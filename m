@@ -2,168 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 837BC201A0
-	for <e@80x24.org>; Thu, 11 May 2017 22:46:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F086E201A0
+	for <e@80x24.org>; Thu, 11 May 2017 23:36:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756425AbdEKWqo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 18:46:44 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35464 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756388AbdEKWqn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 18:46:43 -0400
-Received: by mail-pg0-f65.google.com with SMTP id i63so5151029pgd.2
-        for <git@vger.kernel.org>; Thu, 11 May 2017 15:46:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=KZEM6qMByycyTxq87qIrumZy2lCaqi8LSmGYwukTPSQ=;
-        b=TNgTRfRF86DAS6B29QXoTbYrs4dxFzDeD9q5dIfRJr/b1CglqPNUnUDawhpd9TKcdQ
-         t6/WisjXZLYxlEcRBPSpd1ULDz/zBOQVzd1bgl7G5ZOv7koDbM8f6h5jErYw5bQlY1Po
-         S7H0H2sTmPNZDNWXQc9murVa0EhBbkBTlScX6hKpMR+8R1M5iNjaxh9R28F3tAAGSO4V
-         ULSlt/sUHlHUkQby70k0znAfu8TDGTYhR4/67KwgT7Ln53VZNh2/0eg/MyIGC+9IfRaT
-         nq49HNB2mw07ToN9s7P8nkEVD5OibtUTpkW3KvppGlEjK3KiMH3jyfo1MZBP1UId0DfL
-         YgDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KZEM6qMByycyTxq87qIrumZy2lCaqi8LSmGYwukTPSQ=;
-        b=N8+kMAfIFB+QGJWtfejS6c4Kfm7dFzpa5dEwtP2pLz4pN8ugCbp18bc7o7Vj0oqb4c
-         ZRoYmS1dJjVdbIDPoOv+ZshAEFNGucj7qvH15ktF1j7FGDbFrN/jNmGBUU5grAB5creS
-         Kb4vbW/jNgym3GnaASDoKBHxMbaHxUV642Kw0gTkb7fnK9osrItkOztmFcI1Rc+lnvPR
-         LUdlTq8/WmAP8na0jL0rHJRUled7mli11lg0ulxdPINKTvFi+MvegkOPEQZxqzYnVH9P
-         EnyR42HYlojjbLlkjsfKbs5kI49gdho95xsFlEZSIntrZ+VOLff0x+KOMJThhohsJStx
-         s3sA==
-X-Gm-Message-State: AODbwcBuh3+/Oa6D5b4Gg2DR+WZtm6dYNBplAlcXflOLnzP4ClCo0T10
-        FfKLCNXZWLSwJg==
-X-Received: by 10.99.113.6 with SMTP id m6mr901464pgc.188.1494542802314;
-        Thu, 11 May 2017 15:46:42 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:ac23:a158:2bd3:569b])
-        by smtp.gmail.com with ESMTPSA id r90sm1929019pfl.82.2017.05.11.15.46.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 15:46:41 -0700 (PDT)
-Date:   Thu, 11 May 2017 15:46:39 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v5] fetch-pack: always allow fetching of literal SHA1s
-Message-ID: <20170511224639.GC21723@aiede.svl.corp.google.com>
-References: <20170509182042.28389-1-jonathantanmy@google.com>
- <20170511223054.25239-1-jonathantanmy@google.com>
+        id S1756398AbdEKXgr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 19:36:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49979 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756021AbdEKXgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 19:36:46 -0400
+Received: (qmail 28623 invoked by uid 109); 11 May 2017 23:36:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 23:36:43 +0000
+Received: (qmail 19936 invoked by uid 111); 11 May 2017 23:37:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 19:37:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 May 2017 19:36:41 -0400
+Date:   Thu, 11 May 2017 19:36:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: Best "triangle" workflow setup?
+Message-ID: <20170511233640.ylf4to3hotngh6xe@sigill.intra.peff.net>
+References: <CAHd499DjBHsWCf8h+i4EstR7qs-9hkO4En5-B-WA17DoPZQNoQ@mail.gmail.com>
+ <20170511201707.aobrdiompzg6wu5k@sigill.intra.peff.net>
+ <CAHd499AvDRH-KZ7piOE=QsVXSpMt0u5jVXUC=7UPnRVLYo-U5Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170511223054.25239-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAHd499AvDRH-KZ7piOE=QsVXSpMt0u5jVXUC=7UPnRVLYo-U5Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan wrote:
+On Thu, May 11, 2017 at 04:23:03PM -0500, Robert Dailey wrote:
 
-[...]
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -15,6 +15,7 @@
->  #include "version.h"
->  #include "prio-queue.h"
->  #include "sha1-array.h"
-> +#include "oidset.h"
->  
->  static int transfer_unpack_limit = -1;
->  static int fetch_unpack_limit = -1;
-> @@ -592,13 +593,32 @@ static void mark_recent_complete_commits(struct fetch_pack_args *args,
->  	}
->  }
->  
-> +static void add_refs_to_oidset(struct oidset *oids, struct ref *refs)
-> +{
-> +	for (; refs; refs = refs->next)
-> +		oidset_insert(oids, &refs->old_oid);
-> +}
-> +
-> +static int tip_oids_contain(struct oidset *tip_oids,
-> +			    struct ref *unmatched, struct ref *newlist,
-> +			    const struct object_id *id)
-> +{
-> +	if (!tip_oids->map.cmpfn) {
+> On Thu, May 11, 2017 at 3:17 PM, Jeff King <peff@peff.net> wrote:
+> > I think you want:
+> >
+> >   [push]
+> >   default = current
+> >   [remote]
+> >   pushDefault = myfork
+> >
+> > to make "git push" do what you want. And then generally have branches
+> > mark their counterparts on "origin" (which you can do either at creation
+> > time, or probably by using "git push -u origin my-topic" when you push
+> > them).
+> 
+> So without the `pushDefault` setting, `current` will default to a
+> remote named `origin` if there is no tracking branch set, correct? So
+> `pushDefault` is effectively overriding this built-in default? In
+> addition, it seems like since this overrides `branch.name.remote`,
+> that this effectively makes the remote tracking branch *only* for
+> `pull`. Is this a correct understanding?
 
-This feels like a layering violation.  Could it be e.g. a static inline
-function oidset_is_initialized in oidset.h?
+Right. The general idea of a triangular workflow is that where you pull
+from is not the same as where you push to. We have branch.*.pushremote
+if you really wanted to do it on a per-branch basis, but in my
+experience you almost always want to use "myfork", because you can't
+push to "origin" in the first place. :)
 
-> +		add_refs_to_oidset(tip_oids, unmatched);
-> +		add_refs_to_oidset(tip_oids, newlist);
-> +	}
-> +	return oidset_contains(tip_oids, id);
-> +}
+> > This is similar to what I do for my git.git workflow, though I usually
+> > have origin/master as the branch's upstream. I.e., I'd create them with:
+> >
+> >   git checkout -b my-topic origin
+> 
+> I'm looking through the `git checkout` and `git branch` documentation,
+> but I don't see any mention of it being valid to use a remote name as
+> the <start-point> parameter (you're using `origin` in the above
+> example). Am I misunderstanding? Did you mean origin/my-topic?
 
-The rest looks good.
+Using "origin" there will resolve to "origin/HEAD", i.e., origin/master.
+So basically I am saying that all of my topic branches are based on
+master, and if I were to rebase them (for example), I'd want to rebase
+the whole thing.
 
-With or without that change,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+If I were to "git pull", they'd also pull from master, which may or may
+not be what you want (though with pull.rebase, perhaps). I don't
+generally use "git pull" at all for my git.git workflow.
 
-Thanks for your patient work.
+> > And then rebasing always happens on top of master (because "origin"
+> > doesn't even have my topic branch at all). If I want to compare with
+> > what I've pushed to my fork, I'd use "@{push}".
+> 
+> Can you explain more about how your rebase chooses master instead of
+> your same-named remote tracking branch? Maybe provide some examples of
+> your rebase command and respective configuration (unless what you've
+> already provided is sufficient). As for @{push}, I haven't used this
+> before, so I'll dig in the docs and learn about it.
 
-diff --git i/fetch-pack.c w/fetch-pack.c
-index 9dd430a65a..0394580434 100644
---- i/fetch-pack.c
-+++ w/fetch-pack.c
-@@ -603,7 +603,7 @@ static int tip_oids_contain(struct oidset *tip_oids,
- 			    struct ref *unmatched, struct ref *newlist,
- 			    const struct object_id *id)
- {
--	if (!tip_oids->map.cmpfn) {
-+	if (!oidset_initialized(tip_oids)) {
- 		add_refs_to_oidset(tip_oids, unmatched);
- 		add_refs_to_oidset(tip_oids, newlist);
- 	}
-diff --git i/oidset.c w/oidset.c
-index ac169f05d3..f2a6753b8a 100644
---- i/oidset.c
-+++ w/oidset.c
-@@ -18,7 +18,7 @@ int oidset_contains(const struct oidset *set, const struct object_id *oid)
- {
- 	struct hashmap_entry key;
- 
--	if (!set->map.cmpfn)
-+	if (!oidset_initialized(set))
- 		return 0;
- 
- 	hashmap_entry_init(&key, sha1hash(oid->hash));
-@@ -29,7 +29,7 @@ int oidset_insert(struct oidset *set, const struct object_id *oid)
- {
- 	struct oidset_entry *entry;
- 
--	if (!set->map.cmpfn)
-+	if (!oidset_initialized(set))
- 		hashmap_init(&set->map, oidset_hashcmp, 0);
- 
- 	if (oidset_contains(set, oid))
-diff --git i/oidset.h w/oidset.h
-index b7eaab5b88..2e7d889770 100644
---- i/oidset.h
-+++ w/oidset.h
-@@ -22,6 +22,16 @@ struct oidset {
- 
- #define OIDSET_INIT { { NULL } }
- 
-+/**
-+ * Returns true iff "set" has been initialized (for example by inserting
-+ * an entry). An oidset is considered uninitialized if it hasn't had any
-+ * oids inserted since it was last cleared.
-+ */
-+static inline int oidset_initialized(const struct oidset *set)
-+{
-+	return set->map.cmpfn ? 1 : 0;
-+}
-+
- /**
-  * Returns true iff `set` contains `oid`.
-  */
+The default for "git rebase" (if you don't specify a base) is the
+configured upstream, which in my case is origin/master. Most of my
+rebasing is "rebase -i" to rewrite bits, so it automatically picks all
+the commits on my topic branch.
+
+Maybe it would help to set up a trivial example:
+
+  # just a helper to make dummy commits
+  commit() { echo "$1" >"$1" && git add "$1" && git commit -m "$1"; }
+
+  # some parent repo
+  git init parent
+  (cd parent && commit one)
+
+  # and imagine you have a public fork, too
+  git clone --bare parent myfork.git
+
+  # and then you have your local clone; in real life this is obviously
+  # the only one that would actually be on your machine, but this is a
+  # toy example
+  git clone parent local
+  cd local
+
+  # set up our triangular config
+  git remote add myfork ../myfork.git
+  git config remote.pushdefault myfork
+  git config push.default current
+
+  # now let's try a topic branch
+  git checkout -b topic origin
+  commit two
+  commit three
+
+  # config will show our topic based on origin/master:
+  #  [branch "topic"]
+  #	remote = origin
+  #	merge = refs/heads/master
+  less .git/config
+
+  # this should default to all the commits in our topic (i.e., two, three)
+  git rebase -i
+
+  # let's imagine upstream makes more commits on master. We can "pull
+  # --rebase" to put our work on top
+  (cd ../parent && commit four)
+  git pull --rebase
+
+  # pushes go to the matching branch on myfork
+  git push
+
+  # if you want to see what you haven't pushed yet, you can use @{push}
+  commit five
+  git log @{push}..
+
+  # likewise, if you wanted to rebase only commits that you've been
+  # working on since your last push:
+  git rebase -i @{push}
+
+  # Now imagine "origin" picks up your branch...
+  (cd ../parent && git fetch ../myfork.git topic:topic)
+
+  # Depending on your project's workflow, you may want to consider that
+  # the new base for further development (and never rebase or rewrite
+  # any commits that origin has). You do that by re-pointing your
+  # @{upstream} config.
+  git fetch
+  git branch --set-upstream-to=origin/topic topic
+
+  # now a "rebase -i" would show only the commits origin doesn't have
+  # (five and six in this case)
+  commit six
+  git rebase -i
+
+
+Hopefully that shows off some of the ways you can use the upstream and
+push config in practice.  Some people may not be as excited about the
+"rebase" default as I am. I spend quite a lot of time at the end of a
+series sifting through the commits via "rebase -i" and polishing them
+up. I also test with "git rebase -x 'make test'".
+
+-Peff
