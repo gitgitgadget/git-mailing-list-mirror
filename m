@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14AD61FF34
-	for <e@80x24.org>; Thu, 11 May 2017 07:44:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B530D1FF34
+	for <e@80x24.org>; Thu, 11 May 2017 07:44:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755097AbdEKHo0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 03:44:26 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34501 "EHLO
+        id S1755124AbdEKHo3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 03:44:29 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35059 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755081AbdEKHoZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 03:44:25 -0400
-Received: by mail-wm0-f66.google.com with SMTP id d127so4943587wmf.1
-        for <git@vger.kernel.org>; Thu, 11 May 2017 00:44:24 -0700 (PDT)
+        with ESMTP id S1755088AbdEKHo1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 03:44:27 -0400
+Received: by mail-wm0-f66.google.com with SMTP id v4so4929799wmb.2
+        for <git@vger.kernel.org>; Thu, 11 May 2017 00:44:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=brz+9aIuJP2GGteanazzqj6NnUNd38gay9tsohiU/iQ=;
-        b=OuDE+7jYl7m2xNSuXUtpIkSWp7IgIyuXnmMZtK5M0BuLWFz5tQwwxF0IlT/KdIh5ah
-         tT58i51hx3AxSHx1xG491Io+8x6cCwZAsfUfOw88WrRRCa5oISWuvrqVnYxrTAV9lTTc
-         c/MUr3srwc19uiW3QCEVZ0X53oM87xxp633YELTrllngYLKIXBqgeYSMjQaUvOKD8bI6
-         6a6zmhBpRktks7Sm1zSSxdeggEvXjq4e0qWhFONWi5rFcf8gAg6GwB41wwzzw5xTBzrD
-         sU8tIPXG1HhgYMlDhePLb3izLc19xwYNNChPqSkicKGoyOB+ETPkk+mFY3QISpZDUjaz
-         lDpw==
+        bh=N3VJCJ6suqL3r4carUoJ+YJkN2EGoPzmpu9leW7hHBk=;
+        b=EyloykHp2E0zxoszwkNK90IoZWaWz4phVwV6/kugpnSeojA/Ry40yF2ywy7guWLVa8
+         q0w3n3x5XEpdLU8SEHOROJBCshU3cJLfWFkKj7YMEAWbFTXQQaqRms6aKGpLHQUTNfqx
+         Rkrx/suG0dJAWKrUy8ZUmbP+m8Ruf7VRTDaFM7PmyzKpf5LkZgB0wOTfqK5GnjxLGZmv
+         ActLkXf+l2Yb+ghlcXtiRfus3uOkBFLulC5xgKwo3pfP2SekLvR7V/Ut4GOZpoaBYJjV
+         sMpet6JMsyHAyEzfcqD7PVCE2jW6ROEk8vuK8PKq7YY/FiQ98tBR9BJs1H+uY7TxjezZ
+         eLwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=brz+9aIuJP2GGteanazzqj6NnUNd38gay9tsohiU/iQ=;
-        b=oKOpP0DcFcUKw7i23H4hVhZuiWD6WXGi9vyu53ZGHapYXS70qbsZaz9D7P6Fm0NX2M
-         ooT/AZzmD2vws9kYI9gVkTEi1Ckfs+B3PS/YBhzfzvwrj27yil9LcZOI6ZNbr9f5iRIY
-         24ay2P3Ae9ll2IqjHB7Myr6d9NEmfoIYRBXzPiI6MAL3d3L4nB+CBXJDJGEcCgLXXrV4
-         Evu2aW35CVPfyYuw+Ap5RbbYzyccBiZnOK066mNB/QlY1iuMJVid+GjQo1Yza4O04Hnk
-         p0yoSZU/SbSCQCMtzGmj/hubLSIdRSOnLSyVpGlo3tM4gmdqJIIOqVtaOZKMqvBw/ep8
-         DMmw==
-X-Gm-Message-State: AODbwcBwNLdXpMo7kUnLXTG+fe6WplS8QIWUOcpo1/+s3/D+iJutJpXN
-        QP1HtmgUplBOeQ==
-X-Received: by 10.80.130.36 with SMTP id 33mr7187089edf.154.1494488663920;
-        Thu, 11 May 2017 00:44:23 -0700 (PDT)
+        bh=N3VJCJ6suqL3r4carUoJ+YJkN2EGoPzmpu9leW7hHBk=;
+        b=G4c6AtBpgYHj6ip3A3ylZq0gx82FQILnontg3nQ0Ufp0We+/3hUqWmi+jkngpLPb1g
+         dnNxf8Li0fgopbyGFezvl6HlivbVJ7Nu9oKhVHr8KN0r+CGSvXfxEDzQYR//CDwi2xtZ
+         rK46+jewwJvmGaze+j1uShDHCCCqYDCdlFSxH+6RQ/j+DvlLt049hpcPP3fUd9aMZ+37
+         9CQN5u78pfivTD9S51nl/x3IkgImu9rotRKX4PbdRdWXm7j3Q17TUMrPqbSDCwzGPupz
+         P/kbsDiRaHGBgOKiYHZlwBGI1Jt3YHbXnytunvyFP4voz41HlA4VfkqSDQW7HSbM7BEg
+         x1VQ==
+X-Gm-Message-State: AODbwcDpzws2Boae5sKJ6v44tyJyjyZ4HBZ9YZXEBFLrVs71ElTBzGch
+        FYo7R42+zzzmnA==
+X-Received: by 10.80.145.80 with SMTP id f16mr7450399eda.170.1494488666569;
+        Thu, 11 May 2017 00:44:26 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id c35sm325071eda.55.2017.05.11.00.44.22
+        by smtp.gmail.com with ESMTPSA id c35sm325071eda.55.2017.05.11.00.44.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 May 2017 00:44:22 -0700 (PDT)
+        Thu, 11 May 2017 00:44:25 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 1/2] perf: add function to setup a fresh test repo
-Date:   Thu, 11 May 2017 07:43:53 +0000
-Message-Id: <20170511074354.11336-2-avarab@gmail.com>
+Subject: [PATCH v3 2/2] perf: add test showing exponential growth in path globbing
+Date:   Thu, 11 May 2017 07:43:54 +0000
+Message-Id: <20170511074354.11336-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170511074354.11336-1-avarab@gmail.com>
 References: <20170511074354.11336-1-avarab@gmail.com>
@@ -70,72 +70,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a function to setup a fresh test repo via 'git init' to compliment
-the existing functions to copy over a normal & large repo.
+Add a test showing that runtimes of the wildmatch() function used for
+globbing in git grow exponentially in the face of some pathological
+globs.
 
-Some performance tests don't need any existing repository data at all
-to be significant, e.g. tests which stress glob matches against single
-pathological revisions or files, which I'm about to add in a
-subsequent commit.
+This issue affects both globs matching filenames via e.g. ls-files,
+and globs matching refnames via e.g. for-each-ref.
+
+As noted in the test description this is a test to see whether Git
+suffers from the issue noted in an article Russ Cox posted today about
+common bugs in various glob implementations:
+https://research.swtch.com/glob
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/perf/README      |  1 +
- t/perf/perf-lib.sh | 17 +++++++++++++----
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ t/perf/p0100-globbing.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+ create mode 100755 t/perf/p0100-globbing.sh
 
-diff --git a/t/perf/README b/t/perf/README
-index 49ea4349be..de2fe15696 100644
---- a/t/perf/README
-+++ b/t/perf/README
-@@ -106,6 +106,7 @@ sources perf-lib.sh:
- 
- After that you will want to use some of the following:
- 
-+	test_perf_fresh_repo    # sets up an empty repository
- 	test_perf_default_repo  # sets up a "normal" repository
- 	test_perf_large_repo    # sets up a "large" repository
- 
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index ab4b8b06ae..f51fc773e8 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -78,6 +78,10 @@ if test -z "$GIT_PERF_LARGE_REPO"; then
- 	GIT_PERF_LARGE_REPO=$TEST_DIRECTORY/..
- fi
- 
-+test_perf_do_repo_symlink_config_ () {
-+	test_have_prereq SYMLINKS || git config core.symlinks false
-+}
+diff --git a/t/perf/p0100-globbing.sh b/t/perf/p0100-globbing.sh
+new file mode 100755
+index 0000000000..dd18a9ce2b
+--- /dev/null
++++ b/t/perf/p0100-globbing.sh
+@@ -0,0 +1,43 @@
++#!/bin/sh
 +
- test_perf_create_repo_from () {
- 	test "$#" = 2 ||
- 	error "bug in the test script: not 2 parameters to test-create-repo"
-@@ -102,15 +106,20 @@ test_perf_create_repo_from () {
- 	) &&
- 	(
- 		cd "$repo" &&
--		"$MODERN_GIT" init -q && {
--			test_have_prereq SYMLINKS ||
--			git config core.symlinks false
--		} &&
-+		"$MODERN_GIT" init -q &&
-+		test_perf_do_repo_symlink_config_ &&
- 		mv .git/hooks .git/hooks-disabled 2>/dev/null
- 	) || error "failed to copy repository '$source' to '$repo'"
- }
- 
- # call at least one of these to establish an appropriately-sized repository
-+test_perf_fresh_repo () {
-+	repo="${1:-$TRASH_DIRECTORY}"
-+	"$MODERN_GIT" init -q "$repo" &&
-+	cd "$repo" &&
-+	test_perf_do_repo_symlink_config_
-+}
++test_description="Tests pathological globbing performance
 +
- test_perf_default_repo () {
- 	test_perf_create_repo_from "${1:-$TRASH_DIRECTORY}" "$GIT_PERF_REPO"
- }
++Shows how Git's globbing performance performs when given the sort of
++pathological patterns described in at https://research.swtch.com/glob
++"
++
++. ./perf-lib.sh
++
++test_globs_big='10 25 50 75 100'
++test_globs_small='1 2 3 4 5 6'
++
++test_perf_fresh_repo
++
++test_expect_success 'setup' '
++	for i in $(test_seq 1 100)
++	do
++		printf "a" >>refname &&
++		for j in $(test_seq 1 $i)
++		do
++			printf "a*" >>refglob.$i
++		done &&
++		echo b >>refglob.$i
++	done &&
++	test_commit test $(cat refname).t "" $(cat refname).t
++'
++
++for i in $test_globs_small
++do
++	test_perf "refglob((a*)^nb) against tag (a^100).t; n = $i" '
++		git for-each-ref "refs/tags/$(cat refglob.'$i')b"
++	'
++done
++
++for i in $test_globs_small
++do
++	test_perf "fileglob((a*)^nb) against file (a^100).t; n = $i" '
++		git ls-files "$(cat refglob.'$i')b"
++	'
++done
++
++test_done
 -- 
 2.11.0
 
