@@ -2,103 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BD6C201A4
-	for <e@80x24.org>; Fri, 12 May 2017 04:59:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55EB720188
+	for <e@80x24.org>; Fri, 12 May 2017 08:14:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756838AbdELE7Z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 00:59:25 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34918 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755071AbdELE7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 00:59:24 -0400
-Received: by mail-pg0-f66.google.com with SMTP id i63so6136482pgd.2
-        for <git@vger.kernel.org>; Thu, 11 May 2017 21:59:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=9ZXxiY3G5aeZBp+ohh9NKMnTwkL35GZSeKBqN/Knm/M=;
-        b=RameoM2VsEOqUzm4gRV1qoXRYBEggjQzNkmCEOpbpYFlulgipH7L7kkAwFhRzVJUHt
-         CUJp4lXtBBdWjtzGOnuyoxORatgEF//luqfA1AFUBrnD6CzbVmPaYp4t/F2JQxCBAbJU
-         ezm3CpCB9IVYTky69h0ZkJzBolgNB3IVhPSEvZ2+yKD9H58wdw6qgSodAZ5dkiLYL1vS
-         eA/U0kou1wJhm1rTEeUQnN43qn99h+wnyrD2E1kj22BzjVPNCYnd5V7S1t+Zev/6HdHS
-         uO5FVDB0dTc8Dls2MzRBiQFQKayUC+g8kPnzuko0LGMB6kKCiJvuz2DzaCtsRZY5hNPp
-         3Iqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=9ZXxiY3G5aeZBp+ohh9NKMnTwkL35GZSeKBqN/Knm/M=;
-        b=XaBa3//QZiKt1gsmN1kIfIuC9qXAazWNHLR4RSiWIJqttUH9Qhy5OUBBB1FEoyBb9P
-         43iMn9TdoYEZBPU/LVTjAUEwwUlKpgP8CAtfQehQ5mGpRJlf0ptQJ8Z8Bk1AvBve6U+Q
-         rusDg+w5jnx9Ycrn2D4CO86U+8iXxp4ib+1aKjdTo8VFFDA3M02lpV9323ES27kJFgDn
-         GZ/Wq0l266Kowd1YYvimOLfr+RKcJP2Uqc5L72wM4NUXl0M8Zee4q5CpImFXUJEmD+fL
-         fIgs/VGOzgmP08e4LMX0RrTsC1aBHMhTUYZBz94NsmQCAxBAflO1eYE4fNKUf0zUY7zo
-         UZtA==
-X-Gm-Message-State: AODbwcD+jVV7Lo3w5uoNUWeF3zdgNHh+eZRMmoMWD7rrbK5I4sAEE1My
-        SZswfYzAZItB+WBSvv0=
-X-Received: by 10.98.149.154 with SMTP id c26mr2455324pfk.37.1494565163469;
-        Thu, 11 May 2017 21:59:23 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:954c:c08b:c855:8b7f])
-        by smtp.gmail.com with ESMTPSA id c12sm2821268pfl.79.2017.05.11.21.59.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 21:59:22 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH 09/29] grep: amend submodule recursion test for regex engine testing
-References: <20170511091829.5634-1-avarab@gmail.com>
-        <20170511091829.5634-10-avarab@gmail.com>
-Date:   Fri, 12 May 2017 13:59:21 +0900
-In-Reply-To: <20170511091829.5634-10-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 11 May 2017 09:18:09 +0000")
-Message-ID: <xmqqpofe7jrq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752111AbdELIOY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 04:14:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50176 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750713AbdELIOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 04:14:21 -0400
+Received: (qmail 32596 invoked by uid 109); 12 May 2017 08:14:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 May 2017 08:14:19 +0000
+Received: (qmail 22074 invoked by uid 111); 12 May 2017 08:14:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 May 2017 04:14:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 May 2017 04:14:17 -0400
+Date:   Fri, 12 May 2017 04:14:17 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v5] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170512081417.w537fmd4o5rl4kja@sigill.intra.peff.net>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
+ <20170511223054.25239-1-jonathantanmy@google.com>
+ <20170511224639.GC21723@aiede.svl.corp.google.com>
+ <xmqq37ca7gw0.fsf@gitster.mtv.corp.google.com>
+ <20170512075931.umunxd72nj53snds@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20170512075931.umunxd72nj53snds@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+On Fri, May 12, 2017 at 03:59:31AM -0400, Jeff King wrote:
 
-> Amend the submodule recursion test to prepare it for subsequent tests
-> of whether it passes along the grep.patternType to the submodule
-> greps.
->
-> This is the result of searching & replacing:
->
->     foobar -> (1|2)d(3|4)
->     foo    -> (1|2)
->     bar    -> (3|4)
-> ...
->  test_expect_success 'grep and multiple patterns' '
->  	cat >expect <<-\EOF &&
-> -	b/b:bar
-> +	b/b:(3|4)
->  	EOF
->  
-> -	git grep -e "bar" --and --not -e "foo" --recurse-submodules >actual &&
-> +	git grep -e "(3|4)" --and --not -e "(1|2)d" --recurse-submodules >actual &&
+> It's hard to resolve that because the loop that chops up the lists is
+> also the loop that is figuring out if there are leftover raw-sha1
+> names. But you could probably structure it like:
+> 
+>   1. Loop and see if we have unmatched names that look like sha1s.
+> 
+>   2. Set up the oidset from the two chopped-up lists if there are
+>      sha1 candidates (and if we aren't going to just send them
+>      regardless due to server options).
+> 
+>   3. Loop over the unmatched candidates and check them against the
+>      oidset.
+> 
+> That avoids the lazy-init, so pulling (2) out into a function results in
+> a better interface.
 
+Here that is for reference. It's a bit more complex than the other
+solutions, requiring the unmatched list, the is_literal_sha1() helper,
+and the oidset. But it avoids any extra allocation when it isn't
+necessary, and drops the laziness.
 
-This breaks the promise "foo maps to (1|2)"; I do not think you need
-to add 'd' in order to make the test to succeed, so I am not sure
-what is going on here.
+I mostly did this to give the discussion something concrete to look at.
+I'm actually OK with any of the options so far, as long as it does not
+have any quadratic behavior. :)
 
+diff --git a/fetch-pack.c b/fetch-pack.c
+index afb8b0502..e167213c0 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -15,6 +15,7 @@
+ #include "version.h"
+ #include "prio-queue.h"
+ #include "sha1-array.h"
++#include "oidset.h"
+ 
+ static int transfer_unpack_limit = -1;
+ static int fetch_unpack_limit = -1;
+@@ -592,13 +593,27 @@ static void mark_recent_complete_commits(struct fetch_pack_args *args,
+ 	}
+ }
+ 
++static int is_literal_sha1(const struct ref *ref)
++{
++	struct object_id oid;
++	const char *end;
++	return !parse_oid_hex(ref->name, &oid, &end) &&
++	       !*end &&
++	       !oidcmp(&oid, &ref->old_oid);
++}
++
+ static void filter_refs(struct fetch_pack_args *args,
+ 			struct ref **refs,
+ 			struct ref **sought, int nr_sought)
+ {
+ 	struct ref *newlist = NULL;
+ 	struct ref **newtail = &newlist;
++	struct ref *unmatched = NULL;
+ 	struct ref *ref, *next;
++	struct oidset tip_oids = OIDSET_INIT;
++	int send_raw_oids = (allow_unadvertised_object_request &
++			     (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
++	int seeking_raw_oid = 0;
+ 	int i;
+ 
+ 	i = 0;
+@@ -617,7 +632,8 @@ static void filter_refs(struct fetch_pack_args *args,
+ 				else if (cmp == 0) {
+ 					keep = 1; /* definitely have it */
+ 					sought[i]->match_status = REF_MATCHED;
+-				}
++				} else if (is_literal_sha1(sought[i]))
++					seeking_raw_oid = 1;
+ 				i++;
+ 			}
+ 		}
+@@ -631,24 +647,27 @@ static void filter_refs(struct fetch_pack_args *args,
+ 			ref->next = NULL;
+ 			newtail = &ref->next;
+ 		} else {
+-			free(ref);
++			ref->next = unmatched;
++			unmatched = ref;
+ 		}
+ 	}
+ 
++	if (seeking_raw_oid && !send_raw_oids) {
++		for (ref = newlist; ref; ref = ref->next)
++			oidset_insert(&tip_oids, &ref->old_oid);
++		for (ref = unmatched; ref; ref = ref->next)
++			oidset_insert(&tip_oids, &ref->old_oid);
++	}
++
+ 	/* Append unmatched requests to the list */
+ 	for (i = 0; i < nr_sought; i++) {
+-		unsigned char sha1[20];
+-
+ 		ref = sought[i];
+ 		if (ref->match_status != REF_NOT_MATCHED)
+ 			continue;
+-		if (get_sha1_hex(ref->name, sha1) ||
+-		    ref->name[40] != '\0' ||
+-		    hashcmp(sha1, ref->old_oid.hash))
++		if (!is_literal_sha1(ref))
+ 			continue;
+ 
+-		if ((allow_unadvertised_object_request &
+-		    (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1))) {
++		if (send_raw_oids || oidset_contains(&tip_oids, &ref->old_oid)) {
+ 			ref->match_status = REF_MATCHED;
+ 			*newtail = copy_ref(ref);
+ 			newtail = &(*newtail)->next;
+@@ -656,6 +675,13 @@ static void filter_refs(struct fetch_pack_args *args,
+ 			ref->match_status = REF_UNADVERTISED_NOT_ALLOWED;
+ 		}
+ 	}
++
++	oidset_clear(&tip_oids);
++	for (ref = unmatched; ref; ref = next) {
++		next = ref->next;
++		free(ref);
++	}
++
+ 	*refs = newlist;
+ }
+ 
