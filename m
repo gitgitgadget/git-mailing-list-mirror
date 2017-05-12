@@ -2,95 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AA7F201A7
-	for <e@80x24.org>; Fri, 12 May 2017 13:03:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB15220188
+	for <e@80x24.org>; Fri, 12 May 2017 07:48:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932294AbdELNDZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 09:03:25 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:63258 "EHLO smtp2-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932207AbdELNDY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 09:03:24 -0400
-Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
-        by smtp2-g21.free.fr (Postfix) with ESMTP id 63F482003ED;
-        Fri, 12 May 2017 15:03:21 +0200 (CEST)
-From:   Jean-Noel Avila <jn.avila@free.fr>
-To:     git@vger.kernel.org
-Cc:     Jean-Noel Avila <jn.avila@free.fr>
-Subject: [PATCH v4 2/3] read-tree -m: make error message for merging 0 trees less smart aleck
-Date:   Fri, 12 May 2017 15:03:16 +0200
-Message-Id: <20170512130317.25832-2-jn.avila@free.fr>
-X-Mailer: git-send-email 2.13.0
-In-Reply-To: <20170512130317.25832-1-jn.avila@free.fr>
-References: <20170503162931.30721-1-jn.avila@free.fr>
- <20170512130317.25832-1-jn.avila@free.fr>
+        id S1756712AbdELHsA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 03:48:00 -0400
+Received: from mail-it0-f47.google.com ([209.85.214.47]:36446 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756674AbdELHr6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 03:47:58 -0400
+Received: by mail-it0-f47.google.com with SMTP id o5so6256403ith.1
+        for <git@vger.kernel.org>; Fri, 12 May 2017 00:47:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=MLnR8NTv2snmDbxtuFLdJbPjmrplopCigUfMeY9UVuE=;
+        b=P1lZ3LTiWEHSMW4rEhs6wrdZ3s4cYsNr+FedOZI9CYfXy0LD7Ks0C2Xf5moiLSHbju
+         bgAoYi/d7Ik05URsqMfkGd49gSS6xACTVyVIXpSojW3ERIOtbpUZVXKyz9/U9X4H2M/l
+         /cPT8zvVe74o62YiNlJpLsQZZ/VPWk2f4yyWIKIkE5f9W/H9+4Kd6QRBMUv9halFoG76
+         9v5zpopRk6qca73MQrmkfGs+geUDC0OSHe7h7Y7HhuUaXIGboBvfAwinNydUaJlvxXpa
+         QR1n/GSuNo6JH9fxSanOEz1RvHbjDOCytlGQisZ+XpDWDEt6bmiYy3++4lxKZLB4PrWC
+         h2iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=MLnR8NTv2snmDbxtuFLdJbPjmrplopCigUfMeY9UVuE=;
+        b=YlavN2ROJrkv7OQKJGH+jkd5MBD/lVDE/xCV7NMIpVLCGS7DowFeD2XY90YrpxXXTD
+         W6HN+rz5/qErosQ1o7qB+P57PwIotlC02Ged+GOdmzLo98Yq4a46dxzvaECnfyxqTnNA
+         rALJ1M3+V6HqMMbdYa/LFV8kxs71gI/G+n4mfRYkXDad09+OqEakqKfw9fW+AxIYRuhQ
+         sQD0utzTgdXcpuPH8SpAzRv28Q8/sNP50OQo90CbbMVQbaS/A+AFcToKVvxcWgYNHy8n
+         oXAbNtVDTu4c8/vj6I8x9TyOxEsUyZa086Uo2moKN5mm1tkbZr5nNp30HcRqXqUpLPjW
+         1/eg==
+X-Gm-Message-State: AODbwcDYZPJjQi1wp//7nWsVfgw8+lcwacJEfF4VtBbjMxq9ngOdWzou
+        nHhOws8NjW4imJ4if19O9NpVS2HBtFaJfKc=
+X-Received: by 10.36.154.3 with SMTP id l3mr1753669ite.94.1494575277984; Fri,
+ 12 May 2017 00:47:57 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.8.220 with HTTP; Fri, 12 May 2017 00:47:37 -0700 (PDT)
+In-Reply-To: <xmqqpofe60dy.fsf@gitster.mtv.corp.google.com>
+References: <xmqqpofe60dy.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 12 May 2017 09:47:37 +0200
+Message-ID: <CACBZZX700n_nFvYxy0Z4M2cUqaOF0bNhLxJ9XJYGNDu8bk5HNg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2017, #04; Fri, 12)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git read-tree -m" requires a tree argument to name the tree to be
-merged in.  Git uses a cutesy error message to say so and why:
+On Fri, May 12, 2017 at 8:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * ab/grep-preparatory-cleanup (2017-05-12) 15 commits
+>  - grep: add tests to fix blind spots with \0 patterns
+>  - grep: prepare for testing binary regexes containing rx metacharacters
+>  - SQUASH???
+>  - grep: add a test helper function for less verbose -f \0 tests
+>  - grep: add tests for grep pattern types being passed to submodules
+>  - grep: amend submodule recursion test for regex engine testing
+>  - grep: add tests for --threads=N and grep.threads
+>  - SQUASH???
+>  - grep: change non-ASCII -i test to stop using --debug
+>  - grep: add a test for backreferences in PCRE patterns
+>  - grep: add a test asserting that --perl-regexp dies when !PCRE
+>  - log: add exhaustive tests for pattern style options & config
+>  - test-lib: rename the LIBPCRE prerequisite to PCRE
+>  - grep & rev-list doc: stop promising libpcre for --perl-regexp
+>  - Makefile & configure: reword inaccurate comment about PCRE
+>
+>  (what is queued here is only the early part of a larger series)
 
-    $ git read-tree -m
-    warning: read-tree: emptying the index with no arguments is
-    deprecated; use --empty
-    fatal: just how do you expect me to merge 0 trees?
-    $ git read-tree -m --empty
-    fatal: just how do you expect me to merge 0 trees?
+What's the reason for only queuing it up to this point? AFAICT there's
+no particular breakages past this point that would prevent the whole
+thing from being queued.
 
-When lucky, that could produce an ah-hah moment for the user, but it's
-more likely to irritate and distract them.
+I'm going to fix the issues noted on-list, but wondering what I should
+do with the next submission. Do you think with fixes you'd like to
+take the whole thing?
 
-Instead, tell the user plainly that the tree argument is
-required. Also document that more than 3 trees can be merged.
 
-Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
----
- Documentation/git-read-tree.txt | 7 +++----
- builtin/read-tree.c             | 5 +++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+> --------------------------------------------------
+> [Cooking]
+>
+> * ab/compat-regex-update (2017-05-12) 3 commits
+>  - DONTMERGE compat/regex: make it compile with -Werror=int-to-pointer-cast
+>  - compat/regex: update the gawk regex engine from upstream
+>  - compat/regex: add a README with a maintenance guide
+>
+>  Update compat/regex we borrowed from gawk.  It seems that some
+>  customizations we made to the older one were dropped by mistake.
 
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index ed9d63ef4..7e20b0c21 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -135,10 +135,9 @@ OPTIONS
- 
- Merging
- -------
--If `-m` is specified, 'git read-tree' can perform 3 kinds of
--merge, a single tree merge if only 1 tree is given, a
--fast-forward merge with 2 trees, or a 3-way merge if 3 trees are
--provided.
-+If `-m` is specified, 'git read-tree' can perform 3 kinds of merge, a
-+single tree merge if only 1 tree is given, a fast-forward merge with 2
-+trees, or a 3-way merge if 3 or more trees are provided.
- 
- 
- Single Tree Merge
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 23e212ee8..383442567 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -226,9 +226,10 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 		setup_work_tree();
- 
- 	if (opts.merge) {
--		if (stage < 2)
--			die("just how do you expect me to merge %d trees?", stage-1);
- 		switch (stage - 1) {
-+		case 0:
-+			die("you must specify at least one tree to merge");
-+			break;
- 		case 1:
- 			opts.fn = opts.prefix ? bind_merge : oneway_merge;
- 			break;
--- 
-2.13.0
-
+Do you prefer that I pick up JS's "compat/regex: fix compilation on
+Windows" patch & re-send, or for you to add that on top after that
+discussion is resolved?
