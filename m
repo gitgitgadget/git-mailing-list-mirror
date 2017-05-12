@@ -2,109 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E105A201A7
-	for <e@80x24.org>; Fri, 12 May 2017 18:18:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDE5620188
+	for <e@80x24.org>; Fri, 12 May 2017 11:44:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755663AbdELSSK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 14:18:10 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:36038 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751424AbdELSSJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 14:18:09 -0400
-Received: by mail-io0-f196.google.com with SMTP id f102so6423358ioi.3
-        for <git@vger.kernel.org>; Fri, 12 May 2017 11:18:09 -0700 (PDT)
+        id S932071AbdELLoY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 07:44:24 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34365 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756464AbdELLoV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 07:44:21 -0400
+Received: by mail-pf0-f195.google.com with SMTP id w69so6791376pfk.1
+        for <git@vger.kernel.org>; Fri, 12 May 2017 04:44:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=eBzYGU8exjU9u4GfcaH7XbChRSh31LXrNx28ZDtQCRw=;
-        b=ZWpsdS3W1NWjfkhHQ6DDVm1Aak+S2Lr9c46r8ZEBoN6YnKc9Mycrhl621kTaULYnSa
-         Hq0DNHdH1HyN3l7pPFU2Mv32JHwITI6Kai/V028ZGIdG8F7AHPeY27gDMDN8uPCgML3i
-         WGR30NO/ut3Xt8GDD2YVWknhp7qSJHWAkS7Ldcf0fLvsKVq2LN/MFw5iovtvkJdU58It
-         S9uMEQ/iDAHaNkWWoVE1QAYsBEBTQ2pF4fRNjkrLq59RRSnjc02oR5L40+lzKQfK3rlS
-         iKw84yp/q7QbGBq2a8jnNhWRk6XLJ2U1mm/rruBHYjJn1MNhKPfJ8HHaU31QsKmiWQUQ
-         tXdg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Rz9DuUv0ilFW36cjGj1vW1xa6MKTAC/0w8Kljyy6Fxs=;
+        b=iyy9o0E10WhljKKEvm77Q7nrbpV00CSoFihz9rYyCej1hI+A8WvJbQxxPdXI0Nm5up
+         pvfZTkHiEyKlqd1JbvGFr/VQErvaHGreOvGpb0QCPk+n2uY20NBZ5l0xo7FmhGXoyPK3
+         VVWY9Okq10w4yUYqy1VcgfnsHJ3x0+vFWcYlDxMOW3h2yTIcZW6pC4aYIo/oGQRBPOoA
+         FQhhOQLmJ+lVVumbOzxaLKUULHLQNA6KrH1AxqOrYDdJaYro+1F5ND8qa0fovenhYDK3
+         6kXnP5FRf/rAYXjjkK0e8IF1wrjNn35qy0rV8Qu+w/Ltce4FQGtaQzCMqmegG8vJejTQ
+         dypA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=eBzYGU8exjU9u4GfcaH7XbChRSh31LXrNx28ZDtQCRw=;
-        b=de9vOrOozCDp7L8PtXVHuXwRYAsey5enEcqEU0PCuRYI3NldQFTIS4HU7MHdsjMi/v
-         zvmZKOK1TxGl7XI3Q1D9iAjfwvM2Gzlya6UJ7w4ko0g4USroZIJCMpoZdxqCwKRepJQW
-         4GO5KHz80edDTJ5ksYdb2k5rBFueVwbcfOiaDNXOldfvNdefqjKSeaR0EEbWSMoxsHmv
-         TKLcBA271zQa7LYXynQ6kN+FTmHiMDhwALKEbrHtQnD9PQx0utXblCm+dcfuNXSgJ4BK
-         SuUBzlkJS0xMQCt+Hjmw92xXntELWIsU7vVaf58IC8iKpK7333Zqpr3MRE1ks4fVURV/
-         VdLw==
-X-Gm-Message-State: AODbwcD9uE+GubkseJv4YWZDEGQytviL6e929iAy2Zl8wfkwfjP/gbA1
-        2rWb4HfWcRlUHVLoE3hm86zN3ERyyg==
-X-Received: by 10.107.201.131 with SMTP id z125mr5002084iof.160.1494613089105;
- Fri, 12 May 2017 11:18:09 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Fri, 12 May 2017 11:17:48 -0700 (PDT)
-In-Reply-To: <20170512173527.GD98586@google.com>
-References: <20170511170142.15934-1-avarab@gmail.com> <20170511170142.15934-2-avarab@gmail.com>
- <20170512173527.GD98586@google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 12 May 2017 20:17:48 +0200
-Message-ID: <CACBZZX7x=9Pvuhy7Q9=ecnhvVmjt664enZOjk4B8LXErVL4oEg@mail.gmail.com>
-Subject: Re: [PATCH 1/7] grep: don't redundantly compile throwaway patterns
- under threading
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Rz9DuUv0ilFW36cjGj1vW1xa6MKTAC/0w8Kljyy6Fxs=;
+        b=bRdZB1lLldo4/Pj+hbNCWdbf9ULkJ5V2nNQa0zgcSWs+iiJtjR2xc6JlBAbqMMBvGc
+         fAErVddKMhgcJvVB30Fy4q10OZqL4qI4Lvab9aCpabuoRlgCoa0JTSvu6WzWubJFeHd8
+         wj6DR1vQCdeLmHzyTcUQoC699NCSdmbxAv1/KmsFAJRiecR5NOZJyZhcVs6KqdRb0HS8
+         JVS5isApPodXUA1XzgW5z4V3d2nbkGihTeqDoObikxP2Ry9R7UWsDREFmqDheHe4MUFZ
+         baHoOf5DgHM8AsVZ5AK/42wUCG5kyZpV9IRuS6Y/U/rcftkBd3jZj2eFM6CPuF0IJYZW
+         h1SA==
+X-Gm-Message-State: AODbwcBIrkbvEhzfV/xBOmU/tdvLaZfwtnjIu5TnzoOCZIX88PjOBHmv
+        0D5ZFX4vvnl86w==
+X-Received: by 10.99.103.4 with SMTP id b4mr3878975pgc.84.1494589461046;
+        Fri, 12 May 2017 04:44:21 -0700 (PDT)
+Received: from prathampc-X550JX.domain.name ([116.73.73.225])
+        by smtp.gmail.com with ESMTPSA id 63sm6990988pfg.35.2017.05.12.04.44.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 12 May 2017 04:44:20 -0700 (PDT)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+To:     ramsay@ramsayjones.plus.com
+Cc:     git@vger.kernel.org, pc44800@gmail.com, sbeller@google.com
+Subject: [GSoC][RFC/PATCH v3 1/2] t7407: test "submodule foreach --recursive" from subdirectory added
+Date:   Fri, 12 May 2017 17:14:03 +0530
+Message-Id: <20170512114404.10008-1-pc44800@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <c3b724d8-bb9b-b63b-0105-8c1e22b120be@ramsayjones.plus.com>
+References: <c3b724d8-bb9b-b63b-0105-8c1e22b120be@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 12, 2017 at 7:35 PM, Brandon Williams <bmwill@google.com> wrote=
-:
-> On 05/11, =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason wrote:
->> Change the pattern compilation logic under threading so that grep
->> doesn't compile a pattern it never ends up using on the non-threaded
->> code path, only to compile it again N times for N threads which will
->> each use their own copy, ignoring the initially compiled pattern.
->
-> Is there a reason each thread needs to compile the patterns as opposed
-> to them being compiled a single time and being copies N time for N
-> threads?
+Additional test cases added to the submodule-foreach test suite
+to check the submodule foreach --recursive behavior from a
+subdirectory as this was missing from the test suite.
 
-Not really, just simplicity.
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+---
+ t/t7407-submodule-foreach.sh | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-I'll amend the commit message to mention that I did this not as an
-optimization, but just so the code is easier to reason about and
-debug, when debugging this I found that there were two different
-stacktraces to get to where I was compiling the pattern, and e.g.
-"give each compilation/execution an id" for ad-hoc debugging would
-always end up with one unused pattern, confusingly.
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 6ba5daf42..58a890e31 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -79,7 +79,6 @@ test_expect_success 'test basic "submodule foreach" usage' '
+ 	) &&
+ 	test_i18ncmp expect actual
+ '
+-
+ cat >expect <<EOF
+ Entering '../sub1'
+ $pwd/clone-foo1-../sub1-$sub1sha1
+@@ -197,6 +196,40 @@ test_expect_success 'test messages from "foreach --recursive" from subdirectory'
+ 	test_i18ncmp expect actual
+ '
+ 
++sub1sha1=$(cd clone2/sub1 && git rev-parse HEAD)
++sub2sha1=$(cd clone2/sub2 && git rev-parse HEAD)
++sub3sha1=$(cd clone2/sub3 && git rev-parse HEAD)
++nested1sha1=$(cd clone2/nested1 && git rev-parse HEAD)
++nested2sha1=$(cd clone2/nested1/nested2 && git rev-parse HEAD)
++nested3sha1=$(cd clone2/nested1/nested2/nested3 && git rev-parse HEAD)
++submodulesha1=$(cd clone2/nested1/nested2/nested3/submodule && git rev-parse HEAD)
++
++cat >expect <<EOF
++Entering '../nested1'
++$pwd/clone2-nested1-../nested1-$nested1sha1
++Entering '../nested1/nested2'
++$pwd/clone2/nested1-nested2-../nested2-$nested2sha1
++Entering '../nested1/nested2/nested3'
++$pwd/clone2/nested1/nested2-nested3-../nested3-$nested3sha1
++Entering '../nested1/nested2/nested3/submodule'
++$pwd/clone2/nested1/nested2/nested3-submodule-../submodule-$submodulesha1
++Entering '../sub1'
++$pwd/clone2-foo1-../sub1-$sub1sha1
++Entering '../sub2'
++$pwd/clone2-foo2-../sub2-$sub2sha1
++Entering '../sub3'
++$pwd/clone2-foo3-../sub3-$sub3sha1
++EOF
++
++test_expect_success 'test "submodule foreach --recursive" from subdirectory' '
++	(
++		cd clone2 &&
++		cd untracked &&
++		git submodule foreach --recursive "echo \$toplevel-\$name-\$sm_path-\$sha1" >../../actual
++	) &&
++	test_i18ncmp expect actual
++'
++
+ cat > expect <<EOF
+ nested1-nested1
+ nested2-nested2
+-- 
+2.11.0
 
-The reason it's like this is because it's a side-effect of duplicating
-the whole grep_opt structure, which is not thread safe, writable, and
-munged during execution, that's where the pattern is stored.
-
-We could re-use the compiled regexp itself for POSIX, for PCRE you can
-pre-JIT, post-JIT you can only partially do it, i.e. the pattern is
-const, thread safe and can be shared, but you need to also marshal
-around mutable per-thread for the JIT stack etc.
-
-I looked into e.g. splitting the API into some "do & alloc threadsafe
-stuff", "spawn thread", "do and alloc non-threadsafe stuff", but the
-execution time of grep_opt_dup() & pattern compilation is trivial
-compared to actually executing the grep, so there was no point. Even
-with the more expensive JIT some of the most expensive PCRE patterns
-take something like 0.0X milliseconds to compile at most[1].
-
-1. http://sljit.sourceforge.net/pcre.html
