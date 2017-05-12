@@ -2,87 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE6A920188
-	for <e@80x24.org>; Fri, 12 May 2017 10:19:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48EF2201A7
+	for <e@80x24.org>; Fri, 12 May 2017 18:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755021AbdELKTB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 06:19:01 -0400
-Received: from mout.gmx.net ([212.227.17.21]:58592 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751266AbdELKS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 06:18:59 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIuft-1dB2XG29nN-002TzJ; Fri, 12
- May 2017 12:18:47 +0200
-Date:   Fri, 12 May 2017 12:18:46 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 00/11] Start retiring .git/remotes/ and .git/branches/
- for good
-In-Reply-To: <xmqqk25m98rd.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1705121216290.146734@virtualbox>
-References: <cover.1494509599.git.johannes.schindelin@gmx.de> <xmqqk25m98rd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1757145AbdELSAl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 14:00:41 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:36958 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756500AbdELSAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 14:00:39 -0400
+Received: by mail-wm0-f54.google.com with SMTP id d127so22028548wmf.0
+        for <git@vger.kernel.org>; Fri, 12 May 2017 11:00:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=3bmtMxiYE48rs5uRMf3uAalnDlQ28k80uyRFdlFq49E=;
+        b=NGrVfpt0KuUShjnF8EmijeQnpoliInKo22VsqwRRDsllgu7PT1pqsV+vDetsz9sseb
+         2begZTi1CbdYchmZNlDwB56yRxgqpa6wbRzyDTZFktyWjAvXCcKtH9uAoM4f+dVoupOA
+         J2H9ojcP4aNlu9ffMnLZMjZ7oiKOufRi63grxeVI0euW52TBz69popHLOIuhlooz+Fv9
+         6qX9YypvzjzR1w7pRr9Jgpv60K2gXbUdYLnv5GzFSvQWHuRK47GoWfSHxORMlzAbd+r3
+         Q6wCeIJVHg9jGE5hO/+OUoTETJFmp+UpYN9pb+n49QJiyLdPs2WEbrjuQinY2u+9MaRK
+         SYTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=3bmtMxiYE48rs5uRMf3uAalnDlQ28k80uyRFdlFq49E=;
+        b=mG1PO7ltjjHnumJL0dNhBHiUGPy38b+y5aesqhzjyMCJhdCV9CFb+jSUfg+DvbCBZ3
+         WjcBJcRzTo5s56tC7njNPswWyNAyCuXuTmxPtdzZNmirIgNEe2/ql+6mMcW6zYL9YrPK
+         RHKMqsypdDahyNTyWzkL9F0vsuP+TX4nT9u3SMsQ0Q92QK3dj2ChiTB7fGmeZIhU2d2O
+         mc4X/EJz0rO/QS3IVZ39Pwu7HuJkfXeL7np4jP4fl98ziBW5UbJdxyaHuI0EQuivUYgU
+         sJHWHIHH5c+gz1pBFIeKnkQDnH1lKw3v2n65R7RkAd64CEFZXiJdGPnfKUgxjx+nTbEj
+         rsWw==
+X-Gm-Message-State: AODbwcCU09cpA3Z+vsx9bvFMkQENLOiz7Ub5R8CcNJjzvanFbGhVUc2e
+        6uZVL3yX7X6BXQpdVEwP8U2TIJpNbL/a
+X-Received: by 10.28.141.140 with SMTP id p134mr3218352wmd.54.1494612037881;
+ Fri, 12 May 2017 11:00:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:EcllxRTXznHjKDVO7tEw7ZsMjBNUmoUB46/jF1eZPDL7GGDNkkn
- LENGjGuTKwMA6Zv8uXtXYC05ssoDBjyp1rbuk/q/xv/XBUuj5ZCiDTV9kbxGMv/Xbh0z0wy
- f06IP0XPRfQWXzV1fhIF9DfVRS5UyRErpwwSUUd1Fqw7SukB4Hl2XnPKApi1TwhlpP1VUy3
- 9nTBEoXzARvGw8eeLBfXA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:q0Kvc8dCxJc=:ZRiQg+4DlhRv1j6kiMcoAS
- CqlY/IwKqKySblkVNheDSEEayxyZzVKH7guzt8rCTZUt26v5wC4/LHGXWqMfL+BoKyH6ImqdX
- ABZYi+s1WJqH4k6Uvaquri3vk0zcUA28vc+/PvNfNBeilE9ibesIqsdCLiCoPKiEKRvQPlOxV
- UplvKUzMk5bWOnaN9kK8J9nlD5ANT5LNYknKI4ILiAWTvo1N7CIX5c/9bxTtMPwntgzpNyO+5
- b4Admf9LJUG/D5fbOT/FOd8+eWr17svUo7ebN/oXSdySlNYPJqo6T47LXKoaF+lZ3OLXf/gyK
- xeicwsg8bJ2hO6xpABVoAtt6Tz5JguZcmZvdwWdbIRXEfxT2CrWDc/JWYA7LjCRmJFQbKWXDD
- bgW3lsFhZU1zShsjnhbvY8/j2uVH+/pmRNEpcGDIdwSODUHv9QkR9qKwmnWc7TBas3t3xIjH8
- GTTdTd+/53y5IjhNPmtsReAsPIJ1Q+SATC6Pr4/fc3vGqkK/PA/XOSM8I/bgT8uri7aP9/zB0
- rhxoaGf64HiP+kDOcaT3XUBzc6y7BkWd8BWE62O6vG+RaWcrxO0dYydpYyi0nrTn4jt+0DOhL
- blMZzQQbSyWuBKv8ZFJwvju83xwe1FucKHQEuH8L9i7JGNdaQwETxd/zoKp56jZQzsv2MKIPB
- Xpn12fQfMWylVnsrbfTZQY/Nk+tXebz8mPqGQ1g24JPLhFzZBVOUJxF/mss50qrtL2nBOdMaj
- 33Z5K+g7mP/gtqtv75tSvwHD/2NwEsnUuvPefD3lXPjziPuCqeqOvumO5BYAfI5jGQghdlTqV
- fg5/gE5
+Received: by 10.28.48.66 with HTTP; Fri, 12 May 2017 11:00:36 -0700 (PDT)
+In-Reply-To: <20170512081417.w537fmd4o5rl4kja@sigill.intra.peff.net>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
+ <20170511223054.25239-1-jonathantanmy@google.com> <20170511224639.GC21723@aiede.svl.corp.google.com>
+ <xmqq37ca7gw0.fsf@gitster.mtv.corp.google.com> <20170512075931.umunxd72nj53snds@sigill.intra.peff.net>
+ <20170512081417.w537fmd4o5rl4kja@sigill.intra.peff.net>
+From:   Jonathan Tan <jonathantanmy@google.com>
+Date:   Fri, 12 May 2017 11:00:36 -0700
+Message-ID: <CAGf8dgLcCeMYGPF1PSPy5M5zLvj2hb_EfpDBPbcNe+96c9YpRA@mail.gmail.com>
+Subject: Re: [PATCH v5] fetch-pack: always allow fetching of literal SHA1s
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, May 12, 2017 at 1:14 AM, Jeff King <peff@peff.net> wrote:
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index afb8b0502..e167213c0 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -15,6 +15,7 @@
+>  #include "version.h"
+>  #include "prio-queue.h"
+>  #include "sha1-array.h"
+> +#include "oidset.h"
+>
+>  static int transfer_unpack_limit = -1;
+>  static int fetch_unpack_limit = -1;
+> @@ -592,13 +593,27 @@ static void mark_recent_complete_commits(struct fetch_pack_args *args,
+>         }
+>  }
+>
+> +static int is_literal_sha1(const struct ref *ref)
+> +{
+> +       struct object_id oid;
+> +       const char *end;
+> +       return !parse_oid_hex(ref->name, &oid, &end) &&
+> +              !*end &&
+> +              !oidcmp(&oid, &ref->old_oid);
+> +}
+> +
+>  static void filter_refs(struct fetch_pack_args *args,
+>                         struct ref **refs,
+>                         struct ref **sought, int nr_sought)
+>  {
+>         struct ref *newlist = NULL;
+>         struct ref **newtail = &newlist;
+> +       struct ref *unmatched = NULL;
+>         struct ref *ref, *next;
+> +       struct oidset tip_oids = OIDSET_INIT;
+> +       int send_raw_oids = (allow_unadvertised_object_request &
+> +                            (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
+> +       int seeking_raw_oid = 0;
+>         int i;
+>
+>         i = 0;
+> @@ -617,7 +632,8 @@ static void filter_refs(struct fetch_pack_args *args,
+>                                 else if (cmp == 0) {
+>                                         keep = 1; /* definitely have it */
+>                                         sought[i]->match_status = REF_MATCHED;
+> -                               }
+> +                               } else if (is_literal_sha1(sought[i]))
+> +                                       seeking_raw_oid = 1;
 
-On Fri, 12 May 2017, Junio C Hamano wrote:
+As far as I can tell, this seems to coincidentally work because SHA-1s
+as strings compare less than any ref name (HEAD or refs/...) - if this
+weren't the case, the "break" statement above might cause this line to
+never be executed. I'm not sure if we want to rely on that.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > Git uses the config for remote/upstream information in favor of the
-> > previously-used .git/remotes/ and .git/branches/ for a decade now.
-> 
-> The last time I thought about trying this several years ago, I found
-> that people who need to grab things from many places still do use
-> .git/branches/ and their use case is hard to migrate to .git/config,
-> primarily because the former is "one per file" and it is easy to
-> add/remove/tweak without affecting others.  Ask akpm@ if he still
-> prefers to use .git/branches/ for example.
-> 
-> Is it really hurting us having to support these old information
-> sources we treat as read-only?
-
-Well, you frequently complain about my patches, claiming that they place
-unnecessary maintenance burden on you.
-
-I would say that the .git/remotes/ and .git/branches/ code is a lot more
-maintenance burden than most of my patches.
-
-Also: I do not buy that it is hard to migrate from .git/branches/ to
-.git/config. All you have to is to call git-config (maybe twice) instead
-of pasting a oneliner into a file. I do not have akpm@'s email address
-handy, BTW.
-
-Ciao,
-Dscho
+>                                 i++;
+>                         }
+>                 }
+> @@ -631,24 +647,27 @@ static void filter_refs(struct fetch_pack_args *args,
+>                         ref->next = NULL;
+>                         newtail = &ref->next;
+>                 } else {
+> -                       free(ref);
+> +                       ref->next = unmatched;
+> +                       unmatched = ref;
+>                 }
+>         }
+>
+> +       if (seeking_raw_oid && !send_raw_oids) {
+> +               for (ref = newlist; ref; ref = ref->next)
+> +                       oidset_insert(&tip_oids, &ref->old_oid);
+> +               for (ref = unmatched; ref; ref = ref->next)
+> +                       oidset_insert(&tip_oids, &ref->old_oid);
+> +       }
+> +
+>         /* Append unmatched requests to the list */
+>         for (i = 0; i < nr_sought; i++) {
+> -               unsigned char sha1[20];
+> -
+>                 ref = sought[i];
+>                 if (ref->match_status != REF_NOT_MATCHED)
+>                         continue;
+> -               if (get_sha1_hex(ref->name, sha1) ||
+> -                   ref->name[40] != '\0' ||
+> -                   hashcmp(sha1, ref->old_oid.hash))
+> +               if (!is_literal_sha1(ref))
+>                         continue;
+>
+> -               if ((allow_unadvertised_object_request &
+> -                   (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1))) {
+> +               if (send_raw_oids || oidset_contains(&tip_oids, &ref->old_oid)) {
+>                         ref->match_status = REF_MATCHED;
+>                         *newtail = copy_ref(ref);
+>                         newtail = &(*newtail)->next;
+> @@ -656,6 +675,13 @@ static void filter_refs(struct fetch_pack_args *args,
+>                         ref->match_status = REF_UNADVERTISED_NOT_ALLOWED;
+>                 }
+>         }
+> +
+> +       oidset_clear(&tip_oids);
+> +       for (ref = unmatched; ref; ref = next) {
+> +               next = ref->next;
+> +               free(ref);
+> +       }
+> +
+>         *refs = newlist;
+>  }
+>
