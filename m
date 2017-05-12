@@ -2,79 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B5C120188
-	for <e@80x24.org>; Fri, 12 May 2017 08:21:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24A88201A7
+	for <e@80x24.org>; Fri, 12 May 2017 13:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757481AbdELIVE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 04:21:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50179 "EHLO cloud.peff.net"
+        id S932304AbdELND3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 09:03:29 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:63378 "EHLO smtp2-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755606AbdELIVB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 04:21:01 -0400
-Received: (qmail 607 invoked by uid 109); 12 May 2017 08:21:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 May 2017 08:21:00 +0000
-Received: (qmail 22111 invoked by uid 111); 12 May 2017 08:21:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 May 2017 04:21:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 May 2017 04:20:58 -0400
-Date:   Fri, 12 May 2017 04:20:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?0KDQsNC50YbQuNC9INCQ0L3RgtC+0L0=?= <anton@smarthead.ru>
-Cc:     git@vger.kernel.org
-Subject: Re: Git credential helper store flushes randomly
-Message-ID: <20170512082058.ivvsmzc44cildp7l@sigill.intra.peff.net>
-References: <cdedf063-5f53-04c9-5ac0-2acf7e26696e@smarthead.ru>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cdedf063-5f53-04c9-5ac0-2acf7e26696e@smarthead.ru>
+        id S932207AbdELND0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 09:03:26 -0400
+Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id 8E17E2003FA;
+        Fri, 12 May 2017 15:03:23 +0200 (CEST)
+From:   Jean-Noel Avila <jn.avila@free.fr>
+To:     git@vger.kernel.org
+Cc:     Jean-Noel Avila <jn.avila@free.fr>
+Subject: [PATCH v4 3/3] git-filter-branch: be more direct in an error message
+Date:   Fri, 12 May 2017 15:03:17 +0200
+Message-Id: <20170512130317.25832-3-jn.avila@free.fr>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170512130317.25832-1-jn.avila@free.fr>
+References: <20170503162931.30721-1-jn.avila@free.fr>
+ <20170512130317.25832-1-jn.avila@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 12, 2017 at 11:05:19AM +0300, Райцин Антон wrote:
+git-filter-branch requires the specification of a branch by one way or
+another. If no branch appears to have been specified, we know the user
+got the usage wrong but we don't know what they were trying to do ---
+e.g. maybe they specified the ref to rewrite but in the wrong place.
 
-> I have very strange git credentials store behavior on one of my servers.
-> I Use Ubuntu 14.04 LTS and git  2.10.2. The server have multiple users with
-> multiple projects, so they have got many different git credentials to
-> different repositories.
-> I set git config --global credential.helper store, but the credential record
-> strings from file ~/.git-credentials for one specific user disappears
-> randomly. Especially for one specific repository.
-> 
-> I do not see any TTL for git credentials in credential.helper store on git
-> documentation, so I can't even imagine, what could cause such strange
-> behavior.
-> 
-> Is this a known problem and is there any solution to fix this problem?
+In this case, just state that the branch specification is missing.
 
-I've never heard of a bug like this, and the credential-store code
-hasn't really changed in the 5+ years since it was introduced.
+Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+---
+ git-filter-branch.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The only time it should remove an entry is when Git asks it to. And the
-only time that happens is when Git sees the credential rejected by the
-server (e.g., an HTTP 401 even after we fed the stored credential). I
-don't know why that would happen unless there's some non-determinism on
-the server.
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 2b8cdba15..aafaf708d 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -239,7 +239,7 @@ git rev-parse --no-flags --revs-only --symbolic-full-name \
+ sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
+ 
+ test -s "$tempdir"/heads ||
+-	die "Which ref do you want to rewrite?"
++	die "You must specify a ref to rewrite."
+ 
+ GIT_INDEX_FILE="$(pwd)/../index"
+ export GIT_INDEX_FILE
+-- 
+2.13.0
 
-Running with GIT_TRACE=/path/to/logfile in the environment would let you
-know when Git invokes the helper with the "erase" argument. But the
-credential data itself is sent over stdin, so it won't be logged. And if
-this is something that happens occasionally and randomly, you might have
-to log for quite a while.
-
-Likewise, running with GIT_CURL_VERBOSE=1 might show what's going on,
-but you'd have to actually catch the offending git command (in more
-recent versions of curl there is GIT_TRACE_CURL, which you can point at
-a specific logfile rather than just stderr). Do note if you try logging
-with GIT_CURL_VERBOSE that it includes your password in the output, so
-treat it appropriately.
-
--Peff
