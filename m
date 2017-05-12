@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 505D1201A7
-	for <e@80x24.org>; Fri, 12 May 2017 20:45:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC10C201A7
+	for <e@80x24.org>; Fri, 12 May 2017 20:46:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758084AbdELUp5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 16:45:57 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:34903 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756671AbdELUp4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 16:45:56 -0400
-Received: by mail-pg0-f43.google.com with SMTP id q125so15766905pgq.2
-        for <git@vger.kernel.org>; Fri, 12 May 2017 13:45:56 -0700 (PDT)
+        id S1758362AbdELUqx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 16:46:53 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:34691 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755994AbdELUqw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 16:46:52 -0400
+Received: by mail-pg0-f52.google.com with SMTP id u28so35194650pgn.1
+        for <git@vger.kernel.org>; Fri, 12 May 2017 13:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
         bh=3hIHyGCLJCUKVO1YDvo1a/wVHd8GC1OJxj7cvNbpt7g=;
-        b=jnqHI9Z1AGUVCgx0KXIqKLOJqm1Ss3JCWdn9loBZbIoqE0AWUILZ5tktVHpDwDU0JK
-         /BG5CszoxvKTF3sw9MNOwhpRY2Xo50PykPDpBjXnzFUGS0I3ZiBzvqobs2kjgcXsyn6N
-         lx6hg2Wqe+bVcrsxDWEA/vAcCLYqKbweT5k1q/8AN/QIFtIxl0rSNe/QCHrMUXzeRjwg
-         9t/uth/ZaA3joZkbiJK5WQ4slTjQIn4iKLdu6ZHXPp09rhH0FYdhUT64FPnIiK0xHIPy
-         fkdXTeexyEDeewp3+ysWvvaLvKOmSAL5nRi5gqT0wzt99OhH+H6KIIFb4k9YAyU5efxj
-         cGTQ==
+        b=Ch6JTNj1VOS+XL7GJ1vpg/+IgIlhlJLB5i7S8du0u/UbdD0LTh4OmPRusUJ5Ct5z0v
+         /Svu172GnI5y3L4ftvJq7EEdMOpSZVbE4R2dUbtTOH69UNI0GCl3LrdHOWi23Q2iO3Tj
+         0o6kgqmncv2uDRZw8RSouyu0vzsAy/r4V31fa4/T0BLNU6m8RPqk+RUlFVaggSQBn6tm
+         soMO4wYyyGciK9WL7s7+GyiYbGsBl1wauBw24n3Q9Cxq5r7H2EQ2VbvtakCsqfhSxfgW
+         /ctfO8O/ZYBbYxO3+yhiAWgVZVO54wyrXAij8bJDSKoJstD0FW91sh1TvJhlAWRS3KUT
+         fyLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
         bh=3hIHyGCLJCUKVO1YDvo1a/wVHd8GC1OJxj7cvNbpt7g=;
-        b=UFrXXC8+6Qv69ANRwa2Q3OgKDHx63yFgGwh4CSzN7g38kX534gg2nuwTRL5AC0rvZM
-         /xev9bYKQVIJXVQdHU/WMfRXCoYIRosYzAkUCmLFWAVPyygHsWbvAVQ75GaM9Aijzmbb
-         60Z1k/qjhfuHWuIRBEV5RBCAOQlKu9eegeSccFer5zmYbd2cRxHOXMFV8LzUTRaPh/DH
-         u+ILA6PE6iBg4o3oxMOBVq5s052QLbQRzZNsz8a5vqdMhdIwRTbhLNNfagIxvSDN32Qm
-         kdWU2hR5xrww/abuL56G+4QDxLnuwV30p/BcOx5mjtV5PLcYtzPBKOw5cgYg/M31VclU
-         iCdg==
-X-Gm-Message-State: AODbwcB+r3sMDUxYcGCm4l0+DuZVpNZi4bsdkpFUJpkyp35p+62x8BlM
-        tYQufmBPoD4fwucb
-X-Received: by 10.99.55.65 with SMTP id g1mr6425238pgn.208.1494621955547;
-        Fri, 12 May 2017 13:45:55 -0700 (PDT)
+        b=gMBGT75oCKbaZh5FZD51Yp0XnnPasNqigyJOB3twOZSr8+S2Jl3/Z3z4OwQVsX22Hh
+         xcEIbhfYttEpdthCFt5/3VIyXJysUD52YrW4p6lcRPuJY5BrTMhVB30Ysv9fbHDHIz9J
+         Gz5LDSRoO5047BMvQVYqJ7cKD3UX14uWK0zMkZe4LOg0vMshNcFfWJlEfTjwVj5fkICl
+         Le15tEHNFPXabUKici9CX+LE0KobIjmzjC/oontGaWOhuIHzZDkClgMG4x4M22erA6+L
+         Oh57+V74ShdI62pgNIELLpKjaNtcx4Unwik5H10nEeDl1UY+J/VBMCjydmKCK/rk0J7h
+         XFWg==
+X-Gm-Message-State: AODbwcAzfPJ52HTN0DJJvMttz8pH99l6xgnQ89G9UCKmr/s4AsPVix/Q
+        4JYjPpAhczOpeQHK
+X-Received: by 10.84.137.3 with SMTP id 3mr8263487plm.68.1494622011961;
+        Fri, 12 May 2017 13:46:51 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id l85sm7038084pfg.123.2017.05.12.13.45.53
+        by smtp.gmail.com with ESMTPSA id b77sm7782669pfe.39.2017.05.12.13.46.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 12 May 2017 13:45:54 -0700 (PDT)
+        Fri, 12 May 2017 13:46:50 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
         peff@peff.net, gitster@pobox.com
-Subject: [PATCH v5] fetch-pack: always allow fetching of literal SHA1s
-Date:   Fri, 12 May 2017 13:45:50 -0700
-Message-Id: <20170512204550.10373-1-jonathantanmy@google.com>
+Subject: [PATCH v6] fetch-pack: always allow fetching of literal SHA1s
+Date:   Fri, 12 May 2017 13:46:48 -0700
+Message-Id: <20170512204648.10611-1-jonathantanmy@google.com>
 X-Mailer: git-send-email 2.13.0.rc2.291.g57267f2277-goog
 In-Reply-To: <20170509182042.28389-1-jonathantanmy@google.com>
 References: <20170509182042.28389-1-jonathantanmy@google.com>
