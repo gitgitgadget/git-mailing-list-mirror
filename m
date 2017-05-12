@@ -2,83 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCBD4201A7
-	for <e@80x24.org>; Fri, 12 May 2017 18:12:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E86C20188
+	for <e@80x24.org>; Fri, 12 May 2017 08:05:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756524AbdELSMi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 14:12:38 -0400
-Received: from mail-ua0-f176.google.com ([209.85.217.176]:35899 "EHLO
-        mail-ua0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755818AbdELSMh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 14:12:37 -0400
-Received: by mail-ua0-f176.google.com with SMTP id j17so51216976uag.3
-        for <git@vger.kernel.org>; Fri, 12 May 2017 11:12:37 -0700 (PDT)
+        id S1756145AbdELIF1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 04:05:27 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:37684 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755747AbdELIFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 04:05:22 -0400
+Received: by mail-wm0-f46.google.com with SMTP id d127so5787017wmf.0
+        for <git@vger.kernel.org>; Fri, 12 May 2017 01:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=myitcv.io; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=QvFrTMQbTntY5uw+qCegCt8VTI67FLRbL+pNA1PXwnQ=;
-        b=NnKZ5h1YqGyJxDzDsBZ76zB8Kuzc+e2NG6Ggeo2cu+MtLw+GeePU5g1AnC5LC/f8WP
-         GoD+fUy97ueKQM9ZGMb01PLOq+bfhRPcnwY5GKw7OVkt2orpkyAE7QTgvjO7PxkKL3D0
-         fZUyuw5KQxpRgbCpDBTI/SdSiunQ70dXlw2Sr4FZ0p4uYucpXW91ccfsNq9YoA53xuSx
-         hnHCewXg/dCPwD85tDRHZZk1WIBg3pqH/H4Bxc/AXK4n9By42IgVN3IegR67LHifuww2
-         0GPy468YOZQWqGKn60uFjgrqmqRjwVWjWT/JbTUtSXXqGp9ozPaQV4xK73Due49sC3YL
-         M75w==
+        d=smarthead.ru; s=smarthead;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=BWKf3UcKFqUZEUUFwBYMWkhy4/3VOLiAKt0t3NwLrIo=;
+        b=ndRLIWD9XNuxj2AcqEFmQZ+ONNaSIr8NcP9VhXR5Ouy2yto1c+zc6tpK+yeZo8KGWi
+         W4RdwLrS7ICwPwPCZTbcw7+Bo2nPvrNzVD8EO6LdpELFEoDxjFD6nQ57Rmtvd7BODF/w
+         FLpJRuNpHevYK8oqSIKUYwpjWggL+nlsAKuHo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=QvFrTMQbTntY5uw+qCegCt8VTI67FLRbL+pNA1PXwnQ=;
-        b=BLk8AbiE9qqG3QspC3eLcCKJtW2QwCc9zO2j3ald4MlicjvPJ42njK120QaOBoCa5L
-         AOeMds5MVH5VeXctIm2N+GWDgmvmTtFwtvUGCMp6p7ekBEKlxUVhjggHo2WGmDkrYO4s
-         9fiGN+3FlZOPchqSGBsl9X81KhEr0CRqq8powMh+5kWJOCQkWwHp5+LDgGB62St+kVI/
-         XWmhFK7GSdc2hHoKVg39x79geFqsuwNjhplGfClWUw3Toqzf2YO2IAX7z+7kVD6IaSSn
-         6wOrXokO4TGPrA8+TiRJjWTxMOrv1GejvH/1SinCMFHzgUo3wl0Cpziavbus0onyXstT
-         Ej5w==
-X-Gm-Message-State: AODbwcBWRMprbnP/6OAo2wPY7CbnF0X5DDG+LFdEuwP4ervzTCAW5Qhj
-        pXVH9uh6xrqVmoWP5Qajw8bQK0uiuhKC
-X-Received: by 10.159.57.93 with SMTP id i29mr2838536uag.102.1494612756547;
- Fri, 12 May 2017 11:12:36 -0700 (PDT)
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=BWKf3UcKFqUZEUUFwBYMWkhy4/3VOLiAKt0t3NwLrIo=;
+        b=Kn4bOFgmON+lik8GsQ/MaL+j70J4TNp2UcI5EiQbap7+SI+iwYMZV35IOGXXoAJ1YC
+         KlhNKdCYWawDl5zfxpu/uKhquLPQ6hqwDnhjGN04PbklTtF/KP4a60dQ49xAHYfTugCN
+         u/TE+2MCl7xDMh0oxmMNIsy9Rrwu+mtddKQX63Jasu3YTo9AqqakRbpbFn5v/eFlGSFK
+         dvUc4Zd14fgNOSAz817WN8fC99QSYd9eA50JZpQOOgSyqwBvvLyZdY5a4hFkAMFG5n9x
+         Fm15RWrvb8erdYRlGgAEJXZzfwigTY1abga6HAJcA6fAF5HxaJyiAOYyPBkFXIIA9yZG
+         O2sQ==
+X-Gm-Message-State: AODbwcAw8w3DVFqndyafo0K52DZWNMHsMxEHtppKJHUNIxPGEMCe4Hex
+        uzqaSX4DAZdnq6tB
+X-Received: by 10.25.213.197 with SMTP id m188mr680549lfg.41.1494576320667;
+        Fri, 12 May 2017 01:05:20 -0700 (PDT)
+Received: from [192.168.155.40] ([77.72.250.174])
+        by smtp.googlemail.com with ESMTPSA id q184sm434718ljb.31.2017.05.12.01.05.19
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 12 May 2017 01:05:20 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   =?UTF-8?B?0KDQsNC50YbQuNC9INCQ0L3RgtC+0L0=?= <anton@smarthead.ru>
+Subject: Git credential helper store flushes randomly
+Message-ID: <cdedf063-5f53-04c9-5ac0-2acf7e26696e@smarthead.ru>
+Date:   Fri, 12 May 2017 11:05:19 +0300
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.31.69.87 with HTTP; Fri, 12 May 2017 11:12:35 -0700 (PDT)
-In-Reply-To: <20170512172657.GA98586@google.com>
-References: <xmqqefwpdx9x.fsf@gitster.mtv.corp.google.com> <20170512162109.49752-1-paul@myitcv.io>
- <20170512172657.GA98586@google.com>
-From:   Paul Jolly <paul@myitcv.io>
-Date:   Fri, 12 May 2017 19:12:35 +0100
-Message-ID: <CACoUkn5fyk054BJ5e+C8KynYMJg=EkMLOTiZya8KTNZh+=u5dQ@mail.gmail.com>
-Subject: Re: [PATCH 3/2] ls-files: only recurse on active submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, jacob.keller@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> How can I help diagnose what's going on here?
+Hello.
 
-<snip>
+I have very strange git credentials store behavior on one of my servers.
+I Use Ubuntu 14.04 LTS and git  2.10.2. The server have multiple users 
+with multiple projects, so they have got many different git credentials 
+to different repositories.
+I set git config --global credential.helper store, but the credential 
+record strings from file ~/.git-credentials for one specific user 
+disappears randomly. Especially for one specific repository.
 
-> Welp that's a pretty terrible bug which stems from
-> missing a check to see if a submodule is initialized, and not explicitly
-> setting GIT_DIR=.git (theres cases where we don't want this but turns
-> out we probably should do that here).  Let me know if this fixes the
-> problem:
+I do not see any TTL for git credentials in credential.helper store on 
+git documentation, so I can't even imagine, what could cause such 
+strange behavior.
 
-That's certainly fixed the fork explosion. Indeed seems to now work as
-expected from my perspective...
+Is this a known problem and is there any solution to fix this problem?
 
-And also answers the question that I was going to ask, namely whether
-git ls-files --recurse-submodules should work on repos that do not contain
-any submodules... to which I'd hoped the answer was "yes" (because as I
-said it was a fatal error in v2.11.x, despite there being some output). The
-behaviour I'm now seeing appears to affirm that, assuming it's as expected
-from your perspective!
 
-Thanks for the quick response.
+Best regards,
+Anton.
