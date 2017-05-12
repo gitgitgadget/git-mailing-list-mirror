@@ -7,152 +7,74 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F8DB201A7
-	for <e@80x24.org>; Fri, 12 May 2017 22:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12A75201A7
+	for <e@80x24.org>; Fri, 12 May 2017 22:28:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754940AbdELW2O (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 18:28:14 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:32941 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751975AbdELW2N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 18:28:13 -0400
-Received: by mail-it0-f67.google.com with SMTP id l145so6335403ita.0
-        for <git@vger.kernel.org>; Fri, 12 May 2017 15:28:12 -0700 (PDT)
+        id S1756965AbdELW2o (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 18:28:44 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33846 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756193AbdELW2n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 18:28:43 -0400
+Received: by mail-pg0-f65.google.com with SMTP id u187so9067204pgb.1
+        for <git@vger.kernel.org>; Fri, 12 May 2017 15:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zaqUvlbTTZq7uIokHyT6AAUVYtbCysgRjDeTq4V5z6U=;
-        b=ECVLdn0I0PQEA+t3DmQd5y8roHifAehJcYM+kPQ7FjuPagcC6ulvN3uWsmpjZ4E3tU
-         KTWZSIU/vBLoLX57JT83DodAz3srVfdutBxNRsgIXbVbqDnM0R1YDy+kHVXdSHqTZ6gw
-         +fQdbE+FOwO/tHi9iM6W5W8kFrAwrmNfE30RovgUPUCYjSdN7fqfn9X+PMa63A8lneSy
-         nlGBzGkhbGdN44Ll+MC3LyKhQDdb2AvmvtMKVZxD8SDnxgt7N728OWpEUjCZri2Se0Ms
-         6xar0fOYTDiGh0qIEdKlrmR3gCgGSd5KwKFb7kgJCZaNsG4Dl1JvuBkRB4/PMGe81GQ/
-         vJhQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yGF3tJGp2F5U4gvBk1UXpPeJlDFCMIqg3MRWcmOc9ek=;
+        b=cxJAyiUv6qhaoOdtKmfXGDfOvFsTl0Uk4mEhHSCG0hBvTH3fl5JePPniXz8FcNpSSp
+         DaPT0+Ir/rPXQJXZmjn+yJSZCviq8vBgw5pE3A/AhwxXLJqbZAmuPv09xcg5Ey8DRhFK
+         FRucJxIODz6MCyWBQUX7C+bPDoxC2Y6qgOGgwl7DoH//M6SBSKYCon+4CO5qm/RQb3GE
+         /9oBwQUp/ydoKktQ2aYwJu3B4F6lJKnx3ePLvR/l7RFOhP3Zr7PlUE8EqJ53+v2Q0LOl
+         MbxAckpYhLw46Z4egjPqans08kQtPDVF6oerM/X0D9jWXU6d1VoDWAmgU0VB4p+PA/Jg
+         JSFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zaqUvlbTTZq7uIokHyT6AAUVYtbCysgRjDeTq4V5z6U=;
-        b=gcgdt5ArIQ7WZtz6byWD1AiqptyUDQPIqVGAhMcQS22cVhxWI3SDsXAMUttDLYC1xK
-         JaPPT+wuvzjWI2ItmIp3PqCm11PBWmQKqetRHrCP/sFXkgC1sFb6NGe3fSEaIeaZibSD
-         ZlOTIPImrHjkaTtzc7+paD9y2kPcd5KOJxc3eO39UsLNb5n4eMoGnRy0KjHouuobZsco
-         1yypDInGcr2Ie8QF7ny+Xo92+tDGaJAk0y+JcwGRyrh1eWLgVzUjn9oopvQuPJzIOVXb
-         ry8/DfxiX0FZN4x172nS4GGrO338suqt1fMgzQsAVxnhpizOCtySe4SOPqkn7nBfnmUi
-         h2+A==
-X-Gm-Message-State: AODbwcCa7tnmqu5Tr9aDRu5q6ja82yuzVQDNyIm0pjibmHNYbitc9SsA
-        lQMJ34XUAD80QPl6C2YaKE97BAzDtg==
-X-Received: by 10.36.138.131 with SMTP id v125mr5925309itd.66.1494628092370;
- Fri, 12 May 2017 15:28:12 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yGF3tJGp2F5U4gvBk1UXpPeJlDFCMIqg3MRWcmOc9ek=;
+        b=OpfZMjHzt77EvXTQADXruSdB5DmAzaP0TkuSZxo0KrOwhuAYovUn79sqpi1mFWjSbv
+         oHA9HeocxKJExJ0Y0JVhgxHXLPq2f9pUAnwSLdVo7o9cT1naGBxzbMQXFZh21Nj45LRP
+         xsSzxIgOV6vQ6iNfVzgwwymriIc22G3JhpIEaMxm70RIHfYSY9LKQiJ9VtMCWQ0haEwP
+         leuT1vHJb+zA9bwI2cBFNvvxgMacjSCMxbfoUZevNmV7kar+XmRTSc+KR/6KzmRIv4kD
+         rrZhajVNTE0OJM4dxf7eH8tJiCRoPS7N88HPsEnSkrlFhMYYujDxXGLqpXfCeihdtpqm
+         pN7A==
+X-Gm-Message-State: AODbwcCwFhJvJvPp8zK/VdUobqWkZ5+bmZd5Q7D4bQ/fHPnh7OtJt6dz
+        CM2q4uJrT0Ej8g==
+X-Received: by 10.84.238.200 with SMTP id l8mr8554224pln.85.1494628122580;
+        Fri, 12 May 2017 15:28:42 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:fcb1:2bc1:55ad:11f1])
+        by smtp.gmail.com with ESMTPSA id m89sm6745520pfg.22.2017.05.12.15.28.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 12 May 2017 15:28:41 -0700 (PDT)
+Date:   Fri, 12 May 2017 15:28:39 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com
+Subject: Re: [PATCH v6] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170512222839.GD27400@aiede.svl.corp.google.com>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
+ <20170512204648.10611-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Fri, 12 May 2017 15:27:51 -0700 (PDT)
-In-Reply-To: <6a6782863a74432094a1d7fba7f2477991ef2d16.1494510612.git.johannes.schindelin@gmx.de>
-References: <6a6782863a74432094a1d7fba7f2477991ef2d16.1494510612.git.johannes.schindelin@gmx.de>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 13 May 2017 00:27:51 +0200
-Message-ID: <CACBZZX4UUwzRQmyH8joYaqHnuVTjVtGBHp+iZKcnAnwoM_ZJhg@mail.gmail.com>
-Subject: Re: [PATCH] compat/regex: fix compilation on Windows
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170512204648.10611-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 11, 2017 at 3:50 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> The real issue here is that GNU awk's regex implementation assumes a bit
-> too much about the relative sizes of pointers and long integers. What they
-> really want is to use intptr_t.
->
-> This patch recapitulates what 56a1a3ab449 (Silence GCC's "cast of pointer
-> to integer of a different size" warning, 2015-10-26) did to our previous
-> copy of GNU awk's regex engine.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Jonathan Tan wrote:
+
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 > ---
-> Published-As: https://github.com/dscho/git/releases/tag/compat-regex-fixes-v1
-> Fetch-It-Via: git fetch https://github.com/dscho/git compat-regex-fixes-v1
->
->  .../0003-Use-intptr_t-instead-of-long.patch        | 22 ++++++++++++++++++++++
->  compat/regex/regcomp.c                             |  4 ++--
->  2 files changed, 24 insertions(+), 2 deletions(-)
->  create mode 100644 compat/regex/patches/0003-Use-intptr_t-instead-of-long.patch
->
-> diff --git a/compat/regex/patches/0003-Use-intptr_t-instead-of-long.patch b/compat/regex/patches/0003-Use-intptr_t-instead-of-long.patch
-> new file mode 100644
-> index 00000000000..246ff256fb8
-> --- /dev/null
-> +++ b/compat/regex/patches/0003-Use-intptr_t-instead-of-long.patch
-> @@ -0,0 +1,22 @@
-> +diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
-> +index 5e9ea26cd46..e6469167a80 100644
-> +--- a/compat/regex/regcomp.c
-> ++++ b/compat/regex/regcomp.c
-> +@@ -2641,7 +2641,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
-> +     old_tree = NULL;
-> +
-> +   if (elem->token.type == SUBEXP)
-> +-    postorder (elem, mark_opt_subexp, (void *) (long) elem->token.opr.idx);
-> ++    postorder (elem, mark_opt_subexp, (void *) (intptr_t) elem->token.opr.idx);
-> +
-> +   tree = create_tree (dfa, elem, NULL, (end == -1 ? OP_DUP_ASTERISK : OP_ALT));
-> +   if (BE (tree == NULL, 0))
-> +@@ -3868,7 +3868,7 @@ create_token_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
-> + static reg_errcode_t
-> + mark_opt_subexp (void *extra, bin_tree_t *node)
-> + {
-> +-  int idx = (int) (long) extra;
-> ++  int idx = (int) (intptr_t) extra;
-> +   if (node->token.type == SUBEXP && node->token.opr.idx == idx)
-> +     node->token.opt_subexp = 1;
-> +
-> diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
-> index 5e9ea26cd46..e6469167a80 100644
-> --- a/compat/regex/regcomp.c
-> +++ b/compat/regex/regcomp.c
-> @@ -2641,7 +2641,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
->      old_tree = NULL;
->
->    if (elem->token.type == SUBEXP)
-> -    postorder (elem, mark_opt_subexp, (void *) (long) elem->token.opr.idx);
-> +    postorder (elem, mark_opt_subexp, (void *) (intptr_t) elem->token.opr.idx);
->
->    tree = create_tree (dfa, elem, NULL, (end == -1 ? OP_DUP_ASTERISK : OP_ALT));
->    if (BE (tree == NULL, 0))
-> @@ -3868,7 +3868,7 @@ create_token_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
->  static reg_errcode_t
->  mark_opt_subexp (void *extra, bin_tree_t *node)
->  {
-> -  int idx = (int) (long) extra;
-> +  int idx = (int) (intptr_t) extra;
->    if (node->token.type == SUBEXP && node->token.opr.idx == idx)
->      node->token.opt_subexp = 1;
->
->
-> base-commit: 4e23cefb4da69a2d884c2d5a303825f40008ca42
-> --
-> 2.12.2.windows.2.800.gede8f145e06
+>  fetch-pack.c          | 35 +++++++++++++++++++++++++++++++++--
+>  t/t5500-fetch-pack.sh | 35 +++++++++++++++++++++++++++++++++++
+>  2 files changed, 68 insertions(+), 2 deletions(-)
 
-Let's drop this current gawk import series.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-After talking to the gawk author it turns out it's better to use the
-version from gnulib, this includes the equivalent of your patch.
-
-The following one-liner works for me on linux to import that library,
-on the master branch:
-
-$ git reset --hard; rm compat/regex/*.[ch]; rm -rfv /tmp/git.rx; test
--e /tmp/git-gnulib || git clone
-https://git.savannah.gnu.org/git/gnulib.git /tmp/git-gnulib; mkdir
-/tmp/git.rx; touch /tmp/git.rx/configure.ac;
-/tmp/git-gnulib/gnulib-tool --lgpl --add-import --dir=/tmp/git.rx
-regex; cp /tmp/git.rx/lib/{intprops.h,reg*} compat/regex/; perl -0666
--pi.bak -e 's[compat/regex/regex.o: EXTRA_CPPFLAGS =
-\K[^\n]+\n[^\n]+][]s' Makefile; echo '#define _GNU_SOURCE'
->compat/regex/config.h
-
-I.e. remove the existing engine, import new one from gnulib, then wipe
-the extra -D flags that exist now, and define _GNU_SOURCE.
+Thanks for your patience.
