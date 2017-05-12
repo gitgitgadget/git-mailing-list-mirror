@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7829C201A4
-	for <e@80x24.org>; Fri, 12 May 2017 05:27:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A996020188
+	for <e@80x24.org>; Fri, 12 May 2017 12:00:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932207AbdELF1r (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 01:27:47 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36280 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750767AbdELF1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 01:27:47 -0400
-Received: by mail-pf0-f195.google.com with SMTP id n23so4637808pfb.3
-        for <git@vger.kernel.org>; Thu, 11 May 2017 22:27:46 -0700 (PDT)
+        id S1755468AbdELMAp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 08:00:45 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36239 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752439AbdELMAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 08:00:44 -0400
+Received: by mail-pf0-f193.google.com with SMTP id n23so5718929pfb.3
+        for <git@vger.kernel.org>; Fri, 12 May 2017 05:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=drTcpQixr323zMxMcMfQaNffKIjqDqYddC5cUbhqmvE=;
-        b=ncmdKEdq0Uo/98hslnLz1Obv1jXFXOx+yW/R3boXsPiHctGfAuBJchINNjwHYo+z0W
-         eSUKy3vvf8FDMDsB0zgUgDX/+fwD+gRyAFQHCrOxhv18g8njaVBtYNz0XPYl2G/DQH7W
-         h6ZC+6SgNqRaNfNOC8S8LXDUOv1/cEXseSXX32pDqzfufpfASkU2WN0QtUTggkThjqSM
-         c8IaJz2zSmlVle7PRUMcsBUSld/6IKPYgrIeqDsY9Yv0idGah5PfmBtAcKXRIdrrx0/4
-         hxSl+HPACbDCfvzFMF9BgJ9DNe+fe5hv8UV4hG50JUtLx6L3tu0j/1/jL4Q4GRKFKLho
-         J2Rw==
+        bh=Mc3x1kciOTQaXWOFJq1gjvGrrXvBpchGbbuTDuY34yY=;
+        b=dx9uf5jippnWBGVBhnkDMoQq6XP+7F4n0OungM5GrrZFsTu8CFdlmOuNMjDLw/hmJH
+         w3LVgtSOuN2GIwHpOnbqlyC7JbZdgto8LJDswNKwfwRsOnDkZ+ZQGMAJ5ycOHfNS0Txh
+         bJ5d32F6Nsj97SrdM4oHOepuhWKKdUq9SX50/YW81ikYWbffp8h60nuvHRuHTRwZclxj
+         KeeMew3cLD7librXo8NI6WRtWxOUB89HTGhAcV+4AXEgXHz/30UgTOjPsvRJvFG8BvuG
+         4bhrudcjuOcuYU0HeN2oqyLeBnjCVqUDDXzqDEaAprOGZWU4b0bRkKLdMspXNWD/7q6Y
+         cc8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=drTcpQixr323zMxMcMfQaNffKIjqDqYddC5cUbhqmvE=;
-        b=XPd9jOkRzx42nnSwZRO8rLr0JfgYqTVZNdodiufrn6SK9vHTRoAcUq9eqXLDuwfevd
-         lcBLk51pOI0YSq8M3O6VWgfKZnHoCnfUMoRwOMcqirCmfQmjInxFiV+QHFp6irlTOaRv
-         dbK8a6D+KpUQq4QquFzlsGGilaXz7elnsdXzAW/hFxSxAFQFtKAE2fW/EZrsDkxv9MaF
-         Rcj0qlR3fMeryghs7pDfkOeAX9f7XUZhzl483OAdwyk073tjDe6ftcrndxWda+/0Of8N
-         s2pmWS1K9WQxegJ2kGnFWRmB8i3gFiXoBsCgFrHe3JXwK774lkiyV9w3aJTk9uii7IZc
-         v4jQ==
-X-Gm-Message-State: AODbwcB8grkJFA5UrUKQ3xVORaU5dDRgKq2n1LGl+jeYMkuXATXiPvq+
-        oqGivIJd0mpJUg==
-X-Received: by 10.84.254.70 with SMTP id a6mr3089878pln.64.1494566866366;
-        Thu, 11 May 2017 22:27:46 -0700 (PDT)
+        bh=Mc3x1kciOTQaXWOFJq1gjvGrrXvBpchGbbuTDuY34yY=;
+        b=h+PAI8NFgAaKImYHiU/an967FxBz4MAQKZkt1AwxSk+fR67XyUNjMzocZ1ogK9tOnb
+         DD9Us5y5gx5s1svDDyE5E8/gNSgPVnh3JkS/LwXTZ4EphSR05GEBeZ2mK/iqa9GOX3IL
+         TLLBk531Bq9+rYegSx8RHgF9iVgcI75NjXf3SDvymPDhrpP+ul7/OumdLxiz06nHq+xe
+         0oT7F2fk2v+D2dDAeIvLY/upJm/Tloj5GtCmjIpJjXRmc6yoLix/dlXGqATkiVB7RpnX
+         b5uJM4cWmnuEbRqfD59pW0f4juPzLejdObyoaIuMr3Yq37gXBaaTItP3+2HuheJV+pG4
+         ajFg==
+X-Gm-Message-State: AODbwcBhYyCL24x9misdOeohl7sBdSgoEdhwkiqtukT80Q0vc62etKGj
+        rslbUer8HMhOIQ==
+X-Received: by 10.99.97.83 with SMTP id v80mr4180787pgb.94.1494590443526;
+        Fri, 12 May 2017 05:00:43 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:954c:c08b:c855:8b7f])
-        by smtp.gmail.com with ESMTPSA id b126sm3622880pga.3.2017.05.11.22.27.45
+        by smtp.gmail.com with ESMTPSA id u19sm5558621pfd.63.2017.05.12.05.00.42
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 22:27:45 -0700 (PDT)
+        Fri, 12 May 2017 05:00:42 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, j6t@kdbg.org
-Subject: Re: [PATCH v2 0/6] convert pathspec.c to take an index parameter
-References: <20170509191805.176266-1-bmwill@google.com>
-        <20170511220427.192627-1-bmwill@google.com>
-Date:   Fri, 12 May 2017 14:27:45 +0900
-In-Reply-To: <20170511220427.192627-1-bmwill@google.com> (Brandon Williams's
-        message of "Thu, 11 May 2017 15:04:21 -0700")
-Message-ID: <xmqqh90q7ige.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 00/11] Start retiring .git/remotes/ and .git/branches/ for good
+References: <cover.1494509599.git.johannes.schindelin@gmx.de>
+        <xmqqk25m98rd.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 12 May 2017 21:00:41 +0900
+In-Reply-To: <xmqqk25m98rd.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 12 May 2017 10:14:14 +0900")
+Message-ID: <xmqqfuga5lp2.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,23 +66,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> The main difference in v2 is that instead of piping through an index_state
-> struct into parse_pathspec, I ripped out the logic that needed to access the
-> index and either removed it completely if it wasn't needed anymore (stripping
-> submodule slash) or factored it out into its own function which can be called
-> after initializing a pathspec object (dying if a path descends into a
-> submodule).
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 >
-> Brandon Williams (6):
->   pathspec: provide a more descriptive die message
->   submodule: add die_in_unpopulated_submodule function
->   pathspec: remove PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE flag
->   ls-files: prevent prune_cache from overeagerly pruning submodules
->   pathspec: remove PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP
->   pathspec: convert find_pathspecs_matching_against_index to take an
->     index
+>> Git uses the config for remote/upstream information in favor of the
+>> previously-used .git/remotes/ and .git/branches/ for a decade now.
+>
+> The last time I thought about trying this several years ago, I found
+> that people who need to grab things from many places still do use
+> .git/branches/ and their use case is hard to migrate to .git/config,
+> primarily because the former is "one per file" and it is easy to
+> add/remove/tweak without affecting others.  Ask akpm@ if he still
+> prefers to use .git/branches/ for example.
 
-This was (perhaps surprisingly) quite a pleasant read, even compared
-to the other approach ;-).
+FWIW, I do not think there is any reason for people to be using
+.git/remotes/, but for .git/branches/, I do not think I can offer a
+more efficient and easier to use alternative based on .git/config to
+do these things:
+
+ $ grep <substring> .git/branches/* ;# what did I call that remote?
+ $ cat .git/branches/$name ;# where do I get that from?
+ $ echo "$URL#$branch" >.git/branches/$name ;# I just learned a new src
+ $ rm .git/branch/$name ;# I no longer need it
+
+without having to learn things experienced CLI/UNIX person already
+knows.  We simply cannot beat the above with anything like 
+
+    $ git config remote.$name.fetch refs/heads/$branch
+
+even though the config based remote definition may be infinitely
+more powerful.
+
+> Is it really hurting us having to support these old information
+> sources we treat as read-only?
+
+And this one is also important.  I do not think we had to touch any
+code that handles .git/remotes/ or .git/branches when we extended
+the .git/config based configuration for remotes, simply because the
+old data source are pretty much frozen read-only places these days.
+
