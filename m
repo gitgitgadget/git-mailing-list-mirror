@@ -2,75 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7660220188
-	for <e@80x24.org>; Fri, 12 May 2017 08:40:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDF37201A7
+	for <e@80x24.org>; Fri, 12 May 2017 19:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756470AbdELIkc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 04:40:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50192 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755605AbdELIkb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 04:40:31 -0400
-Received: (qmail 1664 invoked by uid 109); 12 May 2017 08:40:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 May 2017 08:40:30 +0000
-Received: (qmail 22223 invoked by uid 111); 12 May 2017 08:41:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 May 2017 04:41:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 May 2017 04:40:28 -0400
-Date:   Fri, 12 May 2017 04:40:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     Brian Malehorn <bmalehorn@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] commit.c: add is_scissors_line
-Message-ID: <20170512084028.f6vv4uz6of6ofadu@sigill.intra.peff.net>
-References: <20170512050347.30765-1-bmalehorn@gmail.com>
- <20170512050347.30765-3-bmalehorn@gmail.com>
+        id S1758951AbdELTGW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 15:06:22 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33622 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758792AbdELTGV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 15:06:21 -0400
+Received: by mail-pg0-f67.google.com with SMTP id s62so8665371pgc.0
+        for <git@vger.kernel.org>; Fri, 12 May 2017 12:06:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VEqrk3CtXR6KhI9akxVBndmKkCl3Pp/y8G/BO93NAVk=;
+        b=t6ReYfCtkwATm3HJfPjA2CF7Lf/GsDeQkRQfx6+JhrKErdH4czmodSWAQx7R1jEXPN
+         5V0iZlL0Jd8JZY9cThzaP3BTaMOGqJuNCtimknLGAq19beKqadsKgjs+f6uR4oKGdLUS
+         Jnkaaf60aQ8SLVpf/W0PmzN4EEofa63/xjRQspVefd0yz0+DDomSddBQ79div0+D0Whn
+         iW/36WGioj0rJ3X+M/lbI2Cb3LPfxC33S0+h1vFTM6JaYRqArgEwoKXeI9YLoyFQWUJo
+         ExxibHOl9klPrLbF5tAwEwY/XckjUOrWR7y5bITvLBXi8JiIywKndT43XnDSs66uxZpu
+         +IaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VEqrk3CtXR6KhI9akxVBndmKkCl3Pp/y8G/BO93NAVk=;
+        b=IvuJLV1CkcYnuBodixjIIrVGF1SEC9jWMYFP3s8fLKbRS3k1smYvlQ3tY35NIT13y4
+         WlvFpD+6VUpC6NrWQULPMKOAL0D9VWMzTgB7Akpc2UyDJ3tRgdUC1mxspI45vERQfDr7
+         peTlqxrOIj9SRrJfauCuiOkWkRF5JfsjJIMK6V3OmA43TpE6c2aqnnnyKQvReHNxqQEi
+         C98kDjiRxA8z+5F7xf4lcRt1/Ti5QxyfFaOG8O0t2mjMOIiEbhp6Ui9qgvVq12IDGiVS
+         ISNa77hQMVldRbGW3qAJevMT8BvPZQy2yFQfZw46jd7pFRFWaeyi7P05dVxIHSzG9s/3
+         h03A==
+X-Gm-Message-State: AODbwcAGpKECpKhE1hBhaAwEIuZ4LGzwo+wnV0MXI8kU/9YrC3DUWkoq
+        tZIqFujeHdyVlQ==
+X-Received: by 10.98.34.203 with SMTP id p72mr6251963pfj.118.1494615980715;
+        Fri, 12 May 2017 12:06:20 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:fcb1:2bc1:55ad:11f1])
+        by smtp.gmail.com with ESMTPSA id t5sm6946257pgo.48.2017.05.12.12.06.19
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 12 May 2017 12:06:19 -0700 (PDT)
+Date:   Fri, 12 May 2017 12:06:17 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v5] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170512190617.GC27400@aiede.svl.corp.google.com>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
+ <20170511223054.25239-1-jonathantanmy@google.com>
+ <20170511224639.GC21723@aiede.svl.corp.google.com>
+ <xmqq37ca7gw0.fsf@gitster.mtv.corp.google.com>
+ <20170512075931.umunxd72nj53snds@sigill.intra.peff.net>
+ <CAGf8dgJxz+jA=pA5TRR6vmK=zP=CUenpsBDy2VEtjYB5CO9yuQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170512050347.30765-3-bmalehorn@gmail.com>
+In-Reply-To: <CAGf8dgJxz+jA=pA5TRR6vmK=zP=CUenpsBDy2VEtjYB5CO9yuQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 11, 2017 at 10:03:46PM -0700, Brian Malehorn wrote:
+Jonathan Tan wrote:
 
-> Move is_scissors_line to commit.c and expose it through commit.h.
-> This is needed in commit.c, and mailinfo.c shouldn't really own it.
+> To make the interface less muddy, would you agree with this (untested):
+>
+> @@ -648,7 +669,9 @@ static void filter_refs(struct fetch_pack_args *args,
+>   continue;
+> 
+>   if ((allow_unadvertised_object_request &
+> -    (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1))) {
+> +     (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1)) ||
+> +      (check_tip_oids_initialized(&tip_oids, unmatched, newlist) &&
+> oidset_contains(&tip_oids,
+> +     &ref->old_oid))) {
+>   ref->match_status = REF_MATCHED;
+>   *newtail = copy_ref(ref);
+>   newtail = &(*newtail)->next;
+>
+> (making the function-to-abstract be merely an initialization one,
+> instead of one that does 2 things). That decreases the scope of the
+> function that Jonathan Nieder and Peff wanted, but it might be a
+> warranted reduction in scope.
 
-It was fine for mailinfo to own it until now, since it was the only
-user. :) I think there are some unsaid bits in your rationale. Perhaps
-something like:
+Yeah, that sounds nicer than anything I suggested.
 
- Subject: mailinfo: make is_scissors_line() public
+nit that check_ would be clearer as ensure_
 
- We parse scissors lines only when looking at emails, and thus the
- parsing function has always lived in mailinfo.c. However, we also
- generate scissors lines as part of "git commit -v". We should be able
- to reuse the same function to parse them.
-
- Once public, it doesn't really belong in mailinfo.c anymore. A better
- place is commit.c because...[I had trouble filling this in; it's really
- _not_ about commits in particular, but rather about the in-editor
- representation of the commit message used by git-commit].
-
-Thinking on it more, though...are the scissors lines generated by "-v"
-really the same as the ones parsed by mailinfo? In the case of mailinfo,
-we are parsing an externally generated string according to a heuristic
-microformat. But with "commit -v", we are the ones who wrote the cut
-line in the first place. Shouldn't we be a bit more picky and make sure
-we parse the exact same cut line?
-
-And indeed, we _do_ actually have to parse these cut lines already, when
-we read the commit message back in. The code is in
-wt_status_truncate_message_at_cut_line(), and it does do an exact match.
-We should probably be using that rather than making the mailinfo
-is_scissors_line() public.
-
--Peff
+Thanks,
+Jonathan
