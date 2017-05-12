@@ -2,148 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9495D20188
-	for <e@80x24.org>; Fri, 12 May 2017 07:59:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2152D20188
+	for <e@80x24.org>; Fri, 12 May 2017 09:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756557AbdELH7i (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 03:59:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50144 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755051AbdELH7h (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 03:59:37 -0400
-Received: (qmail 31708 invoked by uid 109); 12 May 2017 07:59:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 May 2017 07:59:33 +0000
-Received: (qmail 21995 invoked by uid 111); 12 May 2017 08:00:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 May 2017 04:00:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 May 2017 03:59:31 -0400
-Date:   Fri, 12 May 2017 03:59:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v5] fetch-pack: always allow fetching of literal SHA1s
-Message-ID: <20170512075931.umunxd72nj53snds@sigill.intra.peff.net>
-References: <20170509182042.28389-1-jonathantanmy@google.com>
- <20170511223054.25239-1-jonathantanmy@google.com>
- <20170511224639.GC21723@aiede.svl.corp.google.com>
- <xmqq37ca7gw0.fsf@gitster.mtv.corp.google.com>
+        id S1757317AbdELJjd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 05:39:33 -0400
+Received: from mail-it0-f47.google.com ([209.85.214.47]:38123 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751985AbdELJja (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 05:39:30 -0400
+Received: by mail-it0-f47.google.com with SMTP id e65so34148394ita.1
+        for <git@vger.kernel.org>; Fri, 12 May 2017 02:39:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=qbS0WblMM0vAO3EQdFsJIRms5rdABn2bb2IitmDRPTw=;
+        b=kc6xK12I8Lofpym8E+4C+3RUfKAtg0hw4bQhTOvrXhCYj95os8VW18BlthddAHdNS8
+         ozUyvcFdAw1wYNz36O/5Jd8pAj73ePhfQGY5tk19uCAXspHY5luUN5xFVTKyyULhdNx8
+         vOxWi+caKYs8P/V4myLFo4ZoqeK8cmcb7mBRhxEHT+WLeuzll01bhK650ZyGL8r9i7rd
+         cFUN7dSA8v+/my57CrysOmvjqbNS8ft7H50zK1ZxlsJgb1AC6Yth1lHyQQs81yMdL4MN
+         RvJQCPDcqFxFcpvvXvZ0gj8yw1iQuwu9U3xOo/5dSIS67aV6UA8SLMKyO1pdCrG9Ad1P
+         9/eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qbS0WblMM0vAO3EQdFsJIRms5rdABn2bb2IitmDRPTw=;
+        b=l0YYaUu/yIsaq97a51jzOvwF1kFipPWbFjaNGNr2DlIpy0ku29s7MnZ4v+QKy+/kJR
+         O00McuX6nwUFsWYWh/DJNSP/1G/Vehk3r4QzcpO3TOwxTg31GfpOaADfnVFGB6mv78Fl
+         Jqb9uC6fTUCv1uIg3uYiLkd+CtstT74h+9/gGSAoUzVTY0fsjTriRpVnaE1yf1C9+Jpj
+         Mk+nSLF2mJamgtKUM4uLZtj67Ol7+RZM0Zbq+mxsYkHmOtfFvFJrLgzc1H3SgJtBA5mO
+         GseDlekj3vVttncCHh7XfbXHDqgMtOcA/jbC9MNCez7uCRZQ9GY4cXtmkdd+kJX555Xk
+         nCrQ==
+X-Gm-Message-State: AODbwcBqslctu0IKtGtR21rSU0tuDr2ehoxieHyAAtlQ4aHDiae8eQWZ
+        ob2/yQssLIx9ihvlI8fDmHrPRcsZWogZ
+X-Received: by 10.36.28.139 with SMTP id c133mr2256823itc.117.1494581970022;
+ Fri, 12 May 2017 02:39:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq37ca7gw0.fsf@gitster.mtv.corp.google.com>
+Received: by 10.79.104.194 with HTTP; Fri, 12 May 2017 02:39:29 -0700 (PDT)
+In-Reply-To: <20170512092212.wpw232jfpp3bnqol@sigill.intra.peff.net>
+References: <CAHGBnuOzWSCR9wr=TSGoJSnimZDx2Gr-eR3+LFXmpc9m0cv4qw@mail.gmail.com>
+ <20170512092212.wpw232jfpp3bnqol@sigill.intra.peff.net>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Fri, 12 May 2017 11:39:29 +0200
+Message-ID: <CAHGBnuOXRdpyozq2BbLFnao6NB0GAL09bsQ-3NtDv6gZTpqvOA@mail.gmail.com>
+Subject: Re: [BUG] fast-export --anonymize does not maintain fixup! commits
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 12, 2017 at 03:01:35PM +0900, Junio C Hamano wrote:
+On Fri, May 12, 2017 at 11:22 AM, Jeff King <peff@peff.net> wrote:
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
-> >> +static void add_refs_to_oidset(struct oidset *oids, struct ref *refs)
-> >> +{
-> >> +	for (; refs; refs = refs->next)
-> >> +		oidset_insert(oids, &refs->old_oid);
-> >> +}
-> >> +
-> >> +static int tip_oids_contain(struct oidset *tip_oids,
-> >> +			    struct ref *unmatched, struct ref *newlist,
-> >> +			    const struct object_id *id)
-> >> +{
-> >> +	if (!tip_oids->map.cmpfn) {
-> >
-> > This feels like a layering violation.  Could it be e.g. a static inline
-> > function oidset_is_initialized in oidset.h?
-> 
-> Surely it does.
-> 
-> Also, tip_oids_contain() uses unmatched and newlist only on the
-> first call, but the internal API this patch establishes gives an
-> illusion (confusion) that updating unmatched and newlist while
-> making repeated to calls to this function may affect the outcome of
-> tip_oids_contain() function.  In fact, doesn't the loop that calls
-> this function extend "newlist" by extending the list at its tail?
+>> these (or any other command prefixes in commit messages). Given that
+>> the --anonymize option is explicitly designed to help reproducing
+>> bugs, I consider this to be a bug in the --anonymize option itself.
+>
+> Yes, it probably should handle those prefixes.
+>
+> I don't know if I'd call it a bug. Maybe a missing feature. :)
 
-It does, but only with elements whose oids were already in the set. So I
-don't think it's wrong, but I agree the interface makes it a bit muddy.
+I'd usually agree, but in this case, as I mentioned above, I consider
+the missing feature to be so essential that the oversight to implement
+it is actually a bug :-)
 
-The whole thing is much easier to follow if you just create the oidset
-before chopping it up into two lists. But that loses the "lazy"
-property, and you pay for the oidset even if there are no raw sha1s
-requested. But it is nice and short. See the patch below (as a
-replacement for what we've been discussing, not on top).
+> So this seems like a good example of that. I think I'd prefer to see us
+> add in known prefixes like "fixup!" and "squash!" then try to guess what
+> other prefixes might be OK. I don't know of any other command prefixes
+> besides those two, so maybe that's all you were suggesting.
 
-It's hard to resolve that because the loop that chops up the lists is
-also the loop that is figuring out if there are leftover raw-sha1
-names. But you could probably structure it like:
+Those were also the only two that came to my mind, but I wanted to
+give some one who has a better overview the change to amend that list.
 
-  1. Loop and see if we have unmatched names that look like sha1s.
+> It shouldn't be too hard to add. You'd probably need to make two
+> adjustments to anonymize_commit_message():
+>
+>   1. Teach it to store the mapping of anonymized messages, using
+>      anonymize_mem().
+>
+>   2. Parse "fixup! <msg>" and just anonymize_mem() the second half. I
+>      think technically this wouldn't handle a fixup-of-fixup, but I
+>      don't think rebase handles recursive ones anyway.
 
-  2. Set up the oidset from the two chopped-up lists if there are
-     sha1 candidates (and if we aren't going to just send them
-     regardless due to server options).
+Thanks. I'll give it a try.
 
-  3. Loop over the unmatched candidates and check them against the
-     oidset.
-
-That avoids the lazy-init, so pulling (2) out into a function results in
-a better interface.
-
----
-diff --git a/fetch-pack.c b/fetch-pack.c
-index afb8b0502..4f3e8fa6b 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -15,6 +15,7 @@
- #include "version.h"
- #include "prio-queue.h"
- #include "sha1-array.h"
-+#include "oidset.h"
- 
- static int transfer_unpack_limit = -1;
- static int fetch_unpack_limit = -1;
-@@ -599,6 +600,9 @@ static void filter_refs(struct fetch_pack_args *args,
- 	struct ref *newlist = NULL;
- 	struct ref **newtail = &newlist;
- 	struct ref *ref, *next;
-+	struct oidset tip_oids = OIDSET_INIT;
-+	int send_raw_oids = (allow_unadvertised_object_request &
-+			     (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1));
- 	int i;
- 
- 	i = 0;
-@@ -626,6 +630,9 @@ static void filter_refs(struct fetch_pack_args *args,
- 		    (!args->deepen || !starts_with(ref->name, "refs/tags/")))
- 			keep = 1;
- 
-+		if (!send_raw_oids)
-+			oidset_insert(&tip_oids, &ref->old_oid);
-+
- 		if (keep) {
- 			*newtail = ref;
- 			ref->next = NULL;
-@@ -647,8 +654,7 @@ static void filter_refs(struct fetch_pack_args *args,
- 		    hashcmp(sha1, ref->old_oid.hash))
- 			continue;
- 
--		if ((allow_unadvertised_object_request &
--		    (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1))) {
-+		if (send_raw_oids || oidset_contains(&tip_oids, &ref->old_oid)) {
- 			ref->match_status = REF_MATCHED;
- 			*newtail = copy_ref(ref);
- 			newtail = &(*newtail)->next;
-@@ -657,6 +663,8 @@ static void filter_refs(struct fetch_pack_args *args,
- 		}
- 	}
- 	*refs = newlist;
-+
-+	oidset_clear(&tip_oids);
- }
- 
- static void mark_alternate_complete(struct object *obj)
+-- 
+Sebastian Schuberth
