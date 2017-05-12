@@ -2,158 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38F82201A0
-	for <e@80x24.org>; Fri, 12 May 2017 02:15:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9904B1FF34
+	for <e@80x24.org>; Fri, 12 May 2017 14:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755578AbdELCPO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 22:15:14 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34409 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750922AbdELCPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 22:15:12 -0400
-Received: by mail-pg0-f66.google.com with SMTP id u187so5678734pgb.1
-        for <git@vger.kernel.org>; Thu, 11 May 2017 19:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=I1Nse9/a3nwrPoDKmDCfZGGFU4BbUCgjX4LwxXmYsYg=;
-        b=HKLUb2DS1XOIN5CbTX9KhLBYvGA5BXNDQ5EkONsuJaYD9RsDOWr2k/W/FoWCtUkMgC
-         fXnIxpTWyfrGNSMvkNFYW4c/NlIjiJ1YVkl98ubnqHCQyiVGj4wy9h1V1mbSspZY4bs2
-         osW1hstmUTdjrHFdYM8Th+W1cjrYgd2EPCX9nUmzgbj5aT3pBER2iDDDclNNtkW+2mxM
-         aadRY6mf21UyIAwZrLQArTV61B+SceYhkKjfo30Ge6azxq0WWl+8cBAPPQOM5JLZa9ia
-         hYl7D6K2UeeGFk1fcJklTUQAwAFnidBa+hOH+kOQJJRq4SCFKYc9rJPsd8ZEMuQcemFh
-         jocA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=I1Nse9/a3nwrPoDKmDCfZGGFU4BbUCgjX4LwxXmYsYg=;
-        b=GNb+Eh5NiebaXg+4lGZvDzjlyWOO4+XJ//ZAROPIYXA5ZRdBx4xrU2dWfX5H8sj5MV
-         JtiEuKU4L8jeGjYtZwA4uLMU36vRS/3NYbu4H62V7FeFlncdVDxK9kGyxmK5fjXxvnQp
-         i4fZqhI/O6U8y1+RBjVr7mWg6LNHizlG3kXB84qlST0rxq+sTbrWNgmo8xKk1kVMNwSE
-         Hx4X/z4vhVxl9P5aGUXmhPIT+h9vqTKiAqUyNYIb140LlEuagTS503GEA0SMDNDksq5H
-         nmRViS+oATmUx+nq1bNBto/NaXvaRaDapMHrYBtxZ5gx4/gHmrfLndAMN1WwI4DGDWP5
-         yJSQ==
-X-Gm-Message-State: AODbwcBNRCncTGRe9nPFVpRYBn7Eyb+TIlNa3jY6qNnkRJ5RSqoEfYG1
-        4JHZpHKe7LWgPVop8n0=
-X-Received: by 10.98.131.142 with SMTP id h136mr1877804pfe.138.1494555311926;
-        Thu, 11 May 2017 19:15:11 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:91c4:5195:150f:b3e6])
-        by smtp.gmail.com with ESMTPSA id p76sm2204976pfa.53.2017.05.11.19.15.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 19:15:10 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] send-email: support validate hook
-References: <20170511193753.19594-1-jonathantanmy@google.com>
-Date:   Fri, 12 May 2017 11:15:10 +0900
-In-Reply-To: <20170511193753.19594-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Thu, 11 May 2017 12:37:53 -0700")
-Message-ID: <xmqq8tm295xt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S932315AbdELOs4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 10:48:56 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53687 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932311AbdELOsz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 10:48:55 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHX4u-1dAHnt0HiW-003Ldh; Fri, 12
+ May 2017 16:48:53 +0200
+Date:   Fri, 12 May 2017 16:48:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Josh Hagins <hagins.josh@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [Git 2.13.0] BUG: setup_git_env called without repository
+In-Reply-To: <CANuW5x0pBwfQeha50mxN8pVQKm67u_b3UKTCQ8ZbJA6FUGvYbw@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1705121643180.146734@virtualbox>
+References: <CANuW5x0pBwfQeha50mxN8pVQKm67u_b3UKTCQ8ZbJA6FUGvYbw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:NPXSYL11uy9wZ/Thqdf40lRLF6Ta5hvKJ/qMjpvCstgdvcDdLgB
+ fk+BRIdYyURm5Rn8Hw7BfjL0uqkTbaPJBM9H1wUKUFWyw0mgVNApPYyWLAEG9dY+qU9vU3P
+ Hb0GmHSwFtAJKbbkBJ6JMFy/yWBeJ2lqBI23K+Ym8CdO1LrtHK8w4hgBrQHsaa5OSFTmdo5
+ Vb/tmN9byQDPmW39/o3xQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IcAbGP2H0mU=:0bzSJIV/jnG3KdXCq2VpT6
+ Gp1S6/QD8LykcUEkt3xL5XerV1yyOYwFOsJUQ61LTmFcdcm2WUSsaWSKZyoEcnL3Bq89881T0
+ VhdZv/05wRiZDYWM6ZiNzd364EKSMETtkPEfZnRgdpQCjcLpmgYtl6EfyxrUy99wNzo6KSlAd
+ nIp6PeyWxWryoPSV4ZKVN37xE4VrF/AqzA0zpDnNpRJGpJu9RSfWHwqZtb45ZMm4caTqth002
+ BLNiUrqiJcRk8M1xoRAVxlsH0F4Fu5r8xn6LttjDAP5D6V4y3hsVAZVXxoBryiwrrDvSTXDSU
+ iMQTpL15jlYbF5hcr+vqIMCMvTxtFb3yC7SDDn/BEXVEtFpLFSbdCfNMQx2kiNLT/m/RwVc03
+ PMs8qo9QOg/etbSI3TcvYUC9st1DsQHY2BOmz1vkXyvRPERNuHbNvkBbO91wD451E3tl1hu7t
+ 9Vao265qa5t9kpeaR3PZE/CVq/R0XEOsM/+VbmKoMZ6ddc6Ye6X2SUD5hYP62EVj2lpeo3hCg
+ x6Rp35dxDrOyI14mo2ORoy1zOj49eTDh+yViNYfzDoSOIfoVBJ/MfBL9AUQmzroXcGOIOiffs
+ dp4cbGScagiBHAuGd1otgTBafNwbnv9tD1EE0PPnfc+zAKh1bIsdZb/leDD9gz1WvSgLje3Eo
+ BiiRdqnjsPC5CrrydLH3d0lxNK/8F6Y6csxwxu5fWgzPll6j0mVVYSAo2xgkYVATVqsB7zC1K
+ wMaR51/YC1MYNnghGzLwa3pHH8WS/y4qilRCQJfYfudLknzH+95nKNxQpWpONITiO+jdr3EPh
+ P1J5Zr1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hi Josh,
 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index eea0a517f..7de91ca7c 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -27,6 +27,7 @@ use Term::ANSIColor;
->  use File::Temp qw/ tempdir tempfile /;
->  use File::Spec::Functions qw(catfile);
->  use Error qw(:try);
-> +use Cwd qw(abs_path cwd);
->  use Git;
->  use Git::I18N;
->  
-> @@ -628,9 +629,24 @@ if (@rev_list_opts) {
->  @files = handle_backup_files(@files);
->  
->  if ($validate) {
-> +	my @hook = ($repo->repo_path().'/hooks/sendemail-validate', '');
-> +	my $use_hook = -x $hook[0];
-> +	if ($use_hook) {
-> +		# The hook needs a correct GIT_DIR.
-> +		$ENV{"GIT_DIR"} = $repo->repo_path();
-> +	}
->  	foreach my $f (@files) {
->  		unless (-p $f) {
-> -			my $error = validate_patch($f);
-> +			my $error;
-> +			if ($use_hook) {
-> +				$hook[1] = abs_path($f);
-> +				my $cwd_save = cwd();
-> +				chdir($repo->wc_path() or $repo->repo_path());
-> +				$error = "rejected by sendemail-validate hook"
-> +					unless system(@hook) == 0;
-> +				chdir($cwd_save);
-> +			}
-> +			$error = validate_patch($f) unless $error;
->  			$error and die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
->  						  $f, $error);
->  		}
+On Fri, 12 May 2017, Josh Hagins wrote:
 
-This is not about "Perl code" but I find it somewhat strange to add
-this code to outside validate_patch() when we have a helper function 
-specifically designed to "validate patch" and the new code is about
-teaching the program an additional way to "validate patch".
+> Since upgrading to Git 2.13.0 I'm seeing this error message whenever
+> `git config --local <whatever>` is called outside a Git repository.
+> For example, note the difference in behavior between Git 2.13 and
+> Apple Git:
+> 
+>     $ pwd
+>     /Users/jhagins
+>     $ /usr/bin/git --version
+>     git version 2.11.0 (Apple Git-81)
+>     $ /usr/bin/git config --local --get user.name
+>     $ /usr/local/bin/git --version
+>     git version 2.13.0
+>     $ /usr/local/bin/git config --local --get user.name
+>     fatal: BUG: setup_git_env called without repository
+> 
+> Apple Git outputs nothing, as expected. The summarized release notes
+> published by GitHub specifically mentioned that instances of this
+> error message should be reported, so here you go!
+> 
+> Please let me know if I can provide any more information that would be
+> helpful.
 
-Also I am not sure if setting and exporting GIT_DIR for the entire
-program, only when we run this hook is a sensible thing to do.
+Since this is in /usr/local/bin/, there are two possibilities:
 
-Either the remainder of the program is safe to see the GIT_DIR
-pointing at the correct location (in which case $ENV{GIT_DIR}
-assignment can be done outside "if ($validate && $use_hook)" to
-affect everything), or the rest of the program is not prepared to
-see such a forced assignment and export (in which case we should
-limit the setting of the environment to the subprocess that runs
-system(@hook) without affecting anything else).  Doing something in
-the middle conditionally feels like it is inviting future troubles
-coming from the inconsistency (e.g. "this feature totally unrelated
-to the validate hook works when validate hook is in use but
-otherwise it doesn't, because $GIT_DIR is sometimes set and
-sometimes not").
+1) you built and installed it yourself (but then it would be more likely
+   in your $HOME/bin), or
 
+2) you installed it via HomeBrew.
 
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 60a80f60b..f3f238d40 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1913,4 +1913,44 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
->  	test_cmp expected-list actual-list
->  '
->  
-> +test_expect_success $PREREQ 'invoke hook' '
-> +	mkdir -p .git/hooks &&
-> +
-> +	write_script .git/hooks/sendemail-validate <<-\EOF &&
-> +		# test that we have the correct environment variable, pwd, and
-> +		# argument
-> +		case "$GIT_DIR" in
-> +			*.git)
-> +				true
-> +				;;
-> +			*)
-> +				false
-> +				;;
-> +		esac &&
+I guess it is the latter.
 
-Case arms indented one level too deep.
+In both cases, however, you have XCode installed, so you can dig further.
+Yay.
 
-> +		test -e 0001-add-master.patch &&
+The thing I would do in your case would be to clone Git:
 
-Do we only care about existence and do not mind if it is a
-directory?  Otherwise using "-f" would be more sensible, perhaps?
+	git clone https://github.com/git/git
+
+then check out v2.13.0:
+
+	git checkout v2.13.0
+
+then edit the Makefile to remove the -O2 from the CFLAGS (the next step is
+to use the GNU debugger, and in my hands the -O2 optimization made that
+pretty useless), and then build with
+
+	make
+
+After that, you should be able to start the command in your local GNU
+debugger:
+
+	gdb -args ./git config --local --get user.name
+
+You will then want to set a breakpoint on the die_builtin() function:
+
+	b die_builtin
+
+Now run it with the `r` command, and it should stop in the die_builtin
+routine, in which case a backtrace would be most helpful to figure out
+what is going wrong:
+
+	bt
+
+If the output is not enlightening on its own, it would be nice to paste it
+into a reply to this mail so that the entire Git developer community can
+have a look.
+
+Ciao,
+Johannes
