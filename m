@@ -2,132 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D15D201A7
-	for <e@80x24.org>; Fri, 12 May 2017 22:32:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A01C201A7
+	for <e@80x24.org>; Fri, 12 May 2017 22:32:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756858AbdELWb6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 18:31:58 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:35357 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756599AbdELWb5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 18:31:57 -0400
-Received: by mail-pg0-f43.google.com with SMTP id q125so16648771pgq.2
-        for <git@vger.kernel.org>; Fri, 12 May 2017 15:31:57 -0700 (PDT)
+        id S932472AbdELWcH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 18:32:07 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33323 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932296AbdELWcG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 18:32:06 -0400
+Received: by mail-pf0-f195.google.com with SMTP id a23so8397883pfe.0
+        for <git@vger.kernel.org>; Fri, 12 May 2017 15:32:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=Y8OJ6ZrX097u8JLs08VuXINTSt2Y61KyafskEEr3D70=;
-        b=dGhDLo+NuUZz9SxfPfwLWL1XqFRqFY1Ap+DhYe4VIWC0/mi9KTONvJ1kBKjV2sUlRE
-         xjcHJXAqQbEX/GA1FFwrHxZi7AB61IAaVyAwMK4gqmkcKkq4m66wwKC6w9HmTS02eLWL
-         AZEVUzqlNB1tzVE/lbXsGPHtS7A0t7dy9yicXeSVf/dlEiXWpSvX+1uyeQaL+PSBDi1h
-         sW+ISmpZ+b3IPKzjXgFtQW6wb3Vhs5DthylLsA1fWOAkxycR/GxaG8dekcLIu0mFTKPd
-         cUG3t2Kfm8sm5laaj23XAP4eiX5x4+LkeZ/30UDOW6ldG0+mMUJbfVi8kbMqc0ztngIE
-         pO5w==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=bVVgy8YwTiffGBXmnkus156y25XJj8O5H2lrRNdgPa8=;
+        b=Vb4D7wLucxSYq6QtrVGLyw4xzd8khqXOiE2W0dW+djKplQvpJtEIRPrytd+dHB6dZl
+         dxwr7V8s9wstjKhw1hRMKoVDx+l+zhldNyVPV/DLuiqYN2kMar1USmmHi8R9FCRlic65
+         Uw0tNS0Ippjx+nes+fAfxZpRrv4O4NaiuoTAXPA9r/+Fky1Bev7wdzONgMmgWxGBwMZm
+         Hb7HLSXXF0TcAn7onyOHOyiGT78Gr2FOkkFC2qZw2T4QHgPHvE8uu9/hyuv7uQuRppvj
+         Vjta2cOrbd2m/noEYzcEOUyefJ2p5+60jA61mDxfmEgQEv4fS8z+Q0khECpM08G07eww
+         L07A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=Y8OJ6ZrX097u8JLs08VuXINTSt2Y61KyafskEEr3D70=;
-        b=uYmoM0QAopTBShKbpWiWypHhnmxe8UGxWbNNxL9QVcauXxV1brB3YmNi+MkyzLSPGG
-         nBqdvHCFb1FiVnr3qKJy/mFkZwjqNk9r5YV990Eh9GOb4XR7mEAutme7DnrME5FX+9+l
-         IY+H4Fz5XsI2w4lADk+H1eUd38/ME2eh20XjuiGuf+UAczZrxjN6FssAqCyo9EKepDI9
-         qOH4SK6LyHVsnjmBnbPO7c5pH7o/rPizZf0t4y/iz/MbS7PlPlQeSQ49ZFWeiutYToVM
-         76KxrnDZaDZsROpLqnFM/JE7KKmmKIr1h6HuBHHJ/GdQdsaoxM4beZuLGpRm7YM40hi+
-         NbkQ==
-X-Gm-Message-State: AODbwcCjCvf9MnB/QU2KRvJKHZ27ZLYjwcRiMSEHvkd+GAmb3DG3GXRn
-        6L5aFk/umVNyjueIRtfj7A==
-X-Received: by 10.84.217.139 with SMTP id p11mr8759919pli.146.1494628316520;
-        Fri, 12 May 2017 15:31:56 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:cca2:a63f:8bc1:6a6d])
-        by smtp.gmail.com with ESMTPSA id y20sm981230pfb.93.2017.05.12.15.31.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 12 May 2017 15:31:55 -0700 (PDT)
-Subject: Re: [RFC] send-email: support validate hook
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20170511193753.19594-1-jonathantanmy@google.com>
- <CACBZZX74dsTJtAQdrMmEDPKOVdEaiL4dGrmz9OZ3jQhhmr5xEA@mail.gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <45b9e2d1-0840-d163-468f-588253cb8527@google.com>
-Date:   Fri, 12 May 2017 15:31:54 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=bVVgy8YwTiffGBXmnkus156y25XJj8O5H2lrRNdgPa8=;
+        b=j9Leim8ZjH1CUHrWvu/WKdDwnk0Rfpceyq/UnXp5tjl7pQKl9ROxaQpzW8nZyyLACj
+         YJMWypot6tuEL1fL5k9io/8qGL3JKm9FDrrMs1FV63rTGEpJdgZt4COXW2w+vn/pWzVz
+         lGdKqU+q5yYM5/JYFiQ1jFVWneBXUtnaiU44e5nN5iSaR+iFUjWsBe1BOZMUBCrLBfEv
+         mh9yvexk/YN2CbwtNDQdjFoKDLWmS/kRVxdsvfT5va15wgyDAJCuL+mrE6EjGqbzNCKf
+         uOlnigwbSkxKVYzg4VfNgl1cHAa5oWxIdELf5W7csqpV8+d10nOjU4aHR810kDjeilBR
+         +4Vg==
+X-Gm-Message-State: AODbwcD0rYhkEzXFNbJuVcj6ZV11WIO6bEIvECukJsjlPPujOIMi9QhR
+        R3JHUrsS9fmSizJ2Few=
+X-Received: by 10.98.192.143 with SMTP id g15mr6781737pfk.219.1494628326067;
+        Fri, 12 May 2017 15:32:06 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:954c:c08b:c855:8b7f])
+        by smtp.gmail.com with ESMTPSA id v6sm6741574pgb.20.2017.05.12.15.32.05
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 12 May 2017 15:32:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] fixup! log: add exhaustive tests for pattern style options & config
+References: <92c10618c688bb8cb1f31ee2a93110c581974468.1494586245.git.johannes.schindelin@gmx.de>
+Date:   Sat, 13 May 2017 07:32:04 +0900
+In-Reply-To: <92c10618c688bb8cb1f31ee2a93110c581974468.1494586245.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Fri, 12 May 2017 12:50:55 +0200
+        (CEST)")
+Message-ID: <xmqqtw4p4sgr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CACBZZX74dsTJtAQdrMmEDPKOVdEaiL4dGrmz9OZ3jQhhmr5xEA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/12/2017 12:23 AM, Ævar Arnfjörð Bjarmason wrote:
-> I hacked this up last night, it also addresses Junio's comment about GIT_DIR:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> On Windows, `(1|2)` is not a valid file name, and therefore the tag
+> cannot be created as expected by the new test.
 >
-[snip]
+> So simply skip this test on Windows.
 >
-> Changes there:
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+
+Will queue as an emergency fix on 'pu' for now, but I'd expect
+(read: ask) Ævar to squash this in when the series is rerolled.
+
+Thanks.
+
+> Published-As: https://github.com/dscho/git/releases/tag/exhaustive-grep-tests-fixup-v1
+> Fetch-It-Via: git fetch https://github.com/dscho/git exhaustive-grep-tests-fixup-v1
 >
->  * use catdir instead of string concat, I don't know if we run
-> format-patch on any platform where this matters in theory (e.g. VMS I
-> think), but the file uses that API already, so continue using it.
->  * Just make this more brief by moving the -x test into the loop,
-> we're sending E-Mail here, no need to optimize stat calls (you did ask
-> for style advice :)
-> * Check the return value of chdir & die appropriately
-> * localize GIT_DIR
-> * "die if system" is more idiomatic than "die unless system == 0"
-
-Thanks - all these are very helpful. Especially the one about localizing 
-GIT_DIR - this allows me to move everything into the validate_patch() 
-function.
-
-> Or actually just move this into a function:
+>  t/t4202-log.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-[snip]
-
-I'll send out another version of the patch that puts all these into the 
-validate_patch() function.
-
-> I wonder if we were designing this interface today whether whether the
-> existing behavior of  --validate wouldn't just be shipped as a
-> *.sample hook instead. There's also the caveat now that your hook
-> might be OK with really long lines, but the existing validate function
-> denies it, and there's no way to override that. I think a better way
-> to do this is:
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index 36321f19061..6f108e99b7b 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -296,7 +296,7 @@ test_expect_success 'log with grep.patternType configuration and command line' '
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_success 'log with various grep.patternType configurations & command-lines' '
+> +test_expect_success !MINGW 'log with various grep.patternType configurations & command-lines' '
+>  	git init pattern-type &&
+>  	(
+>  		cd pattern-type &&
 >
->         foreach my $f (@files) {
->                 unless (-p $f) {
-> -                       my $error;
-> -                       if ($use_hook) {
-> -                               $hook[1] = abs_path($f);
-> -                               my $cwd_save = cwd();
-> -                               chdir($repo->wc_path() or $repo->repo_path());
-> -                               $error = "rejected by sendemail-validate hook"
-> -                                       unless system(@hook) == 0;
-> -                               chdir($cwd_save);
-> -                       }
-> -                       $error = validate_patch($f) unless $error;
-> +                       my $error = -x $validate_hook
-> +                               ? validate_via_hook($validate_hook, $f)
-> +                               : validate_patch($f);
->
-> I.e. if you specify a validate hook it replaces the existing hardcoded behavior.
-
-I'm OK either way.
-
-> Also, just to check, is this new thing still consistent with the cwd
-> docs in githooks (see e.g. 501d3cd7b8).?
-
-Anything particular that you think is inconsistent? It is consistent 
-with "Before Git invokes a hook, it changes its working directory to 
-either $GIT_DIR in a bare repository or the root of the working tree in 
-a non-bare repository". (The commit you reference refers to push hooks, 
-of which this isn't one.)
+> base-commit: 3760a479060228867a31eed443334b30124465b9
