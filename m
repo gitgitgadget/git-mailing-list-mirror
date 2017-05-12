@@ -2,102 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCCB7201A7
-	for <e@80x24.org>; Fri, 12 May 2017 22:03:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D4BB201A7
+	for <e@80x24.org>; Fri, 12 May 2017 22:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756098AbdELWD1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 18:03:27 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36391 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754683AbdELWD0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 18:03:26 -0400
-Received: by mail-wm0-f66.google.com with SMTP id u65so16132572wmu.3
-        for <git@vger.kernel.org>; Fri, 12 May 2017 15:03:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=28ZmHq1GHJelsD/Bity9KEODNr5/ZblW1JJg08LRWm4=;
-        b=PQk6W2w2He5zj7vq+TzqCRFC6zwk42L8RxpPYBBwRn1RsLIOx4XuDJK2Qa2VB0nWUO
-         ApgfGK5f589zkIsEnAbQhz+kwQgbnN2y6Sq8i8aJNnXzLyl2KvwWZOe3U5xpvi8yC4i3
-         zXpdk8kABhPSoeLPRfYoxvzoxGpz5Gw0S8fG6WDMravBrr/fykKWh45Xnm2aW/ZxELBd
-         noYT3GMhF8/MkfcluzlxlCXlvk7v/8yh4AglZBaejpfmiI73u2TpEIGFArphQH11rxc7
-         xADXDw9c1fyc5xmbmKphRhnYBSWNE+fiTm+bl0CBFnnlW0seI8LYYPkDJSA4wmw9Gbip
-         +1kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=28ZmHq1GHJelsD/Bity9KEODNr5/ZblW1JJg08LRWm4=;
-        b=V4b0Ph6m7wt+wd+mVHk1I0B1Som19ouwsY/WDes4TB3uJhPHGxsPrLaz43omRXfUBn
-         jFqS70TyPzd+44ihZZaizOVz1n0Aq6sePrdEClUJLh048pF07Tt2y/JxfKz1hiEQcuZH
-         bbhCjxsm1ck3cpEafUIbWKR/X4uwNWj+7gGwUuTERT0WzFrRn3ZrzAXP+u6Iawd2PqXf
-         fZY+yILR9FogpH9XPYBnvuHWbkICJLwJbZPGka4Y/+2fMCC9a8iqNSni/t+xL1CRMkvi
-         6rQNwD6OGAhwSTiCO6u7Fjd6lkFlP++P085N6KWd6sMTEK/P6d4BbpBiYHv3htl5T5p4
-         45nA==
-X-Gm-Message-State: AODbwcCWXg2NZ+6sKfOVysoJqVm7JjWY5yNgaZ5r7DbilK5C2YDyvpCQ
-        wXobKsRUcGWDo1UiRf/yuN3UAxCG1tkC
-X-Received: by 10.28.146.2 with SMTP id u2mr3575401wmd.94.1494626605211; Fri,
- 12 May 2017 15:03:25 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.28.100.213 with HTTP; Fri, 12 May 2017 15:03:04 -0700 (PDT)
-In-Reply-To: <20170512213407.46251-1-sandals@crustytoothpaste.net>
-References: <20170512213407.46251-1-sandals@crustytoothpaste.net>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Fri, 12 May 2017 16:03:04 -0600
-Message-ID: <CAMMLpeTYvK+yow8R83Yf-kOFOZngFEfYsoQeXuTOL0tZOE3XTA@mail.gmail.com>
-Subject: Re: [PATCH] builtin/log: honor log.decorate
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S932166AbdELWHK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 18:07:10 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:39462 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751574AbdELWHJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 12 May 2017 18:07:09 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 41636280AD;
+        Fri, 12 May 2017 22:07:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1494626828;
+        bh=u8N3AxLRVpmxhgPok7r6ryD2605MMTmvB46vJX1Svgc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=1XL2/goMzOeWNqE4zflkJ2kS6o7ZsquwrrldoDt3kKPwIKEiP2l2f0Rj5JbwF5scc
+         T6OJpIfkiaT+9wdEc3orbv5sxI6eqB60JS+Bu2GUj5he8Z4c6ybNaYgDZZay6/uhkL
+         52hq32yFlVeAPC+mBtxLIUj7DDrgt75gWa3DXPUbbccPTRiAhlJ31PgXO6w/i6QbXv
+         mCkSiB5IhtGwG2e84tp4oogct6vzKZjL5MJtvHE1DkgVTNblDB8Q79XmRxNQcvjPr9
+         JpB4jdlMJlrbkWVKtfVyrAjU6dvubDP08uRSRbX9sUpPseaKkACM9BSM/2sDcVJ4iP
+         1FhIGM0t31aje/60pS6x3yyA0/DAMVXCD8GqBjw589chSKbIvuN4GpLwPz4Qk8ps5R
+         GhJ/SvivwNlUP1AAryGZLK9MXPGbC2VdL77FFkYWSEYLxuGcwsu7EvRRV5ivxyJkmh
+         BWE0Er7v+R++LIB/zCZ9vLdmGVx/UnjVShhd8O6AlTUD9KWlat8
+Date:   Fri, 12 May 2017 22:07:04 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Alex Henrie <alexhenrie24@gmail.com>
 Cc:     Git mailing list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] builtin/log: honor log.decorate
+Message-ID: <20170512220704.txmdk45s66aqhexi@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20170512213407.46251-1-sandals@crustytoothpaste.net>
+ <CAMMLpeTYvK+yow8R83Yf-kOFOZngFEfYsoQeXuTOL0tZOE3XTA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="tlcgckjpxu3oxzi4"
+Content-Disposition: inline
+In-Reply-To: <CAMMLpeTYvK+yow8R83Yf-kOFOZngFEfYsoQeXuTOL0tZOE3XTA@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-3-amd64)
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-05-12 15:34 GMT-06:00 brian m. carlson <sandals@crustytoothpaste.net>:
-> The recent change that introduced autodecorating of refs accidentally
-> broke the ability of users to set log.decorate = false to override it.
-> When the git_log_config was traversed a second time with an option other
-> than log.decorate, the decoration style would be set to the automatic
-> style, even if the user had already overridden it.  Only set the option
-> to its default value if we haven't set it already.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/log.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index b3b10cc1e..304923836 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -34,7 +34,7 @@ static int default_abbrev_commit;
->  static int default_show_root = 1;
->  static int default_follow;
->  static int default_show_signature;
-> -static int decoration_style;
-> +static int decoration_style = -1;
->  static int decoration_given;
->  static int use_mailmap_config;
->  static const char *fmt_patch_subject_prefix = "PATCH";
-> @@ -410,7 +410,7 @@ static int git_log_config(const char *var, const char *value, void *cb)
->                 if (decoration_style < 0)
->                         decoration_style = 0; /* maybe warn? */
->                 return 0;
-> -       } else {
-> +       } else if (decoration_style == -1) {
->                 decoration_style = auto_decoration_style();
->         }
->         if (!strcmp(var, "log.showroot")) {
 
-Sorry for the mistake. On second thought, I think we should set
-decoration_style = auto_decoration_style() in init_log_defaults.
+--tlcgckjpxu3oxzi4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--Alex
+On Fri, May 12, 2017 at 04:03:04PM -0600, Alex Henrie wrote:
+> > diff --git a/builtin/log.c b/builtin/log.c
+> > index b3b10cc1e..304923836 100644
+> > --- a/builtin/log.c
+> > +++ b/builtin/log.c
+> > @@ -34,7 +34,7 @@ static int default_abbrev_commit;
+> >  static int default_show_root =3D 1;
+> >  static int default_follow;
+> >  static int default_show_signature;
+> > -static int decoration_style;
+> > +static int decoration_style =3D -1;
+> >  static int decoration_given;
+> >  static int use_mailmap_config;
+> >  static const char *fmt_patch_subject_prefix =3D "PATCH";
+> > @@ -410,7 +410,7 @@ static int git_log_config(const char *var, const ch=
+ar *value, void *cb)
+> >                 if (decoration_style < 0)
+> >                         decoration_style =3D 0; /* maybe warn? */
+> >                 return 0;
+> > -       } else {
+> > +       } else if (decoration_style =3D=3D -1) {
+> >                 decoration_style =3D auto_decoration_style();
+> >         }
+> >         if (!strcmp(var, "log.showroot")) {
+>=20
+> Sorry for the mistake. On second thought, I think we should set
+> decoration_style =3D auto_decoration_style() in init_log_defaults.
+
+I can do that.  Patch forthcoming shortly.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--tlcgckjpxu3oxzi4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.20 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlkWMgcACgkQv1NdgR9S
+9ovLfxAAiOJnt/Zn26t6bzMVVPjkmGNG9pL7tqvJtKOX6ljdx2dE1N0qnALn6BkQ
+wurKplhS5NJWMcl45rxLdPpRIDeliEjW/EDTNEttjHn5QGuRtS5lie6DfKFqMItJ
+36Sy/uFnQ4fSIgclF8Ujofg2fHWdzpOfqMd2KVA9VDe8mqFI7q+3R/Q84D460psN
+5Tnw0KQlStEP6AFQVlho5oL6a8hSDmzP6wubyWX/JrwdfS7/hwauWzjrie4ykK/e
+UYBQ/WXqRgew3ScoF7TUnxxl1G68HWWg2bec/pQoQ5rROpOhUmj8nP1BZ4OboFqc
+bfocTUA373H7PR18iZhZRxfuRgjNwuDmHBh7keFe2sHhtHXZ1a0+quMAcVzajYNO
+bltzs8Es0Zbbo4w8c+ThcCwwlNw1yzeUZdRni/63PzHQGXhjA7IJCguYJZ7Q/gND
+Mvkv2/p+HWBnncxGOqMG9mBpCbXJlKXh4/LSUTRVLrKN4Kt0MOTxxBjKkJ+h7Czv
+rMxzGO94TtZg6gFVe8x5RS4BQjfygDNhk81LpmGRCzDsLLq/lfmpRfXK8CUtU92A
+932kXt7zickZg54Z5bb9Lj0ifXw7kVi56j8XNhFjc2NACjj7gfQsqpVRJsQiQWX7
+2NtSdp2nPCBPG0G8BDZklj/X3u+rEQ6v0/FXaGANUUploDB04OM=
+=qvHO
+-----END PGP SIGNATURE-----
+
+--tlcgckjpxu3oxzi4--
