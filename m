@@ -2,85 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50BA6201A7
-	for <e@80x24.org>; Fri, 12 May 2017 20:59:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09546201A7
+	for <e@80x24.org>; Fri, 12 May 2017 21:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758595AbdELU7e (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 16:59:34 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36456 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758464AbdELU7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 16:59:33 -0400
-Received: by mail-pf0-f193.google.com with SMTP id n23so7100654pfb.3
-        for <git@vger.kernel.org>; Fri, 12 May 2017 13:59:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XRn/1HG7PNBipGGLjUGQkrysik+XIvqxpzhchtxNCa0=;
-        b=bEcHKusS/+/t9dQlQFdNtIWcvvic0FHQZXKcX4o93FLcXuQjMxcbPxjPtw95ilHqlA
-         IJ6ifTj+MBZdH7U0eeyGDsaQfl2ysN/2RDRGJ9UfpngeAUh79aq16Trqud9TBMpjOqP4
-         k+WXPTa+uloZ8ORVQCL6iEArCXmgW2anFpIYGaa/uyY6eLLxT4wfg6HNFXJxdXeRIw69
-         QsrS0r0fiyTwqbhLomKpS9sbmUqUADaiFm2jewIWZaTGpPo8wthdstYYoxQp2JY3tdfF
-         QoygnsCNFfwQ3HH/+P59+sAmm4Zqc9fig3yvHzy/K114FgtEHw628l5nDibd3LW7/+FR
-         bYxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XRn/1HG7PNBipGGLjUGQkrysik+XIvqxpzhchtxNCa0=;
-        b=uKWrMoaoGQlDD009s9uIrFlp3PaKvbosEaUgVH1ajil4lJwjortn6UH5Y/CzX0EfXs
-         qzG9Ce7RsSJeU2/YqEFaLf2UxOLecQ+KE3VG1GorfRJSKsIR0ShUyP4TO9njU7uP3IMd
-         eD4YtHnvxfeEZhaEZe78QiCPcyKWeDMFEKVWDD6vNG668XAtX4hRwqq+jumeDTnoRApJ
-         AOpBcXQhvjXvcKRb+Vl6hoc7OUWlShaw1jOpVhRtUWWbzNS6U1rtKSfkpTfQidn80RnO
-         hNwWqjD108Tn8sMoh8mmM34nM5qoC8buTz28dYTOqNjpnFtRkfrY13vX1pUJURaLq9Px
-         bZoA==
-X-Gm-Message-State: AODbwcBTGj5S42D/wi0CVxQZwgo7GYkJUkW1RBlEOWG+Gkp6ksESdqcW
-        v5ipjv5vcL8cqBFTJErhTA==
-X-Received: by 10.98.252.8 with SMTP id e8mr6697119pfh.190.1494622772793;
-        Fri, 12 May 2017 13:59:32 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:954c:c08b:c855:8b7f])
-        by smtp.gmail.com with ESMTPSA id h28sm631655pfd.55.2017.05.12.13.59.31
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 12 May 2017 13:59:31 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefano Lattarini <stefano.lattarini@gmail.com>,
-        =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>,
-        "Arnold D . Robbins" <arnold@skeeve.com>
-Subject: Re: [PATCH 1/7] compat/regex: add a README with a maintenance guide
-References: <20170504220043.25702-1-avarab@gmail.com>
-        <20170504220043.25702-2-avarab@gmail.com>
-        <xmqqwp9m99zw.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1705121214470.146734@virtualbox>
-Date:   Sat, 13 May 2017 05:59:30 +0900
-In-Reply-To: <alpine.DEB.2.21.1.1705121214470.146734@virtualbox> (Johannes
-        Schindelin's message of "Fri, 12 May 2017 12:15:37 +0200 (CEST)")
-Message-ID: <xmqqbmqx6bbh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1758464AbdELVDC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 17:03:02 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:47231 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758146AbdELVDB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 17:03:01 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout08 with smtp
+        id KZ2y1v0081keHif01Z2zUu; Fri, 12 May 2017 22:03:00 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=JPdLi4Cb c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=N659UExz7-8A:10 a=_hnA9iWeDGu5zDH6B2UA:9 a=pILNOxqGKmIA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] compat/regex: fix compilation on Windows
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <6a6782863a74432094a1d7fba7f2477991ef2d16.1494510612.git.johannes.schindelin@gmx.de>
+ <xmqqd1be98kk.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1705121219150.146734@virtualbox>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <413493c2-24ee-e085-f4cc-371b677d2d02@ramsayjones.plus.com>
+Date:   Fri, 12 May 2017 22:02:58 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <alpine.DEB.2.21.1.1705121219150.146734@virtualbox>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> - rather than scraping the files from the CGit website (which does not
->   guarantee that the first scraped file will be from the same revision as
->   the last scraped file), I would very strongly prefer the files to be
->   copied from a clone of gawk.git, and the gawk.git revision from which
->   they were copied should be recorded in git.git's commit adding them.
 
-Wow, I didn't even notice that was how the "original" came about.
-No question that we should be taking from a known-stable snapshot,
-not from a moving target.
+On 12/05/17 11:25, Johannes Schindelin wrote:
+> Hi Junio,
+> 
+> On Fri, 12 May 2017, Junio C Hamano wrote:
+> 
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>>
+>>> The real issue here is that GNU awk's regex implementation assumes a
+>>> bit too much about the relative sizes of pointers and long integers.
+>>> What they really want is to use intptr_t.
+>>
+>> Good.  I got annoyed enough to do the same myself before opening my
+>> mailbox.  One thing that is curious about your version is that it still
+>> has "#include <stdint.h>" behind HAVE_STDINT_H; when I tried to compile
+>> an equivalent of your change last night, the compilation failed because
+>> intptr_t wasn't available without exposing <stdint.h>
+>>
+>> Where is Windows build getting its intptr_t, I wonder.
+> 
+> I'd place a bet on this part of compat/mingw.h for GCC builds:
+> 
+> 	#ifdef __MINGW64_VERSION_MAJOR
+> 	#include <stdint.h>
+> 	#include <wchar.h>
+> 	typedef _sigset_t sigset_t;
+> 	#endif
+> 
+> and on this part of git-compat-util.h for MSVC builds:
+> 
+> 	#ifndef NO_INTTYPES_H
+> 	#include <inttypes.h>
+> 	#else
+> 	#include <stdint.h>
+> 	#endif
+> 
+> For the record, it seems that our current version of compat/regex/regex.c
+> has this:
+> 
+> 	/* On some systems, limits.h sets RE_DUP_MAX to a lower value than
+> 	   GNU regex allows.  Include it before <regex.h>, which correctly
+> 	   #undefs RE_DUP_MAX and sets it to the right value.  */
+> 	#include <limits.h>
+> 	#include <stdint.h>
+> 
+> while the one in `pu` lacks the last line. That may be the reason why
+> things compiled neatly before, and stopped working for you now.
+
+Yep, see commit bd8f005583. ;-P
+
+So, sparse is, once again, complaining about the SIZE_MAX macro
+redefinition. (Along with two other warnings, one of which is a
+_very_ long standing warning and one of which is new - I have
+yet to investigate).
+
+ATB,
+Ramsay Jones
+
