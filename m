@@ -2,68 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52E95201A0
-	for <e@80x24.org>; Fri, 12 May 2017 00:31:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17CD8201A0
+	for <e@80x24.org>; Fri, 12 May 2017 00:47:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756369AbdELAbV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 20:31:21 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36317 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753288AbdELAbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 20:31:20 -0400
-Received: by mail-pg0-f67.google.com with SMTP id h64so698537pge.3
-        for <git@vger.kernel.org>; Thu, 11 May 2017 17:31:20 -0700 (PDT)
+        id S1757266AbdELArf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 20:47:35 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34827 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754998AbdELAre (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 20:47:34 -0400
+Received: by mail-pf0-f193.google.com with SMTP id u26so5028332pfd.2
+        for <git@vger.kernel.org>; Thu, 11 May 2017 17:47:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=tbmWKVKQq585JHVpQSr7PcJteAXLIChXZqCIXJIixgg=;
-        b=UbX77X3AdfMufM4b2NbucwL3yNZ/XgyNr6iqTm5FMXv/VG391xMoXAV21xsJ6PmOfQ
-         6tNesoWCWxFlXSPQWSg/sXX3wYv4l0mMQ3MQTdLzef7LhhV6e2kATDhITrP9yTeyYztj
-         VVnmkpLBGb1eFJyAUzVnrO5C3eSn8QPlDC+RenU7H1NdAFz5swf0ixmYbA89v83r4qSM
-         PV+/k7/uSqt3q6hqMoJfyTYrcVgWFGlMQHnfuI4L+kTGG0XzT4v3MHh+mv7+6dfthZea
-         iAv1cjfBQIPr1ADunYkxhbHujxOtl8NVJqN50y24LSV5KFoL9jLBe0J1urBHAJvr5SRe
-         9pkQ==
+        bh=/YdiTn40gyG9UstZltN66CPRZ5NlCXx+l1XRGlsjfq4=;
+        b=tQyfNdO5jKTKiY0Z0/ZlPUbEdiCjWq/Bxlt4yV7uAnAU8PoVLcegWxZzaRkTSPplru
+         rdqP+DIxTC8poLnCFy3qOKw+d4/SPCvcXV/BxrQvySvZVmPFUeOvfi8K7wSQMEeYbCIv
+         cEBMiRkvzHeJOl0V6grUqdF3FDXcUptBd+SqFld8OQBWNMqx6BACkrkRH2IZxhHqJcAE
+         HnavtYRn+3MdBqqzFIa7TsX/Vi+N/+b9QDdu9op8p9u402TBAUrZPiXqmoKO5wYiz7+I
+         xv2SpIYkXCXT0yyv9UN3st41ai/42On1aPQcFYgwhG6FqbAumn7El52DApZyVKeFZfv8
+         BU1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=tbmWKVKQq585JHVpQSr7PcJteAXLIChXZqCIXJIixgg=;
-        b=feteePm2TKj/i0/12+d8mpPtGxGVwyNi8ct+2a0kqOyqyB1XBDBc8uxyOE3+hbjEI5
-         nUQQ3PkmYBCizucWsrE0y7+o/Mu1gdNySQykkNSMq14dgB7YIt77O+6SLKEbBSpSs8Qw
-         xOZTdU7WtlgGza78lp3iiuELgyVz2ZaKPHaUCpMQh4QXH+SnFj0035miLDepeO0zMJoD
-         GIVapbrTj6SYfEgwRiiaolskNszpDPtTXS5dSbKyHPHQBqPouuE/vJZdFgcUfyeWUkrD
-         Ha1DZOB5a6pJlIsgMXpRNsPfPwqtUbA8+xRcd44x5jkt5OvJftZtcrGBJBpIgE6d6vP3
-         Ox1Q==
-X-Gm-Message-State: AODbwcBfREZGTj9u1/wxsoRfo8h8OuQE2Z60V7QzWzs4TWeQeOEvcYrP
-        RFpIgdMzHaxN4A==
-X-Received: by 10.98.215.72 with SMTP id v8mr1391768pfl.121.1494549078171;
-        Thu, 11 May 2017 17:31:18 -0700 (PDT)
+        bh=/YdiTn40gyG9UstZltN66CPRZ5NlCXx+l1XRGlsjfq4=;
+        b=emrnqhSlc6AFWTeK7wB7Flf543veZPDyqAbTLFft68cqGOLC3bVEGDuyW+JJny2dkY
+         x68E8iXTYGzr+6b0dmlmdXvFNYuwPkVwBlJ+QQktddesrkwnH3LfRajW9J9yn+yDgVTa
+         hq9a85JEXIdce2KEbhxox9hF2Vza+//8UVn/uxNa9Q49hsG5oKEiTcifArhrv+WrwQyQ
+         DJCrTw988U97Zen8XkR/qAIpfldiCfeGiVaEI+QT489m9Sb9q+r47BrBId9ocnoLOGWz
+         jd8l9bJcHfTS8P/KsnMXdJv53rPtvlELVxSEkNRVei2DdopNyCy9c6kJbmQRvWUoBb0w
+         lBoQ==
+X-Gm-Message-State: AODbwcCopzAQhJuLYNJUrpxxmacIzslMeaMvPa66lwmkPrf/BZsU9Fyc
+        lNkZRDUuE2qhfg==
+X-Received: by 10.98.1.134 with SMTP id 128mr1434270pfb.199.1494550053227;
+        Thu, 11 May 2017 17:47:33 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:91c4:5195:150f:b3e6])
-        by smtp.gmail.com with ESMTPSA id f193sm1889111pgc.54.2017.05.11.17.31.15
+        by smtp.gmail.com with ESMTPSA id x5sm2150409pfi.94.2017.05.11.17.47.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 17:31:15 -0700 (PDT)
+        Thu, 11 May 2017 17:47:32 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
         Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
         Stefano Lattarini <stefano.lattarini@gmail.com>,
-        =?utf-8?B?T25kxZllaiBC?= =?utf-8?B?w61sa2E=?= <neleai@seznam.cz>,
+        =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>,
         "Arnold D . Robbins" <arnold@skeeve.com>
-Subject: Re: [PATCH 0/7] Update the compat/regex engine from upstream
+Subject: Re: [PATCH 1/7] compat/regex: add a README with a maintenance guide
 References: <20170504220043.25702-1-avarab@gmail.com>
-Date:   Fri, 12 May 2017 09:31:14 +0900
-In-Reply-To: <20170504220043.25702-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+        <20170504220043.25702-2-avarab@gmail.com>
+Date:   Fri, 12 May 2017 09:47:31 +0900
+In-Reply-To: <20170504220043.25702-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
  =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 4 May 2017 22:00:36 +0000")
-Message-ID: <xmqq4lwqapbh.fsf@gitster.mtv.corp.google.com>
+        Bjarmason"'s message of "Thu, 4 May 2017 22:00:37 +0000")
+Message-ID: <xmqqwp9m99zw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -75,64 +74,69 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> See the first patch for motivation & why.
-> ...
+> diff --git a/compat/regex/README b/compat/regex/README
+> new file mode 100644
+> index 0000000000..345d322d8c
+> --- /dev/null
+> +++ b/compat/regex/README
+> @@ -0,0 +1,21 @@
+> +This is the Git project's copy of the GNU awk (Gawk) regex
+> +engine. It's used when Git is build with e.g. NO_REGEX=NeedsStartEnd,
+> +or when the C library's regular expression functions are otherwise
+> +deficient.
+> +
+> +This is not a fork, but a source code copy. Upstream is the Gawk
+> +project, and the sources should be periodically updated from their
+> +copy, which can be done with:
+> +
+> +    for f in $(find . -name '*.[ch]' -printf "%f\n"); do wget http://git.savannah.gnu.org/cgit/gawk.git/plain/support/$f -O $f; done
+> +
+> +For ease of maintenance, and to intentionally make it inconvenient to
+> +diverge from upstream (since it makes it harder to re-merge) any local
+> +changes should be stored in the patches/ directory, which after doing
+> +the above can be applied as:
+> +
+> +    for p in patches/*; do patch -p3 < $p; done
+> +
+> +For any changes that aren't specific to the git.git copy please submit
+> +a patch to the Gawk project and/or to the GNU C library (the Gawk
+> +regex engine is a periodically & forked copy from glibc.git).
 
-I do not necessarily agree with the upgrading strategy outlined in
-1/7, but that is a separate issue.  There may be some other bits
-that needs resurrecting out of "git log -p master compat/regex/",
-but I cannot test them myself (the part changed by the following
-patch have no effect in an environment where long is intptr_t, so
-"make NO_REGEX=YesPlease" build does not fail for me), so I'm
-letting Dscho's Windows builder find it out via Travis.
+I am not a huge fan of placing patch files under version control.
 
--- >8 --
-Date: Fri, 12 May 2017 09:00:07 +0900
-Subject: [PATCH] compat/regex: make it compile with -Werror=int-to-pointer-cast
+If I were doing the "code drop from the outside world from time to
+time", I'd rather do the following every time we update:
 
-The change by 56a1a3ab ("Silence GCC's "cast of pointer to integer
-of a different size" warning", 2015-10-26) may need resurrecting; I
-do not think an unprotected #include <stdint.h> is the best way to
-do this, but for the purpose of places that needs further work,
-thishsould do.
+ - have a topic branch for importing version N+1, and in its first
+   commit, replace compat/regex/ with the pristine copy of the files
+   we'll borrow from version N+1.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- compat/regex/regcomp.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ - ask "git log -p compat/regex/" to grab all changes made to the
+   directory, and stop at the commit that imported the pristine copy
+   of the files we borrowed from version N.  These are the changes
+   we made to the pristine copy of version N to adjust it to our
+   needs.
 
-diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
-index 5e9ea26cd4..5688a639bf 100644
---- a/compat/regex/regcomp.c
-+++ b/compat/regex/regcomp.c
-@@ -24,9 +24,7 @@
-    License along with the GNU C Library; if not, see
-    <http://www.gnu.org/licenses/>.  */
- 
--#ifdef HAVE_STDINT_H
- #include <stdint.h>
--#endif
- 
- #ifdef HAVE_STRINGS_H
- #include <strings.h>
-@@ -2641,7 +2639,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
-     old_tree = NULL;
- 
-   if (elem->token.type == SUBEXP)
--    postorder (elem, mark_opt_subexp, (void *) (long) elem->token.opr.idx);
-+    postorder (elem, mark_opt_subexp, (void *) (intptr_t) elem->token.opr.idx);
- 
-   tree = create_tree (dfa, elem, NULL, (end == -1 ? OP_DUP_ASTERISK : OP_ALT));
-   if (BE (tree == NULL, 0))
-@@ -3868,7 +3866,7 @@ create_token_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
- static reg_errcode_t
- mark_opt_subexp (void *extra, bin_tree_t *node)
- {
--  int idx = (int) (long) extra;
-+  int idx = (int) (intptr_t) extra;
-   if (node->token.type == SUBEXP && node->token.opr.idx == idx)
-     node->token.opt_subexp = 1;
- 
--- 
-2.13.0-334-gbb1c091dbc
+ - cherry-pick these patches on the topic branch; some of them
+   hopefully have been upstreamed, the remainder of the patches are
+   presumably to adjust the code to our local needs.
 
+ - make more changes, while still on the topic branch, to adjust the
+   code to our local and current needs.
+
+ - once the result becomes buildable and tests OK, merge it back to
+   the mainline.
+
+This may break bisectability, but I think it is OK (you should be
+able to skip and test only first-parent chain, treating as if these
+are squashed together into a single change).  The patch files your
+approach is keeping will become the individual patches on the topic
+branch, and will be explained and justified the same way as any
+other patches in their commit log message.
+
+Having said all that, since I am not expecting to be the primary one
+working in this area, I'll let you (who I take to be volunteering to
+be the one) pick the approach that you would find the easiest and
+least error prone to handle this task.
+
+Thanks.
