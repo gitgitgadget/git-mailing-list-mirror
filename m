@@ -2,94 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A957220188
-	for <e@80x24.org>; Fri, 12 May 2017 11:09:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A02220188
+	for <e@80x24.org>; Fri, 12 May 2017 08:58:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932514AbdELLJY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 07:09:24 -0400
-Received: from mout.gmx.net ([212.227.15.19]:53795 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932184AbdELLJX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 07:09:23 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ljqgb-1dk7xI33VJ-00bsO0; Fri, 12
- May 2017 13:09:05 +0200
-Date:   Fri, 12 May 2017 13:09:03 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/11] Start retiring .git/remotes/ and .git/branches/
- for good
-In-Reply-To: <20170512091104.5yl57m4x6z5oxq3r@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.21.1.1705121304310.146734@virtualbox>
-References: <cover.1494509599.git.johannes.schindelin@gmx.de> <20170512091104.5yl57m4x6z5oxq3r@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1755284AbdELI6s (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 04:58:48 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:34152 "EHLO
+        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751282AbdELI6q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 04:58:46 -0400
+Received: by mail-io0-f169.google.com with SMTP id k91so36398084ioi.1
+        for <git@vger.kernel.org>; Fri, 12 May 2017 01:58:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=vp9r5Jspa5+OPG4gBxH+txVZcjYbF3uAptumduQARBI=;
+        b=fZ3L6bELc7zXYzI2jjLLfLsAtEdpIAkKF59GA+No7jnwFh0Ne8JLMKGrAf2KyFp7XK
+         PXNXOe/3L7OXkZCAUo/+yZWdi3slfqzJ1itZ/HtLj2mfCVQbIxKVbBpYKMwGr3PuFIYR
+         FDmjDHPIBGYGdjDYXe/e3FxmD2AG1KFceCc4Ggr9ixQp0o+N8SivowFrP+Dk8NXANhpf
+         jmhi/E1ph8/PX31wty4SEGNwf3rpPnWI7kRf8lj4WdNTSaiHC7VcbcoHdKwtEFOGMQUb
+         SlsGDBcTBRlu7hNid0DjeIb6J3LvaO7+saEdPdoZYlGSOhbR09L7OANk0YUKEvPCpZsM
+         IvMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vp9r5Jspa5+OPG4gBxH+txVZcjYbF3uAptumduQARBI=;
+        b=etQpa82iz/X4A792uyvup7kuL0r+0BijZ9GR41jvNmOqppskxLwuIx4Q3Csn8VMmUc
+         zZBAFT3+JaoeT9+1B77fprBQ1Vwjba00w4lWrUe0Mc2rb8ig84RPfgEoWraGmwdjyTtF
+         4dGGzOIvM9iKs3UZE57XoL4zppYArr5MgJCZVcCaqxwzvVYp3R7aWh13SXa2GG375uXM
+         HrA130Ga2s2JzfsWhvjZF6JuR2V6PPxFbYltecq2KkVY5CsJdljOb5dzU71ZN94Ckiyd
+         NDTBU1gUD5IrJGQOtv7uwQoIT+9B8UmhFQs9uNe8b4GIjJMoRatNyiS4Twm96lbbjE1g
+         +TAA==
+X-Gm-Message-State: AODbwcDvqEXvlie0hFT+Kw2Ho0R8q3wNH0XtcM/ILgohNjVQ0Nk2fkXr
+        wDmqQCUnNFHZM6qq4gai0/ZeFAi5hg==
+X-Received: by 10.107.178.12 with SMTP id b12mr2375392iof.50.1494579525402;
+ Fri, 12 May 2017 01:58:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gqEeqxcZ9+4i1BYx7JjblF/e9cqJhBNGmrPmAQixijWmnskgOTL
- TJxgWSrwjkHZ7+p5lRVml16lubXBIv9G7ketzlbil3+uwNOjerluFyD2c0LftzfqlofJPcB
- lB1/6D0Ok2yIElaaYdcdyRMP9+nvgNY2ROZbkpzyMxNSYkDx4ah4Tj0u4V6OopPCoWdWOOd
- 3eWsh42o3y3qWWrBvJbOg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QjswsJy4QPE=:VRhneKoHWlP81NBurlRDor
- E5ivWDjCIEoIxCscZ8XmOEh8if0Oy1w4oPKf32F4r1xnGrksB8M0cScwKf4A1zNzflxEGMQuW
- UUwEwK2bSVJnZd0o4GNsurGvfbL5+DtVjVH4+UqI78pZ6uHhcqYgpu5DjVM/y8eI6Wz22ajQ4
- 0vbWCUH3fpTYrj74Lb8WJZSuTvuiWLTncrw8+FfTp5wRM+p74re0REbawH7iI0WUeWCHmEswU
- rzudgGpxhvYnFcN5V+OI5HX8C5iwBMqlVH+9naHGgjXBi7Fwobejn49rSt3Q/EOD3LI+DXpUU
- qRO5I/k65xdybgRP9XrULiLl6cE5nAo9GsdB0K5Wy1ccaiHWvi22jhlHDo9sVRmVsCrmfD6Rz
- UsrFxX3dn8iiHbKMyb3Y/iqInLOLRUKCvClv2nKGEU7cnHa1Zryj4+WkeJtGL+5RO5b7/8apW
- UnuiQNbKhpSrMqWy6Ry7c1z0xTecTA6wQJ6z+M+EUH9CBEWkRQ5cgh2taOp65N4IUoKRqGZG4
- t5y9l37Ez+T2XcdpyA4Yxx9QBwKnQ8cruiKgMU3PMZ/VF40JjNxo5vQkA4CaWW6TAm8FP0WK8
- +ZEfd6Qgl00QtrJz/T0H5zrigMEwtQMCswuxm3xNT2JKV3Yy8gu8dVDdGIDhMIuBRaJ3l23XE
- 2XuPsrScIkIjkjr/WMXe7+WjxiP2ccuIsrqD+91PGaddugTT0UF+cMQQFckHaVhuErnsxs6YT
- yRpQrxlcd1XJ6tDOrdIVVvVYzF11hkFa1H2Fo7W/gGNH95q0gOVZ/Mpm4GHSmythoFIqqkdDd
- k+lHfHM
+Received: by 10.107.8.220 with HTTP; Fri, 12 May 2017 01:58:24 -0700 (PDT)
+In-Reply-To: <F55DC360-9C1E-45B9-B8BA-39E1001BD620@gmail.com>
+References: <F55DC360-9C1E-45B9-B8BA-39E1001BD620@gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 12 May 2017 10:58:24 +0200
+Message-ID: <CACBZZX7-Gw7G7yY=ah6AQCJKzWKB002iAo6RNJwZmvMRe4Pd+w@mail.gmail.com>
+Subject: Re: Possible bug in includeIf / conditional includes on non git
+ initialised directories
+To:     Raphael Stolt <raphael.stolt@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Thu, May 11, 2017 at 8:53 PM, Raphael Stolt <raphael.stolt@gmail.com> wr=
+ote:
+> Hi there,
+>
+> I might have stumbled this time over a real bug in includeIf / conditiona=
+l includes or maybe it's just as intended.
+> 1) Given I have a correct configured includeIf and I=E2=80=99m issuing `g=
+it config --show-origin --get user.email` against an directory which hasn=
+=E2=80=99t been `git init`ed I get the user.email configured globally.
+> 2) Given I have a correct configured includeIf and I=E2=80=99m issuing `g=
+it config --show-origin --get user.email` against an directory which has be=
+en `git init`ed I get the user.email configured conditionally.
+> For 1) I would probably expect to get the user.email configured condition=
+ally even for a plain directory.
+>
+> More details see this (http://stackoverflow.com/questions/43919191/git-2-=
+13-conditional-config-on-windows/) Stack Overflow question.
+> Best regards,
+> Raphael Stolt
 
-On Fri, 12 May 2017, Jeff King wrote:
-
-> On Thu, May 11, 2017 at 03:47:33PM +0200, Johannes Schindelin wrote:
-> 
-> > Git uses the config for remote/upstream information in favor of the
-> > previously-used .git/remotes/ and .git/branches/ for a decade now.
-> > 
-> > Nothing in Git writes to these files any longer, and the most
-> > prominent user of .git/branches/ (Cogito) is long abandoned.
-> > 
-> > It is time to start not only deprecating this feature, but *really*
-> > deprecating it. Like, really, *really*. For reals.
-> 
-> I like the goal, and the patches themselves (both the deprecations and
-> the actual removal) all look good to me.
-
-Thanks!
-
-> If we want to start slow (and if Junio is right that there may be some
-> people who are actually using this feature, we probably should), step 0
-> may be making people aware that it's on the horizon, even before we
-> start issuing annoying warnings to them. This thread does that to some
-> degree, but we could also put it in the release notes for a version.
-> That's not guaranteed to get people's attention, but it gives more
-> opportunity for them to speak up before installing a version of Git that
-> produces warnings whenever they fetch.
-
-Okay. I do not think there is any value in putting this into the release
-notes, of course, as 1) next to nobody reads them, at least not closely,
-and 2) people who still use .git/branches/ very clearly missed the release
-notes of a decade ago that .git/branches/ is not the way to go.
-
-Of course, it takes what it takes. If we spend 6+ cycles deprecating a
-feature that only one person may still use, for what we know, so be it.
-
-Ciao,
-Dscho
+The "this is how this works" has been covered already by others, but
+can you elaborate on the use-case, why does it matter for you that
+"git config" doesn't show your user.email when you have no git dir
+there, I can't think of a reason for why this would matter since
+there's no .git there, so there's no way anything can use the config
+info at that location.
