@@ -6,137 +6,77 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17CD8201A0
-	for <e@80x24.org>; Fri, 12 May 2017 00:47:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EB2F201A0
+	for <e@80x24.org>; Fri, 12 May 2017 00:54:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757266AbdELArf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 20:47:35 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34827 "EHLO
+        id S1757291AbdELAyu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 20:54:50 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34930 "EHLO
         mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754998AbdELAre (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 20:47:34 -0400
-Received: by mail-pf0-f193.google.com with SMTP id u26so5028332pfd.2
-        for <git@vger.kernel.org>; Thu, 11 May 2017 17:47:33 -0700 (PDT)
+        with ESMTP id S1756954AbdELAyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 20:54:49 -0400
+Received: by mail-pf0-f193.google.com with SMTP id u26so5044848pfd.2
+        for <git@vger.kernel.org>; Thu, 11 May 2017 17:54:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=/YdiTn40gyG9UstZltN66CPRZ5NlCXx+l1XRGlsjfq4=;
-        b=tQyfNdO5jKTKiY0Z0/ZlPUbEdiCjWq/Bxlt4yV7uAnAU8PoVLcegWxZzaRkTSPplru
-         rdqP+DIxTC8poLnCFy3qOKw+d4/SPCvcXV/BxrQvySvZVmPFUeOvfi8K7wSQMEeYbCIv
-         cEBMiRkvzHeJOl0V6grUqdF3FDXcUptBd+SqFld8OQBWNMqx6BACkrkRH2IZxhHqJcAE
-         HnavtYRn+3MdBqqzFIa7TsX/Vi+N/+b9QDdu9op8p9u402TBAUrZPiXqmoKO5wYiz7+I
-         xv2SpIYkXCXT0yyv9UN3st41ai/42On1aPQcFYgwhG6FqbAumn7El52DApZyVKeFZfv8
-         BU1A==
+         :user-agent:mime-version;
+        bh=k8wfdPVplNvhJay6rNEzJ+q3bIwU7ihl7qjQcmdHzzU=;
+        b=mSrdkAoNTy76qj4T98/PdPdF1CYRgf4CPfbjRCWOg4TYJanTK7faAW1BauQYb3n4/U
+         gkEAGbz+9XYk/lVbMiXtRFShWK7l0qqFbwa4DxNWrPTHXDeWE8wwKeNL+GocOmrcMJxC
+         h14hXt8/kos80O2bnkzWmHPXdUqwwFtQP6LKcHCSKGMqX+4e/xRH+4K9/YLjqestj02G
+         GArijqaGOCVXm7hhXAMBCL+8IGBeRW2a8Q8zINWEwqUdmUTFjjAXzXwwvZOTU2RtP+2m
+         JwKr2NpiVEvN7+WmqlZ0aF4maGb991CrjsZiSQo9sw06nndl3k0cuVnzPWRPVMCOEDik
+         vToQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=/YdiTn40gyG9UstZltN66CPRZ5NlCXx+l1XRGlsjfq4=;
-        b=emrnqhSlc6AFWTeK7wB7Flf543veZPDyqAbTLFft68cqGOLC3bVEGDuyW+JJny2dkY
-         x68E8iXTYGzr+6b0dmlmdXvFNYuwPkVwBlJ+QQktddesrkwnH3LfRajW9J9yn+yDgVTa
-         hq9a85JEXIdce2KEbhxox9hF2Vza+//8UVn/uxNa9Q49hsG5oKEiTcifArhrv+WrwQyQ
-         DJCrTw988U97Zen8XkR/qAIpfldiCfeGiVaEI+QT489m9Sb9q+r47BrBId9ocnoLOGWz
-         jd8l9bJcHfTS8P/KsnMXdJv53rPtvlELVxSEkNRVei2DdopNyCy9c6kJbmQRvWUoBb0w
-         lBoQ==
-X-Gm-Message-State: AODbwcCopzAQhJuLYNJUrpxxmacIzslMeaMvPa66lwmkPrf/BZsU9Fyc
-        lNkZRDUuE2qhfg==
-X-Received: by 10.98.1.134 with SMTP id 128mr1434270pfb.199.1494550053227;
-        Thu, 11 May 2017 17:47:33 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=k8wfdPVplNvhJay6rNEzJ+q3bIwU7ihl7qjQcmdHzzU=;
+        b=UtcmrfKGKz9ifW4V54eIDFxIiBCKFRT9dz2NZpUppoblYfkojglOxRapOaugllQ7Bz
+         +2+3fBxrnKy2qliDkVxYVbpFr11wUcaiXTRw/AeG6C4jO5ghlMvK/FK3xAaD+5s3kWCx
+         ayV1UGK4Cs5ZUAYEfjlYuvcMbv7uLGlMMV+klIHNfcqJbXPR2CgkEpUsuD0FhU7/brZA
+         jwZknh2ONyGTqK10cR7nUyk5fi2F9Gh8zfqbh34XW953yeLUSzWWKtCwOOFsstUWxoYC
+         Hkrd6BILBo9xtceBxZ856WGdzT751eSjw912Fja9T32yui8u0fl/eMVtRm4G5jmjqvu5
+         0W4g==
+X-Gm-Message-State: AODbwcCkNbKBlr2HH+iPesNAynF7cscmHZmffkSGHgIbwJFLKFpasSl6
+        U+oBbOtCRWAYNQptlow=
+X-Received: by 10.84.215.197 with SMTP id g5mr1888282plj.131.1494550488203;
+        Thu, 11 May 2017 17:54:48 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:91c4:5195:150f:b3e6])
-        by smtp.gmail.com with ESMTPSA id x5sm2150409pfi.94.2017.05.11.17.47.32
+        by smtp.gmail.com with ESMTPSA id i63sm2201981pgc.26.2017.05.11.17.54.47
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 17:47:32 -0700 (PDT)
+        Thu, 11 May 2017 17:54:47 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-        Stefano Lattarini <stefano.lattarini@gmail.com>,
-        =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>,
-        "Arnold D . Robbins" <arnold@skeeve.com>
-Subject: Re: [PATCH 1/7] compat/regex: add a README with a maintenance guide
-References: <20170504220043.25702-1-avarab@gmail.com>
-        <20170504220043.25702-2-avarab@gmail.com>
-Date:   Fri, 12 May 2017 09:47:31 +0900
-In-Reply-To: <20170504220043.25702-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 4 May 2017 22:00:37 +0000")
-Message-ID: <xmqqwp9m99zw.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 8/8] pathspec: convert parse_pathspec to take an index
+References: <20170509191805.176266-1-bmwill@google.com>
+        <20170509191805.176266-9-bmwill@google.com>
+        <xmqq1srxxn72.fsf@gitster.mtv.corp.google.com>
+        <20170510170226.GB41649@google.com>
+        <xmqqh90sw4dr.fsf@gitster.mtv.corp.google.com>
+        <20170511173605.GB83655@google.com>
+Date:   Fri, 12 May 2017 09:54:46 +0900
+In-Reply-To: <20170511173605.GB83655@google.com> (Brandon Williams's message
+        of "Thu, 11 May 2017 10:36:05 -0700")
+Message-ID: <xmqqshka99nt.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> diff --git a/compat/regex/README b/compat/regex/README
-> new file mode 100644
-> index 0000000000..345d322d8c
-> --- /dev/null
-> +++ b/compat/regex/README
-> @@ -0,0 +1,21 @@
-> +This is the Git project's copy of the GNU awk (Gawk) regex
-> +engine. It's used when Git is build with e.g. NO_REGEX=NeedsStartEnd,
-> +or when the C library's regular expression functions are otherwise
-> +deficient.
-> +
-> +This is not a fork, but a source code copy. Upstream is the Gawk
-> +project, and the sources should be periodically updated from their
-> +copy, which can be done with:
-> +
-> +    for f in $(find . -name '*.[ch]' -printf "%f\n"); do wget http://git.savannah.gnu.org/cgit/gawk.git/plain/support/$f -O $f; done
-> +
-> +For ease of maintenance, and to intentionally make it inconvenient to
-> +diverge from upstream (since it makes it harder to re-merge) any local
-> +changes should be stored in the patches/ directory, which after doing
-> +the above can be applied as:
-> +
-> +    for p in patches/*; do patch -p3 < $p; done
-> +
-> +For any changes that aren't specific to the git.git copy please submit
-> +a patch to the Gawk project and/or to the GNU C library (the Gawk
-> +regex engine is a periodically & forked copy from glibc.git).
+> ...  Note that if we go with the route to not pass
+> in an index now, it doesn't necessarily mean that down the line we won't
+> have to pass a 'repository' instance into parse_pathspec().
 
-I am not a huge fan of placing patch files under version control.
+Correct.  
 
-If I were doing the "code drop from the outside world from time to
-time", I'd rather do the following every time we update:
-
- - have a topic branch for importing version N+1, and in its first
-   commit, replace compat/regex/ with the pristine copy of the files
-   we'll borrow from version N+1.
-
- - ask "git log -p compat/regex/" to grab all changes made to the
-   directory, and stop at the commit that imported the pristine copy
-   of the files we borrowed from version N.  These are the changes
-   we made to the pristine copy of version N to adjust it to our
-   needs.
-
- - cherry-pick these patches on the topic branch; some of them
-   hopefully have been upstreamed, the remainder of the patches are
-   presumably to adjust the code to our local needs.
-
- - make more changes, while still on the topic branch, to adjust the
-   code to our local and current needs.
-
- - once the result becomes buildable and tests OK, merge it back to
-   the mainline.
-
-This may break bisectability, but I think it is OK (you should be
-able to skip and test only first-parent chain, treating as if these
-are squashed together into a single change).  The patch files your
-approach is keeping will become the individual patches on the topic
-branch, and will be explained and justified the same way as any
-other patches in their commit log message.
-
-Having said all that, since I am not expecting to be the primary one
-working in this area, I'll let you (who I take to be volunteering to
-be the one) pick the approach that you would find the easiest and
-least error prone to handle this task.
-
-Thanks.
+An attribute annotated pathspec may want to check if the attributes
+used in it are used in the repository at all for validation or
+optimization purposes, for example.
