@@ -2,351 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9EAD20188
-	for <e@80x24.org>; Fri, 12 May 2017 07:23:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 159FC1FF34
+	for <e@80x24.org>; Fri, 12 May 2017 14:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757086AbdELHXa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 03:23:30 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:37941 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756302AbdELHX3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 03:23:29 -0400
-Received: by mail-it0-f49.google.com with SMTP id e65so32712050ita.1
-        for <git@vger.kernel.org>; Fri, 12 May 2017 00:23:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=oaUx3jAFt3S8lqoGkBBX93NOq/g1dOKqdk3wti0oHAE=;
-        b=WY4Oqp8FTsF1P2qs2yX6JKVWrfSmYqjT2ewxn45r0FSvDe5YK0fZ8Uyk/BHuxO/k/z
-         mDjz7NPn/niVRDWYq6ULOyN/O7351oDH9qqkAmUWiYHM29C4JnvUNTEzdxzRilkKPmA3
-         J8XDQwiPNdJGH5zSgqyi5ekO2gfv0zDmqijrlXhxF6Plo4zmN6BusvMMMuPfcNFjkjB7
-         b3y0wkGVEA8zEseDRjuavotn3BK+H2M5tGOwch2hfv2zuV7WsOpWwyk9F8IFjZ85DL2I
-         l39Aosf3vSk2mIVXXRRiqQKFGInUq1mGUgXrKI/u/8xBlPP+ppMi+43XZcTrgtoe8e1W
-         7+Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=oaUx3jAFt3S8lqoGkBBX93NOq/g1dOKqdk3wti0oHAE=;
-        b=sAZr+nDKt+vN84LN5Z41QovvhoazLfgwND3Yz9dsLYrzujg501o1E5NA4uX83A3y0J
-         F/aTD8uDxj7XrSlXn7noMx6hW9olZ4YKKvBTUl4rRTTpqef0bGYSQc43Pmrf22Ep196h
-         uqUOCW9NFPfmhXUz6MyElyfJoCiWjtZ7NGGaoG8xit4qbcnXmuTnNp6fIHKdoU+SzEUZ
-         UG0AiPTZk8HYC913Kdt/eCNLNIpx2Q4beVfUDkLsVJ03qG6xc4pI+Z9JTj4ydNWSSKMt
-         zc6J6SA6khF6stX4+/rqMaRPg7qqRLT6VsTKV+6bE8TAFZ+C5ly8IJehwtL5u4Y/F23A
-         Dcjg==
-X-Gm-Message-State: AODbwcCwrtdYMNHzTmgUWCfq18HEs7so2LKZJFpp1NxLY+ORy6nPauvX
-        VjbdLyZavPfDaaGdoAO9EseGdzHt6AAdkSU=
-X-Received: by 10.36.166.4 with SMTP id q4mr2228993ite.66.1494573808555; Fri,
- 12 May 2017 00:23:28 -0700 (PDT)
+        id S1757761AbdELOUC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 10:20:02 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52699 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1757418AbdELOUC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 10:20:02 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Le69A-1dnnZg0ebc-00pu6b; Fri, 12
+ May 2017 16:19:56 +0200
+Date:   Fri, 12 May 2017 16:19:55 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 00/11] Start retiring .git/remotes/ and .git/branches/
+ for good
+In-Reply-To: <xmqqfuga5lp2.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1705121617420.146734@virtualbox>
+References: <cover.1494509599.git.johannes.schindelin@gmx.de> <xmqqk25m98rd.fsf@gitster.mtv.corp.google.com> <xmqqfuga5lp2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Fri, 12 May 2017 00:23:07 -0700 (PDT)
-In-Reply-To: <20170511193753.19594-1-jonathantanmy@google.com>
-References: <20170511193753.19594-1-jonathantanmy@google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 12 May 2017 09:23:07 +0200
-Message-ID: <CACBZZX74dsTJtAQdrMmEDPKOVdEaiL4dGrmz9OZ3jQhhmr5xEA@mail.gmail.com>
-Subject: Re: [RFC] send-email: support validate hook
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:aSV8r5/CGC1CNuT32GPU3q7MJYvo2PMcrvxQzRPudJFV6Tgn/ys
+ OfeijwRwEVFXafNK9fywGwOI94YEp6oQBg/mD4IK5faYyIL+o2L+/ZbHATHOm6H2mUPKo+E
+ lav07faXbAaHztNavjLkvf7Vx0N5LaJUFAnqdVxdfXI9lZaMMWmqplumMjnD7HblSIhG122
+ PBDy2lDtsjqSKXy0Qauow==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OVwzfian2R8=:o+fjy8iitZB7obbOGGWkkS
+ ZBT6O8VfrvqjkBdiNv/Qm6yxdo9OtviQOMeS3WKSTo+Q3pIwOYUSRqeYNNndC/zNNszCs8Q/R
+ AqbrL0SdCJ38wvW2am4peBxPDX6ZXsTEL1eXhAycnkwuJ2pYazD4VKlpeJ0Zb8cVyLvIQCelS
+ bepRNQdmrXEBzVW8Nz1LGoJYM6P7EwGQt+RLN5W52KNgu35XJUhrihipebt1nQ7F83Yx+XvDV
+ gxgW+lpJHyK5mOb1vWfkBLF3VQ69WQ+Pr/Th90USdZB898FNsDCRQO/2L7ZOvRYO8BUbGwOI6
+ 6iVf8N30wcseNAIUtMNdgCmi5zYGF6Fhq54RLpgb29AhWAY8kgz316aISP0bse2lrH/AtF/0N
+ JPZF0qqGRc8X/R9UwFpzNLCY84GZRkEKDhhoZGaeIl8lE1EQoIgUrongNWB4jm99mALy1FfVj
+ Z0C8BhEigB3Fb0Nhde8G+HWoGQb+/Mka795t7s4BoriOMsj+7yg+pvhDjfXFThT0MIxcyt4Z/
+ u1LEnM4m0eueF0jID6TYC/XyYx0Y7Scqt0njrx9GBJDvomkusjV6sOA1cSe0P9GwkTvLXtUVm
+ +42ltPHAfZ55MqglLwUm2jFarmsFCgJAkYD4GdZJbD9hchu6OFoxPrmJotuKIy6CEo8SI/3L3
+ +mrkIgTNUlGDnuyQLQw+Z+CnDYhVv2Qrbx9EO48m4mKtgTr19qAJ1KEOnEy6SzWz9i3Q98tIe
+ gDwRYEkkYb1L1XAnQMqO2kXiCTlKwqeZenUdAxU+fQbTiV2tudakgxooLuW7l32o7ui72csmz
+ yEcPLPn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 11, 2017 at 9:37 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> Currently, send-email has support for rudimentary e-mail validation.
-> Allow the user to add support for more validation by providing a
-> sendemail-validate hook.
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->
-> This is motivated by situations in which we discuss a work in progress
-> using Gerrit (which requires Change-Id trailers in patches), and then,
-> forgetting to remove the Change-Id trailers, send them to the Git
-> mailing list (which does not want such trailers). I can envision such
-> functionality being useful in other situations, hence this patch
-> submission.
->
-> I'm not very familiar with Perl, and "There Is More Than One Way To Do
-> It", so advice on Perl style is appreciated.
+Hi Junio,
 
+On Fri, 12 May 2017, Junio C Hamano wrote:
 
-I hacked this up last night, it also addresses Junio's comment about GIT_DIR:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >
+> >> Git uses the config for remote/upstream information in favor of the
+> >> previously-used .git/remotes/ and .git/branches/ for a decade now.
+> >
+> > The last time I thought about trying this several years ago, I found
+> > that people who need to grab things from many places still do use
+> > .git/branches/ and their use case is hard to migrate to .git/config,
+> > primarily because the former is "one per file" and it is easy to
+> > add/remove/tweak without affecting others.  Ask akpm@ if he still
+> > prefers to use .git/branches/ for example.
+> 
+> FWIW, I do not think there is any reason for people to be using
+> .git/remotes/, but for .git/branches/, I do not think I can offer a
+> more efficient and easier to use alternative based on .git/config to
+> do these things:
+> 
+>  $ grep <substring> .git/branches/* ;# what did I call that remote?
+>  $ cat .git/branches/$name ;# where do I get that from?
+>  $ echo "$URL#$branch" >.git/branches/$name ;# I just learned a new src
+>  $ rm .git/branch/$name ;# I no longer need it
+> 
+> without having to learn things experienced CLI/UNIX person already
+> knows.
 
-+++ b/git-send-email.perl
-@@ -25,7 +25,7 @@ use Getopt::Long;
- use Text::ParseWords;
- use Term::ANSIColor;
- use File::Temp qw/ tempdir tempfile /;
--use File::Spec::Functions qw(catfile);
-+use File::Spec::Functions qw(catdir catfile);
- use Error qw(:try);
- use Cwd qw(abs_path cwd);
- use Git;
-@@ -629,22 +629,19 @@ if (@rev_list_opts) {
- @files = handle_backup_files(@files);
+I do not understand what you want to tell me with that example. It is
+confusing me utterly.
 
- if ($validate) {
--       my @hook = ($repo->repo_path().'/hooks/sendemail-validate', '');
--       my $use_hook = -x $hook[0];
--       if ($use_hook) {
--               # The hook needs a correct GIT_DIR.
--               $ENV{"GIT_DIR"} = $repo->repo_path();
--       }
-+       my $validate_hook = catfile(catdir($repo->repo_path(),
-'hooks'), 'sendemail-validate');
-        foreach my $f (@files) {
-                unless (-p $f) {
-                        my $error;
--                       if ($use_hook) {
--                               $hook[1] = abs_path($f);
-+                       if (-x $validate_hook) {
-+                               my $target = abs_path($f);
-                                my $cwd_save = cwd();
--                               chdir($repo->wc_path() or $repo->repo_path());
-+                               chdir($repo->wc_path() or
-$repo->repo_path()) or die "chdir: $!";
-+                               # The hook needs a correct GIT_DIR.
-+                               local $ENV{"GIT_DIR"} = $repo->repo_path();
-                                $error = "rejected by sendemail-validate hook"
--                                       unless system(@hook) == 0;
--                               chdir($cwd_save);
-+                                       if system($validate_hook, $target);
-+                               chdir($cwd_save) or die "chdir: $!";
-                        }
-                        $error = validate_patch($f) unless $error;
-                        $error and die sprintf(__("fatal: %s:
-%s\nwarning: no patches were sent\n"),
+> We simply cannot beat the above with anything like 
+> 
+>     $ git config remote.$name.fetch refs/heads/$branch
+> 
+> even though the config based remote definition may be infinitely
+> more powerful.
 
-Changes there:
+Then maybe we need to teach, say, `git remote` to be that powerful?
 
- * use catdir instead of string concat, I don't know if we run
-format-patch on any platform where this matters in theory (e.g. VMS I
-think), but the file uses that API already, so continue using it.
- * Just make this more brief by moving the -x test into the loop,
-we're sending E-Mail here, no need to optimize stat calls (you did ask
-for style advice :)
-* Check the return value of chdir & die appropriately
-* localize GIT_DIR
-* "die if system" is more idiomatic than "die unless system == 0"
+> > Is it really hurting us having to support these old information
+> > sources we treat as read-only?
+> 
+> And this one is also important.  I do not think we had to touch any
+> code that handles .git/remotes/ or .git/branches when we extended
+> the .git/config based configuration for remotes, simply because the
+> old data source are pretty much frozen read-only places these days.
 
-Or actually just move this into a function:
+Okay. But by the same reasoning, I want to hear nothing from you anymore
+about the sort of maintenance burden you talked about in the ssh_variant
+patches. That burden was ridiculously small compared to what you tell me
+you want to keep (and for a single user that may have moved on). Not one
+word.
 
-@@ -629,23 +629,11 @@ if (@rev_list_opts) {
- @files = handle_backup_files(@files);
-
- if ($validate) {
--       my @hook = ($repo->repo_path().'/hooks/sendemail-validate', '');
--       my $use_hook = -x $hook[0];
--       if ($use_hook) {
--               # The hook needs a correct GIT_DIR.
--               $ENV{"GIT_DIR"} = $repo->repo_path();
--       }
-+       my $validate_hook = catfile(catdir($repo->repo_path(),
-'hooks'), 'sendemail-validate');
-        foreach my $f (@files) {
-                unless (-p $f) {
-                        my $error;
--                       if ($use_hook) {
--                               $hook[1] = abs_path($f);
--                               my $cwd_save = cwd();
--                               chdir($repo->wc_path() or $repo->repo_path());
--                               $error = "rejected by sendemail-validate hook"
--                                       unless system(@hook) == 0;
--                               chdir($cwd_save);
--                       }
-+                       $error = validate_via_hook($validate_hook, $f)
-if -x $validate_hook;
-                        $error = validate_patch($f) unless $error;
-                        $error and die sprintf(__("fatal: %s:
-%s\nwarning: no patches were sent\n"),
-                                                  $f, $error);
-@@ -1763,6 +1751,22 @@ sub validate_patch {
-        return;
- }
-
-+sub validate_via_hook {
-+       my ($validate_hook, $patch) = @_;
-+       my $error;
-+
-+       my $target = abs_path($patch);
-+       my $cwd_save = cwd();
-+       chdir($repo->wc_path() or $repo->repo_path()) or die "chdir: $!";
-+       # The hook needs a correct GIT_DIR.
-+       local $ENV{"GIT_DIR"} = $repo->repo_path();
-+       $error = "rejected by sendemail-validate hook"
-+               if system($validate_hook, $target);
-+       chdir($cwd_save) or die "chdir: $!";
-+
-+       return $error;
-+}
-+
- sub handle_backup {
-        my ($last, $lastlen, $file, $known_suffix) = @_;
-        my ($suffix, $skip);
-
-I wonder if we were designing this interface today whether whether the
-existing behavior of  --validate wouldn't just be shipped as a
-*.sample hook instead. There's also the caveat now that your hook
-might be OK with really long lines, but the existing validate function
-denies it, and there's no way to override that. I think a better way
-to do this is:
-
-        foreach my $f (@files) {
-                unless (-p $f) {
--                       my $error;
--                       if ($use_hook) {
--                               $hook[1] = abs_path($f);
--                               my $cwd_save = cwd();
--                               chdir($repo->wc_path() or $repo->repo_path());
--                               $error = "rejected by sendemail-validate hook"
--                                       unless system(@hook) == 0;
--                               chdir($cwd_save);
--                       }
--                       $error = validate_patch($f) unless $error;
-+                       my $error = -x $validate_hook
-+                               ? validate_via_hook($validate_hook, $f)
-+                               : validate_patch($f);
-
-I.e. if you specify a validate hook it replaces the existing hardcoded behavior.
-
-Also, just to check, is this new thing still consistent with the cwd
-docs in githooks (see e.g. 501d3cd7b8).?
-
-> ---
->  Documentation/git-send-email.txt |  1 +
->  Documentation/githooks.txt       |  8 ++++++++
->  git-send-email.perl              | 18 +++++++++++++++++-
->  t/t9001-send-email.sh            | 40 ++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 66 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 9d66166f6..bb23b02ca 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -377,6 +377,7 @@ have been specified, in which case default to 'compose'.
->         Currently, validation means the following:
->  +
->  --
-> +               *       Invoke the sendemail-validate hook if present (see linkgit:githooks[5]).
->                 *       Warn of patches that contain lines longer than 998 characters; this
->                         is due to SMTP limits as described by http://www.ietf.org/rfc/rfc2821.txt.
->  --
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index 706091a56..b2514f4d4 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -447,6 +447,14 @@ rebase::
->  The commits are guaranteed to be listed in the order that they were
->  processed by rebase.
->
-> +sendemail-validate
-> +~~~~~~~~~~~~~~~~~~
-> +
-> +This hook is invoked by 'git send-email'.  It takes a single parameter,
-> +the name of the file that holds the e-mail to be sent.  Exiting with a
-> +non-zero status causes 'git send-email' to abort before sending any
-> +e-mails.
-> +
->
->  GIT
->  ---
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index eea0a517f..7de91ca7c 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -27,6 +27,7 @@ use Term::ANSIColor;
->  use File::Temp qw/ tempdir tempfile /;
->  use File::Spec::Functions qw(catfile);
->  use Error qw(:try);
-> +use Cwd qw(abs_path cwd);
->  use Git;
->  use Git::I18N;
->
-> @@ -628,9 +629,24 @@ if (@rev_list_opts) {
->  @files = handle_backup_files(@files);
->
->  if ($validate) {
-> +       my @hook = ($repo->repo_path().'/hooks/sendemail-validate', '');
-> +       my $use_hook = -x $hook[0];
-> +       if ($use_hook) {
-> +               # The hook needs a correct GIT_DIR.
-> +               $ENV{"GIT_DIR"} = $repo->repo_path();
-> +       }
->         foreach my $f (@files) {
->                 unless (-p $f) {
-> -                       my $error = validate_patch($f);
-> +                       my $error;
-> +                       if ($use_hook) {
-> +                               $hook[1] = abs_path($f);
-> +                               my $cwd_save = cwd();
-> +                               chdir($repo->wc_path() or $repo->repo_path());
-> +                               $error = "rejected by sendemail-validate hook"
-> +                                       unless system(@hook) == 0;
-> +                               chdir($cwd_save);
-> +                       }
-> +                       $error = validate_patch($f) unless $error;
->                         $error and die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
->                                                   $f, $error);
->                 }
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 60a80f60b..f3f238d40 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1913,4 +1913,44 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
->         test_cmp expected-list actual-list
->  '
->
-> +test_expect_success $PREREQ 'invoke hook' '
-> +       mkdir -p .git/hooks &&
-> +
-> +       write_script .git/hooks/sendemail-validate <<-\EOF &&
-> +               # test that we have the correct environment variable, pwd, and
-> +               # argument
-> +               case "$GIT_DIR" in
-> +                       *.git)
-> +                               true
-> +                               ;;
-> +                       *)
-> +                               false
-> +                               ;;
-> +               esac &&
-> +               test -e 0001-add-master.patch &&
-> +               grep "add master" "$1"
-> +       EOF
-> +
-> +       mkdir subdir &&
-> +       (
-> +               # Test that it works even if we are not at the root of the
-> +               # working tree
-> +               cd subdir &&
-> +               git send-email \
-> +                       --from="Example <nobody@example.com>" \
-> +                       --to=nobody@example.com \
-> +                       --smtp-server="$(pwd)/../fake.sendmail" \
-> +                       ../0001-add-master.patch &&
-> +
-> +               # Verify error message when a patch is rejected by the hook
-> +               sed -e "s/add master/x/" ../0001-add-master.patch >../another.patch &&
-> +               git send-email \
-> +                       --from="Example <nobody@example.com>" \
-> +                       --to=nobody@example.com \
-> +                       --smtp-server="$(pwd)/../fake.sendmail" \
-> +                       ../another.patch 2>err
-> +               test_i18ngrep "rejected by sendemail-validate hook" err
-> +       )
-> +'
-> +
->  test_done
-> --
-> 2.13.0.rc2.291.g57267f2277-goog
->
+Ciao,
+Dscho
