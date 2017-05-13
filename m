@@ -2,99 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 234F820188
-	for <e@80x24.org>; Sat, 13 May 2017 13:22:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E29DC20188
+	for <e@80x24.org>; Sat, 13 May 2017 13:32:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755249AbdEMNWy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 09:22:54 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:35379 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755245AbdEMNWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 09:22:52 -0400
-Received: by mail-io0-f178.google.com with SMTP id f102so53354457ioi.2
-        for <git@vger.kernel.org>; Sat, 13 May 2017 06:22:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=aqJgcqKZWcMMqwjJ2e0kZxnToIPvaQmfd0jNCZEhaNE=;
-        b=hplgPtPHY9zkTgpG5ke4Bc0600MlZnDibVUWFReLLZqotMTdDp2RlpwQaQ7QDP13S5
-         jTgV9t7rULe6ZFlKlooQ8K7f80aFsOzFyZGWdW1xUKDfgA8KV9AIgvXZ/mnS8jUO6JjU
-         n+6DUsX6hMF5CWANqRtP0vsuIaQg/mYJscXTmcE0M5C6i7WLoPZflaaBG61E/N9g5BKk
-         EKNIb1YXJBPsQ5Yyo8kSTSs3kYr7TCphNgiTZvGIqfYWRlyTbk3UJjiTNXcN/+HGu6VD
-         KbyapXX+pDeBonYIFyFMqFJiJyB/OQeUfU8bnFrNn/XOOMwnxmSQrdLHoS90N46GjW0O
-         /GkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=aqJgcqKZWcMMqwjJ2e0kZxnToIPvaQmfd0jNCZEhaNE=;
-        b=QtkH5BSnZ9GPiU0T+7r+q2lES3DhpXWlkVcmnoV1S2czSrvRPPoCb6mN3S3Fo1/EgS
-         SPC+1j9DU50kd4Va02PtymbMRz6lO5pitLRZqX49tN22TMhV+bBy/d46uaJl1Ri60RS4
-         V3oTkKJVTYLrVFxLF1ffdR08e5tS9P1nM4UnrNJ+Ps8JdlDXB0IfBUFEe9hiAihJuZKw
-         AblI39zSElWjqFxH+stUQbsqY9H7WR/3+HMr/Yg3tYp9r1ltI7WZeIgPOdOvEaI9ldkm
-         oacJ54Wr3WvTmlaRzLbTWdW9qkE/vV3rmPLJaELJbY6NUneI+7tGdI3+X7BxFT9UqkN+
-         73QQ==
-X-Gm-Message-State: AODbwcCmFFF5tUYzbOGbNuqB1NyjqLxh4ESNLVbL9ex8K+ohsw6PPlYP
-        bkXEbkskQ5RE25hdGhYTrmbKJl30rQ==
-X-Received: by 10.107.178.12 with SMTP id b12mr8342240iof.50.1494681770943;
- Sat, 13 May 2017 06:22:50 -0700 (PDT)
+        id S1752943AbdEMNcq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 09:32:46 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:37366 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750935AbdEMNcp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 09:32:45 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout08 with smtp
+        id KpYi1v0031keHif01pYjlq; Sat, 13 May 2017 14:32:44 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=JPdLi4Cb c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=RqK9Ag7hJBwwZxdiC9oA:9 a=QEXdDO2ut3YA:10
+ a=q92HNjYiIAC_jH7JDaYf:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] usage.c: drop set_error_handle()
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20170513034818.h3aaihqmf4q43vef@sigill.intra.peff.net>
+Cc:     Brandon Williams <bmwill@google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <ca13408b-0aaf-f330-5a6b-12aa8ff8e313@ramsayjones.plus.com>
+Date:   Sat, 13 May 2017 14:32:42 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Sat, 13 May 2017 06:22:30 -0700 (PDT)
-In-Reply-To: <20170512234414.GF27400@aiede.svl.corp.google.com>
-References: <92c10618c688bb8cb1f31ee2a93110c581974468.1494586245.git.johannes.schindelin@gmx.de>
- <20170512234414.GF27400@aiede.svl.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 13 May 2017 15:22:30 +0200
-Message-ID: <CACBZZX4LXkCCkHTaEw5YKsVHFcE6GsE3JRzLR5gd56DxGHxptQ@mail.gmail.com>
-Subject: Re: [PATCH] fixup! log: add exhaustive tests for pattern style
- options & config
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20170513034818.h3aaihqmf4q43vef@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 13, 2017 at 1:44 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Johannes Schindelin wrote:
->
->> On Windows, `(1|2)` is not a valid file name, and therefore the tag
->> cannot be created as expected by the new test.
->>
->> So simply skip this test on Windows.
->>
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> I wouldn't be surprised if there are filesystems used places other
-> than MINGW that also can't handle this test.  Isn't this what some
-> tests use a FUNNYNAMES prerequisite for?
->
-> In this example, it's the pipe that's not allowed, not the
-> parenthesis, right?  (At least I have some memories of naming files
-> with some parentheses.)  Would something like
->
->         test PIPE_IN_FILENAME '
->                 >"a|b" &&
->                 test -f "a|b"
->         '
->
-> work?
 
-It would, but as indicated upthread I'll just amend this so the odd
-tag/filename won't be needed, since the test doesn't actually use
-that.
 
-(B.t.w. I meant "[odd looking] tag or file" in my last E-Mail in this
-thread, not just "[odd looking tag]")>
+On 13/05/17 04:48, Jeff King wrote:
+> The set_error_handle() function was introduced by 3b331e926
+> (vreportf: report to arbitrary filehandles, 2015-08-11) so
+> that run-command could send post-fork, pre-exec errors to
+> the parent's original stderr.
+> 
+> That use went away in 79319b194 (run-command: eliminate
+> calls to error handling functions in child, 2017-04-19),
+> which pushes all of the error reporting to the parent.
+> This leaves no callers of set_error_handle(). As we're not
+> likely to add any new ones, let's drop it.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+
+I have an identical patch, which I had intended to send at
+the 'start of the next cycle'. :D (Well, you actually had
+a commit message ...).
+
+So, FWIW: ACK
+
+ATB,
+Ramsay Jones
+
+> ---
+> This goes on top of bw/forking-and-threading.
+> 
+>  git-compat-util.h |  1 -
+>  usage.c           | 10 +---------
+>  2 files changed, 1 insertion(+), 10 deletions(-)
+> 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 8a4a3f85e..f1f2a2d73 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -445,7 +445,6 @@ extern void (*get_error_routine(void))(const char *err, va_list params);
+>  extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
+>  extern void (*get_warn_routine(void))(const char *warn, va_list params);
+>  extern void set_die_is_recursing_routine(int (*routine)(void));
+> -extern void set_error_handle(FILE *);
+>  
+>  extern int starts_with(const char *str, const char *prefix);
+>  
+> diff --git a/usage.c b/usage.c
+> index ad6d2910f..2623c078e 100644
+> --- a/usage.c
+> +++ b/usage.c
+> @@ -6,12 +6,9 @@
+>  #include "git-compat-util.h"
+>  #include "cache.h"
+>  
+> -static FILE *error_handle;
+> -
+>  void vreportf(const char *prefix, const char *err, va_list params)
+>  {
+>  	char msg[4096];
+> -	FILE *fh = error_handle ? error_handle : stderr;
+>  	char *p;
+>  
+>  	vsnprintf(msg, sizeof(msg), err, params);
+> @@ -19,7 +16,7 @@ void vreportf(const char *prefix, const char *err, va_list params)
+>  		if (iscntrl(*p) && *p != '\t' && *p != '\n')
+>  			*p = '?';
+>  	}
+> -	fprintf(fh, "%s%s\n", prefix, msg);
+> +	fprintf(stderr, "%s%s\n", prefix, msg);
+>  }
+>  
+>  static NORETURN void usage_builtin(const char *err, va_list params)
+> @@ -88,11 +85,6 @@ void set_die_is_recursing_routine(int (*routine)(void))
+>  	die_is_recursing = routine;
+>  }
+>  
+> -void set_error_handle(FILE *fh)
+> -{
+> -	error_handle = fh;
+> -}
+> -
+>  void NORETURN usagef(const char *err, ...)
+>  {
+>  	va_list params;
+> 
