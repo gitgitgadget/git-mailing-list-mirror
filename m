@@ -2,119 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A3E3201A7
-	for <e@80x24.org>; Sat, 13 May 2017 00:04:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32804201A7
+	for <e@80x24.org>; Sat, 13 May 2017 01:23:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757785AbdEMAEq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 20:04:46 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34276 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757694AbdEMAEp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 20:04:45 -0400
-Received: by mail-pf0-f195.google.com with SMTP id w69so8560286pfk.1
-        for <git@vger.kernel.org>; Fri, 12 May 2017 17:04:45 -0700 (PDT)
+        id S1752976AbdEMBX1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 12 May 2017 21:23:27 -0400
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:36660 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751830AbdEMBX0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 12 May 2017 21:23:26 -0400
+Received: by mail-wr0-f170.google.com with SMTP id l50so51901464wrc.3
+        for <git@vger.kernel.org>; Fri, 12 May 2017 18:23:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FUR7RMF+nGm1p1JYHrLwoqQ8kjObFaASI6CFuBZwCUs=;
-        b=NycPmmasj7UrYkZEVC4kMc5LSurpfm+6y5xF5fM9Ea30DQT5UImjjupLX2L1sG5LEv
-         y55OPwGP3NiK3aUtUYVNho9W0nqixQAV3N+bjISd9+bcwwgKSmSZvpGuz9L+WN/Y5WS7
-         XecVEfE8d8l4xEX/A88scaTMTqG+PBdtX4qHHCVuwX+dMdP4Zsj+GNLg214WnqIdSk/3
-         iUSUo9ePBcB8OoGUeSrl0PG+l/dWmqvicZdLac1FLcKUpheGN5eaAl7Afen4KKehQ8u0
-         xC6RWYxdmm+aLvz9g0ZY0PeHqQ5ZFWGRtvrAUSgIQN/riUy+j6FYXYAQqUZ8DTzSafv7
-         czTw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=pkoeS2d/AvL6ADwMkfGufckLMyxZGNi3uEaW/gHDGUU=;
+        b=uBH91s8H2yuukCnadqymVswFD9ITYGaVT5Gj7INza528y0LsZOcoX8Eqzya3zyeATJ
+         Mzp4pEWpqGRvDRUoDn5N3qY7VNgb/2+YuyBXNk8QRqRPrC/+qho8W3asuz1JfsWhZrDZ
+         YQOon95oBJBN7/N7qBJiwt6GPevG3aLK3X8u8KF584DTx/QS4tfax9M/z9Iedy4AY/CG
+         RTXBoFBbh5xNqwz15rr8JqhqNGVFG1tqXK5DhoCzBwiInxHcNq+t9LnYwccrMIBhnUYo
+         Smfh7tedY9e/J2qOeWdG0Hf1QITmgaW5qfY4b5WahjiY46NcERbVMLTSj4c5MrxkYOEB
+         sEcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FUR7RMF+nGm1p1JYHrLwoqQ8kjObFaASI6CFuBZwCUs=;
-        b=DkmxgqG0jW6FO/jRKF9vTp/bdAdq7/C82EzxdxEFJQ22fhL8Le7EaZhezqhQLwzLvD
-         YtFW8jBIcJLa8kO7STrjb1mKo3iGnDt4dAvZzzCFC7XSo0vlNs3pwUPereZwZyIEhwl6
-         oQIP6hBPF3rPz/GxcHjVLH1YZGh8qKBgj2gtRY/JI3a+fErN9g+d6iu61a0tVxGAxFqP
-         WUyET2lOLTzoOFk+1w5ZT5vZj61GDO7U/SvzlqniwcM8LnVrmNPOVyjQNpzMuPZCtA8S
-         vkTZkTIh+JDmxXuixeCRYtlrv7qHAdAMjZA5MDigW1+qkscFNObtFhx5yhZWdLIeTJev
-         Od9A==
-X-Gm-Message-State: AODbwcC56WMN80CGau2KkkhdRJX00ZArxfJjvqkEepAg+73ORL/ySODz
-        MgtWWE++aIiVhx7K/Pg=
-X-Received: by 10.84.233.199 with SMTP id m7mr9168086pln.108.1494633884885;
-        Fri, 12 May 2017 17:04:44 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:fcb1:2bc1:55ad:11f1])
-        by smtp.gmail.com with ESMTPSA id e16sm7844935pfk.100.2017.05.12.17.04.44
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 12 May 2017 17:04:44 -0700 (PDT)
-Date:   Fri, 12 May 2017 17:04:42 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Josh Hagins <hagins.josh@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] config: complain about --local outside of a git repo
-Message-ID: <20170513000442.GH27400@aiede.svl.corp.google.com>
-References: <CANuW5x0pBwfQeha50mxN8pVQKm67u_b3UKTCQ8ZbJA6FUGvYbw@mail.gmail.com>
- <20170512203436.fcoqauphzvox2sgv@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=pkoeS2d/AvL6ADwMkfGufckLMyxZGNi3uEaW/gHDGUU=;
+        b=K0myL+ia/Z/lTUJTcgOKIogR11GClvsHSbetu/xVYj/y0CqrmXg62M8tw1SveiwUE4
+         ivam4i/OH5FC7n5kFDy1majrVxCikLiCZSJifRcwdfiY5C1d0GJDyMgvrFX/houleOIE
+         ymgHkVYycsztY3BNwSTmdsKTlDJQD8ceLie+GGZZoaYFS+Bc2UCynj5uHot/OJBVhMoi
+         GEf7iNP5a90Nv9h/K+X5Iu3xuRcLkpDb5dpt9f6uTYf4Wh45I/o+m1CCdzdlkshVRwm+
+         RPd3F7eC762+8i9VDsD9fUWG/naAdatyeAA/Nr9vsg0klYM0Wao+j5aci/+7qJgx2Fcp
+         iD2w==
+X-Gm-Message-State: AODbwcD5vSZgEFDr5rPV3mVy6zw1n07rcL07i2FB91qBumXSPe6HTjpk
+        lvcnZAh3MZEqKleN6eUBQZ+2TZ9fxw==
+X-Received: by 10.223.168.120 with SMTP id l111mr4322221wrc.137.1494638605415;
+ Fri, 12 May 2017 18:23:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170512203436.fcoqauphzvox2sgv@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.28.100.213 with HTTP; Fri, 12 May 2017 18:23:04 -0700 (PDT)
+In-Reply-To: <20170512234814.GG27400@aiede.svl.corp.google.com>
+References: <20170512220704.txmdk45s66aqhexi@genre.crustytoothpaste.net>
+ <20170512221221.406645-1-sandals@crustytoothpaste.net> <20170512233214.GE27400@aiede.svl.corp.google.com>
+ <20170512233753.rz2g7quews4ny5iq@genre.crustytoothpaste.net> <20170512234814.GG27400@aiede.svl.corp.google.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Fri, 12 May 2017 19:23:04 -0600
+Message-ID: <CAMMLpeRkVsvp_fzt+bHSQ_F9gsMhYqej_oyqrjhAXsY1xs7=Qw@mail.gmail.com>
+Subject: Re: [PATCH v2] builtin/log: honor log.decorate
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git mailing list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-
-> Subject: [PATCH] config: complain about --local outside of a git repo
+2017-05-12 17:48 GMT-06:00 Jonathan Nieder <jrnieder@gmail.com>:
+> Hi,
 >
-> The "--local" option instructs git-config to read or modify
-> the repository-level config. This doesn't make any sense if
-> you're not actually in a repository.
+> brian m. carlson wrote:
 >
-> Older versions of Git would blindly try to read or write
-> ".git/config". For reading, this would result in a quiet
-> failure, since there was no config to read (and thus no
-> matching config value). Writing would generally fail
-> noisily, since ".git" was unlikely to exist. But since
-> b1ef400ee (setup_git_env: avoid blind fall-back to ".git",
-> 2016-10-20), we catch this in the call to git_pathdup() and
-> die("BUG").
+>> Does anyone else have views on whether this is good thing to test for?
 >
-> Dying is the right thing to do, but we should catch the
-> problem early and give a more human-friendly error message.
+> I know you don't mean to be rude, but this comes across as a bit of
+> a dismissive question.
+
+The question sounded neutral to me.
+
+>> On Fri, May 12, 2017 at 04:32:14PM -0700, Jonathan Nieder wrote:
+>>> brian m. carlson wrote:
 >
-> Note that even without --local, git-config will sometimes
-> default to using local repository config. These cases are
-> already protected by a similar check.
+>>>> The recent change that introduced autodecorating of refs accidentally
+>>>> broke the ability of users to set log.decorate = false to override it.
+>>>
+>>> Yikes.  It sounds to me like we need a test to ensure we don't regress
+>>> it again later.
+>>
+>> I can add one, but it's going to be a bit odd.  The issue is that as far
+>> as I can tell, the option is honored only if it's the last one read, so
+>> it necessarily has to be in the per-repository configuration.
+>>
+>> I'm not sure it makes that much sense to add a test for this case.  Do
+>> we generally want to write such tests for all config options?  I don't
+>> suppose it's that common a mistake to make.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/config.c | 3 +++
->  1 file changed, 3 insertions(+)
+> In my humble opinion, the bug being subtle makes it especially useful
+> to have a test that describes that bug.  That way, if someone is
+> refactoring this code later then they know what to watch out for not
+> reintroducing.
+>
+> I'm happy to hear other opinions, especially if they come with data or
+> a principle attached that I can use when writing future patches of my
+> own.
 
-Makes sense.
+When I saw Brian's email today, my first thought was "What was I
+thinking?" My mistake was pretty obvious. Then I remembered that when
+I wrote the original patch, I wasn't sure where to set the default
+value, because there were no clear examples in this file. Now that
+we've established a clear precedent for setting the log.decorate
+default (and other defaults like it) in init_log_defaults, I don't
+expect any more problems with log.decorate. And since it's not
+practical to add tests for similar bugs for every command and
+configuration option in Git, we'll just have to be a little more
+vigilant about code review.
 
-> diff --git a/builtin/config.c b/builtin/config.c
-> index 3a554ad50..ad7c6a19c 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -496,6 +496,9 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->  		usage_with_options(builtin_config_usage, builtin_config_options);
->  	}
-> 
-> +	if (use_local_config && nongit)
-> +		die(_("--local only be used inside a git repository"));
-> +
+Again, I apologize for the trouble.
 
-The output would be
-
-	fatal: --local only be used inside a git repository
-
-Is that missing a "should" before "only"?
-
-With that change,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+-Alex
