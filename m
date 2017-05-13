@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EC1620188
-	for <e@80x24.org>; Sat, 13 May 2017 16:02:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA0E4201B0
+	for <e@80x24.org>; Sat, 13 May 2017 16:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754199AbdEMQCn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 12:02:43 -0400
-Received: from mout.web.de ([212.227.17.11]:56672 "EHLO mout.web.de"
+        id S1754220AbdEMQDd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 12:03:33 -0400
+Received: from mout.web.de ([212.227.17.11]:55569 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753030AbdEMQCm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 12:02:42 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MFL6u-1dCqlD28Cy-00EJxC; Sat, 13
- May 2017 18:02:35 +0200
-Subject: [PATCH 3/5] p0004: use test_perf
+        id S1753030AbdEMQDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 12:03:32 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MGAG3-1dC1ZC3xI7-00FEaN; Sat, 13
+ May 2017 18:03:26 +0200
+Subject: [PATCH 4/5] p0004: don't abort if multi-threaded is too slow
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
 Cc:     Jeff Hostetler <git@jeffhostetler.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
 References: <9b574d73-8dfb-f0b3-dc3e-d593726a8f0e@web.de>
-Message-ID: <5d8cff82-c695-ea6a-4d82-448dc10b8b63@web.de>
-Date:   Sat, 13 May 2017 18:02:32 +0200
+Message-ID: <871f5f29-feb3-5c69-7ddd-f92819a76cce@web.de>
+Date:   Sat, 13 May 2017 18:03:22 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.1.0
 MIME-Version: 1.0
@@ -34,90 +34,53 @@ In-Reply-To: <9b574d73-8dfb-f0b3-dc3e-d593726a8f0e@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:QVL8RAL8UD3MNIQjZl+qzNBWrU+GS4PDXdtDk0DrzJSI7SUJysc
- FWtTNgIU91/xYtSIRem4lCNn8NAyJqJBxs1y2Z+pd8nLs5iJrcq+CaraqfNLugd/7sKuP+L
- YVkKDIEJoI6aHI549bXMVd2FIqJWMMqHGJ7hrkXDCMxEdx4Qx1xMpwy/82otYxjF92ammRU
- Fkn36d6rvD6vicrYFB72A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:d+QBTunY6Ds=:bpH5cgh7SktboAdgsa5Axe
- 4+MbbRpskuW2to4kNiOROd4W52hg1jN6pGVlrtpygMaL62HwouSBfGYKawSTLQ9sH6ik2POZL
- 4P+UkmsH5Xwug/swZuYkzq6UNq5KXV+/zxP9+bh6VKymcOm4A15LarTT65qUYoj+7iSk/N33U
- CAlCGXMFPV72iEA7Jp2hjRiRq2r/mO9s0nU3LSyu6Z3swO2NKIMUNYzE3+tbjmwCIjbP3TH1V
- 574JPLJlWQhcN5g3/zqpRrA41yfC+Nm9JUYchnod2qNsFryD0CBAvYFP1FPScZ1P/H2pMohUw
- 0daOVBuKSiCGoehbwXcvH4AKiWDsz5dCk8q3za51T3cUarlJmWj4SQsFiYs8cQUdu1/FnfOKG
- aWAacUJ1wB4DQ82+lU0bcHpyae9oIDZnrqLR0fmRF80z5ArVsi2YL9CYObQ2aMz6y7Ze1JwEF
- 5snC00I3Obw2QuKY0d+WSL12eaKR3TtKXaHhhEskp/90SmtTfuvheN7oQwOHwsXVyPY7mvWw5
- BoyYwNx+iaJP5TtJO3LeaqSIfmYdL2LmRRFFmUK24qoUoLI6zS9BsEYq9+crOnsUDo43Qam3K
- pxjvGZfBIPM7T5tRnf+JC7W/I8RqJf+piyI7o581D4fqF5SMnn5L/GiFqkwJUgY6Vh9JjVHSO
- UoeSreFJzpi+EqGWKYAVEujx7T2KGdB6hpczJVSf/UqgiseaH58vEZNjYDgmvOAQ98VMmHJI2
- iCzGNVDdIvlu82kzrwtjKqk5HqhKfmYPFvg1yVzc5nLr1l9JVRMSlZiFvyZV1w7dv9/gKvhJA
- w665kNH
+X-Provags-ID: V03:K0:EQoxazdDFpYD9FUVAwlPqidBX7OM1iIzmAClrmBcLOKr1xLOsn5
+ A53VvRnlLmpmMZqBCAt+njvwfAH36XEQPQkbiH+sPZhVFQ+XDQIXZll6SutPmUJDsNVZ3q3
+ pbSQ9NNq6jHjQixC5kUjRbUrBrVL7+yVQNv2B70HWHWPQlfI3M8eChqyMObY/7r3H4gIG61
+ JAlTyXGbw352YR6C8g9hQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:W+KwwqinYqY=:tUj+ycT5epkxCTuFwgy1OL
+ RTW8N0dak4ishNlSb4eE7OAZq3lATY9rCLlWGB/vc24h8l2nYEPqeIqxSQ2DnZebS1YNUYjCp
+ cK5fnUqHTfehb+pp9gZjk6qBCxmDvOXkyUGx73PZVUtJ4PYjXQ0//5E5KqtuyLunt8iAYcgdZ
+ CGHr/xioWe06qkMfutLkN0uXpqyzOQUaHPl2UtDVRpMMSyv7znIXej8UKKPug8G1KCM1oVvER
+ hYleAj5W/e7+CmpOINFaWUDCf3ITsUtsDjyeRw9S/6+cl++MvOzAQhdSn10vw0fTWiP8DGt3+
+ CJlnsDdMljZTe6n6Pk0ACxe8vM36N+XYXpxYqD7kh1Q/cl2qTg9ZAU/2Oh4jnaWqUmijm0tsP
+ Wp2kQQjPo9uEdYYe8a1bePmWpUcV7i1k9FjeSMT4iNMbQoTqABTkrdaESLVdel4YwKncda8Oa
+ 1j49MRGrq300B3SCBxJ43nNb6GpZwcCDyszzgHIezoxNk3/cywo2A/wYVPMbM4Ag/Ir2yvKhb
+ n/hFpyrksm1GBoATAJ2QMmZbqU4lPykhkJiV7p1U5/7mAgrzWpF0wxHa6Tg6fLXhuHbs61pjQ
+ Lg1fk9UI5BLqjkAgbICWT8gk0382LsmobmYhLiMLNSwidJ1S0PgPVkL/oJvtrP1cWIsX9o+j7
+ oA2b6zWUxi10G7t290oFO23TT6Lmik72p2eSEnPFH1MP2HA/Ha5HtjsECRSgDw/4MNyjcfhSI
+ n3QQslkuXjICPo09GxqZJcetK/UCOn0E5hD4hAQ7kIgyaR5HZfuRdNsau3h4mP06A5bbhj2Jp
+ UsRyaRH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The perf test suite (more specifically: t/perf/aggregate.perl) requires
-each test script to write test results into a file, otherwise it aborts
-when aggregating.  Add actual performance tests with test_perf to allow
-p0004 to be run together with other perf scripts.
-
-Calibrate the value for the parameter --count based on the size of the
-test repository, in order to get meaningful results with smaller repos
-yet still be able to finish the script against huge ones without having
-to wait for hours.
+If the single-threaded variant beats the multi-threaded one then we may
+have a performance bug, but that doesn't justify aborting the test.
+Drop that check; we can compare the results for --single and --multi
+using the actual performance tests.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
-The numbers are just guesses; I didn't actually test all ranges.
-
- t/perf/p0004-lazy-init-name-hash.sh | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ t/perf/p0004-lazy-init-name-hash.sh | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/t/perf/p0004-lazy-init-name-hash.sh b/t/perf/p0004-lazy-init-name-hash.sh
-index 576bdc3c4e..d30c32f97b 100755
+index d30c32f97b..3c2135a185 100755
 --- a/t/perf/p0004-lazy-init-name-hash.sh
 +++ b/t/perf/p0004-lazy-init-name-hash.sh
-@@ -18,4 +18,40 @@ test_expect_success 'multithreaded should be faster' '
- 	test-lazy-init-name-hash --perf >out.perf
+@@ -14,10 +14,6 @@ test_expect_success 'verify both methods build the same hashmaps' '
+ 	test_cmp sorted.single sorted.multi
  '
  
-+test_expect_success 'calibrate' '
-+	entries=$(wc -l <out.single) &&
-+
-+	case $entries in
-+	?) count=1000000 ;;
-+	??) count=100000 ;;
-+	???) count=10000 ;;
-+	????) count=1000 ;;
-+	?????) count=100 ;;
-+	??????) count=10 ;;
-+	*) count=1 ;;
-+	esac &&
-+	export count &&
-+
-+	case $entries in
-+	1) entries_desc="1 entry" ;;
-+	*) entries_desc="$entries entries" ;;
-+	esac &&
-+
-+	case $count in
-+	1) count_desc="1 round" ;;
-+	*) count_desc="$count rounds" ;;
-+	esac &&
-+
-+	desc="$entries_desc, $count_desc" &&
-+	export desc
-+'
-+
-+test_perf "single-threaded, $desc" "
-+	test-lazy-init-name-hash --single --count=$count
-+"
-+
-+test_perf "multi-threaded, $desc" "
-+	test-lazy-init-name-hash --multi --count=$count
-+"
-+
- test_done
+-test_expect_success 'multithreaded should be faster' '
+-	test-lazy-init-name-hash --perf >out.perf
+-'
+-
+ test_expect_success 'calibrate' '
+ 	entries=$(wc -l <out.single) &&
+ 
 -- 
 2.12.2
 
