@@ -3,104 +3,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9E5E201A4
-	for <e@80x24.org>; Sat, 13 May 2017 10:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 933C9201A4
+	for <e@80x24.org>; Sat, 13 May 2017 10:58:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751380AbdEMKNP (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 06:13:15 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34229 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750935AbdEMKNO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 06:13:14 -0400
-Received: by mail-pg0-f66.google.com with SMTP id u187so10548816pgb.1
-        for <git@vger.kernel.org>; Sat, 13 May 2017 03:13:14 -0700 (PDT)
+        id S1752240AbdEMK6l (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 06:58:41 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:35038 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751787AbdEMK6k (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 06:58:40 -0400
+Received: by mail-it0-f68.google.com with SMTP id 67so8054092itx.2
+        for <git@vger.kernel.org>; Sat, 13 May 2017 03:58:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=YdzBeKP0uAbivXDDD4vrA9KH4ZTJcKh4IVDVe2nETGc=;
-        b=g87ChJ4gbEsWyiUvYvd1mbRjBeMw/fDGoecTxlbBoNsGcxC64grjNZKgs3TRTBduRe
-         GVXnxmQjBHXkiywqixWPOFBZSY+iZkj+WcaTbbSLZuD6edVKYL5gY0uu/ErabzrXsDuw
-         R+D2TVZVwhbpSwDZoUvTPyXwhyVQSD3cWVGt+f6GLCLduC6GlI64TdyrnIKTUThKASwh
-         NN7Bw1VYAVXEkPzeBzraASdtFpW6Lm3eKL5br+u5cP9eIY3bOgDI8474mszJijSD06b5
-         wcXha5mRVWGBi+Ne9wicpW3kMdiGtMbZAGHttwSUeFE11mC4GMQ5N4LPnE9N0SAbQs3F
-         QZlg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=m44KJ9cM50Z+KQP9e7D7Aw4M2pxcr0lR8ySK9QemopM=;
+        b=EGqpu7L42xqOuotNw+lo8w1Swgv31IVkBGIvUmLpaQKQVhocAR9+0Vu88sP7ynfcBb
+         btyxTUkaqMqIISSbKbl3cibg8gVIUfWTsUPDlacqFVkO5eR4GeaHDsQ/SAXJ37ij+ceQ
+         ILl/gODjkApWOkgN2oyJgYVNiHYwS6HKBpcU3AmmGRITqqPgw1g8JxLBzSCICYNjGRrJ
+         i2McQNtWLunebQLE7+dZlGAN1Pd8UB+LOa+/07TLV/9H2TOo4/OwspSKg/HH9f1urvS8
+         fkduduhU2SNCVB2tzPA+9Tnli7evjbsbCPdwxkc/uIEQ9DhhLAk2m/vgu6qovzpIhtyE
+         3bdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=YdzBeKP0uAbivXDDD4vrA9KH4ZTJcKh4IVDVe2nETGc=;
-        b=TWuGBwZZOZmj+isaJ3x8TomnueTrrs8uamYp8b8Yvied+ncT+CnBcRQRNqWVBBQgHV
-         XIpXr1nb3KgiO1cn9Q1jAgL+kjmZc9pGp2DE/tzVqQu9dbukgXQ11rzQEZQQsla8vPB/
-         eV7MkEmUbEdVtBjazOFu0xyON4z+/uOTEBLswIeEZnaMfHyRbBb3Sc6iYTHQfM2CdRpc
-         3rhlt0+efyLRvdephiHotlSWKSbczLlBGecvjV6zAQe/iV1aLKSz+KYXhRdNyN5+6xHj
-         Yb61omtUgfmvCjJnztN8h+rFJPwIpr7KMN3soD04NkqyHmis5x4bYvyB33H8eTVKVHHB
-         p/eA==
-X-Gm-Message-State: AODbwcAMt6pC73rZA4WZXrdP8aqzfW0SKtSD8HQDwsOYfTIqDsjdQWyo
-        aPi/FobKGcOlCA==
-X-Received: by 10.84.216.10 with SMTP id m10mr11627403pli.4.1494670393840;
-        Sat, 13 May 2017 03:13:13 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:2d31:71a5:f712:48d1])
-        by smtp.gmail.com with ESMTPSA id c23sm9244105pfh.131.2017.05.13.03.13.12
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 13 May 2017 03:13:12 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 00/11] Start retiring .git/remotes/ and .git/branches/ for good
-References: <cover.1494509599.git.johannes.schindelin@gmx.de>
-        <xmqqk25m98rd.fsf@gitster.mtv.corp.google.com>
-        <xmqqfuga5lp2.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1705121617420.146734@virtualbox>
-        <20170512173846.GA27400@aiede.svl.corp.google.com>
-Date:   Sat, 13 May 2017 19:13:11 +0900
-Message-ID: <xmqqinl53w08.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=m44KJ9cM50Z+KQP9e7D7Aw4M2pxcr0lR8ySK9QemopM=;
+        b=sCLu37ov2cY02fHEXu87TAv00bv4tuOQw3JOb9kMl687j1DsH2ijEfT1oLYR7f6LLS
+         jZWqPGCc6NmCj3f7lIvNdikX0oeCwU0ToLJirzEybdeGHLcrFGZ6kPYYJWTz2Yvjiw4M
+         wh7Vc9roeEaixljgQd9LMb0a/6+ZMwlKiqJ2sCmRaWay01QaXQloWwYkGK9eOD8p7NzD
+         6RmZxYU/wbd0NPrHeuZrXgKcWRysiavytIGKHP98jG/WjyYKbl6TVTeFlXrNWnsj07Ul
+         yj0utLe3oYI267jxGNW4RmwhqiiF7QGidZBrj1INKFqM9MKtfMmSfg9gBzcrDhZvNMvG
+         GPWg==
+X-Gm-Message-State: AODbwcDCumRowXtKbgrh9IuzD0pgGRbgi8+lO3Fd/q+unGy5rprc/5Nu
+        ZcpIWu1eb5M9Hkv3FBensvW8r6H+tSFkM3k=
+X-Received: by 10.36.53.2 with SMTP id k2mr7994457ita.71.1494673119670; Sat,
+ 13 May 2017 03:58:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.8.220 with HTTP; Sat, 13 May 2017 03:58:18 -0700 (PDT)
+In-Reply-To: <20170513095716.C718E221C2B@srv1.79p.de>
+References: <20170513095716.C718E221C2B@srv1.79p.de>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 13 May 2017 12:58:18 +0200
+Message-ID: <CACBZZX6dcy9DEp8AZsdV5SPG-86ELOXUSuFkOaoUxjVreJXhDA@mail.gmail.com>
+Subject: Re: [PATCH] doc: use https link to Wikipeai to avoid http redirect
+To:     Sven Strickroth <email@cs-ware.de>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Sat, May 13, 2017 at 11:54 AM, Sven Strickroth <email@cs-ware.de> wrote:
 
-> Johannes Schindelin wrote:
->> On Fri, 12 May 2017, Junio C Hamano wrote:
+Spelling error: Wikipeai
+
+Looks good, but let's change these too while we're at it:
+
+$ git grep http://en.wikip
+Documentation/gitweb.txt:87:http://en.wikipedia.org/wiki/Query_string#URL_encoding[]),
+the difference
+bisect.c:549: * http://en.wikipedia.org/wiki/Integer_square_root
+gitweb/gitweb.perl:8088:<a
+href="http://en.wikipedia.org/wiki/Regular_expression">regular
+expression</a> (also case
+
+
+
+> Signed-off-by: Sven Strickroth <email@cs-ware.de>
+> ---
+>  Documentation/gitweb.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->>> And this one is also important.  I do not think we had to touch any
->>> code that handles .git/remotes/ or .git/branches when we extended
->>> the .git/config based configuration for remotes, simply because the
->>> old data source are pretty much frozen read-only places these days.
->>
->> Okay. But by the same reasoning, I want to hear nothing from you anymore
->> about the sort of maintenance burden you talked about in the ssh_variant
->> patches. That burden was ridiculously small compared to what you tell me
->> you want to keep (and for a single user that may have moved on). Not one
->> word.
+> diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+> index 96156e5e1..88450589a 100644
+> --- a/Documentation/gitweb.txt
+> +++ b/Documentation/gitweb.txt
+> @@ -84,7 +84,7 @@ separator (rules for Perl's "`split(" ", $line)`").
 >
-> I don't understand this argument at all.  There are costs and benefits
-> to removing an existing feature, just like there are costs and benefits
-> to adding a feature.  If I understand the two examples you're comparing
-> correctly, then the same principle is at play in both: when it is much
-> more expensive to remove a feature than to not add it in the first
-> place, a maintainer has to push back on both addition and removal of
-> features.
-
-FWIW, I do not understand Dscho's argument, either.
-
-And I do agree with you about additions and removals.  While these
-are a bit of apples and oranges comparison, the same principle
-indeed sits behind them.  Incompatible changes, including removal,
-are costly to existing users, so we want to avoid them or when we
-cannot avoid them, we try to find a way to alleviate the pain.  When
-adding something new, we try to make sure that the addition will not
-introduce the need to make incompatible changes in the future.
-
-
-
+>  * Fields use modified URI encoding, defined in RFC 3986, section 2.1
+>  (Percent-Encoding), or rather "Query string encoding" (see
+> -http://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the difference
+> +https://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the difference
+>  being that SP (" ") can be encoded as "{plus}" (and therefore "{plus}" has to be
+>  also percent-encoded).
+>  +
+> --
+> 2.12.1.windows.1
+>
