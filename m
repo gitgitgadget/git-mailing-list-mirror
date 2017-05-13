@@ -6,81 +6,75 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10684201A7
-	for <e@80x24.org>; Sat, 13 May 2017 03:55:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E09E5201A4
+	for <e@80x24.org>; Sat, 13 May 2017 06:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751398AbdEMDzG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 12 May 2017 23:55:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50662 "EHLO cloud.peff.net"
+        id S1751231AbdEMGnw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 02:43:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50693 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750883AbdEMDzG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 12 May 2017 23:55:06 -0400
-Received: (qmail 8119 invoked by uid 109); 13 May 2017 03:55:06 -0000
+        id S1750822AbdEMGnv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 02:43:51 -0400
+Received: (qmail 18770 invoked by uid 109); 13 May 2017 06:43:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 May 2017 03:55:06 +0000
-Received: (qmail 29221 invoked by uid 111); 13 May 2017 03:55:37 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 May 2017 06:43:49 +0000
+Received: (qmail 30109 invoked by uid 111); 13 May 2017 06:44:22 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 12 May 2017 23:55:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 12 May 2017 23:55:03 -0400
-Date:   Fri, 12 May 2017 23:55:03 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 May 2017 02:44:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 May 2017 02:43:48 -0400
+Date:   Sat, 13 May 2017 02:43:48 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Josh Hagins <hagins.josh@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] usage.c: add BUG() function
-Message-ID: <20170513035503.cubqhzcvhifp54yg@sigill.intra.peff.net>
-References: <20170513032414.mfrwabt4hovujde2@sigill.intra.peff.net>
- <20170513032850.zeru4cm2l7i23rkc@sigill.intra.peff.net>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: Best "triangle" workflow setup?
+Message-ID: <20170513064348.wwnkle4bkhih2clx@sigill.intra.peff.net>
+References: <CAHd499DjBHsWCf8h+i4EstR7qs-9hkO4En5-B-WA17DoPZQNoQ@mail.gmail.com>
+ <20170511201707.aobrdiompzg6wu5k@sigill.intra.peff.net>
+ <CAHd499AvDRH-KZ7piOE=QsVXSpMt0u5jVXUC=7UPnRVLYo-U5Q@mail.gmail.com>
+ <20170511233640.ylf4to3hotngh6xe@sigill.intra.peff.net>
+ <CAHd499A=wwxFxZ2mq=PZcOBNRSiK1Xm_sE79AypBXQaYU_UcJQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170513032850.zeru4cm2l7i23rkc@sigill.intra.peff.net>
+In-Reply-To: <CAHd499A=wwxFxZ2mq=PZcOBNRSiK1Xm_sE79AypBXQaYU_UcJQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 12, 2017 at 11:28:50PM -0400, Jeff King wrote:
+On Fri, May 12, 2017 at 09:53:23AM -0500, Robert Dailey wrote:
 
-> +static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_list params)
-> +{
-> +	char prefix[256];
-> +
-> +	/* truncation via snprintf is OK here */
-> +	if (file)
-> +		snprintf(prefix, sizeof(prefix), "BUG: %s:%d: ", file, line);
-> +	else
-> +		snprintf(prefix, sizeof(prefix), "BUG: ");
-> +
-> +	vreportf(prefix, fmt, params);
-> +	abort();
-> +}
+> Thanks, just curious, where in the git documentation is the "origin"
+> to "origin/HEAD" resolution documented? I checked the git-revisions
+> page but it doesn't seem to mention it there. Thanks for explaining
+> though.
 
-I used vreportf() here to match die(). But the two things that function
-does are:
+In gitrevisions(7), the <refname> section, rule 6:
 
-  1. Respect error_handle. But after bw/forking-and-threading is merged,
-     nobody will ever set error_handle (and I just sent a patch to drop
-     it entirely).
+  otherwise, refs/remotes/<refname>/HEAD if it exists.
 
-  2. Quotes non-printable characters. I don't know how useful this is.
-     Most of the assertion messages are pretty vanilla (because anything
-     that relies on user input probably should be a regular die, not an
-     assertion failure). But a few of them do actually print arbitrary
-     strings in a reasonable way (e.g., a BUG() which is handling user
-     string which was supposed to be vetted by an earlier function is
-     still a reasonable assertion, but it's useful to show the string).
+And then the contents of origin/HEAD are discussed a bit in
+git-remote(1), under set-head.
 
-So an alternative would be just:
+> Also is there a similar mechanism for "track same-named branch on
+> specified remote"? Something like "origin/."? I follow git-flow
+> development process, so topic branches on hotfix or release branches
+> will track origin/master (since origin/HEAD still points to master or
+> develop). But I want to track "origin/release/1.2.3" without typing
+> the full thing. Basically would be nice if there was a lazy shorthand
+> for it similar to the "origin/HEAD" example you gave.
 
-  fprintf(stderr, "BUG: ");
-  if (file)
-	fprintf(stderr, "%s:%d ", file, line);
-  vfprintf(stderr, fmt, params);
-  fputc('\n', stderr);
+No, I don't think there's a shorthand for "the same-named branch". But
+there are two things that might help:
 
-which is perhaps a bit simpler (not much in lines of code, but there's
-no extra buffer to reason about). But given the discussion in (2) above,
-it's probably worth continuing to use vreportf.
+  1. If you're always branching from release/1.2.3 instead of "master",
+     you can use "git remote set-head" to change it.
+
+  2. If you want a local branch "foo" to track refs/remotes/origin/foo
+     (which already exists) then the checkout-dwim should work for you:
+
+        $ git checkout foo
+	Branch foo set up to track remote branch foo from origin.
+	Switched to a new branch 'foo'
 
 -Peff
