@@ -2,102 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AB0B20188
-	for <e@80x24.org>; Sat, 13 May 2017 16:04:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C215F20188
+	for <e@80x24.org>; Sat, 13 May 2017 17:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754278AbdEMQEB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 12:04:01 -0400
-Received: from mout.web.de ([217.72.192.78]:57524 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753347AbdEMQEA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 12:04:00 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MJkxE-1d8T3l0ASK-0018bv; Sat, 13
- May 2017 18:03:53 +0200
-Subject: [PATCH 5/5] p0004: don't error out if test repo is too small
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <9b574d73-8dfb-f0b3-dc3e-d593726a8f0e@web.de>
-Message-ID: <ca844223-bb04-8885-2f33-2c3e9c5a5e3c@web.de>
-Date:   Sat, 13 May 2017 18:03:50 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+        id S1754678AbdEMRdb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 13:33:31 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:37509 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753155AbdEMRda (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 13:33:30 -0400
+Received: by mail-it0-f51.google.com with SMTP id g126so51426396ith.0
+        for <git@vger.kernel.org>; Sat, 13 May 2017 10:33:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=KIeFp7fI+fpzZXThqc5fY+UtDZkssCeGXCj5LUGdgCo=;
+        b=WiCs2CyhN1tCsCWyRaS5KaeytCtqQ5IxzkBzWC7cRxG7MHtMh+7MRN2cWH0woPQWFR
+         YkiKX9MzjhTISxOBtMuz88M8z94Xb7F3dBcEfTcs3IzK20HvqqJxy0r2PjYiE+Ugh9qY
+         2qIA2GLVSRGjbuYpcBhkLHkerlr+zbgzMPq+AbU7SkzPjmrObztC999jr9YY2n3Giuur
+         aeGDOfNWZA0v7FsV8A9qVFeRyhOGqH6pB1K9Fpf9SODYay4aMbKqtG0IziXCQyzb4tIq
+         DqzdxaqNqMc3VbhLx5H3Jj7zplg8Gdc2o0y42shAk4iLqah1m5oJQgXLlo/ufMhYcRcu
+         uPDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KIeFp7fI+fpzZXThqc5fY+UtDZkssCeGXCj5LUGdgCo=;
+        b=cJcKlkiVzrPtlY94MDgTtdRXGHM7DMjFAg2F12AqB6p918zDsk+7buK/1u2FYBor7t
+         6TN2AlSM7wTRHVoXd9vUdTWtgDDRMSS7Ru4KdVy1j+DOlgOMFAOzCbRYD64rIgN2Vv8y
+         hz9tR5o97xqWEWeqaGA+LJAy4kTJjmZPQ+4t0Ls3aONumXY+8DtRh9M9fnx/ySAMq+8X
+         d9oBDT80x9b7BR0maVDC/uAy1TtVyYgP8tX86G6kh/8Az9knbgzlzXzpOudgu5gfyEA7
+         mEQ6Gb2ubgn+kA1zxn+QV4O6G6NLD/Y/0xk7Ej3EkyvqP9BZbxxPxDKthnPJLY8nVw1+
+         3Nug==
+X-Gm-Message-State: AODbwcA3M0jUxA6pAve1DIybgDRFE3XOKXUTTrvWcP/FmYLnhYIwwHQX
+        t+cHnoJTK/Zmqi6+uzMCIYy4ZfH2yA==
+X-Received: by 10.36.89.207 with SMTP id p198mr2350332itb.71.1494696809363;
+ Sat, 13 May 2017 10:33:29 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <9b574d73-8dfb-f0b3-dc3e-d593726a8f0e@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:Jb9YVmM8cKwAy5T422bzvToZaX7ZZ9t8hGrL0TbGbf39vBvZSXw
- qHNGlM37VddnIO0UZesJGfIDvgvIqmiwg3x4I2r4R4GBAaWjxZoYcymnTdNOCxBGZIUaQ43
- dB+HmvPC8JR3+A9e6xNwBMiRb5W6UAQXAy8qycS3/R1vUdGsSlEzWGxhipn/3K1FevGYcN1
- Ur+eRGB0BLRzzDxhALx4w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Nw7GrLDg8q4=:6afMpvgIy+mCpT+xOu3S4V
- Dhuh88bvTscOrqJIl2A4gjv8893b+VGwB24oOH8W3CUkkNKsYDqTurXnEUFffueYrtOapoq7w
- pSHUdNlI67QfB1CTibhUHGR6sSD7Ji7QKwbHweOyN5wtibNIdn3/OszvcXo5afQrGigGHULsZ
- 6y9/vjRZqHnYoFLNrLwfNCXotpJak8VcPIOssI1oLDvou+i2XyaOf03Yq3meY2nfPdoegzs/S
- JJJTu7w3bHpWetEHPacLdG7BScCgHaDRh+Wzxo4507+Da9hetgSs5B1sP/nL6HkQ/txOYj5Sl
- SMAguTXVhd/rEfq656zkM8+S+LUR1qyAZbgGcr47WxEw+WgP2LFj2+i66yvKCeuDSe+TTAtR4
- /xJyeu/ChS7dfLWsnyQw8sh8HUEDJIYqixa2sN8QuCXEJumfjMXfAD7U8keke+Wj/svB7juv5
- Av6dPfBDShVetxjKe5taIufhSuaoyN/M3JHj2LSXFaJlYBqOpUk1We20x2DrZtizLGyw/fmIs
- wZzzIxmCCQz8CyUlD2ZRTCSBEvY72PRZOXWDG6pZ4LT20zb7Bgm+AcpU6Nu/K3XPc4cjEBJs8
- 2XlTZH73kbYxHsmc7G+8taBBydWOCtWZHelgBRNR2IidC6QPzn6ql8jtD5d1YdVP+VgBJfGGw
- pNr/5namwf7EZMKjzNrPRhTM+eUxcDKqJfJMmdrGK6mLk1wmnVaUuBL48vz7Q/Zz//6OC9vn5
- do0/0RYtqF8eNq5tPojU8QNfCuRHSPDjAM3s3VeHqcO3NYLJ2lOMGTyCE1D5sotSBqob/e4b0
- tne3W9a
+Received: by 10.107.8.220 with HTTP; Sat, 13 May 2017 10:33:08 -0700 (PDT)
+In-Reply-To: <xmqqpofe7jrq.fsf@gitster.mtv.corp.google.com>
+References: <20170511091829.5634-1-avarab@gmail.com> <20170511091829.5634-10-avarab@gmail.com>
+ <xmqqpofe7jrq.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 13 May 2017 19:33:08 +0200
+Message-ID: <CACBZZX6P=q=nAx4LinGG1877HitkrzC_dRL+9b4u7D38r3u_8g@mail.gmail.com>
+Subject: Re: [PATCH 09/29] grep: amend submodule recursion test for regex
+ engine testing
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Repositories with less than 4000 entries are always handled using a
-single thread, causing test-lazy-init-name-hash --multi to error out.
-Don't abort the whole test script in that case, but simply skip the
-multi-threaded performance check.  We can still use it to compare the
-single-threaded speed of different versions in that case.
+On Fri, May 12, 2017 at 6:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> Amend the submodule recursion test to prepare it for subsequent tests
+>> of whether it passes along the grep.patternType to the submodule
+>> greps.
+>>
+>> This is the result of searching & replacing:
+>>
+>>     foobar -> (1|2)d(3|4)
+>>     foo    -> (1|2)
+>>     bar    -> (3|4)
+>> ...
+>>  test_expect_success 'grep and multiple patterns' '
+>>       cat >expect <<-\EOF &&
+>> -     b/b:bar
+>> +     b/b:(3|4)
+>>       EOF
+>>
+>> -     git grep -e "bar" --and --not -e "foo" --recurse-submodules >actua=
+l &&
+>> +     git grep -e "(3|4)" --and --not -e "(1|2)d" --recurse-submodules >=
+actual &&
+>
+>
+> This breaks the promise "foo maps to (1|2)"; I do not think you need
+> to add 'd' in order to make the test to succeed, so I am not sure
+> what is going on here.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- t/perf/p0004-lazy-init-name-hash.sh | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/t/perf/p0004-lazy-init-name-hash.sh b/t/perf/p0004-lazy-init-name-hash.sh
-index 3c2135a185..8de5a98cfc 100755
---- a/t/perf/p0004-lazy-init-name-hash.sh
-+++ b/t/perf/p0004-lazy-init-name-hash.sh
-@@ -8,10 +8,13 @@ test_checkout_worktree
- 
- test_expect_success 'verify both methods build the same hashmaps' '
- 	test-lazy-init-name-hash --dump --single >out.single &&
--	test-lazy-init-name-hash --dump --multi >out.multi &&
--	sort <out.single >sorted.single &&
--	sort <out.multi >sorted.multi &&
--	test_cmp sorted.single sorted.multi
-+	if test-lazy-init-name-hash --dump --multi >out.multi
-+	then
-+		test_set_prereq REPO_BIG_ENOUGH_FOR_MULTI &&
-+		sort <out.single >sorted.single &&
-+		sort <out.multi >sorted.multi &&
-+		test_cmp sorted.single sorted.multi
-+	fi
- '
- 
- test_expect_success 'calibrate' '
-@@ -46,7 +49,7 @@ test_perf "single-threaded, $desc" "
- 	test-lazy-init-name-hash --single --count=$count
- "
- 
--test_perf "multi-threaded, $desc" "
-+test_perf REPO_BIG_ENOUGH_FOR_MULTI "multi-threaded, $desc" "
- 	test-lazy-init-name-hash --multi --count=$count
- "
- 
--- 
-2.12.2
-
+Thanks, fixing it. That was just a stupid mistake on my part, don't
+know how that snuck in there, must have just fat-fingered (1|2) as
+(1|2)d during interactive replace.
