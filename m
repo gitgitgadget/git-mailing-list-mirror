@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F323520188
-	for <e@80x24.org>; Sat, 13 May 2017 19:31:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 718B220188
+	for <e@80x24.org>; Sat, 13 May 2017 19:56:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756016AbdEMTbe (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 15:31:34 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:33259 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755847AbdEMTbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 15:31:34 -0400
-Received: by mail-io0-f170.google.com with SMTP id p24so55863860ioi.0
-        for <git@vger.kernel.org>; Sat, 13 May 2017 12:31:33 -0700 (PDT)
+        id S1758353AbdEMT44 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 15:56:56 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:35290 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758310AbdEMT4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 15:56:55 -0400
+Received: by mail-io0-f196.google.com with SMTP id o12so8570152iod.2
+        for <git@vger.kernel.org>; Sat, 13 May 2017 12:56:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=jf419kDr7nWjEdmuXwwmMy198DuGYfeOJdunqeR1U2c=;
-        b=qAMe8RI92Asg2xFiNb/FtK9nJorNvfj5SmvEnO2LsKUcAG1t4SE8oD625kXxAdH4cJ
-         LgSe45vnZV3yXVva5U+m3XN1EHrn6BPBiOqzUKn+81l9XYU3wh3LkYD31ZeBaLcMJvv/
-         6HP3JrBUShPac7TNFrvWxiZMq6rrs2Vzrdzg/FUlmgS+R2ObILgdmQUI8IHL1Nxr549L
-         nqNNrhpekZN+EWcIb/B4RCQIiQ8MvxbdhxKpzw0WFzwXmGLAzxzGo1rUW1I/nqIpHRpD
-         hUjZD+GGr0o8lPsRhuiLIqVvIG9OXrC6LhKxUTpCMmEAxqXunJbK45GJYVpzcTG5XlsH
-         MOWA==
+        bh=KNhWQOiX9B7/3KVz74EQ0e8QA4qd5YekEjlki5T6tC4=;
+        b=k2D6eUAqkcJv9LEuynC8Xfd2i8iZd8V2GLJKTPyErLh+DQ90rTogC9GEoQPWvUSnEH
+         wd8JF/9lNP8e3q52LrQn2WWGlkGG927vX3UoFW1h2l8+shHKtu1HYbvsw3w8mO3Vr5kX
+         /2DDSfYlRm0bS/aZFl5C6H5SnW26akQ6VOGZrnvwZedX6ouAICJ4wJ/0Cb9JsMTYnBOv
+         hRf9tJvzzVrkORu3pN/VunfeLAs9mvRv/ESwjIdTW7Om0JVmWRyZVqTcSIlgvd16mJs2
+         Up3C6YmGzzm34Y4RWTiPop3TolAuNfTSUMpRx3QjpOK9USygtG8Le5bm5TT6FpDvddvt
+         pExA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jf419kDr7nWjEdmuXwwmMy198DuGYfeOJdunqeR1U2c=;
-        b=pta/IOfQgf28dqSv+i3mHp1x8A3Z7J2FjvTy/tRk6FzD+S6oSzTzN8BejCdG4xWh6R
-         LrYJesnHMdFUuvrNvWx95AV3oHB4Mx2a505pSlen9pOYy3ijbSwLkfANp7XwOzbP3twP
-         LW3PKbuluqAfgeUoMLoMsbWGX0xVjKK4IEi7ARnbuGiPuQCmqcC7jXew7BNyhF4HUxbu
-         oj/qquD6BFiaw0ykJwSnCvvvKBZ9Unw1XiemMs8BfviYBjSdQZvsyaCy+0GPPX57QYum
-         SKjAdgI9nNgbXP/Xt5zesaTMRKs7pQHG0GiEAqMfPDBk28W1UKZFMDInxqRR4s5pM4nz
-         pRaw==
-X-Gm-Message-State: AODbwcBhey1WVKXzeicIyebWpmV+dtVfEe5Q9THH9g9ltZDgwxCJna8K
-        FLy6ANUu/kVo/cYqFlnCGmNl9/TXxw==
-X-Received: by 10.107.138.21 with SMTP id m21mr9919133iod.80.1494703893164;
- Sat, 13 May 2017 12:31:33 -0700 (PDT)
+        bh=KNhWQOiX9B7/3KVz74EQ0e8QA4qd5YekEjlki5T6tC4=;
+        b=LFiLIPsSgaTl2rqIPIuH5XyqtO5FyqopvxtjXu5BYIC2XKHr1bNol01aEn1oJQSfJN
+         ypKRtRa+SYmEkE2OHEwJKb2buLjiDDXGPx2U6a6y+5hsiUEDieZ9qpAyFbtH9ABq0TwL
+         Vqa6H1pUgmnpQZCG8H5njhWNCKwGdCUzzupHZWggU4O2omMMciSWXjY56FwjMUfjn7o9
+         38jQoZzvKUYeZrxXABTZYcK7tqspQfot1bmCTK/rNcuyAfX0pA5RYDlV4NOH/84jAbq1
+         9bE7l6FYtJvMBUNXXILo/UQzUAOAfcbZv4dnXwpePp0lUHdkCUrmEgY2wjXTvwrQrRCD
+         vMgg==
+X-Gm-Message-State: AODbwcB8j0K9jGR6WSKVFNp+IoY2t6aEapDX+frO1nqGVZBaMfI4M7MO
+        VHp6xSm5ubxFxXylFrT5ekuAz+Bki7KS
+X-Received: by 10.107.178.12 with SMTP id b12mr9639361iof.50.1494705415020;
+ Sat, 13 May 2017 12:56:55 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Sat, 13 May 2017 12:31:12 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1705131251260.146734@virtualbox>
-References: <6a6782863a74432094a1d7fba7f2477991ef2d16.1494510612.git.johannes.schindelin@gmx.de>
- <CACBZZX4UUwzRQmyH8joYaqHnuVTjVtGBHp+iZKcnAnwoM_ZJhg@mail.gmail.com> <alpine.DEB.2.21.1.1705131251260.146734@virtualbox>
+Received: by 10.107.8.220 with HTTP; Sat, 13 May 2017 12:56:34 -0700 (PDT)
+In-Reply-To: <a38670f6-2d47-f455-c9d3-d887a58e1e29@cs-ware.de>
+References: <20170513095716.C718E221C2B@srv1.79p.de> <CACBZZX6dcy9DEp8AZsdV5SPG-86ELOXUSuFkOaoUxjVreJXhDA@mail.gmail.com>
+ <a38670f6-2d47-f455-c9d3-d887a58e1e29@cs-ware.de>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 13 May 2017 21:31:12 +0200
-Message-ID: <CACBZZX6Qx+oy83GjTOahUyHM4=gESzX+QNMLrY2DHgdYMo3cNw@mail.gmail.com>
-Subject: Re: [PATCH] compat/regex: fix compilation on Windows
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Sat, 13 May 2017 21:56:34 +0200
+Message-ID: <CACBZZX66ALcHuVh14R4OfW-D5PJS9prnzG5hw2SKvC-V+4+PVA@mail.gmail.com>
+Subject: Re: [PATCH] Use https links to Wikipedia to avoid http redirects
+To:     Sven Strickroth <email@cs-ware.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,62 +63,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 13, 2017 at 8:30 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi =C3=86var,
->
-> I originally replied in a very verbose manner, going step by step through
-> the "one-liner", but decided to rephrase everything.
->
-> So here goes.
->
-> On Sat, 13 May 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> Let's drop this current gawk import series.
->
-> Well, the reason why you imported the current gawk regex is that we (you?=
-)
-> decided originally that it'd be easier to go with that one rather than
-> with the gnulib one (which they friendly-forked). If you switch to gnulib=
-,
-> I would like to see (in the commit message) the original reason we picked
-> gawk (which forked gnulib's regex code, after all), and why that reason n=
-o
-> longer applies.
+On Sat, May 13, 2017 at 11:54 AM, Sven Strickroth <email@cs-ware.de> wrote:
+> Signed-off-by: Sven Strickroth <email@cs-ware.de>
 
-It was just easier to extract the code from gawk than gnulib at the
-time. The thread starting at <20100715220059.GA3312@burratino> has
-some details.
+Thanks! FWIW:
 
-> I also would strongly prefer a *non* one-liner, in a commit message that
-> adds the relevant source code from gawk or gnulib *verbatim*, followed by
-> patches that adjust the code to Git's needs. That way, a future update ca=
-n
-> repeat the commands outlined in the first commit message and then
-> cherry-pick the subsequent patches.
+Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+
+> ---
+>  Documentation/gitweb.txt | 2 +-
+>  bisect.c                 | 2 +-
+>  gitweb/gitweb.perl       | 2 +-
+>  3 files changed, 3 insertions(+), 3 deletions(-)
 >
-> And remember that you do not need to clone the entire repository. You can
-> 1) fetch into the current one, and 2) use a shallow fetch. Example:
+> diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
+> index 96156e5e1..88450589a 100644
+> --- a/Documentation/gitweb.txt
+> +++ b/Documentation/gitweb.txt
+> @@ -84,7 +84,7 @@ separator (rules for Perl's "`split(" ", $line)`").
 >
->         git fetch --depth 1 http://git.savannah.gnu.org/r/gawk.git \
->                 gawk-4.1.4
+>  * Fields use modified URI encoding, defined in RFC 3986, section 2.1
+>  (Percent-Encoding), or rather "Query string encoding" (see
+> -http://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the differenc=
+e
+> +https://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the differen=
+ce
+>  being that SP (" ") can be encoded as "{plus}" (and therefore "{plus}" h=
+as to be
+>  also percent-encoded).
+>  +
+> diff --git a/bisect.c b/bisect.c
+> index 08c9fb726..fa477a3e2 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -546,7 +546,7 @@ static unsigned get_prn(unsigned count) {
 >
-> The next commands could be something like
+>  /*
+>   * Custom integer square root from
+> - * http://en.wikipedia.org/wiki/Integer_square_root
+> + * https://en.wikipedia.org/wiki/Integer_square_root
+>   */
+>  static int sqrti(int val)
+>  {
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 7cf68f07b..d8209c7a0 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -8085,7 +8085,7 @@ sub git_search_help {
+>  <p><strong>Pattern</strong> is by default a normal string that is matche=
+d precisely (but without
+>  regard to case, except in the case of pickaxe). However, when you check =
+the <em>re</em> checkbox,
+>  the pattern entered is recognized as the POSIX extended
+> -<a href=3D"http://en.wikipedia.org/wiki/Regular_expression">regular expr=
+ession</a> (also case
+> +<a href=3D"https://en.wikipedia.org/wiki/Regular_expression">regular exp=
+ression</a> (also case
+>  insensitive).</p>
+>  <dl>
+>  <dt><b>commit</b></dt>
+> --
+> 2.12.1.windows.1
 >
->         git read-tree --prefix=3Dcompat/regex/ FETCH_HEAD:
->         git clean -dfx -- compat/regex/
-
-Sure, if I submit this again I'll update whatever one liner is in
-there to import it via git.
-
-> Oh, and please do not use `master`. If Git is any indication, a tagged
-> release will most often be a bit more robust than any in-between commit.
-
-The reason to use the master branch of gawk is that since the last
-release only one trivial change has been made to it, but the files
-were all renamed as well, so it was easier for that one-liner in the
-README to use master than the latest release.
-
-If we move to gnulib we'll also use the master branch, because that's
-what you're supposed to do according to their docs, they don't make
-releases.
