@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA6EF20188
-	for <e@80x24.org>; Sat, 13 May 2017 23:16:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CA9420188
+	for <e@80x24.org>; Sat, 13 May 2017 23:17:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752654AbdEMXQ4 (ORCPT <rfc822;e@80x24.org>);
+        id S1757248AbdEMXQ7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 19:16:59 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:34023 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753831AbdEMXQ4 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 13 May 2017 19:16:56 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:36806 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758804AbdEMXQt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 19:16:49 -0400
-Received: by mail-qk0-f193.google.com with SMTP id y128so12509334qka.3
-        for <git@vger.kernel.org>; Sat, 13 May 2017 16:16:49 -0700 (PDT)
+Received: by mail-qt0-f194.google.com with SMTP id l39so11212194qtb.1
+        for <git@vger.kernel.org>; Sat, 13 May 2017 16:16:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=BEtF9/6/PTWtzo7Wyxi/nurfVSWczGik/x3F9ANtyMY=;
-        b=nJEiqZacyWpQYT3pIpfmG2PG8NGL90026Um1T0BRVwSXN6IaHUt8w+VuSzWAIEMH0N
-         dxbyhMrvIw4kWIZDDPp7gQKZQ+Q6OxGtuB1tbr4XSQ+SHPBTt5NbuMLwszP50uSKGmPf
-         nM5iphVkhO8VKIEzRxskraihA4PZj1uNe9qKuFbH1q0uxdz9rZFYL5pzVJQqWwl5h4zS
-         S1sFX3lgtIbCxrWSMohSX/dZS5cK1F5plQlG6WsqcuXzRbIwPb4iBegcUP8p6gq2gvkL
-         pGYu6VFBbru9YLvAm9ddaw3LnQLRVuZbZQBmfoW9nLjoeQrTNpPmuctgaqLh/PYN2Va2
-         cCcA==
+        bh=qChLjPWMksS6+A1u3X/INnjIp25DdjDwGWfsz186jfY=;
+        b=PEvpcrKZ18cyixw8QWrkJA64Mc63YLP3kyQEY07wVJ46luhcJ1Qkstc0xR/McYFzRJ
+         VHqyJQLxUV0r6DOUkZyEI+aSBLIwn5FcUjK++h7QmCcRpsJYuB0igivYcV6GNALUItwt
+         GKHeTUIvFwNPn6fdJhhFtjtswLgsDfG3G3kH+uc8twct6X/6mRR9kxlkg76m6IH0tZAe
+         fp/s0RS0/roQ952MNeUlhXq0Wh73HaABRJK+BoNXtbR7EPn48Z50gL4vzgIl+3P6vWCR
+         z1+N4opj8WFmWsTuDo4oXnHTI42K9FIbEoobm24AOb11Kmv//ZtRnVY5TVHUXBD+TE/l
+         oWoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=BEtF9/6/PTWtzo7Wyxi/nurfVSWczGik/x3F9ANtyMY=;
-        b=X7QoQHuKqJUgK4Rl4OAQPsrpx6I6s9gNuMr276Gh4pGSl/dI9KLaOD0M4+Rm5Yj5Mp
-         PmPi85J5DbBZ5TJjs3f+YZmEcuiAlNRhfs72vDc3FcyUmpG0m5Oo8Uttp8zlLFKgrk2w
-         0dUOoYw7hSyCM2ZCMrhPzV7xNCuwfOFcaf2ut6dSA+XwiclXRC/obJfpgRB09ZavXZJp
-         bsqfLyqstLfKpdea4N5IdgWTND6QlQhoqEYw0S2OnvSbAixXqhBTJKFxgzPuGRrVbvaw
-         43wcfdVTq3eN3u5vzwFFIEn2O74IgmqvAnOOgDYGK/pDp9xREz2iffP7CRT0XO48hcaw
-         JsVg==
-X-Gm-Message-State: AODbwcD7BaYj8XBfuML7Altc2IqT5pPF8Eoab8QpC+z/KnU+wJfH63lN
-        EawjtepkIkH2tQ==
-X-Received: by 10.55.221.8 with SMTP id n8mr9557786qki.103.1494717403495;
-        Sat, 13 May 2017 16:16:43 -0700 (PDT)
+        bh=qChLjPWMksS6+A1u3X/INnjIp25DdjDwGWfsz186jfY=;
+        b=it6UFL093lWsG/sl/dKINJWp4ayylOIm5qpLSh8orjjo00VT1AhRynsiMAifRTloU4
+         9pJLZcqAK527JmGz+QOCkBjxDaIdihql1B+YNLlsE85VNqhLhywGjQnXRkwMW1eVeCiX
+         cS531X8hXbz6O4NkpAqwe8HdECInkhzSorHdm4RWvXTaECTYOzKpxUfk0v5ci9oElh5c
+         GtFV1g0LuVd+9kW81Tpp3NIYqhDJ+Or+Dy4028T1vmGFctn4xtdYvwIC8DHudaJfVK8t
+         rPVEFtYabj7nek8UNZvdC4+2dcC4/GrRPmaXvvRRSNoJzyN5rnRnieStyG3b93Hh0pUb
+         DPEw==
+X-Gm-Message-State: AODbwcBq3TAJeYllmnGqwqNbUSLtVp5bzVblErsjPPpgA5cCFiGdHYnw
+        I+FnnFeAHo35yg==
+X-Received: by 10.200.36.232 with SMTP id t37mr9510711qtt.264.1494717414865;
+        Sat, 13 May 2017 16:16:54 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k86sm5574840qkh.12.2017.05.13.16.16.40
+        by smtp.gmail.com with ESMTPSA id k86sm5574840qkh.12.2017.05.13.16.16.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 13 May 2017 16:16:42 -0700 (PDT)
+        Sat, 13 May 2017 16:16:54 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 17/29] perf: add a performance comparison of fixed-string grep
-Date:   Sat, 13 May 2017 23:14:57 +0000
-Message-Id: <20170513231509.7834-18-avarab@gmail.com>
+Subject: [PATCH v2 20/29] grep: remove redundant `regflags &= ~REG_EXTENDED` assignments
+Date:   Sat, 13 May 2017 23:15:00 +0000
+Message-Id: <20170513231509.7834-21-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170513231509.7834-1-avarab@gmail.com>
 References: <20170513231509.7834-1-avarab@gmail.com>
@@ -77,77 +77,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a performance comparison test which compares both case-sensitive &
-case-insensitive fixed-string grep, as well as non-ASCII
-case-sensitive & case-insensitive grep.
+Remove redundant assignments to the "regflags" variable. There are no
+code paths that have previously set the regflags to anything, and
+certainly not to `|= REG_EXTENDED`.
 
-Currently only the "-i æ" performance test doesn't go through the same
-kwset.[ch] codepath, see the "Even when -F..." comment in grep.c.
-
-    $ GIT_PERF_REPEAT_COUNT=10 GIT_PERF_LARGE_REPO=~/g/linux ./run p7821-grep-engines-fixed.sh
-    ----------------------------------------------
-    7821.1: fixed grep int         1.75(1.39+0.34)
-    7821.2: basic grep int         1.68(1.38+0.28)
-    7821.3: extended grep int      1.75(1.41+0.29)
-    7821.4: perl grep int          1.73(1.40+0.30)
-    7821.6: fixed grep -i int      1.94(1.54+0.35)
-    7821.7: basic grep -i int      1.92(1.57+0.32)
-    7821.8: extended grep -i int   1.90(1.54+0.30)
-    7821.9: perl grep -i int       1.91(1.53+0.36)
-    7821.11: fixed grep æ          1.35(1.14+0.18)
-    7821.12: basic grep æ          1.34(1.16+0.16)
-    7821.13: extended grep æ       1.33(1.15+0.17)
-    7821.14: perl grep æ           1.35(1.12+0.20)
-    7821.16: fixed grep -i æ       0.72(0.49+0.22)
-    7821.17: basic grep -i æ       0.74(0.49+0.21)
-    7821.18: extended grep -i æ    0.72(0.48+0.22)
-    7821.19: perl grep -i æ        0.71(0.44+0.23)
-
-I'm planning to make that not be the case, this performance test gives
-a baseline for comparing performance before & after any such change.
-
-See commit ("perf: add a performance comparison test of grep -G, -E
-and -P", 2017-04-19) for details on the machine the above test run was
-executed on.
+This code gave the impression that it had to reset its environment,
+but it doesn't. This dates back to the initial introduction of
+git-grep in commit 5010cb5fcc ("built-in "git grep"", 2006-04-30).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/perf/p7821-grep-engines-fixed.sh | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
- create mode 100755 t/perf/p7821-grep-engines-fixed.sh
+ grep.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/t/perf/p7821-grep-engines-fixed.sh b/t/perf/p7821-grep-engines-fixed.sh
-new file mode 100755
-index 0000000000..d771cccfdf
---- /dev/null
-+++ b/t/perf/p7821-grep-engines-fixed.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+
-+test_description="Comparison of fixed string grep under git-grep's regex engines"
-+
-+. ./perf-lib.sh
-+
-+test_perf_large_repo
-+test_checkout_worktree
-+
-+for args in 'int' '-i int' 'æ' '-i æ'
-+do
-+	for engine in fixed basic extended perl
-+	do
-+		test_perf "$engine grep $args" "
-+			git -c grep.patternType=$engine grep $args >'out.$engine.$args' || :
-+		"
-+	done
-+
-+	test_expect_success "assert that all engines found the same for $args" "
-+		test_cmp 'out.fixed.$args' 'out.basic.$args' &&
-+		test_cmp 'out.fixed.$args' 'out.extended.$args' &&
-+		test_cmp 'out.fixed.$args' 'out.perl.$args'
-+	"
-+done
-+
-+test_done
+diff --git a/grep.c b/grep.c
+index 59ae7809f2..bf6c2494fd 100644
+--- a/grep.c
++++ b/grep.c
+@@ -179,7 +179,6 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 	case GREP_PATTERN_TYPE_BRE:
+ 		opt->fixed = 0;
+ 		opt->pcre = 0;
+-		opt->regflags &= ~REG_EXTENDED;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_ERE:
+@@ -191,7 +190,6 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 	case GREP_PATTERN_TYPE_FIXED:
+ 		opt->fixed = 1;
+ 		opt->pcre = 0;
+-		opt->regflags &= ~REG_EXTENDED;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_PCRE:
+@@ -414,10 +412,9 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int err;
+-	int regflags;
++	int regflags = opt->regflags;
+ 
+ 	basic_regex_quote_buf(&sb, p->pattern);
+-	regflags = opt->regflags & ~REG_EXTENDED;
+ 	if (opt->ignore_case)
+ 		regflags |= REG_ICASE;
+ 	err = regcomp(&p->regexp, sb.buf, regflags);
 -- 
 2.11.0
 
