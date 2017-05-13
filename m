@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2111320188
-	for <e@80x24.org>; Sat, 13 May 2017 23:15:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BCD020188
+	for <e@80x24.org>; Sat, 13 May 2017 23:15:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757293AbdEMXPf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 19:15:35 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:36543 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757246AbdEMXPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 19:15:34 -0400
-Received: by mail-qk0-f194.google.com with SMTP id y128so12507267qka.3
-        for <git@vger.kernel.org>; Sat, 13 May 2017 16:15:33 -0700 (PDT)
+        id S1757787AbdEMXPk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 19:15:40 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:36391 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757648AbdEMXPi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 19:15:38 -0400
+Received: by mail-qt0-f195.google.com with SMTP id j13so11203518qta.3
+        for <git@vger.kernel.org>; Sat, 13 May 2017 16:15:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=v1qkCRm/Z3LtU5uwjIY+qewmLtUUzJLKe11tVGGlik8=;
-        b=nZerdywTuZvLzfy3h13NZacqJmiqZ6yMcnyH3VKkVd3Q6FSFmf/1wU52Q5ze6PKhY8
-         88t2nxSdcZV+b4gSwY3oUMBUPdUswKtMDK5CRDQ9cuag21ge3QWGogwAq3ICL7wGsmkl
-         RFmFUAoxDbtGAPu26WfmLxO/vNKCA3tcIx4YeqF+3+AKBHIciVWhyzYHLvJ+IA7oz+9Y
-         cbTZ8sR1upJLpr+f/jnF3o7oLtWNT/LN6rhJOIZUNS6zvyZ5sR/0WNCeGMWQcqQU1Fni
-         /tIs1TDQBtJOOeOOjOhT9HgNF85DWUSBh9fIc5Z/GjkF4liahD4sBurTMtXeqP49fKwc
-         2sWA==
+        bh=ihzpD4+OFPWbMxJZIbF5doRzeJ3HBeUhU8J70apcUko=;
+        b=qP3h+XpdFEzfXFQGs9ZZco/Jg7oYqxL8aJE/RyOKf2ticHucrIf3rWSRVCMLHKJ9v2
+         3IXIiqiP9+gOlAn6EhDpJfGPhfb+6/jdGM02avW1NQ8KG2Ng0gg7hbSzNoqUPUnA+0/9
+         8ZSBEOAW0seUw62FOeAXRrgDJa0Bo+KIxjTC7E4O5u/gLGQGH3kf3UXY5p1F2EJEKkjM
+         v57ReI0c6mgAveYjypfYMr8HqdmZxzsX+gaDmvCSisTyk0uHdHYO7k9EEEOYbTpViJeE
+         nSGKW4miXLQ8r8wSxllHSg3Qx1a5Go0c7zCf3L3b/7OTUDHtalHGRsKpiwiJJz2T2z5u
+         gOrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=v1qkCRm/Z3LtU5uwjIY+qewmLtUUzJLKe11tVGGlik8=;
-        b=EGrf+qVg07J0Q9ngmXxcqk7WWfu/Cclg5OLbR+VcoJbOci+VjJDzrO1ldMBf+UX+t5
-         5PVY9+lrxu0XWkJtP0w8gDfUUQKJJ+ZOIwaY0mE/9HNQkkD5RRmQDcRBQlT+4WjmgcKc
-         svorbzDht002GEuT8WHRciApbOJ5XqfgBfrCTRdVFFEKJHxjsuGj6o65OTJWWZUcGIpH
-         e6uRoNguUBzM+WnjAg0z2rzxmq1H+TWWKORcRzaZn0vMCh+ijSGcyDxidR7rvLNB2CVe
-         MNCGQ+1JuKLtl4InzWRcr0aNid7QybIO9GHffkSyHXFQ7ELMDTY0IJ7/rnpsf8vVN6SO
-         s0Mg==
-X-Gm-Message-State: AODbwcACW5tBCHsJ3xaFRXqq6jSrJWR2Ik/2vspfdIyGq14stZik0fbB
-        2rBBsELeysMA6A==
-X-Received: by 10.55.119.5 with SMTP id s5mr9924740qkc.32.1494717333217;
-        Sat, 13 May 2017 16:15:33 -0700 (PDT)
+        bh=ihzpD4+OFPWbMxJZIbF5doRzeJ3HBeUhU8J70apcUko=;
+        b=AjUtpUOJODY92gjgH4WLKtyi0JB0XQTrNx3R9UDDv4EZTlbLEjsc/HxGLCNkACCTlS
+         VOLgC90KqUj2t/k+AioTGhvARUkL2SH/CB1LndTc8w7TCm4PM+m3ePkWPJ1OHQYPc1Tn
+         cDmt7RnRpxkWhyKdMNmIcl2tmTohYbnios48DWG04P4Gy9j1o59s1CGrUJzb/+pAGDGc
+         lFAkZ0ZIcmqvejSiW3oTtZJYcdQXKQULitOdr0DCjtu6QoKKrpU+DbHCtnE+VhezLr5G
+         4NF6W1KJlP+9nvW54C9oF+HgctD3cOD7+mqixKm1yVukJCh/ZalbnZcUVr87aRLzgw1g
+         iFpA==
+X-Gm-Message-State: AODbwcA33ex5f7tL+kH45pfNgfByIaPMKs0/b8k3AngJcJx/gOfQ4r/p
+        mkOmTPrbSPcf/g==
+X-Received: by 10.237.35.134 with SMTP id j6mr9912945qtc.256.1494717337854;
+        Sat, 13 May 2017 16:15:37 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k86sm5574840qkh.12.2017.05.13.16.15.30
+        by smtp.gmail.com with ESMTPSA id k86sm5574840qkh.12.2017.05.13.16.15.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 13 May 2017 16:15:32 -0700 (PDT)
+        Sat, 13 May 2017 16:15:36 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 01/29] Makefile & configure: reword inaccurate comment about PCRE
-Date:   Sat, 13 May 2017 23:14:41 +0000
-Message-Id: <20170513231509.7834-2-avarab@gmail.com>
+Subject: [PATCH v2 02/29] grep & rev-list doc: stop promising libpcre for --perl-regexp
+Date:   Sat, 13 May 2017 23:14:42 +0000
+Message-Id: <20170513231509.7834-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170513231509.7834-1-avarab@gmail.com>
 References: <20170513231509.7834-1-avarab@gmail.com>
@@ -77,83 +77,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reword an outdated & inaccurate comment which suggests that only
-git-grep can use PCRE.
+Stop promising in our grep & rev-list options documentation that we're
+always going to be using libpcre when given the --perl-regexp option.
 
-This comment was added back when PCRE support was initially added in
-commit 63e7e9d8b6 ("git-grep: Learn PCRE", 2011-05-09), and was true
-at the time.
+Instead talk about using "Perl-compatible regular expressions" and
+using these types of patterns using "a compile-time dependency".
 
-It hasn't been telling the full truth since git-log learned to use
-PCRE with --grep in commit 727b6fc3ed ("log --grep: accept
---basic-regexp and --perl-regexp", 2012-10-03), and more importantly
-is likely to get more inaccurate over time as more use is made of PCRE
-in other areas.
+Saying "libpcre" means that we're talking about libpcre.so, which is
+always going to be v1. This change is part of an ongoing saga to add
+support for libpcre2, which comes with PCRE v2.
 
-Reword it to be more future-proof, and to more clearly explain that
-this enables user-initiated runtime behavior.
-
-Copy/pasting this so much in configure.ac is lame, these Makefile-like
-flags aren't even used by autoconf, just the corresponding
---with[out]-* options. But copy/pasting the comments that make sense
-for the Makefile to configure.ac where they make less sense is the
-pattern everything else follows in that file. I'm not going to war
-against that as part of this change, just following the existing
-pattern.
+In the future we might use some completely unrelated library to
+provide perl-compatible regular expression support. By wording the
+documentation differently and not promising any specific version of
+PCRE or even PCRE at all we have more wiggle room to change the
+implementation.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile     |  6 ++++--
- configure.ac | 12 ++++++++----
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ Documentation/git-grep.txt         | 7 +++++--
+ Documentation/rev-list-options.txt | 8 ++++++--
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e35542e631..eedadb8056 100644
---- a/Makefile
-+++ b/Makefile
-@@ -24,8 +24,10 @@ all::
- # Define NO_OPENSSL environment variable if you do not have OpenSSL.
- # This also implies BLK_SHA1.
- #
--# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
--# able to use Perl-compatible regular expressions.
-+# Define USE_LIBPCRE if you have and want to use libpcre. Various
-+# commands such as log and grep offer runtime options to use
-+# Perl-compatible regular expressions instead of standard or extended
-+# POSIX regular expressions.
- #
- # Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
- # /foo/bar/include and /foo/bar/lib directories.
-diff --git a/configure.ac b/configure.ac
-index 128165529f..deeb968daa 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -250,8 +250,10 @@ AS_HELP_STRING([--with-openssl],[use OpenSSL library (default is YES)])
- AS_HELP_STRING([],              [ARG can be prefix for openssl library and headers]),
- GIT_PARSE_WITH([openssl]))
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 71f32f3508..5033483db4 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -161,8 +161,11 @@ OPTIONS
  
--# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
--# able to use Perl-compatible regular expressions.
-+# Define USE_LIBPCRE if you have and want to use libpcre. Various
-+# commands such as log and grep offer runtime options to use
-+# Perl-compatible regular expressions instead of standard or extended
-+# POSIX regular expressions.
- #
- # Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
- # /foo/bar/include and /foo/bar/lib directories.
-@@ -499,8 +501,10 @@ GIT_CONF_SUBST([NEEDS_SSL_WITH_CRYPTO])
- GIT_CONF_SUBST([NO_OPENSSL])
+ -P::
+ --perl-regexp::
+-	Use Perl-compatible regexp for patterns. Requires libpcre to be
+-	compiled in.
++	Use Perl-compatible regular expressions for patterns.
+++
++Support for these types of regular expressions is an optional
++compile-time dependency. If Git wasn't compiled with support for them
++providing this option will cause it to die.
  
- #
--# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
--# able to use Perl-compatible regular expressions.
-+# Define USE_LIBPCRE if you have and want to use libpcre. Various
-+# commands such as log and grep offer runtime options to use
-+# Perl-compatible regular expressions instead of standard or extended
-+# POSIX regular expressions.
- #
+ -F::
+ --fixed-strings::
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index a02f7324c0..a46f70c2b1 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -92,8 +92,12 @@ endif::git-rev-list[]
+ 	pattern as a regular expression).
  
- if test -n "$USE_LIBPCRE"; then
+ --perl-regexp::
+-	Consider the limiting patterns to be Perl-compatible regular expressions.
+-	Requires libpcre to be compiled in.
++	Consider the limiting patterns to be Perl-compatible regular
++	expressions.
+++
++Support for these types of regular expressions is an optional
++compile-time dependency. If Git wasn't compiled with support for them
++providing this option will cause it to die.
+ 
+ --remove-empty::
+ 	Stop when a given path disappears from the tree.
 -- 
 2.11.0
 
