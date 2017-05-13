@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2363201B0
-	for <e@80x24.org>; Sat, 13 May 2017 23:16:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D7C920188
+	for <e@80x24.org>; Sat, 13 May 2017 23:16:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758615AbdEMXP7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 19:15:59 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:33621 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758554AbdEMXP6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 19:15:58 -0400
-Received: by mail-qk0-f196.google.com with SMTP id o85so12526123qkh.0
-        for <git@vger.kernel.org>; Sat, 13 May 2017 16:15:57 -0700 (PDT)
+        id S1758664AbdEMXQF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 19:16:05 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:35283 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758554AbdEMXQC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 19:16:02 -0400
+Received: by mail-qk0-f195.google.com with SMTP id k74so12530750qke.2
+        for <git@vger.kernel.org>; Sat, 13 May 2017 16:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=coAqhDZTTtUk6URijA5R3wpxlWMGJFdBrSDu4ifDMLU=;
-        b=B0yl9csWiHyM3+Fo/9nYR9w4GcJoEhLlOyw/q0JfK8Sp4ZvVujIa0Y/XQjjBtj0TWw
-         bsa3mGoILsDJACCDH6q07J7xWKLSNC26NH6rnudRtkZ30qtUUPCqz9DRZUmU1mSIf7X2
-         teYNASfEfrjotRwY1EOn4wplYLoyqlCNeShR61imjsdbtU+16CpTrSVto0lEHAhh7+kv
-         x7y8C1czjQBnOCe7GE6Au4RnWiM4T42a6nSbFoVe7q6D235K+HfzFMvCmzDkjh0DluGh
-         +x/OllXi8LO7zLNedLz4rPzo8QFa/tsabUHvAxdPd8fPV1uzEyrGQE97VJVFUAukUQVA
-         W7Cw==
+        bh=hmihBrR25yjJ9cBZFRZ9c6DvXOqVaSnUA2EgeXZtnVc=;
+        b=r848maOTYzOgP0chs4X8U4aYjfg/cwct+GgZVSSS0H+1N7Snm2RS8RvYkvVR9y9rp3
+         6WKw9Qpp+ulnzDNvoYigRg9A7NO5CvQg3MMbnvZnf3thv41iu+QR2KDYcu8PB6vdhlTZ
+         IEy2A359NxvacwikY8YLA/uCmjg7QxZorsR6Iy8NGuh0s6K9qxQRDD4XwyYiEUp44cgI
+         AG9SLrrjtcSxKKUTLa8l8hs0Yxm6QNmpw71MPtsgtyssWHdz6GqCIPjDEKGGDccizrnI
+         0f6X5AZESSVX8exUm4qhx73kCZjSPIwy+ri42tfB8mUFEs95yn6/8lMg8RAPjS4kvUhX
+         S/Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=coAqhDZTTtUk6URijA5R3wpxlWMGJFdBrSDu4ifDMLU=;
-        b=HmjllW5dUQ3FSdOafp7ZJCTdav/grKroO1ZplKKLcWWyrapbR1d86gcMGuAgIJ4wAy
-         X3if+62nbGlWRf/B2/4cDd7BPPfejI3xN3518HTOtAzWbSMOIGC17TPG9/YyyzMvQM+9
-         qjgvj/KCW3D+Gmzaq3xmM9eChqyTgnWUts4ApoZ8XvyM1y3G/d1MtFEKrZakQD7lUAbw
-         zrGMoRECDTAqwvkYJvgw5CS6ygJFCrZNNbRBqWCnToe+/Off8zCp++iyBYTK6BoyPgq0
-         qCQsF9g8F92b576EJ3sHGFDIm7hUNpINzrEqkvUMf2Tho0g587rHRi7pivrgkUdZdSjF
-         oTuw==
-X-Gm-Message-State: AODbwcC5JZLUfk24ZrdzKn8DdbDwOrtxPXSJ9HTt0Cs/a3tGwD384xEl
-        6F/FOaaFh7HBwQ==
-X-Received: by 10.55.43.168 with SMTP id r40mr10534659qkr.59.1494717357143;
-        Sat, 13 May 2017 16:15:57 -0700 (PDT)
+        bh=hmihBrR25yjJ9cBZFRZ9c6DvXOqVaSnUA2EgeXZtnVc=;
+        b=HOuHumuZN2t8X5JsyEiDLbpcHvK5SZumptupAvOtzJJv+dMfIP6wfdme789qAXdsSN
+         zqGyq5sVDKalDAM81M5ZwDfpx5ShuGae07qwiA3ptA3/aZIryxXlZ4dxAypZq2zqaJet
+         P+cd/Vxij9IjFMO2qmlDMOyu6rpIRuXwXE2iFLcCd5ay6xz/7B3vBJ8xv6F707vH7gHi
+         fcacpHbWNkZwNX/5R4uB3M5xB8B8QazXuDVYbIJx0LN/++gv2qvHVNu6TjYmffJkdkXz
+         ysvn2dplgBgqDnfkzLCEDr9WsEJgZtU0JXTF4bOiqNih2zb6tqa83Xld8oi+f3IXlJYN
+         IaqA==
+X-Gm-Message-State: AODbwcA+6Tbp5zfHcmfF4YZRVphwL7iAkYilWtBBsoPZrH5C6PAH22oX
+        aB1P2cbzko8UZA==
+X-Received: by 10.55.53.210 with SMTP id c201mr9454411qka.301.1494717361104;
+        Sat, 13 May 2017 16:16:01 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k86sm5574840qkh.12.2017.05.13.16.15.54
+        by smtp.gmail.com with ESMTPSA id k86sm5574840qkh.12.2017.05.13.16.15.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 13 May 2017 16:15:56 -0700 (PDT)
+        Sat, 13 May 2017 16:16:00 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 07/29] grep: change non-ASCII -i test to stop using --debug
-Date:   Sat, 13 May 2017 23:14:47 +0000
-Message-Id: <20170513231509.7834-8-avarab@gmail.com>
+Subject: [PATCH v2 08/29] grep: add tests for --threads=N and grep.threads
+Date:   Sat, 13 May 2017 23:14:48 +0000
+Message-Id: <20170513231509.7834-9-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170513231509.7834-1-avarab@gmail.com>
 References: <20170513231509.7834-1-avarab@gmail.com>
@@ -77,61 +77,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a non-ASCII case-insensitive test case to stop using --debug,
-and instead simply test for the expected results.
+Add tests for --threads=N being supplied on the command-line, or when
+grep.threads=N being supplied in the configuration.
 
-The test coverage remains the same with this change, but the test
-won't break due to internal refactoring.
+When the threading support was made run-time configurable in commit
+89f09dd34e ("grep: add --threads=<num> option and grep.threads
+configuration", 2015-12-15) no tests were added for it.
 
-This test was added in commit 793dc676e0 ("grep/icase: avoid kwsset
-when -F is specified", 2016-06-25). It was asserting that the regex
-must be compiled with compile_fixed_regexp(), instead test for the
-expected results, allowing the underlying implementation to change.
+In developing a change to the grep code I was able to make
+'--threads=1 <pat>` segfault, while the test suite still passed. This
+change fixes that blind spot in the tests.
+
+In addition to asserting that asking for N threads shouldn't segfault,
+test that the grep output given any N is the same.
+
+The choice to test only 1..10 as opposed to 1..8 or 1..16 or whatever
+is arbitrary. Testing 1..1024 works locally for me (but gets
+noticeably slower as more threads are spawned). Given the structure of
+the code there's no reason to test an arbitrary number of threads,
+only 0, 1 and >=2 are special modes of operation.
+
+A later patch introduces a PTHREADS test prerequisite which is true
+under NO_PTHREADS=UnfortunatelyYes, but even under NO_PTHREADS it's
+fine to test --threads=N, we'll just ignore it and not use
+threading. So these tests also make sense under that mode to assert
+that --threads=N without pthreads still returns expected results.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7812-grep-icase-non-ascii.sh | 25 +++++--------------------
- 1 file changed, 5 insertions(+), 20 deletions(-)
+ t/t7810-grep.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
-index 04a61cb8e0..0059a1f837 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -36,29 +36,14 @@ test_expect_success GETTEXT_LOCALE,PCRE 'grep pcre utf-8 string with "+"' '
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index daa906b9b0..561709ef6a 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -775,6 +775,22 @@ test_expect_success 'grep -W with userdiff' '
+ 	test_cmp expected actual
  '
  
- test_expect_success REGEX_LOCALE 'grep literal string, with -F' '
--	git grep --debug -i -F "TILRAUN: Halló Heimur!"  2>&1 >/dev/null |
--		 grep fixed >debug1 &&
--	test_write_lines "fixed TILRAUN: Halló Heimur!" >expect1 &&
--	test_cmp expect1 debug1 &&
--
--	git grep --debug -i -F "TILRAUN: HALLÓ HEIMUR!"  2>&1 >/dev/null |
--		 grep fixed >debug2 &&
--	test_write_lines "fixed TILRAUN: HALLÓ HEIMUR!" >expect2 &&
--	test_cmp expect2 debug2
-+	git grep -i -F "TILRAUN: Halló Heimur!" &&
-+	git grep -i -F "TILRAUN: HALLÓ HEIMUR!"
- '
- 
- test_expect_success REGEX_LOCALE 'grep string with regex, with -F' '
--	test_write_lines "^*TILR^AUN:.* \\Halló \$He[]imur!\$" >file &&
--
--	git grep --debug -i -F "^*TILR^AUN:.* \\Halló \$He[]imur!\$" 2>&1 >/dev/null |
--		 grep fixed >debug1 &&
--	test_write_lines "fixed \\^*TILR^AUN:\\.\\* \\\\Halló \$He\\[]imur!\\\$" >expect1 &&
--	test_cmp expect1 debug1 &&
--
--	git grep --debug -i -F "^*TILR^AUN:.* \\HALLÓ \$HE[]IMUR!\$"  2>&1 >/dev/null |
--		 grep fixed >debug2 &&
--	test_write_lines "fixed \\^*TILR^AUN:\\.\\* \\\\HALLÓ \$HE\\[]IMUR!\\\$" >expect2 &&
--	test_cmp expect2 debug2
-+	test_write_lines "TILRAUN: Halló Heimur [abc]!" >file3 &&
-+	git add file3 &&
-+	git grep -i -F "TILRAUN: Halló Heimur [abc]!" file3
- '
- 
- test_expect_success REGEX_LOCALE 'pickaxe -i on non-ascii' '
++for threads in $(test_seq 0 10)
++do
++	test_expect_success "grep --threads=$threads & -c grep.threads=$threads" "
++		git grep --threads=$threads . >actual.$threads &&
++		if test $threads -ge 1
++		then
++			test_cmp actual.\$(($threads - 1)) actual.$threads
++		fi &&
++		git -c grep.threads=$threads grep . >actual.$threads &&
++		if test $threads -ge 1
++		then
++			test_cmp actual.\$(($threads - 1)) actual.$threads
++		fi
++	"
++done
++
+ test_expect_success 'grep from a subdirectory to search wider area (1)' '
+ 	mkdir -p s &&
+ 	(
 -- 
 2.11.0
 
