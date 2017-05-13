@@ -6,75 +6,73 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E09E5201A4
-	for <e@80x24.org>; Sat, 13 May 2017 06:43:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19C75201A4
+	for <e@80x24.org>; Sat, 13 May 2017 08:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751231AbdEMGnw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 02:43:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50693 "EHLO cloud.peff.net"
+        id S1752079AbdEMIaS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 04:30:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50739 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750822AbdEMGnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 02:43:51 -0400
-Received: (qmail 18770 invoked by uid 109); 13 May 2017 06:43:49 -0000
+        id S1751843AbdEMIaS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 04:30:18 -0400
+Received: (qmail 25826 invoked by uid 109); 13 May 2017 08:30:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 May 2017 06:43:49 +0000
-Received: (qmail 30109 invoked by uid 111); 13 May 2017 06:44:22 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 May 2017 08:30:14 +0000
+Received: (qmail 30456 invoked by uid 111); 13 May 2017 08:30:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 May 2017 02:44:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 May 2017 02:43:48 -0400
-Date:   Sat, 13 May 2017 02:43:48 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 13 May 2017 04:30:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 13 May 2017 04:30:12 -0400
+Date:   Sat, 13 May 2017 04:30:12 -0400
 From:   Jeff King <peff@peff.net>
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: Best "triangle" workflow setup?
-Message-ID: <20170513064348.wwnkle4bkhih2clx@sigill.intra.peff.net>
-References: <CAHd499DjBHsWCf8h+i4EstR7qs-9hkO4En5-B-WA17DoPZQNoQ@mail.gmail.com>
- <20170511201707.aobrdiompzg6wu5k@sigill.intra.peff.net>
- <CAHd499AvDRH-KZ7piOE=QsVXSpMt0u5jVXUC=7UPnRVLYo-U5Q@mail.gmail.com>
- <20170511233640.ylf4to3hotngh6xe@sigill.intra.peff.net>
- <CAHd499A=wwxFxZ2mq=PZcOBNRSiK1Xm_sE79AypBXQaYU_UcJQ@mail.gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v5] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170513083012.lcs47tz3xb7avl45@sigill.intra.peff.net>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
+ <20170511223054.25239-1-jonathantanmy@google.com>
+ <20170511224639.GC21723@aiede.svl.corp.google.com>
+ <xmqq37ca7gw0.fsf@gitster.mtv.corp.google.com>
+ <20170512075931.umunxd72nj53snds@sigill.intra.peff.net>
+ <20170512081417.w537fmd4o5rl4kja@sigill.intra.peff.net>
+ <CAGf8dgLcCeMYGPF1PSPy5M5zLvj2hb_EfpDBPbcNe+96c9YpRA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAHd499A=wwxFxZ2mq=PZcOBNRSiK1Xm_sE79AypBXQaYU_UcJQ@mail.gmail.com>
+In-Reply-To: <CAGf8dgLcCeMYGPF1PSPy5M5zLvj2hb_EfpDBPbcNe+96c9YpRA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 12, 2017 at 09:53:23AM -0500, Robert Dailey wrote:
+On Fri, May 12, 2017 at 11:00:36AM -0700, Jonathan Tan wrote:
 
-> Thanks, just curious, where in the git documentation is the "origin"
-> to "origin/HEAD" resolution documented? I checked the git-revisions
-> page but it doesn't seem to mention it there. Thanks for explaining
-> though.
+> > @@ -617,7 +632,8 @@ static void filter_refs(struct fetch_pack_args *args,
+> >                                 else if (cmp == 0) {
+> >                                         keep = 1; /* definitely have it */
+> >                                         sought[i]->match_status = REF_MATCHED;
+> > -                               }
+> > +                               } else if (is_literal_sha1(sought[i]))
+> > +                                       seeking_raw_oid = 1;
+> 
+> As far as I can tell, this seems to coincidentally work because SHA-1s
+> as strings compare less than any ref name (HEAD or refs/...) - if this
+> weren't the case, the "break" statement above might cause this line to
+> never be executed. I'm not sure if we want to rely on that.
 
-In gitrevisions(7), the <refname> section, rule 6:
+Right, I was thinking we'd hit all of the sought refs in this loop, but
+we don't necessarily (if we run out of remote refs to compare to).
+Finishing it off with:
 
-  otherwise, refs/remotes/<refname>/HEAD if it exists.
+  /* scan the remainder of the requests */
+  for (; i < nr_sought; i++)
+	if (is_literal_sha1(...))
 
-And then the contents of origin/HEAD are discussed a bit in
-git-remote(1), under set-head.
+though it would probably be less confusing to just do a separate loop
+after the original is done.
 
-> Also is there a similar mechanism for "track same-named branch on
-> specified remote"? Something like "origin/."? I follow git-flow
-> development process, so topic branches on hotfix or release branches
-> will track origin/master (since origin/HEAD still points to master or
-> develop). But I want to track "origin/release/1.2.3" without typing
-> the full thing. Basically would be nice if there was a lazy shorthand
-> for it similar to the "origin/HEAD" example you gave.
-
-No, I don't think there's a shorthand for "the same-named branch". But
-there are two things that might help:
-
-  1. If you're always branching from release/1.2.3 instead of "master",
-     you can use "git remote set-head" to change it.
-
-  2. If you want a local branch "foo" to track refs/remotes/origin/foo
-     (which already exists) then the checkout-dwim should work for you:
-
-        $ git checkout foo
-	Branch foo set up to track remote branch foo from origin.
-	Switched to a new branch 'foo'
+Anyway, it looks like your v6 just keeps the lazy approach, so this is
+all moot.
 
 -Peff
