@@ -2,126 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E29DC20188
-	for <e@80x24.org>; Sat, 13 May 2017 13:32:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F42E20188
+	for <e@80x24.org>; Sat, 13 May 2017 14:06:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752943AbdEMNcq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 09:32:46 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:37366 "EHLO
-        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750935AbdEMNcp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 09:32:45 -0400
-Received: from [10.0.2.15] ([143.159.212.80])
-        by avasout08 with smtp
-        id KpYi1v0031keHif01pYjlq; Sat, 13 May 2017 14:32:44 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=JPdLi4Cb c=1 sm=1 tr=0
- a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
- a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=RqK9Ag7hJBwwZxdiC9oA:9 a=QEXdDO2ut3YA:10
- a=q92HNjYiIAC_jH7JDaYf:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] usage.c: drop set_error_handle()
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20170513034818.h3aaihqmf4q43vef@sigill.intra.peff.net>
-Cc:     Brandon Williams <bmwill@google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <ca13408b-0aaf-f330-5a6b-12aa8ff8e313@ramsayjones.plus.com>
-Date:   Sat, 13 May 2017 14:32:42 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1752203AbdEMOGh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 10:06:37 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34792 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750935AbdEMOGh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 10:06:37 -0400
+Received: by mail-pf0-f181.google.com with SMTP id 9so2705376pfj.1
+        for <git@vger.kernel.org>; Sat, 13 May 2017 07:06:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lZDN+YnFDEAUHxBiOChkfe0Bx7T+SztgtvrKZ1NNYcQ=;
+        b=otUuEplthunlIdIbd3hIIVMwbTLhpyE2MWgVGjNtHyH1TCUnQJrdzPjn1KouC/BhHi
+         5V2wTVfCGmWwGJgaha0w0msOO+LeBYEdLSi2DVk13qDo6iXPNrV71MkvvRhzyDSgtL7M
+         SILa10ifMqU+XaIiv1FdFwFiilYybMFtk8UU+8Fp4kcoyTcXPLjXW6FBAjE9ZA9Mc8a3
+         TMdaILoL+vz38FwdNFYMslTJ02/mx5kjMorY6kus7t4XFeh0L2rJ+O1Mx+0lgOf3X5nx
+         TbTct/1OMB/7SQPrC35l8wUsJ2syGiwPs26cx5MTXjKUATxW5/cWi6pdblU0yyVIb97r
+         z1qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lZDN+YnFDEAUHxBiOChkfe0Bx7T+SztgtvrKZ1NNYcQ=;
+        b=Mdo0LYkm0JH5U8JcfVWqhnbw4Zs2iJhTmCvCCvPxl6+6Em2GfjoNj8vyg9PowcL/5n
+         5f6/SziHX+yPAQEzyvjk7HgR+5WisKTwIcFQzJ/lhphFjCxnH6DtpjnhyhjCX7S7swM3
+         u4c4h0cdkB2XVZDqhnoawzSj1yGSPLnFA9JBLB2tb1GsdSjUPqbW356cKQLJJvrQBAF5
+         sr9oPaXPgF4D8WS/3O00ItEW0V0DRFpgDGOdPc09PjQvIwL0ifwg2caphVSVWvyBHUhY
+         KUCJgxEYmezyj978e6tUBQ/n+iVmU11qoESsddneBALNFwyh83fdoIGgPHnWWYUo3MEu
+         6IrA==
+X-Gm-Message-State: AODbwcAP/fMWGqVynkGeq1at5u8jqrAKwnnp9uOl0rucVgAh9NL2KmcZ
+        BudDcloGVolXZ9Xe435ciYRM2Yen4XHT
+X-Received: by 10.84.228.207 with SMTP id y15mr12758639pli.172.1494684396109;
+ Sat, 13 May 2017 07:06:36 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170513034818.h3aaihqmf4q43vef@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Received: by 10.100.170.200 with HTTP; Sat, 13 May 2017 07:06:35 -0700 (PDT)
+In-Reply-To: <20170513085050.plmau5ffvzn6ibfp@sigill.intra.peff.net>
+References: <20170512200244.25245-1-sbeller@google.com> <20170513085050.plmau5ffvzn6ibfp@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Sat, 13 May 2017 07:06:35 -0700
+Message-ID: <CAGZ79kZxN5-K19R+gd-pZ1Uc30_JRKugjMTJZ4er2dF71pStPg@mail.gmail.com>
+Subject: Re: [PATCH] hashmap: hashmap_get_next passes through keydata as well
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, May 13, 2017 at 1:50 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, May 12, 2017 at 01:02:44PM -0700, Stefan Beller wrote:
+>
+>> The 'keydata' may be of value in the underlying compare function to decide
+>> if the given two entries are the same.
+>
+> I had to scratch my head over this for a minute, because there isn't
+> really any motivating example of what you're trying to do.
+>
+> I think I figured it out, but I have a feeling it is violating the
+> intent of the "keydata" parameter.  That parameter is typically used not
+> as a pointer to arbitrary auxiliary data, but as a trick for finding a
+> hash entry without having to allocate a struct for it.
 
+Yes, I was violating the intent exactly as you describe. I'll adapt my patches
+accordingly.
 
-On 13/05/17 04:48, Jeff King wrote:
-> The set_error_handle() function was introduced by 3b331e926
-> (vreportf: report to arbitrary filehandles, 2015-08-11) so
-> that run-command could send post-fork, pre-exec errors to
-> the parent's original stderr.
-> 
-> That use went away in 79319b194 (run-command: eliminate
-> calls to error handling functions in child, 2017-04-19),
-> which pushes all of the error reporting to the parent.
-> This leaves no callers of set_error_handle(). As we're not
-> likely to add any new ones, let's drop it.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
+I do not really buy into the trick though, because when the overhead of
+allocating a 'key' struct filling in the key parts only leaving out the value
+is so much more expensive than giving the key via this keydata argument,
+then there are serious issues with your data structure IMHO.
+Example:
 
-I have an identical patch, which I had intended to send at
-the 'start of the next cycle'. :D (Well, you actually had
-a commit message ...).
+  struct {
+    struct hashmap_entry ent;
+    int actual key;
+    char value[4096*1024]
+  } key_plus_value;
 
-So, FWIW: ACK
+Now when you want to look up a specific key, you don't want to allocate
+such a struct on the stack, as we'd be wasting 4M memory of the stack
+trashing the caches. However the neat part about this struct is that the
+key part is (a) totally separate from the values, and (b) comes before
+any value part, such that
 
-ATB,
-Ramsay Jones
+  struct {
+    struct hashmap_entry ent;
+    int actual key;
+  } key_only;
 
-> ---
-> This goes on top of bw/forking-and-threading.
-> 
->  git-compat-util.h |  1 -
->  usage.c           | 10 +---------
->  2 files changed, 1 insertion(+), 10 deletions(-)
-> 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 8a4a3f85e..f1f2a2d73 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -445,7 +445,6 @@ extern void (*get_error_routine(void))(const char *err, va_list params);
->  extern void set_warn_routine(void (*routine)(const char *warn, va_list params));
->  extern void (*get_warn_routine(void))(const char *warn, va_list params);
->  extern void set_die_is_recursing_routine(int (*routine)(void));
-> -extern void set_error_handle(FILE *);
->  
->  extern int starts_with(const char *str, const char *prefix);
->  
-> diff --git a/usage.c b/usage.c
-> index ad6d2910f..2623c078e 100644
-> --- a/usage.c
-> +++ b/usage.c
-> @@ -6,12 +6,9 @@
->  #include "git-compat-util.h"
->  #include "cache.h"
->  
-> -static FILE *error_handle;
-> -
->  void vreportf(const char *prefix, const char *err, va_list params)
->  {
->  	char msg[4096];
-> -	FILE *fh = error_handle ? error_handle : stderr;
->  	char *p;
->  
->  	vsnprintf(msg, sizeof(msg), err, params);
-> @@ -19,7 +16,7 @@ void vreportf(const char *prefix, const char *err, va_list params)
->  		if (iscntrl(*p) && *p != '\t' && *p != '\n')
->  			*p = '?';
->  	}
-> -	fprintf(fh, "%s%s\n", prefix, msg);
-> +	fprintf(stderr, "%s%s\n", prefix, msg);
->  }
->  
->  static NORETURN void usage_builtin(const char *err, va_list params)
-> @@ -88,11 +85,6 @@ void set_die_is_recursing_routine(int (*routine)(void))
->  	die_is_recursing = routine;
->  }
->  
-> -void set_error_handle(FILE *fh)
-> -{
-> -	error_handle = fh;
-> -}
-> -
->  void NORETURN usagef(const char *err, ...)
->  {
->  	va_list params;
-> 
+  struct key_only = {{NULL, 0}, 42};
+  struct key_plus_value *match = hashmap_get(&map, &key, NULL);
+
+works, I would think?
+
+>
+> So generally, I'd think two entries in the table should be able to be
+> compared on their own merits, even if no keydata is available. Without
+> that property, any internal operations in the hashmap can't actually do
+> an entry comparison (e.g., a table resize that needs to rehash the
+> entries).
+>
+> It works out in the current code because the chaining is purely linear,
+> and doesn't care about order. So we can rehash and just stick the
+> elements into a new list. But if it were switched out for a different
+> data structure (e.g., a tree), then the hashmap code would need to be
+> able to compare elements.
+
+Note that most compare functions do not return an order, but only
+a boolean [no]match, so putting it into an ordered tree could only
+rely on the hash that we already know without aid from the compare function.
+Of course we could fix our compare functions before doing such a
+refactoring, but I want to point out how involved that would be.
+
+>
+> I don't think we have any particular plans for such a change, but I
+> wonder if we should avoid encouraging callers to rely on the current
+> implementation.
+
+After a night of sleep it is easy to fix my code to behave as the API
+intended. Yesterday I could not see how to fix it.
+
+Thanks,
+Stefan
+
+>
+> -Peff
