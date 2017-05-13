@@ -2,99 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC2BD201A4
-	for <e@80x24.org>; Sat, 13 May 2017 11:03:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7164201A4
+	for <e@80x24.org>; Sat, 13 May 2017 11:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752728AbdEMLDV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 07:03:21 -0400
-Received: from srv1.79p.de ([213.239.234.118]:45890 "EHLO srv1.79p.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752661AbdEMLDV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 07:03:21 -0400
-Received: from srv1.79p.de (localhost [127.0.0.1])
-        by srv1.79p.de (Postfix) with ESMTP id A83B8220F61;
-        Sat, 13 May 2017 13:03:19 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-X-Amavis-Alert: BAD HEADER SECTION, Header field occurs more than once: "Cc"
-        occurs 3 times
-Received: by srv1.79p.de (Postfix, from userid 0)
-        id EF348221C2B; Sat, 13 May 2017 13:03:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-        s=mail2017; t=1494673398;
-        bh=7v3ResPo4guESUP0S8RoDCV8I2fr4KX3ph8wSaFQxtU=;
-        h=From:To:CC:CC:CC:In-Reply-To:References:Date:Subject;
-        b=S2DiuiZx9aKjlsMzYxD/45xa80uvv5JMwtzZX3RMetLNP3yBgnuYLonf4LN84g7hK
-         n72ie6a3MkwCc6BydsPq+pRTJ8EtmtduuzTbUP507uWJybCEdbl9rakGBxWXHRSjgE
-         YQ4VA6Ts9Q1u3vrX4g7GA3etckUQTISgTOIBmXBlSbowtfEplcu1agZo9tVG0c5R+Z
-         +KuEECDcu7gDVxisMdEVwRoVT1EhfvmDnh7sfwf6rCT1p2PS7JBgRlQTa1beyoMDkt
-         9s4SqknlTmEA6Joz1L4LirGktY0E4Bo+ocIU3raZ3Tsx3vde9V4mU5ciOahRyqEvpG
-         M75oXSdHGXv0Q==
-From:   Sven Strickroth <email@cs-ware.de>
-To:     Git List <git@vger.kernel.org>
-CC:     Junio C Hamano <gitster@pobox.com>
-CC:     Jeff King <peff@peff.net>
-CC:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Message-ID: <a38670f6-2d47-f455-c9d3-d887a58e1e29@cs-ware.de>
-In-Reply-To: <CACBZZX6dcy9DEp8AZsdV5SPG-86ELOXUSuFkOaoUxjVreJXhDA@mail.gmail.com>
-References: <20170513095716.C718E221C2B@srv1.79p.de>
- <CACBZZX6dcy9DEp8AZsdV5SPG-86ELOXUSuFkOaoUxjVreJXhDA@mail.gmail.com>
-Date:   Sat, 13 May 2017 11:54:51 +0200
-Subject: [PATCH] Use https links to Wikipedia to avoid http redirects
+        id S1752718AbdEMLeL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 07:34:11 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:33469 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752054AbdEMLeK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 07:34:10 -0400
+Received: by mail-it0-f66.google.com with SMTP id l145so7273118ita.0
+        for <git@vger.kernel.org>; Sat, 13 May 2017 04:34:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=aEqpyCfEld4RnFRIHyOICUp2JWRDaBzDMrnlqCuNGC8=;
+        b=R5XoDlxa3553lS0InilaLiTtWaTSm1vgTFYvllkuMLvcs7bWHQy4pSLgYvLasYUtea
+         mzoNTY2HBaETkner5dw8ytYIP41hyo9TDb9otx6heMLKY5jgTZWbW/Aqzkm5DamsSkLP
+         yoeNWs5n/MaqcBGrLaWbwj0zZrPmIoGMnshvyH5napbrivCQj6q6B44w7sdNVSpbUK+O
+         FDWQxIGwe6S0L17HY1zFoSDPG4nfwlvV8JTfi5nzRBWUPGfYIWAfzIS9jnR0aHzU+4nw
+         TaOfuk7t7hsKYFTnkQzNRwVHmzrcp+coNXT6RxySzDUw/ViHijhC3zG4gqJc3k2RQzaX
+         AcDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aEqpyCfEld4RnFRIHyOICUp2JWRDaBzDMrnlqCuNGC8=;
+        b=MMYB7+ELvVQnY2/HHw5mqFuzmawcvI64FMw9E1JGogc2NnW8aikNPgS/JHyIdbInGK
+         4NHzljngBoTFGFwbFCMj6ETsm2nU7lJy5P2ak5FK+VbKThZv34YJ5u/MvgCh+b1nU+vy
+         MNhWKx71dCpBOC/C6XkR8c9XsvJMM6QZJWtF4wVGO2zuyLLZwJY6CKiAYts1Ke6hfz4C
+         zYTrXSFFGj4c1YaFMsbgVNXWS4x6/7RVwZhQSBa6TPRp7i8Op2EG8pNKE5m5AQTtau36
+         F7d39Bqq8iLOcB5K/u1Qb4T+VEg4CD6RoVp6DPu00DIE4qQ6o1XovopXx6PBo96E4suQ
+         u9jQ==
+X-Gm-Message-State: AODbwcAYA6dStAaXUuLX/Ho1UCXaq7gjUlYi/VIIr5lZNKwIMUa2N94c
+        CCgxHzFyl6DyAym433lkFjI/FeqTlQ==
+X-Received: by 10.36.138.131 with SMTP id v125mr1048962itd.66.1494675249833;
+ Sat, 13 May 2017 04:34:09 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.8.220 with HTTP; Sat, 13 May 2017 04:33:49 -0700 (PDT)
+In-Reply-To: <xmqqlgq27jgl.fsf@gitster.mtv.corp.google.com>
+References: <20170511091829.5634-1-avarab@gmail.com> <20170511091829.5634-12-avarab@gmail.com>
+ <xmqqlgq27jgl.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 13 May 2017 13:33:49 +0200
+Message-ID: <CACBZZX4MK8=YixozpbPjJh1JxHcFr9x6GoXJeA34E-qLn6ZSDw@mail.gmail.com>
+Subject: Re: [PATCH 11/29] grep: add a test helper function for less verbose
+ -f \0 tests
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Sven Strickroth <email@cs-ware.de>
----
- Documentation/gitweb.txt | 2 +-
- bisect.c                 | 2 +-
- gitweb/gitweb.perl       | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+On Fri, May 12, 2017 at 7:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> Add a helper function to make the tests which check for patterns with
+>> \0 in them more succinct. Right now this isn't a big win, but
+>> subsequent commits will add a lot more of these tests.
+>>
+>> The helper is based on the match() function in t3070-wildmatch.sh.
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  t/t7008-grep-binary.sh | 58 +++++++++++++++++++++++++------------------=
+-------
+>>  1 file changed, 29 insertions(+), 29 deletions(-)
+>>
+>> diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
+>> index 9c9c378119..6c1952eafa 100755
+>> --- a/t/t7008-grep-binary.sh
+>> +++ b/t/t7008-grep-binary.sh
+>> @@ -4,6 +4,29 @@ test_description=3D'git grep in binary files'
+>>
+>>  . ./test-lib.sh
+>>
+>> +nul_match() {
+>
+> Micronit: "nul_match () {"
+>
+>> +     status=3D$1
+>> +     flags=3D$2
+>> +     pattern=3D$3
+>> +     pattern_human=3D$(echo $pattern | sed 's/Q/<NUL>/g')
+>
+> Double quote around "$pattern"?
+>
+>> +
+>> +     if test $status =3D "1"
+>
+> Double quote around "$status" and drop double quote around "1"
+> (which is clearly a literal string without any funnies) instead?
+>
+>> +     then
+>> +             test_expect_success "git grep -f f $flags '$pattern_human'=
+ a" "
+>> +                     printf '$pattern' | q_to_nul >f &&
+>> +                     git grep -f f $flags a
+>> +             "
+>> +     elif test $status =3D "0"
+>> +     then
+>> +             test_expect_success "git grep -f f $flags '$pattern_human'=
+ a" "
+>> +                     printf '$pattern' | q_to_nul >f &&
+>> +                     test_must_fail git grep -f f $flags a
+>> +             "
 
-diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-index 96156e5e1..88450589a 100644
---- a/Documentation/gitweb.txt
-+++ b/Documentation/gitweb.txt
-@@ -84,7 +84,7 @@ separator (rules for Perl's "`split(" ", $line)`").
- 
- * Fields use modified URI encoding, defined in RFC 3986, section 2.1
- (Percent-Encoding), or rather "Query string encoding" (see
--http://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the difference
-+https://en.wikipedia.org/wiki/Query_string#URL_encoding[]), the difference
- being that SP (" ") can be encoded as "{plus}" (and therefore "{plus}" has to be
- also percent-encoded).
- +
-diff --git a/bisect.c b/bisect.c
-index 08c9fb726..fa477a3e2 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -546,7 +546,7 @@ static unsigned get_prn(unsigned count) {
- 
- /*
-  * Custom integer square root from
-- * http://en.wikipedia.org/wiki/Integer_square_root
-+ * https://en.wikipedia.org/wiki/Integer_square_root
-  */
- static int sqrti(int val)
- {
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7cf68f07b..d8209c7a0 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -8085,7 +8085,7 @@ sub git_search_help {
- <p><strong>Pattern</strong> is by default a normal string that is matched precisely (but without
- regard to case, except in the case of pickaxe). However, when you check the <em>re</em> checkbox,
- the pattern entered is recognized as the POSIX extended
--<a href="http://en.wikipedia.org/wiki/Regular_expression">regular expression</a> (also case
-+<a href="https://en.wikipedia.org/wiki/Regular_expression">regular expression</a> (also case
- insensitive).</p>
- <dl>
- <dt><b>commit</b></dt>
--- 
-2.12.1.windows.1
+All changed in v2.
 
+> It somehow was unintuitive that 0 expected failure and 1 expected
+> success, but it probably was just me.
+
+Except this. The wildmatch uses the same idiom, and I think it makes
+sense. 1 =3D true, 0 =3D false, not 0 =3D exit zero, 1 =3D exit nonzero, wh=
+ich
+would also be IMO a bit more confusing since it should really be 0 and
+!0 if you don't want to rely on specific non-zero exit codes, which is
+just going down a garden path of complexity when all we wanted was
+"does this match".
