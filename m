@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9703820188
-	for <e@80x24.org>; Sun, 14 May 2017 03:16:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31C9420188
+	for <e@80x24.org>; Sun, 14 May 2017 03:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758864AbdENDQi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 23:16:38 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:33512 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758734AbdENDQa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 23:16:30 -0400
-Received: by mail-oi0-f65.google.com with SMTP id h4so14344414oib.0
-        for <git@vger.kernel.org>; Sat, 13 May 2017 20:16:29 -0700 (PDT)
+        id S1758875AbdENDQo (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 23:16:44 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:36743 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758836AbdENDQe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 23:16:34 -0400
+Received: by mail-oi0-f66.google.com with SMTP id w138so14313908oiw.3
+        for <git@vger.kernel.org>; Sat, 13 May 2017 20:16:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZbQ+ACbpmdLLjV1Wjfc/DXYinkY/iLEx1ooy042MgvA=;
-        b=lnnaEPOT6m4FlkF32egDqwVHFnYsj0oStZn+u0UEL5ncmW/q7Bf3ZODSravHu9oDxD
-         +e+vbxYuwEfU7Bf3GY2pIDeuJIoq58SZa+ZFD/bZfFp02Qk2khxMPUTswlNQTvimVG81
-         iyVDwZIwFwjHn6C9U//KBbpKUGLxMTZQvm0zISz55xVYFsObZ6WEknvDmNCvlguJZGyg
-         y+c6oQUsYy10Guf7NwgzP9xUg5cZPjl41FhmOR013r4E/2cnyJkLJSskxs2Er6xk5sAN
-         P6yOnYPWv1X3VkCrfc7CXfomEdui/SMTiWLi1WC4vy7PpurgJhLdn3xRFMtARCyy0gx3
-         35Hg==
+        bh=4CYvR7jI0cnSaNI3X3kWlKjdbXYuQoKi847bAhim6pA=;
+        b=l5jg6PZK83iqTC3ofvuIV+OjqnZ7UzkuH7fWHVf9SrNdCWAYWTHsXm9C50FAZh89oq
+         9yEsEQzJJOnNIj6Eie3+Ugec714XxXCdStxP7D3GjVg+fbi6wZvDT9Zf59hK+rT2Vfe+
+         nuS1cjHPOAtdjA5LvSBHv1RivH7SCwgErUFsPCHgOmUwcuTteiLJN2uB9A+3GbiUR9L4
+         ICDgF1lGILAGXe8GbPtlVRweqydwyERKQyz0LghuUo84keJnvRSE6/eqEPmKsmz/vpfl
+         PTCUb04cYHIcB0eeaoD0f0puXrm1gMM7hns4eXuE/6S7T9yJrnvnOV977tmkjY/ALFe/
+         ICKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ZbQ+ACbpmdLLjV1Wjfc/DXYinkY/iLEx1ooy042MgvA=;
-        b=fMcgGwg8ySQJKSd4u1TJRuOYTKi8wr0o1gIKWivrso2QeD+CLTMBTpcKN8AjRXBBJj
-         7homfPLdoUnzTvxU7twzCt2mBtww/kwDnZFyjFmeM77Jx1nZUcQ8Eoy66netHSHKTubD
-         Z8YmXHUGXeviXRCYMV+GWrRRnIqXXPumgk04YCKREJHK4RZNKdmY4lpbglxXmUYzOH8i
-         xIWiI5zhTclCHckWQANBOI9RCf55IiS9/2RKBEgS8O5mvOhiQTquuGkdVuaCFQvGmPt0
-         +lPt7my8UmVRISSPgtxn5yPZ0Xij+vOB+sLC54esOApBwPYwAMZxBApfRjluVtnr19Ze
-         whQA==
-X-Gm-Message-State: AODbwcCRFBC0sRJ/UTDxCZzMq93VYD3kwPT8sANlmsLoNh/t3UIx4k1o
-        2mJxKTrDS1uLEQ==
-X-Received: by 10.157.84.26 with SMTP id j26mr5224319oth.193.1494731789155;
-        Sat, 13 May 2017 20:16:29 -0700 (PDT)
+        bh=4CYvR7jI0cnSaNI3X3kWlKjdbXYuQoKi847bAhim6pA=;
+        b=ihApnd2UF2PptrJI/sIC2H5B7ykJLZq4AbBFV7CSfrVGAasGUVAa5NkYglIZeC17By
+         s5ULPNakaj0v9HNxAMQdThKLVh4pfBPQfhZbN+m//BrkUFa7SFoSTYFLPQuaoKL/YyIN
+         oShhZfoRzLOgMIQFNJmH/hpkvRq+QqC235uLlJklxlKofCu8iwuVPXr4YV96ALemwX7K
+         tJs/1nrCBtqYJY530nL09IaD4Wgz0Mpzp9fkrArNXAXfpiQsLIxSF6o7tx+2qJc793+S
+         y36RsvHD81p320gp4xLBmwmN17kwNhxJgBgUqkX0tx7duNM8Vsb1ZpAFZzgwyvpugpN1
+         WsiQ==
+X-Gm-Message-State: AODbwcBZ3ZrU2EeLjGd6i0FKuV2WeGrGQuJQPDfKr5lhR8Sl6I0uohCE
+        skR66+ug0CoeMw==
+X-Received: by 10.157.1.118 with SMTP id 109mr6067309otu.251.1494731793539;
+        Sat, 13 May 2017 20:16:33 -0700 (PDT)
 Received: from whydoubt.T-mobile.com (ip68-12-240-88.ok.ok.cox.net. [68.12.240.88])
-        by smtp.gmail.com with ESMTPSA id 67sm3735193otb.53.2017.05.13.20.16.27
+        by smtp.gmail.com with ESMTPSA id 67sm3735193otb.53.2017.05.13.20.16.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 13 May 2017 20:16:28 -0700 (PDT)
+        Sat, 13 May 2017 20:16:32 -0700 (PDT)
 From:   Jeff Smith <whydoubt@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, Jeff Smith <whydoubt@gmail.com>
-Subject: [RFC PATCH v2 18/22] blame: move fake-commit-related methods to libgit
-Date:   Sat, 13 May 2017 22:15:09 -0500
-Message-Id: <20170514031513.9042-19-whydoubt@gmail.com>
+Subject: [RFC PATCH v2 21/22] blame: create scoreboard setup function in libgit
+Date:   Sat, 13 May 2017 22:15:12 -0500
+Message-Id: <20170514031513.9042-22-whydoubt@gmail.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170514031513.9042-1-whydoubt@gmail.com>
 References: <20170505052729.7576-1-whydoubt@gmail.com>
@@ -64,470 +64,661 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Jeff Smith <whydoubt@gmail.com>
 ---
- blame.c         | 203 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- blame.h         |   4 +-
- builtin/blame.c | 197 ------------------------------------------------------
- 3 files changed, 205 insertions(+), 199 deletions(-)
+ blame.c         | 272 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ blame.h         |   5 +-
+ builtin/blame.c | 259 +----------------------------------------------------
+ 3 files changed, 271 insertions(+), 265 deletions(-)
 
 diff --git a/blame.c b/blame.c
-index 4855d6d..8c025bc 100644
+index 17ebf64..f6c9cb7 100644
 --- a/blame.c
 +++ b/blame.c
-@@ -1,3 +1,6 @@
-+#include "cache.h"
-+#include "refs.h"
-+#include "cache-tree.h"
+@@ -4,6 +4,7 @@
+ #include "mergesort.h"
+ #include "diff.h"
+ #include "diffcore.h"
++#include "tag.h"
  #include "blame.h"
  
  void blame_origin_decref(struct blame_origin *o)
-@@ -28,7 +31,7 @@ void blame_origin_decref(struct blame_origin *o)
-  * get_origin() to obtain shared, refcounted copy instead of calling
-  * this function directly.
+@@ -49,7 +50,7 @@ static struct blame_origin *make_origin(struct commit *commit, const char *path)
+  * Locate an existing origin or create a new one.
+  * This moves the origin to front position in the commit util list.
   */
--struct blame_origin *make_origin(struct commit *commit, const char *path)
-+static struct blame_origin *make_origin(struct commit *commit, const char *path)
+-struct blame_origin *get_origin(struct commit *commit, const char *path)
++static struct blame_origin *get_origin(struct commit *commit, const char *path)
  {
- 	struct blame_origin *o;
- 	FLEX_ALLOC_STR(o, path, path);
-@@ -60,3 +63,201 @@ struct blame_origin *get_origin(struct commit *commit, const char *path)
- 	}
- 	return make_origin(commit, path);
+ 	struct blame_origin *o, *l;
+ 
+@@ -142,9 +143,9 @@ static void set_commit_buffer_from_strbuf(struct commit *c, struct strbuf *sb)
+  * Prepare a dummy commit that represents the work tree (or staged) item.
+  * Note that annotating work tree item never works in the reverse.
+  */
+-struct commit *fake_working_tree_commit(struct diff_options *opt,
+-					const char *path,
+-					const char *contents_from)
++static struct commit *fake_working_tree_commit(struct diff_options *opt,
++					       const char *path,
++					       const char *contents_from)
+ {
+ 	struct commit *commit;
+ 	struct blame_origin *origin;
+@@ -410,6 +411,13 @@ void blame_sort_final(struct blame_scoreboard *sb)
+ 				  compare_blame_final);
  }
-+
-+
-+
-+static void verify_working_tree_path(struct commit *work_tree, const char *path)
+ 
++static int compare_commits_by_reverse_commit_date(const void *a,
++						  const void *b,
++						  void *c)
 +{
-+	struct commit_list *parents;
-+	int pos;
-+
-+	for (parents = work_tree->parents; parents; parents = parents->next) {
-+		const struct object_id *commit_oid = &parents->item->object.oid;
-+		struct object_id blob_oid;
-+		unsigned mode;
-+
-+		if (!get_tree_entry(commit_oid->hash, path, blob_oid.hash, &mode) &&
-+		    sha1_object_info(blob_oid.hash, NULL) == OBJ_BLOB)
-+			return;
-+	}
-+
-+	pos = cache_name_pos(path, strlen(path));
-+	if (pos >= 0)
-+		; /* path is in the index */
-+	else if (-1 - pos < active_nr &&
-+		 !strcmp(active_cache[-1 - pos]->name, path))
-+		; /* path is in the index, unmerged */
-+	else
-+		die("no such path '%s' in HEAD", path);
++	return -compare_commits_by_commit_date(a, b, c);
 +}
 +
-+static struct commit_list **append_parent(struct commit_list **tail, const struct object_id *oid)
+ /*
+  * For debugging -- origin is refcounted, and this asserts that
+  * we do not underflow.
+@@ -483,6 +491,32 @@ static void queue_blames(struct blame_scoreboard *sb, struct blame_origin *porig
+ }
+ 
+ /*
++ * Fill the blob_sha1 field of an origin if it hasn't, so that later
++ * call to fill_origin_blob() can use it to locate the data.  blob_sha1
++ * for an origin is also used to pass the blame for the entire file to
++ * the parent to detect the case where a child's blob is identical to
++ * that of its parent's.
++ *
++ * This also fills origin->mode for corresponding tree path.
++ */
++static int fill_blob_sha1_and_mode(struct blame_origin *origin)
 +{
-+	struct commit *parent;
-+
-+	parent = lookup_commit_reference(oid->hash);
-+	if (!parent)
-+		die("no such commit %s", oid_to_hex(oid));
-+	return &commit_list_insert(parent, tail)->next;
-+}
-+
-+static void append_merge_parents(struct commit_list **tail)
-+{
-+	int merge_head;
-+	struct strbuf line = STRBUF_INIT;
-+
-+	merge_head = open(git_path_merge_head(), O_RDONLY);
-+	if (merge_head < 0) {
-+		if (errno == ENOENT)
-+			return;
-+		die("cannot open '%s' for reading", git_path_merge_head());
-+	}
-+
-+	while (!strbuf_getwholeline_fd(&line, merge_head, '\n')) {
-+		struct object_id oid;
-+		if (line.len < GIT_SHA1_HEXSZ || get_oid_hex(line.buf, &oid))
-+			die("unknown line in '%s': %s", git_path_merge_head(), line.buf);
-+		tail = append_parent(tail, &oid);
-+	}
-+	close(merge_head);
-+	strbuf_release(&line);
++	if (!is_null_oid(&origin->blob_oid))
++		return 0;
++	if (get_tree_entry(origin->commit->object.oid.hash,
++			   origin->path,
++			   origin->blob_oid.hash, &origin->mode))
++		goto error_out;
++	if (sha1_object_info(origin->blob_oid.hash, NULL) != OBJ_BLOB)
++		goto error_out;
++	return 0;
++ error_out:
++	oidclr(&origin->blob_oid);
++	origin->mode = S_IFINVALID;
++	return -1;
 +}
 +
 +/*
-+ * This isn't as simple as passing sb->buf and sb->len, because we
-+ * want to transfer ownership of the buffer to the commit (so we
-+ * must use detach).
-+ */
-+static void set_commit_buffer_from_strbuf(struct commit *c, struct strbuf *sb)
+  * We have an origin -- check if the same path exists in the
+  * parent and return an origin structure to represent it.
+  */
+@@ -1575,9 +1609,239 @@ void assign_blame(struct blame_scoreboard *sb, int opt)
+ 	}
+ }
+ 
++static const char *get_next_line(const char *start, const char *end)
 +{
-+	size_t len;
-+	void *buf = strbuf_detach(sb, &len);
-+	set_commit_buffer(c, buf, len);
++	const char *nl = memchr(start, '\n', end - start);
++	return nl ? nl + 1 : end;
 +}
 +
 +/*
-+ * Prepare a dummy commit that represents the work tree (or staged) item.
-+ * Note that annotating work tree item never works in the reverse.
++ * To allow quick access to the contents of nth line in the
++ * final image, prepare an index in the scoreboard.
 + */
-+struct commit *fake_working_tree_commit(struct diff_options *opt,
-+					const char *path,
-+					const char *contents_from)
++static int prepare_lines(struct blame_scoreboard *sb)
 +{
-+	struct commit *commit;
-+	struct blame_origin *origin;
-+	struct commit_list **parent_tail, *parent;
-+	struct object_id head_oid;
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *ident;
-+	time_t now;
-+	int size, len;
-+	struct cache_entry *ce;
-+	unsigned mode;
-+	struct strbuf msg = STRBUF_INIT;
++	const char *buf = sb->final_buf;
++	unsigned long len = sb->final_buf_size;
++	const char *end = buf + len;
++	const char *p;
++	int *lineno;
++	int num = 0;
 +
-+	read_cache();
-+	time(&now);
-+	commit = alloc_commit_node();
-+	commit->object.parsed = 1;
-+	commit->date = now;
-+	parent_tail = &commit->parents;
++	for (p = buf; p < end; p = get_next_line(p, end))
++		num++;
 +
-+	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL))
-+		die("no such ref: HEAD");
++	ALLOC_ARRAY(sb->lineno, num + 1);
++	lineno = sb->lineno;
 +
-+	parent_tail = append_parent(parent_tail, &head_oid);
-+	append_merge_parents(parent_tail);
-+	verify_working_tree_path(commit, path);
++	for (p = buf; p < end; p = get_next_line(p, end))
++		*lineno++ = p - buf;
 +
-+	origin = make_origin(commit, path);
++	*lineno = len;
 +
-+	ident = fmt_ident("Not Committed Yet", "not.committed.yet", NULL, 0);
-+	strbuf_addstr(&msg, "tree 0000000000000000000000000000000000000000\n");
-+	for (parent = commit->parents; parent; parent = parent->next)
-+		strbuf_addf(&msg, "parent %s\n",
-+			    oid_to_hex(&parent->item->object.oid));
-+	strbuf_addf(&msg,
-+		    "author %s\n"
-+		    "committer %s\n\n"
-+		    "Version of %s from %s\n",
-+		    ident, ident, path,
-+		    (!contents_from ? path :
-+		     (!strcmp(contents_from, "-") ? "standard input" : contents_from)));
-+	set_commit_buffer_from_strbuf(commit, &msg);
++	sb->num_lines = num;
++	return sb->num_lines;
++}
 +
-+	if (!contents_from || strcmp("-", contents_from)) {
-+		struct stat st;
-+		const char *read_from;
-+		char *buf_ptr;
-+		unsigned long buf_len;
++static struct commit *find_single_final(struct rev_info *revs,
++					const char **name_p)
++{
++	int i;
++	struct commit *found = NULL;
++	const char *name = NULL;
 +
-+		if (contents_from) {
-+			if (stat(contents_from, &st) < 0)
-+				die_errno("Cannot stat '%s'", contents_from);
-+			read_from = contents_from;
-+		}
-+		else {
-+			if (lstat(path, &st) < 0)
-+				die_errno("Cannot lstat '%s'", path);
-+			read_from = path;
-+		}
-+		mode = canon_mode(st.st_mode);
-+
-+		switch (st.st_mode & S_IFMT) {
-+		case S_IFREG:
-+			if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
-+			    textconv_object(read_from, mode, &null_oid, 0, &buf_ptr, &buf_len))
-+				strbuf_attach(&buf, buf_ptr, buf_len, buf_len + 1);
-+			else if (strbuf_read_file(&buf, read_from, st.st_size) != st.st_size)
-+				die_errno("cannot open or read '%s'", read_from);
-+			break;
-+		case S_IFLNK:
-+			if (strbuf_readlink(&buf, read_from, st.st_size) < 0)
-+				die_errno("cannot readlink '%s'", read_from);
-+			break;
-+		default:
-+			die("unsupported file type %s", read_from);
-+		}
++	for (i = 0; i < revs->pending.nr; i++) {
++		struct object *obj = revs->pending.objects[i].item;
++		if (obj->flags & UNINTERESTING)
++			continue;
++		obj = deref_tag(obj, NULL, 0);
++		if (obj->type != OBJ_COMMIT)
++			die("Non commit %s?", revs->pending.objects[i].name);
++		if (found)
++			die("More than one commit to dig from %s and %s?",
++			    revs->pending.objects[i].name, name);
++		found = (struct commit *)obj;
++		name = revs->pending.objects[i].name;
 +	}
-+	else {
-+		/* Reading from stdin */
-+		mode = 0;
-+		if (strbuf_read(&buf, 0, 0) < 0)
-+			die_errno("failed to read from stdin");
-+	}
-+	convert_to_git(path, buf.buf, buf.len, &buf, 0);
-+	origin->file.ptr = buf.buf;
-+	origin->file.size = buf.len;
-+	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_oid.hash);
++	if (name_p)
++		*name_p = name;
++	return found;
++}
++
++static struct commit *dwim_reverse_initial(struct rev_info *revs,
++					   const char **name_p)
++{
++	/*
++	 * DWIM "git blame --reverse ONE -- PATH" as
++	 * "git blame --reverse ONE..HEAD -- PATH" but only do so
++	 * when it makes sense.
++	 */
++	struct object *obj;
++	struct commit *head_commit;
++	unsigned char head_sha1[20];
++
++	if (revs->pending.nr != 1)
++		return NULL;
++
++	/* Is that sole rev a committish? */
++	obj = revs->pending.objects[0].item;
++	obj = deref_tag(obj, NULL, 0);
++	if (obj->type != OBJ_COMMIT)
++		return NULL;
++
++	/* Do we have HEAD? */
++	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_sha1, NULL))
++		return NULL;
++	head_commit = lookup_commit_reference_gently(head_sha1, 1);
++	if (!head_commit)
++		return NULL;
++
++	/* Turn "ONE" into "ONE..HEAD" then */
++	obj->flags |= UNINTERESTING;
++	add_pending_object(revs, &head_commit->object, "HEAD");
++
++	if (name_p)
++		*name_p = revs->pending.objects[0].name;
++	return (struct commit *)obj;
++}
++
++static struct commit *find_single_initial(struct rev_info *revs,
++					  const char **name_p)
++{
++	int i;
++	struct commit *found = NULL;
++	const char *name = NULL;
 +
 +	/*
-+	 * Read the current index, replace the path entry with
-+	 * origin->blob_sha1 without mucking with its mode or type
-+	 * bits; we are not going to write this index out -- we just
-+	 * want to run "diff-index --cached".
++	 * There must be one and only one negative commit, and it must be
++	 * the boundary.
 +	 */
-+	discard_cache();
-+	read_cache();
-+
-+	len = strlen(path);
-+	if (!mode) {
-+		int pos = cache_name_pos(path, len);
-+		if (0 <= pos)
-+			mode = active_cache[pos]->ce_mode;
-+		else
-+			/* Let's not bother reading from HEAD tree */
-+			mode = S_IFREG | 0644;
++	for (i = 0; i < revs->pending.nr; i++) {
++		struct object *obj = revs->pending.objects[i].item;
++		if (!(obj->flags & UNINTERESTING))
++			continue;
++		obj = deref_tag(obj, NULL, 0);
++		if (obj->type != OBJ_COMMIT)
++			die("Non commit %s?", revs->pending.objects[i].name);
++		if (found)
++			die("More than one commit to dig up from, %s and %s?",
++			    revs->pending.objects[i].name, name);
++		found = (struct commit *) obj;
++		name = revs->pending.objects[i].name;
 +	}
-+	size = cache_entry_size(len);
-+	ce = xcalloc(1, size);
-+	oidcpy(&ce->oid, &origin->blob_oid);
-+	memcpy(ce->name, path, len);
-+	ce->ce_flags = create_ce_flags(0);
-+	ce->ce_namelen = len;
-+	ce->ce_mode = create_ce_mode(mode);
-+	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
 +
-+	cache_tree_invalidate_path(&the_index, path);
++	if (!name)
++		found = dwim_reverse_initial(revs, &name);
++	if (!name)
++		die("No commit to dig up from?");
 +
-+	return commit;
++	if (name_p)
++		*name_p = name;
++	return found;
++}
++
+ void init_scoreboard(struct blame_scoreboard *sb)
+ {
+ 	memset(sb, 0, sizeof(struct blame_scoreboard));
+ 	sb->move_score = BLAME_DEFAULT_MOVE_SCORE;
+ 	sb->copy_score = BLAME_DEFAULT_COPY_SCORE;
+ }
++
++void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blame_origin **orig)
++{
++	const char *final_commit_name = NULL;
++	struct blame_origin *o;
++	struct commit *final_commit = NULL;
++	enum object_type type;
++
++	if (sb->reverse && sb->contents_from)
++		die(_("--contents and --reverse do not blend well."));
++
++	if (!sb->reverse) {
++		sb->final = find_single_final(sb->revs, &final_commit_name);
++		sb->commits.compare = compare_commits_by_commit_date;
++	} else {
++		sb->final = find_single_initial(sb->revs, &final_commit_name);
++		sb->commits.compare = compare_commits_by_reverse_commit_date;
++	}
++
++	if (sb->final && sb->contents_from)
++		die(_("cannot use --contents with final commit object name"));
++
++	if (sb->reverse && sb->revs->first_parent_only)
++		sb->revs->children.name = NULL;
++
++	if (!sb->final) {
++		/*
++		 * "--not A B -- path" without anything positive;
++		 * do not default to HEAD, but use the working tree
++		 * or "--contents".
++		 */
++		setup_work_tree();
++		sb->final = fake_working_tree_commit(&sb->revs->diffopt,
++						     path, sb->contents_from);
++		add_pending_object(sb->revs, &(sb->final->object), ":");
++	}
++
++	if (sb->reverse && sb->revs->first_parent_only) {
++		final_commit = find_single_final(sb->revs, NULL);
++		if (!final_commit)
++			die(_("--reverse and --first-parent together require specified latest commit"));
++	}
++
++	/*
++	 * If we have bottom, this will mark the ancestors of the
++	 * bottom commits we would reach while traversing as
++	 * uninteresting.
++	 */
++	if (prepare_revision_walk(sb->revs))
++		die(_("revision walk setup failed"));
++
++	if (sb->reverse && sb->revs->first_parent_only) {
++		struct commit *c = final_commit;
++
++		sb->revs->children.name = "children";
++		while (c->parents &&
++		       oidcmp(&c->object.oid, &sb->final->object.oid)) {
++			struct commit_list *l = xcalloc(1, sizeof(*l));
++
++			l->item = c;
++			if (add_decoration(&sb->revs->children,
++					   &c->parents->item->object, l))
++				die("BUG: not unique item in first-parent chain");
++			c = c->parents->item;
++		}
++
++		if (oidcmp(&c->object.oid, &sb->final->object.oid))
++			die(_("--reverse --first-parent together require range along first-parent chain"));
++	}
++
++	if (is_null_oid(&sb->final->object.oid)) {
++		o = sb->final->util;
++		sb->final_buf = xmemdupz(o->file.ptr, o->file.size);
++		sb->final_buf_size = o->file.size;
++	}
++	else {
++		o = get_origin(sb->final, path);
++		if (fill_blob_sha1_and_mode(o))
++			die(_("no such path %s in %s"), path, final_commit_name);
++
++		if (DIFF_OPT_TST(&sb->revs->diffopt, ALLOW_TEXTCONV) &&
++		    textconv_object(path, o->mode, &o->blob_oid, 1, (char **) &sb->final_buf,
++				    &sb->final_buf_size))
++			;
++		else
++			sb->final_buf = read_sha1_file(o->blob_oid.hash, &type,
++						       &sb->final_buf_size);
++
++		if (!sb->final_buf)
++			die(_("cannot read blob %s for path %s"),
++			    oid_to_hex(&o->blob_oid),
++			    path);
++	}
++	sb->num_read_blob++;
++	prepare_lines(sb);
++
++	if (orig)
++		*orig = o;
 +}
 diff --git a/blame.h b/blame.h
-index 39f8865..f831dec 100644
+index 9477b6e..76fd8ef 100644
 --- a/blame.h
 +++ b/blame.h
-@@ -6,6 +6,7 @@
- #include "xdiff-interface.h"
- #include "revision.h"
- #include "prio-queue.h"
-+#include "diff.h"
- 
- #define BLAME_DEFAULT_MOVE_SCORE	20
- #define BLAME_DEFAULT_COPY_SCORE	40
-@@ -155,7 +156,8 @@ static inline struct blame_origin *blame_origin_incref(struct blame_origin *o)
+@@ -161,10 +161,6 @@ static inline struct blame_origin *blame_origin_incref(struct blame_origin *o)
  }
  extern void blame_origin_decref(struct blame_origin *o);
  
--extern struct blame_origin *make_origin(struct commit *commit, const char *path);
- extern struct blame_origin *get_origin(struct commit *commit, const char *path);
+-extern struct blame_origin *get_origin(struct commit *commit, const char *path);
+-
+-extern struct commit *fake_working_tree_commit(struct diff_options *opt, const char *path, const char *contents_from);
+-
+ extern void blame_coalesce(struct blame_scoreboard *sb);
+ extern void blame_sort_final(struct blame_scoreboard *sb);
+ extern unsigned blame_entry_score(struct blame_scoreboard *sb, struct blame_entry *e);
+@@ -172,5 +168,6 @@ extern void assign_blame(struct blame_scoreboard *sb, int opt);
+ extern const char *blame_nth_line(struct blame_scoreboard *sb, long lno);
  
-+extern struct commit *fake_working_tree_commit(struct diff_options *opt, const char *path, const char *contents_from);
-+
+ extern void init_scoreboard(struct blame_scoreboard *sb);
++extern void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blame_origin **orig);
+ 
  #endif /* BLAME_H */
 diff --git a/builtin/blame.c b/builtin/blame.c
-index b60d604..33ede4f 100644
+index e01265a..7ec5a73 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -16,7 +16,6 @@
+@@ -6,11 +6,8 @@
+  */
+ 
+ #include "cache.h"
+-#include "refs.h"
+ #include "builtin.h"
+ #include "commit.h"
+-#include "tag.h"
+-#include "tree-walk.h"
+ #include "diff.h"
  #include "revision.h"
  #include "quote.h"
- #include "xdiff-interface.h"
--#include "cache-tree.h"
- #include "string-list.h"
- #include "mailmap.h"
- #include "mergesort.h"
-@@ -2004,202 +2003,6 @@ static int git_blame_config(const char *var, const char *value, void *cb)
+@@ -70,39 +67,6 @@ struct progress_info {
+ 	int blamed_lines;
+ };
+ 
+-static int compare_commits_by_reverse_commit_date(const void *a,
+-						  const void *b,
+-						  void *c)
+-{
+-	return -compare_commits_by_commit_date(a, b, c);
+-}
+-
+-/*
+- * Fill the blob_sha1 field of an origin if it hasn't, so that later
+- * call to fill_origin_blob() can use it to locate the data.  blob_sha1
+- * for an origin is also used to pass the blame for the entire file to
+- * the parent to detect the case where a child's blob is identical to
+- * that of its parent's.
+- *
+- * This also fills origin->mode for corresponding tree path.
+- */
+-static int fill_blob_sha1_and_mode(struct blame_origin *origin)
+-{
+-	if (!is_null_oid(&origin->blob_oid))
+-		return 0;
+-	if (get_tree_entry(origin->commit->object.oid.hash,
+-			   origin->path,
+-			   origin->blob_oid.hash, &origin->mode))
+-		goto error_out;
+-	if (sha1_object_info(origin->blob_oid.hash, NULL) != OBJ_BLOB)
+-		goto error_out;
+-	return 0;
+- error_out:
+-	oidclr(&origin->blob_oid);
+-	origin->mode = S_IFINVALID;
+-	return -1;
+-}
+-
+ static const char *nth_line_cb(void *data, long lno)
+ {
+ 	return blame_nth_line((struct blame_scoreboard *)data, lno);
+@@ -510,40 +474,6 @@ static void output(struct blame_scoreboard *sb, int option)
+ 	}
+ }
+ 
+-static const char *get_next_line(const char *start, const char *end)
+-{
+-	const char *nl = memchr(start, '\n', end - start);
+-	return nl ? nl + 1 : end;
+-}
+-
+-/*
+- * To allow quick access to the contents of nth line in the
+- * final image, prepare an index in the scoreboard.
+- */
+-static int prepare_lines(struct blame_scoreboard *sb)
+-{
+-	const char *buf = sb->final_buf;
+-	unsigned long len = sb->final_buf_size;
+-	const char *end = buf + len;
+-	const char *p;
+-	int *lineno;
+-	int num = 0;
+-
+-	for (p = buf; p < end; p = get_next_line(p, end))
+-		num++;
+-
+-	ALLOC_ARRAY(sb->lineno, num + 1);
+-	lineno = sb->lineno;
+-
+-	for (p = buf; p < end; p = get_next_line(p, end))
+-		*lineno++ = p - buf;
+-
+-	*lineno = len;
+-
+-	sb->num_lines = num;
+-	return sb->num_lines;
+-}
+-
+ /*
+  * Add phony grafts for use with -S; this is primarily to
+  * support git's cvsserver that wants to give a linear history
+@@ -685,104 +615,6 @@ static int git_blame_config(const char *var, const char *value, void *cb)
  	return git_default_config(var, value, cb);
  }
  
--static void verify_working_tree_path(struct commit *work_tree, const char *path)
+-static struct commit *find_single_final(struct rev_info *revs,
+-					const char **name_p)
 -{
--	struct commit_list *parents;
--	int pos;
+-	int i;
+-	struct commit *found = NULL;
+-	const char *name = NULL;
 -
--	for (parents = work_tree->parents; parents; parents = parents->next) {
--		const struct object_id *commit_oid = &parents->item->object.oid;
--		struct object_id blob_oid;
--		unsigned mode;
--
--		if (!get_tree_entry(commit_oid->hash, path, blob_oid.hash, &mode) &&
--		    sha1_object_info(blob_oid.hash, NULL) == OBJ_BLOB)
--			return;
+-	for (i = 0; i < revs->pending.nr; i++) {
+-		struct object *obj = revs->pending.objects[i].item;
+-		if (obj->flags & UNINTERESTING)
+-			continue;
+-		obj = deref_tag(obj, NULL, 0);
+-		if (obj->type != OBJ_COMMIT)
+-			die("Non commit %s?", revs->pending.objects[i].name);
+-		if (found)
+-			die("More than one commit to dig from %s and %s?",
+-			    revs->pending.objects[i].name, name);
+-		found = (struct commit *)obj;
+-		name = revs->pending.objects[i].name;
 -	}
--
--	pos = cache_name_pos(path, strlen(path));
--	if (pos >= 0)
--		; /* path is in the index */
--	else if (-1 - pos < active_nr &&
--		 !strcmp(active_cache[-1 - pos]->name, path))
--		; /* path is in the index, unmerged */
--	else
--		die("no such path '%s' in HEAD", path);
+-	if (name_p)
+-		*name_p = name;
+-	return found;
 -}
 -
--static struct commit_list **append_parent(struct commit_list **tail, const struct object_id *oid)
+-static struct commit *dwim_reverse_initial(struct rev_info *revs,
+-					   const char **name_p)
 -{
--	struct commit *parent;
+-	/*
+-	 * DWIM "git blame --reverse ONE -- PATH" as
+-	 * "git blame --reverse ONE..HEAD -- PATH" but only do so
+-	 * when it makes sense.
+-	 */
+-	struct object *obj;
+-	struct commit *head_commit;
+-	unsigned char head_sha1[20];
 -
--	parent = lookup_commit_reference(oid->hash);
--	if (!parent)
--		die("no such commit %s", oid_to_hex(oid));
--	return &commit_list_insert(parent, tail)->next;
+-	if (revs->pending.nr != 1)
+-		return NULL;
+-
+-	/* Is that sole rev a committish? */
+-	obj = revs->pending.objects[0].item;
+-	obj = deref_tag(obj, NULL, 0);
+-	if (obj->type != OBJ_COMMIT)
+-		return NULL;
+-
+-	/* Do we have HEAD? */
+-	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_sha1, NULL))
+-		return NULL;
+-	head_commit = lookup_commit_reference_gently(head_sha1, 1);
+-	if (!head_commit)
+-		return NULL;
+-
+-	/* Turn "ONE" into "ONE..HEAD" then */
+-	obj->flags |= UNINTERESTING;
+-	add_pending_object(revs, &head_commit->object, "HEAD");
+-
+-	if (name_p)
+-		*name_p = revs->pending.objects[0].name;
+-	return (struct commit *)obj;
 -}
 -
--static void append_merge_parents(struct commit_list **tail)
+-static struct commit *find_single_initial(struct rev_info *revs,
+-					  const char **name_p)
 -{
--	int merge_head;
--	struct strbuf line = STRBUF_INIT;
--
--	merge_head = open(git_path_merge_head(), O_RDONLY);
--	if (merge_head < 0) {
--		if (errno == ENOENT)
--			return;
--		die("cannot open '%s' for reading", git_path_merge_head());
--	}
--
--	while (!strbuf_getwholeline_fd(&line, merge_head, '\n')) {
--		struct object_id oid;
--		if (line.len < GIT_SHA1_HEXSZ || get_oid_hex(line.buf, &oid))
--			die("unknown line in '%s': %s", git_path_merge_head(), line.buf);
--		tail = append_parent(tail, &oid);
--	}
--	close(merge_head);
--	strbuf_release(&line);
--}
--
--/*
-- * This isn't as simple as passing sb->buf and sb->len, because we
-- * want to transfer ownership of the buffer to the commit (so we
-- * must use detach).
-- */
--static void set_commit_buffer_from_strbuf(struct commit *c, struct strbuf *sb)
--{
--	size_t len;
--	void *buf = strbuf_detach(sb, &len);
--	set_commit_buffer(c, buf, len);
--}
--
--/*
-- * Prepare a dummy commit that represents the work tree (or staged) item.
-- * Note that annotating work tree item never works in the reverse.
-- */
--static struct commit *fake_working_tree_commit(struct diff_options *opt,
--					       const char *path,
--					       const char *contents_from)
--{
--	struct commit *commit;
--	struct blame_origin *origin;
--	struct commit_list **parent_tail, *parent;
--	struct object_id head_oid;
--	struct strbuf buf = STRBUF_INIT;
--	const char *ident;
--	time_t now;
--	int size, len;
--	struct cache_entry *ce;
--	unsigned mode;
--	struct strbuf msg = STRBUF_INIT;
--
--	read_cache();
--	time(&now);
--	commit = alloc_commit_node();
--	commit->object.parsed = 1;
--	commit->date = now;
--	parent_tail = &commit->parents;
--
--	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL))
--		die("no such ref: HEAD");
--
--	parent_tail = append_parent(parent_tail, &head_oid);
--	append_merge_parents(parent_tail);
--	verify_working_tree_path(commit, path);
--
--	origin = make_origin(commit, path);
--
--	ident = fmt_ident("Not Committed Yet", "not.committed.yet", NULL, 0);
--	strbuf_addstr(&msg, "tree 0000000000000000000000000000000000000000\n");
--	for (parent = commit->parents; parent; parent = parent->next)
--		strbuf_addf(&msg, "parent %s\n",
--			    oid_to_hex(&parent->item->object.oid));
--	strbuf_addf(&msg,
--		    "author %s\n"
--		    "committer %s\n\n"
--		    "Version of %s from %s\n",
--		    ident, ident, path,
--		    (!contents_from ? path :
--		     (!strcmp(contents_from, "-") ? "standard input" : contents_from)));
--	set_commit_buffer_from_strbuf(commit, &msg);
--
--	if (!contents_from || strcmp("-", contents_from)) {
--		struct stat st;
--		const char *read_from;
--		char *buf_ptr;
--		unsigned long buf_len;
--
--		if (contents_from) {
--			if (stat(contents_from, &st) < 0)
--				die_errno("Cannot stat '%s'", contents_from);
--			read_from = contents_from;
--		}
--		else {
--			if (lstat(path, &st) < 0)
--				die_errno("Cannot lstat '%s'", path);
--			read_from = path;
--		}
--		mode = canon_mode(st.st_mode);
--
--		switch (st.st_mode & S_IFMT) {
--		case S_IFREG:
--			if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
--			    textconv_object(read_from, mode, &null_oid, 0, &buf_ptr, &buf_len))
--				strbuf_attach(&buf, buf_ptr, buf_len, buf_len + 1);
--			else if (strbuf_read_file(&buf, read_from, st.st_size) != st.st_size)
--				die_errno("cannot open or read '%s'", read_from);
--			break;
--		case S_IFLNK:
--			if (strbuf_readlink(&buf, read_from, st.st_size) < 0)
--				die_errno("cannot readlink '%s'", read_from);
--			break;
--		default:
--			die("unsupported file type %s", read_from);
--		}
--	}
--	else {
--		/* Reading from stdin */
--		mode = 0;
--		if (strbuf_read(&buf, 0, 0) < 0)
--			die_errno("failed to read from stdin");
--	}
--	convert_to_git(path, buf.buf, buf.len, &buf, 0);
--	origin->file.ptr = buf.buf;
--	origin->file.size = buf.len;
--	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_oid.hash);
+-	int i;
+-	const char *final_commit_name = NULL;
+-	struct commit *found = NULL;
 -
 -	/*
--	 * Read the current index, replace the path entry with
--	 * origin->blob_sha1 without mucking with its mode or type
--	 * bits; we are not going to write this index out -- we just
--	 * want to run "diff-index --cached".
+-	 * There must be one and only one negative commit, and it must be
+-	 * the boundary.
 -	 */
--	discard_cache();
--	read_cache();
--
--	len = strlen(path);
--	if (!mode) {
--		int pos = cache_name_pos(path, len);
--		if (0 <= pos)
--			mode = active_cache[pos]->ce_mode;
--		else
--			/* Let's not bother reading from HEAD tree */
--			mode = S_IFREG | 0644;
+-	for (i = 0; i < revs->pending.nr; i++) {
+-		struct object *obj = revs->pending.objects[i].item;
+-		if (!(obj->flags & UNINTERESTING))
+-			continue;
+-		obj = deref_tag(obj, NULL, 0);
+-		if (obj->type != OBJ_COMMIT)
+-			die("Non commit %s?", revs->pending.objects[i].name);
+-		if (found)
+-			die("More than one commit to dig up from, %s and %s?",
+-			    revs->pending.objects[i].name,
+-			    final_commit_name);
+-		found = (struct commit *) obj;
+-		final_commit_name = revs->pending.objects[i].name;
 -	}
--	size = cache_entry_size(len);
--	ce = xcalloc(1, size);
--	oidcpy(&ce->oid, &origin->blob_oid);
--	memcpy(ce->name, path, len);
--	ce->ce_flags = create_ce_flags(0);
--	ce->ce_namelen = len;
--	ce->ce_mode = create_ce_mode(mode);
--	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
 -
--	cache_tree_invalidate_path(&the_index, path);
+-	if (!final_commit_name)
+-		found = dwim_reverse_initial(revs, &final_commit_name);
+-	if (!final_commit_name)
+-		die("No commit to dig up from?");
 -
--	return commit;
+-	if (name_p)
+-		*name_p = final_commit_name;
+-	return found;
 -}
 -
- static struct commit *find_single_final(struct rev_info *revs,
- 					const char **name_p)
+ static int blame_copy_callback(const struct option *option, const char *arg, int unset)
  {
+ 	int *opt = option->value;
+@@ -824,9 +656,6 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	struct blame_origin *o;
+ 	struct blame_entry *ent = NULL;
+ 	long dashdash_pos, lno;
+-	const char *final_commit_name = NULL;
+-	enum object_type type;
+-	struct commit *final_commit = NULL;
+ 	struct progress_info pi = { NULL, 0 };
+ 
+ 	struct string_list range_list = STRING_LIST_INIT_NODUP;
+@@ -1031,92 +860,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	sb.revs = &revs;
+ 	sb.contents_from = contents_from;
+ 	sb.reverse = reverse;
+-
+-	if (!reverse) {
+-		sb.final = find_single_final(&revs, &final_commit_name);
+-		sb.commits.compare = compare_commits_by_commit_date;
+-	}
+-	else if (contents_from)
+-		die(_("--contents and --reverse do not blend well."));
+-	else {
+-		sb.final = find_single_initial(&revs, &final_commit_name);
+-		sb.commits.compare = compare_commits_by_reverse_commit_date;
+-		if (revs.first_parent_only)
+-			revs.children.name = NULL;
+-	}
+-
+-	if (!sb.final) {
+-		/*
+-		 * "--not A B -- path" without anything positive;
+-		 * do not default to HEAD, but use the working tree
+-		 * or "--contents".
+-		 */
+-		setup_work_tree();
+-		sb.final = fake_working_tree_commit(&sb.revs->diffopt,
+-						    path, contents_from);
+-		add_pending_object(&revs, &(sb.final->object), ":");
+-	}
+-	else if (contents_from)
+-		die(_("cannot use --contents with final commit object name"));
+-
+-	if (reverse && revs.first_parent_only) {
+-		final_commit = find_single_final(sb.revs, NULL);
+-		if (!final_commit)
+-			die(_("--reverse and --first-parent together require specified latest commit"));
+-	}
+-
+-	/*
+-	 * If we have bottom, this will mark the ancestors of the
+-	 * bottom commits we would reach while traversing as
+-	 * uninteresting.
+-	 */
+-	if (prepare_revision_walk(&revs))
+-		die(_("revision walk setup failed"));
+-
+-	if (reverse && revs.first_parent_only) {
+-		struct commit *c = final_commit;
+-
+-		sb.revs->children.name = "children";
+-		while (c->parents &&
+-		       oidcmp(&c->object.oid, &sb.final->object.oid)) {
+-			struct commit_list *l = xcalloc(1, sizeof(*l));
+-
+-			l->item = c;
+-			if (add_decoration(&sb.revs->children,
+-					   &c->parents->item->object, l))
+-				die("BUG: not unique item in first-parent chain");
+-			c = c->parents->item;
+-		}
+-
+-		if (oidcmp(&c->object.oid, &sb.final->object.oid))
+-			die(_("--reverse --first-parent together require range along first-parent chain"));
+-	}
+-
+-	if (is_null_oid(&sb.final->object.oid)) {
+-		o = sb.final->util;
+-		sb.final_buf = xmemdupz(o->file.ptr, o->file.size);
+-		sb.final_buf_size = o->file.size;
+-	}
+-	else {
+-		o = get_origin(sb.final, path);
+-		if (fill_blob_sha1_and_mode(o))
+-			die(_("no such path %s in %s"), path, final_commit_name);
+-
+-		if (DIFF_OPT_TST(&sb.revs->diffopt, ALLOW_TEXTCONV) &&
+-		    textconv_object(path, o->mode, &o->blob_oid, 1, (char **) &sb.final_buf,
+-				    &sb.final_buf_size))
+-			;
+-		else
+-			sb.final_buf = read_sha1_file(o->blob_oid.hash, &type,
+-						      &sb.final_buf_size);
+-
+-		if (!sb.final_buf)
+-			die(_("cannot read blob %s for path %s"),
+-			    oid_to_hex(&o->blob_oid),
+-			    path);
+-	}
+-	sb.num_read_blob++;
+-	lno = prepare_lines(&sb);
++	setup_scoreboard(&sb, path, &o);
++	lno = sb.num_lines;
+ 
+ 	if (lno && !range_list.nr)
+ 		string_list_append(&range_list, "1");
 -- 
 2.9.3
 
