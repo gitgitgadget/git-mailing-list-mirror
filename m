@@ -2,113 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C64A201A7
-	for <e@80x24.org>; Sun, 14 May 2017 08:11:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD774201A7
+	for <e@80x24.org>; Sun, 14 May 2017 08:34:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751506AbdENILJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 May 2017 04:11:09 -0400
-Received: from [195.159.176.226] ([195.159.176.226]:39860 "EHLO
-        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1751250AbdENILH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2017 04:11:07 -0400
-Received: from list by blaine.gmane.org with local (Exim 4.84_2)
-        (envelope-from <gcvg-git-2@m.gmane.org>)
-        id 1d9ocF-0002mM-Fk
-        for git@vger.kernel.org; Sun, 14 May 2017 10:10:59 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To:     git@vger.kernel.org
-From:   Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH v2 04/22] blame: move origin and entry structures to header
-Date:   Sun, 14 May 2017 17:10:55 +0900
-Message-ID: <xmqq8tlz504w.fsf@gitster.mtv.corp.google.com>
-References: <20170505052729.7576-1-whydoubt@gmail.com>
-        <20170514031513.9042-1-whydoubt@gmail.com>
-        <20170514031513.9042-5-whydoubt@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-X-Complaints-To: usenet@blaine.gmane.org
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-Cancel-Lock: sha1:vg3gDS5NxSW65WS2oi3F7OjzVDg=
+        id S1751250AbdENIeD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 May 2017 04:34:03 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:36680 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751163AbdENIeC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2017 04:34:02 -0400
+Received: by mail-pf0-f173.google.com with SMTP id m17so48694533pfg.3
+        for <git@vger.kernel.org>; Sun, 14 May 2017 01:34:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=0xShyip1lpeyepXAWQwz0DsBTHKj24vkrhDHR79IhDs=;
+        b=Lg5PDVTsjFGo/xmFnAXRy11wVaouP2wkJ/pHuk3hOjhAmdZiGoTeoVyg7+rmJzNF9g
+         zyw81r5wYgSZtsuq7uOMdt2+FnG2R5CpxxxP3iyUeHso5HEl+H1V6LphEnjWhSQWVdth
+         VvRcpB2sMxaxw+jTjbq6tuoY/xLEhEJnnZYfp/XzKPbeQpRj09if6cacilPcDutyFjPr
+         2BXwOPWBHDZ+4CkIRyWFdXg27m2/m4wK393GJXXl/q9QOpBhqO6JptXmtTzVd8C3Ak4H
+         j3Ya+NnQuRCR3uqH0P/EnWgdoqNx8FoZ4Jko9nB0pHHo/ApHSsqs1eW8MQfEIxTLwaQf
+         F+pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=0xShyip1lpeyepXAWQwz0DsBTHKj24vkrhDHR79IhDs=;
+        b=dYppNXhFnIpu3LuYJUnS6oWR8wQhUgfM/8605w3sdRmUkcQjfoH/W7qBVb1Lc2GjmA
+         b1qra6l6/NMxY/0X0JJwVxPIg2l9w+IZakwqkJILUIfFlbO9RgAoWfvlf+zxXgW+5tV2
+         Mx5AJnligfHB6LAp2AAsWyOLDd29F765LQ42yxfpO89jlL6oeGczGkXWkgBl1f93ROAz
+         YRxK0daA9s5JaEW2hyL3lKXy1IIRkAfXsq0nYhXWOuTJLK2tG/SdBHpZfEjA6KKTKJ+8
+         3CcKJpiSd2J0fGf+ErC2JfQwIoY+lzmUtiqPoL1r9MhS5Vle4xrwc+fssfwIa27gYPmN
+         6PzQ==
+X-Gm-Message-State: AODbwcDA9T97JKxrkWH6C9+w4tZsSXGH1GTx8VoQPTagjzynrVTfhnon
+        Wtc8IA+0eh4rhA==
+X-Received: by 10.98.223.28 with SMTP id u28mr418598pfg.97.1494750841673;
+        Sun, 14 May 2017 01:34:01 -0700 (PDT)
+Received: from localhost.localdomain ([2601:646:3:1ec0:54fd:6c32:8438:4e94])
+        by smtp.gmail.com with ESMTPSA id q27sm13290057pfk.4.2017.05.14.01.33.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 14 May 2017 01:33:59 -0700 (PDT)
+From:   Brian Malehorn <bmalehorn@gmail.com>
+To:     peff@peff.net
+Cc:     bmalehorn@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH] interpret-trailers: obey scissors lines
+Date:   Sun, 14 May 2017 01:33:48 -0700
+Message-Id: <20170514083349.24979-1-bmalehorn@gmail.com>
+X-Mailer: git-send-email 2.12.3.9.g050893b
+In-Reply-To: <20170514035652.rn5npxxflku6s5k4@sigill.intra.peff.net>
+References: <20170514035652.rn5npxxflku6s5k4@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Smith <whydoubt@gmail.com> writes:
 
-> The origin and blame_entry structures are core to the blame interface
-> and reference each other. Since origin will be more exposed, rename it
-> to blame_origin to clarify what it is a part of.
->
-> Signed-off-by: Jeff Smith <whydoubt@gmail.com>
-> ---
->  blame.h         |  86 ++++++++++++++++++++++++++
->  builtin/blame.c | 185 +++++++++++++++++---------------------------------------
->  2 files changed, 140 insertions(+), 131 deletions(-)
->  create mode 100644 blame.h
->
-> diff --git a/blame.h b/blame.h
-> new file mode 100644
-> index 0000000..f52d0fc
-> --- /dev/null
-> +++ b/blame.h
-> @@ -0,0 +1,86 @@
-> +#ifndef BLAME_H
-> +#define BLAME_H
-> +
-> +#include "cache.h"
-> +#include "commit.h"
-> +#include "xdiff-interface.h"
-> +
-> +/*
-> + * One blob in a commit that is being suspected
-> + */
-> +struct blame_origin {
-> +	int refcnt;
-> +...
->   ...
-> -/*
-> - * One blob in a commit that is being suspected
-> - */
-> -struct origin {
-> -	int refcnt;
+> One, we'd usually use "\EOF" here unless you
+> really do want to interpolate inside the here document.
 
-I hate to say this AFTER you sent your second attempt, but could you
-have another preparetory step before this patch, that does many
-renames of symbols (e.g. s/origin/blame_origin/) and nothing else,
-while the lines are still in builtin/blame.c?
+Fixed, and I learned something new.
 
-To review a step like yoru 04/22 to make sure nothing else other
-than moving the lines is going on, an easy way to do so is to run
-"blame -C" on the resulting blame.h file---that lets the reviewers'
-eyes coast over the lines that came from contiguous region of the
-original builtin/blame.c and concentrate on things like what used to
-be static to the file now getting extern.
+> And two, we usually indent the contents to the same level as the outer
+> cat/EOF pair
 
-If you rename symbols while moving lines across files, that becomes
-impossible because many lines are now different (i.e. a line that
-talked about "origin" in builtin/blame.c in the preimage may now
-talk about "blame_origin" in blame.h, hence attributed to the
-new commit's blame.h).
+Fixed.
 
-It may even be OK to do the "rename the symbols" step in a single
-patch (e.g. your 04/22 and 05/22 are separate patches and the former
-renames "origin" while the latter does "scoreboard"---I am saying
-that the preparatory step that renames the symbols without
-introducing the new "blame.h" may not have to have these two as
-separate patches).
+I was indenting the same as the other tests in that file. But if the way
+you described is the preferred way, then sure.
 
-If rename of symbols are done first while the lines are still in the
-original file, mechanical moving of lines gets much easier to
-review.  Of course, a patch that only renames symbols is also much
-easier to review, even if it is a large one.
+> Another way to think of it is still as a truncation. Our strip_suffix()
+> helper behaves quite similarly to this (not actually writing into the
+> buffer, but returning the new length). Perhaps something like
+> "wt_status_strip_scissors" would work.
 
-Thanks.
+I agree the name was pretty awkward. I was trying to avoid using the
+word "truncate" or "strip", since it doesn't make any change to the
+buffer. But if strip_suffix() is already around it shouldn't be to
+surprising.
 
-
-
-
+I've now renamed it to "wt_status_strip_scissors".
