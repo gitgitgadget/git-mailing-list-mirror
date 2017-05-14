@@ -2,86 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17DC220188
-	for <e@80x24.org>; Sun, 14 May 2017 02:12:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF46220188
+	for <e@80x24.org>; Sun, 14 May 2017 03:16:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754396AbdENCMT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 22:12:19 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:34839 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753628AbdENCMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 22:12:19 -0400
-Received: by mail-pf0-f181.google.com with SMTP id n23so41722941pfb.2
-        for <git@vger.kernel.org>; Sat, 13 May 2017 19:12:18 -0700 (PDT)
+        id S1757332AbdENDQH (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 23:16:07 -0400
+Received: from mail-oi0-f66.google.com ([209.85.218.66]:35069 "EHLO
+        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757197AbdENDQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 23:16:06 -0400
+Received: by mail-oi0-f66.google.com with SMTP id m17so14323803oik.2
+        for <git@vger.kernel.org>; Sat, 13 May 2017 20:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=e/Z27cXJ+DFWKR8rfNxPPEY5qpBaGa7UK9wdbWOMU5M=;
-        b=PDKhKfsgPTDGGTKgGsyPGKlAHpj1E9gDJDAfM3wX5BfKEWGyX2MgFTnmLXVX5ZEHEC
-         iua87jqXeVWSRvSIUl9Itlvuvh6lPiRFeTXxhYbQoqSP5/l//FR8aP1uL408njniLizf
-         rjKPUF34DujFbC36u4CqojfVHPUmV99Bmp17a1YIZPQNFU9hUidgeHwRdEk8jRBktFtV
-         jo1GuvZ2TtLWjpkkuxpD1ph1HU9Vz8qjOfTUvHdHBKT/Ljibt7/QB2PK+h1vSwibcjhA
-         7qC5CU/tCi4tTAak+yDZqyCLmewqxcbeC6goXMwYktCp03Ya3TUi9vTLbpFDn5aLFper
-         rmTQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=aqQochhNySBdPzHz14HabCLDNOEHCX0MxFvgyir3jys=;
+        b=lr+07vSc8y9Qf7a3tsKcfB0zNwzCXDLrgKgrpDxaeoQ83TKBLeHq6M3N9Wghc8d4hD
+         doIIN5ZjFDvw3Ev52NImmMo+PA0+DYUE4S/1bHGaeu6MUjNjBZLvvnQ27YS2NoAHQMAl
+         XOiKlWTR//3xipsL9fuWxCmT4CnrffPRkMjn6fbBg61q6z0y/CI/Y8hTZroS7vfo7FsS
+         zLUd2LK9IFBEux3d+nlTEcz/pdkdHz4vJLUT9XGQ9/buR3VK4vqxdZ4WWmOCLNaozhRn
+         Fbo9EC0eRqZHzoGYboQ2tfY7TRX1M5+H72WWxuBJOeH9/fq1kH7lH6XxeqOESWxtotjj
+         IZBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=e/Z27cXJ+DFWKR8rfNxPPEY5qpBaGa7UK9wdbWOMU5M=;
-        b=IcIM3xoB0r5u5DJkJriuPXRnXo5uNY173J1gauPFA/wvnu8HmDFc9ylRf+oZ9P9rsP
-         sqdoKd8nxUSM49dgoFbSwpSF0yrn5Bzrmr8fmeiZncdA6EmzbUltXgJjt7xHwbqlgNWs
-         s38nqqG0vC2DBeKqOK044XxDpbwy7nIP+5S4zdmgpDYuB3kdiSbuofiYux/kfl/Mez45
-         2sPVwGY4kgauGEOwZxUpqkztio3sj3th2jnlJRYpb3G9Lb9rIcMTxlSOP6VZcsCpZC3Z
-         449cwRsz8JY5Q2sCoXEc9fdYUUXD4OOTZE1ARzRq37KzF9jxcaCtpDw5RFjcIYixBy93
-         TV2Q==
-X-Gm-Message-State: AODbwcAK50KiLLcNmCq6XVe9cRwI3HO4cBFYEmHlwLmp1Q0SuCbLx9Tv
-        yfeOt+/UwA3uklPZnwdBow==
-X-Received: by 10.98.108.68 with SMTP id h65mr11498457pfc.98.1494727938094;
-        Sat, 13 May 2017 19:12:18 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:8f6:7dcd:1847:4543])
-        by smtp.gmail.com with ESMTPSA id c12sm12342469pfl.79.2017.05.13.19.12.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 13 May 2017 19:12:16 -0700 (PDT)
-Date:   Sat, 13 May 2017 19:12:15 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] usage.c: drop set_error_handle()
-Message-ID: <20170514021215.GA82343@google.com>
-References: <20170513034818.h3aaihqmf4q43vef@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170513034818.h3aaihqmf4q43vef@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=aqQochhNySBdPzHz14HabCLDNOEHCX0MxFvgyir3jys=;
+        b=L3EH0nc+gvMdRCfIUCcXE07tx6yxXyZJr5Gsnoxszj5zaOhSJliaRQFOwaJ3Y7FD8K
+         r9xNDXm8U6or3/XO3CsesH+04B9Rl4PK5x+SiZtg7T7vhOO8Ebxh0sWsKnmDcYrkkLVz
+         p0ctqjTdKSxH0M1gri0CFQbkeIzymUatjlYwUfXCx4EYq80jad9m86eW6vOSh9RbWQR5
+         fOn86gB+vZQvLrE3S2TlhTxjtuj8uvedMQ88d0mWLJa2s2JGf94+UOljkCExX88GHYqF
+         mlHeHNP6pGHxSNOrP5Zx5lj8c5SfQA6KbpoS2PPULkoWNOleYyxN/AHxown7Av1rq35I
+         se1A==
+X-Gm-Message-State: AODbwcAh994B9D+dbNJlNBqB0i0fqFoWqyDD3cz7zXhW0t2PG958TkHo
+        SnVoh8NcHtqYZg==
+X-Received: by 10.157.20.143 with SMTP id d15mr5886671ote.35.1494731765401;
+        Sat, 13 May 2017 20:16:05 -0700 (PDT)
+Received: from whydoubt.T-mobile.com (ip68-12-240-88.ok.ok.cox.net. [68.12.240.88])
+        by smtp.gmail.com with ESMTPSA id 67sm3735193otb.53.2017.05.13.20.16.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 13 May 2017 20:16:03 -0700 (PDT)
+From:   Jeff Smith <whydoubt@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, Jeff Smith <whydoubt@gmail.com>
+Subject: [RFC PATCH v2 00/22] Add blame to libgit
+Date:   Sat, 13 May 2017 22:14:51 -0500
+Message-Id: <20170514031513.9042-1-whydoubt@gmail.com>
+X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20170505052729.7576-1-whydoubt@gmail.com>
+References: <20170505052729.7576-1-whydoubt@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/12, Jeff King wrote:
-> The set_error_handle() function was introduced by 3b331e926
-> (vreportf: report to arbitrary filehandles, 2015-08-11) so
-> that run-command could send post-fork, pre-exec errors to
-> the parent's original stderr.
-> 
-> That use went away in 79319b194 (run-command: eliminate
-> calls to error handling functions in child, 2017-04-19),
-> which pushes all of the error reporting to the parent.
-> This leaves no callers of set_error_handle(). As we're not
-> likely to add any new ones, let's drop it.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
+Rather than duplicate large portions of builtin/blame.c in cgit, it
+would be better to shift its core functionality into libgit.a.  The
+functionality left in builtin/blame.c mostly relates to terminal
+presentation.
 
-Looks good to me!
+Since initial patchset:
+  Made commit titles consistent
+  Broke some commits into more atomic pieces
+  Fleshed out commit message bodies
+  Made public structure and method names more clearly blame-related
 
-Thanks
+Jeff Smith (22):
+  blame: remove unneeded dependency on blob.h
+  blame: move textconv_object with related functions
+  blame: remove unused parameters
+  blame: move origin and entry structures to header
+  blame: move scoreboard structure to header
+  blame: move stat counters to scoreboard
+  blame: move copy/move thresholds to scoreboard
+  blame: move contents_from to scoreboard
+  blame: move reverse flag to scoreboard
+  blame: move show_root flag to scoreboard
+  blame: move xdl_opts flags to scoreboard
+  blame: move no_whole_file_rename flag to scoreboard
+  blame: make sanity_check use a callback in scoreboard
+  blame: move progess updates to a scoreboard callback
+  blame: wrap blame_sort and compare_blame_final
+  blame: rework methods that determine 'final' commit
+  blame: move origin-related methods to libgit
+  blame: move fake-commit-related methods to libgit
+  blame: move scoreboard-related methods to libgit
+  blame: create scoreboard init function in libgit
+  blame: create scoreboard setup function in libgit
+  blame: create entry prepend function in libgit
+
+ Makefile           |    1 +
+ blame.c            | 1863 +++++++++++++++++++++++++++++++++++++++++++++
+ blame.h            |  175 +++++
+ builtin.h          |    2 -
+ builtin/blame.c    | 2130 ++--------------------------------------------------
+ builtin/cat-file.c |    1 +
+ diff.c             |   23 +
+ diff.h             |    7 +
+ 8 files changed, 2143 insertions(+), 2059 deletions(-)
+ create mode 100644 blame.c
+ create mode 100644 blame.h
 
 -- 
-Brandon Williams
+2.9.3
+
