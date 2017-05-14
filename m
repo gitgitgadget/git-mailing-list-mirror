@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 227F820188
-	for <e@80x24.org>; Sun, 14 May 2017 03:16:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C21E420188
+	for <e@80x24.org>; Sun, 14 May 2017 03:16:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758310AbdENDQN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 13 May 2017 23:16:13 -0400
-Received: from mail-oi0-f68.google.com ([209.85.218.68]:33442 "EHLO
-        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757197AbdENDQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 13 May 2017 23:16:10 -0400
-Received: by mail-oi0-f68.google.com with SMTP id h4so14343915oib.0
-        for <git@vger.kernel.org>; Sat, 13 May 2017 20:16:09 -0700 (PDT)
+        id S1758036AbdENDQL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 13 May 2017 23:16:11 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:33961 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757481AbdENDQJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 13 May 2017 23:16:09 -0400
+Received: by mail-oi0-f67.google.com with SMTP id w10so14325619oif.1
+        for <git@vger.kernel.org>; Sat, 13 May 2017 20:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GnzlXiT7yNhX8XnPrv/tpqzkFn7oVMpi9eMFEkBSXiE=;
-        b=hLLtIgdq0+dJPtR8c+e6GqgxSw0id2lWX9/qhtJDeiNIwBw/VwCLQ9qgSWf8WT6HNz
-         KJ9AyjsZO1igNNH9AOhfojHWSDM7q00I4NGARIzYAciGiX5gZZw4x3MERwlPJvaaR/hL
-         6d9CKbVq09CV55/rhfQNEzL/NA9P1kMciAILwhYEX/Isy22WEF05rNB0AJBVYBpjMe0l
-         j9GMEu3sHTDHlFmYtMv1yRnpv8izUTvcm1cg5TmFyZ3AMpQkFGo6zGyhyCs4LWOI9FPE
-         19wnFFIj9EtI1g8k/dhrMzgMbh0MIqAI5FDFIBquguWV4BT+f2uxB77Hecc/gfK7YmbD
-         fUxA==
+        bh=8OzXG1WUkzOO+wsLafgPawOgPKG/UZXhRigvFQLvSPQ=;
+        b=fH/L4ahVBmZb++f+Qr0Ott2WQ4IueWXPBByst2c9SPEC0idM2QXAHtJd8w2mdw6sej
+         qaCrUtdyCKxRx1H4rYEJIoy6QjlDtGcFpD0MlXp2Qjx6Q7G9xP9EQpM2+NwBmW5fvjLU
+         7PMroCdtKiz08h+/or4X/NuXua01SnWfN+WToXW36ajVQ0w83O325edDkznnD2DZ2A74
+         XM6e3co9zl2UjdVtkNlCbofuz/T6+UcGkuraTIk1mOkDo6n3LDV+3vFu+MRAC/m1ik7Y
+         rCfsjWKCuYuFgZJD0Jz2RAPtRuyHVXwAu3vk2vv1PA0pYaNSzu0nV1B7FtoRtR5LlL1T
+         7yUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=GnzlXiT7yNhX8XnPrv/tpqzkFn7oVMpi9eMFEkBSXiE=;
-        b=QvWnOSU+c+goztcQN5+qARUQrD/B0qznq+dweoUvtvFPjUMvhool2Kq/euXDOLWQHZ
-         2Kh65wcjWOCmv4/SNdtyYHxYvOPd8oQfOzp1H5hIC97Lx4+3QTPG3ga7zUAnKEBZ2/VI
-         ToDIQOF2OF5V8QASuttsb3DpKLSaBoFnGCWUx1Fk5rnRPE+IfmgjWJRoAFrUTp0cmXMG
-         HFLipxgtl3hsulqqm1/Fz1RRMJ5IpieTOgJbQVxLeMT+ro26hfZxFTsbZIvvR1rBGl+H
-         CWbUxkyCGdlvw8rsawcQ0LRcwpb+VWODqTL0mmSDe98NlSlDe3loELNloTNhaI/CGPFB
-         W4sg==
-X-Gm-Message-State: AODbwcCCSod0weY3NQapTEXmmGdclAQN1lwLSAN3QkxmG4KcUclY2qop
-        BzNRL/XD7hS5zQ==
-X-Received: by 10.202.81.9 with SMTP id f9mr4946496oib.184.1494731769318;
-        Sat, 13 May 2017 20:16:09 -0700 (PDT)
-Received: from whydoubt.T-mobile.com (ip68-12-240-88.ok.ok.cox.net. [68.12.240.88])
-        by smtp.gmail.com with ESMTPSA id 67sm3735193otb.53.2017.05.13.20.16.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=8OzXG1WUkzOO+wsLafgPawOgPKG/UZXhRigvFQLvSPQ=;
+        b=mkG6rfcHpR0DYl29K/6ZKKVt5Zjcr2a946SqRX0gQNpqVeP86bFAK+SQaxoH88n+2l
+         JQmVHK3hW+J0oqMiKOjH1vx7CFjG2K5M+FYZZUc+RfmV/axVFF+9Hpavlm3Bf9f4kDQ8
+         dPJ6WPGoVoyXq0Xf3Me1Kx+BzPJcY/yscEWG9PBqdpWP6oQkWa/v/nEDsSJoryrCgCZ9
+         XrkMjOLcz7XXXJiGGnj2fKZL1pQMzeA2DudMlXqm0+ymdxvcDid/FkRBHTaDcYDayxsU
+         j+d6NbOTEl8jvugn2b6YmHhPiBpHeo34R1lEmloGrS5Aw3rm1oRwBlukgVtGbvPcKAOr
+         M3OA==
+X-Gm-Message-State: AODbwcCFgR+lHsA3cnLOYqk7CTXNp+XCtIjbskIAEUnHjzu5egAB6tlo
+        lBEmvDo9mSg2lw==
+X-Received: by 10.157.37.72 with SMTP id j8mr6590613otd.27.1494731768186;
         Sat, 13 May 2017 20:16:08 -0700 (PDT)
+Received: from whydoubt.T-mobile.com (ip68-12-240-88.ok.ok.cox.net. [68.12.240.88])
+        by smtp.gmail.com with ESMTPSA id 67sm3735193otb.53.2017.05.13.20.16.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 13 May 2017 20:16:07 -0700 (PDT)
 From:   Jeff Smith <whydoubt@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, Jeff Smith <whydoubt@gmail.com>
-Subject: [RFC PATCH v2 03/22] blame: remove unused parameters
-Date:   Sat, 13 May 2017 22:14:54 -0500
-Message-Id: <20170514031513.9042-4-whydoubt@gmail.com>
+Subject: [RFC PATCH v2 02/22] blame: move textconv_object with related functions
+Date:   Sat, 13 May 2017 22:14:53 -0500
+Message-Id: <20170514031513.9042-3-whydoubt@gmail.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170514031513.9042-1-whydoubt@gmail.com>
 References: <20170505052729.7576-1-whydoubt@gmail.com>
@@ -63,112 +62,135 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clean up blame code before moving it into libgit
+textconv_object is used in places other than blame.c and should be moved
+to a more appropriate location.  Other textconv related functions are
+located in diff.c so that seems as good a place as any.
 
 Signed-off-by: Jeff Smith <whydoubt@gmail.com>
 ---
- builtin/blame.c | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ builtin.h          |  2 --
+ builtin/blame.c    | 28 ----------------------------
+ builtin/cat-file.c |  1 +
+ diff.c             | 23 +++++++++++++++++++++++
+ diff.h             |  7 +++++++
+ 5 files changed, 31 insertions(+), 30 deletions(-)
 
+diff --git a/builtin.h b/builtin.h
+index 9e4a898..498ac80 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -25,8 +25,6 @@ struct fmt_merge_msg_opts {
+ extern int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 			 struct fmt_merge_msg_opts *);
+ 
+-extern int textconv_object(const char *path, unsigned mode, const struct object_id *oid, int oid_valid, char **buf, unsigned long *buf_size);
+-
+ extern int is_builtin(const char *s);
+ 
+ extern int cmd_add(int argc, const char **argv, const char *prefix);
 diff --git a/builtin/blame.c b/builtin/blame.c
-index c419981..e30b3ef 100644
+index 42c56eb..c419981 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -449,9 +449,7 @@ static struct origin *make_origin(struct commit *commit, const char *path)
-  * Locate an existing origin or create a new one.
-  * This moves the origin to front position in the commit util list.
+@@ -147,34 +147,6 @@ static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b,
+ }
+ 
+ /*
+- * Prepare diff_filespec and convert it using diff textconv API
+- * if the textconv driver exists.
+- * Return 1 if the conversion succeeds, 0 otherwise.
+- */
+-int textconv_object(const char *path,
+-		    unsigned mode,
+-		    const struct object_id *oid,
+-		    int oid_valid,
+-		    char **buf,
+-		    unsigned long *buf_size)
+-{
+-	struct diff_filespec *df;
+-	struct userdiff_driver *textconv;
+-
+-	df = alloc_filespec(path);
+-	fill_filespec(df, oid->hash, oid_valid, mode);
+-	textconv = get_textconv(df);
+-	if (!textconv) {
+-		free_filespec(df);
+-		return 0;
+-	}
+-
+-	*buf_size = fill_textconv(textconv, df, buf);
+-	free_filespec(df);
+-	return 1;
+-}
+-
+-/*
+  * Given an origin, prepare mmfile_t structure to be used by the
+  * diff machinery
   */
--static struct origin *get_origin(struct scoreboard *sb,
--				 struct commit *commit,
--				 const char *path)
-+static struct origin *get_origin(struct commit *commit, const char *path)
- {
- 	struct origin *o, *l;
- 
-@@ -499,8 +497,7 @@ static int fill_blob_sha1_and_mode(struct origin *origin)
-  * We have an origin -- check if the same path exists in the
-  * parent and return an origin structure to represent it.
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 1890d7a..79a2c82 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -5,6 +5,7 @@
   */
--static struct origin *find_origin(struct scoreboard *sb,
--				  struct commit *parent,
-+static struct origin *find_origin(struct commit *parent,
- 				  struct origin *origin)
- {
- 	struct origin *porigin;
-@@ -543,7 +540,7 @@ static struct origin *find_origin(struct scoreboard *sb,
+ #include "cache.h"
+ #include "builtin.h"
++#include "diff.h"
+ #include "parse-options.h"
+ #include "userdiff.h"
+ #include "streaming.h"
+diff --git a/diff.c b/diff.c
+index 74283d9..040fb25 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5270,6 +5270,29 @@ size_t fill_textconv(struct userdiff_driver *driver,
+ 	return size;
+ }
  
- 	if (!diff_queued_diff.nr) {
- 		/* The path is the same as parent */
--		porigin = get_origin(sb, parent, origin->path);
-+		porigin = get_origin(parent, origin->path);
- 		oidcpy(&porigin->blob_oid, &origin->blob_oid);
- 		porigin->mode = origin->mode;
- 	} else {
-@@ -569,7 +566,7 @@ static struct origin *find_origin(struct scoreboard *sb,
- 			die("internal error in blame::find_origin (%c)",
- 			    p->status);
- 		case 'M':
--			porigin = get_origin(sb, parent, origin->path);
-+			porigin = get_origin(parent, origin->path);
- 			oidcpy(&porigin->blob_oid, &p->one->oid);
- 			porigin->mode = p->one->mode;
- 			break;
-@@ -588,8 +585,7 @@ static struct origin *find_origin(struct scoreboard *sb,
-  * We have an origin -- find the path that corresponds to it in its
-  * parent and return an origin structure to represent it.
++int textconv_object(const char *path,
++		    unsigned mode,
++		    const struct object_id *oid,
++		    int oid_valid,
++		    char **buf,
++		    unsigned long *buf_size)
++{
++	struct diff_filespec *df;
++	struct userdiff_driver *textconv;
++
++	df = alloc_filespec(path);
++	fill_filespec(df, oid->hash, oid_valid, mode);
++	textconv = get_textconv(df);
++	if (!textconv) {
++		free_filespec(df);
++		return 0;
++	}
++
++	*buf_size = fill_textconv(textconv, df, buf);
++	free_filespec(df);
++	return 1;
++}
++
+ void setup_diff_pager(struct diff_options *opt)
+ {
+ 	/*
+diff --git a/diff.h b/diff.h
+index 5be1ee7..52ebd54 100644
+--- a/diff.h
++++ b/diff.h
+@@ -385,6 +385,13 @@ extern size_t fill_textconv(struct userdiff_driver *driver,
   */
--static struct origin *find_rename(struct scoreboard *sb,
--				  struct commit *parent,
-+static struct origin *find_rename(struct commit *parent,
- 				  struct origin *origin)
- {
- 	struct origin *porigin = NULL;
-@@ -615,7 +611,7 @@ static struct origin *find_rename(struct scoreboard *sb,
- 		struct diff_filepair *p = diff_queued_diff.queue[i];
- 		if ((p->status == 'R' || p->status == 'C') &&
- 		    !strcmp(p->two->path, origin->path)) {
--			porigin = get_origin(sb, parent, p->one->path);
-+			porigin = get_origin(parent, p->one->path);
- 			oidcpy(&porigin->blob_oid, &p->one->oid);
- 			porigin->mode = p->one->mode;
- 			break;
-@@ -1270,7 +1266,7 @@ static void find_copy_in_parent(struct scoreboard *sb,
- 				/* find_move already dealt with this path */
- 				continue;
+ extern struct userdiff_driver *get_textconv(struct diff_filespec *one);
  
--			norigin = get_origin(sb, parent, p->one->path);
-+			norigin = get_origin(parent, p->one->path);
- 			oidcpy(&norigin->blob_oid, &p->one->oid);
- 			norigin->mode = p->one->mode;
- 			fill_origin_blob(&sb->revs->diffopt, norigin, &file_p);
-@@ -1404,8 +1400,7 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
- 	 * common cases, then we look for renames in the second pass.
- 	 */
- 	for (pass = 0; pass < 2 - no_whole_file_rename; pass++) {
--		struct origin *(*find)(struct scoreboard *,
--				       struct commit *, struct origin *);
-+		struct origin *(*find)(struct commit *, struct origin *);
- 		find = pass ? find_rename : find_origin;
++/*
++ * Prepare diff_filespec and convert it using diff textconv API
++ * if the textconv driver exists.
++ * Return 1 if the conversion succeeds, 0 otherwise.
++ */
++extern int textconv_object(const char *path, unsigned mode, const struct object_id *oid, int oid_valid, char **buf, unsigned long *buf_size);
++
+ extern int parse_rename_score(const char **cp_p);
  
- 		for (i = 0, sg = first_scapegoat(revs, commit);
-@@ -1418,7 +1413,7 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
- 				continue;
- 			if (parse_commit(p))
- 				continue;
--			porigin = find(sb, p, origin);
-+			porigin = find(p, origin);
- 			if (!porigin)
- 				continue;
- 			if (!oidcmp(&porigin->blob_oid, &origin->blob_oid)) {
-@@ -2806,7 +2801,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		sb.final_buf_size = o->file.size;
- 	}
- 	else {
--		o = get_origin(&sb, sb.final, path);
-+		o = get_origin(sb.final, path);
- 		if (fill_blob_sha1_and_mode(o))
- 			die(_("no such path %s in %s"), path, final_commit_name);
- 
+ extern long parse_algorithm_value(const char *value);
 -- 
 2.9.3
 
