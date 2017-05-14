@@ -2,89 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F50E20188
-	for <e@80x24.org>; Sun, 14 May 2017 04:26:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58CE2201A7
+	for <e@80x24.org>; Sun, 14 May 2017 07:02:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751283AbdENE0B (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 May 2017 00:26:01 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:35977 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750848AbdENE0B (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2017 00:26:01 -0400
-Received: by mail-pf0-f179.google.com with SMTP id m17so47341309pfg.3
-        for <git@vger.kernel.org>; Sat, 13 May 2017 21:26:01 -0700 (PDT)
+        id S1751334AbdENHCl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 May 2017 03:02:41 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:34098 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751142AbdENHCk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2017 03:02:40 -0400
+Received: by mail-io0-f171.google.com with SMTP id k91so58924964ioi.1
+        for <git@vger.kernel.org>; Sun, 14 May 2017 00:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=M0T+tW1n6Je72nM/Wn+lrLYIyT3VgNT3LIF3x1KZreU=;
-        b=eE6DFMVDIObgFeMP4uJ3nv7swd8jZhgYU21NqOxIch7JUrTjuu98GSB6v1ZsV6lT6k
-         4xteZxSb9tZHAenKRExJx3kn+PCpQmXJWP4RM+tctTK3iVmDaw7Vc8PVF1nZfiaSTPfc
-         rvATy2FsFKZ2vTiQeiI+23y8iaLhcTNETH8qDMAn2H42BetfvSikEcHyfzjk8uBRnX19
-         nTSDTmj5QIhtoiwbCy3TX1yN12fE8M7eqPJPdQi3Xm6cjzqLtsnFEZe3dxfw2/XV1K+O
-         xK43sim5nCFAQ2qZhD667Mky97PzTCAt7Pve7eBoR8ehUF5gLPcEVQ2+/DDVzzeUstKj
-         hJBw==
+        bh=zq/Cmwua4Ko8PrhJbDVI38BBFM4t2b0wotcgyJYTGEQ=;
+        b=tbCraUo+xlNxr3NTlccASzwnlGyTBnymVT0jGaSpPHKnec31CH2EEq3PvPwpsk+PaB
+         jlgXPLjmWVq3ufLrcjcVQAY+O4YruAn6bdEMw8cJoevSd+1OP6OEvdcSSdyooM8hcOcx
+         uBi5vkYoZcG1U9QdhToAruQPJxy9Ov2UYL8kGCCifTU4O/oDyQbmCzLBULnqGXhDkq4i
+         KB+HScd7VOAQZdIT1ky0qLMnVrRO1F56cvJjKUQDex7MwBI2n6saI/1d7J6QizZ4oWVq
+         L4bDaNlV4ypaCc0mi7B/zEgbY0i49S7Jc3TqneUTCulDwWXO35dhZ0vNJ6aOmXemUuwS
+         tNrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=M0T+tW1n6Je72nM/Wn+lrLYIyT3VgNT3LIF3x1KZreU=;
-        b=ZHJQslbKNR6RTm5F7dIK7BfQRFkrgV8LkRetrMv8PBFy2J9/IMdnJM+c/ZatbvyJl7
-         lKc2LTnIl39RlOfH+M9Hnn+BmbHa8GO0sO3CFZzq6mqN1/z4tZXdhopCOGS6Jtq2Nwlj
-         Wyu8Ewpo22712PHbvqPefQr0ro2IdquqbFUW5bMKZrwuGHuoCru1uoayVTKqfD/27sXE
-         DXTmenerhh48/TxTTHfWsN0nIFtcDt7NLdKPHp3XAebFU4o6EHbqyUY5hnri1EOcMeeM
-         gf7YDpdKHC0TxXRmTlGTzvl5Vpgv1OBEyINCQPOwpcf6eLINww7tFH15gllYsTVT+sjq
-         d60g==
-X-Gm-Message-State: AODbwcDoUr414Fj6QA6KbxQUAs2TIvm6tIeVPjbN9e+085gnhR6SBKKx
-        citXyJaD2pzE6zgtQEnrPpoDmueLTI8i
-X-Received: by 10.84.248.73 with SMTP id e9mr16408904pln.76.1494735960508;
- Sat, 13 May 2017 21:26:00 -0700 (PDT)
+        bh=zq/Cmwua4Ko8PrhJbDVI38BBFM4t2b0wotcgyJYTGEQ=;
+        b=jI7InMasCrN+Te2KJ5DflImhkRf+iZ406Rp0c7UAllhDL9uZCMeNUMin3hkz638fdT
+         RJ2lOS4SJnffCqTEU2eiNSQ5A5tlVg8Wos3MpB1NZ5ELGfb+xNd+RiCN75rEz4rVnXjh
+         smg8Q2WUknxAFMMxGWnrl2N/fRnpCmwCcAt1+xLBnp/stFq2QMQrgMo9c295SuTkrGU4
+         94mTOUwDt0AtgHMjUM3vXMe4i9MALxFZQCOVomidgNBqDy+ASN8ytuECV2WFae6n+Ir6
+         Oql2YXmIxLQwW/p8AIJuoaQSQWsD2vISGBCjxe1xWeGhKOHtXwHb38RVxTe3fFzy0hX4
+         3ZQA==
+X-Gm-Message-State: AODbwcDRYvU2EyCxjXwkEhMw//wSc+ijxsZKuczhsY/kMS8KFAi5sQVY
+        WQu/CFW32Z0tJsTxxipNg71QltZ1gg==
+X-Received: by 10.107.178.12 with SMTP id b12mr210069iof.50.1494745359962;
+ Sun, 14 May 2017 00:02:39 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Sat, 13 May 2017 21:25:59 -0700 (PDT)
-In-Reply-To: <20170514040559.uvs6c2dnd6aelrln@sigill.intra.peff.net>
-References: <20170514040117.25865-1-sbeller@google.com> <20170514040117.25865-19-sbeller@google.com>
- <20170514040559.uvs6c2dnd6aelrln@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Sat, 13 May 2017 21:25:59 -0700
-Message-ID: <CAGZ79kaWQJ-UJxdVfkaXVdpXzHET+8xg9U9Pj9geE4kchcR1zA@mail.gmail.com>
-Subject: Re: [PATCH 18/19] diff: buffer all output if asked to
-To:     Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Brandon Williams <bmwill@google.com>
+Received: by 10.107.8.220 with HTTP; Sun, 14 May 2017 00:02:19 -0700 (PDT)
+In-Reply-To: <20170514033923.12870-2-bmalehorn@gmail.com>
+References: <20170512090032.coddhlsrs6s3zm2f@sigill.intra.peff.net>
+ <20170514033923.12870-1-bmalehorn@gmail.com> <20170514033923.12870-2-bmalehorn@gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sun, 14 May 2017 09:02:19 +0200
+Message-ID: <CACBZZX6hjbiTUzK9CCR1_taE8hzoDm9vH8tGTk-_DW_36Wia+A@mail.gmail.com>
+Subject: Re: [PATCH] interpret-trailers: obey scissors lines
+To:     Brian Malehorn <bmalehorn@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 13, 2017 at 9:06 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, May 13, 2017 at 09:01:16PM -0700, Stefan Beller wrote:
->
->> +             for (i = 0; i < o->line_buffer_nr; i++);
->> +                     free((void*)o->line_buffer[i].line);
->
-> I haven't looked at the patches yet, but this ";" on the for line is
-> almost certainly a typo (gcc catches it due to the misleading
-> indentation of the next line).
+On Sun, May 14, 2017 at 5:39 AM, Brian Malehorn <bmalehorn@gmail.com> wrote:
+> If a commit message is being editted as "verbose", it will contain a
 
-Grr  :/
-
-I have spent hours trying to figure out why this does not work,
-questioning the design, my mental model of how pointers work
-and programming in general.
-
-/me should get gcc 6 and set  -Wmisleading-indentation
-
-Thanks,
-Stefan
-
->
-> -Peff
+Typo, should be "edited": https://en.wiktionary.org/wiki/editted
