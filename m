@@ -2,66 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58CE2201A7
-	for <e@80x24.org>; Sun, 14 May 2017 07:02:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E087C201A7
+	for <e@80x24.org>; Sun, 14 May 2017 08:00:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751334AbdENHCl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 May 2017 03:02:41 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:34098 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751142AbdENHCk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2017 03:02:40 -0400
-Received: by mail-io0-f171.google.com with SMTP id k91so58924964ioi.1
-        for <git@vger.kernel.org>; Sun, 14 May 2017 00:02:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zq/Cmwua4Ko8PrhJbDVI38BBFM4t2b0wotcgyJYTGEQ=;
-        b=tbCraUo+xlNxr3NTlccASzwnlGyTBnymVT0jGaSpPHKnec31CH2EEq3PvPwpsk+PaB
-         jlgXPLjmWVq3ufLrcjcVQAY+O4YruAn6bdEMw8cJoevSd+1OP6OEvdcSSdyooM8hcOcx
-         uBi5vkYoZcG1U9QdhToAruQPJxy9Ov2UYL8kGCCifTU4O/oDyQbmCzLBULnqGXhDkq4i
-         KB+HScd7VOAQZdIT1ky0qLMnVrRO1F56cvJjKUQDex7MwBI2n6saI/1d7J6QizZ4oWVq
-         L4bDaNlV4ypaCc0mi7B/zEgbY0i49S7Jc3TqneUTCulDwWXO35dhZ0vNJ6aOmXemUuwS
-         tNrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zq/Cmwua4Ko8PrhJbDVI38BBFM4t2b0wotcgyJYTGEQ=;
-        b=jI7InMasCrN+Te2KJ5DflImhkRf+iZ406Rp0c7UAllhDL9uZCMeNUMin3hkz638fdT
-         RJ2lOS4SJnffCqTEU2eiNSQ5A5tlVg8Wos3MpB1NZ5ELGfb+xNd+RiCN75rEz4rVnXjh
-         smg8Q2WUknxAFMMxGWnrl2N/fRnpCmwCcAt1+xLBnp/stFq2QMQrgMo9c295SuTkrGU4
-         94mTOUwDt0AtgHMjUM3vXMe4i9MALxFZQCOVomidgNBqDy+ASN8ytuECV2WFae6n+Ir6
-         Oql2YXmIxLQwW/p8AIJuoaQSQWsD2vISGBCjxe1xWeGhKOHtXwHb38RVxTe3fFzy0hX4
-         3ZQA==
-X-Gm-Message-State: AODbwcDRYvU2EyCxjXwkEhMw//wSc+ijxsZKuczhsY/kMS8KFAi5sQVY
-        WQu/CFW32Z0tJsTxxipNg71QltZ1gg==
-X-Received: by 10.107.178.12 with SMTP id b12mr210069iof.50.1494745359962;
- Sun, 14 May 2017 00:02:39 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Sun, 14 May 2017 00:02:19 -0700 (PDT)
-In-Reply-To: <20170514033923.12870-2-bmalehorn@gmail.com>
-References: <20170512090032.coddhlsrs6s3zm2f@sigill.intra.peff.net>
- <20170514033923.12870-1-bmalehorn@gmail.com> <20170514033923.12870-2-bmalehorn@gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sun, 14 May 2017 09:02:19 +0200
-Message-ID: <CACBZZX6hjbiTUzK9CCR1_taE8hzoDm9vH8tGTk-_DW_36Wia+A@mail.gmail.com>
-Subject: Re: [PATCH] interpret-trailers: obey scissors lines
-To:     Brian Malehorn <bmalehorn@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1752136AbdENIAr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 May 2017 04:00:47 -0400
+Received: from [195.159.176.226] ([195.159.176.226]:53524 "EHLO
+        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
+        with ESMTP id S1751334AbdENIAq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2017 04:00:46 -0400
+Received: from list by blaine.gmane.org with local (Exim 4.84_2)
+        (envelope-from <gcvg-git-2@m.gmane.org>)
+        id 1d9oSD-0007LX-Li
+        for git@vger.kernel.org; Sun, 14 May 2017 10:00:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To:     git@vger.kernel.org
+From:   Junio C Hamano <gitster@pobox.com>
+Subject: Re: checkout -b remotes/origin/<branch> should not work
+Date:   Sun, 14 May 2017 17:00:36 +0900
+Message-ID: <xmqqefvr50m3.fsf@gitster.mtv.corp.google.com>
+References: <CAGZ79kYACtA_q6kJ=gGYe02H-a9g_GV=kKLn8jy2ZZKvjxGYNQ@mail.gmail.com>
+        <20170514040048.evwtngo6bixtrput@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+X-Complaints-To: usenet@blaine.gmane.org
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+Cancel-Lock: sha1:dEtl4dOAbhaR55iMY/cZvhmgdGE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 14, 2017 at 5:39 AM, Brian Malehorn <bmalehorn@gmail.com> wrote:
-> If a commit message is being editted as "verbose", it will contain a
+Jeff King <peff@peff.net> writes:
 
-Typo, should be "edited": https://en.wiktionary.org/wiki/editted
+> I think this problem extends beyond "remotes/". The worst is:
+>
+>   git checkout -b HEAD
+>
+> but there are many confusing variants:
+>
+>   git checkout -b refs/heads/foo
+>   git checkout -b tags/v1.0
+>
+> etc. Those are all perfectly legal names, but almost certainly not what
+> the user intended. I think the plumbing should continue to allow them,
+> but I wouldn't object to some common-sense think-o protections in the
+> "checkout -b" plumbing (especially if it could be disabled for power
+> users).
+
+Yup.  I suspect that the last one has uses (for those who may want
+to build on v1.0 tag it is conceivable that a local branch they use
+for it is named like so), but I agree that anything that begins with
+refs/* is not something any sane person would want to use.
+
+sanity.branchname configuration or something that tells "checkout"
+and "branch" Porcelain commands to barf on an attempt to create such
+refnames does not sound too bad, and making it on by default may not
+even be a bad idea.  But that leads me to say it may not even need
+to be a configurable thing (people who DO want funny names can
+already and still use the plumbing).
+
+In any case, no command after such a change should forbid checking
+out such a funny-named branch if it already exists.  We should
+complain only on (an attempted) creation.
+
+
