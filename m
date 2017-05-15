@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D25E0201A4
-	for <e@80x24.org>; Mon, 15 May 2017 00:23:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31FBB201A4
+	for <e@80x24.org>; Mon, 15 May 2017 00:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751645AbdEOAXF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 May 2017 20:23:05 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:33708 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751005AbdEOAXE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2017 20:23:04 -0400
-Received: by mail-io0-f178.google.com with SMTP id p24so64588013ioi.0
-        for <git@vger.kernel.org>; Sun, 14 May 2017 17:23:04 -0700 (PDT)
+        id S1752870AbdEOAc1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 May 2017 20:32:27 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:33156 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752849AbdEOAc0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2017 20:32:26 -0400
+Received: by mail-it0-f66.google.com with SMTP id l145so9805400ita.0
+        for <git@vger.kernel.org>; Sun, 14 May 2017 17:32:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=toqyc6vaaxASYpcER1oN0wcPDwPR+FIZk1PhhNH3TsE=;
-        b=Bwp0j8bjWoCigyZLcncLlwVUmgw+CMQO/xIIJ3zbZRA2sUGyDmn9SL0DeNWgnu/8nM
-         bMalHlwX3EM1YI/um2QOY5uDOlNpdCXTEyQZx9RBIiGhWwsYXrVi96/7EAww1WqFNbxV
-         iEfWPXco/sSMwWibmIIzRaMM1CMUFanq0IL7uCP47jArESL7gVOE5Zf6kzF27ceDy6/Z
-         U2tBaYviWA89CDq+F3xd5/d6qf0kaEgDr28ZmbvYDZY0L2PTU7Fq+vYZFhC1yuE7SZzR
-         GIS27ow5ActFIWRVmFO8r6dM+nPsK0BB0CYZG24o7CChNfTd19aTcS/eXb1RqbQ9DVVx
-         7u+w==
+        bh=7OCp4VfVwXmNdHrYdTMqmC+6bBqQ4zDvg2s6PdRgScY=;
+        b=rwwPLVxlpoD5krrPObw2BmG88dHLqccIhxo53S1H6zi13F1FyjwxKQZv9KjnRnxQpX
+         ERJrPut0MXpS8+hyK8g8cv3rHvkgzZwuNyN5HBTIfqTJzbhroTrP0zgZQkkEq7ehlsfX
+         BJfheluVNugma95odMfx80VdV1yRWu4arGHwVeYLhXzUfx8kLWDV4a6tBf0H6tokhlBh
+         H/tA7PCQIccDsyFreiuJ3owbcVXjzvFSp05CMc2a9slPDdyYcm4/cWpZoabt5f81C+hr
+         0Y78P7caJziQNzT66YO1P07wu09Yw/Slrf4cRurvfXqSTEaHm4LFLcooqbZMz69hDqEQ
+         UdIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=toqyc6vaaxASYpcER1oN0wcPDwPR+FIZk1PhhNH3TsE=;
-        b=B06wb7sWZ9Q67VsYd7JpHngvvc1qM/sCqTbE5+76UfKav6H7/toA8ftN4E2gXOikZN
-         OcvlL8/ZDkjbgikfg0Vhl0NEo1bBP8qKIw56z56Bz828bgCz0rrSWVHYAwI3krwXfE+F
-         m2Sz0VU4O827HjaoF65Ml2nVHWabTSGAPLU6mgbtjAlEVHZe4e9CxnRUFo9i6oNHRQS8
-         q8pnse/hKe+LQBVxBIORjngK12S7d+iGxwSYlD/Zn2QAwhRHFO9ipCWoc9RZdZfUSMiw
-         giqH8obphwHEbVqlo163qYNe1ekquU9Ae75ayqsVpbN6bIwbcNVIZ75aNCMl0j6/BdI6
-         LUmQ==
-X-Gm-Message-State: AODbwcA3mMGmZP2ZWrVwdzs4blEJTUrh4ovO6zNLgVGajincDWKm1nZa
-        5tGp7jGYyjTytmsAk7Nhe9RWhQW5dw==
-X-Received: by 10.107.10.24 with SMTP id u24mr3545440ioi.82.1494807783954;
- Sun, 14 May 2017 17:23:03 -0700 (PDT)
+        bh=7OCp4VfVwXmNdHrYdTMqmC+6bBqQ4zDvg2s6PdRgScY=;
+        b=UmGnIsJEjmqkHrLr5FRNvNLjXlzmmSsS+nIEHNNc2tDTutz3zNtY0IzF3dVHHJLkJ9
+         0UqGtAgbzNOmDFppqGQiJjU6kqApl5sJ4pHWOrwBFGicJetVnZnKpKvlhWHCK7x3vOk9
+         ihehXKTNsHFTXEzGLi3LSN+JyGscpMOap3jZ1ZGHUb8KeYHWxaDKYnn1sGU6FKKCxtd2
+         shOy22EvgVUzu6V9k88LE8M0V1wWL9mUIay0XmdgJMasHoo52P7knJKhMOr9xqpzbvR2
+         KxjFuvarMVvYwPUUGTqugwjqJjd50uoGZwMCUxqGTTJKx2CS/0V+LSBFbji71AAeCabG
+         OmHw==
+X-Gm-Message-State: AODbwcCnBpVjQ5Exifc0iYEwwB7zk0OOmAAa9UxRDAMubxbUFJ8BQwX2
+        za0U6CJyWL2/CkuUeosuvzGZ85ZnWg==
+X-Received: by 10.36.233.66 with SMTP id f63mr3205809ith.46.1494808345156;
+ Sun, 14 May 2017 17:32:25 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.38.6 with HTTP; Sun, 14 May 2017 17:22:33 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1705121643180.146734@virtualbox>
+Received: by 10.79.38.6 with HTTP; Sun, 14 May 2017 17:31:54 -0700 (PDT)
+In-Reply-To: <20170512203436.fcoqauphzvox2sgv@sigill.intra.peff.net>
 References: <CANuW5x0pBwfQeha50mxN8pVQKm67u_b3UKTCQ8ZbJA6FUGvYbw@mail.gmail.com>
- <alpine.DEB.2.21.1.1705121643180.146734@virtualbox>
+ <20170512203436.fcoqauphzvox2sgv@sigill.intra.peff.net>
 From:   Josh Hagins <hagins.josh@gmail.com>
-Date:   Sun, 14 May 2017 20:22:33 -0400
-Message-ID: <CANuW5x0rOKm29SDR_jF9ZydAA5UPyjmvnoH9At+M_uXUzdV5HA@mail.gmail.com>
-Subject: Re: [Git 2.13.0] BUG: setup_git_env called without repository
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Sun, 14 May 2017 20:31:54 -0400
+Message-ID: <CANuW5x2-gzHuPN9ox8hEgNUiTsEKeAqeZQXZZ=SMFbsfabXd1w@mail.gmail.com>
+Subject: Re: [PATCH] config: complain about --local outside of a git repo
+To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -61,69 +61,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hi Jeff,
 
-Here's the full text of the gdb session, including backtrace. Hope it helps!
+For context, the "user.name" bit was purely notional; I just wanted to
+give a sample reproduction. Where I've actually been running into this
+in real life is with oh-my-git, a GitHub-themed Powerline bash prompt:
+https://github.com/arialdomartini/oh-my-git/blob/42c11f08540949b75bd513e6880a4ce6824a2bcc/base.sh#L52.
 
-$ pwd
-/Users/jhagins/dev/github
-$ gdb -args ./git/git config --local --get user.name
-GNU gdb (GDB) 7.12.1
-Copyright (C) 2017 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
-and "show warranty" for details.
-This GDB was configured as "x86_64-apple-darwin16.4.0".
-Type "show configuration" for configuration details.
-For bug reporting instructions, please see:
-<http://www.gnu.org/software/gdb/bugs/>.
-Find the GDB manual and other documentation resources online at:
-<http://www.gnu.org/software/gdb/documentation/>.
-For help, type "help".
-Type "apropos word" to search for commands related to "word"...
-Reading symbols from ./git/git...done.
-(gdb) b die_builtin
-Breakpoint 1 at 0x100210757: file usage.c, line 33.
-(gdb) r
-Starting program: /Volumes/git/github/git/git config --local --get user.name
-[New Thread 0x1403 of process 64101]
-warning: unhandled dyld version (15)
-
-Thread 2 hit Breakpoint 1, die_builtin (err=0x100270d95 "BUG:
-setup_git_env called without repository", params=0x7fff5fbfdbe0) at
-usage.c:33
-33 vreportf("fatal: ", err, params);
-(gdb) bt
-#0  die_builtin (err=0x100270d95 "BUG: setup_git_env called without
-repository", params=0x7fff5fbfdbe0) at usage.c:33
-#1  0x000000010020fc80 in die (err=0x100270d95 "BUG: setup_git_env
-called without repository") at usage.c:120
-#2  0x000000010012cb2b in setup_git_env () at environment.c:172
-#3  0x000000010012cab7 in get_git_dir () at environment.c:214
-#4  0x0000000100214e9c in get_worktree_git_dir (wt=0x0) at worktree.c:215
-#5  0x000000010017968c in do_git_path (wt=0x0, buf=0x7fff5fbfde50,
-fmt=0x10024c24d "config", args=0x7fff5fbfde70) at path.c:395
-#6  0x0000000100179c78 in git_pathdup (fmt=0x10024c24d "config") at path.c:437
-#7  0x0000000100030449 in cmd_config (argc=1, argv=0x7fff5fbfe180,
-prefix=0x0) at builtin/config.c:527
-#8  0x0000000100001ac5 in run_builtin (p=0x10028c3a8, argc=4,
-argv=0x7fff5fbfe180) at git.c:371
-#9  0x0000000100000cc6 in handle_builtin (argc=4, argv=0x7fff5fbfe180)
-at git.c:572
-#10 0x0000000100001883 in run_argv (argcp=0x7fff5fbfe12c,
-argv=0x7fff5fbfe120) at git.c:624
-#11 0x0000000100000a4f in cmd_main (argc=4, argv=0x7fff5fbfe180) at git.c:701
-#12 0x00000001000c3772 in main (argc=5, argv=0x7fff5fbfe178) at common-main.c:43
+Since this command is invoked every time the prompt is build, I see
+the error message after every single command I run outside of a Git
+repository. While this is more indicative of a code smell in
+oh-my-git, I figured that, as you said, BUG assertions should never
+get hit in the wild. Thanks for the patch!
 
 Cheers,
 Josh
 
-On Fri, May 12, 2017 at 10:48 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Josh,
->
-> On Fri, 12 May 2017, Josh Hagins wrote:
+On Fri, May 12, 2017 at 4:34 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, May 12, 2017 at 10:19:59AM -0400, Josh Hagins wrote:
 >
 >> Since upgrading to Git 2.13.0 I'm seeing this error message whenever
 >> `git config --local <whatever>` is called outside a Git repository.
@@ -143,57 +98,69 @@ On Fri, May 12, 2017 at 10:48 AM, Johannes Schindelin
 >> Apple Git outputs nothing, as expected. The summarized release notes
 >> published by GitHub specifically mentioned that instances of this
 >> error message should be reported, so here you go!
->>
->> Please let me know if I can provide any more information that would be
->> helpful.
 >
-> Since this is in /usr/local/bin/, there are two possibilities:
+> Thanks for reporting. All the developers have been running with this
+> change for months, but I knew as soon as it was released into the wild
+> that somebody would find a new corner case. :)
 >
-> 1) you built and installed it yourself (but then it would be more likely
->    in your $HOME/bin), or
+> I think dying is the right thing here; you are asking for "--local" but
+> there is no local repository. But we should never hit a BUG assertion.
+> Patch is below.
 >
-> 2) you installed it via HomeBrew.
+> I'm not sure exactly what you wanted to accomplish with --local. If you
+> just want to know if user.name is set anywhere (and you may or may not
+> be in a git repo), then just "git config --get user.name" would work. If
+> you want to know if you're in a local repo and if so whether the
+> variable is set, you'd need to use two commands, like:
 >
-> I guess it is the latter.
+>   git rev-parse --git-dir >/dev/null 2>&1 &&
+>   git config --local --get user.name
 >
-> In both cases, however, you have XCode installed, so you can dig further.
-> Yay.
+> -- >8 --
+> Subject: [PATCH] config: complain about --local outside of a git repo
 >
-> The thing I would do in your case would be to clone Git:
+> The "--local" option instructs git-config to read or modify
+> the repository-level config. This doesn't make any sense if
+> you're not actually in a repository.
 >
->         git clone https://github.com/git/git
+> Older versions of Git would blindly try to read or write
+> ".git/config". For reading, this would result in a quiet
+> failure, since there was no config to read (and thus no
+> matching config value). Writing would generally fail
+> noisily, since ".git" was unlikely to exist. But since
+> b1ef400ee (setup_git_env: avoid blind fall-back to ".git",
+> 2016-10-20), we catch this in the call to git_pathdup() and
+> die("BUG").
 >
-> then check out v2.13.0:
+> Dying is the right thing to do, but we should catch the
+> problem early and give a more human-friendly error message.
 >
->         git checkout v2.13.0
+> Note that even without --local, git-config will sometimes
+> default to using local repository config. These cases are
+> already protected by a similar check.
 >
-> then edit the Makefile to remove the -O2 from the CFLAGS (the next step is
-> to use the GNU debugger, and in my hands the -O2 optimization made that
-> pretty useless), and then build with
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/config.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
->         make
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 3a554ad50..ad7c6a19c 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -496,6 +496,9 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>                 usage_with_options(builtin_config_usage, builtin_config_options);
+>         }
 >
-> After that, you should be able to start the command in your local GNU
-> debugger:
+> +       if (use_local_config && nongit)
+> +               die(_("--local only be used inside a git repository"));
+> +
+>         if (given_config_source.file &&
+>                         !strcmp(given_config_source.file, "-")) {
+>                 given_config_source.file = NULL;
+> --
+> 2.13.0.452.g0afc8e12b
 >
->         gdb -args ./git config --local --get user.name
->
-> You will then want to set a breakpoint on the die_builtin() function:
->
->         b die_builtin
->
-> Now run it with the `r` command, and it should stop in the die_builtin
-> routine, in which case a backtrace would be most helpful to figure out
-> what is going wrong:
->
->         bt
->
-> If the output is not enlightening on its own, it would be nice to paste it
-> into a reply to this mail so that the entire Git developer community can
-> have a look.
->
-> Ciao,
-> Johannes
 
 
 
