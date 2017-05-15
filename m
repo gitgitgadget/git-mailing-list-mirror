@@ -2,120 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A6FC201A7
-	for <e@80x24.org>; Mon, 15 May 2017 15:48:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D811201A7
+	for <e@80x24.org>; Mon, 15 May 2017 16:13:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934982AbdEOPr6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 11:47:58 -0400
-Received: from smtp98.iad3a.emailsrvr.com ([173.203.187.98]:59791 "EHLO
-        smtp98.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933006AbdEOPr4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 15 May 2017 11:47:56 -0400
-Received: from smtp29.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
-        by smtp29.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 5D5A225114;
-        Mon, 15 May 2017 11:47:55 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp29.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 313172519B;
-        Mon, 15 May 2017 11:47:55 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Mon, 15 May 2017 11:47:55 -0400
-Subject: Re: [PATCH] tag: duplicate mention of --contains should mention
- --no-contains
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20170515122331.17348-1-avarab@gmail.com>
- <28535adf-5f8f-a43d-82e9-2ada398637e2@xiplink.com>
- <CACBZZX4VDphESS1bt8w4A2GGCnXgj3DRwQLtC+o2ngTQz9=CZA@mail.gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <bf600222-757d-5b7d-7908-d08caa411eca@xiplink.com>
-Date:   Mon, 15 May 2017 11:47:55 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S934849AbdEOQNb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 12:13:31 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:33615 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933278AbdEOQNa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 12:13:30 -0400
+Received: by mail-pf0-f177.google.com with SMTP id e193so65393760pfh.0
+        for <git@vger.kernel.org>; Mon, 15 May 2017 09:13:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=B8DJOumm9SupffUBlwU8vR4m4Pg10yazDlUguZN5wKA=;
+        b=pligxw2vsNR7XzWCTc52jUYHz3ps35fz1F2cin4NLA+TvYKTQF6sUqXUk7yCyH9+/j
+         NFmOmTeiEt0pE4u72anZ4OFLyPlW8nbSoT3KjDdiIWJWfGRQ8qacLWP6aFqibVnj/OrE
+         +EYN1XNO4iNlk9O0D6GRmQd16c7WGDqeYNDHvUeB8IKWcjdmcLvcAjR9C7tmfYhmpzCB
+         tOtTobwhTx3m/joEEDe296zY+DNln/B1/RAc9Pk51LINNf8hBPLJZnRdufGbuk9V4rwW
+         Jm6tPbJ+gJPQubzWPNaeyjaf24Cw9CiOyJMbW//ixN0MCBFYmezc3fZlRSFYP58LwA9q
+         s/TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=B8DJOumm9SupffUBlwU8vR4m4Pg10yazDlUguZN5wKA=;
+        b=TQqkfyVp8cu84+NFjLxeN5m3+Pet3PPLF49xap+vnpjZtDbdN6v77zQJgMjrlvVxoY
+         ah27cWUoy2A5k4V4WoO1CIw6x7xxXal5huoDSCrZqxIttHr/bQshVMw5M36RTu9jwoju
+         pPmaMVqW23nGRdQzcS5Caovio/au/a7Kj1PqDL0chwbvp4GYSokdUaVSNBvbadTaeTnF
+         HLvEQAzbZLnMAa667ZCERpXbZDm0oaJ7B25fMCJOdnUTrKBnw/p5cWvoLFDpMbkuIliW
+         g3S/xy/zGr3QwI8RQPPmm5YPHqgXC306wGjzKMxZxv+y4pLzB2sR/1aexKzJD5XS/riF
+         nyAQ==
+X-Gm-Message-State: AODbwcBJrllN1frswtVxjOG8oDRSgtO5rzo2+0oE7deHweB91Ypq8Vwz
+        7yelWeBtC0Bi7T+zz9/uKC947bB2v2Ad
+X-Received: by 10.99.56.66 with SMTP id h2mr7261334pgn.40.1494864809848; Mon,
+ 15 May 2017 09:13:29 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACBZZX4VDphESS1bt8w4A2GGCnXgj3DRwQLtC+o2ngTQz9=CZA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Received: by 10.100.170.200 with HTTP; Mon, 15 May 2017 09:13:29 -0700 (PDT)
+In-Reply-To: <xmqqk25ivcnb.fsf@gitster.mtv.corp.google.com>
+References: <20170514040117.25865-1-sbeller@google.com> <20170514040117.25865-3-sbeller@google.com>
+ <xmqqk25ivcnb.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 15 May 2017 09:13:29 -0700
+Message-ID: <CAGZ79kYLNojFHE7mhgmy84-tRbNN66Kt=DFQoMAKz_p4=_m8fA@mail.gmail.com>
+Subject: Re: [PATCH 02/19] diff: move line ending check into emit_hunk_header
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-05-15 11:01 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Mon, May 15, 2017 at 4:20 PM, Marc Branchaud <marcnarc@xiplink.com> wrote:
->> On 2017-05-15 08:23 AM, Ævar Arnfjörð Bjarmason wrote:
->>>
->>> Fix a duplicate mention of --contains in the SYNOPSIS to mention
->>> --no-contains.
->>>
->>> This fixes an error introduced in my commit ac3f5a3468 ("ref-filter:
->>> add --no-contains option to tag/branch/for-each-ref", 2017-03-24).
->>>
->>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->>> ---
->>>  Documentation/git-tag.txt | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
->>> index f8a0b787f4..1eb15afa1c 100644
->>> --- a/Documentation/git-tag.txt
->>> +++ b/Documentation/git-tag.txt
->>> @@ -12,7 +12,7 @@ SYNOPSIS
->>>  'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>]
->>>         <tagname> [<commit> | <object>]
->>>  'git tag' -d <tagname>...
->>> -'git tag' [-n[<num>]] -l [--contains <commit>] [--contains <commit>]
->>> +'git tag' [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
->>
->>
->> I think
->>
->>         [--[no-]contains <commit>]
->>
->> is the usual pattern...
->>
->>>         [--points-at <object>] [--column[=<options>] | --no-column]
->>>         [--create-reflog] [--sort=<key>] [--format=<format>]
->>>         [--[no-]merged [<commit>]] [<pattern>...]
->>
->>
->> ... like with --[no-]merged, there.
->>
->>                 M.
+On Sun, May 14, 2017 at 11:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Thanks for the feedback, this was discussed earlier in the series and
-> we decided on the current format I'm submitting here.
+>> In a later patch, I want to propose an option to detect&color
+>> moved lines in a diff, which cannot be done in a one-pass over
+>> the diff. Instead we need to go over the whole diff twice,
+>> because we cannot detect the first line of the two corresponding
+>> lines (+ and -) that got moved.
+>>
+>> So to prepare the diff machinery for two pass algorithms
+>> (i.e. buffer it all up and then operate on the result),
+>> move all emissions to places, such that the only emitting
+>> function is emit_line_0.
+>>
+>> This patch moves code that is conceptually part of
+>> emit_hunk_header, but was using output in fn_out_consume,
+>> back to emit_hunk_header.
 >
-> Saying --[no-]merged is the convention we use for options where the
-> two are mutually exclusive, as is the case with the --[no-]merged
-> options:
+> Makes sort-of sense.  If I were selling this patch, I'd remove the
+> first two paragraph and stress on how completing the line inside
+> emit_hunk_header() is conceptually cleaner than doing it outside.
 >
->     $ git tag --merged v2.12.0 --no-merged v2.13.0
->     error: option `no-merged' is incompatible with --merged
->     [...]
+>         emit_hunk_header() function is responsible for assembling a
+>         hunk header and calling emit_line() to send the hunk header
+>         to the output file.  Its only caller fn_out_consume() needs
+>         to prepare for a case where the function emits an incomplete
+>         line and add the terminating LF.
 >
-> But in the case of --contains and --no-contains you can provide both:
+>         Instead make sure emit_hunk_header() to always send a
+>         completed line to emit_line().
 >
->     $ git tag --contains v2.12.0 --no-contains v2.13.0 'v*'
->     v2.12.0
->     v2.12.1
->     v2.12.2
->     v2.12.3
->     v2.13.0-rc0
->     v2.13.0-rc1
->     v2.13.0-rc2
+> or something like that.
 >
-> So they don't use that convention, since it would imply that they're
-> mutually exclusive, rather than both being optional.
+> Note that I am not saying "buffering the entire diff in-core?  why
+> should we support such a use case?".  I am saying that this change
+> is a clean-up that is justifiable, without having to answer such a
+> question.
 
-Ah, thanks.  My mistake!
+Right, the first couple patches are more cleanup than preparation.
+I considered sending them on their own, but then decided to rather
+include it in this series.
 
-		M.
+I'll reword the commit message for a resend.
 
+Thanks,
+Stefan
