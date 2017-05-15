@@ -6,104 +6,132 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6E8201A4
-	for <e@80x24.org>; Mon, 15 May 2017 04:23:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7E7F201A4
+	for <e@80x24.org>; Mon, 15 May 2017 04:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752646AbdEOEXb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 00:23:31 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35902 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751924AbdEOEXa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 00:23:30 -0400
-Received: by mail-pg0-f66.google.com with SMTP id h64so10608286pge.3
-        for <git@vger.kernel.org>; Sun, 14 May 2017 21:23:29 -0700 (PDT)
+        id S1752816AbdEOE6C (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 00:58:02 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:36841 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751005AbdEOE6B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 00:58:01 -0400
+Received: by mail-pg0-f46.google.com with SMTP id x64so34813374pgd.3
+        for <git@vger.kernel.org>; Sun, 14 May 2017 21:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FjpdrHzJ4xnQnWNxERtm6kipVegYGeHIKVU3vj9nLts=;
-        b=gYBDsbbgpNxjvnEIPeowkauJI2LpEAgBb/umP2mjVI0dv66iAYd6T7BUi4eOqJD2AZ
-         e0NKkXeKgUm8jud2HibThNC4DRpclftZXIadObKzo16hUJGnoptI4dLHx9aDf+37ujFj
-         o8wmsscf2kJcoiTv/87+bE05xLFs9VzcWUhzDAOLT5qBZOcVYAaIhYJ24pHJPDupu09P
-         l4Bfvm+BMsXfr3GiUt6rdHiIEsbtx7NW1SxyYAN9djsE5enZd+0+mXKjGrtXq6lEJABT
-         hg5IbfPCVcqKhoM30DYBrVt+6uP8gots/VNW/Y74W81+IS5tIOIy9wkbCo1iGCzVy/9t
-         swSg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=dxSaf1Nv1YlxrIAaZ/vD2R3MAzPxuN9OJvm4TVP+NFU=;
+        b=qpzYqQrkLUAQa6NC96KL7YZ8zXZfFkQGRETKN1+q5MHEwasIBO6VH/beaPCcxCHnG2
+         jDXAj1TxpGvlRhZ5vESwxtSfEHCP8fEt7fzjRpu2Kk9SqO/jZgwaPphC42pRVuKPwuEL
+         QzhuH2idJwfKI0TRMLov2AX+/aM9/JaNmtjoduqldu34oN7DPSEwFxB9aEfAjR5+ydPV
+         cg5TcP1r47VO8enNQz34rPEDUXNbsNgJ8KAiQJz+4e9A06QFj4AfjYlS06QunQNTv9q6
+         Na0B6ta11oOdGV9tItvkPm+YOwdO2ypQ5R6mc8Vmg0aY+vDEg0Wl2HrHrKWYyNpLAv7y
+         iyrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=FjpdrHzJ4xnQnWNxERtm6kipVegYGeHIKVU3vj9nLts=;
-        b=Ho0qDjUDHk8MAOSTE6lmLN0DMb7OsK+Bl9bPgpsiiMaEo/lrsi/3cpDJNGIVCND5H1
-         3JB7Lp58OLafQTkiwoKj0XKrcrNYR5VxLuBRMVAdpfEqV3h4OYd+PI4wJkdQx2vvPiuR
-         jmUFLrG3nA6u0v5hrYfPZJcquNiRc4P0eYIj3oduF1G/hbPkVT3jW3MLyY2Yh6Cn+D6q
-         Za6hf2kPiGlPoLywNn9viF9bAblt9q0vga3Y1p4t0DqhB8Sxf0vC130U8mSkAvBBrepR
-         JMdY6s7zFSFdoxsdozqErCN26tJ1A9FHgUaw5vk09spaq60hcreS3O1LvAaGxf99sRnC
-         WtUg==
-X-Gm-Message-State: AODbwcA3G58CiFHXiMWaYzqYzlTi1Rcb9M2JEgsx1SLEbm/2OBuyNYKQ
-        2E9Zs0VPpfky0A==
-X-Received: by 10.84.233.200 with SMTP id m8mr5681285pln.118.1494822209441;
-        Sun, 14 May 2017 21:23:29 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=dxSaf1Nv1YlxrIAaZ/vD2R3MAzPxuN9OJvm4TVP+NFU=;
+        b=fiaMcbzAZR8mhsCQUVQh9vm0nXxoFs7yNbSirmexxLuH3onwzAEhRSp/+5jpgTu51P
+         fu048A6u7F69ZCwU3tFtwxAUCBMKcJO9O6LU6EiMtrPJevrajRk3is23jOTDGe5tQMyx
+         AsHCSg+TQ9r/84Bw08O4S9B6LvOQQDLXCp35S7JLiWrm8hiOVKmCByLcTivplxK+IL0Q
+         VUNJT5noCj2NDsUVnGeRA+ZGE2OoaITTo9ANb7s0C730byXs/72Pn3u3EHk1NQFQFgUE
+         sHmpV6caAIBt0Nw/pz+ZNGQ4p3T9u07ykhdPUI4+ojX1iGhI4ZgvOm7BzGvu1P1fqVN+
+         9bsA==
+X-Gm-Message-State: AODbwcCT4IfOSMu1Nsa/LIeNdaOAFJYi+/bLgds+tOmS8PrNEQXzwAg1
+        VBCg0gV9v1le2w==
+X-Received: by 10.98.89.194 with SMTP id k63mr4149072pfj.81.1494824280857;
+        Sun, 14 May 2017 21:58:00 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b170:f9ed:5f25:7ab5])
-        by smtp.gmail.com with ESMTPSA id d3sm16745658pfb.110.2017.05.14.21.23.27
+        by smtp.gmail.com with ESMTPSA id r13sm18065443pgn.16.2017.05.14.21.57.58
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 14 May 2017 21:23:27 -0700 (PDT)
+        Sun, 14 May 2017 21:57:58 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brian Malehorn <bmalehorn@gmail.com>
-Cc:     peff@peff.net, git@vger.kernel.org
-Subject: Re: [PATCH] interpret-trailers: obey scissors lines
-References: <20170514035652.rn5npxxflku6s5k4@sigill.intra.peff.net>
-        <20170514083349.24979-1-bmalehorn@gmail.com>
-        <20170514083349.24979-2-bmalehorn@gmail.com>
-        <xmqqk25iwz7l.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 15 May 2017 13:23:26 +0900
-In-Reply-To: <xmqqk25iwz7l.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 15 May 2017 12:55:42 +0900")
-Message-ID: <xmqq7f1iwxxd.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 04/29] log: add exhaustive tests for pattern style options & config
+References: <20170513231509.7834-1-avarab@gmail.com>
+        <20170513231509.7834-5-avarab@gmail.com>
+Date:   Mon, 15 May 2017 13:57:57 +0900
+In-Reply-To: <20170513231509.7834-5-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sat, 13 May 2017 23:14:44 +0000")
+Message-ID: <xmqq1srqwwbu.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
->         This can be done by the same logic as the existing helper
->         function, wt_status_truncate_message_at_cut_line(), uses,
->         but it wants the caller to pass a strbuf to it.  Because the
->         helper function ignore_non_trailer() used by the command
->         takes a <pointer, length> pair, not a strbuf, steal the
->         logic from wt_status_truncate_message_at_cut_line() to
->         create a new wt_status_strip_scissors() helper function that
->         takes <poiter, length> pair, and make ignore_non_trailer()
->         call it to help "interpret-trailers".  Since there is only
->         one caller of wt_status_truncate_message_at_cut_line() in
->         cmd_commit(), rewrite it to call wt_status_strip_scissors()
->         helper instead and remove the old helper that no longer has
->         any caller.
->
-> The last paragraph would have saved me from getting puzzled.
+> +	echo 2e >expect &&
+> +	# In PCRE \d in [\d] is like saying "0-9", and matches the 2
+> +	# in 2e...
+> +	git -C num_commits log -1 --pretty="tformat:%s" -F -E --perl-regexp --grep="[\d]" >actual &&
+> +	test_cmp expect actual &&
+> +	echo 1d >expect &&
+> +	# ...in POSIX basic & extended it is the same as [d],
+> +	# i.e. "d", which matches 1d, but not and does not match 2e.
 
-And re-reading the above, wt_status_strip_scissors() does not sound
-right to me.  
+s/not and//; I think.
 
-Yes, I am bikeshedding at this point, but names matter.  I prefer to
-keep the distinction between the two clear by not calling the
-cut_line[] array "scissors", but in any case, the new function is
-not about "finding" the cut-line or scissors, in other words,
-wt_status_locate_scissors() is not a good name either (we do not say
-"not found" when there is none).
+> +	git -C num_commits log -1 --pretty="tformat:%s" -F -E --grep="[\d]" >actual &&
+>  	test_cmp expect actual
+>  '
+>  
+> @@ -280,6 +301,77 @@ test_expect_success 'log with grep.patternType configuration and command line' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'log with various grep.patternType configurations & command-lines' '
+> +	git init pattern-type &&
+> +	(
+> +		cd pattern-type &&
+> +		test_commit 1 file A &&
+> +
+> +		# The tagname is overridden here because creating a
+> +		# tag called "(1|2)" as test_commit would otherwise
+> +		# implicitly do would fail on e.g. MINGW.
 
-We are locating the logical end of the commit log message.  It ends
-at "---\n", if exists, in the output of "git format-patch", and it
-ends at the cut-line, if exists, in "commit -v" editor buffer, and
-if there aren't these funny End-Of-Message marks, then we return the
-location of the last byte.  IOW, the helper function you added will
-be the place to add more logic in the future if we ever found the
-need to notice other kinds of "logical end" markers (which may be
-ones we will invent in the future) while accepting a proposed commit
-log message.
+Thanks.
 
-So how about calling it wt_status_locate_end() or something like
-that, without limiting ourselves only to the "scissors"?
+> +		# POSIX extended needs to have | escaped to match it
+> +		# literally, whereas under basic this is the same as
+> +		# (|2), i.e. it would also match "1". This test checks
+> +		# for extended by asserting that it is not matching
+> +		# what basic would match.
+> +		git -c grep.patternType=extended log --pretty=tformat:%s \
+> +			--grep="\|2" >actual.extended &&
+
+Makes sense.
+
+> +		if test_have_prereq PCRE
+> +		then
+> +			# Only PCRE would match [\d]\| with only
+> +			# "(1|2)" due to [\d]. POSIX basic would match
+> +			# both it and "1", and POSIX extended would
+> +			# match neither.
+
+OK.  BRE would match because the other side of "\|" is empty to
+match anything?
+
+> +			git -c grep.patternType=perl log --pretty=tformat:%s \
+> +				--grep="[\d]\|" >actual.perl &&
+> +			test_cmp expect.perl actual.perl
+> +		fi &&
+
