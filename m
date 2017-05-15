@@ -2,97 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6E07201A7
-	for <e@80x24.org>; Mon, 15 May 2017 21:21:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B48CB201A7
+	for <e@80x24.org>; Mon, 15 May 2017 21:38:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758666AbdEOVVk convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 15 May 2017 17:21:40 -0400
-Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:60326 "EHLO
-        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758646AbdEOVVj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 17:21:39 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id D9D9E1000FE;
-        Mon, 15 May 2017 21:21:37 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id 6O0SIWtastmP; Mon, 15 May 2017 21:21:37 +0000 (GMT)
-Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id C7E788002E;
-        Mon, 15 May 2017 21:21:37 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Mon, 15 May 2017 21:21:37 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
- 15.00.1263.000; Mon, 15 May 2017 21:21:37 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Ben Peart' <peartben@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "gitster@pobox.com" <gitster@pobox.com>,
-        "benpeart@microsoft.com" <benpeart@microsoft.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
-        "peff@peff.net" <peff@peff.net>
-Subject: RE: [PATCH v1 2/5] Teach git to optionally utilize a file system
- monitor to speed up detecting new or changed files.
-Thread-Topic: [PATCH v1 2/5] Teach git to optionally utilize a file system
- monitor to speed up detecting new or changed files.
-Thread-Index: AQHSza9xnxP0HlkZREi6FimeFkCaFKH13b4Q
-Date:   Mon, 15 May 2017 21:21:37 +0000
-Message-ID: <d195af80f27e4fea85a96d6435b36139@exmbdft7.ad.twosigma.com>
-References: <20170515191347.1892-1-benpeart@microsoft.com>
- <20170515191347.1892-3-benpeart@microsoft.com>
-In-Reply-To: <20170515191347.1892-3-benpeart@microsoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.11]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1751196AbdEOViE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 17:38:04 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:35267 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751204AbdEOViD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 17:38:03 -0400
+Received: by mail-it0-f54.google.com with SMTP id c15so51486142ith.0
+        for <git@vger.kernel.org>; Mon, 15 May 2017 14:38:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=accedian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=r+806xOiqD+/24NRSriHvb6q7VLvSwblx4KgvUggT7g=;
+        b=sY8ENrVTPVXsIgkMlr1j9QDZbBMuZK0jWtu4Q2gXRHcQEaad4Gb3XuOA+RF/dNcW76
+         CJT0GAWv40uVGGAiVrSHB3r9R+eSOHDzVjCNLGEg34rONaP5mtijedINJh3GnPVyuwxA
+         sU88GV4Wi7zZz835JMiqiO4IgAcOm4vvGKTtbUdm5W/avXhxJ/gocwbwq552Q6Rpe2fo
+         QMjS3nRRPfNRNuD8Hji0axKh6o5pJi8dSUfvxPNDOjQqqIVG1sTK/sqcpzpiyndiPZEK
+         oRU8NoIHXKNCQyUApZYdh0FlXcq/OfpgBkSQmWCYmkOJ0tqlNCsd5a5ANsROmNc9+jnV
+         j1Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=r+806xOiqD+/24NRSriHvb6q7VLvSwblx4KgvUggT7g=;
+        b=XThikZ0bo2bu+YZIn1xcqww96eD6+QxNFxMGo1MErs5eIamwJ0ZLQtkkko4WEcmjwY
+         lC5viRu0XVJ2/eVqneZJf5FWVqR2bawGxwmss1T1bhrU5G/eK8URKqtnwnVk7q/xeNBZ
+         E1EYPkEDWn+7o15LyhTeZZKiF593Z+F8O0grhHKI0ZDFbHEP4kkHbukkxaFCWVEyiMQj
+         cGp7xTWSNi8I+68UVI93dcN7kkEaWpAg3s6XrnvrCoOZHegYzNQ3MtZAMjzzokTPcaRt
+         1qmqfys6/Dbu8eeFt7p/fVzhYSLVuLYhpWLRkj03S+RKqqZN0O/lXCEvQYhOUlS/RB7T
+         D44Q==
+X-Gm-Message-State: AODbwcBI7lxk7kqYfsFakE98faWkRBX7AuioLO2Lxyvk6usBiFKh6bGS
+        aDkzog+r+X9L4aN43A8k1R5Ih6ad5xHiFr7RphBti0h6fqNF0QeNvhkTFGoh07Mskd/OArNtsGE
+        /PxYcHgHQFbwUBA==
+X-Received: by 10.36.25.196 with SMTP id b187mr7460179itb.30.1494884282063;
+ Mon, 15 May 2017 14:38:02 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.79.123.133 with HTTP; Mon, 15 May 2017 14:38:01 -0700 (PDT)
+In-Reply-To: <CAPYmS36e40gb6_2updPKvzo8EJj7+f5npZy9nPDkz1ou8a80_g@mail.gmail.com>
+References: <CAPYmS36e40gb6_2updPKvzo8EJj7+f5npZy9nPDkz1ou8a80_g@mail.gmail.com>
+From:   Jean-Francois Bouchard <jfbouchard@accedian.com>
+Date:   Mon, 15 May 2017 17:38:01 -0400
+Message-ID: <CAPYmS37KTeQDM+iugnEpcxFdPdBxEg3Khg8woptGPE7K-nyjGw@mail.gmail.com>
+Subject: Re: clone vs submodule operation with HTTP cURL
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
-> -----Original Message-----
-> From: Ben Peart [mailto:peartben@gmail.com]
-> Sent: Monday, May 15, 2017 3:14 PM
-> To: git@vger.kernel.org
-> Cc: gitster@pobox.com; benpeart@microsoft.com; pclouds@gmail.com;
-> johannes.schindelin@gmx.de; David Turner <David.Turner@twosigma.com>;
-> peff@peff.net
-> Subject: [PATCH v1 2/5] Teach git to optionally utilize a file system monitor to
-> speed up detecting new or changed files.
+Follow-up to this post.
 
-> @@ -342,6 +344,8 @@ struct index_state {
->  	struct hashmap dir_hash;
->  	unsigned char sha1[20];
->  	struct untracked_cache *untracked;
-> +	time_t last_update;
-> +	struct ewah_bitmap *bitmap;
+I seems that setting GIT_HTTP_PROXY_AUTHMETHOD=3Danyauth is a workaround
+to this issue.
 
-The name 'bitmap' doesn't tell the reader much about what it used for.
+So now the issue is : git is not setting AUTHMETHOD correctly when
+doing a submodule update
 
-> +static int update_istate(const char *name, void *is) {
+Note that a user is needed in the URL string. :@ does not work,
+empty.auth variable does not work.
 
-Rename to mark_file_dirty?  Also why does it take a void pointer?  Or return int (rather than void)?
+Any ideas ?
 
-> +void refresh_by_fsmonitor(struct index_state *istate) {
-> +	static has_run_once = FALSE;
-> +	struct strbuf buffer = STRBUF_INIT;
+Thanks,
+JF
 
-Rename to query_result? Also I think you're leaking it.
+On Thu, May 11, 2017 at 6:04 PM, Jean-Francois Bouchard
+<jfbouchard@accedian.com> wrote:
+> Hello everyone,
+>
+> In our usage of GSSAPI via HTTPS, all our operation with git are very
+> well handle, however, when trying to update a submodule, git seems to
+> be managing cURL differently. cURL drop the ball quickly.
+>
+> Example (No other setup needed on the client) :
+> git clone HTTPrepo -> GET -> 401 -> GET -> 401 -> GET (this time with
+> Authorization: Negotiate)  -> 200 OK
+>
+> git submodule update -> GET -> 401 -> git prompt for username
+>
+> Is the codepath for clone regarding cURL is different than with submodule=
+ ?
+>
+> Using : 2.13.0, I have also tried the emptyAuth stuff with no avail.
+>
+> Thanks,
+> JF
 
+--=20
+
+
+Avis de confidentialit=C3=A9
+
+Les informations contenues dans le pr=C3=A9sent message et dans toute pi=C3=
+=A8ce qui=20
+lui est jointe sont confidentielles et peuvent =C3=AAtre prot=C3=A9g=C3=A9e=
+s par le secret=20
+professionnel. Ces informations sont =C3=A0 l=E2=80=99usage exclusif de son=
+ ou de ses=20
+destinataires. Si vous recevez ce message par erreur, veuillez s=E2=80=99il=
+ vous=20
+plait communiquer imm=C3=A9diatement avec l=E2=80=99exp=C3=A9diteur et en d=
+=C3=A9truire tout=20
+exemplaire. De plus, il vous est strictement interdit de le divulguer, de=
+=20
+le distribuer ou de le reproduire sans l=E2=80=99autorisation de l=E2=80=99=
+exp=C3=A9diteur.=20
+Merci.
+
+Confidentiality notice
+
+This e-mail message and any attachment hereto contain confidential=20
+information which may be privileged and which is intended for the exclusive=
+=20
+use of its addressee(s). If you receive this message in error, please=20
+inform sender immediately and destroy any copy thereof. Furthermore, any=20
+disclosure, distribution or copying of this message and/or any attachment=
+=20
+hereto without the consent of the sender is strictly prohibited. Thank you.
