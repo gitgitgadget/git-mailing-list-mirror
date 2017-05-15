@@ -2,203 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C07B201A7
-	for <e@80x24.org>; Mon, 15 May 2017 19:16:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC311201A7
+	for <e@80x24.org>; Mon, 15 May 2017 19:22:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965216AbdEOTQH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 15:16:07 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:33872 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933582AbdEOTQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 15:16:06 -0400
-Received: by mail-qk0-f195.google.com with SMTP id u75so18975606qka.1
-        for <git@vger.kernel.org>; Mon, 15 May 2017 12:16:06 -0700 (PDT)
+        id S966488AbdEOTWt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 15:22:49 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:35988 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966483AbdEOTWq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 15:22:46 -0400
+Received: by mail-pf0-f169.google.com with SMTP id m17so67793537pfg.3
+        for <git@vger.kernel.org>; Mon, 15 May 2017 12:22:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=G/O6RFbnAfSa3LBG/538L2/mf2+W5bJu9XKAWVvzKAs=;
-        b=R6U2ey/ANw89qRPPn1ppwlSR14dMloNWKpqu/trVjxDaBT5g/YMHpitaDrA3cBXX5L
-         cPIjnYomLYCn0VGZ5OHIB0fpN/mdMX2G9/nGbOOdttwAmoeP7AfqVqn4dSG2WmxCBNvZ
-         WLpCopxbH0UkUYncxLMUv0wo0QZF7wCdMDL3wlBzgZEOZMwvIeVBCKDUaNGeJ/AtaPnr
-         YJt1CF7YJ+ji7pizQrqTZmJDqOsjeBd9CJVipC6YlunFb4hvpj9U968q/SRVK8cC4ynI
-         d5MX6TdhO4IO7UAy6o4cthXlBIx1xmGKPX5Owaa68KLrOeJa0zHKxuyhudpS73wlRj1i
-         VDFA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mICcQp7OGYGd3d8EfifjTSa4BL15czvobta16wPvRzY=;
+        b=PDoImLUvnXZG05KgbDigu6LWAQgZye5B/Tq2zEEisvCYYg+51IpahwbMfaZWGRDk8x
+         uKj6AcrtNdU5phAVAG10Ja+b+zO8wSGJso0iHXYWdNyJmGKT5E8X6LhHNowOSXPIEiWf
+         UipZSFZTP3zJb9cd8fINC7wMXp4gvGNrTrL9+Y96vwcr/4bma+RMGYBzLW9chMuejP38
+         /3BJeD26f/jRmGxLgHoT4hcCJNiAMDKMRem/RhVb4eiAI3GSRgZW1EGwODg6urYOIt/J
+         5TWC6ZJAVbsogNM7zNneHi6KumXH8/M7xsTLXPYdO4TSeeBkJgoaCzR97snaBJ+nLtsG
+         7ntg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=G/O6RFbnAfSa3LBG/538L2/mf2+W5bJu9XKAWVvzKAs=;
-        b=I5Ik7/P+GFKy405Bgb24ysk5GDXg2/6cBDG2gcnvzk6tfKKV5Y/bffkjM/DSZ0JUM5
-         bLuB+MnCBZF9hRTv7fbnhwezV9VuVJwCRnG0twoItPNSOr4QH600uS6wzFKPn2K4ccC5
-         w5oRduUDGOctt71Nb1OXsfzBj2XOaUCBXNj7EYHl04RUkfJwWKigyvhcx2oi+kULGOSs
-         4DkJWO/87/7IDtIV1XlxtyChE6uUM8x3zUV/UQC5IXcyYqxwnc4VdWC/TwSONtF/GH3p
-         cPnRpYTQ6gRaG1zVhU/eOJlGZQU0TCfF7Hu01Er9rT3wGU85uQr9NS6Z3YP29jXtszZz
-         //dQ==
-X-Gm-Message-State: AODbwcALTn+cqD+YCrNqp6txP9Fe5rnrcQK4IEoenGhA44vA0V71AMjH
-        UvY8hqtJhCALiw==
-X-Received: by 10.55.99.87 with SMTP id x84mr6438137qkb.86.1494875765452;
-        Mon, 15 May 2017 12:16:05 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id n19sm9014374qkn.66.2017.05.15.12.16.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 May 2017 12:16:04 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] config: match both symlink & realpath versions in IncludeIf.gitdir:*
-Date:   Mon, 15 May 2017 19:15:52 +0000
-Message-Id: <20170515191552.5193-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.13.0.rc2.291.g57267f2277
-In-Reply-To: <CACBZZX5nchNUb-V3U8FL9fuhk=3t42Qhz4=Wh9Qk_0C=x85UdQ@mail.gmail.com>
-References: <CACBZZX5nchNUb-V3U8FL9fuhk=3t42Qhz4=Wh9Qk_0C=x85UdQ@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mICcQp7OGYGd3d8EfifjTSa4BL15czvobta16wPvRzY=;
+        b=cyK0KYPAHhQFbMpQaVOSSk489Bghlae6f7QeNBHpapmqZ4914vFK93fjIR83EbH7+G
+         c2PpVhce2dl0rpAYtKH/JvWODWS3wOtfOkUUF1f1tR21nrPrGQJs85Q0D32kuN+TLylZ
+         U8gfm7+Ry2oa8Fmb3UK7GCUyeIdnfUNu5mJn/ObSCByl4bD1E232+DYE/I+YDVOjWvPb
+         SQj74ZZ1R2or24lwlXHiXAGKjYKH+P0qivyahpyZ3Sr5RjDV0BSn4bUumbvzcvZTZ1rK
+         GTm0jgsP6jke+gFLjKGPMt4vnSIs7zltNA/IquqDh4Pwpxjsu+40jtx6MqHm7bTspFDT
+         Xpkg==
+X-Gm-Message-State: AODbwcAttO+P/3jY0VxTLwNAwSLsdLOw4q8PLd1E0qos7zXhc4xlv8O3
+        kAy+/UIV+r1NXcdE
+X-Received: by 10.99.113.20 with SMTP id m20mr7719045pgc.120.1494876164999;
+        Mon, 15 May 2017 12:22:44 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:8923:f8dd:f0f0:f864])
+        by smtp.gmail.com with ESMTPSA id l7sm28789206pgn.10.2017.05.15.12.22.43
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 15 May 2017 12:22:44 -0700 (PDT)
+Date:   Mon, 15 May 2017 12:22:42 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com, peff@peff.net,
+        gitster@pobox.com, mhagger@alum.mit.edu, jrnieder@gmail.com
+Subject: Re: [PATCH 03/19] diff.c: drop 'nofirst' from emit_line_0
+Message-ID: <20170515192242.GB79147@google.com>
+References: <20170514040117.25865-1-sbeller@google.com>
+ <20170514040117.25865-4-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170514040117.25865-4-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the conditional inclusion mechanism to support
-e.g. gitdir:~/git_tree/repo where ~/git_tree is a symlink to to
-/mnt/stuff/repo.
+On 05/13, Stefan Beller wrote:
+> In 250f79930d (diff.c: split emit_line() from the first char and the rest
+> of the line, 2009-09-14) we introduced the local variable 'nofirst' that
+> indicates if we have no first sign character. With the given implementation
+> we had to use an extra variable unlike reusing 'first' because the lines
+> first character could be '\0'.
+> 
+> Change the meaning of the 'first' argument to not mean the first character
+> of the line, but rather just containing the sign that is prepended to the
+> line. Refactor emit_line to not include the lines first character, but pass
+> the complete line as well as a '\0' sign, which now serves as an indication
+> not to print a sign.
+> 
+> With this patch other callers hard code the sign (which are '+', '-',
+> ' ' and '\\') such that we do not run into unexpectedly emitting an
+> error-nous '\0'.
+> 
+> The audit of the caller revealed that the sign cannot be '\n' or '\r',
+> so remove that condition for trailing newline or carriage return in the
+> sign; the else part of the condition handles the len==0 perfectly,
+> so we can drop the if/else construct.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  diff.c | 40 +++++++++++++++++-----------------------
+>  1 file changed, 17 insertions(+), 23 deletions(-)
+> 
+> diff --git a/diff.c b/diff.c
+> index c2ed605cd0..4269b8dccf 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -517,33 +517,24 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
+>  }
+>  
+>  static void emit_line_0(struct diff_options *o, const char *set, const char *reset,
+> -			int first, const char *line, int len)
+> +			int sign, const char *line, int len)
+>  {
+>  	int has_trailing_newline, has_trailing_carriage_return;
+> -	int nofirst;
+>  	FILE *file = o->file;
+>  
+>  	fputs(diff_line_prefix(o), file);
+>  
+> -	if (len == 0) {
+> -		has_trailing_newline = (first == '\n');
+> -		has_trailing_carriage_return = (!has_trailing_newline &&
+> -						(first == '\r'));
+> -		nofirst = has_trailing_newline || has_trailing_carriage_return;
+> -	} else {
+> -		has_trailing_newline = (len > 0 && line[len-1] == '\n');
+> -		if (has_trailing_newline)
+> -			len--;
+> -		has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
+> -		if (has_trailing_carriage_return)
+> -			len--;
+> -		nofirst = 0;
+> -	}
+> +	has_trailing_newline = (len > 0 && line[len-1] == '\n');
+> +	if (has_trailing_newline)
+> +		len--;
+> +	has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
+> +	if (has_trailing_carriage_return)
+> +		len--;
 
-This worked in the initial version of this facility[1], but regressed
-later in the series while solving a related bug[2].
+Does the order of newline/carriage return always the same?
 
-Now gitdir: will match against the symlinked
-path (e.g. gitdir:~/git_tree/repo) in addition to the current
-/mnt/stuff/repo path.
+>  
+> -	if (len || !nofirst) {
+> +	if (len || sign) {
+>  		fputs(set, file);
+> -		if (!nofirst)
+> -			fputc(first, file);
+> +		if (sign)
+> +			fputc(sign, file);
+>  		fwrite(line, len, 1, file);
+>  		fputs(reset, file);
+>  	}
+> @@ -556,7 +547,7 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
+>  static void emit_line(struct diff_options *o, const char *set, const char *reset,
+>  		      const char *line, int len)
+>  {
+> -	emit_line_0(o, set, reset, line[0], line+1, len-1);
+> +	emit_line_0(o, set, reset, 0, line, len);
+>  }
+>  
+>  static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
+> @@ -4822,9 +4813,12 @@ void diff_flush(struct diff_options *options)
+>  
+>  	if (output_format & DIFF_FORMAT_PATCH) {
+>  		if (separator) {
+> -			fprintf(options->file, "%s%c",
+> -				diff_line_prefix(options),
+> -				options->line_termination);
+> +			char term[2];
+> +			term[0] = options->line_termination;
+> +			term[1] = '\0';
+> +
+> +			emit_line(options, NULL, NULL,
+> +				  term, 1);
+>  			if (options->stat_sep) {
+>  				/* attach patch instead of inline */
+>  				fputs(options->stat_sep, options->file);
+> -- 
+> 2.13.0.18.g183880de0a
+> 
 
-Since this is already in a release version note in the documentation
-that this behavior changed, so users who expect their configuration to
-work on both v2.13.0 and some future version of git with this fix
-aren't utterly confused.
-
-1. commit 3efd0bedc6 ("config: add conditional include", 2017-03-01)
-2. commit 86f9515708 ("config: resolve symlinks in conditional
-   include's patterns", 2017-04-05)
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-Here's a non-RFC patch to fix this bug.
-
- Documentation/config.txt  | 11 +++++++++++
- config.c                  | 16 ++++++++++++++++
- t/t1305-config-include.sh | 23 +++++++++++++++++++++++
- 3 files changed, 50 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 475e874d51..137502a289 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -140,6 +140,17 @@ A few more notes on matching via `gitdir` and `gitdir/i`:
- 
-  * Symlinks in `$GIT_DIR` are not resolved before matching.
- 
-+ * Both the symlink & realpath versions of paths will be matched
-+   outside of `$GIT_DIR`. E.g. if ~/git is a symlink to
-+   /mnt/storage/git, both `gitdir:~/git` and `gitdir:/mnt/storage/git`
-+   will match.
-+
-+   This was not the case in the initial release of this feature in
-+   v2.13.0, which only matched the realpath version. Configuration
-+   that wants to be compatible with the initial release of this
-+   feature needs to either specify only the realpath version, or both
-+   versions.
-+
-  * Note that "../" is not special and will match literally, which is
-    unlikely what you want.
- 
-diff --git a/config.c b/config.c
-index b4a3205da3..0498746112 100644
---- a/config.c
-+++ b/config.c
-@@ -214,6 +214,7 @@ static int include_by_gitdir(const struct config_options *opts,
- 	struct strbuf pattern = STRBUF_INIT;
- 	int ret = 0, prefix;
- 	const char *git_dir;
-+	int retry = 1;
- 
- 	if (opts->git_dir)
- 		git_dir = opts->git_dir;
-@@ -226,6 +227,7 @@ static int include_by_gitdir(const struct config_options *opts,
- 	strbuf_add(&pattern, cond, cond_len);
- 	prefix = prepare_include_condition_pattern(&pattern);
- 
-+again:
- 	if (prefix < 0)
- 		goto done;
- 
-@@ -245,6 +247,20 @@ static int include_by_gitdir(const struct config_options *opts,
- 	ret = !wildmatch(pattern.buf + prefix, text.buf + prefix,
- 			 icase ? WM_CASEFOLD : 0, NULL);
- 
-+	if (!ret && retry) {
-+		/*
-+		 * We've tried e.g. matching gitdir:~/work, but if
-+		 * ~/work is a symlink to /mnt/storage/work
-+		 * strbuf_realpath() will expand it, so the rule won't
-+		 * match. Let's match against a
-+		 * strbuf_add_absolute_path() version of the path,
-+		 * which'll do the right thing
-+		 */
-+		strbuf_reset(&text);
-+		strbuf_add_absolute_path(&text, git_dir);
-+		retry = 0;
-+		goto again;
-+	}
- done:
- 	strbuf_release(&pattern);
- 	strbuf_release(&text);
-diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-index 933915ec06..d9d2f545a4 100755
---- a/t/t1305-config-include.sh
-+++ b/t/t1305-config-include.sh
-@@ -273,6 +273,29 @@ test_expect_success SYMLINKS 'conditional include, relative path with symlinks'
- 	)
- '
- 
-+test_expect_success SYMLINKS 'conditional include, gitdir matching symlink' '
-+	ln -s foo bar &&
-+	(
-+		cd bar &&
-+		echo "[includeIf \"gitdir:bar/\"]path=bar7" >>.git/config &&
-+		echo "[test]seven=7" >.git/bar7 &&
-+		echo 7 >expect &&
-+		git config test.seven >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success SYMLINKS 'conditional include, gitdir matching symlink, icase' '
-+	(
-+		cd bar &&
-+		echo "[includeIf \"gitdir/i:BAR/\"]path=bar8" >>.git/config &&
-+		echo "[test]eight=8" >.git/bar8 &&
-+		echo 8 >expect &&
-+		git config test.eight >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success 'include cycles are detected' '
- 	cat >.gitconfig <<-\EOF &&
- 	[test]value = gitconfig
 -- 
-2.13.0.rc2.291.g57267f2277
-
+Brandon Williams
