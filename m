@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FF821FAA8
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84F0A1FAA8
 	for <e@80x24.org>; Mon, 15 May 2017 11:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755997AbdEOLGa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 07:06:30 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36330 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755812AbdEOLG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 07:06:29 -0400
-Received: by mail-wm0-f68.google.com with SMTP id u65so27275934wmu.3
-        for <git@vger.kernel.org>; Mon, 15 May 2017 04:06:28 -0700 (PDT)
+        id S933959AbdEOLGe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 07:06:34 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33564 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755812AbdEOLGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 07:06:32 -0400
+Received: by mail-wm0-f66.google.com with SMTP id y10so27473756wmh.0
+        for <git@vger.kernel.org>; Mon, 15 May 2017 04:06:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=E9AKHIGelLK+WFQAHa2cSoPiR+65FEmQ2HmO6fqXqQo=;
-        b=sB3ExLta4si+pzrpk/HybrORAzV5TnkKlMI7j4REzDUAhyJoqf6o8rsS03rp1we2FB
-         KOaPfgqg7/TD19MXpxQMpKKQ73885Ab6J3uJ46rgr00dC6aXvapTe21TH5dbyfu+xEWe
-         mzL6899AwGGE8VCiGgb4HVqZj4bxPPZB+ExDKNePMxefNS4RHfatkiY4aIfj7fyjwjuM
-         J52tAbhd4Bw7mRJy6XXbe8LZ5SovwhboFLKxMYo0cZ+EmpaegJ0e1KB2oPWsRQrIC7Vz
-         wkov33s61N1HvTAf1c+v931pXG69BEooCt7Zxx5o3Yzs8a2axS+A1lLhOSMMQGv0thmz
-         aJhQ==
+        bh=B1m0hGcmeyhw8pLUgOQySd/CQmzdmgxGts9HxNvGjwA=;
+        b=Tf2ekEDWPn0unLBUO9eeAFXp+1eU2gmtb4Q1iMvEhI4otSlfyB06e0+v3XREg4X6V3
+         AZCWJFk+Fqg7TGeI3ci/Iz2IlUjFq0UNwSGu/fdO7yZ4fxeNR5KTas4jYSHC+GFd66Im
+         vsUBR3z4PzNz9Pp38A0g885KawSoLO17m2QPMk0Y1l6aAJ/JHaNK8kqR5SgQbn/8X35b
+         fKYrw6/pBuv/XQlkJbEILYn7Q0vxW9EVDEivdaUSiVGeuqeVSQ05Mp5i+tHF8qz2XTCW
+         RAkDSDQxP8mbGvf0E60M8orjSTMdZ6SwWkj7yOpQZm5SIwTxTbsv3QASC7MYT9lgtR76
+         4dzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=E9AKHIGelLK+WFQAHa2cSoPiR+65FEmQ2HmO6fqXqQo=;
-        b=pmGqPV8hohPXjPJ489NxqMHlS7Vr2jZwOjQcGixgAJaZBY2f+URdyyQE8XKGRABdBN
-         8ld2TlUw1ZWwMwm/0ihG/cwzzxg+LA3jHKJKEa5Slo+/OVQ88rTIaKmqlayPy/Prmyf3
-         TSxWtI9ZWVJJwIR/2uSxDqnkn+m0sUM1felMBqFqQ9HcT+a4OkwtqXCnYk6OX/mRatSK
-         okLkoJX0k063iIxugJAyADzKLSEgwPmYsmtQl/rtIE9hk3rULcCKNIpny5H3Dw00tvnh
-         Z/5dQRV8CJsSeluipjhDGAZRf3VD0BwpV2+zRsK369dI8IakCw2/Dg0J7V55RhtX5iZ3
-         t2wQ==
-X-Gm-Message-State: AODbwcDZUb7PdsreT4BK6jVa37eE++npqEEb7nbywvOFuPoZMJFAvKKP
-        6GBuzpMmszV88g==
-X-Received: by 10.28.178.197 with SMTP id b188mr3721722wmf.139.1494846387676;
-        Mon, 15 May 2017 04:06:27 -0700 (PDT)
+        bh=B1m0hGcmeyhw8pLUgOQySd/CQmzdmgxGts9HxNvGjwA=;
+        b=d27bY5VyKYatPhY52H0dFFoFG3BY0MM/f82/6r8g5pzMusZYUSYMXufsgUYPQVhDqG
+         2g/StuESk9BJaZIMjXCuqdyuNziWLQYDLwKj3+qfWTV1J4G4Z79YJcLQybFJ+RCqHfiy
+         qDi+NaBPgm6ZjCwXtZzIm+plvreS5ivKeGRxHor3JTsVy3YE0XtYHlwdgyw+KcUc2hTN
+         WQOoVsMqRCzvh+Oc4+YvBQ/I7NabctQ9kgku95pAzbx6fFJowMgkI2513EgU0fmPJwCx
+         0tOkL/2B71kiKb9xSYdEFYOOFnndJZF2E4qcL/7WFiOVN2GzpnBkEXmq4YQOHq4QJoF8
+         XPXQ==
+X-Gm-Message-State: AODbwcCBaRZ9DvzQVZTQrk3sOwWvEBI9GPaq32SBoDhQ2y7pdwvR8pbc
+        pq5pwzBJB7DpMA==
+X-Received: by 10.223.150.167 with SMTP id u36mr3816879wrb.184.1494846380751;
+        Mon, 15 May 2017 04:06:20 -0700 (PDT)
 Received: from localhost.localdomain (62-165-238-151.pool.digikabel.hu. [62.165.238.151])
-        by smtp.gmail.com with ESMTPSA id 20sm10363191wmk.17.2017.05.15.04.06.26
+        by smtp.gmail.com with ESMTPSA id 20sm10363191wmk.17.2017.05.15.04.06.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 15 May 2017 04:06:27 -0700 (PDT)
+        Mon, 15 May 2017 04:06:20 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCHv3 2/4] Documentation/clone: document ignored configuration variables
-Date:   Mon, 15 May 2017 13:05:55 +0200
-Message-Id: <20170515110557.11913-3-szeder.dev@gmail.com>
+Subject: [PATCHv3 1/4] clone: respect additional configured fetch refspecs during initial fetch
+Date:   Mon, 15 May 2017 13:05:54 +0200
+Message-Id: <20170515110557.11913-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.13.0.35.g14b6294b1
 In-Reply-To: <20170515110557.11913-1-szeder.dev@gmail.com>
 References: <20170515110557.11913-1-szeder.dev@gmail.com>
@@ -66,34 +66,155 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Due to limitations/bugs in the current implementation, some
-configuration variables specified via 'git clone -c var=val' (or 'git
--c var=val clone') are ignored during the initial fetch and checkout.
+The initial fetch during a clone doesn't transfer refs matching
+additional fetch refspecs given on the command line as configuration
+variables.  This contradicts to the documentation stating that
+configuration variables specified via 'git clone -c <key>=<value> ...'
+"take effect immediately after the repository is initialized, but
+before the remote history is fetched" and the given example
+specifically mentions "adding additional fetch refspecs to the origin
+remote".  Furthermore, one-shot configuration variables specified via
+'git -c <key>=<value> clone ...', though not written to the newly
+created repository's config file, live during the lifetime of the
+'clone' command, including the initial fetch.  This implies that any
+fetch refspecs specified this way should already be taken into account
+during the initial fetch.
 
-Let the users know which configuration variables are known to be
-ignored ('remote.origin.mirror' and 'remote.origin.tagOpt') under the
-documentation of 'git clone -c'.
+The reason is that the initial fetch is not a fully fledged 'git
+fetch' but a bunch of direct calls into the fetch/transport machinery,
+bypassing parts of 'git fetch' that processes configured fetch
+refspecs.  The configured refspecs are, however, read and parsed
+properly when clone calls remote.c:remote_get(), but it never looks at
+the parsed refspecs in the resulting 'struct remote'.
+
+Modify clone to take the configured fetch refspecs into account to
+retrieve all matching refs during the initial fetch.  Note that the
+configuration at that point only includes the fetch refspecs specified
+by the user, but it doesn't include the default fetch refspec, so we
+have to append it manually at the end of the parsed refspecs array.
+
+Add tests to check that refspecs given both via 'git clone -c ...' and
+'git -c ... clone' retrieve all refs matching either the default or
+the additional refspecs, and that it works even when the user
+specifies the remote name via '--origin=<name>'.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- Documentation/git-clone.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+ builtin/clone.c         | 20 +++++++++++++++-----
+ t/t5611-clone-config.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index ec41d3d69..4f1e7d4ba 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -186,6 +186,10 @@ objects from the source repository into a pack in the cloned repository.
- 	values are given for the same key, each value will be written to
- 	the config file. This makes it safe, for example, to add
- 	additional fetch refspecs to the origin remote.
-+	Note that due to limitations of the current implementation some
-+	configuration variables don't take effect during the initial
-+	fetch and checkout.  Configuration variables known to not take
-+	effect are: `remote.<name>.mirror` and `remote.<name>.tagOpt`.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index a35d62293..4144190da 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -520,7 +520,7 @@ static struct ref *find_remote_branch(const struct ref *refs, const char *branch
+ }
  
- --depth <depth>::
- 	Create a 'shallow' clone with a history truncated to the
+ static struct ref *wanted_peer_refs(const struct ref *refs,
+-		struct refspec *refspec)
++		struct refspec *refspec, unsigned int refspec_nr)
+ {
+ 	struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
+ 	struct ref *local_refs = head;
+@@ -541,13 +541,18 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
+ 			warning(_("Could not find remote branch %s to clone."),
+ 				option_branch);
+ 		else {
+-			get_fetch_map(remote_head, refspec, &tail, 0);
++			unsigned int i;
++			for (i = 0; i < refspec_nr; i++)
++				get_fetch_map(remote_head, &refspec[i], &tail, 0);
+ 
+ 			/* if --branch=tag, pull the requested tag explicitly */
+ 			get_fetch_map(remote_head, tag_refspec, &tail, 0);
+ 		}
+-	} else
+-		get_fetch_map(refs, refspec, &tail, 0);
++	} else {
++		unsigned int i;
++		for (i = 0; i < refspec_nr; i++)
++			get_fetch_map(refs, &refspec[i], &tail, 0);
++	}
+ 
+ 	if (!option_mirror && !option_single_branch)
+ 		get_fetch_map(refs, tag_refspec, &tail, 0);
+@@ -989,6 +994,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	strbuf_reset(&value);
+ 
+ 	remote = remote_get(option_origin);
++	REALLOC_ARRAY(remote->fetch, remote->fetch_refspec_nr + 1);
++	memcpy(remote->fetch+remote->fetch_refspec_nr, refspec,
++	       sizeof(*refspec));
++
+ 	transport = transport_get(remote, remote->url[0]);
+ 	transport_set_verbosity(transport, option_verbosity, option_progress);
+ 	transport->family = family;
+@@ -1029,7 +1038,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	refs = transport_get_remote_refs(transport);
+ 
+ 	if (refs) {
+-		mapped_refs = wanted_peer_refs(refs, refspec);
++		mapped_refs = wanted_peer_refs(refs, remote->fetch,
++					       remote->fetch_refspec_nr + 1);
+ 		/*
+ 		 * transport_get_remote_refs() may return refs with null sha-1
+ 		 * in mapped_refs (see struct transport->get_refs_list
+diff --git a/t/t5611-clone-config.sh b/t/t5611-clone-config.sh
+index e4850b778..114b53920 100755
+--- a/t/t5611-clone-config.sh
++++ b/t/t5611-clone-config.sh
+@@ -37,6 +37,50 @@ test_expect_success 'clone -c config is available during clone' '
+ 	test_cmp expect child/file
+ '
+ 
++test_expect_success 'clone -c remote.origin.fetch=<refspec> works' '
++	rm -rf child &&
++	git update-ref refs/grab/it refs/heads/master &&
++	git update-ref refs/leave/out refs/heads/master &&
++	git clone -c "remote.origin.fetch=+refs/grab/*:refs/grab/*" . child &&
++	git -C child for-each-ref --format="%(refname)" >actual &&
++	cat >expect <<-EOF &&
++	refs/grab/it
++	refs/heads/master
++	refs/remotes/origin/HEAD
++	refs/remotes/origin/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'git -c remote.origin.fetch=<refspec> clone works' '
++	rm -rf child &&
++	git -c "remote.origin.fetch=+refs/grab/*:refs/grab/*" clone . child &&
++	git -C child for-each-ref --format="%(refname)" >actual &&
++	cat >expect <<-EOF &&
++	refs/grab/it
++	refs/heads/master
++	refs/remotes/origin/HEAD
++	refs/remotes/origin/master
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'clone -c remote.<remote>.fetch=<refspec> --origin=<name>' '
++	rm -rf child &&
++	git clone --origin=upstream \
++		-c "remote.upstream.fetch=+refs/grab/*:refs/grab/*" \
++		-c "remote.origin.fetch=+refs/leave/*:refs/leave/*" \
++		. child &&
++	git -C child for-each-ref --format="%(refname)" >actual &&
++	cat >expect <<-EOF &&
++	refs/grab/it
++	refs/heads/master
++	refs/remotes/upstream/HEAD
++	refs/remotes/upstream/master
++	EOF
++	test_cmp expect actual
++'
++
+ # Tests for the hidden file attribute on windows
+ is_hidden () {
+ 	# Use the output of `attrib`, ignore the absolute path
 -- 
 2.13.0.35.g14b6294b1
 
