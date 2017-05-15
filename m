@@ -2,224 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A7E0201A7
-	for <e@80x24.org>; Mon, 15 May 2017 17:32:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 902A6201A7
+	for <e@80x24.org>; Mon, 15 May 2017 17:38:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758426AbdEORce (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 13:32:34 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:34376 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750935AbdEORcc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 13:32:32 -0400
-Received: by mail-pg0-f54.google.com with SMTP id u28so63402070pgn.1
-        for <git@vger.kernel.org>; Mon, 15 May 2017 10:32:32 -0700 (PDT)
+        id S1754235AbdEORih (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 13:38:37 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:36205 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751163AbdEORig (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 13:38:36 -0400
+Received: by mail-io0-f171.google.com with SMTP id o12so78418254iod.3
+        for <git@vger.kernel.org>; Mon, 15 May 2017 10:38:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hOMto+hxe+yGzwSabLU/HcrQ/qmTJcIId1reHcL1eyU=;
-        b=U2onsl1iM5Xt9ir2OaHI3fLqn4R3V+VD8WGFj5V5YSCbVm0IC5aZareeJuxJQqcEEF
-         n/eATo9G6UbMbfRzKPyisuenI7ZUjdHkL+qEQ77KmThFyT5zElBNgkEzrL8l8Nt1f/PV
-         r5N+4yFPVnkQssTe5CqQEvsyODmO+HQzoL0nNiqdYhU941WEvSUjuiqdFS0ZgvCR0g1e
-         yTDwQEw2OVWKRRtJrgswvyfWIuz31YZZ9ZulaaAnA8eCH5sot2YGU7Cq4dcsRbd6IFOB
-         abFXecPjWwvFR9wOfa1QcvoX+U1a5nreY7Ts7y8/PA41vBR3Po7bkH2caROANSGobbUy
-         Z1kA==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Rk/d3s+elox93+vt5Wki1n1qDaW8+9jDfQkBOli2jMQ=;
+        b=MdMd9Eff3YFXjLdVYnfobwwJgUtIGzVWJMddXELHwHItceLnWnt6rlCxTM/W1a4DKl
+         CLWn2rhkG3pqjm4XGT0FCgjliwNKzxADF4Iqs65kwXNZkSQqN3PYl/EgpqGVfyiUxNXd
+         M9XfDJS5ZfcO7pfJDTH19Sn8wILzR3bX4T9am99b4/uUQvY1L+zdKcgR9uXFp44X7e2h
+         fUrH9EeLDl9YHkNCmV66TwT8s5cE/8jG7k3PShWs3f/rsDwwjnYDYr/O658WtDyI+9dL
+         BMkk26nDbmq1JuVD5XgpkCCSM0J1YX0jhBDgMoF3AIXm+Z2/SkdQa6ulkX1VrH4t9Fo4
+         XQ6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=hOMto+hxe+yGzwSabLU/HcrQ/qmTJcIId1reHcL1eyU=;
-        b=n+CRY3MZllPtMtBsVUHlauTaeHCnu84QRO/J7RRNijA+PzNcKS2SG7XDjfNgBV8WDu
-         o+0YwSUKeTZsGN92KN2ffm+NRsPoNmoBE8MVMCwijN4Zrf6ks9eE9K8gGLSLcGCLtwEB
-         h9v6JDqclyK1f+PpTv67JoyMe9swNqx1ZABT2Aze/UF8mJK96nOnpPBdvzHC3EfgjV1D
-         P6rWAXWAgE+0Y3IfYRcWNENjjynTV59hFPCIUSc3SbT4JEZbCJ1ipQ+CwCgln811kQ6I
-         rvYV/hT2Wc7V+EmgZIfARY2J70V4OJDPgwWLvtUHrhBW8GbymHHkeCcf5Zew3FVICTeZ
-         n4hA==
-X-Gm-Message-State: AODbwcD4KavwIUhep/J/CGQJFX9NTRJrhfKxvo3KVgSEzJTyFA42nkFM
-        x9OtL/2Pyeme2Wjp
-X-Received: by 10.99.173.71 with SMTP id y7mr7261533pgo.3.1494869551738;
-        Mon, 15 May 2017 10:32:31 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id k192sm21886833pgc.31.2017.05.15.10.32.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 15 May 2017 10:32:30 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
-        peff@peff.net, gitster@pobox.com
-Subject: [PATCH v7] fetch-pack: always allow fetching of literal SHA1s
-Date:   Mon, 15 May 2017 10:32:20 -0700
-Message-Id: <20170515173220.13103-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.13.0.rc2.291.g57267f2277-goog
-In-Reply-To: <20170509182042.28389-1-jonathantanmy@google.com>
-References: <20170509182042.28389-1-jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Rk/d3s+elox93+vt5Wki1n1qDaW8+9jDfQkBOli2jMQ=;
+        b=EU8dshg2rI+hEDi9sQdLMt0lfDV2uhIjXVfK5FtkxcBDnntnTSI5DbRDjEr4RiqyOi
+         zpyYNfqzDwF7nbbum3tgTC1d5377aJ5bIB5TSzbiflaKuYFaXLmwmysxKb5NB2MYexVU
+         eNOg3zHp2pREXmsNCIP/BNsaGTa6IBvKPcp/UOzn4DPqUplfLQoQUqy/NvQzg3KxsqtI
+         09AJsctfL45ILM1MN5M8/PhFxP+qCud6JBBjHXPQJyErpBTRQC+V1Gz+maZzTNIUZNEQ
+         /TmpPx357IORZYf+HWQ0RQZudxgnNZwyJN4IQq6MBNpgIh1FnSIZ6tKQTMcojGuJ05W5
+         JteA==
+X-Gm-Message-State: AODbwcAC6WV/3jHI3cI0YI5e8ULLhM/Atl52X8QgnhgQHbMOvhzhk1AL
+        E4FTWZItFebfA0pXptmVJ7gMCXmOOw==
+X-Received: by 10.107.178.12 with SMTP id b12mr6357440iof.50.1494869915687;
+ Mon, 15 May 2017 10:38:35 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.8.220 with HTTP; Mon, 15 May 2017 10:38:14 -0700 (PDT)
+In-Reply-To: <xmqq1srqwwbu.fsf@gitster.mtv.corp.google.com>
+References: <20170513231509.7834-1-avarab@gmail.com> <20170513231509.7834-5-avarab@gmail.com>
+ <xmqq1srqwwbu.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 15 May 2017 19:38:14 +0200
+Message-ID: <CACBZZX4EfWCD3rwQbRJ1TokDkH=7EfoepMd_ipHr5NSv9kWOJg@mail.gmail.com>
+Subject: Re: [PATCH v2 04/29] log: add exhaustive tests for pattern style
+ options & config
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fetch-pack, when fetching a literal SHA-1 from a server that is not
-configured with uploadpack.allowtipsha1inwant (or similar), always
-returns an error message of the form "Server does not allow request for
-unadvertised object %s". However, it is sometimes the case that such
-object is advertised. This situation would occur, for example, if a user
-or a script was provided a SHA-1 instead of a branch or tag name for
-fetching, and wanted to invoke "git fetch" or "git fetch-pack" using
-that SHA-1.
+On Mon, May 15, 2017 at 6:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> +     echo 2e >expect &&
+>> +     # In PCRE \d in [\d] is like saying "0-9", and matches the 2
+>> +     # in 2e...
+>> +     git -C num_commits log -1 --pretty=3D"tformat:%s" -F -E --perl-reg=
+exp --grep=3D"[\d]" >actual &&
+>> +     test_cmp expect actual &&
+>> +     echo 1d >expect &&
+>> +     # ...in POSIX basic & extended it is the same as [d],
+>> +     # i.e. "d", which matches 1d, but not and does not match 2e.
+>
+> s/not and//; I think.
 
-Teach fetch-pack to also check the SHA-1s of the refs in the received
-ref advertisement if a literal SHA-1 was given by the user.
+Will fix.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
+>> +     git -C num_commits log -1 --pretty=3D"tformat:%s" -F -E --grep=3D"=
+[\d]" >actual &&
+>>       test_cmp expect actual
+>>  '
+>>
+>> @@ -280,6 +301,77 @@ test_expect_success 'log with grep.patternType conf=
+iguration and command line' '
+>>       test_cmp expect actual
+>>  '
+>>
+>> +test_expect_success 'log with various grep.patternType configurations &=
+ command-lines' '
+>> +     git init pattern-type &&
+>> +     (
+>> +             cd pattern-type &&
+>> +             test_commit 1 file A &&
+>> +
+>> +             # The tagname is overridden here because creating a
+>> +             # tag called "(1|2)" as test_commit would otherwise
+>> +             # implicitly do would fail on e.g. MINGW.
+>
+> Thanks.
+>
+>> +             # POSIX extended needs to have | escaped to match it
+>> +             # literally, whereas under basic this is the same as
+>> +             # (|2), i.e. it would also match "1". This test checks
+>> +             # for extended by asserting that it is not matching
+>> +             # what basic would match.
+>> +             git -c grep.patternType=3Dextended log --pretty=3Dtformat:=
+%s \
+>> +                     --grep=3D"\|2" >actual.extended &&
+>
+> Makes sense.
+>
+>> +             if test_have_prereq PCRE
+>> +             then
+>> +                     # Only PCRE would match [\d]\| with only
+>> +                     # "(1|2)" due to [\d]. POSIX basic would match
+>> +                     # both it and "1", and POSIX extended would
+>> +                     # match neither.
+>
+> OK.  BRE would match because the other side of "\|" is empty to
+> match anything?
 
-OK, one combined function (for lazy initialization and checking
-containment in the oidset) with comment it is.
+Yes. I'll clarify this. It's not just a POSIX basic feature. The same
+is true of extended and perl. E.g.:
 
-Change from v6: changed back to "tip_oids_contain", and included Peff's
-comment.
----
- fetch-pack.c          | 40 ++++++++++++++++++++++++++++++++++++++--
- t/t5500-fetch-pack.sh | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 73 insertions(+), 2 deletions(-)
+    git grep [-E|-P] 'foo|bar'
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index afb8b0502..703e7ec78 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -15,6 +15,7 @@
- #include "version.h"
- #include "prio-queue.h"
- #include "sha1-array.h"
-+#include "oidset.h"
- 
- static int transfer_unpack_limit = -1;
- static int fetch_unpack_limit = -1;
-@@ -592,13 +593,38 @@ static void mark_recent_complete_commits(struct fetch_pack_args *args,
- 	}
- }
- 
-+static void add_refs_to_oidset(struct oidset *oids, struct ref *refs)
-+{
-+	for (; refs; refs = refs->next)
-+		oidset_insert(oids, &refs->old_oid);
-+}
-+
-+static int tip_oids_contain(struct oidset *tip_oids,
-+			    struct ref *unmatched, struct ref *newlist,
-+			    const struct object_id *id)
-+{
-+	/*
-+	 * Note that this only looks at the ref lists the first time it's
-+	 * called. This works out in filter_refs() because even though it may
-+	 * add to "newlist" between calls, the additions will always be for
-+	 * oids that are already in the set.
-+	 */
-+	if (!tip_oids->map.tablesize) {
-+		add_refs_to_oidset(tip_oids, unmatched);
-+		add_refs_to_oidset(tip_oids, newlist);
-+	}
-+	return oidset_contains(tip_oids, id);
-+}
-+
- static void filter_refs(struct fetch_pack_args *args,
- 			struct ref **refs,
- 			struct ref **sought, int nr_sought)
- {
- 	struct ref *newlist = NULL;
- 	struct ref **newtail = &newlist;
-+	struct ref *unmatched = NULL;
- 	struct ref *ref, *next;
-+	struct oidset tip_oids = OIDSET_INIT;
- 	int i;
- 
- 	i = 0;
-@@ -631,7 +657,8 @@ static void filter_refs(struct fetch_pack_args *args,
- 			ref->next = NULL;
- 			newtail = &ref->next;
- 		} else {
--			free(ref);
-+			ref->next = unmatched;
-+			unmatched = ref;
- 		}
- 	}
- 
-@@ -648,7 +675,9 @@ static void filter_refs(struct fetch_pack_args *args,
- 			continue;
- 
- 		if ((allow_unadvertised_object_request &
--		    (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1))) {
-+		     (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1)) ||
-+		    tip_oids_contain(&tip_oids, unmatched, newlist,
-+				     &ref->old_oid)) {
- 			ref->match_status = REF_MATCHED;
- 			*newtail = copy_ref(ref);
- 			newtail = &(*newtail)->next;
-@@ -656,6 +685,13 @@ static void filter_refs(struct fetch_pack_args *args,
- 			ref->match_status = REF_UNADVERTISED_NOT_ALLOWED;
- 		}
- 	}
-+
-+	oidset_clear(&tip_oids);
-+	for (ref = unmatched; ref; ref = next) {
-+		next = ref->next;
-+		free(ref);
-+	}
-+
- 	*refs = newlist;
- }
- 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index b5865b385..80a1a3239 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -547,6 +547,41 @@ test_expect_success 'fetch-pack can fetch a raw sha1' '
- 	git fetch-pack hidden $(git -C hidden rev-parse refs/hidden/one)
- '
- 
-+test_expect_success 'fetch-pack can fetch a raw sha1 that is advertised as a ref' '
-+	rm -rf server client &&
-+	git init server &&
-+	test_commit -C server 1 &&
-+
-+	git init client &&
-+	git -C client fetch-pack ../server \
-+		$(git -C server rev-parse refs/heads/master)
-+'
-+
-+test_expect_success 'fetch-pack can fetch a raw sha1 overlapping a named ref' '
-+	rm -rf server client &&
-+	git init server &&
-+	test_commit -C server 1 &&
-+	test_commit -C server 2 &&
-+
-+	git init client &&
-+	git -C client fetch-pack ../server \
-+		$(git -C server rev-parse refs/tags/1) refs/tags/1
-+'
-+
-+test_expect_success 'fetch-pack cannot fetch a raw sha1 that is not advertised as a ref' '
-+	rm -rf server &&
-+
-+	git init server &&
-+	test_commit -C server 5 &&
-+	git -C server tag -d 5 &&
-+	test_commit -C server 6 &&
-+
-+	git init client &&
-+	test_must_fail git -C client fetch-pack ../server \
-+		$(git -C server rev-parse refs/heads/master^) 2>err &&
-+	test_i18ngrep "Server does not allow request for unadvertised object" err
-+'
-+
- check_prot_path () {
- 	cat >expected <<-EOF &&
- 	Diag: url=$1
--- 
-2.13.0.rc2.291.g57267f2277-goog
+Both match the same as:
 
+    git grep [-E|-P] '(foo|bar)'
+
+>> +                     git -c grep.patternType=3Dperl log --pretty=3Dtfor=
+mat:%s \
+>> +                             --grep=3D"[\d]\|" >actual.perl &&
+>> +                     test_cmp expect.perl actual.perl
+>> +             fi &&
+>
