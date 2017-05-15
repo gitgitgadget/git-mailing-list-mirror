@@ -6,60 +6,59 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D92F201A4
-	for <e@80x24.org>; Mon, 15 May 2017 04:02:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E6E8201A4
+	for <e@80x24.org>; Mon, 15 May 2017 04:23:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756885AbdEOEC2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 00:02:28 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35219 "EHLO
+        id S1752646AbdEOEXb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 00:23:31 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35902 "EHLO
         mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751536AbdEOEC1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 00:02:27 -0400
-Received: by mail-pg0-f66.google.com with SMTP id i63so15289895pgd.2
-        for <git@vger.kernel.org>; Sun, 14 May 2017 21:02:27 -0700 (PDT)
+        with ESMTP id S1751924AbdEOEXa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 00:23:30 -0400
+Received: by mail-pg0-f66.google.com with SMTP id h64so10608286pge.3
+        for <git@vger.kernel.org>; Sun, 14 May 2017 21:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ADiHmej6HMWozsWt6vkgGTb/+fm5kn4P0PK+ise0B8g=;
-        b=KrvmXGacJHE6mzKwlO1WCvQGK5pujUUshFOVoX1A7vKLipKKD9cLTogoV56K/wP4YN
-         KYyHu3p51qCN5b0SeqKjTh0LS+1eLzVsk1MeDg3HlK1ugBdcFYsjMwkDRFb9YwwO4UEY
-         lY6Rsv++GM8LwffnDHZLMcJdvZEVqq7jR1h7ZIB75FW9RDyBFzNkwkpNADSRQLpm9qro
-         b6YW2SX040kTjP0F12iTn39vyZPsCBcbo8wi5RsdtfrcZXw7RmOom24QM31PQl/WxerR
-         6mQ0PM6JitTTwgJYNcc9PvXEITMEweYXZ1kkHb27uMh6RMZzcAWGS5bjCwtYUirjucuF
-         13pQ==
+        bh=FjpdrHzJ4xnQnWNxERtm6kipVegYGeHIKVU3vj9nLts=;
+        b=gYBDsbbgpNxjvnEIPeowkauJI2LpEAgBb/umP2mjVI0dv66iAYd6T7BUi4eOqJD2AZ
+         e0NKkXeKgUm8jud2HibThNC4DRpclftZXIadObKzo16hUJGnoptI4dLHx9aDf+37ujFj
+         o8wmsscf2kJcoiTv/87+bE05xLFs9VzcWUhzDAOLT5qBZOcVYAaIhYJ24pHJPDupu09P
+         l4Bfvm+BMsXfr3GiUt6rdHiIEsbtx7NW1SxyYAN9djsE5enZd+0+mXKjGrtXq6lEJABT
+         hg5IbfPCVcqKhoM30DYBrVt+6uP8gots/VNW/Y74W81+IS5tIOIy9wkbCo1iGCzVy/9t
+         swSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ADiHmej6HMWozsWt6vkgGTb/+fm5kn4P0PK+ise0B8g=;
-        b=SoGEy+7vJUCmWVxn/hl9LyIU2Hua0Zf28oc9WTWy1EK1idmMD3QvvlKiJ4lhfUrsAJ
-         NA6fdA27Ij39al8Ysb0/hE7I1HQYe0nGlqpdDJM9FZHBL93xqb7K9Li6ONmTm5tv+yXs
-         1f9oA0dx4IbVIGoiuUsPPIK3xTnP8YE5tXw+3VdTmgSWvMQn47BsgaTcHJLZCqq7YZ19
-         lrh+OVnPQhDLrTlm6op5EkrpDbg/Vdpe3YN+P9jUiui0mSq6HtLJXotKRE7whwQJYbEK
-         wAEaJ2l9toOm+e+gJCGpe3YrO2RWhqhtDm2OQP+wWNpRb0ej1P7tDkuNqcRMBj9MCLrx
-         zBrQ==
-X-Gm-Message-State: AODbwcDLjpGvVEWx2x2WG2Yv7nOrOZLo+0KYJgH24yku4YEXN81kK9U1
-        zgPwF6LZzHLVrw==
-X-Received: by 10.98.62.86 with SMTP id l83mr4149579pfa.114.1494820947083;
-        Sun, 14 May 2017 21:02:27 -0700 (PDT)
+        bh=FjpdrHzJ4xnQnWNxERtm6kipVegYGeHIKVU3vj9nLts=;
+        b=Ho0qDjUDHk8MAOSTE6lmLN0DMb7OsK+Bl9bPgpsiiMaEo/lrsi/3cpDJNGIVCND5H1
+         3JB7Lp58OLafQTkiwoKj0XKrcrNYR5VxLuBRMVAdpfEqV3h4OYd+PI4wJkdQx2vvPiuR
+         jmUFLrG3nA6u0v5hrYfPZJcquNiRc4P0eYIj3oduF1G/hbPkVT3jW3MLyY2Yh6Cn+D6q
+         Za6hf2kPiGlPoLywNn9viF9bAblt9q0vga3Y1p4t0DqhB8Sxf0vC130U8mSkAvBBrepR
+         JMdY6s7zFSFdoxsdozqErCN26tJ1A9FHgUaw5vk09spaq60hcreS3O1LvAaGxf99sRnC
+         WtUg==
+X-Gm-Message-State: AODbwcA3G58CiFHXiMWaYzqYzlTi1Rcb9M2JEgsx1SLEbm/2OBuyNYKQ
+        2E9Zs0VPpfky0A==
+X-Received: by 10.84.233.200 with SMTP id m8mr5681285pln.118.1494822209441;
+        Sun, 14 May 2017 21:23:29 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b170:f9ed:5f25:7ab5])
-        by smtp.gmail.com with ESMTPSA id m8sm16103199pga.34.2017.05.14.21.02.26
+        by smtp.gmail.com with ESMTPSA id d3sm16745658pfb.110.2017.05.14.21.23.27
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 14 May 2017 21:02:26 -0700 (PDT)
+        Sun, 14 May 2017 21:23:27 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
-        benpeart@microsoft.com, christian.couder@gmail.com,
-        larsxschneider@gmail.com
-Subject: Re: [PATCH v7 04/10] convert: move packet_write_line() into pkt-line as packet_writel()
-References: <20170505152802.6724-1-benpeart@microsoft.com>
-        <20170505152802.6724-5-benpeart@microsoft.com>
-        <20170513090457.s6gmqjdyrj4osmck@sigill.intra.peff.net>
-Date:   Mon, 15 May 2017 13:02:25 +0900
-In-Reply-To: <20170513090457.s6gmqjdyrj4osmck@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 13 May 2017 05:04:58 -0400")
-Message-ID: <xmqqbmquwywe.fsf@gitster.mtv.corp.google.com>
+To:     Brian Malehorn <bmalehorn@gmail.com>
+Cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: [PATCH] interpret-trailers: obey scissors lines
+References: <20170514035652.rn5npxxflku6s5k4@sigill.intra.peff.net>
+        <20170514083349.24979-1-bmalehorn@gmail.com>
+        <20170514083349.24979-2-bmalehorn@gmail.com>
+        <xmqqk25iwz7l.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 15 May 2017 13:23:26 +0900
+In-Reply-To: <xmqqk25iwz7l.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 15 May 2017 12:55:42 +0900")
+Message-ID: <xmqq7f1iwxxd.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,42 +67,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> This isn't a new problem, but I noticed that this function should
-> probably get annotated to describe its interface.
+>         This can be done by the same logic as the existing helper
+>         function, wt_status_truncate_message_at_cut_line(), uses,
+>         but it wants the caller to pass a strbuf to it.  Because the
+>         helper function ignore_non_trailer() used by the command
+>         takes a <pointer, length> pair, not a strbuf, steal the
+>         logic from wt_status_truncate_message_at_cut_line() to
+>         create a new wt_status_strip_scissors() helper function that
+>         takes <poiter, length> pair, and make ignore_non_trailer()
+>         call it to help "interpret-trailers".  Since there is only
+>         one caller of wt_status_truncate_message_at_cut_line() in
+>         cmd_commit(), rewrite it to call wt_status_strip_scissors()
+>         helper instead and remove the old helper that no longer has
+>         any caller.
 >
-> Junio, can you pick up the patch below on top of Ben's series (or I'd be
-> fine if it were squashed into this patch)?
+> The last paragraph would have saved me from getting puzzled.
 
-Surely.  Thanks for a careful review.
+And re-reading the above, wt_status_strip_scissors() does not sound
+right to me.  
 
->
-> -- >8 --
-> Subject: [PATCH] pkt-line: annotate packet_writel with LAST_ARG_MUST_BE_NULL
->
-> packet_writel() takes a variable-sized list and reads to
-> the first NULL. Let's let the compiler know so that it can
-> help us catch mistakes in the callers.
->
-> This should have been annotated similarly when it was a
-> static function, but it's doubly important now that the
-> function is available to the whole code-base.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  pkt-line.h | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/pkt-line.h b/pkt-line.h
-> index b2965869a..450183b64 100644
-> --- a/pkt-line.h
-> +++ b/pkt-line.h
-> @@ -25,6 +25,7 @@ void packet_buf_flush(struct strbuf *buf);
->  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
->  int packet_flush_gently(int fd);
->  int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-> +LAST_ARG_MUST_BE_NULL
->  int packet_writel(int fd, const char *line, ...);
->  int write_packetized_from_fd(int fd_in, int fd_out);
->  int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+Yes, I am bikeshedding at this point, but names matter.  I prefer to
+keep the distinction between the two clear by not calling the
+cut_line[] array "scissors", but in any case, the new function is
+not about "finding" the cut-line or scissors, in other words,
+wt_status_locate_scissors() is not a good name either (we do not say
+"not found" when there is none).
+
+We are locating the logical end of the commit log message.  It ends
+at "---\n", if exists, in the output of "git format-patch", and it
+ends at the cut-line, if exists, in "commit -v" editor buffer, and
+if there aren't these funny End-Of-Message marks, then we return the
+location of the last byte.  IOW, the helper function you added will
+be the place to add more logic in the future if we ever found the
+need to notice other kinds of "logical end" markers (which may be
+ones we will invent in the future) while accepting a proposed commit
+log message.
+
+So how about calling it wt_status_locate_end() or something like
+that, without limiting ourselves only to the "scissors"?
