@@ -2,85 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EDED201A7
-	for <e@80x24.org>; Mon, 15 May 2017 14:26:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E94B8201A7
+	for <e@80x24.org>; Mon, 15 May 2017 15:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934529AbdEOO0r (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 10:26:47 -0400
-Received: from smtp154.dfw.emailsrvr.com ([67.192.241.154]:57676 "EHLO
-        smtp154.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933430AbdEOO0q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 10:26:46 -0400
-X-Greylist: delayed 391 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 May 2017 10:26:46 EDT
-Received: from smtp32.relay.dfw1a.emailsrvr.com (localhost [127.0.0.1])
-        by smtp32.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id 07A26A02FA;
-        Mon, 15 May 2017 10:20:15 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp32.relay.dfw1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 8A099A0304;
-        Mon, 15 May 2017 10:20:14 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Mon, 15 May 2017 10:20:15 -0400
-Subject: Re: [PATCH] tag: duplicate mention of --contains should mention
- --no-contains
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <20170515122331.17348-1-avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <28535adf-5f8f-a43d-82e9-2ada398637e2@xiplink.com>
-Date:   Mon, 15 May 2017 10:20:13 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S965496AbdEOPB3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 11:01:29 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:33806 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934147AbdEOPB2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 11:01:28 -0400
+Received: by mail-it0-f67.google.com with SMTP id d68so1710240ita.1
+        for <git@vger.kernel.org>; Mon, 15 May 2017 08:01:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=dR4rZZvWupbUED3IiJkBl4TUz98sR/2SJxHPC2fXIkU=;
+        b=HZu7B3b+TuSr1pz2ID7iWzcA/9utZbQDepWf8ZDGETx4evxCnnxseSi3S+YCuPOdIj
+         60zLq+nRDt4M8UuJyXFwz+elinAo46Sde94O+AIjMSzIpHkfmnIbL7Zn/HJRPtJlvogd
+         0vUKUP15+dmUwcnamEmmNMisZiAA0CtjdlHdIlkX5Q5h6ER52kX+Wyn7wMYUhJLMf2ll
+         Tb4GuP5x28g7aQBBzgRBkCuYoOayyK+b105gTesiAZYIUU/4B+ugcFm89TV60w47q7ga
+         DiU6/e5wF2L1mQb5CdV3RWUp6RIv/hHMnbfHxVlgUncg1gOxtD6Ht9KWXDZVapw+MbYE
+         +Yrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=dR4rZZvWupbUED3IiJkBl4TUz98sR/2SJxHPC2fXIkU=;
+        b=pzB6Su5Unl3Pm77nXoFs/azsTfGpoCpoGHNvTApJtQyA1bHpjdMMsZPCuvB5CxsF7Q
+         x56CPw+YAeul8x2SefDDKuz7LmrqRc/uhQrJz6kvtEoBhK8fzLkWzounYdEi3gFBNxiq
+         mK51WyaKW+vGpTMiuckyTgwRG2XExxHNfdqetx5Naa5wkx0xdYBSGFgucYoEWmp9Gy1F
+         oJYVAG+JzY0zTcWMTrO2Im4wOZYy5pcEmryUw1w9TqwgOZIpL7VWDPDxz4EkiYigD3Vo
+         q21QDy+nFlpuaE+H0g7Klx7GX50lmvjrIIgSNmbp3LJgAAP5kROCXSrIwoh6uF7n/c7T
+         T0Kg==
+X-Gm-Message-State: AODbwcAWaAU5DX7R3HWh178r7hXqu/7/rG5nNnqclsW+H1aCE2x6NUra
+        rG0sV+Cxicyw3kb3Yv4qOe/vHmPCAg==
+X-Received: by 10.36.89.207 with SMTP id p198mr5712375itb.71.1494860487848;
+ Mon, 15 May 2017 08:01:27 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170515122331.17348-1-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Received: by 10.107.8.220 with HTTP; Mon, 15 May 2017 08:01:07 -0700 (PDT)
+In-Reply-To: <28535adf-5f8f-a43d-82e9-2ada398637e2@xiplink.com>
+References: <20170515122331.17348-1-avarab@gmail.com> <28535adf-5f8f-a43d-82e9-2ada398637e2@xiplink.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 15 May 2017 17:01:07 +0200
+Message-ID: <CACBZZX4VDphESS1bt8w4A2GGCnXgj3DRwQLtC+o2ngTQz9=CZA@mail.gmail.com>
+Subject: Re: [PATCH] tag: duplicate mention of --contains should mention --no-contains
+To:     Marc Branchaud <marcnarc@xiplink.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-05-15 08:23 AM, Ævar Arnfjörð Bjarmason wrote:
-> Fix a duplicate mention of --contains in the SYNOPSIS to mention
-> --no-contains.
+On Mon, May 15, 2017 at 4:20 PM, Marc Branchaud <marcnarc@xiplink.com> wrot=
+e:
+> On 2017-05-15 08:23 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>> Fix a duplicate mention of --contains in the SYNOPSIS to mention
+>> --no-contains.
+>>
+>> This fixes an error introduced in my commit ac3f5a3468 ("ref-filter:
+>> add --no-contains option to tag/branch/for-each-ref", 2017-03-24).
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  Documentation/git-tag.txt | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+>> index f8a0b787f4..1eb15afa1c 100644
+>> --- a/Documentation/git-tag.txt
+>> +++ b/Documentation/git-tag.txt
+>> @@ -12,7 +12,7 @@ SYNOPSIS
+>>  'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>]
+>>         <tagname> [<commit> | <object>]
+>>  'git tag' -d <tagname>...
+>> -'git tag' [-n[<num>]] -l [--contains <commit>] [--contains <commit>]
+>> +'git tag' [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
 >
-> This fixes an error introduced in my commit ac3f5a3468 ("ref-filter:
-> add --no-contains option to tag/branch/for-each-ref", 2017-03-24).
 >
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  Documentation/git-tag.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> I think
 >
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index f8a0b787f4..1eb15afa1c 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -12,7 +12,7 @@ SYNOPSIS
->  'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>]
->  	<tagname> [<commit> | <object>]
->  'git tag' -d <tagname>...
-> -'git tag' [-n[<num>]] -l [--contains <commit>] [--contains <commit>]
-> +'git tag' [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
+>         [--[no-]contains <commit>]
+>
+> is the usual pattern...
+>
+>>         [--points-at <object>] [--column[=3D<options>] | --no-column]
+>>         [--create-reflog] [--sort=3D<key>] [--format=3D<format>]
+>>         [--[no-]merged [<commit>]] [<pattern>...]
+>
+>
+> ... like with --[no-]merged, there.
+>
+>                 M.
 
-I think
+Thanks for the feedback, this was discussed earlier in the series and
+we decided on the current format I'm submitting here.
 
-	[--[no-]contains <commit>]
+Saying --[no-]merged is the convention we use for options where the
+two are mutually exclusive, as is the case with the --[no-]merged
+options:
 
-is the usual pattern...
+    $ git tag --merged v2.12.0 --no-merged v2.13.0
+    error: option `no-merged' is incompatible with --merged
+    [...]
 
->  	[--points-at <object>] [--column[=<options>] | --no-column]
->  	[--create-reflog] [--sort=<key>] [--format=<format>]
->  	[--[no-]merged [<commit>]] [<pattern>...]
+But in the case of --contains and --no-contains you can provide both:
 
-... like with --[no-]merged, there.
+    $ git tag --contains v2.12.0 --no-contains v2.13.0 'v*'
+    v2.12.0
+    v2.12.1
+    v2.12.2
+    v2.12.3
+    v2.13.0-rc0
+    v2.13.0-rc1
+    v2.13.0-rc2
 
-		M.
-
+So they don't use that convention, since it would imply that they're
+mutually exclusive, rather than both being optional.
