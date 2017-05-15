@@ -2,74 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6584E201A4
-	for <e@80x24.org>; Mon, 15 May 2017 01:29:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02D2A201A4
+	for <e@80x24.org>; Mon, 15 May 2017 01:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751637AbdEOB3E (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 May 2017 21:29:04 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36334 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751005AbdEOB3C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2017 21:29:02 -0400
-Received: by mail-pf0-f193.google.com with SMTP id n23so12709186pfb.3
-        for <git@vger.kernel.org>; Sun, 14 May 2017 18:29:02 -0700 (PDT)
+        id S1751480AbdEOBjF (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 May 2017 21:39:05 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:34397 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751166AbdEOBjE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2017 21:39:04 -0400
+Received: by mail-pf0-f173.google.com with SMTP id 9so14859404pfj.1
+        for <git@vger.kernel.org>; Sun, 14 May 2017 18:39:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=nY4PuDzpEac6QltGYMV4XpEu3/J7RAiqW+qdYX1LBSc=;
-        b=vI41cPALVDz3E6AX+BNqun92I2kONzZHX2pYZj/mjJARqE2vNcxMgZUkM+xj4b2j9A
-         gjvV8eclpgQAQcsEAwQgN1OKobPgXAY1HDnj0UmqEZYY8bz0Qlpc0XPWRZw0rrrCv4tF
-         0ZKqkC+36YJZmfeT+2Fu1/RNP0cJUN/8nPWch8DPFhbl6ZEnr5f4HDHZHcTUOlK2gHeh
-         N3G6IqzO63Qpbcqe3xlDNFobcGtHju73i+0rG+jOPdR7f4aCR//oWZjCPBRdUV6RHGJw
-         dn3/rosbI5ZawVxrNHsugCPPFwBegmxyHxWGDQywOO+ZK3iWpJ5mIEu3GlzaUMwt2pUW
-         e4fA==
+        bh=eWdK0RLn/kg+RHfz9AmcwSmeICorZ+jiJNTiEpCcblE=;
+        b=GfVP+KhZBWE/mUjYwrfQlaoHv0cmfSxF2UIGnAKXgKP5aMI4LRzPtdn7rSlB2lt64x
+         fI7DhvurbDvJr1n5kq6yQO7Xf2tIqboIulsx+5WCk5wyGNDf4pcemjZQ8Ak52COB/Beq
+         WDicS7h1kNqrJ8t1rwqpMFPx605SdjC2ZnNFE4R1OjvrR8Y0x2ZG4Ef+1zK5rJy9YGOp
+         63PmaOUkVNnGGo31p8Q+GNoW+ZDw1BIi+YLnXjht4IqgNhDJf4DlGDwoZ8+0L+cKIf9Q
+         8PxpW3qvdc2nT9kGvdaIq4TQlE8gkwPqCt6h5ITRA3J6C3QIUVWFAYt+d+9vOBpF9S/h
+         gQxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=nY4PuDzpEac6QltGYMV4XpEu3/J7RAiqW+qdYX1LBSc=;
-        b=IoVAk5fKPThS0mH5AhurB3V9sP+GUN3jDskKV+s1ejjBaOWwAcxyZ0H1kC3ChaO5uJ
-         HwFThQNR8CiBzlINtDcSQTl56R9seegwB4IHTGGsM0vXYTi3IAoQvO38MzZFhC7lFiSu
-         ODIgxdGSVJfP/8kRogxVEdmFXFBPVwk1wcuWyRCVx6SJHpALt+KByAgZWV+u9WTbrvQ2
-         wOkjrwRBBTcjkC/H3oRCCQvkkA12CYnbi7lBRKdGhqGvM3DIYLC+r/Pm59wVXLNq5fYi
-         Es1ux36OVALORnf0r/+qAYlZj4Gc/j8x1WuXL9AewTX9LklblpuqXnBcwb5Z0PblzCuS
-         YkQQ==
-X-Gm-Message-State: AODbwcBkpo/xHTFl7uBCoQ67PrL0jpyRMMf+yEHbRgnTRr043xl+xvHa
-        o/7dlgXZAv23G71ECt8=
-X-Received: by 10.99.109.141 with SMTP id i135mr3608187pgc.33.1494811742266;
-        Sun, 14 May 2017 18:29:02 -0700 (PDT)
+        bh=eWdK0RLn/kg+RHfz9AmcwSmeICorZ+jiJNTiEpCcblE=;
+        b=SZE2j6S83niKx4FI7Q/AjksZol6Y5MSiRYdGq6LsdIAWl6d6wTrgqCDnyuZQY+7Fcm
+         jv4AfN/FB/ZWJm8V0M5GU2BLi2JZPD9p/RISiCRQV1OHH7GRzQxQeZg9dclwbuFjNtM/
+         lpSVAvPSJ/G2y7QRKNz7mvQjHfPfSwzN39IatWFLqsYUtN3ylKJcZGS3m2zxN+AW+rXV
+         kziCA2BgWWOrw8SM8S03E+oJtlumUkU4E5ykMN23JrMkUp7TZXSu13wXW5A1q+xCtAen
+         ed5GRpjRk7IDmbblb4tfZ32/NilylwUlGPsgaDrgXhgGnIPmRdMCOzvD/n6ih0BP606R
+         demg==
+X-Gm-Message-State: AODbwcC3iSZdapbarngW9F3ccj/jNbSKQzifPzR05WF+7A0O/zrGeJxZ
+        4ziRgFCrJTyX7g==
+X-Received: by 10.99.119.76 with SMTP id s73mr3622751pgc.215.1494812343293;
+        Sun, 14 May 2017 18:39:03 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b170:f9ed:5f25:7ab5])
-        by smtp.gmail.com with ESMTPSA id e16sm16738719pfk.100.2017.05.14.18.29.01
+        by smtp.gmail.com with ESMTPSA id n71sm19349595pfg.46.2017.05.14.18.39.02
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 14 May 2017 18:29:01 -0700 (PDT)
+        Sun, 14 May 2017 18:39:02 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH 11/29] grep: add a test helper function for less verbose -f \0 tests
-References: <20170511091829.5634-1-avarab@gmail.com>
-        <20170511091829.5634-12-avarab@gmail.com>
-        <xmqqlgq27jgl.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX4MK8=YixozpbPjJh1JxHcFr9x6GoXJeA34E-qLn6ZSDw@mail.gmail.com>
-Date:   Mon, 15 May 2017 10:29:00 +0900
-In-Reply-To: <CACBZZX4MK8=YixozpbPjJh1JxHcFr9x6GoXJeA34E-qLn6ZSDw@mail.gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] compat/regex: fix compilation on Windows
+References: <6a6782863a74432094a1d7fba7f2477991ef2d16.1494510612.git.johannes.schindelin@gmx.de>
+        <CACBZZX4UUwzRQmyH8joYaqHnuVTjVtGBHp+iZKcnAnwoM_ZJhg@mail.gmail.com>
+Date:   Mon, 15 May 2017 10:39:01 +0900
+In-Reply-To: <CACBZZX4UUwzRQmyH8joYaqHnuVTjVtGBHp+iZKcnAnwoM_ZJhg@mail.gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 13 May
- 2017 13:33:49
+ 2017 00:27:51
         +0200")
-Message-ID: <xmqqshk6ykkj.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqo9uuyk3u.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -81,15 +72,11 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
->> It somehow was unintuitive that 0 expected failure and 1 expected
->> success, but it probably was just me.
+> Let's drop this current gawk import series.
 >
-> Except this. The wildmatch uses the same idiom, and I think it makes
-> sense. 1 = true, 0 = false, ... when all we wanted was
-> "does this match".
+> After talking to the gawk author it turns out it's better to use the
+> version from gnulib, this includes the equivalent of your patch.
 
-OK.  Makes perfect sense (it would have been even easier to
-understand if the variable was not $status but $matches or
-something).
+OK.  That may make things simpler ;-)
 
-
+Thanks.
