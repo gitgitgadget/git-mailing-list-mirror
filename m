@@ -2,72 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A0E8201A7
-	for <e@80x24.org>; Mon, 15 May 2017 20:10:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20E81201A7
+	for <e@80x24.org>; Mon, 15 May 2017 20:21:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966629AbdEOUKk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 16:10:40 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:36075 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966591AbdEOUKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 16:10:38 -0400
-Received: by mail-qt0-f195.google.com with SMTP id j13so17620428qta.3
-        for <git@vger.kernel.org>; Mon, 15 May 2017 13:10:33 -0700 (PDT)
+        id S934613AbdEOUVx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 16:21:53 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:34644 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934544AbdEOUVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 16:21:52 -0400
+Received: by mail-pg0-f50.google.com with SMTP id u28so65310406pgn.1
+        for <git@vger.kernel.org>; Mon, 15 May 2017 13:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=tefmCRieEe7wuPDHguItOgmMFab8ps7vphtonJrfISQ=;
-        b=FW3mjC2b0rj3c9mVe8/5YDSXu2KBfIkU1KELSFA7xRegcmmfePJ/LgR2PDq7RpQ9Aa
-         U2V2YBZjMyVXt2SaJv1Jmb6PmqYakpksYJO+rkzQkCp0xjbje/xjxFz02h9OQD9sQuwR
-         JZaaoZHKzbXJxif0Y6/mxqBAjvB9dmzReVgVASNJ7j2QlWJfqlFipG85QcswCdviyE/9
-         TARERJylTXZjNTIFwew1bdqEw6x04nuszPiRM4dgGgF92iNT8CeKH+7kgFLTvfC/Vgyi
-         shslxpxVmKiBQuTvRYElCwQQwaDyKpjhU4A+PGSfn2wAsJc5sP55M1J6In+mCJ+V+zqY
-         Rk/w==
+        bh=jGZ2eOmNuzCsTgjZJc9Q+mAcP1IiHTLuEfmpTxhE6qI=;
+        b=oR0V9/Sjy7vsxHZrMh+16te2652QtWgPxac5zzomxfztBghPK892YhjGbsXf0gup94
+         gdQAivxbGvNZ/ncP+WfTt44C2C1XtK9a2X2UdjwqNHp0rDAUyL/yPxK8sDmetpBuk/B6
+         1qjtYTm1FdelnfH17gS6P22oOzTY/12/jCEYjM2RlC4Fkt1JBE+RHlfZM8kvtfahwULR
+         I6VUhi9SpWglJNYgb6tTy6Xu8lWCsDVQUG6fKvIXbSHJO4PYDhpFvWpvHHMDlIgEAvhi
+         o0YUdYkX2dMAm0tDrzuyF4LeiR+uv+UiROGOCwc1P+QMsgjD9BrHOi09lo0MxT6ZgHSp
+         Tp3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=tefmCRieEe7wuPDHguItOgmMFab8ps7vphtonJrfISQ=;
-        b=LjZnlh+SZTHkU5CYq7mKPAgO3FBmDdFhjskkJMfDzEIvCciXzYcYMK/U+8yh7h6sgw
-         1ilZo8oIj+RUaIqrR4GEWXlIXc5Vw+lPGjUFEzhalXZJLvFmY9WolFJb6g9yZcdz11Da
-         KZhLgfi/jqgpF8eNw72qrdxSPAeOhGu0piUFlfy7L/9uQMHErmo31vrVHOwGcyFyj7Jc
-         P0SbzZWe7HRfnTTK3IrQAETB64Y/LYzV1gM4q/QGCqxU6NaIYgNe8FLLwzTsyNu+JHmK
-         c95ppzu6Xthde18AvO//6z6+mFdMV1gfhFx7e1qXoiXGCAnCOL8MNi+A4ppJvcgjmv44
-         MsAw==
-X-Gm-Message-State: AODbwcDx8JF18sOYJB2SuQx9MK2lR4qRg/Z6CpCyJ0Ckf2sGp3LAbr0Z
-        a/+fxyemWP19Ew==
-X-Received: by 10.200.37.56 with SMTP id 53mr7061105qtm.216.1494879032847;
-        Mon, 15 May 2017 13:10:32 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id s21sm9015498qtc.58.2017.05.15.13.10.31
+        bh=jGZ2eOmNuzCsTgjZJc9Q+mAcP1IiHTLuEfmpTxhE6qI=;
+        b=czall/XoRRR+DCyZJNHxwB4HqMdGugSOfeCUKNk+XB3cg+TnOyG3HLDaR3/Vmrdo8x
+         HJLLa7QulpU+aeSbYWqs1u9mj6vkwLHDKDJjKgykmIRWkPcCXQtr3hm/sa84noe3oe0I
+         4GTd0WMOJ4nQ7dpYZttca5vpLHMxvlfaUCci7EUQNibf3OiR8mj/wsN0He9UCzNYwGjT
+         HfYhwby3PTGgDSk1ANmmhYtmU9V4w8Ic72QijR7SFPExvM/zdm5etskEDCAUFgr4AChb
+         3vBKNheSXNuu8q5FxF+aGUcMFUSjsLsADg/NB37jLL3rCZViYfMMPCig24yFATDOC728
+         eYcw==
+X-Gm-Message-State: AODbwcD0/IrvGwNHIcrAEhG1+Wyeu/3aUQEq4ET8aSWeKnsOwGt/ueZJ
+        UMwzl4iRGC3b0w6a
+X-Received: by 10.99.139.195 with SMTP id j186mr8196111pge.134.1494879711655;
+        Mon, 15 May 2017 13:21:51 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:f484:2515:b6cf:fcc0])
+        by smtp.gmail.com with ESMTPSA id 15sm23867684pfj.59.2017.05.15.13.21.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 15 May 2017 13:10:32 -0700 (PDT)
-Subject: Re: [PATCH v1 5/5] Add a sample query-fsmonitor hook script that
- integrates with the cross platform Watchman file watching service.
-To:     David Turner <David.Turner@twosigma.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <20170515191347.1892-1-benpeart@microsoft.com>
- <20170515191347.1892-6-benpeart@microsoft.com>
- <fb609e259c714469b5528888e14c2e3a@exmbdft7.ad.twosigma.com>
-Cc:     "gitster@pobox.com" <gitster@pobox.com>,
-        "benpeart@microsoft.com" <benpeart@microsoft.com>,
-        "pclouds@gmail.com" <pclouds@gmail.com>,
-        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
-        "peff@peff.net" <peff@peff.net>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <268acc85-8fc7-7779-8cb8-f0e88e7d50a5@gmail.com>
-Date:   Mon, 15 May 2017 16:10:31 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+        Mon, 15 May 2017 13:21:50 -0700 (PDT)
+Subject: Re: [PATCH 15/19] diff.c: convert diff_flush to use emit_line_*
+To:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+References: <20170514040117.25865-1-sbeller@google.com>
+ <20170514040117.25865-16-sbeller@google.com>
+Cc:     peff@peff.net, gitster@pobox.com, mhagger@alum.mit.edu,
+        jrnieder@gmail.com, bmwill@google.com
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <1b85a773-fb44-9a88-63d3-36c642d07c22@google.com>
+Date:   Mon, 15 May 2017 13:21:49 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <fb609e259c714469b5528888e14c2e3a@exmbdft7.ad.twosigma.com>
+In-Reply-To: <20170514040117.25865-16-sbeller@google.com>
 Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -75,86 +68,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 5/15/2017 3:50 PM, David Turner wrote:
+On 05/13/2017 09:01 PM, Stefan Beller wrote:
+> In a later patch, I want to propose an option to detect&color
+> moved lines in a diff, which cannot be done in a one-pass over
+> the diff. Instead we need to go over the whole diff twice,
+> because we cannot detect the first line of the two corresponding
+> lines (+ and -) that got moved.
 >
->> -----Original Message-----
->> From: Ben Peart [mailto:peartben@gmail.com]
->> Sent: Monday, May 15, 2017 3:14 PM
->> To: git@vger.kernel.org
->> Cc: gitster@pobox.com; benpeart@microsoft.com; pclouds@gmail.com;
->> johannes.schindelin@gmx.de; David Turner <David.Turner@twosigma.com>;
->> peff@peff.net
->> Subject: [PATCH v1 5/5] Add a sample query-fsmonitor hook script that
->> integrates with the cross platform Watchman file watching service.
->>
->> To use the script:
->>
->> Download and install Watchman from https://facebook.github.io/watchman/
->> and instruct Watchman to watch your working directory for changes
->> ('watchman watch-project /usr/src/git').
->>
->> Rename the sample integration hook from query-fsmonitor.sample to query-
->> fsmonitor.
->>
->> Configure git to use the extension ('git config core.fsmonitor true') and
->> optionally turn on the untracked cache for optimal performance ('git config
->> core.untrackedcache true').
->>
->> Signed-off-by: Ben Peart <benpeart@microsoft.com>
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
->>   templates/hooks--query-fsmonitor.sample | 27
->> +++++++++++++++++++++++++++
->>   1 file changed, 27 insertions(+)
->>   create mode 100644 templates/hooks--query-fsmonitor.sample
->>
->> diff --git a/templates/hooks--query-fsmonitor.sample b/templates/hooks--
->> query-fsmonitor.sample
->> new file mode 100644
->> index 0000000000..4bd22f21d8
->> --- /dev/null
->> +++ b/templates/hooks--query-fsmonitor.sample
->> @@ -0,0 +1,27 @@
->> +#!/bin/sh
->> +#
->> +# An example hook script to integrate Watchman #
->> +(https://facebook.github.io/watchman/) with git to provide fast # git
->> +status.
->> +#
->> +# The hook is passed a time_t formatted as a string and outputs to #
->> +stdout all files that have been modified since the given time.
->> +# Paths must be relative to the root of the working tree and #
->> +separated by a single NUL.
->> +#
->> +# To enable this hook, rename this file to "query-fsmonitor"
->> +
->> +# Convert unix style paths to escaped Windows style paths case "$(uname
->> +-s)" in
->> +MINGW*|MSYS_NT*)
->> +  GIT_WORK_TREE="$(cygpath -aw "$PWD" | sed 's,\\,\\\\,g')"
->> +  ;;
->> +*)
->> +  GIT_WORK_TREE="$PWD"
->> +  ;;
->> +esac
->> +
->> +# Query Watchman for all the changes since the requested time echo
->> +"[\"query\", \"$GIT_WORK_TREE\", {\"since\": $1,
->> +\"fields\":[\"name\"]}]" | \ watchman -j | \ perl -e 'use JSON::PP; my
->> +$o = JSON::PP->new->utf8->decode(join("", <>)); die "Watchman: $o-
->>> {'error'}.\nFalling back to scanning...\n" if defined($o->{"error"});
->> print(join("\0", @{$o->{"files"}}));'
-> Last time I checked, the argument to 'since' was not a time_t -- it was a
-> watchman clock spec.  Have you tested this?  Does it work?
+> So to prepare the diff machinery for two pass algorithms
+> (i.e. buffer it all up and then operate on the result),
+> move all emissions to places, such that the only emitting
+> function is emit_line_0.
 >
+> This covers diff_flush.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  diff.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/diff.c b/diff.c
+> index 07041a35ad..386b28cf47 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4873,7 +4873,9 @@ void diff_flush(struct diff_options *options)
+>  				  term, 1);
+>  			if (options->stat_sep) {
+>  				/* attach patch instead of inline */
+> -				fputs(options->stat_sep, options->file);
+> +				emit_line(options, NULL, NULL,
+> +					  options->stat_sep,
+> +					  strlen(options->stat_sep));
 
-Watchman also accepts a Unix time value for "since" as documented here 
-(https://facebook.github.io/watchman/docs/expr/since.html).
+Same comment as patch 10 - is it OK that we now output a prefix too?
 
-Yes, this has been tested and works correctly as long as you have a 
-recent version that contains the patch 
-(https://github.com/facebook/watchman/commit/67b26a8938336f08918fc7187129b6c1a571f35b) 
-that made sure it was greedy when using the Unix time.
-
+>  			}
+>  		}
+>
+>
