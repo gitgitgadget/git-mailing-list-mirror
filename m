@@ -2,153 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0534201CF
-	for <e@80x24.org>; Mon, 15 May 2017 08:42:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 780D1201CF
+	for <e@80x24.org>; Mon, 15 May 2017 08:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933352AbdEOImc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 04:42:32 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51530 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933113AbdEOImc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 04:42:32 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lfolq-1dmFLc0Q5S-00pLn5; Mon, 15
- May 2017 10:42:26 +0200
-Date:   Mon, 15 May 2017 10:42:25 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 00/11] Start retiring .git/remotes/ and .git/branches/
- for good
-In-Reply-To: <xmqq7f1l6as6.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1705151022160.146734@virtualbox>
-References: <cover.1494509599.git.johannes.schindelin@gmx.de> <xmqqk25m98rd.fsf@gitster.mtv.corp.google.com> <xmqqfuga5lp2.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1705121617420.146734@virtualbox> <xmqq7f1l6as6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1757232AbdEOI7Z (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 04:59:25 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33425 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756920AbdEOI7X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 04:59:23 -0400
+Received: by mail-pf0-f195.google.com with SMTP id f27so4702660pfe.0
+        for <git@vger.kernel.org>; Mon, 15 May 2017 01:59:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=GRUZs50vOtSL9opLPA8FOXPhTR9FldWNq7n4qsf9Xy8=;
+        b=RSg51tFpbmz/Z9kx+ZP4Mea7MOJCCwSgU9aWgzdpFesCg9E2e0z64fDXkPczyMnuIt
+         ZlZLgK9wdzbm8044Y4h7f+0Hfke4f17q3aQZFYmV/jcVnMIOSD1d6WvfoXwwklH6JwHm
+         Ln0cY2CJM8km2PbU3ANEWrEv/prDaLkcHCsaFDoKoEgB7F1IgYp6wZXehBJCDCCHCHbA
+         I9LQXbNCE/QEtSqioGEEgscgTe1JQ3OZY11tcRLC8ODMCIENgO1ddbMI4VeaeReW48M+
+         fs773l1LcCvR/JbFiwjSsb3XCUbfHa19ZpslnreBLOq7KBKd91GRbXeYmSgw4iswGrTu
+         6I4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=GRUZs50vOtSL9opLPA8FOXPhTR9FldWNq7n4qsf9Xy8=;
+        b=Kuc80HD/67dczE2XSSDmex0IqsHeczLgnsl88zCqJzxeEY6V5iYia6aib340oeVlZa
+         ojtwlGxeOJ/hshuu0IXf1pf0qSQ/ivGcg2Nd1fZubD2VszqdDofjP9HpjWt4tA229qts
+         mYR5s0Wermy2WeAndQFNHor2BuODle65Qkr5qFyC/EpgaF//LTZfRU/6OGZg0yQKC73U
+         pkTkQrpAS0DscUFezCTxrTEebxxX3wzLyv57e+tSUeGud7mF1EaAJLTXM5fp0eySnmQ+
+         np02l5rV8f9Q1Hn+DGcJPcnaGru0BBbO2zMHGw1y96EnpT0qJPFUXfdJid1Hx/8FT9AX
+         GZNQ==
+X-Gm-Message-State: AODbwcCyH0H9Iui8FH/w9PEvXpRb06k+ulmVIZnVqjiWubGF82EbqI0e
+        Evlg62uPmcy3vg==
+X-Received: by 10.99.98.65 with SMTP id w62mr4989056pgb.207.1494838762200;
+        Mon, 15 May 2017 01:59:22 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b170:f9ed:5f25:7ab5])
+        by smtp.gmail.com with ESMTPSA id r64sm17625490pfr.38.2017.05.15.01.59.21
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 15 May 2017 01:59:21 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 27/29] pack-objects: fix buggy warning about threads
+References: <20170513231509.7834-1-avarab@gmail.com>
+        <20170513231509.7834-28-avarab@gmail.com>
+Date:   Mon, 15 May 2017 17:59:20 +0900
+In-Reply-To: <20170513231509.7834-28-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sat, 13 May 2017 23:15:07 +0000")
+Message-ID: <xmqqfug6v6l3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:LtItpw+EdZBHEjqSxt+gt/m9WvBrXOaAP0BLekvvuLiq7Fj9lWc
- oD3VXm7X7ZCvkBQM15y5bLZGjepc/y7A38H9aTWOLxi34TBb1U4ZaakCmANuXG9K1evOo/f
- TppfcH9grgKoTRf6u9Amwq3ntd3whg2x2pyygxgEg36AruBtRQjbzRopWhgjpLDvQq+ijwB
- FuQX5iW4jtiLtUDguZfPg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RFf76Lar1Wg=:D6WJjOJMSRfs1dR5zct50+
- UTlRFUc2Gmsq4d0n4QNM3Zc3KAmYd5DhZ69RoVw6ei+cgGKRGV4/FCc5SUg+0nh0khYOuiB2u
- lyJn8tS7SWBFGCRJGj3wBPT8RAPix+WN6BNmWsFdVwOq5o6/eyX536RqUQS72MadqztX0umhH
- MNxwtI0OBQUMg1aQi3D2yGTZQg0LRCuzd36xpfaUI0TKsvEcHB2qmUpBqV7IuwsI9UNbhdJ0v
- 8lbMZ+Cg098NFGZCtoVEct6f7F8xBI4tfAMHegykkNVXCkvuUiAjr05j2N57PlkRYpCDJjJdt
- nkvOmPDGo+vcUFUYx/zhjcUCi6C2ql88NZkigacizj8icAL8UhtE0rMTIWclN2B5cCAA2QKGR
- UcNfxCfLIb9xVw6J7+GVALkKlgGGfCCmXbN7+gGNmIptpUfs+NvGd5QSlPo3/mNoe0HZrvinE
- pb6ucIsMBn4NKf1c4m0scnm5M/E8mZixw5XZ3dkEjn6EN2LqYgePvD8sSl/D1RV8EU04n2gjF
- yfeS50qf/G63Y6NyKLzmBEJnRZl5n3w8imOLFgY3J7TSrOV+0yH92OVYCpfqwmSS/VQ6y+iMt
- FsjXstB8U/hWyowH/2NIXqVibgLfoGM01H390n2lI2+UyMXbum0joN0mFwlXN2tzky3DsrPrN
- VcIc1E04saM4wgzzJVU5nxbn7b2K3fBeo/B4Z8wT4YHopB9hv5seTPXPJAq0/7vuDOeo1WOGf
- xo3cIT1sKSlt20KAh6quSA5r4pbxBntbplJG7Id4vd7KtMagdYRz5rCpnqRJeNbgZfm+4YpQ7
- +Shsvv1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-On Sat, 13 May 2017, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Fri, 12 May 2017, Junio C Hamano wrote:
-> >>  ...
-> >> FWIW, I do not think there is any reason for people to be using
-> >> .git/remotes/, but for .git/branches/, I do not think I can offer a
-> >> more efficient and easier to use alternative based on .git/config to
-> >> do these things:
-> >> 
-> >>  $ grep <substring> .git/branches/* ;# what did I call that remote?
-> >>  $ cat .git/branches/$name ;# where do I get that from?
-> >>  $ echo "$URL#$branch" >.git/branches/$name ;# I just learned a new src
-> >>  $ rm .git/branch/$name ;# I no longer need it
-> >> 
-> >> without having to learn things experienced CLI/UNIX person already
-> >> knows.
-> >
-> > I do not understand what you want to tell me with that example. It is
-> > confusing me utterly.
-> 
-> They show how it helps a user, whose primary use of Git is to fetch
-> from many places, to keep the the old "branches" machinery.
-
-M'kay. Not quite sure how that differs from my use case, which works quite
-well with the "config" way. My `git remote | wc -l` says 21.
-
-Let me re-format what you said next.
-
-> It is not "hard" to migrate in the sense that there is a way to
+> Fix a buggy warning about threads under NO_PTHREADS=YesPlease. Due to
+> re-using the delta_search_threads variable for both the state of the
+> "pack.threads" config & the --threads option, setting "pack.threads"
+> but not supplying --threads would trigger the warning for both
+> "pack.threads" & --threads.
 >
-> (1) find the short-name you gave to a remote from a part of URL etc.,
+> Solve this bug by resetting the delta_search_threads variable in
+> git_pack_config(), it might then be set by --threads again and be
+> subsequently warned about, as the test I'm changing here asserts.
 >
-> (2) find the exact attributes of the repository a short-name refers to,
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/pack-objects.c | 4 +++-
+>  t/t5300-pack-object.sh | 3 +--
+>  2 files changed, 4 insertions(+), 3 deletions(-)
 >
-> (3) update an existing or add a new short-name and
->
-> (4) remove an existing one.
->
-> The remotes.*.{url,fetch} configuration are expressive enough to
-> represent these operations.  It however is more work and I couldn't
-> think of alternatives.
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 0fe35d1b5a..f1baf05dfe 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -2472,8 +2472,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+>  			die("invalid number of threads specified (%d)",
+>  			    delta_search_threads);
+>  #ifdef NO_PTHREADS
+> -		if (delta_search_threads != 1)
+> +		if (delta_search_threads != 1) {
+>  			warning("no threads support, ignoring %s", k);
+> +			delta_search_threads = 0;
+> +		}
+>  #endif
+>  		return 0;
+>  	}
+> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+> index 1629fa80b0..0ec25c4966 100755
+> --- a/t/t5300-pack-object.sh
+> +++ b/t/t5300-pack-object.sh
+> @@ -445,8 +445,7 @@ test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'pack-objects --threads=N or pack.
+>  	git -c pack.threads=2 pack-objects --stdout --all </dev/null >/dev/null 2>err &&
+>  	cat err &&
+>  	grep ^warning: err >warnings &&
+> -	test_line_count = 2 warnings &&
+> -	grep -F "no threads support, ignoring --threads" err &&
+> +	test_line_count = 1 warnings &&
+>  	grep -F "no threads support, ignoring pack.threads" err &&
+>  	git -c pack.threads=2 pack-objects --threads=4 --stdout --all </dev/null >/dev/null 2>err &&
+>  	grep ^warning: err >warnings &&
 
-So if I understand correctly, you want to do
+Commenting on both 26 and 27.
 
-(1) `git remote -v | grep <part-of-the-url>`
+The usual way we document a known breakage to be fixed is to write a
+test that checks for the desired outcome with test_expect_failure,
+and when a patch corrects the behaviour we just flip it to expect
+success instead.  On the other hand, when we document a behaviour
+that is accepted/acceptable we would have a test that checks for the
+then-accepted behaviour with test_expect_success, and a patch that
+improves the behaviour would update the expectation.
 
-(2) `git remote show <shortname>`
+This follows the second pattern, even though the log message for the
+patches claim this is about an existing bug and its fix.
 
-(3) if (1) did not find it:
-	`git remote add -f <short-name> <URL>`,
-    otherwise:
-	`git fetch <shortname>`
+Now, I am not saying (at least not yet) that 26 & 27 violates the
+established practice and they must be changed to expect seeing only
+one line of output in warnings with test_expect_failure in patch 26
+which is flipped to test_expect_success in patch 27.  Yes, it does
+not follow the usual pattern, but it gives a good food-for-thought.
 
-(4) `git remove rm <shortname>`
+Perhaps our usual pattern may be suboptimal in illustrating in what
+way the current behaviour is not desirable, and the way these two
+patches document the current breakage and then documents the fixed
+behaviour may be a better example to follow?  With our usual way, it
+is not apparent until you actually run the tests with the current
+code what the questionable current behaviour is, but with the way
+patch 26 is written, we can tell that two warnings are given,
+instead of one.
 
-I have to admit that I used `git remote -v | grep ^<shortname>` for (2)
-all the time, until I had a quick look at builtin/remote.c so I would not
-make a complete fool out of myself in this reply, and I will use `git -p
-remote show <shortname>` henceforth.
-
-As to (1), I really do not use this myself, as my remotes pretty much
-always have names that I remember very well. And if I don't, neither do I
-remember the URL, so I have to sift through the output of `git -p remote
--v` manually anyway.
-
-> >> We simply cannot beat the above with anything like 
-> >> 
-> >>     $ git config remote.$name.fetch refs/heads/$branch
-> >> 
-> >> even though the config based remote definition may be infinitely
-> >> more powerful.
-> >
-> > Then maybe we need to teach, say, `git remote` to be that powerful?
-> 
-> Ah, after all, you weren't confused utterly.
-
-No, I was, and I am still at least partially confused. I just read your
-"We simply cannot beat ..." as a round-about way to say "I wish we had an
-easy way to do XYZ" without stating the XYZ in a way that even dimwits
-such as myself can understand.
-
-> Not necessarily "that powerful", but yes, if we had something that
-> is quick and easy to use as a replacement, I do agree we can plan
-> .git/{branches,remotes}'s removal.  The point of "branches" thing to
-> existing users, I think, is not its expressive power (it is much
-> much simpler and can do only one thing) but its simplicity.
-
-Okay, so my quest at removing maintenance burden is not entirely pointless
-an exercise and a waste of my time.
-
-Good. I will continue to work on that front, then, among other things.
-
-Ciao,
-Dscho
+I dunno.  What do others think?
