@@ -2,177 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC311201A7
-	for <e@80x24.org>; Mon, 15 May 2017 19:22:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA58C201A7
+	for <e@80x24.org>; Mon, 15 May 2017 19:31:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966488AbdEOTWt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 15:22:49 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:35988 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966483AbdEOTWq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 15:22:46 -0400
-Received: by mail-pf0-f169.google.com with SMTP id m17so67793537pfg.3
-        for <git@vger.kernel.org>; Mon, 15 May 2017 12:22:45 -0700 (PDT)
+        id S935490AbdEOTbI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 15:31:08 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:35523 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933207AbdEOTbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 15:31:07 -0400
+Received: by mail-pf0-f170.google.com with SMTP id n23so62959570pfb.2
+        for <git@vger.kernel.org>; Mon, 15 May 2017 12:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mICcQp7OGYGd3d8EfifjTSa4BL15czvobta16wPvRzY=;
-        b=PDoImLUvnXZG05KgbDigu6LWAQgZye5B/Tq2zEEisvCYYg+51IpahwbMfaZWGRDk8x
-         uKj6AcrtNdU5phAVAG10Ja+b+zO8wSGJso0iHXYWdNyJmGKT5E8X6LhHNowOSXPIEiWf
-         UipZSFZTP3zJb9cd8fINC7wMXp4gvGNrTrL9+Y96vwcr/4bma+RMGYBzLW9chMuejP38
-         /3BJeD26f/jRmGxLgHoT4hcCJNiAMDKMRem/RhVb4eiAI3GSRgZW1EGwODg6urYOIt/J
-         5TWC6ZJAVbsogNM7zNneHi6KumXH8/M7xsTLXPYdO4TSeeBkJgoaCzR97snaBJ+nLtsG
-         7ntg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=kPmJzWeB/1Ra7HNHR5x3MuOnAatkc3v+EJzJDvuQ05I=;
+        b=Q9fRlfkQ+fB20XVo2eeJDbZ7m78glpIr4sDOvu6U27gvUUeAsEy08LwQSfVYO7vjbw
+         0yWVLPSuxfkMZQH0u71p6emMeNxH+3lGi5Brnd2zuLlzKntmrcn38p9vE6dQ1bnmxSoS
+         Gt3iKwAbH/WROZNocu6ctqjpWeip2AodRvuJ57W7DtRXq/FtVM4RBk48f/b1W1CI2s9f
+         qHvWks4fRNfCPpDqNbvqL+kK4KYwDf4Mp+6CzAh6anzqi8U6lMj0/hUMMhBbjdet3tDU
+         2pw/8xjR/KGvg2zk26YUJbnz4xNWHkkGJ/8zubm4Hdn8fBVjp04J01s91CSjoQrW5uHG
+         0Pjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mICcQp7OGYGd3d8EfifjTSa4BL15czvobta16wPvRzY=;
-        b=cyK0KYPAHhQFbMpQaVOSSk489Bghlae6f7QeNBHpapmqZ4914vFK93fjIR83EbH7+G
-         c2PpVhce2dl0rpAYtKH/JvWODWS3wOtfOkUUF1f1tR21nrPrGQJs85Q0D32kuN+TLylZ
-         U8gfm7+Ry2oa8Fmb3UK7GCUyeIdnfUNu5mJn/ObSCByl4bD1E232+DYE/I+YDVOjWvPb
-         SQj74ZZ1R2or24lwlXHiXAGKjYKH+P0qivyahpyZ3Sr5RjDV0BSn4bUumbvzcvZTZ1rK
-         GTm0jgsP6jke+gFLjKGPMt4vnSIs7zltNA/IquqDh4Pwpxjsu+40jtx6MqHm7bTspFDT
-         Xpkg==
-X-Gm-Message-State: AODbwcAttO+P/3jY0VxTLwNAwSLsdLOw4q8PLd1E0qos7zXhc4xlv8O3
-        kAy+/UIV+r1NXcdE
-X-Received: by 10.99.113.20 with SMTP id m20mr7719045pgc.120.1494876164999;
-        Mon, 15 May 2017 12:22:44 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:8923:f8dd:f0f0:f864])
-        by smtp.gmail.com with ESMTPSA id l7sm28789206pgn.10.2017.05.15.12.22.43
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 15 May 2017 12:22:44 -0700 (PDT)
-Date:   Mon, 15 May 2017 12:22:42 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jonathantanmy@google.com, peff@peff.net,
-        gitster@pobox.com, mhagger@alum.mit.edu, jrnieder@gmail.com
-Subject: Re: [PATCH 03/19] diff.c: drop 'nofirst' from emit_line_0
-Message-ID: <20170515192242.GB79147@google.com>
-References: <20170514040117.25865-1-sbeller@google.com>
- <20170514040117.25865-4-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=kPmJzWeB/1Ra7HNHR5x3MuOnAatkc3v+EJzJDvuQ05I=;
+        b=cYxCaeHd+f8srCna7+GOdjHMYCVx1HFDIrFMaC0CeaMNcaNEZNiW9XZGaT6s4U92fA
+         UNIzUwQQxwygohjvM271jX/KUktNq375zcUUX3ovobITHPMucHpQSTXIarlmYUn67WJr
+         zqGsKUmVS41tFKBuhxuLSeFs8ILKXPyPf7rO2hfuwCwWuq8rYo9nn9CE/5qQVwO+5mPg
+         GxI7EO6azLudaUdbM3njzdXrYlt0ko81VA5na8Ii1I5AxnOyw2WvRcfVK4PCwr/dwwHU
+         WGLVgolbhwQ0pm21FaxXZ9X3FLZTG15ZatgG0vwbG+rgpcNi3sCKxfcpVueW1+v1oyRF
+         06sg==
+X-Gm-Message-State: AODbwcBaq5ZWLWvKYWZop4TYwilrNl5DA3bIeA1wy6ceIddhY4Tb1BDp
+        BKwiD95L11Wyqt4YHA3Bt0IVq2KoFbvG
+X-Received: by 10.84.228.207 with SMTP id y15mr10551089pli.172.1494876666182;
+ Mon, 15 May 2017 12:31:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170514040117.25865-4-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.170.200 with HTTP; Mon, 15 May 2017 12:31:05 -0700 (PDT)
+In-Reply-To: <d67fa7ed-fbde-7bce-a691-01dafaa93732@google.com>
+References: <20170514040117.25865-1-sbeller@google.com> <20170514040117.25865-11-sbeller@google.com>
+ <d67fa7ed-fbde-7bce-a691-01dafaa93732@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 15 May 2017 12:31:05 -0700
+Message-ID: <CAGZ79kafiLjKbMSz5qpm6uqEJqHKJkn0rQQ--OA7g0w5=5S3jw@mail.gmail.com>
+Subject: Re: [PATCH 10/19] diff.c: convert emit_rewrite_lines to use emit_line_*
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/13, Stefan Beller wrote:
-> In 250f79930d (diff.c: split emit_line() from the first char and the rest
-> of the line, 2009-09-14) we introduced the local variable 'nofirst' that
-> indicates if we have no first sign character. With the given implementation
-> we had to use an extra variable unlike reusing 'first' because the lines
-> first character could be '\0'.
-> 
-> Change the meaning of the 'first' argument to not mean the first character
-> of the line, but rather just containing the sign that is prepended to the
-> line. Refactor emit_line to not include the lines first character, but pass
-> the complete line as well as a '\0' sign, which now serves as an indication
-> not to print a sign.
-> 
-> With this patch other callers hard code the sign (which are '+', '-',
-> ' ' and '\\') such that we do not run into unexpectedly emitting an
-> error-nous '\0'.
-> 
-> The audit of the caller revealed that the sign cannot be '\n' or '\r',
-> so remove that condition for trailing newline or carriage return in the
-> sign; the else part of the condition handles the len==0 perfectly,
-> so we can drop the if/else construct.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  diff.c | 40 +++++++++++++++++-----------------------
->  1 file changed, 17 insertions(+), 23 deletions(-)
-> 
-> diff --git a/diff.c b/diff.c
-> index c2ed605cd0..4269b8dccf 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -517,33 +517,24 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
->  }
->  
->  static void emit_line_0(struct diff_options *o, const char *set, const char *reset,
-> -			int first, const char *line, int len)
-> +			int sign, const char *line, int len)
->  {
->  	int has_trailing_newline, has_trailing_carriage_return;
-> -	int nofirst;
->  	FILE *file = o->file;
->  
->  	fputs(diff_line_prefix(o), file);
->  
-> -	if (len == 0) {
-> -		has_trailing_newline = (first == '\n');
-> -		has_trailing_carriage_return = (!has_trailing_newline &&
-> -						(first == '\r'));
-> -		nofirst = has_trailing_newline || has_trailing_carriage_return;
-> -	} else {
-> -		has_trailing_newline = (len > 0 && line[len-1] == '\n');
-> -		if (has_trailing_newline)
-> -			len--;
-> -		has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
-> -		if (has_trailing_carriage_return)
-> -			len--;
-> -		nofirst = 0;
-> -	}
-> +	has_trailing_newline = (len > 0 && line[len-1] == '\n');
-> +	if (has_trailing_newline)
-> +		len--;
-> +	has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
-> +	if (has_trailing_carriage_return)
-> +		len--;
+On Mon, May 15, 2017 at 12:09 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+>
+> On 05/13/2017 09:01 PM, Stefan Beller wrote:
+>>
+>> In a later patch, I want to propose an option to detect&color
+>> moved lines in a diff, which cannot be done in a one-pass over
+>> the diff. Instead we need to go over the whole diff twice,
+>> because we cannot detect the first line of the two corresponding
+>> lines (+ and -) that got moved.
+>>
+>> So to prepare the diff machinery for two pass algorithms
+>> (i.e. buffer it all up and then operate on the result),
+>> move all emissions to places, such that the only emitting
+>> function is emit_line_0.
+>>
+>> This covers emit_rewrite_lines.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  diff.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/diff.c b/diff.c
+>> index e4b46fee4f..369c804f03 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -748,7 +748,7 @@ static void emit_rewrite_lines(struct emit_callback
+>> *ecb,
+>>         if (!endp) {
+>>                 const char *context = diff_get_color(ecb->color_diff,
+>>                                                      DIFF_CONTEXT);
+>> -               putc('\n', ecb->opt->file);
+>> +               emit_line(ecb->opt, NULL, NULL, "\n", 1);
+>
+>
+> This outputs diff_line_prefix(ecb->opt) - is that OK?
 
-Does the order of newline/carriage return always the same?
+It shows this area is not covered well by our test suite.
 
->  
-> -	if (len || !nofirst) {
-> +	if (len || sign) {
->  		fputs(set, file);
-> -		if (!nofirst)
-> -			fputc(first, file);
-> +		if (sign)
-> +			fputc(sign, file);
->  		fwrite(line, len, 1, file);
->  		fputs(reset, file);
->  	}
-> @@ -556,7 +547,7 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
->  static void emit_line(struct diff_options *o, const char *set, const char *reset,
->  		      const char *line, int len)
->  {
-> -	emit_line_0(o, set, reset, line[0], line+1, len-1);
-> +	emit_line_0(o, set, reset, 0, line, len);
->  }
->  
->  static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
-> @@ -4822,9 +4813,12 @@ void diff_flush(struct diff_options *options)
->  
->  	if (output_format & DIFF_FORMAT_PATCH) {
->  		if (separator) {
-> -			fprintf(options->file, "%s%c",
-> -				diff_line_prefix(options),
-> -				options->line_termination);
-> +			char term[2];
-> +			term[0] = options->line_termination;
-> +			term[1] = '\0';
-> +
-> +			emit_line(options, NULL, NULL,
-> +				  term, 1);
->  			if (options->stat_sep) {
->  				/* attach patch instead of inline */
->  				fputs(options->stat_sep, options->file);
-> -- 
-> 2.13.0.18.g183880de0a
-> 
+My first reaction was that this is not ok, but we'd have
+to inspect the situation. It was introduced in
+35e2d03c2c (Fix '\ No newline...' annotation in rewrite diffs,
+2012-08-04).
 
--- 
-Brandon Williams
+And looking at the code of the function I think this is broken.
+
+I wonder what the best way forward is for this patch series here,
+as we'd need to buffer the last line. That should be fine as it is
+a corner case, maybe:
+
+diff --git a/diff.c b/diff.c
+index 0f10736ee6..f46e52135d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1011,15 +1011,27 @@ static void add_line_count(struct strbuf *out,
+int count)
+ static void emit_rewrite_lines(struct emit_callback *ecb,
+                               int prefix, const char *data, int size)
+ {
+-       const char *endp = NULL;
+-       static const char *nneof = " No newline at end of file\n";
++       static const char *nneof = "\\ No newline at end of file\n";
+        const char *reset = diff_get_color(ecb->color_diff, DIFF_RESET);
++       struct strbuf sb = STRBUF_INIT;
+
+        while (0 < size) {
+                int len;
+
+                endp = memchr(data, '\n', size);
+-               len = endp ? (endp - data + 1) : size;
++               if (endp)
++                       len = endp - data + 1;
++               else {
++                       /* last line has no \n */
++                       while (0 < size) {
++                               strbuf_addch(&sb, *data);
++                               size -= len;
++                               data += len;
++                       }
++                       strbuf_addch(&sb, '\n');
++                       data = sb.buf;
++                       len = sb.len;
++               }
+                if (prefix != '+') {
+                        ecb->lno_in_preimage++;
+                        emit_del_line(reset, ecb, data, len);
+@@ -1030,12 +1042,12 @@ static void emit_rewrite_lines(struct
+emit_callback *ecb,
+                size -= len;
+                data += len;
+        }
+-       if (!endp) {
++       if (sb.len) {
+                const char *context = diff_get_color(ecb->color_diff,
+                                                     DIFF_CONTEXT);
+-               emit_line(ecb->opt, NULL, NULL, "\n", 1);
+-               emit_line_0(ecb->opt, context, reset, '\\',
++               emit_line(ecb->opt, context, reset,
+                            nneof, strlen(nneof));
++               strbuf_release(&sb);
+        }
+ }
