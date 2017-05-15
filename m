@@ -6,60 +6,58 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9FD6201A4
-	for <e@80x24.org>; Mon, 15 May 2017 02:28:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 424C4201A4
+	for <e@80x24.org>; Mon, 15 May 2017 02:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752070AbdEOC2p (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 May 2017 22:28:45 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:35810 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751105AbdEOC2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2017 22:28:44 -0400
-Received: by mail-pg0-f42.google.com with SMTP id q125so33367096pgq.2
-        for <git@vger.kernel.org>; Sun, 14 May 2017 19:28:44 -0700 (PDT)
+        id S1751518AbdEOCfi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 May 2017 22:35:38 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36640 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751166AbdEOCfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2017 22:35:37 -0400
+Received: by mail-pf0-f196.google.com with SMTP id n23so12868113pfb.3
+        for <git@vger.kernel.org>; Sun, 14 May 2017 19:35:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=2Ai7ddaP4SvBqaqOWFW3pwj2Byv+kmjpxRee6QI2X9U=;
-        b=APUbDXxJrdIrAPUQUPiPO6nGvnqz8UTRoiiT2+WzwOek3793bdkvoZ9GueF3nsWrr2
-         SBAnJngJyMbMFbZJrhPj0/hk1dFrwvXz5r4R+iW8kA1tHMi8sJGsezpkSWDbeqedGTc/
-         KpIb/+8uVxGTEV9pmtxOVYOPJVd9eXhV0eetei0QrmBMEbvQ3JrtrS53LLkpHC9f3T3O
-         VZouVqMCZTb/ir0HU5pIiY6dszAw5qK1zk3KsmOpOptp3b9pAmRghIIlE9lEDxMB4G/u
-         pBdfLnDoU9DuFUbVGRr92ZVRABlOTKlfIUEb3ARj6ZL0LIWcQqqG7lwTPiX9wEr17MfK
-         /uSA==
+        bh=EpuVZP618525IGtq82eOuQ4ehUE6w/k3inGBgXgHPWs=;
+        b=azg7EoGj2ck3agAzVHBp6VzM4I+1RxqmwZg/nxGkj5Syi1ox5RqPqj9EnxYwl1OEOn
+         pbLkAFL8t/+xCFW0PxZ3cgqETUkZeDW7R5HqZ4Zf3PDTWXUtwTu3YscV8eHzhNHcqDUT
+         Nl9iOTMVag5WBJvM/yVZsa/8xp9N+xn7vsOISULCOENzpyvo7wgjWpgBPyqItTLth/i8
+         QV7SsfpNO1LLJmlQmWpD68ntLOSprgq8wqJUveXTsWhpTjQeJUi3Wd8PO9xc2JBUU9h6
+         hoALOY9IEQgvAKyTwTYGscWIyoL4FXn0r8UUyLKrBnS2FOSpHaPS/Yw9xd06rfdMvl9Y
+         +mWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=2Ai7ddaP4SvBqaqOWFW3pwj2Byv+kmjpxRee6QI2X9U=;
-        b=WhxeDCE+EsQbqkFvrnP7EQGWbJNLifV54mwYKweU2ZD20kCh3jqHGB5u7En4HmMeVE
-         ezBU8/4rbyreyb8gwqpXvfBn/09vX3ach0dysO73DqfCOxvEdh8/3Zk7xZpKpquCleNI
-         HSiNO7FSJiItiRXbSY1E2PJTwZrsKiK4kzmbkY+dODWB45NgPCtqBccaffuWJoFWZPiM
-         LFBbUvlYrOE8eFpO45deSmg0l5nuwXeiM1kkuxxJONSaCeHYLpB9LTZim2l2Y9p0pT/S
-         DAOQTLXC3rjKulNzgtnayCz4jk/3kxMEIp0zDm5ZUa8bp7fNCp9dl0kHpoVn8TGFKFXR
-         3KPg==
-X-Gm-Message-State: AODbwcBeRcDzD8oGq4acbImTHHpEI2Zc4oQQK5fa41fYnga9H+v03GSl
-        cP5hs3519+DaHQ==
-X-Received: by 10.99.116.7 with SMTP id p7mr3722760pgc.162.1494815323646;
-        Sun, 14 May 2017 19:28:43 -0700 (PDT)
+        bh=EpuVZP618525IGtq82eOuQ4ehUE6w/k3inGBgXgHPWs=;
+        b=PJYVXaZjrsW7obADlAF3+5kXqjEwHKQcLkEFPaGkIJEZnBT48ATYl0yStm+NEQEC55
+         BxqCapt41sxObx1IJtpxkkZQhWbcr4+BP0wfXyK415GmzIfwn0UAuS5uo8EPGTkFAJb3
+         vOy03J4iq+uTLVlCu0zZ5WgKxODTQUWk1gqdp7/85Clq4+atiIqykhFjEmawh7fZh/d0
+         ZlrXdk3ksA4CmRL+NkzsK2+gxGY4eYpQCWnqtMHtk1+xoMjbEk/b08I3xm9flkWMAsDy
+         ESQko2F+0vMr55ihV9IzF7paFXy9DsezC3rRozHtmv0alTp8DZEaA7wD9h8wZNrAOUqE
+         2QQg==
+X-Gm-Message-State: AODbwcDqLxRkyhaXNoc2WSdRWGW6lo/K0Vn/dZ6zFN7QAZTQHWd2slS/
+        zWNlN2udhlM7U7k7k5U=
+X-Received: by 10.99.124.75 with SMTP id l11mr3784783pgn.211.1494815736537;
+        Sun, 14 May 2017 19:35:36 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b170:f9ed:5f25:7ab5])
-        by smtp.gmail.com with ESMTPSA id n65sm17260149pga.8.2017.05.14.19.28.42
+        by smtp.gmail.com with ESMTPSA id d13sm17089728pfl.12.2017.05.14.19.35.35
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 14 May 2017 19:28:42 -0700 (PDT)
+        Sun, 14 May 2017 19:35:35 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Josh Hagins <hagins.josh@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] usage.c: add BUG() function
-References: <20170513032414.mfrwabt4hovujde2@sigill.intra.peff.net>
-        <20170513032850.zeru4cm2l7i23rkc@sigill.intra.peff.net>
-        <20170513035503.cubqhzcvhifp54yg@sigill.intra.peff.net>
-Date:   Mon, 15 May 2017 11:28:42 +0900
-In-Reply-To: <20170513035503.cubqhzcvhifp54yg@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 12 May 2017 23:55:03 -0400")
-Message-ID: <xmqq37c6yht1.fsf@gitster.mtv.corp.google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3] builtin/log: honor log.decorate
+References: <20170512221221.406645-1-sandals@crustytoothpaste.net>
+        <20170514180058.842315-1-sandals@crustytoothpaste.net>
+Date:   Mon, 15 May 2017 11:35:34 +0900
+In-Reply-To: <20170514180058.842315-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Sun, 14 May 2017 18:00:58 +0000")
+Message-ID: <xmqqy3tyx2x5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,49 +66,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On Fri, May 12, 2017 at 11:28:50PM -0400, Jeff King wrote:
+> The recent change that introduced autodecorating of refs accidentally
+> broke the ability of users to set log.decorate = false to override it.
+> When the git_log_config was traversed a second time with an option other
+> than log.decorate, the decoration style would be set to the automatic
+> style, even if the user had already overridden it.  Instead of setting
+> the option in config parsing, set it in init_log_defaults instead.
 >
->> +static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_list params)
->> +{
->> +	char prefix[256];
->> +
->> +	/* truncation via snprintf is OK here */
->> +	if (file)
->> +		snprintf(prefix, sizeof(prefix), "BUG: %s:%d: ", file, line);
->> +	else
->> +		snprintf(prefix, sizeof(prefix), "BUG: ");
->> +
->> +	vreportf(prefix, fmt, params);
->> +	abort();
->> +}
+> Add a test for this case.  The actual additional config option doesn't
+> matter, but it needs to be something not already set in the
+> configuration file.
 >
-> I used vreportf() here to match die(). But the two things that function
-> does are:
->
->   1. Respect error_handle. But after bw/forking-and-threading is merged,
->      nobody will ever set error_handle (and I just sent a patch to drop
->      it entirely).
->
->   2. Quotes non-printable characters. I don't know how useful this is.
->      Most of the assertion messages are pretty vanilla (because anything
->      that relies on user input probably should be a regular die, not an
->      assertion failure). But a few of them do actually print arbitrary
->      strings in a reasonable way (e.g., a BUG() which is handling user
->      string which was supposed to be vetted by an earlier function is
->      still a reasonable assertion, but it's useful to show the string).
->
-> So an alternative would be just:
->
->   fprintf(stderr, "BUG: ");
->   if (file)
-> 	fprintf(stderr, "%s:%d ", file, line);
->   vfprintf(stderr, fmt, params);
->   fputc('\n', stderr);
->
-> which is perhaps a bit simpler (not much in lines of code, but there's
-> no extra buffer to reason about). But given the discussion in (2) above,
-> it's probably worth continuing to use vreportf.
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> Changes from v2:
+> * Add a test.  I tested that the config parsing both works with
+>   additional options and also can be overridden from the command line.
 
-Yeah, that does sound sensible.  Thanks.
+Thanks, all.
+
+Will queue with Acked-by by Alex and Reviewed-by by Jonathan.
+
+
+>  builtin/log.c  |  4 ++--
+>  t/t4202-log.sh | 12 ++++++++++++
+>  2 files changed, 14 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/log.c b/builtin/log.c
+> index b3b10cc1e..ec3258368 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -110,6 +110,8 @@ static void init_log_defaults(void)
+>  {
+>  	init_grep_defaults();
+>  	init_diff_ui_defaults();
+> +
+> +	decoration_style = auto_decoration_style();
+>  }
+>  
+>  static void cmd_log_init_defaults(struct rev_info *rev)
+> @@ -410,8 +412,6 @@ static int git_log_config(const char *var, const char *value, void *cb)
+>  		if (decoration_style < 0)
+>  			decoration_style = 0; /* maybe warn? */
+>  		return 0;
+> -	} else {
+> -		decoration_style = auto_decoration_style();
+>  	}
+>  	if (!strcmp(var, "log.showroot")) {
+>  		default_show_root = git_config_bool(var, value);
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index f57799071..1c7d6729c 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -577,6 +577,18 @@ test_expect_success 'log.decorate configuration' '
+>  
+>  '
+>  
+> +test_expect_success 'log.decorate config parsing' '
+> +	git log --oneline --decorate=full >expect.full &&
+> +	git log --oneline --decorate=short >expect.short &&
+> +
+> +	test_config log.decorate full &&
+> +	test_config log.mailmap true &&
+> +	git log --oneline >actual &&
+> +	test_cmp expect.full actual &&
+> +	git log --oneline --decorate=short >actual &&
+> +	test_cmp expect.short actual
+> +'
+> +
+>  test_expect_success TTY 'log output on a TTY' '
+>  	git log --oneline --decorate >expect.short &&
+>  
