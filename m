@@ -2,95 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86022201A7
-	for <e@80x24.org>; Mon, 15 May 2017 19:45:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84915201A7
+	for <e@80x24.org>; Mon, 15 May 2017 19:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965551AbdEOTpx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 15:45:53 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:34414 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965374AbdEOTpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 15:45:52 -0400
-Received: by mail-pf0-f178.google.com with SMTP id 9so28233337pfj.1
-        for <git@vger.kernel.org>; Mon, 15 May 2017 12:45:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dDyiDOP2LPTGP3avV6P91nA9gwR5S+FQ64hUmEpJonA=;
-        b=VDz47TEwMI4KlvzzfZcOWnKJtEkR1/OvlVjkrooDw+lk7ZrpxRcl0MdBxr0WX/54aD
-         w5jesUVNtKu4bMcVo83IfyClW1ZpwAW0e11RodhuVgT7hYAGnkXHtFAFX3/eVd7tbD3D
-         jprQWDG+FBZLqiHqkmI2AEK99tVoVFCIGoXe8TOTJEQQg7EEnqNqAoLJOUepaRuAcNQc
-         I1I/XkQ9Y2MEKTUaceSikwwhh5YGWQ8Eo/PzHJbL9c6sh5aaPJiaZUh/a8xFWjBZ6wW5
-         PnVUiRLDoA4rtpnDYAOI4BxDeE03JadWHI1PConOw6Vk/LeTJX47606T3VTojKVAhk1Q
-         5J6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dDyiDOP2LPTGP3avV6P91nA9gwR5S+FQ64hUmEpJonA=;
-        b=CavSi1dCjSLt44Zkp08II3j3exsw68ePeFmraLBxLLJ24fg+2Es+bUD3sxnuQdZrOM
-         nGjkOws+xDzRYk2QloBypVvS6W4fsyvVqyrx1odYiyhGZQZVdgey2GZdt282uvoSU2zX
-         9Qih925sKxtgygOTVv1ffpP7Cl+xRnAkc0/Co9g0DFaeTmCeC6pABfbaN20ISyLpl+Ox
-         9aEGVo0rCcn1GhAISs/Vz+pYQkGeIK/Aam+boIiwqZpKOOiD/e1j3IlRpkYk+kb9wZgj
-         QXZPen69mKvyv5v1irRyDAlrCSM5QJerozbMySpwrYQMGuFf75/b+1WX0axUI1GCVy1h
-         cIYQ==
-X-Gm-Message-State: AODbwcALBX9g7bGtD/g/1puvNjgHxclUdvQxVXCDfprJMMnwo8YuJfrU
-        F/c074sc6CHfVGNx
-X-Received: by 10.98.163.152 with SMTP id q24mr8050851pfl.217.1494877551294;
-        Mon, 15 May 2017 12:45:51 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:8923:f8dd:f0f0:f864])
-        by smtp.gmail.com with ESMTPSA id v63sm14570452pfi.133.2017.05.15.12.45.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 15 May 2017 12:45:50 -0700 (PDT)
-Date:   Mon, 15 May 2017 12:45:49 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 03/19] diff.c: drop 'nofirst' from emit_line_0
-Message-ID: <20170515194549.GD79147@google.com>
-References: <20170514040117.25865-1-sbeller@google.com>
- <20170514040117.25865-4-sbeller@google.com>
- <20170515192242.GB79147@google.com>
- <CAGZ79kZMHuk8g7wwwoDxBOG17Vo3P0s9v9bwzpwy5WnuNUogtw@mail.gmail.com>
+        id S966556AbdEOTu4 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 15 May 2017 15:50:56 -0400
+Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:41939 "EHLO
+        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932677AbdEOTuz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 15:50:55 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id D02891000D8;
+        Mon, 15 May 2017 19:50:53 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id K-YOLxxLyn9w; Mon, 15 May 2017 19:50:53 +0000 (GMT)
+Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id BC23D80035;
+        Mon, 15 May 2017 19:50:53 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Mon, 15 May 2017 19:50:53 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
+ 15.00.1263.000; Mon, 15 May 2017 19:50:53 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Ben Peart' <peartben@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "gitster@pobox.com" <gitster@pobox.com>,
+        "benpeart@microsoft.com" <benpeart@microsoft.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "johannes.schindelin@gmx.de" <johannes.schindelin@gmx.de>,
+        "peff@peff.net" <peff@peff.net>
+Subject: RE: [PATCH v1 5/5] Add a sample query-fsmonitor hook script that
+ integrates with the cross platform Watchman file watching service.
+Thread-Topic: [PATCH v1 5/5] Add a sample query-fsmonitor hook script that
+ integrates with the cross platform Watchman file watching service.
+Thread-Index: AQHSza90VZIRcf+aS0Cz7gtDriFBZaH1xfKg
+Date:   Mon, 15 May 2017 19:50:53 +0000
+Message-ID: <fb609e259c714469b5528888e14c2e3a@exmbdft7.ad.twosigma.com>
+References: <20170515191347.1892-1-benpeart@microsoft.com>
+ <20170515191347.1892-6-benpeart@microsoft.com>
+In-Reply-To: <20170515191347.1892-6-benpeart@microsoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.11]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZMHuk8g7wwwoDxBOG17Vo3P0s9v9bwzpwy5WnuNUogtw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/15, Stefan Beller wrote:
-> On Mon, May 15, 2017 at 12:22 PM, Brandon Williams <bmwill@google.com> wrote:
-> 
-> > Does the order of newline/carriage return always the same?
-> 
-> https://en.wikipedia.org/wiki/Newline
-> 
-> There are operating systems that like it the other way round.
-> The BBC micro is no longer relevant (IMHO), but RISC OS
-> spooled text output *may* be relevant as they released a stable
-> version not that long ago.
-> 
-> But I would think this code would have issues with RISC OS
-> text spooling without this patch as well.
-> 
-> Stefan
 
-Fair enough, its not relevant to the series.  I was just pointing it
-out.
 
--- 
-Brandon Williams
+> -----Original Message-----
+> From: Ben Peart [mailto:peartben@gmail.com]
+> Sent: Monday, May 15, 2017 3:14 PM
+> To: git@vger.kernel.org
+> Cc: gitster@pobox.com; benpeart@microsoft.com; pclouds@gmail.com;
+> johannes.schindelin@gmx.de; David Turner <David.Turner@twosigma.com>;
+> peff@peff.net
+> Subject: [PATCH v1 5/5] Add a sample query-fsmonitor hook script that
+> integrates with the cross platform Watchman file watching service.
+> 
+> To use the script:
+> 
+> Download and install Watchman from https://facebook.github.io/watchman/
+> and instruct Watchman to watch your working directory for changes
+> ('watchman watch-project /usr/src/git').
+> 
+> Rename the sample integration hook from query-fsmonitor.sample to query-
+> fsmonitor.
+> 
+> Configure git to use the extension ('git config core.fsmonitor true') and
+> optionally turn on the untracked cache for optimal performance ('git config
+> core.untrackedcache true').
+> 
+> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  templates/hooks--query-fsmonitor.sample | 27
+> +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+>  create mode 100644 templates/hooks--query-fsmonitor.sample
+> 
+> diff --git a/templates/hooks--query-fsmonitor.sample b/templates/hooks--
+> query-fsmonitor.sample
+> new file mode 100644
+> index 0000000000..4bd22f21d8
+> --- /dev/null
+> +++ b/templates/hooks--query-fsmonitor.sample
+> @@ -0,0 +1,27 @@
+> +#!/bin/sh
+> +#
+> +# An example hook script to integrate Watchman #
+> +(https://facebook.github.io/watchman/) with git to provide fast # git
+> +status.
+> +#
+> +# The hook is passed a time_t formatted as a string and outputs to #
+> +stdout all files that have been modified since the given time.
+> +# Paths must be relative to the root of the working tree and #
+> +separated by a single NUL.
+> +#
+> +# To enable this hook, rename this file to "query-fsmonitor"
+> +
+> +# Convert unix style paths to escaped Windows style paths case "$(uname
+> +-s)" in
+> +MINGW*|MSYS_NT*)
+> +  GIT_WORK_TREE="$(cygpath -aw "$PWD" | sed 's,\\,\\\\,g')"
+> +  ;;
+> +*)
+> +  GIT_WORK_TREE="$PWD"
+> +  ;;
+> +esac
+> +
+> +# Query Watchman for all the changes since the requested time echo
+> +"[\"query\", \"$GIT_WORK_TREE\", {\"since\": $1,
+> +\"fields\":[\"name\"]}]" | \ watchman -j | \ perl -e 'use JSON::PP; my
+> +$o = JSON::PP->new->utf8->decode(join("", <>)); die "Watchman: $o-
+> >{'error'}.\nFalling back to scanning...\n" if defined($o->{"error"});
+> print(join("\0", @{$o->{"files"}}));'
+
+Last time I checked, the argument to 'since' was not a time_t -- it was a 
+watchman clock spec.  Have you tested this?  Does it work?
+
