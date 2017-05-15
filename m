@@ -2,108 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7770201A7
-	for <e@80x24.org>; Mon, 15 May 2017 20:26:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA0A5201A7
+	for <e@80x24.org>; Mon, 15 May 2017 20:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933527AbdEOU0k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 16:26:40 -0400
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:35568 "EHLO
-        mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933188AbdEOU0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 16:26:39 -0400
-Received: by mail-vk0-f49.google.com with SMTP id h16so54853607vkd.2
-        for <git@vger.kernel.org>; Mon, 15 May 2017 13:26:39 -0700 (PDT)
+        id S1755760AbdEOUrM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 16:47:12 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:34173 "EHLO
+        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750877AbdEOUrK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 16:47:10 -0400
+Received: by mail-io0-f173.google.com with SMTP id k91so81570499ioi.1
+        for <git@vger.kernel.org>; Mon, 15 May 2017 13:47:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=SrHBT4b0a2QrqHgygRiIe/SOIEjMwTFTcwswkiR2Fr8=;
-        b=t+7l25hOw5NFF80FbTl1xSZJ4iAxklJ8SpwUy/ia7SmFTF5QOdTxXVtY1abahEq/uh
-         b8hidJ0QzorJWiM33uiBp7Uayy82vc07ixksUeA1kaWhDWMO+WRIRBKmAxGHh6iCT1MC
-         t+ghnTMCVjV7oVLE+q0rHcECkj8j3dmfjLWaUt9Fz4cjHW/MTRzAbA5VsXEly7QmgXCc
-         c+Jvn5XP8VLduwVUDGnLnVn8iggO6NJ7+mpuMQiPTbp7OgXPMW+uT9GnQxruRcrln4fz
-         Hc3nJwabOyhrS3lMi2RdrR7o8EIgXPOYEkCCn9W+wrMT/p++iJNafAaV/bQLPOF3SACb
-         Sylw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=Hpkm+z9T0GK2+SWPZRfdmB3oJFykPG074i53JhGzrTg=;
+        b=szsDdbiX1cmWUtLYuwII1iSARMUp6ZHxpWHKjiyRdq8di7grc01bhPp3QCtRlJ6EYL
+         +fOneU8UKBiyQxNwWHDwP3lRKz/9PY7F4sXDazkumZvmYKnwfiAJ+ZWzzTTdLAcgUWq7
+         mGYYe+aM5Lozrfk4eAa+4FQ40/Ss+8qfplTRTeK/HhWq8nJ46Bz2k21jrnhMGkmT0Bek
+         3R6D5wQCjl4LyLBfcyamejxDUjAVcb8utfhVeh0hM3wUzRFH6yVMZA08wo1htu8watUM
+         d37VkI8mqSVPcIAHkQPDPNc2IULJAEl1JN0yyqpixuDLk+0Tpm0ELZCoGhI7DMHYU085
+         0Xbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=SrHBT4b0a2QrqHgygRiIe/SOIEjMwTFTcwswkiR2Fr8=;
-        b=U/o9tCEFerhnl52rmrHQ0O3tVvQ9RXQ03N2k7SxdGB7ms99050iiuiiX2PGTLMw7Rp
-         26UaWh0h6Jod72Qdt1RSMuGkPfMgUhgTNpuu+j8/mfDrxrZg+6A6BOHIyAknF3bneSHo
-         rc4Tmgqt/qj1+c4PY1sKvSkjnOGueuOXBN0ECcMCzYPgB9WcgM1oId8eNqE3iSWckn7e
-         V+LeHPnE3KlXnrXFMKEpZondR4c0TlK7AYRPlO7ecUKEn1u7ZlyHpOAfgDYzPV3IBdOo
-         nMPmUJBVA0YTUskqqyP9+j0BsH7WPNyI14DGu8zYcHfQ/izMHIWhP6u2DcaT5DzThF1N
-         Kasg==
-X-Gm-Message-State: AODbwcCInWoSXgMXj7XmDAfbghIt8UZxSV2FUwI8jql9hjbv9RT5Kpbm
-        N4Bkndn40AdrEbjZROLwraRWlU3W4g==
-X-Received: by 10.31.9.204 with SMTP id 195mr3894757vkj.115.1494879998216;
- Mon, 15 May 2017 13:26:38 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=Hpkm+z9T0GK2+SWPZRfdmB3oJFykPG074i53JhGzrTg=;
+        b=uhnKDoA+Y9aklZgUX+ZI/BfRkgHT1Q8B8D3bCFrbjzC6D0nn7P3WT0Wrtw4B5xKR2D
+         R8/kB9Q6IhCsjPU6FD/VJhyvK5KbHotZAyrGkaAi1UUnyPz76BSe4GPm39gJVxAWwE4C
+         gOxtdHYQ7i0oUf2ZEoX3LIV1JkalJxqUos+DtYKLfrG32NWGBaBq6DEJGL2ZbVthxM5i
+         ryc8ygRYJZjgo5M9NF1npe4DUaERy+SK5yCXnQPcsrALIODmoqS24BNh3ih8QQ30PQA+
+         5U7AEI+8fGWohml+OhFZ0IXloM8ysqmJiA5fR5MX+uJ+uMU7oVTGEg8/A816h2GHmB91
+         ar7Q==
+X-Gm-Message-State: AODbwcCS1WgCwk/IszSODfgUxxVmkk5m/3YnXgo5MP1iDQTUJD01Lvgm
+        +EcLdZn94WwJZwlxhmUd9RX0Gnvtgy9ggLA=
+X-Received: by 10.107.138.21 with SMTP id m21mr7300722iod.80.1494881229645;
+ Mon, 15 May 2017 13:47:09 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.159.38.44 with HTTP; Mon, 15 May 2017 13:26:37 -0700 (PDT)
-From:   Prathamesh Chavan <pc44800@gmail.com>
-Date:   Tue, 16 May 2017 01:56:37 +0530
-Message-ID: <CAME+mvUxNQToNOsaqAzabmMuACKyDeviZ5CBZHjvm3yXTEmrZw@mail.gmail.com>
-Subject: [GSoC] Update: Week 0 (Community Bonding Period)
-To:     git <git@vger.kernel.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>
+Received: by 10.107.8.220 with HTTP; Mon, 15 May 2017 13:46:48 -0700 (PDT)
+In-Reply-To: <20170515155454.k6bu4psohr674oo7@sunbase.org>
+References: <20170515155454.k6bu4psohr674oo7@sunbase.org>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 15 May 2017 22:46:48 +0200
+Message-ID: <CACBZZX5C0fetqrqF+3hRciH+QoSPUezcP-A3OzsR=+S_hdztXQ@mail.gmail.com>
+Subject: Re: Git just passed Subversion on openhub.net
+To:     =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>,
+        Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SUMMARY OF MY PROJECT:
+On Mon, May 15, 2017 at 5:54 PM, =C3=98yvind A. Holm <sunny@sunbase.org> wr=
+ote:
+> openhub.net has a comparion of the number of public repositories on the
+> net, based on searching public hosting services on the net. Git just
+> passed Subversion after the number of Git repositories has exploded
+> lately. It seems as lots of new repositories were created after cpython
+> changed to Git in February.
+>
+> I've been tracking the development on
+> <https://www.openhub.net/repositories/compare> since 2014-08, and all
+> the data since then are availble on
+>
+>   https://gitlab.com/sunny256/openhub-repositories
+> and
+>   https://github.com/sunny256/openhub-repositories
+>
+> Current status:
 
-Git submodule subcommands are currently implemented by using shell script
-'git-submodule.sh'. There are several reasons why we'll prefer not to
-use the shell script. My project intends to convert the subcommands into
-C code, thus making them builtins. This will increase Git's portability
-and hence the efficiency of working with the git-submodule commands.
-Link to the complete proposal: [1]
+Thanks, that's really interesting!
 
-Mentors:
-Stefan Beller <sbeller@google.com>
-Christian Couder <christian.couder@gmail.com>
+>  https://gitlab.com/sunny256/openhub-repositories/blob/master/status.txt
 
-UPDATES:
+ITYM: https://github.com/sunny256/openhub-repositories/blob/master/status.t=
+xt
 
-As proposed, till 15th May I mostly spend my time updating my information
-about the codebase.
+> SVG graphs are available on
+>
+>   https://gitlab.com/sunny256/openhub-repositories/tree/master/graph
 
-Along with this, I even spend some time working on the patch:
-submodule: port subcommand foreach from shell to C[2]
-I even updated my patch by sending v3, and adding a test[3] to
-the existing ones. Currently, the patch passes all the test,
-except the newly added one.
+ITYM: https://github.com/sunny256/openhub-repositories/blob/master/graph/re=
+pos.svg
 
-PLAN FOR WEEK-1:
-
-As proposed, I would be starting to code officially from 16th May
-(tomorrow), and hence have plans for working as follows:
-
-Improvise submodule: port subcommand foreach from shell to C patch,
-as suggested and also work on getting the newly added test passed.
-I have recently received review from Brandon Williams <bmwill@google.com>
-and my mentor Stefan Beller <sbeller@google.com> which I am really
-thankful for, and wish to implement these suggestions as soon as
-possible.
-
-Adding to this, I am also waiting for the community's review on the
-issue regarding the $path variable, which I added along with the
-patch[2]. This issue is also highlighted by the new test[3] added.
-Any suggestion would be of huge help to work further on getting
-all the tests clear.
-
-Along with this, I plan to port submodule subcommand status.
-This required first porting of the function set_name_rev from
-shell to C, and then later port the subcommand.
-
-[1]: https://docs.google.com/document/d/1krxVLooWl--75Pot3dazhfygR3wCUUWZWzTXtK1L-xU/edit
-[2]: https://public-inbox.org/git/20170512114404.10008-2-pc44800@gmail.com/
-[3]: https://public-inbox.org/git/20170512114404.10008-1-pc44800@gmail.com/
+> Regards,
+> =C3=98yvind
+>
+> +-| =C3=98yvind A. Holm <sunny@sunbase.org> - N 60.37604=C2=B0 E 5.33339=
+=C2=B0 |-+
+> | OpenPGP: 0xFB0CBEE894A506E5 - http://www.sunbase.org/pubkey.asc |
+> | Fingerprint: A006 05D6 E676 B319 55E2  E77E FB0C BEE8 94A5 06E5 |
+> +------------| 27e0042e-3985-11e7-b3fc-db5caa6d21d3 |-------------+
