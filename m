@@ -6,57 +6,59 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E13F0201A4
-	for <e@80x24.org>; Mon, 15 May 2017 01:55:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DAD5201A4
+	for <e@80x24.org>; Mon, 15 May 2017 02:12:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754188AbdEOBzz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 May 2017 21:55:55 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36407 "EHLO
+        id S1755864AbdEOCMH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 May 2017 22:12:07 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36095 "EHLO
         mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753783AbdEOBzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2017 21:55:54 -0400
-Received: by mail-pf0-f196.google.com with SMTP id n23so12773403pfb.3
-        for <git@vger.kernel.org>; Sun, 14 May 2017 18:55:54 -0700 (PDT)
+        with ESMTP id S1751183AbdEOCMG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2017 22:12:06 -0400
+Received: by mail-pf0-f196.google.com with SMTP id n23so12813129pfb.3
+        for <git@vger.kernel.org>; Sun, 14 May 2017 19:12:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=bstD1J4NuA7nJ+k5T5rKWIRnEV1v9H6kIJrn8qGnwaM=;
-        b=B/MBEUVgf+TYRCck8ivWqcA1XSAf1c3Z3T3xLQD6T/gi6VdvwMcWXroUr0kdt7pqIZ
-         J3UqN/sE+r/5szYkhAwNoEYld2DbmJHiC1AuT4JLDECjN7t/A6FtceNfrERhnWxk13Mo
-         Y/RcGmTz+EyfSQDjK1ruDPxjkobGwiLcZb2F3sLKnzb3522N00Ku65rp+ewAPYBgIBLk
-         V/Ny5EKCbb1I1FoMLsRbUG8rfpoH26x0Y5YTEQV8h3kPrdOabAh98znrvi5/z2xzoJ4G
-         He2cS0JlT7+RpSa2YQ/nZZ+BAjk9GD+4jdXSPnXe56lW61q2Z3oIaur6LD4IlvGWiWKV
-         3ylw==
+        bh=tU/il+Kl+K3NDTPDaVqKGxbB0j3deo+qxhh2KWjo5Nc=;
+        b=df3T1hQ6vnaxIZtYvCY9p/lxNTWdZW7c04UV0Ef0BNtffdkFi0vS5ibKFmPqOHz5JQ
+         ivd3F0C/leijOMGjNPP1llDPN83QGVYlQQ/ic5ddhCdBZtwLz2FDvyNdr9WItI1N1BlV
+         Mli3QdbBWVIqon68JPSwvCeNK5ckkD2rdQsTpk0VuBHOYs3TpET/SENYSsJncriw/YHq
+         N6S6KYsP2SFLKgFGEFnwJttlkJnNDq6a0Ul+t5gnCgLV/uUw7aoyNN+KXnO53HM0H2QD
+         ws+/XVErvdS08OcB8EUQXL0ezPJK4p/QtXuIDDU74ef5AQrBlYzPJbTc6Tuat6AABtBh
+         N8Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=bstD1J4NuA7nJ+k5T5rKWIRnEV1v9H6kIJrn8qGnwaM=;
-        b=YX+wlw6gO0ZMPnRWAfgvqcXPRYPFMHCFcHjw6WSDwRO56jZqL3D5t+DamDpO1/99hV
-         7J2MwTQKRJkrt2qKpCGUg3TiGGZpnF94WfnOLenIadVqM8WKuhDiDwGbJwdi4RkRU/nD
-         cppYtQ4mlOqdnpXAI1cWInYNjjOUjRdGUdnAF4rargaaI+slBaVdYQsYxtyViIBdH01l
-         cIktfkWzGiXNu0qrYx0QFq74YouOqNwtSsqiHfYYlOPgejscQDpyaEsn0EkkwFp1ep1T
-         1Y9DxkxoiNEP+aP49xPpqNJ2kaGpeCP7FULF4YvWyeDZy46Z5Dug9TP+GNQzeP2VSTmx
-         GfNQ==
-X-Gm-Message-State: AODbwcBgaWc8MIh44ZjhMTIR/jeuhsjWdciXWWW2+69PXewmX93GP8Jc
-        JYV2ANvTxf1dqg==
-X-Received: by 10.98.214.90 with SMTP id r87mr3700160pfg.204.1494813353953;
-        Sun, 14 May 2017 18:55:53 -0700 (PDT)
+        bh=tU/il+Kl+K3NDTPDaVqKGxbB0j3deo+qxhh2KWjo5Nc=;
+        b=dYnLe83uAEk2cP2x9jMnpR2Sxq1TYdLFQmZfkTHf6HlA8HSqlu3qV5NzRp05HaYEj5
+         1jgO5pwcmh/pgY1ncP3DCAjNT7qjbOKNEeei27nKPDvkSlVz7bsiAf8xUE0w5nVbnkXX
+         4RXV3kYqwbMEGzoyy0O2OT8y4l+ejYDJDy4hcLlQ9b7u63WnZKJ/o1sspMXKbgnYQ9Bg
+         uwVYAFvHW8Qqhwl2+gtRIavCx2UHH0+I1mxTIHxrlDIfDFGhWbbMk9YE2hWI1XzVEx0B
+         /4tWh3MX9q6bCwqVlwZdcr3WRgRev3u7kd8S9XBPfGBZnd/THsz3gSapUDgeSTj0eHwU
+         biCw==
+X-Gm-Message-State: AODbwcCOUu1KG9ulWndhoIQvdjOb+d7YNuctDhXgLZAJSCo8i/kTpzR6
+        Zj5LZzY2wIuYMA==
+X-Received: by 10.99.175.8 with SMTP id w8mr3746073pge.170.1494814325646;
+        Sun, 14 May 2017 19:12:05 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b170:f9ed:5f25:7ab5])
-        by smtp.gmail.com with ESMTPSA id s63sm1637141pgb.40.2017.05.14.18.55.53
+        by smtp.gmail.com with ESMTPSA id n65sm17223882pga.8.2017.05.14.19.12.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 14 May 2017 18:55:53 -0700 (PDT)
+        Sun, 14 May 2017 19:12:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com
-Subject: Re: [PATCH v2] send-email: support validate hook
-References: <20170511193753.19594-1-jonathantanmy@google.com>
-        <20170512223827.21372-1-jonathantanmy@google.com>
-Date:   Mon, 15 May 2017 10:55:52 +0900
-In-Reply-To: <20170512223827.21372-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Fri, 12 May 2017 15:38:26 -0700")
-Message-ID: <xmqqk25iyjbr.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Brian Malehorn <bmalehorn@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] interpret-trailers: obey scissors lines
+References: <20170512090032.coddhlsrs6s3zm2f@sigill.intra.peff.net>
+        <20170514033923.12870-1-bmalehorn@gmail.com>
+        <20170514033923.12870-2-bmalehorn@gmail.com>
+        <20170514035652.rn5npxxflku6s5k4@sigill.intra.peff.net>
+Date:   Mon, 15 May 2017 11:12:03 +0900
+In-Reply-To: <20170514035652.rn5npxxflku6s5k4@sigill.intra.peff.net> (Jeff
+        King's message of "Sat, 13 May 2017 23:56:53 -0400")
+Message-ID: <xmqqfug6yiks.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,60 +67,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index 706091a56..b2514f4d4 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -447,6 +447,14 @@ rebase::
->  The commits are guaranteed to be listed in the order that they were
->  processed by rebase.
->  
-> +sendemail-validate
-> +~~~~~~~~~~~~~~~~~~
-> +
-> +This hook is invoked by 'git send-email'.  It takes a single parameter,
-> +the name of the file that holds the e-mail to be sent.  Exiting with a
-> +non-zero status causes 'git send-email' to abort before sending any
-> +e-mails.
-> +
+>> If a commit message is being editted as "verbose", it will contain a
+>> scissors string ("-- >8 --") and a diff:
+>> 
+>>     my subject
+>> 
+>>     # ------------------------ >8 ------------------------
+>>     # Do not touch the line above.
+>>     # Everything below will be removed.
+>>     diff --git a/foo.txt b/foo.txt
+>>     index 5716ca5..7601807 100644
+>>     --- a/foo.txt
+>>     +++ b/foo.txt
+>>     @@ -1 +1 @@
+>>     -bar
+>>     +baz
+>> 
+>> interpret-trailers doesn't interpret the scissors and therefore places
+>> trailer information after the diff. A simple reproduction is:
+>> 
+>>     git config commit.verbose true
+>>     GIT_EDITOR='git interpret-trailers --in-place --trailer Acked-by:me' \
+>>         git commit --amend
 
-I briefly wondered if an interface that allows only the name of the
-file will close the door to future enhancements, but in the end
-decided it is OK.  E.g. users may want "here is the contents, is it
-appropriate to be sent to this and that address?"---but this hook is
-meant to enhances/extends the existing "make sure the contents do
-not syntactically bust the technical limit of underlying transport",
-and sits at a place best to do so in the codeflow, i.e. before we
-even start to decide who the recipients of the patch are.  So those
-who want "given the contents of the patch and list of the recipients,
-decide if it is OK to send the patch to all of them" would be better
-served by a separate hook, not this one.
+So, "git commit --amend --verbose" prepares something like the above
+example and passes it to the GIT_EDITOR.  The problem description
+indicates that because interpret-trailers (which happens to be used
+as the GIT_EDITOR) treats the cut-line used by "git commit" just
+like any other random line, it tries to find the trailer block way
+below, in the patch text.  I agree that it is a problem.  But...
 
-> +	write_script .git/hooks/sendemail-validate <<-\EOF &&
-> +		# test that we have the correct environment variable, pwd, and
-> +		# argument
-> +		case "$GIT_DIR" in
-> +			*.git)
-> +				true
-> +				;;
-> +			*)
-> +				false
-> +				;;
-> +		esac &&
-> +		test -e 0001-add-master.patch &&
-> +		grep "add master" "$1"
-> +	EOF
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index 2de5f6cc6..2ce9c339d 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -1735,7 +1735,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>>  
+>>  	if (verbose || /* Truncate the message just before the diff, if any. */
+>>  	    cleanup_mode == CLEANUP_SCISSORS)
+>> -		wt_status_truncate_message_at_cut_line(&sb);
+>> +		strbuf_setlen(&sb,
+>> +			      wt_status_last_nonscissors_index(sb.buf, sb.len));
+>
+> This hunk surprised me at first (that we would need to touch commit.c at
+> all), but the refactoring makes sense.
 
-I'd squash in cosmetic changes to de-dent the contents of
-write_script (our standard style is that the body of the script is
-written as if the column at which write_script..EOF starts is the
-left-edge of the page; I think this file already has a few style
-violations that may want to be updated with a separate clean-up
-patch when the file is quiet), and then de-dent the case arm (case
-arms are indented at the same depth as case/esac).  Also I think we
-care that 0001-add-master.patch not just exists but is a file, so
-I'd do s/test -e/test -f/ while at it.
+This still surprises me.  If the problem is in interpret-trailers,
+why do we even need to touch cmd_commit()?  If GIT_EDITOR returns us
 
-Thanks.
+     my subject
+ 
+     Acked-by: me
+     # ------------------------ >8 ------------------------
+     # Do not touch the line above.
+     # Everything below will be removed.
+     diff --git a/foo.txt b/foo.txt
+     index 5716ca5..7601807 100644
+     --- a/foo.txt
+     +++ b/foo.txt
+     @@ -1 +1 @@
+     -bar
+     +baz
+
+after this patch fixes interpret-trailers, wouldn't the cmd_commit()
+function work as expected without any change?
+
+Puzzled.
+
+The proposed log message calls the cut-line "scissors", but that is
+probably a source of this confusion.  The cut-line and scissors do
+not have much in commmon.  For one thing, scissors is a mechanism to
+discard everything _ABOVE_ it.  The cut-line we see in this example,
+on the other hand, is about discarding everything _BELOW_ it.
