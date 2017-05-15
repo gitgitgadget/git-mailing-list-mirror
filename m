@@ -2,104 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65276201A7
-	for <e@80x24.org>; Mon, 15 May 2017 15:20:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5354201A7
+	for <e@80x24.org>; Mon, 15 May 2017 15:24:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966080AbdEOPUb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 11:20:31 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:34716 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966076AbdEOPU2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 11:20:28 -0400
-Received: by mail-io0-f175.google.com with SMTP id k91so75548516ioi.1
-        for <git@vger.kernel.org>; Mon, 15 May 2017 08:20:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=l5pF3tXRCxtDIBn6sBVUg5jpWno5el0DtvrIJrVOR3Q=;
-        b=VTLm6K3zYAv11376jbU4TEANSjOkgax0ixz/ipq6IPkbnDw+CN2/wWv6C0En5jk2IH
-         kIid6Hxk5A0SRhYuafT/mYPh2OX3MZMfMnxmgzxNPbVMQQ56b/43zCLrZtqAHb+FBoGD
-         t2T3gJ05eRTTYHvlv0ehfhxv7W2wrrMbZXf13zyBUrIJDjfCIn4eatjY3bQRfnQqQbtw
-         Oh/AU3w1NPWEHzHW3i4kdO1R9r6G1Qktthd1HzLxbpr49ukXRxh7ccJYduBNQmfry2od
-         FD3PAy0xbnFE51qx0SqiD4tW5g2VHCS9zhkayVQG+THKb7HynpkXxZfVqUMCGtLZUm6b
-         fCnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=l5pF3tXRCxtDIBn6sBVUg5jpWno5el0DtvrIJrVOR3Q=;
-        b=pxQHAdz0dPstwBcQlh4JijBRPbZ1CGE7a+t6imfKKaycocyjJuPigeJW6pT0C4sjf9
-         e3B72hevADc9xKByLbYzni22C4ay2BAswTDDs9E+YNVMiBEn2cOTmhlu3tTWvcrjT+NB
-         KmF5J/CLwFqmplvb/dh4y2kWxLLunkT45IRMFwoqZ8pbtT90GY+J4dP5VrKkfZN/yX6z
-         2LSwaQK9/C2MfXYPScXYZ4n2qSWNr3XsUfZeRrPnsGrdSzIQ/i5buhlx+ZoKYN/lmVaW
-         yQ87UgM75bzAQ9rUNm2poTSl3AMT/0zIBK4SwFEh5eHw+KkMGq8gadRsfWTbX4n9EQnv
-         xwdg==
-X-Gm-Message-State: AODbwcAQePhbJUN6EbFJ5qESp6pgqBWTKLaUwSJlE1fPrrGtRHI73C3I
-        /EWcWiEeA1KIBz4yvo4TIbQawpaBSg==
-X-Received: by 10.107.138.21 with SMTP id m21mr5855859iod.80.1494861622533;
- Mon, 15 May 2017 08:20:22 -0700 (PDT)
+        id S966151AbdEOPXy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 11:23:54 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59636 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S965928AbdEOPXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 11:23:52 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfSeH-1dlJhg2qCH-00p3AT; Mon, 15
+ May 2017 17:23:45 +0200
+Date:   Mon, 15 May 2017 17:23:44 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 0/2] Demonstrate and partially work around a gitattributes
+ problem
+Message-ID: <cover.1494861793.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Mon, 15 May 2017 08:20:01 -0700 (PDT)
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 15 May 2017 17:20:01 +0200
-Message-ID: <CACBZZX5d25UyGbb6=kPmzk_5-X0GMptN0kX_--aBADsDy-9kWw@mail.gmail.com>
-Subject: [PATCH/RFC] The new IncludeIf facility doesn't DWIM when the repo is symlinked
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:aZcRm4L4UJiw413kmmjUQgTTVQciWGCMu+9+S7mXUn3eRFCSfrO
+ UwpESZT3JTOm+mAJ7VC+jPhPF7fabGd2mVAyijQvGAS8pN8A+YD4IaesM9TaPP9scEvSAWS
+ bn9K6D23gECGlHy88GBf9ih0NtHYxBMxH7kzdRCIBj/DLZy8WiA8/CipYESsXHY3981kirC
+ +5/AxwjK1fc4htawmBvfw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tCYS9vmUaLs=:UZhVXmxFaCIILJI7/UlHCR
+ fUlAWuxs4EBWpNiml/jgrKsdBJqhtdHIIUP+IMV0pM7kroP6hj8fRDsJfBh7prjS9acRaCj8H
+ 7NRvpnY8cTAB/u5Ap/OvQyH50lNxZ7U+MiEw95c1FeRw9JDXzZ29qF7IUodXxbkaTw1dAid/R
+ ENy2CY1l05XlZFZU7yzBoxaXJW8ljgKY/lX1DlXm8LlRze0hJm6i896qeYpT4XJN1dgUNJryl
+ na2hKC+5am0h/n+T6s4iDlWPiJpKx9MFi1fOcLh3Zxw/6P0PVF0f/5XAZH/z+GrVrANAoCJGP
+ UHUnu9hpTmSu0wHbo2+CKWX/k3MsQQRNKMkZlPkR5qqhx713jnxu8s5R3TgSI790ZxZaWJPSh
+ zTnTgWD5C8NrU6p31+Ah9GdPKUqd5w0qrLxcwPvlFBVIWSIATAQMmbg8N7utgVAMm6hiZHSYU
+ uJHE9JJxriFLBwy2IWtAMh6E3b/vd1PD6UW409Ua64gTcLZSs47P/5vQo4f94o3wPti6XzPGh
+ 5GyMoAIzeEvOSKx1nhd+4qnLuvcGd2C3s2CyDQm4Qtem8ZcktPZQGp1JWvysqhHmnoQJlI6sR
+ xW5L7XiYvJY9hgBqrfX0z6rV5hxDswjhehduWwzM0Vbk3KicDSzlkusWD5lvwDk4f4abvDMt1
+ 00/bbdUTdCQ0VkCzxj1Ch0vO6JcRH3uh3syMs1/I2JRImL9N7c4ubVmy8WYHxt4eftJnurby+
+ T29pzauqvYcKXP6a9eWJpaaEsm8zcvetz3cN5ijl26Psvk0zAg9rKutpKS9F58w6mfDN77pa/
+ X7puSuQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have a ~/git_tree in my homedir that's symlinked to an external
-drive, and doing "gitdir:~/git_tree/" doesn't work, because instead of
-matching against ~/git_tree it's matched against
-/mnt/some-other-storage/.
+Granted, it is a bit of a less common use case to call
 
-Here's a WIP patch that makes this work for me, any reason I shouldn't
-finish this up & that we shouldn't be doing this? The doc don't say
-"we'll only match gitdir against the absolute resolved path" or
-anything like that, so until I checked out the implementation I didn't
-realize what was going on:
+	git diff <commit1>:<file1> <commit2>:<file2>
 
-diff --git a/config.c b/config.c
-index b4a3205da3..606acaa3f1 100644
---- a/config.c
-+++ b/config.c
-@@ -214,6 +214,7 @@ static int include_by_gitdir(const struct
-config_options *opts,
-        struct strbuf pattern = STRBUF_INIT;
-        int ret = 0, prefix;
-        const char *git_dir;
-+       int tried_absolute = 0;
+There are valid scenarios for such calls, of course.
 
-        if (opts->git_dir)
-                git_dir = opts->git_dir;
-@@ -226,6 +227,7 @@ static int include_by_gitdir(const struct
-config_options *opts,
-        strbuf_add(&pattern, cond, cond_len);
-        prefix = prepare_include_condition_pattern(&pattern);
+And sometimes, one may want to compare even files that are stored in
+subdirectories instead of the top-level directory. Example:
 
-+again:
-        if (prefix < 0)
-                goto done;
+	git diff cafebabe:t/README bee7e55:t/README
 
-@@ -245,6 +247,12 @@ static int include_by_gitdir(const struct
-config_options *opts,
-        ret = !wildmatch(pattern.buf + prefix, text.buf + prefix,
-                         icase ? WM_CASEFOLD : 0, NULL);
+Now, the surprising part is that Git tries to read a .gitattributes
+files interpreting the *entire* prefix `cafebabe:t/` as a *directory
+path*. I.e. it will try to read the *file* (not the blob)
+`cafebabe:t/.gitattributes`.
 
-+       if (!ret && !tried_absolute) {
-+               tried_absolute = 1;
-+               strbuf_reset(&text);
-+               strbuf_add_absolute_path(&text, git_dir);
-+               goto again;
-+       }
- done:
-        strbuf_release(&pattern);
-        strbuf_release(&text);
+A remarkable side effect prevents this from happening for files in the
+top-level directory: there is no slash in the argument, therefore the
+top-level .gitattributes (which have been read from the index/worktree
+already) is used.
+
+Unless, of course, one specifies the commit via a ref whose name
+contains slashes.
+
+As mentioned in the commit message of the patch demonstrating the
+problem, I fear that this issue is *really* hard to fix. Certainly too
+complicated for me alone.
+
+Side note: I was really, really surprised, in a very positive way, that
+Git handled the scenario gracefully where I *created* files with the
+actual file paths <commit1>:<file1> and <commit2>:<file2>, i.e. where
+`git diff <commit1>:<file1> <commit2>:<file2>` is ambiguous because it
+could refer to two objects or to two files. In this case, Git warns
+about the ambiguity (it is *slightly* misleading that it says to
+separate *revisions* using `--`, as we do not want to compare
+revisions... but it is definitely better than picking one side of the
+ambiguity and running with it).
+
+Git for Windows carries the second patch for ages already, and I would
+have contributed it much earlier if I had not been busy with other
+patches. The reason I submit it now is that it conflicts with Duy's
+fopen_or_warn() patch series.
+
+
+Johannes Schindelin (2):
+  gitattributes: demonstrate that Git tries to read a bogus file
+  mingw: Suppress warning that <commit>:.gitattributes does not exist
+
+ attr.c                |  2 +-
+ t/t0003-attributes.sh | 21 +++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+
+base-commit: b06d3643105c8758ed019125a4399cb7efdcce2c
+Published-As: https://github.com/dscho/git/releases/tag/no-commit-colon-gitattributes-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git no-commit-colon-gitattributes-v1
+-- 
+2.13.0.windows.1
+
