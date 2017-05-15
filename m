@@ -2,122 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91153201A7
-	for <e@80x24.org>; Mon, 15 May 2017 18:08:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00AF7201A7
+	for <e@80x24.org>; Mon, 15 May 2017 18:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934339AbdEOSIl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 14:08:41 -0400
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:33870 "EHLO
-        mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754602AbdEOSIk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 14:08:40 -0400
-Received: by mail-oi0-f47.google.com with SMTP id b204so140766271oii.1
-        for <git@vger.kernel.org>; Mon, 15 May 2017 11:08:40 -0700 (PDT)
+        id S1752391AbdEOSKS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 14:10:18 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34814 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751531AbdEOSKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 14:10:17 -0400
+Received: by mail-pf0-f181.google.com with SMTP id 9so27102576pfj.1
+        for <git@vger.kernel.org>; Mon, 15 May 2017 11:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=Q4Kb6T9S65EZK3AsJ8ZxhdSOBoSGB1bAfpzNqgxjS9U=;
-        b=Wo5AcqOhHqDULBUiJxMV+l+2LmWPxJT1kCeQXLCsBdP916EhnQsemHaGPx098703EE
-         TbgkO3gvykwn27pH5IHnIC7dJwVsjv8AXu7NF0RBICkgMVq94I267zulIH4wI6xyfc70
-         crdS4vkZfnYkqjGYwnIndUuknjV924CeYJM0DK9ldYMexE0E620T6Og4OjiFvxG12CQ9
-         76OmD7fDUTZUvJlF9kfq9KWp7/awDf6YWdE6nAUXDddqfcExwA0K5gYJVKZlPlp2IYKy
-         Roam9WhSAY8BcssfXG8t1kg1FZuNFGEHuIu1/zIUoSq/1BRqL9OUr/H15wZUeZfJTq/a
-         sEkQ==
+        d=google.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=tv0LILs9AfYnGS2og6CBl3q8kMRIbJEsxxrt5EawLxM=;
+        b=hu1n5BmfzhLQNYYwaQ2dA5+KPy0IMoOZa7eOw4XweWvxn1eokOY9oNVZu2Nm+ghxpB
+         RISOovRla6EfAWhgIYa2hqQVckODq6KFBbYzYTI/2nd7ozlZVjw9NxkLxH4QE8Tmykip
+         0adUFcqEleOdfTWpV8zppMdhqDA9+KDlg6/BflL3S/qE1Xs85I63q2z+jJUnz6wxipEd
+         MqWf4nervLfUhVN9LV4/6ZCJZahi4sS3NYwkseq7lLCLJOK6py1r8VAjaR7vB7j6WFFW
+         BkXkHRHuO4y87L9Yr63J8g7+9cmqKO0ph2DZvV0L0oc63VjJXPhLkmZgurWS6LuhD2wE
+         72Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=Q4Kb6T9S65EZK3AsJ8ZxhdSOBoSGB1bAfpzNqgxjS9U=;
-        b=N+pA8qh++rAIA8+WUlHiMEfxWzzqPz0bZZ4gxam4Fhkuhl61yehcT0IB2Ud90P+mhj
-         FbGNCpNblxC6bfZRkvJLYEheKHGGvsZppO75fHfrhmh1vG6LRyZ+SH66li5RcEQtF1hb
-         QGP0cGffTIPCUbO77s8tSOdbXOVjIr8g+ekJtqjqkiqapCe6dnF/9drUvxfu23CkUmzM
-         e25wK/KaIgarCZd7WwGhAETTE2RB39bQHayXCpg4Mid86Zyk3t8N92fAvF7MuId7XC3E
-         QMtDkqu1tunErrgrXfTSPWsbeRaJVv3mqpGZz7pTzwBArrQWFgRA2nPO+gStBVJbWevD
-         ak3w==
-X-Gm-Message-State: AODbwcD+AhLD82u0a3iG73/z9urhizgI9z1b8KHUxeZS+1helbDDExHS
-        VWHLA7I9TQXLUTHlbN/c5ToUv0w4Ww==
-X-Received: by 10.202.0.4 with SMTP id 4mr3260298oia.8.1494871719735; Mon, 15
- May 2017 11:08:39 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=tv0LILs9AfYnGS2og6CBl3q8kMRIbJEsxxrt5EawLxM=;
+        b=E4k9iq0ck/40QepPbw6yi8BZTyHslxcMfZIT90jsjErDANG94DQP9wIcqt2nUVuT3f
+         Lob3lPfjY7J+SFtlsrXQK4iiOz8BGcmNvj/dNp5MiQ7Pw9qsbFoWE/nUZnnnIduq8ChR
+         R25aE7lAkuFIq2X+xNGIwLOatN/4m7JPZxgGd0E8/sSAVcUn8E1LgzIULZyNS9792hs4
+         JGU7xpCnKKnvNbAyOHmk+b3xNgNwYy5ERwnXIth71aDlH05kuZiIEY5yAp4IjHeQtzsX
+         6ARuBF/BlYQfS5OD1k/svNwehAJQf4nGfugoXJnjNXy5Sq5k2CKz3OaXZYPzoIXe/nzk
+         C/CA==
+X-Gm-Message-State: AODbwcDqEwC54hNDTPyffk2I6JAYDNoPOet22eS9YL0Q6BL2IQXYvV+v
+        X35cWlpcj4Q3kTHw
+X-Received: by 10.99.23.102 with SMTP id 38mr7543581pgx.4.1494871816781;
+        Mon, 15 May 2017 11:10:16 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:f484:2515:b6cf:fcc0])
+        by smtp.gmail.com with ESMTPSA id z3sm21664939pfk.99.2017.05.15.11.10.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 May 2017 11:10:15 -0700 (PDT)
+Subject: Re: [PATCH v2] send-email: support validate hook
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20170511193753.19594-1-jonathantanmy@google.com>
+ <20170512223827.21372-1-jonathantanmy@google.com>
+ <xmqqk25iyjbr.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <a3ab7799-f849-2f9a-79d6-a0f4693dc7a7@google.com>
+Date:   Mon, 15 May 2017 11:10:14 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.157.54.53 with HTTP; Mon, 15 May 2017 11:08:39 -0700 (PDT)
-From:   Eric Rannaud <eric.rannaud@gmail.com>
-Date:   Mon, 15 May 2017 11:08:39 -0700
-Message-ID: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
-Subject: git rebase regression: cannot pass a shell expression directly to --exec
-To:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Jeremy Serror <jeremy.serror@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqk25iyjbr.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On 05/14/2017 06:55 PM, Junio C Hamano wrote:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>
+>> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+>> index 706091a56..b2514f4d4 100644
+>> --- a/Documentation/githooks.txt
+>> +++ b/Documentation/githooks.txt
+>> @@ -447,6 +447,14 @@ rebase::
+>>  The commits are guaranteed to be listed in the order that they were
+>>  processed by rebase.
+>>
+>> +sendemail-validate
+>> +~~~~~~~~~~~~~~~~~~
+>> +
+>> +This hook is invoked by 'git send-email'.  It takes a single parameter,
+>> +the name of the file that holds the e-mail to be sent.  Exiting with a
+>> +non-zero status causes 'git send-email' to abort before sending any
+>> +e-mails.
+>> +
+>
+> I briefly wondered if an interface that allows only the name of the
+> file will close the door to future enhancements, but in the end
+> decided it is OK.  E.g. users may want "here is the contents, is it
+> appropriate to be sent to this and that address?"---but this hook is
+> meant to enhances/extends the existing "make sure the contents do
+> not syntactically bust the technical limit of underlying transport",
+> and sits at a place best to do so in the codeflow, i.e. before we
+> even start to decide who the recipients of the patch are.  So those
+> who want "given the contents of the patch and list of the recipients,
+> decide if it is OK to send the patch to all of them" would be better
+> served by a separate hook, not this one.
+>
+>> +	write_script .git/hooks/sendemail-validate <<-\EOF &&
+>> +		# test that we have the correct environment variable, pwd, and
+>> +		# argument
+>> +		case "$GIT_DIR" in
+>> +			*.git)
+>> +				true
+>> +				;;
+>> +			*)
+>> +				false
+>> +				;;
+>> +		esac &&
+>> +		test -e 0001-add-master.patch &&
+>> +		grep "add master" "$1"
+>> +	EOF
+>
+> I'd squash in cosmetic changes to de-dent the contents of
+> write_script (our standard style is that the body of the script is
+> written as if the column at which write_script..EOF starts is the
+> left-edge of the page; I think this file already has a few style
+> violations that may want to be updated with a separate clean-up
+> patch when the file is quiet), and then de-dent the case arm (case
+> arms are indented at the same depth as case/esac).  Also I think we
+> care that 0001-add-master.patch not just exists but is a file, so
+> I'd do s/test -e/test -f/ while at it.
+>
+> Thanks.
 
-It used to be possible to run a sequence like:
-
-  foo() { echo X; }
-  export -f foo
-  git rebase --exec foo HEAD~10
-
-Since upgrading to 2.13.0, I had to update my scripts to run:
-
-  git rebase --exec "bash -c foo" HEAD~10
-
-I'm not sure if this was an intended change. Bisecting with the
-following script:
-
-  #!/usr/bin/env bash
-
-  make -j8 || exit 3
-
-  function foo() {
-          echo OK
-  }
-  export -f foo
-
-  pushd tmp
-  ../git --exec-path=.. rebase --exec foo HEAD^^
-  ret=$?
-  # Cleanup if failure
-  ../git --exec-path=.. rebase --abort &> /dev/null
-  popd
-  exit $ret
-
-It points to this commit:
-
-commit 18633e1a22a68bbe8e6311a1039d13ebbf6fd041 (refs/bisect/bad)
-Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date:   Thu Feb 9 23:23:11 2017 +0100
-
-    rebase -i: use the rebase--helper builtin
-
-    Now that the sequencer learned to process a "normal" interactive rebase,
-    we use it. The original shell script is still used for "non-normal"
-    interactive rebases, i.e. when --root or --preserve-merges was passed.
-
-    Please note that the --root option (via the $squash_onto variable) needs
-    special handling only for the very first command, hence it is still okay
-    to use the helper upon continue/skip.
-
-    Also please note that the --no-ff setting is volatile, i.e. when the
-    interactive rebase is interrupted at any stage, there is no record of
-    it. Therefore, we have to pass it from the shell script to the
-    rebase--helper.
-
-    Note: the test t3404 had to be adjusted because the the error messages
-    produced by the sequencer comply with our current convention to start with
-    a lower-case letter.
-
-    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-
-Thanks,
-Eric
+Thanks to you too. I agree with these changes - sorry, your previous 
+reply must have slipped my mind when I was writing v2.
