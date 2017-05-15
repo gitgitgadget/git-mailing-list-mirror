@@ -2,63 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47A95201A4
-	for <e@80x24.org>; Mon, 15 May 2017 03:59:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D92F201A4
+	for <e@80x24.org>; Mon, 15 May 2017 04:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756789AbdEOD7v (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 May 2017 23:59:51 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34963 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754028AbdEOD7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2017 23:59:50 -0400
-Received: by mail-pg0-f65.google.com with SMTP id i63so15282554pgd.2
-        for <git@vger.kernel.org>; Sun, 14 May 2017 20:59:49 -0700 (PDT)
+        id S1756885AbdEOEC2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 00:02:28 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35219 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751536AbdEOEC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 00:02:27 -0400
+Received: by mail-pg0-f66.google.com with SMTP id i63so15289895pgd.2
+        for <git@vger.kernel.org>; Sun, 14 May 2017 21:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=hnwH5f7xrLH0KMPQzk9BFWDD712cImXbmoJJwWtOZwQ=;
-        b=R0O/6zzzdczXF5yDIQa9HJRa2ax9xkr8hUeWQQvZ4EDLWNEF/d4/VfKy6STJU37J+c
-         33aQXUgcfEjzg09dydYUGUevH9BY3k4amOeAPH380K0/LZP4aGr15nvwcU8Xps3it5H5
-         Xgw7vtcmYxx7AzmxgbnGd69oCscdnp36lRMcY19lO1VHMkOzT+KVJuFPliibZW7v0Al9
-         bY7wo+oEd9JOqtvKUyjM6QyCDFuysCXvxnFUwmFKG2oSRc9s0+rphqrRu735wlA0H7Ts
-         AxfdPeWZZXPjISJzbAfIcn5fe0qm3tCmPjGOyHA//cIolfM9NxxU6w+C/IDFc0E7N6I9
-         QNVQ==
+        bh=ADiHmej6HMWozsWt6vkgGTb/+fm5kn4P0PK+ise0B8g=;
+        b=KrvmXGacJHE6mzKwlO1WCvQGK5pujUUshFOVoX1A7vKLipKKD9cLTogoV56K/wP4YN
+         KYyHu3p51qCN5b0SeqKjTh0LS+1eLzVsk1MeDg3HlK1ugBdcFYsjMwkDRFb9YwwO4UEY
+         lY6Rsv++GM8LwffnDHZLMcJdvZEVqq7jR1h7ZIB75FW9RDyBFzNkwkpNADSRQLpm9qro
+         b6YW2SX040kTjP0F12iTn39vyZPsCBcbo8wi5RsdtfrcZXw7RmOom24QM31PQl/WxerR
+         6mQ0PM6JitTTwgJYNcc9PvXEITMEweYXZ1kkHb27uMh6RMZzcAWGS5bjCwtYUirjucuF
+         13pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=hnwH5f7xrLH0KMPQzk9BFWDD712cImXbmoJJwWtOZwQ=;
-        b=bGYGOFCzx1UCj3VvQxnHsnhPBUtKfdsXv3yi/q0ARuEX9LtrASH1n7jnIKGaZq8ZaW
-         67Ixi7I09uWTp8RtiwviE8trV6Rdazd78nrw6KmZue1Wi6iSbJRbChpvOqK7ZkAfyqen
-         fX451aSq02QapeT1G6il74z0/PXZ51PjPmhJwtfIEJUTMgyTiXMOHNWkcmnfWoJmrNAJ
-         WkIvwsca2ysU6tpl7lRD3kzoMv5M/8wWbiWaZlRNwRmatbTYUlGyqCVppL4VW4dczwxi
-         P+hA1+CRUAxUC8IusPLKz+tTLdF65CDofCAda9ZWslxMtnGnh5wowrSuFguTN8bzxWHQ
-         AsXg==
-X-Gm-Message-State: AODbwcBHBVoHpkMh7MXn1wm9VOwhPgI+CEUivZRftxUnyevZ5bESIu6c
-        WSkbR1hKQhEJNQ==
-X-Received: by 10.98.223.195 with SMTP id d64mr4026595pfl.226.1494820788641;
-        Sun, 14 May 2017 20:59:48 -0700 (PDT)
+        bh=ADiHmej6HMWozsWt6vkgGTb/+fm5kn4P0PK+ise0B8g=;
+        b=SoGEy+7vJUCmWVxn/hl9LyIU2Hua0Zf28oc9WTWy1EK1idmMD3QvvlKiJ4lhfUrsAJ
+         NA6fdA27Ij39al8Ysb0/hE7I1HQYe0nGlqpdDJM9FZHBL93xqb7K9Li6ONmTm5tv+yXs
+         1f9oA0dx4IbVIGoiuUsPPIK3xTnP8YE5tXw+3VdTmgSWvMQn47BsgaTcHJLZCqq7YZ19
+         lrh+OVnPQhDLrTlm6op5EkrpDbg/Vdpe3YN+P9jUiui0mSq6HtLJXotKRE7whwQJYbEK
+         wAEaJ2l9toOm+e+gJCGpe3YrO2RWhqhtDm2OQP+wWNpRb0ej1P7tDkuNqcRMBj9MCLrx
+         zBrQ==
+X-Gm-Message-State: AODbwcDLjpGvVEWx2x2WG2Yv7nOrOZLo+0KYJgH24yku4YEXN81kK9U1
+        zgPwF6LZzHLVrw==
+X-Received: by 10.98.62.86 with SMTP id l83mr4149579pfa.114.1494820947083;
+        Sun, 14 May 2017 21:02:27 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b170:f9ed:5f25:7ab5])
-        by smtp.gmail.com with ESMTPSA id f24sm16004242pfk.66.2017.05.14.20.59.47
+        by smtp.gmail.com with ESMTPSA id m8sm16103199pga.34.2017.05.14.21.02.26
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 14 May 2017 20:59:47 -0700 (PDT)
+        Sun, 14 May 2017 21:02:26 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     xiaoqiang zhao <zxq_yx_007@163.com>
-Cc:     git@vger.kernel.org, viktorin@rehivetech.com, mst@kernel.org,
-        pbonzini@redhat.com, mina86@mina86.com, artagnon@gmail.com,
-        avarab@gmail.com
-Subject: Re: [PATCH v4] send-email: --batch-size to work around some SMTP server limit
-References: <20170513015726.20281-1-zxq_yx_007@163.com>
-Date:   Mon, 15 May 2017 12:59:47 +0900
-In-Reply-To: <20170513015726.20281-1-zxq_yx_007@163.com> (xiaoqiang zhao's
-        message of "Sat, 13 May 2017 09:57:26 +0800")
-Message-ID: <xmqqfug6wz0s.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
+        benpeart@microsoft.com, christian.couder@gmail.com,
+        larsxschneider@gmail.com
+Subject: Re: [PATCH v7 04/10] convert: move packet_write_line() into pkt-line as packet_writel()
+References: <20170505152802.6724-1-benpeart@microsoft.com>
+        <20170505152802.6724-5-benpeart@microsoft.com>
+        <20170513090457.s6gmqjdyrj4osmck@sigill.intra.peff.net>
+Date:   Mon, 15 May 2017 13:02:25 +0900
+In-Reply-To: <20170513090457.s6gmqjdyrj4osmck@sigill.intra.peff.net> (Jeff
+        King's message of "Sat, 13 May 2017 05:04:58 -0400")
+Message-ID: <xmqqbmquwywe.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,38 +68,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-xiaoqiang zhao <zxq_yx_007@163.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Some email servers (e.g. smtp.163.com) limit the number emails to be
-> sent per session(connection) and this will lead to a faliure when
-> sending many messages.
+> This isn't a new problem, but I noticed that this function should
+> probably get annotated to describe its interface.
 >
-> Teach send-email to disconnect after sending a number of messages
-> (configurable via the --batch-size=<num> option), wait for a few
-> seconds (configurable via the --relogin-delay=<seconds> option) and
-> reconnect, to work around such a limit.
+> Junio, can you pick up the patch below on top of Ben's series (or I'd be
+> fine if it were squashed into this patch)?
+
+Surely.  Thanks for a careful review.
+
 >
-> Also add this two configure option for git config command.
-
-s/configure/configuration/; "for git config command" is better left
-unsaid (too obvious).
-
-> Note:
->    Re-authentication will happen every $<batch-size> messages, so it
-> will be much more acceptable if you use some form of credential helper
-> (e.g. the 'sendemail.smtppass' config option), otherwise you will have
-> to retype password every time when asked.
-
-I think this deserves to be in the end-user documentation (i.e. the
-part of your patch that updates Documentation/git-send-email.txt).
-
-Other than that, looking good ;-)
-
-Thanks.
-
-> Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
+> -- >8 --
+> Subject: [PATCH] pkt-line: annotate packet_writel with LAST_ARG_MUST_BE_NULL
+>
+> packet_writel() takes a variable-sized list and reads to
+> the first NULL. Let's let the compiler know so that it can
+> help us catch mistakes in the callers.
+>
+> This should have been annotated similarly when it was a
+> static function, but it's doubly important now that the
+> function is available to the whole code-base.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  contrib/completion/git-completion.bash |  2 ++
->  git-send-email.perl                    | 18 ++++++++++++++++++
->  2 files changed, 20 insertions(+)
-
+>  pkt-line.h | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/pkt-line.h b/pkt-line.h
+> index b2965869a..450183b64 100644
+> --- a/pkt-line.h
+> +++ b/pkt-line.h
+> @@ -25,6 +25,7 @@ void packet_buf_flush(struct strbuf *buf);
+>  void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+>  int packet_flush_gently(int fd);
+>  int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+> +LAST_ARG_MUST_BE_NULL
+>  int packet_writel(int fd, const char *line, ...);
+>  int write_packetized_from_fd(int fd_in, int fd_out);
+>  int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
