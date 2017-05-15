@@ -2,87 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB316201A7
-	for <e@80x24.org>; Mon, 15 May 2017 12:19:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 192F2201A7
+	for <e@80x24.org>; Mon, 15 May 2017 12:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751253AbdEOMTj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 08:19:39 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50717 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750822AbdEOMTi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 08:19:38 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5dMm-1duLH624Bk-00xdvz; Mon, 15
- May 2017 14:19:28 +0200
-Date:   Mon, 15 May 2017 14:19:27 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] fixup! log: add exhaustive tests for pattern style
- options & config
-In-Reply-To: <xmqqbmquyiae.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1705151418000.146734@virtualbox>
-References: <92c10618c688bb8cb1f31ee2a93110c581974468.1494586245.git.johannes.schindelin@gmx.de> <CACBZZX7MXh_9mG1EROZVEEGapBwjzRWzr3S57f6rWLnQe9L+XA@mail.gmail.com> <xmqqbmquyiae.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752924AbdEOMXr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 08:23:47 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:34999 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751999AbdEOMXq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 08:23:46 -0400
+Received: by mail-qt0-f196.google.com with SMTP id r58so15179884qtb.2
+        for <git@vger.kernel.org>; Mon, 15 May 2017 05:23:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=56BBPIRql2rj2bhITCdObf1IZ+LCKK0vT4JUic+9hMQ=;
+        b=WfN60be9bR4KnJxwwvpvUE/hRUo6p/mvUu58BRPb8yUxFCI7bYp1fNAjwD5jClaU3B
+         NvH7cxKZcsFBLp/WwQA1KGhiH3PXWrgOaDr9afP4BkmNlIoj5LG/nk56CUBgtg2U5USU
+         QCh1KwKleu4Ok3FoPUXKvRYJh4fsuQd094C+9WDWBQVWVao9d24ylMQSvWO6fFz/1Ssb
+         fHfN45OvIMymnn4ggKJy16hBNCyQl86hE54ZG/xIupOyj6O2UKp9MWaXd2qiUMS7YeL1
+         1isC6y8xm1SQGx8VOBcAFdiHftOG3nqO9Bim8edRMXuTVJOSoLy/t6iW1P9HCxgZoo32
+         o1Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=56BBPIRql2rj2bhITCdObf1IZ+LCKK0vT4JUic+9hMQ=;
+        b=NygjfVeQ4CMTaHePIgD6hzE4vGPa8gc1pBFX4+tzap62e/7xVncWr5xT01cmQmJe5u
+         kwJNZUoT4veNhW6aCd1jImSB6a5Kzcc9sm62NApumEkpDPeyDodsKv2f0D55v+YbzUgR
+         m8v5hsn1JeGxjauO9bXuSOwkwgVkg4tslM91V4R1UJq2SAnfV45m/XeeUdW/bN4gQkwd
+         BZQT+Qxmi08JVXwMKFWW+YrqjUV9CUyYxrwGr+CuWBsnXubBpL5hFE+lE9yMNx1kLmJV
+         oNIy5qtuj5pIo5VIg4gv1OTmW3OJIn0B37iYcTUQaaW9REFf5iGIP1hRCiuczMJ5Sgac
+         nY/g==
+X-Gm-Message-State: AODbwcDK0ReTmgC/SHZhvRdP10cZL1hLlGVQhwf6K78hKsEb2JV8K2+d
+        8PjJ6beOpHyx0g==
+X-Received: by 10.200.49.75 with SMTP id h11mr5015442qtb.13.1494851025514;
+        Mon, 15 May 2017 05:23:45 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id y76sm8122414qka.51.2017.05.15.05.23.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 15 May 2017 05:23:44 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] tag: duplicate mention of --contains should mention --no-contains
+Date:   Mon, 15 May 2017 12:23:31 +0000
+Message-Id: <20170515122331.17348-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1285961049-1494850768=:146734"
-X-Provags-ID: V03:K0:8VJ7g3HmQPpeWS4WaCoKYl1omI0IUOB7s5oMt9UbGvhEYl8xWzB
- LcjXJK88r6ZhvHdLoKlsQXIGjGS4+egH/XoAgsXTEMjJYOtbTrpAatx4/K7lA9T8gfzpUKE
- XAAGT51b7ta8H3y6vKi9iW4nbGt+cPaPTYatdQ97PRifU4vTJMoKSAALUNi6MY22c7jLuPP
- pPsdS4OM7G26L7jI5M7Iw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:b6dPYLi05pg=:o1XcMwv0R9SKgLdYjXlzMG
- jUzEfnkNo1Of0DHhNK0DlOokuCb0HkXXKyDKzalBWl0yt5AdLtKeA9TFAgIjCP42JQZ2emulP
- TEtkc4IW1k1OYUtZzLelvxX/907EtlRo5fB3pLzD5pYnsWcJKooFz0uIiDvLWOg9bPXeOoE+A
- UNEA8aqd5Dg3FBF48vXnMvWpjncQpOo7mBiomkIdDdnAaTZQMSVuQyYluKNG5DNltLh8xxCDd
- 1xN2+vqRnEZlv/bPWSa91sqt22hKToLKZIEUlU2dfJKBTGEB6Bwt/c3mRq3xiDwh3KUk0MvWq
- WNkAAZ0FvzjJHI4zd29uKh1bkmnXSVSb6UKfZO0tMSys6LNhZ/g0kIuj7EfU5Lu1R61FW4z/h
- QuMEiUjgIrVtkrbKlpEFNf9mlYZFHy7ktwlctlw/Mu2yzIUKhILGkPr1oVj04YBpxQqyqawm2
- 4D1mq4oMXvZM/8ZnPRKuVCHv/kwtql1jlySi0TiosHM2bsy9CdydIZ3wTkY4OXg/qA+QcnlgD
- lbSW4vb+Z/mqVwrzyWvmPSLVqYVJOHX0m1ONj43ld+26X8OZDRDomGDSwwpBM50gFHZz7Fv+Z
- TZBg0TfEJQbaFuAZA3q4uo91ww2+pi7pvubvIDxUnQL1Y/GQ7gQjdExuhGkM6k6e+Nf2sysTt
- 4seQoo3Hvm9UZLdO/EwicWc2Mso02wzkFXdXxHFqkqKFNPBuxfR1Oe3aAL4oerN9PWoPDASKm
- 1iYNKF3VxBPaWsSsT9HvMVCychcxVb+mNDT3qCGbhqwFhFJkA7S1/mHFieNAbiD1pFr4Z2m6i
- Q1k1eu6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Fix a duplicate mention of --contains in the SYNOPSIS to mention
+--no-contains.
 
---8323329-1285961049-1494850768=:146734
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+This fixes an error introduced in my commit ac3f5a3468 ("ref-filter:
+add --no-contains option to tag/branch/for-each-ref", 2017-03-24).
 
-Hi Junio,
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/git-tag.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On Mon, 15 May 2017, Junio C Hamano wrote:
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index f8a0b787f4..1eb15afa1c 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>]
+ 	<tagname> [<commit> | <object>]
+ 'git tag' -d <tagname>...
+-'git tag' [-n[<num>]] -l [--contains <commit>] [--contains <commit>]
++'git tag' [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
+ 	[--points-at <object>] [--column[=<options>] | --no-column]
+ 	[--create-reflog] [--sort=<key>] [--format=<format>]
+ 	[--[no-]merged [<commit>]] [<pattern>...]
+-- 
+2.11.0
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->=20
-> > Thanks for the hotfix. I'll fix this in my v2, but do it differently
-> > in such a way that I can still run these tests on windows.
-> >
-> > I.e. the actual test here just needs these odd characters in the
-> > commit message. It's just an unintended implementation detail of
-> > test_commit that a tag is being created.
->=20
-> My knee-jerk reaction matched Dscho's, but grep is about contents,
-> and we should be able to test this if we used a sensible tagnames or
-> didn't use any.  Glad to see somebody can step back and think ;-)
-
-Maybe somebody should step back even further and think even more, as we
-could adjust test_commit to mangle the argument into a tag name that is
-legal even with a refs backend relying on NTFS.
-
-Ciao,
-Dscho
---8323329-1285961049-1494850768=:146734--
