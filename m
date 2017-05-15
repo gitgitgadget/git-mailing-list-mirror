@@ -2,99 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10105201A4
-	for <e@80x24.org>; Mon, 15 May 2017 03:33:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 913AE201A4
+	for <e@80x24.org>; Mon, 15 May 2017 03:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756156AbdEODdi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 14 May 2017 23:33:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51667 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754994AbdEODdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 14 May 2017 23:33:37 -0400
-Received: (qmail 20316 invoked by uid 109); 15 May 2017 03:33:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 May 2017 03:33:36 +0000
-Received: (qmail 12828 invoked by uid 111); 15 May 2017 03:34:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 14 May 2017 23:34:08 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 14 May 2017 23:33:33 -0400
-Date:   Sun, 14 May 2017 23:33:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brian Malehorn <bmalehorn@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] interpret-trailers: obey scissors lines
-Message-ID: <20170515033333.g25hdr4fgzuay536@sigill.intra.peff.net>
-References: <20170512090032.coddhlsrs6s3zm2f@sigill.intra.peff.net>
- <20170514033923.12870-1-bmalehorn@gmail.com>
- <20170514033923.12870-2-bmalehorn@gmail.com>
- <20170514035652.rn5npxxflku6s5k4@sigill.intra.peff.net>
- <xmqqfug6yiks.fsf@gitster.mtv.corp.google.com>
- <20170515030726.mmbb43zxqgtbrbuy@sigill.intra.peff.net>
- <xmqqpofax0af.fsf@gitster.mtv.corp.google.com>
+        id S1756974AbdEODs4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 14 May 2017 23:48:56 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:33105 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751536AbdEODsz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 14 May 2017 23:48:55 -0400
+Received: by mail-wr0-f173.google.com with SMTP id w50so72388619wrc.0
+        for <git@vger.kernel.org>; Sun, 14 May 2017 20:48:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Ihalo0Z1CTxVYTdI/kQ9cnl0ZcRAAe3MaXZdoxYWlag=;
+        b=BygRh+JVUd6RF9Hc4p6N3QqziHlPt6AKjSonWtWJ9wXKiKSJrsTN6NKtrEJpESfnNX
+         XRIe1es9PhLz6iwHsUTxpczqoejc9zifD4S3lMdEWfhMlabmMMYY1uuqQCqLPeZclayx
+         fIEYGsVpltSLdSmPkPjkyN7cW0+KsoUb47R6n/aTUHjn0OWIxTzyMiIqGUEialTi7jRO
+         xLNTV3AiStapEtOSjidUm7bmRBfC6gAZZnl4spqWYBky63F+Ej5mE9MWrNrx9FHA/YxW
+         aamvfQstfHrlND4+qZ1o5ANBWnDXMKj2dC00fqDRg6vD+mQ9lY0oMX0JblTmxIZ1hvXH
+         j9+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Ihalo0Z1CTxVYTdI/kQ9cnl0ZcRAAe3MaXZdoxYWlag=;
+        b=MZRB6emyuycGFkYBe2/97uReRAupaFzZQDrP4ZsAN9NQm5cv9bSz1akmGG3QBxdC9E
+         EhVtGJlUd4nFMFlKBXhBiprVI+/PdR1PldAWx1xFRhS/gBrGR5snEdzROTnXHgbFhHf9
+         30O/LRkfjUu632qwD05BvPxo2SzdNRv+sT0/rcSoKJ5DYVxZIPlP78kVv6Z7STDXKG7X
+         I+CpfNLJkLJ+WcHncBuD4IRx7n8qagTV7AzdM/Ki4DZQNnhKOZXTxQ4NaCI12+WEZLaS
+         kafEj4gS+B7iFL7003pwxKaKddoQ4O69mvzGETs5tyYeSiXHCX2ReMyXOCsnMV3dO5rG
+         Xp5Q==
+X-Gm-Message-State: AODbwcCSlGxr7SHYV4YTEruGtsgNuNCmFMz5wIkkMEQ7iQN8E+mnSZq3
+        JXaUmG0i0tnnfhfuUYMB4Dm1xq4uSw==
+X-Received: by 10.223.176.163 with SMTP id i32mr2994852wra.32.1494820134159;
+ Sun, 14 May 2017 20:48:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpofax0af.fsf@gitster.mtv.corp.google.com>
+Received: by 10.28.100.213 with HTTP; Sun, 14 May 2017 20:48:33 -0700 (PDT)
+In-Reply-To: <xmqqy3tyx2x5.fsf@gitster.mtv.corp.google.com>
+References: <20170512221221.406645-1-sandals@crustytoothpaste.net>
+ <20170514180058.842315-1-sandals@crustytoothpaste.net> <xmqqy3tyx2x5.fsf@gitster.mtv.corp.google.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Sun, 14 May 2017 21:48:33 -0600
+Message-ID: <CAMMLpeSpgfOFLV_WE6yQzp2aKta9DEt+Z5gDGDhwrEDzfqtwBg@mail.gmail.com>
+Subject: Re: [PATCH v3] builtin/log: honor log.decorate
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git mailing list <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 12:32:24PM +0900, Junio C Hamano wrote:
+2017-05-14 20:35 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>
+>> The recent change that introduced autodecorating of refs accidentally
+>> broke the ability of users to set log.decorate = false to override it.
+>> When the git_log_config was traversed a second time with an option other
+>> than log.decorate, the decoration style would be set to the automatic
+>> style, even if the user had already overridden it.  Instead of setting
+>> the option in config parsing, set it in init_log_defaults instead.
+>>
+>> Add a test for this case.  The actual additional config option doesn't
+>> matter, but it needs to be something not already set in the
+>> configuration file.
+>>
+>> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+>> ---
+>> Changes from v2:
+>> * Add a test.  I tested that the config parsing both works with
+>>   additional options and also can be overridden from the command line.
+>
+> Thanks, all.
+>
+> Will queue with Acked-by by Alex and Reviewed-by by Jonathan.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Mon, May 15, 2017 at 11:12:03AM +0900, Junio C Hamano wrote:
-> >
-> >> >> diff --git a/builtin/commit.c b/builtin/commit.c
-> >> >> index 2de5f6cc6..2ce9c339d 100644
-> >> >> --- a/builtin/commit.c
-> >> >> +++ b/builtin/commit.c
-> >> >> @@ -1735,7 +1735,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
-> >> >>  
-> >> >>  	if (verbose || /* Truncate the message just before the diff, if any. */
-> >> >>  	    cleanup_mode == CLEANUP_SCISSORS)
-> >> >> -		wt_status_truncate_message_at_cut_line(&sb);
-> >> >> +		strbuf_setlen(&sb,
-> >> >> +			      wt_status_last_nonscissors_index(sb.buf, sb.len));
-> >> >
-> >> > This hunk surprised me at first (that we would need to touch commit.c at
-> >> > all), but the refactoring makes sense.
-> >> 
-> >> This still surprises me.  If the problem is in interpret-trailers,
-> >> why do we even need to touch cmd_commit()?  If GIT_EDITOR returns us
-> >
-> > The behavior of cmd_commit() shouldn't be changed by the patch. But to
-> > make the interface suitable for the new callsite (which doesn't have a
-> > strbuf, but a ptr/len buffer), it needs to return the length rather than
-> > shortening the strbuf. We could leave in place:
-> >
-> >   void wt_status_truncate_message_at_cut_line(struct strbuf *sb)
-> >   {
-> > 	strbuf_setlen(sb, wt_status_last_nonscissors_index(sb->buf, sb->len));
-> >   }
-> >
-> > but it would only have this one caller.
-> >
-> > If I were doing the patch series, I'd probably have split that
-> > refactoring into its own patch and discussed the reason separately. I
-> > waffled on whether or not to ask Brian to do so (and obviously didn't in
-> > the end).
-> 
-> I suspect that you would have just explained "since there is only
-> one caller, let's open-code it" in the log message, without making
-> this a two-patch series, and that would also have been perfectly
-> understandable (and in this case probably preferrable).
-> 
-> So the patch text would be OK; it was surprising to have the change
-> without being explained, that's all.
+That sounds great, thank you.
 
-Yeah, I'd agree it could use a better explanation in the commit message.
-I was surprised to see it, too. Since both of us were surprised, that's
-probably a good indicator. :)
-
--Peff
+-Alex
