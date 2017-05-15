@@ -7,214 +7,145 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84F0A1FAA8
-	for <e@80x24.org>; Mon, 15 May 2017 11:06:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 623131FAA8
+	for <e@80x24.org>; Mon, 15 May 2017 11:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933959AbdEOLGe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 07:06:34 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33564 "EHLO
+        id S933344AbdEOLGq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 07:06:46 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36853 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755812AbdEOLGc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 07:06:32 -0400
-Received: by mail-wm0-f66.google.com with SMTP id y10so27473756wmh.0
-        for <git@vger.kernel.org>; Mon, 15 May 2017 04:06:26 -0700 (PDT)
+        with ESMTP id S933297AbdEOLGp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 07:06:45 -0400
+Received: by mail-wm0-f66.google.com with SMTP id u65so27277649wmu.3
+        for <git@vger.kernel.org>; Mon, 15 May 2017 04:06:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=B1m0hGcmeyhw8pLUgOQySd/CQmzdmgxGts9HxNvGjwA=;
-        b=Tf2ekEDWPn0unLBUO9eeAFXp+1eU2gmtb4Q1iMvEhI4otSlfyB06e0+v3XREg4X6V3
-         AZCWJFk+Fqg7TGeI3ci/Iz2IlUjFq0UNwSGu/fdO7yZ4fxeNR5KTas4jYSHC+GFd66Im
-         vsUBR3z4PzNz9Pp38A0g885KawSoLO17m2QPMk0Y1l6aAJ/JHaNK8kqR5SgQbn/8X35b
-         fKYrw6/pBuv/XQlkJbEILYn7Q0vxW9EVDEivdaUSiVGeuqeVSQ05Mp5i+tHF8qz2XTCW
-         RAkDSDQxP8mbGvf0E60M8orjSTMdZ6SwWkj7yOpQZm5SIwTxTbsv3QASC7MYT9lgtR76
-         4dzw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=YvN8ui4p/OE30uPBusF1N/UTzNcIQZETNYq+aWvyOEI=;
+        b=nv+9IgMu9cJvolyajR3PFS/zRBOZYrg+JNGej79jRwrrrxfjDO3Le+L17wddigYcka
+         IHt5MIMMkrjNXL1lsdRMzRTx8N3ZYC5BlcNlDX7iuz6WA/Z4o+3AZZCzOvs5BN9PiERu
+         xrXUY9NIPlcyvE89U8p18uetJxcMTaw3aIug0WGl09M/ldAntIRIIt369wbMWugpc/yX
+         lzTTlQCyg7tUuX+yZTLScp81s2BAq6qj1V670uBtVBnIkuFkHjwZ9sFjPM5zYBdxheE3
+         oCwgQnYUdtClavFMTsxw8TNGrUshVDkwNKOaZoUIeHFbefRcR2tW6HokGOwtfZ1XWf6p
+         ehIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=B1m0hGcmeyhw8pLUgOQySd/CQmzdmgxGts9HxNvGjwA=;
-        b=d27bY5VyKYatPhY52H0dFFoFG3BY0MM/f82/6r8g5pzMusZYUSYMXufsgUYPQVhDqG
-         2g/StuESk9BJaZIMjXCuqdyuNziWLQYDLwKj3+qfWTV1J4G4Z79YJcLQybFJ+RCqHfiy
-         qDi+NaBPgm6ZjCwXtZzIm+plvreS5ivKeGRxHor3JTsVy3YE0XtYHlwdgyw+KcUc2hTN
-         WQOoVsMqRCzvh+Oc4+YvBQ/I7NabctQ9kgku95pAzbx6fFJowMgkI2513EgU0fmPJwCx
-         0tOkL/2B71kiKb9xSYdEFYOOFnndJZF2E4qcL/7WFiOVN2GzpnBkEXmq4YQOHq4QJoF8
-         XPXQ==
-X-Gm-Message-State: AODbwcCBaRZ9DvzQVZTQrk3sOwWvEBI9GPaq32SBoDhQ2y7pdwvR8pbc
-        pq5pwzBJB7DpMA==
-X-Received: by 10.223.150.167 with SMTP id u36mr3816879wrb.184.1494846380751;
-        Mon, 15 May 2017 04:06:20 -0700 (PDT)
+         :references;
+        bh=YvN8ui4p/OE30uPBusF1N/UTzNcIQZETNYq+aWvyOEI=;
+        b=MDRljShNT6r2Hu65dNo086oObIdIVTJ9rZ6ZU3RWG78EZmduYFbvpHGv4l8dHwjUnh
+         +hOJ8+wh/VSQh++0Gm/9/FPgKqzqdAJcuDDhNdRSzSlkstP5Fk4mrvj5q2whuKIX8Ng9
+         j3t14IgsRy5IN3Tw4eo+/VlwcIl87BXa+r3/mqpQb+zZ3JpPi8cgmsXutSIKMYu6eLIx
+         pJuY5x/gnWpHbsk6RINEZ9JlKGUwmjl9UR6oVFIwmMTRQlsc2irFzhPV6lnjHnSXiiUL
+         ySEx3R/05GWsORHFJfhqGCHvxdDrx+QOGpxD2KSbVwyLyhWZaq/rwsupihzuWDGeGfu8
+         bOyg==
+X-Gm-Message-State: AODbwcAc2y2s/L8gs77esg8XTeHoGGST90eBzNFPkHGwK1GVgBS9vevl
+        RnZsvJ/q+toaog==
+X-Received: by 10.28.158.76 with SMTP id h73mr3781395wme.140.1494846403908;
+        Mon, 15 May 2017 04:06:43 -0700 (PDT)
 Received: from localhost.localdomain (62-165-238-151.pool.digikabel.hu. [62.165.238.151])
-        by smtp.gmail.com with ESMTPSA id 20sm10363191wmk.17.2017.05.15.04.06.19
+        by smtp.gmail.com with ESMTPSA id 20sm10363191wmk.17.2017.05.15.04.06.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 15 May 2017 04:06:20 -0700 (PDT)
+        Mon, 15 May 2017 04:06:42 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCHv3 1/4] clone: respect additional configured fetch refspecs during initial fetch
-Date:   Mon, 15 May 2017 13:05:54 +0200
-Message-Id: <20170515110557.11913-2-szeder.dev@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: [PATCHv3 3/4] remote: drop free_refspecs() function
+Date:   Mon, 15 May 2017 13:05:56 +0200
+Message-Id: <20170515110557.11913-4-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.13.0.35.g14b6294b1
 In-Reply-To: <20170515110557.11913-1-szeder.dev@gmail.com>
 References: <20170515110557.11913-1-szeder.dev@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The initial fetch during a clone doesn't transfer refs matching
-additional fetch refspecs given on the command line as configuration
-variables.  This contradicts to the documentation stating that
-configuration variables specified via 'git clone -c <key>=<value> ...'
-"take effect immediately after the repository is initialized, but
-before the remote history is fetched" and the given example
-specifically mentions "adding additional fetch refspecs to the origin
-remote".  Furthermore, one-shot configuration variables specified via
-'git -c <key>=<value> clone ...', though not written to the newly
-created repository's config file, live during the lifetime of the
-'clone' command, including the initial fetch.  This implies that any
-fetch refspecs specified this way should already be taken into account
-during the initial fetch.
+From: Jeff King <peff@peff.net>
 
-The reason is that the initial fetch is not a fully fledged 'git
-fetch' but a bunch of direct calls into the fetch/transport machinery,
-bypassing parts of 'git fetch' that processes configured fetch
-refspecs.  The configured refspecs are, however, read and parsed
-properly when clone calls remote.c:remote_get(), but it never looks at
-the parsed refspecs in the resulting 'struct remote'.
+We already have free_refspec(), a public function which does
+the same thing as the static free_refspecs(). Let's just
+keep one.  There are two minor differences between the
+functions:
 
-Modify clone to take the configured fetch refspecs into account to
-retrieve all matching refs during the initial fetch.  Note that the
-configuration at that point only includes the fetch refspecs specified
-by the user, but it doesn't include the default fetch refspec, so we
-have to append it manually at the end of the parsed refspecs array.
+  1. free_refspecs() is a noop when the refspec argument is
+     NULL. This probably doesn't matter in practice.  The
+     nr_refspec parameter would presumably be 0 in that
+     case, skipping the loop. And free(NULL) is explicitly
+     OK. But it doesn't hurt for us to port this extra
+     safety to free_refspec(), as one of the callers passes
+     a funny "i+1" count.
 
-Add tests to check that refspecs given both via 'git clone -c ...' and
-'git -c ... clone' retrieve all refs matching either the default or
-the additional refspecs, and that it works even when the user
-specifies the remote name via '--origin=<name>'.
+  2. The order of arguments is reversed between the two
+     functions. This patch uses the already-public order of
+     free_refspec(), as it matches the argument order on the
+     parsing side.
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/clone.c         | 20 +++++++++++++++-----
- t/t5611-clone-config.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 59 insertions(+), 5 deletions(-)
+ remote.c | 28 ++++++----------------------
+ 1 file changed, 6 insertions(+), 22 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index a35d62293..4144190da 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -520,7 +520,7 @@ static struct ref *find_remote_branch(const struct ref *refs, const char *branch
+diff --git a/remote.c b/remote.c
+index ad6c5424e..7918e0dac 100644
+--- a/remote.c
++++ b/remote.c
+@@ -473,26 +473,6 @@ static void read_config(void)
+ 	alias_all_urls();
  }
  
- static struct ref *wanted_peer_refs(const struct ref *refs,
--		struct refspec *refspec)
-+		struct refspec *refspec, unsigned int refspec_nr)
+-/*
+- * This function frees a refspec array.
+- * Warning: code paths should be checked to ensure that the src
+- *          and dst pointers are always freeable pointers as well
+- *          as the refspec pointer itself.
+- */
+-static void free_refspecs(struct refspec *refspec, int nr_refspec)
+-{
+-	int i;
+-
+-	if (!refspec)
+-		return;
+-
+-	for (i = 0; i < nr_refspec; i++) {
+-		free(refspec[i].src);
+-		free(refspec[i].dst);
+-	}
+-	free(refspec);
+-}
+-
+ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refspec, int fetch, int verify)
  {
- 	struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
- 	struct ref *local_refs = head;
-@@ -541,13 +541,18 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
- 			warning(_("Could not find remote branch %s to clone."),
- 				option_branch);
- 		else {
--			get_fetch_map(remote_head, refspec, &tail, 0);
-+			unsigned int i;
-+			for (i = 0; i < refspec_nr; i++)
-+				get_fetch_map(remote_head, &refspec[i], &tail, 0);
+ 	int i;
+@@ -606,7 +586,7 @@ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refsp
+ 		 * since it is only possible to reach this point from within
+ 		 * the for loop above.
+ 		 */
+-		free_refspecs(rs, i+1);
++		free_refspec(i+1, rs);
+ 		return NULL;
+ 	}
+ 	die("Invalid refspec '%s'", refspec[i]);
+@@ -617,7 +597,7 @@ int valid_fetch_refspec(const char *fetch_refspec_str)
+ 	struct refspec *refspec;
  
- 			/* if --branch=tag, pull the requested tag explicitly */
- 			get_fetch_map(remote_head, tag_refspec, &tail, 0);
- 		}
--	} else
--		get_fetch_map(refs, refspec, &tail, 0);
-+	} else {
-+		unsigned int i;
-+		for (i = 0; i < refspec_nr; i++)
-+			get_fetch_map(refs, &refspec[i], &tail, 0);
-+	}
+ 	refspec = parse_refspec_internal(1, &fetch_refspec_str, 1, 1);
+-	free_refspecs(refspec, 1);
++	free_refspec(1, refspec);
+ 	return !!refspec;
+ }
  
- 	if (!option_mirror && !option_single_branch)
- 		get_fetch_map(refs, tag_refspec, &tail, 0);
-@@ -989,6 +994,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	strbuf_reset(&value);
- 
- 	remote = remote_get(option_origin);
-+	REALLOC_ARRAY(remote->fetch, remote->fetch_refspec_nr + 1);
-+	memcpy(remote->fetch+remote->fetch_refspec_nr, refspec,
-+	       sizeof(*refspec));
+@@ -634,6 +614,10 @@ static struct refspec *parse_push_refspec(int nr_refspec, const char **refspec)
+ void free_refspec(int nr_refspec, struct refspec *refspec)
+ {
+ 	int i;
 +
- 	transport = transport_get(remote, remote->url[0]);
- 	transport_set_verbosity(transport, option_verbosity, option_progress);
- 	transport->family = family;
-@@ -1029,7 +1038,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	refs = transport_get_remote_refs(transport);
- 
- 	if (refs) {
--		mapped_refs = wanted_peer_refs(refs, refspec);
-+		mapped_refs = wanted_peer_refs(refs, remote->fetch,
-+					       remote->fetch_refspec_nr + 1);
- 		/*
- 		 * transport_get_remote_refs() may return refs with null sha-1
- 		 * in mapped_refs (see struct transport->get_refs_list
-diff --git a/t/t5611-clone-config.sh b/t/t5611-clone-config.sh
-index e4850b778..114b53920 100755
---- a/t/t5611-clone-config.sh
-+++ b/t/t5611-clone-config.sh
-@@ -37,6 +37,50 @@ test_expect_success 'clone -c config is available during clone' '
- 	test_cmp expect child/file
- '
- 
-+test_expect_success 'clone -c remote.origin.fetch=<refspec> works' '
-+	rm -rf child &&
-+	git update-ref refs/grab/it refs/heads/master &&
-+	git update-ref refs/leave/out refs/heads/master &&
-+	git clone -c "remote.origin.fetch=+refs/grab/*:refs/grab/*" . child &&
-+	git -C child for-each-ref --format="%(refname)" >actual &&
-+	cat >expect <<-EOF &&
-+	refs/grab/it
-+	refs/heads/master
-+	refs/remotes/origin/HEAD
-+	refs/remotes/origin/master
-+	EOF
-+	test_cmp expect actual
-+'
++	if (!refspec)
++		return;
 +
-+test_expect_success 'git -c remote.origin.fetch=<refspec> clone works' '
-+	rm -rf child &&
-+	git -c "remote.origin.fetch=+refs/grab/*:refs/grab/*" clone . child &&
-+	git -C child for-each-ref --format="%(refname)" >actual &&
-+	cat >expect <<-EOF &&
-+	refs/grab/it
-+	refs/heads/master
-+	refs/remotes/origin/HEAD
-+	refs/remotes/origin/master
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'clone -c remote.<remote>.fetch=<refspec> --origin=<name>' '
-+	rm -rf child &&
-+	git clone --origin=upstream \
-+		-c "remote.upstream.fetch=+refs/grab/*:refs/grab/*" \
-+		-c "remote.origin.fetch=+refs/leave/*:refs/leave/*" \
-+		. child &&
-+	git -C child for-each-ref --format="%(refname)" >actual &&
-+	cat >expect <<-EOF &&
-+	refs/grab/it
-+	refs/heads/master
-+	refs/remotes/upstream/HEAD
-+	refs/remotes/upstream/master
-+	EOF
-+	test_cmp expect actual
-+'
-+
- # Tests for the hidden file attribute on windows
- is_hidden () {
- 	# Use the output of `attrib`, ignore the absolute path
+ 	for (i = 0; i < nr_refspec; i++) {
+ 		free(refspec[i].src);
+ 		free(refspec[i].dst);
 -- 
 2.13.0.35.g14b6294b1
 
