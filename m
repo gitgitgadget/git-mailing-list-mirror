@@ -8,152 +8,89 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2966D201A7
-	for <e@80x24.org>; Mon, 15 May 2017 17:42:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75627201A7
+	for <e@80x24.org>; Mon, 15 May 2017 17:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760561AbdEORmE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 13:42:04 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:33748 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751693AbdEORmC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 13:42:02 -0400
-Received: by mail-it0-f66.google.com with SMTP id l145so11816136ita.0
-        for <git@vger.kernel.org>; Mon, 15 May 2017 10:42:02 -0700 (PDT)
+        id S933405AbdEORqn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 13:46:43 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35432 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753579AbdEORqm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 13:46:42 -0400
+Received: by mail-pf0-f196.google.com with SMTP id u26so16507758pfd.2
+        for <git@vger.kernel.org>; Mon, 15 May 2017 10:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=tzFgvh8dcc4TNWb8d9DbLSNuCYKRJjK/sbsywK7mk/k=;
-        b=k5UGebAceyBoN1B9YpnLkLhaQOP0/d7l7sLLficcP935+bkliu1R2h08ZiG/k3XAo7
-         F0fgry2+0ZnyDgREBByjVXjIbOadYhukRPVgIsxMMyhWlpjWzZuYgg9bMJjz7RFT9amW
-         ktgKyXW+A1Prwwn1awleLV2OIqnFUFf3I8OZ4lEQ5n05aAi2J6jS4E92eHBc0fOFYwdr
-         QuQuZohiI+G+ktFXBDOh/cLdj+lKW4sSC4OjJ9xblm01qVZVWWrVfDtnVomM9JOMaB0g
-         smsWvpCWk/WJJBU/HKkjRMqiA9ffSBrQdnXIneku5c/WgAit34dpU4DQb902cz3KYjfF
-         l5vQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=c8E3i9ZG58zdGpdFQs90yTcHsRxWTXtyElI0SmGnJIM=;
+        b=inl1NO7atYgyr1jQdOv1oZGfY0FgjjIDacBBxPny/0gKzTX3wjf8gOy7aeyS0ETNUN
+         rKmlLp0WdWDIaXFW2TRegmEou/cpOAennHR1qcVEK3uev1TIzjP/qmRzYtWShy8zPp2F
+         LpuIGvOa/erKaDJ6f6LKWT89Ovx4/MH/93evarU5mF+FP+WbwRGZUZjMzIlAC1rFEbSr
+         ccTSrfx/da3XGB0vrJ1AvbGXafph4uUB7ngXR8jLSVhEYO0edXfDvVq99NM7il8H88Ct
+         gaV73kKQJYGoGLdCthCpx4L2J5/r/Zed8+uOmeMb6WTx7R48Ss8O7KqwSFa0AhfdSCO/
+         7j9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tzFgvh8dcc4TNWb8d9DbLSNuCYKRJjK/sbsywK7mk/k=;
-        b=KqWp+ndu1apJCNT9/avUmfRrHebbjLrof5lcvW0vTp+HpXOWzypa7ZwykoXpbTQkuV
-         vEgdCTi5dGTC7XeoL5q/qXd6wmegBQSfU8GpBQUMQSoOEhsHgpLqabvhD6KRVc3L9sKD
-         mYdXro+57Cq7dTdtfsAKGsBkx8TQpb9BXF8nj7Ep8Pd27Pf+FvoWMXfEv5gFXJAQPVdU
-         NU+J2Hl7lsPYYe+2qUmXVBMUy3vkaGV4J+9yUjmGzn/jZ0fPCuYaSzAbuB7OApxmZ+hh
-         UFZ3DXVLY1A858gnQAkBxNeZIDZ2TgsxhScNsi6jY/4J1M/KGbk+OTzCnXoKqngQUCEl
-         kIlA==
-X-Gm-Message-State: AODbwcD7XJZikNmkCM9KgVBsIyLX22kC6aLqDvu3BJoxXs9ZGjoAk+Oc
-        R/R9biV/1WuZSz3XQZ1AnzWMQgtehw==
-X-Received: by 10.36.37.78 with SMTP id g75mr6424601itg.94.1494870122091; Mon,
- 15 May 2017 10:42:02 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=c8E3i9ZG58zdGpdFQs90yTcHsRxWTXtyElI0SmGnJIM=;
+        b=EP29cDy0VA7PA9MoORrJWdxMzA795yTWPwFVb5RMssQYU3NfZDoc4BZZl4WPSloWAa
+         ztEKtBGvBuxB8DxaEs9ITlWcBUKn7IrJTphmjHYYmKeZ+qnvPkYSqH9latjkCa3y388o
+         HFSL/Q4QEFnuusdyeUQWf/XzZVpprOTNcY57Q4Izey0YN7eoSlAjYYrUu9fEeXBFbJYO
+         7VAn+m6Twt5InkGZwxmmSPcfKZi6F4A0iqN1L8DosiC3M6c0SNUdgRMBGLoUEKxEbKbl
+         lJ0ktqW40ff5oWns0m+o5NVUpwQZtG0vSRUT/hiJtiiHjHjrTWGNEogPPZe9L7OcRgS+
+         zfBg==
+X-Gm-Message-State: AODbwcDvNhY6Ww0RpLguG7M1PlnfAX2CUySMWhjCPwPWBuPl4on3xR/U
+        X4cx3iQN1levew==
+X-Received: by 10.84.136.70 with SMTP id 64mr10233817plk.82.1494870401440;
+        Mon, 15 May 2017 10:46:41 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:6582:4c54:354a:7413])
+        by smtp.gmail.com with ESMTPSA id n65sm23613318pga.8.2017.05.15.10.46.40
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 15 May 2017 10:46:40 -0700 (PDT)
+Date:   Mon, 15 May 2017 10:46:38 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com
+Subject: Re: [PATCH v7] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170515174638.GJ27400@aiede.svl.corp.google.com>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
+ <20170515173220.13103-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Mon, 15 May 2017 10:41:41 -0700 (PDT)
-In-Reply-To: <xmqqshk6ve8k.fsf@gitster.mtv.corp.google.com>
-References: <20170513231509.7834-1-avarab@gmail.com> <20170513231509.7834-21-avarab@gmail.com>
- <xmqqshk6ve8k.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 15 May 2017 19:41:41 +0200
-Message-ID: <CACBZZX5jRVtJd8wj93TGS4mcE=9qaxwQjmJQqNkcxuRkJ9fXaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 20/29] grep: remove redundant `regflags &=
- ~REG_EXTENDED` assignments
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170515173220.13103-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 8:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> Remove redundant assignments to the "regflags" variable. There are no
->> code paths that have previously set the regflags to anything, and
->> certainly not to `|=3D REG_EXTENDED`.
->>
->> This code gave the impression that it had to reset its environment,
->> but it doesn't. This dates back to the initial introduction of
->> git-grep in commit 5010cb5fcc ("built-in "git grep"", 2006-04-30).
->
-> Back in 5010cb5fcc, we did do "opt.regflags &=3D ~REG_EXTENDED" upon
-> seeing "-G" on the command line and flipped the bit on upon seeing
-> "-E", but I think that was perfectly sensible and it would have been
-> a bug if we didn't.  They were part of the command line parsing that
-> could have seen "-E" on the command line earlier.
->
-> If we want to find a commit to assign blame to, I think it is more
-> correct to say that this came from the same one as 19/29 fixes.
->
-> When cca2c172 ("git-grep: do not die upon -F/-P when
-> grep.extendedRegexp is set.", 2011-05-09) switched the command line
-> parsing to "read into a 'tentatively this is what we saw the last'
-> variable and then finally commit just once", we didn't touch
-> opt.regflags for PCRE and FIXED, but we still had to flip regflags
-> between BRE and ERE, because parsing of grep.extendedregexp
-> configuration variable directly touched opt.regflags back then,
-> which was done by b22520a3 ("grep: allow -E and -n to be turned on
-> by default via configuration", 2011-03-30).  When 84befcd0 ("grep:
-> add a grep.patternType configuration setting", 2012-08-03)
-> introduced extended_regexp_option field, we stopped flipping
-> regflags while reading the configuration, and that was when we
-> should have noticed and stopped dropping REG_EXTENDED bit in the
-> "now we can commit what type to use" helper function.
+Jonathan Tan wrote:
 
-Thanks for the history. I'll amend the commit message to note this.
+> fetch-pack, when fetching a literal SHA-1 from a server that is not
+> configured with uploadpack.allowtipsha1inwant (or similar), always
+> returns an error message of the form "Server does not allow request for
+> unadvertised object %s". However, it is sometimes the case that such
+> object is advertised. This situation would occur, for example, if a user
+> or a script was provided a SHA-1 instead of a branch or tag name for
+> fetching, and wanted to invoke "git fetch" or "git fetch-pack" using
+> that SHA-1.
+>
+> Teach fetch-pack to also check the SHA-1s of the refs in the received
+> ref advertisement if a literal SHA-1 was given by the user.
+>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  fetch-pack.c          | 40 ++++++++++++++++++++++++++++++++++++++--
+>  t/t5500-fetch-pack.sh | 35 +++++++++++++++++++++++++++++++++++
+>  2 files changed, 73 insertions(+), 2 deletions(-)
 
-> In any case, I think this change is safe to do in the current
-> codebase.  I wonder if this and 19/29 should be a single patch,
-> though, as the unnecessary bit-flipping all are blamed to the same
-> origin.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Squashing these two makes sense. I'll do that.
+I think we've done enough golf on this one.
 
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  grep.c | 5 +----
->>  1 file changed, 1 insertion(+), 4 deletions(-)
->>
->> diff --git a/grep.c b/grep.c
->> index 59ae7809f2..bf6c2494fd 100644
->> --- a/grep.c
->> +++ b/grep.c
->> @@ -179,7 +179,6 @@ static void grep_set_pattern_type_option(enum grep_p=
-attern_type pattern_type, st
->>       case GREP_PATTERN_TYPE_BRE:
->>               opt->fixed =3D 0;
->>               opt->pcre =3D 0;
->> -             opt->regflags &=3D ~REG_EXTENDED;
->>               break;
->>
->>       case GREP_PATTERN_TYPE_ERE:
->> @@ -191,7 +190,6 @@ static void grep_set_pattern_type_option(enum grep_p=
-attern_type pattern_type, st
->>       case GREP_PATTERN_TYPE_FIXED:
->>               opt->fixed =3D 1;
->>               opt->pcre =3D 0;
->> -             opt->regflags &=3D ~REG_EXTENDED;
->>               break;
->>
->>       case GREP_PATTERN_TYPE_PCRE:
->> @@ -414,10 +412,9 @@ static void compile_fixed_regexp(struct grep_pat *p=
-, struct grep_opt *opt)
->>  {
->>       struct strbuf sb =3D STRBUF_INIT;
->>       int err;
->> -     int regflags;
->> +     int regflags =3D opt->regflags;
->>
->>       basic_regex_quote_buf(&sb, p->pattern);
->> -     regflags =3D opt->regflags & ~REG_EXTENDED;
->>       if (opt->ignore_case)
->>               regflags |=3D REG_ICASE;
->>       err =3D regcomp(&p->regexp, sb.buf, regflags);
+Thanks for your patient work.
+Jonathan
