@@ -7,47 +7,51 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 723F31FAA8
-	for <e@80x24.org>; Mon, 15 May 2017 09:34:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96DC31FAA8
+	for <e@80x24.org>; Mon, 15 May 2017 09:42:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760340AbdEOJem (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 05:34:42 -0400
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:35796 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757106AbdEOJek (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 05:34:40 -0400
-Received: by mail-qt0-f176.google.com with SMTP id v27so67589007qtg.2
-        for <git@vger.kernel.org>; Mon, 15 May 2017 02:34:40 -0700 (PDT)
+        id S1760429AbdEOJml (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 05:42:41 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:35348 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760081AbdEOJmk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 05:42:40 -0400
+Received: by mail-qk0-f177.google.com with SMTP id a72so88819638qkj.2
+        for <git@vger.kernel.org>; Mon, 15 May 2017 02:42:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=GjhtBk+0dmX8JutC36KhMKKFT+GWLV0z4WSrxDJn6p8=;
-        b=Qw7yDo2nRCg5Xv8OMa1GTZt63nI/3U43fOXB929aXnRbhYYkof2b8nW/0hFG8Fulxp
-         gJhDPh0CiOOb6n1G3Z4Cy6cwv45pJkqsC0zsbsbvH7kopLWe9TDEuFXlqBw7zqhAZFWH
-         OlupPYiGWKKAWqZPgrjThqFMQEj9ixQXOrJldzxRO7eewJGm9spDD/uBs5HM9WlGONP7
-         RyUEPVo9EQd1N/MOYa98v1Ucfnn3qB58UV4KPwxq5RDb6ZswwxhOkI07C94WtHgebz7g
-         yOattOEXOwgnpHXTjntQzNH5M2kaksceTzt+1MBkbIvY/OMw/CVU0+I5q/bobNtiF9/M
-         o1tA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0JEIsFmPT//IqwReh3vVq+Ai+OxWXFK7Ez2wrMfEm6E=;
+        b=ElOCsjT3e4G1Q3uIw2e+1BDa98kOgv9seZanNe1H9WdTaobiab/mTo3ohRuz///rQP
+         8+rh+Ae6krfvUjwSedNH+gMdpX+5Dk7+cJFt6tq+9AcEJGqVpg/LSmmf1NjebVnT1mtA
+         qqrisjTu8TIlEhoCRCIEMA1SnAJjAujo+kEOZM2X/t8RpnGwDh9d3mByWfuPlp4uTG2n
+         Wb4ZfXo4sd4HOsqzanQdDpCjKIGa22eyWrCjKtBHpKu2PvxD2RBvL4uKyoBwRbBwCZbz
+         I21PYJpIwM1ZStspd3TYn+yZhEk+DvXUZKO3YDMmntcBsMA11mU3HhF4b7/TZRLlueD7
+         LeZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=GjhtBk+0dmX8JutC36KhMKKFT+GWLV0z4WSrxDJn6p8=;
-        b=GdxaqpGzSKF/UMVer3Zpc8BNe3B0AgWvYMLSlFZPeLz67CjJJnjSFBq+G6kf8ft0Sq
-         BA7NcVrenYuc1c2u+ZT+0vXf8/KwLopRSxNvV+OLPvmCFR/KF6uRwJN5AYRrtprmMdW7
-         AjV79G79pTutJKYQAaKi9dnlwys0esuHg3TqAvOADjc676Y41qW8JEyARnqxVIiez9xw
-         wYUgJJPVq7pCc4xRgr/hMc6YxLYv8ywj+Q2IdCpdLFhThynuikAWVC8E1Dddcqw9JqTj
-         A0XeI9xFxkpF+OFKXuEW82snM0KTru89+k+lE/rS5xs3ki+eSqOpNmvQT/cjrL/SV10g
-         Kiaw==
-X-Gm-Message-State: AODbwcDPFMqsZe+R4lbLXu3mvyX/PYIqPO5IuxmK0W7/YkGvpHVh7+J1
-        V1FtuKEaC4HhioIek5UyM5rVKJhKeg==
-X-Received: by 10.200.48.196 with SMTP id w4mr4285364qta.226.1494840880076;
- Mon, 15 May 2017 02:34:40 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0JEIsFmPT//IqwReh3vVq+Ai+OxWXFK7Ez2wrMfEm6E=;
+        b=EHdFhEZdN/tQRrJpqj/RrmvMePqu+V5ch9K1kmgLI7wsplAZJ8R83A5pEZIicpx2tm
+         5eQWkGbvS/r7N8xsCEAs1GmKyt5+dpR32Mh1iFaQRORuU4RSdXDz39s0ohiBeUlEN4n4
+         HAnvu4YWmLPZGzdSit7V9BPl+KYd2pk/mMaALas2UgRTuK9jiF7sXFzQmKycKnfuUDlA
+         +qujmO1JFrjUxNUPw3HJeVk5OTGWozwxLadua3TxM78TMFvIOlFAVKxae4P9zKjNXs/u
+         bo2o/dbvc1t7YrL14PfhZAZlPEghSfatPCKHD/qu9AdPhBmIUscP1Qcf6vBPZGHSbWDm
+         cjoA==
+X-Gm-Message-State: AODbwcDa4OiCg7PI+pt3e3ueeKbfHDcKIfu5QXDVWbQeOsDPXrdWSJ09
+        bx/SzfXshDSEpjLlL4Ldu/wa9WS19g==
+X-Received: by 10.55.108.196 with SMTP id h187mr4237262qkc.40.1494841359985;
+ Mon, 15 May 2017 02:42:39 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.55.78.212 with HTTP; Mon, 15 May 2017 02:34:39 -0700 (PDT)
+Received: by 10.55.78.212 with HTTP; Mon, 15 May 2017 02:42:39 -0700 (PDT)
+In-Reply-To: <CAP8UFD1T77NkP014uebWO2_3ozbEk0Oivwfb_5hoP+AVff1LzQ@mail.gmail.com>
+References: <CAP8UFD1T77NkP014uebWO2_3ozbEk0Oivwfb_5hoP+AVff1LzQ@mail.gmail.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 15 May 2017 11:34:39 +0200
-Message-ID: <CAP8UFD1T77NkP014uebWO2_3ozbEk0Oivwfb_5hoP+AVff1LzQ@mail.gmail.com>
-Subject: Draft of Git Rev News edition 27
+Date:   Mon, 15 May 2017 11:42:39 +0200
+Message-ID: <CAP8UFD1UQ2YvyXy2NwpxVOM=bm9unMtrht2n1zqJdCPK8cdBBg@mail.gmail.com>
+Subject: Re: Draft of Git Rev News edition 27
 To:     git <git@vger.kernel.org>
 Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
         Jakub Narebski <jnareb@gmail.com>,
@@ -60,7 +64,6 @@ Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
         Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
         Brandon Williams <bmwill@google.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
         Carlos Pita <carlosjosepita@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>
@@ -70,29 +73,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, May 15, 2017 at 11:34 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Hi,
+>
+> A draft of a new Git Rev News edition is available here:
+>
+>   https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-27.md
+>
+> Everyone is welcome to contribute in any section either by editing the
+> above page on GitHub and sending a pull request, or by commenting on
+> this GitHub issue:
+>
+>   https://github.com/git/git.github.io/issues/240
+>
+> You can also reply to this email.
+>
+> In general all kinds of contribution, for example proofreading,
+> suggestions for articles or links, help on the issues in GitHub, and
+> so on, are very much appreciated.
+>
+> I tried to cc everyone who appears in this edition, but maybe I missed
+> some people, sorry about that.
+>
+> Thomas, Jakub, Markus and myself plan to publish this edition on
+> Wednesday April 19th.
 
-A draft of a new Git Rev News edition is available here:
+It's Wednesday May 17th.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-27.md
-
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
-
-  https://github.com/git/git.github.io/issues/240
-
-You can also reply to this email.
-
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
-
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Thomas, Jakub, Markus and myself plan to publish this edition on
-Wednesday April 19th.
-
-Thanks,
+Sorry for the mistake,
 Christian.
