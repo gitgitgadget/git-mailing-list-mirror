@@ -2,98 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C21D51FAA8
-	for <e@80x24.org>; Tue, 16 May 2017 17:37:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D49AE1FAA8
+	for <e@80x24.org>; Tue, 16 May 2017 17:37:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752618AbdEPRhL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 13:37:11 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:34064 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751272AbdEPRhK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 13:37:10 -0400
-Received: by mail-pg0-f41.google.com with SMTP id u28so79776202pgn.1
-        for <git@vger.kernel.org>; Tue, 16 May 2017 10:37:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8vcpRVR+fci1fWgma12owEbD5hrDb5Y2GUYLxRDYslA=;
-        b=p1o/m3miTT7t81Z+OZVCXdPXrSKPXDRW1oz4DF3xF4HJLynaCKqtTxLDcZvVASBq2R
-         2y4JMt1xSX6fiyNSA+wLDhq+xFcGdZ+VQRZx1Tgy1cEVd3R5PJMyJwE8lQcbm7fX7qOJ
-         9nY5nmzgZUdLgS9AUQv9BGBDfrtFb/PeLJmvBEk/cOoYAI3SZS1miSV3X+epsz7mrC5j
-         ObjgGLHbjvABpMbTVxAlmCYtGRzWxibnH2B7ngvJLBi0zaRq5YK5XqDULPP4cwC5bEEG
-         xZclNRq//6TEo7LYD+ue7l6TbuP/KP0SgG7jhP3KHFmL33f/J4hLDiX14NJRJB1sCvmV
-         f43A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8vcpRVR+fci1fWgma12owEbD5hrDb5Y2GUYLxRDYslA=;
-        b=i+yY7zm92Ad1IK71h02wIy4UQ7y8Uhi2ciokkzasqfIPnAx2KYA7nNY0a9IRnkF2nO
-         HH9gKiOUjK3cfzKHwvCg5B4meiE3bJ9dj50NslX9U4sag9nfJWsU6zMFo73We21QpxSV
-         osvTGJHweTLtI3xo/3UVUtlJMxOpO9YNf0JXVtvgdRw+hCgAluCYq/mLH4SrU4znCdWh
-         CPPFo6UkAihhLFdchTWlyfMN7ncwvclXvBSYKNbXZpE+OwO0Yo0yODdWZMzaAjkvXW5+
-         x2c4BDOZci1Tb8nqa+MYZBFJ1xxwhn2txjIno3KLApkTxdvAhqhjMXbRWIRoB6U5da/p
-         clpQ==
-X-Gm-Message-State: AODbwcDD7i0xY3hYyKnhRq0bo5A0mj/Q0jCJphd8SZptOrRDyUaZHor7
-        NiFy40Fh3H+ZTMK0rf8=
-X-Received: by 10.99.150.1 with SMTP id c1mr2494455pge.160.1494956229979;
-        Tue, 16 May 2017 10:37:09 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:cd47:ccb1:c55d:4b70])
-        by smtp.gmail.com with ESMTPSA id s3sm37929583pgn.29.2017.05.16.10.37.09
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 16 May 2017 10:37:09 -0700 (PDT)
-Date:   Tue, 16 May 2017 10:37:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Rannaud <eric.rannaud@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeremy Serror <jeremy.serror@gmail.com>,
-        Brandon Williams <bmwill@google.com>
+        id S1752648AbdEPRhc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 13:37:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52831 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751272AbdEPRhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 13:37:32 -0400
+Received: (qmail 20344 invoked by uid 109); 16 May 2017 17:37:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 17:37:29 +0000
+Received: (qmail 30587 invoked by uid 111); 16 May 2017 17:38:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 13:38:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 May 2017 13:37:27 -0400
+Date:   Tue, 16 May 2017 13:37:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Rannaud <eric.rannaud@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Jeremy Serror <jeremy.serror@gmail.com>
 Subject: Re: git rebase regression: cannot pass a shell expression directly
  to --exec
-Message-ID: <20170516173707.GP27400@aiede.svl.corp.google.com>
+Message-ID: <20170516173727.5zstcg2g5bradhcf@sigill.intra.peff.net>
 References: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
- <20170516032503.bzkxmtqpmppxgi75@sigill.intra.peff.net>
- <20170516033736.23cfkouus3p67vhc@sigill.intra.peff.net>
- <20170516164124.GO27400@aiede.svl.corp.google.com>
- <20170516164750.3tw6xlbcbyuu5t72@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1705161220230.3610@virtualbox>
+ <20170516161858.stp4ylwfmbgc4oid@sigill.intra.peff.net>
+ <CA+zRj8Uxh1SGdVW=zz29Q4m4OnDcs665T0XtV6FiZ_qZSiG-8g@mail.gmail.com>
+ <CA+zRj8XLQiTmiVbsJZ7XjdW4bQvMSJpCtKW8xx5JvMKOhBDmLQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170516164750.3tw6xlbcbyuu5t72@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CA+zRj8XLQiTmiVbsJZ7XjdW4bQvMSJpCtKW8xx5JvMKOhBDmLQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
->>> On Mon, May 15, 2017 at 11:25:03PM -0400, Jeff King wrote:
+On Tue, May 16, 2017 at 10:21:51AM -0700, Eric Rannaud wrote:
 
->>>> One hack would be to look for BASH_FUNC_* in the environment and disable
->>>> the optimization in that case. I think that would make your case Just
->>>> Work. It doesn't help other oddball cases, like:
-[...]
->> Hm.  execvp explicitly does this when it hits ENOEXEC, but not for
->> ENOENT.  Do you know why that is?
->
-> When execvp(foo) falls back on ENOEXEC, it is not running "sh -c foo".
-> It is actually running "sh foo" to run the script contents.
+> On Tue, May 16, 2017 at 9:59 AM, Eric Rannaud <eric.rannaud@gmail.com> wrote:
+> > When I use "git rebase --exec <cmd>" I'm basically writing a "foreach
+> > commit in range { <cmd> }" in my shell. Same idea with git bisect run.
+> >
+> > A transparent optimization that tries execve() then falls back to the
+> > user's shell sounds like a good idea.
+> 
+> One issue with the execve-else-shell optimization is that sometimes a
+> binary exists that will shadow an exported function or a shell
+> builtin:
+> 
+>   git rebase --exec true master^^  # OK but in fact this runs /usr/bin/true
 
-Oh --- now I get it.  This is about the optimization to bypass the shell
-in prepare_shell_command.  It has nothing to do with execvp --- our
-execvp emulation already does the right thing, and Brandon's patches
-did not make this problem any worse or better.
+Yeah, this is the builtin thing I mentioned elsewhere. I think it's
+pretty rare to run a builtin with no arguments and care about the
+behavior differences.
 
-Unconditionally falling back to sh -c when we get ENOENT in the
-RUN_USING_SHELL case makes sense to me.
+> /usr/bin/time requires an argument. Even though the bash builtin time
+> runs fine without argument.
+> 
+>   $ time
+> 
+>   real    0m0.000s
+>   user    0m0.000s
+>   sys     0m0.000s
 
-Sorry for the confusion,
-Jonathan
+I've run into the "time" distinction even when running things from the
+shell, because the time builtin is special. E.g.:
+
+  $ time true
+  real	0m0.000s
+  user	0m0.000s
+  sys	0m0.000s
+
+  $ (echo foo | time true) 2>&1
+  0.00user 0.00system 0:00.00elapsed 0%CPU (0avgtext+0avgdata 1136maxresident)k
+  0inputs+0outputs (0major+61minor)pagefaults 0swaps
+
+So to some degree, depending on builtins versus external commands
+(especially when you're round-tripping through another program running a
+second shell) is going to have some surprises.
+
+> But if the optimization is applied to more complex commands, then we
+> will have problems. For instance, the builtin echo supports \E, but
+> /usr/bin/echo doesn't support it.
+
+No, it shouldn't. If any of
+
+     |&;<>()$`\\\"' \t\n*?[#~=%
+
+appear in the string, we always run the shell.
+
+> In any case, the manpage says --exec <cmd> and "<cmd> will be
+> interpreted as one or more shell commands.", it doesn't say "--exec
+> <executable>".
+
+Right, it's clearly supposed to use the shell, or behave as if the shell
+were invoked (within reason).
+
+-Peff
