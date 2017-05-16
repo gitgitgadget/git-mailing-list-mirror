@@ -2,103 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2C121FAA8
-	for <e@80x24.org>; Tue, 16 May 2017 21:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9B701FAA8
+	for <e@80x24.org>; Tue, 16 May 2017 21:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752896AbdEPVMY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 17:12:24 -0400
-Received: from mail-qt0-f173.google.com ([209.85.216.173]:34794 "EHLO
-        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752750AbdEPVMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 17:12:21 -0400
-Received: by mail-qt0-f173.google.com with SMTP id c13so77367075qtc.1
-        for <git@vger.kernel.org>; Tue, 16 May 2017 14:12:21 -0700 (PDT)
+        id S1753241AbdEPVlM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 17:41:12 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:32991 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753089AbdEPVlL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 17:41:11 -0400
+Received: by mail-pg0-f42.google.com with SMTP id u187so82325504pgb.0
+        for <git@vger.kernel.org>; Tue, 16 May 2017 14:41:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=0MLr0a6e/0Kt6stJQnvr49/S/PKkZF+0w4fAWDAY1Y8=;
-        b=BkCkuJWPLLhoFOi1Lo2eK8scV9eDgW6WUmV09NOrbzwubIkSrGf4eKNTSuqeoNViBO
-         KkhI68N0Gqw5Irg7ZPB5zmi8YaQ6dkKNl7mlgpPtNngRo/jAjQ8ATLOk60edSBlDNnJ2
-         oTnRSbaqGTSnwQePHdwpvsB6cEzr/BVtbjKCf4YfCXZulH45g1herNkg8U4Nb5LNqvN8
-         s8LDUXiHEbljYghbW4WZ/F1SY4qgjEN/GeMu0YWxs24vrcMXI2tk1dWyut+G7VvFZgiM
-         hx8pP7OD1fTifwixXPgqza37Lg5AhX8YMv0Li2szv1AqYTUhw9EUKHpywEm0b2MOBXcG
-         /IhQ==
+        d=google.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=n1xhDcWvPCeKkAZamnTuFyuWvF84FhtIs7gXyRoQ75A=;
+        b=GiW7VChhoe2RfePWFEJlKMc8eJOzN+SfmLOQqnu28EK0qUckrXIDJpR5PXOWqVrW//
+         rcwwtwUfiElEpdrXCAskjU/Gs07bIp1iR8p/yafTSuPL0oFHOBMf+FzZMMTcNHjB10DX
+         QQPlzDFjZZ6jv8hifWx80aWB5CXkcMk0RRCJQu571VkdrOnMJo8xPJcpGytnbQs35qGj
+         AMov/8RwREPKSAIXDPnde/owaai+LdMuczDxEZjvDZKYAPWKsnqvB3yF9e0Cvl6qANmF
+         lLeeh2q2laa44hkxpEHU79p/6ozt5iGgdz/LgzsrnGfiyOnNSUDQ8Zu+iYlm9s+Kvrxr
+         KUUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=0MLr0a6e/0Kt6stJQnvr49/S/PKkZF+0w4fAWDAY1Y8=;
-        b=kYYh9SQU4XKUOpItw2VV3LDpVfQGMCPhihgqKnTprnXnMOjExmyPyWqKQ+buPOSgsl
-         lbOXYFd5z06OgitwQjG929ikryPg2yuN88ld0RAjkc58/u4GiJDlNRS1MI5+q6E4om3V
-         rgO7FBw9CC4/wKYnS/aG1LI77m/yxPU8ClzW944GTXke6XHDY/g0lVMx3bJiyWmyQJVA
-         tjiXtDpX1bfOoTpKfqBwYFvjrCo56Y0f1O65t+9FK+RRq0fh+fTF6eQand8174cOjbu8
-         Mp2t2mVoZWkX1EGsboK6Hp7AixKvvA/xrvifH/Dt5OS3huEKND1Eig8Vy8g1xiyMV/O2
-         0ySg==
-X-Gm-Message-State: AODbwcDxGGBBQStg0H6Qda5SRfB7tNx8i5u2MJG0xT2xb2fcGOD0/Mch
-        2SwsyzH7MOMRft0R0pw=
-X-Received: by 10.200.54.199 with SMTP id b7mr13094607qtc.145.1494969140948;
-        Tue, 16 May 2017 14:12:20 -0700 (PDT)
-Received: from Matthews-MacBook-Pro.local (146-115-162-193.c3-0.wth-ubr1.sbo-wth.ma.cable.rcn.com. [146.115.162.193])
-        by smtp.gmail.com with ESMTPSA id k36sm292314qte.65.2017.05.16.14.12.19
-        for <git@vger.kernel.org>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=n1xhDcWvPCeKkAZamnTuFyuWvF84FhtIs7gXyRoQ75A=;
+        b=gD0QaQVE+RVQI4leZaCmtlck/C7UarWqQfhvl7gg4cWyrsmXu//FrXpWioglIgRs8f
+         cxFo6Bn9F3F4leNIwx+5jrMtXLhjCIAwqKEBPnom3sZIMkFwV7rN9hdM1OlJ2ExgVXBJ
+         TuV6OWq+D6TzrIFKOMrgtqMMg4bVMzOJNhqsrew7KbkA/RLOxwhXeYHdaHbRnfAKOMbi
+         d+N0u6CeBXhRdLLMgtigfBP3WgaQEkNS7PwgDOZaOWCpYMo4jOMEXHECnguLX3EILtzK
+         M2D0lIIFe2LcZhgykrB0acyMqBk9xHYZlv48oFVqK2ZfkFWwGVXOBC16KFRWrbRmZPYt
+         GyYQ==
+X-Gm-Message-State: AODbwcDzdy/EJM3hVVWWidhmefrw1NlYOgBYLjChcq+UNkJpQlXjs0T6
+        umsGcqB39oke4aF2
+X-Received: by 10.84.217.218 with SMTP id d26mr107740plj.47.1494970870975;
+        Tue, 16 May 2017 14:41:10 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:9572:8006:bb1a:9123])
+        by smtp.gmail.com with ESMTPSA id v64sm35321pfk.86.2017.05.16.14.41.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 May 2017 14:12:20 -0700 (PDT)
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Matthew Groth <mgroth49@gmail.com>
-Subject: Re: error using `git mergetool --tool=meld`
-Message-ID: <68c4da38-2f3a-1b46-c2e8-3fa1c1170e6d@gmail.com>
-Date:   Tue, 16 May 2017 17:12:19 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
- Gecko/20100101 Thunderbird/45.8.0
+        Tue, 16 May 2017 14:41:09 -0700 (PDT)
+Subject: Re: [PATCH v1 2/5] Teach git to optionally utilize a file system
+ monitor to speed up detecting new or changed files.
+To:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org
+References: <20170515191347.1892-1-benpeart@microsoft.com>
+ <20170515191347.1892-3-benpeart@microsoft.com>
+Cc:     gitster@pobox.com, benpeart@microsoft.com, pclouds@gmail.com,
+        johannes.schindelin@gmx.de, David.Turner@twosigma.com,
+        peff@peff.net
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <473c4b47-06a7-cb55-6d67-e335fa5b5a5b@google.com>
+Date:   Tue, 16 May 2017 14:41:08 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20170515191347.1892-3-benpeart@microsoft.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I'm not very familiar with this part of the code - here is a partial review.
 
-I tried `git config mergetool.meld.hasOutput true` followed again by 
-`git mergetool --tool=meld` and got the same error.
+Firstly, if someone invokes update-index, I wonder if it's better just 
+to do a full refresh (e.g. by deleting the last_update time from the index).
 
-My original message:
+Also, the change to unpack-trees.c doesn't match my mental model. I 
+notice that it is in a function related to sparse checkout, but if the 
+working tree changes for whatever reason, it seems simpler to just let 
+the hook do its thing. As far as I can tell, it is fine to have files 
+overzealously marked as FSMONITOR_DIRTY.
 
-         When using `git mergetool --tool=kdiff3`, it works fine. But 
-with `git mergetool --tool=meld` I get this for every merge conflict:
+On 05/15/2017 12:13 PM, Ben Peart wrote:
+> diff --git a/cache.h b/cache.h
+> index 40ec032a2d..64aa6e57cd 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -201,6 +201,7 @@ struct cache_entry {
+>  #define CE_ADDED             (1 << 19)
+>
+>  #define CE_HASHED            (1 << 20)
+> +#define CE_FSMONITOR_DIRTY   (1 << 21)
+>  #define CE_WT_REMOVE         (1 << 22) /* remove in work directory */
+>  #define CE_CONFLICTED        (1 << 23)
+>
+> @@ -324,6 +325,7 @@ static inline unsigned int canon_mode(unsigned int mode)
+>  #define CACHE_TREE_CHANGED	(1 << 5)
+>  #define SPLIT_INDEX_ORDERED	(1 << 6)
+>  #define UNTRACKED_CHANGED	(1 << 7)
+> +#define FSMONITOR_CHANGED	(1 << 8)
+>
+>  struct split_index;
+>  struct untracked_cache;
+> @@ -342,6 +344,8 @@ struct index_state {
+>  	struct hashmap dir_hash;
+>  	unsigned char sha1[20];
+>  	struct untracked_cache *untracked;
+> +	time_t last_update;
+> +	struct ewah_bitmap *bitmap;
 
-         ```
-         Normal merge conflict for 'builders/pdfBuilder.py':
-           {local}: created file
-           {remote}: created file
-         Traceback (most recent call last):
-           File "/usr/local/bin/meld", line 20, in <module>
-             filename = arg.split('=')[1]
-         IndexError: list index out of range
-         builders/pdfBuilder.py seems unchanged.
-         ```
+Here a bitmap is introduced, presumably corresponding to the entries in 
+"struct cache_entry **cache", but there is also a CE_FSMONITOR_DIRTY 
+that can be set in each "struct cache_entry". This seems redundant and 
+probably at least worth explaining in a comment.
 
-         And the contents of /usr/local/bin/meld are:
+> +/*
+> + * Call the query-fsmonitor hook passing the time of the last saved results.
+> + */
+> +static int query_fsmonitor(time_t last_update, struct strbuf *buffer)
+> +{
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	char date[64];
+> +	const char *argv[3];
+> +
+> +	if (!(argv[0] = find_hook("query-fsmonitor")))
+> +		return -1;
+> +
+> +	snprintf(date, sizeof(date), "%" PRIuMAX, (uintmax_t)last_update);
+> +	argv[1] = date;
+> +	argv[2] = NULL;
+> +	cp.argv = argv;
+> +	cp.out = -1;
+> +
+> +	return capture_command(&cp, buffer, 1024);
+> +}
 
-         arglist = []
-         for arg in sys.argv[1:]:
-             if arg.startswith('--output'):
-                 filename = arg.split('=')[1] ##### <<--------- line 20
-                 newArg = '--output=' + fix_abspath(filename)
-             elif arg.startswith('-'):
-                 newArg = arg
-             else:
-                 newArg = fix_abspath(arg)
-             arglist.append(newArg)
+Output argument could probably be named better.
 
-         I'm on OSX: 10.12.4
+Also, would the output of this command be very large? If yes, it might 
+be better to process it little by little instead of buffering the whole 
+thing first.
 
-         git --version
-         git version 2.12.2
+> +void write_fsmonitor_extension(struct strbuf *sb, struct index_state* istate);
+
+Space before * (in the .h and .c files).
+
