@@ -2,88 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1763201A4
-	for <e@80x24.org>; Tue, 16 May 2017 06:59:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00EFC201A4
+	for <e@80x24.org>; Tue, 16 May 2017 07:36:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750858AbdEPG7o (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 02:59:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52469 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750759AbdEPG7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 02:59:43 -0400
-Received: (qmail 9854 invoked by uid 109); 16 May 2017 06:59:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 06:59:41 +0000
-Received: (qmail 25434 invoked by uid 111); 16 May 2017 07:00:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 03:00:15 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 May 2017 02:59:40 -0400
-Date:   Tue, 16 May 2017 02:59:40 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
-Subject: Re: How to force a pull to succeed?
-Message-ID: <20170516065939.uy3ib7z2v6gkldox@sigill.intra.peff.net>
-References: <CAH8yC8k8sTGDA=C8vLCE090Y1B4TK86bOnZMNjj13C-JXVEBHQ@mail.gmail.com>
- <xmqq8tlx4h1y.fsf@gitster.mtv.corp.google.com>
- <CAH8yC8mOc68A-0uM8b3AKAYo9VqYNUjHkGw0knbXL0suM25tfA@mail.gmail.com>
- <xmqqmvad31sr.fsf@gitster.mtv.corp.google.com>
- <CAH8yC8kVFGe9gnj8P+=Pp1ToDvMPXiViVM-HzhkZ6SAteoPZaQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8kVFGe9gnj8P+=Pp1ToDvMPXiViVM-HzhkZ6SAteoPZaQ@mail.gmail.com>
+        id S1751272AbdEPHgL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 03:36:11 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:36102 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750759AbdEPHgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 03:36:10 -0400
+Received: by mail-qk0-f196.google.com with SMTP id y128so21244352qka.3
+        for <git@vger.kernel.org>; Tue, 16 May 2017 00:36:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=PyVzxIPbNktEYUiN5d7cQtg3HomaBdnsbNa0CmKwJco=;
+        b=KWu6zoSRWeTKVqdYQMH7BFe+gIVwUYtMzA0Hqu5aV55c/4kwhINmEGL3QeeWRBQOpf
+         AXooHxspG39ts4Z3dxNm8ivsWI4SLyyAk8wcXgp99q+dQMfVVVoIcBssCw3F4ErfZSKa
+         gc1N9iNmiiJwTjpqwzO30re6J7qnJvIVAnnLBIdGEQ+C0tVLdjYzVI3TO0QV9EbxebdY
+         kMWwetnz0/csqFjLFZf8CnQs+YPUCQi7WEr5qGL1ckW7jV88b91ctEB+Iv6dhqR6B9Bw
+         7guqqcyLtB3qLSUmJLqL4VSjjAPvCLkbz40nxRnRShFkEDrlnPEgfecnG4XjkcoRc2sc
+         v6Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=PyVzxIPbNktEYUiN5d7cQtg3HomaBdnsbNa0CmKwJco=;
+        b=iLKPOTyMpkIh3BOM3IvIVOqO3b2OWSlantRao6i3tU2ChnLTBdd0Or+Cc83d+fDWtA
+         0NDpTRyUE+aAQ7EfZgoZ4S4UEtwVUYB1uWvCF+ludsFy1JEMW9n/azCNwbTX57Z22kjx
+         FDcALAHR3BO3KHtcuTcfAADd52Oydn/VjtNcJDVjeLk/T0PQp+KwSy8mCBqcRkQIAXHo
+         IfiyboPIMnBTQGVBiaakUmSyDeb6YpBSVnQJWdMRj2eNArZ4RvtirroykAyKIvM+DUCe
+         VeZZYCMY4zhmbHySPQwZWxmL0DQEouStWQvZk8z+FATBWK2idA4LKlS/VskQ1iq3/EQr
+         a0Ww==
+X-Gm-Message-State: AODbwcDBKy3BCu3wSUb+hEI3oVHJYLSriyGs/FqxqQ4sxTNGy3sjOE0k
+        PaHnIEf3o4VhWA==
+X-Received: by 10.55.25.80 with SMTP id k77mr8536510qkh.294.1494920169817;
+        Tue, 16 May 2017 00:36:09 -0700 (PDT)
+Received: from localhost.localdomain (cpe-98-14-117-223.nyc.res.rr.com. [98.14.117.223])
+        by smtp.gmail.com with ESMTPSA id i51sm10374103qte.28.2017.05.16.00.36.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 May 2017 00:36:08 -0700 (PDT)
+From:   Samuel Lijin <sxlijin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Samuel Lijin <sxlijin@gmail.com>
+Subject: [PATCH v3 0/8] Fix clean -d and status --ignored
+Date:   Tue, 16 May 2017 03:34:15 -0400
+Message-Id: <20170516073423.25762-1-sxlijin@gmail.com>
+X-Mailer: git-send-email 2.12.2
+In-Reply-To: <20170505104611.17845-1-sxlijin@gmail.com>
+References: <20170505104611.17845-1-sxlijin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 11:47:14PM -0400, Jeffrey Walton wrote:
+Restructures the patch series so that everything works properly.
 
-> > The fact that you think it is expected is immaterial. Git doesn't
-> > know (or care) how you made the files different from HEAD, so it
-> > looks like a damage to it.
-> 
-> 'git pull' fails and its expected, but 'git pull -f' is supposed to
-> succeed. That's what -f is supposed to do.
+I also noticed while redoing it that I didn't properly fix the clean -d bug
+before; while it wouldn't remove a directory with only untracked and ignored
+files, it would miss the untracked contents of such a directory. That's now been
+fixed.
 
-Well, no. "pull -f" does something else, and is documented as such.
+Samuel Lijin (8):
+  t7300: clean -d should skip dirs with ignored files
+  t7061: status --ignored should search untracked dirs
+  dir: recurse into untracked dirs for ignored files
+  dir: hide untracked contents of untracked dirs
+  dir: expose cmp_name() and check_contains()
+  clean: teach clean -d to skip dirs containing ignored files
+  t7300: clean -d now skips untracked dirs containing ignored files
+  t7061: status --ignored now searches untracked dirs
 
-> Is there a way to add intelligence to Git so that it sees they are the
-> _exact_ same file, and it stops bothering me with details of problems
-> that don't exist?
-> 
-> It seems like adding the intelligence is a good enhancement. A version
-> control tool has to do three things: check-out, check-in, and
-> determine differences. Its not doing a good job of determining
-> differences considering they are the exact same file.
+ builtin/clean.c            | 32 ++++++++++++++++++++--
+ dir.c                      | 67 +++++++++++++++++++++++++++++++++++++++++++---
+ dir.h                      |  6 ++++-
+ t/t7061-wtstatus-ignore.sh |  1 +
+ t/t7300-clean.sh           | 11 ++++++++
+ 5 files changed, 110 insertions(+), 7 deletions(-)
 
-AFAICT there are basically two changes we could consider here:
+-- 
+2.12.2
 
-  1. Some kind of --force option to git-merge and git-pull that just
-     overwrites files, regardless of content. That's not much better
-     than "git reset --hard && git merge", but I suppose it might save
-     the state of files that wouldn't otherwise be affected by the
-     merge. We already have something similar for "checkout -f".
-
-  2. Right now the verify_uptodate() check happens deep in unpack-trees,
-     which doesn't actually know what the merge result is going to be
-     for that file. In some cases (like yours) the threeway result is
-     trivial, but in others it requires doing an actual content-level
-     merge. But in theory we could get the entire merge result and only
-     then decide whether to write it in place (after comparing to the
-     on-disk contents).
-
-     I suspect that covering the latter would take some major surgery to
-     the way that the merge code works. The trivial cases could probably
-     be handled inside unpack-trees.
-
-Neither seem totally unreasonable to me. But without working patches,
-there's not much to discuss.
-
--Peff
