@@ -1,53 +1,71 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.4 required=3.0 tests=AWL,BAYES_00,
-	CHARSET_FARAWAY_HEADER,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MIME_CHARSET_FARAWAY,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D06F61FAA8
-	for <e@80x24.org>; Tue, 16 May 2017 13:56:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C52561FAA8
+	for <e@80x24.org>; Tue, 16 May 2017 14:28:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751436AbdEPN4u (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 09:56:50 -0400
-Received: from m12-11.163.com ([220.181.12.11]:36454 "EHLO m12-11.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751080AbdEPN4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 09:56:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Mime-Version:Subject:From:Date:Message-Id; bh=iM+cv
-        BIyW/Jy/FPu5oBW+9IwvRA3uQoIVg+SLK+P3Ig=; b=WKHUOpspl+XarpuyVoOTK
-        m0+5QAqSJ2BGRhvdAW95A8jYbpxB8KsFUDbQJsbI99fgyX/7v+wfoZv/3+TY98PS
-        wluqTEi7ClSJoUAS4TxcvbjSgjzhHO91yODPtTlLbT9M5d7PPAZato2NZYppVJnD
-        VNSGzDmDbT+W70Iut1PQz8=
-Received: from [192.168.0.108] (unknown [219.143.190.219])
-        by smtp7 (Coremail) with SMTP id C8CowACHlhLHBBtZsIHrFQ--.61907S2;
-        Tue, 16 May 2017 21:55:19 +0800 (CST)
-Content-Type: text/plain;
-        charset=gb2312
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v4] send-email: --batch-size to work around some SMTP server limit
-From:   =?GB2312?B?1dTQoce/?= <zxq_yx_007@163.com>
-X-Mailer: iPhone Mail (14E304)
-In-Reply-To: <20170516141014.6e8487df.viktorin@rehivetech.com>
-Date:   Tue, 16 May 2017 21:55:18 +0800
-Cc:     git@vger.kernel.org, gitster@pobox.com, mst@kernel.org,
-        pbonzini@redhat.com, mina86@mina86.com, artagnon@gmail.com,
-        avarab@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <2BB8B551-01A6-4470-9370-5B1A03EB96D0@163.com>
-References: <20170513015726.20281-1-zxq_yx_007@163.com> <20170516141014.6e8487df.viktorin@rehivetech.com>
-To:     Jan Viktorin <viktorin@rehivetech.com>
-X-CM-TRANSID: C8CowACHlhLHBBtZsIHrFQ--.61907S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxJw45uw15KFWftFW7Cw1DGFg_yoWrCw18pr
-        yDWFWYgFy8tF1Yya1Iyw1xWryYgrZ5trnFgw1rKr1UAa45AF9Iyr1UtrWrZFWfJr1qgrWa
-        vr1jgF93uF4qyFJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j_eOdUUUUU=
-X-Originating-IP: [219.143.190.219]
-X-CM-SenderInfo: 520ts5t0bqili6rwjhhfrp/1tbiqBDZxlc686D4OwABsb
+        id S1753784AbdEPO2R (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 10:28:17 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:33865 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753775AbdEPO2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 10:28:14 -0400
+Received: by mail-qk0-f194.google.com with SMTP id u75so23043424qka.1
+        for <git@vger.kernel.org>; Tue, 16 May 2017 07:28:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=DD7sQ7zzDkwJc55HFmguX7R10Y7rf2qzW5NN+cqFtzs=;
+        b=Ggf4QHg3O1IMHi2MmEB+O3MpTJWWFbm5AJLHm93FDHJ6FVJdgm/hQeGipEUtYN8swA
+         Klz3moa6kJTD7FMqbFRT2PTcdcG3uzYC1JXSzCqcSabbV6AYFvhXhqYvLwL+SB04/L8s
+         hZC9spjNfkpFKhdJfvTVGfb5g6ETCJWRGtC6WVgKdWeLwFUPF3Trwpyywu9F3tcH+qhi
+         GDpP+WLAqgib7NdZU6Yi+XWHn5A9bLIV4GxWgiEhxXoTj/JCtnUC7yrBdsGg+U+anUz2
+         l0bcpmKDRU/XyYbu3sQeZhtuoDtZZkldNZ1waSao5wKOonfG2cEWi548e2ESz21IcJIK
+         oGDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=DD7sQ7zzDkwJc55HFmguX7R10Y7rf2qzW5NN+cqFtzs=;
+        b=IaTy0CGrx6ZwsA1lP0z91rP8vwI4/p/ilA6OFNwR9LRZ+Ia2if88NFMjnoITsARQkt
+         qFNZUZbWKpmDED8K8zsRDLuMxcFkEAckSk1AgyK4lKpuI+BPu5kb1Ds5O0R3S1M6dEEP
+         H7iyvY+9LxXzbzmYpuy8Xn/+D9u8qu5RDyCaznt0xoJ2toiztSen+jqx81tjY5nyKfKg
+         lWsd6dGi5kvHN1OGfz9Xpk1GDiYgBfvV9Gz62bd8VdOAQv7S7sV51eimm5RntnuYd1Y9
+         LJsnFe4mmJ76HDfzmJuhTknEBJZdg5FjJrGCPKAKKMqKhFM21XWTKJfqESU+HqSSVtwy
+         HPpA==
+X-Gm-Message-State: AODbwcDMLKBKk84vBN0JeS4VjVvj9FzLF6BERg65kOB/7ShjSXGLP1oT
+        TAr35C/alzmEAw==
+X-Received: by 10.55.131.198 with SMTP id f189mr9715991qkd.187.1494944893743;
+        Tue, 16 May 2017 07:28:13 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id 83sm11359956qkq.26.2017.05.16.07.28.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 May 2017 07:28:13 -0700 (PDT)
+Subject: Re: [PATCH v1 3/5] fsmonitor: add test cases for fsmonitor extension
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20170515191347.1892-1-benpeart@microsoft.com>
+ <20170515191347.1892-4-benpeart@microsoft.com>
+ <xmqq60h12y94.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, benpeart@microsoft.com, pclouds@gmail.com,
+        johannes.schindelin@gmx.de, David.Turner@twosigma.com,
+        peff@peff.net
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <db527b7e-350a-751a-89e8-5e3312bf3610@gmail.com>
+Date:   Tue, 16 May 2017 10:28:12 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <xmqq60h12y94.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,135 +73,64 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-> =D4=DA 2017=C4=EA5=D4=C216=C8=D5=A3=AC20:10=A3=ACJan Viktorin <viktorin@re=
-hivetech.com> =D0=B4=B5=C0=A3=BA
->=20
-> Hello,
->=20
-> with this patch applied to git 2.12, I could see:
->=20
-> Use of uninitialized value $batch_size in numeric eq (=3D=3D) at /usr/lib/=
-git-core/git-send-email line 1679
->=20
-> when --batch-size is NOT used. See below...
->=20
-> On Sat, 13 May 2017 09:57:26 +0800
-> xiaoqiang zhao <zxq_yx_007@163.com> wrote:
->=20
->> Some email servers (e.g. smtp.163.com) limit the number emails to be
->> sent per session(connection) and this will lead to a faliure when
->> sending many messages.
->>=20
->> Teach send-email to disconnect after sending a number of messages
->> (configurable via the --batch-size=3D<num> option), wait for a few
->> seconds (configurable via the --relogin-delay=3D<seconds> option) and
->> reconnect, to work around such a limit.
->>=20
->> Also add this two configure option for git config command.
->>=20
->> Note:
->>   Re-authentication will happen every $<batch-size> messages, so it
->> will be much more acceptable if you use some form of credential helper
->> (e.g. the 'sendemail.smtppass' config option), otherwise you will have
->> to retype password every time when asked.
->>=20
->> Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
+On 5/16/2017 12:59 AM, Junio C Hamano wrote:
+> Ben Peart <peartben@gmail.com> writes:
+>
+>> Add test cases that ensure status results are correct when using the new
+>> fsmonitor extension.  Test untracked, modified, and new files by
+>> ensuring the results are identical to when not using the extension.
+>>
+>> Add a test to ensure updates to the index properly mark corresponding
+>> entries in the index extension as dirty so that the status is correct
+>> after commands that modify the index but don't trigger changes in the
+>> working directory.
+>>
+>> Add a test that verifies that if the fsmonitor extension doesn't tell
+>> git about a change, it doesn't discover it on its own.  This ensures
+>> git is honoring the extension and that we get the performance benefits
+>> desired.
+>>
+>> Signed-off-by: Ben Peart <benpeart@microsoft.com>
 >> ---
->> contrib/completion/git-completion.bash |  2 ++
->> git-send-email.perl                    | 18 ++++++++++++++++++
->> 2 files changed, 20 insertions(+)
->>=20
->> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
->> index af658995d..29496353a 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -2608,6 +2608,8 @@ _git_config ()
->>        sendemail.thread
->>        sendemail.to
->>        sendemail.validate
->> +        sendemail.smtpbatchsize
->> +        sendemail.smtprelogindelay
->>        showbranch.default
->>        status.relativePaths
->>        status.showUntrackedFiles
->> diff --git a/git-send-email.perl b/git-send-email.perl
->> index eea0a517f..071d1ab9d 100755
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -81,6 +81,10 @@ git send-email --dump-aliases
->>                                      This setting forces to use one of th=
-e listed mechanisms.
->>     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
->>=20
->> +    --batch-size            <int>  * send max <int> message per connecti=
-on.
->> +    --relogin-delay         <int>  * delay <int> seconds between two suc=
-cessive login, default to 1,
->> +                                     This option can only be used with -=
--batch-size
->> +
->>   Automating:
->>     --identity              <str>  * Use the sendemail.<id> options.
->>     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
->> @@ -153,6 +157,7 @@ my $have_email_valid =3D eval { require Email::Valid;=
- 1 };
->> my $have_mail_address =3D eval { require Mail::Address; 1 };
->> my $smtp;
->> my $auth;
->> +my $num_sent =3D 0;
->>=20
->> # Regexes for RFC 2047 productions.
->> my $re_token =3D qr/[^][()<>@,;:\\"\/?.=3D \000-\037\177-\377]+/;
->> @@ -216,6 +221,7 @@ my ($cover_cc, $cover_to);
->> my ($to_cmd, $cc_cmd);
->> my ($smtp_server, $smtp_server_port, @smtp_server_options);
->> my ($smtp_authuser, $smtp_encryption, $smtp_ssl_cert_path);
->> +my ($batch_size, $relogin_delay);
->> my ($identity, $aliasfiletype, @alias_files, $smtp_domain, $smtp_auth);
->> my ($validate, $confirm);
->> my (@suppress_cc);
->> @@ -247,6 +253,8 @@ my %config_settings =3D (
->>     "smtppass" =3D> \$smtp_authpass,
->>     "smtpdomain" =3D> \$smtp_domain,
->>     "smtpauth" =3D> \$smtp_auth,
->> +    "smtpbatchsize" =3D> \$batch_size,
->> +    "smtprelogindelay" =3D> \$relogin_delay,
->>     "to" =3D> \@initial_to,
->>     "tocmd" =3D> \$to_cmd,
->>     "cc" =3D> \@initial_cc,
->> @@ -358,6 +366,8 @@ $rc =3D GetOptions(
->>            "force" =3D> \$force,
->>            "xmailer!" =3D> \$use_xmailer,
->>            "no-xmailer" =3D> sub {$use_xmailer =3D 0},
->> +            "batch-size=3Di" =3D> \$batch_size,
->> +            "relogin-delay=3Di" =3D> \$relogin_delay,
->>     );
->>=20
->> usage() if $help;
->> @@ -1664,6 +1674,14 @@ foreach my $t (@files) {
->>        }
->>    }
->>    $message_id =3D undef;
->> +    $num_sent++;
->> +    if ($num_sent =3D=3D $batch_size) {
->=20
-> This is the line. I think, batch_size can be sometimes uninitialized
-> while this statement is executed.
->=20
-> Regards
-> Jan
+>>  t/t7519-status-fsmonitor.sh | 134 ++++++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 134 insertions(+)
+>>  create mode 100644 t/t7519-status-fsmonitor.sh
+>
+> Please make this executable.
+>
 
-Thank you for reporting this=A3=ACI will take a look .
->=20
->> +        $num_sent =3D 0;
->> +        $smtp->quit if defined $smtp;
->> +        undef $smtp;
->> +        undef $auth;
->> +        sleep($relogin_delay);
->> +    }
->> }
->>=20
->> # Execute a command (e.g. $to_cmd) to get a list of email addresses
+Sorry, long time Windows developer so I forgot this extra step.  Fixed 
+for next roll.
 
+>> diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+>> new file mode 100644
+>> index 0000000000..2d63efc27b
+>> --- /dev/null
+>> +++ b/t/t7519-status-fsmonitor.sh
+>> @@ -0,0 +1,134 @@
+>> ...
+>> +# Ensure commands that call refresh_index() to move the index back in time
+>> +# properly invalidate the fsmonitor cache
+>> +...
+>> +	git status >output &&
+>> +	git -c core.fsmonitor=false status >expect &&
+>> +	test_i18ncmp expect output
+>> +'
+>
+> Hmm. I wonder if we can somehow detect the case where we got the
+> correct and expected result only because fsmonitor was not in
+> effect, even though the test requested it to be used?  Not limited
+> to this particular test piece, but applies to all of them in this
+> file.
+>
 
+I have tested this manually by editing the test hook proc to output 
+invalid results and ensured that the test failed as a result but adding 
+that to the test script was kind of ugly (all tests end up getting 
+duplicated - one ensuring success, one ensuring failure).
+
+On further reflection, a better idea is to have the test hook proc 
+output a marker file that can be tested for existence.  If it exists, 
+the hook was used to update the results, if it doesn't exist, then the 
+hook proc wasn't used.  A much cleaner solution that doesn't require 
+duplicating the tests.
