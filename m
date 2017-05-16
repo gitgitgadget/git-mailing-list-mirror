@@ -2,135 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4854201A7
-	for <e@80x24.org>; Tue, 16 May 2017 03:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEC00201A7
+	for <e@80x24.org>; Tue, 16 May 2017 03:27:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751030AbdEPDZI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 23:25:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52362 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750812AbdEPDZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 23:25:08 -0400
-Received: (qmail 27007 invoked by uid 109); 16 May 2017 03:25:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 03:25:06 +0000
-Received: (qmail 24006 invoked by uid 111); 16 May 2017 03:25:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 May 2017 23:25:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 May 2017 23:25:04 -0400
-Date:   Mon, 15 May 2017 23:25:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Rannaud <eric.rannaud@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeremy Serror <jeremy.serror@gmail.com>
-Subject: Re: git rebase regression: cannot pass a shell expression directly
- to --exec
-Message-ID: <20170516032503.bzkxmtqpmppxgi75@sigill.intra.peff.net>
-References: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
+        id S1750784AbdEPD1k (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 23:27:40 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:35342 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750711AbdEPD1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 23:27:39 -0400
+Received: by mail-pf0-f175.google.com with SMTP id n23so67965753pfb.2
+        for <git@vger.kernel.org>; Mon, 15 May 2017 20:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=vziECPp1UQv6EK7a8Gze0CCQBGErMAt0eh+UPQIRBvs=;
+        b=WnJnWPuteCvL7DQGercc+yEMq4E3AoPJuAHEagzWxIUofSzwfvmZQV0BxcEBQEpHUH
+         DfRGtNufaNhNN41AGWNEjSKD8XcIrnYlud6gW/+HK2zOvPD9N45rjzt5sgbMYXRA5+kJ
+         nqu1Nbo+qM7EUsSounWm2LW64FGBfnKeZpbt2GywMXFeE2iU1jQ7EYT/68I9fsUNsCuH
+         xubGJ3K8r6pvT7tL/dOI/J2oEygQoI2nNV1LZ8Gh7E5GDO8Jc/gZaVLp0OBYFYX7bh3r
+         ObVk0bbT+bZarIrI1Ud2uiLiRaFdfZwEWv0Jg6vZDTz2UdliuRiIAN4JOP04FnojcWsw
+         jn7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=vziECPp1UQv6EK7a8Gze0CCQBGErMAt0eh+UPQIRBvs=;
+        b=Dr491wiDNI55P5yFOLS978jDPuwE3TkRq060YRJ7D+kSgC/ZPT2r9+jX1HKlBnyqs3
+         Lw0rd7AerdDJGPwM92nzNSLtFTdHIApjBYD6nILg9v/6EUJnPLRpjsr3u9EeqwFtLoTR
+         dH3XGcYr9/V3gPJdG3nMnPnmTBJsO0IkWMkOR5+wFB7rEVPVotCCOmTV98j1u5vjPZH1
+         3e8cwQZ9y8+RpY1qMO5eMMb3N612C55R903dhh+K+aky8F2HhVNGV09P4CdwNnPMbEyP
+         dH8HXi6QzjwLU0gpeb7t3eAFRompHtgUt95qOdQxUWwUjQ4PqeJN2B/5Ne4iM3yWQOST
+         wCCg==
+X-Gm-Message-State: AODbwcCOPuuCvO9DVxUOIX5NzF8Tn8HmsnhuPAsfvSjQv7EhM0lxAhwM
+        hZaFa8p/LSgi0g==
+X-Received: by 10.84.232.76 with SMTP id f12mr12884955pln.101.1494905258512;
+        Mon, 15 May 2017 20:27:38 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:8dc7:ff72:325b:10d7])
+        by smtp.gmail.com with ESMTPSA id s68sm23007158pgc.5.2017.05.15.20.27.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 15 May 2017 20:27:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeffrey Walton <noloader@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: How to force a pull to succeed?
+References: <CAH8yC8k8sTGDA=C8vLCE090Y1B4TK86bOnZMNjj13C-JXVEBHQ@mail.gmail.com>
+Date:   Tue, 16 May 2017 12:27:37 +0900
+In-Reply-To: <CAH8yC8k8sTGDA=C8vLCE090Y1B4TK86bOnZMNjj13C-JXVEBHQ@mail.gmail.com>
+        (Jeffrey Walton's message of "Mon, 15 May 2017 22:17:33 -0400")
+Message-ID: <xmqq8tlx4h1y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 11:08:39AM -0700, Eric Rannaud wrote:
+Jeffrey Walton <noloader@gmail.com> writes:
 
-> It used to be possible to run a sequence like:
-> 
->   foo() { echo X; }
->   export -f foo
->   git rebase --exec foo HEAD~10
-> 
-> Since upgrading to 2.13.0, I had to update my scripts to run:
-> 
->   git rebase --exec "bash -c foo" HEAD~10
+> I scp'd a file to another machine for testing. The change tested OK,
+> so I checked it in on the original machine.
+> ...
+> How do I force the pull to succeed?
 
-Interesting. The "exec" string is still run with a shell. E.g.:
+Git doesn't know (or care) if you "scp"ed a file from a known to be
+good place, or if you modified it in the editor.  When it notices
+that there are differences you may rather not to lose in these files
+(because they are different from HEAD), it refrains from touching
+them.
 
-  $ git rebase --exec 'for i in 1 2 3; do echo >&2 $i; done' HEAD~5
-  Executing: for i in 1 2 3; do echo >&2 $i; done
-  1
-  2
-  3
-  Executing: for i in 1 2 3; do echo >&2 $i; done
-  1
-  2
-  3
-  [...and so on...]
+So the way to go forward is for you to make sure that you do not
+have such local changes in the repository that your "pull" is trying
+to touch.  An easiest way would be to do
 
-I wonder if this is falling afoul of the optimization in run-command's
-prepare_shell_cmd() to skip shell invocations for "simple" commands.
+	git checkout HEAD -- <paths>..
 
-E.g., if I do:
-
-   strace -fe execve git rebase -x foo HEAD^ 2>&1 | grep foo
-
-I see:
-
-   ...
-   Executing: foo
-   [pid 21820] execve("foo", ["foo"], [/* 57 vars */]) = -1 ENOENT (No such file or directory)
-   fatal: cannot run foo: No such file or directory
-
-But if I were to add a shell meta-character, like this:
-
-   strace -fe execve git rebase -x 'foo;' HEAD^ 2>&1 | grep foo
-
-then I see:
-
-  ...
-  Executing: foo;
-  [pid 22569] execve("/bin/sh", ["/bin/sh", "-c", "foo;", "foo;"], [/* 57 vars */]) = 0
-  foo;: 1: foo;: foo: not found
-
-So I suspect if you added an extraneous semi-colon, your case would work
-again (and that would confirm for us that this is indeed the problem).
-
-> I'm not sure if this was an intended change. Bisecting with the
-> following script:
-> [...]
-> It points to this commit:
->
-> commit 18633e1a22a68bbe8e6311a1039d13ebbf6fd041 (refs/bisect/bad)
-> Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Date:   Thu Feb 9 23:23:11 2017 +0100
->
->     rebase -i: use the rebase--helper builtin
-
-The optimization in run-command is very old, but the switch to
-rebase--helper presumably moved us from doing that exec in the actual
-shell script to doing it via the C code.
-
-Which means your exported-function technique has been broken for _most_
-of Git all along, but it just now affected this particular spot.
-
-I'm not sure how to feel about it. In the face of exported functions, we
-can never do the shell-skipping optimization, because we don't know how
-the shell is going to interpret even a simple-looking command. And it is
-kind of a neat trick. But I also hate to add extra useless shell
-invocations for the predominantly common case that people aren't using
-this trick (or aren't even using a shell that supports function
-exports).
-
-One hack would be to look for BASH_FUNC_* in the environment and disable
-the optimization in that case. I think that would make your case Just
-Work. It doesn't help other oddball cases, like:
-
-  - you're trying to run a shell builtin that behaves differently than
-    its exec-able counterpart
-
-  - your shell has some other mechanism for defining commands that we
-    would not find via exec. I don't know of one offhand. Obviously $ENV
-    could point to a file which defines some, but for most shells would
-    not read any startup files for a non-interactive "sh -c" invocation.
-
--Peff
+before doing a "git pull" to clear the damage you caused manually
+with your "scp".  
