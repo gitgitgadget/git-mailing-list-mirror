@@ -2,83 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A9B01FAA8
-	for <e@80x24.org>; Tue, 16 May 2017 18:35:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B01EA1FAA8
+	for <e@80x24.org>; Tue, 16 May 2017 18:49:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750847AbdEPSfv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 14:35:51 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:61952 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750775AbdEPSfu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 14:35:50 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wS5jw2Xf4z5tlB;
-        Tue, 16 May 2017 20:35:47 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id D8DDD4308;
-        Tue, 16 May 2017 20:35:46 +0200 (CEST)
-Subject: Re: t5400 failure on Windows
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <50f6d8b7-383b-7673-22ad-9a9b80bec2d1@kdbg.org>
- <20170515222406.hxab2wrapv75ybmj@sigill.intra.peff.net>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <afca6bf5-472e-dda4-2c16-a2256080ac51@kdbg.org>
-Date:   Tue, 16 May 2017 20:35:46 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+        id S1751947AbdEPStq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 14:49:46 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:33435 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750924AbdEPStp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 14:49:45 -0400
+Received: by mail-io0-f179.google.com with SMTP id p24so99586747ioi.0
+        for <git@vger.kernel.org>; Tue, 16 May 2017 11:49:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Q01Smo10XQTuURT++evoKwRNPCSHcVW5KUeeDytXbX4=;
+        b=TwWyinGobNTe6l2rK85mruR8syLpLkCpgrZte47A13boSyNjPKeMfQ39F0RKEyw7+r
+         plPo7TpWGobae0QBTZQnyITe6PL0W+mEOfqnp1KQy6GHGmXxgVbGZu5MPv3wIqpJVLuP
+         sPgzzrj0i47Rayp9roZok5GMDKnOYs+j6vHfkNBmi8ooav75AgOT5M6sGWy6jirNcbk/
+         /8gGS0qeYDbXdvDF6uuDXWGHorsJyMRiYB/UFL4oAwc/ZbaQGwfL2DWxX9IxdlbbH2BB
+         48VfRgnUYUYZTpIkrcs9FYcyZWlEAiNlIl6JZiUAL48Ad+RM4xzfTR/38xxHB65StgoK
+         zwmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Q01Smo10XQTuURT++evoKwRNPCSHcVW5KUeeDytXbX4=;
+        b=bw58GrxdaJPd67Ae9jqs4kBZd2gR4VYIk3NvBBF6IFWRlA5E/Rp2CZ8vTcr5323d+K
+         tCArfAHgD6LN3xuoepu0KmJ/84C3w8ugDLBnpWWRVpabw2TkevnNkWLI6wq++G2cRYUp
+         qzWx29lhyRlzH9t8geCRJVqP+LmJOSggZMbWCQIIqR9AtQhCSZPNfP43zoSKyCRyPT0k
+         jmWpBC3dm9Doef7jhsaTOeYY3ud5lhHU/5n1Pq301zdSlOmWx7ldT8RcGI5bFpR4iE1u
+         tset2cZbZ84VP6tVNnuisToEtJbzTlNeaFj0MIg3cUKooyEs6KObFE0NL/8pHQ7f5JSg
+         hrIg==
+X-Gm-Message-State: AODbwcCRIKgq6UChKsNmMT17Ad8IAvy/mkmN4r5lcm1ndXRnNPdxHotL
+        JgVDyKUeatmlBMbH1R+rp8AxdAwe7w==
+X-Received: by 10.107.195.70 with SMTP id t67mr3519052iof.17.1494960584940;
+ Tue, 16 May 2017 11:49:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170515222406.hxab2wrapv75ybmj@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.79.150.90 with HTTP; Tue, 16 May 2017 11:49:04 -0700 (PDT)
+In-Reply-To: <83801c20-96e6-7f9c-1e0e-2d46e32dc5f6@gmail.com>
+References: <83801c20-96e6-7f9c-1e0e-2d46e32dc5f6@gmail.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Tue, 16 May 2017 14:49:04 -0400
+Message-ID: <CAJZjrdVg=Fqp0nd0h7r1MY3FK_WE1RENbZPs+AY2Th7ZrDBJjA@mail.gmail.com>
+Subject: Re: error using `git mergetool --tool=meld`
+To:     Matthew Groth <mgroth49@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.05.2017 um 00:24 schrieb Jeff King:
->    4. There is something racy and unportable about both programs writing
->       to the same trace file. It's opened with O_APPEND, which means that
->       each write should atomically position the pointer at the end of the
->       file. Is it possible there's a problem with that in the way
->       O_APPEND works on Windows?
-> 
->       If that was the case, though, I'd generally expect a sheared write
->       or a partial overwrite. The two origin/HEAD lines from the two
->       programs are the exact same length, but I'd find it more likely for
->       the overwrite to happen with one of the follow-on lines.
-
-Good guesswork! O_APPEND is not atomic on Windows, in particular, it is 
-emulated as lseek(SEEK_END) followed by write().
-
-I ran the test a few more times, and it fails in different ways 
-(different missing lines) and also succeeds in a minority of the cases.
-
-Windows is capable of writing atomically in the way O_APPEND requires 
-(keyword: FILE_APPEND_DATA), but I do not see a way to wedge this into 
-the emulation layer. For the time being, I think I have to skip the test 
-case.
-
-The question remains how endangered our uses of O_APPEND are when the 
-POSIX semantics are not obeyed precisely:
-
-* trace.c: It is about debugging. Not critical.
-
-* sequencer.c: It writes the "done" file. No concurrent accesses are 
-expected: Not critial.
-
-* refs/files-backend.c: There are uses in functions 
-open_or_create_logfile() and log_ref_setup(). Sounds like it is in 
-reflogs. Sounds like this is about reflogs. If there are concurrent 
-accesses, there is a danger that a reflog is not recorded correctly. 
-Then reflogs may be missing and objects may be pruned earlier than 
-expected. That's something to worry about, but I would not count it as 
-mission critical.
-
--- Hannes
+Can you try `git config mergetool.meld.hasOutput true` and see if that
+fixes the issue?
