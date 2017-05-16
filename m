@@ -2,107 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 717C11FAA8
-	for <e@80x24.org>; Tue, 16 May 2017 16:23:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37D5B1FAA8
+	for <e@80x24.org>; Tue, 16 May 2017 16:41:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752521AbdEPQXl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 12:23:41 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:36394 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752492AbdEPQXk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 12:23:40 -0400
-Received: by mail-pg0-f49.google.com with SMTP id x64so59382971pgd.3
-        for <git@vger.kernel.org>; Tue, 16 May 2017 09:23:40 -0700 (PDT)
+        id S1753234AbdEPQl2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 12:41:28 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36630 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753232AbdEPQl1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 12:41:27 -0400
+Received: by mail-pf0-f194.google.com with SMTP id n23so19390206pfb.3
+        for <git@vger.kernel.org>; Tue, 16 May 2017 09:41:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=AAnaLvD+zKtjZ+VmMhr/yFOj521InwHz2K3MF+Nuuy4=;
-        b=tEa6HH+f46wLkwpC7b1OULKZyUZ7A3ww+g/bbNiAFMHkROuRhSVmIBC+Tdkvj2/ujd
-         1FbXNlnuXzthoTZXtsf9Un1yFAW70ThKZu9XPrlBXviNjztD9B8s0geNvCxoHydMlSwH
-         aq+1rk4ELXxxC07JaiXA78t9XCf2KKTWfMMYPUHWw6YS09a3uXQM3KqZLCsgj2MIVnRM
-         6yvR5spr/1N/1LSEo6mrd2WZo4rQo5Egej2sezuey8xxPfpAErzDOOZttjpG+A28GYK0
-         /E1//DOPVDbxE+35J9ETn1wpxOXBEr2O7YoZ19eeGLTgxLlXL6NEJNTWH18AIisovdi9
-         TgaA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gWu+bxNxNKNwY0o0J344+2cAjHcQBast24bvFNKmItI=;
+        b=hZEtjPE4vb/vPviJUn0Jf7gOJo8P6CLQLgV4zCi3uJjtR7KO5yQG60oimBRobBsd9O
+         AJ499u8WmbRWT3yT+FODMZb5RXRwqXUYJCfZr2OuxbZZqQvCgxt7YTuAbXRjXLLMHkyL
+         zx6Yh6bU98o6TlcqxyXswNpuJ1bbHwF8vvgg7HYTCex8gy2+VczTkTeKo67eJFC4RDAn
+         mpHJPPuZaG0DHpS8USwUIkoOKT86m5O1dZW4ZPGYiKAwHI9yerquPgL6Ib0ATtCWkISm
+         4Eo9A8VBZUegcU8t+6l/fH0hubm0iFdc5jClWsprDiJdrSVrQb0rXjqzcPE5zry4m0zO
+         2x2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=AAnaLvD+zKtjZ+VmMhr/yFOj521InwHz2K3MF+Nuuy4=;
-        b=AOkFA10DYeYoujOzkS3fmW5W2gCDeQA1DxyBKjkPDpMqt8mqgXHCI6WPAYe34JRz3t
-         ODxC7f2NUZX66MT+ClgYT5sFL5C4a4P1SrVU6+FV9Wkc+7D1MRHEYrs+FpDr+Y5HMp+C
-         ObwkdAt/BoCtZ2IsGLhtSsleVtFJY6ojONenWpcmzphAOdT01C1V7gNCSlaPAy8/JtLz
-         IE9G8VXWuUXkLjVPt3FWns8GEG2+jDsgy49l6ljw4u8ka5v126ryE00Yvt2Lp5d3/+kM
-         tNfNvWM1jWRn+ScfCP/GKY4motXsxVXjjPs+3ANzEZ2DyBayZPfHiI3EJFmW/+HusG3+
-         FS1g==
-X-Gm-Message-State: AODbwcBTh67lc/69QsW28fxLOwtjs2SRL/AwDxDJZ7mhDiOiFR8aD9Ui
-        HQDAsRveD2blUIIyU3TZBM7ke4ZCntur
-X-Received: by 10.84.231.206 with SMTP id g14mr16818410pln.12.1494951819957;
- Tue, 16 May 2017 09:23:39 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Tue, 16 May 2017 09:23:39 -0700 (PDT)
-In-Reply-To: <xmqqpof94nn2.fsf@gitster.mtv.corp.google.com>
-References: <20170514040117.25865-1-sbeller@google.com> <20170514040117.25865-8-sbeller@google.com>
- <xmqqtw4l4nuk.fsf@gitster.mtv.corp.google.com> <xmqqpof94nn2.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 16 May 2017 09:23:39 -0700
-Message-ID: <CAGZ79ka3JU=7WgF1tYTTam32QhZVokJxdqyOi33P-sd=XrUecw@mail.gmail.com>
-Subject: Re: [PATCH 07/19] diff.c: convert fn_out_consume to use emit_line_*
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jonathan Nieder <jrnieder@gmail.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gWu+bxNxNKNwY0o0J344+2cAjHcQBast24bvFNKmItI=;
+        b=kMe+saNszQI2NyysTo8G0Cqik/sctfdl6McTS96/DIpnShMMglhvs1nk1hyMjyLhRU
+         lgaCpL+A1UvfnkMkcmWvWHHuWbh6ap9c/F/1qR1W3AEbjb2U/NLR+3RDB9+3qrqypvBq
+         QJfoRDPvCe3mRWWRAGz+fxXOZgGBxfYafiLnVbep4ETLnHwopK9oTHSLyJL/CmIPgm/O
+         MxjhmYjMsvTioobWtrlj2wJHKoScP3Qrb9HYQnTdjA8ILKwohke+5M2FiNUsN9hG91FO
+         18r/HznFpsxBdlpJT8x7Vk2AoT7pJ+CzUcA5PMddtHhP9ar5YhREIsrmWNtpB5TgDmKD
+         zasg==
+X-Gm-Message-State: AODbwcCNj3If1TcqmedGdxbYPZCg2e25YW8aAc3wa5lB1A8z9LVwo0lC
+        ylx/bNX5kZ2pyKb3tRU=
+X-Received: by 10.98.210.199 with SMTP id c190mr13295441pfg.87.1494952886957;
+        Tue, 16 May 2017 09:41:26 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:6582:4c54:354a:7413])
+        by smtp.gmail.com with ESMTPSA id y20sm18339408pfb.93.2017.05.16.09.41.25
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 16 May 2017 09:41:26 -0700 (PDT)
+Date:   Tue, 16 May 2017 09:41:24 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Rannaud <eric.rannaud@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeremy Serror <jeremy.serror@gmail.com>,
         Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: git rebase regression: cannot pass a shell expression directly
+ to --exec
+Message-ID: <20170516164124.GO27400@aiede.svl.corp.google.com>
+References: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
+ <20170516032503.bzkxmtqpmppxgi75@sigill.intra.peff.net>
+ <20170516033736.23cfkouus3p67vhc@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170516033736.23cfkouus3p67vhc@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 6:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>> -            fprintf(o->file, "%s%s--- %s%s%s\n",
->>> -                    line_prefix, meta, ecbdata->label_path[0], reset, name_a_tab);
->>> -            fprintf(o->file, "%s%s+++ %s%s%s\n",
->>> -                    line_prefix, meta, ecbdata->label_path[1], reset, name_b_tab);
->>> +            emit_line_fmt(o, meta, reset, "--- %s%s\n",
->>> +                          ecbdata->label_path[0], name_a_tab);
->>> +            emit_line_fmt(o, meta, reset, "+++ %s%s\n",
->>> +                          ecbdata->label_path[1], name_b_tab);
+(+Brandon Williams, who may have more context for execvp-related things)
+Hi,
+
+Jeff King wrote:
+> On Mon, May 15, 2017 at 11:25:03PM -0400, Jeff King wrote:
+
+>> One hack would be to look for BASH_FUNC_* in the environment and disable
+>> the optimization in that case. I think that would make your case Just
+>> Work. It doesn't help other oddball cases, like:
 >>
->> How is the loss of line_prefix from this call site compensated?
+>>   - you're trying to run a shell builtin that behaves differently than
+>>     its exec-able counterpart
+>>
+>>   - your shell has some other mechanism for defining commands that we
+>>     would not find via exec. I don't know of one offhand. Obviously $ENV
+>>     could point to a file which defines some, but for most shells would
+>>     not read any startup files for a non-interactive "sh -c" invocation.
 >
-> OK, emit_line_0() has already been aware of line_prefix, so that is
-> how the loss of line_prefix in the above is accounted for.  We are
-> good here.
+> So I was thinking something like the patch below, though I guess
+> technically you could look for BASH_FUNC_$argv[0]%%, which seems to be
+> bash's magic variable name. I hate to get too intimate with those
+> details, though.
 >
->>>              ecbdata->label_path[0] = ecbdata->label_path[1] = NULL;
->>>      }
->>>
->>> @@ -1349,7 +1346,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
->>>              diff_words_flush(ecbdata);
->>>              if (ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN) {
->>>                      emit_line(o, context, reset, line, len);
->>> -                    fputs("~\n", o->file);
->>> +                    emit_line(o, NULL, NULL, "~\n", 2);
->
-> So unless we have some magic here, we would see an extra line-prefix
-> before that "~\n" thing, no?
+> Another option is to speculatively run "foo" without the shell, and if
+> execve fails to find it, then fall back to running the shell. That would
+> catch any number of cases where the shell "somehow" finds a command that
+> we can't.
 
-Right.
+Hm.  execvp explicitly does this when it hits ENOEXEC, but not for
+ENOENT.  Do you know why that is?
 
-With all the discussion on the the convert* patches, I consider just introducing
-another parameter to emit_line, which specifies whether we want
-emit_line to output
-a line_prefix. Then the conversion becomes a lot easier as well.
+I think we want to behave consistently for shell builtins and for
+exported functions --- they are different sides of the same problem,
+and behaving differently between the two feels confusing.
 
 Thanks,
-Stefan
+Jonathan
