@@ -2,117 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DEDE201A7
-	for <e@80x24.org>; Tue, 16 May 2017 03:47:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 561C2201A7
+	for <e@80x24.org>; Tue, 16 May 2017 03:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750917AbdEPDrQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 23:47:16 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:35070 "EHLO
-        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750877AbdEPDrP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 23:47:15 -0400
-Received: by mail-oi0-f51.google.com with SMTP id l18so10638212oig.2
-        for <git@vger.kernel.org>; Mon, 15 May 2017 20:47:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Tow3FnkUdyavAvUNFBzqSHxmgcLwRzDI1Qeo2btjRG8=;
-        b=Tsub9PjJ0cPam0TlOPm1/oOba8crs8Oqoy329LZdN0gFr2nOgMVIRED29hp+E3EGpF
-         6JCrR525Wi6+C1F9Mb5Fnb0BDaOn/YUd1W0xmaoHMN1ghVR4Bw+tbboc4/9UUD7HLmid
-         WO/MOkv+qo/ox8PHhiCmcv10zKMMsRwO30QRMlYzeftmv6m7WuLVT5KlZ6uIchR2W3O/
-         JlyjnJzPoFJqpLKpWSOufxggHSbk/Zln0WAtOX8A93Fnm+8PoBpUtryZlQ4ttFl9zFrL
-         73ZXumyy43Rjyfs5kPsdfSxOLRlvTDWamSo5dK0MBXXJpJ3hMX5yGbQqW06QLEIMehGS
-         I2/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc;
-        bh=Tow3FnkUdyavAvUNFBzqSHxmgcLwRzDI1Qeo2btjRG8=;
-        b=dRfIHPjwbEgbc/e+lStI0nX/ppepela3NyLgQ2EjWRye95JML/o3Co62TzOb4D1oVL
-         5CzuVb4cU77+MEYxmA8nAKrRvNifNPAlC9YI9PBIJTPyNPleHWlPda0qxueVdrNGrzan
-         ppOHIiPi4S9ZpYzY8zdpeVQNrv42IYWqXgR9zIttL+7H1r5PwEskHJWyYKSIRyPUqt10
-         3vsEjVNXXP6wfOWR71fHWh6oddItDass7+DlG0BQAIEAx8XXpAMPQAWeoyqOWevCJIHg
-         rWGb8nV8QsVw9wSQWNFVUalIxKuoHITbdfc4fGOGt0WG3k+tyKfwz+ZnT7KKZAar3Ygd
-         JhPQ==
-X-Gm-Message-State: AODbwcBOcuCD1kbeTfv+Ts+gjcleN39zcXSHlr8IIzO8ZIFKJm+5GTcW
-        PUM8ZPLDh+124U5GUUlSjFeNwF2m0Q==
-X-Received: by 10.202.91.198 with SMTP id p189mr725189oib.117.1494906434628;
- Mon, 15 May 2017 20:47:14 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.74.22.199 with HTTP; Mon, 15 May 2017 20:47:14 -0700 (PDT)
-Reply-To: noloader@gmail.com
-In-Reply-To: <xmqqmvad31sr.fsf@gitster.mtv.corp.google.com>
-References: <CAH8yC8k8sTGDA=C8vLCE090Y1B4TK86bOnZMNjj13C-JXVEBHQ@mail.gmail.com>
- <xmqq8tlx4h1y.fsf@gitster.mtv.corp.google.com> <CAH8yC8mOc68A-0uM8b3AKAYo9VqYNUjHkGw0knbXL0suM25tfA@mail.gmail.com>
- <xmqqmvad31sr.fsf@gitster.mtv.corp.google.com>
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 15 May 2017 23:47:14 -0400
-Message-ID: <CAH8yC8kVFGe9gnj8P+=Pp1ToDvMPXiViVM-HzhkZ6SAteoPZaQ@mail.gmail.com>
-Subject: Re: How to force a pull to succeed?
+        id S1750970AbdEPDyC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 23:54:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52387 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750759AbdEPDyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 23:54:01 -0400
+Received: (qmail 29777 invoked by uid 109); 16 May 2017 03:54:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 03:54:00 +0000
+Received: (qmail 24200 invoked by uid 111); 16 May 2017 03:54:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 May 2017 23:54:33 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 May 2017 23:53:58 -0400
+Date:   Mon, 15 May 2017 23:53:58 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Eric Rannaud <eric.rannaud@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeremy Serror <jeremy.serror@gmail.com>
+Subject: Re: git rebase regression: cannot pass a shell expression directly
+ to --exec
+Message-ID: <20170516035357.2wutcd2tyax4tjyn@sigill.intra.peff.net>
+References: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
+ <20170516032503.bzkxmtqpmppxgi75@sigill.intra.peff.net>
+ <xmqqr2zp31vg.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr2zp31vg.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 11:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeffrey Walton <noloader@gmail.com> writes:
->
->> On Mon, May 15, 2017 at 11:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Jeffrey Walton <noloader@gmail.com> writes:
->>>
->>>> I scp'd a file to another machine for testing. The change tested OK,
->>>> so I checked it in on the original machine.
->>>> ...
->>>> How do I force the pull to succeed?
->>>
->>> Git doesn't know (or care) if you "scp"ed a file from a known to be
->>> good place, or if you modified it in the editor.  When it notices
->>> that there are differences you may rather not to lose in these files
->>> (because they are different from HEAD), it refrains from touching
->>> them.
->>>
->>> So the way to go forward is for you to make sure that you do not
->>> have such local changes in the repository that your "pull" is trying
->>> to touch.  An easiest way would be to do
->>>
->>>         git checkout HEAD -- <paths>..
->>
->> Thanks. That's an extra command. Is there any way to roll it up into
->> one command?
->
->         git checkout HEAD -- <paths>.. && git pull
->
-> ;-)
->
->>> before doing a "git pull" to clear the damage you caused manually
->>> with your "scp".
->>
->> There's no damage. Its expected.
->
-> The fact that you think it is expected is immaterial. Git doesn't
-> know (or care) how you made the files different from HEAD, so it
-> looks like a damage to it.
+On Tue, May 16, 2017 at 12:40:51PM +0900, Junio C Hamano wrote:
 
-'git pull' fails and its expected, but 'git pull -f' is supposed to
-succeed. That's what -f is supposed to do.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Interesting. The "exec" string is still run with a shell. E.g.:
+> > ...
+> > I wonder if this is falling afoul of the optimization in run-command's
+> > prepare_shell_cmd() to skip shell invocations for "simple" commands.
+> > ...
+> > So I suspect if you added an extraneous semi-colon, your case would work
+> > again (and that would confirm for us that this is indeed the problem).
+> 
+> Wow, that's a brilliant analysis.
 
-Is there a way to add intelligence to Git so that it sees they are the
-_exact_ same file, and it stops bothering me with details of problems
-that don't exist?
+If it's right. :) It's all theory at this point.
 
-It seems like adding the intelligence is a good enhancement. A version
-control tool has to do three things: check-out, check-in, and
-determine differences. Its not doing a good job of determining
-differences considering they are the exact same file.
+My /bin/sh isn't bash, but I should be able to build with
+SHELL_PATH=/bin/bash to reproduce. But I can't:
 
-Jeff
+   $ bash
+   $ foo() { echo >&2 "in foo"; }
+   $ export -f foo
+   $ bash -c foo
+   in foo
+
+   $ strace -f 2>&1 git.compile rebase -x 'foo;' HEAD^ | grep foo
+   Executing: foo;
+   [pid  1788] execve("/bin/bash", ["/bin/bash", "-c", "foo;", "foo;"], [/* 60 vars */] <unfinished ...>
+   foo;: foo: command not found
+
+So I'm not sure why the direct "bash -c" can find it, but somehow the
+variable doesn't make it through to the "bash -c" at the lower level.
+Replacing "foo;" with "env" shows the environment, but BASH_FUNC_foo
+isn't set in it. I'm not sure where it's getting eaten, though.
+
+> The "semicolon" trick is way too obscure, but perhaps can be
+> documented as an escape hatch?
+
+Yeah, I agree this should be documented if it can't be fixed. I wasn't
+sure if we were giving up just yet.
+
+Either way, though, it wouldn't hurt to mention optimizing out "maybe
+shell" optimization, because it can occasionally produce user-visible
+effects. Where would be a good place? In git(1), I guess?
+
+It's almost something that could go in gitcli(7), but it's not really
+about the CLI in particular. In most cases the shell-exec'd commands are
+from config, but not always (as this case shows). So git-config(1)
+probably isn't the right place.
+
+AFAIK, we don't talk about this behavior at all in the existing
+documentation. And I really don't know where we'd put it that somebody
+would find it without having to read the documentation exhaustively.
+
+-Peff
