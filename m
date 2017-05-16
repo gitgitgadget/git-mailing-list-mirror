@@ -2,93 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42B79201A7
-	for <e@80x24.org>; Tue, 16 May 2017 03:32:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8188A201A7
+	for <e@80x24.org>; Tue, 16 May 2017 03:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750786AbdEPDcf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 23:32:35 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:33413 "EHLO
-        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750711AbdEPDce (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 23:32:34 -0400
-Received: by mail-oi0-f42.google.com with SMTP id w10so10517113oif.0
-        for <git@vger.kernel.org>; Mon, 15 May 2017 20:32:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=a1nRZXe3YCHrYaEH+WRNBdZwvWa/LvAp6kl6Fvdt4Og=;
-        b=Cfw+r7hnqMD56KlVJxz/phPeLbpJhTUc3WX5z0IRAhmqZefvpLMOy44UJO2I4dznWG
-         sEUbY0t0PU4yATf0kzVCLLSYhJC+oiCzFvZEahqovPASJjgBGP0dzA78mwKMVnKUZ1S2
-         30ttpS1hfIqS2clsLvHqtBhp3sIHUNnN3SqVJRdVfpZ8Zj6sDvhcAhFRbuY4NPUgqHrR
-         9NmibETkHVM5yhye78+XZ6hurahn7RT4R6yVraynfTorHs6HUN+O96q2vvmCzOurnW84
-         IIZIdJRTHiCQ1T1HohxE+TegyLWGzRDIyCj70b1TSQKWHYiDs7kWdTStpyL0w7kdip1L
-         8DDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc;
-        bh=a1nRZXe3YCHrYaEH+WRNBdZwvWa/LvAp6kl6Fvdt4Og=;
-        b=LFfrW1IhlZAXgd7uaiZZNxbobKbqa81b2vD6nT4Ydi4CIbUtI5IwovuhQJOiPF046L
-         HLRROJ0miiaXtbUPJWD80Nwb6BXnRomhjbSt5Lwa2q5BG9e79HHy7HtkgQlyMYQj2SLq
-         7Np/FECBAadpWbKghDVpz1aW+CcS1nLRxJqvhTGNZUYXmlEbClPtwWiKyE2oBlPT2Mid
-         5db2dLl+W3T157Eo4LH/SfNxrFFrxJMYcVibhpUNCeZIwL1Quh4J/JZM7wTYi8r84bmC
-         5pdl+dGrQEX7OUSHb34F/69QBeL7OZrcLnW0yBLzjhMDRfO8cF7jH/YHEOluqxGyzhqD
-         XLRg==
-X-Gm-Message-State: AODbwcARjio0fyXrFvf6chP3E9sC5Is8yjx9+0yPKgsnAjOI4PuGrsmg
-        3pjbt3BnW3HDLVPWztlhC2Eri5+MSQ==
-X-Received: by 10.202.199.69 with SMTP id x66mr686848oif.215.1494905554122;
- Mon, 15 May 2017 20:32:34 -0700 (PDT)
+        id S1750765AbdEPDhj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 23:37:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52372 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750711AbdEPDhj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 23:37:39 -0400
+Received: (qmail 28084 invoked by uid 109); 16 May 2017 03:37:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 03:37:39 +0000
+Received: (qmail 24073 invoked by uid 111); 16 May 2017 03:38:11 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 May 2017 23:38:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 May 2017 23:37:36 -0400
+Date:   Mon, 15 May 2017 23:37:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Rannaud <eric.rannaud@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeremy Serror <jeremy.serror@gmail.com>
+Subject: Re: git rebase regression: cannot pass a shell expression directly
+ to --exec
+Message-ID: <20170516033736.23cfkouus3p67vhc@sigill.intra.peff.net>
+References: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
+ <20170516032503.bzkxmtqpmppxgi75@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.74.22.199 with HTTP; Mon, 15 May 2017 20:32:33 -0700 (PDT)
-Reply-To: noloader@gmail.com
-In-Reply-To: <xmqq8tlx4h1y.fsf@gitster.mtv.corp.google.com>
-References: <CAH8yC8k8sTGDA=C8vLCE090Y1B4TK86bOnZMNjj13C-JXVEBHQ@mail.gmail.com>
- <xmqq8tlx4h1y.fsf@gitster.mtv.corp.google.com>
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 15 May 2017 23:32:33 -0400
-Message-ID: <CAH8yC8mOc68A-0uM8b3AKAYo9VqYNUjHkGw0knbXL0suM25tfA@mail.gmail.com>
-Subject: Re: How to force a pull to succeed?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170516032503.bzkxmtqpmppxgi75@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 11:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeffrey Walton <noloader@gmail.com> writes:
->
->> I scp'd a file to another machine for testing. The change tested OK,
->> so I checked it in on the original machine.
->> ...
->> How do I force the pull to succeed?
->
-> Git doesn't know (or care) if you "scp"ed a file from a known to be
-> good place, or if you modified it in the editor.  When it notices
-> that there are differences you may rather not to lose in these files
-> (because they are different from HEAD), it refrains from touching
-> them.
->
-> So the way to go forward is for you to make sure that you do not
-> have such local changes in the repository that your "pull" is trying
-> to touch.  An easiest way would be to do
->
->         git checkout HEAD -- <paths>..
+On Mon, May 15, 2017 at 11:25:03PM -0400, Jeff King wrote:
 
-Thanks. That's an extra command. Is there any way to roll it up into
-one command?
+> One hack would be to look for BASH_FUNC_* in the environment and disable
+> the optimization in that case. I think that would make your case Just
+> Work. It doesn't help other oddball cases, like:
+> 
+>   - you're trying to run a shell builtin that behaves differently than
+>     its exec-able counterpart
+> 
+>   - your shell has some other mechanism for defining commands that we
+>     would not find via exec. I don't know of one offhand. Obviously $ENV
+>     could point to a file which defines some, but for most shells would
+>     not read any startup files for a non-interactive "sh -c" invocation.
 
-> before doing a "git pull" to clear the damage you caused manually
-> with your "scp".
+So I was thinking something like the patch below, though I guess
+technically you could look for BASH_FUNC_$argv[0]%%, which seems to be
+bash's magic variable name. I hate to get too intimate with those
+details, though.
 
-There's no damage. Its expected.
+Another option is to speculatively run "foo" without the shell, and if
+execve fails to find it, then fall back to running the shell. That would
+catch any number of cases where the shell "somehow" finds a command that
+we can't.
 
-Jeff
+You'd still have confusing behavior if your shell builtin behaved
+differently than the exec-able version, though (because we'd quietly use
+the exec-able one), but I would imagine that's exceedingly rare.
+
+I dunno. Maybe the whole thing is a fool's errand.
+
+diff --git a/run-command.c b/run-command.c
+index 1c02bfb2e..8328d27fb 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -240,12 +240,24 @@ int sane_execvp(const char *file, char * const argv[])
+ 	return -1;
+ }
+ 
++static int env_has_bash_functions(void)
++{
++	extern char **environ;
++	char **key;
++
++	for (key = environ; *key; key++)
++		if (starts_with(*key, "BASH_FUNC_"))
++			return 1;
++	return 0;
++}
++
+ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
+ {
+ 	if (!argv[0])
+ 		die("BUG: shell command is empty");
+ 
+-	if (strcspn(argv[0], "|&;<>()$`\\\"' \t\n*?[#~=%") != strlen(argv[0])) {
++	if (strcspn(argv[0], "|&;<>()$`\\\"' \t\n*?[#~=%") != strlen(argv[0]) ||
++	    env_has_bash_functions()) {
+ #ifndef GIT_WINDOWS_NATIVE
+ 		argv_array_push(out, SHELL_PATH);
+ #else
