@@ -3,139 +3,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E4101FAA8
-	for <e@80x24.org>; Tue, 16 May 2017 17:15:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36B951FAA8
+	for <e@80x24.org>; Tue, 16 May 2017 17:17:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752521AbdEPRPo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 13:15:44 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:34594 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752038AbdEPRPn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 13:15:43 -0400
-Received: by mail-pg0-f46.google.com with SMTP id u28so79517282pgn.1
-        for <git@vger.kernel.org>; Tue, 16 May 2017 10:15:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=w5pKBMH4XyYzJ+qlNdEhu8yLusKfRumK2+s9kp9peEE=;
-        b=DzI1CIXBlbUnlYxurCGoyEjRXEUjI3NIyXecLFuzlTlIhe5yn3R8JHVuTR4QFy6nG4
-         q7GMnfIKeg13kBNf9CuJbDeIz7lpi6oWm5C4fcZJGMcc8sdXeuFMklPoxhc2fhZkTONx
-         eGSlonhvmBlK6CAjHCWBABFmTImGGvRKhJAUn1FRrDa8VT3amLpunFktRHWgIrZgVfuB
-         vpArc/7tBebJg02vofKemmBR7m/IWdwkF7gymb26MHcb/8+XRiBrKaLOyjRNaCzygXlL
-         CIymiBE6/CqzkWQWzlTxEY4TtxJmgF7mRrKnaemr4DwQqOFaSBichZ8RB9qcgCNgldy2
-         Zylw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=w5pKBMH4XyYzJ+qlNdEhu8yLusKfRumK2+s9kp9peEE=;
-        b=RMOyahDzvM20sUkqlRETv7nDo7AnSH0xeeuVSaH1c1M33EB5nK/r1djdnw57ds6srd
-         IkYtHtgS8yWIsGjPXH4W+YFXKkC6SvOHDQdEuIghVeiRPglB995O/VUHAn2a3OsA3+qI
-         xlvkHob+BMdpfr38UY4UydoLPMdrpNCUAuDH9J5ssgAlQGFR6Oi2lhXNYVAEJdwvj//U
-         sMePfATk/r4rLiLNeHyZ2jitY2/TJ+tk2D/NDE6Tli9DKb61VLpZaN8vAiAkBlY4x7FB
-         goonNhGLh0/kQhR/CdcLdbNBbLlzLY0oHrrv83J0YHSjlflLqQd81zOpEE5Eey0YcIDt
-         MLzQ==
-X-Gm-Message-State: AODbwcCpdKKp1rr1hPVdyVml08huYS6lDdPnN3eZ+41a1sPpIT+1ijiI
-        hLWbh9W7gC0RovMh
-X-Received: by 10.84.237.1 with SMTP id s1mr17414544plk.157.1494954942400;
-        Tue, 16 May 2017 10:15:42 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:6c78:c1b9:36d1:fa23])
-        by smtp.gmail.com with ESMTPSA id n85sm28649523pfi.101.2017.05.16.10.15.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 16 May 2017 10:15:41 -0700 (PDT)
-Date:   Tue, 16 May 2017 10:15:40 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Rannaud <eric.rannaud@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeremy Serror <jeremy.serror@gmail.com>
-Subject: Re: git rebase regression: cannot pass a shell expression directly
- to --exec
-Message-ID: <20170516171540.GG79147@google.com>
-References: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
- <20170516032503.bzkxmtqpmppxgi75@sigill.intra.peff.net>
- <20170516033736.23cfkouus3p67vhc@sigill.intra.peff.net>
- <20170516164124.GO27400@aiede.svl.corp.google.com>
- <20170516164750.3tw6xlbcbyuu5t72@sigill.intra.peff.net>
+        id S1753247AbdEPRRG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 13:17:06 -0400
+Received: from kitenet.net ([66.228.36.95]:37042 "EHLO kitenet.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752214AbdEPRRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 13:17:03 -0400
+X-Greylist: delayed 389 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 May 2017 13:17:03 EDT
+X-Question: 42
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
+        t=1494954628; bh=/0KajLr+vCVCgp+Qa4aGAAfkFdQzgwE4YfWN35/EIlU=;
+        h=Date:From:To:Cc:Subject:From;
+        b=Gn0UTbAb9BOhNz2O/4wXfkHSG0zNNVXipyMEMZKU+YSSk6VTHcFg7g1Ce8THOeGIX
+         LwEB8bU9py5OCXhNMzKI5pfm0aiuet6t817OsVkOJJfPqv7Gql2rKpsr7G5WOUEw6k
+         GWUC4rL717q08vvQlYT7r9NKT5MnkZLgAimlB3Sk=
+Date:   Tue, 16 May 2017 13:10:28 -0400
+From:   Joey Hess <id@joeyh.name>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Peter Simons <simons@cryp.to>
+Subject: reversion in GIT_COMMON_DIR refs path
+Message-ID: <20170516171028.5eagqr2sw5a2i77d@kitenet.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170516164750.3tw6xlbcbyuu5t72@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/16, Jeff King wrote:
-> On Tue, May 16, 2017 at 09:41:24AM -0700, Jonathan Nieder wrote:
-> 
-> > Jeff King wrote:
-> > > On Mon, May 15, 2017 at 11:25:03PM -0400, Jeff King wrote:
-> > 
-> > >> One hack would be to look for BASH_FUNC_* in the environment and disable
-> > >> the optimization in that case. I think that would make your case Just
-> > >> Work. It doesn't help other oddball cases, like:
-> > >>
-> > >>   - you're trying to run a shell builtin that behaves differently than
-> > >>     its exec-able counterpart
-> > >>
-> > >>   - your shell has some other mechanism for defining commands that we
-> > >>     would not find via exec. I don't know of one offhand. Obviously $ENV
-> > >>     could point to a file which defines some, but for most shells would
-> > >>     not read any startup files for a non-interactive "sh -c" invocation.
-> > >
-> > > So I was thinking something like the patch below, though I guess
-> > > technically you could look for BASH_FUNC_$argv[0]%%, which seems to be
-> > > bash's magic variable name. I hate to get too intimate with those
-> > > details, though.
+Bisecting this test suite failure
+https://git-annex.branchable.com/git-annex_in_nixpkgs_fails_with_git-2.13.0/
+I landed on commit f57f37e2e1bf11ab4cdfd221ad47e961ba9353a0 to git.
 
-One concern with that is what about all other shells that are not BASH?
-I'm sure they use a different env var for storing functions so we may
-need to handle other shell's too? That is assuming we want to keep the
-old behavior.
+It seems that changed resolving refs paths when GIT_DIR and GIT_COMMON_DIR
+are both set. While before refs were looked for in GIT_COMMON_DIR,
+now they're not.
 
-> > >
-> > > Another option is to speculatively run "foo" without the shell, and if
-> > > execve fails to find it, then fall back to running the shell. That would
-> > > catch any number of cases where the shell "somehow" finds a command that
-> > > we can't.
-> > 
-> > Hm.  execvp explicitly does this when it hits ENOEXEC, but not for
-> > ENOENT.  Do you know why that is?
-> 
-> When execvp(foo) falls back on ENOEXEC, it is not running "sh -c foo".
-> It is actually running "sh foo" to run the script contents. So it's
-> about letting you do:
-> 
->   echo "no shebang line" >script
->   chmod +x script
->   ./script
-> 
-> And nothing to do with shell builtins.
+Test case:
 
-That's correct, and is the exact behavior I was trying to mimic with the
-changes to run_command.
-  1. try executing the command.
-  2. if it fails with ENOEXEC then attempt to execute it with a shell
+#!/bin/sh
+set -e
+set -x
+rm -rf testdir
+git init testdir
+cd testdir
+echo 1 > foo
+git add foo
+git commit -m add
+mkdir dummy
+mkdir dummy/overlay
+cp .git/index .git/HEAD dummy/overlay
+#cp .git/refs .git/packed-refs dummy/overlay -a
+cd dummy
+export GIT_COMMON_DIR=`pwd`/../.git
+export GIT_DIR=`pwd`/overlay
+git rev-parse --git-path refs/heads/master
+git show refs/heads/master
 
-> 
-> > I think we want to behave consistently for shell builtins and for
-> > exported functions --- they are different sides of the same problem,
-> > and behaving differently between the two feels confusing.
-> 
-> Yes, I think ideally we'd handle it all transparently. Although I'd also
-> point out that Git the behavior under discussion dates back to 2009 and
-> this is (as far as I can recall) the first report. So documenting the
-> current behavior might not be that bad an option.
-> 
-> -Peff
+This script succeeds with git 2.11.0, but with 2.13.0, it fails:
 
--- 
-Brandon Williams
+fatal: ambiguous argument 'refs/heads/master': unknown revision or path not in the working tree.
+
+It seems to be failing to look up refs in GIT_COMMON_DIR.
+Note that uncommenting the commented out line in the script, to copy the refs
+into GIT_DIR, makes it succeed.
+
+git rev-parse --git-path refs/heads/master shows the GIT_COMMON_DIR/refs path
+still (as gitrepository-layout documents). So this reversion made
+different parts of git disagreeing about the refs path.
