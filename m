@@ -7,103 +7,71 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 729371FAA8
-	for <e@80x24.org>; Tue, 16 May 2017 16:13:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A3961FAA8
+	for <e@80x24.org>; Tue, 16 May 2017 16:19:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752034AbdEPQNV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 12:13:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52702 "EHLO cloud.peff.net"
+        id S1751449AbdEPQTC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 12:19:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52709 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751714AbdEPQNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 12:13:21 -0400
-Received: (qmail 13612 invoked by uid 109); 16 May 2017 16:13:17 -0000
+        id S1750950AbdEPQTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 12:19:01 -0400
+Received: (qmail 14109 invoked by uid 109); 16 May 2017 16:19:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 16:13:17 +0000
-Received: (qmail 28868 invoked by uid 111); 16 May 2017 16:13:50 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 16:19:01 +0000
+Received: (qmail 28928 invoked by uid 111); 16 May 2017 16:19:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 12:13:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 May 2017 12:13:15 -0400
-Date:   Tue, 16 May 2017 12:13:15 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 12:19:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 May 2017 12:18:59 -0400
+Date:   Tue, 16 May 2017 12:18:59 -0400
 From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] hashmap: hashmap_get_next passes through keydata as well
-Message-ID: <20170516161315.oraebpe2zuzuo3q3@sigill.intra.peff.net>
-References: <20170512200244.25245-1-sbeller@google.com>
- <20170513085050.plmau5ffvzn6ibfp@sigill.intra.peff.net>
- <CAGZ79kZxN5-K19R+gd-pZ1Uc30_JRKugjMTJZ4er2dF71pStPg@mail.gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Rannaud <eric.rannaud@gmail.com>, git@vger.kernel.org,
+        Jeremy Serror <jeremy.serror@gmail.com>
+Subject: Re: git rebase regression: cannot pass a shell expression directly
+ to --exec
+Message-ID: <20170516161858.stp4ylwfmbgc4oid@sigill.intra.peff.net>
+References: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
+ <alpine.DEB.2.21.1.1705161220230.3610@virtualbox>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZxN5-K19R+gd-pZ1Uc30_JRKugjMTJZ4er2dF71pStPg@mail.gmail.com>
+In-Reply-To: <alpine.DEB.2.21.1.1705161220230.3610@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 13, 2017 at 07:06:35AM -0700, Stefan Beller wrote:
+On Tue, May 16, 2017 at 12:23:02PM +0200, Johannes Schindelin wrote:
 
-> > I think I figured it out, but I have a feeling it is violating the
-> > intent of the "keydata" parameter.  That parameter is typically used not
-> > as a pointer to arbitrary auxiliary data, but as a trick for finding a
-> > hash entry without having to allocate a struct for it.
+> On Mon, 15 May 2017, Eric Rannaud wrote:
 > 
-> Yes, I was violating the intent exactly as you describe. I'll adapt my patches
-> accordingly.
+> > It used to be possible to run a sequence like:
+> > 
+> >   foo() { echo X; }
+> >   export -f foo
+> >   git rebase --exec foo HEAD~10
 > 
-> I do not really buy into the trick though, because when the overhead of
-> allocating a 'key' struct filling in the key parts only leaving out the value
-> is so much more expensive than giving the key via this keydata argument,
-> then there are serious issues with your data structure IMHO.
-> Example:
-> [...]
+> It would appear to me that you used a side effect of an implementation
+> detail: that `git rebase -i` was implemented entirely as a shell script.
 
-Sure, in your example it works to allocate a partial structure on the
-stack. But if you look at the users of the hashmap, quite a few are
-structs with final flex-array members, which cannot easily do that
-without allocating a new struct on the heap.  You can work around it by
-converting them to flex-ptrs (at the cost of an extra 8 bytes per
-struct) and having the "key only" version be an oddball by pointing
-outside the struct. But I do think having the flexibility in hashmap is
-nice.
+I don't think that's true at all. He expected the user-provided "--exec"
+command to be run by a shell, which seems like a reasonable thing for
+Git to promise (and we already make a similar promise for most
+user-provided commands that we run).  What happens in between, be it
+shell or C code, doesn't matter, and the conversion away from a shell
+script in this case only tickled an existing bad interaction between
+"export -f" and Git's run-command code.
 
-I actually wish that it did not even require the hashmap entry to be at
-the beginning of the struct; it makes it hard to put the same structure
-into multiple hashes/lists. See for example the pack MRU, which is in
-both a hash and a doubly-linked list. Fortunately the list code is
-flexible enough to allow its pointers anywhere in the struct.
+See my other replies for the full story.
 
-So yeah, we could design all of our data structures to fit into the
-hashmap's world-view. But I think it's handy for it to be flexible.
+I don't think this has anything in particular to do with git-rebase,
+though. Our solutions are either:
 
-> > It works out in the current code because the chaining is purely linear,
-> > and doesn't care about order. So we can rehash and just stick the
-> > elements into a new list. But if it were switched out for a different
-> > data structure (e.g., a tree), then the hashmap code would need to be
-> > able to compare elements.
-> 
-> Note that most compare functions do not return an order, but only
-> a boolean [no]match, so putting it into an ordered tree could only
-> rely on the hash that we already know without aid from the compare function.
-> Of course we could fix our compare functions before doing such a
-> refactoring, but I want to point out how involved that would be.
+  - declare "export -f" as too tricky for our optimization, and teach
+    people about the ";" trick
 
-Good point, I didn't think of that. Moving to any non-linear lookup
-within a single bucket would require totally changing the cmp_fn
-contract, and that's not likely to happen (and anyway, if we're starting
-to care about intra-bucket lookup times, that's probably a sign we
-should be growing the table more aggressively).
-
-So my concern was just nonsense.
-
-> > I don't think we have any particular plans for such a change, but I
-> > wonder if we should avoid encouraging callers to rely on the current
-> > implementation.
-> 
-> After a night of sleep it is easy to fix my code to behave as the API
-> intended. Yesterday I could not see how to fix it.
-
-Yay, then. :)
+  - figure out some workaround/fallback to disable the shell-skipping
+    optimization in this case
 
 -Peff
