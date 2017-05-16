@@ -2,158 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17190201A4
-	for <e@80x24.org>; Tue, 16 May 2017 08:05:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D593201A4
+	for <e@80x24.org>; Tue, 16 May 2017 08:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751436AbdEPIFg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 04:05:36 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:38822 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751203AbdEPIFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 04:05:31 -0400
-Received: by mail-it0-f53.google.com with SMTP id e65so83060344ita.1
-        for <git@vger.kernel.org>; Tue, 16 May 2017 01:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3sOFWesCibIDoOe7SoHpQ10U4/EcheYv7QRIANmgWpw=;
-        b=J/lI68H2npWcNbcI5zLaPxrmfkGSaqbMu6Ad/wjzMnAFP/jVimqkw4YSa4D2akpfT8
-         n26gIElIibkWWmEQUDHkjFzKfaRZ7uV4W4KSV/2xSLymMudNLk0j6bdPauymXczERDAJ
-         nhpZB/hJjB0SNc+ju772iCNHw9j1l/gIKNl0g8b1f1MqEk7qZcYIDaitxdwpDLuJXeNR
-         RvEL9FfQ4UX3XMEefL7AB/LMUHVv/VyoFnj+JoBjLsnkXJpcXGG9pux1LzhHYeo1T5Yu
-         407/ndab9043N0CbSGI7fusAFbY1IsR5C0WzyEZ4sIt49Iy1RdrUNpWtSJZxqRQDh6Ww
-         6nig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3sOFWesCibIDoOe7SoHpQ10U4/EcheYv7QRIANmgWpw=;
-        b=WfT3x5FpvbMUYUo7AU2eNVU5eqm9oxx6613VdGJNLJe3FUZ/TPPIzWj8ZG9RJ27ugl
-         LaPeYGxXhNJ9fTrXWYjvhzx8COyKVNOT7h4hkAcL7SsVBjhUrUk1vkl6ooBWZzpEP7GE
-         pEv0Y4qW7SPa7pk0maGkGNUK4LbutAK2WOv3z4Oc0u/+RrMjygIkxNPiVzLATTCOvcF4
-         kmUx+z456VTBCBUwfJ6iYGXnQEvYVnLZhMJ5c3kT6OrHnrWLr5mpr1R7OBYh1PUByiTx
-         6lQGB5x/xiljVC0LDDxML1BN1Nr5ubX8A8zc03wdINg35ZSBcxrduLe3m4BuL+WmKxZ5
-         +22Q==
-X-Gm-Message-State: AODbwcDMY2aqiLZTv6uLppLyLh5GJ41z1Yqior6yxdh/zaHP3gScKKOS
-        Yr5jBrHQKK+KXGuSlf9bZosnH8gvRg==
-X-Received: by 10.36.166.4 with SMTP id q4mr9385639ite.66.1494921930583; Tue,
- 16 May 2017 01:05:30 -0700 (PDT)
+        id S1751781AbdEPIKb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 04:10:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52530 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751643AbdEPIK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 04:10:27 -0400
+Received: (qmail 14132 invoked by uid 109); 16 May 2017 08:10:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 08:10:25 +0000
+Received: (qmail 25783 invoked by uid 111); 16 May 2017 08:10:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 04:10:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 May 2017 04:10:23 -0400
+Date:   Tue, 16 May 2017 04:10:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 0/2] Demonstrate and partially work around a
+ gitattributes problem
+Message-ID: <20170516081023.lh3zflnf473jiviq@sigill.intra.peff.net>
+References: <cover.1494861793.git.johannes.schindelin@gmx.de>
+ <20170516075418.m3knwvdsr5ab6vzy@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Tue, 16 May 2017 01:05:09 -0700 (PDT)
-In-Reply-To: <xmqq7f1h63h9.fsf@gitster.mtv.corp.google.com>
-References: <cover.1494509599.git.johannes.schindelin@gmx.de>
- <xmqqk25m98rd.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1705121216290.146734@virtualbox>
- <xmqq7f1h63h9.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 16 May 2017 10:05:09 +0200
-Message-ID: <CACBZZX5EXxsB3TWiiB0TH-ZpOsadcAPAe4chrQBe7py9VAMY+Q@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Start retiring .git/remotes/ and .git/branches/ for good
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170516075418.m3knwvdsr5ab6vzy@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 16, 2017 at 2:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> On Fri, 12 May 2017, Junio C Hamano wrote:
->>
->>> Is it really hurting us having to support these old information
->>> sources we treat as read-only?
->>
->> Well, you frequently complain about my patches, claiming that they place
->> unnecessary maintenance burden on you.
->>
->> I would say that the .git/remotes/ and .git/branches/ code is a lot more
->> maintenance burden than most of my patches.
->
-> I wasn't going to respond to this thread anymore, because I didn't
-> feel like the discussion was going anywhere, and you already said
-> you won't listen to me.
->
-> You seem to be confused between "maintenance burden" and "burden on
-> the maintainer". I felt that it needs to be corrected for other
-> people reading this exchange from the sideline.
->
->     When we worked to add feature X in the remotes subsystem, we
->     were slowed down because we had to adjust the code also for
->     .git/branches.  The same story for feature Y.  The same for
->     feature Z.  This is getting ridiculous/cumbersome, especially
->     given that we know .git/branches is not used by anybody.
->
-> That's a maintenance burden, and the "we" refers to the Git
-> development community as a whole, not the maintainer.  It is not a
-> burden on _me_.
->
-> Also important to notice is I do not know what X, Y and Z are with
-> respect to .git/branches feature.  That is where "Is it really
-> hurting?" question comes from, but it hasn't been answered so far.
->
-> What's burden on the maintainer is having to engage in a discussion
-> like this one, to reject an attempt to remove something that is not
-> demonstratably a maintenance burden, because the maintainer has to
-> act as the last-resort champion for the end-users, when others on
-> the list do not speak up X-<.
+On Tue, May 16, 2017 at 03:54:18AM -0400, Jeff King wrote:
 
-This and many other discussions on-list basically come down to:
+> Something like the patch below almost gets us there, but it suffers from
+> the fact that the revision machinery doesn't record the path for the
+> blobs it parses. So:
+> 
+>   1. It's a little inefficient, because it has to re-resolve the names
+>      again.
+> 
+>   2. It works for "git diff $commit:file1 $commit:file2", because each
+>      of the blobs has a name we can re-resolve. But connecting them with
+>      "$commit:file1..$commit:file2" doesn't work, because that name is
+>      given to _both_ blobs, and can't be resolved as a single sha1. I'd
+>      argue that this is actually a bug in the revision code.
+> 
+> Both would be solved if handle_revision_arg used get_sha1_with_context
+> to record the path while resolving (struct object_entry already has a
+> slot for it, but the revision code never sets it).
 
-1. Someone wants to change X.
-2. This would have user impact Y.
-3. We have no way to quantify Y.
-4. X doesn't happen out of fear of unquantifiable Y.
+This turned out much easier than I feared. With the patch below:
 
-It seems to me that a way out of this that would make everyone happy
-is to go through some deprecation cycle through several releases with
-X where:
+  - your t0003 test passes
 
-1. We detect that you're using X, and warn that it's a candidate for deprecation
-2. In another release, we turn off the feature by default, threatening
-that it's going to go away forever unless someone pipes up (this is
-what we did with rsync:// accidentally)
-3. In another release, If you turned on the feature after #2 we emit a
-noisy warning every time it's used, saying "it'll really be removed in
-$release+1"
+  - the diff headers are much more sensible (IMHO)
 
-Another open source community I'm involved in, the Perl language, used
-to have the same issue. Every time something like
-adding/changing/removing X came up we'd have the same discussion all
-over again from scratch.
+  - it fixes a semi-related bug in which "git diff $blob1 $blob2"
+    compared the modes correctly, but "git diff $blob1..$blob2" did not
+    (because the ".." code path did not correctly record the modes).
 
-A lot of that was solved by having some written down guide for how
-deprecations are done:
-http://perldoc.perl.org/perlpolicy.html#BACKWARD-COMPATIBILITY-AND-DEPRECATION
+I'll stop here for now to get any comments/feedback. There are a few
+changes I'd make to polish this up:
 
-Of course that's not a perfect solution, nothing is, but it makes it
-much easier to get patches like this on some sort of well-defined
-track towards deprecation.
+  - the mode fix should be its own preparatory patch
 
-> Yes, I know that proving that something we currently support is not
-> used by anybody is HARD [*1*].  That is why removal is costly.  And
-> that in turn is why we need to be careful when adding new things and
-> making changes in general.
+  - teaching revision.c to pass out path info should be its own patch
 
-From my reading of this series we already have a solution to that. We
-start warning and then we find out who's using it.
+  - the "struct blobinfo" in builtin/diff.c should probably call it
+    "path" instead of "name" for clarity. In fact, I kind of wonder if
+    this should just be an object_array element, as that has all of
+    the information.
 
-To the extent that that causes issues I think it's better to peel that
-discussion off this specific topic, i.e. the pain that causes users is
-not specific to this proposed update, but has to do with how we want
-to do deprecations in general, and the trade-offs involved with doing
-that.
+  - the way that "struct object_context" handles the paths with a
+    fixed-size buffer is badly designed (by me, long ago). I may see
+    what it would take to refactor that to match the technique in
+    sha1_object_info_extended(), which I think has worked well in
+    practice.
 
-> [Footnotes]
->
-> *1* Removal of "rsync" transport we did recently was a happy but
->     rare case.  It has been broken for a few years without anybody
->     complaining.
+    That's orthogonal to this series, but it's been bugging me for a
+    long time, and obviously the caller here would have to adapt.
+
+---
+diff --git a/builtin/diff.c b/builtin/diff.c
+index d184aafab..8ed1e99e3 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -409,7 +409,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 			if (2 <= blobs)
+ 				die(_("more than two blobs given: '%s'"), name);
+ 			hashcpy(blob[blobs].oid.hash, obj->oid.hash);
+-			blob[blobs].name = name;
++			blob[blobs].name = entry->path ? entry->path : name;
+ 			blob[blobs].mode = entry->mode;
+ 			blobs++;
+ 
+diff --git a/revision.c b/revision.c
+index 8a8c1789c..72b9af7de 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1431,7 +1431,7 @@ static void prepare_show_merge(struct rev_info *revs)
+ 
+ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsigned revarg_opt)
+ {
+-	struct object_context oc;
++	struct object_context oc, oc2;
+ 	char *dotdot;
+ 	struct object *object;
+ 	unsigned char sha1[20];
+@@ -1470,8 +1470,8 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 				return -1;
+ 			}
+ 		}
+-		if (!get_sha1_committish(this, from_sha1) &&
+-		    !get_sha1_committish(next, sha1)) {
++		if (!get_sha1_with_context(this, GET_SHA1_COMMITTISH, from_sha1, &oc) &&
++		    !get_sha1_with_context(next, GET_SHA1_COMMITTISH, sha1, &oc2)) {
+ 			struct object *a_obj, *b_obj;
+ 
+ 			if (!cant_be_filename) {
+@@ -1523,8 +1523,12 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 					REV_CMD_LEFT, a_flags);
+ 			add_rev_cmdline(revs, b_obj, next,
+ 					REV_CMD_RIGHT, flags);
+-			add_pending_object(revs, a_obj, this);
+-			add_pending_object(revs, b_obj, next);
++			add_pending_object_with_path(revs, a_obj, this,
++						     oc.mode,
++						     oc.path[0] ? oc.path : NULL);
++			add_pending_object_with_path(revs, b_obj, next,
++						     oc2.mode,
++						     oc2.path[0] ? oc2.path : NULL);
+ 			return 0;
+ 		}
+ 		*dotdot = '.';
+@@ -1574,7 +1578,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 		verify_non_filename(revs->prefix, arg);
+ 	object = get_reference(revs, arg, sha1, flags ^ local_flags);
+ 	add_rev_cmdline(revs, object, arg_, REV_CMD_REV, flags ^ local_flags);
+-	add_pending_object_with_mode(revs, object, arg, oc.mode);
++	add_pending_object_with_path(revs, object, arg, oc.mode, oc.path);
+ 	return 0;
+ }
+ 
