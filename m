@@ -2,181 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCCE61FAA8
-	for <e@80x24.org>; Tue, 16 May 2017 20:27:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9058F1FAA8
+	for <e@80x24.org>; Tue, 16 May 2017 20:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752740AbdEPU1B (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 16:27:01 -0400
-Received: from mail-yw0-f172.google.com ([209.85.161.172]:35741 "EHLO
-        mail-yw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752636AbdEPU1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 16:27:00 -0400
-Received: by mail-yw0-f172.google.com with SMTP id l74so44240943ywe.2
-        for <git@vger.kernel.org>; Tue, 16 May 2017 13:26:55 -0700 (PDT)
+        id S1752636AbdEPU1p (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 16:27:45 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:37010 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750924AbdEPU1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 16:27:43 -0400
+Received: by mail-it0-f54.google.com with SMTP id g126so95223294ith.0
+        for <git@vger.kernel.org>; Tue, 16 May 2017 13:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=r7VAXxAwMAwGAKDsCjHuf+V+dJMEdPmXwNfeKNiG5vE=;
-        b=stvU4Gu59shiMof0KY/Q0cJJRaylEVZ+/DFnOsZaeMYnB0YVlBvdT2YIv9ggYDwv5c
-         q3HlxL53tX0tTjP0XZdb/GrztljbXF5kbY9BJFzh1NxFBkCtkhAMYya80rz5x/JtL4w9
-         l2vcXMBRAr14Jb+WozxgFUWwEOW2uew7fwn6ABdHO+bBAJ7IVU25KtwfoJLBALzfJbbt
-         d6fl8v/yB6b9MuRDEa8+2PPwzVdlWOInnd+a23mX0dKAnCWY1JMYkChK5j3xm1T+F1l5
-         f2yzFg6JTYLuH1968yUIXupflM+zoxqPbJ8txJedAe0FfLH1TpFv1o203ZQAOzUEeVac
-         ogEA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=MzZcI9B7pkXFVcg9LGqwcPPKub3F/hXoAA7lDP7Ljx8=;
+        b=r6DJXK6L2FVqrYsOgYywGZdOXqtZ1DGvUNPIywdxEsLE5ND2wT4Cag3AYzTf2sRaZr
+         ITKHIt/V0yL55EeWY3L82E0DOpT3dxe37l9iscdSYbTwxnfB6p9oXmn5suJFYtK0PxeP
+         d75TzIpVxk8bci82eX2/rWPeRc/7rTOHgkH5UZ2Qwt0d7dU1+5Ym85hCMVGeQiYtzVoV
+         7D4lpOpYacdOJNLVeo7XD1PE9tUig/hgVeMVw87I69ozvsyRaHHYTSqpAfXM0xQCUJqI
+         3DQjM4xK6SP3JzxPgTcQaEGtVCu47WFu1gv7cGCBba1ZwOk05EV8yK5rk/rb6PnRFsSk
+         C2lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=r7VAXxAwMAwGAKDsCjHuf+V+dJMEdPmXwNfeKNiG5vE=;
-        b=NcHcpvx9SIPw+A14DuUmMjnyyCM7GXAQLGHCyV0Wh81kl+P7tIDvunT/Zqj2N6JmDm
-         uT0avAgAzPcMILrdFAVlux0wcjBpUjx3qMN/FJcvODOrmba1dR3tYV6fBA6YV2erpRr3
-         VvQwKPs5nbk2JVNHL7iNpp9PgHSvnGwLlwkuUcQkz8xwFTIkjoGuUexO3z03r4jEJJck
-         VunMowdeL0lPcGA7OU7joLZLfsKfUMH1I4no4A9FK9m3bOO647X0KJMN3UWn4binw2RK
-         UU0zt/IvgG7bvFLCb4dSZYGkA00rpJsPyHoSazG2dLqIa0y0Hlch2ywK0sNkZyTXf63D
-         t7Vg==
-X-Gm-Message-State: AODbwcD/D9FHJTzrHCqGC50s45godSZAh1SRGxV2GInsS9bZHqMZFrC2
-        w8+aYSMKH6YNr4AKP8Mv2lbkVqR6xJXG
-X-Received: by 10.129.163.67 with SMTP id a64mr8819513ywh.138.1494966414550;
- Tue, 16 May 2017 13:26:54 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=MzZcI9B7pkXFVcg9LGqwcPPKub3F/hXoAA7lDP7Ljx8=;
+        b=Hgk7h1FO5meiansWQ6FPnyQ5KfWtrvYqascobMBmPI2irgoyYzne4NGfTWrQj0w4h2
+         7ErREFFw2wmWFCvk4nikpGLeUm2b6obmiT4PBkUQFhkqrxKVK+3xU6qOKEASnwAfg2GD
+         pWgFgiyVDbjIMaFfRYj5/USMqtBFnLJwcpl1qGuRtePSqejT1UoDFkb0zxjQFCNHYIxW
+         Iq3pBwiZzUfLyPGvEC7Gn7j1fZWZzdIi9AQUlOOUq0Xvk+D6Cv2cMlf66KffLrcYboUC
+         HWGDG9TkhBZu//mnmXVX7+VCy89WIii8Aj+LNk8SN1x+FD4NQV8CQlnpMgaXvODFgCW1
+         4yJg==
+X-Gm-Message-State: AODbwcCtBbhvPfMoVdu1wsjxw+lni+ZrmyZXG/yEAG9XfmY5UQJq8fTP
+        pqSB9ZZ6gEZBxqqzKwfg8360Vac7cw==
+X-Received: by 10.36.74.82 with SMTP id k79mr12456556itb.58.1494966463105;
+ Tue, 16 May 2017 13:27:43 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.129.44.70 with HTTP; Tue, 16 May 2017 13:26:53 -0700 (PDT)
-In-Reply-To: <20170516103836.GB2169@alpha.vpn.ikke.info>
-References: <cf9ce8e9-a358-4fdf-aa7c-a8ab76b6429a@gmail.com> <20170516103836.GB2169@alpha.vpn.ikke.info>
-From:   Thomas Schweikle <tschweikle@gmail.com>
-Date:   Tue, 16 May 2017 22:26:53 +0200
-Message-ID: <CA+rGx5ctrWps8JTvxL9Pn=o=QfmD+JbJU0QHBoJ9JJYt1A0Lgw@mail.gmail.com>
-Subject: Re: Cant clone/pull/fetch because of "Unable to create temporary file '$HOME/Dev/linux-stable/.git/objects/pack/tmp_pack_'
-To:     Kevin Daudt <me@ikke.info>
-Cc:     git@vger.kernel.org
+Received: by 10.107.204.3 with HTTP; Tue, 16 May 2017 13:27:42 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.21.1.1705162211320.3610@virtualbox>
+References: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
+ <20170516032503.bzkxmtqpmppxgi75@sigill.intra.peff.net> <20170516033736.23cfkouus3p67vhc@sigill.intra.peff.net>
+ <20170516164124.GO27400@aiede.svl.corp.google.com> <20170516164750.3tw6xlbcbyuu5t72@sigill.intra.peff.net>
+ <20170516171540.GG79147@google.com> <20170516172307.36hyshwypomlsubx@sigill.intra.peff.net>
+ <CA+55aFwB-MWASj7dZWkXWhgd4gvEfoOhL6Fo7kXeJSm9dht4Jg@mail.gmail.com> <alpine.DEB.2.21.1.1705162211320.3610@virtualbox>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Tue, 16 May 2017 13:27:42 -0700
+X-Google-Sender-Auth: tZQqxQ6C2VW4jjvqap9PxQs1qQg
+Message-ID: <CA+55aFwX2RDwT=g4w55bbLV38ggaVpdcLpMcCvqMcKRziUSesQ@mail.gmail.com>
+Subject: Re: git rebase regression: cannot pass a shell expression directly to --exec
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Rannaud <eric.rannaud@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeremy Serror <jeremy.serror@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-05-16 12:38 GMT+02:00 Kevin Daudt <me@ikke.info>:
-> On Mon, May 15, 2017 at 12:28:58AM +0200, Thomas Schweikle wrote:
->> $ git clone
->> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
->> linux-stable
->> Cloning into 'linux-stable'...
->> remote: Counting objects: 5932092, done.
->> remote: Compressing objects: 100% (154131/154131), done.
->> fatal: Unable to create temporary file
->> '$HOME/Dev/linux-stable/.git/objects/pack/tmp_pack_XXXXXX': Permission
->> denied
->> fatal: index-pack failed
+On Tue, May 16, 2017 at 1:12 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >>
->> Since no file/directory created by git I cant tell why git isn't
->> able to create
->> "$HOME/Dev/linux-stable/.git/objects/pack/tmp_pack_XXXXXX".
+>> I think it would be better to just
 >>
->> If I try to create this file and directory I can create it:
->> $ mkdir -p $HOME/Dev/linux-stable/.git/objects/pack
->> $ touch $HOME/Dev/linux-stable/.git/objects/pack/tmp_pack_XXXXXX
->> $ ll $HOME/Dev/linux-stable/.git/objects/pack/tmp_pack_XXXXXX
->> -rw-rw-r-x+ 1 tps tps 0 May 15 00:18
->> /home/tps/Dev/linux-stable/.git/objects/pack/tmp_pack_XXXXXX
->> $
+>>  (a) get rid of the magic strcspn() entirely
 >>
->> $ git --version
->> git version 2.11.0
->>
->> --
->> Thomas
+>>  (b) make the 'can we optimize this' test be simply just looking up
+>> 'argv[0]' in $PATH
 >
-> Note the '+' at the end of the permission list. This means an acl has
-> been applied to this directory.
+> What about
 >
-> What does getfacl
-> '$HOME/Dev/linux-stable/.git/objects/pack/' return?
+>         ABC=1 my-executable my-arg
 
-since non of "linux-stable/.git/objects/pack" is created, I can only
-have a look at what acl the directories have if I create them:
+What about it?
 
-$ mkdir -p $HOME/Dev/linux-stable/.git/objects/pack
-$ LANG=3DC getfacl $HOME/Dev/linux-stable/.git
-getfacl: Removing leading '/' from absolute path names
-# file: home/tps/Dev/linux-stable/.git
-# owner: tps
-# group: tps
-user::rwx
-user:root:rwx
-user:500:rwx
-user:nobody:---
-group::rwx
-group:uuidd:rwx
-group:crontab:r-x
-mask::rwx
-other::rwx
-default:user::rwx
-default:user:root:rwx
-default:user:500:rwx
-default:user:nobody:---
-default:group::rwx
-default:group:uuidd:rwx
-default:group:crontab:r-x
-default:mask::rwx
-default:other::rwx
+Do you have a binary like
 
-$ LANG=3DC getfacl /home/tps/Dev/linux-stable/.git/objects/
-getfacl: Removing leading '/' from absolute path names
-# file: home/tps/Dev/linux-stable/.git/objects/
-# owner: tps
-# group: tps
-user::rwx
-user:root:rwx
-user:500:rwx
-user:nobody:---
-group::rwx
-group:uuidd:rwx
-group:crontab:r-x
-mask::rwx
-other::rwx
-default:user::rwx
-default:user:root:rwx
-default:user:500:rwx
-default:user:nobody:---
-default:group::rwx
-default:group:uuidd:rwx
-default:group:crontab:r-x
-default:mask::rwx
-default:other::rwx
+    '/usr/bin/ABC=1 my-executable my-arg'
 
-$ LANG=3DC getfacl /home/tps/Dev/linux-stable/.git/objects/pack/
-getfacl: Removing leading '/' from absolute path names
-# file: home/tps/Dev/linux-stable/.git/objects/pack/
-# owner: tps
-# group: tps
-user::rwx
-user:root:rwx
-user:500:rwx
-user:nobody:---
-group::rwx
-group:uuidd:rwx
-group:crontab:r-x
-mask::rwx
-other::rwx
-default:user::rwx
-default:user:root:rwx
-default:user:500:rwx
-default:user:nobody:---
-default:group::rwx
-default:group:uuidd:rwx
-default:group:crontab:r-x
-default:mask::rwx
-default:other::rwx
+or something? If so, it gets executed. If not, it would get passed off
+to "/bin/sh".
 
-git should not have any problems creating files and folders =E2=80=A6
-but git wont even create linux-stable!
+That sounds a lot more obvious than "some random set of characters are magical".
 
---=20
-Thomas
+                  Linus
