@@ -8,235 +8,112 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA9DD201A7
-	for <e@80x24.org>; Tue, 16 May 2017 06:07:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47881201A7
+	for <e@80x24.org>; Tue, 16 May 2017 06:15:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751316AbdEPGHB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 02:07:01 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34019 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751027AbdEPGG7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 02:06:59 -0400
-Received: by mail-pf0-f196.google.com with SMTP id w69so18709577pfk.1
-        for <git@vger.kernel.org>; Mon, 15 May 2017 23:06:59 -0700 (PDT)
+        id S1751304AbdEPGPa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 02:15:30 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:34448 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751423AbdEPGP2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 02:15:28 -0400
+Received: by mail-io0-f194.google.com with SMTP id 12so13567811iol.1
+        for <git@vger.kernel.org>; Mon, 15 May 2017 23:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RPuiwak1NJXbp0rFShJp2RgDiewYkfP471m35He7Z90=;
-        b=c/LsiA6MTDcFpteXlMRfZznIltI1fNpDWdMGyiv207V291YAx/oWu3MTquu8lV9Br4
-         3mi3Pk9HAdLAWV/+ZzJpqG9QjMN8xT2ujETyN5kSlkTooaAmo7vTYRwkJg1krAf+JFFh
-         4dQh0Mi2f++bhQdLcqRllAoaJPqlqQR21FcUIONouxTSBNVEQC8IcHR39dLmNMTAduB+
-         FvkQRc2eYom8s4PvIPZTywvTR8/xX/KACughNzaP1DmvIuF6zKx892+w9u/ItIE6plxp
-         HtX/CuYpCOxfLdAeBIo86mGVToXBEUQ5zwDDLaALcTL9VVFGV43P0W9rx90oZd7lKwRG
-         G3Gw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=5PyK9GbdUXttoPGkbSHBjYOzTEJvjmDwYQRsZRt054s=;
+        b=sE8//6S1ztzg/9z+luSzZDOrGUhVNhf/R1/wPQ67/bV0MU7cUa3D+AEdHkBF9sSiUo
+         VwNhUmixQpjS4pyxskhFLcPFPMzXAXoPbMwJ1ptTeTaC5ybMUsTRRBGDoKj725fYQXok
+         BvRa3nWpkp32mwDTz764BrtCNJT83nlg7Qd05NKODsrX7fKzDW82i402azaFCTvp2Nwa
+         vUBpagKPLZgARCentiAVdP5O+KQ85RCVM0vjKyHYPB8JOqajA4rnIgE0lvy4dmOtG2BE
+         6mVtCGygeibKF84WkbvwnidtbIdK0skvrHw95OAqv7Vnhu4jsQa1flt1ZOSGe0bgyd0g
+         ub3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=RPuiwak1NJXbp0rFShJp2RgDiewYkfP471m35He7Z90=;
-        b=MX4fsex2YYIunVnsS/ZNrfLcBYbPVmucBp/KaP5BdFoj9FUaJ6xh7OsYOsYQndv/j4
-         uDviOe8Pfy8ZyVb+fwUjYSiRE2VNLPaqYFFz/IcKFZyjRuMbwrILoYCsTE8Bs9wcf7MN
-         f06n8KX4KXpCtq7gDvNChPIQuFpPjtqC11v8l/q2HoRFF6dOx5wpcoWYhYSvzKJepnXu
-         1hyZtg3HgaLw21veb0hy0K4rDM0r7hBzU2KTK5LD85jIlHPKdS7TPIn2WBLPy221M5zh
-         tb2ibx/BSieRcFqmxsLlpHF2q7TDcU76SGTKkBEDPLCh8hwZ8sHl9R37H4WmPmdXxoeA
-         CcdQ==
-X-Gm-Message-State: AODbwcCjpQX3jY+2tzDuAvKQ6PDNlZQxdEuIWLsBuHu+ihc22SoaTEiO
-        wVMDF9s2AXHPTg==
-X-Received: by 10.84.168.69 with SMTP id e63mr13505238plb.124.1494914819079;
-        Mon, 15 May 2017 23:06:59 -0700 (PDT)
-Received: from localhost.localdomain ([2601:646:3:1ec0:3967:8bec:86da:f675])
-        by smtp.gmail.com with ESMTPSA id z68sm21587736pgz.14.2017.05.15.23.06.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 15 May 2017 23:06:58 -0700 (PDT)
-From:   Brian Malehorn <bmalehorn@gmail.com>
-To:     gitster@pobox.com
-Cc:     bmalehorn@gmail.com, git@vger.kernel.org, peff@peff.net
-Subject: [PATCH] interpret-trailers: honor the cut line
-Date:   Mon, 15 May 2017 23:06:49 -0700
-Message-Id: <20170516060649.29110-2-bmalehorn@gmail.com>
-X-Mailer: git-send-email 2.12.3.9.g050893b
-In-Reply-To: <20170516060649.29110-1-bmalehorn@gmail.com>
-References: <xmqq7f1iwxxd.fsf@gitster.mtv.corp.google.com>
- <20170516060649.29110-1-bmalehorn@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=5PyK9GbdUXttoPGkbSHBjYOzTEJvjmDwYQRsZRt054s=;
+        b=ScgUL6/rCveGYQKQDKAQiCbTy/WREkuH0UIw/urqfFdR8f1ACwVe7kWAEpgEP3ydmn
+         Zyw6/cJrEJDRMOLIw7yrm+EJFPLFa0koqEztfBOnvkJfGH87EZZyZUXhD+ciVIMJdV/6
+         mfOR+Wp6OD3Y7FeVqOFwxz2P2GT7bNztr1Kwzc+NRgW40velsAnoTHqtRiUA99FAnxFv
+         xEHdpp6L7UMcqsYJ0IAMGFoRTvFNTbqOHENYxz6aqT8GeMnerTSvxVl9IZ02pCYspZNE
+         s3VlE4IzJzgx7fVWR0RoP6IK22WEvmOZ/XKa36RBa0WdKnUxc2pqOrRz9C3AXT9tilke
+         innw==
+X-Gm-Message-State: AODbwcDt2dJ5yPC/LqnuTPzPh+SjatUc7ecJSqkNXB9iYKi9XDxnB7gb
+        Vx/X7v0bCjjhr7Ps/p2Aw43pZea3pw==
+X-Received: by 10.107.201.131 with SMTP id z125mr8539381iof.160.1494915327477;
+ Mon, 15 May 2017 23:15:27 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.8.220 with HTTP; Mon, 15 May 2017 23:15:06 -0700 (PDT)
+In-Reply-To: <xmqq37c56334.fsf@gitster.mtv.corp.google.com>
+References: <92c10618c688bb8cb1f31ee2a93110c581974468.1494586245.git.johannes.schindelin@gmx.de>
+ <CACBZZX7MXh_9mG1EROZVEEGapBwjzRWzr3S57f6rWLnQe9L+XA@mail.gmail.com>
+ <xmqqbmquyiae.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1705151418000.146734@virtualbox>
+ <xmqq37c56334.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 16 May 2017 08:15:06 +0200
+Message-ID: <CACBZZX4GZnpVzhL-bDSxmsH_JWZjxOPzpEYyZC=d+wLPLs6Kpg@mail.gmail.com>
+Subject: Re: [PATCH] fixup! log: add exhaustive tests for pattern style
+ options & config
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a commit message is edited with the "verbose" option, the buffer will
-have a cut line and diff after the log message, like so:
+On Tue, May 16, 2017 at 2:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> On Mon, 15 May 2017, Junio C Hamano wrote:
+>>
+>>> My knee-jerk reaction matched Dscho's, but grep is about contents,
+>>> and we should be able to test this if we used a sensible tagnames or
+>>> didn't use any.  Glad to see somebody can step back and think ;-)
+>>
+>> Maybe somebody should step back even further and think even more, as we
+>> could adjust test_commit to mangle the argument into a tag name that is
+>> legal even with a refs backend relying on NTFS.
+>
+> Perhaps, but I am not sure if that is needed.
+>
+> The point of the helper is to serve as a simple "we are building a
+> toy sample history by only adding a one-liner new file" convenience
+> helper, and I think it is sensible to keep its definition simple.
+> The callers (like the ones being added in the rerolled patch under
+> discussion) with special needs can supply tagname when the default
+> one is not suitable.
+>
+> In hindsight, perhaps it would have been better if the default for
+> the helper were _not_ to create any tag (and callers who care about
+> tags can optionally tell it to add tag, or tag the resulting commit
+> themselves), but that is lamenting water under the bridge.
 
-    my subject
+This works, but I wonder if it's worth it to solve this one-off issue:
 
-    # ------------------------ >8 ------------------------
-    # Do not touch the line above.
-    # Everything below will be removed.
-    diff --git a/foo.txt b/foo.txt
-    index 5716ca5..7601807 100644
-    --- a/foo.txt
-    +++ b/foo.txt
-    @@ -1 +1 @@
-    -bar
-    +baz
-
-"git interpret-trailers" is unaware of the cut line, and assumes the
-trailer block would be at the end of the whole thing.  This can easily
-be seen with:
-
-     $ GIT_EDITOR='git interpret-trailers --in-place --trailer Acked-by:me' \
-       git commit --amend -v
-
-Teach "git interpret-trailers" to notice the cut-line and ignore the
-remainder of the input when looking for a place to add new trailer
-block.  This makes it consistent with how "git commit -v -s" inserts a
-new Signed-off-by: line.
-
-This can be done by the same logic as the existing helper function,
-wt_status_truncate_message_at_cut_line(), uses, but it wants the caller
-to pass a strbuf to it.  Because the helper function
-ignore_non_trailer() used by the command takes a <pointer, length> pair,
-not a strbuf, steal the logic from
-wt_status_truncate_message_at_cut_line() to create a new
-wt_status_locate_end() helper function that takes <pointer, length>
-pair, and make ignore_non_trailer() call it to help
-"interpret-trailers".  Since there is only one caller of
-wt_status_truncate_message_at_cut_line() in cmd_commit(), rewrite it to
-call wt_status_locate_end() helper instead and remove the old helper
-that no longer has any caller.
-
-Signed-off-by: Brian Malehorn <bmalehorn@gmail.com>
----
- builtin/commit.c              |  2 +-
- commit.c                      | 13 +++++++------
- t/t7513-interpret-trailers.sh | 17 +++++++++++++++++
- wt-status.c                   | 11 ++++++-----
- wt-status.h                   |  2 +-
- 5 files changed, 32 insertions(+), 13 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 2de5f6cc6..6c606d965 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1735,7 +1735,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 
- 	if (verbose || /* Truncate the message just before the diff, if any. */
- 	    cleanup_mode == CLEANUP_SCISSORS)
--		wt_status_truncate_message_at_cut_line(&sb);
-+		strbuf_setlen(&sb, wt_status_locate_end(sb.buf, sb.len));
- 
- 	if (cleanup_mode != CLEANUP_NONE)
- 		strbuf_stripspace(&sb, cleanup_mode == CLEANUP_ALL);
-diff --git a/commit.c b/commit.c
-index fab826973..fa353acac 100644
---- a/commit.c
-+++ b/commit.c
-@@ -11,6 +11,7 @@
- #include "commit-slab.h"
- #include "prio-queue.h"
- #include "sha1-lookup.h"
-+#include "wt-status.h"
- 
- static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
- 
-@@ -1649,10 +1650,9 @@ const char *find_commit_header(const char *msg, const char *key, size_t *out_len
- /*
-  * Inspect the given string and determine the true "end" of the log message, in
-  * order to find where to put a new Signed-off-by: line.  Ignored are
-- * trailing comment lines and blank lines, and also the traditional
-- * "Conflicts:" block that is not commented out, so that we can use
-- * "git commit -s --amend" on an existing commit that forgot to remove
-- * it.
-+ * trailing comment lines and blank lines.  To support "git commit -s
-+ * --amend" on an existing commit, we also ignore "Conflicts:".  To
-+ * support "git commit -v", we truncate at cut lines.
-  *
-  * Returns the number of bytes from the tail to ignore, to be fed as
-  * the second parameter to append_signoff().
-@@ -1662,8 +1662,9 @@ int ignore_non_trailer(const char *buf, size_t len)
- 	int boc = 0;
- 	int bol = 0;
- 	int in_old_conflicts_block = 0;
-+	size_t cutoff = wt_status_locate_end(buf, len);
- 
--	while (bol < len) {
-+	while (bol < cutoff) {
- 		const char *next_line = memchr(buf + bol, '\n', len - bol);
- 
- 		if (!next_line)
-@@ -1689,5 +1690,5 @@ int ignore_non_trailer(const char *buf, size_t len)
- 		}
- 		bol = next_line - buf;
- 	}
--	return boc ? len - boc : 0;
-+	return boc ? len - boc : len - cutoff;
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 5ee124332a..4cab67c410 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -195,7 +195,15 @@ test_commit () {
+                test_tick
+        fi &&
+        git ${indir:+ -C "$indir"} commit $signoff -m "$1" &&
+-       git ${indir:+ -C "$indir"} tag "${4:-$1}"
++       if test -n "$4"
++       then
++               git ${indir:+ -C "$indir"} tag "$4"
++       elif test -n "$(echo $1 | tr -d A-Za-z0-9/~_.#-)"
++       then
++               error "Implicitly created tag '$1' looks unusual,
+probably fails outside *nix"
++       else
++               git ${indir:+ -C "$indir"} tag "$1"
++       fi
  }
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 4dd1d7c52..0c6f91c43 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -1258,4 +1258,21 @@ test_expect_success 'with no command and no key' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'with cut line' '
-+	cat >expected <<-\EOF &&
-+		my subject
-+
-+		review: Brian
-+		sign: A U Thor <author@example.com>
-+		# ------------------------ >8 ------------------------
-+		ignore this
-+	EOF
-+	git interpret-trailers --trailer review:Brian >actual <<-\EOF &&
-+		my subject
-+		# ------------------------ >8 ------------------------
-+		ignore this
-+	EOF
-+	test_cmp expected actual
-+'
-+
- test_done
-diff --git a/wt-status.c b/wt-status.c
-index 4bb46781c..afff86c18 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -883,17 +883,18 @@ static void wt_longstatus_print_other(struct wt_status *s,
- 	status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
- }
- 
--void wt_status_truncate_message_at_cut_line(struct strbuf *buf)
-+size_t wt_status_locate_end(const char *s, size_t len)
- {
- 	const char *p;
- 	struct strbuf pattern = STRBUF_INIT;
- 
- 	strbuf_addf(&pattern, "\n%c %s", comment_line_char, cut_line);
--	if (starts_with(buf->buf, pattern.buf + 1))
--		strbuf_setlen(buf, 0);
--	else if ((p = strstr(buf->buf, pattern.buf)))
--		strbuf_setlen(buf, p - buf->buf + 1);
-+	if (starts_with(s, pattern.buf + 1))
-+		len = 0;
-+	else if ((p = strstr(s, pattern.buf)))
-+		len = p - s + 1;
- 	strbuf_release(&pattern);
-+	return len;
- }
- 
- void wt_status_add_cut_line(FILE *fp)
-diff --git a/wt-status.h b/wt-status.h
-index 54fec7703..889a8d682 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -112,7 +112,7 @@ struct wt_status_state {
- 	unsigned char cherry_pick_head_sha1[20];
- };
- 
--void wt_status_truncate_message_at_cut_line(struct strbuf *);
-+size_t wt_status_locate_end(const char *s, size_t len);
- void wt_status_add_cut_line(FILE *fp);
- void wt_status_prepare(struct wt_status *s);
- void wt_status_print(struct wt_status *s);
--- 
-2.12.3.9.g050893b
 
+ # Call test_merge with the arguments "<message> <commit>", where <commit>
