@@ -7,60 +7,72 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61FFC201A7
-	for <e@80x24.org>; Tue, 16 May 2017 02:51:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAF0A201A7
+	for <e@80x24.org>; Tue, 16 May 2017 03:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750951AbdEPCvY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 15 May 2017 22:51:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52345 "EHLO cloud.peff.net"
+        id S1751002AbdEPDCF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 15 May 2017 23:02:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52352 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750784AbdEPCvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 15 May 2017 22:51:23 -0400
-Received: (qmail 23784 invoked by uid 109); 16 May 2017 02:51:23 -0000
+        id S1750984AbdEPDCF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 15 May 2017 23:02:05 -0400
+Received: (qmail 24835 invoked by uid 109); 16 May 2017 03:02:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 02:51:23 +0000
-Received: (qmail 23858 invoked by uid 111); 16 May 2017 02:51:55 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 03:02:03 +0000
+Received: (qmail 23900 invoked by uid 111); 16 May 2017 03:02:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 May 2017 22:51:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 May 2017 22:51:20 -0400
-Date:   Mon, 15 May 2017 22:51:20 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 15 May 2017 23:02:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 15 May 2017 23:02:00 -0400
+Date:   Mon, 15 May 2017 23:02:00 -0400
 From:   Jeff King <peff@peff.net>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, gitster@pobox.com, benpeart@microsoft.com,
-        pclouds@gmail.com, johannes.schindelin@gmx.de,
-        David.Turner@twosigma.com
-Subject: Re: [PATCH v1 2/5] Teach git to optionally utilize a file system
- monitor to speed up detecting new or changed files.
-Message-ID: <20170516025120.xn5dimkuryl33wfk@sigill.intra.peff.net>
-References: <20170515191347.1892-1-benpeart@microsoft.com>
- <20170515191347.1892-3-benpeart@microsoft.com>
- <20170516002214.tlqkk4zrwdzcdjha@genre.crustytoothpaste.net>
- <20170516003414.yliltu5fsaudfhyu@sigill.intra.peff.net>
- <2d965a87-36da-23b4-4bc5-97de47f3d7f7@gmail.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] usage: fix a sparse 'redeclared with different type'
+ error
+Message-ID: <20170516030200.fivl7p5iukfxk2jb@sigill.intra.peff.net>
+References: <52ef158a-0719-c71a-b72b-4961cf8f96d5@ramsayjones.plus.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2d965a87-36da-23b4-4bc5-97de47f3d7f7@gmail.com>
+In-Reply-To: <52ef158a-0719-c71a-b72b-4961cf8f96d5@ramsayjones.plus.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 09:55:12PM -0400, Ben Peart wrote:
+On Tue, May 16, 2017 at 02:11:40AM +0100, Ramsay Jones wrote:
 
-> > > > +	istate->last_update = (time_t)ntohll(*(uint64_t *)index);
-> [...]
-> > (I note also that time_t is not necessarily 64-bits in the first place,
-> > but David said something about this not really being a time_t).
 > 
-> The in memory representation is a time_t as that is the return value of
-> time(NULL) but it is converted to/from a 64 bit value when written/read to
-> the index extension so that the index format is the same no matter the
-> native size of time_t.
+> If you need to re-roll your 'jk/bug-to-abort' branch, could you please
+> squash this into the relevant patch (commit d8193743e0 "usage.c: add
+> BUG() function", 12-05-2017).
+> 
+> [Just FYI, sparse complains thus:
+>   usage.c:212:6: error: symbol 'BUG_fl' redeclared with different type
+>   (originally declared at git-compat-util.h:1076) - different modifiers
+> ]
 
-OK. I guess your cast here will truncate on 32-bit systems, but
-presumably not until 2038, so we can perhaps ignore it for now (and
-anyway, time(NULL) will be broken on such a system at that point).
+Hmm. Our model here is the die() function, which gets noreturn and
+format attributes in the declaration, but only noreturn at the
+definition.
+
+Your patch here adds both attributes to the definition:
+
+> +__attribute__((format (printf, 3, 4))) NORETURN
+>  void BUG_fl(const char *file, int line, const char *fmt, ...)
+
+Another possible model is trace_printf_key_fl(), which just has a format
+attribute at the declaration, and nothing at all in the definition.
+
+So it seems like this doesn't matter for the format attribute, but does
+for NORETURN. Weird. I wonder if it's specific to the attribute, or
+something about the way we hide it behind a macro.
+
+There probably isn't a downside to repeating the format attribute, I
+guess. Except that I'm not sure what happens if the two ever got out of
+sync (gcc doesn't seem to complain, though in practice you'd probably
+change the order or number of arguments at the same time, which is
+likely to cause a mismatch).
 
 -Peff
