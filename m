@@ -2,110 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37D5B1FAA8
-	for <e@80x24.org>; Tue, 16 May 2017 16:41:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E60A31FAA8
+	for <e@80x24.org>; Tue, 16 May 2017 16:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753234AbdEPQl2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 12:41:28 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36630 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753232AbdEPQl1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 12:41:27 -0400
-Received: by mail-pf0-f194.google.com with SMTP id n23so19390206pfb.3
-        for <git@vger.kernel.org>; Tue, 16 May 2017 09:41:27 -0700 (PDT)
+        id S1752280AbdEPQm0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 12:42:26 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35518 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752172AbdEPQmZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 12:42:25 -0400
+Received: by mail-pf0-f180.google.com with SMTP id n23so78201188pfb.2
+        for <git@vger.kernel.org>; Tue, 16 May 2017 09:42:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gWu+bxNxNKNwY0o0J344+2cAjHcQBast24bvFNKmItI=;
-        b=hZEtjPE4vb/vPviJUn0Jf7gOJo8P6CLQLgV4zCi3uJjtR7KO5yQG60oimBRobBsd9O
-         AJ499u8WmbRWT3yT+FODMZb5RXRwqXUYJCfZr2OuxbZZqQvCgxt7YTuAbXRjXLLMHkyL
-         zx6Yh6bU98o6TlcqxyXswNpuJ1bbHwF8vvgg7HYTCex8gy2+VczTkTeKo67eJFC4RDAn
-         mpHJPPuZaG0DHpS8USwUIkoOKT86m5O1dZW4ZPGYiKAwHI9yerquPgL6Ib0ATtCWkISm
-         4Eo9A8VBZUegcU8t+6l/fH0hubm0iFdc5jClWsprDiJdrSVrQb0rXjqzcPE5zry4m0zO
-         2x2w==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=DetSH51DrKiBzxzeb1k1Nuzp8m8/AvEB3Pf1v/uBZZc=;
+        b=a0+ORY8fLN5tWUDtcwYb4KI+4PMrSqTXfQjAhQWGYqqzRZA2apJxWZ9dKkmy5/QqUF
+         qbJTskQMaMxNFa68AwcpBsu/4STsY3EggvJJX1ooWh9bRATE/BWpC9lU2xU5jU22yiPx
+         A55ZEPJrYjbBeSJ4K5B8MbOGNY2Viyg6ec7hdA4PM8DkAgqFduZzx1uflhO6tfacgyjD
+         9vkpZ+hTvaf0C8Rf7WhHr/78Yc3migLxWPS9Ixi2qKhPnecTxSKdzDSM0r8SLMgcRDOD
+         wYst1LAXTxrV9RWSLw5mfRj6AQfuBRUY7oT/6/5Dlx3yDakwuh2J0aGMjAzF/j7bm+MI
+         cBWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gWu+bxNxNKNwY0o0J344+2cAjHcQBast24bvFNKmItI=;
-        b=kMe+saNszQI2NyysTo8G0Cqik/sctfdl6McTS96/DIpnShMMglhvs1nk1hyMjyLhRU
-         lgaCpL+A1UvfnkMkcmWvWHHuWbh6ap9c/F/1qR1W3AEbjb2U/NLR+3RDB9+3qrqypvBq
-         QJfoRDPvCe3mRWWRAGz+fxXOZgGBxfYafiLnVbep4ETLnHwopK9oTHSLyJL/CmIPgm/O
-         MxjhmYjMsvTioobWtrlj2wJHKoScP3Qrb9HYQnTdjA8ILKwohke+5M2FiNUsN9hG91FO
-         18r/HznFpsxBdlpJT8x7Vk2AoT7pJ+CzUcA5PMddtHhP9ar5YhREIsrmWNtpB5TgDmKD
-         zasg==
-X-Gm-Message-State: AODbwcCNj3If1TcqmedGdxbYPZCg2e25YW8aAc3wa5lB1A8z9LVwo0lC
-        ylx/bNX5kZ2pyKb3tRU=
-X-Received: by 10.98.210.199 with SMTP id c190mr13295441pfg.87.1494952886957;
-        Tue, 16 May 2017 09:41:26 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:6582:4c54:354a:7413])
-        by smtp.gmail.com with ESMTPSA id y20sm18339408pfb.93.2017.05.16.09.41.25
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 16 May 2017 09:41:26 -0700 (PDT)
-Date:   Tue, 16 May 2017 09:41:24 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Rannaud <eric.rannaud@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeremy Serror <jeremy.serror@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: git rebase regression: cannot pass a shell expression directly
- to --exec
-Message-ID: <20170516164124.GO27400@aiede.svl.corp.google.com>
-References: <CA+zRj8X3OoejQVhUHD9wvv60jpTEZy06qa0y7TtodfBa1q5bnA@mail.gmail.com>
- <20170516032503.bzkxmtqpmppxgi75@sigill.intra.peff.net>
- <20170516033736.23cfkouus3p67vhc@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=DetSH51DrKiBzxzeb1k1Nuzp8m8/AvEB3Pf1v/uBZZc=;
+        b=jjPoSRgqoWSC3kfqgQGoL15k991nQ0vZpR7cHa/DtJ3SLAtWwTnN3SuNr8Tk24oDm9
+         ExvfVZXWA3D+xtfIVW9HBAvPM2TjBED+axzH+4IarxiM9Vd0fZ3th1GJ+hUpPo1BbjzS
+         ZkndrhpWmgp1UEwlPlrcPVoEgBwJQprlPCI6uqBhrfcv7wVn6rxr47JD5hmjfLF0aB0f
+         WgMKpntZWyJBexiqb2aohcuyVl5uo81ABUKPhNJ2OzG2jmmQXfoWcEVSpt1Xr1P6UcRo
+         smzE8r6AND1R4U2U2Zjmv/EB9pRlcytvEcTm0arTifOhtjDBXIDxy8XjPBF+oRsOATp5
+         oKKA==
+X-Gm-Message-State: AODbwcDuurKBVUHG7GlZ76hNn9PJjYq068NOXGW7Xug3Zr7YyqQkd+0a
+        njCaVmOBY3J9kAADIcG28FdzDnCbNFdwIa4Bag==
+X-Received: by 10.98.205.65 with SMTP id o62mr13176409pfg.105.1494952944127;
+ Tue, 16 May 2017 09:42:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170516033736.23cfkouus3p67vhc@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.170.200 with HTTP; Tue, 16 May 2017 09:42:23 -0700 (PDT)
+In-Reply-To: <CAGf8dgJP+i5RL3FaGSYZyVKkt1ttSnnPd924ebs=4xJb4Fhc6w@mail.gmail.com>
+References: <20170514040117.25865-1-sbeller@google.com> <20170514040117.25865-19-sbeller@google.com>
+ <CAGf8dgJP+i5RL3FaGSYZyVKkt1ttSnnPd924ebs=4xJb4Fhc6w@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 16 May 2017 09:42:23 -0700
+Message-ID: <CAGZ79kZQBG0AmADWCQ5yj+sRMtwiy8HOnD3SLFS_-yPPoRbfTA@mail.gmail.com>
+Subject: Re: [PATCH 18/19] diff: buffer all output if asked to
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(+Brandon Williams, who may have more context for execvp-related things)
-Hi,
-
-Jeff King wrote:
-> On Mon, May 15, 2017 at 11:25:03PM -0400, Jeff King wrote:
-
->> One hack would be to look for BASH_FUNC_* in the environment and disable
->> the optimization in that case. I think that would make your case Just
->> Work. It doesn't help other oddball cases, like:
->>
->>   - you're trying to run a shell builtin that behaves differently than
->>     its exec-able counterpart
->>
->>   - your shell has some other mechanism for defining commands that we
->>     would not find via exec. I don't know of one offhand. Obviously $ENV
->>     could point to a file which defines some, but for most shells would
->>     not read any startup files for a non-interactive "sh -c" invocation.
+On Mon, May 15, 2017 at 9:14 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> Overall, this patch seems larger than it should to me, although there
+> might be good reasons for that that I don't know. I'll remark on what
+> I find unexpected.
 >
-> So I was thinking something like the patch below, though I guess
-> technically you could look for BASH_FUNC_$argv[0]%%, which seems to be
-> bash's magic variable name. I hate to get too intimate with those
-> details, though.
+
+
+>>
+>> +static void emit_buffered_patch_line_ws(struct diff_options *o,
+>> +                                       struct buffered_patch_line *e,
+>> +                                       const char *ws, unsigned ws_rule)
 >
-> Another option is to speculatively run "foo" without the shell, and if
-> execve fails to find it, then fall back to running the shell. That would
-> catch any number of cases where the shell "somehow" finds a command that
-> we can't.
+> This introduces a new _ws emission function - how is this used and how
+> is this different from the non-ws one? I see BPL_EMIT_LINE_WS, but I
+> don't see the caller that introduces that constant in this patch.
 
-Hm.  execvp explicitly does this when it hits ENOEXEC, but not for
-ENOENT.  Do you know why that is?
+See emit_line_ws, which makes use of BPL_EMIT_LINE_WS.
+The difference between BPL_EMIT_LINE_WS and BPL_EMIT_LINE_AS_IS
+is that _WS is emitted marking up whitespace differently (e.g. 8 continuous
+spaces instead of a tab or such), see the core.whitespace option.
+Relevant hunk:
 
-I think we want to behave consistently for shell builtins and for
-exported functions --- they are different sides of the same problem,
-and behaving differently between the two feels confusing.
+@@ -557,9 +616,12 @@ static void emit_line_ws(struct diff_options *o,
+                         const char *line, int len,
+                         const char *ws, unsigned ws_rule)
+ {
+-       emit_line_0(o, set, reset, sign, "", 0);
+-       ws_check_emit(line, len, ws_rule,
+-                     o->file, set, reset, ws);
++       struct buffered_patch_line e = {set, reset, line, len, sign,
+BPL_EMIT_LINE_WS};
++
++       if (o->use_buffer)
++               append_buffered_patch_line(o, &e);
++       else
++               emit_buffered_patch_line_ws(o, &e, ws, ws_rule);
+ }
 
-Thanks,
-Jonathan
+>> +       switch (e->state) {
+>> +               case BPL_EMIT_LINE_ASIS:
+>> +                       emit_buffered_patch_line(o, e);
+>> +                       break;
+>> +               case BPL_EMIT_LINE_WS:
+>> +                       emit_buffered_patch_line_ws(o, e, ws, ws_rule);
+>> +                       break;
+>> +               case BPL_HANDOVER:
+>> +                       o->current_filepair++;
+>
+> If we're just buffering the diff output, do we need to store
+> per-file-pair metadata? (I assume that's why you need a special
+> handover constant.) Clients can already read what they need from the
+> diff output.
+
+Currently we keep only whitespace settings per-file separate as they are
+defined per path (via attributes).
+
+So I read this comment as if you consider the per-file buffer unneeded and
+we could just detect the next file via the line
+
+    <line-prefix>diff --git a/<file> b/<file>
+
+and then re-read the attributes and remember only the current files settings in
+the output pass. I'll look into that.
+
+>> +        *
+>> +        * TODO (later in this series):
+>> +        * We'll unset this flag in a later patch.
+>> +        */
+>> +       o->use_buffer = 1;
+>
+> What I would do is to add a demonstration patch at the end of the
+> patch series (which is not supposed to be queued) to avoid such churn
+> in history, but I'm not sure how the Git project prefers to do this.
+
+ok, I can omit this part in a reroll.
+
+>> + *
+>> + * NEEDSWORK: Instead of storing a copy of the line, add an offset pointer
+>> + * into the pre/post image file. This pointer could be a union with the
+>> + * line pointer. By storing an offset into the file instead of the literal line,
+>> + * we can decrease the memory footprint for the buffered output. At first we
+>> + * may want to only have indirection for the content lines, but we could
+>> + * also have an enum (based on sign?) that stores prefabricated lines, e.g.
+>> + * the similarity score line or hunk/file headers.
+>
+> This would be nice, but come to think of it, might not be possible.
+> When requesting --word-diff, control characters (or others) might
+> appear in the output, right?
+
+That is why we'd have even more states. ;)
+Or duplicate word diff still, but lines left intact are referenced via offsets.
+It's a hard problem to get right, so I defer it via this comment.
+
+>
+>> + */
+>> +struct buffered_patch_line {
+>> +       const char *set;
+>> +       const char *reset;
+>> +       const char *line;
+>> +       int len;
+>> +       int sign;
+>> +       enum {
+>> +               BPL_EMIT_LINE_WS,
+>> +               BPL_EMIT_LINE_ASIS,
+>> +               BPL_HANDOVER
+>> +       } state;
+>
+> It might be better, for simplicity, just to have one big buffer
+> including everything (if we decide that we really can't add pointers
+> to input later).
+
+What do you mean here? (Drop the other structs such as the file pair?)
+
+Thanks for the review!
+Stefan
