@@ -2,96 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 741FA201A4
-	for <e@80x24.org>; Tue, 16 May 2017 07:36:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00217201A4
+	for <e@80x24.org>; Tue, 16 May 2017 07:54:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751777AbdEPHgb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 03:36:31 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:33715 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751763AbdEPHg3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 03:36:29 -0400
-Received: by mail-qt0-f194.google.com with SMTP id a46so19357385qte.0
-        for <git@vger.kernel.org>; Tue, 16 May 2017 00:36:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=x12fr/3h5+3if6WTqgCdCMjyMHo4RMLsONvS6fLJTJw=;
-        b=DZYFBpBQ1wYqmSnz6j/XWOCloH+SmjAIMa7jsq2Ntnn26aOTj6kSt3rvob7+bdGF22
-         CuwIORBsQ0NP2d09m11KYrJmRnOr8C3C2RmVkjnzI2m5TFoZUY/2Lp0TNq3GHzIdN58h
-         3KnbEmie0nbr1Xl+DYlxi/dBm0hC60blpXbBv9OtKMD3Ufua/3F7X4j/K4FTbgzLH0sg
-         HOcsWxBhQorlNd/K6q4t/0XqKW1FcP8IVN5cDBZvgIf8YsWwxXEP411l7dHYn6gwBS0q
-         1Mc71PjxTRqMeHKIDwKMePmv1Pttw9E1D3AxixKNhIUldj2H13I3imwwQkqQyx/a2nAd
-         2PPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=x12fr/3h5+3if6WTqgCdCMjyMHo4RMLsONvS6fLJTJw=;
-        b=WTu+tVxB8gznzTnQvFWAnvuHHMbPoZaQ4Pv6w8gKzyRRupJQCL7FNttbaG1GQ/p5Bl
-         cgDySXPu+Syh3VOMbRNLfdlT5J3mLA2fy6doPgJQk3dw/t5cW3+fozJn0p5mubZxbPCj
-         hglmZLjVLAPUoAE6ojVS6Bn2OyN9U8VX7OEYW2UwGDo5bb4L7Htxigyu1r/mvPfcZRo2
-         SKDMez6Gi693C4/5n5SmMwj3Nl64FR8V7YOu0IcaiCbNo+6f7F5OGqFIbK7ADhTzy6+M
-         bWFID5l04djKQwGv3BtthwoFREKO2gB/9A71QQzNjrut7k+1WU32QA0BUJrcb6/IAXX6
-         HX5g==
-X-Gm-Message-State: AODbwcCzjO/yQDOqxtkioEpcjrSrPVD0Kfw/c7UCVLXIH1D671NTTiiJ
-        JZhsUrFL5l/CJdIl00M=
-X-Received: by 10.200.52.221 with SMTP id x29mr8946495qtb.70.1494920178785;
-        Tue, 16 May 2017 00:36:18 -0700 (PDT)
-Received: from localhost.localdomain (cpe-98-14-117-223.nyc.res.rr.com. [98.14.117.223])
-        by smtp.gmail.com with ESMTPSA id i51sm10374103qte.28.2017.05.16.00.36.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 May 2017 00:36:18 -0700 (PDT)
-From:   Samuel Lijin <sxlijin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Samuel Lijin <sxlijin@gmail.com>
-Subject: [PATCH v3 8/8] t7061: status --ignored now searches untracked dirs
-Date:   Tue, 16 May 2017 03:34:23 -0400
-Message-Id: <20170516073423.25762-9-sxlijin@gmail.com>
-X-Mailer: git-send-email 2.12.2
-In-Reply-To: <20170516073423.25762-1-sxlijin@gmail.com>
-References: <20170516073423.25762-1-sxlijin@gmail.com>
-In-Reply-To: <20170505104611.17845-1-sxlijin@gmail.com>
-References: <20170505104611.17845-1-sxlijin@gmail.com>
+        id S1751215AbdEPHyV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 03:54:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52494 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750759AbdEPHyV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 03:54:21 -0400
+Received: (qmail 13049 invoked by uid 109); 16 May 2017 07:54:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 07:54:20 +0000
+Received: (qmail 25715 invoked by uid 111); 16 May 2017 07:54:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 16 May 2017 03:54:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 May 2017 03:54:18 -0400
+Date:   Tue, 16 May 2017 03:54:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 0/2] Demonstrate and partially work around a
+ gitattributes problem
+Message-ID: <20170516075418.m3knwvdsr5ab6vzy@sigill.intra.peff.net>
+References: <cover.1494861793.git.johannes.schindelin@gmx.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1494861793.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
+On Mon, May 15, 2017 at 05:23:44PM +0200, Johannes Schindelin wrote:
+
+> Granted, it is a bit of a less common use case to call
+> 
+> 	git diff <commit1>:<file1> <commit2>:<file2>
+> 
+> There are valid scenarios for such calls, of course.
+> 
+> And sometimes, one may want to compare even files that are stored in
+> subdirectories instead of the top-level directory. Example:
+> 
+> 	git diff cafebabe:t/README bee7e55:t/README
+> 
+> Now, the surprising part is that Git tries to read a .gitattributes
+> files interpreting the *entire* prefix `cafebabe:t/` as a *directory
+> path*. I.e. it will try to read the *file* (not the blob)
+> `cafebabe:t/.gitattributes`.
+
+You also get a very silly-looking diff header:
+
+  $ git diff HEAD:Makefile HEAD~100:Makefile
+  diff --git a/HEAD:Makefile b/HEAD~100:Makefile
+  index e35542e63..9b36068ac 100644
+  --- a/HEAD:Makefile
+  +++ b/HEAD~100:Makefile
+  [...]
+
+I think the problem is that diff's blob-compare should be feeding the
+actual path to the diff machinery, rather than the original name. True,
+that carries less information, but it matches the other cases. For
+instance:
+
+  git diff HEAD~100:Makefile Makefile
+
+will diff a blob and a file, and uses the file's path (so "HEAD~100"
+does not appear at all in the output).
+
+Likewise, doing:
+
+  git diff HEAD~100 HEAD -- Makefile
+
+will show you the diff over "Makefile", without bothering to mention
+the commit endpoints.
+
+So I think we should just be feeding "Makefile" to the diff code even
+for the 2-blob case.
+
+Something like the patch below almost gets us there, but it suffers from
+the fact that the revision machinery doesn't record the path for the
+blobs it parses. So:
+
+  1. It's a little inefficient, because it has to re-resolve the names
+     again.
+
+  2. It works for "git diff $commit:file1 $commit:file2", because each
+     of the blobs has a name we can re-resolve. But connecting them with
+     "$commit:file1..$commit:file2" doesn't work, because that name is
+     given to _both_ blobs, and can't be resolved as a single sha1. I'd
+     argue that this is actually a bug in the revision code.
+
+Both would be solved if handle_revision_arg used get_sha1_with_context
+to record the path while resolving (struct object_entry already has a
+slot for it, but the revision code never sets it).
+
+-Peff
+
 ---
- t/t7061-wtstatus-ignore.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index 15e7592b6..fc6013ba3 100755
---- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -12,7 +12,7 @@ cat >expected <<\EOF
- !! untracked/ignored
- EOF
+diff --git a/builtin/diff.c b/builtin/diff.c
+index d184aafab..e8c541f00 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -406,10 +406,30 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 			obj->flags |= flags;
+ 			add_object_array(obj, name, &ent);
+ 		} else if (obj->type == OBJ_BLOB) {
++			struct object_context oc;
++
+ 			if (2 <= blobs)
+ 				die(_("more than two blobs given: '%s'"), name);
+-			hashcpy(blob[blobs].oid.hash, obj->oid.hash);
+-			blob[blobs].name = name;
++
++			/*
++			 * We already resolved this once as a blob via the
++			 * rev_info machinery, but it did not bother to collect
++			 * any path information. Let's re-resolve to get it.
++			 *
++			 * There are a few corner cases where there is no path
++			 * information (e.g., a tag pointing straight at a
++			 * blob). In that case we'll fall back to just using
++			 * the name the user gave us.
++			 */
++			if (!get_sha1_with_context(entry->name, 0, blob[blobs].oid.hash, &oc) &&
++			    !hashcmp(blob[blobs].oid.hash, obj->oid.hash) &&
++			    oc.path[0]) {
++				blob[blobs].name = xstrdup(oc.path);
++			} else {
++				blob[blobs].name = name;
++				hashcpy(blob[blobs].oid.hash, obj->oid.hash);
++			}
++
+ 			blob[blobs].mode = entry->mode;
+ 			blobs++;
  
--test_expect_failure 'status untracked directory with --ignored' '
-+test_expect_success 'status untracked directory with --ignored' '
- 	echo "ignored" >.gitignore &&
- 	mkdir untracked &&
- 	: >untracked/ignored &&
-@@ -21,7 +21,7 @@ test_expect_failure 'status untracked directory with --ignored' '
- 	test_cmp expected actual
- '
- 
--test_expect_failure 'same with gitignore starting with BOM' '
-+test_expect_success 'same with gitignore starting with BOM' '
- 	printf "\357\273\277ignored\n" >.gitignore &&
- 	mkdir -p untracked &&
- 	: >untracked/ignored &&
--- 
-2.12.2
-
