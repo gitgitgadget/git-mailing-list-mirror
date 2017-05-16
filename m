@@ -2,255 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED779201A7
-	for <e@80x24.org>; Tue, 16 May 2017 05:43:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D52A201A7
+	for <e@80x24.org>; Tue, 16 May 2017 06:07:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751138AbdEPFnk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 01:43:40 -0400
-Received: from mail-vk0-f52.google.com ([209.85.213.52]:33887 "EHLO
-        mail-vk0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750777AbdEPFnj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 01:43:39 -0400
-Received: by mail-vk0-f52.google.com with SMTP id y190so60096601vkc.1
-        for <git@vger.kernel.org>; Mon, 15 May 2017 22:43:38 -0700 (PDT)
+        id S1751302AbdEPGG7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 02:06:59 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:33032 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751027AbdEPGG6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 02:06:58 -0400
+Received: by mail-pg0-f42.google.com with SMTP id u187so71087623pgb.0
+        for <git@vger.kernel.org>; Mon, 15 May 2017 23:06:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=AVRpER0OYmqGb7MGyMVIZF3x+VCfegWNgstzuYHLtqI=;
-        b=CWT4W9UezPu6DFTmYH209M2+CJbSjrVqffXIzmfMQRjoEa5kQ97V1Cj4XcKvDJbM5o
-         m8zESjQpJ6xV7nhxQOjNW0zF0LqVLuhetQFTizZUCDttm4F/neWiZjgIrdMDCxyZPozk
-         YxDg6y6iPXbfBUgmSNpctC7tJQKTrDKv6ikK5BCsTEgFEzmTpp5J7xhPVMoYW0tZSaYv
-         Rl/INdl6PDTJM5f65kj6yeX8mFLkDTrW39ZhWS0UOvICcHjL3cNfL2t2R8PGdPRNajE9
-         E3t2m9Ee2h8l6aoiYE2X1bTKvwV98mPUD/CErAa5pmXbcOfEwULIMgoNbtc6xlToSaxj
-         JLCQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=4qCZVhAxpiwqLMJtk8spFg4SNQAb1DpgxHV6gIgptdM=;
+        b=rcEoKTjWFwTP9viyovQu4UmuXOq5Vf01SD4n9r7FdI4++mL/49LPFovFov2qOUHdDd
+         ZRfW9kZBf4dLjN4dVnbISjeDFdKiRmFZPxlrXuOETNBaocTn3lHgbqJIj/xeBjIZmkMy
+         L7p9mxDGvSqONTbynvpq908QdGQAqiv4n+gwJ+suk3NyRGRMdtHqUqK38oklch8tkV31
+         t5ifgAc01TE4A0cS5uELFFifZrN0D2gyFLhZj7pxDZx54rkK3WflPGuB6bmQRzrzthtJ
+         P1JVcjTyhBp7TY3UXmvrSyRJGNkakbGUgj3+x/B2aLZYamFd/m7wMtGmzhjj38M/B04y
+         0GDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AVRpER0OYmqGb7MGyMVIZF3x+VCfegWNgstzuYHLtqI=;
-        b=jNv4l9P6aPaMbTFavstO3q1WYByHSad4R1v3z8KjEOTCd7XyizrBO4BKyFY4KK0mcR
-         /507lNmF5lS2umIzYf0qvK4OkDCclRgJrrR1+mty6EqJXuzEFkmXbvydvwRz9WZVhcft
-         p5B15J4ileYsCjl3uhXN4RkK0alu54VuYy24vztMI9UEa4bySFS3RY1Vha+ivumXLwAV
-         wn9jVgTw/Chw/TuSiLDjSXBe6gAJgg9RTlp9iJq/mFg3u2voaq4GF7Dbk8zNQst6HtKf
-         Tm/q2aeKNbUrYt1TBMw+40mLF9K+caPBdeaePLJ5Nqq7UpASo4l3F3HeU84nacttqBxL
-         zNCg==
-X-Gm-Message-State: AODbwcDqWSVVzJcXsYp/Gjkh2AT1csFR6clyE7L1md7+L8wn7pM9jXZu
-        Q3TE9Lqbee/DTM0StXV6xSc7Dt7eLQ==
-X-Received: by 10.31.191.21 with SMTP id p21mr4809677vkf.7.1494913417803; Mon,
- 15 May 2017 22:43:37 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.23.3 with HTTP; Mon, 15 May 2017 22:43:17 -0700 (PDT)
-In-Reply-To: <007001d2cd88$2b916180$82b42480$@marc-stevens.nl>
-References: <CACBZZX6nmKK8af0-UpjCKWV4R+hV-uk2xWXVA5U+_UQ3VXU03g@mail.gmail.com>
- <006301d2cd83$663b5520$32b1ff60$@marc-stevens.nl> <CACBZZX5Q9paMbYWH47fdK9GuNrE=F=FwR__E1yZ32EOAMw_w6w@mail.gmail.com>
- <CAKKM46vwM9pxyMxTc4jA0z_8vGKdDGCGg9ziKkFAsqr5ULYJxA@mail.gmail.com> <007001d2cd88$2b916180$82b42480$@marc-stevens.nl>
-From:   Michael Kebe <michael.kebe@gmail.com>
-Date:   Tue, 16 May 2017 07:43:17 +0200
-Message-ID: <CAKKM46sS_5bVe5a6wNN7SdVoGvwmVxnLAZTxJ+tSftXfZKeGWg@mail.gmail.com>
-Subject: Re: Git 2.13.0 segfaults on Solaris SPARC due to DC_SHA1=YesPlease
- being on by default
-To:     Marc Stevens <marc@marc-stevens.nl>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=4qCZVhAxpiwqLMJtk8spFg4SNQAb1DpgxHV6gIgptdM=;
+        b=mnmeJfe6o1QDv7ypk6AXeY1OIgSU24qOemTyQvj2JNZNbpAMUSQKiDm0XQyRu/jiwy
+         gjfpblYphPqTfJKr88vReEtodAQHh8CjFgRVGV1XjD8Kw7DKJ8Kil8qOCCL7Dx20chj3
+         3mHmm1pWBBBasC57kRK3mneU3oAnx2x01VrNfGkt9Vy9ndMRTAEON5F4O3yiKngb400f
+         qUTf+h7tEH6OuUsDD8opysxO1ay4cQjrj9WBpwTb7SCxXQ8EOUoH35ggHXRnrovuPZ46
+         xwWggQKVwiCnDRjTFncHxoohdvTlGC9G/zSAQfJDtctcLAM1qZifMjIfG0h+M2R0PfyQ
+         /eRw==
+X-Gm-Message-State: AODbwcDx56klNOjc7B48fCptELoU10Lb3ZjRbzzxuVP5DXi6XsqRUzXV
+        wq8g56gcS/z+mQ==
+X-Received: by 10.84.140.164 with SMTP id 33mr13494217plt.142.1494914817347;
+        Mon, 15 May 2017 23:06:57 -0700 (PDT)
+Received: from localhost.localdomain ([2601:646:3:1ec0:3967:8bec:86da:f675])
+        by smtp.gmail.com with ESMTPSA id z68sm21587736pgz.14.2017.05.15.23.06.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 15 May 2017 23:06:55 -0700 (PDT)
+From:   Brian Malehorn <bmalehorn@gmail.com>
+To:     gitster@pobox.com
+Cc:     bmalehorn@gmail.com, git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH] interpret-trailers: obey scissors lines
+Date:   Mon, 15 May 2017 23:06:48 -0700
+Message-Id: <20170516060649.29110-1-bmalehorn@gmail.com>
+X-Mailer: git-send-email 2.12.3.9.g050893b
+In-Reply-To: <xmqq7f1iwxxd.fsf@gitster.mtv.corp.google.com>
+References: <xmqq7f1iwxxd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Marc,
 
-works like a charm!
+Alright, I've made a new patch based on this feedback:
 
-Michael
+* make indentation consistent with rest of test file again
+* rename function to wt_status_locate_end()
+* rephrase commit message; add paragraph about wt_status_locate_end()
+* s/scissors/cut line/
+* Signed-off-by: me
 
+> The mention of "'commit -v -s' works that way, too" was my attempt
+> to justify why it is OK to make this change unconditionally to
+> intepret-trailers, but I am still not 100% convinced with that
+> reasoning (or your original log message) that it is a safe thing to
+> do.  It is not like its sole purpose is to serve as GIT_EDITOR for
+> the "git commit" command.
 
-2017-05-15 16:33 GMT+02:00 Marc Stevens <marc@marc-stevens.nl>:
-> Hi Michael,
->
->
->
-> See the latest commit to the SHA1DC repo:
->
-> https://github.com/cr-marcstevens/sha1collisiondetection/commit/33a694a9e=
-e1b79c24be45f9eab5ac0e1aeeaf271
->
-> Just apply this same patch to SHA1DC in Git.
->
->
->
-> Best regards,
->
-> Marc Stevens
->
->
->
-> Van: Michael Kebe [mailto:michael.kebe@gmail.com]
-> Verzonden: maandag 15 mei 2017 16:22
-> Aan: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> CC: Jeff King <peff@peff.net>; Git Mailing List <git@vger.kernel.org>; Ma=
-rc
-> Stevens <marc@marc-stevens.nl>
-> Onderwerp: Re: Git 2.13.0 segfaults on Solaris SPARC due to
-> DC_SHA1=3DYesPlease being on by default
->
->
->
-> Just give me patch or repo, I will test it tomorrow.
->
->
->
-> Michael
->
->
->
->
->
-> Am 15.05.2017 4:14 nachm. schrieb "=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
-"
-> <avarab@gmail.com>:
->
-> On Mon, May 15, 2017 at 3:58 PM, Marc Stevens <marc@marc-stevens.nl> wrot=
-e:
->> Hi Aevar,
->>
->> Thank you for notifying us of this issue.
->> Big endianness is a tricky issue, also since I don't have access or
->> accurate knowledge about all big endian systems.
->> Our github repo does check correct functioning, including an endianness
->> mistake, with 'make test'.
->> But I guess this is not included for SHA1DC in Git.
->>
->> Anyway, we can easily add the _BIG_ENDIAN macrotest to the git repo and
->> will do so soon.
->>
->> I don't think the segfault is caused by buffer overflow, inproper access=
-,
->> or the endianness issue.
->> But I did notice an unexpected issue: the message block pointer m=3D0x39=
-8ad5
->> is odd.
->> Can you confirm whether loading an uint32_t from an odd address triggers=
- a
->> hardware interrupt on your platform?
->> This is not problem for x86, but maybe for your platform it is?
->> If it is then we should always copy buffer contents to the sha1context t=
-o
->> avoid this issue.
->
-> I don't have access to the box in question, Michael was testing this
-> code for me. But unaligned access is probably the cause, although
-> according to some info I found online that should give a SIGBUS not a
-> SIGSEGV, but that may have changed:
->
-> https://bugs.python.org/issue12181
-> https://github.com/magnumripper/JohnTheRipper/issues/2187
->
->> Best regards,
->> Marc Stevens
->>
->> -----Oorspronkelijk bericht-----
->> Van: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason [mailto:avarab@gmail.com]
->> Verzonden: maandag 15 mei 2017 14:49
->> Aan: Git Mailing List <git@vger.kernel.org>
->> CC: michael.kebe@gmail.com; Jeff King <peff@peff.net>; Marc Stevens
->> <marc@marc-stevens.nl>
->> Onderwerp: Git 2.13.0 segfaults on Solaris SPARC due to DC_SHA1=3DYesPle=
-ase
->> being on by default
->>
->> Since 2.13.0 just running "git status" on a newly init'd repo on Solaris
->> SPARC[1] segfaults. Michael (CC'd) reported this issue on #git and I hel=
-ped
->> him debug it.
->>
->> Just compiling with BLK_SHA1=3DYesPlease solves the issue.
->>
->> There are at least two different issues with DC_SHA1 here:
->>
->>  * We don't properly detect that this platform is big endian. The check =
-at
->> the top of sha1dc/sha1.c needs to test for _BIG_ENDIAN. This comes from
->> sys/isa_defs.h which (I'm told by #solaris) is included on Solaris by
->> default, at least by stdio.h.
->>
->> Hacking the endian detection makes t0013-sha1dc.sh pass.
->>
->>   * Even with that & the test passing just a plain "git init x && cd x &=
-&
->> touch A && git add A && git commit" will segfault.
->>
->> This is some bug in the sha1dc code, presumably some big endian issue
->> that's not resolved by the change above. Backtrace for that (censored ac=
-tual
->> author info):
->>
->>  Program received signal SIGSEGV, Segmentation fault.
->>  [Switching to Thread 1 (LWP 1)]
->>  0x002f8c84 in sha1_compression_states (ihv=3D0xffbf8268, m=3D0x398ad5,
->> W=3D0xffbf82fc, states=3D0xffbf857c) at sha1dc/sha1.c:291
->>  291             SHA1COMPRESS_FULL_ROUND1_STEP_LOAD(a, b, c, d, e, m,
->> W, 0, temp);
->>  (gdb) bt
->>  #0  0x002f8c84 in sha1_compression_states (ihv=3D0xffbf8268, m=3D0x398a=
-d5,
->> W=3D0xffbf82fc, states=3D0xffbf857c) at sha1dc/sha1.c:291
->>  #1  0x00300b60 in sha1_process (ctx=3D0xffbf8260, block=3D0x398ad5) at
->> sha1dc/sha1.c:1616
->>  #2  0x00301188 in SHA1DCUpdate (ctx=3D0xffbf8260,
->>      buf=3D0x398ad5 "deadbeefdeadbeefdeadbeefdeadbeefdeadbeef\nauthor Au
->> Thor <au.thor@example.com> 123456789 +0000\ncommitter Au Thor
->> <au.thor@example.com> 123456789
->>                   +0000\n\nBlah Blah"..., len=3D220)
->>      at sha1dc/sha1.c:1731
->>  #3  0x0030168c in git_SHA1DCUpdate (ctx=3D0xffbf8260, vdata=3D0x398aa0,
->> len=3D273) at sha1dc/sha1.c:1808
->>  #4  0x002a6f7c in write_sha1_file_prepare (buf=3D0x398aa0, len=3D273,
->> type=3D0x959c8 "commit", sha1=3D0xffbfd630 "",
->>      hdr=3D0xffbf8c28 "commit 273", hdrlen=3D0xffbf8c24) at sha1_file.c:=
-3207
->>  #5  0x002a71ac in hash_sha1_file (buf=3D0x398aa0, len=3D273, type=3D0x9=
-59c8
->> "commit", sha1=3D0xffbfd630 "") at sha1_file.c:3266
->>  #6  0x002a25f8 in check_sha1_signature (sha1=3D0xffbfdbb8
->> "\375\067\356\337\002", map=3D0x398aa0, size=3D273, type=3D0x959c8 "comm=
-it")
->>      at sha1_file.c:1644
->>  #7  0x0022816c in parse_object (sha1=3D0xffbfdbb8
->> "\375\067\356\337\002") at object.c:269
->>  #8  0x0027c258 in get_reference (revs=3D0xffbfdc88, name=3D0xa87f0 "HEA=
-D",
->> sha1=3D0xffbfdbb8 "\375\067\356\337\002", flags=3D0)
->>      at revision.c:196
->>  #9  0x00284714 in setup_revisions (argc=3D0, argv=3D0x0, revs=3D0xffbfd=
-c88,
->> opt=3D0xffbfdc74) at revision.c:2295
->>  #10 0x002ee4d8 in wt_status_collect_changes_index (s=3D0x348ea8
->> <s.24114>) at wt-status.c:585
->>  #11 0x002eeae8 in wt_status_collect (s=3D0x348ea8 <s.24114>) at
->> wt-status.c:701
->>  #12 0x000db4fc in cmd_status (argc=3D0, argv=3D0xffbfe6fc, prefix=3D0x0=
-) at
->> builtin/commit.c:1393
->>  #13 0x000acc24 in run_builtin (p=3D0x340ccc <commands+1200>, argc=3D1,
->> argv=3D0xffbfe6fc) at git.c:371
->>  #14 0x000acf98 in handle_builtin (argc=3D1, argv=3D0xffbfe6fc) at git.c=
-:572
->>  #15 0x000ad1a4 in run_argv (argcp=3D0xffbfe66c, argv=3D0xffbfe670) at
->> git.c:624
->>  #16 0x000ad3fc in cmd_main (argc=3D1, argv=3D0xffbfe6fc) at git.c:701
->>  #17 0x001747a0 in main (argc=3D5, argv=3D0xffbfe6ec) at common-main.c:4=
-3
->>
->> 1. Relevant part of uname -a: "SunOS <hostname> 5.11 11.3 sun4v sparc
->> sun4v".
->>
+Yup, this is a heuristic and it will sometimes hit false.  But a far
+more grievous heuristic is ignoring all lines that begin with '#', yet
+we do that anyway for its convenience in editing commit messages.  Since
+we already *partially* honor commit message syntax in
+interpret-trailers, we might as well *completely* honor it by parsing
+cut lines as well.  At least, that's my reasoning.
