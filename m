@@ -8,46 +8,46 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47CC42023D
-	for <e@80x24.org>; Wed, 17 May 2017 00:50:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02D2A2023D
+	for <e@80x24.org>; Wed, 17 May 2017 00:50:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751577AbdEQAus (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 20:50:48 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35106 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750784AbdEQAus (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 20:50:48 -0400
-Received: by mail-pg0-f66.google.com with SMTP id i63so23241984pgd.2
-        for <git@vger.kernel.org>; Tue, 16 May 2017 17:50:48 -0700 (PDT)
+        id S1751987AbdEQAu5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 20:50:57 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33199 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751856AbdEQAu4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 20:50:56 -0400
+Received: by mail-pf0-f195.google.com with SMTP id f27so11320966pfe.0
+        for <git@vger.kernel.org>; Tue, 16 May 2017 17:50:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/petlubfOZfuGUU/4/SdOa1GnsBkIYj3KZIXH4pDgnU=;
-        b=W7oLi7ZYW0UXoZIqDc5qN4oOpwiw64T27sD47b2LKI50rWGmJGh/jYL6ib3Ec+JIua
-         1dpR9rlBbW/jcZ5jYkMwdiIlaqQKCURp6CueTaJ8lsO0BP5NgZFgfGLB9JZvrBRw76Zm
-         JRLXt9SJpQKGM6InaE4H4ifQaTB+DTMc4IWY6wKRhOgG7YDP3/KBmxVUbqqMlmqqkd/G
-         RTY1BK3As6P07SF2oDFaIIpYa+yeDlsg2u54Uke8HWH0jRV4+Iedhicekzu3TPS6bBla
-         F+9oZfpIEhDVdSKnZY2QG5rAsF+k2Nd3FFcF1qgPWsSogxzuWbsaEACDBiboOYMfkIw8
-         Njrg==
+        bh=xiCpD/7pJC5z0Q66e2q1rR3K6Qp93dAdeLkrE5W7FiY=;
+        b=JRku2doPsOqpvKSKOOt5WZLIbWH0TSjq/33+XJAarf8V/3fMl6UCvPpIVyfVZkFxL3
+         5nE32PjqvqUcfyjbTfj12xMWRmQCbUibPomqTP/PuaodF6ntDJoekHyhlu9+PujamcLi
+         ZnLKyUjkvn6U6yNbqgUOCo0OIujCMJUPDW1ZjAjG3e/r2KPpW4cvfssFDQ8qMCtZFfUB
+         VwRLkbvsoRlTTV3ofg7mdogCrN+i+Y843CIOjUkWfS37l3+YR3cro4PLrBz99V8efPUO
+         h12HIqAF0KArB3Yh5zn1IsPXNy+2MenK/8EOo/Air5vHGcIQFn/7oa61Kfd0F1H+qzTT
+         O9rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/petlubfOZfuGUU/4/SdOa1GnsBkIYj3KZIXH4pDgnU=;
-        b=Q4qMnDBt1CAbT/Qk7gISIxOOE9sIxW+TQNUuRl4sD++HDKw7LM0M6MUXU6Zm8nh0x9
-         bBkTsO3MHFFaG8fKAshzkEmN0FH9FltXWh7b21cTOHNGkkDmE/Y5A7xTm+FUEjjHUmee
-         IRxlakIL6k0C8ey69OvIQbSYP0ev9dN4mO879GNvagwx2PfKP5n8hz2KnxdqLeiDAMSa
-         jmq3ZGvZWr8ocjVlRntBZ5ch+ZE+1lr+FqVvQ5RQDzqYMYXNU5ExRagCsM9WMOkMW3WW
-         Il1gTPJmxNrGbh+EUm15SqqoQz2z2C/ZfK9pcwOlAIx5ln7kHokv2t1qQ+sR0tGaoMMZ
-         rGAw==
-X-Gm-Message-State: AODbwcBlsLmBTkMafNFaQ5VuWwgzlpckJDdUxK1+Gk34urHA5Op2MaXU
-        qtAz8BTSdnw+XA==
-X-Received: by 10.84.171.195 with SMTP id l61mr913100plb.147.1494982247575;
-        Tue, 16 May 2017 17:50:47 -0700 (PDT)
+        bh=xiCpD/7pJC5z0Q66e2q1rR3K6Qp93dAdeLkrE5W7FiY=;
+        b=qqfZ0clVebI3fLNQ59czhiQ0N51Kov1NN9Yyh5gfYH334WwRhPpPjxaHj9kIqGOmDN
+         JvWvLd9aTqSz90gP+MrMJkkxmJKECSwkdX2eEEyeO8Cjh5zRXixMi2i4AWja860anXFk
+         /mLTw/s1U5BAE4loIadBYtXegLfRJ+C5dhQYFcj/q2k52uYFUyAudCnKcSkyKyrvfIol
+         8V13KfDyr9Yl86ABGIN5CKPa2hDiOJPUGIij76ZbasAc6Dl6/gO2aVF3Ddpn0XlQVlSE
+         lxbGRPTR4WMKGZnuvGVD38GZm2C+UpUMltNKAl3+7rrHSqD0qJ+yHxTVIvmsSLqXYm82
+         DeDw==
+X-Gm-Message-State: AODbwcAlgNL4AGSKBvPxo82Qu3NMXLi9jYRnYHEdyJ88lqbtM4llPJWd
+        rUbseLqMejwgew==
+X-Received: by 10.99.55.88 with SMTP id g24mr819838pgn.176.1494982255652;
+        Tue, 16 May 2017 17:50:55 -0700 (PDT)
 Received: from ligo.sfo1.mozilla.com (corp-nat.fw1.untrust.sfo1.mozilla.net. [63.245.222.198])
-        by smtp.gmail.com with ESMTPSA id g27sm372699pfg.63.2017.05.16.17.50.46
+        by smtp.gmail.com with ESMTPSA id g27sm372699pfg.63.2017.05.16.17.50.54
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 16 May 2017 17:50:47 -0700 (PDT)
+        Tue, 16 May 2017 17:50:55 -0700 (PDT)
 From:   manish.earth@gmail.com
 X-Google-Original-From: manishearth@gmail.com
 To:     git@vger.kernel.org
@@ -56,12 +56,13 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Manish Goregaokar <manishearth@gmail.com>
-Subject: [PATCH 1/2] refs: Add for_each_worktree_ref for iterating over all worktree HEADs
-Date:   Tue, 16 May 2017 17:50:40 -0700
-Message-Id: <20170517005041.46310-1-manishearth@gmail.com>
+Subject: [PATCH 2/2] reachable: Add HEADs of all worktrees to reachability analysis
+Date:   Tue, 16 May 2017 17:50:41 -0700
+Message-Id: <20170517005041.46310-2-manishearth@gmail.com>
 X-Mailer: git-send-email 2.10.1
-In-Reply-To: <20170517002825.GR27400@aiede.svl.corp.google.com>
+In-Reply-To: <20170517005041.46310-1-manishearth@gmail.com>
 References: <20170517002825.GR27400@aiede.svl.corp.google.com>
+ <20170517005041.46310-1-manishearth@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,63 +70,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Manish Goregaokar <manishearth@gmail.com>
 
-To ensure that `git prune` does not remove refs checked out
-in other worktrees, we need to include these HEADs in the
-set of roots. This adds the iteration function necessary
-to do this.
+* reachable.c:
+  mark_reachable_objects: Include other worktrees
 
 Signed-off-by: Manish Goregaokar <manishearth@gmail.com>
 ---
- refs.c | 16 ++++++++++++++++
- refs.h |  1 +
- 2 files changed, 17 insertions(+)
+ reachable.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/refs.c b/refs.c
-index 2d71774..27e0b60 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3,6 +3,7 @@
-  */
+diff --git a/reachable.c b/reachable.c
+index d0199ca..439708e 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -178,6 +178,9 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
+ 	/* detached HEAD is not included in the list above */
+ 	head_ref(add_one_ref, revs);
  
- #include "cache.h"
-+#include "commit.h"
- #include "lockfile.h"
- #include "refs.h"
- #include "refs/refs-internal.h"
-@@ -1157,6 +1158,21 @@ int head_ref(each_ref_fn fn, void *cb_data)
- 	return head_ref_submodule(NULL, fn, cb_data);
- }
- 
-+int for_each_worktree_ref(each_ref_fn fn, void *cb_data)
-+{
-+	int i, flag, retval;
-+	struct object_id oid;
-+	struct worktree **worktrees = get_worktrees(GWT_SORT_LINKED);
-+	for (i = 0; worktrees[i]; i++) {
-+		struct commit* commit = lookup_commit_reference(worktrees[i]->head_sha1);
-+		oid = commit->object.oid;
-+		if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag)) {
-+			if (retval = fn("HEAD", &oid, flag, cb_data))
-+				return retval;
-+		}
-+	}
-+}
++	/* worktrees are not included in either */
++	for_each_worktree_ref(add_one_ref, revs);
 +
- /*
-  * Call fn for each reference in the specified submodule for which the
-  * refname begins with prefix. If trim is non-zero, then trim that
-diff --git a/refs.h b/refs.h
-index 9fbff90..425a853 100644
---- a/refs.h
-+++ b/refs.h
-@@ -192,6 +192,7 @@ typedef int each_ref_fn(const char *refname,
-  * stop the iteration.
-  */
- int head_ref(each_ref_fn fn, void *cb_data);
-+int for_each_worktree_ref(each_ref_fn fn, void *cb_data);
- int for_each_ref(each_ref_fn fn, void *cb_data);
- int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
- int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
+ 	/* Add all reflog info */
+ 	if (mark_reflog)
+ 		add_reflogs_to_pending(revs, 0);
 -- 
 2.10.1
 
