@@ -2,147 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C0D72023D
-	for <e@80x24.org>; Wed, 17 May 2017 04:23:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C3552023D
+	for <e@80x24.org>; Wed, 17 May 2017 04:28:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751427AbdEQEXt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 00:23:49 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:34585 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750969AbdEQEXs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 00:23:48 -0400
-Received: by mail-pf0-f181.google.com with SMTP id 9so857667pfj.1
-        for <git@vger.kernel.org>; Tue, 16 May 2017 21:23:47 -0700 (PDT)
+        id S1753143AbdEQE2H (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 00:28:07 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:34971 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752262AbdEQE2F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2017 00:28:05 -0400
+Received: by mail-qt0-f194.google.com with SMTP id r58so155639qtb.2
+        for <git@vger.kernel.org>; Tue, 16 May 2017 21:28:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HX1utY976gSsOtwbSaci6JS6iGwEg7d3laf+hNyQS8A=;
-        b=asugm4COPKqTnCSAooXH0GzetIxqg4zvYC7LjjSr8FLprpjlXxtET85gDv2n2ir/y9
-         gy01VUK9jkj/uvOqKjDgCEMSbxQruQfJ1bam6ef4a1GVZ/bgsXkPu7WJGLkPHUHN1rVn
-         o7ikSvTpJn0mQDEFb5su3E4DBclc0wwzVMbsV7jxoY58dgJUBxVuye+5zzsR7ZsDmcOF
-         GAJInN983dNqeGb+qCXZMNVzvTWOMZ6+8PM3jkLPiS7M24ekErCfSP5Wv67Sn/qoQB5S
-         XdsFBr3C6HeoifuAttqjK9gRd3725AyAJgBGbIl9/svanSveaSWMvps0F/Z8vpuglTBe
-         3zLQ==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=BU8ppCKjK0NM65htHh8qtMdgT1NRm9eqmmGXAXVnEOE=;
+        b=lKQ8lLsZm5e5JvZpeJ6iOQ20llxebfhQygSYczkE6BvghEfSE6ZLMYo9d3YBjP547V
+         8/THOHLXJmrN+g1LE+fit1UvEXrVP5VIJoUFit6SylNkYSi3XlnV+lfn9zZtlt18vhcp
+         6z9RSWoaA6lKNr+zJqott8ASugzmawoiGkksO5j7A8iVl7t9JEvj5Fl7sIoe/Mi2yWbh
+         nHzNIXPy1GKhFC6WTVRopqU4NejiPZxQUkma5wp3NbteBGBgWycSOgA7lqqiS+KgjGgn
+         Xp3qOKmdkf9uco/nPpJgT/eeHwCp3SUcB2UWt3SxagF0EUHWZ8/cI1N3ZugPKPq4fMcS
+         SFxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HX1utY976gSsOtwbSaci6JS6iGwEg7d3laf+hNyQS8A=;
-        b=Q8DuBzSgX994Qc3Smsde/Pj9s0Fng4jQPvTJDnLWttFhRtBzZyQ+XE0T1evOpx7Q4Q
-         91HMrdpVaxJmmwhADdiWWENAZ9N0aftTCZn+QNF2f63+3VguN3pxd/lAQ7477alS3qO0
-         iom+6inZiP/Anx1FXYt9UIrXeJEq46NNuVc+KaBrM3kvXxdDFYKBGqSg/pGegwrr3BLF
-         5F1l7CJibPG7DiVbXnMLgU+kzNZ6iK7tmqQye5eR0zql03hOcdLpg5iVABGA8q/fJemH
-         mcPeCe+aTw8qLtAGpX8sLo++WQ+UDdLiO3ry03CwfyErdK75f8ga5xJlalQ8UihXgE56
-         pjoQ==
-X-Gm-Message-State: AODbwcCm2ZQLKbehUFOanQ89FRb4HJQiqvb9V7TkZoZmT/1rUsemEBZ5
-        fUd5707cufXS8w==
-X-Received: by 10.99.115.29 with SMTP id o29mr1676402pgc.140.1494995027378;
-        Tue, 16 May 2017 21:23:47 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:78bf:56b6:7690:fdbd])
-        by smtp.gmail.com with ESMTPSA id f24sm944483pfk.66.2017.05.16.21.23.46
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 16 May 2017 21:23:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: t5545: reduced test coverage
-References: <ca942ab1-db57-5794-4587-1a756686c833@ramsayjones.plus.com>
-        <xmqqbmqsyzn7.fsf@gitster.mtv.corp.google.com>
-        <xmqqmvacxhk0.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 17 May 2017 13:23:45 +0900
-In-Reply-To: <xmqqmvacxhk0.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 17 May 2017 12:56:15 +0900")
-Message-ID: <xmqqinl0xga6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=BU8ppCKjK0NM65htHh8qtMdgT1NRm9eqmmGXAXVnEOE=;
+        b=Xow3qV26D7Fy0dFwQZ6US3Nhs+TQfm6JmSYs/IS3uaQuaOaHpYvfAbfg3xzm+j8lsE
+         mJtfBooxcndmuiM+EurmulgpVpTtQ13hixSw0cHXuPENdS7wNpfxvJgtc3Cq02ozl+pL
+         tokE7vDJJDpCzehc3Fy9EMhclYLSfnADXSiBG7C8NGdM8IaelgLhZ6uw/uzos9BQ3rdJ
+         cf7nD+Z3Xj3wUvSO5ni+pHvMf0RdKp5by2m2rRtjp40zgC9BCU+X8PWMNvcwJjpLfii1
+         rOxSURavUF01XiKAgv8TVKybRfrIVkBMCI8b98F2DDol9kgijlduRD5C4Ln9Rui+b/U0
+         oYTw==
+X-Gm-Message-State: AODbwcB0xntcW/RUSVMxhVQiiFcr9VmH10eIhqcnSb9tpra1LtjFHyQJ
+        rWd6VKxOIN71EA==
+X-Received: by 10.237.36.3 with SMTP id r3mr1303114qtc.200.1494995284237;
+        Tue, 16 May 2017 21:28:04 -0700 (PDT)
+Received: from Matthews-MacBook-Pro.local (146-115-162-193.c3-0.wth-ubr1.sbo-wth.ma.cable.rcn.com. [146.115.162.193])
+        by smtp.gmail.com with ESMTPSA id q200sm620635qke.64.2017.05.16.21.28.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 May 2017 21:28:03 -0700 (PDT)
+Subject: Re: [fixed] error using `git mergetool --tool=meld`
+To:     Samuel Lijin <sxlijin@gmail.com>, davvid@gmail.com
+References: <dbbf2f82-8ef3-2411-d51f-63f94ba7e77a@gmail.com>
+ <CAJZjrdUXoa8EXYfFzHqn2yrUdidwdPSoEJ8_AFwwAX3ORr59UQ@mail.gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Matthew Groth <mgroth49@gmail.com>
+Message-ID: <449621d5-c645-c9e4-afc1-ad2a1226970e@gmail.com>
+Date:   Wed, 17 May 2017 00:28:02 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
+ Gecko/20100101 Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAJZjrdUXoa8EXYfFzHqn2yrUdidwdPSoEJ8_AFwwAX3ORr59UQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+
+I'm on Meld 3.16.0, OSX 10.12.4, git 2.12.2 and haven't changed any git 
+or meld code. Let me know when its fixed so I can turn hasOutput back 
+on? Thanks and good luck.
+
+On 5/16/17 9:05 PM, Samuel Lijin wrote:
+> On Tue, May 16, 2017 at 5:55 PM, Matthew Groth <mgroth49@gmail.com> wrote:
+>> I needed to use `git config mergetool.meld.hasOutput false`
 >
->> It appears to me that only a few tests in the entire script wants to
->> work with HTTP server, so perhaps moving them to the end, together
->> with the inclusion of lib-httpd and start_httpd that 438fc684 ("push
->> options: pass push options to the transport helper", 2017-02-08)
->> introduced, may be sufficient?
+> Hm, that's interesting - the source code snippet you quoted from meld
+> implies it supports --output. What version of meld do you have?
 >
-> Probably not, as lib-httpd, when it gives up, does the
-> "skip_all=message; test_done" thing, which makes test_done
-> to trigger this:
+> David Aguilar seems to be the one who's contributed most of the meld
+> code, perhaps he might have an idea about why this is happening.
 >
-> 	# Maybe print SKIP message
-> 	if test -n "$skip_all" && test $test_count -gt 0
-> 	then
-> 		error "Can't use skip_all after running some tests"
-> 	fi
->
-> So a bit more work is needed, than just moving things around, I am
-> afraid...
-
-And now I am visiting bf4b7219 ("test-lib.sh: Add check for invalid
-use of 'skip_all' facility", 2012-09-01), which is yours ;-)
-
-I am wondering what the fallouts would be if we did the following to
-test-lib.  We used to say "1..0 # SKIP <why>" when we skip
-everything, which is still kept, so that prove can notice why things
-are skipped.
-
-When we abort early but after executing any test, we used to error
-out, but instead we pretend that the test finished right there, as
-it seems that we are not allowed to say "1..4 # SKIP <why>" after
-running 4 tests.
-
- t/test-lib.sh | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 13b5696822..46f29cf112 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -745,20 +745,25 @@ test_done () {
- 	fi
- 	case "$test_failure" in
- 	0)
--		# Maybe print SKIP message
--		if test -n "$skip_all" && test $test_count -gt 0
--		then
--			error "Can't use skip_all after running some tests"
--		fi
--		test -z "$skip_all" || skip_all=" # SKIP $skip_all"
--
- 		if test $test_external_has_tap -eq 0
- 		then
- 			if test $test_remaining -gt 0
- 			then
- 				say_color pass "# passed all $msg"
- 			fi
--			say "1..$test_count$skip_all"
-+
-+			# Maybe print SKIP message
-+			test -z "$skip_all" || skip_all="# SKIP $skip_all"
-+			case "$test_count" in
-+			0)			    
-+				say "1..$test_count${skip_all:+ $skip_all}"
-+				;;
-+			*)
-+				test -z "$skip_all" ||
-+				say_color warn "$skip_all"
-+				say "1..$test_count"
-+				;;
-+			esac
- 		fi
- 
- 		test -d "$remove_trash" &&
-
