@@ -2,107 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61020201A7
-	for <e@80x24.org>; Wed, 17 May 2017 14:53:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B011201A7
+	for <e@80x24.org>; Wed, 17 May 2017 15:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753714AbdEQOw4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 10:52:56 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34413 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932121AbdEQOwu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 10:52:50 -0400
-Received: by mail-pf0-f179.google.com with SMTP id 9so8648316pfj.1
-        for <git@vger.kernel.org>; Wed, 17 May 2017 07:52:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ytBwqVz4IYoRRhMIi3qvnl6s4MYgbST/t7tVjDvrAAI=;
-        b=XRAzgDdGz63FVzOWF6fFZUY4Xlt2TtiAGYTuuQWpgGaa48rjD7tbX/m7dwKYpB/lSS
-         OJ93nffr2uukAhpxOMmkX0mNKEJFsFvqFbzQs2B43yMqSahJ2SMcFne2N9NkVV/Bu53h
-         EETBBatUMwxDfn0M8DH6XqXO+1XOvE7daUDFZuaONLB43vlgku2W8QOt5SxNXJwIod9e
-         LhuSM+BGoywgTmtWMKHe1SxzVOvaJFcxTxsULG4r+5R4haHi/1L2Jq21irl6qOdHzKfF
-         GtdJvRBOXZcI6kv6vyx5wuIMkySPGfQhlBfks69zU/E8gTqW4i+XrZD/+/514jQIKkkr
-         bEoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ytBwqVz4IYoRRhMIi3qvnl6s4MYgbST/t7tVjDvrAAI=;
-        b=PcW0qdBwOGggrklqi/1cXgpCBlBiuZMbMDuo6rjJf2s+8GO7YBiP4WTiQfNirNZP3u
-         wdmxXGvGWXN9R1ElEGNpQuuY41RuDBkAlxQHZr4f7zby/iLaw43sJ/IHNejm7vErFrQK
-         lwjx4D9GZKAT2XZVcRSK6MtCs8PEvip+N7Cy0echT6BGXvTxZRwi0zzSogMrLWRx/3X0
-         OZqiGLixuyEj58fo+Tp84RANjgseyZ/8NksKJkENBeMxGqg4SGrQdRTA+IDT7u9rIkKp
-         QlF8XAMYWirfzxPFb6YS3USo9QKGdi8+0UGMzxcqigMAfKbUD9O/CN999sCs1nE8BiAV
-         8kYA==
-X-Gm-Message-State: AODbwcA0B39vLeMo0LfzLMsLim88OqIkpsj84qTyBxACNfZAOkdGqnK+
-        bfzabLLC/N8XdArQ
-X-Received: by 10.98.76.76 with SMTP id z73mr4086301pfa.99.1495032762879;
-        Wed, 17 May 2017 07:52:42 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:6c78:c1b9:36d1:fa23])
-        by smtp.gmail.com with ESMTPSA id k86sm4695773pfk.125.2017.05.17.07.52.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 17 May 2017 07:52:41 -0700 (PDT)
-Date:   Wed, 17 May 2017 07:52:40 -0700
-From:   Brandon Williams <bmwill@google.com>
+        id S1753572AbdEQPBs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 11:01:48 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:50191 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751398AbdEQPBr (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 May 2017 11:01:47 -0400
+X-AuditID: 12074411-cc7ff70000003efd-de-591c65d8afb7
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id BB.23.16125.8D56C195; Wed, 17 May 2017 11:01:44 -0400 (EDT)
+Received: from [192.168.69.190] (p5B104B68.dip0.t-ipconnect.de [91.16.75.104])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4HF1fa0009968
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 17 May 2017 11:01:42 -0400
+Subject: Re: [PATCH 07/23] ref_store: take `logmsg` parameter when deleting
+ references
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        j6t@kdbg.org, sbeller@google.com, e@80x24.org, jrnieder@gmail.com
-Subject: Re: [PATCH v6 04/11] run-command: use the async-signal-safe execv
- instead of execvp
-Message-ID: <20170517145240.GA185461@google.com>
-References: <20170418231805.61835-1-bmwill@google.com>
- <20170419231327.49895-1-bmwill@google.com>
- <20170419231327.49895-5-bmwill@google.com>
- <xmqqfug4z0s0.fsf@gitster.mtv.corp.google.com>
- <20170517022602.jj26pf7eypxp2fjm@sigill.intra.peff.net>
+References: <cover.1495014840.git.mhagger@alum.mit.edu>
+ <b26ccc03a7e72dfa30467db81e9210dd621516e2.1495014840.git.mhagger@alum.mit.edu>
+ <20170517131204.m564xy7i3ywietsl@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>, git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <4632308e-3f75-0d18-d0f8-c94af0d852c6@alum.mit.edu>
+Date:   Wed, 17 May 2017 17:01:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170517022602.jj26pf7eypxp2fjm@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170517131204.m564xy7i3ywietsl@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42IRYndR1L2RKhNpcPqVlsXaZ3eYLLqudDNZ
+        NPReYbZY8vA1s0X3lLeMFj9aepgtNm9uZ3Fg99g56y67x4JNpR5d7UfYPJ717mH0uHhJ2ePz
+        JrkAtigum5TUnMyy1CJ9uwSujEf9u5kKZvJWHJz3nLGB8StnFyMnh4SAicSvSROYuhi5OIQE
+        djBJ7NixjAXCOccksfbQKVaQKmGBCIneefPYQWwRAVmJ74c3MkIUHWKU+PzjIFiCWWATk8TW
+        s/YgNpuArsSinmYmEJtXwF5izf8PYDUsAqoSZx80sIDYokBDH3buYoeoEZQ4OfMJWJxTwEVi
+        zt3DzBAz1SX+zLsEZctLbH87h3kCI/8sJC2zkJTNQlK2gJF5FaNcYk5prm5uYmZOcWqybnFy
+        Yl5eapGuqV5uZoleakrpJkZIoAvuYJxxUu4QowAHoxIPb0SATKQQa2JZcWXuIUZJDiYlUd79
+        D6QjhfiS8lMqMxKLM+KLSnNSi4Fe52BWEuHNiQMq501JrKxKLcqHSUlzsCiJ8/ItUfcTEkhP
+        LEnNTk0tSC2CycpwcChJ8F5IAWoULEpNT61Iy8wpQUgzcXCCDOcBGs6RCjK8uCAxtzgzHSJ/
+        ilFRSpx3KUizAEgiozQPrheWiF4xigO9IsybC1LFA0xicN2vgAYzAQ1uBvmIt7gkESEl1cC4
+        cY3ro8CdGcbqfsaZvE1t+6PD8qYH/uLK3tReZxY6adER82XHFjYWNzYcPz03mX/doikfZyxX
+        8je8U/t5fbP5tHexDx3F+FcvPF/tznC6iL2i8s77Gbq5WrGn3+3MNQvyfJgy9SGT1N6/f7oc
+        GkquFz6dsfP+ob/nGnrvtnA9qb6xaF95r0ahEktxRqKhFnNRcSIAYiXLSx8DAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/16, Jeff King wrote:
-> On Wed, May 17, 2017 at 11:15:43AM +0900, Junio C Hamano wrote:
+On 05/17/2017 03:12 PM, Jeff King wrote:
+> On Wed, May 17, 2017 at 02:05:30PM +0200, Michael Haggerty wrote:
 > 
-> > > +		if (errno == ENOEXEC)
-> > > +			execv(argv.argv[0], (char *const *) argv.argv);
-> > 
-> > "/bin/sh" tries to run "/usr/bin/git" that was not executable (well,
-> > the one in "usr/bin/" would have +x bit, but let's pretend that we
-> > are trying to run one from bin-wrappers/ and somehow forgot +x bit)?
-> > 
-> > I think all of that is sensible, but there is one "huh?" I can't
-> > figure out.  Typically we do "sh -c git cat-file -t HEAD" but this
-> > lacks the "-c" (cf. the original prepare_shell_cmd()); why do we not
-> > need it in this case?
+>> Just because the files backend can't retain reflogs for deleted
+>> references is no reason that they shouldn't be supported by the
+>> virtual method interface. Let's add them now before the interface
+>> becomes truly polymorphic and increases the work.
+>>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  builtin/fetch.c                |  2 +-
+>>  builtin/remote.c               |  4 ++--
+>>  refs.c                         | 11 ++++++-----
+>>  refs.h                         | 12 +++++++-----
+>>  refs/files-backend.c           |  4 ++--
+>>  refs/refs-internal.h           |  2 +-
+>>  t/helper/test-ref-store.c      |  3 ++-
+>>  t/t1405-main-ref-store.sh      |  2 +-
+>>  t/t1406-submodule-ref-store.sh |  2 +-
+>>  9 files changed, 23 insertions(+), 19 deletions(-)
 > 
-> I think this is the same case we were discussing over in the "rebase"
-> thread. This isn't about running the user's command as a shell command.
-> Note that this kicks in even when cmd->shell_cmd isn't set.
+> Having carried a similar patch in GitHub's fork for many years (because
+> we maintain an audit log of all ref updates), I expected this to be
+> bigger. But I forgot that we did 755b49ae9 (delete_ref: accept a reflog
+> message argument, 2017-02-20) a few months ago, which already hit most
+> of the ref-deleting callers. This is just making the plural
+> delete_refs() interface match.
 > 
-> This is about finding "/usr/bin/foo", realizing it cannot be exec'd
-> because it lacks a shebang line, and then pretending that it did have
-> "#!/bin/sh". IOW, maintaining compatibility with execvp().
+> I think your reasoning above is sound by itself, but that gives an added
+> interface: we are making the delete_ref() and delete_refs() interfaces
+> consistent.
 
-Exactly this is all about ensuring we do the same thing the execvp does,
-because there isn't a portable variant which allows for passing in an
-environment.
+I think you meant s/interface/justification/, in which case I agree with
+you and I'll mention it in v2. I also noticed that the parameters are
+named inconsistently. I'll fix that too.
 
-> 
-> So the command itself isn't a shell command, but it may execute a shell
-> script. If that makes sense.
-> 
-> -Peff
+Michael
 
--- 
-Brandon Williams
