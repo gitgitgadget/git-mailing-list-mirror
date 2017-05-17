@@ -2,108 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DFB8201CF
-	for <e@80x24.org>; Wed, 17 May 2017 10:19:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E985201CF
+	for <e@80x24.org>; Wed, 17 May 2017 11:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752330AbdEQKTG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 06:19:06 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33904 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751829AbdEQKTF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 06:19:05 -0400
-Received: by mail-pf0-f171.google.com with SMTP id 9so5256884pfj.1
-        for <git@vger.kernel.org>; Wed, 17 May 2017 03:19:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ph7aoTCs5PAXwHLY31tFIIfdF47w6eDfDwJ3LLW37Us=;
-        b=VYVchLLM5zvrzpsJovvudJWtihqp3QA6xphLTgESn/UpKJuW0lZsxChg/wryxOlQMI
-         VnEtwHRvPjcVSlTE8jBiVj+b7u0Fx/46dOdI9+ySbrG3JFqFMuJNNrakNAbuO892KuxT
-         PhHr4igMX4GUW9ny4B1dPBPhPpKGlN+sAVztZDNvwyK9jWG4aTKK1lSHxFLrbQXPN2un
-         iXkKSOWke6HKWlH8WengupYvZAISGHlcHJBULbm595quqrjWjBpLbE5mcai/kb4IZnZR
-         Mcrd6wArUIrsHukOapSPiPXWYgIc3kkVMJVd76D2zneZKvyv5/LQ1aZvUt/CuuLHwOHN
-         YPmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ph7aoTCs5PAXwHLY31tFIIfdF47w6eDfDwJ3LLW37Us=;
-        b=DTamM4f3e5LnARasUyrXDf1DZwr0zDcqbJuek62GScgqsyWRsXrjs93W846RX/Ty5R
-         tZtVpkdRraY0RrahbhyUjmngdk2N2R+q1pL596/KjE4AN67oEnULh4edgQrs3ghJyfLi
-         Jkffk0GWmOLvJCs50umGakeaA/Nc60W6W/fuhvD5bKwoQZkz0JIUURUAkTOjlmGcJa7A
-         m9remeDfWFByfcVf5Vpby9vry5lHVR99/T+H2xviPe4eSTdDPuOH4dpRfdS9F5f44atQ
-         wCo5Lg4woflYh8g38KlkdbbW8nR1wKZ6S7k/GlgM9w7z2mXrOGFNRTtmc6zbKwsJNgqj
-         n5uw==
-X-Gm-Message-State: AODbwcA3a3i0jAs6zTco/vSl0XLHSr4lDywscSaK/7W7hpRj7oj3Ktq6
-        7a6sIt7A3gCErw==
-X-Received: by 10.98.64.143 with SMTP id f15mr2918504pfd.109.1495016344471;
-        Wed, 17 May 2017 03:19:04 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:78bf:56b6:7690:fdbd])
-        by smtp.gmail.com with ESMTPSA id v9sm3291375pfa.43.2017.05.17.03.19.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 17 May 2017 03:19:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Joey Hess <id@joeyh.name>
-Subject: Re: [PATCH] tests: add an optional test to test git-annex
-References: <20170516175906.hdwn4x5md7dj7fo3@kitenet.net>
-        <20170516203712.15921-1-avarab@gmail.com>
-        <xmqq7f1gyzep.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX4Jppr7ht7m444EjW4CDYX5CMvnxtStH4bF=A19TYKcZg@mail.gmail.com>
-Date:   Wed, 17 May 2017 19:19:02 +0900
-In-Reply-To: <CACBZZX4Jppr7ht7m444EjW4CDYX5CMvnxtStH4bF=A19TYKcZg@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 17 May
- 2017 08:47:01
-        +0200")
-Message-ID: <xmqqbmqrwzu1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1754567AbdEQLOm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 07:14:42 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:48498 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754491AbdEQLOj (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 May 2017 07:14:39 -0400
+X-AuditID: 12074411-cafff70000003efd-9b-591c309cbd95
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 2F.29.16125.C903C195; Wed, 17 May 2017 07:14:38 -0400 (EDT)
+Received: from [192.168.69.190] (p5B104B68.dip0.t-ipconnect.de [91.16.75.104])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4HBEY1u030613
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 17 May 2017 07:14:36 -0400
+To:     Karthik Nayak <karthik.188@gmail.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Performance regression in `git branch` due to ref-filter usage
+Cc:     git discussion list <git@vger.kernel.org>
+Message-ID: <dfc3a334-8047-26b0-1142-81c703010507@alum.mit.edu>
+Date:   Wed, 17 May 2017 13:14:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqDvPQCbS4NsrDouuK91MFrO3bGCz
+        +NHSw+zA7LFz1l12j2e9exg9Pm+SC2CO4rJJSc3JLEst0rdL4MqYM/Mac8EktorJb7sZGxi/
+        snQxcnJICJhILPm0mamLkYtDSGAHk0TH0VnMEM45JomLV9Yyg1SJCGhKHGidyApiswnoSizq
+        aWYCsYUF3CXW7V8FZjMDxR90PAazeQXsJfoevQTrZRFQlTiy+huYLSoQIfGwcxc7RI2gxMmZ
+        T1ggetUl/sy7xAxhy0tsfzuHeQIj7ywkZbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJi
+        Xl5qka6pXm5miV5qSukmRkjQCe5gnHFS7hCjAAejEg/vBC7pSCHWxLLiytxDjJIcTEqivPsf
+        AIX4kvJTKjMSizPii0pzUosPMUpwMCuJ8FrxykQK8aYkVlalFuXDpKQ5WJTEefmWqPsJCaQn
+        lqRmp6YWpBbBZGU4OJQkeNfqAzUKFqWmp1akZeaUIKSZODhBhvMADZ+iBzK8uCAxtzgzHSJ/
+        ilGXY869r++ZhFjy8vNSpcR5Y0EGCYAUZZTmwc2BJYtXjOJAbwnzrgSp4gEmGrhJr4CWMAEt
+        aQb5jre4JBEhJdXAKHXzXd/r6hbn3Jun7G57rAgVKlBS5Pb6kaOj0LTnofWi1fNX/+adfaMu
+        xmQ3y9JK5k2/jD7rcEUufe37bXaYQzBDvEyopE7/rrtazZWzEo2ui68pZmxzWSg8+V59/QfL
+        vyJ7ku1r23zXRzk+ODpla0/4o/33lHYwpdTG/w2pFTeqW8BdfilViaU4I9FQi7moOBEAPU0J
+        sPECAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+While working on reference code, I was running `git branch` under
+`strace`, when I noticed that `$GIT_DIR/HEAD` was being `lstat()`ed and
+`read()` 121 times. This is in a repository with 114 branches, so
+probably it is being run once per branch. The extra work makes a
+measurable difference to the (admittedly, short) runtime.
 
->> Well, it is one thing to place git-annex under CI to make sure its
->> latest and greatest works together well with our latest and greatest
->> (and it may be something we want to see happen), but driving its
->> tests from our testsuite sounds like a tail wagging the dog, at
->> least to me.
->
-> To me this is just a question of:
->
-> * Is it the case that git-annex tests for a lot of edge cases we don't
-> test for: Yes, probably. As evidenced by them spotting this
-> regression, and not us.
+As recently as 2.12.3 the file was only read 4 times when running the
+same command [1].
 
-And I'd encourage them to keep doing so.
+The regression bisects to
 
-> * We can (and should) add a test for the specific breakage we caused
-> in 2.13.0, but that's no replacement for other things annex may be
-> covering & we may be missing which'll catch future breakages.
->
-> * It's a pretty established practice to test a library (git) along
-> with its consumers (e.g. annex) before a major release.
+    949af0684c (branch: use ref-filter printing APIs, 2017-01-10)
 
-I am not so sure about the division of labor.  What you are
-advocating would work _ONLY_ if we test with a perfect & bug-free
-version of the consumers.  If they are also a moving target, then
-I do not think it is worth it.  After all, we are *not* in the
-business of testing these consumers.
+It would be nice if these extra syscalls could be avoided.
 
-Unless I misunderstood you and you were saying that we freeze a
-version, or a set of versions, of customer that is/are known to pass
-their own tests, and test the combination of that frozen version of
-the customer with our daily development.  If that is the case, then
-I would agree that we are using their test to test us, not them.
-But I somehow didn't get that impression, hence my reaction.
+I haven't checked whether other commands have similar regressions.
+
+Michael
+
+[1] One wonders why the file has to be read more than once, but that's a
+different story and probably harder to fix.
