@@ -2,97 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_WEB,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A8AD201A7
-	for <e@80x24.org>; Wed, 17 May 2017 15:27:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90C9A201A7
+	for <e@80x24.org>; Wed, 17 May 2017 15:28:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753656AbdEQP06 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 11:26:58 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49901 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751676AbdEQP0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 11:26:54 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MS5jy-1dZeC00Eg6-00TAZ4; Wed, 17
- May 2017 17:26:34 +0200
-Date:   Wed, 17 May 2017 17:26:32 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Marc Stevens <marc@marc-stevens.nl>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] sha1dc: fix issues with a big endian platform
-In-Reply-To: <xmqq37c4xcr6.fsf_-_@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1705171722440.3610@virtualbox>
-References: <CACBZZX6nmKK8af0-UpjCKWV4R+hV-uk2xWXVA5U+_UQ3VXU03g@mail.gmail.com>        <006301d2cd83$663b5520$32b1ff60$@marc-stevens.nl>        <CACBZZX5Q9paMbYWH47fdK9GuNrE=F=FwR__E1yZ32EOAMw_w6w@mail.gmail.com>        <CAKKM46vwM9pxyMxTc4jA0z_8vGKdDGCGg9ziKkFAsqr5ULYJxA@mail.gmail.com>
-        <007001d2cd88$2b916180$82b42480$@marc-stevens.nl>        <CAKKM46sS_5bVe5a6wNN7SdVoGvwmVxnLAZTxJ+tSftXfZKeGWg@mail.gmail.com> <xmqq37c4xcr6.fsf_-_@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753948AbdEQP2O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 11:28:14 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60226 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753958AbdEQP2A (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 May 2017 11:28:00 -0400
+X-AuditID: 1207440f-701ff700000004e5-4a-591c6bf96fa0
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 06.62.01253.9FB6C195; Wed, 17 May 2017 11:27:54 -0400 (EDT)
+Received: from [192.168.69.190] (p5B104B68.dip0.t-ipconnect.de [91.16.75.104])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4HFRoBZ011398
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 17 May 2017 11:27:52 -0400
+Subject: Re: [PATCH 19/23] read_packed_refs(): report unexpected fopen()
+ failures
+To:     Jeff King <peff@peff.net>
+References: <cover.1495014840.git.mhagger@alum.mit.edu>
+ <5d13d0f0e0a63430a9bf2889e9a9e911382170de.1495014840.git.mhagger@alum.mit.edu>
+ <20170517132839.fx6oebgqt5t65tia@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>, git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <488f1c1d-2611-5665-34dd-23ed88769fbc@alum.mit.edu>
+Date:   Wed, 17 May 2017 17:27:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FTh6zdFuPlbW9Wbs2XniOpA27ZuLVPjX2vgUocB5xFZztuQRjyl
- mGyYXIAD/1NM/Pejnk04uLesxhW4g1DT37dxOfD8K+YYobMfFzSbZOCNqlKciizjQqd9uyY
- JBGexPJ46T0h5WY3TwvsGIYvE9iKX/nkNXfmf5vZize5MVR5fvQV9qa2426OW3Sq4NbBzG6
- gOa5arhngDsEP6WxdQG/Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7tBTrUEarIo=:n4SUcgCZgccZtBxxkIg4ew
- DPiYY/AiKMgoDjYeBtVUHKZJeeqZiRMn1bJ9nL1SCyFDYSm1cZP0U9GCH5A0p1xdwM1/XBv3r
- +Zcaj18AgniKBBPZOnyBbcm/6j5MHC2vVYYAVErE0qidSCa5IOEbo3HEcQn7TXHDRAjyjRAfx
- wu/c0W8caMXYmCgPdk+CewJZWkLwk3Kh/iNG9U56UpYWlFzfDRdx1gvIkyyO0kiaf56DwF+vv
- MSGlvqjU7PFCMXbIds0eRK3NU3S4M5skcKUMjFdsl+CE40YaQh+m2ND7uzAUPjCbVITz+LSC+
- QeyUgrOGdQFofTPPzC7eFILfMI4lwBqr9oq/MK8UzEBRQZ5sQFURLhch8x4RBk/umj4BYjm2j
- anfzKIuJXqid0yucfaN5xtz9NHoRK5Y8PH+x8mSMAiLBh9Yd7ngBn7yojfhXThST9T+T1H4Kd
- P+Z3cHtCGrM3OA1Ewpjlj1Fxg15jx+kWq5eYJ0hS6uRw1g43DvuD5/0wD9Qcy5Ngbh8RuidMD
- YpR//ipIBbh5U31nUPGJNKa0cRZIKifpI5vwB4TF5oZOWf7B9CLEcMLbsoH0lOqfOQmjm+XaA
- EH9r7XgPYQFnNDwScCZEPX1j53U20EWRHQB+ZaFBkkM/uwyiiE8fm3IXT2IVwX47typMHKDjQ
- U/LpYLbYyb8za9lsCaHIxu4tiu4jJI/kjAGiFODSx3lE2BCOSvZ6pFZgtppQakLG5RUXVf5n9
- aKobiKfVuwkAKJq1kOsMwvDKIYQ9jOz1aLSeVBVMCoEkChpe/6SrNa5Oagvh26VR6j94CzfH/
- 9w1ptmC
+In-Reply-To: <20170517132839.fx6oebgqt5t65tia@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOKsWRmVeSWpSXmKPExsUixO6iqPsrWybS4HwTr8XaZ3eYLLqudDNZ
+        NPReYbZY8vA1s0X3lLeMFj9aepgtNm9uZ3Fg99g56y67x4JNpR5d7UfYPJ717mH0uHhJ2ePz
+        JrkAtigum5TUnMyy1CJ9uwSujC0NX5gLfnBVnF71grmBcQ1HFyMnh4SAicTeNxPYuxi5OIQE
+        djBJHOtdzQLhnGOSuL52NlMXIweHsECwxJnFFiANIgKyEt8Pb2SEqDnEKLHr6h5WkASzwCYm
+        ia1n7UFsNgFdiUU9zUwgNq+AvcTuWzvZQWwWAVWJS++PM4PYogIREg87d7FD1AhKnJz5hAXE
+        5hRwkdi24SETxEx1iT/zLjFD2PIS29/OYZ7AyD8LScssJGWzkJQtYGRexSiXmFOaq5ubmJlT
+        nJqsW5ycmJeXWqRropebWaKXmlK6iRES5vw7GLvWyxxiFOBgVOLhjQiQiRRiTSwrrsw9xCjJ
+        waQkyrv/gXSkEF9SfkplRmJxRnxRaU5qMdDrHMxKIry6WUDlvCmJlVWpRfkwKWkOFiVxXvUl
+        6n5CAumJJanZqakFqUUwWRkODiUJ3jcgjYJFqempFWmZOSUIaSYOTpDhPEDD14MNLy5IzC3O
+        TIfIn2LU5Tj0/Od7JiGWvPy8VClxXgeQIgGQoozSPLg5sPT0ilEc6C1h3rMgVTzA1AY36RXQ
+        EiagJc0g3/EWlyQipKQaGCOTVptUnW7LvhKoe/V17L2lbCU197rqnd0Uj7dv7uTYfefL8+So
+        VWFSW09O+7Oq2HN1bZS3rN/jeqPGPW0GldnBh4xOMbzMLSnfuvP8xt89nee576/8eq5V/xvv
+        9Ksh5m4cyxkbCnI5bxy7Wy+49Ou/Xu6qWBknj8a1reerv3x/M2n2vHNXQ5VYijMSDbWYi4oT
+        AeEJaHQqAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 05/17/2017 03:28 PM, Jeff King wrote:
+> On Wed, May 17, 2017 at 02:05:42PM +0200, Michael Haggerty wrote:
+> 
+>> The old code ignored any errors encountered when trying to fopen the
+>> "packed-refs" file, treating all such failures as if the file didn't
+>> exist. But it could be that there is some other error opening the
+>> file (e.g., permissions problems), and we don't want to silently
+>> ignore such problems. So report any failures that are not due to
+>> ENOENT.
+> 
+> I think there are may be other "OK" errno values here, like ENOTDIR.
+> That's probably pretty unlikely in practice, though, as we're opening a
+> file at the root of the $GIT_DIR here (so somebody would had to have
+> racily changed our paths). It's probably fine to just err on the side of
+> safety.
 
-On Wed, 17 May 2017, Junio C Hamano wrote:
+Yikes, I think if somebody swaps $GIT_DIR out from under a working git
+command, the user would want to know about it. How would you possibly
+recover, anyway?
 
-> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-> index 35e9dd5bf4..ae25318c47 100644
-> --- a/sha1dc/sha1.c
-> +++ b/sha1dc/sha1.c
-> @@ -20,7 +20,7 @@
->   */
->  #if (defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
->      (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) || \
-> -    defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) ||  defined(__AARCH64EB__) || \
-> +    defined(_BIG_ENDIAN) || defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) ||  defined(__AARCH64EB__) || \
->      defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__)
->  
->  #define SHA1DC_BIGENDIAN	1
-> @@ -1728,7 +1728,8 @@ void SHA1DCUpdate(SHA1_CTX* ctx, const char* buf, size_t len)
->  	while (len >= 64)
->  	{
->  		ctx->total += 64;
-> -		sha1_process(ctx, (uint32_t*)(buf));
-> +		memcpy(ctx->buffer, buf, 64);
-> +		sha1_process(ctx, (uint32_t*)(ctx->buffer));
->  		buf += 64;
+>> +	if (!f) {
+>> +		if (errno == ENOENT) {
+>> +			/*
+>> +			 * This is OK; it just means that no
+>> +			 * "packed-refs" file has been written yet,
+>> +			 * which is equivalent to it being empty.
+>> +			 */
+>> +			return packed_refs;
+>> +		} else {
+>> +			die("couldn't read %s: %s",
+>> +			    packed_refs_file, strerror(errno));
+>> +		}
+> 
+> I think this could be die_errno().
 
-There is actually a discussion going on about this. See
+Ah yes. I'll change it.
 
-https://github.com/cr-marcstevens/sha1collisiondetection/commit/33a694a9ee1b79c24be45f9eab5ac0e1aeeaf271#commitcomment-22158243
+Thanks,
+Michael
 
-for details.
-
-The fixup commit under discussion is here:
-
-https://github.com/cr-marcstevens/sha1collisiondetection/commit/40f07a0c12d525b24ac1235ee8a81bbf33957ca5
-
-Ciao,
-dscho
