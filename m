@@ -2,115 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B53C2201A7
-	for <e@80x24.org>; Wed, 17 May 2017 14:04:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E75F0201A7
+	for <e@80x24.org>; Wed, 17 May 2017 14:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754214AbdEQOEY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 10:04:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53706 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753323AbdEQOEV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 10:04:21 -0400
-Received: (qmail 7885 invoked by uid 109); 17 May 2017 14:04:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 May 2017 14:04:21 +0000
-Received: (qmail 9833 invoked by uid 111); 17 May 2017 14:04:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 May 2017 10:04:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 May 2017 10:04:18 -0400
-Date:   Wed, 17 May 2017 10:04:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Karthik Nayak <karthik.188@gmail.com>,
-        git discussion list <git@vger.kernel.org>
-Subject: Re: Performance regression in `git branch` due to ref-filter usage
-Message-ID: <20170517140417.kwzznw4su36k6pxv@sigill.intra.peff.net>
-References: <dfc3a334-8047-26b0-1142-81c703010507@alum.mit.edu>
+        id S1753742AbdEQOLU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 10:11:20 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:64243 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753103AbdEQOLT (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 May 2017 10:11:19 -0400
+X-AuditID: 1207440c-9d9ff70000001412-ee-591c5a069d8c
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 0E.13.05138.60A5C195; Wed, 17 May 2017 10:11:18 -0400 (EDT)
+Received: from [192.168.69.190] (p5B104B68.dip0.t-ipconnect.de [91.16.75.104])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4HEBFeu007035
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 17 May 2017 10:11:16 -0400
+Subject: Re: [PATCH 04/23] prefix_ref_iterator: don't trim too much
+To:     Jeff King <peff@peff.net>
+References: <cover.1495014840.git.mhagger@alum.mit.edu>
+ <eecc015af8d7ed71223b591b13847fdb56ee69f0.1495014840.git.mhagger@alum.mit.edu>
+ <20170517125510.qmy2qvyxuup25zw6@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>, git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <7cec0285-fe6b-0e7e-83b4-b93c9770b55b@alum.mit.edu>
+Date:   Wed, 17 May 2017 16:11:15 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
+In-Reply-To: <20170517125510.qmy2qvyxuup25zw6@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <dfc3a334-8047-26b0-1142-81c703010507@alum.mit.edu>
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupmleLIzCtJLcpLzFFi42IRYndR1GWLkok0WDNZwWLtsztMFl1Xupks
+        GnqvMFssefia2aJ7yltGix8tPcwWmze3sziwe+ycdZfdY8GmUo+u9iNsHs969zB6XLyk7PF5
+        k1wAWxSXTUpqTmZZapG+XQJXxp6fU9kLHglVXGnfw9TA+Jyvi5GTQ0LARGLz/GbWLkYuDiGB
+        HUwSKy/9YINwzjFJbN/1iKWLkYNDWMBZYvJyM5AGEQFZie+HNzJC1BxilFizcCMLSIJZYBOT
+        xNaz9iA2m4CuxKKeZiYQm1fAXuL3wn5GEJtFQFViWe89sHpRgQiJh5272CFqBCVOznwCFucU
+        cJF48+k+K8RMdYk/8y4xQ9jyEtvfzmGewMg/C0nLLCRls5CULWBkXsUol5hTmqubm5iZU5ya
+        rFucnJiXl1qka6iXm1mil5pSuokREuY8Oxi/rZM5xCjAwajEwxsRIBMpxJpYVlyZe4hRkoNJ
+        SZR3/wPpSCG+pPyUyozE4oz4otKc1GKg1zmYlUR4xSKAynlTEiurUovyYVLSHCxK4ryqS9T9
+        hATSE0tSs1NTC1KLYLIyHBxKErxnQRoFi1LTUyvSMnNKENJMHJwgw3mAhsuBDS8uSMwtzkyH
+        yJ9iVJQS530SDpQQAElklObB9cLS0CtGcaBXhHk1IoGqeIApDK77FdBgJqDBzSAf8RaXJCKk
+        pBoYtVI1AiM0WTxehX1wEItxyl+ZV3pHdB1T+VG+s2mJbJEWGb+OH1tX/1HZ3/yi5vIan+te
+        ZUErf6kl8u63DOcV9dwcrbhgycyvy3qE+n8+PvV+xRRlzxsJFyT7pvJyzRbWbFZSbLs0M29j
+        PUveO1lHbVHb/7Ib/860qV/+a4bRW8/vD935jwgosRRnJBpqMRcVJwIAxkJ0eR4DAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 17, 2017 at 01:14:34PM +0200, Michael Haggerty wrote:
-
-> While working on reference code, I was running `git branch` under
-> `strace`, when I noticed that `$GIT_DIR/HEAD` was being `lstat()`ed and
-> `read()` 121 times. This is in a repository with 114 branches, so
-> probably it is being run once per branch. The extra work makes a
-> measurable difference to the (admittedly, short) runtime.
+On 05/17/2017 02:55 PM, Jeff King wrote:
+> On Wed, May 17, 2017 at 02:05:27PM +0200, Michael Haggerty wrote:
 > 
-> As recently as 2.12.3 the file was only read 4 times when running the
-> same command [1].
+>> diff --git a/refs/iterator.c b/refs/iterator.c
+>> index bce1f192f7..f33d1b3a39 100644
+>> --- a/refs/iterator.c
+>> +++ b/refs/iterator.c
+>> @@ -292,7 +292,19 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
+>>  		if (!starts_with(iter->iter0->refname, iter->prefix))
+>>  			continue;
+>>  
+>> -		iter->base.refname = iter->iter0->refname + iter->trim;
+>> +		if (iter->trim) {
+>> +			/*
+>> +			 * If there wouldn't be at least one character
+>> +			 * left in the refname after trimming, skip
+>> +			 * over it:
+>> +			 */
+>> +			if (memchr(iter->iter0->refname, '\0', iter->trim + 1))
+>> +				continue;
 > 
-> The regression bisects to
+> It took me a minute to figure out the logic here. You're looking for the
+> end-of-string within the trim boundary, which would be an indication
+> that the string itself is smaller than the boundary.
 > 
->     949af0684c (branch: use ref-filter printing APIs, 2017-01-10)
+> But what if it returns true, and the string really is shorter than the
+> trim size? That would mean we pass a size to memchr that is longer than
+> the buffer we pass. Is that legal?
 > 
-> It would be nice if these extra syscalls could be avoided.
+> I suspect it's undefined behavior according to the standard, though I'd
+> guess in practice it would be fine. But if I'm understanding it
+> correctly, this is the same check as:
 > 
-> I haven't checked whether other commands have similar regressions.
+>   if (strlen(iter->iter0->refname) <= iter->trim)
+> 
+> which seems a lot more obvious to me and doesn't fall afoul of weird
+> standard issues. The only downside I see is that it would read to the
+> end of string when yours could stop at iter->trim bytes. I have no idea
+> if that would be measurable (it might even be faster because strlen()
+> only has one condition to loop on).
 
-It looks like it's part of populate_value(). Each ref checks %(HEAD),
-and resolve HEAD individually to see if we're it. So it probably doesn't
-affect other commands by default (though you could specify %(HEAD)
-manually via for-each-ref).
+You are correct that I chose `memchr()` over `strlen()` to avoid
+scanning a POTENTIALLY EXTREMELY LARGE NUMBER OF CHARACTERS past the
+trim length, but of course in real life refnames aren't that long and
+`strlen()` might actually be faster.
 
-The solution is to cache the value we read and use it to compare against
-each ref. I'm not sure if we can do something more elegant than the
-patch below, which just caches it for the length of the program.
+I *think* `memchr()` is technically OK:
 
-> [1] One wonders why the file has to be read more than once, but that's a
-> different story and probably harder to fix.
+> Implementations shall behave as if they read the memory byte by byte
+from the beginning of the bytes pointed to by s and stop at the first
+occurrence of c (if it is found in the initial n bytes).
 
-The other ones seem to come from wt_status code, as part of
-get_head_description().
+But I agree that the `strlen()` version is also easier to read (I
+actually had that version first). So I'll change it as you have suggested.
 
----
-diff --git a/ref-filter.c b/ref-filter.c
-index 1fc5e9970..947919fc4 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1284,6 +1284,20 @@ static const char *get_refname(struct used_atom *atom, struct ref_array_item *re
- 	return show_ref(&atom->u.refname, ref->refname);
- }
- 
-+static int head_matches(const char *refname)
-+{
-+	static int initialized;
-+	static char *head;
-+
-+	if (!initialized) {
-+		unsigned char sha1[20];
-+		head = resolve_refdup("HEAD", RESOLVE_REF_READING, sha1, NULL);
-+		initialized = 1;
-+	}
-+
-+	return head && !strcmp(refname, head);
-+}
-+
- /*
-  * Parse the object referred by ref, and grab needed value.
-  */
-@@ -1369,12 +1383,7 @@ static void populate_value(struct ref_array_item *ref)
- 		} else if (!deref && grab_objectname(name, ref->objectname, v, atom)) {
- 			continue;
- 		} else if (!strcmp(name, "HEAD")) {
--			const char *head;
--			unsigned char sha1[20];
--
--			head = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
--						  sha1, NULL);
--			if (head && !strcmp(ref->refname, head))
-+			if (head_matches(ref->refname))
- 				v->s = "*";
- 			else
- 				v->s = " ";
+Thanks,
+Michael
+
