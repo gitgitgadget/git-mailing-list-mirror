@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5991C201A7
-	for <e@80x24.org>; Wed, 17 May 2017 12:06:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 924F7201A7
+	for <e@80x24.org>; Wed, 17 May 2017 12:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752921AbdEQMGH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 08:06:07 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:57187 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752038AbdEQMGD (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 17 May 2017 08:06:03 -0400
-X-AuditID: 12074414-059ff70000004f50-d0-591c3ca9ae1a
+        id S1750795AbdEQMGJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 08:06:09 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:58669 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751300AbdEQMGG (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 May 2017 08:06:06 -0400
+X-AuditID: 1207440f-719ff700000004e5-e1-591c3cacedb5
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id F2.CF.20304.9AC3C195; Wed, 17 May 2017 08:06:01 -0400 (EDT)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 9F.68.01253.CAC3C195; Wed, 17 May 2017 08:06:05 -0400 (EDT)
 Received: from bagpipes.fritz.box (p5B104B68.dip0.t-ipconnect.de [91.16.75.104])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4HC5pfs000430
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4HC5pfu000430
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Wed, 17 May 2017 08:05:59 -0400
+        Wed, 17 May 2017 08:06:03 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -35,59 +35,58 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, David Turner <novalis@novalis.org>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 03/23] ref_iterator_begin_fn(): fix docstring
-Date:   Wed, 17 May 2017 14:05:26 +0200
-Message-Id: <da4669a209fa1aafe6a8e3ae8082963a338b1da8.1495014840.git.mhagger@alum.mit.edu>
+Subject: [PATCH 05/23] refs_ref_iterator_begin(): don't check prefixes redundantly
+Date:   Wed, 17 May 2017 14:05:28 +0200
+Message-Id: <c9e1d561825a63630a09a2815b9b296c9e4bd1f5.1495014840.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1495014840.git.mhagger@alum.mit.edu>
 References: <cover.1495014840.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDIsWRmVeSWpSXmKPExsUixO6iqLvSRibSoOsUp8XaZ3eYLLqudDNZ
-        NPReYba4vWI+s8WSh6+ZLbqnvGW0+NHSw2yxeXM7iwOHx9/3H5g8ds66y+6xYFOpR1f7ETaP
-        Z717GD0uXlL2+LxJLoA9issmJTUnsyy1SN8ugSujc8EspoKNXBUzV9xnb2C8yNHFyMkhIWAi
-        MfvjMuYuRi4OIYEdTBL7t/9hhHBOMEm07uxgBqliE9CVWNTTzARiiwioSUxsO8QCUsQs8JhJ
-        4u+ybhaQhLCArcTDg03sXYwcHCwCqhJ9D7VBwrwCURJ/385ngtgmL7Gr7SIriM0pYCFx//0j
-        sHIhAXOJ7dcrJzDyLGBkWMUol5hTmqubm5iZU5yarFucnJiXl1qka6GXm1mil5pSuokREmgi
-        OxiPnJQ7xCjAwajEw2vBIR0pxJpYVlyZe4hRkoNJSZR3/wOgEF9SfkplRmJxRnxRaU5q8SFG
-        CQ5mJRHem6YykUK8KYmVValF+TApaQ4WJXHeb4vV/YQE0hNLUrNTUwtSi2CyMhwcShK8U6yB
-        GgWLUtNTK9Iyc0oQ0kwcnCDDeYCGc4HU8BYXJOYWZ6ZD5E8xKkqJ8x4ASQiAJDJK8+B6YYng
-        FaM40CvCvGYgVTzAJALX/QpoMBPQ4GaQj3iLSxIRUlINjLVejslx05ILj/N8ndWle0rWNr79
-        k2evjNZTq/TnDsciDonlbpcqzZ864fdU/ellb1c6Rsc4vz1/5vTRF0f3zlI/0Lun0EfjWIH5
-        nl7eA/HzOZ2ypNNLniUFeL5SO71zpmEYT/NyfRkLidUrFNZ1pwT4Xkw+s98q48WC9nmLf0zT
-        u5040WcfuxJLcUaioRZzUXEiAEZQYynfAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrBIsWRmVeSWpSXmKPExsUixO6iqLvWRibSYP1dLou1z+4wWXRd6Way
+        aOi9wmxxe8V8ZoslD18zW3RPecto8aOlh9li8+Z2FgcOj7/vPzB57Jx1l91jwaZSj672I2we
+        z3r3MHpcvKTs8XmTXAB7FJdNSmpOZllqkb5dAldGw+LlbAVP2SrOTGliaWDcw9rFyMkhIWAi
+        sa7jMUsXIxeHkMAOJoltP54wQjgnmCR+9zYwg1SxCehKLOppZgKxRQTUJCa2HQLrYBZ4zCTx
+        d1k3kMPBISwQJLHoISdIDYuAqsSmhefAenkFoiSOv1nKArFNXmJX20WwzZwCFhL33z9iB2kV
+        EjCX2H69cgIjzwJGhlWMcok5pbm6uYmZOcWpybrFyYl5ealFuiZ6uZkleqkppZsYIYHGv4Ox
+        a73MIUYBDkYlHt4JXNKRQqyJZcWVuYcYJTmYlER59z8ACvEl5adUZiQWZ8QXleakFh9ilOBg
+        VhLhvWkqEynEm5JYWZValA+TkuZgURLnVV+i7ickkJ5YkpqdmlqQWgSTleHgUJLgnWIN1ChY
+        lJqeWpGWmVOCkGbi4AQZzgM0nAukhre4IDG3ODMdIn+KUZdjzr2v75mEWPLy81KlxHkPgBQJ
+        gBRllObBzYEliFeM4kBvCfOuBqniASYXuEmvgJYwAS1pBvmOt7gkESEl1cC4ZL6Sha6S6JbW
+        OpZ9BsV62/fObfg+Jfj9nOr+4KC/txb5NZ06Mok75IzX1Z+JDKKyohkNOk1ret//jX4uekhP
+        tme2TOcWXY91N1zcLompns3WzoxvDj76svpL2PkHQplTemsXntfoqd2hoOS5o+THu1dP5r/e
+        IdfD79aZuGve4x+9P4xtw5SVWIozEg21mIuKEwHmWZBu6wIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The iterator returned by this function only includes references whose
-names start with the whole prefix, not all of those in
-`find_containing_dir(prefix)` as the old docstring claimed. This
-docstring was probably copy-pasted from old ref-cache code, which had
-the old specification. But now, `cache_ref_iterator_begin()`
-(from which the files reference iterator gets its values)
-automatically wraps its output using `prefix_ref_iterator_begin()`
-when necessary, so it has the stricter behavior.
+The backend already takes care of the prefix. By passing the prefix
+again to `prefix_ref_iterator`, we were forcing that iterator to do
+redundant prefix comparisons. So set it to the empty string.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/refs-internal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ refs.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 12cf4e4718..e5f6bb2047 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -515,8 +515,8 @@ typedef int rename_ref_fn(struct ref_store *ref_store,
- 			  const char *logmsg);
+diff --git a/refs.c b/refs.c
+index 26d40f9927..f4a485cd8a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1247,7 +1247,13 @@ struct ref_iterator *refs_ref_iterator_begin(
+ 	struct ref_iterator *iter;
  
- /*
-- * Iterate over the references in the specified ref_store that are
-- * within find_containing_dir(prefix). If prefix is NULL or the empty
-+ * Iterate over the references in the specified ref_store whose names
-+ * start with the specified prefix. If prefix is NULL or the empty
-  * string, iterate over all references in the submodule.
-  */
- typedef struct ref_iterator *ref_iterator_begin_fn(
+ 	iter = refs->be->iterator_begin(refs, prefix, flags);
+-	iter = prefix_ref_iterator_begin(iter, prefix, trim);
++
++	/*
++	 * `iterator_begin()` already takes care of prefix, but we
++	 * might need to do some trimming:
++	 */
++	if (trim)
++		iter = prefix_ref_iterator_begin(iter, "", trim);
+ 
+ 	return iter;
+ }
 -- 
 2.11.0
 
