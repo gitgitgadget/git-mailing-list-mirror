@@ -2,191 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBF14201CF
-	for <e@80x24.org>; Wed, 17 May 2017 06:47:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5053201CF
+	for <e@80x24.org>; Wed, 17 May 2017 07:03:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753223AbdEQGrx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 02:47:53 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33543 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752596AbdEQGrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 02:47:52 -0400
-Received: by mail-pf0-f193.google.com with SMTP id f27so627105pfe.0
-        for <git@vger.kernel.org>; Tue, 16 May 2017 23:47:51 -0700 (PDT)
+        id S1753781AbdEQHCv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 03:02:51 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:36682 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753528AbdEQHCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2017 03:02:48 -0400
+Received: by mail-io0-f196.google.com with SMTP id f102so642358ioi.3
+        for <git@vger.kernel.org>; Wed, 17 May 2017 00:02:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pIShrsWbkqB2HUxSKI0RH8JAXds18BDFYqx9EzUobt8=;
-        b=tos6c5JRdA0o0+GnM7rwsa/hFh1STHQNLkU9qEF6J8Jk5ukU94qeXChZ+sCm5BiX2S
-         K1Rk6wt7lSgPmrhwITDabJh0ZpEZzJcq3orO7tkR57Nno//m/wnPhz7gKImQC2piNTR3
-         qTRatTLKbzzkFxDrPWC+FV3bO0hngJRcgt+qcjDwn7Fvq6NRXo0owff6u+SxPdAMmpl1
-         nOgQMZDgoMv32Qe5IwrUezbSDawLWedyy/IKxY02C/b1vY1m/gGCQ7L17b4+5Axaga6t
-         VOa3cTsFL30vQq77HbS0NbuTky9fgYSFx4+pvQpyMnt4x39NfKcXG6nwW7O7mFa0JZOo
-         UgNQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=n5VWUMKcTC3/FxeDxBZoUhup82wyEl+uaYCdOfpMRqg=;
+        b=HHwp5+CjCsbllcUHNv5YdM2tsmZTwvnEofpvKg8r4DiemFiHdjM0DTY3xpe4rXVgl3
+         JHPvdyEurHFconSBFcZ35z2VUQtAoT1GDjBy47vDi20sGJ+0hJunScN3CyDLy4gL1h4B
+         M7vo9HyYqii3LAe5mgE+2eaXan0Hkum48wKCvCtbol/6Li7iYBuk2vaL1JKDEbrMwuZJ
+         OVJK0G8SH/YfO95ivSy+NQMUGbRRZCfYfJ7iLN3BeH4BnxLQt1GZR3jmIXJ67lRg+VKu
+         9iP682XpcEBn0I4H5cCKb6O80AiM58UUeBzTQ0TbjB8v5f/BKLGW5TTWEkAJKaqIHUnP
+         Ayrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pIShrsWbkqB2HUxSKI0RH8JAXds18BDFYqx9EzUobt8=;
-        b=CGvUoE9YhSwxpb8P/pBkWP7U1pSXiwQ2YcXDJ9b+vT+5K0qUAZ07W+ftw3b+DSxpPt
-         QlVptlQXrqQA9IaKXE2UxA2J5IPmwrG5+AIy6UqCGgYyrTJCZxMtaq1SJDDYLYBJLWJP
-         n7t4/BiPfZbCd6c8itjVcUm8/L8pjwKsOIqrw1vyB2WmVuVRV/qJXcdeaRahypP+3pe5
-         GWZfMWlwvXlXNq/rumug0gnYoscYsC3sGfiH4bqVIvQaaAW/pcbxPxSRLPhL0ilUMpu9
-         kXBz8Ynk/NHJe4WbfbxNEIrpuVXb9xVw4CXVW7zlxYbqa+Q78t1xWrWtCi2O4YDAIaec
-         tJdw==
-X-Gm-Message-State: AODbwcAPpU2+rUZMuSuv4gZkcdjwIBp3I48omqoqT8/iwPFKTTq/d5Yy
-        JEoOLomKUSJdGQ==
-X-Received: by 10.84.202.163 with SMTP id x32mr2450073pld.51.1495003671300;
-        Tue, 16 May 2017 23:47:51 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:78bf:56b6:7690:fdbd])
-        by smtp.gmail.com with ESMTPSA id p10sm1709854pgf.63.2017.05.16.23.47.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 16 May 2017 23:47:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 4/8] dir: hide untracked contents of untracked dirs
-References: <20170516073423.25762-1-sxlijin@gmail.com>
-        <20170505104611.17845-1-sxlijin@gmail.com>
-        <20170516073423.25762-5-sxlijin@gmail.com>
-Date:   Wed, 17 May 2017 15:47:49 +0900
-In-Reply-To: <20170516073423.25762-5-sxlijin@gmail.com> (Samuel Lijin's
-        message of "Tue, 16 May 2017 03:34:19 -0400")
-Message-ID: <xmqqo9usvv1m.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=n5VWUMKcTC3/FxeDxBZoUhup82wyEl+uaYCdOfpMRqg=;
+        b=tfMnbpQAIY1g4RBrriJ4xGqsSY2/8Jq8tMqUvdetDYBioNTNne9fo3oyCQ4QkBBfYc
+         Yita0amegRbPiNHF5JYvo9qPOSN+ZEi8JiKPWcBkQQpTmwQMBobKq+qvRmrAvloOS0n6
+         OjLoycxLhgWmLNjzew12hXkb8SH6+ynH+AFD15b/GEgvJG8kYb7fJInkUNM3O2MU+gAz
+         ajDu03wXvLwPAxnfE4XxwoVTIqP3lxsPUoBC2NGXoz/1e3GJ1+mEC+2UKdrKEmfXeiZp
+         KSKe1+KET47Ep9J8ifJd0pUotRgnfjCxBuERjiAwZ0xSDAk00AkOsXAkfO0K+MSefAOv
+         9hIw==
+X-Gm-Message-State: AODbwcCglvWOQp/uxPr0LPO6Kyl9UhB0BnhDwwK4vgi4K6VsjJCQ7wOR
+        CWo3amRxjJaJ3R3wOyxbdcXcApQLRg==
+X-Received: by 10.107.195.70 with SMTP id t67mr1998459iof.17.1495004568015;
+ Wed, 17 May 2017 00:02:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.79.150.90 with HTTP; Wed, 17 May 2017 00:02:07 -0700 (PDT)
+In-Reply-To: <xmqqy3twvw66.fsf@gitster.mtv.corp.google.com>
+References: <20170516073423.25762-1-sxlijin@gmail.com> <20170505104611.17845-1-sxlijin@gmail.com>
+ <20170516073423.25762-4-sxlijin@gmail.com> <xmqqy3twvw66.fsf@gitster.mtv.corp.google.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Wed, 17 May 2017 03:02:07 -0400
+Message-ID: <CAJZjrdXTWsOX6-=4XJwa0EwOUieWw7xpK6i9hfOaxpAAjqqz-g@mail.gmail.com>
+Subject: Re: [PATCH v3 3/8] dir: recurse into untracked dirs for ignored files
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Samuel Lijin <sxlijin@gmail.com> writes:
-
-> When we taught read_directory_recursive() to recurse into untracked
-> directories in search of ignored files given DIR_SHOW_IGNORED_TOO, that
-> had the side effect of teaching it to collect the untracked contents of
-> untracked directories. It doesn't always make sense to return these,
-> though (we do need them for `clean -d`), so we introduce a flag
-> (DIR_KEEP_UNTRACKED_CONTENTS) to control whether or not read_directory()
-> strips dir->entries of the untracked contents of untracked dirs.
+On Wed, May 17, 2017 at 2:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Samuel Lijin <sxlijin@gmail.com> writes:
 >
-> We also introduce check_contains() to check if one dir_entry corresponds
-> to a path which contains the path corresponding to another dir_entry.
+>> We consider directories containing only untracked and ignored files to
+>> be themselves untracked, which in the usual case means we don't have to
+>> search these directories. This is problematic when we want to collect
+>> ignored files with DIR_SHOW_IGNORED_TOO, though, so we teach
+>> read_directory_recursive() to recurse into untracked directories to find
+>> the ignored files they contain when DIR_SHOW_IGNORED_TOO is set. This
+>> has the side effect of also collecting all untracked files in untracked
+>> directories as well.
+>>
+>> Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
+>> ---
+>>  dir.c | 7 ++++++-
+>>  1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/dir.c b/dir.c
+>> index f451bfa48..6bd0350e9 100644
+>> --- a/dir.c
+>> +++ b/dir.c
+>> @@ -1784,7 +1784,12 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+>>                       dir_state = state;
+>>
+>>               /* recurse into subdir if instructed by treat_path */
+>> -             if (state == path_recurse) {
+>> +             if ((state == path_recurse) ||
+>> +                             ((get_dtype(cdir.de, path.buf, path.len) == DT_DIR) &&
 >
-> Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
-> ---
->  dir.c | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  dir.h |  3 ++-
->  2 files changed, 56 insertions(+), 1 deletion(-)
+> I see a conditional in treat_path() that is prepared to deal with a
+> NULL in cdir.de; do we know cdir.de is always non-NULL at this point
+> in the code, or is get_dtype() prepared to see NULL as its first
+> parameter?
 >
-> diff --git a/dir.c b/dir.c
-> index 6bd0350e9..214a148ee 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1852,6 +1852,14 @@ static int cmp_name(const void *p1, const void *p2)
->  	return name_compare(e1->name, e1->len, e2->name, e2->len);
->  }
->  
-> +/* check if *out lexically contains *in */
-> +static int check_contains(const struct dir_entry *out, const struct dir_entry *in)
-> +{
-> +	return (out->len < in->len) &&
-> +			(out->name[out->len - 1] == '/') &&
-> +			!memcmp(out->name, in->name, out->len);
-> +}
+>         ... goes and looks ...
+>
+> Yes, it falls back to the usual lstat() dance in such a case, so
+> we'd be OK here.
+>
+>> +                              (state == path_untracked) &&
+>> +                              (dir->flags & DIR_SHOW_IGNORED_TOO))
+>
+> If we are told to SHOW_IGNORED_TOO, we'd recurse into an untracked
+> thing if it is a directory.  No other behaviour change.
+>
+> Isn't get_dtype() potentially slower than other two checks if it
+> triggers?  I am wondering if these three conditions in &&-chain
+> should be reordered to call get_dtype() the last, i.e.
+>
+>                 if ((state == path_recurse) ||
+>                     ((dir->flags & DIR_SHOW_IGNORED_TOO)) &&
+>                      (state == path_untracked) &&
+>                      (get_dtype(cdir.de, path.buf, path.len) == DT_DIR)) {
 
-OK, treat_one_path() and treat_pah_fast() both ensure that a path to
-a directory is terminated with '/' before calling dir_add_name() and
-dir_add_ignored(), so we know a dir_entry "out" that is a directory
-must end with '/'.  Good.
+Ah, I didn't realize that. I figured that get_dtype() was just a
+helper to invoke the appropriate macros, but if it's actually mildly
+expensive I'll take your reorder.
 
-The second and third line being overly indented is a bit
-distracting, though.
-
->  static int treat_leading_path(struct dir_struct *dir,
->  			      const char *path, int len,
->  			      const struct pathspec *pathspec)
-> @@ -2067,6 +2075,52 @@ int read_directory(struct dir_struct *dir, const char *path,
->  		read_directory_recursive(dir, path, len, untracked, 0, pathspec);
->  	QSORT(dir->entries, dir->nr, cmp_name);
->  	QSORT(dir->ignored, dir->ignored_nr, cmp_name);
-> +
-> +	// if DIR_SHOW_IGNORED_TOO, read_directory_recursive() will also pick
-> +	// up untracked contents of untracked dirs; by default we discard these,
-> +	// but given DIR_KEEP_UNTRACKED_CONTENTS we do not
-
-	/*
-	 * Our multi-line comments are formatted like this 
-	 * example.  No C++/C99 // comments, outside of
-	 * borrowed code and platform specific compat/ code,
-	 * please.
-	 */
-
-> +	if ((dir->flags & DIR_SHOW_IGNORED_TOO)
-> +		     && !(dir->flags & DIR_KEEP_UNTRACKED_CONTENTS)) {
-
-Both having && at the end and && at the beginning are valid C, but
-please stick to one style in a single file.
-
-> +		int i, j, nr_removed = 0;
-> +
-> +		// remove from dir->entries untracked contents of untracked dirs
-
-	/* And our single-liner comments look like this */
-
-> +		for (i = 0; i < dir->nr; i++) {
-> +			if (!dir->entries[i])
-> +				continue;
-> +
-> +			for (j = i + 1; j < dir->nr; j++) {
-> +				if (!dir->entries[j])
-> +					continue;
-> +				if (check_contains(dir->entries[i], dir->entries[j])) {
-> +					nr_removed++;
-> +					free(dir->entries[j]);
-> +					dir->entries[j] = NULL;
-> +				}
-> +				else {
-> +					break;
-> +				}
-> +			}
-> +		}
-
-This loop is O(n^2).  I wonder if we can do better, especially we
-know dir->entries[] is sorted already.
-
-Well, because it is sorted, if A/, A/B, and A/B/C are all untracked,
-the first round that scans for A/ will nuke both A/B and A/B/C, so
-we won't have to scan looking for entries inside A/B, which is a bit
-of consolation ;-)
-
-> +			for (i = 0;;) {
-> +				while (i < dir->nr && dir->entries[i])
-> +					i++;
-> +				if (i == dir->nr)
-> +					break;
-> +				j = i;
-> +				while (j < dir->nr && !dir->entries[j])
-> +					j++;
-> +				if (j == dir->nr)
-> +					break;
-> +				dir->entries[i] = dir->entries[j];
-> +				dir->entries[j] = NULL;
-> +			}
-> +			dir->nr -= nr_removed;
-
-This looks like an overly complicated way to scan an array and skip
-NULLs.  Are you doing an equivalent of this loop, or am I missing
-something subtle?
-
-	for (src = dst = 0; src < nr; src++)
-		if (array[src])
-			array[dst++] = src;
-	nr = dst;
+>> +                             )
+>> +             {
+>
+> It may be just a style, but these new lines are indented overly too
+> deep.  We don't use a lone "{" on a line to open a block, either.
+>
+>>                       struct untracked_cache_dir *ud;
+>>                       ud = lookup_untracked(dir->untracked, untracked,
+>>                                             path.buf + baselen,
