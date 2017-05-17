@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39AA22023D
-	for <e@80x24.org>; Wed, 17 May 2017 02:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CC512023D
+	for <e@80x24.org>; Wed, 17 May 2017 02:59:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752931AbdEQC7b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 22:59:31 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:34817 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751521AbdEQC7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 22:59:15 -0400
-Received: by mail-pf0-f177.google.com with SMTP id n23so84855920pfb.2
-        for <git@vger.kernel.org>; Tue, 16 May 2017 19:59:15 -0700 (PDT)
+        id S1752956AbdEQC7h (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 22:59:37 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:36213 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752809AbdEQC7Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 22:59:25 -0400
+Received: by mail-pg0-f53.google.com with SMTP id x64so66006727pgd.3
+        for <git@vger.kernel.org>; Tue, 16 May 2017 19:59:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DUmtSBfQjYYEbs580pwMpvoMQloirfoICyAluAabTsY=;
-        b=itC0nNfO3dqX2rLbdARr8CGl0zn5qxzqOfxrpDiEuqs5fh6nzr2FWFJcdiXMqGSqEn
-         IhZ5MGoZdxTEGKWNcq8wIlScKo8Ouo8oKYaUVgu9LeRLOAMrWzzvZJEciTsDvnZvyfDN
-         2WQKuOSpPHlfpJOJDWCj1B3RkNN6TFydXoAwgN3DYQqT50RP1lpdVMsVdZNT+aOem9zQ
-         3pVQaa5SrArmmCEy2xHtQNI2zCNK+Lv4T5FLVDl/+EihR2Z7ut+AEem6srP+k9CKXcpQ
-         Q0Ss5MjC/0kIq2ZAIBhMro/PinudrzMkioKBisw7YA0hJJmxaWB4/cfJcbcFPlR7dNjn
-         7YJw==
+        bh=wmWM+nVP/6WjQRaSMBVpG3pVBAJeJTIXayPLsb4n4TM=;
+        b=Rbsjivv7zOvomc4/8RBrNparxvn33MBak7aVb0ayuTaT8yMB7/vPa2peoBJ2LJvhJi
+         wOEUNaxc0uGGTgxTlX15K3d9eSD6xow0PQqIV2e5XEjmqkKh9RScn4khgG5Svi46RNby
+         JsWdsmBnDVz5zmli6tzG5o3vosYsrzctoYEFOp4QJL5hu3ExUq6B/tWj5hkkHKMSQfXZ
+         6saRjCC5Q9MSVch2PUhGEM2U03a9wcLe5JlMUNDx370D2+/rcPWvGCIL6ZsKT94dxnWe
+         deektcWiklDWH+nWUniRQasozj6wQ7GX58UrpufsZp/dvfXKP7WUlW5tbv6RCKcRZGxd
+         0ovQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=DUmtSBfQjYYEbs580pwMpvoMQloirfoICyAluAabTsY=;
-        b=AxA+iSWS4MfO2yBATF/3ukhsI54UWzgIl0HBUtd8oyIGbrMeM7KTggn/AfQ7EjIWSk
-         /G98gO8ihf2MnfXv8QyKT4gFX4amu1iKAYe3mIgOkX2BHKhE6SB/WMTCeiVbGOptZcr4
-         y5RteeD42RDaSGL2frdq7p669NVf7M9ofcKpvNeMClL86cO37YGrBcVhB9/3camCr2Wo
-         xUDGXaXx3mt7WZs7oXYkObFbOmFJ/ATVW1EJxJHx36yFXv6+zGqKgVKJER/bKvte+nRY
-         gRsFgZvPKEZxefwpfXEbr4op5rdEusu3yJvCZ+cPRZhWc5Ilw0pU9nctUQgzvRgB8UlG
-         qjSw==
-X-Gm-Message-State: AODbwcAVj3MGDHamvgS5QNShu22ARxch4od1iYnLPy12rZ5ndgnIQXYh
-        GUFi+R5kqUlSXg13
-X-Received: by 10.98.59.2 with SMTP id i2mr1334955pfa.50.1494989954107;
-        Tue, 16 May 2017 19:59:14 -0700 (PDT)
+        bh=wmWM+nVP/6WjQRaSMBVpG3pVBAJeJTIXayPLsb4n4TM=;
+        b=Qr01knHQ1XiAjKLdngm6K/bHrrUu555jb1pEg/8JSbwwo85+7Be+SfgU2ATKRfE6aE
+         xqdqM2FqCPJ3LygGLZz1LG1mexzdzqrDX+Jf3ZO0dEAtuUQT5JOlv0jQWYd7yvGrqPGg
+         qQU3uLTREWhDvh30sONP+4A9GLvCIDr1L/zls//nxlVJwsa8K79HmmaQMAIJbxPC1l/m
+         TPKGzfmnmx+QuyTP3T4ZqPEd7U9lvJnqKwtTXaKK9Qt62PpJtS/b6G8ljnc4K2jMzoKE
+         Pi+tGIdnV0cBeXOKGdzXLrjtAajYjIQEQCYULz+RDfJUKW2YFp9E57VcmcP13vOzklb7
+         swNA==
+X-Gm-Message-State: AODbwcDrmCKetsPuhjyIYyzdVauUsOyxqEIBh2h3WAunMvAOP4sP/qIW
+        uDYFEFGeQLc6+IBf
+X-Received: by 10.98.198.130 with SMTP id x2mr1301457pfk.232.1494989964790;
+        Tue, 16 May 2017 19:59:24 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:b4bc:dafd:125e:c48a])
-        by smtp.gmail.com with ESMTPSA id x80sm649178pff.105.2017.05.16.19.59.13
+        by smtp.gmail.com with ESMTPSA id h28sm673828pfd.55.2017.05.16.19.59.23
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 16 May 2017 19:59:13 -0700 (PDT)
+        Tue, 16 May 2017 19:59:23 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, gitster@pobox.com, jonathantanmy@google.com,
         bmwill@google.com, peff@peff.net, mhagger@alum.mit.edu,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 08/20] diff.c: convert fn_out_consume to use emit_line
-Date:   Tue, 16 May 2017 19:58:45 -0700
-Message-Id: <20170517025857.32320-9-sbeller@google.com>
+Subject: [PATCHv2 17/20] diff.c: convert diff_summary to use emit_line_*
+Date:   Tue, 16 May 2017 19:58:54 -0700
+Message-Id: <20170517025857.32320-18-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.18.g7d86cc8ba0
 In-Reply-To: <20170517025857.32320-1-sbeller@google.com>
 References: <20170514040117.25865-1-sbeller@google.com>
@@ -73,80 +73,121 @@ lines (+ and -) that got moved.
 So to prepare the diff machinery for two pass algorithms
 (i.e. buffer it all up and then operate on the result),
 move all emissions to places, such that the only emitting
-function is emit_line.
+function is emit_line_0.
 
-This covers the parts of fn_out_consume.  In the next
-patches we'll convert more functions that want to emit
-formatted output, so we'd want to have a formatted emit
-function. Add it here.
+This covers diff_summary.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ diff.c | 64 ++++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 34 insertions(+), 30 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 3569857818..8186289734 100644
+index 4cd1b3c520..964b5cb5a7 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -547,6 +547,21 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
- 		fputc('\n', file);
+@@ -4500,67 +4500,71 @@ static void flush_one_pair(struct diff_filepair *p, struct diff_options *opt)
+ 	}
  }
  
-+static void emit_line_fmt(struct diff_options *o,
-+			  const char *set, const char *reset,
-+			  int add_line_prefix,
-+			  const char *fmt, ...)
-+{
+-static void show_file_mode_name(FILE *file, const char *newdelete, struct diff_filespec *fs)
++static void show_file_mode_name(struct diff_options *opt, const char *newdelete, struct diff_filespec *fs)
+ {
 +	struct strbuf sb = STRBUF_INIT;
-+	va_list ap;
-+	va_start(ap, fmt);
-+	strbuf_vaddf(&sb, fmt, ap);
-+	va_end(ap);
-+
-+	emit_line(o, set, reset, add_line_prefix, 0, sb.buf, sb.len);
+ 	if (fs->mode)
+-		fprintf(file, " %s mode %06o ", newdelete, fs->mode);
++		strbuf_addf(&sb, " %s mode %06o ", newdelete, fs->mode);
+ 	else
+-		fprintf(file, " %s ", newdelete);
+-	write_name_quoted(fs->path, file, '\n');
+-}
++		strbuf_addf(&sb, " %s ", newdelete);
+ 
++	quote_c_style(fs->path, &sb, NULL, 0);
++	strbuf_addch(&sb, '\n');
++	emit_line(opt, NULL, NULL, 1, 0, sb.buf, sb.len);
 +	strbuf_release(&sb);
 +}
-+
- static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
+ 
+-static void show_mode_change(FILE *file, struct diff_filepair *p, int show_name,
+-		const char *line_prefix)
++static void show_mode_change(struct diff_options *opt, struct diff_filepair *p,
++		int show_name)
  {
- 	if (!((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
-@@ -1270,7 +1285,6 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 	const char *context = diff_get_color(ecbdata->color_diff, DIFF_CONTEXT);
- 	const char *reset = diff_get_color(ecbdata->color_diff, DIFF_RESET);
- 	struct diff_options *o = ecbdata->opt;
--	const char *line_prefix = diff_line_prefix(o);
- 
- 	o->found_changes = 1;
- 
-@@ -1282,14 +1296,12 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 
- 	if (ecbdata->label_path[0]) {
- 		const char *name_a_tab, *name_b_tab;
--
- 		name_a_tab = strchr(ecbdata->label_path[0], ' ') ? "\t" : "";
- 		name_b_tab = strchr(ecbdata->label_path[1], ' ') ? "\t" : "";
--
--		fprintf(o->file, "%s%s--- %s%s%s\n",
--			line_prefix, meta, ecbdata->label_path[0], reset, name_a_tab);
--		fprintf(o->file, "%s%s+++ %s%s%s\n",
--			line_prefix, meta, ecbdata->label_path[1], reset, name_b_tab);
-+		emit_line_fmt(o, meta, reset, 1, "--- %s%s\n",
-+			      ecbdata->label_path[0], name_a_tab);
-+		emit_line_fmt(o, meta, reset, 1, "+++ %s%s\n",
-+			      ecbdata->label_path[1], name_b_tab);
- 		ecbdata->label_path[0] = ecbdata->label_path[1] = NULL;
+ 	if (p->one->mode && p->two->mode && p->one->mode != p->two->mode) {
+-		fprintf(file, "%s mode change %06o => %06o%c", line_prefix, p->one->mode,
+-			p->two->mode, show_name ? ' ' : '\n');
++		struct strbuf sb = STRBUF_INIT;
+ 		if (show_name) {
+-			write_name_quoted(p->two->path, file, '\n');
++			strbuf_addch(&sb, ' ');
++			quote_c_style(p->two->path, &sb, NULL, 0);
+ 		}
++		emit_line_fmt(opt, NULL, NULL, 1,
++			      " mode change %06o => %06o%s\n",
++			      p->one->mode, p->two->mode,
++			      show_name ? sb.buf : "");
++		strbuf_release(&sb);
  	}
+ }
  
-@@ -1330,7 +1342,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 		diff_words_flush(ecbdata);
- 		if (ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN) {
- 			emit_line(o, context, reset, 1, 0, line, len);
--			fputs("~\n", o->file);
-+			emit_line(o, NULL, NULL, 0, 0, "~\n", 2);
- 		} else {
- 			/*
- 			 * Skip the prefix character, if any.  With
+-static void show_rename_copy(FILE *file, const char *renamecopy, struct diff_filepair *p,
+-			const char *line_prefix)
++static void show_rename_copy(struct diff_options *opt, const char *renamecopy,
++		struct diff_filepair *p)
+ {
+ 	char *names = pprint_rename(p->one->path, p->two->path);
+-
+-	fprintf(file, " %s %s (%d%%)\n", renamecopy, names, similarity_index(p));
++	emit_line_fmt(opt, NULL, NULL, 1, " %s %s (%d%%)\n",
++		      renamecopy, names, similarity_index(p));
+ 	free(names);
+-	show_mode_change(file, p, 0, line_prefix);
++	show_mode_change(opt, p, 0);
+ }
+ 
+ static void diff_summary(struct diff_options *opt, struct diff_filepair *p)
+ {
+-	FILE *file = opt->file;
+-	const char *line_prefix = diff_line_prefix(opt);
+-
+ 	switch(p->status) {
+ 	case DIFF_STATUS_DELETED:
+-		fputs(line_prefix, file);
+-		show_file_mode_name(file, "delete", p->one);
++		show_file_mode_name(opt, "delete", p->one);
+ 		break;
+ 	case DIFF_STATUS_ADDED:
+-		fputs(line_prefix, file);
+-		show_file_mode_name(file, "create", p->two);
++		show_file_mode_name(opt, "create", p->two);
+ 		break;
+ 	case DIFF_STATUS_COPIED:
+-		fputs(line_prefix, file);
+-		show_rename_copy(file, "copy", p, line_prefix);
++		show_rename_copy(opt, "copy", p);
+ 		break;
+ 	case DIFF_STATUS_RENAMED:
+-		fputs(line_prefix, file);
+-		show_rename_copy(file, "rename", p, line_prefix);
++		show_rename_copy(opt, "rename", p);
+ 		break;
+ 	default:
+ 		if (p->score) {
+-			fprintf(file, "%s rewrite ", line_prefix);
+-			write_name_quoted(p->two->path, file, ' ');
+-			fprintf(file, "(%d%%)\n", similarity_index(p));
++			struct strbuf sb = STRBUF_INIT;
++			strbuf_addstr(&sb, " rewrite ");
++			quote_c_style(p->two->path, &sb, NULL, 0);
++			strbuf_addf(&sb, " (%d%%)\n", similarity_index(p));
++			emit_line(opt, NULL, NULL, 1, 0, sb.buf, sb.len);
+ 		}
+-		show_mode_change(file, p, !p->score, line_prefix);
++		show_mode_change(opt, p, !p->score);
+ 		break;
+ 	}
+ }
 -- 
 2.13.0.18.g7d86cc8ba0
 
