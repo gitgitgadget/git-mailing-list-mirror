@@ -2,143 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D57EF2023D
-	for <e@80x24.org>; Wed, 17 May 2017 00:08:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 860FB2023D
+	for <e@80x24.org>; Wed, 17 May 2017 00:28:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751571AbdEQAIp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 20:08:45 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:36001 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751436AbdEQAIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 20:08:44 -0400
-Received: by mail-lf0-f66.google.com with SMTP id h4so4529710lfj.3
-        for <git@vger.kernel.org>; Tue, 16 May 2017 17:08:43 -0700 (PDT)
+        id S1752083AbdEQA2b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 20:28:31 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33813 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752000AbdEQA23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 20:28:29 -0400
+Received: by mail-pg0-f66.google.com with SMTP id u187so23140425pgb.1
+        for <git@vger.kernel.org>; Tue, 16 May 2017 17:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=9dBrrotKcZ4QW4/G6zMENwg5vdO1JtlKBbjZ8Q1DV+o=;
-        b=HIZQzrqpOTbbqaTst9yQaIpbaoy0DgK+CHxxtzjIlnuMEqM/J3+tx48jInWpyDfMRn
-         Kb+XYBrHlP4UokGtuT4hQf4oEuXizviIp63MxTNEag2YWXvbKsbHiNavd2PG64GUifol
-         ZQtxkelqro9FCKyd5KLxr/mqUP6fiHzrD2Q6UJyumVaxFZF5N95m/R1fq4ngu/slXRt5
-         vZqG9E/o4GMBL5ld8we/MLqoMWkWqpCh8T4P9OmymgG+/Ybj7qO7RyyH8KU+D+H8pdYg
-         ZfGKYpQQpn2zz/XUrbR9YndxdvG/vtsUM3N/3CIz58S2mOWfzfzWVDhwHFKULszsgMr3
-         mDDQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=TUTzsyvnVoOrbIGnZ+JnXEils6vvCFbl4Nx88fX/kA0=;
+        b=CNJluNmpji9djTT9HrOFdbP6J/N/DGkriP2PT96+afvOZuwIrR71nF5SCyCIs/n8vN
+         44HX51pJkSzvpc559Euv9cYra1fRBWvBTT1onmz1ysCocsjHYHawHk5YpzSfpa2ruwT6
+         1OijpKgBiGuiX53D1b/ja9U/c6Vj9q24T6/176TOsTfjViqwib5wS7ZTGiQPM+qgjU0o
+         RfLtLpsHdD7yJeXzySKr+5tM0uqgT6r4cuwB+r10BpqRkcwMc8zNtmuCH8qziGX1AbaI
+         qGpe8zO9X4ZEMUeqhoTw6UjwPRfDb5igeLsWDt6SxEn62T/5EXy73CTjCEw94W4qQOLg
+         xiEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=9dBrrotKcZ4QW4/G6zMENwg5vdO1JtlKBbjZ8Q1DV+o=;
-        b=kha0hxs6ph96OXNSzx0Oqcg6rxRzwIruBveyBMOBHmFjddN8pJb1w95iPYhWFnTK45
-         yvqlvRfZ8fwZyy/VizG6+FwnS5awd8vRYm7RNRLXzYnH78jcpQS12uDA/bbqHfCChHe2
-         Yp3Fr6SkTFUFrIEVDv10C7GrDs/xrTuikVFFnjL5mQo0Fa7bz8HBy3351PtL5tL3RnXX
-         haixi/nfQZ6qAuO7UIP8M5XI57/4atqfR3J1X7pByUL4sMeLynfq0WbpXtdKIJQjtsFm
-         wHLcPqSrVs5I7WAkcQxbZIgtu2TG6/LSJHYJHpLGUWyQ8BLI9idgxuHJ6sJKQUBebHfD
-         nDgQ==
-X-Gm-Message-State: AODbwcAs4S+M41+s0Hg+Cx9qQBrZcphOEi62ucOvpWva+5Tou+3k+lx2
-        0G4zSPMwk4cnKYiG6XHDEG5KwhbVbA==
-X-Received: by 10.25.156.75 with SMTP id f72mr161267lfe.77.1494979723001; Tue,
- 16 May 2017 17:08:43 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.46.71.69 with HTTP; Tue, 16 May 2017 17:08:22 -0700 (PDT)
-In-Reply-To: <CACpkpxn4zSdUMT-i6XWBR77sQTpr5-vudbLVTCs1_hiv7a2t_w@mail.gmail.com>
-References: <CACpkpxn4zSdUMT-i6XWBR77sQTpr5-vudbLVTCs1_hiv7a2t_w@mail.gmail.com>
-From:   Manish Goregaokar <manishearth@gmail.com>
-Date:   Tue, 16 May 2017 17:08:22 -0700
-X-Google-Sender-Auth: -PEv__jlaz__dv8WkZJFYgwA1mw
-Message-ID: <CACpkpx=O4UxrELRO3ojbbRL2LShcw0MLq=_4Dyck8csbwca9CQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] refs: Add for_each_worktree_ref for iterating over
- all worktree HEADs
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=TUTzsyvnVoOrbIGnZ+JnXEils6vvCFbl4Nx88fX/kA0=;
+        b=V1tJg8yRP07LsYXfEGdkSjLyYV4kHsmQehI/SPjWJqEHrFhnyXTFaSvwZ7BimNDphj
+         vACF/+HSS2PRob29fgk/M2Z/9sh674G5kf/lxmADYOw63FCZy28Glscr8PLcP8mBQw+8
+         FlrBW6ZaluFw5c/CCFkXPcRNoGNXg7oyW4Koeo464WwVSd2CJnS765ETeeAnv6NgtNfb
+         1n7MtOKl95JCD3REIERESqHoLh5dO5NTCKGC6JLMAiaCE7eF2NtVrprgFlQg/nvx2FGt
+         2y5kjxJu2QnqkFP6pvI+DW55E5uC9m5r9qof2QUtTGpCDrY1grBZ9QnkcpJsMEHAUzpM
+         5oCg==
+X-Gm-Message-State: AODbwcCg0OZJGEJAOdymQMvIIPryR8JHaNvTSrFXAxNNtUCKiAiq3714
+        ZiLVRSfz4rIEjg==
+X-Received: by 10.98.93.217 with SMTP id n86mr742389pfj.113.1494980908314;
+        Tue, 16 May 2017 17:28:28 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:cd47:ccb1:c55d:4b70])
+        by smtp.gmail.com with ESMTPSA id 23sm123134pfr.127.2017.05.16.17.28.27
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 16 May 2017 17:28:27 -0700 (PDT)
+Date:   Tue, 16 May 2017 17:28:25 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Manish Goregaokar <manishearth@gmail.com>
 Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1/2] refs: Add for_each_worktree_ref for iterating over
+ all worktree HEADs
+Message-ID: <20170517002825.GR27400@aiede.svl.corp.google.com>
+References: <CACpkpxn4zSdUMT-i6XWBR77sQTpr5-vudbLVTCs1_hiv7a2t_w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACpkpxn4zSdUMT-i6XWBR77sQTpr5-vudbLVTCs1_hiv7a2t_w@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From 3f8015efdcc122e0d345baeb5f1f0485a9f0fcd8 Mon Sep 17 00:00:00 2001
-From: Manish Goregaokar <manishearth@gmail.com>
-Date: Tue, 16 May 2017 16:46:36 -0700
-Subject: [PATCH 2/2] reachable: Add HEADs of all worktrees to reachability
- analysis
+(+cc: Duy, worktree expert)
+Hi Manish,
 
-* reachable.c:
-  mark_reachable_objects: Include other worktrees
+Manish Goregaokar wrote:
 
-Signed-off-by: Manish Goregaokar <manishearth@gmail.com>
----
- reachable.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/reachable.c b/reachable.c
-index d0199ca..439708e 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -178,6 +178,9 @@ void mark_reachable_objects(struct rev_info *revs,
-int mark_reflog,
-     /* detached HEAD is not included in the list above */
-     head_ref(add_one_ref, revs);
-
-+    /* worktrees are not included in either */
-+    for_each_worktree_ref(add_one_ref, revs);
-+
-     /* Add all reflog info */
-     if (mark_reflog)
-         add_reflogs_to_pending(revs, 0);
--- 
-2.10.1
-
--Manish Goregaokar
-
-
-On Tue, May 16, 2017 at 5:07 PM, Manish Goregaokar
-<manishearth@gmail.com> wrote:
 > Git prune will happily delete commits checked out in other worktrees.
 > This is probably not desired.
->
+
+Yikes.  Thanks for working on it.
+
 > (Tabs have been converted to spaces in this email sadly, because GMail
 > garbles these. This should suffice for review, and I'll send the patch
 > as an attachment or in some other form when done so that it can be
 > cleanly applied. Let me know if this won't work.)
->
->
-> Thanks!
->
-> Patch 1/2 follows (based on maint)
->
-> -----
->
-> From c3657cd0bb61921053fad4dd669589780881c574 Mon Sep 17 00:00:00 2001
-> From: Manish Goregaokar <manishearth@gmail.com>
-> Date: Tue, 16 May 2017 16:46:00 -0700
-> Subject: refs: Add for_each_worktree_ref for iterating over all worktree HEADs
->
+
+I don't think this will work well --- many reviewers (e.g. I am one of
+them) rely on being able to apply patches and inspect them locally.
+See the Discussion and MUA-Specific Hints sections of git-format-patch(1)
+for some hints about how to accomplish that.
+
+Patch left unsnipped for reference.
+
+Thanks,
+Jonathan
+
 > To ensure that `git prune` does not remove refs checked out
 > in other worktrees, we need to include these HEADs in the
 > set of roots. This adds the iteration function necessary
 > to do this.
->
+> 
 > Signed-off-by: Manish Goregaokar <manishearth@gmail.com>
 > ---
 >  refs.c | 16 ++++++++++++++++
 >  refs.h |  1 +
 >  2 files changed, 17 insertions(+)
->
+> 
 > diff --git a/refs.c b/refs.c
 > index 2d71774..27e0b60 100644
 > --- a/refs.c
 > +++ b/refs.c
 > @@ -3,6 +3,7 @@
 >   */
->
+> 
 >  #include "cache.h"
 > +#include "commit.h"
 >  #include "lockfile.h"
@@ -147,7 +121,7 @@ On Tue, May 16, 2017 at 5:07 PM, Manish Goregaokar
 > @@ -1157,6 +1158,21 @@ int head_ref(each_ref_fn fn, void *cb_data)
 >      return head_ref_submodule(NULL, fn, cb_data);
 >  }
->
+> 
 > +int for_each_worktree_ref(each_ref_fn fn, void *cb_data)
 > +{
 > +    int i, flag, retval;
@@ -179,5 +153,5 @@ On Tue, May 16, 2017 at 5:07 PM, Manish Goregaokar
 >  int for_each_ref(each_ref_fn fn, void *cb_data);
 >  int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
 >  int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
-> --
+> -- 
 > 2.10.1
