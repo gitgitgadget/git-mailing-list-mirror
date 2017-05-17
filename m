@@ -1,77 +1,143 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	CHARSET_FARAWAY_HEADER,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B97F22023D
-	for <e@80x24.org>; Wed, 17 May 2017 00:04:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7210B2023D
+	for <e@80x24.org>; Wed, 17 May 2017 00:08:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751716AbdEQAEn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 20:04:43 -0400
-Received: from m12-11.163.com ([220.181.12.11]:37319 "EHLO m12-11.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750775AbdEQAEn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 20:04:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Mime-Version:Subject:From:Date:Message-Id; bh=CA54b
-        XSN4qYo3D/p3Cv3FkHL49heAiI8etUplWrVyH8=; b=d7sAz9i4bYwfDPlEi95Ez
-        MwEAGmS0GIoZ+PVGbNRw/Alcz5xg2h2VWgU7fCO5pUbA9h2v4Wr7B4BHfQF8C35G
-        uJF1DrwJ7jEjLrVzuJ6x3KJrl9NWnYvQS5YSONLmh6pEJHaUjIpAtkifzLRYspDE
-        0mQSt7RkrGvKOZFQIKy3so=
-Received: from [10.202.100.8] (unknown [117.136.38.235])
-        by smtp7 (Coremail) with SMTP id C8CowACXpBCCkxtZiOg_Fg--.63116S2;
-        Wed, 17 May 2017 08:04:19 +0800 (CST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v4] send-email: --batch-size to work around some SMTP server limit
-From:   =?GB2312?B?1dTQoce/?= <zxq_yx_007@163.com>
-X-Mailer: iPhone Mail (14E304)
-In-Reply-To: <CACBZZX76ZYc=BXoAc+stKu+6c7M8CY2V+z4Mg86Y9y9GqmC5dw@mail.gmail.com>
-Date:   Wed, 17 May 2017 08:04:18 +0800
-Cc:     Jan Viktorin <viktorin@rehivetech.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, mst@kernel.org,
-        pbonzini@redhat.com, mina86@mina86.com,
-        Ramkumar Ramachandra <artagnon@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <9B8174EC-E774-49FF-AB8A-2B8372AACE2E@163.com>
-References: <20170513015726.20281-1-zxq_yx_007@163.com> <20170516141014.6e8487df.viktorin@rehivetech.com> <2BB8B551-01A6-4470-9370-5B1A03EB96D0@163.com> <CACBZZX76ZYc=BXoAc+stKu+6c7M8CY2V+z4Mg86Y9y9GqmC5dw@mail.gmail.com>
-To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-X-CM-TRANSID: C8CowACXpBCCkxtZiOg_Fg--.63116S2
-X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-        VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxU22Q6DUUUU
-X-Originating-IP: [117.136.38.235]
-X-CM-SenderInfo: 520ts5t0bqili6rwjhhfrp/xtbBEAXaxlUMBjSBgwAAsg
+        id S1751264AbdEQAIC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 20:08:02 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:33775 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750759AbdEQAIB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 20:08:01 -0400
+Received: by mail-lf0-f67.google.com with SMTP id m18so1504173lfj.0
+        for <git@vger.kernel.org>; Tue, 16 May 2017 17:08:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to:cc;
+        bh=mEqaDckDA99FkYONXGsuLkZG3FNM490Q6waqPWpJot8=;
+        b=u5ubXkxUl0/HwtqF1atA6/wpqgNyy3qcCavbS5+38WmgCC7H5olcWHg26lw5wBfQmZ
+         CKocet3llQVsh8ZgirgWvnTKczk7udoRo0z2pApz6x1YcEgf/8kVjpmEnKUAkaW/2wjH
+         rS4mVAStI1fhHFuw4nPURoHp8xCJpdQehYjzQ5AZiRJVaD79A9SDhB4LNIAQ5wbFZk8P
+         a7EOUYia476G9cmCSCnmQUmFrVsxEPZyMojsiAAXOKfSjm2icUayqooaBPZdoo7sw5k9
+         K5veB6Ja5bchpLSmw0YAT6EXCbeqXlzXquDjduC+0nkCbacExK0HJLFnZEIawFPVlQ5z
+         zsqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to:cc;
+        bh=mEqaDckDA99FkYONXGsuLkZG3FNM490Q6waqPWpJot8=;
+        b=V6b61QR540iBIgUOxIXVHjbIGAE3CQTN6aNNUq3STYLMgdAjQNJQ9I+tpUQ+r6sGCl
+         /pWB5pVVHLESWj9yLEeHX8mP5EPnHQI5lrO3ha3ZXPERNOzmhPxew1LFw/u2OjVABu1I
+         fTjR0xzfcd7qKsGvhc/MqAFK8/VEkFS7ozULkbnzJnNffSQd280b9gVSlqmzw54wTJvJ
+         4bqX9Zd0yDpkV55OvNpWuh4rx6znGht3RyLFmeYGCzbT3GZBPOXCQ4iNUljMduOCCIWe
+         ixnUMQBNKaGt8ECvvy8llRSm8ajFzaLrCUW5bmylmh18dw5l1YKqofqasmTCitbk7ovA
+         iUoA==
+X-Gm-Message-State: AODbwcALSwJ0si/FsoyIspIm/2GIr0y5/Cxs3IzHkpDvPZKnjSB2Pyze
+        DeZ9PGotGhgkRnOEIroak6aewfrqdQ==
+X-Received: by 10.25.160.75 with SMTP id j72mr151360lfe.97.1494979679897; Tue,
+ 16 May 2017 17:07:59 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.46.71.69 with HTTP; Tue, 16 May 2017 17:07:39 -0700 (PDT)
+From:   Manish Goregaokar <manishearth@gmail.com>
+Date:   Tue, 16 May 2017 17:07:39 -0700
+X-Google-Sender-Auth: DcYXG5wtqGqJ-VKIP6YsH2zBGfk
+Message-ID: <CACpkpxn4zSdUMT-i6XWBR77sQTpr5-vudbLVTCs1_hiv7a2t_w@mail.gmail.com>
+Subject: [PATCH 1/2] refs: Add for_each_worktree_ref for iterating over all
+ worktree HEADs
+To:     git@vger.kernel.org
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Git prune will happily delete commits checked out in other worktrees.
+This is probably not desired.
+
+(Tabs have been converted to spaces in this email sadly, because GMail
+garbles these. This should suffice for review, and I'll send the patch
+as an attachment or in some other form when done so that it can be
+cleanly applied. Let me know if this won't work.)
 
 
-=E5=9C=A8 2017=E5=B9=B45=E6=9C=8817=E6=97=A5=EF=BC=8C01:43=EF=BC=8C=C3=86var=
- Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E5=86=99=E9=81=93=EF=BC=9A=
+Thanks!
 
+Patch 1/2 follows (based on maint)
 
->>> Regards
->>> Jan
->>=20
->> Thank you for reporting this=EF=BC=8CI will take a look .
->=20
-> You just need to initialize the variables you're using, see e.g. these
-> existing ones:
->=20
->    my ($quiet, $dry_run) =3D (0, 0);
->=20
-> Just do the same for the ones you're adding.
+-----
 
-Yes=EF=BC=8Chas to be.=
+From c3657cd0bb61921053fad4dd669589780881c574 Mon Sep 17 00:00:00 2001
+From: Manish Goregaokar <manishearth@gmail.com>
+Date: Tue, 16 May 2017 16:46:00 -0700
+Subject: refs: Add for_each_worktree_ref for iterating over all worktree HEADs
 
+To ensure that `git prune` does not remove refs checked out
+in other worktrees, we need to include these HEADs in the
+set of roots. This adds the iteration function necessary
+to do this.
 
+Signed-off-by: Manish Goregaokar <manishearth@gmail.com>
+---
+ refs.c | 16 ++++++++++++++++
+ refs.h |  1 +
+ 2 files changed, 17 insertions(+)
+
+diff --git a/refs.c b/refs.c
+index 2d71774..27e0b60 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3,6 +3,7 @@
+  */
+
+ #include "cache.h"
++#include "commit.h"
+ #include "lockfile.h"
+ #include "refs.h"
+ #include "refs/refs-internal.h"
+@@ -1157,6 +1158,21 @@ int head_ref(each_ref_fn fn, void *cb_data)
+     return head_ref_submodule(NULL, fn, cb_data);
+ }
+
++int for_each_worktree_ref(each_ref_fn fn, void *cb_data)
++{
++    int i, flag, retval;
++    struct object_id oid;
++    struct worktree **worktrees = get_worktrees(GWT_SORT_LINKED);
++    for (i = 0; worktrees[i]; i++) {
++        struct commit* commit =
+lookup_commit_reference(worktrees[i]->head_sha1);
++        oid = commit->object.oid;
++        if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag)) {
++            if (retval = fn("HEAD", &oid, flag, cb_data))
++                return retval;
++        }
++    }
++}
++
+ /*
+  * Call fn for each reference in the specified submodule for which the
+  * refname begins with prefix. If trim is non-zero, then trim that
+diff --git a/refs.h b/refs.h
+index 9fbff90..425a853 100644
+--- a/refs.h
++++ b/refs.h
+@@ -192,6 +192,7 @@ typedef int each_ref_fn(const char *refname,
+  * stop the iteration.
+  */
+ int head_ref(each_ref_fn fn, void *cb_data);
++int for_each_worktree_ref(each_ref_fn fn, void *cb_data);
+ int for_each_ref(each_ref_fn fn, void *cb_data);
+ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
+ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
+-- 
+2.10.1
