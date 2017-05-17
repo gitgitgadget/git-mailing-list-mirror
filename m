@@ -2,99 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F062D201A7
-	for <e@80x24.org>; Wed, 17 May 2017 14:26:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61020201A7
+	for <e@80x24.org>; Wed, 17 May 2017 14:53:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753994AbdEQO0L (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 10:26:11 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:33700 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753341AbdEQO0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 10:26:09 -0400
-Received: by mail-qt0-f194.google.com with SMTP id a46so1751383qte.0
-        for <git@vger.kernel.org>; Wed, 17 May 2017 07:26:09 -0700 (PDT)
+        id S1753714AbdEQOw4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 10:52:56 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:34413 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932121AbdEQOwu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2017 10:52:50 -0400
+Received: by mail-pf0-f179.google.com with SMTP id 9so8648316pfj.1
+        for <git@vger.kernel.org>; Wed, 17 May 2017 07:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=yRXLfAT38hxzLf4A20/5fHrq7AIUFENImmOljzGCmo8=;
-        b=N12HZAFGdIAf5uEnfz3ZMufuH7RuwFoMJ4P24HzKKOJebsPBVSRmkc4bDuB4XxjI5E
-         +c1NILn26HJuh3gNyKJnKS31Qk0KXx/EKvCiqJAEeo+PWzRXughndRnxA5gMdLqrjAi0
-         hjL23hXakF1rPdMtwjwiFhIPDR+Alyph46tmVMWsgPVpKm3+TSSRY0ZHMyz5KIYNa6n3
-         wq8Xk/eBivPetcQ/X/KN22G0UIMR4XhSWjsFhKeBCmk8l8RmekVJ57uqZP8tNlcMo34u
-         OSr8NGgzCEdrl2Tka5U4c0bSVY6bCv4tFF4pxMC11+nvsX49C5zF3GynuvQhZkobwL6f
-         /Kxw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ytBwqVz4IYoRRhMIi3qvnl6s4MYgbST/t7tVjDvrAAI=;
+        b=XRAzgDdGz63FVzOWF6fFZUY4Xlt2TtiAGYTuuQWpgGaa48rjD7tbX/m7dwKYpB/lSS
+         OJ93nffr2uukAhpxOMmkX0mNKEJFsFvqFbzQs2B43yMqSahJ2SMcFne2N9NkVV/Bu53h
+         EETBBatUMwxDfn0M8DH6XqXO+1XOvE7daUDFZuaONLB43vlgku2W8QOt5SxNXJwIod9e
+         LhuSM+BGoywgTmtWMKHe1SxzVOvaJFcxTxsULG4r+5R4haHi/1L2Jq21irl6qOdHzKfF
+         GtdJvRBOXZcI6kv6vyx5wuIMkySPGfQhlBfks69zU/E8gTqW4i+XrZD/+/514jQIKkkr
+         bEoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=yRXLfAT38hxzLf4A20/5fHrq7AIUFENImmOljzGCmo8=;
-        b=R3MVlt8GasrbV+n59UImIrPPPqQpnTNVGDTE9VxUFYAqdIbh6sUMz1Md3qGBaQ5E3P
-         LJt9VJXpo4bdgLkdb+rF8cAAZBPJ7dAyFB2M5hUYqtaeWH4IAfv4wIe7TYA2nnnCgSbC
-         rOK3VyRdGpYMsPeKTYBo199ihWL+X5fJUSx/lzPmolUQm592bX/QP1G0wWiW1kJB6FXA
-         L0WyL2Mm36sY/O1MEsXvORD2/D8vLUaaaGiQKxRQONj28uH+SE9cCOjelbc4mSgwD9Ap
-         mJZD0eGGQf8ET/UjDPx8Ledydr9foB6Ci86QYbg/AoQF199ZQ6n4Lx4kDXdjcShNI+LV
-         Obgw==
-X-Gm-Message-State: AODbwcBcC3OVxzykkLY6kr73pVffaxp7GswJfgkIGREkm44iqpcw4Ymi
-        KRdnZgda++Ft6A==
-X-Received: by 10.200.9.76 with SMTP id z12mr3647290qth.102.1495031169063;
-        Wed, 17 May 2017 07:26:09 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id s32sm1485983qtg.2.2017.05.17.07.26.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 17 May 2017 07:26:08 -0700 (PDT)
-Subject: Re: [PATCH v1 2/5] Teach git to optionally utilize a file system
- monitor to speed up detecting new or changed files.
-To:     Johannes Sixt <j6t@kdbg.org>
-References: <20170515191347.1892-1-benpeart@microsoft.com>
- <20170515191347.1892-3-benpeart@microsoft.com>
- <20170516002214.tlqkk4zrwdzcdjha@genre.crustytoothpaste.net>
- <20170516003414.yliltu5fsaudfhyu@sigill.intra.peff.net>
- <2d965a87-36da-23b4-4bc5-97de47f3d7f7@gmail.com>
- <29122818-71fb-5af9-59b1-03387f014151@gmail.com>
- <134ea57f-3a64-f7b5-67dd-8b14ff3cc04a@kdbg.org>
-Cc:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, gitster@pobox.com, benpeart@microsoft.com,
-        pclouds@gmail.com, johannes.schindelin@gmx.de,
-        David.Turner@twosigma.com
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <0a3f38b7-788b-b364-3fef-83191e4b9bea@gmail.com>
-Date:   Wed, 17 May 2017 10:26:08 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ytBwqVz4IYoRRhMIi3qvnl6s4MYgbST/t7tVjDvrAAI=;
+        b=PcW0qdBwOGggrklqi/1cXgpCBlBiuZMbMDuo6rjJf2s+8GO7YBiP4WTiQfNirNZP3u
+         wdmxXGvGWXN9R1ElEGNpQuuY41RuDBkAlxQHZr4f7zby/iLaw43sJ/IHNejm7vErFrQK
+         lwjx4D9GZKAT2XZVcRSK6MtCs8PEvip+N7Cy0echT6BGXvTxZRwi0zzSogMrLWRx/3X0
+         OZqiGLixuyEj58fo+Tp84RANjgseyZ/8NksKJkENBeMxGqg4SGrQdRTA+IDT7u9rIkKp
+         QlF8XAMYWirfzxPFb6YS3USo9QKGdi8+0UGMzxcqigMAfKbUD9O/CN999sCs1nE8BiAV
+         8kYA==
+X-Gm-Message-State: AODbwcA0B39vLeMo0LfzLMsLim88OqIkpsj84qTyBxACNfZAOkdGqnK+
+        bfzabLLC/N8XdArQ
+X-Received: by 10.98.76.76 with SMTP id z73mr4086301pfa.99.1495032762879;
+        Wed, 17 May 2017 07:52:42 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:6c78:c1b9:36d1:fa23])
+        by smtp.gmail.com with ESMTPSA id k86sm4695773pfk.125.2017.05.17.07.52.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 17 May 2017 07:52:41 -0700 (PDT)
+Date:   Wed, 17 May 2017 07:52:40 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        j6t@kdbg.org, sbeller@google.com, e@80x24.org, jrnieder@gmail.com
+Subject: Re: [PATCH v6 04/11] run-command: use the async-signal-safe execv
+ instead of execvp
+Message-ID: <20170517145240.GA185461@google.com>
+References: <20170418231805.61835-1-bmwill@google.com>
+ <20170419231327.49895-1-bmwill@google.com>
+ <20170419231327.49895-5-bmwill@google.com>
+ <xmqqfug4z0s0.fsf@gitster.mtv.corp.google.com>
+ <20170517022602.jj26pf7eypxp2fjm@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <134ea57f-3a64-f7b5-67dd-8b14ff3cc04a@kdbg.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170517022602.jj26pf7eypxp2fjm@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 05/16, Jeff King wrote:
+> On Wed, May 17, 2017 at 11:15:43AM +0900, Junio C Hamano wrote:
+> 
+> > > +		if (errno == ENOEXEC)
+> > > +			execv(argv.argv[0], (char *const *) argv.argv);
+> > 
+> > "/bin/sh" tries to run "/usr/bin/git" that was not executable (well,
+> > the one in "usr/bin/" would have +x bit, but let's pretend that we
+> > are trying to run one from bin-wrappers/ and somehow forgot +x bit)?
+> > 
+> > I think all of that is sensible, but there is one "huh?" I can't
+> > figure out.  Typically we do "sh -c git cat-file -t HEAD" but this
+> > lacks the "-c" (cf. the original prepare_shell_cmd()); why do we not
+> > need it in this case?
+> 
+> I think this is the same case we were discussing over in the "rebase"
+> thread. This isn't about running the user's command as a shell command.
+> Note that this kicks in even when cmd->shell_cmd isn't set.
+> 
+> This is about finding "/usr/bin/foo", realizing it cannot be exec'd
+> because it lacks a shebang line, and then pretending that it did have
+> "#!/bin/sh". IOW, maintaining compatibility with execvp().
 
+Exactly this is all about ensuring we do the same thing the execvp does,
+because there isn't a portable variant which allows for passing in an
+environment.
 
-On 5/16/2017 3:13 PM, Johannes Sixt wrote:
-> Am 16.05.2017 um 19:17 schrieb Ben Peart:
->> OK, now I'm confused as to the best path for adding a get_be64.  This
->> one is trivial:
->>
->> #define get_be64(p)    ntohll(*(uint64_t *)(p))
->
-> I cringe when I see a cast like this. Unless you can guarantee that p is
-> char* (bare or signed or unsigned), you fall pray to strict aliasing
-> violations, aka undefined behavior. And I'm not even mentioning correct
-> alignment, yet.
->
-> -- Hannes
+> 
+> So the command itself isn't a shell command, but it may execute a shell
+> script. If that makes sense.
+> 
+> -Peff
 
-Note, this macro is only used where the CPU architecture is OK with 
-unaligned memory access.  You can see it in context with many similar 
-macros and casts in bswap.h.  It's outside the scope of this patch 
-series to fix them all.  Perhaps a separate patch series?
+-- 
+Brandon Williams
