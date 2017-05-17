@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62CF9201A7
-	for <e@80x24.org>; Wed, 17 May 2017 13:39:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B73682027B
+	for <e@80x24.org>; Wed, 17 May 2017 13:40:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753746AbdEQNj3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 09:39:29 -0400
-Received: from mail-ua0-f170.google.com ([209.85.217.170]:32889 "EHLO
-        mail-ua0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753496AbdEQNj2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 09:39:28 -0400
-Received: by mail-ua0-f170.google.com with SMTP id e28so7701439uah.0
-        for <git@vger.kernel.org>; Wed, 17 May 2017 06:39:27 -0700 (PDT)
+        id S1753852AbdEQNk3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 09:40:29 -0400
+Received: from mail-vk0-f53.google.com ([209.85.213.53]:33881 "EHLO
+        mail-vk0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753219AbdEQNk3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2017 09:40:29 -0400
+Received: by mail-vk0-f53.google.com with SMTP id y190so6737953vkc.1
+        for <git@vger.kernel.org>; Wed, 17 May 2017 06:40:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:sender:in-reply-to:references:from:date:message-id
          :subject:to:cc;
-        bh=crX8NW3KcEx2+grtfT5HeQfi1XRtcodUe2oPWlhzWA0=;
-        b=KdSjsKBxg/WWKPeNKwvS9lajHhAuUHUNPqutfsuKl+O9fY41UPIadBytZf7HJmG5iX
-         /TysHyvwcVL8ZDGaL5FFay6pE/pAxoT/efa8Ks8o/X3hMrzLDiMCe/yAAfF/DiCcCNlb
-         5KsBfCV2cgNegt2pS6mkdP4t4cHoJ7BCNN/CBQJOtcnv5EPF00F3Fd+S6dFg3XBAkW/H
-         5+7E1u8/XlqlZ4luE/rdj+8gceMUViSskdisiuMVgAhSm0srJHK3yZ44pQgUP8TU2zNo
-         oQA4ImIozkuUnpn0YRapaz7A9pCE+6ZmPvqQOw1YDl/QOf/b3N9KYJPkLWkHbQf0WX0h
-         UkwQ==
+        bh=xJ4rqJE9qvbuBo3ajCdJnVuMFNmMDG9USOMLHPDELYc=;
+        b=tPoAkOEHYxz6HJ3udllV8xaPevjr7CReJlIve/FasDAqmXXVgmaWnoWFrWRDBBt1nc
+         z2PEaSNxDcRTYTueWdNfsQU/pS5p6unYIo86OvmbVHCui4x6aJtnk6kfrYoTRPVRGaJk
+         jkf4kHCy6CmZ7esVsIB7ONnp+14azKdPX/O7yqclXRr8KqVn4HNU1xUDLh06kUFz5dHE
+         NyNYcbqXD5LSdBB+ELDdcup/Ev1YMn+1ILbOkOLzwhfUWVSNVeGCp6Opfrkft6eTmPNG
+         xN6wcvMFFk437kHehAvanVR6Y5UkZimwwRisBObj6hHKwrfgig9nOggR815yxiblhfvP
+         zWzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
          :date:message-id:subject:to:cc;
-        bh=crX8NW3KcEx2+grtfT5HeQfi1XRtcodUe2oPWlhzWA0=;
-        b=P26zQ49NeiUkUvTRDzwnTux2sHpgUSdIonRWHp2T3MJsWqs2PTCGOEEKIbWyeKP+ay
-         rwPM8Af4vdpm3+g9nI7IVZJgFnv2gCNT6bFtaPsoRuG7SnS3UsyvGMKiN/bu9rGbPZI3
-         DwKN9xYjsWqzSmvS/dQhMB3ypjl4KbQCij0YOehfEIfYxuZGuaAzk1ODX1DtoEvZeUjm
-         wr8Ktw/n8/V0acnMudMR/PPFLK7kcta2Fu1dB7zU25EPIOKqfJJUMHDqN3+KhXbLnaj8
-         8WtE5o4RC5HnGF6lx6byWkt/rxRzuO5hukdOT9u3aTxcjEvAnl1PnCi8SzauVWU7oA70
-         vZKA==
-X-Gm-Message-State: AODbwcDk284taUtr1sjgM61PmkhOjnmSSycf9ol77m6fCnBbHw6eivZT
-        Wj8GopNkOfLJ40DoX4DzJWP4XufK1A==
-X-Received: by 10.176.7.198 with SMTP id d6mr1800382uaf.61.1495028367100; Wed,
- 17 May 2017 06:39:27 -0700 (PDT)
+        bh=xJ4rqJE9qvbuBo3ajCdJnVuMFNmMDG9USOMLHPDELYc=;
+        b=cnC+/FV7BPXaHej/YGhaJtM9lEKhrrEHpR5gE34vRc/9Fq+fGoFVgauVEFmVHVacW0
+         9laPqh8hirbZcQC06iBYwEPPda/4+ZZqLkNH3kEsDktNcZ45LqS5iuRxKG7JXFG9era9
+         QZ+PgrnriR+Wa89l8Zwiu+0NxqtU9JQeMa548auV0LtaQ3k/8Cz3w/UXiXZf0hFqEOqB
+         /DzLIusfxNgMQUhVi117YWHx90J92po3Yipy1GrF4LLLa004ICHxUSkiamTSNHu1ggZw
+         Cgj2QHAySspJ/ZAj4vu25fSK3ov2Lj5umdPRCiimO1E0lCNm3huOSXPefN8MRQPSvsLn
+         koiA==
+X-Gm-Message-State: AODbwcAX5jSaq4256SkS+AGUsUmQN6U3fN3FwXUSFAdoT6IOHdf0a3PU
+        12sex9IgXfxOLGRQmBoartMvYiXnnQ==
+X-Received: by 10.31.238.143 with SMTP id m137mr1345005vkh.109.1495028428282;
+ Wed, 17 May 2017 06:40:28 -0700 (PDT)
 MIME-Version: 1.0
 X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.159.55.163 with HTTP; Wed, 17 May 2017 06:39:26 -0700 (PDT)
-In-Reply-To: <xmqq37c4yzb3.fsf@gitster.mtv.corp.google.com>
+Received: by 10.159.55.163 with HTTP; Wed, 17 May 2017 06:40:27 -0700 (PDT)
+In-Reply-To: <CAHd499DNa1zFm+ktWJb-4Rp09DjSc+p4HMqoHiXDj57muwxukw@mail.gmail.com>
 References: <CAHd499ADTbO09OJhH_wWBbAcXZeLRLFAqOw5eTe6=abN-JUrUA@mail.gmail.com>
- <xmqq37c4yzb3.fsf@gitster.mtv.corp.google.com>
+ <xmqq37c4yzb3.fsf@gitster.mtv.corp.google.com> <CAHd499DNa1zFm+ktWJb-4Rp09DjSc+p4HMqoHiXDj57muwxukw@mail.gmail.com>
 From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Wed, 17 May 2017 08:39:26 -0500
-X-Google-Sender-Auth: hv6Q-FAt6Q0sh1AzKE_Bny-53Ns
-Message-ID: <CAHd499DNa1zFm+ktWJb-4Rp09DjSc+p4HMqoHiXDj57muwxukw@mail.gmail.com>
+Date:   Wed, 17 May 2017 08:40:27 -0500
+X-Google-Sender-Auth: _o94CYFGUR0FJ8UmCQjCi-KghGI
+Message-ID: <CAHd499D5WiXfTXCx+Mzg5Mt+L0_pOKVgSuasFOew4QiZ5DGv-A@mail.gmail.com>
 Subject: Re: Diff topic branch + working copy changes?
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git <git@vger.kernel.org>
@@ -64,55 +64,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 16, 2017 at 9:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Robert Dailey <rcdailey.lists@gmail.com> writes:
+On Wed, May 17, 2017 at 8:39 AM, Robert Dailey <rcdailey.lists@gmail.com> wrote:
+> Thanks Junio, I forgot about merge-base. I'll create some aliases for now:
 >
->> So for a topic branch based on master, I can diff ONLY my changes on
->> the topic branch by doing this simple command:
->>
->> $ git diff origin/master...
->>
->> However, this does not include uncommitted working copy changes. To
->> work around this, I can do this instead:
->>
->> $ git diff origin/master
->>
->> (No three-dot notation above)
->>
->> However this implies a ".." notation which will include changes on
->> master that have been made after I branched my topic (I use three-dot
->> to exclude those).
->>
->> Is there a way I can do the first diff but also include working copy
->> changes?
+>     # Diff Branch
+>     db = "!f() { : git diff ; git diff $(git merge-base @{upstream}
+> HEAD) ; }; f"
 >
-> I've wished this a few times, but the answer is no.  Not as a
-> short-hand like "..." anyway.
+>     # Diff Tool Branch
+>     dtb = "!f() { : git diff ; git difftool -d $(git merge-base
+> @{upstream} HEAD) ; }; f"
 >
-> You can still do
+> Since I use push.default = current, I always keep my upstream set to
+> the parent branch (origin/master, origin/release/1.2.3, etc). So in my
+> case these aliases work, but probably not for other push.default
+> settings like 'upstream'.
+
+Correction: settings like 'simple'
+
+> Would be nice in the future to have another revision specification
+> like @{wc} for "HEAD + working copy". I guess this technically isn't a
+> revision, but something along those lines. Or maybe just an
+> --include-wc for diff or something.
 >
->     $ git diff $(git merge-base origin/master HEAD)
->
-> of course.
-
-Thanks Junio, I forgot about merge-base. I'll create some aliases for now:
-
-    # Diff Branch
-    db = "!f() { : git diff ; git diff $(git merge-base @{upstream}
-HEAD) ; }; f"
-
-    # Diff Tool Branch
-    dtb = "!f() { : git diff ; git difftool -d $(git merge-base
-@{upstream} HEAD) ; }; f"
-
-Since I use push.default = current, I always keep my upstream set to
-the parent branch (origin/master, origin/release/1.2.3, etc). So in my
-case these aliases work, but probably not for other push.default
-settings like 'upstream'.
-
-Would be nice in the future to have another revision specification
-like @{wc} for "HEAD + working copy". I guess this technically isn't a
-revision, but something along those lines. Or maybe just an
---include-wc for diff or something.
-
-Thanks again!!
+> Thanks again!!
