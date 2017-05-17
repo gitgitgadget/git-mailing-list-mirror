@@ -3,104 +3,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 947CB201CF
-	for <e@80x24.org>; Wed, 17 May 2017 06:47:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBF14201CF
+	for <e@80x24.org>; Wed, 17 May 2017 06:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753243AbdEQGrY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 02:47:24 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:36698 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753223AbdEQGrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 02:47:23 -0400
-Received: by mail-io0-f169.google.com with SMTP id o12so3656134iod.3
-        for <git@vger.kernel.org>; Tue, 16 May 2017 23:47:22 -0700 (PDT)
+        id S1753223AbdEQGrx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 02:47:53 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33543 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752596AbdEQGrw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2017 02:47:52 -0400
+Received: by mail-pf0-f193.google.com with SMTP id f27so627105pfe.0
+        for <git@vger.kernel.org>; Tue, 16 May 2017 23:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Gg8wmQixe5Ypj6W0aI4rEaDRicVCIL3ZmiHfp4WyDxQ=;
-        b=nWvDrt6jFxRIqY2GH8JIt3uMvnK/fxj5G9JT0fXftJH5ai4wuFjrJovU2UMUVdgasS
-         m5O+1zP0i/XKKfI04rdq0fqZzhkSb4j1NTmKfs5sfBqy/fE8GjGmB7mrxQJfJzDCNpRY
-         L0V4c2WMYxHlER2KSAL9c+VUDa/eTIbpsn3/k1KAZ9ZeEf+NXOv3+m2YGQ4pRy4nKOuS
-         xYQGBzUkPY8v1wAEVnkITtfXVt5dMfE6174yhyxQsq19hOAgrPj9BZT+2zP8Tibdn7F7
-         BhWGKy8kzj9RFdedhVARwjylc83IWZLmcCDg+R20/IADe5ram6cWK/hvQYqbdEEa3Y4l
-         Cwkw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=pIShrsWbkqB2HUxSKI0RH8JAXds18BDFYqx9EzUobt8=;
+        b=tos6c5JRdA0o0+GnM7rwsa/hFh1STHQNLkU9qEF6J8Jk5ukU94qeXChZ+sCm5BiX2S
+         K1Rk6wt7lSgPmrhwITDabJh0ZpEZzJcq3orO7tkR57Nno//m/wnPhz7gKImQC2piNTR3
+         qTRatTLKbzzkFxDrPWC+FV3bO0hngJRcgt+qcjDwn7Fvq6NRXo0owff6u+SxPdAMmpl1
+         nOgQMZDgoMv32Qe5IwrUezbSDawLWedyy/IKxY02C/b1vY1m/gGCQ7L17b4+5Axaga6t
+         VOa3cTsFL30vQq77HbS0NbuTky9fgYSFx4+pvQpyMnt4x39NfKcXG6nwW7O7mFa0JZOo
+         UgNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Gg8wmQixe5Ypj6W0aI4rEaDRicVCIL3ZmiHfp4WyDxQ=;
-        b=gHl7fF2JSrkJlXC0eIj/r9Ytm3W7R1kQbWkjUA8n2J7oSBJJncD2wLyhNdIZBjz8hz
-         vxWH9bLVS/grMwK5HBpsbSWB6b8SaIAAAGDhW4/6B2Mhx6r00JVBM6Q/w1a6E4FfOsim
-         BEHMsXkvSb9GEpc1N75/o08tBQsdZiO2G4U0TK2cX9SN/cGgCvsCTXXljpAE+VrVEoYu
-         c2pisG6DbzBQwziG3Lb1CBKElci+10w23AlvVpop3/m/BzrxhyaXqe3KkWLBkcm8w8xP
-         7FY+FGkD0+ND4fqKnVwu8+qbDJYAlhLvhwpGhhn4n6R+wZ8OBEwc4Yj2AFdOBeYJ4TWH
-         mDtw==
-X-Gm-Message-State: AODbwcDHe6KHSWXB2+TIC7JC6m1awKKYFFzyyIxtA3ToF98nLkRcsO0R
-        o9xN/wsNQGgv8CRbjw26DQHaqe7879nAuyg=
-X-Received: by 10.107.201.131 with SMTP id z125mr1587389iof.160.1495003642331;
- Tue, 16 May 2017 23:47:22 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=pIShrsWbkqB2HUxSKI0RH8JAXds18BDFYqx9EzUobt8=;
+        b=CGvUoE9YhSwxpb8P/pBkWP7U1pSXiwQ2YcXDJ9b+vT+5K0qUAZ07W+ftw3b+DSxpPt
+         QlVptlQXrqQA9IaKXE2UxA2J5IPmwrG5+AIy6UqCGgYyrTJCZxMtaq1SJDDYLYBJLWJP
+         n7t4/BiPfZbCd6c8itjVcUm8/L8pjwKsOIqrw1vyB2WmVuVRV/qJXcdeaRahypP+3pe5
+         GWZfMWlwvXlXNq/rumug0gnYoscYsC3sGfiH4bqVIvQaaAW/pcbxPxSRLPhL0ilUMpu9
+         kXBz8Ynk/NHJe4WbfbxNEIrpuVXb9xVw4CXVW7zlxYbqa+Q78t1xWrWtCi2O4YDAIaec
+         tJdw==
+X-Gm-Message-State: AODbwcAPpU2+rUZMuSuv4gZkcdjwIBp3I48omqoqT8/iwPFKTTq/d5Yy
+        JEoOLomKUSJdGQ==
+X-Received: by 10.84.202.163 with SMTP id x32mr2450073pld.51.1495003671300;
+        Tue, 16 May 2017 23:47:51 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:78bf:56b6:7690:fdbd])
+        by smtp.gmail.com with ESMTPSA id p10sm1709854pgf.63.2017.05.16.23.47.49
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 16 May 2017 23:47:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 4/8] dir: hide untracked contents of untracked dirs
+References: <20170516073423.25762-1-sxlijin@gmail.com>
+        <20170505104611.17845-1-sxlijin@gmail.com>
+        <20170516073423.25762-5-sxlijin@gmail.com>
+Date:   Wed, 17 May 2017 15:47:49 +0900
+In-Reply-To: <20170516073423.25762-5-sxlijin@gmail.com> (Samuel Lijin's
+        message of "Tue, 16 May 2017 03:34:19 -0400")
+Message-ID: <xmqqo9usvv1m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Tue, 16 May 2017 23:47:01 -0700 (PDT)
-In-Reply-To: <xmqq7f1gyzep.fsf@gitster.mtv.corp.google.com>
-References: <20170516175906.hdwn4x5md7dj7fo3@kitenet.net> <20170516203712.15921-1-avarab@gmail.com>
- <xmqq7f1gyzep.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 17 May 2017 08:47:01 +0200
-Message-ID: <CACBZZX4Jppr7ht7m444EjW4CDYX5CMvnxtStH4bF=A19TYKcZg@mail.gmail.com>
-Subject: Re: [PATCH] tests: add an optional test to test git-annex
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Joey Hess <id@joeyh.name>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 17, 2017 at 4:45 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Samuel Lijin <sxlijin@gmail.com> writes:
+
+> When we taught read_directory_recursive() to recurse into untracked
+> directories in search of ignored files given DIR_SHOW_IGNORED_TOO, that
+> had the side effect of teaching it to collect the untracked contents of
+> untracked directories. It doesn't always make sense to return these,
+> though (we do need them for `clean -d`), so we introduce a flag
+> (DIR_KEEP_UNTRACKED_CONTENTS) to control whether or not read_directory()
+> strips dir->entries of the untracked contents of untracked dirs.
 >
->> Add an optional test to test git-annex. It's guarded by a new
->> EXTERNAL_TESTS environment variable. Running this test takes me 10
->> minutes.
+> We also introduce check_contains() to check if one dir_entry corresponds
+> to a path which contains the path corresponding to another dir_entry.
+>
+> Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
+> ---
+>  dir.c | 54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  dir.h |  3 ++-
+>  2 files changed, 56 insertions(+), 1 deletion(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 6bd0350e9..214a148ee 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -1852,6 +1852,14 @@ static int cmp_name(const void *p1, const void *p2)
+>  	return name_compare(e1->name, e1->len, e2->name, e2->len);
+>  }
+>  
+> +/* check if *out lexically contains *in */
+> +static int check_contains(const struct dir_entry *out, const struct dir_entry *in)
+> +{
+> +	return (out->len < in->len) &&
+> +			(out->name[out->len - 1] == '/') &&
+> +			!memcmp(out->name, in->name, out->len);
+> +}
 
-[Re-arranged your mail because it worked better with my reply]
+OK, treat_one_path() and treat_pah_fast() both ensure that a path to
+a directory is terminated with '/' before calling dir_add_name() and
+dir_add_ignored(), so we know a dir_entry "out" that is a directory
+must end with '/'.  Good.
 
-> I do not mind at all to place the simple reproduction recipe Joey
-> posted as a new test in our test suite, though.  That kind of test
-> that catches changes to externally visible behaviour surely belongs
-> to our test suite.
+The second and third line being overly indented is a bit
+distracting, though.
 
-This is not a replacement for having an isolated test for the issue
-Joey noted. We should have a separate patch for that, but I did not
-have time/interest in writing that up. This change is orthagonal to
-that.
+>  static int treat_leading_path(struct dir_struct *dir,
+>  			      const char *path, int len,
+>  			      const struct pathspec *pathspec)
+> @@ -2067,6 +2075,52 @@ int read_directory(struct dir_struct *dir, const char *path,
+>  		read_directory_recursive(dir, path, len, untracked, 0, pathspec);
+>  	QSORT(dir->entries, dir->nr, cmp_name);
+>  	QSORT(dir->ignored, dir->ignored_nr, cmp_name);
+> +
+> +	// if DIR_SHOW_IGNORED_TOO, read_directory_recursive() will also pick
+> +	// up untracked contents of untracked dirs; by default we discard these,
+> +	// but given DIR_KEEP_UNTRACKED_CONTENTS we do not
 
-> Well, it is one thing to place git-annex under CI to make sure its
-> latest and greatest works together well with our latest and greatest
-> (and it may be something we want to see happen), but driving its
-> tests from our testsuite sounds like a tail wagging the dog, at
-> least to me.
+	/*
+	 * Our multi-line comments are formatted like this 
+	 * example.  No C++/C99 // comments, outside of
+	 * borrowed code and platform specific compat/ code,
+	 * please.
+	 */
 
-To me this is just a question of:
+> +	if ((dir->flags & DIR_SHOW_IGNORED_TOO)
+> +		     && !(dir->flags & DIR_KEEP_UNTRACKED_CONTENTS)) {
 
-* Is it the case that git-annex tests for a lot of edge cases we don't
-test for: Yes, probably. As evidenced by them spotting this
-regression, and not us.
+Both having && at the end and && at the beginning are valid C, but
+please stick to one style in a single file.
 
-* We can (and should) add a test for the specific breakage we caused
-in 2.13.0, but that's no replacement for other things annex may be
-covering & we may be missing which'll catch future breakages.
+> +		int i, j, nr_removed = 0;
+> +
+> +		// remove from dir->entries untracked contents of untracked dirs
 
-* It's a pretty established practice to test a library (git) along
-with its consumers (e.g. annex) before a major release.
+	/* And our single-liner comments look like this */
 
-* This allows us to do that at minimal cost. I think it makes sense to
-add this and integration tests for other similar utilities if they're
-similarly easy to integrate.
+> +		for (i = 0; i < dir->nr; i++) {
+> +			if (!dir->entries[i])
+> +				continue;
+> +
+> +			for (j = i + 1; j < dir->nr; j++) {
+> +				if (!dir->entries[j])
+> +					continue;
+> +				if (check_contains(dir->entries[i], dir->entries[j])) {
+> +					nr_removed++;
+> +					free(dir->entries[j]);
+> +					dir->entries[j] = NULL;
+> +				}
+> +				else {
+> +					break;
+> +				}
+> +			}
+> +		}
+
+This loop is O(n^2).  I wonder if we can do better, especially we
+know dir->entries[] is sorted already.
+
+Well, because it is sorted, if A/, A/B, and A/B/C are all untracked,
+the first round that scans for A/ will nuke both A/B and A/B/C, so
+we won't have to scan looking for entries inside A/B, which is a bit
+of consolation ;-)
+
+> +			for (i = 0;;) {
+> +				while (i < dir->nr && dir->entries[i])
+> +					i++;
+> +				if (i == dir->nr)
+> +					break;
+> +				j = i;
+> +				while (j < dir->nr && !dir->entries[j])
+> +					j++;
+> +				if (j == dir->nr)
+> +					break;
+> +				dir->entries[i] = dir->entries[j];
+> +				dir->entries[j] = NULL;
+> +			}
+> +			dir->nr -= nr_removed;
+
+This looks like an overly complicated way to scan an array and skip
+NULLs.  Are you doing an equivalent of this loop, or am I missing
+something subtle?
+
+	for (src = dst = 0; src < nr; src++)
+		if (array[src])
+			array[dst++] = src;
+	nr = dst;
