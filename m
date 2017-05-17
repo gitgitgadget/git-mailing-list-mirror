@@ -2,147 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D92C2201A7
-	for <e@80x24.org>; Wed, 17 May 2017 19:57:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 393C1201A7
+	for <e@80x24.org>; Wed, 17 May 2017 20:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752921AbdEQT53 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 15:57:29 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:36530 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753486AbdEQT5Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 15:57:24 -0400
-Received: by mail-pg0-f42.google.com with SMTP id x64so11790106pgd.3
-        for <git@vger.kernel.org>; Wed, 17 May 2017 12:57:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=d66b0sAHsz+UvDdZKrKFCX7DC5HQ/xUWbGXhoh4r6HA=;
-        b=GYA6O7gR1UZV0BJM9vrYw9nOPIYTcKCPpG8Gqh/RlLnW/nnhk3LXbAPIYkFGNsnUrb
-         WheyyzvdchYL3iPF5m3NO/aVAlvkqPwhQ4BENr5FheD0YSrAko7iEAGD5DxYnjxDWyEK
-         LE5C+k0mw8VtbqXsAF31KhPa1w/AHSPJpz8z2GFifDZqc350GiRmj06YiLAic0MHYrkB
-         o9FWZf86UR64EwkbpMEWjMNoqJ+ddrDNX/XNh5vIKmjOtYIOnfaV/UbswDr5g5x0tnQz
-         3zcjnRvWBHHnKiKv9zD+jPx2XGc8DoIAfT4SnfgmlhQKRPFdhjHcyWnUAKmHYzGU2IkM
-         yVrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=d66b0sAHsz+UvDdZKrKFCX7DC5HQ/xUWbGXhoh4r6HA=;
-        b=KA5WcyyDBH8/NQSkMa79my63Moq6/gTfmtE0eIGNr7nUcVHLS3/5cVIVYhFGETEWmt
-         0p03riXXVckp+ZJYhQmo5PnaUjscHsHIjw4GKDRosLw62sNcKlVqKaM7cYzXyJVIHS1G
-         BM51u9TrR7LeGHYGIZmvP8eA9mVgJswpfN7/otYWMNqI9NTObdPSZrWSUbXnxMbR3nXa
-         1boy+xKX2OPr+pOnqs7mM4s3a0mEZYtFNWjYgeyJ1iYFPpTynBqKa7I+xyxTRJZsNsm7
-         iCYmtrJ7ZL96h8thNmnuG2bf843sCzy8J0GRwe/po5eaanfrcjepLuy3H2Wv5PxJU9Ax
-         VyZw==
-X-Gm-Message-State: AODbwcD9xXZOvn2+TsiQ0P0I3fg5N0sgsmRDqqVj1D1uk7RUeAJxfjny
-        3KQBx+7isvTfc1rtawA8PInLT+V8LzIa8E4=
-X-Received: by 10.84.248.73 with SMTP id e9mr569182pln.76.1495051038935; Wed,
- 17 May 2017 12:57:18 -0700 (PDT)
+        id S1752941AbdEQUs7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 16:48:59 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:50462 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751974AbdEQUs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2017 16:48:58 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout07 with smtp
+        id MYov1v0051keHif01YoxGY; Wed, 17 May 2017 21:48:57 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=pJ1g7XDVtAwV4EuFfrUA:9 a=QEXdDO2ut3YA:10
+ a=ezPG0ZpnnpEA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: t5545: reduced test coverage
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+References: <ca942ab1-db57-5794-4587-1a756686c833@ramsayjones.plus.com>
+ <xmqqbmqsyzn7.fsf@gitster.mtv.corp.google.com>
+ <xmqqmvacxhk0.fsf@gitster.mtv.corp.google.com>
+ <xmqqinl0xga6.fsf@gitster.mtv.corp.google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <17124bdc-c6cb-5f1a-5021-7c92ad7e669c@ramsayjones.plus.com>
+Date:   Wed, 17 May 2017 21:48:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Wed, 17 May 2017 12:57:18 -0700 (PDT)
-In-Reply-To: <CACBZZX6Gad32eZX6BTamNK016wu3HHLdYDB6JkUPNv=+mB3PKg@mail.gmail.com>
-References: <xmqqk25gvu12.fsf@gitster.mtv.corp.google.com> <20170517113824.31700-1-avarab@gmail.com>
- <CAGZ79kZC98CxA69QjmX2s_SU6z1CSgKgwZeqvwiMRAQc6+S3xg@mail.gmail.com> <CACBZZX6Gad32eZX6BTamNK016wu3HHLdYDB6JkUPNv=+mB3PKg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 17 May 2017 12:57:18 -0700
-Message-ID: <CAGZ79kZXgjC84vsXtvPu_=ApJOkAwUjV1BCS2iETowF-sSrrvw@mail.gmail.com>
-Subject: Re: [PATCH/RFC 0/3] Use sha1collisiondetection as a submodule
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Marc Stevens <marc@marc-stevens.nl>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqinl0xga6.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 17, 2017 at 12:45 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Wed, May 17, 2017 at 8:52 PM, Stefan Beller <sbeller@google.com> wrote=
-:
->> On Wed, May 17, 2017 at 4:38 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->> <avarab@gmail.com> wrote:
->>> On Wed, May 17, 2017 at 9:09 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>>>
->>>>> On Wed, May 17, 2017 at 7:39 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->>>>>> From: Marc Stevens <marc@marc-stevens.nl>
->>>>>>
->>>>>> Some big-endian platforms define _BIG_ENDIAN, which the test at the
->>>>>> beginning of file has missed.  Also, when the input is not aligned,
->>>>>> some platforms trigger SIGBUS.
->>>>>>
->>>>>> This change corresponds to 33a694a9 ("Fix issues with a big endian
->>>>>> platform", 2017-05-15) in the history of the upstream repository
->>>>>> https://github.com/cr-marcstevens/sha1collisiondetection
->>>>>
->>>>> Then why not just update sha1dc from upstream instead of
->>>>> cherry-picking one patch from them?
->>>>
->>>> See the original message upthread.  I did the cherry-pick simply
->>>> because that was what Marc instructed the patch recipient to do ;-).
->>>
->>> Since that patch is now in Marc's upstream code we can just update to
->>> that.
->>>
->>> While we're at it let's see if Marc will take a patch so that we can
->>> use his code as-is with some Makefile trickery of our own, instead of
->>> having to solve merge conflicts each time we update from him. I'll
->>> submit a pull request for that shortly.
->>>
->>> And since if and when that pull request gets accepted we're at the
->>> point of being able to use the upstream code as-is & don't need to
->>> locally modify it, we can just use a submodule to track it.
+
+
+On 17/05/17 05:23, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Junio C Hamano <gitster@pobox.com> writes:
 >>
->> As someone who works on submodules: YAY! This sounds
->> wonderful in the sense that more git developers experience the
->> sharp edges (if any) of submodules and would fix them.
->
-> Yeah I agree git.git should dogfood submodules, and this seemed like a
-> perfect opportunity for thaht.
->
-> As noted later in your mail everything may not be ready, so when I
-> submit a non-RFC version of this (after upstream pulls my changes,
-> hopefully), the 2nd and 3rd patches can just be dropped.
->
->> With the reset work on submodules (checkout, reset,
->> ls-files, grep) and more in the works (better push/pull)
->> we may be close to prime time.
+>>> It appears to me that only a few tests in the entire script wants to
+>>> work with HTTP server, so perhaps moving them to the end, together
+>>> with the inclusion of lib-httpd and start_httpd that 438fc684 ("push
+>>> options: pass push options to the transport helper", 2017-02-08)
+>>> introduced, may be sufficient?
 >>
->> However we do distribute tarballs (well, Junio does),
->> which is not yet supported to include submodules.
->
-> Ouch. So there's no non-manual way with git-archive to make a tarball
-> release of a git project using submodules?
+>> Probably not, as lib-httpd, when it gives up, does the
+>> "skip_all=message; test_done" thing, which makes test_done
+>> to trigger this:
+>>
+>> 	# Maybe print SKIP message
+>> 	if test -n "$skip_all" && test $test_count -gt 0
+>> 	then
+>> 		error "Can't use skip_all after running some tests"
+>> 	fi
+>>
+>> So a bit more work is needed, than just moving things around, I am
+>> afraid...
+> 
+> And now I am visiting bf4b7219 ("test-lib.sh: Add check for invalid
+> use of 'skip_all' facility", 2012-09-01), which is yours ;-)
 
-Yes. Ouch.
+Indeed. :-D
 
->> We could make a friendly fork of it and put it next to all the repositor=
-ies
->> of https://git-blame.blogspot.com/p/git-public-repositories.html
->> and then use relative URLs in the .gitmodules file.
->
-> Wouldn't we lose the ability to just "pull" the module to see if
-> upstream changed, i.e. now we'd need to manually munge the URL first.
+> I am wondering what the fallouts would be if we did the following to
+> test-lib.  We used to say "1..0 # SKIP <why>" when we skip
+> everything, which is still kept, so that prove can notice why things
+> are skipped.
+> 
+> When we abort early but after executing any test, we used to error
+> out, but instead we pretend that the test finished right there, as
+> it seems that we are not allowed to say "1..4 # SKIP <why>" after
+> running 4 tests.
 
-I assumed more people would fetch git and trust the community rather
-than people checking if SHA1DC is up-to-date, so I thought it is easier for
-the minority to rewrite a URL.
+Yes, I had this exact 'Huh?' moment back in 2012. I remember spending
+quite a long time searching 'TAP specification' documents, in order to
+get an answer to this. It was so long ago (and I can't find the links
+to those documents now), but I have a vague recollection that prove's
+behaviour is correct in allowing '1..0 <skip message>', while throwing
+a fit at '1..n <any message>' (for n > 0).
 
-> If so having a fetchurl be a relative URL similar to git-push's
-> pushurl would solve it wouldn't it? I.e. a project like git could say
-> "here's my mirrors" different from "here's my upstream".
+I would probably have simply split the test file into two, but ...
 
-I would think so.
+>  t/test-lib.sh | 21 +++++++++++++--------
+>  1 file changed, 13 insertions(+), 8 deletions(-)
+> 
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 13b5696822..46f29cf112 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -745,20 +745,25 @@ test_done () {
+>  	fi
+>  	case "$test_failure" in
+>  	0)
+> -		# Maybe print SKIP message
+> -		if test -n "$skip_all" && test $test_count -gt 0
+> -		then
+> -			error "Can't use skip_all after running some tests"
+> -		fi
+> -		test -z "$skip_all" || skip_all=" # SKIP $skip_all"
+> -
+>  		if test $test_external_has_tap -eq 0
+>  		then
+>  			if test $test_remaining -gt 0
+>  			then
+>  				say_color pass "# passed all $msg"
+>  			fi
+> -			say "1..$test_count$skip_all"
+> +
+> +			# Maybe print SKIP message
+> +			test -z "$skip_all" || skip_all="# SKIP $skip_all"
+> +			case "$test_count" in
+> +			0)			    
+> +				say "1..$test_count${skip_all:+ $skip_all}"
+> +				;;
+> +			*)
+> +				test -z "$skip_all" ||
+> +				say_color warn "$skip_all"
+> +				say "1..$test_count"
+> +				;;
+> +			esac
+>  		fi
+>  
+>  		test -d "$remove_trash" &&
+
+... this looks good to me. (tested on Linux and cygwin).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
