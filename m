@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3858201A7
-	for <e@80x24.org>; Wed, 17 May 2017 12:06:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14320201A7
+	for <e@80x24.org>; Wed, 17 May 2017 12:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753659AbdEQMGd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 08:06:33 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:48811 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753341AbdEQMG3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 17 May 2017 08:06:29 -0400
-X-AuditID: 12074411-cafff70000003efd-0c-591c3cc31e25
+        id S1753763AbdEQMGh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 08:06:37 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:45819 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753015AbdEQMGa (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 17 May 2017 08:06:30 -0400
+X-AuditID: 1207440e-7afff70000007d8a-1c-591c3cc54d70
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id D3.9A.16125.3CC3C195; Wed, 17 May 2017 08:06:28 -0400 (EDT)
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id C9.B5.32138.5CC3C195; Wed, 17 May 2017 08:06:29 -0400 (EDT)
 Received: from bagpipes.fritz.box (p5B104B68.dip0.t-ipconnect.de [91.16.75.104])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4HC5pg8000430
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4HC5pg9000430
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Wed, 17 May 2017 08:06:26 -0400
+        Wed, 17 May 2017 08:06:28 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -35,78 +35,137 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, David Turner <novalis@novalis.org>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 17/23] get_packed_ref_cache(): assume "packed-refs" won't change while locked
-Date:   Wed, 17 May 2017 14:05:40 +0200
-Message-Id: <eedc8f85c8237515bc66584649b1e3f3d547049c.1495014840.git.mhagger@alum.mit.edu>
+Subject: [PATCH 18/23] read_packed_refs(): do more of the work of reading packed refs
+Date:   Wed, 17 May 2017 14:05:41 +0200
+Message-Id: <41dba75f36a53c963255922009463e67a8126f21.1495014840.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1495014840.git.mhagger@alum.mit.edu>
 References: <cover.1495014840.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrNIsWRmVeSWpSXmKPExsUixO6iqHvERibSYMozQYu1z+4wWXRd6Way
-        aOi9wmxxe8V8ZoslD18zW3RPecto8aOlh9li8+Z2FgcOj7/vPzB57Jx1l91jwaZSj672I2we
-        z3r3MHpcvKTs8XmTXAB7FJdNSmpOZllqkb5dAlfGs84m5oIdAhWP/p1jamBcxdvFyMkhIWAi
-        MfnAC6YuRi4OIYEdTBI3D/9hh3BOMElcXjuBEaSKTUBXYlFPMxOILSKgJjGx7RALSBGzwGMm
-        ib/LuoEcDg5hgViJtmVuIDUsAqoSD6bPZgQJ8wpESRzdVQWxTF5iV9tFVhCbU8BC4v77R+wg
-        JUIC5hLbr1dOYORZwMiwilEuMac0Vzc3MTOnODVZtzg5MS8vtUjXVC83s0QvNaV0EyMkzAR3
-        MM44KXeIUYCDUYmHdwKXdKQQa2JZcWXuIUZJDiYlUd79D4BCfEn5KZUZicUZ8UWlOanFhxgl
-        OJiVRHhvmspECvGmJFZWpRblw6SkOViUxHn5lqj7CQmkJ5akZqemFqQWwWRlODiUJHinWAM1
-        ChalpqdWpGXmlCCkmTg4QYbzAA3nAqnhLS5IzC3OTIfIn2JUlBLnPQCSEABJZJTmwfXC0sAr
-        RnGgV4R5n4NU8QBTCFz3K6DBTECDm0E+4i0uSURISTUwzhSzPy/5/VP1mRKBdvf7J1sXNq/M
-        uyYnJXijjenJW4XFx/VZDwl/yuH+dML8yt6zkdM7eR3jUz5e3l/zs8Fu4xGm4qU3BT+oRu91
-        847rnvxlGkuMfs/c/wUWnLkXvWzPZYReWrOGTf3MTecj9lFLrK+mrFh2ZclkLTX+fz57Z217
-        Otdjof9XdSWW4oxEQy3mouJEANa7fMTeAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLIsWRmVeSWpSXmKPExsUixO6iqHvURibS4FCnscXaZ3eYLLqudDNZ
+        NPReYba4vWI+s8WSh6+ZLbqnvGW0+NHSw2yxeXM7iwOHx9/3H5g8ds66y+6xYFOpR1f7ETaP
+        Z717GD0uXlL2+LxJLoA9issmJTUnsyy1SN8ugSujc9ZixoJdchUzWqYyNzD2SnYxcnJICJhI
+        tN//ztLFyMUhJLCDSWLqpVdQzgkmifM9J1hAqtgEdCUW9TQzgdgiAmoSE9sOgRUxCzxmkvi7
+        rBusSFggVGLB6++MIDaLgKrEg2sXWEFsXoEoie0LPjNBrJOX2NV2ESzOKWAhcf/9I/YuRg6g
+        beYS269XTmDkWcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11gvN7NELzWldBMjJNT4djC2
+        r5c5xCjAwajEwzuBSzpSiDWxrLgy9xCjJAeTkijv/gdAIb6k/JTKjMTijPii0pzU4kOMEhzM
+        SiK8N01lIoV4UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK8U6yBGgWL
+        UtNTK9Iyc0oQ0kwcnCDDeYCGc4HU8BYXJOYWZ6ZD5E8xKkqJ8x4ASQiAJDJK8+B6YangFaM4
+        0CvCvHkgVTzANALX/QpoMBPQ4GaQj3iLSxIRUlINjN4tjPfMH0e0nZ9Z9/Q/z57C/mP3XOKN
+        Fy5Ty0/bL3bTOtNxr5rxubNyPv5MBzdO3fxAeXNpzFquxs8i+oEX3n/nWLS46MHj8EbLswfW
+        R+se8m/fuf7g9JrVPg8mNF13EHr6L8dq49e3j/MvNkv28U7MvD0/OpThz8lgIQeOCcFJ3inh
+        +50zXiuxFGckGmoxFxUnAgCUezBy4AIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we've got the "packed-refs" file locked, then it can't change;
-there's no need to keep calling `stat_validity_check()` on it.
+Teach `read_packed_refs()` to also
+
+* Allocate and initialize the new `packed_ref_cache`
+* Open and close the `packed-refs` file
+* Update the `validity` field of the new object
+
+This decreases the coupling between `packed_refs_cache` and
+`files_ref_store` by a little bit.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ refs/files-backend.c | 40 ++++++++++++++++++++++++----------------
+ refs/ref-cache.h     |  3 ++-
+ 2 files changed, 26 insertions(+), 17 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index c549a8d956..a910c44f38 100644
+index a910c44f38..6a037e1d61 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -354,13 +354,18 @@ static void files_ref_path(struct files_ref_store *refs,
+@@ -221,7 +221,9 @@ static const char *parse_ref_line(struct strbuf *line, unsigned char *sha1)
+ }
  
  /*
-  * Get the packed_ref_cache for the specified files_ref_store,
-- * creating it if necessary.
-+ * creating and populating it if it hasn't been read before or if the
-+ * file has been changed (according to its `validity` field) since it
-+ * was last read. On the other hand, if we hold the lock, then assume
-+ * that the file hasn't been changed out from under us, so skip the
-+ * extra `stat()` call in `stat_validity_check()`.
+- * Read f, which is a packed-refs file, into dir.
++ * Read from `packed_refs_file` into a newly-allocated
++ * `packed_ref_cache` and return it. The return value will already
++ * have its reference count incremented.
+  *
+  * A comment line of the form "# pack-refs with: " may contain zero or
+  * more traits. We interpret the traits as follows:
+@@ -247,12 +249,26 @@ static const char *parse_ref_line(struct strbuf *line, unsigned char *sha1)
+  *      compatibility with older clients, but we do not require it
+  *      (i.e., "peeled" is a no-op if "fully-peeled" is set).
   */
- static struct packed_ref_cache *get_packed_ref_cache(struct files_ref_store *refs)
+-static void read_packed_refs(FILE *f, struct ref_dir *dir)
++static struct packed_ref_cache *read_packed_refs(const char *packed_refs_file)
  {
- 	const char *packed_refs_file = files_packed_refs_path(refs);
++	FILE *f;
++	struct packed_ref_cache *packed_refs = xcalloc(1, sizeof(*packed_refs));
+ 	struct ref_entry *last = NULL;
+ 	struct strbuf line = STRBUF_INIT;
+ 	enum { PEELED_NONE, PEELED_TAGS, PEELED_FULLY } peeled = PEELED_NONE;
++	struct ref_dir *dir;
  
- 	if (refs->packed &&
-+	    !is_lock_file_locked(&refs->packlock) &&
++	acquire_packed_ref_cache(packed_refs);
++	packed_refs->cache = create_ref_cache(NULL, NULL);
++	packed_refs->cache->root->flag &= ~REF_INCOMPLETE;
++
++	f = fopen(packed_refs_file, "r");
++	if (!f)
++		return packed_refs;
++
++	stat_validity_update(&packed_refs->validity, fileno(f));
++
++	dir = get_ref_dir(packed_refs->cache->root);
+ 	while (strbuf_getwholeline(&line, f, '\n') != EOF) {
+ 		unsigned char sha1[20];
+ 		const char *refname;
+@@ -299,7 +315,10 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 		}
+ 	}
+ 
++	fclose(f);
+ 	strbuf_release(&line);
++
++	return packed_refs;
+ }
+ 
+ static const char *files_packed_refs_path(struct files_ref_store *refs)
+@@ -369,20 +388,9 @@ static struct packed_ref_cache *get_packed_ref_cache(struct files_ref_store *ref
  	    !stat_validity_check(&refs->packed->validity, packed_refs_file))
  		clear_packed_ref_cache(refs);
  
-@@ -1300,10 +1305,11 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
- 			    flags, timeout_value) < 0)
- 		return -1;
- 	/*
--	 * Get the current packed-refs while holding the lock.  If the
--	 * packed-refs file has been modified since we last read it,
--	 * this will automatically invalidate the cache and re-read
--	 * the packed-refs file.
-+	 * Get the current packed-refs while holding the lock. It is
-+	 * important that we call `get_packed_ref_cache()` before
-+	 * setting `packed_ref_cache->lock`, because otherwise the
-+	 * former will see that the file is locked and assume that the
-+	 * cache can't be stale.
- 	 */
- 	packed_ref_cache = get_packed_ref_cache(refs);
- 	/* Increment the reference count to prevent it from being freed: */
+-	if (!refs->packed) {
+-		FILE *f;
+-
+-		refs->packed = xcalloc(1, sizeof(*refs->packed));
+-		acquire_packed_ref_cache(refs->packed);
+-		refs->packed->cache = create_ref_cache(&refs->base, NULL);
+-		refs->packed->cache->root->flag &= ~REF_INCOMPLETE;
+-		f = fopen(packed_refs_file, "r");
+-		if (f) {
+-			stat_validity_update(&refs->packed->validity, fileno(f));
+-			read_packed_refs(f, get_ref_dir(refs->packed->cache->root));
+-			fclose(f);
+-		}
+-	}
++	if (!refs->packed)
++		refs->packed = read_packed_refs(packed_refs_file);
++
+ 	return refs->packed;
+ }
+ 
+diff --git a/refs/ref-cache.h b/refs/ref-cache.h
+index ffdc54f3f0..83e6c2dd2a 100644
+--- a/refs/ref-cache.h
++++ b/refs/ref-cache.h
+@@ -194,7 +194,8 @@ struct ref_entry *create_ref_entry(const char *refname,
+  * function called to fill in incomplete directories in the
+  * `ref_cache` when they are accessed. If it is NULL, then the whole
+  * `ref_cache` must be filled (including clearing its directories'
+- * `REF_INCOMPLETE` bits) before it is used.
++ * `REF_INCOMPLETE` bits) before it is used, and `refs` can be NULL,
++ * too.
+  */
+ struct ref_cache *create_ref_cache(struct ref_store *refs,
+ 				   fill_ref_dir_fn *fill_ref_dir);
 -- 
 2.11.0
 
