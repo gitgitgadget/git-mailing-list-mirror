@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BDEE2023D
-	for <e@80x24.org>; Wed, 17 May 2017 02:59:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C09202023D
+	for <e@80x24.org>; Wed, 17 May 2017 02:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752073AbdEQC7j (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 22:59:39 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:34067 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752910AbdEQC73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 22:59:29 -0400
-Received: by mail-pg0-f44.google.com with SMTP id u28so85475048pgn.1
-        for <git@vger.kernel.org>; Tue, 16 May 2017 19:59:29 -0700 (PDT)
+        id S1752740AbdEQC7s (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 22:59:48 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:32934 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752990AbdEQC7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 22:59:43 -0400
+Received: by mail-pf0-f181.google.com with SMTP id e193so89805313pfh.0
+        for <git@vger.kernel.org>; Tue, 16 May 2017 19:59:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QZzJQLf+5wjYzNyZVL1RrXzscPBgEZpuptk0JhJERbs=;
-        b=JosfQd6L9XWRYTK9c+KaAYSstN00xeyIXszbpkeMgvXl4u1Q8DVmV1cJvAvAbWvoxv
-         wTM7kBGUeVu9phGK/9SKXaM+anOldHHhfOrDGlxgANAPq8+vffAG4FAmrGQoMkCMte2N
-         IRNKcDoEs2c58xlnSI9Nl5Q/l0sUnr44XXFMozvNbg3CELT7chyOhQBRSqWM7GJwypgR
-         tjyWdAtVG7EB7h/W6pqnAWluUcUQ4mj1s1UT0t/pGQFwoiy5Di40eDleoMH8NUyIXQkf
-         fTqTzGW5rt5hd5Ny7A3ERIsGWev97fyrYEHj+O5DjSL0wa/TDg3qRFGCafvz7E+kSKJJ
-         373w==
+        bh=ufmT24cw2m/o2F1c3FroKFcnJdei9cwkjmTuH1Qhoeg=;
+        b=KgZzy3EnxTQAMknJz871RFEbatchyn8FnPZ+DdasIndCXCoSHu6Mw3lhH5EFwLd61o
+         kOUdzbXY/rrmNDY/by8QxhGVjKsBxY2ncx2DaR1b3JP2XZwz2c+xDeIipS8Jbodrg8iz
+         CTqoLAJH+M14M+YlibFnvJqOogRcktqfKEsuso1XxnJoLWPgOXhNnb3xmXZLHcckHnaN
+         1yZbKz/O6lNwC7SAYQwh2I9EJ1tR9QdE2Wr0vpaHB+l1Jx1hdu0dmOr6cUktNnc6dk2G
+         qH41/1vSoV4yVAZzGosAd76DSqbYIpNpTaiiJ+RT/GUmSHRoK2u/7ltm2qsunMwH/qGE
+         reVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QZzJQLf+5wjYzNyZVL1RrXzscPBgEZpuptk0JhJERbs=;
-        b=gSLcMnyd3+Bma0qkENuQRvRIR+VLhtk74I+I4a+ebn9et37N1Av8aQ+FlJqLveOw9C
-         tA3znNL3qRGBHRqPYrIgtfsecHX0B08xhVv/KNa3YGds6se333pODcP4xwIDjBPWNZwX
-         bVk7K9wDgi6fXFxAOcYH/3zPGRuoRvzYiiAGmS47AhVZ61mL7SE28Zi9wH9ZzbbTKFbt
-         RE/CmQa50hf1UU8gI0PKeBgEclLkgj+kuAtFY5TWTT26AMhVK0wubTLiiB0swgIfjupC
-         jr8YpCHWb2tQY9FZcGZ3fTBq0DuHQJJwYUb09wQ9ESZaTg68KDPGTjaGz+I8Gq/9ZbAD
-         Nnug==
-X-Gm-Message-State: AODbwcCdzsBn6tRHmK6LkulZwVDJBl1h3HHktYC/dNDVJcn/rSrut/p9
-        zdRKab8AncTL1OKW
-X-Received: by 10.99.107.201 with SMTP id g192mr1304773pgc.149.1494989958707;
-        Tue, 16 May 2017 19:59:18 -0700 (PDT)
+        bh=ufmT24cw2m/o2F1c3FroKFcnJdei9cwkjmTuH1Qhoeg=;
+        b=fM9EA47IjjnuCE5FDwsVKZDiQelOef5uHf0HucJq7dM5dj0VivsN0K+26CJ/KZNPQD
+         PvHKdCzRgj5nQif8ypzJoWajMrEeX91L04yuH8zTQVtoGIQat18PZ6UmnKaUTO0QJXl6
+         hew+WlVjw1UsxS8+CsJ859b/awuM0yVKEoyF4UO4s2KeNJnxAp3KmBCle5y1mDUjkQj1
+         iAKIIZ4ArtUTA1dfn64aYs4JMp/gSZ/nNsPVz+I95M4o+NWx9/lTQtaHo3iTWWaLSAw3
+         HRjRW1WpHX5UwdBclzcvZjVb3FghRhKgIM+tScqibGrMJ6NZBfup9NvPbZvORmW8gMsx
+         Q+ww==
+X-Gm-Message-State: AODbwcDGf+7zeO4wPE08tcdutNGDa+Rc9/wBipf/ZzFdAm4bh9mvVHkK
+        vbBfzZo8gaQnrn0T
+X-Received: by 10.99.117.65 with SMTP id f1mr1357152pgn.58.1494989966195;
+        Tue, 16 May 2017 19:59:26 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:b4bc:dafd:125e:c48a])
-        by smtp.gmail.com with ESMTPSA id y20sm643156pfb.93.2017.05.16.19.59.17
+        by smtp.gmail.com with ESMTPSA id c12sm657910pfl.79.2017.05.16.19.59.25
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 16 May 2017 19:59:18 -0700 (PDT)
+        Tue, 16 May 2017 19:59:25 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, gitster@pobox.com, jonathantanmy@google.com,
         bmwill@google.com, peff@peff.net, mhagger@alum.mit.edu,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 12/20] submodule.c: convert show_submodule_summary to use emit_line_fmt
-Date:   Tue, 16 May 2017 19:58:49 -0700
-Message-Id: <20170517025857.32320-13-sbeller@google.com>
+Subject: [PATCHv2 18/20] diff.c: emit_line includes whitespace highlighting
+Date:   Tue, 16 May 2017 19:58:55 -0700
+Message-Id: <20170517025857.32320-19-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.18.g7d86cc8ba0
 In-Reply-To: <20170517025857.32320-1-sbeller@google.com>
 References: <20170514040117.25865-1-sbeller@google.com>
@@ -64,306 +64,455 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch, I want to propose an option to detect&color
-moved lines in a diff, which cannot be done in a one-pass over
-the diff. Instead we need to go over the whole diff twice,
-because we cannot detect the first line of the two corresponding
-lines (+ and -) that got moved.
-
-So to prepare the diff machinery for two pass algorithms
-(i.e. buffer it all up and then operate on the result),
-move all emissions to places, such that the only emitting
-function is emit_line_0.
-
-This prepares the code for submodules to go through the
-emit_line function.
+Currently any whitespace highlighting happens outside the emit_line
+function. Teach the highlighting to emit_line, triggered by a new
+parameter.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c      | 20 +++++++---------
- diff.h      |  5 ++++
- submodule.c | 78 ++++++++++++++++++++++++++++++-------------------------------
- submodule.h |  9 +++----
- 4 files changed, 56 insertions(+), 56 deletions(-)
+ diff.c      | 104 +++++++++++++++++++++++++++++++++++-------------------------
+ diff.h      |   4 ++-
+ submodule.c |  14 ++++----
+ 3 files changed, 71 insertions(+), 51 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 690794aeb8..7c8d6a5d12 100644
+index 964b5cb5a7..34482a6a09 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -516,8 +516,8 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
+@@ -516,15 +516,33 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
  	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
  }
  
--static void emit_line(struct diff_options *o, const char *set, const char *reset,
--		      int add_line_prefix, int sign, const char *line, int len)
-+void emit_line(struct diff_options *o, const char *set, const char *reset,
-+	       int add_line_prefix, int sign, const char *line, int len)
+-void emit_line(struct diff_options *o, const char *set, const char *reset,
+-	       int add_line_prefix, int sign, const char *line, int len)
++void emit_line(struct diff_options *o,
++	       const char *set, const char *reset,
++	       int add_line_prefix, int markup_ws,
++	       int sign, const char *line, int len)
  {
++	const char *ws;
  	int has_trailing_newline, has_trailing_carriage_return;
  	FILE *file = o->file;
-@@ -547,10 +547,10 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
- 		fputc('\n', file);
+ 
+ 	if (add_line_prefix)
+ 		fputs(diff_line_prefix(o), file);
+ 
++	if (markup_ws) {
++		ws = diff_get_color(o->use_color, DIFF_WHITESPACE);
++
++		if (set)
++			fputs(set, file);
++		if (sign)
++			fputc(sign, file);
++		if (reset)
++			fputs(reset, file);
++		ws = diff_get_color(o->use_color, DIFF_WHITESPACE);
++		ws_check_emit(line, len, o->ws_rule,
++			      file, set, reset, ws);
++		return;
++	}
++
+ 	has_trailing_newline = (len > 0 && line[len-1] == '\n');
+ 	if (has_trailing_newline)
+ 		len--;
+@@ -558,7 +576,7 @@ void emit_line_fmt(struct diff_options *o,
+ 	strbuf_vaddf(&sb, fmt, ap);
+ 	va_end(ap);
+ 
+-	emit_line(o, set, reset, add_line_prefix, 0, sb.buf, sb.len);
++	emit_line(o, set, reset, add_line_prefix, 0, 0, sb.buf, sb.len);
+ 	strbuf_release(&sb);
  }
  
--static void emit_line_fmt(struct diff_options *o,
--			  const char *set, const char *reset,
--			  int add_line_prefix,
--			  const char *fmt, ...)
-+void emit_line_fmt(struct diff_options *o,
-+		   const char *set, const char *reset,
-+		   int add_line_prefix,
-+		   const char *fmt, ...)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	va_list ap;
-@@ -2386,8 +2386,7 @@ static void builtin_diff(const char *name_a,
- 	    (!two->mode || S_ISGITLINK(two->mode))) {
- 		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
- 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
--		show_submodule_summary(o->file, one->path ? one->path : two->path,
--				line_prefix,
-+		show_submodule_summary(o, one->path ? one->path : two->path,
- 				&one->oid, &two->oid,
- 				two->dirty_submodule,
- 				meta, del, add, reset);
-@@ -2397,11 +2396,10 @@ static void builtin_diff(const char *name_a,
- 		   (!two->mode || S_ISGITLINK(two->mode))) {
- 		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
- 		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
--		show_submodule_inline_diff(o->file, one->path ? one->path : two->path,
--				line_prefix,
-+		show_submodule_inline_diff(o, one->path ? one->path : two->path,
- 				&one->oid, &two->oid,
- 				two->dirty_submodule,
--				meta, del, add, reset, o);
-+				meta, del, add, reset);
+@@ -590,16 +608,15 @@ static void emit_line_checked(const char *reset,
+ 	}
+ 
+ 	if (!ws)
+-		emit_line(ecbdata->opt, set, reset, 1, sign, line, len);
++		emit_line(ecbdata->opt, set, reset, 1, 0, sign, line, len);
+ 	else if (sign == '+' && new_blank_line_at_eof(ecbdata, line, len))
+ 		/* Blank line at EOF - paint '+' as well */
+-		emit_line(ecbdata->opt, ws, reset, 1, sign, line, len);
++		emit_line(ecbdata->opt, ws, reset, 1, 1, sign, line, len);
+ 	else {
+ 		/* Emit just the prefix, then the rest. */
+-		emit_line(ecbdata->opt, set, reset, 1, sign, "", 0);
+-		ws_check_emit(line, len, ecbdata->ws_rule,
+-			      ecbdata->opt->file, set, reset, ws);
++		emit_line(ecbdata->opt, set, reset, 1, 1, sign, line, len);
+ 	}
++
+ }
+ 
+ static void emit_add_line(const char *reset,
+@@ -646,7 +663,7 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 	if (len < 10 ||
+ 	    memcmp(line, atat, 2) ||
+ 	    !(ep = memmem(line + 2, len - 2, atat, 2))) {
+-		emit_line(ecbdata->opt, context, reset, 1, 0, line, len);
++		emit_line(ecbdata->opt, context, reset, 1, 0, 0, line, len);
+ 		return;
+ 	}
+ 	ep += 2; /* skip over @@ */
+@@ -682,7 +699,7 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 	strbuf_add(&msgbuf, line + len, org_len - len);
+ 	strbuf_complete_line(&msgbuf);
+ 
+-	emit_line(ecbdata->opt, "", "", 1, 0, msgbuf.buf, msgbuf.len);
++	emit_line(ecbdata->opt, "", "", 1, 0, 0, msgbuf.buf, msgbuf.len);
+ 	strbuf_release(&msgbuf);
+ }
+ 
+@@ -755,7 +772,7 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
+ 		static const char *nneof = "\\ No newline at end of file\n";
+ 		const char *context = diff_get_color(ecb->color_diff,
+ 						     DIFF_CONTEXT);
+-		emit_line(ecb->opt, context, reset, 1, 0,
++		emit_line(ecb->opt, context, reset, 1, 0, 0,
+ 			    nneof, strlen(nneof));
+ 		strbuf_release(&sb);
+ 	}
+@@ -831,7 +848,7 @@ static void emit_rewrite_diff(const char *name_a,
+ 	strbuf_addstr(&out, " +");
+ 	add_line_count(&out, lc_b);
+ 	strbuf_addstr(&out, " @@\n");
+-	emit_line(o, fraginfo, reset, 1, 0, out.buf, out.len);
++	emit_line(o, fraginfo, reset, 1, 0, 0, out.buf, out.len);
+ 	strbuf_release(&out);
+ 
+ 	if (lc_a && !o->irreversible_delete)
+@@ -904,7 +921,7 @@ static int fn_out_diff_words_write_helper(struct diff_options *o,
+ 	while (count) {
+ 		char *p = memchr(buf, '\n', count);
+ 		if (print)
+-			emit_line(o, NULL, NULL, 1, 0, "", 0);
++			emit_line(o, NULL, NULL, 1, 0, 0, "", 0);
+ 
+ 		if (p != buf) {
+ 			const char *reset = st_el->color && *st_el->color ?
+@@ -913,14 +930,14 @@ static int fn_out_diff_words_write_helper(struct diff_options *o,
+ 			strbuf_add(&sb, buf, p ? p - buf : count);
+ 			strbuf_addstr(&sb, st_el->suffix);
+ 			emit_line(o, st_el->color, reset,
+-				  0, 0, sb.buf, sb.len);
++				  0, 0, 0, sb.buf, sb.len);
+ 			strbuf_reset(&sb);
+ 		}
+ 		if (!p)
+ 			goto out;
+ 
+ 		strbuf_addstr(&sb, newline);
+-		emit_line(o, NULL, NULL, 0, 0, sb.buf, sb.len);
++		emit_line(o, NULL, NULL, 0, 0, 0, sb.buf, sb.len);
+ 		strbuf_reset(&sb);
+ 		count -= p + 1 - buf;
+ 		buf = p + 1;
+@@ -1135,7 +1152,7 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 	if (diff_words->current_plus != diff_words->plus.text.ptr +
+ 			diff_words->plus.text.size) {
+ 		if (color_words_output_graph_prefix(diff_words))
+-			emit_line(diff_words->opt, NULL, NULL, 1, 0, "", 0);
++			emit_line(diff_words->opt, NULL, NULL, 1, 0, 0, "", 0);
+ 		fn_out_diff_words_write_helper(diff_words->opt,
+ 			&style->ctx, style->newline,
+ 			diff_words->plus.text.ptr + diff_words->plus.text.size
+@@ -1294,7 +1311,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 	o->found_changes = 1;
+ 
+ 	if (ecbdata->header) {
+-		emit_line(o, NULL, NULL, 0, 0,
++		emit_line(o, NULL, NULL, 0, 0, 0,
+ 			  ecbdata->header->buf, ecbdata->header->len);
+ 		strbuf_release(ecbdata->header);
+ 		ecbdata->header = NULL;
+@@ -1347,8 +1364,8 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		}
+ 		diff_words_flush(ecbdata);
+ 		if (ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN) {
+-			emit_line(o, context, reset, 1, 0, line, len);
+-			emit_line(o, NULL, NULL, 0, 0, "~\n", 2);
++			emit_line(o, context, reset, 1, 0, 0, line, len);
++			emit_line(o, NULL, NULL, 0, 0, 0, "~\n", 2);
+ 		} else {
+ 			/*
+ 			 * Skip the prefix character, if any.  With
+@@ -1359,7 +1376,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 			      line++;
+ 			      len--;
+ 			}
+-			emit_line(o, context, reset, 1, 0, line, len);
++			emit_line(o, context, reset, 1, 0, 0, line, len);
+ 		}
+ 		return;
+ 	}
+@@ -1382,7 +1399,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		/* incomplete line at the end */
+ 		ecbdata->lno_in_preimage++;
+ 		emit_line(o, diff_get_color(ecbdata->color_diff, DIFF_CONTEXT),
+-			  reset, 1, 0, line, len);
++			  reset, 1, 0, 0, line, len);
+ 		break;
+ 	}
+ }
+@@ -1571,7 +1588,7 @@ void print_stat_summary_0(struct diff_options *options, int files,
+ 	if (!files) {
+ 		assert(insertions == 0 && deletions == 0);
+ 		strbuf_addstr(&sb, " 0 files changed");
+-		emit_line(options, NULL, NULL, 1, 0, sb.buf, sb.len);
++		emit_line(options, NULL, NULL, 1, 0, 0, sb.buf, sb.len);
  		return;
  	}
  
+@@ -1599,7 +1616,7 @@ void print_stat_summary_0(struct diff_options *options, int files,
+ 			    deletions);
+ 	}
+ 	strbuf_addch(&sb, '\n');
+-	emit_line(options, NULL, NULL, 1, 0, sb.buf, sb.len);
++	emit_line(options, NULL, NULL, 1, 0, 0, sb.buf, sb.len);
+ 	strbuf_release(&sb);
+ }
+ 
+@@ -1783,7 +1800,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 			strbuf_addf(&out, " %*s", number_width, "Bin");
+ 			if (!added && !deleted) {
+ 				strbuf_addch(&out, '\n');
+-				emit_line(options, NULL, NULL, 1, 0, out.buf, out.len);
++				emit_line(options, NULL, NULL, 1, 0, 0, out.buf, out.len);
+ 				strbuf_reset(&out);
+ 				continue;
+ 			}
+@@ -1793,14 +1810,14 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 			strbuf_addf(&out, "%s%"PRIuMAX"%s",
+ 				add_c, added, reset);
+ 			strbuf_addstr(&out, " bytes\n");
+-			emit_line(options, NULL, NULL, 1, 0, out.buf, out.len);
++			emit_line(options, NULL, NULL, 1, 0, 0, out.buf, out.len);
+ 			strbuf_reset(&out);
+ 			continue;
+ 		}
+ 		else if (file->is_unmerged) {
+ 			show_name(&out, prefix, name, len);
+ 			strbuf_addstr(&out, " Unmerged\n");
+-			emit_line(options, NULL, NULL, 1, 0, out.buf, out.len);
++			emit_line(options, NULL, NULL, 1, 0, 0, out.buf, out.len);
+ 			strbuf_reset(&out);
+ 			continue;
+ 		}
+@@ -1831,7 +1848,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 		show_graph(&out, '+', add, add_c, reset);
+ 		show_graph(&out, '-', del, del_c, reset);
+ 		strbuf_addch(&out, '\n');
+-		emit_line(options, NULL, NULL, 1, 0, out.buf, out.len);
++		emit_line(options, NULL, NULL, 1, 0, 0, out.buf, out.len);
+ 		strbuf_reset(&out);
+ 	}
+ 
+@@ -1853,7 +1870,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 		if (i < count)
+ 			continue;
+ 		if (!extra_shown)
+-			emit_line(options, NULL, NULL, 1, 0,
++			emit_line(options, NULL, NULL, 1, 0, 0,
+ 				  " ...\n", strlen(" ...\n"));
+ 		extra_shown = 1;
+ 	}
+@@ -2207,7 +2224,7 @@ static void checkdiff_consume(void *priv, char *line, unsigned long len)
+ 		fprintf(data->o->file, "%s%s:%d: %s.\n",
+ 			line_prefix, data->filename, data->lineno, err);
+ 		free(err);
+-		emit_line(data->o, set, reset, 1, 0, line, 1);
++		emit_line(data->o, set, reset, 1, 0, 0, line, 1);
+ 		ws_check_emit(line + 1, len - 1, data->ws_rule,
+ 			      data->o->file, set, reset, ws);
+ 	} else if (line[0] == ' ') {
+@@ -2303,9 +2320,9 @@ static void emit_binary_diff_body(struct diff_options *o,
+ 		line[len++] = '\n';
+ 		line[len] = '\0';
+ 
+-		emit_line(o, NULL, NULL, 1, 0, line, len);
++		emit_line(o, NULL, NULL, 1, 0, 0, line, len);
+ 	}
+-	emit_line(o, NULL, NULL, 1, 0, "\n", 1);
++	emit_line(o, NULL, NULL, 1, 0, 0, "\n", 1);
+ 	free(data);
+ }
+ 
+@@ -2314,7 +2331,7 @@ static void emit_binary_diff(struct diff_options *o,
+ {
+ 	const char *s = "GIT binary patch\n";
+ 	const int len = strlen(s);
+-	emit_line(o, NULL, NULL, 1, 0, s, len);
++	emit_line(o, NULL, NULL, 1, 0, 0, s, len);
+ 	emit_binary_diff_body(o, one, two);
+ 	emit_binary_diff_body(o, two, one);
+ }
+@@ -2457,7 +2474,7 @@ static void builtin_diff(const char *name_a,
+ 		if (complete_rewrite &&
+ 		    (textconv_one || !diff_filespec_is_binary(one)) &&
+ 		    (textconv_two || !diff_filespec_is_binary(two))) {
+-			emit_line(o, NULL, NULL, 0, 0, header.buf, header.len);
++			emit_line(o, NULL, NULL, 0, 0, 0, header.buf, header.len);
+ 			strbuf_reset(&header);
+ 			emit_rewrite_diff(name_a, name_b, one, two,
+ 						textconv_one, textconv_two, o);
+@@ -2467,7 +2484,7 @@ static void builtin_diff(const char *name_a,
+ 	}
+ 
+ 	if (o->irreversible_delete && lbl[1][0] == '/') {
+-		emit_line(o, NULL, NULL, 0, 0, header.buf, header.len);
++		emit_line(o, NULL, NULL, 0, 0, 0, header.buf, header.len);
+ 		strbuf_reset(&header);
+ 		goto free_ab_and_return;
+ 	} else if (!DIFF_OPT_TST(o, TEXT) &&
+@@ -2478,11 +2495,11 @@ static void builtin_diff(const char *name_a,
+ 		    !DIFF_OPT_TST(o, BINARY)) {
+ 			if (!oidcmp(&one->oid, &two->oid)) {
+ 				if (must_show_header)
+-					emit_line(o, NULL, NULL, 0, 0,
++					emit_line(o, NULL, NULL, 0, 0, 0,
+ 						  header.buf, header.len);
+ 				goto free_ab_and_return;
+ 			}
+-			emit_line(o, NULL, NULL, 0, 0,
++			emit_line(o, NULL, NULL, 0, 0, 0,
+ 				  header.buf, header.len);
+ 			emit_line_fmt(o, NULL, NULL, 1,
+ 				      "Binary files %s and %s differ\n",
+@@ -2495,11 +2512,11 @@ static void builtin_diff(const char *name_a,
+ 		if (mf1.size == mf2.size &&
+ 		    !memcmp(mf1.ptr, mf2.ptr, mf1.size)) {
+ 			if (must_show_header)
+-				emit_line(o, NULL, NULL, 0, 0,
++				emit_line(o, NULL, NULL, 0, 0, 0,
+ 					  header.buf, header.len);
+ 			goto free_ab_and_return;
+ 		}
+-		emit_line(o, NULL, NULL, 0, 0,
++		emit_line(o, NULL, NULL, 0, 0, 0,
+ 			  header.buf, header.len);
+ 		strbuf_reset(&header);
+ 		if (DIFF_OPT_TST(o, BINARY))
+@@ -2519,7 +2536,7 @@ static void builtin_diff(const char *name_a,
+ 		const struct userdiff_funcname *pe;
+ 
+ 		if (must_show_header) {
+-			emit_line(o, NULL, NULL, 0, 0, header.buf, header.len);
++			emit_line(o, NULL, NULL, 0, 0, 0, header.buf, header.len);
+ 			strbuf_reset(&header);
+ 		}
+ 
+@@ -2536,6 +2553,7 @@ static void builtin_diff(const char *name_a,
+ 		ecbdata.label_path = lbl;
+ 		ecbdata.color_diff = want_color(o->use_color);
+ 		ecbdata.ws_rule = whitespace_rule(name_b);
++		o->ws_rule = ecbdata.ws_rule;
+ 		if (ecbdata.ws_rule & WS_BLANK_AT_EOF)
+ 			check_blank_at_eof(&mf1, &mf2, &ecbdata);
+ 		ecbdata.opt = o;
+@@ -4510,7 +4528,7 @@ static void show_file_mode_name(struct diff_options *opt, const char *newdelete,
+ 
+ 	quote_c_style(fs->path, &sb, NULL, 0);
+ 	strbuf_addch(&sb, '\n');
+-	emit_line(opt, NULL, NULL, 1, 0, sb.buf, sb.len);
++	emit_line(opt, NULL, NULL, 1, 0, 0, sb.buf, sb.len);
+ 	strbuf_release(&sb);
+ }
+ 
+@@ -4562,7 +4580,7 @@ static void diff_summary(struct diff_options *opt, struct diff_filepair *p)
+ 			strbuf_addstr(&sb, " rewrite ");
+ 			quote_c_style(p->two->path, &sb, NULL, 0);
+ 			strbuf_addf(&sb, " (%d%%)\n", similarity_index(p));
+-			emit_line(opt, NULL, NULL, 1, 0, sb.buf, sb.len);
++			emit_line(opt, NULL, NULL, 1, 0, 0, sb.buf, sb.len);
+ 		}
+ 		show_mode_change(opt, p, !p->score);
+ 		break;
+@@ -4869,10 +4887,10 @@ void diff_flush(struct diff_options *options)
+ 			term[0] = options->line_termination;
+ 			term[1] = '\0';
+ 
+-			emit_line(options, NULL, NULL, 1, 0, term, !!term[0]);
++			emit_line(options, NULL, NULL, 1, 0, 0, term, !!term[0]);
+ 			if (options->stat_sep) {
+ 				/* attach patch instead of inline */
+-				emit_line(options, NULL, NULL, 0, 0,
++				emit_line(options, NULL, NULL, 0, 0, 0,
+ 					  options->stat_sep,
+ 					  strlen(options->stat_sep));
+ 			}
 diff --git a/diff.h b/diff.h
-index 5be1ee77a7..6e14100102 100644
+index b75b0d7283..267acf1980 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -188,6 +188,11 @@ struct diff_options {
+@@ -186,12 +186,14 @@ struct diff_options {
+ 	void *output_prefix_data;
+ 
  	int diff_path_counter;
++
++	unsigned ws_rule;
  };
  
-+void emit_line_fmt(struct diff_options *o, const char *set, const char *reset,
-+		   int add_line_prefix, const char *fmt, ...);
-+void emit_line(struct diff_options *o, const char *set, const char *reset,
-+	       int add_line_prefix, int sign, const char *line, int len);
-+
+ void emit_line_fmt(struct diff_options *o, const char *set, const char *reset,
+ 		   int add_line_prefix, const char *fmt, ...);
+ void emit_line(struct diff_options *o, const char *set, const char *reset,
+-	       int add_line_prefix, int sign, const char *line, int len);
++	       int add_line_prefix, int markup_ws, int sign, const char *line, int len);
+ 
  enum color_diff {
  	DIFF_RESET = 0,
- 	DIFF_CONTEXT = 1,
 diff --git a/submodule.c b/submodule.c
-index d3299e29c0..5996ebca44 100644
+index 5996ebca44..868f913971 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -362,8 +362,8 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
- 	return prepare_revision_walk(rev);
- }
- 
--static void print_submodule_summary(struct rev_info *rev, FILE *f,
--		const char *line_prefix,
-+static void print_submodule_summary(struct rev_info *rev,
-+		struct diff_options *o,
- 		const char *del, const char *add, const char *reset)
- {
- 	static const char format[] = "  %m %s";
-@@ -375,18 +375,12 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 		ctx.date_mode = rev->date_mode;
- 		ctx.output_encoding = get_log_output_encoding();
- 		strbuf_setlen(&sb, 0);
--		strbuf_addstr(&sb, line_prefix);
--		if (commit->object.flags & SYMMETRIC_LEFT) {
--			if (del)
--				strbuf_addstr(&sb, del);
--		}
--		else if (add)
--			strbuf_addstr(&sb, add);
+@@ -378,9 +378,9 @@ static void print_submodule_summary(struct rev_info *rev,
  		format_commit_message(commit, format, &sb, &ctx);
--		if (reset)
--			strbuf_addstr(&sb, reset);
  		strbuf_addch(&sb, '\n');
--		fprintf(f, "%s", sb.buf);
-+		if (commit->object.flags & SYMMETRIC_LEFT)
-+			emit_line(o, del, reset, 1, 0, sb.buf, sb.len);
-+		else if (add)
-+			emit_line(o, add, reset, 1, 0, sb.buf, sb.len);
+ 		if (commit->object.flags & SYMMETRIC_LEFT)
+-			emit_line(o, del, reset, 1, 0, sb.buf, sb.len);
++			emit_line(o, del, reset, 1, 0, 0, sb.buf, sb.len);
+ 		else if (add)
+-			emit_line(o, add, reset, 1, 0, sb.buf, sb.len);
++			emit_line(o, add, reset, 1, 0, 0, sb.buf, sb.len);
  	}
  	strbuf_release(&sb);
  }
-@@ -413,8 +407,7 @@ void prepare_submodule_repo_env(struct argv_array *out)
-  * attempt to lookup both the left and right commits and put them into the
-  * left and right pointers.
-  */
--static void show_submodule_header(FILE *f, const char *path,
--		const char *line_prefix,
-+static void show_submodule_header(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule, const char *meta,
- 		const char *reset,
-@@ -426,11 +419,11 @@ static void show_submodule_header(FILE *f, const char *path,
- 	int fast_forward = 0, fast_backward = 0;
- 
- 	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
--		fprintf(f, "%sSubmodule %s contains untracked content\n",
--			line_prefix, path);
-+		emit_line_fmt(o, NULL, NULL, 1,
-+			      "Submodule %s contains untracked content\n", path);
- 	if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
--		fprintf(f, "%sSubmodule %s contains modified content\n",
--			line_prefix, path);
-+		emit_line_fmt(o, NULL, NULL, 1,
-+			      "Submodule %s contains modified content\n", path);
- 
- 	if (is_null_oid(one))
- 		message = "(new submodule)";
-@@ -472,21 +465,20 @@ static void show_submodule_header(FILE *f, const char *path,
- 	}
- 
- output_header:
--	strbuf_addf(&sb, "%s%sSubmodule %s ", line_prefix, meta, path);
-+	strbuf_addf(&sb, "Submodule %s ", path);
- 	strbuf_add_unique_abbrev(&sb, one->hash, DEFAULT_ABBREV);
- 	strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "...");
- 	strbuf_add_unique_abbrev(&sb, two->hash, DEFAULT_ABBREV);
- 	if (message)
--		strbuf_addf(&sb, " %s%s\n", message, reset);
-+		strbuf_addf(&sb, " %s\n", message);
+@@ -473,7 +473,7 @@ static void show_submodule_header(struct diff_options *o, const char *path,
+ 		strbuf_addf(&sb, " %s\n", message);
  	else
--		strbuf_addf(&sb, "%s:%s\n", fast_backward ? " (rewind)" : "", reset);
--	fwrite(sb.buf, sb.len, 1, f);
-+		strbuf_addf(&sb, "%s:\n", fast_backward ? " (rewind)" : "");
-+	emit_line(o, meta, reset, 1, 0,  sb.buf, sb.len);
+ 		strbuf_addf(&sb, "%s:\n", fast_backward ? " (rewind)" : "");
+-	emit_line(o, meta, reset, 1, 0,  sb.buf, sb.len);
++	emit_line(o, meta, reset, 1, 0, 0, sb.buf, sb.len);
  
  	strbuf_release(&sb);
  }
- 
--void show_submodule_summary(FILE *f, const char *path,
--		const char *line_prefix,
-+void show_submodule_summary(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule, const char *meta,
- 		const char *del, const char *add, const char *reset)
-@@ -495,7 +487,7 @@ void show_submodule_summary(FILE *f, const char *path,
- 	struct commit *left = NULL, *right = NULL;
- 	struct commit_list *merge_bases = NULL;
- 
--	show_submodule_header(f, path, line_prefix, one, two, dirty_submodule,
-+	show_submodule_header(o, path, one, two, dirty_submodule,
- 			      meta, reset, &left, &right, &merge_bases);
- 
- 	/*
-@@ -508,11 +500,12 @@ void show_submodule_summary(FILE *f, const char *path,
- 
+@@ -501,7 +501,7 @@ void show_submodule_summary(struct diff_options *o, const char *path,
  	/* Treat revision walker failure the same as missing commits */
  	if (prepare_submodule_summary(&rev, path, left, right, merge_bases)) {
--		fprintf(f, "%s(revision walker failed)\n", line_prefix);
-+		const char *error = "(revision walker failed)\n";
-+		emit_line(o, NULL, NULL, 1, 0, error, strlen(error));
+ 		const char *error = "(revision walker failed)\n";
+-		emit_line(o, NULL, NULL, 1, 0, error, strlen(error));
++		emit_line(o, NULL, NULL, 1, 0, 0, error, strlen(error));
  		goto out;
  	}
  
--	print_submodule_summary(&rev, f, line_prefix, del, add, reset);
-+	print_submodule_summary(&rev, o, del, add, reset);
- 
- out:
- 	if (merge_bases)
-@@ -521,20 +514,18 @@ void show_submodule_summary(FILE *f, const char *path,
- 	clear_commit_marks(right, ~0);
- }
- 
--void show_submodule_inline_diff(FILE *f, const char *path,
--		const char *line_prefix,
-+void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule, const char *meta,
--		const char *del, const char *add, const char *reset,
--		const struct diff_options *o)
-+		const char *del, const char *add, const char *reset)
- {
- 	const struct object_id *old = &empty_tree_oid, *new = &empty_tree_oid;
- 	struct commit *left = NULL, *right = NULL;
- 	struct commit_list *merge_bases = NULL;
--	struct strbuf submodule_dir = STRBUF_INIT;
- 	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct strbuf sb = STRBUF_INIT;
- 
--	show_submodule_header(f, path, line_prefix, one, two, dirty_submodule,
-+	show_submodule_header(o, path, one, two, dirty_submodule,
- 			      meta, reset, &left, &right, &merge_bases);
- 
- 	/* We need a valid left and right commit to display a difference */
-@@ -547,15 +538,14 @@ void show_submodule_inline_diff(FILE *f, const char *path,
- 	if (right)
- 		new = two;
- 
--	fflush(f);
- 	cp.git_cmd = 1;
- 	cp.dir = path;
--	cp.out = dup(fileno(f));
-+	cp.out = -1;
- 	cp.no_stdin = 1;
- 
- 	/* TODO: other options may need to be passed here. */
- 	argv_array_push(&cp.args, "diff");
--	argv_array_pushf(&cp.args, "--line-prefix=%s", line_prefix);
-+	argv_array_pushf(&cp.args, "--line-prefix=%s", diff_line_prefix(o));
- 	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
- 		argv_array_pushf(&cp.args, "--src-prefix=%s%s/",
- 				 o->b_prefix, path);
-@@ -578,11 +568,21 @@ void show_submodule_inline_diff(FILE *f, const char *path,
- 		argv_array_push(&cp.args, oid_to_hex(new));
- 
+@@ -570,15 +570,15 @@ void show_submodule_inline_diff(struct diff_options *o, const char *path,
  	prepare_submodule_repo_env(&cp.env_array);
--	if (run_command(&cp))
--		fprintf(f, "(diff failed)\n");
-+	if (start_command(&cp)) {
-+		const char *error = "(diff failed)\n";
-+		emit_line(o, NULL, NULL, 1, 0, error, strlen(error));
-+	}
-+
-+	while (strbuf_getwholeline_fd(&sb, cp.out, '\n') != EOF)
-+		emit_line(o, NULL, NULL, 1, 0, sb.buf, sb.len);
-+
-+	if (finish_command(&cp)) {
-+		const char *error = "(diff failed)\n";
-+		emit_line(o, NULL, NULL, 1, 0, error, strlen(error));
-+	}
+ 	if (start_command(&cp)) {
+ 		const char *error = "(diff failed)\n";
+-		emit_line(o, NULL, NULL, 1, 0, error, strlen(error));
++		emit_line(o, NULL, NULL, 1, 0, 0, error, strlen(error));
+ 	}
+ 
+ 	while (strbuf_getwholeline_fd(&sb, cp.out, '\n') != EOF)
+-		emit_line(o, NULL, NULL, 1, 0, sb.buf, sb.len);
++		emit_line(o, NULL, NULL, 1, 0, 0, sb.buf, sb.len);
+ 
+ 	if (finish_command(&cp)) {
+ 		const char *error = "(diff failed)\n";
+-		emit_line(o, NULL, NULL, 1, 0, error, strlen(error));
++		emit_line(o, NULL, NULL, 1, 0, 0, error, strlen(error));
+ 	}
  
  done:
--	strbuf_release(&submodule_dir);
-+	strbuf_release(&sb);
- 	if (merge_bases)
- 		free_commit_list(merge_bases);
- 	if (left)
-diff --git a/submodule.h b/submodule.h
-index 1277480add..9df0a3aea2 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -53,17 +53,14 @@ extern int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst);
- extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
- extern void handle_ignore_submodules_arg(struct diff_options *, const char *);
--extern void show_submodule_summary(FILE *f, const char *path,
--		const char *line_prefix,
-+extern void show_submodule_summary(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule, const char *meta,
- 		const char *del, const char *add, const char *reset);
--extern void show_submodule_inline_diff(FILE *f, const char *path,
--		const char *line_prefix,
-+extern void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
- 		unsigned dirty_submodule, const char *meta,
--		const char *del, const char *add, const char *reset,
--		const struct diff_options *opt);
-+		const char *del, const char *add, const char *reset);
- extern void set_config_fetch_recurse_submodules(int value);
- extern void set_config_update_recurse_submodules(int value);
- /* Check if we want to update any submodule.*/
 -- 
 2.13.0.18.g7d86cc8ba0
 
