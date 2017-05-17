@@ -7,23 +7,23 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A02B201A7
-	for <e@80x24.org>; Wed, 17 May 2017 13:12:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02310201A7
+	for <e@80x24.org>; Wed, 17 May 2017 13:15:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754119AbdEQNMk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 09:12:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53610 "EHLO cloud.peff.net"
+        id S1753550AbdEQNPD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 09:15:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53618 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754088AbdEQNMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 09:12:40 -0400
-Received: (qmail 4568 invoked by uid 109); 17 May 2017 13:12:39 -0000
+        id S1751348AbdEQNPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2017 09:15:03 -0400
+Received: (qmail 4762 invoked by uid 109); 17 May 2017 13:15:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 May 2017 13:12:39 +0000
-Received: (qmail 9351 invoked by uid 111); 17 May 2017 13:13:12 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 May 2017 13:15:02 +0000
+Received: (qmail 9375 invoked by uid 111); 17 May 2017 13:15:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 May 2017 09:13:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 May 2017 09:12:37 -0400
-Date:   Wed, 17 May 2017 09:12:37 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 17 May 2017 09:15:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 May 2017 09:15:00 -0400
+Date:   Wed, 17 May 2017 09:15:00 -0400
 From:   Jeff King <peff@peff.net>
 To:     Michael Haggerty <mhagger@alum.mit.edu>
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -31,23 +31,39 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         David Turner <novalis@novalis.org>, git@vger.kernel.org
-Subject: Re: [PATCH 08/23] lockfile: add a new method, is_lock_file_locked()
-Message-ID: <20170517131236.kzhsq2jehpxfd27o@sigill.intra.peff.net>
+Subject: Re: [PATCH 09/23] files-backend: move `lock` member to
+ `files_ref_store`
+Message-ID: <20170517131459.uznay3pmzgxijunm@sigill.intra.peff.net>
 References: <cover.1495014840.git.mhagger@alum.mit.edu>
- <70fbcd573f5c8a78a19a08ffc255437c36e7f49d.1495014840.git.mhagger@alum.mit.edu>
+ <9b52c29411fa11ac0d8227d5ae78ba2768485b3f.1495014840.git.mhagger@alum.mit.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <70fbcd573f5c8a78a19a08ffc255437c36e7f49d.1495014840.git.mhagger@alum.mit.edu>
+In-Reply-To: <9b52c29411fa11ac0d8227d5ae78ba2768485b3f.1495014840.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 17, 2017 at 02:05:31PM +0200, Michael Haggerty wrote:
+On Wed, May 17, 2017 at 02:05:32PM +0200, Michael Haggerty wrote:
 
-> It will soon prove useful.
+> @@ -70,6 +61,13 @@ struct files_ref_store {
+>  
+>  	struct ref_cache *loose;
+>  	struct packed_ref_cache *packed;
+> +
+> +	/*
+> +	 * Iff the packed-refs file associated with this instance is
+> +	 * currently locked for writing, this points at the associated
+> +	 * lock (which is owned by somebody else).
+> +	 */
+> +	struct lock_file *packlock;
 
-Very mysterious...
+I'm glad to see you renamed this from just "lock", though the short
+"pack" makes me think of packed objects. I don't know if
+"packed_refs_lock" would be too verbose (I see it's just "packed" above,
+so maybe "packed_lock").
+
+</bikeshed>
 
 -Peff
