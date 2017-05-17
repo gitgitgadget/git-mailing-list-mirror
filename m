@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D577201A7
-	for <e@80x24.org>; Wed, 17 May 2017 17:57:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37F41201A7
+	for <e@80x24.org>; Wed, 17 May 2017 18:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754599AbdEQR5h (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 13:57:37 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35801 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754591AbdEQR5f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 13:57:35 -0400
-Received: by mail-pf0-f181.google.com with SMTP id n23so10994195pfb.2
-        for <git@vger.kernel.org>; Wed, 17 May 2017 10:57:35 -0700 (PDT)
+        id S1754774AbdEQSOE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 14:14:04 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34180 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753465AbdEQSOC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2017 14:14:02 -0400
+Received: by mail-pf0-f178.google.com with SMTP id 9so11227726pfj.1
+        for <git@vger.kernel.org>; Wed, 17 May 2017 11:14:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=k7DD6KQeQAjztXU/+dkJao3QueKWPxnJgNC6AfvvenA=;
-        b=cqrKchqk62BBv+qwcB3/3HpfjmrY+hHcuxTaZGxJGJl6V8ldiDjDvBEoQLig7cbc1h
-         qfvNzonGPWm0KQ+QBzUUCIb7qDwRhr8teLx4YivPol1+s7bOn1nu/+dyCw3iAf703jLw
-         bw9kb0gnH1hP6xSlulR+lqREOH7D661pWvRGD905puETabGNev+1j/6slexH9x4cphJ9
-         QIDYK3+dPuIOvc+Sd/NIFQ+TczQOAnlZIEZrkoMSl8HH9F5WrRAfG2KXD0rILKqJQw7A
-         y/I0ue3fehBTFpBKOskJe3VuN8dK49N8MWjZF+SBIHZbdJDxFWVJLeHYUTrsRKE3gPho
-         7tcA==
+        bh=8d9PQwakUoTQlCS7hdoX2sJpeCIxU2z+BuD5IzXiAV4=;
+        b=N4+ffOyak7cAJaKH2buwV+UPhqDehd6Wxmt8JdFrkMwa+2HkLvbn4cF88esYxvjbD7
+         lCuhXFz9HmKMw3Ob7pM51S4XsmlUbY87URskBp6DLHYuecIRIjQXKhNhsx0z9plMYjAg
+         as4ioIqbyq5i7Ho58Oq7yZRVn5/CZ4fzMU7eppXeN6Hg1ONfgkCMiEUq6AmNIO4jc9lZ
+         BV/Fb16sJllUQ9M62PzKsl5Ff660fLF5C7Wt7fbt6hOSEIEddGU/5Y0nRGClVSIDVX0Z
+         2sFrEUFODiHcWsDiQs5YARzjM/EOOCXF20hKHFX5YTy5B7OirZbEf7NFDGtkg/XBbG72
+         Immg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=k7DD6KQeQAjztXU/+dkJao3QueKWPxnJgNC6AfvvenA=;
-        b=T4hi/cXO6rDbWmcw/0XdCjf7+wq6JeMLayQ5CoQI1JVqj7bt9e9/er6Ecg/rsgokNl
-         3CjKP2wSFqh5igigUdFA9lZ9lexDKh5wXRC0LSk057XfXlhjLdr8MMscJwWAYhUppQuh
-         lTT4vUZ7XD+S1gj/TsEuI0o6orGH35MA5GJ2SJFWVGBt5yGulL9e2tMcJhHhdZxOW8kR
-         f9FxmUmnttLZBjVuvlu19sX+4W+YS3YU55rwe094GOsKI4X9RS4gap/K7CH6qVrGDX4F
-         kjkF0cXBkbr98jKeDvog8oAS3p9C/9iFdcIsmJXikczPD6tqYnP2z7+alLzMJN4R5ecG
-         8QqA==
-X-Gm-Message-State: AODbwcA+/1WX5H+268xG/Jo9QYukWdoDkvdX8MzsHS3BidNGr5j2GGs3
-        7Bg3gRFV+4GTDdxafwE8v/hFoEQstobl
-X-Received: by 10.98.148.2 with SMTP id m2mr18174pfe.194.1495043855130; Wed,
- 17 May 2017 10:57:35 -0700 (PDT)
+        bh=8d9PQwakUoTQlCS7hdoX2sJpeCIxU2z+BuD5IzXiAV4=;
+        b=LBh+kJNwl6CNwlByb5EDpwHJuF3nm9IsaYhQVw5+XqeX2NZn74cmc2Q5EsUEvbs5Rz
+         JLiDS7hTnWmxhEdFw9QILmpmeq7qqUbOe7hzIAD66mffBs3vQJWK3FamoXTHHcQ04zco
+         lciaLNOpiHEZrXZ04hsQ+L7GQLstMXWLhNlrtbCYTMs4p7xBCao/yb/hp8KMHHVoLysS
+         E+J9xpi3nWVaS1kfySe/yH4TqiJpAflhhY7jYcr8jCcrQ6NGbrtkcPdIMyr8YWN4qfsJ
+         gaYRL0jYTkYUzhoARQVLIDQGB0mWYvOloKFTbzKHS71dvyyOHvH27bDfH3HbBmoMpZd8
+         FL9g==
+X-Gm-Message-State: AODbwcDBVPKCGbDmtJ3SeEmzPRBaAl56OjL9ZxKv68EAOhnaV4RbJwFT
+        eOzmIEb9GXwcJSkRfRFx95LmdwotozF5
+X-Received: by 10.84.228.207 with SMTP id y15mr99218pli.172.1495044841069;
+ Wed, 17 May 2017 11:14:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Wed, 17 May 2017 10:57:34 -0700 (PDT)
-In-Reply-To: <eedc8f85c8237515bc66584649b1e3f3d547049c.1495014840.git.mhagger@alum.mit.edu>
-References: <cover.1495014840.git.mhagger@alum.mit.edu> <eedc8f85c8237515bc66584649b1e3f3d547049c.1495014840.git.mhagger@alum.mit.edu>
+Received: by 10.100.170.200 with HTTP; Wed, 17 May 2017 11:14:00 -0700 (PDT)
+In-Reply-To: <20170517134241.5zqaqptfgjrrrbju@sigill.intra.peff.net>
+References: <cover.1495014840.git.mhagger@alum.mit.edu> <20170517134241.5zqaqptfgjrrrbju@sigill.intra.peff.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 17 May 2017 10:57:34 -0700
-Message-ID: <CAGZ79kb65sv8g6XUQMcGTkZ0ubpY2LYpj7g2wv15knXuv7oKhw@mail.gmail.com>
-Subject: Re: [PATCH 17/23] get_packed_ref_cache(): assume "packed-refs" won't
- change while locked
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
+Date:   Wed, 17 May 2017 11:14:00 -0700
+Message-ID: <CAGZ79kaNxyh_3eJUZ7VRL673K4_nYD-KosAyv=grzWRCSzYT9Q@mail.gmail.com>
+Subject: Re: [PATCH 00/23] Prepare to separate out a packed_ref_store
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        <pclouds@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         David Turner <novalis@novalis.org>,
         "git@vger.kernel.org" <git@vger.kernel.org>
@@ -66,22 +66,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 17, 2017 at 5:05 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> If we've got the "packed-refs" file locked, then it can't change;
-> there's no need to keep calling `stat_validity_check()` on it.
+On Wed, May 17, 2017 at 6:42 AM, Jeff King <peff@peff.net> wrote:
+> On Wed, May 17, 2017 at 02:05:23PM +0200, Michael Haggerty wrote:
+>
+>> This patch series is the next leg on a journey towards reading
+>> `packed-refs` using `mmap()`, the most interesting aspect of which is
+>> that we will often be able to avoid having to read the whole
+>> `packed-refs` file if we only need a subset of references.
+>>
+>> The first leg of the journey was separating out the reference cache
+>> into a separate module [1]. That branch is already merged to master.
+>>
+>> This patch series prepares the ground for separating out a
+>> `packed_ref_store`, but doesn't yet take that step. (As you can see,
+>> it's a long enough patch series already!) It's kind of a grab bag of
+>> cleanup patches plus work to decouple the packed-refs handling code
+>> from the rest of `files_ref_store`. Some highlights:
+>
+> I dropped a few minor comments in individual patches, but it all looks
+> good to me up through patch 22. Your description in patch 23 makes
+> sense, but I was too frazzled by the end to carefully review the code
+> itself for that patch. I'll try to come back to it later.
 
-This change will work in a world where all Git implementations
-obey a lock. If there is at least one implementation that doesn't
-care about the existence of lock files we may introduce a race
-here.
-
-I am not sure if it is worth to be extra careful in the common case
-though. But I could imagine some people using a git repo on an
-NFS concurrently with different implementations and one of them
-is an old / careless lock-ignoring implementation.
-
-My opinion is not strong enough that I'd veto such a patch
-just food for thought.
+Same here.
 
 Thanks,
 Stefan
