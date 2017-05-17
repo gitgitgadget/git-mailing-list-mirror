@@ -2,137 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCF0A2023D
-	for <e@80x24.org>; Wed, 17 May 2017 00:55:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7041A2023D
+	for <e@80x24.org>; Wed, 17 May 2017 01:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751529AbdEQAza (ORCPT <rfc822;e@80x24.org>);
-        Tue, 16 May 2017 20:55:30 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:33684 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750784AbdEQAz3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 16 May 2017 20:55:29 -0400
-Received: by mail-oi0-f66.google.com with SMTP id h4so6037531oib.0
-        for <git@vger.kernel.org>; Tue, 16 May 2017 17:55:29 -0700 (PDT)
+        id S1751866AbdEQBGP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 16 May 2017 21:06:15 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:35883 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751845AbdEQBGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 16 May 2017 21:06:14 -0400
+Received: by mail-it0-f52.google.com with SMTP id o5so72811109ith.1
+        for <git@vger.kernel.org>; Tue, 16 May 2017 18:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=2IwX4zZCK6xBDrFg2qblXA2q/PM68LEsxigKLhCdAEQ=;
-        b=dbtNIIsmhp/Tymm9WJvAUbnPrvOSckMSPKUi0jbUuHuqlqalBSBJakmAF+hIR6ou8V
-         OeiaSmtKJEU8wZldujraOZr4BHUvr56Pfbw90mz7raHVRioE6qXc4lHT+PI+rXoQIKeO
-         rinnP5d36SxU6WsAvW6QCysjziCpIOH35ugvgErLgv6qdLkPuyNqoaLsZ3hB7KFNzJI6
-         ayudZEM9xFrf4t/zxLgkV0OCtPaOndX4FcN7rdTY9RNBwapmP5ibi8lBXa1cxWjZl6zh
-         plqXuoGN16MqB017JUt6UiVutoHGi2ViDrfs6dDXzRul7Sujiuly0ThVc3FROyBb3Mc5
-         /V/g==
+        bh=i+a9+UCMbeHcPGlzNvYDjHAxytJtSDEsJ0PRFZGJVHk=;
+        b=H5gQ0qS3ZxTURLxz9ttWQ1hqk1bOaEROG4QUVO6wOKrhxLzLBnh2RLv4U+caBktlRX
+         i6mMBzjTXW6+kwR+ukN7XzL7a+DqTJ4y2mmB0OvbyJOai06zq9otSx75Io053hL7ints
+         dtsXsXjisLXaQeCVwjYAnUyo0PvPFWFL7Ez8sJaHJvJNtEU3Ty740TeT/zUV7B8/6sw7
+         Ub+I3AgzJ1YuvxRDn8UIcicfYVboOValJAngyYGFkCoYOgHFYaAoEBwEriOAJYVHvKg0
+         nMeMk57UaSq1wrf4MERJp0PWr4OXb1Zrh+75D8IOofVMErzsauNoXH2P713L+gE5Bvce
+         SG/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=2IwX4zZCK6xBDrFg2qblXA2q/PM68LEsxigKLhCdAEQ=;
-        b=bfhWk9lK7NvtXcsQzXtZdEAJhZPXwyejmHEV7R3YWkfyOVkyRdcCKms5A2FJi4zMaw
-         YPlH6voPcLIeKPktiiqTj9dq5nFBEWWC/SUMSngte5Fckg2tsNg1G2VgkEeX5xyEncmY
-         He3HzpMSxs55ZGfNvqJp8IO1tkClLLz4NgC8bkDjvquMo0QMLELkGxtWUtOAyP5LGHhB
-         lFcIHkuXmBdfOtpdeMoGsB8c+jDkLinoVRDnOiXahDhOzA0SGXxfbntDL2c+0i9T7Fdq
-         2+9zWkfdBJo0bNzdk6d913g+lLsNBcLtotgD6uoNJ9GTCukjIZsAHzMrynw9zRHEVPhK
-         80Dg==
-X-Gm-Message-State: AODbwcBaiGnd3pIWKHoMVDcPJCswuLHsNmGfaF5whCsV2WlOd8CtKeTZ
-        dJw6QV9NRY/IuDXEhe25pkSemnVPNA==
-X-Received: by 10.202.114.74 with SMTP id p71mr381542oic.201.1494982528552;
- Tue, 16 May 2017 17:55:28 -0700 (PDT)
+        bh=i+a9+UCMbeHcPGlzNvYDjHAxytJtSDEsJ0PRFZGJVHk=;
+        b=S1fQZ2gUoDAWa/Zg6nUXcvFZzIZZlsvslUN1YERwKRlIWee6Urt0f5UvJdzmKfACNq
+         wqkZO0ykwO5SmKWMBSgz8w172GlC4fwOEnpUEpCreeJuxq+Q+48Fv63vjlfVz/S3P1W7
+         6RMaX46htM2EBAxwgnh+yHaJaK6bJyMeG+03IJR4B7YSroNeDXdgmoviS07Qj6J9pxdC
+         iuY9PHdvb2viFuUqt3h6g2PZ7WrU1bModFC6N04Elge+cAL/Xpobl9gylAdQJ+c2AeYD
+         b49jOufEAGzOO8K0f1qcTeNH+TqJIQZFp8+l2lTOHauEuxbKGd90XNhaZ6K30P8HOjbL
+         +j1g==
+X-Gm-Message-State: AODbwcDdK/wJyDpVzhWyb6bwqb5lCV6DeluRmHitaHo6xhmlBLuBpbG8
+        btExH3q5hokEkF/J97mO1gg0KtmMzQ==
+X-Received: by 10.36.210.193 with SMTP id z184mr1634270itf.86.1494983174053;
+ Tue, 16 May 2017 18:06:14 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.202.72.194 with HTTP; Tue, 16 May 2017 17:55:28 -0700 (PDT)
-In-Reply-To: <20170517005041.46310-1-manishearth@gmail.com>
-References: <20170517002825.GR27400@aiede.svl.corp.google.com> <20170517005041.46310-1-manishearth@gmail.com>
-From:   Manish Goregaokar <manish.earth@gmail.com>
-Date:   Tue, 16 May 2017 17:55:28 -0700
-Message-ID: <CAM2h-yfRc69W8f=inRRjtyBh4EZWJk6W2gCTM=S=ifJn3g8auA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] refs: Add for_each_worktree_ref for iterating over
- all worktree HEADs
-To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Manish Goregaokar <manishearth@gmail.com>
+Received: by 10.79.150.90 with HTTP; Tue, 16 May 2017 18:05:33 -0700 (PDT)
+In-Reply-To: <dbbf2f82-8ef3-2411-d51f-63f94ba7e77a@gmail.com>
+References: <dbbf2f82-8ef3-2411-d51f-63f94ba7e77a@gmail.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Tue, 16 May 2017 21:05:33 -0400
+Message-ID: <CAJZjrdUXoa8EXYfFzHqn2yrUdidwdPSoEJ8_AFwwAX3ORr59UQ@mail.gmail.com>
+Subject: Re: [fixed] error using `git mergetool --tool=meld`
+To:     Matthew Groth <mgroth49@gmail.com>, davvid@gmail.com
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I *think* I got send-email to work but I can't be certain :) The tabs
-seem to be back!
+On Tue, May 16, 2017 at 5:55 PM, Matthew Groth <mgroth49@gmail.com> wrote:
+> I needed to use `git config mergetool.meld.hasOutput false`
 
-It didn't thread correctly, unsure why.
+Hm, that's interesting - the source code snippet you quoted from meld
+implies it supports --output. What version of meld do you have?
 
-Sorry about the patch problems,
-
-On Tue, May 16, 2017 at 5:50 PM,  <manish.earth@gmail.com> wrote:
-> From: Manish Goregaokar <manishearth@gmail.com>
->
-> To ensure that `git prune` does not remove refs checked out
-> in other worktrees, we need to include these HEADs in the
-> set of roots. This adds the iteration function necessary
-> to do this.
->
-> Signed-off-by: Manish Goregaokar <manishearth@gmail.com>
-> ---
->  refs.c | 16 ++++++++++++++++
->  refs.h |  1 +
->  2 files changed, 17 insertions(+)
->
-> diff --git a/refs.c b/refs.c
-> index 2d71774..27e0b60 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -3,6 +3,7 @@
->   */
->
->  #include "cache.h"
-> +#include "commit.h"
->  #include "lockfile.h"
->  #include "refs.h"
->  #include "refs/refs-internal.h"
-> @@ -1157,6 +1158,21 @@ int head_ref(each_ref_fn fn, void *cb_data)
->         return head_ref_submodule(NULL, fn, cb_data);
->  }
->
-> +int for_each_worktree_ref(each_ref_fn fn, void *cb_data)
-> +{
-> +       int i, flag, retval;
-> +       struct object_id oid;
-> +       struct worktree **worktrees = get_worktrees(GWT_SORT_LINKED);
-> +       for (i = 0; worktrees[i]; i++) {
-> +               struct commit* commit = lookup_commit_reference(worktrees[i]->head_sha1);
-> +               oid = commit->object.oid;
-> +               if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag)) {
-> +                       if (retval = fn("HEAD", &oid, flag, cb_data))
-> +                               return retval;
-> +               }
-> +       }
-> +}
-> +
->  /*
->   * Call fn for each reference in the specified submodule for which the
->   * refname begins with prefix. If trim is non-zero, then trim that
-> diff --git a/refs.h b/refs.h
-> index 9fbff90..425a853 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -192,6 +192,7 @@ typedef int each_ref_fn(const char *refname,
->   * stop the iteration.
->   */
->  int head_ref(each_ref_fn fn, void *cb_data);
-> +int for_each_worktree_ref(each_ref_fn fn, void *cb_data);
->  int for_each_ref(each_ref_fn fn, void *cb_data);
->  int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
->  int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
-> --
-> 2.10.1
->
+David Aguilar seems to be the one who's contributed most of the meld
+code, perhaps he might have an idea about why this is happening.
