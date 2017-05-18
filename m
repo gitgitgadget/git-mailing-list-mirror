@@ -2,97 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 857E42027B
-	for <e@80x24.org>; Thu, 18 May 2017 12:11:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 175F6201CF
+	for <e@80x24.org>; Thu, 18 May 2017 13:42:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932499AbdERMLX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 08:11:23 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52270 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932342AbdERKuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 06:50:23 -0400
-Received: from virtualbox ([95.208.59.37]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaaVn-1dqN7w0WwZ-00mKCe; Thu, 18
- May 2017 12:49:59 +0200
-Date:   Thu, 18 May 2017 12:49:57 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] rebase -i: silence stash apply
-In-Reply-To: <20170518100233.30559-3-phillip.wood@talktalk.net>
-Message-ID: <alpine.DEB.2.21.1.1705181246430.3610@virtualbox>
-References: <20170518100233.30559-1-phillip.wood@talktalk.net> <20170518100233.30559-3-phillip.wood@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:GRl8lDk476X+HZe7v5kQiJBf+zPCKffY8qjy3flJ5yMUBrQwvgm
- oF8/zxv+RnGnqG0IJQgVx8aW/J2v89XHciyvo51PeZ7oBHg7IWssrIOIMzC9gxGO2Mr1KFX
- R4IKzJ9JuxMQl1HqrU75BVfoz+geXRul8KCxHxvArC8sY2OjB4VOvzLYfLw96tsb9niRGqa
- lcBLl0ZxGNPkLHihTmDww==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JhzJ2s2RmAQ=:9es2CXP3oH1a8e6c7gTXCf
- 6nSJztIFp3zCNeJXNGv4ZlIwVON+IvIau/6/7XnpypUXrkG/XzC9LVyI7H2IX0+uptlkfDHc8
- 0ul4dWbwjZQ4Xtviok9V/JFEBs5hgNBp2iX0vZCm7ef7rztK7FEaGvgZi4gfQk63IuKay7krS
- cnIHXSmuANX7e9U2LZIO3H8VF1QTJZB25zuCjeDgQVI6be4NCaklNNipFQigbHJd5V5JG8/PB
- 1NGWQGGsALExYoOyfnpkpiD47HFI1p8Z7E5uuu79aCXOph2CU6hLgXsWR4y5sImA+B/0CDGkv
- JlHROuftxwlEaXt15SfmJ8xJ8IJaPhS+jqFGcvjqkPJrt1eJTDZzdTIyhV8pXoYu4bgzkP05o
- Zu0RGNOnGl6dWgU0XXYX30vDKQhZs3gVjEGTpJbis8QQSETEWx3AhLiRK3wucq/DSEz4eHRI/
- +zVQEsj2km0tNa4p0l0UO9zMplN2R+jTOil2r3XU63m+kRIuFdGf8t5r8eSuzZEdcFZwSaTsQ
- tYH6lsIy8zWZWfi479CKji0CZ5pqmA4aO/Z3KRI7TzN6nwLR4fSHpmz9qqelhICAuHNnq6//9
- tF6U6CeHw/504nqh4a7BwoN0K+BPGT1nsOKsRmIHyM2NGT4BHS0r+1mVaaboVw5S1Ce5Fz1NI
- hFZWxVTTFbJSk2Z8smPMcj8bli3aRDuu+KZegsdRNRHy3eNr/+FR0IP5JRqWRv5P8gKxZHgP8
- lLf5iq8a2zcthYoUgrkaYPZ5TCpm4jYOEojrGdrDVjXisjlleltNnets4GYwi/C6lpFKrFWor
- vNRiHRz
+        id S1754521AbdERNmN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 09:42:13 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:22484 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753478AbdERNmL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 09:42:11 -0400
+Received: from lamlash.localdomain ([92.22.40.87])
+        by smtp.talktalk.net with SMTP
+        id BLgjddP0lxR4bBLgudCZFu; Thu, 18 May 2017 14:42:09 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1495114929; bh=NxHHaVtGrVCLbqhgPUP2kFuIRod7d5N4PJyzKO7um04=;
+        h=From:To:Cc:Subject:Date:Reply-To;
+        b=ejTl0mg/8iZWxxqt4hLvqzYtf/6qn/a8ICGhNMZ1W7qadYFJt2O4hLnjbjNSA1pPb
+         7oj0mafjT51ixPQxV2s3Mr7boxcjWmbYBgkMnOLZz/9jzIPKgbtG79lE3vjobKJWMw
+         dZl06KUuFxWhFXC628rbvDdA6jFD0ch5wRp22C04=
+X-Originating-IP: [92.22.40.87]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=Uk7VDCfhaeB8IHNEy8al/Q==:117
+ a=Uk7VDCfhaeB8IHNEy8al/Q==:17 a=evINK-nbAAAA:8 a=S_-o_t9VBCyMV-C0xAUA:9
+ a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH] rebase -i: Add missing newline to end of message
+Date:   Thu, 18 May 2017 14:41:54 +0100
+Message-Id: <20170518134154.12771-1-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.13.0
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfNT5dwWFHcs8s5fzRUTt6ppVkN/LeI7muvrVYLIroHHDpp+TIp39zaXsfRe+JFAeIdy+6q0ETw3pwb2KS0ww0D8HDsotkFTfUdr7EwCczcFG6qaHaV3y
+ Vp+r450lDlc4jjE9Hnc7mYxVY4WGdHnQjdZsqbDhfGGvyQ7NRQnQPepNX5gD/aSGQFJ7AZ2qCKjhNUugQlg9I1C3btUJRQ9ET+2mocnhr9dAATEsD3UCr/4I
+ J1HeZ/24z37N3oJbliE30VeXrikbmA3CZ44Pqf5Rgfo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-On Thu, 18 May 2017, Phillip Wood wrote:
+The message that's printed when auto-stashed changes are successfully
+restored was missing '\n' at the end.
+---
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> diff --git a/sequencer.c b/sequencer.c
-> index f8bc18badf1a3fb1b39656501c5a316e229968d2..311728a145dfc66e230334221a2610468239932d 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1914,6 +1914,8 @@ static int apply_autostash(struct replay_opts *opts)
->  	strbuf_trim(&stash_sha1);
->  
->  	child.git_cmd = 1;
-> +	child.no_stdout = 1;
-> +	child.no_stderr = 1;
->  	argv_array_push(&child.args, "stash");
->  	argv_array_push(&child.args, "apply");
->  	argv_array_push(&child.args, stash_sha1.buf);
+diff --git a/sequencer.c b/sequencer.c
+index 311728a14..4dcf9c8be 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1920,7 +1920,7 @@ static int apply_autostash(struct replay_opts *opts)
+ 	argv_array_push(&child.args, "apply");
+ 	argv_array_push(&child.args, stash_sha1.buf);
+ 	if (!run_command(&child))
+-		printf(_("Applied autostash."));
++		printf(_("Applied autostash.\n"));
+ 	else {
+ 		struct child_process store = CHILD_PROCESS_INIT;
+ 
+-- 
+2.13.0
 
-If I remember correctly, then the shell version prints the output in case
-of an error.
-
-We already imitated that behavior in `git commit`
-(https://github.com/git-for-windows/git/blob/v2.13.0.windows.1/sequencer.c#L674-L684):
-
-		/* hide stderr on success */
-		struct strbuf buf = STRBUF_INIT;
-		int rc = pipe_command(&cmd,
-				      NULL, 0,
-				      /* stdout is already redirected */
-				      NULL, 0,
-				      &buf, 0);
-		if (rc)
-			fputs(buf.buf, stderr);
-		strbuf_release(&buf);
-
-I think that would be the appropriate approach here, too.
-
-Ciao,
-Johannes
-
-P.S.: it may be a very good idea to accompany this patch (as well as the
-previous one) by a patch to the test suite to verify that the fixed code
-does not regress.
