@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5C39201CF
-	for <e@80x24.org>; Thu, 18 May 2017 19:38:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 862C0201CF
+	for <e@80x24.org>; Thu, 18 May 2017 19:38:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757734AbdERTia (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 15:38:30 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33396 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757691AbdERTiU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 15:38:20 -0400
-Received: by mail-pf0-f176.google.com with SMTP id e193so28549761pfh.0
-        for <git@vger.kernel.org>; Thu, 18 May 2017 12:38:19 -0700 (PDT)
+        id S1757741AbdERTig (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 15:38:36 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33392 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757700AbdERTiS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 15:38:18 -0400
+Received: by mail-pf0-f181.google.com with SMTP id e193so28549561pfh.0
+        for <git@vger.kernel.org>; Thu, 18 May 2017 12:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9RVaBAvF7wjrlb8GWkX9H1NvYV5V5i/zJLEW9c4gO/8=;
-        b=c4I2mg7O6uc16Kgd8Esm9bFdY6IwEC2EQFVj2rhIGpyHEUJTipdIFjihjTQKlmS6Lx
-         pdfwEJmDEs43n06Divgp/IRh0GVKocgrG2jCwdw/1MjDlfsVDd4kHQffEUABkLOXsIRM
-         GpBMhNsYwfz7HHviMf/3l0dKov2GfVORSUZELQ/hJcxVpD9xTiVUOD/5IhrxLhGS3Js2
-         c7NLeC2DazryqxcKnTLNw2YJewUKqFhGYdgS+GbBU6kykZMn0ed1W8WD+V+HqWB/32Xt
-         B1zJVFYEt07D5MrVOB84DjhkDdwmjEM4vTats9AkygN9OjTWYOPv1VV5lGa2HQXeGdCU
-         no1A==
+        bh=2E1Zsc7LUrIZ/0v77ii1SsmUnyMLxbCE/Jm3T18suHo=;
+        b=A9dqASreuSw37GtHV0rwm0r/iRj+YKuc5Kda8MEz00XPosuPHbiKwDKRIMv3clkYnT
+         qjnweCQ5vmnwn3JKAaTlrEPTkQJz1dIybwvZ1/z1ftWGuhGzwyDjRKymoOF/svSafXid
+         RX/Jh1yT94RGZiBmg31/EdeGbpuf1AVP7TTPietm3blVtkKI5W3219cdl3g3uz2TZmqc
+         LOABXLCZAGmPCsN9S2uedg/IXRQZI6/kXYTTAWVwGFtsgbvp4stoE4W2xt5+sj7BRJVN
+         orsubWofp6NhLBtJqg7pBPPcWxWVRhfIE+5N7cfcoK/vepMLmHr4tEojq7TDHcM2uqsn
+         GRYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=9RVaBAvF7wjrlb8GWkX9H1NvYV5V5i/zJLEW9c4gO/8=;
-        b=Mrj/dJ/dCdNAb8Uu4a7/Qe4LYgiesrksBU9Lr5gS4YRt6wgLFdeIs+CgJUxhXORUxU
-         jgOjnlzOXKKx3btaIY8G4mXCSEzTjX16dkCmau1bMKiyH0QpJv2a14PQOC8d0ho7jYFg
-         91UvEOCn/qW+j5p5b5Lc8mXkVDAgqHjJB1EhZQ1CmjTY5NkqSazJy8IDPuil+8DMy1KT
-         sj3pVDObl9h4ME3YHeAVev6vWMBhauFVDXFsXZNy7T0QWKCU7HrT8MsDz34e0I9jwFDS
-         ZrTKbvvj2GLr3v73h+m4UsuSuxJcCTqKRNDxfvCTt4VpL/zup6RIIvoZ4VcGY+k+rpao
-         vuxg==
-X-Gm-Message-State: AODbwcBvlS8xb/I5F9A0EKf997oy7NRITl6gBAnvtfhQRiPBSYzbJ/WB
-        5Fp8vEBCwFi+7VYW
-X-Received: by 10.84.195.1 with SMTP id i1mr6787630pld.120.1495136299100;
-        Thu, 18 May 2017 12:38:19 -0700 (PDT)
+        bh=2E1Zsc7LUrIZ/0v77ii1SsmUnyMLxbCE/Jm3T18suHo=;
+        b=AdxVpsZBXs+XuzTx6fAQjAVEVDZBMaJIoRJNEJiWIaYAup9uq3CVu/ZphBtp4mhjr/
+         lTIDqPN45fiFePasJ33qF4pPhVsBtzmp8YHaOwEEgdGkMYVxIh5qvFuQP4551FFwqXH9
+         B+q8xisdi65yiXXSjBngL03CGqxZVLDBFJpTSqHJtbAH98DXp/75TNr4XgjaX5MGEno+
+         ceBFEkUbH6rvdiBLjbwcHlL++NXM84MzO1nHGe8VaXkcFcyRWiLaaYgKvKlfluW3k72g
+         JeNC7VxLjWAqT6fGFvQhyGQs0ORS4Awd5Hv9eAYRmqjjmXbBuBL1bNGfUPgDop9gfFOD
+         LIPQ==
+X-Gm-Message-State: AODbwcBb0TQdJN6yse03MW2d9/IOoc5bJ98lLao+l7NvTfBG3q/Lmucs
+        2aFUikRGBr0BLrb8
+X-Received: by 10.98.204.130 with SMTP id j2mr6332633pfk.107.1495136297871;
+        Thu, 18 May 2017 12:38:17 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:7013:588c:5765:703d])
-        by smtp.gmail.com with ESMTPSA id t13sm12363761pfa.126.2017.05.18.12.38.18
+        by smtp.gmail.com with ESMTPSA id w85sm11275721pfk.62.2017.05.18.12.38.16
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 18 May 2017 12:38:18 -0700 (PDT)
+        Thu, 18 May 2017 12:38:17 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, mhagger@alum.mit.edu,
         peff@peff.net
-Subject: [PATCHv3 20/20] diff.c: color moved lines differently
-Date:   Thu, 18 May 2017 12:37:46 -0700
-Message-Id: <20170518193746.486-21-sbeller@google.com>
+Subject: [PATCHv3 19/20] diff: buffer all output if asked to
+Date:   Thu, 18 May 2017 12:37:45 -0700
+Message-Id: <20170518193746.486-20-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.18.g7d86cc8ba0
 In-Reply-To: <20170518193746.486-1-sbeller@google.com>
 References: <20170517025857.32320-1-sbeller@google.com>
@@ -64,804 +64,330 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When there is a lot of code moved around such as in 11979b9 (2005-11-18,
-"http.c: reorder to avoid compilation failure.") for example, the review
-process is quite hard, as it is not mentally challenging.  It is a rather
-tedious process, that gets boring quickly. However you still need to read
-through all of the code to make sure the moved lines are there as supposed.
+Introduce a new option 'use_buffer' in the struct diff_options which
+controls whether all output is buffered up until all output is available.
 
-While it is trivial to color up a patch like the following
+We'll have a new struct 'buffered_patch_line' in diff.h which will be
+used to buffer each line.  The buffered_patch_line will duplicate the
+memory of the line to buffer as that is easiest to reason about for now.
+In a future patch we may want to decrease the memory usage by not
+duplicating all output for buffering but rather we may want to store
+offsets into the file or in case of hunk descriptions such as the
+similarity score, we could just store the relevant number and
+reproduce the text later on.
 
-    $ git diff
-    diff --git a/file2.c b/file2.c
-    index 9163a0f..8e66dc0 100644
-    --- a/file2.c
-    +++ b/file2.c
-    @@ -3,13 +3,6 @@ void *xmemdupz(const void *data, size_t len)
-            return memcpy(xmallocz(len), data, len);
-     }
+This approach was chosen as a first step because it is quite simple
+compared to the alternative with less memory footprint.
 
-    -int secure_foo(struct user *u)
-    -{
-    -       if (!u->is_allowed_foo)
-    -               return;
-    -       foo(u);
-    -}
-    -
-     char *xstrndup(const char *str, size_t len)
-     {
-            char *p = memchr(str, '\0', len);
-    diff --git a/test.c b/test.c
-    index a95e6fe..81eb0eb 100644
-    --- a/test.c
-    +++ b/test.c
-    @@ -18,6 +18,13 @@ ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset)
-            return total;
-     }
+emit_line factors out the emission part into emit_line_emission,
+and depending on the diff_options->use_buffer the emission
+will be performed directly when calling emit_line or after the
+whole process is done, i.e. by buffering we have add the possibility
+for a second pass over the whole output before doing the actual
+output.
 
-    +int secure_foo(struct user *u)
-    +{
-    +       if (!u->is_allowed_foo)
-    +               return;
-    +       foo(u);
-    +}
-    +
-     int xdup(int fd)
-     {
-            int ret = dup(fd);
+In 6440d34 (2012-03-14, diff: tweak a _copy_ of diff_options with
+word-diff) we introduced a duplicate diff options struct for word
+emissions as we may have different regex settings in there.
+When buffering the output, we need to operate on just one buffer,
+so we have to copy back the emissions of the word buffer into the
+main buffer.
 
-as in this patch all lines that add or remove lines
-should be colored in the new color that indicates moved
-lines.
+Unconditionally enable output via buffer in this patch as it yields
+a great opportunity for testing, i.e. all the diff tests from the
+test suite pass without having reordering issues (i.e. only parts
+of the output got buffered, and we forgot to buffer other parts).
+The test suite passes, which gives confidence that we converted all
+functions to use emit_line for output.
 
-However the intention of this patch is to aid reviewers
-to spotting permutations in the moved code. So consider the
-following malicious move:
-
-    diff --git a/file2.c b/file2.c
-    index 9163a0f..8e66dc0 100644
-    --- a/file2.c
-    +++ b/file2.c
-    @@ -3,13 +3,6 @@ void *xmemdupz(const void *data, size_t len)
-            return memcpy(xmallocz(len), data, len);
-     }
-
-    -int secure_foo(struct user *u)
-    -{
-    -       if (!u->is_allowed_foo)
-    -               return;
-    -       foo(u);
-    -}
-    -
-     char *xstrndup(const char *str, size_t len)
-     {
-            char *p = memchr(str, '\0', len);
-    diff --git a/test.c b/test.c
-    index a95e6fe..a679c40 100644
-    --- a/test.c
-    +++ b/test.c
-    @@ -18,6 +18,13 @@ ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset)
-            return total;
-     }
-
-    +int secure_foo(struct user *u)
-    +{
-    +       foo(u);
-    +       if (!u->is_allowed_foo)
-    +               return;
-    +}
-    +
-     int xdup(int fd)
-     {
-            int ret = dup(fd);
-
-If the moved code is larger, it is easier to hide some permutation in the
-code, which is why we would not want to color all lines as "moved" in this
-case. So we do not just need to color lines differently that are added and
-removed in the same diff, we need to tweak the algorithm a bit more.
-
-As the reviewers attention should be brought to the places, where the
-difference is introduced to the moved code, we cannot just have one new
-color for all of moved code.
-
-First I implemented an alternative design, which would show a moved hunk
-in one color, and its boundaries in another color. This idea was error
-prone as it inspected each line and its neighboring lines to determine
-if the line was (a) moved and (b) if was deep inside a hunk by having
-matching neighboring lines. This is unreliable as the we can construct
-hunks which have equal neighbors that just exceed the number of lines
-inspected. (Think of 'AXYZBXYZCXYZD..' with each letter as a line, that
-is permutated to AXYZCXYZBXYZD..').
-
-Instead this provides a dynamic programming greedy algorithm that finds
-the largest moved hunk and then switches color to the alternative color
-for the next hunk. By doing this any permutation is recognized and
-displayed. That implies that there is no dedicated boundary or
-inside-hunk color, but instead we'll have just two colors alternating
-for hunks.
-
-It would be a bit more UX friendly if the two corresponding hunks
-(of added and deleted lines) for one move would get the same color id.
-(Both get "regular moved" or "alternative moved"). This problem is
-deferred to a later patch for now.
-
-A note on the options '--submodule=diff' and '--color-words/--word-diff':
-In the conversion to use emit_line in the prior patches both submodules
-as well as word diff output carefully chose to call emit_line with sign=0.
-All output with sign=0 is ignored for move detection purposes in this
-patch, such that no weird looking output will be generated for these
-cases. This leads to another thought: We could pass on '--color-moved' to
-submodules such that they color up moved lines for themselves. If we'd do
-so only line moves within a repository boundary are marked up.
-
-Algorithm-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/config.txt   |  14 ++-
- diff.c                     | 266 +++++++++++++++++++++++++++++++++++++++++++--
- diff.h                     |  11 +-
- t/t4015-diff-whitespace.sh | 229 ++++++++++++++++++++++++++++++++++++++
- 4 files changed, 507 insertions(+), 13 deletions(-)
+ diff.c | 154 ++++++++++++++++++++++++++++++++++++++++++++++++++---------------
+ diff.h |  39 +++++++++++++++++
+ 2 files changed, 159 insertions(+), 34 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 475e874d51..902d017c3b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1051,14 +1051,24 @@ This does not affect linkgit:git-format-patch[1] or the
- 'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
- command line with the `--color[=<when>]` option.
- 
-+color.moved::
-+	A boolean value, whether a diff should color moved lines
-+	differently. The moved lines are searched for in the diff only.
-+	Duplicated lines from somewhere in the project that are not
-+	part of the diff are not colored as moved.
-+	Defaults to false.
-+
- color.diff.<slot>::
- 	Use customized color for diff colorization.  `<slot>` specifies
- 	which part of the patch to use the specified color, and is one
- 	of `context` (context text - `plain` is a historical synonym),
- 	`meta` (metainformation), `frag`
- 	(hunk header), 'func' (function in hunk header), `old` (removed lines),
--	`new` (added lines), `commit` (commit headers), or `whitespace`
--	(highlighting whitespace errors).
-+	`new` (added lines), `commit` (commit headers), `whitespace`
-+	(highlighting whitespace errors), `oldMoved` (removed lines that
-+	reappear), `newMoved` (added lines that were removed elsewhere),
-+	`oldMovedAlternative` and `newMovedAlternative` (as a fallback to
-+	cover adjacent blocks of moved code)
- 
- color.decorate.<slot>::
- 	Use customized color for 'git log --decorate' output.  `<slot>` is one
 diff --git a/diff.c b/diff.c
-index 2ccf93cd09..451cab2875 100644
+index 50d91643b6..2ccf93cd09 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -31,6 +31,7 @@ static int diff_indent_heuristic; /* experimental */
- static int diff_rename_limit_default = 400;
- static int diff_suppress_blank_empty;
- static int diff_use_color_default = -1;
-+static int diff_color_moved_default;
- static int diff_context_default = 3;
- static int diff_interhunk_context_default;
- static const char *diff_word_regex_cfg;
-@@ -55,6 +56,10 @@ static char diff_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_YELLOW,	/* COMMIT */
- 	GIT_COLOR_BG_RED,	/* WHITESPACE */
- 	GIT_COLOR_NORMAL,	/* FUNCINFO */
-+	GIT_COLOR_BOLD_RED,	/* OLD_MOVED_A */
-+	GIT_COLOR_BG_RED,	/* OLD_MOVED_B */
-+	GIT_COLOR_BOLD_GREEN,	/* NEW_MOVED_A */
-+	GIT_COLOR_BG_GREEN,	/* NEW_MOVED_B */
- };
- 
- static NORETURN void die_want_option(const char *option_name)
-@@ -80,6 +85,14 @@ static int parse_diff_color_slot(const char *var)
- 		return DIFF_WHITESPACE;
- 	if (!strcasecmp(var, "func"))
- 		return DIFF_FUNCINFO;
-+	if (!strcasecmp(var, "oldmoved"))
-+		return DIFF_FILE_OLD_MOVED;
-+	if (!strcasecmp(var, "oldmovedalternative"))
-+		return DIFF_FILE_OLD_MOVED_ALT;
-+	if (!strcasecmp(var, "newmoved"))
-+		return DIFF_FILE_NEW_MOVED;
-+	if (!strcasecmp(var, "newmovedalternative"))
-+		return DIFF_FILE_NEW_MOVED_ALT;
- 	return -1;
- }
- 
-@@ -234,6 +247,10 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 		diff_use_color_default = git_config_colorbool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "color.moved")) {
-+		diff_color_moved_default = git_config_bool(var, value);
-+		return 0;
-+	}
- 	if (!strcmp(var, "diff.context")) {
- 		diff_context_default = git_config_int(var, value);
- 		if (diff_context_default < 0)
-@@ -354,6 +371,88 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
- 
-+struct moved_entry {
-+	struct hashmap_entry ent;
-+	const struct buffered_patch_line *line;
-+	struct moved_entry *next_line;
-+};
-+
-+static void get_ws_cleaned_string(const struct buffered_patch_line *l,
-+				  struct strbuf *out)
-+{
-+	int i;
-+	for (i = 0; i < l->len; i++) {
-+		if (isspace(l->line[i]))
-+			continue;
-+		strbuf_addch(out, l->line[i]);
-+	}
-+}
-+
-+static int buffered_patch_line_cmp_no_ws(const struct buffered_patch_line *a,
-+					 const struct buffered_patch_line *b,
-+					 const void *keydata)
-+{
-+	int ret;
-+	struct strbuf sba = STRBUF_INIT;
-+	struct strbuf sbb = STRBUF_INIT;
-+
-+	get_ws_cleaned_string(a, &sba);
-+	get_ws_cleaned_string(b, &sbb);
-+	ret = sba.len != sbb.len || strncmp(sba.buf, sbb.buf, sba.len);
-+
-+	strbuf_release(&sba);
-+	strbuf_release(&sbb);
-+	return ret;
-+}
-+
-+static int buffered_patch_line_cmp(const struct buffered_patch_line *a,
-+				   const struct buffered_patch_line *b,
-+				   const void *keydata)
-+{
-+	return a->len != b->len || strncmp(a->line, b->line, a->len);
-+}
-+
-+static int moved_entry_cmp(const struct moved_entry *a,
-+			   const struct moved_entry *b,
-+			   const void *keydata)
-+{
-+	return buffered_patch_line_cmp(a->line, b->line, keydata);
-+}
-+
-+static int moved_entry_cmp_no_ws(const struct moved_entry *a,
-+				 const struct moved_entry *b,
-+				 const void *keydata)
-+{
-+	return buffered_patch_line_cmp_no_ws(a->line, b->line, keydata);
-+}
-+
-+static unsigned get_line_hash(struct buffered_patch_line *line, unsigned ignore_ws)
-+{
-+	static struct strbuf sb = STRBUF_INIT;
-+
-+	if (ignore_ws) {
-+		strbuf_reset(&sb);
-+		get_ws_cleaned_string(line, &sb);
-+		return memhash(sb.buf, sb.len);
-+	} else {
-+		return memhash(line->line, line->len);
-+	}
-+}
-+
-+static struct moved_entry *prepare_entry(struct diff_options *o,
-+					 int line_no)
-+{
-+	struct moved_entry *ret = xmalloc(sizeof(*ret));
-+	unsigned ignore_ws = DIFF_XDL_TST(o, IGNORE_WHITESPACE);
-+	struct buffered_patch_line *l = &o->line_buffer[line_no];
-+
-+	ret->ent.hash = get_line_hash(l, ignore_ws);
-+	ret->line = l;
-+	ret->next_line = NULL;
-+
-+	return ret;
-+}
-+
- static char *quote_two(const char *one, const char *two)
- {
- 	int need_one = quote_c_style(one, NULL, NULL, 1);
-@@ -516,6 +615,135 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
+@@ -516,53 +516,85 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
  	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
  }
  
-+static void add_lines_to_move_detection(struct diff_options *o)
-+{
-+	struct moved_entry *prev_line;
-+
-+	int n;
-+	for (n = 0; n < o->line_buffer_nr; n++) {
-+		int sign = 0;
-+		struct hashmap *hm;
-+		struct moved_entry *key;
-+
-+		switch (o->line_buffer[n].sign) {
-+		case '+':
-+			sign = '+';
-+			hm = o->added_lines;
-+			break;
-+		case '-':
-+			sign = '-';
-+			hm = o->deleted_lines;
-+			break;
-+		case ' ':
-+		default:
-+			prev_line = NULL;
-+			continue;
-+		}
-+
-+		key = prepare_entry(o, n);
-+		if (prev_line &&
-+		    prev_line->line->sign == sign)
-+			prev_line->next_line = key;
-+
-+		hashmap_add(hm, key);
-+		prev_line = key;
-+	}
-+}
-+
-+static void mark_color_as_moved(struct diff_options *o)
-+{
-+	struct moved_entry **pmb = NULL; /* potentially moved blocks */
-+	int pmb_nr = 0, pmb_alloc = 0;
-+	int alt_flag = 0;
-+	int n;
-+
-+	for (n = 0; n < o->line_buffer_nr; n++) {
-+		struct hashmap *hm = NULL;
-+		struct moved_entry *key;
-+		struct moved_entry *match = NULL;
-+		struct buffered_patch_line *l = &o->line_buffer[n];
-+		int i, lp, rp;
-+
-+		switch (l->sign) {
-+		case '+':
-+			hm = o->deleted_lines;
-+			break;
-+		case '-':
-+			hm = o->added_lines;
-+			break;
-+		default:
-+			alt_flag = 0; /* reset to standard, no-alt move color */
-+			pmb_nr = 0; /* no running sets */
-+			continue;
-+		}
-+
-+		/* Check for any match to color it as a move. */
-+		key = prepare_entry(o, n);
-+		match = hashmap_get(hm, key, o);
-+		free(key);
-+		if (!match)
-+			continue;
-+
-+		/* Check any potential block runs, advance each or nullify */
-+		for (i = 0; i < pmb_nr; i++) {
-+			struct moved_entry *p = pmb[i];
-+			struct moved_entry *pnext = (p && p->next_line) ?
-+					p->next_line : NULL;
-+			if (pnext &&
-+			    !buffered_patch_line_cmp(pnext->line, l, o)) {
-+				pmb[i] = p->next_line;
-+			} else {
-+				pmb[i] = NULL;
-+			}
-+		}
-+
-+		/* Shrink the set to the remaining runs */
-+		for (lp = 0, rp = pmb_nr - 1; lp <= rp;) {
-+			while (lp < pmb_nr && pmb[lp])
-+				lp ++;
-+			/* lp points at the first NULL now */
-+
-+			while (rp > -1 && !pmb[rp])
-+				rp--;
-+			/* rp points at the last non-NULL */
-+
-+			if (lp < pmb_nr && rp > -1 && lp < rp) {
-+				pmb[lp] = pmb[rp];
-+				pmb[rp] = NULL;
-+				rp--;
-+				lp++;
-+			}
-+		}
-+
-+		if (rp > -1) {
-+			/* Remember the number of running sets */
-+			pmb_nr = rp + 1;
-+		} else {
-+			/* Toggle color */
-+			alt_flag = (alt_flag + 1) % 2;
-+
-+			/* Build up a new set */
-+			pmb_nr = 0;
-+			for (; match; match = hashmap_get_next(hm, match)) {
-+				ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
-+				pmb[pmb_nr++] = match;
-+			}
-+		}
-+
-+		switch (l->sign) {
-+		case '+':
-+			l->set = diff_get_color_opt(o, DIFF_FILE_NEW_MOVED + alt_flag);
-+			break;
-+		case '-':
-+			l->set = diff_get_color_opt(o, DIFF_FILE_OLD_MOVED + alt_flag);
-+			break;
-+		default:
-+			die("BUG: we should have continued earlier?");
-+		}
-+	}
-+	free(pmb);
-+}
-+
- static void emit_buffered_patch_line(struct diff_options *o,
- 				     struct buffered_patch_line *e)
+-void emit_line(struct diff_options *o,
+-	       const char *set, const char *reset,
+-	       int add_line_prefix, int markup_ws,
+-	       int sign, const char *line, int len)
++static void emit_buffered_patch_line(struct diff_options *o,
++				     struct buffered_patch_line *e)
  {
-@@ -3518,6 +3746,8 @@ void diff_setup(struct diff_options *options)
- 	options->line_buffer = NULL;
- 	options->line_buffer_nr = 0;
- 	options->line_buffer_alloc = 0;
+ 	const char *ws;
+ 	int has_trailing_newline, has_trailing_carriage_return;
++	int len = e->len;
+ 	FILE *file = o->file;
+ 
+-	if (add_line_prefix)
++	if (e->add_line_prefix)
+ 		fputs(diff_line_prefix(o), file);
+ 
+-	if (markup_ws) {
++	switch (e->state) {
++	case BPL_EMIT_LINE_WS:
+ 		ws = diff_get_color(o->use_color, DIFF_WHITESPACE);
++		if (e->set)
++			fputs(e->set, file);
++		if (e->sign)
++			fputc(e->sign, file);
++		if (e->reset)
++			fputs(e->reset, file);
++		ws_check_emit(e->line, e->len, o->ws_rule,
++			      file, e->set, e->reset, ws);
++		return;
++	case BPL_EMIT_LINE_ASIS:
++		has_trailing_newline = (len > 0 && e->line[len-1] == '\n');
++		if (has_trailing_newline)
++			len--;
++		has_trailing_carriage_return = (len > 0 && e->line[len-1] == '\r');
++		if (has_trailing_carriage_return)
++			len--;
+ 
+-		if (set)
+-			fputs(set, file);
+-		if (sign)
+-			fputc(sign, file);
+-		if (reset)
+-			fputs(reset, file);
+-		ws = diff_get_color(o->use_color, DIFF_WHITESPACE);
+-		ws_check_emit(line, len, o->ws_rule,
+-			      file, set, reset, ws);
++		if (len || e->sign) {
++			if (e->set)
++				fputs(e->set, file);
++			if (e->sign)
++				fputc(e->sign, file);
++			fwrite(e->line, len, 1, file);
++			if (e->reset)
++				fputs(e->reset, file);
++		}
++		if (has_trailing_carriage_return)
++			fputc('\r', file);
++		if (has_trailing_newline)
++			fputc('\n', file);
++		return;
++	case BPL_HANDOVER:
++		o->ws_rule = whitespace_rule(e->line); /*read from file, stored in line?*/
+ 		return;
++	default:
++		die("BUG: malformatted buffered patch line: '%d'", e->state);
+ 	}
++}
+ 
+-	has_trailing_newline = (len > 0 && line[len-1] == '\n');
+-	if (has_trailing_newline)
+-		len--;
+-	has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
+-	if (has_trailing_carriage_return)
+-		len--;
++static void append_buffered_patch_line(struct diff_options *o,
++				       struct buffered_patch_line *e)
++{
++	struct buffered_patch_line *f;
++	ALLOC_GROW(o->line_buffer,
++		   o->line_buffer_nr + 1,
++		   o->line_buffer_alloc);
++	f = &o->line_buffer[o->line_buffer_nr++];
+ 
+-	if (len || sign) {
+-		if (set)
+-			fputs(set, file);
+-		if (sign)
+-			fputc(sign, file);
+-		fwrite(line, len, 1, file);
+-		if (reset)
+-			fputs(reset, file);
+-	}
+-	if (has_trailing_carriage_return)
+-		fputc('\r', file);
+-	if (has_trailing_newline)
+-		fputc('\n', file);
++	memcpy(f, e, sizeof(struct buffered_patch_line));
++	f->line = e->line ? xmemdupz(e->line, e->len) : NULL;
++}
 +
-+	options->color_moved = diff_color_moved_default;
++void emit_line(struct diff_options *o,
++	       const char *set, const char *reset,
++	       int add_line_prefix, int markup_ws,
++	       int sign, const char *line, int len)
++{
++	struct buffered_patch_line e = {set, reset, line,
++		len, sign, add_line_prefix,
++		markup_ws ? BPL_EMIT_LINE_WS : BPL_EMIT_LINE_ASIS};
++
++	if (o->use_buffer)
++		append_buffered_patch_line(o, &e);
++	else
++		emit_buffered_patch_line(o, &e);
+ }
+ 
+ void emit_line_fmt(struct diff_options *o,
+@@ -1171,6 +1203,18 @@ static void diff_words_flush(struct emit_callback *ecbdata)
+ 	if (ecbdata->diff_words->minus.text.size ||
+ 	    ecbdata->diff_words->plus.text.size)
+ 		diff_words_show(ecbdata->diff_words);
++
++	if (ecbdata->diff_words->opt->line_buffer_nr) {
++		int i;
++		for (i = 0; i < ecbdata->diff_words->opt->line_buffer_nr; i++)
++			append_buffered_patch_line(ecbdata->opt,
++				&ecbdata->diff_words->opt->line_buffer[i]);
++
++		for (i = 0; i < ecbdata->diff_words->opt->line_buffer_nr; i++)
++			free((void*) ecbdata->diff_words->opt->line_buffer[i].line);
++
++		ecbdata->diff_words->opt->line_buffer_nr = 0;
++	}
+ }
+ 
+ static void diff_filespec_load_driver(struct diff_filespec *one)
+@@ -1206,6 +1250,11 @@ static void init_diff_words_data(struct emit_callback *ecbdata,
+ 		xcalloc(1, sizeof(struct diff_words_data));
+ 	ecbdata->diff_words->type = o->word_diff;
+ 	ecbdata->diff_words->opt = o;
++
++	o->line_buffer = NULL;
++	o->line_buffer_nr = 0;
++	o->line_buffer_alloc = 0;
++
+ 	if (!o->word_regex)
+ 		o->word_regex = userdiff_word_regex(one);
+ 	if (!o->word_regex)
+@@ -1240,6 +1289,7 @@ static void free_diff_words_data(struct emit_callback *ecbdata)
+ {
+ 	if (ecbdata->diff_words) {
+ 		diff_words_flush(ecbdata);
++		free (ecbdata->diff_words->opt->line_buffer);
+ 		free (ecbdata->diff_words->opt);
+ 		free (ecbdata->diff_words->minus.text.ptr);
+ 		free (ecbdata->diff_words->minus.orig);
+@@ -2578,6 +2628,13 @@ static void builtin_diff(const char *name_a,
+ 			xecfg.ctxlen = strtoul(v, NULL, 10);
+ 		if (o->word_diff)
+ 			init_diff_words_data(&ecbdata, o, one, two);
++		if (o->use_buffer) {
++			struct buffered_patch_line e = BUFFERED_PATCH_LINE_INIT;
++			e.state = BPL_HANDOVER;
++			e.line = name_b;
++			e.len = strlen(name_b);
++			append_buffered_patch_line(o, &e);
++		}
+ 		if (xdi_diff_outf(&mf1, &mf2, fn_out_consume, &ecbdata,
+ 				  &xpp, &xecfg))
+ 			die("unable to generate diff for %s", one->path);
+@@ -3457,6 +3514,10 @@ void diff_setup(struct diff_options *options)
+ 		options->a_prefix = "a/";
+ 		options->b_prefix = "b/";
+ 	}
++
++	options->line_buffer = NULL;
++	options->line_buffer_nr = 0;
++	options->line_buffer_alloc = 0;
  }
  
  void diff_setup_done(struct diff_options *options)
-@@ -3627,6 +3857,9 @@ void diff_setup_done(struct diff_options *options)
- 
- 	if (DIFF_OPT_TST(options, FOLLOW_RENAMES) && options->pathspec.nr != 1)
- 		die(_("--follow requires exactly one pathspec"));
-+
-+	if (!options->use_color || external_diff())
-+		options->color_moved = 0;
- }
- 
- static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *val)
-@@ -4051,6 +4284,10 @@ int diff_opt_parse(struct diff_options *options,
- 	}
- 	else if (!strcmp(arg, "--no-color"))
- 		options->use_color = 0;
-+	else if (!strcmp(arg, "--color-moved"))
-+		options->color_moved = 1;
-+	else if (!strcmp(arg, "--no-color-moved"))
-+		options->color_moved = 0;
- 	else if (!strcmp(arg, "--color-words")) {
- 		options->use_color = 1;
- 		options->word_diff = DIFF_WORDS_COLOR;
-@@ -4856,16 +5093,19 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
+@@ -4795,11 +4856,36 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
  {
  	int i;
  	struct diff_queue_struct *q = &diff_queued_diff;
--	/*
--	 * For testing purposes we want to make sure the diff machinery
--	 * works completely with the buffer. If there is anything emitted
--	 * outside the emit_buffered_patch_line, then the order is screwed
--	 * up and the tests will fail.
--	 *
--	 * TODO (later in this series):
--	 * We'll unset this flag in a later patch.
--	 */
--	o->use_buffer = 1;
++	/*
++	 * For testing purposes we want to make sure the diff machinery
++	 * works completely with the buffer. If there is anything emitted
++	 * outside the emit_buffered_patch_line, then the order is screwed
++	 * up and the tests will fail.
++	 *
++	 * TODO (later in this series):
++	 * We'll unset this flag in a later patch.
++	 */
++	o->use_buffer = 1;
 +
-+	if (o->color_moved) {
-+		unsigned ignore_ws = DIFF_XDL_TST(o, IGNORE_WHITESPACE);
-+		o->use_buffer = 1;
-+		o->deleted_lines = xmallocz(sizeof(*o->deleted_lines));
-+		o->added_lines = xmallocz(sizeof(*o->added_lines));
-+		hashmap_init(o->deleted_lines, ignore_ws ?
-+			(hashmap_cmp_fn)moved_entry_cmp_no_ws :
-+			(hashmap_cmp_fn)moved_entry_cmp, 0);
-+		hashmap_init(o->added_lines, ignore_ws ?
-+			(hashmap_cmp_fn)moved_entry_cmp_no_ws :
-+			(hashmap_cmp_fn)moved_entry_cmp, 0);
-+	}
- 
  	for (i = 0; i < q->nr; i++) {
  		struct diff_filepair *p = q->queue[i];
-@@ -4874,6 +5114,11 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
+ 		if (check_pair_status(p))
+ 			diff_flush_patch(p, o);
  	}
- 
- 	if (o->use_buffer) {
-+		if (o->color_moved) {
-+			add_lines_to_move_detection(o);
-+			mark_color_as_moved(o);
-+		}
 +
- 		for (i = 0; i < o->line_buffer_nr; i++)
- 			emit_buffered_patch_line(o, &o->line_buffer[i]);
++	if (o->use_buffer) {
++		for (i = 0; i < o->line_buffer_nr; i++)
++			emit_buffered_patch_line(o, &o->line_buffer[i]);
++
++		for (i = 0; i < o->line_buffer_nr; i++)
++			free((void*)o->line_buffer[i].line);
++
++		free(o->line_buffer);
++
++		o->line_buffer = NULL;
++		o->line_buffer_nr = 0;
++		o->line_buffer_alloc = 0;
++	}
+ }
  
-@@ -4962,6 +5207,7 @@ void diff_flush(struct diff_options *options)
- 		if (!options->file)
- 			die_errno("Could not open /dev/null");
- 		options->close_file = 1;
-+		options->color_moved = 0;
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
- 			if (check_pair_status(p))
+ void diff_flush(struct diff_options *options)
 diff --git a/diff.h b/diff.h
-index f9fd0ea3ae..2d86e3a012 100644
+index 85948ed65a..f9fd0ea3ae 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -7,6 +7,7 @@
- #include "tree-walk.h"
- #include "pathspec.h"
- #include "object.h"
-+#include "hashmap.h"
+@@ -115,6 +115,41 @@ enum diff_submodule_format {
+ 	DIFF_SUBMODULE_INLINE_DIFF
+ };
  
- struct rev_info;
- struct diff_options;
-@@ -227,6 +228,10 @@ struct diff_options {
- 
- 	struct buffered_patch_line *line_buffer;
- 	int line_buffer_nr, line_buffer_alloc;
++/*
++ * This struct is used when we need to buffer the output of the diff output.
++ *
++ * NEEDSWORK: Instead of storing a copy of the line, add an offset pointer
++ * into the pre/post image file. This pointer could be a union with the
++ * line pointer. By storing an offset into the file instead of the literal line,
++ * we can decrease the memory footprint for the buffered output. At first we
++ * may want to only have indirection for the content lines, but we could
++ * also have an enum (based on sign?) that stores prefabricated lines, e.g.
++ * the similarity score line or hunk/file headers.
++ */
++struct buffered_patch_line {
++	const char *set;
++	const char *reset;
++	const char *line;
++	int len;
++	int sign;
++	int add_line_prefix;
++	enum {
++		/*
++		 * Emits [lineprefix][set][sign][reset] and then calls
++		 * ws_check_emit which will output "line", marked up
++		 * according to ws_rule.
++		 */
++		BPL_EMIT_LINE_WS,
 +
-+	int color_moved;
-+	struct hashmap *deleted_lines;
-+	struct hashmap *added_lines;
++		/* Emits [lineprefix][set][sign] line [reset] */
++		BPL_EMIT_LINE_ASIS,
++
++		/* Reloads the ws_rule; line contains the file name */
++		BPL_HANDOVER
++	} state;
++};
++#define BUFFERED_PATCH_LINE_INIT {NULL, NULL, NULL, 0, 0, 0}
++
+ struct diff_options {
+ 	const char *orderfile;
+ 	const char *pickaxe;
+@@ -188,6 +223,10 @@ struct diff_options {
+ 	int diff_path_counter;
+ 
+ 	unsigned ws_rule;
++	int use_buffer;
++
++	struct buffered_patch_line *line_buffer;
++	int line_buffer_nr, line_buffer_alloc;
  };
  
  void diff_emit_line(struct diff_options *o, const char *set, const char *reset,
-@@ -241,7 +246,11 @@ enum color_diff {
- 	DIFF_FILE_NEW = 5,
- 	DIFF_COMMIT = 6,
- 	DIFF_WHITESPACE = 7,
--	DIFF_FUNCINFO = 8
-+	DIFF_FUNCINFO = 8,
-+	DIFF_FILE_OLD_MOVED = 9,
-+	DIFF_FILE_OLD_MOVED_ALT = 10,
-+	DIFF_FILE_NEW_MOVED = 11,
-+	DIFF_FILE_NEW_MOVED_ALT = 12
- };
- const char *diff_get_color(int diff_use_color, enum color_diff ix);
- #define diff_get_color_opt(o, ix) \
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 289806d0c7..232d9ad55e 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -972,4 +972,233 @@ test_expect_success 'option overrides diff.wsErrorHighlight' '
- 
- '
- 
-+test_expect_success 'detect moved code, complete file' '
-+	git reset --hard &&
-+	cat <<-\EOF >test.c &&
-+	#include<stdio.h>
-+	main()
-+	{
-+	printf("Hello World");
-+	}
-+	EOF
-+	git add test.c &&
-+	git commit -m "add main function" &&
-+	git mv test.c main.c &&
-+	git diff HEAD --color-moved --no-renames | test_decode_color >actual &&
-+	cat >expected <<-\EOF &&
-+	<BOLD>diff --git a/main.c b/main.c<RESET>
-+	<BOLD>new file mode 100644<RESET>
-+	<BOLD>index 0000000..a986c57<RESET>
-+	<BOLD>--- /dev/null<RESET>
-+	<BOLD>+++ b/main.c<RESET>
-+	<CYAN>@@ -0,0 +1,5 @@<RESET>
-+	<BGREEN>+<RESET><BGREEN>#include<stdio.h><RESET>
-+	<BGREEN>+<RESET><BGREEN>main()<RESET>
-+	<BGREEN>+<RESET><BGREEN>{<RESET>
-+	<BGREEN>+<RESET><BGREEN>printf("Hello World");<RESET>
-+	<BGREEN>+<RESET><BGREEN>}<RESET>
-+	<BOLD>diff --git a/test.c b/test.c<RESET>
-+	<BOLD>deleted file mode 100644<RESET>
-+	<BOLD>index a986c57..0000000<RESET>
-+	<BOLD>--- a/test.c<RESET>
-+	<BOLD>+++ /dev/null<RESET>
-+	<CYAN>@@ -1,5 +0,0 @@<RESET>
-+	<BRED>-#include<stdio.h><RESET>
-+	<BRED>-main()<RESET>
-+	<BRED>-{<RESET>
-+	<BRED>-printf("Hello World");<RESET>
-+	<BRED>-}<RESET>
-+	EOF
-+
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'detect moved code, inside file' '
-+	git reset --hard &&
-+	cat <<-\EOF >main.c &&
-+		#include<stdio.h>
-+		int stuff()
-+		{
-+			printf("Hello ");
-+			printf("World\n");
-+		}
-+
-+		int secure_foo(struct user *u)
-+		{
-+			if (!u->is_allowed_foo)
-+				return;
-+			foo(u);
-+		}
-+
-+		int main()
-+		{
-+			foo();
-+		}
-+	EOF
-+	cat <<-\EOF >test.c &&
-+		#include<stdio.h>
-+		int bar()
-+		{
-+			printf("Hello World, but different\n");
-+		}
-+
-+		int another_function()
-+		{
-+			bar();
-+		}
-+	EOF
-+	git add main.c test.c &&
-+	git commit -m "add main and test file" &&
-+	cat <<-\EOF >main.c &&
-+		#include<stdio.h>
-+		int stuff()
-+		{
-+			printf("Hello ");
-+			printf("World\n");
-+		}
-+
-+		int main()
-+		{
-+			foo();
-+		}
-+	EOF
-+	cat <<-\EOF >test.c &&
-+		#include<stdio.h>
-+		int bar()
-+		{
-+			printf("Hello World, but different\n");
-+		}
-+
-+		int secure_foo(struct user *u)
-+		{
-+			if (!u->is_allowed_foo)
-+				return;
-+			foo(u);
-+		}
-+
-+		int another_function()
-+		{
-+			bar();
-+		}
-+	EOF
-+	git diff HEAD --no-renames --color-moved| test_decode_color >actual &&
-+	cat <<-\EOF >expected &&
-+	<BOLD>diff --git a/main.c b/main.c<RESET>
-+	<BOLD>index 27a619c..7cf9336 100644<RESET>
-+	<BOLD>--- a/main.c<RESET>
-+	<BOLD>+++ b/main.c<RESET>
-+	<CYAN>@@ -5,13 +5,6 @@<RESET> <RESET>printf("Hello ");<RESET>
-+	 printf("World\n");<RESET>
-+	 }<RESET>
-+	 <RESET>
-+	<BRED>-int secure_foo(struct user *u)<RESET>
-+	<BRED>-{<RESET>
-+	<BRED>-if (!u->is_allowed_foo)<RESET>
-+	<BRED>-return;<RESET>
-+	<BRED>-foo(u);<RESET>
-+	<BRED>-}<RESET>
-+	<BRED>-<RESET>
-+	 int main()<RESET>
-+	 {<RESET>
-+	 foo();<RESET>
-+	<BOLD>diff --git a/test.c b/test.c<RESET>
-+	<BOLD>index 1dc1d85..e34eb69 100644<RESET>
-+	<BOLD>--- a/test.c<RESET>
-+	<BOLD>+++ b/test.c<RESET>
-+	<CYAN>@@ -4,6 +4,13 @@<RESET> <RESET>int bar()<RESET>
-+	 printf("Hello World, but different\n");<RESET>
-+	 }<RESET>
-+	 <RESET>
-+	<BGREEN>+<RESET><BGREEN>int secure_foo(struct user *u)<RESET>
-+	<BGREEN>+<RESET><BGREEN>{<RESET>
-+	<BGREEN>+<RESET><BGREEN>if (!u->is_allowed_foo)<RESET>
-+	<BGREEN>+<RESET><BGREEN>return;<RESET>
-+	<BGREEN>+<RESET><BGREEN>foo(u);<RESET>
-+	<BGREEN>+<RESET><BGREEN>}<RESET>
-+	<BGREEN>+<RESET>
-+	 int another_function()<RESET>
-+	 {<RESET>
-+	 bar();<RESET>
-+	EOF
-+
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'detect permutations inside moved code, ' '
-+	# reusing the move example from last test:
-+	cat <<-\EOF >main.c &&
-+		#include<stdio.h>
-+		int stuff()
-+		{
-+			printf("Hello ");
-+			printf("World\n");
-+		}
-+
-+		int main()
-+		{
-+			foo();
-+		}
-+	EOF
-+	cat <<-\EOF >test.c &&
-+		#include<stdio.h>
-+		int bar()
-+		{
-+			printf("Hello World, but different\n");
-+		}
-+
-+		int secure_foo(struct user *u)
-+		{
-+			foo(u);
-+			if (!u->is_allowed_foo)
-+				return;
-+		}
-+
-+		int another_function()
-+		{
-+			bar();
-+		}
-+	EOF
-+	git diff HEAD --no-renames --color-moved| test_decode_color >actual &&
-+	cat <<-\EOF >expected &&
-+	<BOLD>diff --git a/main.c b/main.c<RESET>
-+	<BOLD>index 27a619c..7cf9336 100644<RESET>
-+	<BOLD>--- a/main.c<RESET>
-+	<BOLD>+++ b/main.c<RESET>
-+	<CYAN>@@ -5,13 +5,6 @@<RESET> <RESET>printf("Hello ");<RESET>
-+	 printf("World\n");<RESET>
-+	 }<RESET>
-+	 <RESET>
-+	<BRED>-int secure_foo(struct user *u)<RESET>
-+	<BRED>-{<RESET>
-+	<BOLD;RED>-if (!u->is_allowed_foo)<RESET>
-+	<BOLD;RED>-return;<RESET>
-+	<BRED>-foo(u);<RESET>
-+	<BOLD;RED>-}<RESET>
-+	<BOLD;RED>-<RESET>
-+	 int main()<RESET>
-+	 {<RESET>
-+	 foo();<RESET>
-+	<BOLD>diff --git a/test.c b/test.c<RESET>
-+	<BOLD>index 1dc1d85..2bedec9 100644<RESET>
-+	<BOLD>--- a/test.c<RESET>
-+	<BOLD>+++ b/test.c<RESET>
-+	<CYAN>@@ -4,6 +4,13 @@<RESET> <RESET>int bar()<RESET>
-+	 printf("Hello World, but different\n");<RESET>
-+	 }<RESET>
-+	 <RESET>
-+	<BGREEN>+<RESET><BGREEN>int secure_foo(struct user *u)<RESET>
-+	<BGREEN>+<RESET><BGREEN>{<RESET>
-+	<BOLD;GREEN>+<RESET><BOLD;GREEN>foo(u);<RESET>
-+	<BGREEN>+<RESET><BGREEN>if (!u->is_allowed_foo)<RESET>
-+	<BGREEN>+<RESET><BGREEN>return;<RESET>
-+	<BOLD;GREEN>+<RESET><BOLD;GREEN>}<RESET>
-+	<BOLD;GREEN>+<RESET>
-+	 int another_function()<RESET>
-+	 {<RESET>
-+	 bar();<RESET>
-+	EOF
-+
-+	test_cmp expected actual
-+'
-+
- test_done
 -- 
 2.13.0.18.g7d86cc8ba0
 
