@@ -2,52 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_WEB,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,
+	RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01354201CF
-	for <e@80x24.org>; Thu, 18 May 2017 21:19:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 847E6201CF
+	for <e@80x24.org>; Thu, 18 May 2017 21:21:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756042AbdERVTh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 17:19:37 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49719 "EHLO mout.gmx.net"
+        id S1756062AbdERVVc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 17:21:32 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49173 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755203AbdERVTf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 17:19:35 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9b4B-1dGhsz2rh1-00CwPn; Thu, 18
- May 2017 23:19:30 +0200
-Date:   Thu, 18 May 2017 23:19:30 +0200 (CEST)
+        id S1756046AbdERVVb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 17:21:31 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MAPoQ-1dHYjy170M-00BbcH; Thu, 18
+ May 2017 23:21:28 +0200
+Date:   Thu, 18 May 2017 23:21:27 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     phillip.wood@dunelm.org.uk
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] rebase -i: silence stash apply
-In-Reply-To: <decdfff1-dd21-4e10-44d5-9dbee38ba05f@talktalk.net>
-Message-ID: <alpine.DEB.2.21.1.1705182318170.3610@virtualbox>
-References: <20170518100233.30559-1-phillip.wood@talktalk.net> <20170518100233.30559-3-phillip.wood@talktalk.net> <alpine.DEB.2.21.1.1705181246430.3610@virtualbox> <decdfff1-dd21-4e10-44d5-9dbee38ba05f@talktalk.net>
+Subject: Re: [PATCH] rebase -i: Add missing newline to end of message
+In-Reply-To: <20170518134154.12771-1-phillip.wood@talktalk.net>
+Message-ID: <alpine.DEB.2.21.1.1705182321030.3610@virtualbox>
+References: <20170518134154.12771-1-phillip.wood@talktalk.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:XVA8R4G35AeQnzDvxetcr6G8bZoTmInGAVTb0LOpQ4fVLQGnxPI
- 7Mb/GajmFmmRyg9tE11dZFAfLxPhLrYy8lHDh4chYvWJP+BpEb2VVcGbfLt6ZZoB2kHL/8x
- JO8VlXuzrfFUGl8uF++Gt8gDWJ15J7WKkK8U1APF2RMuXI4Jk2ifOJxDtQXUu8t7wiVBs8w
- erpTp7xs0LXnNTbc9tmCQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZaF7xix9iek=:nwhpTWv55ff/XUnMx44dsU
- v2tDWYqHLvq+SYIygyEwv539ksxZ8tCG0TXjrr36dbubiGHHuQpc98Zkb63oe/nKh2zg+ZXY5
- 4to3SooJqWXqDtX3VLk8W2O3JP5YvxuZMoRcXrzkUeFgtG1RPWPbuucsymF//nVMafioS+52I
- LFPuwtiHlk3ztwLOPoQHPlECzahBN/F06wvBsGvWA1ZfqnvxkIosmlpIr78LmoI1m1lF8W5dV
- nDhBdDRQwwTGYQyEVXveXabzQPJLBQaIbTCavzEDchtR5dAS0CwC2Tfnym2hKPdwDfzPSHWtb
- pSjeKxnUuMIHunRscR5yxMA78O5UxerYAyy/eBGe0Lt69DLvWkCh/WbQQHoyx+/XNPlfnxHPf
- KjUjGbMLp9OR47U5EvAQ2tkAzkJ/1iA5dA24+1gbOBPl39MzxD7DbNWLemB/LOqi8NXW0X5nB
- 9nFK7ISERNlzIKfzEra6WyT45pVesXKGc7pJ2jY9rwH3Vtf7Vnm4CjKkEPKWMORDhIa/qEm+m
- iweomgo7EjEzVed5KbwH2q3VxTRE4FjGYFQaF3KUPT/rUb6TZh90Aim60zcQRBQTrSZTaUD5d
- 4jzMaRlVSsQKDeZkae+w51qtru9Jf0oKyErs0YYNMM1Ev/I7PzGOlLhZck/oU1qJIg7T+WAoi
- +lSGQwUO9biQ1v/A6I8Z8HZfyOrvynWpOXDS0xEVBPMHcRNsfrgHJ0oEdq9KCcQQly9sRPh4z
- Q3qdkasYbluGmPjtU6DGjr3pinCBqSsbiOXLFENX7LxAE3zVRMmPlKJJOWmWaCwFvFhzM2QU+
- END9j+f
+X-Provags-ID: V03:K0:ehcUS2884QWjDHnEEeTK+8FpR3GJFxrMzvVnDUX3IosE3LjuBLW
+ jbaKTjwt00e4gGkBPwqI7ts2qZFRHZr9Bn5NbZZMq0Waxf6AU69upquyMDevzdPMPcyeIZU
+ IPuNC4LTORp19FV7Kx5iIckZ1DeGu58+CZFkn64iTA/0vXQoutUkzzqDNUmhfVYZMdFy6TH
+ 3a4kXAiaP8CXw2BdcJh0g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:W0XuhCeE248=:0tAMUrP8D5KWdvOYTnEHmd
+ LqzdmqvRd9PlacYmHvHNN7PD9GYWaXsQm6moeOtc0tA+6PzpuUYdlHtijYUjIc/ps3SOHRbjP
+ 56RHjGtvu+BIXgqLi2s7sKOueTZu0nAHgFbpkDZvROatPEJTZte4Que43E1wC1SATCa3iLQFE
+ aO1lealrxcBA/wryFi8NVQ8b9wheqfNFsFpnW81T7tIIwuZkyFviMVw2YAwg/p3aoce7hJ2HR
+ 6C9nRryWhmn2ljdVT4ZMrBnk6DsIEb3blih7GDektaTVyFEyddXCCC1yZo9gMtqfSnDjEIbTN
+ Pc401ABvi1Bj3jycZHlqTp1Cqof6nVMMj9/X8n3bR/KDbM13y5bHzcnVXXOH7mpuO4SZ2QKxd
+ vcqcuW/+Qh4i6p/dXGC1nPylMHTEsoXziwK3xNk+DGiH8gi19fBYJpv+ML4TT+1WME70H1+GF
+ thvcAdSUS1dunu2dxycs9Z+KOiwEYXD5T0gdnis7NTk8n+ol+OYXu7pGeHYytQvDJbTuwWBLr
+ N+YxgdGA/sQot4fgIV5wgod1sXwPdOWz0OHH8RKELYbQjpS3DZGA7tf+J1VSlpKZMePvjbdM3
+ lx24FYqpuuyjXONRijju5NGh4TrR3Bds4UEZCoIN7pilT2bfDHH103T1xz4hKd4XYi+ASC7rl
+ 4TDQQ1NEgUCzLonpRRDP8HI1k6xjX6a5/QJlp6RF0etTgtQeHTabczbK2AhOLuIlWwZf2cG3E
+ hhoj6VwwUd9gkaEc1mbRvvTAU9oP6V/PsG00tLD7c6iK23Sh96fD4Mds8aEHeKe2Yw1icpX/C
+ ZEZAZmC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,75 +58,13 @@ Hi Phillip,
 
 On Thu, 18 May 2017, Phillip Wood wrote:
 
-> The shell version prints it's own error message if there's an error, the
-> C version does this as well
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 > 
-> Shell version:
-> apply_autostash () {
-> 	if test -f "$state_dir/autostash"
-> 	then
-> 		stash_sha1=$(cat "$state_dir/autostash")
-> 		if git stash apply $stash_sha1 2>&1 >/dev/null
-> 		then
-> 			echo "$(gettext 'Applied autostash.')"
-> 		else
-> 			git stash store -m "autostash" -q $stash_sha1 ||
-> 			die "$(eval_gettext "Cannot store \$stash_sha1")"
-> 			gettext 'Applying autostash resulted in conflicts.
-> Your changes are safe in the stash.
-> You can run "git stash pop" or "git stash drop" at any time.
-> '
-> 		fi
-> 	fi
-> }
-> 
-> C version:
-> static int apply_autostash(struct replay_opts *opts)
-> {
-> 	struct strbuf stash_sha1 = STRBUF_INIT;
-> 	struct child_process child = CHILD_PROCESS_INIT;
-> 	int ret = 0;
-> 
-> 	if (!read_oneliner(&stash_sha1, rebase_path_autostash(), 1)) {
-> 		strbuf_release(&stash_sha1);
-> 		return 0;
-> 	}
-> 	strbuf_trim(&stash_sha1);
-> 
-> 	child.git_cmd = 1;
-> 	child.no_stdout = 1;
-> 	child.no_stderr = 1;
-> 	argv_array_push(&child.args, "stash");
-> 	argv_array_push(&child.args, "apply");
-> 	argv_array_push(&child.args, stash_sha1.buf);
-> 	if (!run_command(&child))
-> 		printf(_("Applied autostash.\n"));
-> 	else {
-> 		struct child_process store = CHILD_PROCESS_INIT;
-> 
-> 		store.git_cmd = 1;
-> 		argv_array_push(&store.args, "stash");
-> 		argv_array_push(&store.args, "store");
-> 		argv_array_push(&store.args, "-m");
-> 		argv_array_push(&store.args, "autostash");
-> 		argv_array_push(&store.args, "-q");
-> 		argv_array_push(&store.args, stash_sha1.buf);
-> 		if (run_command(&store))
-> 			ret = error(_("cannot store %s"), stash_sha1.buf);
-> 		else
-> 			printf(_("Applying autostash resulted in conflicts.\n"
-> 				"Your changes are safe in the stash.\n"
-> 				"You can run \"git stash pop\" or"
-> 				" \"git stash drop\" at any time.\n"));
-> 	}
-> 
-> 	strbuf_release(&stash_sha1);
-> 	return ret;
-> }
+> The message that's printed when auto-stashed changes are successfully
+> restored was missing '\n' at the end.
+> ---
 
-Oh, you're right, I misremembered.
-
-Thank you for being so thorough. This patch is Acked-by: me, then.
+Please add your Signed-off-by:, and my Acked-by:
 
 Thanks,
 Johannes
