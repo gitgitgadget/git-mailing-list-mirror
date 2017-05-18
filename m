@@ -7,149 +7,125 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C90B52027B
-	for <e@80x24.org>; Thu, 18 May 2017 23:22:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF4992027B
+	for <e@80x24.org>; Thu, 18 May 2017 23:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753332AbdERXWK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 19:22:10 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:36843 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751673AbdERXWI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 19:22:08 -0400
-Received: by mail-pg0-f50.google.com with SMTP id x64so29452416pgd.3
-        for <git@vger.kernel.org>; Thu, 18 May 2017 16:22:08 -0700 (PDT)
+        id S1754236AbdERXWN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 19:22:13 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:36852 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751673AbdERXWL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 19:22:11 -0400
+Received: by mail-pg0-f41.google.com with SMTP id x64so29452837pgd.3
+        for <git@vger.kernel.org>; Thu, 18 May 2017 16:22:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=c7wH2rHTpLsb6dBjeIdcV2+4zxwyfmDLanJ8x1O+Yro=;
-        b=DxPt8jXrdlvbRk1F8FirYotP3+qhbeql2RbR7GM38vo6uvmPA9KeEYhVsYhjLJ1CPl
-         cyJ95D2ERJ36KS6Eit/7lhg03yHWWzUNaIpN7K9l8KN02IUZMSE4C/FCN85x4okcuSCX
-         JQPGN71OBOZlLJ1IzfmPe840fx2daRpdMeYKm9ECWw5qYYx6YRdJY56VUkmB3Y8kDase
-         C12XqCNiKnWCkGIq+aCabQKRrvyl91ec2FE1joe9tFquixBNl6y6CgqQ5Wbme1tZK56R
-         pOg/G+LWfn3+efyuHORFAA6QrwNZnIbUknr14p7BkGCCsqxXsztXwq0tQ0FIyndkiiRs
-         XYQg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=s+n7RB13XiiCFpOGLq8JKQo/qYm/+Ac9PKzFU0YQlx4=;
+        b=NdwNyJweuHNFWdENyTOp9wZGROKyI4s+1U7vY1HwgLg+MBpBidRqfJJ3T5uEnsIlCn
+         d2tN82zaTJemuzcHVLo2UzEqrUeWRK9OkPg49EeG/eZ+cKSfctQBTWoQRBYl3O50s7/6
+         U9k2y08WdmpL1aFNGx+JgIc04qkHuHXO7miIgFjI4tnTVa9d04zTjlaCf5kwnKuqWHv/
+         Z+8RvB+XcBjbl9tMW5myx6fx2nJjLG/ja4km1+SIzwFLO1CiOwV3nTqtD4k13sD1F141
+         oe2l9DcgpP+GKTJQ7wUBnT7IhNP3TJn8adyu6S1cM7/yTMF9O36pf5+aecsey/mbPqmt
+         UM8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=c7wH2rHTpLsb6dBjeIdcV2+4zxwyfmDLanJ8x1O+Yro=;
-        b=c3gTr8VLdt2TkJtrao6bx+1fCG3LC2qiaS3JM9cliUFXujf/3iEuGvD1BG844G1Nci
-         cloE48bjbXLinMmYazmp/YU000zWVg6v8Mgx4Cvv2t6wMAVcerm1Aa9AuMJHOf3fpzVU
-         S9COHUmage4G4V9H8Y6SZD3vKipfus/KggvoswQkR7o8/yQw8RE4lvVW4K0cem2fZEYG
-         ytRJuKsR7Nzn6k4hcuBTWhtbnMZUQQYxWkytqIvGuU6gcf80gyYXIEeSdVeJIGi7baie
-         bMQbop192awdgOSyPKiHxbvAR+x3lvKKUEmgZKYc0DK/RyRf7rns5xbT/yDo14QYnwj9
-         HayQ==
-X-Gm-Message-State: AODbwcBXz3R5mL2dET2xdrpZ0KmxlEQYq7WE0akaRCbpTWHTRbPrsn1k
-        FTu6Kciogsig+eZF
-X-Received: by 10.84.141.129 with SMTP id 1mr7837966plv.75.1495149727844;
-        Thu, 18 May 2017 16:22:07 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=s+n7RB13XiiCFpOGLq8JKQo/qYm/+Ac9PKzFU0YQlx4=;
+        b=UDGqWJHP8ubi0/iMzgs5mAuKY7aHPBwuRbqQbhyzwxq+dY09yDSmfeohsaIHFYPRc9
+         LZtm249Pb/CxyBO9pJTHU2W8Llbakg9d4/n93nMcT9DqXGnI+c8CmQhgOeMf/YgiNdPC
+         b7RksGKqy2hUkTnH7V/IvDliqFmC/kx00vLQ05Ks3BhTY+6QAs76Uw0b8c1cOF4xlW3U
+         fbIP/+8wDPWr/5kKNFWbZd/opH4hKNeuHGgEjBPAc4bD1x1KDJC6L9DlXnaZ5g5LgCLC
+         VWFeKCr59kkd9xnh/NIvqVas+uDvqM9Z3w0KrvYXhia2naeQskj0dqzo21MQh/E8toR2
+         Er5g==
+X-Gm-Message-State: AODbwcA4Oqlx5UKByyOU1Cl+X/juk94vNblq+aTMaewarhyHNRXPnaVZ
+        KBuVzJbuFjMLD+Lm
+X-Received: by 10.84.134.34 with SMTP id 31mr7584988plg.178.1495149730558;
+        Thu, 18 May 2017 16:22:10 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id d3sm12579575pfg.30.2017.05.18.16.22.06
+        by smtp.gmail.com with ESMTPSA id d3sm12579575pfg.30.2017.05.18.16.22.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 May 2017 16:22:06 -0700 (PDT)
+        Thu, 18 May 2017 16:22:09 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com, peff@peff.net,
         sbeller@google.com, jrnieder@gmail.com, pclouds@gmail.com,
         Brandon Williams <bmwill@google.com>
-Subject: [WIP/RFC 00/23] repository object
-Date:   Thu, 18 May 2017 16:21:11 -0700
-Message-Id: <20170518232134.163059-1-bmwill@google.com>
+Subject: [WIP/RFC 02/23] convert: convert crlf_to_git to take an index
+Date:   Thu, 18 May 2017 16:21:13 -0700
+Message-Id: <20170518232134.163059-3-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169-goog
+In-Reply-To: <20170518232134.163059-1-bmwill@google.com>
+References: <20170518232134.163059-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When I first started working on the git project I found it very difficult to
-understand parts of the code base because of the inherently global nature of
-our code.  It also made working on submodules very difficult.  Since we can
-only open up a single repository per process, you need to launch a child
-process in order to process a submodule.  But you also need to be able to
-communicate other stateful information to the children processes so that the
-submodules know how best to format their output or match against a
-pathspec...it ends up feeling like layering on hack after hack.  What I would
-really like to do, is to have the ability to have a repository object so that I
-can open a submodule in-process.
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ convert.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-Before this becomes a reality for all commands, much of the library code would
-need to be refactored in order to work purely on handles instead of global
-state.  As it turned out, ls-files is a pretty simple command and doesn't have
-*too* many dependencies.  The biggest thing that needed to be changed was
-piping through an index into a couple library routines so that they don't
-inherently rely on 'the_index'.  A few of these changes I've sent out and can
-be found at 'origin/bw/pathspec-sans-the-index' and
-'origin/bw/dir-c-stops-relying-on-the-index' which this series is based on.
-
-Patches 1-16 are refactorings to prepare either library code or ls-files itself
-to be ready to handle passing around an index struct.  Patches 17-22 introduce
-a repository struct and change a couple of things about how submodule caches
-work (getting submodule information from .gitmodules).  And Patch 23 converts
-ls-files to use a repository struct. 
-
-The most interesting part of the series is from 17-23.  And 1-16 could be taken
-as is without the rest of the series.
-
-This is still very much in a WIP state, though it does pass all tests.  What
-I'm hoping for here is to get a discussion started about the feasibility of a
-change like this and hopefully to get the ball rolling.  Is this a direction we
-want to move in?  Is it worth the pain?
-
-Thanks for taking the time to look at this and entertain my insane ideas :)
-
-Brandon Williams (23):
-  convert: convert get_cached_convert_stats_ascii to take an index
-  convert: convert crlf_to_git to take an index
-  convert: convert convert_to_git_filter_fd to take an index
-  convert: convert convert_to_git to take an index
-  convert: convert renormalize_buffer to take an index
-  tree: convert read_tree to take an index parameter
-  ls-files: convert overlay_tree_on_cache to take an index
-  ls-files: convert write_eolinfo to take an index
-  ls-files: convert show_killed_files to take an index
-  ls-files: convert show_other_files to take an index
-  ls-files: convert show_ru_info to take an index
-  ls-files: convert ce_excluded to take an index
-  ls-files: convert prune_cache to take an index
-  ls-files: convert show_files to take an index
-  ls-files: factor out debug info into a function
-  ls-files: factor out tag calculation
-  repo: introduce new repository object
-  repo: add index_state to struct repo
-  repo: add per repo config
-  submodule-config: refactor to allow for multiple submodule_cache's
-  repo: add repo_read_gitmodules
-  submodule: add is_submodule_active
-  ls-files: use repository object
-
- Makefile                               |   1 +
- apply.c                                |   2 +-
- builtin/blame.c                        |   2 +-
- builtin/commit.c                       |   3 +-
- builtin/ls-files.c                     | 348 ++++++++++++++++-----------------
- cache.h                                |   4 +-
- combine-diff.c                         |   2 +-
- config.c                               |   2 +-
- convert.c                              |  31 +--
- convert.h                              |  19 +-
- diff.c                                 |   6 +-
- dir.c                                  |   2 +-
- git.c                                  |   2 +-
- ll-merge.c                             |   2 +-
- merge-recursive.c                      |   4 +-
- repo.c                                 | 112 +++++++++++
- repo.h                                 |  22 +++
- sha1_file.c                            |   6 +-
- submodule-config.c                     |  40 +++-
- submodule-config.h                     |  10 +
- submodule.c                            |  51 +++++
- submodule.h                            |   2 +
- t/t3007-ls-files-recurse-submodules.sh |  39 ++++
- tree.c                                 |  28 ++-
- tree.h                                 |   3 +-
- 25 files changed, 513 insertions(+), 230 deletions(-)
- create mode 100644 repo.c
- create mode 100644 repo.h
-
+diff --git a/convert.c b/convert.c
+index b1b90d6e6..f5773cfe1 100644
+--- a/convert.c
++++ b/convert.c
+@@ -217,13 +217,13 @@ static void check_safe_crlf(const char *path, enum crlf_action crlf_action,
+ 	}
+ }
+ 
+-static int has_cr_in_index(const char *path)
++static int has_cr_in_index(const struct index_state *istate, const char *path)
+ {
+ 	unsigned long sz;
+ 	void *data;
+ 	int has_cr;
+ 
+-	data = read_blob_data_from_cache(path, &sz);
++	data = read_blob_data_from_index(istate, path, &sz);
+ 	if (!data)
+ 		return 0;
+ 	has_cr = memchr(data, '\r', sz) != NULL;
+@@ -253,7 +253,8 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
+ 
+ }
+ 
+-static int crlf_to_git(const char *path, const char *src, size_t len,
++static int crlf_to_git(const struct index_state *istate,
++		       const char *path, const char *src, size_t len,
+ 		       struct strbuf *buf,
+ 		       enum crlf_action crlf_action, enum safe_crlf checksafe)
+ {
+@@ -285,7 +286,8 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+ 		 * unless we want to renormalize in a merge or
+ 		 * cherry-pick.
+ 		 */
+-		if ((checksafe != SAFE_CRLF_RENORMALIZE) && has_cr_in_index(path))
++		if ((checksafe != SAFE_CRLF_RENORMALIZE) &&
++		    has_cr_in_index(istate, path))
+ 			convert_crlf_into_lf = 0;
+ 	}
+ 	if ((checksafe == SAFE_CRLF_WARN ||
+@@ -1193,7 +1195,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+-	ret |= crlf_to_git(path, src, len, dst, ca.crlf_action, checksafe);
++	ret |= crlf_to_git(&the_index, path, src, len, dst, ca.crlf_action, checksafe);
+ 	if (ret && dst) {
+ 		src = dst->buf;
+ 		len = dst->len;
+@@ -1213,7 +1215,7 @@ void convert_to_git_filter_fd(const char *path, int fd, struct strbuf *dst,
+ 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN))
+ 		die("%s: clean filter '%s' failed", path, ca.drv->name);
+ 
+-	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
++	crlf_to_git(&the_index, path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
+ 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
+ }
+ 
 -- 
 2.13.0.303.g4ebf302169-goog
 
