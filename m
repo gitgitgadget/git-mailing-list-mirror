@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93FB62023D
+	by dcvr.yhbt.net (Postfix) with ESMTP id C004A2023D
 	for <e@80x24.org>; Thu, 18 May 2017 08:22:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754796AbdERIWZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 04:22:25 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:33965 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754558AbdERIWV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 04:22:21 -0400
-Received: by mail-qt0-f195.google.com with SMTP id l39so4797425qtb.1
-        for <git@vger.kernel.org>; Thu, 18 May 2017 01:22:16 -0700 (PDT)
+        id S1754813AbdERIWb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 04:22:31 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:33436 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754157AbdERIWK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 04:22:10 -0400
+Received: by mail-qk0-f196.google.com with SMTP id o85so5043587qkh.0
+        for <git@vger.kernel.org>; Thu, 18 May 2017 01:22:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=YOq8W4k/LmFDsjele7XvWL6haDRCfY5e3vWtVtml0bU=;
-        b=UUtM02HLaOO5M7fa8b/rmDQcjZlghQ/LS/CU+YhPe4k8Z3UHzT5DYNyiXW2XcMy9lN
-         m3clBvVcf+gKyCbpAfvRMo5xlX/E2wx4d9iCN+CCXQLMb6y+/3jnHAQw0bzagmgSX1Fm
-         9WDYf7lV6JxsbCEwsm5aUFoYXpIVH7QOV2eRi3pNdLuOIvfj4i1ZoyYZYeReSmZjCLpP
-         pDRTgiJoY9VroC19Wpo+Ez9miFc2YqnzNA4thX6CxP2e6ZHmYRw2ltj/L3UVljCkZZz6
-         H9eFM1nDpReWy4sqNX+vtmDPMpDsvorUyGAHTIWE1ZnKcmZDjZqYDMhRsp1ohuH1MwI8
-         jcJw==
+        bh=k8IZu30aN5XyKOp64tpL4By2wtxxwgQeuZDZTW0IEbI=;
+        b=gyrutF5Yo3lwX+8E25cwIeLxN6UjlekPNWfBb37GidiJ0FmAsn1Nh/9UKblSGpwNZW
+         bB1cmIcxgH6SpMhhXCLGEuh6YAqYpKgeg3tHHYxjYiSzEHdgOobCSGBvvg77mkf9F/UR
+         kgroy+Zi+UgmVW6rxSYmZNE6XKwwFp2zjVqA99w+VSKykH0XY9+YlC19Hnsz5nGt2shp
+         Cpv13A8KPVUTchfpqxE4+NzJcLyy3cZqMMS0tv2vyxgZJrGW6w2PzisJrUo5cGj696tT
+         kvXUHrCydw39IKWEU+qZxp/JR0cTBTzZLoN/Gi31cOaBx8SO+W8S1wdechntSsBgk+eX
+         IQRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=YOq8W4k/LmFDsjele7XvWL6haDRCfY5e3vWtVtml0bU=;
-        b=rOb70IslJxMOzZ3X0mVvfRnsCNmYuyOmF5m40ldTh7a2JBGsy/ayvbsluQFc4fxS9Z
-         D/TgJMPIKDQrU04QgTGaGFXtIsc72YTjPJU893WcHy+HV8WqloiERoUpOiygd/GpZhjD
-         WyBKM9xJj2rgBN4jzGAGIgP4a4Y2Cl/8qDADYLvqcJ7kA0Fa/OgjcdyzuAUa1cqWgBpp
-         Yg+YLhFfkUvWNDGp6O5oreIErmyW3jtMkRAVqlIyhNu48j8dSHTvfYTtOCjEHoUTj73n
-         UCtS3kgQrTOVqRMXp11OGnuFt7InzUwTJ7Wk5ZqGyfwTdfju4dYNelFmp+3fVtj+rTOs
-         UO6g==
-X-Gm-Message-State: AODbwcAOL1PYILCQMswutmqwqvTNnJ9MsAkqfaei2doGeaEVzSDqwBl9
-        wblY2mlQFca+iA==
-X-Received: by 10.200.4.29 with SMTP id v29mr2945346qtg.82.1495095730500;
-        Thu, 18 May 2017 01:22:10 -0700 (PDT)
-Received: from localhost.localdomain (cpe-98-14-117-223.nyc.res.rr.com. [98.14.117.223])
-        by smtp.gmail.com with ESMTPSA id k36sm2999604qte.65.2017.05.18.01.22.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=k8IZu30aN5XyKOp64tpL4By2wtxxwgQeuZDZTW0IEbI=;
+        b=kOjAZmp8ZBf7++3SNr1KEeoJbizligehRDWBh1UYClCDI5jFU/hhp3O6d6d60TVQva
+         olrgNMQRf4FQL9g2UK1D4yGOsUsH8By/VKItzE7NkFhC+pdrU4/d2y0Yjgv1baENyese
+         +XQ+h1//BBzyppEBbKhtOzgdcfy0RygNetywuOvr4inrLaS86MIH/u3dRyYYobQZPv+S
+         EgDfauCtKWXfFXeQuTlnzJ7BQIIDyny0pz4RF1Xm9uFIk8bFNZkI/pWqHj9WDAyBWsKm
+         fVhlG4ijt8/oozQiROCfxIp9SZ5sfvQW0+0/N2Ri5ifOVE8xqzwKrlfZzOjLAcuYxVwG
+         c3QA==
+X-Gm-Message-State: AODbwcC7tYOairApqLGlXWlHsazsGXVtDz59c1pM7/zIvAqJVTmn5poe
+        qH0SqSdCFmr82ajoLkQ=
+X-Received: by 10.55.60.67 with SMTP id j64mr2762543qka.316.1495095729061;
         Thu, 18 May 2017 01:22:09 -0700 (PDT)
+Received: from localhost.localdomain (cpe-98-14-117-223.nyc.res.rr.com. [98.14.117.223])
+        by smtp.gmail.com with ESMTPSA id k36sm2999604qte.65.2017.05.18.01.22.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 18 May 2017 01:22:08 -0700 (PDT)
 From:   Samuel Lijin <sxlijin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Samuel Lijin <sxlijin@gmail.com>
-Subject: [PATCH v4 3/6] dir: recurse into untracked dirs for ignored files
-Date:   Thu, 18 May 2017 04:21:51 -0400
-Message-Id: <20170518082154.28643-4-sxlijin@gmail.com>
+Subject: [PATCH v4 2/6] t7061: status --ignored should search untracked dirs
+Date:   Thu, 18 May 2017 04:21:50 -0400
+Message-Id: <20170518082154.28643-3-sxlijin@gmail.com>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170518082154.28643-1-sxlijin@gmail.com>
 References: <20170518082154.28643-1-sxlijin@gmail.com>
@@ -65,36 +65,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We consider directories containing only untracked and ignored files to
-be themselves untracked, which in the usual case means we don't have to
-search these directories. This is problematic when we want to collect
-ignored files with DIR_SHOW_IGNORED_TOO, though, so we teach
-read_directory_recursive() to recurse into untracked directories to find
-the ignored files they contain when DIR_SHOW_IGNORED_TOO is set. This
-has the side effect of also collecting all untracked files in untracked
-directories as well.
+Per eb8c5b87, `status --ignored` by design does not list ignored files
+if they are in a directory which contains only ignored and untracked
+files (which is itself considered to be untracked) without `-uall`. This
+does not make sense for `--ignored`, which claims to "Show ignored files
+as well."
+
+Thus we revisit eb8c5b87 and decide that for such directories, `status
+--ignored` will list the directory as untracked *and* list all ignored
+files within said directory even without `-uall`.
 
 Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
 ---
- dir.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ t/t7061-wtstatus-ignore.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index f451bfa48..68cf6e47c 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1784,7 +1784,10 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 			dir_state = state;
+diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+index cdc0747bf..15e7592b6 100755
+--- a/t/t7061-wtstatus-ignore.sh
++++ b/t/t7061-wtstatus-ignore.sh
+@@ -9,9 +9,10 @@ cat >expected <<\EOF
+ ?? actual
+ ?? expected
+ ?? untracked/
++!! untracked/ignored
+ EOF
  
- 		/* recurse into subdir if instructed by treat_path */
--		if (state == path_recurse) {
-+		if ((state == path_recurse) ||
-+			((state == path_untracked) &&
-+			 (dir->flags & DIR_SHOW_IGNORED_TOO) &&
-+			 (get_dtype(cdir.de, path.buf, path.len) == DT_DIR))) {
- 			struct untracked_cache_dir *ud;
- 			ud = lookup_untracked(dir->untracked, untracked,
- 					      path.buf + baselen,
+-test_expect_success 'status untracked directory with --ignored' '
++test_expect_failure 'status untracked directory with --ignored' '
+ 	echo "ignored" >.gitignore &&
+ 	mkdir untracked &&
+ 	: >untracked/ignored &&
+@@ -20,7 +21,7 @@ test_expect_success 'status untracked directory with --ignored' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success 'same with gitignore starting with BOM' '
++test_expect_failure 'same with gitignore starting with BOM' '
+ 	printf "\357\273\277ignored\n" >.gitignore &&
+ 	mkdir -p untracked &&
+ 	: >untracked/ignored &&
 -- 
 2.13.0
 
