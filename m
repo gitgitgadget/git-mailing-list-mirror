@@ -2,88 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16B7F201CF
-	for <e@80x24.org>; Thu, 18 May 2017 16:00:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C98BD201CF
+	for <e@80x24.org>; Thu, 18 May 2017 16:20:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755356AbdERQAB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 12:00:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54263 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751782AbdERQAA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 12:00:00 -0400
-Received: (qmail 11685 invoked by uid 109); 18 May 2017 15:59:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 May 2017 15:59:58 +0000
-Received: (qmail 18247 invoked by uid 111); 18 May 2017 16:00:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 May 2017 12:00:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 May 2017 11:59:56 -0400
-Date:   Thu, 18 May 2017 11:59:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?QW5kcsOp?= Werlang <beppe85@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: explain default option for rev-parse --short
-Message-ID: <20170518155956.ecti4audvrqlj3pt@sigill.intra.peff.net>
-References: <CAP96LmMtfO5DC6hGeqJdZvcqj+29H_7=8S+uua8YC7YwFRC9Nw@mail.gmail.com>
+        id S1755405AbdERQU2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 12:20:28 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:33307 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755028AbdERQU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 12:20:27 -0400
+Received: by mail-pg0-f54.google.com with SMTP id u187so25102330pgb.0
+        for <git@vger.kernel.org>; Thu, 18 May 2017 09:20:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=dWcrLWbc/ijICU87i41ExrqccNiJ7cLfdA00a4hTmtQ=;
+        b=o2NJAo88UHdl/VxeSwcH+NFiNfMaw4Z/3yiV3qOoQtP1ieYCsCFKbnrsKivnnAwtJK
+         f5qpGh6klhjip0vHcxXPyPTmbpFqxJaCiRRZzxdszbFY4CHQmwZZfo9UWMpzlF0//JDO
+         Q7paIZ5xfEyM3eZhiHRDpkruWgW7/JQYkeiYbEdBVmu+7z7jRMfiZfyNyQGXed55r5yB
+         Oo4Geo0vDkwlHRlMqL+PJ4mQAhwAonUGR46Y+os0U7WSRKXiywEqVLLvjLS05uqyweFj
+         WlgIglX7oOcw1N1gu0fG4VyBX7GuOvT0G7b8+aMIAeYgGN8jT/VGXbTUDJ98I3X9PiLU
+         1S5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=dWcrLWbc/ijICU87i41ExrqccNiJ7cLfdA00a4hTmtQ=;
+        b=lJwDyPCBo2aS0mm3I30Mf0LApiYP+tCaCBh0O4qvgZ9S5A27BWgLJoho1jL15my4rT
+         JNMK+zi3ks43uqEPQrt76RCnUxnYJfj0TWnUwOhX+DnWbgC3PypTWAC8UkV1M1TbEJLW
+         iKOqXMIkQr2WZ3c3MGRP0wkzfIVi9YAJ/A0BQ1RVff3oO0nVYASJFogy/3qNQHcS2k4X
+         WaP0kdKgVxB6yPITzpCVhO+VIIH9txPvA7Lrx0wSFxB+sxkTDtr8c8xPmflAJhwDSqDz
+         L4Oz/iL9uIcp5aGH+Volq9SOkxsEPt0UMDbAPaYJOWojlLKU27X7oKDUhzF7Ua8OIj4P
+         yUMw==
+X-Gm-Message-State: AODbwcBwMsuA+YtSsfZ1dvyO4IlRgH0Tl+dCaT0oDsqwGB1laQj/MMlD
+        BeV0BPLSUkeUhB31EDVx56E4RQtmszZuAyc=
+X-Received: by 10.99.56.66 with SMTP id h2mr5536013pgn.40.1495124426576; Thu,
+ 18 May 2017 09:20:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP96LmMtfO5DC6hGeqJdZvcqj+29H_7=8S+uua8YC7YwFRC9Nw@mail.gmail.com>
+Received: by 10.100.170.200 with HTTP; Thu, 18 May 2017 09:20:26 -0700 (PDT)
+In-Reply-To: <20170518153901.GB112091@google.com>
+References: <20170517213135.20988-1-sbeller@google.com> <20170517213135.20988-4-sbeller@google.com>
+ <20170518153901.GB112091@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 18 May 2017 09:20:26 -0700
+Message-ID: <CAGZ79kZjMwoXOr_5xrU0Uy9K5bjJOd=YUBvK+Dpx+uS+5LH9Dw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] Introduce submodule.recurse option
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 18, 2017 at 11:03:00AM -0300, André Werlang wrote:
+On Thu, May 18, 2017 at 8:39 AM, Brandon Williams <bmwill@google.com> wrote:
+> On 05/17, Stefan Beller wrote:
+>> Any command that understands the boolean --recurse-submodule=[true/false]
+>> can have its default changed to true, by setting the submodule.recurse
+>> option.
+>>
+>> git-push takes a --recurse-submodule argument but it is not boolean,
+>> hence it is not included (yet?).
+>
+> ls-files and grep could also be added.  They don't need to be added in
+> this patch though.
 
-> Git 2.11 introduced a computation to guess the default length
-> for commit short hashes. The documentation isn't updated.
+I agree for git-grep.
+git-ls-files is a pure plumbing command, which usually are not very accepting
+of options. Then it is easier for script writers to rely on its expected output.
 
-Thanks for the patch. I think this is going in the right direction, but
-I have a few minor comments.
+I just missed those two (at least grep) and will add them in this
+patch if we think
+this series is a good idea going forward.
 
-> From 2b1c229153a89c7608e64b87d2f933704c18b7ae Mon Sep 17 00:00:00 2001
-> From: =?UTF-8?q?Andr=C3=A9=20Werlang?= <beppe85@gmail.com>
-> Date: Thu, 18 May 2017 10:50:11 -0300
-> Subject: [PATCH] doc: explain default option for rev-parse --short
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=UTF-8
-> Content-Transfer-Encoding: 8bit
-
-These headers are redundant with what's in your email headers and can be
-dropped.
-
-> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-> index 7241e96..b49f053 100644
-> --- a/Documentation/git-rev-parse.txt
-> +++ b/Documentation/git-rev-parse.txt
-> @@ -139,8 +139,10 @@ can be used.
->  --short::
->  --short=number::
->   Instead of outputting the full SHA-1 values of object names try to
-> - abbreviate them to a shorter unique name. When no length is specified
-> - 7 is used. The minimum length is 4.
-> + abbreviate them to a shorter unique name. When no length is specified,
-> + it is guessed from the number of objects in the repository. In any case,
-> + the actual length will be enough to identify the object unambiguously
-> + in the current state of the repository. The minimum length is 4.
-
-This is definitely an improvement, though I wonder if we should mention
-that we default to core.abbrev (which in turn defaults to the "auto"
-behavior).
-
-It looks like there are a few other mentions of "7" with respect to
-"--abbrev": git-branch.txt, git-describe.txt, git-blame.txt. Those
-should probably get the same treatment.
-
-There are a few other "--abbrev" options (e.g., ls-files and ls-tree)
-that don't mention "7". But while we're fixing the others, it may be
-worth giving them all consistent text.
-
--Peff
+Thanks,
+Stefan
