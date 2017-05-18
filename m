@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0DFF201CF
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6628201CF
 	for <e@80x24.org>; Thu, 18 May 2017 23:23:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755126AbdERXXH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 19:23:07 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:33786 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754937AbdERXWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 19:22:34 -0400
-Received: by mail-pg0-f41.google.com with SMTP id u187so29512228pgb.0
-        for <git@vger.kernel.org>; Thu, 18 May 2017 16:22:34 -0700 (PDT)
+        id S932664AbdERXXJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 19:23:09 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:36405 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754920AbdERXWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 19:22:33 -0400
+Received: by mail-pf0-f179.google.com with SMTP id m17so30750597pfg.3
+        for <git@vger.kernel.org>; Thu, 18 May 2017 16:22:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Rq1jIklYtwWpSvZlD7c2qntX3DWeUQpJJSezpkrjZ7s=;
-        b=PIom0luBDxTTDd9x1U/reT0OY4f/f08/Wrwez/JTFIoLz7J7c0U/9rmq/R9B3PDvB3
-         OLNJ0jrESuWh+MA6hclusNwJ+gcor4wMwoJCkMEgQilOKFYF5f0g7riAsRfUQq0bBx9C
-         316QWu1DpnCl7tkCWt4PNjofqF6OC5iQNdi4cacIvdxDc78hYarKcUKcNSOXVWHsjACj
-         42UPIUOlrtRpAWWcipykBs4vDK0ZJbZmnZ1obh574vIOso3O4HXwZmlB6XgHR2Nkc/wj
-         nDeqLGn5LYVI42sMxkTckcDKLEDYnA6l8R8GXYbMJtp3e7DP8i/478vc2UbBDj1c4P3C
-         8CNQ==
+        bh=M/t9sh2Jpj4YtQwnQmFFaOmWxCsWQhsPTuKw76CW0Kg=;
+        b=a6BtV3T/colOjexTOyfg2IjfKGp5uuvBQ8BcOgTM9iUosI35Xyd2v9OHMbSYnTYgjY
+         6Va0vgm6PR+te/ZOz1+4N0nuX6NPV7XplOUomxSNQ886xH5A+Tr5uP8LGOwp02QDggbO
+         FRX4n8DQpuOju2bT3UMtdlif5GzJ++G/+tk+rupIAQ2bTp7WmOTDGYD5Ab3XYaPLN64E
+         eesb/v/ywwdETmiEfrX+W8XLCpmqtPux/473XqTfFge6kjJK5LHJqDgpqj00NTNI0nNn
+         vzJM6v6IvECmCgqfCW5tBCZo5FFOJnGBPx7iPnhEgEgoAtcEb9lPu8czYUHTNOszgmsh
+         fR3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Rq1jIklYtwWpSvZlD7c2qntX3DWeUQpJJSezpkrjZ7s=;
-        b=XmUwZxPseKDQJv4YK8jwO8gI5EVgatBQJYLua6vjM+zD7MsHdIVr0vKUUG+ePp9Zm3
-         kPOj4pcxSV11MvCah4xa+2u6sg72DmH0nvLza4b8a9PdNgW/FWRRwE9tjUJUMAwIXMOv
-         gCWMIX9DvQ/MVmPXZ3R0NnjXFF0sfEJy/m69QXhQppxd0bSAwamEnpsf4Ut6oz9lSVdo
-         H1aD2f9omsdydYgPqSWcnkKkTrJZauLa4P4sbqYiyh2pt7pejCyYt0sTTqRPMeyPwbqD
-         lvKNEmm+ez54GKGeEwCQFLMjCKKoW8z+5e8eAko1iLWf6uhpQghAEwNdAVOi4+oKwweq
-         R9Tg==
-X-Gm-Message-State: AODbwcDumfzuNH2QPLMwqgqdya7jpv/twBzxc0kO1UFZkX9XPcICNF9j
-        bbaBUgatucTzOT0D
-X-Received: by 10.99.38.5 with SMTP id m5mr7067553pgm.203.1495149753742;
-        Thu, 18 May 2017 16:22:33 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id d3sm12579575pfg.30.2017.05.18.16.22.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=M/t9sh2Jpj4YtQwnQmFFaOmWxCsWQhsPTuKw76CW0Kg=;
+        b=GN1hZNVRxuQ7Jf2RdlHbg64mcoRJBLT44BDtVQYDeM1XHmC1ybRmlbSzc7HDOn1Sim
+         +xb03qfo3tZPokG9KqrAkYDgu+2x7mnDHX53Uq6lcN0LQqN5z+NC39CNgGVqVOUWB45c
+         8Vw3KUoyZvDZZF/BEr+fwtNmI6Ir8ihKs2+anJHqgGh38hXEZNSu2+VXgM7u20JWjffg
+         9WGFzHkhRH1+XnGf8s5LCVuhNN36DJ2lSZZs6zBm1AuQoXxSe+upPMklY5TA/KuCEcav
+         g00zIep9CU50Nlo60eNpvHYNEZm0U8PjhEvCdy0jLaGn4tH/tz1D1y/+ve9heKi4IXt9
+         troQ==
+X-Gm-Message-State: AODbwcC2MyFyXp5litRgjbK8zaJqeqHJGXIE9pDoLUlUey4FJt3Mvs9K
+        FMwdjSYKtwer3IIg
+X-Received: by 10.98.29.196 with SMTP id d187mr7247046pfd.68.1495149752460;
         Thu, 18 May 2017 16:22:32 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id d3sm12579575pfg.30.2017.05.18.16.22.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 18 May 2017 16:22:31 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com, peff@peff.net,
         sbeller@google.com, jrnieder@gmail.com, pclouds@gmail.com,
         Brandon Williams <bmwill@google.com>
-Subject: [WIP/RFC 18/23] repo: add index_state to struct repo
-Date:   Thu, 18 May 2017 16:21:29 -0700
-Message-Id: <20170518232134.163059-19-bmwill@google.com>
+Subject: [WIP/RFC 17/23] repo: introduce new repository object
+Date:   Thu, 18 May 2017 16:21:28 -0700
+Message-Id: <20170518232134.163059-18-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169-goog
 In-Reply-To: <20170518232134.163059-1-bmwill@google.com>
 References: <20170518232134.163059-1-bmwill@google.com>
@@ -63,62 +63,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Introduce 'struct repo' an object used to represent a repository.
+
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- repo.c | 19 +++++++++++++++++++
- repo.h |  2 ++
- 2 files changed, 21 insertions(+)
+ Makefile |  1 +
+ repo.c   | 42 ++++++++++++++++++++++++++++++++++++++++++
+ repo.h   | 15 +++++++++++++++
+ 3 files changed, 58 insertions(+)
+ create mode 100644 repo.c
+ create mode 100644 repo.h
 
+diff --git a/Makefile b/Makefile
+index e35542e63..a49d2f96a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -821,6 +821,7 @@ LIB_OBJS += refs/ref-cache.o
+ LIB_OBJS += ref-filter.o
+ LIB_OBJS += remote.o
+ LIB_OBJS += replace_object.o
++LIB_OBJS += repo.o
+ LIB_OBJS += rerere.o
+ LIB_OBJS += resolve-undo.o
+ LIB_OBJS += revision.o
 diff --git a/repo.c b/repo.c
-index d47e98d95..7e5c03ac5 100644
---- a/repo.c
+new file mode 100644
+index 000000000..d47e98d95
+--- /dev/null
 +++ b/repo.c
-@@ -2,6 +2,20 @@
- #include "repo.h"
- 
- int
-+repo_read_index(struct repo *repo, const char *index_file)
-+{
-+	char *index_path = xstrfmt("%s/index", repo->gitdir);
-+	const char *file = index_file ? index_file : index_path;
-+
-+	repo->index = xcalloc(1, sizeof(struct index_state));
-+	if (read_index_from(repo->index, file) < 0)
-+		die("failure reading index\n");
-+
-+	free(index_path);
-+	return 0;
-+}
+@@ -0,0 +1,42 @@
++#include "cache.h"
++#include "repo.h"
 +
 +int
- repo_init(struct repo *repo, const char *gitdir, const char *worktree)
- {
- 	int error = 0;
-@@ -39,4 +53,9 @@ repo_clear(struct repo *repo)
- 	repo->gitdir = NULL;
- 	free(repo->worktree);
- 	repo->worktree = NULL;
++repo_init(struct repo *repo, const char *gitdir, const char *worktree)
++{
++	int error = 0;
++	char *abspath = real_pathdup(gitdir, 1);
++	char *suspect = xstrfmt("%s/.git", abspath);
++	const char *resolved_gitdir;
 +
-+	if (repo->index) {
-+		discard_index(repo->index);
-+		free(repo->index);
++	memset(repo, 0, sizeof(struct repo));
++
++	/* First assume 'gitdir' references the gitdir directly */
++	resolved_gitdir = resolve_gitdir_gently(abspath, &error);
++	/* otherwise; try 'gitdir'.git */
++	if (!resolved_gitdir) {
++		resolved_gitdir = resolve_gitdir_gently(suspect, &error);
++		if (!resolved_gitdir) {
++			die("'%s' is not a repository\n", abspath);
++			return error;
++		}
 +	}
- }
++
++	repo->gitdir = xstrdup(resolved_gitdir);
++	/* Maybe need a check to verify that a worktree is indeed a worktree? */
++	repo->worktree = xstrdup_or_null(worktree);
++
++	free(abspath);
++	free(suspect);
++
++	return error;
++}
++
++void
++repo_clear(struct repo *repo)
++{
++	free(repo->gitdir);
++	repo->gitdir = NULL;
++	free(repo->worktree);
++	repo->worktree = NULL;
++}
 diff --git a/repo.h b/repo.h
-index 55f2dbec6..15a0bdee9 100644
---- a/repo.h
+new file mode 100644
+index 000000000..55f2dbec6
+--- /dev/null
 +++ b/repo.h
-@@ -7,8 +7,10 @@ struct repo {
- 	char *gitdir;
- 	char *worktree;
- 	const char *submodule_prefix;
-+	struct index_state *index;
- };
- 
-+extern int repo_read_index(struct repo *repo, const char *index_file);
- extern int repo_init(struct repo *repo, const char *gitdir, const char *worktree);
- extern void repo_clear(struct repo *repo);
- 
+@@ -0,0 +1,15 @@
++#ifndef REPO_H
++#define REPO_H
++
++struct index_state;
++
++struct repo {
++	char *gitdir;
++	char *worktree;
++	const char *submodule_prefix;
++};
++
++extern int repo_init(struct repo *repo, const char *gitdir, const char *worktree);
++extern void repo_clear(struct repo *repo);
++
++#endif /* REPO_H */
 -- 
 2.13.0.303.g4ebf302169-goog
 
