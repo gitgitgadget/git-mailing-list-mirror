@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 777CE201CF
-	for <e@80x24.org>; Thu, 18 May 2017 19:38:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E88F4201CF
+	for <e@80x24.org>; Thu, 18 May 2017 19:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932246AbdERTis (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 15:38:48 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:33369 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752437AbdERTiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 15:38:13 -0400
-Received: by mail-pf0-f178.google.com with SMTP id e193so28548404pfh.0
-        for <git@vger.kernel.org>; Thu, 18 May 2017 12:38:12 -0700 (PDT)
+        id S932373AbdERTix (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 15:38:53 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34745 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757500AbdERTiE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 15:38:04 -0400
+Received: by mail-pf0-f177.google.com with SMTP id 9so28527517pfj.1
+        for <git@vger.kernel.org>; Thu, 18 May 2017 12:38:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UjwY9i66H4Q1bjVOBjeN1h5LaQkpCp6iLH+LDNQHH1A=;
-        b=qaj/l72ur06dNddmnlHTfoTvYVk87ATMaVZwaL+HX6crcdbdqmDpMP07AiwoHcX9wm
-         BsT5ogNgc7IbR3fPYZ1XQUbS1eEn0BfaDJiB+9Ex1HviQ2rRoLoT+k66tTcwSSpHLkU0
-         10Jv+dGq1Q2DcCB3G8ondm/VDtqpys2+kGVgkg9uh+6PrYUCgOzFfALqQ+94TknsfjXV
-         ZLYmYt1KoCqJXmlY5OY1wgqP9hlJ9OTCIawQlmUkguDCM7/iheC8Su92onSfKy/QjhSJ
-         DkWKIQjCmv5fWtbthSyP8cO+3OLzdsFYAgaw1fHCb1jmWuyMEkqxAdBMkGBB6t7OIPXC
-         tcAw==
+        bh=Pjutrxv8EMne7P/yrCRvUXrQMHOvUF7B5LspvSYqTRY=;
+        b=J20pJDXu3obcnb3w38hjqbluf+wKS+NSan7q7nLGwlTl93zcJYhPpK+8lJLO1K767m
+         P1ZVLDTdBqZIxnFoTWzrYnh0ovExUK4jC2uUiZTWk0yXe6vXMLnIC11KXp826u35Sy0H
+         mnftVMyn1jAJJuPUCnYpwuktt7airRr/YYX4q6Re87EjeI4SXlMQlgVqqBmxy55CFiyL
+         8FzcByu7n8tXwWmmJ3kKJ8yZLxMM6oqY6XZ14RC8cl5zS3yBtZ3iNCxYPRXt7XCXGHzR
+         slY809iYH9194dCk3AdnLeAE/6iJU0Z1h5myxtLC0i/pZ7bM1CbNWqus7FBAl/VZW1OJ
+         XTUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=UjwY9i66H4Q1bjVOBjeN1h5LaQkpCp6iLH+LDNQHH1A=;
-        b=slz/ISy5PCbOvEep/M9i/m9ZZvZnIXRxRaR9h4t5hWysdSPYII3bZyVBJ9++TOxCy4
-         m8FtRqa89dprP854RBfUwvS9OKe4AjSFEzZ4k5/R5TyIoEBGBM7DToPMCMpqxCRaixEW
-         r9LooKHn1P7/FdOT4Br3wtXhcUFAdTgNlA2kyuFI5Oa6n8f0r6ZstLT4qYs/om7HvF7d
-         UAhNM0uhDI2FhxiMzoUa7OGQBJMoUMkanAQ7YxYA/XYYRFSQ5Oc5h2xVVHUwSOt+bV4Z
-         2LxrpzM7pm3DtV4MoiYHbp+cbwerG023YHBH4EM0RUffuBi9ac0aNMuwX9VlpU3+oi1L
-         HlWQ==
-X-Gm-Message-State: AODbwcBaBnUpNiqMRm85YcpPG2v+KYICtY5OykvTdPgXL9HFLK7QPz98
-        7GksZV6H5A5v5HC0
-X-Received: by 10.99.2.78 with SMTP id 75mr6017391pgc.157.1495136291347;
-        Thu, 18 May 2017 12:38:11 -0700 (PDT)
+        bh=Pjutrxv8EMne7P/yrCRvUXrQMHOvUF7B5LspvSYqTRY=;
+        b=j/Xr0SrICtKdlNRprK8V4Fz5ZRYnBjjcXh+jdSuQgKVlMlKwnd2vXICogUlmmnB51H
+         XNwViZsqkbOkIYjWnrt9EG4lu0MH9lNWZ53M51Yt2JF+A0BvFJ0Y0ZcjVJnwoTcGSOsh
+         kec23AENNY8XqGFBJUBpZO1Hh5P3AQ3NjCvkBHIZiTv3YObNkPeTJIWg6LOEwGm1BKYT
+         XWj1ue0o40tLNgc80/0ZhOb2QxbVYFKcSDzHLMyE6/2teGx//PLO99n/GuWoHLN63HZv
+         VohhjNWGNUneM/q/+cTmBB3nep9aar9Odof4+Md/2U0qQEFjkJInWkPyWNRoYyvATc1E
+         E1Sw==
+X-Gm-Message-State: AODbwcArjUxnctb8n3ehX47vP5BL3gNv1by58JQg8VMb9zXtL6cCe0Iw
+        Hf/U3WxVodiG+4At
+X-Received: by 10.84.149.102 with SMTP id b35mr6768601plh.151.1495136283079;
+        Thu, 18 May 2017 12:38:03 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:7013:588c:5765:703d])
-        by smtp.gmail.com with ESMTPSA id y190sm10729414pgd.25.2017.05.18.12.38.10
+        by smtp.gmail.com with ESMTPSA id i68sm13319470pfi.72.2017.05.18.12.38.02
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 18 May 2017 12:38:10 -0700 (PDT)
+        Thu, 18 May 2017 12:38:02 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, mhagger@alum.mit.edu,
         peff@peff.net
-Subject: [PATCHv3 14/20] diff.c: convert show_stats to use emit_line_*
-Date:   Thu, 18 May 2017 12:37:40 -0700
-Message-Id: <20170518193746.486-15-sbeller@google.com>
+Subject: [PATCHv3 07/20] diff.c: inline emit_line_0 into emit_line
+Date:   Thu, 18 May 2017 12:37:33 -0700
+Message-Id: <20170518193746.486-8-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.18.g7d86cc8ba0
 In-Reply-To: <20170518193746.486-1-sbeller@google.com>
 References: <20170517025857.32320-1-sbeller@google.com>
@@ -64,232 +64,134 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch, I want to propose an option to detect&color
-moved lines in a diff, which cannot be done in a one-pass over
-the diff. Instead we need to go over the whole diff twice,
-because we cannot detect the first line of the two corresponding
-lines (+ and -) that got moved.
-
-So to prepare the diff machinery for two pass algorithms
-(i.e. buffer it all up and then operate on the result),
-move all emissions to places, such that the only emitting
-function is emit_line_0.
-
-We call print_stat_summary from builtin/apply, so we still
-need the version with a file pointer, so introduce
-print_stat_summary_0 that uses emit_line_* machinery and
-keep print_stat_summary with the same arguments around.
-
-The responsibility to print the line prefix moves from the callers
-of print_stat_summary_0 into the function itself.
+The argument list of emit_line_0 is just 2 more arguments that are
+hard-coded in emit_line. Eliminate this intermediate function and
+rename the remaining function by dropping the '_0'.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c | 89 ++++++++++++++++++++++++++++++++++++++----------------------------
- diff.h |  4 +--
- 2 files changed, 53 insertions(+), 40 deletions(-)
+ diff.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 126038696d..f45f034036 100644
+index 25735f03d2..3569857818 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1540,20 +1540,19 @@ static int scale_linear(int it, int width, int max_change)
- 	return 1 + (it * (width - 1) / max_change);
+@@ -516,8 +516,8 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
+ 	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
  }
  
--static void show_name(FILE *file,
-+static void show_name(struct strbuf *out,
- 		      const char *prefix, const char *name, int len)
+-static void emit_line_0(struct diff_options *o, const char *set, const char *reset,
+-			int add_line_prefix, int sign, const char *line, int len)
++static void emit_line(struct diff_options *o, const char *set, const char *reset,
++		      int add_line_prefix, int sign, const char *line, int len)
  {
--	fprintf(file, " %s%-*s |", prefix, len, name);
-+	strbuf_addf(out, " %s%-*s |", prefix, len, name);
+ 	int has_trailing_newline, has_trailing_carriage_return;
+ 	FILE *file = o->file;
+@@ -547,12 +547,6 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
+ 		fputc('\n', file);
  }
  
--static void show_graph(FILE *file, char ch, int cnt, const char *set, const char *reset)
-+static void show_graph(struct strbuf *out, char ch, int cnt, const char *set, const char *reset)
+-static void emit_line(struct diff_options *o, const char *set, const char *reset,
+-		      const char *line, int len)
+-{
+-	emit_line_0(o, set, reset, 1, 0, line, len);
+-}
+-
+ static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
  {
- 	if (cnt <= 0)
+ 	if (!((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
+@@ -581,13 +575,13 @@ static void emit_line_checked(const char *reset,
+ 	}
+ 
+ 	if (!ws)
+-		emit_line_0(ecbdata->opt, set, reset, 1, sign, line, len);
++		emit_line(ecbdata->opt, set, reset, 1, sign, line, len);
+ 	else if (sign == '+' && new_blank_line_at_eof(ecbdata, line, len))
+ 		/* Blank line at EOF - paint '+' as well */
+-		emit_line_0(ecbdata->opt, ws, reset, 1, sign, line, len);
++		emit_line(ecbdata->opt, ws, reset, 1, sign, line, len);
+ 	else {
+ 		/* Emit just the prefix, then the rest. */
+-		emit_line_0(ecbdata->opt, set, reset, 1, sign, "", 0);
++		emit_line(ecbdata->opt, set, reset, 1, sign, "", 0);
+ 		ws_check_emit(line, len, ecbdata->ws_rule,
+ 			      ecbdata->opt->file, set, reset, ws);
+ 	}
+@@ -637,7 +631,7 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 	if (len < 10 ||
+ 	    memcmp(line, atat, 2) ||
+ 	    !(ep = memmem(line + 2, len - 2, atat, 2))) {
+-		emit_line(ecbdata->opt, context, reset, line, len);
++		emit_line(ecbdata->opt, context, reset, 1, 0, line, len);
  		return;
--	fprintf(file, "%s", set);
--	while (cnt--)
--		putc(ch, file);
--	fprintf(file, "%s", reset);
-+	strbuf_addstr(out, set);
-+	strbuf_addchars(out, ch, cnt);
-+	strbuf_addstr(out, reset);
- }
- 
- static void fill_print_name(struct diffstat_file *file)
-@@ -1577,14 +1576,16 @@ static void fill_print_name(struct diffstat_file *file)
- 	file->print_name = pname;
- }
- 
--int print_stat_summary(FILE *fp, int files, int insertions, int deletions)
-+void print_stat_summary_0(struct diff_options *options, int files,
-+			  int insertions, int deletions)
- {
- 	struct strbuf sb = STRBUF_INIT;
--	int ret;
- 
- 	if (!files) {
- 		assert(insertions == 0 && deletions == 0);
--		return fprintf(fp, "%s\n", " 0 files changed");
-+		strbuf_addstr(&sb, " 0 files changed");
-+		emit_line(options, NULL, NULL, 1, 0, sb.buf, sb.len);
-+		return;
  	}
+ 	ep += 2; /* skip over @@ */
+@@ -673,7 +667,7 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 	strbuf_add(&msgbuf, line + len, org_len - len);
+ 	strbuf_complete_line(&msgbuf);
  
- 	strbuf_addf(&sb,
-@@ -1611,9 +1612,17 @@ int print_stat_summary(FILE *fp, int files, int insertions, int deletions)
- 			    deletions);
- 	}
- 	strbuf_addch(&sb, '\n');
--	ret = fputs(sb.buf, fp);
-+	emit_line(options, NULL, NULL, 1, 0, sb.buf, sb.len);
- 	strbuf_release(&sb);
--	return ret;
-+}
-+
-+void print_stat_summary(FILE *fp, int files,
-+			int insertions, int deletions)
-+{
-+	struct diff_options o;
-+	memset(&o, 0, sizeof(o));
-+	o.file = fp;
-+	print_stat_summary_0(&o, files, insertions, deletions);
+-	emit_line(ecbdata->opt, "", "", msgbuf.buf, msgbuf.len);
++	emit_line(ecbdata->opt, "", "", 1, 0, msgbuf.buf, msgbuf.len);
+ 	strbuf_release(&msgbuf);
  }
  
- static void show_stats(struct diffstat_t *data, struct diff_options *options)
-@@ -1623,13 +1632,13 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	int total_files = data->nr, count;
- 	int width, name_width, graph_width, number_width = 0, bin_width = 0;
- 	const char *reset, *add_c, *del_c;
--	const char *line_prefix = "";
- 	int extra_shown = 0;
-+	const char *line_prefix = diff_line_prefix(options);
-+	struct strbuf out = STRBUF_INIT;
+@@ -736,8 +730,8 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
+ 		const char *context = diff_get_color(ecb->color_diff,
+ 						     DIFF_CONTEXT);
+ 		putc('\n', ecb->opt->file);
+-		emit_line_0(ecb->opt, context, reset, 1, '\\',
+-			    nneof, strlen(nneof));
++		emit_line(ecb->opt, context, reset, 1, '\\',
++			  nneof, strlen(nneof));
+ 	}
+ }
  
- 	if (data->nr == 0)
+@@ -1335,7 +1329,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		}
+ 		diff_words_flush(ecbdata);
+ 		if (ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN) {
+-			emit_line(o, context, reset, line, len);
++			emit_line(o, context, reset, 1, 0, line, len);
+ 			fputs("~\n", o->file);
+ 		} else {
+ 			/*
+@@ -1347,7 +1341,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 			      line++;
+ 			      len--;
+ 			}
+-			emit_line(o, context, reset, line, len);
++			emit_line(o, context, reset, 1, 0, line, len);
+ 		}
  		return;
- 
--	line_prefix = diff_line_prefix(options);
- 	count = options->stat_count ? options->stat_count : data->nr;
- 
- 	reset = diff_get_color_opt(options, DIFF_RESET);
-@@ -1783,26 +1792,29 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 		}
- 
- 		if (file->is_binary) {
--			fprintf(options->file, "%s", line_prefix);
--			show_name(options->file, prefix, name, len);
--			fprintf(options->file, " %*s", number_width, "Bin");
-+			show_name(&out, prefix, name, len);
-+			strbuf_addf(&out, " %*s", number_width, "Bin");
- 			if (!added && !deleted) {
--				putc('\n', options->file);
-+				strbuf_addch(&out, '\n');
-+				emit_line(options, NULL, NULL, 1, 0, out.buf, out.len);
-+				strbuf_reset(&out);
- 				continue;
- 			}
--			fprintf(options->file, " %s%"PRIuMAX"%s",
-+			strbuf_addf(&out, " %s%"PRIuMAX"%s",
- 				del_c, deleted, reset);
--			fprintf(options->file, " -> ");
--			fprintf(options->file, "%s%"PRIuMAX"%s",
-+			strbuf_addstr(&out, " -> ");
-+			strbuf_addf(&out, "%s%"PRIuMAX"%s",
- 				add_c, added, reset);
--			fprintf(options->file, " bytes");
--			fprintf(options->file, "\n");
-+			strbuf_addstr(&out, " bytes\n");
-+			emit_line(options, NULL, NULL, 1, 0, out.buf, out.len);
-+			strbuf_reset(&out);
- 			continue;
- 		}
- 		else if (file->is_unmerged) {
--			fprintf(options->file, "%s", line_prefix);
--			show_name(options->file, prefix, name, len);
--			fprintf(options->file, " Unmerged\n");
-+			show_name(&out, prefix, name, len);
-+			strbuf_addstr(&out, " Unmerged\n");
-+			emit_line(options, NULL, NULL, 1, 0, out.buf, out.len);
-+			strbuf_reset(&out);
- 			continue;
- 		}
- 
-@@ -1825,14 +1837,15 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 				add = total - del;
- 			}
- 		}
--		fprintf(options->file, "%s", line_prefix);
--		show_name(options->file, prefix, name, len);
--		fprintf(options->file, " %*"PRIuMAX"%s",
-+		show_name(&out, prefix, name, len);
-+		strbuf_addf(&out, " %*"PRIuMAX"%s",
- 			number_width, added + deleted,
- 			added + deleted ? " " : "");
--		show_graph(options->file, '+', add, add_c, reset);
--		show_graph(options->file, '-', del, del_c, reset);
--		fprintf(options->file, "\n");
-+		show_graph(&out, '+', add, add_c, reset);
-+		show_graph(&out, '-', del, del_c, reset);
-+		strbuf_addch(&out, '\n');
-+		emit_line(options, NULL, NULL, 1, 0, out.buf, out.len);
-+		strbuf_reset(&out);
  	}
- 
- 	for (i = 0; i < data->nr; i++) {
-@@ -1853,11 +1866,12 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 		if (i < count)
- 			continue;
- 		if (!extra_shown)
--			fprintf(options->file, "%s ...\n", line_prefix);
-+			emit_line(options, NULL, NULL, 1, 0,
-+				  " ...\n", strlen(" ...\n"));
- 		extra_shown = 1;
+@@ -1370,7 +1364,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		/* incomplete line at the end */
+ 		ecbdata->lno_in_preimage++;
+ 		emit_line(o, diff_get_color(ecbdata->color_diff, DIFF_CONTEXT),
+-			  reset, line, len);
++			  reset, 1, 0, line, len);
+ 		break;
  	}
--	fprintf(options->file, "%s", line_prefix);
--	print_stat_summary(options->file, total_files, adds, dels);
-+
-+	print_stat_summary_0(options, total_files, adds, dels);
  }
+@@ -2182,7 +2176,7 @@ static void checkdiff_consume(void *priv, char *line, unsigned long len)
+ 		fprintf(data->o->file, "%s%s:%d: %s.\n",
+ 			line_prefix, data->filename, data->lineno, err);
+ 		free(err);
+-		emit_line(data->o, set, reset, line, 1);
++		emit_line(data->o, set, reset, 1, 0, line, 1);
+ 		ws_check_emit(line + 1, len - 1, data->ws_rule,
+ 			      data->o->file, set, reset, ws);
+ 	} else if (line[0] == ' ') {
+@@ -4831,7 +4825,7 @@ void diff_flush(struct diff_options *options)
+ 			term[0] = options->line_termination;
+ 			term[1] = '\0';
  
- static void show_shortstats(struct diffstat_t *data, struct diff_options *options)
-@@ -1869,7 +1883,7 @@ static void show_shortstats(struct diffstat_t *data, struct diff_options *option
- 
- 	for (i = 0; i < data->nr; i++) {
- 		int added = data->files[i]->added;
--		int deleted= data->files[i]->deleted;
-+		int deleted = data->files[i]->deleted;
- 
- 		if (data->files[i]->is_unmerged ||
- 		    (!data->files[i]->is_interesting && (added + deleted == 0))) {
-@@ -1879,8 +1893,7 @@ static void show_shortstats(struct diffstat_t *data, struct diff_options *option
- 			dels += deleted;
- 		}
- 	}
--	fprintf(options->file, "%s", diff_line_prefix(options));
--	print_stat_summary(options->file, total_files, adds, dels);
-+	print_stat_summary_0(options, total_files, adds, dels);
- }
- 
- static void show_numstat(struct diffstat_t *data, struct diff_options *options)
-diff --git a/diff.h b/diff.h
-index 9ad546361a..56d8dd036e 100644
---- a/diff.h
-+++ b/diff.h
-@@ -392,8 +392,8 @@ extern int parse_rename_score(const char **cp_p);
- 
- extern long parse_algorithm_value(const char *value);
- 
--extern int print_stat_summary(FILE *fp, int files,
--			      int insertions, int deletions);
-+extern void print_stat_summary(FILE *fp, int files,
-+			       int insertions, int deletions);
- extern void setup_diff_pager(struct diff_options *);
- 
- #endif /* DIFF_H */
+-			emit_line(options, NULL, NULL, term, !!term[0]);
++			emit_line(options, NULL, NULL, 1, 0, term, !!term[0]);
+ 			if (options->stat_sep) {
+ 				/* attach patch instead of inline */
+ 				fputs(options->stat_sep, options->file);
 -- 
 2.13.0.18.g7d86cc8ba0
 
