@@ -8,47 +8,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53E16201CF
-	for <e@80x24.org>; Thu, 18 May 2017 21:29:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A9B4201CF
+	for <e@80x24.org>; Thu, 18 May 2017 21:29:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756119AbdERV3Q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 17:29:16 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35004 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756106AbdERV3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 17:29:14 -0400
-Received: by mail-wm0-f65.google.com with SMTP id v4so14074238wmb.2
-        for <git@vger.kernel.org>; Thu, 18 May 2017 14:29:14 -0700 (PDT)
+        id S1756125AbdERV3T (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 17:29:19 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35151 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756122AbdERV3R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 17:29:17 -0400
+Received: by mail-wm0-f67.google.com with SMTP id v4so14074491wmb.2
+        for <git@vger.kernel.org>; Thu, 18 May 2017 14:29:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ERUhy/oXoLqDEuROTjp3/+S/Bslm5o8ZiOTJVrcfrQg=;
-        b=XrYvb2g1A62dxkjHoTiPIJpWJjh+FcD7/iuRomDt5a3+Sm4bLUwhRkAnCN4hxZNB8v
-         Nx0Z7t5bspCQppKecIOydI+fbSkKXwFHjCq1aIRgYLrL/ThV5kebEvux8vJhNXqxdZcO
-         292sfAmfAuwMCEGaHYqprfhfhGr1Bx79EvmvBtBn80Px+aCnuz8bADaGKaWKjsaLVmTy
-         VZTVjLd1RZu1VBqKvAb1jusCosabQFX5fV8fchUqrR7Ny39Gf+bsF8J8ItlLCaPFqCYY
-         xapgeiTx0iQmqgrN2Zg6QvbMh95khqMgWNlX8GTu+A1mHLrTwgI6E0UsUXo46prRC8tH
-         39Ew==
+        bh=hqYmgGEmDavyaeV/CdN9EmmBz26I7SxaKgmxn0J6u60=;
+        b=uZSCzb64TAKZjRBpTVK7Y1FEqpyJ9xtk2a+gp6hNEsnxWtyaTpOZxnVz0SPQyapwMl
+         +NYy5muLk++Byr7HwcqZdazGAtdPhj2Q5AJXMXjcWU7r2sO3qxqTGdYD9ZQ/5484aqAA
+         s7MOjdys2Luz+mAyuItZ7b9zH0qVtJcujkfJJlUtIIlBI/YIzAXo1tLpHlWNlmcg932I
+         JN++BSPYVcLLPHQAizCuDkW7cv+pKtrmyXKgVCcMe60cFuZgRNWT6siWVYJJrUYsUDiV
+         icrJ2Fcti+47E1ZxV8vBJGbaIj8+bMC1roFR+p1xKb9tOGqyQGQjSv0QrIiFJSkW2IKp
+         iKMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ERUhy/oXoLqDEuROTjp3/+S/Bslm5o8ZiOTJVrcfrQg=;
-        b=JUNcY3hCxGjDP+Hamnn1hBqkIkbn43zCqKIHtYkmYPY96LIoSM5m9nAW+DbrWh9O9q
-         HwOERYRRoGQ0gG9bmMlg+o2JBPy/jE8xzLVIp+u1gu63BZ1opv9RCKlBW9t0ln7aUahy
-         Cx/fgK7telJP36EPlTDkJVfEaNsDse972nTj6FQv81NjvJqKrDKiGBWJiOMwDTc62WqT
-         lnHIhIiK62l9TtNlY8TXC0vJ23uZsg/ZLJbQLk2AIMGT5UqwLOANr5TudDEirhiX56+A
-         QJ/eiueNKTRD5TYtpMLPqtBv/sQoZJC5hVOt6szXFo0OiBbMaqVC08JVnsjmkahrbUis
-         SAbQ==
-X-Gm-Message-State: AODbwcDU5WkK9ibYyenl2wR1S2yAx/0u/a+3pVZxb7vWRS2jwxaVPV9J
-        9vOegy5IpSKvFw==
-X-Received: by 10.28.38.68 with SMTP id m65mr4262380wmm.25.1495142953104;
-        Thu, 18 May 2017 14:29:13 -0700 (PDT)
+        bh=hqYmgGEmDavyaeV/CdN9EmmBz26I7SxaKgmxn0J6u60=;
+        b=qFldBpBTG+EGW+bs+5vqNgWQSWB4N0+gdnGDjB7h7CYleytw+cCdOXYoc8BqT+9R9v
+         KYmC7rVt0Mt2/TLVysCtDNJeUJfWqU7of90bE8SiGHXczbMWsxAM7bJxMXyhZw7ZlouO
+         SeCNXhkp7k0Fpt9qzYa51AOOI03z2uvp12+/xVeGfK7YVTyzCZEyf8uHDnbN9Kz2/UqR
+         tE4PcGGZGlyawunI2dRBpXdkO7/jaxxSVRvifF4RV+fDZIBXMQUbznzyzBJvbsrBNfaR
+         J8IRU0TvY+RbcC5FmNDPe9RGEDRU0lvHcsTuY/qNKg2vkFSU5Rm/kCNpsUSx7qSImniU
+         hvYw==
+X-Gm-Message-State: AODbwcBmbKMZtFRIuLK3jlypwelSC98to8mSPb72E0GRCQUXCzu91PgC
+        zu3Epol3G7z+YA==
+X-Received: by 10.28.154.133 with SMTP id c127mr3840831wme.42.1495142955986;
+        Thu, 18 May 2017 14:29:15 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k18sm416181wre.9.2017.05.18.14.29.11
+        by smtp.gmail.com with ESMTPSA id k18sm416181wre.9.2017.05.18.14.29.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 May 2017 14:29:12 -0700 (PDT)
+        Thu, 18 May 2017 14:29:14 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/3] sha1dc: update from upstream
-Date:   Thu, 18 May 2017 21:28:56 +0000
-Message-Id: <20170518212858.3649-2-avarab@gmail.com>
+Subject: [PATCH 2/3] sha1dc: use sha1collisiondetection as a submodule
+Date:   Thu, 18 May 2017 21:28:57 +0000
+Message-Id: <20170518212858.3649-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170518212858.3649-1-avarab@gmail.com>
 References: <20170518212858.3649-1-avarab@gmail.com>
@@ -73,503 +73,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update sha1dc from the latest version by the upstream
-maintainer[1].
+Replace the forked sha1dc directory with a copy of the upstream code
+imported as a submodule. This is the exact same code as now exists in
+the sha1dc/ directory.
 
-This version includes a commit of mine which allows for replacing the
-local modifications done to the upstream files in git.git with macro
-definitions to monkeypatch it in place.
+The initial reason for copy/pasting the code into sha1dc and locally
+modifying it was that it needed to be altered to work with the git
+project.
 
-It also brings in a change[2] upstream made for the breakage 2.13.0
-introduced on SPARC and other platforms that forbid unaligned
-access[3].
-
-This means that the code customizations done since the initial import
-in commit 28dc98e343 ("sha1dc: add collision-detecting sha1
-implementation", 2017-03-16) can be done purely via Makefile
-definitions and by including the content of our own sha1dc_git.[ch] in
-sha1dc/sha1.c via a macro.
-
-1. https://github.com/cr-marcstevens/sha1collisiondetection/commit/b45fcefc71270d9a159028c22e6d36c3817da188
-2. https://github.com/cr-marcstevens/sha1collisiondetection/commit/33a694a9ee1b79c24be45f9eab5ac0e1aeeaf271
-3. "Git 2.13.0 segfaults on Solaris SPARC due to DC_SHA1=YesPlease
-   being on by default"
-   (https://public-inbox.org/git/CACBZZX6nmKK8af0-UpjCKWV4R+hV-uk2xWXVA5U+_UQ3VXU03g@mail.gmail.com/)
+The upstream project has accepted my code changes to allow us to use
+their code as-is, see the preceding commit for details. So import the
+code as a submodule instead, this will make it easier to keep
+up-to-date with any upstream fixes or improvements.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile           |  9 ++++-
- sha1dc/sha1.c      | 99 +++++++++++++++++++++++++++++++++++-------------------
- sha1dc/sha1.h      | 92 ++++++++++++++++++++++----------------------------
- sha1dc/ubc_check.c | 13 +++++--
- sha1dc/ubc_check.h | 14 ++++++--
- sha1dc_git.c       | 24 +++++++++++++
- sha1dc_git.h       | 19 +++++++++++
- 7 files changed, 178 insertions(+), 92 deletions(-)
- create mode 100644 sha1dc_git.c
- create mode 100644 sha1dc_git.h
+ .gitmodules            | 4 ++++
+ Makefile               | 4 ++--
+ hash.h                 | 2 +-
+ sha1collisiondetection | 1 +
+ 4 files changed, 8 insertions(+), 3 deletions(-)
+ create mode 100644 .gitmodules
+ create mode 160000 sha1collisiondetection
 
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000000..cbeebdab7a
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,4 @@
++[submodule "sha1collisiondetection"]
++	path = sha1collisiondetection
++	url = https://github.com/cr-marcstevens/sha1collisiondetection.git
++	branch = master
 diff --git a/Makefile b/Makefile
-index e35542e631..ffa6da71b7 100644
+index ffa6da71b7..d7f506e790 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1414,7 +1414,14 @@ else
+@@ -1412,8 +1412,8 @@ ifdef APPLE_COMMON_CRYPTO
+ 	BASIC_CFLAGS += -DSHA1_APPLE
+ else
  	DC_SHA1 := YesPlease
- 	LIB_OBJS += sha1dc/sha1.o
- 	LIB_OBJS += sha1dc/ubc_check.o
--	BASIC_CFLAGS += -DSHA1_DC
-+	BASIC_CFLAGS += \
-+		-DSHA1_DC \
-+		-DSHA1DC_NO_STANDARD_INCLUDES \
-+		-DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 \
-+		-DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"cache.h\"" \
-+		-DSHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_C="\"sha1dc_git.c\"" \
-+		-DSHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_H="\"sha1dc_git.h\"" \
-+		-DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\""
- endif
- endif
- endif
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index 35e9dd5bf4..26516b102f 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -5,12 +5,26 @@
- * https://opensource.org/licenses/MIT
- ***/
- 
--#include "cache.h"
+-	LIB_OBJS += sha1dc/sha1.o
+-	LIB_OBJS += sha1dc/ubc_check.o
++	LIB_OBJS += sha1collisiondetection/lib/sha1.o
++	LIB_OBJS += sha1collisiondetection/lib/ubc_check.o
+ 	BASIC_CFLAGS += \
+ 		-DSHA1_DC \
+ 		-DSHA1DC_NO_STANDARD_INCLUDES \
+diff --git a/hash.h b/hash.h
+index a11fc9233f..9d9892ac3e 100644
+--- a/hash.h
++++ b/hash.h
+@@ -8,7 +8,7 @@
+ #elif defined(SHA1_OPENSSL)
+ #include <openssl/sha.h>
+ #elif defined(SHA1_DC)
 -#include "sha1dc/sha1.h"
--#include "sha1dc/ubc_check.h"
-+#ifndef SHA1DC_NO_STANDARD_INCLUDES
-+#include <string.h>
-+#include <memory.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#endif
-+
-+#ifdef SHA1DC_CUSTOM_INCLUDE_SHA1_C
-+#include SHA1DC_CUSTOM_INCLUDE_SHA1_C
-+#endif
-+
-+#ifndef SHA1DC_INIT_SAFE_HASH_DEFAULT
-+#define SHA1DC_INIT_SAFE_HASH_DEFAULT 1
-+#endif
- 
-+#include "sha1.h"
-+#include "ubc_check.h"
- 
--/*
-+
-+/* 
-    Because Little-Endian architectures are most common,
-    we only set SHA1DC_BIGENDIAN if one of these conditions is met.
-    Note that all MSFT platforms are little endian,
-@@ -18,16 +32,30 @@
-    If you are compiling on a big endian platform and your compiler does not define one of these,
-    you will have to add whatever macros your tool chain defines to indicate Big-Endianness.
-  */
--#if (defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
-+#ifdef SHA1DC_BIGENDIAN
-+#undef SHA1DC_BIGENDIAN
-+#endif
-+#if (!defined SHA1DC_FORCE_LITTLEENDIAN) && \
-+    ((defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
-     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) || \
--    defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) ||  defined(__AARCH64EB__) || \
--    defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__)
-+    defined(_BIG_ENDIAN) || defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) ||  defined(__AARCH64EB__) || \
-+    defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__) || defined(SHA1DC_FORCE_BIGENDIAN))
-+
-+#define SHA1DC_BIGENDIAN
- 
--#define SHA1DC_BIGENDIAN	1
--#else
--#undef SHA1DC_BIGENDIAN
- #endif /*ENDIANNESS SELECTION*/
- 
-+#if (defined(__amd64__) || defined(__amd64) || defined(__x86_64__) || defined(__x86_64) || \
-+     defined(i386) || defined(__i386) || defined(__i386__) || defined(__i486__)  || \
-+     defined(__i586__) || defined(__i686__) || defined(_M_IX86) || defined(__X86__) || \
-+     defined(_X86_) || defined(__THW_INTEL__) || defined(__I86__) || defined(__INTEL__) || \
-+     defined(__386) || defined(_M_X64) || defined(_M_AMD64))
-+
-+#define SHA1DC_ALLOW_UNALIGNED_ACCESS
-+
-+#endif /*UNALIGNMENT DETECTION*/
-+
-+
- #define rotate_right(x,n) (((x)>>(n))|((x)<<(32-(n))))
- #define rotate_left(x,n)  (((x)<<(n))|((x)>>(32-(n))))
- 
-@@ -36,11 +64,11 @@
- 
- #define sha1_mix(W, t)  (rotate_left(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1))
- 
--#if defined(SHA1DC_BIGENDIAN)
-+#ifdef SHA1DC_BIGENDIAN
- 	#define sha1_load(m, t, temp)  { temp = m[t]; }
- #else
- 	#define sha1_load(m, t, temp)  { temp = m[t]; sha1_bswap32(temp); }
--#endif /* !defined(SHA1DC_BIGENDIAN) */
-+#endif
- 
- #define sha1_store(W, t, x)	*(volatile uint32_t *)&W[t] = x
- 
-@@ -869,6 +897,11 @@ static void sha1recompress_fast_ ## t (uint32_t ihvin[5], uint32_t ihvout[5], co
- 	ihvout[0] = ihvin[0] + a; ihvout[1] = ihvin[1] + b; ihvout[2] = ihvin[2] + c; ihvout[3] = ihvin[3] + d; ihvout[4] = ihvin[4] + e; \
- }
- 
-+#ifdef _MSC_VER
-+#pragma warning(push)
-+#pragma warning(disable: 4127)  /* Complier complains about the checks in the above macro being constant. */
-+#endif
-+
- #ifdef DOSTORESTATE0
- SHA1_RECOMPRESS(0)
++#include "sha1collisiondetection/lib/sha1.h"
+ #else /* SHA1_BLK */
+ #include "block-sha1/sha1.h"
  #endif
-@@ -1189,6 +1222,10 @@ SHA1_RECOMPRESS(78)
- SHA1_RECOMPRESS(79)
- #endif
- 
-+#ifdef _MSC_VER
-+#pragma warning(pop)
-+#endif
-+
- static void sha1_recompression_step(uint32_t step, uint32_t ihvin[5], uint32_t ihvout[5], const uint32_t me2[80], const uint32_t state[5])
- {
- 	switch (step)
-@@ -1606,7 +1643,7 @@ static void sha1_process(SHA1_CTX* ctx, const uint32_t block[16])
- 	unsigned i, j;
- 	uint32_t ubc_dv_mask[DVMASKSIZE] = { 0xFFFFFFFF };
- 	uint32_t ihvtmp[5];
--
-+	
- 	ctx->ihv1[0] = ctx->ihv[0];
- 	ctx->ihv1[1] = ctx->ihv[1];
- 	ctx->ihv1[2] = ctx->ihv[2];
-@@ -1662,7 +1699,7 @@ void SHA1DCInit(SHA1_CTX* ctx)
- 	ctx->ihv[3] = 0x10325476;
- 	ctx->ihv[4] = 0xC3D2E1F0;
- 	ctx->found_collision = 0;
--	ctx->safe_hash = 0;
-+	ctx->safe_hash = SHA1DC_INIT_SAFE_HASH_DEFAULT;
- 	ctx->ubc_check = 1;
- 	ctx->detect_coll = 1;
- 	ctx->reduced_round_coll = 0;
-@@ -1710,6 +1747,9 @@ void SHA1DCSetCallback(SHA1_CTX* ctx, collision_block_callback callback)
- void SHA1DCUpdate(SHA1_CTX* ctx, const char* buf, size_t len)
- {
- 	unsigned left, fill;
-+
-+    const uint32_t* buffer_to_hash = NULL;
-+
- 	if (len == 0)
- 		return;
- 
-@@ -1728,7 +1768,14 @@ void SHA1DCUpdate(SHA1_CTX* ctx, const char* buf, size_t len)
- 	while (len >= 64)
- 	{
- 		ctx->total += 64;
--		sha1_process(ctx, (uint32_t*)(buf));
-+
-+#if defined(SHA1DC_ALLOW_UNALIGNED_ACCESS)
-+        buffer_to_hash = (const uint32_t*)buf;
-+#else
-+        buffer_to_hash = (const uint32_t*)ctx->buffer;
-+        memcpy(ctx->buffer, buf, 64);
-+#endif /* defined(SHA1DC_ALLOW_UNALIGNED_ACCESS) */
-+		sha1_process(ctx, buffer_to_hash);
- 		buf += 64;
- 		len -= 64;
- 	}
-@@ -1788,22 +1835,6 @@ int SHA1DCFinal(unsigned char output[20], SHA1_CTX *ctx)
- 	return ctx->found_collision;
- }
- 
--void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
--{
--	if (!SHA1DCFinal(hash, ctx))
--		return;
--	die("SHA-1 appears to be part of a collision attack: %s",
--	    sha1_to_hex(hash));
--}
--
--void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long len)
--{
--	const char *data = vdata;
--	/* We expect an unsigned long, but sha1dc only takes an int */
--	while (len > INT_MAX) {
--		SHA1DCUpdate(ctx, data, INT_MAX);
--		data += INT_MAX;
--		len -= INT_MAX;
--	}
--	SHA1DCUpdate(ctx, data, len);
--}
-+#ifdef SHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_C
-+#include SHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_C
-+#endif
-diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
-index bd8bd928fb..dd41b0a5a6 100644
---- a/sha1dc/sha1.h
-+++ b/sha1dc/sha1.h
-@@ -4,6 +4,7 @@
- * See accompanying file LICENSE.txt or copy at
- * https://opensource.org/licenses/MIT
- ***/
-+
- #ifndef SHA1DC_SHA1_H
- #define SHA1DC_SHA1_H
- 
-@@ -11,36 +12,30 @@
- extern "C" {
- #endif
- 
--/* uses SHA-1 message expansion to expand the first 16 words of W[] to 80 words */
--/* void sha1_message_expansion(uint32_t W[80]); */
--
--/* sha-1 compression function; first version takes a message block pre-parsed as 16 32-bit integers, second version takes an already expanded message) */
--/* void sha1_compression(uint32_t ihv[5], const uint32_t m[16]);
--void sha1_compression_W(uint32_t ihv[5], const uint32_t W[80]); */
-+#ifndef SHA1DC_NO_STANDARD_INCLUDES
-+#include <stdint.h>
-+#endif
- 
--/* same as sha1_compression_W, but additionally store intermediate states */
-+/* sha-1 compression function that takes an already expanded message, and additionally store intermediate states */
- /* only stores states ii (the state between step ii-1 and step ii) when DOSTORESTATEii is defined in ubc_check.h */
- void sha1_compression_states(uint32_t[5], const uint32_t[16], uint32_t[80], uint32_t[80][5]);
- 
- /*
--// function type for sha1_recompression_step_T (uint32_t ihvin[5], uint32_t ihvout[5], const uint32_t me2[80], const uint32_t state[5])
--// where 0 <= T < 80
--//       me2 is an expanded message (the expansion of an original message block XOR'ed with a disturbance vector's message block difference)
--//       state is the internal state (a,b,c,d,e) before step T of the SHA-1 compression function while processing the original message block
--// the function will return:
--//       ihvin: the reconstructed input chaining value
--//       ihvout: the reconstructed output chaining value
-+// Function type for sha1_recompression_step_T (uint32_t ihvin[5], uint32_t ihvout[5], const uint32_t me2[80], const uint32_t state[5]).
-+// Where 0 <= T < 80
-+//       me2 is an expanded message (the expansion of an original message block XOR'ed with a disturbance vector's message block difference.)
-+//       state is the internal state (a,b,c,d,e) before step T of the SHA-1 compression function while processing the original message block.
-+// The function will return:
-+//       ihvin: The reconstructed input chaining value.
-+//       ihvout: The reconstructed output chaining value.
- */
- typedef void(*sha1_recompression_type)(uint32_t*, uint32_t*, const uint32_t*, const uint32_t*);
- 
--/* table of sha1_recompression_step_0, ... , sha1_recompression_step_79 */
--/* extern sha1_recompression_type sha1_recompression_step[80];*/
--
--/* a callback function type that can be set to be called when a collision block has been found: */
-+/* A callback function type that can be set to be called when a collision block has been found: */
- /* void collision_block_callback(uint64_t byteoffset, const uint32_t ihvin1[5], const uint32_t ihvin2[5], const uint32_t m1[80], const uint32_t m2[80]) */
- typedef void(*collision_block_callback)(uint64_t, const uint32_t*, const uint32_t*, const uint32_t*, const uint32_t*);
- 
--/* the SHA-1 context */
-+/* The SHA-1 context. */
- typedef struct {
- 	uint64_t total;
- 	uint32_t ihv[5];
-@@ -59,30 +54,34 @@ typedef struct {
- 	uint32_t states[80][5];
- } SHA1_CTX;
- 
--/* initialize SHA-1 context */
-+/* Initialize SHA-1 context. */
- void SHA1DCInit(SHA1_CTX*);
- 
- /*
--// function to enable safe SHA-1 hashing:
--// collision attacks are thwarted by hashing a detected near-collision block 3 times
--// think of it as extending SHA-1 from 80-steps to 240-steps for such blocks:
--//   the best collision attacks against SHA-1 have complexity about 2^60,
--//   thus for 240-steps an immediate lower-bound for the best cryptanalytic attacks would 2^180
--//   an attacker would be better off using a generic birthday search of complexity 2^80
--//
--// enabling safe SHA-1 hashing will result in the correct SHA-1 hash for messages where no collision attack was detected
--// but it will result in a different SHA-1 hash for messages where a collision attack was detected
--// this will automatically invalidate SHA-1 based digital signature forgeries
--// enabled by default
-+    Function to enable safe SHA-1 hashing:
-+    Collision attacks are thwarted by hashing a detected near-collision block 3 times.
-+    Think of it as extending SHA-1 from 80-steps to 240-steps for such blocks:
-+        The best collision attacks against SHA-1 have complexity about 2^60,
-+        thus for 240-steps an immediate lower-bound for the best cryptanalytic attacks would be 2^180.
-+        An attacker would be better off using a generic birthday search of complexity 2^80.
-+  
-+   Enabling safe SHA-1 hashing will result in the correct SHA-1 hash for messages where no collision attack was detected,
-+   but it will result in a different SHA-1 hash for messages where a collision attack was detected.
-+   This will automatically invalidate SHA-1 based digital signature forgeries.
-+   Enabled by default.
- */
- void SHA1DCSetSafeHash(SHA1_CTX*, int);
- 
--/* function to disable or enable the use of Unavoidable Bitconditions (provides a significant speed up) */
--/* enabled by default */
-+/*
-+    Function to disable or enable the use of Unavoidable Bitconditions (provides a significant speed up).
-+    Enabled by default
-+ */
- void SHA1DCSetUseUBC(SHA1_CTX*, int);
- 
--/* function to disable or enable the use of Collision Detection */
--/* enabled by default */
-+/*
-+    Function to disable or enable the use of Collision Detection.
-+    Enabled by default.
-+ */
- void SHA1DCSetUseDetectColl(SHA1_CTX*, int);
- 
- /* function to disable or enable the detection of reduced-round SHA-1 collisions */
-@@ -98,25 +97,14 @@ void SHA1DCUpdate(SHA1_CTX*, const char*, size_t);
- 
- /* obtain SHA-1 hash from SHA-1 context */
- /* returns: 0 = no collision detected, otherwise = collision found => warn user for active attack */
--int  SHA1DCFinal(unsigned char[20], SHA1_CTX*);
--
--/*
-- * Same as SHA1DCFinal, but convert collision attack case into a verbose die().
-- */
--void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
--
--/*
-- * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
-- */
--void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
--
--#define platform_SHA_CTX SHA1_CTX
--#define platform_SHA1_Init SHA1DCInit
--#define platform_SHA1_Update git_SHA1DCUpdate
--#define platform_SHA1_Final git_SHA1DCFinal
-+int  SHA1DCFinal(unsigned char[20], SHA1_CTX*); 
- 
- #if defined(__cplusplus)
- }
- #endif
- 
--#endif /* SHA1DC_SHA1_H */
-+#ifdef SHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_H
-+#include SHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_H
-+#endif
-+
-+#endif
-diff --git a/sha1dc/ubc_check.c b/sha1dc/ubc_check.c
-index 089dd4743d..b3beff2afb 100644
---- a/sha1dc/ubc_check.c
-+++ b/sha1dc/ubc_check.c
-@@ -24,8 +24,13 @@
- // ubc_check has been verified against ubc_check_verify using the 'ubc_check_test' program in the tools section
- */
- 
--#include "git-compat-util.h"
--#include "sha1dc/ubc_check.h"
-+#ifndef SHA1DC_NO_STANDARD_INCLUDES
-+#include <stdint.h>
-+#endif
-+#ifdef SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C
-+#include SHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C
-+#endif
-+#include "ubc_check.h"
- 
- static const uint32_t DV_I_43_0_bit 	= (uint32_t)(1) << 0;
- static const uint32_t DV_I_44_0_bit 	= (uint32_t)(1) << 1;
-@@ -361,3 +366,7 @@ if (mask) {
- 
- 	dvmask[0]=mask;
- }
-+
-+#ifdef SHA1DC_CUSTOM_TRAILING_INCLUDE_UBC_CHECK_C
-+#include SHA1DC_CUSTOM_TRAILING_INCLUDE_UBC_CHECK_C
-+#endif
-diff --git a/sha1dc/ubc_check.h b/sha1dc/ubc_check.h
-index b64c306d77..d7e17dc734 100644
---- a/sha1dc/ubc_check.h
-+++ b/sha1dc/ubc_check.h
-@@ -20,13 +20,17 @@
- // thus one needs to do the recompression check for each DV that has its bit set
- */
- 
--#ifndef UBC_CHECK_H
--#define UBC_CHECK_H
-+#ifndef SHA1DC_UBC_CHECK_H
-+#define SHA1DC_UBC_CHECK_H
- 
- #if defined(__cplusplus)
- extern "C" {
- #endif
- 
-+#ifndef SHA1DC_NO_STANDARD_INCLUDES
-+#include <stdint.h>
-+#endif
-+
- #define DVMASKSIZE 1
- typedef struct { int dvType; int dvK; int dvB; int testt; int maski; int maskb; uint32_t dm[80]; } dv_info_t;
- extern dv_info_t sha1_dvs[];
-@@ -41,4 +45,8 @@ void ubc_check(const uint32_t W[80], uint32_t dvmask[DVMASKSIZE]);
- }
- #endif
- 
--#endif /* UBC_CHECK_H */
-+#ifdef SHA1DC_CUSTOM_TRAILING_INCLUDE_UBC_CHECK_H
-+#include SHA1DC_CUSTOM_TRAILING_INCLUDE_UBC_CHECK_H
-+#endif
-+
-+#endif
-diff --git a/sha1dc_git.c b/sha1dc_git.c
-new file mode 100644
-index 0000000000..4d32b4f77e
+diff --git a/sha1collisiondetection b/sha1collisiondetection
+new file mode 160000
+index 0000000000..b45fcefc71
 --- /dev/null
-+++ b/sha1dc_git.c
-@@ -0,0 +1,24 @@
-+/*
-+ * This code is included at the end of sha1dc/sha1.c with the
-+ * SHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_C macro.
-+ */
-+
-+void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
-+{
-+	if (!SHA1DCFinal(hash, ctx))
-+		return;
-+	die("SHA-1 appears to be part of a collision attack: %s",
-+	    sha1_to_hex(hash));
-+}
-+
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long len)
-+{
-+	const char *data = vdata;
-+	/* We expect an unsigned long, but sha1dc only takes an int */
-+	while (len > INT_MAX) {
-+		SHA1DCUpdate(ctx, data, INT_MAX);
-+		data += INT_MAX;
-+		len -= INT_MAX;
-+	}
-+	SHA1DCUpdate(ctx, data, len);
-+}
-diff --git a/sha1dc_git.h b/sha1dc_git.h
-new file mode 100644
-index 0000000000..a8a5c1da16
---- /dev/null
-+++ b/sha1dc_git.h
-@@ -0,0 +1,19 @@
-+/*
-+ * This code is included at the end of sha1dc/sha1.h with the
-+ * SHA1DC_CUSTOM_TRAILING_INCLUDE_SHA1_H macro.
-+ */
-+
-+/*
-+ * Same as SHA1DCFinal, but convert collision attack case into a verbose die().
-+ */
-+void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
-+
-+/*
-+ * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
-+ */
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
-+
-+#define platform_SHA_CTX SHA1_CTX
-+#define platform_SHA1_Init SHA1DCInit
-+#define platform_SHA1_Update git_SHA1DCUpdate
-+#define platform_SHA1_Final git_SHA1DCFinal
++++ b/sha1collisiondetection
+@@ -0,0 +1 @@
++Subproject commit b45fcefc71270d9a159028c22e6d36c3817da188
 -- 
 2.13.0.303.g4ebf302169
 
