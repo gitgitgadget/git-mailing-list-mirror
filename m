@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A595C201CF
-	for <e@80x24.org>; Thu, 18 May 2017 19:38:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25854201CF
+	for <e@80x24.org>; Thu, 18 May 2017 19:38:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757699AbdERTiL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 15:38:11 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:35115 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757683AbdERTiI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 15:38:08 -0400
-Received: by mail-pg0-f49.google.com with SMTP id q125so27306653pgq.2
-        for <git@vger.kernel.org>; Thu, 18 May 2017 12:38:08 -0700 (PDT)
+        id S1757688AbdERTiJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 15:38:09 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33347 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751155AbdERTiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 15:38:06 -0400
+Received: by mail-pf0-f170.google.com with SMTP id e193so28547342pfh.0
+        for <git@vger.kernel.org>; Thu, 18 May 2017 12:38:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=phc84LnN9XCscloCeISnt3Ufms1A68XX5FPStK7zMHU=;
-        b=Lq5ZnyFFmZMTu3eDnLO8QoRDaCguO0reOL544tMKtwQ9JvDOlJUywmuZIH3PUx08er
-         5nKzPzuO8HqEUKFSudzbCFNGTocQzhUBQqL0vzQn7Aac17N2uIh5PyPp5oGqs6dvHtHv
-         ditEehkrCg3HIwk+EKiUEvGqo5eqj3EKHToBhtbTsG9mcODa3ppjJq8HDiolCMB220eV
-         MGk+wEVGq4/+OWVE3Rap552jLY3tFqAPPAcpZKnTlYAL5kf66Jf0nCs/pUKEOzn84bCd
-         p8kHK4eQy8mZQdDbv4+l8adFoEVjb1K317EtCBfQPiKSJQq8WmmXprDHtp8nyeHt8urV
-         qfkg==
+        bh=r8pbJxQI9wcHNldGmPxxwILXBS9BaqIm0Y6z3+UeJvA=;
+        b=j0TYmIF7+x5QuwUE6rEiQgA/in8tVLRpL+xEN42ZZfUAvjKgZIvTdynCx6KuBKvdjo
+         dwaPmOIxO4X6kEeHN0BCqToPvxHHBK7hCqOOL8Gm5P0DckMS+g8d5brqw5qPnb68q6EX
+         4KLNgNrACgBu4jpvMWiLfmYOEdmLu/sOxQryEcVYzMj2/UuQxRCa5yLCo7oBtwPfoUeA
+         cTbZZUAQnp5XFw1EzAwggjcVgt3QrrXSoufN6exT2o4GI4toxsW+w0gjDtoJ91HGk009
+         ak33zvybj0fzNfwUY9r1KxqDO/tH4ZGv6GYYSCwkTomV31OQGQ/oIqqa1BMIMIJ2WD3z
+         SzsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=phc84LnN9XCscloCeISnt3Ufms1A68XX5FPStK7zMHU=;
-        b=mrXHDEaYle1bM6fEonr+b9bjtCeC49NIPuvXqMsIi+h99JPfsPT+SYZ06Jhq62lFJu
-         55ipM0xO/ineuGAVcTllzUKf0T0gy1wsoaYRLn8f3ACSlqu3ZOYUkgqty3Q1fhkjM5o0
-         cxICY3jEksCvZ4YkQ1B34jPGgiUx5wm195bdoFZsfqny+x91Ohp8W/1HUdJ+URZGZ4ic
-         jmRT/B4QRLWXWLpHN5mwskU1uqgaZ5Mokl68VYl3Yr2aDFpluGGbPR76j9DB4cjhn3vr
-         U6ZxtKOvfFh5aS6u4BYUL6/2Rb/GULoqLT+ipvq3KrcgI1HHUd8G1rUEhaiLk0N3TsLL
-         N+kQ==
-X-Gm-Message-State: AODbwcB9UfANm3aBsF26+TAjbX9eQhE3ix+XEEe/seiXUIqHoT5UrjH4
-        1VO9wNLtZDq///tU
-X-Received: by 10.98.153.76 with SMTP id d73mr6316739pfe.223.1495136287590;
-        Thu, 18 May 2017 12:38:07 -0700 (PDT)
+        bh=r8pbJxQI9wcHNldGmPxxwILXBS9BaqIm0Y6z3+UeJvA=;
+        b=N6OlXChE+30PU0g53pH5zJI9lUyj1bluzaBZV7MEniR+NjWVZEe289m47wISYtMmwQ
+         uCU51LzK8fP/tnCNH7iiWERps3AYHZLSmXbn84zqpUzXmqxO+0Ljx3Epir+xeFhx9iXV
+         jkGxdycTdv3YHO6h7YkIwcqyh1iANj5WTZxG6wqVlasBtdHuGZ04EMsvueoxlRLhtk4Y
+         syDIXco0Q+pCYsdyybRR5sv5NOVNCFEVliKZDpNL2wS2XG0U7O29xGuLLEW1y3KODf0H
+         y5i0w5RQZba6oFV2RFhsJZz1KKGahgMr1SEnr7D6GNmo6QD2XQrYwrwrQ5l2doaS3bDZ
+         ofNw==
+X-Gm-Message-State: AODbwcBkDmW4DjGgfEA/QqPMUeYV0tBJEArr13EjrDga43iEhsgsPDqD
+        ERKDl/FhsnhZE3Zv
+X-Received: by 10.98.217.5 with SMTP id s5mr6231424pfg.42.1495136285191;
+        Thu, 18 May 2017 12:38:05 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:7013:588c:5765:703d])
-        by smtp.gmail.com with ESMTPSA id l67sm10238529pfc.18.2017.05.18.12.38.06
+        by smtp.gmail.com with ESMTPSA id d3sm10507893pfb.110.2017.05.18.12.38.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 18 May 2017 12:38:06 -0700 (PDT)
+        Thu, 18 May 2017 12:38:04 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, mhagger@alum.mit.edu,
         peff@peff.net
-Subject: [PATCHv3 11/20] diff.c: convert emit_rewrite_lines to use emit_line_*
-Date:   Thu, 18 May 2017 12:37:37 -0700
-Message-Id: <20170518193746.486-12-sbeller@google.com>
+Subject: [PATCHv3 09/20] diff.c: convert builtin_diff to use emit_line_*
+Date:   Thu, 18 May 2017 12:37:35 -0700
+Message-Id: <20170518193746.486-10-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.18.g7d86cc8ba0
 In-Reply-To: <20170518193746.486-1-sbeller@google.com>
 References: <20170517025857.32320-1-sbeller@google.com>
@@ -75,62 +75,99 @@ So to prepare the diff machinery for two pass algorithms
 move all emissions to places, such that the only emitting
 function is emit_line_0.
 
-This covers emit_rewrite_lines.
+This covers builtin_diff.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ diff.c | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 3dda9f3c8e..ca6b48cf49 100644
+index 8186289734..4fa976d43c 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -722,15 +722,23 @@ static void add_line_count(struct strbuf *out, int count)
- static void emit_rewrite_lines(struct emit_callback *ecb,
- 			       int prefix, const char *data, int size)
- {
--	const char *endp = NULL;
--	static const char *nneof = " No newline at end of file\n";
- 	const char *reset = diff_get_color(ecb->color_diff, DIFF_RESET);
-+	struct strbuf sb = STRBUF_INIT;
+@@ -1289,8 +1289,9 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 	o->found_changes = 1;
  
- 	while (0 < size) {
- 		int len;
+ 	if (ecbdata->header) {
+-		fprintf(o->file, "%s", ecbdata->header->buf);
+-		strbuf_reset(ecbdata->header);
++		emit_line(o, NULL, NULL, 0, 0,
++			  ecbdata->header->buf, ecbdata->header->len);
++		strbuf_release(ecbdata->header);
+ 		ecbdata->header = NULL;
+ 	}
  
--		endp = memchr(data, '\n', size);
--		len = endp ? (endp - data + 1) : size;
-+		const char *endp = memchr(data, '\n', size);
-+		if (endp)
-+			len = endp - data + 1;
-+		else {
-+			strbuf_add(&sb, data, size);
-+			strbuf_addch(&sb, '\n');
-+			size = 0; /* to exit the loop. */
-+
-+			data = sb.buf;
-+			len = sb.len;
-+		}
- 		if (prefix != '+') {
- 			ecb->lno_in_preimage++;
- 			emit_del_line(reset, ecb, data, len);
-@@ -741,12 +749,13 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
- 		size -= len;
- 		data += len;
+@@ -2435,7 +2436,7 @@ static void builtin_diff(const char *name_a,
+ 		if (complete_rewrite &&
+ 		    (textconv_one || !diff_filespec_is_binary(one)) &&
+ 		    (textconv_two || !diff_filespec_is_binary(two))) {
+-			fprintf(o->file, "%s", header.buf);
++			emit_line(o, NULL, NULL, 0, 0, header.buf, header.len);
+ 			strbuf_reset(&header);
+ 			emit_rewrite_diff(name_a, name_b, one, two,
+ 						textconv_one, textconv_two, o);
+@@ -2445,7 +2446,7 @@ static void builtin_diff(const char *name_a,
  	}
--	if (!endp) {
-+	if (sb.len) {
-+		static const char *nneof = "\\ No newline at end of file\n";
- 		const char *context = diff_get_color(ecb->color_diff,
- 						     DIFF_CONTEXT);
--		putc('\n', ecb->opt->file);
--		emit_line(ecb->opt, context, reset, 1, '\\',
--			  nneof, strlen(nneof));
-+		emit_line(ecb->opt, context, reset, 1, 0,
-+			    nneof, strlen(nneof));
-+		strbuf_release(&sb);
- 	}
- }
+ 
+ 	if (o->irreversible_delete && lbl[1][0] == '/') {
+-		fprintf(o->file, "%s", header.buf);
++		emit_line(o, NULL, NULL, 0, 0, header.buf, header.len);
+ 		strbuf_reset(&header);
+ 		goto free_ab_and_return;
+ 	} else if (!DIFF_OPT_TST(o, TEXT) &&
+@@ -2456,12 +2457,15 @@ static void builtin_diff(const char *name_a,
+ 		    !DIFF_OPT_TST(o, BINARY)) {
+ 			if (!oidcmp(&one->oid, &two->oid)) {
+ 				if (must_show_header)
+-					fprintf(o->file, "%s", header.buf);
++					emit_line(o, NULL, NULL, 0, 0,
++						  header.buf, header.len);
+ 				goto free_ab_and_return;
+ 			}
+-			fprintf(o->file, "%s", header.buf);
+-			fprintf(o->file, "%sBinary files %s and %s differ\n",
+-				line_prefix, lbl[0], lbl[1]);
++			emit_line(o, NULL, NULL, 0, 0,
++				  header.buf, header.len);
++			emit_line_fmt(o, NULL, NULL, 1,
++				      "Binary files %s and %s differ\n",
++				      lbl[0], lbl[1]);
+ 			goto free_ab_and_return;
+ 		}
+ 		if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
+@@ -2470,16 +2474,19 @@ static void builtin_diff(const char *name_a,
+ 		if (mf1.size == mf2.size &&
+ 		    !memcmp(mf1.ptr, mf2.ptr, mf1.size)) {
+ 			if (must_show_header)
+-				fprintf(o->file, "%s", header.buf);
++				emit_line(o, NULL, NULL, 0, 0,
++					  header.buf, header.len);
+ 			goto free_ab_and_return;
+ 		}
+-		fprintf(o->file, "%s", header.buf);
++		emit_line(o, NULL, NULL, 0, 0,
++			  header.buf, header.len);
+ 		strbuf_reset(&header);
+ 		if (DIFF_OPT_TST(o, BINARY))
+ 			emit_binary_diff(o->file, &mf1, &mf2, line_prefix);
+ 		else
+-			fprintf(o->file, "%sBinary files %s and %s differ\n",
+-				line_prefix, lbl[0], lbl[1]);
++			emit_line_fmt(o, NULL, NULL, 1,
++				      "Binary files %s and %s differ\n",
++				      lbl[0], lbl[1]);
+ 		o->found_changes = 1;
+ 	} else {
+ 		/* Crazy xdl interfaces.. */
+@@ -2491,7 +2498,7 @@ static void builtin_diff(const char *name_a,
+ 		const struct userdiff_funcname *pe;
+ 
+ 		if (must_show_header) {
+-			fprintf(o->file, "%s", header.buf);
++			emit_line(o, NULL, NULL, 0, 0, header.buf, header.len);
+ 			strbuf_reset(&header);
+ 		}
  
 -- 
 2.13.0.18.g7d86cc8ba0
