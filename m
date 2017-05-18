@@ -7,66 +7,83 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1D692027D
-	for <e@80x24.org>; Thu, 18 May 2017 15:42:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16B7F201CF
+	for <e@80x24.org>; Thu, 18 May 2017 16:00:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934024AbdERPmQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 11:42:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54253 "EHLO cloud.peff.net"
+        id S1755356AbdERQAB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 12:00:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54263 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934008AbdERPmO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 11:42:14 -0400
-Received: (qmail 10454 invoked by uid 109); 18 May 2017 15:42:02 -0000
+        id S1751782AbdERQAA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 12:00:00 -0400
+Received: (qmail 11685 invoked by uid 109); 18 May 2017 15:59:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 May 2017 15:42:02 +0000
-Received: (qmail 18118 invoked by uid 111); 18 May 2017 15:42:35 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 May 2017 15:59:58 +0000
+Received: (qmail 18247 invoked by uid 111); 18 May 2017 16:00:32 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 May 2017 11:42:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 May 2017 11:42:00 -0400
-Date:   Thu, 18 May 2017 11:42:00 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 May 2017 12:00:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 May 2017 11:59:56 -0400
+Date:   Thu, 18 May 2017 11:59:56 -0400
 From:   Jeff King <peff@peff.net>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Samuel Lijin <sxlijin@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git-scm.com status report
-Message-ID: <20170518154159.s2ysocfzlf2ffgqg@sigill.intra.peff.net>
-References: <20170202023349.7fopb3a6pc6dkcmd@sigill.intra.peff.net>
- <20170206182754.qxgzl7546i7u5wnw@sigill.intra.peff.net>
- <CAJZjrdXCYwbH4wtY44UiEQii+r47a-coTwLd0qYzhV3VZwyd1A@mail.gmail.com>
- <20170517020334.ncp3c6meak4mkp2j@sigill.intra.peff.net>
- <469A925D-E5E4-4B9D-8AE2-A23DBA3595AE@gmail.com>
+To:     =?utf-8?B?QW5kcsOp?= Werlang <beppe85@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc: explain default option for rev-parse --short
+Message-ID: <20170518155956.ecti4audvrqlj3pt@sigill.intra.peff.net>
+References: <CAP96LmMtfO5DC6hGeqJdZvcqj+29H_7=8S+uua8YC7YwFRC9Nw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <469A925D-E5E4-4B9D-8AE2-A23DBA3595AE@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP96LmMtfO5DC6hGeqJdZvcqj+29H_7=8S+uua8YC7YwFRC9Nw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 18, 2017 at 02:06:16PM +0200, Lars Schneider wrote:
+On Thu, May 18, 2017 at 11:03:00AM -0300, André Werlang wrote:
 
-> > I haven't ever tried to do this in the local development environment.
-> > The production site currently just use a cloud-hosted ES (Bonsai). They
-> > have free "Sandbox" plans for testing, so you could probably use that as
-> > a test resource after setting up the relevant environment variables. Or
-> > alternatively, I think ElasticSearch folks produce binary builds you can
-> > try, and you could host locally.
-> > 
-> > There's a rake job that inserts documents into the search index (see
-> > lib/tasks/search.rake).
-> 
-> Disclaimer: I am jumping in here without much knowledge. Feel free
-> to ignore me :-)
-> 
-> In our TravisCI builds we create the AsciiDoc/Doctor documentation
-> already. Couldn't we push that result to some static hosting service?
-> Would that help in any way with git-scm.com?
+> Git 2.11 introduced a computation to guess the default length
+> for commit short hashes. The documentation isn't updated.
 
-Not really. The site builds the asciidoctor documentation already via an
-automated job. This question was just about putting it into the search
-index (which also happens in production with an automated job; this is
-just about setting up the search database).  So I don't think there's
-any real problem to be solved with respect to generating pages.
+Thanks for the patch. I think this is going in the right direction, but
+I have a few minor comments.
+
+> From 2b1c229153a89c7608e64b87d2f933704c18b7ae Mon Sep 17 00:00:00 2001
+> From: =?UTF-8?q?Andr=C3=A9=20Werlang?= <beppe85@gmail.com>
+> Date: Thu, 18 May 2017 10:50:11 -0300
+> Subject: [PATCH] doc: explain default option for rev-parse --short
+> MIME-Version: 1.0
+> Content-Type: text/plain; charset=UTF-8
+> Content-Transfer-Encoding: 8bit
+
+These headers are redundant with what's in your email headers and can be
+dropped.
+
+> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+> index 7241e96..b49f053 100644
+> --- a/Documentation/git-rev-parse.txt
+> +++ b/Documentation/git-rev-parse.txt
+> @@ -139,8 +139,10 @@ can be used.
+>  --short::
+>  --short=number::
+>   Instead of outputting the full SHA-1 values of object names try to
+> - abbreviate them to a shorter unique name. When no length is specified
+> - 7 is used. The minimum length is 4.
+> + abbreviate them to a shorter unique name. When no length is specified,
+> + it is guessed from the number of objects in the repository. In any case,
+> + the actual length will be enough to identify the object unambiguously
+> + in the current state of the repository. The minimum length is 4.
+
+This is definitely an improvement, though I wonder if we should mention
+that we default to core.abbrev (which in turn defaults to the "auto"
+behavior).
+
+It looks like there are a few other mentions of "7" with respect to
+"--abbrev": git-branch.txt, git-describe.txt, git-blame.txt. Those
+should probably get the same treatment.
+
+There are a few other "--abbrev" options (e.g., ls-files and ls-tree)
+that don't mention "7". But while we're fixing the others, it may be
+worth giving them all consistent text.
 
 -Peff
