@@ -2,71 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35BB8201CF
-	for <e@80x24.org>; Thu, 18 May 2017 13:48:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAE31201CF
+	for <e@80x24.org>; Thu, 18 May 2017 14:03:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753786AbdERNsb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 09:48:31 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:38408 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752741AbdERNs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 09:48:29 -0400
-Received: by mail-it0-f51.google.com with SMTP id e65so28225409ita.1
-        for <git@vger.kernel.org>; Thu, 18 May 2017 06:48:29 -0700 (PDT)
+        id S932207AbdERODD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 10:03:03 -0400
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:33702 "EHLO
+        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754241AbdERODC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 10:03:02 -0400
+Received: by mail-vk0-f68.google.com with SMTP id h16so2972067vkd.0
+        for <git@vger.kernel.org>; Thu, 18 May 2017 07:03:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rvsSd14FuzAhhAW2s4k7sPNySTWp1G4Ca96vQfwRzx0=;
-        b=AcxxbALuOjiWaLFYVCXIiB8kfPKyKfMcaV+QHJRvT86gUXIA/kdVm0bEYKLlHDlBUH
-         CE72VIcPP1NUyjX3HaBOyOEJLsHiRXqAActIYzrWIkszQwYjPQatbmnRKT2nvr7BbMmT
-         CMyrNYIYQNHBfHz+pWkd8h6VzpXbvB7guZmgg3ZbOgYL7xEs+7eEIyHzDrkLBqNPoCDH
-         ygciwkZC8oBoJ/0dRaRJJXqHvxu7zTceHq5vpq9+5YGbtvFzbGeUABi9AQjFJVVJ/cIi
-         KyBYWGt6QLaWLMi0dJQ3LKLw+Il7v4YzWAL/8DIGS7VHg9PDanV3XUap5Lb/oA2NzsWZ
-         VWbQ==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=eSmGltedDb7JMpWC7mcp+ys82mmMRzvPKIHn7Dbdi9o=;
+        b=SdFMT/U4uuqGmhT2PjdwCif/IVO6d56tcyGbRRCgIqvW/QQs7RT6NtAUnYkObEbZSm
+         wTVTqKMfJSLOCWC3ppYZuAc8SvYnHdqj5teJ8sABCSscLk2EmAyThxuMKGH60Od5ezQo
+         /h+qWxJsaHqPRaIjXl7vRPF4guOBB2IBznndRjeBWQl1Lm5XyfvsLPRE+ztZxrzveihh
+         VAfyEieTwFIJ4iPXPukLA2UyhI4JoA5J66dOZvAdzKE0DDbsXPn4MENTybercg5OJJKf
+         8GZzixry/dZIn9hJNXJ/xoeSDNHE9knMkUmOr85IzRh9zQhO1+W2OyeLwmYcgFRrZ5yf
+         k5gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rvsSd14FuzAhhAW2s4k7sPNySTWp1G4Ca96vQfwRzx0=;
-        b=Q2a+gel30OhT2NNp7C/iJ5e+ESBxEtneAa27OFkP+QdUW+yNMhtsW89JljnHsMquX/
-         tU5KbDaDhgBrq5F5/97D5ROPya3tFGIXYBfz599zdYtWdNmslEzIed9kjomb6kndek2m
-         togr4gaC/YdyVKoorVQ9QbzaiBcE6mILzgJOQhXqKlsnRLoqvr2RBi9glNa7ikhhAgIt
-         XCXSI69u45+//9EcDJDoCQ/cF6GElmas9Tr65wNcrslH0syLGOX7Au60YjbbN7TA8Ghp
-         CA356PsplmyfE3e5wZdSXcpnaA/xr0sL+4WdJtW+8qkFUThO3TqJyNDSVfu5OUvCxj0U
-         xhsw==
-X-Gm-Message-State: AODbwcBBXRWbNC+A1NzMo1NEAjub+uIABR25XCKoy2ZLlu4OW0c7OFGn
-        hon59hQgpShzVyUfdZfHBA6xSYMQfw==
-X-Received: by 10.36.166.4 with SMTP id q4mr4633359ite.66.1495115308572; Thu,
- 18 May 2017 06:48:28 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=eSmGltedDb7JMpWC7mcp+ys82mmMRzvPKIHn7Dbdi9o=;
+        b=QXpLJWimd7AC2187Sd+/d6kncTW+Xa2sqtpwXLf7j2OUo6yzxsCIyg6khRjr50powd
+         LZtz0P/pkuwl/aV1YzWgYO2EckyGjgT5eoze8SqXKQrdL+vt6m863USttQDFs8CKlbTa
+         vAXxp8UFBNWw3+6IrdpLZxTnAA9Rquu2PjfEcUKkD10GldSBM+WEVNCLE2VZJj6xJM0j
+         KPunlMCwr0fNpwBfqdr5tJYqsDJaiPIruCOqmsgY9wCKeG8MekrSVR95UcLhq+fb8wsm
+         VOYkGBYBbehhxl1qFrbrZSeQy0zwvyaPAsgYA034zEAJshxk2jbRnQ2pD0FuLwPn+1R+
+         yGNg==
+X-Gm-Message-State: AODbwcCYBGmU5p1LKjarSN4zR2y6nNqahvSxVwPk2FhqF1fR0WyAS376
+        5s7NjLZIpFqmOIwVqIcdBn/VJiZcCCwl
+X-Received: by 10.31.181.141 with SMTP id e135mr1827227vkf.23.1495116181369;
+ Thu, 18 May 2017 07:03:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Thu, 18 May 2017 06:48:07 -0700 (PDT)
-In-Reply-To: <20170518134154.12771-1-phillip.wood@talktalk.net>
-References: <20170518134154.12771-1-phillip.wood@talktalk.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 18 May 2017 15:48:07 +0200
-Message-ID: <CACBZZX4hbe+bDbxQKy92ruD8=4V7pqnOi9WyBqhunG-F8=wXRw@mail.gmail.com>
-Subject: Re: [PATCH] rebase -i: Add missing newline to end of message
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Received: by 10.159.54.233 with HTTP; Thu, 18 May 2017 07:03:00 -0700 (PDT)
+From:   =?UTF-8?Q?Andr=C3=A9_Werlang?= <beppe85@gmail.com>
+Date:   Thu, 18 May 2017 11:03:00 -0300
+Message-ID: <CAP96LmMtfO5DC6hGeqJdZvcqj+29H_7=8S+uua8YC7YwFRC9Nw@mail.gmail.com>
+Subject: [PATCH] doc: explain default option for rev-parse --short
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 18, 2017 at 3:41 PM, Phillip Wood <phillip.wood@talktalk.net> wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> The message that's printed when auto-stashed changes are successfully
-> restored was missing '\n' at the end.
+From 2b1c229153a89c7608e64b87d2f933704c18b7ae Mon Sep 17 00:00:00 2001
+From: =3D?UTF-8?q?Andr=3DC3=3DA9=3D20Werlang?=3D <beppe85@gmail.com>
+Date: Thu, 18 May 2017 10:50:11 -0300
+Subject: [PATCH] doc: explain default option for rev-parse --short
+MIME-Version: 1.0
+Content-Type: text/plain; charset=3DUTF-8
+Content-Transfer-Encoding: 8bit
 
-Both this and your reflog message really seem like the sort of tricky
-edge cases we should have tests for.
+Git 2.11 introduced a computation to guess the default length
+for commit short hashes. The documentation isn't updated.
+
+Signed-off-by: Andr=C3=A9 Werlang <beppe85@gmail.com>
+---
+ Documentation/git-rev-parse.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.=
+txt
+index 7241e96..b49f053 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -139,8 +139,10 @@ can be used.
+ --short::
+ --short=3Dnumber::
+  Instead of outputting the full SHA-1 values of object names try to
+- abbreviate them to a shorter unique name. When no length is specified
+- 7 is used. The minimum length is 4.
++ abbreviate them to a shorter unique name. When no length is specified,
++ it is guessed from the number of objects in the repository. In any case,
++ the actual length will be enough to identify the object unambiguously
++ in the current state of the repository. The minimum length is 4.
+
+ --symbolic::
+  Usually the object names are output in SHA-1 form (with
