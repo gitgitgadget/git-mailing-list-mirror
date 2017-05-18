@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B24A201CF
-	for <e@80x24.org>; Thu, 18 May 2017 20:14:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79B91201CF
+	for <e@80x24.org>; Thu, 18 May 2017 20:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754157AbdERUOR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 16:14:17 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:34103 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752437AbdERUON (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 16:14:13 -0400
-Received: by mail-qt0-f195.google.com with SMTP id l39so7164646qtb.1
-        for <git@vger.kernel.org>; Thu, 18 May 2017 13:14:13 -0700 (PDT)
+        id S1754179AbdERUOV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 16:14:21 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:34074 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753221AbdERUOM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 16:14:12 -0400
+Received: by mail-qk0-f193.google.com with SMTP id u75so7542426qka.1
+        for <git@vger.kernel.org>; Thu, 18 May 2017 13:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=msmGI6MzqXzRN4su2b3ESeqavtgdUqoSXYQXvPTxGKQ=;
-        b=j2YOLtdyIvmKEmL9fWVtrV2c5MGZ9M0rMI9kirNTI71wqTaHVT7bbcszwVIMEeNvSc
-         qexqHNCv+GSEkSHPYQzayomCZVRjUNy22myzAYYWUj71Ir7liT19ui6Zas6wkTkUS5RN
-         4cFXLVR1KnVep1Bhq78UQ+5tF7vdFlJl85x1b+HQTZu68IUMolN5SI9H7+Tsfa+6ptNk
-         pH9CbDKN9tAcgJCiysyuvg2Jo6pM4RcflgAkDulB+dtjqj7KNxTjtXNJ2wQ3vpA9zNnb
-         EympBlry5qupdzEy+5gK46eB9H+62kYlMppmwvljLj4zFQUylS7bmoW7pnwYohLa49qp
-         Mjwg==
+        bh=kgPHzv6j4dlCEBsbxgoaRlwZIXiDQNLk15ZewNgOIbg=;
+        b=mHgjmnYXEGMfJVTWOJw7ceGiN5rqCqv7TMTw75ixwsTt3hWeQ6hUVbYzNwM+6mER59
+         jjkwGtFSCWGVoPJKhw1ud+zjm1Vkn/iI0Arj5OokK8CkhUdK+5qa+8t3OKbJWy30HEqv
+         XiF9jBm5HrMpRyIYfrDM20fxHGiwAxnuzXQzEDLtdMvKZaJlqGJ2vfyUZJ5gxpfZLLS6
+         sur7YXCLsfFqKS70irHdDvZztjCksN6rB8kgK4SSKLbv1sOhPFzMJPrOInyGO6TvIcUP
+         D5CQeqbnhvQjRaQ0W+d1plkcznYGxPXRZrv3eabVWlCCrD2dXf/FwOO9u6TlOLTBTMFL
+         ft0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=msmGI6MzqXzRN4su2b3ESeqavtgdUqoSXYQXvPTxGKQ=;
-        b=fiQeNH2iS7++7K29sYpKROFUCEL4NOsuGWbrtfjdNFvFwhPE7mElVYXjgydjox6kbj
-         FYDHtXR1rHjMqKA0XekHx4PhZ+f4Oxxi68v87Z5KP0saLYrIpMwtMuGY7LdGLRPaH8sh
-         M5R3XPqzoWex+6/91bOvjGN4ozpzGX4bhKaSvAm4QjTZ/73ENc6F+FC1IWpdDTl0L5dd
-         +RY9B+RMuN4GasnUIMfrCvkCAy2c6luaWKPpqe+qs4yJW3LMcd1mJZNZmf5WRB+1Nrbu
-         Al5t2OOBR6u4hwgVM82wuhwi9qv//FADhy8c1S1LOcTt7ybCa9YzodtJW3vSEpjIPcFi
-         8eyg==
-X-Gm-Message-State: AODbwcCfy09/0VF+d3FfRVWeZw8n8L5gCg0rYb41Jn751KXkLgENsJVw
-        LIwUj4m5Si5GTA==
-X-Received: by 10.200.3.79 with SMTP id w15mr5800156qtg.203.1495138452809;
-        Thu, 18 May 2017 13:14:12 -0700 (PDT)
+        bh=kgPHzv6j4dlCEBsbxgoaRlwZIXiDQNLk15ZewNgOIbg=;
+        b=t9YYua8OduD8vHgcnbA/Hjo3OeOFRk1WQv1v2V7MJKzlVpkIcFMSN8/ztiKh4Rf41g
+         +//h+b8Tet6VnW5ZS1RCR0KX+PM9JoggxFD2zcCbYa754YqqBxMeeLC1YyzrfB1vkDox
+         c/wPxBs6rKe0iOnI8iMIu1CsuqTkDplLhkVFsLW6/pxGBevmbjTNgwUCyP4QOENjLyDi
+         ZEs6Q/98dgJJRy0pij718rbxQofKHIGiJybC00TjVNwrqis2szdVNESEjMIMDBSPnlb6
+         Zm+KL1F/F/TwloCM5d6cLvh914M2+jRTLgpND2V6oZGSpI+SLR2gytJN9DERycbVnD0r
+         eciA==
+X-Gm-Message-State: AODbwcDaCogmFWOOOvxruBwJvts7Fa4T34pHTw5CN2qFg+BZO1hq7BIP
+        JRaZTLvi7ZWdvQ==
+X-Received: by 10.55.24.9 with SMTP id j9mr5311803qkh.25.1495138451883;
+        Thu, 18 May 2017 13:14:11 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
         by smtp.gmail.com with ESMTPSA id y17sm4369133qtc.29.2017.05.18.13.14.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 May 2017 13:14:12 -0700 (PDT)
+        Thu, 18 May 2017 13:14:11 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com, pclouds@gmail.com,
         johannes.schindelin@gmx.de, David.Turner@twosigma.com,
         peff@peff.net
-Subject: [PATCH v2 6/6] fsmonitor: add a sample query-fsmonitor hook script for Watchman
-Date:   Thu, 18 May 2017 16:13:33 -0400
-Message-Id: <20170518201333.13088-7-benpeart@microsoft.com>
+Subject: [PATCH v2 5/6] fsmonitor: add documentation for the fsmonitor extension.
+Date:   Thu, 18 May 2017 16:13:32 -0400
+Message-Id: <20170518201333.13088-6-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.13.0.windows.1.6.g4597375fc3
 In-Reply-To: <20170518201333.13088-1-benpeart@microsoft.com>
 References: <20170518201333.13088-1-benpeart@microsoft.com>
@@ -65,60 +65,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This hook script integrates the new fsmonitor capabilities of git with
-the cross platform Watchman file watching service. To use the script:
-
-Download and install Watchman from https://facebook.github.io/watchman/
-and instruct Watchman to watch your working directory for changes
-('watchman watch-project /usr/src/git').
-
-Rename the sample integration hook from query-fsmonitor.sample to
-query-fsmonitor.
-
-Configure git to use the extension ('git config core.fsmonitor true')
-and optionally turn on the untracked cache for optimal performance
-('git config core.untrackedcache true').
+This includes the core.fsmonitor setting, the query-fsmonitor hook,
+and the fsmonitor index extension.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- templates/hooks--query-fsmonitor.sample | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
- create mode 100644 templates/hooks--query-fsmonitor.sample
+ Documentation/config.txt                 |  7 +++++++
+ Documentation/githooks.txt               | 23 +++++++++++++++++++++++
+ Documentation/technical/index-format.txt | 18 ++++++++++++++++++
+ 3 files changed, 48 insertions(+)
 
-diff --git a/templates/hooks--query-fsmonitor.sample b/templates/hooks--query-fsmonitor.sample
-new file mode 100644
-index 0000000000..4bd22f21d8
---- /dev/null
-+++ b/templates/hooks--query-fsmonitor.sample
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+#
-+# An example hook script to integrate Watchman
-+# (https://facebook.github.io/watchman/) with git to provide fast
-+# git status.
-+#
-+# The hook is passed a time_t formatted as a string and outputs to
-+# stdout all files that have been modified since the given time.
-+# Paths must be relative to the root of the working tree and
-+# separated by a single NUL.
-+#
-+# To enable this hook, rename this file to "query-fsmonitor"
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 96e9cf8b73..4ffbf0d4c2 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -389,6 +389,13 @@ core.protectNTFS::
+ 	8.3 "short" names.
+ 	Defaults to `true` on Windows, and `false` elsewhere.
+ 
++core.fsmonitor::
++	If set to true, call the query-fsmonitor hook proc which will
++	identify all files that may have had changes since the last
++	request. This information is used to speed up operations like
++	'git commit' and 'git status' by limiting what git must scan to
++	detect changes.
 +
-+# Convert unix style paths to escaped Windows style paths
-+case "$(uname -s)" in
-+MINGW*|MSYS_NT*)
-+  GIT_WORK_TREE="$(cygpath -aw "$PWD" | sed 's,\\,\\\\,g')"
-+  ;;
-+*)
-+  GIT_WORK_TREE="$PWD"
-+  ;;
-+esac
+ core.trustctime::
+ 	If false, the ctime differences between the index and the
+ 	working tree are ignored; useful when the inode change time
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 706091a569..f7b4b4a844 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -448,6 +448,29 @@ The commits are guaranteed to be listed in the order that they were
+ processed by rebase.
+ 
+ 
++[[query-fsmonitor]]
++query-fsmonitor
++~~~~~~~~~~~~
 +
-+# Query Watchman for all the changes since the requested time
-+echo "[\"query\", \"$GIT_WORK_TREE\", {\"since\": $1, \"fields\":[\"name\"]}]" | \
-+watchman -j | \
-+perl -e 'use JSON::PP; my $o = JSON::PP->new->utf8->decode(join("", <>)); die "Watchman: $o->{'error'}.\nFalling back to scanning...\n" if defined($o->{"error"}); print(join("\0", @{$o->{"files"}}));'
++This hook is invoked when the configuration option core.fsmonitor is
++set and git needs to identify changed or untracked files.  It takes
++a single argument which is the time in elapsed seconds since midnight,
++January 1, 1970.
++
++The hook should output to stdout the list of all files in the working
++directory that may have changed since the requested time.  The logic
++should be inclusive so that it does not miss any potential changes.
++The paths should be relative to the root of the working directory
++and be separated by a single NUL.
++
++Git will limit what files it checks for changes as well as which
++directories are checked for untracked files based on the path names
++given.
++
++The exit status determines whether git will use the data from the
++hook to limit its search.  On error, it will fall back to verifying
++all files and folders.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
+index ade0b0c445..b002d23c05 100644
+--- a/Documentation/technical/index-format.txt
++++ b/Documentation/technical/index-format.txt
+@@ -295,3 +295,21 @@ The remaining data of each directory block is grouped by type:
+     in the previous ewah bitmap.
+ 
+   - One NUL.
++
++== File System Monitor cache
++
++  The file system monitor cache tracks files for which the query-fsmonitor
++  hook has told us about changes.  The signature for this extension is
++  { 'F', 'S', 'M', 'N' }.
++
++  The extension starts with
++
++  - 32-bit version number: the current supported version is 1.
++
++  - 64-bit time: the extension data reflects all changes through the given
++	time which is stored as the seconds elapsed since midnight, January 1, 1970.
++
++  - 32-bit bitmap size: the size of the CE_FSMONITOR_DIRTY bitmap.
++
++  - An ewah bitmap, the n-th bit indicates whether the n-th index entry
++    is CE_FSMONITOR_DIRTY.
 -- 
 2.13.0.windows.1.6.g4597375fc3
 
