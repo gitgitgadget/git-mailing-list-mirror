@@ -2,79 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CC232023D
-	for <e@80x24.org>; Thu, 18 May 2017 09:41:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9B912023D
+	for <e@80x24.org>; Thu, 18 May 2017 10:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754641AbdERJlB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 05:41:01 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:35774 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754011AbdERJlA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 05:41:00 -0400
-Received: by mail-it0-f53.google.com with SMTP id c15so96683500ith.0
-        for <git@vger.kernel.org>; Thu, 18 May 2017 02:41:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eWwqbpvVvJgHm4SR1/HliK1T1V0ZjdUveIjFi2U4OiE=;
-        b=N7yhVKkjWntQTl1wujnRxxXCziburDSyGk5fHe4DFt0pD/3rrktcjQ5wlVR9rBbpan
-         yAox0AoSGJ6E7VTVMRbP7VkMkw8wgBvc3wreFE7JF0O7iRsGDnV+q26cjiPOFP48oY2H
-         keyT2UnHGMpo/B3f6xO3GbQcERnzPAL+4luB0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eWwqbpvVvJgHm4SR1/HliK1T1V0ZjdUveIjFi2U4OiE=;
-        b=n/1srf2PDRllxWSts3jgUrxYzVs9EDhCI/obNGcd7ji+lus0mhT0PHNuxqK+jJdEdf
-         pIAa5RNbYkYeIZ5J2ZELsyr+QTVoq3R77HYRUYgTQcqiQohb8C/QO8ZlprAI8zlKTqrt
-         gR5JyLFltpANcbXlG+0DsNYW2guALxcUpq3oAOA+0QapQNUbliaTF3Mc16mM6fp7PLHV
-         LNZgtlDkBheZnVu/929WfHq0z3SbZx84/qWwxScjKGcoQm8ejhP3cAy5QA4BChuv2HwE
-         vwd0Mn9w5qzHfveGZ9CK9O38Xy+IjRO7G6FtYvnMvC2pDKVd4e9ZzwPCu1CkU4IZZAbd
-         9oOw==
-X-Gm-Message-State: AODbwcAJHGZnMCakrXjIvnoG9SOpTrTdRW5zK4cQRZNpJUdsnHe0O9P4
-        m2ec/DrgzSjauFk7RWn/8RNO5QECXpR7
-X-Received: by 10.36.125.80 with SMTP id b77mr10658642itc.108.1495100459796;
- Thu, 18 May 2017 02:40:59 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.36.10.131 with HTTP; Thu, 18 May 2017 02:40:59 -0700 (PDT)
-In-Reply-To: <CAKohpok0=0__AcNZAfziTMYVDhGka3o0hzEN6HHZc=YUr7hWYQ@mail.gmail.com>
-References: <CAKohpok0=0__AcNZAfziTMYVDhGka3o0hzEN6HHZc=YUr7hWYQ@mail.gmail.com>
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-Date:   Thu, 18 May 2017 15:10:59 +0530
-Message-ID: <CAKohpo=eFcf=VqCOvRJvQacUgMycZ1axvjbsNs2GeUGHzq4_Fg@mail.gmail.com>
-Subject: Re: [Query] Override sendemail.tocmd
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Vincent Guittot <vincent.guittot@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1753819AbdERKDL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 06:03:11 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:19718 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752083AbdERKDK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 06:03:10 -0400
+Received: from lindisfarne.localdomain ([92.22.40.87])
+        by smtp.talktalk.net with SMTP
+        id BIGsdcxC6xR4bBIGydCNJ2; Thu, 18 May 2017 11:03:09 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1495101789; bh=D4jP0p0fgt/6psHGS13sEgYVhd83OfDSf0ztgCYPV+I=;
+        h=From:To:Cc:Subject:Date:Reply-To;
+        b=Q/O535QV0qjgvw+CM9laUgmxsD1bnPJ0L9R5wix+3bNLUH4nu48DCwGgds9kYkgK4
+         8LneyRdTcIBZLTl0wnpCNyex4MVp/u5OWG1ZXWBt+lCXZr4ke+nzgpUKH0II1I+CL3
+         mFTgCukyGlhiCSqYNJ8xS6X1siVkVXAqd4ZUbpb4=
+X-Originating-IP: [92.22.40.87]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=Uk7VDCfhaeB8IHNEy8al/Q==:117
+ a=Uk7VDCfhaeB8IHNEy8al/Q==:17 a=evINK-nbAAAA:8 a=hm08_smbYGlZgFOPTvUA:9
+ a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 0/2] Fix a couple of minor rebase -i regressions
+Date:   Thu, 18 May 2017 11:02:31 +0100
+Message-Id: <20170518100233.30559-1-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.13.0
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfO4FG1PnBUcT6yAiz/DQfaxtrE+VDblTrl/0ROSfMp1IR08BjuIbhdmTneBnwBJCLORkv5I3udGbloMQNwJFnFjlwKef4Zgso4Wnf573IdPET1vzFjtx
+ j114A0UnQRAVTL+HBW1wgFxF9CRgI2nvR+Ru49e/3VQF4l5T5NQznlKDXJYSawzTylPJ8iYiqcWqDBADc5GvJuN57LPK1pSjV0lFkariqhli2YYFGCXApHvJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10 May 2017 at 12:53, Viresh Kumar <viresh.kumar@linaro.org> wrote:
-> Hi,
->
-> I have a use case and wanted help from you guys..
->
-> I have set the sendemail.tocmd option in my kernel's .git/config
-> file and that works very well. But sometimes I want to avoid that
-> (for example sending the patch to someone without the list and
-> maintainers).
->
-> The suppress-cc=all option works quite well to avoid almost
-> everything (including running --cc-cmd), but it doesn't suppress
-> --to-cmd.
->
-> Are there any specific reasons why it is being done that way?
->
-> Currently I need to go edit my .git/config file and remove tocmd
-> before sending any such patches and it sucks :)
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Ping !!
+These patches fix a regression in the reflog message written when
+rebase -i finishes and supresses the status output from applying any
+autostashed changes to match the shell version of rebase -i.
+
+Phillip Wood (2):
+  rebase -i: fix reflog message
+  rebase -i: silence stash apply
+
+ sequencer.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+-- 
+2.13.0
+
