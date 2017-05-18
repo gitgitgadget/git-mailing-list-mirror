@@ -7,145 +7,102 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FA35201A7
-	for <e@80x24.org>; Thu, 18 May 2017 00:11:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAEFA201A7
+	for <e@80x24.org>; Thu, 18 May 2017 00:17:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753501AbdERAL4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 17 May 2017 20:11:56 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:34336 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752852AbdERALz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 17 May 2017 20:11:55 -0400
-Received: by mail-pg0-f45.google.com with SMTP id u28so14274760pgn.1
-        for <git@vger.kernel.org>; Wed, 17 May 2017 17:11:55 -0700 (PDT)
+        id S1754589AbdERARW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 17 May 2017 20:17:22 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:32986 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754460AbdERARU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 17 May 2017 20:17:20 -0400
+Received: by mail-pg0-f46.google.com with SMTP id u187so14332561pgb.0
+        for <git@vger.kernel.org>; Wed, 17 May 2017 17:17:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=jOqFVClMyrYc38Aql78qPsdEAYRHTLzKUM0PUCdUum8=;
-        b=miigQ1zjahh/6A44aU+8lkmyulq61PJrJnZzBAA7ZcsQsVdustJouz4eQh9sXYzLnq
-         ODSUWBAss60HXt3fgFYqkCPxuibaFbsYdj8QHj/NPdlmKm494QFG3hF9CI1BUPFU/14m
-         Hg9K0390AbyvPudyE1OQNgmGhzhGWnZo0tpKi+HimlCBIPXU72z6A6w6B65dE2y3UDUx
-         kjSgFtxNWf4GmLsKxKaTft15cpJK88AcvQMmj8qRv0ScfmiLNKSwDMZxOb5AIwZKLOFc
-         7HcFysvMO7+yy1TVTlb86SCr0A4WxUGVeDA3V86QnBcZYJJLaeM2uJ1qTTq5t9ZvTetR
-         G2dw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=VSLcbqfJu8qpXVFuwAeHwm2B3nEkP87ijYE9gWBzKKc=;
+        b=RyCkvA8HgNtri+PNTH0EQzIsPz0HwBtMe6x2iecKAL7jvBjGN7rucyI1GC82+ln8zH
+         ZU0G9YQGPIDg9iHGqoQNYNHol8im7kHEHgMZLA7ToW43iSP3moPoRXJf9uUAbme+ocvV
+         YYaJGoAWX3DMPDs1d/FZsqJ4ICXJSs4sNehAOJNM/OjaEDXoLHFZs6QM77zB+yMT1naK
+         9J5vN0wDGhtNIzEQ42snMcU9K/Yu15axNQPlPp6O3IHKLPsFc3LeEnHTTlAGL2pWXHqZ
+         tLiWVY6WumM0Ui/xhhTjO6tgC64O1SVaaz1p7xZShrwqfoZ7iCUVkMWSsOcXmIsGRQ2p
+         a/fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=jOqFVClMyrYc38Aql78qPsdEAYRHTLzKUM0PUCdUum8=;
-        b=qoLp0483F8+mZeoXar/lJh6DA9M0OvFPowGUpaWJ2JqOstdrE3JvlK57U6TXaL9E6V
-         KGqcitm0ToTL2Ll6qDDBAoZH1Gwy0U1H1yedOGeQOWrrDESma1zb5jOht+cEBkmo64Nj
-         Vovhku7o9UrXlDThDZyvcTm4+5RRxr2lUcU7aYjXtnXiSoR2+Datk5n+0XAced5xLrQA
-         Pe2A+K9uFl6Jrp6my+QR5MRUbiAw8QSUMHt/8EQJRAF0x8VqRgfFwHyeG3qlyEg5mO49
-         QUM0t0OjqOo+wtVsTwmfjqmg51/bEDLepll/6x8ugg7/HReVzHp0dCFzrm/RToCVJ9ea
-         /55w==
-X-Gm-Message-State: AODbwcAx/ApukTey3IYjLMOTukuV5oguoDggucrBLSqC/au4QL7DHSS6
-        loUaibWscJsswMXw
-X-Received: by 10.99.122.21 with SMTP id v21mr1362028pgc.98.1495066314467;
-        Wed, 17 May 2017 17:11:54 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VSLcbqfJu8qpXVFuwAeHwm2B3nEkP87ijYE9gWBzKKc=;
+        b=ihcKqddlaRhVgPfI/+CJhUfjgeIGCu+W+so7Dqap1zkh9crDIN/kUhUaKs0VbsBAC4
+         Z2WOQuTc5Xk37bCardhtKNEK7dXj68WY6nkkHzoZ0EQ9s7Lvv+RdwoNAETSfQP0VaFJd
+         UXsI09ILNkWtptf2S+LE/1PN+M9C9ZvOSaKU0NXTLYtl1MKj7Cqj/Ka3HIUEoeqATq89
+         MNGFBsw/uqnjevU6N1GXkh60WOqJnlFzB8JcsXvLnwBhpMEuYvEiRJ8VyHbVWF8EVz98
+         J01QOlrddMWOUn2qmJZ0e45UGnf6rK0PTOPaoRkMSmWfIqUo2RCasNnBsKUUpEpirYUB
+         yo+w==
+X-Gm-Message-State: AODbwcDt69pGwifplEfGBabYMG6fAh3txyylU5Xh/UegDA9zhjvr/yJT
+        A5O4sbsQPu3Rz4nE
+X-Received: by 10.99.163.67 with SMTP id v3mr1383917pgn.210.1495066639480;
+        Wed, 17 May 2017 17:17:19 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:1838:1185:c4dc:8c8d])
-        by smtp.gmail.com with ESMTPSA id o89sm6276160pfj.88.2017.05.17.17.11.53
+        by smtp.gmail.com with ESMTPSA id x18sm6124367pfe.13.2017.05.17.17.17.18
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 17 May 2017 17:11:53 -0700 (PDT)
-Date:   Wed, 17 May 2017 17:11:52 -0700
+        Wed, 17 May 2017 17:17:18 -0700 (PDT)
+Date:   Wed, 17 May 2017 17:17:17 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>,
-        Marc Stevens <marc@marc-stevens.nl>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC 0/3] Use sha1collisiondetection as a submodule
-Message-ID: <20170518001152.GE185461@google.com>
-References: <xmqqk25gvu12.fsf@gitster.mtv.corp.google.com>
- <20170517113824.31700-1-avarab@gmail.com>
- <CAGZ79kZC98CxA69QjmX2s_SU6z1CSgKgwZeqvwiMRAQc6+S3xg@mail.gmail.com>
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>, git@vger.kernel.org
+Subject: Re: [PATCH 10/23] files_ref_store: put the packed files lock
+ directly in this struct
+Message-ID: <20170518001717.GF185461@google.com>
+References: <cover.1495014840.git.mhagger@alum.mit.edu>
+ <dd7637060bac1a27e03563edc82649812dcf897c.1495014840.git.mhagger@alum.mit.edu>
+ <20170517131753.rditx62clmkrdmeq@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGZ79kZC98CxA69QjmX2s_SU6z1CSgKgwZeqvwiMRAQc6+S3xg@mail.gmail.com>
+In-Reply-To: <20170517131753.rditx62clmkrdmeq@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/17, Stefan Beller wrote:
-> On Wed, May 17, 2017 at 4:38 AM, Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
-> > On Wed, May 17, 2017 at 9:09 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> >> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> >>
-> >>> On Wed, May 17, 2017 at 7:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> >>>> From: Marc Stevens <marc@marc-stevens.nl>
-> >>>>
-> >>>> Some big-endian platforms define _BIG_ENDIAN, which the test at the
-> >>>> beginning of file has missed.  Also, when the input is not aligned,
-> >>>> some platforms trigger SIGBUS.
-> >>>>
-> >>>> This change corresponds to 33a694a9 ("Fix issues with a big endian
-> >>>> platform", 2017-05-15) in the history of the upstream repository
-> >>>> https://github.com/cr-marcstevens/sha1collisiondetection
-> >>>
-> >>> Then why not just update sha1dc from upstream instead of
-> >>> cherry-picking one patch from them?
-> >>
-> >> See the original message upthread.  I did the cherry-pick simply
-> >> because that was what Marc instructed the patch recipient to do ;-).
-> >
-> > Since that patch is now in Marc's upstream code we can just update to
-> > that.
-> >
-> > While we're at it let's see if Marc will take a patch so that we can
-> > use his code as-is with some Makefile trickery of our own, instead of
-> > having to solve merge conflicts each time we update from him. I'll
-> > submit a pull request for that shortly.
-> >
-> > And since if and when that pull request gets accepted we're at the
-> > point of being able to use the upstream code as-is & don't need to
-> > locally modify it, we can just use a submodule to track it.
+On 05/17, Jeff King wrote:
+> On Wed, May 17, 2017 at 02:05:33PM +0200, Michael Haggerty wrote:
 > 
-> As someone who works on submodules: YAY! This sounds
-> wonderful in the sense that more git developers experience the
-> sharp edges (if any) of submodules and would fix them.
+> > Instead of using a global `lock_file` instance for the main
+> > "packed-refs" file and using a pointer in `files_ref_store` to keep
+> > track of whether it is locked, embed the `lock_file` instance directly
+> > in the `files_ref_store` struct and use the new
+> > `is_lock_file_locked()` function to keep track of whether it is
+> > locked. This keeps related data together and makes the main reference
+> > store less of a special case.
+> 
+> This made me wonder how we handle the locking for ref_stores besides the
+> main one (e.g., for submodules). The lockfile structs have to remain
+> valid for the length of the program. Previously those stores could have
+> xcalloc()'d a lockfile and just leaked it. Now they'll need to xcalloc()
+> and leak their whole structs.
 
-Haha, I wish I had your enthusiasm for this.  That is a good argument
-for us to include them in git.git, but I still feel apprehensive.  There
-is still so much to do in submodule land!  We'll make them great though!
+Wait, why would this be the case?  I would assume that you would
+allocate a ref_store (including a lockfile for it) and then once you are
+done with the ref_store, you free it (and unlock and free the lockfile).
+I'm definitely not versed in ref handling code though so I may be
+missing something.
 
 > 
-> With the reset work on submodules (checkout, reset,
-> ls-files, grep) and more in the works (better push/pull)
-> we may be close to prime time.
-> 
-> However we do distribute tarballs (well, Junio does),
-> which is not yet supported to include submodules.
-> 
-> I did follow the SHA1DC discussion just from the sideline,
-> how crucial is that library for us?
-> 
-> Also now that we discuss having submodules:
-> Would we just point the submodule URL to github\
-> and call it a day?
-> 
-> We could make a friendly fork of it and put it next to all the repositories
-> of https://git-blame.blogspot.com/p/git-public-repositories.html
-> and then use relative URLs in the .gitmodules file.
-> 
-> On a tangent, in an off-list discussion we discussed having
-> the git-annex tests as an optional submodule instead of an
-> "external" test, but in conclusion we considered that idea not
-> ideal to implement (because our tests are like contracts, we should
-> actually write our own tests and not rely on downstream to write
-> tests for us)
-> 
-> looking forward for a discussion here,
-> Stefan
+> I suspect the answer is "we don't ever lock anything except the main ref
+> store because that is the only one we write to", so it doesn't matter
+> anyway.
+
+Really? I can envision a case in the future where we'd want to update
+a ref, or create a ref inside a submodule.
 
 -- 
 Brandon Williams
