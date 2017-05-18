@@ -2,110 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 057CD201CF
-	for <e@80x24.org>; Thu, 18 May 2017 12:06:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 857E42027B
+	for <e@80x24.org>; Thu, 18 May 2017 12:11:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933018AbdERMGY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 08:06:24 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:38177 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932537AbdERMGT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 08:06:19 -0400
-Received: by mail-wm0-f52.google.com with SMTP id v15so50084976wmv.1
-        for <git@vger.kernel.org>; Thu, 18 May 2017 05:06:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=F2AvfYYndq856kIBUWZsm5CF39+Z7dTyASWeXELWZ/U=;
-        b=IzZK7yoKd4BTkR8q48paY3wEMzQkOm9ZQ5rWYMTXFfLsPkF5O33LM9Giorw7souEQq
-         m+QQmz0yt6nGvjQDEPzX2psOyamoVk/A4WLr/mFUD71rMqdop6pTZBfJClbH6Lvt3c/v
-         7ZZFn3Vygpmc1ef20GBpCDOdl7ZhTZhqBrdRJrlhLdneUGZBpWv9dZ3zRYGm0F4r8ti5
-         1kNWgMSbpgr8HMRzW/bhPcyKlQyENh/bJeeS4PQTQU0jNJ2kKxfY5Vw03N2bBt4Pcr/B
-         F5fbckqhi7sxPNFmNhCTa71gLlyhLQ7lVkAxNynqRqN4lm/cw2KcIBBYfe3QjZretCdu
-         +y6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=F2AvfYYndq856kIBUWZsm5CF39+Z7dTyASWeXELWZ/U=;
-        b=dZM4nraod9xNN6XKvzLUs8AdW1yPOH5YEMSl19VDNK51WhFqdJ58uoY9R0meWBcE3E
-         kEq0i3JlQqy5h2LieGSwoV0DtqnX0csKV2EqM5zzrEmfcdvGSZ2LbishYcaRY6dWB4i5
-         HR+OrOTF570JoEwUYmpjdNH88HcKFsw3gVepwtC0gA6dsgVkxQhIOp01Xl69fqtgC7Wc
-         c9aqwvmoncyyO12t4vpfV5RTgA/sm/IKOgm/DGRiatye6nsQYqaes+dGNMnTk7P/SF6/
-         CQU1pNGaeAHIes0n79i7tstb172gL5wR5M3sQIuhyADxaRwWktLor6Vn+f7WMBw991ru
-         9V1Q==
-X-Gm-Message-State: AODbwcCBFndu7lu1xXiZBAFFO2VK4lzf46vRUjWO9/CWT/Eyui6ZKVC7
-        qPJ6z7gILr39dg==
-X-Received: by 10.80.135.214 with SMTP id 22mr3030810edz.124.1495109178106;
-        Thu, 18 May 2017 05:06:18 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id w44sm1967516edd.53.2017.05.18.05.06.17
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 18 May 2017 05:06:17 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: git-scm.com status report
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170517020334.ncp3c6meak4mkp2j@sigill.intra.peff.net>
-Date:   Thu, 18 May 2017 14:06:16 +0200
-Cc:     Samuel Lijin <sxlijin@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Transfer-Encoding: 7bit
-Message-Id: <469A925D-E5E4-4B9D-8AE2-A23DBA3595AE@gmail.com>
-References: <20170202023349.7fopb3a6pc6dkcmd@sigill.intra.peff.net> <20170206182754.qxgzl7546i7u5wnw@sigill.intra.peff.net> <CAJZjrdXCYwbH4wtY44UiEQii+r47a-coTwLd0qYzhV3VZwyd1A@mail.gmail.com> <20170517020334.ncp3c6meak4mkp2j@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        id S932499AbdERMLX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 08:11:23 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52270 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932342AbdERKuX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 06:50:23 -0400
+Received: from virtualbox ([95.208.59.37]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaaVn-1dqN7w0WwZ-00mKCe; Thu, 18
+ May 2017 12:49:59 +0200
+Date:   Thu, 18 May 2017 12:49:57 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] rebase -i: silence stash apply
+In-Reply-To: <20170518100233.30559-3-phillip.wood@talktalk.net>
+Message-ID: <alpine.DEB.2.21.1.1705181246430.3610@virtualbox>
+References: <20170518100233.30559-1-phillip.wood@talktalk.net> <20170518100233.30559-3-phillip.wood@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:GRl8lDk476X+HZe7v5kQiJBf+zPCKffY8qjy3flJ5yMUBrQwvgm
+ oF8/zxv+RnGnqG0IJQgVx8aW/J2v89XHciyvo51PeZ7oBHg7IWssrIOIMzC9gxGO2Mr1KFX
+ R4IKzJ9JuxMQl1HqrU75BVfoz+geXRul8KCxHxvArC8sY2OjB4VOvzLYfLw96tsb9niRGqa
+ lcBLl0ZxGNPkLHihTmDww==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JhzJ2s2RmAQ=:9es2CXP3oH1a8e6c7gTXCf
+ 6nSJztIFp3zCNeJXNGv4ZlIwVON+IvIau/6/7XnpypUXrkG/XzC9LVyI7H2IX0+uptlkfDHc8
+ 0ul4dWbwjZQ4Xtviok9V/JFEBs5hgNBp2iX0vZCm7ef7rztK7FEaGvgZi4gfQk63IuKay7krS
+ cnIHXSmuANX7e9U2LZIO3H8VF1QTJZB25zuCjeDgQVI6be4NCaklNNipFQigbHJd5V5JG8/PB
+ 1NGWQGGsALExYoOyfnpkpiD47HFI1p8Z7E5uuu79aCXOph2CU6hLgXsWR4y5sImA+B/0CDGkv
+ JlHROuftxwlEaXt15SfmJ8xJ8IJaPhS+jqFGcvjqkPJrt1eJTDZzdTIyhV8pXoYu4bgzkP05o
+ Zu0RGNOnGl6dWgU0XXYX30vDKQhZs3gVjEGTpJbis8QQSETEWx3AhLiRK3wucq/DSEz4eHRI/
+ +zVQEsj2km0tNa4p0l0UO9zMplN2R+jTOil2r3XU63m+kRIuFdGf8t5r8eSuzZEdcFZwSaTsQ
+ tYH6lsIy8zWZWfi479CKji0CZ5pqmA4aO/Z3KRI7TzN6nwLR4fSHpmz9qqelhICAuHNnq6//9
+ tF6U6CeHw/504nqh4a7BwoN0K+BPGT1nsOKsRmIHyM2NGT4BHS0r+1mVaaboVw5S1Ce5Fz1NI
+ hFZWxVTTFbJSk2Z8smPMcj8bli3aRDuu+KZegsdRNRHy3eNr/+FR0IP5JRqWRv5P8gKxZHgP8
+ lLf5iq8a2zcthYoUgrkaYPZ5TCpm4jYOEojrGdrDVjXisjlleltNnets4GYwi/C6lpFKrFWor
+ vNRiHRz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Phillip,
 
-> On 17 May 2017, at 04:03, Jeff King <peff@peff.net> wrote:
-> 
-> On Tue, May 16, 2017 at 09:56:37PM -0400, Samuel Lijin wrote:
-> 
->> So I've finally found the time to get everything set up (in the
->> process discovering that remote_genbook2 consistently induces a
->> segfault in VirtualBox's networking driver, impressively enough) and
->> am taking a look at how much work it would take to get the site
->> running on AWS EC2/DO or some other hosting provider.
->> 
->> Some things I'm wondering about:
->> 
->> - You mentioned a lot of people reaching out off-list about hosting
->> options. Do any of them look particularly appealing at the moment?
-> 
-> Yes. I actually have stuff to announce there soon, but was holding off
-> until the final pieces are in place. But basically, the architecture
-> would remain largely the same, but hosted on community-owned accounts
-> (that I can share access to), with sponsorship from various hosting
-> services.
-> 
->> - How do I set up the ES service?
-> 
-> I haven't ever tried to do this in the local development environment.
-> The production site currently just use a cloud-hosted ES (Bonsai). They
-> have free "Sandbox" plans for testing, so you could probably use that as
-> a test resource after setting up the relevant environment variables. Or
-> alternatively, I think ElasticSearch folks produce binary builds you can
-> try, and you could host locally.
-> 
-> There's a rake job that inserts documents into the search index (see
-> lib/tasks/search.rake).
+On Thu, 18 May 2017, Phillip Wood wrote:
 
-Disclaimer: I am jumping in here without much knowledge. Feel free
-to ignore me :-)
+> diff --git a/sequencer.c b/sequencer.c
+> index f8bc18badf1a3fb1b39656501c5a316e229968d2..311728a145dfc66e230334221a2610468239932d 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1914,6 +1914,8 @@ static int apply_autostash(struct replay_opts *opts)
+>  	strbuf_trim(&stash_sha1);
+>  
+>  	child.git_cmd = 1;
+> +	child.no_stdout = 1;
+> +	child.no_stderr = 1;
+>  	argv_array_push(&child.args, "stash");
+>  	argv_array_push(&child.args, "apply");
+>  	argv_array_push(&child.args, stash_sha1.buf);
 
-In our TravisCI builds we create the AsciiDoc/Doctor documentation
-already. Couldn't we push that result to some static hosting service?
-Would that help in any way with git-scm.com?
+If I remember correctly, then the shell version prints the output in case
+of an error.
 
-- Lars
+We already imitated that behavior in `git commit`
+(https://github.com/git-for-windows/git/blob/v2.13.0.windows.1/sequencer.c#L674-L684):
+
+		/* hide stderr on success */
+		struct strbuf buf = STRBUF_INIT;
+		int rc = pipe_command(&cmd,
+				      NULL, 0,
+				      /* stdout is already redirected */
+				      NULL, 0,
+				      &buf, 0);
+		if (rc)
+			fputs(buf.buf, stderr);
+		strbuf_release(&buf);
+
+I think that would be the appropriate approach here, too.
+
+Ciao,
+Johannes
+
+P.S.: it may be a very good idea to accompany this patch (as well as the
+previous one) by a patch to the test suite to verify that the fixed code
+does not regress.
