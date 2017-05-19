@@ -2,76 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19043201CF
-	for <e@80x24.org>; Fri, 19 May 2017 02:45:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16DD1201CF
+	for <e@80x24.org>; Fri, 19 May 2017 03:43:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755558AbdESCpF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 22:45:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54650 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752301AbdESCpE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 22:45:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4AA1081B6D;
-        Thu, 18 May 2017 22:45:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id; s=sasl; bh=oN0eDq/cP5uk3Y03qBHqnRjtC2o
-        =; b=u+kux2U2pF3prMlx1HZe9k5g9S8vPwkBSZTfe8tMAQ/KHxcd+9qOr1yjE9S
-        ueczQRCkkYz6eX3rxVA54kGSHAzkbMInSR4PjUu2HxqhecmoO7Ei2/GDsWYNK2VG
-        wJkv+u1IGXxMLwi/eCEfZLckG0m6qXkTW4EBvVCqso1L0a8c=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3B8AC81B6C;
-        Thu, 18 May 2017 22:45:03 -0400 (EDT)
-Received: from kmlap.hsd1.ct.comcast.net (unknown [24.60.167.92])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 439F481B69;
-        Thu, 18 May 2017 22:45:01 -0400 (EDT)
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     git@vger.kernel.org
-Cc:     Kyle Meyer <kyle@kyleam.com>
-Subject: [PATCH] config.txt: add an entry for log.showSignature
-Date:   Thu, 18 May 2017 22:44:51 -0400
-Message-Id: <20170519024451.11252-1-kyle@kyleam.com>
-X-Mailer: git-send-email 2.13.0
-X-Pobox-Relay-ID: 28380E66-3C3D-11E7-A6FD-61520C78B957-24757444!pb-smtp2.pobox.com
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
- h=from:to:cc:subject:date:message-id; s=mesmtp;
- bh=oN0eDq/cP5uk3Y03qBHqnRjtC2o=;
- b=KQcFoP2V+rKONYdk1ohxMn5R6bcjd85mI0j3kpye5GS4ffgey4fFWStlzgwH9MO49VSRlQQ5yx/UIjctITGJEvg8grep8XnNx4BPr7H5zp5b8yI1x0y9qwByKtrNeXpiBPcmzIE2c3qU7UG1mWJ4Jkcf4ZJTLo4BwIORMoxDkqM=
+        id S1756621AbdESDnC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 23:43:02 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:51217 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756415AbdESDlE (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 18 May 2017 23:41:04 -0400
+X-AuditID: 1207440f-701ff700000004e5-c7-591e6899c78f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 19.10.01253.9986E195; Thu, 18 May 2017 23:38:03 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCCC1C.dip0.t-ipconnect.de [87.188.204.28])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4J3bvNk023912
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Thu, 18 May 2017 23:37:59 -0400
+Subject: Re: [PATCH 01/23] t3600: clean up permissions test properly
+To:     Junio C Hamano <gitster@pobox.com>
+References: <cover.1495014840.git.mhagger@alum.mit.edu>
+ <bb244c72ec6e6ab56171d82f7379a75c4eb5481f.1495014840.git.mhagger@alum.mit.edu>
+ <xmqqa86avm8j.fsf@gitster.mtv.corp.google.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>, git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <2003333a-4a33-b023-078f-07a481df7b63@alum.mit.edu>
+Date:   Fri, 19 May 2017 05:37:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqa86avm8j.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1J2dIRdpsKCF2WLtsztMFl1Xupks
+        GnqvMFssefia2aJ7yltGix8tPcwWmze3sziwe+ycdZfdY8GmUo+u9iNsHs969zB6XLyk7PF5
+        k1wAWxSXTUpqTmZZapG+XQJXxuGzt5kKFnBVbF72jqmBsYuji5GTQ0LARGL1rf+sXYxcHEIC
+        O5gkHl4+zgbhnGeSuL/rKCNIlbCAi0Tr9YNsILaIgJrExLZDLBBFOxklzn+fzgTiMAssYJLY
+        sWEJK0gVm4CuxKKeZiYQm1fAXuLkkt9gNouAqsSpo73sILaoQITEw85d7BA1ghInZz5hAbE5
+        Bawllq6bBGYzC+hJ7Lj+ixXClpfY/nYO8wRG/llIWmYhKZuFpGwBI/MqRrnEnNJc3dzEzJzi
+        1GTd4uTEvLzUIl0TvdzMEr3UlNJNjJBQ59/B2LVe5hCjAAejEg/vgxWykUKsiWXFlbmHGCU5
+        mJREeWcEyEUK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuEVFwPK8aYkVlalFuXDpKQ5WJTEedWX
+        qPsJCaQnlqRmp6YWpBbBZGU4OJQkeO3SgRoFi1LTUyvSMnNKENJMHJwgw3mAhgeC1PAWFyTm
+        FmemQ+RPMSpKifPapQElBEASGaV5cL2wVPSKURzoFWFeOZB2HmAag+t+BTSYCWhw8wNpkMEl
+        iQgpqQbGYr9DCUc+zlKKVGpQVJmkls/nFflI7Wty0p5p/2LXzTz8Sl7E6eqzyu1iD/JX6VQy
+        BHtW9qzxXjr9ieqU5+HN7548eqGs3ez9TDKmMuJPUvP5rgstPwM31b8piix4t9rtxMvDMSuP
+        5ruuaxN+of3M3T5YdseK8g2RN0PCLGe1dJSadhzcyOusxFKckWioxVxUnAgAqaYgDyADAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The configuration variable log.showSignature is mentioned in git-log's
-manpage.  Document it in git-config's manpage as well.
+On 05/18/2017 06:10 AM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> The test of failing `git rm -f` removes the write permissions on the
+>> test directory, but fails to restore them if the test fails. This
+>> means that the test temporary directory cannot be cleaned up, which
+>> means that subsequent attempts to run the test fail mysteriously.
+>>
+>> Instead, do the cleanup in a `test_must_fail` block so that it can't
+>> be skipped.
+>>
+>> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+>> ---
+>>  t/t3600-rm.sh | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+>> index 5f9913ba33..4a35c378c8 100755
+>> --- a/t/t3600-rm.sh
+>> +++ b/t/t3600-rm.sh
+>> @@ -98,8 +98,8 @@ embedded'"
+>>  
+>>  test_expect_success SANITY 'Test that "git rm -f" fails if its rm fails' '
+>>  	chmod a-w . &&
+>> -	test_must_fail git rm -f baz &&
+>> -	chmod 775 .
+>> +	test_when_finished "chmod 775 ." &&
+>> +	test_must_fail git rm -f baz
+>>  '
+> 
+> Obviously a good idea.
+> 
+> In this case it would not matter very much, but I think it is a
+> better style to have when-finished _before_ "chmod a-w ." that
+> introduces the state we want to revert out of.
 
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- Documentation/config.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+OK, I'll change this in v2.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 96e9cf8b7..a7dce9a1e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2143,6 +2143,10 @@ log.showRoot::
- 	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
- 	normally hide the root commit will now show it. True by default.
- 
-+log.showSignature::
-+	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
-+	linkgit:git-whatchanged[1] assume `--show-signature`.
-+
- log.mailmap::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
- 	linkgit:git-whatchanged[1] assume `--use-mailmap`.
--- 
-2.13.0
+Michael
 
