@@ -2,123 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33918201CF
-	for <e@80x24.org>; Fri, 19 May 2017 06:12:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA78F201A7
+	for <e@80x24.org>; Fri, 19 May 2017 07:58:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755407AbdESGMR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 May 2017 02:12:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54690 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755065AbdESGMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 May 2017 02:12:17 -0400
-Received: (qmail 7510 invoked by uid 109); 19 May 2017 06:12:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 May 2017 06:12:15 +0000
-Received: (qmail 26098 invoked by uid 111); 19 May 2017 06:12:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 May 2017 02:12:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 May 2017 02:12:12 -0400
-Date:   Fri, 19 May 2017 02:12:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Karthik Nayak <karthik.188@gmail.com>,
-        git discussion list <git@vger.kernel.org>
-Subject: [PATCH] ref-filter: resolve HEAD when parsing %(HEAD) atom
-Message-ID: <20170519061212.5xrkqydzl32l24ck@sigill.intra.peff.net>
-References: <dfc3a334-8047-26b0-1142-81c703010507@alum.mit.edu>
- <20170517140417.kwzznw4su36k6pxv@sigill.intra.peff.net>
+        id S1751463AbdESH6r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 May 2017 03:58:47 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50225 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750793AbdESH6q (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 May 2017 03:58:46 -0400
+X-AuditID: 1207440d-de7ff70000000e33-ce-591ea5ab20f2
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A5.65.03635.BA5AE195; Fri, 19 May 2017 03:58:35 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCCC1C.dip0.t-ipconnect.de [87.188.204.28])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4J7wUcC002651
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Fri, 19 May 2017 03:58:32 -0400
+Subject: Re: [PATCH 12/23] ref_transaction_commit(): break into multiple
+ functions
+To:     Stefan Beller <sbeller@google.com>
+References: <cover.1495014840.git.mhagger@alum.mit.edu>
+ <5ec5f3f9b4c9fc9f719d116b48dcf7b61e74ae49.1495014840.git.mhagger@alum.mit.edu>
+ <CAGZ79kYF=MnJKrQakDbEQoR8r2MyeHro9vtzzmggwm6NXH9T2g@mail.gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <00f2cef4-70fa-9e77-9833-764d4b133733@alum.mit.edu>
+Date:   Fri, 19 May 2017 09:58:30 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
+In-Reply-To: <CAGZ79kYF=MnJKrQakDbEQoR8r2MyeHro9vtzzmggwm6NXH9T2g@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170517140417.kwzznw4su36k6pxv@sigill.intra.peff.net>
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupmleLIzCtJLcpLzFFi42IRYndR1F29VC7S4PBVcYu1z+4wWXRd6Way
+        aOi9wmyx5OFrZovuKW8ZLX609DBbbN7czuLA7rFz1l12jwWbSj262o+weTzr3cPocfGSssfn
+        TXIBbFFcNimpOZllqUX6dglcGXs3NjAVNPJW/GiYzdrAeJ2ri5GTQ0LARGL938ksILaQwA4m
+        iWvTfbsYuYDs80wSHza/ZOti5OAQFgiR2HNQG6RGREBNYuaq2WxQNYwSMw+/ZwRxmAXOMEn8
+        v7YfbBKbgK7Eop5mJhCbV8BeYs7ew2wgNouAqsT+H5cZQWxRgQiJh5272CFqBCVOznwC1ssp
+        ECgxZfMOVhCbWUBd4s+8S8wQtrzE9rdzmCcw8s9C0jILSdksJGULGJlXMcol5pTm6uYmZuYU
+        pybrFicn5uWlFuka6eVmluilppRuYoSEOe8Oxv/rZA4xCnAwKvHwPlghGynEmlhWXJl7iFGS
+        g0lJlHdGgFykEF9SfkplRmJxRnxRaU5q8SFGCQ5mJRFecTGgHG9KYmVValE+TEqag0VJnFdt
+        ibqfkEB6YklqdmpqQWoRTFaGg0NJgld2CVCjYFFqempFWmZOCUKaiYMTZDgP0PB5IDW8xQWJ
+        ucWZ6RD5U4yKUuK8KouBEgIgiYzSPLheWBp6xSgO9IowLwdIOw8whcF1vwIazAQ0uPmBNMjg
+        kkSElFQDY+wM3X2/Xi3IXlp1dfLCVyvjft1g3HF6utRks/msk88+/Wrjzbxyys4XrFpvLtRa
+        Zhc7iB+1ehY7oU9os4p69qOgx/cEFnC51L9+kv2m8ILz3N8bF7lnNn7RFlf4fWyX5++mYyyF
+        Cxcs2fe6Ys7dL4p/fVRiYyd3/yrccimy+CaPjdJ1W08/Rg4lluKMREMt5qLiRAAIkEIDHgMA
+        AA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the user asks to display (or sort by) the %(HEAD) atom,
-ref-filter has to compare each refname to the value of HEAD.
-We do so by resolving HEAD fresh when calling populate_value()
-on each ref. If there are a large number of refs, this can
-have a measurable impact on runtime.
+On 05/17/2017 07:44 PM, Stefan Beller wrote:
+> On Wed, May 17, 2017 at 5:05 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> Break the function `ref_transaction_commit()` into two functions,
+>> `ref_transaction_prepare()` and `ref_transaction_finish()`, with a
+>> third function, `ref_transaction_abort()`, that can be used to abort
+>> the transaction. Break up the `ref_store` methods similarly.
+>>
+>> This split will make it easier to implement compound reference stores,
+>> where a transaction might have to span multiple underlying stores. In
+>> that case, we would first want to "prepare" the sub-transactions in
+>> each of the reference stores. If any of the "prepare" steps fails, we
+>> would "abort" all of the sub-transactions. Only if all of the
+>> "prepare" steps succeed would we "finish" each of them.
+> [...]
 
-Instead, let's resolve HEAD once when we realize we need the
-%(HEAD) atom, allowing us to do a simple string comparison
-for each ref. On a repository with 3000 branches (high, but
-an actual example found in the wild) this drops the
-best-of-five time to run "git branch >/dev/null" from 59ms
-to 48ms (~20% savings).
+Thanks for your comments. While I was incorporating them, I realized
+that other parts of the documentation needed updates, too. And while I
+was fixing that, I noticed that the interface was unnecessarily
+complicated. The old version required either `commit` or `prepare`
+followed by `finish`. But there is no reason that the public API has to
+expose `finish`. So instead, let's call `prepare` an optional step that
+is allowed to precede `commit`, and make `commit` smart enough to call
+`prepare` if it hasn't been called already, and then call `finish`.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-The "something like this" patch I sent earlier just cached the value of
-HEAD in a global for the length of the program. This is a bit nicer, in
-that it ties the cache to the atom we are filling in. But since that's
-also stored in a program global, the end effect is the same. :) I think
-it's still worth doing it this way, though, as we might one day push the
-used_atom stuff into some kind of ref_filter_context struct, and then
-this would Just Work.
+Furthermore, let's make it possible to call `abort` when the transaction
+is in OPEN as well as PREPARED state rather than requiring `free` in
+OPEN state and `abort` in PREPARED state.
 
-I did take a look at de-globalifying used_atom and friends, but it gets
-pretty nasty pushing it all through the callstack. Since there's no
-immediate benefit, I don't think it's really worth pursuing for now.
+I will make these changes and revamp the docs for v2.
 
- ref-filter.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index 1fc5e9970..82ca411d0 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -93,6 +93,7 @@ static struct used_atom {
- 			unsigned int length;
- 		} objectname;
- 		struct refname_atom refname;
-+		char *head;
- 	} u;
- } *used_atom;
- static int used_atom_cnt, need_tagged, need_symref;
-@@ -287,6 +288,12 @@ static void if_atom_parser(struct used_atom *atom, const char *arg)
- 	}
- }
- 
-+static void head_atom_parser(struct used_atom *atom, const char *arg)
-+{
-+	unsigned char unused[GIT_SHA1_RAWSZ];
-+
-+	atom->u.head = resolve_refdup("HEAD", RESOLVE_REF_READING, unused, NULL);
-+}
- 
- static struct {
- 	const char *name;
-@@ -325,7 +332,7 @@ static struct {
- 	{ "push", FIELD_STR, remote_ref_atom_parser },
- 	{ "symref", FIELD_STR, refname_atom_parser },
- 	{ "flag" },
--	{ "HEAD" },
-+	{ "HEAD", FIELD_STR, head_atom_parser },
- 	{ "color", FIELD_STR, color_atom_parser },
- 	{ "align", FIELD_STR, align_atom_parser },
- 	{ "end" },
-@@ -1369,12 +1376,7 @@ static void populate_value(struct ref_array_item *ref)
- 		} else if (!deref && grab_objectname(name, ref->objectname, v, atom)) {
- 			continue;
- 		} else if (!strcmp(name, "HEAD")) {
--			const char *head;
--			unsigned char sha1[20];
--
--			head = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
--						  sha1, NULL);
--			if (head && !strcmp(ref->refname, head))
-+			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
- 				v->s = "*";
- 			else
- 				v->s = " ";
--- 
-2.13.0.219.g63f6bc368
+Michael
 
