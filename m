@@ -2,94 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E639201CF
-	for <e@80x24.org>; Fri, 19 May 2017 04:49:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33918201CF
+	for <e@80x24.org>; Fri, 19 May 2017 06:12:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750738AbdESEtp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 May 2017 00:49:45 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:42431 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750703AbdESEto (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 19 May 2017 00:49:44 -0400
-X-AuditID: 12074411-cafff70000003efd-d4-591e7964e2cb
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 49.C1.16125.4697E195; Fri, 19 May 2017 00:49:43 -0400 (EDT)
-Received: from [192.168.69.190] (p57BCCC1C.dip0.t-ipconnect.de [87.188.204.28])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4J4nbPZ027233
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Fri, 19 May 2017 00:49:38 -0400
-Subject: Re: [PATCH 11/23] files_transaction_cleanup(): new helper function
-To:     Jeff King <peff@peff.net>
-References: <cover.1495014840.git.mhagger@alum.mit.edu>
- <d6374d948f4424e4e6b4d999460597d226028be0.1495014840.git.mhagger@alum.mit.edu>
- <20170517131958.nxb5ol3wrtwyskss@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Turner <novalis@novalis.org>, git@vger.kernel.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <c8eb0a01-9d7d-a8c6-c1bc-31743d677883@alum.mit.edu>
-Date:   Fri, 19 May 2017 06:49:37 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1755407AbdESGMR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 May 2017 02:12:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54690 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755065AbdESGMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 May 2017 02:12:17 -0400
+Received: (qmail 7510 invoked by uid 109); 19 May 2017 06:12:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 May 2017 06:12:15 +0000
+Received: (qmail 26098 invoked by uid 111); 19 May 2017 06:12:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 May 2017 02:12:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 May 2017 02:12:12 -0400
+Date:   Fri, 19 May 2017 02:12:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Karthik Nayak <karthik.188@gmail.com>,
+        git discussion list <git@vger.kernel.org>
+Subject: [PATCH] ref-filter: resolve HEAD when parsing %(HEAD) atom
+Message-ID: <20170519061212.5xrkqydzl32l24ck@sigill.intra.peff.net>
+References: <dfc3a334-8047-26b0-1142-81c703010507@alum.mit.edu>
+ <20170517140417.kwzznw4su36k6pxv@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20170517131958.nxb5ol3wrtwyskss@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupileLIzCtJLcpLzFFi42IRYndR1E2vlIs0uHWc22LtsztMFl1Xupks
-        GnqvMFssefia2aJ7yltGix8tPcwWmze3sziwe+ycdZfdY8GmUo+u9iNsHs969zB6XLyk7PF5
-        k1wAWxSXTUpqTmZZapG+XQJXxt0vp1kLHnJUTH2xnaWBsZW9i5GTQ0LARGL1tytsXYxcHEIC
-        O5gkbhz7zgThnGeSmHjoBDNIlbCAt0Tzw142EFtEQFbi++GNjBBFhxglXj9rZwJJMAtsYpLY
-        etYexGYT0JVY1NMMFucVsJdofTABqJmDg0VAVWL6QyuQsKhAhMTDzl3sECWCEidnPmEBKeEU
-        cJG4eSoWYqK6xJ95l5ghbHmJ7W/nME9g5J+FpGMWkrJZSMoWMDKvYpRLzCnN1c1NzMwpTk3W
-        LU5OzMtLLdI11cvNLNFLTSndxAgJcsEdjDNOyh1iFOBgVOLhfbBCNlKINbGsuDL3EKMkB5OS
-        KO+MALlIIb6k/JTKjMTijPii0pzUYqDHOZiVRHjFxYByvCmJlVWpRfkwKWkOFiVxXr4l6n5C
-        AumJJanZqakFqUUwWRkODiUJ3uQKoEbBotT01Iq0zJwShDQTByfIcB6g4QwgNbzFBYm5xZnp
-        EPlTjIpS4rxJ5UAJAZBERmkeXC8sCb1iFAd6RZg3EqSdB5jA4LpfAQ1mAhrc/EAaZHBJIkJK
-        qoHROzXsrmX9RfNt/Gd2LjTbsvBv/Vb25V12Z3fmfmDu//s07fr+49dt3skVxvvefCsWOVXt
-        vELfilKfz+kfdiqoXfl61131dcKKlHNPgi+z/T+Wkrb82tztXnENSoXKy9RWvROduKtMLKHh
-        lvDUcs9KO97Ided3TmqR4VvFe3Dn7sa2TZsnKaeoK7EUZyQaajEXFScCAOSeBBodAwAA
+Content-Disposition: inline
+In-Reply-To: <20170517140417.kwzznw4su36k6pxv@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/17/2017 03:19 PM, Jeff King wrote:
-> On Wed, May 17, 2017 at 02:05:34PM +0200, Michael Haggerty wrote:
-> 
->> Extract function from `files_transaction_commit()`. It will soon have
->> another caller.
->> [...]
->> @@ -2868,10 +2889,8 @@ static int files_transaction_commit(struct ref_store *ref_store,
->>  	if (transaction->state != REF_TRANSACTION_OPEN)
->>  		die("BUG: commit called for transaction that is not open");
->>  
->> -	if (!transaction->nr) {
->> -		transaction->state = REF_TRANSACTION_CLOSED;
->> -		return 0;
->> -	}
->> +	if (!transaction->nr)
->> +		goto cleanup;
-> 
-> This is slightly more than it says on the tin. I guess the reason is
-> that the cleanup function is going to learn about more than just
-> iterating over the transaction, and we'll want to trigger it even for
-> empty transactions.
+If the user asks to display (or sort by) the %(HEAD) atom,
+ref-filter has to compare each refname to the value of HEAD.
+We do so by resolving HEAD fresh when calling populate_value()
+on each ref. If there are a large number of refs, this can
+have a measurable impact on runtime.
 
-Mostly this is just DRY. For example, later the cleanup will be changed
-to set the state to `REF_TRANSACTION_PREPARED` rather than
-`REF_TRANSACTION_CLOSED`, and that change will be able to be made in one
-place rather than two. I'll mention this in the commit message.
+Instead, let's resolve HEAD once when we realize we need the
+%(HEAD) atom, allowing us to do a simple string comparison
+for each ref. On a repository with 3000 branches (high, but
+an actual example found in the wild) this drops the
+best-of-five time to run "git branch >/dev/null" from 59ms
+to 48ms (~20% savings).
 
-Michael
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The "something like this" patch I sent earlier just cached the value of
+HEAD in a global for the length of the program. This is a bit nicer, in
+that it ties the cache to the atom we are filling in. But since that's
+also stored in a program global, the end effect is the same. :) I think
+it's still worth doing it this way, though, as we might one day push the
+used_atom stuff into some kind of ref_filter_context struct, and then
+this would Just Work.
+
+I did take a look at de-globalifying used_atom and friends, but it gets
+pretty nasty pushing it all through the callstack. Since there's no
+immediate benefit, I don't think it's really worth pursuing for now.
+
+ ref-filter.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/ref-filter.c b/ref-filter.c
+index 1fc5e9970..82ca411d0 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -93,6 +93,7 @@ static struct used_atom {
+ 			unsigned int length;
+ 		} objectname;
+ 		struct refname_atom refname;
++		char *head;
+ 	} u;
+ } *used_atom;
+ static int used_atom_cnt, need_tagged, need_symref;
+@@ -287,6 +288,12 @@ static void if_atom_parser(struct used_atom *atom, const char *arg)
+ 	}
+ }
+ 
++static void head_atom_parser(struct used_atom *atom, const char *arg)
++{
++	unsigned char unused[GIT_SHA1_RAWSZ];
++
++	atom->u.head = resolve_refdup("HEAD", RESOLVE_REF_READING, unused, NULL);
++}
+ 
+ static struct {
+ 	const char *name;
+@@ -325,7 +332,7 @@ static struct {
+ 	{ "push", FIELD_STR, remote_ref_atom_parser },
+ 	{ "symref", FIELD_STR, refname_atom_parser },
+ 	{ "flag" },
+-	{ "HEAD" },
++	{ "HEAD", FIELD_STR, head_atom_parser },
+ 	{ "color", FIELD_STR, color_atom_parser },
+ 	{ "align", FIELD_STR, align_atom_parser },
+ 	{ "end" },
+@@ -1369,12 +1376,7 @@ static void populate_value(struct ref_array_item *ref)
+ 		} else if (!deref && grab_objectname(name, ref->objectname, v, atom)) {
+ 			continue;
+ 		} else if (!strcmp(name, "HEAD")) {
+-			const char *head;
+-			unsigned char sha1[20];
+-
+-			head = resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+-						  sha1, NULL);
+-			if (head && !strcmp(ref->refname, head))
++			if (atom->u.head && !strcmp(ref->refname, atom->u.head))
+ 				v->s = "*";
+ 			else
+ 				v->s = " ";
+-- 
+2.13.0.219.g63f6bc368
 
