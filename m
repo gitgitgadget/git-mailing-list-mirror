@@ -7,30 +7,30 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C47C72021E
-	for <e@80x24.org>; Fri, 19 May 2017 12:54:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 198982021E
+	for <e@80x24.org>; Fri, 19 May 2017 12:55:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751279AbdESMyq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 May 2017 08:54:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54830 "EHLO cloud.peff.net"
+        id S1753663AbdESMy7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 May 2017 08:54:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54838 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750728AbdESMyq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 May 2017 08:54:46 -0400
-Received: (qmail 2710 invoked by uid 109); 19 May 2017 12:54:45 -0000
+        id S1751403AbdESMy6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 May 2017 08:54:58 -0400
+Received: (qmail 2733 invoked by uid 109); 19 May 2017 12:54:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 May 2017 12:54:45 +0000
-Received: (qmail 27822 invoked by uid 111); 19 May 2017 12:55:19 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 May 2017 12:54:58 +0000
+Received: (qmail 27841 invoked by uid 111); 19 May 2017 12:55:32 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 May 2017 08:55:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 May 2017 08:54:43 -0400
-Date:   Fri, 19 May 2017 08:54:43 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 May 2017 08:55:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 May 2017 08:54:56 -0400
+Date:   Fri, 19 May 2017 08:54:56 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         git@vger.kernel.org,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH 08/15] get_sha1_with_context: dynamically allocate oc->path
-Message-ID: <20170519125443.7fknotkezbpfwdht@sigill.intra.peff.net>
+Subject: [PATCH 09/15] t4063: add tests of direct blob diffs
+Message-ID: <20170519125456.j3xnwazaahtogwni@sigill.intra.peff.net>
 References: <20170519124651.4q7waz75rmzfopgn@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,176 +41,163 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a sha1 lookup returns the tree path via "struct
-object_context", it just copies it into a fixed-size buffer.
-This means the result can be truncated, and it means our
-"struct object_context" consumes a lot of stack space.
+The git-diff command can directly compare two blobs (or a
+blob and a file), but we don't test this at all. Let's add
+some basic tests that reveal a few problems.
 
-Instead, let's allocate a string on the heap. Because most
-callers don't care about this information, we'll avoid doing
-it by default (so they don't all have to start calling
-free() on the result). There are basically two options for
-the caller to signal to us that it's interested:
+There are basically four interesting inputs:
 
-  1. By setting a pointer to storage in the object_context.
+  1. sha1 against sha1 (where diff has no information beyond
+     the contents)
 
-  2. By passing a flag in another parameter.
+  2. tree:path against tree:path (where it can get
+     information via get_sha1_with_context)
 
-Doing (1) would match the way that sha1_object_info_extended()
-works. But it would mean that every caller would have to
-initialize the object_context, which they don't currently
-have to do.
+  3. Same as (2), but using the ".." range syntax
 
-This patch does (2), and adds a new bit to the function's
-flags field. All of the callers that look at the "path"
-field are updated to pass the new flag.
+  4. tree:path against a filename
+
+And beyond generating a sane diff, we care about a few
+little bits: which paths they show in the diff header, and
+whether they correctly pick up a mode change.
+
+They should all be able to show a mode except for (1),
+though note that case (3) is currently broken.
+
+For the headers, we would ideally show the path within the
+tree if we have it, making:
+
+  git diff a:path b:path
+
+look the same as:
+
+  git diff a b -- path
+
+We can't always do that (e.g., in the direct sha1/sha1 diff,
+we have no path to show), in which case we should fall back
+to the name that resolved to the blob (which is nonsense
+from the repository's perspective, but is the best we can
+do).
+
+Aside from the fallback case in (1), none of the cases get
+this right. Cases (2) and (3) always show the full
+tree:path, even though we should be able to know just the
+"path" portion.
+
+Case (4) picks up the filename path, but assigns it to
+_both_ sides of the diff. So this works for:
+
+  git diff tree:path path
+
+but not for:
+
+  git diff tree:other_path path
+
+The appropriate tests are marked to expect failure.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-If there's a topic in flight that adds a new call without the flag, note
-that it will stop filling the "path" field (which is what most calls
-would want). And you won't get a compile error, because the pointer can
-be used in largely the same way as the array.
+ t/t4063-diff-blobs.sh | 91 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 91 insertions(+)
+ create mode 100755 t/t4063-diff-blobs.sh
 
-I find it unlikely that there's a case that would care, but if we wanted
-to be really paranoid, we could change the name of oc->path (at the cost
-of making this diff much noisier).
-
- builtin/cat-file.c |  4 +++-
- builtin/grep.c     |  4 +++-
- builtin/log.c      | 10 +++++++---
- cache.h            |  8 +++++++-
- sha1_name.c        |  6 ++++--
- 5 files changed, 24 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 1890d7a63..421709517 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -61,7 +61,8 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 	if (unknown_type)
- 		flags |= LOOKUP_UNKNOWN_OBJECT;
- 
--	if (get_sha1_with_context(obj_name, 0, oid.hash, &obj_context))
-+	if (get_sha1_with_context(obj_name, GET_SHA1_RECORD_PATH,
-+				  oid.hash, &obj_context))
- 		die("Not a valid object name %s", obj_name);
- 
- 	if (!path)
-@@ -165,6 +166,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		die("git cat-file %s: bad file", obj_name);
- 
- 	write_or_die(1, buf, size);
-+	free(obj_context.path);
- 	return 0;
- }
- 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 3ffb5b4e8..254c1c784 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1190,7 +1190,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			break;
- 		}
- 
--		if (get_sha1_with_context(arg, 0, oid.hash, &oc)) {
-+		if (get_sha1_with_context(arg, GET_SHA1_RECORD_PATH,
-+					  oid.hash, &oc)) {
- 			if (seen_dashdash)
- 				die(_("unable to resolve revision: %s"), arg);
- 			break;
-@@ -1200,6 +1201,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		if (!seen_dashdash)
- 			verify_non_filename(prefix, arg);
- 		add_object_array_with_path(object, arg, &list, oc.mode, oc.path);
-+		free(oc.path);
- 	}
- 
- 	/*
-diff --git a/builtin/log.c b/builtin/log.c
-index fd3d10ec2..a0d5233dc 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -483,16 +483,20 @@ static int show_blob_object(const struct object_id *oid, struct rev_info *rev, c
- 	    !DIFF_OPT_TST(&rev->diffopt, ALLOW_TEXTCONV))
- 		return stream_blob_to_fd(1, oid, NULL, 0);
- 
--	if (get_sha1_with_context(obj_name, 0, oidc.hash, &obj_context))
-+	if (get_sha1_with_context(obj_name, GET_SHA1_RECORD_PATH,
-+				  oidc.hash, &obj_context))
- 		die(_("Not a valid object name %s"), obj_name);
--	if (!obj_context.path[0] ||
--	    !textconv_object(obj_context.path, obj_context.mode, &oidc, 1, &buf, &size))
-+	if (!obj_context.path ||
-+	    !textconv_object(obj_context.path, obj_context.mode, &oidc, 1, &buf, &size)) {
-+		free(obj_context.path);
- 		return stream_blob_to_fd(1, oid, NULL, 0);
-+	}
- 
- 	if (!buf)
- 		die(_("git show %s: bad file"), obj_name);
- 
- 	write_or_die(1, buf, size);
-+	free(obj_context.path);
- 	return 0;
- }
- 
-diff --git a/cache.h b/cache.h
-index 656341b8e..e219c45ed 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1333,13 +1333,18 @@ static inline int hex2chr(const char *s)
- 
- struct object_context {
- 	unsigned char tree[20];
--	char path[PATH_MAX];
- 	unsigned mode;
- 	/*
- 	 * symlink_path is only used by get_tree_entry_follow_symlinks,
- 	 * and only for symlinks that point outside the repository.
- 	 */
- 	struct strbuf symlink_path;
-+	/*
-+	 * If GET_SHA1_RECORD_PATH is set, this will record path (if any)
-+	 * found when resolving the name. The caller is responsible for
-+	 * releasing the memory.
-+	 */
-+	char *path;
- };
- 
- #define GET_SHA1_QUIETLY           01
-@@ -1349,6 +1354,7 @@ struct object_context {
- #define GET_SHA1_TREEISH          020
- #define GET_SHA1_BLOB             040
- #define GET_SHA1_FOLLOW_SYMLINKS 0100
-+#define GET_SHA1_RECORD_PATH     0200
- #define GET_SHA1_ONLY_TO_DIE    04000
- 
- #define GET_SHA1_DISAMBIGUATORS \
-diff --git a/sha1_name.c b/sha1_name.c
-index 35b16efc6..70f096749 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1550,7 +1550,8 @@ static int get_sha1_with_context_1(const char *name,
- 			namelen = strlen(cp);
- 		}
- 
--		strlcpy(oc->path, cp, sizeof(oc->path));
-+		if (flags & GET_SHA1_RECORD_PATH)
-+			oc->path = xstrdup(cp);
- 
- 		if (!active_cache)
- 			read_cache();
-@@ -1613,7 +1614,8 @@ static int get_sha1_with_context_1(const char *name,
- 				}
- 			}
- 			hashcpy(oc->tree, tree_sha1);
--			strlcpy(oc->path, filename, sizeof(oc->path));
-+			if (flags & GET_SHA1_RECORD_PATH)
-+				oc->path = xstrdup(filename);
- 
- 			free(new_filename);
- 			return ret;
+diff --git a/t/t4063-diff-blobs.sh b/t/t4063-diff-blobs.sh
+new file mode 100755
+index 000000000..90c6f6b85
+--- /dev/null
++++ b/t/t4063-diff-blobs.sh
+@@ -0,0 +1,91 @@
++#!/bin/sh
++
++test_description='test direct comparison of blobs via git-diff'
++. ./test-lib.sh
++
++run_diff () {
++	# use full-index to make it easy to match the index line
++	git diff --full-index "$@" >diff
++}
++
++check_index () {
++	grep "^index $1\\.\\.$2" diff
++}
++
++check_mode () {
++	grep "^old mode $1" diff &&
++	grep "^new mode $2" diff
++}
++
++check_paths () {
++	grep "^diff --git a/$1 b/$2" diff
++}
++
++test_expect_success 'create some blobs' '
++	echo one >one &&
++	echo two >two &&
++	chmod +x two &&
++	git add . &&
++
++	# cover systems where modes are ignored
++	git update-index --chmod=+x two &&
++
++	git commit -m base &&
++
++	sha1_one=$(git rev-parse HEAD:one) &&
++	sha1_two=$(git rev-parse HEAD:two)
++'
++
++test_expect_success 'diff by sha1' '
++	run_diff $sha1_one $sha1_two
++'
++test_expect_success 'index of sha1 diff' '
++	check_index $sha1_one $sha1_two
++'
++test_expect_success 'sha1 diff uses arguments as paths' '
++	check_paths $sha1_one $sha1_two
++'
++test_expect_success 'sha1 diff has no mode change' '
++	! grep mode diff
++'
++
++test_expect_success 'diff by tree:path (run)' '
++	run_diff HEAD:one HEAD:two
++'
++test_expect_success 'index of tree:path diff' '
++	check_index $sha1_one $sha1_two
++'
++test_expect_failure 'tree:path diff uses filenames as paths' '
++	check_paths one two
++'
++test_expect_success 'tree:path diff shows mode change' '
++	check_mode 100644 100755
++'
++
++test_expect_success 'diff by ranged tree:path' '
++	run_diff HEAD:one..HEAD:two
++'
++test_expect_success 'index of ranged tree:path diff' '
++	check_index $sha1_one $sha1_two
++'
++test_expect_failure 'ranged tree:path diff uses filenames as paths' '
++	check_paths one two
++'
++test_expect_failure 'ranged tree:path diff shows mode change' '
++	check_mode 100644 100755
++'
++
++test_expect_success 'diff blob against file' '
++	run_diff HEAD:one two
++'
++test_expect_success 'index of blob-file diff' '
++	check_index $sha1_one $sha1_two
++'
++test_expect_failure 'blob-file diff uses filename as paths' '
++	check_paths one two
++'
++test_expect_success FILEMODE 'blob-file diff shows mode change' '
++	check_mode 100644 100755
++'
++
++test_done
 -- 
 2.13.0.219.g63f6bc368
 
