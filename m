@@ -2,94 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D5072023D
-	for <e@80x24.org>; Fri, 19 May 2017 18:31:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1549A2023D
+	for <e@80x24.org>; Fri, 19 May 2017 18:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756353AbdESSa7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 May 2017 14:30:59 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:37035 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756172AbdESSa4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 May 2017 14:30:56 -0400
-Received: by mail-it0-f51.google.com with SMTP id g126so51489708ith.0;
-        Fri, 19 May 2017 11:30:56 -0700 (PDT)
+        id S1756326AbdESSaf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 May 2017 14:30:35 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:33364 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752891AbdESS3I (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 May 2017 14:29:08 -0400
+Received: by mail-qk0-f196.google.com with SMTP id o85so11229445qkh.0
+        for <git@vger.kernel.org>; Fri, 19 May 2017 11:28:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=XzAzCg//SlabUDp8mDKfzZHIFxGGyAdHhf+JPQS51Ds=;
-        b=KidWy1QhqwGaVUP4MI0Hak3JGR2G1BpDxsdfOBsl3eW4P6xNs9N/LKDoG4gEQmXBiv
-         9Qlb5NzuNx+9Bo6RyguBXiUf1VSmPS3naOfug08pW1ZQhA0YU4oNNLgNRI8r/N1hcRp+
-         JIJyJek4fZzw9tQ+HO343Bf7p1irHX9iX1gnaBZUn+v/6TV2B8CELDKYt6971677TIDN
-         vr4iF4QXqSFAdzXicGlJVtjWTc2IrIK5LWUrYbP8q0DXZsXqqRn2CFaGEfYUFLEWeIQw
-         YDXsJHoADk/pRoxjoPjU1YEcXxeuyUg+Txxq93NLeg0/a7kZXoHmncjpwqdYLE9ILg0s
-         V43g==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=bCHpl9T4ZvvATJQFHfvzxmkfETIgZh5tVrQkz2KKL88=;
+        b=aW7I4lGMbUZnUFfjAGhR/6vU/pbBvxILjSm0MVyOg2uCEEP2Kyojc4oYPg2hpdPkqf
+         RpX/HACdaWyUnOcRv/s0UyhQl9qS5+A+9cvQ8a9dRPqKN+TCoBDzUX5+RekwPmTlcSeO
+         98P6A2puPClXz6WodNRHKkhFMbspbb0gVcuhXDw67jI5Ittu289fwWEHYPvSGUsY40NV
+         yWDg3yH/Pw5sF+P/s2dMsdQ63XmZfR/7nbB+7LGKVx9LhUgfPLCod7btptlMRB6syurO
+         pnTnPzYugo66tLh0gydpCy3zg4EQeGTg0Ps3jS8A6Nf/afh4Il33ZNnO/yvoBTyeWuMr
+         iFnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=XzAzCg//SlabUDp8mDKfzZHIFxGGyAdHhf+JPQS51Ds=;
-        b=kMGRcQKLJDoVYPBmANjDzCyRSn2j3gYfGNskfKWKG0IhaVP1P9XT7lkPxzi9j3S9SY
-         wy47kFntqxsBihmpxJ1cS0j3JswH9HxlUJPQVmzl3B6myhUVbFZ6W7NfTVOgUltvG7ql
-         NBCkDZWM0wy1EOBGAZK1tvHACKrbNxK2NDZEvqWxW2WFIx4WxKe3JiIb9yV7uLbCH/QE
-         cmz4L9g21OjBotucTUI3Fl1YHf8b1tnSyHm3t7xksJPUsA0g2YcJzQhyT3zb5dyvVl1j
-         knNaTQNfSg9ThctEWvjxiLG4fU8nwzGDKY4Aukhedjah95XAHgFp7dUwfESRbEpRsuI5
-         +IWA==
-X-Gm-Message-State: AODbwcBqUDOKK4JgMQB9oOLi8YXe4XVqulTSFxOvXwUdt0ImVFyG2Dnu
-        +x7HXK9Ddmbw3I3X1mcXpdETDDLcEop0
-X-Received: by 10.36.108.76 with SMTP id w73mr30176965itb.91.1495218655451;
- Fri, 19 May 2017 11:30:55 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=bCHpl9T4ZvvATJQFHfvzxmkfETIgZh5tVrQkz2KKL88=;
+        b=lYaHdfcl8k+aPXMeBFYiNZ4ZfW5IagEIFWqAQ8d6nvYwqe0CA1sYPXD4UeEn/9FvqS
+         0DjtxbZ9RgmmM1QH9NZAdj6FR3cEV7hf8F6HXWyrNemsExbNcxedvc3tvE0lWQii9tUR
+         DM6lt1+Wd01mcTnGwupgAL5IqiNcsxTW7SIGvELiwH4H7Sd3ZR1AYmaMAGMXPJEK/nOs
+         v6/Xuw9uS52OouMRDWW9KMRSk5g/+d+QqrcqaThVt6tdWaQTEzSuthtHbzQkFtLOXnU9
+         m7XeoWhTjO034cRKzYe9YMOV/m1PTAWCyyqQp+GmKvA8+v9r6+XtL2KMHAfAsPMe/34+
+         ZdwA==
+X-Gm-Message-State: AODbwcCu6VCac3bIl2UBxdrO3xAwQW1FlqsvNPVXwZEXWxvjpEdAYQBi
+        03CVQ64Qy6XgAQ==
+X-Received: by 10.55.105.2 with SMTP id e2mr9531127qkc.48.1495218532307;
+        Fri, 19 May 2017 11:28:52 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id 27sm4490283qtz.17.2017.05.19.11.28.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 19 May 2017 11:28:51 -0700 (PDT)
+Subject: Re: [WIP/RFC 00/23] repository object
+To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+References: <20170518232134.163059-1-bmwill@google.com>
+Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com, peff@peff.net,
+        sbeller@google.com, jrnieder@gmail.com, pclouds@gmail.com
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <82cb1f56-4a26-4b27-3c8a-506821847c0e@gmail.com>
+Date:   Fri, 19 May 2017 14:28:52 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.107.204.3 with HTTP; Fri, 19 May 2017 11:30:55 -0700 (PDT)
-In-Reply-To: <20170519092202.6b0f9a57@canb.auug.org.au>
-References: <20170519092202.6b0f9a57@canb.auug.org.au>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Fri, 19 May 2017 11:30:55 -0700
-X-Google-Sender-Auth: QmbUTeqOn_m8ZrefhRN-lr2nbYU
-Message-ID: <CA+55aFwaxsNZ0ACQkASdDTbSrdcHMJpFPtswK485tEWRBVVYrA@mail.gmail.com>
-Subject: Re: git merges of tags
-To:     Stephen Rothwell <sfr@canb.auug.org.au>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Linux-Next Mailing List <linux-next@vger.kernel.org>,
-        Git Mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20170518232134.163059-1-bmwill@google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 18, 2017 at 4:23 PM, Stephen Rothwell <sfr@canb.auug.org.au> wrote:
+Glad to see you tackling this.  This is definitely a step in the right 
+direction.
+
+I realize that it will take a lot of work and that intermediate steps 
+may just be pushing it the global state one level higher but eventually 
+it would be great to see an entire code path global state free!
+
+I'm personally interested because reducing the reliance on global state 
+also helps us in our performance work as it makes it more possible to 
+use threading to scale up the performance.
+
+Ben
+
+On 5/18/2017 7:21 PM, Brandon Williams wrote:
+> When I first started working on the git project I found it very difficult to
+> understand parts of the code base because of the inherently global nature of
+> our code.  It also made working on submodules very difficult.  Since we can
+> only open up a single repository per process, you need to launch a child
+> process in order to process a submodule.  But you also need to be able to
+> communicate other stateful information to the children processes so that the
+> submodules know how best to format their output or match against a
+> pathspec...it ends up feeling like layering on hack after hack.  What I would
+> really like to do, is to have the ability to have a repository object so that I
+> can open a submodule in-process.
 >
-> Just a reminder that if you are merging Linus' tree (or any tree
-> really) via a tag, git was changed some time ago so that merging a tag
-> will not do a fast forward (there is a good reason for this - I just
-> can't recall it ATM).
-
-The reason is that when you merge a signed tag, git squirrels away t
-he signature into the merge commit, so that you can see and verify the
-signage later (use "git log --show-signatures" to see the signatures
-on the commits).
-
-If you fast-forward, there isn't any new commit to add the signing data to.
-
-> To do the fast forward, try "git merge <tag>^{}" ...
-
-A slightly simpler syntax might be just "tag^0", but yes, the "^{}"
-thing peels off any tags.
-
->   (unfortunately
-> doing "git merge --ff <tag>" also does not do a fast forward - it also
-> doesn't fail, it unexpectedly just creates a merge commit :-().
-
-"--ff" is the default behavior, and means "allow fast forward", but
-note that it is about "allowing", not "forcing".
-
-You can use "--ff-only" to say that you will _only_ accept a
-fast-forward, and git will error out  if it needs to create a merge.
-
-                  Linus
+> Before this becomes a reality for all commands, much of the library code would
+> need to be refactored in order to work purely on handles instead of global
+> state.  As it turned out, ls-files is a pretty simple command and doesn't have
+> *too* many dependencies.  The biggest thing that needed to be changed was
+> piping through an index into a couple library routines so that they don't
+> inherently rely on 'the_index'.  A few of these changes I've sent out and can
+> be found at 'origin/bw/pathspec-sans-the-index' and
+> 'origin/bw/dir-c-stops-relying-on-the-index' which this series is based on.
+>
+> Patches 1-16 are refactorings to prepare either library code or ls-files itself
+> to be ready to handle passing around an index struct.  Patches 17-22 introduce
+> a repository struct and change a couple of things about how submodule caches
+> work (getting submodule information from .gitmodules).  And Patch 23 converts
+> ls-files to use a repository struct.
+>
+> The most interesting part of the series is from 17-23.  And 1-16 could be taken
+> as is without the rest of the series.
+>
+> This is still very much in a WIP state, though it does pass all tests.  What
+> I'm hoping for here is to get a discussion started about the feasibility of a
+> change like this and hopefully to get the ball rolling.  Is this a direction we
+> want to move in?  Is it worth the pain?
+>
+> Thanks for taking the time to look at this and entertain my insane ideas :)
+>
+> Brandon Williams (23):
+>   convert: convert get_cached_convert_stats_ascii to take an index
+>   convert: convert crlf_to_git to take an index
+>   convert: convert convert_to_git_filter_fd to take an index
+>   convert: convert convert_to_git to take an index
+>   convert: convert renormalize_buffer to take an index
+>   tree: convert read_tree to take an index parameter
+>   ls-files: convert overlay_tree_on_cache to take an index
+>   ls-files: convert write_eolinfo to take an index
+>   ls-files: convert show_killed_files to take an index
+>   ls-files: convert show_other_files to take an index
+>   ls-files: convert show_ru_info to take an index
+>   ls-files: convert ce_excluded to take an index
+>   ls-files: convert prune_cache to take an index
+>   ls-files: convert show_files to take an index
+>   ls-files: factor out debug info into a function
+>   ls-files: factor out tag calculation
+>   repo: introduce new repository object
+>   repo: add index_state to struct repo
+>   repo: add per repo config
+>   submodule-config: refactor to allow for multiple submodule_cache's
+>   repo: add repo_read_gitmodules
+>   submodule: add is_submodule_active
+>   ls-files: use repository object
+>
+>  Makefile                               |   1 +
+>  apply.c                                |   2 +-
+>  builtin/blame.c                        |   2 +-
+>  builtin/commit.c                       |   3 +-
+>  builtin/ls-files.c                     | 348 ++++++++++++++++-----------------
+>  cache.h                                |   4 +-
+>  combine-diff.c                         |   2 +-
+>  config.c                               |   2 +-
+>  convert.c                              |  31 +--
+>  convert.h                              |  19 +-
+>  diff.c                                 |   6 +-
+>  dir.c                                  |   2 +-
+>  git.c                                  |   2 +-
+>  ll-merge.c                             |   2 +-
+>  merge-recursive.c                      |   4 +-
+>  repo.c                                 | 112 +++++++++++
+>  repo.h                                 |  22 +++
+>  sha1_file.c                            |   6 +-
+>  submodule-config.c                     |  40 +++-
+>  submodule-config.h                     |  10 +
+>  submodule.c                            |  51 +++++
+>  submodule.h                            |   2 +
+>  t/t3007-ls-files-recurse-submodules.sh |  39 ++++
+>  tree.c                                 |  28 ++-
+>  tree.h                                 |   3 +-
+>  25 files changed, 513 insertions(+), 230 deletions(-)
+>  create mode 100644 repo.c
+>  create mode 100644 repo.h
+>
