@@ -2,97 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C13F72023D
-	for <e@80x24.org>; Fri, 19 May 2017 14:37:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D15B92021E
+	for <e@80x24.org>; Fri, 19 May 2017 15:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755037AbdESOhb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 May 2017 10:37:31 -0400
-Received: from kitenet.net ([66.228.36.95]:41184 "EHLO kitenet.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754058AbdESOha (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 May 2017 10:37:30 -0400
-X-Question: 42
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=joeyh.name; s=mail;
-        t=1495204647; bh=H9uPrJt5bptlEkE9s1VFfqkeB2W2hGEGNVUSvMD0J8w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=dQ3+o4C8amcxhj8QitqAQwxcM9UVBtCGjPwnnT3oKP1ruJx62jrNbY4LAccVJoX/N
-         zAthsDt8CAP7qf2QSjvBjBjeFPTB9CYcL6vq09kS6kfEDsM+aLtI8AlMsoSmW5Cezo
-         W7ggTeF3FWxBb1wEXxfWeOoKWwdp8ksVBk6pyg4o=
-Date:   Fri, 19 May 2017 10:37:27 -0400
-From:   Joey Hess <id@joeyh.name>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Peter Simons <simons@cryp.to>
-Subject: Re: reversion in GIT_COMMON_DIR refs path
-Message-ID: <20170519143727.edi4ni7v5pywm7dk@kitenet.net>
-References: <20170516171028.5eagqr2sw5a2i77d@kitenet.net>
+        id S1754392AbdESPWA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 May 2017 11:22:00 -0400
+Received: from mail-ua0-f178.google.com ([209.85.217.178]:34096 "EHLO
+        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751626AbdESPV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 May 2017 11:21:59 -0400
+Received: by mail-ua0-f178.google.com with SMTP id u10so27855224uaf.1
+        for <git@vger.kernel.org>; Fri, 19 May 2017 08:21:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RS5V6jWbAidxQNdvKJfEcL1KZNiQiR6g6oM9pru99qk=;
+        b=Z9Ps6CZaLgIGfLu77MoUaibyEPOrQ6NvuULESlErRftYjYS60HH8xAch8dAa/NH/1r
+         IFdHKK3kTxH4XALUa6CKEuiLDbXujSzUdu8CXOdYYYUggwsKcJSD4P4JbXzddOZH+CEB
+         SMzbigNC9x6pVtI4Z1QRrTtfX3btrBU5F0u14KODCD3BmhivjCCjZsI3wucSvF7gCU+1
+         zrKatZaqPRcEHFE4kx3T0sxEO+hNW29jnp7FZkAfjKIRU3P/++CIVZqHSuXzlRRe5tJZ
+         TL1uJ5tcIAoMOZX1Y/oO7V4MS8s/fJ+duM8omsrk7V8z926yBkWSlW6cfo/PO07G1WcZ
+         pL0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RS5V6jWbAidxQNdvKJfEcL1KZNiQiR6g6oM9pru99qk=;
+        b=bP6gNjTiZa2KzGSXOOt36QJ0NXs1rCBp8nk4rxof5uoi3DWBWAObIcO36hILVKmjD3
+         ZoxcB/XO84jAcLzFJNUk0NcDEL62GFNcTe8OqFLa0RxeOqGufj5oBESmyBmecFIMaDiY
+         KrnfmsS028mutERM0uCfGWexpm2Ol5s19JppAQiZrOQPEEnMYAfZIZLX3fyBfNptUIRO
+         IjoYutnudlLxB3wsrgwWcz5xiQ7aBfxzHoikmm1Ls/W9BZwRmPPEB/OtUcv0kwbpXpvq
+         xafia52CsgoLwYAMv2OtO83uYDCNP/gR4NhfkTTEO46h/iZ8MNBFy2hW9DKlRPOJ8TQt
+         OW6A==
+X-Gm-Message-State: AODbwcBcImLe35UxLZoEIUSOytBr4utJVl+CJ4qSBX+ztEwX+EINJZt/
+        Q72eySrBI4QfGdBSTrLHefT8qvtaKQ==
+X-Received: by 10.176.25.15 with SMTP id v15mr4953526uag.81.1495207318502;
+ Fri, 19 May 2017 08:21:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="4rushcifptuz6g4v"
-Content-Disposition: inline
-In-Reply-To: <20170516171028.5eagqr2sw5a2i77d@kitenet.net>
-User-Agent: NeoMutt/20170306 (1.8.0)
+Received: by 10.159.54.233 with HTTP; Fri, 19 May 2017 08:21:58 -0700 (PDT)
+In-Reply-To: <20170518155956.ecti4audvrqlj3pt@sigill.intra.peff.net>
+References: <CAP96LmMtfO5DC6hGeqJdZvcqj+29H_7=8S+uua8YC7YwFRC9Nw@mail.gmail.com>
+ <20170518155956.ecti4audvrqlj3pt@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Andr=C3=A9_Werlang?= <beppe85@gmail.com>
+Date:   Fri, 19 May 2017 12:21:58 -0300
+Message-ID: <CAP96LmN6zXEiRA+gMJoM4MhFDWhfMpUGszvthaRTuAT_RhXpTw@mail.gmail.com>
+Subject: Re: [PATCH] doc: explain default option for rev-parse --short
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hey Jeff, I'll take a look at improving the text and the other commands.
 
---4rushcifptuz6g4v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for the response. I'll get back to you soonish.
 
-Joey Hess wrote:
-> Bisecting this test suite failure
-> https://git-annex.branchable.com/git-annex_in_nixpkgs_fails_with_git-2.13=
-=2E0/
-> I landed on commit f57f37e2e1bf11ab4cdfd221ad47e961ba9353a0 to git.
->=20
-> It seems that changed resolving refs paths when GIT_DIR and GIT_COMMON_DIR
-> are both set. While before refs were looked for in GIT_COMMON_DIR,
-> now they're not.
+Andr=C3=A9
 
-In case there's any doubt about whether this is a reversion or an
-intentional change, see gitrepository-layout(5):
+2017-05-18 12:59 GMT-03:00 Jeff King <peff@peff.net>:
+> On Thu, May 18, 2017 at 11:03:00AM -0300, Andr=C3=A9 Werlang wrote:
+>
+>> Git 2.11 introduced a computation to guess the default length
+>> for commit short hashes. The documentation isn't updated.
+>
+> Thanks for the patch. I think this is going in the right direction, but
+> I have a few minor comments.
+>
+>> From 2b1c229153a89c7608e64b87d2f933704c18b7ae Mon Sep 17 00:00:00 2001
+>> From: =3D?UTF-8?q?Andr=3DC3=3DA9=3D20Werlang?=3D <beppe85@gmail.com>
+>> Date: Thu, 18 May 2017 10:50:11 -0300
+>> Subject: [PATCH] doc: explain default option for rev-parse --short
+>> MIME-Version: 1.0
+>> Content-Type: text/plain; charset=3DUTF-8
+>> Content-Transfer-Encoding: 8bit
+>
+> These headers are redundant with what's in your email headers and can be
+> dropped.
+>
+>> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-par=
+se.txt
+>> index 7241e96..b49f053 100644
+>> --- a/Documentation/git-rev-parse.txt
+>> +++ b/Documentation/git-rev-parse.txt
+>> @@ -139,8 +139,10 @@ can be used.
+>>  --short::
+>>  --short=3Dnumber::
+>>   Instead of outputting the full SHA-1 values of object names try to
+>> - abbreviate them to a shorter unique name. When no length is specified
+>> - 7 is used. The minimum length is 4.
+>> + abbreviate them to a shorter unique name. When no length is specified,
+>> + it is guessed from the number of objects in the repository. In any cas=
+e,
+>> + the actual length will be enough to identify the object unambiguously
+>> + in the current state of the repository. The minimum length is 4.
+>
+> This is definitely an improvement, though I wonder if we should mention
+> that we default to core.abbrev (which in turn defaults to the "auto"
+> behavior).
+>
+> It looks like there are a few other mentions of "7" with respect to
+> "--abbrev": git-branch.txt, git-describe.txt, git-blame.txt. Those
+> should probably get the same treatment.
+>
+> There are a few other "--abbrev" options (e.g., ls-files and ls-tree)
+> that don't mention "7". But while we're fixing the others, it may be
+> worth giving them all consistent text.
+>
+> -Peff
 
-       refs
-           References are stored in subdirectories of this directory. The g=
-it
-           prune command knows to preserve objects reachable from refs found
-           in this directory and its subdirectories. This directory is igno=
-red
-           if $GIT_COMMON_DIR is set and "$GIT_COMMON_DIR/refs" will be used
-           instead.
 
-So the documented behavior is broken.
 
 --=20
-see shy jo
-
---4rushcifptuz6g4v
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEKKUAw1IH6rcvbA8l2xLbD/BfjzgFAlkfAycACgkQ2xLbD/Bf
-jzjNrg/+IvpdO0l7xi3JqYD4nQYU8OE5LWZB11H0rxV6G9ZHFiuf7tKB+Msfefi3
-kepKc5pLvuGGGhTfB/oxUTaHlKVGK33GTrT9mbJXNOhU9cmMaWedgDXLES/wKhat
-HrqjoOfVF/+uN79dcX9NsoSmirH36QbK8VbdwnRCL6UdIQA0PeUPszQm7iTyTAKJ
-8E/mQ4Dh3+VFrVxCbrLCwm9lXZu+FTY8PPS2us9jAEAQxNFkpj6b9NGyUi1PeeLV
-zldikSNZr3M2UR4kawo+50HIjJzN2iCuuW17k/ceeI6wZXmXgAnO7kZanxkWPSdC
-jhSvWSRCR8KN0ptkTwvDEC7s3X5jhep6zpctSzosm46HWoYXEdTW0JHKLPHLmNs9
-LlPpFxFOOq3tsbwtGntVO3X7u+0C13LrmkFary4ssPrMWtqsvlM438tQDxMR9Nvn
-bY3oljoSHeGF0oKvOclpJ8e0cc+TrxIGsqtUMUkSuffhjYj3JH5NTHxMd5pnGTZt
-GwxsCv1oLToohD/xrLjAKl3gRyWmoh+Oi2XfwWbrmgPMBIW+tHJP2QJcwFBome0Z
-uGpeepsAP/J2+p0ckyniGbXhFqGqy8qynKxcIknFbN6mbgwmOgT0ZIFl2TI5tj28
-2Dmo4N+brYciwAefOFtsyQ98Ay79/RlBbr2duyK4Wv/wTfLuysM=
-=Gicv
------END PGP SIGNATURE-----
-
---4rushcifptuz6g4v--
+Andr=C3=A9 Werlang
