@@ -7,100 +7,111 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16DD1201CF
-	for <e@80x24.org>; Fri, 19 May 2017 03:43:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A13B201CF
+	for <e@80x24.org>; Fri, 19 May 2017 04:00:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756621AbdESDnC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 23:43:02 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:51217 "EHLO
-        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756415AbdESDlE (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 18 May 2017 23:41:04 -0400
-X-AuditID: 1207440f-701ff700000004e5-c7-591e6899c78f
+        id S1750718AbdESEAb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 May 2017 00:00:31 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:48549 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750703AbdESEAa (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 19 May 2017 00:00:30 -0400
+X-AuditID: 12074413-0e1ff70000001dc3-e9-591e6dd9c2d9
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 19.10.01253.9986E195; Thu, 18 May 2017 23:38:03 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id E2.17.07619.9DD6E195; Fri, 19 May 2017 00:00:28 -0400 (EDT)
 Received: from [192.168.69.190] (p57BCCC1C.dip0.t-ipconnect.de [87.188.204.28])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4J3bvNk023912
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4J40MZ2025000
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 18 May 2017 23:37:59 -0400
-Subject: Re: [PATCH 01/23] t3600: clean up permissions test properly
-To:     Junio C Hamano <gitster@pobox.com>
+        Fri, 19 May 2017 00:00:24 -0400
+Subject: Re: [PATCH 10/23] files_ref_store: put the packed files lock directly
+ in this struct
+To:     Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        Brandon Williams <bmwill@google.com>
 References: <cover.1495014840.git.mhagger@alum.mit.edu>
- <bb244c72ec6e6ab56171d82f7379a75c4eb5481f.1495014840.git.mhagger@alum.mit.edu>
- <xmqqa86avm8j.fsf@gitster.mtv.corp.google.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>,
+ <dd7637060bac1a27e03563edc82649812dcf897c.1495014840.git.mhagger@alum.mit.edu>
+ <20170517131753.rditx62clmkrdmeq@sigill.intra.peff.net>
+ <CAGZ79kbdQ-MqYKH-L9unqEAPUtgQxNv6ANJERKSEQCADjgmm1w@mail.gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Turner <novalis@novalis.org>, git@vger.kernel.org
+        David Turner <novalis@novalis.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <2003333a-4a33-b023-078f-07a481df7b63@alum.mit.edu>
-Date:   Fri, 19 May 2017 05:37:57 +0200
+Message-ID: <d7e3d4ac-6383-d919-9f42-bb278fc26b3f@alum.mit.edu>
+Date:   Fri, 19 May 2017 06:00:22 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqa86avm8j.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
+In-Reply-To: <CAGZ79kbdQ-MqYKH-L9unqEAPUtgQxNv6ANJERKSEQCADjgmm1w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1J2dIRdpsKCF2WLtsztMFl1Xupks
-        GnqvMFssefia2aJ7yltGix8tPcwWmze3sziwe+ycdZfdY8GmUo+u9iNsHs969zB6XLyk7PF5
-        k1wAWxSXTUpqTmZZapG+XQJXxuGzt5kKFnBVbF72jqmBsYuji5GTQ0LARGL1rf+sXYxcHEIC
-        O5gkHl4+zgbhnGeSuL/rKCNIlbCAi0Tr9YNsILaIgJrExLZDLBBFOxklzn+fzgTiMAssYJLY
-        sWEJK0gVm4CuxKKeZiYQm1fAXuLkkt9gNouAqsSpo73sILaoQITEw85d7BA1ghInZz5hAbE5
-        Bawllq6bBGYzC+hJ7Lj+ixXClpfY/nYO8wRG/llIWmYhKZuFpGwBI/MqRrnEnNJc3dzEzJzi
-        1GTd4uTEvLzUIl0TvdzMEr3UlNJNjJBQ59/B2LVe5hCjAAejEg/vgxWykUKsiWXFlbmHGCU5
-        mJREeWcEyEUK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuEVFwPK8aYkVlalFuXDpKQ5WJTEedWX
-        qPsJCaQnlqRmp6YWpBbBZGU4OJQkeO3SgRoFi1LTUyvSMnNKENJMHJwgw3mAhgeC1PAWFyTm
-        FmemQ+RPMSpKifPapQElBEASGaV5cL2wVPSKURzoFWFeOZB2HmAag+t+BTSYCWhw8wNpkMEl
-        iQgpqQbGYr9DCUc+zlKKVGpQVJmkls/nFflI7Wty0p5p/2LXzTz8Sl7E6eqzyu1iD/JX6VQy
-        BHtW9qzxXjr9ieqU5+HN7548eqGs3ez9TDKmMuJPUvP5rgstPwM31b8piix4t9rtxMvDMSuP
-        5ruuaxN+of3M3T5YdseK8g2RN0PCLGe1dJSadhzcyOusxFKckWioxVxUnAgAqaYgDyADAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqHsnVy7S4NUMBYu1z+4wWTxff4Ld
+        outKN5NFQ+8VZoslD18zW3RPecto8aOlh9li8+Z2FgcOj52z7rJ7LNhU6tHVfoTN41nvHkaP
+        i5eUPT5vkgtgi+KySUnNySxLLdK3S+DKePnxJ2PBIf6KNW/OMTUwNvF0MXJySAiYSNy+epKl
+        i5GLQ0hgB5PE6z/v2CGc80wSh75MYAKpEhaIl1j44hQbiC0iUCCx49x7qI5OJomTHz4ygTjM
+        AiuYJH6d+84MUsUmoCuxqKcZKMHBwStgL9F9KBkkzCKgKrH/2m12EFtUIELiYecuMJtXQFDi
+        5MwnLCDlnAKBEpsXlIKEmQXUJf7Mu8QMYctLbH87h3kCI/8sJB2zkJTNQlK2gJF5FaNcYk5p
+        rm5uYmZOcWqybnFyYl5eapGuuV5uZoleakrpJkZIwAvvYNx1Uu4QowAHoxIP74MVspFCrIll
+        xZW5hxglOZiURHlnBMhFCvEl5adUZiQWZ8QXleakFh9ilOBgVhLhFRcDyvGmJFZWpRblw6Sk
+        OViUxHnVlqj7CQmkJ5akZqemFqQWwWRlODiUJHjf5gA1ChalpqdWpGXmlCCkmTg4QYbzAA1v
+        BqnhLS5IzC3OTIfIn2JUlBLn3ZwNlBAASWSU5sH1whLSK0ZxoFeEed2A6UmIB5jM4LpfAQ1m
+        Ahn8QBpkcEkiQkqqgXEqV/6O0wZPvx+65WVpXMz+g8uBy2s9q9szdzs7a5uzu6tPvTNP1l2f
+        Iz9B+//1TQf2S2YvimSYz/mg4fbTg8tXZEloLvp/Pf9oxjRhi2sn9XQ72Pq9ru6cMS/io8JD
+        Qc/WCWs/bi7lKT1rcGbNjc+VF1Z6Wb34EFGnOEVq+e81O9+cXppxNJNdiaU4I9FQi7moOBEA
+        wFH3QiMDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/18/2017 06:10 AM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> The test of failing `git rm -f` removes the write permissions on the
->> test directory, but fails to restore them if the test fails. This
->> means that the test temporary directory cannot be cleaned up, which
->> means that subsequent attempts to run the test fail mysteriously.
+On 05/17/2017 07:18 PM, Stefan Beller wrote:
+> On Wed, May 17, 2017 at 6:17 AM, Jeff King <peff@peff.net> wrote:
+>> On Wed, May 17, 2017 at 02:05:33PM +0200, Michael Haggerty wrote:
 >>
->> Instead, do the cleanup in a `test_must_fail` block so that it can't
->> be skipped.
+>>> Instead of using a global `lock_file` instance for the main
+>>> "packed-refs" file and using a pointer in `files_ref_store` to keep
+>>> track of whether it is locked, embed the `lock_file` instance directly
+>>> in the `files_ref_store` struct and use the new
+>>> `is_lock_file_locked()` function to keep track of whether it is
+>>> locked. This keeps related data together and makes the main reference
+>>> store less of a special case.
 >>
->> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
->> ---
->>  t/t3600-rm.sh | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
+>> This made me wonder how we handle the locking for ref_stores besides the
+>> main one (e.g., for submodules). The lockfile structs have to remain
+>> valid for the length of the program. Previously those stores could have
+>> xcalloc()'d a lockfile and just leaked it. Now they'll need to xcalloc()
+>> and leak their whole structs.
+> 
+> +cc Brandon, who is eager to go down that road.
+> 
+>> I suspect the answer is "we don't ever lock anything except the main ref
+>> store because that is the only one we write to", so it doesn't matter
+>> anyway.
 >>
->> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
->> index 5f9913ba33..4a35c378c8 100755
->> --- a/t/t3600-rm.sh
->> +++ b/t/t3600-rm.sh
->> @@ -98,8 +98,8 @@ embedded'"
->>  
->>  test_expect_success SANITY 'Test that "git rm -f" fails if its rm fails' '
->>  	chmod a-w . &&
->> -	test_must_fail git rm -f baz &&
->> -	chmod 775 .
->> +	test_when_finished "chmod 775 ." &&
->> +	test_must_fail git rm -f baz
->>  '
+>> -Peff
 > 
-> Obviously a good idea.
 > 
-> In this case it would not matter very much, but I think it is a
-> better style to have when-finished _before_ "chmod a-w ." that
-> introduces the state we want to revert out of.
+>> @@ -102,7 +98,7 @@ static void clear_packed_ref_cache(struct files_ref_store *refs)
+>>        if (refs->packed) {
+>>                struct packed_ref_cache *packed_refs = refs->packed;
+>>
+>> -               if (refs->packlock)
+>> +               if (is_lock_file_locked(&refs->packlock))
+>>                        die("internal error: packed-ref cache cleared while locked");
+> 
+> I think the error message needs adjustment here as well? Maybe
+> 
+>      die("internal error: packed refs locked in cleanup");
 
-OK, I'll change this in v2.
+Hmmm, I don't see what's wrong with the current error message (except
+for s/internal error/BUG/). In any case, this is meant to be a sanity
+check that users should never see, so I wouldn't worry too much about it
+either way.
 
 Michael
 
