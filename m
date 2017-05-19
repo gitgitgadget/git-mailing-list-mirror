@@ -7,169 +7,87 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFF342023D
-	for <e@80x24.org>; Fri, 19 May 2017 20:54:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85FC32023D
+	for <e@80x24.org>; Fri, 19 May 2017 21:50:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757217AbdESUyt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 May 2017 16:54:49 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:35094 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756693AbdESUyp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 May 2017 16:54:45 -0400
-Received: by mail-wm0-f50.google.com with SMTP id b84so245681926wmh.0
-        for <git@vger.kernel.org>; Fri, 19 May 2017 13:54:09 -0700 (PDT)
+        id S1755535AbdESVuo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 May 2017 17:50:44 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:38106 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752345AbdESVun (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 May 2017 17:50:43 -0400
+Received: by mail-wm0-f44.google.com with SMTP id v15so97225615wmv.1
+        for <git@vger.kernel.org>; Fri, 19 May 2017 14:50:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
         h=message-id:subject:from:to:date:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=leFRGW6gGZA0Bqd1sqo2/Jfpg4v0hTTJ6Z0LXrnQWeM=;
-        b=oXZByhyDcc0VVnbyAuQNHsy17FZcSVdrAI7yWILkjA/6TMxSLCDW2rwR6u7JmUvOCW
-         Ea00qI08vyuBxnsY4DiNyVHFMrTWBuE1HHbpqZK3qQu4cTuEeF4fJAogSwdh9jxft9qb
-         dUIDOfRqmVXzhklR0Jw515ee2hHvEnKxMdKwUWMQLLzQgXkm+mILbs88SD1iN/JdhWz9
-         1ogk+XxLeMNuDvFzxwT2CSf6zrY+s3bUuarjIOykSQ+FJAzgNPatHGBa5sQWAAa1QpNA
-         uC6epnE5NH8wgEc5rZgVZ5SfcwvizgMmJVqQrPY2zv1amK7nGmSC5x4hJW8PpgtGZfug
-         /ZYA==
+        bh=yOTS4WEcvcNIAhL7gwJmDyTMu9TlIHsjdXGFC1Idre4=;
+        b=rB10VoMkG34jz22o7LpD9bSvC7UZ4pW/rnm2+fu3CJ7Inb0kJmgCTxW82TlZVwwyt4
+         DEHf6eEgaYzCCQ7eCh/k9gfiQ4TmZ+GQOWD2xnNifSzDo6gWRKdDJHhMtFC6xJs8Wz3/
+         6pb0g9AkD1ssBQIKg8DoYE/SVu7ZkYCX5h2mP9bNA1oHsEdUe95LLk2a7GsHtkZNwswj
+         m7k294/0Bkzd7hqC/wKlrS+JEhJeXYuE18nzT7jn9VLjNOqD04QVDWiDJXrs2PsOXikQ
+         iQp4t1xvgKhWj0m5SoDZxvc1abbatxUuJer3VQFTQtNZBwI6gxj0C3IJ1uPHTQ5eeN2M
+         z6wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=leFRGW6gGZA0Bqd1sqo2/Jfpg4v0hTTJ6Z0LXrnQWeM=;
-        b=rulUWcUJbN9fNb9RHy28dLLpcCAtnQdatvbUTBNV7GqqhnSt6bZtO57OyvGaBW48I7
-         2SPQdsMIGtAUYt+7AZHdakTip0RbRozUwrRCGYEKTSRh1aKM+f55b83hM9aGnZaBiL0x
-         4sdABzCG3+6XDeIs8HT2J1Mx9nebzxEqfVSgt5jh1nFKe2sFV8X84oWI9Zzmx9uaCRzC
-         JmIN2AYQp8kBVGTJ9Fudn2oxKS0HF6JJhDL5fJczyrfmk+TpbUCRg6lhv7oEWKNESIuu
-         4Co/oQeA5dGQzkgZhmwuC3efrNk85pOPrTLg9Ye3TEgNSjvMjG2at4DQrn0yY7yabzVg
-         RurA==
-X-Gm-Message-State: AODbwcAfX4DIFZCVNOZgsWDL1MK7gsOjXdX6dDJfw9qQZB2Vvo3Yau9S
-        8IGHV6wq+KpZLlXtqBlwdw==
-X-Received: by 10.80.137.155 with SMTP id g27mr8715905edg.125.1495227248536;
-        Fri, 19 May 2017 13:54:08 -0700 (PDT)
+        bh=yOTS4WEcvcNIAhL7gwJmDyTMu9TlIHsjdXGFC1Idre4=;
+        b=Cb7Fvk1wTKm6ECWUMpeq9DjS0DVrA/TGX4rtb+xh23nLdYuAj0qPi8JThl5XVUfPwz
+         lFCmjUIciBWd33tUxsScNmqUb/nq/B8u78joDxFC3TVsHK6ebyKVHhtrd9ECWrwcu6+0
+         2haV8Rkr9JF5cO78rhN/ZtnslBioKidV0eK3W02+nE8/eUZ35dlkHXfiUQ7Z83gGHPU6
+         zOLiuXpZ8a5WJdp94lwI0cQ+8Efm1rtU+FswTuWHT71qoU333bgjD2GZvAu34dLNGr0P
+         sObmJWuPFNilGhFely4PnCRyQChQy/krd7H6Ev4zX55JuTBQnlm7ZpVjzQlgji/h55a4
+         0QGw==
+X-Gm-Message-State: AODbwcDvEMdqlWn8M2ilpToJrNY0S5Pfnm5iT6/id8KfrVfLf77Ex0FX
+        NVFFUBR0KAHq+3tF
+X-Received: by 10.80.183.195 with SMTP id i3mr8618589ede.159.1495230187718;
+        Fri, 19 May 2017 14:43:07 -0700 (PDT)
 Received: from [192.168.1.80] ([145.129.9.233])
-        by smtp.gmail.com with ESMTPSA id w44sm3698899edd.53.2017.05.19.13.54.07
+        by smtp.gmail.com with ESMTPSA id l4sm9587836edd.69.2017.05.19.14.43.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 19 May 2017 13:54:08 -0700 (PDT)
-Message-ID: <1495227246.19473.3.camel@kaarsemaker.net>
-Subject: Re: [PATCH v2] send-email: Net::SMTP::SSL is obsolete, use only
- when necessary
+        Fri, 19 May 2017 14:43:07 -0700 (PDT)
+Message-ID: <1495230186.19473.7.camel@kaarsemaker.net>
+Subject: Re: persistent-https, url insteadof, and `git submodule`
 From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com
-Date:   Fri, 19 May 2017 22:54:06 +0200
-In-Reply-To: <1493881302.20467.3.camel@kaarsemaker.net>
-References: <CACBZZX5j1dYk8aeRED7T7iJ=b32aFUpfUWPpMpmtofBL3QnVXQ@mail.gmail.com>
-         <20170324213732.29932-1-dennis@kaarsemaker.net>
-         <1493881302.20467.3.camel@kaarsemaker.net>
+To:     Elliott Cable <me@ell.io>, Git Mailing List <git@vger.kernel.org>
+Date:   Fri, 19 May 2017 23:43:06 +0200
+In-Reply-To: <CAPZ477MCsBsfbqKzp69MT_brwz-0aes6twJofQrhizUBV7ZoeA@mail.gmail.com>
+References: <CAPZ477MCsBsfbqKzp69MT_brwz-0aes6twJofQrhizUBV7ZoeA@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.22.6-1ubuntu1 
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Second ping. This problem is not going away, so if this solution is not
-acceptable, I'd like to know what needs to be improved.
-
-On Thu, 2017-05-04 at 09:01 +0200, Dennis Kaarsemaker wrote:
-> Ping. It's a little over a month since I sent this, but I haven't seen
-> any comments. Is this commit good to go?
+On Fri, 2017-05-19 at 14:57 -0500, Elliott Cable wrote:
+> Set up `persistent-https` as described in the [README][]; including the
+> ‘rewrite https urls’ feature in `.gitconfig`:
 > 
-> On Fri, 2017-03-24 at 22:37 +0100, Dennis Kaarsemaker wrote:
-> > Net::SMTP itself can do the necessary SSL and STARTTLS bits just fine
-> > since version 1.28, and Net::SMTP::SSL is now deprecated. Since 1.28
-> > isn't that old yet, keep the old code in place and use it when
-> > necessary.
-> > 
-> > While we're in the area, mark some messages for translation that were
-> > not yet marked as such.
-> > 
-> > Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-> > ---
-> >  git-send-email.perl | 54 ++++++++++++++++++++++++++++++++++-------------------
-> >  1 file changed, 35 insertions(+), 19 deletions(-)
-> > 
-> > diff --git a/git-send-email.perl b/git-send-email.perl
-> > index eea0a517f7..0d90439d9a 100755
-> > --- a/git-send-email.perl
-> > +++ b/git-send-email.perl
-> > @@ -1353,10 +1353,12 @@ EOF
-> >  			die __("The required SMTP server is not properly defined.")
-> >  		}
-> >  
-> > +		require Net::SMTP;
-> > +		my $use_net_smtp_ssl = version->parse($Net::SMTP::VERSION) < version->parse("1.28");
-> > +		$smtp_domain ||= maildomain();
-> > +
-> >  		if ($smtp_encryption eq 'ssl') {
-> >  			$smtp_server_port ||= 465; # ssmtp
-> > -			require Net::SMTP::SSL;
-> > -			$smtp_domain ||= maildomain();
-> >  			require IO::Socket::SSL;
-> >  
-> >  			# Suppress "variable accessed once" warning.
-> > @@ -1368,34 +1370,48 @@ EOF
-> >  			# Net::SMTP::SSL->new() does not forward any SSL options
-> >  			IO::Socket::SSL::set_client_defaults(
-> >  				ssl_verify_params());
-> > -			$smtp ||= Net::SMTP::SSL->new($smtp_server,
-> > -						      Hello => $smtp_domain,
-> > -						      Port => $smtp_server_port,
-> > -						      Debug => $debug_net_smtp);
-> > +
-> > +			if ($use_net_smtp_ssl) {
-> > +				require Net::SMTP::SSL;
-> > +				$smtp ||= Net::SMTP::SSL->new($smtp_server,
-> > +							      Hello => $smtp_domain,
-> > +							      Port => $smtp_server_port,
-> > +							      Debug => $debug_net_smtp);
-> > +			}
-> > +			else {
-> > +				$smtp ||= Net::SMTP->new($smtp_server,
-> > +							 Hello => $smtp_domain,
-> > +							 Port => $smtp_server_port,
-> > +							 Debug => $debug_net_smtp,
-> > +							 SSL => 1);
-> > +			}
-> >  		}
-> >  		else {
-> > -			require Net::SMTP;
-> > -			$smtp_domain ||= maildomain();
-> >  			$smtp_server_port ||= 25;
-> >  			$smtp ||= Net::SMTP->new($smtp_server,
-> >  						 Hello => $smtp_domain,
-> >  						 Debug => $debug_net_smtp,
-> >  						 Port => $smtp_server_port);
-> >  			if ($smtp_encryption eq 'tls' && $smtp) {
-> > -				require Net::SMTP::SSL;
-> > -				$smtp->command('STARTTLS');
-> > -				$smtp->response();
-> > -				if ($smtp->code == 220) {
-> > +				if ($use_net_smtp_ssl) {
-> > +					$smtp->command('STARTTLS');
-> > +					$smtp->response();
-> > +					if ($smtp->code != 220) {
-> > +						die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
-> > +					}
-> > +					require Net::SMTP::SSL;
-> >  					$smtp = Net::SMTP::SSL->start_SSL($smtp,
-> >  									  ssl_verify_params())
-> > -						or die "STARTTLS failed! ".IO::Socket::SSL::errstr();
-> > -					$smtp_encryption = '';
-> > -					# Send EHLO again to receive fresh
-> > -					# supported commands
-> > -					$smtp->hello($smtp_domain);
-> > -				} else {
-> > -					die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
-> > +						or die sprintf(__("STARTTLS failed! %s"), IO::Socket::SSL::errstr());
-> > +				}
-> > +				else {
-> > +					$smtp->starttls(ssl_verify_params())
-> > +						or die sprintf(__("STARTTLS failed! %s"), IO::Socket::SSL::errstr());
-> >  				}
-> > +				$smtp_encryption = '';
-> > +				# Send EHLO again to receive fresh
-> > +				# supported commands
-> > +				$smtp->hello($smtp_domain);
-> >  			}
-> >  		}
-> >  
+>     [url "persistent-https"]
+>         insteadof = https
+>     [url "persistent-http"]
+>         insteadof = http
+> 
+> Unfortunately, this breaks `git submodule add`:
+> 
+>     > git submodule add https://github.com/nodenv/nodenv.git \
+>         ./Vendor/nodenv
+>     Cloning into '/Users/ec/Library/System Repo/Vendor/nodenv'...
+>     fatal: transport 'persistent-https' not allowed
+>     fatal: clone of 'https://github.com/nodenv/nodenv.git' into
+> submodule path '/Users/ec/Library/System Repo/Vendor/nodenv' failed
+> 
+> Presumably this isn't intended behaviour?
+
+It actually is. git-submodule sets GIT_PROTOCOL_FROM_USER to 0, which
+makes git not trust any urls except http(s), git, ssh and file urls
+unless you explicitely configure git to allow it. See the
+GIT_ALLOW_PROTOCOL section in man git and the git-config section it
+links to.
+
+D.
