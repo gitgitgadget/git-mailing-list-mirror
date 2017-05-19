@@ -1,86 +1,81 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.1 required=3.0 tests=BAYES_50,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BD252021E
-	for <e@80x24.org>; Fri, 19 May 2017 13:52:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B98E32023D
+	for <e@80x24.org>; Fri, 19 May 2017 14:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755608AbdESNw0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 19 May 2017 09:52:26 -0400
-Received: from ws6.zone31-163-177.zaural.ru ([31.163.177.6]:60425 "HELO
-        zaural.ru" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-        id S1755434AbdESNwZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 19 May 2017 09:52:25 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 May 2017 09:52:24 EDT
-Content-Type: application/zip; name="09906659818048.zip"
-MIME-Version: 1.0
-Date:   Fri, 19 May 2017 13:52:19 -0000
-To:     <git@vger.kernel.org>
-Subject: 
-Content-Disposition: attachment
-Message-ID: <149520193950.6150.8290047592490798217@zaural.ru>
-Importance: High
-Content-Transfer-Encoding: base64
-From:   <kamoe@pvlearners.net>
+        id S1754817AbdESOdX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 19 May 2017 10:33:23 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:16495 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752010AbdESOdW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 19 May 2017 10:33:22 -0400
+Received: from lamlash.localdomain ([92.22.40.87])
+        by smtp.talktalk.net with SMTP
+        id BixrdXTuhgKstBiy0dqpNU; Fri, 19 May 2017 15:33:21 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1495204401; bh=vD92B9oUk8EBWB3vN78sdumEqX6OTDpomK+DoazJtC4=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=rxG/6CmGbCxZhpU9zyrqaEqv/6QtGu3TCldlolcMXCrxzl060xsfmZScYPq5iIMe6
+         fEWx/bUvI8Sto+u5/0fmFxm7OXyWR7FROeC3G+dSxzWSvRVtPLsUil5ON2LL58SUSD
+         gx2EwYttHrx1mD0hGRXHbHlQAM346QZjgdlQymGA=
+X-Originating-IP: [92.22.40.87]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=Uk7VDCfhaeB8IHNEy8al/Q==:117
+ a=Uk7VDCfhaeB8IHNEy8al/Q==:17 a=evINK-nbAAAA:8 a=S_-o_t9VBCyMV-C0xAUA:9
+ a=lHyciEgUYxwQECeY:21 a=ihTzXKAMthZDrVno:21 a=RfR_gqz1fSpA9VikTjo0:22
+From:   phillip.wood@talktalk.net
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, Johannes.Schindelin@gmx.de,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2] rebase -i: Add missing newline to end of message
+Date:   Fri, 19 May 2017 15:32:48 +0100
+Message-Id: <20170519143248.22358-1-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170518134154.12771-1-phillip.wood@talktalk.net>
+References: <20170518134154.12771-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfEi5ZILD25vjFGAA95gEMstag32O50/bVG+oGIKDYI+iFXQS1aCYeUib0fPNJVe2H2GaAKeae4EW3kh359grJlngD1mcWjlkpx3x0rq8TRo4522eRwzT
+ aJD3JadZJepY2DSfO7G21vyIaf2r01NNyXw3yjWAdR0ADeKRE1qGbCeWDqqghzU9KWR3+zcGfmq+OtaYQ46y37v/73ZnRlxeyeGSXhoXpsGYE6VPOuP+8aBF
+ EL1qC01rbWDpfsciPWPfbn/N2RcRiasxulEDpxBnoNr1BQEkKc9M4nYO2FG7v8tN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
-SwUGAAAAAAEAAQBbAAAA/woAAAAA
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
+
+The message that's printed when auto-stashed changes are successfully
+restored was missing '\n' at the end.
+
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+I've added signed-off-by and acked-by lines to the commit message,
+otherwise this is unchanged
+
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 311728a145dfc66e230334221a2610468239932d..4dcf9c8be044247c6c18a4ec2a4675d9df9953eb 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1920,7 +1920,7 @@ static int apply_autostash(struct replay_opts *opts)
+ 	argv_array_push(&child.args, "apply");
+ 	argv_array_push(&child.args, stash_sha1.buf);
+ 	if (!run_command(&child))
+-		printf(_("Applied autostash."));
++		printf(_("Applied autostash.\n"));
+ 	else {
+ 		struct child_process store = CHILD_PROCESS_INIT;
+ 
+-- 
+2.13.0
+
