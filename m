@@ -2,55 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A82CA201CF
-	for <e@80x24.org>; Fri, 19 May 2017 00:00:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19043201CF
+	for <e@80x24.org>; Fri, 19 May 2017 02:45:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753994AbdESAAY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 18 May 2017 20:00:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54637 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751944AbdESAAX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 18 May 2017 20:00:23 -0400
-Received: (qmail 14626 invoked by uid 109); 19 May 2017 00:00:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 19 May 2017 00:00:19 +0000
-Received: (qmail 24665 invoked by uid 111); 19 May 2017 00:00:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 18 May 2017 20:00:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 May 2017 20:00:16 -0400
-Date:   Thu, 18 May 2017 20:00:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/2] Demonstrate and partially work around a
- gitattributes problem
-Message-ID: <20170519000016.bvqaml6d3o6q6qus@sigill.intra.peff.net>
-References: <cover.1494861793.git.johannes.schindelin@gmx.de>
- <20170516075418.m3knwvdsr5ab6vzy@sigill.intra.peff.net>
- <20170516081023.lh3zflnf473jiviq@sigill.intra.peff.net>
- <xmqqshk4z2hv.fsf@gitster.mtv.corp.google.com>
- <20170517020535.qqmw2yncfomd3hfb@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1705182122430.3610@virtualbox>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1705182122430.3610@virtualbox>
+        id S1755558AbdESCpF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 18 May 2017 22:45:05 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54650 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752301AbdESCpE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 18 May 2017 22:45:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4AA1081B6D;
+        Thu, 18 May 2017 22:45:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; s=sasl; bh=oN0eDq/cP5uk3Y03qBHqnRjtC2o
+        =; b=u+kux2U2pF3prMlx1HZe9k5g9S8vPwkBSZTfe8tMAQ/KHxcd+9qOr1yjE9S
+        ueczQRCkkYz6eX3rxVA54kGSHAzkbMInSR4PjUu2HxqhecmoO7Ei2/GDsWYNK2VG
+        wJkv+u1IGXxMLwi/eCEfZLckG0m6qXkTW4EBvVCqso1L0a8c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3B8AC81B6C;
+        Thu, 18 May 2017 22:45:03 -0400 (EDT)
+Received: from kmlap.hsd1.ct.comcast.net (unknown [24.60.167.92])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 439F481B69;
+        Thu, 18 May 2017 22:45:01 -0400 (EDT)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     git@vger.kernel.org
+Cc:     Kyle Meyer <kyle@kyleam.com>
+Subject: [PATCH] config.txt: add an entry for log.showSignature
+Date:   Thu, 18 May 2017 22:44:51 -0400
+Message-Id: <20170519024451.11252-1-kyle@kyleam.com>
+X-Mailer: git-send-email 2.13.0
+X-Pobox-Relay-ID: 28380E66-3C3D-11E7-A6FD-61520C78B957-24757444!pb-smtp2.pobox.com
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:date:message-id; s=mesmtp;
+ bh=oN0eDq/cP5uk3Y03qBHqnRjtC2o=;
+ b=KQcFoP2V+rKONYdk1ohxMn5R6bcjd85mI0j3kpye5GS4ffgey4fFWStlzgwH9MO49VSRlQQ5yx/UIjctITGJEvg8grep8XnNx4BPr7H5zp5b8yI1x0y9qwByKtrNeXpiBPcmzIE2c3qU7UG1mWJ4Jkcf4ZJTLo4BwIORMoxDkqM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 18, 2017 at 09:23:17PM +0200, Johannes Schindelin wrote:
+The configuration variable log.showSignature is mentioned in git-log's
+manpage.  Document it in git-config's manpage as well.
 
-> So you drive this forward? That would really help me a lot. Please make my
-> 1/2 part of your patches to that end.
+Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+---
+ Documentation/config.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Yes, sorry, I haven't gotten a chance to polish the patches yet.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 96e9cf8b7..a7dce9a1e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2143,6 +2143,10 @@ log.showRoot::
+ 	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
+ 	normally hide the root commit will now show it. True by default.
+ 
++log.showSignature::
++	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
++	linkgit:git-whatchanged[1] assume `--show-signature`.
++
+ log.mailmap::
+ 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
+ 	linkgit:git-whatchanged[1] assume `--use-mailmap`.
+-- 
+2.13.0
 
--Peff
