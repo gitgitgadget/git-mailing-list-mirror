@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E26D201A7
-	for <e@80x24.org>; Sat, 20 May 2017 21:27:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57315201A7
+	for <e@80x24.org>; Sat, 20 May 2017 21:38:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756019AbdETV11 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 17:27:27 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33700 "EHLO
+        id S1756180AbdETViB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 17:38:01 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:36643 "EHLO
         mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753217AbdETV10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 17:27:26 -0400
-Received: by mail-pf0-f173.google.com with SMTP id e193so54590603pfh.0
-        for <git@vger.kernel.org>; Sat, 20 May 2017 14:27:26 -0700 (PDT)
+        with ESMTP id S1755988AbdETViA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 17:38:00 -0400
+Received: by mail-pf0-f173.google.com with SMTP id m17so54539933pfg.3
+        for <git@vger.kernel.org>; Sat, 20 May 2017 14:38:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=PHGurkip6DE1Lnqbs0DRLBdG2gOWTgTEw4Pxt8cT8Xc=;
-        b=AuHjjrMT9oPADxb/z1fsCk24/noDeO5uFjm7IyZmE3rx54Y5In9fdMm+Rn4ZLkAu+s
-         crfryVwVgP6htSPsiW6YeduiU4MELL3GuERIt9AIwLt5eKGormeKEsdnxrppSSqdLTw8
-         JZ6mJwKzkVr2L2DP6/Gm6O8HuZbC9sDyJ2C4DyOlh5wxhGAt7hO1p8UbpLmw8wL8phkg
-         /5DnBJFdEvka3Zlg9k0dhs+zGUnhXFe6VZs0l7F9aIs8amSG8VmoAtEAtxFPhrJMtYa/
-         wObY8+2W4LnH9MwnEY4XNs8fGyXD2fCfc8l5fdPOzbZ90FXsy3KFDjXrzb0J9ZzkrHwt
-         Tj3Q==
+        bh=90ToygSz0eioYvfEjcHSgEyZkKWSkaxZ/EyPj19tJcE=;
+        b=aL7h3SWT4fdMYMaW9i13rJKdjMrBKhsoT12rY7m1PHdT5f/f6nIOoxtJpMetA8DKag
+         t6rd4cnjKaRxwxfcMRspA+UpBmoYe6sD9Gzv6OMgblxOx70Ur1rrGRceMMJ3FMKiQwch
+         oCXt0rReV3J6jzLMi/v/lBP8vL2Luqp2K3o2XAfMWt7maFY0ewcFJD/IYT47H9aEAep7
+         pKHBkEXaAQTZ/LdD5buJLkFBvPaNtKVuWFsMU80bH5b+964H0GQiyeo0AjkXyq/F1OGc
+         KzAMjztjIky7+Tr5bJ2eT/koB/Q8sxXRs+e6Czk6u/5MeBOxSYzTMcMZ5LPWDCnUbOk5
+         LCmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=PHGurkip6DE1Lnqbs0DRLBdG2gOWTgTEw4Pxt8cT8Xc=;
-        b=suycCOLQuAQ4BTFEeA6eA5FK/RY+2Lhh3z61uumw2dgcXqAAMC4rxeC41cQWqxFU7t
-         1mmH//Ttvb9gOOH73lHAp6quR/1iy9/6Puh0ofd052vA3DUD9eWBuxdbpBFOMJtzqQkr
-         ALVRPraKHmd8C/qNdFBJfApUYImgXuANTUe7DcmWO6pJwxfyhVmy0jRvy/YK7Z/1WpvX
-         P0IVtD7L6YHdfFNUVGFKk4EFgHNU8DDFRFL0rl9wikiQTZbv6n/cLE4vXd9MvmKhuV/h
-         1JkQbZSgz2nhZyY3MXjAz1fkX/aQNFudrGglFOWXJ8vp24lwd544ArfbSCns4ukp6lsz
-         btmQ==
-X-Gm-Message-State: AODbwcCJE7xJkPERrzckXEp4BT4MMfB2EjWT/Jm7o8GICNhtkwjeKk2D
-        DmkSVuobE3bDMIV/aJ6n5caw2i0DZ4EY
-X-Received: by 10.99.126.92 with SMTP id o28mr17570268pgn.63.1495315645674;
- Sat, 20 May 2017 14:27:25 -0700 (PDT)
+        bh=90ToygSz0eioYvfEjcHSgEyZkKWSkaxZ/EyPj19tJcE=;
+        b=d1NECZzbnjwhdm4ie6Qc3KPglDC2PhXtJ4EZCZY9UTadBNU4bcrNPvETE5fekHPWJP
+         jK3XX8m89SZWBdElsAIx5uc53jJ3gERfxhaYBZ8GJ/wsFY519k7AZugQH3O1lcKC6mqn
+         brxCzTit3qCEhBBdbhC4Ya3UY4ovs3HUb6vZi+VlF9dELd9dLjHZuj+zZYunVc+u8qtl
+         KuSgMCKPNKfThoT5Cr5a+8gWXljxprJXoyNVLDzrgqd5fgnFwpimDRezmFjZ3rHf5S3S
+         N/r/ya7jPEbt+5pLqLHvUNedAxiG2u8+OoXoTabZ22KEM3kqqMAmP26RQRBfGE2b1e8n
+         1zzQ==
+X-Gm-Message-State: AODbwcDtXwPpKzmWSxDfNgfgTUqyejUzAmC8J5vtHY0pTydDDOfTfFKI
+        FOt00Vi72hE4O49914WTpVuUVrbgG2aE
+X-Received: by 10.84.228.207 with SMTP id y15mr19191530pli.172.1495316280169;
+ Sat, 20 May 2017 14:38:00 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Sat, 20 May 2017 14:27:25 -0700 (PDT)
-In-Reply-To: <20170518232134.163059-19-bmwill@google.com>
-References: <20170518232134.163059-1-bmwill@google.com> <20170518232134.163059-19-bmwill@google.com>
+Received: by 10.100.170.200 with HTTP; Sat, 20 May 2017 14:37:59 -0700 (PDT)
+In-Reply-To: <20170518232134.163059-1-bmwill@google.com>
+References: <20170518232134.163059-1-bmwill@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Sat, 20 May 2017 14:27:25 -0700
-Message-ID: <CAGZ79kYY8sncbq-Zoi9iiqz+4qWOsA+y80T1RjO5c49OvY+uxA@mail.gmail.com>
-Subject: Re: [WIP/RFC 18/23] repo: add index_state to struct repo
+Date:   Sat, 20 May 2017 14:37:59 -0700
+Message-ID: <CAGZ79kbvhRzjbfiUNuc364tM8j1TpNEtGt6rtfG2h9Y=v4TVHw@mail.gmail.com>
+Subject: Re: [WIP/RFC 00/23] repository object
 To:     Brandon Williams <bmwill@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -65,13 +65,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  int
-> +repo_read_index(struct repo *repo, const char *index_file)
-...
-> +
-> +int
->  repo_init(struct repo *repo, const char *gitdir, const char *worktree)
+On Thu, May 18, 2017 at 4:21 PM, Brandon Williams <bmwill@google.com> wrote:
 
-The version 2.13.0.303.g4ebf302169-goog doesn't have diff slider
-heuristics on by default, and you also did not enable it?
-(I am curious if the heuristics would have helped here)
+> This is still very much in a WIP state, though it does pass all tests.  What
+> I'm hoping for here is to get a discussion started about the feasibility of a
+> change like this and hopefully to get the ball rolling.  Is this a direction we
+> want to move in?  Is it worth the pain?
+
+I would be really happy to see this series land eventually.
+
+The introduction of a repo object will deliver performance at a higher
+level, such as
+* (remarked by Ben): enabling of threading
+* submodules do not need to spawn processes
+* I would imagine that developer velocity will go up by having less global state
+  in the long run.
+
+Thanks for working on this.
+Stefan
