@@ -1,102 +1,85 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=2.3 required=3.0 tests=BAYES_50,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B47A0201CF
-	for <e@80x24.org>; Sat, 20 May 2017 10:31:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4AE4201CF
+	for <e@80x24.org>; Sat, 20 May 2017 10:32:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752623AbdETKbA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 06:31:00 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:32842 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751457AbdETKa6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 06:30:58 -0400
-Received: by mail-pf0-f193.google.com with SMTP id f27so12107696pfe.0
-        for <git@vger.kernel.org>; Sat, 20 May 2017 03:30:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=KW7SkvyVnJ/6ksIu4gQ7JE4U+LbosfM24SPJRglO1Uc=;
-        b=nNlTLHu3XIcQ6ZwTcKat63ahkE6HBdQuUunig07kXEm49ZQr/l75okJpULuhLNeODK
-         vfO99mfpz3YxvLm7R35Ug/th1CIAf8ocd5hg0eUSoshWrjD09+Tf8WebpOqCP72plz8x
-         4TZUawyklfjmiS0KNUZIOrGcT0F7xUwjh9r3wbwYTKgW+XIN6oilCYNPchZ8MIJA+qgV
-         wpETBa0X5tJNkQoOTtxk5L6LBIrlYjWxoN7QKZ3XqIvn8sEqikvI6cAsEvFrjiwHv7wd
-         Ggub7GTywlrCydUyYE7GKbDlit1732ifk6WIyHs2LS9VKDS6D4ubtn4XhUblsfB5fN5r
-         o1oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=KW7SkvyVnJ/6ksIu4gQ7JE4U+LbosfM24SPJRglO1Uc=;
-        b=Q6SsIdDyP/rDYNKkClDvmzbkFZfyZpyhuHf1fumd3md74Bsb1sTUbUIVSclMnMPTjx
-         McIqoCHDsMuq5W0aVs7YxTjlE6i5vcL+zqUaXCA/cSzAGhvi4vI/tE3UpXIO9lWnasGf
-         Wdv+RwS37nkjYoVPpgQfg+ionW2x6okMKhgVRf+Wvf2xmVYtHabBgpep7IdNLOmUHx+7
-         XOOozRQ4/qAdSNQ8byk5lxV0ijYMwvhLvkMlNcKXjxPbywk8iE2lFRmqKBEdDSIisXcJ
-         zQbQrWa8zlEBywpq5qGc3apFdb2TDwF3jdI35HiswiHMjUOE7bcqlbtF/KfcqBZQRZb4
-         xgEw==
-X-Gm-Message-State: AODbwcBiaJYFcIgokb7/wj3b3z5LyQKIBltk2Bq1VxHsQvLRpW/5vEMD
-        T5dAzAvGp2gHrA==
-X-Received: by 10.99.114.94 with SMTP id c30mr14831743pgn.6.1495276258050;
-        Sat, 20 May 2017 03:30:58 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:4027:806a:d2b9:807c])
-        by smtp.gmail.com with ESMTPSA id v9sm19798154pfa.43.2017.05.20.03.30.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 20 May 2017 03:30:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     manishearth@gmail.com
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 1/2] refs: Add for_each_worktree_ref for iterating over all worktree HEADs
-References: <CACpkpxkGWhcALQZ2+2nOCRKgzAa7U7EjZg--S71zocdGY8NYag@mail.gmail.com>
-        <20170518014210.94189-1-manishearth@gmail.com>
-Date:   Sat, 20 May 2017 19:30:54 +0900
-In-Reply-To: <20170518014210.94189-1-manishearth@gmail.com>
-        (manishearth@gmail.com's message of "Wed, 17 May 2017 18:42:09 -0700")
-Message-ID: <xmqqy3trstup.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753266AbdETKcr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 06:32:47 -0400
+Received: from static.vnpt.vn ([14.231.0.53]:48934 "HELO vnpt.vn"
+        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+        id S1751003AbdETKcr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 06:32:47 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 May 2017 06:32:45 EDT
+Date:   Sat, 20 May 2017 10:32:27 -0000
+Content-Transfer-Encoding: base64
+From:   <wantjay@163.com>
+To:     <git@vger.kernel.org>
+Message-ID: <149527634789.1559.4043491160096839455@vnpt.vn>
+Subject: 
+Content-Type: application/zip; name="87358.zip"
+Content-Disposition: attachment
 MIME-Version: 1.0
-Content-Type: text/plain
+Importance: High
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-manishearth@gmail.com writes:
-
-> +int for_each_worktree_ref(each_ref_fn fn, void *cb_data)
-> +{
-> +	int i, flag, retval = 0;
-> +	struct object_id oid;
-> +	struct worktree **worktrees = get_worktrees(GWT_SORT_LINKED);
-> +	struct commit* commit;
-> +	for (i = 0; worktrees[i]; i++) {
-> +		if ((commit = lookup_commit_reference(worktrees[i]->head_sha1))) {
-> +			oid = commit->object.oid;
-> +			if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag)) {
-> +				if ((retval = fn("HEAD", &oid, flag, cb_data)))
-> +					return retval;
-> +			}
-> +		}
-> +	}
-> +	return retval;
-> +}
-
-I would have expected for-each-worktree-ref to iterate over all the
-refs in a given worktree, but that is not what this does.  This
-instead iterates over worktrees and shows only their HEAD ref, no
-other refs.  This helper is somewhat misnamed.
-
-By the way, doesn't nd/prune-in-worktree topic that has been cooking
-in 'pu' supersede this change?  It not just protects the commit at
-the tip of HEAD in each worktree, it also makes sure the ones in
-HEAD's reflog are not prematurely pruned.
-
-Thanks.
-
+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
