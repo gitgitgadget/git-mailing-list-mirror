@@ -8,47 +8,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 191B4201A7
-	for <e@80x24.org>; Sat, 20 May 2017 21:43:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19859201A7
+	for <e@80x24.org>; Sat, 20 May 2017 21:43:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932240AbdETVnN (ORCPT <rfc822;e@80x24.org>);
+        id S932279AbdETVnQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 17:43:16 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36300 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932227AbdETVnN (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 20 May 2017 17:43:13 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:35437 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932135AbdETVnK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 17:43:10 -0400
-Received: by mail-wr0-f196.google.com with SMTP id g12so5760499wrg.2
-        for <git@vger.kernel.org>; Sat, 20 May 2017 14:43:08 -0700 (PDT)
+Received: by mail-wm0-f65.google.com with SMTP id k15so23157810wmh.3
+        for <git@vger.kernel.org>; Sat, 20 May 2017 14:43:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Oz2ZXtQlzriN/xsKjgBSNa3wy6S36RQeLHBf3rBQwmw=;
-        b=QmrZKv5Tpr+Z4S2VihGfd0OjeJpJebluEjMwChcLSVgR6MtrFoYpRxOYGJ88HPbHdh
-         pHD6fGjCB1PHmo2NXS1kZphmUviXFYyRJqJYP/K8+4ves0nUkW9CfBE6QAxyw//D3BMp
-         BsPHYZXydtDK32HrJfyDKDNv/aqiBR9/ivjVohcNsrQ3hynsmmRf4XTrlJmuYpEN3j9w
-         G0G8EkJnDAtq+LbYP6tfg/a9ltmbnZi4lp6h9Os0IFC7Fl8jxqfhTPa7OIDJA04BqNJB
-         NUq8Zs6LMGWrRhHSqgnGJ6TXXhj26ZOBlyGdOz4Oe9TtVLv9bPkwzP1cyi/MlyTFdf6M
-         MYtA==
+        bh=JGirQO6xmxrwvsU4x1ubVVynXObQ6nfbnKl5TUO+mhI=;
+        b=MIcKaojZHS2rw0ZOJ94AtS3HzcwFVFGoXHw7d9g7qExvEr6peQGjuSRa4v6htxOvJn
+         Rf9yBSdngO+8xdT+PTOw5KUxan50za7qxf9j8P3fyMORL2OqIJSvEFUgrUGQt6+lptzo
+         wFKTe67L1OxLaQVafRekjOcAGpnwXQew/N6+ZJOOe2r1olyLEdXo9Qc7WhJwYqpIgpgV
+         pajKNfxPvIbQu+bk+qjOBw+9vaQF+n9ErEbRDOER5GECACAV5VDtRttR3DaYTACpCTgL
+         he0L2OcvDEx87avnclAhI8QJGv1wHcWOXvC8fjuKunvmaJF9cAWZiBH8sLPomziFxmo+
+         e1DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Oz2ZXtQlzriN/xsKjgBSNa3wy6S36RQeLHBf3rBQwmw=;
-        b=AaCHTWXGH3pPJqMpdlptRTqQsH3qdjdEc4wUM0nEiTX3kkc13AZkwx60EG4IXqB5iJ
-         fFKgU4rRq2dJ/n1Ts83j30xnf8qvk98z7sm5scMgtjI5sezDBs9Jy5opBNHvE4FnUmO1
-         cs1BcOVj1bD8kzkPf8/eVJ8kc1vmBvWLTJxD3akxua6ab0b9cq6+8tOAMi1rSJK0jHYu
-         6ECq8Ry8Asn7kTEsMAjRd2aPNd5o4sphy0io82dfO6yaxh6jJ6OO96qq+zmTMWJMn4pB
-         LP5XNh1jXTN3OwWyil/MhtM0FEcDqpjayMQ60+WsD1DD8VWI4LPQLyAv4FUV8CXy3Y4q
-         IXjQ==
-X-Gm-Message-State: AODbwcCrKx6Bgb+W706WbePs4LH+gAh4hH02St9F0aDgvCnJQcB2JfV0
-        rfOQIc9CJsXwcw==
-X-Received: by 10.223.155.134 with SMTP id d6mr7752165wrc.157.1495316583067;
-        Sat, 20 May 2017 14:43:03 -0700 (PDT)
+        bh=JGirQO6xmxrwvsU4x1ubVVynXObQ6nfbnKl5TUO+mhI=;
+        b=oz98PiYSUJC3aZXTODh7/1oLypxa7bpQSlkqOIcDgL4IkRPOF4ZC7U2TktyQpHNyrA
+         Jq7YZ6QM3sgldT/mtOvu6uqqiRuneFznokjqykSIIWkyN7G+rmX7Uy9wQkYQRo80Z/uY
+         Tk7ShMKs6srvJb+sJ0QD2ofbAcrfwj2wg6hU6uQVR9pJB19dDeUxWyxQXeri7MUpqO2q
+         a6NpbtsA/x5iPljY+VN5NEKzz4AZN6p2tBdXjyu3fgorr9pU0OUfBclyPGYEs4Yf1UzM
+         jeUqF8rADuOj6VWSqL4XwBGwiuDrx8Pod9MbeXMNTNY9ytoiViTObQSCa39oGXsbxt0A
+         Ul8A==
+X-Gm-Message-State: AODbwcDcXMekbuRJ0NrVEqPqthlOi/srEN2oBE/kEypXQhdZZd5PpMYr
+        YnHAlAyD3lBgFA==
+X-Received: by 10.28.139.18 with SMTP id n18mr22166867wmd.100.1495316591772;
+        Sat, 20 May 2017 14:43:11 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e73sm25666835wmd.1.2017.05.20.14.43.01
+        by smtp.gmail.com with ESMTPSA id e73sm25666835wmd.1.2017.05.20.14.43.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 May 2017 14:43:02 -0700 (PDT)
+        Sat, 20 May 2017 14:43:10 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 08/30] grep: change non-ASCII -i test to stop using --debug
-Date:   Sat, 20 May 2017 21:42:11 +0000
-Message-Id: <20170520214233.7183-9-avarab@gmail.com>
+Subject: [PATCH v3 12/30] grep: add a test helper function for less verbose -f \0 tests
+Date:   Sat, 20 May 2017 21:42:15 +0000
+Message-Id: <20170520214233.7183-13-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170520214233.7183-1-avarab@gmail.com>
 References: <20170520214233.7183-1-avarab@gmail.com>
@@ -76,61 +76,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change a non-ASCII case-insensitive test case to stop using --debug,
-and instead simply test for the expected results.
+Add a helper function to make the tests which check for patterns with
+\0 in them more succinct. Right now this isn't a big win, but
+subsequent commits will add a lot more of these tests.
 
-The test coverage remains the same with this change, but the test
-won't break due to internal refactoring.
-
-This test was added in commit 793dc676e0 ("grep/icase: avoid kwsset
-when -F is specified", 2016-06-25). It was asserting that the regex
-must be compiled with compile_fixed_regexp(), instead test for the
-expected results, allowing the underlying implementation to change.
+The helper is based on the match() function in t3070-wildmatch.sh.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7812-grep-icase-non-ascii.sh | 25 +++++--------------------
- 1 file changed, 5 insertions(+), 20 deletions(-)
+ t/t7008-grep-binary.sh | 58 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
-index 04a61cb8e0..0059a1f837 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -36,29 +36,14 @@ test_expect_success GETTEXT_LOCALE,PCRE 'grep pcre utf-8 string with "+"' '
+diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
+index 9c9c378119..df93d8e44c 100755
+--- a/t/t7008-grep-binary.sh
++++ b/t/t7008-grep-binary.sh
+@@ -4,6 +4,29 @@ test_description='git grep in binary files'
+ 
+ . ./test-lib.sh
+ 
++nul_match () {
++	matches=$1
++	flags=$2
++	pattern=$3
++	pattern_human=$(echo "$pattern" | sed 's/Q/<NUL>/g')
++
++	if test "$matches" = 1
++	then
++		test_expect_success "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			git grep -f f $flags a
++		"
++	elif test "$matches" = 0
++	then
++		test_expect_success "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			test_must_fail git grep -f f $flags a
++		"
++	else
++		test_expect_success "PANIC: Test framework error. Unknown matches value $matches" 'false'
++	fi
++}
++
+ test_expect_success 'setup' "
+ 	echo 'binaryQfile' | q_to_nul >a &&
+ 	git add a &&
+@@ -69,35 +92,12 @@ test_expect_failure 'git grep .fi a' '
+ 	git grep .fi a
  '
  
- test_expect_success REGEX_LOCALE 'grep literal string, with -F' '
--	git grep --debug -i -F "TILRAUN: Halló Heimur!"  2>&1 >/dev/null |
--		 grep fixed >debug1 &&
--	test_write_lines "fixed TILRAUN: Halló Heimur!" >expect1 &&
--	test_cmp expect1 debug1 &&
+-test_expect_success 'git grep -F y<NUL>f a' "
+-	printf 'yQf' | q_to_nul >f &&
+-	git grep -f f -F a
+-"
 -
--	git grep --debug -i -F "TILRAUN: HALLÓ HEIMUR!"  2>&1 >/dev/null |
--		 grep fixed >debug2 &&
--	test_write_lines "fixed TILRAUN: HALLÓ HEIMUR!" >expect2 &&
--	test_cmp expect2 debug2
-+	git grep -i -F "TILRAUN: Halló Heimur!" &&
-+	git grep -i -F "TILRAUN: HALLÓ HEIMUR!"
- '
+-test_expect_success 'git grep -F y<NUL>x a' "
+-	printf 'yQx' | q_to_nul >f &&
+-	test_must_fail git grep -f f -F a
+-"
+-
+-test_expect_success 'git grep -Fi Y<NUL>f a' "
+-	printf 'YQf' | q_to_nul >f &&
+-	git grep -f f -Fi a
+-"
+-
+-test_expect_success 'git grep -Fi Y<NUL>x a' "
+-	printf 'YQx' | q_to_nul >f &&
+-	test_must_fail git grep -f f -Fi a
+-"
+-
+-test_expect_success 'git grep y<NUL>f a' "
+-	printf 'yQf' | q_to_nul >f &&
+-	git grep -f f a
+-"
+-
+-test_expect_success 'git grep y<NUL>x a' "
+-	printf 'yQx' | q_to_nul >f &&
+-	test_must_fail git grep -f f a
+-"
++nul_match 1 '-F' 'yQf'
++nul_match 0 '-F' 'yQx'
++nul_match 1 '-Fi' 'YQf'
++nul_match 0 '-Fi' 'YQx'
++nul_match 1 '' 'yQf'
++nul_match 0 '' 'yQx'
  
- test_expect_success REGEX_LOCALE 'grep string with regex, with -F' '
--	test_write_lines "^*TILR^AUN:.* \\Halló \$He[]imur!\$" >file &&
--
--	git grep --debug -i -F "^*TILR^AUN:.* \\Halló \$He[]imur!\$" 2>&1 >/dev/null |
--		 grep fixed >debug1 &&
--	test_write_lines "fixed \\^*TILR^AUN:\\.\\* \\\\Halló \$He\\[]imur!\\\$" >expect1 &&
--	test_cmp expect1 debug1 &&
--
--	git grep --debug -i -F "^*TILR^AUN:.* \\HALLÓ \$HE[]IMUR!\$"  2>&1 >/dev/null |
--		 grep fixed >debug2 &&
--	test_write_lines "fixed \\^*TILR^AUN:\\.\\* \\\\HALLÓ \$HE\\[]IMUR!\\\$" >expect2 &&
--	test_cmp expect2 debug2
-+	test_write_lines "TILRAUN: Halló Heimur [abc]!" >file3 &&
-+	git add file3 &&
-+	git grep -i -F "TILRAUN: Halló Heimur [abc]!" file3
- '
- 
- test_expect_success REGEX_LOCALE 'pickaxe -i on non-ascii' '
+ test_expect_success 'grep respects binary diff attribute' '
+ 	echo text >t &&
 -- 
 2.13.0.303.g4ebf302169
 
