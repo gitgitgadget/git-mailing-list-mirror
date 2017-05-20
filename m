@@ -2,202 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5C60201CF
-	for <e@80x24.org>; Sat, 20 May 2017 07:56:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51B01201CF
+	for <e@80x24.org>; Sat, 20 May 2017 08:03:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754107AbdETH4Y (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 03:56:24 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:35152 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751861AbdETH4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 03:56:23 -0400
-Received: by mail-it0-f52.google.com with SMTP id c15so129902567ith.0
-        for <git@vger.kernel.org>; Sat, 20 May 2017 00:56:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qnx0KA3OJ/m9eZ6ov2u+gEKb+TaL+eUxISugF65jR+Q=;
-        b=VuNuz2f4ota5opYvwncy+lmRP0JloXBe8uI+pfT+bHHXHRgxFO+nK9+7qvJK0HblWG
-         p3C1/OPmmOEWkuR/lIXcwM89XgP/r0DIBOmIn1Ie49D7cvUFRE+wFKb/Ze4g7Old9pHM
-         E78eWXTEZXDuuDja9M6QuEZojkZP/5XF/wTyNlEz8QyOOW75ojkqA1Nq9HtRqketv3CE
-         J4vk1KUWtnfc7bDnImCz73XtIMKMucZDyBVMADRYMZnxOo3ECoqB6XBcJIUdAyWhi69M
-         ulfyQaP9sIurq1eTZBrPGzFzHwxepIIyFDkvJQtw0anzYXDpJIS/XRRm3mbSo/LCDJqx
-         mFuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qnx0KA3OJ/m9eZ6ov2u+gEKb+TaL+eUxISugF65jR+Q=;
-        b=K1Hv394X5AfQM9Rf/mjKnkER7/R1IRFWKSiTdgBrIPVtqKvXMGQqWsS+4AG13c7evN
-         HNAzVRebrcq14mdd40rdWZOEKBGlF7lRTUXiEUHN9sVpeTHg3Fj0qT7wWKOai4krLxWM
-         gLPFh7ytx7HdOVGZG8SUXwhyTI1IGqgdHvZ9SEhR9b6fjvBpTyt8LQuOXbeyR7KgTqbb
-         w09ikSkGjboUus7p9URa9Z4zjiY9JIorh7gX6l8hHEL0+gGF5+Lxazue/lkyQKblVcf3
-         Gw8H3oRQOB+XDmhoc8J9ctd5DMj1xxhnh2jcm1ZMZO08IiTcb8GgcUQ82i8gxxV0Pxjn
-         8PgQ==
-X-Gm-Message-State: AODbwcCxJBE1aMcqv3Jr/OwluMpiQUVX0YqJKRsq1FdakO0grjam89jz
-        1NzCyD8P2zz96knle3t6HHSx1oOOdA==
-X-Received: by 10.36.166.4 with SMTP id q4mr13928869ite.66.1495266982248; Sat,
- 20 May 2017 00:56:22 -0700 (PDT)
+        id S1754894AbdETID0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 04:03:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55142 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753617AbdETIDR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 04:03:17 -0400
+Received: (qmail 17060 invoked by uid 109); 20 May 2017 08:03:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 20 May 2017 08:03:14 +0000
+Received: (qmail 315 invoked by uid 111); 20 May 2017 08:03:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 20 May 2017 04:03:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 20 May 2017 04:03:12 -0400
+Date:   Sat, 20 May 2017 04:03:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     Chris West <solo-git-vger@goeswhere.com>
+Cc:     git@vger.kernel.org
+Subject: Re: die("bad object.. for duplicate tagged tag in remote
+Message-ID: <20170520080312.nwb277swvmpq7iq6@sigill.intra.peff.net>
+References: <20170519172856.GA14673@blind.goeswhere.com>
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Sat, 20 May 2017 00:56:01 -0700 (PDT)
-In-Reply-To: <1495227246.19473.3.camel@kaarsemaker.net>
-References: <CACBZZX5j1dYk8aeRED7T7iJ=b32aFUpfUWPpMpmtofBL3QnVXQ@mail.gmail.com>
- <20170324213732.29932-1-dennis@kaarsemaker.net> <1493881302.20467.3.camel@kaarsemaker.net>
- <1495227246.19473.3.camel@kaarsemaker.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 20 May 2017 09:56:01 +0200
-Message-ID: <CACBZZX7OE2rRD4W4weGhAoaurFRvA85Js0dN=80zcuxR0xM3SA@mail.gmail.com>
-Subject: Re: [PATCH v2] send-email: Net::SMTP::SSL is obsolete, use only when necessary
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170519172856.GA14673@blind.goeswhere.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 19, 2017 at 10:54 PM, Dennis Kaarsemaker
-<dennis@kaarsemaker.net> wrote:
-> Second ping. This problem is not going away, so if this solution is not
-> acceptable, I'd like to know what needs to be improved.
+On Fri, May 19, 2017 at 06:28:56PM +0100, Chris West wrote:
 
-FWIW:
+> If you have an annotated tag of an annotated tag, and `remote update`
+> elects not to fetch this tag (perhaps because it has a name collision
+> locally), then the repo ends up corrupt: you can't gc it, but fsck
+> doesn't notice.
+> 
+> Two repos, named "bad" and "good":
+> [...]
 
-Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+What version of git are you using? If I run this script:
 
-> On Thu, 2017-05-04 at 09:01 +0200, Dennis Kaarsemaker wrote:
->> Ping. It's a little over a month since I sent this, but I haven't seen
->> any comments. Is this commit good to go?
->>
->> On Fri, 2017-03-24 at 22:37 +0100, Dennis Kaarsemaker wrote:
->> > Net::SMTP itself can do the necessary SSL and STARTTLS bits just fine
->> > since version 1.28, and Net::SMTP::SSL is now deprecated. Since 1.28
->> > isn't that old yet, keep the old code in place and use it when
->> > necessary.
->> >
->> > While we're in the area, mark some messages for translation that were
->> > not yet marked as such.
->> >
->> > Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
->> > ---
->> >  git-send-email.perl | 54 ++++++++++++++++++++++++++++++++++----------=
----------
->> >  1 file changed, 35 insertions(+), 19 deletions(-)
->> >
->> > diff --git a/git-send-email.perl b/git-send-email.perl
->> > index eea0a517f7..0d90439d9a 100755
->> > --- a/git-send-email.perl
->> > +++ b/git-send-email.perl
->> > @@ -1353,10 +1353,12 @@ EOF
->> >                     die __("The required SMTP server is not properly d=
-efined.")
->> >             }
->> >
->> > +           require Net::SMTP;
->> > +           my $use_net_smtp_ssl =3D version->parse($Net::SMTP::VERSIO=
-N) < version->parse("1.28");
->> > +           $smtp_domain ||=3D maildomain();
->> > +
->> >             if ($smtp_encryption eq 'ssl') {
->> >                     $smtp_server_port ||=3D 465; # ssmtp
->> > -                   require Net::SMTP::SSL;
->> > -                   $smtp_domain ||=3D maildomain();
->> >                     require IO::Socket::SSL;
->> >
->> >                     # Suppress "variable accessed once" warning.
->> > @@ -1368,34 +1370,48 @@ EOF
->> >                     # Net::SMTP::SSL->new() does not forward any SSL o=
-ptions
->> >                     IO::Socket::SSL::set_client_defaults(
->> >                             ssl_verify_params());
->> > -                   $smtp ||=3D Net::SMTP::SSL->new($smtp_server,
->> > -                                                 Hello =3D> $smtp_dom=
-ain,
->> > -                                                 Port =3D> $smtp_serv=
-er_port,
->> > -                                                 Debug =3D> $debug_ne=
-t_smtp);
->> > +
->> > +                   if ($use_net_smtp_ssl) {
->> > +                           require Net::SMTP::SSL;
->> > +                           $smtp ||=3D Net::SMTP::SSL->new($smtp_serv=
-er,
->> > +                                                         Hello =3D> $=
-smtp_domain,
->> > +                                                         Port =3D> $s=
-mtp_server_port,
->> > +                                                         Debug =3D> $=
-debug_net_smtp);
->> > +                   }
->> > +                   else {
->> > +                           $smtp ||=3D Net::SMTP->new($smtp_server,
->> > +                                                    Hello =3D> $smtp_=
-domain,
->> > +                                                    Port =3D> $smtp_s=
-erver_port,
->> > +                                                    Debug =3D> $debug=
-_net_smtp,
->> > +                                                    SSL =3D> 1);
->> > +                   }
->> >             }
->> >             else {
->> > -                   require Net::SMTP;
->> > -                   $smtp_domain ||=3D maildomain();
->> >                     $smtp_server_port ||=3D 25;
->> >                     $smtp ||=3D Net::SMTP->new($smtp_server,
->> >                                              Hello =3D> $smtp_domain,
->> >                                              Debug =3D> $debug_net_smt=
-p,
->> >                                              Port =3D> $smtp_server_po=
-rt);
->> >                     if ($smtp_encryption eq 'tls' && $smtp) {
->> > -                           require Net::SMTP::SSL;
->> > -                           $smtp->command('STARTTLS');
->> > -                           $smtp->response();
->> > -                           if ($smtp->code =3D=3D 220) {
->> > +                           if ($use_net_smtp_ssl) {
->> > +                                   $smtp->command('STARTTLS');
->> > +                                   $smtp->response();
->> > +                                   if ($smtp->code !=3D 220) {
->> > +                                           die sprintf(__("Server doe=
-s not support STARTTLS! %s"), $smtp->message);
->> > +                                   }
->> > +                                   require Net::SMTP::SSL;
->> >                                     $smtp =3D Net::SMTP::SSL->start_SS=
-L($smtp,
->> >                                                                       =
-ssl_verify_params())
->> > -                                           or die "STARTTLS failed! "=
-.IO::Socket::SSL::errstr();
->> > -                                   $smtp_encryption =3D '';
->> > -                                   # Send EHLO again to receive fresh
->> > -                                   # supported commands
->> > -                                   $smtp->hello($smtp_domain);
->> > -                           } else {
->> > -                                   die sprintf(__("Server does not su=
-pport STARTTLS! %s"), $smtp->message);
->> > +                                           or die sprintf(__("STARTTL=
-S failed! %s"), IO::Socket::SSL::errstr());
->> > +                           }
->> > +                           else {
->> > +                                   $smtp->starttls(ssl_verify_params(=
-))
->> > +                                           or die sprintf(__("STARTTL=
-S failed! %s"), IO::Socket::SSL::errstr());
->> >                             }
->> > +                           $smtp_encryption =3D '';
->> > +                           # Send EHLO again to receive fresh
->> > +                           # supported commands
->> > +                           $smtp->hello($smtp_domain);
->> >                     }
->> >             }
->> >
+-- >8 --
+#!/bin/sh
+
+rm -rf good bad
+
+git init bad
+cd bad
+git commit --allow-empty -m bad
+git tag -m 'bad inner' inner
+git tag -m 'bad outer' outer inner
+outer=$(git -C ../bad rev-parse outer)
+inner=$(git -C ../bad rev-parse inner)
+git tag -d inner
+cd ..
+
+git init good
+cd good
+git commit --allow-empty -m good
+git tag -m 'good outer' outer
+git remote add bad ../bad
+git fetch bad
+
+echo "===> outer is $outer"
+git cat-file tag $outer
+
+echo "===> inner is $inner"
+git cat-file tag $inner
+-- >8 --
+
+then prior to Git v2.10.1, the final cat-file fails. But after it is
+fine. This is due to b773ddea2 (pack-objects: walk tag chains for
+--include-tag, 2016-09-05), which dealt with this exact tag-of-tag case.
+
+In the real world, it would depend on which version of Git the server is
+running (the fix is on the pack-objects side).
+
+There's another interesting thing going on with the fsck/gc thing,
+though. The fetching repo isn't actually corrupt. The guarantee that Git
+makes is that we have the complete graph of anything that's reachable
+from a ref, not that we might not have stray objects (though it does try
+to avoid breaking even unreachable parts of history, as I'll explain in
+a moment). And that's what's happening here; the client gets "outer" but
+it's not actually reachable.
+
+So what happens in your case in more detail is:
+
+  1. git-fetch sends the include-tag capability to the server, asking it
+     to include tags that point to whatever we're fetching (master in
+     this case)
+
+  2. The server sees that "outer" eventually points to what the client
+     is fetching and adds it. It doesn't do the same for "inner" because
+     it no longer has a tag ref pointing at it. And because it is
+     pre-v2.10.1, it doesn't walk the full chain of "outer", and so
+     never considers "inner" at all.
+
+  3. The next step would normally be for git-fetch to realize that it's
+     missing an object and backfill tags with a followup request. But
+     since it already has its own unrelated "outer", it knows it doesn't
+     need "outer" and doesn't bother looking at it.
+
+     So now we have "outer" in the object store (because the server
+     thought we might need it), but we never actually pointed a ref at
+     it.
+
+And that explains your fsck result:
+
+> $ git fsck
+> ...
+> dangling tag 07070...
+
+We have the object, but nobody points to it.
+
+> I actually don't get that on the real repo, but do on this testcase. Hmm.
+> `git fsck` exits with success here. This is bad, as the object graph is
+> incomplete?
+
+No, that outcome is correct. The interesting thing is that your
+real-world case probably _does_ have a ref pointing at it (if it's not
+getting a dangling-tag). I don't know how that got there, though. The
+original case that motivated the fix in v2.10.1 was cloning with a
+single branch, like:
+
+  git clone --single-branch --no-local bad broken
+
+but that results in the clone failing, not a corrupt repo. Is it
+possible you or somebody else then ran something like:
+
+  git update-ref refs/tags/other-outer $outer_sha1
+
+after the fetch? That would reference the broken part of the graph, and
+the repository is corrupt at that point.
+
+> $ git gc
+> fatal: bad object 03030303...
+> error: failed to run repack
+
+So this is where I think there might be room for improvement, even with
+current versions of git.  Traditionally, we wouldn't try to traverse or
+pack that unreferenced part of the object graph. But since v2.2.0, we
+traverse any objects that are "recent" (within the 2-week
+prune-expiration timestamp) to try to keep whole chunks of the graph
+intact (ironically, to prevent problems like the update-ref I showed
+above).
+
+We use the "ignore_missing_links" flag to tell the traversal that this
+is best-effort (i.e., we try to retain unreachable history if we can,
+but if it's already broken there's nothing we can do). So I wouldn't be
+surprised to find that we correctly respect that flag when following
+parent and tree links, but not in tags.
+
+> diff --git a/revision.c b/revision.c
+> index 8a8c178..22b6021 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -232,7 +232,8 @@ static struct commit *handle_commit(struct rev_info *revs,
+>  		if (!object) {
+>  			if (flags & UNINTERESTING)
+>  				return NULL;
+> -			die("bad object %s", oid_to_hex(&tag->tagged->oid));
+> +			die("bad tagged object %s in %s", oid_to_hex(&tag->tagged->oid),
+> +						oid_to_hex(&tag->object.oid));
+>  		}
+
+I agree this is an improvement. And that "if" in the context lines is
+almost certainly the culprit. It should also trigger when
+revs->ignore_missing_links is set.
+
+-Peff
