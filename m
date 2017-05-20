@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4AE8201A7
-	for <e@80x24.org>; Sat, 20 May 2017 23:50:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CD1A201A7
+	for <e@80x24.org>; Sat, 20 May 2017 23:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755126AbdETXua (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 19:50:30 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34510 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753121AbdETXu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 19:50:29 -0400
-Received: by mail-pf0-f196.google.com with SMTP id w69so13338860pfk.1
-        for <git@vger.kernel.org>; Sat, 20 May 2017 16:50:29 -0700 (PDT)
+        id S1755306AbdETXuf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 19:50:35 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35109 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753121AbdETXue (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 19:50:34 -0400
+Received: by mail-pf0-f193.google.com with SMTP id u26so13340991pfd.2
+        for <git@vger.kernel.org>; Sat, 20 May 2017 16:50:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version:content-transfer-encoding;
-        bh=cKXm0Cue55sCEObMgSVNGrS8VukoK1sO7STy3dzlkBg=;
-        b=r3Fpu+dYF8k86F/7ddpXPPsiWbNjPYjNsr3P/mDteAmQ6iBjD8oXHhi9u6YjFrJTmf
-         mJ/jWdybzuOI8rDc27sLmF6gp7Y9moVJ3U95FcWpLHhD0vCmIHUUV507dZTZDENmYsfh
-         PdvIx6zPzVDeBpcM226OuCSpohP2psSC0TUOOoWdYfkOaLBqvk0gCqVRylTTGMT72eLG
-         BRzKraqWWufOoF1ULBT7od/OejxPUa7rcynvvGTfeAx+n2m+cnUZR5J0hE0LJO22K71y
-         uc2pUD5Uysw1lhz27gTOtBXjfKWxRh579XGPaA+O/j+QUo5afGEGPgtB+HKE/96C7WoJ
-         TBKg==
+        bh=z+fnDl8xiV2iI/LMLY2jpCzLJvMj/5VXDnEliSz8oQs=;
+        b=qz5+yXC85jE8hVOZAbLcnmRkvBCUnROiRYPLiWzDcCoR6GCK2OvmPA5idQTEtKtrcs
+         hInGpRfyiiTMKzbmhxqlSiBkeoquECcuBi17wbvm4ChSF2nm93CD26AljC4OIGfmqn27
+         /8ViAvF1M8HjupPRUEP71mFEpoYRkeTk5i6BAKNK310gvxdtH67it8gxa4gtxBBOWnlC
+         QvKQbXJKl8Y+JT3ubaWmpR4Ls4R1aiVz3Sz73hbw8kPqKseQiBTY7aPxhNqxbLCtSkxh
+         V7mcoAYp7931aa099IPHOtA8zHE+ZJ73PZ9Ck/Udhl9Or0RJy+JaGsfMZKsjLcFvoY+P
+         NDLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=cKXm0Cue55sCEObMgSVNGrS8VukoK1sO7STy3dzlkBg=;
-        b=H2WzIt2kNjqmD9J4xBagc7pjarOH3giZdvH/pFUmA+Dp7fkXZA3V8p0Gu/WKmX6YPj
-         ik80fa5UlG1pxrtQ3wYMzKaQwruCPAyDFOaILNu2Pu3/a9DCFxJzk+XLsqT3/AwZ1F/s
-         SW6AgZar4UZWPp0VeZ6THmnNiA71yRJicKrcmxqZES1i9pL48xGfqJbA+gUJTUyzXvvI
-         fTgY5RdzQrMLFLKwS4+wK95nQ9ExiuTRyokM6AS8ayTJ0H5QO3CA6MXf5HO2zB4s+2jw
-         8hX9Ayky/86pfyjC1RyE1ZVvY5OdIOTC4lSZXVcPFzxxHcU8rZcWDjuj+XsjI5wWvtkY
-         2zNQ==
-X-Gm-Message-State: AODbwcAiuVGQCz/KjwyRFeRtgm7guJNDpXq7GL3djFZq6Mlt3zQWfubi
-        8uzKpJ4tGpw+hw==
-X-Received: by 10.84.194.165 with SMTP id h34mr19513686pld.65.1495324229272;
-        Sat, 20 May 2017 16:50:29 -0700 (PDT)
+        bh=z+fnDl8xiV2iI/LMLY2jpCzLJvMj/5VXDnEliSz8oQs=;
+        b=Xw+ASoOUmasabmwDZGn+THh9CIRuZuI+atbGXsHKVPfPLXy4VHLvPshOy65Vr3JjwH
+         P3lrCGTKexR1EuoYfHqCWhafSiusXAWp7U31ElniGqOIBlFVfWZIH08Vd197lE6mt8IA
+         OnctGJ269m3QklA3bG85ckhbr4327AJP0uMOYeDBhUBBO5xAcA5/4GdzjZpoL80Q/MEU
+         WfYucZ8U28gz/xEI+5nymPIpPARXG2f4wKz/ly/UWc18AKc+8ASJEzcRVvY3LbF+JSwf
+         PHz621GfZqZpedaU3UJFlDSCfzJBQ0gPZYUyH+7BT8xzFb8ZcaaPiO5Kz74g8B5Y5gEi
+         xjlw==
+X-Gm-Message-State: AODbwcBNL7doJs9cpz8tXxZXgm1C5YGFN+cemLhJKiNmAUh/yTmvWzyZ
+        Md6Fq5XcG05wqL6C7ug=
+X-Received: by 10.84.215.197 with SMTP id g5mr19815711plj.131.1495324233769;
+        Sat, 20 May 2017 16:50:33 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:a59e:fcd8:9df2:4b0f])
-        by smtp.gmail.com with ESMTPSA id t3sm22769056pfl.60.2017.05.20.16.50.28
+        by smtp.gmail.com with ESMTPSA id g23sm19331445pfb.54.2017.05.20.16.50.33
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 20 May 2017 16:50:28 -0700 (PDT)
+        Sat, 20 May 2017 16:50:33 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -58,10 +58,11 @@ Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
         Fredrik Kuivinen <frekui@gmail.com>,
         Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v3 00/30] Easy to review grep & pre-PCRE changes
+Subject: Re: [PATCH v3 05/30] log: make --regexp-ignore-case work with --perl-regexp
 References: <20170520214233.7183-1-avarab@gmail.com>
-Date:   Sun, 21 May 2017 08:50:27 +0900
-Message-ID: <xmqqshjzqe9o.fsf@gitster.mtv.corp.google.com>
+        <20170520214233.7183-6-avarab@gmail.com>
+Date:   Sun, 21 May 2017 08:50:32 +0900
+Message-ID: <xmqqlgprqe9j.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,22 +74,46 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Easy to review? 29 (I mean 30) patches? Are you kidding me?!
+> Make the --regexp-ignore-case option work with --perl-regexp. This
+> never worked, and there was no test for this. Fix the bug and add a
+> test.
 >
-> As noted in v1 (<20170511091829.5634-1-avarab@gmail.com>;
-> https://public-inbox.org/git/20170511091829.5634-1-avarab@gmail.com/)
-> these are all doc, test, refactoring etc. changes needed by the
-> subsequent "PCRE v2, PCRE v1 JIT, log -P & fixes" series.
+> When PCRE support was added in commit 63e7e9d8b6 ("git-grep: Learn
+> PCRE", 2011-05-09) compile_pcre_regexp() would only check
+> opt->ignore_case, but when the --perl-regexp option was added in
+> commit 727b6fc3ed ("log --grep: accept --basic-regexp and
+> --perl-regexp", 2012-10-03) the code didn't set the opt->ignore_case.
 >
-> Since Junio hasn't been picking it I'm no longer sending updates to
-> that patch series & waiting for this one to cook first.
+> Change the test suite to test for -i and --invert-regexp with
+> basic/extended/perl patterns in addition to fixed, which was the only
+> patternType that was tested for before in combination with those
+> options.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  revision.c     |  1 +
+>  t/t4202-log.sh | 60 +++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+>  2 files changed, 56 insertions(+), 5 deletions(-)
+>
+> diff --git a/revision.c b/revision.c
+> index 8a8c1789c7..4883cdd2d0 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1991,6 +1991,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+>  	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
+>  		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_ERE;
+>  	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
+> +		revs->grep_filter.ignore_case = 1;
+>  		revs->grep_filter.regflags |= REG_ICASE;
+>  		DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
+>  	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
 
-I actually do not mind a reroll that goes together with this.  The
-only reason why I skipped the earlier one was because I looked at
-the original one, and the discussion on the reroll of this 'easy to
-review' part indicated that it will be rerolled, before I got to
-look at these upper layer patches.
+Looks good.
 
-Overall nicely done.  I only had just a few observations.
+I however wonder if it is a better approach in the longer term to
+treat the .ignore_case field just like .extended_regexp_option
+field, i.e. not committing immediately to .regflags but commit it
+after config and command line parsing is done, just like we make the
+"BRE? ERE?" decision in grep_commit_pattern_type().
 
 Thanks.
