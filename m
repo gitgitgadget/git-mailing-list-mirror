@@ -7,94 +7,88 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D8C1201A7
-	for <e@80x24.org>; Sat, 20 May 2017 23:49:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4AE8201A7
+	for <e@80x24.org>; Sat, 20 May 2017 23:50:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752999AbdETXt5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 19:49:57 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36206 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751813AbdETXt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 19:49:56 -0400
-Received: by mail-pf0-f193.google.com with SMTP id n23so13329680pfb.3
-        for <git@vger.kernel.org>; Sat, 20 May 2017 16:49:56 -0700 (PDT)
+        id S1755126AbdETXua (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 19:50:30 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34510 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753121AbdETXu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 19:50:29 -0400
+Received: by mail-pf0-f196.google.com with SMTP id w69so13338860pfk.1
+        for <git@vger.kernel.org>; Sat, 20 May 2017 16:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zFMwVGUWgcfD4j90JeoEBkwDzEcyh3PlqlHP+ID+bag=;
-        b=n+EQINk/c4n4uSQ5kny/fS3njPLFlOgzKvQCsR4XmXxpE4bUwIV0ilItt6iqnmhFnB
-         vLJHumc3G5//sT8Tik3zOJ1nQVm3rMyr4FCMQxSkNpd8JIYIUBuOEC9NLRcAOosq/2x5
-         tgcYKocCBkwxsevNelhx63ZokWnLNZiZZd6PS0aZagDdfr7obmDvdJnGvbVJULYbXJIt
-         7JEhydSE7oxDYGLoMHJ/R+STlsNvr4JVpxWRdj2SE6YLU4HzL1DNr4qtBK0QlocFRhxK
-         N1rbrO2IMoAz0Du+SA8m0GWN5R1/IOMOxcPWMElxluLn/pB7sHINdim4ohgSIv0VBJkz
-         Nfig==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=cKXm0Cue55sCEObMgSVNGrS8VukoK1sO7STy3dzlkBg=;
+        b=r3Fpu+dYF8k86F/7ddpXPPsiWbNjPYjNsr3P/mDteAmQ6iBjD8oXHhi9u6YjFrJTmf
+         mJ/jWdybzuOI8rDc27sLmF6gp7Y9moVJ3U95FcWpLHhD0vCmIHUUV507dZTZDENmYsfh
+         PdvIx6zPzVDeBpcM226OuCSpohP2psSC0TUOOoWdYfkOaLBqvk0gCqVRylTTGMT72eLG
+         BRzKraqWWufOoF1ULBT7od/OejxPUa7rcynvvGTfeAx+n2m+cnUZR5J0hE0LJO22K71y
+         uc2pUD5Uysw1lhz27gTOtBXjfKWxRh579XGPaA+O/j+QUo5afGEGPgtB+HKE/96C7WoJ
+         TBKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zFMwVGUWgcfD4j90JeoEBkwDzEcyh3PlqlHP+ID+bag=;
-        b=AS/HhJLYf1m4vhKquuYJ3z25iCQfaLXiKTOzsHXSkovuLCRcOSVhXf0ycfG3dGvzMd
-         1ZWVm7rfMWIWjBywShEaHJxPmBcY8AKxOXV5tolsC1+a2C8OQQycmygNRN3Rh1r8wKE8
-         gNXYTwk9K9OciGLP/HaMqnXUus8GXDDpf5FvhMwT21ZSQyIyP0nnYk0Yb9cgo59Kdoh8
-         1lbiZ2SqXkhqmyyyS56W4QyPAqazZqIQyqMWEfwhjC8biYZq8gpnueqp34rQG2MEYdT6
-         NvPHcVvEr75cHxSa/HLxSYKAUBtfvuk8pe+VvWEBSrbKTGwzgtcv5UPmNBm8m8P8H67D
-         0SDQ==
-X-Gm-Message-State: AODbwcBMYdq8xXVrRjph5EmcmRZH6srmYZqPnFwygXQNB5dR8EIU0OzA
-        lo/KuXooNHmzrw==
-X-Received: by 10.84.143.68 with SMTP id 62mr14020443ply.123.1495324195623;
-        Sat, 20 May 2017 16:49:55 -0700 (PDT)
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=cKXm0Cue55sCEObMgSVNGrS8VukoK1sO7STy3dzlkBg=;
+        b=H2WzIt2kNjqmD9J4xBagc7pjarOH3giZdvH/pFUmA+Dp7fkXZA3V8p0Gu/WKmX6YPj
+         ik80fa5UlG1pxrtQ3wYMzKaQwruCPAyDFOaILNu2Pu3/a9DCFxJzk+XLsqT3/AwZ1F/s
+         SW6AgZar4UZWPp0VeZ6THmnNiA71yRJicKrcmxqZES1i9pL48xGfqJbA+gUJTUyzXvvI
+         fTgY5RdzQrMLFLKwS4+wK95nQ9ExiuTRyokM6AS8ayTJ0H5QO3CA6MXf5HO2zB4s+2jw
+         8hX9Ayky/86pfyjC1RyE1ZVvY5OdIOTC4lSZXVcPFzxxHcU8rZcWDjuj+XsjI5wWvtkY
+         2zNQ==
+X-Gm-Message-State: AODbwcAiuVGQCz/KjwyRFeRtgm7guJNDpXq7GL3djFZq6Mlt3zQWfubi
+        8uzKpJ4tGpw+hw==
+X-Received: by 10.84.194.165 with SMTP id h34mr19513686pld.65.1495324229272;
+        Sat, 20 May 2017 16:50:29 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:a59e:fcd8:9df2:4b0f])
-        by smtp.gmail.com with ESMTPSA id j191sm24012801pgc.53.2017.05.20.16.49.54
+        by smtp.gmail.com with ESMTPSA id t3sm22769056pfl.60.2017.05.20.16.50.28
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 20 May 2017 16:49:54 -0700 (PDT)
+        Sat, 20 May 2017 16:50:28 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Manish Goregaokar <manishearth@gmail.com>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 1/2] refs: Add for_each_worktree_ref for iterating over all worktree HEADs
-References: <CACpkpxkGWhcALQZ2+2nOCRKgzAa7U7EjZg--S71zocdGY8NYag@mail.gmail.com>
-        <20170518014210.94189-1-manishearth@gmail.com>
-        <xmqqy3trstup.fsf@gitster.mtv.corp.google.com>
-        <CACpkpxmGzz0hUsypX5ORX7FLB3rh_xbyPOKz4SUt-zrjSjCq_g@mail.gmail.com>
-Date:   Sun, 21 May 2017 08:49:54 +0900
-In-Reply-To: <CACpkpxmGzz0hUsypX5ORX7FLB3rh_xbyPOKz4SUt-zrjSjCq_g@mail.gmail.com>
-        (Manish Goregaokar's message of "Sat, 20 May 2017 10:33:25 -0700")
-Message-ID: <xmqqzie7qeal.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v3 00/30] Easy to review grep & pre-PCRE changes
+References: <20170520214233.7183-1-avarab@gmail.com>
+Date:   Sun, 21 May 2017 08:50:27 +0900
+Message-ID: <xmqqshjzqe9o.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Manish Goregaokar <manishearth@gmail.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> One thing which I think hasn't been covered yet is the rebase
-> ORIG_HEAD. I'll see if that's still a problem on `pu` and make a patch
-> for it if so.
+> Easy to review? 29 (I mean 30) patches? Are you kidding me?!
+>
+> As noted in v1 (<20170511091829.5634-1-avarab@gmail.com>;
+> https://public-inbox.org/git/20170511091829.5634-1-avarab@gmail.com/)
+> these are all doc, test, refactoring etc. changes needed by the
+> subsequent "PCRE v2, PCRE v1 JIT, log -P & fixes" series.
+>
+> Since Junio hasn't been picking it I'm no longer sending updates to
+> that patch series & waiting for this one to cook first.
 
-IIRC, ORIG_HEAD, FETCH_HEAD, MERGE_HEAD and others are be transitory
-and never served as the starting points of reachability traversal,
-even in the primary worktree (also when you are not using any extra
-worktrees).  The commits listed in the todo list of "rebase -i" and
-"git cherry-pick A..B" are the same way.
+I actually do not mind a reroll that goes together with this.  The
+only reason why I skipped the earlier one was because I looked at
+the original one, and the discussion on the reroll of this 'easy to
+review' part indicated that it will be rerolled, before I got to
+look at these upper layer patches.
 
-Because ORIG_HEAD is expected to be in a reflog of some ref (at
-least, the reflog of HEAD), I do not see much benefit (or "more
-safety") in adding it to the starting points.
+Overall nicely done.  I only had just a few observations.
 
-Among the ones that appear in .git/ and we never considered as
-starting points, the commits in FETCH_HEAD might be the ones we may
-want to give extra protection over what we currently have, simply
-because the ones that do not have remote-tracking branches have NO
-other refs pointing at them (compared to these transitory artifacts
-resulting from a local operation, i.e. ORIG_HEAD and ones in the
-todo list).  But they by definition are "new" objects, and the
-reason why the user does *not* use remote-tracking branches for them
-is because the user does not want to keep record of them unless the
-user decides to merge them somewhere in the repository's history, so
-even for them the benefit is dubious...
-
+Thanks.
