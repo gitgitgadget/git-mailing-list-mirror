@@ -8,157 +8,164 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4082A201CF
-	for <e@80x24.org>; Sat, 20 May 2017 11:54:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8375201A7
+	for <e@80x24.org>; Sat, 20 May 2017 12:10:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753285AbdETLyx (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 07:54:53 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:36325 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751350AbdETLyv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 07:54:51 -0400
-Received: by mail-wr0-f195.google.com with SMTP id v42so4955531wrc.3
-        for <git@vger.kernel.org>; Sat, 20 May 2017 04:54:51 -0700 (PDT)
+        id S1750814AbdETMKu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 08:10:50 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36503 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750739AbdETMKt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 08:10:49 -0400
+Received: by mail-it0-f68.google.com with SMTP id i206so7485208ita.3
+        for <git@vger.kernel.org>; Sat, 20 May 2017 05:10:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=KZdVlnyXS3utmEuR7v3o2Ri6VgW/CnaNBJ/yeiSajHo=;
-        b=VzHOTsnA3jlcl6EUUZSKMnAGoaembQotCJwUIhJKtF1DwCPleYhBhfBy2oXutvLNa5
-         4IJs3DUBEZGyvPOdXSfSAjaZ7JaEWQsFF1AdfTXYfI/91sRlfoaGyNZB44/Y+CQC2WVK
-         w2xwXexpz/3+aoHg9jnXEBMaRJ6w1LA4v4n02fsLPrXgWhVxku8rs29iJhe07OFTmDec
-         Z3lxUbTvxp4+bInWojb3EZ1xuxKo7RBowpdEQ9NE/s6ZI2zPWoG6OduIMRhVAGRba2Pd
-         Yg/ZVaWI6C0mGZ+qPy4hLLlJFtt1Z9t1M6QxLa/RflvGK9ob8fy9qkVu76Ru4k9/6gRo
-         jgwQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=j3rjNBB32jP682I83LeagL9pypwEW4nJHuvk97/21LU=;
+        b=ewRZ1HTrO6m+1US6b6uW+8u6+I/l4U3iHV0YNMRMv53bhjU6RSnHmNdE9vBvazb/DU
+         vL7Ctca+fafZhzpayxvr6T8ir40akWEm1jiJL1xSozKVzGXSd2vASfB2+LykO6zrmbC8
+         5qPczyuNfQUdjp/jtR9VOJ7aEh/qILDyFeQWZNS4b1/yywYMO+5c9xZ7B+D8TPRZK5ut
+         qgEBFrsjvUipI8RsFB5F7ySu7OiAjADOnD8+Q2hbIYE2x0+YHUbVZL2qYDI6MYRK/eU1
+         fo35D4XMlJueDPAk6AGOv+WKilCNqtO9LxqXm5rCrUhAY3D13FBNsYDpLf/Ay5i+fBgV
+         49Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=KZdVlnyXS3utmEuR7v3o2Ri6VgW/CnaNBJ/yeiSajHo=;
-        b=T98N3kAOQiG4un7j6+ZM6rDsLqrUJuiiW4RQL+DOXztZ3OY63RxIlOcQsHedK90GPX
-         ojfWJcMFz/hIvv55fl+Wz4+gJDfOtVh5blCz9iC6urU3KUJ19RMy4KwOYnjjfbpIWF8w
-         Dv1yQVCfE3k/KL2xjcCwA3upTyttYhA3iTalYa5LK+AW1vlzzvUojcbAMFCo1C/uHgSj
-         7xH9NFPoc9k9XHnk0/AyW8GmZZps1oqewhTToQ8TuKBi08kaRzuoimiLMB6O4PTHiIX3
-         B/kimceqWh3wRj2I+ieidIYEHKRP41r6qqD4+K2nw7Ylc+mp8dPlUwroYmSqhbk8d0Ba
-         0/qQ==
-X-Gm-Message-State: AODbwcAUPrcTu7jChxZNO3g3AD4i/6867D4sFr0uzT9KlbNFgbCmPkbY
-        mO/kt9+Jrn0IjA==
-X-Received: by 10.223.162.158 with SMTP id s30mr7085449wra.34.1495281290546;
-        Sat, 20 May 2017 04:54:50 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id n99sm5887280wrb.62.2017.05.20.04.54.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 May 2017 04:54:49 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Marc Stevens <marc@marc-stevens.nl>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/2] sha1dc: optionally use sha1collisiondetection as a submodule
-Date:   Sat, 20 May 2017 11:54:29 +0000
-Message-Id: <20170520115429.12289-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.13.0.303.g4ebf302169
-In-Reply-To: <20170520115429.12289-1-avarab@gmail.com>
-References: <20170520115429.12289-1-avarab@gmail.com>
-In-Reply-To: <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com>
-References: <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=j3rjNBB32jP682I83LeagL9pypwEW4nJHuvk97/21LU=;
+        b=AiGbEjGClIcDKB0bhA8C6izU09zxtyMi388Y6PkO2J+L7RSvhfdSmkiF+slfvqSjCl
+         K9kzEVVQl9Q4CpSal/g2T7WoSSk8OVLizd5oyA4ub6dAD7LpBLR/v51kaTx2GI2ZhTQH
+         QVZkvKEz4WN9Nq1zGSgnYaAtzoQR54I6cqXl8rc+yb2uUvX0DkcYY4b08371BxpZnHxk
+         n1Z6oqnkGjZjw6hfzEz1Ib5IJPGPLrsW2wK83xSfTWyo18+TAmC3XBwvQeJJcgR2zh6O
+         2zBScnZGL25jm0uFpPkYKjXz9zy5PCuyRk7izjfxd2mUfcH5Uu6fdmhDTPQAoVrLisWN
+         RSrA==
+X-Gm-Message-State: AODbwcDcuyDUoUGt6+bVpMFrn5aBW1bd8Y4PM+Xgt6RDS+cUx6aLf07H
+        QnXaJOOJ4FphNuIy4fH/vNgoUqUlHg==
+X-Received: by 10.36.89.207 with SMTP id p198mr31646116itb.71.1495282248533;
+ Sat, 20 May 2017 05:10:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.107.8.220 with HTTP; Sat, 20 May 2017 05:10:27 -0700 (PDT)
+In-Reply-To: <20170518201333.13088-6-benpeart@microsoft.com>
+References: <20170518201333.13088-1-benpeart@microsoft.com> <20170518201333.13088-6-benpeart@microsoft.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 20 May 2017 14:10:27 +0200
+Message-ID: <CACBZZX5URAeA+=12ezW-oDGnkdAqvQqV7it=HBaYCKUdx0p_XA@mail.gmail.com>
+Subject: Re: [PATCH v2 5/6] fsmonitor: add documentation for the fsmonitor extension.
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, benpeart@microsoft.com,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        David.Turner@twosigma.com, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an option to use the sha1collisiondetection library from the
-submodule in sha1collisiondetection/ instead of in the copy in the
-sha1dc/ directory.
+On Thu, May 18, 2017 at 10:13 PM, Ben Peart <peartben@gmail.com> wrote:
+> This includes the core.fsmonitor setting, the query-fsmonitor hook,
+> and the fsmonitor index extension.
+>
+> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+> ---
+>  Documentation/config.txt                 |  7 +++++++
+>  Documentation/githooks.txt               | 23 +++++++++++++++++++++++
+>  Documentation/technical/index-format.txt | 18 ++++++++++++++++++
+>  3 files changed, 48 insertions(+)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 96e9cf8b73..4ffbf0d4c2 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -389,6 +389,13 @@ core.protectNTFS::
+>         8.3 "short" names.
+>         Defaults to `true` on Windows, and `false` elsewhere.
+>
+> +core.fsmonitor::
+> +       If set to true, call the query-fsmonitor hook proc which will
+> +       identify all files that may have had changes since the last
+> +       request. This information is used to speed up operations like
+> +       'git commit' and 'git status' by limiting what git must scan to
+> +       detect changes.
+> +
+>  core.trustctime::
+>         If false, the ctime differences between the index and the
+>         working tree are ignored; useful when the inode change time
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 706091a569..f7b4b4a844 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -448,6 +448,29 @@ The commits are guaranteed to be listed in the order that they were
+>  processed by rebase.
+>
+>
+> +[[query-fsmonitor]]
+> +query-fsmonitor
+> +~~~~~~~~~~~~
+> +
+> +This hook is invoked when the configuration option core.fsmonitor is
+> +set and git needs to identify changed or untracked files.  It takes
+> +a single argument which is the time in elapsed seconds since midnight,
+> +January 1, 1970.
+> +
+> +The hook should output to stdout the list of all files in the working
+> +directory that may have changed since the requested time.  The logic
+> +should be inclusive so that it does not miss any potential changes.
+> +The paths should be relative to the root of the working directory
+> +and be separated by a single NUL.
+> +
+> +Git will limit what files it checks for changes as well as which
+> +directories are checked for untracked files based on the path names
+> +given.
+> +
+> +The exit status determines whether git will use the data from the
+> +hook to limit its search.  On error, it will fall back to verifying
+> +all files and folders.
+> +
+>  GIT
+>  ---
+>  Part of the linkgit:git[1] suite
+> diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
+> index ade0b0c445..b002d23c05 100644
+> --- a/Documentation/technical/index-format.txt
+> +++ b/Documentation/technical/index-format.txt
+> @@ -295,3 +295,21 @@ The remaining data of each directory block is grouped by type:
+>      in the previous ewah bitmap.
+>
+>    - One NUL.
+> +
+> +== File System Monitor cache
+> +
+> +  The file system monitor cache tracks files for which the query-fsmonitor
+> +  hook has told us about changes.  The signature for this extension is
+> +  { 'F', 'S', 'M', 'N' }.
+> +
+> +  The extension starts with
+> +
+> +  - 32-bit version number: the current supported version is 1.
+> +
+> +  - 64-bit time: the extension data reflects all changes through the given
+> +       time which is stored as the seconds elapsed since midnight, January 1, 1970.
+> +
+> +  - 32-bit bitmap size: the size of the CE_FSMONITOR_DIRTY bitmap.
+> +
+> +  - An ewah bitmap, the n-th bit indicates whether the n-th index entry
+> +    is CE_FSMONITOR_DIRTY.
 
-This allows us to try out the submodule in sha1collisiondetection
-without breaking the build for anyone who's not expecting them as we
-work out any kinks.
+We already have a uint64_t in one place in the codebase (getnanotime)
+which uses a 64 bit time for nanosecond accuracy, and numerous
+filesystems already support nanosecond timestamps (ext4, that new
+Apple thingy...).
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- .gitmodules            |  4 ++++
- Makefile               | 12 ++++++++++++
- hash.h                 |  4 ++++
- sha1collisiondetection |  1 +
- 4 files changed, 21 insertions(+)
- create mode 100644 .gitmodules
- create mode 160000 sha1collisiondetection
+I don't know if any of the inotify/fsmonitor APIs support that yet,
+but it seems inevitable that that'll be added if not, in some
+pathological cases we can have a lot of files modified in 1 second, so
+using nanosecond accuracy means there'll be a lot less data to
+consider in some cases.
 
-diff --git a/.gitmodules b/.gitmodules
-new file mode 100644
-index 0000000000..cbeebdab7a
---- /dev/null
-+++ b/.gitmodules
-@@ -0,0 +1,4 @@
-+[submodule "sha1collisiondetection"]
-+	path = sha1collisiondetection
-+	url = https://github.com/cr-marcstevens/sha1collisiondetection.git
-+	branch = master
-diff --git a/Makefile b/Makefile
-index ffa6da71b7..6baad1669e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -144,6 +144,12 @@ all::
- # algorithm. This is slower, but may detect attempted collision attacks.
- # Takes priority over other *_SHA1 knobs.
- #
-+# Define DC_SHA1_SUBMODULE in addition to DC_SHA1 to use the
-+# sha1collisiondetection shipped as a submodule instead of the
-+# non-submodule copy in sha1dc/. This is an experimental option used
-+# by the git project to migrate to using sha1collisiondetection as a
-+# submodule.
-+#
- # Define OPENSSL_SHA1 environment variable when running make to link
- # with the SHA1 routine from openssl library.
- #
-@@ -1412,8 +1418,14 @@ ifdef APPLE_COMMON_CRYPTO
- 	BASIC_CFLAGS += -DSHA1_APPLE
- else
- 	DC_SHA1 := YesPlease
-+ifdef DC_SHA1_SUBMODULE
-+	LIB_OBJS += sha1collisiondetection/lib/sha1.o
-+	LIB_OBJS += sha1collisiondetection/lib/ubc_check.o
-+	BASIC_CFLAGS += -DDC_SHA1_SUBMODULE
-+else
- 	LIB_OBJS += sha1dc/sha1.o
- 	LIB_OBJS += sha1dc/ubc_check.o
-+endif
- 	BASIC_CFLAGS += \
- 		-DSHA1_DC \
- 		-DSHA1DC_NO_STANDARD_INCLUDES \
-diff --git a/hash.h b/hash.h
-index a11fc9233f..bef3e630a0 100644
---- a/hash.h
-+++ b/hash.h
-@@ -8,7 +8,11 @@
- #elif defined(SHA1_OPENSSL)
- #include <openssl/sha.h>
- #elif defined(SHA1_DC)
-+#ifdef DC_SHA1_SUBMODULE
-+#include "sha1collisiondetection/lib/sha1.h"
-+#else
- #include "sha1dc/sha1.h"
-+#endif
- #else /* SHA1_BLK */
- #include "block-sha1/sha1.h"
- #endif
-diff --git a/sha1collisiondetection b/sha1collisiondetection
-new file mode 160000
-index 0000000000..cc465543b3
---- /dev/null
-+++ b/sha1collisiondetection
-@@ -0,0 +1 @@
-+Subproject commit cc465543b310e5f59a1d534381690052e8509b22
--- 
-2.13.0.303.g4ebf302169
-
+It does mean this'll only work until the year ~2500, but that seems
+like an acceptable trade-off.
