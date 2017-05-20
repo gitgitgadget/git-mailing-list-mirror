@@ -8,47 +8,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F97E2027D
-	for <e@80x24.org>; Sat, 20 May 2017 21:43:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B548201A7
+	for <e@80x24.org>; Sat, 20 May 2017 21:43:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756506AbdETVnt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 17:43:49 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36626 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753588AbdETVnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 17:43:46 -0400
-Received: by mail-wr0-f193.google.com with SMTP id v42so5741478wrc.3
-        for <git@vger.kernel.org>; Sat, 20 May 2017 14:43:40 -0700 (PDT)
+        id S1756486AbdETVnm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 17:43:42 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33841 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932319AbdETVn3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 17:43:29 -0400
+Received: by mail-wr0-f196.google.com with SMTP id 6so5753076wrb.1
+        for <git@vger.kernel.org>; Sat, 20 May 2017 14:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VAyUFqWR6te10cyXip2D28oUwTmslMOK+fArvTImb1Y=;
-        b=YaD1rXawGBfkHZb8NR8SKw1lDSWeBt+wk348DFXJ5uTN6pChlkCI6RgxLHzBuXfA9F
-         UofK8foTHn6l28tq3MPn6wKss0flS9no6lZoy0WkeinevGqNfW2YRdIzcf28dSF2Ljeh
-         jgK5m7D6KV575DEaWUt/gl3DC4AU1vdLUYRXsXxrT/ZFGtJ6J/vkaYWWTWZHYyMeVbEa
-         BD6txgfZdOYj4K28Iowv7kzvKIkniN+0rR9VqJ81PAsUTm6tH0CoRiNLG5RDaWV3NIsQ
-         JoQNGTYqF937TTSba1voQxHUVy3OPQgV4mhGJ6W68JbsguQPCDintrV7xUTHeW7Twsvi
-         is8w==
+        bh=ou95g/MwI2fjU6EWtwVRtu9SjlXjaRBL/9rEbwOTQe0=;
+        b=JKCOSCjNlrlG5uAGKijL4KbPWIJ5kSG8pw4B6HhuWoRcUt6vM/sQadeVf6U36Maara
+         /ENMDunksCFv5MqoEL2xA1OLt3s3qvGgWaGptffRkgbLHtqKQ/FAKG1S4O8PqWZkj2fT
+         AKn9I5NPXIzwkTMhY+JpkT/jxoVW1W2KKxR209riRtfQEV1VJiUgVNk3w8/asQZAQvBv
+         Xd3egykODlFqafVVFvaQIZ9x/hNCwbMELbCssYT81quLNEy6oHYBP2mA3InqYJMAWiyE
+         lB2J7R4JqEsYOI8oB78USadcmA1pRM4L58ZALaBcIrXifxtV6vp+HyXrv258QoM7S3Jg
+         F5lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VAyUFqWR6te10cyXip2D28oUwTmslMOK+fArvTImb1Y=;
-        b=rd5s2Ov3G6gWjOiOGcHiLI96DcdgIdZDkRqmCTkzjdw3zKj/qcc/DbkKOZhuO79+Kt
-         Hk13qTGOuo6xvccGOfj6bcoAN1vlDZ0LZLqQ2tA6jefsnFdbMRU3qwIm0jEhwIDRV4ET
-         tJKmhqWQ0YEMOSWTDEtG0vFCU8nIMkX5B2Rs/Kn/pEgr4OscSogONCwCSBvofVOp66nO
-         Y0VJuN6/Nz67hekX6+3S/jgRGq5BBm/X14mHF2VDgHZdbki0r6jGJh79XPeNlCLi0FYo
-         Zrdpm4i0YFaRZ5C+GvD2Eit9HUVvIBXaPCFmXTJe9m8GJ+7faCQ/W8HXX2a9E+MisP7E
-         WttQ==
-X-Gm-Message-State: AODbwcBvLPSaXlTuqT9H9G/ZhPWXmsxReyM44hIoJ0ZpSg8fextfTk9R
-        ZoxNJHWDeAbNMQ==
-X-Received: by 10.223.154.40 with SMTP id z37mr7556287wrb.136.1495316619718;
-        Sat, 20 May 2017 14:43:39 -0700 (PDT)
+        bh=ou95g/MwI2fjU6EWtwVRtu9SjlXjaRBL/9rEbwOTQe0=;
+        b=HSc6Jm83RdYUrXjmAhKnDHAHwoggg678RzW5jZ13kHFXHslkK6PqLU2POKjao4tomo
+         d2rgXJR/tDjbIaJnYewiKDKavmDcp74dpH/Sj+9EYxlL2zUvuhpCxbz9AJNG98UObCTS
+         GbJAMSIpoMyEgqnvzqfKoXcXZlxlrUsXzNxg3GwJJsj5qx68qz2GjDkgs9I/BJ2jko9t
+         4EJJhpPBn5hjmwhELcOL5D93EShsMYgN4+PhLv5IFyBSbvBtliuMk+lJ74mQpvC17Tq/
+         kUgy5f6xy0xZ/X0aYS/MQOgHeEosaGXduFIPdS6fr3rySloTwUjgI+x55qppGxG/W8lJ
+         l4Iw==
+X-Gm-Message-State: AODbwcCQIGJcKzzafMKppH9JEe+ufxAUl2M0mim/vT6lDNaMyG/XuSrg
+        MCRPahtLPFxQ+A==
+X-Received: by 10.223.155.134 with SMTP id d6mr7752748wrc.157.1495316607968;
+        Sat, 20 May 2017 14:43:27 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e73sm25666835wmd.1.2017.05.20.14.43.38
+        by smtp.gmail.com with ESMTPSA id e73sm25666835wmd.1.2017.05.20.14.43.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 May 2017 14:43:38 -0700 (PDT)
+        Sat, 20 May 2017 14:43:27 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 20/30] grep: catch a missing enum in switch statement
-Date:   Sat, 20 May 2017 21:42:23 +0000
-Message-Id: <20170520214233.7183-21-avarab@gmail.com>
+Subject: [PATCH v3 17/30] perf: add a comparison test of grep regex engines
+Date:   Sat, 20 May 2017 21:42:20 +0000
+Message-Id: <20170520214233.7183-18-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170520214233.7183-1-avarab@gmail.com>
 References: <20170520214233.7183-1-avarab@gmail.com>
@@ -76,41 +76,125 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a die(...) to a default case for the switch statement selecting
-between grep pattern types under --recurse-submodules.
+Add a very basic performance comparison test comparing the POSIX
+basic, extended and perl engines.
 
-Normally this would be caught by -Wswitch, but the grep_pattern_type
-type is converted to int by going through parse_options(). Changing
-the argument type passed to compile_submodule_options() won't work,
-the value will just get coerced. The -Wswitch-default warning will
-warn about it, but that produces a lot of noise across the codebase,
-this potential issue would be drowned in that noise.
+In theory the "basic" and "extended" engines should be implemented
+using the same underlying code with a slightly different pattern
+parser, but some implementations may not do this. Jump through some
+slight hoops to test both, which is worthwhile since "basic" is the
+default.
 
-Thus catching this at runtime is the least bad option. This won't ever
-trigger in practice, but if a new pattern type were to be added this
-catches an otherwise silent bug during development.
+Running this on an i7 3.4GHz Linux 4.9.0-2 Debian testing against a
+checkout of linux.git & latest upstream PCRE, both PCRE and git
+compiled with -O3 using gcc 7.1.1:
 
-See commit 0281e487fd ("grep: optionally recurse into submodules",
-2016-12-16) for the initial addition of this code.
+    $ GIT_PERF_REPEAT_COUNT=10 GIT_PERF_LARGE_REPO=~/g/linux ./run p7820-grep-engines.sh
+    [...]
+    Test                                            this tree
+    ---------------------------------------------------------------
+    7820.1: basic grep 'how.to'                     0.34(1.24+0.53)
+    7820.2: extended grep 'how.to'                  0.33(1.23+0.45)
+    7820.3: perl grep 'how.to'                      0.31(1.05+0.56)
+    7820.5: basic grep '^how to'                    0.32(1.24+0.42)
+    7820.6: extended grep '^how to'                 0.33(1.20+0.44)
+    7820.7: perl grep '^how to'                     0.57(2.67+0.42)
+    7820.9: basic grep '[how] to'                   0.51(2.16+0.45)
+    7820.10: extended grep '[how] to'               0.49(2.20+0.43)
+    7820.11: perl grep '[how] to'                   0.56(2.60+0.43)
+    7820.13: basic grep '\(e.t[^ ]*\|v.ry\) rare'   0.66(3.25+0.40)
+    7820.14: extended grep '(e.t[^ ]*|v.ry) rare'   0.65(3.19+0.46)
+    7820.15: perl grep '(e.t[^ ]*|v.ry) rare'       1.05(5.74+0.34)
+    7820.17: basic grep 'm\(ú\|u\)lt.b\(æ\|y\)te'   0.34(1.28+0.47)
+    7820.18: extended grep 'm(ú|u)lt.b(æ|y)te'      0.34(1.38+0.38)
+    7820.19: perl grep 'm(ú|u)lt.b(æ|y)te'          0.39(1.56+0.44)
+
+Options can also be passed to git-grep via the GIT_PERF_7820_GREP_OPTS
+environment variable. There are various modes such as "-v" that have
+very different performance profiles, but handling the combinatorial
+explosion of testing all those options would make this script much
+more complex and harder to maintain. Instead just add the ability to
+do one-shot runs with arbitrary options, e.g.:
+
+    $ GIT_PERF_REPEAT_COUNT=10 GIT_PERF_LARGE_REPO=~/g/linux GIT_PERF_7820_GREP_OPTS=" -i" ./run p7820-grep-engines.sh
+    [...]
+    Test                                               this tree
+    ------------------------------------------------------------------
+    7820.1: basic grep -i 'how.to'                     0.49(1.72+0.38)
+    7820.2: extended grep -i 'how.to'                  0.46(1.64+0.42)
+    7820.3: perl grep -i 'how.to'                      0.44(1.45+0.45)
+    7820.5: basic grep -i '^how to'                    0.47(1.76+0.38)
+    7820.6: extended grep -i '^how to'                 0.47(1.70+0.42)
+    7820.7: perl grep -i '^how to'                     0.65(2.72+0.37)
+    7820.9: basic grep -i '[how] to'                   0.86(3.64+0.42)
+    7820.10: extended grep -i '[how] to'               0.84(3.62+0.46)
+    7820.11: perl grep -i '[how] to'                   0.73(3.06+0.39)
+    7820.13: basic grep -i '\(e.t[^ ]*\|v.ry\) rare'   1.63(8.13+0.36)
+    7820.14: extended grep -i '(e.t[^ ]*|v.ry) rare'   1.64(8.01+0.44)
+    7820.15: perl grep -i '(e.t[^ ]*|v.ry) rare'       1.44(6.88+0.44)
+    7820.17: basic grep -i 'm\(ú\|u\)lt.b\(æ\|y\)te'   0.66(2.67+0.44)
+    7820.18: extended grep -i 'm(ú|u)lt.b(æ|y)te'      0.66(2.67+0.43)
+    7820.19: perl grep -i 'm(ú|u)lt.b(æ|y)te'          0.59(2.31+0.37)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/grep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ t/perf/p7820-grep-engines.sh | 47 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+ create mode 100755 t/perf/p7820-grep-engines.sh
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 3ffb5b4e81..a191e2976b 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -495,6 +495,8 @@ static void compile_submodule_options(const struct grep_opt *opt,
- 		break;
- 	case GREP_PATTERN_TYPE_UNSPECIFIED:
- 		break;
-+	default:
-+		die("BUG: Added a new grep pattern type without updating switch statement");
- 	}
- 
- 	for (pattern = opt->pattern_list; pattern != NULL;
+diff --git a/t/perf/p7820-grep-engines.sh b/t/perf/p7820-grep-engines.sh
+new file mode 100755
+index 0000000000..a3a1b9fa28
+--- /dev/null
++++ b/t/perf/p7820-grep-engines.sh
+@@ -0,0 +1,47 @@
++#!/bin/sh
++
++test_description="Comparison of git-grep's regex engines
++
++Set GIT_PERF_7820_GREP_OPTS in the environment to pass options to
++git-grep. Make sure to include a leading space,
++e.g. GIT_PERF_7820_GREP_OPTS=' -i'. Some options to try:
++
++	-i
++	-w
++	-v
++	-vi
++	-vw
++	-viw
++"
++
++. ./perf-lib.sh
++
++test_perf_large_repo
++test_checkout_worktree
++
++for pattern in \
++	'how.to' \
++	'^how to' \
++	'[how] to' \
++	'\(e.t[^ ]*\|v.ry\) rare' \
++	'm\(ú\|u\)lt.b\(æ\|y\)te'
++do
++	for engine in basic extended perl
++	do
++		if test $engine != "basic"
++		then
++			# Poor man's basic -> extended converter.
++			pattern=$(echo "$pattern" | sed 's/\\//g')
++		fi
++		test_perf "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern'" "
++			git -c grep.patternType=$engine grep$GIT_PERF_7820_GREP_OPTS -- '$pattern' >'out.$engine' || :
++		"
++	done
++
++	test_expect_success "assert that all engines found the same for$GIT_PERF_7820_GREP_OPTS '$pattern'" "
++		test_cmp 'out.basic' 'out.extended' &&
++		test_cmp 'out.basic' 'out.perl'
++	"
++done
++
++test_done
 -- 
 2.13.0.303.g4ebf302169
 
