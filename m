@@ -2,82 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF437201A7
-	for <e@80x24.org>; Sat, 20 May 2017 16:55:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08F8F201A7
+	for <e@80x24.org>; Sat, 20 May 2017 17:00:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755824AbdETQzq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 12:55:46 -0400
-Received: from mout.web.de ([212.227.15.4]:57329 "EHLO mout.web.de"
+        id S1756187AbdETRAW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 13:00:22 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:53201 "EHLO bsmtp1.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755431AbdETQzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 12:55:45 -0400
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lx77p-1e11JO2z8b-016f2c; Sat, 20
- May 2017 18:55:19 +0200
-Subject: Re: [PATCH v2 4/6] fsmonitor: add test cases for fsmonitor extension
-To:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, benpeart@microsoft.com, pclouds@gmail.com,
-        johannes.schindelin@gmx.de, David.Turner@twosigma.com,
-        peff@peff.net
-References: <20170518201333.13088-1-benpeart@microsoft.com>
- <20170518201333.13088-5-benpeart@microsoft.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <da2523fc-e6ef-ff26-0449-83f8d46bed84@web.de>
-Date:   Sat, 20 May 2017 18:55:13 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.1.1
+        id S1755431AbdETRAV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 13:00:21 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wVWPv10Cfz5tlH;
+        Sat, 20 May 2017 19:00:18 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 965ED4323;
+        Sat, 20 May 2017 19:00:18 +0200 (CEST)
+Subject: Re: [PATCH] mingw: simplify PATH handling
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <c5b7292f-6367-e4a9-2ee0-96b93b1b587f@web.de>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <5d4f08c0-07e2-b59c-a132-d165a21323df@kdbg.org>
+Date:   Sat, 20 May 2017 19:00:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
-In-Reply-To: <20170518201333.13088-5-benpeart@microsoft.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <c5b7292f-6367-e4a9-2ee0-96b93b1b587f@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:F0Kx/FI13ELfc6/6o/qFOVAAqLMJ3d4IYz+ILj+5DGskoTBTODr
- w/NY0rUlBnbx865ub7zjbJ4fxLGNRlOR27WjywdaicPbQ04/SogqNMeqoZTSKoH+WoERyKI
- EfFSkkd1X/mAhcvPeS026ACIyIBRgt+wEAyk18/nDMcSP9tgx8uAHpHk6LXrUrTml+wcNt9
- IOf7E7VjwLZw0WW6u9qPw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MsVdEjzMmWA=:uXV3ehgjbzSiLlMm92Mvt0
- w6/4nr+5oGobYtB49Rx/WYX8PCi5DiGESWd9cfK+9HspVfrT7qUQJsqH+6vR1J1V40nVFN6u2
- m8wjELpamXsIcp4wEYrEpKd3EjLIaq6IsZ8uawoFel1Xxl+MudSZZpJqEZWWRq4miVaaC/zp6
- 6F1aygUBbKbyApvWNZ2nddbmhU9k8wg6tb2f8c63qGRxw4EWFFi+0Ipx9rTKrelA/H07OH/87
- yXDA7gOiChalEOpEcET85ZLiSSLvbY94MlDQcAbd+d5pC/r8FvLHZS8vkA1PS9zUd/kqoL+qB
- JvTjs7A1042Z0auSDmMUa9YNftpU5eDb/isHTHFx3opralZjeDkEsZK0ItqXfUeA38jqwpVRr
- nq0fqkZiWqA4jIMpAMGYKYBMHbmnYArcAzd5P0IYlPAAiC4bXqt6uaN43qVSUS8VtMe32fhgJ
- GHns0wlMw3sYBWBL7b0nZwVb+UHXWvij12newtBHNRn0lXIabKjb9/6VI3d56RUwN2PLDB3Wd
- vvYfRAWmQvPA+U1SOYaRH4z/DYr8JreVRXvzzD54pANBE2cS1rLNkFrD/qc5+rxar86oSLgEl
- 326bWXUgPoEMRNklWo3gxv62S2c1W0fsu+MjlQjTXAjYrqOqLMH07klMQ5MskZyh5xj+Ze29M
- Asn2dy/v2zbT50AabG144FcBQlWbGAbA6YKl7f6Mk2+jzhybPyMBtSlUv9Vj1TXttS6KlF7G+
- T9ADJGm+ozCIx8DiEMcV9Agd+fACM0DO0CuJffKbJ9ZuKWG58kQK3jtIwZ3jNfLde5NBrv+ko
- 6GaWjoz
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-> new file mode 100755
-> index 0000000000..d3cffc758f
-> --- /dev/null
-> +++ b/t/t7519-status-fsmonitor.sh
-> @@ -0,0 +1,153 @@
-> +#!/bin/sh
+Am 20.05.2017 um 17:29 schrieb René Scharfe:
+> -static char *path_lookup(const char *cmd, char **path, int exe_only)
+> +static char *path_lookup(const char *cmd, int exe_only)
+>   {
+> +	const char *path;
+>   	char *prog = NULL;
+>   	int len = strlen(cmd);
+>   	int isexe = len >= 4 && !strcasecmp(cmd+len-4, ".exe");
+>   
+>   	if (strchr(cmd, '/') || strchr(cmd, '\\'))
+> -		prog = xstrdup(cmd);
+> +		return xstrdup(cmd);
+>   
+> -	while (!prog && *path)
+> -		prog = lookup_prog(*path++, cmd, isexe, exe_only);
+> +	path = mingw_getenv("PATH");
+> +	if (!path)
+> +		return NULL;
 > +
-> +test_description='git status with file system watcher'
-> +
-> +. ./test-lib.sh
-> +
-> +clean_repo () {
-> +	git reset --hard HEAD
-> +	git clean -fd
-> +	rm marker -f
+> +	for (; !prog && *path; path++) {
+> +		const char *sep = strchrnul(path, ';');
+> +		if (sep == path)
+> +			continue;
+> +		prog = lookup_prog(path, sep - path, cmd, isexe, exe_only);
+> +		path = sep;
+> +	}
 
-This Works under Linux, but not e.g. Mac OS X. Should be
+The loop termination does not work here. When the final PATH component 
+is investigated, sep points to the NUL. This pointer is assigned to 
+path, which is incremented and now points one past NUL. Then the loop 
+condition (*path) accesses the char behind NUL.
 
-rm -f marker
+>   
+>   	return prog;
+>   }
+> @@ -1569,13 +1527,10 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaen
+>   	}
+>   
+>   	if (getenv("GIT_STRACE_COMMANDS")) {
+> -		char **path = get_path_split();
+> -		char *p = path_lookup("strace.exe", path, 1);
+> +		char *p = path_lookup("strace.exe", 1);
+>   		if (!p) {
+> -			free_path_split(path);
+>   			return error("strace not found!");
+>   		}
+> -		free_path_split(path);
+>   		if (xutftowcs_path(wcmd, p) < 0) {
+>   			free(p);
+>   			return -1;
 
-> +}
+Upstream does not have this hunk.
 
+Otherwise, good catch!
+
+-- Hannes
