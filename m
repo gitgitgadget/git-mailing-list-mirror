@@ -7,176 +7,118 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51B01201CF
-	for <e@80x24.org>; Sat, 20 May 2017 08:03:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 917BA201CF
+	for <e@80x24.org>; Sat, 20 May 2017 08:30:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754894AbdETID0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 04:03:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55142 "EHLO cloud.peff.net"
+        id S1752929AbdETIab (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 04:30:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55175 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753617AbdETIDR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 04:03:17 -0400
-Received: (qmail 17060 invoked by uid 109); 20 May 2017 08:03:14 -0000
+        id S1750831AbdETIa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 04:30:28 -0400
+Received: (qmail 19079 invoked by uid 109); 20 May 2017 08:30:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 20 May 2017 08:03:14 +0000
-Received: (qmail 315 invoked by uid 111); 20 May 2017 08:03:48 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 20 May 2017 08:30:27 +0000
+Received: (qmail 435 invoked by uid 111); 20 May 2017 08:31:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 20 May 2017 04:03:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 20 May 2017 04:03:12 -0400
-Date:   Sat, 20 May 2017 04:03:12 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 20 May 2017 04:31:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 20 May 2017 04:30:25 -0400
+Date:   Sat, 20 May 2017 04:30:25 -0400
 From:   Jeff King <peff@peff.net>
 To:     Chris West <solo-git-vger@goeswhere.com>
 Cc:     git@vger.kernel.org
-Subject: Re: die("bad object.. for duplicate tagged tag in remote
-Message-ID: <20170520080312.nwb277swvmpq7iq6@sigill.intra.peff.net>
+Subject: [PATCH] revision.c: ignore broken tags with ignore_missing_links
+Message-ID: <20170520083025.nv7hqwy6of3mkkjs@sigill.intra.peff.net>
 References: <20170519172856.GA14673@blind.goeswhere.com>
+ <20170520080312.nwb277swvmpq7iq6@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170519172856.GA14673@blind.goeswhere.com>
+In-Reply-To: <20170520080312.nwb277swvmpq7iq6@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 19, 2017 at 06:28:56PM +0100, Chris West wrote:
+When peeling a tag for prepare_revision_walk(), we do not
+respect the ignore_missing_links flag. This can lead to a
+bogus error when pack-objects walks the possibly-broken
+unreachable-but-recent part of the object graph.
 
-> If you have an annotated tag of an annotated tag, and `remote update`
-> elects not to fetch this tag (perhaps because it has a name collision
-> locally), then the repo ends up corrupt: you can't gc it, but fsck
-> doesn't notice.
-> 
-> Two repos, named "bad" and "good":
-> [...]
+The other link-following all happens via traverse_commit_list(),
+which explains why this case was missed. And our tests
+covered only broken links from commits. Let's be more
+comprehensive and cover broken tree entries (which do work)
+and tags (which shows off this bug).
 
-What version of git are you using? If I run this script:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+So here's the fix I showed earlier polished up as a real patch. I still
+think your patch to improve the error message is a good suggestion. I
+was going to just re-send it out on top of this, but I realized it was
+missing your signoff. Do you want to resend?
 
--- >8 --
-#!/bin/sh
+ revision.c                 |  2 +-
+ t/t6501-freshen-objects.sh | 27 ++++++++++++++++++++++++++-
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
-rm -rf good bad
+diff --git a/revision.c b/revision.c
+index 8a8c1789c..610638f2e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -230,7 +230,7 @@ static struct commit *handle_commit(struct rev_info *revs,
+ 			die("bad tag");
+ 		object = parse_object(tag->tagged->oid.hash);
+ 		if (!object) {
+-			if (flags & UNINTERESTING)
++			if (revs->ignore_missing_links || (flags & UNINTERESTING))
+ 				return NULL;
+ 			die("bad object %s", oid_to_hex(&tag->tagged->oid));
+ 		}
+diff --git a/t/t6501-freshen-objects.sh b/t/t6501-freshen-objects.sh
+index cf076dcd9..394b169ea 100755
+--- a/t/t6501-freshen-objects.sh
++++ b/t/t6501-freshen-objects.sh
+@@ -129,7 +129,7 @@ for repack in '' true; do
+ 	'
+ done
+ 
+-test_expect_success 'do not complain about existing broken links' '
++test_expect_success 'do not complain about existing broken links (commit)' '
+ 	cat >broken-commit <<-\EOF &&
+ 	tree 0000000000000000000000000000000000000001
+ 	parent 0000000000000000000000000000000000000002
+@@ -144,4 +144,29 @@ test_expect_success 'do not complain about existing broken links' '
+ 	test_must_be_empty stderr
+ '
+ 
++test_expect_success 'do not complain about existing broken links (tree)' '
++	cat >broken-tree <<-\EOF &&
++	100644 blob 0000000000000000000000000000000000000003	foo
++	EOF
++	tree=$(git mktree --missing <broken-tree) &&
++	git gc 2>stderr &&
++	git cat-file -e $tree &&
++	test_must_be_empty stderr
++'
++
++test_expect_success 'do not complain about existing broken links (tag)' '
++	cat >broken-tag <<-\EOF &&
++	object 0000000000000000000000000000000000000004
++	type commit
++	tag broken
++	tagger whatever <whatever@example.com> 1234 -0000
++
++	this is a broken tag
++	EOF
++	tag=$(git hash-object -t tag -w broken-tag) &&
++	git gc 2>stderr &&
++	git cat-file -e $tag &&
++	test_must_be_empty stderr
++'
++
+ test_done
+-- 
+2.13.0.234.g029c1392a
 
-git init bad
-cd bad
-git commit --allow-empty -m bad
-git tag -m 'bad inner' inner
-git tag -m 'bad outer' outer inner
-outer=$(git -C ../bad rev-parse outer)
-inner=$(git -C ../bad rev-parse inner)
-git tag -d inner
-cd ..
 
-git init good
-cd good
-git commit --allow-empty -m good
-git tag -m 'good outer' outer
-git remote add bad ../bad
-git fetch bad
-
-echo "===> outer is $outer"
-git cat-file tag $outer
-
-echo "===> inner is $inner"
-git cat-file tag $inner
--- >8 --
-
-then prior to Git v2.10.1, the final cat-file fails. But after it is
-fine. This is due to b773ddea2 (pack-objects: walk tag chains for
---include-tag, 2016-09-05), which dealt with this exact tag-of-tag case.
-
-In the real world, it would depend on which version of Git the server is
-running (the fix is on the pack-objects side).
-
-There's another interesting thing going on with the fsck/gc thing,
-though. The fetching repo isn't actually corrupt. The guarantee that Git
-makes is that we have the complete graph of anything that's reachable
-from a ref, not that we might not have stray objects (though it does try
-to avoid breaking even unreachable parts of history, as I'll explain in
-a moment). And that's what's happening here; the client gets "outer" but
-it's not actually reachable.
-
-So what happens in your case in more detail is:
-
-  1. git-fetch sends the include-tag capability to the server, asking it
-     to include tags that point to whatever we're fetching (master in
-     this case)
-
-  2. The server sees that "outer" eventually points to what the client
-     is fetching and adds it. It doesn't do the same for "inner" because
-     it no longer has a tag ref pointing at it. And because it is
-     pre-v2.10.1, it doesn't walk the full chain of "outer", and so
-     never considers "inner" at all.
-
-  3. The next step would normally be for git-fetch to realize that it's
-     missing an object and backfill tags with a followup request. But
-     since it already has its own unrelated "outer", it knows it doesn't
-     need "outer" and doesn't bother looking at it.
-
-     So now we have "outer" in the object store (because the server
-     thought we might need it), but we never actually pointed a ref at
-     it.
-
-And that explains your fsck result:
-
-> $ git fsck
-> ...
-> dangling tag 07070...
-
-We have the object, but nobody points to it.
-
-> I actually don't get that on the real repo, but do on this testcase. Hmm.
-> `git fsck` exits with success here. This is bad, as the object graph is
-> incomplete?
-
-No, that outcome is correct. The interesting thing is that your
-real-world case probably _does_ have a ref pointing at it (if it's not
-getting a dangling-tag). I don't know how that got there, though. The
-original case that motivated the fix in v2.10.1 was cloning with a
-single branch, like:
-
-  git clone --single-branch --no-local bad broken
-
-but that results in the clone failing, not a corrupt repo. Is it
-possible you or somebody else then ran something like:
-
-  git update-ref refs/tags/other-outer $outer_sha1
-
-after the fetch? That would reference the broken part of the graph, and
-the repository is corrupt at that point.
-
-> $ git gc
-> fatal: bad object 03030303...
-> error: failed to run repack
-
-So this is where I think there might be room for improvement, even with
-current versions of git.  Traditionally, we wouldn't try to traverse or
-pack that unreferenced part of the object graph. But since v2.2.0, we
-traverse any objects that are "recent" (within the 2-week
-prune-expiration timestamp) to try to keep whole chunks of the graph
-intact (ironically, to prevent problems like the update-ref I showed
-above).
-
-We use the "ignore_missing_links" flag to tell the traversal that this
-is best-effort (i.e., we try to retain unreachable history if we can,
-but if it's already broken there's nothing we can do). So I wouldn't be
-surprised to find that we correctly respect that flag when following
-parent and tree links, but not in tags.
-
-> diff --git a/revision.c b/revision.c
-> index 8a8c178..22b6021 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -232,7 +232,8 @@ static struct commit *handle_commit(struct rev_info *revs,
->  		if (!object) {
->  			if (flags & UNINTERESTING)
->  				return NULL;
-> -			die("bad object %s", oid_to_hex(&tag->tagged->oid));
-> +			die("bad tagged object %s in %s", oid_to_hex(&tag->tagged->oid),
-> +						oid_to_hex(&tag->object.oid));
->  		}
-
-I agree this is an improvement. And that "if" in the context lines is
-almost certainly the culprit. It should also trigger when
-revs->ignore_missing_links is set.
-
--Peff
