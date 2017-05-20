@@ -2,90 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 576AB201A7
-	for <e@80x24.org>; Sat, 20 May 2017 21:16:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 197FE201A7
+	for <e@80x24.org>; Sat, 20 May 2017 21:25:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755096AbdETVQP (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 17:16:15 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:36762 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753856AbdETVQO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 17:16:14 -0400
-Received: from [10.0.2.15] ([143.159.212.80])
-        by avasout07 with smtp
-        id NlGA1v0071keHif01lGBbf; Sat, 20 May 2017 22:16:12 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
- a=IkcTkHD0fZMA:10 a=gdoHADL5AAAA:8 a=5D-dG0KQFcBTO_saTsQA:9 a=QEXdDO2ut3YA:10
- a=DclRd9yUzMzvIfv12z_R:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] name-rev: use larger timestamp for is_better_name
-To:     Eric Wong <e@80x24.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
-References: <20170520203649.GA13079@untitled>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <fe9ca677-1f38-4b61-a610-9f8ab014daff@ramsayjones.plus.com>
-Date:   Sat, 20 May 2017 22:16:10 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1755988AbdETVZX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 17:25:23 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:33554 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755825AbdETVZW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 17:25:22 -0400
+Received: by mail-pf0-f175.google.com with SMTP id e193so54581429pfh.0
+        for <git@vger.kernel.org>; Sat, 20 May 2017 14:25:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tu3pWj7NCvdRBy8qxjxzrnMGklLQyd58p4+FoMJ8oiw=;
+        b=NvBiGHSm3w0uBA2LCdhWE8ILIkGtj0Q7M2BIktUwTGUUjsSYKM4kIV3eZZX8VOWFzH
+         8HawBzRCXGPfkPNFK16mwSrOCNvGQc4a7unGU4sfQHkCfihGFoeI02Tfgb8snSHCBqvR
+         5X+p+CYQNO3ZfM7B/FtpEKWxud+oPJouRU82S/IkS0kUIoOl8nIVfRloZNXGu8yQZD6E
+         mVfq9MoVMtqtGCJclEbfZP19qQ0fz7tmxE7N68rk9WygvcKnKsTR5cYwNAAiRai5/GiY
+         17Qsz/GDeQoFfqLxDNEWUQyoYUiLEoVIlaWSDe7ObfTlkF9OBzNOEui/JqcJYdqxepka
+         ZxpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tu3pWj7NCvdRBy8qxjxzrnMGklLQyd58p4+FoMJ8oiw=;
+        b=tu4S2FRTSH/c7Zg6XZDAwCnpobc/gbkaQdPozg3+xFSSY9tXgjrGccdW+vFMopFFIR
+         LkwByhM41wjFnb/VM37+vMhB9koZTfUbHAf9b6d8xxEYMmI0k8PonkfWvKEzMfsiDNQ2
+         yQZfzBzsHXgIWYUzPo5de7yAZpOH6GjcSy7CGiBDSgDOwN/pYUrS2f6IT14FEtrWTIIs
+         DZtlIfJyWxj8pBoxs9K+RElUFoNVzR86u3dQUCpcukaxi1aOmReTTjaFB+Wxnj1/fbSt
+         ut7kmqTuYMDKw+xbqRFspB6q6otMq9ewW18mC0swnfEeDRppYXaz7XHNfA9DXFINHuPE
+         EV3Q==
+X-Gm-Message-State: AODbwcB8QgYPIkq6uWS7KUOZrQnssmOdBfX2Lg8PJSEdc6b0RkrjHmro
+        wCxv25fBqN/x6qYU1l8VZcXeEXa4+iB1D+1NOA==
+X-Received: by 10.98.148.2 with SMTP id m2mr17391265pfe.194.1495315521323;
+ Sat, 20 May 2017 14:25:21 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170520203649.GA13079@untitled>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 10.100.170.200 with HTTP; Sat, 20 May 2017 14:25:20 -0700 (PDT)
+In-Reply-To: <20170518232134.163059-18-bmwill@google.com>
+References: <20170518232134.163059-1-bmwill@google.com> <20170518232134.163059-18-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Sat, 20 May 2017 14:25:20 -0700
+Message-ID: <CAGZ79kZoCkrF_ruzkpULQVSZ7=WEgFP+8PcgDhacWBh7ZCac5Q@mail.gmail.com>
+Subject: Re: [WIP/RFC 17/23] repo: introduce new repository object
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, May 18, 2017 at 4:21 PM, Brandon Williams <bmwill@google.com> wrote:
+> Introduce 'struct repo' an object used to represent a repository.
 
+Is this the right place to outline what you expect from a repo object?
+Are you planning to use it everywhere?
+Is it lazy-init'd and it takes care of it itself, or would the caller
+have to take
+care of the state of the repo? ("the repo object is just a place to put the
+current globals")
 
-On 20/05/17 21:36, Eric Wong wrote:
-> This fixes t4202 for me at "44 - log --graph with full output"
-> on 32-bit x86.
-> 
-> Signed-off-by: Eric Wong <e@80x24.org>
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
 > ---
->  This is for pu, I'm still using the machine I used git with in 2005 :)
-> 
->  builtin/name-rev.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index f06498524..35409c03b 100644
-> --- a/builtin/name-rev.c
-> +++ b/builtin/name-rev.c
-> @@ -27,7 +27,7 @@ static const char *prio_names[] = {
->  
->  static int is_better_name(struct rev_name *name,
->  			  const char *tip_name,
-> -			  unsigned long taggerdate,
-> +			  timestamp_t taggerdate,
->  			  int generation,
->  			  int distance,
->  			  int from_tag)
-> 
+>  Makefile |  1 +
+>  repo.c   | 42 ++++++++++++++++++++++++++++++++++++++++++
+>  repo.h   | 15 +++++++++++++++
+>  3 files changed, 58 insertions(+)
+>  create mode 100644 repo.c
+>  create mode 100644 repo.h
+>
+> diff --git a/Makefile b/Makefile
+> index e35542e63..a49d2f96a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -821,6 +821,7 @@ LIB_OBJS += refs/ref-cache.o
+>  LIB_OBJS += ref-filter.o
+>  LIB_OBJS += remote.o
+>  LIB_OBJS += replace_object.o
+> +LIB_OBJS += repo.o
+>  LIB_OBJS += rerere.o
+>  LIB_OBJS += resolve-undo.o
+>  LIB_OBJS += revision.o
+> diff --git a/repo.c b/repo.c
+> new file mode 100644
+> index 000000000..d47e98d95
+> --- /dev/null
+> +++ b/repo.c
+> @@ -0,0 +1,42 @@
+> +#include "cache.h"
+> +#include "repo.h"
+> +
+> +int
+> +repo_init(struct repo *repo, const char *gitdir, const char *worktree)
 
-Heh, you seem to be a little ahead of me. :-D
+style ;)
 
-I test on 32-bit Linux from time to time, and tonight's 'pu'
-branch fails t4202.44, t6007.2,5-6,12-13,16, t6012.2-11,
-t6111.2-65. I bisected the t4202 failure to a merge commit
-(99d31e1378, merge branch 'jc/name-rev-lw-tag') and I spotted
-the 'unsigned long' taggerdate parameter to the is_better_name()
-function.
 
-I was just about to try the patch above and retest, when I saw
-your email! (so I can leave that for tonight).
+> +       /* Maybe need a check to verify that a worktree is indeed a worktree? */
 
-Thanks!
+add NEEDSWORK/FIXME prefix to comment?
 
-ATB,
-Ramsay Jones
+> +void
+> +repo_clear(struct repo *repo)
 
+style ;)
