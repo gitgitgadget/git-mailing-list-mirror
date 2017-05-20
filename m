@@ -8,47 +8,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15E53201A7
-	for <e@80x24.org>; Sat, 20 May 2017 21:43:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FFDA202B1
+	for <e@80x24.org>; Sat, 20 May 2017 21:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756392AbdETVnd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 17:43:33 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:33648 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932211AbdETVnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 17:43:21 -0400
-Received: by mail-wr0-f195.google.com with SMTP id w50so5750755wrc.0
-        for <git@vger.kernel.org>; Sat, 20 May 2017 14:43:20 -0700 (PDT)
+        id S1756446AbdETVnh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 17:43:37 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36576 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756358AbdETVne (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 17:43:34 -0400
+Received: by mail-wm0-f66.google.com with SMTP id k15so23158558wmh.3
+        for <git@vger.kernel.org>; Sat, 20 May 2017 14:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ba8s41cz5c5VOj8gWS3nLYxWBH6HVZzf8VHUSmmQzUw=;
-        b=u/VfdEiifItif+SA73xOKgzOGzVHuohTn2zwnNf5lKOZPgEEHqkpQ1k9/ZVmR7od4G
-         FSgMqNsEdNO2fWm5m7SAP4vBShPUwZ6tnNwMQpLxtUE7KM9PMou2Mem6qit1Nt+11m1J
-         A60/6JsBs/qgT7SMO0rNxj7vd7n981u5esXK2DIx3+VMCpR/frAFhE8+neDEtU9kirey
-         yPcEqo/+pEoB9t4L4bUj2d5wgCh15tpS4uLCyhR6RtkZxHi/3xFeRL4ut3uDFalp9k8C
-         SxBE6f+2oISHiN5FrsVBmyYN88tG6X78369rWg0jJFUW1PL7RZf9yrTI1bMtMpTWmnS5
-         5Szg==
+        bh=EX5ivpJheWgXOzB1LZI795t1Iejj+9y87d5e5e9Rsgo=;
+        b=UvhpbGc2BdsHpZe6wHXDut0+yvUF36Yyrn2C7dZiNVjbGmDCTIG1GslfLPKdsU56Tn
+         jKKA1XOCQdpeDw1HKWEWUjq3cAAfhgCHf0wDY/fXXd52TRhRtx1+XkaneLQgLSrVfWJu
+         ND4UKVIo/8UqFXFZF+oacBaF+1Zk1yJXB1yTCG464mLIWLp70F8dtmJRhOBM95uo1JD2
+         5dqDwTfD07ykSkoXaQE5P+X3uvri8YYOKuCbt7iZy0Jaci163CdOkkD9Ne8cV23R9sPA
+         6VnmyAdptLykYVOB2WzhM+naiWjTP4Jr8lcxnt12AH62MyRWGAGDDZZ6Z3TRgK4Bci1a
+         SWuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ba8s41cz5c5VOj8gWS3nLYxWBH6HVZzf8VHUSmmQzUw=;
-        b=D+/CbEuFZ6xwiCKen1vtYTRWLfgecJm9RnXjJnqdPNpa+zMhomcliEJjb07Wp8nDTp
-         0UHKBt4rtuS8O92PqqrRC2GliS+vU4F4BscEOH6IcW6ry/00J9mLApAJ0LTb/EcsMRac
-         lkkHWun0RQ8NvDn9E22h2tbRv+/oVxc1v59f1iPiSkayxVR19ZvbYI3Om8+NemAhBRem
-         C2W7TVdISBDI6qe1Qixl9j7+W0bOEbydvzGpHVvjp8mZpK2H6p7QuXJBXys7E5cb+6Ui
-         kglJPTrZJz+tCgSyXdqUIBdhtAkekgWBSTx1qjyMyRM7DA5J5DcARWEszyV6405eZCGx
-         5MMA==
-X-Gm-Message-State: AODbwcAEYgKe846YzaIz/Oe/oSKJ+DMibdjUFGWhpg3XGFVr/k4Fuwyo
-        rHIlNkzw+X9HBw==
-X-Received: by 10.223.145.162 with SMTP id 31mr7433835wri.43.1495316599861;
-        Sat, 20 May 2017 14:43:19 -0700 (PDT)
+        bh=EX5ivpJheWgXOzB1LZI795t1Iejj+9y87d5e5e9Rsgo=;
+        b=WHHTSqy1JPa8VCAfgFt6L+2vKn15kYHI4rL6Ydqb35q0Q0xuz1dYp09mGVO40DWgs8
+         xj0aDJHpNS+tq1LOsq9g6OSJE12vgitCYSh+lkoc+CGPT42qVXEVqjXbUBWuoHD6d4b+
+         Y8Q5fYGJmsfAL5h6FxiabdZMyuPOB799peWV/KKbHr3PFvpzThgP41sBtvDX82qoGuT8
+         qNbA7fl+r5vsexfv8sudNBjoP0BFmMZJ+Tl5UfQkMigJiPW5s3HQHhtVEm5Oz/yWlvhy
+         Q0DP2h1mQx8IyxbpaLMMmiTFRTx562sWHmS4WEOGXCPjnj+Zkgc8PxeY2UzUovTlUlTO
+         4BXA==
+X-Gm-Message-State: AODbwcCjl3KGlLvLiqp+BYPgX957rtXc7Mv3mDuRyVhnKlOL0/7dNDfL
+        6jlsWxJllYLXFw==
+X-Received: by 10.28.175.136 with SMTP id y130mr10221128wme.112.1495316611827;
+        Sat, 20 May 2017 14:43:31 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e73sm25666835wmd.1.2017.05.20.14.43.18
+        by smtp.gmail.com with ESMTPSA id e73sm25666835wmd.1.2017.05.20.14.43.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 May 2017 14:43:18 -0700 (PDT)
+        Sat, 20 May 2017 14:43:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 15/30] perf: add a GIT_PERF_MAKE_COMMAND for when *_MAKE_OPTS won't do
-Date:   Sat, 20 May 2017 21:42:18 +0000
-Message-Id: <20170520214233.7183-16-avarab@gmail.com>
+Subject: [PATCH v3 18/30] perf: add a comparison test of grep regex engines with -F
+Date:   Sat, 20 May 2017 21:42:21 +0000
+Message-Id: <20170520214233.7183-19-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170520214233.7183-1-avarab@gmail.com>
 References: <20170520214233.7183-1-avarab@gmail.com>
@@ -76,98 +76,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a git GIT_PERF_MAKE_COMMAND variable to compliment the existing
-GIT_PERF_MAKE_OPTS facility. This allows specifying an arbitrary shell
-command to execute instead of 'make'.
+Add a performance comparison test which compares both case-sensitive &
+case-insensitive fixed-string grep, as well as non-ASCII
+case-sensitive & case-insensitive grep.
 
-This is useful e.g. in cases where the name, semantics or defaults of
-a Makefile flag have changed over time. It can even be used to change
-the contents of the tree, useful for monkeypatching ancient versions
-of git to get them to build.
+    $ GIT_PERF_REPEAT_COUNT=10 GIT_PERF_LARGE_REPO=~/g/linux ./run p7821-grep-engines-fixed.sh
+    [...]
+    Test                             this tree
+    ------------------------------------------------
+    7821.1: fixed grep int           0.61(1.72+0.65)
+    7821.2: basic grep int           0.69(1.72+0.53)
+    7821.3: extended grep int        0.60(1.72+0.54)
+    7821.4: perl grep int            0.65(1.65+0.64)
+    7821.6: fixed grep uncommon      0.25(0.53+0.48)
+    7821.7: basic grep uncommon      0.26(0.57+0.46)
+    7821.8: extended grep uncommon   0.25(0.52+0.51)
+    7821.9: perl grep uncommon       0.26(0.56+0.48)
+    7821.11: fixed grep æ            0.40(1.26+0.44)
+    7821.12: basic grep æ            0.40(1.28+0.43)
+    7821.13: extended grep æ         0.39(1.28+0.44)
+    7821.14: perl grep æ             0.39(1.29+0.44)
 
-This opens Pandora's box in some ways, it's now possible to
-"jailbreak" the perf environment and e.g. modify the source tree via
-this arbitrary instead of just issuing a custom "make" command, such a
-command has to be re-entrant in the sense that subsequent perf runs
-will re-use the possibly modified tree.
+This test needs to be run with GIT_PERF_7821_GREP_OPTS=' -i' to avoid
+going through the same kwset.[ch] codepath, see the "Even when -F..."
+comment in grep.c:
 
-It would be pointless to try to mitigate or work around that caveat in
-a tool purely aimed at Git developers, so this change makes no attempt
-to do so.
+    $ GIT_PERF_REPEAT_COUNT=10 GIT_PERF_LARGE_REPO=~/g/linux GIT_PERF_7821_GREP_OPTS=' -i' ./run p7821-grep-engines-fixed.sh
+    [...]
+    Test                                this tree
+    ---------------------------------------------------
+    7821.1: fixed grep -i int           1.55(1.86+0.66)
+    7821.2: basic grep -i int           0.66(1.97+0.54)
+    7821.3: extended grep -i int        0.72(1.88+0.62)
+    7821.4: perl grep -i int            0.75(1.93+0.57)
+    7821.6: fixed grep -i uncommon      0.27(0.52+0.54)
+    7821.7: basic grep -i uncommon      0.25(0.58+0.44)
+    7821.8: extended grep -i uncommon   0.26(0.62+0.43)
+    7821.9: perl grep -i uncommon       0.26(0.55+0.53)
+    7821.11: fixed grep -i æ            0.32(0.87+0.46)
+    7821.12: basic grep -i æ            0.30(0.90+0.41)
+    7821.13: extended grep -i æ         0.32(0.92+0.41)
+    7821.14: perl grep -i æ             0.29(0.71+0.53)
+
+I'm planning to make that not be the case, this performance test gives
+a baseline for comparing performance before & after any such change.
+
+See commit ("perf: add a comparison test of grep regex engines",
+2017-04-19) for details on the machine the above test run was executed
+on.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile      |  3 +++
- t/perf/README | 19 +++++++++++++++++--
- t/perf/run    | 11 +++++++++--
- 3 files changed, 29 insertions(+), 4 deletions(-)
+ t/perf/p7821-grep-engines-fixed.sh | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+ create mode 100755 t/perf/p7821-grep-engines-fixed.sh
 
-diff --git a/Makefile b/Makefile
-index eedadb8056..d1587452f1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2272,6 +2272,9 @@ endif
- ifdef GIT_PERF_MAKE_OPTS
- 	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@+
- endif
-+ifdef GIT_PERF_MAKE_COMMAND
-+	@echo GIT_PERF_MAKE_COMMAND=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_COMMAND)))'\' >>$@+
-+endif
- ifdef GIT_INTEROP_MAKE_OPTS
- 	@echo GIT_INTEROP_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_INTEROP_MAKE_OPTS)))'\' >>$@+
- endif
-diff --git a/t/perf/README b/t/perf/README
-index 49ea4349be..b3d95042a8 100644
---- a/t/perf/README
-+++ b/t/perf/README
-@@ -60,8 +60,23 @@ You can set the following variables (also in your config.mak):
- 
-     GIT_PERF_MAKE_OPTS
- 	Options to use when automatically building a git tree for
--	performance testing.  E.g., -j6 would be useful.
--
-+	performance testing. E.g., -j6 would be useful. Passed
-+	directly to make as "make $GIT_PERF_MAKE_OPTS".
+diff --git a/t/perf/p7821-grep-engines-fixed.sh b/t/perf/p7821-grep-engines-fixed.sh
+new file mode 100755
+index 0000000000..d935194ecf
+--- /dev/null
++++ b/t/perf/p7821-grep-engines-fixed.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
 +
-+    GIT_PERF_MAKE_COMMAND
-+	An arbitrary command that'll be run in place of the make
-+	command, if set the GIT_PERF_MAKE_OPTS variable is
-+	ignored. Useful in cases where source tree changes might
-+	require issuing a different make command to different
-+	revisions.
++test_description="Comparison of git-grep's regex engines with -F
 +
-+	This can be (ab)used to monkeypatch or otherwise change the
-+	tree about to be built. Note that the build directory can be
-+	re-used for subsequent runs so the make command might get
-+	executed multiple times on the same tree, but don't count on
-+	any of that, that's an implementation detail that might change
-+	in the future.
-+ 
-     GIT_PERF_REPO
-     GIT_PERF_LARGE_REPO
- 	Repositories to copy for the performance tests.  The normal
-diff --git a/t/perf/run b/t/perf/run
-index c788d713ae..b61024a830 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -37,8 +37,15 @@ build_git_rev () {
- 			cp "../../$config" "build/$rev/"
- 		fi
- 	done
--	(cd build/$rev && make $GIT_PERF_MAKE_OPTS) ||
--	die "failed to build revision '$mydir'"
-+	(
-+		cd build/$rev &&
-+		if test -n "$GIT_PERF_MAKE_COMMAND"
-+		then
-+			sh -c "$GIT_PERF_MAKE_COMMAND"
-+		else
-+			make $GIT_PERF_MAKE_OPTS
-+		fi
-+	) || die "failed to build revision '$mydir'"
- }
- 
- run_dirs_helper () {
++Set GIT_PERF_7821_GREP_OPTS in the environment to pass options to
++git-grep. Make sure to include a leading space,
++e.g. GIT_PERF_7821_GREP_OPTS=' -w'. See p7820-grep-engines.sh for more
++options to try.
++"
++
++. ./perf-lib.sh
++
++test_perf_large_repo
++test_checkout_worktree
++
++for args in 'int' 'uncommon' 'æ'
++do
++	for engine in fixed basic extended perl
++	do
++		test_perf "$engine grep$GIT_PERF_7821_GREP_OPTS $args" "
++			git -c grep.patternType=$engine grep$GIT_PERF_7821_GREP_OPTS $args >'out.$engine.$args' || :
++		"
++	done
++
++	test_expect_success "assert that all engines found the same for$GIT_PERF_7821_GREP_OPTS $args" "
++		test_cmp 'out.fixed.$args' 'out.basic.$args' &&
++		test_cmp 'out.fixed.$args' 'out.extended.$args' &&
++		test_cmp 'out.fixed.$args' 'out.perl.$args'
++	"
++done
++
++test_done
 -- 
 2.13.0.303.g4ebf302169
 
