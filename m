@@ -8,47 +8,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D426201A7
-	for <e@80x24.org>; Sat, 20 May 2017 21:43:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB1B5201A7
+	for <e@80x24.org>; Sat, 20 May 2017 21:44:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756523AbdETVnz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 20 May 2017 17:43:55 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:35530 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756513AbdETVnu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 20 May 2017 17:43:50 -0400
-Received: by mail-wr0-f194.google.com with SMTP id g12so5761208wrg.2
-        for <git@vger.kernel.org>; Sat, 20 May 2017 14:43:44 -0700 (PDT)
+        id S932336AbdETVn6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 20 May 2017 17:43:58 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:35546 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753903AbdETVny (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 20 May 2017 17:43:54 -0400
+Received: by mail-wr0-f195.google.com with SMTP id g12so5761340wrg.2
+        for <git@vger.kernel.org>; Sat, 20 May 2017 14:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9k3ucbHMPEBwDQm4JKKfeyroezbzDYoKpY6jLbmztis=;
-        b=HJ60O9KoOP92YjrVO5UOIOn2eCz4x797rdHE6jsHpZROhdnb11KgY/yaB+8YFQGjj5
-         gUv13c8RE72/xv7+kJrn240FS0CaZBHeyTeq5nYRhOGeYvGtQOp554HbdzuGT+YhDd4j
-         Hk3XU8EpS0ODa0SHpPW8oSyAhju3nl8Bj/6o+BRANQ3Phhrn4kVaYMmvYdaDW2vmZGS1
-         fSxP6hCGa2DKnfuhQHNxFx/v4kbpkVdz5Rft5J1SfoauKCKvqfYoojGBZ/3A5muGgZkd
-         Hy5EAurIG+QLKUcbJZRApiRBueyky04FAeKlH12wmAlMvopuiiG76OCfrVcxACCX55re
-         flwg==
+        bh=fO0avBZSlefSdPICPn7L/RdXOefPOca+Hygd7v6vvtE=;
+        b=MwH1XBnmlLtmYw2Cl/UVVb6kMJuTrzwyw4k3lnsd7yJpiSEPDapIxm+QhZQUWLOUiL
+         IljjluqHoWQ+YXXV7OFKr9zaLoeZ7/8IJ98rtjvvR/ZQYmgZN+4Q9Qg+s4pZ27zh3lyW
+         1U1joi3GgTw1WDwThmE2TwiQPJuLZU9GimhP/t2o67e5szoFO6rkllYN/IpCnCRNPW0D
+         uLbTIh4jBQv92t8HiLRTPmT2INMIQtO+H/13QMekdJlDGpwaRYtKo5b7JyPUDKf+Ifcf
+         ceh/89vTBi/ff3qWZor8GwkJsQY//rz43Wki0OMW1NTcxFr8ASEvzoQIK6EfU/rp8yFE
+         j2yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9k3ucbHMPEBwDQm4JKKfeyroezbzDYoKpY6jLbmztis=;
-        b=omNPdrD+R5qKC0Vn7v/exDkHaSrEaYQP/GSE8uHm6MM4pWyU9+6EBp9AYT8CcMe5ZQ
-         7WsycVzsvc5WXfSiBGPKZipYC97VxtzqhyJCHcarpFNEdJCVnnLF4dShmXCpkOgLCBV+
-         MGvrZUmN/guI7Fg+wCT96jaSiQQPGTbB22iW1FfM5MZ8LUfs46DZEfERz/FGbHXcnK7n
-         nCqkF8lwMCh7jHfa+b7iw5+xFEoDX0iTvxnawXnqgC3O+MZy6sQO1E2SzdJMCjZJqUNa
-         +JUssnBuBe1zFfIc1ZRLtXqcRc3jj7QN2EEniZOn9iTDgdTm/dHyp5dPFz5lEDdPcAQ/
-         biNA==
-X-Gm-Message-State: AODbwcAJ9Qls4gdThSVbns4yjoshVH4tU0+idQQkUro/AJc+O4LwxIlJ
-        NrhI/aEeyIZRWA==
-X-Received: by 10.223.183.16 with SMTP id l16mr7901031wre.42.1495316623947;
-        Sat, 20 May 2017 14:43:43 -0700 (PDT)
+        bh=fO0avBZSlefSdPICPn7L/RdXOefPOca+Hygd7v6vvtE=;
+        b=lC4GN7kzgVUh9Kyupya99IrniAVCcWzEPsnehd/epQ7noQT0/nO3jvT+J4bGDOfc4N
+         IGx2v8sIVRjBnKi0aciaBIpw9f7dXH/xjzb1dvlL4eOyhb4c7h2SIxv7adkBbz22kwbr
+         5vE9eXL4jUEyzByGpU5ZsqUX1qDmxsvm2Fh7fhGqKVyWdjhfO+YxusgW+9Qn9qRagwcY
+         puUeAA/r4kncPKd5Ioieog1Ei6In5U27BDTF5MhnDvKq4LZLkhw8Ww9effTMYOSxl7RD
+         rrRtxkaes8hmB3vslupD5GjuLYkU4NVEf+ZsISO3U5lFbrAcVj2Kmp+0e5JfSk5/byHD
+         CPoQ==
+X-Gm-Message-State: AODbwcAnICY1HxmQ8VWdoaF2WNxfc9fXBsUAbZ5+g8iqYJbNiLEFb0Ez
+        xk9jTrg/0fvbOg==
+X-Received: by 10.223.135.84 with SMTP id 20mr7922528wrz.141.1495316632859;
+        Sat, 20 May 2017 14:43:52 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e73sm25666835wmd.1.2017.05.20.14.43.42
+        by smtp.gmail.com with ESMTPSA id e73sm25666835wmd.1.2017.05.20.14.43.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 20 May 2017 14:43:43 -0700 (PDT)
+        Sat, 20 May 2017 14:43:51 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 22/30] grep: factor test for \0 in grep patterns into a function
-Date:   Sat, 20 May 2017 21:42:25 +0000
-Message-Id: <20170520214233.7183-23-avarab@gmail.com>
+Subject: [PATCH v3 25/30] grep: move is_fixed() earlier to avoid forward declaration
+Date:   Sat, 20 May 2017 21:42:28 +0000
+Message-Id: <20170520214233.7183-26-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170520214233.7183-1-avarab@gmail.com>
 References: <20170520214233.7183-1-avarab@gmail.com>
@@ -76,66 +76,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor the test for \0 in grep patterns into a function. Since commit
-9eceddeec6 ("Use kwset in grep", 2011-08-21) any pattern containing a
-\0 is considered fixed as regcomp() can't handle it.
-
-This change makes later changes that make use of either has_null() or
-is_fixed() (but not both) smaller.
-
-While I'm at it make the comment conform to the style guide, i.e. add
-an opening "/*\n".
+Move the is_fixed() function which are currently only used in
+compile_regexp() earlier so it can be used in the PCRE family of
+functions in a later change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ grep.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index bf6c2494fd..79eb681c6e 100644
+index 07512346b1..1157529115 100644
 --- a/grep.c
 +++ b/grep.c
 @@ -321,6 +321,18 @@ static NORETURN void compile_regexp_failed(const struct grep_pat *p,
  	die("%s'%s': %s", where, p->pattern, error);
  }
  
-+static int has_null(const char *s, size_t len)
++static int is_fixed(const char *s, size_t len)
 +{
-+	/*
-+	 * regcomp cannot accept patterns with NULs so when using it
-+	 * we consider any pattern containing a NUL fixed.
-+	 */
-+	if (memchr(s, 0, len))
-+		return 1;
++	size_t i;
 +
-+	return 0;
++	for (i = 0; i < len; i++) {
++		if (is_regex_special(s[i]))
++			return 0;
++	}
++
++	return 1;
 +}
 +
- #ifdef USE_LIBPCRE
- static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ static int has_null(const char *s, size_t len)
  {
-@@ -394,12 +406,6 @@ static int is_fixed(const char *s, size_t len)
- {
- 	size_t i;
+ 	/*
+@@ -402,18 +414,6 @@ static void free_pcre1_regexp(struct grep_pat *p)
+ }
+ #endif /* !USE_LIBPCRE1 */
  
--	/* regcomp cannot accept patterns with NULs so we
--	 * consider any pattern containing a NUL fixed.
--	 */
--	if (memchr(s, 0, len))
--		return 1;
+-static int is_fixed(const char *s, size_t len)
+-{
+-	size_t i;
 -
- 	for (i = 0; i < len; i++) {
- 		if (is_regex_special(s[i]))
- 			return 0;
-@@ -451,7 +457,7 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 	 * simple string match using kws.  p->fixed tells us if we
- 	 * want to use kws.
- 	 */
--	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
-+	if (opt->fixed || has_null(p->pattern, p->patternlen) || is_fixed(p->pattern, p->patternlen))
- 		p->fixed = !icase || ascii_only;
- 	else
- 		p->fixed = 0;
+-	for (i = 0; i < len; i++) {
+-		if (is_regex_special(s[i]))
+-			return 0;
+-	}
+-
+-	return 1;
+-}
+-
+ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
 -- 
 2.13.0.303.g4ebf302169
 
