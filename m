@@ -2,62 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A47A201CF
-	for <e@80x24.org>; Sun, 21 May 2017 13:42:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D73C72028A
+	for <e@80x24.org>; Sun, 21 May 2017 14:11:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751474AbdEUNmb (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 May 2017 09:42:31 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36721 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751198AbdEUNma (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 May 2017 09:42:30 -0400
-Received: by mail-pf0-f194.google.com with SMTP id n23so14526221pfb.3
-        for <git@vger.kernel.org>; Sun, 21 May 2017 06:42:30 -0700 (PDT)
+        id S1753956AbdEUOLV (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 May 2017 10:11:21 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36039 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750937AbdEUOLU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 May 2017 10:11:20 -0400
+Received: by mail-pf0-f195.google.com with SMTP id n23so14570657pfb.3
+        for <git@vger.kernel.org>; Sun, 21 May 2017 07:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
         bh=CgsbrqCTWHqai8Ouhvg8/jO2D3KpEsR2DpobPVjj26M=;
-        b=XW+zfAHNLpHUSEbYrz59Ox6O2K/JGKopdgpR8RmsSOhslEyQLariW+ruWOyvajGjsc
-         lRbVFfKteYp74/jA+kA3hj1BWwnJfw3bSOAfGcCQZRJPhId+WHGxrSJWKfdS2hW2qtP1
-         cQefn3WmhdAp1jeGo3r8CvPp3Fzti36ek3JTKY2yY44zSVInq9WpURld5rDuciNUofhN
-         oHUvoKUB1OCX9bYbyoBmi946Xw3IKPpP1cRltsqyXGLdtt8UJz6ceOwJqa9w3xbtXURI
-         heZt5ZLG5UffmDkeT9Iyw2O8Fo5rxMQSKQgU3D0R8MqZLrcjc0tgplrZ5q7OwQXRROub
-         1LiQ==
+        b=lUA5fa3fwY50kia1147YTDYdXmkK7ZgnBleByjAn5KnEsEycJo+9pUkC6Pz2/lieex
+         fsoxIl3ZJeOdsS5EYTVwxJkjUOASCzfM9n6NNoPoyC30QPZpruJ0956SBEf86SdJy+Tm
+         PuyYYaTZf2bII4HTaCGAwEsGPRdXgpsgpnUH7aI4oHOXPHlKTQ5j6YeT6dOhy7I8J6gt
+         /Pii7f9ZS/9hCutJyyemlUcY5Mu4lxxfb25DwRyVPFdReGH5mKa29AzBgQhO/G7+DrWG
+         2S3zjJGdNQPoB0ZjcxAGOuTwshQjW3TQuvsN6t5klPCHap+J9AX/3ypggGd5XQOIdQVl
+         E/Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
         bh=CgsbrqCTWHqai8Ouhvg8/jO2D3KpEsR2DpobPVjj26M=;
-        b=Vosp5nDY9QT1eAp9kpiNra4CcL7x9tG/rsxW5WLCunB2KiPi7VBPJhNFPVLlpFNfTT
-         j3zPzowmNLs1uvtu5mWqlEM1bYEchVKfhBE0njAP6aIWoiZe8DriaTmCSeaxQmCGg1xu
-         LAR2GcILof+6oJaglu9zX09hmQyrbq7Wj86dzdVcgtSDlrBuBl2E8Y6ObUZSDnbMRN1V
-         F1B4xHOgnJDyPXlI1FMpp4fcz36Suxg5XNC6hnyGr8T7XYtHj7lipHOLHs3ql3VdxihN
-         KeAQqXe3dAUcZyGtG7Vd1VMcwW1KMjis23rH4ssBq6qcuj0qsIm3v45gtXRvxgBWbvla
-         xrpg==
-X-Gm-Message-State: AODbwcCIkDtfU11kjHA5DIc2no2HT8rAcW6jbjLfUB4zH7R6AA0kGoSn
-        x26zA9y8E0yV/HTlcj03fA==
-X-Received: by 10.99.5.3 with SMTP id 3mr19549560pgf.104.1495374149939;
-        Sun, 21 May 2017 06:42:29 -0700 (PDT)
+        b=l2/16gvvY+i0adqb7J/RukxNglCOzCu4sLE4OaF0NtWZzG7Vsq4uacNfQ5fuloj/cR
+         T2wTqmYtXtYtn11JvFB/SnFrQ9NR3AQE8+CkuA7zfcYz99OsmCrgjusG2aJhT6ipKf5D
+         CdCJ9Jmw0Y6sGI+R0GxIe7NbObdaAXWrHol4hpQEFvQ/TRqcL+G7zJV3czHOw1ID03sN
+         72La+0NcJ3fm2f2I7AWZ6zHGji80YoMurItSLdM/lUuK6oWp2A3xCvDpZCKWZ0r3UN5l
+         LE9KYpPVAfYWfn1c7QdoSmtdKVeuK12paEQOu6kdj5caiWe+AFmC9LNhLGk+W2sdCDWP
+         3Dig==
+X-Gm-Message-State: AODbwcBqA74mbopF8t/Kh2jDJKh+1xFs7lMibMs+6pF/fCSQOHTvKllC
+        Kz90sluDxCGzrQ==
+X-Received: by 10.84.215.15 with SMTP id k15mr22694405pli.104.1495375880116;
+        Sun, 21 May 2017 07:11:20 -0700 (PDT)
 Received: from localhost.localdomain ([116.87.142.169])
-        by smtp.gmail.com with ESMTPSA id h71sm24113510pfe.85.2017.05.21.06.42.28
+        by smtp.gmail.com with ESMTPSA id d2sm1370302pfb.110.2017.05.21.07.11.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 21 May 2017 06:42:29 -0700 (PDT)
+        Sun, 21 May 2017 07:11:19 -0700 (PDT)
 From:   DOAN Tran Cong Danh <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     animi.vulpis@gmail.com, j6t@kdbg.org,
-        DOAN Tran Cong Danh <congdanhqx@gmail.com>
+Cc:     animi.vulpis@gmail.com, j6t@kdbg.org, peff@peff.net,
+        gitster@pobox.com, git@grubix.eu, pclouds@gmail.com,
+        karthik.188@gmail.com, DOAN Tran Cong Danh <congdanhqx@gmail.com>
 Subject: [PATCH] ref-filter: treat CRLF as same as LF in find_subpos
-Date:   Sun, 21 May 2017 21:42:09 +0800
-Message-Id: <20170521134209.25659-1-congdanhqx@gmail.com>
+Date:   Sun, 21 May 2017 22:10:59 +0800
+Message-Id: <20170521141059.2767-1-congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.13.0.67.g10c78a1
-In-Reply-To: <CA+izobvwRCwGEtpCbey=gFbCh9sHBb5xB1i1LpMG0JCUy0O2mQ@mail.gmail.com>
-References: <CA+izobvwRCwGEtpCbey=gFbCh9sHBb5xB1i1LpMG0JCUy0O2mQ@mail.gmail.com>
+In-Reply-To: <CALKRkrxHNao6NY+-_UmznHdq29yVJJynu8Xx5M__YfK9UkdOAw@mail.gmail.com>
+References: <CALKRkrxHNao6NY+-_UmznHdq29yVJJynu8Xx5M__YfK9UkdOAw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
