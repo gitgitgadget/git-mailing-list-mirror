@@ -8,53 +8,52 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CC30201A7
-	for <e@80x24.org>; Sun, 21 May 2017 06:24:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 81FFB2023D
+	for <e@80x24.org>; Sun, 21 May 2017 06:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750961AbdEUGYU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 May 2017 02:24:20 -0400
-Received: from mail-it0-f54.google.com ([209.85.214.54]:38469 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750994AbdEUGYT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 May 2017 02:24:19 -0400
-Received: by mail-it0-f54.google.com with SMTP id r63so8893559itc.1
-        for <git@vger.kernel.org>; Sat, 20 May 2017 23:24:18 -0700 (PDT)
+        id S1751004AbdEUG6r (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 May 2017 02:58:47 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:33916 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750822AbdEUG6q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 May 2017 02:58:46 -0400
+Received: by mail-io0-f193.google.com with SMTP id 12so10918238iol.1
+        for <git@vger.kernel.org>; Sat, 20 May 2017 23:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=1tNuSeJAGxjVI8+0sEwpWb99jfA8GEQIACvF+biJ2mA=;
-        b=BtPs5IFIg1b3xIxXEEmY5CUVdUHrhYj9unMtuT4E+G6sC/8XgLyGMjgRy4hLtzJLos
-         HBE5eh6siGH2nq/MkWH9CrWeZ1ccRqxcYADOKTHga/zn/2LIff3UWxIiE/qEYNeF4Ws1
-         5kf5p9Vqkrg+dnvf/GjbBnaHOQqNpBj/BofNWUSUT+JdjN+TL78eLKhmC5FLQzbK5UAb
-         C0f/Q1kgcEez8yUK/TsyJM8hj8HrUlATogNMBkdP1f0kT4w2sSUFuJZMs2DHF4U45L2d
-         crIORDksZ7s/GlhLKXoI9dyGe9jtLuuOUQIraqagDbMYq6c42UVIy2WXUTcikz9QPybe
-         nq1w==
+        bh=9TjQNrm/7mx8FYDhwd+2+FcZh3rUbAV8eSpTl43rZwg=;
+        b=IOIpmAD+5EJsTZMcJQlAOmeVOVsNPWaomJGDYtP+GXtYBziOSatvWVC2c3WRS1vuNR
+         oyogtujV2CUsRhasa5dJLnpDgJvyNj3DHJd5CuYP8n1VlgaArXJXoQPKWB2JZpCFq7Cl
+         gDJ9MhFTTdjPmeWnDGDMZKztU7C5gcO93ldh/J12577cwphns/Rx+WuL9of/lF9M0zYA
+         0YHsS7nbC2AS3i26AGk4/b/bzZHcDBSUISt5KsOtg83yZSnooeIC7a6GSyilRDlo7VrR
+         c98Gowk+bOcffYJsPeSTfDY0NqMlszCA2scv5w0RdQhCoxYEDYijmEXOIlRVf1Z9Ou0U
+         LfQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1tNuSeJAGxjVI8+0sEwpWb99jfA8GEQIACvF+biJ2mA=;
-        b=S17NY8iDZjvFNEJHVu2dKFRLUv8lYP/hxA6HCH63BHNDGb+5mFgNSDhzPOxl/K8MQA
-         YPZjRoREieasCMtR79kvQnVpzBaeo0JZfOMQmsfNZ8GZf+ecAsDuFkgUtoeRUXmZTiCz
-         nj7HzjsolhNNWozHey86iHLnA5oXz1cRUkYiCyWxpaFQhwvri8VSz2tFtlGcb0V3mv+y
-         KuqsFQp9R7zeeu3NcfqnQ9Nm2C5sUsWcZHaXe+dE2Ih4HH3vRiq1ODKyzPdZVPA3m9ua
-         SwjbiuPKezt78CVFq+m0Luo1QWsmkta0NrfAfCp+lLHpIGHg446rYX6UQRImWr1xBVlf
-         ia/g==
-X-Gm-Message-State: AODbwcDqlgjSWUqzd+3RClppTMvXpkZAVjogbY70x0ieZVjOCiZ5A+5n
-        MJhxVcWQBFKt3G8sVOWr/bJJTVla+1U9
-X-Received: by 10.36.89.207 with SMTP id p198mr34255284itb.71.1495347858227;
- Sat, 20 May 2017 23:24:18 -0700 (PDT)
+        bh=9TjQNrm/7mx8FYDhwd+2+FcZh3rUbAV8eSpTl43rZwg=;
+        b=ndZLgFc2eDcOb73Voy6o/ItysXXa9FMLn6vVub3Wz3BRkDwz2uOndAsfJjkLN1onU/
+         QCGiopLnrCmp6ntomhpT+ztMFg6sifzSZCjMsx03uEQ1kpSeRC8BHRZak8XRBZ6FDf/H
+         mQY0sxedTxjfZJU/H8ck7IxBNiMNalPo/4Rxs3co7voTNDUPz5gsKSBLm87weZz/UYz+
+         rjchb+0WM1f60PmPy1ccrRuKtvbykJQwuiJ4orvMDcbRXctbXFZva+0hvwZecNiufj7D
+         vZnWMaKBR/k8A7hcHBpwf1wvVaRs0FA9N00TNznKJeHksiKyg9bbLtvbJ5lT9d1OLvMu
+         8VZg==
+X-Gm-Message-State: AODbwcASJAEACJ0JXCpwd/A6qhSn/XZAtQQ7ICIHekmkbbJcMywlbYrP
+        vw3KPfEHwu9w+Neu7j0AHV2bnSgPMw==
+X-Received: by 10.107.178.12 with SMTP id b12mr16166056iof.50.1495349925202;
+ Sat, 20 May 2017 23:58:45 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Sat, 20 May 2017 23:23:57 -0700 (PDT)
-In-Reply-To: <xmqqefvjqe9f.fsf@gitster.mtv.corp.google.com>
-References: <20170520214233.7183-1-avarab@gmail.com> <20170520214233.7183-16-avarab@gmail.com>
- <xmqqefvjqe9f.fsf@gitster.mtv.corp.google.com>
+Received: by 10.107.8.220 with HTTP; Sat, 20 May 2017 23:58:24 -0700 (PDT)
+In-Reply-To: <xmqqlgprqe9j.fsf@gitster.mtv.corp.google.com>
+References: <20170520214233.7183-1-avarab@gmail.com> <20170520214233.7183-6-avarab@gmail.com>
+ <xmqqlgprqe9j.fsf@gitster.mtv.corp.google.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sun, 21 May 2017 08:23:57 +0200
-Message-ID: <CACBZZX5mmhQzhJPbE0wwXY8T6+i7NynmdBFXr6Ym1U=6tCtPwQ@mail.gmail.com>
-Subject: Re: [PATCH v3 15/30] perf: add a GIT_PERF_MAKE_COMMAND for when
- *_MAKE_OPTS won't do
+Date:   Sun, 21 May 2017 08:58:24 +0200
+Message-ID: <CACBZZX6Hp4Q4TOj_X1fbdCA4twoXF5JemZ5ZbEn7wmkA=1KO2g@mail.gmail.com>
+Subject: Re: [PATCH v3 05/30] log: make --regexp-ignore-case work with --perl-regexp
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         Jeffrey Walton <noloader@gmail.com>,
@@ -74,52 +73,303 @@ X-Mailing-List: git@vger.kernel.org
 On Sun, May 21, 2017 at 1:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
 > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->> diff --git a/t/perf/README b/t/perf/README
->> index 49ea4349be..b3d95042a8 100644
->> --- a/t/perf/README
->> +++ b/t/perf/README
->> @@ -60,8 +60,23 @@ You can set the following variables (also in your con=
-fig.mak):
+>> Make the --regexp-ignore-case option work with --perl-regexp. This
+>> never worked, and there was no test for this. Fix the bug and add a
+>> test.
 >>
->>      GIT_PERF_MAKE_OPTS
->>       Options to use when automatically building a git tree for
->> -     performance testing.  E.g., -j6 would be useful.
->> -
->> +...
->> +     any of that, that's an implementation detail that might change
->> +     in the future.
->> +
->
-> I'll remove the trailing whitespace on this otherwise blank line
-> while queuing (no need to resend only to fix this one).
->
-> Thanks.
-
-Thanks, forgot about diff --check on the whole series with all the
-other checks I was doing.
-
->>      GIT_PERF_REPO
->>      GIT_PERF_LARGE_REPO
->>       Repositories to copy for the performance tests.  The normal
->> diff --git a/t/perf/run b/t/perf/run
->> index c788d713ae..b61024a830 100755
->> --- a/t/perf/run
->> +++ b/t/perf/run
->> @@ -37,8 +37,15 @@ build_git_rev () {
->>                       cp "../../$config" "build/$rev/"
->>               fi
->>       done
->> -     (cd build/$rev && make $GIT_PERF_MAKE_OPTS) ||
->> -     die "failed to build revision '$mydir'"
->> +     (
->> +             cd build/$rev &&
->> +             if test -n "$GIT_PERF_MAKE_COMMAND"
->> +             then
->> +                     sh -c "$GIT_PERF_MAKE_COMMAND"
->> +             else
->> +                     make $GIT_PERF_MAKE_OPTS
->> +             fi
->> +     ) || die "failed to build revision '$mydir'"
->>  }
+>> When PCRE support was added in commit 63e7e9d8b6 ("git-grep: Learn
+>> PCRE", 2011-05-09) compile_pcre_regexp() would only check
+>> opt->ignore_case, but when the --perl-regexp option was added in
+>> commit 727b6fc3ed ("log --grep: accept --basic-regexp and
+>> --perl-regexp", 2012-10-03) the code didn't set the opt->ignore_case.
 >>
->>  run_dirs_helper () {
+>> Change the test suite to test for -i and --invert-regexp with
+>> basic/extended/perl patterns in addition to fixed, which was the only
+>> patternType that was tested for before in combination with those
+>> options.
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  revision.c     |  1 +
+>>  t/t4202-log.sh | 60 +++++++++++++++++++++++++++++++++++++++++++++++++++=
+++-----
+>>  2 files changed, 56 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/revision.c b/revision.c
+>> index 8a8c1789c7..4883cdd2d0 100644
+>> --- a/revision.c
+>> +++ b/revision.c
+>> @@ -1991,6 +1991,7 @@ static int handle_revision_opt(struct rev_info *re=
+vs, int argc, const char **arg
+>>       } else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")=
+) {
+>>               revs->grep_filter.pattern_type_option =3D GREP_PATTERN_TYP=
+E_ERE;
+>>       } else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-=
+i")) {
+>> +             revs->grep_filter.ignore_case =3D 1;
+>>               revs->grep_filter.regflags |=3D REG_ICASE;
+>>               DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
+>>       } else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) =
+{
+>
+> Looks good.
+>
+> I however wonder if it is a better approach in the longer term to
+> treat the .ignore_case field just like .extended_regexp_option
+> field, i.e. not committing immediately to .regflags but commit it
+> after config and command line parsing is done, just like we make the
+> "BRE? ERE?" decision in grep_commit_pattern_type().
+
+I started hacking up a patch to fix the root cause of this, i.e. the
+users of the grep API should only set `.ignore_case =3D 1` and not care
+about setting regflags, but it was more than a trivial change, so I
+didn't include it in this series:
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 3ffb5b4e81..be28c37265 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1151,8 +1151,6 @@ int cmd_grep(int argc, const char **argv, const
+char *prefix)
+
+        if (!opt.pattern_list)
+                die(_("no pattern given."));
+-       if (!opt.fixed && opt.ignore_case)
+-               opt.regflags |=3D REG_ICASE;
+
+        compile_grep_patterns(&opt);
+
+diff --git a/grep.c b/grep.c
+index 47cee45067..7b13ee1043 100644
+--- a/grep.c
++++ b/grep.c
+@@ -435,12 +435,11 @@ static void compile_fixed_regexp(struct grep_pat
+*p, struct grep_opt *opt)
+
+ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ {
+-       int icase, ascii_only;
++       int ascii_only;
+        int err;
+
+        p->word_regexp =3D opt->word_regexp;
+        p->ignore_case =3D opt->ignore_case;
+-       icase          =3D opt->regflags & REG_ICASE || p->ignore_case;
+        ascii_only     =3D !has_non_ascii(p->pattern);
+
+        /*
+@@ -456,12 +455,12 @@ static void compile_regexp(struct grep_pat *p,
+struct grep_opt *opt)
+         * want to use kws.
+         */
+        if (opt->fixed || is_fixed(p->pattern, p->patternlen))
+-               p->fixed =3D !icase || ascii_only;
++               p->fixed =3D !p->ignore_case || ascii_only;
+        else
+                p->fixed =3D 0;
+
+        if (p->fixed) {
+-               p->kws =3D kwsalloc(icase ? tolower_trans_tbl : NULL);
++               p->kws =3D kwsalloc(p->ignore_case ? tolower_trans_tbl : NU=
+LL);
+                kwsincr(p->kws, p->pattern, p->patternlen);
+                kwsprep(p->kws);
+                return;
+@@ -480,6 +479,8 @@ static void compile_regexp(struct grep_pat *p,
+struct grep_opt *opt)
+                return;
+        }
+
++       if (p->ignore_case)
++               opt->regflags |=3D REG_ICASE;
+        err =3D regcomp(&p->regexp, p->pattern, opt->regflags);
+        if (err) {
+                char errbuf[1024];
+diff --git a/revision.c b/revision.c
+index 4883cdd2d0..30c23a1098 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1992,7 +1992,6 @@ static int handle_revision_opt(struct rev_info
+*revs, int argc, const char **arg
+                revs->grep_filter.pattern_type_option =3D GREP_PATTERN_TYPE=
+_ERE;
+        } else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i=
+")) {
+                revs->grep_filter.ignore_case =3D 1;
+-               revs->grep_filter.regflags |=3D REG_ICASE;
+                DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
+        } else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
+                revs->grep_filter.pattern_type_option =3D GREP_PATTERN_TYPE=
+_FIXED;
+
+But an even better solution is to get rid of passing the regflags
+field in grep_opt entirely, this conflicts with some of my later
+patches:
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 3ffb5b4e81..be28c37265 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1151,8 +1151,6 @@ int cmd_grep(int argc, const char **argv, const
+char *prefix)
+
+        if (!opt.pattern_list)
+                die(_("no pattern given."));
+-       if (!opt.fixed && opt.ignore_case)
+-               opt.regflags |=3D REG_ICASE;
+
+        compile_grep_patterns(&opt);
+diff --git a/grep.c b/grep.c
+index 47cee45067..1bde7037ba 100644
+--- a/grep.c
++++ b/grep.c
+@@ -34,7 +34,6 @@ void init_grep_defaults(void)
+        memset(opt, 0, sizeof(*opt));
+        opt->relative =3D 1;
+        opt->pathname =3D 1;
+-       opt->regflags =3D REG_NEWLINE;
+        opt->max_depth =3D -1;
+        opt->pattern_type_option =3D GREP_PATTERN_TYPE_UNSPECIFIED;
+        opt->extended_regexp_option =3D 0;
+@@ -156,7 +155,6 @@ void grep_init(struct grep_opt *opt, const char *prefix=
+)
+        opt->linenum =3D def->linenum;
+        opt->max_depth =3D def->max_depth;
+        opt->pathname =3D def->pathname;
+-       opt->regflags =3D def->regflags;
+        opt->relative =3D def->relative;
+        opt->output =3D def->output;
+
+@@ -179,25 +177,25 @@ static void grep_set_pattern_type_option(enum
+grep_pattern_type pattern_type, st
+        case GREP_PATTERN_TYPE_BRE:
+                opt->fixed =3D 0;
+                opt->pcre =3D 0;
+-               opt->regflags &=3D ~REG_EXTENDED;
++               opt->extended =3D 0;
+                break;
+         case GREP_PATTERN_TYPE_ERE:
+                opt->fixed =3D 0;
+                opt->pcre =3D 0;
+-               opt->regflags |=3D REG_EXTENDED;
++               opt->extended =3D 1;
+                break;
+
+        case GREP_PATTERN_TYPE_FIXED:
+                opt->fixed =3D 1;
+                opt->pcre =3D 0;
+-               opt->regflags &=3D ~REG_EXTENDED;
++               opt->extended =3D 0;
+                break;
+
+        case GREP_PATTERN_TYPE_PCRE:
+                opt->fixed =3D 0;
+                opt->pcre =3D 1;
+-               opt->regflags &=3D ~REG_EXTENDED;
++               opt->extended =3D 0;
+                break;
+        }
+ }
+@@ -415,10 +413,9 @@ static void compile_fixed_regexp(struct grep_pat
+*p, struct grep_opt *opt)
+ {
+        struct strbuf sb =3D STRBUF_INIT;
+        int err;
+-       int regflags;
++       int regflags =3D REG_NEWLINE;
+
+        basic_regex_quote_buf(&sb, p->pattern);
+-       regflags =3D opt->regflags & ~REG_EXTENDED;
+        if (opt->ignore_case)
+                regflags |=3D REG_ICASE;
+        err =3D regcomp(&p->regexp, sb.buf, regflags);
+@@ -435,12 +432,12 @@ static void compile_fixed_regexp(struct grep_pat
+*p, struct grep_opt *opt)
+
+ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ {
+-       int icase, ascii_only;
++       int ascii_only;
+        int err;
++       int regflags =3D REG_NEWLINE;
+
+        p->word_regexp =3D opt->word_regexp;
+        p->ignore_case =3D opt->ignore_case;
+-       icase          =3D opt->regflags & REG_ICASE || p->ignore_case;
+        ascii_only     =3D !has_non_ascii(p->pattern);
+
+        /*
+@@ -456,12 +453,12 @@ static void compile_regexp(struct grep_pat *p,
+struct grep_opt *opt)
+         * want to use kws.
+         */
+        if (opt->fixed || is_fixed(p->pattern, p->patternlen))
+-               p->fixed =3D !icase || ascii_only;
++               p->fixed =3D !p->ignore_case || ascii_only;
+        else
+                p->fixed =3D 0;
+
+        if (p->fixed) {
+-               p->kws =3D kwsalloc(icase ? tolower_trans_tbl : NULL);
++               p->kws =3D kwsalloc(p->ignore_case ? tolower_trans_tbl : NU=
+LL);
+                kwsincr(p->kws, p->pattern, p->patternlen);
+                kwsprep(p->kws);
+                return;
+@@ -480,7 +477,11 @@ static void compile_regexp(struct grep_pat *p,
+struct grep_opt *opt)
+                return;
+        }
+
+-       err =3D regcomp(&p->regexp, p->pattern, opt->regflags);
++       if (p->ignore_case)
++               regflags |=3D REG_ICASE;
++       if (opt->extended)
++               regflags |=3D REG_EXTENDED;
++       err =3D regcomp(&p->regexp, p->pattern, regflags);
+        if (err) {
+                char errbuf[1024];
+                regerror(err, &p->regexp, errbuf, 1024);
+diff --git a/grep.h b/grep.h
+index 267534ca24..d9d603deb1 100644
+--- a/grep.h
++++ b/grep.h
+@@ -129,7 +129,6 @@ struct grep_opt {
+        char color_match_selected[COLOR_MAXLEN];
+        char color_selected[COLOR_MAXLEN];
+        char color_sep[COLOR_MAXLEN];
+-       int regflags;
+        unsigned pre_context;
+        unsigned post_context;
+        unsigned last_shown;
+diff --git a/revision.c b/revision.c
+index 4883cdd2d0..67240d38af 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1362,7 +1362,6 @@ void init_revisions(struct rev_info *revs, const
+char *prefix)
+        init_grep_defaults();
+        grep_init(&revs->grep_filter, prefix);
+        revs->grep_filter.status_only =3D 1;
+-       revs->grep_filter.regflags =3D REG_NEWLINE;
+
+        diff_setup(&revs->diffopt);
+        if (prefix && !revs->diffopt.prefix) {
+@@ -1992,7 +1991,6 @@ static int handle_revision_opt(struct rev_info
+*revs, int argc, const char **arg
+                revs->grep_filter.pattern_type_option =3D GREP_PATTERN_TYPE=
+_ERE;
+        } else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i=
+")) {
+                revs->grep_filter.ignore_case =3D 1;
+-               revs->grep_filter.regflags |=3D REG_ICASE;
+                DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
+        } else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
+                revs->grep_filter.pattern_type_option =3D GREP_PATTERN_TYPE=
+_FIXED;
+
+But as all this code cleanup isn't needed for fixing this bug, and I'd
+really like to get this series merged into next/master ASAP so I can
+start submitting the grep/pcre patches that are actually interesting,
+let's leave this orthogonal code cleanup for now.
