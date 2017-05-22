@@ -2,126 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFDA41FF30
-	for <e@80x24.org>; Mon, 22 May 2017 03:19:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAF421FF30
+	for <e@80x24.org>; Mon, 22 May 2017 04:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757098AbdEVDTc (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 May 2017 23:19:32 -0400
-Received: from m12-17.163.com ([220.181.12.17]:60723 "EHLO m12-17.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756876AbdEVDTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 May 2017 23:19:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=B/+iO
-        6HlxKfAW9IKscClqY+wNrMqoMsT6tARMJt5SuY=; b=EZq48Wz8CIseTqJ/qVHaM
-        4VRUHNQvwCScaJha8R76bsQm4ds+7dbgCv+1Xiyj1qCG7KFWClYjCSpq6reQ/NMw
-        Uz483rzvITMeWSPWF8B4JwUeie+g0hSpe5GY5EGhGTvtkdSiyV2ZObn2GKROYthw
-        mkXs5WfRrhJk+uPJgZ5rRs=
-Received: from [127.0.0.1] (unknown [118.187.28.42])
-        by smtp13 (Coremail) with SMTP id EcCowAAHmgynWCJZS4XCFw--.44574S2;
-        Mon, 22 May 2017 11:19:03 +0800 (CST)
-To:     gitster@pobox.com
-Cc:     mst@kernel.org, pbonzini@redhat.com, mina86@mina86.com,
-        artagnon@gmail.com, avarab@gmail.com, git@vger.kernel.org,
-        viktorin@rehivetech.com
-From:   Zhaoxiangqiang <zxq_yx_007@163.com>
-Subject: Re: [PATCH v5] send-email: --batch-size to work around some SMTP
- server limit
-X-Priority: 3
-In-Reply-To: <xmqqlgpppri7.fsf@gitster.mtv.corp.google.com>
-References: <20170521125950.5524-1-zxq_yx_007@163.com>
- <xmqqlgpppri7.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-Date:   Mon, 22 May 2017 03:19:02 +0000
-Message-ID: <cfm22a.oqc3vr.1hgearw-qmf@mail>
+        id S1751007AbdEVEsQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 00:48:16 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34339 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750951AbdEVEsP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 00:48:15 -0400
+Received: by mail-pf0-f169.google.com with SMTP id 9so70054744pfj.1
+        for <git@vger.kernel.org>; Sun, 21 May 2017 21:48:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=k6ZHGrqu8c4q7dCdEsjR/0BCeKGQYg229I8eyOvHBVg=;
+        b=HFc+8okBO/S9HXHgEqlS2b6eNVt42qTaVFRF/NBauDeTlrYKWrU5PxHJul0bjoUWbf
+         zIC8XqaQ5hxdAK0q6eWuuSazDRWUFhVFj5oweOt4Z5uRFm9Ew3ApjqekYg9LLBLXx2My
+         E9SD0pJWkhNxTTpuVTZLAmhus8QwQuHScH4dgwQ8hPrM6QpZpl+udz3Vsoy1gIncagFH
+         0+BCl8nUCzGh1mVoi/BE6ANpwZzD96kpJzomHxLauWIidZ/XdmZpvhNjM8k0jsyJbBcY
+         1RZf41K/UWYe609qUzltlsNVJC1IQhjD8cHVKLtANMGM2xJqefC51AoldgOtJVIb225e
+         vGdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=k6ZHGrqu8c4q7dCdEsjR/0BCeKGQYg229I8eyOvHBVg=;
+        b=KuUw7ilFF1O/AduzUo8Nipt5AOZltpFwdkbjIs9xQF06HYMOm748fYYjiPHRHbLIMP
+         shNChZzTnlKapxDwG46OcaR8KfGymS6onZ2jhmB/xavNKXqnB5S+4uzKCUT51B/rlBtH
+         KskM4pdfTNM9KaWOA7YzQcKF6NCp2AYBP8OeEMWfcthNmAePb5jow+G6uY6H4NvyS94C
+         WN0XYg8MG4vHbA4OoI8CKMbl/0X7w+Uu+9hzE0ZDz4FdIXubJiK1zsdVtwzl4LbFtOoM
+         AzFJtNt+S26drcSF/pc4IATOZpvvlrrtikBYau9DCOTQRX8Lm1uHdXAjGiUiDKBUrYa/
+         ctfw==
+X-Gm-Message-State: AODbwcD1f05Pbtw8LlNBD8U0+KO2Nfn7075ldL+SsddzRW1Me/6bv6jG
+        gJqqHg8U4SeB5w==
+X-Received: by 10.98.57.80 with SMTP id g77mr23728597pfa.111.1495428494363;
+        Sun, 21 May 2017 21:48:14 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:4439:f55c:c49b:d0dc])
+        by smtp.gmail.com with ESMTPSA id q24sm29080862pfj.3.2017.05.21.21.48.13
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 21 May 2017 21:48:13 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 6/6] clean: teach clean -d to skip dirs containing ignored files
+References: <20170518082154.28643-1-sxlijin@gmail.com>
+        <20170516073423.25762-1-sxlijin@gmail.com>
+        <20170518082154.28643-7-sxlijin@gmail.com>
+Date:   Mon, 22 May 2017 13:48:12 +0900
+In-Reply-To: <20170518082154.28643-7-sxlijin@gmail.com> (Samuel Lijin's
+        message of "Thu, 18 May 2017 04:21:54 -0400")
+Message-ID: <xmqqtw4do5tf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-X-CM-TRANSID: EcCowAAHmgynWCJZS4XCFw--.44574S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxWr1kGrykXFy8Ar1xCr17Jrb_yoWrGw1kp3
-        90gr4I9F95JFy5W34vkF1IgF9Ik3ykKr4DK3Wktr18twn8AasFyr4rtwn5Gas3CrnF9FWU
-        ZrWYqFy3uw1qy37anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j-pnPUUUUU=
-X-Originating-IP: [118.187.28.42]
-X-CM-SenderInfo: 520ts5t0bqili6rwjhhfrp/1tbiEAffxlWBakiOXgAAso
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQoNCkp1bmlvIEMgSGFtYW5vIOS6jiAyMDE3IOW5tCA1IOaciCAyMiDml6Ug5pif5pyf5LiAIOWG
-memBkzoNCj4gSSB0aGluayB0aGlzIGlzIGFsbW9zdCBwZXJmZWN0Lg0KPiANCj4gSSdkIHByb3Bv
-c2Ugc3F1YXNoaW5nIHRoZSBwYXRjaCBiZWxvdyB0bw0KPiANCj4gIC0gQWRkIGNyb3NzIHJlZmVy
-ZW5jZSBiZXR3ZWVuIGNvbmZpZyBhbmQgb3B0aW9uDQo+IA0KPiAgLSBTcGVsbCBjb25maWd1cmF0
-aW9uIHZhcmlhYmxlcyBpbiBjYW1lbENhc2UgdG8gbWltaWMgb3RoZXINCj4gICAgc2VuZGVtYWls
-LiogdmFyaWFibGVzDQo+IA0KPiAgLSBTcGVsbCBTTVRQIGluIGFsbCBjYXBzIHRvIG1pbWljIG90
-aGVyIHBhcnRzIG9mIHRoZSBtYW51YWwNCj4gDQo+ICAtIFN1Z2dlc3QgdXNlIG9mIGNyZWRlbnRp
-YWwgaGVscGVyIGluIHRoZSBkb2N1bWVudCB0byBoZWxwIHRoZSBlbmQNCj4gICAgdXNlcnMsIG5v
-dCBpbiB0aGUgcHJvcG9zZWQgbG9nIG1lc3NhZ2UuDQo+IA0KPiBJZiB5b3UgYXJlIGZpbmUgd2l0
-aCBhbGwgb2YgdGhlc2UgY2hhbmdlcywgdGhlcmUgaXMgbm8gbmVlZCB0bw0KPiByZXNlbmQgKHlv
-dSBjYW4gc2F5IHNvIGFuZCBJIGNhbiBsb2NhbGx5IHNxdWFzaCB0aGVzZSBpbikuICBPZg0KPiBj
-b3Vyc2UsIGFueW9uZSBpcyB2ZXJ5IHdlbGNvbWUgdG8gcG9pbnQgb3V0IGRvY3VtZW50YXRpb24g
-YnVncyBJIG1heQ0KPiBiZSBpbnRyb2R1Y2luZyB3aXRoIHRoaXMgcGF0Y2guDQo+IA0KPiBUaGFu
-a3MuDQo+IA0KPiAtLSA+OCAtLQ0KPiBTdWJqZWN0OiBmaXh1cCEgc2VuZC1lbWFpbDogLS1iYXRj
-aC1zaXplIHRvIHdvcmsgYXJvdW5kIHNvbWUgU01UUCBzZXJ2ZXIgbGltaXQNCj4gDQo+IFNvbWUg
-ZW1haWwgc2VydmVycyAoZS5nLiBzbXRwLjE2My5jb20pIGxpbWl0IHRoZSBudW1iZXIgZW1haWxz
-IHRvIGJlDQo+IHNlbnQgcGVyIHNlc3Npb24gKGNvbm5lY3Rpb24pIGFuZCB0aGlzIHdpbGwgbGVh
-ZCB0byBhIGZhbGl1cmUgd2hlbg0KPiBzZW5kaW5nIG1hbnkgbWVzc2FnZXMuDQo+IA0KPiBUZWFj
-aCBzZW5kLWVtYWlsIHRvIGRpc2Nvbm5lY3QgYWZ0ZXIgc2VuZGluZyBhIG51bWJlciBvZiBtZXNz
-YWdlcw0KPiAoY29uZmlndXJhYmxlIHZpYSB0aGUgLS1iYXRjaC1zaXplPTxudW0+IG9wdGlvbiks
-IHdhaXQgZm9yIGEgZmV3DQo+IHNlY29uZHMgKGNvbmZpZ3VyYWJsZSB2aWEgdGhlIC0tcmVsb2dp
-bi1kZWxheT08c2Vjb25kcz4gb3B0aW9uKSBhbmQNCj4gcmVjb25uZWN0LCB0byB3b3JrIGFyb3Vu
-ZCBzdWNoIGEgbGltaXQuDQo+IA0KPiBBbHNvIGFkZCB0d28gY29uZmlndXJhdGlvbiB2YXJpYWJs
-ZXMgdG8gZ2l2ZSB0aGVzZSBvcHRpb25zIHRoZSBkZWZhdWx0Lg0KPiANCj4gU2lnbmVkLW9mZi1i
-eTogSnVuaW8gQyBIYW1hbm8gPGdpdHN0ZXJAcG9ib3guY29tPg0KPiAtLS0NCj4gIERvY3VtZW50
-YXRpb24vY29uZmlnLnR4dCAgICAgICAgIHwgIDggKysrKystLS0NCj4gIERvY3VtZW50YXRpb24v
-Z2l0LXNlbmQtZW1haWwudHh0IHwgMTIgKysrKysrKystLS0tDQo+ICAyIGZpbGVzIGNoYW5nZWQs
-IDEzIGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pDQo+DQoNCkl0J3MgZmluZSB3aXRoIG1l
-LCBqdXN0ICBnbyBhaGVhZC4NClRoYW5rIHlvdSAgSGFtYW5vIQ0KIA0KPiBkaWZmIC0tZ2l0IGEv
-RG9jdW1lbnRhdGlvbi9jb25maWcudHh0IGIvRG9jdW1lbnRhdGlvbi9jb25maWcudHh0DQo+IGlu
-ZGV4IGExMzMxNWVkNjkuLmVlNGExMTE4NzggMTAwNjQ0DQo+IC0tLSBhL0RvY3VtZW50YXRpb24v
-Y29uZmlnLnR4dA0KPiArKysgYi9Eb2N1bWVudGF0aW9uL2NvbmZpZy50eHQNCj4gQEAgLTI5MTQs
-MTMgKzI5MTQsMTUgQEAgc2VuZGVtYWlsLnhtYWlsZXI6Og0KPiAgc2VuZGVtYWlsLnNpZ25lZG9m
-ZmNjIChkZXByZWNhdGVkKTo6DQo+ICAJRGVwcmVjYXRlZCBhbGlhcyBmb3IgYHNlbmRlbWFpbC5z
-aWduZWRvZmZieWNjYC4NCj4gIA0KPiAtc2VuZGVtYWlsLnNtdHBiYXRjaHNpemU6Og0KPiArc2Vu
-ZGVtYWlsLnNtdHBCYXRjaFNpemU6Og0KPiAgCU51bWJlciBvZiBtZXNzYWdlcyB0byBiZSBzZW50
-IHBlciBjb25uZWN0aW9uLCBhZnRlciB0aGF0IGEgcmVsb2dpbg0KPiAtCXdpbGwgaGFwcGVuLiBp
-ZiB0aGUgdmFsdWUgaXMgMCBvciB1bmRlZmluZWQsIHNlbmQgYWxsIG1lc3NhZ2VzIGluDQo+ICsJ
-d2lsbCBoYXBwZW4uICBJZiB0aGUgdmFsdWUgaXMgMCBvciB1bmRlZmluZWQsIHNlbmQgYWxsIG1l
-c3NhZ2VzIGluDQo+ICAJb25lIGNvbm5lY3Rpb24uDQo+ICsJU2VlIGFsc28gdGhlIGAtLWJhdGNo
-LXNpemVgIG9wdGlvbiBvZiBsaW5rZ2l0OmdpdC1zZW5kLWVtYWlsWzFdLg0KPiAgDQo+IC1zZW5k
-ZW1haWwuc210cHJlbG9naW5kZWxheTo6DQo+ICtzZW5kZW1haWwuc210cFJlbG9naW5EZWxheTo6
-DQo+ICAJU2Vjb25kcyB3YWl0IGJlZm9yZSByZWNvbm5lY3RpbmcgdG8gc210cCBzZXJ2ZXIuDQo+
-ICsJU2VlIGFsc28gdGhlIGAtLXJlbG9naW4tZGVsYXlgIG9wdGlvbiBvZiBsaW5rZ2l0OmdpdC1z
-ZW5kLWVtYWlsWzFdLg0KPiAgDQo+ICBzaG93YnJhbmNoLmRlZmF1bHQ6Og0KPiAgCVRoZSBkZWZh
-dWx0IHNldCBvZiBicmFuY2hlcyBmb3IgbGlua2dpdDpnaXQtc2hvdy1icmFuY2hbMV0uDQo+IGRp
-ZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2dpdC1zZW5kLWVtYWlsLnR4dCBiL0RvY3VtZW50YXRp
-b24vZ2l0LXNlbmQtZW1haWwudHh0DQo+IGluZGV4IDUzODBkOGM5NTYuLjc5YjQxOGJmYTUgMTAw
-NjQ0DQo+IC0tLSBhL0RvY3VtZW50YXRpb24vZ2l0LXNlbmQtZW1haWwudHh0DQo+ICsrKyBiL0Rv
-Y3VtZW50YXRpb24vZ2l0LXNlbmQtZW1haWwudHh0DQo+IEBAIC0yNTAsMTQgKzI1MCwxOCBAQCBt
-dXN0IGJlIHVzZWQgZm9yIGVhY2ggb3B0aW9uLg0KPiAgDQo+ICAtLWJhdGNoLXNpemU9PG51bT46
-Og0KPiAgCVNvbWUgZW1haWwgc2VydmVycyAoZS5nLiBzbXRwLjE2My5jb20pIGxpbWl0IHRoZSBu
-dW1iZXIgZW1haWxzIHRvIGJlDQo+IC0Jc2VudCBwZXIgc2Vzc2lvbihjb25uZWN0aW9uKSBhbmQg
-dGhpcyB3aWxsIGxlYWQgdG8gYSBmYWxpdXJlIHdoZW4NCj4gKwlzZW50IHBlciBzZXNzaW9uIChj
-b25uZWN0aW9uKSBhbmQgdGhpcyB3aWxsIGxlYWQgdG8gYSBmYWxpdXJlIHdoZW4NCj4gIAlzZW5k
-aW5nIG1hbnkgbWVzc2FnZXMuICBXaXRoIHRoaXMgb3B0aW9uLCBzZW5kLWVtYWlsIHdpbGwgZGlz
-Y29ubmVjdCBhZnRlcg0KPiAgCXNlbmRpbmcgJDxudW0+IG1lc3NhZ2VzIGFuZCB3YWl0IGZvciBh
-IGZldyBzZWNvbmRzIChzZWUgLS1yZWxvZ2luLWRlbGF5KQ0KPiAtCWFuZCByZWNvbm5lY3QsIHRv
-IHdvcmsgYXJvdW5kIHN1Y2ggYSBsaW1pdC4NCj4gKwlhbmQgcmVjb25uZWN0LCB0byB3b3JrIGFy
-b3VuZCBzdWNoIGEgbGltaXQuICBZb3UgbWF5IHdhbnQgdG8NCj4gKwl1c2Ugc29tZSBmb3JtIG9m
-IGNyZWRlbnRpYWwgaGVscGVyIHRvIGF2b2lkIGhhdmluZyB0byByZXR5cGUNCj4gKwl5b3VyIHBh
-c3N3b3JkIGV2ZXJ5IHRpbWUgdGhpcyBoYXBwZW5zLiAgRGVmYXVsdHMgdG8gdGhlDQo+ICsJYHNl
-bmRlbWFpbC5zbXRwQmF0Y2hTaXplYCBjb25maWd1cmF0aW9uIHZhcmlhYmxlLg0KPiAgDQo+ICAt
-LXJlbG9naW4tZGVsYXk9PGludD46Og0KPiAtCVdhaXRpbmcgJDxpbnQ+IHNlY29uZHMgYmVmb3Jl
-IHJlY29ubmVjdGluZyB0byBzbXRwIHNlcnZlci4gVXNlZCB0b2dldGhlcg0KPiAtCXdpdGggLS1i
-YXRjaC1zaXplIG9wdGlvbi4NCj4gKwlXYWl0aW5nICQ8aW50PiBzZWNvbmRzIGJlZm9yZSByZWNv
-bm5lY3RpbmcgdG8gU01UUCBzZXJ2ZXIuIFVzZWQgdG9nZXRoZXINCj4gKwl3aXRoIC0tYmF0Y2gt
-c2l6ZSBvcHRpb24uICBEZWZhdWx0cyB0byB0aGUgYHNlbmRlbWFpbC5zbXRwUmVsb2dpbkRlbGF5
-YA0KPiArCWNvbmZpZ3VyYXRpb24gdmFyaWFibGUuDQo+ICANCj4gIEF1dG9tYXRpbmcNCj4gIH5+
-fn5+fn5+fn4NCj4gLS0gDQo+IDIuMTMuMC00NDAtZzNjZTZkMmQ1YjgNCj4gDQo+
+Samuel Lijin <sxlijin@gmail.com> writes:
 
+> +	for (j = i = 0; i < dir.nr;) {
+> +		for (;
+> +		     j < dir.ignored_nr &&
+> +		       0 <= cmp_dir_entry(&dir.entries[i], &dir.ignored[j]);
+> +		     j++);
+> +
+> +		if ((j < dir.ignored_nr) &&
+> +				check_dir_entry_contains(dir.entries[i], dir.ignored[j])) {
+> +			/* skip any dir.entries which contains a dir.ignored */
+> +			free(dir.entries[i]);
+> +			dir.entries[i++] = NULL;
+> +		} else {
+> +			/* prune the contents of a dir.entries which will be removed */
+> +			struct dir_entry *ent = dir.entries[i++];
+> +			for (;
+> +			     i < dir.nr &&
+> +			       check_dir_entry_contains(ent, dir.entries[i]);
+> +			     i++) {
+> +				free(dir.entries[i]);
+> +				dir.entries[i] = NULL;
+> +			}
+> +		}
+> +	}
+
+The second loop in the else clause is a bit tricky, and the comment
+"which will be removed" is not all that helpful to explain why the
+loop is there.
+
+But I think the code is correct.  Here is how I understood it.
+
+    While looking at dir.entries[i], the code noticed that nothing
+    in that directory is ignored.  But entries in dir.entries[] that
+    come later may be contained in dir.entries[i] and we just want
+    to show the top-level untracked one (e.g. "a/" and "a/b/" were
+    in entries[], there is nothing in "a/", so naturally there is
+    nothing in "a/b/", but we do not want to bother showing
+    both---showing "a/" alone saying "the entire a/ is untracked" is
+    what we want).
+
+We may want to have a test to ensure "a/b/" is indeed omitted in
+such a situation from the output, though.
+
+By the way, instead of putting NULL, it may be easier to follow if
+you used two pointers, src and dst, into dir.entries[], just like
+you did in your latest version of [PATCH 4/6].  That way, you do not
+have to change anything in the later loop that walks over elements
+in the dir.entries[] array.  It would also help the logic easier to
+follow if the above loop were its own helper function.
+
+Putting them all together, here is what I came up with that can be
+squashed into your patch.  I am undecided myself if this is easier
+to follow than your version, but it seems to pass your test ;-)
+
+Thanks.
+
+ builtin/clean.c | 70 ++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 42 insertions(+), 28 deletions(-)
+
+diff --git a/builtin/clean.c b/builtin/clean.c
+index dd3308a447..c8712e7ac8 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -851,9 +851,49 @@ static void interactive_main_loop(void)
+ 	}
+ }
+ 
++static void simplify_untracked(struct dir_struct *dir)
++{
++	int src, dst, ign;
++
++	for (src = dst = ign = 0; src < dir->nr; src++) {
++		/*
++		 * Skip entries in ignored[] that cannot be inside
++		 * entries[src]
++		 */
++		while (ign < dir->ignored_nr &&
++		       0 <= cmp_dir_entry(&dir->entries[src], &dir->ignored[ign]))
++			ign++;
++
++		if (dir->ignored_nr <= ign ||
++		    !check_dir_entry_contains(dir->entries[src], dir->ignored[ign])) {
++			/*
++			 * entries[src] does not contain an ignored
++			 * path -- we need to keep it.  But we do not
++			 * want to show entries[] that are contained
++			 * in entries[src].
++			 */
++			struct dir_entry *ent = dir->entries[src++];
++			dir->entries[dst++] = ent;
++			while (src < dir->nr &&
++			       check_dir_entry_contains(ent, dir->entries[src])) {
++				free(dir->entries[src++]);
++			}
++			/* compensate for the outer loop's loop control */
++			src--;
++		} else {
++			/*
++			 * entries[src] contains an ignored path --
++			 * drop it.
++			 */
++			free(dir->entries[src]);
++		}
++	}
++	dir->nr = dst;
++}
++
+ int cmd_clean(int argc, const char **argv, const char *prefix)
+ {
+-	int i, j, res;
++	int i, res;
+ 	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
+ 	int ignored_only = 0, config_set = 0, errors = 0, gone = 1;
+ 	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
+@@ -928,30 +968,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		       prefix, argv);
+ 
+ 	fill_directory(&dir, &pathspec);
+-
+-	for (j = i = 0; i < dir.nr;) {
+-		for (;
+-		     j < dir.ignored_nr &&
+-		       0 <= cmp_dir_entry(&dir.entries[i], &dir.ignored[j]);
+-		     j++);
+-
+-		if ((j < dir.ignored_nr) &&
+-				check_dir_entry_contains(dir.entries[i], dir.ignored[j])) {
+-			/* skip any dir.entries which contains a dir.ignored */
+-			free(dir.entries[i]);
+-			dir.entries[i++] = NULL;
+-		} else {
+-			/* prune the contents of a dir.entries which will be removed */
+-			struct dir_entry *ent = dir.entries[i++];
+-			for (;
+-			     i < dir.nr &&
+-			       check_dir_entry_contains(ent, dir.entries[i]);
+-			     i++) {
+-				free(dir.entries[i]);
+-				dir.entries[i] = NULL;
+-			}
+-		}
+-	}
++	simplify_untracked(&dir);
+ 
+ 	for (i = 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent = dir.entries[i];
+@@ -959,9 +976,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		struct stat st;
+ 		const char *rel;
+ 
+-		if (!ent)
+-			continue;
+-
+ 		if (!cache_name_is_other(ent->name, ent->len))
+ 			continue;
+ 
