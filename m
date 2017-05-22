@@ -2,112 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FAAB2023D
-	for <e@80x24.org>; Mon, 22 May 2017 14:08:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F3142023D
+	for <e@80x24.org>; Mon, 22 May 2017 14:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933882AbdEVOCe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 10:02:34 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:57033 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933877AbdEVOCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 10:02:31 -0400
-Received: from [10.0.2.15] ([143.159.212.80])
-        by avasout07 with smtp
-        id PS2G1v0051keHif01S2HAx; Mon, 22 May 2017 15:02:29 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
- a=IkcTkHD0fZMA:10 a=vxfzNK-mxNk2fl23QzIA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] usage: add NORETURN to BUG() function definitions
+        id S934668AbdEVOSL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 10:18:11 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:64429 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S934407AbdEVOSI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 22 May 2017 10:18:08 -0400
+X-AuditID: 1207440d-dcfff70000000e33-09-5922f31fd052
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id E8.A8.03635.F13F2295; Mon, 22 May 2017 10:18:07 -0400 (EDT)
+Received: from bagpipes.fritz.box (p57BCCDA0.dip0.t-ipconnect.de [87.188.205.160])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4MEI249023503
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Mon, 22 May 2017 10:18:04 -0400
+From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
-References: <4a5619af-d695-ab6c-e603-368e38827455@ramsayjones.plus.com>
- <xmqqpof1psy7.fsf@gitster.mtv.corp.google.com>
- <11cae8d7-46a6-9ab5-5bee-a7e6897c0a88@ramsayjones.plus.com>
- <xmqqh90dpqja.fsf@gitster.mtv.corp.google.com>
- <xmqqd1b1pq1j.fsf@gitster.mtv.corp.google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <15d73455-6d0e-e67a-7cf3-eb0ae9aa3b0d@ramsayjones.plus.com>
-Date:   Mon, 22 May 2017 15:02:16 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqd1b1pq1j.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v2 00/25] Prepare to separate out a packed_ref_store
+Date:   Mon, 22 May 2017 16:17:30 +0200
+Message-Id: <cover.1495460199.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.11.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrCIsWRmVeSWpSXmKPExsUixO6iqCv/WSnS4OtRcYu1z+4wWTxff4Ld
+        outKN5NFQ+8VZosnc+8yW9xeMZ/ZYsnD18wW3VPeMlr8aOlhtti8uZ3Fgcvj7/sPTB47Z91l
+        91iwqdTj4asudo+u9iNsHs969zB6XLyk7PF5k1wARxSXTUpqTmZZapG+XQJXxta2dqaCNyoV
+        /6YuYWxgfCXTxcjJISFgItE09QsriC0ksINJYtt0xS5GLiD7FJPE9SfnWUASbAK6Eot6mplA
+        bBEBNYmJbYdYQIqYBTYwS7yZvhosISzgInHs+ztmEJtFQFVi/5cbjCA2r4C5xN+GJkaIbfIS
+        u9ousk5g5FrAyLCKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdILzezRC81pXQTIySweHcw/l8n
+        c4hRgINRiYdX47FSpBBrYllxZe4hRkkOJiVR3qNvgEJ8SfkplRmJxRnxRaU5qcWHGCU4mJVE
+        eLXvAuV4UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK8ep+AGgWLUtNT
+        K9Iyc0oQ0kwcnCDDeYCGr/kAMry4IDG3ODMdIn+KUVFKnNcApFkAJJFRmgfXC4v8V4ziQK8I
+        85qAVPEAkwZc9yugwUxAg62fyYMMLklESEk1MLJYyWw00DGMkbP0DFP7vafxpnNnUUtukdr9
+        Kdt3V4ds9NML/fp1+UpVj+xPxg82lu1jvJCWsyVyq6a22p6V31nqxVZ2h0wquahW6aebalCq
+        w/Rt5fSVRY+/z9E2j5oxXa1KfFvasfla71jZp1tON4i5fLRb/EZwbu1U8YeHNs+rXKZ7Mdr9
+        gRJLcUaioRZzUXEiAOjgFpLXAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is the second iteration of a patch series that prepares the
+ground for separating out a `packed_ref_store` and then for changing
+`packed-refs` to be read using `mmap()`. Thanks to Peff, Junio,
+Stefan, Brandon, and Johannes for their feedback about v1 [1]. I think
+I have addressed all of your comments.
 
+Changes since v1:
 
-On 22/05/17 03:46, Junio C Hamano wrote:
-> Hmph.  I do not know what went wrong.  The one I had in /usr/bin
-> that came from the distro was too old that it didn't give any useful
-> result and failed, and that was why I got v0.5.0-207-g14964df
-> installed in ~/gitstuff/bin/ which is early on my $PATH; I do not
-> think I did any other updates but now I am seeing happy results.
-> 
->         $ git checkout jk/bug-to-abort^1
->         $ make SP_OBJ=usage.sp sparse
->         GIT_VERSION = 2.13.0.3.g25cd291963
->             SP usage.c
->         usage.c:220:6: error: symbol 'BUG_fl' redeclared with diff...
+* Since v1, branch `bc/object-id` has been merged to `next`, and it
+  has lots of conflicts with these changes. So I rebased this branch
+  onto a merge of `master` and `bc/object-id`. (I hope this makes
+  Junio's job easier.) This unfortunately causes a bit of tbdiff noise
+  between v1 and v2.
 
-To save yourself a little typing, if you want to run sparse over a
-single file:
+* Patch [01/25]: in t3600, register the `test_when_finished` command
+  before executing `chmod a-w`.
 
-    $ make usage.sp  # ie simply replace '.c' with '.sp'
+* Patch [04/25] (new patch): convert a few `die("internal error: ...")`
+  to `die("BUG: ...")`.
 
-... is the recommended way to do it. This makes sure that the same
-flags are passed to cgcc as are passed to gcc as part of the build.
+* Patch [05/25]: Use `strlen()` rather than `memchr()` to check the
+  trim length, and `die()` rather than skipping if it is longer than
+  the reference name.
 
-Note that I would not normally run sparse directly on a source file
-(except when messing around with different versions!), the idea is
-to use cgcc as a frontend (as the Makefile does).
+* Patch [08/25]: Name the log message arguments `msg` for consistency
+  with existing code.
 
-Having said that, I rarely run sparse over just one file (except
-when fixing a sparse error/warning). On each branch (master->next->pu)
-I do
+* Patch [10/25]: Rename the new member from `packlock` to
+  `packed_refs_lock`.
 
-    $ make sparse >sp-out 2>&1 # nsp-out on 'next', psp-out on 'pu'
+* Patch [13/25] (new patch): Move the check for valid
+  `transaction->state` from `files_transaction_commit()` to
+  `ref_transaction_commit()`.
 
-... so that I can diff the files from branch to branch. (I check the
-master branch file by hand. There is a single warning on Linux that
-is actually a sparse problem).
+* Patch [14/25]:
 
-Just FYI, for today's fetch:
+  * Add more sanity checks of `transaction->state`.
 
-    $ diff sp-out nsp-out
-    $ diff nsp-out psp-out
-    12a13
-    >     SP blame.c
-    42a44,46
-    > diff.c:813:6: warning: symbol 'emit_line' was not declared. Should it be static?
-    > diff.c:828:6: warning: symbol 'emit_line_fmt' was not declared. Should it be static?
-    > diff.c:1865:6: warning: symbol 'print_stat_summary_0' was not declared. Should it be static?
-    54a59
-    >     SP fsmonitor.c
-    137a143
-    >     SP sub-process.c
-    170a177
-    >     SP compat/fopen.c
-    276a284
-    > builtin/worktree.c:539:38: warning: Using plain integer as NULL pointer
-    296a305
-    >     SP t/helper/test-dir-iterator.c
-    $ 
-    
+  * Don't add `ref_transaction_finish()` to the public API. Instead,
+    teach `ref_transaction_commit()` to do the right thing whether or
+    not `ref_transaction_prepare()` has been called.
 
-ATB,
-Ramsay Jones
+  * Add and improve docstrings.
 
+  * Allow `ref_transaction_abort()` to be called even before
+    `ref_transaction_prepare()` (in which case it just calls
+    `ref_transaction_free()`).
+
+* Lots of improvements to commit messages and comments, mostly to
+  clarify points that reviewers asked about.
+
+These changes (along with the merge commit that they are based on) are
+also available as branch `packed-ref-store-prep` in my GitHub fork
+[2]. If you'd like to see a preview of the rest of the changes (which
+works but is not yet polished), checkout the `mmap-packed-refs` branch
+from the same place.
+
+Michael
+
+[1] http://public-inbox.org/git/cover.1495014840.git.mhagger@alum.mit.edu/
+[2] https://github.com/mhagger/git
+
+Jeff King (1):
+  ref-filter: limit traversal to prefix
+
+Michael Haggerty (24):
+  t3600: clean up permissions test properly
+  refs.h: clarify docstring for the ref_transaction_update()-related fns
+  ref_iterator_begin_fn(): fix docstring
+  files-backend: use `die("BUG: ...")`, not `die("internal error: ...")`
+  prefix_ref_iterator: don't trim too much
+  refs_ref_iterator_begin(): don't check prefixes redundantly
+  refs: use `size_t` indexes when iterating over ref transaction updates
+  ref_store: take a `msg` parameter when deleting references
+  lockfile: add a new method, is_lock_file_locked()
+  files-backend: move `lock` member to `files_ref_store`
+  files_ref_store: put the packed files lock directly in this struct
+  files_transaction_cleanup(): new helper function
+  ref_transaction_commit(): check for valid `transaction->state`
+  ref_transaction_prepare(): new optional step for reference updates
+  ref_update_reject_duplicates(): expose function to whole refs module
+  ref_update_reject_duplicates(): use `size_t` rather than `int`
+  ref_update_reject_duplicates(): add a sanity check
+  should_pack_ref(): new function, extracted from `files_pack_refs()`
+  get_packed_ref_cache(): assume "packed-refs" won't change while locked
+  read_packed_refs(): do more of the work of reading packed refs
+  read_packed_refs(): report unexpected fopen() failures
+  refs_ref_iterator_begin(): handle `GIT_REF_PARANOIA`
+  create_ref_entry(): remove `check_name` option
+  cache_ref_iterator_begin(): avoid priming unneeded directories
+
+ builtin/fetch.c                |   2 +-
+ builtin/remote.c               |   4 +-
+ lockfile.h                     |   8 ++
+ ref-filter.c                   |  64 ++++++++-
+ refs.c                         | 135 ++++++++++++++++--
+ refs.h                         | 149 +++++++++++++++-----
+ refs/files-backend.c           | 302 +++++++++++++++++++++++++----------------
+ refs/iterator.c                |  18 ++-
+ refs/ref-cache.c               | 100 ++++++++++++--
+ refs/ref-cache.h               |   6 +-
+ refs/refs-internal.h           |  62 +++++++--
+ t/helper/test-ref-store.c      |   3 +-
+ t/t1405-main-ref-store.sh      |   2 +-
+ t/t1406-submodule-ref-store.sh |   2 +-
+ t/t3600-rm.sh                  |   4 +-
+ 15 files changed, 658 insertions(+), 203 deletions(-)
+
+-- 
+2.11.0
 
