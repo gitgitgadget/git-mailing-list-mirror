@@ -2,87 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70FC72023D
-	for <e@80x24.org>; Mon, 22 May 2017 19:01:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 064892023D
+	for <e@80x24.org>; Mon, 22 May 2017 19:01:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761105AbdEVTBK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 15:01:10 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:24223 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751884AbdEVTBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 15:01:10 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wWp0N2vKdz5tlJ;
-        Mon, 22 May 2017 21:01:08 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 20B894327;
-        Mon, 22 May 2017 21:01:08 +0200 (CEST)
-Subject: [PATCH v2 2/2] Windows: do not treat a path with backslashes as a
- remote's nick name
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <cover.1495261020.git.j6t@kdbg.org>
- <7b1f97ff-52b7-72c3-211f-e73dce562911@kdbg.org>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <b2fa1cff-9902-5bef-0392-1371bf1f4268@kdbg.org>
-Date:   Mon, 22 May 2017 21:01:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
-MIME-Version: 1.0
-In-Reply-To: <7b1f97ff-52b7-72c3-211f-e73dce562911@kdbg.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1761106AbdEVTB0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 15:01:26 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:35613 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751951AbdEVTBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 15:01:25 -0400
+Received: by mail-pf0-f171.google.com with SMTP id n23so90675597pfb.2
+        for <git@vger.kernel.org>; Mon, 22 May 2017 12:01:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=RSPn4UTMGqAWF8BgGsQTLAU6D4xInqOUC429NidkHxM=;
+        b=ZUbiAj14iKd/glgxZqxKEwnTniwWhTvQmjxKcQ2zHVwhiMZipTWH/lKKSyBCInpsRi
+         oHYYtltBjDTSjpaFpWDpd/sg7wpn+wyEeLCfB/g7Q/JDGqx7B+pg7HvWmhWcV6cubkqQ
+         wkVoZQZlM8rtrA8Hnnqk21q5nSULaStA7H6jPFk6ukWf5U9K1EANLP9EzhaPcZfmnc39
+         rsjBQVSBYpZENSY1JgSFErPKM4xZAndIXYmFRVH3J4nMKd/iiM5zgxA7pq+P8b6DqDxl
+         VyfKgfigSDSU/d2JWb8K/T4MTJLSqbligc/uKV7Vl5aD1+D9fTAo2zu0kZ9CV/bo/1l7
+         7AMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=RSPn4UTMGqAWF8BgGsQTLAU6D4xInqOUC429NidkHxM=;
+        b=CKbRjxMHYv/hMU7rn4HtRkyB4oWhmKDNacoN4Of0cuGgQ1BBr4gM7G/vmXdosQhiyq
+         Az/BvRjtcOePuoRfrA43xyexppeOaV4WB4hO2aqV5tgWUOo0mKlfvKJai586pw22h9Mv
+         znE/1Am6P9s6/8eDev/ee0QvsILMMyBFhyIcbqPvtFjgVg8HvoufU6alOxplr8zS5tmF
+         kKsOW3zeEgddDAWT8hR8t3sRm068GB5DyrBfHK7i2JrpfF7pkfQJ/yoggv7wIvR5SvCa
+         FCEni9cQz0w/FAstGVe8vyYB9tkJXT4i0W/7Rufay7wDiAjZqrXU3rPTsSz5XPMuxQYB
+         pENg==
+X-Gm-Message-State: AODbwcB8/USg0YyJ2MBdwLZt8DhmR6FrFbW4T1YqZpz7++BpomdMZ326
+        3l1dl6hK6U1pVizA
+X-Received: by 10.99.119.137 with SMTP id s131mr27093191pgc.116.1495479683184;
+        Mon, 22 May 2017 12:01:23 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:6dc1:8d70:6f8f:1c2a])
+        by smtp.gmail.com with ESMTPSA id z21sm30665630pgc.15.2017.05.22.12.01.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 22 May 2017 12:01:22 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] t5531: fix test description
+Date:   Mon, 22 May 2017 12:01:14 -0700
+Message-Id: <20170522190114.19832-1-sbeller@google.com>
+X-Mailer: git-send-email 2.13.0.18.g7d86cc8ba0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fetching from a remote using a native Windows path produces these warnings:
+The description of the test was not enclosed in single quotes, which
+broke the coloring scheme that I am used to.  Upon closer inspection
+the test is good, but the description is a bit vague. So extend the
+description of the first test.
 
-C:\Temp\gittest>git fetch C:\Temp\gittest
-warning: unable to access '.git/remotes/C:\Temp\gittest': Invalid argument
-warning: unable to access '.git/branches/C:\Temp\gittest': Invalid argument
-From C:\Temp\gittest
- * branch            HEAD       -> FETCH_HEAD
+While at it align the description of the file to match what we actually
+test in the file.
 
-The functions that read the branches and remotes files are protected by
-a valid_remote_nick() check. Its implementation does not take Windows
-paths into account, so that the caller simply concatenates the paths,
-leading to the error seen above.
-
-Use is_dir_sep() to check for both slashes and backslashes on Windows.
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- This v2 writes your suggested comment in front of the loop (not just
- the 'if' because then I feel I would have to add braces).
+ t/t5531-deep-submodule-push.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- remote.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/remote.c b/remote.c
-index ad6c5424ed..1949882c10 100644
---- a/remote.c
-+++ b/remote.c
-@@ -645,7 +645,12 @@ static int valid_remote_nick(const char *name)
- {
- 	if (!name[0] || is_dot_or_dotdot(name))
- 		return 0;
--	return !strchr(name, '/'); /* no slash */
-+
-+	/* remote nicknames cannot contain slashes */
-+	while (*name)
-+		if (is_dir_sep(*name++))
-+			return 0;
-+	return 1;
- }
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-push.sh
+index f55137f76f..62160ab0ca 100755
+--- a/t/t5531-deep-submodule-push.sh
++++ b/t/t5531-deep-submodule-push.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
  
- const char *remote_for_branch(struct branch *branch, int *explicit)
+-test_description='unpack-objects'
++test_description='test push with submodules'
+ 
+ . ./test-lib.sh
+ 
+@@ -27,7 +27,7 @@ test_expect_success setup '
+ 	)
+ '
+ 
+-test_expect_success push '
++test_expect_success 'push works with recorded gitlink' '
+ 	(
+ 		cd work &&
+ 		git push ../pub.git master
 -- 
-2.13.0.55.g17b7d13330
+2.13.0.18.g7d86cc8ba0
+
