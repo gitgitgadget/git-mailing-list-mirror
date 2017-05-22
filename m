@@ -7,106 +7,120 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 180331FF30
-	for <e@80x24.org>; Mon, 22 May 2017 01:33:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58B7C1FF30
+	for <e@80x24.org>; Mon, 22 May 2017 01:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757056AbdEVBd0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 May 2017 21:33:26 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36300 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756846AbdEVBdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 May 2017 21:33:25 -0400
-Received: by mail-pf0-f193.google.com with SMTP id n23so16293505pfb.3
-        for <git@vger.kernel.org>; Sun, 21 May 2017 18:33:25 -0700 (PDT)
+        id S932083AbdEVBnP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 May 2017 21:43:15 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34739 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756494AbdEVBnO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 May 2017 21:43:14 -0400
+Received: by mail-pf0-f195.google.com with SMTP id w69so16331511pfk.1
+        for <git@vger.kernel.org>; Sun, 21 May 2017 18:43:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=IWeiqWruqQpsgZ+i1oxCQ6OwbV9Vvedr9zbR3Ayn4j4=;
-        b=nslW1fcKeHAWscOwR8J52H67XymXlasRuKqhXcdARK7NoZlwBUhkTVZiETXPtXk4wb
-         vKDTqkdPmhSmtZ9cXJOqIOqMDPhjnFBfy6XuHu3X+Be/Kz+srYtAdqqEqHxkTVcvugjy
-         ODkDTAis3EHuTTyyfz71uojQoJI4Gz4egmRlSzX0WF/CX3Gu0s7uPQi1VRsKW1Yy0Qxp
-         KHHicX1zyzcjMM7m0hHQbIYq59yhWZBqDkpuYsb+O2t1AxlXSehboBA6p+0j+Zy1Gdbr
-         WaO1j3DHATC6IkxFkhxpdzn9eEqmKwFMc2B3RjRBDaUpOK3ZVM149AMO8ya12zQaX9+t
-         AWjw==
+         :user-agent:mime-version;
+        bh=xbfVv4m2UDBdrpJ3vuMg3ytYC3evI5M8yMpSw1RWF94=;
+        b=WnIRMvYj12XhG93vWx0v8oRviZIlSF4kufsKdNaqzlb3sZqbgCVtSor5gKqFUCtUL6
+         lkeNO4WnVmw8Qqk+8INI6mc3rjGV9vvxZ3tFWb/nBuypgCmutoukgcOF7Dt1nSnPBIVg
+         vPpOjUs2YSKcvWjll5yZe2KYohXj8OXOQmcTNazazcd9psUvblHF7GHsz2ND2azFziy2
+         iiBubGNX1S9LwNiBttK7oG7dhEdDqLIApOFR0rdA8IebBxIWL5f4yUwaHDaoOHOtG9/d
+         sXGOw0z0sADU3RyOaOvVI5aoVtyEb8lGhAF7yv2EQ8XoJGB2RKKoeZsr0DIP7PmAPSk0
+         v2/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=IWeiqWruqQpsgZ+i1oxCQ6OwbV9Vvedr9zbR3Ayn4j4=;
-        b=ioIbmMXQG6tmz5N+dGo8m9RcmclRSbbt6CkuaYIoZOIA886BUUDsficxsPvWDI8fZ0
-         Z29u+k3woFn5BWJrB//NHrAgetnoas6N4f2XHGJdstVpjpbvFNcOdT4vUyU5i8hLxypg
-         Uxm4L8P2gXlzxctIG1fD3P3eXNQEid35u11Ou9c3L465cR8XSmFTdsnrxOtz5Tq0ylkt
-         Pdqxtom6+JFDDFeHaK5w6N6p+pShJWjurO1USoVPBHHXUSCKPq2tltUvUqQ3hQgc281M
-         rl4+Reg4pCly9xV3U3Z7s6TcQEPcdB+nZsD9yHAW6tm83kZOAe1aN70PyqfTv3q9q/fx
-         w0xA==
-X-Gm-Message-State: AODbwcA+Y0rSXL4mpNfDcNGifbdQYvOdchLOjpBRZGL9w56X3PjumoqC
-        wW72B8mpDGsWj7xSWJs=
-X-Received: by 10.98.70.198 with SMTP id o67mr22078461pfi.79.1495416805007;
-        Sun, 21 May 2017 18:33:25 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=xbfVv4m2UDBdrpJ3vuMg3ytYC3evI5M8yMpSw1RWF94=;
+        b=D3tm9QSwfW/q1to42bekbfjr4Ps0G3T4RLv2dBOV22FAVe3kukXLe7rQDXW8qlh3Lw
+         wExO8VUfJMUnwK3I8ZaPqSsCoaNLxa9BsXg3J3BBUOPmOuYXsESrpHBx+Kl+iy9ONBaS
+         YBtFFPJzW5vjh1r8QembIR5SrGviXgjeQo5IUBd4I+l6GsbEvRJp4BZ/Fzh3Bov5zIWX
+         7a4dESz5CUpSjAsagRcNOOlbSGBWQXswwzXSyO/NWxEh6tXlcifi5vQXcf+1Oa4ddYK9
+         ksWDThguF58Ky7tSv52OGFjnNF/c/t9464y6zuXS47EzMe1C+FsnSdXtbLfMfmr/5r0N
+         Hybg==
+X-Gm-Message-State: AODbwcAR+3+GR5XhL8SbXKflvJ7rEBCEWg9fRvQYzf5jFVkZPLQDFUZv
+        OCEPcYMx+gBqCA==
+X-Received: by 10.98.76.140 with SMTP id e12mr8423882pfj.142.1495417393424;
+        Sun, 21 May 2017 18:43:13 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:4439:f55c:c49b:d0dc])
-        by smtp.gmail.com with ESMTPSA id c19sm24277641pgk.32.2017.05.21.18.33.24
+        by smtp.gmail.com with ESMTPSA id u194sm27392728pgc.2.2017.05.21.18.43.12
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 21 May 2017 18:33:24 -0700 (PDT)
+        Sun, 21 May 2017 18:43:12 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Marc Stevens <marc@marc-stevens.nl>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v2 2/2] sha1dc: optionally use sha1collisiondetection as a submodule
-References: <20170520115429.12289-1-avarab@gmail.com>
-        <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com>
-        <20170520115429.12289-3-avarab@gmail.com>
-Date:   Mon, 22 May 2017 10:33:23 +0900
-In-Reply-To: <20170520115429.12289-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sat, 20 May 2017 11:54:29 +0000")
-Message-ID: <xmqqtw4dptek.fsf@gitster.mtv.corp.google.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] usage: add NORETURN to BUG() function definitions
+References: <4a5619af-d695-ab6c-e603-368e38827455@ramsayjones.plus.com>
+Date:   Mon, 22 May 2017 10:43:12 +0900
+In-Reply-To: <4a5619af-d695-ab6c-e603-368e38827455@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Sun, 21 May 2017 23:25:39 +0100")
+Message-ID: <xmqqpof1psy7.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> +# Define DC_SHA1_SUBMODULE in addition to DC_SHA1 to use the
-> +# sha1collisiondetection shipped as a submodule instead of the
-> +# non-submodule copy in sha1dc/. This is an experimental option used
-> +# by the git project to migrate to using sha1collisiondetection as a
-> +# submodule.
-> +#
+> Commit d8193743e0 ("usage.c: add BUG() function", 12-05-2017) added the
+> BUG() functions and macros as a replacement for calls to die("BUG: ..").
+> The use of NORETURN on the declarations (in git-compat-util.h) and the
+> lack of NORETURN on the function definitions, however, leads sparse to
+> complain thus:
+>
+>       SP usage.c
+>   usage.c:220:6: error: symbol 'BUG_fl' redeclared with different type
+>   (originally declared at git-compat-util.h:1074) - different modifiers
+>
+> In order to suppress the sparse error, add the NORETURN to the function
+> definitions.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Junio,
+>
+> This is built on 'next', which has now merged the 'jk/bug-to-abort'
+> branch.
 
-Yup, thanks.
+Thanks.  
 
-I actually was envisioning something like this instead, though.
+I cannot seem to cause sparse (v0.5.0-207-g14964df) to complain the
+same way, though.
 
-diff --git a/Makefile b/Makefile
-index 6baad1669e..8d33936a12 100644
---- a/Makefile
-+++ b/Makefile
-@@ -989,6 +989,10 @@ EXTLIBS =
- 
- GIT_USER_AGENT = git/$(GIT_VERSION)
- 
-+ifeq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisiondetection/lib/sha1.h)
-+DC_SHA1_SUBMODULE = auto
-+endif
-+
- include config.mak.uname
- -include config.mak.autogen
- -include config.mak
-
-That way, a user can say "git submodule init/update" it to use it,
-and deinit it to use the frozen version.
-
-But when somebody (like me?) feels strongly enough, such a change
-can always come on top of this patch, so let's have this
-manual-configuration-only version as our first step.
-
-Thanks.
+>
+> Thanks!
+>
+> ATB,
+> Ramsay Jones
+>
+>  usage.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/usage.c b/usage.c
+> index 7e6cb2028..1f63e033e 100644
+> --- a/usage.c
+> +++ b/usage.c
+> @@ -217,7 +217,7 @@ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_lis
+>  }
+>  
+>  #ifdef HAVE_VARIADIC_MACROS
+> -void BUG_fl(const char *file, int line, const char *fmt, ...)
+> +NORETURN void BUG_fl(const char *file, int line, const char *fmt, ...)
+>  {
+>  	va_list ap;
+>  	va_start(ap, fmt);
+> @@ -225,7 +225,7 @@ void BUG_fl(const char *file, int line, const char *fmt, ...)
+>  	va_end(ap);
+>  }
+>  #else
+> -void BUG(const char *fmt, ...)
+> +NORETURN void BUG(const char *fmt, ...)
+>  {
+>  	va_list ap;
+>  	va_start(ap, fmt);
