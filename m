@@ -2,94 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 825CF1FF30
-	for <e@80x24.org>; Mon, 22 May 2017 06:17:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C556B20281
+	for <e@80x24.org>; Mon, 22 May 2017 08:27:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752121AbdEVGRw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 02:17:52 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:36656 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752081AbdEVGRv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 02:17:51 -0400
-Received: by mail-pf0-f175.google.com with SMTP id m17so72006366pfg.3
-        for <git@vger.kernel.org>; Sun, 21 May 2017 23:17:51 -0700 (PDT)
+        id S1752938AbdEVI1z (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 04:27:55 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:32805 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752899AbdEVI1y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 04:27:54 -0400
+Received: by mail-it0-f66.google.com with SMTP id l145so13000992ita.0
+        for <git@vger.kernel.org>; Mon, 22 May 2017 01:27:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=34f5eN1GzGHZQ5zqwZLdU/uILA2Nmj9dGUmF5UfYoZ8=;
-        b=onEGoNiPKxq1lLnFmRFHqRvK0cBz1/6U4+CH+DXa9IRdiUz86JiwUusL+cijDuYw1i
-         5INpskTeaAvkYr45Hn0O1i0zsblJeke/HHxzJIfs1jU1YHzCzjzqQnuz3Cv12ixGD7Lc
-         rHvgN+HBJOnOICWgdu/wdN3Ga17x/CHkjJTcyv2HE/NYB0fgrZZcpoS53Ptb3BSroa3J
-         bosS5hsm4hojL0kT7U1veyOQW8z7aPEaXOekbHNiCs7TRnrw/9eRJVoBCR+Z7+snP9u8
-         0ppaZW5ZGlqFNdDt1gejpa11T2y5mbU85glK93xj0NVunHONQVIQz/Q2NpamOygyx1q6
-         KhQw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VsOs7Q9UNJUcvrYfgSqeEzIC03lSvX8qBPCknM6NDUQ=;
+        b=o1TLapEo1VPxkm7Wzj2WP/XXrqwY9gIOLJVDF6YxrrCVeXvIr/kO0NRPEkNu3KOmbJ
+         9wRBrLdIjsGHcnTH/VjNb2A1pVMBkb9Cc9jlMfjDlmtZuFxOrzwlBOheVy92n7sxiKdL
+         OS/fPHv0jUldAxvK11z9GuzAoR4PEJFnqbStMCBuHViaZolat4mBY8nlh3K6bMoBIv3k
+         +ZrkWnRN3jMtKOF31Eu/+K/ZFSccNNthF7idtBCI2UpdYYIJDBbfpLGSk+b0W4/k+h5W
+         TBPLb3T7y7O/3o0O0HMEYNLdAd33WicTNVpWw8mxDd0GRagUZvtfMYfolsNjbN9GYJlm
+         hUmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=34f5eN1GzGHZQ5zqwZLdU/uILA2Nmj9dGUmF5UfYoZ8=;
-        b=PEonX15yvvgx1KgjgDg2yOs1gCyxzxnxOXe8WA+ZTLfExVSArndXaGoesos3XrHF0+
-         OZW7fsvKxbD6guo/R0wEVGvHmoQ3gPcz1bu9y7VabIkw02gyWfTgOYC0qMV8OMRkRy+0
-         TnlF87R0DeE9ToqlSCBBYENqLRpf3NQMk8i5FvG6YW5boWmaNSRKLFRPTrwEstaBbQlE
-         h4nhxkUidP/t4bSfrUwmnsE+4oN7bMZf7vyE7SF09ScMzzHeU4ts9i3IVJ11AEy1oKCB
-         /tWJfFOgm1qk1IxpfCOiNS/KDLRi3IfEvorvvBy/QfKE/mOMf8T9ewmE7HTMSB2hE5/C
-         5kLA==
-X-Gm-Message-State: AODbwcBMlgNh0FLnhlzwN3rxgPHUnKkVHUau329Zud/0sqjdZBK8YW7/
-        /00AocOt17bcc7l+ssc=
-X-Received: by 10.98.103.87 with SMTP id b84mr24216162pfc.235.1495433870412;
-        Sun, 21 May 2017 23:17:50 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:4439:f55c:c49b:d0dc])
-        by smtp.gmail.com with ESMTPSA id y20sm23419684pfb.93.2017.05.21.23.17.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 21 May 2017 23:17:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v4 6/6] clean: teach clean -d to skip dirs containing ignored files
-References: <20170518082154.28643-1-sxlijin@gmail.com>
-        <20170516073423.25762-1-sxlijin@gmail.com>
-        <20170518082154.28643-7-sxlijin@gmail.com>
-        <xmqqtw4do5tf.fsf@gitster.mtv.corp.google.com>
-        <CAJZjrdX9BnuxY3tmpswG+yEdDm1+AR8rc5wKGZyVCMp-jP218A@mail.gmail.com>
-Date:   Mon, 22 May 2017 15:17:49 +0900
-In-Reply-To: <CAJZjrdX9BnuxY3tmpswG+yEdDm1+AR8rc5wKGZyVCMp-jP218A@mail.gmail.com>
-        (Samuel Lijin's message of "Mon, 22 May 2017 01:58:53 -0400")
-Message-ID: <xmqqk259o1o2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VsOs7Q9UNJUcvrYfgSqeEzIC03lSvX8qBPCknM6NDUQ=;
+        b=b6gkCI/1I2Ma640hGRSUo1YhGlGP/0iecgdcEBn67Vlmxp3qIXeHQ6J+anoPDxUIWB
+         GJbEmBxDgdJATGra2eAj66PjIrIHat43n3p6yhBmSuf8CFc4zcPc0JNDUT0OyrZaroOS
+         /aj4Jml7vDqQQFSscFE9/4P7ajmXr+EImkn4PTMDpUZv+9x+K8NIpNePmZkr4pcfJik+
+         Nbv4sGcHtR6GbR7jiQmHInCEwIOZCsi5nXBWvF6pKbr6Ssu7ezo+1LMfvxWkKDbxN8YB
+         KjBYlaARhrSb+IAXA7adrOWfuqh12YqtMynRJAR7lbjDLgFBM1QEe6klPH8zl5GH57gm
+         EeNA==
+X-Gm-Message-State: AODbwcBOk70YJ6gVtvg1uhxVl2+1jg20eg6+27wIJdTTvL93yZeTW5mp
+        FzuPcN37ranLkDDelAP+ivt1NK/U1g==
+X-Received: by 10.36.138.131 with SMTP id v125mr38511073itd.66.1495441673800;
+ Mon, 22 May 2017 01:27:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.8.220 with HTTP; Mon, 22 May 2017 01:27:33 -0700 (PDT)
+In-Reply-To: <xmqq7f19ppy6.fsf@gitster.mtv.corp.google.com>
+References: <20170520115429.12289-1-avarab@gmail.com> <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com>
+ <20170520115429.12289-3-avarab@gmail.com> <xmqqtw4dptek.fsf@gitster.mtv.corp.google.com>
+ <xmqq7f19ppy6.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 22 May 2017 10:27:33 +0200
+Message-ID: <CACBZZX52etn7jjT13tDfiQL2ondBAK8G7MuLvG5bmm8Fmn-FwQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] sha1dc: optionally use sha1collisiondetection as a submodule
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Marc Stevens <marc@marc-stevens.nl>,
+        Michael Kebe <michael.kebe@gmail.com>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Samuel Lijin <sxlijin@gmail.com> writes:
-
->> By the way, instead of putting NULL, it may be easier to follow if
->> you used two pointers, src and dst, into dir.entries[], just like
->> you did in your latest version of [PATCH 4/6].  That way, you do not
->> have to change anything in the later loop that walks over elements
->> in the dir.entries[] array.  It would also help the logic easier to
->> follow if the above loop were its own helper function.
+On Mon, May 22, 2017 at 4:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Agreed on the helper function. On the src-dst thing: I considered it,
-> but I figured another O(n) set of array moves was unnecessary. I guess
-> this is one of those cases where premature optimization doesn't make
-> sense?
+>> But when somebody (like me?) feels strongly enough, such a change
+>> can always come on top of this patch, so let's have this
+>> manual-configuration-only version as our first step.
+>
+> Just so that I have something I can come back to, here it is with a
+> log message.
+>
+> -- >8 --
+> Subject: [PATCH] sha1collisiondetection: automatically enable when submodule is populated
+>
+> If a user wants to experiment with the version of collision
+> detecting sha1 from the submodule, the user needed to not just
+> populate the submodule but also needed to turn the knob.
+>
+> A Makefile trick is easy enough to do so, so let's do this.  When
+> somebody with a copy of the submodule populated wants not to use it,
+> that can be done by overriding it in config.mak or from the command
+> line, e.g. "make DC_SHA1_SUBMODULE= all".
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Makefile | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Makefile b/Makefile
+> index 6baad1669e..8d33936a12 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -989,6 +989,10 @@ EXTLIBS =
+>
+>  GIT_USER_AGENT = git/$(GIT_VERSION)
+>
+> +ifeq ($(wildcard sha1collisiondetection/lib/sha1.h),sha1collisiondetection/lib/sha1.h)
+> +DC_SHA1_SUBMODULE = auto
+> +endif
+> +
+>  include config.mak.uname
+>  -include config.mak.autogen
+>  -include config.mak
 
-I actually did not mean to give the variables more descriptive names
-and preserve the original 'main loop' (namely, not adding the "skip
-if NULL" which would never happen in normal case where "-d" is not
-used without "-x") as "optimization", whether it is premature or
-not.  My suggestions were purely from "wouldn't the resulting code
-easier to follow and understand, leading to fewer bugs in the
-future?" point of view.
 
-As I said, I am undecided if the result is easier to follow than
-your version ;-)
+I thought this should have something like this:
+
+diff --git a/Makefile b/Makefile
+index 8d33936a12..bbcac648a4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -989,9 +989,11 @@ EXTLIBS =
+
+ GIT_USER_AGENT = git/$(GIT_VERSION)
+
++ifndef DC_SHA1_SUBMODULE
+ ifeq ($(wildcard
+sha1collisiondetection/lib/sha1.h),sha1collisiondetection/lib/sha1.h)
+ DC_SHA1_SUBMODULE = auto
+ endif
++endif
+
+ include config.mak.uname
+ -include config.mak.autogen
+
+I.e. so using sha1dc via DC_SHA1_SUBMODULE= even with the submodule
+checked-out would work, but experimenting with it now that seems to do
+the right thing, even though this is set unconditionally. There must
+be some Makefile magic I'm missing here.
+
+But in any case it would make sense to squash something like this into
+your patch:
+
+diff --git a/Makefile b/Makefile
+index 8d33936a12..4d9c49ae17 100644
+--- a/Makefile
++++ b/Makefile
+@@ -148,7 +148,8 @@ all::
+ # sha1collisiondetection shipped as a submodule instead of the
+ # non-submodule copy in sha1dc/. This is an experimental option used
+ # by the git project to migrate to using sha1collisiondetection as a
+-# submodule.
++# submodule. Supplied implicitly if the sha1collisiondetection/
++# directory is found to be populated.
+ #
+ # Define OPENSSL_SHA1 environment variable when running make to link
+ # with the SHA1 routine from openssl library.
