@@ -2,76 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8948D2023D
-	for <e@80x24.org>; Mon, 22 May 2017 18:34:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B6332023D
+	for <e@80x24.org>; Mon, 22 May 2017 18:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935107AbdEVSeE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 14:34:04 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:35598 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934590AbdEVSeD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 14:34:03 -0400
-Received: by mail-pf0-f180.google.com with SMTP id n23so90070655pfb.2
-        for <git@vger.kernel.org>; Mon, 22 May 2017 11:34:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=LtI/Hrw0zzpJklgR/IIwb3yd7RX7h/fVUf2jlGT0HtY=;
-        b=UgBsFhF0f0y11XEZJvRQgtj6ObEEv6qhWcMKc9LFsaYZ0cMSpPfvweDaLp/JijuviW
-         7p87WNaB6h63IZHIVNX6eK6Z+KBayefF/KJdrBV9RxMtwE03tJmzsPd59JXJpxHdrST9
-         ncTk/L5h4bR+5EBdKPB6vgtbCNVFkBGhA3R6Wt9B9f3DeIqDc7GCbY28xFYxZI/YDT2Q
-         uLeGHp3JA1x1UOD4l6y08vuNNd97yc6VYtw/zvqHdlYI1WE9cfZiRqUF9kzGRCnav//L
-         ZwHIVscSNq7InALeaygXWAiqU4umVLuskov9XqKq1GycB/eP4vQAW0SMcVBkr2dVcC3D
-         jzwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=LtI/Hrw0zzpJklgR/IIwb3yd7RX7h/fVUf2jlGT0HtY=;
-        b=MrjSDgvQN373Vw2CedS44ZE1t92F1xmk+65SFLP4JWLbvuNnAhVLqfxJ5ESTWhvcs9
-         M6KOz3Xl11Obkmk8py+mO4/YXcvRNCZIlUDLm4avlphVAGEx8z7UciRyOF/yOTVrn2tD
-         FQO5RJPSJhDYl0Xl+JnNcrJApZrqFQ0W6vFkWh/ucrClVV/YPaPTUnroMwF05rJI9ITG
-         vqGlE7XhBXW67l0Vrkb4yHlSjTbR3JyRWY5cIHjZMpLGAql8oBH6hnT4zAb1qW6ifaBU
-         XzeumQqOrkPjTdakXIByLLxV/Owa7U/C0EvxJAbvzqci+dU7EIqkCJ4cwcUU2CiADEcv
-         RCPQ==
-X-Gm-Message-State: AODbwcDH1Y9QwRvLfLJPB7kYfpNFy1MMgEWeowtW2d1vU+5LTjHsSAYw
-        Ex4Cv/3v6zaz/6TmEV+f5UCrju/sLh22
-X-Received: by 10.99.60.81 with SMTP id i17mr27301452pgn.183.1495478042834;
- Mon, 22 May 2017 11:34:02 -0700 (PDT)
+        id S1760944AbdEVS6m (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 14:58:42 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:25670 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1760390AbdEVS6h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 14:58:37 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wWnxR6L6Lz5tlL;
+        Mon, 22 May 2017 20:58:35 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id E3E5D4327;
+        Mon, 22 May 2017 20:58:32 +0200 (CEST)
+Subject: [PATCH v2 1/2] mingw.h: permit arguments with side effects for
+ is_dir_sep
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <cover.1495261020.git.j6t@kdbg.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <7b1f97ff-52b7-72c3-211f-e73dce562911@kdbg.org>
+Date:   Mon, 22 May 2017 20:58:32 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Mon, 22 May 2017 11:34:02 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 22 May 2017 11:34:02 -0700
-Message-ID: <CAGZ79kYirjV0eQgB_ng-64HSPN_7njUMjnoNBkmWnx-rinsemQ@mail.gmail.com>
-Subject: Another git repo at kernel.org?
-To:     webmaster@kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <cover.1495261020.git.j6t@kdbg.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Taking git-compat-util.h's cue (which uses an inline function to back
+is_dir_sep()), let's use an inline function to back also the Windows
+version of is_dir_sep(). This avoids problems when calling the function
+with arguments that do more than just provide a single character, e.g.
+incrementing a pointer. Example:
 
-The Git community considers using submodules for some parts of the
-code (a third party lib, SHA1DC, computing SHA1s that warn about
-potential attachs, see shattered.io) [1].
+    is_dir_sep(*p++)
 
-We are also concerned about single point of failure there, so a repo
-at kernel.org
-mirroring the potential submodule[2] would be great.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ This v2 takes your commit message body because I like it better
+ than mine. I did not change the subject because your suggestion
+ sounded like the exact opposite of what this patch wants to achieve
+ on first reading. Patch text is unchanged.
 
-I cc'd the git mailing list as we may want to have further discussion who
-shall have access to the new repo.
+ compat/mingw.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Thanks,
-Stefan
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 034fff9479..d2168c1e5e 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -395,7 +395,11 @@ HANDLE winansi_get_osfhandle(int fd);
+ 	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
+ int mingw_skip_dos_drive_prefix(char **path);
+ #define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
+-#define is_dir_sep(c) ((c) == '/' || (c) == '\\')
++static inline int mingw_is_dir_sep(int c)
++{
++	return c == '/' || c == '\\';
++}
++#define is_dir_sep mingw_is_dir_sep
+ static inline char *mingw_find_last_dir_sep(const char *path)
+ {
+ 	char *ret = NULL;
+-- 
+2.13.0.55.g17b7d13330
 
-[1] https://public-inbox.org/git/20170520115429.12289-1-avarab@gmail.com/
-[2] https://github.com/cr-marcstevens/sha1collisiondetection
