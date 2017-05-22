@@ -2,84 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=0.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A84B1FF30
-	for <e@80x24.org>; Mon, 22 May 2017 03:13:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFDA41FF30
+	for <e@80x24.org>; Mon, 22 May 2017 03:19:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756855AbdEVDNP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 May 2017 23:13:15 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36225 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751344AbdEVDNO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 May 2017 23:13:14 -0400
-Received: by mail-pf0-f193.google.com with SMTP id n23so16744357pfb.3
-        for <git@vger.kernel.org>; Sun, 21 May 2017 20:13:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dTybzAvjcIoOiCaXUpbfBIt130tcdi3yUs7TByriDsQ=;
-        b=naR3NtLTZaOtUZx/w2UTlpJ0ox1PwYB/kzJ1ZsA8gCrb0/JksuauNUSemRc/MtSoV1
-         HtMlCQWUazGelUcVIOTO+yaYNq8kBMh7EogHJ1EQx0qF5NtAHAs/3+rY8QurcW5pHfYB
-         RvpwYFGKvFGh/D8Ju6F0ZNzcDycKL54PyTBPr/0LGRJgPpYIHtsMO1ISnL9dNtlgB1Wy
-         7Fk7zfzDN0uy+SludwnZaGJC3/1Y6azpiy4a0TxZL379Z1PocIeL1cBKNl5oE3T0QKsd
-         nytOWVS9edp5EkaUwTtoYHLHYU7jOnMyG9CA7TVPmYmqgFGHMrDjkT0/AkHfTDiYDeLt
-         VAvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dTybzAvjcIoOiCaXUpbfBIt130tcdi3yUs7TByriDsQ=;
-        b=RWYtfKMf/2NBxTR8kQGRCc+mZ1bJAXlWslMVS0Bb1R+gMt4ISlEJviJ0QGtNUnv0/M
-         +6poA1g9bcMesHv8MQLrkRsA8gO/45v0jzv3Fz9dsy0ux0Ierx3cabpeqq13g7pKH0Zh
-         Jc06DXPamcXiIojZ6xUT0S4mxHRBMK2OIEvoiXFN5C0My0ucERZxcqpo07ESbxoeZ4ob
-         VWI5ynJU0bd5/FHRKBzOMhpFxl79T5/d2NCjWv7WPeNxG/UKf2i08W8ST/S5CpqHj5sK
-         T5pPXlCdRRJjJNVTmg7UGfoxGe+3S9plXsVYw2gfVKSkpg5GfMfewtB2mhjBgJBpX6L0
-         O3hQ==
-X-Gm-Message-State: AODbwcDzyQEcsdm/wADQLCUC5YWuRvqKTwul+LZg21WGYnEiCRS99Ypk
-        Q9ystzDweLQLq6OEjug=
-X-Received: by 10.98.14.131 with SMTP id 3mr23110336pfo.23.1495422794003;
-        Sun, 21 May 2017 20:13:14 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:4439:f55c:c49b:d0dc])
-        by smtp.gmail.com with ESMTPSA id b68sm3706087pfe.18.2017.05.21.20.13.11
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 21 May 2017 20:13:12 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 4/6] dir: hide untracked contents of untracked dirs
-References: <20170518082154.28643-1-sxlijin@gmail.com>
-        <20170516073423.25762-1-sxlijin@gmail.com>
-        <20170518082154.28643-5-sxlijin@gmail.com>
-Date:   Mon, 22 May 2017 12:13:11 +0900
-In-Reply-To: <20170518082154.28643-5-sxlijin@gmail.com> (Samuel Lijin's
-        message of "Thu, 18 May 2017 04:21:52 -0400")
-Message-ID: <xmqq37bxpos8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1757098AbdEVDTc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 May 2017 23:19:32 -0400
+Received: from m12-17.163.com ([220.181.12.17]:60723 "EHLO m12-17.163.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756876AbdEVDTb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 May 2017 23:19:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-ID:MIME-Version; bh=B/+iO
+        6HlxKfAW9IKscClqY+wNrMqoMsT6tARMJt5SuY=; b=EZq48Wz8CIseTqJ/qVHaM
+        4VRUHNQvwCScaJha8R76bsQm4ds+7dbgCv+1Xiyj1qCG7KFWClYjCSpq6reQ/NMw
+        Uz483rzvITMeWSPWF8B4JwUeie+g0hSpe5GY5EGhGTvtkdSiyV2ZObn2GKROYthw
+        mkXs5WfRrhJk+uPJgZ5rRs=
+Received: from [127.0.0.1] (unknown [118.187.28.42])
+        by smtp13 (Coremail) with SMTP id EcCowAAHmgynWCJZS4XCFw--.44574S2;
+        Mon, 22 May 2017 11:19:03 +0800 (CST)
+To:     gitster@pobox.com
+Cc:     mst@kernel.org, pbonzini@redhat.com, mina86@mina86.com,
+        artagnon@gmail.com, avarab@gmail.com, git@vger.kernel.org,
+        viktorin@rehivetech.com
+From:   Zhaoxiangqiang <zxq_yx_007@163.com>
+Subject: Re: [PATCH v5] send-email: --batch-size to work around some SMTP
+ server limit
+X-Priority: 3
+In-Reply-To: <xmqqlgpppri7.fsf@gitster.mtv.corp.google.com>
+References: <20170521125950.5524-1-zxq_yx_007@163.com>
+ <xmqqlgpppri7.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
+Date:   Mon, 22 May 2017 03:19:02 +0000
+Message-ID: <cfm22a.oqc3vr.1hgearw-qmf@mail>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-CM-TRANSID: EcCowAAHmgynWCJZS4XCFw--.44574S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxWr1kGrykXFy8Ar1xCr17Jrb_yoWrGw1kp3
+        90gr4I9F95JFy5W34vkF1IgF9Ik3ykKr4DK3Wktr18twn8AasFyr4rtwn5Gas3CrnF9FWU
+        ZrWYqFy3uw1qy37anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j-pnPUUUUU=
+X-Originating-IP: [118.187.28.42]
+X-CM-SenderInfo: 520ts5t0bqili6rwjhhfrp/1tbiEAffxlWBakiOXgAAso
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Samuel Lijin <sxlijin@gmail.com> writes:
-
-> +
-> +	/* if DIR_SHOW_IGNORED_TOO, read_directory_recursive() will also pick
-> +	 * up untracked contents of untracked dirs; by default we discard these,
-> +	 * but given DIR_KEEP_UNTRACKED_CONTENTS we do not
-> +	 */
-
-No need to resend only to fix this, as I'll fix it up while queuing,
-but for the next time, 
-
-        /*
-         * Our multi-line comments have their opening slash-aster
-         * and closing aster-slash on their own lines, like this.
-         */
+DQoNCkp1bmlvIEMgSGFtYW5vIOS6jiAyMDE3IOW5tCA1IOaciCAyMiDml6Ug5pif5pyf5LiAIOWG
+memBkzoNCj4gSSB0aGluayB0aGlzIGlzIGFsbW9zdCBwZXJmZWN0Lg0KPiANCj4gSSdkIHByb3Bv
+c2Ugc3F1YXNoaW5nIHRoZSBwYXRjaCBiZWxvdyB0bw0KPiANCj4gIC0gQWRkIGNyb3NzIHJlZmVy
+ZW5jZSBiZXR3ZWVuIGNvbmZpZyBhbmQgb3B0aW9uDQo+IA0KPiAgLSBTcGVsbCBjb25maWd1cmF0
+aW9uIHZhcmlhYmxlcyBpbiBjYW1lbENhc2UgdG8gbWltaWMgb3RoZXINCj4gICAgc2VuZGVtYWls
+LiogdmFyaWFibGVzDQo+IA0KPiAgLSBTcGVsbCBTTVRQIGluIGFsbCBjYXBzIHRvIG1pbWljIG90
+aGVyIHBhcnRzIG9mIHRoZSBtYW51YWwNCj4gDQo+ICAtIFN1Z2dlc3QgdXNlIG9mIGNyZWRlbnRp
+YWwgaGVscGVyIGluIHRoZSBkb2N1bWVudCB0byBoZWxwIHRoZSBlbmQNCj4gICAgdXNlcnMsIG5v
+dCBpbiB0aGUgcHJvcG9zZWQgbG9nIG1lc3NhZ2UuDQo+IA0KPiBJZiB5b3UgYXJlIGZpbmUgd2l0
+aCBhbGwgb2YgdGhlc2UgY2hhbmdlcywgdGhlcmUgaXMgbm8gbmVlZCB0bw0KPiByZXNlbmQgKHlv
+dSBjYW4gc2F5IHNvIGFuZCBJIGNhbiBsb2NhbGx5IHNxdWFzaCB0aGVzZSBpbikuICBPZg0KPiBj
+b3Vyc2UsIGFueW9uZSBpcyB2ZXJ5IHdlbGNvbWUgdG8gcG9pbnQgb3V0IGRvY3VtZW50YXRpb24g
+YnVncyBJIG1heQ0KPiBiZSBpbnRyb2R1Y2luZyB3aXRoIHRoaXMgcGF0Y2guDQo+IA0KPiBUaGFu
+a3MuDQo+IA0KPiAtLSA+OCAtLQ0KPiBTdWJqZWN0OiBmaXh1cCEgc2VuZC1lbWFpbDogLS1iYXRj
+aC1zaXplIHRvIHdvcmsgYXJvdW5kIHNvbWUgU01UUCBzZXJ2ZXIgbGltaXQNCj4gDQo+IFNvbWUg
+ZW1haWwgc2VydmVycyAoZS5nLiBzbXRwLjE2My5jb20pIGxpbWl0IHRoZSBudW1iZXIgZW1haWxz
+IHRvIGJlDQo+IHNlbnQgcGVyIHNlc3Npb24gKGNvbm5lY3Rpb24pIGFuZCB0aGlzIHdpbGwgbGVh
+ZCB0byBhIGZhbGl1cmUgd2hlbg0KPiBzZW5kaW5nIG1hbnkgbWVzc2FnZXMuDQo+IA0KPiBUZWFj
+aCBzZW5kLWVtYWlsIHRvIGRpc2Nvbm5lY3QgYWZ0ZXIgc2VuZGluZyBhIG51bWJlciBvZiBtZXNz
+YWdlcw0KPiAoY29uZmlndXJhYmxlIHZpYSB0aGUgLS1iYXRjaC1zaXplPTxudW0+IG9wdGlvbiks
+IHdhaXQgZm9yIGEgZmV3DQo+IHNlY29uZHMgKGNvbmZpZ3VyYWJsZSB2aWEgdGhlIC0tcmVsb2dp
+bi1kZWxheT08c2Vjb25kcz4gb3B0aW9uKSBhbmQNCj4gcmVjb25uZWN0LCB0byB3b3JrIGFyb3Vu
+ZCBzdWNoIGEgbGltaXQuDQo+IA0KPiBBbHNvIGFkZCB0d28gY29uZmlndXJhdGlvbiB2YXJpYWJs
+ZXMgdG8gZ2l2ZSB0aGVzZSBvcHRpb25zIHRoZSBkZWZhdWx0Lg0KPiANCj4gU2lnbmVkLW9mZi1i
+eTogSnVuaW8gQyBIYW1hbm8gPGdpdHN0ZXJAcG9ib3guY29tPg0KPiAtLS0NCj4gIERvY3VtZW50
+YXRpb24vY29uZmlnLnR4dCAgICAgICAgIHwgIDggKysrKystLS0NCj4gIERvY3VtZW50YXRpb24v
+Z2l0LXNlbmQtZW1haWwudHh0IHwgMTIgKysrKysrKystLS0tDQo+ICAyIGZpbGVzIGNoYW5nZWQs
+IDEzIGluc2VydGlvbnMoKyksIDcgZGVsZXRpb25zKC0pDQo+DQoNCkl0J3MgZmluZSB3aXRoIG1l
+LCBqdXN0ICBnbyBhaGVhZC4NClRoYW5rIHlvdSAgSGFtYW5vIQ0KIA0KPiBkaWZmIC0tZ2l0IGEv
+RG9jdW1lbnRhdGlvbi9jb25maWcudHh0IGIvRG9jdW1lbnRhdGlvbi9jb25maWcudHh0DQo+IGlu
+ZGV4IGExMzMxNWVkNjkuLmVlNGExMTE4NzggMTAwNjQ0DQo+IC0tLSBhL0RvY3VtZW50YXRpb24v
+Y29uZmlnLnR4dA0KPiArKysgYi9Eb2N1bWVudGF0aW9uL2NvbmZpZy50eHQNCj4gQEAgLTI5MTQs
+MTMgKzI5MTQsMTUgQEAgc2VuZGVtYWlsLnhtYWlsZXI6Og0KPiAgc2VuZGVtYWlsLnNpZ25lZG9m
+ZmNjIChkZXByZWNhdGVkKTo6DQo+ICAJRGVwcmVjYXRlZCBhbGlhcyBmb3IgYHNlbmRlbWFpbC5z
+aWduZWRvZmZieWNjYC4NCj4gIA0KPiAtc2VuZGVtYWlsLnNtdHBiYXRjaHNpemU6Og0KPiArc2Vu
+ZGVtYWlsLnNtdHBCYXRjaFNpemU6Og0KPiAgCU51bWJlciBvZiBtZXNzYWdlcyB0byBiZSBzZW50
+IHBlciBjb25uZWN0aW9uLCBhZnRlciB0aGF0IGEgcmVsb2dpbg0KPiAtCXdpbGwgaGFwcGVuLiBp
+ZiB0aGUgdmFsdWUgaXMgMCBvciB1bmRlZmluZWQsIHNlbmQgYWxsIG1lc3NhZ2VzIGluDQo+ICsJ
+d2lsbCBoYXBwZW4uICBJZiB0aGUgdmFsdWUgaXMgMCBvciB1bmRlZmluZWQsIHNlbmQgYWxsIG1l
+c3NhZ2VzIGluDQo+ICAJb25lIGNvbm5lY3Rpb24uDQo+ICsJU2VlIGFsc28gdGhlIGAtLWJhdGNo
+LXNpemVgIG9wdGlvbiBvZiBsaW5rZ2l0OmdpdC1zZW5kLWVtYWlsWzFdLg0KPiAgDQo+IC1zZW5k
+ZW1haWwuc210cHJlbG9naW5kZWxheTo6DQo+ICtzZW5kZW1haWwuc210cFJlbG9naW5EZWxheTo6
+DQo+ICAJU2Vjb25kcyB3YWl0IGJlZm9yZSByZWNvbm5lY3RpbmcgdG8gc210cCBzZXJ2ZXIuDQo+
+ICsJU2VlIGFsc28gdGhlIGAtLXJlbG9naW4tZGVsYXlgIG9wdGlvbiBvZiBsaW5rZ2l0OmdpdC1z
+ZW5kLWVtYWlsWzFdLg0KPiAgDQo+ICBzaG93YnJhbmNoLmRlZmF1bHQ6Og0KPiAgCVRoZSBkZWZh
+dWx0IHNldCBvZiBicmFuY2hlcyBmb3IgbGlua2dpdDpnaXQtc2hvdy1icmFuY2hbMV0uDQo+IGRp
+ZmYgLS1naXQgYS9Eb2N1bWVudGF0aW9uL2dpdC1zZW5kLWVtYWlsLnR4dCBiL0RvY3VtZW50YXRp
+b24vZ2l0LXNlbmQtZW1haWwudHh0DQo+IGluZGV4IDUzODBkOGM5NTYuLjc5YjQxOGJmYTUgMTAw
+NjQ0DQo+IC0tLSBhL0RvY3VtZW50YXRpb24vZ2l0LXNlbmQtZW1haWwudHh0DQo+ICsrKyBiL0Rv
+Y3VtZW50YXRpb24vZ2l0LXNlbmQtZW1haWwudHh0DQo+IEBAIC0yNTAsMTQgKzI1MCwxOCBAQCBt
+dXN0IGJlIHVzZWQgZm9yIGVhY2ggb3B0aW9uLg0KPiAgDQo+ICAtLWJhdGNoLXNpemU9PG51bT46
+Og0KPiAgCVNvbWUgZW1haWwgc2VydmVycyAoZS5nLiBzbXRwLjE2My5jb20pIGxpbWl0IHRoZSBu
+dW1iZXIgZW1haWxzIHRvIGJlDQo+IC0Jc2VudCBwZXIgc2Vzc2lvbihjb25uZWN0aW9uKSBhbmQg
+dGhpcyB3aWxsIGxlYWQgdG8gYSBmYWxpdXJlIHdoZW4NCj4gKwlzZW50IHBlciBzZXNzaW9uIChj
+b25uZWN0aW9uKSBhbmQgdGhpcyB3aWxsIGxlYWQgdG8gYSBmYWxpdXJlIHdoZW4NCj4gIAlzZW5k
+aW5nIG1hbnkgbWVzc2FnZXMuICBXaXRoIHRoaXMgb3B0aW9uLCBzZW5kLWVtYWlsIHdpbGwgZGlz
+Y29ubmVjdCBhZnRlcg0KPiAgCXNlbmRpbmcgJDxudW0+IG1lc3NhZ2VzIGFuZCB3YWl0IGZvciBh
+IGZldyBzZWNvbmRzIChzZWUgLS1yZWxvZ2luLWRlbGF5KQ0KPiAtCWFuZCByZWNvbm5lY3QsIHRv
+IHdvcmsgYXJvdW5kIHN1Y2ggYSBsaW1pdC4NCj4gKwlhbmQgcmVjb25uZWN0LCB0byB3b3JrIGFy
+b3VuZCBzdWNoIGEgbGltaXQuICBZb3UgbWF5IHdhbnQgdG8NCj4gKwl1c2Ugc29tZSBmb3JtIG9m
+IGNyZWRlbnRpYWwgaGVscGVyIHRvIGF2b2lkIGhhdmluZyB0byByZXR5cGUNCj4gKwl5b3VyIHBh
+c3N3b3JkIGV2ZXJ5IHRpbWUgdGhpcyBoYXBwZW5zLiAgRGVmYXVsdHMgdG8gdGhlDQo+ICsJYHNl
+bmRlbWFpbC5zbXRwQmF0Y2hTaXplYCBjb25maWd1cmF0aW9uIHZhcmlhYmxlLg0KPiAgDQo+ICAt
+LXJlbG9naW4tZGVsYXk9PGludD46Og0KPiAtCVdhaXRpbmcgJDxpbnQ+IHNlY29uZHMgYmVmb3Jl
+IHJlY29ubmVjdGluZyB0byBzbXRwIHNlcnZlci4gVXNlZCB0b2dldGhlcg0KPiAtCXdpdGggLS1i
+YXRjaC1zaXplIG9wdGlvbi4NCj4gKwlXYWl0aW5nICQ8aW50PiBzZWNvbmRzIGJlZm9yZSByZWNv
+bm5lY3RpbmcgdG8gU01UUCBzZXJ2ZXIuIFVzZWQgdG9nZXRoZXINCj4gKwl3aXRoIC0tYmF0Y2gt
+c2l6ZSBvcHRpb24uICBEZWZhdWx0cyB0byB0aGUgYHNlbmRlbWFpbC5zbXRwUmVsb2dpbkRlbGF5
+YA0KPiArCWNvbmZpZ3VyYXRpb24gdmFyaWFibGUuDQo+ICANCj4gIEF1dG9tYXRpbmcNCj4gIH5+
+fn5+fn5+fn4NCj4gLS0gDQo+IDIuMTMuMC00NDAtZzNjZTZkMmQ1YjgNCj4gDQo+
 
