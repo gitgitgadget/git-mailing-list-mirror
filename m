@@ -2,135 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 933042023D
-	for <e@80x24.org>; Mon, 22 May 2017 14:19:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 314432023D
+	for <e@80x24.org>; Mon, 22 May 2017 14:58:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934739AbdEVOT2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 10:19:28 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:42984 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S934721AbdEVOS4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 22 May 2017 10:18:56 -0400
-X-AuditID: 12074413-0c9ff70000001dc3-d4-5922f34b458a
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 89.20.07619.B43F2295; Mon, 22 May 2017 10:18:51 -0400 (EDT)
-Received: from bagpipes.fritz.box (p57BCCDA0.dip0.t-ipconnect.de [87.188.205.160])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4MEI24R023503
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Mon, 22 May 2017 10:18:49 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
-        Brandon Williams <bmwill@google.com>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 18/25] should_pack_ref(): new function, extracted from `files_pack_refs()`
-Date:   Mon, 22 May 2017 16:17:48 +0200
-Message-Id: <b7786f0cc9664fe86580f4296b4916f450b068d0.1495460199.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <cover.1495460199.git.mhagger@alum.mit.edu>
-References: <cover.1495460199.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrDIsWRmVeSWpSXmKPExsUixO6iqOv9WSnS4O4Tfou1z+4wWTxff4Ld
-        outKN5NFQ+8VZosnc+8yW9xeMZ/ZYsnD18wW3VPeMlr8aOlhtti8uZ3Fgcvj7/sPTB47Z91l
-        91iwqdTj4asudo+u9iNsHs969zB6XLyk7PF5k1wARxSXTUpqTmZZapG+XQJXxusd+9gKvglU
-        /Jv0ib2B8ThvFyMnh4SAicSVjj9sILaQwA4micY9Ql2MXED2KSaJjWd6wRJsAroSi3qamUBs
-        EQE1iYlth1hAipgFNjBLvJm+GiwhLBArce/iI2YQm0VAVaLrw06wOK9AlMSiI0uZIbbJS+xq
-        u8gKYnMKWEj8nnWACWKzuUTvv9UsExh5FjAyrGKUS8wpzdXNTczMKU5N1i1OTszLSy3SNdfL
-        zSzRS00p3cQICUThHYy7TsodYhTgYFTi4dV4rBQpxJpYVlyZe4hRkoNJSZT36BugEF9Sfkpl
-        RmJxRnxRaU5q8SFGCQ5mJRFe7btAOd6UxMqq1KJ8mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQi
-        mKwMB4eSBK/eJ6BGwaLU9NSKtMycEoQ0EwcnyHAeoOFrPoAMLy5IzC3OTIfIn2JUlBLn3QGS
-        EABJZJTmwfXCEsUrRnGgV4R5C0FW8ACTDFz3K6DBTECDrZ/JgwwuSURISTUwCjx0mXPrt+mX
-        PXxLbz9+FJMmYMP8aM3fmRevWgr+uL3K/Km57cePh3U8ldOjpuze8mblBqXzt6aeNpHKady6
-        Md9Q6qOJ56bZF4UFP0jq9PBu0/Ndwc+2qEjiyO36iJVtqyYJfHwVGnvh9bwjMrvL15S4MDQq
-        2H7YHHX34UtZnz8d39mmBSad+6DEUpyRaKjFXFScCADUFC7N7wIAAA==
+        id S935125AbdEVO6N (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 10:58:13 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34804 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934539AbdEVO6M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 10:58:12 -0400
+Received: by mail-pf0-f196.google.com with SMTP id w69so20586219pfk.1
+        for <git@vger.kernel.org>; Mon, 22 May 2017 07:58:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=y8l648rI/6Sx7s/PKrZYc+RHZ5CUW70PRvY2iMdhGUQ=;
+        b=V78knIH+PENqn3vdY6T9dEa8wmLzqNx3I6EEASKHWJImB2UJ6deCCXcuTgOzc7ywEU
+         R/qFt7MwdQmfjMBw4ld4a8F9JPQDYBhNsxMPsQ9GuYLilROmVXaA9+PW7+hpc6X52XLp
+         8dFUxFNtUH6jX8XMdaRnQziwWGBizplgSYIjoRTNYstUL1xzPlNq5wHqdhehMB5a/58n
+         IPQ3Bv97xlKjx+/ckt5i5GIWJ+niDNHKgD32InhXIKYqdkvNUpvPBhdORT+gnM2UEY/r
+         EnLlLzH453lV6OdcF/Z9E5XVV4r1itlQz5MBEcrIgRBex9o7umU+H2zVZta7dLNYFOu0
+         H1hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=y8l648rI/6Sx7s/PKrZYc+RHZ5CUW70PRvY2iMdhGUQ=;
+        b=NLY9+6Xz/hadzi+OUu4k8RX3oaro7vGpAQm74kw9elnq3L394SglhHefehpuIr0vZm
+         F6/z36euh4aIWBzI4Z5mrseUMqChFWVmlpRfdxHDpaW941E+BfK8nla+IUQDb/6KXcqE
+         JRBIR+TbHr2pPowGkqyr5UuQ1b4Yrp3Xb/E8KaT2+178KxOzu6ss1yo6SKcwk1AQzRg9
+         eqibwpbAabuKHYPqPJ2qNLZtQXVguWAhqKdo3hhA+IIVS2UYR09UEIhszFf/d24+ES9+
+         EkxMIpDozXJban1uZThGHUfx4SraSSK9qygb5LDIM4TFNIOhhHN/rz15reG63H9+gz8Q
+         81VA==
+X-Gm-Message-State: AODbwcDlG3BOIOI3cWgOLQQO73BVd3xGZ0ymwqckL7RwTqRzhyoGeFND
+        FLDYnDJOKGIQ8w==
+X-Received: by 10.98.205.65 with SMTP id o62mr25784681pfg.105.1495465092051;
+        Mon, 22 May 2017 07:58:12 -0700 (PDT)
+Received: from localhost.localdomain ([116.87.142.169])
+        by smtp.gmail.com with ESMTPSA id r69sm8640232pfj.42.2017.05.22.07.58.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 May 2017 07:58:11 -0700 (PDT)
+From:   DOAN Tran Cong Danh <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     animi.vulpis@gmail.com, j6t@kdbg.org, peff@peff.net,
+        gitster@pobox.com, git@grubix.eu, pclouds@gmail.com,
+        karthik.188@gmail.com,
+        =?UTF-8?q?=C4=90O=C3=80N=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH v2] ref-filter: trim end whitespace in subject
+Date:   Mon, 22 May 2017 22:57:53 +0800
+Message-Id: <20170522145753.83810-1-congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.13.0.67.g10c78a1
+In-Reply-To: <20170521141059.2767-1-congdanhqx@gmail.com>
+References: <20170521141059.2767-1-congdanhqx@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extract a function for deciding whether a reference should be packed.
-It is a self-contained bit of logic, so splitting it out improves
-readability.
+From: ĐOÀN Trần Công Danh <congdanhqx@gmail.com>
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+Commit 949af0684 ("branch: use ref-filter printing APIs", 2017-01-10)
+make `git branch -v` stops trimming end-whitespace in subject,
+and it stops treating next all-whitespace-line as an empty line.
+
+Quote from git mailing-list:
+
+> Here is a recipe to reproduce the error:
+>
+>    git init
+>    git commit --allow-empty -m initial
+>    git branch crlf $(printf '%s\r\n' subject '' line3_long line4 |
+>        git commit-tree HEAD:)
+> The reason for the "bug" is obviously that a line having CR in addition
+> to LF is not "an empty line". Consequently, the second line is not
+> treated as a separator between subject and body, whereupon Git
+> concatenates all line into one large subject line. This strips the LFs
+> but leaves the CRS in tact, which, when printed on a terminal move the
+> cursor to the beginning of the line, so that text after the CRs
+> overwrites what is already in the terminal.
+
+To recover previous behavior, trim all whitespace at the end of
+first line, and treat all-white-space line as empty line
+
+Reported-by: Animi Vulpis <animi.vulpis@gmail.com>
+Helped-by: Johannes Sixt <j6t@kbdg.org>
+Signed-off-by: ĐOÀN Trần Công Danh <congdanhqx@gmail.com>
 ---
- refs/files-backend.c | 42 ++++++++++++++++++++++++++++--------------
- 1 file changed, 28 insertions(+), 14 deletions(-)
+ ref-filter.c             | 21 +++++++++++++++++----
+ t/t3203-branch-output.sh |  3 ++-
+ 2 files changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 8d0ce739a6..29514392b0 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1455,6 +1455,32 @@ static void prune_refs(struct files_ref_store *refs, struct ref_to_prune *r)
+diff --git a/ref-filter.c b/ref-filter.c
+index 1fc5e9970..3625d543c 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -942,6 +942,17 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
  	}
  }
  
 +/*
-+ * Return true if the specified reference should be packed.
++ * check if line in range [start, end) is a blank line or not
++ * data in range [start, end) must be valid before calling this function
 + */
-+static int should_pack_ref(const char *refname,
-+			   const struct object_id *oid, unsigned int ref_flags,
-+			   unsigned int pack_flags)
++static int is_blank_line(const char *start, const char *end)
 +{
-+	/* Do not pack per-worktree refs: */
-+	if (ref_type(refname) != REF_TYPE_NORMAL)
-+		return 0;
-+
-+	/* Do not pack non-tags unless PACK_REFS_ALL is set: */
-+	if (!(pack_flags & PACK_REFS_ALL) && !starts_with(refname, "refs/tags/"))
-+		return 0;
-+
-+	/* Do not pack symbolic refs: */
-+	if (ref_flags & REF_ISSYMREF)
-+		return 0;
-+
-+	/* Do not pack broken refs: */
-+	if (!ref_resolves_to_object(refname, oid, ref_flags))
-+		return 0;
-+
-+	return 1;
++	while (start != end && isspace(*start))
++		++start;
++	return start == end;
 +}
 +
- static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- {
- 	struct files_ref_store *refs =
-@@ -1476,21 +1502,9 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 		 * pruned, also add it to refs_to_prune.
- 		 */
- 		struct ref_entry *packed_entry;
--		int is_tag_ref = starts_with(iter->refname, "refs/tags/");
--
--		/* Do not pack per-worktree refs: */
--		if (ref_type(iter->refname) != REF_TYPE_NORMAL)
--			continue;
--
--		/* ALWAYS pack tags */
--		if (!(flags & PACK_REFS_ALL) && !is_tag_ref)
--			continue;
--
--		/* Do not pack symbolic or broken refs: */
--		if (iter->flags & REF_ISSYMREF)
--			continue;
+ static void find_subpos(const char *buf, unsigned long sz,
+ 			const char **sub, unsigned long *sublen,
+ 			const char **body, unsigned long *bodylen,
+@@ -967,19 +978,21 @@ static void find_subpos(const char *buf, unsigned long sz,
+ 	/* subject is first non-empty line */
+ 	*sub = buf;
+ 	/* subject goes to first empty line */
+-	while (buf < *sig && *buf && *buf != '\n') {
++	while (buf < *sig) {
+ 		eol = strchrnul(buf, '\n');
+ 		if (*eol)
+ 			eol++;
++		if (is_blank_line(buf, eol))
++			break;
+ 		buf = eol;
+ 	}
+ 	*sublen = buf - *sub;
+-	/* drop trailing newline, if present */
+-	if (*sublen && (*sub)[*sublen - 1] == '\n')
++	/* drop trailing whitespace, if present */
++	while (*sublen && isspace((*sub)[*sublen - 1]))
+ 		*sublen -= 1;
  
--		if (!ref_resolves_to_object(iter->refname, iter->oid, iter->flags))
-+		if (!should_pack_ref(iter->refname, iter->oid, iter->flags,
-+				     flags))
- 			continue;
+ 	/* skip any empty lines */
+-	while (*buf == '\n')
++	while (isspace(*buf))
+ 		buf++;
+ 	*body = buf;
+ 	*bodylen = strlen(buf);
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index 5778c0afe..fa4441868 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -13,7 +13,8 @@ test_expect_success 'make commits' '
  
- 		/*
+ test_expect_success 'make branches' '
+ 	git branch branch-one &&
+-	git branch branch-two HEAD^
++	git branch branch-two $(printf "%s\r\n" one " " line3_long line4 |
++	     git commit-tree HEAD:)
+ '
+ 
+ test_expect_success 'make remote branches' '
 -- 
-2.11.0
+2.13.0.67.g10c78a1
 
