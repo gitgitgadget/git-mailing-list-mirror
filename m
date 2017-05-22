@@ -2,149 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
+	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A1BA2023D
-	for <e@80x24.org>; Mon, 22 May 2017 23:36:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 278582023D
+	for <e@80x24.org>; Mon, 22 May 2017 23:45:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1763034AbdEVXgy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 19:36:54 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:32816 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1763007AbdEVXgf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 19:36:35 -0400
-Received: by mail-pf0-f177.google.com with SMTP id e193so96229595pfh.0
-        for <git@vger.kernel.org>; Mon, 22 May 2017 16:36:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/lYnhrCHo48xfYYvVQV20a24Y8JR572OpwBwWXeYb/w=;
-        b=QSscgcS9ffPR+yKxTdda900M0/hox2aJt9J1rimOYqwlsyQtWYaqnjGMul+BkPhlg6
-         /I936ExBz2+/IEFR4Z8q+NMO09Ix24Q8/7rgfy4JDydtbCq/WPLlQTaMAuanZO9BRrYh
-         El34xVkLS/PAHvlCqLXlOYyK4r9bHsd0ODEbi5oVGMbcNDv7X+91r1JNbTmgTegUfiDX
-         3zEx5aLYzLeH+o5zYYJofB/li2kRe/Rmw7iG/JuwAdtggtfQ/tY/A009kkM4qPb5z++t
-         39VouJHnUG8ABqnZHMoP0RLCEnmLlL0Sv+4jQIjvWqbT3TeNAOIZ9ILpzbCLKq9j5KoI
-         KPzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/lYnhrCHo48xfYYvVQV20a24Y8JR572OpwBwWXeYb/w=;
-        b=Y5RlxzOsg+rAk/fidFQlRsCbn4ljS2PFMzKJleYr0t7sWLb3h83UPKLGlk9APxmKKm
-         SLzg60XkPxSXRdREd8qrp3ktj9NRTOgssllDk34UMwkJ9LlzszKj55lsuPSXBb16GG9L
-         8euRPj26NUQhpCG6gF1GY8BHs5tISQnaD9rppL6rE4GMWOXUYtjRsTGFr/tgU6M7R8qe
-         tWAOMek9c7za68HTybxAhaoLSjwPHVf97QVqeKb1XjXWcZvt6PriL/Ih+PO0kmc8QBx3
-         AbnZVj8I0Bx8ybjR+Rp7EYdUGf78E2Qiclqj5Bl2cKlMcUmubUMJH8XyxoSqXQ7GAceX
-         9SJw==
-X-Gm-Message-State: AODbwcDl5x1VbcreAwBOMibkL71Y0rzYhzJC+XAmIBYGbce/o4K6O3bq
-        +M8a4Ycdz8o2JV02Pc3evvQD/+5h+4Zv
-X-Received: by 10.99.56.66 with SMTP id h2mr29276572pgn.40.1495496194876; Mon,
- 22 May 2017 16:36:34 -0700 (PDT)
+        id S1763275AbdEVXpA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 19:45:00 -0400
+Received: from mout.kundenserver.de ([212.227.17.10]:58178 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1763272AbdEVXo6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 19:44:58 -0400
+Received: from [192.168.178.10] ([94.222.19.13]) by mrelayeu.kundenserver.de
+ (mreue104 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 0MekDA-1db4Up3hiS-00OHHt for <git@vger.kernel.org>; Tue, 23 May 2017 01:44:55
+ +0200
+From:   ch <cr@onlinehome.de>
+Subject: Passing revs to git-bundle-create via stdin
+To:     git@vger.kernel.org
+Message-ID: <76491764-cd43-ef7f-fbfc-939a15f2fb77@onlinehome.de>
+Date:   Tue, 23 May 2017 01:44:55 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Mon, 22 May 2017 16:36:34 -0700 (PDT)
-In-Reply-To: <20170518163307.657caedc@twelve2.svl.corp.google.com>
-References: <20170517025857.32320-1-sbeller@google.com> <20170518193746.486-1-sbeller@google.com>
- <20170518193746.486-5-sbeller@google.com> <20170518163307.657caedc@twelve2.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 22 May 2017 16:36:34 -0700
-Message-ID: <CAGZ79kYQj-RECTiGkSV9PS5eD=6_s27CSpaF1tX6Ek34eajH=w@mail.gmail.com>
-Subject: Re: [PATCHv3 04/20] diff.c: teach emit_line_0 to accept sign parameter
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:SqhdyBmt8YQ/8jSxA5LayuyOqBybpSFvcgXpY1UzP65pFXNQvjy
+ zIt/Av9iMxR/6wXgvcipi9PqsZIAJtyLk3+1rXfaGlaCtrBFH+OUGPNHJQIRKFg2wX1XnyL
+ q9XAhiRyZUpxtNz4qgE2cR17piKAFixXIb/+KnoawUPsZwdvuIgEnGw3PzfCSwlFBNy/DFH
+ QtUmm1JUHTykhJk0EMS+Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:aZV8L+0sSTo=:atyX8P/ZsXZwh2wYTp0qAu
+ dimhJTBNVRSx6u1UN3CBJ3tpmCcc1brVZHnuPPe0lV9x09b4UROozZoKqjXntRY9+JW9WYoKf
+ jXlyPd0flrjHF6HPZYoo16iOntFJatnX64/MdT4fjnc47F+vV78QxVZRlzA2oQSKcevgP5QQn
+ Do62BLBrpz80XaXmZsv5RSqxJB6yQBbEA0DyO3MssLBKUkCsWo5NcM9QyTTAAdZuypzBizIod
+ IloCwprnWvE4OTQhIubhosZeZXJfNquY/TooUjiURinGUJ8XHTi6hruTPETRhdtO70onGU8/z
+ upQdeNKqqmE3ag0C7OdUjbyhgjQaVs39hgB1Z7CTJ6KoXs3zooRBct2/PjXSYbbg24mgW+i+O
+ 9IsqWfXVUjosRTuOdkULA7PeTceo3oa97Gz0fcjOhVv03Au0pW5fLExopJ8Tj5z0mRuUsRGRC
+ doKAWO9clJ8mXWTQaXIGmqtGtq6uHIuguu73SQZmHkT8y0rVkriFIV2IE1o/Z/Gi9QWLwGJgj
+ SmmD+fHhKjci6AXjAD1xjPrjlaVrYAP0aZ6kGMJpn8M/rOpUKEJ9b8lJOTvQGnehtj3xdowhy
+ PhvnwzjIVrqQGc7rZiTafP2TDZR0tT3H1HGlwXSHp5gv0wBGI5pBRKZyAXa6ckG6gVjRiPLzk
+ EwuEcOgpsfh/ZlACqjxrZdW2gk/AhACcQTQcf8XSMq84xV7IftRaZkiusQ1yDV7bJUlCbow6W
+ xbQ1tGjY2r2SdcDZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 18, 2017 at 4:33 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+Hi,
 
-> I know I suggested the paragraph above, but after rereading your patch
-> set, I think I finally understand what you're trying to accomplish.
-> I think it's better to combine patches 4/20, 5/20, and 6/20, with the
-> following commit message:
+I'm using git bundles to create (incremental) backups of my local repositories.
+This works quite well but for certain repositories I'm getting unexpectedly big
+incremental bundles. I did some testing and from what I can tell it seems
+git-bundle-create has issues processing revs passed via stdin. To illustrate
+the problem I have included a small bash script below.
 
-and patch 7/20 (diff.c: inline emit_line_0 into emit_line)
+I'm using Git for Windows 2.13.0.windows.1 (64-bit). Unfortunately I don't have
+access to a non-Windows box to check whether it's a problem specific to the
+Windows port.
 
->   diff: introduce more flexible emit function
->
->   Currently, diff output is written either through the emit_line_0
->   function or through the FILE * in struct diff_options directly. To
->   make it easier to teach diff to buffer its output (which will be done
->   in a subsequent commit), introduce a more flexible emit() function. In
->   this commit, direct usages of emit_line_0() are replaced with emit();
->   subsequent commits will also replace usages of the FILE * with emit().
-
-ok. sounds reasonable to me. I kept them separate for easier review
-originally, but I can certainly combine them again.
-
->
-> And the function itself can be documented this way (with the appropriate
-> formatting):
-
-I have some documentation in 19/20 in diff.h for the data structure stored.
-We'd want to discuss where to put the documentation. I'd not like to add
-such documentation to some static function in diff.c but rather only document
-the data structure, and then (after in-lining <...>_0 to emit_line) keep the
-function documentation rather short as:
-
-/* see struct buffered_patch_line */
-static void emit_line(...lots of args...)
+----
+add_file()
 {
-    /* work on said data structure */
-    ...
+     echo "$1" > "$1"
+     git add "$1"
+     git commit -m "$1"
+}
 
+git init .
 
-> If you do all that, then the buffering patch (19/20) can be improved by
-> adding this comment somewhere in the file:
->
->   Buffer the diff output into ??? instead of immediately writing it to
->   "file".
->
->   NEEDSWORK: The contents of the ??? array - in particular, how the diff
->   output is divided into array elements - is not precisely defined; some
->   functions may emit a line all at once (resulting in one element)
->   whereas some others may emit a line piecemeal (resulting in more than
->   one element). Ideally, the code in this file should be structured so
->   that we do not have such imprecision, but in the meantime, callers
->   that request buffering should ensure that the diff output is divided
->   the way they expect (and have tests to ensure that it remains so).
+add_file "test-1"
+add_file "test-2"
+add_file "test-3"
 
-I want to rename that struct to "buffered_diff_piece" or
-"partial_diff_output", not implying we have a line or other another
-specific piece.
+git checkout -b feature
+add_file "test-4"
+add_file "test-5"
+add_file "test-6"
 
-Rethinking the discussion with Junio, what the correct abstraction level is,
-we could even name it "one_color_piece", or "colored_diff_part", to
-imply we'd want to have as much content as possible in the same
-color. (And line endings always being in RESET color, we'd have a
-natural separation at EOL)
+git checkout master
+add_file "test-7"
+add_file "test-8"
+add_file "test-9"
 
->
->> With this patch other callers hard code the sign (which are '+', '-',
->> ' ' and '\\') such that we do not run into unexpectedly emitting an
->> erroneous '\0'.
->
-> I still don't understand this paragraph - can you rewrite this in the
-> imperative tense?
+echo -e "\nCreating test.git..."
+git bundle create test.git --all ^feature ^master^
 
-As in this patch the function signature is the same, but just changes
-meaning of one of the arguments, one could imagine that there
-could be a caller with first='\0' given some interesting data/mode of operation,
-which would have instructed to literally output a '\0'. We would not do this
-any more as the meaning changed.
+echo -e "\nCreating test-stdin.git..."
+echo -e "^feature\n^master^\n" | git bundle create test-stdin.git --all --stdin
 
-However this hypothetical subtle bug was not introduced, because
-there are no callers that call the function with a 'first' depending on
-user provided data or otherwise hard-coded  expectation of a '\0' output.
+echo -e "\nCreating test-2.git..."
+git bundle create test-2.git --all ^feature^ ^master^
 
-Maybe I'll just drop this part.
+echo -e "\nCreating test-2-stdin.git..."
+echo -e "^feature^\n^master^\n" | git bundle create test-2-stdin.git --all --stdin
+
+echo -e "\nCreating test-3-stdin.git..."
+echo -e "feature\nmaster\n" | git bundle create test-3-stdin.git --stdin
+
+echo
+git branch -D feature
+git tag -am "Annotated tag" annotated-tag master~2
+
+echo -e "\nCreating annotated.git..."
+git bundle create annotated.git --all ^annotated-tag
+
+echo -e "\nCreating annotated-stdin.git..."
+echo -e "^annotated-tag\n" | git bundle create annotated-stdin.git --all --stdin
+
+echo
+git tag -d annotated-tag
+git tag lightweight-tag master~2
+echo -e "\nCreating lightweight-stdin.git..."
+echo -e "^lightweight-tag\n" | git bundle create lightweight-stdin.git --all --stdin
+----
+
+I'd expect test.git and test-stdin.git to be identical. In fact the contained-
+and required-refs lists of both bundles are equal but the pack in
+test-stdin.git is notably larger compared to the one in test.git. Interestingly
+test-2.git and test-2-stdin.git are identical.
+
+git-bundle-create does not appear to handle includes properly either. In this
+specific case it won't create test-3-stdin.git and dies with
+'error: Refusing to create empty bundle.'.
+
+Last but not least git-bundle-create includes annotated-tag in
+annotated-stdin.git even though the tag is excluded via stdin. It works alright
+if the tag is excluded via commandline like in case of annotated.git. The issue
+also seems to be specific to annotated tags as lightweight-tag is properly
+excluded from lightweight-stdin.git.
+
+Any help would be appreciated.
+
+Thanks in advance.
