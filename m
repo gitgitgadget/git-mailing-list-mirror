@@ -2,76 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5AAE2023D
-	for <e@80x24.org>; Mon, 22 May 2017 12:49:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DED772023D
+	for <e@80x24.org>; Mon, 22 May 2017 12:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757976AbdEVMtP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 08:49:15 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:54626 "EHLO mail96.atlas.de"
+        id S933437AbdEVM6q (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 08:58:46 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51121 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757963AbdEVMtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 08:49:14 -0400
-X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 May 2017 08:49:13 EDT
-X-IPAS-Result: =?us-ascii?q?A2ADAwCS2yJZ/wXKxApcGgEBAQECAQEBAQgBAQEBiTKbZyG?=
- =?us-ascii?q?YBYYkAhqGORUBAgEBAQEBAQGBE4UZAgEDIwQNRRACAQgaAiYCAgIqBhUCAQ0CB?=
- =?us-ascii?q?AEMAQcBAbohgWw6iw8BAQEBAQEBAQEBAQEBAQEBAQEBH4ELhzIrC4JlhHqCe4J?=
- =?us-ascii?q?gAQSJRpRQniCGb4wWiDI1gSxxh1GKIAEBAQ?=
-Received: from scesrv02.atlas.de ([10.196.202.5])
-  by MGW102FE.atlas.de with ESMTP/TLS/DHE-RSA-AES128-GCM-SHA256; 22 May 2017 14:39:06 +0200
-Received: by SCESRV02.atlas.de (Postfix, from userid 600)
-        id 3wWdWZ3QrTz2yWRs; Mon, 22 May 2017 12:38:37 +0000 (UTC)
-Received: from MGW201PAR.atlas.de (unknown [10.206.101.60])
-        by SCESRV02.atlas.de (Postfix) with ESMTPS id 3wWdW12CvDz2yWRZ
-        for <git@vger.kernel.org>; Mon, 22 May 2017 12:38:37 +0000 (UTC)
-Received: from atlas-elektronik.com (HELO MSEXSRV1.atlas.de) ([10.200.102.56])
-  by MGW201DAT.atlas.de with ESMTP/TLS/DHE-RSA-AES256-SHA; 22 May 2017 14:38:37 +0200
-Received: from MSEXSRV6.atlas.de ([169.254.4.29]) by MSEXSRV1.atlas.de
- ([10.200.102.56]) with mapi id 14.03.0351.000; Mon, 22 May 2017 14:38:36
- +0200
-From:   <stefan.naewe@atlas-elektronik.com>
-To:     <j6t@kdbg.org>, <johannes.schindelin@gmx.de>
-CC:     <git@vger.kernel.org>
-Subject: Re: [PATCH 0/2] Fix warnings on access of a remote with Windows
- paths
-Thread-Topic: [PATCH 0/2] Fix warnings on access of a remote with Windows
- paths
-Thread-Index: AQHS0TJ7tMiKPNp0qkWKzzbW3NJ8DaIALLuA
-Date:   Mon, 22 May 2017 12:38:35 +0000
-Message-ID: <122838f4-5f6b-6921-9242-2724bb6d8c95@atlas-elektronik.com>
-References: <cover.1495261020.git.j6t@kdbg.org>
-In-Reply-To: <cover.1495261020.git.j6t@kdbg.org>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <38543202C61FE5438F6BC065D03E0404@atlas.de>
-Content-Transfer-Encoding: base64
+        id S933259AbdEVM6p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 08:58:45 -0400
+Received: from virtualbox ([95.208.58.16]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M2LZc-1e4U052pXA-00sAPT; Mon, 22
+ May 2017 14:58:33 +0200
+Date:   Mon, 22 May 2017 14:58:27 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] mingw: simplify PATH handling
+In-Reply-To: <f4119dba-0e25-0a0b-0796-dc4c3d4d1cc5@web.de>
+Message-ID: <alpine.DEB.2.21.1.1705221457520.3610@virtualbox>
+References: <c5b7292f-6367-e4a9-2ee0-96b93b1b587f@web.de> <f4119dba-0e25-0a0b-0796-dc4c3d4d1cc5@web.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323329-774337645-1495457913=:3610"
+X-Provags-ID: V03:K0:7UgVFPYtm2Iefz82/FctMfu5vnurtpcB2HPKUyCxIkN1WScvDse
+ EpPi/M+Es7O5tLbti0+RM6tVTt/SVxnIA3FIjYqrY/yy5xubPBaDHsWw5rktDO2qMkPv3Ie
+ 7oGkwekX2mzAAZARHniqz2wepHCxFrPzNYyibgr5/mh9qkkYJHNBcCeZTVJor639DcCvUYl
+ LBN8wbg0RUfaKJPOVauDg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LDLfA2d1IkQ=:RcJzUZVothVpGoxXbBpXp8
+ c/+6asX3ddGS5ywp6ovOUvvIZRt5M1OXjIAsOk4Ub+8W7ohU6Kukg7HPQxzu6UwNV3gct/6mS
+ OkX5F0Coie1hpeZseURM5oVLxv0UWuIBB2OZzF76KBjGBl98B+iBZK708DapPjQeDPtfEGS0o
+ rmvBeshp2air/nTxDqrg4Kfd4p0ZtECPkysSJUlsv2fgiqZthVkjFocV3bPZQ3yKAGlwHKYcf
+ i6h1AhVtmA9gRVDXGexndZuBNlkLC2PLOrhJY7ZtD73tX4jHY5nTtXyf1S7j9ROo9FteBqRL/
+ A4Y0g4RUpvuk23VkdMzZLUOMWcbe8fZHraUsx/OVOA/ASmKZCuwKzlMw8pEgNJvBXVIVugzCK
+ QC337oEXGiXEnlgJ4KuqczUJeV4emk2kSA40B8E6THe7LJ+wKWti0l6fNoRyUoN8dO8GQNG3l
+ Opdi6fohS1fWgcXtgbtkTrYkDZXyD63P4JuOhfL2h3puWmwrddQ+8brnS+Sm46SMas4gL8Xef
+ vXq13ixYykm158CpHycAlybl5UwJrVagMwl0hZKLkMPwLP0KLNl46Z/LRnHWiivbYe5I7rXX7
+ cmcBkH0cmrXxl6jnKAZKYO6iyOkyvOymZ5DAyr/7TKMnd31I9tOfKEUgEJERY9uQd55AkyXxG
+ 2SNHgn1kEdkpvDRRp7bRXxfYVyIAxBPNp94NWlWdPinSbsL4zjyhjIvAi1JfUepCzvU5OBo8q
+ 0eKDtsN5kTW4K5FcTtKFu7OvCHfeqUaahkBiTmGI43G9N0LgviuGTv0VmAt65ccPeN8ogwJbB
+ d+ORaRo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-QW0gMjAuMDUuMjAxNyB1bSAwODoyOCBzY2hyaWViIEpvaGFubmVzIFNpeHQ6DQo+IFRoaXMgc21h
-bGwgc2VyaWVzIGZpeGVzIHRoZXNlIHdhcm5pbmdzIG9uIFdpbmRvd3M6DQo+IA0KPiBDOlxUZW1w
-XGdpdHRlc3Q+Z2l0IGZldGNoIEM6XFRlbXBcZ2l0dGVzdA0KPiB3YXJuaW5nOiB1bmFibGUgdG8g
-YWNjZXNzICcuZ2l0L3JlbW90ZXMvQzpcVGVtcFxnaXR0ZXN0JzogSW52YWxpZCBhcmd1bWVudA0K
-PiB3YXJuaW5nOiB1bmFibGUgdG8gYWNjZXNzICcuZ2l0L2JyYW5jaGVzL0M6XFRlbXBcZ2l0dGVz
-dCc6IEludmFsaWQgYXJndW1lbnQNCj4gRnJvbSBDOlxUZW1wXGdpdHRlc3QNCj4gICogYnJhbmNo
-ICAgICAgICAgICAgSEVBRCAgICAgICAtPiBGRVRDSF9IRUFEDQoNCldoYXQgaXMgdGhlIGV4YWN0
-IHByZWNvbmRpdGlvbiB0byBnZXQgc3VjaCBhIHdhcm5pbmcgPw0KDQpKdXN0IHdvbmRlcmluZywg
-YmVjYXVzZSBJJ20gbm90IGFibGUgdG8gcmVwcm9kdWNlIHRoYXQgd2FybmluZw0KKHdpdGggR2l0
-NHdpbiB2ZXJzaW9uIDIuMTMuMC53aW5kb3dzLjEpLg0KDQpTdGVmYW4NCi0tIA0KLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
-L2Rldi9yYW5kb20gc2F5czogU3BvY2ssIHlvdSBhcmUgc3VjaCBhIHB1dHohDQpweXRob24gLWMg
-InByaW50ICc3Mzc0NjU2NjYxNmUyZTZlNjE2NTc3NjU0MDYxNzQ2YzYxNzMyZDY1NmM2NTZiNzQ3
-MjZmNmU2OTZiMmU2MzZmNmQnLmRlY29kZSgnaGV4JykiIA0KR1BHIEtleSBmaW5nZXJwcmludCA9
-IDJERjUgRTAxQiAwOUMzIDc1MDEgQkNBOSAgOTY2NiA4MjlCIDQ5QzUgOTIyMSAyN0FG
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-774337645-1495457913=:3610
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi Ren=C3=A9,
+
+On Sat, 20 May 2017, Ren=C3=A9 Scharfe wrote:
+
+> On Windows the environment variable PATH contains a semicolon-separated
+> list of directories to search for, in order, when looking for the
+> location of a binary to run.  get_path_split() parses it and returns an
+> array of string copies, which is iterated by path_lookup(), which in
+> turn passes each entry to lookup_prog().
+>=20
+> Change lookup_prog() to take the directory name as a length-limited
+> string instead of as a NUL-terminated one and parse PATH directly in
+> path_lookup().  This avoids memory allocations, simplifying the code.
+>=20
+> Helped-by: Johannes Sixt <j6t@kdbg.org>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+
+ACK.
+
+> Rebased against Junio's master, fixed string overrun.  Can hold and
+> resubmit in a few months if it gets in the way right now.
+
+I am in favor of getting this in as soon as possible.
+
+Ciao,
+Dscho
+--8323329-774337645-1495457913=:3610--
