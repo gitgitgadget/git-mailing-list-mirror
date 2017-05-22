@@ -2,63 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D3601FF30
-	for <e@80x24.org>; Mon, 22 May 2017 00:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C80931FF30
+	for <e@80x24.org>; Mon, 22 May 2017 01:19:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756944AbdEVAia (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 May 2017 20:38:30 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35751 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755163AbdEVAi3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 May 2017 20:38:29 -0400
-Received: by mail-pf0-f195.google.com with SMTP id u26so16080751pfd.2
-        for <git@vger.kernel.org>; Sun, 21 May 2017 17:38:29 -0700 (PDT)
+        id S932594AbdEVBTz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 May 2017 21:19:55 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33200 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755502AbdEVBTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 May 2017 21:19:54 -0400
+Received: by mail-pf0-f196.google.com with SMTP id f27so16258443pfe.0
+        for <git@vger.kernel.org>; Sun, 21 May 2017 18:19:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=FyjdexYsOB6hoBt5eagjV+0gjohQTNNnQ1MDVp75SZ4=;
-        b=VFgwgWLg6R9QrbkMlZLdSNKx/vEH+UcjWpsnKBv3D8zPvZvzOg19eTATVB9MsXIG8n
-         eQwL6VMUfo+HQn2ocInqqrZaiuaRiKbnSOvhKYqVHQ8zt1SpGUHAG+hR+7r2pXIYoacS
-         Vjl4TurJs6uN2WDxC71+1cDikE4GD8VvR1EJsu6C9fSSlIqWMM3Db9yJmgr/fadMAJwb
-         96DoNeuY1i7i2xlZr7L0Rx1fOMx0CW5c8g09AEMEqaCr3gd/MmSoaa4+nRUMuh74anQO
-         TIDTEDHXNCHragdubkPb98IYihTUeEaqG72wKmeIlwqmembNFUITVHUVgAYAwpHKMXV/
-         xTug==
+        bh=6gE4Tc3euCgALFoOKKyd1/H9Y7Pn5+MRlQ7Klax3LUE=;
+        b=hZYLEKxgozYz1ppCzUW1q24+G7oMt9kgp9LiuFiaBVHR3CJdQTVT15Aphy1FFszoLz
+         09zX/My13kqlCA+9egjHXbTvXh+D6kDwIJ8IXGfOcSeTexhsBPpd0/CHETO86puBLIXn
+         +Ujm/ZTijAqrVZIVHPjwBW4ld+Nzl/DTZ49bSutllFCHBURf7kkN8khRYWx+AHJmUL3L
+         R3bFWOsZP2vL8zSVwOLyHK6oYKMjRej2uor1O6qzNdG64mkqkLLAEr7hmZSSZNQEzdlk
+         yyYraks5N/4KUcylhSB+GlQjZBKPnvJDNdHx0jqpAtT6iXtIPfnTqtI5eHiiMzCmOHlN
+         /RrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=FyjdexYsOB6hoBt5eagjV+0gjohQTNNnQ1MDVp75SZ4=;
-        b=KSx9JGUrvybzNYdZdY92Z21M1KkptQJS7s0COgLcIqN4HYUhee7wQiIRPIECXNo+by
-         fgxdiWaCrv5338/dXwmehf8pkbi4QCdoee3R1/ULgh56MWDSVgNv5tkNcsiP4/GADUpI
-         zz0b/aAHK9m3k5297VtEyvBRG8Wc1Z5wfU9PAF/qnLebhurYdeo6gr3hlHJVuFr60SxA
-         TCvGL+uaSJkLsinOhxbW0zirOsWgKvIjWCAqVt50O5siNKAZTBgIdUFXI4WUP1qOqeFT
-         A78nzKBPsjEHiIXrIwfrDJG6MJ7zpJvd0YVzcbPQBDwNshZ3zo6Lf1TxvbljQptlc+m6
-         frvg==
-X-Gm-Message-State: AODbwcC6gz9GxhYaxRHhcCfqxUdtPEgv/PwD2rP7fvjsUVQM+W65YCRv
-        xTs40hcEHiKalg==
-X-Received: by 10.98.36.198 with SMTP id k67mr23021646pfk.174.1495413508997;
-        Sun, 21 May 2017 17:38:28 -0700 (PDT)
+        bh=6gE4Tc3euCgALFoOKKyd1/H9Y7Pn5+MRlQ7Klax3LUE=;
+        b=a6bHVFibu/TIYsDj60gGhV+BeuNCciPXNvK5Yf572BDXK8OQ0ZKJgKHauOz7zzDFSU
+         xaZkC1To4cmXOj7XKcmfLjo16drh62ilOPuWW2W897SStIN5IdhqOBymA7aZXAT4nEQK
+         smVPJ5ac9tOcyAGvLJxjB785Zde1OuITyi3nnQHHpXTXYVEdFAwE2KuN7zcZ2fNMul8p
+         ZWKQSawDK4HWUmEZpuowH+58pNfIKlGVbWzILW7hRhEl+JaXucNmoRFLqjeqHQng7mgX
+         HGh0+IV6APwVu/kgeoS5hB4aMMwzR26Nx+UwGl04JtGIBEC3UrsoqAzQjYow0GdEbNt/
+         lomA==
+X-Gm-Message-State: AODbwcDUiScnjrBnmwE2MyelkLKR3PfKxku5WTMqUEI5/Q5tBt4yw4vB
+        AsMbvw1rHxDlW6AZgmE=
+X-Received: by 10.98.89.5 with SMTP id n5mr22381447pfb.2.1495415993550;
+        Sun, 21 May 2017 18:19:53 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:4439:f55c:c49b:d0dc])
-        by smtp.gmail.com with ESMTPSA id y78sm27669698pfd.32.2017.05.21.17.38.28
+        by smtp.gmail.com with ESMTPSA id y5sm23558589pgb.4.2017.05.21.18.19.52
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 21 May 2017 17:38:28 -0700 (PDT)
+        Sun, 21 May 2017 18:19:52 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 5/6] dir: expose cmp_name() and check_contains()
-References: <20170518082154.28643-1-sxlijin@gmail.com>
-        <20170516073423.25762-1-sxlijin@gmail.com>
-        <20170518082154.28643-6-sxlijin@gmail.com>
-Date:   Mon, 22 May 2017 09:38:27 +0900
-In-Reply-To: <20170518082154.28643-6-sxlijin@gmail.com> (Samuel Lijin's
-        message of "Thu, 18 May 2017 04:21:53 -0400")
-Message-ID: <xmqq60gtraik.fsf@gitster.mtv.corp.google.com>
+To:     DOAN Tran Cong Danh <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org, animi.vulpis@gmail.com, j6t@kdbg.org,
+        Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH] ref-filter: treat CRLF as same as LF in find_subpos
+References: <CA+izobvwRCwGEtpCbey=gFbCh9sHBb5xB1i1LpMG0JCUy0O2mQ@mail.gmail.com>
+        <20170521134209.25659-1-congdanhqx@gmail.com>
+Date:   Mon, 22 May 2017 10:19:52 +0900
+In-Reply-To: <20170521134209.25659-1-congdanhqx@gmail.com> (DOAN Tran Cong
+        Danh's message of "Sun, 21 May 2017 21:42:09 +0800")
+Message-ID: <xmqqy3tppu13.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,23 +67,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Samuel Lijin <sxlijin@gmail.com> writes:
+DOAN Tran Cong Danh <congdanhqx@gmail.com> writes:
 
-> We want to use cmp_name() and check_contains() (which both compare
-> `struct dir_entry`s, the former in terms of the sort order, the latter
-> in terms of whether one lexically contains another) outside of dir.c,
-> so we have to (1) change their linkage and (2) rename them as
-> appropriate for the global namespace. The second is achieved by
-> renaming cmp_name() to cmp_dir_entry() and check_contains() to
-> check_dir_entry_contains().
+> Starting from commit 949af06 (branch: use ref-filter printing APIs, 2017-01-10),
+> `git branch -v` doesn't treat CRLF as line separator anymore.
+
+A seemingly good problem identification (but not quite; see below) ...
+
 >
-> Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
-> ---
->  dir.c | 11 ++++++-----
->  dir.h |  3 +++
->  2 files changed, 9 insertions(+), 5 deletions(-)
+> Quote from git mailing-list:
+>
+>> Here is a recipe to reproduce the error:
+>>
+>>    git init
+>>    git commit --allow-empty -m initial
+>>    git branch crlf $(printf '%s\r\n' subject '' line3_long line4 |
+>>        git commit-tree HEAD:)
+>> The reason for the "bug" is obviously that a line having CR in addition
+>> to LF is not "an empty line". Consequently, the second line is not
+>> treated as a separator between subject and body, whereupon Git
+>> concatenates all line into one large subject line. This strips the LFs
+>> but leaves the CRS in tact, which, when printed on a terminal move the
+>> cursor to the beginning of the line, so that text after the CRs
+>> overwrites what is already in the terminal.
 
-Up to this point in the series all looked sensible.  I haven't
-looked the last one carefully to form an opinion yet.
+... and good analysis.
 
-Thanks.
+However.
+
+If you look at how `git branch -v` before that problematic change
+removed the extra CR, you would notice that pretty_print_commit()
+was used for that, which eventually called format_subject() with
+"one\r\n\r\nline3...", got one line "one\r\n" by calling
+get_one_line(), adjusted the line length from 5 to 3 by calling
+is_blank_line() which as a side effect trims all whitespaces (not
+just LF and CR), and emitted "one".  The reason why the next \r\n
+was not mistaken as a non-empty line is the same---is_blank_line()
+call onthe next line said that "\r\n" is an all-white space line.
+
+So, while I think the realization that we have a problem, and the
+analysis above i.e. "emptiness of the line matters", are both good,
+but I do not think this is suffucient to get back the old behaviour.
+
+The thing is, we never treated CRLF as line separator in this code.
+What we did was to treat LF as line separator, but trimmed trailing
+bytes that are isspace().  That is what the analysis you quoted from
+J6t says.
+
+Here is your test addition:
+
+> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+> index 5778c0afe..29b392066 100755
+> --- a/t/t3203-branch-output.sh
+> +++ b/t/t3203-branch-output.sh
+> @@ -13,7 +13,8 @@ test_expect_success 'make commits' '
+>  
+>  test_expect_success 'make branches' '
+>  	git branch branch-one &&
+> -	git branch branch-two HEAD^
+> +	git branch branch-two $(printf "%s\r\n" one "" line3_long line4 |
+> +	     git commit-tree HEAD:)
+>  '
+
+If you change this test to
+
+> +	git branch branch-two $(printf "%s\n" one " " line3_long line4 |
+> +	     git commit-tree HEAD:)
+
+then the old code before the problematic change will only show the
+first line i.e. "one" in "branch -v" output.  I think with or
+without your code change, the new code would still show line3_long
+and line4 in the output.
