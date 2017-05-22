@@ -2,97 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
-	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EB89201CF
-	for <e@80x24.org>; Sun, 21 May 2017 22:25:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8AAE31FF30
+	for <e@80x24.org>; Mon, 22 May 2017 00:17:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932612AbdEUWZo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 21 May 2017 18:25:44 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:48055 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757261AbdEUWZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 21 May 2017 18:25:43 -0400
-Received: from [10.0.2.15] ([143.159.212.80])
-        by avasout07 with smtp
-        id PARf1v0061keHif01ARggD; Sun, 21 May 2017 23:25:41 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=iHgncD99ot6ZOeLuFXUA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] usage: add NORETURN to BUG() function definitions
-Message-ID: <4a5619af-d695-ab6c-e603-368e38827455@ramsayjones.plus.com>
-Date:   Sun, 21 May 2017 23:25:39 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1757265AbdEVARx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 21 May 2017 20:17:53 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:35450 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755073AbdEVARw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 21 May 2017 20:17:52 -0400
+Received: by mail-pf0-f170.google.com with SMTP id n23so65062857pfb.2
+        for <git@vger.kernel.org>; Sun, 21 May 2017 17:17:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=oSijd3E12kr+49SjbQ27c480iRcEEt981X/H1oOG2IQ=;
+        b=FooULp0ZsPIEhJGdIBDTyWuwTtaQfjP9yrLqeA509LSnr6VLLDKMMfSs00mfdiq+BU
+         t/WBOtEZ0q/dBhq0YhA2u/ZsDbWQWwYoOMF2hqvT1xHoqYvb8xolfSU7hrlruoliSCu0
+         ewM+Hjfw8/9RxtTHq0E+pph3tsbZadi5lEJQFu78MEeUwusSkhrjWCWjZevtjF82ffgb
+         Gzgt4tZ43r0M6sE4vXS1VNlebAYzPIpno8WPMfaHViPr4/rAk7cPr6TIdZTl29lVNY+1
+         NpxRhpAym8FLjhglV87vMrooNCQt5PrFDqLuWst/zM3XGQR2H6HAmQbWOyt/KJwmCDtF
+         Nh3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=oSijd3E12kr+49SjbQ27c480iRcEEt981X/H1oOG2IQ=;
+        b=LsmNvpWvRBqCxRBLiXXXaJ9j/sSJhOnmddGtpSNw99yFxR//pDajaTQGkGdwpPnDgW
+         +tr28kM0OorDN464nsfAMLAXdtuHU6s+xorMCryQ00aWyDU2AB7FqDUh+hH+7JjaBvRD
+         OeOdD25/oPDOy05Uyw0F/kIbvBdI5AqlDu5WmNqoVW5BRsbjafDuURwcYUkMUu8saJSS
+         /yy48wFBNwjZoP3hQGu9NhDDJgPwMj2zPs9doEH5xVdOTj6PToGEOi6vWb5unljy4J+V
+         y9savPejiRNwIHSttaQjFJCS9yJvONN68/wvFO0KbxJ8Vw46C5zUMRJ+MgiNpcDl8qLP
+         ck3Q==
+X-Gm-Message-State: AODbwcDoVwf07mo8gtkNxrW5C0LtkjrMTa30vKXJroJPcKUET1zJw6Ky
+        XCnkYG2GkQq/1w==
+X-Received: by 10.99.127.26 with SMTP id a26mr22139307pgd.75.1495412272206;
+        Sun, 21 May 2017 17:17:52 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:4439:f55c:c49b:d0dc])
+        by smtp.gmail.com with ESMTPSA id n22sm17190767pfa.123.2017.05.21.17.17.51
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 21 May 2017 17:17:51 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v3 05/30] log: make --regexp-ignore-case work with --perl-regexp
+References: <20170520214233.7183-1-avarab@gmail.com>
+        <20170520214233.7183-6-avarab@gmail.com>
+        <xmqqlgprqe9j.fsf@gitster.mtv.corp.google.com>
+        <CACBZZX6Hp4Q4TOj_X1fbdCA4twoXF5JemZ5ZbEn7wmkA=1KO2g@mail.gmail.com>
+Date:   Mon, 22 May 2017 09:17:50 +0900
+In-Reply-To: <CACBZZX6Hp4Q4TOj_X1fbdCA4twoXF5JemZ5ZbEn7wmkA=1KO2g@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 21 May
+ 2017 08:58:24
+        +0200")
+Message-ID: <xmqqa865rbgx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-Commit d8193743e0 ("usage.c: add BUG() function", 12-05-2017) added the
-BUG() functions and macros as a replacement for calls to die("BUG: ..").
-The use of NORETURN on the declarations (in git-compat-util.h) and the
-lack of NORETURN on the function definitions, however, leads sparse to
-complain thus:
+>> Looks good.
+>>
+>> I however wonder if it is a better approach in the longer term to
+>> treat the .ignore_case field just like .extended_regexp_option
+>> field, i.e. not committing immediately to .regflags but commit it
+>> after config and command line parsing is done, just like we make the
+>> "BRE? ERE?" decision in grep_commit_pattern_type().
+>
+> I started hacking up a patch to fix the root cause of this, i.e. the
+> users of the grep API should only set `.ignore_case = 1` and not care
+> about setting regflags, but it was more than a trivial change, so I
+> didn't include it in this series:
 
-      SP usage.c
-  usage.c:220:6: error: symbol 'BUG_fl' redeclared with different type
-  (originally declared at git-compat-util.h:1074) - different modifiers
+Ah, sorry.  Now I re-read my response, "Looks good.  I however
+wonder..." does sound like I am requesting to do something more to
+solve the same issue.  I shouldn't have phrased it that way.  It was
+more like "while I was staring the context lines of your patch, I
+noticed this tangent", nothing more.
 
-In order to suppress the sparse error, add the NORETURN to the function
-definitions.
+> ...
+> But an even better solution is to get rid of passing the regflags
+> field in grep_opt entirely, this conflicts with some of my later
+> patches:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
+Yes, that may be a good direction to go in longer term, but let's
+not push it before the other bits already in flight land safely.
 
-Hi Junio,
+> ...
+> But as all this code cleanup isn't needed for fixing this bug, and I'd
+> really like to get this series merged into next/master ASAP so I can
+> start submitting the grep/pcre patches that are actually interesting,
+> let's leave this orthogonal code cleanup for now.
 
-This is built on 'next', which has now merged the 'jk/bug-to-abort'
-branch.
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
- usage.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/usage.c b/usage.c
-index 7e6cb2028..1f63e033e 100644
---- a/usage.c
-+++ b/usage.c
-@@ -217,7 +217,7 @@ static NORETURN void BUG_vfl(const char *file, int line, const char *fmt, va_lis
- }
- 
- #ifdef HAVE_VARIADIC_MACROS
--void BUG_fl(const char *file, int line, const char *fmt, ...)
-+NORETURN void BUG_fl(const char *file, int line, const char *fmt, ...)
- {
- 	va_list ap;
- 	va_start(ap, fmt);
-@@ -225,7 +225,7 @@ void BUG_fl(const char *file, int line, const char *fmt, ...)
- 	va_end(ap);
- }
- #else
--void BUG(const char *fmt, ...)
-+NORETURN void BUG(const char *fmt, ...)
- {
- 	va_list ap;
- 	va_start(ap, fmt);
--- 
-2.13.0
+Yes.  Thanks.
