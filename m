@@ -8,220 +8,91 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 341EA2023D
-	for <e@80x24.org>; Mon, 22 May 2017 17:28:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFE932023D
+	for <e@80x24.org>; Mon, 22 May 2017 17:42:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760628AbdEVR2f (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 13:28:35 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:36073 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760625AbdEVR2e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 13:28:34 -0400
-Received: by mail-it0-f65.google.com with SMTP id i206so11962503ita.3
-        for <git@vger.kernel.org>; Mon, 22 May 2017 10:28:34 -0700 (PDT)
+        id S1760726AbdEVRmN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 13:42:13 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36692 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757895AbdEVRmL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 13:42:11 -0400
+Received: by mail-pf0-f176.google.com with SMTP id m17so88914310pfg.3
+        for <git@vger.kernel.org>; Mon, 22 May 2017 10:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=0Qqj5YKQmvX5KJJSWP3ZtFyWW3Y6BanIJaxIYyd2rWM=;
-        b=nnSvX0jg/g1qNcnaitgZBo8vuD0IP3nxcUqm9WHvd7+qV2wWOpDC8BMZLOA5qTpNVD
-         kh9DWVjTaRg4OcTNgjsFUCCYZm/PQFIYt1JZmyyXQg3HNRQmVqNXiTGnAug9xT6mRbKP
-         Y8NiXVyT9hB1yRK18KqFxBY9insHX35IXEGJCbwAMxLOUiIrcA9TBPFD2qd+WzfqiLin
-         LfpJkLntrTxFZvT1OfVrLlShGxa4xLibE1wGevOfU2mtfnZZN3GlvLGplVzEZk99MU+x
-         Ugm5KyVUWC+9ukwO2U2KyNoZ4el/v/5gDnV43pYAzFzyYBVGvp6XM5MtJ2OYoqB0xBXT
-         3Kxg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XySGmJ0ZS5hPuaHFm0eMS6ukoULIDew9fe5tJBwcpEA=;
+        b=n9EMqZqx8wAemNjqLNnZsa/kZhexuZv9uraIBw5SlWuBqwjgx5G/6/llp+L3vNBYbW
+         p6Kt9Bx+x1j3/tMoL+HMGBccMgmqbPv8Iz0QzEtSELSyqjuW3j26MJIk4vyTdd6FqYL3
+         uqhwIqOYwrzTvWbZfPnliWWwP7tooo/9Qm2CBu0g1piIzWfuXpoqkZBPAFYTKngVp9lN
+         qXIef5OV8StDt+SBcB9iXQBKovhIgYgot9qlgeE9d35wj2CMZdbq4UuJWJcsa9nHw1s1
+         hMmNwwdGwwfZaEQYUzMhej8saXUoHjACxufjaji/BkUW471ofZb/O5F9EmC84D8crtQW
+         zPLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0Qqj5YKQmvX5KJJSWP3ZtFyWW3Y6BanIJaxIYyd2rWM=;
-        b=YhQI9T1k0OTcc3kJSnRESWLyjvBoMQDlxSeZr3iIl7sJPQECAGq4MsGBdYiNrBSvG2
-         mweQBlzzRXu5oGeQqmG/2+zxkb48S5Mz2D8lq3NJ+3Gdtb80LhZ3366HcNZqlidN9mGL
-         n0rZcO6ketYq7nVX54O3BA96rBXE3ARctRseiDCkAE73ZiGiFGd/hA34h8FAnvzShHxq
-         qAFPMyrkk1pYMp5z+K+ouoa3jolyG6Vuz4jCGIXUadLQCyAPtZG8SVRYsPb4JQpfkPP3
-         y/ezAHEGp4lI8IjPFRHNuHFI+Nj1WIgAY6y4cndiXVkLgRw+tYby1O7rkE4y15GdTzha
-         xb6w==
-X-Gm-Message-State: AODbwcDf9aQqpGjInR/YotjDZnfzUfK0AQpliUcIvfc7b1G0aMc9jLMg
-        P1GEb/Vb/1E15ctq+6hn+EHWOYL9rw==
-X-Received: by 10.36.166.4 with SMTP id q4mr23227465ite.66.1495474113717; Mon,
- 22 May 2017 10:28:33 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XySGmJ0ZS5hPuaHFm0eMS6ukoULIDew9fe5tJBwcpEA=;
+        b=A+fSi4mMR8Cxq4TVoDp2eweZPZkdmvQaYdawmYXVsXx9CTZ3jzE3bHAbC0Wclv/Inc
+         6TNMWSYCP5Ydw+eHk4uMvG6ZyZAj5xyzobn/YYOl27OLQUPnR3AjN2pjaU4mEK07ePdf
+         0YXS6rdLAOb2vrogYPTNwkOpz+1u7E8hNVt/SBvdjSF4m7IEomyoQuuWdTDN8GjyYiFs
+         wnYh4J0JP7LyqYu0/zJihhG1jovdenhbVR2vdoqAD7Df4DMsvMiM0gCWum3j4es4VsRK
+         CJij8QVF+4oU22Og0ULaEPFb1lkIFlkycR4DcoztSV57cq6mKKD7OeFHKU+E+iH+pgRL
+         rhKw==
+X-Gm-Message-State: AODbwcAjElJ1nek0Qe+xjGD38ATUoYPEMXfn7iN2Be0AvQKQNy+N91DO
+        wNriVTiuKdp5AA==
+X-Received: by 10.99.63.141 with SMTP id m135mr26687092pga.195.1495474930906;
+        Mon, 22 May 2017 10:42:10 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:557c:4659:8965:b134])
+        by smtp.gmail.com with ESMTPSA id z3sm31734378pfk.99.2017.05.22.10.42.10
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 22 May 2017 10:42:10 -0700 (PDT)
+Date:   Mon, 22 May 2017 10:42:08 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2017, #06; Mon, 22)
+Message-ID: <20170522174208.GB17710@aiede.svl.corp.google.com>
+References: <xmqqo9ulo1yn.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Mon, 22 May 2017 10:28:12 -0700 (PDT)
-In-Reply-To: <5ab333a4-c3cd-1cb5-ba3e-6b08fa14c9e7@gmail.com>
-References: <20170518201333.13088-1-benpeart@microsoft.com>
- <20170518201333.13088-6-benpeart@microsoft.com> <CACBZZX5URAeA+=12ezW-oDGnkdAqvQqV7it=HBaYCKUdx0p_XA@mail.gmail.com>
- <5ab333a4-c3cd-1cb5-ba3e-6b08fa14c9e7@gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 22 May 2017 19:28:12 +0200
-Message-ID: <CACBZZX6LENwuVuTyU-RetaXz8jZtUp1dv+gmQQ281sPx1czPnA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] fsmonitor: add documentation for the fsmonitor extension.
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, benpeart@microsoft.com,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        David.Turner@twosigma.com, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo9ulo1yn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 22, 2017 at 6:18 PM, Ben Peart <peartben@gmail.com> wrote:
-> On 5/20/2017 8:10 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>>
->>> +=3D=3D File System Monitor cache
->>> +
->>> +  The file system monitor cache tracks files for which the
->>> query-fsmonitor
->>> +  hook has told us about changes.  The signature for this extension is
->>> +  { 'F', 'S', 'M', 'N' }.
->>> +
->>> +  The extension starts with
->>> +
->>> +  - 32-bit version number: the current supported version is 1.
->>> +
->>> +  - 64-bit time: the extension data reflects all changes through the
->>> given
->>> +       time which is stored as the seconds elapsed since midnight,
->>> January 1, 1970.
->>> +
->>> +  - 32-bit bitmap size: the size of the CE_FSMONITOR_DIRTY bitmap.
->>> +
->>> +  - An ewah bitmap, the n-th bit indicates whether the n-th index entr=
-y
->>> +    is CE_FSMONITOR_DIRTY.
->>
->>
->> We already have a uint64_t in one place in the codebase (getnanotime)
->> which uses a 64 bit time for nanosecond accuracy, and numerous
->> filesystems already support nanosecond timestamps (ext4, that new
->> Apple thingy...).
->>
->> I don't know if any of the inotify/fsmonitor APIs support that yet,
->> but it seems inevitable that that'll be added if not, in some
->> pathological cases we can have a lot of files modified in 1 second, so
->> using nanosecond accuracy means there'll be a lot less data to
->> consider in some cases.
->>
->> It does mean this'll only work until the year ~2500, but that seems
->> like an acceptable trade-off.
->>
+Hi,
+
+Junio C Hamano wrote:
+
+> * bw/forking-and-threading (2017-05-15) 14 commits
+>  - usage.c: drop set_error_handle()
+>  - run-command: restrict PATH search to executable files
+>  - run-command: expose is_executable function
+>  - run-command: block signals between fork and execve
+>  - run-command: add note about forking and threading
+>  - run-command: handle dup2 and close errors in child
+>  - run-command: eliminate calls to error handling functions in child
+>  - run-command: don't die in child when duping /dev/null
+>  - run-command: prepare child environment before forking
+>  - string-list: add string_list_remove function
+>  - run-command: use the async-signal-safe execv instead of execvp
+>  - run-command: prepare command before forking
+>  - t0061: run_command executes scripts without a #! line
+>  - t5550: use write_script to generate post-update hook
 >
-> I really don't think nano-second resolution is needed in this case for a =
-few
-> reasons.
+>  The "run-command" API implementation has been made more robust
+>  against dead-locking in a threaded environment.
 >
-> The number of files that can change within a given second is limited by t=
-he
-> IO throughput of the underlying device. Even assuming a very fast device =
-and
-> very small files and changes, this won't be that many files.
->
-> Without this patch, git would have scanned all those files every time. Wi=
-th
-> this patch, git will only scan those files a 2nd time that are modified i=
-n
-> the same second that it did the first scan *that came before the first sc=
-an
-> started* (the "lots of files modified" section in the 1 second timeline
-> below).
->
-> |------------------------- one second ---------------------|
-> |-lots of files modified - git status - more file modified-|
->
-> Yes, some duplicate status checks can be made but its still a significant
-> win in any reasonable scenario. Especially when you consider that it is
-> pretty unusual to do git status/add/commit calls in the middle of making
-> lots of changes to files.
+>  Will merge to 'next'.
 
-I understand that we get most of the wins either way.
+What's holding this up?  The deadlock it fixed was a real,
+non-theoretical issue.
 
-I'm just wondering why not make it nanosecond-resolution now from the
-beginning since that's where major filesystems are heading already,
-and changing stuff like this can be a hassle once it's initially out
-there, whereas just dividing by 10^9 for APIs that need seconds from
-the beginning is easy & future-proof.
-
-There are some uses of git where this would probably matter in practice.
-
-E.g. consider a git-annex backed fileserver using ext4, currently
-git-annex comes with its own FS watcher as a daemon invoked via `git
-annex watch` to constantly add new files without killing performance
-via a status/add in a loop, with this a daemon like that could just
-run status/add in a loop, but on a busy repo the 1s interval size
-might start to matter as you're constantly inspecting larger
-intervals.
-
-More importantly though, I can't think of any case where having it in
-nanoseconds to begin with would do any harm.
-
-> In addition, the backing file system monitor (Watchman) supports number o=
-f
-> seconds since the unix epoch (unix time_t style).  This means any support=
- of
-> nano seconds by git is academic until someone provides a file system watc=
-her
-> that does support nano second granularity.
-
-I haven't used watchman for anything non-trivial, but the
-documentation for the query API you seem to be using says you can
-request a {ctime,mtime}_ns field:
-
-https://github.com/facebook/watchman/blob/master/website/_docs/cmd.query.ma=
-rkdown#user-content-available-fields
-
-And isn't this the documentation for the "since" query you're using,
-saying you can specify any arbitrary fs timing field, such as a _ns
-time field:
-
-https://github.com/facebook/watchman/blob/master/website/_docs/expr.since.m=
-d
-
-?
-
-> Finally, the fsmonitor index extension is versioned so that we can
-> seamlessly upgrade to nano second resolution later if we desire.
-
-Aside from my nanosecond bikeshedding, let's say we change the
-semantics of any of this in the future: The index has the version, but
-there's one argument passed to the hook without a version. Is the hook
-expected to potentially be reading the version from the index to make
-sense of whether (in this case) the argument is a mtime or mtime_ns?
-
-Wouldn't this make more sense than that on top, i.e. pass the version
-to the hook, untested (and probably whines about the sprintf
-format...):
-
-$ git diff -U1
-diff --git a/cache.h b/cache.h
-index 6eafd34fff..3c63f179f8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -346,2 +346,3 @@ struct index_state {
-        struct untracked_cache *untracked;
-+       uint32_t fsmonitor_version;
-        time_t fsmonitor_last_update;
-diff --git a/fsmonitor.c b/fsmonitor.c
-index f5a9f818e8..7236b538ac 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -60,2 +60,4 @@ int read_fsmonitor_extension(struct index_state
-*istate, const void *data,
-                return error("bad fsmonitor version %d", hdr_version);
-+       else
-+               istate->fsmonitor_version =3D hdr_version;
-
-@@ -137,2 +139,3 @@ static int query_fsmonitor(time_t last_update,
-struct strbuf *query_result)
-        struct child_process cp =3D CHILD_PROCESS_INIT;
-+       char version[1];
-        char date[64];
-@@ -143,2 +146,3 @@ static int query_fsmonitor(time_t last_update,
-struct strbuf *query_result)
-
-+       snprintf(version, sizeof(version), "%d", istate->fsmonitor_version)=
-;
-        snprintf(date, sizeof(date), "%" PRIuMAX, (uintmax_t)last_update)
+Thanks,
+Jonathan
