@@ -8,87 +8,74 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_MSPIKE_WL,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4AAA20281
-	for <e@80x24.org>; Mon, 22 May 2017 11:12:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77A1920281
+	for <e@80x24.org>; Mon, 22 May 2017 11:18:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758929AbdEVLLx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 07:11:53 -0400
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:35679 "EHLO
-        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758926AbdEVLLw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 07:11:52 -0400
-Received: by mail-oi0-f44.google.com with SMTP id l18so156508977oig.2
-        for <git@vger.kernel.org>; Mon, 22 May 2017 04:11:52 -0700 (PDT)
+        id S1759113AbdEVLSb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 07:18:31 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:35640 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753131AbdEVLS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 07:18:29 -0400
+Received: by mail-oi0-f41.google.com with SMTP id l18so156684862oig.2
+        for <git@vger.kernel.org>; Mon, 22 May 2017 04:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=RHce0+E9HV9IPlTtMAwoXo2cXz9ZROZPfGCunlYPKYs=;
-        b=g23Kg/NNXCWCSrgnW4i/Wr/wLfMggPYf1HCDcE0WwMrBj0h3e4VJ8we4gibv72MkTR
-         Gh3Ij96//qZor1JVAwX8bnbuCdvO0dv7xBqfli9c6O0OPz1zANjpdz8plxEyxz0hsPnz
-         cDb4nDqF/aCiFKf7Viq2t6ehjm5zj5wASvqfHgnXLOpUkCnt008Cb86Z1vHbZ2AewzHz
-         uxbUsorSG64a6iC3XjJ6RDmCBAj5SXPv+d0eEahKkYE5/8SlATivcstTifKbPAJcPuR0
-         PQMBvUPtd7jVt9eJ9O7P6GVuMEHbiIXdjYPjBpR23wprC8FTafhlvoeqtLlD6dpgdJVq
-         udYQ==
+        bh=GZ5nfVt5BL3cVk9OrNW+qZuTXQY4q0JtWm6UOvTSQTE=;
+        b=IF8jA/KkjZt/Pzheh0cRrLurTdhZUtfqUZWSYhKC44k/F2fzydOGOqJlcGzGbr6kBu
+         HZlCSGBDEgd8F+1FgFQN2lLkPcgfae0H7VVy8g0iqMRCXOulCd/n6OLkkl/jq0IZlAfD
+         6PbXZEQZ9mCQEsDkmXPPSJH0OJES6PTvNe305MbrWoGOaaeOKCS6CFLeGvopOFQ8qqhi
+         O1J2UUF26/wMl4TRWUZABVLKOsnawU50XjFvj6YD9mZlRFlGPFlP2G1PTlbD4sYTZTg9
+         2DLGuJ/daVE+4UT4jm1W6i3lEkwBwOlRxy5z7NHxVlsOplr2+LqAGxOBfrWL6KtsvWbL
+         Ehbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=RHce0+E9HV9IPlTtMAwoXo2cXz9ZROZPfGCunlYPKYs=;
-        b=EaN2GNK+Mi0Pz49uqCianH0YYyPT3HJ/64Q/usJSSn8/ngm3KKJBFSwNNS7YZu+oDz
-         4pe6lULwYQZKpVMWTmFUXHCGaeDG72UpRwWmLehI+8nEXMzJnDjy/W0RpBAxAY6N9F4U
-         RdDA6vI2uhVy3bVBpHsDFAnPp0bW/YMtsJcZmJUVlyIHS0abwMe8Jxds6eAP0eujaq+F
-         2Y9KRJV2vWI+1i0Jqhk/Tp/cPy2HO5kx16+SJ9uDGmyups6kHpLLV9BfHO9FlJN7bG3Y
-         9kO+XC+xweNfWqADEgWu0JSCOgAeLBraSKL8/9KCkvge7sDp8vO0QcMBKim1H8bbqRzs
-         bm2A==
-X-Gm-Message-State: AODbwcDnb1M+NXy/3VW/yUBQxMKfEIr4sbtO95XuXlXvzT69D+9wf/ZB
-        EUs1wxtAVsS7Lx3PjInqCzIxd9eKDA==
-X-Received: by 10.157.24.123 with SMTP id t56mr12137633ott.101.1495451511691;
- Mon, 22 May 2017 04:11:51 -0700 (PDT)
+        bh=GZ5nfVt5BL3cVk9OrNW+qZuTXQY4q0JtWm6UOvTSQTE=;
+        b=nwChnBbTh1xTME908CLvFHw21IDPRTirZNaZcTa6BFvgQSmoma/I5L7JtWkDSm5Rue
+         gGuHFWoC0N5AwMAnepFtKIdF171PQF2fnMk1jTiKS5M6o8dlLREj1RwSvenU0Pa1xLg8
+         0F91bH1r+KiLhan96uVRtnBUAnXDukhBfvsekOzkTCjqJnxrb63i6ZbicMae+1CT7YYE
+         g4Ov0xw2gUgvwICereLQfTyL9JnQkhGlsQxoINGihsStcZXBmtoUiCFKqT3lYAkrY4AX
+         MRD7HpMPLVrxSXt2YG1gqKKSV0ouJJcRPjduwTCEZBjCxBvCAPY7QsWnvgoC2WtSalqj
+         XiDA==
+X-Gm-Message-State: AODbwcBwsZpiCBwdsyb307zmNVGcprBepdKCrTZLtzARSc40W0vTGXHn
+        uwWVTZC4GhHRm32a9RstP3LL2ADRVQ==
+X-Received: by 10.157.17.143 with SMTP id v15mr11147368otf.140.1495451907666;
+ Mon, 22 May 2017 04:18:27 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.145.17 with HTTP; Mon, 22 May 2017 04:11:21 -0700 (PDT)
-In-Reply-To: <20170519143727.edi4ni7v5pywm7dk@kitenet.net>
-References: <20170516171028.5eagqr2sw5a2i77d@kitenet.net> <20170519143727.edi4ni7v5pywm7dk@kitenet.net>
+Received: by 10.74.145.17 with HTTP; Mon, 22 May 2017 04:17:57 -0700 (PDT)
+In-Reply-To: <xmqqy3trstup.fsf@gitster.mtv.corp.google.com>
+References: <CACpkpxkGWhcALQZ2+2nOCRKgzAa7U7EjZg--S71zocdGY8NYag@mail.gmail.com>
+ <20170518014210.94189-1-manishearth@gmail.com> <xmqqy3trstup.fsf@gitster.mtv.corp.google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 22 May 2017 18:11:21 +0700
-Message-ID: <CACsJy8C4EZnB2PkJw5t7c007vRmb8DDKk41p2azvjOnJNO0n7Q@mail.gmail.com>
-Subject: Re: reversion in GIT_COMMON_DIR refs path
-To:     Joey Hess <id@joeyh.name>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Peter Simons <simons@cryp.to>
+Date:   Mon, 22 May 2017 18:17:57 +0700
+Message-ID: <CACsJy8CN0ZvWD6v2vkK3Lbt7xgrMwCjFKT6Nx7HtwZiEzmowpw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] refs: Add for_each_worktree_ref for iterating over
+ all worktree HEADs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     manishearth@gmail.com, Git Mailing List <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 19, 2017 at 9:37 PM, Joey Hess <id@joeyh.name> wrote:
-> Joey Hess wrote:
->> Bisecting this test suite failure
->> https://git-annex.branchable.com/git-annex_in_nixpkgs_fails_with_git-2.13.0/
->> I landed on commit f57f37e2e1bf11ab4cdfd221ad47e961ba9353a0 to git.
->>
->> It seems that changed resolving refs paths when GIT_DIR and GIT_COMMON_DIR
->> are both set. While before refs were looked for in GIT_COMMON_DIR,
->> now they're not.
->
-> In case there's any doubt about whether this is a reversion or an
-> intentional change, see gitrepository-layout(5):
->
->        refs
->            References are stored in subdirectories of this directory. The git
->            prune command knows to preserve objects reachable from refs found
->            in this directory and its subdirectories. This directory is ignored
->            if $GIT_COMMON_DIR is set and "$GIT_COMMON_DIR/refs" will be used
->            instead.
->
-> So the documented behavior is broken.
+On Sat, May 20, 2017 at 5:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> By the way, doesn't nd/prune-in-worktree topic that has been cooking
+> in 'pu' supersede this change?  It not just protects the commit at
+> the tip of HEAD in each worktree, it also makes sure the ones in
+> HEAD's reflog are not prematurely pruned.
 
-It's a gray area. When I wrote that I think I forgot about
-per-worktree refs (refs/bisect/*) so "This directory is ignored" is
-not completely true. The final line (probably won't help you much) is
-"per-repo refs must be read from $GIT_COMMON_DIR/refs, per-worktree
-from $GIT_DIR". The fact that we looked per-repo (like master) in
-$GIT_DIR is probably an unwanted side effect.
+You have probably noticed I have stayed silent for a long time (and
+probably will continue). But yes nd/prune-in-worktree should fix this.
+Unfortunately I will not be able to fix it up (I think Michael
+responded on my last question about the proper way to fix
+files_for_each_ref). So anyone feel free to pick that series up and
+fix it (or drop it). For now, pretend that I'm kidnapped by aliens.
 -- 
 Duy
