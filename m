@@ -7,26 +7,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CCBD2023D
-	for <e@80x24.org>; Mon, 22 May 2017 14:18:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2497C2023D
+	for <e@80x24.org>; Mon, 22 May 2017 14:18:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934699AbdEVOSg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 10:18:36 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:44117 "EHLO
-        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S934692AbdEVOSd (ORCPT
+        id S934703AbdEVOSi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 10:18:38 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:56192 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S934683AbdEVOSd (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 22 May 2017 10:18:33 -0400
-X-AuditID: 1207440f-719ff700000004e5-fa-5922f332e823
+X-AuditID: 1207440e-7afff70000007d8a-51-5922f3376028
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 75.45.01253.233F2295; Mon, 22 May 2017 10:18:26 -0400 (EDT)
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 44.59.32138.733F2295; Mon, 22 May 2017 10:18:31 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCDA0.dip0.t-ipconnect.de [87.188.205.160])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4MEI24H023503
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4MEI24J023503
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Mon, 22 May 2017 10:18:24 -0400
+        Mon, 22 May 2017 10:18:29 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -37,222 +37,143 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         Brandon Williams <bmwill@google.com>,
         Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 08/25] ref_store: take a `msg` parameter when deleting references
-Date:   Mon, 22 May 2017 16:17:38 +0200
-Message-Id: <eb1b8016cbf4aff3b595cb176534751520460608.1495460199.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 10/25] files-backend: move `lock` member to `files_ref_store`
+Date:   Mon, 22 May 2017 16:17:40 +0200
+Message-Id: <21939432bc90e0cb58f4b8e1e6a082b9beee93b3.1495460199.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1495460199.git.mhagger@alum.mit.edu>
 References: <cover.1495460199.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFIsWRmVeSWpSXmKPExsUixO6iqGv0WSnSoH2/jcXaZ3eYLJ6vP8Fu
-        0XWlm8miofcKs8WTuXeZLW6vmM9sseTha2aL7ilvGS1+tPQwW2ze3M7iwOXx9/0HJo+ds+6y
-        eyzYVOrx8FUXu0dX+xE2j2e9exg9Ll5S9vi8SS6AI4rLJiU1J7MstUjfLoEr48bD3awFD2wr
-        Vs97ydzAeN+oi5GDQ0LARGLeNLcuRk4OIYEdTBJ7poZA2KeYJO6/qQWx2QR0JRb1NDOB2CIC
-        ahIT2w6xdDFycTALbGCWeDN9NVhCWCBEYu3fKcwgNouAqsSk5w9YQGxegSiJhiev2EFsCQF5
-        iV1tF1lBbE4BC4nfsw4wQSwzl+j9t5plAiPPAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6
-        Jnq5mSV6qSmlmxghQci/g7FrvcwhRgEORiUeXo3HSpFCrIllxZW5hxglOZiURHmPvgEK8SXl
-        p1RmJBZnxBeV5qQWH2KU4GBWEuHVvguU401JrKxKLcqHSUlzsCiJ86ovUfcTEkhPLEnNTk0t
-        SC2CycpwcChJ8Op9AmoULEpNT61Iy8wpQUgzcXCCDOcBGr7mA8jw4oLE3OLMdIj8KUZFKXFe
-        A5BmAZBERmkeXC8sSbxiFAd6RZi3EKSKB5hg4LpfAQ1mAhps/UweZHBJIkJKqoHR0oX92o5E
-        37b4m+svF/r9N1Wv+nApfg9Xi06oWnq0ZKCi+Gv9VkFzzZ8L3smXv9FbpxLYwfD+ccKvwMln
-        wq3n/5ptl7HQ875ZSnVY019Z1zbGA+sC7YtSAnzZ720oCeP+weT1ZpPVcYPHt2JDF1a4XXUt
-        8ZSWF8i/VudX99dDbM0x4Qsbi5RYijMSDbWYi4oTAXJpKmPtAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrBIsWRmVeSWpSXmKPExsUixO6iqGv+WSnSYNs+K4u1z+4wWTxff4Ld
+        outKN5NFQ+8VZosnc+8yW9xeMZ/ZYsnD18wW3VPeMlr8aOlhtti8uZ3Fgcvj7/sPTB47Z91l
+        91iwqdTj4asudo+u9iNsHs969zB6XLyk7PF5k1wARxSXTUpqTmZZapG+XQJXxs2LM1kLnshX
+        7Gy7wtrAuEiqi5GTQ0LAROLeq7vMXYxcHEICO5gkFk2+wQThnGKSaHr6jgWkik1AV2JRTzMT
+        iC0ioCYxse0QC0gRs8AGZok301eDJYQFAiQ+NmwDsjk4WARUJV63aoGEeQWiJA6/Xc0CsU1e
+        YlfbRVYQm1PAQuL3rANgrUIC5hK9/1azTGDkWcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI
+        11gvN7NELzWldBMjJBD5djC2r5c5xCjAwajEw6vxWClSiDWxrLgy9xCjJAeTkijv0TdAIb6k
+        /JTKjMTijPii0pzU4kOMEhzMSiK82neBcrwpiZVVqUX5MClpDhYlcV61Jep+QgLpiSWp2amp
+        BalFMFkNDg6Bu0t6NzBKseTl56UqSfDqfQIaIliUmp5akZaZU4JQysTBCbKIB2jRmg8gi4oL
+        EnOLM9Mh8qcYFaXEeQ1AmgVAEhmleXC9sATyilEc6C1h3kKQKh5g8oHrfgU0mAlosPUzeZDB
+        JYkIKakGxo7EI8bCd8I9PU4XqxyR93N61v7u8MZrJxvTyx8t+Fw3vbqBme/NrRl8qdX/J8jL
+        SLzRZiy8MXVOwIMnU+fmbxCev/YYz1v/4iUZ/NZujQsXXMg8ufHo/dZFGjWFEonr/0fWz3+9
+        923T7vnFOaV/WFfu2b/I6cSckGmamuU3Z972ef/VNfOejLESS3FGoqEWc1FxIgB52STV+wIA
+        AA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Just because the files backend can't retain reflogs for deleted
-references is no reason that they shouldn't be supported by the
-virtual method interface. Also, `delete_ref()` and `refs_delete_ref()`
-have already gained `msg` parameters. Now let's add them to
-`delete_refs()` and `refs_delete_refs()`.
+Move the `lock` member from `packed_ref_cache` to `files_ref_store`,
+since at most one cache can have a locked "packed-refs" file
+associated with it. Rename it to `packed_refs_lock` to make its
+purpose clearer in its new home. More changes are coming here shortly.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- builtin/fetch.c                |  2 +-
- builtin/remote.c               |  4 ++--
- refs.c                         | 11 ++++++-----
- refs.h                         | 12 +++++++-----
- refs/files-backend.c           |  4 ++--
- refs/refs-internal.h           |  2 +-
- t/helper/test-ref-store.c      |  3 ++-
- t/t1405-main-ref-store.sh      |  2 +-
- t/t1406-submodule-ref-store.sh |  2 +-
- 9 files changed, 23 insertions(+), 19 deletions(-)
+ refs/files-backend.c | 36 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index d4d573b985..47708451bc 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -941,7 +941,7 @@ static int prune_refs(struct refspec *refs, int ref_count, struct ref *ref_map,
- 		for (ref = stale_refs; ref; ref = ref->next)
- 			string_list_append(&refnames, ref->name);
- 
--		result = delete_refs(&refnames, 0);
-+		result = delete_refs("fetch: prune", &refnames, 0);
- 		string_list_clear(&refnames, 0);
- 	}
- 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index addf97ad29..5f52c5a6d6 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -786,7 +786,7 @@ static int rm(int argc, const char **argv)
- 	strbuf_release(&buf);
- 
- 	if (!result)
--		result = delete_refs(&branches, REF_NODEREF);
-+		result = delete_refs("remote: remove", &branches, REF_NODEREF);
- 	string_list_clear(&branches, 0);
- 
- 	if (skipped.nr) {
-@@ -1301,7 +1301,7 @@ static int prune_remote(const char *remote, int dry_run)
- 	string_list_sort(&refs_to_prune);
- 
- 	if (!dry_run)
--		result |= delete_refs(&refs_to_prune, 0);
-+		result |= delete_refs("remote: prune", &refs_to_prune, 0);
- 
- 	for_each_string_list_item(item, &states.stale) {
- 		const char *refname = item->util;
-diff --git a/refs.c b/refs.c
-index 71139ba74e..989462c972 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1902,15 +1902,16 @@ int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 	return refs->be->initial_transaction_commit(refs, transaction, err);
- }
- 
--int refs_delete_refs(struct ref_store *refs, struct string_list *refnames,
--		     unsigned int flags)
-+int refs_delete_refs(struct ref_store *refs, const char *msg,
-+		     struct string_list *refnames, unsigned int flags)
- {
--	return refs->be->delete_refs(refs, refnames, flags);
-+	return refs->be->delete_refs(refs, msg, refnames, flags);
- }
- 
--int delete_refs(struct string_list *refnames, unsigned int flags)
-+int delete_refs(const char *msg, struct string_list *refnames,
-+		unsigned int flags)
- {
--	return refs_delete_refs(get_main_ref_store(), refnames, flags);
-+	return refs_delete_refs(get_main_ref_store(), msg, refnames, flags);
- }
- 
- int refs_rename_ref(struct ref_store *refs, const char *oldref,
-diff --git a/refs.h b/refs.h
-index ec8c6bfbbb..b62722fb81 100644
---- a/refs.h
-+++ b/refs.h
-@@ -331,7 +331,8 @@ int reflog_exists(const char *refname);
-  * verify that the current value of the reference is old_sha1 before
-  * deleting it. If old_sha1 is NULL, delete the reference if it
-  * exists, regardless of its old value. It is an error for old_sha1 to
-- * be NULL_SHA1. flags is passed through to ref_transaction_delete().
-+ * be NULL_SHA1. msg and flags are passed through to
-+ * ref_transaction_delete().
-  */
- int refs_delete_ref(struct ref_store *refs, const char *msg,
- 		    const char *refname,
-@@ -343,12 +344,13 @@ int delete_ref(const char *msg, const char *refname,
- /*
-  * Delete the specified references. If there are any problems, emit
-  * errors but attempt to keep going (i.e., the deletes are not done in
-- * an all-or-nothing transaction). flags is passed through to
-+ * an all-or-nothing transaction). msg and flags are passed through to
-  * ref_transaction_delete().
-  */
--int refs_delete_refs(struct ref_store *refs, struct string_list *refnames,
--		     unsigned int flags);
--int delete_refs(struct string_list *refnames, unsigned int flags);
-+int refs_delete_refs(struct ref_store *refs, const char *msg,
-+		     struct string_list *refnames, unsigned int flags);
-+int delete_refs(const char *msg, struct string_list *refnames,
-+		unsigned int flags);
- 
- /** Delete a reflog */
- int refs_delete_reflog(struct ref_store *refs, const char *refname);
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index b2559b5585..fce8265aa7 100644
+index fce8265aa7..bfc555a417 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1595,7 +1595,7 @@ static int repack_without_refs(struct files_ref_store *refs,
- 	return ret;
- }
+@@ -43,15 +43,6 @@ struct packed_ref_cache {
+ 	 */
+ 	unsigned int referrers;
  
--static int files_delete_refs(struct ref_store *ref_store,
-+static int files_delete_refs(struct ref_store *ref_store, const char *msg,
- 			     struct string_list *refnames, unsigned int flags)
+-	/*
+-	 * Iff the packed-refs file associated with this instance is
+-	 * currently locked for writing, this points at the associated
+-	 * lock (which is owned by somebody else).  The referrer count
+-	 * is also incremented when the file is locked and decremented
+-	 * when it is unlocked.
+-	 */
+-	struct lock_file *lock;
+-
+ 	/* The metadata from when this packed-refs cache was read */
+ 	struct stat_validity validity;
+ };
+@@ -70,6 +61,13 @@ struct files_ref_store {
+ 
+ 	struct ref_cache *loose;
+ 	struct packed_ref_cache *packed;
++
++	/*
++	 * Iff the packed-refs file associated with this instance is
++	 * currently locked for writing, this points at the associated
++	 * lock (which is owned by somebody else).
++	 */
++	struct lock_file *packed_refs_lock;
+ };
+ 
+ /* Lock used for the main packed-refs file: */
+@@ -104,7 +102,7 @@ static void clear_packed_ref_cache(struct files_ref_store *refs)
+ 	if (refs->packed) {
+ 		struct packed_ref_cache *packed_refs = refs->packed;
+ 
+-		if (packed_refs->lock)
++		if (refs->packed_refs_lock)
+ 			die("BUG: packed-ref cache cleared while locked");
+ 		refs->packed = NULL;
+ 		release_packed_ref_cache(packed_refs);
+@@ -396,7 +394,7 @@ static void add_packed_ref(struct files_ref_store *refs,
  {
- 	struct files_ref_store *refs =
-@@ -1627,7 +1627,7 @@ static int files_delete_refs(struct ref_store *ref_store,
- 	for (i = 0; i < refnames->nr; i++) {
- 		const char *refname = refnames->items[i].string;
+ 	struct packed_ref_cache *packed_ref_cache = get_packed_ref_cache(refs);
  
--		if (refs_delete_ref(&refs->base, NULL, refname, NULL, flags))
-+		if (refs_delete_ref(&refs->base, msg, refname, NULL, flags))
- 			result |= error(_("could not remove reference %s"), refname);
+-	if (!packed_ref_cache->lock)
++	if (!refs->packed_refs_lock)
+ 		die("BUG: packed refs not locked");
+ 	add_ref_entry(get_packed_ref_dir(packed_ref_cache),
+ 		      create_ref_entry(refname, oid, REF_ISPACKED, 1));
+@@ -1300,7 +1298,7 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
+ 	 * the packed-refs file.
+ 	 */
+ 	packed_ref_cache = get_packed_ref_cache(refs);
+-	packed_ref_cache->lock = &packlock;
++	refs->packed_refs_lock = &packlock;
+ 	/* Increment the reference count to prevent it from being freed: */
+ 	acquire_packed_ref_cache(packed_ref_cache);
+ 	return 0;
+@@ -1323,10 +1321,10 @@ static int commit_packed_refs(struct files_ref_store *refs)
+ 
+ 	files_assert_main_repository(refs, "commit_packed_refs");
+ 
+-	if (!packed_ref_cache->lock)
++	if (!refs->packed_refs_lock)
+ 		die("BUG: packed-refs not locked");
+ 
+-	out = fdopen_lock_file(packed_ref_cache->lock, "w");
++	out = fdopen_lock_file(refs->packed_refs_lock, "w");
+ 	if (!out)
+ 		die_errno("unable to fdopen packed-refs descriptor");
+ 
+@@ -1344,11 +1342,11 @@ static int commit_packed_refs(struct files_ref_store *refs)
+ 	if (ok != ITER_DONE)
+ 		die("error while iterating over references");
+ 
+-	if (commit_lock_file(packed_ref_cache->lock)) {
++	if (commit_lock_file(refs->packed_refs_lock)) {
+ 		save_errno = errno;
+ 		error = -1;
  	}
+-	packed_ref_cache->lock = NULL;
++	refs->packed_refs_lock = NULL;
+ 	release_packed_ref_cache(packed_ref_cache);
+ 	errno = save_errno;
+ 	return error;
+@@ -1366,10 +1364,10 @@ static void rollback_packed_refs(struct files_ref_store *refs)
  
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 7020e51cb7..95edf6f234 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -508,7 +508,7 @@ typedef int create_symref_fn(struct ref_store *ref_store,
- 			     const char *ref_target,
- 			     const char *refs_heads_master,
- 			     const char *logmsg);
--typedef int delete_refs_fn(struct ref_store *ref_store,
-+typedef int delete_refs_fn(struct ref_store *ref_store, const char *msg,
- 			   struct string_list *refnames, unsigned int flags);
- typedef int rename_ref_fn(struct ref_store *ref_store,
- 			  const char *oldref, const char *newref,
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index fba85e7da5..05d8c4d8af 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -93,12 +93,13 @@ static int cmd_create_symref(struct ref_store *refs, const char **argv)
- static int cmd_delete_refs(struct ref_store *refs, const char **argv)
- {
- 	unsigned int flags = arg_flags(*argv++, "flags");
-+	const char *msg = *argv++;
- 	struct string_list refnames = STRING_LIST_INIT_NODUP;
+ 	files_assert_main_repository(refs, "rollback_packed_refs");
  
- 	while (*argv)
- 		string_list_append(&refnames, *argv++);
- 
--	return refs_delete_refs(refs, &refnames, flags);
-+	return refs_delete_refs(refs, msg, &refnames, flags);
+-	if (!packed_ref_cache->lock)
++	if (!refs->packed_refs_lock)
+ 		die("BUG: packed-refs not locked");
+-	rollback_lock_file(packed_ref_cache->lock);
+-	packed_ref_cache->lock = NULL;
++	rollback_lock_file(refs->packed_refs_lock);
++	refs->packed_refs_lock = NULL;
+ 	release_packed_ref_cache(packed_ref_cache);
+ 	clear_packed_ref_cache(refs);
  }
- 
- static int cmd_rename_ref(struct ref_store *refs, const char **argv)
-diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-index 490521f8cb..e8115df5ba 100755
---- a/t/t1405-main-ref-store.sh
-+++ b/t/t1405-main-ref-store.sh
-@@ -31,7 +31,7 @@ test_expect_success 'create_symref(FOO, refs/heads/master)' '
- test_expect_success 'delete_refs(FOO, refs/tags/new-tag)' '
- 	git rev-parse FOO -- &&
- 	git rev-parse refs/tags/new-tag -- &&
--	$RUN delete-refs 0 FOO refs/tags/new-tag &&
-+	$RUN delete-refs 0 nothing FOO refs/tags/new-tag &&
- 	test_must_fail git rev-parse FOO -- &&
- 	test_must_fail git rev-parse refs/tags/new-tag --
- '
-diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
-index 13b5454c56..c32d4cc465 100755
---- a/t/t1406-submodule-ref-store.sh
-+++ b/t/t1406-submodule-ref-store.sh
-@@ -31,7 +31,7 @@ test_expect_success 'create_symref() not allowed' '
- '
- 
- test_expect_success 'delete_refs() not allowed' '
--	test_must_fail $RUN delete-refs 0 FOO refs/tags/new-tag
-+	test_must_fail $RUN delete-refs 0 nothing FOO refs/tags/new-tag
- '
- 
- test_expect_success 'rename_refs() not allowed' '
 -- 
 2.11.0
 
