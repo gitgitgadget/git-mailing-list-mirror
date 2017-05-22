@@ -2,77 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,
 	RCVD_IN_MSPIKE_WL,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED0472023D
-	for <e@80x24.org>; Mon, 22 May 2017 20:12:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C91832023D
+	for <e@80x24.org>; Mon, 22 May 2017 20:19:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762117AbdEVUMQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 16:12:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56234 "EHLO cloud.peff.net"
+        id S1757504AbdEVUTD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 16:19:03 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:46887 "EHLO bsmtp1.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1762038AbdEVUMQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 16:12:16 -0400
-Received: (qmail 22562 invoked by uid 109); 22 May 2017 20:12:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 May 2017 20:12:14 +0000
-Received: (qmail 24349 invoked by uid 111); 22 May 2017 20:12:49 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 22 May 2017 16:12:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 May 2017 16:12:12 -0400
-Date:   Mon, 22 May 2017 16:12:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1751376AbdEVUTC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 16:19:02 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wWqkF0Q3Fz5tlG;
+        Mon, 22 May 2017 22:19:01 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id ADF694327;
+        Mon, 22 May 2017 22:19:00 +0200 (CEST)
+Subject: Re: [PATCH v3] ref-filter: trim end whitespace in subject
+To:     Jeff King <peff@peff.net>
 Cc:     DOAN Tran Cong Danh <congdanhqx@gmail.com>, git@vger.kernel.org,
-        animi.vulpis@gmail.com, j6t@kdbg.org,
-        Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] ref-filter: treat CRLF as same as LF in find_subpos
-Message-ID: <20170522201212.uuas26n6npdebsxg@sigill.intra.peff.net>
-References: <CA+izobvwRCwGEtpCbey=gFbCh9sHBb5xB1i1LpMG0JCUy0O2mQ@mail.gmail.com>
- <20170521134209.25659-1-congdanhqx@gmail.com>
- <xmqqy3tppu13.fsf@gitster.mtv.corp.google.com>
+        animi.vulpis@gmail.com, gitster@pobox.com, git@grubix.eu,
+        pclouds@gmail.com, karthik.188@gmail.com
+References: <20170522145753.83810-1-congdanhqx@gmail.com>
+ <20170522171014.33384-1-congdanhqx@gmail.com>
+ <777c63ed-c1e3-8efd-48cd-91ac2a841631@kdbg.org>
+ <20170522195334.eoj4u4nxupyl6dho@sigill.intra.peff.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <f717824b-3527-251b-bc3f-835f12703698@kdbg.org>
+Date:   Mon, 22 May 2017 22:19:00 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy3tppu13.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170522195334.eoj4u4nxupyl6dho@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 22, 2017 at 10:19:52AM +0900, Junio C Hamano wrote:
-
-> However.
+Am 22.05.2017 um 21:53 schrieb Jeff King:
+> On Mon, May 22, 2017 at 09:47:59PM +0200, Johannes Sixt wrote:
 > 
-> If you look at how `git branch -v` before that problematic change
-> removed the extra CR, you would notice that pretty_print_commit()
-> was used for that, which eventually called format_subject() with
-> "one\r\n\r\nline3...", got one line "one\r\n" by calling
-> get_one_line(), adjusted the line length from 5 to 3 by calling
-> is_blank_line() which as a side effect trims all whitespaces (not
-> just LF and CR), and emitted "one".  The reason why the next \r\n
-> was not mistaken as a non-empty line is the same---is_blank_line()
-> call onthe next line said that "\r\n" is an all-white space line.
+>> Am 22.05.2017 um 19:10 schrieb DOAN Tran Cong Danh:
+>>> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+>>> index 5778c0afe..fa4441868 100755
+>>> --- a/t/t3203-branch-output.sh
+>>> +++ b/t/t3203-branch-output.sh
+>>> @@ -13,7 +13,8 @@ test_expect_success 'make commits' '
+>>>    test_expect_success 'make branches' '
+>>>    	git branch branch-one &&
+>>> -	git branch branch-two HEAD^
+>>> +	git branch branch-two $(printf "%s\r\n" one " " line3_long line4 |
 
-I noticed a similar thing regarding pretty_print_commit(). Which really
-made me wonder whether the right solution is to drop the custom parsing
-code in ref-filter.c and use the bits from pretty.c. Then we'd have only
-one parser. That's less code, but more importantly, there can't be
-inconsistencies between the two (we're fixing one now, but we have no
-idea if there are others).
+I didn't notice earlier that there is a blank between the dq here.
 
-I suspect that's more work because we'd need to refactor pretty.c a bit
-to make the right functionality available. But the end result would be
-much more maintainable.
+>>> +	     git commit-tree HEAD:)
+>>>    '
+>>>    test_expect_success 'make remote branches' '
+>>>
+>>
+>> This updated test shows nothing, I am afraid: If I apply only this change
+>> without the rest of the patch, then all test in t3203 still pass. And I do
+>> not see how the code change could make any difference at all. What am I
+>> missing?
 
--Peff
+And I didn't look carefully enough at t3203. Some tests do check branch 
+-v output.
 
-PS I'm also a bit curious how a CRLF got into a commit message in the
-   first place. Stripspace should be removing that for normal "git
-   commit" runs. I don't know that we've ever said it explicitly, but I
-   think we'd consider the canonical in-repo object representation to be
-   LF-only (just like we do for smudge/clean filters). Which means that
-   whatever is generating these commit objects is arguably buggy.
+> 
+> It does for me here on Linux; I wonder if the CRs are being eaten by the
+> shell expansion.
+
+And I tested on Linux, too, but on the wrong branch. On a branch closer 
+to master I see a failure as well. Sorry for the noise.
+
+There are no CRs on the command line, BTW, only on stdin of commit-tree.
+
+-- Hannes
