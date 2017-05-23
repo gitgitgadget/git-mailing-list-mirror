@@ -2,130 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0283A20281
-	for <e@80x24.org>; Tue, 23 May 2017 19:38:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C677620281
+	for <e@80x24.org>; Tue, 23 May 2017 19:45:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965874AbdEWTiH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 15:38:07 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:33051 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965180AbdEWTiG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 15:38:06 -0400
-Received: by mail-pf0-f179.google.com with SMTP id e193so124051749pfh.0
-        for <git@vger.kernel.org>; Tue, 23 May 2017 12:38:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=isWP/sCaGjP9tAFS3KH0G7sudMZy/yqVTVU1f5KeY30=;
-        b=elBJBexSZsL87gMmJraTSWCknrxc4gDSco8+gfFNK/8VeCMhK0qeXsU3+hDl4bwCM+
-         6woMeSz2NTYJH6gmhwGqcntQb+8BfWBdJj8gzI2oVcrVmTlaGSdmQo/qwzFYOAEKjFIp
-         Qo04etx82HlYnjgF7dwWt51R00WOcAfMhGLGUDQou89JmWqJ6fLCZVN34RsppzSdWL3e
-         XLg5rbhm3pjJ4h/NjaenGwaNjEG8LUZvepwzs8eQX6EAgFyybZ7F7IRbry49j75QNn67
-         peTIt8AxiU00HlX/4ng17ItMgu0eZQYh8hTTNQ6vZ9IM4HmeMD+0lDEwacT23cy2aFcE
-         PTrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=isWP/sCaGjP9tAFS3KH0G7sudMZy/yqVTVU1f5KeY30=;
-        b=nzOuZxehjCZW0E0lRJXnKpogWPLKdHikImbFwEVVkrLCmOWDhlViA6xHFWUtS2+FC2
-         1nI+IdR3uagzMuUhw+SxX7/mXcBm88OPKcuRrF93J8gr+m1h0dUJfKLeZJMNVj55h7+V
-         ef8d1OHCe3W++DouRGLtMQnQQcSy0iTY3POrUZN8VhgpUGxFI5Cy7L7L+A8LbUxBxiZV
-         Hi1ia9Iolsk03db1C67sC00iJTNuqDcsA/lSP5KgA/XC1f5WlZ8kx4M/XkpQw0UK3F2P
-         aa7GkSp62j2MvNaJGQ89fJToTwdrr/xUAZka/ijmocD3HYBUADjwWD7/tF6ekG4jwqV8
-         Buzw==
-X-Gm-Message-State: AODbwcDdKZKHWSP+WPF2XMYj58iMwuS180Vh9oQtp7W2wTTc82wHZYYi
-        02XsNvshQku+BurtK/e/X8hDMFr8Iksx
-X-Received: by 10.98.205.65 with SMTP id o62mr33400784pfg.105.1495568285189;
- Tue, 23 May 2017 12:38:05 -0700 (PDT)
+        id S966487AbdEWTpX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 15:45:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56939 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1760218AbdEWTpW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 15:45:22 -0400
+Received: (qmail 8250 invoked by uid 109); 23 May 2017 19:45:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 19:45:22 +0000
+Received: (qmail 3455 invoked by uid 111); 23 May 2017 19:45:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 15:45:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 May 2017 15:45:20 -0400
+Date:   Tue, 23 May 2017 15:45:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+Subject: Re: [PATCH v2 25/25] cache_ref_iterator_begin(): avoid priming
+ unneeded directories
+Message-ID: <20170523194519.luhuej3rerzb57t7@sigill.intra.peff.net>
+References: <cover.1495460199.git.mhagger@alum.mit.edu>
+ <0d6a608a62026352c1496239bab02122f123f2e1.1495460199.git.mhagger@alum.mit.edu>
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Tue, 23 May 2017 12:38:04 -0700 (PDT)
-In-Reply-To: <CAGZ79kZMJP7K5MU0UujuEatZ2MOrSnFpfD707aSGa64mKyCZbw@mail.gmail.com>
-References: <xmqqwp98j8q2.fsf@gitster.mtv.corp.google.com> <CAGZ79kZMJP7K5MU0UujuEatZ2MOrSnFpfD707aSGa64mKyCZbw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 23 May 2017 12:38:04 -0700
-Message-ID: <CAGZ79kYoHYz6hi5kDjQBcN-35c0kXE6mf6NNV_Z_F6-UqZ=3cw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (May 2017, #07; Tue, 23)
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0d6a608a62026352c1496239bab02122f123f2e1.1495460199.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 23, 2017 at 12:08 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, May 23, 2017 at 1:08 AM, Junio C Hamano <gitster@pobox.com> wrote=
-:
->
->> * sb/submodule-blanket-recursive (2017-05-23) 6 commits
->>  . builtin/push.c: respect 'submodule.recurse' option
->>  . builtin/grep.c: respect 'submodule.recurse' option
->>  . builtin/fetch.c: respect 'submodule.recurse' option
->>  . Introduce submodule.recurse option for worktree manipulators
->>  . submodule test invocation: only pass additional arguments
->>  . submodule.c: add has_submodules to check if we have any submodules
->>  (this branch uses sb/reset-recurse-submodules.)
->>
->>  A new configuration variable "submodule.recurse" can be set to true
->>  to force various commands run at the top-level superproject to
->>  behave as if they were invoked with the "--recurse-submodules"
->>  option.
->>
->>  Seems to break t7814 when merged to 'pu'.
->
-> I will investigate! (It passes on its own, so I guess it is some
-> interference with a recent grep series)
+On Mon, May 22, 2017 at 04:17:55PM +0200, Michael Haggerty wrote:
 
-And the winner is 5d52a30eda (grep: amend submodule recursion
-test for regex engine testing, 2017-05-20, by =C3=86var)
+> So:
+> 
+> * Move the responsibility for doing the prefix check directly to
+>   `cache_ref_iterator`. This means that `cache_ref_iterator_begin()`
+>   never has to wrap its return value in a `prefix_ref_iterator`.
+> 
+> * Teach `cache_ref_iterator_begin()` (and `prime_ref_dir()`) to be
+>   stricter about what they iterate over and what directories they
+>   prime.
+> 
+> * Teach `cache_ref_iterator` to keep track of whether the current
+>   `cache_ref_iterator_level` is fully within the prefix. If so, skip
+>   the prefix checks entirely.
 
-The tests added by grep rely on the old content of
-test 2 'grep correctly finds patterns in a submodule'.
+As promised, I came back to this one with a more careful eye. These
+changes all make sense to me, and the implementation matches.
 
-The (whitespace broken) diff below fixes it.
-I think the best way forward is that my series relies on
-that series as a foundation then, and writes correct tests based
-on the file contents at that version.
+My only question is:
 
----8<---
-diff --git a/t/t7814-grep-recurse-submodules.sh
-b/t/t7814-grep-recurse-submodules.sh
-index 14eeb54b4b..ce9fbbc1f6 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -36,18 +36,18 @@ test_expect_success 'grep correctly finds patterns
-in a submodule' '
- test_expect_success 'grep finds patterns in a submodule via config' '
-        test_config submodule.recurse true &&
-        # expect from previous test
--       git grep -e "bar" >actual &&
-+       git grep -e3 >actual &&
-        test_cmp expect actual
- '
+> @@ -511,9 +582,12 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
+>  	level->index = -1;
+>  	level->dir = dir;
+>  
+> -	if (prefix && *prefix)
+> -		ref_iterator = prefix_ref_iterator_begin(ref_iterator,
+> -							 prefix, 0);
+> +	if (prefix && *prefix) {
+> +		iter->prefix = xstrdup(prefix);
+> +		level->prefix_state = PREFIX_WITHIN_DIR;
+> +	} else {
+> +		level->prefix_state = PREFIX_CONTAINS_DIR;
+> +	}
 
- test_expect_success 'grep --no-recurse-submodules overrides config' '
-        test_config submodule.recurse true &&
-        cat >expect <<-\EOF &&
--       a:foobar
--       b/b:bar
-+       a:(1|2)d(3|4)
-+       b/b:(3|4)
-        EOF
+Who frees the prefix? Does this need:
 
--       git grep -e "bar" --no-recurse-submodules >actual &&
-+       git grep -e4 --no-recurse-submodules >actual &&
-        test_cmp expect actual
- '
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index fda3942db..a3efc5c51 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -542,6 +542,7 @@ static int cache_ref_iterator_abort(struct ref_iterator *ref_iterator)
+ 	struct cache_ref_iterator *iter =
+ 		(struct cache_ref_iterator *)ref_iterator;
+ 
++	free(iter->prefix);
+ 	free(iter->levels);
+ 	base_ref_iterator_free(ref_iterator);
+ 	return ITER_DONE;
 
----8<---
-
-Thanks,
-Stefan
+-Peff
