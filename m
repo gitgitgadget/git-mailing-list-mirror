@@ -2,146 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E096F20281
-	for <e@80x24.org>; Tue, 23 May 2017 19:51:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7187D20281
+	for <e@80x24.org>; Tue, 23 May 2017 19:51:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967652AbdEWTvA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 15:51:00 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:32931 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967149AbdEWTu7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 15:50:59 -0400
-Received: by mail-io0-f175.google.com with SMTP id p24so104751211ioi.0
-        for <git@vger.kernel.org>; Tue, 23 May 2017 12:50:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7wq+AIGI1C18Kjw78pxGhjc7xsRmd6zR3SrN+BO+ue4=;
-        b=sRJDIv6/uPjYvTfo8V3wfU1WQNhPJvXWvC6jAWV2+j9LNKlVrTNnbH9UFwA0QIorWQ
-         aTdPhJ9zaxC+JUzG3cOs4aAkDNGHl37VX/RtWsmz/60HEZpuQ3p1/QclxkQG5sRGx+4f
-         P08lPrhxt7XpmTrTZB1p/OmUL8q+EkjLO9nnUmsgyOHfBRNWS4EHt+/rR80mryIheF3j
-         NwODZfPFeEHJc1vDfSR6JSxlL80gqyNwkpH0W6nCFAJsdeFnLq4cbw+i9f2F9q7r5anl
-         aP5TFb8an98m05mZxnd9VXOfUG0HTH8ASgo/p/P0i84TbMWsWKmUBnoRncFRbkMCNs8r
-         9ahg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7wq+AIGI1C18Kjw78pxGhjc7xsRmd6zR3SrN+BO+ue4=;
-        b=GTKgneOXcQUH2IWC/HkGBsb8RkzKr5zsgzP9suKkRTTQGw8K6+aToMFp8t4PNXmJ19
-         DRDP8USx42A4X4RfaCY5hlTQgBF1ZEPz7brbN5bZ87qCzbKYTSzSkpqnq1Gpltv6XiFn
-         1MZI72nWJmAhbd6vtoeBkhZt0NkmREml9vRn50zAKOkPxcVgKF4tSiAtCAKK51JeCxk8
-         4sFiKh2PIXUI5nXzXcXwXEM2Sht2DVELSanMPzA6WhcxO7j8y8sek06n/tWHkCDPzk+m
-         APAuZgdsqmmhQL3lYPOWAjSOjYZo2vdoDOlBDYtqG1GLXaIgbpPaLtMg4sGJ54DEm9zr
-         DB6g==
-X-Gm-Message-State: AODbwcDO3JLrdtYv7tekam1UefxOA3Mh7Vg01ZDCx6msNFZ2GDXeNBgK
-        3P5/dxLKk0NIMp/5F6PyGrMl8OTT/A==
-X-Received: by 10.107.178.12 with SMTP id b12mr27358806iof.50.1495569058134;
- Tue, 23 May 2017 12:50:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Tue, 23 May 2017 12:50:37 -0700 (PDT)
-In-Reply-To: <CAGZ79kYoHYz6hi5kDjQBcN-35c0kXE6mf6NNV_Z_F6-UqZ=3cw@mail.gmail.com>
-References: <xmqqwp98j8q2.fsf@gitster.mtv.corp.google.com> <CAGZ79kZMJP7K5MU0UujuEatZ2MOrSnFpfD707aSGa64mKyCZbw@mail.gmail.com>
- <CAGZ79kYoHYz6hi5kDjQBcN-35c0kXE6mf6NNV_Z_F6-UqZ=3cw@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 23 May 2017 21:50:37 +0200
-Message-ID: <CACBZZX4adLy6Xumicu3Qke=g39EEe3iBa5ShsGvTBAYFqXENPg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (May 2017, #07; Tue, 23)
-To:     Stefan Beller <sbeller@google.com>
+        id S967676AbdEWTvg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 15:51:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56949 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S967061AbdEWTvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 15:51:35 -0400
+Received: (qmail 8829 invoked by uid 109); 23 May 2017 19:51:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 19:51:34 +0000
+Received: (qmail 3520 invoked by uid 111); 23 May 2017 19:52:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 15:52:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 May 2017 15:51:32 -0400
+Date:   Tue, 23 May 2017 15:51:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     Philip Oakley <philipoakley@iee.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 01/15] handle_revision_arg: reset "dotdot" consistently
+Message-ID: <20170523195132.s57ikef4romy3n3r@sigill.intra.peff.net>
+References: <20170519124651.4q7waz75rmzfopgn@sigill.intra.peff.net>
+ <20170519124834.ipk42isngqck2egu@sigill.intra.peff.net>
+ <F66E608B6CE34520BD764C404A2AD36C@PhilipOakley>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <F66E608B6CE34520BD764C404A2AD36C@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 23, 2017 at 9:38 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, May 23, 2017 at 12:08 PM, Stefan Beller <sbeller@google.com> wrot=
-e:
->> On Tue, May 23, 2017 at 1:08 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
->>
->>> * sb/submodule-blanket-recursive (2017-05-23) 6 commits
->>>  . builtin/push.c: respect 'submodule.recurse' option
->>>  . builtin/grep.c: respect 'submodule.recurse' option
->>>  . builtin/fetch.c: respect 'submodule.recurse' option
->>>  . Introduce submodule.recurse option for worktree manipulators
->>>  . submodule test invocation: only pass additional arguments
->>>  . submodule.c: add has_submodules to check if we have any submodules
->>>  (this branch uses sb/reset-recurse-submodules.)
->>>
->>>  A new configuration variable "submodule.recurse" can be set to true
->>>  to force various commands run at the top-level superproject to
->>>  behave as if they were invoked with the "--recurse-submodules"
->>>  option.
->>>
->>>  Seems to break t7814 when merged to 'pu'.
->>
->> I will investigate! (It passes on its own, so I guess it is some
->> interference with a recent grep series)
->
-> And the winner is 5d52a30eda (grep: amend submodule recursion
-> test for regex engine testing, 2017-05-20, by =C3=86var)
->
-> The tests added by grep rely on the old content of
-> test 2 'grep correctly finds patterns in a submodule'.
+On Sat, May 20, 2017 at 03:56:32PM +0100, Philip Oakley wrote:
 
-Sorry about the fallout.
+> > That means we do report the correct name for "a" in the
+> > pending array. But some code paths try to show the whole
+> > "a..b" name in error messages, and these erroneously show
+> > only "a" instead of "a..b". E.g.:
+> > 
+> >  $ git cherry-pick HEAD:foo..HEAD:foo
+> 
+> shouldn't this be three dots? Also the para above uses two dot examples in
+> its description but the paras before that start by describing the three dot
+> case.
 
-> The (whitespace broken) diff below fixes it.
-> I think the best way forward is that my series relies on
-> that series as a foundation then, and writes correct tests based
-> on the file contents at that version.
->
-> ---8<---
-> diff --git a/t/t7814-grep-recurse-submodules.sh
-> b/t/t7814-grep-recurse-submodules.sh
-> index 14eeb54b4b..ce9fbbc1f6 100755
-> --- a/t/t7814-grep-recurse-submodules.sh
-> +++ b/t/t7814-grep-recurse-submodules.sh
-> @@ -36,18 +36,18 @@ test_expect_success 'grep correctly finds patterns
-> in a submodule' '
->  test_expect_success 'grep finds patterns in a submodule via config' '
->         test_config submodule.recurse true &&
->         # expect from previous test
-> -       git grep -e "bar" >actual &&
-> +       git grep -e3 >actual &&
->         test_cmp expect actual
->  '
->
->  test_expect_success 'grep --no-recurse-submodules overrides config' '
->         test_config submodule.recurse true &&
->         cat >expect <<-\EOF &&
-> -       a:foobar
-> -       b/b:bar
-> +       a:(1|2)d(3|4)
-> +       b/b:(3|4)
->         EOF
->
-> -       git grep -e "bar" --no-recurse-submodules >actual &&
-> +       git grep -e4 --no-recurse-submodules >actual &&
+Yeah, it should be. The problem happens with the two-dot case, too (it's
+the same code) but to provoke cherry-pick to actually show the error in
+question, you need to use three-dots. There's probably a way to provoke
+a broken error message with the two-dot case, but I didn't dig further
+after finding this one.
 
-The rest of my changed just did:
+Thanks for being a careful reader. Here's the patch with a modified
+commit message. I don't think this series otherwise needs a re-roll so
+far.
 
-        foobar -> (1|2)d(3|4)
-        foo    -> (1|2)
-        bar    -> (3|4)
+-- >8 --
+Subject: [PATCH] handle_revision_arg: reset "dotdot" consistently
 
-While this works might want to do e.g. `-e "(3|4)"` here like the
-rest. This works, but probably confusing going forward when it's the
-only exception.
+When we are parsing a range like "a..b", we write a
+temporary NUL over the first ".", so that we can access the
+names "a" and "b" as C strings. But our restoration of the
+original "." is done at inconsistent times, which can lead
+to confusing results.
 
->         test_cmp expect actual
->  '
-> ---8<---
->
-> Thanks,
-> Stefan
+For most calls, we restore the "." after we resolve the
+names, but before we call verify_non_filename().  This means
+that when we later call add_pending_object(), the name for
+the left-hand "a" has been re-expanded to "a..b". You can
+see this with:
+
+  git log --source a...b
+
+where "b" will be correctly marked with "b", but "a" will be
+marked with "a...b". Likewise with "a..b" (though you need
+to use --boundary to even see "a" at all in that case).
+
+To top off the confusion, when the REVARG_CANNOT_BE_FILENAME
+flag is set, we skip the non-filename check, and leave the
+NUL in place.
+
+That means we do report the correct name for "a" in the
+pending array. But some code paths try to show the whole
+"a...b" name in error messages, and these erroneously show
+only "a" instead of "a...b". E.g.:
+
+  $ git cherry-pick HEAD:foo...HEAD:foo
+  error: object d95f3ad14dee633a758d2e331151e950dd13e4ed is a blob, not a commit
+  error: object d95f3ad14dee633a758d2e331151e950dd13e4ed is a blob, not a commit
+  fatal: Invalid symmetric difference expression HEAD:foo
+
+(That last message should be "HEAD:foo...HEAD:foo"; I used
+cherry-pick because it passes the CANNOT_BE_FILENAME flag).
+
+As an interesting side note, cherry-pick actually looks at
+and re-resolves the arguments from the pending->name fields.
+So it would have been visibly broken by the first bug, but
+the effect was canceled out by the second one.
+
+This patch makes the whole function consistent by re-writing
+the NUL immediately after calling verify_non_filename(), and
+then restoring the "." as appropriate in some error-printing
+and early-return code paths.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ revision.c     | 3 +++
+ t/t4202-log.sh | 9 +++++++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/revision.c b/revision.c
+index 8a8c1789c..014bf52e3 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1477,12 +1477,14 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 			if (!cant_be_filename) {
+ 				*dotdot = '.';
+ 				verify_non_filename(revs->prefix, arg);
++				*dotdot = '\0';
+ 			}
+ 
+ 			a_obj = parse_object(from_sha1);
+ 			b_obj = parse_object(sha1);
+ 			if (!a_obj || !b_obj) {
+ 			missing:
++				*dotdot = '.';
+ 				if (revs->ignore_missing)
+ 					return 0;
+ 				die(symmetric
+@@ -1525,6 +1527,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 					REV_CMD_RIGHT, flags);
+ 			add_pending_object(revs, a_obj, this);
+ 			add_pending_object(revs, b_obj, next);
++			*dotdot = '.';
+ 			return 0;
+ 		}
+ 		*dotdot = '.';
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 1c7d6729c..76c511973 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -1392,4 +1392,13 @@ test_expect_success 'log --source paints tag names' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'log --source paints symmetric ranges' '
++	cat >expect <<-\EOF &&
++	09e12a9	source-b three
++	8e393e1	source-a two
++	EOF
++	git log --oneline --source source-a...source-b >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.13.0.387.gec0afcebb.dirty
+
