@@ -2,118 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 332FF1FF30
-	for <e@80x24.org>; Tue, 23 May 2017 08:31:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B81D01FF30
+	for <e@80x24.org>; Tue, 23 May 2017 08:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966707AbdEWIbH convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 23 May 2017 04:31:07 -0400
-Received: from wes1-so1-b.wedos.net ([46.28.106.43]:50839 "EHLO
-        wes1-so1.wedos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965219AbdEWIbD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 04:31:03 -0400
-Received: from jvn (105.215.broadband18.iol.cz [109.81.215.105])
-        by wes1-so1.wedos.net (Postfix) with ESMTPSA id 3wX7yp3wHZz5r0;
-        Tue, 23 May 2017 10:30:58 +0200 (CEST)
-Date:   Tue, 23 May 2017 10:30:50 +0200
-From:   Jan Viktorin <viktorin@rehivetech.com>
+        id S935955AbdEWInP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 04:43:15 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:33627 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933976AbdEWInK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 04:43:10 -0400
+Received: by mail-wr0-f195.google.com with SMTP id w50so9341991wrc.0
+        for <git@vger.kernel.org>; Tue, 23 May 2017 01:43:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=4PRVV6k6HHJE/kUej/3Q2BAIifOAE522wJ6DRIQuT+A=;
+        b=dXychjzwCIwVbXLfYfg2dqAUKIsAQP9i0HSxJwIacxK8eCuTibeedDwWhHfy0lv8a7
+         28QHE9KrMBIq+pmt4Yi/lMsSZYIwPhG0hDZdyeZZSyl+7d7Z7iCHmk0UwC5Wm+/iHeVX
+         +nAQxxDa8vbQGLC9GHTvhhnD+M9W/9y/FJNtkfJEnOdl0VrtICzI3mHDjuC6GOUn8zv9
+         V3sdMOMpzF/3LQ7Hh/WqS9eBGxFD206vdOQ8r2qe2s++GDZC4Fo7MLahJrEtQEa9y0ND
+         h6EmZsRDU9UHVEtsgnrQlvuaUDyKGPtr53JiT8o0+m3KCLDuU+mEoyIWus/NvlKdBJo0
+         dKGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=4PRVV6k6HHJE/kUej/3Q2BAIifOAE522wJ6DRIQuT+A=;
+        b=VJ0QajX4b8nOHL1lv+fB62btUKjVMfpYiiBkRk2Ce7Vry3CsCGrTYIsun9KMfknkSX
+         qjrMudShn1SthJjWjmZoyKTTv7nJxO/QyV3gXEGucbUcmeLnYCRKUxwxPkNkhUJRR1lY
+         f8bWZ5Nj6Lm/fnurm5iyWoul6HE0D1x7DfpL1BBcuuotsCskcr0dE1qlaW/+0f8Sx9H3
+         n+vLmbujrAMZNeS9t6dvwwDa7joKJWa6+b0+4CeiRe2uVDhdXQ5yWuUVRkWqqMYBQO2o
+         haEdsXVLFptImeGBTm4wIKh1CXdhQ/NbG1dRTci5B3JpIP3h87kLStylU//Hwf0QROua
+         GUsg==
+X-Gm-Message-State: AODbwcB+h7hPfzAHCQF+fZSIjUXrPbVOD7GscpMwoQPVmhRGhuc7tTzh
+        vcvM/iO93XF2rg==
+X-Received: by 10.223.153.181 with SMTP id y50mr14408846wrb.41.1495528984211;
+        Tue, 23 May 2017 01:43:04 -0700 (PDT)
+Received: from [10.146.248.58] ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id l190sm81812wmb.18.2017.05.23.01.43.02
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 23 May 2017 01:43:03 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v4 4/4] convert: add "status=delayed" to filter process protocol
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqq1srgm9kq.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 23 May 2017 10:43:02 +0200
+Cc:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>,
+        ttaylorr@github.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <DB31E695-B7D5-4337-BACD-5191EB642F40@gmail.com>
+References: <20170522135001.54506-1-larsxschneider@gmail.com> <20170522135001.54506-5-larsxschneider@gmail.com> <64b1fda4-9f79-1bd8-ad6d-43196b808d61@web.de> <04ECEBE5-CAC8-4344-B07A-6B7A7C795C94@gmail.com> <xmqq1srgm9kq.fsf@gitster.mtv.corp.google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        xiaoqiang zhao <zxq_yx_007@163.com>,
-        Git Mailing List <git@vger.kernel.org>, mst@kernel.org,
-        pbonzini@redhat.com, mina86@mina86.com,
-        Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v5] send-email: --batch-size to work around some SMTP
- server limit
-Message-ID: <20170523103050.1f7ab7e0@jvn>
-In-Reply-To: <xmqq60gskobw.fsf@gitster.mtv.corp.google.com>
-References: <20170521125950.5524-1-zxq_yx_007@163.com>
-        <CACBZZX5GYV50rjg9X602JHqFPaoofH9TwDf_-r_MDu8-rmNV6Q@mail.gmail.com>
-        <xmqq60gskobw.fsf@gitster.mtv.corp.google.com>
-Organization: RehiveTech
-X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-unknown-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 23 May 2017 16:46:27 +0900
-Junio C Hamano <gitster@pobox.com> wrote:
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
-> > Looking at this the Nth time now though I wonder about this approach
-> > in general. In all your E-Mails I don't think you ever said /what/
-> > sort of error you had from the SMTP server, you just said you had a
-> > failure or an error, I assume you hit one of the die's in the
-> > send_message() function. Can you paste the actual error you get
-> > without this patch?
+> On 23 May 2017, at 07:22, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Lars Schneider <larsxschneider@gmail.com> writes:
+>=20
+>>>> +	sigchain_pop(SIGPIPE);
+>>>> +
+>>>> +	if (err || errno =3D=3D EPIPE) {
+>>>=20
+>>> This looks strange, at first glance.
+>>> Do we set errno to 0 before ?
+>>> Or is there a trick that EPIPE can only be reached,
+>>> if it is "our" error ?
+>>=20
+>> You are right and I'll fix it!=20
+>> Thanks for reminding me!=20
+>> Peff also noticed that some time ago:
+>> =
+http://public-inbox.org/git/20170411200520.oivytvlzkdu7bfh5@sigill.intra.p=
+eff.net/
+>=20
+> Ben Peart's bp/sub-process-convert-filter topic also had the same
+> EPIPE issues in its earlier incarnation, IIRC.  I haven't looked at
+> this topic for some time, but I wonder if we can share code with it.
 
-Hello,
+That's right. There might be some code sharing opportunity with Ben's
+code that is already in "next":
+https://github.com/git/git/blob/next/convert.c#L660-L677
 
-I have issues with a company SMTP server that returns:
+Would it be useful for you if I send v5 with the changes rebased=20
+onto "next"?
 
-Net::SMTP::SSL=GLOB(0x20d6510)<<< 451 4.3.0 Please try again later,
-rate limited.
-4.3.0 Please try again later, rate limited.
+Thanks,
+Lars
 
-Unfortunately, I didn't find out the exact properties of the limit yet.
-It seems that sending more then 10 patches at once fails. Thus, I have
-to send longer patch sets in 2 rounds:
 
-1. normal git send-email
-2. git send-email --no-thread --in-reply-to="<COVER LETTER ID>" \
-     <REST-OF-PATCHES>...
-
-It is not exactly the same as sending all the patches at once.
-
-The xiaoqiang's solution sounds promising to me. However, probably a
-more general solution would be to "just" enable sending a whole patch
-set in 2 rounds manually. But I didn't find any way how to do it right.
-
-Regards
-Jan
-
-> >
-> > I wonder if something like this would Just Work for this case without
-> > any configuration or command-line options, with the added benefit of
-> > just working for anyone with transitory SMTP issues as well (patch
-> > posted with -w, full version at
-> > https://github.com/avar/git/commit/acb60c4bde50bdcb62b71ed46f49617e2caef84e.patch):  
-> 
-> Yeah, if the issues users of 163.com are having can be resolved with
-> a more general approach like this, that would be very much preferred.
-> 
-> > Now that's very much a WIP and I don't have a server like that to test against.
-> >
-> > Having worked with SMTP a lot in a past life/job, I'd say it's *very*
-> > likely that you're just getting a /^4/ error code from 163.com,
-> > probably 421, which would make this logic even simpler. I.e. we could
-> > just adjust this to back-off for /^4/ instead of trying to handle
-> > arbitrary errors.
-> >
-> > Anyway, I'm not interested in pursuing that WIP patch, and I don't
-> > think perfect should be the enemy of the good here. Your patch works
-> > for you, doesn't really damage anything else, so if you're not
-> > interested in hacking up something like the above I think we should
-> > just take it.
-> >
-> >
-> > But I do think it would be very good to get a reply to you / details
-> > in the commit message about what error you get exactly in this
-> > scenario, see if you get better details with --smtp-debug, and if so
-> > paste that (sans any secret info like user/password you don't want to
-> > share).  
-> 
-> Let's wait for a few days to see if xiaoqiang wants to take your
-> outline of more general approach and polish it.  I do prefer the "no
-> config" solution as xiaoqiang won't be the only 163.com user, but
-> Individual Contributors cannot be forced, so ...
-> 
-> Thanks.
