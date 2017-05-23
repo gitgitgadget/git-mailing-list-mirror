@@ -2,127 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8572A20281
-	for <e@80x24.org>; Tue, 23 May 2017 18:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F4E020284
+	for <e@80x24.org>; Tue, 23 May 2017 18:39:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030768AbdEWS3O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 14:29:14 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35142 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030763AbdEWS3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 14:29:13 -0400
-Received: by mail-pf0-f173.google.com with SMTP id n23so122387732pfb.2
-        for <git@vger.kernel.org>; Tue, 23 May 2017 11:29:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mdiugME4HvMmGCm2N43eMZdZ2jo2L1mpARP5HjnYW/I=;
-        b=L58CWtHf62qArH2VTUKxj7A7s0o0sL+sj+MwZX48vl7xjSDsMwNpj1Wkd0wt7OXH34
-         Zd+HH9/luTOP1iaWo1Rvuk1ogENj/fPTXtg2/Ms/9e8bSJWrvse+tgQ1cjeF14H4Q38i
-         Crh+vnY3GwxM6KEPRiQnhZXLyp0hUaQERomxrrLOP19TnjSduadoMyy6xsZGz2hStXAH
-         J0n9do7Dyc0/q+dNDrxrqtALGLrHuVxeRH517h2ooXUwwLI6SUVxN7DjQDPjQ6DPOX9v
-         2KhbrXYjmGD5zfE8ZYjg9bxKScdg8BbP3Ovc9r6GiLyCgR7CiqBOSGUBF6Gpo6j5TWXD
-         fMTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mdiugME4HvMmGCm2N43eMZdZ2jo2L1mpARP5HjnYW/I=;
-        b=qHlpytgoHsz3xQkXEbonAF0+lKg3T4NtPNg4PD9FdoKkExSntfry2BR0KJbNT6n9bd
-         JGOWaqRwgnRbiSxs//wl3dkI2aVgxCNP327MsWV5K2eFLHpxLNr59cakXS/7LdOciDGK
-         6t6ywA3nPPKvjrqqULc4dbiIggrqVOiBTRSE0udtDXu5uHJ+5jE9+bVtBJk5G0xu9Hor
-         1wTfo3N+XH/8Ix+tB+3s9vlsEibhU2l+0/69CXDXw8AjJaNnZNdcMVziKdnsEn4iB4VL
-         EbT19XTcYdLOkLLSAuYKmR1NRNqOPIOuE75XcKtU9POWLpW43W0l8xAr9kEppPuRyGZr
-         YMDw==
-X-Gm-Message-State: AODbwcB9YgeeRjUIxkqhurz7cDf++Y105+ls3h+34yAPw7r/G1TAyWlk
-        3vQ26+FftC3w96FN7Qv7ynJuI0m6qM+PQY3vNw==
-X-Received: by 10.99.60.81 with SMTP id i17mr33804333pgn.183.1495564152619;
- Tue, 23 May 2017 11:29:12 -0700 (PDT)
+        id S937126AbdEWSjL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 14:39:11 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:37896 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934078AbdEWSjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 14:39:09 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wXPSW3Mv2z5tlC;
+        Tue, 23 May 2017 20:39:07 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 90026432E;
+        Tue, 23 May 2017 20:39:06 +0200 (CEST)
+Subject: Re: [PATCH 0/2] Fix warnings on access of a remote with Windows paths
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>, gitster@pobox.com
+References: <cover.1495261020.git.j6t@kdbg.org>
+ <alpine.DEB.2.21.1.1705221357360.3610@virtualbox>
+ <947b2453-52b6-4940-fd20-ddf350c5df4d@kdbg.org>
+ <alpine.DEB.2.21.1.1705231248150.3610@virtualbox>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <574f9050-e711-e83c-ba93-6be2dc2a44bc@kdbg.org>
+Date:   Tue, 23 May 2017 20:39:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Tue, 23 May 2017 11:29:12 -0700 (PDT)
-In-Reply-To: <xmqqefvgks0g.fsf@gitster.mtv.corp.google.com>
-References: <20170522194806.13568-1-sbeller@google.com> <20170522194806.13568-3-sbeller@google.com>
- <xmqqefvgks0g.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 23 May 2017 11:29:12 -0700
-Message-ID: <CAGZ79kb2iu1D1hRbGNx9aP_ebCyXzrCZQorbop7BG11vSUNzoA@mail.gmail.com>
-Subject: Re: [PATCHv2 2/6] submodule test invocation: only pass additional arguments
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <alpine.DEB.2.21.1.1705231248150.3610@virtualbox>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 22, 2017 at 11:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
->> index e8f70b806f..2672f104cf 100755
->> --- a/t/t2013-checkout-submodule.sh
->> +++ b/t/t2013-checkout-submodule.sh
->> @@ -65,9 +65,9 @@ test_expect_success '"checkout <submodule>" honors submodule.*.ignore from .git/
+Am 23.05.2017 um 12:53 schrieb Johannes Schindelin:
+> Hi Hannes (& Junio, see below),
+> 
+> On Mon, 22 May 2017, Johannes Sixt wrote:
+> 
+>> Am 22.05.2017 um 13:59 schrieb Johannes Schindelin:
+>>> On Sat, 20 May 2017, Johannes Sixt wrote:
+>>>> This small series fixes these warnings on Windows:
+>>>>
+>>>> C:\Temp\gittest>git fetch C:\Temp\gittest
+>>>> warning: unable to access '.git/remotes/C:\Temp\gittest': Invalid argument
+>>>> warning: unable to access '.git/branches/C:\Temp\gittest': Invalid
+>>>> warning: argument
+>>>>   From C:\Temp\gittest
+>>>>    * branch            HEAD       -> FETCH_HEAD
+>>>>
+>>>> The fix is in the second patch; the first patch is a
+>>>> preparation that allows to write the fix in my preferred style.
+>>>
+>>> Thank you!
+>>>
+>>> Maybe you want to accompany these patches with a simple test case that
+>>> uses e.g. ls-remote on $(pwd | tr / \\\\)?
 >>
->>  KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
->>  KNOWN_FAILURE_SUBMODULE_RECURSIVE_NESTED=1
->> -test_submodule_switch_recursing "git checkout --recurse-submodules"
->> +test_submodule_switch_recursing "checkout"
->>
->> -test_submodule_forced_switch_recursing "git checkout -f --recurse-submodules"
->> +test_submodule_forced_switch_recursing "checkout -f"
->>
->>  test_submodule_switch "git checkout"
->
-> Doesn't the above look crazy to you?
+>> Actually, no, I don't want to. It would have to be protected by MINGW, and I
+>> don't want to burden us (and here I mean Windows folks) with a check for a
+>> cosmetic deficiency. (Shell scripts, slow forks, yadda, yadda...)
+> 
+> Actually, yes, I want to.
+> 
+> Yes, it would have to be protected by MINGW, and yes, it would put a
+> burden on us, but also yes: it would put an even higher burden on me to
+> check this manually before releasing Git for Windows, or even worse: this
+> regression would be the kind of bug that triggers many bug reports,
+> addressing which would take a lot more time than writing this test case
+> and executing it as part of our test suite.
 
-Oh well. The commit message doesn't explain why the craziness is
-required here (really!).
+Fair enough. The patch looks good. I'll be able to test no earlier than 
+Monday, though.
 
-    submodule test invocation: only pass additional arguments
+> 
+> So here goes:
+> 
+> -- snipsnap --
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Tue, 23 May 2017 12:42:13 +0200
+> Subject: [PATCH] mingw: verify that paths are not mistaken for remote nicknames
+> 
+> This added test case simply verifies that users will not be bothered
+> with bogus complaints à la
+> 
+> 	warning: unable to access '.git/remotes/D:\repo': Invalid argument
+> 
+> when fetching from a Windows path (in this case, D:\repo).
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   t/t5580-clone-push-unc.sh | 10 ++++++++--
+>   1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t5580-clone-push-unc.sh b/t/t5580-clone-push-unc.sh
+> index b195f71ea98..93ce99ba3c6 100755
+> --- a/t/t5580-clone-push-unc.sh
+> +++ b/t/t5580-clone-push-unc.sh
+> @@ -1,13 +1,19 @@
+>   #!/bin/sh
+>   
+> -test_description='various UNC path tests (Windows-only)'
+> +test_description='various Windows-only path tests'
+>   . ./test-lib.sh
+>   
+>   if ! test_have_prereq MINGW; then
+> -	skip_all='skipping UNC path tests, requires Windows'
+> +	skip_all='skipping Windows-only path tests'
+>   	test_done
+>   fi
+>   
+> +test_expect_success 'remote nick cannot contain backslashes' '
+> +	BACKSLASHED="$(pwd | tr / \\\\)" &&
+> +	git ls-remote "$BACKSLASHED" >out 2>err &&
+> +	! grep "unable to access" err
+> +'
+> +
+>   UNCPATH="$(pwd)"
+>   case "$UNCPATH" in
+>   [A-Z]:*)
+> 
 
-    In a later patch we want to introduce a config option to trigger
-    the submodule recursing by default. As this option should be
-    available and uniform across all commands that deal with submodules
-    we'd want to test for this option in the submodule update library.
-
-    So instead of calling the whole test set again for
-    "git -c submodule.recurse foo" instead of
-    "git foo --recurse-submodules", we'd only want to introduce one
-    basic test that tests if the option is recognized and respected
-    to not overload the test suite.
-
->
-> It is hostile to other people (and those who need to make merges)
-> who have to work with test_submodule_switch_recursing that older one
-> used to take the full command but its definition suddenly changes so
-> that the caller now must omit the leading "git".
-
-I am not aware of other people (or other series in flight by myself) that use
-one of the switches currently.
-
->  Even worse,
-> another helper with a similar-sounding name, test_submodule_switch,
-> still must be called with the leading "git".
-
-Oh, yeah that is a real issue. I will migrate all of them.
-
->
-> The same comment applies to the one we can see below.
-
-An alternative would be to come up with a slightly different name
-to ensure we do not have issues with other series in flight. The function
-name is already pretty long, so encoding even more information in it
-may be not a good idea. But the argument is shorter, so maybe:
-
-- test_submodule_switch_recursing "git reset --hard --recurse-submodules"
-+ test_submodule_switch_recursing_args_only  "reset --hard"
-
-Thanks,
-Stefan
