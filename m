@@ -2,144 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E91AF20281
-	for <e@80x24.org>; Tue, 23 May 2017 13:12:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D1E320281
+	for <e@80x24.org>; Tue, 23 May 2017 13:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760571AbdEWNMb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 09:12:31 -0400
-Received: from m13-26.163.com ([220.181.13.26]:60763 "EHLO m13-26.163.com"
+        id S1763395AbdEWNMh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 09:12:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56687 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752455AbdEWNM3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 09:12:29 -0400
-X-Greylist: delayed 944 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 May 2017 09:12:28 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=W/JdU
-        aBQjRgx+Ke7+aniW8bUAGP8LeJa4AmzoZePTw4=; b=bSitdiLMFS/f/51M+E//1
-        duiT2RYFyd/1FAwvc5IdRWY6q1NurFyaSSr/VwJCfjiPoF9RqYt8m8Zb5JqJt18H
-        ELVJnWoOdF9SXBqxiwwMNYVPs/2wF9VQFB1lGv5TWhsiBwzx1hxzNrzuV0KZWEM3
-        P7zOpIngxUQXjbKcIX/T5w=
-Received: from zxq_yx_007$163.com ( [1.203.183.150] ) by
- ajax-webmail-wmsvr26 (Coremail) ; Tue, 23 May 2017 20:55:51 +0800 (CST)
-X-Originating-IP: [1.203.183.150]
-Date:   Tue, 23 May 2017 20:55:51 +0800 (CST)
-From:   =?UTF-8?B?6LW15bCP5by6?= <zxq_yx_007@163.com>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Cc:     "Git Mailing List" <git@vger.kernel.org>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        "Jan Viktorin" <viktorin@rehivetech.com>, mst@kernel.org,
-        pbonzini@redhat.com, mina86@mina86.com,
-        "Ramkumar Ramachandra" <artagnon@gmail.com>
-Subject: Re:Re: [PATCH v5] send-email: --batch-size to work around some SMTP
- server limit
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20160729(86883.8884) Copyright (c) 2002-2017 www.mailtech.cn 163com
-In-Reply-To: <CACBZZX5GYV50rjg9X602JHqFPaoofH9TwDf_-r_MDu8-rmNV6Q@mail.gmail.com>
-References: <20170521125950.5524-1-zxq_yx_007@163.com>
- <CACBZZX5GYV50rjg9X602JHqFPaoofH9TwDf_-r_MDu8-rmNV6Q@mail.gmail.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        id S1752455AbdEWNMf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 09:12:35 -0400
+Received: (qmail 9053 invoked by uid 109); 23 May 2017 13:12:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 13:12:33 +0000
+Received: (qmail 31900 invoked by uid 111); 23 May 2017 13:13:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 09:13:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 May 2017 09:12:31 -0400
+Date:   Tue, 23 May 2017 09:12:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Tyler Brazier <tylerbrazier@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: `pull --rebase --autostash` fails when fast forward in dirty repo
+Message-ID: <20170523131231.zqjkymypbilv6tyf@sigill.intra.peff.net>
+References: <CAAZatrCaoB7EXVrCvC9RKmO02G5xcp8GPBaJefHfv7zAXVpL3Q@mail.gmail.com>
 MIME-Version: 1.0
-Message-ID: <7993e188.d18d.15c3560bcaf.Coremail.zxq_yx_007@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: GsGowAA3KalXMSRZJBEiAA--.46060W
-X-CM-SenderInfo: 520ts5t0bqili6rwjhhfrp/xtbBEhLgxlZX3AKK1QACsk
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAAZatrCaoB7EXVrCvC9RKmO02G5xcp8GPBaJefHfv7zAXVpL3Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-CgpBdCAyMDE3LTA1LTIyIDE3OjI2OjQxLCAiw4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24iIDxh
-dmFyYWJAZ21haWwuY29tPiB3cm90ZToKPk9uIFN1biwgTWF5IDIxLCAyMDE3IGF0IDI6NTkgUE0s
-IHhpYW9xaWFuZyB6aGFvIDx6eHFfeXhfMDA3QDE2My5jb20+IHdyb3RlOgo+PiBTb21lIGVtYWls
-IHNlcnZlcnMgKGUuZy4gc210cC4xNjMuY29tKSBsaW1pdCB0aGUgbnVtYmVyIGVtYWlscyB0byBi
-ZQo+PiBzZW50IHBlciBzZXNzaW9uKGNvbm5lY3Rpb24pIGFuZCB0aGlzIHdpbGwgbGVhZCB0byBh
-IGZhbGl1cmUgd2hlbgo+PiBzZW5kaW5nIG1hbnkgbWVzc2FnZXMuCj4KPlRoaXMgT0sgdG8gbWUs
-IHRoZSBuaXRzIEkgaGFkIGFyZSBhZGRyZXNzZWQgYnkgSnVuaW8ncyByZXBseS4KPgo+TG9va2lu
-ZyBhdCB0aGlzIHRoZSBOdGggdGltZSBub3cgdGhvdWdoIEkgd29uZGVyIGFib3V0IHRoaXMgYXBw
-cm9hY2gKPmluIGdlbmVyYWwuIEluIGFsbCB5b3VyIEUtTWFpbHMgSSBkb24ndCB0aGluayB5b3Ug
-ZXZlciBzYWlkIC93aGF0Lwo+c29ydCBvZiBlcnJvciB5b3UgaGFkIGZyb20gdGhlIFNNVFAgc2Vy
-dmVyLCB5b3UganVzdCBzYWlkIHlvdSBoYWQgYQo+ZmFpbHVyZSBvciBhbiBlcnJvciwgSSBhc3N1
-bWUgeW91IGhpdCBvbmUgb2YgdGhlIGRpZSdzIGluIHRoZQo+c2VuZF9tZXNzYWdlKCkgZnVuY3Rp
-b24uIENhbiB5b3UgcGFzdGUgdGhlIGFjdHVhbCBlcnJvciB5b3UgZ2V0Cj53aXRob3V0IHRoaXMg
-cGF0Y2g/Cj4KCldoZW4gSSBzZW5kIGEgcGF0Y2ggc2VyaWVzIHdoaWNoIGhhcyAxMyAocGx1cyBj
-b3ZlcikgbWVzc2FnZXMgYXMgYSB0ZXN0LCBJIGdvdCBlcnJvcnMgYXMgZm9sbG93cyBhbmQgc2Vu
-ZC1lbWFpbCBxdWl0IHdoZW4gc2VuZGluZyB0aGUgMTF0aCBtZXNzYWdlOgoKTUk6RE1DIDE2MyBz
-bXRwMTQsRXNDb3dBRDNvNzFUS3lSWlRCbEpIdy0tLjIwNDk2UzEzIDE0OTU1NDI2MTMgaHR0cDov
-L21haWwuMTYzLmNvbS9oZWxwL2hlbHBfc3BhbV8xNi5odG0/aXA9MS4yMDMuMTgzLjE1MCZob3N0
-aWQ9c210cDE0JnRpbWU9MTQ5NTU0MjYxMwoKRm9sbG93IHRoZSBsaW5rIGFib3ZlLCBJIGZpbmQg
-dHdvIGVycm9yIGNvZGU6CgrigKI0NTAgTUk6RE1DIOW9k+WJjei/nuaOpeWPkemAgeeahOmCruS7
-tuaVsOmHj+i2heWHuumZkOWItuOAguivt+WHj+Wwkeavj+asoei/nuaOpeS4reaKlemAkueahOmC
-ruS7tuaVsOmHjwrigKI0NTEgTUk6RE1DIOW9k+WJjei/nuaOpeWPkemAgeeahOmCruS7tuaVsOmH
-j+i2heWHuumZkOWItuOAguivt+aOp+WItuavj+asoei/nuaOpeS4reaKlemAkueahOmCruS7tuaV
-sOmHjwoKVHJhbnNsYXRlICBpbnRvIEVuZ2xpc2g6CuKAojQ1MCBNSTpETUMgVGhlIG51bWJlciBv
-ZiBtZXNzYWdlcyBzZW50IGV4ZWNlZWRzIHRoZSBsaW1pdHMuIFBsZWFzZSByZWR1Y2UgdGhlIG51
-bWJlciBvZiBtZXNzYWdlcyAgdG8gYmUgc2VudCAgcGVyIGNvbm5lY3Rpb24uCuKAojQ1MSBNSTpE
-TUMgVGhlIG51bWJlciBvZiBtZXNzYWdlcyBzZW50IGV4ZWNlZWRzIHRoZSBsaW1pdHMuIFBsZWFz
-ZSBjb250cm9sIHRoZSBudW1iZXIgb2YgbWVzc2FnZXMgdG8gYmUgc2VudCBwZXIgY29ubmVjdGlv
-bi4KCkFsdGhvdWdoIGhhcyBkaWZmZXJlbnQgZXJyb3IgY29kZSwgYnV0ICBzYXlzIHNpbWlsYXIg
-cmVhc29uLiBUZXN0aW5nIHdpdGggLS1zbXRwLWRlYnVnIG9wdGlvbiBwcm9kdWNlIHRoZSBzYW1l
-IGVycm9yLgoKPkkgd29uZGVyIGlmIHNvbWV0aGluZyBsaWtlIHRoaXMgd291bGQgSnVzdCBXb3Jr
-IGZvciB0aGlzIGNhc2Ugd2l0aG91dAo+YW55IGNvbmZpZ3VyYXRpb24gb3IgY29tbWFuZC1saW5l
-IG9wdGlvbnMsIHdpdGggdGhlIGFkZGVkIGJlbmVmaXQgb2YKPmp1c3Qgd29ya2luZyBmb3IgYW55
-b25lIHdpdGggdHJhbnNpdG9yeSBTTVRQIGlzc3VlcyBhcyB3ZWxsIChwYXRjaAo+cG9zdGVkIHdp
-dGggLXcsIGZ1bGwgdmVyc2lvbiBhdAo+aHR0cHM6Ly9naXRodWIuY29tL2F2YXIvZ2l0L2NvbW1p
-dC9hY2I2MGM0YmRlNTBiZGNiNjJiNzFlZDQ2ZjQ5NjE3ZTJjYWVmODRlLnBhdGNoKToKPgo+ZGlm
-ZiAtLWdpdCBhL2dpdC1zZW5kLWVtYWlsLnBlcmwgYi9naXQtc2VuZC1lbWFpbC5wZXJsCj5pbmRl
-eCA4YTFlZTBmMGQ0Li5jMmQ4NTIzNmQxIDEwMDc1NQo+LS0tIGEvZ2l0LXNlbmQtZW1haWwucGVy
-bAo+KysrIGIvZ2l0LXNlbmQtZW1haWwucGVybAo+QEAgLTEzNjMsNiArMTM2MywxMCBAQCBFT0YK
-PiAgICAgICAgICAgICAgICAgICAgICAgIGRpZSBfXygiVGhlIHJlcXVpcmVkIFNNVFAgc2VydmVy
-IGlzIG5vdAo+cHJvcGVybHkgZGVmaW5lZC4iKQo+ICAgICAgICAgICAgICAgIH0KPgo+KyAgICAg
-ICAgICAgICAgIG15ICRudW1fdHJpZXMgPSAwOwo+KyAgICAgICAgICAgICAgIG15ICRtYXhfdHJp
-ZXMgPSA1Owo+KyAgICAgICBzbXRwX2FnYWluOgo+KyAgICAgICAgICAgICAgIGV2YWwgewo+ICAg
-ICAgICAgICAgICAgICAgICAgICAgaWYgKCRzbXRwX2VuY3J5cHRpb24gZXEgJ3NzbCcpIHsKPiAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJHNtdHBfc2VydmVyX3BvcnQgfHw9IDQ2NTsg
-IyBzc210cAo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXF1aXJlIE5ldDo6U01U
-UDo6U1NMOwo+QEAgLTE0MjksNiArMTQzMywyMiBAQCBFT0YKPiAgICAgICAgICAgICAgICAgICAg
-ICAgIH0KPiAgICAgICAgICAgICAgICAgICAgICAgICRzbXRwLT5kYXRhZW5kKCkgb3IgZGllICRz
-bXRwLT5tZXNzYWdlOwo+ICAgICAgICAgICAgICAgICAgICAgICAgJHNtdHAtPmNvZGUgPX4gLzI1
-MHwyMDAvIG9yIGRpZQo+c3ByaW50ZihfXygiRmFpbGVkIHRvIHNlbmQgJXNcbiIpLCAkc3ViamVj
-dCkuJHNtdHAtPm1lc3NhZ2U7Cj4rICAgICAgICAgICAgICAgICAgICAgICAxOwo+KyAgICAgICAg
-ICAgICAgIH0gb3IgZG8gewo+KyAgICAgICAgICAgICAgICAgICAgICAgbXkgJGVycm9yID0gJEAg
-fHwgIlpvbWJpZSBFcnJvciI7Cj4rCj4rICAgICAgICAgICAgICAgICAgICAgICB3YXJuIHNwcmlu
-dGYoX18oIkZhaWxlZCB0byBzZW5kICVzIGR1ZSB0bwo+ZXJyb3I6ICVzIiksICRzdWJqZWN0LCAk
-ZXJyb3IpOwo+KyAgICAgICAgICAgICAgICAgICAgICAgaWYgKCRudW1fdHJpZXMrKyA8ICRtYXhf
-dHJpZXMpIHsKPisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJHNtdHAtPnF1aXQgaWYg
-ZGVmaW5lZCAkc210cDsKPisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJHNtdHAgPSB1
-bmRlZjsKPisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJGF1dGggPSB1bmRlZjsKPisg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbXkgJHNsZWVwID0gJG51bV90cmllcyAqIDM7
-ICMgMywgNiwgOSwgLi4uCj4rICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdhcm4gc3By
-aW50ZihfXygiVGhpcyBpcyByZXRyeSAlZC8lZC4KPlNsZWVwaW5nICVkIGJlZm9yZSB0cnlpbmcg
-YWdhaW4iKSwKPisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICRu
-dW1fdHJpZXMsICRtYXhfdHJpZXMsICRzbGVlcCk7Cj4rICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIHNsZWVwKCRzbGVlcCk7Cj4rICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGdv
-dG8gc210cF9hZ2FpbjsKPisgICAgICAgICAgICAgICAgICAgICAgIH0KPisgICAgICAgICAgICAg
-ICB9Owo+ICAgICAgICB9Cj4gICAgICAgIGlmICgkcXVpZXQpIHsKPiAgICAgICAgICAgICAgICBw
-cmludGYoJGRyeV9ydW4gPyBfXygiRHJ5LVNlbnQgJXNcbiIpIDogX18oIlNlbnQKPiVzXG4iKSwg
-JHN1YmplY3QpOwo+Cj5Ob3cgdGhhdCdzIHZlcnkgbXVjaCBhIFdJUCBhbmQgSSBkb24ndCBoYXZl
-IGEgc2VydmVyIGxpa2UgdGhhdCB0byB0ZXN0IGFnYWluc3QuCj4KPkhhdmluZyB3b3JrZWQgd2l0
-aCBTTVRQIGEgbG90IGluIGEgcGFzdCBsaWZlL2pvYiwgSSdkIHNheSBpdCdzICp2ZXJ5Kgo+bGlr
-ZWx5IHRoYXQgeW91J3JlIGp1c3QgZ2V0dGluZyBhIC9eNC8gZXJyb3IgY29kZSBmcm9tIDE2My5j
-b20sCj5wcm9iYWJseSA0MjEsIHdoaWNoIHdvdWxkIG1ha2UgdGhpcyBsb2dpYyBldmVuIHNpbXBs
-ZXIuIEkuZS4gd2UgY291bGQKPmp1c3QgYWRqdXN0IHRoaXMgdG8gYmFjay1vZmYgZm9yIC9eNC8g
-aW5zdGVhZCBvZiB0cnlpbmcgdG8gaGFuZGxlCj5hcmJpdHJhcnkgZXJyb3JzLgo+Cj5Bbnl3YXks
-IEknbSBub3QgaW50ZXJlc3RlZCBpbiBwdXJzdWluZyB0aGF0IFdJUCBwYXRjaCwgYW5kIEkgZG9u
-J3QKPnRoaW5rIHBlcmZlY3Qgc2hvdWxkIGJlIHRoZSBlbmVteSBvZiB0aGUgZ29vZCBoZXJlLiBZ
-b3VyIHBhdGNoIHdvcmtzCj5mb3IgeW91LCBkb2Vzbid0IHJlYWxseSBkYW1hZ2UgYW55dGhpbmcg
-ZWxzZSwgc28gaWYgeW91J3JlIG5vdAo+aW50ZXJlc3RlZCBpbiBoYWNraW5nIHVwIHNvbWV0aGlu
-ZyBsaWtlIHRoZSBhYm92ZSBJIHRoaW5rIHdlIHNob3VsZAo+anVzdCB0YWtlIGl0Lgo+Cj5CdXQg
-SSBkbyB0aGluayBpdCB3b3VsZCBiZSB2ZXJ5IGdvb2QgdG8gZ2V0IGEgcmVwbHkgdG8geW91IC8g
-ZGV0YWlscwo+aW4gdGhlIGNvbW1pdCBtZXNzYWdlIGFib3V0IHdoYXQgZXJyb3IgeW91IGdldCBl
-eGFjdGx5IGluIHRoaXMKPnNjZW5hcmlvLCBzZWUgaWYgeW91IGdldCBiZXR0ZXIgZGV0YWlscyB3
-aXRoIC0tc210cC1kZWJ1ZywgYW5kIGlmIHNvCj5wYXN0ZSB0aGF0IChzYW5zIGFueSBzZWNyZXQg
-aW5mbyBsaWtlIHVzZXIvcGFzc3dvcmQgeW91IGRvbid0IHdhbnQgdG8KPnNoYXJlKS4KPgo+VGhl
-biBpZiB3ZSdyZSBwb2tpbmcgYXQgdGhpcyBjb2RlIGluIHRoZSBmdXR1cmUgd2UgY2FuIG1heWJl
-IGp1c3QgZml4Cj50aGlzIGluIHNvbWUgbW9yZSBnZW5lcmFsIGZhc2hpb24gd2hpbGUga2VlcGlu
-ZyB0aGlzIHVzZS1jYXNlIGluIG1pbmQuCg==
+[+cc Junio, whose code this is touching]
+
+On Sun, May 21, 2017 at 12:17:06AM -0500, Tyler Brazier wrote:
+
+> This script explains and tests what's going on:
+> https://gist.github.com/tylerbrazier/4478e76fe44bf6657d4d3da6c789531d
+> 
+> pull is failing because it shortcuts to --ff-only then calls
+> run_merge(), which does not know how to autostash. Removing the
+> shortcut fixes the problem:
+
+So I guess the ideal solution would be for us to do the autostash
+ourselves, run the fast-forward merge, and then pop the stash. In theory
+that's just "git stash push" followed by "git stash pop", but looking at
+the implementation in git-rebase.sh, it looks like it's a little more
+complicated than that.
+
+Disabling the optimization sounds like a reasonable interim workaround,
+but...
+
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> index dd1a4a94e..225a59f5f 100644
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -868,11 +868,6 @@ int cmd_pull(int argc, const char **argv, const
+> char *prefix)
+>       head = lookup_commit_reference(orig_head.hash);
+>       commit_list_insert(head, &list);
+>       merge_head = lookup_commit_reference(merge_heads.oid[0].hash);
+> -     if (is_descendant_of(merge_head, list)) {
+> -         /* we can fast-forward this without invoking rebase */
+> -         opt_ff = "--ff-only";
+> -         return run_merge();
+> -     }
+
+...we can probably restrict it to when autostash is in use, like:
+
+  /*
+   * If this is a fast-forward, we can skip calling rebase and
+   * just do the merge ourselves. But we don't know about
+   * autostash, so use the real rebase command when it's in effect.
+   */
+  if (!autostash && is_descendant_of(merge_head, list)) {
+	opt_ff = "--ff-only";
+	return run_merge();
+  }
+
+AFAICT from the commit introducing this code (33b842a1e9), and the
+surrounding discussion:
+
+  http://public-inbox.org/git/OF95D98CB6.47969C1C-ONC1257FE1.0058D980-C1257FE1.0059986D@dakosy.de/T/#u
+
+this is purely an optimization to avoid invoking rebase, so it's OK to
+skip (and interestingly, the autostash question was raised in that
+thread but not resolved).
+
+But I notice on the run_merge() code path that we do still invoke
+git-merge. And rebase has been getting faster as it is moved to C code
+itself. So is this optimization even worth doing anymore?
+
+-Peff
