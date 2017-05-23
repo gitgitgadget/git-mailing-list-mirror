@@ -6,117 +6,142 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92A8920281
-	for <e@80x24.org>; Tue, 23 May 2017 21:05:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2C6C20281
+	for <e@80x24.org>; Tue, 23 May 2017 21:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162380AbdEWVFa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 17:05:30 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:33380 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161919AbdEWVF2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 17:05:28 -0400
-Received: by mail-pf0-f170.google.com with SMTP id e193so125901747pfh.0
-        for <git@vger.kernel.org>; Tue, 23 May 2017 14:05:27 -0700 (PDT)
+        id S1161900AbdEWVSM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 17:18:12 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:34488 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161870AbdEWVSI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 17:18:08 -0400
+Received: by mail-pf0-f175.google.com with SMTP id 9so126007276pfj.1
+        for <git@vger.kernel.org>; Tue, 23 May 2017 14:17:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NEufYwcYrNYCgNRqBRlqKPhNrotJyKzUXW4B3WjfzVw=;
-        b=a2XE2N++dkVNXZwOu+R29oOorXY3/IoAW8WeJ+39+WWsBw6CV59EWsSDEj7WGB9KD9
-         Hr61E3WP91FX2NVD7yFK4/6ZaKeWsFWUW1YIKT4cyqi2mR/XqQBuYNvg78GbpPqR70V5
-         Nk/33abLIzf+dwssn9TfjNMTVDmO1Zxeejoi81Qs043QlBqkD0MsK8aIpL3Py1srdH61
-         Im6zY4U/JEdYiUoxkG/05fYCaNVuCU8MK/P17ll+ReOXdsXKNNOuxPA41/TAt3zssVE6
-         TJERTvIs8b3PW7TXARqivJ0jji8KV02RX9W2TwAyYlxhrJPhaUBfhsUN+JSJYMugzovb
-         nHyA==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=znom3mYgkpLf0Iy0c3B1SKPEXbzy5mKaELMoZc1l3sk=;
+        b=nBcbkYYLhcI15/PXHRw4AQVYKzmZoNqF0XACXdIbbR52YDhBzymt3bXrIdVKJcwtIK
+         xCQb5VRn0Nns0OnX3JH4GbXp+bkXjFWbfM6WYDCnUJb5vETQAyco2bFtd9xtxJgaJkyM
+         aEjc1rTKmaPHIQ/kyM/x2eJopJ60E9Q5iH2TdnMgD2NwDRHoanGBvphpCV9J2zsEAm2a
+         9r+2yCDhAKi46DkaesQIuE9HLp3Tb22EiV1nQd5GCD2zvwidySb+PhDUJXF3lkg2fZEq
+         vXi1loDf+iNLSKD3AAdYo2xwo8yhCySwWA0oHheCKpEz/VMS6PAXyuW3hj5s3umUeJwM
+         8qiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NEufYwcYrNYCgNRqBRlqKPhNrotJyKzUXW4B3WjfzVw=;
-        b=i72H84KzDPTU8zn7hfWZBNNBC9FfPfdp7iShL0SBTZxVyH6IdVAZjVrMqXk30EZSmo
-         +CgKNvalzzGZvwq14HNmM6Enx14IqRECaWCvIjkcRaQI74u/uH2NJ9vAEWInvV1zY6z/
-         c3rt4EwmuMLR1NJc0yMc9dXN7BYXp3ejn8Ia9TWMQECrFBxqvtKiSjWdNuXKYzjLr/5Z
-         E0RGt/Q982DXPRKlICgwJC2jj7Z0QFF6NzfrSVgD9dM5jLqhREd6n2jJeWSt+H/duJN/
-         bM2PmmXSECGXNDlxz2u10mOFnPh9fHHmt/K6/0pHNR0fmqrDaiXg2LOzE49W4oQjaYD9
-         zkSw==
-X-Gm-Message-State: AODbwcBuzf9jqEjvRaBMnQ7uLwi78qXHBv3RzYObkckTSC9ik4qbJEk4
-        sypYplyuXBFnz1j/
-X-Received: by 10.98.12.142 with SMTP id 14mr33292042pfm.66.1495573527268;
-        Tue, 23 May 2017 14:05:27 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=znom3mYgkpLf0Iy0c3B1SKPEXbzy5mKaELMoZc1l3sk=;
+        b=MPZQYRw3emBMDCPFYPgaFTwlaP/rQ8V7Zp1jyiMScd+x3/lgrGiUoBdB4x/W5iZW29
+         9Pfee5TGgnmZfVxCjieUzPtBFwJ+mv5e7LzURVbTOfx/YXRcl71da4AXT4ib6hUL3ScQ
+         Zm9caWoT/yzXtIng0oNn87RgCGeJUa3GHGuCyz2VW9fzRqNWu1sMjwtMxfzmqInRXMbA
+         H0NJTrFLBfo0ZSHDEkwBjKU1FE8a3xwC99nAfCXkF6ydBta1MwfXlMQQ2omJvNMV1bDV
+         BRUcz9UC97RZRjWoiNt9JWZe2CqJ+czpKfVWsXY9pYUowUEEzIdQJ9/KxPiN6YSGOpsY
+         l3Ng==
+X-Gm-Message-State: AODbwcCpkjlZ5xDl0dBolGmMb+LctxFWx1EgvknXgFcmEZnBff+o3NgZ
+        7MuHwyvTHnA4iMXp
+X-Received: by 10.84.198.3 with SMTP id o3mr39198492pld.60.1495574277106;
+        Tue, 23 May 2017 14:17:57 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:6539:887d:745f:6fdf])
-        by smtp.gmail.com with ESMTPSA id z14sm2964069pfg.109.2017.05.23.14.05.25
+        by smtp.gmail.com with ESMTPSA id n23sm3910388pfh.44.2017.05.23.14.17.55
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 23 May 2017 14:05:26 -0700 (PDT)
-Date:   Tue, 23 May 2017 14:05:25 -0700
+        Tue, 23 May 2017 14:17:55 -0700 (PDT)
+Date:   Tue, 23 May 2017 14:17:54 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Prathamesh Chavan <pc44800@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [GSoC][PATCH v4 2/2] submodule: port subcommand foreach from
- shell to C
-Message-ID: <20170523210525.GH115919@google.com>
-References: <20170515183405.GA79147@google.com>
- <20170521125814.26255-1-pc44800@gmail.com>
- <20170521125814.26255-2-pc44800@gmail.com>
- <20170523193627.GG115919@google.com>
- <CAGZ79kYPUO34YUVR_u4sRuYz+Geo=wxwNEfCnyx+NQWQCQTkaQ@mail.gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Jeffrey Walton <noloader@gmail.com>,
+        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH v3 22/30] grep: factor test for \0 in grep patterns into
+ a function
+Message-ID: <20170523211754.GI115919@google.com>
+References: <20170520214233.7183-1-avarab@gmail.com>
+ <20170520214233.7183-23-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kYPUO34YUVR_u4sRuYz+Geo=wxwNEfCnyx+NQWQCQTkaQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170520214233.7183-23-avarab@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/23, Stefan Beller wrote:
-> On Tue, May 23, 2017 at 12:36 PM, Brandon Williams <bmwill@google.com> wrote:
-> >
-> > You can set .git_cmd = 1 instead.
-> >
-> >> +             cpr.dir = list_item->name;
-> >> +             prepare_submodule_repo_env(&cpr.env_array);
-> >> +
-> >> +             argv_array_pushl(&cpr.args, "git", "--super-prefix", displaypath,
-> >
-> > And then you don't need to include "git" here.
+On 05/20, Ævar Arnfjörð Bjarmason wrote:
+> Factor the test for \0 in grep patterns into a function. Since commit
+> 9eceddeec6 ("Use kwset in grep", 2011-08-21) any pattern containing a
+> \0 is considered fixed as regcomp() can't handle it.
 > 
-> even if git_cmd = 1 is set, you'd need a first dummy argument?
-> cf. find_unpushed_submodules, See comment in 9cfa1c260f
-> (serialize collection of refs that contain submodule changes, 2016-11-16)
+> This change makes later changes that make use of either has_null() or
+> is_fixed() (but not both) smaller.
+> 
+> While I'm at it make the comment conform to the style guide, i.e. add
+> an opening "/*\n".
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  grep.c | 20 +++++++++++++-------
+>  1 file changed, 13 insertions(+), 7 deletions(-)
+> 
+> diff --git a/grep.c b/grep.c
+> index bf6c2494fd..79eb681c6e 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -321,6 +321,18 @@ static NORETURN void compile_regexp_failed(const struct grep_pat *p,
+>  	die("%s'%s': %s", where, p->pattern, error);
+>  }
+>  
+> +static int has_null(const char *s, size_t len)
+> +{
+> +	/*
+> +	 * regcomp cannot accept patterns with NULs so when using it
+> +	 * we consider any pattern containing a NUL fixed.
+> +	 */
+> +	if (memchr(s, 0, len))
+> +		return 1;
+> +
+> +	return 0;
+> +}
+> +
+>  #ifdef USE_LIBPCRE
+>  static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
+>  {
+> @@ -394,12 +406,6 @@ static int is_fixed(const char *s, size_t len)
+>  {
+>  	size_t i;
+>  
+> -	/* regcomp cannot accept patterns with NULs so we
+> -	 * consider any pattern containing a NUL fixed.
+> -	 */
+> -	if (memchr(s, 0, len))
+> -		return 1;
+> -
+>  	for (i = 0; i < len; i++) {
+>  		if (is_regex_special(s[i]))
+>  			return 0;
+> @@ -451,7 +457,7 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+>  	 * simple string match using kws.  p->fixed tells us if we
+>  	 * want to use kws.
+>  	 */
+> -	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
+> +	if (opt->fixed || has_null(p->pattern, p->patternlen) || is_fixed(p->pattern, p->patternlen))
 
-Different subsystem, you don't need a dummy first argument.  The
-revision walking code does (for some reason) need a dummy first
-argument.
+small nit: longer than 80 char
 
+>  		p->fixed = !icase || ascii_only;
+>  	else
+>  		p->fixed = 0;
+> -- 
+> 2.13.0.303.g4ebf302169
 > 
-> >> +
-> >> +     info.argc = argc;
-> >> +     info.argv = argv;
-> >> +     info.prefix = prefix;
-> >> +     info.quiet = !!quiet;
-> >> +     info.recursive = !!recursive;
-> >
-> > If these values are boolean why do we need to do the extra '!!'?
-> 
-> Actually that was my advice. As we only have a limited space in a single
-> bit, strange things happen when you were to do:
-> 
->     quiet = 2; /* be extra quiet */
->     info.quiet = quiet;
-> 
-> This is not the case here, but other commands have evolved over time
-> to first take a OPT_BOOL, and then in a later patch an OPT_INT.
-> (some commands take a "-v -v -v")
-> 
-> And by having the double negative we'd have some defensive programming
-> right here. (To prove I am not telling crazy stories, $ git log -S \!\!)
-
-All good, I didn't notice that they were bit fields.
 
 -- 
 Brandon Williams
