@@ -7,47 +7,48 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6113020281
-	for <e@80x24.org>; Tue, 23 May 2017 19:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8275920281
+	for <e@80x24.org>; Tue, 23 May 2017 19:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1764378AbdEWTZS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 15:25:18 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37968 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758009AbdEWTZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 15:25:17 -0400
-Received: by mail-wm0-f41.google.com with SMTP id e127so43504718wmg.1
-        for <git@vger.kernel.org>; Tue, 23 May 2017 12:25:16 -0700 (PDT)
+        id S1764458AbdEWTZ1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 15:25:27 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36679 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1764386AbdEWTZY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 15:25:24 -0400
+Received: by mail-wm0-f68.google.com with SMTP id k15so40570923wmh.3
+        for <git@vger.kernel.org>; Tue, 23 May 2017 12:25:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8vGGl4kiUZto0a9Y0KiA/Zu1UPWLkn2dyBXoaCBm94A=;
-        b=EUKRg91SFullwgsLW0H7C3V8HpTLY40fbsvklBYuBDV5N8IP5+zJY6Bb0EWFjqrokC
-         VxXAXaR6uFwTQrVM76npzdDnphC31OzY0MriMWaTr+p3B8OhGhhwYM8M2wcG7t6WUeBt
-         8th2ncDr7zHma0Sc/oVZc3aQQcK3eM7rUncCPQZz/OUzQSI9/gDvveqsgeU2Q/kfLpS0
-         04URzn53bGrO4kbYbVo9TCYTGwP0f783fdOmBT+9B1v+GB0Yu+VQcy+3I75ewY3MwhRA
-         XKArTKX5UhNTk2Y7b/Y3+kMnwwk96mLlqFUjIqdVHejiINzlLUZC5CI1/YVkfNWsgA9x
-         7hbw==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=r87BKAHucgtjSeg4AObx4z9vIX8Waok1gaLH+PqO2EQ=;
+        b=iKB6MuJn1JKcrTBxkWIwvAW9JYCJEA5bjX8tPs0FOCwb8mz7rSlmeE12IzUCUn/2Pc
+         Qu/LpdvFe8DOSUJx4G6DHr6hm/34oSBmX53auzi3NNXvT4Iav59W+YeMKlTrZ2VRzoAI
+         qDWg0rBcQG1ex8GA9Y7It/gNpFoRg68+j99K9mFBXvmQLr3wEDcc01GEPwpTrH+cuF1Y
+         UvbHQF1acIfcUB11E9VAIpYElIPTEJCFJoi6TKM7oa83bfBh9g03kTEUEGkmbRDOfloA
+         mQvmv8GPKQRUqlbg6LvlxGI8cV6b1Lw3tcSDv4QJDCNIBQmTQcq2xpG5XNeAOr1h3h6L
+         OAhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8vGGl4kiUZto0a9Y0KiA/Zu1UPWLkn2dyBXoaCBm94A=;
-        b=PXvkEaFQ0UfGAoj0a8T6hVZJCSw+lGTC7ipDlVOhyEyL0PcKrpgJjzAkRvYBScEVc5
-         NNPaL4746/2U/EcQa0TFELKDKL4ENFNfIsCHCBri33uTBAnC0+vZjk6x6+bitcn+oFC8
-         CCIe4jLh6kYbWZUlXsZ6FCGMLEjhw5qyyEZbyECgiNgyF623T4dmXO3SblAXadQ3e/qY
-         uNWYKLFVfi9VTYW3WPacvq0iCByJfbbRzr8vcFb7Xw51RBHEUSU8oSNb5reh1veHRijh
-         Z7oAjh8hcF5vjjYz25h72fGrzWYAe3WdWbEmaQ2PXlvDTPAdwbRHthabTmKUHlPBP8LV
-         CiuA==
-X-Gm-Message-State: AODbwcDwDeNwskC2eJm+rAocV1qvWi9CAXq2vxYgGDjdWl04dUrkjCCj
-        4IIQrxSMbO2y3w==
-X-Received: by 10.223.171.238 with SMTP id s101mr16287079wrc.83.1495567515897;
-        Tue, 23 May 2017 12:25:15 -0700 (PDT)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=r87BKAHucgtjSeg4AObx4z9vIX8Waok1gaLH+PqO2EQ=;
+        b=SURrjEFF/ZNAKGurKfH3Jvk33XlNSih+KS6ImBNTkGm88O+xFUOIrlB1fj55gA49H5
+         3c+HGkLjh0jK6GhpoQ89R4XxiI753uLlFvJV70AvcfnO+dak7j7dei+Z31xGoyhjlfpu
+         LNgV3CYi1b/m+rqldWwph+lWIxsZ0RNucRD+mX9j9rVqrB4eeP3nRuHUhIciJfFtOOSa
+         60D1P/8+OP7L1+ixR809DGHpE9RQs+ma6NJCnnX3Bfz7aMG3lGKiIL/3sjrXUBcI86wC
+         7+sKSH7uPOXhpE1iaE7Htu8MJNmMUrgQnIGkp++nPi8BYRicKiYFDRcjL21h28yOdyfM
+         6duw==
+X-Gm-Message-State: AODbwcA7rh00vrHgAZWjVMm/wOvhdO5hd2hk1sWiQSUCHFYTiENy0pdI
+        XJ8rDM82hegc1A==
+X-Received: by 10.28.210.13 with SMTP id j13mr3306759wmg.110.1495567523177;
+        Tue, 23 May 2017 12:25:23 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a24sm2203480wra.17.2017.05.23.12.25.14
+        by smtp.gmail.com with ESMTPSA id a24sm2203480wra.17.2017.05.23.12.25.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 May 2017 12:25:14 -0700 (PDT)
+        Tue, 23 May 2017 12:25:22 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -64,10 +65,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Simon Ruderich <simon@ruderich.org>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/7] PCRE v2, PCRE v1 JIT, log -P & fixes
-Date:   Tue, 23 May 2017 19:24:46 +0000
-Message-Id: <20170523192453.14172-1-avarab@gmail.com>
+Subject: [PATCH v2 3/7] log: add -P as a synonym for --perl-regexp
+Date:   Tue, 23 May 2017 19:24:49 +0000
+Message-Id: <20170523192453.14172-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
+In-Reply-To: <20170523192453.14172-1-avarab@gmail.com>
+References: <20170523192453.14172-1-avarab@gmail.com>
 In-Reply-To: <xmqqshjzqe9o.fsf@gitster.mtv.corp.google.com>
 References: <xmqqshjzqe9o.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
@@ -78,58 +81,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 21, 2017 at 1:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> Easy to review? 29 (I mean 30) patches? Are you kidding me?!
->>
->> As noted in v1 (<20170511091829.5634-1-avarab@gmail.com>;
->> https://public-inbox.org/git/20170511091829.5634-1-avarab@gmail.com/)
->> these are all doc, test, refactoring etc. changes needed by the
->> subsequent "PCRE v2, PCRE v1 JIT, log -P & fixes" series.
->>
->> Since Junio hasn't been picking it I'm no longer sending updates to
->> that patch series & waiting for this one to cook first.
->
-> I actually do not mind a reroll that goes together with this.  The
-> only reason why I skipped the earlier one was because I looked at
-> the original one, and the discussion on the reroll of this 'easy to
-> review' part indicated that it will be rerolled, before I got to
-> look at these upper layer patches.
+Add a short -P option as a synonym for the longer --perl-regexp, for
+consistency with the options the corresponding grep invocations
+accept.
 
-Great, now that the base of this is migrating to next, here's the
-second part of this.
+This was intentionally omitted in commit 727b6fc3ed ("log --grep:
+accept --basic-regexp and --perl-regexp", 2012-10-03) for unspecified
+future use.
 
-For v1 see <20170513234535.12749-1-avarab@gmail.com>
-(https://public-inbox.org/git/20170513234535.12749-1-avarab@gmail.com/).
+Make it consistent with "grep" rather than to keep it open for future
+use, and to avoid the confusion of -P meaning different things for
+grep & log, as is the case with the -G option.
 
-The only changes to the content are better if/else branching around
-conditional macros (but no functional changes) in the PCRE v1 JIT API
-patch in response to a comment by Simon Ruderich.
+As noted in the aforementioned commit the --basic-regexp option can't
+have a corresponding -G argument, as the log command already uses that
+for -G<regex>.
 
-The only other changes are trivial updates to the commit messages to
-account for t/perf changes made in the series this builds on.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/rev-list-options.txt |  1 +
+ revision.c                         |  2 +-
+ t/t4202-log.sh                     | 12 ++++++++++++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-Ævar Arnfjörð Bjarmason (7):
-  grep: don't redundantly compile throwaway patterns under threading
-  grep: skip pthreads overhead when using one thread
-  log: add -P as a synonym for --perl-regexp
-  grep: add support for the PCRE v1 JIT API
-  grep: un-break building with PCRE < 8.32
-  grep: un-break building with PCRE < 8.20
-  grep: add support for PCRE v2
-
- Documentation/rev-list-options.txt |   1 +
- Makefile                           |  30 +++++--
- builtin/grep.c                     |  16 +++-
- configure.ac                       |  77 +++++++++++++---
- grep.c                             | 177 ++++++++++++++++++++++++++++++++++++-
- grep.h                             |  31 +++++++
- revision.c                         |   2 +-
- t/t4202-log.sh                     |  12 +++
- t/test-lib.sh                      |   2 +-
- 9 files changed, 324 insertions(+), 24 deletions(-)
-
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index a46f70c2b1..9c44eae55d 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -91,6 +91,7 @@ endif::git-rev-list[]
+ 	Consider the limiting patterns to be fixed strings (don't interpret
+ 	pattern as a regular expression).
+ 
++-P::
+ --perl-regexp::
+ 	Consider the limiting patterns to be Perl-compatible regular
+ 	expressions.
+diff --git a/revision.c b/revision.c
+index 4883cdd2d0..60329da1bd 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1996,7 +1996,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
+ 	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_FIXED;
+-	} else if (!strcmp(arg, "--perl-regexp")) {
++	} else if (!strcmp(arg, "--perl-regexp") || !strcmp(arg, "-P")) {
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_PCRE;
+ 	} else if (!strcmp(arg, "--all-match")) {
+ 		revs->grep_filter.all_match = 1;
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index dbed3efeee..2b07d1c0c2 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -404,8 +404,20 @@ test_expect_success 'log with various grep.patternType configurations & command-
+ 			--grep="(1|2)" >actual.fixed.short-arg &&
+ 		git log --pretty=tformat:%s -E \
+ 			--grep="\|2" >actual.extended.short-arg &&
++		if test_have_prereq PCRE
++		then
++			git log --pretty=tformat:%s -P \
++				--grep="[\d]\|" >actual.perl.short-arg
++		else
++			test_must_fail git log -P \
++				--grep="[\d]\|"
++		fi &&
+ 		test_cmp expect.fixed actual.fixed.short-arg &&
+ 		test_cmp expect.extended actual.extended.short-arg &&
++		if test_have_prereq PCRE
++		then
++			test_cmp expect.perl actual.perl.short-arg
++		fi &&
+ 
+ 		git log --pretty=tformat:%s --fixed-strings \
+ 			--grep="(1|2)" >actual.fixed.long-arg &&
 -- 
 2.13.0.303.g4ebf302169
 
