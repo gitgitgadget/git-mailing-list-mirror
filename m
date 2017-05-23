@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 630861FF30
-	for <e@80x24.org>; Tue, 23 May 2017 09:18:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3035B1FF30
+	for <e@80x24.org>; Tue, 23 May 2017 09:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935464AbdEWJSn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 05:18:43 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:36618 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1762274AbdEWJSj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 05:18:39 -0400
-Received: by mail-qk0-f193.google.com with SMTP id y128so22154348qka.3
-        for <git@vger.kernel.org>; Tue, 23 May 2017 02:18:38 -0700 (PDT)
+        id S935500AbdEWJSq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 05:18:46 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:34745 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753078AbdEWJSk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 05:18:40 -0400
+Received: by mail-qk0-f196.google.com with SMTP id u75so22099703qka.1
+        for <git@vger.kernel.org>; Tue, 23 May 2017 02:18:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=k8IZu30aN5XyKOp64tpL4By2wtxxwgQeuZDZTW0IEbI=;
-        b=iklQgcspu+KHLTNGRzmHEpvV+6EhSjpCX7nEySZWLeKhJ/geY4lGBLrgxm8svecvEb
-         sXKbSx3ZQr2fqW7u129TtRTx0soosvB7AMm4YTo7Cii4uhA/GcLhF4THmRgOzEJWOx4f
-         rzH43nOW/YPxe4ifGBaTZIeXdlDyMYQmlpFPMBsA79hwbHvOZBkNGe3PVUle6qQ7pAYT
-         HwPrG+mScQWvBbSZkQ7SNDMmPIPQ58w+KF2DKoll2CgN9EMuR/znbYB32wnPZLnaDYIE
-         yEg+O7D6oLMCDjK+VYPQ2C8rhM5gxHmKnS/WQazqWy72oGU5n2BSm/IDTWTM3vXV8m1n
-         O/Sg==
+        bh=YOq8W4k/LmFDsjele7XvWL6haDRCfY5e3vWtVtml0bU=;
+        b=H8FbHy0IFtfa8fX1caA5S7JRf050ebj5KCEm8HcWJwn+BPLEHcDbygme0i1nWcfgzX
+         1riupS/lnquf+DkCOtTPfpzWC1TTS2h+2EezhJLZFabhOeFGELDoAmboKuxzJQ8DSPXV
+         A9B5CZqo93btdVTgB4Ir6qlDlKfoXjMh4FVSmfVYkZUCCMKQhem2xE4rYipaDNsamsY9
+         4bx2RoQWrKNqBZahmGxJhVbk/0duWuJIw8rcRlpBXioFrrCGLAjkfs5CV0uDNx4XFIc3
+         SmSzbfLPWcdd875BD8NQLR41dirfu/5+3FOOoD8joe/zIok3ekSapywY5GgZUxw1iJIx
+         9IxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=k8IZu30aN5XyKOp64tpL4By2wtxxwgQeuZDZTW0IEbI=;
-        b=jNZ7DXstpyY8Emi1zPKfhNq/jszMf7RzYSLW5lxKG7kX2igkAE8YvcoaZIDmRSPsD4
-         7ZmJH8M3d9dvBc64ToxBD7mjXbisktOETwx0TpgRYMyKS8C8zyb25XJu9ZjWERBkEnPE
-         IT/rMn6r+3wLH87fWFf6CrS0oSUKdcpdevpuoC2isS1cMQG+8ecBnudDUfaBr2Xe/z4F
-         G5m8AVAvoRb+4Vzp/LBBMj0tfpptsc6UpvqHDTe0qsEBr90mscts8v+JBSWUVYZsmuZk
-         l6d+RkNcfook1W8X1nHgPCOSB9wzZdMislCtYkSmPW7356DhKW7xLiCwxL4W38X5i14X
-         dpkw==
-X-Gm-Message-State: AODbwcDC7t3+6R8vbkTXdaX+4c3pdhYx6DYZyXM2iWock6jO34dSBiCw
-        8gwAXcnIEW9ASA==
-X-Received: by 10.55.98.8 with SMTP id w8mr18847034qkb.124.1495531118211;
-        Tue, 23 May 2017 02:18:38 -0700 (PDT)
+        bh=YOq8W4k/LmFDsjele7XvWL6haDRCfY5e3vWtVtml0bU=;
+        b=LLT0zPnF/dmFhGJnZ/tS67Kte82Egk6MlZqOpohkoO2KWWApKfFNfCENsSrmQAKu3l
+         7smd9OZy2Q8+G0YHVcGgLTdNgoEbgroF6wlK54voWw/QFtPqt7K6H9kQRYVXcEiAmxxw
+         6G/dKEhhgn4bbHQ74ov3p2mYgxbn+Jzw2XvOeAstbl+wsG2mFAM4LrHlEwPz1A0uaA/v
+         nxpUzHvvHAbUto2f25B2KY2ANioxe8RKXRa+Fm2ReBKUziJWXuhydDYAhzIUA+V5svsy
+         DMgWTTOfyGlOP1DQuHEmo5O8Lky2xOtDwPyTJk/3oejwoTAhb4V5d4Q/K0SlD66KoCok
+         cBCQ==
+X-Gm-Message-State: AODbwcC+/0svBB3Xixtz+1vemRO/xJ9LBczWZ6mGPZCHqOGmNn61aUqH
+        KvXA6/NMU3rNVngJeiw=
+X-Received: by 10.55.21.4 with SMTP id f4mr24963919qkh.67.1495531119473;
+        Tue, 23 May 2017 02:18:39 -0700 (PDT)
 Received: from localhost.localdomain (cpe-98-14-117-223.nyc.res.rr.com. [98.14.117.223])
-        by smtp.gmail.com with ESMTPSA id a45sm83105qta.39.2017.05.23.02.18.37
+        by smtp.gmail.com with ESMTPSA id a45sm83105qta.39.2017.05.23.02.18.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 May 2017 02:18:37 -0700 (PDT)
+        Tue, 23 May 2017 02:18:38 -0700 (PDT)
 From:   Samuel Lijin <sxlijin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Samuel Lijin <sxlijin@gmail.com>
-Subject: [PATCH v5 2/6] t7061: status --ignored should search untracked dirs
-Date:   Tue, 23 May 2017 05:18:25 -0400
-Message-Id: <20170523091829.1746-3-sxlijin@gmail.com>
+Subject: [PATCH v5 3/6] dir: recurse into untracked dirs for ignored files
+Date:   Tue, 23 May 2017 05:18:26 -0400
+Message-Id: <20170523091829.1746-4-sxlijin@gmail.com>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170523091829.1746-1-sxlijin@gmail.com>
 References: <20170523091829.1746-1-sxlijin@gmail.com>
@@ -64,46 +64,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Per eb8c5b87, `status --ignored` by design does not list ignored files
-if they are in a directory which contains only ignored and untracked
-files (which is itself considered to be untracked) without `-uall`. This
-does not make sense for `--ignored`, which claims to "Show ignored files
-as well."
-
-Thus we revisit eb8c5b87 and decide that for such directories, `status
---ignored` will list the directory as untracked *and* list all ignored
-files within said directory even without `-uall`.
+We consider directories containing only untracked and ignored files to
+be themselves untracked, which in the usual case means we don't have to
+search these directories. This is problematic when we want to collect
+ignored files with DIR_SHOW_IGNORED_TOO, though, so we teach
+read_directory_recursive() to recurse into untracked directories to find
+the ignored files they contain when DIR_SHOW_IGNORED_TOO is set. This
+has the side effect of also collecting all untracked files in untracked
+directories as well.
 
 Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
 ---
- t/t7061-wtstatus-ignore.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ dir.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index cdc0747bf..15e7592b6 100755
---- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -9,9 +9,10 @@ cat >expected <<\EOF
- ?? actual
- ?? expected
- ?? untracked/
-+!! untracked/ignored
- EOF
+diff --git a/dir.c b/dir.c
+index f451bfa48..68cf6e47c 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1784,7 +1784,10 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+ 			dir_state = state;
  
--test_expect_success 'status untracked directory with --ignored' '
-+test_expect_failure 'status untracked directory with --ignored' '
- 	echo "ignored" >.gitignore &&
- 	mkdir untracked &&
- 	: >untracked/ignored &&
-@@ -20,7 +21,7 @@ test_expect_success 'status untracked directory with --ignored' '
- 	test_cmp expected actual
- '
- 
--test_expect_success 'same with gitignore starting with BOM' '
-+test_expect_failure 'same with gitignore starting with BOM' '
- 	printf "\357\273\277ignored\n" >.gitignore &&
- 	mkdir -p untracked &&
- 	: >untracked/ignored &&
+ 		/* recurse into subdir if instructed by treat_path */
+-		if (state == path_recurse) {
++		if ((state == path_recurse) ||
++			((state == path_untracked) &&
++			 (dir->flags & DIR_SHOW_IGNORED_TOO) &&
++			 (get_dtype(cdir.de, path.buf, path.len) == DT_DIR))) {
+ 			struct untracked_cache_dir *ud;
+ 			ud = lookup_untracked(dir->untracked, untracked,
+ 					      path.buf + baselen,
 -- 
 2.13.0
 
