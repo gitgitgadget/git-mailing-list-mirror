@@ -2,66 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0B6720281
-	for <e@80x24.org>; Tue, 23 May 2017 12:08:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9EC420281
+	for <e@80x24.org>; Tue, 23 May 2017 12:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935900AbdEWMIC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 08:08:02 -0400
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:34309 "EHLO
-        mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935851AbdEWMIB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 08:08:01 -0400
-Received: by mail-vk0-f48.google.com with SMTP id y190so56735589vkc.1
-        for <git@vger.kernel.org>; Tue, 23 May 2017 05:08:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=QaDUC534vd+c9bd4Jkpy1sNfdT0xatTwgoMtWEWMoYQ=;
-        b=B2DCJYQHr25N4Pin1GXz9QBgvZhNNuCbTx0rGFGV0T3TLVUqwsMY0ysqOWgh75Zcxj
-         XSGHadOKO7nQx/1gZWLDPP00L7HTU+2tGOn2TtyBT1sZRs6Uk+eDiE5aoSM0Q8dwjPzp
-         hp0DcYRzzuTXSaYgAYoZKBsijkBcdIYGdMiaon8LRbKSUoXaogayGoVpAjCU+Ga9kW6w
-         cdlv6JhufCUwi83F4dTCih4J5z7inBdTN5APxkyzQb+RjSnViYACR+wGxeWbO8//Vv7K
-         Fvb2eOyUfXB1nKKoQmVub3dvffNVjHgz+ESxYwpLgkFIhk49lTnKPnLUFJdao2LY9HMq
-         7HJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=QaDUC534vd+c9bd4Jkpy1sNfdT0xatTwgoMtWEWMoYQ=;
-        b=mmDR7k4YfUaxa+IF4TwRfUjBRlmZ6N7zWA1dUBuSEuL6Q7mTG0i3ODmbZMDZ09enE2
-         /tZqup4pCyRsB78PmaipT/VW6LIWpube8VM7COgPhMPISb3ewKX30LD9EOPEb1AU88mh
-         f8Grcfh8j3oh3M/hxMohnGjNyv3IycH/Wpt/qfAemw1txSKOsrQlTR0bpiftYnjMgVpK
-         bGLyLyv4asd4b0fUuj/YeVFj/qcJu9vL/jlj1QCgWjV7eYRFBbiirymLAoIScZ9xauoi
-         unOgDh/NPUIL8GHyg6IdQkswfYPjXFDaQuzToigwFGWlCK8AQ8DRpgdR4BYj1v5w8rUF
-         rBcg==
-X-Gm-Message-State: AODbwcD7Tfz7pki0Ll/9j5yfGLiM/dooR046FQQtvSGZxSLDzuf3Rbf8
-        Yb6oVMN1JuHiAdu3FHKCw+Xz9TGaHIT4
-X-Received: by 10.31.52.17 with SMTP id b17mr1938179vka.150.1495541280403;
- Tue, 23 May 2017 05:08:00 -0700 (PDT)
+        id S936931AbdEWMME (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 08:12:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56655 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S935851AbdEWMMD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 08:12:03 -0400
+Received: (qmail 4080 invoked by uid 109); 23 May 2017 12:12:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 12:12:01 +0000
+Received: (qmail 31268 invoked by uid 111); 23 May 2017 12:12:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 08:12:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 May 2017 08:12:00 -0400
+Date:   Tue, 23 May 2017 08:12:00 -0400
+From:   Jeff King <peff@peff.net>
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     =?utf-8?B?RsOpbGl4?= Saparelli <felix@passcod.name>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [Bug] cloning a repository with a default MASTER branch tries to
+ check out the master branch
+Message-ID: <20170523121159.zxxp43o6es7lzcj3@sigill.intra.peff.net>
+References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
+ <CAJZjrdWXsuKrFzedLvyE-1mvD0RC5XYDkmvV3wRNWXjFAVt4iQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.103.71.74 with HTTP; Tue, 23 May 2017 05:07:40 -0700 (PDT)
-From:   Stefan Monov <logixoul@gmail.com>
-Date:   Tue, 23 May 2017 15:07:40 +0300
-Message-ID: <CAJtFkWu25RkiKm0O__W2My+Adi9pxZ3YtjZW4eb+2U+wpNS3yA@mail.gmail.com>
-Subject: =?UTF-8?Q?How_do_I_see_=E2=80=9Cmerge_events=E2=80=9D_in_history=3F?=
-To:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJZjrdWXsuKrFzedLvyE-1mvD0RC5XYDkmvV3wRNWXjFAVt4iQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I use the GitHub web interface and the git cli. Answers for either or
-both are appreciated.
+On Tue, May 23, 2017 at 04:01:06AM -0400, Samuel Lijin wrote:
 
-Sometimes, when I merge a branch into another branch, I see a commit
-with a message like "Merge branch 'master' into other_branch" in the
-GitHub history. But not always. So how do I see all "merge events",
-inside the history?
+> For some reason the repo on GH does not have a HEAD pointer:
+> 
+> $ git ls-remote https://github.com/passcod/UPPERCASE-NPM.git
+> efc7dbfd6ca155d5d19ce67eb98603896062f35a        refs/heads/MASTER
+> e60ea8e6ec45ec45ff44ac8939cb4105b16477da        refs/pull/1/head
+> f35a73dcb151d336dc3d30c9a2c7423ecdb7bd1c        refs/pull/2/head
+> 0d9b3a1268ff39350e04a7183af0add912b686e6        refs/tags/V1.0.0
+> efc7dbfd6ca155d5d19ce67eb98603896062f35a        refs/tags/V1.0.1
+> 
+> I'm not sure how you managed to do that, since GH rejects attempts to
+> delete the current branch, but I believe if you set the default branch
+> to MASTER it will work correctly.
 
-Even better if I can get a view with vertical lines showing branches
-and merges (like a graph).
+The HEAD branch on the server side is still pointing at
+refs/heads/master. But since that doesn't exist, upload-pack doesn't
+advertise HEAD at all (it has no sha1).
+
+You can recreate this situation with:
+
+  cd /some/repo
+  git init --bare dst.git
+  git push dst.git HEAD:refs/heads/MASTER
+  git ls-remote dst.git
+
+No current-branch deletion required.
+
+Félix should be able to re-point the server-side HEAD to MASTER via
+GitHub's web interface.
+
+GitHub's post-receive hook usually does that automatically if you push a
+branch to a repository with an unborn HEAD. But I think there may be
+corner cases where it gets confused.
+
+-Peff
