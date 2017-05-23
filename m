@@ -2,87 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1099620281
-	for <e@80x24.org>; Tue, 23 May 2017 13:06:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E91AF20281
+	for <e@80x24.org>; Tue, 23 May 2017 13:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760224AbdEWNGn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 09:06:43 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:33462 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760033AbdEWNGc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 09:06:32 -0400
-Received: by mail-pf0-f178.google.com with SMTP id e193so114387105pfh.0
-        for <git@vger.kernel.org>; Tue, 23 May 2017 06:06:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=4//5SKygMA39x+TvRu6/NPImz6wrXwGFdWeERGY1Ppk=;
-        b=Tas4WzhVqZXlLCWQH/0L2ddcE3Wp/MNkXexolYkkILe4CMBjMmfi15TMq1wb5BHsZd
-         yBOiXEwI4zhf9qbzsbbWDpHeD/+GNwjt5NBgjl0jzCJ80s7MfKR8qbr5CQe0VkY9URux
-         HelYr3T4vQZQdt2f2r6Gx/AHm1VlhcOrOW616YZ2yV4Nq6NMZ8kVX71M6fqVtvPnVhJJ
-         MgRW6q2DZ1YF490SoZS/NxN24i/8gx2B+/A8QyB31r4mWwzAsVKcCUCxALP4R8FrwDag
-         lxb62Nbu66CPQzT9UV8YywFm3keSf/XBWYftdqW+H6/jDNyEIwtR6cTHErfb07kiafp8
-         A2Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=4//5SKygMA39x+TvRu6/NPImz6wrXwGFdWeERGY1Ppk=;
-        b=qJR2hFOnr0nMN95mWmT8TnjUgM3Hm19xEJaTICFAfdXEZG7Yx0TQBz40PLcZxCta+i
-         vL23h8Ac82tnXYzNQscb2xZD3pi4CrnE7cDp0uQePoA9FvmTZkypPB0C0qLM7TrW6fvU
-         AtyZ5OC/qy+jvt0BtSZxve2mE7S6R9Tsgxhfu5N2+zp+dHEnjJwjfYWHP8hXAH/AOrPG
-         jZrRX+9rAQply9uDS4bT8KraqsTKyk1OrDrPcA7qmJziy8+zdaKpHtYoQ+jCtBfCj3xO
-         G1NwXBjHrLd/BbQujUdAStEGQDTPdoxEiYJAOHETYgTG/iWwG6Pxcb+lhA6+nSHaSDcs
-         WFIQ==
-X-Gm-Message-State: AODbwcAuItLIpT8Tflw11ESOedB/bdZAjwOJDn+UwbxmpclB1A8ua/Gw
-        x+lOq226wRgofVux/+f9NQ==
-X-Received: by 10.99.42.199 with SMTP id q190mr31531119pgq.13.1495544791316;
-        Tue, 23 May 2017 06:06:31 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:b9c2:d2d1:97c0:9dab])
-        by smtp.gmail.com with ESMTPSA id r64sm1649965pfr.38.2017.05.23.06.06.30
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 23 May 2017 06:06:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Marc Stevens <marc@marc-stevens.nl>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v2 0/2] Update sha1dc from upstream & optionally make it a submodule
-References: <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com>
-        <20170520115429.12289-1-avarab@gmail.com>
-        <xmqqbmqko7c2.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX4d4-EGiUtJQT8cvuMzm0c5DUu5sxUb11kUnJu3ocuSHw@mail.gmail.com>
-Date:   Tue, 23 May 2017 22:06:29 +0900
-In-Reply-To: <CACBZZX4d4-EGiUtJQT8cvuMzm0c5DUu5sxUb11kUnJu3ocuSHw@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 23 May
- 2017 12:55:15
-        +0200")
-Message-ID: <xmqqo9ujk9ii.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1760571AbdEWNMb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 09:12:31 -0400
+Received: from m13-26.163.com ([220.181.13.26]:60763 "EHLO m13-26.163.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752455AbdEWNM3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 09:12:29 -0400
+X-Greylist: delayed 944 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 May 2017 09:12:28 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=W/JdU
+        aBQjRgx+Ke7+aniW8bUAGP8LeJa4AmzoZePTw4=; b=bSitdiLMFS/f/51M+E//1
+        duiT2RYFyd/1FAwvc5IdRWY6q1NurFyaSSr/VwJCfjiPoF9RqYt8m8Zb5JqJt18H
+        ELVJnWoOdF9SXBqxiwwMNYVPs/2wF9VQFB1lGv5TWhsiBwzx1hxzNrzuV0KZWEM3
+        P7zOpIngxUQXjbKcIX/T5w=
+Received: from zxq_yx_007$163.com ( [1.203.183.150] ) by
+ ajax-webmail-wmsvr26 (Coremail) ; Tue, 23 May 2017 20:55:51 +0800 (CST)
+X-Originating-IP: [1.203.183.150]
+Date:   Tue, 23 May 2017 20:55:51 +0800 (CST)
+From:   =?UTF-8?B?6LW15bCP5by6?= <zxq_yx_007@163.com>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Cc:     "Git Mailing List" <git@vger.kernel.org>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Jan Viktorin" <viktorin@rehivetech.com>, mst@kernel.org,
+        pbonzini@redhat.com, mina86@mina86.com,
+        "Ramkumar Ramachandra" <artagnon@gmail.com>
+Subject: Re:Re: [PATCH v5] send-email: --batch-size to work around some SMTP
+ server limit
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20160729(86883.8884) Copyright (c) 2002-2017 www.mailtech.cn 163com
+In-Reply-To: <CACBZZX5GYV50rjg9X602JHqFPaoofH9TwDf_-r_MDu8-rmNV6Q@mail.gmail.com>
+References: <20170521125950.5524-1-zxq_yx_007@163.com>
+ <CACBZZX5GYV50rjg9X602JHqFPaoofH9TwDf_-r_MDu8-rmNV6Q@mail.gmail.com>
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Message-ID: <7993e188.d18d.15c3560bcaf.Coremail.zxq_yx_007@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: GsGowAA3KalXMSRZJBEiAA--.46060W
+X-CM-SenderInfo: 520ts5t0bqili6rwjhhfrp/xtbBEhLgxlZX3AKK1QACsk
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-
-> Seems like it would be useful to have a way to ex-post-facto say "past
-> history should use these URLs". i.e. if all git.git mirrors go down
-> and we have to re-host, then you can just clone git.git and off you
-> go, but the same isn't true of past submodule urls, or is it?
-
-I do not know how heavily you are used to use submodules, but I
-think submodule's URL is copied to the config of the superproject,
-and that URL is what will be used from there on, so "past history or
-future history will use that URL" is already the case, no?
+CgpBdCAyMDE3LTA1LTIyIDE3OjI2OjQxLCAiw4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24iIDxh
+dmFyYWJAZ21haWwuY29tPiB3cm90ZToKPk9uIFN1biwgTWF5IDIxLCAyMDE3IGF0IDI6NTkgUE0s
+IHhpYW9xaWFuZyB6aGFvIDx6eHFfeXhfMDA3QDE2My5jb20+IHdyb3RlOgo+PiBTb21lIGVtYWls
+IHNlcnZlcnMgKGUuZy4gc210cC4xNjMuY29tKSBsaW1pdCB0aGUgbnVtYmVyIGVtYWlscyB0byBi
+ZQo+PiBzZW50IHBlciBzZXNzaW9uKGNvbm5lY3Rpb24pIGFuZCB0aGlzIHdpbGwgbGVhZCB0byBh
+IGZhbGl1cmUgd2hlbgo+PiBzZW5kaW5nIG1hbnkgbWVzc2FnZXMuCj4KPlRoaXMgT0sgdG8gbWUs
+IHRoZSBuaXRzIEkgaGFkIGFyZSBhZGRyZXNzZWQgYnkgSnVuaW8ncyByZXBseS4KPgo+TG9va2lu
+ZyBhdCB0aGlzIHRoZSBOdGggdGltZSBub3cgdGhvdWdoIEkgd29uZGVyIGFib3V0IHRoaXMgYXBw
+cm9hY2gKPmluIGdlbmVyYWwuIEluIGFsbCB5b3VyIEUtTWFpbHMgSSBkb24ndCB0aGluayB5b3Ug
+ZXZlciBzYWlkIC93aGF0Lwo+c29ydCBvZiBlcnJvciB5b3UgaGFkIGZyb20gdGhlIFNNVFAgc2Vy
+dmVyLCB5b3UganVzdCBzYWlkIHlvdSBoYWQgYQo+ZmFpbHVyZSBvciBhbiBlcnJvciwgSSBhc3N1
+bWUgeW91IGhpdCBvbmUgb2YgdGhlIGRpZSdzIGluIHRoZQo+c2VuZF9tZXNzYWdlKCkgZnVuY3Rp
+b24uIENhbiB5b3UgcGFzdGUgdGhlIGFjdHVhbCBlcnJvciB5b3UgZ2V0Cj53aXRob3V0IHRoaXMg
+cGF0Y2g/Cj4KCldoZW4gSSBzZW5kIGEgcGF0Y2ggc2VyaWVzIHdoaWNoIGhhcyAxMyAocGx1cyBj
+b3ZlcikgbWVzc2FnZXMgYXMgYSB0ZXN0LCBJIGdvdCBlcnJvcnMgYXMgZm9sbG93cyBhbmQgc2Vu
+ZC1lbWFpbCBxdWl0IHdoZW4gc2VuZGluZyB0aGUgMTF0aCBtZXNzYWdlOgoKTUk6RE1DIDE2MyBz
+bXRwMTQsRXNDb3dBRDNvNzFUS3lSWlRCbEpIdy0tLjIwNDk2UzEzIDE0OTU1NDI2MTMgaHR0cDov
+L21haWwuMTYzLmNvbS9oZWxwL2hlbHBfc3BhbV8xNi5odG0/aXA9MS4yMDMuMTgzLjE1MCZob3N0
+aWQ9c210cDE0JnRpbWU9MTQ5NTU0MjYxMwoKRm9sbG93IHRoZSBsaW5rIGFib3ZlLCBJIGZpbmQg
+dHdvIGVycm9yIGNvZGU6CgrigKI0NTAgTUk6RE1DIOW9k+WJjei/nuaOpeWPkemAgeeahOmCruS7
+tuaVsOmHj+i2heWHuumZkOWItuOAguivt+WHj+Wwkeavj+asoei/nuaOpeS4reaKlemAkueahOmC
+ruS7tuaVsOmHjwrigKI0NTEgTUk6RE1DIOW9k+WJjei/nuaOpeWPkemAgeeahOmCruS7tuaVsOmH
+j+i2heWHuumZkOWItuOAguivt+aOp+WItuavj+asoei/nuaOpeS4reaKlemAkueahOmCruS7tuaV
+sOmHjwoKVHJhbnNsYXRlICBpbnRvIEVuZ2xpc2g6CuKAojQ1MCBNSTpETUMgVGhlIG51bWJlciBv
+ZiBtZXNzYWdlcyBzZW50IGV4ZWNlZWRzIHRoZSBsaW1pdHMuIFBsZWFzZSByZWR1Y2UgdGhlIG51
+bWJlciBvZiBtZXNzYWdlcyAgdG8gYmUgc2VudCAgcGVyIGNvbm5lY3Rpb24uCuKAojQ1MSBNSTpE
+TUMgVGhlIG51bWJlciBvZiBtZXNzYWdlcyBzZW50IGV4ZWNlZWRzIHRoZSBsaW1pdHMuIFBsZWFz
+ZSBjb250cm9sIHRoZSBudW1iZXIgb2YgbWVzc2FnZXMgdG8gYmUgc2VudCBwZXIgY29ubmVjdGlv
+bi4KCkFsdGhvdWdoIGhhcyBkaWZmZXJlbnQgZXJyb3IgY29kZSwgYnV0ICBzYXlzIHNpbWlsYXIg
+cmVhc29uLiBUZXN0aW5nIHdpdGggLS1zbXRwLWRlYnVnIG9wdGlvbiBwcm9kdWNlIHRoZSBzYW1l
+IGVycm9yLgoKPkkgd29uZGVyIGlmIHNvbWV0aGluZyBsaWtlIHRoaXMgd291bGQgSnVzdCBXb3Jr
+IGZvciB0aGlzIGNhc2Ugd2l0aG91dAo+YW55IGNvbmZpZ3VyYXRpb24gb3IgY29tbWFuZC1saW5l
+IG9wdGlvbnMsIHdpdGggdGhlIGFkZGVkIGJlbmVmaXQgb2YKPmp1c3Qgd29ya2luZyBmb3IgYW55
+b25lIHdpdGggdHJhbnNpdG9yeSBTTVRQIGlzc3VlcyBhcyB3ZWxsIChwYXRjaAo+cG9zdGVkIHdp
+dGggLXcsIGZ1bGwgdmVyc2lvbiBhdAo+aHR0cHM6Ly9naXRodWIuY29tL2F2YXIvZ2l0L2NvbW1p
+dC9hY2I2MGM0YmRlNTBiZGNiNjJiNzFlZDQ2ZjQ5NjE3ZTJjYWVmODRlLnBhdGNoKToKPgo+ZGlm
+ZiAtLWdpdCBhL2dpdC1zZW5kLWVtYWlsLnBlcmwgYi9naXQtc2VuZC1lbWFpbC5wZXJsCj5pbmRl
+eCA4YTFlZTBmMGQ0Li5jMmQ4NTIzNmQxIDEwMDc1NQo+LS0tIGEvZ2l0LXNlbmQtZW1haWwucGVy
+bAo+KysrIGIvZ2l0LXNlbmQtZW1haWwucGVybAo+QEAgLTEzNjMsNiArMTM2MywxMCBAQCBFT0YK
+PiAgICAgICAgICAgICAgICAgICAgICAgIGRpZSBfXygiVGhlIHJlcXVpcmVkIFNNVFAgc2VydmVy
+IGlzIG5vdAo+cHJvcGVybHkgZGVmaW5lZC4iKQo+ICAgICAgICAgICAgICAgIH0KPgo+KyAgICAg
+ICAgICAgICAgIG15ICRudW1fdHJpZXMgPSAwOwo+KyAgICAgICAgICAgICAgIG15ICRtYXhfdHJp
+ZXMgPSA1Owo+KyAgICAgICBzbXRwX2FnYWluOgo+KyAgICAgICAgICAgICAgIGV2YWwgewo+ICAg
+ICAgICAgICAgICAgICAgICAgICAgaWYgKCRzbXRwX2VuY3J5cHRpb24gZXEgJ3NzbCcpIHsKPiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJHNtdHBfc2VydmVyX3BvcnQgfHw9IDQ2NTsg
+IyBzc210cAo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByZXF1aXJlIE5ldDo6U01U
+UDo6U1NMOwo+QEAgLTE0MjksNiArMTQzMywyMiBAQCBFT0YKPiAgICAgICAgICAgICAgICAgICAg
+ICAgIH0KPiAgICAgICAgICAgICAgICAgICAgICAgICRzbXRwLT5kYXRhZW5kKCkgb3IgZGllICRz
+bXRwLT5tZXNzYWdlOwo+ICAgICAgICAgICAgICAgICAgICAgICAgJHNtdHAtPmNvZGUgPX4gLzI1
+MHwyMDAvIG9yIGRpZQo+c3ByaW50ZihfXygiRmFpbGVkIHRvIHNlbmQgJXNcbiIpLCAkc3ViamVj
+dCkuJHNtdHAtPm1lc3NhZ2U7Cj4rICAgICAgICAgICAgICAgICAgICAgICAxOwo+KyAgICAgICAg
+ICAgICAgIH0gb3IgZG8gewo+KyAgICAgICAgICAgICAgICAgICAgICAgbXkgJGVycm9yID0gJEAg
+fHwgIlpvbWJpZSBFcnJvciI7Cj4rCj4rICAgICAgICAgICAgICAgICAgICAgICB3YXJuIHNwcmlu
+dGYoX18oIkZhaWxlZCB0byBzZW5kICVzIGR1ZSB0bwo+ZXJyb3I6ICVzIiksICRzdWJqZWN0LCAk
+ZXJyb3IpOwo+KyAgICAgICAgICAgICAgICAgICAgICAgaWYgKCRudW1fdHJpZXMrKyA8ICRtYXhf
+dHJpZXMpIHsKPisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJHNtdHAtPnF1aXQgaWYg
+ZGVmaW5lZCAkc210cDsKPisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJHNtdHAgPSB1
+bmRlZjsKPisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJGF1dGggPSB1bmRlZjsKPisg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbXkgJHNsZWVwID0gJG51bV90cmllcyAqIDM7
+ICMgMywgNiwgOSwgLi4uCj4rICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdhcm4gc3By
+aW50ZihfXygiVGhpcyBpcyByZXRyeSAlZC8lZC4KPlNsZWVwaW5nICVkIGJlZm9yZSB0cnlpbmcg
+YWdhaW4iKSwKPisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICRu
+dW1fdHJpZXMsICRtYXhfdHJpZXMsICRzbGVlcCk7Cj4rICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIHNsZWVwKCRzbGVlcCk7Cj4rICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGdv
+dG8gc210cF9hZ2FpbjsKPisgICAgICAgICAgICAgICAgICAgICAgIH0KPisgICAgICAgICAgICAg
+ICB9Owo+ICAgICAgICB9Cj4gICAgICAgIGlmICgkcXVpZXQpIHsKPiAgICAgICAgICAgICAgICBw
+cmludGYoJGRyeV9ydW4gPyBfXygiRHJ5LVNlbnQgJXNcbiIpIDogX18oIlNlbnQKPiVzXG4iKSwg
+JHN1YmplY3QpOwo+Cj5Ob3cgdGhhdCdzIHZlcnkgbXVjaCBhIFdJUCBhbmQgSSBkb24ndCBoYXZl
+IGEgc2VydmVyIGxpa2UgdGhhdCB0byB0ZXN0IGFnYWluc3QuCj4KPkhhdmluZyB3b3JrZWQgd2l0
+aCBTTVRQIGEgbG90IGluIGEgcGFzdCBsaWZlL2pvYiwgSSdkIHNheSBpdCdzICp2ZXJ5Kgo+bGlr
+ZWx5IHRoYXQgeW91J3JlIGp1c3QgZ2V0dGluZyBhIC9eNC8gZXJyb3IgY29kZSBmcm9tIDE2My5j
+b20sCj5wcm9iYWJseSA0MjEsIHdoaWNoIHdvdWxkIG1ha2UgdGhpcyBsb2dpYyBldmVuIHNpbXBs
+ZXIuIEkuZS4gd2UgY291bGQKPmp1c3QgYWRqdXN0IHRoaXMgdG8gYmFjay1vZmYgZm9yIC9eNC8g
+aW5zdGVhZCBvZiB0cnlpbmcgdG8gaGFuZGxlCj5hcmJpdHJhcnkgZXJyb3JzLgo+Cj5Bbnl3YXks
+IEknbSBub3QgaW50ZXJlc3RlZCBpbiBwdXJzdWluZyB0aGF0IFdJUCBwYXRjaCwgYW5kIEkgZG9u
+J3QKPnRoaW5rIHBlcmZlY3Qgc2hvdWxkIGJlIHRoZSBlbmVteSBvZiB0aGUgZ29vZCBoZXJlLiBZ
+b3VyIHBhdGNoIHdvcmtzCj5mb3IgeW91LCBkb2Vzbid0IHJlYWxseSBkYW1hZ2UgYW55dGhpbmcg
+ZWxzZSwgc28gaWYgeW91J3JlIG5vdAo+aW50ZXJlc3RlZCBpbiBoYWNraW5nIHVwIHNvbWV0aGlu
+ZyBsaWtlIHRoZSBhYm92ZSBJIHRoaW5rIHdlIHNob3VsZAo+anVzdCB0YWtlIGl0Lgo+Cj5CdXQg
+SSBkbyB0aGluayBpdCB3b3VsZCBiZSB2ZXJ5IGdvb2QgdG8gZ2V0IGEgcmVwbHkgdG8geW91IC8g
+ZGV0YWlscwo+aW4gdGhlIGNvbW1pdCBtZXNzYWdlIGFib3V0IHdoYXQgZXJyb3IgeW91IGdldCBl
+eGFjdGx5IGluIHRoaXMKPnNjZW5hcmlvLCBzZWUgaWYgeW91IGdldCBiZXR0ZXIgZGV0YWlscyB3
+aXRoIC0tc210cC1kZWJ1ZywgYW5kIGlmIHNvCj5wYXN0ZSB0aGF0IChzYW5zIGFueSBzZWNyZXQg
+aW5mbyBsaWtlIHVzZXIvcGFzc3dvcmQgeW91IGRvbid0IHdhbnQgdG8KPnNoYXJlKS4KPgo+VGhl
+biBpZiB3ZSdyZSBwb2tpbmcgYXQgdGhpcyBjb2RlIGluIHRoZSBmdXR1cmUgd2UgY2FuIG1heWJl
+IGp1c3QgZml4Cj50aGlzIGluIHNvbWUgbW9yZSBnZW5lcmFsIGZhc2hpb24gd2hpbGUga2VlcGlu
+ZyB0aGlzIHVzZS1jYXNlIGluIG1pbmQuCg==
