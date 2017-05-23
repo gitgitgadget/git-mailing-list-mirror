@@ -2,96 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF0B01FF30
-	for <e@80x24.org>; Tue, 23 May 2017 09:17:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB29D1FF30
+	for <e@80x24.org>; Tue, 23 May 2017 09:18:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935485AbdEWJRs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 05:17:48 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55422 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935239AbdEWJRj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 05:17:39 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPDaC-1dHTfK2NJg-004Rp1; Tue, 23
- May 2017 11:17:34 +0200
-Date:   Tue, 23 May 2017 11:17:28 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: BUG: The .gitignore rules can't be made to cross submodule
- boundaries
-In-Reply-To: <CACBZZX41yrAtBvkVeL9Q=2_TxcwrDXh55gu3qLN54P_go318OA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1705231103220.3610@virtualbox>
-References: <CACBZZX41yrAtBvkVeL9Q=2_TxcwrDXh55gu3qLN54P_go318OA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-614509214-1495531054=:3610"
-X-Provags-ID: V03:K0:wl0S6yWNdH9aj/Zrjoa/4xq9ty2BJY8kOu2jwZ9eEAWLeiOWLN0
- Nj6r8BUSwfD+fbh9D2xJ9ZmVEzjlEH1OoMUb2cdJLhxmLbIUnHkyDyicBccf49CoYjW0Tkm
- /8M+HkVs672IvoksuejztKEvH0LoMST4rm1EretpMDaQWLlxZSGkmHMJ9eQUkDqQha2/AZe
- GhdtJhB0PDIAKGyfOvu7Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:tIPOcsf7eGo=:qZSyHnSvDXeG7FeeAq4mUP
- XGu2Jrqk0naTEEenzXVh9v530TcnkBCHkyyN+zGTQf7EwpwjKVyBsTq8HczI2pYnB8nsKDrT2
- 0jkaO/8E1ZPLMwL9oEWUqPgRexA4ul5Q0JNkj0QqlYeQVt1yD+WtukbQqnPPym04tk2C8Y7Dg
- TkZc8xdbO8mpMpAnIhpPuiO5MrlTuXjytNTLIeVnMv7DeHsWg8GA0/40orRs2BoAvB/ZLaU6z
- e1Y0CbL2Z6Oq/XQouEp8CDIPLint6rZD2fnXOk42WEzpinlVgb+SNb0UMSegOe33IUGLQZvgb
- XM0R3X9ayLiFA2yDPWZPThQcbG85FfzNHzarXu67aiU099a01VArvFhg5+wh6YbpTbFqJOjOP
- O81FPaZXZdAg5apwZPuEmQUTU8cc+ceLqJLo4qCT17HKjp/GceUNis4im0emZ92T4Rc1dzhxY
- DHvBXZIMZtl6MpJbp9yZPplTCuHKViYviLxP7L/H+p2nQtMQv2PY4xF/o8aKaWJR3I7JBpGyU
- OkXoYqYcxae5p4wX3pZwlWI+OYAPmCCw6MEYSxed/v5f0HwoEjc2inXMvSXzmcOR29BtU+k9G
- kFudsHpmAR76pUhfsZy40RInMtQnogc5XomZ5XAWX2dDviWSy0p23H31Djsn2Kbve/ife9qae
- G0vSA+8AbYguy38hzAH3/m2YjO8GKu/hx0S/ONKjmZgngTpf8x4JP0N3tlKrW6nLyZLaCbqLB
- v3tfjttXN/snSgfQjl33KE4GHlZu0aGGDExqFf3t6MGRQNJD+tTQiq1uPJUD4za0i5MP1xabs
- 9bPWmYx
+        id S1762352AbdEWJSj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 05:18:39 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:34734 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753078AbdEWJSh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 05:18:37 -0400
+Received: by mail-qk0-f196.google.com with SMTP id u75so22099531qka.1
+        for <git@vger.kernel.org>; Tue, 23 May 2017 02:18:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/oJacIioIyh67/M/X602Y9ibXDWAMjakQ0VQIPOAejY=;
+        b=nsBr4gNaNjt0WKJoHBlAnB7M02b+PburawSJuJ/gbTH4IhM5SKZ0q7Uivzx55o+feq
+         CCAcvfsVcXOgE4BKlek9dbxbu2RfYzv1DSmZlWGHqocVfs803aDmKsfVpxnnlS54Eucf
+         zUv2HeMzs81j3nUgse0jk69xumKOpzl0knKbGUY06BmczZHo2XqVb1+VvcTp5nzsfgUY
+         kEvXd7iBFR9maFBn+Um7JLq9rIjvjb4u4SkSmjM9x31Q5VKFf6pl9rLm2DmodL3ZMAz8
+         u1b0cmdDeBDgySpr8ENy0w845xhOi9qTnbGdBg4NrSSCmIAEUUBuiNfwqVCom6p+hc6r
+         SixQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/oJacIioIyh67/M/X602Y9ibXDWAMjakQ0VQIPOAejY=;
+        b=GsVUpB2ywG+LgRYEhrtEClBT4V0dGQ86Gk5XS8sFbHSD3qPJhNgKh9UnkZB0RTrt2H
+         ul0fVcRhB5wLeb9cwtDXwVyoTXU0Nlp1gAxyDvmbkADmARjRuvah2CMbee+VuOhxCwMb
+         3U9YDln5ycgl4P9BePaS6NFZUZFM1mOSm8HVVmQZKt6maTTb7dBMl3z+1ElXSWVna0FS
+         K5KYVwT+2FqJpZnTpPbf7mReBSowDL/yFB/o5sewAKPD/tUGcPeNSq6G4ZJyHr7xbI/w
+         uhdRU+1tbCUeCl3Ud32gMPqtFU4EEDDTdRcVkGzQIgfhyziqAoGBHN7SgwX6bDnEc7s+
+         xaWA==
+X-Gm-Message-State: AODbwcDCLpa/KDC7J4pHqni1iEUXsGd/u/ywLSlhsoGUaN6wS+tYFcQD
+        7olSIHesm3QEwNGftQw=
+X-Received: by 10.55.156.11 with SMTP id f11mr26621038qke.8.1495531116042;
+        Tue, 23 May 2017 02:18:36 -0700 (PDT)
+Received: from localhost.localdomain (cpe-98-14-117-223.nyc.res.rr.com. [98.14.117.223])
+        by smtp.gmail.com with ESMTPSA id a45sm83105qta.39.2017.05.23.02.18.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 May 2017 02:18:35 -0700 (PDT)
+From:   Samuel Lijin <sxlijin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Samuel Lijin <sxlijin@gmail.com>
+Subject: [PATCH v5 0/6] Fix clean -d and status --ignored
+Date:   Tue, 23 May 2017 05:18:23 -0400
+Message-Id: <20170523091829.1746-1-sxlijin@gmail.com>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170518082154.28643-1-sxlijin@gmail.com>
+References: <20170518082154.28643-1-sxlijin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Incorporates latest round of feedback from Junio about how to best structure
+the changes to cmd_clean() for maintainability.
 
---8323329-614509214-1495531054=:3610
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Samuel Lijin (6):
+  t7300: clean -d should skip dirs with ignored files
+  t7061: status --ignored should search untracked dirs
+  dir: recurse into untracked dirs for ignored files
+  dir: hide untracked contents of untracked dirs
+  dir: expose cmp_name() and check_contains()
+  clean: teach clean -d to preserve ignored paths
 
-Hi =C3=86var,
+ Documentation/technical/api-directory-listing.txt |  6 ++++
+ builtin/clean.c                                   | 31 ++++++++++++++++
+ dir.c                                             | 43 ++++++++++++++++++++---
+ dir.h                                             |  6 +++-
+ t/t7061-wtstatus-ignore.sh                        |  1 +
+ t/t7300-clean.sh                                  | 16 +++++++++
+ 6 files changed, 98 insertions(+), 5 deletions(-)
 
-On Mon, 22 May 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+-- 
+2.13.0
 
-> When I was adding the sha1collisiondetection submodule to git.git I
-> noticed that building git would dirty the submodule.
->=20
-> This is because our own Makefile adds .depend/ directories. I hacked
-> around it by just getting the upstream project accept carrying an ignore
-> rule for that around:
-> https://github.com/cr-marcstevens/sha1collisiondetection/commit/e8397b26
->=20
-> A workaround for this is to have the Makefile add such a rule to
-> .git/modules/sha1collisiondetection/info/exclude, but that's less
-> convenient than being able to distribute it as a normal .gitignore rule.
->=20
-> The submodule.<name>.ignore config provides an overly big hammer to
-> solve this, it would be better if we had something like
-> submodule.<name>.gitignore=3D<path>. Then we could have e.g.
-> .gitignore.sha1collisiondetection which would be added to whatever rules
-> the repo's own .gitignore provides.
-
-While I have nothing but the utmost respect for Stefan and Brandon for
-trying to improve submodules, maybe it would be a wiser idea to imitate
-the same strategy with sha1dc as we use with git-gui and gitk, i.e.
-perform a subtree merge instead of adding it as a submodule. It's not like
-570kB will kill us.
-
-Ciao,
-Dscho
---8323329-614509214-1495531054=:3610--
