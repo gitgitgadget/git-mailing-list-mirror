@@ -6,75 +6,77 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9EC420281
-	for <e@80x24.org>; Tue, 23 May 2017 12:12:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 761A020284
+	for <e@80x24.org>; Tue, 23 May 2017 12:20:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936931AbdEWMME (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 08:12:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56655 "EHLO cloud.peff.net"
+        id S936059AbdEWMUx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 08:20:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56661 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935851AbdEWMMD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 08:12:03 -0400
-Received: (qmail 4080 invoked by uid 109); 23 May 2017 12:12:01 -0000
+        id S934248AbdEWMUv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 08:20:51 -0400
+Received: (qmail 4867 invoked by uid 109); 23 May 2017 12:20:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 12:12:01 +0000
-Received: (qmail 31268 invoked by uid 111); 23 May 2017 12:12:37 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 12:20:48 +0000
+Received: (qmail 31315 invoked by uid 111); 23 May 2017 12:21:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 08:12:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 May 2017 08:12:00 -0400
-Date:   Tue, 23 May 2017 08:12:00 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 23 May 2017 08:21:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 May 2017 08:20:46 -0400
+Date:   Tue, 23 May 2017 08:20:46 -0400
 From:   Jeff King <peff@peff.net>
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     =?utf-8?B?RsOpbGl4?= Saparelli <felix@passcod.name>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [Bug] cloning a repository with a default MASTER branch tries to
- check out the master branch
-Message-ID: <20170523121159.zxxp43o6es7lzcj3@sigill.intra.peff.net>
-References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
- <CAJZjrdWXsuKrFzedLvyE-1mvD0RC5XYDkmvV3wRNWXjFAVt4iQ@mail.gmail.com>
+To:     Stefan Monov <logixoul@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Subject: Re: How do I see =?utf-8?B?4oCcbWVyZ2Ug?= =?utf-8?B?ZXZlbnRz4oCd?=
+ in history?
+Message-ID: <20170523122046.xfxudxqof726vzuj@sigill.intra.peff.net>
+References: <CAJtFkWu25RkiKm0O__W2My+Adi9pxZ3YtjZW4eb+2U+wpNS3yA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJZjrdWXsuKrFzedLvyE-1mvD0RC5XYDkmvV3wRNWXjFAVt4iQ@mail.gmail.com>
+In-Reply-To: <CAJtFkWu25RkiKm0O__W2My+Adi9pxZ3YtjZW4eb+2U+wpNS3yA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 23, 2017 at 04:01:06AM -0400, Samuel Lijin wrote:
+On Tue, May 23, 2017 at 03:07:40PM +0300, Stefan Monov wrote:
 
-> For some reason the repo on GH does not have a HEAD pointer:
+> I use the GitHub web interface and the git cli. Answers for either or
+> both are appreciated.
 > 
-> $ git ls-remote https://github.com/passcod/UPPERCASE-NPM.git
-> efc7dbfd6ca155d5d19ce67eb98603896062f35a        refs/heads/MASTER
-> e60ea8e6ec45ec45ff44ac8939cb4105b16477da        refs/pull/1/head
-> f35a73dcb151d336dc3d30c9a2c7423ecdb7bd1c        refs/pull/2/head
-> 0d9b3a1268ff39350e04a7183af0add912b686e6        refs/tags/V1.0.0
-> efc7dbfd6ca155d5d19ce67eb98603896062f35a        refs/tags/V1.0.1
-> 
-> I'm not sure how you managed to do that, since GH rejects attempts to
-> delete the current branch, but I believe if you set the default branch
-> to MASTER it will work correctly.
+> Sometimes, when I merge a branch into another branch, I see a commit
+> with a message like "Merge branch 'master' into other_branch" in the
+> GitHub history. But not always. So how do I see all "merge events",
+> inside the history?
 
-The HEAD branch on the server side is still pointing at
-refs/heads/master. But since that doesn't exist, upload-pack doesn't
-advertise HEAD at all (it has no sha1).
+The simple answer is that to see all merges, you can run "git log
+--merges". But I think that's not quite what you're asking.
 
-You can recreate this situation with:
+Your "but not always" makes me think you are wondering why sometimes
+when you run "git merge" (or "git pull), it results in a merge commit
+and sometimes not, and whether you can see evidence of the times when it
+was "not".
 
-  cd /some/repo
-  git init --bare dst.git
-  git push dst.git HEAD:refs/heads/MASTER
-  git ls-remote dst.git
+When a merge is a "fast forward", i.e., when the thing you are merging
+is strictly a descendent of your current branch, then Git omits the
+merge commit and simply updates your current branch tip to the thing
+you're merging. This can happen if you forked a branch, and then when it
+came time to merge it back, nothing had happened on the original branch.
 
-No current-branch deletion required.
+In a fast forward merge, there's no evidence at all of the merge command
+in the resulting history graph. So there's nothing to find via "git
+log".
 
-Félix should be able to re-point the server-side HEAD to MASTER via
-GitHub's web interface.
+For some workflows you'd rather see a commit for such merges, even if it
+could fast-forward. For example, when merging a topic branch, you may
+want the graph to reflect that the work was done on a side branch, even
+if nothing happened on "master" in the interim. You can use "git merge
+--no-ff" for this.
 
-GitHub's post-receive hook usually does that automatically if you push a
-branch to a repository with an unborn HEAD. But I think there may be
-corner cases where it gets confused.
+> Even better if I can get a view with vertical lines showing branches
+> and merges (like a graph).
+
+Try "git log --oneline --decorate --graph". It will show you the graph
+structure and annotate the tips of any branches.
 
 -Peff
