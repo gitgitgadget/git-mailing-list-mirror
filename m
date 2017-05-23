@@ -7,54 +7,56 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62EFB1FF30
-	for <e@80x24.org>; Tue, 23 May 2017 09:44:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09F601FF30
+	for <e@80x24.org>; Tue, 23 May 2017 09:55:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936827AbdEWJoL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 05:44:11 -0400
-Received: from mail-io0-f174.google.com ([209.85.223.174]:32865 "EHLO
-        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757409AbdEWJoJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 05:44:09 -0400
-Received: by mail-io0-f174.google.com with SMTP id p24so93718513ioi.0
-        for <git@vger.kernel.org>; Tue, 23 May 2017 02:44:08 -0700 (PDT)
+        id S965612AbdEWJza (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 05:55:30 -0400
+Received: from mail-it0-f48.google.com ([209.85.214.48]:35685 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933487AbdEWJz3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 05:55:29 -0400
+Received: by mail-it0-f48.google.com with SMTP id c15so16089242ith.0
+        for <git@vger.kernel.org>; Tue, 23 May 2017 02:55:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=0vakAMwHsv8IW/AjnC0ckti1QmDopConJqTxkgSfWDU=;
-        b=MJmtE49/TlNlIDfiuurTlmY5daKM6y5eOqTsMktANotczTQXFeTW4tdh9c0KulKPzn
-         xKgt8ug61J2Rp5vfbpm3UCTjcrb+oG8zvFL05T5Cir+ZK8ZvhoyqHcSQGOuAHSdjnT08
-         pKgYS7jcG4fjpheUA+o0r1lZu2QXWJprjqtlL9B2qXAUmLBRtqI3TgfZE6RqWQhAElBV
-         CZ7+VeOGwqnAew9zY+ecobQF1T/r4fSZyYcPKn381Mg9YAk64kM3RsS/XmyebHjq/tj3
-         D3w17kG0CQ+TRSPgRlOJj+xlZdIIHz0mlN/DbcYJY02vI8YMjU0jFxhnZWS+QMcPxVrt
-         aFlg==
+        bh=ybTy/20r6zyFYcpuiw+0xGrMuRixMWfEQH6nJmjp+zg=;
+        b=BluAeob4kF4bFoil3HlnAGVdHAgNnClcCYKpUO0hWXSn5Athy9uVNKboEy8xFQ1+ev
+         BQ46s9YkTawB9ltorTs4S5dqzHtxB3A9f6CaCmC9cX5rZJHJIeWEtP98/MnmB8T2EFTV
+         sd9hF7tKcOpaVumPI0OKNkuFC9qFCXEXOIHM0icmaOqOqCPNf3mA7XvIBwQF2pwobRoC
+         QtnsHEiFlBcgaHkJgKYYomB+EBCIHeMHmHuvwcf2g8GvlKfYEkl9yagQaJ5kktRIkjvv
+         76c3bUb9JUzsA7fdNlljkRwLWurTZeodM2IwEYmPesB00nL9hevFbIV7sVXo3TsCIT64
+         ys7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0vakAMwHsv8IW/AjnC0ckti1QmDopConJqTxkgSfWDU=;
-        b=pHPzEZ0goo+8fsNjz1yOC/RJ1DE81SsQ5too2ANTMdhvrJX+4mT/78V5TOCDX3yifS
-         49KqBRL36d7jZa2auFdVtFb0vD5S3Ix2cM89F/C6cug/3xl6SkW0j5fq8Es6MWUy+9kh
-         JgfU4/ZszzFHXfEMTy8HVwCul7SE+oSSygeMkaPFUVhwBPnqD4sZqbGsM/3jwIzuNGOg
-         Qu9qMaIITNiFGQYhTK3E8m98NIb3E8INrtz8U5rDdHb8jBc/eIUC5Lt+8j4jbdcZeUHw
-         fLpILpPQ0E8Kw7RBHR8nYnE2NTjXd0LcsKihNcltpZ2lHgWu/8SHdHBlrneb+wqq74Xo
-         pnHw==
-X-Gm-Message-State: AODbwcAJxAVRHuWPAb55s62egd2JCch/JHYGPbJSMvg/kGwVIuXgzroM
-        gQmbXPuHDDmZXsrthAu0YIK/iolF0w==
-X-Received: by 10.107.201.131 with SMTP id z125mr24054940iof.160.1495532648216;
- Tue, 23 May 2017 02:44:08 -0700 (PDT)
+        bh=ybTy/20r6zyFYcpuiw+0xGrMuRixMWfEQH6nJmjp+zg=;
+        b=qFpDh56KEK8z9avwAC3IkaWOo31w1k6SaqyHoLlXqJ1yp9ul8iNmDH8HaIYZ/1SL/Q
+         hVN+v9XDojZS71qtsdXn+/rfHl0sObgVfywLyl34ygM/sthZ9W0kSCLueibvDxl9KKwp
+         +9Gl8VaHSE9kb8ne8GpJEAOgNXhBFm2goxMxIKbRYx4cs061ohdBJk0d0HwYo/7t8szQ
+         0bAOgbKDfVHN2DA33EQ2i7lJjPx3MuKnrmYHllaWj8jEbwrYBo0uSNaTjjBaBiWqT5mO
+         k5ImTLx0kZ9K2e22uySZqfF0hDmy6/xdTMkH5r0hXDJ1eeY6fk36ZuMnMEkSCmHeVuZA
+         KgIA==
+X-Gm-Message-State: AODbwcDGqrapklDzu4JSjkCiPBF2iw4BHA7llTVxgi0nqeIx9OQqELGY
+        3GHD4I4KkLurC3snv3owyr9SKdsZTA==
+X-Received: by 10.36.89.207 with SMTP id p198mr1742992itb.71.1495533328416;
+ Tue, 23 May 2017 02:55:28 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Tue, 23 May 2017 02:43:47 -0700 (PDT)
-In-Reply-To: <20170515122331.17348-1-avarab@gmail.com>
-References: <20170515122331.17348-1-avarab@gmail.com>
+Received: by 10.107.8.220 with HTTP; Tue, 23 May 2017 02:55:07 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.21.1.1705231103220.3610@virtualbox>
+References: <CACBZZX41yrAtBvkVeL9Q=2_TxcwrDXh55gu3qLN54P_go318OA@mail.gmail.com>
+ <alpine.DEB.2.21.1.1705231103220.3610@virtualbox>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 23 May 2017 11:43:47 +0200
-Message-ID: <CACBZZX5k8jiz2uz4qygdr2-gRphmeQo5fPT1b=mNxcp2REXccA@mail.gmail.com>
-Subject: Re: [PATCH] tag: duplicate mention of --contains should mention --no-contains
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 23 May 2017 11:55:07 +0200
+Message-ID: <CACBZZX5EQhoEBvj2e6ogXU5Y=EfwSPCx+jFvTJ1P2KbYNpADyw@mail.gmail.com>
+Subject: Re: BUG: The .gitignore rules can't be made to cross submodule boundaries
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -62,33 +64,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 2:23 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Fix a duplicate mention of --contains in the SYNOPSIS to mention
-> --no-contains.
+On Tue, May 23, 2017 at 11:17 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi =C3=86var,
 >
-> This fixes an error introduced in my commit ac3f5a3468 ("ref-filter:
-> add --no-contains option to tag/branch/for-each-ref", 2017-03-24).
+> On Mon, 22 May 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  Documentation/git-tag.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>> When I was adding the sha1collisiondetection submodule to git.git I
+>> noticed that building git would dirty the submodule.
+>>
+>> This is because our own Makefile adds .depend/ directories. I hacked
+>> around it by just getting the upstream project accept carrying an ignore
+>> rule for that around:
+>> https://github.com/cr-marcstevens/sha1collisiondetection/commit/e8397b26
+>>
+>> A workaround for this is to have the Makefile add such a rule to
+>> .git/modules/sha1collisiondetection/info/exclude, but that's less
+>> convenient than being able to distribute it as a normal .gitignore rule.
+>>
+>> The submodule.<name>.ignore config provides an overly big hammer to
+>> solve this, it would be better if we had something like
+>> submodule.<name>.gitignore=3D<path>. Then we could have e.g.
+>> .gitignore.sha1collisiondetection which would be added to whatever rules
+>> the repo's own .gitignore provides.
 >
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index f8a0b787f4..1eb15afa1c 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -12,7 +12,7 @@ SYNOPSIS
->  'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>]
->         <tagname> [<commit> | <object>]
->  'git tag' -d <tagname>...
-> -'git tag' [-n[<num>]] -l [--contains <commit>] [--contains <commit>]
-> +'git tag' [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
->         [--points-at <object>] [--column[=3D<options>] | --no-column]
->         [--create-reflog] [--sort=3D<key>] [--format=3D<format>]
->         [--[no-]merged [<commit>]] [<pattern>...]
-> --
+> While I have nothing but the utmost respect for Stefan and Brandon for
+> trying to improve submodules, maybe it would be a wiser idea to imitate
+> the same strategy with sha1dc as we use with git-gui and gitk, i.e.
+> perform a subtree merge instead of adding it as a submodule. It's not lik=
+e
+> 570kB will kill us.
 
-Junio: I think this one's fallen through the cracks, could you please
-pick this up? It's also something that should be in 2.13.1.
+The submodule/.gitignore bug/feature-request being reported here isn't
+something that impacts the ab/sha1dc series in practice.
+
+It was something I noticed while working with an earlier commit in
+that repo, but that's a commit that'll never be pinned by the
+git.git:sha1collisiondetection submodule.
