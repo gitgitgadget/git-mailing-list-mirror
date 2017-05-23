@@ -2,131 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 049AC20281
-	for <e@80x24.org>; Tue, 23 May 2017 19:09:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0A9620281
+	for <e@80x24.org>; Tue, 23 May 2017 19:09:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933426AbdEWTI5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 15:08:57 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33369 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757621AbdEWTI4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 15:08:56 -0400
-Received: by mail-pf0-f171.google.com with SMTP id e193so123418416pfh.0
-        for <git@vger.kernel.org>; Tue, 23 May 2017 12:08:56 -0700 (PDT)
+        id S1760530AbdEWTJb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 15:09:31 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:33628 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757621AbdEWTJb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 15:09:31 -0400
+Received: by mail-pf0-f174.google.com with SMTP id e193so123430627pfh.0
+        for <git@vger.kernel.org>; Tue, 23 May 2017 12:09:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=f4hhn3C6xUBlD1fRxusGmIdyLyjasRID9++fV9GgAVE=;
-        b=FTfvLA2C/OMAZ+r1AeIGp8UJIFPvMSdwTuB00JaZNsLdBzb1FWZviGewhryqlATb7B
-         JXBdY07iWzDh+Z1U9QMnH/wUtw+BUaryGIAMn6NLkmYaAdrMt7TSjIlsoyF7LCt8+UN5
-         /6+rj+eWN2SvqtJHvWUA026+ERbvKct2t1JmQodQ23MKaW7iY8mIlNYBNjX3EjKQTCwK
-         2SZp4tRXx3NrQ0SI3sp7QPc3ynhFZKS5HpjOaPessGVbgsO3XSwQtPpITw4goC6I3iez
-         PN2HNT7y6OThOfia4pJpPGiEuSXAMjKtR2vh0BFPJ8Z/7dSiZS4sngFgW4PIdS0k+rq8
-         twLQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=TkIqtYyE8BcckyK28s1+nWSppHh8EwSTqrxuy8ZL3vs=;
+        b=CS0Byrs56pVWxUMv2ZTwJAtM2o86WrlT6WQWyMbLp3RArfmbxchLvvFG1g0LxTXMa2
+         nDwMkmgOxIF4bvJUrSdRQBL/H7O6TgCGQGO9sDrqtkfUeTO3Wgdtwnp52o6br8oSSctg
+         dgkVtkXHILZBcFxKhqn12YG8fI0gYeVhhk+FgNqI+qnGrZu81JLTOrZHIbTOItr/S1rS
+         TpbsNseIqWYwmnsdVtf5VZxlE2w8A91HjxReXo8kDz4Y1LSMbKOwNJHX1SNC25Kai4/s
+         Lj/DUF49YlZ4db39L5U+xLNVZYHOeBJILpaaKMGMAt1mB7nNZ50zhTi7kTJu3ohQTf2K
+         ywiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=f4hhn3C6xUBlD1fRxusGmIdyLyjasRID9++fV9GgAVE=;
-        b=uK+5ac9y7ZS6Q1tdMzzb2hms/7wRHnCXhqFnhpW/lDgw0h8Xik7p/Y/2TRjuBG0ZEu
-         tCqGnXjQdZh6CuhCMTft+1YWEJWuqahST7N7Ov4SJcI/M3nWZradMTXqdcsCfqxfyuHT
-         zsgJLH2dJ6l4fWHs1aMy0IQTAmSK0GuLz5yIu/ZevjT0AR3dIHl8RdiUgMSemjhk89hu
-         RZ9rg2u44n0h0M/rVh0RP535c7TlcW6VzqFM+cRj548Kz8yt1Dg9ZHeLjzhxxRqDq+QR
-         pML2kIRddTk3Qq5ec4ufemj7Nq4iD+zsou2L68BOatToBrdbH0aAY/bb+eQ1ak+CZW4O
-         WThw==
-X-Gm-Message-State: AODbwcBAVlG5MydqIVLvVW4GFjFR6AzxQg7dPaj7vyyVHKyth78I/2rn
-        dQnPLS0MZ4QKLcVqG2V6RMJoZrKb6ZEX
-X-Received: by 10.99.60.81 with SMTP id i17mr33986691pgn.183.1495566535723;
- Tue, 23 May 2017 12:08:55 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=TkIqtYyE8BcckyK28s1+nWSppHh8EwSTqrxuy8ZL3vs=;
+        b=QhKaJ703KUxEFvDn4xvx9yICVmBUvcRA9CMseterd48rY+8OA85GoXwTK3pn2zUD2W
+         9l4szWMNbCVtvIG1iDSXo4Vo7aYO1Ta+O58aILUhi3V2h5qygZTD1mBgUzZ5aTBqHIm6
+         VjSJiJqlJyCkPlNZN1i+jATX2+twisHtFXIZRdGvdZiCL8I7heZAgF+IIa4cB+Z+8GKv
+         MG05AB75c0mVZJEpF3uriwN4ZNn2rX3rFxJsjssgA7ARpqwz36RD8c+/LUQKKZfiDVs/
+         XbMF4bNoxmNF12ZlU0OcZOGamNDt+mO8/cigYegwl6uDpsdpHwSS8y3cjHpZu9exZUL7
+         LfkA==
+X-Gm-Message-State: AODbwcAiTpT1HvT2LgWq+8IqSQIMMg0v2EHHULbkIqkvPtVZFvyj/XCZ
+        O0HxYWjvo4TtmJjd
+X-Received: by 10.99.167.75 with SMTP id w11mr34191688pgo.148.1495566570177;
+        Tue, 23 May 2017 12:09:30 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:6539:887d:745f:6fdf])
+        by smtp.gmail.com with ESMTPSA id m80sm3144088pfg.107.2017.05.23.12.09.28
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 23 May 2017 12:09:29 -0700 (PDT)
+Date:   Tue, 23 May 2017 12:09:28 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Prathamesh Chavan <pc44800@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [GSoC][PATCH v4 2/2] submodule: port subcommand foreach from
+ shell to C
+Message-ID: <20170523190928.GF115919@google.com>
+References: <20170515183405.GA79147@google.com>
+ <20170521125814.26255-1-pc44800@gmail.com>
+ <20170521125814.26255-2-pc44800@gmail.com>
+ <CAGZ79kbmQ5_Vb8BSoJkA74-+e0FoKwz=iJkSk4sdSnc46s+qUw@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Tue, 23 May 2017 12:08:55 -0700 (PDT)
-In-Reply-To: <xmqqwp98j8q2.fsf@gitster.mtv.corp.google.com>
-References: <xmqqwp98j8q2.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 23 May 2017 12:08:55 -0700
-Message-ID: <CAGZ79kZMJP7K5MU0UujuEatZ2MOrSnFpfD707aSGa64mKyCZbw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (May 2017, #07; Tue, 23)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbmQ5_Vb8BSoJkA74-+e0FoKwz=iJkSk4sdSnc46s+qUw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 23, 2017 at 1:08 AM, Junio C Hamano <gitster@pobox.com> wrote:
+On 05/22, Stefan Beller wrote:
+> On Sun, May 21, 2017 at 5:58 AM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+> 
+> > I have also made some changes in git-submodule.sh for correcting
+> > the $path variable. And hence made the corresponding changes in
+> > the new test introduced in t7407-submodule-foreach as well.
+> > I have push this work at:
+> > https://github.com/pratham-pc/git/commits/foreach-bug-fixed
+> 
+> This one seems to pass the test suite by having the bug fixed.
+> (The patches posted here seems to be
+> https://github.com/pratham-pc/git/commits/foreach
+> which does not pass tests? These two series seem to only differ in
+> the bug fix commit, which I think is a good idea to include, as then we
+> have a bug fixed and the tests pass.)
+> 
+> > +static void for_each_submodule_list(const struct module_list list, submodule_list_func_t fn, void *cb_data)
+> ..
+> > +       return;
+> 
+> no need for an explicit return in a void function.
+> 
+> > +struct cb_foreach {
+> > +       int argc;
+> > +       const char **argv;
+> > +       const char *prefix;
+> > +       unsigned int quiet: 1;
+> > +       unsigned int recursive: 1;
+> > +};
+> > +#define CB_FOREACH_INIT { 0, NULL, 0, 0 }
+> 
+> This static initializer doesn't quite match the struct,
+> (I would expect two NULLs as we have two const char pointers).
 
-> * sb/submodule-blanket-recursive (2017-05-23) 6 commits
->  . builtin/push.c: respect 'submodule.recurse' option
->  . builtin/grep.c: respect 'submodule.recurse' option
->  . builtin/fetch.c: respect 'submodule.recurse' option
->  . Introduce submodule.recurse option for worktree manipulators
->  . submodule test invocation: only pass additional arguments
->  . submodule.c: add has_submodules to check if we have any submodules
->  (this branch uses sb/reset-recurse-submodules.)
->
->  A new configuration variable "submodule.recurse" can be set to true
->  to force various commands run at the top-level superproject to
->  behave as if they were invoked with the "--recurse-submodules"
->  option.
->
->  Seems to break t7814 when merged to 'pu'.
+If we ever move to a new version of C, these initializers would be much
+more readable as we could assign values to the fields themselves.  But
+that is unrelated to this change.
 
-I will investigate! (It passes on its own, so I guess it is some
-interference with a recent grep series)
+> 
+> > +
+> > +       info.argc = argc;
+> > +       info.argv = argv;
+> > +       info.prefix = prefix;
+> > +       info.quiet = !!quiet;
+> > +       info.recursive = !!recursive;
+> 
+> as you assign all fields of the struct yourself, you could also omit the
+> static initialization via _INIT above.
+> 
+> 
+> Apart from these two minor nits the code looks good to me.
+> However we'd really want to have the bug fix patch as well.
+> (At the time of submission of a patch we should not be aware
+> of any tests failing, which we are without said bug fix patch)
+> 
+> Thanks,
+> Stefan
 
-
-> * sb/diff-color-move (2017-05-23) 17 commits
->  . diff.c: color moved lines differently
->  . diff: buffer all output if asked to
->  . diff.c: emit_line includes whitespace highlighting
->  . diff.c: convert diff_summary to use emit_line_*
->  . diff.c: convert diff_flush to use emit_line_*
->  . diff.c: convert word diffing to use emit_line_*
->  . diff.c: convert show_stats to use emit_line_*
->  . diff.c: convert emit_binary_diff_body to use emit_line_*
->  . submodule.c: convert show_submodule_summary to use emit_line_fmt
->  . diff.c: convert emit_rewrite_lines to use emit_line_*
->  . diff.c: convert emit_rewrite_diff to use emit_line_*
->  . diff.c: convert builtin_diff to use emit_line_*
->  . diff.c: convert fn_out_consume to use emit_line
->  . diff: introduce more flexible emit function
->  . diff.c: factor out diff_flush_patch_all_file_pairs
->  . diff: move line ending check into emit_hunk_header
->  . diff: readability fix
->
->  "git diff" has been taught to optionally paint new lines that are
->  the same as deleted lines elsewhere differently from genuinely new
->  lines.
->
->  Seems to break t4060 when merged to 'next'.
-
-It breaks own its own, but when merged to next it breaks, too. :(
-
-The reason for this is the submodule color thing that I added
-last minute as manual inspection of submodule diffs seemed
-odd to me.
-
-It turns out submodule diffs were never colored appropriately,
-so I'll resend with this interdiff (that let's test pass again),
-once the discussion settles:
-
-diff --git a/submodule.c b/submodule.c
-index 428c996c97..19c63197fb 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -550,8 +550,6 @@ void show_submodule_inline_diff(struct
-diff_options *o, const char *path,
-
-        /* TODO: other options may need to be passed here. */
-        argv_array_push(&cp.args, "diff");
--       if (o->use_color)
--               argv_array_push(&cp.args, "--color=always");
-        argv_array_pushf(&cp.args, "--line-prefix=%s", diff_line_prefix(o));
-        if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
-                argv_array_pushf(&cp.args, "--src-prefix=%s%s/",
+-- 
+Brandon Williams
