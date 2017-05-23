@@ -2,153 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 149A820281
-	for <e@80x24.org>; Tue, 23 May 2017 20:48:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73E5320281
+	for <e@80x24.org>; Tue, 23 May 2017 20:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161387AbdEWUr7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 16:47:59 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:35696 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161321AbdEWUrz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 16:47:55 -0400
-Received: from [10.0.2.15] ([143.159.212.80])
-        by avasout07 with smtp
-        id Pwns1v0051keHif01wnt1z; Tue, 23 May 2017 21:47:53 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
- a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
- a=IkcTkHD0fZMA:10 a=cCdah9ibjOc_Lkdyp7wA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] usage: add NORETURN to BUG() function definitions
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <4a5619af-d695-ab6c-e603-368e38827455@ramsayjones.plus.com>
- <xmqqpof1psy7.fsf@gitster.mtv.corp.google.com>
- <11cae8d7-46a6-9ab5-5bee-a7e6897c0a88@ramsayjones.plus.com>
- <xmqqh90dpqja.fsf@gitster.mtv.corp.google.com>
- <xmqqd1b1pq1j.fsf@gitster.mtv.corp.google.com>
- <15d73455-6d0e-e67a-7cf3-eb0ae9aa3b0d@ramsayjones.plus.com>
- <xmqqpof0memv.fsf@gitster.mtv.corp.google.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <84e547c2-8a5b-225c-1363-361e091821f4@ramsayjones.plus.com>
-Date:   Tue, 23 May 2017 21:47:52 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1033921AbdEWU5c (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 16:57:32 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36381 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032673AbdEWU51 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 16:57:27 -0400
+Received: by mail-pf0-f169.google.com with SMTP id m17so125624417pfg.3
+        for <git@vger.kernel.org>; Tue, 23 May 2017 13:57:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fQcvdFI4WmgQnie3LTXz8IJDgmB9lyIjwaTfgd+1e/Q=;
+        b=JqSGfhDAywRAyvTk2u0hAXyoObFVI/2E3sRKerURylNFdUBcMeKmOlFX57LbqPYDVd
+         S5+71CFWrqLwJAx6OM5et919mM3ssRCreCxs40cC8kldZJv0XItFfmRul9axLCddcnnt
+         CHcGJR3cBUkG8vZJEEDoifPeXFL8Wd9Ui2+BfnexRY5IKAvoWP7xsPPq7rdg149AVSjg
+         tFAjn5y9oE2TbOeH2cdzfhOi92L3eC5mgbWiqnFq6l5nY8exfeC6ckisqcD84JB4l+Gw
+         OEmPccnwYz6mjNPYrPNzTBxrGLKNiWBlTbNSLLTwFCFUHfoERCdjMF/aOO3UqZgGWLEa
+         myEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fQcvdFI4WmgQnie3LTXz8IJDgmB9lyIjwaTfgd+1e/Q=;
+        b=JuPPwr4TZaL1TP/Ejmd+YeLBK2WKtPFYD1u4p3ebgLyQyQTUKq/DGemy/s2rZQ0bkY
+         JwZ1evDTvV/KTRQvWMV4zdBkdqLebAXKPfXCdj52HN/gNERRRqDkUUTfm4elaW28xVXK
+         AgSaZiOayvx+1tr4AIDgPDz16TSoRAvcYqlD6PqqNOZYM6HSthuDYUkH5K27tsUSXR/k
+         GZ+yNB302z8IIf44l9/IxCBAqLpoJUnfQBzo3oDEVisFal8ih33VIoVm6okeMkpeoXGO
+         ZDaeKu0Fv3K5M279A9eK5bnEDZDdLoQjl2OWIyNp8zvP15O3cjWNdpzT+0dA2TAmdEBz
+         3YNg==
+X-Gm-Message-State: AODbwcDbYCRQcG15baCyWLtsPK8vznKzfNACDjhDYSgcCLJkRuYNO35P
+        iS83DeBrTbAg/LcUBbiswtQYY+n4M/w+
+X-Received: by 10.84.248.73 with SMTP id e9mr38975039pln.76.1495573046510;
+ Tue, 23 May 2017 13:57:26 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqpof0memv.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 10.100.170.200 with HTTP; Tue, 23 May 2017 13:57:25 -0700 (PDT)
+In-Reply-To: <20170523193627.GG115919@google.com>
+References: <20170515183405.GA79147@google.com> <20170521125814.26255-1-pc44800@gmail.com>
+ <20170521125814.26255-2-pc44800@gmail.com> <20170523193627.GG115919@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 23 May 2017 13:57:25 -0700
+Message-ID: <CAGZ79kYPUO34YUVR_u4sRuYz+Geo=wxwNEfCnyx+NQWQCQTkaQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v4 2/2] submodule: port subcommand foreach from
+ shell to C
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Prathamesh Chavan <pc44800@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, May 23, 2017 at 12:36 PM, Brandon Williams <bmwill@google.com> wrote:
+>
+> You can set .git_cmd = 1 instead.
+>
+>> +             cpr.dir = list_item->name;
+>> +             prepare_submodule_repo_env(&cpr.env_array);
+>> +
+>> +             argv_array_pushl(&cpr.args, "git", "--super-prefix", displaypath,
+>
+> And then you don't need to include "git" here.
 
+even if git_cmd = 1 is set, you'd need a first dummy argument?
+cf. find_unpushed_submodules, See comment in 9cfa1c260f
+(serialize collection of refs that contain submodule changes, 2016-11-16)
 
-On 23/05/17 04:32, Junio C Hamano wrote:
-> Interesting.  One thing that I found somewhat suboptimal is that we
-> do not get signalled by non-zero exit.
+>> +
+>> +     info.argc = argc;
+>> +     info.argv = argv;
+>> +     info.prefix = prefix;
+>> +     info.quiet = !!quiet;
+>> +     info.recursive = !!recursive;
+>
+> If these values are boolean why do we need to do the extra '!!'?
 
-Warnings don't lead to non-zero exit, but similarly to -Werror, you can
-provide a -Wsparse-error to turn warnings into errors:
+Actually that was my advice. As we only have a limited space in a single
+bit, strange things happen when you were to do:
 
-  $ make builtin/worktree.sp
-      SP builtin/worktree.c
-  builtin/worktree.c:539:38: warning: Using plain integer as NULL pointer
-  $ 
-  $ make SPARSE_FLAGS=-Wsparse-error builtin/worktree.sp
-      SP builtin/worktree.c
-  builtin/worktree.c:539:38: error: Using plain integer as NULL pointer
-  Makefile:2370: recipe for target 'builtin/worktree.sp' failed
-  make: *** [builtin/worktree.sp] Error 1
-  $ 
+    quiet = 2; /* be extra quiet */
+    info.quiet = quiet;
 
-Unfortunately, that does not help too much because, as I mentioned before,
-one warning is actually a sparse problem (and you can't turn it off):
+This is not the case here, but other commands have evolved over time
+to first take a OPT_BOOL, and then in a later patch an OPT_INT.
+(some commands take a "-v -v -v")
 
-  $ make pack-revindex.sp
-      SP pack-revindex.c
-  pack-revindex.c:64:23: warning: memset with byte count of 262144
-  $ 
-
-This is caused by sparse _unconditionally_ complaining about the byte count
-used in calls to memset(), memcpy(), copy_to_user() and copy_from_user().
-In addition, the byte count limits are hard-coded (v <= 0 || v > 100000).
-About a decade ago, I wrote a patch to enable/set the limit value from the
-command line, but didn't get around to sending the patch upstream. :-D
-   
-[There is actually another problem warning, if you build with NO_REGEX=1].
-
-Since cgcc was intended to be used as proxy for gcc, you might think you
-could use CC=cgcc on a regular build, but that has problems of it's own:
-
-  $ make clean >/dev/null 2>&1  # on 'pu' branch, build output in 'pout'
-  $ make CC=cgcc >pout1 2>&1
-  $ diff pout pout1
-  99a100
-  > pack-revindex.c:64:23: warning: memset with byte count of 262144
-  199a201
-  > imap-send.c:1439:9: warning: expression using sizeof on a function
-  200a203,207
-  > http.c:675:9: warning: expression using sizeof on a function
-  > http.c:1676:25: warning: expression using sizeof on a function
-  > http.c:1681:25: warning: expression using sizeof on a function
-  > http.c:2082:9: warning: expression using sizeof on a function
-  > http.c:2249:9: warning: expression using sizeof on a function
-  219a227
-  > http-walker.c:377:9: warning: expression using sizeof on a function
-  222a231,233
-  > http-push.c:189:9: warning: expression using sizeof on a function
-  > http-push.c:200:9: warning: expression using sizeof on a function
-  > http-push.c:202:9: warning: expression using sizeof on a function
-  228a240,243
-  > remote-curl.c:524:9: warning: expression using sizeof on a function
-  > remote-curl.c:605:17: warning: expression using sizeof on a function
-  > remote-curl.c:608:17: warning: expression using sizeof on a function
-  > remote-curl.c:676:9: warning: expression using sizeof on a function
-  374a390
-  > builtin/worktree.c:539:38: warning: Using plain integer as NULL pointer
-  
-  ...
-
-  $ 
-
-See commit 9371322a60 (sparse: suppress some "using sizeof on a function"
-warnings, 06-10-2013) for an explanation of the additional warnings.
-I chose the SPARSE_FLAGS method to suppress those warnings, precisely
-because I don't build git that way. (git grep -n SPARSE_FLAGS).
-
-So, using CC='cgcc -Wsparse-error' as it stands isn't much help:
-  
-  $ make clean >/dev/null 2>&1
-  $ make CC='cgcc -Wsparse-error'
-  GIT_VERSION = 2.13.0.530.g896b4ae59
-      * new build flags
-      CC credential-store.o
-      * new link flags
-      CC common-main.o
- 
-  ...
- 
-      CC pack-objects.o
-      CC pack-revindex.o
-  pack-revindex.c:64:23: error: memset with byte count of 262144
-  Makefile:2036: recipe for target 'pack-revindex.o' failed
-  make: *** [pack-revindex.o] Error 1
-  $ 
-
->                                         Otherwise it would make a
-> good addition to the "Static Analysis" task in .travis.yml file.
-
-Unfortunately, some additional work required. :-P
-
-ATB,
-Ramsay Jones
-
-
+And by having the double negative we'd have some defensive programming
+right here. (To prove I am not telling crazy stories, $ git log -S \!\!)
