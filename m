@@ -2,89 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B68BE1FF30
-	for <e@80x24.org>; Tue, 23 May 2017 10:17:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B20661FF30
+	for <e@80x24.org>; Tue, 23 May 2017 10:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967357AbdEWKRZ convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 23 May 2017 06:17:25 -0400
-Received: from mail-sn1nam02on0040.outbound.protection.outlook.com ([104.47.36.40]:20224
-        "EHLO NAM02-SN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752118AbdEWKRZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 06:17:25 -0400
-Received: from BLUPR0701MB754.namprd07.prod.outlook.com (10.141.252.20) by
- BLUPR0701MB754.namprd07.prod.outlook.com (10.141.252.20) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.1101.14; Tue, 23 May 2017 10:17:23 +0000
-Received: from BLUPR0701MB754.namprd07.prod.outlook.com ([10.141.252.20]) by
- BLUPR0701MB754.namprd07.prod.outlook.com ([10.141.252.20]) with mapi id
- 15.01.1101.021; Tue, 23 May 2017 10:17:18 +0000
-From:   "Holst, Henrik" <henrik.holst@frostbite.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Holst, Henrik" <henrik.holst@frostbite.com>
-Subject: git --merge and option parsing
-Thread-Topic: git --merge and option parsing
-Thread-Index: AQHS062xrE9A5apfYUChjg44cyYifw==
-Date:   Tue, 23 May 2017 10:17:18 +0000
-Message-ID: <BLUPR0701MB75463EE0B8ADC559BBE02A282F90@BLUPR0701MB754.namprd07.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: frostbite.com; dkim=none (message not signed)
- header.d=none;frostbite.com; dmarc=none action=none
- header.from=frostbite.com;
-x-originating-ip: [2a01:111:e400:525a:cafe::82]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BLUPR0701MB754;7:eKuxvzeSn+p5pZgTrwitAFr/XqHHIb6mD0U+hLRWbrxrBh9fDn4m9VwqnoA6u8/R+7ONdQBJp2Kn3aBxm0JQLUr8CV/fwr/xz0NWDi5HyT3UAeBvAdC/so9xBcoaN+ffFHRQlhnmrmkY7copM7eblQMVVub6OjQjycsfcF8NH78HgLQUwXZ1/CBbYPbLU6cV/Q+WdqBkjnnmrzAiE5EsYgCqmiAJHOph71BJ7FaxU3lZemayaUikCxtDWkYLp28B00eJ80KQbuX2XOzn7gix382CtIE9vpujTgeCcWgA1IAF1Gzs21koh6NS2XlIvqopbWBhZtg1I9HIn++MytzfxA==
-x-forefront-antispam-report: SFV:SKI;SCL:-1SFV:NSPM;SFS:(10009020)(6009001)(39850400002)(39450400003)(39410400002)(39860400002)(39400400002)(39840400002)(33656002)(5640700003)(54356999)(6436002)(9686003)(6506006)(50986999)(99286003)(55016002)(122556002)(2900100001)(77096006)(2351001)(7696004)(38730400002)(110136004)(6916009)(508600001)(107886003)(305945005)(4326008)(25786009)(189998001)(5660300001)(8936002)(1730700003)(8676002)(86362001)(81166006)(7736002)(74316002)(2501003)(53936002)(3280700002)(2906002)(3660700001)(102836003)(6116002)(70820200005);DIR:OUT;SFP:1101;SCL:1;SRVR:BLUPR0701MB754;H:BLUPR0701MB754.namprd07.prod.outlook.com;FPR:;SPF:None;MLV:ovr;PTR:InfoNoRecords;LANG:en;
-x-ms-traffictypediagnostic: BLUPR0701MB754:
-x-ms-office365-filtering-correlation-id: d9642905-9943-4298-1c05-08d4a1c4e464
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(2017030254075)(48565401081)(201703131423075)(201703031133081)(201702281549075);SRVR:BLUPR0701MB754;
-x-microsoft-antispam-prvs: <BLUPR0701MB754B297C78260234F3D573C82F90@BLUPR0701MB754.namprd07.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040450)(601004)(2401047)(5005006)(8121501046)(10201501046)(3002001)(93006095)(93001095)(6055026)(6041248)(20161123555025)(20161123562025)(20161123564025)(201703131423075)(201703011903075)(201702281528075)(201703061421075)(20161123558100)(20161123560025)(6072148);SRVR:BLUPR0701MB754;BCL:0;PCL:0;RULEID:;SRVR:BLUPR0701MB754;
-x-forefront-prvs: 0316567485
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
+        id S1760976AbdEWKq3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 06:46:29 -0400
+Received: from mout.gmx.net ([212.227.15.18]:60147 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758653AbdEWKq2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 06:46:28 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDyFr-1dAfZW2CL9-00HKlW; Tue, 23
+ May 2017 12:46:25 +0200
+Date:   Tue, 23 May 2017 12:46:24 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     stefan.naewe@atlas-elektronik.com, git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Fix warnings on access of a remote with Windows
+ paths
+In-Reply-To: <1542d54f-d530-b60d-3270-d9b4e94c814d@kdbg.org>
+Message-ID: <alpine.DEB.2.21.1.1705231245300.3610@virtualbox>
+References: <cover.1495261020.git.j6t@kdbg.org> <122838f4-5f6b-6921-9242-2724bb6d8c95@atlas-elektronik.com> <alpine.DEB.2.21.1.1705221600100.3610@virtualbox> <1542d54f-d530-b60d-3270-d9b4e94c814d@kdbg.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-OriginatorOrg: frostbite.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 May 2017 10:17:18.1448
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: cc74fc12-4142-400e-a653-f98bfa4b03ba
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLUPR0701MB754
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:MjyvmLQAJY4Cp1XAMAF5/UevWPaj49UtKH0MORJpAyVKZdxwcwx
+ p7QMeXhaNoIDUj+YJ59dwCRAXshsrp7E5mqI0y7/tJqsrwoXj0k3s+GipHr7zaOAealyqqP
+ LaCyg6Cg+WS/l6XAcaZz9W5fNjAgY/Jrh/JXxpP0iSpNRIQ+Pdghf3RoWN8k9zk1+QY8Z0w
+ WSVH4vaxMWMaxQU83gEqw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:l+EWgDqacFo=:Xcmfo9+TX4qE6EpyBCna+E
+ ePf4M8TORnbPBQAvCqRPQ5I0AbEzWQLJ9BkoHENepljnyBeM/kTq53GhR6C05ra6u9ELPKaAx
+ 6wCfzzG9NfUX3HCBppDvjRKAjias+pnTCO7RU0DpPeHkx7A2HfoTYk1gloUDDJbeVdSClP/R1
+ 48hyK8EocltxqMsJajPlECD5raLepwjdl4eQuqCehFWjm5sJq6ew3W2wzhNHwsdfJVwtFTzyx
+ X6np889nRjzrd1QFJfVjRKcKBd9rQ+t7FNaVycHMkfShUSLfLdyfHWT6JBxoc8ywogoGuUHIV
+ 7fOdqg7eMosFk9EyWyLjn7ueRaANgghI9gG9orN+wOxtV5yU9fONCALmqaJs3TWDkIlIy0v0m
+ qwXX/1XOlQIRlGAU17xEXSL9Cb3jmubWyIHSukG20M2pKIai06jR5uW9iKzT3mORuHP/hohvt
+ DnvDjY3dWfkLRVJYw1lhMKL7xa7qkyeHIERC3otZDWBitew/1qjoV8T4K0F8bpUHixyoVGIGx
+ UdM8qz7GjIzNsc6XAJ/5CXr0CaGT3EzmVUDOQ9iD8Kl5aIltj6P6Lpmegix3zi0PwNnDkDfIO
+ y3PX2WwFaY3xuj6NNJHQTBg6qk+Hx0QNc3VvfAkZ0vIm2k+5L8M8JZV392WMsmuQ9Nl23RH20
+ Z7P2vbso1SUcaEfpH48tsQHw95/phZvDDfLTpuK4JUm9vkyGvsSiLZ9byOaAef5LSVuLvhS10
+ An3YDNPahcipBQcSsXFNjBEomuJE77TXzNPyzbG8H2bZYXmaPSjRyOvj+iCEzWEXguQtC6KOZ
+ kmQbG1r
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Hannes,
 
-I am not sure if this is a bug but it was surprising to me so I thought I'd report it here.
+On Mon, 22 May 2017, Johannes Sixt wrote:
 
-I added `ui.column=auto` to my gitconfig and that does not work so well with pipes so I want to use `--no-column` option. I was a bit surprised that this does not work? It seems that `--merged` picks up `--no-column` as a commit reference instead it being parsed as an option.
+> Am 22.05.2017 um 16:01 schrieb Johannes Schindelin:
+> > On Mon, 22 May 2017, stefan.naewe@atlas-elektronik.com wrote:
+> > > Am 20.05.2017 um 08:28 schrieb Johannes Sixt:
+> > > > This small series fixes these warnings on Windows:
+> > > >
+> > > > C:\Temp\gittest>git fetch C:\Temp\gittest
+> > > > warning: unable to access '.git/remotes/C:\Temp\gittest': Invalid
+> > > > warning: argument
+> > > > warning: unable to access '.git/branches/C:\Temp\gittest': Invalid
+> > > > warning: argument
+> > > >  From C:\Temp\gittest
+> > > >   * branch            HEAD       -> FETCH_HEAD
+> > >
+> > > What is the exact precondition to get such a warning ?
+> > >
+> > > Just wondering, because I'm not able to reproduce that warning
+> > > (with Git4win version 2.13.0.windows.1).
+> > 
+> > I had tested this also, and came to the conclusion that only Hannes'
+> > MSys-based custom version is affected that is much closer to git.git's
+> > `master` than to Git for Windows' fork.
+> 
+> In this case, the warning occurs because I build with nd/fopen-errors.
 
-hholst@fb-hholst3 ~/src/a3c-batch (feature/NetworkHandler) [conda:tensorflow] 
-$ git branch --no-column --merged
-* feature/NetworkHandler
-[snip]
+Ah. So the base commit Junio chose for your v1 is completely
+inappropriate. It should be nd/fopen-errors instead.
 
-hholst@fb-hholst3 ~/src/a3c-batch (feature/NetworkHandler) [conda:tensorflow] 
-$ git branch --merged --no-column
-fatal: malformed object name --no-column
-
-hholst@fb-hholst3 ~/src/a3c-batch (feature/NetworkHandler) [conda:tensorflow] 
-$ git --version
-git version 2.13.0
-
-Best,
-Henrik Holst
-(Not on the list)
+Thanks for the clarification!
+Dscho
