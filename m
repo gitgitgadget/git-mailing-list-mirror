@@ -6,149 +6,119 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9564F20281
-	for <e@80x24.org>; Tue, 23 May 2017 17:51:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F90520281
+	for <e@80x24.org>; Tue, 23 May 2017 18:14:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966381AbdEWRvI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 13:51:08 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34595 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1761086AbdEWRvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 13:51:06 -0400
-Received: by mail-pf0-f180.google.com with SMTP id 9so121492105pfj.1
-        for <git@vger.kernel.org>; Tue, 23 May 2017 10:51:06 -0700 (PDT)
+        id S1030528AbdEWSOL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 14:14:11 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:35204 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967057AbdEWSOK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 14:14:10 -0400
+Received: by mail-pf0-f178.google.com with SMTP id n23so122044466pfb.2
+        for <git@vger.kernel.org>; Tue, 23 May 2017 11:14:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=KC5P9Xf15fwOYc3h1ePWaZ/RrDMlJQhVYQ0NCthpFHE=;
-        b=gp6FVDJAJ8Wc0Dz9MmjqVtCwfnHZL8HXI6AVbPMqbxKS5Q/ZP7jH5COvnVo2tt/2r4
-         w9UGOzs7SJ68VaH7XlwFIONL85SImoWHLPBtGCzBg9eMgxwiTo7K/+9z21bPVJv4LuYa
-         PZefzapF9vXvprt6DiC4I+c8SXR9f5XqXiYihcoe4ulxN3uGjWUEKA4RavFTQATcqAjX
-         y02i3ET6aE6TnDSDt3FdQW9mj7QtTxG4MYZr7isDjlsJwqKs9I2okTxHZgMH6rC0Yy4g
-         31gwZTRZ5LCMT7tsf2KXJvhjTE4GlUSEaHJrZNRmUzLEb+ltsynfDk5VATFr3TronDAL
-         HVeg==
+         :cc;
+        bh=rZgGMUwi80copcmr01aC2FYa9Ofi1/JsToa6IC3Ok/o=;
+        b=JwFaZ1EZPJj+yLDMWaqkiR9Ue+6L00NA7loL6nBKO0+y1EL69ju0QJCvxwV/USrF8S
+         uM+sXTBJomkvt/vfnfE4JkG19U6kQ/+9Vu8wfAPZmPCer6xORw8+oY6uY4f9gOQceX4N
+         2kiW7jQeU77w3rKWGloT+Si+pIub3JgOfHPnGFa2DGwU3D1lm5dK7ssk8Bk7KhJCsXro
+         Vl3MSRJstAJf5s5gowWiENBibiEu0W+ZMsICGA/26GuniSrLW+HpXcZ4Ykaueyx3s9Nq
+         FkiLVI5bo33i5HidYIK8jayN6C4OHwP52YwcqTzkw7HeNX5+ZQlgL7qIX58ZVo4hzE5p
+         zylg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KC5P9Xf15fwOYc3h1ePWaZ/RrDMlJQhVYQ0NCthpFHE=;
-        b=DAUdOWGd1NirPUQBcupF8erOH/wJg6JRObqJn8gvdCKY5/53NCMdg9DKNNaGEKyjG9
-         SLWCWCuAryq5FdN3c2Qwo+YsXnp3vm5s9mXOdVhWrJOCvGqXxJ79TsK3eHfq/2shPLxO
-         QZ8IWSowQFwCgAAK6VCD1ZmaicVMeHBhYugvLpmJ5ZS01khyMtC2rnExoMPGyc4d0LV9
-         wVRCDlc82joMiob/SW04jn2vWbCKxO34Ux3uuU3Myg81jRRNYD0BO5sQK6Y6clz64OwB
-         oG/SWG/F8dJ5shOD1wAwR4cZ9mFx1KZmqtzEJlYEn2y+C+hcdeAndn5ud4Afc4XqEEI2
-         Kvdw==
-X-Gm-Message-State: AODbwcD04PiiA4FLP0ZmHcTgWXp3pqxHQhDO0WGSPPuFWb10DvnV33PM
-        8IyZEHuoMrN3BV+n/k8QRZuziWlel8EwraiKkg==
-X-Received: by 10.84.248.73 with SMTP id e9mr38074892pln.76.1495561865721;
- Tue, 23 May 2017 10:51:05 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=rZgGMUwi80copcmr01aC2FYa9Ofi1/JsToa6IC3Ok/o=;
+        b=XDZ3z18CGzqO80ck28YefJUnsYfGtc3smiKhhhBTkykBEduqBDwyHolzrjmHhZTYG3
+         Dt616QX0lMS79Ot/1gM/bgxkUu0LIuKdABg/Ae3W1JhnNkFPVLCKlXuNnpVKnpr3e7Q0
+         9Eb6X1Aw6osTOaj7GiaNu7gCXhGZlkLjWwCHBC5aipLLRFda+wqp1ZpJkjcy/EqpF1go
+         KaxeIGgCmX1pSg7hE8KX6TIjHMGDmj+2U/2zXHrY6m00AH+kq9pq+zZBN+8Z22EiW0vI
+         RKyCfR0aZYJVlrmS6Ikpc1qBxvlzwOWefz39UeXim2QzXXHkLrc6GWqqUgK/0fsec59q
+         kl3A==
+X-Gm-Message-State: AODbwcAitphNRL/MFD35bLIDmiB/7WfkJCYBnJqTTK0f9rzPU9XAmaxJ
+        8O9UomnBZUYSjLs+9ZKjpSqJaK05PpUs
+X-Received: by 10.99.56.66 with SMTP id h2mr34529117pgn.40.1495563244472; Tue,
+ 23 May 2017 11:14:04 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Tue, 23 May 2017 10:51:05 -0700 (PDT)
-In-Reply-To: <CACBZZX5EQhoEBvj2e6ogXU5Y=EfwSPCx+jFvTJ1P2KbYNpADyw@mail.gmail.com>
-References: <CACBZZX41yrAtBvkVeL9Q=2_TxcwrDXh55gu3qLN54P_go318OA@mail.gmail.com>
- <alpine.DEB.2.21.1.1705231103220.3610@virtualbox> <CACBZZX5EQhoEBvj2e6ogXU5Y=EfwSPCx+jFvTJ1P2KbYNpADyw@mail.gmail.com>
+Received: by 10.100.170.200 with HTTP; Tue, 23 May 2017 11:14:04 -0700 (PDT)
+In-Reply-To: <xmqqinksktaj.fsf@gitster.mtv.corp.google.com>
+References: <20170518193746.486-1-sbeller@google.com> <20170523024048.16879-1-sbeller@google.com>
+ <20170523024048.16879-10-sbeller@google.com> <xmqqinksktaj.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 23 May 2017 10:51:05 -0700
-Message-ID: <CAGZ79kYEASh1cehJ-5=HtevYvpFm6H-aWB+P3VEbXm_o=Go_MQ@mail.gmail.com>
-Subject: Re: BUG: The .gitignore rules can't be made to cross submodule boundaries
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
+Date:   Tue, 23 May 2017 11:14:04 -0700
+Message-ID: <CAGZ79kZ4_giLxXeRLZRDbCzNK754QthscthmzaU02oSpv3nw8g@mail.gmail.com>
+Subject: Re: [PATCHv4 09/17] submodule.c: convert show_submodule_summary to
+ use emit_line_fmt
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 23, 2017 at 2:55 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Tue, May 23, 2017 at 11:17 AM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> Hi =C3=86var,
->>
->> On Mon, 22 May 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->>> When I was adding the sha1collisiondetection submodule to git.git I
->>> noticed that building git would dirty the submodule.
->>>
->>> This is because our own Makefile adds .depend/ directories. I hacked
->>> around it by just getting the upstream project accept carrying an ignor=
-e
->>> rule for that around:
->>> https://github.com/cr-marcstevens/sha1collisiondetection/commit/e8397b2=
-6
->>>
->>> A workaround for this is to have the Makefile add such a rule to
->>> .git/modules/sha1collisiondetection/info/exclude, but that's less
->>> convenient than being able to distribute it as a normal .gitignore rule=
-.
->>>
->>> The submodule.<name>.ignore config provides an overly big hammer to
->>> solve this, it would be better if we had something like
->>> submodule.<name>.gitignore=3D<path>. Then we could have e.g.
->>> .gitignore.sha1collisiondetection which would be added to whatever rule=
-s
->>> the repo's own .gitignore provides.
->>
->> While I have nothing but the utmost respect for Stefan and Brandon for
->> trying to improve submodules, maybe it would be a wiser idea to imitate
->> the same strategy with sha1dc as we use with git-gui and gitk, i.e.
->> perform a subtree merge instead of adding it as a submodule. It's not li=
-ke
->> 570kB will kill us.
-
-Actually that is a very valid bug report outside that series for the
-behavior of submodules.
-
-In a world where you use a submodule to track say a third party
-library, the current behavior of .gitignore applying to each repo makes
-sense.
-
-When it is no third party, but a first party lib, then it is sensible to ex=
-pect
-that the building/testing infrastructure works across the whole repo set,
-and the user wants just one central place to specify things, such as
-ignoring certain files or applying .gitattributes.
-
-This topic came up in various forms on the mailing list, most often for
-config that ought to be applied across all repos[1].
-
-That said I have no good idea yet how to fix this issue without introducing
-the ultimate user confusion.
-
-The conditional include of config files (by Duy as part of 2.13) seems like
-an interesting approach, which we could build on top of.
-We currently have a main config and a per-working-tree config, so I would
-expect we'd introduce another config file that is included by all submodule=
-s
-by default. It could be located in the superproject at ".git/config.super".
-This config file could then specify
-
-[submodule]
-    recursiveIgnore =3D [yes/no]
-    recursiveAttributes =3D [yes/no]
-
-In that way commands run from within the submodule as well as from
-the superproject would realize that the submodule needs to lookup
-the superproject and use the attribute/ignore/config settings from there.
-
-[1] Here the example for URL.insteadOf
-https://public-inbox.org/git/CAPZ477MCsBsfbqKzp69MT_brwz-0aes6twJofQrhizUBV=
-7ZoeA@mail.gmail.com/
-
+On Mon, May 22, 2017 at 10:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> The submodule/.gitignore bug/feature-request being reported here isn't
-> something that impacts the ab/sha1dc series in practice.
+>> diff --git a/submodule.c b/submodule.c
+>> index d3299e29c0..428c996c97 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> ...
+>> @@ -547,15 +543,16 @@ void show_submodule_inline_diff(FILE *f, const char *path,
+>>       if (right)
+>>               new = two;
+>>
+>> -     fflush(f);
+>>       cp.git_cmd = 1;
+>>       cp.dir = path;
+>> -     cp.out = dup(fileno(f));
+>> +     cp.out = -1;
+>>       cp.no_stdin = 1;
+>>
+>>       /* TODO: other options may need to be passed here. */
+>>       argv_array_push(&cp.args, "diff");
+>> -     argv_array_pushf(&cp.args, "--line-prefix=%s", line_prefix);
+>> +     if (o->use_color)
+>> +             argv_array_push(&cp.args, "--color=always");
+>> +     argv_array_pushf(&cp.args, "--line-prefix=%s", diff_line_prefix(o));
 >
-> It was something I noticed while working with an earlier commit in
-> that repo, but that's a commit that'll never be pinned by the
-> git.git:sha1collisiondetection submodule.
+> This makes me wonder if we also need to explicitly decline coloring
+> when o->use_color is not set.  After all, even if configuration in
+> the submodule's config file says diff.color=never, we will enable
+> the color with this codepath (because the user explicitly asked to
+> use the color in the top-level), so we should do the same for the
+> opposite case where the config says yes/auto if the user said no at
+> the top-level, no?
 
-Thanks for the bug report. As outlined above, we'd still need to bikeshed
-how to fix it properly I'd think.
+That makes sense, so instead we'd do
+
+             argv_array_push(&cp.args, "--color=%s", o->use_color ?
+"always" : "never");
+
+to override the submodule config in all cases.
+
+However that changes from current behavior.
+
+You could imagine that you want to see the superproject colored
+and the submodule non-colored to easily spot that it is a submodule change.
+Currently this can be made to work via setting color=never in the
+submodule and then run the diff from the superproject.
+
+What we really want here is a switch that influences the automatic detection
+and say: pretend "dup(fileno(f));" was your stdout, now run your auto-detection
+to decide for yourself.
+
+I am not sure if it worth the effort to fix this hypothetical situation, though.
 
 Thanks,
 Stefan
