@@ -7,162 +7,127 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28FB02023D
-	for <e@80x24.org>; Tue, 23 May 2017 03:01:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B77C42023D
+	for <e@80x24.org>; Tue, 23 May 2017 03:22:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936012AbdEWDBp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 22 May 2017 23:01:45 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34091 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933583AbdEWDBn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 22 May 2017 23:01:43 -0400
-Received: by mail-pf0-f196.google.com with SMTP id w69so24132151pfk.1
-        for <git@vger.kernel.org>; Mon, 22 May 2017 20:01:43 -0700 (PDT)
+        id S932600AbdEWDWD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 22 May 2017 23:22:03 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:33564 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751897AbdEWDWC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 22 May 2017 23:22:02 -0400
+Received: by mail-pf0-f176.google.com with SMTP id e193so100490086pfh.0
+        for <git@vger.kernel.org>; Mon, 22 May 2017 20:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+JLBiJYSXC1tO5EIbNjl3M9lTVQBx965YgFqMr5z4yc=;
-        b=p6a+goYRNhAqorozUfCRoJUv64EuaSfhRY6F4Gs5iPAQ+Cels48rtFVRLBL6mbVXAv
-         MjufYyIxpV771jKV45rshPZb712KhpEk9698DpftvgjVb6xrVjtaTR6pQo/YRTZlx1zG
-         PxETU7RRqR7KLLH6XdTB9KCuxjrust19TiquqnhawEPt+BG4iQYJYU8SK+p8qxDHHpj2
-         IxkSpWfg6+VNBJTHiNkZqOlo3jR9pouAd/x9RGC1uSzq5VB7+bjjgLrkEeDwZWbp3UFd
-         q5+AGEmja4I41V9FQb9PbZdYUhMrYdiC7nXlqbS1uxnHnUF6ouXoyV5cOxNPjRCMfDzC
-         IYxg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=lyRJjR9ipkfbj3QDCGyOAFps0xqSZ7c8bAjU4P8AFTw=;
+        b=O3XkqlbTzIOQxQNKr49iserXfQiUMmAGgy/+ENtNLeft7MRnQpeqc92MH9Z0JAPp8c
+         fcnNybRVUjZuuYTyt0JyPWcBLA+EZbDBx5GRB35x5XFmcIuor36SLcTAOGUJSVhR1ezn
+         GggIm4vZPpmeKWN8TUZaGi1aa9/yQQmebScZnpoCMvnS0jqsUSJUvNrx75yEb2lXdZkf
+         uKS1KkHaMpgoMKey1zK7OcLigAlSH1BecLcvl9gaExJVhfohcjRwsQgjXk8ECVfBIU6f
+         A3y6gvSlhqZTnwGAcgg4EM4W7bkGFfazUPhDuaN5NFPmg2TlKvI9f9jXawE+BJk3mvhJ
+         T2RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+JLBiJYSXC1tO5EIbNjl3M9lTVQBx965YgFqMr5z4yc=;
-        b=BoC3hn9ieKyhs3n3xZ7ZEdmkdbMkbCaoQnSFirEwz/vRe4BytKcigyGAergM2xFILL
-         5wGB/LrE740g7TFg2QK5vFyhoqw5FjJOZgiuJv5KFC4CE7F+gQB5Y7rgGx97xurb82v6
-         Z5cFRYv+tAtleZSly13nin31snghvhvkym48GeMqM6b5KY7eNbWJbZfEPoUfCfpHqmcQ
-         Ye3rdcq+4kW0L7FpPs7PoCircXJq0PJzdvYFCJrj3TV2tAgBgaCPlXfB/3BJ1uEd6ViV
-         YiAiMwCeO8u7kHzQEkDgoVIk//7kZfNeBYJz+gwFVb3ULUIQzk+PhEQXs28UEWCkS5kG
-         CbrA==
-X-Gm-Message-State: AODbwcB4YKq4bbkJToT7beDYXpYRdLH+6xGwRCEB5goygaPnWYY7obkX
-        BKf20OPe1kehcZ1jOHs=
-X-Received: by 10.84.176.131 with SMTP id v3mr32852581plb.138.1495508503075;
-        Mon, 22 May 2017 20:01:43 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=lyRJjR9ipkfbj3QDCGyOAFps0xqSZ7c8bAjU4P8AFTw=;
+        b=AyOJdbvF7onjc5nvDcDCnhrYx/sdPUiXWMIW4RPsCcb8vpQ8I6UTv7vxEmbvXeltBt
+         7H9avEDZbz9KEpQdI2MOflH/pi7qfsj89dWwbLL7utFGZCuVCHwlqVCM+Rzv5hyZQzt/
+         dbbQa0cHqLmHqBil3AOD3pCnkFSdwfKvW/Dh4+3evi2kDdbueAkoDag3V750d2Vr/aj+
+         h+dm2JrN/ZAfJm11MOucE0BwMfEtq7/aVwJ/d4mz7/eeMwkd1hfyffODj/RcX18QvLU3
+         QvRU9KpA7uBPxw0K9MokulP++21a/7ncMFVLalDPd9TS+LQh/ikMo3J18+aelrfl3wZG
+         1I/Q==
+X-Gm-Message-State: AODbwcAZYttSPsW/UyzqdIqABDXnVzeXfgAK7GbDpRAmY4oU5CUFi9AH
+        bCbptbaEDWnDBpV/iBw=
+X-Received: by 10.99.96.70 with SMTP id u67mr29996669pgb.101.1495509721526;
+        Mon, 22 May 2017 20:22:01 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b9c2:d2d1:97c0:9dab])
-        by smtp.gmail.com with ESMTPSA id 202sm28321679pge.12.2017.05.22.20.01.42
+        by smtp.gmail.com with ESMTPSA id b129sm14773407pfg.102.2017.05.22.20.22.00
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 22 May 2017 20:01:42 -0700 (PDT)
+        Mon, 22 May 2017 20:22:00 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     DOAN Tran Cong Danh <congdanhqx@gmail.com>, git@vger.kernel.org,
-        animi.vulpis@gmail.com, j6t@kdbg.org,
-        Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] ref-filter: treat CRLF as same as LF in find_subpos
-References: <CA+izobvwRCwGEtpCbey=gFbCh9sHBb5xB1i1LpMG0JCUy0O2mQ@mail.gmail.com>
-        <20170521134209.25659-1-congdanhqx@gmail.com>
-        <xmqqy3tppu13.fsf@gitster.mtv.corp.google.com>
-        <20170522201212.uuas26n6npdebsxg@sigill.intra.peff.net>
-        <xmqq37bwnxg4.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 23 May 2017 12:01:41 +0900
-In-Reply-To: <xmqq37bwnxg4.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 23 May 2017 11:01:15 +0900")
-Message-ID: <xmqqy3tomg2y.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Marc Stevens <marc@marc-stevens.nl>,
+        Michael Kebe <michael.kebe@gmail.com>,
+        Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v2 0/2] Update sha1dc from upstream & optionally make it a submodule
+References: <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com>
+        <20170520115429.12289-1-avarab@gmail.com>
+        <xmqqbmqko7c2.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kb9Ca6QtyRzOW-1Q-E+7Z+PB7+MBtj4KvZx-mV36opWpA@mail.gmail.com>
+Date:   Tue, 23 May 2017 12:22:00 +0900
+In-Reply-To: <CAGZ79kb9Ca6QtyRzOW-1Q-E+7Z+PB7+MBtj4KvZx-mV36opWpA@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 22 May 2017 15:48:45 -0700")
+Message-ID: <xmqqtw4cmf53.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Jeff King <peff@peff.net> writes:
+> On Mon, May 22, 2017 at 3:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+>>
+>>> I liked the suggestion to make the URL a relative path, but this would
+>>> require you to maintain a mirror in the same places you push git.git
+>>> to, is that something you'd be willing to do?
+>>
+>> After thinking about this a bit more, I know what I think we want a
+>> bit better.
+>>
+>> Relative URL (e.g. ../sha1collisiondetection that sits next to the
+>> copy of git.git) may be a good way to go.  I can arrange to create
+>> necessary repository next to git.git on k.org and github.com but I
+>> need to double check about other places
 >
->> I suspect that's more work because we'd need to refactor pretty.c a bit
->> to make the right functionality available. But the end result would be
->> much more maintainable.
->
-> I actually think the entire codeflow of "find positions and length
-> of threeparts" using find_subpos() and then "copy the length bytes
-> starting position for C_{SUB,BODY,SIG,LINES,...}" must be rethought,
-> if the behavior of pretty.c::pretty_print_commit() is to be matched.
-> With the current code, %(contents:body) and other atoms that are
-> handled in ref-filter.c::grab_sub_body_contents() keep trailing
-> whitespaces on their lines with the current code that copies length
-> bytes starting the position using xmemdupz().  There need to be some
-> code that loses these trailing whiltespaces in the copied result.
->
-> While I do not claim that refactoring and reusing code from pretty.c
-> is the only viable way forward, it is clear to me that a patch that
-> updates find_subpos() and changes nothing else falls short X-<.
+> And here we see another deficit with a single URL:
+> We have to abide by the same scheme at all hosting endpoints.
 
-I wonder if this would be a viable alternative (this is just a
-smoking-break hack without an attempt to think through corner
-cases---for example we need to make sure we work sensibly when
-the object does not have _any_ body past the header, but I do not
-think the original works well in that case, either).
+FWIW, I do not see it a deficit.  It is a price you may or may not
+be willing to pay for simplicity, and I think it is a reasonable
+trade-off.
 
- ref-filter.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+The .gitmodules format can be enhanced to list multiple URLs quite
+easily.  I think the current users all use the equivalent of "git
+config -f .gitmodules submodule.foo.url" to grab one value.  Unless
+the user chooses to do anything special, they will continue to get
+the same behaviour whensuch an enhancement happens, which is a good
+thing.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 1fc5e9970d..10f8fe15f5 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -949,13 +949,7 @@ static void find_subpos(const char *buf, unsigned long sz,
- 			const char **sig, unsigned long *siglen)
- {
- 	const char *eol;
--	/* skip past header until we hit empty line */
--	while (*buf && *buf != '\n') {
--		eol = strchrnul(buf, '\n');
--		if (*eol)
--			eol++;
--		buf = eol;
--	}
-+
- 	/* skip any empty lines */
- 	while (*buf == '\n')
- 		buf++;
-@@ -1011,10 +1005,11 @@ static void append_lines(struct strbuf *out, const char *buf, unsigned long size
- }
- 
- /* See grab_values */
--static void grab_sub_body_contents(struct atom_value *val, int deref, struct object *obj, void *buf, unsigned long sz)
-+static void grab_sub_body_contents(struct atom_value *val, int deref, struct object *obj, void *rawbuf, unsigned long sz)
- {
- 	int i;
- 	const char *subpos = NULL, *bodypos = NULL, *sigpos = NULL;
-+	struct strbuf buf = STRBUF_INIT;
- 	unsigned long sublen = 0, bodylen = 0, nonsiglen = 0, siglen = 0;
- 
- 	for (i = 0; i < used_atom_cnt; i++) {
-@@ -1030,11 +1025,18 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
- 		    strcmp(name, "trailers") &&
- 		    !starts_with(name, "contents"))
- 			continue;
--		if (!subpos)
--			find_subpos(buf, sz,
-+		if (!subpos) {
-+			char *eoh = memmem(rawbuf, sz, "\n\n", 2);
-+			eoh += 2;
-+			sz -= eoh - (char *)rawbuf;
-+			rawbuf = eoh;
-+			strbuf_add(&buf, rawbuf, sz);
-+			strbuf_stripspace(&buf, 0);
-+			find_subpos(buf.buf, sz,
- 				    &subpos, &sublen,
- 				    &bodypos, &bodylen, &nonsiglen,
- 				    &sigpos, &siglen);
-+		}
- 
- 		if (atom->u.contents.option == C_SUB)
- 			v->s = copy_subject(subpos, sublen);
-@@ -1060,8 +1062,9 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct obj
- 					info.trailer_end - info.trailer_start);
- 			trailer_info_release(&info);
- 		} else if (atom->u.contents.option == C_BARE)
--			v->s = xstrdup(subpos);
-+			v->s = xmemdupz(rawbuf, sz);
- 	}
-+	strbuf_release(&buf);
- }
- 
- /*
+But then, you need to design what users choose to do that is
+"something special".  Should "git clone --recurse-submodules" have a
+way to control which one of the not-yet-known-before-cloning URLs
+that may be listed in .gitmodules?  Will we have a way to say "For
+North American users, we recommend this URL, while Asians may want
+to fetch from this other URL" in .gitmodules and then the recursive
+clone have a way to say "I want the European option"?  Would the
+recursive clone have a way to go interactive?
+
+And from that point of view, "you'll find the submodules relative to
+the superproject" convention is one way (not necessarily the only
+way) to allow users not to care too much.  The simplicity comes with
+price and that is perfectly acceptable.
+
+Also a single URL scheme may still perfectly fine.  .gitmodules may
+have new submodule.<name>.alternateURL fields and recursive clone
+can be told to optionally go interactive when such fields are
+present.
+
+Or README can list alternate URLs and instruct the users to use the
+insteadOf if they want to go to mirrors instead.  Those users who do
+care about picking particular mirror are likely not favor simplicity
+over flexibility, so they would not likely to do a recursive clone
+(after all, clone is a single-time operation) and it may be
+sufficient if they can clone the top-level, read README and then
+decide how and from where they get their submodules.
