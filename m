@@ -1,147 +1,91 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=1.5 required=3.0 tests=BAYES_20,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2C6C20281
-	for <e@80x24.org>; Tue, 23 May 2017 21:18:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58CD320281
+	for <e@80x24.org>; Tue, 23 May 2017 21:26:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161900AbdEWVSM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 17:18:12 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:34488 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161870AbdEWVSI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 17:18:08 -0400
-Received: by mail-pf0-f175.google.com with SMTP id 9so126007276pfj.1
-        for <git@vger.kernel.org>; Tue, 23 May 2017 14:17:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=znom3mYgkpLf0Iy0c3B1SKPEXbzy5mKaELMoZc1l3sk=;
-        b=nBcbkYYLhcI15/PXHRw4AQVYKzmZoNqF0XACXdIbbR52YDhBzymt3bXrIdVKJcwtIK
-         xCQb5VRn0Nns0OnX3JH4GbXp+bkXjFWbfM6WYDCnUJb5vETQAyco2bFtd9xtxJgaJkyM
-         aEjc1rTKmaPHIQ/kyM/x2eJopJ60E9Q5iH2TdnMgD2NwDRHoanGBvphpCV9J2zsEAm2a
-         9r+2yCDhAKi46DkaesQIuE9HLp3Tb22EiV1nQd5GCD2zvwidySb+PhDUJXF3lkg2fZEq
-         vXi1loDf+iNLSKD3AAdYo2xwo8yhCySwWA0oHheCKpEz/VMS6PAXyuW3hj5s3umUeJwM
-         8qiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=znom3mYgkpLf0Iy0c3B1SKPEXbzy5mKaELMoZc1l3sk=;
-        b=MPZQYRw3emBMDCPFYPgaFTwlaP/rQ8V7Zp1jyiMScd+x3/lgrGiUoBdB4x/W5iZW29
-         9Pfee5TGgnmZfVxCjieUzPtBFwJ+mv5e7LzURVbTOfx/YXRcl71da4AXT4ib6hUL3ScQ
-         Zm9caWoT/yzXtIng0oNn87RgCGeJUa3GHGuCyz2VW9fzRqNWu1sMjwtMxfzmqInRXMbA
-         H0NJTrFLBfo0ZSHDEkwBjKU1FE8a3xwC99nAfCXkF6ydBta1MwfXlMQQ2omJvNMV1bDV
-         BRUcz9UC97RZRjWoiNt9JWZe2CqJ+czpKfVWsXY9pYUowUEEzIdQJ9/KxPiN6YSGOpsY
-         l3Ng==
-X-Gm-Message-State: AODbwcCpkjlZ5xDl0dBolGmMb+LctxFWx1EgvknXgFcmEZnBff+o3NgZ
-        7MuHwyvTHnA4iMXp
-X-Received: by 10.84.198.3 with SMTP id o3mr39198492pld.60.1495574277106;
-        Tue, 23 May 2017 14:17:57 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:6539:887d:745f:6fdf])
-        by smtp.gmail.com with ESMTPSA id n23sm3910388pfh.44.2017.05.23.14.17.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 23 May 2017 14:17:55 -0700 (PDT)
-Date:   Tue, 23 May 2017 14:17:54 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Jeffrey Walton <noloader@gmail.com>,
-        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH v3 22/30] grep: factor test for \0 in grep patterns into
- a function
-Message-ID: <20170523211754.GI115919@google.com>
-References: <20170520214233.7183-1-avarab@gmail.com>
- <20170520214233.7183-23-avarab@gmail.com>
+        id S1162767AbdEWV0w (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 17:26:52 -0400
+Received: from ip-178-46-163-135.adsl.surnet.ru ([178.46.163.135]:37756 "HELO
+        surnet.ru" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+        id S1162735AbdEWV0u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 17:26:50 -0400
+X-Greylist: delayed 590 seconds by postgrey-1.27 at vger.kernel.org; Tue, 23 May 2017 17:26:49 EDT
+Content-Disposition: attachment
+Importance: High
+To:     <git@vger.kernel.org>
+Message-ID: <149557480473.15597.17233865596315448806@surnet.ru>
+Content-Type: application/zip; name="13422.zip"
+Subject: 
+Content-Transfer-Encoding: base64
+From:   <jadebook@bellsouth.net>
+Date:   Tue, 23 May 2017 21:26:44 -0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170520214233.7183-23-avarab@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/20, Ævar Arnfjörð Bjarmason wrote:
-> Factor the test for \0 in grep patterns into a function. Since commit
-> 9eceddeec6 ("Use kwset in grep", 2011-08-21) any pattern containing a
-> \0 is considered fixed as regcomp() can't handle it.
-> 
-> This change makes later changes that make use of either has_null() or
-> is_fixed() (but not both) smaller.
-> 
-> While I'm at it make the comment conform to the style guide, i.e. add
-> an opening "/*\n".
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  grep.c | 20 +++++++++++++-------
->  1 file changed, 13 insertions(+), 7 deletions(-)
-> 
-> diff --git a/grep.c b/grep.c
-> index bf6c2494fd..79eb681c6e 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -321,6 +321,18 @@ static NORETURN void compile_regexp_failed(const struct grep_pat *p,
->  	die("%s'%s': %s", where, p->pattern, error);
->  }
->  
-> +static int has_null(const char *s, size_t len)
-> +{
-> +	/*
-> +	 * regcomp cannot accept patterns with NULs so when using it
-> +	 * we consider any pattern containing a NUL fixed.
-> +	 */
-> +	if (memchr(s, 0, len))
-> +		return 1;
-> +
-> +	return 0;
-> +}
-> +
->  #ifdef USE_LIBPCRE
->  static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
->  {
-> @@ -394,12 +406,6 @@ static int is_fixed(const char *s, size_t len)
->  {
->  	size_t i;
->  
-> -	/* regcomp cannot accept patterns with NULs so we
-> -	 * consider any pattern containing a NUL fixed.
-> -	 */
-> -	if (memchr(s, 0, len))
-> -		return 1;
-> -
->  	for (i = 0; i < len; i++) {
->  		if (is_regex_special(s[i]))
->  			return 0;
-> @@ -451,7 +457,7 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
->  	 * simple string match using kws.  p->fixed tells us if we
->  	 * want to use kws.
->  	 */
-> -	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
-> +	if (opt->fixed || has_null(p->pattern, p->patternlen) || is_fixed(p->pattern, p->patternlen))
-
-small nit: longer than 80 char
-
->  		p->fixed = !icase || ascii_only;
->  	else
->  		p->fixed = 0;
-> -- 
-> 2.13.0.303.g4ebf302169
-> 
-
--- 
-Brandon Williams
+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
+AFBLBQYAAAAAAQABAE8AAAAqDAAAAAA=
