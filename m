@@ -2,81 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B69A81FF30
-	for <e@80x24.org>; Tue, 23 May 2017 09:01:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF0B01FF30
+	for <e@80x24.org>; Tue, 23 May 2017 09:17:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762465AbdEWJBa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 23 May 2017 05:01:30 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52259 "EHLO mout.gmx.net"
+        id S935485AbdEWJRs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 23 May 2017 05:17:48 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55422 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1762441AbdEWJB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 23 May 2017 05:01:26 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MHso5-1dG71O1tsb-003aQI; Tue, 23
- May 2017 11:01:03 +0200
-Date:   Tue, 23 May 2017 11:01:02 +0200 (CEST)
+        id S935239AbdEWJRj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 23 May 2017 05:17:39 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPDaC-1dHTfK2NJg-004Rp1; Tue, 23
+ May 2017 11:17:34 +0200
+Date:   Tue, 23 May 2017 11:17:28 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH v3 1/6] Fix build with core.autocrlf=true
-In-Reply-To: <xmqqh90cmei6.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1705231057510.3610@virtualbox>
-References: <cover.1493891336.git.johannes.schindelin@gmx.de> <cover.1494334366.git.johannes.schindelin@gmx.de> <6bc890b10de8a59f90005462f8767d6b022b0749.1494334366.git.johannes.schindelin@gmx.de> <20170522175709.GC17710@aiede.svl.corp.google.com>
- <xmqqh90cmei6.fsf@gitster.mtv.corp.google.com>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: BUG: The .gitignore rules can't be made to cross submodule
+ boundaries
+In-Reply-To: <CACBZZX41yrAtBvkVeL9Q=2_TxcwrDXh55gu3qLN54P_go318OA@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1705231103220.3610@virtualbox>
+References: <CACBZZX41yrAtBvkVeL9Q=2_TxcwrDXh55gu3qLN54P_go318OA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Hiq18EKeTHcknRm1viQYovod1fY0oyBFW/PGmXqyJEP7RIAk3ML
- wB2pJu2nKSE4eHCQlhRQoUrcS72cwh9H3iSIfBHwizjwQG5y8GuwOr5RMvzWAHcCETdJTh1
- S0WgOB4DF+h0WkQQWphqFbTuAVEuRoPi84ThIeUM13drJBf0kYQcDQ9/TZvQ9UYYosNi8d8
- Vr7m9dPZYHF8SslG4wUxQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7gfhCJ8NsTs=:UYHJEezy9FVnxNrIb0rb2M
- C6AZARUo39fv4Ec/2eySfjF1nqbjpcs/IDwUjDXXlEgAqsEHaoKVyD/o+b6TaeKlOiNLdlcbc
- vbPMXiTTrN95Y+3/3PKQx5dRzJ7E31aGh90Wc4dXb7dTSEhex8/H6NwemRjqW725Ec7eZLDMM
- e/aaPpdDitWDcZuM6nZh0tk0cE5tv7rU8gzKCMVhifepEmorw61MAe5w+HoExsbDu9f1wrGNl
- 3Cvj4eEJZvQ+tVRN+jkbf+s4rwaFsnqaDUyqMJiXqaSgEA3hlpg4y0zY5m4gnasHG+zj5Dbng
- gjK6PA/OGMFPOeoIJQpj39dlLNvdtVpiToXU3gmAfMx1hI7/0CAQ4skO96FqStoADOvZnj8X0
- WYjCBZY5DNMu6vb6vGcy+/w93YpaaibKmLCL0XOx3gRUjg13et3DsJipS8lUzUAhjo22cYLTi
- wkW35hNpRr7YKRcHp5FiEuAyysbwtfxshNJyAiBwY7JCvYjigGhhOQpqY2EGkmvV+78bGyb/A
- ur6QZl9a0T5aLWhCk9Zuw6LIpyVRM00wUeTWwzORQsyIfJE7c9o93io2yoByCJCfvWSMpkdGp
- q+sJYGtfB6TEKLpD59vF6tOeB/qGLo1clqL5xiETSUzB3r+hZjXswm9+WETjrXLTCB0V9ZG5q
- 1mmax3z50w7jGKDIr+S3EXySKQCds1OzqF/3zYcRKK1XGJHPltZ6l2dZtptExRf0XJr9P2tVK
- 87S55N6YWY5drm6wKxFDexJ4Ox8ytdrrlAVc47FlvpanKcQgCMcOEMxAH7f8YcqGI9vahp2Vt
- L9jchAU
+Content-Type: multipart/mixed; boundary="8323329-614509214-1495531054=:3610"
+X-Provags-ID: V03:K0:wl0S6yWNdH9aj/Zrjoa/4xq9ty2BJY8kOu2jwZ9eEAWLeiOWLN0
+ Nj6r8BUSwfD+fbh9D2xJ9ZmVEzjlEH1OoMUb2cdJLhxmLbIUnHkyDyicBccf49CoYjW0Tkm
+ /8M+HkVs672IvoksuejztKEvH0LoMST4rm1EretpMDaQWLlxZSGkmHMJ9eQUkDqQha2/AZe
+ GhdtJhB0PDIAKGyfOvu7Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tIPOcsf7eGo=:qZSyHnSvDXeG7FeeAq4mUP
+ XGu2Jrqk0naTEEenzXVh9v530TcnkBCHkyyN+zGTQf7EwpwjKVyBsTq8HczI2pYnB8nsKDrT2
+ 0jkaO/8E1ZPLMwL9oEWUqPgRexA4ul5Q0JNkj0QqlYeQVt1yD+WtukbQqnPPym04tk2C8Y7Dg
+ TkZc8xdbO8mpMpAnIhpPuiO5MrlTuXjytNTLIeVnMv7DeHsWg8GA0/40orRs2BoAvB/ZLaU6z
+ e1Y0CbL2Z6Oq/XQouEp8CDIPLint6rZD2fnXOk42WEzpinlVgb+SNb0UMSegOe33IUGLQZvgb
+ XM0R3X9ayLiFA2yDPWZPThQcbG85FfzNHzarXu67aiU099a01VArvFhg5+wh6YbpTbFqJOjOP
+ O81FPaZXZdAg5apwZPuEmQUTU8cc+ceLqJLo4qCT17HKjp/GceUNis4im0emZ92T4Rc1dzhxY
+ DHvBXZIMZtl6MpJbp9yZPplTCuHKViYviLxP7L/H+p2nQtMQv2PY4xF/o8aKaWJR3I7JBpGyU
+ OkXoYqYcxae5p4wX3pZwlWI+OYAPmCCw6MEYSxed/v5f0HwoEjc2inXMvSXzmcOR29BtU+k9G
+ kFudsHpmAR76pUhfsZy40RInMtQnogc5XomZ5XAWX2dDviWSy0p23H31Djsn2Kbve/ife9qae
+ G0vSA+8AbYguy38hzAH3/m2YjO8GKu/hx0S/ONKjmZgngTpf8x4JP0N3tlKrW6nLyZLaCbqLB
+ v3tfjttXN/snSgfQjl33KE4GHlZu0aGGDExqFf3t6MGRQNJD+tTQiq1uPJUD4za0i5MP1xabs
+ 9bPWmYx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 23 May 2017, Junio C Hamano wrote:
+--8323329-614509214-1495531054=:3610
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
-> > Junio, how do you prefer to handle this in git.git?  Would you need to
-> > amend the patch to remove the git-gui/.gitattributes change and wait
-> > to get it from Pat, or is getting the same change twice okay?
-> 
-> Yes, getting the same change twice should be fine.  I'll see
-> conflicts when I update from Pat when it happens next time, but we
-> know what the resolution should be already.
+Hi =C3=86var,
 
-FWIW the reason why I did not open a Pull Request in
-https://github.com/patthoyts/git-gui for this change (which I had
-originally considered) is that I already have a couple of Pull Requests
-open in that repository, and they are rotting for over half a year
-already (and will soon compete with certain Icelandic delicacies):
+On Mon, 22 May 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-https://github.com/patthoyts/git-gui/pulls/dscho
+> When I was adding the sha1collisiondetection submodule to git.git I
+> noticed that building git would dirty the submodule.
+>=20
+> This is because our own Makefile adds .depend/ directories. I hacked
+> around it by just getting the upstream project accept carrying an ignore
+> rule for that around:
+> https://github.com/cr-marcstevens/sha1collisiondetection/commit/e8397b26
+>=20
+> A workaround for this is to have the Makefile add such a rule to
+> .git/modules/sha1collisiondetection/info/exclude, but that's less
+> convenient than being able to distribute it as a normal .gitignore rule.
+>=20
+> The submodule.<name>.ignore config provides an overly big hammer to
+> solve this, it would be better if we had something like
+> submodule.<name>.gitignore=3D<path>. Then we could have e.g.
+> .gitignore.sha1collisiondetection which would be added to whatever rules
+> the repo's own .gitignore provides.
+
+While I have nothing but the utmost respect for Stefan and Brandon for
+trying to improve submodules, maybe it would be a wiser idea to imitate
+the same strategy with sha1dc as we use with git-gui and gitk, i.e.
+perform a subtree merge instead of adding it as a submodule. It's not like
+570kB will kill us.
 
 Ciao,
 Dscho
+--8323329-614509214-1495531054=:3610--
