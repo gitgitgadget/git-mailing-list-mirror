@@ -2,71 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCFF120285
-	for <e@80x24.org>; Wed, 24 May 2017 07:08:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 973352023D
+	for <e@80x24.org>; Wed, 24 May 2017 07:17:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031378AbdEXHIj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 May 2017 03:08:39 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36293 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S938513AbdEXHIi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2017 03:08:38 -0400
-Received: by mail-pg0-f68.google.com with SMTP id h64so16075661pge.3
-        for <git@vger.kernel.org>; Wed, 24 May 2017 00:08:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Ey16MfDOt0se0hIU9Bk9Hzz7p9hQyMN3Zzmj/7NqQdw=;
-        b=l8XCEL/AD0LOoHZ8J3u7g2b5zlgeAu3IsYBuf5p3EwbVBRI92Ye+kN0kHLhy58UKsU
-         1XW3IZUWVjwFXxirYlAjxnYEIP2ibzBaS9x5/4p6sFUBVgMJIRl5hb4SrRdAKmQ3ZJVN
-         GaFlQH39KCMtYxOh5yzC1vhIj1zpxhV75b8bkAAjOuHRC25oSyI4c/OsifivFKPT9RiN
-         ovs1B1/Q5HKJd97oLVjDhILXBlfqdpTM5h1h4liVz9OKw7BF5qsBPUzdtvnsVl5cZKoz
-         Oa0vwB/1mvl0PAhIOX+k91bEHFCcEMMmZ2wEOSs6SolqfVMrrPTZ4p5nNCwELLSEM8VX
-         LOdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Ey16MfDOt0se0hIU9Bk9Hzz7p9hQyMN3Zzmj/7NqQdw=;
-        b=KTIiLTHZNFH457iXBgzNVpz/pFlY24J0rHCXmF+cISmAxblXWvLhbkDOo0bly5M93N
-         7acz5AGBfDz2DNkRX2ibN/YbTRNT+EBkjZwtVHMSVt8cPRCxFROdFf/XOT8j31dY6NNM
-         F4KTfvNXEu9otEiVd3nQX9Xxdg27ObR8Sdqv24Be4mSjrayWJSo41hrC3m6tJkMgW9qP
-         fcAo/yX5oXNLas5wRG7Oe/qWMFV01O/T35T/1g4cBwSeIXaUcMpfXYchkpJrAKDcxb9h
-         7FLzCvQ1iuowKkYsaWP1ecJkuuRzlDZg9mfEzwZxxKxAtv9LbaKEB5tFt4UEe7o6Bx+2
-         +lKg==
-X-Gm-Message-State: AODbwcCeljRkZJQLh0wxHdTQvuEZMiET+lBHEB8zCZE9xfBjFB1MVD+/
-        1mMZsnMx3rV0Lw==
-X-Received: by 10.98.101.6 with SMTP id z6mr36446072pfb.221.1495609717831;
-        Wed, 24 May 2017 00:08:37 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:167:7063:293b:a24d])
-        by smtp.gmail.com with ESMTPSA id m8sm6879765pga.34.2017.05.24.00.08.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 May 2017 00:08:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Smith <whydoubt@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 00/29] Add blame to libgit
-References: <20170524051537.29978-1-whydoubt@gmail.com>
-Date:   Wed, 24 May 2017 16:08:36 +0900
-In-Reply-To: <20170524051537.29978-1-whydoubt@gmail.com> (Jeff Smith's message
-        of "Wed, 24 May 2017 00:15:08 -0500")
-Message-ID: <xmqq1srehguj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S935918AbdEXHRa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 May 2017 03:17:30 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:60717 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933229AbdEXHR3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 24 May 2017 03:17:29 -0400
+X-AuditID: 12074412-a67ff70000003a21-21-59253385f33f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 4E.A6.14881.58335295; Wed, 24 May 2017 03:17:26 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCC990.dip0.t-ipconnect.de [87.188.201.144])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v4O7HKq6017703
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 24 May 2017 03:17:22 -0400
+Subject: Re: [PATCH v2 25/25] cache_ref_iterator_begin(): avoid priming
+ unneeded directories
+To:     Jeff King <peff@peff.net>
+References: <cover.1495460199.git.mhagger@alum.mit.edu>
+ <0d6a608a62026352c1496239bab02122f123f2e1.1495460199.git.mhagger@alum.mit.edu>
+ <20170523194519.luhuej3rerzb57t7@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <33ffee8b-22da-ced4-95c6-ab68d4557f1d@alum.mit.edu>
+Date:   Wed, 24 May 2017 09:17:20 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20170523194519.luhuej3rerzb57t7@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqNtmrBppcH+9icXaZ3eYLJ6vP8Fu
+        0XWlm8miofcKs8WTuXeZLZY8fM1s0T3lLaPFj5YeZovNm9tZHDg9ds66y+6xYFOpx8NXXewe
+        Xe1H2Dye9e5h9Lh4Sdnj8ya5APYoLpuU1JzMstQifbsEroyTE3sZC2YKVHx7/IulgfETTxcj
+        J4eEgInEuVNdTF2MXBxCAjuYJB73NDODJIQELjBJTJ7o38XIwSEsECex4EIySFhEQFbi++GN
+        jBD1hxglllzoYQZxmAU6mCW+7p/JBlLFJqArsainmQnE5hWwl2hadYoFxGYRUJWY8WkHmC0q
+        ECHxsHMXO0SNoMTJmU/A4pwCLhI7f00FO4JZQF3iz7xLULa8xPa3c5gnMPLPQtIyC0nZLCRl
+        CxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpmunlZpbopaaUbmKERIHQDsb1J+UOMQpwMCrx
+        8CY4qEQKsSaWFVfmHmKU5GBSEuVNeA4U4kvKT6nMSCzOiC8qzUktBvqdg1lJhFdTRzVSiDcl
+        sbIqtSgfJiXNwaIkzvtzsbqfkEB6YklqdmpqQWoRTFaGg0NJgrfFCKhRsCg1PbUiLTOnBCHN
+        xMEJMpwHaHgvSA1vcUFibnFmOkT+FKOilDjvYZCEAEgiozQPrheWpF4xigO9Isw7C6SKB5jg
+        4LpfAQ1mAhrselcZZHBJIkJKqoGxyUOtZHtYxN+/bTKe2xLcrMQvvk/N5s8Jrr75ddcalfCP
+        hbp21z7aG588lFVrMefE9dusM5c+tdwm9uVhec764NDJPffzDFu++Ooz2O24fOb3e/6HAU9f
+        RTteSn1vc/sjK//EytStksVJbfOmLFeTPa0/iXu+c+FnuZ2Xjs7Rl924fXt95BsTJZbijERD
+        Leai4kQAlbWgDy0DAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I haven't had a chance to take a deeper look, but what I saw in
-merge conflicts with the rest of the system made all sense to me ;-)
-Will take a deeper look tomorrow.
+On 05/23/2017 09:45 PM, Jeff King wrote:
+> On Mon, May 22, 2017 at 04:17:55PM +0200, Michael Haggerty wrote:
+> 
+>> So:
+>>
+>> * Move the responsibility for doing the prefix check directly to
+>>   `cache_ref_iterator`. This means that `cache_ref_iterator_begin()`
+>>   never has to wrap its return value in a `prefix_ref_iterator`.
+>>
+>> * Teach `cache_ref_iterator_begin()` (and `prime_ref_dir()`) to be
+>>   stricter about what they iterate over and what directories they
+>>   prime.
+>>
+>> * Teach `cache_ref_iterator` to keep track of whether the current
+>>   `cache_ref_iterator_level` is fully within the prefix. If so, skip
+>>   the prefix checks entirely.
+> 
+> As promised, I came back to this one with a more careful eye. These
+> changes all make sense to me, and the implementation matches.
+> 
+> My only question is:
+> 
+>> @@ -511,9 +582,12 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
+>>  	level->index = -1;
+>>  	level->dir = dir;
+>>  
+>> -	if (prefix && *prefix)
+>> -		ref_iterator = prefix_ref_iterator_begin(ref_iterator,
+>> -							 prefix, 0);
+>> +	if (prefix && *prefix) {
+>> +		iter->prefix = xstrdup(prefix);
+>> +		level->prefix_state = PREFIX_WITHIN_DIR;
+>> +	} else {
+>> +		level->prefix_state = PREFIX_CONTAINS_DIR;
+>> +	}
+> 
+> Who frees the prefix? Does this need:
+> 
+> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+> index fda3942db..a3efc5c51 100644
+> --- a/refs/ref-cache.c
+> +++ b/refs/ref-cache.c
+> @@ -542,6 +542,7 @@ static int cache_ref_iterator_abort(struct ref_iterator *ref_iterator)
+>  	struct cache_ref_iterator *iter =
+>  		(struct cache_ref_iterator *)ref_iterator;
+>  
+> +	free(iter->prefix);
+>  	free(iter->levels);
+>  	base_ref_iterator_free(ref_iterator);
+>  	return ITER_DONE;
 
-Thanks.
+Yes, you are right. Thanks for catching this.
+
+Note: it has to be
+
+        free((char *)iter->prefix);
+
+because `prefix` is const.
+
+Junio, if a reroll is not needed for other reasons, would you mind
+squashing this into the last patch of my series?
+
+Michael
+
