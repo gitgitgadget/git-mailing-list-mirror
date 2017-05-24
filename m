@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23E6620281
-	for <e@80x24.org>; Wed, 24 May 2017 05:16:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8737020281
+	for <e@80x24.org>; Wed, 24 May 2017 05:17:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S969161AbdEXFQu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 May 2017 01:16:50 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:36249 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S969127AbdEXFQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2017 01:16:25 -0400
-Received: by mail-oi0-f66.google.com with SMTP id w138so31033561oiw.3
-        for <git@vger.kernel.org>; Tue, 23 May 2017 22:16:25 -0700 (PDT)
+        id S969170AbdEXFQ7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 May 2017 01:16:59 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:33697 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S969127AbdEXFQv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2017 01:16:51 -0400
+Received: by mail-oi0-f65.google.com with SMTP id h4so31067402oib.0
+        for <git@vger.kernel.org>; Tue, 23 May 2017 22:16:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gs9c0Ds1cfjoGy5MALTzo4lAmVQSkHMYJIGwmtlTUP8=;
-        b=gZ3pmM2wMHRxTiMNdgf7JE+7Lfy374mFdMqgLbSlLFQqDUQfDqTgsZfsT5rez0ooqA
-         /TVXY6ORg/6d/Uh4BHIXBES9ZxEmjKOciMwCukY1F/Amz76TEmne5pwLBK0aDmatiKdV
-         kBVGFqhBAUmnb+35QxzcgrVQGX8ynl3fntidGIKqr7G9zetlskqWyRrU22FvwFq63jsd
-         zPDVvZHgVutJMs6roIoeEbqfCxEpRarkzSID3tDRKWFQlwMmZphdGpqD6pKLaWD3rrcD
-         rfyIEazEm6Jei82buf4GtGnKhUQEokJf3NZnEmNXq3J9EkChPvB0gdP08GmyXWjIEVjC
-         rEtA==
+        bh=wJuDeRrmEecWFSJRZ3XFV4vqYrVuGVYS2NkZZNLgwUQ=;
+        b=tyTDnFFAdTNOwMkCCz+9Gaewyfhek/J+ihZX6DrhpG2BJfhvZ9E9oOGWdZd7deUsvu
+         nDH5ZCQ0ese6CEKoob6W1UjYVsLOpcgQSxhZ+hssmjDdiVZrja61dQQ1Wlgqrr3m4kOS
+         CNsCigN0w+IyiHpQ+2wL19UHjssCWLz9JFAGUGCaH7fOYthia2YY+L3dlfEiIrXL3nlj
+         zoXF+5kBg/UoAL0XoXFkoQ+nyjstXbSJhvm1yJ90wtDDKSAERflrWxwCPOK3FZp88P6Z
+         2vmQxuKT7+uuCJbswmJvtteqRJEoKm+vpQohKgqOiinmyDHMQF+KVzevr4fg+DIXzqus
+         I2ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gs9c0Ds1cfjoGy5MALTzo4lAmVQSkHMYJIGwmtlTUP8=;
-        b=lx5gcVCjpaR3lJ2dv6cdIqXWWZWYIaFnmOrlUqvpjyOI7l4ceCGn4xpK6ueCkPKSOG
-         UQ0gEECrj9iATFk6+s6as4g5Cs2j5BlIecJZ6gMgoMgdSdUcgrhUMN1ieqcLW3sAiyD4
-         3CYbwV+zlOQbs+r18xQLu92WksoO5MqV+BxTfxDl86TQlCfWqwUM9yybN3s86Ay3hnCc
-         cBDm6XSMPoHCZxddwX/FHTivKnFvGCCn8i61CHL/2QgpHL7OfGndPkHpSXMzdBXqGOE1
-         ytU6r4Yijnd+dRGV/BPoPZ3RgaDDN3JVkp3zMABRnLZCUAaLM4IvM6CGJ/XQi+d+MH0L
-         z/vw==
-X-Gm-Message-State: AODbwcAkwPQ/z8BzsWu949iBQAlLjG/XGGclr5Aj6yAb/pGWfqVqP0lC
-        2IrwrUb+viNJxQ==
-X-Received: by 10.157.47.173 with SMTP id r42mr4237905otb.63.1495602985275;
-        Tue, 23 May 2017 22:16:25 -0700 (PDT)
+        bh=wJuDeRrmEecWFSJRZ3XFV4vqYrVuGVYS2NkZZNLgwUQ=;
+        b=kAnoza1GziUoO58BFC6+1+hL4voI64Gh0d86SRHr+M8Se9zsvBNZIM0kJNW5BAGdbk
+         5QahukwCtvbGgEJt7z+C//NbFxuBp84Cs/z9Y8U9qGDGagPZR+eHrwPkJyXcnOo+7VyS
+         6mgCKIV8iDLNlAUzC4fxOfxXA1TiCYuD6BHFu+ILdaOoK39Uh80NWsk4FsTbMbLPLN5M
+         Bf8cR7q7aN6RBrT65wAjM7c93Q6C1g6Pv+Nhg/hoeACVqGUaDsuwfiorcnZQaslfvkln
+         E+rLeoIhgd8nxM2pydiWC6RGlq8Y8yWmbE+iESi04wne6J8t671fXJkTBi3iH0HXBvk8
+         ZBXQ==
+X-Gm-Message-State: AODbwcAYCUpO+h3T0fv8kr4bd/GA1+DlVXif7ZUOd6WzS//PsQVAKluh
+        FWaWT2TFqIW24g==
+X-Received: by 10.202.244.86 with SMTP id s83mr16987547oih.116.1495603011029;
+        Tue, 23 May 2017 22:16:51 -0700 (PDT)
 Received: from whydoubt.T-mobile.com (ip68-12-240-88.ok.ok.cox.net. [68.12.240.88])
-        by smtp.gmail.com with ESMTPSA id f81sm1429917oih.1.2017.05.23.22.16.23
+        by smtp.gmail.com with ESMTPSA id f81sm1429917oih.1.2017.05.23.22.16.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 May 2017 22:16:24 -0700 (PDT)
+        Tue, 23 May 2017 22:16:50 -0700 (PDT)
 From:   Jeff Smith <whydoubt@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, Jeff Smith <whydoubt@gmail.com>
-Subject: [PATCH 07/29] blame: rename coalesce function
-Date:   Wed, 24 May 2017 00:15:15 -0500
-Message-Id: <20170524051537.29978-8-whydoubt@gmail.com>
+Subject: [PATCH 23/29] blame: create entry prepend function
+Date:   Wed, 24 May 2017 00:15:31 -0500
+Message-Id: <20170524051537.29978-24-whydoubt@gmail.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170524051537.29978-1-whydoubt@gmail.com>
 References: <20170524051537.29978-1-whydoubt@gmail.com>
@@ -61,36 +61,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Functions that will be publicly exposed should have names that better
-reflect what they are a part of.
+Create function that populates a blame_entry and prepends it to a list.
 
 Signed-off-by: Jeff Smith <whydoubt@gmail.com>
 ---
- builtin/blame.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/blame.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/blame.c b/builtin/blame.c
-index 7854770..7c493d2 100644
+index fd41551..29771b7 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -384,7 +384,7 @@ static void sanity_check_refcnt(struct blame_scoreboard *);
-  * contiguous lines in the same origin (i.e. <commit, path> pair),
-  * merge them together.
-  */
--static void coalesce(struct blame_scoreboard *sb)
-+static void blame_coalesce(struct blame_scoreboard *sb)
+@@ -2643,6 +2643,20 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
+ 		*orig = o;
+ }
+ 
++struct blame_entry *blame_entry_prepend(struct blame_entry *head,
++					long start, long end,
++					struct blame_origin *o)
++{
++	struct blame_entry *new_head = xcalloc(1, sizeof(struct blame_entry));
++	new_head->lno = start;
++	new_head->num_lines = end - start;
++	new_head->suspect = o;
++	new_head->s_lno = start;
++	new_head->next = head;
++	blame_origin_incref(o);
++	return new_head;
++}
++
+ int cmd_blame(int argc, const char **argv, const char *prefix)
  {
- 	struct blame_entry *ent, *next;
+ 	struct rev_info revs;
+@@ -2885,16 +2899,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
  
-@@ -2885,7 +2885,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	for (range_i = ranges.nr; range_i > 0; --range_i) {
+ 		const struct range *r = &ranges.ranges[range_i - 1];
+-		long bottom = r->start;
+-		long top = r->end;
+-		struct blame_entry *next = ent;
+-		ent = xcalloc(1, sizeof(*ent));
+-		ent->lno = bottom;
+-		ent->num_lines = top - bottom;
+-		ent->suspect = o;
+-		ent->s_lno = bottom;
+-		ent->next = next;
+-		blame_origin_incref(o);
++		ent = blame_entry_prepend(ent, r->start, r->end, o);
+ 	}
  
- 	sb.ent = blame_sort(sb.ent, compare_blame_final);
- 
--	coalesce(&sb);
-+	blame_coalesce(&sb);
- 
- 	if (!(output_option & OUTPUT_PORCELAIN))
- 		find_alignment(&sb, &output_option);
+ 	o->suspects = ent;
 -- 
 2.9.3
 
