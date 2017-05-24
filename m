@@ -2,200 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10FB820281
-	for <e@80x24.org>; Wed, 24 May 2017 05:17:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9CEF20281
+	for <e@80x24.org>; Wed, 24 May 2017 05:17:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S969195AbdEXFRd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 May 2017 01:17:33 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:35502 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S969114AbdEXFQq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2017 01:16:46 -0400
-Received: by mail-oi0-f67.google.com with SMTP id m17so31048240oik.2
-        for <git@vger.kernel.org>; Tue, 23 May 2017 22:16:45 -0700 (PDT)
+        id S966061AbdEXFRj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 May 2017 01:17:39 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35322 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S969171AbdEXFRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2017 01:17:18 -0400
+Received: by mail-pf0-f194.google.com with SMTP id u26so31636418pfd.2
+        for <git@vger.kernel.org>; Tue, 23 May 2017 22:17:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/IqZguUwx/ZgWyW4DZR6Bl9JSpz7+2boNH97f5PAQqk=;
-        b=TGbD82OffBS+n8d1yZD4XIeq4bCMdYKxRirZ/BKSBhhqjjb324iE02jMQeSb8p222U
-         sSxlIk+gyODLeZr3BFj9dwHmzILtFynovV7KtWRjaDgm9muCM76R0kpBjKYpWu+N8xJ6
-         F494mClQyCfdbDx+5HbCA2V5049RHcEH4lBaF71lwigaIlHBtky2VVHNHajVErcCGXaq
-         9AcJ61Q4pgILepxSX1Bsz5nNThiPrkGuAZZIUqcb30dUJKwaKwARnRKoT+zdLU9Aj5Oq
-         ISgQVLPz0NPJAMYpSx2LCYxNn8j+BTpMeVSxeCIQk13a3EMjZcqvdIF2CxAv3M8WSfYX
-         8REw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=LR4upWAmfYUN/p24lcVXrfmzsvyU6/dyf6lorCZLYC8=;
+        b=lCkqyrmj7LGmVDQHG8wRmQ6i0jf8EK3LJ+fzJgYUDNhMg2HzAyVxgYcO/FD1Zk9JYW
+         hiLE+4vA0wfhXLh47vJI0RloawO+jCeQvcN7Awml1OxJJM4qbHZHJDkYyyeiPQQbV6IB
+         a0/+nanBgzo0V3YioxArL1oBBjvxU73zRHqj7rO1bPgQbxYBMQjOqWs0fmdZFiGNTkDc
+         I4m9bbuKDPntxgn4h4JDlpPMno6BvV/aWvYgtv8MMFBHKXptMuzxJ1Kr1WEbmAMLMpVu
+         JtE+QN1HHq0T4WgVdeconegX8BpvPeVaJO51NnoCMx+kig4a8ITcTorfjnmklbVkb2SY
+         Z/wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=/IqZguUwx/ZgWyW4DZR6Bl9JSpz7+2boNH97f5PAQqk=;
-        b=F8N/13UV/pi9U1O8Mp6aORbGcb3U1Uu/lKdA3BWQK+9JaFKaS1iUdl9jGum/Wvvznw
-         V7Fg8WxVZA7voLXe7/30lgKnTq11SNEswdRg6xSI6skXQtqri+nCSTjVdFKsP2nycOov
-         Ts39JReKFmf4kGgGtEbEA3sKftHbIU7ez5AxjZUQnBzeXgc/C4b800UL9PDA8VaDV3d6
-         0AIfTyspEEO6I9kL+0oPak0oH5cc2wj5DOSz4xhwL47yOBS1JF6rmPWniGs4+GU/6IsT
-         5pv1IKeIvWAVdzeaDQzDk12+CI7sXNBE1dpvYtq9+ldmweDkprukqGADbDVyslrXbSpf
-         cwxw==
-X-Gm-Message-State: AODbwcAc9Vxsz9F89LZIuBJGfNzquCQYQuNgnxczRAM7Oiw2zMZ+hXUV
-        DV68+ssX5a6/fA==
-X-Received: by 10.202.245.194 with SMTP id t185mr16862493oih.102.1495603005272;
-        Tue, 23 May 2017 22:16:45 -0700 (PDT)
-Received: from whydoubt.T-mobile.com (ip68-12-240-88.ok.ok.cox.net. [68.12.240.88])
-        by smtp.gmail.com with ESMTPSA id f81sm1429917oih.1.2017.05.23.22.16.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 23 May 2017 22:16:44 -0700 (PDT)
-From:   Jeff Smith <whydoubt@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, Jeff Smith <whydoubt@gmail.com>
-Subject: [PATCH 20/29] blame: rework methods that determine 'final' commit
-Date:   Wed, 24 May 2017 00:15:28 -0500
-Message-Id: <20170524051537.29978-21-whydoubt@gmail.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170524051537.29978-1-whydoubt@gmail.com>
-References: <20170524051537.29978-1-whydoubt@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=LR4upWAmfYUN/p24lcVXrfmzsvyU6/dyf6lorCZLYC8=;
+        b=c+rKsp3SwoA4zOyhtXRe1FeOmmJXg2xIZcrCaXDMxC4Mp6F5gy9GgKGUs8DPf9mlyf
+         t134ZvBy5o/EEN7GApBuqRDAGoN5yye9tQlYKhvFtXGHp8aGLk4w+CY0GJ8Qep3SC5nE
+         Z38m1HkgOy0C97/scW/bY9YM0McQKs9GYj1t+C3nF2GAIvK2VIn7v5bDspa3WpwygC9c
+         rcrbcbPWH15EfAyW84L0nm8MLn5Wyzk8fe+mlZZTZGj275YHypISQ9qhaAu5bzVWubih
+         dpAqBc3aXCdbZEOHLKsqpczljBeGHRbCUDIyx+5WG8wSf+k22Mfh6bTwEPoIpqKs9Npt
+         QYUw==
+X-Gm-Message-State: AODbwcDD8lYJnxgyeoPPkh86ipaQlv0DPZvbg5aio+e0EPyWmUpFwykY
+        jWsRwnV/N7BCag==
+X-Received: by 10.99.125.87 with SMTP id m23mr36295310pgn.79.1495603032978;
+        Tue, 23 May 2017 22:17:12 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:167:7063:293b:a24d])
+        by smtp.gmail.com with ESMTPSA id a3sm4948356pfc.26.2017.05.23.22.17.12
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 23 May 2017 22:17:12 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Simon Ruderich <simon@ruderich.org>
+Subject: Re: [PATCH v2 4/7] grep: add support for the PCRE v1 JIT API
+References: <20170523192453.14172-1-avarab@gmail.com>
+        <xmqqshjzqe9o.fsf@gitster.mtv.corp.google.com>
+        <20170523192453.14172-5-avarab@gmail.com>
+Date:   Wed, 24 May 2017 14:17:11 +0900
+In-Reply-To: <20170523192453.14172-5-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 23 May 2017 19:24:50 +0000")
+Message-ID: <xmqqlgpmhm08.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Either prepare_initial or prepare_final is used to determine which
-commit is marked as 'final'. Call the underlying methods directly to
-make this more clear.
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-Signed-off-by: Jeff Smith <whydoubt@gmail.com>
----
- builtin/blame.c | 49 +++++++++++++++++++++++--------------------------
- 1 file changed, 23 insertions(+), 26 deletions(-)
+> diff --git a/grep.c b/grep.c
+> index 1157529115..49e9aed457 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -351,6 +351,9 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+>  	const char *error;
+>  	int erroffset;
+>  	int options = PCRE_MULTILINE;
+> +#ifdef PCRE_CONFIG_JIT
+> +	int canjit;
+> +#endif
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 61fd5b4..e343520 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2431,14 +2431,8 @@ static struct commit *find_single_final(struct rev_info *revs,
- 	return found;
- }
- 
--static char *prepare_final(struct blame_scoreboard *sb)
--{
--	const char *name;
--	sb->final = find_single_final(sb->revs, &name);
--	return xstrdup_or_null(name);
--}
--
--static const char *dwim_reverse_initial(struct blame_scoreboard *sb)
-+static struct commit *dwim_reverse_initial(struct rev_info *revs,
-+					   const char **name_p)
- {
- 	/*
- 	 * DWIM "git blame --reverse ONE -- PATH" as
-@@ -2449,11 +2443,11 @@ static const char *dwim_reverse_initial(struct blame_scoreboard *sb)
- 	struct commit *head_commit;
- 	unsigned char head_sha1[20];
- 
--	if (sb->revs->pending.nr != 1)
-+	if (revs->pending.nr != 1)
- 		return NULL;
- 
- 	/* Is that sole rev a committish? */
--	obj = sb->revs->pending.objects[0].item;
-+	obj = revs->pending.objects[0].item;
- 	obj = deref_tag(obj, NULL, 0);
- 	if (obj->type != OBJ_COMMIT)
- 		return NULL;
-@@ -2467,17 +2461,19 @@ static const char *dwim_reverse_initial(struct blame_scoreboard *sb)
- 
- 	/* Turn "ONE" into "ONE..HEAD" then */
- 	obj->flags |= UNINTERESTING;
--	add_pending_object(sb->revs, &head_commit->object, "HEAD");
-+	add_pending_object(revs, &head_commit->object, "HEAD");
- 
--	sb->final = (struct commit *)obj;
--	return sb->revs->pending.objects[0].name;
-+	if (name_p)
-+		*name_p = revs->pending.objects[0].name;
-+	return (struct commit *)obj;
- }
- 
--static char *prepare_initial(struct blame_scoreboard *sb)
-+static struct commit *find_single_initial(struct rev_info *revs,
-+					  const char **name_p)
- {
- 	int i;
- 	const char *final_commit_name = NULL;
--	struct rev_info *revs = sb->revs;
-+	struct commit *found = NULL;
- 
- 	/*
- 	 * There must be one and only one negative commit, and it must be
-@@ -2490,19 +2486,22 @@ static char *prepare_initial(struct blame_scoreboard *sb)
- 		obj = deref_tag(obj, NULL, 0);
- 		if (obj->type != OBJ_COMMIT)
- 			die("Non commit %s?", revs->pending.objects[i].name);
--		if (sb->final)
-+		if (found)
- 			die("More than one commit to dig up from, %s and %s?",
- 			    revs->pending.objects[i].name,
- 			    final_commit_name);
--		sb->final = (struct commit *) obj;
-+		found = (struct commit *) obj;
- 		final_commit_name = revs->pending.objects[i].name;
- 	}
- 
- 	if (!final_commit_name)
--		final_commit_name = dwim_reverse_initial(sb);
-+		found = dwim_reverse_initial(revs, &final_commit_name);
- 	if (!final_commit_name)
- 		die("No commit to dig up from?");
--	return xstrdup(final_commit_name);
-+
-+	if (name_p)
-+		*name_p = final_commit_name;
-+	return found;
- }
- 
- static int blame_copy_callback(const struct option *option, const char *arg, int unset)
-@@ -2546,7 +2545,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	struct blame_origin *o;
- 	struct blame_entry *ent = NULL;
- 	long dashdash_pos, lno;
--	char *final_commit_name = NULL;
-+	const char *final_commit_name = NULL;
- 	enum object_type type;
- 	struct commit *final_commit = NULL;
- 	struct progress_info pi = { NULL, 0 };
-@@ -2755,14 +2754,15 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	sb.revs = &revs;
- 	sb.contents_from = contents_from;
- 	sb.reverse = reverse;
-+
- 	if (!reverse) {
--		final_commit_name = prepare_final(&sb);
-+		sb.final = find_single_final(&revs, &final_commit_name);
- 		sb.commits.compare = compare_commits_by_commit_date;
- 	}
- 	else if (contents_from)
- 		die(_("--contents and --reverse do not blend well."));
- 	else {
--		final_commit_name = prepare_initial(&sb);
-+		sb.final = find_single_initial(&revs, &final_commit_name);
- 		sb.commits.compare = compare_commits_by_reverse_commit_date;
- 		if (revs.first_parent_only)
- 			revs.children.name = NULL;
-@@ -2917,10 +2917,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 
- 	if (!incremental)
- 		setup_pager();
--
--	free(final_commit_name);
--
--	if (incremental)
-+	else
- 		return 0;
- 
- 	blame_sort_final(&sb);
--- 
-2.9.3
+Is "canjit" a property purely of the library (e.g. version and
+compilation option), or of combination of that and nature of the
+pattern, or something else like the memory pressure?
 
+I am wondering if it is worth doing something like this:
+
+	static int canjit = -1;
+	if (canjit < 0) {
+		pcre_config(PCRE_CONFIG_JIT, &canjit);
+	}
+
+if it depends purely on the library linked to the process.
+
+> @@ -365,9 +368,20 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+>  	if (!p->pcre1_regexp)
+>  		compile_regexp_failed(p, error);
+>  
+> -	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, 0, &error);
+> +	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, PCRE_STUDY_JIT_COMPILE, &error);
+>  	if (!p->pcre1_extra_info && error)
+>  		die("%s", error);
+> +
+> +#ifdef PCRE_CONFIG_JIT
+> +	pcre_config(PCRE_CONFIG_JIT, &canjit);
+> +	if (canjit == 1) {
+> +		p->pcre1_jit_stack = pcre_jit_stack_alloc(1, 1024 * 1024);
+> +		if (!p->pcre1_jit_stack)
+> +			die("BUG: Couldn't allocate PCRE JIT stack");
+
+I agree that dying is OK, but as far as I can tell, this is not a
+BUG (there is no error a programmer can correct by a follow-up
+patch); please do not mark it as such (it is likely that we'll later
+do a tree-wide s/die("BUG:/BUG("/ and this will interfere).
+
+> +		pcre_assign_jit_stack(p->pcre1_extra_info, NULL, p->pcre1_jit_stack);
+> +		p->pcre1_jit_on = 1;
+
+Contrary to what I wondered about "canjit" above, I think it makes
+tons of sense to contain the "is JIT in use?" information in "struct
+grep_pat" and not rely on any global state.  Not that we are likely
+to want to be able to JIT some patterns while not doing others.  So
+I agree with the design choice of adding pcre1_jit_on field to the
+structure.
+
+But then, wouldn't it make more sense to do all of the above without
+the canjit variable at all?  i.e. something like...
+
+        #ifdef PCRE_CONFIG_JIT
+                pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
+                if (p->pcre1_jit_on)
+                        ... stack thing ...
+        #else
+                p->pcre1_jit_on = 0;
+        #endif
+
+> +#ifdef PCRE_CONFIG_JIT
+> +	if (p->pcre1_jit_on) {
+> +		pcre_free_study(p->pcre1_extra_info);
+> +		pcre_jit_stack_free(p->pcre1_jit_stack);
+> +	} else
+> +#endif
+> +	/* PCRE_CONFIG_JIT !p->pcre1_jit_on else branch */
+>  	pcre_free(p->pcre1_extra_info);
+> +
+>  	pcre_free((void *)p->pcre1_tables);
+
+It is very thoughtful to add a blank line here (and you did the same
+in another similar hunk), but I have a feeling that it is still a
+bit too subtle a hint to signal to the readers that these two
+pcre_free()s fire differently, i.e. the former does not fire if jit
+is on but the latter always fires.
+
+Would this be a bit safer while being not too ugly to live, I wonder?
+
+        #ifdef PCRE_CONFIG_JIT
+                if (p->pcre1_jit_on) {
+                        pcre_free_study(p->pcre1_extra_info);
+                        pcre_jit_stack_free(p->pcre1_jit_stack);
+                } else
+        #endif
+                {
+                        /* PCRE_CONFIG_JIT !p->pcre1_jit_on else branch */
+                        pcre_free(p->pcre1_extra_info);
+                }
+                pcre_free((void *)p->pcre1_tables);
+
+Thanks.
