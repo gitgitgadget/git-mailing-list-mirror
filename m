@@ -2,133 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 154A120285
-	for <e@80x24.org>; Wed, 24 May 2017 13:12:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9055D1FF30
+	for <e@80x24.org>; Wed, 24 May 2017 14:19:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030802AbdEXNM5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 May 2017 09:12:57 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:36773 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030200AbdEXNMz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2017 09:12:55 -0400
-Received: by mail-qk0-f176.google.com with SMTP id u75so152727751qka.3
-        for <git@vger.kernel.org>; Wed, 24 May 2017 06:12:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8/jTSjgKuM+3IeOZhMJfm8ZqDUuuR4DIRKWwAoKKGBs=;
-        b=TjsdgbnwQiuJvu6W4kvVsdc7DsQBAwfd0aMT5cFQ6vYbabmltwlk5eVbrZu/A0gCw6
-         hT9m/HYmkb/XSCpDdXhwzhafeJHIq/phcUkp5Il1VOGqmab3NmYzS2jN5wV5Vd/5XN4z
-         1Zknb6v7kCrH4v54fXnkfZ7FaRCdXRe8/sHTIHl8hX1uSIzqpYJ0s7yTQA/GuzDHPCKP
-         rVqI/Dlys5pGgcya/DHPS0vlEMQpy1l6S56oTj4QYcqjOJbHA6xS6zjvHM5hGdjp/mzN
-         ySaTAhkK3+tqmbWeaAYbzvRMVVk7Jp3LGPbnEheNiz48uE50ptthoAgvAA+vq8JM1H3f
-         /Ngg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8/jTSjgKuM+3IeOZhMJfm8ZqDUuuR4DIRKWwAoKKGBs=;
-        b=HkEv2NUPMsbz0DWxG5AUq2qjxZ8j+iezPGjk+r/eGByVra+U77wiYwblKiuUL2aJjn
-         E/0leKSA+TeFFae/kdsGw81QngCghqmXorT/TadbRdGq8sOdi/pfxYyWTv+k/OmjHXvi
-         1aNvZyu/YNIKGqTKVy6Uq5v9h6sz+2HCkRqXXJO46rBZEIo+/ulaRtfRvmSMeehkJJYL
-         tq1I+Aw7vsmQFaJiJg7iffYsub8EXaee1C9I4my2w6EAHpFbNaVWJNYUO08vUaDcgxWs
-         LE3Gl2ZkDFaILCqMPqXoGSEOEYBAh56xRb2H9IKfD0aomsbN6EwKPc0TahnwJNsPaQ+O
-         ayEQ==
-X-Gm-Message-State: AODbwcDwTBcdqEGcNYbD2UawLvQKoZMr30qRwCUzuQ+10yb5yohrYRna
-        EcjbGPIefu7I92cMSRNzRuZYCLUZqQ==
-X-Received: by 10.55.140.65 with SMTP id o62mr30404762qkd.127.1495631574686;
- Wed, 24 May 2017 06:12:54 -0700 (PDT)
+        id S964846AbdEXOTw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 May 2017 10:19:52 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57438 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750885AbdEXOTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2017 10:19:51 -0400
+Received: (qmail 4649 invoked by uid 109); 24 May 2017 14:19:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 May 2017 14:19:49 +0000
+Received: (qmail 11275 invoked by uid 111); 24 May 2017 14:20:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 May 2017 10:20:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 May 2017 10:19:48 -0400
+Date:   Wed, 24 May 2017 10:19:48 -0400
+From:   Jeff King <peff@peff.net>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?RsOpbGl4?= Saparelli <felix@passcod.name>,
+        git@vger.kernel.org
+Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch
+ tries to check out the master branch
+Message-ID: <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net>
+References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
+ <xmqqa864mea3.fsf@gitster.mtv.corp.google.com>
+ <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
 MIME-Version: 1.0
-Received: by 10.55.78.212 with HTTP; Wed, 24 May 2017 06:12:54 -0700 (PDT)
-In-Reply-To: <20170518201333.13088-7-benpeart@microsoft.com>
-References: <20170518201333.13088-1-benpeart@microsoft.com> <20170518201333.13088-7-benpeart@microsoft.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 24 May 2017 15:12:54 +0200
-Message-ID: <CAP8UFD340yndvkT8=F9zdzX9QtbuPspn8rfiK8q7f8c=kGeWQg@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] fsmonitor: add a sample query-fsmonitor hook
- script for Watchman
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        David Turner <David.Turner@twosigma.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 18, 2017 at 10:13 PM, Ben Peart <peartben@gmail.com> wrote:
-> This hook script integrates the new fsmonitor capabilities of git with
-> the cross platform Watchman file watching service. To use the script:
->
-> Download and install Watchman from https://facebook.github.io/watchman/
-> and instruct Watchman to watch your working directory for changes
-> ('watchman watch-project /usr/src/git').
->
-> Rename the sample integration hook from query-fsmonitor.sample to
-> query-fsmonitor.
->
-> Configure git to use the extension ('git config core.fsmonitor true')
-> and optionally turn on the untracked cache for optimal performance
-> ('git config core.untrackedcache true').
+On Wed, May 24, 2017 at 12:24:52AM +0100, Philip Oakley wrote:
 
-Ok, it looks like the untracked cache can be used, but it could work without it.
+> > > $ git clone git@github.com:passcod/UPPERCASE-NPM.git
+> > > Cloning into 'UPPERCASE-NPM'...
+> > > remote: Counting objects: 14, done.
+> > > remote: Compressing objects: 100% (11/11), done.
+> > > remote: Total 14 (delta 3), reused 14 (delta 3), pack-reused 0
+> > > Receiving objects: 100% (14/14), done.
+> > > Resolving deltas: 100% (3/3), done.
+> > > warning: remote HEAD refers to nonexistent ref, unable to checkout.
+> 
+> Perhaps here the warning message could include the value of the ref provided
+> by the remote's HEAD which would then more clearly indicate to the user what
+> was expected.
+> 
+> I haven't had chance to look at how easy that maybe in the code - perhaps a
+> bit of low hanging fruit for someone?
 
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  templates/hooks--query-fsmonitor.sample | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
->  create mode 100644 templates/hooks--query-fsmonitor.sample
->
-> diff --git a/templates/hooks--query-fsmonitor.sample b/templates/hooks--query-fsmonitor.sample
-> new file mode 100644
-> index 0000000000..4bd22f21d8
-> --- /dev/null
-> +++ b/templates/hooks--query-fsmonitor.sample
-> @@ -0,0 +1,27 @@
-> +#!/bin/sh
-> +#
-> +# An example hook script to integrate Watchman
-> +# (https://facebook.github.io/watchman/) with git to provide fast
-> +# git status.
-> +#
-> +# The hook is passed a time_t formatted as a string and outputs to
-> +# stdout all files that have been modified since the given time.
-> +# Paths must be relative to the root of the working tree and
-> +# separated by a single NUL.
-> +#
-> +# To enable this hook, rename this file to "query-fsmonitor"
-> +
-> +# Convert unix style paths to escaped Windows style paths
-> +case "$(uname -s)" in
-> +MINGW*|MSYS_NT*)
-> +  GIT_WORK_TREE="$(cygpath -aw "$PWD" | sed 's,\\,\\\\,g')"
-> +  ;;
-> +*)
-> +  GIT_WORK_TREE="$PWD"
-> +  ;;
-> +esac
-> +
-> +# Query Watchman for all the changes since the requested time
-> +echo "[\"query\", \"$GIT_WORK_TREE\", {\"since\": $1, \"fields\":[\"name\"]}]" | \
-> +watchman -j | \
-> +perl -e 'use JSON::PP; my $o = JSON::PP->new->utf8->decode(join("", <>)); die "Watchman: $o->{'error'}.\nFalling back to scanning...\n" if defined($o->{"error"}); print(join("\0", @{$o->{"files"}}));'
+Unfortunately, it can't, because the ref doesn't exist:
 
-Maybe put the above small perl script on multiple lines for improved
-readability.
+  $ git ls-remote git://github.com/passcod/UPPERCASE-NPM.git
+  efc7dbfd6ca155d5d19ce67eb98603896062f35a	refs/heads/MASTER
+  e60ea8e6ec45ec45ff44ac8939cb4105b16477da	refs/pull/1/head
+  f35a73dcb151d336dc3d30c9a2c7423ecdb7bd1c	refs/pull/2/head
+  0d9b3a1268ff39350e04a7183af0add912b686e6	refs/tags/V1.0.0
+  efc7dbfd6ca155d5d19ce67eb98603896062f35a	refs/tags/V1.0.1
 
-Is JSON::PP always available in Perl >= 5.8?
-What happens if watchman is not installed or not in the PATH?
-It seems to me that the git process will not die, and will just work
-as if the hook does not exist, except that it will call the hook which
-will probably output error messages.
+There is no HEAD line at all, so we have no information about it on the
+client side.  Likewise, if you run with GIT_TRACE_PACKET=1, you'll see
+that the capabilities line does not include a symref marker either.
+
+So if we wanted to improve this, I think the first step would be for the
+server to start sending symref lines for HEAD, even when it does not
+resolve to anything.
+
+That would also make a case like this:
+
+  git -C dst.git symbolic-ref refs/heads/does-not-exist
+  git clone dst.git local
+
+use "does-not-exist" as the default branch name in our local clone
+(rather than just falling back to "master", which presumably the other
+side never plans to use).
+
+-Peff
