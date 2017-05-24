@@ -2,60 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2978D2023D
-	for <e@80x24.org>; Wed, 24 May 2017 09:57:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36BD82023D
+	for <e@80x24.org>; Wed, 24 May 2017 10:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1163306AbdEXJ5V (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 May 2017 05:57:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57371 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1758949AbdEXJ5R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2017 05:57:17 -0400
-Received: (qmail 18833 invoked by uid 109); 24 May 2017 09:57:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 May 2017 09:57:16 +0000
-Received: (qmail 9640 invoked by uid 111); 24 May 2017 09:57:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 24 May 2017 05:57:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 24 May 2017 05:57:15 -0400
-Date:   Wed, 24 May 2017 05:57:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/15] retain blob info for git diff HEAD:foo HEAD:bar
-Message-ID: <20170524095715.wgkft6fofjop5jco@sigill.intra.peff.net>
-References: <cover.1494861793.git.johannes.schindelin@gmx.de>
- <20170516075418.m3knwvdsr5ab6vzy@sigill.intra.peff.net>
- <20170516081023.lh3zflnf473jiviq@sigill.intra.peff.net>
- <xmqqshk4z2hv.fsf@gitster.mtv.corp.google.com>
- <20170517020535.qqmw2yncfomd3hfb@sigill.intra.peff.net>
- <20170519124651.4q7waz75rmzfopgn@sigill.intra.peff.net>
- <xmqqefvfht29.fsf@gitster.mtv.corp.google.com>
+        id S1761767AbdEXKzo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 May 2017 06:55:44 -0400
+Received: from mail-qk0-f170.google.com ([209.85.220.170]:36853 "EHLO
+        mail-qk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1761587AbdEXKyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2017 06:54:50 -0400
+Received: by mail-qk0-f170.google.com with SMTP id u75so150075050qka.3
+        for <git@vger.kernel.org>; Wed, 24 May 2017 03:54:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=QVCn46iaWB4R6B/p3mMr6GhMbx8GTX85o1Q/qUsq6GU=;
+        b=Bj84KRFfW4aLgRDRp0bRP2fb/emnOPRx3AFl9Jvj1VQwPc1v9JRLNq57pO60mmy09o
+         tu8s737AeEEwJ0KIxQNFFia6fYMz2XRxxT+HloIuDh4XOh2hKG13i48tPRyoRZgEJF3E
+         mXmGNvUn38JBMAKBSoCh7CZ9xhgfX5R9fFhLtEXGDWCJuDbuBltp0LwNdhPry7sDRl1x
+         kN7/s7rdKp0PBJjoTHgwnrUPhV8lLnq7ygtj0EH9OwkDf4K7QvfVNDaoJEaSOngSXugm
+         DBLFy1Vv4sp9q+nzOX/pMMuPDrpKXentES9PTYefGegdMt79Epy46HlqtBY5JED7l04Y
+         kfyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=QVCn46iaWB4R6B/p3mMr6GhMbx8GTX85o1Q/qUsq6GU=;
+        b=iLVBjKwdLaO9Ydm31TTxVEYhk4sjDgNIv/2Y+AfVPkSW+ngkgqAlYHs0wyFdUZXLvB
+         SwL1N68+IztckrVaZAaF8HBPNHwl+9iMiLcYvlB48VsCFo3QRin+F8lTnGVNHGIe2F1S
+         nzqQx6eybgnL3qkpEmmHfS+wZoMB56iqmhGW7NWfOamEAsOyGYR/p47hvjOA9cuGPh8b
+         4oe0ctOOupqzQf7iQ3y7PL5SVslz8ZI5vRTQyG21D4EPvzjtt7s8/WdyFDy17m1b5Xxo
+         2w60zitMrdJHMJjM8I6z+3vvggrz/nISFQdhsjNimYk8Iw9aA3qWf9EEyNfHMCpMexNj
+         5CSg==
+X-Gm-Message-State: AODbwcAOyagPrems7GFKLrVayeSJJPu6ze8wAWBJqFj9GJgCf6wv3qoa
+        aKkSrF37jdx6Yq0pYtt5+XTbfGzeTQ==
+X-Received: by 10.55.217.155 with SMTP id q27mr32796035qkl.217.1495623289140;
+ Wed, 24 May 2017 03:54:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqefvfht29.fsf@gitster.mtv.corp.google.com>
+Received: by 10.55.78.212 with HTTP; Wed, 24 May 2017 03:54:48 -0700 (PDT)
+In-Reply-To: <20170518201333.13088-1-benpeart@microsoft.com>
+References: <20170518201333.13088-1-benpeart@microsoft.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 24 May 2017 12:54:48 +0200
+Message-ID: <CAP8UFD20gvTZqCOcpd1iozNDHOZR1sUKRwi062wL52FNHWNC3w@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] Fast git status via a file system watcher
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        David Turner <David.Turner@twosigma.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 24, 2017 at 11:44:46AM +0900, Junio C Hamano wrote:
+> Design
+> ~~~~~~
+>
+> A new git hook (query-fsmonitor) must exist and be enabled
+> (core.fsmonitor=true) that takes a time_t formatted as a string and
+> outputs to stdout all files that have been modified since the requested
+> time.
 
-> Patches around [PATCH 06-08/15] made some unexpected (at least to
-> me) turns but the series told a coherent story, building on top of
-> what has been achieved in the previous steps.
+Is there a reason why there is a new hook, instead of a
+"core.fsmonitorquery" config option to which you could pass whatever
+command line with options?
 
-Yeah, those patches are not technically required for the rest of it. The
-"strbuf" conversion for oc->path is just something I've wanted to fix
-for a long time. It made sense to me to do it before teaching
-handle_dotdot() to look at oc->path (because the interface to do so
-changed a bit).
+> A new 'fsmonitor' index extension has been added to store the time the
+> fsmonitor hook was last queried and a ewah bitmap of the current
+> 'fsmonitor-dirty' files. Unmarked entries are 'fsmonitor-clean', marked
+> entries are 'fsmonitor-dirty.'
+>
+> As needed, git will call the query-fsmonitor hook proc for the set of
+> changes since the index was last updated. Git then uses this set of
+> files along with the list saved in the fsmonitor index extension to flag
+> the potentially dirty index and untracked cache entries.
 
--Peff
+So this can work only if "core.untrackedCache" is set to true?
+
+Thanks for working on this,
+Christian.
