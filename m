@@ -2,54 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3EAB209FD
-	for <e@80x24.org>; Thu, 25 May 2017 18:30:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3640A209FD
+	for <e@80x24.org>; Thu, 25 May 2017 18:36:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1036370AbdEYSal (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 14:30:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58011 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1033504AbdEYSal (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 14:30:41 -0400
-Received: (qmail 21188 invoked by uid 109); 25 May 2017 18:30:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 May 2017 18:30:40 +0000
-Received: (qmail 22018 invoked by uid 111); 25 May 2017 18:31:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 May 2017 14:31:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 May 2017 14:30:38 -0400
-Date:   Thu, 25 May 2017 14:30:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     Adrian Forbes <forbesa06@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Documentation issue: git-stash examples
-Message-ID: <20170525183037.tu7vaja25b7vgjfe@sigill.intra.peff.net>
-References: <CAOJu4w-4eCkt9Co19BmyTQ7NF+rf23LU8ANCTCcmPP84efdjeA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAOJu4w-4eCkt9Co19BmyTQ7NF+rf23LU8ANCTCcmPP84efdjeA@mail.gmail.com>
+        id S1036421AbdEYSgm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 14:36:42 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:35083 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936821AbdEYSgj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 14:36:39 -0400
+Received: by mail-qt0-f196.google.com with SMTP id r58so31233652qtb.2
+        for <git@vger.kernel.org>; Thu, 25 May 2017 11:36:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=wUbWgi9OwEnIhShVXMcpBvy0wTnr62zJwvg9v0x8Jls=;
+        b=HSI/NJFcA2+tbYXDOUZw5gxDy8RFfqGex4PA5rTCrzgwyoSaRihgNeyUbVx++EViKN
+         3aNNWjoc4dROTprHibg13iEI2I6T/BectD5pKaFUh5csbPeeMu4d4ezR6UTxnYEaKoJr
+         JgOG7llGmvJtJtr6Oe72Ps2kkvi29hX5LqzyJPfLkYDg+xIGaftcPTHDIvtgizhhW5xJ
+         poPLltZeyqKhcI0H2hmIHpD+BeBwmx4zjjoYc3ZRKL0yNVTc+ZzApv9Ewkz57zZdQ38O
+         vtvkKWy3KV4R5vPeXV4uVKZBa8gHmUNvvZ6AW18gX1VKkvwr+EJqzqjvmvVYqaT97gVU
+         Om8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=wUbWgi9OwEnIhShVXMcpBvy0wTnr62zJwvg9v0x8Jls=;
+        b=sy3ZjteB7cVH7LH937t37Idx22T+n+WeBOlpRjMl+bvSasuuvsadO3QYxNvjqvUzjs
+         i19M32FWpfImmrLY86IoJyOx4jLAXxMMQ0TDutLZgqrh5ZuuKA7GEVhWtjgu/lcvpOe3
+         b0v0E9shKyehDndkhcTw3WieycxdKrIDXIwaWz7L8b4Efph1LwAfRqrQqvRSA4o4t2Yp
+         L7d2ii37ohMg6hFbXC9oyiwL4a6njmg58sWCzzLlMk1gheAYGykP72yfFhk7qoJl6iY6
+         vNShtx0AR6fI4npfPkf43zVMxuwKCakT2o00jU1Ts6vbyhbKRSC6Ji1LNmjj73xwxYCd
+         968A==
+X-Gm-Message-State: AODbwcBVrXt8bWytfMRilfvIf9d3bOOuhEPSzPYdv4YyT6rj/We3bR0h
+        W1fUHeGD2nKCzA==
+X-Received: by 10.200.51.27 with SMTP id t27mr42767602qta.10.1495737398783;
+        Thu, 25 May 2017 11:36:38 -0700 (PDT)
+Received: from localhost.localdomain ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id j66sm5089231qte.26.2017.05.25.11.36.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 25 May 2017 11:36:38 -0700 (PDT)
+From:   Ben Peart <peartben@gmail.com>
+X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, benpeart@microsoft.com, pclouds@gmail.com,
+        johannes.schindelin@gmx.de, David.Turner@twosigma.com,
+        peff@peff.net
+Subject: [PATCH v3 1/6] bswap: add 64 bit endianness helper get_be64
+Date:   Thu, 25 May 2017 14:36:07 -0400
+Message-Id: <20170525183612.3128-2-benpeart@microsoft.com>
+X-Mailer: git-send-email 2.13.0.windows.1.9.gc201c67b71
+In-Reply-To: <20170525183612.3128-1-benpeart@microsoft.com>
+References: <20170525183612.3128-1-benpeart@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 25, 2017 at 09:52:42PM +1200, Adrian Forbes wrote:
+Add a new get_be64 macro to enable 64 bit endian conversions on memory
+that may or may not be aligned.
 
-> Some of the example commands in git-stash documentation should be
-> written as comments rather than actual commands:
-> https://cloud.githubusercontent.com/assets/24915363/26444394/5cf6a754-4190-11e7-845e-135288c8916e.png
-> 
-> For example, `$ edit emergency fix` should be `# ... edit emergency
-> fix ...` like the other comments in the section.
-> 
-> It could be misleading for novices.
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
+---
+ compat/bswap.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Yeah, I think that's a good idea. Do you want to try your hand at a
-patch?
+diff --git a/compat/bswap.h b/compat/bswap.h
+index d47c003544..f89fe7f4b5 100644
+--- a/compat/bswap.h
++++ b/compat/bswap.h
+@@ -158,6 +158,7 @@ static inline uint64_t git_bswap64(uint64_t x)
+ 
+ #define get_be16(p)	ntohs(*(unsigned short *)(p))
+ #define get_be32(p)	ntohl(*(unsigned int *)(p))
++#define get_be64(p)	ntohll(*(uint64_t *)(p))
+ #define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
+ 
+ #else
+@@ -170,6 +171,9 @@ static inline uint64_t git_bswap64(uint64_t x)
+ 	(*((unsigned char *)(p) + 1) << 16) | \
+ 	(*((unsigned char *)(p) + 2) <<  8) | \
+ 	(*((unsigned char *)(p) + 3) <<  0) )
++#define get_be64(p)	( \
++	((uint64_t)get_be32((unsigned char *)(p) + 0) << 32) | \
++	((uint64_t)get_be32((unsigned char *)(p) + 4) <<  0)
+ #define put_be32(p, v)	do { \
+ 	unsigned int __v = (v); \
+ 	*((unsigned char *)(p) + 0) = __v >> 24; \
+-- 
+2.13.0.windows.1.9.gc201c67b71
 
--Peff
