@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 048F220284
-	for <e@80x24.org>; Thu, 25 May 2017 19:47:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 656DE20284
+	for <e@80x24.org>; Thu, 25 May 2017 19:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1036743AbdEYTrX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:47:23 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:36595 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1036734AbdEYTrT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:47:19 -0400
-Received: by mail-wm0-f49.google.com with SMTP id 7so104146790wmo.1
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:47:18 -0700 (PDT)
+        id S970176AbdEYTra (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:47:30 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35950 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1036739AbdEYTrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:47:21 -0400
+Received: by mail-wm0-f65.google.com with SMTP id k15so54298653wmh.3
+        for <git@vger.kernel.org>; Thu, 25 May 2017 12:47:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8hkgaqPi9P5iy7bO6NjNH6NWLWsmtheLbKv9sX9oCSo=;
-        b=sWlvFzDVV2JpgqecfiGOTc5LcKk89b9rRNGMghKI0VBCYtTNxA7oefHCRpw8AqUWNZ
-         UrNwRme2qUTLqygpmoeyVgwVzjA0Y1XUx2sCF+vcm8ztaIcRJnbzRaou2N0Xtg7FxDnC
-         ZR5NhegYM/hSmRuZHjmGxNa5X1QFmX5SKd7fPZrY8G3EEMM4Rv9Mpu4bASbAU7CSPe6L
-         KdgKKhECurTkUwHq0s4GkqqYyaQ/MwxQFt6RsQhSRTSJEEoqXU+zJn/zaso5L88xaS2k
-         slmgzVgPtAHq6ttjqWXumGQeIH/uDDPt/A22VBhnjFzviTg8fwsEPNw6N/ssc+XkjKrH
-         Yi+Q==
+        bh=zcB+b3E4GDg9S8+aTv8iIlxO2bbIkGsrRzWjf4ZOwFQ=;
+        b=BMTmnHG5OaXcKlHXjX16ATg0KhusjrnF4XYoOBh20yKcLLQGTAIieUoD43pDz7UK8Y
+         GGDOVjNcJxJD7UzML8Zkp6ur9/YSf5W0yz7bCjsDZShg8nXhZ1gfD6esJ2ZzPj5IhQvL
+         /SByIy/v/FbGAaIN18KFhAiEeS2KtM+qn5xfpmOab6q1GrFy1Bz7rTtkuPDeDVGY4c/4
+         70WS3Dy0TWhJSAhImuYQR8hfJ3pkNrQaM1RRKAAWSTMF5h/Zx1uNnkL67rSSgf8hjSmC
+         pOaUQw4KXlWQ0SPGDjPM6fivyFQ+I5CNBL5wNzY3fM9uXvyhSHTvBXCx0SWl8PDB8iiU
+         5CVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8hkgaqPi9P5iy7bO6NjNH6NWLWsmtheLbKv9sX9oCSo=;
-        b=nT0mI71x2NEMNr2PeVjK2k6fDJg1ZUiE0bZ+hWakAI8F4sTDL1YptmIaJwNrwpLif5
-         GZwo9L+Aj+vIrJgh7SaHtk2RPJVtXXjHV+QaM7OakARJ9KC5UTdvkUQd7/WMlB1dutjs
-         aCZrGi6IY9uZxClO+yiBjxEuXBsjrLBkLeoTYpAC2cMpZSDEaWOe9XVBTVZp5bGI2NGh
-         haINKWj8TQSglZt/cXEwycjzhOPUI4GYWz6mm+ztJ78gXsKgtAnIZRPhPqtpngiblYEu
-         s3bVdRKYqcviQiR6SgAduLrQJId8bD900F6NQidXYxmBS+pi6DjjjdoSQbJmH7LDIO5I
-         lDmQ==
-X-Gm-Message-State: AODbwcCd8BAp3wJQBqIV2eCDph2a760KjWi6dkVOY6N7yPkV/8frgPYZ
-        80YM3aw5cyV53g==
-X-Received: by 10.223.179.198 with SMTP id x6mr30400913wrd.167.1495741637623;
-        Thu, 25 May 2017 12:47:17 -0700 (PDT)
+        bh=zcB+b3E4GDg9S8+aTv8iIlxO2bbIkGsrRzWjf4ZOwFQ=;
+        b=av5hDYHyX9gmg65FjM0BZScGZhmeSVvNpDZiE2x1xg/oxwbNIqRCvKXI7FD4iGtP7S
+         41IV3SsaS1Fi6ln7loxq4k9RCh7rCqYtmiYDtiLndQHXIGusK16gdECbPOsV+fJ/APMH
+         vp7uO8+5i/iE8NHi9A+wl+MJCP4oAXTEOmnj6XI0dvxTqX9QC61wwaC+/o7wotWk9ovE
+         2u1aESFK3TabUfA1NYGxbrKK4haJinEOIdJxOrXE69K6ZdJET5nUivIm/afuT6VioXED
+         Gjjw6c0AA0kk51fH7/lAltS7LZFAZplHseQimzhOhlzhxML3ki/M3GPtNrGggtL9l8gn
+         TkyA==
+X-Gm-Message-State: AODbwcDjqcz/8085tcrtAfVTsc2uC0ngL7DGmmObbtY5B9Q6ta9q9Dfj
+        X8ysiYzsDApDDF4I2rM=
+X-Received: by 10.223.131.34 with SMTP id 31mr29469606wrd.95.1495741634930;
+        Thu, 25 May 2017 12:47:14 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.47.16
+        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.47.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 12:47:16 -0700 (PDT)
+        Thu, 25 May 2017 12:47:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 24/31] grep: change the internal PCRE macro names to be PCRE1
-Date:   Thu, 25 May 2017 19:45:28 +0000
-Message-Id: <20170525194535.9324-25-avarab@gmail.com>
+Subject: [PATCH v4 23/31] grep: factor test for \0 in grep patterns into a function
+Date:   Thu, 25 May 2017 19:45:27 +0000
+Message-Id: <20170525194535.9324-24-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170525194535.9324-1-avarab@gmail.com>
 References: <20170525194535.9324-1-avarab@gmail.com>
@@ -75,118 +75,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the internal USE_LIBPCRE define, & build options flag to use a
-naming convention ending in PCRE1, without changing the long-standing
-USE_LIBPCRE Makefile flag which enables this code.
+Factor the test for \0 in grep patterns into a function. Since commit
+9eceddeec6 ("Use kwset in grep", 2011-08-21) any pattern containing a
+\0 is considered fixed as regcomp() can't handle it.
 
-This is for preparation for libpcre2 support where having things like
-USE_LIBPCRE and USE_LIBPCRE2 in any more places than we absolutely
-need to for backwards compatibility with old Makefile arguments would
-be confusing.
+This change makes later changes that make use of either has_null() or
+is_fixed() (but not both) smaller.
 
-In some ways it would be better to change everything that now uses
-USE_LIBPCRE to use USE_LIBPCRE1, and to make specifying
-USE_LIBPCRE (or --with-pcre) an error. This would impose a one-time
-burden on packagers of git to s/USE_LIBPCRE/USE_LIBPCRE1/ in their
-build scripts.
-
-However I'd like to leave the door open to making
-USE_LIBPCRE=YesPlease eventually mean USE_LIBPCRE2=YesPlease,
-i.e. once PCRE v2 is ubiquitous enough that it makes sense to make it
-the default.
-
-This code and the USE_LIBPCRE Makefile argument was added in commit
-63e7e9d8b6 ("git-grep: Learn PCRE", 2011-05-09). At the time there was
-no indication that the PCRE project would release an entirely new &
-incompatible API around 3 years later.
+While I'm at it make the comment conform to the style guide, i.e. add
+an opening "/*\n".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile      | 4 ++--
- grep.c        | 6 +++---
- grep.h        | 2 +-
- t/test-lib.sh | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ grep.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index d1587452f1..374fbc7e58 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1088,7 +1088,7 @@ ifdef NO_LIBGEN_H
- endif
- 
- ifdef USE_LIBPCRE
--	BASIC_CFLAGS += -DUSE_LIBPCRE
-+	BASIC_CFLAGS += -DUSE_LIBPCRE1
- 	ifdef LIBPCREDIR
- 		BASIC_CFLAGS += -I$(LIBPCREDIR)/include
- 		EXTLIBS += -L$(LIBPCREDIR)/$(lib) $(CC_LD_DYNPATH)$(LIBPCREDIR)/$(lib)
-@@ -2240,7 +2240,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@+
- 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@+
- 	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@+
--	@echo USE_LIBPCRE=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE)))'\' >>$@+
-+	@echo USE_LIBPCRE1=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE)))'\' >>$@+
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
- 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
 diff --git a/grep.c b/grep.c
-index 18306bc605..7a3858a1c3 100644
+index bf6c2494fd..18306bc605 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -333,7 +333,7 @@ static int has_null(const char *s, size_t len)
- 	return 0;
+@@ -321,6 +321,18 @@ static NORETURN void compile_regexp_failed(const struct grep_pat *p,
+ 	die("%s'%s': %s", where, p->pattern, error);
  }
  
--#ifdef USE_LIBPCRE
-+#ifdef USE_LIBPCRE1
++static int has_null(const char *s, size_t len)
++{
++	/*
++	 * regcomp cannot accept patterns with NULs so when using it
++	 * we consider any pattern containing a NUL fixed.
++	 */
++	if (memchr(s, 0, len))
++		return 1;
++
++	return 0;
++}
++
+ #ifdef USE_LIBPCRE
  static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
  {
- 	const char *error;
-@@ -385,7 +385,7 @@ static void free_pcre_regexp(struct grep_pat *p)
- 	pcre_free(p->pcre_extra_info);
- 	pcre_free((void *)p->pcre_tables);
- }
--#else /* !USE_LIBPCRE */
-+#else /* !USE_LIBPCRE1 */
- static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
+@@ -394,12 +406,6 @@ static int is_fixed(const char *s, size_t len)
  {
- 	die("cannot use Perl-compatible regexes when not compiled with USE_LIBPCRE");
-@@ -400,7 +400,7 @@ static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
- static void free_pcre_regexp(struct grep_pat *p)
- {
- }
--#endif /* !USE_LIBPCRE */
-+#endif /* !USE_LIBPCRE1 */
+ 	size_t i;
  
- static int is_fixed(const char *s, size_t len)
- {
-diff --git a/grep.h b/grep.h
-index 267534ca24..073b0e4c92 100644
---- a/grep.h
-+++ b/grep.h
-@@ -1,7 +1,7 @@
- #ifndef GREP_H
- #define GREP_H
- #include "color.h"
--#ifdef USE_LIBPCRE
-+#ifdef USE_LIBPCRE1
- #include <pcre.h>
- #else
- typedef int pcre;
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 04d857a42b..1d0f636cbd 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1014,7 +1014,7 @@ esac
- ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
- test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PYTHON" && test_set_prereq PYTHON
--test -n "$USE_LIBPCRE" && test_set_prereq PCRE
-+test -n "$USE_LIBPCRE1" && test_set_prereq PCRE
- test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
- 
- # Can we rely on git's output in the C locale?
+-	/* regcomp cannot accept patterns with NULs so we
+-	 * consider any pattern containing a NUL fixed.
+-	 */
+-	if (memchr(s, 0, len))
+-		return 1;
+-
+ 	for (i = 0; i < len; i++) {
+ 		if (is_regex_special(s[i]))
+ 			return 0;
+@@ -451,7 +457,9 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 	 * simple string match using kws.  p->fixed tells us if we
+ 	 * want to use kws.
+ 	 */
+-	if (opt->fixed || is_fixed(p->pattern, p->patternlen))
++	if (opt->fixed ||
++	    has_null(p->pattern, p->patternlen) ||
++	    is_fixed(p->pattern, p->patternlen))
+ 		p->fixed = !icase || ascii_only;
+ 	else
+ 		p->fixed = 0;
 -- 
 2.13.0.303.g4ebf302169
 
