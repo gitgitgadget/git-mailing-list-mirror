@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FD6F20284
-	for <e@80x24.org>; Thu, 25 May 2017 19:47:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C92120284
+	for <e@80x24.org>; Thu, 25 May 2017 19:47:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1036738AbdEYTrj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:47:39 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34716 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1036732AbdEYTrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:47:23 -0400
-Received: by mail-wm0-f66.google.com with SMTP id d127so55399819wmf.1
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:47:17 -0700 (PDT)
+        id S1036747AbdEYTrm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:47:42 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35224 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S970184AbdEYTre (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:47:34 -0400
+Received: by mail-wm0-f65.google.com with SMTP id g15so35875887wmc.2
+        for <git@vger.kernel.org>; Thu, 25 May 2017 12:47:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=P2pgMIXwCl9FG9wBoaT1RBpCIPjVhEpdor2sV6aRtes=;
-        b=OMb7KCNphRDzhHi+iQSjDzdnqw/d8amOOP46LCFCuu9zMW8ouQI2ekaPLNNLJKSbF2
-         PPO5NJlA1J2Zgum6s1IlGYpw8hT1aLDx21ooVFhJLm5DYq5zIt61opDDz4mXXbb2ULna
-         9vny0yR11KPimoDLogM9jU0GG/bdBf9WEEB06Yr/9XVXZZBG0Q0/s1qKWYhUUizi49nl
-         isrZ0pkxPuCeDjR/3UdS9WKrj0JJI6mbcbHE+hLULYW3mf+0zDy3VDXtiKBdvljFZ1lC
-         cgM7yrDtM8zKPSzbLBTyhgBQksVVwiz81AKzcro3V1FsMgvkg0EGl6fzJTfUSHbEcQ0X
-         A/kA==
+        bh=1v4vNf3aFNOhaqUckIr7fJhC5LtsMGvuaH/zfM5LxgM=;
+        b=QHmuQDlZAVqc8u/VNRLf3t0fBCcknwcAPQYlY/IGOCTnpjfkY/WB3ZkCuQ+wOKF7Y7
+         jDPr871jIip5cU5i/e1KhsIAtm1Xe6OFCrQ51BjJsSkqct1APpPbMb0Hl8zp1yYTKJjW
+         jSNjjfq5PNvW5JSPzVfPivKxGJoQrpA6t0Jbl63yXwaiyYHK+lsThcD3avZkREGBG44Q
+         Z5G9a0hzarGF9wnG5oyGqBvMlh3v776BDOcYdx0RuoQVgVKKMBPzH1apkecqwWuKBQqa
+         0JLIEurnTTwae68jQ5JnBo2ZZgiVdZiuCk34vTVfwxRCSCDhQJaY7n+L02TnXzOyvpIf
+         Y+pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=P2pgMIXwCl9FG9wBoaT1RBpCIPjVhEpdor2sV6aRtes=;
-        b=nblf5+PFlQWFTQZSsGct4diXVN4Gta0iJ1hCbypWq3qrhmt+JiPUtNiPo1b3Q4FoGv
-         ow7F0St48fIV8o3wBnkpFLpNYmJrx5FE5ffpiWRtlBjaMOXy6tSBlT1CH5799VnBzzVw
-         9Lu8mMvVjkU+dfgM31ZIgRL3biKHr2EK5hbpMc5VqqAsHPbEWpolwJJsBowaNoUp6S/q
-         mcdbYBdSk88fRw/I9yR3nUOC3zHiUJ34j6dc7NdFElgZYvlmrKG/qIKp2zJ/1zDxOI4I
-         lcoPt6k8rbJBvj2YHpg9MgVGA+oC1Merf92ZMR1/DJK1uAtEck7i2/nmKoZoVpuZmQZS
-         k0Aw==
-X-Gm-Message-State: AODbwcCmZOMJyj85HE/5WoeQCwaZJTfSoysjsv/p3YeJDylT8Faq9YOd
-        Aq245lR3tV85xQ==
-X-Received: by 10.28.130.196 with SMTP id e187mr11702770wmd.24.1495741632211;
-        Thu, 25 May 2017 12:47:12 -0700 (PDT)
+        bh=1v4vNf3aFNOhaqUckIr7fJhC5LtsMGvuaH/zfM5LxgM=;
+        b=ZHzLsb4/0McMgxvt3dxkCXEGLlUdHD7IyI0o1oET3RA9sA1ugv1cGKU2KgfXKlwpyy
+         lUANCVsmCkoI8MUt7ZI5J3gQ9YlQzTDeGCKTo6zBA67D9bEYmF6rk+vwxUNwBHAapusc
+         imikpQGRzp8eUBRA3GgRHUEO0XY9qzSWhtU2KosyzeDq6mhE7J9hebdFt5Rs/0BRYPDk
+         xpEXVSMLLH7+EkSyplpz+Hqy/rbT8Yd3wRH071Hh6Pi3FwsLosEd9YVUN/IVTTTrjg+6
+         H7dXlZNV/1GmQow5aczv9PblBfcmoN7Nb4gaC8De04DNHwgL32OLdK0xWGCmq0z6Fp6D
+         t/jQ==
+X-Gm-Message-State: AODbwcC/1ee/13QLUHWvFvHOxyzlvETtVzLEQP1Jm1lbqPE5FanW3tM/
+        YccYIANbcztNEw==
+X-Received: by 10.28.29.17 with SMTP id d17mr11637652wmd.90.1495741648282;
+        Thu, 25 May 2017 12:47:28 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.47.10
+        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.47.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 12:47:11 -0700 (PDT)
+        Thu, 25 May 2017 12:47:27 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 22/31] grep: remove redundant regflags assignments
-Date:   Thu, 25 May 2017 19:45:26 +0000
-Message-Id: <20170525194535.9324-23-avarab@gmail.com>
+Subject: [PATCH v4 28/31] pack-objects & index-pack: add test for --threads warning
+Date:   Thu, 25 May 2017 19:45:32 +0000
+Message-Id: <20170525194535.9324-29-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170525194535.9324-1-avarab@gmail.com>
 References: <20170525194535.9324-1-avarab@gmail.com>
@@ -75,82 +75,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove redundant assignments to the "regflags" variable. This variable
-is only used set under GREP_PATTERN_TYPE_ERE, so there's no need to
-un-set it under GREP_PATTERN_TYPE_{FIXED,BRE,PCRE}.
+Add a test for the warning that's emitted when --threads or
+pack.threads is provided under NO_PTHREADS=YesPlease. This uses the
+new PTHREADS prerequisite.
 
-Back in 5010cb5fcc[1], we did do "opt.regflags &= ~REG_EXTENDED" upon
-seeing "-G" on the command line and flipped the bit on upon seeing
-"-E", but I think that was perfectly sensible and it would have been a
-bug if we didn't.  They were part of the command line parsing that
-could have seen "-E" on the command line earlier.
+The assertion for C_LOCALE_OUTPUT in the latter test is currently
+redundant, since unlike index-pack the pack-objects warnings aren't
+i18n'd. However they might be changed to be i18n'd in the future, and
+there's no harm in future-proofing the test.
 
-When cca2c172 ("git-grep: do not die upon -F/-P when
-grep.extendedRegexp is set.", 2011-05-09) switched the command line
-parsing to "read into a 'tentatively this is what we saw the last'
-variable and then finally commit just once", we didn't touch
-opt.regflags for PCRE and FIXED, but we still had to flip regflags
-between BRE and ERE, because parsing of grep.extendedregexp
-configuration variable directly touched opt.regflags back then, which
-was done by b22520a3 ("grep: allow -E and -n to be turned on by
-default via configuration", 2011-03-30).
-
-When 84befcd0 ("grep: add a grep.patternType configuration setting",
-2012-08-03) introduced extended_regexp_option field, we stopped
-flipping regflags while reading the configuration, and that was when
-we should have noticed and stopped dropping REG_EXTENDED bit in the
-"now we can commit what type to use" helper function.
-
-There is no reason to do this anymore, so stop doing it, more to
-reduce "wait this is used under fixed/BRE/PCRE how?" confusion when
-reading the code, than to to save ourselves trivial CPU cycles by
-removing one assignment.
-
-1. "built-in "git grep"", 2006-04-30.
+There's an existing bug in the implementation of pack-objects which
+this test currently tests for as-is. Details about the bug & the fix
+are included in a follow-up change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ t/t5300-pack-object.sh | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/grep.c b/grep.c
-index 47cee45067..bf6c2494fd 100644
---- a/grep.c
-+++ b/grep.c
-@@ -179,7 +179,6 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
- 	case GREP_PATTERN_TYPE_BRE:
- 		opt->fixed = 0;
- 		opt->pcre = 0;
--		opt->regflags &= ~REG_EXTENDED;
- 		break;
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 43a672c345..6ed23ee1d2 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -421,6 +421,42 @@ test_expect_success 'index-pack <pack> works in non-repo' '
+ 	test_path_is_file foo.idx
+ '
  
- 	case GREP_PATTERN_TYPE_ERE:
-@@ -191,13 +190,11 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
- 	case GREP_PATTERN_TYPE_FIXED:
- 		opt->fixed = 1;
- 		opt->pcre = 0;
--		opt->regflags &= ~REG_EXTENDED;
- 		break;
- 
- 	case GREP_PATTERN_TYPE_PCRE:
- 		opt->fixed = 0;
- 		opt->pcre = 1;
--		opt->regflags &= ~REG_EXTENDED;
- 		break;
- 	}
- }
-@@ -415,10 +412,9 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	int err;
--	int regflags;
-+	int regflags = opt->regflags;
- 
- 	basic_regex_quote_buf(&sb, p->pattern);
--	regflags = opt->regflags & ~REG_EXTENDED;
- 	if (opt->ignore_case)
- 		regflags |= REG_ICASE;
- 	err = regcomp(&p->regexp, sb.buf, regflags);
++test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'index-pack --threads=N or pack.threads=N warns when no pthreads' '
++	test_must_fail git index-pack --threads=2 2>err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 1 warnings &&
++	grep -F "no threads support, ignoring --threads=2" err &&
++
++	test_must_fail git -c pack.threads=2 index-pack 2>err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 1 warnings &&
++	grep -F "no threads support, ignoring pack.threads" err &&
++
++	test_must_fail git -c pack.threads=2 index-pack --threads=4 2>err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 2 warnings &&
++	grep -F "no threads support, ignoring --threads=4" err &&
++	grep -F "no threads support, ignoring pack.threads" err
++'
++
++test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'pack-objects --threads=N or pack.threads=N warns when no pthreads' '
++	git pack-objects --threads=2 --stdout --all </dev/null >/dev/null 2>err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 1 warnings &&
++	grep -F "no threads support, ignoring --threads" err &&
++
++	git -c pack.threads=2 pack-objects --stdout --all </dev/null >/dev/null 2>err &&
++	grep ^warning: err >warnings &&
++	test_must_fail test_line_count = 1 warnings &&
++	grep -F "no threads support, ignoring pack.threads" err &&
++
++	git -c pack.threads=2 pack-objects --threads=4 --stdout --all </dev/null >/dev/null 2>err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 2 warnings &&
++	grep -F "no threads support, ignoring --threads" err &&
++	grep -F "no threads support, ignoring pack.threads" err
++'
++
+ #
+ # WARNING!
+ #
 -- 
 2.13.0.303.g4ebf302169
 
