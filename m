@@ -6,70 +6,89 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C301A209FD
-	for <e@80x24.org>; Thu, 25 May 2017 19:11:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4DB2209FD
+	for <e@80x24.org>; Thu, 25 May 2017 19:33:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S939187AbdEYTLS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:11:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58046 "EHLO cloud.peff.net"
+        id S1762529AbdEYTdK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:33:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58052 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935251AbdEYTLR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:11:17 -0400
-Received: (qmail 23973 invoked by uid 109); 25 May 2017 19:11:17 -0000
+        id S1761548AbdEYTdJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:33:09 -0400
+Received: (qmail 25394 invoked by uid 109); 25 May 2017 19:33:07 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 May 2017 19:11:17 +0000
-Received: (qmail 22823 invoked by uid 111); 25 May 2017 19:11:53 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 May 2017 19:33:07 +0000
+Received: (qmail 22889 invoked by uid 111); 25 May 2017 19:33:43 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 May 2017 15:11:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 May 2017 15:11:15 -0400
-Date:   Thu, 25 May 2017 15:11:15 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 May 2017 15:33:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 May 2017 15:33:05 -0400
+Date:   Thu, 25 May 2017 15:33:05 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        =?utf-8?B?RsOpbGl4?= Saparelli <felix@passcod.name>,
-        git@vger.kernel.org
-Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch
- tries to check out the master branch
-Message-ID: <20170525191115.tqd6zlj5mxqls4wp@sigill.intra.peff.net>
-References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
- <xmqqa864mea3.fsf@gitster.mtv.corp.google.com>
- <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
- <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net>
- <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com>
- <xmqqa861fx34.fsf@gitster.mtv.corp.google.com>
- <20170525155924.hk5jskennph6tta3@sigill.intra.peff.net>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] connect.c: fix leak in parse_one_symref_info()
+Message-ID: <20170525193304.fhtmywv4xisclhii@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170525155924.hk5jskennph6tta3@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 25, 2017 at 11:59:24AM -0400, Jeff King wrote:
+If we successfully parse a symref value like
+"HEAD:refs/heads/master", we add the result to a string
+list. But because the string list is marked
+STRING_LIST_INIT_DUP, the string list code will make a copy
+of the string and add the copy.
 
-> The just-HEAD case could look like:
+This patch fixes it by adding the entry with
+string_list_append_nodup(), which lets the string list take
+ownership of our newly allocated string. There are two
+alternatives that seem like they would work, but aren't the
+right solution.
 
-This patch does work, in the sense that upload-pack advertises the
-unborn HEAD symref. But the client doesn't actually do anything with it.
-The capability parsing happens in get_remote_heads(), which passes the
-data out by adding an annotation to the "struct ref" list. But of course
-we have no HEAD ref to annotate.
+The first is to initialize the list with the "NODUP"
+initializer. That would avoid the copy, but then the string
+list would not realize that it owns the strings. When we
+eventually call string_list_clear(), it would not free the
+strings, causing a leak.
 
-So either get_remote_heads() would have to start returning a bogus HEAD
-ref (with a null sha1, I guess, which all callers would have to
-recognize). Or clone (and probably "remote set-head -a") would have to
-start reaching across the transport-module boundary and asking for any
-symref values for "HEAD". I'm not excited about more special-casing of
-"HEAD", though. In theory we'd want this for other symrefs in the long
-run, and it would be nice if clients were ready to handle that (even if
-the protocol isn't quite there).
+The second option would be to use the normal
+string_list_append(), but free the local copy in our
+function. We can't do this because the local copy actually
+contains _two_ strings; the symref name and its target. We
+point to the target pointer via the "util" field, and its
+memory must last as long as the string list does.
 
-I dunno. I was thinking there might be a quick tweak, but I'm wondering
-if this arcane case is worth the restructuring we'd have to do to
-support it. It only comes up when you've moved the server repo's HEAD to
-an unborn branch _and_ you have other refs (since otherwise we don't
-even send capabilities at all!).
+You may also wonder whether it's safe to ever free the local
+copy, since the target points into it. The answer is yes,
+because we duplicate it in annotaate_refs_with_symref_info
+before clearing the string list.
 
--Peff
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Phew. For a one-line leak fix, that sure was complicated.
+
+I doubt it matters much in practice, because servers send only a single
+HEAD, so we just leak one string. But I happened to notice it while
+looking at the unborn-HEAD thing.
+
+ connect.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/connect.c b/connect.c
+index cd21a1b6f..c72b1d115 100644
+--- a/connect.c
++++ b/connect.c
+@@ -71,7 +71,7 @@ static void parse_one_symref_info(struct string_list *symref, const char *val, i
+ 	    check_refname_format(target, REFNAME_ALLOW_ONELEVEL))
+ 		/* "symref=bogus:pair */
+ 		goto reject;
+-	item = string_list_append(symref, sym);
++	item = string_list_append_nodup(symref, sym);
+ 	item->util = target;
+ 	return;
+ reject:
+-- 
+2.13.0.496.ge44ba89db
