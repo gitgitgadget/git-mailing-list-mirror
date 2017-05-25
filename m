@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CFF820284
-	for <e@80x24.org>; Thu, 25 May 2017 19:46:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 633A320284
+	for <e@80x24.org>; Thu, 25 May 2017 19:46:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1036691AbdEYTqr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:46:47 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33260 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1036692AbdEYTqn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:46:43 -0400
-Received: by mail-wm0-f65.google.com with SMTP id b84so39672260wmh.0
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:46:42 -0700 (PDT)
+        id S1036716AbdEYTqw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:46:52 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33353 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1036692AbdEYTqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:46:48 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b84so39672403wmh.0
+        for <git@vger.kernel.org>; Thu, 25 May 2017 12:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JGirQO6xmxrwvsU4x1ubVVynXObQ6nfbnKl5TUO+mhI=;
-        b=ezTUZyLhmqUiIk1Qa509asOS7W0hbItzXm6+FnzX6CP68uJAtC1oEENteVKwlLKlcn
-         5G4zFjY9RhUe30SBOhAgiWNnS3CrldExYfRQOwQzhr7k4JmUf/2wEt9im9YkDi5BeTx+
-         i6wF3bbPsYqSI45Jyhx2bxqahyGnf50os6KIUx4HizAO4bzO++qC3RM2FfiDznDVs/gS
-         tQbGd/emuLlIJ/jIfuCaFB0QEv7axUWTgIiPp10WpNwIlxlb+K1WPmQQuKl97qxLttUK
-         YoJX5taC25oCqddc2AWLXBZcT1xqeV0jxENIl82FW2PytIrbrpc28skqwBUhtim1rG1L
-         j47w==
+        bh=b4FmghXhthipWmU4fpG4IiIVmDGMMJgCn8x1buEpANo=;
+        b=oW5OAJQtIC6BQYI/Qkpd/73UiZi0a+oZgGT8lIoLK2t+CfoRce/McZZPk47JkxN39v
+         M/zrZ7UkCs5PQ38zSoB0ctnK+KPJMARhdSPhACmF1DNI/i7ZK/W7URJiuzlqA30eTQmw
+         VT7UdL4fvqSTErsJ0+3bkQITOrzmARxvzPZJWAtmr++4SRI8nd+PJibLWeNc+k8zsRdh
+         3s3tYZjxDOeATPeuLYoE1Z9Dyd51cTeNfZUFhCXHpCKW+B2hYFBm1TnCPWrCQUuB6w5u
+         FbcWS9Ny4VVkuQJ+zFDDZEjszBrbbjI5/6seChCNBmbeNW+ETDOoeT9lEYN18lw6lDMf
+         v1Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JGirQO6xmxrwvsU4x1ubVVynXObQ6nfbnKl5TUO+mhI=;
-        b=m/pG7Vi29vGP6AaASlDNfjbuC+LZgE63x/SA3ULFfDOE9IJqngjIOrmheksf8UsOMb
-         WH41/4XmdGk+oqJU0uOXzfXWlLTc6eHrXzYDmH0kUfi1+GmfLEWyeTmmjPQJnToiX55J
-         qBfXZKH9oPVW3oybnPG/Kf6pnsL7cP/OJbjdzZGkwKFsudWldC4cmJKjBY2JQw5DiM4S
-         lBEYNl1LqOU9WXiDJg+OzD4Ryx7KM//ITYojOdCS4Rta36KFUD52TzH0d2OeuPkQZb1Q
-         5OCcmHK7o2tMD5+gS1z9l7T0Fj2YIZNXayMF7y/n8JhCpMbRQEoSAroooImEGknqcLrC
-         5stg==
-X-Gm-Message-State: AODbwcCNzu3N2SWn78OJD0VOLxvPIf3vVVtmawJVxaSQ4lk6rFB3rJ5h
-        Lvf0mojnxBU0DwM4SrM=
-X-Received: by 10.223.152.233 with SMTP id w96mr20736457wrb.151.1495741601532;
-        Thu, 25 May 2017 12:46:41 -0700 (PDT)
+        bh=b4FmghXhthipWmU4fpG4IiIVmDGMMJgCn8x1buEpANo=;
+        b=RNWr2e28gnTVMbE0xJvcxqfd5uLOLR0N+E6Ofj7xyIBdgULR9PWmDHG4kjD3Km9m1r
+         H5wvnqJYQMdo3tZs1vReWvpui1mgNoJKY63McKkPaQB+iGh0YRb/jgqVKYrFM3AozmkS
+         /bSrVYYAJqrVm5MbOXEP+qHnce3s0cyIjTFzMrQISORbycZWquU8zCUc5hlXBbwZbxp9
+         OVA5VZhFRDvPCD7MENakbiOVnyMGofhf1Am2EK9NpVRT9c4WDnmI88mphk3h2NZ9Umtu
+         RmGzgQ03bjTNH8syHc5zTXXMk7N7yXQ3srvm6OMEciyLNJc7DPuEDbZSvQHiJyYg3nU9
+         rJXg==
+X-Gm-Message-State: AODbwcBaF04h5PbFlh3zclHzz4s9RSRSzWkQROZaJN+7C1LAqwmS3AFk
+        5LNy0ITGi9zybA==
+X-Received: by 10.223.128.80 with SMTP id 74mr30114821wrk.30.1495741603773;
+        Thu, 25 May 2017 12:46:43 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.46.40
+        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.46.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 12:46:40 -0700 (PDT)
+        Thu, 25 May 2017 12:46:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 12/31] grep: add a test helper function for less verbose -f \0 tests
-Date:   Thu, 25 May 2017 19:45:16 +0000
-Message-Id: <20170525194535.9324-13-avarab@gmail.com>
+Subject: [PATCH v4 13/31] grep: prepare for testing binary regexes containing rx metacharacters
+Date:   Thu, 25 May 2017 19:45:17 +0000
+Message-Id: <20170525194535.9324-14-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170525194535.9324-1-avarab@gmail.com>
 References: <20170525194535.9324-1-avarab@gmail.com>
@@ -75,93 +75,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a helper function to make the tests which check for patterns with
-\0 in them more succinct. Right now this isn't a big win, but
-subsequent commits will add a lot more of these tests.
+Add setup code needed for testing regexes that contain both binary
+data and regex metacharacters.
 
-The helper is based on the match() function in t3070-wildmatch.sh.
+The POSIX regcomp() function inherently can't support that, because it
+takes a \0-delimited char *, but other regex engines APIs like PCRE v2
+take a pattern/length pair, and are thus able to handle \0s in
+patterns as well as any other character.
+
+When kwset was imported in commit 9eceddeec6 ("Use kwset in grep",
+2011-08-21) this limitation was fixed, but at the expense of
+introducing the undocumented limitation that any pattern containing \0
+implicitly becomes a fixed match (equivalent to -F having been
+provided).
+
+That's not something we'd like to keep in the future. The inability to
+match patterns containing \0 is a leaky implementation detail.
+
+So add tests as a first step towards changing that. In order to test
+that \0-patterns can properly match as regexes the test string needs
+to have some regex metacharacters in it.
+
+There were other blind spots in the tests. The code around kwset
+specially handles case-insensitive & non-ASCII data, but there were no
+tests for this.
+
+Fix all of that by amending the text being matched to contain both
+regex metacharacters & non-ASCII data.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7008-grep-binary.sh | 58 +++++++++++++++++++++++++-------------------------
- 1 file changed, 29 insertions(+), 29 deletions(-)
+ t/t7008-grep-binary.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
-index 9c9c378119..df93d8e44c 100755
+index df93d8e44c..20370d6e0c 100755
 --- a/t/t7008-grep-binary.sh
 +++ b/t/t7008-grep-binary.sh
-@@ -4,6 +4,29 @@ test_description='git grep in binary files'
+@@ -28,7 +28,7 @@ nul_match () {
+ }
  
- . ./test-lib.sh
- 
-+nul_match () {
-+	matches=$1
-+	flags=$2
-+	pattern=$3
-+	pattern_human=$(echo "$pattern" | sed 's/Q/<NUL>/g')
-+
-+	if test "$matches" = 1
-+	then
-+		test_expect_success "git grep -f f $flags '$pattern_human' a" "
-+			printf '$pattern' | q_to_nul >f &&
-+			git grep -f f $flags a
-+		"
-+	elif test "$matches" = 0
-+	then
-+		test_expect_success "git grep -f f $flags '$pattern_human' a" "
-+			printf '$pattern' | q_to_nul >f &&
-+			test_must_fail git grep -f f $flags a
-+		"
-+	else
-+		test_expect_success "PANIC: Test framework error. Unknown matches value $matches" 'false'
-+	fi
-+}
-+
  test_expect_success 'setup' "
- 	echo 'binaryQfile' | q_to_nul >a &&
+-	echo 'binaryQfile' | q_to_nul >a &&
++	echo 'binaryQfileQm[*]cQ*æQð' | q_to_nul >a &&
  	git add a &&
-@@ -69,35 +92,12 @@ test_expect_failure 'git grep .fi a' '
- 	git grep .fi a
+ 	git commit -m.
+ "
+@@ -162,7 +162,7 @@ test_expect_success 'grep does not honor textconv' '
  '
  
--test_expect_success 'git grep -F y<NUL>f a' "
--	printf 'yQf' | q_to_nul >f &&
--	git grep -f f -F a
--"
--
--test_expect_success 'git grep -F y<NUL>x a' "
--	printf 'yQx' | q_to_nul >f &&
--	test_must_fail git grep -f f -F a
--"
--
--test_expect_success 'git grep -Fi Y<NUL>f a' "
--	printf 'YQf' | q_to_nul >f &&
--	git grep -f f -Fi a
--"
--
--test_expect_success 'git grep -Fi Y<NUL>x a' "
--	printf 'YQx' | q_to_nul >f &&
--	test_must_fail git grep -f f -Fi a
--"
--
--test_expect_success 'git grep y<NUL>f a' "
--	printf 'yQf' | q_to_nul >f &&
--	git grep -f f a
--"
--
--test_expect_success 'git grep y<NUL>x a' "
--	printf 'yQx' | q_to_nul >f &&
--	test_must_fail git grep -f f a
--"
-+nul_match 1 '-F' 'yQf'
-+nul_match 0 '-F' 'yQx'
-+nul_match 1 '-Fi' 'YQf'
-+nul_match 0 '-Fi' 'YQx'
-+nul_match 1 '' 'yQf'
-+nul_match 0 '' 'yQx'
+ test_expect_success 'grep --textconv honors textconv' '
+-	echo "a:binaryQfile" >expect &&
++	echo "a:binaryQfileQm[*]cQ*æQð" >expect &&
+ 	git grep --textconv Qfile >actual &&
+ 	test_cmp expect actual
+ '
+@@ -172,7 +172,7 @@ test_expect_success 'grep --no-textconv does not honor textconv' '
+ '
  
- test_expect_success 'grep respects binary diff attribute' '
- 	echo text >t &&
+ test_expect_success 'grep --textconv blob honors textconv' '
+-	echo "HEAD:a:binaryQfile" >expect &&
++	echo "HEAD:a:binaryQfileQm[*]cQ*æQð" >expect &&
+ 	git grep --textconv Qfile HEAD:a >actual &&
+ 	test_cmp expect actual
+ '
 -- 
 2.13.0.303.g4ebf302169
 
