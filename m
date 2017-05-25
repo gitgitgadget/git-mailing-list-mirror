@@ -2,121 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26114209FD
-	for <e@80x24.org>; Thu, 25 May 2017 20:06:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29534209FD
+	for <e@80x24.org>; Thu, 25 May 2017 21:05:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1165468AbdEYUGS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 16:06:18 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:33549 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1165448AbdEYUGA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 16:06:00 -0400
-Received: by mail-wm0-f67.google.com with SMTP id b84so39781655wmh.0
-        for <git@vger.kernel.org>; Thu, 25 May 2017 13:06:00 -0700 (PDT)
+        id S939284AbdEYVFf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 17:05:35 -0400
+Received: from mail-it0-f48.google.com ([209.85.214.48]:34252 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933798AbdEYVFd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 17:05:33 -0400
+Received: by mail-it0-f48.google.com with SMTP id a10so636149itg.1
+        for <git@vger.kernel.org>; Thu, 25 May 2017 14:05:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=zTzczVrKyU/TekWAHLBE5UzHiV4zkTFIDHa0S8x82Vs=;
-        b=o23fvbPFsNVC0FnnKBCdkGIgdVM8Zje9Ycw+IkYviqSTAiygYuqo006VKJG/c9D+Ct
-         jlUKLGe7SVaPARc7vl4xSolVh+qi+IzRBHYSv4smTPLH73sp67Rdv3BhcdO3N5Sm87Ix
-         KlpMTL0m1ekpF5P8xVF03266ummrlM5WaAGlsgaZoUqLaTQ6/5PyyzCqnqWeek8VvVQk
-         HtpIZvk+KHKAEbFgd3qv0WJF7gvJ4X27vwSGdcAMCimI6KY6XyQoudl0QJjC3RG1wog8
-         ee5c7refccuOt3Y2fTM2DdlS7QrYBlVhzJsVSlb8StidRwA/x0ezb6w/0PuNmvPdPFgt
-         muBg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2Y8evJ1+TrrGZGCSgglIm+9YTGRqXhV08PBTOReuQGQ=;
+        b=Pq9bWS/z7yde3nL0Xo7CejZltW/h5ihttW/g6j9tvBTcD4Mvd1jQuALD8yt2NMQeMe
+         9Ji2GGEUNLuJC9eWKmaghTVtQr1jgTz75LlBdKZL/+hB3+QMCGTbql2dcMCofqXh1BFk
+         j/+NjL6Xb+ISxrdgswfTwYRFoJHib075/eXK9fvJIWQ2xgRYea1Gw/9iBolYn9ySeSmg
+         8fK1VkKfN9+IcT5PeHjw4U568okKOYP8fpgEwpwFc7QUlk9ICtgwIF9iytRYI6wTGznj
+         qiPkGjv0tm/ANsvvy3kSdO2ZGA44COpDxCH2VC1QAw6Z2BRE/F3I5BwMSITP/AxHnoS7
+         395A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zTzczVrKyU/TekWAHLBE5UzHiV4zkTFIDHa0S8x82Vs=;
-        b=gVUyMTOVQ4I+Cmd7IBVO3Q8sly0whxe7REJwTCrpqOOQdIjV8+IslQFtvwRQRvWMqr
-         CBvIjglKeXPAgiG2EvIags/x8/urOaEIzZxOQHOnON1dz05vZPuG+Ad4PQzXCTttyWyb
-         eG63Dt1Ciot88b2Ah3zd89FeOd7HAStSvZAHRJNuncpG67OEb30cAQJJrQnt/IgFw8/5
-         hEcxt7Qu6qDIYaoNjFQBFLRzTDBZBP6RMhy3wKDUkE2fFmWHB1rHJpD+N3NSciD3rfzU
-         AaXURcEJ2DV8z1aeeqekhIQvzLKFoCt5xWGkKDksBV4vDlI5jkWIcWvSLfOjsLph/LaA
-         yesQ==
-X-Gm-Message-State: AODbwcAgWh7nvgBXm4ggvC1Cu4ZCnCvH85T5yx2QI0PDSruMSopPUoIS
-        3wEmxIaLXpBNBQ==
-X-Received: by 10.223.165.14 with SMTP id i14mr29922476wrb.127.1495742759620;
-        Thu, 25 May 2017 13:05:59 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id r60sm10574313wrb.37.2017.05.25.13.05.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 13:05:58 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 6/7] grep: un-break building with PCRE < 8.20
-Date:   Thu, 25 May 2017 20:05:27 +0000
-Message-Id: <20170525200528.22037-7-avarab@gmail.com>
-X-Mailer: git-send-email 2.13.0.303.g4ebf302169
-In-Reply-To: <20170525200528.22037-1-avarab@gmail.com>
-References: <20170525200528.22037-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2Y8evJ1+TrrGZGCSgglIm+9YTGRqXhV08PBTOReuQGQ=;
+        b=Sk3cIn2ryNj3Bnl5Ab8KmDeoDaEjmL32KhCTjiXq3e2RlUoc2COEOxgROdPdBIA8XV
+         h/mYv+3ICNsTfKwqcC14S8nCcxx45cvpDBmHPW1uQmX233hbCLwcHCJIgv+gvQgN8xiO
+         B59mRanGJY8yNWHgxxfBQqk8i+xPz7xHU+7E/lKoRkIdUo9dIefxOsazHKjxOdRhHXvI
+         igOcVfKWrYZy9H4gMWzfZZTHqy7Ugoe6IIeCfcX0MrVFWz6rrUhaCk1AygNz2EIZMUSA
+         Z0XxOYjKW1WH1DqvTSQOF4F1vcM3IuCubg/Na0MAzTXSa+6rISCdvxQoT0TprE7+UKnr
+         va+w==
+X-Gm-Message-State: AODbwcAeHhYnWX88eb4ao8heVAynwOI7ps2wVgClcMOqX2Lf3ipgFYX0
+        wGKRhs9Tb3Cv1TgVYgOSyklDsnG5Uw==
+X-Received: by 10.36.53.79 with SMTP id k76mr15460297ita.71.1495746332661;
+ Thu, 25 May 2017 14:05:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.107.8.220 with HTTP; Thu, 25 May 2017 14:05:11 -0700 (PDT)
+In-Reply-To: <20170518201333.13088-7-benpeart@microsoft.com>
+References: <20170518201333.13088-1-benpeart@microsoft.com> <20170518201333.13088-7-benpeart@microsoft.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 25 May 2017 23:05:11 +0200
+Message-ID: <CACBZZX7AA5sbdqhY+W2v3HRSudkWv4cHM+EQUr-X34FGvLH2hw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] fsmonitor: add a sample query-fsmonitor hook
+ script for Watchman
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, benpeart@microsoft.com,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        David.Turner@twosigma.com, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend my change earlier in this series ("grep: add support for the
-PCRE v1 JIT API", 2017-04-11) to un-break the build on PCRE v1
-versions earlier than 8.20.
+On Thu, May 18, 2017 at 10:13 PM, Ben Peart <peartben@gmail.com> wrote:
+> This hook script integrates the new fsmonitor capabilities of git with
+> the cross platform Watchman file watching service. To use the script:
+>
+> Download and install Watchman from https://facebook.github.io/watchman/
+> and instruct Watchman to watch your working directory for changes
+> ('watchman watch-project /usr/src/git').
+>
+> Rename the sample integration hook from query-fsmonitor.sample to
+> query-fsmonitor.
+>
+> Configure git to use the extension ('git config core.fsmonitor true')
+> and optionally turn on the untracked cache for optimal performance
+> ('git config core.untrackedcache true').
+>
+> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  templates/hooks--query-fsmonitor.sample | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+>  create mode 100644 templates/hooks--query-fsmonitor.sample
+>
+> diff --git a/templates/hooks--query-fsmonitor.sample b/templates/hooks--query-fsmonitor.sample
+> new file mode 100644
+> index 0000000000..4bd22f21d8
+> --- /dev/null
+> +++ b/templates/hooks--query-fsmonitor.sample
+> @@ -0,0 +1,27 @@
+> +#!/bin/sh
+> +#
+> +# An example hook script to integrate Watchman
+> +# (https://facebook.github.io/watchman/) with git to provide fast
+> +# git status.
+> +#
+> +# The hook is passed a time_t formatted as a string and outputs to
+> +# stdout all files that have been modified since the given time.
+> +# Paths must be relative to the root of the working tree and
+> +# separated by a single NUL.
+> +#
+> +# To enable this hook, rename this file to "query-fsmonitor"
+> +
+> +# Convert unix style paths to escaped Windows style paths
+> +case "$(uname -s)" in
+> +MINGW*|MSYS_NT*)
+> +  GIT_WORK_TREE="$(cygpath -aw "$PWD" | sed 's,\\,\\\\,g')"
+> +  ;;
+> +*)
+> +  GIT_WORK_TREE="$PWD"
+> +  ;;
+> +esac
+> +
+> +# Query Watchman for all the changes since the requested time
+> +echo "[\"query\", \"$GIT_WORK_TREE\", {\"since\": $1, \"fields\":[\"name\"]}]" | \
+> +watchman -j | \
+> +perl -e 'use JSON::PP; my $o = JSON::PP->new->utf8->decode(join("", <>)); die "Watchman: $o->{'error'}.\nFalling back to scanning...\n" if defined($o->{"error"}); print(join("\0", @{$o->{"files"}}));'
 
-The 8.20 release was the first release to have JIT & pcre_jit_stack in
-the headers, so a mock type needs to be provided for it on those
-releases.
+I couldn't get watchman to work for me (built from source, keep
+getting [1]), but I hacked up something you can hopefully test &
+squash on top of this:
 
-Now git should compile with all PCRE versions that it supported before
-my JIT change.
+ # Query Watchman for all the changes since the requested time
+-echo "[\"query\", \"$GIT_WORK_TREE\", {\"since\": $time_t,
+\"fields\":[\"name\"]}]" | \
+-watchman -j | \
+-perl -e 'use JSON::PP; my $o = JSON::PP->new->utf8->decode(join("",
+<>)); die "Watchman: $o->{'error'}.\nFalling back to scanning...\n" if
+defined($o-
++echo "[\"query\", \"$GIT_WORK_TREE\", {\"since\": $time_t,
+\"fields\":[\"name\"]}]" |
++       watchman -j |
++       perl -0666 -e '
++               use strict;
++               use warnings;
++
++               my $stdin = <>;
++               die "Watchman: The watchman command returned no
+output, error above?\n" if $stdin eq "";
++               die "Watchman: Invalid input: $stdin\n" unless $stdin =~ /^\{/;
++
++               my $json_pkg;
++               eval {
++                       require JSON::XS;
++                       $json_pkg = "JSON::XS";
++                       1;
++               } or do {
++                       require JSON::PP;
++                       $json_pkg = "JSON::PP";
++               };
++
++               my $o = $json_pkg->new->utf8->decode($stdin);
++               die "Watchman: $o->{error}.\nFalling back to scanning...\n"
++                       if $o->{error};
++
++               local $, = "\0";
++               print @{$o->{files}};
++       '
 
-I've tested it as far back as version 7.5 released on 2008-01-10, once
-I got down to version 7.0 it wouldn't build anymore with GCC 7.1.1,
-and I couldn't be bothered to anything older than 7.5 as I'm confident
-that if the build breaks on those older versions it's not because of
-my JIT change.
+Rationale:
 
-See the "un-break" change in this series ("grep: un-break building
-with PCRE < 8.32", 2017-05-10) for why this isn't squashed into the
-main PCRE JIT commit.
+ * We use the much faster JSON::XS if it's installed.
+ * We use strict/warnings
+ * Micro optimization: Replace joining stdin with an equivalent -0666
+   invocation. See "perldoc perlrun".
+ * Micro optimization: No need to join up the possibly large list of
+   files into one big string, just set $, to \0 and stream out the
+   array.
+ * Error handling: My watchman is broken (so actually this isn't
+   tested), it only spews to stderr and exits. Handle that by checking
+   whether stdin is "".
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- grep.h | 3 +++
- 1 file changed, 3 insertions(+)
+Those changes are available at
+https://github.com/avar/git/commits/avar/fsmonitor
 
-diff --git a/grep.h b/grep.h
-index 3b948d9155..ce90969736 100644
---- a/grep.h
-+++ b/grep.h
-@@ -11,6 +11,9 @@
- #ifndef PCRE_STUDY_JIT_COMPILE
- #define PCRE_STUDY_JIT_COMPILE 0
- #endif
-+#if PCRE_MAJOR <= 8 && PCRE_MINOR < 20
-+typedef int pcre_jit_stack;
-+#endif
- #else
- typedef int pcre;
- typedef int pcre_extra;
--- 
-2.13.0.303.g4ebf302169
 
+
+1. watchman: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version
+`CXXABI_1.3.11' not found (required by watchman)
