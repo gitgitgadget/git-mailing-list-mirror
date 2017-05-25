@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C35620284
-	for <e@80x24.org>; Thu, 25 May 2017 19:46:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFACB20284
+	for <e@80x24.org>; Thu, 25 May 2017 19:46:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1036673AbdEYTqK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:46:10 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35032 "EHLO
+        id S1036680AbdEYTqO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:46:14 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33668 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936850AbdEYTqD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:46:03 -0400
-Received: by mail-wm0-f65.google.com with SMTP id g15so35867101wmc.2
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:46:03 -0700 (PDT)
+        with ESMTP id S1036667AbdEYTqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:46:09 -0400
+Received: by mail-wm0-f65.google.com with SMTP id b84so39668671wmh.0
+        for <git@vger.kernel.org>; Thu, 25 May 2017 12:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6fP4tzQmckPOEV7hy/Czv7QhcqPAYgbNpzsH2Nd9xlc=;
-        b=CmsyAfonXVVhLsPcagHF6UTvSiLcGBANqPi813DgW8fObssUb564sYnvTsAzEMC7e1
-         HnqxHYD9TQb+Tci2OEW19sbrO6CRHpEcVCi2fRyIFEj5C3XvgiDCaWZ6RbqTWRSmU7Mp
-         cluS9UqWOMi/NpDXMSCUAL1peYSmoGvMQAU/wSaxirAs6uzC7r4w90GKA5qSjdazL7sP
-         Hd5Be9IuRX0jRiF9bFhDQJOESAwIdugj1cI36DY+DV3QvgNeU8mTCX77vyMq4ZDTGOKN
-         g72UgKSDs/go0w0Xe9ITKw2ef+S92T8Ow3qHIHGCZZQQ5+2tXKvmPQfiksMUjb/RnC8k
-         wnrg==
+        bh=IW8fbNco5Hqf3yHvTye8KqqdrLtzBNEOBnUoah7/Ios=;
+        b=IJzrijEuVnSCv36urfT9z4VBZHcuq03+4R+hAi5LRsuFV19Nf8pCyQ/cFbwdiUi3pm
+         KxFIsZG/i6e6dHh89ghZdfPCuDR/wUOBOmLrahO0q+51uo6PrsQMJcCLbmc10A9c2CEm
+         s9JmqxEwJJWUvsHnBbvYgiZ/9nRBFlkC5ESDEPVY91xZ300JdXHRkCB+saTcKK04rfqp
+         50V5pVI3sW0gNo9n1JKgtgLcl+U+y82Fk1f3Rd7MtPEp0SeWIcD5Jeip+vkcXzdO+uee
+         amNwPSb152KWCf+jFA+sDgbhzreTBjur02PcdUIjfXEK6xLbWYd/hOiJpM6fQ2v096b9
+         07JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
+        d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6fP4tzQmckPOEV7hy/Czv7QhcqPAYgbNpzsH2Nd9xlc=;
-        b=ghTyLLAhOhdtVQEB+ntiJ2W7Y2avZwlNu+d+F99LYkx+x+aOu0G6SYFPlf8nluO+rr
-         oPBsmFlHKdOPU154RVAHkqd52MOonekWCM9MiV3+QDrFtQnUTaTmJ/Q+7PalDgusk71M
-         OPAYszrZwp9rFg9liljWeZ01T+pD/GiXDZjfBK/1cTSmK1YwInnfeReC2PgicP9TeYtt
-         HMct3xPD4qVBzwndEraZuw7QMQztxXGmbQgvK56Tsr1ZD64FLhdnNMToU2q/1H7BMh32
-         l5oSTLgH3ntk4i64kx5xQESUoKd/rjhwp58CPBwJsfmykhqbrdW1Rrtyno4CLw3IDtT8
-         kZIw==
-X-Gm-Message-State: AODbwcDv1E87rHLlA3PgkvQLk+pOqBsFZGsd6EkL5NRNqNXgH2D2h2uq
-        /DCGy++0ow6JqpOj3tA=
-X-Received: by 10.28.193.202 with SMTP id r193mr11825647wmf.31.1495741561870;
-        Thu, 25 May 2017 12:46:01 -0700 (PDT)
+        bh=IW8fbNco5Hqf3yHvTye8KqqdrLtzBNEOBnUoah7/Ios=;
+        b=mTz+7u8K9DfQxJjzsVbNcbxeOQZf0zi0Ska0m4a0EGW866+gywkRf+9NK7VReSIQcd
+         MoUg2YC6eRWb95v2hty9E6j7sOmyHN50TEQrbtfkkcj4B/hglnuhHDkF4KsUuwq8OKxt
+         erlQrOmhd8oct/d3nngdcII/Bya3mw2NhmgEQTcviC3KjZHWU8v4rt9uHlv2UMtijKOb
+         /P/PXvz9X5JDmyeRoBj4lon3nlimHgXSUhvf9fchp9JinKX+fYmTadBxfgYC3oTMiCLF
+         hH69NiBTtYvGoNaUzVuIjHzTO/IFhYx038HRZK8exRFevLSsCgayFw4tfzBfVu/cPa0U
+         BvCg==
+X-Gm-Message-State: AODbwcCgy9fUdR2Jcq9uLSfFoWKYjoPYR0rbAaQw26cX/3qr9iMeSqj2
+        d0VeQvNhszna7/933X8=
+X-Received: by 10.28.4.210 with SMTP id 201mr2723396wme.1.1495741566965;
+        Thu, 25 May 2017 12:46:06 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.46.00
+        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.46.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 12:46:00 -0700 (PDT)
+        Thu, 25 May 2017 12:46:05 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 03/31] test-lib: rename the LIBPCRE prerequisite to PCRE
-Date:   Thu, 25 May 2017 19:45:07 +0000
-Message-Id: <20170525194535.9324-4-avarab@gmail.com>
+Subject: [PATCH v4 05/31] log: make --regexp-ignore-case work with --perl-regexp
+Date:   Thu, 25 May 2017 19:45:09 +0000
+Message-Id: <20170525194535.9324-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170525194535.9324-1-avarab@gmail.com>
 References: <20170525194535.9324-1-avarab@gmail.com>
@@ -75,201 +75,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rename the LIBPCRE prerequisite to PCRE. This is for preparation for
-libpcre2 support, where having just "LIBPCRE" would be confusing as it
-implies v1 of the library.
+Make the --regexp-ignore-case option work with --perl-regexp. This
+never worked, and there was no test for this. Fix the bug and add a
+test.
 
-None of these tests are incompatible between versions 1 & 2 of
-libpcre, it's less confusing to give them a more general name to make
-it clear that they work on both library versions.
+When PCRE support was added in commit 63e7e9d8b6 ("git-grep: Learn
+PCRE", 2011-05-09) compile_pcre_regexp() would only check
+opt->ignore_case, but when the --perl-regexp option was added in
+commit 727b6fc3ed ("log --grep: accept --basic-regexp and
+--perl-regexp", 2012-10-03) the code didn't set the opt->ignore_case.
+
+Change the test suite to test for -i and --invert-regexp with
+basic/extended/perl patterns in addition to fixed, which was the only
+patternType that was tested for before in combination with those
+options.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/README                        |  4 ++--
- t/t7810-grep.sh                 | 28 ++++++++++++++--------------
- t/t7812-grep-icase-non-ascii.sh |  4 ++--
- t/t7813-grep-icase-iso.sh       |  2 +-
- t/test-lib.sh                   |  2 +-
- 5 files changed, 20 insertions(+), 20 deletions(-)
+ revision.c     |  1 +
+ t/t4202-log.sh | 60 +++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 56 insertions(+), 5 deletions(-)
 
-diff --git a/t/README b/t/README
-index ab386c3681..a90cb62583 100644
---- a/t/README
-+++ b/t/README
-@@ -803,9 +803,9 @@ use these, and "test_set_prereq" for how to define your own.
-    Test is not run by root user, and an attempt to write to an
-    unwritable file is expected to fail correctly.
- 
-- - LIBPCRE
-+ - PCRE
- 
--   Git was compiled with USE_LIBPCRE=YesPlease. Wrap any tests
-+   Git was compiled with support for PCRE. Wrap any tests
-    that use git-grep --perl-regexp or git-grep -P in these.
- 
-  - CASE_INSENSITIVE_FS
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index cee42097b0..c84c4d99f9 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -275,7 +275,7 @@ do
- 		test_cmp expected actual
- 	'
- 
--	test_expect_success LIBPCRE "grep $L with grep.patterntype=perl" '
-+	test_expect_success PCRE "grep $L with grep.patterntype=perl" '
- 		echo "${HC}ab:a+b*c" >expected &&
- 		git -c grep.patterntype=perl grep "a\x{2b}b\x{2a}c" $H ab >actual &&
- 		test_cmp expected actual
-@@ -1053,12 +1053,12 @@ hello.c:int main(int argc, const char **argv)
- hello.c:	printf("Hello world.\n");
+diff --git a/revision.c b/revision.c
+index 8a8c1789c7..4883cdd2d0 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1991,6 +1991,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_ERE;
+ 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
++		revs->grep_filter.ignore_case = 1;
+ 		revs->grep_filter.regflags |= REG_ICASE;
+ 		DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
+ 	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 948fd719d2..c25eb9afd1 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -231,14 +231,47 @@ second
+ initial
  EOF
- 
--test_expect_success LIBPCRE 'grep --perl-regexp pattern' '
-+test_expect_success PCRE 'grep --perl-regexp pattern' '
- 	git grep --perl-regexp "\p{Ps}.*?\p{Pe}" hello.c >actual &&
- 	test_cmp expected actual
+ test_expect_success 'log --invert-grep --grep' '
+-	git log --pretty="tformat:%s" --invert-grep --grep=th --grep=Sec >actual &&
+-	test_cmp expect actual
++	# Fixed
++	git -c grep.patternType=fixed log --pretty="tformat:%s" --invert-grep --grep=th --grep=Sec >actual &&
++	test_cmp expect actual &&
++
++	# POSIX basic
++	git -c grep.patternType=basic log --pretty="tformat:%s" --invert-grep --grep=t[h] --grep=S[e]c >actual &&
++	test_cmp expect actual &&
++
++	# POSIX extended
++	git -c grep.patternType=basic log --pretty="tformat:%s" --invert-grep --grep=t[h] --grep=S[e]c >actual &&
++	test_cmp expect actual &&
++
++	# PCRE
++	if test_have_prereq PCRE
++	then
++		git -c grep.patternType=perl log --pretty="tformat:%s" --invert-grep --grep=t[h] --grep=S[e]c >actual &&
++		test_cmp expect actual
++	fi
  '
  
--test_expect_success LIBPCRE 'grep -P pattern' '
-+test_expect_success PCRE 'grep -P pattern' '
- 	git grep -P "\p{Ps}.*?\p{Pe}" hello.c >actual &&
- 	test_cmp expected actual
- '
-@@ -1070,13 +1070,13 @@ test_expect_success 'grep pattern with grep.extendedRegexp=true' '
- 	test_cmp empty actual
- '
- 
--test_expect_success LIBPCRE 'grep -P pattern with grep.extendedRegexp=true' '
-+test_expect_success PCRE 'grep -P pattern with grep.extendedRegexp=true' '
- 	git -c grep.extendedregexp=true \
- 		grep -P "\p{Ps}.*?\p{Pe}" hello.c >actual &&
- 	test_cmp expected actual
- '
- 
--test_expect_success LIBPCRE 'grep -P -v pattern' '
-+test_expect_success PCRE 'grep -P -v pattern' '
- 	{
- 		echo "ab:a+b*c"
- 		echo "ab:a+bc"
-@@ -1085,7 +1085,7 @@ test_expect_success LIBPCRE 'grep -P -v pattern' '
- 	test_cmp expected actual
- '
- 
--test_expect_success LIBPCRE 'grep -P -i pattern' '
-+test_expect_success PCRE 'grep -P -i pattern' '
- 	cat >expected <<-EOF &&
- 	hello.c:	printf("Hello world.\n");
- 	EOF
-@@ -1093,7 +1093,7 @@ test_expect_success LIBPCRE 'grep -P -i pattern' '
- 	test_cmp expected actual
+ test_expect_success 'log --invert-grep --grep -i' '
+ 	echo initial >expect &&
+-	git log --pretty="tformat:%s" --invert-grep -i --grep=th --grep=Sec >actual &&
+-	test_cmp expect actual
++
++	# Fixed
++	git -c grep.patternType=fixed log --pretty="tformat:%s" --invert-grep -i --grep=th --grep=Sec >actual &&
++	test_cmp expect actual &&
++
++	# POSIX basic
++	git -c grep.patternType=basic log --pretty="tformat:%s" --invert-grep -i --grep=t[h] --grep=S[e]c >actual &&
++	test_cmp expect actual &&
++
++	# POSIX extended
++	git -c grep.patternType=extended log --pretty="tformat:%s" --invert-grep -i --grep=t[h] --grep=S[e]c >actual &&
++	test_cmp expect actual &&
++
++	# PCRE
++	if test_have_prereq PCRE
++	then
++		git -c grep.patternType=perl log --pretty="tformat:%s" --invert-grep -i --grep=t[h] --grep=S[e]c >actual &&
++		test_cmp expect actual
++	fi
  '
  
--test_expect_success LIBPCRE 'grep -P -w pattern' '
-+test_expect_success PCRE 'grep -P -w pattern' '
- 	{
- 		echo "hello_world:Hello world"
- 		echo "hello_world:HeLLo world"
-@@ -1118,11 +1118,11 @@ test_expect_success 'grep invalidpattern properly dies with grep.patternType=ext
- 	test_must_fail git -c grep.patterntype=extended grep "a["
+ test_expect_success 'log --grep option parsing' '
+@@ -256,8 +289,25 @@ test_expect_success 'log -i --grep' '
+ 
+ test_expect_success 'log --grep -i' '
+ 	echo Second >expect &&
++
++	# Fixed
+ 	git log -1 --pretty="tformat:%s" --grep=sec -i >actual &&
+-	test_cmp expect actual
++	test_cmp expect actual &&
++
++	# POSIX basic
++	git -c grep.patternType=basic log -1 --pretty="tformat:%s" --grep=s[e]c -i >actual &&
++	test_cmp expect actual &&
++
++	# POSIX extended
++	git -c grep.patternType=extended log -1 --pretty="tformat:%s" --grep=s[e]c -i >actual &&
++	test_cmp expect actual &&
++
++	# PCRE
++	if test_have_prereq PCRE
++	then
++		git -c grep.patternType=perl log -1 --pretty="tformat:%s" --grep=s[e]c -i >actual &&
++		test_cmp expect actual
++	fi
  '
  
--test_expect_success LIBPCRE 'grep -P invalidpattern properly dies ' '
-+test_expect_success PCRE 'grep -P invalidpattern properly dies ' '
- 	test_must_fail git grep -P "a["
- '
- 
--test_expect_success LIBPCRE 'grep invalidpattern properly dies with grep.patternType=perl' '
-+test_expect_success PCRE 'grep invalidpattern properly dies with grep.patternType=perl' '
- 	test_must_fail git -c grep.patterntype=perl grep "a["
- '
- 
-@@ -1191,13 +1191,13 @@ test_expect_success 'grep pattern with grep.patternType=fixed, =basic, =perl, =e
- 	test_cmp expected actual
- '
- 
--test_expect_success LIBPCRE 'grep -G -F -E -P pattern' '
-+test_expect_success PCRE 'grep -G -F -E -P pattern' '
- 	echo "d0:0" >expected &&
- 	git grep -G -F -E -P "[\d]" d0 >actual &&
- 	test_cmp expected actual
- '
- 
--test_expect_success LIBPCRE 'grep pattern with grep.patternType=fixed, =basic, =extended, =perl' '
-+test_expect_success PCRE 'grep pattern with grep.patternType=fixed, =basic, =extended, =perl' '
- 	echo "d0:0" >expected &&
- 	git \
- 		-c grep.patterntype=fixed \
-@@ -1208,7 +1208,7 @@ test_expect_success LIBPCRE 'grep pattern with grep.patternType=fixed, =basic, =
- 	test_cmp expected actual
- '
- 
--test_expect_success LIBPCRE 'grep -P pattern with grep.patternType=fixed' '
-+test_expect_success PCRE 'grep -P pattern with grep.patternType=fixed' '
- 	echo "ab:a+b*c" >expected &&
- 	git \
- 		-c grep.patterntype=fixed \
-@@ -1343,12 +1343,12 @@ space: line with leading space2
- space: line with leading space3
- EOF
- 
--test_expect_success LIBPCRE 'grep -E "^ "' '
-+test_expect_success PCRE 'grep -E "^ "' '
- 	git grep -E "^ " space >actual &&
- 	test_cmp expected actual
- '
- 
--test_expect_success LIBPCRE 'grep -P "^ "' '
-+test_expect_success PCRE 'grep -P "^ "' '
- 	git grep -P "^ " space >actual &&
- 	test_cmp expected actual
- '
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
-index 169fd8d706..04a61cb8e0 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -20,13 +20,13 @@ test_expect_success REGEX_LOCALE 'grep literal string, no -F' '
- 	git grep -i "TILRAUN: HALLÓ HEIMUR!"
- '
- 
--test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep pcre utf-8 icase' '
-+test_expect_success GETTEXT_LOCALE,PCRE 'grep pcre utf-8 icase' '
- 	git grep --perl-regexp    "TILRAUN: H.lló Heimur!" &&
- 	git grep --perl-regexp -i "TILRAUN: H.lló Heimur!" &&
- 	git grep --perl-regexp -i "TILRAUN: H.LLÓ HEIMUR!"
- '
- 
--test_expect_success GETTEXT_LOCALE,LIBPCRE 'grep pcre utf-8 string with "+"' '
-+test_expect_success GETTEXT_LOCALE,PCRE 'grep pcre utf-8 string with "+"' '
- 	test_write_lines "TILRAUN: Hallóó Heimur!" >file2 &&
- 	git add file2 &&
- 	git grep -l --perl-regexp "TILRAUN: H.lló+ Heimur!" >actual &&
-diff --git a/t/t7813-grep-icase-iso.sh b/t/t7813-grep-icase-iso.sh
-index efef7fb81f..701e08a8e5 100755
---- a/t/t7813-grep-icase-iso.sh
-+++ b/t/t7813-grep-icase-iso.sh
-@@ -11,7 +11,7 @@ test_expect_success GETTEXT_ISO_LOCALE 'setup' '
- 	export LC_ALL
- '
- 
--test_expect_success GETTEXT_ISO_LOCALE,LIBPCRE 'grep pcre string' '
-+test_expect_success GETTEXT_ISO_LOCALE,PCRE 'grep pcre string' '
- 	git grep --perl-regexp -i "TILRAUN: H.ll� Heimur!" &&
- 	git grep --perl-regexp -i "TILRAUN: H.LL� HEIMUR!"
- '
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 26b3edfb2e..04d857a42b 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1014,7 +1014,7 @@ esac
- ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
- test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PYTHON" && test_set_prereq PYTHON
--test -n "$USE_LIBPCRE" && test_set_prereq LIBPCRE
-+test -n "$USE_LIBPCRE" && test_set_prereq PCRE
- test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
- 
- # Can we rely on git's output in the C locale?
+ test_expect_success 'log -F -E --grep=<ere> uses ere' '
 -- 
 2.13.0.303.g4ebf302169
 
