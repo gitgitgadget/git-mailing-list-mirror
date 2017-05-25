@@ -2,86 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E056209FD
-	for <e@80x24.org>; Thu, 25 May 2017 23:20:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 180A620A04
+	for <e@80x24.org>; Thu, 25 May 2017 23:28:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1163182AbdEYXUz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 19:20:55 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33774 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030469AbdEYXUy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 19:20:54 -0400
-Received: by mail-wm0-f66.google.com with SMTP id b84so119242wmh.0
-        for <git@vger.kernel.org>; Thu, 25 May 2017 16:20:53 -0700 (PDT)
+        id S1030462AbdEYX2M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 19:28:12 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:32824 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965050AbdEYX2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 19:28:11 -0400
+Received: by mail-pf0-f194.google.com with SMTP id f27so42022886pfe.0
+        for <git@vger.kernel.org>; Thu, 25 May 2017 16:28:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Br/UPnR8IdeWG+HhQYIT2zALr9n3zc+n7F3ng5h+xnY=;
-        b=X9/Dj27QFa6Vhxi2+JEJOF5zr3kOLTZ+o5J+J1hziyJQsM4Q/1kyD4EWpWtfb4IOvR
-         luWSb+rovH0ycxSxYRo/AcdAT9mnyj99Kt9uhoYqVXgNiLiRgtljrhFHUTRUHeBGCYfu
-         kZSk99/ZGlHMIOFiqYsiDub8VQ5YA73hqfEA34i6iaKpXBIafn2htRXW1PX5eD406Hwr
-         3XSAE2sAoEcWORH3NDON0ES6RjY/piozgwszaBwv0Ve7rBmY6wi9jWy1S0ZFqMo+WhAT
-         hUJXa9BafAiKpaZ9CAvtdhKCeTRQ2WAhw4V0LFNwU3WnedLzYyl44F8Fo35ipkeGzoyt
-         AO4Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=t0yeGNu8yloFjF7oHnJmsVtdwvfQmS71JIGyCkMJCf0=;
+        b=AG4gtcl4/7EHdIZNzfmzuabhkFd6HvkuIR04UVy4P/8DK8wwIaXtBS82QK7IjUd/41
+         BJwwndV87uoz6v8UBFcjuMIDtwOWJOBk3krkKOtSojjrPPSiIrgpNhbEF40Fnn1j9S5d
+         2UfdNw+vnpqUsMJFe0rzQc7+vx9bplPsKa3eNx3ulpZPQ6eVYDS09uGZiwuFLaAC2/Xe
+         4+lUmcFONcyraWJNSz/jYp5BsttXCTeN14KHNE/fj1FyEZCzAmmNhkz3zsPHpUVY9IRs
+         hvf7A7zqwErq0E4n5v+z2iAC6RQYVadxf0LS7eyqpVRQtFrnnA2Kh/SlxGWV2LX89A1O
+         wb9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Br/UPnR8IdeWG+HhQYIT2zALr9n3zc+n7F3ng5h+xnY=;
-        b=jqvG/nCjpfpSeqoK8QesaT4aL95E2k9JePWNUuTM5By0DzOZEjhNFKvUjO1C0CjmtB
-         zllNGBYvxezKIRc8IeEZFchaMwnTZNhmsQYJcga12Eno9bvKBWvyZNqQUDCVU/0BuB1K
-         521ppTF/nuwnepIhdpEL40f9phkcBSJbHwJH5bZzmpifidxWTUB6GZgqbJP+owu0NR1/
-         +I67D3k0YA+YrIuUCePDk4Z3wNka5njdNunzeve9dmF8V9ZVhSsDz+jKM5WVhW+ZJyV/
-         KLq0+0vMbMfXB7Ygibx2cHisD7srNRTo3d1V8ouLWDaWDkV6ozyeBET/85Cm0NcFFpv/
-         f74A==
-X-Gm-Message-State: AODbwcCP0t9OJ6lXHkcjD24w/Fi7id2bH9/xu30k7mRS6JqYjNraddIG
-        rcDOKnCnkTislA==
-X-Received: by 10.80.146.71 with SMTP id j7mr59873eda.17.1495754452668;
-        Thu, 25 May 2017 16:20:52 -0700 (PDT)
-Received: from localhost.localdomain (x4db264f7.dyn.telefonica.de. [77.178.100.247])
-        by smtp.gmail.com with ESMTPSA id c2sm2293465edc.34.2017.05.25.16.20.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 25 May 2017 16:20:52 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] docs/config.txt: fix indefinite article in core.fileMode description
-Date:   Fri, 26 May 2017 01:20:46 +0200
-Message-Id: <20170525232046.3421-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.13.0.35.g14b6294b1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=t0yeGNu8yloFjF7oHnJmsVtdwvfQmS71JIGyCkMJCf0=;
+        b=IGqzmrb5EKtrnjyd/qz67geOGhD7OIRwhR1wHCIR9M4rpn+S0Pr6E58zoNUl3wVQOG
+         oF1pMMM4cMLEQ3I68tn+xHWzn40Wxv6c/2cvfx5mqrB+n5tZPR/RAE3nlVQhR5HcSvhV
+         Z48dbA02vd4oj2l02J7URADaRnm0E7xgi4o+z2tm/qAD2bva6dc6hz6JlNNrZFvqMSda
+         aU90Jkvtr51NthBf7/Y1oRRMR8FtQO5SL+a645J2rBq3l7fdz5IiBtUmH/EmgOeCEjXq
+         lfCIVXUsIKnbvn8r65nx9wzimKciz4QGn9I3XZ/U9HeFBFRozIgXWp+2wIMwj2RGD3iB
+         /BTw==
+X-Gm-Message-State: AODbwcBq0wi/gKZKoHp445D1v/YU0+nSC2h3JkU9Vwx/mFWegh+HmSQ/
+        Nzw+Q8qnD01cIA==
+X-Received: by 10.99.37.198 with SMTP id l189mr48857404pgl.102.1495754890500;
+        Thu, 25 May 2017 16:28:10 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:546a:ce73:1719:5041])
+        by smtp.gmail.com with ESMTPSA id x5sm15004540pfi.94.2017.05.25.16.28.09
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 25 May 2017 16:28:09 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        =?utf-8?Q?F=C3=A9lix?= Saparelli <felix@passcod.name>,
+        git@vger.kernel.org
+Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch tries to check out the master branch
+References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
+        <xmqqa864mea3.fsf@gitster.mtv.corp.google.com>
+        <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
+        <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net>
+        <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com>
+        <xmqqa861fx34.fsf@gitster.mtv.corp.google.com>
+        <20170525155924.hk5jskennph6tta3@sigill.intra.peff.net>
+        <20170525191115.tqd6zlj5mxqls4wp@sigill.intra.peff.net>
+Date:   Fri, 26 May 2017 08:28:09 +0900
+In-Reply-To: <20170525191115.tqd6zlj5mxqls4wp@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 25 May 2017 15:11:15 -0400")
+Message-ID: <xmqqy3tkcy9i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- Documentation/config.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Jeff King <peff@peff.net> writes:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 475e874d5..f9adc9afa 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -334,7 +334,7 @@ core.fileMode::
- 	is to be honored.
- +
- Some filesystems lose the executable bit when a file that is
--marked as executable is checked out, or checks out an
-+marked as executable is checked out, or checks out a
- non-executable file with executable bit on.
- linkgit:git-clone[1] or linkgit:git-init[1] probe the filesystem
- to see if it handles the executable bit correctly
--- 
-2.13.0.35.g14b6294b1
+> I dunno. I was thinking there might be a quick tweak, but I'm wondering
+> if this arcane case is worth the restructuring we'd have to do to
+> support it. It only comes up when you've moved the server repo's HEAD to
+> an unborn branch _and_ you have other refs (since otherwise we don't
+> even send capabilities at all!).
 
+Thanks for digging.  You made me to start doubting it is worth
+doing, too.
