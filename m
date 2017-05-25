@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9A9920209
-	for <e@80x24.org>; Thu, 25 May 2017 05:34:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7834920285
+	for <e@80x24.org>; Thu, 25 May 2017 05:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032713AbdEYFef (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 01:34:35 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33029 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030766AbdEYFee (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 01:34:34 -0400
-Received: by mail-pf0-f171.google.com with SMTP id e193so156758403pfh.0
-        for <git@vger.kernel.org>; Wed, 24 May 2017 22:34:34 -0700 (PDT)
+        id S1034088AbdEYFjx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 01:39:53 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:35986 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1034084AbdEYFjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 01:39:52 -0400
+Received: by mail-pf0-f179.google.com with SMTP id m17so156736891pfg.3
+        for <git@vger.kernel.org>; Wed, 24 May 2017 22:39:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=9dXpgQu2huqdTc26VB6FeX/DT7pBwFzAzQ6QZ+MtC78=;
-        b=mPkVDqZf2f1uHB7I0W22Ke+YOdlnBRyULJzeMTTMqI20wRmrzwr/QDNYIHWrsheVyo
-         JAy9woOqpJbfC3a/wc8CwFjoXSoAJaSrjMjs/bXAM2yyEKepwrhmZwwGGPHiBPrvmLeG
-         9BQJKnj6zwQCSotepSQHCA0OsLgWVU2Ba73saNL2AX6rK/muJ04YHnM7CB0fXijMdYRS
-         g2A+ClxzDToVpu1OtkgArdj653IFgzhxkflj6+zPKx9PP0Ih3TpCArz0DGxmcQfllj74
-         CftY7M7v3cWOOWa2v52Q7ceRgxKSA9YdKINMfTCBCuL1Vd8ovCY47VP5iJxDajkmKouP
-         O6iw==
+        bh=8bqEDABenNn2w23lbltzGWTVvIlWG/FrQYyAG+epOrs=;
+        b=Km5NnK0eGcrgjj0FomliPiL+X5UOpyHMiuPXMNJ/5XPmHjvJWbL668pSvDG8XO0F35
+         srZcj4KxkEpDUMm8sztVrCQ+xRRpVv15ONdX2U5B/SQ5eCSmf/DbLDFCIKZWz+KUoxv2
+         79qTL97cUAuH/H8A3uy7TMsvJDS/LCptN6MdG0EhY4zxRO2uTBSVvH9AuV8z79zjtNyY
+         /onf+dpUsz0xCDQFfqjDU8gwbo8ZN3xsEp2jKVFCEXmiFrKaZ5pZR0BuEYag1t7z3AK6
+         rC06csSDcs28TWlVRV/QtKUXD7FlWWtHnuZtMBCSJPc7l4LM0Lqdd+TIxxn4cOCseeWt
+         oGZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=9dXpgQu2huqdTc26VB6FeX/DT7pBwFzAzQ6QZ+MtC78=;
-        b=RtYrjWrCgi/QIRPfulbxXC6Kf0ew4TxtOuTIautL45PcWShIzbTCYyOKKtQOhHtU25
-         ADZlQue6UNK3cONn2hPLEp1ZsOO4l+2/lNAZCJKIUsibuG205BgS8AeNK50S1Xh9pXcb
-         HefxZZjNlE+2847PJdPauI+1OcfSvaP1FuydgWZ5QDHoGLfTNjjMc1etqqIN3IRpse/0
-         tKgUr8d5DFNMKc4oGiWN1Ryp0xk+ULxiYrV2GZo+ew4i9msarwn3nBrTMWc56qGWG1s0
-         DcKMQp6seCoLf2aI1BzpNQyHu0aRHQMWPNMjCtIhqyr90rvp9vTmC6PStO0eLfpILwj5
-         hGQA==
-X-Gm-Message-State: AODbwcDXJ/DF26rXr715sxAGuqBLlPpNAzr5w+7uaN3PBpjwEA9ASHDM
-        ALuJepDx1bMkevznNpNAzDeRM/RGMfW1Uwc=
-X-Received: by 10.98.205.65 with SMTP id o62mr42289118pfg.105.1495690473858;
- Wed, 24 May 2017 22:34:33 -0700 (PDT)
+        bh=8bqEDABenNn2w23lbltzGWTVvIlWG/FrQYyAG+epOrs=;
+        b=T6I7GlvsPV/KDUXqs9iu6dtwSOfwmTSJR4Afj8pTqzjXyOYpNgtaS8fIqgyaRZVCpM
+         j+WfJI+BBVAHEr8bOKaSyGG73fwjKZjwHg+vDwXEGLVsBqDk0VltE4elVZQ0z3GYyt4B
+         wQaPexkQMs2fqOig3dnzAt6TpKTcJ2ZgYiJj/sX4v+wN8dxXK65btbNmnIHMMCLjLlAC
+         1wkEvMtkoOszScRXPBsXs2HjWjWEvSyYiNz45Cxyz0MenuQeqHr77UC3HKsLsaBEwWuI
+         5/DQ692jlAPyHbrjK5//PNN8GD5vFkiokYwHB6G8vF8jFWa+2PBbYN3moKvZVknx4k7g
+         pXAg==
+X-Gm-Message-State: AODbwcAgNeOcMOGmRhPexqmCLDgnizItwK+hEQBKm3cQ04UatySzkWeq
+        aU1RNdZkBV3hfD7XhtNsw5p7AIFxhBUq
+X-Received: by 10.98.148.2 with SMTP id m2mr42635596pfe.194.1495690781291;
+ Wed, 24 May 2017 22:39:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Wed, 24 May 2017 22:34:33 -0700 (PDT)
-In-Reply-To: <xmqqo9uhfz8g.fsf@gitster.mtv.corp.google.com>
+Received: by 10.100.170.200 with HTTP; Wed, 24 May 2017 22:39:40 -0700 (PDT)
+In-Reply-To: <xmqqk255fz7b.fsf@gitster.mtv.corp.google.com>
 References: <20170523024048.16879-1-sbeller@google.com/> <20170524214036.29623-1-sbeller@google.com>
- <20170524214036.29623-17-sbeller@google.com> <xmqqo9uhfz8g.fsf@gitster.mtv.corp.google.com>
+ <20170524214036.29623-18-sbeller@google.com> <xmqqk255fz7b.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 24 May 2017 22:34:33 -0700
-Message-ID: <CAGZ79kZM5KPP7iDo7rT5gxsooRrftJrA=+3-WBXW3nqfXeTy4Q@mail.gmail.com>
-Subject: Re: [PATCHv5 16/17] diff: buffer all output if asked to
+Date:   Wed, 24 May 2017 22:39:40 -0700
+Message-ID: <CAGZ79kZBOoK2vd5EqottnUr1AYMHa1=TzQB8ga00TehQxgtuhA@mail.gmail.com>
+Subject: Re: [PATCHv5 17/17] diff.c: color moved lines differently
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Brandon Williams <bmwill@google.com>,
@@ -65,75 +65,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 24, 2017 at 7:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, May 24, 2017 at 7:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Stefan Beller <sbeller@google.com> writes:
 >
->> Introduce a new option 'use_buffer' in the struct diff_options which
->> controls whether all output is buffered up until all output is available.
+>> When a patch consists mostly of moving blocks of code around, it can
+>> be quite tedious to ensure that the blocks are moved verbatim, and not
 >> ...
->> Unconditionally enable output via buffer in this patch as it yields
->> a great opportunity for testing, i.e. all the diff tests from the
->> test suite pass without having reordering issues (i.e. only parts
->> of the output got buffered, and we forgot to buffer other parts).
->> The test suite passes, which gives confidence that we converted all
->> functions to use emit_line for output.
+>> cases. This leads to another thought: We could pass on '--color-moved' to
+>> submodules such that they color up moved lines for themselves. If we'd do
+>> so only line moves within a repository boundary are marked up.
 >>
+>> Helped-by: Jonathan Tan <jonathantanmy@google.com>
 >> Signed-off-by: Stefan Beller <sbeller@google.com>
 >> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> Oh, did I?
-
-Yes, this is essentially the v4 with small indentation fixes, so I
-assumed your signoff is still valid.
-
-Which leads to explaining my workflow (which I think we
-discussed that half a year ago with Dscho in a longer thread).
-
-As soon as you apply a series I take that series and work off
-that series, because you explained you would do smaller
-fixups occasionally.
-
-Patches that change drastically, I strip off your signoff and
-pretend like I created them from scratch, but for those which
-I barely touch (if at all), I do not remove your signoff, as
-I'd be just passing them along again.
-
-Maybe I have to rethink that strategy.
-
->
->> ---
->>  diff.c | 155 ++++++++++++++++++++++++++++++++++++++++++++++++++---------------
->>  diff.h |  41 +++++++++++++++++
->>  2 files changed, 161 insertions(+), 35 deletions(-)
 >>
->> diff --git a/diff.c b/diff.c
->> index 514c5facd7..8e06206881 100644
->> --- a/diff.c
->> +++ b/diff.c
->> ...
->> @@ -2579,6 +2628,13 @@ static void builtin_diff(const char *name_a,
->>                       xecfg.ctxlen = strtoul(v, NULL, 10);
->>               if (o->word_diff)
->>                       init_diff_words_data(&ecbdata, o, one, two);
->> +             if (o->use_buffer) {
->> +                     struct diff_line e = diff_line_INIT;
+>> # Conflicts:
+>> #     diff.c
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
 >
-> This ...
->
->> +                     e.state = DIFF_LINE_RELOAD_WS_RULE;
->> ...
->> +#define diff_line_INIT {NULL, NULL, NULL, 0, 0, 0}
->
-> ... and this should be in all caps.   We do not say
->
->         struct strbuf buf = strbuf_INIT;
->
-> and we should do the same for this new thing.
+> Hmph, what are these final lines about?
 
-Yes. Totally agree. That is fallout from a mechanical
-replace all s/buffered_patch_line/diff_line/ and the case
-sensitivity got lost.
+See the explanation in the patch 16/17.
+My guess is that one of us (me) was careless again.
 
-Will fix again.
+The commented lines are easily produced by git-gui, that
+I use. I think it just takes the commit message from the underlying
+git-core. But unlike git-core, it doesn't strip off commented lines
+as there is no extra information in comments presented.
+I wonder how you are the first signoff after the conflict markers
+though, as that would hint that you signed off a commit message
+with the commented conflict lines first, before I had them.
 
+Puzzeled, will fix in a reroll.
+
+Thanks,
 Stefan
