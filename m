@@ -6,99 +6,126 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7834920285
-	for <e@80x24.org>; Thu, 25 May 2017 05:40:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 408E020209
+	for <e@80x24.org>; Thu, 25 May 2017 05:42:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034088AbdEYFjx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 01:39:53 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:35986 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1034084AbdEYFjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 01:39:52 -0400
-Received: by mail-pf0-f179.google.com with SMTP id m17so156736891pfg.3
-        for <git@vger.kernel.org>; Wed, 24 May 2017 22:39:51 -0700 (PDT)
+        id S968490AbdEYFm1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 01:42:27 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:34177 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968162AbdEYFmX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 01:42:23 -0400
+Received: by mail-pf0-f180.google.com with SMTP id 9so156727145pfj.1
+        for <git@vger.kernel.org>; Wed, 24 May 2017 22:42:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8bqEDABenNn2w23lbltzGWTVvIlWG/FrQYyAG+epOrs=;
-        b=Km5NnK0eGcrgjj0FomliPiL+X5UOpyHMiuPXMNJ/5XPmHjvJWbL668pSvDG8XO0F35
-         srZcj4KxkEpDUMm8sztVrCQ+xRRpVv15ONdX2U5B/SQ5eCSmf/DbLDFCIKZWz+KUoxv2
-         79qTL97cUAuH/H8A3uy7TMsvJDS/LCptN6MdG0EhY4zxRO2uTBSVvH9AuV8z79zjtNyY
-         /onf+dpUsz0xCDQFfqjDU8gwbo8ZN3xsEp2jKVFCEXmiFrKaZ5pZR0BuEYag1t7z3AK6
-         rC06csSDcs28TWlVRV/QtKUXD7FlWWtHnuZtMBCSJPc7l4LM0Lqdd+TIxxn4cOCseeWt
-         oGZA==
+         :cc:content-transfer-encoding;
+        bh=avXzWGV883v3/Re1XZraGoAgQdIBUgK7IiIVfPMuyYA=;
+        b=dxdHrc6auS7rzDdTQdqeBPJztBH1l+R5YYK5w4SiUpLwNpQP6x1U+fH/w9aUTtzBwH
+         KFKX8dsaWtFzf9vVlPXfextDONLzpyB1kyZaPrN1CT+w/S1Jt9McbmPOEmI8frn7V2Kw
+         Yc3RNcHt6BbaAzONroeR8snDgNmdztROCSwpET8OL468/UFwyOmPBAYseYiw93aK2jpZ
+         ffegGKZ0DW0Di9QzHp/vFxQBARHxPYEinpAehp9PPuCXRowQRNjLfCXHAf5xcvMAbqOe
+         Fyjn9wxEVnAaFTevJZos3tXhGMfsHgcgrwXFrPvttXCeVAetWVes2Jnq5PhVT31n71cc
+         jcGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8bqEDABenNn2w23lbltzGWTVvIlWG/FrQYyAG+epOrs=;
-        b=T6I7GlvsPV/KDUXqs9iu6dtwSOfwmTSJR4Afj8pTqzjXyOYpNgtaS8fIqgyaRZVCpM
-         j+WfJI+BBVAHEr8bOKaSyGG73fwjKZjwHg+vDwXEGLVsBqDk0VltE4elVZQ0z3GYyt4B
-         wQaPexkQMs2fqOig3dnzAt6TpKTcJ2ZgYiJj/sX4v+wN8dxXK65btbNmnIHMMCLjLlAC
-         1wkEvMtkoOszScRXPBsXs2HjWjWEvSyYiNz45Cxyz0MenuQeqHr77UC3HKsLsaBEwWuI
-         5/DQ692jlAPyHbrjK5//PNN8GD5vFkiokYwHB6G8vF8jFWa+2PBbYN3moKvZVknx4k7g
-         pXAg==
-X-Gm-Message-State: AODbwcAgNeOcMOGmRhPexqmCLDgnizItwK+hEQBKm3cQ04UatySzkWeq
-        aU1RNdZkBV3hfD7XhtNsw5p7AIFxhBUq
-X-Received: by 10.98.148.2 with SMTP id m2mr42635596pfe.194.1495690781291;
- Wed, 24 May 2017 22:39:41 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=avXzWGV883v3/Re1XZraGoAgQdIBUgK7IiIVfPMuyYA=;
+        b=rHHXSrfB7kPxpyjnotrxyTu+YbeRVX/8pV2fx5EGE0SzBklLhJeO7B7Nryrt1IbIQO
+         i90H7zpdwe6IsrywosEVOk1KemMYYCVCGjfvKZeXYSZwLE3MtQ6/rL0qdEdf2EAhUZ34
+         a8knIDoy8Vzrc9Gita44gXfTHmgLy705maWlV42UrPFF849vcIxrx/qUzHAVFsM3nZZv
+         UMhEQArxbZ3etSdgoWasTTfjDiQBI0dP9gxibNzvJHZxW0kZs3RF7WKYQWjSYmnfEF3F
+         YJAcLT5S+h7RC3COVujIr0VkeSp4MgU9gZJ+fWiFoWHyCmfTF3k7WSqu5S37e95OSelK
+         Lyug==
+X-Gm-Message-State: AODbwcDLJU3Z0eHVlWzTL1UAXTFd+StO6Gx5aEVTyXcC3DgK+iTyJd1j
+        uS1Amp+anUbaPmmBi6vxcQj/c25JYfhY
+X-Received: by 10.84.241.132 with SMTP id b4mr48074303pll.107.1495690942567;
+ Wed, 24 May 2017 22:42:22 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Wed, 24 May 2017 22:39:40 -0700 (PDT)
-In-Reply-To: <xmqqk255fz7b.fsf@gitster.mtv.corp.google.com>
-References: <20170523024048.16879-1-sbeller@google.com/> <20170524214036.29623-1-sbeller@google.com>
- <20170524214036.29623-18-sbeller@google.com> <xmqqk255fz7b.fsf@gitster.mtv.corp.google.com>
+Received: by 10.100.170.200 with HTTP; Wed, 24 May 2017 22:42:22 -0700 (PDT)
+In-Reply-To: <xmqq60gpfvqj.fsf@gitster.mtv.corp.google.com>
+References: <xmqqwp98j8q2.fsf@gitster.mtv.corp.google.com> <CAGZ79kZMJP7K5MU0UujuEatZ2MOrSnFpfD707aSGa64mKyCZbw@mail.gmail.com>
+ <CAGZ79kYoHYz6hi5kDjQBcN-35c0kXE6mf6NNV_Z_F6-UqZ=3cw@mail.gmail.com>
+ <CACBZZX4adLy6Xumicu3Qke=g39EEe3iBa5ShsGvTBAYFqXENPg@mail.gmail.com> <xmqq60gpfvqj.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 24 May 2017 22:39:40 -0700
-Message-ID: <CAGZ79kZBOoK2vd5EqottnUr1AYMHa1=TzQB8ga00TehQxgtuhA@mail.gmail.com>
-Subject: Re: [PATCHv5 17/17] diff.c: color moved lines differently
+Date:   Wed, 24 May 2017 22:42:22 -0700
+Message-ID: <CAGZ79kZexcwh=E6_ks83=pJh=ZvKnLvJ54eLsn+HURsTZOpvqg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2017, #07; Tue, 23)
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 24, 2017 at 7:27 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Wed, May 24, 2017 at 8:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
->> When a patch consists mostly of moving blocks of code around, it can
->> be quite tedious to ensure that the blocks are moved verbatim, and not
->> ...
->> cases. This leads to another thought: We could pass on '--color-moved' to
->> submodules such that they color up moved lines for themselves. If we'd do
->> so only line moves within a repository boundary are marked up.
+>>> The tests added by grep rely on the old content of
+>>> test 2 'grep correctly finds patterns in a submodule'.
 >>
->> Helped-by: Jonathan Tan <jonathantanmy@google.com>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> Sorry about the fallout.
 >>
->> # Conflicts:
->> #     diff.c
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
+>>> The (whitespace broken) diff below fixes it.
 >
-> Hmph, what are these final lines about?
+> Ah, then, this was an example of maintainer not doing a good job.
+> When I see a topic that pass its own test that fails when merged to
+> 'pu', I usually try to see where it goes wrong myself and come up
+> with a fix in an evil merge, but this time I didn't have enough time
+> to do so before sending out the "What's cooking" report.
+>
+> Here is what I taught my merge-fix machinery to apply after
+> mechanical merge of the two topics.
 
-See the explanation in the patch 16/17.
-My guess is that one of us (me) was careless again.
+Please evict (or stop paying attention to)
+sb/submodule-blanket-recursive as it is fundamentally broken.
 
-The commented lines are easily produced by git-gui, that
-I use. I think it just takes the commit message from the underlying
-git-core. But unlike git-core, it doesn't strip off commented lines
-as there is no extra information in comments presented.
-I wonder how you are the first signoff after the conflict markers
-though, as that would hint that you signed off a commit message
-with the commented conflict lines first, before I had them.
+I hoped to resend a fixed version today, but it took me longer than expecte=
+d
+to figure out the config machinery playing with submodules.
 
-Puzzeled, will fix in a reroll.
+The diff below looks correct to me.
 
 Thanks,
 Stefan
+>
+>  t/t7814-grep-recurse-submodules.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-su=
+bmodules.sh
+> index 14eeb54b4b..7184113b9b 100755
+> --- a/t/t7814-grep-recurse-submodules.sh
+> +++ b/t/t7814-grep-recurse-submodules.sh
+> @@ -36,18 +36,18 @@ test_expect_success 'grep correctly finds patterns in=
+ a submodule' '
+>  test_expect_success 'grep finds patterns in a submodule via config' '
+>         test_config submodule.recurse true &&
+>         # expect from previous test
+> -       git grep -e "bar" >actual &&
+> +       git grep -e "(3|4)" >actual &&
+>         test_cmp expect actual
+>  '
+>
+>  test_expect_success 'grep --no-recurse-submodules overrides config' '
+>         test_config submodule.recurse true &&
+>         cat >expect <<-\EOF &&
+> -       a:foobar
+> -       b/b:bar
+> +       a:(1|2)d(3|4)
+> +       b/b:(3|4)
+>         EOF
+>
+> -       git grep -e "bar" --no-recurse-submodules >actual &&
+> +       git grep -e "(3|4)" --no-recurse-submodules >actual &&
+>         test_cmp expect actual
+>  '
+>
+> --
+> 2.13.0-491-g71cfeddc25
+>
