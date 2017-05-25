@@ -2,67 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48A1320209
-	for <e@80x24.org>; Wed, 24 May 2017 21:48:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8535D20209
+	for <e@80x24.org>; Thu, 25 May 2017 01:36:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033786AbdEXVsw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 May 2017 17:48:52 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:33584 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1033727AbdEXVsv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2017 17:48:51 -0400
-Received: by mail-pf0-f177.google.com with SMTP id e193so147683747pfh.0
-        for <git@vger.kernel.org>; Wed, 24 May 2017 14:48:51 -0700 (PDT)
+        id S1754900AbdEYBgS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 May 2017 21:36:18 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34804 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753452AbdEYBgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2017 21:36:16 -0400
+Received: by mail-pf0-f195.google.com with SMTP id w69so35653294pfk.1
+        for <git@vger.kernel.org>; Wed, 24 May 2017 18:36:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=pX9oT76YF2PWhD7i9huhb/KvEdK745NkWRcs6IRwBs8=;
-        b=QpAw7h6S9x06ZaEPJM+7Nn7Am18npAwIFS3+uJ7gnzEd400OH2dCfSPkZaIcbwKukT
-         PfrNxecGvt8WtwUqZbPhn63KpJgQ/gFdFL6q+QyM8qe8/2y5WDFSG+JYGo9hTl2aa9Sg
-         S/PdYWep/PSaSl2eeVxsYElN6vyxvN4lC1ud5vxxbqb6bDwiSxUETV1rxUa7vCRWxFPy
-         Mk7xpm66KkziSjSUurItOEyqXw2BZ1hqgIhldEDD+bbsORWgHHX4y3DWctvi+iyT2dwm
-         r9ykaFs3n3t+/9u7Fje45zpID5DOB16gLoMEa4nqftitUsXGZ81FcVh1c4cLwhe577Pe
-         l17Q==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=W0o6P1Y76H/aF8LyKR3VzwMYQUF1USo2FViBOm8680k=;
+        b=d43yvC8awQCbF8OMoWyHvUsSZa14Ar4obusEekZ0P5Jv+HemNh7gUPpH+YM6cYYK05
+         12gIxuagHQo2FEFuuXvDtpW5RLaLnjL9Kx10BBDNAmONKWJDfMMOpD5cXJNYbtykSQsv
+         lnQyqd0GsC1STUji0kPrAVWtw6KszutbLxPnjyeQggCF76uLsZG4nh6m49kUyU0Z83Zl
+         6w+xjjGvOPmRF5EynQonTL7772hb85PtCS99IUJ7x+h0v2/GPWp04Yd1EiBurAvbbMrL
+         ruiTdz0t1k8CL1N9vWXJMPg4U8snYNOiSdJGCaf17GPsrHpa3bvBiUXyBQBe2raY4963
+         f0Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=pX9oT76YF2PWhD7i9huhb/KvEdK745NkWRcs6IRwBs8=;
-        b=mX3PfH5mQ97ywyUy3Czvjd3HGTjBy+cx/AeLJken0okDkr1wtwC7iSepKhcvJyVPWq
-         r4+iN5KVVEHVAjFFET1ouRjO9SRxjmO8C+q6wqCLvzzOGJeqzdZ+nlp0mhX/s0sL/43Y
-         1DJDJArvomlWtMwMfPBiGrNEJkXe1krJi9wGhGNdxUi+wg2iLz01Sb4bKMvmOyOJRPpj
-         0XtWDSeUxzgbQFu1416anXGEpaYgsb+J+BJbpCLBtZPG+jWGHIFqJs1DtgvXK1nTYQUJ
-         eUV+JSK1uuOg/FTa9e8AY8Z8Lw97iVDtfuCAsQbJCzb3v2Lw/b1cSUjeoRsTWiZxwb2r
-         rZaQ==
-X-Gm-Message-State: AODbwcA9yZuRj9DmTayDYSm36cQGAu0sjk3ldtDJjhGnaOdnNADaLY9i
-        sRwPZoUiFG7xddPSAGumirisZHULCwa3PIA=
-X-Received: by 10.99.126.92 with SMTP id o28mr42459243pgn.63.1495662531128;
- Wed, 24 May 2017 14:48:51 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=W0o6P1Y76H/aF8LyKR3VzwMYQUF1USo2FViBOm8680k=;
+        b=mLwqIZkd5efVM9MSBCRuqe+n3UgSsScLZevB4MY3UEtJVNUgZp8UzwZr4A1NoyqxLv
+         uL6IsPwRPxyliHy62+CNPp4WKDC29Hr3gUZ7kgddrRu3mu2hoSc0R5hJ9LSVbgQzV4wY
+         H88RW+lvmrruibApWQmvXpHGD4yE2RJBJQIH9j/UsM/bRvLkLwmQyNwKC0xVcboVOZq+
+         pyejeJ5etYLyRyqxsUZ3JSy6qabzT+h0aIuRyH+L8FmJz4SMSsquAtoD9+YtrLcCZhhU
+         0VZGfMmVIk4fGBfjNuttuma/UVkzJ1pA2vB2AFolC0QLAEK9QTLKFsCjqYV1utFgvI98
+         l4NQ==
+X-Gm-Message-State: AODbwcC+pRvxcroaufotV5kmmH8l+wIwLBwk1TkLqM4R2LoOV6zYhlOR
+        Q1mvoLhAPIYADQ==
+X-Received: by 10.98.158.5 with SMTP id s5mr41512997pfd.159.1495676176212;
+        Wed, 24 May 2017 18:36:16 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:bc81:1d63:7e7e:dfa1])
+        by smtp.gmail.com with ESMTPSA id g27sm9421934pfg.63.2017.05.24.18.36.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 24 May 2017 18:36:15 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        =?utf-8?Q?F=C3=A9lix?= Saparelli <felix@passcod.name>,
+        git@vger.kernel.org
+Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch tries to check out the master branch
+References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
+        <xmqqa864mea3.fsf@gitster.mtv.corp.google.com>
+        <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
+        <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net>
+Date:   Thu, 25 May 2017 10:36:14 +0900
+In-Reply-To: <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 24 May 2017 10:19:48 -0400")
+Message-ID: <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Wed, 24 May 2017 14:48:50 -0700 (PDT)
-In-Reply-To: <BN6PR06MB3475A0F44B37A82175E86871EBFE0@BN6PR06MB3475.namprd06.prod.outlook.com>
-References: <BN6PR06MB3475DCD7A2588E3EDBE07E48EBFE0@BN6PR06MB3475.namprd06.prod.outlook.com>
- <BN6PR06MB3475A0F44B37A82175E86871EBFE0@BN6PR06MB3475.namprd06.prod.outlook.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 24 May 2017 14:48:50 -0700
-Message-ID: <CAGZ79kbN_cW_TMOs08ePqAMLqNTxP--sU9XUS2k40nBgJGY3PA@mail.gmail.com>
-Subject: Re: Sama/Winbind AD Computer Accounts Moved
-To:     "Thompson, Matt" <matt.thompson@ttu.edu>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 24, 2017 at 2:46 PM, Thompson, Matt <matt.thompson@ttu.edu> wrote:
->  I realize this is a Samba support list but I'm curious to know if someone may be familiar enough to render a guess.
+Jeff King <peff@peff.net> writes:
 
-I think the primary purpose of git@ is different than samba support. ;)
-Wrong mailing list?
+> Unfortunately, it can't, because the ref doesn't exist:
+>
+>   $ git ls-remote git://github.com/passcod/UPPERCASE-NPM.git
+>   efc7dbfd6ca155d5d19ce67eb98603896062f35a	refs/heads/MASTER
+>   e60ea8e6ec45ec45ff44ac8939cb4105b16477da	refs/pull/1/head
+>   f35a73dcb151d336dc3d30c9a2c7423ecdb7bd1c	refs/pull/2/head
+>   0d9b3a1268ff39350e04a7183af0add912b686e6	refs/tags/V1.0.0
+>   efc7dbfd6ca155d5d19ce67eb98603896062f35a	refs/tags/V1.0.1
+>
+> There is no HEAD line at all, so we have no information about it on the
+> client side.  Likewise, if you run with GIT_TRACE_PACKET=1, you'll see
+> that the capabilities line does not include a symref marker either.
+>
+> So if we wanted to improve this, I think the first step would be for the
+> server to start sending symref lines for HEAD, even when it does not
+> resolve to anything.
+
+Yup, noticed the same and I agree with your conclusion.
