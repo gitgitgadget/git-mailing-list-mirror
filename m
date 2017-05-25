@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B9EC20284
-	for <e@80x24.org>; Thu, 25 May 2017 19:47:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FD6F20284
+	for <e@80x24.org>; Thu, 25 May 2017 19:47:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S970190AbdEYTre (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:47:34 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34485 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1036736AbdEYTrU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:47:20 -0400
-Received: by mail-wm0-f65.google.com with SMTP id d127so55399452wmf.1
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:47:14 -0700 (PDT)
+        id S1036738AbdEYTrj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:47:39 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34716 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1036732AbdEYTrX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:47:23 -0400
+Received: by mail-wm0-f66.google.com with SMTP id d127so55399819wmf.1
+        for <git@vger.kernel.org>; Thu, 25 May 2017 12:47:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VAyUFqWR6te10cyXip2D28oUwTmslMOK+fArvTImb1Y=;
-        b=krTW1MQ57uyzpKnRPZKBCiFdilu/DVvySuHal5Z9eRYye0cs5aV5ZJWhIq6Qn0Hnoy
-         2lcjConUlADcheGKsDaBCTZyy3QpNhGY/zf5MQ1uLNZOIfDJEU+DaBSvsMN6bca0Ip3A
-         uTGJUwtgWWJOGXRInFshw+7krQcrMNIOZ5+aqEw0DOa6ml53TZD75TVd9EADWWtkd/UL
-         vwu8juEfqrrgLpv5sJS/bCC5P5xiQV5TzYCssKceHbbe7xB1zrjSB37UpbOsuFpRU4iJ
-         1D3Yhc89B7ukg/2MwbOPpaBmJOeqeHTzP21B+nRLKvSWmwgE4GcJkuaF6c7YcuLWnw3l
-         ZJVg==
+        bh=P2pgMIXwCl9FG9wBoaT1RBpCIPjVhEpdor2sV6aRtes=;
+        b=OMb7KCNphRDzhHi+iQSjDzdnqw/d8amOOP46LCFCuu9zMW8ouQI2ekaPLNNLJKSbF2
+         PPO5NJlA1J2Zgum6s1IlGYpw8hT1aLDx21ooVFhJLm5DYq5zIt61opDDz4mXXbb2ULna
+         9vny0yR11KPimoDLogM9jU0GG/bdBf9WEEB06Yr/9XVXZZBG0Q0/s1qKWYhUUizi49nl
+         isrZ0pkxPuCeDjR/3UdS9WKrj0JJI6mbcbHE+hLULYW3mf+0zDy3VDXtiKBdvljFZ1lC
+         cgM7yrDtM8zKPSzbLBTyhgBQksVVwiz81AKzcro3V1FsMgvkg0EGl6fzJTfUSHbEcQ0X
+         A/kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VAyUFqWR6te10cyXip2D28oUwTmslMOK+fArvTImb1Y=;
-        b=RNveEiCLDrdtvzAync27qfVTONC1+6Zb/zCBZHN6HSOvzYlW1EcRw5o9YEOQ/rt3ru
-         4TURANumvj3rQQc/122K1dklMao9fA1QuI6uthsTLlr+e6oZDVswj/Z9BG9TDJElj/Ly
-         +m3g5L1sR/E90EyzFo50hXbyAcFGSVVoIQE55/1SBkxegPRpL8B5Xma4y//htppH4z0Y
-         cW1y2PDdTeLPdFU3TK+F2VFDbjv4AP8VAGywkRCq7lTcfKRXF+d8CjuncyOVuWPNnVkQ
-         okfcAEyCgR6F/FuB9HO1BiKH8cMDFK31slRx+oiuRKNut8Bhwfmh0ax4DfsYsfJTRZus
-         WGgg==
-X-Gm-Message-State: AODbwcB5RdiSrZIZAk4u1drHXFA/4G3B3qJdf/5PGnConPVM5I4MGUj7
-        l9AjnujZqF9nf4BjC2E=
-X-Received: by 10.28.157.14 with SMTP id g14mr11538161wme.114.1495741627958;
-        Thu, 25 May 2017 12:47:07 -0700 (PDT)
+        bh=P2pgMIXwCl9FG9wBoaT1RBpCIPjVhEpdor2sV6aRtes=;
+        b=nblf5+PFlQWFTQZSsGct4diXVN4Gta0iJ1hCbypWq3qrhmt+JiPUtNiPo1b3Q4FoGv
+         ow7F0St48fIV8o3wBnkpFLpNYmJrx5FE5ffpiWRtlBjaMOXy6tSBlT1CH5799VnBzzVw
+         9Lu8mMvVjkU+dfgM31ZIgRL3biKHr2EK5hbpMc5VqqAsHPbEWpolwJJsBowaNoUp6S/q
+         mcdbYBdSk88fRw/I9yR3nUOC3zHiUJ34j6dc7NdFElgZYvlmrKG/qIKp2zJ/1zDxOI4I
+         lcoPt6k8rbJBvj2YHpg9MgVGA+oC1Merf92ZMR1/DJK1uAtEck7i2/nmKoZoVpuZmQZS
+         k0Aw==
+X-Gm-Message-State: AODbwcCmZOMJyj85HE/5WoeQCwaZJTfSoysjsv/p3YeJDylT8Faq9YOd
+        Aq245lR3tV85xQ==
+X-Received: by 10.28.130.196 with SMTP id e187mr11702770wmd.24.1495741632211;
+        Thu, 25 May 2017 12:47:12 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.47.06
+        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.47.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 12:47:07 -0700 (PDT)
+        Thu, 25 May 2017 12:47:11 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 21/31] grep: catch a missing enum in switch statement
-Date:   Thu, 25 May 2017 19:45:25 +0000
-Message-Id: <20170525194535.9324-22-avarab@gmail.com>
+Subject: [PATCH v4 22/31] grep: remove redundant regflags assignments
+Date:   Thu, 25 May 2017 19:45:26 +0000
+Message-Id: <20170525194535.9324-23-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170525194535.9324-1-avarab@gmail.com>
 References: <20170525194535.9324-1-avarab@gmail.com>
@@ -75,41 +75,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a die(...) to a default case for the switch statement selecting
-between grep pattern types under --recurse-submodules.
+Remove redundant assignments to the "regflags" variable. This variable
+is only used set under GREP_PATTERN_TYPE_ERE, so there's no need to
+un-set it under GREP_PATTERN_TYPE_{FIXED,BRE,PCRE}.
 
-Normally this would be caught by -Wswitch, but the grep_pattern_type
-type is converted to int by going through parse_options(). Changing
-the argument type passed to compile_submodule_options() won't work,
-the value will just get coerced. The -Wswitch-default warning will
-warn about it, but that produces a lot of noise across the codebase,
-this potential issue would be drowned in that noise.
+Back in 5010cb5fcc[1], we did do "opt.regflags &= ~REG_EXTENDED" upon
+seeing "-G" on the command line and flipped the bit on upon seeing
+"-E", but I think that was perfectly sensible and it would have been a
+bug if we didn't.  They were part of the command line parsing that
+could have seen "-E" on the command line earlier.
 
-Thus catching this at runtime is the least bad option. This won't ever
-trigger in practice, but if a new pattern type were to be added this
-catches an otherwise silent bug during development.
+When cca2c172 ("git-grep: do not die upon -F/-P when
+grep.extendedRegexp is set.", 2011-05-09) switched the command line
+parsing to "read into a 'tentatively this is what we saw the last'
+variable and then finally commit just once", we didn't touch
+opt.regflags for PCRE and FIXED, but we still had to flip regflags
+between BRE and ERE, because parsing of grep.extendedregexp
+configuration variable directly touched opt.regflags back then, which
+was done by b22520a3 ("grep: allow -E and -n to be turned on by
+default via configuration", 2011-03-30).
 
-See commit 0281e487fd ("grep: optionally recurse into submodules",
-2016-12-16) for the initial addition of this code.
+When 84befcd0 ("grep: add a grep.patternType configuration setting",
+2012-08-03) introduced extended_regexp_option field, we stopped
+flipping regflags while reading the configuration, and that was when
+we should have noticed and stopped dropping REG_EXTENDED bit in the
+"now we can commit what type to use" helper function.
+
+There is no reason to do this anymore, so stop doing it, more to
+reduce "wait this is used under fixed/BRE/PCRE how?" confusion when
+reading the code, than to to save ourselves trivial CPU cycles by
+removing one assignment.
+
+1. "built-in "git grep"", 2006-04-30.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/grep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ grep.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 3ffb5b4e81..a191e2976b 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -495,6 +495,8 @@ static void compile_submodule_options(const struct grep_opt *opt,
+diff --git a/grep.c b/grep.c
+index 47cee45067..bf6c2494fd 100644
+--- a/grep.c
++++ b/grep.c
+@@ -179,7 +179,6 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 	case GREP_PATTERN_TYPE_BRE:
+ 		opt->fixed = 0;
+ 		opt->pcre = 0;
+-		opt->regflags &= ~REG_EXTENDED;
  		break;
- 	case GREP_PATTERN_TYPE_UNSPECIFIED:
- 		break;
-+	default:
-+		die("BUG: Added a new grep pattern type without updating switch statement");
- 	}
  
- 	for (pattern = opt->pattern_list; pattern != NULL;
+ 	case GREP_PATTERN_TYPE_ERE:
+@@ -191,13 +190,11 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 	case GREP_PATTERN_TYPE_FIXED:
+ 		opt->fixed = 1;
+ 		opt->pcre = 0;
+-		opt->regflags &= ~REG_EXTENDED;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_PCRE:
+ 		opt->fixed = 0;
+ 		opt->pcre = 1;
+-		opt->regflags &= ~REG_EXTENDED;
+ 		break;
+ 	}
+ }
+@@ -415,10 +412,9 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int err;
+-	int regflags;
++	int regflags = opt->regflags;
+ 
+ 	basic_regex_quote_buf(&sb, p->pattern);
+-	regflags = opt->regflags & ~REG_EXTENDED;
+ 	if (opt->ignore_case)
+ 		regflags |= REG_ICASE;
+ 	err = regcomp(&p->regexp, sb.buf, regflags);
 -- 
 2.13.0.303.g4ebf302169
 
