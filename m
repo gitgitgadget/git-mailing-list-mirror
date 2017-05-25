@@ -2,70 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F2F7209FD
-	for <e@80x24.org>; Thu, 25 May 2017 19:04:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C301A209FD
+	for <e@80x24.org>; Thu, 25 May 2017 19:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S969188AbdEYTEt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:04:49 -0400
-Received: from mail-ua0-f172.google.com ([209.85.217.172]:35805 "EHLO
-        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964904AbdEYTEs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:04:48 -0400
-Received: by mail-ua0-f172.google.com with SMTP id y4so114469373uay.2
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:04:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Q28r90ocw4eJ7m3hqB3wv0tHv8eRu/ICImO/3XrUv+M=;
-        b=V1s29qv0/qMQSj/cEe0M/R0ZbmO6knPuSfgNiBaXnqVRVu+2ctz57YuifsACOTyMt/
-         IwVcBj8EfmtOaXsJQo2GSeNjyJwqKyN9JfWgSHv80fjfdO2p1yt7/5c20gNRp+Y+0xma
-         KREc+/vI/cmc3lbMwautWTAnJudl1S5CFNMpf725uCR8HP686IfoOQWeRK2qCnGNHxHR
-         0VTBduaQ8oPNvMt5T84/TMzNdl+QpKuF1sRRFSk3EdVnvvdGIkz2b3xYkKmn3VHjENJY
-         vlEt4ZiLCTKS2pZohXVzmhHGdPeTmPBZXv4/FOiVo0qYlsyDHhUrKOcM6Dt+gVxc9QOz
-         vjpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Q28r90ocw4eJ7m3hqB3wv0tHv8eRu/ICImO/3XrUv+M=;
-        b=emEHmrxEjXk/JDc/CAF0Yg2VcRzCn5g6X6sQowRIiJXHw4ZK6GQXrj23d4a66q2zqJ
-         6dCSTiEnUae+o1KhJAatQ5onogcmij8fTxTmFpceEyHxvTrzgyZ6U23dH+Jg2kGqmbvz
-         lIrSiXHbGIXrn4o7WPvw//fawUm5f2vM6YNUm0ChKpUtBAAOrQvriJkRbA5LPMJOeqMA
-         fqDWCOsFGjM+0iORl1pKAPdpm7Qi6PKKwVHVstXXKc1vOx7y69stgyoHYL47spU8dZYt
-         OVGp+EhrdG2OS5yyAFdz/WvQRMvQb7a218Qf6fgk99l+KTa4mYK6p7DHfuGd+B+s8Ka/
-         /HjQ==
-X-Gm-Message-State: AODbwcAZFg/U0DKbHKiyekECnQ03oQBrAr8XRtCo9X4FZ/ahQa0de8YM
-        eOctloGqKlzM6RIj7cFpfcLKj8DFJIJKlzQ=
-X-Received: by 10.176.4.80 with SMTP id 74mr11197205uav.115.1495739087606;
- Thu, 25 May 2017 12:04:47 -0700 (PDT)
+        id S939187AbdEYTLS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:11:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58046 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S935251AbdEYTLR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:11:17 -0400
+Received: (qmail 23973 invoked by uid 109); 25 May 2017 19:11:17 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 May 2017 19:11:17 +0000
+Received: (qmail 22823 invoked by uid 111); 25 May 2017 19:11:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 25 May 2017 15:11:53 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 25 May 2017 15:11:15 -0400
+Date:   Thu, 25 May 2017 15:11:15 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        =?utf-8?B?RsOpbGl4?= Saparelli <felix@passcod.name>,
+        git@vger.kernel.org
+Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch
+ tries to check out the master branch
+Message-ID: <20170525191115.tqd6zlj5mxqls4wp@sigill.intra.peff.net>
+References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
+ <xmqqa864mea3.fsf@gitster.mtv.corp.google.com>
+ <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
+ <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net>
+ <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com>
+ <xmqqa861fx34.fsf@gitster.mtv.corp.google.com>
+ <20170525155924.hk5jskennph6tta3@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.176.75.72 with HTTP; Thu, 25 May 2017 12:04:27 -0700 (PDT)
-From:   Alexandre Bury <alexandre.bury@gmail.com>
-Date:   Thu, 25 May 2017 12:04:27 -0700
-Message-ID: <CACfpxdthS4W9giaFNd7GVxPw4BMJ85GmOQAJbEL84YHrouyK9Q@mail.gmail.com>
-Subject: `git svn branch` does not respect authors file
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170525155924.hk5jskennph6tta3@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have a git repository linked to a svn repository with git-svn,
-including a branch path configuration and an authorsfile for svn
-username -> email mapping.
+On Thu, May 25, 2017 at 11:59:24AM -0400, Jeff King wrote:
 
+> The just-HEAD case could look like:
 
-When running `git svn branch new_branch`, git-svn:
-* Creates a svn commit creating a new svn branch
-* Creates a local git commit linked to this svn commit
-The svn commit is correctly generated, but the corresponding git
-commit has a bad author: the author is just the svn username.
+This patch does work, in the sense that upload-pack advertises the
+unborn HEAD symref. But the client doesn't actually do anything with it.
+The capability parsing happens in get_remote_heads(), which passes the
+data out by adding an annotation to the "struct ref" list. But of course
+we have no HEAD ref to annotate.
 
+So either get_remote_heads() would have to start returning a bogus HEAD
+ref (with a null sha1, I guess, which all callers would have to
+recognize). Or clone (and probably "remote set-head -a") would have to
+start reaching across the transport-module boundary and asking for any
+symref values for "HEAD". I'm not excited about more special-casing of
+"HEAD", though. In theory we'd want this for other symrefs in the long
+run, and it would be nice if clients were ready to handle that (even if
+the protocol isn't quite there).
 
-Re-fetching the svn repository then properly applies the authors file,
-but ideally it would do it directly when creating the branch.
+I dunno. I was thinking there might be a quick tweak, but I'm wondering
+if this arcane case is worth the restructuring we'd have to do to
+support it. It only comes up when you've moved the server repo's HEAD to
+an unborn branch _and_ you have other refs (since otherwise we don't
+even send capabilities at all!).
+
+-Peff
