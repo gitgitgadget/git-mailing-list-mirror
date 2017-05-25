@@ -2,88 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EBDC20209
-	for <e@80x24.org>; Thu, 25 May 2017 05:25:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9A9920209
+	for <e@80x24.org>; Thu, 25 May 2017 05:34:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S941936AbdEYFZx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 01:25:53 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35964 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S941903AbdEYFZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 01:25:53 -0400
-Received: by mail-pf0-f195.google.com with SMTP id n23so36793168pfb.3
-        for <git@vger.kernel.org>; Wed, 24 May 2017 22:25:52 -0700 (PDT)
+        id S1032713AbdEYFef (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 01:34:35 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:33029 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030766AbdEYFee (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 01:34:34 -0400
+Received: by mail-pf0-f171.google.com with SMTP id e193so156758403pfh.0
+        for <git@vger.kernel.org>; Wed, 24 May 2017 22:34:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=F2Ld+ObMcQHZpSVZQwaSWY9WQXkhGNxrhUaT8PpN7Qk=;
-        b=RG7KPHG+l8mEwbx2RPsy2PkV7L/VMGnvWupSER18R/8+oo3XUgr8nOfFrzQfW28h0X
-         yR+awJP6M9DtEqCAP3vOEE9asp+z87SGprPzsMjjYH3gCPx3uZCHmRvAs+4+0jaSsVfq
-         P/6T0qREoXtKqsF1aJyVY7HwuIFrkVikCpVphviMVUkU1qzk3GOCeAoBZcnIjSZ30DwZ
-         YpfR+T86hyOpRWwfhxqsgVY7RAimxiqbzfQ4MppBgkAvx3g5cIxCRZOHVHzIwjClP9jw
-         ZDcXAwebXIl6d45EOvkHRfHxTG5Er3XDya26qbyqHq+rrl2JB6fEZ7lMUUr5YvgCK+rE
-         dMfg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=9dXpgQu2huqdTc26VB6FeX/DT7pBwFzAzQ6QZ+MtC78=;
+        b=mPkVDqZf2f1uHB7I0W22Ke+YOdlnBRyULJzeMTTMqI20wRmrzwr/QDNYIHWrsheVyo
+         JAy9woOqpJbfC3a/wc8CwFjoXSoAJaSrjMjs/bXAM2yyEKepwrhmZwwGGPHiBPrvmLeG
+         9BQJKnj6zwQCSotepSQHCA0OsLgWVU2Ba73saNL2AX6rK/muJ04YHnM7CB0fXijMdYRS
+         g2A+ClxzDToVpu1OtkgArdj653IFgzhxkflj6+zPKx9PP0Ih3TpCArz0DGxmcQfllj74
+         CftY7M7v3cWOOWa2v52Q7ceRgxKSA9YdKINMfTCBCuL1Vd8ovCY47VP5iJxDajkmKouP
+         O6iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=F2Ld+ObMcQHZpSVZQwaSWY9WQXkhGNxrhUaT8PpN7Qk=;
-        b=TYwPEVIACHwAxXnCu2RkabtnCQK57jDEzWyMB/7Iz8DWQjxiaM7TPnWvQ9MeWhAa/f
-         AoOaQh75a5gJG0aXOfhuzHkB3HhAzsECmtSOzhFiAPH671yQ6pDy3ctoVtuomuK6m7FZ
-         0xqgJbJCGZE65bci3e779iSYMyk5QktDzl/tG8zctEib4qfBQqKmLnQpYy8w9JC/WqMb
-         TUyhkWPF6sNj7h1qESbGxZsk7sy9jlwBrN56sd92LHa1CPRw8aaxn8ci31OpcAl75Tt8
-         bjMk1I4lCAp9VAE7P1qqk/8+9Q7RiVppQIpEkh4fdYETvaIH0CJs1o1r/AagFbwaJGOm
-         513w==
-X-Gm-Message-State: AODbwcAzxtjDk17sF2OcKVlwR8aQ200oshsgD3FPS3Q3z6Fjknw+t0uY
-        5p2p/yKPXQi/PkFL3v8=
-X-Received: by 10.99.65.7 with SMTP id o7mr42377095pga.90.1495689952346;
-        Wed, 24 May 2017 22:25:52 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:bc81:1d63:7e7e:dfa1])
-        by smtp.gmail.com with ESMTPSA id t79sm9971858pfk.106.2017.05.24.22.25.51
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 May 2017 22:25:51 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Smith <whydoubt@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 24/29] blame: move core structures to header
-References: <20170524051537.29978-1-whydoubt@gmail.com>
-        <20170524051537.29978-25-whydoubt@gmail.com>
-Date:   Thu, 25 May 2017 14:25:50 +0900
-In-Reply-To: <20170524051537.29978-25-whydoubt@gmail.com> (Jeff Smith's
-        message of "Wed, 24 May 2017 00:15:32 -0500")
-Message-ID: <xmqqk255ecdd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9dXpgQu2huqdTc26VB6FeX/DT7pBwFzAzQ6QZ+MtC78=;
+        b=RtYrjWrCgi/QIRPfulbxXC6Kf0ew4TxtOuTIautL45PcWShIzbTCYyOKKtQOhHtU25
+         ADZlQue6UNK3cONn2hPLEp1ZsOO4l+2/lNAZCJKIUsibuG205BgS8AeNK50S1Xh9pXcb
+         HefxZZjNlE+2847PJdPauI+1OcfSvaP1FuydgWZ5QDHoGLfTNjjMc1etqqIN3IRpse/0
+         tKgUr8d5DFNMKc4oGiWN1Ryp0xk+ULxiYrV2GZo+ew4i9msarwn3nBrTMWc56qGWG1s0
+         DcKMQp6seCoLf2aI1BzpNQyHu0aRHQMWPNMjCtIhqyr90rvp9vTmC6PStO0eLfpILwj5
+         hGQA==
+X-Gm-Message-State: AODbwcDXJ/DF26rXr715sxAGuqBLlPpNAzr5w+7uaN3PBpjwEA9ASHDM
+        ALuJepDx1bMkevznNpNAzDeRM/RGMfW1Uwc=
+X-Received: by 10.98.205.65 with SMTP id o62mr42289118pfg.105.1495690473858;
+ Wed, 24 May 2017 22:34:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.170.200 with HTTP; Wed, 24 May 2017 22:34:33 -0700 (PDT)
+In-Reply-To: <xmqqo9uhfz8g.fsf@gitster.mtv.corp.google.com>
+References: <20170523024048.16879-1-sbeller@google.com/> <20170524214036.29623-1-sbeller@google.com>
+ <20170524214036.29623-17-sbeller@google.com> <xmqqo9uhfz8g.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 24 May 2017 22:34:33 -0700
+Message-ID: <CAGZ79kZM5KPP7iDo7rT5gxsooRrftJrA=+3-WBXW3nqfXeTy4Q@mail.gmail.com>
+Subject: Re: [PATCHv5 16/17] diff: buffer all output if asked to
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Smith <whydoubt@gmail.com> writes:
-
-> The origin, entry, and scoreboard structures are core to the blame
-> interface and need to be exposed for blame functionality.
+On Wed, May 24, 2017 at 7:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Signed-off-by: Jeff Smith <whydoubt@gmail.com>
-> ---
+>> Introduce a new option 'use_buffer' in the struct diff_options which
+>> controls whether all output is buffered up until all output is available.
+>> ...
+>> Unconditionally enable output via buffer in this patch as it yields
+>> a great opportunity for testing, i.e. all the diff tests from the
+>> test suite pass without having reordering issues (i.e. only parts
+>> of the output got buffered, and we forgot to buffer other parts).
+>> The test suite passes, which gives confidence that we converted all
+>> functions to use emit_line for output.
+>>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> Oh, did I?
 
-Looks good.  
+Yes, this is essentially the v4 with small indentation fixes, so I
+assumed your signoff is still valid.
 
-Thanks to "prepare everything in place before bulk movement"
-approach this round takes, unlike the previous one, reviewing this
-is just the matter of running
+Which leads to explaining my workflow (which I think we
+discussed that half a year ago with Dscho in a longer thread).
 
-	$ git blame -C -b HEAD^..HEAD -- blame.h
+As soon as you apply a series I take that series and work off
+that series, because you explained you would do smaller
+fixups occasionally.
 
-after applying this patch.  Anything that is shown as "introduced"
-by HEAD needs careful examination; everything else we already know
-are good because we know it came from existing parts.
+Patches that change drastically, I strip off your signoff and
+pretend like I created them from scratch, but for those which
+I barely touch (if at all), I do not remove your signoff, as
+I'd be just passing them along again.
 
-Thanks.
+Maybe I have to rethink that strategy.
+
+>
+>> ---
+>>  diff.c | 155 ++++++++++++++++++++++++++++++++++++++++++++++++++---------------
+>>  diff.h |  41 +++++++++++++++++
+>>  2 files changed, 161 insertions(+), 35 deletions(-)
+>>
+>> diff --git a/diff.c b/diff.c
+>> index 514c5facd7..8e06206881 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> ...
+>> @@ -2579,6 +2628,13 @@ static void builtin_diff(const char *name_a,
+>>                       xecfg.ctxlen = strtoul(v, NULL, 10);
+>>               if (o->word_diff)
+>>                       init_diff_words_data(&ecbdata, o, one, two);
+>> +             if (o->use_buffer) {
+>> +                     struct diff_line e = diff_line_INIT;
+>
+> This ...
+>
+>> +                     e.state = DIFF_LINE_RELOAD_WS_RULE;
+>> ...
+>> +#define diff_line_INIT {NULL, NULL, NULL, 0, 0, 0}
+>
+> ... and this should be in all caps.   We do not say
+>
+>         struct strbuf buf = strbuf_INIT;
+>
+> and we should do the same for this new thing.
+
+Yes. Totally agree. That is fallout from a mechanical
+replace all s/buffered_patch_line/diff_line/ and the case
+sensitivity got lost.
+
+Will fix again.
+
+Stefan
