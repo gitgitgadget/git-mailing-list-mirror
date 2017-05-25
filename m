@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFCE01FA14
-	for <e@80x24.org>; Thu, 25 May 2017 10:44:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1776F1FA14
+	for <e@80x24.org>; Thu, 25 May 2017 10:47:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759491AbdEYKo5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 06:44:57 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:32780 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1759207AbdEYKo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 06:44:56 -0400
-Received: by mail-io0-f181.google.com with SMTP id p24so134101134ioi.0
-        for <git@vger.kernel.org>; Thu, 25 May 2017 03:44:55 -0700 (PDT)
+        id S1759549AbdEYKry (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 06:47:54 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:34814 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756251AbdEYKrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 06:47:53 -0400
+Received: by mail-it0-f66.google.com with SMTP id d68so22294930ita.1
+        for <git@vger.kernel.org>; Thu, 25 May 2017 03:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=c7N6PI0wHHr+yNhrdp6pSf/PnaYEZ6opfdXUPPUvkNc=;
-        b=ePduNrBcTQakMhj0dw2Nw7WgqxsOr6W5PFk29ukX0fVnwujSvzuHMWV2uWzviRSiDt
-         JvlL86d0apntmbC6tNyiMeS609+VqPzCsrSFTpVS6dTaoWbXjhBGDhFD4tuqvAw5z/hu
-         WKOknUFxDmzhXMgg7IF6d1x4UZYrqlfUdgT886dbxO+030xP+P+WMHZ6TYAxk1ddgrrj
-         JPqwNd5X1TsZg9RjD0JyoXCInHVhnmNgV++NiMZLxFGCdqzCWSIEukUNZwKtcfSt3rF/
-         KvZ0m15tzEKOMWMnAoLQn19lA8C1ggj7NyujvA9PefEa1SnRyaC9y1EkdQaaMdFY5axr
-         Ja7g==
+        bh=tr5lmXgqp/4PwPB0RZXH+bA+opw64dRt4jk/GX6tnOk=;
+        b=FACHktNwYOqRCdkNx7Ic0MbRCCozj1b6tuFVw7AqvOVtdx+cjMb8S/WA/sMhXKMQnC
+         /NJikGvQqb99eLV4R/gtXBap1z/PWmkjudKCoNpRlc6dc7gcXpp0i5N/lDwIb4h7LNPv
+         aGKY16WQUfuI9DpftpCnw4kmAQpjBZclfyiMZ/GcLWPPPWO5Ea8k1OeUtzYhl0TtONE2
+         xMChhsaL2k1++mTLtBZ1zDOKC/6n3nZy+//nHW4H9/PYlNq/AiFrm1lmhwOv1C+WqE7E
+         TSHGql8TIKBdH6eOdK6MjovF3afoD7oDomZj2djMOkrUqcx19/yObQrSfwYOQsG2Cmig
+         mMbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=c7N6PI0wHHr+yNhrdp6pSf/PnaYEZ6opfdXUPPUvkNc=;
-        b=VJCaU6faqiOM3KFnaaZAXm+x20W6I7soDR+1DgTH5mxJSRcTekM1HAUGXgJljH0YU4
-         fIQ4H7FB6/hC7YHJMj9VYedZjsvS05vjmX5aAtT7vseiVPlEiAYakd2Rob7TIQjsN0uP
-         jf9V8bfTgurjQnNsvtBLXQgruIobJ0WZhRJeZVGPCJY4QP9kNL/2t03arMnarfkpCwxF
-         zBT0svPCf4fxv7EKt/dnF6oN3OtKV2pooC64foHh3zaumNFSXUgEnTrMZuh0rs6iCTN2
-         3J/Ncg/zjzQWdN0BkGdypYBdUYo1pQChNsy39GUtL55k2fXlf+dYOJuX5IDDvIzkW28V
-         bzEg==
-X-Gm-Message-State: AODbwcCWtMLxVXlRy6ERIdnMAzkQz+M2VfQvWBMKILbAq+2xJ+uOMqgY
-        StRS2uXqn1QevvpUT9p+hzP19RB0rw==
-X-Received: by 10.107.138.21 with SMTP id m21mr36309637iod.80.1495709095153;
- Thu, 25 May 2017 03:44:55 -0700 (PDT)
+        bh=tr5lmXgqp/4PwPB0RZXH+bA+opw64dRt4jk/GX6tnOk=;
+        b=n5Qso3OPxeVxzY2xa8B5uPJQVwHS+PfE2pibslAUQwIAQuuK7oZFFWbeq/i11MxbCc
+         Zks+Cz7DK/D1v8toHz4A8+GRTBzNWTVM93qgqGFzZT7q+CgTPFsSXoBTC2rrPRj9DLxS
+         Lc+JPcre6cIOQXB8su21wQdnYXxz35gvcHT2bmZDtocTs/QvnzI75UcMBMdey60eFu9b
+         /9XXZNp9GlVslo9nyS4a3eRGZAmb3phCfNOEK1veQjL3FqhLScsH8M7CP6sz9o0CcUwp
+         /INaSAUifeME3G5L7MYCg67rw0jU3wxdNTrwDDaX04LW/fvC4SNobhHmE7bwq+yGIZfl
+         ctrw==
+X-Gm-Message-State: AODbwcD8EcK5Ug1ech7qSmMrnMHfC9fmwmWr0c7p/5U7tVSXKU9T5pcz
+        uDTIviNLaUw/s7nWiDUe5kFwFSKKMjhVP0E=
+X-Received: by 10.36.53.79 with SMTP id k76mr12562750ita.71.1495709272291;
+ Thu, 25 May 2017 03:47:52 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Thu, 25 May 2017 03:44:34 -0700 (PDT)
-In-Reply-To: <xmqqo9ujk9ii.fsf@gitster.mtv.corp.google.com>
-References: <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com> <20170520115429.12289-1-avarab@gmail.com>
- <xmqqbmqko7c2.fsf@gitster.mtv.corp.google.com> <CACBZZX4d4-EGiUtJQT8cvuMzm0c5DUu5sxUb11kUnJu3ocuSHw@mail.gmail.com>
- <xmqqo9ujk9ii.fsf@gitster.mtv.corp.google.com>
+Received: by 10.107.8.220 with HTTP; Thu, 25 May 2017 03:47:31 -0700 (PDT)
+In-Reply-To: <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com>
+References: <20170518212858.3649-1-avarab@gmail.com> <20170518212858.3649-3-avarab@gmail.com>
+ <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 25 May 2017 12:44:34 +0200
-Message-ID: <CACBZZX5Aa9cQngCgMVP2kb8Jnk_V7coK-f5J6jMOhn=AWCrXzQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Update sha1dc from upstream & optionally make it a submodule
+Date:   Thu, 25 May 2017 12:47:31 +0200
+Message-ID: <CACBZZX43Mrv_7W_Eoo9YOB1zV832GibNj_T+KjQ8QZQNVYo7nw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] sha1dc: use sha1collisiondetection as a submodule
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Marc Stevens <marc@marc-stevens.nl>,
@@ -67,36 +66,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 23, 2017 at 3:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Sat, May 20, 2017 at 1:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->> Seems like it would be useful to have a way to ex-post-facto say "past
->> history should use these URLs". i.e. if all git.git mirrors go down
->> and we have to re-host, then you can just clone git.git and off you
->> go, but the same isn't true of past submodule urls, or is it?
+>> Replace the forked sha1dc directory with a copy of the upstream code
+>> imported as a submodule. This is the exact same code as now exists in
+>> the sha1dc/ directory.
+>>
+>> The initial reason for copy/pasting the code into sha1dc and locally
+>> modifying it was that it needed to be altered to work with the git
+>> project.
+>>
+>> The upstream project has accepted my code changes to allow us to use
+>> their code as-is, see the preceding commit for details. So import the
+>> code as a submodule instead, this will make it easier to keep
+>> up-to-date with any upstream fixes or improvements.
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  .gitmodules            | 4 ++++
+>>  Makefile               | 4 ++--
+>>  hash.h                 | 2 +-
+>>  sha1collisiondetection | 1 +
+>>  4 files changed, 8 insertions(+), 3 deletions(-)
+>>  create mode 100644 .gitmodules
+>>  create mode 160000 sha1collisiondetection
 >
-> I do not know how heavily you are used to use submodules, but I
-> think submodule's URL is copied to the config of the superproject,
-> and that URL is what will be used from there on, so "past history or
-> future history will use that URL" is already the case, no?
+> I am not sure how prepared our .travis.yml is to deal with a
+> submodule, I'd prefer to have this step broken down to two step
+> process.
 
-I haven't used them much, just starting to get familiar with them now again=
-.
-
-I thought given your "if it is ever rewound away in the upstream
-history..." that if we e.g. pegged upstream to that github URL now
-that if that got rewound, anyone working with git.git in the future
-would be in for some pain if they needed to check out and test old
-tags.
-
-But from what you're saying here that seems like a non-issue, i.e. in
-such a scenario we'd just mirror the original repo[1], change the URL
-in git.git to that, and then anyone could easily use older history
-since it would be pointing to the new mirror.
-
-I.e. in the spirit of my last reply, this seems like deviating from
-the default workflow around submodules out of concern for an extremely
-unlikely scenario, which, if it happened, would be easily mitigated
-for both past & future git.git history.
-
-1. Or likely just ask upstream kindly to push a tag with the old history.
+I've since sent a v2 of this which addresses this by being more
+careful, but since then I found these Travis docs that seem to
+indicate that cloning the submodule will Just Work:
+https://docs.travis-ci.com/user/common-build-problems/#Git-Submodules-are-n=
+ot-updated-correctly
