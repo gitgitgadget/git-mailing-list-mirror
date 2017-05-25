@@ -2,131 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4738209FD
-	for <e@80x24.org>; Thu, 25 May 2017 23:16:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E056209FD
+	for <e@80x24.org>; Thu, 25 May 2017 23:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1165955AbdEYXQO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 19:16:14 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35256 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030469AbdEYXQL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 19:16:11 -0400
-Received: by mail-pf0-f196.google.com with SMTP id u26so41970401pfd.2
-        for <git@vger.kernel.org>; Thu, 25 May 2017 16:16:11 -0700 (PDT)
+        id S1163182AbdEYXUz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 19:20:55 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33774 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030469AbdEYXUy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 19:20:54 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b84so119242wmh.0
+        for <git@vger.kernel.org>; Thu, 25 May 2017 16:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=qC4hetbzLR5JtkQqY3XGQM1Dy+5Px2TfPHiLt/c+eco=;
-        b=aMBXZo5z6+LvyhB5hcy9JjiR9+oqqi9rTM2IbOgEKhCRthBbjOyMjgGOpY1XJLuSSu
-         zV/F+mzdU+BAQ++CDiQuHOeC0SmbVGuAEyfxfVFGv4HGPjJhFi1bUABMInemL4wG+ezv
-         syhzPHsbAwsyhjJEUOv8WKZNJqnjJttVBFK3x47Yjbzk4GY6xR3XJ7ueTfOq/XHy4aSc
-         oi/3gjKJvt64pUPUjvZLuTlzelzoaxlWqF6WK8dTUUucroz9HXC7IyQmdMQyn4CP64X4
-         BAvd9snlRr9PNGizAWpxPa66fRkR0EsJMDdagg12TbOVNHXhu9JVatW2JFpa86OwQ90B
-         zOgg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Br/UPnR8IdeWG+HhQYIT2zALr9n3zc+n7F3ng5h+xnY=;
+        b=X9/Dj27QFa6Vhxi2+JEJOF5zr3kOLTZ+o5J+J1hziyJQsM4Q/1kyD4EWpWtfb4IOvR
+         luWSb+rovH0ycxSxYRo/AcdAT9mnyj99Kt9uhoYqVXgNiLiRgtljrhFHUTRUHeBGCYfu
+         kZSk99/ZGlHMIOFiqYsiDub8VQ5YA73hqfEA34i6iaKpXBIafn2htRXW1PX5eD406Hwr
+         3XSAE2sAoEcWORH3NDON0ES6RjY/piozgwszaBwv0Ve7rBmY6wi9jWy1S0ZFqMo+WhAT
+         hUJXa9BafAiKpaZ9CAvtdhKCeTRQ2WAhw4V0LFNwU3WnedLzYyl44F8Fo35ipkeGzoyt
+         AO4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=qC4hetbzLR5JtkQqY3XGQM1Dy+5Px2TfPHiLt/c+eco=;
-        b=Za7EbHvCCCBceXsAS9MrFnp6oks7NczYBhW89MX8j5y/VgBcmdOrbpoUJG/PkQXwmm
-         rxo0hBBdoaE24mfW9/Pi4J4WAlK9iiNINoj+NEa5J27uRpF+48NVJHKFX1G/J9uf8oOq
-         LrqEvNL0EBWElHqgxu4/K2/89QpYvl92uHeE5kY9+nvJxj6d9LLxHgOUNBqnBSVS+Xy0
-         MWfMOXgtf53y0NpjXRAgyQAGbIt+LPljqz9te1NuM1TuERTvlfKrEu6fvZe6psOw482k
-         s0l1x53pPSIweALi+zR1U9bTyY1WNvsUqWk4E05GGYuoHa07+bQWWinR3EgSt9poPZ0S
-         Qrdw==
-X-Gm-Message-State: AODbwcAGHkOblhCoQU1GSkHaAxKjUF0Hjjy64ZSSoI0NYBqhM0fBdvUQ
-        Bsn4zjGQbJsg0w==
-X-Received: by 10.98.69.193 with SMTP id n62mr48448878pfi.216.1495754170997;
-        Thu, 25 May 2017 16:16:10 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:546a:ce73:1719:5041])
-        by smtp.gmail.com with ESMTPSA id 74sm11634594pga.58.2017.05.25.16.16.09
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 25 May 2017 16:16:10 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        stefan.naewe@atlas-elektronik.com, git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] Windows: do not treat a path with backslashes as a remote's nick name
-References: <cover.1495261020.git.j6t@kdbg.org>
-        <122838f4-5f6b-6921-9242-2724bb6d8c95@atlas-elektronik.com>
-        <alpine.DEB.2.21.1.1705221600100.3610@virtualbox>
-        <1542d54f-d530-b60d-3270-d9b4e94c814d@kdbg.org>
-        <alpine.DEB.2.21.1.1705231245300.3610@virtualbox>
-        <xmqqinkrjkfb.fsf@gitster.mtv.corp.google.com>
-        <c36ae9af-b566-5bb3-ad70-ee7f0051ca9a@kdbg.org>
-        <10ee6b91-cd54-d43a-4cfb-d3baa2af7e7a@kdbg.org>
-Date:   Fri, 26 May 2017 08:16:09 +0900
-In-Reply-To: <10ee6b91-cd54-d43a-4cfb-d3baa2af7e7a@kdbg.org> (Johannes Sixt's
-        message of "Thu, 25 May 2017 14:00:13 +0200")
-Message-ID: <xmqq37bseddy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Br/UPnR8IdeWG+HhQYIT2zALr9n3zc+n7F3ng5h+xnY=;
+        b=jqvG/nCjpfpSeqoK8QesaT4aL95E2k9JePWNUuTM5By0DzOZEjhNFKvUjO1C0CjmtB
+         zllNGBYvxezKIRc8IeEZFchaMwnTZNhmsQYJcga12Eno9bvKBWvyZNqQUDCVU/0BuB1K
+         521ppTF/nuwnepIhdpEL40f9phkcBSJbHwJH5bZzmpifidxWTUB6GZgqbJP+owu0NR1/
+         +I67D3k0YA+YrIuUCePDk4Z3wNka5njdNunzeve9dmF8V9ZVhSsDz+jKM5WVhW+ZJyV/
+         KLq0+0vMbMfXB7Ygibx2cHisD7srNRTo3d1V8ouLWDaWDkV6ozyeBET/85Cm0NcFFpv/
+         f74A==
+X-Gm-Message-State: AODbwcCP0t9OJ6lXHkcjD24w/Fi7id2bH9/xu30k7mRS6JqYjNraddIG
+        rcDOKnCnkTislA==
+X-Received: by 10.80.146.71 with SMTP id j7mr59873eda.17.1495754452668;
+        Thu, 25 May 2017 16:20:52 -0700 (PDT)
+Received: from localhost.localdomain (x4db264f7.dyn.telefonica.de. [77.178.100.247])
+        by smtp.gmail.com with ESMTPSA id c2sm2293465edc.34.2017.05.25.16.20.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 25 May 2017 16:20:52 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] docs/config.txt: fix indefinite article in core.fileMode description
+Date:   Fri, 26 May 2017 01:20:46 +0200
+Message-Id: <20170525232046.3421-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.13.0.35.g14b6294b1
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ Documentation/config.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->>> So in short:
->>>
->>>   (1) Hannes's patches are good, but they solve a problem that is
->>>       different from what their log messages say; the log message
->>>       needs to be updated;
->
-> I do not resend patch 1/2 as it is unchanged in all regards. This 2/2
-> changes the justification; patch text is unchanged.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 475e874d5..f9adc9afa 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -334,7 +334,7 @@ core.fileMode::
+ 	is to be honored.
+ +
+ Some filesystems lose the executable bit when a file that is
+-marked as executable is checked out, or checks out an
++marked as executable is checked out, or checks out a
+ non-executable file with executable bit on.
+ linkgit:git-clone[1] or linkgit:git-init[1] probe the filesystem
+ to see if it handles the executable bit correctly
+-- 
+2.13.0.35.g14b6294b1
 
-Thanks.  I think this is explained better.  Complaints against
-fopen() warnings sounded as if we should avoid attempting to open a
-file that may result in _any_ failure, which I felt was misleading,
-but it is not a huge issue.
-
-So how do we want to proceed on the point (2), i.e. updating the
-"warn on _unexpected_ errors from fopen" series to make it aware of
-the EINVAL we can expect on Windows?  My primary question is if all
-EINVAL we could ever see on Windows after open/fopen returns an
-error is because the pathname the caller gave is not liked by the
-filesystem (hence we also know that the path does not exist).
-
-If that is the case, then the "workaround" patch I sent would be an
-OK approach (even though I do not know what to write after #ifdef
-and I suspect that is not "WINDOWS". We would want to cover the one
-you use, the one Dscho releases and possibly the cygwin build).
-
-If we can see EINVAL after open/fopen error that is _not_ expected
-and indicates a failure that is worth reporting to the user (just
-like we want to report e.g. I/O or permission errors), I think
-Windows folks are in a better position than I am to decide between
-that approach and a patch at lower level (e.g. teach open/fopen not
-to give EINVAL and instead give ENOENT when appropriate).
-
-
->  remote.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/remote.c b/remote.c
-> index ad6c5424ed..1949882c10 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -645,7 +645,12 @@ static int valid_remote_nick(const char *name)
->  {
->  	if (!name[0] || is_dot_or_dotdot(name))
->  		return 0;
-> -	return !strchr(name, '/'); /* no slash */
-> +
-> +	/* remote nicknames cannot contain slashes */
-> +	while (*name)
-> +		if (is_dir_sep(*name++))
-> +			return 0;
-> +	return 1;
->  }
->  
->  const char *remote_for_branch(struct branch *branch, int *explicit)
