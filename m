@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6795120209
-	for <e@80x24.org>; Thu, 25 May 2017 02:26:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23FB520209
+	for <e@80x24.org>; Thu, 25 May 2017 02:27:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755274AbdEYC0n (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 May 2017 22:26:43 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34965 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755269AbdEYC0l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2017 22:26:41 -0400
-Received: by mail-pf0-f195.google.com with SMTP id u26so35927245pfd.2
-        for <git@vger.kernel.org>; Wed, 24 May 2017 19:26:41 -0700 (PDT)
+        id S1755275AbdEYC1Y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 May 2017 22:27:24 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33507 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755240AbdEYC1W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2017 22:27:22 -0400
+Received: by mail-pf0-f193.google.com with SMTP id f27so35942138pfe.0
+        for <git@vger.kernel.org>; Wed, 24 May 2017 19:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=siV6MMkHyAyTaJHtVf6JWDEZWgTDlkf7hCV3pkV90QE=;
-        b=s+3Lx4sXEti5go275Rq7bSAs8U3Elv6jcVIUIF9QIbYwa7RTDRT1Lc4FJ3YTGEjC1D
-         Jrq0xfVXig27RIXq58xCBnH6+CmFL4VFw9NugRabw1fGjInhfifwT3tuGW6gDb7lZG6i
-         P0ebQfKe11FcDejxEB7bXXYcLH1dgrZKBRVceJWNkLCMPOlb6m39+PyI3Qkc1B0E5UMT
-         qbTQK5HCKyJO/qgBeoBAvmrxfAZuZKhTMBeWoM88YQ5eqUSmUkdtMa2M+VUqPFRjyVYX
-         Of+94eGTRyZkSAZtqq3JLZ1aWtzRjgDrkj/hfRFUouY/DVcXeqbpIOsLQnP/CGZPbQGa
-         3Xww==
+        bh=d32UC/LXskRsSEjDQfh8uoUr3BICj9f6t5Rq/E1Mdio=;
+        b=Scc4YVP9tBYd+Y2U++Diu4IpUAj0ALx4UnMHBtMBpCPzBguJoYXradnM+fyOjx+0wo
+         akuAdLzrLITBGYiGHPrYRF2cdEaJ0waHWcSy7xC9TYqPi0CzSezIns/Dkpfma3TagpjO
+         BHAaBGRld9W6+anZMP2qRLZ7FF1C6Ddq2u/SyRmxIhW599U1E5fnHBw/ZBSzr3x5CLeb
+         vIVfSUIeC+jT1pWH9zDIIRRQFpNqFrilud5Apozrp/RsZwIGB98G1nTJ1hDwbkN/DyYA
+         ZIMZH8bpgpOnVVLL4U1tc3zN7ZVpODTy3kFKmcy2vUIzrBjTfLionMWf5jykcFi7RQ38
+         pHpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=siV6MMkHyAyTaJHtVf6JWDEZWgTDlkf7hCV3pkV90QE=;
-        b=MP1KY9s6lT/fxIyVamvHLzuzkOkEbO+R6/szelgJFkEEU+5aG3pSjuQHR/E4/HdvJb
-         KMhzBeS9Cio3UujReOFtQ0m3SkHFyFM3ihoZGqi+YkvGxK9jskbegnUkY1hWuSKwPWvq
-         UAP+QRAzfsyxodzy9RFkHJ+IP3Uz8uvYYQhSQ+57jUS43RsxmT80z5eesgPN+WxbfiID
-         REybsOrEgXZmVUOg8DsC41uJsVJZsC23gekgsXs8saGql/DFN9Sh71Rvjh0aAo69T9+n
-         um7+eZJj88B1fRVr+n1lr8ZeuKNoJVDE5tiW5sEnAJEvMniFhTVsMSyvx7rfggB+QOFa
-         rNCA==
-X-Gm-Message-State: AODbwcBf+YBAA/43vklC3Lc+bbZhcEEBEDWPvsoibLuisywQj2exSzst
-        dnFAIMzxH8PyEg==
-X-Received: by 10.84.136.135 with SMTP id 7mr47569258pll.98.1495679200643;
-        Wed, 24 May 2017 19:26:40 -0700 (PDT)
+        bh=d32UC/LXskRsSEjDQfh8uoUr3BICj9f6t5Rq/E1Mdio=;
+        b=n92+PZ5lKhmglseoI/oaw+9aVsdWZM1c2x92W0SwTPLRMcchTo4aUXK1EnQWop76K6
+         Inb4K21W0mEAAlrebxsgZ0ePSgLsrzFjOn2hGiwmAiNOZiamiafkL3e7l5Y5hJuuXIIw
+         SkKTaLlekZmv0S/weqcTpSYzrovZZHfTELhnN08YcOKA4OBFyoXVWg7imPraeIyMApYz
+         BxFPkewK73UvXN7fxzuhZhklGTIB1wvRWlCqG3vAbwgmfYyvj1zYrHjCbSj9keieWjV9
+         Sd0IYNVGOFywzbczSLIGedYdhzi2LzVjd6Bt6V2VhuNCihd0rZr7hoPPZ07vO99fDCg9
+         Xi0Q==
+X-Gm-Message-State: AODbwcD9zu79PPEs7N84peZSRk93yihEsxHNXAs1v1wgCElT0uRO9kfY
+        49dZS6Muwb5/Yg==
+X-Received: by 10.98.69.193 with SMTP id n62mr42692271pfi.216.1495679241371;
+        Wed, 24 May 2017 19:27:21 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:bc81:1d63:7e7e:dfa1])
-        by smtp.gmail.com with ESMTPSA id a28sm5629743pgd.37.2017.05.24.19.26.39
+        by smtp.gmail.com with ESMTPSA id s18sm9954550pfi.16.2017.05.24.19.27.20
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 May 2017 19:26:39 -0700 (PDT)
+        Wed, 24 May 2017 19:27:20 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, bmwill@google.com, jrnieder@gmail.com,
         jonathantanmy@google.com, peff@peff.net, mhagger@alum.mit.edu
-Subject: Re: [PATCHv5 16/17] diff: buffer all output if asked to
+Subject: Re: [PATCHv5 17/17] diff.c: color moved lines differently
 References: <20170523024048.16879-1-sbeller@google.com/>
         <20170524214036.29623-1-sbeller@google.com>
-        <20170524214036.29623-17-sbeller@google.com>
-Date:   Thu, 25 May 2017 11:26:39 +0900
-In-Reply-To: <20170524214036.29623-17-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 24 May 2017 14:40:35 -0700")
-Message-ID: <xmqqo9uhfz8g.fsf@gitster.mtv.corp.google.com>
+        <20170524214036.29623-18-sbeller@google.com>
+Date:   Thu, 25 May 2017 11:27:20 +0900
+In-Reply-To: <20170524214036.29623-18-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 24 May 2017 14:40:36 -0700")
+Message-ID: <xmqqk255fz7b.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,47 +70,21 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
-> Introduce a new option 'use_buffer' in the struct diff_options which
-> controls whether all output is buffered up until all output is available.
+> When a patch consists mostly of moving blocks of code around, it can
+> be quite tedious to ensure that the blocks are moved verbatim, and not
 > ...
-> Unconditionally enable output via buffer in this patch as it yields
-> a great opportunity for testing, i.e. all the diff tests from the
-> test suite pass without having reordering issues (i.e. only parts
-> of the output got buffered, and we forgot to buffer other parts).
-> The test suite passes, which gives confidence that we converted all
-> functions to use emit_line for output.
+> cases. This leads to another thought: We could pass on '--color-moved' to
+> submodules such that they color up moved lines for themselves. If we'd do
+> so only line moves within a repository boundary are marked up.
 >
+> Helped-by: Jonathan Tan <jonathantanmy@google.com>
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Oh, did I?
-
-> ---
->  diff.c | 155 ++++++++++++++++++++++++++++++++++++++++++++++++++---------------
->  diff.h |  41 +++++++++++++++++
->  2 files changed, 161 insertions(+), 35 deletions(-)
 >
-> diff --git a/diff.c b/diff.c
-> index 514c5facd7..8e06206881 100644
-> --- a/diff.c
-> +++ b/diff.c
-> ...
-> @@ -2579,6 +2628,13 @@ static void builtin_diff(const char *name_a,
->  			xecfg.ctxlen = strtoul(v, NULL, 10);
->  		if (o->word_diff)
->  			init_diff_words_data(&ecbdata, o, one, two);
-> +		if (o->use_buffer) {
-> +			struct diff_line e = diff_line_INIT;
+> # Conflicts:
+> #	diff.c
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 
-This ...
-
-> +			e.state = DIFF_LINE_RELOAD_WS_RULE;
-> ...
-> +#define diff_line_INIT {NULL, NULL, NULL, 0, 0, 0}
-
-... and this should be in all caps.   We do not say
-
-	struct strbuf buf = strbuf_INIT;
-
-and we should do the same for this new thing.
-
+Hmph, what are these final lines about?
