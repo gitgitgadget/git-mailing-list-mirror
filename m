@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F81E209FD
-	for <e@80x24.org>; Thu, 25 May 2017 19:47:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1531209FD
+	for <e@80x24.org>; Thu, 25 May 2017 19:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1036749AbdEYTrp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:47:45 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35498 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S970191AbdEYTrf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:47:35 -0400
-Received: by mail-wm0-f65.google.com with SMTP id g15so35876324wmc.2
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:47:34 -0700 (PDT)
+        id S970180AbdEYTrc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:47:32 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34821 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1036738AbdEYTrV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:47:21 -0400
+Received: by mail-wm0-f67.google.com with SMTP id g15so35875167wmc.2
+        for <git@vger.kernel.org>; Thu, 25 May 2017 12:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=EZ6hA7jZWwq8nGDirM5J+yCglYW1lCb+6oIjgOHxcQ8=;
-        b=OYs0Lx5O/uzGWwlJ1ws/5cJ9lsb5JMwVSEud3LAj7YKMWX7iZg32wMtGRMVKDM6+eB
-         b0uZsHNojQDhSuraLi/dLDdxHVg4ZhyA8glHxjVn0lzefFMBWincpZbKAKALRdnZEUd+
-         GnsqzkVJGwKexTFMXC/NGz1Tp6C/YfAzAevuAtsW2WQ49vSAUG1HpTwBTji8LP0i3fuo
-         22942eoSQBa8r24cXewFJMsEADjJ71isczgIV2hBq3UaXravfSw9mv7qFq1W5HYSf6SC
-         POocTGl/7RkG80oBDI1RFvpKIssWcWLvahhymrCCx4s9fUI6We6aFgEcWRIO4rv/90Qz
-         wK1g==
+        bh=ozBmGe0mxm7FoNleoX9PB/NOx0uE4rRk80hfUM0P1O0=;
+        b=nyQTciubgbzkxNAy2sWSzYolkkjejG/f7QUK9dc9liJPpT2obsENy6hwk47WOQxOil
+         apzYVWw7tiwu0S8VPR6+t2UcsHzg2rHN/jabl7ZuL0FR9Hq/Ioae5xhJH95joKWvLdZP
+         axDJmr8ydZ0qBI151bE/yYjGjmmLMr0xK6gLmqnsIEfMuL9UTk4oy8oCenLgiy5mrnkh
+         SalFrmmmfQIH3EH8p7sDz0r9pUZH8WRpMAS42oA0RCPo87se6yoMl3OS5KhUzBlLAeV4
+         K5IMPmYmm1LGDssK84hF0yXbUrX5H8Lz4VhYheXv6mW8togFEfjkyTjBiQQx7zwdbAYn
+         t2oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EZ6hA7jZWwq8nGDirM5J+yCglYW1lCb+6oIjgOHxcQ8=;
-        b=leTp17UeK9iWAE1OV1oVzvTUwdAvxu5MGMtjXZ85qIAxCLAJxXu/hCdelzDp0VBNYy
-         1LsdyrbBetxXuQ7BWSFdEgT1eXLYOIgISGa6MBN9j6EDbZ8IMg599Uqt+kIxnsXaY//P
-         r6Dht363ZsphxknPcHzi7Va7qzdsmX8/mgDKG+C0U80d6ltsALd8D4JIQg0cLwoQv6iT
-         gfnQCrjIPNurI8U52198nqCVxnl21Kzr7kHpOj9lT8X9xcDUqEdLz/D374yRPLkRchR8
-         IjqnuQnJbkTbAbxcb8BgIBe8Udi8bPhNbSk7W7R0HIY+0sVy0fhDg7tN9kETlf6fMbRH
-         VZaw==
-X-Gm-Message-State: AODbwcBEAFfbz0baNzrTps9JWMEO4H5jVlmYrcNTQz6eir3PwS7vklZq
-        DTqERiB6ICGpcQ==
-X-Received: by 10.223.160.240 with SMTP id n45mr28910875wrn.198.1495741653794;
-        Thu, 25 May 2017 12:47:33 -0700 (PDT)
+        bh=ozBmGe0mxm7FoNleoX9PB/NOx0uE4rRk80hfUM0P1O0=;
+        b=kfMHN6uAQeo9lacrgrPhouGkQ58Vp0hscnZ66mJXqa2Tv4v7reD34XqfdCLDt8d2jA
+         Vcg7dy/Ujv5QDDhplhu7B3nDCJ9g3QrLtmCDCkiwtQ8q7nA1HKYvItjFUzpWQ1lgYZ9r
+         lkWDR2g1m6kMYktadyvLD5BrwZv1JCSCKuGM4C1Xo2SemWAYQxXNTMSPWNtVXpYVgXS1
+         so0E7LBl+Gcp6bSnWCmRL0EfVphP4W/Jc1s3XkVHpz6cGCZEOeeFf3xFQ9ZErJEfrBK/
+         MVGe2uWS7JwDq41VpKxmejgLjMU1tM5iOjZvSBex6hTo3yr5FftzvjR3WpQDJi8RSWJ5
+         Khqw==
+X-Gm-Message-State: AODbwcCUWyiCm0f4l4Iv991FlHDf8nOkhTRIaY852PPFEixJKrgq/rel
+        Yk3AR+5Z3pJn3Q==
+X-Received: by 10.223.165.14 with SMTP id i14mr29870913wrb.127.1495741639864;
+        Thu, 25 May 2017 12:47:19 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.47.32
+        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.47.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 12:47:32 -0700 (PDT)
+        Thu, 25 May 2017 12:47:18 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 30/31] grep: given --threads with NO_PTHREADS=YesPlease, warn
-Date:   Thu, 25 May 2017 19:45:34 +0000
-Message-Id: <20170525194535.9324-31-avarab@gmail.com>
+Subject: [PATCH v4 25/31] grep: change internal *pcre* variable & function names to be *pcre1*
+Date:   Thu, 25 May 2017 19:45:29 +0000
+Message-Id: <20170525194535.9324-26-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170525194535.9324-1-avarab@gmail.com>
 References: <20170525194535.9324-1-avarab@gmail.com>
@@ -75,81 +75,193 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a warning about missing thread support when grep.threads or
---threads is set to a non 0 (default) or 1 (no parallelism) value
-under NO_PTHREADS=YesPlease.
+Change the internal PCRE variable & function names to have a "1"
+suffix. This is for preparation for libpcre2 support, where having
+non-versioned names would be confusing.
 
-This is for consistency with the index-pack & pack-objects commands,
-which also take a --threads option & are configurable via
-pack.threads, and have long warned about the same under
-NO_PTHREADS=YesPlease.
+An earlier change in this series ("grep: change the internal PCRE
+macro names to be PCRE1", 2017-04-07) elaborates on the motivations
+behind this change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/grep.c  | 13 +++++++++++++
- t/t7810-grep.sh | 18 ++++++++++++++++++
- 2 files changed, 31 insertions(+)
+ grep.c | 52 ++++++++++++++++++++++++++--------------------------
+ grep.h |  8 ++++----
+ 2 files changed, 30 insertions(+), 30 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index a191e2976b..3c721b75a5 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -289,6 +289,17 @@ static int grep_cmd_config(const char *var, const char *value, void *cb)
- 		if (num_threads < 0)
- 			die(_("invalid number of threads specified (%d) for %s"),
- 			    num_threads, var);
-+#ifdef NO_PTHREADS
-+		else if (num_threads && num_threads != 1) {
-+			/*
-+			 * TRANSLATORS: %s is the configuration
-+			 * variable for tweaking threads, currently
-+			 * grep.threads
-+			 */
-+			warning(_("no threads support, ignoring %s"), var);
-+			num_threads = 0;
-+		}
-+#endif
+diff --git a/grep.c b/grep.c
+index 7a3858a1c3..2d54baeaa3 100644
+--- a/grep.c
++++ b/grep.c
+@@ -178,23 +178,23 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 
+ 	case GREP_PATTERN_TYPE_BRE:
+ 		opt->fixed = 0;
+-		opt->pcre = 0;
++		opt->pcre1 = 0;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_ERE:
+ 		opt->fixed = 0;
+-		opt->pcre = 0;
++		opt->pcre1 = 0;
+ 		opt->regflags |= REG_EXTENDED;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_FIXED:
+ 		opt->fixed = 1;
+-		opt->pcre = 0;
++		opt->pcre1 = 0;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_PCRE:
+ 		opt->fixed = 0;
+-		opt->pcre = 1;
++		opt->pcre1 = 1;
+ 		break;
+ 	}
+ }
+@@ -334,7 +334,7 @@ static int has_null(const char *s, size_t len)
+ }
+ 
+ #ifdef USE_LIBPCRE1
+-static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
++static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ {
+ 	const char *error;
+ 	int erroffset;
+@@ -342,23 +342,23 @@ static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ 
+ 	if (opt->ignore_case) {
+ 		if (has_non_ascii(p->pattern))
+-			p->pcre_tables = pcre_maketables();
++			p->pcre1_tables = pcre_maketables();
+ 		options |= PCRE_CASELESS;
+ 	}
+ 	if (is_utf8_locale() && has_non_ascii(p->pattern))
+ 		options |= PCRE_UTF8;
+ 
+-	p->pcre_regexp = pcre_compile(p->pattern, options, &error, &erroffset,
+-				      p->pcre_tables);
+-	if (!p->pcre_regexp)
++	p->pcre1_regexp = pcre_compile(p->pattern, options, &error, &erroffset,
++				      p->pcre1_tables);
++	if (!p->pcre1_regexp)
+ 		compile_regexp_failed(p, error);
+ 
+-	p->pcre_extra_info = pcre_study(p->pcre_regexp, 0, &error);
+-	if (!p->pcre_extra_info && error)
++	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, 0, &error);
++	if (!p->pcre1_extra_info && error)
+ 		die("%s", error);
+ }
+ 
+-static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
++static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ 		regmatch_t *match, int eflags)
+ {
+ 	int ovector[30], ret, flags = 0;
+@@ -366,7 +366,7 @@ static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
+ 	if (eflags & REG_NOTBOL)
+ 		flags |= PCRE_NOTBOL;
+ 
+-	ret = pcre_exec(p->pcre_regexp, p->pcre_extra_info, line, eol - line,
++	ret = pcre_exec(p->pcre1_regexp, p->pcre1_extra_info, line, eol - line,
+ 			0, flags, ovector, ARRAY_SIZE(ovector));
+ 	if (ret < 0 && ret != PCRE_ERROR_NOMATCH)
+ 		die("pcre_exec failed with error code %d", ret);
+@@ -379,25 +379,25 @@ static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
+ 	return ret;
+ }
+ 
+-static void free_pcre_regexp(struct grep_pat *p)
++static void free_pcre1_regexp(struct grep_pat *p)
+ {
+-	pcre_free(p->pcre_regexp);
+-	pcre_free(p->pcre_extra_info);
+-	pcre_free((void *)p->pcre_tables);
++	pcre_free(p->pcre1_regexp);
++	pcre_free(p->pcre1_extra_info);
++	pcre_free((void *)p->pcre1_tables);
+ }
+ #else /* !USE_LIBPCRE1 */
+-static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
++static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ {
+ 	die("cannot use Perl-compatible regexes when not compiled with USE_LIBPCRE");
+ }
+ 
+-static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
++static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ 		regmatch_t *match, int eflags)
+ {
+ 	return 1;
+ }
+ 
+-static void free_pcre_regexp(struct grep_pat *p)
++static void free_pcre1_regexp(struct grep_pat *p)
+ {
+ }
+ #endif /* !USE_LIBPCRE1 */
+@@ -479,8 +479,8 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 		return;
  	}
  
- 	return st;
-@@ -1229,6 +1240,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	else if (num_threads < 0)
- 		die(_("invalid number of threads specified (%d)"), num_threads);
- #else
-+	if (num_threads)
-+		warning(_("no threads support, ignoring --threads"));
- 	num_threads = 0;
- #endif
+-	if (opt->pcre) {
+-		compile_pcre_regexp(p, opt);
++	if (opt->pcre1) {
++		compile_pcre1_regexp(p, opt);
+ 		return;
+ 	}
  
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 561709ef6a..f106387820 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -791,6 +791,24 @@ do
- 	"
- done
+@@ -836,8 +836,8 @@ void free_grep_patterns(struct grep_opt *opt)
+ 		case GREP_PATTERN_BODY:
+ 			if (p->kws)
+ 				kwsfree(p->kws);
+-			else if (p->pcre_regexp)
+-				free_pcre_regexp(p);
++			else if (p->pcre1_regexp)
++				free_pcre1_regexp(p);
+ 			else
+ 				regfree(&p->regexp);
+ 			free(p->pattern);
+@@ -916,8 +916,8 @@ static int patmatch(struct grep_pat *p, char *line, char *eol,
  
-+test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'grep --threads=N or pack.threads=N warns when no pthreads' '
-+	git grep --threads=2 Hello hello_world 2>err &&
-+	grep ^warning: err >warnings &&
-+	test_line_count = 1 warnings &&
-+	grep -F "no threads support, ignoring --threads" err &&
-+	git -c grep.threads=2 grep Hello hello_world 2>err &&
-+	grep ^warning: err >warnings &&
-+	test_line_count = 1 warnings &&
-+	grep -F "no threads support, ignoring grep.threads" err &&
-+	git -c grep.threads=2 grep --threads=4 Hello hello_world 2>err &&
-+	grep ^warning: err >warnings &&
-+	test_line_count = 2 warnings &&
-+	grep -F "no threads support, ignoring --threads" err &&
-+	grep -F "no threads support, ignoring grep.threads" err &&
-+	git -c grep.threads=0 grep --threads=0 Hello hello_world 2>err &&
-+	test_line_count = 0 err
-+'
-+
- test_expect_success 'grep from a subdirectory to search wider area (1)' '
- 	mkdir -p s &&
- 	(
+ 	if (p->fixed)
+ 		hit = !fixmatch(p, line, eol, match);
+-	else if (p->pcre_regexp)
+-		hit = !pcrematch(p, line, eol, match, eflags);
++	else if (p->pcre1_regexp)
++		hit = !pcre1match(p, line, eol, match, eflags);
+ 	else
+ 		hit = !regexec_buf(&p->regexp, line, eol - line, 1, match,
+ 				   eflags);
+diff --git a/grep.h b/grep.h
+index 073b0e4c92..38ac82b638 100644
+--- a/grep.h
++++ b/grep.h
+@@ -46,9 +46,9 @@ struct grep_pat {
+ 	size_t patternlen;
+ 	enum grep_header_field field;
+ 	regex_t regexp;
+-	pcre *pcre_regexp;
+-	pcre_extra *pcre_extra_info;
+-	const unsigned char *pcre_tables;
++	pcre *pcre1_regexp;
++	pcre_extra *pcre1_extra_info;
++	const unsigned char *pcre1_tables;
+ 	kwset_t kws;
+ 	unsigned fixed:1;
+ 	unsigned ignore_case:1;
+@@ -111,7 +111,7 @@ struct grep_opt {
+ 	int allow_textconv;
+ 	int extended;
+ 	int use_reflog_filter;
+-	int pcre;
++	int pcre1;
+ 	int relative;
+ 	int pathname;
+ 	int null_following_name;
 -- 
 2.13.0.303.g4ebf302169
 
