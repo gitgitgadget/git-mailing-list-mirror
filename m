@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E984F20284
-	for <e@80x24.org>; Thu, 25 May 2017 19:46:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CFF820284
+	for <e@80x24.org>; Thu, 25 May 2017 19:46:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1036686AbdEYTqj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:46:39 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:32771 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1763872AbdEYTqi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:46:38 -0400
-Received: by mail-wm0-f66.google.com with SMTP id b84so39671095wmh.0
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:46:37 -0700 (PDT)
+        id S1036691AbdEYTqr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:46:47 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33260 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1036692AbdEYTqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:46:43 -0400
+Received: by mail-wm0-f65.google.com with SMTP id b84so39672260wmh.0
+        for <git@vger.kernel.org>; Thu, 25 May 2017 12:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mZxtcEJpE8sWZw8Dm8Q1sUZWhnp7L0W818+G5Q9MLXI=;
-        b=cB28xR7W6h9Dgc5INKHkdu6PclubQ6dLOO3q7oWkVYDy0e9VKt30dm13A12Vy7OUov
-         RPps6CjZJOxYhyPX58NKzHC1G5uPjwM/sdtRNT08yYU2diME/lEAbvZ2CjTzqMcUyUYv
-         tBwGvfM+YjTPMbWH/SDktgcRQZkfgCq2imHSBFaxY8WI6A2pRN5mEGW2+cfs9QzSqn12
-         VEzN87ypPYayKEcR5u+pWLpnB07NibeCC/Gdjaz5be8LGf1B82Y+UUAoW5kodVF0Qh8J
-         dozapTE6OcZkLC7cHs2DeEQjDURji42Y3cdnVLxXPbMrusOLpVEb3N8WCQrx0sLmWVB0
-         U2+w==
+        bh=JGirQO6xmxrwvsU4x1ubVVynXObQ6nfbnKl5TUO+mhI=;
+        b=ezTUZyLhmqUiIk1Qa509asOS7W0hbItzXm6+FnzX6CP68uJAtC1oEENteVKwlLKlcn
+         5G4zFjY9RhUe30SBOhAgiWNnS3CrldExYfRQOwQzhr7k4JmUf/2wEt9im9YkDi5BeTx+
+         i6wF3bbPsYqSI45Jyhx2bxqahyGnf50os6KIUx4HizAO4bzO++qC3RM2FfiDznDVs/gS
+         tQbGd/emuLlIJ/jIfuCaFB0QEv7axUWTgIiPp10WpNwIlxlb+K1WPmQQuKl97qxLttUK
+         YoJX5taC25oCqddc2AWLXBZcT1xqeV0jxENIl82FW2PytIrbrpc28skqwBUhtim1rG1L
+         j47w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mZxtcEJpE8sWZw8Dm8Q1sUZWhnp7L0W818+G5Q9MLXI=;
-        b=gvHl5mCJu0rCVc4KPji9Bcb92NiAclgJ0Yq36ZVc0gdJATAHkcrcngLJWQFaaQId55
-         A/nfL0wrI0cTkIIo9+1RAD/elx3PNWJ80NjdliRcQk1tZQOHSglxt9MmC2n7XI8vdKKM
-         mAOnPr1uUcAymUpKO+0723d+iSv453zy2YQ11wWCQaASxablUjbSq1MxOeFPWrosOWAf
-         zXksvc27ZEan9MI76YBTWb4Imw0f9pBorXTpBb5KB+u14uLK/1qCDnM/9jaFvKSY6YBV
-         Saet6GtF+GggczdCS46c/U5h0ULpEhKepz2hi8Q6VFomcmRD+Ye7SIwMKsL7yMXfhTHR
-         Wx4A==
-X-Gm-Message-State: AODbwcCMz2HQMimF1ro+wJRsrN3Yp/IB8f9amFLEAm4RD4N0IG4x2xlJ
-        VBtlDMQNkP4vUg==
-X-Received: by 10.223.176.163 with SMTP id i32mr29185605wra.32.1495741591571;
-        Thu, 25 May 2017 12:46:31 -0700 (PDT)
+        bh=JGirQO6xmxrwvsU4x1ubVVynXObQ6nfbnKl5TUO+mhI=;
+        b=m/pG7Vi29vGP6AaASlDNfjbuC+LZgE63x/SA3ULFfDOE9IJqngjIOrmheksf8UsOMb
+         WH41/4XmdGk+oqJU0uOXzfXWlLTc6eHrXzYDmH0kUfi1+GmfLEWyeTmmjPQJnToiX55J
+         qBfXZKH9oPVW3oybnPG/Kf6pnsL7cP/OJbjdzZGkwKFsudWldC4cmJKjBY2JQw5DiM4S
+         lBEYNl1LqOU9WXiDJg+OzD4Ryx7KM//ITYojOdCS4Rta36KFUD52TzH0d2OeuPkQZb1Q
+         5OCcmHK7o2tMD5+gS1z9l7T0Fj2YIZNXayMF7y/n8JhCpMbRQEoSAroooImEGknqcLrC
+         5stg==
+X-Gm-Message-State: AODbwcCNzu3N2SWn78OJD0VOLxvPIf3vVVtmawJVxaSQ4lk6rFB3rJ5h
+        Lvf0mojnxBU0DwM4SrM=
+X-Received: by 10.223.152.233 with SMTP id w96mr20736457wrb.151.1495741601532;
+        Thu, 25 May 2017 12:46:41 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.46.30
+        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.46.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 12:46:30 -0700 (PDT)
+        Thu, 25 May 2017 12:46:40 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 11/31] grep: add tests for grep pattern types being passed to submodules
-Date:   Thu, 25 May 2017 19:45:15 +0000
-Message-Id: <20170525194535.9324-12-avarab@gmail.com>
+Subject: [PATCH v4 12/31] grep: add a test helper function for less verbose -f \0 tests
+Date:   Thu, 25 May 2017 19:45:16 +0000
+Message-Id: <20170525194535.9324-13-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170525194535.9324-1-avarab@gmail.com>
 References: <20170525194535.9324-1-avarab@gmail.com>
@@ -75,75 +75,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add testing for grep pattern types being correctly passed to
-submodules. The pattern "(.|.)[\d]" matches differently under
-fixed (not at all), and then matches different lines under
-basic/extended & perl regular expressions, so this change asserts that
-the pattern type is passed along correctly.
+Add a helper function to make the tests which check for patterns with
+\0 in them more succinct. Right now this isn't a big win, but
+subsequent commits will add a lot more of these tests.
+
+The helper is based on the match() function in t3070-wildmatch.sh.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7814-grep-recurse-submodules.sh | 49 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ t/t7008-grep-binary.sh | 58 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index 1472855e1d..3a58197f47 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -313,4 +313,53 @@ test_incompatible_with_recurse_submodules ()
- test_incompatible_with_recurse_submodules --untracked
- test_incompatible_with_recurse_submodules --no-index
+diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
+index 9c9c378119..df93d8e44c 100755
+--- a/t/t7008-grep-binary.sh
++++ b/t/t7008-grep-binary.sh
+@@ -4,6 +4,29 @@ test_description='git grep in binary files'
  
-+test_expect_success 'grep --recurse-submodules should pass the pattern type along' '
-+	# Fixed
-+	test_must_fail git grep -F --recurse-submodules -e "(.|.)[\d]" &&
-+	test_must_fail git -c grep.patternType=fixed grep --recurse-submodules -e "(.|.)[\d]" &&
+ . ./test-lib.sh
+ 
++nul_match () {
++	matches=$1
++	flags=$2
++	pattern=$3
++	pattern_human=$(echo "$pattern" | sed 's/Q/<NUL>/g')
 +
-+	# Basic
-+	git grep -G --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	cat >expect <<-\EOF &&
-+	a:(1|2)d(3|4)
-+	submodule/a:(1|2)d(3|4)
-+	submodule/sub/a:(1|2)d(3|4)
-+	EOF
-+	test_cmp expect actual &&
-+	git -c grep.patternType=basic grep --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	test_cmp expect actual &&
-+
-+	# Extended
-+	git grep -E --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	cat >expect <<-\EOF &&
-+	.gitmodules:[submodule "submodule"]
-+	.gitmodules:	path = submodule
-+	.gitmodules:	url = ./submodule
-+	a:(1|2)d(3|4)
-+	submodule/.gitmodules:[submodule "sub"]
-+	submodule/a:(1|2)d(3|4)
-+	submodule/sub/a:(1|2)d(3|4)
-+	EOF
-+	test_cmp expect actual &&
-+	git -c grep.patternType=extended grep --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	test_cmp expect actual &&
-+	git -c grep.extendedRegexp=true grep --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	test_cmp expect actual &&
-+
-+	# Perl
-+	if test_have_prereq PCRE
++	if test "$matches" = 1
 +	then
-+		git grep -P --recurse-submodules -e "(.|.)[\d]" >actual &&
-+		cat >expect <<-\EOF &&
-+		a:(1|2)d(3|4)
-+		b/b:(3|4)
-+		submodule/a:(1|2)d(3|4)
-+		submodule/sub/a:(1|2)d(3|4)
-+		EOF
-+		test_cmp expect actual &&
-+		git -c grep.patternType=perl grep --recurse-submodules -e "(.|.)[\d]" >actual &&
-+		test_cmp expect actual
++		test_expect_success "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			git grep -f f $flags a
++		"
++	elif test "$matches" = 0
++	then
++		test_expect_success "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			test_must_fail git grep -f f $flags a
++		"
++	else
++		test_expect_success "PANIC: Test framework error. Unknown matches value $matches" 'false'
 +	fi
-+'
++}
 +
- test_done
+ test_expect_success 'setup' "
+ 	echo 'binaryQfile' | q_to_nul >a &&
+ 	git add a &&
+@@ -69,35 +92,12 @@ test_expect_failure 'git grep .fi a' '
+ 	git grep .fi a
+ '
+ 
+-test_expect_success 'git grep -F y<NUL>f a' "
+-	printf 'yQf' | q_to_nul >f &&
+-	git grep -f f -F a
+-"
+-
+-test_expect_success 'git grep -F y<NUL>x a' "
+-	printf 'yQx' | q_to_nul >f &&
+-	test_must_fail git grep -f f -F a
+-"
+-
+-test_expect_success 'git grep -Fi Y<NUL>f a' "
+-	printf 'YQf' | q_to_nul >f &&
+-	git grep -f f -Fi a
+-"
+-
+-test_expect_success 'git grep -Fi Y<NUL>x a' "
+-	printf 'YQx' | q_to_nul >f &&
+-	test_must_fail git grep -f f -Fi a
+-"
+-
+-test_expect_success 'git grep y<NUL>f a' "
+-	printf 'yQf' | q_to_nul >f &&
+-	git grep -f f a
+-"
+-
+-test_expect_success 'git grep y<NUL>x a' "
+-	printf 'yQx' | q_to_nul >f &&
+-	test_must_fail git grep -f f a
+-"
++nul_match 1 '-F' 'yQf'
++nul_match 0 '-F' 'yQx'
++nul_match 1 '-Fi' 'YQf'
++nul_match 0 '-Fi' 'YQx'
++nul_match 1 '' 'yQf'
++nul_match 0 '' 'yQx'
+ 
+ test_expect_success 'grep respects binary diff attribute' '
+ 	echo text >t &&
 -- 
 2.13.0.303.g4ebf302169
 
