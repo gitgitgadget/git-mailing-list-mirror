@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 078EA20284
-	for <e@80x24.org>; Thu, 25 May 2017 19:45:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0D3520284
+	for <e@80x24.org>; Thu, 25 May 2017 19:46:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935333AbdEYTpy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:45:54 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:37788 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757593AbdEYTpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:45:52 -0400
-Received: by mail-wm0-f54.google.com with SMTP id d127so110924851wmf.0
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:45:51 -0700 (PDT)
+        id S1030354AbdEYTqB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:46:01 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36118 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936850AbdEYTp5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:45:57 -0400
+Received: by mail-wm0-f65.google.com with SMTP id k15so54290263wmh.3
+        for <git@vger.kernel.org>; Thu, 25 May 2017 12:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jIHh5nf6F3dV0mO3hn2b0x5imJYXYYfxYq9uLfx7oxA=;
-        b=e2QhKrnQTeksovk42OVfdPeg0E/b0Blk5PXHXcuRF9T4THhXDeIFPhOaEgc/s/F9tz
-         qPgupMYB9SK0nfRg5Vk/M9wetYNUowe5vd4uawiVjTTc7wt5hcwHRNoKjuJFf+e+MIoP
-         iv99mSRjsSWWzEs08GrjUu1e8hIqRLt2HDOsE/UnBjWCg2rHzXBB2r3bl8Hr4s+4/CdN
-         Ou6CPOKa6Xyla8xqjGGEQ2Sb7zyZjf8G4bj7GYKFk72PAlWFIwa3BZl45YlroHbMXLpJ
-         M9S1s/JkR9uXULnW7tsJ3vRo0PzeIol+W7I8pCfQCk7m68kPOBMCsz8ZNoyGVlpr4ThS
-         rxpA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lf2/dNfz089P1nvhuylmjIiIPZDdlFmoMXdV21HYhG8=;
+        b=K2tKZ7uAAnEQ19lOrOwMFndg5ndHudvlbShlzCvoOC/fCcwa4U9uQ8ZsuNTqgI4xPH
+         0tvy+HXgso6nQMe8YOZAzCz96+9XkQpTJAPFs3plZmp9VZ2ytFcKZyciYijCrLBLcS3k
+         tNVi8wjEM+WyslEO3z90DkpP5nt6+guOXgOCmUm9mOaoddhhYXo1w484fkRVkR82rnCZ
+         u1VUBU1+aNAI8pC14DVR/jAAXOOoUIBqEoKcUIeQj+C4imju4ogUXjD2nymrP319s7g5
+         earX+Iy2wudcKR2u0Q7i2v0u0Xw8/GfQolh1yDumpt0njq2/DKB0oQxAN45VmGM9k9wE
+         MNoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=jIHh5nf6F3dV0mO3hn2b0x5imJYXYYfxYq9uLfx7oxA=;
-        b=Np0Oma5K5RiFuJF+N5gbr4VbsQoDHHBDZEJ6fNG7VG2bPPuXuBtnC8sCtbl23YxFWB
-         PbOPWg9NvDv9zGjNnQMi2VJB8kJSWizrGbud4PT84pMBEYyO9Q6vfcs11tE3mYU7IbxU
-         GdgKN3PmED4u7E4T39dYWBNZsC5uf2kOjKSGWtFXHYu3YmDB6Np35MIdDBNwwnQhhuWt
-         Ewz/eNl3LaHJVVIinWSbQTIsEdl7IycT3jIeZviZxS/1RIVZpyiSeXaUVMhZWGOdaJwc
-         GQMts9w0RLQ0zgIB23Su5peR++6GahrVUaLGF6nO+4qQ+Wc7feTuO9gC0AUeTFlpZlgK
-         DLKQ==
-X-Gm-Message-State: AODbwcCfWcU1jAXiIaPJwk5KPQ1CXRU9Ms/u/jb79DiZlDkk8My8l/Kd
-        1Dhp5G3jgtbAAQ==
-X-Received: by 10.223.135.213 with SMTP id c21mr29729709wrc.10.1495741550489;
-        Thu, 25 May 2017 12:45:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lf2/dNfz089P1nvhuylmjIiIPZDdlFmoMXdV21HYhG8=;
+        b=Wyx+VxRTMoeKyvquTxwi6JrdbEw+o7mEDkdRr4OqM2q8dAn4dttnH8kFynCM+X4oXQ
+         48MexMa+HVp3PKf1YdylRzi8vuU+l08/F5W/AXAUjHd/auL+wpclnRcEWA0zBolaJ3pC
+         o1my9elQ995XIVJuFJKJPs//8qKI4Ou6F6t/8Jw53t8QDx3sujMOrO2bTHwirY7tHQSB
+         PbBHjsQPZDBYe7vQ/BrBdHI6e0QD5E3lzsu/TcT0YHpK1FD/94RLOxC5CwasGyDKjmf1
+         AmQx/UEnWE2CB6pITh4H+iBo8TuMNiX/KCS/twCFUHy6C6RkPE2h0ixGva3XQxOVLpDT
+         k/kg==
+X-Gm-Message-State: AODbwcB6nv51JFUMGGpvwI/SWEkwG4+eIsrL3oEWP5BhrTAgN0fy7kNx
+        2GBUT2keGUA6kQ==
+X-Received: by 10.28.128.202 with SMTP id b193mr11620216wmd.53.1495741555383;
+        Thu, 25 May 2017 12:45:55 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.45.49
+        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.45.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 12:45:49 -0700 (PDT)
+        Thu, 25 May 2017 12:45:54 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,10 +61,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 00/31] Easy to review grep & pre-PCRE changes
-Date:   Thu, 25 May 2017 19:45:04 +0000
-Message-Id: <20170525194535.9324-1-avarab@gmail.com>
+Subject: [PATCH v4 01/31] Makefile & configure: reword inaccurate comment about PCRE
+Date:   Thu, 25 May 2017 19:45:05 +0000
+Message-Id: <20170525194535.9324-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
+In-Reply-To: <20170525194535.9324-1-avarab@gmail.com>
+References: <20170525194535.9324-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,114 +75,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Easy to review? 29 (I mean 30, I mean 31) patches? Are you kidding
-me?!
+Reword an outdated & inaccurate comment which suggests that only
+git-grep can use PCRE.
 
-As noted in v1 (<20170511091829.5634-1-avarab@gmail.com>;
-https://public-inbox.org/git/20170511091829.5634-1-avarab@gmail.com/)
-these are all doc, test, refactoring etc. changes needed by the
-subsequent "PCRE v2, PCRE v1 JIT, log -P & fixes" series.
+This comment was added back when PCRE support was initially added in
+commit 63e7e9d8b6 ("git-grep: Learn PCRE", 2011-05-09), and was true
+at the time.
 
-See <20170520214233.7183-1-avarab@gmail.com>
-(https://public-inbox.org/git/20170520214233.7183-1-avarab@gmail.com/)
-v3 & notes about that version. What changed this time around? See
-below:
+It hasn't been telling the full truth since git-log learned to use
+PCRE with --grep in commit 727b6fc3ed ("log --grep: accept
+--basic-regexp and --perl-regexp", 2012-10-03), and more importantly
+is likely to get more inaccurate over time as more use is made of PCRE
+in other areas.
 
+Reword it to be more future-proof, and to more clearly explain that
+this enables user-initiated runtime behavior.
 
-Ævar Arnfjörð Bjarmason (31):
-  Makefile & configure: reword inaccurate comment about PCRE
-  grep & rev-list doc: stop promising libpcre for --perl-regexp
-  test-lib: rename the LIBPCRE prerequisite to PCRE
-  log: add exhaustive tests for pattern style options & config
-  log: make --regexp-ignore-case work with --perl-regexp
-  grep: add a test asserting that --perl-regexp dies when !PCRE
-  grep: add a test for backreferences in PCRE patterns
-  grep: change non-ASCII -i test to stop using --debug
-  grep: add tests for --threads=N and grep.threads
-  grep: amend submodule recursion test for regex engine testing
-  grep: add tests for grep pattern types being passed to submodules
-  grep: add a test helper function for less verbose -f \0 tests
-  grep: prepare for testing binary regexes containing rx metacharacters
-  grep: add tests to fix blind spots with \0 patterns
+Copy/pasting this so much in configure.ac is lame, these Makefile-like
+flags aren't even used by autoconf, just the corresponding
+--with[out]-* options. But copy/pasting the comments that make sense
+for the Makefile to configure.ac where they make less sense is the
+pattern everything else follows in that file. I'm not going to war
+against that as part of this change, just following the existing
+pattern.
 
-No changes.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile     |  6 ++++--
+ configure.ac | 12 ++++++++----
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
-  perf: add a GIT_PERF_MAKE_COMMAND for when *_MAKE_OPTS won't do
-
-Fix trailing whitespace.
-
-  perf: emit progress output when unpacking & building
-
-No changes.
-
-  perf: add a comparison test of grep regex engines
-  perf: add a comparison test of grep regex engines with -F
-  perf: add a comparison test of log --grep regex engines
-  perf: add a comparison test of log --grep regex engines with -F
-
-These are all improved:
-
- * Skip the PCRE test when we don't have the PCRE prerequisite,
-   instead of erroring out.
-
- * Update outdated commit messages left over from previous
-   submissions.
-
- * General minor nits in the code, e.g. use the same for-loop variable
-   name in all four files which have similar code, simplify the
-   test_cmp invocation etc.
-
-  grep: catch a missing enum in switch statement
-  grep: remove redundant regflags assignments
-
-No changes.
-
-  grep: factor test for \0 in grep patterns into a function
-
-Brandon pointed out that one of the lines in this patch was longer
-than 79 characters. Fixed.
-
-  grep: change the internal PCRE macro names to be PCRE1
-  grep: change internal *pcre* variable & function names to be *pcre1*
-  grep: move is_fixed() earlier to avoid forward declaration
-  test-lib: add a PTHREADS prerequisite
-  pack-objects & index-pack: add test for --threads warning
-  pack-objects: fix buggy warning about threads
-  grep: given --threads with NO_PTHREADS=YesPlease, warn
-  grep: assert that threading is enabled when calling grep_{lock,unlock}
-
-No changes.
-
- Documentation/git-grep.txt             |   7 +-
- Documentation/rev-list-options.txt     |   8 +-
- Makefile                               |  14 ++-
- builtin/grep.c                         |  23 +++-
- builtin/pack-objects.c                 |   4 +-
- configure.ac                           |  12 +-
- grep.c                                 | 110 +++++++++--------
- grep.h                                 |  10 +-
- revision.c                             |   1 +
- t/README                               |   8 +-
- t/perf/README                          |  17 ++-
- t/perf/p4220-log-grep-engines.sh       |  53 ++++++++
- t/perf/p4221-log-grep-engines-fixed.sh |  44 +++++++
- t/perf/p7820-grep-engines.sh           |  56 +++++++++
- t/perf/p7821-grep-engines-fixed.sh     |  41 +++++++
- t/perf/run                             |  13 +-
- t/t4202-log.sh                         | 160 +++++++++++++++++++++++-
- t/t5300-pack-object.sh                 |  36 ++++++
- t/t7008-grep-binary.sh                 | 135 ++++++++++++++++-----
- t/t7810-grep.sh                        |  81 ++++++++++---
- t/t7812-grep-icase-non-ascii.sh        |  29 ++---
- t/t7813-grep-icase-iso.sh              |   2 +-
- t/t7814-grep-recurse-submodules.sh     | 215 ++++++++++++++++++++-------------
- t/test-lib.sh                          |   3 +-
- 24 files changed, 843 insertions(+), 239 deletions(-)
- create mode 100755 t/perf/p4220-log-grep-engines.sh
- create mode 100755 t/perf/p4221-log-grep-engines-fixed.sh
- create mode 100755 t/perf/p7820-grep-engines.sh
- create mode 100755 t/perf/p7821-grep-engines-fixed.sh
-
+diff --git a/Makefile b/Makefile
+index e35542e631..eedadb8056 100644
+--- a/Makefile
++++ b/Makefile
+@@ -24,8 +24,10 @@ all::
+ # Define NO_OPENSSL environment variable if you do not have OpenSSL.
+ # This also implies BLK_SHA1.
+ #
+-# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
+-# able to use Perl-compatible regular expressions.
++# Define USE_LIBPCRE if you have and want to use libpcre. Various
++# commands such as log and grep offer runtime options to use
++# Perl-compatible regular expressions instead of standard or extended
++# POSIX regular expressions.
+ #
+ # Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
+ # /foo/bar/include and /foo/bar/lib directories.
+diff --git a/configure.ac b/configure.ac
+index 128165529f..deeb968daa 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -250,8 +250,10 @@ AS_HELP_STRING([--with-openssl],[use OpenSSL library (default is YES)])
+ AS_HELP_STRING([],              [ARG can be prefix for openssl library and headers]),
+ GIT_PARSE_WITH([openssl]))
+ 
+-# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
+-# able to use Perl-compatible regular expressions.
++# Define USE_LIBPCRE if you have and want to use libpcre. Various
++# commands such as log and grep offer runtime options to use
++# Perl-compatible regular expressions instead of standard or extended
++# POSIX regular expressions.
+ #
+ # Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
+ # /foo/bar/include and /foo/bar/lib directories.
+@@ -499,8 +501,10 @@ GIT_CONF_SUBST([NEEDS_SSL_WITH_CRYPTO])
+ GIT_CONF_SUBST([NO_OPENSSL])
+ 
+ #
+-# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
+-# able to use Perl-compatible regular expressions.
++# Define USE_LIBPCRE if you have and want to use libpcre. Various
++# commands such as log and grep offer runtime options to use
++# Perl-compatible regular expressions instead of standard or extended
++# POSIX regular expressions.
+ #
+ 
+ if test -n "$USE_LIBPCRE"; then
 -- 
 2.13.0.303.g4ebf302169
 
