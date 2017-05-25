@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C59E20284
-	for <e@80x24.org>; Thu, 25 May 2017 19:46:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E984F20284
+	for <e@80x24.org>; Thu, 25 May 2017 19:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S970171AbdEYTqd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 15:46:33 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:38111 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1036692AbdEYTq3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 15:46:29 -0400
-Received: by mail-wm0-f50.google.com with SMTP id e127so119838820wmg.1
-        for <git@vger.kernel.org>; Thu, 25 May 2017 12:46:28 -0700 (PDT)
+        id S1036686AbdEYTqj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 15:46:39 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:32771 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1763872AbdEYTqi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 15:46:38 -0400
+Received: by mail-wm0-f66.google.com with SMTP id b84so39671095wmh.0
+        for <git@vger.kernel.org>; Thu, 25 May 2017 12:46:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=O9+W8NoDWQRmidtFGBRDVqz8F+8djYYiwD81u9inhGc=;
-        b=u+850ZjfoD/SvnuUxKU1gfnURsz+0h7bUoD+T/0J/FGgwhHad0BEwQsPkE0XokNNUz
-         tFmz7kQRomeSNKkjzrq44R14qBBkTbR+k/n0HKjHG/Exk7HrqeCbaGWAFlyDcg07RDd8
-         ujFyfI/BMKKbyO1zrX8Usf84KQEOlqLxg+T5q0Wuy+jCZb6zsPWSw5060mhSS7iStKOM
-         G9xsfdiPgunBm3Pyzo9nY9RPMB3eU2fZ2AvBzI8Lhn4E3FdRmIQMwk7lI5xc26lfGp3j
-         nYF1wj3ELxfBveQklggpBWkwckqS6QrqoKcHrvdQ+QxUPe99pWbPaxfsSGYHEeSGwP6m
-         694Q==
+        bh=mZxtcEJpE8sWZw8Dm8Q1sUZWhnp7L0W818+G5Q9MLXI=;
+        b=cB28xR7W6h9Dgc5INKHkdu6PclubQ6dLOO3q7oWkVYDy0e9VKt30dm13A12Vy7OUov
+         RPps6CjZJOxYhyPX58NKzHC1G5uPjwM/sdtRNT08yYU2diME/lEAbvZ2CjTzqMcUyUYv
+         tBwGvfM+YjTPMbWH/SDktgcRQZkfgCq2imHSBFaxY8WI6A2pRN5mEGW2+cfs9QzSqn12
+         VEzN87ypPYayKEcR5u+pWLpnB07NibeCC/Gdjaz5be8LGf1B82Y+UUAoW5kodVF0Qh8J
+         dozapTE6OcZkLC7cHs2DeEQjDURji42Y3cdnVLxXPbMrusOLpVEb3N8WCQrx0sLmWVB0
+         U2+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=O9+W8NoDWQRmidtFGBRDVqz8F+8djYYiwD81u9inhGc=;
-        b=r58ehXhMybDLrqGTf5HJ+B0j9QYiRA4oCBqOlEj21/wlJ7RNgOy10PpfaBeTLnmCCj
-         rhZOAfb71NGu4rj524LVbVYda+dx7wrYXEw5gcnXCacPsarZ3ZPiYzeuXhECcHokn985
-         fSFfYN0hD2KmAK/KLq+pTMQMQ7TxtawxvdkLl7yv9ifrDflcTn7wCeBXok+AqCXx+FZu
-         /xzRSr/DI+QrQK1Sor46qxRXBTY1kGDuhlltUUNqRbD5MojxeBZXcesmj+bQN6GlfWCG
-         uUaEHiHO+tpgEvdTWAhRWi80HbMEvFvZJUof3BKpmx71Hi6SMLvfGTHkmh0YTVhCFClO
-         rWqQ==
-X-Gm-Message-State: AODbwcCiXBPPwhc2ZMxh6xTz2qLBEfSiDKcDwBXeXh5kbmuXv9x00Raj
-        t14hwb4ZDOflrw==
-X-Received: by 10.28.175.136 with SMTP id y130mr11698918wme.112.1495741587753;
-        Thu, 25 May 2017 12:46:27 -0700 (PDT)
+        bh=mZxtcEJpE8sWZw8Dm8Q1sUZWhnp7L0W818+G5Q9MLXI=;
+        b=gvHl5mCJu0rCVc4KPji9Bcb92NiAclgJ0Yq36ZVc0gdJATAHkcrcngLJWQFaaQId55
+         A/nfL0wrI0cTkIIo9+1RAD/elx3PNWJ80NjdliRcQk1tZQOHSglxt9MmC2n7XI8vdKKM
+         mAOnPr1uUcAymUpKO+0723d+iSv453zy2YQ11wWCQaASxablUjbSq1MxOeFPWrosOWAf
+         zXksvc27ZEan9MI76YBTWb4Imw0f9pBorXTpBb5KB+u14uLK/1qCDnM/9jaFvKSY6YBV
+         Saet6GtF+GggczdCS46c/U5h0ULpEhKepz2hi8Q6VFomcmRD+Ye7SIwMKsL7yMXfhTHR
+         Wx4A==
+X-Gm-Message-State: AODbwcCMz2HQMimF1ro+wJRsrN3Yp/IB8f9amFLEAm4RD4N0IG4x2xlJ
+        VBtlDMQNkP4vUg==
+X-Received: by 10.223.176.163 with SMTP id i32mr29185605wra.32.1495741591571;
+        Thu, 25 May 2017 12:46:31 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.46.26
+        by smtp.gmail.com with ESMTPSA id q203sm8387273wme.0.2017.05.25.12.46.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 25 May 2017 12:46:26 -0700 (PDT)
+        Thu, 25 May 2017 12:46:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 10/31] grep: amend submodule recursion test for regex engine testing
-Date:   Thu, 25 May 2017 19:45:14 +0000
-Message-Id: <20170525194535.9324-11-avarab@gmail.com>
+Subject: [PATCH v4 11/31] grep: add tests for grep pattern types being passed to submodules
+Date:   Thu, 25 May 2017 19:45:15 +0000
+Message-Id: <20170525194535.9324-12-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170525194535.9324-1-avarab@gmail.com>
 References: <20170525194535.9324-1-avarab@gmail.com>
@@ -75,414 +75,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the submodule recursion test to prepare it for subsequent tests
-of whether it passes along the grep.patternType to the submodule
-greps.
-
-This is the result of searching & replacing:
-
-    foobar -> (1|2)d(3|4)
-    foo    -> (1|2)
-    bar    -> (3|4)
-
-Currently there's no tests for whether e.g. -P or -E is correctly
-passed along, tests for that will be added in a follow-up change, but
-first add content to the tests which will match differently under
-different regex engines.
-
-Reuse the pattern established in an earlier commit of mine in this
-series ("log: add exhaustive tests for pattern style options &
-config", 2017-04-07). The pattern "(.|.)[\d]" will match this content
-differently under fixed/basic/extended & perl.
-
-This test code was originally added in commit 0281e487fd ("grep:
-optionally recurse into submodules", 2016-12-16).
+Add testing for grep pattern types being correctly passed to
+submodules. The pattern "(.|.)[\d]" matches differently under
+fixed (not at all), and then matches different lines under
+basic/extended & perl regular expressions, so this change asserts that
+the pattern type is passed along correctly.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7814-grep-recurse-submodules.sh | 166 ++++++++++++++++++-------------------
- 1 file changed, 83 insertions(+), 83 deletions(-)
+ t/t7814-grep-recurse-submodules.sh | 49 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
 diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index 5b6eb3a65e..1472855e1d 100755
+index 1472855e1d..3a58197f47 100755
 --- a/t/t7814-grep-recurse-submodules.sh
 +++ b/t/t7814-grep-recurse-submodules.sh
-@@ -9,13 +9,13 @@ submodules.
- . ./test-lib.sh
+@@ -313,4 +313,53 @@ test_incompatible_with_recurse_submodules ()
+ test_incompatible_with_recurse_submodules --untracked
+ test_incompatible_with_recurse_submodules --no-index
  
- test_expect_success 'setup directory structure and submodule' '
--	echo "foobar" >a &&
-+	echo "(1|2)d(3|4)" >a &&
- 	mkdir b &&
--	echo "bar" >b/b &&
-+	echo "(3|4)" >b/b &&
- 	git add a b &&
- 	git commit -m "add a and b" &&
- 	git init submodule &&
--	echo "foobar" >submodule/a &&
-+	echo "(1|2)d(3|4)" >submodule/a &&
- 	git -C submodule add a &&
- 	git -C submodule commit -m "add a" &&
- 	git submodule add ./submodule &&
-@@ -24,18 +24,18 @@ test_expect_success 'setup directory structure and submodule' '
- 
- test_expect_success 'grep correctly finds patterns in a submodule' '
- 	cat >expect <<-\EOF &&
--	a:foobar
--	b/b:bar
--	submodule/a:foobar
-+	a:(1|2)d(3|4)
-+	b/b:(3|4)
-+	submodule/a:(1|2)d(3|4)
- 	EOF
- 
--	git grep -e "bar" --recurse-submodules >actual &&
-+	git grep -e "(3|4)" --recurse-submodules >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep and basic pathspecs' '
- 	cat >expect <<-\EOF &&
--	submodule/a:foobar
-+	submodule/a:(1|2)d(3|4)
- 	EOF
- 
- 	git grep -e. --recurse-submodules -- submodule >actual &&
-@@ -44,7 +44,7 @@ test_expect_success 'grep and basic pathspecs' '
- 
- test_expect_success 'grep and nested submodules' '
- 	git init submodule/sub &&
--	echo "foobar" >submodule/sub/a &&
-+	echo "(1|2)d(3|4)" >submodule/sub/a &&
- 	git -C submodule/sub add a &&
- 	git -C submodule/sub commit -m "add a" &&
- 	git -C submodule submodule add ./sub &&
-@@ -54,117 +54,117 @@ test_expect_success 'grep and nested submodules' '
- 	git commit -m "updated submodule" &&
- 
- 	cat >expect <<-\EOF &&
--	a:foobar
--	b/b:bar
--	submodule/a:foobar
--	submodule/sub/a:foobar
-+	a:(1|2)d(3|4)
-+	b/b:(3|4)
-+	submodule/a:(1|2)d(3|4)
-+	submodule/sub/a:(1|2)d(3|4)
- 	EOF
- 
--	git grep -e "bar" --recurse-submodules >actual &&
-+	git grep -e "(3|4)" --recurse-submodules >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep and multiple patterns' '
- 	cat >expect <<-\EOF &&
--	a:foobar
--	submodule/a:foobar
--	submodule/sub/a:foobar
++test_expect_success 'grep --recurse-submodules should pass the pattern type along' '
++	# Fixed
++	test_must_fail git grep -F --recurse-submodules -e "(.|.)[\d]" &&
++	test_must_fail git -c grep.patternType=fixed grep --recurse-submodules -e "(.|.)[\d]" &&
++
++	# Basic
++	git grep -G --recurse-submodules -e "(.|.)[\d]" >actual &&
++	cat >expect <<-\EOF &&
 +	a:(1|2)d(3|4)
 +	submodule/a:(1|2)d(3|4)
 +	submodule/sub/a:(1|2)d(3|4)
- 	EOF
- 
--	git grep -e "bar" --and -e "foo" --recurse-submodules >actual &&
-+	git grep -e "(3|4)" --and -e "(1|2)" --recurse-submodules >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep and multiple patterns' '
- 	cat >expect <<-\EOF &&
--	b/b:bar
-+	b/b:(3|4)
- 	EOF
- 
--	git grep -e "bar" --and --not -e "foo" --recurse-submodules >actual &&
-+	git grep -e "(3|4)" --and --not -e "(1|2)" --recurse-submodules >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'basic grep tree' '
- 	cat >expect <<-\EOF &&
--	HEAD:a:foobar
--	HEAD:b/b:bar
--	HEAD:submodule/a:foobar
--	HEAD:submodule/sub/a:foobar
-+	HEAD:a:(1|2)d(3|4)
-+	HEAD:b/b:(3|4)
-+	HEAD:submodule/a:(1|2)d(3|4)
-+	HEAD:submodule/sub/a:(1|2)d(3|4)
- 	EOF
- 
--	git grep -e "bar" --recurse-submodules HEAD >actual &&
-+	git grep -e "(3|4)" --recurse-submodules HEAD >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep tree HEAD^' '
- 	cat >expect <<-\EOF &&
--	HEAD^:a:foobar
--	HEAD^:b/b:bar
--	HEAD^:submodule/a:foobar
-+	HEAD^:a:(1|2)d(3|4)
-+	HEAD^:b/b:(3|4)
-+	HEAD^:submodule/a:(1|2)d(3|4)
- 	EOF
- 
--	git grep -e "bar" --recurse-submodules HEAD^ >actual &&
-+	git grep -e "(3|4)" --recurse-submodules HEAD^ >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep tree HEAD^^' '
- 	cat >expect <<-\EOF &&
--	HEAD^^:a:foobar
--	HEAD^^:b/b:bar
-+	HEAD^^:a:(1|2)d(3|4)
-+	HEAD^^:b/b:(3|4)
- 	EOF
- 
--	git grep -e "bar" --recurse-submodules HEAD^^ >actual &&
-+	git grep -e "(3|4)" --recurse-submodules HEAD^^ >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep tree and pathspecs' '
- 	cat >expect <<-\EOF &&
--	HEAD:submodule/a:foobar
--	HEAD:submodule/sub/a:foobar
-+	HEAD:submodule/a:(1|2)d(3|4)
-+	HEAD:submodule/sub/a:(1|2)d(3|4)
- 	EOF
- 
--	git grep -e "bar" --recurse-submodules HEAD -- submodule >actual &&
-+	git grep -e "(3|4)" --recurse-submodules HEAD -- submodule >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep tree and pathspecs' '
- 	cat >expect <<-\EOF &&
--	HEAD:submodule/a:foobar
--	HEAD:submodule/sub/a:foobar
-+	HEAD:submodule/a:(1|2)d(3|4)
-+	HEAD:submodule/sub/a:(1|2)d(3|4)
- 	EOF
- 
--	git grep -e "bar" --recurse-submodules HEAD -- "submodule*a" >actual &&
-+	git grep -e "(3|4)" --recurse-submodules HEAD -- "submodule*a" >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep tree and more pathspecs' '
- 	cat >expect <<-\EOF &&
--	HEAD:submodule/a:foobar
-+	HEAD:submodule/a:(1|2)d(3|4)
- 	EOF
- 
--	git grep -e "bar" --recurse-submodules HEAD -- "submodul?/a" >actual &&
-+	git grep -e "(3|4)" --recurse-submodules HEAD -- "submodul?/a" >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep tree and more pathspecs' '
- 	cat >expect <<-\EOF &&
--	HEAD:submodule/sub/a:foobar
-+	HEAD:submodule/sub/a:(1|2)d(3|4)
- 	EOF
- 
--	git grep -e "bar" --recurse-submodules HEAD -- "submodul*/sub/a" >actual &&
-+	git grep -e "(3|4)" --recurse-submodules HEAD -- "submodul*/sub/a" >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success !MINGW 'grep recurse submodule colon in name' '
- 	git init parent &&
- 	test_when_finished "rm -rf parent" &&
--	echo "foobar" >"parent/fi:le" &&
-+	echo "(1|2)d(3|4)" >"parent/fi:le" &&
- 	git -C parent add "fi:le" &&
- 	git -C parent commit -m "add fi:le" &&
- 
- 	git init "su:b" &&
- 	test_when_finished "rm -rf su:b" &&
--	echo "foobar" >"su:b/fi:le" &&
-+	echo "(1|2)d(3|4)" >"su:b/fi:le" &&
- 	git -C "su:b" add "fi:le" &&
- 	git -C "su:b" commit -m "add fi:le" &&
- 
-@@ -172,30 +172,30 @@ test_expect_success !MINGW 'grep recurse submodule colon in name' '
- 	git -C parent commit -m "add submodule" &&
- 
- 	cat >expect <<-\EOF &&
--	fi:le:foobar
--	su:b/fi:le:foobar
-+	fi:le:(1|2)d(3|4)
-+	su:b/fi:le:(1|2)d(3|4)
- 	EOF
--	git -C parent grep -e "foobar" --recurse-submodules >actual &&
-+	git -C parent grep -e "(1|2)d(3|4)" --recurse-submodules >actual &&
- 	test_cmp expect actual &&
- 
- 	cat >expect <<-\EOF &&
--	HEAD:fi:le:foobar
--	HEAD:su:b/fi:le:foobar
-+	HEAD:fi:le:(1|2)d(3|4)
-+	HEAD:su:b/fi:le:(1|2)d(3|4)
- 	EOF
--	git -C parent grep -e "foobar" --recurse-submodules HEAD >actual &&
-+	git -C parent grep -e "(1|2)d(3|4)" --recurse-submodules HEAD >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep history with moved submoules' '
- 	git init parent &&
- 	test_when_finished "rm -rf parent" &&
--	echo "foobar" >parent/file &&
-+	echo "(1|2)d(3|4)" >parent/file &&
- 	git -C parent add file &&
- 	git -C parent commit -m "add file" &&
- 
- 	git init sub &&
- 	test_when_finished "rm -rf sub" &&
--	echo "foobar" >sub/file &&
-+	echo "(1|2)d(3|4)" >sub/file &&
- 	git -C sub add file &&
- 	git -C sub commit -m "add file" &&
- 
-@@ -203,82 +203,82 @@ test_expect_success 'grep history with moved submoules' '
- 	git -C parent commit -m "add submodule" &&
- 
- 	cat >expect <<-\EOF &&
--	dir/sub/file:foobar
--	file:foobar
-+	dir/sub/file:(1|2)d(3|4)
-+	file:(1|2)d(3|4)
- 	EOF
--	git -C parent grep -e "foobar" --recurse-submodules >actual &&
-+	git -C parent grep -e "(1|2)d(3|4)" --recurse-submodules >actual &&
- 	test_cmp expect actual &&
- 
- 	git -C parent mv dir/sub sub-moved &&
- 	git -C parent commit -m "moved submodule" &&
- 
- 	cat >expect <<-\EOF &&
--	file:foobar
--	sub-moved/file:foobar
-+	file:(1|2)d(3|4)
-+	sub-moved/file:(1|2)d(3|4)
- 	EOF
--	git -C parent grep -e "foobar" --recurse-submodules >actual &&
-+	git -C parent grep -e "(1|2)d(3|4)" --recurse-submodules >actual &&
- 	test_cmp expect actual &&
- 
- 	cat >expect <<-\EOF &&
--	HEAD^:dir/sub/file:foobar
--	HEAD^:file:foobar
-+	HEAD^:dir/sub/file:(1|2)d(3|4)
-+	HEAD^:file:(1|2)d(3|4)
- 	EOF
--	git -C parent grep -e "foobar" --recurse-submodules HEAD^ >actual &&
-+	git -C parent grep -e "(1|2)d(3|4)" --recurse-submodules HEAD^ >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep using relative path' '
- 	test_when_finished "rm -rf parent sub" &&
- 	git init sub &&
--	echo "foobar" >sub/file &&
-+	echo "(1|2)d(3|4)" >sub/file &&
- 	git -C sub add file &&
- 	git -C sub commit -m "add file" &&
- 
- 	git init parent &&
--	echo "foobar" >parent/file &&
-+	echo "(1|2)d(3|4)" >parent/file &&
- 	git -C parent add file &&
- 	mkdir parent/src &&
--	echo "foobar" >parent/src/file2 &&
-+	echo "(1|2)d(3|4)" >parent/src/file2 &&
- 	git -C parent add src/file2 &&
- 	git -C parent submodule add ../sub &&
- 	git -C parent commit -m "add files and submodule" &&
- 
- 	# From top works
- 	cat >expect <<-\EOF &&
--	file:foobar
--	src/file2:foobar
--	sub/file:foobar
-+	file:(1|2)d(3|4)
-+	src/file2:(1|2)d(3|4)
-+	sub/file:(1|2)d(3|4)
- 	EOF
--	git -C parent grep --recurse-submodules -e "foobar" >actual &&
-+	git -C parent grep --recurse-submodules -e "(1|2)d(3|4)" >actual &&
- 	test_cmp expect actual &&
- 
- 	# Relative path to top
- 	cat >expect <<-\EOF &&
--	../file:foobar
--	file2:foobar
--	../sub/file:foobar
-+	../file:(1|2)d(3|4)
-+	file2:(1|2)d(3|4)
-+	../sub/file:(1|2)d(3|4)
- 	EOF
--	git -C parent/src grep --recurse-submodules -e "foobar" -- .. >actual &&
-+	git -C parent/src grep --recurse-submodules -e "(1|2)d(3|4)" -- .. >actual &&
- 	test_cmp expect actual &&
- 
- 	# Relative path to submodule
- 	cat >expect <<-\EOF &&
--	../sub/file:foobar
-+	../sub/file:(1|2)d(3|4)
- 	EOF
--	git -C parent/src grep --recurse-submodules -e "foobar" -- ../sub >actual &&
-+	git -C parent/src grep --recurse-submodules -e "(1|2)d(3|4)" -- ../sub >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success 'grep from a subdir' '
- 	test_when_finished "rm -rf parent sub" &&
- 	git init sub &&
--	echo "foobar" >sub/file &&
-+	echo "(1|2)d(3|4)" >sub/file &&
- 	git -C sub add file &&
- 	git -C sub commit -m "add file" &&
- 
- 	git init parent &&
- 	mkdir parent/src &&
--	echo "foobar" >parent/src/file &&
-+	echo "(1|2)d(3|4)" >parent/src/file &&
- 	git -C parent add src/file &&
- 	git -C parent submodule add ../sub src/sub &&
- 	git -C parent submodule add ../sub sub &&
-@@ -286,19 +286,19 @@ test_expect_success 'grep from a subdir' '
- 
- 	# Verify grep from root works
- 	cat >expect <<-\EOF &&
--	src/file:foobar
--	src/sub/file:foobar
--	sub/file:foobar
-+	src/file:(1|2)d(3|4)
-+	src/sub/file:(1|2)d(3|4)
-+	sub/file:(1|2)d(3|4)
- 	EOF
--	git -C parent grep --recurse-submodules -e "foobar" >actual &&
-+	git -C parent grep --recurse-submodules -e "(1|2)d(3|4)" >actual &&
- 	test_cmp expect actual &&
- 
- 	# Verify grep from a subdir works
- 	cat >expect <<-\EOF &&
--	file:foobar
--	sub/file:foobar
-+	file:(1|2)d(3|4)
-+	sub/file:(1|2)d(3|4)
- 	EOF
--	git -C parent/src grep --recurse-submodules -e "foobar" >actual &&
-+	git -C parent/src grep --recurse-submodules -e "(1|2)d(3|4)" >actual &&
- 	test_cmp expect actual
- '
- 
++	EOF
++	test_cmp expect actual &&
++	git -c grep.patternType=basic grep --recurse-submodules -e "(.|.)[\d]" >actual &&
++	test_cmp expect actual &&
++
++	# Extended
++	git grep -E --recurse-submodules -e "(.|.)[\d]" >actual &&
++	cat >expect <<-\EOF &&
++	.gitmodules:[submodule "submodule"]
++	.gitmodules:	path = submodule
++	.gitmodules:	url = ./submodule
++	a:(1|2)d(3|4)
++	submodule/.gitmodules:[submodule "sub"]
++	submodule/a:(1|2)d(3|4)
++	submodule/sub/a:(1|2)d(3|4)
++	EOF
++	test_cmp expect actual &&
++	git -c grep.patternType=extended grep --recurse-submodules -e "(.|.)[\d]" >actual &&
++	test_cmp expect actual &&
++	git -c grep.extendedRegexp=true grep --recurse-submodules -e "(.|.)[\d]" >actual &&
++	test_cmp expect actual &&
++
++	# Perl
++	if test_have_prereq PCRE
++	then
++		git grep -P --recurse-submodules -e "(.|.)[\d]" >actual &&
++		cat >expect <<-\EOF &&
++		a:(1|2)d(3|4)
++		b/b:(3|4)
++		submodule/a:(1|2)d(3|4)
++		submodule/sub/a:(1|2)d(3|4)
++		EOF
++		test_cmp expect actual &&
++		git -c grep.patternType=perl grep --recurse-submodules -e "(.|.)[\d]" >actual &&
++		test_cmp expect actual
++	fi
++'
++
+ test_done
 -- 
 2.13.0.303.g4ebf302169
 
