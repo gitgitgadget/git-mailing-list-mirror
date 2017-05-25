@@ -7,58 +7,62 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA69420209
-	for <e@80x24.org>; Thu, 25 May 2017 02:55:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD84D20209
+	for <e@80x24.org>; Thu, 25 May 2017 03:13:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937733AbdEYCzG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 24 May 2017 22:55:06 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:36521 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932535AbdEYCzE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 24 May 2017 22:55:04 -0400
-Received: by mail-pf0-f176.google.com with SMTP id m17so153309739pfg.3
-        for <git@vger.kernel.org>; Wed, 24 May 2017 19:55:04 -0700 (PDT)
+        id S941501AbdEYDNH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 24 May 2017 23:13:07 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36154 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S941498AbdEYDNF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 24 May 2017 23:13:05 -0400
+Received: by mail-pf0-f193.google.com with SMTP id n23so36127662pfb.3
+        for <git@vger.kernel.org>; Wed, 24 May 2017 20:13:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=AFW/lgW7TRxwd0upGg15hGAeUb4g9pVucEjie7z0xQo=;
-        b=co21KmfwQ4e0uI2RSlmTf0b20Fdssb6FsoA0FutUHh4pwbHWlBhiFOSlUUVG7hNsTK
-         hmsrOkCMHCdJDpNzJSOaaw0tadM/Cwo8mRLEd8pZOf8s8NIESmg68sRtk07S2wPzeLep
-         LF6AhHT2vb2grOlL9F0hPxMHvxuOLOE5430T6d8nfoXgwnRSgRVI1WomAOVouuy8ilIL
-         8mABPzJTR/cmsKzWMxUknahCXXKTIDJy8KavhFC2ixCNoiuQVrAFaCePluiQp1rgy7dn
-         NQCgnWebzyCa9bv9MWXeVtpHV5pWrV/X7qiNwaoQdK2Y71ck5PeTwdoHzy/ukNcPympD
-         24qg==
+        bh=W7Y0E1/4ogxYVERpHUQbtnb80FAkDXqugKqAr78Ugbw=;
+        b=bwPUDfK8D6JiXf4OfdW6JwVv0CeJEXoCLOfRsstPKTlBVzQJBLO4rd5aOVLampI4mH
+         CcXOWG52SMciaXSyZW3fA1FFIs93rba0BQyL+VsgktnfdUsGvFXm+3eWPgJudBLln2+5
+         bakDWIaLzJ5OUpl2IzRo5XekKt37V2oB78vetmW5cLd9/ZljhMf79NoJ55k8gqSNBwQG
+         i35d9jnRT0ZVDbu2WRp3zh6Fr5sKGPRDW63c+pXotjUpBT7u4DfaJjsCMxNH89UmAd27
+         6F8FtE8uYPr1xBaszZ2V8OxMgBU2mJ/0rXJRwFzkQZ0G/adTD0e36MqxoYbkMYyC9icE
+         8kNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=AFW/lgW7TRxwd0upGg15hGAeUb4g9pVucEjie7z0xQo=;
-        b=VDboPjzY7r4EGyYBTyziwzB8iXe1ceY5fRA+Rf3825VF5gpQAbsoYfMmg4GWO4tYj8
-         tIJ82ebJ1g5NdsP9Ye4O/ElDAw62dpr2k44YyVSH0Z/v7mZ4o6Ud6+A1jf7ZZ7yUfF64
-         zJsYLCq7tURl26ppRDSLhbIO/ubNdzORIE8dGeqkrKNEhJC40HUgGOGqEU7XwC/sOQIk
-         lm9cauWkBK89NMfaOnAl9b2eIgCs7PkMipqtfGeMuUFANFLk/jmodugQNI//VwTPbLG0
-         k6CWx5ok+R1SV2rWGsY8wJRcxZTTJ9vYeAfxtFaBMEOKlyKMT788BgINhOjgBUiFFpMe
-         3Q/w==
-X-Gm-Message-State: AODbwcBIhAN1ojnTe8SXIPYUte992nVGlhT2sqX4iQBZh1qxKWfN0uHC
-        xSmyIsiVU47QrA==
-X-Received: by 10.84.176.131 with SMTP id v3mr47125726plb.138.1495680903580;
-        Wed, 24 May 2017 19:55:03 -0700 (PDT)
+        bh=W7Y0E1/4ogxYVERpHUQbtnb80FAkDXqugKqAr78Ugbw=;
+        b=tsK+qr7J4nd+opyMA5204W2vK9erlZY5Lv6IerjuMY4tyDEvG+gheKP1W3L7r9j359
+         nykHHE0m1KNfBXcH0gL5y00WcWIzcFwDQAAkkzJT8wtvgWjwXvXbK293c4xB2X9hIgDC
+         Bcn3eRGjiqh16EAIztzJhmLhGHLWnIceacs7C2S9gLOCIPm0iGEHvlxaO/5Go0RTuq0w
+         iUTuBE4yGc6QLkrkrp1WpsbQYxNTZnW9MCrMLMR2MprcRxFj+vbWneXX+bf6NxWARWiG
+         9iWgyd1h9G/sJ0CHcCrkr0U20V2yDEFHCowQk+ZYSKR1cjy6X0d+MjEcSiOMNosV8lFL
+         vBCA==
+X-Gm-Message-State: AODbwcCoJkH7ADp03lSWPL99hpaHJEMZzbMTiAglria3nHU85XYaC0or
+        I1N8APJP0zs54w==
+X-Received: by 10.84.248.4 with SMTP id p4mr31942613pll.155.1495681985164;
+        Wed, 24 May 2017 20:13:05 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:bc81:1d63:7e7e:dfa1])
-        by smtp.gmail.com with ESMTPSA id l16sm886512pgu.45.2017.05.24.19.55.02
+        by smtp.gmail.com with ESMTPSA id n22sm10231741pfa.123.2017.05.24.20.13.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 24 May 2017 19:55:03 -0700 (PDT)
+        Wed, 24 May 2017 20:13:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     ch <cr@onlinehome.de>, git@vger.kernel.org
-Subject: Re: Passing revs to git-bundle-create via stdin
-References: <76491764-cd43-ef7f-fbfc-939a15f2fb77@onlinehome.de>
-        <20170523164641.u3rd7bgc7ifvu2su@sigill.intra.peff.net>
-        <xmqqwp97hvvi.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 25 May 2017 11:55:02 +0900
-In-Reply-To: <xmqqwp97hvvi.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 24 May 2017 10:44:01 +0900")
-Message-ID: <xmqqefvdfxx5.fsf@gitster.mtv.corp.google.com>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        =?utf-8?Q?F=C3=A9lix?= Saparelli <felix@passcod.name>,
+        git@vger.kernel.org
+Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch tries to check out the master branch
+References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
+        <xmqqa864mea3.fsf@gitster.mtv.corp.google.com>
+        <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
+        <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net>
+        <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 25 May 2017 12:13:03 +0900
+In-Reply-To: <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 25 May 2017 10:36:14 +0900")
+Message-ID: <xmqqa861fx34.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,88 +75,32 @@ Junio C Hamano <gitster@pobox.com> writes:
 
 > Jeff King <peff@peff.net> writes:
 >
->> I think what's happening is that git-bundle actually runs _two_
->> traversals using the command-line arguments. ...
->> ... It was just a way of confirming my
->> guess about the double-read.
+>> Unfortunately, it can't, because the ref doesn't exist:
 >>
->> The real solutions I can think of are:
+>>   $ git ls-remote git://github.com/passcod/UPPERCASE-NPM.git
+>>   efc7dbfd6ca155d5d19ce67eb98603896062f35a	refs/heads/MASTER
+>>   e60ea8e6ec45ec45ff44ac8939cb4105b16477da	refs/pull/1/head
+>>   f35a73dcb151d336dc3d30c9a2c7423ecdb7bd1c	refs/pull/2/head
+>>   0d9b3a1268ff39350e04a7183af0add912b686e6	refs/tags/V1.0.0
+>>   efc7dbfd6ca155d5d19ce67eb98603896062f35a	refs/tags/V1.0.1
 >>
->>   1. Teach git-bundle not to require the double-read. I'm not sure why
->>      it's written the way it is, but presumably it would be tricky to
->>      undo it (or we would have just written it the other way in the
->>      first place!)
+>> There is no HEAD line at all, so we have no information about it on the
+>> client side.  Likewise, if you run with GIT_TRACE_PACKET=1, you'll see
+>> that the capabilities line does not include a symref marker either.
+>>
+>> So if we wanted to improve this, I think the first step would be for the
+>> server to start sending symref lines for HEAD, even when it does not
+>> resolve to anything.
 >
-> If I remember correctly, the reason why it does the double-read is
-> because it wants to cope with things like "--since".  There is no
-> explicit bottom of the DAG specified on the command line, and the
-> first one (without "--objects") is done to find "prerequisites" that
-> are written in the header.
->
-> Then the packdata is generated, which does another traversal (this
-> time with "--objects" option).
->
-> So perhaps the right way to fix it is to keep the first traversal
-> as-is, but update the second one (I think write-bundle-refs is the
-> culprit) so that it does not use the user-supplied command line
-> as-is; instead it should use the positive end of the history from
-> the command line with the negative end set to these "prerequisites"
-> commits.
->
-> I said "command line" in the above, but read that as "end user
-> input"; the list of rev-list command line arguments given from the
-> standard input is exactly the same deal.
+> Yup, noticed the same and I agree with your conclusion.
 
-Actually, after thinking a bit more about this, I think the bundle
-we currently generate may be a bit less efficient than ideal when
-options like --since or --max-count are used.
+We probably should make head_ref_namespaced() to take the
+resolve_flags that is passed down thru refs_read_ref_full() down to
+refs_resolve_ref_unsafe().  For the purpose of the first call to it
+in upload-pack.c to call back find_symref(), we do not need and want
+to say RESOLVE_REF_READING (which requires a symref to be pointing
+at an existing ref).  I suspect all the other calls (there are 2
+other in unload-pack.c and yet another in http-backend.c) to the
+function should keep passing RESOLVE_REF_READING, as they do want to
+omit a symbolic ref that points at an unborn branch.
 
-Imagine a history of this shape (child grows on the right hand side):
-
- A---D-----E-----G---H
-      \         /
-       B---C---F
-
-The labels on commits also denote their timestamps in relative
-terms, i.e. A has the oldest timestamp, D, even though it is a
-parent of B, has newer timestamp than B has, etc.
-
-Now, imagine running "git log --since=$time H" with time set to the
-timestamp commit D has.  We traversal from H, following parent chain,
-and stop when we see a commit with timestamp older than $time.  So,
-we'd enumerate H G F E D; C and A are "boundaries"---we looked at,
-but we decided not to include in the result.
-
-A bundle file format records "By using this bundle, you can advance
-your history up to this commit", which can be seen by running "git
-ls-remote" on the bundle file.  It also records "However, this
-bundle does not record the entire history; you need to have the
-complete history behind these commits".  These are called
-"prerequisites", and can be checked with "git bundle verify".
-And then of course it has an actual packfile (which is thin).
-
-So putting all together,
-
-	git bundle create mybundle --since=$time H
-
-would record H as its head, and also C and A as prerequistes.
-
-The "double reading of --stdin" we have been discussing is there
-because we run two traversals; the first one is to find the
-prerequisites (i.e. C and A in the above example).  The second one
-uses the same rev-list arguments (i.e. "--since=$time H") to
-generate pack, so it will include D.
-
-As the recipient of a bundle is required to have complete history
-behind both A and C, however, the packfile generated with the
-current proceess is inefficient--it includes D but it does not need
-to.
-
-If we change the argument to rev-list used in the actual packfile
-generation, and instead use the boundary we learned during the first
-traversal (i.e. A and C in the above example) and the tip of the
-history being recorded in the resulting bundle (i.e. H), then we'd
-run "git log ^A ^C H", which would only walk "H G F E".
-
-Which would be smaller (it no longer includes D), and the recipient
-who has A and C can still apply.
