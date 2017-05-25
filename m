@@ -7,86 +7,78 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2837E209FD
-	for <e@80x24.org>; Thu, 25 May 2017 23:31:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9147D209FD
+	for <e@80x24.org>; Thu, 25 May 2017 23:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966945AbdEYXbJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 19:31:09 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:35115 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S966859AbdEYXbI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 19:31:08 -0400
-Received: by mail-pf0-f177.google.com with SMTP id n23so180518067pfb.2
-        for <git@vger.kernel.org>; Thu, 25 May 2017 16:31:07 -0700 (PDT)
+        id S1163149AbdEYXdx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 19:33:53 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:33771 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161768AbdEYXdt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 19:33:49 -0400
+Received: by mail-pf0-f176.google.com with SMTP id e193so180672420pfh.0
+        for <git@vger.kernel.org>; Thu, 25 May 2017 16:33:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=vAvh+LtoSLo3rq3MRYh7RV5CANVabjdoetfwTWng56Y=;
-        b=rwj6zjAm/etc3o/HdEbDBjxRMEw/OHokiZCRBGPoFXVKfJmu79G/WGIcmykgqxH5oo
-         XigHYc2VBegzLT8E97BBuf+Iv4jH5OxTEAWdltMdvU3FSWAl5V1rY9J8JcVUT7HWZO/q
-         zTEjM92myNU6qXuUnGYtN4UHehXNBPHmi0qg90u1HoSeerAnJo7FKhcsK874jqiAhAqD
-         j276w0Zwhp8KoV6GPLJCwn5QJKoeegNCEKr9aP6fvQg9fG6AKDOHhjuinZLDEGQMWLyI
-         RNwe1ajFzMAKuZjUIwKIsTqQ9FgYbON7d3Xsn2Y+1J7bxFzIec7LnDfU2caruLCW6zQh
-         QXoQ==
+         :user-agent:mime-version;
+        bh=9GLJc7WJ81fVWnwcCXbiXF2sRY8y+X9yZb1x2ynNlV8=;
+        b=hCINl78JyAVa+klI40DB3T1Bo0FcW4jqA50G0jl6l9PTb88sT0JGKfesA2H9oN4t25
+         sSjxFw3aIRuv/tjtdsZx8vJn6X8CvgZpprmYB/vW0hy9DLZg1TGWSChhWByn4TjM1+ni
+         jOTPzZ7YGYs4gx7xUkJQrPz0gHbVCI+4lISfGmPAS9R8lAj8UQ/a3aaeQrhtpTqVKvIO
+         OGAhPW5WAOAfy1ZJrNWngV1e6/JrCit02QpXZjLTBL2pnu1+TFxNEawRDyWoEFY7HMR7
+         XT2C8f0t+XsUoF0phr75vN5CX45xtagdPFuPQcmKhht4RI4rvbxAsEj8ct75l/U0aE/d
+         /7+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=vAvh+LtoSLo3rq3MRYh7RV5CANVabjdoetfwTWng56Y=;
-        b=hlTn7YEaivcZmQKY2b3B5I5cfAngtr/7H0bIq1klsaFErbpOuW/cji76mVHmq+PYrR
-         VS6NLh3jANmk5ZCExql+gQynHvWcY7R1MJ5wgtODNcOgGa4Z6Tn/W5rVFwEXUEmOwaPJ
-         uiVB1AGqFcOE2gzD/aiwoSJ2j8+vC14VSSgDHut5T8FPSiLyE2eD4OzGUL4jpZ9/Tc5q
-         koxbgP0sSJf5t96mdQxGNgzUYVEsPl2dkzNGoJpKzTsuD7R54M8Gz7l5P/76cLnLqA1F
-         BCSLNSMz1NRsanFokj5722rZ4a9vCDKSXZUONcDtncawKOmokX3aqNjPL4bXgKi84Ap1
-         8RQQ==
-X-Gm-Message-State: AODbwcDb5vVD3jPeUUYQzqbK7P3M7QADv1ovqfJ8gH4gMFHOS+zL1KgH
-        bnQJPgKXEc0cyQ==
-X-Received: by 10.84.215.155 with SMTP id l27mr52957089pli.31.1495755067511;
-        Thu, 25 May 2017 16:31:07 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9GLJc7WJ81fVWnwcCXbiXF2sRY8y+X9yZb1x2ynNlV8=;
+        b=t4ACpte+Fp+hTmipnjoaxCC/4HVwU4oJc8YOV5QLYMZ1P/JKFrruSNXUMmQhb51mOK
+         iRHEJNDHRy/u/ZEsbiPYYPUIpgXg4Qcp+68UB8S83Sri1nWBZV830ImTbdVdLaNT062s
+         4/aGp+KA0FNpMQ3/5N+EiOqg2qkpUFRlSEEJL+S4nmJAZqoGdHosabRokQV/nOOkb5jU
+         DCRP7utASyJPytdbUEIHMriYRtnYdoKa60Xcb0FTagbbJwEGO1Bf4FvNQ91poQ/wAhqZ
+         +Qzs8jP6QpZosiMFk26CsgJzsyY3/kL3vbaRRCw9sP81UwKk8GjHu2lM9H2tmkfazrxv
+         QHZw==
+X-Gm-Message-State: AODbwcDepr+wgalAP2Vq2y4ihnmqmPlN2XMbIiEuAZOynFn72ez7sFmf
+        A/Ehc3z+8ESmVQ==
+X-Received: by 10.84.194.165 with SMTP id h34mr53066008pld.65.1495755228209;
+        Thu, 25 May 2017 16:33:48 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:546a:ce73:1719:5041])
-        by smtp.gmail.com with ESMTPSA id n71sm15409196pfg.46.2017.05.25.16.31.06
+        by smtp.gmail.com with ESMTPSA id s82sm19232276pfe.57.2017.05.25.16.33.47
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 25 May 2017 16:31:06 -0700 (PDT)
+        Thu, 25 May 2017 16:33:47 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Marc Stevens <marc@marc-stevens.nl>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v2 0/2] Update sha1dc from upstream & optionally make it a submodule
-References: <xmqqpof3srw4.fsf@gitster.mtv.corp.google.com>
-        <20170520115429.12289-1-avarab@gmail.com>
-        <xmqqbmqko7c2.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX4d4-EGiUtJQT8cvuMzm0c5DUu5sxUb11kUnJu3ocuSHw@mail.gmail.com>
-        <xmqqo9ujk9ii.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX5Aa9cQngCgMVP2kb8Jnk_V7coK-f5J6jMOhn=AWCrXzQ@mail.gmail.com>
-Date:   Fri, 26 May 2017 08:31:06 +0900
-In-Reply-To: <CACBZZX5Aa9cQngCgMVP2kb8Jnk_V7coK-f5J6jMOhn=AWCrXzQ@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 25 May
- 2017 12:44:34
-        +0200")
-Message-ID: <xmqqtw48cy4l.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Tyler Brazier <tylerbrazier@gmail.com>, git@vger.kernel.org
+Subject: Re: `pull --rebase --autostash` fails when fast forward in dirty repo
+References: <CAAZatrCaoB7EXVrCvC9RKmO02G5xcp8GPBaJefHfv7zAXVpL3Q@mail.gmail.com>
+        <20170523131231.zqjkymypbilv6tyf@sigill.intra.peff.net>
+        <xmqqa863jiyf.fsf@gitster.mtv.corp.google.com>
+        <20170525180407.ni2oed5wk3qsd2ch@sigill.intra.peff.net>
+        <20170525182230.552dif62zqxuufk3@sigill.intra.peff.net>
+Date:   Fri, 26 May 2017 08:33:46 +0900
+In-Reply-To: <20170525182230.552dif62zqxuufk3@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 25 May 2017 14:22:31 -0400")
+Message-ID: <xmqqpoewcy05.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> But from what you're saying here that seems like a non-issue, i.e. in
-> such a scenario we'd just mirror the original repo[1], change the URL
-> in git.git to that, and then anyone could easily use older history
-> since it would be pointing to the new mirror.
+> Anyway. All this has shown me is that it's probably pointless to do this
+> timing at all on Linux. Somebody on Windows might get better results.
+>
+> But regardless, we need to do something. Correctness must trump
+> optimizations, and the question is whether we can throw out the whole
+> conditional, or if we should just restrict when it kicks in.
 
-Those who cloned before such a switch will still have the URL they
-chose when they cloned and did "submodule init" on it, I think, so
-they need to explicitly choose to switch to the new URL.  So I would
-not exactly say "seems like a non-issue"; it certainly is an easy
-thing to work around.
+Yes.  I personally do not mind going with the simplest approach.
+The optimization thing is relatively new and we were perfectly happy
+without it before ;-).
+
