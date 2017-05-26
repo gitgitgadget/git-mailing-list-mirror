@@ -2,84 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12DC51FA14
-	for <e@80x24.org>; Fri, 26 May 2017 16:19:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAFAD1FA14
+	for <e@80x24.org>; Fri, 26 May 2017 16:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933130AbdEZQTM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 May 2017 12:19:12 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36384 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754599AbdEZQTL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 May 2017 12:19:11 -0400
-Received: by mail-pf0-f177.google.com with SMTP id m17so15734400pfg.3
-        for <git@vger.kernel.org>; Fri, 26 May 2017 09:19:11 -0700 (PDT)
+        id S944197AbdEZQXB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 May 2017 12:23:01 -0400
+Received: from mail-vk0-f41.google.com ([209.85.213.41]:34368 "EHLO
+        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754563AbdEZQW6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 May 2017 12:22:58 -0400
+Received: by mail-vk0-f41.google.com with SMTP id y190so7941691vkc.1
+        for <git@vger.kernel.org>; Fri, 26 May 2017 09:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=ell.io; s=google;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=PUBot6meowXFLI99L0Kt1zo3P+2aHBncTIBXTWwuKMo=;
-        b=ccaOHu3WHYeAlqWEDd45y9oOvvwjifibBaIcHHIhh/KRQRiXi8G8WeT2XWCvU2sNCM
-         26zugv6iz1G9rMubWH0usaRZqKNUMzPHRUwdvRRZxehJD9qK7efJ5C3Z0vP/jYp2pIif
-         T+V9FSrkL9/cD/vudhkxndQ8efHCHmksmiJsRW0me7D1uxTDaduzNrnLU1c8y+cNMPOg
-         R9udTGi5bb8gqie9fNKlRBINWs9iRCmaNuVPn7xJEhHRiZ+8YlBolErFbU4O4n0nmQ3B
-         i/h185ThjxJzPaCmlKlGfXHDyOdahWT/tvGfmuIzDe+tOVJ1DYb8kOJG4LPuU/LmJ5R1
-         JOcw==
+         :cc:content-transfer-encoding;
+        bh=y6k7jUtkQ2oJKAI6C2cgmlxsq7H+Ky285dTUuLv9SVs=;
+        b=JAXD5Pp5B+zfwRmAx6eAgGm6r9CSieR//PM/lWaOXmyN31YcmdeSYsa7KcMacBNuGd
+         hzvQTjurbZPmE/kuPFjgV59QVgM5JTX9JSKOy4QbS8CiIvU3nc+BpQkiDIXAL0Pj9+lu
+         0zUEefzqFJNOPTDWZ/XPbLQ8e4ijqJjWVGe1w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=PUBot6meowXFLI99L0Kt1zo3P+2aHBncTIBXTWwuKMo=;
-        b=P8lwuqTBIlTmyJVvpdEnLkSJGHzCN/wLecLrj9KAavDtRO2wgsxZNzwUjb6tzJXvRo
-         EulEiu0+lBlsHILIqEH/uLr6E8G3WQl1XawtJoR+eRxvco1ri5p1gcTlyBaxgyMZtLsc
-         uZFGzrD9vac3mdtBIcF3jFD9t7NxNMl6y+WQE5vFNea85rx5/2ozV1bsv0BwEtaFPHPf
-         rra94J4MISJbUaiRf9Az+/eVsSdjapXTWns9vJHA4w6cW1ibSuFk6h5p6D3dbS7myqlj
-         DntKkG8OqWzybmTvbcTKmIjq22y6W7Zq51xqA/dG1KIrPqQAyDN6iVpv20F48nAEZFUp
-         Ytdw==
-X-Gm-Message-State: AODbwcCsVMeTlrNJCfmx+h9wetUTxN1mA6A9IAyQk7LmCpdPpoV4kMKw
-        r1YyZkghICDDs74FzrciVoXq48WsYKRQ
-X-Received: by 10.98.236.150 with SMTP id e22mr3358927pfm.48.1495815550553;
- Fri, 26 May 2017 09:19:10 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=y6k7jUtkQ2oJKAI6C2cgmlxsq7H+Ky285dTUuLv9SVs=;
+        b=ta8j51JCduD5Uhoyd5yRxooOxl4YC/ylzOb7nO+zv1z4ZgWilm+1V6J2vMJdQwHkoY
+         F5tJpwAqnAyBzyGPCBgsrL4wDgdxd25Z2moxq35s2zrVOyGYDxAnRMUG+UCLBiVCKjo9
+         PU9fFFAJKV16eAmxXQQnTSbRaK/KY7DIkHyMDaS0wmNn4ATZDnJcdc4LEOPqmy/HE5Ng
+         9AwM7JiLfHvIlK/7uTa9VLtv5ySnneAIU4IpjhOBTE8xxmUQu6SWh9t65YU4jxDDHl9n
+         Qem4xdlgDN8rwbXCMxfZ3mlpTsjchahHVsbBa2lSfSxd2npUGOPXEh2sJ2BM+Yevx3f1
+         fnLA==
+X-Gm-Message-State: AODbwcBUK+Fd45TmGTqntMSW+DDLNnFt6gvWL7oROQbqNnUTVEqiDXXc
+        O1PvPXnEZdmFvyvYXzLUWrf0lO5lxnCK
+X-Received: by 10.31.114.66 with SMTP id n63mr1021531vkc.59.1495815777847;
+ Fri, 26 May 2017 09:22:57 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Fri, 26 May 2017 09:19:10 -0700 (PDT)
-In-Reply-To: <20170526151713.10974-2-pc44800@gmail.com>
-References: <20170521125814.26255-2-pc44800@gmail.com> <20170526151713.10974-1-pc44800@gmail.com>
- <20170526151713.10974-2-pc44800@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 May 2017 09:19:10 -0700
-Message-ID: <CAGZ79kY4s_WtEJfyFStchFvr7ka659zYjv6H3vy9GsCX2sKbdg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v5 2/3] t7407: test "submodule foreach --recursive"
- from subdirectory added
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Received: by 10.159.33.227 with HTTP; Fri, 26 May 2017 09:22:37 -0700 (PDT)
+X-Originating-IP: [136.30.24.42]
+In-Reply-To: <20170520070757.jekykxagzze3t2wy@sigill.intra.peff.net>
+References: <CAPZ477MCsBsfbqKzp69MT_brwz-0aes6twJofQrhizUBV7ZoeA@mail.gmail.com>
+ <1495230186.19473.7.camel@kaarsemaker.net> <1495230934.19473.10.camel@booking.com>
+ <20170520070757.jekykxagzze3t2wy@sigill.intra.peff.net>
+From:   Elliott Cable <me@ell.io>
+Date:   Fri, 26 May 2017 11:22:37 -0500
+Message-ID: <CAPZ477PoSXqahxaQVpO+m==vng==o4vQahrg_WA8Oeh7wmoW0w@mail.gmail.com>
+Subject: Re: persistent-https, url insteadof, and `git submodule`
+To:     Jeff King <peff@peff.net>
+Cc:     Dennis Kaarsemaker <dennis.kaarsemaker@booking.com>,
+        Git Mailing List <git@vger.kernel.org>, bmwill@google.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 26, 2017 at 8:17 AM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> Additional test cases added to the submodule-foreach test suite
-> to check the submodule foreach --recursive behavior from a
-> subdirectory as this was missing from the test suite.
+Hi! Thanks for the responses (I hope reply-all isn't bad mailing-list
+etiquette? Feel free to yell at with a direct reply!). For whatever it's
+worth, as a random user, here's my thoughts:
 
-As this demonstrates the fixture of the first patch,
-this could be squashed into the first commit.
+On Sat, May 20, 2017 at 2:07 AM, Jeff King <peff@peff.net> wrote:
+> On Fri, May 19, 2017 at 11:55:34PM +0200, Dennis Kaarsemaker wrote:
+>> > On Fri, 2017-05-19 at 14:57 -0500, Elliott Cable wrote:
+>> > > Presumably this isn't intended behaviour?
+>> >
+>> > It actually is. git-submodule sets GIT_PROTOCOL_FROM_USER to 0, which
+>> > makes git not trust any urls except http(s), git, ssh and file urls
+>> > unless you explicitely configure git to allow it. See the
+>> > GIT_ALLOW_PROTOCOL section in man git and the git-config section it
+>> > links to.
+>>
+>> 33cfccbbf3 (submodule: allow only certain protocols for submodule
+>> fetches, 2015-09-16) says:
+>> [...]
+>>     But doing it this way is
+>>     simpler, and makes it much less likely that we would miss a
+>>     case. And since such protocols should be an exception
+>>     (especially because nobody who clones from them will be able
+>>     to update the submodules!), it's not likely to inconvenience
+>>     anyone in practice.
+>
+> The other approach is to declare that a url rewrite resets the
+> protocol-from-user flag to 1. IOW, since the "persistent-https" protocol
+> comes from our local config, it's not dangerous and we should behave as
+> if the user themselves gave it to us. That makes Elliott's case work out
+> of the box.
 
-Reason: When someone is looking at that first commit, they
-may wonder if there is no test that demonstrates the fix. (as fixing
-a bug with no test is bad style. ;) And given the data structures of
-Git it is only easy to find the previous commit, but hard to find the
-next commit (this one) later on.
+Well, now that I'm aware of security concerns, `GIT_PROTOCOL_FROM_USER`
+and `GIT_ALLOW_PROTOCOL`, and so on, I wouldn't *at all* expect
+`insteadOf` to disable that behaviour. Instead, one of two things seems
+like a more ideal solution:
 
-I think with only the minor nit in patch 3, the foreach is tackled. :)
+1. Most simply, better documentation: mention `GIT_PROTOCOL_FROM_USER`
+   explicitly in the documentation of/near `insteadOf`, most
+   particularly in the README for `contrib/persistent-https`.
 
-Thanks,
-Stefan
+2. Possibly, special-case =E2=80=9Chigher-security=E2=80=9D porcelain (like
+   `git-submodule`, as described in 33cfccbbf3) to ignore `insteadOf`
+   rewrite-rules without additional, special configuration. This way,
+   `git-submodule` works for ignorant users (like me) out of the box,
+   just as it previously did, and there's no possible security
+   compramise.
+
+Just my 2=C2=A2 =E2=80=94 thanks for your tireless contributions, loves. <3
+
+
+=E2=81=93=E2=80=89ELLIOTTCABLE=E2=80=84=E2=80=94=E2=80=84fly safe.
+=E2=80=83=E2=80=89http://ell.io/tt
