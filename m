@@ -2,82 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66ABC209FD
-	for <e@80x24.org>; Fri, 26 May 2017 04:38:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 942EA209FD
+	for <e@80x24.org>; Fri, 26 May 2017 05:51:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1035155AbdEZEiG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 May 2017 00:38:06 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:36615 "EHLO
-        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1035147AbdEZEiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 May 2017 00:38:05 -0400
-Received: by mail-io0-f182.google.com with SMTP id o12so3279608iod.3
-        for <git@vger.kernel.org>; Thu, 25 May 2017 21:38:05 -0700 (PDT)
+        id S1163634AbdEZFvg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 May 2017 01:51:36 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:36258 "EHLO
+        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965226AbdEZFvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 May 2017 01:51:35 -0400
+Received: by mail-oi0-f49.google.com with SMTP id h4so1277413oib.3
+        for <git@vger.kernel.org>; Thu, 25 May 2017 22:51:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=HMRJJSsuLy9vZoVou9X0888Hu/8DCk+D6X6B9HPsGyo=;
-        b=cy/+iKCnvjPOEZRo0sSfzshXCIZCcaY7D/9fvip22s4UDGsAil6WyI+uyd8ajiy6A/
-         G9YkpMWQ7XRlLbttodLQvcE2XcQKYbECnDaZEVbB1oCJj1xUZuyE2Ngr8JWrH3B3jZ8W
-         BcPujActjkTy2/SNSeR/zYJLLA2IrTehfq4ZjLJwGUd4kFImIpvCKsG/lr+993Ad4Qc5
-         OBxSYwH/TlqBc+1uoF46f914csldmRIcUvGdNgceZADJoEBnP9e73Z/eIUyQ0WBB3YN5
-         lc/uoPE58CwvaqnuwJ4FgOJUQ5SyCsojbTpYxNij5fmc8y9Qy17lSYB+nV8MHm046XY/
-         fnhg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=/BJdNp2wIjNcI9p8BYUWSb+Y3yXYfFRe2bNGWEkk1F0=;
+        b=Q5t5gWTTSeHAZeSjRneCuRGjVeJPEIJ3bKQA5JtnXwOx2ln0tqriHg75vR52zBGxLH
+         VBSW2n1oL6tdrYvo0MqFs1MLVbo94kVKms6xIEPf4Zi7ttghTnsYzjGvBIrhGxvQpy7r
+         nhQEaaen59FHbUy8SIPBgMqtjpwQEciOjqalfvL92gpv8JFOVJabLmC0dzB70bEYI2BD
+         phnhMTwrKnS+jDG7UML+0ScgguOX4kaGwfK5SriYBxKC3k+oGgRcHs5WSLbCuLwxrYlv
+         rAv/Oe0u+pADSw1zadSOXIEuWYgee3quS2cBh3ZA6PBpMrOeK3oLl4TDeiGFiI611InN
+         qtXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=HMRJJSsuLy9vZoVou9X0888Hu/8DCk+D6X6B9HPsGyo=;
-        b=JNoVwgkkKBmZ5Atc67st1IZEDdHNZtQY9qj/vOzIWB76s5cj9gU9rj9nSzR1dGq+0b
-         Hu82KlQH7n8C/iN02pm6AXHylaVL3YcSM0B8imRppnrC5GPqt3zSSM90uk4bt3QkG7bv
-         tzdVnrX7NdIbXNT72Pghbx7mh/U0iWAy2oz6rbp1q5dy8AOAs+CxOpDGTkmBDGGYp8wF
-         JGOTz2tWiTqJO3U1+cH4azgcxC95gnuK0NZIkesSANfQYWAK/GKlu0XClyuJL6xKxyOU
-         sDMtcCzUsdAbGKIH18SAZ15PVCp+WFotsnw90LgCJ4viN1LpAGYJYkku5hUPKG/ry+Uf
-         POng==
-X-Gm-Message-State: AODbwcDxUb/FAUvEUwLSPNLmSCBuy9biKk2UqlQHYkKUisxYnuUseewF
-        UUNpecEVk1Vrs0NE1hs3KXpsUSxLC3ga
-X-Received: by 10.107.4.200 with SMTP id 191mr47807882ioe.223.1495773484763;
- Thu, 25 May 2017 21:38:04 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=/BJdNp2wIjNcI9p8BYUWSb+Y3yXYfFRe2bNGWEkk1F0=;
+        b=kSrKxy+M4I5PSgIYNcIc5qH+mZSmQjXL1mYY77eTnJzZrIbMGqL9ihkg29K+RBpEEQ
+         lb56RuSK1QyadyKYwjD4bz7k4gQd5ugVqI0zuUGPrNJlMztzos3GvO9MPd5pu2jPPq0n
+         rTWgDD4NQA8Izf5KJ4UiGsL6XAtfl6Mqb1KOCJNjx7Q36wXzAOSNC3HgZQeZNNrr8mPy
+         sAZ/4qLnDed/w66pg+usSUy1ULM0+JpYps+mXHlTeDwI0yjLVKalTncj6DG8izB+Lwjk
+         W4YXKNK4k6AKTHVk7dF3lIi1Z98T+nDfVso0cskIc5OWLHsRFYbFO+Wt1ZTY3faneJVr
+         FfrQ==
+X-Gm-Message-State: AODbwcCDtJQrD+7FbUFlVK3tz5r6wVd6fb3iNA+MuBNTULWydkuMxk3u
+        1F/9vpve5vqEBYCksaFKSeVmvwCQbWLk
+X-Received: by 10.202.244.86 with SMTP id s83mr117242oih.116.1495777894363;
+ Thu, 25 May 2017 22:51:34 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.146.18 with HTTP; Thu, 25 May 2017 21:38:04 -0700 (PDT)
-In-Reply-To: <xmqqpoewcy05.fsf@gitster.mtv.corp.google.com>
-References: <CAAZatrCaoB7EXVrCvC9RKmO02G5xcp8GPBaJefHfv7zAXVpL3Q@mail.gmail.com>
- <20170523131231.zqjkymypbilv6tyf@sigill.intra.peff.net> <xmqqa863jiyf.fsf@gitster.mtv.corp.google.com>
- <20170525180407.ni2oed5wk3qsd2ch@sigill.intra.peff.net> <20170525182230.552dif62zqxuufk3@sigill.intra.peff.net>
- <xmqqpoewcy05.fsf@gitster.mtv.corp.google.com>
-From:   Tyler Brazier <tylerbrazier@gmail.com>
-Date:   Thu, 25 May 2017 23:38:04 -0500
-Message-ID: <CAAZatrCQZq5_Jc=O-6guyKx1BcOcTNOmWoqwGNrbotnK-VXacg@mail.gmail.com>
-Subject: Re: `pull --rebase --autostash` fails when fast forward in dirty repo
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Received: by 10.157.11.214 with HTTP; Thu, 25 May 2017 22:51:34 -0700 (PDT)
+From:   Yu-Hsuan Chen <davidchen9568@gmail.com>
+Date:   Fri, 26 May 2017 13:51:34 +0800
+Message-ID: <CACX31FFFk1aSn+X9VO6PkCofXPE1fjB6pugLcm+srjXFDJkmyg@mail.gmail.com>
+Subject: Bug report: Corrupt pack file after committing a large file (>4 GB?)
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Does git accept outside pull requests? I wouldn't mind committing the
-fix for this once it's been decided what the fix should be. (It might
-help my resume ;)
+Dear maintainer,
 
-On Thu, May 25, 2017 at 6:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> Anyway. All this has shown me is that it's probably pointless to do this
->> timing at all on Linux. Somebody on Windows might get better results.
->>
->> But regardless, we need to do something. Correctness must trump
->> optimizations, and the question is whether we can throw out the whole
->> conditional, or if we should just restrict when it kicks in.
->
-> Yes.  I personally do not mind going with the simplest approach.
-> The optimization thing is relatively new and we were perfectly happy
-> without it before ;-).
->
+There is a bug where committing a large file corrupts the pack file in
+Windows. Steps to recreate are:
+
+1. git init
+2. stage and commit a file larger than 4 GB (not entirely sure about this size)
+3. git checkout -f
+
+The file checked out is much smaller than the original file size.
+
+This behavior is surprising. If git does not support large files, I
+would at least expect an error message when staging or committing. I
+have post a question on StackOverflow regrading this issue, and has
+been confirmed by another user. (question id: 44022897)
+
+Best regards,
+
+David Chen
