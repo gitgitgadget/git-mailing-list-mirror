@@ -2,152 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF65620A04
-	for <e@80x24.org>; Fri, 26 May 2017 19:30:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C889B1FA14
+	for <e@80x24.org>; Fri, 26 May 2017 20:01:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754615AbdEZTaI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 May 2017 15:30:08 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:35861 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752055AbdEZTaH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 May 2017 15:30:07 -0400
-Received: by mail-pf0-f171.google.com with SMTP id m17so19672222pfg.3
-        for <git@vger.kernel.org>; Fri, 26 May 2017 12:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=w6UnpDLEyWSvbi9qmTpK0ispYAMHefvcqDKqGLd56ig=;
-        b=Mx/zWtV8QaZxY3Ts4t/v+bYdD1U2tY5qGjwwvS1QRz8MkBWsh271XWaYWu1KREKvmO
-         UoeMVfbf5URDk7t1dSe2tYLVdeIQmWsFpyTA+faIr47bVH1xy48OZGxqiEApm40sWkQH
-         pkQYwzHVA9/Z6fk2Qi+FAcSzC5PMUj9n/Tkt3Ji7PePqgY+hpNW2CpfXTofo7bp5E1Nx
-         1kic5guum0kJk1moYgdS2W5mxxrN+y72B1mxYjezH9tf/hZcS8OMRqsXrEl02P0zpdEI
-         acRlTBZ7eqnCbhAdwkUvUyfZh45RqRdzU0NLNuudzYStLeUYyoOYFnzjQH1tB8Ac3VlJ
-         zFXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=w6UnpDLEyWSvbi9qmTpK0ispYAMHefvcqDKqGLd56ig=;
-        b=jFlZQiKjg2wHMQoHdB/QhNyXT19V5XB2C3ultjL3+pnaE4jeFoLlJjORrg7IJzsSbN
-         S1zoEf1g6S37xFJKKIM9vplagOY11YGsX2TfvoFj0Aa/LHXjqi0P4/FpXMj+mooWz8Ae
-         zPAQPZWzh8YHdnoW9wqHdbFnQwaWMJOvCR3+WncjAXWeeaNMKpSg7tDpA2edp71ab6H+
-         NK5dx8XG9NJpzPQOWgiFz/2iNoPq5+YJT33/46NhQoqvDcsGVzWHbFkULpqy6GLOuLmA
-         i4C4RWY7Y2V4YBMQEgGmuu98dCRerI1s9gFPUmEfsgF1k1O8L7J27YGXWZCKhxhogUqN
-         P/hQ==
-X-Gm-Message-State: AODbwcDSEdFRo/QeZLRwHxV55zWm8d3iy6fCTHr6283ImPw6IV3pf1O7
-        m3XPbGPRnmWOWL9a5vqa8N5aDIq83302
-X-Received: by 10.98.236.150 with SMTP id e22mr4248439pfm.48.1495827006178;
- Fri, 26 May 2017 12:30:06 -0700 (PDT)
+        id S944824AbdEZUBD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 May 2017 16:01:03 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:35088 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934332AbdEZUBB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 May 2017 16:01:01 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id ELPtdx2lYcpskELPvd0wTo; Fri, 26 May 2017 21:00:59 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8
+ a=gFvFdXDMSmaRUvh_Q6cA:9 a=QEXdDO2ut3YA:10 a=q92HNjYiIAC_jH7JDaYf:22
+Message-ID: <CEF93B59EA3F49608B41892952454B1D@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Jeff King" <peff@peff.net>, "Junio C Hamano" <gitster@pobox.com>
+Cc:     =?UTF-8?Q?F=C3=A9lix_Saparelli?= <felix@passcod.name>,
+        <git@vger.kernel.org>
+References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com> <xmqqa864mea3.fsf@gitster.mtv.corp.google.com> <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley> <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net> <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com> <xmqqa861fx34.fsf@gitster.mtv.corp.google.com> <20170525155924.hk5jskennph6tta3@sigill.intra.peff.net> <20170525191115.tqd6zlj5mxqls4wp@sigill.intra.peff.net>
+Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch tries to check out the master branch
+Date:   Fri, 26 May 2017 21:00:57 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Fri, 26 May 2017 12:30:05 -0700 (PDT)
-In-Reply-To: <xmqq8tlkct27.fsf@gitster.mtv.corp.google.com>
-References: <20170523024048.16879-1-sbeller@google.com/> <20170524214036.29623-1-sbeller@google.com>
- <xmqq7f15e8pu.fsf@gitster.mtv.corp.google.com> <CAGZ79kYO8DoTDCXCk1uSFSAJA5JusD-t4BZoQfGy5n9DF34EvA@mail.gmail.com>
- <xmqq8tlkct27.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 26 May 2017 12:30:05 -0700
-Message-ID: <CAGZ79kbD6QggYH9+M8FM0Khg7Cs0egJR6Jm+kMJkscaANV6UXA@mail.gmail.com>
-Subject: Re: [PATCHv5 00/17] Diff machine: highlight moved lines.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfDCie5nrfbzZzmaK2/bqmgpjD8ECFCPNEa34OtT5qh2vWHFMgWhnkH03NR/maLzocj2z4s9nEVkallhpD5d1gIPHogUkVfKiRATyjqUqXCr1ImsJo/7M
+ qKEtHor6bmVDni7sYr3T37cjDTxrxydhy1/bBzL1gIuUgdyZFZUWbpgeM2MakkHDPYOHxIopJd+ftMUScgkDtfmaeaLB22Swg2vC9nRgT/QtFrqcZXmkOfNb
+ MIBJGA3mImJ8x9ynKXVhvQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 25, 2017 at 6:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+been trying to keep up...
+
+From: "Jeff King" <peff@peff.net>
+> On Thu, May 25, 2017 at 11:59:24AM -0400, Jeff King wrote:
 >
->> As you turn on/off normal coloring via "color.diff" and this only extends
->> the coloring scheme, I have the impression "color" is the right section.
->> Maybe color.diffStyle=[normal/enhanced] and "enhanced" means this
->> feature for now?
+>> The just-HEAD case could look like:
 >
-> Hmph, I thought the intent of color.diff is "is the diff command
-> itself is colored?"  In other words, color.diff=false should give
-> you monochrome if you say "diff --word-diff", etc.
-
-Yes, but in my understanding the "diff" doesn't apply to
-the command, but the part of the output. I arrived at that
-understanding as other commands (show/log/..) also respect
-that setting, so the "diff" in color.diff is not the command, but
-referring to something else, the output being the closest match. :)
-
-And by that understanding color.diffStyle is just natural?
-
-But I think that setting would be a bad idea as we'd rather have
-multiple uncorrelated settings for coloring, which a style argument
-would not.
-
->> The only option in the "diff" section related to color is diff.wsErrorHighlight
->> which has a very similar purpose, so "diff.colorMoved" would fit in that
->> scheme.
-
-With the above reasoning, this may be missnamed and should rather be
-color.wsErrorHighlight as it applies to more than just the diff command.
-
-Note: The average user may not aware that diff/show/log are tiny wrappers
-around the same backend for the heavy lifting.
-
-> I didn't have "should diff output highlight whitespace errors?" in
-> mind when I wrote the message you are responding to, but yes, that
-> is quite similar to "should diff output show lines moved and lines
-> deleted/added differently?".
+> This patch does work, in the sense that upload-pack advertises the
+> unborn HEAD symref. But the client doesn't actually do anything with it.
+> The capability parsing happens in get_remote_heads(), which passes the
+> data out by adding an annotation to the "struct ref" list. But of course
+> we have no HEAD ref to annotate.
 >
->> So with these questions, I wonder if we want to color moved lines
->> as "color.diff.context" (i.e. plain white text in the normal coloring scheme)
->> This would serve the intended purpose of
->> dimming the attention to moved lines.
+> So either get_remote_heads() would have to start returning a bogus HEAD
+> ref (with a null sha1, I guess, which all callers would have to
+> recognize). Or clone (and probably "remote set-head -a") would have to
+> start reaching across the transport-module boundary and asking for any
+> symref values for "HEAD". I'm not excited about more special-casing of
+> "HEAD", though. In theory we'd want this for other symrefs in the long
+> run, and it would be nice if clients were ready to handle that (even if
+> the protocol isn't quite there).
 >
-> Yes, but two points.
+> I dunno. I was thinking there might be a quick tweak, but I'm wondering
+> if this arcane case is worth the restructuring we'd have to do to
+> support it. It only comes up when you've moved the server repo's HEAD to
+> an unborn branch _and_ you have other refs (since otherwise we don't
+> even send capabilities at all!).
 >
->  (1) We want to do so while making it obvious where the boundary
->      between two moved blocks of text whose destination (for
->      moved-deleted lines) or source (for moved-added lines) is.
+> -Peff
 
-Yes, that is what the boundary color would accomplish.
-Any two adjacent blocks with the same sign would have
-their boundary line colored this way.
+My original comment regarding Felix's report was based on when I was looking 
+at the bundle code's disambiguation of refs which matched HEAD's sha1. Hence 
+I had a mis-remembered impression that the HEAD - symref matching was 
+avaibable.
 
->  (2) My message was an impression from using the code to review a
->      patch that is meant to be "move without changing other things".
+At that time, Junio had suggested that, at least in the bundle file, the 
+HEAD symref could be advertised immediately after a nul on the ref line.
 
-Ok, glad you found it somewhat useful already.
+At least for regular git, the sha1and symref value would included in the 
+read line, and the current string processing [1] would not notice the extra 
+symref data. This extra data could then be read (if present) from the end of 
+the line, and the HEAD symref set.
 
->      For other purposes, there may be cases where moved ones may
->      want to be highlighted, not dimmed.
+What I then noticed (but didn't report to the list) was the option of adding 
+that extra info to the PKLINE protocol.
 
-I wonder what these use cases would be?
-(barring a --find-copies harder extension that would not just search the
-current diff, but the whole tree)
+<from my notes>
+In technical\pack-protocol.txt #L136;158-160
+Reference Discovery:
 
-That hints at just having an extra slot for the moved block, but the default
-color could be the same as color.diff.context for dimming.
+If HEAD is a valid ref, HEAD MUST appear as the first advertised
+ref.  If HEAD is not a valid ref, HEAD MUST NOT appear in the
+advertisement list at all, but other refs may still appear.
+-
 
-By now I also think we may not need different colors for additions
-or removals, but keeping two colors is easy enough.
+So, (for both upload pack, and bundle refs) the place to hide the HEAD is 
+after the later ref that HEAD points to.
+ e.g.(updating the example at #L147):
+   00441d3fcd5ced445d1abc402225c0b8a1299641f497 
+refs/heads/integration\0HEAD[LF]
 
->> Regarding the last point of marking up adjacent blocks (which would
->> indicate that there is a coherency issue or just moving from different
->> places), we could highlight the last line of the previous block
->> and first line of the next block in their "normal" colors (i.e.
->> color.diff.old and color.diff.new).
->
-> Hmm.  That is an interesting thought.
+The potential issue is if there is a passed ref that is HEAD, but that HEAD 
+itself isn't passed (especially for bundle)
+<\from my notes>
+--
 
-I'll try the implementation for that and see if it looks good.
+However given the discussion about an unborn HEAD, the option here would be 
+to also pass the NULL sha for the symref and then add the annotation 'HEAD' 
+after an extra \0, in the same way that an active symref could be annotated 
+with the '\0HEAD'. This would kill two birds with one stone!
 
-Thanks,
-Stefan
+These are still protocol changes but should squeeze into the existing 
+processing using the \0 trick.
+
+In the absence of the information, and the multi-use of the warning 
+function, the current message is possible the best we can get.
+
+Philip
+
+[1] the question would be whether other git versions also use the same 
+string processing so could be 'fooled' in the same way? I'd be interested to 
+know if that was a possibility.
+
+
+
