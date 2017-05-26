@@ -2,115 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B09C209FD
-	for <e@80x24.org>; Fri, 26 May 2017 02:56:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABD6D209FD
+	for <e@80x24.org>; Fri, 26 May 2017 03:15:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965131AbdEZC4t (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 22:56:49 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:36352 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932649AbdEZC4s (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 22:56:48 -0400
-Received: by mail-pf0-f169.google.com with SMTP id m17so184240151pfg.3
-        for <git@vger.kernel.org>; Thu, 25 May 2017 19:56:48 -0700 (PDT)
+        id S1946764AbdEZDP0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 23:15:26 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36621 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1946760AbdEZDPP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 23:15:15 -0400
+Received: by mail-it0-f68.google.com with SMTP id i206so409996ita.3
+        for <git@vger.kernel.org>; Thu, 25 May 2017 20:15:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=wDbfqAZvWHUb3qes+O3RqGgbOeNY4efiZi3d8L/sy84=;
-        b=fau7/1CyU6fArPtJzVJjIVHwMWt+RULuyj2i0NbWUgAsgA7J491kAHEsVsH1ttBuz1
-         qQrOP69mmtWvPnwa2bVbHxjyr1HnYQOXwU/rFHrkgtAuFId0qtlA5Kn6n86IgPciUW1A
-         ER4FTsIP+2K5pHDAnB6bWBMDzGJXkm+muUx8FSdZeOehmm5dgieVDQPGBdDw+iVw6y9w
-         eOaDwBb+UjEi2Tif+hqPr/LAz+DpkOTBXJOHdL0juAzy8N+XyN6O62S0VIOQUiuOKDiQ
-         9Nf38bbqBJTi79kZjtzJIdA2KxnW1frKIdt3k91qSN2xKcy2TLRRr+9XNCNGLkZ+Kr5k
-         L/YA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=1frcdyXGlSpgsFnpCcsBueFUxgAs6uiUG2aTsL4lcRI=;
+        b=jm9jhY6/jzQX3TwtBlp6ViKYHU+bnXih7WpmJ2CoxXnPXhTX+MBgADoO+ygzdNtAOf
+         WZbdfedUMSfAs3w8nfu2C+i9pllUVV7h590QnT46LKmFT/Ov0SDsQkB38WrYwiQQJKOG
+         VLql3Q2OMTcW6huw3bwNrSAgSVLVPDIwnPvnduDHhZrV3eZ/uA2cK7byr45OYGkK8aeG
+         +co76K7AExjIF25obIWMa5Eaycvfe8fdh5pKF0oz01AJs9Oj4qn81loFi0G6emN9Yd0B
+         NIuLc3Oq/R/zlyvJuZrxbDnjuCrEgJGCh11iuGXDFnA6u+YcH/fidnrKliBi+/BQ6c1q
+         Yi8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=wDbfqAZvWHUb3qes+O3RqGgbOeNY4efiZi3d8L/sy84=;
-        b=s5vClGr0IEFowkz3DCvNcAjjFlUEpiShfyqV9I3Xw7EwjwV8iPQ3R5E1ULkCes7JO6
-         8P/QobJ7GQcmgAp+Cej9a8iKMGN1hUU0CgJ6o5rCjY8sg1v3/XKbqjfkTODRBjY+0fMQ
-         w0ynKyTGFs9X2uc1gRxojqJdcmRjjWnQ5JG+hQOwa+5K5PhD+iBKM5QTBhhQf1yG+yPJ
-         kIIhJyPorhDiwrWJl+tbUKEoyT0J3BJSxR4EK2t6T/CtiFc4Amdp1BpZSRsIpRHK9aZD
-         Rg1HySm6EgsvJhHebCe6HUqQ5ngNBoHEaG9LthyXdK+Ot7p/4IJ4CvuOsMif75lpYT20
-         gJpg==
-X-Gm-Message-State: AODbwcDyIjg2Tz38X1dGfVAudl6AkrTsLzy120iyJ3Aryvqn8F69tz2Q
-        7QEFjYNsNkCPhg==
-X-Received: by 10.99.167.75 with SMTP id w11mr49902986pgo.148.1495767407833;
-        Thu, 25 May 2017 19:56:47 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:546a:ce73:1719:5041])
-        by smtp.gmail.com with ESMTPSA id e20sm16185854pfd.34.2017.05.25.19.56.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 25 May 2017 19:56:45 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (May 2017, #06; Mon, 22)
-References: <xmqqo9ulo1yn.fsf@gitster.mtv.corp.google.com>
-        <CACsJy8CzgHc=qe5w=FGJJ=ZU0a+JiqBrjWHV7SH3rAPKmOOKoA@mail.gmail.com>
-Date:   Fri, 26 May 2017 11:56:44 +0900
-In-Reply-To: <CACsJy8CzgHc=qe5w=FGJJ=ZU0a+JiqBrjWHV7SH3rAPKmOOKoA@mail.gmail.com>
-        (Duy Nguyen's message of "Thu, 25 May 2017 19:58:23 +0700")
-Message-ID: <xmqqzie0ba1f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=1frcdyXGlSpgsFnpCcsBueFUxgAs6uiUG2aTsL4lcRI=;
+        b=HTquPvI977Yj/frwBplWDpswzmNiBBnY6oJ20sAlGzzAidZMvj37RQNvXoBmYxv5yo
+         EGkz1FfnlWoQ2QqAdAop6Pj/hWGNU9emFVWAx+4YBtR4XMWYGNcGinJj5046ypgJSGyc
+         C1YuwaQiase0KI7sAgWDrkKa3Sgoso9ChTXBocdpJQPK25iUKIGNPehLLpzVjrCQrg95
+         uCiccvfUT6U/fhbQhtLfqVkkDDQLN8DEaJHMSdX2KjLuDlJ0XBy/iLlgKjJQqEFbGktG
+         NJG+wSii8hiWfKFicih/n2poQJa+au9e2K5BxxkhTXrG74W73yUfbR1z+oNavOKyVVLH
+         InDQ==
+X-Gm-Message-State: AODbwcCRRDnrWUiRWwk7UJB3081bODzOL3c58dsmrkXuk40Yhc6ARg+N
+        jz3aEkP8M9RB3Q==
+X-Received: by 10.36.104.198 with SMTP id v189mr684704itb.99.1495768515018;
+        Thu, 25 May 2017 20:15:15 -0700 (PDT)
+Received: from localhost.localdomain (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
+        by smtp.gmail.com with ESMTPSA id 78sm3861689iou.36.2017.05.25.20.15.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 25 May 2017 20:15:14 -0700 (PDT)
+From:   Liam Beguin <liambeguin@gmail.com>
+To:     johannes.schindelin@gmx.de
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        philipoakley@iee.org, phillip.wood@dunelm.org.uk
+Subject: [PATCH v4 00/10] The final building block for a faster rebase -i
+Date:   Thu, 25 May 2017 23:15:08 -0400
+Message-Id: <20170526031508.24838-1-liambeguin@gmail.com>
+X-Mailer: git-send-email 2.9.3
+In-Reply-To: <cover.1493414945.git.johannes.schindelin@gmx.de>
+References: <cover.1493414945.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Hi Johannes,
 
-> On Mon, May 22, 2017 at 1:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> * nd/fopen-errors (2017-05-09) 23 commits
->>  - t1308: add a test case on open a config directory
->>  - config.c: handle error on failing to fopen()
->>  - xdiff-interface.c: report errno on failure to stat() or fopen()
->>  - wt-status.c: report error on failure to fopen()
->>  - server-info: report error on failure to fopen()
->>  - sequencer.c: report error on failure to fopen()
->>  - rerere.c: report correct errno
->>  - rerere.c: report error on failure to fopen()
->>  - remote.c: report error on failure to fopen()
->>  - commit.c: report error on failure to fopen() the graft file
->>  - log: fix memory leak in open_next_file()
->>  - log: report errno on failure to fopen() a file
->>  - blame: report error on open if graft_file is a directory
->>  - bisect: report on fopen() error
->>  - ident.c: use fopen_or_warn()
->>  - attr.c: use fopen_or_warn()
->>  - wrapper.c: add fopen_or_warn()
->>  - wrapper.c: add warn_on_fopen_errors()
->>  - config.mak.uname: set FREAD_READS_DIRECTORIES for Darwin, too
->>  - config.mak.uname: set FREAD_READS_DIRECTORIES for Linux and FreeBSD
->>  - clone: use xfopen() instead of fopen()
->>  - Use xfopen() in more places
->>  - git_fopen: fix a sparse 'not declared' warning
->>
->>  We often try to open a file for reading whose existence is
->>  optional, and silently ignore errors from open/fopen; report such
->>  errors if they are not due to missing files.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> This patch series reimplements the expensive pre- and post-processing of
+> the todo script in C.
 >
-> If anyone wants to continue this, I've cleaned up the series based on
-> Johannes comments here [1]. It does not have the Darwin change though.
-
-Also it seems to be missing the SUPPRESS_FOPEN_REDEF thing by
-Ramsay.  I'll mix these two in, post to the list for review and
-requeue.
-
-Thanks.
-
-
-> There was the last question about the '*' test change in ref path and
-> what exact code change causes that, which I can't answer because I
-> don't have Windows, or the time to simulate and pinpoint the fault on
-> Linux.
+> And it concludes the work I did to accelerate rebase -i.
 >
-> [1] https://github.com/pclouds/git/commits/fopen-or-warn
+> Changes since v3:
+>
+> - removed the no-longer-used transform_todo_ids shell function
+>
+> - simplified transform_todo_ids()'s command parsing
+>
+> - fixed two commits in check_todo_list(), renamed the unclear
+>   `raise_error` variable to `advise_to_edit_todo`, build the message
+>   about missing commits directly (without the detour to building a
+>   commit_list) and instead of assigning an unused pointer to commit->util
+>   the code now uses (void *)1.
+>
+> - return early from check_todo_list() when parsing failed, even if the
+>   check level is something else than CHECK_IGNORE
+>
+> - the todo list is generated is again generated in the same way as
+>   before when rebase.instructionFormat is empty: it was interpreted as
+>   if it had not been set
+>
+> - added a test for empty rebase.instructionFormat settings
+>
+>
+> Johannes Schindelin (10):
+>   t3415: verify that an empty instructionFormat is handled as before
+>   rebase -i: generate the script via rebase--helper
+>   rebase -i: remove useless indentation
+>   rebase -i: do not invent onelines when expanding/collapsing SHA-1s
+>   rebase -i: also expand/collapse the SHA-1s via the rebase--helper
+>   t3404: relax rebase.missingCommitsCheck tests
+>   rebase -i: check for missing commits in the rebase--helper
+>   rebase -i: skip unnecessary picks using the rebase--helper
+>   t3415: test fixup with wrapped oneline
+>   rebase -i: rearrange fixup/squash lines using the rebase--helper
+>
+>  Documentation/git-rebase.txt  |  16 +-
+>  builtin/rebase--helper.c      |  29 ++-
+>  git-rebase--interactive.sh    | 373 ++++-------------------------
+>  sequencer.c                   | 530 ++++++++++++++++++++++++++++++++++++++++++
+>  sequencer.h                   |   8 +
+>  t/t3404-rebase-interactive.sh |  22 +-
+>  t/t3415-rebase-autosquash.sh  |  28 ++-
+>  7 files changed, 646 insertions(+), 360 deletions(-)
+>
+>
+> base-commit: 027a3b943b444a3e3a76f9a89803fc10245b858f
+> Based-On: rebase--helper at https://github.com/dscho/git
+> Fetch-Base-Via: git fetch https://github.com/dscho/git rebase--helper
+> Published-As: https://github.com/dscho/git/releases/tag/rebase-i-extra-v4
+> Fetch-It-Via: git fetch https://github.com/dscho/git rebase-i-extra-v4
+>
+
+This is my first review so it's probably not the best you'll get, but
+here it goes!
+
+I rebased the series ontop of v2.13.0 and run the whole `make test` on
+both revisions.
+The changes do not seem to have introduced any evident breakage as the
+output of `make test` did not change.
+
+I tried to time the execution on an interactive rebase (on Linux) but
+I did not notice a significant change in speed.
+Do we have a way to measure performance / speed changes between version?
+
+Liam
+
