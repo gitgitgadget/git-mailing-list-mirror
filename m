@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76345209FD
-	for <e@80x24.org>; Fri, 26 May 2017 03:35:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74E2C209FD
+	for <e@80x24.org>; Fri, 26 May 2017 03:35:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1946836AbdEZDff (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 23:35:35 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:33398 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1946804AbdEZDfY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 23:35:24 -0400
-Received: by mail-pf0-f181.google.com with SMTP id e193so185093345pfh.0
-        for <git@vger.kernel.org>; Thu, 25 May 2017 20:35:23 -0700 (PDT)
+        id S969446AbdEZDfi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 23:35:38 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34236 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1946821AbdEZDfZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 23:35:25 -0400
+Received: by mail-pf0-f194.google.com with SMTP id w69so43045593pfk.1
+        for <git@vger.kernel.org>; Thu, 25 May 2017 20:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=f7BqDVsf+GeKlwN1J7e/uzUMAL816EjOS2PePm4bNR8=;
-        b=SYX6pC1paJnzxFdAPWwXgtJ3FuLmqaaVbURCkRYh76f1wm4u1NaIhtIo4lpSHYBp5A
-         l1yJK2HmYqq265PfoN/Xa/JMB4+BniPbbPzkOxRt4C/tTPzv6Arl5PdsLiH/Rx0ksNss
-         UXfLvXPYh9WlhzpirLtAgwBMRDHn2HTBtfpg7bh1caNdlBQvDlQz4OLkR2Rg+lbH7cFf
-         KziMkytxBnvtlOWtMU8zM2J3Ho2zyZWGZr+H066fptEGs+j3u16d9fP/6hXAlzM4r5AM
-         ORG3zVTvfP2lDIiEkwyxoI48y/xwA8yhkrr6NrPaO/RslsKTpCxYwe6mRlRnacdUIhL+
-         cOgA==
+        bh=rOGNLoc33uTsg+C6Zw3OYBx8EyOougBS2g85f6sbUkA=;
+        b=mm/8pdvU5Gr6MIyfyXl3Q1eNp8+iWn+DubVh/UdWzpZ2Zya6fmB3OwjdVEAMqIAfDp
+         UTuxkB8XT+YNXX3rhxzwNSSOCyi+iOZsWVHd4HTcyHvrFcyqgRJzmOscqLy9B67KrYaT
+         5m3UL+rwBGviV9isP7cbgcu4f2VdE3smK/2Rrl2t6YWO3SrKTUavOfk7PBmhahC93r7v
+         R4SmP4Cq447LfYIU0wjk5dHEJzn3B25fmJmB6nrn8gTJwtejw7CKwMnR99C2dOcayFSS
+         YcmIWigH4WsKByB9sQ+MQPZg1nulKb/LbkZItnqUvQtKzaXz45W+W1cskfPBSckQkb+a
+         AjAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=f7BqDVsf+GeKlwN1J7e/uzUMAL816EjOS2PePm4bNR8=;
-        b=SNh7ttaIiqCSuF5EhHmIrgs83pGj/mG/VPqRSGrPIKXaVLcbANHisX5Pj6VF7XGP1M
-         UiVcgyAT823/cbuoeJjqkQRQOXcay9J06v+RrY92/IoVHVvjZVf9yOE2YaSj4iReY3S2
-         8Ro0WO3Bl7jxvI4fzrw+oeVkIpN2lXqTKvKXZsYxnqHlxaJln3VjR8SPdlLCdBPAjHw8
-         XHRP40eLqA8pvrUrLZvtmFYUtLLZfBWd8WdxRz6XluYzsDUzqJiTCkD6EN9V9q4aex5o
-         tuU5EvTGdKEmMvsekx/xwXH72kfj/sH+piQ6LPhcSU7UHHX0f/wFpknrTQcZ5q7Buru+
-         GkeA==
-X-Gm-Message-State: AODbwcBaWb5Gran7gJJtAaFZ/rIve15vbTEk2zZ2iUTpsKmtiAAme4E4
-        oiYJyYiLorKZQQ==
-X-Received: by 10.84.137.165 with SMTP id 34mr1525977pln.167.1495769723442;
-        Thu, 25 May 2017 20:35:23 -0700 (PDT)
+        bh=rOGNLoc33uTsg+C6Zw3OYBx8EyOougBS2g85f6sbUkA=;
+        b=X0T80YA0YxizMN682gAYb7hUSrl9sEQu660vx6r3sm9qK2ly3WzSfzEj2BP9gJ/n9G
+         dS1ChJ/2sFs+YPv59O9wUnZTfLl/y8hYYdHy59UAfs2R6c5Ud5oOqZdDDHPJzIFKDdiB
+         gzRhDJnPM8fi5SU1s6RUBW+KPS8qeVeyhLztPIdq/EGj90rt2KkUp6CAKdq8RJXXQ2UK
+         3nInpGb5O8LtDERG9pSq3UjpbRLLbV81d6EvLP5zMkp6EUJySfdYESVG7S3vbcxV9RJ9
+         yTF7Nz3cFZroa/NzF7e5FNGoKISIUZTuYVpc2IIb75x9QU0ZwG82ue3OEShUHZiXCv3q
+         8aXQ==
+X-Gm-Message-State: AODbwcCRbeF824XeSWoUN1OHjUEZnYi9FCJF7nXHbla0c1ze7/4q83Wx
+        iEkw/okQj1Z56Q==
+X-Received: by 10.98.163.152 with SMTP id q24mr48581094pfl.217.1495769724638;
+        Thu, 25 May 2017 20:35:24 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:546a:ce73:1719:5041])
-        by smtp.gmail.com with ESMTPSA id p13sm17821298pfl.52.2017.05.25.20.35.22
+        by smtp.gmail.com with ESMTPSA id x12sm16899649pgc.47.2017.05.25.20.35.23
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 25 May 2017 20:35:22 -0700 (PDT)
+        Thu, 25 May 2017 20:35:24 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 09/13] print errno when reporting a system call error
-Date:   Fri, 26 May 2017 12:35:06 +0900
-Message-Id: <20170526033510.1793-10-gitster@pobox.com>
+Subject: [PATCH v3 10/13] rerere.c: move error_errno() closer to the source system call
+Date:   Fri, 26 May 2017 12:35:07 +0900
+Message-Id: <20170526033510.1793-11-gitster@pobox.com>
 X-Mailer: git-send-email 2.13.0-491-g71cfeddc25
 In-Reply-To: <20170526033510.1793-1-gitster@pobox.com>
 References: <CACsJy8CzgHc=qe5w=FGJJ=ZU0a+JiqBrjWHV7SH3rAPKmOOKoA@mail.gmail.com>
@@ -69,64 +69,29 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+We are supposed to report errno from fopen(). fclose() between fopen()
+and the report function could either change errno or reset it.
+
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/log.c     | 3 ++-
- rerere.c          | 4 ++--
- xdiff-interface.c | 4 ++--
- 3 files changed, 6 insertions(+), 5 deletions(-)
+ rerere.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index b3b10cc1ed..26d6a3cf14 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -858,7 +858,8 @@ static int open_next_file(struct commit *commit, const char *subject,
- 		printf("%s\n", filename.buf + outdir_offset);
- 
- 	if ((rev->diffopt.file = fopen(filename.buf, "w")) == NULL)
--		return error(_("Cannot open patch file %s"), filename.buf);
-+		return error_errno(_("Cannot open patch file %s"),
-+				   filename.buf);
- 
- 	strbuf_release(&filename);
- 	return 0;
 diff --git a/rerere.c b/rerere.c
-index 971bfedfb2..1351b0c3fb 100644
+index 1351b0c3fb..c26c29f87a 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -484,13 +484,13 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
- 	io.input = fopen(path, "r");
- 	io.io.wrerror = 0;
- 	if (!io.input)
--		return error("Could not open %s", path);
-+		return error_errno("Could not open %s", path);
- 
+@@ -489,8 +489,9 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
  	if (output) {
  		io.io.output = fopen(output, "w");
  		if (!io.io.output) {
++			error_errno("Could not write %s", output);
  			fclose(io.input);
--			return error("Could not write %s", output);
-+			return error_errno("Could not write %s", output);
+-			return error_errno("Could not write %s", output);
++			return -1;
  		}
  	}
  
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 060038c2d6..d3f78ca2a7 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -164,9 +164,9 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
- 	size_t sz;
- 
- 	if (stat(filename, &st))
--		return error("Could not stat %s", filename);
-+		return error_errno("Could not stat %s", filename);
- 	if ((f = fopen(filename, "rb")) == NULL)
--		return error("Could not open %s", filename);
-+		return error_errno("Could not open %s", filename);
- 	sz = xsize_t(st.st_size);
- 	ptr->ptr = xmalloc(sz ? sz : 1);
- 	if (sz && fread(ptr->ptr, sz, 1, f) != 1) {
 -- 
 2.13.0-491-g71cfeddc25
 
