@@ -7,64 +7,56 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D313209FD
-	for <e@80x24.org>; Fri, 26 May 2017 01:20:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F61E209FD
+	for <e@80x24.org>; Fri, 26 May 2017 02:14:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1946500AbdEZBUg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 25 May 2017 21:20:36 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:32838 "EHLO
+        id S1762750AbdEZCN6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 25 May 2017 22:13:58 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33349 "EHLO
         mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1946470AbdEZBUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 25 May 2017 21:20:34 -0400
-Received: by mail-pf0-f193.google.com with SMTP id f27so42477403pfe.0
-        for <git@vger.kernel.org>; Thu, 25 May 2017 18:20:34 -0700 (PDT)
+        with ESMTP id S1760165AbdEZCN5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 25 May 2017 22:13:57 -0400
+Received: by mail-pf0-f193.google.com with SMTP id f27so42687159pfe.0
+        for <git@vger.kernel.org>; Thu, 25 May 2017 19:13:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=2JqtrzdvMy4de8EhQRAThbnrJ0HhGe1khZO2/Yt2Gv8=;
-        b=SUiT2PC6WS+Wu6/TcBwJcNo29Zr9AI2kSrbawK46/At5RWZZjBwRGHtWGrxjkVvPgu
-         SMS9ZFpQIhK7eJAJvc62d4N0OP9+ICXShsxkQUb3hLs4LKLwHX6+uuqKoe/68eeLAuEn
-         7PqcVVoViL6ocmDoRbxory7hJJKlj11UsS5uNMaS3b6hHzEohQ0p5o0ckWYgKBvnY5xI
-         9IPmQbvwR+rBEiviUlayxmJoFR86ONdpCrfOc9pWiAdiXlqibaray+0AcMKkq1P473fH
-         TT4FtMi1QFACictfY6d/VS9ZsOpiRZMlOqOcJ4+fO3oYZYtaeaaeU1aaambG2Wz5OxDA
-         h7vA==
+        bh=SN1vRVbijioOfC27UzprarGPO6b7vvg0LFvuGDXembk=;
+        b=hlhzIcUjAOfyeHuE3TklsQ8KDe1hglG2w0Kd93Mt/TUOTNnVl49m5QhE1cF3Go3zQW
+         hXZDOZmQ5qZnRPEnYyFT1j87Cm5UryHbZzjvr0+/z6xDPs4aRBrZScwrds5yRH/nwMV3
+         piTqdtviFySRPOApoSnGwLbMNLtGekk7kV05r5LdWOZBT/IvV3lzcpeC7WXPDxBqX/QR
+         DYMSMs234tqiAd2ZvyW/WyqwGi4v1/TR/H39RuOQMkFtePrAXq7jxa4Obt7qCL0fhJBL
+         52Sj0M1AGqZLG1LZMmMGBA4ebmViAgQDHaQAZB0sqWa/Uw6kdoCEgER23YpQykzb48yU
+         jiaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=2JqtrzdvMy4de8EhQRAThbnrJ0HhGe1khZO2/Yt2Gv8=;
-        b=o3f9l4Ik85gIkpOytwKcYUZPxJfKJIwXx9fNqTwTg1DsQn3z/greNCUZf2JwYOOMLn
-         A/aToKvS9DrSugjuIyFAqRvIopVI3CKPV9SivTTW7ZlmrFRlNhvgoNQuPyoc7jYkaaAt
-         uLox9ZV2QKH5OuVUrLYYvhzGtluxlUihAEeEGfLXkYnze00FvsbDLQrAwOWrNnx2fgmL
-         1Nz51AuyLde4hcwhTr6ghwDdYmNITDPj3QbwQ+aS9T04FQQCO90MixN6P2+nw3y/utmj
-         MpSXlsEsmaeI3BbAkO6ckuyaIsOkzk4WLqjQktSYRKC8hC8n2dF8Oeo6MIi5AY82sYRN
-         xRRg==
-X-Gm-Message-State: AODbwcCHiaxzieWqPgSYdqFyakGa/n4jwqoBLJu28yA3KiPHxzOH7Zim
-        Wso24pYsgUauHA==
-X-Received: by 10.98.224.1 with SMTP id f1mr48546846pfh.116.1495761633814;
-        Thu, 25 May 2017 18:20:33 -0700 (PDT)
+        bh=SN1vRVbijioOfC27UzprarGPO6b7vvg0LFvuGDXembk=;
+        b=WiOw5mAbbQSUOxS4u6gLoSnc1/SIAwQbJRfaLsO8v2Qi7FOjPCIBxTZCiCw942yk9Y
+         hnJ/n8aE2FMqCz38BP3bZ6IhQ6gV9q3TQm9HXNiDpTKufAFfFirt4tt8A4O4DpjovdwN
+         4IeCz976HZxf0wXHg7sTqTZND88oppd6dMVAgX3TBN6xMcuhBdwCKtiI2bO+QbsBq/Uv
+         h1w0ITtCu8i4qenPFJZuFZm754j+6IkJa7Ees+CLds7lTy36+PaCqv5Ej6Y1darudJ4Q
+         kOYV1FOfymCsPFgops75nCflY4KW6J5dzIPobO2tQaO7uozHA5CuQ2J1MAitcr7B8/RL
+         QtlA==
+X-Gm-Message-State: AODbwcBVqPPnps27BLfv+AjAopjNFqPXSpwIkTn9jCeL0OElnC70+MxP
+        dfrjlNRb2TKH3g==
+X-Received: by 10.99.107.136 with SMTP id g130mr27586009pgc.3.1495764836579;
+        Thu, 25 May 2017 19:13:56 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:546a:ce73:1719:5041])
-        by smtp.gmail.com with ESMTPSA id l63sm14474538pfb.68.2017.05.25.18.20.32
+        by smtp.gmail.com with ESMTPSA id 192sm14170972pfb.10.2017.05.25.19.13.55
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 25 May 2017 18:20:33 -0700 (PDT)
+        Thu, 25 May 2017 19:13:55 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCHv5 00/17] Diff machine: highlight moved lines.
-References: <20170523024048.16879-1-sbeller@google.com/>
-        <20170524214036.29623-1-sbeller@google.com>
-        <xmqq7f15e8pu.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYO8DoTDCXCk1uSFSAJA5JusD-t4BZoQfGy5n9DF34EvA@mail.gmail.com>
-Date:   Fri, 26 May 2017 10:20:32 +0900
-In-Reply-To: <CAGZ79kYO8DoTDCXCk1uSFSAJA5JusD-t4BZoQfGy5n9DF34EvA@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 25 May 2017 09:31:27 -0700")
-Message-ID: <xmqq8tlkct27.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC/PATCH] recognize pathspec magic without "--" disambiguation
+References: <20170525152739.t63dbsq2dojy2y2h@sigill.intra.peff.net>
+Date:   Fri, 26 May 2017 11:13:55 +0900
+In-Reply-To: <20170525152739.t63dbsq2dojy2y2h@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 25 May 2017 11:27:40 -0400")
+Message-ID: <xmqq4lw8cql8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,46 +65,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> As you turn on/off normal coloring via "color.diff" and this only extends
-> the coloring scheme, I have the impression "color" is the right section.
-> Maybe color.diffStyle=[normal/enhanced] and "enhanced" means this
-> feature for now?
+> But let's consider related invocations and whether we're
+> making them better or worse:
+>
+>    - git log :/foo
+>       (when "foo" matches a commit message)
+>
+>       This one should remain the same. Like the existing
+>       wildcard rule, we're touching only verify_filename(),
+>       not verify_non_filename(). So cases that _do_ resolve
+>       as a rev will continue to do so.
+>
+>    - git log :^foo
+>       (when "^foo" exists in your index)
+>
+>       The same logic applies; it would continue to work. And
+>       ditto for any other weird filenames in your index like
+>       "(attr)foo".
 
-Hmph, I thought the intent of color.diff is "is the diff command
-itself is colored?"  In other words, color.diff=false should give
-you monochrome if you say "diff --word-diff", etc.
+"git show :$path" where $path happens to be "^foo" would grab the
+contents of the $path out of the index and I think that is what you
+meant, but use of "git log" in the example made me scratch my head
+greatly.
 
-> The only option in the "diff" section related to color is diff.wsErrorHighlight
-> which has a very similar purpose, so "diff.colorMoved" would fit in that
-> scheme.
+>    - git log :/foo
+>       (when "foo" does _not_ match a commit message)
+>	...
+>       This same downside actually exists currently when you
+>       have an asterisk in your regex. E.g.,
+>
+>         git log :/foo.*bar
+>
+>       will be treated as a pathspec (if it doesn't match a
+>       commit message) due to the wildcard matching in
+>       28fcc0b71.
 
-I didn't have "should diff output highlight whitespace errors?" in
-mind when I wrote the message you are responding to, but yes, that
-is quite similar to "should diff output show lines moved and lines
-deleted/added differently?".
+In other words, we are not making things worse?
 
-> So with these questions, I wonder if we want to color moved lines
-> as "color.diff.context" (i.e. plain white text in the normal coloring scheme)
-> This would serve the intended purpose of
-> dimming the attention to moved lines.
+> I wrote all the above to try to convince myself that this
+> doesn't have any serious regression cases. And I think I
+> did.
+>
+> But I actually we could make the rules in alternative (2)
+> above work. check_filename() would ask the pathspec code to
+> parse each argument and get one of three results:
+>
+>   1. it's not pathspec magic; treat it like a filename
+>      (e.g., just "foo", or even bogus stuff like ":%foo")
+>
+>   2. it is pathspec magic, and here is the matching filename
+>      that ought to exist (e.g., "foo" from ":^foo" or
+>      ":(exclude)foo")
+>
+>   3. it is pathspec magic, but there's no matching filename.
+>      Assume it's a pathspec (e.g., "(attr)foo").
+>
+> I'm on the fence on whether it's worth the trouble versus
+> the simple rule implemented by this patch.
 
-Yes, but two points.
+Unlike "git log builtin-checkout.c" that errors out (only because
+there is no such file in the checkout of the current version) and
+makes its solution obvious to the users, this change has the risk of
+silently accepting an ambiguous input and computing result that is
+different from what the user intended to.  So I am not sure.  
 
- (1) We want to do so while making it obvious where the boundary
-     between two moved blocks of text whose destination (for
-     moved-deleted lines) or source (for moved-added lines) is.
+As you pointedout, ":/" especially does look like a likely point of
+failure, in that both "this is path at the top" pathspec magic and
+"the commit with this string" are not something that we can say with
+confidence that are rarely used because they are so esoteric.
 
- (2) My message was an impression from using the code to review a
-     patch that is meant to be "move without changing other things".
-     For other purposes, there may be cases where moved ones may
-     want to be highlighted, not dimmed.
-
-> Regarding the last point of marking up adjacent blocks (which would
-> indicate that there is a coherency issue or just moving from different
-> places), we could highlight the last line of the previous block
-> and first line of the next block in their "normal" colors (i.e.
-> color.diff.old and color.diff.new).
-
-Hmm.  That is an interesting thought.
+As to "is it OK to build a rule that we cannot explain easily?", I
+think it is OK to say "if it is not a rev, and if it is not a
+pathname in the current working tree, you must disambiguate, but Git
+helps by guessing in some cases---if you want to have more control
+(e.g. you are a script), explicitly disambiguate and you'd be OK",
+and leave the "some cases" vague, as long as we are only making
+reasonably conservative guesses.
