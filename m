@@ -7,137 +7,118 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B33B1FA14
-	for <e@80x24.org>; Fri, 26 May 2017 14:01:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53ABE1FA14
+	for <e@80x24.org>; Fri, 26 May 2017 15:24:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S940564AbdEZOBu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 May 2017 10:01:50 -0400
-Received: from mail-ua0-f196.google.com ([209.85.217.196]:33541 "EHLO
-        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751170AbdEZOBs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 May 2017 10:01:48 -0400
-Received: by mail-ua0-f196.google.com with SMTP id x47so763675uab.0
-        for <git@vger.kernel.org>; Fri, 26 May 2017 07:01:48 -0700 (PDT)
+        id S1947898AbdEZPYB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 May 2017 11:24:01 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33272 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1947895AbdEZPX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 May 2017 11:23:59 -0400
+Received: by mail-pf0-f196.google.com with SMTP id f27so3502592pfe.0
+        for <git@vger.kernel.org>; Fri, 26 May 2017 08:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fo6Ae0t9pGoQOjekMkIjIeCKvqBUCZbbBehs0PB0f5s=;
-        b=FHItiyRDHHXszflIhHA4f04kTIrkEcdwsQR87E7UXxasXyO35uRgPqtT55HpC1y4w4
-         dOvmWGG1AlVQhKCkCciFcfIZqaMM4EbQNGlrWRaKbsh2Fuf45+iyso0kkFQe4lR/6WUP
-         gbtpMz9geis4vFuDGWlyzSGMZankuNzdvGR0dySHgpI68aFxkwzmjd86tTPVmNVz6j/3
-         7f9tSr/InkD7n5a8x2/tJOQS4xq/BNahrJnLtFmUB/1UaO3DP88VE/BHsBMdJaUWxq+I
-         Okyq459ovvfeHU1oXnqZNo+YL49iaT02Pv7AsCDnm4UQpUAgzD2kQVy/kq42gCeIHibR
-         n0NA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=TD8acxIp28O6qe+BWI4bEK8kjJjOp2pYxU2/I4wl/cM=;
+        b=C2qYPI3BueAToUq+ExUH3bRPqp3imQ2+JZZ2Xgm4FHeIZlANNlCYe8PlYOryIHu4tY
+         iUMKTlG8kmQ/Tk76Op5ZPHbHhUV91qbkvumH2ca1XD74cdRadGhrGrjmTUwQFFiWsck6
+         F6Z+EanddYIC4471+InUBE8VipSSN3bWraqZrniwZnUd2ZoQfVHCw2iRCY718eIyS356
+         gvEKXtUncTqQz6fhBUlcEXV5Lnc2JzseJIAM9L6YktBvJmnP3eJJhildT4o9tkKS8stE
+         PK7Ka1mogMqpPoeWRG0rpuAFkpCB4QBeeP36Fc5XAXsgiRPEJ2cMJUGEOkYcT6b4WRv7
+         RpEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fo6Ae0t9pGoQOjekMkIjIeCKvqBUCZbbBehs0PB0f5s=;
-        b=X2DfPxSyERDnvfSOFCktIR0utzyBgtM0Rr5OBYI7rXfkY/DXSX692eVWBd1kKAwGSx
-         4f+3kloVd+AmxrRqDDG86KxlIrLIHS+aeKLU0sBv1QC4OKj4ZawYJ4KDPgeoFv8F4dhn
-         qysREkPu5hdbiRq8RSpuQ1dNyqjZ8J5uzDWuz+UWKkbFXYmMh8MBdKYPSmg1PHASdkDm
-         o+VcplSrXqSoab0ZTYPQRksJydLseDOWbqI1pO1GgXVmuKxx4UIL1J537iYA6bj35DC7
-         uYXpXHszjw0yX0DO//dnPcRc3Q1cIa7t0GMhpDNgX6M+0f2raI0fbaZhKjTnn+k/jQyP
-         wdpw==
-X-Gm-Message-State: AODbwcDFoWBHiyW7uTq1wrGdV8roG6a6jZc3d/PO5V+2aw0Q4Z66oi/2
-        Vbvzn3BrIW5yGoUicNRsxFiGuUOuBA==
-X-Received: by 10.159.35.22 with SMTP id 22mr1184367uae.134.1495807307479;
- Fri, 26 May 2017 07:01:47 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.82.57 with HTTP; Fri, 26 May 2017 07:01:47 -0700 (PDT)
-In-Reply-To: <20170515110557.11913-3-szeder.dev@gmail.com>
-References: <20170515110557.11913-1-szeder.dev@gmail.com> <20170515110557.11913-3-szeder.dev@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 26 May 2017 16:01:47 +0200
-Message-ID: <CAM0VKjkSMnemwPbFihXiQui3wm_wYmQeQmgYrFs5bfsH1jMg1A@mail.gmail.com>
-Subject: Re: [PATCHv3 2/4] Documentation/clone: document ignored configuration variables
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=TD8acxIp28O6qe+BWI4bEK8kjJjOp2pYxU2/I4wl/cM=;
+        b=JfnS1OwZ1nLP35x7k+DPYDXHxeHvwlMH/tzd1ltDy7keH94y3SBcHHmi2zStrX1lP+
+         s5VEwNUFc0DhNWlc1SP12+zREYpenbvYu18z5DQRUy9zgSURdGAgSaFQbQb1rKdxls0K
+         lEZ6hHl4hCaRRFacuUK1GPa9PaWrt6z95VJjPFi5Bf/aKEejDDmumyGaYd2yuGlUoOti
+         UJhCoLSVITPwBppKC0eFveo8za5F0e8U7a5sKL0haxBUQy+r/9tnauncca6YNj7GrQir
+         v3ikxG5jE6LzUuLkMB3fnX/EpJ2KE7hwkkaHvIKoP5JIgYC3eDhPCaDkZ2SlVPvcTAf8
+         vK3g==
+X-Gm-Message-State: AODbwcAfIN2wZXi+5Ig8DWS/naL/uNoXeQYvFD2sXPIjTKgf0EItFnEn
+        Nb/NQ7PtRrJZRxi9AyQ=
+X-Received: by 10.99.129.66 with SMTP id t63mr3068268pgd.224.1495811847478;
+        Fri, 26 May 2017 08:17:27 -0700 (PDT)
+Received: from prathampc-X550JX.domain.name ([116.73.73.225])
+        by smtp.gmail.com with ESMTPSA id e24sm3105198pgn.1.2017.05.26.08.17.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 26 May 2017 08:17:26 -0700 (PDT)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+To:     git@vger.kernel.org
+Cc:     bmwill@google.com, christian.couder@gmail.com,
+        ramsay@ramsayjones.plus.com, sbeller@google.com,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: [GSoC][PATCH v5 1/3] submodule: fix buggy $path and $sm_path variable's value
+Date:   Fri, 26 May 2017 20:47:11 +0530
+Message-Id: <20170526151713.10974-1-pc44800@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170521125814.26255-2-pc44800@gmail.com>
+References: <20170521125814.26255-2-pc44800@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 15, 2017 at 1:05 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
-> Due to limitations/bugs in the current implementation, some
-> configuration variables specified via 'git clone -c var=3Dval' (or 'git
-> -c var=3Dval clone') are ignored during the initial fetch and checkout.
->
-> Let the users know which configuration variables are known to be
-> ignored ('remote.origin.mirror' and 'remote.origin.tagOpt') under the
-> documentation of 'git clone -c'.
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->  Documentation/git-clone.txt | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> index ec41d3d69..4f1e7d4ba 100644
-> --- a/Documentation/git-clone.txt
-> +++ b/Documentation/git-clone.txt
-> @@ -186,6 +186,10 @@ objects from the source repository into a pack in th=
-e cloned repository.
->         values are given for the same key, each value will be written to
->         the config file. This makes it safe, for example, to add
->         additional fetch refspecs to the origin remote.
-> +       Note that due to limitations of the current implementation some
-> +       configuration variables don't take effect during the initial
-> +       fetch and checkout.  Configuration variables known to not take
-> +       effect are: `remote.<name>.mirror` and `remote.<name>.tagOpt`.
+According to the documentation about git-submodule foreach subcommand's
+$path variable:
+$path is the name of the submodule directory relative to the superproject
 
-A few notes to this patch, because I didn't like that "known to not
-take effect" expression, and looked into how some configuration
-variables are handled during the initial fetch and checkout.  Far from
-comprehensive, but here they are anyway:
+But it was observed when the value of the $path value deviates from this
+for the nested submodules when the <command> is run from a subdirectory.
+This patch aims for its correction.
 
-Concerning the initial fetch:
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+---
+This series of patch is based on gitster/jk/bug-to-abort for untilizing its 
+BUG() macro.
 
- - Configuration variables influencing the refspecs to be fetched are
-   currently ignored.  These are the fetch refspecs, of course, and
-   remote.<name>.{mirror,tagOpt}.
-   This series makes fetch refspecs work.  The other two are mentioned
-   in this patch, and are less urgent, because their functionality is
-   or will soon be available through command line options (--mirror
-   and --no-tags).
- - remote.<name>.url is strange.  It's not just ignored, it's ignored
-   so much that it isn't even written to the config file when
-   specified as 'git clone -c ...'.  Nonetheless, specifying it for
-   'git clone' doesn't make much sense in the first place, does it?
-   So I think it's actually good that it's ignored and it isn't worth
-   mentioning it in the docs.
- - Some fetch-related config variables, e.g.
-   remote.<name>.{prune,skipDefaultUpdate,skipFetchAll} or
-   fetch.{prune,output}, don't matter during the initial fetch.
- - Other fetch-related config variables, e.g.
-   fetch.{fsckObjects,unpackLimit}, are handled deep down in
-   fetch-pack and work properly.
- - Transport-specific config variables, e.g. url.<base>.insteadOf,
-   remote.<name>.{proxy,uploadpack,vcs}, or http.*, if applicable, are
-   handled in the transport layer or remote helper.
- - I'm not sure about submodule-related config variables, but there
-   are command line options for that.
+The observation made was as follows:
+For a project - super containing dir (not a submodule) and a submodule sub 
+which contains another submodule subsub. When we run a command from super/dir:
 
-I'm not sure about the initial checkout, in particular I'm not sure
-how many configuration variables there are that could/should influence
-the initial checkout (or any checkout, for that matter).
+git submodule foreach "echo \$path-\$sm_path"
 
- - core.autocrlf works properly, we even have a test for that.
- - filter.<name>.smudge is read during initial checkout, but I'm not
-   sure whether that should do anything, since no attributes files
-   exist at that point.
- - I glanced through builtin/checkout.c to see whether it looks at any
-   configuration variables that clone doesn't, and while it does so,
-   it seems to only look at variables that are either irrelevant
-   during the initial checkout, e.g. 'diff.ignoresubmodules' and
-   'merge.conflictstyle', or are submodule-specific, and about those I
-   have no idea.
+actual results:
+Entering '../sub'
+../sub-../sub
+Entering '../sub/subsub'
+../subsub-../subsub
 
+expected result wrt documentation and current test suite:
+Entering '../sub'
+sub-../sub
+Entering '../sub/subsub'
+subsub-../sub/subsub
 
-Like I said, far from comprehensive, but I think at least the fetch
-part is well covered.
+This make the value of $path confusing and I also feel it deviates from its 
+documentation:
+$path is the name of the submodule directory relative to the superproject.
+Hence, this patch corrects the value assigned to the $path and $sm_path.
+
+ git-submodule.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index c0d0e9a4c..ea6f56337 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -344,9 +344,9 @@ cmd_foreach()
+ 				prefix="$prefix$sm_path/"
+ 				sanitize_submodule_env
+ 				cd "$sm_path" &&
+-				sm_path=$(git submodule--helper relative-path "$sm_path" "$wt_prefix") &&
+ 				# we make $path available to scripts ...
+ 				path=$sm_path &&
++				sm_path=$displaypath &&
+ 				if test $# -eq 1
+ 				then
+ 					eval "$1"
+-- 
+2.11.0
+
