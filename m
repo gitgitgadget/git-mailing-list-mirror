@@ -2,127 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D8FC20D09
-	for <e@80x24.org>; Sat, 27 May 2017 16:57:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E78120D09
+	for <e@80x24.org>; Sat, 27 May 2017 20:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750762AbdE0Q5b (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 May 2017 12:57:31 -0400
-Received: from mail-it0-f50.google.com ([209.85.214.50]:35910 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750717AbdE0Q5a (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 May 2017 12:57:30 -0400
-Received: by mail-it0-f50.google.com with SMTP id o5so10517396ith.1
-        for <git@vger.kernel.org>; Sat, 27 May 2017 09:57:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Sok3myqzXJRrVC7dKhdFh6phNErIkm169BNSzhEJO/U=;
-        b=QfpMxGvqdALyDVgDvGgfxvXjJFbiJpoHQWcvjcq8mdvUHkwU/F8zMifM2MQF5vEvPU
-         U1f55lejApteenzCIdZar9ATeSbqwzAlkTbAaT15xQJ0g62DLzq2SwPraUVipn/EADtu
-         5QxyFlL1hRXXdu5VFSz9qW4mGQdbZKdCIMpsQh2EFAQ1fDWbxqs/av4mXLhcI4DYb23I
-         HmlaSVMG6Aw8GPsMEpDRDWvxQt3GMvkyK7nWx5kMjJF6xR6NxHKhaZTKtzBOpqD+eRCv
-         S6L1JH2LpsOPpMjKdw9a3qC8v16m1XGlyNlULFWZUhpShmqCSXaJGmbcdON6f1qgXIuw
-         ygIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Sok3myqzXJRrVC7dKhdFh6phNErIkm169BNSzhEJO/U=;
-        b=SzvMEIDCLxMxfflHWkCKXdSUsJOkJlqrxsjWeLOvB0chPSzAggpWKJsGfxaT9cnsdH
-         tARteJFcPLHEBl1hvaypEzVACt06bF+JnSBx2cln4GdvumRcG+izqdWeg9NWd/YhRPSA
-         hPtJipYkmYf+XeJWVltNa2/hRDMyoTksIIJHNBYvz6kBVVNlAsVWb9fLeu21W/tSheYX
-         zaVi/AulCLU0JyQTmbJeFmOw9fgjvP9pQUfFifWu+xAcIgYZYH7kYvjZxXZJNm3CoFhM
-         914jjXTG3a5KkkbqMaMBDjQzkxX56O+oeX7pP+j3r1ERPrBnIsKP5LiChfzgPBmITWK5
-         gnbA==
-X-Gm-Message-State: AODbwcCBx91dTsnLYw91+hiDpGnaCdRxrAh+p/QCMq1Ps3GNycKAq/QD
-        ugzEmrTnc0Yzkn+zWkLPqqQ7sQbQfUD4mgw=
-X-Received: by 10.36.29.150 with SMTP id 144mr1829046itj.71.1495904249250;
- Sat, 27 May 2017 09:57:29 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Sat, 27 May 2017 09:57:08 -0700 (PDT)
-In-Reply-To: <22824.29946.305300.380299@a1i15.kph.uni-mainz.de>
-References: <22824.29946.305300.380299@a1i15.kph.uni-mainz.de>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 27 May 2017 18:57:08 +0200
-Message-ID: <CACBZZX6t0Q9AJ4cpnG298tf5Las-YpmvvJXgLNNYMszikLvtMQ@mail.gmail.com>
-Subject: Re: git-2.13.0: log --date=format:%z not working
-To:     Ulrich Mueller <ulm@gentoo.org>
+        id S1750756AbdE0Ujm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 May 2017 16:39:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58874 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750740AbdE0Ujl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 May 2017 16:39:41 -0400
+Received: (qmail 26302 invoked by uid 109); 27 May 2017 20:39:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 May 2017 20:39:40 +0000
+Received: (qmail 5680 invoked by uid 111); 27 May 2017 20:40:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 27 May 2017 16:40:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 27 May 2017 16:39:38 -0400
+Date:   Sat, 27 May 2017 16:39:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [RFC/PATCH] recognize pathspec magic without "--" disambiguation
+Message-ID: <20170527203937.hto7lwxfbjvl5f7o@sigill.intra.peff.net>
+References: <20170525152739.t63dbsq2dojy2y2h@sigill.intra.peff.net>
+ <CACBZZX6K7ppVB0qYah76_+pjTKjsco3rHT0xRyKtF2H1dS4k_w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX6K7ppVB0qYah76_+pjTKjsco3rHT0xRyKtF2H1dS4k_w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 26, 2017 at 8:33 PM, Ulrich Mueller <ulm@gentoo.org> wrote:
-> The following commands work as expected (using commit b06d364310
-> in the git://git.kernel.org/pub/scm/git/git.git repo as test case):
->
-> $ export TZ=Europe/Berlin
-> $ git --no-pager log -1 --pretty="%ad" --date=iso b06d364310
-> 2017-05-09 23:26:02 +0900
-> $ git --no-pager log -1 --pretty="%ad" --date=iso-local b06d364310
-> 2017-05-09 16:26:02 +0200
->
-> However, if I use explicit format: then the output of the time zone is
-> wrong:
->
-> $ git --no-pager log -1 --pretty="%ad" --date="format:%F %T %z" b06d364310
-> 2017-05-09 23:26:02 +0000
-> $ git --no-pager log -1 --pretty="%ad" --date="format-local:%F %T %z" b06d364310
-> 2017-05-09 16:26:02 +0000
->
-> I would expect the output to be the same as in the first two examples.
+On Sat, May 27, 2017 at 11:54:07AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-This patch solves half of your problem, i.e. makes the latter
-format-local case work:
+> On Thu, May 25, 2017 at 5:27 PM, Jeff King <peff@peff.net> wrote:
+> >         git log :/foo.*bar
+> 
+> Another option would be to deprecate the :/rx syntax over some period
+> in favor of ^{/rx}.
 
-diff --git a/date.c b/date.c
-index 63fa99685e..469306ebf5 100644
---- a/date.c
-+++ b/date.c
-@@ -70,6 +70,12 @@ static struct tm *time_to_tm(timestamp_t time, int tz)
-        return gmtime(&t);
- }
+Yeah, the latter is more flexible (can start at a tip of your choosing)
+and syntactically matches other object selectors much better.
 
-+static struct tm *time_to_local_tm(timestamp_t time, int tz)
-+{
-+       time_t t = gm_time_t(time, tz);
-+       return localtime(&t);
-+}
-+
- /*
-  * What value of "tz" was in effect back then at "time" in the
-  * local timezone?
-@@ -214,10 +220,14 @@ const char *show_date(timestamp_t time, int tz,
-const struct date_mode *mode)
-                return timebuf.buf;
-        }
+> I think it's too ugly to live, and really useless. It's equivalent to
+> "--grep=<rx> --all". Does anyone use this and not really mean to use
+> ^{/rx}? E.g. "git show :/fix" might show a fix on some unrelated
+> branch you recently rebased.
 
--       tm = time_to_tm(time, tz);
--       if (!tm) {
--               tm = time_to_tm(0, 0);
--               tz = 0;
-+       if (mode->type == DATE_STRFTIME) {
-+               tm = time_to_local_tm(time, tz);
-+       } else {
-+               tm = time_to_tm(time, tz);
-+               if (!tm) {
-+                       tm = time_to_tm(0, 0);
-+                       tz = 0;
-+               }
-         }
+It's actually _worse_ than that --grep because it only picks one result.
+So not only do we look at unrelated branches, but they may take
+precedence (based on commit timestamp) over the current branch.
 
-        strbuf_reset(&timebuf);
+It is shorter than "HEAD^{/re}", though. So I suspect people do use it
+and would be slightly annoyed if it went away.
 
-There's another test which breaks if we just s/gmtime/localtime/g. As
-far as I can tell to make the non-local case work we'd need to do a
-whole dance where we set the TZ variable to e.g. UTC$offset, then call
-strftime(), then call it again. Maybe there's some way to just specify
-the tz offset, but I didn't find any in a quick skimming of time.h.
+> >       will be treated as a pathspec (if it doesn't match a
+> >       commit message) due to the wildcard matching in
+> >       28fcc0b71.
+> 
+> So it might DWYM after hanging there looking at your entire history
+> for a commit message matching foo.*bar? And if you make such a commit
+> it'll start meaning something else entirely?
+
+Yeah. That's a good reason not to use ":/" without a disambiguating "--"
+(which _does_ work, even without my series, because check_filename()
+does specific path-matching). At best, you pay for a complete useless
+history traversal before the command actually starts running. But much
+more likely is that Git just complains of ambiguity, because people tend
+to mention top-level paths in their commit messages. E.g.:
+
+  $ cd t
+  $ git grep foo :/Documentation
+  fatal: ambiguous argument ':/Documentation': both revision and filename
+
+So it really is a pretty horrible syntax.
+
+-Peff
