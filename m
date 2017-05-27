@@ -2,73 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 727481FA14
-	for <e@80x24.org>; Sat, 27 May 2017 01:22:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 199A91FA14
+	for <e@80x24.org>; Sat, 27 May 2017 01:48:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032623AbdE0BWv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 26 May 2017 21:22:51 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:51724 "EHLO
-        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S945314AbdE0BUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 26 May 2017 21:20:49 -0400
-Received: from [10.0.2.15] ([143.159.212.80])
-        by avasout08 with smtp
-        id RDLh1v0011keHif01DLiMw; Sat, 27 May 2017 02:20:42 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=FLJr/6gs c=1 sm=1 tr=0
- a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
- a=IkcTkHD0fZMA:10 a=LMaSFMIIojMiEG72jHgA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [GSoC][PATCH v5 3/3] submodule: port subcommand foreach from
- shell to C
-To:     Johannes Sixt <j6t@kdbg.org>, Prathamesh Chavan <pc44800@gmail.com>
-Cc:     git@vger.kernel.org, bmwill@google.com, christian.couder@gmail.com,
-        sbeller@google.com
-References: <20170521125814.26255-2-pc44800@gmail.com>
- <20170526151713.10974-1-pc44800@gmail.com>
- <20170526151713.10974-3-pc44800@gmail.com>
- <83801d05-e3a9-b7e4-8f29-cd8172257dac@kdbg.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <41781ba1-2284-cc5d-8736-bb87d580f5bf@ramsayjones.plus.com>
-Date:   Sat, 27 May 2017 02:20:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S932229AbdE0BMD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 26 May 2017 21:12:03 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:33415 "EHLO
+        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S944983AbdE0BEq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 26 May 2017 21:04:46 -0400
+Received: by mail-lf0-f42.google.com with SMTP id m18so13376832lfj.0
+        for <git@vger.kernel.org>; Fri, 26 May 2017 18:04:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=+FQLz0NUDVIze8IZ+27LOGdEOYomesHSoytYd25HzOc=;
+        b=AztIJpPLh+o2nOgq+4/Yjio715OR4ya57GFEQB1LNLNl11LGz/fb5UnpDUcQXGJoeT
+         sosZJRUybSuFDEJIFzPQYSh2Xf8aX5oV1iEjVxe57b1rqY0vd+teifnkty9V5y7lkaUg
+         X6JawI9kJ9+IUe2e5ixnr0q82vCLAUhXCe5QQdgrilsvDzYGosgrV1bxZZ81U86fVlEU
+         gxSzZPbnzdhO1Rx76cC35Fgcw3/fR7otnKhlb6sW8xcP7BjoJ8/x1H3Gp54PApYAuSg1
+         ljVcUj9Kgl96zpJg5Kg8agO/FGoaY6SB/NT20x8axZ63E+mcDmYC5sB1qU7nzzeETkgt
+         AKkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=+FQLz0NUDVIze8IZ+27LOGdEOYomesHSoytYd25HzOc=;
+        b=DIzeaK5oQzIgragdydB6HYO98XpiCpnSOCT7gMKhpncdisANMy1itE3ZWPQ/tf9Yas
+         vAyPE3lVgWLmEXVoOe+d9g+seQyH282EzJF3+mnnevWHOOPYb38RWhNH3D8erM781prg
+         BWTco6NUW7QHvOiEe2vn75vRSupSfK5GdIi5zIpk9piHwmPlkuuzIk8ueXq1Xclwc6s0
+         331SZlcAcoatkxALVl0OzSnEmlRSJdXLDq3wbDMZo/4q7ALYF+UUS0JCjCVMSa5+qo1d
+         4ceKIuImgsx80lb8jSpt5nb9pl9edAhIxVDExLwVHeOn0Wptto6TbhiPjDO0nKrNg+F5
+         n2qA==
+X-Gm-Message-State: AODbwcBySF1mGol5wv3Kc3bd5pMLvJnzJUN5JchNiPOnYJ6DSsJEyBKD
+        RtAB8dE3kcRRQPhwHW/UYnfebEMy8g==
+X-Received: by 10.46.88.29 with SMTP id m29mr1419775ljb.37.1495847084593; Fri,
+ 26 May 2017 18:04:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <83801d05-e3a9-b7e4-8f29-cd8172257dac@kdbg.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 10.25.32.133 with HTTP; Fri, 26 May 2017 18:04:23 -0700 (PDT)
+In-Reply-To: <20170523024048.16879-1-sbeller@google.com>
+References: <20170518193746.486-1-sbeller@google.com> <20170523024048.16879-1-sbeller@google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 26 May 2017 18:04:23 -0700
+Message-ID: <CA+P7+xrFjwUWNA9BQ3V4ad6mizrfXTcU4td+u1-i9GCBshPjfQ@mail.gmail.com>
+Subject: Re: [PATCHv4 00/17] Diff machine: highlight moved lines.
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, May 22, 2017 at 7:40 PM, Stefan Beller <sbeller@google.com> wrote:
+> v4:
+> * interdiff to v3 (what is currently origin/sb/diff-color-move) below.
+> * renamed the "buffered_patch_line" to "diff_line". Originally I planned
+>   to not carry the "line" part as it can be a piece of a line as well.
+>   But for the intended functionality it is best to keep the name.
+>   If we'd want to add more functionality to say have a move detection
+>   for words as well, we'd rename the struct to have a better name then.
+>   For now diff_line is the best. (Thanks Jonathan Nieder!)
+> * tests to demonstrate it doesn't mess with --color-words as well as
+>   submodules. (Thanks Jonathan Tan!)
+> * added in the statics (Thanks Ramsay!)
+> * smaller scope for the hashmaps (Thanks Jonathan Tan!)
+> * some commit messages were updated, prior patch 4-7 is squashed into one
+>   (Thanks Jonathan Tan!)
+> * the tests added revealed an actual fault: now that the submodule process
+>   is not attached to a dupe of our stdout, it would stop coloring the
+>   output. We need to pass on use-color explicitly.
+> * updated the NEEDSWORK comment in the second last patch.
+>
+> Thanks for bearing,
+> Stefan
+>
 
+One thing to note when I was playing around with what's on pu right
+now, I noticed that the oldMovedAlternative and newMovedAlternative
+are the first moved colors to be used if there is only one move. (Ie:
+a simple case of literally one section moved) This is a bit weird that
+the alternative colors are used before the "main" colors. I would have
+thought it would be the other way.
 
-On 26/05/17 22:54, Johannes Sixt wrote:
-> Am 26.05.2017 um 17:17 schrieb Prathamesh Chavan:
->> +    argv_array_pushf(&cp.env_array, "path=%s", list_item->name);
-> 
-> Not good! On Windows, environment variables are case insensitive. The environment variable "path" has a very special purpose, although it is generally spelled "PATH" (actually "Path" on Windows).
-> 
-> Lowercase "path" may have worked as long as it was only used in a shell script (and perhaps only by lucky coincidence), but this I can pretty much guarantee to fail. (I haven't tested it, though.)
-> 
-> The correct fix can only be to rename this variable here and in shell scripts that need the value that is set here.
+I noticed this because the default colors do not work well for my
+terminal color scheme and I had to configure but realized that I
+needed to configure the alternative ones to make a difference in the
+simple diff I was viewing.
 
-Yeah, I already pointed to commit 64394e3ae9 (but it seems not
-to have registered!), but ...
-
-I tried provoking a failure on cygwin, and I couldn't get it to fail!
-Since Johannes told me about Gfw fork of the msys-runtime, I didn't
-even attempt to try and provoke a failure on MSYS2/MinGW.
-
-So, maybe it's fixed (no I'm not convinced either) ...
-
-ATB,
-Ramsay Jones
-
-
+Thanks,
+Jake
