@@ -2,76 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF0B920D09
-	for <e@80x24.org>; Sat, 27 May 2017 13:31:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AA7C20D09
+	for <e@80x24.org>; Sat, 27 May 2017 14:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756789AbdE0Nbh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 May 2017 09:31:37 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:34949 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756626AbdE0Nbg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 May 2017 09:31:36 -0400
-Received: by mail-qt0-f174.google.com with SMTP id v27so26013934qtg.2
-        for <git@vger.kernel.org>; Sat, 27 May 2017 06:31:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=0kiS0ZIeE4bqrF49ClZFx+F/Deykg82RG0XS7WjCsI8=;
-        b=DX3wLx7zZih1cd1YbC9mUqKLFNn+EmQUGv61xgmZ08r5gOjpHI/2UrtcaKRmQ3TTCG
-         b8y4EaRJfGeboVWErFkiW7xsmZGAgr5d74IvxnjdYfPl+rDIjT4eQGphD2Qjt3aR9G5A
-         rwHLOn6NE07fKQm8n77m6niuwd52zyELFl5z60YoL7Df1FrOFdbWzOIRyB1wn/n37GUL
-         Oc0U2Z4v29s/tgpEWmgE6Atm7rprWaDILJIlEV3YYKIx0cJbB3XhSipt7nN4NvRpdmjh
-         82W7yy40WNrt/4mnajdbpUUYUB2D/F+SoZjX5gKrbEr5RweL2RMQf2z+f/nBD42gMYrF
-         1n3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=0kiS0ZIeE4bqrF49ClZFx+F/Deykg82RG0XS7WjCsI8=;
-        b=uB6JgiQoYOUGGT0wK2BOgt8fbro6uKohk0m8PMs53nRBpLNXkRpFTcNNy2JlH5I1u7
-         KjZsu+b6qixFTREWF5cdS7wF0XXI1/l+LS5vZtC/FYADEq+nivaS3PanJ28Z7UAhpSyv
-         H12Fk52379EkDhbTekfr4fqAqKX6Tg65Xknhw5yCsT2+90bQQiYrC5eZKtCUdge3UY4h
-         /S3Wwr4tZbpYqop26u3HuwSbeq9nOeAhpEjfOukxwMgdn6uK64tfUYajd4oLzcs4JQuh
-         KHtVKreEbZ/qrlEtdTnoYjyUnVz009+LXbgdNc2aTxXVR1lIOTI7N8B3Kqc2EkA7Tfjh
-         4hIA==
-X-Gm-Message-State: AODbwcDYTkEKykwaljAxeFdQH8bOvE3Z4Sl896LO4DyF0/vnaM66Ob7R
-        Z9B3bKvAuoPXVX6T/K6Z92jtyHf7QRHkKdk=
-X-Received: by 10.200.51.148 with SMTP id c20mr8328450qtb.56.1495891895423;
- Sat, 27 May 2017 06:31:35 -0700 (PDT)
+        id S1756774AbdE0OGz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 May 2017 10:06:55 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:33440 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756594AbdE0OGy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 May 2017 10:06:54 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout08 with smtp
+        id RS6r1v0081keHif01S6sb0; Sat, 27 May 2017 15:06:53 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=FLJr/6gs c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=6MLsA6WmFTffsd5Mh6wA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [GSoC][PATCH v5 3/3] submodule: port subcommand foreach from
+ shell to C
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     Johannes Sixt <j6t@kdbg.org>, Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git@vger.kernel.org, bmwill@google.com, christian.couder@gmail.com,
+        sbeller@google.com
+References: <20170521125814.26255-2-pc44800@gmail.com>
+ <20170526151713.10974-1-pc44800@gmail.com>
+ <20170526151713.10974-3-pc44800@gmail.com>
+ <83801d05-e3a9-b7e4-8f29-cd8172257dac@kdbg.org>
+ <41781ba1-2284-cc5d-8736-bb87d580f5bf@ramsayjones.plus.com>
+Message-ID: <ef0b2850-ad3b-e33d-37b7-ece9a305a7a4@ramsayjones.plus.com>
+Date:   Sat, 27 May 2017 15:06:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Received: by 10.140.86.48 with HTTP; Sat, 27 May 2017 06:31:15 -0700 (PDT)
-From:   John Shahid <jvshahid@gmail.com>
-Date:   Sat, 27 May 2017 09:31:15 -0400
-Message-ID: <CAE5=+KX57KM+6n9NpePw9KYPXFy7UH-WRgSwaJDnvRofYFXm7Q@mail.gmail.com>
-Subject: git push recurse.submodules behavior changed in 2.13
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <41781ba1-2284-cc5d-8736-bb87d580f5bf@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
 
-It looks like the git push recurse-submodules behavior has changed.
-Currently with 2.13 you cannot run "git push
---recurse-submodules=on-demand" if the parent repo is on a different
-branch than the sub repos, e.g. parent repo is on "develop" and
-sub-repo on "master". I created a test that can be found here [1].
 
-A bisect shows that the change to propagate refspec [2] to the
-submodules is the culprit. imho this is an undesired change in
-behavior. I looked at the code but couldn't see an easy way to fix
-this issue without breaking the feature mentioned above. The only
-option I can think of is to control the refspec propagation behavior
-using a flag, e.g. "--propagate-refspecs" or add another
-recurse-submodules option, e.g. "--recurse-submodules=propagate"
+On 27/05/17 02:20, Ramsay Jones wrote:
+> 
+> 
+> On 26/05/17 22:54, Johannes Sixt wrote:
+>> Am 26.05.2017 um 17:17 schrieb Prathamesh Chavan:
+>>> +    argv_array_pushf(&cp.env_array, "path=%s", list_item->name);
+>>
+>> Not good! On Windows, environment variables are case insensitive. The environment variable "path" has a very special purpose, although it is generally spelled "PATH" (actually "Path" on Windows).
+>>
+>> Lowercase "path" may have worked as long as it was only used in a shell script (and perhaps only by lucky coincidence), but this I can pretty much guarantee to fail. (I haven't tested it, though.)
+>>
+>> The correct fix can only be to rename this variable here and in shell scripts that need the value that is set here.
+> 
+> Yeah, I already pointed to commit 64394e3ae9 (but it seems not
+> to have registered!), but ...
+> 
+> I tried provoking a failure on cygwin, and I couldn't get it to fail!
 
-What do you all think ?
+To be more explicit, last Sunday I hacked into t7407 to show an
+example failure on cygwin (see patch below), but it passes on both
+Linux (expected) and cygwin! :( Perhaps you can see what I'm doing
+wrong?
 
-[1] https://gist.github.com/jvshahid/b778702cc3d825c6887d2707e866a9c8
-[2] https://github.com/git/git/commit/06bf4ad1db92c32af38e16d9b7f928edbd647780
+ATB,
+Ramsay Jones
+
+-- >8 --
+Date: Sun, 21 May 2017 16:23:58 +0100
+Subject: [PATCH] submodule: foreach $path munging on cygwin
+
+---
+ t/t7407-submodule-foreach.sh | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
+
+diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+index 6ba5daf42..c2d66bab7 100755
+--- a/t/t7407-submodule-foreach.sh
++++ b/t/t7407-submodule-foreach.sh
+@@ -68,17 +68,36 @@ Entering 'sub3'
+ $pwd/clone-foo3-sub3-$sub3sha1
+ EOF
+ 
++cat >expect-func <<EOF
++Entering 'sub1'
++running from TRASH
++path is <<sub1>>
++Entering 'sub3'
++running from TRASH
++path is <<sub3>>
++EOF
++
+ test_expect_success 'test basic "submodule foreach" usage' '
++	PATH="$PWD:$PATH" &&
++	write_script foreach-func <<-\EOF &&
++	echo "running from TRASH"
++	echo "path is <<$1>>"
++	EOF
+ 	git clone super clone &&
+ 	(
+ 		cd clone &&
+ 		git submodule update --init -- sub1 sub3 &&
+ 		git submodule foreach "echo \$toplevel-\$name-\$path-\$sha1" > ../actual &&
++		git submodule foreach "foreach-func \$path" > ../actual-func1 &&
++		git submodule foreach "export path; foreach-func \$path" > ../actual-func2 &&
+ 		git config foo.bar zar &&
+ 		git submodule foreach "git config --file \"\$toplevel/.git/config\" foo.bar"
+ 	) &&
++	test_i18ncmp expect-func actual-func1 &&
++	test_i18ncmp expect-func actual-func2 &&
+ 	test_i18ncmp expect actual
+ '
++test_done
+ 
+ cat >expect <<EOF
+ Entering '../sub1'
+-- 
+2.13.0
+
