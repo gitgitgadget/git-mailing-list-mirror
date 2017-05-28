@@ -2,105 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89ACD20D09
-	for <e@80x24.org>; Sun, 28 May 2017 01:14:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C05E320D09
+	for <e@80x24.org>; Sun, 28 May 2017 01:18:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750770AbdE1BOJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 May 2017 21:14:09 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:34609 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750762AbdE1BOI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 May 2017 21:14:08 -0400
-Received: by mail-pg0-f41.google.com with SMTP id u28so8763191pgn.1
-        for <git@vger.kernel.org>; Sat, 27 May 2017 18:14:08 -0700 (PDT)
+        id S1750777AbdE1BSe (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 May 2017 21:18:34 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:32948 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750764AbdE1BSd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 May 2017 21:18:33 -0400
+Received: by mail-pg0-f67.google.com with SMTP id s62so2699791pgc.0
+        for <git@vger.kernel.org>; Sat, 27 May 2017 18:18:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=muof6XTsDIfbQ/amwJ/iOecYsYiopzVMkJuWpuITSSk=;
-        b=NS4xjSNFgz9JM3NdCPm+5k1ovrd3xPRf9KCN/O8TaxG46So+wKVdxMw9bcK9GluL6B
-         wz27PnZDcSciNiDn9iB/OrvNapN53vNkvk2Tf7i9ZsZbmcXi37AVf/6FuXIVRi82OfKD
-         InInsZd1N6z0ZhZC7oiIxQvJfPDlmFAog5xFVUxfMP42h2a8Y2VUrQFpPyFdf969nka6
-         CcYVMdA/RsR5YklTFK5P0ZLe1cLtPNJ9TiMIjvO1JlZSMO3UQkAk89oDCpJMZ9Q3jkVT
-         Mqy/0vnNtq1ktbz1c3ZsExZWdObshfz0YT6ZGVMzPW5rbuAR4+DNao4/J4V84+6Vk4qz
-         KZuA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=ompae9wzy/tkAy6HxrlcypWviEeKWFYm/UEnIG9I1dQ=;
+        b=J92DATCX9xK8tJ83eYflh08pCPekFbEMrotECZMMuix2lo+8eaUVaOm9a8/+VVeHNQ
+         9iOzzLzKQ9NEnUJfe6bfa/holRdNBI0WVRB6Ys5rY46RPdTcrdenuA0xOL4pn7T9nDn6
+         q8Nu3276AHZZKYNROVybRTa+TowLUKzCO6doN9l9BuCOTwc/F9H6f7qySY2wy2cmtCw8
+         NqrLLvnb8CwzlsTVX/iPWoQwcvoCwTRiF7uVWfgaFjLenUbKNOjGUsVLPm/smLrvRi1X
+         Wi6ju+hxch8mWCkrPTB/OMNOQcaE6gWXFnC38EErkTVOh4tQ8ZZV8WzG0I27J1bPyJoN
+         4H+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=muof6XTsDIfbQ/amwJ/iOecYsYiopzVMkJuWpuITSSk=;
-        b=ZKIoJdUbOMykJwZSqJ/5rw5yRPoeuLlkgb3hAuTNHSxp7SIABTVdmW0raS5pgQqE8I
-         zKXfjNoSITfZ2Pr3bHlJQjCSKHQLJRNwMkvP4+IjmOymbP75UONQrefs/a5NHM3R6RaA
-         5oti0b7qzrhG6zsiPAgJo1N9MrzDsmTum83kgjgEd+I9juyIHjj4W62n4b2humIRFRa0
-         LTamzztrxhSbM1MAqNT0h42CtZgiTtWgnNMxKcyFW7jBi3QZGPdURCWfg009V4fZv/GY
-         75RTExk3yA1dEbgMH+vPA4uLMKJZ/EQzoTvy4DpJ7GXr/LJ3KIEOte8YlQu7irDVdYVy
-         Qmzw==
-X-Gm-Message-State: AODbwcCzM74ZMYxQK8UPTW1LuqJsJrLMol5K7c2A6kGYiWw5cYG4tJ2/
-        DENqMgwbZZavj5EBpD8=
-X-Received: by 10.98.68.2 with SMTP id r2mr10276498pfa.45.1495934048087;
-        Sat, 27 May 2017 18:14:08 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=ompae9wzy/tkAy6HxrlcypWviEeKWFYm/UEnIG9I1dQ=;
+        b=dibyeX62h2hY/fdbyCqq4Z7xUC1haaetmj7GagYZlqbfiTiq8+YJKr05QS8kl/3lLd
+         ths9gL4P+zg2pZDg3+E2ps3tD/h3Y3E1d5YWpg91wUVmpirmKIomgbY7HEvp6qX/Kbm1
+         St2oLUtp8unEgiP+uDCTZEHBI25LvhSuNLcwvtGIyBMFsCRGDYNCDuHhPdidPJmYQUQL
+         Em638esut0IyBg//+TtEw7eA17qauBb5INq+RTe+bVlLHGa1z040u+x0GOK5/t6RyfA8
+         Y5SRZemKdIfKgAJU7hhhoXNYmAaNADpeV6Y29FGKC2MoMBdOwqPInXbItPZH9mVqLs8Q
+         j4+Q==
+X-Gm-Message-State: AODbwcB7oaSpy28p67U4xH4MRj3FchNcNbRm/Bc7E2Fr4+bnBS4x9V8/
+        00yntSJkaILHvg==
+X-Received: by 10.99.130.73 with SMTP id w70mr10897941pgd.119.1495934312862;
+        Sat, 27 May 2017 18:18:32 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:bd10:cbc8:82cc:8993])
-        by smtp.gmail.com with ESMTPSA id m12sm8636873pgn.30.2017.05.27.18.14.07
+        by smtp.gmail.com with ESMTPSA id 184sm9689124pgd.12.2017.05.27.18.18.31
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 27 May 2017 18:14:07 -0700 (PDT)
+        Sat, 27 May 2017 18:18:31 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     "Git List" <git@vger.kernel.org>
-Subject: Re: mergetool: what to do about deleting precious files?
-References: <8CEDDC40C7D24404976929CF3E7AF6FC@PhilipOakley>
-Date:   Sun, 28 May 2017 10:14:06 +0900
-In-Reply-To: <8CEDDC40C7D24404976929CF3E7AF6FC@PhilipOakley> (Philip Oakley's
-        message of "Sat, 27 May 2017 11:03:09 +0100")
-Message-ID: <xmqq37bpbx5t.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH] WIP: add deprecation & experimental process/interface
+References: <20170527111032.30897-1-avarab@gmail.com>
+Date:   Sun, 28 May 2017 10:18:31 +0900
+In-Reply-To: <20170527111032.30897-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sat, 27 May 2017 11:10:32 +0000")
+Message-ID: <xmqqy3thaie0.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> The git book [1] and a few blog posts [2] show how to preserve files which
-> are in the current branch against changes that are on the branch being
-> merged in.
+> The plan, subject to RFC feedback is to:
 >
-> e.g. (from [2])
+>  * Add a new config variable `core.version`. E.g. `core.version =
+>    2.14.0` With this the user can specify that they'd like
+>    new/experimental features introduced in that version (and below),
+>    as well as immediately getting new deprecations added in that
+>    version as errors.
 >
-> echo '<filemane> merge=ours' >> .gitattributes && # commit
-> git config --global merge.ours.driver true
->
-> (test) $ git checkout demo
-> (demo) $ git merge -
-> # <filename> contents are not merged and the original retained.
->
->
->
-> However what is not covered (at least in the documentation ) is the case
-> where the file to be ignored is not present on the current branch, but is
-> present on the branch to be merged in.
+>    This is similar to perl's "use v<VERSION>".
 
-Hmph.  Per-path 'ours' and 'theirs' kick in only after we decide to
-perform the content level three-way merge.  I wonder what would (not
-"should", but "would with the current code") happen, with the same
-attribute setting, if the file being merged were not changed by ours
-but modified by the side branch?  I suspect that we'd take the change
-made by the side branch.
+As long as this does not require very new version like v3.0.0 of Git
+to pretend as if the user is still running an ancient v2.14.0, it is
+a sensible proposal, I would think.
 
-> Normal expectations would be that in such a case the new file from the
-> second parent branch would be added to the current branch.
+>  * Add a deprecated() function to to mark deprecated features.
+>  * TODO: Add an experimental() function to mark experimental features.
 
-So I do not think this is not limited to "new file".  Anything that
-a tree-level three-way merge would resolve cleanly without having to
-consult the content-level three-way merge will complete without
-consulting the merge.ours.driver; per-file content-level three-way
-merge driver (which is what merge=<drivername> mechanism lets you
-specify via the attributes mechanism) is not something you would
-want to use for this kind of thing.  It is purely for resolving the
-actual content-level conflicts.
-
+Having burned by bitter experience during v1.6.0 transition, I do
+welcome an attempt to make it easier to communicate deprecation
+plans to end-users.
