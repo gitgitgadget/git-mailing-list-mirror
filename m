@@ -2,82 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7701B1FD09
-	for <e@80x24.org>; Sun, 28 May 2017 19:08:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 632781FD09
+	for <e@80x24.org>; Sun, 28 May 2017 19:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750825AbdE1TI4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 May 2017 15:08:56 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:36010 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750798AbdE1TIz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 May 2017 15:08:55 -0400
-Received: by mail-io0-f194.google.com with SMTP id f102so5366916ioi.3
-        for <git@vger.kernel.org>; Sun, 28 May 2017 12:08:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Xv7lt7BkSJC3TrIDB9klwby0o0AvCK0iXmn5jrmVafk=;
-        b=ZoETC4TBYNRtmXRgbykeSouHGc35B6X6j6aWePlAu1Nn5C8D/KI/jBxzV3RUrjd47/
-         tdyJXR6VAucNNOpSBWnGTBboacQgwU2pzs3zX8snc1AVgHGmaxW3yYdw11V3hWByLXE6
-         pCsphDTMtMWhl/TCTpj13FLPwc4o327KDciUlwe6EiG9h8Q3A3pFI39/gv0T0xM1/W3s
-         HOCi4gkHhlFm9/N1RRgXjsLykPJK04NBcxUzd4YNzlLEVnzZytxNc2QZcmOfMj+8H+nO
-         /ZZvrbsMqzXgtutGdGMCPVK2UbxZNdqbjyi70AYSTONZ7axjt7ieu0xcUoFqd7wyqQSq
-         GqwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Xv7lt7BkSJC3TrIDB9klwby0o0AvCK0iXmn5jrmVafk=;
-        b=VdcKjYL5pZcH2FqXOlo2KBMwZwVBLF3oU93u4SDJhHaqkqVLMkbQDG1AZ2WNxV7V5T
-         2LUv2EYTA9uBBVg+wl6s4QKNUZhvHrgEzwkRr7oe/SELpSlfePpSjGy3jEbwvKYGwG0+
-         Szmlv3114YRtIPU5xttDVLKGCXgQjXDhOyxcRdftlhFtxxl+4QszylE5KEzoAlMOiZsh
-         QpsZjkgZzOFZdU8kguhRCuQ8ZDguBcSw6mggot9pcjKhx+bwuJDSHrsO9esBYbwjtwVR
-         H/pgNHwr96H5YkUOwcUgrqD92izS9v2zGWjFGYPowka8hjthOZC1J/USJi2ikILuZQcY
-         ScgA==
-X-Gm-Message-State: AODbwcAAgmFxsfxrjUwsWlOypCYIVdEhkth0uUphPXaEAxkAd2OOjlH3
-        o4X3G5c1hrZeGeqbJgL55ZNbSReRWg==
-X-Received: by 10.107.178.12 with SMTP id b12mr9891872iof.50.1495998535131;
- Sun, 28 May 2017 12:08:55 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Sun, 28 May 2017 12:08:34 -0700 (PDT)
-In-Reply-To: <20170528165642.14699-1-joel@teichroeb.net>
-References: <20170528165642.14699-1-joel@teichroeb.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sun, 28 May 2017 21:08:34 +0200
-Message-ID: <CACBZZX5wA57+9t+wzYc-iMpvns-zm1XAdzKszUk7PF2vkoxeMQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] Implement git stash as a builtin command
-To:     Joel Teichroeb <joel@teichroeb.net>
-Cc:     Git Mailing List <git@vger.kernel.org>, t.gummerer@gmail.com,
-        Jeff King <peff@peff.net>,
+        id S1750824AbdE1TV4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 May 2017 15:21:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59077 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750802AbdE1TVz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2017 15:21:55 -0400
+Received: (qmail 17410 invoked by uid 109); 28 May 2017 19:21:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 28 May 2017 19:21:52 +0000
+Received: (qmail 10945 invoked by uid 111); 28 May 2017 19:22:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 28 May 2017 15:22:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 28 May 2017 15:21:50 -0400
+Date:   Sun, 28 May 2017 15:21:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Joel Teichroeb <joel@teichroeb.net>,
+        Git Mailing List <git@vger.kernel.org>, t.gummerer@gmail.com,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v3 4/4] stash: implement builtin stash
+Message-ID: <20170528192149.dgzibu334n5ja57e@sigill.intra.peff.net>
+References: <20170528165642.14699-1-joel@teichroeb.net>
+ <20170528165642.14699-5-joel@teichroeb.net>
+ <CACBZZX6uXnE+BTfsiLNF2OT3Dsr-J99uUFEwcu-qK45OrU+1hQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX6uXnE+BTfsiLNF2OT3Dsr-J99uUFEwcu-qK45OrU+1hQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 28, 2017 at 6:56 PM, Joel Teichroeb <joel@teichroeb.net> wrote:
-> I've rewritten git stash as a builtin c command. All tests pass,
-> and I've added two new tests. Test coverage is around 95% with the
-> only things missing coverage being error handlers.
+On Sun, May 28, 2017 at 08:51:07PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Worth noting, with your patches the best of 3 run of all the stash tests:
+> On Sun, May 28, 2017 at 6:56 PM, Joel Teichroeb <joel@teichroeb.net> wrote:
+> > Implement all git stash functionality as a builtin command
+> >
+> > Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
+> > ---
+> 
+> General note on this that I missed in my first E-Mail, you have ~20
+> calls to argv_array_init() but none to argv_array_clear(). So you're
+> leaking memory, and it obscures potential other issues with valgrind.
 
-$ for i in {1..3}; do (time prove -j1 t*-stash*.sh) 2>&1 | grep ^real;
-done  |awk '{print $2}' | sort -n | head -n 1
-0m3.293s
+I haven't looked carefully at the patches, but note that the argv array
+in a child_process is handled automatically by start/finish_command.
 
-Without:
+So:
 
-$ for i in {1..3}; do (time prove -j1 t*-stash*.sh) 2>&1 | grep ^real;
-done  |awk '{print $2}' | sort -n | head -n 1
-0m7.619s
+> @@ -1107,9 +1111,9 @@ static int list_stash(int argc, const char
+> **argv, const char *prefix)
+>         argv_array_pushv(&args, argv);
+>         argv_array_push(&args, ref_stash);
+>         if (cmd_log(args.argc, args.argv, prefix))
+> -               return 1;
+> -
+> -       return 0;
+> +               ret = 1;
+> +       argv_array_clear(&args);
+> +       return ret;
+>  }
 
-Of course some individual invocations are much faster than that, this
-includes all the shell overhead of the tests themselves.
+This one does need a clear, because it's calling an internal function.
+But...
+
+> @@ -741,13 +740,18 @@ static int do_push_stash(const char *prefix,
+> const char *message,
+>                         argv_array_push(&cp.args, "--");
+>                         argv_array_pushv(&cp.args, argv);
+>                         pipe_command(&cp, NULL, 0, &out, 0, NULL, 0);
+> +                       argv_array_clear(&cp.args);
+
+This one does not, because the array will have been cleared by calling
+pipe_command (because it does the start/finish block itself; and yes,
+before you go checking, start_command() clears it even when it returns
+error).
+
+> +                       child_process_clear(&cp);
+
+This should not be necessary for the same reason.
+
+> -                       cp2.git_cmd = 1;
+> -                       argv_array_push(&cp2.args, "checkout-index");
+> -                       argv_array_push(&cp2.args, "-z");
+> -                       argv_array_push(&cp2.args, "--force");
+> -                       argv_array_push(&cp2.args, "--stdin");
+> -                       pipe_command(&cp2, out.buf, out.len, NULL, 0, NULL, 0);
+> +                       child_process_init(&cp);
+> +                       cp.git_cmd = 1;
+> +                       argv_array_push(&cp.args, "checkout-index");
+> +                       argv_array_push(&cp.args, "-z");
+> +                       argv_array_push(&cp.args, "--force");
+> +                       argv_array_push(&cp.args, "--stdin");
+> +                       pipe_command(&cp, out.buf, out.len, NULL, 0, NULL, 0);
+> +                       argv_array_clear(&cp.args);
+> +                       child_process_clear(&cp);
+
+And ditto here.
+
+I'd also encourage using CHILD_PROCESS_INIT and ARGV_ARRAY_INIT constant
+initializers instead of their function-call counterparts, as that
+matches our usual style.
+
+-Peff
