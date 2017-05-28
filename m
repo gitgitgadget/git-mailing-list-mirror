@@ -7,108 +7,87 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBF6120D09
-	for <e@80x24.org>; Sat, 27 May 2017 23:55:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6429620D09
+	for <e@80x24.org>; Sun, 28 May 2017 00:04:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750769AbdE0XzG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 May 2017 19:55:06 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35853 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750757AbdE0XzF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 May 2017 19:55:05 -0400
-Received: by mail-pg0-f65.google.com with SMTP id h64so2586397pge.3
-        for <git@vger.kernel.org>; Sat, 27 May 2017 16:55:05 -0700 (PDT)
+        id S1750770AbdE1AEK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 27 May 2017 20:04:10 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35297 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750757AbdE1AEJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 27 May 2017 20:04:09 -0400
+Received: by mail-pg0-f66.google.com with SMTP id i63so2600631pgd.2
+        for <git@vger.kernel.org>; Sat, 27 May 2017 17:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=iT0p1N1I9UN+YDDSDPGzDxe7Blwv4MYak6RXXZamqeo=;
-        b=B9FLUMq/uMBKq+/TzlF0xikLry0eEcBz+2lIzIs9oV6lb1oBUGay/coKR7XeL24lfM
-         ppeXmnDoWyLU3041VevmvxSWO5RPO+BhVBwWHtGda3DxpRcw2Y6hr4PfiIQbKqftm4Sk
-         zfT8qSFK/bRnCtL8yi6KclfdjLZGrdkTcJ/PhZlLmWpWpbI+J1QYPqHOfnJaaAyvMGeM
-         SW4OWrmJloeioN59nzBU/Gb9R+ctv2mnkbcQjI0HmBvmjQtF0+LItsZ7lV62gc7S7Sx5
-         yLpDyUhItesEJAf+SMCw+/5nc1TQEnsbzKpfTGf+kFUxPDJXC2emfBzs+vZEmUzU7TB3
-         SA4A==
+         :user-agent:mime-version;
+        bh=wu1ISqqw9t990w31lFV/Nma8TYQKtKdRYPliR5Qelew=;
+        b=ZZFtiHoX/0e3E1ACgeeOFrOYIo8St62J/Peo6K5ZAa/5gaIXIOhchOHq+aWkXjxSVC
+         qoYkrWMCCcjmR6LkIkReKY8MCXlDgiOYT7I57xRNlpspYaxJIQRybRyr9fZu6wE0Nibe
+         SxLukyflFQcU8IAcIUG713H4UGncrQEvuTDNL6p835i7+cndFWncace7LfskLBx0KMpO
+         D7HrS4m9VfLHrA01L0KqOZpRCtb23DDOFSF6vgCSM/OFb2hZS49wYbs+6YEavp7KHXQX
+         w2jBE/QBHgvE+oVPNoQC/SsnS6lSnB2nq20YvlNFU1/4jEnZWi9o8Ovyw4+C6R4cV/U/
+         DYjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=iT0p1N1I9UN+YDDSDPGzDxe7Blwv4MYak6RXXZamqeo=;
-        b=NDcO6vy++AIRyAf6hNr2fHch/aGcMJhRezIJ2xcJcUUi1nitvjH3DGjX7EtAic78OT
-         h1zBKytUxW61aAM2D1OW4gQqjCv4mp3fxYt1Cs5JowPzE2gZz5523qUz2CXk8v4uicI2
-         ffV7K7/OnxhIhcfI6RnH36EajJs+/upPZRU6znSH7+R2nV+xqgn7BW4b9EFV17FnaoOe
-         zzTvhVbFPmj00QbnppbUy5eSg9DgagLYQgdjXKVg4Bp4loUB1+d7mEY0POZRpkN0cez9
-         8wgNOObiSWaV9ued4rNS/Fy0n2kuxdHGLX5MNOjinO7EcxlCNykn6vKnnfcP3Hmk8je5
-         qzRQ==
-X-Gm-Message-State: AODbwcAiUrcJCe0SgHld0QskYc+MF75SPhr1QSN9hurR293xSXDlDopR
-        fdI3BIjxdJVdEA==
-X-Received: by 10.99.116.7 with SMTP id p7mr10451628pgc.162.1495929304914;
-        Sat, 27 May 2017 16:55:04 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=wu1ISqqw9t990w31lFV/Nma8TYQKtKdRYPliR5Qelew=;
+        b=FU236cbKFAqAZK8EPcKnYxAeRBwBzK4oW8rkC1rxsYwzeA4N/X0JRqeIMaot7WBDGX
+         EBNInnny1pByVkXfebHFT9lXTUEU62nspIsWfD9ttjBjpXjtTTxConDeo8/7shyAYvrf
+         LTUZou1yJArcROc813kGDfXzi2+kFE/bGyMoWvd9uw5Gf9dauUJbryc9pxVQTNCHf9vV
+         IEv+53Clrd5T1lhv2WomZf4QfNMEtk98zOOww7l4KZepNEMAX2Adb7HXuWdy1ix1aMUT
+         7BMnp3vl94wF2B+WVjnQQRjsi4nAC4EZkz4MtJNDVwXKmfehf5ES8m03s6ecVo2avh4I
+         tBGg==
+X-Gm-Message-State: AODbwcAApzFsL/23ez0y2HxmZ4rM3EXZXr1Rl1+t/N7flIgSSXL/3AAz
+        V9xuOpEbQM3Gng==
+X-Received: by 10.99.109.141 with SMTP id i135mr10702947pgc.33.1495929848657;
+        Sat, 27 May 2017 17:04:08 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:bd10:cbc8:82cc:8993])
-        by smtp.gmail.com with ESMTPSA id t3sm7400014pfl.60.2017.05.27.16.55.02
+        by smtp.gmail.com with ESMTPSA id m8sm9451951pga.34.2017.05.27.17.04.07
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 27 May 2017 16:55:02 -0700 (PDT)
+        Sat, 27 May 2017 17:04:07 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     "Jeff King" <peff@peff.net>,
-        =?utf-8?Q?F=C3=A9lix?= Saparelli <felix@passcod.name>,
-        <git@vger.kernel.org>
-Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch tries to check out the master branch
-References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
-        <xmqqa864mea3.fsf@gitster.mtv.corp.google.com>
-        <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
-        <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net>
-        <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com>
-        <xmqqa861fx34.fsf@gitster.mtv.corp.google.com>
-        <20170525155924.hk5jskennph6tta3@sigill.intra.peff.net>
-        <20170525191115.tqd6zlj5mxqls4wp@sigill.intra.peff.net>
-        <CEF93B59EA3F49608B41892952454B1D@PhilipOakley>
-Date:   Sun, 28 May 2017 08:55:01 +0900
-In-Reply-To: <CEF93B59EA3F49608B41892952454B1D@PhilipOakley> (Philip Oakley's
-        message of "Fri, 26 May 2017 21:00:57 +0100")
-Message-ID: <xmqqh905c0tm.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC/PATCH] recognize pathspec magic without "--" disambiguation
+References: <20170525152739.t63dbsq2dojy2y2h@sigill.intra.peff.net>
+        <CACBZZX6K7ppVB0qYah76_+pjTKjsco3rHT0xRyKtF2H1dS4k_w@mail.gmail.com>
+        <20170527203937.hto7lwxfbjvl5f7o@sigill.intra.peff.net>
+Date:   Sun, 28 May 2017 09:04:06 +0900
+In-Reply-To: <20170527203937.hto7lwxfbjvl5f7o@sigill.intra.peff.net> (Jeff
+        King's message of "Sat, 27 May 2017 16:39:38 -0400")
+Message-ID: <xmqqd1atc0eh.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> However given the discussion about an unborn HEAD, the option here
-> would be to also pass the NULL sha for the symref and then add the
-> annotation 'HEAD' after an extra \0, in the same way that an active
-> symref could be annotated with the '\0HEAD'. This would kill two birds
-> with one stone!
+> Yeah. That's a good reason not to use ":/" without a disambiguating "--"
+> (which _does_ work, even without my series, because check_filename()
+> does specific path-matching). At best, you pay for a complete useless
+> history traversal before the command actually starts running. But much
+> more likely is that Git just complains of ambiguity, because people tend
+> to mention top-level paths in their commit messages. E.g.:
+>
+>   $ cd t
+>   $ git grep foo :/Documentation
+>   fatal: ambiguous argument ':/Documentation': both revision and filename
+>
+> So it really is a pretty horrible syntax.
 
-Are you aware of the symref capability that is already advertised in
-the initial upload-pack response?  Right now, we do so only when
-HEAD actually points at something, and the earlier suggestion by
-Peff is to do so unconditionally, even when HEAD is dangling.
+It does not allow it to be further annotated like "HEAD^{/^Merge
+branch 'foo'}^2".  Yes, I agree that ":/string" was a pretty poor
+design that was done without thinking things through.
 
-Existing clients that are symref aware do not do anything (good or
-bad) when a HEAD that is dangling [*1*] is advertised, so such a
-change will not hurt (but it would not help by itself either).
-Ancient clients that are not even aware of the symref are not
-affected.
+But back then in 2007, it is a bit unfair to blame the initial
+design for not thinking things through.  There weren't as many
+precedents, good or bad, to learn from than we have today ;-)
 
-Then new clients _could_ start paying attention to the advertised
-HEAD that is dangling.
-
-The bundle transport is a different beast.  I do not think it
-advertises where HEAD is pointing at, whether it is dangling or
-not.
-
-
-[Footnote]
-
-*1* A HEAD symref that is advertised in the upload-pack response is
-    dangling when its pointee does not appear in the set of refs
-    that are advertised.  Félix's case would have shown HEAD
-    pointing at refs/heads/master in the symref capability extension,
-    but the list of refs and their values would not have included
-    that ref (there was only refs/heads/MASTER "for joke reasons").
