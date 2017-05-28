@@ -2,73 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B67851FD09
-	for <e@80x24.org>; Sun, 28 May 2017 12:57:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 006381FD09
+	for <e@80x24.org>; Sun, 28 May 2017 13:06:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750797AbdE1M5o (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 May 2017 08:57:44 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34105 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750773AbdE1M5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 May 2017 08:57:43 -0400
-Received: by mail-pf0-f194.google.com with SMTP id w69so9431188pfk.1
-        for <git@vger.kernel.org>; Sun, 28 May 2017 05:57:43 -0700 (PDT)
+        id S1750794AbdE1NGG (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 May 2017 09:06:06 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:34787 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750773AbdE1NGF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2017 09:06:05 -0400
+Received: by mail-pg0-f41.google.com with SMTP id u28so11961083pgn.1
+        for <git@vger.kernel.org>; Sun, 28 May 2017 06:06:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=qod5fCuWSBRNNkU+s7XAwlX6MlqeDD0r7/F+PaJmmbo=;
-        b=NNE6nX/DAhg5+5LhD3cFV+mCrSK0xkIZrWGTbNq4CNYkdD2KWjQ/eE9lhvoLb6VaU0
-         y+IrnD8lL1TGJud7pV/e3SlcG+ehdIxifKP8T996uvuBMomng5rfTCBY+umP5hQLHeNB
-         N4EdgMCP0FgKA0TUcJJHsbLGtadLmL40Kv/0KRNzHeJQ1xmamrxJZgcYzBxw/xu6K9LB
-         lucdRoYUivKOMMMV92DLCqW2smCTThCpuxnRZU8+PLu1wFc30GEAyUDFVzA97AVw35Gi
-         Dgur76xnWYEzlm7aflBFHIHVzdt97/WGfTUO/BfOZOkPL132EbSG/BHT0Vul40rFhg53
-         GHIg==
+        bh=WXV2yWdpesQ4/WXv92ihMFCmU5JSahP2/6hG6NlQUNs=;
+        b=Ch9A2ODMkY8cXwUjszVVYyABHJ2VSfES45+3NlcNccN1TUG5/i9qTdAc9vj+3oL0QT
+         N7PUDuRzIRwJmRGcBL3g9NYOalel5+Jm44llKNLhDf6aNPcbIzMSptFdLb5YAp3GAR02
+         YGoAvGIhONVxUDFHssC+LLBgg2SqB0AGWQRE7JYEqQZglz/mSSxyraCpL1QoYhrvqcCV
+         Yvzj5oGwunDIxYlMehedD9wlf2w/nGx9nLLYVWkqnznXrOKFl0qxC1RX1Qc5f3lt0ZDq
+         8VqQU84zdM7TIJsNkJL+iMQHn6lPfYM7yXYB4NHnSYSSxKX9+dbVhaOfGWnxtwnQIiba
+         c0pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=qod5fCuWSBRNNkU+s7XAwlX6MlqeDD0r7/F+PaJmmbo=;
-        b=pmAo5MraZ5jGEROyQtdPtTAwEIUaF59qzfIWZehxUmwjZgk3aDBbLkQeTtsJfV3ju2
-         wsZoNya4vZpKWQE+JJ35hYv3x54caQ7KAXSDmmv0Vy/Lqh+0ht16EZr8aEHgiPpfGMDG
-         6JbXEu6Zc0ZjHpBnNjP2/cYPolpcQrtXx2mXOdSFSYndPqavvZpMRerikY5+rVBftVp/
-         j90Do/EYoHaDpR8MLBCs4G3L5ZwyDzWn0K3PGEuvU0SWvfXQekk2RKCR7dpGDfz3XPMH
-         R18KAa6brVP3dmQjGz4GI3kbiGjJBC2HpljyfIPhS94ot6aNAtZz2rWLIlw++467QSh9
-         +2AA==
-X-Gm-Message-State: AODbwcB3RRenKbEWR1ACof8iisFCKD88RbE8US+PBajcP0UOLV35Ztwu
-        t/Av3waTCimsUA==
-X-Received: by 10.98.19.93 with SMTP id b90mr12285520pfj.21.1495976263177;
-        Sun, 28 May 2017 05:57:43 -0700 (PDT)
+        bh=WXV2yWdpesQ4/WXv92ihMFCmU5JSahP2/6hG6NlQUNs=;
+        b=sfUtOVhbE6ZzM65I8Xp8rLVcaHvL73JjINh7YUsJVjEsDWb1aw/3OaxrCAP4OgaU3g
+         ftZAxPY0j3wYB9EHFPyC2Q05Rd3gUQ9iNhs8XPGVxCJOidz7OXESW4povt89ca4ly6fD
+         yMa9kzSjSZDvkT5Y6/vXssHuhGNLyAymHyriboi+WkBDJQ5KBQ/8zD3bJ7HcteyJisj0
+         X6WekDecvzPoLtxvACL1jJWAewBmfN7TWRUc+iFBJ5zbDUOVKdxxc3wmjyTDxU+9GwEe
+         l+o2q+TJ3W3g8ifb6lF3NqRA9zIn8O91aKBS/eKvdv3KIe0Sfk/h4em692xuC8c0/Ecw
+         e4Nw==
+X-Gm-Message-State: AODbwcAAXBdZ04FTvRSrZUjCYRXsDQSB/zO4VGHASW9oeHlDqQ0xSHdn
+        fHzpa8ycVM8vxg==
+X-Received: by 10.99.96.70 with SMTP id u67mr13488302pgb.101.1495976764741;
+        Sun, 28 May 2017 06:06:04 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:bd10:cbc8:82cc:8993])
-        by smtp.gmail.com with ESMTPSA id k192sm10917368pgc.31.2017.05.28.05.57.42
+        by smtp.gmail.com with ESMTPSA id f24sm11798049pfk.66.2017.05.28.06.06.03
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 28 May 2017 05:57:42 -0700 (PDT)
+        Sun, 28 May 2017 06:06:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     "Jeff King" <peff@peff.net>,
-        =?utf-8?Q?F=C3=A9lix?= Saparelli <felix@passcod.name>,
-        <git@vger.kernel.org>
-Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch tries to check out the master branch
-References: <CACQm2Y1QtKD3M6weNhGrAQSLV8hLF4pKcpHDD7iUc78aWrt6Cw@mail.gmail.com>
-        <xmqqa864mea3.fsf@gitster.mtv.corp.google.com>
-        <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
-        <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net>
-        <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com>
-        <xmqqa861fx34.fsf@gitster.mtv.corp.google.com>
-        <20170525155924.hk5jskennph6tta3@sigill.intra.peff.net>
-        <20170525191115.tqd6zlj5mxqls4wp@sigill.intra.peff.net>
-        <CEF93B59EA3F49608B41892952454B1D@PhilipOakley>
-        <xmqqh905c0tm.fsf@gitster.mtv.corp.google.com>
-        <48CB2547397B471C99F54CFB3F113C3F@PhilipOakley>
-Date:   Sun, 28 May 2017 21:57:41 +0900
-In-Reply-To: <48CB2547397B471C99F54CFB3F113C3F@PhilipOakley> (Philip Oakley's
-        message of "Sun, 28 May 2017 12:21:50 +0100")
-Message-ID: <xmqqtw459m0q.fsf@gitster.mtv.corp.google.com>
+Cc:     "Git List" <git@vger.kernel.org>
+Subject: Re: mergetool: what to do about deleting precious files?
+References: <8CEDDC40C7D24404976929CF3E7AF6FC@PhilipOakley>
+        <xmqq37bpbx5t.fsf@gitster.mtv.corp.google.com>
+        <D689F4F80DA24C78B5E0FB025B9548E6@PhilipOakley>
+Date:   Sun, 28 May 2017 22:06:03 +0900
+In-Reply-To: <D689F4F80DA24C78B5E0FB025B9548E6@PhilipOakley> (Philip Oakley's
+        message of "Sun, 28 May 2017 11:24:43 +0100")
+Message-ID: <xmqqpoet9lms.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -79,33 +68,29 @@ X-Mailing-List: git@vger.kernel.org
 
 "Philip Oakley" <philipoakley@iee.org> writes:
 
-> From: "Junio C Hamano" <gitster@pobox.com>
->> "Philip Oakley" <philipoakley@iee.org> writes:
+>> So I do not think this is not limited to "new file".  Anything that
+>> a tree-level three-way merge would resolve cleanly without having to
+>> consult the content-level three-way merge will complete without
+>> consulting the merge.ours.driver; per-file content-level three-way
+>> merge driver (which is what merge=<drivername> mechanism lets you
+>> specify via the attributes mechanism) is not something you would
+>> want to use for this kind of thing.  It is purely for resolving the
+>> actual content-level conflicts.
 >>
->>> However given the discussion about an unborn HEAD, the option here
->>> would be to also pass the NULL sha for the symref and then add the
->>> annotation 'HEAD' after an extra \0, in the same way that an active
->>> symref could be annotated with the '\0HEAD'. This would kill two birds
->>> with one stone!
->>
->> Are you aware of the symref capability that is already advertised in
->> the initial upload-pack response?  Right now, we do so only when
->> HEAD actually points at something, and the earlier suggestion by
->> Peff is to do so unconditionally, even when HEAD is dangling.
->
-> The suggestion is the otherway around. I would argue (as a viewpoint)
-> that what we advertise are object IDs and their associated refs,
-> sorted by ref name. (I'm thinking of the
-> git/Documentation/technical/pack-protocol.txt here). My suggestion was
+> That (that Git knows best) sounds just wrong.
 
-That's not the part of the protocol I explained Peff's suggestion to
-you about.  That's ref advertisement proper, and its first line has
-a trailing NUL followed by "protocol capability" list.  There is one
-"capability" that tells the receiver specifically about HEAD symref
-(if and only if HEAD is a symref).  There are two reasons why the
-current code does not help even though that necessary protocol bits
-are *already* there (i.e. you do not need any protocol extension).
-One is that existing servers do not use the symref capability for
-HEAD if HEAD is pointing at an unborn branch (i.e. dangling). The
-other is that the existing code sitting on the receiving end is not
-prepared to handle one, even if the server end sent one.
+Don't twist my words.  I never said Git knows best.  
+
+The user-level merge driver is a mechanism to affect conflict level
+three-way merges.  The interface to the content level three-way
+merge driver feeds three versions of blobs and the driver is
+expected to give a merged result.  The interface as designed is
+incapable of passing "here is the common ancestor", "our side is
+missing" and "their side is this content".
+
+So if we want a mechanism that can affect the outcome of tree-level
+three-way merge, we need a _new_ mechanism.  The existing merge
+drivers that are written by end users (at least the ones written
+correctly to the spec, anyway) are not expecting to be called with
+"in our tree, there is no blob here", and trying to piggyback on it
+will break existing users.
