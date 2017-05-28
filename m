@@ -2,125 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 437181FD09
-	for <e@80x24.org>; Sun, 28 May 2017 18:32:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A44941FD09
+	for <e@80x24.org>; Sun, 28 May 2017 18:51:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750814AbdE1ScK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 May 2017 14:32:10 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:34754 "EHLO
-        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750794AbdE1ScJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 May 2017 14:32:09 -0400
-Received: by mail-oi0-f51.google.com with SMTP id b204so58827457oii.1
-        for <git@vger.kernel.org>; Sun, 28 May 2017 11:32:09 -0700 (PDT)
+        id S1750844AbdE1Sva (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 May 2017 14:51:30 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:34635 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750797AbdE1Sv3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2017 14:51:29 -0400
+Received: by mail-io0-f195.google.com with SMTP id 12so5386245iol.1
+        for <git@vger.kernel.org>; Sun, 28 May 2017 11:51:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=q8ED+aZA/NjH6EhX73KLOdboPecmcWbC3t8qlhT6V7E=;
-        b=cM1HEVaOhHRKCDnq2JlSuPCkZLGGyD7+Kv364hKg+xKMo3RPVFjFr9eTnsuGJxKaMP
-         fUoA82s77WI3huwElBDObal2EjDQW+IN8XGns6Xz/cZIGDTJKk2SDLkI9F5cePoNExZJ
-         /UtXCSLqiVkx0IOVbTnQcOb1tt2URZQM4x77oBsecAw22OA9RKlPQ/vbwMfQBIVJv4cA
-         uUaF24lb+80gxHK7Bw9XAgM6wRQhQMJh9WqVlpzGjqz7Jb2Ekv7VsCOKhW3oUSmOKB3d
-         JRl1/uawO34OXidz0pOFTK8lOqTIPmT+JM1RH2GuKvW9beae7+XcDEWTL+g5aXk7zeMf
-         RCMg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=y1zdXe1Me5lhzXnVz0SV7KN887kAKHV8LIoUswK5EBo=;
+        b=PPKOFFeJofOKUCUH5bdohT/cUAo3XePiEMas8b5P0tQJdB2Y/ypShhgQGYM9R2LRHC
+         f/kdWOFbBmQQ2BwdaHVHxMdb8tcZICma5Q35qZCCWvZC5V5O+eBKmlDtbcF1PkyrpaIT
+         RmgxU56NhUTfjCQzLUDw34ya4NebZn3pwGZyEaZnFCGIINVzXsHoELKwIg0xcPY8EwtV
+         pbYbwfBMZCVPFlh/GjK7JSHvoTqUuEJ8hLc4XjRU8zd4PUW1LgQmPLfdIuoO0l3svs7x
+         sh3kuExlvVfW7TJL6PRkM0l4eKhoTdL2KFo2rKaC8/CYQzOOM4kZ83S3zMePmDbPJXHM
+         JdSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=q8ED+aZA/NjH6EhX73KLOdboPecmcWbC3t8qlhT6V7E=;
-        b=R4lZTo2pO4xV7BMPOnyb7t62VcIhdO0A3iV2I3zefSkMFgDL+58xQqoBLmJnbnwNil
-         rFymmYMhHl/S36w9ahS6IKxM99tB8nbhWq/oKR/yagaCWPFUUeXnnC1tqxHm7rtR2Nm2
-         TWTQPmdLxMNiFx/1OFAO7vtQpE+EcRsMMtb4YZ2A41daPpIGrIy4q+JNKD47Ad5auByr
-         7NJkEGVy21L5CiTQrm1BS6qo09zcqBtYhNWV/Xi1Zi99qd8su/bhzfmilYiIly95BAVd
-         /R5HF8TveA+OcZwafTw/s5bp71HmeHsbDs3PbBGe8qtsd5YADqcrM/RL/HOr3tDZQUA8
-         ra+g==
-X-Gm-Message-State: AODbwcAeMWS9+UaPDJqa/UDu24SJexEgoNwFQygS5QqWJ+hOMTzZwAex
-        2xDxdOiuNvLJ+VE6IbsunWfZcpX8qA==
-X-Received: by 10.157.68.199 with SMTP id p7mr6129165otg.15.1495996328532;
- Sun, 28 May 2017 11:32:08 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=y1zdXe1Me5lhzXnVz0SV7KN887kAKHV8LIoUswK5EBo=;
+        b=WaY+sbj3xgdUSVqf+1SXH44XbML1ypb7kBpWAQlLkWTzTgQSGkmYzVZkeSRXywo9og
+         vAeK671HRNw6M6SnIj1ITvF8/RE/YZ7XkVLCurm0rRWpvySG2X7JqSGffrKcPcof21Y/
+         W0dv0C+4PcZxPkEwmO8HCzT11HTttokixaVeVnTv7SBoxBWdMIvrTK699cYfXewtt64H
+         KqkqdTyS6yMrjGBH1dyjYFwzYS9WMVchuhH+RyezGVZizEqeW/NmIl/pvlykfCJSfn9s
+         GNjnnTi3pUESWMlz6kese4/u9Jo8nybQuLQjWWF8PHriolk44e4iXYJX5ZD+iFRDqa/M
+         cLtg==
+X-Gm-Message-State: AODbwcCDCkbv+P8Be5bIkBlxziazVIIK2XSECLskNJPnQR6TPrN46Z2a
+        GGXJM7QPL5Tg2jShuqiA3YGBUjRDow==
+X-Received: by 10.107.178.12 with SMTP id b12mr9842971iof.50.1495997488661;
+ Sun, 28 May 2017 11:51:28 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.157.10.202 with HTTP; Sun, 28 May 2017 11:31:48 -0700 (PDT)
-In-Reply-To: <CACBZZX5cxkV4C42OwJ077b1XMHCk+uTCbdHV9Ez5EVStR4DWxg@mail.gmail.com>
+Received: by 10.107.8.220 with HTTP; Sun, 28 May 2017 11:51:07 -0700 (PDT)
+In-Reply-To: <20170528165642.14699-5-joel@teichroeb.net>
 References: <20170528165642.14699-1-joel@teichroeb.net> <20170528165642.14699-5-joel@teichroeb.net>
- <CACBZZX5cxkV4C42OwJ077b1XMHCk+uTCbdHV9Ez5EVStR4DWxg@mail.gmail.com>
-From:   Joel Teichroeb <joel@teichroeb.net>
-Date:   Sun, 28 May 2017 11:31:48 -0700
-X-Google-Sender-Auth: Wa_4szqxbpRCUWeeHmABqapmhyc
-Message-ID: <CA+CzEk8Xx4nh=Bh533DR=Xo_BjQsxAoYNbx3=O=rtWr8+v4xsQ@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sun, 28 May 2017 20:51:07 +0200
+Message-ID: <CACBZZX6uXnE+BTfsiLNF2OT3Dsr-J99uUFEwcu-qK45OrU+1hQ@mail.gmail.com>
 Subject: Re: [PATCH v3 4/4] stash: implement builtin stash
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To:     Joel Teichroeb <joel@teichroeb.net>
 Cc:     Git Mailing List <git@vger.kernel.org>, t.gummerer@gmail.com,
         Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 28, 2017 at 11:26 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Sun, May 28, 2017 at 6:56 PM, Joel Teichroeb <joel@teichroeb.net> wrot=
-e:
->> Implement all git stash functionality as a builtin command
+On Sun, May 28, 2017 at 6:56 PM, Joel Teichroeb <joel@teichroeb.net> wrote:
+> Implement all git stash functionality as a builtin command
 >
-> First thanks for working on this, it's great. Applied it locally,
-> passes all tests for me. A couple of comments Christian didn't cover
->
->> +       info->has_u =3D get_sha1_with_context(u_commit_rev.buf, 0, info-=
->u_commit.hash, &unused) =3D=3D 0 &&
->> +               get_sha1_with_context(u_tree_rev.buf, 0, info->u_tree.ha=
-sh, &unused) =3D=3D 0;
->> +
->> +
->> +       /* TODO: Improve this logic */
->> +       strbuf_addf(&symbolic, "%s", REV);
->> +       str =3D strstr(symbolic.buf, "@");
->
-> Could you elaborate on how this should be improved?
->
+> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
+> ---
 
-I just figured there would be a builtin function that could help here,
-but hadn't had the chance to look into it. It's something easy to do
-in bash, but more complicated in C.
+General note on this that I missed in my first E-Mail, you have ~20
+calls to argv_array_init() but none to argv_array_clear(). So you're
+leaking memory, and it obscures potential other issues with valgrind.
 
->
->> +static int patch_working_tree(struct stash_info *info, const char *pref=
-ix,
->> +               const char **argv)
->> +{
->> +       const char *stash_index_path =3D ".git/foocache2";
->
-> This foocache path isn't created by the shell code, if it's a new
-> thing that's needed (and I haven't followed this code in detail, don'n
-> know what it's for) shouldn't we give it a more descriptive name so
-> that if git crashes it's obvious what it is?
->
+A lot of that's easy to solve, but sometimes requires a temporary
+variable since the code is now returning directly, e.g:
 
-Opps, I had cleaned that part up locally, but I forgot to push it when
-switching computers. It'll be better in the next patch set.
+@@ -1091,6 +1094,7 @@ static int list_stash(int argc, const char
+**argv, const char *prefix)
+        struct object_id obj;
+        struct object_context unused;
+        struct argv_array args;
++       int ret = 0;
 
->> +       const char *message =3D NULL;
->> +       const char *commit =3D NULL;
->> +       struct object_id obj;
->> +       struct option options[] =3D {
->> +               OPT_STRING('m', "message", &message, N_("message"),
->> +                        N_("stash commit message")),
->> +               OPT__QUIET(&quiet, N_("be quiet, only report errors")),
->> +               OPT_END()
->> +       };
->> +       argc =3D parse_options(argc, argv, prefix, options,
->> +                                git_stash_store_usage, 0);
->
-> Nit: In general in this patch the 2nd line of parse_options doesn't
-> align with a tabwidth of 8. Ditto for indenting function arguments
-> (e.g. for untracked_files).
+        argc = parse_options(argc, argv, prefix, options,
+                                 git_stash_list_usage, PARSE_OPT_KEEP_UNKNOWN);
+@@ -1107,9 +1111,9 @@ static int list_stash(int argc, const char
+**argv, const char *prefix)
+        argv_array_pushv(&args, argv);
+        argv_array_push(&args, ref_stash);
+        if (cmd_log(args.argc, args.argv, prefix))
+-               return 1;
+-
+-       return 0;
++               ret = 1;
++       argv_array_clear(&args);
++       return ret;
+ }
 
-I'll fix my tab width. Forgot that long lines would change, haha.
+But more generally this goes a long way to resolving the issue where
+you have variables like out1, out2 or cp1, cp2 etc. which Christian
+pointed out. I.e. you're not freeing/clearing strbufs either, instead
+just creating new ones that also aren't freed, or not clearing
+child_process structs, e.g. this on top allows you to re-use the same
+variable and stops leaking memory:
+
+diff --git a/builtin/stash.c b/builtin/stash.c
+index bf36ff8f9b..4e7344501a 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -729,7 +729,6 @@ static int do_push_stash(const char *prefix, const
+char *message,
+
+                if (keep_index) {
+                        struct child_process cp = CHILD_PROCESS_INIT;
+-                       struct child_process cp2 = CHILD_PROCESS_INIT;
+                        struct strbuf out = STRBUF_INIT;
+
+                        reset_tree(info.i_tree, 0, 1);
+@@ -741,13 +740,18 @@ static int do_push_stash(const char *prefix,
+const char *message,
+                        argv_array_push(&cp.args, "--");
+                        argv_array_pushv(&cp.args, argv);
+                        pipe_command(&cp, NULL, 0, &out, 0, NULL, 0);
++                       argv_array_clear(&cp.args);
++                       child_process_clear(&cp);
+
+-                       cp2.git_cmd = 1;
+-                       argv_array_push(&cp2.args, "checkout-index");
+-                       argv_array_push(&cp2.args, "-z");
+-                       argv_array_push(&cp2.args, "--force");
+-                       argv_array_push(&cp2.args, "--stdin");
+-                       pipe_command(&cp2, out.buf, out.len, NULL, 0, NULL, 0);
++                       child_process_init(&cp);
++                       cp.git_cmd = 1;
++                       argv_array_push(&cp.args, "checkout-index");
++                       argv_array_push(&cp.args, "-z");
++                       argv_array_push(&cp.args, "--force");
++                       argv_array_push(&cp.args, "--stdin");
++                       pipe_command(&cp, out.buf, out.len, NULL, 0, NULL, 0);
++                       argv_array_clear(&cp.args);
++                       child_process_clear(&cp);
+                }
+        } else {
+                struct child_process cp2 = CHILD_PROCESS_INIT;
