@@ -7,54 +7,56 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBB1D20D0A
-	for <e@80x24.org>; Sun, 28 May 2017 07:15:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AD2820D0A
+	for <e@80x24.org>; Sun, 28 May 2017 07:22:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750837AbdE1HPp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 May 2017 03:15:45 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33704 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750794AbdE1HPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 May 2017 03:15:44 -0400
-Received: by mail-pf0-f196.google.com with SMTP id f27so8951524pfe.0
-        for <git@vger.kernel.org>; Sun, 28 May 2017 00:15:44 -0700 (PDT)
+        id S1750827AbdE1HW3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 May 2017 03:22:29 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36117 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750794AbdE1HW2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2017 03:22:28 -0400
+Received: by mail-pg0-f68.google.com with SMTP id h64so3214408pge.3
+        for <git@vger.kernel.org>; Sun, 28 May 2017 00:22:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=DwJw4y/pAXTI3DaOSV7aqryJGNg6iWl27GfODlsNgtw=;
-        b=DX4XOdm4KVag3ZQnWoiDN9+VsvUv09pWsL9ogvRsr/XkxKq+FdYtEOCzYghzl8JNeu
-         CMCnrngPUIRnHDps3hehk/DBKN84pxPVDmbWG+bGgTAPf1fN7HbgFNt9BpyXIwOCxIM1
-         GksO8L3wWApyBO02WDytJE6msL1Hgun6d5OVpHrrigGQQUX5Rctk+Kjrx1oIB/itQ7WZ
-         ZB+b2aexnCUOHroNxRb/+cKN32lL8csSpAGiRP048+oMARf+eVHq8H/3SuaDm84UwQWL
-         518bnn35C7Xnjq2zGY7nZ+dhgp4Uj26wIbEiHBc0QfzYiuxA3mL+P6/co/yJ7OcPdzhK
-         gqiA==
+        bh=8mET4Ezjel8yrQ3DKQ4u1M172pDUmY9r/4sUMzn6ahs=;
+        b=mNFRy6ssb8eYIXHF9NrWUT/1LXd/iWZoogkU6ASgY9/Rw5ZT6ipW81KDa+cC3F/i09
+         pxcxfXlPghD+9olexwVn1Y18QL85LeydSaQv6aE7J+IGIXc71EPy//6P4LArhs437Mhb
+         tCIP2Hf4FHcjvFzVcQsk+J2+SG5vOH72kT6YGmVIXW5IXlwDYLa2cJtc6wvXF8ufsd+8
+         m8zmbMzwzg6z8VkQueoe3vEt1MgBuXY4Otc8Twnx4r2Njf1iygaRlGU1f7b1QnUps9VB
+         VMUa8jtM2V61GOEixiI10Y7S+JjsmAbgh474+erP3Mh++ZCFmKCP/H/iCLQAqE7jPgIB
+         wSpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=DwJw4y/pAXTI3DaOSV7aqryJGNg6iWl27GfODlsNgtw=;
-        b=jufl4xpFRGGfecxvF4eALKO6PdYmWdFX3WUbJ2gfTNo3xw+fhdEGjA37TRc+Oh5k+3
-         jXDNckThM60+kf5V95ayLuQEfwAOOAfBV2RN3I7nTe+rGeCSAWQr5JTPreJot68xNz8v
-         PVSmQmZAipAyUDE6lGB8W/3fUUYkRcaeLu6q8ixmUpASW7fCnEeY4NKuXa2vr6CVZ6en
-         bmTWUG86LSRhZQcwtiz55VTKVp6ynV3ZPirZkXmhsagDEfiMXmKNqe86Mdt4mOwduV1X
-         s1xFIkmsOvwTvsTv/9W5f/BYqSMz8XDkXY4d4RuR9cBhYi4YoTgEJwtW+6MSkZlKf3KG
-         fiug==
-X-Gm-Message-State: AODbwcA2YcArv1U8ETZvOnDyyhkxMi0F1bEPEJ5XxkXH3USzsnQQWExY
-        MJkeH02dIWSxZL0hl8U=
-X-Received: by 10.84.216.79 with SMTP id f15mr10051255plj.178.1495955743293;
-        Sun, 28 May 2017 00:15:43 -0700 (PDT)
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8mET4Ezjel8yrQ3DKQ4u1M172pDUmY9r/4sUMzn6ahs=;
+        b=ApzTq2B4Rf41tgqvAaF8HcCaFowGfPUt3wekWtVC4FJi/OytovYzzpXyknmVHx+UA6
+         cuUgblaiGwg1J+bFJbCd91WHl+jBk9CLhBOG6vMIgYG7po53FaJqmT/AK8avUEkC3EtF
+         pjFvUJ7hEh2ly4BrfFG1GE791uciQ2wm7RUGMhbB5UAB68yZlDao6yhaP3HyPP5aq/lf
+         yIOFzXWk4nYZjoddag2fi04qEvbmidty3zLXmYLzPloSCICM8ehwkrieCNgztJIb19Qs
+         WIiobSzq8FYezrVVQkRFLwuNwg19cETRnubrv5C+MGSi6yVYH5io7eqNQoPbKtboXU7x
+         ix8Q==
+X-Gm-Message-State: AODbwcCKQaho8l6qDYXNsBGDLUClNXS8mtUZOmAmmX9Fvs4NcYyC2Pa8
+        pvaJfJMY5aKrpN+ae3o=
+X-Received: by 10.84.229.78 with SMTP id d14mr67754399pln.15.1495956147789;
+        Sun, 28 May 2017 00:22:27 -0700 (PDT)
 Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id m123sm10111937pfc.51.2017.05.28.00.15.41
+        by smtp.googlemail.com with ESMTPSA id r68sm10363973pfd.91.2017.05.28.00.22.25
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 28 May 2017 00:15:42 -0700 (PDT)
-Message-ID: <1495955737.4716.3.camel@gmail.com>
-Subject: Missing: Consistency of clean state output of "git add -i"
+        Sun, 28 May 2017 00:22:27 -0700 (PDT)
+Message-ID: <1495956144.4716.5.camel@gmail.com>
+Subject: Re: Missing: Consistency of clean state output of "git add -i"
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     git@vger.kernel.org
-Date:   Sun, 28 May 2017 12:45:37 +0530
-Content-Type: text/plain; charset="UTF-8"
+Date:   Sun, 28 May 2017 12:52:24 +0530
+In-Reply-To: <1495955737.4716.3.camel@gmail.com>
+References: <1495955737.4716.3.camel@gmail.com>
+Content-Type: text/plain; charset="ISO-8859-15"
 X-Mailer: Evolution 3.22.6-1 
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -66,26 +68,6 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
-When the "git add -i" command is triggered with a clean working
-directory and index, the outputs of the various options don't seem to
-be giving consistent results. A few of the distinct outputs are,
-
-1. No output, the options are displayed
-2. A single blank line and the options are displayed
-3. The "add untracked" option, prints "No untracked files." and adds a
-empty line and prints the options
-4. The "patch" option, prints "No changes" and prints the options
-
-It seems that the clean state output should be improved for the sake of
-a consistent user interface. 
-
-Note: I could possibly help if I were pointed to the implementation.
-
-Quote: "We hate most in others that which we fail to see in ourselves."
-- Anil Dash
---
-Regards,
-Kaartic
-
-
+I guess I'll take back my note in the previous email that says, I could
+help. I saw the implementation and found that I couldn't help as I
+don't have experience with PERL. My bad.
