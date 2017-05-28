@@ -2,76 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 710E51FD09
-	for <e@80x24.org>; Sun, 28 May 2017 19:26:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E71421FD09
+	for <e@80x24.org>; Sun, 28 May 2017 22:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750825AbdE1T0f (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 May 2017 15:26:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59086 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750802AbdE1T0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 28 May 2017 15:26:34 -0400
-Received: (qmail 17663 invoked by uid 109); 28 May 2017 19:26:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 28 May 2017 19:26:34 +0000
-Received: (qmail 10978 invoked by uid 111); 28 May 2017 19:27:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 28 May 2017 15:27:11 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 28 May 2017 15:26:32 -0400
-Date:   Sun, 28 May 2017 15:26:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     Joel Teichroeb <joel@teichroeb.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, t.gummerer@gmail.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 4/4] stash: implement builtin stash
-Message-ID: <20170528192632.3iei3hxfggqkfrfh@sigill.intra.peff.net>
-References: <20170528165642.14699-1-joel@teichroeb.net>
- <20170528165642.14699-5-joel@teichroeb.net>
- <CACBZZX5cxkV4C42OwJ077b1XMHCk+uTCbdHV9Ez5EVStR4DWxg@mail.gmail.com>
- <CA+CzEk8Xx4nh=Bh533DR=Xo_BjQsxAoYNbx3=O=rtWr8+v4xsQ@mail.gmail.com>
+        id S1750866AbdE1W4z (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 May 2017 18:56:55 -0400
+Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:47708
+        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750830AbdE1W4y (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 28 May 2017 18:56:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1496012212;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=xK+AbUuH16cx5Dyg18QFjDyGgdeYF5KxDL1wElxb1KE=;
+        b=Y9USup231D3fp3AP8KSrh8sDIGR+INC5/DQoMgcxZUUocbKCO5Rfh4ueQMX2iznh
+        ygrpYT0roLz9KLIxX6qJwWu/sQKCyW/myFA/pxDGQvxIEnxvIS3WW03iZJjTnAwEDRx
+        9u9DIlGWVJkOIdE8xhnPZRuJBavAUW5nSLwPMdfM=
+From:   Sahil Dua <sahildua2305@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015c5146c8ca-e5144538-326b-47b8-8c81-af31da4cdfe0-000000@eu-west-1.amazonses.com>
+Subject: [PATCH/RFC] branch: add tests for new copy branch feature
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+CzEk8Xx4nh=Bh533DR=Xo_BjQsxAoYNbx3=O=rtWr8+v4xsQ@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Sun, 28 May 2017 22:56:52 +0000
+X-SES-Outgoing: 2017.05.28-54.240.7.19
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 28, 2017 at 11:31:48AM -0700, Joel Teichroeb wrote:
+New feature - copying a branch along with its config section.
 
-> >> +       /* TODO: Improve this logic */
-> >> +       strbuf_addf(&symbolic, "%s", REV);
-> >> +       str = strstr(symbolic.buf, "@");
-> >
-> > Could you elaborate on how this should be improved?
-> 
-> I just figured there would be a builtin function that could help here,
-> but hadn't had the chance to look into it. It's something easy to do
-> in bash, but more complicated in C.
+Aim is to have an option -c for copying a branch just like -m option for
+renaming a branch.
 
-There's no strbuf function for "truncate at this character". But:
+This commit adds a few basic tests for getting any suggestions/feedback
+about expected behavior for this new feature.
 
-  - you can use strchr for a single-character match, which is more
-    efficient; i.e.:
+Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
+---
+ t/t3200-branch.sh | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-      str = strchr(symbolic.buf, '@');
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index fe62e7c775da..2c95ed6ebf3c 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -341,6 +341,59 @@ test_expect_success 'config information was renamed, too' '
+ 	test_must_fail git config branch.s/s/dummy
+ '
+ 
++test_expect_success 'git branch -c dumps usage' '
++	test_expect_code 128 git branch -c 2>err &&
++	test_i18ngrep "branch name required" err
++'
++
++git config branch.d.dummy Hello
++
++test_expect_success 'git branch -c d e should work' '
++	git branch -l d &&
++	git reflog exists refs/heads/d &&
++	git branch -c d e &&
++	git reflog exists refs/heads/d &&
++	git reflog exists refs/heads/e
++'
++
++test_expect_success 'config information was copied, too' '
++	test $(git config branch.e.dummy) = Hello &&
++	test $(git config branch.d.dummy) = Hello
++'
++
++git config branch.f/f.dummy Hello
++
++test_expect_success 'git branch -c f/f g/g should work' '
++	git branch -l f/f &&
++	git reflog exists refs/heads/f/f &&
++	git branch -c f/f g/g &&
++	git reflog exists refs/heads/f/f &&
++	git reflog exists refs/heads/g/g
++'
++
++test_expect_success 'config information was copied, too' '
++	test $(git config branch.f/f.dummy) = Hello &&
++	test $(git config branch.g/g.dummy) = Hello
++'
++
++test_expect_success 'git branch -c m2 m2 should work' '
++	git branch -l m2 &&
++	git reflog exists refs/heads/m2 &&
++	git branch -c m2 m2 &&
++	git reflog exists refs/heads/m2
++'
++
++test_expect_success 'git branch -c a a/a should fail' '
++	git branch -l a &&
++	git reflog exists refs/heads/a &&
++	test_must_fail git branch -c a a/a
++'
++
++test_expect_success 'git branch -c b/b b should fail' '
++	git branch -l b/b &&
++	test_must_fail git branch -c b/b b
++'
++
+ test_expect_success 'deleting a symref' '
+ 	git branch target &&
+ 	git symbolic-ref refs/heads/symref refs/heads/target &&
 
-  - instead of inserting a '\0' into the strbuf, use strbuf_setlen(),
-    which also updates the symbolic.len; i.e.:
-
-      strbuf_setlen(&symbolic, str - symbolic.buf);
-
-  - it looks like you copy into the strbuf just to truncate, so you
-    could actually get the final size before inserting into the strbuf
-    using strchrnul. Like:
-
-      end_of_rev = strchrnul(REV, '@');
-      strbuf_add(&symbolic, REV, end_of_rev - REV);
-
--Peff
+--
+https://github.com/git/git/pull/363
