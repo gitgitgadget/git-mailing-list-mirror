@@ -2,94 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C05E320D09
-	for <e@80x24.org>; Sun, 28 May 2017 01:18:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBB1D20D0A
+	for <e@80x24.org>; Sun, 28 May 2017 07:15:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750777AbdE1BSe (ORCPT <rfc822;e@80x24.org>);
-        Sat, 27 May 2017 21:18:34 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:32948 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750764AbdE1BSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 27 May 2017 21:18:33 -0400
-Received: by mail-pg0-f67.google.com with SMTP id s62so2699791pgc.0
-        for <git@vger.kernel.org>; Sat, 27 May 2017 18:18:33 -0700 (PDT)
+        id S1750837AbdE1HPp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 May 2017 03:15:45 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33704 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750794AbdE1HPo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2017 03:15:44 -0400
+Received: by mail-pf0-f196.google.com with SMTP id f27so8951524pfe.0
+        for <git@vger.kernel.org>; Sun, 28 May 2017 00:15:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ompae9wzy/tkAy6HxrlcypWviEeKWFYm/UEnIG9I1dQ=;
-        b=J92DATCX9xK8tJ83eYflh08pCPekFbEMrotECZMMuix2lo+8eaUVaOm9a8/+VVeHNQ
-         9iOzzLzKQ9NEnUJfe6bfa/holRdNBI0WVRB6Ys5rY46RPdTcrdenuA0xOL4pn7T9nDn6
-         q8Nu3276AHZZKYNROVybRTa+TowLUKzCO6doN9l9BuCOTwc/F9H6f7qySY2wy2cmtCw8
-         NqrLLvnb8CwzlsTVX/iPWoQwcvoCwTRiF7uVWfgaFjLenUbKNOjGUsVLPm/smLrvRi1X
-         Wi6ju+hxch8mWCkrPTB/OMNOQcaE6gWXFnC38EErkTVOh4tQ8ZZV8WzG0I27J1bPyJoN
-         4H+A==
+        h=message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=DwJw4y/pAXTI3DaOSV7aqryJGNg6iWl27GfODlsNgtw=;
+        b=DX4XOdm4KVag3ZQnWoiDN9+VsvUv09pWsL9ogvRsr/XkxKq+FdYtEOCzYghzl8JNeu
+         CMCnrngPUIRnHDps3hehk/DBKN84pxPVDmbWG+bGgTAPf1fN7HbgFNt9BpyXIwOCxIM1
+         GksO8L3wWApyBO02WDytJE6msL1Hgun6d5OVpHrrigGQQUX5Rctk+Kjrx1oIB/itQ7WZ
+         ZB+b2aexnCUOHroNxRb/+cKN32lL8csSpAGiRP048+oMARf+eVHq8H/3SuaDm84UwQWL
+         518bnn35C7Xnjq2zGY7nZ+dhgp4Uj26wIbEiHBc0QfzYiuxA3mL+P6/co/yJ7OcPdzhK
+         gqiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
+        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
          :content-transfer-encoding;
-        bh=ompae9wzy/tkAy6HxrlcypWviEeKWFYm/UEnIG9I1dQ=;
-        b=dibyeX62h2hY/fdbyCqq4Z7xUC1haaetmj7GagYZlqbfiTiq8+YJKr05QS8kl/3lLd
-         ths9gL4P+zg2pZDg3+E2ps3tD/h3Y3E1d5YWpg91wUVmpirmKIomgbY7HEvp6qX/Kbm1
-         St2oLUtp8unEgiP+uDCTZEHBI25LvhSuNLcwvtGIyBMFsCRGDYNCDuHhPdidPJmYQUQL
-         Em638esut0IyBg//+TtEw7eA17qauBb5INq+RTe+bVlLHGa1z040u+x0GOK5/t6RyfA8
-         Y5SRZemKdIfKgAJU7hhhoXNYmAaNADpeV6Y29FGKC2MoMBdOwqPInXbItPZH9mVqLs8Q
-         j4+Q==
-X-Gm-Message-State: AODbwcB7oaSpy28p67U4xH4MRj3FchNcNbRm/Bc7E2Fr4+bnBS4x9V8/
-        00yntSJkaILHvg==
-X-Received: by 10.99.130.73 with SMTP id w70mr10897941pgd.119.1495934312862;
-        Sat, 27 May 2017 18:18:32 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:bd10:cbc8:82cc:8993])
-        by smtp.gmail.com with ESMTPSA id 184sm9689124pgd.12.2017.05.27.18.18.31
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 27 May 2017 18:18:31 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] WIP: add deprecation & experimental process/interface
-References: <20170527111032.30897-1-avarab@gmail.com>
-Date:   Sun, 28 May 2017 10:18:31 +0900
-In-Reply-To: <20170527111032.30897-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Sat, 27 May 2017 11:10:32 +0000")
-Message-ID: <xmqqy3thaie0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        bh=DwJw4y/pAXTI3DaOSV7aqryJGNg6iWl27GfODlsNgtw=;
+        b=jufl4xpFRGGfecxvF4eALKO6PdYmWdFX3WUbJ2gfTNo3xw+fhdEGjA37TRc+Oh5k+3
+         jXDNckThM60+kf5V95ayLuQEfwAOOAfBV2RN3I7nTe+rGeCSAWQr5JTPreJot68xNz8v
+         PVSmQmZAipAyUDE6lGB8W/3fUUYkRcaeLu6q8ixmUpASW7fCnEeY4NKuXa2vr6CVZ6en
+         bmTWUG86LSRhZQcwtiz55VTKVp6ynV3ZPirZkXmhsagDEfiMXmKNqe86Mdt4mOwduV1X
+         s1xFIkmsOvwTvsTv/9W5f/BYqSMz8XDkXY4d4RuR9cBhYi4YoTgEJwtW+6MSkZlKf3KG
+         fiug==
+X-Gm-Message-State: AODbwcA2YcArv1U8ETZvOnDyyhkxMi0F1bEPEJ5XxkXH3USzsnQQWExY
+        MJkeH02dIWSxZL0hl8U=
+X-Received: by 10.84.216.79 with SMTP id f15mr10051255plj.178.1495955743293;
+        Sun, 28 May 2017 00:15:43 -0700 (PDT)
+Received: from unique-pc ([182.73.109.146])
+        by smtp.googlemail.com with ESMTPSA id m123sm10111937pfc.51.2017.05.28.00.15.41
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 28 May 2017 00:15:42 -0700 (PDT)
+Message-ID: <1495955737.4716.3.camel@gmail.com>
+Subject: Missing: Consistency of clean state output of "git add -i"
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     git@vger.kernel.org
+Date:   Sun, 28 May 2017 12:45:37 +0530
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Hello all,
+When the "git add -i" command is triggered with a clean working
+directory and index, the outputs of the various options don't seem to
+be giving consistent results. A few of the distinct outputs are,
 
-> The plan, subject to RFC feedback is to:
->
->  * Add a new config variable `core.version`. E.g. `core.version =
->    2.14.0` With this the user can specify that they'd like
->    new/experimental features introduced in that version (and below),
->    as well as immediately getting new deprecations added in that
->    version as errors.
->
->    This is similar to perl's "use v<VERSION>".
+1. No output, the options are displayed
+2. A single blank line and the options are displayed
+3. The "add untracked" option, prints "No untracked files." and adds a
+empty line and prints the options
+4. The "patch" option, prints "No changes" and prints the options
 
-As long as this does not require very new version like v3.0.0 of Git
-to pretend as if the user is still running an ancient v2.14.0, it is
-a sensible proposal, I would think.
+It seems that the clean state output should be improved for the sake of
+a consistent user interface. 
 
->  * Add a deprecated() function to to mark deprecated features.
->  * TODO: Add an experimental() function to mark experimental features.
+Note: I could possibly help if I were pointed to the implementation.
 
-Having burned by bitter experience during v1.6.0 transition, I do
-welcome an attempt to make it easier to communicate deprecation
-plans to end-users.
+Quote: "We hate most in others that which we fail to see in ourselves."
+- Anil Dash
+--
+Regards,
+Kaartic
+
+
