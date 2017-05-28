@@ -2,111 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0359A1FD09
-	for <e@80x24.org>; Sun, 28 May 2017 23:31:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F8D91FD09
+	for <e@80x24.org>; Sun, 28 May 2017 23:52:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750929AbdE1XbL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 28 May 2017 19:31:11 -0400
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:45112
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750898AbdE1XbK (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 28 May 2017 19:31:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1496014268;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=bFC63MT7usOXwrGWRNtx7eTvHdbnhceueSps9WP2nMI=;
-        b=eMPxrVPCmMV3uvhIwzkXHxo0vPHdX0F+Wr2N7y3+phZpkc9An42yVu5Dq5lI49e2
-        3CNYosddHqKrIejP9b6qtBQE1hhE5BMtWVZiTbnWWOSgfyJYUncLKKi1aunP1FZ214u
-        knZauy+hPpEbGxE+Sf+Qudtn3bturKtZNk892Rnk=
-From:   Tyler Brazier <tyler@tylerbrazier.com>
-To:     git@vger.kernel.org
-Message-ID: <0102015c5166284d-d8dd6534-a8d5-452d-af14-d827934ef593-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] pull: ff --rebase --autostash works in dirty repo
+        id S1750903AbdE1Xwj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 28 May 2017 19:52:39 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:36671 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750865AbdE1Xwi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 28 May 2017 19:52:38 -0400
+Received: by mail-pg0-f43.google.com with SMTP id x64so14970239pgd.3
+        for <git@vger.kernel.org>; Sun, 28 May 2017 16:52:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=hjW5TcuDJPkBAgwQqNsecMOcZKAB1bxL/YqlB+XozIo=;
+        b=incz/cJgb0KKsQkxWJbx7UWC+XUm0YM4vnjedEEs4nvCaRZK7cfBnvAPp1cHZGx6k1
+         Xmb9v341Guch8n0BngQF7XFgkQm76mCGhDYrAQP7tqgA0IOcJEIJJ4Ns/XF7tT+eBQDW
+         aMrfPPyBEnZDeCv8hXeKYsNfDrZLn5yHOy5WToJGK0k4lbzGaX41Y+vV5dW4wmVTPx+l
+         ze9itTjAZ9uHhijqRh/54SpBT2KGWLjvuvq//bIsN4BljuQgRjg8XH1nJvZ6mimgoUN7
+         vHXc+JfuQVzKOishBtuE/9qsvSpiWor1hPcS0QwA08trYJ4d9Z3sNOs4O8fTvleM3iSb
+         +JFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=hjW5TcuDJPkBAgwQqNsecMOcZKAB1bxL/YqlB+XozIo=;
+        b=r3q5GiLI08CtStoAT/XDWuv7IHKwg22mUbaC8U6pam7yFZeT1ByByglRoOW3vxwrxt
+         mkPj7cWDMfxXwIpMLUbldiNw/SntcYxUhRElpRCXUhe208BBbrm6kEIftgPYfBkMQi59
+         RVE7q5iENqkMiSdT74iHQr+O2tuwrbP8bRDfGx2z/6vecUZZVBFjNwnVWdiYurX+NVhR
+         Czz0ILxP9v/h5cN9f3lnGgbtTgrAcS1kGpMf+h9BPQwlClVmAKUO1326OKq+Ra6clBte
+         usMMmgnpgyZVVn2M5MBMix/SVE+2vB/RSBnjAAudRMWJdXoqNlszDRrqOpB/0EgStfTO
+         YNHw==
+X-Gm-Message-State: AODbwcCOebyoeNR2Ohpr6ZGt4Y7Cg4k9xXtouPFvt2GVBuW3vAEIKS4c
+        1QN09rI/l0n3EQ==
+X-Received: by 10.99.102.7 with SMTP id a7mr15314263pgc.216.1496015557811;
+        Sun, 28 May 2017 16:52:37 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:393e:d787:9be9:17cc])
+        by smtp.gmail.com with ESMTPSA id p4sm16964489pgf.21.2017.05.28.16.52.36
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 28 May 2017 16:52:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Andreas Heiduk <asheiduk@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] doc: filter-branch does not require re-export of vars
+References: <20170526173654.4238-1-asheiduk@gmail.com>
+        <20170526183702.jrjkykhldz74pquq@sigill.intra.peff.net>
+Date:   Mon, 29 May 2017 08:52:36 +0900
+In-Reply-To: <20170526183702.jrjkykhldz74pquq@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 26 May 2017 14:37:02 -0400")
+Message-ID: <xmqqlgpga69n.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Sun, 28 May 2017 23:31:08 +0000
-X-SES-Outgoing: 2017.05.28-54.240.7.20
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-pull --rebase --autostash was failing on a fast-forward in a dirty repo
-since we shortcut to run_merge(), which does not know how to autostash.
-The shortcut is a performance optimization, and since rebase was
-rewritten in C, it seemed okay to just bypass the shortcut if we
-autostash.
----
- builtin/pull.c  |  5 +++--
- t/t5520-pull.sh | 18 ++++++++++++++++++
- 2 files changed, 21 insertions(+), 2 deletions(-)
+Jeff King <peff@peff.net> writes:
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index dd1a4a94e41e..609e594d3f28 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -772,6 +772,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	struct oid_array merge_heads = OID_ARRAY_INIT;
- 	struct object_id orig_head, curr_head;
- 	struct object_id rebase_fork_point;
-+	int autostash;
- 
- 	if (!getenv("GIT_REFLOG_ACTION"))
- 		set_reflog_message(argc, argv);
-@@ -800,8 +801,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (!opt_rebase && opt_autostash != -1)
- 		die(_("--[no-]autostash option is only valid with --rebase."));
- 
-+	autostash = config_autostash;
- 	if (opt_rebase) {
--		int autostash = config_autostash;
- 		if (opt_autostash != -1)
- 			autostash = opt_autostash;
- 
-@@ -868,7 +869,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		head = lookup_commit_reference(orig_head.hash);
- 		commit_list_insert(head, &list);
- 		merge_head = lookup_commit_reference(merge_heads.oid[0].hash);
--		if (is_descendant_of(merge_head, list)) {
-+		if (!autostash && is_descendant_of(merge_head, list)) {
- 			/* we can fast-forward this without invoking rebase */
- 			opt_ff = "--ff-only";
- 			return run_merge();
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 17f4d0fe4e72..4c85be0417cf 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -272,6 +272,24 @@ test_expect_success '--rebase fast forward' '
- 	test_cmp reflog.expected reflog.fuzzy
- '
- 
-+test_expect_success '--rebase --autostash fast forward' '
-+	test_when_finished "
-+		git reset --hard;
-+		git checkout to-rebase;
-+		git branch -D to-rebase-ff;
-+		git branch -D behind" &&
-+	git branch behind &&
-+	git checkout -b to-rebase-ff &&
-+	echo another modification >>file &&
-+	git add file &&
-+	git commit -m mod &&
-+
-+	git checkout behind &&
-+	echo dirty >file &&
-+	git pull --rebase --autostash . to-rebase-ff &&
-+	test "$(git rev-parse HEAD)" = "$(git rev-parse to-rebase-ff)"
-+'
-+
- test_expect_success '--rebase with conflicts shows advice' '
- 	test_when_finished "git rebase --abort; git checkout -f to-rebase" &&
- 	git checkout -b seq &&
+> On Fri, May 26, 2017 at 07:36:54PM +0200, Andreas Heiduk wrote:
+>
+>> The function `set_ident` in `filter-branch` exported the variables
+>> GIT_(AUTHOR|COMMITTER)_(NAME|EMAIL|DATE) at least since 6f6826c52b in 2007.
+>> Therefore the filter scripts don't need to re-eport them again.
+>
+> Some old shells keep separate values for the internal and exporter
+> versions of variables. I.e., this:
+>
+>   foo=one
+>   export foo
+>   foo=two
+>
+> would continue to export $foo as "one", even though it is "two" inside
+> the script.
 
---
-https://github.com/git/git/pull/365
+Yup, that sounds like a grandfather's war story at this point,
+though ;-)
+
+> However, I think POSIX mandates the behavior you'd expect. ...
+> ...
+> At this point, I'd be inclined to remove the text as you suggest and
+> either make a small note at the bottom of the page, or just omit it
+> entirely and assume that anybody on an old non-POSIX shell can fend for
+> themselves.
+
+Sounds good to me.  Thanks.
