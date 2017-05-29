@@ -6,90 +6,100 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F305D2027C
-	for <e@80x24.org>; Mon, 29 May 2017 06:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 702612027C
+	for <e@80x24.org>; Mon, 29 May 2017 06:41:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750854AbdE2Gfw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 May 2017 02:35:52 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33320 "EHLO
+        id S1750864AbdE2Glu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 May 2017 02:41:50 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36619 "EHLO
         mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750825AbdE2Gfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2017 02:35:51 -0400
-Received: by mail-pg0-f68.google.com with SMTP id s62so5504120pgc.0
-        for <git@vger.kernel.org>; Sun, 28 May 2017 23:35:51 -0700 (PDT)
+        with ESMTP id S1750825AbdE2Glt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2017 02:41:49 -0400
+Received: by mail-pg0-f68.google.com with SMTP id h64so5515585pge.3
+        for <git@vger.kernel.org>; Sun, 28 May 2017 23:41:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=beHK2zLY5EhRGJ57mzLPaOmyIvR662C321nxlQggVO0=;
-        b=ddBGfJp7Wth9JZnniaz0WWlBk94NezmSrbxNUFgXDm8OpM4O1UM1/WIqMmQy31+fwr
-         GAbX14leR9lQaUh7VHWpg11x4qlKz+4wCjo3WezmTvOtE/OqcaOqTTK7IKp9MWNjaJzx
-         CprLg8qkV9/fVtxd6lUdIxhLebpx+oIcD23976jxqsdsQwelat1Lmkignj/seVci00Td
-         fiw6nZW4AU2p08KFSCHMppqSqmKxWd7OvALNWD82LEL8kIV8dlPfkI454B6P5X78MpC7
-         Yfu+GDUmsgJR7becCol1VK/2a69se/12WHht6EmaspfOBwz6m8/e/VmzzgTIElg4kV6z
-         6znA==
+         :user-agent:mime-version;
+        bh=PDymxgua6z3TdLViH+wbYT7OWgwLmYtgua31PnzblMI=;
+        b=bNoqFC2ultMNas6RGgvtI0iAiRBVxwmByOtE3R+HyNOSMfd6nDgu67Tevv5dyTuGWc
+         pMI6YZAP5l4P0L6qo/po3ocRVi3s+w3AbVnwBkj5WXjR3q0sp6ztTjwR9V2Q4M4k5Pa5
+         5iRjcnhNMmuV/Lojq7iolkLU6d6nQYcHqDEXGbSaenER95kZTiS4HUMGhnHKxz61ZVQK
+         /EkeCwOTNeGJ7DLsVJBZ4yjCbu+AWHP+BsKFsRxLJfOqjZZprb8A3peIuE0R/32xfpJU
+         dH+CePE/lm4lc3MJMjOX34qGcuTWc+97i5832axQjOaemFACMRALnRcx9atk2tLaN2Ia
+         fESg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=beHK2zLY5EhRGJ57mzLPaOmyIvR662C321nxlQggVO0=;
-        b=HykqT2VWBdgDkmVn7GpYLkW/3qRaHdITOdqp2pgSnmdC+XyXPyvXNl2b8x011jH/I8
-         MIskBAnZNv+zCwDUmY2w1UUugi5EECcJp1S0Uhwuuntf1QNCtQqW7/N8pq7WUgviu88k
-         PB/tZUu3L2tIRG6P/CAkW8mT8t/7CN2XRPALp4jqnKP9zzyExB8KV0czZw45Z9UxMHMi
-         RBkgdEhLqUUd84ZeYOTyZiTejexNW21QGL4QFxqPISjzjiCE9dG6e/gfgabq7f2U7Tu6
-         A/07cvbO7C9pAYtpD/emsfh5Ty2aTepXRIhhZsTozPk4T5BxUFYdqjc/MWZqre/frY2f
-         QC0Q==
-X-Gm-Message-State: AODbwcAvBYgYCfENz7Env4ZyZXj8XlB2qNsIPs7BiYhqgJqWv9c29HkF
-        pMb/ijrWh4EHHA==
-X-Received: by 10.99.137.194 with SMTP id v185mr16945489pgd.206.1496039750709;
-        Sun, 28 May 2017 23:35:50 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=PDymxgua6z3TdLViH+wbYT7OWgwLmYtgua31PnzblMI=;
+        b=GCk3xMXpcThl+/WerFFlRyuRhQh3Aya/ZxklllK+8T3L8VlG+cPi0Qf8jAPSIBslHZ
+         yQXJS5J08AuZjH9qTbo781tJ/5Rab9vMDO5pR1JpmVKU1posKfSySL8CVH1WC2e4h9cK
+         w1j5Rr/fbj3AqgYpcjQnZi7be06E4t5oyMlWy7RhtK0uvU6cIiQhISWCTYRTJJkS1sS9
+         uC3sdXMoxw1kheCEzQ7NnYTI8sDB36s40Oycr1z5yt1SfCtQboV7E25zLJc6CTsglMQp
+         Pc9CATjcpkJgy6nXQmA9khb60TWK7H0KEhyzENUjoh1Nj+nvNpu6lB34VK3130/iWwqC
+         deNg==
+X-Gm-Message-State: AODbwcCOx3bmPvzVclzyWLWAXo2GYpNQjLESDxMRhxTmukqv9Os4Zg64
+        0QND8OUPb1z7HQ==
+X-Received: by 10.99.112.86 with SMTP id a22mr17075669pgn.52.1496040109066;
+        Sun, 28 May 2017 23:41:49 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:393e:d787:9be9:17cc])
-        by smtp.gmail.com with ESMTPSA id i68sm14334993pfi.72.2017.05.28.23.35.49
+        by smtp.gmail.com with ESMTPSA id q25sm14289436pgn.9.2017.05.28.23.41.48
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 28 May 2017 23:35:49 -0700 (PDT)
+        Sun, 28 May 2017 23:41:48 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Joel Teichroeb <joel@teichroeb.net>,
-        Git Mailing List <git@vger.kernel.org>, t.gummerer@gmail.com,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/4] stash: add test for stash create with no files
+To:     Joel Teichroeb <joel@teichroeb.net>
+Cc:     git@vger.kernel.org, t.gummerer@gmail.com, peff@peff.net,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v3 2/4] stash: add test for stashing in a detached state
 References: <20170528165642.14699-1-joel@teichroeb.net>
-        <20170528165642.14699-2-joel@teichroeb.net>
-        <CACBZZX7vsz9fRg6bggMETqfcK_WWFijQ1+YbLcfFauqa1s1KpQ@mail.gmail.com>
-Date:   Mon, 29 May 2017 15:35:48 +0900
-In-Reply-To: <CACBZZX7vsz9fRg6bggMETqfcK_WWFijQ1+YbLcfFauqa1s1KpQ@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 28 May
- 2017 19:45:16
-        +0200")
-Message-ID: <xmqqwp906ugr.fsf@gitster.mtv.corp.google.com>
+        <20170528165642.14699-3-joel@teichroeb.net>
+Date:   Mon, 29 May 2017 15:41:47 +0900
+In-Reply-To: <20170528165642.14699-3-joel@teichroeb.net> (Joel Teichroeb's
+        message of "Sun, 28 May 2017 09:56:40 -0700")
+Message-ID: <xmqqshjo6u6s.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Joel Teichroeb <joel@teichroeb.net> writes:
 
->> +       git stash create > actual &&
->> +       test $(cat actual | wc -l) -eq 0
-> ...
-> Although I wonder in this case whether you don't actually mean:
+> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
+> ---
+>  t/t3903-stash.sh | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 >
->     [...]>actual &&
->     ! test -s actual
->
-> I.e. isn't the test that there should be no output, not that there
-> shouldn't be a \n there?
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index aaae221304..b86851ef46 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -808,6 +808,17 @@ test_expect_success 'create with multiple arguments for the message' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'create in a detached state' '
+> +	test_when_finished "git checkout master" &&
+> +	git checkout HEAD~1 &&
+> +	>foo &&
+> +	git add foo &&
+> +	STASH_ID=$(git stash create) &&
+> +	echo "WIP on (no branch): 47d5e0e initial" >expect &&
 
-Good suggestion.  There is "test_must_be_empty" you may want to use.
+Is it easy to generate this (especially 47d5e0e) at runtime?  I know
+that earlier tests in this script are brittle and will break when
+object names change by using test vectors that hardcode object names
+a bit too much, but if we can avoid making it worse, let's try to do
+so for future developers who will have to do the work of adjusting
+the tests for possible changes to the object name hashing algorithm.
 
-Also, we do not leave SP between the redirection operator and the
-filename.  Your example ">actual" is good; the original goes against
-our style.
-
-Thanks.
+> +	git show --pretty=%s -s ${STASH_ID} >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'stash -- <pathspec> stashes and restores the file' '
+>  	>foo &&
+>  	>bar &&
