@@ -2,115 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55AE32027C
-	for <e@80x24.org>; Mon, 29 May 2017 11:20:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A73B2027C
+	for <e@80x24.org>; Mon, 29 May 2017 11:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751138AbdE2LUZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 May 2017 07:20:25 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:36152 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750974AbdE2LUY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2017 07:20:24 -0400
-Received: by mail-io0-f193.google.com with SMTP id f102so6557171ioi.3
-        for <git@vger.kernel.org>; Mon, 29 May 2017 04:20:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=DT1Bx8RGjKS/nau5UopJjuqF1rl+aE+opwNmKpT1WsY=;
-        b=X4xfxmnO3mGL/WdOMXiqvMfFQ6aMSTLrUXgHGgUqsqYHgOEmIRMUiA1xE36cyGd7UF
-         I1oODiOI4j5oWiaRZ6c8kEcfzfBeFqHS4MdycJkH8zrzpbLoUmSDXOuZd7ERISNA7i7d
-         4aa92INKzdJFnOD3uJAXC2gMeZU0ClgmYB0Q43y6+xa7qOUUps4QVCIvgwYpbQGfFiJX
-         bnkgkvihRN15vT4GFBtHu3Yc0hMkwVjyqeHxwLo59QzsUgnnylVbf7Q6Ow8oBLcwqiWQ
-         3Ibnk4B6hDrwVRcepr9WBwQS1NldRzcaopuPw0Y/ZOHmztlfC+aIbw355kiq4y/iN6lN
-         NWFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DT1Bx8RGjKS/nau5UopJjuqF1rl+aE+opwNmKpT1WsY=;
-        b=rJi1XEso6XH3aXU2x6dc4yfoaKYSzsjzhZl4vHKNSJMBRyhk9OZ2+fgxLae3UOk7P1
-         QI0z74qUie8XJKy4QiJ1XMSgFrCf70jdiJ7wGweHIToJlpr2iO77XbtFXZX+/w4GxY5i
-         +EpCzhBJYboXtmgjRR6bWhmokC030D/p2/QhoZSrZFWT2orTBmseBrcSpUQOuO1bk4K7
-         /uzWtjOohYg1ENXQr2BIA72gRogC8f0KUbZM41r722We3U/sqlrX5ehwzTnkECCYckwF
-         zMzzL3pxvJZTy/QhJbemsrQrD+mKp8Jr8XufZDQAyGOHIKWJNSo/Xqe1h81Hhu/Ayx1q
-         c9nA==
-X-Gm-Message-State: AODbwcBeW70LhLDKEwPFyEGD7ir+u5Q2GADnqoHC08OQddLieMeirPws
-        th4eS4e/mLwRWsNmm7ojPlnOalRg/g==
-X-Received: by 10.107.178.12 with SMTP id b12mr11910814iof.50.1496056823190;
- Mon, 29 May 2017 04:20:23 -0700 (PDT)
+        id S1751105AbdE2LUv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 May 2017 07:20:51 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55330 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751042AbdE2LUu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2017 07:20:50 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MUTSJ-1dP1bQ3Obb-00RLPV; Mon, 29
+ May 2017 13:20:31 +0200
+Date:   Mon, 29 May 2017 13:20:30 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Liam Beguin <liambeguin@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        philipoakley@iee.org, phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 05/10] rebase -i: also expand/collapse the SHA-1s via
+ the rebase--helper
+In-Reply-To: <20170526031530.29162-1-liambeguin@gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1705291302160.3610@virtualbox>
+References: <6cf1bcd39672474230b179a3d12c5eeab353ae0c.1493414945.git.johannes.schindelin@gmx.de> <20170526031530.29162-1-liambeguin@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Mon, 29 May 2017 04:20:02 -0700 (PDT)
-In-Reply-To: <CACsJy8CUpHNDfvN+P7=Jub4+Z281rzExFV9x3_hdVKw6ORUSqQ@mail.gmail.com>
-References: <20170527111032.30897-1-avarab@gmail.com> <CACsJy8CUpHNDfvN+P7=Jub4+Z281rzExFV9x3_hdVKw6ORUSqQ@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 29 May 2017 13:20:02 +0200
-Message-ID: <CACBZZX5SbYo5fVPtK6LW1FF96nR5591RHHC-5wdjW-fmg1R0EQ@mail.gmail.com>
-Subject: Re: [RFC/PATCH] WIP: add deprecation & experimental process/interface
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:+5JqRRHfUT0ukX8PN/Go/DfhD/Fil1fplzYtfIKb3JiAhdUpghj
+ nxd0pl2rIbgJd9P9t7K73cGtoSYBuyvNqPlAG2X8T4USfQz9ow48o4U04hi14fKNXe6T2Ne
+ oMhyntF33pNUJrE8ljQNCtiubrCNmqG9CsswHaAWOMlddp3SWttVgmJaFmk3L70i6DE22+0
+ +tmpqWlnMa9WmaoTddNkQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:d6o2uIrr62o=:ZiyhxALZ4rP1pTivQYY+9e
+ th3R+tXlyLOjkFMmkiXycLsMnHy45SYKFftcdhZ90rYJUFCtkyr05MZasXQTpOtK+rGN19iMI
+ 8u3RjrI+iJ9Cb36ao9+QSD4GJj40BGvHUVVPdP6mHQ36+nTGrw/gvfL2sJylnv06Fk02VHaZz
+ tJzbfCm/buV3r2J1JVUztI5ueGehct/M098/UpY3wgSj+BxdsCAo0fdCNDTznf40MUz8plPBW
+ J/NykW1Cesc0kwlkpBMpTaW1PGJ0H0Gai4J2SpL+dXWASzozrmjHSUZQd4GWyEmM5qGOMLslC
+ z7vNklSmdMg0qpDfDyKSg837Nn1zsL/Vv3cHBY/JFkX/jwg4ZSVH2OVd+fdcee6Uwspj8dXUi
+ 2PycD2xp9sX85I3wZFRBLMqMN4AI9ap8Ja0j50eO3+5sqX2vjYKwwNR5jfyNTdgJylKwnpFlG
+ +UihDJhKDUkPgk7ccG5BjRU4RdmyoanYel+yCCiqMSCuv4MAOz+AxSl9GXrOMoJs5XiTF5Inu
+ WJKsgl2ZdevWRWUsTv+5O/u2WeYcMeKcGAj43/rbR0RxbQRHAo0LYu8ODD8XVk7Suj2Q/yWwr
+ GCrqBZINXGKWBeQqrUH2s+Dg2j/jtDeR5U7topJzHeb1J9NqaQyUREywj5tNAvmWe3+YNJjYV
+ T/udwjrlgwdMzfQsDvG2uT6UitYGKUQ8V0Gw6odgSfb6DWwIAXLTcpKfDS4nMfje8XVhsQ6ES
+ L6dQTYJnkFV1NPoNgYKtp5r/6S+W2XFViCMEX7kaC323yQVTOESBVDaBLGnas1Smibl7HlXtE
+ GUM8ZEV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 29, 2017 at 12:23 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sat, May 27, 2017 at 6:10 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> This is the WIP start of a deprecation & experimental interface to
->> git. The goal is to formalize the workflow around deprecating
->> features, or around introducing new experimental features.
->>
->> This is much more idea than code at the moment, but included is an
->> example showing how :/ might be deprecated[1] (let's not discuss /if/
->> we should do that here, this is just an example).
->>
->> The plan, subject to RFC feedback is to:
->>
->>  * Add a new config variable `core.version`. E.g. `core.version =3D
->>    2.14.0` With this the user can specify that they'd like
->>    new/experimental features introduced in that version (and below),
->>    as well as immediately getting new deprecations added in that
->>    version as errors.
->
-> We have extensions.* for this purpose (or close to this purpose). I
+Hi Liam,
 
-From reading repository-version.txt it seems unrelated to what I'd
-like to do. I.e. there you'd like to introduce a hard breakage and
-it's already documented that if you encounter some extensions.* keys
-you don't understand you *must not* proceed.
+On Thu, 25 May 2017, Liam Beguin wrote:
 
-Whereas for this you'd like to e.g. turn on some experimental feature
-in 2.16, but if you're running a 2.14 git you'd like it to just ignore
-that config key it doesn't know about instead of git breaking.
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+> > index 821058d452d..9444c8d6c60 100644
+> > --- a/builtin/rebase--helper.c
+> > +++ b/builtin/rebase--helper.c
+> > @@ -24,6 +24,10 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+> >  				ABORT),
+> >  		OPT_CMDMODE(0, "make-script", &command,
+> >  			N_("make rebase script"), MAKE_SCRIPT),
+> > +		OPT_CMDMODE(0, "shorten-sha1s", &command,
+> > +			N_("shorten SHA-1s in the todo list"), SHORTEN_SHA1S),
+> > +		OPT_CMDMODE(0, "expand-sha1s", &command,
+> > +			N_("expand SHA-1s in the todo list"), EXPAND_SHA1S),
+> 
+> Since work is being done to convert to `struct object_id` would it
+> not be best to use a more generic name instead of 'sha1'?
+> maybe something like {shorten,expand}-hashs
 
-> think it's more flexible to go with extensions.* instead of a single
-> "core.version". extensions.* are non-optional though (if a git binary
+Good point. You suggest the use of "ids" later, and I think that is an
+even better name: what we try to do here is to expand/reduce the commit
+*identifiers*. The fact that they are hexadecimal representations of
+hashes is an implementation detail.
 
-I'd like there to be both, and the experimental() function would
-define this on the source level, i.e. the call would include a
-corresponding version where it was introduced, and a config key to
-toggle it individually.
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 88819a1a2a9..201d45b1677 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -2437,3 +2437,60 @@ int sequencer_make_script(int keep_empty, FILE *out,
+> >  	strbuf_release(&buf);
+> >  	return 0;
+> >  }
+> > +
+> > +
+> > +int transform_todo_ids(int shorten_sha1s)
+> > +{
+> > +	const char *todo_file = rebase_path_todo();
+> > +	struct todo_list todo_list = TODO_LIST_INIT;
+> > +	int fd, res, i;
+> > +	FILE *out;
+> > +
+> > +	strbuf_reset(&todo_list.buf);
+> > +	fd = open(todo_file, O_RDONLY);
+> > +	if (fd < 0)
+> > +		return error_errno(_("could not open '%s'"), todo_file);
+> > +	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
+> > +		close(fd);
+> > +		return error(_("could not read '%s'."), todo_file);
+> > +	}
+> > +	close(fd);
+> > +
+> > +	res = parse_insn_buffer(todo_list.buf.buf, &todo_list);
+> > +	if (res) {
+> > +		todo_list_release(&todo_list);
+> > +		return error(_("unusable instruction sheet: '%s'"), todo_file);
+> 
+> As you pointed out last time, the name of the "todo script" can be a
+> source of confusion. The migration to C could be a good opportunity to
+> clarify this.
 
-The reason to have both is that you can just upgrade git and say "I'm
-not concerned about backcompat here, please give me all the latest
-features" without having to exhaustively hunt down the list of things
-we're shipping with that version.
+True. This was simply a copy-edited part, and I should have caught that.
 
-> does not understand it, the repo can't be accessed). So it's more
-> about fundamental experiments (like sha256 transition). I'm guessing
-> we can have a "soft" extensions (warn if not understand, instead of
-> die), like what we have in $GIT_DIR/index.
+> I don't know which is the preferred name but we could go with
+> "todo list" as it is the most common across the code base.
 
-> Deprecation via extension.* though may be unintuitive. But I think
-> something along that line (e.g. deprecation.*) might work.
+Yep, my next iteration will use that term.
+
+> > +	}
+> > +
+> > +	out = fopen(todo_file, "w");
+> > +	if (!out) {
+> > +		todo_list_release(&todo_list);
+> > +		return error(_("unable to open '%s' for writing"), todo_file);
+> > +	}
+> > +	for (i = 0; i < todo_list.nr; i++) {
+> > +		struct todo_item *item = todo_list.items + i;
+> > +		int bol = item->offset_in_buf;
+> > +		const char *p = todo_list.buf.buf + bol;
+> > +		int eol = i + 1 < todo_list.nr ?
+> > +			todo_list.items[i + 1].offset_in_buf :
+> > +			todo_list.buf.len;
+> > +
+> > +		if (item->command >= TODO_EXEC && item->command != TODO_DROP)
+> > +			fwrite(p, eol - bol, 1, out);
+> > +		else {
+> > +			const char *sha1 = shorten_sha1s ?
+> > +				short_commit_name(item->commit) :
+> > +				oid_to_hex(&item->commit->object.oid);
+> 
+> We could also use 'hash' or 'ids' here instead of 'sha1'.
+
+Absolutely!
+
+Thank you,
+Johannes
