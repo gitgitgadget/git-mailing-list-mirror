@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A6EE20D0A
-	for <e@80x24.org>; Mon, 29 May 2017 18:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E939420D0A
+	for <e@80x24.org>; Mon, 29 May 2017 18:26:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750951AbdE2SSq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 May 2017 14:18:46 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:35270 "EHLO
-        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750846AbdE2SSq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2017 14:18:46 -0400
-Received: by mail-oi0-f42.google.com with SMTP id l18so86437819oig.2
-        for <git@vger.kernel.org>; Mon, 29 May 2017 11:18:45 -0700 (PDT)
+        id S1750973AbdE2S0n (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 May 2017 14:26:43 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:32776 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750846AbdE2S0m (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2017 14:26:42 -0400
+Received: by mail-io0-f180.google.com with SMTP id p24so44973501ioi.0
+        for <git@vger.kernel.org>; Mon, 29 May 2017 11:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=DLZPVHCKxnFphhLFeCBpSrQh13YCti1UEMTm6Z+hp6Q=;
-        b=frTFdInYr43CPuf8paMAAtbkywit5UEFUyApqzqjUE+aKHMikt6Q5/+S9EYuDLs0cJ
-         UytG6uNKTFzQMVRHZdm5atxjgg8a7YU80LkfOmrmjDZ742S8urj4NlvTPIpT4W/4z9E9
-         V7Kvo27CF5dTsrz313j1jRExg3A1aVUylMLnJb4FTe9uok+DA0pblKmVguoePcwBAUbq
-         TcYHkzktDH6LYrffPUIf7/D+XNHfjxX2lWMhADnA+ih2xnzsbGNInYCAVsiYvy8AMUlO
-         954a8I1wpBiRkkTi970zbv0Cm8h++bzcjSX7Z281n6+jnUBydueLE93zxV5fWCoT4XC/
-         ltPg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=a4m0tY8nAA9oppGEHEUWmlI1KNje5RfWTfwN4QaaLMk=;
+        b=IKVW9IbdNzBL/BwVa7n5n2CE9qsdGdJhPHjqxZ8Hlc3foX4OkukBRrQVUrc9h1UjtO
+         x2irygATloQ7NPnpYfg3FaqlErEx14fRgaVYO3Iske7b0IRjH9tgDIzfTm8aedNjqe8c
+         NcuhEwhFycEz5F0npKcEy+sSOPloeqPTt6q5WqVjKCQEBAtxn7CTElLZ02S7uyYgc963
+         5CM1VCUKzobhN1qQ2z67EoO3y1vz9rn1P/CP3zOxPA733poyZe3YDX7a2lnljUeqMS7C
+         wATb1vfmywW1Hx6INUS+RzeR/AiNYjH5hrw0iXMFmW0bZj0YGrv35zhedVeIvu9WR0WY
+         Zz3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=DLZPVHCKxnFphhLFeCBpSrQh13YCti1UEMTm6Z+hp6Q=;
-        b=mDIV+udP91KvK6F+W0pko125rHUBi2PnfIZnUfHxdyNcxT02TrH2PZ+dqDOYB55HLS
-         ITShtsShUUHrwIKC+3s0ovaTpENK0pEneQMJHBrOJDFU7ngIrGJ24g20hD8nwUayp3Fe
-         PEgeCpiHCZndunBj04q6RFWtzhBypfQ4Jq64/1skIVPgOrEP2CAerjBMbhYdzUHXgdqz
-         49IPp0+FGIgb2aA8HSNn5V0I/0loFhDS6+VvC4hYRnOZsWtbVikECS3/G0T95il8YPGe
-         Pn2WWxfQpBvCGvnf6ZOQ/cbZTzaVJshzOnSRKvA3rxjxs+uDpULq2ERWRmDnrncOlvxB
-         duxQ==
-X-Gm-Message-State: AODbwcDWbl5ctvi3Wliw/XWRF0gWAQJvTMmhVmUuhmuN6U0qsEV2Plh4
-        /NNE/zINtEQAsfdoeK05UxJ+7DN3kw==
-X-Received: by 10.202.97.86 with SMTP id v83mr6570166oib.113.1496081925447;
- Mon, 29 May 2017 11:18:45 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=a4m0tY8nAA9oppGEHEUWmlI1KNje5RfWTfwN4QaaLMk=;
+        b=keqmpMMbi61aoRZ6TF0RkQ3ripbS1kn4Is0lN5SZz/u58Ox+fG37baguLRFKcTPHU2
+         xf5woBjc8lHGMGDEwZJQZVlRcJZPk3JwAjQtLKgmtjsOWviu+X07ZJH2jItCxkFwze/y
+         PRxDUvKEifrzpG+4ekN6PvXURZ0zg2fxQE72LEshLHyumT46pwtMCiLkmkiNSEEDZAdC
+         CtiFLc77k8ELMcW+rg8wy3e04r0dasErt3tPutdGlVRMnUbryrwAU/RTnVWNEv8WR6XV
+         dn75oJLiupzsYnN1wqs89HCqr+ecIR9F9htq1c0lmwHYdZKq4O3XSyQW2TIIebNEmzHL
+         ECCw==
+X-Gm-Message-State: AODbwcCYA01zZI575BI43UuMUlO5xJ7cQbjG1KtDb4zpdTIXOVaKniAQ
+        QSiFt6sRhxT0EwzZOjFFIqYc+YSNDA==
+X-Received: by 10.107.138.21 with SMTP id m21mr14064548iod.80.1496082401767;
+ Mon, 29 May 2017 11:26:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.157.51.169 with HTTP; Mon, 29 May 2017 11:18:25 -0700 (PDT)
-In-Reply-To: <20170528192149.dgzibu334n5ja57e@sigill.intra.peff.net>
+Received: by 10.107.8.220 with HTTP; Mon, 29 May 2017 11:26:20 -0700 (PDT)
+In-Reply-To: <CA+CzEk8NoGhDB6nX6RRL7J-KenoJBE7rVfskJfCQn_iCSnA4nA@mail.gmail.com>
 References: <20170528165642.14699-1-joel@teichroeb.net> <20170528165642.14699-5-joel@teichroeb.net>
- <CACBZZX6uXnE+BTfsiLNF2OT3Dsr-J99uUFEwcu-qK45OrU+1hQ@mail.gmail.com> <20170528192149.dgzibu334n5ja57e@sigill.intra.peff.net>
-From:   Joel Teichroeb <joel@teichroeb.net>
-Date:   Mon, 29 May 2017 11:18:25 -0700
-X-Google-Sender-Auth: LA_IFuwyr_3rgmixItrQylj0688
-Message-ID: <CA+CzEk8NoGhDB6nX6RRL7J-KenoJBE7rVfskJfCQn_iCSnA4nA@mail.gmail.com>
+ <CACBZZX6uXnE+BTfsiLNF2OT3Dsr-J99uUFEwcu-qK45OrU+1hQ@mail.gmail.com>
+ <20170528192149.dgzibu334n5ja57e@sigill.intra.peff.net> <CA+CzEk8NoGhDB6nX6RRL7J-KenoJBE7rVfskJfCQn_iCSnA4nA@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 29 May 2017 20:26:20 +0200
+Message-ID: <CACBZZX4VP2GZSxw5MqBY=w1EhN64=75MFnjd0CYvPTvoVdFWQw@mail.gmail.com>
 Subject: Re: [PATCH v3 4/4] stash: implement builtin stash
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
+To:     Joel Teichroeb <joel@teichroeb.net>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
@@ -65,8 +64,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Once I have all those leaks fixed, is there a way to make sure I'm not
-missing any? I tried using valgrind with leak-check enabled, but there
-are too many leaks from other git commands.
+On Mon, May 29, 2017 at 8:18 PM, Joel Teichroeb <joel@teichroeb.net> wrote:
+> Once I have all those leaks fixed, is there a way to make sure I'm not
+> missing any? I tried using valgrind with leak-check enabled, but there
+> are too many leaks from other git commands.
 
-Joel
+I just used:
+
+    valgrind --leak-check=full ./git-stash list
+
+And then skimmed things that mentioned stash.c in the pager. There
+might be some better way to do this (e.g. instrument the test suite to
+run valgrind for all commands and summarize that somehow), but I don't
+know how to do that offhand...
