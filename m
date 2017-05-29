@@ -2,155 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A73B2027C
-	for <e@80x24.org>; Mon, 29 May 2017 11:20:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF4992027C
+	for <e@80x24.org>; Mon, 29 May 2017 11:23:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751105AbdE2LUv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 May 2017 07:20:51 -0400
-Received: from mout.gmx.net ([212.227.17.21]:55330 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751042AbdE2LUu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2017 07:20:50 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MUTSJ-1dP1bQ3Obb-00RLPV; Mon, 29
- May 2017 13:20:31 +0200
-Date:   Mon, 29 May 2017 13:20:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Liam Beguin <liambeguin@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        philipoakley@iee.org, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 05/10] rebase -i: also expand/collapse the SHA-1s via
- the rebase--helper
-In-Reply-To: <20170526031530.29162-1-liambeguin@gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1705291302160.3610@virtualbox>
-References: <6cf1bcd39672474230b179a3d12c5eeab353ae0c.1493414945.git.johannes.schindelin@gmx.de> <20170526031530.29162-1-liambeguin@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751058AbdE2LXp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 May 2017 07:23:45 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:35542 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751083AbdE2LXo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2017 07:23:44 -0400
+Received: by mail-it0-f49.google.com with SMTP id c15so25447653ith.0
+        for <git@vger.kernel.org>; Mon, 29 May 2017 04:23:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=cEXXs1FFpgzbj95rnFGMYB2sCRjU8aBeA8+Jx3tDMxA=;
+        b=U7SoEo08SSQwYERH1Bjo3yd4lrxns4FI9tehw1xNa+weLQ25aZ7Arggv7CWnPwfqIi
+         xMdSN1zRmPMPOTFxeg3Ekh1d7brHUlx+uMgY1/NA0W17O8S0fyDbxH1BU1qkVnFtHzxF
+         E5ZsNju9inqxHZrjtlOBp9vtcE0HVpjnIaGv1dhphzM6w3hjZCTkeDUxQ93vLYbvZXzz
+         MZR1TGKJUcuqNFtEC0zkGas5+htTDW3O/wAxyyhW346ZjSmolHA5CFA6CZcJ91niL59a
+         B7YYPvg8cNpyEiOlKLkXFbIPQkg/NLwshjWgH89Ho1QrC1jws77TGdyTHNpxTwD9uuQH
+         tOGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=cEXXs1FFpgzbj95rnFGMYB2sCRjU8aBeA8+Jx3tDMxA=;
+        b=Y8e1IlTS/HiJjYAF7Zqnx2/bopTS3J/jSbtdopvvccJNkGU6lUhNnDdhaGhBxB9Fqy
+         +KncwPqTPTAkihjDVxyDnENvPgg6sQV2tOAfXVf06Fg/IK8a3ilEWSIt6ZQ7rMWDOLOZ
+         KpB3H8Halt/KDk4ORhcPPJKdREHyAqUdkPNYHA5/kT1r5/NsARaSpKuA3eP32ac/ylI+
+         iCYkMcmXtUAbtqPMSizOUfNNtb6gEaS6c71IeH1BpZVs5BWZIET880gj/eixMCvh0+9t
+         Ki5DdmwAVEm0Wp0SgtMqL+ongVC/19/NjuyuEaoHP7Pru5/7cGC1f8/FBMw4x7FZWtMW
+         YwHQ==
+X-Gm-Message-State: AODbwcAa6VxuEaMvC0XWszjtqPHQO6IDUskn5BApRUA6y8K9crpz/Opy
+        fJAqSrDtnJSKqQiq0gOQLvm8M4nlAA==
+X-Received: by 10.36.53.79 with SMTP id k76mr13213843ita.71.1496057023365;
+ Mon, 29 May 2017 04:23:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:+5JqRRHfUT0ukX8PN/Go/DfhD/Fil1fplzYtfIKb3JiAhdUpghj
- nxd0pl2rIbgJd9P9t7K73cGtoSYBuyvNqPlAG2X8T4USfQz9ow48o4U04hi14fKNXe6T2Ne
- oMhyntF33pNUJrE8ljQNCtiubrCNmqG9CsswHaAWOMlddp3SWttVgmJaFmk3L70i6DE22+0
- +tmpqWlnMa9WmaoTddNkQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:d6o2uIrr62o=:ZiyhxALZ4rP1pTivQYY+9e
- th3R+tXlyLOjkFMmkiXycLsMnHy45SYKFftcdhZ90rYJUFCtkyr05MZasXQTpOtK+rGN19iMI
- 8u3RjrI+iJ9Cb36ao9+QSD4GJj40BGvHUVVPdP6mHQ36+nTGrw/gvfL2sJylnv06Fk02VHaZz
- tJzbfCm/buV3r2J1JVUztI5ueGehct/M098/UpY3wgSj+BxdsCAo0fdCNDTznf40MUz8plPBW
- J/NykW1Cesc0kwlkpBMpTaW1PGJ0H0Gai4J2SpL+dXWASzozrmjHSUZQd4GWyEmM5qGOMLslC
- z7vNklSmdMg0qpDfDyKSg837Nn1zsL/Vv3cHBY/JFkX/jwg4ZSVH2OVd+fdcee6Uwspj8dXUi
- 2PycD2xp9sX85I3wZFRBLMqMN4AI9ap8Ja0j50eO3+5sqX2vjYKwwNR5jfyNTdgJylKwnpFlG
- +UihDJhKDUkPgk7ccG5BjRU4RdmyoanYel+yCCiqMSCuv4MAOz+AxSl9GXrOMoJs5XiTF5Inu
- WJKsgl2ZdevWRWUsTv+5O/u2WeYcMeKcGAj43/rbR0RxbQRHAo0LYu8ODD8XVk7Suj2Q/yWwr
- GCrqBZINXGKWBeQqrUH2s+Dg2j/jtDeR5U7topJzHeb1J9NqaQyUREywj5tNAvmWe3+YNJjYV
- T/udwjrlgwdMzfQsDvG2uT6UitYGKUQ8V0Gw6odgSfb6DWwIAXLTcpKfDS4nMfje8XVhsQ6ES
- L6dQTYJnkFV1NPoNgYKtp5r/6S+W2XFViCMEX7kaC323yQVTOESBVDaBLGnas1Smibl7HlXtE
- GUM8ZEV
+Received: by 10.107.8.220 with HTTP; Mon, 29 May 2017 04:23:22 -0700 (PDT)
+In-Reply-To: <CACsJy8DmsG_+ASEkisUTLejVkiOmYytvTCTQs=RCH6q=BeDAhg@mail.gmail.com>
+References: <20170518232134.163059-1-bmwill@google.com> <20170522193535.7cgivd6pmmqhw7ze@sigill.intra.peff.net>
+ <CACsJy8DmsG_+ASEkisUTLejVkiOmYytvTCTQs=RCH6q=BeDAhg@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 29 May 2017 13:23:22 +0200
+Message-ID: <CACBZZX5GRxecDQkoqLv55FLuiSohGSR3U1U+sG0vFFpexcc54A@mail.gmail.com>
+Subject: Re: [WIP/RFC 00/23] repository object
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Liam,
+On Mon, May 29, 2017 at 12:36 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, May 23, 2017 at 2:35 AM, Jeff King <peff@peff.net> wrote:
+>> On Thu, May 18, 2017 at 04:21:11PM -0700, Brandon Williams wrote:
+>>
+>>> When I first started working on the git project I found it very difficult to
+>>> understand parts of the code base because of the inherently global nature of
+>>> our code.  It also made working on submodules very difficult.  Since we can
+>>> only open up a single repository per process, you need to launch a child
+>>> process in order to process a submodule.  But you also need to be able to
+>>> communicate other stateful information to the children processes so that the
+>>> submodules know how best to format their output or match against a
+>>> pathspec...it ends up feeling like layering on hack after hack.  What I would
+>>> really like to do, is to have the ability to have a repository object so that I
+>>> can open a submodule in-process.
+>>
+>> We could always buy in fully to the multi-process model and just
+>> implement a generic RPC protocol between the parent and submodule gits.
+>> Does CORBA still exist?
+>>
+>> (No, I am not serious about any of that).
+>
+> CORBA or not, submodule IPC is a real pain. That was what I felt
+> reading the super-prefix changes a few weeks ago. Some operations
+> might benefit from staying in the same process, but probably not all
+> (and we lose process protection, which sometimes is a good thing)
+>
+>>> This is still very much in a WIP state, though it does pass all tests.  What
+>>> I'm hoping for here is to get a discussion started about the feasibility of a
+>>> change like this and hopefully to get the ball rolling.  Is this a direction we
+>>> want to move in?  Is it worth the pain?
+>>
+>> I think the really painful part is going to be all of the system calls
+>> that rely on global state provided by the OS. Like, say, every
+>> filesystem call that expects to find working tree files without
+>> prepending the working tree path.
+>>
+>> That said, even if we never reached the point where we could handle all
+>> submodule requests in-process, I think sticking the repo-related global
+>> state in a struct certainly could not hurt general readability. So it's
+>> a good direction regardless of whether we take it all the way.
+>
+> I doubt we would reach the point where libgit.a can handle all
+> submodule operations in-process either. That would put libgit.a in a
+> direct competitor position with libgit2.
 
-On Thu, 25 May 2017, Liam Beguin wrote:
-
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-> > index 821058d452d..9444c8d6c60 100644
-> > --- a/builtin/rebase--helper.c
-> > +++ b/builtin/rebase--helper.c
-> > @@ -24,6 +24,10 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
-> >  				ABORT),
-> >  		OPT_CMDMODE(0, "make-script", &command,
-> >  			N_("make rebase script"), MAKE_SCRIPT),
-> > +		OPT_CMDMODE(0, "shorten-sha1s", &command,
-> > +			N_("shorten SHA-1s in the todo list"), SHORTEN_SHA1S),
-> > +		OPT_CMDMODE(0, "expand-sha1s", &command,
-> > +			N_("expand SHA-1s in the todo list"), EXPAND_SHA1S),
-> 
-> Since work is being done to convert to `struct object_id` would it
-> not be best to use a more generic name instead of 'sha1'?
-> maybe something like {shorten,expand}-hashs
-
-Good point. You suggest the use of "ids" later, and I think that is an
-even better name: what we try to do here is to expand/reduce the commit
-*identifiers*. The fact that they are hexadecimal representations of
-hashes is an implementation detail.
-
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 88819a1a2a9..201d45b1677 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -2437,3 +2437,60 @@ int sequencer_make_script(int keep_empty, FILE *out,
-> >  	strbuf_release(&buf);
-> >  	return 0;
-> >  }
-> > +
-> > +
-> > +int transform_todo_ids(int shorten_sha1s)
-> > +{
-> > +	const char *todo_file = rebase_path_todo();
-> > +	struct todo_list todo_list = TODO_LIST_INIT;
-> > +	int fd, res, i;
-> > +	FILE *out;
-> > +
-> > +	strbuf_reset(&todo_list.buf);
-> > +	fd = open(todo_file, O_RDONLY);
-> > +	if (fd < 0)
-> > +		return error_errno(_("could not open '%s'"), todo_file);
-> > +	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
-> > +		close(fd);
-> > +		return error(_("could not read '%s'."), todo_file);
-> > +	}
-> > +	close(fd);
-> > +
-> > +	res = parse_insn_buffer(todo_list.buf.buf, &todo_list);
-> > +	if (res) {
-> > +		todo_list_release(&todo_list);
-> > +		return error(_("unusable instruction sheet: '%s'"), todo_file);
-> 
-> As you pointed out last time, the name of the "todo script" can be a
-> source of confusion. The migration to C could be a good opportunity to
-> clarify this.
-
-True. This was simply a copy-edited part, and I should have caught that.
-
-> I don't know which is the preferred name but we could go with
-> "todo list" as it is the most common across the code base.
-
-Yep, my next iteration will use that term.
-
-> > +	}
-> > +
-> > +	out = fopen(todo_file, "w");
-> > +	if (!out) {
-> > +		todo_list_release(&todo_list);
-> > +		return error(_("unable to open '%s' for writing"), todo_file);
-> > +	}
-> > +	for (i = 0; i < todo_list.nr; i++) {
-> > +		struct todo_item *item = todo_list.items + i;
-> > +		int bol = item->offset_in_buf;
-> > +		const char *p = todo_list.buf.buf + bol;
-> > +		int eol = i + 1 < todo_list.nr ?
-> > +			todo_list.items[i + 1].offset_in_buf :
-> > +			todo_list.buf.len;
-> > +
-> > +		if (item->command >= TODO_EXEC && item->command != TODO_DROP)
-> > +			fwrite(p, eol - bol, 1, out);
-> > +		else {
-> > +			const char *sha1 = shorten_sha1s ?
-> > +				short_commit_name(item->commit) :
-> > +				oid_to_hex(&item->commit->object.oid);
-> 
-> We could also use 'hash' or 'ids' here instead of 'sha1'.
-
-Absolutely!
-
-Thank you,
-Johannes
+Wouldn't that be a good thing? We already have some users (e.g.
+Microsoft) choosing not to use libgit and instead use git.git because
+the latter is generally more mature, if git.git gains more libgit
+features without harming other things it'll be more useful to more
+people.
