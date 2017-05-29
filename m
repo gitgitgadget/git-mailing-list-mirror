@@ -7,90 +7,109 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B27D2027C
-	for <e@80x24.org>; Mon, 29 May 2017 10:23:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 101FF2027C
+	for <e@80x24.org>; Mon, 29 May 2017 10:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750871AbdE2KXl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 May 2017 06:23:41 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:35100 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750787AbdE2KXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2017 06:23:41 -0400
-Received: by mail-oi0-f46.google.com with SMTP id l18so74104296oig.2
-        for <git@vger.kernel.org>; Mon, 29 May 2017 03:23:40 -0700 (PDT)
+        id S1750903AbdE2KhJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 May 2017 06:37:09 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:33648 "EHLO
+        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750866AbdE2KhI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2017 06:37:08 -0400
+Received: by mail-oi0-f45.google.com with SMTP id w10so74597252oif.0
+        for <git@vger.kernel.org>; Mon, 29 May 2017 03:37:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ZY6PDtKkP0Eew3mhfR0yA3py5Hwn1DCrEHvLbCkjMoc=;
-        b=USew5amPOGvtqyggt32f2TSJZMZwCtGgmjHUbegoS/Rd41bvMcvbGiuAN6ueQ8yYjp
-         RJI9JYpHlmMA1C1BaGKcN4SrvPucj7xYmsyJFO+ry5Nt6PjrH/AJjt9ouUJ7AJ8QWMHI
-         berPDAhIxOzmGNwmiFT18tXcLbbk6bnj8OQgQ8fl32O1fx7IlvuYHWuwy9BXdw6LeFMP
-         IA91pc+vMnlveROmpiykpcUpcfo6GfYzj5apfxaTA2/or9jussfBa5YHEvq4xGCTyZRR
-         62yjr2HjQT/lRluE0xCvrC2kBcKcJ+cWgD7PNROTlPTq8RR9FjzHAfmExW9GDP+zVU2g
-         om/A==
+         :cc;
+        bh=7n1FG/c2W/rnPFYRkslaR5cSY/FcRbIDbPIhJf/CJcs=;
+        b=EPSX9h98d7Ld87kKWm0m4vL1jlYLG3BChKpNbsSJQEgW61+GvdsulUqRAKi0dfmhS1
+         /+WUjrk5NLh0NaxkZgoQkjcvk7wkvmzxpmQMRrXzbbVyvQvTL2BCnGu8M4/qh24hUOQb
+         YD2QnY7mbS5vUY9j0KauZ8J237Wsja/XkhiZgUvFcwk6B/N8Hoqq5pCNXyVWZQcsX+iZ
+         BZrV6TDRUwpy68QvmSIeEqbCasv1zOw8XVvbxBfJcoewGhZLGlq6rh57PKE+0z0SWvy5
+         jIDtFTAHHpCFfDdRKaC9dA+ACNeVIyzct70RyA+gBUwABkSufxzCvnZMxUVtkQZy/E34
+         L8qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ZY6PDtKkP0Eew3mhfR0yA3py5Hwn1DCrEHvLbCkjMoc=;
-        b=qzDgoxS9mi2ccs+HOy8YIjbu2ILL14ohGM4b9tyIpk24HVn8mosAQz9g0wqkAQW2Bg
-         GzQO29XQw0xYjbVKM3gbFFRtG+/oa5PSq21Yy7WCptYaF/UXLnynVXBaCa3jWl3md4ik
-         MgLhAtR7LNfxAsq2L1WYvNqFvPZ1yFhoBeDXDM/V+ay8OzHvqosjutOC7WvMiMR5lUXy
-         bQa6VRSiXZGRsDiuZh/Fx6QuElPbvy+/4uxh2264OG5xfomPVwyFMf4B2eAiriX3NXiw
-         CgQs3SEZr6nfaElVn556lTZneIsrxBgmrxyqVO/PFSOoYAubYqHNNBIbLMz8najVnQIR
-         gAAw==
-X-Gm-Message-State: AODbwcA4ssO81LdLSjCvTt0T4bS1aU6jwu9jTSH0fnKMW81fUXGE6pea
-        awfjAUNb2LCWTbs3fCTjldtDVkz9Ww==
-X-Received: by 10.202.84.205 with SMTP id i196mr6842474oib.145.1496053420290;
- Mon, 29 May 2017 03:23:40 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=7n1FG/c2W/rnPFYRkslaR5cSY/FcRbIDbPIhJf/CJcs=;
+        b=i1OzbX4liz5P91bzv9I1pq3HEOisEv3oWo/6/pt80sU9ae6dOpwri4d2RtBK28tVWt
+         fMlADlTc2jTzpl/y+J4CZU4TC0JfP1QjDyb4hGxpxXcCxR2b6hWdkEPmEZjcAlLmtX2D
+         NGoNolvOSDxTiLt/G0yBs6UdntukQF28QESiZkmEJLxI48CFb4JTwsWet/dP45EfsHyS
+         lKm0aSjtfIBjH4t5nRESEYhDFyzL+Tww3NOfz6r2uB4wS1x1Cbcx6Gmrhm/dHdOwL8O1
+         Y1rh6P3kKM8bdxVZa0Fsh84oDRUKT957HWu+MZsWNh+qLYVDmBfJyonidpZYNW+gl80q
+         IQ0g==
+X-Gm-Message-State: AODbwcBmyVsh/RA3VKh6gb9kyxWiOmpIwJVJRhuhc5PtTdSuqVcxNw1k
+        9cH6vnA1G5iZfyp2+f0dky3KFbmgsg==
+X-Received: by 10.202.81.12 with SMTP id f12mr7236124oib.66.1496054227844;
+ Mon, 29 May 2017 03:37:07 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.145.17 with HTTP; Mon, 29 May 2017 03:23:09 -0700 (PDT)
-In-Reply-To: <20170527111032.30897-1-avarab@gmail.com>
-References: <20170527111032.30897-1-avarab@gmail.com>
+Received: by 10.74.145.17 with HTTP; Mon, 29 May 2017 03:36:37 -0700 (PDT)
+In-Reply-To: <20170522193535.7cgivd6pmmqhw7ze@sigill.intra.peff.net>
+References: <20170518232134.163059-1-bmwill@google.com> <20170522193535.7cgivd6pmmqhw7ze@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 29 May 2017 17:23:09 +0700
-Message-ID: <CACsJy8CUpHNDfvN+P7=Jub4+Z281rzExFV9x3_hdVKw6ORUSqQ@mail.gmail.com>
-Subject: Re: [RFC/PATCH] WIP: add deprecation & experimental process/interface
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+Date:   Mon, 29 May 2017 17:36:37 +0700
+Message-ID: <CACsJy8DmsG_+ASEkisUTLejVkiOmYytvTCTQs=RCH6q=BeDAhg@mail.gmail.com>
+Subject: Re: [WIP/RFC 00/23] repository object
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 27, 2017 at 6:10 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> This is the WIP start of a deprecation & experimental interface to
-> git. The goal is to formalize the workflow around deprecating
-> features, or around introducing new experimental features.
+On Tue, May 23, 2017 at 2:35 AM, Jeff King <peff@peff.net> wrote:
+> On Thu, May 18, 2017 at 04:21:11PM -0700, Brandon Williams wrote:
 >
-> This is much more idea than code at the moment, but included is an
-> example showing how :/ might be deprecated[1] (let's not discuss /if/
-> we should do that here, this is just an example).
+>> When I first started working on the git project I found it very difficult to
+>> understand parts of the code base because of the inherently global nature of
+>> our code.  It also made working on submodules very difficult.  Since we can
+>> only open up a single repository per process, you need to launch a child
+>> process in order to process a submodule.  But you also need to be able to
+>> communicate other stateful information to the children processes so that the
+>> submodules know how best to format their output or match against a
+>> pathspec...it ends up feeling like layering on hack after hack.  What I would
+>> really like to do, is to have the ability to have a repository object so that I
+>> can open a submodule in-process.
 >
-> The plan, subject to RFC feedback is to:
+> We could always buy in fully to the multi-process model and just
+> implement a generic RPC protocol between the parent and submodule gits.
+> Does CORBA still exist?
 >
->  * Add a new config variable `core.version`. E.g. `core.version =3D
->    2.14.0` With this the user can specify that they'd like
->    new/experimental features introduced in that version (and below),
->    as well as immediately getting new deprecations added in that
->    version as errors.
+> (No, I am not serious about any of that).
 
-We have extensions.* for this purpose (or close to this purpose). I
-think it's more flexible to go with extensions.* instead of a single
-"core.version". extensions.* are non-optional though (if a git binary
-does not understand it, the repo can't be accessed). So it's more
-about fundamental experiments (like sha256 transition). I'm guessing
-we can have a "soft" extensions (warn if not understand, instead of
-die), like what we have in $GIT_DIR/index.
+CORBA or not, submodule IPC is a real pain. That was what I felt
+reading the super-prefix changes a few weeks ago. Some operations
+might benefit from staying in the same process, but probably not all
+(and we lose process protection, which sometimes is a good thing)
 
-Deprecation via extension.* though may be unintuitive. But I think
-something along that line (e.g. deprecation.*) might work.
---=20
+>> This is still very much in a WIP state, though it does pass all tests.  What
+>> I'm hoping for here is to get a discussion started about the feasibility of a
+>> change like this and hopefully to get the ball rolling.  Is this a direction we
+>> want to move in?  Is it worth the pain?
+>
+> I think the really painful part is going to be all of the system calls
+> that rely on global state provided by the OS. Like, say, every
+> filesystem call that expects to find working tree files without
+> prepending the working tree path.
+>
+> That said, even if we never reached the point where we could handle all
+> submodule requests in-process, I think sticking the repo-related global
+> state in a struct certainly could not hurt general readability. So it's
+> a good direction regardless of whether we take it all the way.
+
+I doubt we would reach the point where libgit.a can handle all
+submodule operations in-process either. That would put libgit.a in a
+direct competitor position with libgit2. I do hope though that having
+clearer/modular data structure will improve readability, not hurt it
+(e.g. you see the data model and could largely guess how the code
+interacts before digging deep in).
+-- 
 Duy
