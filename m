@@ -2,117 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF4992027C
-	for <e@80x24.org>; Mon, 29 May 2017 11:23:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3A872027C
+	for <e@80x24.org>; Mon, 29 May 2017 11:26:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751058AbdE2LXp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 May 2017 07:23:45 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:35542 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751083AbdE2LXo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2017 07:23:44 -0400
-Received: by mail-it0-f49.google.com with SMTP id c15so25447653ith.0
-        for <git@vger.kernel.org>; Mon, 29 May 2017 04:23:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=cEXXs1FFpgzbj95rnFGMYB2sCRjU8aBeA8+Jx3tDMxA=;
-        b=U7SoEo08SSQwYERH1Bjo3yd4lrxns4FI9tehw1xNa+weLQ25aZ7Arggv7CWnPwfqIi
-         xMdSN1zRmPMPOTFxeg3Ekh1d7brHUlx+uMgY1/NA0W17O8S0fyDbxH1BU1qkVnFtHzxF
-         E5ZsNju9inqxHZrjtlOBp9vtcE0HVpjnIaGv1dhphzM6w3hjZCTkeDUxQ93vLYbvZXzz
-         MZR1TGKJUcuqNFtEC0zkGas5+htTDW3O/wAxyyhW346ZjSmolHA5CFA6CZcJ91niL59a
-         B7YYPvg8cNpyEiOlKLkXFbIPQkg/NLwshjWgH89Ho1QrC1jws77TGdyTHNpxTwD9uuQH
-         tOGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=cEXXs1FFpgzbj95rnFGMYB2sCRjU8aBeA8+Jx3tDMxA=;
-        b=Y8e1IlTS/HiJjYAF7Zqnx2/bopTS3J/jSbtdopvvccJNkGU6lUhNnDdhaGhBxB9Fqy
-         +KncwPqTPTAkihjDVxyDnENvPgg6sQV2tOAfXVf06Fg/IK8a3ilEWSIt6ZQ7rMWDOLOZ
-         KpB3H8Halt/KDk4ORhcPPJKdREHyAqUdkPNYHA5/kT1r5/NsARaSpKuA3eP32ac/ylI+
-         iCYkMcmXtUAbtqPMSizOUfNNtb6gEaS6c71IeH1BpZVs5BWZIET880gj/eixMCvh0+9t
-         Ki5DdmwAVEm0Wp0SgtMqL+ongVC/19/NjuyuEaoHP7Pru5/7cGC1f8/FBMw4x7FZWtMW
-         YwHQ==
-X-Gm-Message-State: AODbwcAa6VxuEaMvC0XWszjtqPHQO6IDUskn5BApRUA6y8K9crpz/Opy
-        fJAqSrDtnJSKqQiq0gOQLvm8M4nlAA==
-X-Received: by 10.36.53.79 with SMTP id k76mr13213843ita.71.1496057023365;
- Mon, 29 May 2017 04:23:43 -0700 (PDT)
+        id S1751069AbdE2L0W (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 May 2017 07:26:22 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58800 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750893AbdE2L0T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2017 07:26:19 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0McPvw-1dWyBd47Hc-00HgYf; Mon, 29
+ May 2017 13:26:10 +0200
+Date:   Mon, 29 May 2017 13:26:08 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Liam Beguin <liambeguin@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        philipoakley@iee.org, phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 10/10] rebase -i: rearrange fixup/squash lines using
+ the rebase--helper
+In-Reply-To: <20170526031639.10790-1-liambeguin@gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1705291322150.3610@virtualbox>
+References: <6825a2bb46f43687af0565e4d38224d472932203.1493414945.git.johannes.schindelin@gmx.de> <20170526031639.10790-1-liambeguin@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Mon, 29 May 2017 04:23:22 -0700 (PDT)
-In-Reply-To: <CACsJy8DmsG_+ASEkisUTLejVkiOmYytvTCTQs=RCH6q=BeDAhg@mail.gmail.com>
-References: <20170518232134.163059-1-bmwill@google.com> <20170522193535.7cgivd6pmmqhw7ze@sigill.intra.peff.net>
- <CACsJy8DmsG_+ASEkisUTLejVkiOmYytvTCTQs=RCH6q=BeDAhg@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 29 May 2017 13:23:22 +0200
-Message-ID: <CACBZZX5GRxecDQkoqLv55FLuiSohGSR3U1U+sG0vFFpexcc54A@mail.gmail.com>
-Subject: Re: [WIP/RFC 00/23] repository object
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:KLwIQnRjpvbh3NA6EbzFFE+KN1YCZ76T6nzwEqzYCBNDnd94Qnm
+ AR/icBYZwRwba0Rxlp+n8dkzakuszcqOGzap7uEgJc7nRHemZGUCyzZOJa4nsHvT0/CLyhq
+ A0heBY61ETfmVtSuFsCdxgmf4aIhCgUn8ComhH12lKh5TMzDO6Fd/je67JlweJSqrgH0Eig
+ wX6HP/IT4OVCemamFb1rQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:77olI7HM/IE=:H+qAW/kXehmu55AYe9koB/
+ 1hTX1QgQ55GklkLdq/RcmQ8l5v6dRLxOm/H6/iTEYPi3B6fPwEzwNqKEULg+Sy3iCM3B/LdXj
+ VWFCIJ51erfjpSVCv6gv7ynVcPY7pzA3GJn0Fah5/cVfhS71llSGAB/ge4VQR/8jLz9/QdkdU
+ sUH6x+Fdx5swOnfnYtCO8IUunfYkc3FZtLdSyF/H5S6b8i8uCfh6wA3USqsY1ZC1Bw0BxZcNk
+ yqcGlUMY7nFFlaeXBGNvDuTe9hyl4nu631kPEglSetj5mPf+XIyoRavK+eQULqFfTud6ayUqX
+ Std0uSRit7euRALPzlKzNZvC/80l95rKoT/nEtS9GPuC+Bvdby3hh8ASU7A1YxQidiHPvtUCU
+ FwbK9SsTVzI6Y6XKV6/3Ve0QLaE938YSMTr/3RCN6hWMV5CCLEu0cFNLs3/SmjLG+L35QaFDp
+ Wx/sEDNVWyDLVDOwFiEWBqfQCQMpdfe+GwFJK5BPIyYYhnC+x0MxtWiJEFqIULq98tGh6YGcq
+ lVA1aDWrFEIb/L4SW+1bQX/J4JZSuX4eFO5bWblMDOi///+b6zbqqfk4veZ36rZsMQ1icaPDj
+ ujrwhNobHJVxcwdinR8dtW0yInd12cz+YbopS4UvYnaCjzR9+7YRZyVnqdl/AEYx7jksWPGIy
+ lj/07xIp7Ll56gxPGB/l3qrpgq8mjRxAqR+bRxLxArB6sMPZetAbarMAbzRHtwfGuOJc6/KKm
+ r8m1VLAjEv9nOClWIjwYH0c4DjhEZ8e5Mxm8Imotf35ScRKBDYaYl7f9/BCSIancM1qgW/X7u
+ UxCWHjs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 29, 2017 at 12:36 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, May 23, 2017 at 2:35 AM, Jeff King <peff@peff.net> wrote:
->> On Thu, May 18, 2017 at 04:21:11PM -0700, Brandon Williams wrote:
->>
->>> When I first started working on the git project I found it very difficult to
->>> understand parts of the code base because of the inherently global nature of
->>> our code.  It also made working on submodules very difficult.  Since we can
->>> only open up a single repository per process, you need to launch a child
->>> process in order to process a submodule.  But you also need to be able to
->>> communicate other stateful information to the children processes so that the
->>> submodules know how best to format their output or match against a
->>> pathspec...it ends up feeling like layering on hack after hack.  What I would
->>> really like to do, is to have the ability to have a repository object so that I
->>> can open a submodule in-process.
->>
->> We could always buy in fully to the multi-process model and just
->> implement a generic RPC protocol between the parent and submodule gits.
->> Does CORBA still exist?
->>
->> (No, I am not serious about any of that).
->
-> CORBA or not, submodule IPC is a real pain. That was what I felt
-> reading the super-prefix changes a few weeks ago. Some operations
-> might benefit from staying in the same process, but probably not all
-> (and we lose process protection, which sometimes is a good thing)
->
->>> This is still very much in a WIP state, though it does pass all tests.  What
->>> I'm hoping for here is to get a discussion started about the feasibility of a
->>> change like this and hopefully to get the ball rolling.  Is this a direction we
->>> want to move in?  Is it worth the pain?
->>
->> I think the really painful part is going to be all of the system calls
->> that rely on global state provided by the OS. Like, say, every
->> filesystem call that expects to find working tree files without
->> prepending the working tree path.
->>
->> That said, even if we never reached the point where we could handle all
->> submodule requests in-process, I think sticking the repo-related global
->> state in a struct certainly could not hurt general readability. So it's
->> a good direction regardless of whether we take it all the way.
->
-> I doubt we would reach the point where libgit.a can handle all
-> submodule operations in-process either. That would put libgit.a in a
-> direct competitor position with libgit2.
+Hi Liam,
 
-Wouldn't that be a good thing? We already have some users (e.g.
-Microsoft) choosing not to use libgit and instead use git.git because
-the latter is generally more mature, if git.git gains more libgit
-features without harming other things it'll be more useful to more
-people.
+On Thu, 25 May 2017, Liam Beguin wrote:
+
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> [...]
+> > +	if (rearranged) {
+> > +		struct strbuf buf = STRBUF_INIT;
+> > +
+> > +		for (i = 0; i < todo_list.nr; i++) {
+> > +			enum todo_command command = todo_list.items[i].command;
+> > +			int cur = i;
+> > +
+> > +			/*
+> > +			 * Initially, all commands are 'pick's. If it is a
+> > +			 * fixup or a squash now, we have rearranged it.
+> > +			 */
+> > +			if (is_fixup(command))
+> > +				continue;
+> > +
+> > +			while (cur >= 0) {
+> > +				int offset = todo_list.items[cur].offset_in_buf;
+> > +				int end_offset = cur + 1 < todo_list.nr ?
+> > +					todo_list.items[cur + 1].offset_in_buf :
+> > +					todo_list.buf.len;
+> > +				char *bol = todo_list.buf.buf + offset;
+> > +				char *eol = todo_list.buf.buf + end_offset;
+> 
+> I got a little confused with these offsets. I know it was part of a
+> previous series, but maybe we could add a description to the fields
+> of `struct todo_list` and `struct todo_item`.
+
+You mean "offset_in_buf"?
+
+Sure, I can add a comment there. I would like to keep it out of this patch
+series, though, as the purpose of it is to accelerate rebase -i by moving
+logic from the (slow) shell script code to the (decently fast) C code.
+
+Ciao,
+Johannes
