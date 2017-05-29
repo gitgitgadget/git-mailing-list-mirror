@@ -7,96 +7,98 @@ X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 794B22027C
-	for <e@80x24.org>; Mon, 29 May 2017 10:52:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9CC92027C
+	for <e@80x24.org>; Mon, 29 May 2017 10:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750982AbdE2Kv7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 May 2017 06:51:59 -0400
-Received: from mout.gmx.net ([212.227.17.20]:55024 "EHLO mout.gmx.net"
+        id S1751107AbdE2KyN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 May 2017 06:54:13 -0400
+Received: from mout.gmx.net ([212.227.17.22]:57652 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750921AbdE2Kv6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2017 06:51:58 -0400
+        id S1750885AbdE2KyM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2017 06:54:12 -0400
 Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgpmG-1dbCs11Z3I-00M4HL; Mon, 29
- May 2017 12:51:41 +0200
-Date:   Mon, 29 May 2017 12:51:38 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M2WgT-1e6hg72e97-00sOwW; Mon, 29
+ May 2017 12:54:02 +0200
+Date:   Mon, 29 May 2017 12:54:01 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     Liam Beguin <liambeguin@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, peff@peff.net, philipoakley@iee.org,
-        phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 00/10] The final building block for a faster rebase
- -i
-In-Reply-To: <6f0e176b-e638-c13c-6a6d-aa5b62297879@web.de>
-Message-ID: <alpine.DEB.2.21.1.1705291247000.3610@virtualbox>
-References: <cover.1493414945.git.johannes.schindelin@gmx.de> <20170526031508.24838-1-liambeguin@gmail.com> <6f0e176b-e638-c13c-6a6d-aa5b62297879@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 02/10] rebase -i: generate the script via
+ rebase--helper
+In-Reply-To: <xmqq60gk8ad5.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1705291252080.3610@virtualbox>
+References: <cover.1493207864.git.johannes.schindelin@gmx.de> <cover.1493414945.git.johannes.schindelin@gmx.de> <e173445d9a6321f80053967e50375400c0a61764.1493414945.git.johannes.schindelin@gmx.de> <xmqq60gk8ad5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1569139910-1496055101=:3610"
-X-Provags-ID: V03:K0:WXirDn58Q+IQIHQrz0sRVN0No+Oiqd8e5R/3RjAmCghKFAVPAJ6
- o81UB3p5oJSWyPc7BpjG9CIUGRW08eV919JQR/OdSVvtvpShfh0G2PWURdXg/9YvkNEC8WH
- U5VXGWsBHe9sXRHN6EWwfxt61s/gKKAzQmFF52fC4Iulw6SWqJDRhWg3sBCKP1xdocBTPKr
- Aclxay6L0gaYd/hB1zbdA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:lExqtUpgfIc=:RNO0TurgS1tJTPtS5a4skt
- QKEOorJFALOdQoZLuyacXyBplDOLEezYPszZHOJ0VoBZFb9rgj3+Q6sXkr5iT64zX657mv1Vp
- ZanaN6TbbghwZiKnY4UM9AKmUsiEedwRuiitsTm1vIQKtpk5Vrv5sRQiyoEOtnLCvEFZBHB3s
- YXys03/tCs3U+hV8/kqreIbXCUKo2iYvFXq3Sf3Y8yE2URBQNQmJRKkqteti7cW4Eq6320E/Y
- P1XuN05aYVCwPI3QwoGJGc64HqTp9hgDnIAZE360BFpxly9y6Jheqct56WapXctpxJ2/FrTeT
- xFlgX0pdEl33Di9zJukvYE7QZVgN2zF0v3scndza7l6XbmU243DsXDU0zKzNat9HJjWUvi3xI
- FzFPglvs/vzXXUD9Bpejjyt7K1VnuOAraFulAzLPFTZzwcKucYfBXmZQNn+pF79+ICRNZo/q/
- cfHYEdMclGWfY4FBWJJGWySH9InkvphH877jLAdIUFNWHNriu7D5RWo5LSKLIsWA2vbjEmxHw
- 3OrN/dkwLozia6AXcGcbpT1tyNCWtuC41F+lzjLgXmZkhfHARr/na8x/syxCt1gyFZM3ik5z4
- ywTscSDPhS1F+U8KKU9hFMl9pQ/eiRxJTLiT4Pjyal+ypsmkA2kkx8XkWN8EWrlMYMCoz+6RM
- 2/COvN7TPQlZOL95gXnRVZjColw2DbWujFpSwSOZjs9XcnliGNOmrdkujqOw+w1+BDORlNocj
- MXmyhb4osYLh7H4zXhyEZ4yU9Y8APqdDCdOfBw8ODWPYpZvnTz4XAPwcwwWxwO6UtX3trpEG7
- NWOE6LA
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:+ZXYPTas96vn1Tdnm9z6Wb+goTlA+HZJBmdiHziw6ylQZqUQljb
+ nt0Le71do/iwt6tSJBycV+YrplvmJqa+OV63YR6YA8IXCskKtmN/OX6E4OQJHVCnXbMusVV
+ 3LDGnhfTc3DRzrCDk1g7VJaXGmIg7Q6yF//E9roQbe1nryE3jU2Ldmq8R5+DVjjncoAaww9
+ q6SFG8TAGZuQ4X/GGTXVg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sRaZ4CT8nSU=:kvNzh6AI43ndv94y0uYhCy
+ ZsX8WahkRly+Yd68rOVg4DoymaY/fJ/k5KRoVbK0i0mFoWOvW+YopA/FtOEfmhvGQUbN2Vjeh
+ kZfSAOesLpO6muQPEqgLRvKdunYRs/aABXTGKKisxHl+EilnhVbpILXxB+SA2+npb2B/Y63q4
+ WIDdtK6Zt/LTx+3rny1F8gdcXH2HtHbaGr0JwGwIMLUrDrTfNMOZKKtCBfMCbUtW+do3zfP1L
+ edOv/Gn0vUkmv1ARZi2GyYPapuzCeE1kqp1PCHY/TjIOO2uQuWbJkRjYS/excYza1JHC6TQ82
+ 57Nqtrw5GjzsZ5t5m5IuJhzvxBAX67AJ32neZu/S70CCzPRBnkBH8ekW+FD2r99FyjdBqnPd3
+ Onu9nDoIUzWCc1o0jp3KBjAecE5kVIgVIxGhtOOQpC2iCamxzklNoZ3nBf5rs7pO3EdhaAfFt
+ z+MHQan+JwOxlOvjYPMIyu1vBSVFm27GGhgw099iPyyjFeDCBAzGhuSuSNmlSYtObKtPf57Nh
+ nv+H2zH1pe1vMmR37WQEaMlnLip2gB3Z32bGgwf+R8eXGsKpw3DJMwgIp/qGyndDx6Yb/9BkE
+ luBN++l5d7NGCk5oSu1ik6sLBTj3JA+TH3IFqy5zFmuOMA/+dU5I4dnlNb0d9cJHDpe7weCRx
+ EvmQjdgT0EOTMTnsp7MfnZgE8wrtqF0EbDTJPparWwunVoNZ/oAFKmjRpAdUzmwZT6RyHQG9A
+ gkVPGxoO0c9kn5MzKDdDzswqgE94ry0x+bt8zS93nuMjMXj0dDEe7iUuCmVRQyJzshVX2xiPp
+ Ovk/Ey+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-1569139910-1496055101=:3610
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Mon, 29 May 2017, Junio C Hamano wrote:
 
-Hi Ren=C3=A9,
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 130cc868e51..88819a1a2a9 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -2388,3 +2388,52 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+> >  
+> >  	strbuf_release(&sob);
+> >  }
+> > +
+> > +int sequencer_make_script(int keep_empty, FILE *out,
+> > +		int argc, const char **argv)
+> > +{
+> > +	char *format = NULL;
+> > +	struct pretty_print_context pp = {0};
+> > +	struct strbuf buf = STRBUF_INIT;
+> > +	struct rev_info revs;
+> > +	struct commit *commit;
+> > +
+> > +	init_revisions(&revs, NULL);
+> > +	revs.verbose_header = 1;
+> > +	revs.max_parents = 1;
+> > +	revs.cherry_pick = 1;
+> > +	revs.limited = 1;
+> > +	revs.reverse = 1;
+> > +	revs.right_only = 1;
+> > +	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+> > +	revs.topo_order = 1;
+> 
+> cf. <xmqq4lx5i83q.fsf@gitster.mtv.corp.google.com>
+> 
+> This is still futzing below the API implementation detail
+> unnecessarily.
 
-On Sat, 27 May 2017, Ren=C3=A9 Scharfe wrote:
+You still ask me to pass options in plain text that has to be parsed at
+run-time, rather than compile-time-verifiable flags.
 
-> Am 26.05.2017 um 05:15 schrieb Liam Beguin:
-> > I tried to time the execution on an interactive rebase (on Linux) but
-> > I did not notice a significant change in speed.
-> > Do we have a way to measure performance / speed changes between version=
-?
->=20
-> Well, there's performance test script p3404-rebase-interactive.sh.  You
-> could run it e.g. like this:
->=20
-> =09$ (cd t/perf && ./run origin/master HEAD ./p3404*.sh)
->=20
-> This would compare the performance of master with the current branch
-> you're on.  The results of p3404 are quite noisy for me on master,
-> though (saw 15% difference between runs without any code changes), so
-> take them with a bag of salt.
-
-Indeed. Our performance tests are simply not very meaningful.
-
-Part of it is the use of shell scripting (which defeats performance
-testing pretty well), another part is that we have no performance testing
-experts among us, and failed to attract any, so not only is the repeat
-count ridiculously small, we also have no graphing worth speaking of (and
-therefore it is impossible to even see trends, which is a rather important
-visual way to verify sound performance testing).
-
-Frankly, I have no illusion about this getting fixed, ever.
-
-So yes, in the meantime we need to use those numbers with a considerable
-amount of skepticism.
+I am quite puzzled that you keep asking me to make my code sloppy.
 
 Ciao,
 Dscho
---8323329-1569139910-1496055101=:3610--
