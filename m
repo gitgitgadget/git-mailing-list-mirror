@@ -2,76 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B96AE20D0A
-	for <e@80x24.org>; Mon, 29 May 2017 13:01:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D0E720D0A
+	for <e@80x24.org>; Mon, 29 May 2017 14:38:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751090AbdE2NBd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 May 2017 09:01:33 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:36647 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751017AbdE2NBc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2017 09:01:32 -0400
-Received: by mail-it0-f41.google.com with SMTP id o5so26585458ith.1
-        for <git@vger.kernel.org>; Mon, 29 May 2017 06:01:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=QyrgE0UumM7kP2rh56l76MCeBC/Gtm4OppE/22o4TJM=;
-        b=IxytJ66Qw9eAO7wPg2/hT0CoSuLHyt4DsYK5+krXe04LaHuUDPVDDGGYSMzUFssHTn
-         UrlxpS+RgbalqPmk9+sI3CdqDVUOAryrnD1geyyduzMv4W/zvnavmSXjDLwN0qxM+MBG
-         VEw0yspr3mH5bUhLYPim2zAVLOZa7UfDlsc4FmgOOpYTfNXCggu/42hm8Co/3RAzSbKr
-         AMXeNO8WJxrTIvYFFKLYQpsSZogcrBzmy6SKnlyOL8CB/3g3uYLvo80QfY4KklgUjjq9
-         sgv6W+kfB9XdWxoAyE+NmGlBt/Y2/LE756Ls0MZ1wPJQWip8z7PRUOD246hje9MbzDCS
-         dgqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=QyrgE0UumM7kP2rh56l76MCeBC/Gtm4OppE/22o4TJM=;
-        b=KvSi1PInGVlrY3J2DyqSQfGFZs64qkbFgI5osodNWhGSxvWQjwPwA+e5SnyVQSCuoL
-         h/+vy35Hcu9vuVqLbl9+2PziuWhpw7D4yVCpzc3q63898OT2Yfw8cLUTackWcEI+a2d2
-         OcjCqkxvUuRzaOQDP8Q6J+1TLJkHL3QY8mpeLT/KPVexoliMlE25/tSq4nUkS0p4q8N4
-         ajhYn/kX9FjeKB06zZU9hrElQUlDQf59reXsWEk4kyWPXmlyMgFRC6QYQtwY16/sr8Eg
-         Ho2B6NpWioI7PrjydO0P4gyrPBlx+DqeSV+Q9MM3QV/q9svR5ubfG6vWuQe8Ha3jcPT9
-         xrFw==
-X-Gm-Message-State: AODbwcCx6Yi+X2uDrSE1JMK/uRAyapPVoFqdhMOx9guiQ/MYt4o5HKhL
-        wcuE+Ew5KxHlcBjUHtUP0uObtpHC6i1wgys=
-X-Received: by 10.36.29.150 with SMTP id 144mr7555049itj.71.1496062891963;
- Mon, 29 May 2017 06:01:31 -0700 (PDT)
+        id S1751034AbdE2Oih (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 May 2017 10:38:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59409 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750987AbdE2Oig (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2017 10:38:36 -0400
+Received: (qmail 3503 invoked by uid 109); 29 May 2017 14:38:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 May 2017 14:38:35 +0000
+Received: (qmail 17395 invoked by uid 111); 29 May 2017 14:39:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 29 May 2017 10:39:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 29 May 2017 10:38:33 -0400
+Date:   Mon, 29 May 2017 10:38:33 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC/PATCH] WIP: add deprecation & experimental process/interface
+Message-ID: <20170529143832.65hjawks74co6tqe@sigill.intra.peff.net>
+References: <20170527111032.30897-1-avarab@gmail.com>
+ <CACsJy8CUpHNDfvN+P7=Jub4+Z281rzExFV9x3_hdVKw6ORUSqQ@mail.gmail.com>
+ <CACBZZX5SbYo5fVPtK6LW1FF96nR5591RHHC-5wdjW-fmg1R0EQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Mon, 29 May 2017 06:01:11 -0700 (PDT)
-In-Reply-To: <20170529114518.dwlyayg5kfjjwtpx@macports.org>
-References: <20170529114518.dwlyayg5kfjjwtpx@macports.org>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 29 May 2017 15:01:11 +0200
-Message-ID: <CACBZZX4kfNhEOtgpFkWtuTZshJX+tX_Dogd6tk6qEuGX07JqiA@mail.gmail.com>
-Subject: Re: [Bug] setup_git_env called without repository
-To:     Zero King <l2dy@macports.org>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX5SbYo5fVPtK6LW1FF96nR5591RHHC-5wdjW-fmg1R0EQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 29, 2017 at 1:45 PM, Zero King <l2dy@macports.org> wrote:
-> After upgrading to Git 2.13.0, I'm seeing the following error message
-> when running `git am -h`.
->
->    $ git am -h
->    fatal: BUG: setup_git_env called without repository
->
-> And with Git built from the next branch:
->
->    $ git am -h
->    BUG: environment.c:172: setup_git_env called without repository
->    Abort trap: 6
+On Mon, May 29, 2017 at 01:20:02PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Jeff, bisects to your b1ef400eec ("setup_git_env: avoid blind
-fall-back to ".git"", 2016-10-20).
+> >>  * Add a new config variable `core.version`. E.g. `core.version =
+> >>    2.14.0` With this the user can specify that they'd like
+> >>    new/experimental features introduced in that version (and below),
+> >>    as well as immediately getting new deprecations added in that
+> >>    version as errors.
+> >
+> > We have extensions.* for this purpose (or close to this purpose). I
+> 
+> From reading repository-version.txt it seems unrelated to what I'd
+> like to do. I.e. there you'd like to introduce a hard breakage and
+> it's already documented that if you encounter some extensions.* keys
+> you don't understand you *must not* proceed.
+> 
+> Whereas for this you'd like to e.g. turn on some experimental feature
+> in 2.16, but if you're running a 2.14 git you'd like it to just ignore
+> that config key it doesn't know about instead of git breaking.
+
+Right. repostoryformatversion (and extensions) is about the on-disk
+format of a repo. If I understand correctly, this is about the user
+specifying their preferred behaviors. Which is totally orthogonal.
+
+The former must be set in the repo-level .git/config, and would
+generally be set by Git itself when it writes a repo using that feature
+(e.g., upcoming ref backends).  But this new thing would likely be set
+in the ~/.gitconfig explicitly by the user, when they want to change the
+behavior profile.
+
+For that reason, I'd suggest using a name that is a little different
+from "core.version", since it's easily missed up with
+"core.repositoryformatversion". But that's a minor detail.
+
+-Peff
