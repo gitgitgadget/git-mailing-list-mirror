@@ -2,109 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B21AF1FD09
-	for <e@80x24.org>; Mon, 29 May 2017 04:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CB1D1FD09
+	for <e@80x24.org>; Mon, 29 May 2017 04:27:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750908AbdE2EU5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 29 May 2017 00:20:57 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:35890 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750838AbdE2EU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 29 May 2017 00:20:57 -0400
-Received: by mail-pg0-f48.google.com with SMTP id x64so17142162pgd.3
-        for <git@vger.kernel.org>; Sun, 28 May 2017 21:20:56 -0700 (PDT)
+        id S1750880AbdE2E1s (ORCPT <rfc822;e@80x24.org>);
+        Mon, 29 May 2017 00:27:48 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36642 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750844AbdE2E1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 29 May 2017 00:27:47 -0400
+Received: by mail-pg0-f68.google.com with SMTP id h64so5169041pge.3
+        for <git@vger.kernel.org>; Sun, 28 May 2017 21:27:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nleHqJ1g87kLfkqrUoksGeySfIJJziXpLZqjgrL2k9k=;
-        b=t0bck4It/qc8olQvlDsW0U+kKs5M7QlZZCddQs+rdoHcnTFp9DyBc3Km2+f1zqjOga
-         BYtKlYqPD1rl6uOY7gDBEHZDZg3qUN+fC2V/WG3CzZEVDoxsHhKMHVLxOMY2/B8NBYxb
-         sNvuHTlMIeMqTez4B1zjVbBf6brJf2vCHNxikcGqNGOfa73SwlzAexwagrWBmMHuh+do
-         ih12X2WYdEtqmYaKhB49rqMrywVvlpCJ1W0bSM26/BB8rRZrldwHpeIvIIbNaKNolyBu
-         9bgB15lPs7jQuhNVpeqc6qkGfMx6t7iW2dKMUViAwe7CNZW0rgmiJThBssa8uf04/qQD
-         XZ7A==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=NqYcpY5RzUws7N60L0y4EtEZQcVIiblRe9uCtrb0Pt0=;
+        b=UmtdBgUDNv1dpGE5geNimL6e9EgxNo1rmJvAhZq9AY7Ut7joesW47YCLw2nf8faedO
+         xrT66fjJiZy2j7COr41gnfa5vR00YySgUw/DVBdhICI9zcepLFNoywHbxHBLe8GIBrl2
+         mly+2BjAhsLyeRRofYGyYvygpgWuHKArBlAm937vvG02uZXCOfQPXZeHenwh7pl04r+A
+         SPwP+G1mCb+8M7WlQERvihI9JMlaNC9lVpI46pI4i5t2ijbykOKTmnh92J8nVfRVdz1o
+         LeFVm3enT2tKLzb6sQ9xzeQnyZti9cNB93fYqqdRyAzbeVcInxhCR88ffQu/lym0/y+n
+         QrNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nleHqJ1g87kLfkqrUoksGeySfIJJziXpLZqjgrL2k9k=;
-        b=c0lFkqsSsFRwPI037iU3DV49DuS7gveRFo+8vjsNNF3I1ZpTc55d102y7apTyMt65J
-         6WRH/e81bml70qg/KcAn3F6B4hgQdyOA9ufzh64hbNxCDuUhmhBsElmJBSEDC4nenk6w
-         sMFrVdpU5qMAin4s1ON9qH9Ih75k5gCQirMwT2hG45VM4ZWSJKRNgpLa2stF77ffDo0L
-         4PxL044+xx28c/xpVmp8rRgeVxVUc6LOVPpyPNtZseF6uW75BURUU7mjXnKOrwc3j44N
-         fuYrBwRGrWDQ1NN69OAvwBG3ggudjfQRRBWsPOrvkGN+6EkkdvIEmSU2nkUX2IqALJZY
-         aUHQ==
-X-Gm-Message-State: AODbwcA7d1osfSHgDQjxkFwih4+vSnVK20cJyuAfXdxF46ppWiNiF6Eb
-        vFjzxxGDhH4RsSaJistnhG5aGN3qNaTL
-X-Received: by 10.99.116.7 with SMTP id p7mr16356774pgc.162.1496031656272;
- Sun, 28 May 2017 21:20:56 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NqYcpY5RzUws7N60L0y4EtEZQcVIiblRe9uCtrb0Pt0=;
+        b=o5w8nKIZPD9Jxil7fWeKDqFhVmjxqTU6Vq6Rrf8r5VVBAmqe8vZVS7LOsUhqABKAnb
+         lAi6MaFUjInlk2SYOGUliclX4krVfiJJlBh79loy9WR00sEcJ4LUIkrc0ENczkaztlxE
+         v77C8wdLTWbH5e1ZY+pzpVIxAza5G3XYTgtB/CWbtJc1m7nZyFkXtIfU6nXtk4FFmfRN
+         TgwxYRmdh89HibZ5j/i6avWVRAsaevs9o6GGvmxXoDQ98r8ZYP+7U++NSs9EYeA+EsCP
+         ZIcSVD5lr1Mb1sV8RwnV0gO24CoLhOjbmUIxRCpWuO1karFJKed8mFVJWocokEHBPqK5
+         s8/g==
+X-Gm-Message-State: AODbwcAAnNahpVxkl7JK+PmuJ3DGszdouTpZdRx2vXRpaFY0VrGei/93
+        iI12jDdr82Y7Gg==
+X-Received: by 10.98.40.198 with SMTP id o189mr15926955pfo.238.1496032066860;
+        Sun, 28 May 2017 21:27:46 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:393e:d787:9be9:17cc])
+        by smtp.gmail.com with ESMTPSA id e124sm13421347pfc.64.2017.05.28.21.27.46
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 28 May 2017 21:27:46 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Andreas Heiduk <asheiduk@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: filter-branch does not require re-export of vars
+References: <20170526173654.4238-1-asheiduk@gmail.com>
+        <20170526183702.jrjkykhldz74pquq@sigill.intra.peff.net>
+        <CAJZjrdVjeeHUN_biza-MA9iqP5Y5CO3DkLaGG-Bq1w5oo5tW_g@mail.gmail.com>
+Date:   Mon, 29 May 2017 13:27:45 +0900
+In-Reply-To: <CAJZjrdVjeeHUN_biza-MA9iqP5Y5CO3DkLaGG-Bq1w5oo5tW_g@mail.gmail.com>
+        (Samuel Lijin's message of "Sun, 28 May 2017 21:35:30 -0400")
+Message-ID: <xmqqa85w8eym.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Sun, 28 May 2017 21:20:55 -0700 (PDT)
-In-Reply-To: <xmqqinkk8jqm.fsf@gitster.mtv.corp.google.com>
-References: <CAE5=+KX57KM+6n9NpePw9KYPXFy7UH-WRgSwaJDnvRofYFXm7Q@mail.gmail.com>
- <xmqqinkk8jqm.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Sun, 28 May 2017 21:20:55 -0700
-Message-ID: <CAGZ79kYHNpsasqhTY2WrCYgNU1if-pK7UznJV9AWEhxVf6_GvQ@mail.gmail.com>
-Subject: Re: git push recurse.submodules behavior changed in 2.13
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        John Shahid <jvshahid@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 28, 2017 at 7:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> John Shahid <jvshahid@gmail.com> writes:
+Samuel Lijin <sxlijin@gmail.com> writes:
+
+>> However, I think POSIX mandates the behavior you'd expect. And the only
+>> shell I know that misbehaves in this way is Solaris /bin/sh, which we
+>> have already declared too broken to support.
 >
->> It looks like the git push recurse-submodules behavior has changed.
->> Currently with 2.13 you cannot run "git push
->> --recurse-submodules=on-demand" if the parent repo is on a different
->> branch than the sub repos, e.g. parent repo is on "develop" and
->> sub-repo on "master". I created a test that can be found here [1].
->>
->> A bisect shows that the change to propagate refspec [2] to the
->> submodules is the culprit. imho this is an undesired change in
->> behavior. I looked at the code but couldn't see an easy way to fix
->> this issue without breaking the feature mentioned above. The only
->> option I can think of is to control the refspec propagation behavior
->> using a flag, e.g. "--propagate-refspecs" or add another
->> recurse-submodules option, e.g. "--recurse-submodules=propagate"
->>
->> What do you all think ?
->>
->> [1] https://gist.github.com/jvshahid/b778702cc3d825c6887d2707e866a9c8
->> [2] https://github.com/git/git/commit/06bf4ad1db92c32af38e16d9b7f928edbd647780
->
-> Brandon?  I cannot quite tell from the report what "has changed"
-> refers to, what failures "you cannot run" gets, and if that is a
-> desirable thing to do (i.e. if letting the user run it in such a
-> configuration would somehow break things, actively erroring out may
-> be a deliberate change) or not (i.e. an unintended regression).
->
+> Off-topic, but where is this explicitly documented?
 
-Before the refspec was passed down into the submodules,
-we'd just invoke "git push" in the submodule assuming the user
-setup a remote tracking branch and a push strategy such that
-"git push" would do the right thing.
-And because the submodule is configured independently, it
-doesn't matter which branch you're on in the superproject.
+One link I had readily available was
 
-Looking at the test[1], you run "git push --recurse-submodules"
-without any remote/branch that was called out in the commit
-message[2] to not have changed. Is that understanding correct?
+  https://public-inbox.org/git/7vei5qtnc5.fsf@alter.siamese.dyndns.org/
 
-Looking at the test cases of [2] we did not test for explicit
-"still works with no args given", though one could have expected
-we'd have a test for that already. :/
-
-Thanks,
-Stefan
+but there may be older discussions that were the actual process of
+our officially having "written its /bin/sh off as broken and
+unusable" if you dig further in the list archive.
