@@ -2,111 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AADAF1FD09
-	for <e@80x24.org>; Tue, 30 May 2017 11:03:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FCA11FD09
+	for <e@80x24.org>; Tue, 30 May 2017 11:37:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751025AbdE3LDl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 07:03:41 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:52174 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750912AbdE3LDk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 07:03:40 -0400
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.phx2.redhat.com [10.5.11.15])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id DA19DC056791;
-        Tue, 30 May 2017 11:03:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com DA19DC056791
-Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=lersek@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com DA19DC056791
-Received: from lacos-laptop-7.usersys.redhat.com (ovpn-116-87.phx2.redhat.com [10.3.116.87])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 21264183CB;
-        Tue, 30 May 2017 11:03:38 +0000 (UTC)
-Subject: Re: FORMAT_PATCH_NAME_MAX increase
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <99ac8ee7-67b5-5ae7-51cf-6be38de6217f@redhat.com>
- <xmqqh903dt4w.fsf@gitster.mtv.corp.google.com>
-From:   Laszlo Ersek <lersek@redhat.com>
-Message-ID: <70d34f37-7209-e392-c269-21a61228a041@redhat.com>
-Date:   Tue, 30 May 2017 13:03:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1751628AbdE3LhE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 07:37:04 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36099 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751248AbdE3LhD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 07:37:03 -0400
+Received: by mail-it0-f68.google.com with SMTP id i206so9287550ita.3
+        for <git@vger.kernel.org>; Tue, 30 May 2017 04:37:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=EwXY7avz3AMdK4j+TBQVAxbXk2xLOILrNiKM5gkRkxk=;
+        b=S8j+EMBFKantwXALfXu9NPD0uX81/kd4EgRaAtlndQ6Bcva43YBcemY3W2zOLPhBVw
+         Dd1WM7hXVLoWCIloMU+4PVj/G1g4SsJBnTAbqkY+aDCQ4FzJroO7lY5IH3L2+I5J1RLX
+         t5wpeXJtdSImGL1iMqv3gcZqg0rY1QyJRa7Fldk6a+CAictNtw75G8/8Mb2t8g8EgI8d
+         OkEvui/p94DxTY7++pKE6QChDkYtrTjRvWjKL30AmTu6+RT+ZMf1QaBZjZTXg3HGLppA
+         N/T9lItUVMRACfcEwEztkSpwbRpzTVgO0jS2bJV3ORcch52SoLqkqtl1X1pq8lKTMtlP
+         3Nqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=EwXY7avz3AMdK4j+TBQVAxbXk2xLOILrNiKM5gkRkxk=;
+        b=MzxqoczMZKysm9kDU2VV07076fMN+0Zq/GSZEHUIll6bQ7cfb+pPgFcvHrpNKSAYFY
+         oWsuyGhlsSQoD2tu7OrI8NUQllRVkSEyH8qh5I/xofXijEwgo82Qv+8v1tzDhwL6E0jC
+         ZKvR3k6dx/jbSLQv4XZcij4N/cWAoGGM8FWzW5W9bKFJWui3aZMLNFACENT0SWdxF7aF
+         gr3DVzMB394Qr7ZvJdDHA8OriwImEaKyZodJLQiXdIKNpiDqlymYJAsgfOvyRayvYkI8
+         2rmgln4eTUoSb96TQt/QsKhJbzP/7HTvGsY0ws5j5kygs6TMWHdZAIGVv3kYy3W3Jq0S
+         /FCQ==
+X-Gm-Message-State: AODbwcA410LzTJUWW3C8v4WbuIcsyBNGotwG+elEurLOqCHTKZvGAGTL
+        ZPZp0kz7cfEBvKXBQw14Hv4ONVFYBtsckZk=
+X-Received: by 10.36.138.131 with SMTP id v125mr1362991itd.66.1496144222662;
+ Tue, 30 May 2017 04:37:02 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqh903dt4w.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Tue, 30 May 2017 11:03:40 +0000 (UTC)
+Received: by 10.107.8.220 with HTTP; Tue, 30 May 2017 04:36:41 -0700 (PDT)
+In-Reply-To: <99ac8ee7-67b5-5ae7-51cf-6be38de6217f@redhat.com>
+References: <99ac8ee7-67b5-5ae7-51cf-6be38de6217f@redhat.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 30 May 2017 13:36:41 +0200
+Message-ID: <CACBZZX5U=U1bpiFuuxH2t8ZWnmQQAjWm1ji8XYq_6-SJPGL1sw@mail.gmail.com>
+Subject: Re: FORMAT_PATCH_NAME_MAX increase
+To:     Laszlo Ersek <lersek@redhat.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/30/17 03:34, Junio C Hamano wrote:
-
-> I cannot offhand guess what other places would suffer from such a
-> project convention, because I do not work with such a project, but
-> you may be able to come up with a list of various places in Git
-> where the commit titles are used, and that if there were a mechanism
-> to take these commit titles, pass them to your cutomization script,
-> which abbreviates these "long common prefixes" to a shorter string,
-> and to use the output from that script instead of the actual commit
-> title, it would help all of these places.
-
-The problem is that I can't really automate the subject munging. The
-concrete subjects in this case were:
-
-> OvmfPkg/QemuFwCfgLib: Implement SEV internal function for SEC phase
-> OvmfPkg/QemuFwCfgLib: Implement SEV internal functions for PEI phase
-> OvmfPkg/QemuFwCfgLib: Implement SEV internal function for Dxe phase
-
-which got formatted as
-
-> 0010-OvmfPkg-QemuFwCfgLib-Implement-SEV-internal-function.patch
-> 0011-OvmfPkg-QemuFwCfgLib-Implement-SEV-internal-function.patch
-> 0012-OvmfPkg-QemuFwCfgLib-Implement-SEV-internal-function.patch
-
-and these filenames differ only in the running counter on the left.
-
-The patch subjects themselves aren't overlong (the longest is 68
-characters).
-
-At best I could "normalize away" the "OvmfPkg/QemuFwCfgLib" prefix, but
-that exact prefix is pretty accidental. Any standalone module (driver or
-library instance) in the edk2 project is supposed to be named like this
-in patch subjects, so all those prefixes would have to be normalized
-somehow.
-
-We generally try to limit subjects (and commit messages in general) to
-74 columns. I think for one source of inspiration, we used the kernel
-documentation, when setting that limit.
-<https://www.kernel.org/doc/Documentation/process/submitting-patches.rst>
-says, under section 14, "The canonical patch format",
-
-> The canonical patch subject line is::
+On Mon, May 29, 2017 at 10:49 AM, Laszlo Ersek <lersek@redhat.com> wrote:
+> Hi,
 >
->     Subject: [PATCH 001/123] subsystem: summary phrase
+> would it be possible to
 >
-> The canonical patch message body contains the following:
+> - increase the FORMAT_PATCH_NAME_MAX macro from 64 to, say, 128?
 >
->   [...]
+> - Or else to introduce a new git-config knob for it?
 >
->   - The body of the explanation, line wrapped at 75 columns, which will
->     be copied to the permanent changelog to describe this patch.
+> I have a small review-helper / interdiff script that matches patches
+> from adjacent versions of a series against each other, based on subject
+> line. (Using the formatted file name with the patch number stripped.)
+> The project in question uses long common prefixes in subjects, and the
+> current limit of 64 does not always ensure unicity (again, with the
+> number stripped).
 
-It does not specify the subject length, but perhaps we can apply the
-body line length to the subject as well.
+I don't see why this shouldn't be made configurable, but more
+generally if you have a script like this it seems like a futile effort
+in general to just make the subject longer to solve the general case,
+consider:
 
-So, even in kernel land, if subjects up to 75 columns are permitted, but
-FORMAT_PATCH_NAME_MAX is 64, conflicts are possible, at least in theory,
-aren't they? With the numbers stripped, of course.
+    (cd /tmp/; rm -rf test; git init test; cd test && for i in {1..3};
+do touch $i && git add $i && git commit -m"test"; done && git
+format-patch -2 && git reset --hard HEAD~2 && git am *patch)
 
-Thanks,
-Laszlo
+Which now yields:
+
+    0001-test.patch
+    0002-test.patch
+
+Git projects in general will have plenty of patches like this, e.g.
+"fix build" or "update tests" or whatever. Isn't a better solution for
+your script to e.g. key on git-patch-id?
+
+    $ grep "^From " *patch
+    0001-test.patch:From 870e37afa1a5aeb7eef76e607345adcfd4a9022d Mon
+Sep 17 00:00:00 2001
+    0002-test.patch:From de8c37a1532a4f6ae71ffa65400479ba77438f3b Mon
+Sep 17 00:00:00 2001
+    $ cat *patch | git patch-id
+    c71eb8f2c8c461ba6040668e9d79f996f5a04a61
+870e37afa1a5aeb7eef76e607345adcfd4a9022d
+    735aff6fb601d7ce99506dc7701be3e8a9b5d38c
+de8c37a1532a4f6ae71ffa65400479ba77438f3b
+
+Other potential heuristics could be keying not just on the subject but
+on the subject + subject of the last N commits for each commit, which
+should give more of a unique key, or key on the whole commit message
+etc.
