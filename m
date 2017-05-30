@@ -2,115 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 987E52027C
-	for <e@80x24.org>; Tue, 30 May 2017 17:12:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8755C20D11
+	for <e@80x24.org>; Tue, 30 May 2017 17:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750992AbdE3RMW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 13:12:22 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:33592 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750811AbdE3RMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 13:12:21 -0400
-Received: by mail-pf0-f177.google.com with SMTP id e193so78026888pfh.0
-        for <git@vger.kernel.org>; Tue, 30 May 2017 10:12:20 -0700 (PDT)
+        id S1750912AbdE3RbQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 13:31:16 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:32803 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750841AbdE3RbQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 13:31:16 -0400
+Received: by mail-pf0-f179.google.com with SMTP id e193so78456075pfh.0
+        for <git@vger.kernel.org>; Tue, 30 May 2017 10:31:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=O3F1Im9btFsBpDW4kIMm6QSs0zkPCtR5VBLdT+TYKVI=;
-        b=LjhO3gHSGCGPPtdZOCdHgkrXQlDw8aBt79OHxGydy/IJsQam0BsjWmV60fBEwG/4WW
-         rY8ZR9jM67V2sG5k5jyb16uA2lgFgw1YajjmbVHLiNj169nPNSxHi/8WKC8ZmYUAJFkF
-         EEeDmTRVWLnpDLUc8L/xbhvsvUQefxyD/6lQcugNKxAF4263tE2kGw1SAoQPGiAzFk0+
-         1+u+KZbza05f+jyYuPCh50Kmkx9C3RdWQ8wW0tPYxRM0NFqY41Uwc2mtvnh+87Ny7NkM
-         KyHrQN9Wdip3Z2Dex4J+8IHpwiXp+SKilcrIdNgRSaukwrvCNHwrssqXe/7n5T7te5mX
-         pt1A==
+        h=from:to:cc:subject:date:message-id;
+        bh=5YBT6hs1fXObFdr46mPixPnbm6znmK4T7mupyqNwVM4=;
+        b=afcaCnVACYc5EeO6c6PfHdZ3dPy2/AhI5MIvfV6ftaHbqBgnerDlNosS8S3gPS2wBA
+         AUWFJ9xufF4FWpzSoCXGty+P1J1qP/TEyXefQGO9c7fcUJ6+aAd0KXjvBH5sokJN1iIj
+         w0unHdU2FOMRPn8b9s5PfBxM/cCAc+MxpeWCDsjXymcv5UgvoESgQIoh+VDsrb6dEvth
+         jab6LZZWZoed56so2plf5J8ifh7HMGmTi4KrA9x9N6Gpc68TOsoot2M+PV3YFIkqVkCx
+         lw/2IJcrmnDFH0Eyx+qtXluZMCNspYjiR7q1Nds6T4UCjmNt15cWhUZLxzH/0vszpYQf
+         9Lbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=O3F1Im9btFsBpDW4kIMm6QSs0zkPCtR5VBLdT+TYKVI=;
-        b=pY247qDlhss6ULMHja87v+mpDDy5V6bJCZ0EMjxP+HLKl5XK2+xA95AJiDQWmGLQCh
-         FT4L6WXO9M7dLblJ5r0PVTeA4jAKxthCiFkSUAGGqASFxdXvvnWy9j7UxBvzh8jxrs44
-         JLc7emQr1ERfvRNpfTVTOvbTMX2QTARIvPlIVB/9MnU/XMVaO5jLJTvWiO4GCz5r8O5K
-         JnQVjTCFgEFp4QWAoi0rce7KtQeok3ULCt17HfElMtiOard4RSVGZdghxDEDON51sdxB
-         3KF0mDNGXmtW0fuPXbo4nbIW0Caqo/jOhZPR2E0HgR69MFMZ+03b8xlqBfOcDrLtYLdR
-         BC2g==
-X-Gm-Message-State: AODbwcANdzSmrkvvb+5Z+2I+KLTrtTXY4b8ED90FUmTemkbfLFgZZA5q
-        v9qpcqwWF23NJo66
-X-Received: by 10.84.169.3 with SMTP id g3mr28517969plb.37.1496164340212;
-        Tue, 30 May 2017 10:12:20 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:308e:e3d5:272e:65c])
-        by smtp.gmail.com with ESMTPSA id y2sm22846986pfk.1.2017.05.30.10.12.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 30 May 2017 10:12:19 -0700 (PDT)
-Date:   Tue, 30 May 2017 10:12:17 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=5YBT6hs1fXObFdr46mPixPnbm6znmK4T7mupyqNwVM4=;
+        b=Wg90Ju9t/tJVhZwN5i26BdRSj4rdkVrysAM0jh/T7dxVTnXR4C5DlcfYy52Cai0hng
+         8F32RpYKaBNfgQJAy+of62Twu6IUdfQ59FyKMD6hSZR+wF9WhyQCu5LVkMfI6pFZ42io
+         TbBn02PElEPUAnZXud6yG55LPyHgb86uaxAbatgz95Oi4FKDe/oROKwiliY2zrSweohi
+         08F+OSx2Lu2dC882wP0kV82VLG0AK/Ro7kWjzdhjQFdWMJYYxsJxROnbuwRyDbakDu0M
+         InXYig0klBo8fmYn010noQvY5P4s61Y5WrgWvWRbqCtjgnqcV+9/W5B1ENDfJONCLb40
+         pdQQ==
+X-Gm-Message-State: AODbwcCUTcHhnr9CFIr6aeZ1nVjWuBkABimF9H1Gt4e3s2keV/gGxUNd
+        8yR9Lxli7tKPZX6bC05JfA==
+X-Received: by 10.99.123.77 with SMTP id k13mr27644637pgn.32.1496165474800;
+        Tue, 30 May 2017 10:31:14 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id t19sm24940187pfg.31.2017.05.30.10.31.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 30 May 2017 10:31:13 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [WIP/RFC 00/23] repository object
-Message-ID: <20170530171217.GB2798@google.com>
-References: <20170518232134.163059-1-bmwill@google.com>
- <20170522193535.7cgivd6pmmqhw7ze@sigill.intra.peff.net>
- <CACsJy8DmsG_+ASEkisUTLejVkiOmYytvTCTQs=RCH6q=BeDAhg@mail.gmail.com>
- <CACBZZX5GRxecDQkoqLv55FLuiSohGSR3U1U+sG0vFFpexcc54A@mail.gmail.com>
- <CACsJy8AtMNAE=5jihV+sYZqyx40JCJ0hkZAvqFbkOU1g5sZSYA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACsJy8AtMNAE=5jihV+sYZqyx40JCJ0hkZAvqFbkOU1g5sZSYA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, sandals@crustytoothpaste.net,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH 00/33] object id conversion (grep and diff)
+Date:   Tue, 30 May 2017 10:30:36 -0700
+Message-Id: <20170530173109.54904-1-bmwill@google.com>
+X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/29, Duy Nguyen wrote:
-> On Mon, May 29, 2017 at 6:23 PM, Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
-> >>> That said, even if we never reached the point where we could handle all
-> >>> submodule requests in-process, I think sticking the repo-related global
-> >>> state in a struct certainly could not hurt general readability. So it's
-> >>> a good direction regardless of whether we take it all the way.
-> >>
-> >> I doubt we would reach the point where libgit.a can handle all
-> >> submodule operations in-process either. That would put libgit.a in a
-> >> direct competitor position with libgit2.
-> >
-> > Wouldn't that be a good thing? We already have some users (e.g.
-> > Microsoft) choosing not to use libgit and instead use git.git because
-> > the latter is generally more mature, if git.git gains more libgit
-> > features without harming other things it'll be more useful to more
-> > people.
-> 
-> Whether it's a good thing might depend on view point. Similar to linux
-> kernel, we might want some freedom to break ABI and refactor the code.
-> But I think it's too early  to discuss this right now. There's lots of
-> work (the "die()" minefield comes to mind) before we reach the point
-> where libgit.a may be good enough for external use.
+A month or so ago I thought I would lend a hand to Brian and do a round of
+conversions from sha1 -> struct object_id.  Now that Brian's latest series has
+hit master I can finally send these patches out.
 
-My personal end goal is making the code easier to parse and to make
-submodule work easier.  I know I've only worked on the project for a
-short time but I already regret some of the submodule changes that I've
-made because they are straight up hacks which I want to eradicate sooner
-rather than later (just look at my patches to get 'git grep' to handle
-submodules...).
+The first couple patches are from Brian which convert some of the notes logic
+to using 'struct object_id'.  The remaining patches are to convert the grep and
+diff machinery to using 'struct object_id'.
 
-I wasn't thinking about libgit2 and don't really haven't thought too
-much about the possibility of being in competition with that project.
+Brandon Williams (26):
+  grep: convert to struct object_id
+  diff: convert get_stat_data to struct object_id
+  diff: convert diff_index_show_file to struct object_id
+  diff: convert diff_addremove to struct object_id
+  diff: convert run_diff_files to struct object_id
+  diff: convert diff_change to struct object_id
+  diff: convert fill_filespec to struct object_id
+  diff: convert reuse_worktree_file to struct object_id
+  diff: finish conversion for prepare_temp_file to struct object_id
+  patch-ids: convert to struct object_id
+  diff: convert diff_flush_patch_id to struct object_id
+  combine-diff: convert diff_tree_combined to struct object_id
+  combine-diff: convert find_paths_* to struct object_id
+  tree-diff: convert diff_root_tree_sha1 to struct object_id
+  notes-merge: convert notes_merge* to struct object_id
+  notes-merge: convert merge_from_diffs to struct object_id
+  notes-merge: convert find_notes_merge_pair_ps to struct object_id
+  notes-merge: convert verify_notes_filepair to struct object_id
+  notes-merge: convert write_note_to_worktree to struct object_id
+  diff-tree: convert diff_tree_sha1 to struct object_id
+  builtin/diff-tree: cleanup references to sha1
+  tree-diff: convert try_to_follow_renames to struct object_id
+  tree-diff: convert diff_tree_paths to struct object_id
+  tree-diff: convert path_appendnew to object_id
+  diffcore-rename: use is_empty_blob_oid
+  diff: rename diff_fill_sha1_info to diff_fill_oid_info
+
+brian m. carlson (7):
+  notes: convert internal structures to struct object_id
+  notes: convert internal parts to struct object_id
+  notes: convert for_each_note to struct object_id
+  notes: make get_note return pointer to struct object_id
+  notes: convert format_display_notes to struct object_id
+  builtin/notes: convert to struct object_id
+  notes: convert some accessor functions to struct object_id
+
+ builtin/am.c          |   2 +-
+ builtin/blame.c       |  22 +++---
+ builtin/commit.c      |   2 +-
+ builtin/diff-tree.c   |  16 ++--
+ builtin/diff.c        |   8 +-
+ builtin/fast-export.c |   8 +-
+ builtin/grep.c        |  22 +++---
+ builtin/log.c         |   8 +-
+ builtin/merge.c       |   2 +-
+ builtin/notes.c       | 136 ++++++++++++++++-----------------
+ cache.h               |   7 ++
+ combine-diff.c        |  30 ++++----
+ diff-lib.c            |  52 ++++++-------
+ diff-no-index.c       |   2 +-
+ diff.c                |  74 +++++++++---------
+ diff.h                |  38 +++++-----
+ diffcore-rename.c     |   6 +-
+ diffcore.h            |   2 +-
+ grep.c                |  19 +++--
+ grep.h                |   2 +-
+ line-log.c            |  10 +--
+ log-tree.c            |  12 +--
+ merge-recursive.c     |   2 +-
+ notes-cache.c         |  10 +--
+ notes-merge.c         | 165 +++++++++++++++++++++--------------------
+ notes-merge.h         |  12 +--
+ notes-utils.c         |   2 +-
+ notes-utils.h         |   2 +-
+ notes.c               | 202 ++++++++++++++++++++++++++------------------------
+ notes.h               |  16 ++--
+ patch-ids.c           |  26 +++----
+ patch-ids.h           |   4 +-
+ remote-testsvn.c      |  22 +++---
+ revision.c            |  16 ++--
+ sequencer.c           |   4 +-
+ tree-diff.c           |  93 ++++++++++++-----------
+ 36 files changed, 535 insertions(+), 521 deletions(-)
 
 -- 
-Brandon Williams
+2.13.0.219.gdb65acc882-goog
+
