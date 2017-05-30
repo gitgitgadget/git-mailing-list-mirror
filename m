@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F2A02027C
-	for <e@80x24.org>; Tue, 30 May 2017 17:31:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BB8D2027C
+	for <e@80x24.org>; Tue, 30 May 2017 17:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750954AbdE3RbW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 13:31:22 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:32828 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750871AbdE3RbT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 13:31:19 -0400
-Received: by mail-pf0-f177.google.com with SMTP id e193so78457194pfh.0
-        for <git@vger.kernel.org>; Tue, 30 May 2017 10:31:18 -0700 (PDT)
+        id S1751163AbdE3Rbc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 13:31:32 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:36242 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750871AbdE3RbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 13:31:23 -0400
+Received: by mail-pf0-f179.google.com with SMTP id m17so78250546pfg.3
+        for <git@vger.kernel.org>; Tue, 30 May 2017 10:31:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yVKwCF8gFp+lXVmwd9w7mk0Rr52Psj4l21HmbujnCqY=;
-        b=TpGj5BWo9CmZn1S1KD/+QJN3UsX7qsgeVnlzCLXnHYZdAiXGr9fXDWCMPdmWoYwiKk
-         TN/2nqMDtiaGPy1XYxQGdaj5UeTdwOBCunZc6xr+u3FkOzvRJK13fyrklCTaVwJ+/mcj
-         7ulSbw459VeDx5au/cASu5x9dfPzqCG/Wiw1AmSfnD9AqwViGqqomEfDODDl7mDR6Y+m
-         9fmjVWNtO+W8ZHI6A3hU2wkf6MjMTzNyHGoWEVz4OGQ3tT9/yNpRSungGTmPatRjRnHM
-         v0ewul4gRmH4guhFDMJwBLhhrR9ap9NJ094ruAz4RV8/6u3HALMilTFniSOSLdMjx300
-         87Cw==
+        bh=5x6XhpecBcuxjdzPs4RD8MMZ4A3pt8ZjeNNBI/AYndA=;
+        b=aNk2q1Hh6hGnWkPOKAx59cJ0lsbCRyTvmwlaYrYd6Mcncl49x64f2BriRvr7AoNAbz
+         pep83QUBxWVpJ7zeKHxweijziRpeYMrrUMIFmGGGmoibgKQZkjRzC9izREF6NPaROtO2
+         2z0dUQcUoH6yWtreuERDoBIcu9HGiQJEXTYa2m+GXquT8/Lcdbdj/2ar3grEBl+iGISa
+         2G9mq0I9enFCaDGsJ0OorGYvKrLWThqh/bvmmniY2LLIhX5kzSOhBwyn5sF+3IndFQHM
+         Paj/xbZLAFfOysp9LbXQbBx2nqfYcaFNsdCksBbGooACcS+NCWDS5SCwNZtRBtgbbcXr
+         /sNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yVKwCF8gFp+lXVmwd9w7mk0Rr52Psj4l21HmbujnCqY=;
-        b=ueQIl0V+V2al1HJ3ZFT2boXEQLE7UE1Qx5yJR2DFi8LL+fHTtZZZPbO6LKSCitcIAl
-         3CB9HLJSbh2LFUUgEwM0NGFYRfsXNYMMXeQuKsB0HGiebB14EESUphHMA4TpcwWXxDoy
-         tptMRPi0Fl2daMAMcRAApKDVkYYS6Okc5mYR3FmPAx17dMUEgpWfWhkhNydTfdm46gJO
-         IHO34av9LvoeWNU0SoxRDRprhzuNQCs4WSbvFCwBSR699kIsPsz3lVm8fDSkY26AWXFG
-         x0sm76BnfffsVctS25iWiByha5KlauzCgtVhFTLitZUw/FfJxW0RM5/kslZMqltl6uER
-         Wd2w==
-X-Gm-Message-State: AODbwcDERYJJwSCfeYsYVsxWt+xKNbYYj8hxAtXBTjQAwx7rl9+lkKZS
-        hXp06v/68fBWH8qI
-X-Received: by 10.84.160.197 with SMTP id v5mr83374777plg.30.1496165478287;
-        Tue, 30 May 2017 10:31:18 -0700 (PDT)
+        bh=5x6XhpecBcuxjdzPs4RD8MMZ4A3pt8ZjeNNBI/AYndA=;
+        b=WjSKDBnhE2EWV7sboj6rkqxMzCI9yj1YuEUzwslPONctiRYgq4Oz3uNlAXdBIHnpgJ
+         WO1DubGseXaX7i6IL2gLxgT/pAIjD5whhA+P5JZpkGvAK6v7HSXH8hBr91G+cbN9z6Qm
+         4zz6mg+Mris86OxalR93d9vOEd0k4uaILflca9nc/V77hiz5wfeT+um7JcYCxPhcG9aM
+         E0B8hqOXJAmxVDYzSYLR0UD6s5iEL88Vh/dhb1M2g3ns/LsNah3EXAOrFl6pHG8SxUQU
+         5fn4CbLNYkui6o5dmQ5Lgz1uVlJD0745m0yYYapPt/cJ1viItRQf8jEwkrbXNFeVvt7h
+         dJyA==
+X-Gm-Message-State: AODbwcAiS6CURYvxRhlZvmoy0t4Gj8ZeJjQyMOYZRzhJRVrUkGg6mpUH
+        mjzbO7WYSAPgwbPXTwzuuw==
+X-Received: by 10.98.59.2 with SMTP id i2mr24757029pfa.50.1496165481399;
+        Tue, 30 May 2017 10:31:21 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id t19sm24940187pfg.31.2017.05.30.10.31.16
+        by smtp.gmail.com with ESMTPSA id t19sm24940187pfg.31.2017.05.30.10.31.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 May 2017 10:31:16 -0700 (PDT)
+        Tue, 30 May 2017 10:31:20 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sandals@crustytoothpaste.net,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 02/33] notes: convert internal parts to struct object_id
-Date:   Tue, 30 May 2017 10:30:38 -0700
-Message-Id: <20170530173109.54904-3-bmwill@google.com>
+Subject: [PATCH 04/33] notes: make get_note return pointer to struct object_id
+Date:   Tue, 30 May 2017 10:30:40 -0700
+Message-Id: <20170530173109.54904-5-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170530173109.54904-1-bmwill@google.com>
 References: <20170530173109.54904-1-bmwill@google.com>
@@ -64,229 +64,245 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 
-Convert several portions of the internals of the code to struct
-object_id.  Introduce two macros to denote the different constants in
-the code: KEY_INDEX for the last byte of the object ID, and
-FANOUT_PATH_SEPARATORS for the number of possible path separators (on
-Unix, "/").  While these constants are both 19 (one less than the number
-of bytes in the hash), distinguish them to make the code more
-understandable, and define them logically based on their intended
-purpose.
+Make get_note return a pointer to a const struct object_id.  Add a
+defensive check to ensure we don't accidentally dereference a NULL
+pointer.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- notes.c | 64 +++++++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 33 insertions(+), 31 deletions(-)
+ builtin/notes.c  | 22 +++++++++++-----------
+ notes-cache.c    |  8 ++++----
+ notes.c          | 18 +++++++++---------
+ notes.h          |  2 +-
+ remote-testsvn.c |  6 +++---
+ 5 files changed, 28 insertions(+), 28 deletions(-)
 
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 53fe6d34d..3d9005b8f 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -351,7 +351,7 @@ static int list(int argc, const char **argv, const char *prefix)
+ {
+ 	struct notes_tree *t;
+ 	unsigned char object[20];
+-	const unsigned char *note;
++	const struct object_id *note;
+ 	int retval = -1;
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -372,7 +372,7 @@ static int list(int argc, const char **argv, const char *prefix)
+ 			die(_("failed to resolve '%s' as a valid ref."), argv[0]);
+ 		note = get_note(t, object);
+ 		if (note) {
+-			puts(sha1_to_hex(note));
++			puts(oid_to_hex(note));
+ 			retval = 0;
+ 		} else
+ 			retval = error(_("no note found for object %s."),
+@@ -392,7 +392,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 	const char *object_ref;
+ 	struct notes_tree *t;
+ 	unsigned char object[20], new_note[20];
+-	const unsigned char *note;
++	const struct object_id *note;
+ 	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
+ 	struct option options[] = {
+ 		{ OPTION_CALLBACK, 'm', "message", &d, N_("message"),
+@@ -453,7 +453,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 			sha1_to_hex(object));
+ 	}
+ 
+-	prepare_note_data(object, &d, note);
++	prepare_note_data(object, &d, note->hash);
+ 	if (d.buf.len || allow_empty) {
+ 		write_note_data(&d, new_note);
+ 		if (add_note(t, object, new_note, combine_notes_overwrite))
+@@ -474,7 +474,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ static int copy(int argc, const char **argv, const char *prefix)
+ {
+ 	int retval = 0, force = 0, from_stdin = 0;
+-	const unsigned char *from_note, *note;
++	const struct object_id *from_note, *note;
+ 	const char *object_ref;
+ 	unsigned char object[20], from_obj[20];
+ 	struct notes_tree *t;
+@@ -539,7 +539,7 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 		goto out;
+ 	}
+ 
+-	if (add_note(t, object, from_note, combine_notes_overwrite))
++	if (add_note(t, object, from_note->hash, combine_notes_overwrite))
+ 		die("BUG: combine_notes_overwrite failed");
+ 	commit_notes(t, "Notes added by 'git notes copy'");
+ out:
+@@ -553,7 +553,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 	const char *object_ref;
+ 	struct notes_tree *t;
+ 	unsigned char object[20], new_note[20];
+-	const unsigned char *note;
++	const struct object_id *note;
+ 	char *logmsg;
+ 	const char * const *usage;
+ 	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
+@@ -598,13 +598,13 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 	t = init_notes_check(argv[0], NOTES_INIT_WRITABLE);
+ 	note = get_note(t, object);
+ 
+-	prepare_note_data(object, &d, edit ? note : NULL);
++	prepare_note_data(object, &d, edit && note ? note->hash : NULL);
+ 
+ 	if (note && !edit) {
+ 		/* Append buf to previous note contents */
+ 		unsigned long size;
+ 		enum object_type type;
+-		char *prev_buf = read_sha1_file(note, &type, &size);
++		char *prev_buf = read_sha1_file(note->hash, &type, &size);
+ 
+ 		strbuf_grow(&d.buf, size + 1);
+ 		if (d.buf.len && prev_buf && size)
+@@ -638,7 +638,7 @@ static int show(int argc, const char **argv, const char *prefix)
+ 	const char *object_ref;
+ 	struct notes_tree *t;
+ 	unsigned char object[20];
+-	const unsigned char *note;
++	const struct object_id *note;
+ 	int retval;
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -664,7 +664,7 @@ static int show(int argc, const char **argv, const char *prefix)
+ 		retval = error(_("no note found for object %s."),
+ 			       sha1_to_hex(object));
+ 	else {
+-		const char *show_args[3] = {"show", sha1_to_hex(note), NULL};
++		const char *show_args[3] = {"show", oid_to_hex(note), NULL};
+ 		retval = execv_git_cmd(show_args);
+ 	}
+ 	free_notes(t);
+diff --git a/notes-cache.c b/notes-cache.c
+index 2843e9857..6e84a748f 100644
+--- a/notes-cache.c
++++ b/notes-cache.c
+@@ -69,15 +69,15 @@ int notes_cache_write(struct notes_cache *c)
+ char *notes_cache_get(struct notes_cache *c, struct object_id *key_oid,
+ 		      size_t *outsize)
+ {
+-	const unsigned char *value_sha1;
++	const struct object_id *value_oid;
+ 	enum object_type type;
+ 	char *value;
+ 	unsigned long size;
+ 
+-	value_sha1 = get_note(&c->tree, key_oid->hash);
+-	if (!value_sha1)
++	value_oid = get_note(&c->tree, key_oid->hash);
++	if (!value_oid)
+ 		return NULL;
+-	value = read_sha1_file(value_sha1, &type, &size);
++	value = read_sha1_file(value_oid->hash, &type, &size);
+ 
+ 	*outsize = size;
+ 	return value;
 diff --git a/notes.c b/notes.c
-index 251cf11c9..babe0c0eb 100644
+index e881c10ee..fe4db2c1e 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -65,8 +65,10 @@ struct non_note {
- 
- #define GET_NIBBLE(n, sha1) (((sha1[(n) >> 1]) >> ((~(n) & 0x01) << 2)) & 0x0f)
- 
-+#define KEY_INDEX (GIT_SHA1_RAWSZ - 1)
-+#define FANOUT_PATH_SEPARATORS ((GIT_SHA1_HEXSZ / 2) - 1)
- #define SUBTREE_SHA1_PREFIXCMP(key_sha1, subtree_sha1) \
--	(memcmp(key_sha1, subtree_sha1, subtree_sha1[19]))
-+	(memcmp(key_sha1, subtree_sha1, subtree_sha1[KEY_INDEX]))
- 
- struct notes_tree default_notes_tree;
- 
-@@ -194,7 +196,7 @@ static void note_tree_remove(struct notes_tree *t,
- 		struct leaf_node *entry)
- {
- 	struct leaf_node *l;
--	struct int_node *parent_stack[20];
-+	struct int_node *parent_stack[GIT_SHA1_RAWSZ];
- 	unsigned char i, j;
- 	void **p = note_tree_search(t, &tree, &n, entry->key_oid.hash);
- 
-@@ -341,21 +343,21 @@ static void note_tree_free(struct int_node *tree)
-  * Otherwise, returns number of bytes written to sha1 (i.e. hex_len / 2).
-  * Pads sha1 with NULs up to sha1_len (not included in returned length).
-  */
--static int get_sha1_hex_segment(const char *hex, unsigned int hex_len,
--		unsigned char *sha1, unsigned int sha1_len)
-+static int get_oid_hex_segment(const char *hex, unsigned int hex_len,
-+		unsigned char *oid, unsigned int oid_len)
- {
- 	unsigned int i, len = hex_len >> 1;
--	if (hex_len % 2 != 0 || len > sha1_len)
-+	if (hex_len % 2 != 0 || len > oid_len)
- 		return -1;
- 	for (i = 0; i < len; i++) {
- 		unsigned int val = (hexval(hex[0]) << 4) | hexval(hex[1]);
- 		if (val & ~0xff)
- 			return -1;
--		*sha1++ = val;
-+		*oid++ = val;
- 		hex += 2;
- 	}
--	for (; i < sha1_len; i++)
--		*sha1++ = 0;
-+	for (; i < oid_len; i++)
-+		*oid++ = 0;
- 	return len;
- }
- 
-@@ -413,7 +415,7 @@ static void add_non_note(struct notes_tree *t, char *path,
- static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 		struct int_node *node, unsigned int n)
- {
--	unsigned char object_sha1[20];
-+	struct object_id object_oid;
- 	unsigned int prefix_len;
- 	void *buf;
- 	struct tree_desc desc;
-@@ -427,13 +429,13 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 		die("Could not read %s for notes-index",
- 		     oid_to_hex(&subtree->val_oid));
- 
--	prefix_len = subtree->key_oid.hash[19];
-+	prefix_len = subtree->key_oid.hash[KEY_INDEX];
- 	assert(prefix_len * 2 >= n);
--	memcpy(object_sha1, subtree->key_oid.hash, prefix_len);
-+	memcpy(object_oid.hash, subtree->key_oid.hash, prefix_len);
- 	while (tree_entry(&desc, &entry)) {
- 		path_len = strlen(entry.path);
--		len = get_sha1_hex_segment(entry.path, path_len,
--				object_sha1 + prefix_len, 20 - prefix_len);
-+		len = get_oid_hex_segment(entry.path, path_len,
-+				object_oid.hash + prefix_len, GIT_SHA1_RAWSZ - prefix_len);
- 		if (len < 0)
- 			goto handle_non_note; /* entry.path is not a SHA1 */
- 		len += prefix_len;
-@@ -443,16 +445,16 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
- 		 * If object SHA1 is incomplete (len < 20), and current
- 		 * component consists of 2 hex chars, assume note subtree
- 		 */
--		if (len <= 20) {
-+		if (len <= GIT_SHA1_RAWSZ) {
- 			type = PTR_TYPE_NOTE;
- 			l = (struct leaf_node *)
- 				xcalloc(1, sizeof(struct leaf_node));
--			hashcpy(l->key_oid.hash, object_sha1);
-+			oidcpy(&l->key_oid, &object_oid);
- 			oidcpy(&l->val_oid, entry.oid);
--			if (len < 20) {
-+			if (len < GIT_SHA1_RAWSZ) {
- 				if (!S_ISDIR(entry.mode) || path_len != 2)
- 					goto handle_non_note; /* not subtree */
--				l->key_oid.hash[19] = (unsigned char) len;
-+				l->key_oid.hash[KEY_INDEX] = (unsigned char) len;
- 				type = PTR_TYPE_SUBTREE;
- 			}
- 			if (note_tree_insert(t, node, n, l, type,
-@@ -542,14 +544,14 @@ static unsigned char determine_fanout(struct int_node *tree, unsigned char n,
- }
- 
- /* hex SHA1 + 19 * '/' + NUL */
--#define FANOUT_PATH_MAX 40 + 19 + 1
-+#define FANOUT_PATH_MAX GIT_SHA1_HEXSZ + FANOUT_PATH_SEPARATORS + 1
- 
- static void construct_path_with_fanout(const unsigned char *sha1,
- 		unsigned char fanout, char *path)
- {
- 	unsigned int i = 0, j = 0;
- 	const char *hex_sha1 = sha1_to_hex(sha1);
--	assert(fanout < 20);
-+	assert(fanout < GIT_SHA1_RAWSZ);
- 	while (fanout) {
- 		path[i++] = hex_sha1[j++];
- 		path[i++] = hex_sha1[j++];
-@@ -599,7 +601,7 @@ static int for_each_note_helper(struct notes_tree *t, struct int_node *tree,
- 			    flags & FOR_EACH_NOTE_YIELD_SUBTREES) {
- 				/* invoke callback with subtree */
- 				unsigned int path_len =
--					l->key_oid.hash[19] * 2 + fanout;
-+					l->key_oid.hash[KEY_INDEX] * 2 + fanout;
- 				assert(path_len < FANOUT_PATH_MAX - 1);
- 				construct_path_with_fanout(l->key_oid.hash,
- 							   fanout,
-@@ -654,7 +656,7 @@ static void write_tree_entry(struct strbuf *buf, unsigned int mode,
- 		unsigned char *sha1)
- {
- 	strbuf_addf(buf, "%o %.*s%c", mode, path_len, path, '\0');
--	strbuf_add(buf, sha1, 20);
-+	strbuf_add(buf, sha1, GIT_SHA1_RAWSZ);
- }
- 
- static void tree_write_stack_init_subtree(struct tree_write_stack *tws,
-@@ -666,7 +668,7 @@ static void tree_write_stack_init_subtree(struct tree_write_stack *tws,
- 	n = (struct tree_write_stack *)
- 		xmalloc(sizeof(struct tree_write_stack));
- 	n->next = NULL;
--	strbuf_init(&n->buf, 256 * (32 + 40)); /* assume 256 entries per tree */
-+	strbuf_init(&n->buf, 256 * (32 + GIT_SHA1_HEXSZ)); /* assume 256 entries per tree */
- 	n->path[0] = n->path[1] = '\0';
- 	tws->next = n;
- 	tws->path[0] = path[0];
-@@ -677,18 +679,18 @@ static int tree_write_stack_finish_subtree(struct tree_write_stack *tws)
- {
- 	int ret;
- 	struct tree_write_stack *n = tws->next;
--	unsigned char s[20];
-+	struct object_id s;
- 	if (n) {
- 		ret = tree_write_stack_finish_subtree(n);
- 		if (ret)
- 			return ret;
--		ret = write_sha1_file(n->buf.buf, n->buf.len, tree_type, s);
-+		ret = write_sha1_file(n->buf.buf, n->buf.len, tree_type, s.hash);
- 		if (ret)
- 			return ret;
- 		strbuf_release(&n->buf);
- 		free(n);
- 		tws->next = NULL;
--		write_tree_entry(&tws->buf, 040000, tws->path, 2, s);
-+		write_tree_entry(&tws->buf, 040000, tws->path, 2, s.hash);
- 		tws->path[0] = tws->path[1] = '\0';
- 	}
+@@ -1119,7 +1119,7 @@ int remove_note(struct notes_tree *t, const unsigned char *object_sha1)
  	return 0;
-@@ -771,7 +773,7 @@ static int write_each_note(const unsigned char *object_sha1,
- 		note_path[note_path_len] = '\0';
- 		mode = 040000;
- 	}
--	assert(note_path_len <= 40 + 19);
-+	assert(note_path_len <= GIT_SHA1_HEXSZ + FANOUT_PATH_SEPARATORS);
+ }
  
- 	/* Weave non-note entries into note entries */
- 	return  write_each_non_note_until(note_path, d) ||
-@@ -946,8 +948,8 @@ void string_list_add_refs_by_glob(struct string_list *list, const char *glob)
- 	if (has_glob_specials(glob)) {
- 		for_each_glob_ref(string_list_add_one_ref, glob, list);
- 	} else {
--		unsigned char sha1[20];
--		if (get_sha1(glob, sha1))
-+		struct object_id oid;
-+		if (get_oid(glob, &oid))
- 			warning("notes ref %s is invalid", glob);
- 		if (!unsorted_string_list_has_string(list, glob))
- 			string_list_append(list, glob);
-@@ -1150,7 +1152,7 @@ int write_notes_tree(struct notes_tree *t, unsigned char *result)
- 
- 	/* Prepare for traversal of current notes tree */
- 	root.next = NULL; /* last forward entry in list is grounded */
--	strbuf_init(&root.buf, 256 * (32 + 40)); /* assume 256 entries */
-+	strbuf_init(&root.buf, 256 * (32 + GIT_SHA1_HEXSZ)); /* assume 256 entries */
- 	root.path[0] = root.path[1] = '\0';
- 	cb_data.root = &root;
- 	cb_data.next_non_note = t->first_non_note;
-@@ -1315,9 +1317,9 @@ void expand_notes_ref(struct strbuf *sb)
- 
- void expand_loose_notes_ref(struct strbuf *sb)
+-const unsigned char *get_note(struct notes_tree *t,
++const struct object_id *get_note(struct notes_tree *t,
+ 		const unsigned char *object_sha1)
  {
--	unsigned char object[20];
-+	struct object_id object;
+ 	struct leaf_node *found;
+@@ -1128,7 +1128,7 @@ const unsigned char *get_note(struct notes_tree *t,
+ 		t = &default_notes_tree;
+ 	assert(t->initialized);
+ 	found = note_tree_find(t, t->root, 0, object_sha1);
+-	return found ? found->val_oid.hash : NULL;
++	return found ? &found->val_oid : NULL;
+ }
  
--	if (get_sha1(sb->buf, object)) {
-+	if (get_oid(sb->buf, &object)) {
- 		/* fallback to expand_notes_ref */
- 		expand_notes_ref(sb);
+ int for_each_note(struct notes_tree *t, int flags, each_note_fn fn,
+@@ -1219,7 +1219,7 @@ static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 			struct strbuf *sb, const char *output_encoding, int raw)
+ {
+ 	static const char utf8[] = "utf-8";
+-	const unsigned char *sha1;
++	const struct object_id *oid;
+ 	char *msg, *msg_p;
+ 	unsigned long linelen, msglen;
+ 	enum object_type type;
+@@ -1229,11 +1229,11 @@ static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 	if (!t->initialized)
+ 		init_notes(t, NULL, NULL, 0);
+ 
+-	sha1 = get_note(t, object_sha1);
+-	if (!sha1)
++	oid = get_note(t, object_sha1);
++	if (!oid)
+ 		return;
+ 
+-	if (!(msg = read_sha1_file(sha1, &type, &msglen)) || type != OBJ_BLOB) {
++	if (!(msg = read_sha1_file(oid->hash, &type, &msglen)) || type != OBJ_BLOB) {
+ 		free(msg);
+ 		return;
  	}
+@@ -1291,14 +1291,14 @@ int copy_note(struct notes_tree *t,
+ 	      const unsigned char *from_obj, const unsigned char *to_obj,
+ 	      int force, combine_notes_fn combine_notes)
+ {
+-	const unsigned char *note = get_note(t, from_obj);
+-	const unsigned char *existing_note = get_note(t, to_obj);
++	const struct object_id *note = get_note(t, from_obj);
++	const struct object_id *existing_note = get_note(t, to_obj);
+ 
+ 	if (!force && existing_note)
+ 		return 1;
+ 
+ 	if (note)
+-		return add_note(t, to_obj, note, combine_notes);
++		return add_note(t, to_obj, note->hash, combine_notes);
+ 	else if (existing_note)
+ 		return add_note(t, to_obj, null_sha1, combine_notes);
+ 
+diff --git a/notes.h b/notes.h
+index 6651673ae..c72bb9710 100644
+--- a/notes.h
++++ b/notes.h
+@@ -140,7 +140,7 @@ int remove_note(struct notes_tree *t, const unsigned char *object_sha1);
+  *
+  * Return NULL if the given object has no notes.
+  */
+-const unsigned char *get_note(struct notes_tree *t,
++const struct object_id *get_note(struct notes_tree *t,
+ 		const unsigned char *object_sha1);
+ 
+ /*
+diff --git a/remote-testsvn.c b/remote-testsvn.c
+index 793c4ad1d..017af1bd5 100644
+--- a/remote-testsvn.c
++++ b/remote-testsvn.c
+@@ -53,15 +53,15 @@ static void terminate_batch(void)
+ /* NOTE: 'ref' refers to a git reference, while 'rev' refers to a svn revision. */
+ static char *read_ref_note(const unsigned char sha1[20])
+ {
+-	const unsigned char *note_sha1;
++	const struct object_id *note_oid;
+ 	char *msg = NULL;
+ 	unsigned long msglen;
+ 	enum object_type type;
+ 
+ 	init_notes(NULL, notes_ref, NULL, 0);
+-	if (!(note_sha1 = get_note(NULL, sha1)))
++	if (!(note_oid = get_note(NULL, sha1)))
+ 		return NULL;	/* note tree not found */
+-	if (!(msg = read_sha1_file(note_sha1, &type, &msglen)))
++	if (!(msg = read_sha1_file(note_oid->hash, &type, &msglen)))
+ 		error("Empty notes tree. %s", notes_ref);
+ 	else if (!msglen || type != OBJ_BLOB) {
+ 		error("Note contains unusable content. "
 -- 
 2.13.0.219.gdb65acc882-goog
 
