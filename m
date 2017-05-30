@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B75AE2027C
-	for <e@80x24.org>; Tue, 30 May 2017 17:31:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A98682027C
+	for <e@80x24.org>; Tue, 30 May 2017 17:31:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751037AbdE3RbZ (ORCPT <rfc822;e@80x24.org>);
+        id S1751085AbdE3Rb2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 13:31:28 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:34405 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751000AbdE3RbZ (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 30 May 2017 13:31:25 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:36249 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751000AbdE3RbX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 13:31:23 -0400
-Received: by mail-pf0-f170.google.com with SMTP id m17so78250832pfg.3
-        for <git@vger.kernel.org>; Tue, 30 May 2017 10:31:23 -0700 (PDT)
+Received: by mail-pf0-f172.google.com with SMTP id 9so78318120pfj.1
+        for <git@vger.kernel.org>; Tue, 30 May 2017 10:31:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sNlQ0gyxVMngtOswlY1d6NJPR4K+NFkKJTfn6+VeVtg=;
-        b=ACkLOEuINbmiqrAu6gpmpD9Uvm3M7LAVbxRxG6SV7iTSxoR33wfsQRaKEToJTWpiIo
-         O+X4ch4mdT8uvWWSrIm1KP5pAGj5w1iqWhR5n8ObjNDHM8fi8HHZW/dlrBtM211EsODE
-         8Cu/xudBj3X6eDMkiXyxfekShaCt2VCrE4xXHPwsKa6nadYZBIU6ipXMymcm+M8YN31U
-         n1fx/006v4tFRlOAAC/Ng0fhecV/xV8JLNJe+F22B4DQygqRYK/hgcM3pfcfdcyvj6lH
-         y41G/XWzcxAZW6oX1fFkLYKq4r/1WgjqvorrZcBppnJ89je21m0Mz1gy8987ex2QqqkY
-         WUrg==
+        bh=OPhC5x4u8Jma5Ux8fH8j0Wy+PNSmaf3wqjHFJ4/vwKY=;
+        b=cPy7qeYNwdKws4MTjKKxIdqzE8ZR6h0lTI0mg4h87W7zJXG6LLXn9J9yewSUUiZ6gA
+         oayFr4D7Ygg0Vajid7I518Ur4/uxJpPDbXrTUumjhM6+18PYYlyu8Lcc2dX1FYDbmgOA
+         mRE6ow8d09lDgspwOxn3rexwn4hlhgyMUvaRo/2y3aJbJXfbbzCBsqNQo17XU93tq19z
+         tdx27BatqCP0OERL8TRBXrqef7iwfMCCN4PJO37yz+71YJ0ID1EmTnlP9DEBLdMJJRLV
+         MOhwBskgpnFrw9mkVyGZOBDHeHoM7MnJxw0Ow7Pof97twOOM32+OA+4X3KV1j3bpweEU
+         2vnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=sNlQ0gyxVMngtOswlY1d6NJPR4K+NFkKJTfn6+VeVtg=;
-        b=Tmkns/F6u+vQkvx6MAckVP+OrYSL3fNL5FTydlhnrSxUv0ihWJ8TxUXZQMHMUt4g+m
-         nWS1IJ3bruJdH2uI40C0hUjwIsxRGo1ueZc2IhErYE9KKC2bRIh+vqkdZCh9j+lwzTgh
-         j6IbTGdDKR6hsIx1xPHObbOCOOC5IPqP0GNPBIu5UuR3adCgNwm/TskRK1RHeOPHLZ50
-         CEHFZELs3urnTEQBKxMiGIyjEA8WUxPxggv+9zRvOBOCP8bP7gqmv8kU11O/XDfxYbK2
-         b1cmo7IoGNWlhiCcLpT+Toio+hfOPpBnkHfW3aVvmWW93NbcvkZT9irdLdEDYEX8q9Wh
-         /4hg==
-X-Gm-Message-State: AODbwcCKL6saaaehCNzeOfk6/25bsVIBXX+KiUlh/BL8ufm9Q/0fDNFy
-        aonwUE2jan2J4Dn/
-X-Received: by 10.84.224.77 with SMTP id a13mr84937847plt.132.1496165482820;
-        Tue, 30 May 2017 10:31:22 -0700 (PDT)
+        bh=OPhC5x4u8Jma5Ux8fH8j0Wy+PNSmaf3wqjHFJ4/vwKY=;
+        b=mmaAT/0F+1QK17m9VAdHvTQ/2tLW2q8UmNwLH6ez+Ts4jNrs+AmmH6qAQfVmhvoUit
+         7qY/IELwFSASMwAV7MbGLhNUApMCYWyUGp2uJQd5/fVlAR7J1UqsI5u6ijrovA/b6G1D
+         b1WGJvCfjLiS1fhEEwa5V5tQf4KgEQpReD+30UvKvA6Ud8FWz9F1BElwuDFkm0lXm0X/
+         v9KxTdaYkKVmCVzHpcZzV5CUIWm7xAY2AB4xsshgrJQaFzJJxVwkmQCxpaZpy+QU8fq9
+         wlej8VxamAnpHuNg31t5RXOqW1MJeKHU/2bem/TtLZmduDvts35ntKA2fwLQN354207P
+         K5rg==
+X-Gm-Message-State: AODbwcCt1XdBiZY2zBJ2cR4ydgDhgC2nVhSeUICFoX3zPkTZvAMYiy26
+        gC4PO8Arc0C5xNe9
+X-Received: by 10.84.224.70 with SMTP id a6mr84982903plt.38.1496165484427;
+        Tue, 30 May 2017 10:31:24 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id t19sm24940187pfg.31.2017.05.30.10.31.21
+        by smtp.gmail.com with ESMTPSA id t19sm24940187pfg.31.2017.05.30.10.31.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 May 2017 10:31:21 -0700 (PDT)
+        Tue, 30 May 2017 10:31:23 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sandals@crustytoothpaste.net,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 05/33] notes: convert format_display_notes to struct object_id
-Date:   Tue, 30 May 2017 10:30:41 -0700
-Message-Id: <20170530173109.54904-6-bmwill@google.com>
+Subject: [PATCH 06/33] builtin/notes: convert to struct object_id
+Date:   Tue, 30 May 2017 10:30:42 -0700
+Message-Id: <20170530173109.54904-7-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170530173109.54904-1-bmwill@google.com>
 References: <20170530173109.54904-1-bmwill@google.com>
@@ -64,92 +64,422 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 
+Convert most of the static functions to use struct object_id.  In
+addition, convert copy_notes_for_rewrite and its callers.
+
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- log-tree.c | 2 +-
- notes.c    | 8 ++++----
- notes.h    | 2 +-
- revision.c | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ builtin/am.c     |   2 +-
+ builtin/commit.c |   2 +-
+ builtin/notes.c  | 110 +++++++++++++++++++++++++++----------------------------
+ notes-utils.c    |   4 +-
+ notes-utils.h    |   2 +-
+ 5 files changed, 60 insertions(+), 60 deletions(-)
 
-diff --git a/log-tree.c b/log-tree.c
-index a4ec11c2b..9c0c64a2d 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -655,7 +655,7 @@ void show_log(struct rev_info *opt)
- 		struct strbuf notebuf = STRBUF_INIT;
+diff --git a/builtin/am.c b/builtin/am.c
+index 0f63dcab1..d9fdddac4 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -563,7 +563,7 @@ static int copy_notes_for_rebase(const struct am_state *state)
+ 			goto finish;
+ 		}
  
- 		raw = (opt->commit_format == CMIT_FMT_USERFORMAT);
--		format_display_notes(commit->object.oid.hash, &notebuf,
-+		format_display_notes(&commit->object.oid, &notebuf,
- 				     get_log_output_encoding(), raw);
- 		ctx.notes_message = notebuf.len
- 			? strbuf_detach(&notebuf, NULL)
-diff --git a/notes.c b/notes.c
-index fe4db2c1e..b5cabafde 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1215,7 +1215,7 @@ void free_notes(struct notes_tree *t)
-  * (raw != 0) gives the %N userformat; otherwise, the note message is given
-  * for human consumption.
-  */
--static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
-+static void format_note(struct notes_tree *t, const struct object_id *object_oid,
- 			struct strbuf *sb, const char *output_encoding, int raw)
- {
- 	static const char utf8[] = "utf-8";
-@@ -1229,7 +1229,7 @@ static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
- 	if (!t->initialized)
- 		init_notes(t, NULL, NULL, 0);
- 
--	oid = get_note(t, object_sha1);
-+	oid = get_note(t, object_oid->hash);
- 	if (!oid)
- 		return;
- 
-@@ -1277,13 +1277,13 @@ static void format_note(struct notes_tree *t, const unsigned char *object_sha1,
- 	free(msg);
+-		if (copy_note_for_rewrite(c, from_obj.hash, to_obj.hash))
++		if (copy_note_for_rewrite(c, &from_obj, &to_obj))
+ 			ret = error(_("Failed to copy notes from '%s' to '%s'"),
+ 					oid_to_hex(&from_obj), oid_to_hex(&to_obj));
+ 	}
+diff --git a/builtin/commit.c b/builtin/commit.c
+index da1ba4c86..758781004 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1809,7 +1809,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		cfg = init_copy_notes_for_rewrite("amend");
+ 		if (cfg) {
+ 			/* we are amending, so current_head is not NULL */
+-			copy_note_for_rewrite(cfg, current_head->object.oid.hash, oid.hash);
++			copy_note_for_rewrite(cfg, &current_head->object.oid, &oid);
+ 			finish_copy_notes_for_rewrite(cfg, "Notes added by 'git commit --amend'");
+ 		}
+ 		run_rewrite_hook(&current_head->object.oid, &oid);
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 3d9005b8f..7947a16ed 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -129,10 +129,10 @@ static void copy_obj_to_fd(int fd, const unsigned char *sha1)
+ 	}
  }
  
--void format_display_notes(const unsigned char *object_sha1,
-+void format_display_notes(const struct object_id *object_oid,
- 			  struct strbuf *sb, const char *output_encoding, int raw)
+-static void write_commented_object(int fd, const unsigned char *object)
++static void write_commented_object(int fd, const struct object_id *object)
  {
- 	int i;
- 	assert(display_notes_trees);
- 	for (i = 0; display_notes_trees[i]; i++)
--		format_note(display_notes_trees[i], object_sha1, sb,
-+		format_note(display_notes_trees[i], object_oid, sb,
- 			    output_encoding, raw);
+ 	const char *show_args[5] =
+-		{"show", "--stat", "--no-notes", sha1_to_hex(object), NULL};
++		{"show", "--stat", "--no-notes", oid_to_hex(object), NULL};
+ 	struct child_process show = CHILD_PROCESS_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct strbuf cbuf = STRBUF_INIT;
+@@ -145,7 +145,7 @@ static void write_commented_object(int fd, const unsigned char *object)
+ 	show.git_cmd = 1;
+ 	if (start_command(&show))
+ 		die(_("unable to start 'show' for object '%s'"),
+-		    sha1_to_hex(object));
++		    oid_to_hex(object));
+ 
+ 	if (strbuf_read(&buf, show.out, 0) < 0)
+ 		die_errno(_("could not read 'show' output"));
+@@ -157,10 +157,10 @@ static void write_commented_object(int fd, const unsigned char *object)
+ 
+ 	if (finish_command(&show))
+ 		die(_("failed to finish 'show' for object '%s'"),
+-		    sha1_to_hex(object));
++		    oid_to_hex(object));
  }
  
-diff --git a/notes.h b/notes.h
-index c72bb9710..a66532103 100644
---- a/notes.h
-+++ b/notes.h
-@@ -277,7 +277,7 @@ void init_display_notes(struct display_notes_opt *opt);
-  *
-  * You *must* call init_display_notes() before using this function.
-  */
--void format_display_notes(const unsigned char *object_sha1,
-+void format_display_notes(const struct object_id *object_oid,
- 			  struct strbuf *sb, const char *output_encoding, int raw);
+-static void prepare_note_data(const unsigned char *object, struct note_data *d,
++static void prepare_note_data(const struct object_id *object, struct note_data *d,
+ 		const unsigned char *old_note)
+ {
+ 	if (d->use_editor || !d->given) {
+@@ -243,16 +243,16 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct note_data *d = opt->value;
+ 	char *buf;
+-	unsigned char object[20];
++	struct object_id object;
+ 	enum object_type type;
+ 	unsigned long len;
  
- /*
-diff --git a/revision.c b/revision.c
-index b02394530..475d5b2dc 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2908,7 +2908,7 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
- 	if (opt->show_notes) {
- 		if (!buf.len)
- 			strbuf_addstr(&buf, message);
--		format_display_notes(commit->object.oid.hash, &buf, encoding, 1);
-+		format_display_notes(&commit->object.oid, &buf, encoding, 1);
+ 	if (d->buf.len)
+ 		strbuf_addch(&d->buf, '\n');
+ 
+-	if (get_sha1(arg, object))
++	if (get_oid(arg, &object))
+ 		die(_("failed to resolve '%s' as a valid ref."), arg);
+-	if (!(buf = read_sha1_file(object, &type, &len))) {
++	if (!(buf = read_sha1_file(object.hash, &type, &len))) {
+ 		free(buf);
+ 		die(_("failed to read object '%s'."), arg);
+ 	}
+@@ -292,7 +292,7 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
  	}
  
- 	/*
+ 	while (strbuf_getline_lf(&buf, stdin) != EOF) {
+-		unsigned char from_obj[20], to_obj[20];
++		struct object_id from_obj, to_obj;
+ 		struct strbuf **split;
+ 		int err;
+ 
+@@ -301,15 +301,15 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
+ 			die(_("malformed input line: '%s'."), buf.buf);
+ 		strbuf_rtrim(split[0]);
+ 		strbuf_rtrim(split[1]);
+-		if (get_sha1(split[0]->buf, from_obj))
++		if (get_oid(split[0]->buf, &from_obj))
+ 			die(_("failed to resolve '%s' as a valid ref."), split[0]->buf);
+-		if (get_sha1(split[1]->buf, to_obj))
++		if (get_oid(split[1]->buf, &to_obj))
+ 			die(_("failed to resolve '%s' as a valid ref."), split[1]->buf);
+ 
+ 		if (rewrite_cmd)
+-			err = copy_note_for_rewrite(c, from_obj, to_obj);
++			err = copy_note_for_rewrite(c, &from_obj, &to_obj);
+ 		else
+-			err = copy_note(t, from_obj, to_obj, force,
++			err = copy_note(t, from_obj.hash, to_obj.hash, force,
+ 					combine_notes_overwrite);
+ 
+ 		if (err) {
+@@ -350,7 +350,7 @@ static struct notes_tree *init_notes_check(const char *subcommand,
+ static int list(int argc, const char **argv, const char *prefix)
+ {
+ 	struct notes_tree *t;
+-	unsigned char object[20];
++	struct object_id object;
+ 	const struct object_id *note;
+ 	int retval = -1;
+ 	struct option options[] = {
+@@ -368,15 +368,15 @@ static int list(int argc, const char **argv, const char *prefix)
+ 
+ 	t = init_notes_check("list", 0);
+ 	if (argc) {
+-		if (get_sha1(argv[0], object))
++		if (get_oid(argv[0], &object))
+ 			die(_("failed to resolve '%s' as a valid ref."), argv[0]);
+-		note = get_note(t, object);
++		note = get_note(t, object.hash);
+ 		if (note) {
+ 			puts(oid_to_hex(note));
+ 			retval = 0;
+ 		} else
+ 			retval = error(_("no note found for object %s."),
+-				       sha1_to_hex(object));
++				       oid_to_hex(&object));
+ 	} else
+ 		retval = for_each_note(t, 0, list_each_note, NULL);
+ 
+@@ -391,7 +391,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 	int force = 0, allow_empty = 0;
+ 	const char *object_ref;
+ 	struct notes_tree *t;
+-	unsigned char object[20], new_note[20];
++	struct object_id object, new_note;
+ 	const struct object_id *note;
+ 	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
+ 	struct option options[] = {
+@@ -423,11 +423,11 @@ static int add(int argc, const char **argv, const char *prefix)
+ 
+ 	object_ref = argc > 1 ? argv[1] : "HEAD";
+ 
+-	if (get_sha1(object_ref, object))
++	if (get_oid(object_ref, &object))
+ 		die(_("failed to resolve '%s' as a valid ref."), object_ref);
+ 
+ 	t = init_notes_check("add", NOTES_INIT_WRITABLE);
+-	note = get_note(t, object);
++	note = get_note(t, object.hash);
+ 
+ 	if (note) {
+ 		if (!force) {
+@@ -437,7 +437,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 				return error(_("Cannot add notes. "
+ 					"Found existing notes for object %s. "
+ 					"Use '-f' to overwrite existing notes"),
+-					sha1_to_hex(object));
++					oid_to_hex(&object));
+ 			}
+ 			/*
+ 			 * Redirect to "edit" subcommand.
+@@ -450,19 +450,19 @@ static int add(int argc, const char **argv, const char *prefix)
+ 			return append_edit(argc, argv, prefix);
+ 		}
+ 		fprintf(stderr, _("Overwriting existing notes for object %s\n"),
+-			sha1_to_hex(object));
++			oid_to_hex(&object));
+ 	}
+ 
+-	prepare_note_data(object, &d, note->hash);
++	prepare_note_data(&object, &d, note->hash);
+ 	if (d.buf.len || allow_empty) {
+-		write_note_data(&d, new_note);
+-		if (add_note(t, object, new_note, combine_notes_overwrite))
++		write_note_data(&d, new_note.hash);
++		if (add_note(t, object.hash, new_note.hash, combine_notes_overwrite))
+ 			die("BUG: combine_notes_overwrite failed");
+ 		commit_notes(t, "Notes added by 'git notes add'");
+ 	} else {
+ 		fprintf(stderr, _("Removing note for object %s\n"),
+-			sha1_to_hex(object));
+-		remove_note(t, object);
++			oid_to_hex(&object));
++		remove_note(t, object.hash);
+ 		commit_notes(t, "Notes removed by 'git notes add'");
+ 	}
+ 
+@@ -476,7 +476,7 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 	int retval = 0, force = 0, from_stdin = 0;
+ 	const struct object_id *from_note, *note;
+ 	const char *object_ref;
+-	unsigned char object[20], from_obj[20];
++	struct object_id object, from_obj;
+ 	struct notes_tree *t;
+ 	const char *rewrite_cmd = NULL;
+ 	struct option options[] = {
+@@ -509,37 +509,37 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_notes_copy_usage, options);
+ 	}
+ 
+-	if (get_sha1(argv[0], from_obj))
++	if (get_oid(argv[0], &from_obj))
+ 		die(_("failed to resolve '%s' as a valid ref."), argv[0]);
+ 
+ 	object_ref = 1 < argc ? argv[1] : "HEAD";
+ 
+-	if (get_sha1(object_ref, object))
++	if (get_oid(object_ref, &object))
+ 		die(_("failed to resolve '%s' as a valid ref."), object_ref);
+ 
+ 	t = init_notes_check("copy", NOTES_INIT_WRITABLE);
+-	note = get_note(t, object);
++	note = get_note(t, object.hash);
+ 
+ 	if (note) {
+ 		if (!force) {
+ 			retval = error(_("Cannot copy notes. Found existing "
+ 				       "notes for object %s. Use '-f' to "
+ 				       "overwrite existing notes"),
+-				       sha1_to_hex(object));
++				       oid_to_hex(&object));
+ 			goto out;
+ 		}
+ 		fprintf(stderr, _("Overwriting existing notes for object %s\n"),
+-			sha1_to_hex(object));
++			oid_to_hex(&object));
+ 	}
+ 
+-	from_note = get_note(t, from_obj);
++	from_note = get_note(t, from_obj.hash);
+ 	if (!from_note) {
+ 		retval = error(_("missing notes on source object %s. Cannot "
+-			       "copy."), sha1_to_hex(from_obj));
++			       "copy."), oid_to_hex(&from_obj));
+ 		goto out;
+ 	}
+ 
+-	if (add_note(t, object, from_note->hash, combine_notes_overwrite))
++	if (add_note(t, object.hash, from_note->hash, combine_notes_overwrite))
+ 		die("BUG: combine_notes_overwrite failed");
+ 	commit_notes(t, "Notes added by 'git notes copy'");
+ out:
+@@ -552,7 +552,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 	int allow_empty = 0;
+ 	const char *object_ref;
+ 	struct notes_tree *t;
+-	unsigned char object[20], new_note[20];
++	struct object_id object, new_note;
+ 	const struct object_id *note;
+ 	char *logmsg;
+ 	const char * const *usage;
+@@ -592,13 +592,13 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 
+ 	object_ref = 1 < argc ? argv[1] : "HEAD";
+ 
+-	if (get_sha1(object_ref, object))
++	if (get_oid(object_ref, &object))
+ 		die(_("failed to resolve '%s' as a valid ref."), object_ref);
+ 
+ 	t = init_notes_check(argv[0], NOTES_INIT_WRITABLE);
+-	note = get_note(t, object);
++	note = get_note(t, object.hash);
+ 
+-	prepare_note_data(object, &d, edit && note ? note->hash : NULL);
++	prepare_note_data(&object, &d, edit && note ? note->hash : NULL);
+ 
+ 	if (note && !edit) {
+ 		/* Append buf to previous note contents */
+@@ -615,14 +615,14 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (d.buf.len || allow_empty) {
+-		write_note_data(&d, new_note);
+-		if (add_note(t, object, new_note, combine_notes_overwrite))
++		write_note_data(&d, new_note.hash);
++		if (add_note(t, object.hash, new_note.hash, combine_notes_overwrite))
+ 			die("BUG: combine_notes_overwrite failed");
+ 		logmsg = xstrfmt("Notes added by 'git notes %s'", argv[0]);
+ 	} else {
+ 		fprintf(stderr, _("Removing note for object %s\n"),
+-			sha1_to_hex(object));
+-		remove_note(t, object);
++			oid_to_hex(&object));
++		remove_note(t, object.hash);
+ 		logmsg = xstrfmt("Notes removed by 'git notes %s'", argv[0]);
+ 	}
+ 	commit_notes(t, logmsg);
+@@ -637,7 +637,7 @@ static int show(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *object_ref;
+ 	struct notes_tree *t;
+-	unsigned char object[20];
++	struct object_id object;
+ 	const struct object_id *note;
+ 	int retval;
+ 	struct option options[] = {
+@@ -654,15 +654,15 @@ static int show(int argc, const char **argv, const char *prefix)
+ 
+ 	object_ref = argc ? argv[0] : "HEAD";
+ 
+-	if (get_sha1(object_ref, object))
++	if (get_oid(object_ref, &object))
+ 		die(_("failed to resolve '%s' as a valid ref."), object_ref);
+ 
+ 	t = init_notes_check("show", 0);
+-	note = get_note(t, object);
++	note = get_note(t, object.hash);
+ 
+ 	if (!note)
+ 		retval = error(_("no note found for object %s."),
+-			       sha1_to_hex(object));
++			       oid_to_hex(&object));
+ 	else {
+ 		const char *show_args[3] = {"show", oid_to_hex(note), NULL};
+ 		retval = execv_git_cmd(show_args);
+@@ -760,7 +760,7 @@ static int git_config_get_notes_strategy(const char *key,
+ static int merge(int argc, const char **argv, const char *prefix)
+ {
+ 	struct strbuf remote_ref = STRBUF_INIT, msg = STRBUF_INIT;
+-	unsigned char result_sha1[20];
++	struct object_id result_oid;
+ 	struct notes_tree *t;
+ 	struct notes_merge_options o;
+ 	int do_merge = 0, do_commit = 0, do_abort = 0;
+@@ -842,16 +842,16 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 		    remote_ref.buf, default_notes_ref());
+ 	strbuf_add(&(o.commit_msg), msg.buf + 7, msg.len - 7); /* skip "notes: " */
+ 
+-	result = notes_merge(&o, t, result_sha1);
++	result = notes_merge(&o, t, result_oid.hash);
+ 
+ 	if (result >= 0) /* Merge resulted (trivially) in result_sha1 */
+ 		/* Update default notes ref with new commit */
+-		update_ref(msg.buf, default_notes_ref(), result_sha1, NULL,
++		update_ref(msg.buf, default_notes_ref(), result_oid.hash, NULL,
+ 			   0, UPDATE_REFS_DIE_ON_ERR);
+ 	else { /* Merge has unresolved conflicts */
+ 		const struct worktree *wt;
+ 		/* Update .git/NOTES_MERGE_PARTIAL with partial merge result */
+-		update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_sha1, NULL,
++		update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_oid.hash, NULL,
+ 			   0, UPDATE_REFS_DIE_ON_ERR);
+ 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
+ 		wt = find_shared_symref("NOTES_MERGE_REF", default_notes_ref());
+@@ -878,10 +878,10 @@ static int merge(int argc, const char **argv, const char *prefix)
+ static int remove_one_note(struct notes_tree *t, const char *name, unsigned flag)
+ {
+ 	int status;
+-	unsigned char sha1[20];
+-	if (get_sha1(name, sha1))
++	struct object_id oid;
++	if (get_oid(name, &oid))
+ 		return error(_("Failed to resolve '%s' as a valid ref."), name);
+-	status = remove_note(t, sha1);
++	status = remove_note(t, oid.hash);
+ 	if (status)
+ 		fprintf(stderr, _("Object %s has no note\n"), name);
+ 	else
+diff --git a/notes-utils.c b/notes-utils.c
+index 325ff3daa..7d7c22b43 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -155,12 +155,12 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
+ }
+ 
+ int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
+-			  const unsigned char *from_obj, const unsigned char *to_obj)
++			  const struct object_id *from_obj, const struct object_id *to_obj)
+ {
+ 	int ret = 0;
+ 	int i;
+ 	for (i = 0; c->trees[i]; i++)
+-		ret = copy_note(c->trees[i], from_obj, to_obj, 1, c->combine) || ret;
++		ret = copy_note(c->trees[i], from_obj->hash, to_obj->hash, 1, c->combine) || ret;
+ 	return ret;
+ }
+ 
+diff --git a/notes-utils.h b/notes-utils.h
+index fa538e1d9..119057839 100644
+--- a/notes-utils.h
++++ b/notes-utils.h
+@@ -40,7 +40,7 @@ struct notes_rewrite_cfg {
+ int parse_notes_merge_strategy(const char *v, enum notes_merge_strategy *s);
+ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd);
+ int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
+-			  const unsigned char *from_obj, const unsigned char *to_obj);
++			  const struct object_id *from_obj, const struct object_id *to_obj);
+ void finish_copy_notes_for_rewrite(struct notes_rewrite_cfg *c, const char *msg);
+ 
+ #endif
 -- 
 2.13.0.219.gdb65acc882-goog
 
