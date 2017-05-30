@@ -2,115 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C9412027C
-	for <e@80x24.org>; Tue, 30 May 2017 20:35:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F2652027C
+	for <e@80x24.org>; Tue, 30 May 2017 20:40:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751080AbdE3UfF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 16:35:05 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:17544 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750824AbdE3UfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 16:35:04 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wclj24n6Tz5tl9;
-        Tue, 30 May 2017 22:35:02 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 1EADE303E;
-        Tue, 30 May 2017 22:35:02 +0200 (CEST)
-Subject: Re: [PATCH 1/2] mingw: verify that paths are not mistaken for remote
- nicknames
+        id S1751070AbdE3Ukw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 16:40:52 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:34040 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750885AbdE3Ukv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 16:40:51 -0400
+Received: by mail-wr0-f194.google.com with SMTP id 6so5296987wrb.1
+        for <git@vger.kernel.org>; Tue, 30 May 2017 13:40:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Pf1p3V4qrzWG36eNCFzmKKWpmSm27AsCW2jD3vPr7To=;
+        b=cCFYFITIaqj3Vi7RzTkQ1ZzOU8D/C/4kJbRFD2F4x9p2QNCN2HW7BQpkkf32kTvbEq
+         qZ+Epo2NePS71AcoMjpDjoqlvR6BuknaKygylqeHYJh006Svpy3pwGiumOmtQIWQlW2a
+         LLw7xe7bWODdyBnmt1DM9C7/p0/ce4ClGQM5Hx7Vf2dR28ieJYAIy/Pu+xUcTY60A1Cg
+         fkAqdVWkrunU/TqxifaNBpn1Dp8IulWLrdj990nb14Sh/pDJEZfoxI3V3Bt4srdgetBW
+         WWSaM8Q/N+S5HNWLQdkQMfj0fC/47HMvti6MOn2UIUvwdIHHcSvIDH2Mgu0SGQydQbpJ
+         0hPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Pf1p3V4qrzWG36eNCFzmKKWpmSm27AsCW2jD3vPr7To=;
+        b=aKk98n9wjp02wfzI9E6eAP7PXRPTjUs2veZQ2uhat1omPIpyvN1qweHxzYgieKdEPX
+         zXBms09Mi/PA1WMzyAiWlrAulDXMq1i31U+8SR7/GiXc4AoQ+8vbdMZucaIUDYRPNmD3
+         SOke0eukK1DmMuVSURK3lmjhvMlilIurlsPQZPrU2tScS4+4n2z0xAUSP+LGI/031enp
+         H7wngQg8bkBvCcJCWdssoRt59Lwlrt0DyiOXZQTDqPff/Kc2UKXZ/svXWovc196Iq1Aw
+         RGJBAFbKUpGIIpgBbb0wREvGFHj3HJfVAHxBJk5H7n8s1/YiO2m+AmnOUoKqLDqHbB+R
+         fEFw==
+X-Gm-Message-State: AODbwcDSNI69BwcBWajsPADwk+CPq37F+xwS/EHkO2E979f9EEkGrzZk
+        3BQHIFZdETVu3Y5W
+X-Received: by 10.223.171.212 with SMTP id s78mr6235332wrc.116.1496176849730;
+        Tue, 30 May 2017 13:40:49 -0700 (PDT)
+Received: from ?IPv6:2001:a61:345b:1800:859b:523d:9d4b:b3ec? ([2001:a61:345b:1800:859b:523d:9d4b:b3ec])
+        by smtp.googlemail.com with ESMTPSA id p187sm19650120wmd.20.2017.05.30.13.40.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 May 2017 13:40:48 -0700 (PDT)
+Subject: Re: [PATCH] doc: Improve description for rev-parse --short
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CACsJy8CzgHc=qe5w=FGJJ=ZU0a+JiqBrjWHV7SH3rAPKmOOKoA@mail.gmail.com>
- <20170526033510.1793-1-gitster@pobox.com>
- <20170526033510.1793-14-gitster@pobox.com>
- <17b3d445-0cc7-2000-dc67-11fb53c7040b@kdbg.org>
- <CACBZZX5BgVbUFEwQjHqJVfHFUitTJRaCx-Lg+j7q54uErEpqcg@mail.gmail.com>
- <34029b29-9f65-78c0-c2ed-649b179a79ac@kdbg.org>
- <xmqqpoerc5oj.fsf@gitster.mtv.corp.google.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <2899d715-a416-1852-4399-28af0a3e9b6e@kdbg.org>
-Date:   Tue, 30 May 2017 22:35:01 +0200
+Cc:     git@vger.kernel.org
+References: <20170528143322.8580-1-asheiduk@gmail.com>
+ <xmqq1sr7dly4.fsf@gitster.mtv.corp.google.com>
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Message-ID: <787ad1fe-9923-d47d-79b0-8b0aebd8eb9b@gmail.com>
+Date:   Tue, 30 May 2017 22:40:47 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-In-Reply-To: <xmqqpoerc5oj.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+In-Reply-To: <xmqq1sr7dly4.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: de-BE
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.05.2017 um 06:46 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
+Am 30.05.2017 um 06:10 schrieb Junio C Hamano:
+>>  --short=number::
+>>  	Instead of outputting the full SHA-1 values of object names try to
+>>  	abbreviate them to a shorter unique name. When no length is specified
+>> -	7 is used. The minimum length is 4.
+>> +	the effective value of the configuration variable `core.abbrev` (see
+>> +	linkgit:git-config[1]) is used.  The minimum length is 4.  The length
+>> +	may be exceeded to ensure unique object names.	Implies `--verify`.
 > 
->>> Doesn't this need test_i18ngrep?:
->>
->> Good catch! It would be this one in warn_on_inaccessible:
->>
->>>       wrapper.c:581:  warning_errno(_("unable to access '%s'"), path);
->>
->> But actually, I'm more worried about the unholy mix of
->> one-test-first-then-skip_all-later that occurs in this test script (I
->> do not mean the skip_all that is visible in the context, there are
->> others later). I think there was some buzz recently that prove only
->> understands a summary line that reads "1..0", but here we would see
->> "1..1". What to do? Reorganize the test script? Dscho, any ideas?
+> "Implies --verify" is less important than the fact that multiple
+> object names cannot be given from the end-users' (and readers')
+> point of view, no?  The sentence in the pre-context still hints
+> (incorrectly) that we might take multiple names---that would want to
+> be corrected, no?
 > 
-> For now I've queued this on top of 1/2, so that suggestions are not
-> lost, and then tweaked 2/2 (as context for the patch to the test
-> changes).
+> Let me try.
 > 
-> Either an ack or a reroll is appreciated (I do not think we'd
-> terribly mind if this test were added to another script, or if this
-> test were skipped when UNC path cannot be determined even though it
-> does not need that prereq.  Also UNC_PATH can become prereq that is
-> tested by individual test in this script and the new test can be
-> added without requiring that prereq).
+>     --short[=length]::
+> 	Take a single object name, and output a prefix of the object
+> 	name whose length is at least the specified length and
+> 	sufficient to ensure uniqueness of the name.  The minimum
+> 	length is 4.  When no length is given, the effective value
+> 	of the `core.abbrev` configuration variable is used.
 > 
 > Thanks.
-> 
->   t/t5580-clone-push-unc.sh | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/t/t5580-clone-push-unc.sh b/t/t5580-clone-push-unc.sh
-> index fd719a209e..944730cddc 100755
-> --- a/t/t5580-clone-push-unc.sh
-> +++ b/t/t5580-clone-push-unc.sh
-> @@ -8,12 +8,6 @@ if ! test_have_prereq MINGW; then
->   	test_done
->   fi
->   
-> -test_expect_failure 'remote nick cannot contain backslashes' '
-> -	BACKSLASHED="$(pwd | tr / \\\\)" &&
-> -	git ls-remote "$BACKSLASHED" >out 2>err &&
-> -	! grep "unable to access" err
-> -'
-> -
->   UNCPATH="$(pwd)"
->   case "$UNCPATH" in
->   [A-Z]:*)
-> @@ -51,4 +45,10 @@ test_expect_success push '
->   	test "$rev" = "$(git rev-parse --verify refs/heads/to-push)"
->   '
->   
-> +test_expect_failure 'remote nick cannot contain backslashes' '
-> +	BACKSLASHED="$(pwd | tr / \\\\)" &&
-> +	git ls-remote "$BACKSLASHED" >out 2>err &&
-> +	test_i18ngrep ! "unable to access" err
-> +'
-> +
->   test_done
-> 
 
-ACK!
+Your are right about s/names/name/ in the pretext.
 
--- Hannes
+But I think that the link to the `--verify` option is still important.
+The text there talks about when something is output, exit codes and
+about `^{type}` peeling. Also `--quiet` is linked to
+`--verify` and hence relevant here.
+
+So I'd like to patch your text to this:
+
+  --short[=length]::
+	Same as `--verify` but output only a prefix of the object
+	name whose length is at least the specified length and
+	sufficient to ensure uniqueness of the name.  The minimum
+	length is 4.  When no length is given, the effective value
+	of the `core.abbrev` configuration variable is used.
+
+And I'd like to move the section up right to `--verify` and `--quiet`.
+The options in this section are not sorted alphabetically anyways and
+the relevant parts would be adjacent. Is that OK?
+
+ALso: Did you remove the `linkgit` by intention or just by accident?
