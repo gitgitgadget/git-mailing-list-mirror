@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 653C520D0A
-	for <e@80x24.org>; Tue, 30 May 2017 05:11:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DE9420D0A
+	for <e@80x24.org>; Tue, 30 May 2017 05:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750839AbdE3FLZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 01:11:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59596 "EHLO cloud.peff.net"
+        id S1750871AbdE3FMg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 01:12:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59605 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750767AbdE3FLY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 01:11:24 -0400
-Received: (qmail 12491 invoked by uid 109); 30 May 2017 05:11:25 -0000
+        id S1750733AbdE3FMf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 01:12:35 -0400
+Received: (qmail 12586 invoked by uid 109); 30 May 2017 05:12:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 May 2017 05:11:25 +0000
-Received: (qmail 20781 invoked by uid 111); 30 May 2017 05:12:02 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 May 2017 05:12:36 +0000
+Received: (qmail 20801 invoked by uid 111); 30 May 2017 05:13:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 May 2017 01:12:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 May 2017 01:11:23 -0400
-Date:   Tue, 30 May 2017 01:11:23 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 May 2017 01:13:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 May 2017 01:12:33 -0400
+Date:   Tue, 30 May 2017 01:12:33 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Zero King <l2dy@macports.org>,
         Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 1/8] am: handle "-h" argument earlier
-Message-ID: <20170530051122.u6uu3dohtilkk7ia@sigill.intra.peff.net>
+Subject: [PATCH 2/8] credential: handle invalid arguments earlier
+Message-ID: <20170530051233.3nqjtrxtokoudkww@sigill.intra.peff.net>
 References: <20170530050949.dkgu3u26qj6ycusy@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,49 +40,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the user provides "-h" on the command line, then our
-parse_options() invocation will show a usage message and
-quit. But if "-h" is the only argument, the git wrapper
-behaves specially: it ignores our RUN_SETUP flag and calls
-cmd_am() without having done repository setup at all.  This
-is due to 99caeed05 (Let 'git <command> -h' show usage
-without a git dir, 2009-11-09).
+The git-credential command only takes one argument: the
+operation to perform. If we don't have one, we complain
+immediately. But if we have one that we don't recognize, we
+don't notice until after we've read the credential from
+stdin. This is likely to confuse a user invoking "git
+credential -h", as the program will hang waiting for their
+input before showing anything.
 
-Before cmd_am() calls parse_options(), though, it runs a few
-other setup functions. One of these is am_state_init(),
-which uses git_pathdup() to set up the default rebase-apply
-path. But calling git_pathdup() when we haven't done
-repository setup will fall back to using ".git". That's
-mostly harmless (since we won't use the value anyway), but
-is forbidden since b1ef400eec ("setup_git_env: avoid blind
-fall-back to ".git"", 2016-10-20), and we now BUG().
+Let's detect this case early. Likewise, we never noticed
+when there are extra arguments beyond the one we're
+expecting. Let's catch this with the same conditional.
 
-We can't easily move that setup to after the parse_options()
-call; the point is to set up defaults that are overwritten
-by the option parsing. Instead, we'll detect the "-h" case
-early and show the usage then. This matches the behavior of
-other builtins which have a similar setup-ordering issue
-(e.g., git-branch).
+Note that we don't need to handle "--help" similarly,
+because the git wrapper does this before even calling
+cmd_credential().
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/am.c | 3 +++
- 1 file changed, 3 insertions(+)
+ builtin/credential.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 0f63dcab1..5ee146bfb 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2311,6 +2311,9 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+diff --git a/builtin/credential.c b/builtin/credential.c
+index 0412fa00f..879acfbcd 100644
+--- a/builtin/credential.c
++++ b/builtin/credential.c
+@@ -10,9 +10,9 @@ int cmd_credential(int argc, const char **argv, const char *prefix)
+ 	const char *op;
+ 	struct credential c = CREDENTIAL_INIT;
  
-+	if (argc == 2 && !strcmp(argv[1], "-h"))
-+		usage_with_options(usage, options);
-+
- 	git_config(git_am_config, NULL);
+-	op = argv[1];
+-	if (!op)
++	if (argc != 2 || !strcmp(argv[1], "-h"))
+ 		usage(usage_msg);
++	op = argv[1];
  
- 	am_state_init(&state);
+ 	if (credential_read(&c, stdin) < 0)
+ 		die("unable to read credential from stdin");
 -- 
 2.13.0.613.g11c956365
 
