@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C30B20D0A
-	for <e@80x24.org>; Tue, 30 May 2017 05:15:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CED3D20D0A
+	for <e@80x24.org>; Tue, 30 May 2017 05:16:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750821AbdE3FPM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 01:15:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59615 "EHLO cloud.peff.net"
+        id S1751002AbdE3FQx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 01:16:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59622 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750720AbdE3FPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 01:15:11 -0400
-Received: (qmail 12801 invoked by uid 109); 30 May 2017 05:15:12 -0000
+        id S1750988AbdE3FQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 01:16:52 -0400
+Received: (qmail 12936 invoked by uid 109); 30 May 2017 05:16:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 May 2017 05:15:12 +0000
-Received: (qmail 20842 invoked by uid 111); 30 May 2017 05:15:49 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 May 2017 05:16:53 +0000
+Received: (qmail 20867 invoked by uid 111); 30 May 2017 05:17:30 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 May 2017 01:15:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 May 2017 01:15:09 -0400
-Date:   Tue, 30 May 2017 01:15:09 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 30 May 2017 01:17:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 30 May 2017 01:16:50 -0400
+Date:   Tue, 30 May 2017 01:16:50 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Zero King <l2dy@macports.org>,
         Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 4/8] remote-{ext,fd}: print usage message on invalid arguments
-Message-ID: <20170530051509.fx35y7d67b7fev6y@sigill.intra.peff.net>
+Subject: [PATCH 5/8] submodule--helper: show usage for "-h"
+Message-ID: <20170530051650.t2pa2fsvbb6qdut4@sigill.intra.peff.net>
 References: <20170530050949.dkgu3u26qj6ycusy@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,68 +40,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We just say "Expected two arguments" when we get a different
-number of arguments, but we can be slightly friendlier.
-People shouldn't generally be running remote helpers
-themselves, but curious users might say "git remote-ext -h".
+Normal users shouldn't ever call submodule--helper, but it
+doesn't hurt to give them a normal usage message if they try
+"-h".
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-According to remote-curl.c, we should actually handle the
-1-argument case, too. I didn't dig into that because it's
-orthogonal to this series, and it's not clear that anybody
-cares.
+The usage message isn't that helpful _either_, and I admit
+my ulterior motive is just to make the test at the end of
+this series pass. :)
 
- builtin/remote-ext.c | 5 ++++-
- builtin/remote-fd.c  | 5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+I was tempted to actually dump the names from the commands
+array to stdout, but this command really is an internal
+helper. It's probably not worth spending time on such
+niceties.
 
-diff --git a/builtin/remote-ext.c b/builtin/remote-ext.c
-index 11b48bfb4..bfb21ba7d 100644
---- a/builtin/remote-ext.c
-+++ b/builtin/remote-ext.c
-@@ -3,6 +3,9 @@
- #include "run-command.h"
- #include "pkt-line.h"
- 
-+static const char usage_msg[] =
-+	"git remote-ext <remote> <url>";
-+
- /*
-  * URL syntax:
-  *	'command [arg1 [arg2 [...]]]'	Invoke command with given arguments.
-@@ -193,7 +196,7 @@ static int command_loop(const char *child)
- int cmd_remote_ext(int argc, const char **argv, const char *prefix)
+ builtin/submodule--helper.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 566a5b6a6..a78b003c2 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1222,9 +1222,8 @@ static struct cmd_struct commands[] = {
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
  {
- 	if (argc != 3)
--		die("Expected two arguments");
-+		usage(usage_msg);
+ 	int i;
+-	if (argc < 2)
+-		die(_("submodule--helper subcommand must be "
+-		      "called with a subcommand"));
++	if (argc < 2 || !strcmp(argv[1], "-h"))
++		usage("git submodule--helper <command>");
  
- 	return command_loop(argv[2]);
- }
-diff --git a/builtin/remote-fd.c b/builtin/remote-fd.c
-index 08d7121b6..91dfe07e0 100644
---- a/builtin/remote-fd.c
-+++ b/builtin/remote-fd.c
-@@ -1,6 +1,9 @@
- #include "builtin.h"
- #include "transport.h"
- 
-+static const char usage_msg[] =
-+	"git remote-fd <remote> <url>";
-+
- /*
-  * URL syntax:
-  *	'fd::<inoutfd>[/<anything>]'		Read/write socket pair
-@@ -57,7 +60,7 @@ int cmd_remote_fd(int argc, const char **argv, const char *prefix)
- 	char *end;
- 
- 	if (argc != 3)
--		die("Expected two arguments");
-+		usage(usage_msg);
- 
- 	input_fd = (int)strtoul(argv[2], &end, 10);
- 
+ 	for (i = 0; i < ARRAY_SIZE(commands); i++) {
+ 		if (!strcmp(argv[1], commands[i].cmd)) {
 -- 
 2.13.0.613.g11c956365
 
