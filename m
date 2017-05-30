@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AC682027C
-	for <e@80x24.org>; Tue, 30 May 2017 17:31:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57D8E2027C
+	for <e@80x24.org>; Tue, 30 May 2017 17:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751209AbdE3Rbl (ORCPT <rfc822;e@80x24.org>);
+        id S1751220AbdE3Rbp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 13:31:45 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:34454 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751202AbdE3Rbl (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 30 May 2017 13:31:41 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:33002 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751063AbdE3Rbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 13:31:39 -0400
-Received: by mail-pf0-f180.google.com with SMTP id e193so78464919pfh.0
-        for <git@vger.kernel.org>; Tue, 30 May 2017 10:31:39 -0700 (PDT)
+Received: by mail-pf0-f176.google.com with SMTP id 9so78320538pfj.1
+        for <git@vger.kernel.org>; Tue, 30 May 2017 10:31:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ueFDZGGs8CFk75KFnIfHelr8E6t2qBKRSOgUe3uNeaM=;
-        b=hGd/H6pOpPrLcZTbhDsnSm3z0BbljrXNUuowwRabroMN6OsczjBeFJ0iWUeT9R6JdV
-         y75aVYK/kGfPIdGDSRoCUnhShyHoNOvOK+LfzZdwfMYhB6jwfQcAqctb2IEAdN2AG37v
-         wiuKno5aK4JwjdiKtTWwuHM1xsU7p67nYUrGxCnSskJjIVQXicrWGpgHaJh6NyDJPkg8
-         6BcIS/o8Zq7CuElnfX3ylsIja1Wy9u2kyf1SuYVrt11QMDWNHj8FzChceqMrvsCweDZo
-         Usgeobtqo0PoGWaa64UOFIvdPsK56s8FmEuwZOvHwtvjIs0btRJ5IivPfIBPb6PapQvu
-         RZbQ==
+        bh=d0Bz1AUj8khzWpthkjuTTFjodkxPncoKmdZNGAhxzpQ=;
+        b=BmJFKIGaOJZfp+Ewzw4Yp+BWyJO4Ja+kIrhrnCCFjZZKyZfA4HCJ6zpmdLlBDTOaMk
+         19Z4x60zcLEI/SKhMP3gMnhvBSYqjvJo0ZvWM9SVRYlKZki7wpSUZCUd5SM0hg77oWaJ
+         9nYL2bHCWuGVNoh2j9j54FOoI+JcrgcsAEZtkhdTsntVhH6/W9ipexjXCSTBMrBfGtLN
+         h7i/DDPRwbmtpJDnhJV7Df/50IbCs5HY1dIBO8pTvi9Tf3vMWK9hmObmYQwUWU1UQ4G1
+         4Mhm3qCQ/bFaFpBtaZabH1LkYtFftjQWyP8Tm7MZyvq0T36KVKRmDjrfSm8cXSb+vhqN
+         WlLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ueFDZGGs8CFk75KFnIfHelr8E6t2qBKRSOgUe3uNeaM=;
-        b=HGLOtUyOt/pC4hGsKxWXfig/rEZtY3izmR5AtT7IXoscXLkIXGZV+ac30GARec5FmY
-         P/S3aKa2n+GihtdXb88D2jpdiwgb7byJxR8EZIgoVoVDtkrnG6l1xeq0YgJjxeAzzvMo
-         qD2uopJCL7Rm4NgRmGZemhLpGKpN2cq47l/F0pHDewp5tHLWAKl+slxBmI2cR0PQ2nIM
-         mocBYHGN+oSWCH91CCQ1QNYeDUyfmbzGzn3kOaGcwbcftf3y0sg16NM9sRxLRC2DFwsE
-         no8mKDV4y2eLydR1W+YIXJtq8lT9L/Tpxpgd69a/c9RiIq8g72eO5+N1ftTbaIsIGeql
-         8T/w==
-X-Gm-Message-State: AODbwcBxlHoJqR1fgcvj78zKxdN7pfJC1Q/hMc1b6BzeQ0bgzoK0h+2+
-        KzhhEP2KsqgW6QwWDTZgHA==
-X-Received: by 10.99.227.81 with SMTP id o17mr26661054pgj.41.1496165497742;
-        Tue, 30 May 2017 10:31:37 -0700 (PDT)
+        bh=d0Bz1AUj8khzWpthkjuTTFjodkxPncoKmdZNGAhxzpQ=;
+        b=FWon04/+j0dAt2KVSgpDqBNdjiPhni+7CwF8/3iiikTVo7YOFyMrWkQ77PZBYuSKX9
+         oHsJDXZ9NT7Qd471GR8pu3/Av4EgadL0nqKSsgF+6I/vTbd6JD1XGUQkrwCdAkj1yFmL
+         AXFdlCrcn/5sL2Epcey1zM14ntsrK0EaKCFUHE8mfu+2Wd3RxNY4f5oWVp7D5vtob4D7
+         mkqSMQdsqdCkBJcAe9Cp5q524/2bdL4f2OJL7wnr3dI80l5T2a711rHmd2aHvYQ2XIgU
+         hkoik88bZEvR/Nl8fbHMDvIVD6l7Vfq0nROT/TGuwrRQVtNWaGafkCaJ2D9azBN7BEHC
+         r69g==
+X-Gm-Message-State: AODbwcBNXrJU25KLKNuSq543KClkg5D0RljGbB2RSAvC7VbTq53r0jAZ
+        X5b5Kr2D3oCjBsJxf8mb1Q==
+X-Received: by 10.99.123.94 with SMTP id k30mr26524067pgn.91.1496165489905;
+        Tue, 30 May 2017 10:31:29 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id t19sm24940187pfg.31.2017.05.30.10.31.35
+        by smtp.gmail.com with ESMTPSA id t19sm24940187pfg.31.2017.05.30.10.31.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 May 2017 10:31:36 -0700 (PDT)
+        Tue, 30 May 2017 10:31:29 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sandals@crustytoothpaste.net,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 15/33] diff: convert reuse_worktree_file to struct object_id
-Date:   Tue, 30 May 2017 10:30:51 -0700
-Message-Id: <20170530173109.54904-16-bmwill@google.com>
+Subject: [PATCH 10/33] diff: convert diff_index_show_file to struct object_id
+Date:   Tue, 30 May 2017 10:30:46 -0700
+Message-Id: <20170530173109.54904-11-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170530173109.54904-1-bmwill@google.com>
 References: <20170530173109.54904-1-bmwill@google.com>
@@ -64,58 +64,55 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- diff.c | 10 +++++-----
+ diff-lib.c | 10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index e0c179f5f..084c8b2d0 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2717,7 +2717,7 @@ void fill_filespec(struct diff_filespec *spec, const struct object_id *oid,
-  * the work tree has that object contents, return true, so that
-  * prepare_temp_file() does not have to inflate and extract.
-  */
--static int reuse_worktree_file(const char *name, const unsigned char *sha1, int want_file)
-+static int reuse_worktree_file(const char *name, const struct object_id *oid, int want_file)
+diff --git a/diff-lib.c b/diff-lib.c
+index a3bc78162..2c838aaf4 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -255,12 +255,12 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ static void diff_index_show_file(struct rev_info *revs,
+ 				 const char *prefix,
+ 				 const struct cache_entry *ce,
+-				 const unsigned char *sha1, int sha1_valid,
++				 const struct object_id *oid, int oid_valid,
+ 				 unsigned int mode,
+ 				 unsigned dirty_submodule)
  {
- 	const struct cache_entry *ce;
- 	struct stat st;
-@@ -2748,7 +2748,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
- 	 * objects however would tend to be slower as they need
- 	 * to be individually opened and inflated.
+ 	diff_addremove(&revs->diffopt, prefix[0], mode,
+-		       sha1, sha1_valid, ce->name, dirty_submodule);
++		       oid->hash, oid_valid, ce->name, dirty_submodule);
+ }
+ 
+ static int get_stat_data(const struct cache_entry *ce,
+@@ -315,7 +315,7 @@ static void show_new_file(struct rev_info *revs,
+ 	    &dirty_submodule, &revs->diffopt) < 0)
+ 		return;
+ 
+-	diff_index_show_file(revs, "+", new, oid->hash, !is_null_oid(oid), mode, dirty_submodule);
++	diff_index_show_file(revs, "+", new, oid, !is_null_oid(oid), mode, dirty_submodule);
+ }
+ 
+ static int show_modified(struct rev_info *revs,
+@@ -332,7 +332,7 @@ static int show_modified(struct rev_info *revs,
+ 			  &dirty_submodule, &revs->diffopt) < 0) {
+ 		if (report_missing)
+ 			diff_index_show_file(revs, "-", old,
+-					     old->oid.hash, 1, old->ce_mode,
++					     &old->oid, 1, old->ce_mode,
+ 					     0);
+ 		return -1;
+ 	}
+@@ -426,7 +426,7 @@ static void do_oneway_diff(struct unpack_trees_options *o,
+ 	 * Something removed from the tree?
  	 */
--	if (!FAST_WORKING_DIRECTORY && !want_file && has_sha1_pack(sha1))
-+	if (!FAST_WORKING_DIRECTORY && !want_file && has_sha1_pack(oid->hash))
- 		return 0;
- 
- 	/*
-@@ -2768,7 +2768,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
- 	 * This is not the sha1 we are looking for, or
- 	 * unreusable because it is not a regular file.
- 	 */
--	if (hashcmp(sha1, ce->oid.hash) || !S_ISREG(ce->ce_mode))
-+	if (oidcmp(oid, &ce->oid) || !S_ISREG(ce->ce_mode))
- 		return 0;
- 
- 	/*
-@@ -2842,7 +2842,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		return diff_populate_gitlink(s, size_only);
- 
- 	if (!s->oid_valid ||
--	    reuse_worktree_file(s->path, s->oid.hash, 0)) {
-+	    reuse_worktree_file(s->path, &s->oid, 0)) {
- 		struct strbuf buf = STRBUF_INIT;
- 		struct stat st;
- 		int fd;
-@@ -3008,7 +3008,7 @@ static struct diff_tempfile *prepare_temp_file(const char *name,
- 
- 	if (!S_ISGITLINK(one->mode) &&
- 	    (!one->oid_valid ||
--	     reuse_worktree_file(name, one->oid.hash, 1))) {
-+	     reuse_worktree_file(name, &one->oid, 1))) {
- 		struct stat st;
- 		if (lstat(name, &st) < 0) {
- 			if (errno == ENOENT)
+ 	if (!idx) {
+-		diff_index_show_file(revs, "-", tree, tree->oid.hash, 1,
++		diff_index_show_file(revs, "-", tree, &tree->oid, 1,
+ 				     tree->ce_mode, 0);
+ 		return;
+ 	}
 -- 
 2.13.0.219.gdb65acc882-goog
 
