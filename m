@@ -2,97 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C0902027C
-	for <e@80x24.org>; Tue, 30 May 2017 23:03:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76AD72027C
+	for <e@80x24.org>; Tue, 30 May 2017 23:05:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751128AbdE3XDY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 19:03:24 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35380 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751118AbdE3XDY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 19:03:24 -0400
-Received: by mail-pf0-f173.google.com with SMTP id n23so183087pfb.2
-        for <git@vger.kernel.org>; Tue, 30 May 2017 16:03:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=IjXmpIwYx3BPd0bNeDYGx9eWI/QsHzht+DMlsKPVPyA=;
-        b=b8IZJr4L2q4k13kaUFOXIlrZ4GeMCUqOl5XRRwTJk07KVHR9oEP5lOFVqdMLmD2NSC
-         Bwn32WPJ8CRibObFmYybIngCRFj0anr3zHpLoNHM7rVCuDN4P3Pqva6vSWl+VX2LINdp
-         cfsnTQJ6OMcmAHiM8S0xuzHGHv+p0zYrgNAtojN5xtjVqwVSsRZDyl0EMy0X9gpZ/dGg
-         9xVOnCi09RA600AYML9Qpg8nOfz4+rVUQViwbl+9Yj4IhqLWbOHhbrtMLwSMJisYoebj
-         DVPSqXgIyNK5xMMRnaENX+/Qp4Yv4ZI960qxJ5AIAczioTJ5BiSewt1DFsWuErwn05ot
-         86WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=IjXmpIwYx3BPd0bNeDYGx9eWI/QsHzht+DMlsKPVPyA=;
-        b=sW1DD82liKHD+VbywepsgpfWHa2w6IMNpUUtYv6/Y/u2nRRMactnJYB19xH9bsC3+8
-         NN0XFlM4SuIX6utVZEx/S7GuZu8ND7xnG3BfccZUyp8jd+vMcf/IN0MOkLlFrYiONNAa
-         0NgIy1Eh7ds8o3VlvMdc8xYs8vc6zitavgVXLypLGv20QcQhsSyGJrMTHc+cVXWI8sHa
-         T7WmgSYeXnzuoQ8YTXKi78iZ5CociAp05WCHsi5aneLZ202Ige6mvL/gaBZwtBeD4NlD
-         OpZSfZ7uAScn6xnVL5jYOHzaM1qqO/y5ydX4fZoZxaeeHiB6z/4tuRoeINM47dgSGGRB
-         6qOw==
-X-Gm-Message-State: AODbwcAA8c4ZXlc3tCzgVkQ1EnhaJeuBEWoHXgCOwyAv36SygcOIjCcs
-        y11NUW3/ciBq9Q==
-X-Received: by 10.99.147.68 with SMTP id w4mr28879603pgm.189.1496185403438;
-        Tue, 30 May 2017 16:03:23 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:d156:5238:7809:132c])
-        by smtp.gmail.com with ESMTPSA id k9sm18665122pga.40.2017.05.30.16.03.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 30 May 2017 16:03:22 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH] C style: use standard style for "TRANSLATORS" comments
-References: <20170511204334.GM83655@google.com>
-        <20170511212012.6782-1-avarab@gmail.com>
-        <CANYiYbH=EJy51yAdiMg6R_yDzZ3PLUuLMsLxdkf9zXJPhLcwKA@mail.gmail.com>
-Date:   Wed, 31 May 2017 08:03:22 +0900
-In-Reply-To: <CANYiYbH=EJy51yAdiMg6R_yDzZ3PLUuLMsLxdkf9zXJPhLcwKA@mail.gmail.com>
-        (Jiang Xin's message of "Wed, 31 May 2017 00:02:18 +0800")
-Message-ID: <xmqqwp8y9ccl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1750885AbdE3XEx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 19:04:53 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:29231 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750811AbdE3XEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 19:04:51 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id FqC1d3bmYcpskFqC1d2fjx; Wed, 31 May 2017 00:04:49 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=oCcaPWc0AAAA:8 a=ggGe_nQQzwVECPAcrYEA:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <E0D5AC60DB0F48DEBF865597910D9531@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Git List" <git@vger.kernel.org>
+References: <8CEDDC40C7D24404976929CF3E7AF6FC@PhilipOakley>        <xmqq37bpbx5t.fsf@gitster.mtv.corp.google.com>        <D689F4F80DA24C78B5E0FB025B9548E6@PhilipOakley>        <xmqqpoet9lms.fsf@gitster.mtv.corp.google.com>        <DE497A69E68043DABF9C3A7D9198B277@PhilipOakley> <xmqq1sr7f9nb.fsf@gitster.mtv.corp.google.com>
+Subject: Re: mergetool: what to do about deleting precious files?
+Date:   Wed, 31 May 2017 00:04:46 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170530-4, 30/05/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfPHhAxRidCA8ULxDLOwMJ+fU6W2nJDz4bLbesu+zvBZV9rZ5g7ZdcsSV8oltIOE35pM5o9oODh0sSyG4IlXPzxlTbW5dSmzox7tK1buOw8s1bwOUAJ0v
+ QE+h7nRixKWkPdz4SSivW/s3KsDI3wotewDIa/Q/Hb/RleRKszGtXD2EXNhJi9xCual8cwkL3NjeUA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+From: "Junio C Hamano" <gitster@pobox.com>
 
-> 2017-05-12 5:20 GMT+08:00 Ævar Arnfjörð Bjarmason <avarab@gmail.com>:
->> Change all the "TRANSLATORS: [...]" comments in the C code to use the
->> regular Git coding style, and amend the style guide so that the
->> example there uses that style.
->>
->> This custom style was necessary back in 2010 when the gettext support
->> was initially added, and was subsequently documented in commit
->> cbcfd4e3ea ("i18n: mention "TRANSLATORS:" marker in
->> Documentation/CodingGuidelines", 2014-04-18).
->>
->> GNU xgettext hasn't had the parsing limitation that necessitated this
->> exception for almost 3 years. Since its 0.19 release on 2014-06-02
->> it's been able to recognize TRANSLATOR comments in the standard Git
->> comment syntax[1].
+Thanks for the replies. Let's see if I've got it...
+
+> "Philip Oakley" <philipoakley@iee.org> writes:
 >
-> My gettext version is 0.19.8.1.  I applied this patch and checked the
-> new generated `git.pot` file, all "TRANSLATORS:" directions are well
-> kept as usual.
+>> If I now understand correctly, the merge process flow is:
+>>
+>> * canonicalise content (eol, smudge-clean, $id, renormalise, etc)
+>> * diff the content (internal, or GIT_EXTERNAL_DIFF)
+>> * apply the diff
+>> * if conflicts, only then use merge-driver/tool
+>>
+>> Would that be a correct interpretation?
+>
+> Not quite.  There are a lot more going on before any of those steps:
+>
+> * Find the common ancestor commit (which could be many).
 
-Ævar, sorry that this patch fell through cracks about 20 days ago.
-I'll queue with Acked-by by Jiang.
+IIUC Git selects one of them, rather than all if there are many (which then 
+may not be the optimum)
 
-Thanks, both.
+>
+> * Walk the three trees (the common ancestor's, ours and theirs) in
+>   parallel, noticing what happened to each path.  Depending on what
+>   happened to the path in each branch, the merge may or may not
+>   "conflict" (e.g. when both sides added exactly the same contents
+>   to the same path, they are not counted as conflicting.  when we
+>   removed while they modified, they show as conflicting).
+
+I'm assuming here that this is the sha-oid comparison, and then checking the 
+tree/blob names that match them. (the top tree not having a name). So here 
+"conflict free" is that the sha-oids match.
+
+Also, I thnk this is saying that added or removed trees or blobs are in some 
+sense are 'conflict free' (though still subject to rename/move detection 
+etc). An added file/blob would be conflict free for merging into it's tree, 
+yes?
+
+IIUC, the comparison is therefore using the in-repo sha-oids; 
+unless --renormalise was given which will do a smudge-clean washing cycle 
+and recomute fresh canonical sha-oids for the comparison (rather than doing 
+it later).
+
+>
+> * For paths that are conflicting, feed the canonicalized content of
+>   the versions from common, ours and theirs to the file-level merge
+>   driver.
+
+So this is where any .gitattibutes settings come in, or is the merge driver 
+after the diff step? (which could also be a user diff?)
+
+>        The builtin file-level merge driver takes two xdiff (one
+>   between ancestor and ours, the other between ancestore and
+>   theirs) and reconciles them to produce the result.  But that is
+>   irrelevant in the context of "custom merge driver"; the builtin
+>   one is skipped altogether and the custom contents merge driver
+>   the user specified via the attributes is used instead.
+>
+> Notice that the second step above has no customization knobs.  Any
+> path the second step deems not to conflict is "merged cleanly"
+> without even triggering the "oops, ours and theirs did conflicting
+> changes, to the content; let's see how the final content should look
+> like" (aka the third step).  This is *not* because "Git knows the
+> best"; it is merely that nobody felt the need for a mechanism to
+> allow customizing the second step.
+>
+> And that is why I said you need a new customization mechanism if you
+> want to affect the outcome of the scenario that started this thread.
+
+Ok, I think I can see how I was confused between the "tree merge" (oid 
+conflict detection) and the more usual (to users) "file merge" (line by 
+line, etc.). I wasn't sure where to find that as someone relatively new to 
+Git.
+
+Thanks for the explanations.
+--
+Philip 
+
+
+---
+This email has been checked for viruses by AVG.
+http://www.avg.com
+
