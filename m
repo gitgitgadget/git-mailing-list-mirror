@@ -2,179 +2,302 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A21D22027C
-	for <e@80x24.org>; Tue, 30 May 2017 18:11:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AA4F2027C
+	for <e@80x24.org>; Tue, 30 May 2017 18:19:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751114AbdE3SLe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 14:11:34 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:36812 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750930AbdE3SLd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 14:11:33 -0400
-Received: by mail-pf0-f173.google.com with SMTP id m17so79158483pfg.3
-        for <git@vger.kernel.org>; Tue, 30 May 2017 11:11:33 -0700 (PDT)
+        id S1751437AbdE3STh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 14:19:37 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:34266 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751244AbdE3STg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 14:19:36 -0400
+Received: by mail-io0-f193.google.com with SMTP id 12so9829186iol.1
+        for <git@vger.kernel.org>; Tue, 30 May 2017 11:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uzgfEloCxhUTWONOC9CNlIV2wqTr3jl4PLp9RG3FQS0=;
-        b=bZ62ZDQL5XmgKd6ZBz5bCWgCdGA7qOwqBA9vkM7/Ms4PySUWGfKOl9zGRXxbyxHEAG
-         YbUdhK8YCpNff7sOPwWGzPT5vUziel39v0VLc7LUKm96mGRxDBWBA3eX53sxTybfA8lP
-         D54ZgI2tlDt1hleGztvf6jRnohovNw62td4g5NaMPqZj7BeGTF0gHwX8lO75ssI7InJZ
-         oRI004hVREcO/8BNqabf/hBDYvoxkeKwI7JcfVB8RCzZL8OSl5jii8ZKK6cH6CB6zuQs
-         nzwHFo92U0BTMNuQl//+oP4Yc4Uef9+KIA/7E7MRCbukcgzZR77Za5BRM90qOIxJDlZd
-         VdMw==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=m80YmK4oeHypva7HWAhhwHaLsUsdJ7x6vFZKg/lhhpg=;
+        b=gtiVJzllU7cn7upPbzyYHBS/sh9vzicyXFpztXv5QmZ8YHGOuCF2Tt4W3BQAZgFLO6
+         TVnOfJYZdQD13onQo2v7gBFnkz9hNlCJWG692TyMTpIdC30fG9kQrTwX11neQdkSDOWZ
+         e1I3Umw/NN+fzU8P4B1y0XNonxPh4ZvuoKUlAsec5df2AXQ8jrf+n+x2d5UfrHnb/PPQ
+         EDh5VHPmVmqSLItGQfAEA0bhlw4cVHAJ0kJcMIXcpG3PYEPE81xrauopzLJtxtPK1VWr
+         oSvY7gAbiuA5WgWwRTOlFnnaskvDCzpXt3J7g73+tU1qv8Xm12x4MLK9AX+vR/GYg6xu
+         ktfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uzgfEloCxhUTWONOC9CNlIV2wqTr3jl4PLp9RG3FQS0=;
-        b=Dfab60LZT2Tke0I60f1VOOft/TMbG0KWyTzADGi83JRTFFyVrizbBQZDfdoRiOoaeQ
-         mJse6uqlqxHy0F0nTT9XYe2fEQCpZWWPIS6HuDeYF8pedXfsNxr3a1aE/+Rnqe9x+GoB
-         KX10eC8phtZ0e4jml20rlf95Q7m1IpzcqwWk4bM2jKcXxD6I9nscQSPVSaZWm5SGGoW+
-         LOag4KmpAHBbDm06TOETgzS61Ny9Hes+vxO5QRSSNiCd3OUfF8w0qOPVon9J6vTtobQy
-         UpnJBkHwmVhpGJYZY9tra1aENOnvnVCxQcpg26j71a5WKw1VblwyzflWmm0lodCy35BA
-         +0MQ==
-X-Gm-Message-State: AODbwcDmJMkyj6mf3Erc3lad+BZMmlpJ6YJS3D6NC/XXdmWDSvcafPoT
-        IvTSsYSvjnBTYMconPo=
-X-Received: by 10.84.135.101 with SMTP id 92mr61000030pli.114.1496167887548;
-        Tue, 30 May 2017 11:11:27 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:2531:ecb3:c847:ba4b])
-        by smtp.gmail.com with ESMTPSA id 80sm21794749pfy.18.2017.05.30.11.11.25
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 30 May 2017 11:11:26 -0700 (PDT)
-Date:   Tue, 30 May 2017 11:10:51 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     John Shahid <jvshahid@gmail.com>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: git push recurse.submodules behavior changed in 2.13
-Message-ID: <20170530181051.GA81679@aiede.mtv.corp.google.com>
-References: <CAE5=+KX57KM+6n9NpePw9KYPXFy7UH-WRgSwaJDnvRofYFXm7Q@mail.gmail.com>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=m80YmK4oeHypva7HWAhhwHaLsUsdJ7x6vFZKg/lhhpg=;
+        b=nFNQ5nVivF1HykCwTuNil5lT4YPdUwx3fllzNf0Abr8RckHJSpUBIW/iyAMVRUROe2
+         gUPF64cLL6OK7cH12N0AcEdcjKX7jGw1XnA83ufXYk65OnCVEDZ5vLZloDX+VKNzcZz4
+         xRiT6k49TStX+5pLVHGjSfV0RA7Tv7P9RYGYVxKlANEkrCNOWIuct+aLUZRKf+MttYHK
+         Ky/u5oiQZ68jDWHYDatYvZYncbassFVOnsa9R9tqsSpQyWBBhcp4mtSuHN0uhWgZcNTX
+         fkQJSDrJqOWpv2ZTAygiMJcFug2pLA0kvQFtFWn5HT2Ln7P5rF2zOK5tY2QrEMWegQMn
+         Lexw==
+X-Gm-Message-State: AODbwcBHKqf8R2MZVTpwwrpn5CbBMAiRkdBbnEf9d7TtTknvcetOduGd
+        RksSPHhtLsBenJOWIitVmQ==
+X-Received: by 10.107.20.134 with SMTP id 128mr17600510iou.132.1496168374955;
+        Tue, 30 May 2017 11:19:34 -0700 (PDT)
+Received: from [192.168.2.102] (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
+        by smtp.gmail.com with ESMTPSA id i74sm9871980itb.5.2017.05.30.11.19.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 30 May 2017 11:19:34 -0700 (PDT)
+Subject: Re: [PATCH v4 02/10] rebase -i: generate the script via
+ rebase--helper
+From:   liam Beguin <liambeguin@gmail.com>
+To:     johannes.schindelin@gmx.de
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        philipoakley@iee.org, phillip.wood@dunelm.org.uk
+References: <e173445d9a6321f80053967e50375400c0a61764.1493414945.git.johannes.schindelin@gmx.de>
+ <20170526031516.26287-1-liambeguin@gmail.com>
+Message-ID: <b1377fcf-90a4-4ba8-d3ad-53be275b3b75@gmail.com>
+Date:   Tue, 30 May 2017 14:19:33 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE5=+KX57KM+6n9NpePw9KYPXFy7UH-WRgSwaJDnvRofYFXm7Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170526031516.26287-1-liambeguin@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John,
+Hi Johannes,
 
-John Shahid wrote:
-
-> It looks like the git push recurse-submodules behavior has changed.
-> Currently with 2.13 you cannot run "git push
-> --recurse-submodules=on-demand" if the parent repo is on a different
-> branch than the sub repos, e.g. parent repo is on "develop" and
-> sub-repo on "master". I created a test that can be found here [1].
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> The first step of an interactive rebase is to generate the so-called "todo
+> script", to be stored in the state directory as "git-rebase-todo" and to
+> be edited by the user.
 >
-> A bisect shows that the change to propagate refspec [2] to the
-> submodules is the culprit. imho this is an undesired change in
-> behavior. I looked at the code but couldn't see an easy way to fix
-> this issue without breaking the feature mentioned above. The only
-> option I can think of is to control the refspec propagation behavior
-> using a flag, e.g. "--propagate-refspecs" or add another
-> recurse-submodules option, e.g. "--recurse-submodules=propagate"
+> Originally, we adjusted the output of `git log <options>` using a simple
+> sed script. Over the course of the years, the code became more
+> complicated. We now use shell scripting to edit the output of `git log`
+> conditionally, depending whether to keep "empty" commits (i.e. commits
+> that do not change any files).
+>
+> On platforms where shell scripting is not native, this can be a serious
+> drag. And it opens the door for incompatibilities between platforms when
+> it comes to shell scripting or to Unix-y commands.
+>
+> Let's just re-implement the todo script generation in plain C, using the
+> revision machinery directly.
+>
+> This is substantially faster, improving the speed relative to the
+> shell script version of the interactive rebase from 2x to 3x on Windows.
+>
+> Note that the rearrange_squash() function in git-rebase--interactive
+> relied on the fact that we set the "format" variable to the config setting
+> rebase.instructionFormat. Relying on a side effect like this is no good,
+> hence we explicitly perform that assignment (possibly again) in
+> rearrange_squash().
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/rebase--helper.c   |  8 +++++++-
+>  git-rebase--interactive.sh | 44 +++++++++++++++++++++--------------------
+>  sequencer.c                | 49 ++++++++++++++++++++++++++++++++++++++++++++++
+>  sequencer.h                |  3 +++
+>  4 files changed, 82 insertions(+), 22 deletions(-)
+>
+> diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+> index ca1ebb2fa18..821058d452d 100644
+> --- a/builtin/rebase--helper.c
+> +++ b/builtin/rebase--helper.c
+> @@ -11,15 +11,19 @@ static const char * const builtin_rebase_helper_usage[] = {
+>  int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct replay_opts opts = REPLAY_OPTS_INIT;
+> +	int keep_empty = 0;
+>  	enum {
+> -		CONTINUE = 1, ABORT
+> +		CONTINUE = 1, ABORT, MAKE_SCRIPT
+>  	} command = 0;
+>  	struct option options[] = {
+>  		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
+> +		OPT_BOOL(0, "keep-empty", &keep_empty, N_("keep empty commits")),
+>  		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
+>  				CONTINUE),
+>  		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
+>  				ABORT),
+> +		OPT_CMDMODE(0, "make-script", &command,
+> +			N_("make rebase script"), MAKE_SCRIPT),
+>  		OPT_END()
+>  	};
 
-Thanks for reporting.  The old behavior of "git push
---recurse-submodules" was a little loose (it would run "git push" in
-the submodule and rely on defaults to determine the behavior) and when
-propagating refspecs we considered taking the opportunity to tighten
-that by propagating the default refspec when you run "git push
---recurse-submodules" without a refspec.
+This is probably being picky, but we could also use a different name
+here instead of 'rebase script'. This would help keep the name of this
+script consistent as you already pointed out.
+maybe something like 'make-todo-list' or just 'make-list'?
 
-We didn't make that change.  If starting over, it might be a natural
-thing to do, but we didn't want to break existing users.  So
+>  
+> @@ -36,5 +40,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+>  		return !!sequencer_continue(&opts);
+>  	if (command == ABORT && argc == 1)
+>  		return !!sequencer_remove_state(&opts);
+> +	if (command == MAKE_SCRIPT && argc > 1)
+> +		return !!sequencer_make_script(keep_empty, stdout, argc, argv);
 
-  git push --recurse-submodules=on-demand
+same here.
 
-should continue to work as before.  *puzzled*
+>  	usage_with_options(builtin_rebase_helper_usage, options);
+>  }
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 2c9c0165b5a..609e150d38f 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -785,6 +785,7 @@ collapse_todo_ids() {
+>  # each log message will be re-retrieved in order to normalize the
+>  # autosquash arrangement
+>  rearrange_squash () {
+> +	format=$(git config --get rebase.instructionFormat)
+>  	# extract fixup!/squash! lines and resolve any referenced sha1's
+>  	while read -r pick sha1 message
+>  	do
+> @@ -1210,26 +1211,27 @@ else
+>  	revisions=$onto...$orig_head
+>  	shortrevisions=$shorthead
+>  fi
+> -format=$(git config --get rebase.instructionFormat)
+> -# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
+> -git rev-list $merges_option --format="%m%H ${format:-%s}" \
+> -	--reverse --left-right --topo-order \
+> -	$revisions ${restrict_revision+^$restrict_revision} | \
+> -	sed -n "s/^>//p" |
+> -while read -r sha1 rest
+> -do
+> -
+> -	if test -z "$keep_empty" && is_empty_commit $sha1 && ! is_merge_commit $sha1
+> -	then
+> -		comment_out="$comment_char "
+> -	else
+> -		comment_out=
+> -	fi
+> +if test t != "$preserve_merges"
+> +then
+> +	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
+> +		$revisions ${restrict_revision+^$restrict_revision} >"$todo"
+> +else
+> +	format=$(git config --get rebase.instructionFormat)
+> +	# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
+> +	git rev-list $merges_option --format="%m%H ${format:-%s}" \
+> +		--reverse --left-right --topo-order \
+> +		$revisions ${restrict_revision+^$restrict_revision} | \
+> +		sed -n "s/^>//p" |
+> +	while read -r sha1 rest
+> +	do
+> +
+> +		if test -z "$keep_empty" && is_empty_commit $sha1 && ! is_merge_commit $sha1
+> +		then
+> +			comment_out="$comment_char "
+> +		else
+> +			comment_out=
+> +		fi
+>  
+> -	if test t != "$preserve_merges"
+> -	then
+> -		printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
+> -	else
+>  		if test -z "$rebase_root"
+>  		then
+>  			preserve=t
+> @@ -1248,8 +1250,8 @@ do
+>  			touch "$rewritten"/$sha1
+>  			printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
+>  		fi
+> -	fi
+> -done
+> +	done
+> +fi
+>  
+>  # Watch for commits that been dropped by --cherry-pick
+>  if test t = "$preserve_merges"
+> diff --git a/sequencer.c b/sequencer.c
+> index 130cc868e51..88819a1a2a9 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2388,3 +2388,52 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+>  
+>  	strbuf_release(&sob);
+>  }
+> +
+> +int sequencer_make_script(int keep_empty, FILE *out,
+> +		int argc, const char **argv)
+> +{
+> +	char *format = NULL;
+> +	struct pretty_print_context pp = {0};
+> +	struct strbuf buf = STRBUF_INIT;
+> +	struct rev_info revs;
+> +	struct commit *commit;
+> +
+> +	init_revisions(&revs, NULL);
+> +	revs.verbose_header = 1;
+> +	revs.max_parents = 1;
+> +	revs.cherry_pick = 1;
+> +	revs.limited = 1;
+> +	revs.reverse = 1;
+> +	revs.right_only = 1;
+> +	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+> +	revs.topo_order = 1;
+> +
+> +	revs.pretty_given = 1;
+> +	git_config_get_string("rebase.instructionFormat", &format);
+> +	if (!format || !*format) {
+> +		free(format);
+> +		format = xstrdup("%s");
+> +	}
+> +	get_commit_format(format, &revs);
+> +	free(format);
+> +	pp.fmt = revs.commit_format;
+> +	pp.output_encoding = get_log_output_encoding();
+> +
+> +	if (setup_revisions(argc, argv, &revs, NULL) > 1)
+> +		return error(_("make_script: unhandled options"));
+> +
+> +	if (prepare_revision_walk(&revs) < 0)
+> +		return error(_("make_script: error preparing revisions"));
+> +
+> +	while ((commit = get_revision(&revs))) {
+> +		strbuf_reset(&buf);
+> +		if (!keep_empty && is_original_commit_empty(commit))
+> +			strbuf_addf(&buf, "%c ", comment_line_char);
+> +		strbuf_addf(&buf, "pick %s ", oid_to_hex(&commit->object.oid));
+> +		pretty_print_commit(&pp, commit, &buf);
+> +		strbuf_addch(&buf, '\n');
+> +		fputs(buf.buf, out);
+> +	}
+> +	strbuf_release(&buf);
+> +	return 0;
+> +}
+> diff --git a/sequencer.h b/sequencer.h
+> index f885b68395f..83f2943b7a9 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -45,6 +45,9 @@ int sequencer_continue(struct replay_opts *opts);
+>  int sequencer_rollback(struct replay_opts *opts);
+>  int sequencer_remove_state(struct replay_opts *opts);
+>  
+> +int sequencer_make_script(int keep_empty, FILE *out,
+> +		int argc, const char **argv);
+> +
+>  extern const char sign_off_header[];
+>  
+>  void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
+> -- 
+> 2.12.2.windows.2.800.gede8f145e06
 
-[...]
-> We have a parent repo on a branch called "develop" and a submodule on
-> a branch called "master". Prior to git version 2.13 if we had an
-> unpushed commit in the submodule and ran "git push origin develop
-> --recurse-submodules=on-demand" git would happily push the develop
-> branch of the parent repo and the master branch of the submodule,
-[...]
-> pushing to ref refs/heads/develop:refs/heads/develop
-> pushging to remote origin
-> fatal: src refspec 'refs/heads/develop' must name a ref
-> fatal: process for submodule 'sub' failed
-> fatal: The remote end hung up unexpectedly
+If you want, I could add to what I did in "rebase -i: add config to
+abbreviate command-names"[1] and try to resolve these naming inconsistencies
+in a separate patch.
 
-Aha, you are passing a refspec!
+Liam
 
-Can you say more about how this change affects you?  Would you be able
-to push without a refspec, or do you e.g. have scripting that was
-relying on the existing loose behavior?
-
-To put this in more context: part of the ideal that
---recurse-submodules options are trying to achieve is to allow
-thinking of a repository as a single unit, including submodules, most
-of the time.  To this end, "git clone --recurse-submodules" clones a
-repository including its submodules, "git checkout
---recurse-submodules" checks out submodules as part of a checkout
-operation, avoiding a separate "git submodule update --init" operation,
-"git fetch --recurse-submodules" fetches upstream changes for both the
-parent repository and submodules, and so on.
-
-Unfortunately "git checkout --recurse-submodules" was missing a piece,
-impacting this workflow.  If I run
-
-	git checkout --recurse-submodules -b develop
-
-then today this creates a "develop" branch in the superproject but not
-within submodules. This hurts the illusion of the project being a single
-unit and makes the meaning of operations like
-
-	git push --recurse-submodules develop:master
-
-unclear.
-
-Ideas for next steps:
-
- 1. If "git checkout --recurse-submodules -b develop" does the right
-    thing, then this situation is harder to get in in the first place.
-    The series at [3] is meant to do that.
-
- 2. The error message shown above is very unclear. It leaks
-    implementation details and doesn't give the user a clear hint
-    about what to do to resolve it.  Would some message like the
-    following have helped?
-
-	$ git push --recurse-submodules origin develop
-	fatal: branch "develop" does not exist in submodule "sub"
-	hint: use "git -C sub branch develop <sha1>" to create such a branch
-	hint: or push without a branch name to push the current branch
-
- 3. Outside of the output from any particular command, we are missing
-    an equivalent of "man gitworkflows" to describe how the
-    --recurse-submodules options are meant to work.  The series at [4]
-    aims to start addressing that.
-
-Given all the above, this looks like a real and serious bug but I
-think to find a different way from --recurse-submodules=propagate to
-fix it.  The idea, especially with [5], is for submodules to work
-intuitively without requiring special options.  This can require more
-work in the short term getting the default behavior to work well with
-a variety of use cases but I think it is time well spent.
-
-Thoughts?
-
-Thanks and hope that helps,
-Jonathan
-
-> [1] https://gist.github.com/jvshahid/b778702cc3d825c6887d2707e866a9c8
-> [2] https://github.com/git/git/commit/06bf4ad1db92c32af38e16d9b7f928edbd647780
-[3] http://public-inbox.org/git/20170501180058.8063-1-sbeller@google.com/
-[4] http://public-inbox.org/git/20170209020855.23486-1-sbeller@google.com/
-[5] http://public-inbox.org/git/20170526191017.19155-1-sbeller@google.com/
+[1]: https://public-inbox.org/git/20170502040048.9065-1-liambeguin@gmail.com/
