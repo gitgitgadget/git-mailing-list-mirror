@@ -7,80 +7,73 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0102027C
-	for <e@80x24.org>; Tue, 30 May 2017 23:32:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53D072027C
+	for <e@80x24.org>; Tue, 30 May 2017 23:32:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751002AbdE3XcC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 19:32:02 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35708 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750913AbdE3XcB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 19:32:01 -0400
-Received: by mail-pf0-f176.google.com with SMTP id n23so682536pfb.2
-        for <git@vger.kernel.org>; Tue, 30 May 2017 16:32:01 -0700 (PDT)
+        id S1751204AbdE3Xcy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 19:32:54 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:35001 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751022AbdE3Xcw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 19:32:52 -0400
+Received: by mail-pf0-f169.google.com with SMTP id n23so697227pfb.2
+        for <git@vger.kernel.org>; Tue, 30 May 2017 16:32:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=2QVcCL8mcPAzmKxcwhjsxKRf0enG0eAPKDaVQLrrY9s=;
-        b=qSGR3gqJXGbL2xi3rTSKsGconhcPfLuK068RU6vtYN4SZ5lbrciAtn1guYXot+oFZV
-         k8ifOZnyDDVBkv+GR0LbTJZglq6AnCv9BbwJf7l+Qt00Df+97b0hxM/ZOSrxGyEQ3c/L
-         KvXQSqzOb1Rx2PV7FJS18Qw+dx5cmY5VQNoVGt8FhDHsqf5xX6HUlPbPBwyDQTddxQ10
-         bCfgSbJgUZisP9a5ZMSTsBB3aCNAsmgF917GVwaWVsz4O0ksD89CfTDB/WannK5IUstA
-         w7aDoW4nIECOZf1zUi7uEoIUVIgu15+xLJM5sAEanUtEhe4kaz/dALs1K8d1SkqgBNAU
-         s0UQ==
+        bh=DH/n5ZMargWrxK2zC6BLaIBJoWSzDetQnHyQHCz2c+M=;
+        b=XIf7X6MovzKk5tc4yalAQQRNRp37LE8Pzx1i3ZFJ+DXzucCrBJpuzjphjOMDgoe7Wq
+         BTc/CKQgv0psfKKg2MNOgBZdB6BgLbVxW4iVDEQYEkmmqrqizj7R9IcUXdzZzN5cbn0P
+         y2iO4OYr1+GMAXprUnpBDkrkDRpSZhTVrnM6jXGb6icxuDbHD0Fq+aiT5WYXma3BfNAB
+         fPYvMQcyPVQVgQowbMxGWeTQxgRkOdiLcRlQkv+ulR5N/r/S5U8/OlGH0EjfUZYpE7az
+         ybJ4fjVbQFrle9+/YA0W+39K8VebEIf0y8P4ngv9Dusi9zg4Yyw+c6xPXsa9ynopXf3y
+         8Mfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=2QVcCL8mcPAzmKxcwhjsxKRf0enG0eAPKDaVQLrrY9s=;
-        b=UW/sGnTDbfo1D33cOiAqsjE3ojfOQ0+MB1c+3cCNj2nBj+Lo8dEG9EUpg/tdYmngZW
-         IEGrt4yt68DutkkwwGDxwauawCXVkB24fyYSc0jNWDHcnaVSvXkELXCnz0jrK/I/c5AQ
-         6lunUI7LuwNVELLSqzDqdX5qOOvDzygKqT0DiuUsZYTMphyZ7/0NuqnlOcQcn0CTMmzF
-         9fY8RxOIcIiMKrxxEuwjWclWvB82BhVfip00fnYAO8DKeXgiwTGHEijdsGzxlz98dCrh
-         Mx+AzfHWt4NFFqZv/h7E0KmAuqyMCUfXe4cmc4zqVmIIRvVd089DaKLx4JDD9MNS9PjB
-         sqTg==
-X-Gm-Message-State: AODbwcAwe6taXneQ68dhU137ygzFGipbiSp0DfJJWIW9CPRKEBEogzqq
-        6fCuFCU7vZHPjTkPjdCeovmCdmksdZml
-X-Received: by 10.99.18.65 with SMTP id 1mr29225389pgs.40.1496187120604; Tue,
- 30 May 2017 16:32:00 -0700 (PDT)
+        bh=DH/n5ZMargWrxK2zC6BLaIBJoWSzDetQnHyQHCz2c+M=;
+        b=lQpZ7b6Fw7Us+7FCx9bWzxdG4BUm8ATLsiXQXwuKutW7oimtCCUnM4YUn9573A42ti
+         OoYa6m57kI+QEgeETFNogTctso1dbF5129wxEwLCl667wGkPDkRlVtQQ2CiQWDblWEHt
+         A10+o3R+qQXn3UjGi88VA0OHsrCM/oIPyhwBAvA4uRwXLVeCMnfdonPnkKD5Fz33Ffi5
+         v1ZdP8svMSJJcZnL05cCjtbqe5xVSHYzRkUiNlC/awdt6iaV2F1Co2MUUVcXyohw6ASQ
+         +qdfOfnqfKoKovQBzzGzF2EOKx1I/zVc8+a8qCvsfpZRupH+y4v3TNtrTuOBj0ZJI0p7
+         gtHw==
+X-Gm-Message-State: AODbwcB5Kctg2WJafVkB/4sriZ3s9JyWce2mnG2TUvysLBaC6TdT635h
+        KdmKN1scVJaOpH+S6jGAh+9Tu1X7HD1f
+X-Received: by 10.99.188.9 with SMTP id q9mr28355837pge.178.1496187171775;
+ Tue, 30 May 2017 16:32:51 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Tue, 30 May 2017 16:32:00 -0700 (PDT)
-In-Reply-To: <xmqqo9ua9btk.fsf@gitster.mtv.corp.google.com>
+Received: by 10.100.170.200 with HTTP; Tue, 30 May 2017 16:32:51 -0700 (PDT)
+In-Reply-To: <xmqqk24y9bph.fsf@gitster.mtv.corp.google.com>
 References: <CACsJy8CzgHc=qe5w=FGJJ=ZU0a+JiqBrjWHV7SH3rAPKmOOKoA@mail.gmail.com>
- <20170526033510.1793-1-gitster@pobox.com> <20170526033510.1793-6-gitster@pobox.com>
- <CAGZ79kb2LJ-aqDq9o7Z015aNYo0zoK5DdwDGyABOe1V8ifF2wg@mail.gmail.com> <xmqqo9ua9btk.fsf@gitster.mtv.corp.google.com>
+ <20170526033510.1793-1-gitster@pobox.com> <20170526033510.1793-14-gitster@pobox.com>
+ <CAGZ79kZC4WM=aXPO9Rk1GQ7+XKUhoWUZefjM6Trk-11QcrhBYA@mail.gmail.com> <xmqqk24y9bph.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 30 May 2017 16:32:00 -0700
-Message-ID: <CAGZ79kbnV85dZ8jQ=eaQnMSphBvy-6VJcJHv4R=G4sA9YQ6d3g@mail.gmail.com>
-Subject: Re: [PATCH v3 05/13] config.mak.uname: set FREAD_READS_DIRECTORIES
- for Darwin, too
+Date:   Tue, 30 May 2017 16:32:51 -0700
+Message-ID: <CAGZ79kY+KzU5-gqSdV-orPBd71=53UXC4TbD7weqRtJtRjwdWw@mail.gmail.com>
+Subject: Re: [PATCH v3 13/13] is_missing_file_error(): work around EINVAL on Windows
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 30, 2017 at 4:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, May 30, 2017 at 4:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Stefan Beller <sbeller@google.com> writes:
->
->> On Thu, May 25, 2017 at 8:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Do we have any reasons for that, or pointers on the mailing list, that this
->> is a good idea or needed? Does it fix a bug or enable a new feature on Darwin?
->
-> BSD lets you open() a directory for reading and hence we require
-> this workaround on it; I think somebody in an earlier round
-> suspected that that Darwin would have inherited the same from its
-> BSD lineage, and I don't see a reason to contradict with that
-> suspicion, either.
->
 
-Sorry about not being clear:
-I - just like some future reader - did not have the context of the previous
-round, so please put this information into the commit message.
+>> cc'd people knowledgeable of Windows.
+>
+> This has been resolved I think with J6t/Dscho's patch yesterday.
+>
+> Thanks.
 
-Thanks,
+Yeah I saw those patches after reviewing this series.
+
+Sorry for the noise,
 Stefan
