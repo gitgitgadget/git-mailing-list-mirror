@@ -2,117 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F2652027C
-	for <e@80x24.org>; Tue, 30 May 2017 20:40:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 167A12027C
+	for <e@80x24.org>; Tue, 30 May 2017 20:46:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751070AbdE3Ukw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 16:40:52 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:34040 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750885AbdE3Ukv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 16:40:51 -0400
-Received: by mail-wr0-f194.google.com with SMTP id 6so5296987wrb.1
-        for <git@vger.kernel.org>; Tue, 30 May 2017 13:40:50 -0700 (PDT)
+        id S1750951AbdE3UqL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 16:46:11 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:36447 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750811AbdE3UqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 16:46:10 -0400
+Received: by mail-wr0-f193.google.com with SMTP id n104so4343863wrb.3
+        for <git@vger.kernel.org>; Tue, 30 May 2017 13:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Pf1p3V4qrzWG36eNCFzmKKWpmSm27AsCW2jD3vPr7To=;
-        b=cCFYFITIaqj3Vi7RzTkQ1ZzOU8D/C/4kJbRFD2F4x9p2QNCN2HW7BQpkkf32kTvbEq
-         qZ+Epo2NePS71AcoMjpDjoqlvR6BuknaKygylqeHYJh006Svpy3pwGiumOmtQIWQlW2a
-         LLw7xe7bWODdyBnmt1DM9C7/p0/ce4ClGQM5Hx7Vf2dR28ieJYAIy/Pu+xUcTY60A1Cg
-         fkAqdVWkrunU/TqxifaNBpn1Dp8IulWLrdj990nb14Sh/pDJEZfoxI3V3Bt4srdgetBW
-         WWSaM8Q/N+S5HNWLQdkQMfj0fC/47HMvti6MOn2UIUvwdIHHcSvIDH2Mgu0SGQydQbpJ
-         0hPQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=u60HlWo3s0+b3IeNnZoHLuoQ6BbAiX0V1I00V3Hbj2Q=;
+        b=c/HlE5c74xKPBqsLRmyXJNz+7bguoAq3c3LjhqCsSZON5KYH8u7uKeyrkQkUHic7eb
+         OEHGJHqkSS/ZSEvJ/ZyJD2iFCXnqz5ISTXXeLBY0ghGQaOekHWHafWyDocUgXtsHYdZN
+         Ah6iP5g2pD0nx26Qz2seP8BfosrhF5tveGQxLNw2MG9aAq6Hfsx2xhcu7RyQ6f+E30R+
+         82ZEHl6kYlOmTrSHvaJT3DCL94yroVA2SePRsawNWFVslrhNE8sjK73sKY3tOyHQKOJW
+         jQQzSMp0cvEhAMxFsbdU5N+VS6FdMc5InoCt9RILv/BwOEzgq69TSMDtPqVpwqvllGoK
+         WhMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Pf1p3V4qrzWG36eNCFzmKKWpmSm27AsCW2jD3vPr7To=;
-        b=aKk98n9wjp02wfzI9E6eAP7PXRPTjUs2veZQ2uhat1omPIpyvN1qweHxzYgieKdEPX
-         zXBms09Mi/PA1WMzyAiWlrAulDXMq1i31U+8SR7/GiXc4AoQ+8vbdMZucaIUDYRPNmD3
-         SOke0eukK1DmMuVSURK3lmjhvMlilIurlsPQZPrU2tScS4+4n2z0xAUSP+LGI/031enp
-         H7wngQg8bkBvCcJCWdssoRt59Lwlrt0DyiOXZQTDqPff/Kc2UKXZ/svXWovc196Iq1Aw
-         RGJBAFbKUpGIIpgBbb0wREvGFHj3HJfVAHxBJk5H7n8s1/YiO2m+AmnOUoKqLDqHbB+R
-         fEFw==
-X-Gm-Message-State: AODbwcDSNI69BwcBWajsPADwk+CPq37F+xwS/EHkO2E979f9EEkGrzZk
-        3BQHIFZdETVu3Y5W
-X-Received: by 10.223.171.212 with SMTP id s78mr6235332wrc.116.1496176849730;
-        Tue, 30 May 2017 13:40:49 -0700 (PDT)
-Received: from ?IPv6:2001:a61:345b:1800:859b:523d:9d4b:b3ec? ([2001:a61:345b:1800:859b:523d:9d4b:b3ec])
-        by smtp.googlemail.com with ESMTPSA id p187sm19650120wmd.20.2017.05.30.13.40.48
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=u60HlWo3s0+b3IeNnZoHLuoQ6BbAiX0V1I00V3Hbj2Q=;
+        b=KBHqkYQqFo19Wbt5/CLY1vDphdLTdBgRHGLuWD5mcgf3oyKRIw/3TtMdPqofzRS5l7
+         s/t3lqw+1/f2e51ab4OY2GlgxisD+SFTmu7hEdoV4BjKCNDArhjKdansFskTltooCGpG
+         M6J3B0SpFAclZGSkr9yC/nA+zdOC+8x8LD0SbB2YzQ7G5RgBdT1k97XtmCbRsir5UvQW
+         bdmw04k5tUQCWYif4NXI7HtsJsVcxcwRxOee6xL1dUq5MUAQS7w/3Q1Osd5HMfQa2sGX
+         mYjBH2pcwMFFV6r1wWASCnrhEvBpKyixQVZRIpntuJiu4vRQcZBz1OjxOLIc/r7DMEu4
+         8SIA==
+X-Gm-Message-State: AODbwcCPZ+ymGpfH6DlpRkYDIjWiI7l7D5ppMgE/PdMT7JHHGu3Qwe6u
+        823PM3KM4YE9/jeMIQU=
+X-Received: by 10.223.135.42 with SMTP id a39mr14545078wra.113.1496177168147;
+        Tue, 30 May 2017 13:46:08 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id 1sm21668776wrw.32.2017.05.30.13.46.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 May 2017 13:40:48 -0700 (PDT)
-Subject: Re: [PATCH] doc: Improve description for rev-parse --short
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <20170528143322.8580-1-asheiduk@gmail.com>
- <xmqq1sr7dly4.fsf@gitster.mtv.corp.google.com>
-From:   Andreas Heiduk <asheiduk@gmail.com>
-Message-ID: <787ad1fe-9923-d47d-79b0-8b0aebd8eb9b@gmail.com>
-Date:   Tue, 30 May 2017 22:40:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        Tue, 30 May 2017 13:46:07 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Zero King <l2dy@macports.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 6.5?/8] version: move --build-options to a test helper
+Date:   Tue, 30 May 2017 20:45:53 +0000
+Message-Id: <20170530204553.25968-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.13.0.303.g4ebf302169
+In-Reply-To: <20170530051742.3j3yn3ipfmyrrteu@sigill.intra.peff.net>
+References: <20170530051742.3j3yn3ipfmyrrteu@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqq1sr7dly4.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-BE
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.05.2017 um 06:10 schrieb Junio C Hamano:
->>  --short=number::
->>  	Instead of outputting the full SHA-1 values of object names try to
->>  	abbreviate them to a shorter unique name. When no length is specified
->> -	7 is used. The minimum length is 4.
->> +	the effective value of the configuration variable `core.abbrev` (see
->> +	linkgit:git-config[1]) is used.  The minimum length is 4.  The length
->> +	may be exceeded to ensure unique object names.	Implies `--verify`.
-> 
-> "Implies --verify" is less important than the fact that multiple
-> object names cannot be given from the end-users' (and readers')
-> point of view, no?  The sentence in the pre-context still hints
-> (incorrectly) that we might take multiple names---that would want to
-> be corrected, no?
-> 
-> Let me try.
-> 
->     --short[=length]::
-> 	Take a single object name, and output a prefix of the object
-> 	name whose length is at least the specified length and
-> 	sufficient to ensure uniqueness of the name.  The minimum
-> 	length is 4.  When no length is given, the effective value
-> 	of the `core.abbrev` configuration variable is used.
-> 
-> Thanks.
+Move the undocumented --build-options argument to a test helper. It's
+purely used for testing git itself, so it belongs in a test helper
+instead of something that's part of the public plumbing.
 
-Your are right about s/names/name/ in the pretext.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-But I think that the link to the `--verify` option is still important.
-The text there talks about when something is output, exit codes and
-about `^{type}` peeling. Also `--quiet` is linked to
-`--verify` and hence relevant here.
+On Tue, May 30, 2017 at 7:17 AM, Jeff King <peff@peff.net> wrote:
+> The "git version" command didn't traditionally accept any
+> options, and in fact ignores any you give it. When we added
+> simple option parsing for "--build-options" in 6b9c38e14, we
+> didn't improve this; we just loop over the arguments and
+> pick out the one we recognize.
+>
+> Instead, let's move to a real parsing loop, complain about
+> nonsense options, and recognize conventions like "-h".
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I assume nobody was running "git version --foobar" and expecting it to
+> work. I guess we could also complain about "git version foobar" (no
+> dashes), but this patch doesn't. Mainly I wanted the auto-generated
+> options list.
 
-So I'd like to patch your text to this:
+Looks good to me. I started hacking this up the other day, but then
+thought "wait a minute, isn't this just a test helper?" and wrote this
+which I've rebased on top of your change.
 
-  --short[=length]::
-	Same as `--verify` but output only a prefix of the object
-	name whose length is at least the specified length and
-	sufficient to ensure uniqueness of the name.  The minimum
-	length is 4.  When no length is given, the effective value
-	of the `core.abbrev` configuration variable is used.
+I may be missing something here but isn't this a much straightforward
+way to accomplish this, or is this used by some external program
+outside of git.git that's going to rely on --build-options output?
 
-And I'd like to move the section up right to `--verify` and `--quiet`.
-The options in this section are not sorted alphabetically anyways and
-the relevant parts would be adjacent. Is that OK?
+ Makefile                      | 1 +
+ help.c                        | 7 -------
+ t/helper/.gitignore           | 1 +
+ t/helper/test-long-is-64bit.c | 6 ++++++
+ t/test-lib.sh                 | 9 +--------
+ 5 files changed, 9 insertions(+), 15 deletions(-)
+ create mode 100644 t/helper/test-long-is-64bit.c
 
-ALso: Did you remove the `linkgit` by intention or just by accident?
+diff --git a/Makefile b/Makefile
+index 2ed6db728a..aa908ae75a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -623,6 +623,7 @@ TEST_PROGRAMS_NEED_X += test-hashmap
+ TEST_PROGRAMS_NEED_X += test-index-version
+ TEST_PROGRAMS_NEED_X += test-lazy-init-name-hash
+ TEST_PROGRAMS_NEED_X += test-line-buffer
++TEST_PROGRAMS_NEED_X += test-long-is-64bit
+ TEST_PROGRAMS_NEED_X += test-match-trees
+ TEST_PROGRAMS_NEED_X += test-mergesort
+ TEST_PROGRAMS_NEED_X += test-mktemp
+diff --git a/help.c b/help.c
+index f637fc8006..0a7628a922 100644
+--- a/help.c
++++ b/help.c
+@@ -384,14 +384,11 @@ const char *help_unknown_cmd(const char *cmd)
+ 
+ int cmd_version(int argc, const char **argv, const char *prefix)
+ {
+-	int build_options = 0;
+ 	const char * const usage[] = {
+ 		N_("git version [<options>]"),
+ 		NULL
+ 	};
+ 	struct option options[] = {
+-		OPT_BOOL(0, "build-options", &build_options,
+-			 "also print build options"),
+ 		OPT_END()
+ 	};
+ 
+@@ -405,10 +402,6 @@ int cmd_version(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	printf("git version %s\n", git_version_string);
+ 
+-	if (build_options) {
+-		printf("sizeof-long: %d\n", (int)sizeof(long));
+-		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+-	}
+ 	return 0;
+ }
+ 
+diff --git a/t/helper/.gitignore b/t/helper/.gitignore
+index 721650256e..739c4c745c 100644
+--- a/t/helper/.gitignore
++++ b/t/helper/.gitignore
+@@ -13,6 +13,7 @@
+ /test-index-version
+ /test-lazy-init-name-hash
+ /test-line-buffer
++/test-long-is-64bit
+ /test-match-trees
+ /test-mergesort
+ /test-mktemp
+diff --git a/t/helper/test-long-is-64bit.c b/t/helper/test-long-is-64bit.c
+new file mode 100644
+index 0000000000..45fc120432
+--- /dev/null
++++ b/t/helper/test-long-is-64bit.c
+@@ -0,0 +1,6 @@
++#include "git-compat-util.h"
++
++int cmd_main(int argc, const char **argv)
++{
++	return (8 <= (int)sizeof(long)) ? 0 : 1;
++}
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index ec2571f018..bf649fbc03 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1165,14 +1165,7 @@ run_with_limited_cmdline () {
+ 
+ test_lazy_prereq CMDLINE_LIMIT 'run_with_limited_cmdline true'
+ 
+-build_option () {
+-	git version --build-options |
+-	sed -ne "s/^$1: //p"
+-}
+-
+-test_lazy_prereq LONG_IS_64BIT '
+-	test 8 -le "$(build_option sizeof-long)"
+-'
++test_lazy_prereq LONG_IS_64BIT 'test-long-is-64bit'
+ 
+ test_lazy_prereq TIME_IS_64BIT 'test-date is64bit'
+ test_lazy_prereq TIME_T_IS_64BIT 'test-date time_t-is64bit'
+-- 
+2.13.0.303.g4ebf302169
+
