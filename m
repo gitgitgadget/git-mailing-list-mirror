@@ -2,99 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1C131FD09
-	for <e@80x24.org>; Tue, 30 May 2017 07:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CD8F20D12
+	for <e@80x24.org>; Tue, 30 May 2017 07:21:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750946AbdE3HMw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 03:12:52 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34985 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750841AbdE3HMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 03:12:50 -0400
-Received: by mail-wm0-f67.google.com with SMTP id g15so22848080wmc.2
-        for <git@vger.kernel.org>; Tue, 30 May 2017 00:12:50 -0700 (PDT)
+        id S1750896AbdE3HVR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 03:21:17 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:34675 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750841AbdE3HVQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 03:21:16 -0400
+Received: by mail-oi0-f41.google.com with SMTP id b204so100877091oii.1
+        for <git@vger.kernel.org>; Tue, 30 May 2017 00:21:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=E9AKHIGelLK+WFQAHa2cSoPiR+65FEmQ2HmO6fqXqQo=;
-        b=R26Z6uwSv/dVsIaEWV/9cwLpo0s98fStklCrd+1Zhu6LDQD+lGIpdAAA+p4ujZDiBv
-         BcbMCz7gOX6r4gopfLy5v7MK0Ma1fjKSkFq7pajJ+NLiJqaTbfkPh1y4rOxNDmmQgkjQ
-         pgVdT7/3do3it4x1+J8AePj4N8M0rrlyyTLnzneLDQlgiiO6AtrwBl0NVDLWcVsDHaDp
-         7Oq64LJTd/0oqgAFbqoPaDnj7dsTDw/BdF7WNINoHc9+KsVeqLRkOHs2tnOKJnlK8Oio
-         FuIhSjuQOtdKx39NCYKQunk/v6dUUDu1g8d7Z0xhaM4hhGM4upVAdj8Eh/yppMfooWz5
-         V1PA==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=lPQ+MgQu03vPbrGZQua23gyJ/TOE8qsuypM6/qFjyRI=;
+        b=HKgMbDwvGYvg8ym8+DR+14Df3SSoSxcEHMiNdrPItXliVmq8x9idaljfJUqDdF54m+
+         WoYQSYae1c64Ik+38lFaLUZWy0FEF1RifE7Ej//wmKpMd52cIDXoqindX7SkJETbNb9K
+         JMO9yfU2BbzKV6fKTVNXlJ4tz4IFh+4O1oDhSj8ICg5IQdL9Xl60wliGFkjFYNNi/MGl
+         NQuNMhLDW+s+QgwjRWX0aMRGa1P6AHNdtyYa+XK6nims6NK7q+mSYvFg0c4IwhOlj8F7
+         ArGNRg3SvKAOYtSpxsVLknnEAWoX/7OXk3s20anzuPZwv3Qv78gODOeBKse4GE/8unQH
+         xkBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=E9AKHIGelLK+WFQAHa2cSoPiR+65FEmQ2HmO6fqXqQo=;
-        b=G7qvyF5y5rxWkubsQ2lGgOtKV4p1YkNbM4wknxGrGON3crTCIM9TtWlfiGGmKpXJ/b
-         cKfvbJRmurxwQ/3NpkchLNIqcEaPnAQCHKVF+mlhb7dw2r4GooKBtmDw1mXGhTIOgYUx
-         DEBYwfTpm47DKpE5UQANaN/1uYOCHQrVjYzq6qWswLB4M3W4KEwje1XlemNlbCbyboT/
-         mgfVD9y95gaJYtdZB0WS5wmv/D1YpfGumuc3ETKCt7lvqOQt5n67cxUl6unrWCHG+ATy
-         7cKY3DMGUHkuMVRup6vGjasXmvbUuZ6OLIa/cpH/5L1dDdl6FKVVzmQdSryFMSR6pkWo
-         ysTA==
-X-Gm-Message-State: AODbwcB5CskLh8IJQjR/7ANY+1HgT88LgziOhcF22FMF5DiE5cWTXIdF
-        LWG3sx9quJjNvA==
-X-Received: by 10.80.180.155 with SMTP id w27mr15520677edd.42.1496128369657;
-        Tue, 30 May 2017 00:12:49 -0700 (PDT)
-Received: from localhost.localdomain (x590e041b.dyn.telefonica.de. [89.14.4.27])
-        by smtp.gmail.com with ESMTPSA id h33sm4524245edh.50.2017.05.30.00.12.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 May 2017 00:12:49 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCHv4 2/2] Documentation/clone: document ignored configuration variables
-Date:   Tue, 30 May 2017 09:12:44 +0200
-Message-Id: <20170530071244.32257-2-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.13.0.35.g14b6294b1
-In-Reply-To: <20170530071244.32257-1-szeder.dev@gmail.com>
-References: <CAM0VKjnOSxQg_VCBO2cgtbqesmNYx+e_H7m=36PsNWi9K9rQ1Q@mail.gmail.com>
- <20170530071244.32257-1-szeder.dev@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=lPQ+MgQu03vPbrGZQua23gyJ/TOE8qsuypM6/qFjyRI=;
+        b=tYwsz6xxKxOZObDHGJnDGfnJcC3NDA011M9rfxwO1xaSFtUClSlquBC2EJDVQJvu5+
+         eFvazCcnuRqvqs0UFIMIIvFsvaxEZa8ikUgfVXrhkRY1Z/QXfo+OHR+0nZSz3zbYPeXc
+         LVHn0GS6yoJ2MGEPtsmT2KyaYcC+YhZ7x2W9jLbHIwRhevVYgqHRzCLDkowfoo4IxBJX
+         5cy/rByc1ffYTrFIERW52YSc25BzBRDom9wYgDxEx380pSLvCd882AoGF+0yCmt7M2Gz
+         ydQ9NKLtn7DBeq8ZWj8sAM7OEPWN3j1CGXIhfiCqfqGJ592HkGTbu3KyFrDpfyMK6mtM
+         0EdQ==
+X-Gm-Message-State: AODbwcC9xHoDKJKdBI0Hrmzh9QsxamTOsihCoeRM8iFE/W72PEQs6jiY
+        wra7voFXt7a4lVbiKKLBKg7ckyav0D2i
+X-Received: by 10.202.240.66 with SMTP id o63mr8285861oih.169.1496128875225;
+ Tue, 30 May 2017 00:21:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.157.47.98 with HTTP; Tue, 30 May 2017 00:21:14 -0700 (PDT)
+From:   The Intertainer <eminem.raunaq@gmail.com>
+Date:   Tue, 30 May 2017 12:51:14 +0530
+Message-ID: <CAMxySOmZxFPtwW-PZyhzqJMR-xMOUrWQzxq9jX5hXh=BrgzJYg@mail.gmail.com>
+Subject: Unable to download Git
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Due to limitations/bugs in the current implementation, some
-configuration variables specified via 'git clone -c var=val' (or 'git
--c var=val clone') are ignored during the initial fetch and checkout.
+Hi,
 
-Let the users know which configuration variables are known to be
-ignored ('remote.origin.mirror' and 'remote.origin.tagOpt') under the
-documentation of 'git clone -c'.
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- Documentation/git-clone.txt | 4 ++++
- 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index ec41d3d69..4f1e7d4ba 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -186,6 +186,10 @@ objects from the source repository into a pack in the cloned repository.
- 	values are given for the same key, each value will be written to
- 	the config file. This makes it safe, for example, to add
- 	additional fetch refspecs to the origin remote.
-+	Note that due to limitations of the current implementation some
-+	configuration variables don't take effect during the initial
-+	fetch and checkout.  Configuration variables known to not take
-+	effect are: `remote.<name>.mirror` and `remote.<name>.tagOpt`.
- 
- --depth <depth>::
- 	Create a 'shallow' clone with a history truncated to the
--- 
-2.13.0.35.g14b6294b1
 
+
+I have been trying to download the '32-bit Git for Windows setup from
+=E2=80=98 https://git-scm.com/downloads=E2=80=99  latest versiion i.e. 2.13=
+.0 but just
+cannot.
+
+It downloadsl about 4-5mb but then says network error followed by
+Failed -Forbidden. I downloaded the file on the chrome browser online
+downloader.
+
+I even ran the Windows Network Diagnostics but no error came up.
+
+
+
+I hope you look into the issue and take the right steps to fix it.
+Hope you reply soon.
+
+
+
+Regards!
