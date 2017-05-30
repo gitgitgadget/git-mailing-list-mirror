@@ -2,115 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B99522027C
-	for <e@80x24.org>; Tue, 30 May 2017 15:06:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC9762027C
+	for <e@80x24.org>; Tue, 30 May 2017 15:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751305AbdE3PGQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 11:06:16 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:39008 "EHLO mx1.redhat.com"
+        id S1751693AbdE3PJE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 11:09:04 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57822 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751248AbdE3PGO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 11:06:14 -0400
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id 3263F3B708;
-        Tue, 30 May 2017 15:06:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 3263F3B708
-Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=lersek@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 3263F3B708
-Received: from lacos-laptop-7.usersys.redhat.com (ovpn-116-87.phx2.redhat.com [10.3.116.87])
-        by smtp.corp.redhat.com (Postfix) with ESMTP id 06B7219EF3;
-        Tue, 30 May 2017 15:06:12 +0000 (UTC)
-Subject: Re: FORMAT_PATCH_NAME_MAX increase
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>
-Cc:     Git Mailing List <git@vger.kernel.org>
-References: <99ac8ee7-67b5-5ae7-51cf-6be38de6217f@redhat.com>
- <CACBZZX5U=U1bpiFuuxH2t8ZWnmQQAjWm1ji8XYq_6-SJPGL1sw@mail.gmail.com>
- <c2453701-979b-ebc7-dcc3-483a27d4c157@redhat.com>
- <85970ab4-e9c8-c6b6-11d3-faafd3ed0708@redhat.com>
- <CACBZZX4-T50q_eVWwJuBzoC6ocuG+v14Tm8wfK8h7FB_cMQzdQ@mail.gmail.com>
- <xmqqfufmbh4f.fsf@gitster.mtv.corp.google.com>
- <CACBZZX7x7s-RfQMZjHuq=fbGtOeQzYin_Owqx7dK3v7dudh8zA@mail.gmail.com>
-From:   Laszlo Ersek <lersek@redhat.com>
-Message-ID: <36557854-907f-9bb0-2059-c97328e1ca41@redhat.com>
-Date:   Tue, 30 May 2017 17:06:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1751248AbdE3PJD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 11:09:03 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MX16a-1dRwbr3VKu-00VyLC; Tue, 30
+ May 2017 17:08:47 +0200
+Date:   Tue, 30 May 2017 17:08:44 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: revision API design, was Re: [PATCH v4 02/10] rebase -i: generate
+ the script via rebase--helper
+In-Reply-To: <xmqqfufnc56q.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1705301700440.3610@virtualbox>
+References: <cover.1493207864.git.johannes.schindelin@gmx.de> <cover.1493414945.git.johannes.schindelin@gmx.de> <e173445d9a6321f80053967e50375400c0a61764.1493414945.git.johannes.schindelin@gmx.de> <xmqq60gk8ad5.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1705291252080.3610@virtualbox> <xmqqfufnc56q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CACBZZX7x7s-RfQMZjHuq=fbGtOeQzYin_Owqx7dK3v7dudh8zA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Tue, 30 May 2017 15:06:14 +0000 (UTC)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ntTKEr8DcGDdWzaAKR2hR70ii3UQMs7Xx0pXipuBZpKNRI1KsHd
+ E3TdwB4irSzmVJ0GO+bWJAhNzo/fkrKSe8q/JVWVoCZ9Gp0u1d3jBoAZDfFKCUAE2DL0k5f
+ VAgZmkK7S2ndjaQa/6DndMYE16C20SguW+oVCguwgX0L4/Zn8w/mO/INkt/V+HYRWCxQTZy
+ V8hRK1YpE31lrwvWUd0Ig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:X4NmRDjOMZA=:eh7jAYWptA8WHisJZNaU9a
+ jBiWOhzOyKChBikVEkHAPA1PEBckOabhW9EomzsRz/b6xjjyLVNinGhW9JQxDmjCTktSSZqwr
+ U0Emd7YYl4jWC5i4IRqiCWk30TWZ8tqL6BLU0tB2jOtLqX0lN2DINtc3P9IoINGfp6NEDBw24
+ E7vh1lHrH4Ynh2wUePWkm0pUvN5FkchcWp5KtRDv1M1vYgXygmYkCnwiXiMh6g3C47HcYJB6L
+ R1+D9L8277cbmrK9ViD7f/2xUeccV2WJLsTA93vOvT9j12Jokq7vl4Tui9/Cl9kNmhkOEUHgL
+ Xm0zsMT591PRN1jayiQTMS098NZ1S2MydTeXcVSoXEIebWQB76MQU8Fo6xi5/djHuTn+/za8U
+ cxKvj654T5esvKYOAph+kJlTNPxXJL7PyI+vIuuKo/u79ZycufsBo2kd6hwpEq3tQcRzOLL+B
+ XIoSqpY88yWXm/3pAp83t3Qq20Y6UrCSlaAw74tLEpKizSWv3zc2R1ICdd8HQ6zxjg+70Y28S
+ Rj7K1Ls46lSRajkSiJ29ZT5H78Itl0yHaoeAB668iCGa9vxfRIS9nYfXL13qFrO9IRhx7AFI9
+ LG5+gl1lQkzAyWe7l5OXzeVbYa4Rr6nCz7fAHOK8uSdX4FD0ZzKdrKR3TBzdOv4hjXfNZ3+bK
+ BVcjKxpqXXQ9LUuhrOIbN8YRPe0Q6VM5zkxD3SAAfyrQzDv55eAUTVrxMlGM6yLPCpSnIFhCR
+ nMnwwvmCMW0vgl12cPVoGAHg1lMdtBDFvtMP41sPnK8MonlnPgiSWHbhwDNB+KqDFbcuIFMG/
+ qB8oyEm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/30/17 16:35, Ævar Arnfjörð Bjarmason wrote:
-> On Tue, May 30, 2017 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->>
->>> Just curious do you know about https://github.com/trast/tbdiff ? If
->>> not it might have a high overlap with what you're doing.
+Hi Junio,
 
-Thank you for the suggestion, it does exactly what I need. It solves the
-Assignment Problem a whole lot better than my current, crude script.
+On Tue, 30 May 2017, Junio C Hamano wrote:
 
-https://en.wikipedia.org/wiki/Assignment_problem
-https://en.wikipedia.org/wiki/Hungarian_algorithm
+> We do not want these [revision API] implementation details to code that
+> does not implement command line parsing.  This one is not parsing
+> anybody's set of options and should not be mucking with the low level
+> implementation details.
 
-(Mildly amusing, to me anyway: I happen to be Hungarian.)
+Just to make sure we are on the same level: you want the argc & argv to be
+the free-form API of setup_revisions(), rather than code setting fields
+in struct rev_info whose names can be verified at compile time, and whose
+names also suggest their intended use.
 
-The output of git-tbdiff is not exactly the way I like it (I like to
-review interdiffs colorized, and fed to $PAGER individually), but I can
-easily do that on top of the "--no-patches" output.
+I am still flabberghasted that any seasoned software developer sincerely
+would suggest this.
 
->> Yes, that is a very good suggestion.  You'd need to be able to
->> actually apply the patches but the way I often do a review is very
->> similar to (actually, I'd say it is identical workflow) Laszlo's,
->> and it goes like this:
->>
->>     $ git checkout topic ;# previous round
->>     $ git checkout master... ;# check out the fork point of previous one
->>     $ git am mbox ;# apply the updated one
->>     $ git tbdiff ..@{-1} @{-1}..
-> 
-> I wonder if this tool seemingly everyone on-list uses should just be
-> integrated into git.git.
-> 
-> I only learned about it <2 weeks ago and it's been great. The diff
-> output was a bit nonsensical in some cases because it uses python's
-> diff engine instead of git's.
+> See 66b2ed09 ("Fix "log" family not to be too agressive about
+> showing notes", 2010-01-20) and poinder.  Back then, nobody outside
+> builtin/log.c and revision.c (these are the two primary things that
+> implement command line parsing; "log.c" needs access to the low
+> level details because it wants to establish custom default that is
+> applied before it reads options given by the end-user) mucked
+> directly with verbose_header, which allowed the addition of
+> "pretty_given" to be limited only to these places that actually do
+> the parsing.  If the above patch to sequencer.c existed before
+> 66b2ed09, it would have required unnecessary change to tweak
+> "pretty_given" in there too when 66b2ed09 was done.  That is forcing
+> a totally unnecesary work.  And there is no reason to expect that
+> the kind of change 66b2ed09 made to the general command line parsing
+> will not happen in the future.  Adding more code like the above that
+> knows the implementation detail is unwarranted, when you can just
+> ask the existing command line parser to set them for you.
 
-Yes, I'd probably plug in git's diff engine (the patience algorithm at
-that).
+This is a very eloquent description of a problem with the API.
 
-> 
-> Would you mind patches to just integrate it to git in python as-is,
-> then we could slowly convert it to C as we're doing with everything
-> else.
+The correct suggestion would be to fix the API, of course. Not to declare
+an interface intended for command-line parsing the internal API.
 
-That would be wonderful. My preference would be to use core git features
-for solving the problem; as a second preference, it would be great if
-git-tbdiff were packaged & shipped by GNU/Linux distros.
+Maybe the introduction of `pretty_given` was a strong hint at a design
+flaw to begin with, pointing to the fact that user_format is a singleton
+(yes, really, you can't have two different user_formats in the same Git
+process, what were we thinking)?
 
-Thomas (I see you are on To:/Cc: now -- I meant to CC you, snarfing your
-email from the git.git history :) ), are you aware of any distros
-already packaging git-tbdiff?
-
-Still the best would be if git provided this feature out of the box;
-incremental review of rerolled series appears a common activity for any
-serious reviewer / subsystem co-maintainer.
-
-Thanks!
-Laszlo
+Ciao,
+Dscho
