@@ -2,160 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B639020D11
-	for <e@80x24.org>; Tue, 30 May 2017 15:57:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95ECA2027C
+	for <e@80x24.org>; Tue, 30 May 2017 16:02:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750925AbdE3P5z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 11:57:55 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:32958 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750885AbdE3P5y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 11:57:54 -0400
-Received: by mail-io0-f193.google.com with SMTP id m4so9478217ioe.0
-        for <git@vger.kernel.org>; Tue, 30 May 2017 08:57:53 -0700 (PDT)
+        id S1750984AbdE3QCU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 12:02:20 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:36137 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750733AbdE3QCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 12:02:19 -0400
+Received: by mail-qt0-f173.google.com with SMTP id f55so73704783qta.3
+        for <git@vger.kernel.org>; Tue, 30 May 2017 09:02:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=x2cx4oqJ1SRBhAAZwJYr+nzSrAGFD6xLF1/W9v1uo8Q=;
-        b=Ro08gkURLtI1WMHNG/eYhXYa6JNA+0VIUMZ8W+jzt/zAUq1TuRJ/QxzVJR5ojmgyAF
-         lKK0/EtG59MlUXPjZPZQOO+KJ8Xq6FmN1faqW/cinbzSjpqYWaLvVZgG+mWBdOyTk9YF
-         xiW5UCu9NwHQRRmf5GDpTNFa8GrfukNEKectPxI9F6tG8D4roPkZkHqlHm8oZuEuxg2w
-         t3RLEFTUyVIB8/k2JUrIAEaaz3JXm1vQCo6qCDd7M8YCqL3QFy7E6gsTVhQxVrO7D2lV
-         dPJ/kzFldug3v9h0PbN7Het/UkfRkqzExmiqnEmvXnSZkJ22uEY8bQ9JWiTBpkuWT9WL
-         CIxw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=+fEK1GB0ihtk5+nObPyIzIuUyc6j8rm4w1BiX2QNVEo=;
+        b=mXdTK5jJR6yfOK65q5f8FVsicCqXc13F330+BqzcHpdznjZ4s3oq8kO2WS+ZPu+IbK
+         cAG/lxDeWCTefRz+Imim0tsy1j370YjVHvoByJkFwrLta/InKzd1/fRz5IBuKSmObczE
+         tiR3kKkyykCgUQMN/IT9FGXgU3TFN9msnXPtzO9n8CTwb+wZ9DJxlddcdiWc0P3lOkgb
+         vFr6Vg+hsOuzD2ko96DgFaQ1qlf2wm9zEoXl3gh088gpnVF2wXskui7DVCAXJw1YoxJB
+         +U9y82f2LvGK/msqnZf5vnCFF1rgbqQ5v1sAobENlg0jZwhsjDLVCMN26z2ljn1GGCru
+         MLew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=x2cx4oqJ1SRBhAAZwJYr+nzSrAGFD6xLF1/W9v1uo8Q=;
-        b=Yo9T2nYrXAf1jX3NA9aDruBbbCaefk3mYVypKeFnJAxq0fkZWm5jgzCoTYaP9q9wNC
-         n4//6LgkEoCaHzjLvv3WEp/TteoA/4+LNf6dPOOPSE8FisKKG3vvILQV+olzUXiqVtqf
-         kBKXIKpMohh2sUziRbKS3uEBpNGzoMAqh1Tb7Fr0EOwYjH8qOWvCpHO5xQkvSZltY+d1
-         b1K4lBEVYoiBR8+f1o4QCfaA4b4IiXWVR4o2RQwKRCcbYFnfbOmmcsHNxvN/ParioV/6
-         s1TnuwHgPZrabwdI20+K/dYpYOOoJ322zGaebJjakx5YpXE0I/mpwr416I/1CDjW2UCz
-         4nOg==
-X-Gm-Message-State: AODbwcBjZNWjILxXZBEX91BMUtG8vHIM393M08gi6pAMPYZ9AtY8aS2L
-        ZYH4390uHyHl5w==
-X-Received: by 10.107.157.67 with SMTP id g64mr17386197ioe.48.1496159873201;
-        Tue, 30 May 2017 08:57:53 -0700 (PDT)
-Received: from [192.168.2.102] (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.gmail.com with ESMTPSA id g12sm5674891ioi.44.2017.05.30.08.57.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 30 May 2017 08:57:52 -0700 (PDT)
-Subject: Re: [PATCH v4 02/10] rebase -i: generate the script via
- rebase--helper
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        philipoakley@iee.org, phillip.wood@dunelm.org.uk
-References: <e173445d9a6321f80053967e50375400c0a61764.1493414945.git.johannes.schindelin@gmx.de>
- <20170526031516.26287-1-liambeguin@gmail.com>
- <alpine.DEB.2.21.1.1705291256430.3610@virtualbox>
-From:   liam Beguin <liambeguin@gmail.com>
-Message-ID: <9baa8898-36c7-79a9-025b-799785c81284@gmail.com>
-Date:   Tue, 30 May 2017 11:57:51 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+fEK1GB0ihtk5+nObPyIzIuUyc6j8rm4w1BiX2QNVEo=;
+        b=k829exXCzjagnAqk0e1xJP1uxYEkZ9vtSifmeq1b7J9diHnKmK+K+hNlsTTPWJlnoA
+         b/zXWciVXHhPQrxXIUzdAL1eWqDM18GbmrOb2wL3tpLLjcEGMy3YC9DMnKVQQwForLBA
+         GvtdWZhQTYL2EblTtfNriAJvWFP6wA5aPHcJzZhihCcT+g4RgvpIEQALUufffd3EC9vY
+         hWJ4/ZR2mK9vvB2xv5zO/rT8VWrE4TMPUYyZG84TNeBwJhBpi/KnayReSEBbPDv9WzoX
+         Ckz1sNSEJftZxAhFKZNM3GF/+XaAwiLgx8t0+bhQGQbcAp+HRtqMipyi888aEvoWn/82
+         qG0w==
+X-Gm-Message-State: AODbwcCe2QcXUh1pvuQsGSRf1qO1KaKH4mfbJSRYZLK6q0ngvDpfdUll
+        EEj224hPrAqhn9ZOwBN4KTPUmbOqMg==
+X-Received: by 10.237.60.150 with SMTP id d22mr26118092qtf.126.1496160138735;
+ Tue, 30 May 2017 09:02:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.21.1.1705291256430.3610@virtualbox>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.12.149.236 with HTTP; Tue, 30 May 2017 09:02:18 -0700 (PDT)
+In-Reply-To: <20170511212012.6782-1-avarab@gmail.com>
+References: <20170511204334.GM83655@google.com> <20170511212012.6782-1-avarab@gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Wed, 31 May 2017 00:02:18 +0800
+Message-ID: <CANYiYbH=EJy51yAdiMg6R_yDzZ3PLUuLMsLxdkf9zXJPhLcwKA@mail.gmail.com>
+Subject: Re: [PATCH] C style: use standard style for "TRANSLATORS" comments
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+2017-05-12 5:20 GMT+08:00 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gm=
+ail.com>:
+> Change all the "TRANSLATORS: [...]" comments in the C code to use the
+> regular Git coding style, and amend the style guide so that the
+> example there uses that style.
+>
+> This custom style was necessary back in 2010 when the gettext support
+> was initially added, and was subsequently documented in commit
+> cbcfd4e3ea ("i18n: mention "TRANSLATORS:" marker in
+> Documentation/CodingGuidelines", 2014-04-18).
+>
+> GNU xgettext hasn't had the parsing limitation that necessitated this
+> exception for almost 3 years. Since its 0.19 release on 2014-06-02
+> it's been able to recognize TRANSLATOR comments in the standard Git
+> comment syntax[1].
 
-On 29/05/17 06:59 AM, Johannes Schindelin wrote:
-> Hi Liam,
-> 
-> On Thu, 25 May 2017, Liam Beguin wrote:
-> 
->> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
->>
->>> diff --git a/sequencer.c b/sequencer.c
->>> index 130cc868e51..88819a1a2a9 100644
->>> --- a/sequencer.c
->>> +++ b/sequencer.c
->>> @@ -2388,3 +2388,52 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
->>>  
->>>  	strbuf_release(&sob);
->>>  }
->>> +
->>> +int sequencer_make_script(int keep_empty, FILE *out,
->>> +		int argc, const char **argv)
->>> +{
->>> +	char *format = NULL;
->>> +	struct pretty_print_context pp = {0};
->>> +	struct strbuf buf = STRBUF_INIT;
->>> +	struct rev_info revs;
->>> +	struct commit *commit;
->>> +
->>> +	init_revisions(&revs, NULL);
->>> +	revs.verbose_header = 1;
->>> +	revs.max_parents = 1;
->>> +	revs.cherry_pick = 1;
->>> +	revs.limited = 1;
->>> +	revs.reverse = 1;
->>> +	revs.right_only = 1;
->>> +	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
->>> +	revs.topo_order = 1;
->>> +
->>> +	revs.pretty_given = 1;
->>> +	git_config_get_string("rebase.instructionFormat", &format);
->>> +	if (!format || !*format) {
->>> +		free(format);
->>> +		format = xstrdup("%s");
->>> +	}
->>> +	get_commit_format(format, &revs);
->>> +	free(format);
->>> +	pp.fmt = revs.commit_format;
->>> +	pp.output_encoding = get_log_output_encoding();
->>> +
->>> +	if (setup_revisions(argc, argv, &revs, NULL) > 1)
->>> +		return error(_("make_script: unhandled options"));
->>> +
->>> +	if (prepare_revision_walk(&revs) < 0)
->>> +		return error(_("make_script: error preparing revisions"));
->>> +
->>> +	while ((commit = get_revision(&revs))) {
->>> +		strbuf_reset(&buf);
->>> +		if (!keep_empty && is_original_commit_empty(commit))
->>> +			strbuf_addf(&buf, "%c ", comment_line_char);
->>
->> I've never had to use empty commits before, but while testing this, I
->> noticed that `git rebase -i --keep-empty` behaves differently if using
->> the --root option instead of a branch or something like 'HEAD~10'.
->> I also tested this on v2.13.0 and the behavior is the same.
-> 
-> FWIW the terminology "empty commit" is a pretty poor naming choice. This
-> is totally not your fault at all. I just wish we had a much more intuitive
-> name to describe a commit that does not introduce any changes to the tree.
-> 
-> And yes, doing this with --root is a bit of a hack. That's because --root
-> is a bit of a hack.
-> 
-> I am curious, though, as to the exact differences you experienced. I mean,
-> it could be buggy behavior that needs to be fixed (independently of this
-> patch series, of course).
-> 
+My gettext version is 0.19.8.1.  I applied this patch and checked the
+new generated `git.pot` file, all "TRANSLATORS:" directions are well
+kept as usual.
 
-Sorry, reading this I realized that I didn't give any details!
-When using --root, --keep-empty has no effect. The empty commits
-do not appear in the todo list and they are removed.
-Also, when using --root without --keep-empty, the empty commits
-do not show up as comments in the list.
+This patch is nice.
 
-> Ciao,
-> Johannes
-> 
-
-Liam 
+--=20
+Jiang Xin
