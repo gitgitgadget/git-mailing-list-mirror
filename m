@@ -2,93 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0ADB22027C
-	for <e@80x24.org>; Tue, 30 May 2017 14:36:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC9E32027C
+	for <e@80x24.org>; Tue, 30 May 2017 15:00:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751501AbdE3OgF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 10:36:05 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:33845 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751370AbdE3OgE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 10:36:04 -0400
-Received: by mail-io0-f170.google.com with SMTP id k91so57538285ioi.1
-        for <git@vger.kernel.org>; Tue, 30 May 2017 07:36:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HUYxtcY6SN0dOgW/YaCjvtrnFL5hdxRNIlokPM5wlIc=;
-        b=LExq3bQ6FMatW6dxexcQDkoob5mJncEYWkMh9ba6449iGIoNJ1WYPjAsbb1L3iXkmL
-         5T9Hw91rtJ/w9s1Tas8AteFGqxQfAn3LLNh5ybGdcdsBjtJo3DN4CPWfyquqbZ/52IHA
-         GfnhZZcq2hicGkEBSEtLlVU7WwywijKKkO+630o+AuW16NgSNOKzYZqKzvnzO+Ii4KAS
-         lIOjdqcZYRpNn+GxT+2OGmgitlimN81841fCUIirQEF3Q4nDc474lSbB500L1hvdeHRx
-         xYc3QNJFlBNKZHlYc8NWcxoDmZAxOqNlW9K0s7rEBsZlApxEC6PazbcwxElFdYgMHk02
-         WwEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HUYxtcY6SN0dOgW/YaCjvtrnFL5hdxRNIlokPM5wlIc=;
-        b=MF1pgqrSTXnj3NDR7/EvRACSWhgrldPKNoy7rDlctVWjkTKFddNTDaXflpKzWgx8Ty
-         EAkIE4gVYeXKWpiU3B22IflO7q+TAz4mcf1SiHM34Frondihe+3E4/hnOO2VuxYMWNY9
-         /ZuPYHVaPo7pC7fYUtMTL8+zj5NW55xqAiWYf4DqR7W1GBuRDsKWQI1yVR8tW8lw7vUc
-         TM+24HFsApA+zxA2H8TDEsbj6wXyRY2E3xNvwclJ8DzZsZB8lYV6rsUizpgfhcGClMoa
-         7jxpLQPjxf93J0vaGF/Ae7ptGhQHqKqE8MuqTrmLamx3uW3cRmIwjGOw/2PEpN4NWlKk
-         JiwA==
-X-Gm-Message-State: AODbwcBefSqlCML6dbi7LzDe5JJk+mqz3FenVhTt/ARAUVrz+rE6jQfI
-        bVptR5BuqB6gmjz7PCEPMgaAvux0Ww==
-X-Received: by 10.107.138.21 with SMTP id m21mr17387581iod.80.1496154963473;
- Tue, 30 May 2017 07:36:03 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Tue, 30 May 2017 07:35:42 -0700 (PDT)
-In-Reply-To: <xmqqfufmbh4f.fsf@gitster.mtv.corp.google.com>
-References: <99ac8ee7-67b5-5ae7-51cf-6be38de6217f@redhat.com>
- <CACBZZX5U=U1bpiFuuxH2t8ZWnmQQAjWm1ji8XYq_6-SJPGL1sw@mail.gmail.com>
- <c2453701-979b-ebc7-dcc3-483a27d4c157@redhat.com> <85970ab4-e9c8-c6b6-11d3-faafd3ed0708@redhat.com>
- <CACBZZX4-T50q_eVWwJuBzoC6ocuG+v14Tm8wfK8h7FB_cMQzdQ@mail.gmail.com> <xmqqfufmbh4f.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 30 May 2017 16:35:42 +0200
-Message-ID: <CACBZZX7x7s-RfQMZjHuq=fbGtOeQzYin_Owqx7dK3v7dudh8zA@mail.gmail.com>
-Subject: Re: FORMAT_PATCH_NAME_MAX increase
+        id S1751537AbdE3PAB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 11:00:01 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52710 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751170AbdE3O7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 10:59:54 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPZuP-1dJrTy07nN-004gE1; Tue, 30
+ May 2017 16:59:43 +0200
+Date:   Tue, 30 May 2017 16:59:40 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Laszlo Ersek <lersek@redhat.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 02/10] rebase -i: generate the script via
+ rebase--helper
+In-Reply-To: <xmqqfufnc56q.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1705301659150.3610@virtualbox>
+References: <cover.1493207864.git.johannes.schindelin@gmx.de>        <cover.1493414945.git.johannes.schindelin@gmx.de>        <e173445d9a6321f80053967e50375400c0a61764.1493414945.git.johannes.schindelin@gmx.de>        <xmqq60gk8ad5.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1705291252080.3610@virtualbox> <xmqqfufnc56q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:C9twbCppQfYQiMzyeO7YUqoY7t2C/XptQqXrsjz2W3TcPGRWdfR
+ gcolub7cu+1wItvfMq/TC8XTXqLe+M6Ccq6u7FmF4k8XPsV7asmOCmbYsNcCRjPCPFcg0YS
+ 9WNVeIV447qK0EDQyGrTt5821ciVdK+0/v+NSFlWWZItkGfNWPq0C3ubDJHU3pYakK8I7gg
+ fLnVDNXBJxsS9PoW+K6cQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LorEm1zHA/Y=:DsI+ga/v4+nc5Uz548MNF1
+ I8fYVIqXqOSf1oE0ypa4BScGXkwnQRriuVQrfU314uS9YQzZT1Qzj9MgVjbeh0W8SlstkqmkW
+ c3d5lGSlD1P6r9srdtvBUwCYAr7MLCIK63vTD46sUIVloUbYHYu1FU6q0M+zhNq5ii429RRjn
+ 313YI2GOE+QvSln0C/Tdt8fKUnP3KUGQQg26rXidBBer4lATCvqyjVKgRy4WCA/oQBZqA2Mop
+ U0BDS8RTULn9c5hsleBdLJy9vs0OxAFSUPmwY0Rm7ihKKxRhEoOg1j0d9okv5L9uYZqSX8Vkw
+ bHELjhXaqbpdkZASZ9Tzck1/nslylJTWDS0c3yY6OzXOjNJGyhnPURX0T1JYdKnal9t0GDLP1
+ dnHNc8mrj1kQJLQ3A1jben02MBEinDxv3hWidnShtljiOeOp50CUv4lRCmzVZB4oT6SDVpUKF
+ o/Uxe9p0qMEvwcLPdtRW2kqBS65e//TQBY47SOmxEIYFAac4xe55A5sTxCeDm8Z63gPRyzZL9
+ uBzjM+vwIkMRszVfNR2YF+KZFDeNuXhHNGu5AyHq93Bilms5i5MePRIOJvSzGWDB48rMnJOM2
+ LJRwq9Le1Gv3o/nrzfS7Lj6EjoT8QkPl+s8vlGepAhxOH24cJT4ZbafQlhjYi2DwhMu3UmEAf
+ f9n7whkrKMYbBAjhfHIDlVYiJal1hRNdpyGduxzn/Sez7SuwknuItgnFDvH/gPCcGkB0jXnT6
+ tW+z3U4XBETP/0pYJogjoQjdIQaZlgBlZ8vmSl6VAxc97u7tRQJkU0fW5ACAeJOz3QhkQywhD
+ YrpmmQx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 30, 2017 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> Just curious do you know about https://github.com/trast/tbdiff ? If
->> not it might have a high overlap with what you're doing.
->
-> Yes, that is a very good suggestion.  You'd need to be able to
-> actually apply the patches but the way I often do a review is very
-> similar to (actually, I'd say it is identical workflow) Laszlo's,
-> and it goes like this:
->
->     $ git checkout topic ;# previous round
->     $ git checkout master... ;# check out the fork point of previous one
->     $ git am mbox ;# apply the updated one
->     $ git tbdiff ..@{-1} @{-1}..
+Hi Junio,
 
-I wonder if this tool seemingly everyone on-list uses should just be
-integrated into git.git.
+On Tue, 30 May 2017, Junio C Hamano wrote:
 
-I only learned about it <2 weeks ago and it's been great. The diff
-output was a bit nonsensical in some cases because it uses python's
-diff engine instead of git's.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > You still ask me to pass options in plain text that has to be parsed at
+> > run-time, rather than compile-time-verifiable flags.
+> 
+> Absolutely.  
 
-Would you mind patches to just integrate it to git in python as-is,
-then we could slowly convert it to C as we're doing with everything
-else.
+In other words, you want me to put my name to sloppy code.
+
+Sorry, not interested,
+Dscho
