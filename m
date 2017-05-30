@@ -7,63 +7,62 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F06620D0A
-	for <e@80x24.org>; Tue, 30 May 2017 04:47:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A2CD20D0A
+	for <e@80x24.org>; Tue, 30 May 2017 04:57:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751061AbdE3ErB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 00:47:01 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36033 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751057AbdE3Eq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 00:46:59 -0400
-Received: by mail-pf0-f196.google.com with SMTP id n23so15178836pfb.3
-        for <git@vger.kernel.org>; Mon, 29 May 2017 21:46:54 -0700 (PDT)
+        id S1750951AbdE3E5g (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 00:57:36 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35633 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750911AbdE3E5f (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 00:57:35 -0400
+Received: by mail-pf0-f194.google.com with SMTP id u26so15237780pfd.2
+        for <git@vger.kernel.org>; Mon, 29 May 2017 21:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=SWY63T8xcNgUCdbLP3HC/+nXkr56r44ueXlA+dACvdc=;
-        b=O6riHzlij0iTD6ItlwIbK6vPWhM3uUYJsplIcWsW3xf1pe+nLIFtjTJ1rUJPu8JYAl
-         KfthWvph5w7+Da5AkI413ykmFN8VFecE5zRVb9CNVFwl3+OyP82jVQxvsZNxYXcQWvbS
-         hh/QQDeGv72s6c2vWASZoMQOcTq7WCiBEH5/DuVfnffqnLER/9K4QHZR5Kql/QclY+/8
-         /MZ9GyVIaC9B7orcDkt70XogbuhTclV5DiR90RKXfz4Pl+5oyWy4KAsQzaZ6prmkGJrg
-         YWmZP/GeOYDTcm/Od3GKJhykaVKUAXL3wH7CPc2d4m9YKFmXjyLrFJLC6rCRN0rLRX4Z
-         zdqA==
+        bh=8LnTx4r0SzXZJAx5oFgy2NJCcPvjHI1tRvmb/skn3VE=;
+        b=B3hx1YsHRh0DKt/rRPDD0J68XqCyyrOt52xgXNGpZjOBhQpxTXW/Vl+60o5UPkXNxp
+         760TPwiOe2oLeYnGUISaZk2l3jGeVtsLOVv3vKyTt1sGQMAO6/V54rMxjx4h8ILSINWD
+         O/tL5yh9hQJ8ruonoBM/HL3a5NELjqkXCJgkG+0fk5bASuez8tueqEhznsd7iMp7inWS
+         30U925agB/Yaxi1WOazVDuzlKJFcgrCbswZM4mbmeEAXBsr0oqRaCh4yNVeEMPOSAWQy
+         aVqWz3xdphjU+hv5ppWryz8HDtN4Dju6bbhNtrU/3Xy/E5ZiwqPztMrxaRxbg2sJ0rs3
+         SaLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=SWY63T8xcNgUCdbLP3HC/+nXkr56r44ueXlA+dACvdc=;
-        b=UXh3lSBkbjjqPWrMKrT4gO0FK6k3/j3tPwte6oDWM1H9wY3YS3d/fHzuSR6r3LHF4C
-         qPa2AFMbUcXrVYJZRG2r3uoBn/JNbv+siDY1pJ3PIX18q/KT4Ywf20KA4bTk6qnXsBv/
-         cgMOv93VyOAVYBgYhuIi8sJC88bFyPLPRo57DXdF2jWnnuJC1R3kac87paM635Z7DuLs
-         jiNY+/aa4wIByisaNT8IvR9e8aZMTAL5u87B0HKuaIfcP4hGYS+ROUxyFC06Kg3z+2od
-         42CFdz3ePDyq/vz/3bO6h4SnXLHLo1X0W5uN8GrJT4gNIjH0K4Il+NtLb3snsPk1zAic
-         ieQg==
-X-Gm-Message-State: AODbwcAJ2XST+fs5ZNLlIenGjMg5ttXT8zOmaA9zV9C+AKxsq6Drd1IT
-        sh8rHy1GqCrMFR3RFx8=
-X-Received: by 10.99.129.66 with SMTP id t63mr22886872pgd.224.1496119614078;
-        Mon, 29 May 2017 21:46:54 -0700 (PDT)
+        bh=8LnTx4r0SzXZJAx5oFgy2NJCcPvjHI1tRvmb/skn3VE=;
+        b=Q0fCIxgIExM4WgrKXHOoPLLicfpdQbplKmB/1UIcPeSs3u/dgwmXg7wZj5W2G3rZxO
+         gdhIRqbcjaTD3VrwDbRv3leUEwZ2gnEXF+DGEyS+eXPc5S0ud001Pk3b/LA8nhVeNR8n
+         BI3eI2xYE5wMPHpdxtOcSf5CPJZrcyMfzNIat3bS8iw0GDrOhd5Y+Obplh8/gjnz49+V
+         WxNdvrerjRmCvEUeEzhlZGI9WBdDau7wxVyGVJsIstoHU/+z0ViZ+gU+R5MoYJGYM6Ma
+         2569Xdb7O740azv+Ad9HfIf6/8BFONez1aVPFmLRKoVazHHtAEyofSbMB4EqdFOWHGAD
+         kO7A==
+X-Gm-Message-State: AODbwcC6mISo/46y7bmMStSXLZkPhjSa6fJz3e+L6gJhj3T0br7J9/px
+        7YWN+NXQKxgdWQ==
+X-Received: by 10.98.192.134 with SMTP id g6mr21330584pfk.26.1496120255183;
+        Mon, 29 May 2017 21:57:35 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:f830:fc5f:a16b:f475])
-        by smtp.gmail.com with ESMTPSA id 64sm18716773pfi.111.2017.05.29.21.46.52
+        by smtp.gmail.com with ESMTPSA id f1sm13041765pgc.8.2017.05.29.21.57.33
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 29 May 2017 21:46:53 -0700 (PDT)
+        Mon, 29 May 2017 21:57:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] mingw: verify that paths are not mistaken for remote nicknames
-References: <CACsJy8CzgHc=qe5w=FGJJ=ZU0a+JiqBrjWHV7SH3rAPKmOOKoA@mail.gmail.com>
-        <20170526033510.1793-1-gitster@pobox.com>
-        <20170526033510.1793-14-gitster@pobox.com>
-        <17b3d445-0cc7-2000-dc67-11fb53c7040b@kdbg.org>
-        <CACBZZX5BgVbUFEwQjHqJVfHFUitTJRaCx-Lg+j7q54uErEpqcg@mail.gmail.com>
-        <34029b29-9f65-78c0-c2ed-649b179a79ac@kdbg.org>
-Date:   Tue, 30 May 2017 13:46:52 +0900
-In-Reply-To: <34029b29-9f65-78c0-c2ed-649b179a79ac@kdbg.org> (Johannes Sixt's
-        message of "Mon, 29 May 2017 23:02:15 +0200")
-Message-ID: <xmqqpoerc5oj.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v4 02/10] rebase -i: generate the script via rebase--helper
+References: <cover.1493207864.git.johannes.schindelin@gmx.de>
+        <cover.1493414945.git.johannes.schindelin@gmx.de>
+        <e173445d9a6321f80053967e50375400c0a61764.1493414945.git.johannes.schindelin@gmx.de>
+        <xmqq60gk8ad5.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1705291252080.3610@virtualbox>
+Date:   Tue, 30 May 2017 13:57:33 +0900
+In-Reply-To: <alpine.DEB.2.21.1.1705291252080.3610@virtualbox> (Johannes
+        Schindelin's message of "Mon, 29 May 2017 12:54:01 +0200 (CEST)")
+Message-ID: <xmqqfufnc56q.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,65 +71,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> Doesn't this need test_i18ngrep?:
+> Hi Junio,
 >
-> Good catch! It would be this one in warn_on_inaccessible:
+> On Mon, 29 May 2017, Junio C Hamano wrote:
 >
->>      wrapper.c:581:  warning_errno(_("unable to access '%s'"), path);
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>> > diff --git a/sequencer.c b/sequencer.c
+>> > index 130cc868e51..88819a1a2a9 100644
+>> > --- a/sequencer.c
+>> > +++ b/sequencer.c
+>> > @@ -2388,3 +2388,52 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+>> >  
+>> >  	strbuf_release(&sob);
+>> >  }
+>> > +
+>> > +int sequencer_make_script(int keep_empty, FILE *out,
+>> > +		int argc, const char **argv)
+>> > +{
+>> > +	char *format = NULL;
+>> > +	struct pretty_print_context pp = {0};
+>> > +	struct strbuf buf = STRBUF_INIT;
+>> > +	struct rev_info revs;
+>> > +	struct commit *commit;
+>> > +
+>> > +	init_revisions(&revs, NULL);
+>> > +	revs.verbose_header = 1;
+>> > +	revs.max_parents = 1;
+>> > +	revs.cherry_pick = 1;
+>> > +	revs.limited = 1;
+>> > +	revs.reverse = 1;
+>> > +	revs.right_only = 1;
+>> > +	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+>> > +	revs.topo_order = 1;
+>> 
+>> cf. <xmqq4lx5i83q.fsf@gitster.mtv.corp.google.com>
+>> 
+>> This is still futzing below the API implementation detail
+>> unnecessarily.
 >
-> But actually, I'm more worried about the unholy mix of
-> one-test-first-then-skip_all-later that occurs in this test script (I
-> do not mean the skip_all that is visible in the context, there are
-> others later). I think there was some buzz recently that prove only
-> understands a summary line that reads "1..0", but here we would see
-> "1..1". What to do? Reorganize the test script? Dscho, any ideas?
+> You still ask me to pass options in plain text that has to be parsed at
+> run-time, rather than compile-time-verifiable flags.
 
-For now I've queued this on top of 1/2, so that suggestions are not
-lost, and then tweaked 2/2 (as context for the patch to the test
-changes).  
+Absolutely.  
 
-Either an ack or a reroll is appreciated (I do not think we'd
-terribly mind if this test were added to another script, or if this
-test were skipped when UNC path cannot be determined even though it
-does not need that prereq.  Also UNC_PATH can become prereq that is
-tested by individual test in this script and the new test can be
-added without requiring that prereq).
+We do not want these implementation details to code that does not
+implement command line parsing.  This one is not parsing anybody's
+set of options and should not be mucking with the low level
+implementation details.
 
-Thanks.
-
- t/t5580-clone-push-unc.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/t/t5580-clone-push-unc.sh b/t/t5580-clone-push-unc.sh
-index fd719a209e..944730cddc 100755
---- a/t/t5580-clone-push-unc.sh
-+++ b/t/t5580-clone-push-unc.sh
-@@ -8,12 +8,6 @@ if ! test_have_prereq MINGW; then
- 	test_done
- fi
- 
--test_expect_failure 'remote nick cannot contain backslashes' '
--	BACKSLASHED="$(pwd | tr / \\\\)" &&
--	git ls-remote "$BACKSLASHED" >out 2>err &&
--	! grep "unable to access" err
--'
--
- UNCPATH="$(pwd)"
- case "$UNCPATH" in
- [A-Z]:*)
-@@ -51,4 +45,10 @@ test_expect_success push '
- 	test "$rev" = "$(git rev-parse --verify refs/heads/to-push)"
- '
- 
-+test_expect_failure 'remote nick cannot contain backslashes' '
-+	BACKSLASHED="$(pwd | tr / \\\\)" &&
-+	git ls-remote "$BACKSLASHED" >out 2>err &&
-+	test_i18ngrep ! "unable to access" err
-+'
-+
- test_done
--- 
-2.13.0-493-g9105ebc082
+See 66b2ed09 ("Fix "log" family not to be too agressive about
+showing notes", 2010-01-20) and poinder.  Back then, nobody outside
+builtin/log.c and revision.c (these are the two primary things that
+implement command line parsing; "log.c" needs access to the low
+level details because it wants to establish custom default that is
+applied before it reads options given by the end-user) mucked
+directly with verbose_header, which allowed the addition of
+"pretty_given" to be limited only to these places that actually do
+the parsing.  If the above patch to sequencer.c existed before
+66b2ed09, it would have required unnecessary change to tweak
+"pretty_given" in there too when 66b2ed09 was done.  That is forcing
+a totally unnecesary work.  And there is no reason to expect that
+the kind of change 66b2ed09 made to the general command line parsing
+will not happen in the future.  Adding more code like the above that
+knows the implementation detail is unwarranted, when you can just
+ask the existing command line parser to set them for you.
 
