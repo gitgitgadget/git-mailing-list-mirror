@@ -2,137 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76AD72027C
-	for <e@80x24.org>; Tue, 30 May 2017 23:05:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DBD42027C
+	for <e@80x24.org>; Tue, 30 May 2017 23:07:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750885AbdE3XEx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 19:04:53 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:29231 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750811AbdE3XEv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 19:04:51 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id FqC1d3bmYcpskFqC1d2fjx; Wed, 31 May 2017 00:04:49 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=xtxXYLxNAAAA:8 a=oCcaPWc0AAAA:8 a=ggGe_nQQzwVECPAcrYEA:9 a=wPNLvfGTeEIA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <E0D5AC60DB0F48DEBF865597910D9531@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Git List" <git@vger.kernel.org>
-References: <8CEDDC40C7D24404976929CF3E7AF6FC@PhilipOakley>        <xmqq37bpbx5t.fsf@gitster.mtv.corp.google.com>        <D689F4F80DA24C78B5E0FB025B9548E6@PhilipOakley>        <xmqqpoet9lms.fsf@gitster.mtv.corp.google.com>        <DE497A69E68043DABF9C3A7D9198B277@PhilipOakley> <xmqq1sr7f9nb.fsf@gitster.mtv.corp.google.com>
-Subject: Re: mergetool: what to do about deleting precious files?
-Date:   Wed, 31 May 2017 00:04:46 +0100
-Organization: OPDS
+        id S1751208AbdE3XHi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 19:07:38 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:58657 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751128AbdE3XHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 19:07:37 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout07 with smtp
+        id Sn7Z1v0091keHif01n7aLT; Wed, 31 May 2017 00:07:35 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=giEMwcWdGeSfNJdnLe8A:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [GSoC][PATCH v5 1/3] submodule: fix buggy $path and $sm_path
+ variable's value
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Prathamesh Chavan <pc44800@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>
+References: <20170521125814.26255-2-pc44800@gmail.com>
+ <20170526151713.10974-1-pc44800@gmail.com>
+ <01e8c552-fd3a-ee05-1ff1-3b3ea0f7feeb@ramsayjones.plus.com>
+ <CAGZ79kYbi5QxWAsxdfPkuWEyMt9Qg753sm0vExsKaWyksDVw+Q@mail.gmail.com>
+ <24ebb17b-4324-c6ef-7e3a-5576cda3b595@ramsayjones.plus.com>
+ <CAGZ79kYc9wx23N9quxhuYAf2H1Rm3tGNg_0Ydz0KO4qPH-Kz5w@mail.gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <56bcf006-06f1-1851-87de-5697f988cb08@ramsayjones.plus.com>
+Date:   Wed, 31 May 2017 00:07:33 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
+In-Reply-To: <CAGZ79kYc9wx23N9quxhuYAf2H1Rm3tGNg_0Ydz0KO4qPH-Kz5w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 170530-4, 30/05/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfPHhAxRidCA8ULxDLOwMJ+fU6W2nJDz4bLbesu+zvBZV9rZ5g7ZdcsSV8oltIOE35pM5o9oODh0sSyG4IlXPzxlTbW5dSmzox7tK1buOw8s1bwOUAJ0v
- QE+h7nRixKWkPdz4SSivW/s3KsDI3wotewDIa/Q/Hb/RleRKszGtXD2EXNhJi9xCual8cwkL3NjeUA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
 
-Thanks for the replies. Let's see if I've got it...
 
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> If I now understand correctly, the merge process flow is:
+On 30/05/17 22:53, Stefan Beller wrote:
+> On Fri, May 26, 2017 at 6:10 PM, Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
+>> On 26/05/17 18:07, Stefan Beller wrote:
+>>> On Fri, May 26, 2017 at 9:31 AM, Ramsay Jones
+>>> <ramsay@ramsayjones.plus.com> wrote:
+
+>> Back in 2012, the submodule list was generated by filtering the
+>> output of 'git ls-files --error-unmatch --stage --'; but I don't
+>> recall if (at that time) git-ls-files required being at the top
+>> of the working tree, or if it would execute fine in a sub-directory.
+>> So, it's possible that the documentation of $path was wrong all along.
+>> ;-)
 >>
->> * canonicalise content (eol, smudge-clean, $id, renormalise, etc)
->> * diff the content (internal, or GIT_EXTERNAL_DIFF)
->> * apply the diff
->> * if conflicts, only then use merge-driver/tool
+>> At that time, by definition, $path == $sm_path. However, you know this
+>> stuff much better than me (I don't use git-submodule), so ...
+> 
+> Don't take that stance. Sometimes I shoot quickly from the hip without
+> considering consequences (Figuratively).
+> 
+> In a foreach command I can see value both in the 'displaypath'
+> (what sm_path would become here) and the 'submodule path'
+> from the superproject. The naming of 'sm_path' hints at that it ought
+> to be the 'submodule path'.
+
+Well, since I introduced it, I can confidently proclaim that it is
+indeed the 'submodule path'. :-D
+
+As I said above, I can't remember how git-ls-files worked back then,
+but it seems that I thought of it as the path to the submodule from
+the root of the working tree. Again, by definition, $sm_path == $path
+(as documented). Of course, that may have changed since then.
+
+>>> With this patch it becomes less non-sensey and could be documented as:
+>>>
+>>>     $sm_path is the relative path from the current working directory
+>>>     to the submodule (ignoring relations to the superproject or nesting
+>>>     of submodules).
 >>
->> Would that be a correct interpretation?
->
-> Not quite.  There are a lot more going on before any of those steps:
->
-> * Find the common ancestor commit (which could be many).
+>> OK.
+>>
+>>>                      This documentation also fits into the narrative of
+>>>     the test in t7407.
+>>
+>> Hmm, does it?
+> 
+> After rereading that test, I would think so?
 
-IIUC Git selects one of them, rather than all if there are many (which then 
-may not be the optimum)
+Really? So, if it differs from $path, then something changed between
+commit 64394e3ae9 and commit 091a6eb0fe. I haven't really read that
+commit/test, so take what I say with a pinch of salt ...
 
->
-> * Walk the three trees (the common ancestor's, ours and theirs) in
->   parallel, noticing what happened to each path.  Depending on what
->   happened to the path in each branch, the merge may or may not
->   "conflict" (e.g. when both sides added exactly the same contents
->   to the same path, they are not counted as conflicting.  when we
->   removed while they modified, they show as conflicting).
+> Thanks for keeping discussing this.
+> 
+> So maybe we want to
+> * keep path=sm_path
 
-I'm assuming here that this is the sha-oid comparison, and then checking the 
-tree/blob names that match them. (the top tree not having a name). So here 
-"conflict free" is that the sha-oids match.
+As I said in commit 64394e3ae9, $path was part of the API, so I could
+not just rename it, without a deprecation period, etc ... So, I was
+'crossing my fingers' that nobody would export $path in their user
+scripts (not very likely, after all).
 
-Also, I thnk this is saying that added or removed trees or blobs are in some 
-sense are 'conflict free' (though still subject to rename/move detection 
-etc). An added file/blob would be conflict free for merging into it's tree, 
-yes?
+> * fix the documentation via s/$path/$sm_path/g in that section quoted above.
 
-IIUC, the comparison is therefore using the in-repo sha-oids; 
-unless --renormalise was given which will do a smudge-clean washing cycle 
-and recomute fresh canonical sha-oids for the comparison (rather than doing 
-it later).
+So, "$path is the name of the submodule directory relative to the
+superproject", as currently documented in the man page, yes?
 
->
-> * For paths that are conflicting, feed the canonicalized content of
->   the versions from common, ours and theirs to the file-level merge
->   driver.
+So, $sm_path == $path, at least for some period?
 
-So this is where any .gitattibutes settings come in, or is the merge driver 
-after the diff step? (which could also be a user diff?)
+> * Introduce a new variable sm_display_path that contains what this patch
+>   proposes sm_path to be.
 
->        The builtin file-level merge driver takes two xdiff (one
->   between ancestor and ours, the other between ancestore and
->   theirs) and reconciles them to produce the result.  But that is
->   irrelevant in the context of "custom merge driver"; the builtin
->   one is skipped altogether and the custom contents merge driver
->   the user specified via the attributes is used instead.
->
-> Notice that the second step above has no customization knobs.  Any
-> path the second step deems not to conflict is "merged cleanly"
-> without even triggering the "oops, ours and theirs did conflicting
-> changes, to the content; let's see how the final content should look
-> like" (aka the third step).  This is *not* because "Git knows the
-> best"; it is merely that nobody felt the need for a mechanism to
-> allow customizing the second step.
->
-> And that is why I said you need a new customization mechanism if you
-> want to affect the outcome of the scenario that started this thread.
+So, this would be the path from the cwd to the submodule, yes?
 
-Ok, I think I can see how I was confused between the "tree merge" (oid 
-conflict detection) and the more usual (to users) "file merge" (line by 
-line, etc.). I wasn't sure where to find that as someone relatively new to 
-Git.
+> * fix the test in t7407 by checking both sm_path (fixed) as well
+>   as sm_display_path (what is currently recorded in sm_path)
 
-Thanks for the explanations.
---
-Philip 
+Hmm, ...
+
+> In the next patch:
+> * Additionally in the rewrite in C, we would do an
+> 
+>     #ifndef WINDOWS /* need to lookup the exact macro */
+>         argv_array_push(env_vars, "path=%s", sm_path);
+>     #endif
+> 
+> such that Windows users are forced to migrate to sm_path
+> as path/Path is case sensitive there. sm_path being documented
+> value, so it should work fine?
+
+Well, as you saw in a separate thread, I can no longer get
+cygwin to fail, so something (probably in the cygwin runtime)
+has changed since 2012 to make this work now, despite the
+case insensitive win32 environment block. (This may also be
+true of MSYS2, but I haven't tested it).
+
+I have not tested this on MYSY2/MinGW/Git-for-windows, but
+Johannes Sixt was concerned about this, so I guess it may
+still be a problem there.
+
+I don't know how windows folks will feel about simply
+removing $path, ...
 
 
----
-This email has been checked for viruses by AVG.
-http://www.avg.com
+ATB,
+Ramsay Jones
 
