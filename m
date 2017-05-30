@@ -2,73 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC9E32027C
-	for <e@80x24.org>; Tue, 30 May 2017 15:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B99522027C
+	for <e@80x24.org>; Tue, 30 May 2017 15:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751537AbdE3PAB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 11:00:01 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52710 "EHLO mout.gmx.net"
+        id S1751305AbdE3PGQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 11:06:16 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:39008 "EHLO mx1.redhat.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751170AbdE3O7y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 10:59:54 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPZuP-1dJrTy07nN-004gE1; Tue, 30
- May 2017 16:59:43 +0200
-Date:   Tue, 30 May 2017 16:59:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 02/10] rebase -i: generate the script via
- rebase--helper
-In-Reply-To: <xmqqfufnc56q.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1705301659150.3610@virtualbox>
-References: <cover.1493207864.git.johannes.schindelin@gmx.de>        <cover.1493414945.git.johannes.schindelin@gmx.de>        <e173445d9a6321f80053967e50375400c0a61764.1493414945.git.johannes.schindelin@gmx.de>        <xmqq60gk8ad5.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1705291252080.3610@virtualbox> <xmqqfufnc56q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751248AbdE3PGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 11:06:14 -0400
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id 3263F3B708;
+        Tue, 30 May 2017 15:06:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 3263F3B708
+Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx06.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=lersek@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 3263F3B708
+Received: from lacos-laptop-7.usersys.redhat.com (ovpn-116-87.phx2.redhat.com [10.3.116.87])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 06B7219EF3;
+        Tue, 30 May 2017 15:06:12 +0000 (UTC)
+Subject: Re: FORMAT_PATCH_NAME_MAX increase
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <99ac8ee7-67b5-5ae7-51cf-6be38de6217f@redhat.com>
+ <CACBZZX5U=U1bpiFuuxH2t8ZWnmQQAjWm1ji8XYq_6-SJPGL1sw@mail.gmail.com>
+ <c2453701-979b-ebc7-dcc3-483a27d4c157@redhat.com>
+ <85970ab4-e9c8-c6b6-11d3-faafd3ed0708@redhat.com>
+ <CACBZZX4-T50q_eVWwJuBzoC6ocuG+v14Tm8wfK8h7FB_cMQzdQ@mail.gmail.com>
+ <xmqqfufmbh4f.fsf@gitster.mtv.corp.google.com>
+ <CACBZZX7x7s-RfQMZjHuq=fbGtOeQzYin_Owqx7dK3v7dudh8zA@mail.gmail.com>
+From:   Laszlo Ersek <lersek@redhat.com>
+Message-ID: <36557854-907f-9bb0-2059-c97328e1ca41@redhat.com>
+Date:   Tue, 30 May 2017 17:06:11 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:C9twbCppQfYQiMzyeO7YUqoY7t2C/XptQqXrsjz2W3TcPGRWdfR
- gcolub7cu+1wItvfMq/TC8XTXqLe+M6Ccq6u7FmF4k8XPsV7asmOCmbYsNcCRjPCPFcg0YS
- 9WNVeIV447qK0EDQyGrTt5821ciVdK+0/v+NSFlWWZItkGfNWPq0C3ubDJHU3pYakK8I7gg
- fLnVDNXBJxsS9PoW+K6cQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LorEm1zHA/Y=:DsI+ga/v4+nc5Uz548MNF1
- I8fYVIqXqOSf1oE0ypa4BScGXkwnQRriuVQrfU314uS9YQzZT1Qzj9MgVjbeh0W8SlstkqmkW
- c3d5lGSlD1P6r9srdtvBUwCYAr7MLCIK63vTD46sUIVloUbYHYu1FU6q0M+zhNq5ii429RRjn
- 313YI2GOE+QvSln0C/Tdt8fKUnP3KUGQQg26rXidBBer4lATCvqyjVKgRy4WCA/oQBZqA2Mop
- U0BDS8RTULn9c5hsleBdLJy9vs0OxAFSUPmwY0Rm7ihKKxRhEoOg1j0d9okv5L9uYZqSX8Vkw
- bHELjhXaqbpdkZASZ9Tzck1/nslylJTWDS0c3yY6OzXOjNJGyhnPURX0T1JYdKnal9t0GDLP1
- dnHNc8mrj1kQJLQ3A1jben02MBEinDxv3hWidnShtljiOeOp50CUv4lRCmzVZB4oT6SDVpUKF
- o/Uxe9p0qMEvwcLPdtRW2kqBS65e//TQBY47SOmxEIYFAac4xe55A5sTxCeDm8Z63gPRyzZL9
- uBzjM+vwIkMRszVfNR2YF+KZFDeNuXhHNGu5AyHq93Bilms5i5MePRIOJvSzGWDB48rMnJOM2
- LJRwq9Le1Gv3o/nrzfS7Lj6EjoT8QkPl+s8vlGepAhxOH24cJT4ZbafQlhjYi2DwhMu3UmEAf
- f9n7whkrKMYbBAjhfHIDlVYiJal1hRNdpyGduxzn/Sez7SuwknuItgnFDvH/gPCcGkB0jXnT6
- tW+z3U4XBETP/0pYJogjoQjdIQaZlgBlZ8vmSl6VAxc97u7tRQJkU0fW5ACAeJOz3QhkQywhD
- YrpmmQx
+In-Reply-To: <CACBZZX7x7s-RfQMZjHuq=fbGtOeQzYin_Owqx7dK3v7dudh8zA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.30]); Tue, 30 May 2017 15:06:14 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 05/30/17 16:35, Ævar Arnfjörð Bjarmason wrote:
+> On Tue, May 30, 2017 at 3:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>>
+>>> Just curious do you know about https://github.com/trast/tbdiff ? If
+>>> not it might have a high overlap with what you're doing.
 
-On Tue, 30 May 2017, Junio C Hamano wrote:
+Thank you for the suggestion, it does exactly what I need. It solves the
+Assignment Problem a whole lot better than my current, crude script.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+https://en.wikipedia.org/wiki/Assignment_problem
+https://en.wikipedia.org/wiki/Hungarian_algorithm
+
+(Mildly amusing, to me anyway: I happen to be Hungarian.)
+
+The output of git-tbdiff is not exactly the way I like it (I like to
+review interdiffs colorized, and fed to $PAGER individually), but I can
+easily do that on top of the "--no-patches" output.
+
+>> Yes, that is a very good suggestion.  You'd need to be able to
+>> actually apply the patches but the way I often do a review is very
+>> similar to (actually, I'd say it is identical workflow) Laszlo's,
+>> and it goes like this:
+>>
+>>     $ git checkout topic ;# previous round
+>>     $ git checkout master... ;# check out the fork point of previous one
+>>     $ git am mbox ;# apply the updated one
+>>     $ git tbdiff ..@{-1} @{-1}..
 > 
-> > You still ask me to pass options in plain text that has to be parsed at
-> > run-time, rather than compile-time-verifiable flags.
+> I wonder if this tool seemingly everyone on-list uses should just be
+> integrated into git.git.
 > 
-> Absolutely.  
+> I only learned about it <2 weeks ago and it's been great. The diff
+> output was a bit nonsensical in some cases because it uses python's
+> diff engine instead of git's.
 
-In other words, you want me to put my name to sloppy code.
+Yes, I'd probably plug in git's diff engine (the patience algorithm at
+that).
 
-Sorry, not interested,
-Dscho
+> 
+> Would you mind patches to just integrate it to git in python as-is,
+> then we could slowly convert it to C as we're doing with everything
+> else.
+
+That would be wonderful. My preference would be to use core git features
+for solving the problem; as a second preference, it would be great if
+git-tbdiff were packaged & shipped by GNU/Linux distros.
+
+Thomas (I see you are on To:/Cc: now -- I meant to CC you, snarfing your
+email from the git.git history :) ), are you aware of any distros
+already packaging git-tbdiff?
+
+Still the best would be if git provided this feature out of the box;
+incremental review of rerolled series appears a common activity for any
+serious reviewer / subsystem co-maintainer.
+
+Thanks!
+Laszlo
