@@ -2,179 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5A382027C
-	for <e@80x24.org>; Tue, 30 May 2017 21:54:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFB852027C
+	for <e@80x24.org>; Tue, 30 May 2017 22:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751683AbdE3VyB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 17:54:01 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:36576 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751673AbdE3Vx6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 17:53:58 -0400
-Received: by mail-pf0-f169.google.com with SMTP id m17so83693131pfg.3
-        for <git@vger.kernel.org>; Tue, 30 May 2017 14:53:53 -0700 (PDT)
+        id S1751174AbdE3Whj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 18:37:39 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:33499 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751105AbdE3Whi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 18:37:38 -0400
+Received: by mail-pf0-f182.google.com with SMTP id e193so84734794pfh.0
+        for <git@vger.kernel.org>; Tue, 30 May 2017 15:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NanwFfK7y+SvM39fkU6yQr109yz0knoqn/lrHo5xpnU=;
-        b=H7jjIP58IJxBUuVS7crMviq5qErPaPQ1m6gXT61GnJjamOBhX5gMwGeIz+zy2AqTuI
-         VbHGEkUyHLO9qxYqaeszIlMzRz1sOrZZhRmjGiDJtXyyXCMeWw/cTaYgrUpSMGqSsqpz
-         tiP3GSV/6otlw6OMcwdqdRq83G5jyU4h30cxRu5rK6YZBkp7IMQzoBzHeNWHIR9sOzgy
-         2MIG37ulI/hQYukp3sZuMbxpbZJEdF+38Va++dj+vHf8LqX0yIIszhDjqCMw6pD0QHQo
-         dNZiAQHtQ4Vf0Z2MnKfAYQN4hCVhORSnk9RvhhiA9zj0dGahF6LhTrOaHlkRACrLlawb
-         D42g==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nhDKTW0b3wy4CY5ZLJZyGj7++1am+2m0XFMj3SeGlGE=;
+        b=TZApJhgrnevujQoFlJ3rxSFiCVtkEnASC3VOJf1bgbbZquYelQYE/w99fvDLhRzN+5
+         vpfG1je3KwQ+eZLRe9nkvgN9T/sg6JOlBeXpxSeTpFAv/kL/NAvVoXkkLawOCB2kZxYj
+         HPM5pWNVTvPTNEqLcB+XSlxt75cgtOzgTeTnOHn6DBAD63UxhpDF/c5LlT3KR8n/wONG
+         cT/yyGr/zyJZAg2x6+a50d+OV8X0l6CCAo7Xnd+wMWhWg5k5WEcu4P4f5ZEzksr9MxI0
+         CSHV4Ozfvkh/hcLUW/DUU2IxCDOKOcP7LmjS4PmI6ma9xSq8ur0oJ1MMRmKDqkUI33nZ
+         IT7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NanwFfK7y+SvM39fkU6yQr109yz0knoqn/lrHo5xpnU=;
-        b=MPvd4EPaN/L1tMrghAJlh8+9++ySSCelQI6zeo3SVHEPhS5lSh/0tb9u5GB6bQ9qD3
-         UUeWIr+iQh58SIXh0CRTiD+KoryxxfYY4WB4WhbsCxhO0ZZwVj3mPIbmoErgDkYb/IuW
-         lvM/3hWjB8gcOMhmWGIbXolrnuCycrNQWWs17guMOqlehcjDHrh731juIhszMUREcJm7
-         ESyIcnxFh3+Hn4dLZBIUxuOjXbLsZyYEyONSuWe13RHq7+2DAhZkIegCpYQ1FQOIIu5V
-         y3XRanEeEuEKJJb3F5KEynVDjOTALvnXAuKWpZSWnmv35uZLkGe1aUfTkMJ2QL5naUAZ
-         mKvQ==
-X-Gm-Message-State: AODbwcAXq90KlwDQ5gxUTAxcGbe/jnMwXnmKngny0Jp6WXuzaoUwYlP5
-        faE2sVCIvC3WqaDe//xTFC65758Wv56l
-X-Received: by 10.98.236.150 with SMTP id e22mr26033477pfm.48.1496181227663;
- Tue, 30 May 2017 14:53:47 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nhDKTW0b3wy4CY5ZLJZyGj7++1am+2m0XFMj3SeGlGE=;
+        b=LfzL3ysHwAiimT4ExDhFB6ZNFC7DMSSX3I++aIFoKP8DSNcarLDuuBg2uJfg1zuSKj
+         mLQ48J/ls4mV8ABGdp8Kr7B0EIEn4rc7PcNMNv2Lj3rCwEIPQOkIQwxdWkJBmJpznm5b
+         LySgHZj7/AVKR8JAnS+4J5iZjNm8l7BYy6tZIfR0jc+H/K3fHSvqcMSgADbFWNEpS9X8
+         L+b4M9ug3FMy6gd7A8j8f6Eb28SmWDmDv2oQTxyDbJBRvc7sWNGiVs4p2IihOJ0YXBN/
+         zwZYYLqbIzevjm/0/pGnv8tErhd1dsi5HOUA/HasjxkyPYCmXhgX0uQ76j6R9y7hN7He
+         f1fQ==
+X-Gm-Message-State: AODbwcA5TDLRgZ5g7E3eohI+KPOQuBp1CTQOaj8spyxNVXSsMWg9lD7J
+        4kkH/Mm9hO831A==
+X-Received: by 10.99.112.3 with SMTP id l3mr27919716pgc.13.1496183857155;
+        Tue, 30 May 2017 15:37:37 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:f830:fc5f:a16b:f475])
+        by smtp.gmail.com with ESMTPSA id t3sm20516127pfl.60.2017.05.30.15.37.34
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 30 May 2017 15:37:34 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>, Ben Peart <benpeart@microsoft.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        David Turner <David.Turner@twosigma.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 4/6] fsmonitor: add test cases for fsmonitor extension
+References: <20170525183612.3128-1-benpeart@microsoft.com>
+        <20170525183612.3128-5-benpeart@microsoft.com>
+        <CAP8UFD0OEUogQYL5Eo1kBy_1B=dBcdEJyc4B_qAUOU=2XnrxxA@mail.gmail.com>
+        <bfab707a-7f3a-ca7d-1f67-66dcb6ab2ea6@gmail.com>
+Date:   Wed, 31 May 2017 07:37:33 +0900
+In-Reply-To: <bfab707a-7f3a-ca7d-1f67-66dcb6ab2ea6@gmail.com> (Ben Peart's
+        message of "Tue, 30 May 2017 17:21:51 -0400")
+Message-ID: <xmqqa85uas42.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Tue, 30 May 2017 14:53:47 -0700 (PDT)
-In-Reply-To: <24ebb17b-4324-c6ef-7e3a-5576cda3b595@ramsayjones.plus.com>
-References: <20170521125814.26255-2-pc44800@gmail.com> <20170526151713.10974-1-pc44800@gmail.com>
- <01e8c552-fd3a-ee05-1ff1-3b3ea0f7feeb@ramsayjones.plus.com>
- <CAGZ79kYbi5QxWAsxdfPkuWEyMt9Qg753sm0vExsKaWyksDVw+Q@mail.gmail.com> <24ebb17b-4324-c6ef-7e3a-5576cda3b595@ramsayjones.plus.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 30 May 2017 14:53:47 -0700
-Message-ID: <CAGZ79kYc9wx23N9quxhuYAf2H1Rm3tGNg_0Ydz0KO4qPH-Kz5w@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v5 1/3] submodule: fix buggy $path and $sm_path
- variable's value
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Prathamesh Chavan <pc44800@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 26, 2017 at 6:10 PM, Ramsay Jones
-<ramsay@ramsayjones.plus.com> wrote:
->
->
-> On 26/05/17 18:07, Stefan Beller wrote:
->> On Fri, May 26, 2017 at 9:31 AM, Ramsay Jones
->> <ramsay@ramsayjones.plus.com> wrote:
->>> Hmm, I'm not sure which documentation you are referring to,
->>
->> Quite likely our fine manual pages. ;)
->>
->>        foreach [--recursive] <command>
->>            Evaluates an arbitrary shell command in each checked out submodule.
->>            The command has access to the variables $name, $path, $sha1 and
->>            $toplevel: $name is the name of the relevant submodule section in
->>            .gitmodules, $path is the name of the submodule directory relative
->>            to the superproject, $sha1 is the commit as recorded in the
->>            superproject, and $toplevel is the absolute path to the top-level
->>            of the superproject. Any submodules defined in the superproject but
->>            not checked out are ignored by this command. Unless given --quiet,
->>            foreach prints the name of each submodule before evaluating the
->>            command. If --recursive is given, submodules are traversed
->>            recursively (i.e. the given shell command is evaluated in nested
->>            submodules as well). A non-zero return from the command in any
->>            submodule causes the processing to terminate. This can be
->>            overridden by adding || : to the end of the command.
->
-> I suspected as much, but I was wondering specifically if $sm_path
-> had been documented anywhere. I didn't think so, but ...
->
->> As $path is documented and $sm_path is not, we should care about
->> $path first to be correct and either fix the documentation or the implementation
->> such that we have a consistent world view. :)
->
-> Sure, but what is that world view? :-D
->
-> I suspect that commit 091a6eb0fe did not intend (should not have)
-> used $sm_path in that test. If we were to 'fix' that test, would
-> it still work?
->
-> Back in 2012, the submodule list was generated by filtering the
-> output of 'git ls-files --error-unmatch --stage --'; but I don't
-> recall if (at that time) git-ls-files required being at the top
-> of the working tree, or if it would execute fine in a sub-directory.
-> So, it's possible that the documentation of $path was wrong all along.
-> ;-)
->
-> At that time, by definition, $path == $sm_path. However, you know this
-> stuff much better than me (I don't use git-submodule), so ...
+Ben Peart <peartben@gmail.com> writes:
 
-Don't take that stance. Sometimes I shoot quickly from the hip without
-considering consequences (Figuratively).
+> I did a quick search through the existing test scripts and the
+> majority do not link commands together with && when they are in a sub
+> function like this.  I find not having them linked together is easier
+> to write, maintain and is more readable.
 
-In a foreach command I can see value both in the 'displaypath'
-(what sm_path would become here) and the 'submodule path'
-from the superproject. The naming of 'sm_path' hints at that it ought
-to be the 'submodule path'.
-
->>
->>     $path (as documented) is the name of the submodule directory
->>     relative to the direct superproject (so in nested submodules you
->>     go up only one level).
->>
->> $sm_path on the other hand is not documented at all and yields
->> non-sense results in corner cases.
->
-> Hmm, at what point did '$sm_path yields non-sense results' start
-> being the case? (perhaps the corner cases need to be fixed first).
-
-Well the corner case is described in the patchs notes.
-So that patch would fix it to be consistent with the new world view
-(that I have in mind) as I do not know about the 2012 ideas how submodules
-ought to behave correctly.
-
->> With this patch it becomes less non-sensey and could be documented as:
->>
->>     $sm_path is the relative path from the current working directory
->>     to the submodule (ignoring relations to the superproject or nesting
->>     of submodules).
->
-> OK.
->
->>                      This documentation also fits into the narrative of
->>     the test in t7407.
->
-> Hmm, does it?
-
-After rereading that test, I would think so?
-
-Thanks for keeping discussing this.
-
-So maybe we want to
-* keep path=sm_path
-* fix the documentation via s/$path/$sm_path/g in that section quoted above.
-* Introduce a new variable sm_display_path that contains what this patch
-  proposes sm_path to be.
-* fix the test in t7407 by checking both sm_path (fixed) as well
-  as sm_display_path (what is currently recorded in sm_path)
----
-In the next patch:
-* Additionally in the rewrite in C, we would do an
-
-    #ifndef WINDOWS /* need to lookup the exact macro */
-        argv_array_push(env_vars, "path=%s", sm_path);
-    #endif
-
-such that Windows users are forced to migrate to sm_path
-as path/Path is case sensitive there. sm_path being documented
-value, so it should work fine?
-
-Thanks,
-Stefan
+I had an impression that it is true only when the series of commands
+are not about Git.  When testing git commands, we should expect any
+of them to be broken (by somebody else ;-) and prepare to notice it.
