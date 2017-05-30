@@ -2,83 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A067E1FD09
-	for <e@80x24.org>; Tue, 30 May 2017 08:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45F1C1FD09
+	for <e@80x24.org>; Tue, 30 May 2017 09:02:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750992AbdE3ITw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 04:19:52 -0400
-Received: from mikako.shopkeeper.de ([82.119.175.20]:29561 "EHLO
-        mikako.shopkeeper.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750839AbdE3ITv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 04:19:51 -0400
-Received: from email.pecont.de (p54B88C92.dip0.t-ipconnect.de [84.184.140.146])
-        (authenticated bits=0)
-        by mikako.shopkeeper.de (8.15.2/8.14.3) with ESMTPSA id v4U8JgXF085831
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Tue, 30 May 2017 10:19:49 +0200 (CEST)
-        (envelope-from mathias.artus@pecont.de)
-Message-Id: <201705300819.v4U8JgXF085831@mikako.shopkeeper.de>
-X-Authentication-Warning: mikako.shopkeeper.de: Host p54B88C92.dip0.t-ipconnect.de [84.184.140.146] claimed to be email.pecont.de
-X-CTCH-RefID: str=0001.0A0C0206.592D2B18.00FB,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-From:   Mathias Artus <mathias.artus@pecont.de>
-To:     Johannes Sixt <j6t@kdbg.org>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: AW: Error with Templates: Could not find templates on cloning but
- on creating
-Thread-Topic: Error with Templates: Could not find templates on cloning but
- on creating
-Thread-Index: AQHS2L9LlWIJ+ANcSZmo3Pus4h+iZ6IMiRzQ
-Date:   Tue, 30 May 2017 08:19:33 +0000
-References: <201705291120.v4TBKfkV082879@mikako.shopkeeper.de>
- <fa99116f-ce82-f7c6-30ed-807c873c3634@kdbg.org>
-In-Reply-To: <fa99116f-ce82-f7c6-30ed-807c873c3634@kdbg.org>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-tm-as-product-ver: SMEX-10.5.0.1057-8.100.1062-23100.006
-x-tm-as-result: No--12.945900-5.000000-31
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1751140AbdE3JCT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 05:02:19 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:33109 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750896AbdE3JCS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 05:02:18 -0400
+Received: by mail-it0-f65.google.com with SMTP id l145so9048822ita.0
+        for <git@vger.kernel.org>; Tue, 30 May 2017 02:02:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jwxGhP9CcYYvI5ddE2GOtSrd9quKuuJxY4s5VefFESA=;
+        b=nR9tY+7pmWW1Or5Zp2qmhWKLwEojL8y0sDk6KQd+uHY4eGv85tl0WPzatx1QfipuqV
+         GVrSHS91NoLySyRqlNMw43R3s3k3L4RkySZ7XD1nXHIMLi2Q8D+pmzaQ5RW/YMTqPV1i
+         eSJDhcFvJsTjyhMHhJ8CP/okg7+M9k7H8eOlwfc2twPIRKq/0N2I+9fymJ/7Xr63lV7t
+         4MOiXw6K/+cpQb1eosUzN4DSzXwWumhaRaHmtO/fQ7kNdjrmNmce65ODgBwqgrDH9GuP
+         uu481ZJRlXTWLqlVSq74gpeeCxVUkGrm1FUXB3oMDLKL6sM+Xxg8F5aczrwCLjEVz+0C
+         XEeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jwxGhP9CcYYvI5ddE2GOtSrd9quKuuJxY4s5VefFESA=;
+        b=HRxkmqUYFRIYZbwsXIcbr2ZAK2bUn4rmYKkLmCgfLe5PhhWJ2RSI/XOSqP9mWjo7Xk
+         suo7FQUVdgHLt9czDk/2uQPQ+0SiORXTI7E4n3dLja8t4cRt4U4vSvliTOgL1F4h7cW5
+         qsfwYDPa2Xofto8CmCA4a+TzcXhZdpWYit/zum3SnNs3O+EZWIHR8ewBfK7edEQ43yOs
+         MhXgcfqcOjja1KbMHQsOzzM4lq6BMe8Qrfzacoh6L+wGJ6EkrZJT5UgYk0TwFT5Iuyaq
+         C+SRIpEBuJV4W4H9qBRhd3vA7KHxP3zhR1eJD7yI6VW3njhXC5dFT3AlF7PBOCT9jx6H
+         aIeg==
+X-Gm-Message-State: AODbwcBO+CHrJqHO4NM5afwPjHUHY2Osofv5hzvkyfSLoEJ3oigqD08s
+        oyg7Fu/texTcKuSz3LyX2D2sLvPOSg==
+X-Received: by 10.36.37.78 with SMTP id g75mr781001itg.94.1496134937198; Tue,
+ 30 May 2017 02:02:17 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.107.8.220 with HTTP; Tue, 30 May 2017 02:01:56 -0700 (PDT)
+In-Reply-To: <20170530071244.32257-2-szeder.dev@gmail.com>
+References: <CAM0VKjnOSxQg_VCBO2cgtbqesmNYx+e_H7m=36PsNWi9K9rQ1Q@mail.gmail.com>
+ <20170530071244.32257-1-szeder.dev@gmail.com> <20170530071244.32257-2-szeder.dev@gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 30 May 2017 11:01:56 +0200
+Message-ID: <CACBZZX740rcQKnfkRXgn0+fmeUDaWL-Kz5WzKeyUvBhXWPwPhg@mail.gmail.com>
+Subject: Re: [PATCHv4 2/2] Documentation/clone: document ignored configuration variables
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGkgSGFubmVzLA0Kbm8gaSB1c2UgdGhlIG5hdGl2ZSBpbnN0YWxsYXRpb24gd2l0aCBNaW5ndy4N
-Cg0KR3JlZXR6IE1hdGhpYXMNCg0KTWl0IGZyZXVuZGxpY2hlbiBHcsO8w59lbg0KTWF0aGlhcyBB
-cnR1cw0KcGVjb250wqBzdGV1ZXJ1bmdlbiAvwqBzb2Z0d2FyZSBHbWJIIC/CoEt1cnQgRnJhbmtl
-IFN0cmHDn2UgMSAvIMKgOTkwOTggRXJmdXJ0L8KgIEdlc2Now6RmdHNmw7xocmVyOsKgIFZvbGtl
-ciBQZW5uZXdpdHosIMKgQW50cyBXaWVnYW5kIC8gDQpUZWwuOiArNDnCoCgxNzIpIDY5NDg2NDkg
-LyBGYXg6ICs0OcKgKDM2MjAzKSA3MTk3NzYgLyBIUkI6wqAxMDc0NDMgLyBKZW5hIA0KDQoNCi0t
-LS0tVXJzcHLDvG5nbGljaGUgTmFjaHJpY2h0LS0tLS0NClZvbjogSm9oYW5uZXMgU2l4dCBbbWFp
-bHRvOmo2dEBrZGJnLm9yZ10gDQpHZXNlbmRldDogTW9udGFnLCAyOS4gTWFpIDIwMTcgMjM6MDUN
-CkFuOiBNYXRoaWFzIEFydHVzIDxtYXRoaWFzLmFydHVzQHBlY29udC5kZT4NCkNjOiBnaXRAdmdl
-ci5rZXJuZWwub3JnDQpCZXRyZWZmOiBSZTogRXJyb3Igd2l0aCBUZW1wbGF0ZXM6IENvdWxkIG5v
-dCBmaW5kIHRlbXBsYXRlcyBvbiBjbG9uaW5nIGJ1dCBvbiBjcmVhdGluZw0KDQpBbSAyOS4wNS4y
-MDE3IHVtIDEzOjIwIHNjaHJpZWIgTWF0aGlhcyBBcnR1czoNCj4gSGksDQo+IFRvZGF5IGkndmUg
-dHJpZWQgdG8gc2V0IHVwIGEgdGVtcGxhdGUgZGlyZWN0b3J5LiBJIGFkZGVkIGluIHRoZSBzeXN0
-ZW0gd2lkZSBnaXRjb25maWcgdGhlIGZvbGxvd2luZyBsaW5lczoNCj4gCQ0KPiAJW2luaXRdDQo+
-IAkJdGVtcGxhdGVkaXIgPSAiLy9PdXJTZXJ2ZXIvU29tZURpcmVjdG9yeS9HaXRUZW1wbGF0ZSIN
-Cj4gDQo+IFdoZXJlIC8vT3Vyc2VydmVyIGlzIGEgTmV0d29yayBQYXRoLg0KPiBXaXRoIHRoaXMg
-bGluZSBpIGNhbiBjcmVhdGUgYSBuZXcgUmVwb3NpdG9yeSBhbmQgdGhlIHRlbXBsYXRlIGdldHMg
-Y29waWVkLiBCdXQgd2hlbiBpIGNsb25lIGEgcmVwbyB0aGUgZm9sbG93aW5nIGVycm9yIHNob3dz
-IHVwIGFuZCB0aGUgdGVtcGxhdGUgZG9lc24ndCBnZXQgY29waWVkOg0KPiAJdGVtcGxhdGVzIG5v
-dCBmb3VuZCAvT3VyU2VydmVyL1NvbWVEaXJlY3RvcnkvR2l0VGVtcGxhdGUNCj4gDQo+IEkgUmVj
-b2duaXplZCB0aGF0IG9uZSBzbGFzaCB3YXMgbWlzc2luZy4gSGVuY2UgaSBhZGRlZCBvbmU6DQo+
-IAlbaW5pdF0NCj4gCQl0ZW1wbGF0ZWRpciA9ICIvLy9PdXJTZXJ2ZXIvU29tZURpcmVjdG9yeS9H
-aXRUZW1wbGF0ZSINCj4gDQo+IEZpbmUsIGNsb25pbmcgd29ya3MgYWZ0ZXIgdGhhdCwgYnV0IGNy
-ZWF0aW5nIGEgbmV3IHJlcG9zaXRvcnkgdGhlbiBzaG93cyB1cCBhIFdhcm5pbmc6DQo+IAl0ZW1w
-bGF0ZXMgbm90IGZvdW5kIC8vL091clNlcnZlci9Tb21lRGlyZWN0b3J5L0dpdFRlbXBsYXRlDQo+
-IA0KPiBJcyB0aGF0IGEga25vd24gYnVnIG9yIGlzIGl0IG15IEZhaWx1cmU/DQo+IA0KPiBJIHVz
-ZSBnaXQgMi4xMyBvbiB3aW5kb3dzIDcNCg0KSSBjYW5ub3QgcmVwcm9kdWNlLiBJJ20gb24gV2lu
-ZG93cyA4LjEsIGJ1dCBJIHdvdWxkbid0IGV4cGVjdCB0aGF0IHRvIG1ha2UgYSBkaWZmZXJlbmNl
-LiBBcmUgeW91IHVzaW5nIEN5Z3dpbidzIGdpdCBieSBhbnkgY2hhbmNlPw0KDQotLSBIYW5uZXMN
-Cg0KDQo=
+On Tue, May 30, 2017 at 9:12 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+> Due to limitations/bugs in the current implementation, some
+> configuration variables specified via 'git clone -c var=3Dval' (or 'git
+> -c var=3Dval clone') are ignored during the initial fetch and checkout.
+>
+> Let the users know which configuration variables are known to be
+> ignored ('remote.origin.mirror' and 'remote.origin.tagOpt') under the
+> documentation of 'git clone -c'.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+>  Documentation/git-clone.txt | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index ec41d3d69..4f1e7d4ba 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -186,6 +186,10 @@ objects from the source repository into a pack in th=
+e cloned repository.
+>         values are given for the same key, each value will be written to
+>         the config file. This makes it safe, for example, to add
+>         additional fetch refspecs to the origin remote.
+> +       Note that due to limitations of the current implementation some
+> +       configuration variables don't take effect during the initial
+> +       fetch and checkout.  Configuration variables known to not take
+> +       effect are: `remote.<name>.mirror` and `remote.<name>.tagOpt`.
+
+We should add to that: "Instead supply the --mirror and --no-tags
+options, respectively".
+
+>  --depth <depth>::
+>         Create a 'shallow' clone with a history truncated to the
+> --
+> 2.13.0.35.g14b6294b1
+>
