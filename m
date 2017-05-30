@@ -2,113 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A2272027C
-	for <e@80x24.org>; Tue, 30 May 2017 13:37:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 551C72027C
+	for <e@80x24.org>; Tue, 30 May 2017 13:40:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751148AbdE3NhX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 09:37:23 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35584 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750951AbdE3NhW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 09:37:22 -0400
-Received: by mail-pf0-f173.google.com with SMTP id n23so72712063pfb.2
-        for <git@vger.kernel.org>; Tue, 30 May 2017 06:37:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=V4pT/MDkq3a1ZlQGZ2YiRSuiY/X4ee5q5uWqSO5SANg=;
-        b=TspoAHcSr6TGqITqVl0NQPiZxbQNCHEqZuG3vcAtfpJG2+0GiwlQidb+aWJkhLIvJQ
-         OkO9y2Y2fLg+Gh41EDdIvd98phM+3KOfBD4+Xo+ZtxLR0ElAXQllG0MWcwb5cuY+zXBW
-         CoafcVzyDJZfYaLfeRzeRxtXVDo/3PBGPPFgMfqyEOpgy8HWNHRhAW5YbzNSiASwo6aY
-         S7zTATyWg1a/X/fZ8GRor9dhBhzbc5RETnwgSi4wjCWxcPQH/0imCy5fviw0KJYg7/Nw
-         j33s0iX8++xjH539wWexoBxIuEz9NBwIDWWPLrc+i6Gk00DIHejmakYDeqEnx76Wz3si
-         AVQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=V4pT/MDkq3a1ZlQGZ2YiRSuiY/X4ee5q5uWqSO5SANg=;
-        b=JJpqX8HGs4ezWOFsk3dTbr9SPq6+YsL6fHhJGpTFiixrNjWBShE4Zjpfs2ZcnZ7RJm
-         eXQmDlP3uw4sa3qM9h8ZG9MAHnSCIn46c8XXYQ/3YHxMfvUadSsfXb8vRkVg/6vZzJPs
-         MkcMGxZTqcmXQlhWoU+wb6eE2ZiljQkZLC7u5mAodSmvP1InKn/Zn8tK7NBLBQfPWS1n
-         d0dFvXGglRHRZioIz229osv/BWFVqJ+uITm5gvdTaAprKbMfxy6CZElUnkg4UTwep8YY
-         2TzkZ3PWDil48CnctYzU/nlAXoqg+fa1kvLq+1zeoeEqauhZt7CD4hj7r4KY1TgT4Tqd
-         6hYQ==
-X-Gm-Message-State: AODbwcCyk3IUaatUhuHnXdrNirL0gIcfedCMUb8ea3kIY875dKRKsWGp
-        zMTdwmqiGLi34h01N5Y=
-X-Received: by 10.99.1.207 with SMTP id 198mr25089616pgb.37.1496151441718;
-        Tue, 30 May 2017 06:37:21 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:f830:fc5f:a16b:f475])
-        by smtp.gmail.com with ESMTPSA id a78sm26172154pfk.122.2017.05.30.06.37.20
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 30 May 2017 06:37:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Laszlo Ersek <lersek@redhat.com>,
+        id S1751205AbdE3NkK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 09:40:10 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:52048 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751106AbdE3NkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 09:40:09 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout07 with smtp
+        id Sdg41v00A1keHif01dg6NB; Tue, 30 May 2017 14:40:06 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=LoG4C5gyAAAA:8 a=UI62F6zQfZVIbar_Ef8A:9
+ a=QEXdDO2ut3YA:10 a=Vr7qJMbYMNsA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
+ a=szc4L7tIoTp4SOWyBAQL:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 1/2] mingw: verify that paths are not mistaken for remote
+ nicknames
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: FORMAT_PATCH_NAME_MAX increase
-References: <99ac8ee7-67b5-5ae7-51cf-6be38de6217f@redhat.com>
-        <CACBZZX5U=U1bpiFuuxH2t8ZWnmQQAjWm1ji8XYq_6-SJPGL1sw@mail.gmail.com>
-        <c2453701-979b-ebc7-dcc3-483a27d4c157@redhat.com>
-        <85970ab4-e9c8-c6b6-11d3-faafd3ed0708@redhat.com>
-        <CACBZZX4-T50q_eVWwJuBzoC6ocuG+v14Tm8wfK8h7FB_cMQzdQ@mail.gmail.com>
-Date:   Tue, 30 May 2017 22:37:20 +0900
-In-Reply-To: <CACBZZX4-T50q_eVWwJuBzoC6ocuG+v14Tm8wfK8h7FB_cMQzdQ@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 30 May
- 2017 14:41:03
-        +0200")
-Message-ID: <xmqqfufmbh4f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+References: <CACsJy8CzgHc=qe5w=FGJJ=ZU0a+JiqBrjWHV7SH3rAPKmOOKoA@mail.gmail.com>
+ <20170526033510.1793-1-gitster@pobox.com>
+ <20170526033510.1793-14-gitster@pobox.com>
+ <17b3d445-0cc7-2000-dc67-11fb53c7040b@kdbg.org>
+ <CACBZZX5BgVbUFEwQjHqJVfHFUitTJRaCx-Lg+j7q54uErEpqcg@mail.gmail.com>
+ <34029b29-9f65-78c0-c2ed-649b179a79ac@kdbg.org>
+ <bc145b9d-96cc-325a-8df3-af87d23c8727@ramsayjones.plus.com>
+ <xmqqo9ubfby1.fsf@gitster.mtv.corp.google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <acfefc80-7176-c7a8-374c-fc82152ba5d5@ramsayjones.plus.com>
+Date:   Tue, 30 May 2017 14:40:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
+In-Reply-To: <xmqqo9ubfby1.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Just curious do you know about https://github.com/trast/tbdiff ? If
-> not it might have a high overlap with what you're doing.
 
-Yes, that is a very good suggestion.  You'd need to be able to
-actually apply the patches but the way I often do a review is very
-similar to (actually, I'd say it is identical workflow) Laszlo's,
-and it goes like this:
+On 30/05/17 01:03, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+>> See commit c7018be509 ("test: allow skipping the remainder", 18-05-2017)
+>> which is currently merged to the 'next' branch (merge 03b8a61e47 of the
+>> 'jc/skip-test-in-the-middle' branch).
+>>
+>> (see also http://testanything.org)
+>>
+>> If you look at http://testanything.org//tap-specification.html, it shows
+>> that you are allowed to annotate a plan of '1..0' with a SKIP directive
+>> to explain why no tests in a file were run. However, a plan with '1..n'
+>> (for any n > 0) must not have any annotation. (Back in 2012, when I wrote
+>> commit bf4b721932, I found much better documentation than the above!)
+>>
+>> So, after commit c7018be509, you can now use the 'skip_all' facility
+>> after having run some tests; it now converts that into an 'SKIP comment'
+>> just before the test plan, effectively skipping the remainder of the
+>> tests in the file. (since we are using a 'trailing plan', and have thus
+>> not declared how many tests we had intended to run, we can output an
+>> accurate plan).
+> 
+> Yes, but I consider that c7018be509 is an ugly workaround, not a
+> part of a properly designed framework.  Unless it is absolutely
+> necessary to run some tests before we may conditionally want to say
+> "skip_all/test_done", we should strive to add tests _after_ these
+> conditional skil_all/test_done is done.
 
-    $ git checkout topic ;# previous round
-    $ git checkout master... ;# check out the fork point of previous one
-    $ git am mbox ;# apply the updated one
-    $ git tbdiff ..@{-1} @{-1}..
+yes, I don't disagree with that (which is why I said that I would
+have split t5545 into two files). ;-)
 
-With the second step, the commit immediately before the previous
-round of patches were applied to is checked out as a detached HEAD,
-and then with the third step, the updated patches are applied.
-After these two steps, the history leading to HEAD is the latest
-patches, and the history leading to topic (which can be referred to
-as @{-1}, i.e. the branch we were previously on) is the previous
-round.
+> In this case, I do not see there is a strong reason why the new test
+> must come before the "setup" test.  Sure, it does not use UNCPATH so
+> the new test may be able to run even when the current path cannot be
+> spelled as UNC, but that is a natural fallout of (ab)using the test
+> script that was meant for UNC testing for something else, so I think
+> a proper way out would be either (1) to use a separate script, if
+> the new test wants to run whether UNC path can be determined,
 
-"git tbdiff" takes two ranges and compares these two series of
-commits.  The first one says "commits included in the branch we are
-previously on (i.e. topic), excluding the ones on the current HEAD",
-which means "the patches from the previous round", and the second
-one says "commits included in the current HEAD, excluding the ones
-on the previous branch (i.e. topic)", which means "the patches from
-this latest round".
+Yes, I had intended to suggest this (or an existing script, protected
+by the MINGW prerequisite), but forgot!
 
-After that, I may conclude
+>                                                              or (2)
+> just accept the fact that the new test will only be run when UNC
+> paths are tested.
 
-    $ git checkout -B @{-1}
+I prefer (1).
 
-to update the tip of 'topic' with the latest set of patches (the
-reason why I type @{-1} is because that can stay constant in the
-workflow, no matter what the actual topic branch is called).
+>                   Relying on the hack c7018be509 did is much less
+> appealing.
+
+ATB,
+Ramsay Jones
+
