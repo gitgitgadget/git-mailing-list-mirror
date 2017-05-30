@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80C492027C
-	for <e@80x24.org>; Tue, 30 May 2017 17:31:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 837962027C
+	for <e@80x24.org>; Tue, 30 May 2017 17:32:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751240AbdE3Rbw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 30 May 2017 13:31:52 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:35394 "EHLO
+        id S1751258AbdE3RcC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 30 May 2017 13:32:02 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:35491 "EHLO
         mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751224AbdE3Rbs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 30 May 2017 13:31:48 -0400
-Received: by mail-pf0-f169.google.com with SMTP id n23so78337303pfb.2
-        for <git@vger.kernel.org>; Tue, 30 May 2017 10:31:43 -0700 (PDT)
+        with ESMTP id S1751116AbdE3RcA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 30 May 2017 13:32:00 -0400
+Received: by mail-pf0-f169.google.com with SMTP id n23so78341521pfb.2
+        for <git@vger.kernel.org>; Tue, 30 May 2017 10:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gPOF8792pAodFZ89Hcyn7vZCI9fDT8d3Vp/YneyP9cc=;
-        b=DPdRKh1RhaSSJ50wGgLbPpD1RilJIZQp7bNxHYUULFQKAEHfxXHMTSFphWr0qtFkF5
-         m4YspQqNPTaHRcU4tAT6KktbyAR2la0BmfhekMjhmS57nYbroJI5nADGBanXu9NYPjNZ
-         d7IHoV4ES2EbnSBvg2duqnxvTvRye8OOBQPUraEeb2Oc10/2bLC3SLH8R1cHFE7rhXS+
-         +EdSM/r42lySYpYAmSABNS4HOcrqvHZMvUv4dsDFVhZuEmr09kbrr8PvBQDiwrR0V6AA
-         fIJkpIQ1iiMCkAbqgNI/jb+9dFurLhwaN8qOaLeUAo8RiarOf3FKuXDOfPSspWRv/mEH
-         mXJw==
+        bh=OwgIkmp1xmwg+gwZYP+6w+X4PxQmfZu1vbqlATnEupU=;
+        b=Yon77PSEGMD7k43EtiMgxKGtykKN/cMQmS5Dy4syJkUn6PkHLoLpJdUAeZpKAm4Ket
+         IukQduMWfI8P6mhWpszYs822BZhnRFXRNdKT7JqGD8YopnqLPQr9sHj54d6rJJaYmhEz
+         tYK4SPa86gfcvRrzzZIxNEnRCfmlxwQT2b4xDwEx8QWetkxFVco4XBt9VVX9SgaFHXxW
+         Mx9XA83PbUUKZRwujcKYsaXKJTF5oNVSwwJHHlJ01zA4V7DsHjouNuZHK4GPZ54AP/vB
+         Za3PcMMgi4zgilQD/QBoWna7XDW1MChXVU3EmweXsqp3xMbo2yDdUelA5SzLUk6v+/QR
+         HtiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gPOF8792pAodFZ89Hcyn7vZCI9fDT8d3Vp/YneyP9cc=;
-        b=gbxVpgx9DDAYt3CcJLuMOZ++TlJeHYxLjle1T8QFbGH4sXefAzwKfpj0x8jXh6Y0lc
-         yzDEP212ZfA2P9UugprGPKkx6+piW85haZTHjPGFSBgOt/CLjXL1rFXXsdm/5ufyBKhQ
-         6kalp3Vs75I1YAIt3CQVbxljbdIJM8QMFsxaZWxCrZxlSrKj3Ogiienpo4aazP7awVx/
-         XfXU5u+sEagFajpBlNAB4oCtwQgJcfP1LIMia+koub8QTQhD6WR8bY3p2Kqcgc+0Xf22
-         hNlVmDj8un3PKZP8HEvSqjbNvx1MGUb3y8XRRx+EeU+4RwNZfmd7Hh9s9WvXTeQSaBFx
-         9N7Q==
-X-Gm-Message-State: AODbwcBK+WRGfdWsMu3WFWJjymHDoHraErAWEA4xgbo7cNgUWIDLn1BD
-        tQZWXTDKVqkEppjZkJ4epw==
-X-Received: by 10.99.178.19 with SMTP id x19mr22160897pge.89.1496165502561;
-        Tue, 30 May 2017 10:31:42 -0700 (PDT)
+        bh=OwgIkmp1xmwg+gwZYP+6w+X4PxQmfZu1vbqlATnEupU=;
+        b=Py5aA7V4p3h13SFjVQ8sM/t4PnZVAckZaxZ1rMBO3kRirhho7jrm6CtbK9bvZ0DTJq
+         2rjsLcYgistema5Jh7c188/eDnbjz4HDZ5nPHzNl8x4l85YN3h+Wc4537R0A63PbB0XJ
+         69Ky/zfni7wTCSGhljXHq6mp46ukPuH/m1QNDifTSrBXzz1HxDiFGiVe0nhSUIe8xKy4
+         pXiwKED0NzohIE+cNgy2TkGGzvIl+67O+6XTw5FFH5w0h2iAUOfA9XbTYa/aQOdZ0orE
+         YiosAtfB+koOtdBLIvD/32JxGyR3/GtSstrv57/kBpUkl8FmN3UJNYytDlLg/SgSdriD
+         A2Ow==
+X-Gm-Message-State: AODbwcD2znqZujHDtUzGZ0ROkGkfd0X/RgWE4Dz+Ys/e0xnZwuG4ovgc
+        9PinEraXP2DCwFu3Dax3vw==
+X-Received: by 10.99.155.17 with SMTP id r17mr6103692pgd.109.1496165514314;
+        Tue, 30 May 2017 10:31:54 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id t19sm24940187pfg.31.2017.05.30.10.31.41
+        by smtp.gmail.com with ESMTPSA id t19sm24940187pfg.31.2017.05.30.10.31.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 30 May 2017 10:31:41 -0700 (PDT)
+        Tue, 30 May 2017 10:31:52 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, sandals@crustytoothpaste.net,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH 18/33] diff: convert diff_flush_patch_id to struct object_id
-Date:   Tue, 30 May 2017 10:30:54 -0700
-Message-Id: <20170530173109.54904-19-bmwill@google.com>
+Subject: [PATCH 25/33] notes-merge: convert verify_notes_filepair to struct object_id
+Date:   Tue, 30 May 2017 10:31:01 -0700
+Message-Id: <20170530173109.54904-26-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170530173109.54904-1-bmwill@google.com>
 References: <20170530173109.54904-1-bmwill@google.com>
@@ -62,83 +62,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- diff.c      | 12 ++++++------
- diff.h      |  2 +-
- patch-ids.c |  2 +-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ notes-merge.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index a8ceeb024..dd325e616 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4584,7 +4584,7 @@ static void patch_id_add_mode(git_SHA_CTX *ctx, unsigned mode)
+diff --git a/notes-merge.c b/notes-merge.c
+index 55dbb3659..962e9b1bc 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -22,21 +22,21 @@ void init_notes_merge_options(struct notes_merge_options *o)
+ 	o->verbosity = NOTES_MERGE_VERBOSITY_DEFAULT;
  }
  
- /* returns 0 upon success, and writes result into sha1 */
--static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1, int diff_header_only)
-+static int diff_get_patch_id(struct diff_options *options, struct object_id *oid, int diff_header_only)
+-static int path_to_sha1(const char *path, unsigned char *sha1)
++static int path_to_oid(const char *path, struct object_id *oid)
  {
- 	struct diff_queue_struct *q = &diff_queued_diff;
- 	int i;
-@@ -4656,9 +4656,9 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1,
- 		if (diff_filespec_is_binary(p->one) ||
- 		    diff_filespec_is_binary(p->two)) {
- 			git_SHA1_Update(&ctx, oid_to_hex(&p->one->oid),
--					40);
-+					GIT_SHA1_HEXSZ);
- 			git_SHA1_Update(&ctx, oid_to_hex(&p->two->oid),
--					40);
-+					GIT_SHA1_HEXSZ);
- 			continue;
- 		}
- 
-@@ -4671,15 +4671,15 @@ static int diff_get_patch_id(struct diff_options *options, unsigned char *sha1,
- 				     p->one->path);
+-	char hex_sha1[40];
++	char hex_oid[GIT_SHA1_HEXSZ];
+ 	int i = 0;
+-	while (*path && i < 40) {
++	while (*path && i < GIT_SHA1_HEXSZ) {
+ 		if (*path != '/')
+-			hex_sha1[i++] = *path;
++			hex_oid[i++] = *path;
+ 		path++;
  	}
- 
--	git_SHA1_Final(sha1, &ctx);
-+	git_SHA1_Final(oid->hash, &ctx);
- 	return 0;
+-	if (*path || i != 40)
++	if (*path || i != GIT_SHA1_HEXSZ)
+ 		return -1;
+-	return get_sha1_hex(hex_sha1, sha1);
++	return get_oid_hex(hex_oid, oid);
  }
  
--int diff_flush_patch_id(struct diff_options *options, unsigned char *sha1, int diff_header_only)
-+int diff_flush_patch_id(struct diff_options *options, struct object_id *oid, int diff_header_only)
+-static int verify_notes_filepair(struct diff_filepair *p, unsigned char *sha1)
++static int verify_notes_filepair(struct diff_filepair *p, struct object_id *oid)
  {
- 	struct diff_queue_struct *q = &diff_queued_diff;
- 	int i;
--	int result = diff_get_patch_id(options, sha1, diff_header_only);
-+	int result = diff_get_patch_id(options, oid, diff_header_only);
- 
- 	for (i = 0; i < q->nr; i++)
- 		diff_free_filepair(q->queue[i]);
-diff --git a/diff.h b/diff.h
-index fcf334bb6..150f1c5a1 100644
---- a/diff.h
-+++ b/diff.h
-@@ -354,7 +354,7 @@ extern int run_diff_files(struct rev_info *revs, unsigned int option);
- extern int run_diff_index(struct rev_info *revs, int cached);
- 
- extern int do_diff_cache(const struct object_id *, struct diff_options *);
--extern int diff_flush_patch_id(struct diff_options *, unsigned char *, int);
-+extern int diff_flush_patch_id(struct diff_options *, struct object_id *, int);
- 
- extern int diff_result_code(struct diff_options *, int);
- 
-diff --git a/patch-ids.c b/patch-ids.c
-index aab26cbbb..a70a291d8 100644
---- a/patch-ids.c
-+++ b/patch-ids.c
-@@ -22,7 +22,7 @@ int commit_patch_id(struct commit *commit, struct diff_options *options,
- 	else
- 		diff_root_tree_sha1(commit->object.oid.hash, "", options);
- 	diffcore_std(options);
--	return diff_flush_patch_id(options, oid->hash, diff_header_only);
-+	return diff_flush_patch_id(options, oid, diff_header_only);
+ 	switch (p->status) {
+ 	case DIFF_STATUS_MODIFIED:
+@@ -54,7 +54,7 @@ static int verify_notes_filepair(struct diff_filepair *p, unsigned char *sha1)
+ 		return -1;
+ 	}
+ 	assert(!strcmp(p->one->path, p->two->path));
+-	return path_to_sha1(p->one->path, sha1);
++	return path_to_oid(p->one->path, oid);
  }
  
- /*
+ static struct notes_merge_pair *find_notes_merge_pair_pos(
+@@ -140,7 +140,7 @@ static struct notes_merge_pair *diff_tree_remote(struct notes_merge_options *o,
+ 		int occupied;
+ 		struct object_id obj;
+ 
+-		if (verify_notes_filepair(p, obj.hash)) {
++		if (verify_notes_filepair(p, &obj)) {
+ 			trace_printf("\t\tCannot merge entry '%s' (%c): "
+ 			       "%.7s -> %.7s. Skipping!\n", p->one->path,
+ 			       p->status, oid_to_hex(&p->one->oid),
+@@ -201,7 +201,7 @@ static void diff_tree_local(struct notes_merge_options *o,
+ 		int match;
+ 		struct object_id obj;
+ 
+-		if (verify_notes_filepair(p, obj.hash)) {
++		if (verify_notes_filepair(p, &obj)) {
+ 			trace_printf("\t\tCannot merge entry '%s' (%c): "
+ 			       "%.7s -> %.7s. Skipping!\n", p->one->path,
+ 			       p->status, oid_to_hex(&p->one->oid),
 -- 
 2.13.0.219.gdb65acc882-goog
 
