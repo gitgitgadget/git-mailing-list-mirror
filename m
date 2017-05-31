@@ -2,125 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.3 required=3.0 tests=BAYES_00,DKIM_ADSP_ALL,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAFCE1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 19:08:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AB6B1FD09
+	for <e@80x24.org>; Wed, 31 May 2017 19:16:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751177AbdEaTIg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 15:08:36 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:33162 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751037AbdEaTIf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 15:08:35 -0400
-Received: by mail-pf0-f177.google.com with SMTP id e193so15440438pfh.0
-        for <git@vger.kernel.org>; Wed, 31 May 2017 12:08:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qGwDf+GtrMEBgUMxV7H/LCQN2RyApBvUyU7QAbOSQoM=;
-        b=J4e0fWdU5EIN7WXTflht03WCzkZIB9RlG+RWjrmGFMusJvPJYtxjTu4GJLNg+hpb7z
-         RyLuFxg9m/XJ0meLHOS1+QJsWBRbE3kZ+9vya7fTIyiiynDFi6zpNAsutgQfdm1uImsv
-         7LIJX4OLJRAuJncPJvUtscJfE9HWafxa42S9DbfMFaQ9Xc9GaFgW4SPXWWVGSEclqHn/
-         F2LsoznuJdY+3j4m9GiYBNkrq0X1nvB+BNgk8v3HrNQpQ0X37Vm7Jea9U8N0d28wTmfF
-         azCU8wwMds+4rO4Hh5DinVNuACgqH6pkqf4eyVZRJgWTGg8TiFlO3zjT5jkpiy/tksEm
-         16Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qGwDf+GtrMEBgUMxV7H/LCQN2RyApBvUyU7QAbOSQoM=;
-        b=W1JwQbT6Y87isrflKHHy6VSKKDsLjv521Pw7ArKaIa2buzHATbEnRVkjoc3c3iTpZ1
-         pV3zgXQMZjFz2zCOWmjQUcIKJKduchTdz/1gafz0+u2nBsCidtqElT7EkvbD0XhqWhys
-         UWfcNekng0eG1gJI+fhl4agjjrhRrg6w5ZFVTnZVvTc6H4WLHiRewsRN3gW4XlN2U+ev
-         QplXF0VnNiZc1jaCMaXvkTj+ZeM2JIYooXpbHFRKzQSSSnPIRrnoqCM8akLvdAohMEol
-         1o8awOYoQ2S082j/kFG6cQZBxoGw8XKHxGDZvqtzlOWZXEubDscopyvojkTvbfUm6NqF
-         pk5A==
-X-Gm-Message-State: AODbwcDgADZZF+eAKEKnRg3FOu4xLV/R6JXJC/0qkEpTxk5/KrhJrgDc
-        JMBu8GPXXfESnahCkFMY0iwFWqERIe6v
-X-Received: by 10.99.60.82 with SMTP id i18mr9982654pgn.183.1496257714536;
- Wed, 31 May 2017 12:08:34 -0700 (PDT)
+        id S1751135AbdEaTQa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 15:16:30 -0400
+Received: from ntbbs.santronics.com ([76.245.57.69]:58848 "EHLO
+        secure.winserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751128AbdEaTQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 15:16:29 -0400
+X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 May 2017 15:16:29 EDT
+DKIM-Signature: v=1; d=isdg.net; s=tms1; a=rsa-sha1;
+        c=simple/relaxed; t=1496257852; h=Received:Received:Received:
+        Received:Message-ID:Date:From:Organization:To:Subject:List-ID;
+        bh=p3a7A9y+f3XlAbeOosp9RcJdF04=; b=iR6rFSTA879fSe8jxmBbv37tEkffu
+        01X4ArXuMIhlFgTIFvoH2WBV60N26udt7+qwjneFnw/8MKZAGG7SGg+VPddZOz7E
+        0QngbVddPTPQEifSzAeZvedsfd2d992ydC+K9NmxBt/3uMooDfZtcpEXJkJh3mnD
+        xuviRUJ5TlHs9k=
+Received: by winserver.com (Wildcat! SMTP Router v7.0.454.5)
+          for git@vger.kernel.org; Wed, 31 May 2017 15:10:52 -0400
+Authentication-Results: dkim.winserver.com;
+         dkim=pass header.d=beta.winserver.com header.s=tms1 header.i=beta.winserver.com;
+         adsp=pass policy=all author.d=isdg.net asl.d=beta.winserver.com;
+Received: from beta.winserver.com ([76.245.57.74])
+          by winserver.com (Wildcat! SMTP v7.0.454.5) with ESMTP
+          id 616751487.1.1816; Wed, 31 May 2017 15:10:51 -0400
+DKIM-Signature: v=1; d=beta.winserver.com; s=tms1; a=rsa-sha256;
+        c=simple/relaxed; t=1496257692; h=Received:Received:Message-ID:
+        Date:From:Organization:To:Subject:List-ID; bh=NfpXtL9RYsRiPMFPRc
+        tgE6FYraUzia9FYOCcHtf4b+I=; b=vqPOOuI00wSU74u8fMsZoQBuQCvGi8QGeg
+        6umWkJiNqiexbuzwyjZlGpGhYuQc+KJyJH9AQadIr1unAwhFJJAKeDxWE6ZoCoQz
+        79iZ020Xk00gNZiAD1bVKDWn1ussSoSTn5QF+r5z3iT3fsjpVZNSBkyrl9Mp9tER
+        iDCcGe1QU=
+Received: by beta.winserver.com (Wildcat! SMTP Router v7.0.454.5)
+          for git@vger.kernel.org; Wed, 31 May 2017 15:08:12 -0400
+Received: from [192.168.1.68] ([99.121.5.8])
+          by beta.winserver.com (Wildcat! SMTP v7.0.454.5) with ESMTP
+          id 1159327439.9.500332; Wed, 31 May 2017 15:08:08 -0400
+Message-ID: <592F153A.7020403@isdg.net>
+Date:   Wed, 31 May 2017 15:10:50 -0400
+From:   Hector Santos <hsantos@isdg.net>
+Organization: Santronics Software, Inc.
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.8.1
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Wed, 31 May 2017 12:08:34 -0700 (PDT)
-In-Reply-To: <20170531150427.7820-3-kewillf@microsoft.com>
-References: <20170531150427.7820-1-kewillf@microsoft.com> <20170531150427.7820-3-kewillf@microsoft.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 31 May 2017 12:08:34 -0700
-Message-ID: <CAGZ79kYns3CWS5acxGRk67mqdfBvPC=hngnNyovrOkjRRwhRCA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] rebase: turn on progress option by default for format-patch
-To:     Kevin Willford <kcwillford@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Kevin Willford <kewillf@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Subject: Git Daemon on Windows fatal error.
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 31, 2017 at 8:04 AM, Kevin Willford <kcwillford@gmail.com> wrote:
-> This change passes the progress option of format-patch by
-> default and passes the -q --quiet option through to the
-> format-patch call so that it is respected as well.
+Hi, I am relatively new to GIT (coming from CVS and SVN) and I am 
+trying to setup "Git Daemon" on windows.
 
-This is not conflicting with Johannes rewrite of rebase in C?
-(rebase is a huge beast IIUC)
+I got it working for Local network communications:
 
-When passing the progress option by default to formatting patches,
-maybe we should use start_progress_delay in the previous patch instead
-to omit the progress for short lived patch formatting sessions?
-(say a delay of one second?)
+d:\local\wc5\testgit>git clone git://localhost/http clone10
+Cloning into 'clone10'...
+remote: Counting objects: 526, done.
+remote: Compressing objects: 100% (520/520), done.
+Receiving objects: 100% (526/526), 1.38 MiB | 0 bytes/s, done.
+remote: Total 526 (delta 81), reused 0 (delta 0)
+Resolving deltas: 100% (81/81), done.
 
-Thanks,
-Stefan
+but it fails over the wire when using the public host domain:
 
->
-> Signed-off-by: Kevin Willford <kewillf@microsoft.com>
-> ---
->  git-rebase--am.sh | 5 +++--
->  git-rebase.sh     | 2 ++
->  2 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-> index 375239341f..ab2be30abf 100644
-> --- a/git-rebase--am.sh
-> +++ b/git-rebase--am.sh
-> @@ -51,8 +51,9 @@ then
->  else
->         rm -f "$GIT_DIR/rebased-patches"
->
-> -       git format-patch -k --stdout --full-index --cherry-pick --right-only \
-> -               --src-prefix=a/ --dst-prefix=b/ --no-renames --no-cover-letter \
-> +       git format-patch $git_format_patch_opt -k --stdout --full-index \
-> +               --cherry-pick --right-only --src-prefix=a/ --dst-prefix=b/ \
-> +               --no-renames --no-cover-letter --progress \
->                 "$revisions" ${restrict_revision+^$restrict_revision} \
->                 >"$GIT_DIR/rebased-patches"
->         ret=$?
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index db1deed846..b72e319ac9 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -73,6 +73,7 @@ test "$(git config --bool rebase.stat)" = true && diffstat=t
->  autostash="$(git config --bool rebase.autostash || echo false)"
->  fork_point=auto
->  git_am_opt=
-> +git_format_patch_opt=
->  rebase_root=
->  force_rebase=
->  allow_rerere_autoupdate=
-> @@ -308,6 +309,7 @@ do
->         --quiet)
->                 GIT_QUIET=t
->                 git_am_opt="$git_am_opt -q"
-> +               git_format_patch_opt="$git_format_patch_opt -q"
->                 verbose=
->                 diffstat=
->                 ;;
-> --
-> 2.13.0.92.g73a4ce6a77
->
+d:\local\wc5\testgit>git clone git://public.example.dom/http clone11
+Cloning into 'clone11'...
+remote: Counting objects: 526, done.
+remote: Compressing objects: 100% (520/520), done.
+remote: Total 526 (delta 81), reused 0 (delta 0)
+fatal: read error: Invalid argument
+fatal: early EOF
+fatal: index-pack failed
+
+Sometimes its a different initial fatal error but generally the same.  
+Once or twice, a repeat MAY work, but often not.
+
+Short of digging into the git source code, I did as much research 
+online and tried the various config options suggestions, changing the 
+packet size, etc, to no avail.
+
+To me, this seems like a "Socket Half Close" problem.   If anyone is 
+aware of what appears to be a long time "known" problem, and have a 
+real solution, it would be greatly appreciated.   Otherwise, I am very 
+interesting in exploring the Half Close solution as I've seen similar 
+behavior in other internet hosting servers in the past.   A simple 
+closesocket() wrapper funciton did the trick:
+
+
+// HalfCloseSocket() performs a TCP Half Close by calling shutdown()
+// which signals the remote that no more data is going to be
+// sent (FIN signal). HalfCloseSocket() then goes into a
+// recv() loop to wait for the remote to acknowledge the close.
+// This acknowledgment comes as a recv() return value
+// of zero (less).
+
+BOOL HalfCloseSocket(SOCKET socket)
+{
+     if (shutdown(socket,SD_SENT) != 0) {
+         return FALSE;
+     }
+     int ret = 0;
+     int msecs = 10; // poor man sanity check
+     char buf[8*1024];
+     while ((ret = recv(socket, buf,sizeof(buf),0)) > 0) {
+         buf[0] = 0;
+         buf[1] = 0;
+         msecs--;
+         if (msecs == 0) break;
+     }
+     return closesocket(socket);
+}
+
+While I rather not get into the source, I am willing to explore the 
+effort if there is no other option.
+
+Thanks for any input you can provide
+
+Hector Santos
+Santronics Software, Inc.
+
+-- 
+HLS
+
+
+
