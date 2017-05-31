@@ -2,133 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9E31FD09
-	for <e@80x24.org>; Wed, 31 May 2017 18:59:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1481E1FD09
+	for <e@80x24.org>; Wed, 31 May 2017 19:03:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751172AbdEaS7o (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 14:59:44 -0400
-Received: from mail-it0-f50.google.com ([209.85.214.50]:35010 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751157AbdEaS7m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 14:59:42 -0400
-Received: by mail-it0-f50.google.com with SMTP id f72so18573079ite.0
-        for <git@vger.kernel.org>; Wed, 31 May 2017 11:59:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=uOHOHP85K/PNr7fjwLGKa/B1PNPB0xosxZQnxZxsB5Q=;
-        b=PZTfH6uOyYoS+V+60q54YIdVb6Od6v0KQ8fLUfHw5QthD4hWbEJS6zt4anL/aD8//3
-         LQBRlcq0HUK3cVwYl0snoxlg0IxFhSuW1xcfMqbmfRpli33t7TfLQUdBDOsqJ4FmXq5D
-         3f5/qsDb5slxiQwAlQIwLw67+jX+eUPgLpWSpq3++EtKCohNSL/hMgbuu/zP1lC5RW98
-         Sy4B4nZ0OmviCa/ZRZdklZF/B6lO230QenwwYcTebZIFwxsfMpaJAcG7CVP6s/hWAeFr
-         asZzd23oVH/fLwn1G0ctW0CoDFYWT17qRhP1F9Ev6eovnHuvQmjgU5yj00yATNC+GW0k
-         x7fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=uOHOHP85K/PNr7fjwLGKa/B1PNPB0xosxZQnxZxsB5Q=;
-        b=AjoQJdcKSgZJw+vNeVGpS+7hYQNKzSjuaUtnLB00FzV5CcpwY95GmEuImh2efberMA
-         +awgYErc73YIsBa4pjSS1Z8jsAea0iw1awrGAXaMBlbK7w7yKq/5/RnjZ8ogCUKgb0DG
-         rzFCTEHtbGghZEtDpEyAxOs7UbBCDfQvIMh6Rk5g26vphTPY4d77nQG5/uU2YxCUgx5R
-         Vxsebzkwxx4iUyRij2IeH8Y8US/JjEKAyNRATQDeY889k/zYnm3qZfm/EIDyZMNIELej
-         o4pGP45g6LZszV2wI9SsIs/jlpATO+4sl6Vt2IGIOrAAE1hL+TB0Nvma/RJtIsib/BbC
-         AdXw==
-X-Gm-Message-State: AODbwcDb274J95l0MDpQ+RkRhL2VePGnZv7Kt0GWBNY7YHER78b62if6
-        bzzD8WAlzgOC+aURv49RfDh3S+2Hlw==
-X-Received: by 10.36.138.131 with SMTP id v125mr8748990itd.66.1496257167006;
- Wed, 31 May 2017 11:59:27 -0700 (PDT)
+        id S1751080AbdEaTC5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 15:02:57 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:58021 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751011AbdEaTC5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 15:02:57 -0400
+Received: from [192.168.2.240] ([92.22.34.189])
+        by smtp.talktalk.net with SMTP
+        id G8tSdjy1vHGLwG8tSdGzEO; Wed, 31 May 2017 20:02:55 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1496257375; bh=MIMTypvEArvuDEgKx9AwaRUJW+MtTHMbBeVtXSjmxDI=;
+        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=iPcmkUefZYZWMtXxq13rtkMFMK6BWJm35+10gh0VCrOXrRco6X6Cfd2Piu5weFWr2
+         npbyiLtaJCcOoblQJ1T0lqjr+wBZ2PW4Ete2yrbIIxTMT7sCKWJlc3mFYHVhatZICC
+         MbdXDq+OUBa0AEyNfv107uyKaQY+bAXeqDmjifFc=
+X-Originating-IP: [92.22.34.189]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=vjpdqwq13QoU7KiiDtdC/A==:117
+ a=vjpdqwq13QoU7KiiDtdC/A==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
+ a=A1X0JdhQAAAA:8 a=J0bozyjmhRP38CFvKPIA:9 a=shKY6gTsdA-D4Ph0:21
+ a=1z6z2SDjsy-nUKZz:21 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+ a=Df3jFdWbhGDLdZNm0fyq:22
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/3] rebase: Add tests for console output
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170531104213.16944-1-phillip.wood@talktalk.net>
+ <20170531104213.16944-3-phillip.wood@talktalk.net>
+Message-ID: <39cd140a-4ba1-f3ee-d945-bf43199d4a82@talktalk.net>
+Date:   Wed, 31 May 2017 20:02:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Wed, 31 May 2017 11:59:06 -0700 (PDT)
-In-Reply-To: <xmqq1sr889lb.fsf@gitster.mtv.corp.google.com>
-References: <xmqq1sr889lb.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 31 May 2017 20:59:06 +0200
-Message-ID: <CACBZZX6YFKTLKxep2oW0_HrX+kNJ2PX5G4UCboB+4yosmLqr5g@mail.gmail.com>
-Subject: Re: What's cooking in git.git (May 2017, #08; Mon, 29)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20170531104213.16944-3-phillip.wood@talktalk.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfPIFMCn2ck8xE8ENCkN2/vLV9M+fjD6vTNNLY4lLvI9QEcwcJ8iRgHyvM+4b++SSWY4z58zTso1/I8sHNwEeSKdVUWLgbsvKO/otH1v8yP6W1t2GXDFq
+ gBPTd565b9vScUOgR+sIREHoSvZ9My6V3eeUJX+0OPlGUVAV+V6i6s/NizwpEsqI+qa0r/jVw5NT4uFV+gvqr3ISVwSJNYOY3DA9RQQBBklGjCAuBxOCSOhH
+ sd32YvLm10l6nGnuENtTzj9Y+mc0i3QpUh17Ot0MpG3DoR87X/1onsbV7Z+M7tj0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 29, 2017 at 8:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * ab/pcre-v2 (2017-05-26) 7 commits
->  - grep: add support for PCRE v2
->  - grep: un-break building with PCRE < 8.20
->  - grep: un-break building with PCRE < 8.32
->  - grep: add support for the PCRE v1 JIT API
->  - log: add -P as a synonym for --perl-regexp
->  - grep: skip pthreads overhead when using one thread
->  - grep: don't redundantly compile throwaway patterns under threading
->  (this branch uses ab/grep-preparatory-cleanup.)
->
->  Update "perl-compatible regular expression" support to enable JIT
->  and also allow linking with the newer PCRE v2 library.
->
->  Will merge to 'next'.
+On 31/05/17 11:42, Phillip Wood wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> Check the console output when using --autostash and the stash applies
+> cleanly is what we expect. To avoid this test depending on commit and
+> stash hashes it uses sed to replace them with XXX. The sed script also
+> replaces carriage returns in the output with '\r' to avoid embedded
+> '^M's in the expected output files. Unfortunately this means we still
+> end up with an embedded '^M' in the sed script which may not be
+> preserved when sending this. The last line of the sed script should be
+> +s/^M/\\r/g
 
-First a general question: When you say "will merge" in these E-Mails,
-that means "before the next what's cooking in ~7 days, right? I.e. if
-there's no issues in a given series does the pu->next->master cycle
-take 3wks?
+Thinking about this it might be better to create the sed script with 
+printf when running the test
 
-Anyway, the PCRE v1 set of JIT patches break builds on PCRE compiled
-with --disable-jit, which is apparently Johannes's Windows
-configuration.
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>   t/t3420-rebase-autostash.sh          | 10 +++++++++-
+>   t/t3420/expected-success-am          |  6 ++++++
+>   t/t3420/expected-success-interactive |  4 ++++
+>   t/t3420/expected-success-merge       | 30 ++++++++++++++++++++++++++++++
+>   t/t3420/remove-ids.sed               |  6 ++++++
+>   5 files changed, 55 insertions(+), 1 deletion(-)
+> 
+> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+> index ab8a63e8d6dc643b28eb0c74ba3f032b7532226f..886be63c6d13e1ac4197a1b185659fb3d7d7eb26 100755
+> --- a/t/t3420-rebase-autostash.sh
+> +++ b/t/t3420-rebase-autostash.sh
+> @@ -53,12 +53,20 @@ testrebase() {
+>   		git checkout -b rebased-feature-branch feature-branch &&
+>   		test_when_finished git branch -D rebased-feature-branch &&
+>   		echo dirty >>file3 &&
+> -		git rebase$type unrelated-onto-branch &&
+> +		git rebase$type unrelated-onto-branch >tmp 2>&1 &&
+>   		grep unrelated file4 &&
+>   		grep dirty file3 &&
+>   		git checkout feature-branch
+>   	'
+>   
+> +	test_expect_success "rebase$type --autostash: check output" '
+> +		suffix=${type#\ -} && suffix=${suffix:--am} &&
+> +		sed -f $TEST_DIRECTORY/t3420/remove-ids.sed tmp \
+> +			>actual-success$suffix &&
+> +		test_cmp $TEST_DIRECTORY/t3420/expected-success$suffix \
+> +			actual-success$suffix
+> +	'
+> +
+>   	test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
+>   		test_config rebase.autostash true &&
+>   		git reset --hard &&
+> diff --git a/t/t3420/expected-success-am b/t/t3420/expected-success-am
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..c18ded04f703ed2aa83d5e62589a908d0a44cf7e
+> --- /dev/null
+> +++ b/t/t3420/expected-success-am
+> @@ -0,0 +1,6 @@
+> +Created autostash: XXX
+> +HEAD is now at XXX third commit
+> +First, rewinding head to replay your work on top of it...
+> +Applying: second commit
+> +Applying: third commit
+> +Applied autostash.
+> diff --git a/t/t3420/expected-success-interactive b/t/t3420/expected-success-interactive
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..b31f71c95ddc9c18ce9956c1aadf53cedd966801
+> --- /dev/null
+> +++ b/t/t3420/expected-success-interactive
+> @@ -0,0 +1,4 @@
+> +Created autostash: XXX
+> +HEAD is now at XXX third commit
+> +Rebasing (1/2)\rRebasing (2/2)\rSuccessfully rebased and updated refs/heads/rebased-feature-branch.
+> +Applied autostash.
+> diff --git a/t/t3420/expected-success-merge b/t/t3420/expected-success-merge
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..66386f7cb5242a255d9cc64aad741e651ec7ec1e
+> --- /dev/null
+> +++ b/t/t3420/expected-success-merge
+> @@ -0,0 +1,30 @@
+> +Created autostash: XXX
+> +HEAD is now at XXX third commit
+> +First, rewinding head to replay your work on top of it...
+> +Merging unrelated-onto-branch with HEAD~1
+> +Merging:
+> +XXX unrelated commit
+> +XXX second commit
+> +found 1 common ancestor:
+> +XXX initial commit
+> +[detached HEAD XXX] second commit
+> + Author: A U Thor <author@example.com>
+> + Date: Thu Apr 7 15:14:13 2005 -0700
+> + 2 files changed, 2 insertions(+)
+> + create mode 100644 file1
+> + create mode 100644 file2
+> +Committed: 0001 second commit
+> +Merging unrelated-onto-branch with HEAD~0
+> +Merging:
+> +XXX second commit
+> +XXX third commit
+> +found 1 common ancestor:
+> +XXX second commit
+> +[detached HEAD XXX] third commit
+> + Author: A U Thor <author@example.com>
+> + Date: Thu Apr 7 15:15:13 2005 -0700
+> + 1 file changed, 1 insertion(+)
+> + create mode 100644 file3
+> +Committed: 0002 third commit
+> +All done.
+> +Applied autostash.
+> diff --git a/t/t3420/remove-ids.sed b/t/t3420/remove-ids.sed
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..9e9048b02bd04d287461543d85db0bb715b89f8c
+> --- /dev/null
+> +++ b/t/t3420/remove-ids.sed
+> @@ -0,0 +1,6 @@
+> +s/^\(Created autostash: \)[0-9a-f]\{6,\}$/\1XXX/
+> +s/^\(HEAD is now at \)[0-9a-f]\{6,\}\( .* commit\)$/\1XXX\2/
+> +s/^[0-9a-f]\{6,\}\( .* commit\)$/XXX\1/
+> +s/\(detached HEAD \)[0-9a-f]\{6,\}/\1XXX/
+> +s/\(could not apply \)[0-9a-f]\{6,\}/\1XXX/g
+> +s//\\r/g
+> 
 
-This on top fixes it:
-
-diff --git a/grep.h b/grep.h
-index 246f6695c1..6cb21a3544 100644
---- a/grep.h
-+++ b/grep.h
-@@ -3,7 +3,7 @@
- #include "color.h"
- #ifdef USE_LIBPCRE1
- #include <pcre.h>
--#ifdef PCRE_CONFIG_JIT
-+#ifdef SLJIT_CONFIG_AUTO
- #if PCRE_MAJOR >= 8 && PCRE_MINOR >= 32
- #define GIT_PCRE1_USE_JIT
- #endif
-
-But I'm waiting on the pcre-dev list to answer my "is this use of an
-internal macro really the least insane way to check for this, because
-there seems to be no other way?" question:
-https://lists.exim.org/lurker/message/20170531.184405.9d7b128f.en.html
-
-I'm also going to fix this up:
-
-diff --git a/grep.c b/grep.c
-index e4c1ead104..d0bf37858a 100644
---- a/grep.c
-+++ b/grep.c
-@@ -502,9 +502,7 @@ static void compile_pcre2_pattern(struct grep_pat
-*p, const struct grep_opt *opt
-        pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
-        if (p->pcre2_jit_on == 1) {
-                jitret = pcre2_jit_compile(p->pcre2_pattern,
-PCRE2_JIT_COMPLETE);
--               if (!jitret)
--                       p->pcre2_jit_on = 1;
--               else
-+               if (jitret)
-                        die("Couldn't JIT the PCRE2 pattern '%s', got
-'%d'\n", p->pattern, jitret);
-                p->pcre2_jit_stack = pcre2_jit_stack_create(1, 1024 *
-1024, NULL);
-                if (!p->pcre2_jit_stack)
-
-
-And a perf test in a commit message that makes no sense since I split
-up the PCRE v1 patch.
