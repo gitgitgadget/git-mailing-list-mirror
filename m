@@ -7,90 +7,128 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 097CF1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 18:47:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9E31FD09
+	for <e@80x24.org>; Wed, 31 May 2017 18:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751150AbdEaSrB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 14:47:01 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:33480 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751090AbdEaSq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 14:46:59 -0400
-Received: by mail-io0-f177.google.com with SMTP id p24so21588733ioi.0
-        for <git@vger.kernel.org>; Wed, 31 May 2017 11:46:59 -0700 (PDT)
+        id S1751172AbdEaS7o (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 14:59:44 -0400
+Received: from mail-it0-f50.google.com ([209.85.214.50]:35010 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751157AbdEaS7m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 14:59:42 -0400
+Received: by mail-it0-f50.google.com with SMTP id f72so18573079ite.0
+        for <git@vger.kernel.org>; Wed, 31 May 2017 11:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=cRAmClO6t2IAdIduI1TrZYr+t9A9ePaIEzQb8BHifZ0=;
-        b=a1tt4vijHJo45/pKYAdB2yB912kf/RikWVz4e0bj/PgCG02pd6Kp2bp7H+gS5bgueg
-         8E2mhWtMIpAZitSRv9vJuIZfCb9wVtHAHfQW7vrsvSYn9CR2jQS7CuSworiXTP6aQlWe
-         izxfYh0bjtJLVtyEZPGdGmqF6QvPfXRckt1Ny6/Xf6AbdTlmW9X9l6ooqQN0nHAE2BmF
-         rCXvTF402k8waYkcXbBzFsvZ7hxi/bkGnEsnKhkjy+3Y5f0luFSq38a184Ll2wOE6fzF
-         +NCwimNiERFc/zCUprDQcecKsXj6I9q6kZXlFPD0lrvWsw48Wm6MyFUwL/eqIF78nkLK
-         AzGQ==
+         :cc;
+        bh=uOHOHP85K/PNr7fjwLGKa/B1PNPB0xosxZQnxZxsB5Q=;
+        b=PZTfH6uOyYoS+V+60q54YIdVb6Od6v0KQ8fLUfHw5QthD4hWbEJS6zt4anL/aD8//3
+         LQBRlcq0HUK3cVwYl0snoxlg0IxFhSuW1xcfMqbmfRpli33t7TfLQUdBDOsqJ4FmXq5D
+         3f5/qsDb5slxiQwAlQIwLw67+jX+eUPgLpWSpq3++EtKCohNSL/hMgbuu/zP1lC5RW98
+         Sy4B4nZ0OmviCa/ZRZdklZF/B6lO230QenwwYcTebZIFwxsfMpaJAcG7CVP6s/hWAeFr
+         asZzd23oVH/fLwn1G0ctW0CoDFYWT17qRhP1F9Ev6eovnHuvQmjgU5yj00yATNC+GW0k
+         x7fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cRAmClO6t2IAdIduI1TrZYr+t9A9ePaIEzQb8BHifZ0=;
-        b=XklZh2HvFTqvvkZvE8yWJyDzFWd7UXX8Og9dyxoE+uYQVrLbdJulQTBX5rO7G+xnwo
-         PSBga2PaW9bpzmr0aRvyadBEFVEXdmzPBtQTZYgeSDPnnBOERptC+ip2TFczjURYIXy1
-         YwUzJGRdwuYaoYaxqgC43KFUC02i+RlR3xPf2qThoNAW1DDXZ4PfpSe8QHyYvhN77t0o
-         ft47s5ekOxk0MIjSsTuR8AnUdeaU8tKtgqtyRd8mGWkA3OsHdB0SPlUAoJkwnnAnAVQn
-         +UTFXG9sH08ZeFQD9xDNWDmVb3P5T6ONs8sW1k1aWRillzBmpjUBPgmwRpdwUFJwjh4n
-         qsfQ==
-X-Gm-Message-State: AODbwcA/5abZP2+4XQSR9wD+BZKKkBG45JeAdjedHkU7QM9a9b2Z3LLQ
-        tEEBmuPO5KFEgbU3c0wK9q3jtcMvIA==
-X-Received: by 10.107.178.12 with SMTP id b12mr22774627iof.50.1496256418967;
- Wed, 31 May 2017 11:46:58 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=uOHOHP85K/PNr7fjwLGKa/B1PNPB0xosxZQnxZxsB5Q=;
+        b=AjoQJdcKSgZJw+vNeVGpS+7hYQNKzSjuaUtnLB00FzV5CcpwY95GmEuImh2efberMA
+         +awgYErc73YIsBa4pjSS1Z8jsAea0iw1awrGAXaMBlbK7w7yKq/5/RnjZ8ogCUKgb0DG
+         rzFCTEHtbGghZEtDpEyAxOs7UbBCDfQvIMh6Rk5g26vphTPY4d77nQG5/uU2YxCUgx5R
+         Vxsebzkwxx4iUyRij2IeH8Y8US/JjEKAyNRATQDeY889k/zYnm3qZfm/EIDyZMNIELej
+         o4pGP45g6LZszV2wI9SsIs/jlpATO+4sl6Vt2IGIOrAAE1hL+TB0Nvma/RJtIsib/BbC
+         AdXw==
+X-Gm-Message-State: AODbwcDb274J95l0MDpQ+RkRhL2VePGnZv7Kt0GWBNY7YHER78b62if6
+        bzzD8WAlzgOC+aURv49RfDh3S+2Hlw==
+X-Received: by 10.36.138.131 with SMTP id v125mr8748990itd.66.1496257167006;
+ Wed, 31 May 2017 11:59:27 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Wed, 31 May 2017 11:46:38 -0700 (PDT)
-In-Reply-To: <CACBZZX6h1qEC5Drt0LzNLh=_ZXFTHjGCa=DDbhLUMtK9KjPjCg@mail.gmail.com>
-References: <cover.1493414945.git.johannes.schindelin@gmx.de>
- <20170526031508.24838-1-liambeguin@gmail.com> <6f0e176b-e638-c13c-6a6d-aa5b62297879@web.de>
- <alpine.DEB.2.21.1.1705291247000.3610@virtualbox> <CACBZZX4avOKJjWVSBSewNFMWyRj3FzHC2Onw3aWLf1F_MYi+Gg@mail.gmail.com>
- <alpine.DEB.2.21.1.1705301635440.3610@virtualbox> <CACBZZX6h1qEC5Drt0LzNLh=_ZXFTHjGCa=DDbhLUMtK9KjPjCg@mail.gmail.com>
+Received: by 10.107.8.220 with HTTP; Wed, 31 May 2017 11:59:06 -0700 (PDT)
+In-Reply-To: <xmqq1sr889lb.fsf@gitster.mtv.corp.google.com>
+References: <xmqq1sr889lb.fsf@gitster.mtv.corp.google.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 31 May 2017 20:46:38 +0200
-Message-ID: <CACBZZX5tyWY0k6m=7HcZJZanDmrzAQX+3mVDQx-jzqV_Wr_tMQ@mail.gmail.com>
-Subject: Re: [PATCH v4 00/10] The final building block for a faster rebase -i
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Liam Beguin <liambeguin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
+Date:   Wed, 31 May 2017 20:59:06 +0200
+Message-ID: <CACBZZX6YFKTLKxep2oW0_HrX+kNJ2PX5G4UCboB+4yosmLqr5g@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2017, #08; Mon, 29)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 30, 2017 at 10:22 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Tue, May 30, 2017 at 5:44 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->> pu does not build for me:
->>
->> 2017-05-30T11:38:50.0089681Z libgit.a(grep.o): In function `pcre1match':
->> 2017-05-30T11:38:50.0289250Z .../grep.c:411: undefined reference to `__i=
-mp_pcre_jit_exec'
->> 2017-05-30T11:38:50.0329160Z collect2.exe: error: ld returned 1 exit
->> status
+On Mon, May 29, 2017 at 8:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * ab/pcre-v2 (2017-05-26) 7 commits
+>  - grep: add support for PCRE v2
+>  - grep: un-break building with PCRE < 8.20
+>  - grep: un-break building with PCRE < 8.32
+>  - grep: add support for the PCRE v1 JIT API
+>  - log: add -P as a synonym for --perl-regexp
+>  - grep: skip pthreads overhead when using one thread
+>  - grep: don't redundantly compile throwaway patterns under threading
+>  (this branch uses ab/grep-preparatory-cleanup.)
 >
-> Ouch, looks like I've missed some spot in my pcre1 jit series. What's
-> the PCRE version you have? This is somehow doing the wrong thing with
-> this bit in grep.h:
+>  Update "perl-compatible regular expression" support to enable JIT
+>  and also allow linking with the newer PCRE v2 library.
 >
->     #include <pcre.h>
->     #ifdef PCRE_CONFIG_JIT
->     #if PCRE_MAJOR >=3D 8 && PCRE_MINOR >=3D 32
->     #define GIT_PCRE1_USE_JIT
->     [...]
+>  Will merge to 'next'.
 
-I've found what the problem is myself. I'll submit a new version of
-the series that fixes this.
+First a general question: When you say "will merge" in these E-Mails,
+that means "before the next what's cooking in ~7 days, right? I.e. if
+there's no issues in a given series does the pu->next->master cycle
+take 3wks?
+
+Anyway, the PCRE v1 set of JIT patches break builds on PCRE compiled
+with --disable-jit, which is apparently Johannes's Windows
+configuration.
+
+This on top fixes it:
+
+diff --git a/grep.h b/grep.h
+index 246f6695c1..6cb21a3544 100644
+--- a/grep.h
++++ b/grep.h
+@@ -3,7 +3,7 @@
+ #include "color.h"
+ #ifdef USE_LIBPCRE1
+ #include <pcre.h>
+-#ifdef PCRE_CONFIG_JIT
++#ifdef SLJIT_CONFIG_AUTO
+ #if PCRE_MAJOR >= 8 && PCRE_MINOR >= 32
+ #define GIT_PCRE1_USE_JIT
+ #endif
+
+But I'm waiting on the pcre-dev list to answer my "is this use of an
+internal macro really the least insane way to check for this, because
+there seems to be no other way?" question:
+https://lists.exim.org/lurker/message/20170531.184405.9d7b128f.en.html
+
+I'm also going to fix this up:
+
+diff --git a/grep.c b/grep.c
+index e4c1ead104..d0bf37858a 100644
+--- a/grep.c
++++ b/grep.c
+@@ -502,9 +502,7 @@ static void compile_pcre2_pattern(struct grep_pat
+*p, const struct grep_opt *opt
+        pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
+        if (p->pcre2_jit_on == 1) {
+                jitret = pcre2_jit_compile(p->pcre2_pattern,
+PCRE2_JIT_COMPLETE);
+-               if (!jitret)
+-                       p->pcre2_jit_on = 1;
+-               else
++               if (jitret)
+                        die("Couldn't JIT the PCRE2 pattern '%s', got
+'%d'\n", p->pattern, jitret);
+                p->pcre2_jit_stack = pcre2_jit_stack_create(1, 1024 *
+1024, NULL);
+                if (!p->pcre2_jit_stack)
+
+
+And a perf test in a commit message that makes no sense since I split
+up the PCRE v1 patch.
