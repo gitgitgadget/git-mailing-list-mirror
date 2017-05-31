@@ -2,142 +2,221 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6D731FD09
-	for <e@80x24.org>; Wed, 31 May 2017 14:24:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E44731FD09
+	for <e@80x24.org>; Wed, 31 May 2017 14:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751170AbdEaOYM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 10:24:12 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:34787 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751130AbdEaOYL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 10:24:11 -0400
-Received: by mail-io0-f178.google.com with SMTP id k91so16923305ioi.1
-        for <git@vger.kernel.org>; Wed, 31 May 2017 07:24:11 -0700 (PDT)
+        id S1751058AbdEaOui (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 10:50:38 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:34760 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751032AbdEaOuh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 10:50:37 -0400
+Received: by mail-qk0-f177.google.com with SMTP id d14so13596658qkb.1
+        for <git@vger.kernel.org>; Wed, 31 May 2017 07:50:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=oam6Fp8GDVe6i6plmE00dGytvjwlksnbFytMjjnhMxA=;
-        b=T+921vNEhuBOKvDd2R52f623aNA5+z5IoGg3THrFjuazIJCxDjbjQ8a3oJ5ue9VKS3
-         Bgyhue/5g22OpQRWJqX0+uJ8sZZElvixeKnM086520dBBkOyZ6abUu3XnoFgvO2gC86P
-         jxWBtqURQpYXmwKFcf65Fvqu3w5hGdHQc7TsBMpRZrbL+w5XgRLL64gglkNStnHpsjD/
-         AFRq6XUetErUWFHy58x2qwg9gnvd2/jFKv3rLhmBFT235B7Q15Ovk0Q1bv4llGwuurG2
-         dSS0/WQ+bpY4ShPh0j9gqg0CZiPKUIPNWrmbmF/9pH0F/ZnUUhhsVIR+c6fCW4h/DwSk
-         UYrw==
+         :cc;
+        bh=kLw+nospQeon3QGvev7Cp9L8+pXKefUAtog/SsDzC4s=;
+        b=PDXdgOzc257gpGX3g+IW2ZPonIk6amGDfqwSAj8mkVhPLjkfKKnDx0sRe17MY52eYT
+         +xD1h74uoNwBlxXxXuQHi9BT9tD5Vd8CPffsvxTnboZT7BF8xkSeWtX+aPHn6ps4mLSd
+         nMgpRYCFM0W5frMqssiX3gv90EKnaodYQJBZY1WkSHMUKkedSFrnhFueOZl9PmkXOwqI
+         knqvtaYf5/5w9pzYOoZmFC4HRarg+leggy+ryqyze1vQhKv2jqbCvV0IYpB4BlPpR1hl
+         WxuDyakAvC5YA0V5BlgPoA76Vi2mS0T6Darw/seteBZ2jxsZaLh49YcnKkNuhcx2Mt9d
+         c2bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oam6Fp8GDVe6i6plmE00dGytvjwlksnbFytMjjnhMxA=;
-        b=cppENntEps4jiujIzMfv7aZ636B/xzBwrcDH1qqv5N5fSjEhLYHls5MR7WYtZNRiXB
-         eLPt1skp+4HkQqMkLWoU2Wa+E0CUe/jcXyJPH7YMCP8a7eQ3YMLAL4HC0y3w5OelWCOT
-         e7wFvL15gStX8nCrkyf135OW/JVOMaqND7AUL7yD48/aUn/L4T7b6t2ebex/owCW9QTX
-         LWi0r7er2xnZcpKHsXokb7GWfFQMAhZT3uk55Nkjrjd3Aq+Ch+UtZelaE1p9rmpqHwP9
-         45f1VdJeMYmr4RxNrFUrY0SX2V31c7iZc7kKaoAAVA1bfQpIyaDgtlVxiaHqG8FNy2WN
-         ZO2w==
-X-Gm-Message-State: AODbwcCHvQYizmozi1E8iV+9LDKwZgmQGjrqLIe40oplkDRNRWrt3SPg
-        gTCBOQ995GmncuH3rpRwDWZVy1nMVw==
-X-Received: by 10.107.138.21 with SMTP id m21mr22305472iod.80.1496240650439;
- Wed, 31 May 2017 07:24:10 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=kLw+nospQeon3QGvev7Cp9L8+pXKefUAtog/SsDzC4s=;
+        b=gkOjKIEr3BHwDt3mRy2jB3MV8lQzt3akhNbnLYG+WGu7rSC4Ua7WQ2YzLW7Gr61WEY
+         2BShw8E2Wztfg+H2HI/u1cEVu6/RPxMs8jJA0THM22NDo3PZJqVGYIB1Cx4XCJjeFLfH
+         y0/xwIWANeWxjsSak6tGTsZ2Jpu8kRK4np8BUffKoHqTMT0oAfpYsHKazbfgo18qNTDB
+         swwdt1hutpJsm428OxGuubLz7f1+ZxHWJlP4qGuGKyPPLPF8WrTivqc9cfjaQUByv+sL
+         LmTmpHPEPxRFaUcseI0oDoWoPrs9Dyvn4Fp35MmeZyLz4gYndW/LiTP/vhF2+PSOhMgs
+         yxgA==
+X-Gm-Message-State: AODbwcAFTNl+mfRVeztr27rwsgH/MrpBGe6uJFNTKc3dRA3GODfwlIuL
+        C9fVc5HujkbIZZNQDxL0O1Ecuutm2g==
+X-Received: by 10.55.175.199 with SMTP id y190mr27243588qke.155.1496242236204;
+ Wed, 31 May 2017 07:50:36 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Wed, 31 May 2017 07:23:49 -0700 (PDT)
-In-Reply-To: <20170531045051.ctoo7sv3f66xurdf@sigill.intra.peff.net>
-References: <CAPZ477MCsBsfbqKzp69MT_brwz-0aes6twJofQrhizUBV7ZoeA@mail.gmail.com>
- <1495230186.19473.7.camel@kaarsemaker.net> <1495230934.19473.10.camel@booking.com>
- <20170520070757.jekykxagzze3t2wy@sigill.intra.peff.net> <CAPZ477PoSXqahxaQVpO+m==vng==o4vQahrg_WA8Oeh7wmoW0w@mail.gmail.com>
- <20170531045051.ctoo7sv3f66xurdf@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 31 May 2017 16:23:49 +0200
-Message-ID: <CACBZZX6LQRW=78R-rkeUKmDCRUmN52SjkShSjDC5AgV5o7T6iQ@mail.gmail.com>
-Subject: Re: persistent-https, url insteadof, and `git submodule`
-To:     Jeff King <peff@peff.net>
-Cc:     Elliott Cable <me@ell.io>,
-        Dennis Kaarsemaker <dennis.kaarsemaker@booking.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
+Received: by 10.140.86.48 with HTTP; Wed, 31 May 2017 07:50:15 -0700 (PDT)
+In-Reply-To: <20170530181051.GA81679@aiede.mtv.corp.google.com>
+References: <CAE5=+KX57KM+6n9NpePw9KYPXFy7UH-WRgSwaJDnvRofYFXm7Q@mail.gmail.com>
+ <20170530181051.GA81679@aiede.mtv.corp.google.com>
+From:   John Shahid <jvshahid@gmail.com>
+Date:   Wed, 31 May 2017 10:50:15 -0400
+Message-ID: <CAE5=+KXPzY0QX+T26oUAHcV8HUYOCTrpuYN_Tb5cXxF71twmZQ@mail.gmail.com>
+Subject: Re: git push recurse.submodules behavior changed in 2.13
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 31, 2017 at 6:50 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, May 26, 2017 at 11:22:37AM -0500, Elliott Cable wrote:
->
->> Hi! Thanks for the responses (I hope reply-all isn't bad mailing-list
->> etiquette? Feel free to yell at with a direct reply!). For whatever it's
->> worth, as a random user, here's my thoughts:
->
-> No, reply-all is the preferred method on this list.
->
->> > The other approach is to declare that a url rewrite resets the
->> > protocol-from-user flag to 1. IOW, since the "persistent-https" protoc=
-ol
->> > comes from our local config, it's not dangerous and we should behave a=
-s
->> > if the user themselves gave it to us. That makes Elliott's case work o=
-ut
->> > of the box.
->>
->> Well, now that I'm aware of security concerns, `GIT_PROTOCOL_FROM_USER`
->> and `GIT_ALLOW_PROTOCOL`, and so on, I wouldn't *at all* expect
->> `insteadOf` to disable that behaviour. Instead, one of two things seems
->> like a more ideal solution:
->>
->> 1. Most simply, better documentation: mention `GIT_PROTOCOL_FROM_USER`
->>    explicitly in the documentation of/near `insteadOf`, most
->>    particularly in the README for `contrib/persistent-https`.
->>
->> 2. Possibly, special-case =E2=80=9Chigher-security=E2=80=9D porcelain (l=
-ike
->>    `git-submodule`, as described in 33cfccbbf3) to ignore `insteadOf`
->>    rewrite-rules without additional, special configuration. This way,
->>    `git-submodule` works for ignorant users (like me) out of the box,
->>    just as it previously did, and there's no possible security
->>    compramise.
->
-> After my other email, I was all set to write a patch to set
-> "from_user=3D1" when we rewrite a URL. But I think it actually is a bit
-> risky, because we don't know which parts of the URL are
-> security-sensitive versus which parts were rewritten. A modification of
-> a tainted string doesn't necessarily untaint it (but sometimes it does,
-> as in your case).
->
-> We could actually have a flag as part of the rewrite config, like:
->
->   [url "persistent-https"]
->   insteadOf =3D "https"
->   untaint =3D true
->
-> but I don't think that really buys anything. If you know about the
-> problem, you could just as easily do:
->
->   [url "persistent-https"]
->   insteadOf =3D "https"
->   [protocol "persistent-https"]
->   allow =3D always
->
-> It really is an issue of the user knowing about the problem (and how to
-> solve it), and I don't think we can get around that securely. So better
-> documentation probably is the right solution.
->
-> I'll see if I can cook something up.
+Hi Jonathan. Thanks a lot for the detailed and interesting response. I
+included my comments/replies inline. tl;dr;
 
-I was going to say: A way to have our cake & eat it too here would be
-to just support *.insteadOfRegex, i.e.
-"url.persistent-https://.insteadOfRegex=3D"^https://".
+1. I love the idea of having tools treat the repo as a unit.
+2. I think propagating the refspec when no refspec is passed on the
+CLI is very surprising action that should be corrected
+3. I propose more changes to the git tools to support the unity view of the repo
 
-But in this case, even if we can just do un-anchored string
-replacement, isn't a way around this just to do
-"url.persistent-https://.insteadOf=3Dhttps://" & untaint & document that
-you should do that?
+On Tue, May 30, 2017 at 2:10 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi John,
+>
+> John Shahid wrote:
+>
+>> It looks like the git push recurse-submodules behavior has changed.
+>> Currently with 2.13 you cannot run "git push
+>> --recurse-submodules=on-demand" if the parent repo is on a different
+>> branch than the sub repos, e.g. parent repo is on "develop" and
+>> sub-repo on "master". I created a test that can be found here [1].
+>>
+>> A bisect shows that the change to propagate refspec [2] to the
+>> submodules is the culprit. imho this is an undesired change in
+>> behavior. I looked at the code but couldn't see an easy way to fix
+>> this issue without breaking the feature mentioned above. The only
+>> option I can think of is to control the refspec propagation behavior
+>> using a flag, e.g. "--propagate-refspecs" or add another
+>> recurse-submodules option, e.g. "--recurse-submodules=propagate"
+>
+> Thanks for reporting. The old behavior of "git push
+> --recurse-submodules" was a little loose (it would run "git push" in
+> the submodule and rely on defaults to determine the behavior) and when
+> propagating refspecs we considered taking the opportunity to tighten
+> that by propagating the default refspec when you run "git push
+> --recurse-submodules" without a refspec.
+>
+> We didn't make that change. If starting over, it might be a natural
+> thing to do, but we didn't want to break existing users. So
+>
+> git push --recurse-submodules=on-demand
+>
+> should continue to work as before. *puzzled*
+>
+> [...]
+>> We have a parent repo on a branch called "develop" and a submodule on
+>> a branch called "master". Prior to git version 2.13 if we had an
+>> unpushed commit in the submodule and ran "git push origin develop
+>> --recurse-submodules=on-demand" git would happily push the develop
+>> branch of the parent repo and the master branch of the submodule,
+> [...]
+>> pushing to ref refs/heads/develop:refs/heads/develop
+>> pushging to remote origin
+>> fatal: src refspec 'refs/heads/develop' must name a ref
+>> fatal: process for submodule 'sub' failed
+>> fatal: The remote end hung up unexpectedly
+>
+> Aha, you are passing a refspec!
 
-Although that would potentially leave people who have existing
-protocol rewrites without :// open to rewrites they didn't intend for
-submodules...
+Yes, we are used to passing a refspec but we will be happy not to if
+that preserves the old behavior. In fact, the test case I linked to
+earlier does not pass a refspec. I wrote the test that way because I
+initially misunderstood the commit message and thought that not
+passing a refspec preserves the old behavior. Long story short, I'm
+happy with whatever option we have to maintain our current workflow.
+
+>
+> Can you say more about how this change affects you? Would you be able
+> to push without a refspec, or do you e.g. have scripting that was
+> relying on the existing loose behavior?
+
+as i said before, pushing without a refspec would work for us. I'm
+also talking to the team to see if we can switch the branch names to
+be consistent, i.e. use either "master" or "develop" both in the
+parent repo and sub repos.
+
+>
+> To put this in more context: part of the ideal that
+> --recurse-submodules options are trying to achieve is to allow
+> thinking of a repository as a single unit, including submodules, most
+> of the time. To this end, "git clone --recurse-submodules" clones a
+> repository including its submodules, "git checkout
+> --recurse-submodules" checks out submodules as part of a checkout
+> operation, avoiding a separate "git submodule update --init" operation,
+> "git fetch --recurse-submodules" fetches upstream changes for both the
+> parent repository and submodules, and so on.
+>
+> Unfortunately "git checkout --recurse-submodules" was missing a piece,
+> impacting this workflow. If I run
+>
+> git checkout --recurse-submodules -b develop
+>
+> then today this creates a "develop" branch in the superproject but not
+> within submodules. This hurts the illusion of the project being a single
+> unit and makes the meaning of operations like
+>
+> git push --recurse-submodules develop:master
+>
+> unclear.
+>
+> Ideas for next steps:
+>
+> 1. If "git checkout --recurse-submodules -b develop" does the right
+> thing, then this situation is harder to get in in the first place.
+> The series at [3] is meant to do that.
+>
+> 2. The error message shown above is very unclear. It leaks
+> implementation details and doesn't give the user a clear hint
+> about what to do to resolve it. Would some message like the
+> following have helped?
+>
+> $ git push --recurse-submodules origin develop
+> fatal: branch "develop" does not exist in submodule "sub"
+> hint: use "git -C sub branch develop <sha1>" to create such a branch
+> hint: or push without a branch name to push the current branch
+>
+> 3. Outside of the output from any particular command, we are missing
+> an equivalent of "man gitworkflows" to describe how the
+> --recurse-submodules options are meant to work. The series at [4]
+> aims to start addressing that.
+
+I would also add to that list, "git pull --rebase
+-recurse-submodules", "git merge --recurse-submodules", etc. Otherwise
+"git checkout --recurse-submodules develop" won't make much sense,
+since you'll have to go to each submodules and make sure the local
+branch is up to date.
+
+I like the idea of treating the entire repo as a single unit. In fact
+the new feature (to propagate refspec) is very useful to me. For
+example, when working on feature branches across the entire repo. That
+said, i think "git push --recurse-submodules=on-demand" should do the
+least surprising action and push the current branch, where "current"
+is defined wrt the repo being pushed (and "push.default" of course).
+Taking the refspec from the parent repo and forcing it on the
+submodules feels weird to me.
+
+>
+> Given all the above, this looks like a real and serious bug but I
+> think to find a different way from --recurse-submodules=propagate to
+> fix it. The idea, especially with [5], is for submodules to work
+> intuitively without requiring special options. This can require more
+> work in the short term getting the default behavior to work well with
+> a variety of use cases but I think it is time well spent.
+
+>
+> Thoughts?
+>
+> Thanks and hope that helps,
+> Jonathan
+
+Yes, that definitely helped. This track of work makes more sense now.
+Thanks again for the detailed response.
+
+JS
+
+>
+>> [1] https://gist.github.com/jvshahid/b778702cc3d825c6887d2707e866a9c8
+>> [2] https://github.com/git/git/commit/06bf4ad1db92c32af38e16d9b7f928edbd647780
+> [3] http://public-inbox.org/git/20170501180058.8063-1-sbeller@google.com/
+> [4] http://public-inbox.org/git/20170209020855.23486-1-sbeller@google.com/
+> [5] http://public-inbox.org/git/20170526191017.19155-1-sbeller@google.com/
