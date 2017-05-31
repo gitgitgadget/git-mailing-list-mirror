@@ -6,59 +6,75 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF9DE1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 21:13:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A1C21FD09
+	for <e@80x24.org>; Wed, 31 May 2017 21:22:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751106AbdEaVNE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 17:13:04 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60785 "EHLO cloud.peff.net"
+        id S1751053AbdEaVW1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 17:22:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60796 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751019AbdEaVNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 17:13:04 -0400
-Received: (qmail 14801 invoked by uid 109); 31 May 2017 21:06:22 -0000
+        id S1750977AbdEaVW0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 17:22:26 -0400
+Received: (qmail 15909 invoked by uid 109); 31 May 2017 21:22:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 21:06:22 +0000
-Received: (qmail 8621 invoked by uid 111); 31 May 2017 21:07:00 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 21:22:25 +0000
+Received: (qmail 8762 invoked by uid 111); 31 May 2017 21:23:03 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 17:07:00 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 May 2017 17:06:21 -0400
-Date:   Wed, 31 May 2017 17:06:21 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 17:23:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 May 2017 17:22:24 -0400
+Date:   Wed, 31 May 2017 17:22:24 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc:     Elliott Cable <me@ell.io>,
+        Dennis Kaarsemaker <dennis.kaarsemaker@booking.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Zero King <l2dy@macports.org>
-Subject: Re: [PATCH 6.5?/8] version: move --build-options to a test helper
-Message-ID: <20170531210621.64pv2dxmtuhg4mzh@sigill.intra.peff.net>
-References: <20170530051742.3j3yn3ipfmyrrteu@sigill.intra.peff.net>
- <20170530204553.25968-1-avarab@gmail.com>
- <20170530210530.o5gbz2k24wxrfner@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1705311726110.3610@virtualbox>
- <20170531153123.atl45b3kbfmqhnta@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1705311744170.3610@virtualbox>
- <CACBZZX4NkCgXZaz2+d6SN2ZL_zoh_i3fdwLZdinPNki+hU5ZOg@mail.gmail.com>
+        Brandon Williams <bmwill@google.com>
+Subject: Re: persistent-https, url insteadof, and `git submodule`
+Message-ID: <20170531212224.bhn36sa4g5ns54aj@sigill.intra.peff.net>
+References: <CAPZ477MCsBsfbqKzp69MT_brwz-0aes6twJofQrhizUBV7ZoeA@mail.gmail.com>
+ <1495230186.19473.7.camel@kaarsemaker.net>
+ <1495230934.19473.10.camel@booking.com>
+ <20170520070757.jekykxagzze3t2wy@sigill.intra.peff.net>
+ <CAPZ477PoSXqahxaQVpO+m==vng==o4vQahrg_WA8Oeh7wmoW0w@mail.gmail.com>
+ <20170531045051.ctoo7sv3f66xurdf@sigill.intra.peff.net>
+ <CACBZZX6LQRW=78R-rkeUKmDCRUmN52SjkShSjDC5AgV5o7T6iQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACBZZX4NkCgXZaz2+d6SN2ZL_zoh_i3fdwLZdinPNki+hU5ZOg@mail.gmail.com>
+In-Reply-To: <CACBZZX6LQRW=78R-rkeUKmDCRUmN52SjkShSjDC5AgV5o7T6iQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 31, 2017 at 07:51:20PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Wed, May 31, 2017 at 04:23:49PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> Thanks both. It makes sense to discard this patch.
+> > It really is an issue of the user knowing about the problem (and how to
+> > solve it), and I don't think we can get around that securely. So better
+> > documentation probably is the right solution.
+> >
+> > I'll see if I can cook something up.
 > 
-> I wasn't sure whether anyone really cared about this, and thought a
-> patch was a better starting point of discussion.
+> I was going to say: A way to have our cake & eat it too here would be
+> to just support *.insteadOfRegex, i.e.
+> "url.persistent-https://.insteadOfRegex="^https://".
+> 
+> But in this case, even if we can just do un-anchored string
+> replacement, isn't a way around this just to do
+> "url.persistent-https://.insteadOf=https://" & untaint & document that
+> you should do that?
 
-I will never complain about somebody starting a discussion with a patch
-as long as they don't mind if it gets shot down. :)
+I think we already do the second form, and that's what Elliott ran into.
+The problem is that it is not clear if "persistent-https" is safe to use
+for submodules. _We_ know that it is because we know what that remote
+does, but Git doesn't know that. You would not necessarily want:
 
-Thanks for raising the point. I do think it was worth thinking about.
+  [url "ext::ssh-wrapper "]
+  insteadOf  = "ssh://"
+
+to kick in for a submodule. That's a fairly insane thing to be doing,
+but the point is that we don't know if the rewritten protocol is ready
+to handle "tainted" URLs that come from an untrusted submodule file.
 
 -Peff
