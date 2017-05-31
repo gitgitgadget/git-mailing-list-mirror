@@ -2,158 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD85D1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 20:58:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9C841FD09
+	for <e@80x24.org>; Wed, 31 May 2017 21:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751168AbdEaU6U (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 16:58:20 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35798 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751125AbdEaU6S (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 16:58:18 -0400
-Received: by mail-pf0-f181.google.com with SMTP id n23so17650437pfb.2
-        for <git@vger.kernel.org>; Wed, 31 May 2017 13:58:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=CeXRehVFpVsjplfjkWEPVEm15YU/yZ67+czMbVQJvio=;
-        b=kQQfTWkRHJdneVoSHjBrNM31ir+1dN17tX7EiqjhqaCeBV3uih7Z5XVJIf52Oml0ce
-         OSnCFFaqz9S1EJONSWOdTrJszEupwIKorMWPea+dbL8/88TdoVQPgXz2HOfggfl/hiOc
-         vru3BdOQbNGf1TTKaYHB11QQptrCRx+7F5+AdpiQ3ZS8bGjDjR8Kg0xZUOzhI7VLMu2K
-         aD26gZGqJK2KlInZ7AsvHt6Kja/P3e8T/D7rDLXVZ1c4Qj7bOfMc7QqpC2ljevlPE7TG
-         JiGjxzQ89+AbvsaNj2Qvb3fqsNkozlmfg+NQ1Im77Sq+d7al3JLKPyOC4SAAUwsl/1bc
-         I4Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=CeXRehVFpVsjplfjkWEPVEm15YU/yZ67+czMbVQJvio=;
-        b=X0aSXV5YKA+jrKd6LN6PFom028hFOx6RtTstL9q65aSh3DyzQCZRAGvYoNgomw9hn9
-         2VJGYw5QwKSJlV6L9usI9gZwILRmD28HUVm8zLZEs61MNicdcm8Sij+miK6zDJ1vf3Dv
-         DA5mqtW4VfOr/jc2/JT33AJ+rVYorPRyp9IbSaAi0+mDghX+YQi7bU0CQ4o1MimunlVf
-         kK7OB3yPF/pIFrY9m7kg9cO8cv8kuA/M/tmAGA0Of7RAWG4PnZUuzjbvZokLtlSVtvTl
-         u4vk3GdwtYD315UKQj2IY26Js0My71By43Hma6mlnOATLjkZ3pTduGpX2lIuhURnHUOf
-         tNzg==
-X-Gm-Message-State: AODbwcCEqcjRXLZBC+jH6mhdT+ps2YAxoHoz2eoA86ad7PQtwRgYlz+8
-        6lcO42NpvPp/CG5OIIbunKLenqq5W6fC
-X-Received: by 10.101.76.201 with SMTP id n9mr184856pgt.40.1496264297239; Wed,
- 31 May 2017 13:58:17 -0700 (PDT)
+        id S1751126AbdEaVEv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 17:04:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60772 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751041AbdEaVEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 17:04:51 -0400
+Received: (qmail 14660 invoked by uid 109); 31 May 2017 21:04:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 21:04:48 +0000
+Received: (qmail 8602 invoked by uid 111); 31 May 2017 21:05:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 17:05:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 May 2017 17:04:48 -0400
+Date:   Wed, 31 May 2017 17:04:48 -0400
+From:   Jeff King <peff@peff.net>
+To:     Irving Rabin <irving@edmodo.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Coloring
+Message-ID: <20170531210448.6kolid5umzyasxnc@sigill.intra.peff.net>
+References: <CAD1ypiWOcKaLJJzZC=gw75EDFnw_1ZqC94B5p9i722T-sijN1Q@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Wed, 31 May 2017 13:58:16 -0700 (PDT)
-In-Reply-To: <CA+izobteEUSisKXNr=k5BcN9hVV4nyqYPWuRLAgV-rg9chH4_g@mail.gmail.com>
-References: <CALKRkrxHNao6NY+-_UmznHdq29yVJJynu8Xx5M__YfK9UkdOAw@mail.gmail.com>
- <CA+izobvwRCwGEtpCbey=gFbCh9sHBb5xB1i1LpMG0JCUy0O2mQ@mail.gmail.com>
- <3d02b958-5f72-9676-bce9-afca962c07df@kdbg.org> <CA+izobteEUSisKXNr=k5BcN9hVV4nyqYPWuRLAgV-rg9chH4_g@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 31 May 2017 13:58:16 -0700
-Message-ID: <CAGZ79kaVomdMaDw9xBphDnqaEwzaZB7M+rsBMErWfpnyeXhucg@mail.gmail.com>
-Subject: Re: [Bug] git branch -v has problems with carriage returns
-To:     Atousa Duprat <atousa.p@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Animi Vulpis <animi.vulpis@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAD1ypiWOcKaLJJzZC=gw75EDFnw_1ZqC94B5p9i722T-sijN1Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 30, 2017 at 10:32 PM, Atousa Duprat <atousa.p@gmail.com> wrote:
-> Here is my first attempt at fixing the issue.
+On Wed, May 31, 2017 at 11:33:31AM -0700, Irving Rabin wrote:
 
-Cool you're looking into this. :)
+> Specifically, if the field is supposed to be white, it doesn't mean it
+> should be literally 0xFFFFFF. It should be the color that I have
+> configured as White color for my console emulator.
+> 
+> I like light-screen terminals, and I configure my ANSI colors in the
+> way that they are clearly visible on the background and clearly
+> distinct between themselves. In my terminal settings background is
+> light-yellow, Black is black, Yellow is brown, Red is dark red,
+> Magenta is purple and White is dark gray. I set it once and I can use
+> it everywhere - all Unix commands work correctly, I can edit
+> highlighted source code in Vim, and all my color settings are
+> respected.
 
->
-> There are two problems in ref-filter.c:
->
-> First, copy_subject() has been modified to turn '\n' into a space and
-> every other ascii control character to be ignored.
->
-> Second, find_subpos() doesn't realize that a line that only contains a
-> '\r\n' is a blank line =E2=80=93 at least when using crlf convention.
-> I have changed things so that a sequence of either '\n' or "\r\n"
-> separate the subject from the body of the commit message.
-> I am not looking at the crlf setting because it doesn't seem like a
-> useful distinction =E2=80=93 when one would we ever care for \r\n not to =
-be a
-> blank line?  But it could be done...
->
-> Both fixes are minimal, but it feels like they are a issues with the
-> specific encoding.  Does git mandate ascii or utf-8 commit messages?
-> If not, there may be a larger issue here with encodings and line-end
-> conventions at the very least in ref-filter.c
-> Guidance would be appreciated for how to deal with this issue...
->
-> Patch attached.
->
+Git outputs ANSI color codes, which are interpreted by your terminal.
+You _can_ configure Git to send 24-bit color codes if your terminal
+supports it, but by default it uses the traditional set of limited color
+and attribute codes.
 
-Please read Documentation/SubmittingPatches
-(tl;dr:
-(a) please sign your patch, read https://developercertificate.org/
-(b) if possible please send patches inline instead of attached)
+What does running the following snippet in your shell look like?
 
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 3a640448f..bc573f481 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -836,11 +836,15 @@ static const char *copy_email(const char *buf)
->  static char *copy_subject(const char *buf, unsigned long len)
->  {
->          char *r =3D xmemdupz(buf, len);
-> -        int i;
-> +        int i, j;
->
-> -        for (i =3D 0; i < len; i++)
-> +        for (i =3D 0, j =3D 0; i < len; i++, j++)
->                  if (r[i] =3D=3D '\n')
-> -                        r[i] =3D ' ';
-> +                        r[j] =3D ' ';
-> +                else if (r[i] < 32)
-> +                    j--; // skip ascii control characters that are not '=
-\n'
+-- >8 --
 
-/*
- * Our comment style uses the other way,
- * as it is compatible with more compilers, still.
- */
+while read name code; do
+	printf '\033[%sm%s\033[m\n' "$code" "$name"
+done <<-\EOF
+normal
+bold 1
+red 31
+green 32
+yellow 33
+blue 34
+magenta 35
+cyan 36
+bold-red 1;31
+bold-green 1;32
+bold-yellow 1;33
+bold-blue 1;34
+bold-magenta 1;35
+bold-cyan 1;36
+EOF
 
-This seems to solve a different problem than the carriage return
-discussed? So it could go into a separate patch.
+-- 8< --
 
+If any of the colors are not what you expect, is there a pattern? E.g.,
+I wouldn't be surprised if "bold" shows up as bright white. In many
+modern terminal emulators, the bold variants need to be configured
+separately from the non-bold ones, and default to lighter variants of
+their non-bold counterparts. The solution there would be to check your
+terminal emulator config.
 
-> +                else r[j] =3D r[i];
-> +        r[j]=3D0;
->
->          return r;
->  }
-> @@ -956,9 +960,12 @@ static void find_subpos(const char *buf, unsigned lo=
-ng sz,
->                          eol++;
->                  buf =3D eol;
->          }
-> +
+If it does all look as you'd expect, try adding "| less -R" to the end of
+the "done <<-\EOF" line. Most of Git's output goes through that pager
+(though I _think_ it's mostly just passing through the ANSI codes, so it
+wouldn't have any effect).
 
-stray new line?
-
->          /* skip any empty lines */
->          while (*buf =3D=3D '\n')
->                  buf++;
-> +        while (*buf =3D=3D '\r' && *(buf+1) =3D=3D '\n')
-> +                buf +=3D 2;
-
-This first skips LF empty lines and then skips CRLF empty
-lines. What if they are mixed? I'd think if we extend the
-empty line detection we'd want to robust to such as well,
-so maybe
-
-    while (*buf =3D=3D '\r' || *buf =3D=3D '\n')
-        buf++;
-
-Maybe this is a bit too greedy?
+-Peff
