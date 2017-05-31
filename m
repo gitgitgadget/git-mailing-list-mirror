@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95A5E1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 21:44:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 443741FD09
+	for <e@80x24.org>; Wed, 31 May 2017 21:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751186AbdEaVou (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 17:44:50 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:33411 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751029AbdEaVop (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 17:44:45 -0400
-Received: by mail-pf0-f180.google.com with SMTP id e193so18618068pfh.0
-        for <git@vger.kernel.org>; Wed, 31 May 2017 14:44:45 -0700 (PDT)
+        id S1751205AbdEaVo4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 17:44:56 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:35952 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751004AbdEaVoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 17:44:54 -0400
+Received: by mail-pf0-f171.google.com with SMTP id m17so18549893pfg.3
+        for <git@vger.kernel.org>; Wed, 31 May 2017 14:44:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rpL9keHeye2gXI/3BxxWlGA/mFlNcybysBYpSZvIm0Q=;
-        b=pK9/tqOCLxZEWJ0UtSPJYyEvYbAWm/xB4MyMQpSbB57TVv9GgPg42c1N6nWYsarLY0
-         lHJQ0WUyfnr09pTx2xAVDNllxbHFkiufeBHcIs0+1sVlvCEMNHSfoO3czMEA2HWIjcdm
-         TuPGKLJDLcYRtAqEAlKZOXu2/E3aHLV1A8XlFBXJQjWvqANkNGbxhhQxrYCjBhws9QRA
-         lNPk7/Fjtd5Jfj64WLG9jhDQHh5j0+IFtUr/7p9kxMJ+vpgg4ozBuJz0yraD5B17kWlK
-         EGaRf397p1pB1QEIfiE3qKTsW8WBMG9C9egxPCQg4TAR08nzHdYCI5DFtUvgPlGz1KL4
-         mPVA==
+        bh=iJ2Eykn1ewOk56qa2amxq5WGBZBv9G+Aa1wBxM1T3TE=;
+        b=h4VjvT0OwbwfpxFYCfCAoTSIBq1ytaLS3kR0ysiRYr5nSaXXKpMrmNA4hQqWBGFGnG
+         wR5AU9O0jt0ubW/aBJ3BGYs8wHp13aFQI/7fom5hNhGx4DUcFixl2VRB14dETN98GmZh
+         ODBl2R28b2Vsr0bUX+RAQOX/uW9oTY/zEPgn1kBAEPX4m35bVesqfCD9QCxwn3WFZwJI
+         aaiES3mNH3K+YlkK7uz7d3uhGxTTTckmfPaatM9AQHPy55C8rKbppYeIiEo076p3rytx
+         S/deWep223iTXsUd3eSBT3SZZYQWAWPTqwRJRd13xewnY+5TNPIwqZRj49qFtGTm+yzO
+         nfLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=rpL9keHeye2gXI/3BxxWlGA/mFlNcybysBYpSZvIm0Q=;
-        b=dRiYjuBgAS/M/0ehKdXhSYSNoRox0mhE3S/JRUDXFz6kKo0MStWIZRC/F9CQbzdJ9Z
-         gwmvzzh4Uq5Jv6VaFUw31pdyAcNdgJURi7AedtQWGIXD06zMES5Er57maG1Bb/NHbnoa
-         id0qSU0y5tibetBqwrgcsrmpSRPuAI/rd8KK82oarLi8LexdBG6nBpcBRwKuAiRikqEw
-         VuYodpldi0o7hgQRBCX372FKmPUKzyPweMW23cj9kUhEzQJfrvOG6Ruy05C2MUH4/0+v
-         OlwGKgyuvddCAoqjOKxuGJfyWOj6ucsd+HcDlJ1tBeJj8kXTikAVnuS5o0S+2fVAinUP
-         cnLQ==
-X-Gm-Message-State: AODbwcAhL9taqL2YY31gJiOlHRFX9P0PPmn2ExcbbbptT7w1xIOtZK7K
-        VLiukoSCWwVZGLfM
-X-Received: by 10.84.174.193 with SMTP id r59mr44293486plb.34.1496267084596;
-        Wed, 31 May 2017 14:44:44 -0700 (PDT)
+        bh=iJ2Eykn1ewOk56qa2amxq5WGBZBv9G+Aa1wBxM1T3TE=;
+        b=LEJLq5zFk2/DBgrHMcIsMemPN3vM9TO2NQ8+t+tsEXc6RWjWKx0j1OoFj4Mq+hcFYQ
+         fil7dBETDqyG7T2TiNpIFS+4u7VQxhSmtFI8d5GVRDH/V7+NUcb4wtqiep+0hJEidu4c
+         IRXSDKnzsip4fRgfPdwSfBnfURL9CkFYI2O3KHVwd2dqv+DRKiPTTc6FkOQ9ShmYagjj
+         6vuBAB1qmVktePNlzcN89kUIdQVwSeJCP2NZK2MfrJqNsU4PtIkmIZUrYjNC/QR1hfVZ
+         3pQUMFnmZVyEedqYdOSa5q68Y18BuS4QL6I7DGVAeOdoIfPIjHfaP45jaxvQVuKKwTsb
+         jPog==
+X-Gm-Message-State: AODbwcAAHPoamh0eoI1POZv5mYNdGfXhwt7nWkgAHubo8i82L/vEDf8A
+        T+zK6VjqD7juIJpdl05TNQ==
+X-Received: by 10.98.220.201 with SMTP id c70mr33436566pfl.230.1496267092928;
+        Wed, 31 May 2017 14:44:52 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.42
+        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 31 May 2017 14:44:43 -0700 (PDT)
+        Wed, 31 May 2017 14:44:51 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 08/31] environment: store worktree in the_repository
-Date:   Wed, 31 May 2017 14:43:54 -0700
-Message-Id: <20170531214417.38857-9-bmwill@google.com>
+Subject: [PATCH 13/31] repo: add repo_read_gitmodules
+Date:   Wed, 31 May 2017 14:43:59 -0700
+Message-Id: <20170531214417.38857-14-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170531214417.38857-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -65,91 +65,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Migrate 'work_tree' to be stored in 'the_repository'.
+Teach the repo object to be able to populate the submodule_cache by
+reading the repository's gitmodules file.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- environment.c | 9 ++++-----
- repo.c        | 7 +++++++
- repo.h        | 2 ++
- 3 files changed, 13 insertions(+), 5 deletions(-)
+ repo.c | 14 ++++++++++++++
+ repo.h |  1 +
+ 2 files changed, 15 insertions(+)
 
-diff --git a/environment.c b/environment.c
-index a0519f4f3..2722ebb9f 100644
---- a/environment.c
-+++ b/environment.c
-@@ -96,7 +96,6 @@ int ignore_untracked_cache_config;
- 
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
- char *git_work_tree_cfg;
--static char *work_tree;
- 
- static const char *super_prefix;
- 
-@@ -220,19 +219,19 @@ void set_git_work_tree(const char *new_work_tree)
- {
- 	if (git_work_tree_initialized) {
- 		new_work_tree = real_path(new_work_tree);
--		if (strcmp(new_work_tree, work_tree))
-+		if (strcmp(new_work_tree, the_repository.worktree))
- 			die("internal error: work tree has already been set\n"
- 			    "Current worktree: %s\nNew worktree: %s",
--			    work_tree, new_work_tree);
-+			    the_repository.worktree, new_work_tree);
- 		return;
- 	}
- 	git_work_tree_initialized = 1;
--	work_tree = real_pathdup(new_work_tree, 1);
-+	repo_set_worktree(&the_repository, new_work_tree);
- }
- 
- const char *get_git_work_tree(void)
- {
--	return work_tree;
-+	return the_repository.worktree;
- }
- 
- char *get_object_directory(void)
 diff --git a/repo.c b/repo.c
-index f7c3617a9..789ffdd78 100644
+index 13b7d244f..6f7b2015f 100644
 --- a/repo.c
 +++ b/repo.c
-@@ -84,6 +84,11 @@ void repo_set_gitdir(struct repo *repo, const char *path)
- 	repo_setup_env(repo);
+@@ -116,6 +116,20 @@ void repo_read_index(struct repo *repo)
+ 		die(_("failure reading index"));
  }
  
-+void repo_set_worktree(struct repo *repo, const char *path)
++static int gitmodules_cb(const char *var, const char *value, void *data)
 +{
-+	repo->worktree = real_pathdup(path, 1);
++	struct repo *repo = data;
++	return submodule_config_option(repo, var, value);
++}
++
++void repo_read_gitmodules(struct repo *repo)
++{
++	char *gitmodules_path = xstrfmt("%s/.gitmodules", repo->worktree);
++
++	git_config_from_file(gitmodules_cb, gitmodules_path, repo);
++	free(gitmodules_path);
 +}
 +
  int repo_init(struct repo *repo, const char *gitdir)
  {
  	int error = 0;
-@@ -121,4 +126,6 @@ int repo_init(struct repo *repo, const char *gitdir)
- void repo_clear(struct repo *repo)
- {
- 	repo_clear_env(repo);
-+	free(repo->worktree);
-+	repo->worktree = NULL;
- }
 diff --git a/repo.h b/repo.h
-index 453049e67..95d021049 100644
+index ebce2a408..ad0184eaa 100644
 --- a/repo.h
 +++ b/repo.h
-@@ -9,6 +9,7 @@ struct repo {
- 	char *index_file;
- 	char *graft_file;
- 	char *namespace;
-+	char *worktree;
- 
- 	/* Configurations */
- 	unsigned ignore_env:1;
-@@ -19,6 +20,7 @@ struct repo {
- extern struct repo the_repository;
- 
- extern void repo_set_gitdir(struct repo *repo, const char *path);
-+extern void repo_set_worktree(struct repo *repo, const char *path);
+@@ -37,6 +37,7 @@ extern void repo_set_gitdir(struct repo *repo, const char *path);
+ extern void repo_set_worktree(struct repo *repo, const char *path);
+ extern void repo_read_config(struct repo *repo);
+ extern void repo_read_index(struct repo *repo);
++extern void repo_read_gitmodules(struct repo *repo);
  extern int repo_init(struct repo *repo, const char *path);
  extern void repo_clear(struct repo *repo);
  
