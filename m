@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 961641FD09
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9E401FD09
 	for <e@80x24.org>; Wed, 31 May 2017 21:46:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751313AbdEaVqI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 17:46:08 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35184 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751141AbdEaVot (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 17:44:49 -0400
-Received: by mail-pf0-f173.google.com with SMTP id n23so18560795pfb.2
-        for <git@vger.kernel.org>; Wed, 31 May 2017 14:44:49 -0700 (PDT)
+        id S1751162AbdEaVos (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 17:44:48 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:34219 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751141AbdEaVon (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 17:44:43 -0400
+Received: by mail-pf0-f182.google.com with SMTP id 9so18577114pfj.1
+        for <git@vger.kernel.org>; Wed, 31 May 2017 14:44:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Begk0szVfsIK0MNleiufllaCD+/oPEPI5QF8Mpo7rp0=;
-        b=GJJGOSBIRt5ofO90CdcOxPIXtRpSfxQljPaRBr5j7AtBpDh1d2p4tIbpA7a+z3W6Aw
-         rhMomTF8tgLVIlvZ59eJUvQCebpKfCkAfGgyR4RSna0zfY684gQCoZ9wSiRLFyOu0Fek
-         2YB+lbRP4vK5U8VwdEizUF/Xj3x2dxvJiILh63nyvswfzH2lExMpHVYKC5QGTUXfek1+
-         p2nPdM/hCjJem4/xkBwizjpgXtRQ0KP4/iSxokZgNvcfLbvFu3NlHtoz0qlphQjOxjMZ
-         uSHg8a3eCFJKqdi8RC8iqebhglINisnxvNfz46+ITMyK4UqHixURs8kJB4NfRxpHhTaG
-         dGJQ==
+        bh=peC3ImFReYOqbW6oObtcGdI/PL9hdsJmVj+9l5thF50=;
+        b=eCiaF3mBq9aPOWUQT4LnV3Ib/qyhLlAKZ+HJQhCa363/wX5Ea+6NVd1oKb7cMD97sF
+         zLD/DWZ/EKTL6+Ixp9Fu3hKs46MDdY6LLzO9mCfyLm5e4nc9okL4PBdl/RV38HkqsYzX
+         +pLYpmEiR156UH6pbPu3Q9cRNMiQtPDnJsRSZkKVWRlMcVJmr1Y85rOPOSiHuzYOmgOf
+         09a2kAlB+zKLaKxB87j+FoXEHTTHaHnjXJLzT4fokmURddo5Z4kELvKcv61TOsToYTiP
+         xIHvHDeh5GBYmZ67y1m5h4fDCAT3XBJDdUmLil3LuaOw748nFLs/sce/Zc9+80e5/sa2
+         bvPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Begk0szVfsIK0MNleiufllaCD+/oPEPI5QF8Mpo7rp0=;
-        b=cYGx9o7m810kd4KwSzptBklUb1IFMUKZcxC4QrbdtmCwluSvg58uT2GRlT4LFll0Se
-         NAFTnEcBKLWwmq0PbaGk6CEaUQwu1Ipx93aP96RVJ+4/KN9ZRhK4CrkSWrBQrflVnoUd
-         HC8d6e7Kg05siHej6IC9/BweY0GPFIbqyYovb628XXYXsP8hJLXtl39p6MObrC629ZPm
-         gY1TQuk9LRdkJtyHZiIH1MQVMvgpV0rPO2wLV/62kloiNWKZHgtGei4qlYDlCRD9svgw
-         5i7Fzi/DJjGAmlGrRfEHRbrGOwMn3yr7FnMY2n7DVK2c+qsThdwaSe6HwGmJhJtuaHKz
-         2rlw==
-X-Gm-Message-State: AODbwcA4SOyUNheOy3m0zOW/n/aoLlqco/YOlOFLyDKtVWDoUZDCHFDv
-        jQu7UjWt2ZQVq53PoNU9sg==
-X-Received: by 10.84.217.21 with SMTP id o21mr4833485pli.50.1496267088080;
-        Wed, 31 May 2017 14:44:48 -0700 (PDT)
+        bh=peC3ImFReYOqbW6oObtcGdI/PL9hdsJmVj+9l5thF50=;
+        b=ktRezP+Fj2z5mOU+/2EH9cPdJXYslFj5nonNMHT+SiZhWHVmjUWVjNCTO8JoAMDC+2
+         yRFYW3sSHc6hannToynLVm0LJ5gWzitkz2OGS7kN6YOpzNUjwXlpVyGaWZUS/6mUngN3
+         IogbqP9BoOVsPOUuurKbjcJ95MaM1RC4EZafgReZMEQsu9xy6dKtVb41Oucj5Oo57kyo
+         VhxN/7k/9EojPJhxU3mFKXiU/Ru9OlBw47VYUbgkdSPB8TUENTEH0jSGDlbqqpOh/KF6
+         jA0+zHeRqnIPKO9SsBdBwGos0euJD/PS739u3zvY4Hhtytp32g6wj6Iqxd+DLUNtsM98
+         utlg==
+X-Gm-Message-State: AODbwcC86rWGLVzbOxBIwM8fJS4ZnLE6eSYQb0WJVSfbAMkKUEda3uPm
+        gdANQmcRdzjghmC5Z7IHnQ==
+X-Received: by 10.99.169.26 with SMTP id u26mr35652628pge.177.1496267077582;
+        Wed, 31 May 2017 14:44:37 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.46
+        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 31 May 2017 14:44:46 -0700 (PDT)
+        Wed, 31 May 2017 14:44:36 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -53,9 +53,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 10/31] config: migrate the_configset to the_repository
-Date:   Wed, 31 May 2017 14:43:56 -0700
-Message-Id: <20170531214417.38857-11-bmwill@google.com>
+Subject: [PATCH 04/31] setup: don't perform lazy initialization of repository state
+Date:   Wed, 31 May 2017 14:43:50 -0700
+Message-Id: <20170531214417.38857-5-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170531214417.38857-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -64,384 +64,137 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Migrate the default config to be stored within 'the_repository'.
+Under some circumstances (bogus GIT_DIR value or the discovered gitdir
+is '.git') 'setup_git_directory()' won't initialize key repository
+state.  This leads to inconsistent state after running the setup code.
+To account for this inconsistent state, lazy initialization is done once
+a caller asks for the repository's gitdir or some other piece of
+repository state.  This is confusing and can be error prone.
+
+Instead let's tighten the expected outcome of 'setup_git_directory()'
+and ensure that it initializes repository state in all cases that would
+have been handled by lazy initialization.
+
+This also lets us drop the requirement to have 'have_git_dir()' check if
+the environment variable GIT_DIR was set as that will be handled by the
+end of the setup code.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- config.c | 185 ++++++++++++++++++++++++++++++++++++++-------------------------
- config.h |   1 +
- repo.c   |  21 ++++++++
- repo.h   |  11 ++++
- 4 files changed, 146 insertions(+), 72 deletions(-)
+ cache.h       |  2 ++
+ environment.c | 17 ++++++++---------
+ setup.c       | 14 ++++++++++++++
+ 3 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/config.c b/config.c
-index ff09b27b8..930333e89 100644
---- a/config.c
-+++ b/config.c
-@@ -7,6 +7,7 @@
+diff --git a/cache.h b/cache.h
+index 272f8e021..d41aab82f 100644
+--- a/cache.h
++++ b/cache.h
+@@ -462,6 +462,8 @@ static inline enum object_type object_type(unsigned int mode)
   */
- #include "cache.h"
- #include "config.h"
-+#include "repo.h"
- #include "lockfile.h"
- #include "exec_cmd.h"
- #include "strbuf.h"
-@@ -72,13 +73,6 @@ static int core_compression_seen;
- static int pack_compression_seen;
- static int zlib_compression_seen;
+ extern const char * const local_repo_env[];
  
--/*
-- * Default config_set that contains key-value pairs from the usual set of config
-- * config files (i.e repo specific .git/config, user wide ~/.gitconfig, XDG
-- * config file and the global /etc/gitconfig)
-- */
--static struct config_set the_config_set;
--
- static int config_file_fgetc(struct config_source *conf)
- {
- 	return getc_unlocked(conf->u.file);
-@@ -1606,28 +1600,6 @@ int git_config_with_options(config_fn_t fn, void *data,
- 	return do_git_config_sequence(opts, fn, data);
- }
- 
--static void git_config_raw(config_fn_t fn, void *data)
--{
--	struct config_options opts = {0};
--
--	opts.respect_includes = 1;
--	if (have_git_dir())
--		opts.git_dir = get_git_common_dir();
--	if (git_config_with_options(fn, data, NULL, &opts) < 0)
--		/*
--		 * git_config_with_options() normally returns only
--		 * zero, as most errors are fatal, and
--		 * non-fatal potential errors are guarded by "if"
--		 * statements that are entered only when no error is
--		 * possible.
--		 *
--		 * If we ever encounter a non-fatal error, it means
--		 * something went really wrong and we should stop
--		 * immediately.
--		 */
--		die(_("unknown error occurred while reading the configuration files"));
--}
--
- static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
- {
- 	int i, value_index;
-@@ -1676,14 +1648,6 @@ void read_early_config(config_fn_t cb, void *data)
- 	strbuf_release(&buf);
- }
- 
--static void git_config_check_init(void);
--
--void git_config(config_fn_t fn, void *data)
--{
--	git_config_check_init();
--	configset_iter(&the_config_set, fn, data);
--}
--
- static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
- {
- 	struct config_set_element k;
-@@ -1782,7 +1746,7 @@ void git_configset_clear(struct config_set *cs)
- 	cs->list.items = NULL;
- }
- 
--static int config_set_callback(const char *key, const char *value, void *cb)
-+int config_set_callback(const char *key, const char *value, void *cb)
- {
- 	struct config_set *cs = cb;
- 	configset_add_value(cs, key, value);
-@@ -1893,87 +1857,164 @@ int git_configset_get_pathname(struct config_set *cs, const char *key, const cha
- 		return 1;
- }
- 
--static void git_config_check_init(void)
-+/* Functions use to read configuration from a repository */
-+static void git_config_check_init(struct repo *repository)
- {
--	if (the_config_set.hash_initialized)
-+	if (repository->config && repository->config->hash_initialized)
- 		return;
--	git_configset_init(&the_config_set);
--	git_config_raw(config_set_callback, &the_config_set);
-+	repo_read_config(repository);
- }
- 
--void git_config_clear(void)
-+static void repo_config_clear(struct repo *repository)
- {
--	if (!the_config_set.hash_initialized)
-+	if (!repository->config || !repository->config->hash_initialized)
- 		return;
--	git_configset_clear(&the_config_set);
-+	git_configset_clear(repository->config);
- }
- 
--int git_config_get_value(const char *key, const char **value)
-+static void repo_config(struct repo *repository, config_fn_t fn, void *data)
- {
--	git_config_check_init();
--	return git_configset_get_value(&the_config_set, key, value);
-+	git_config_check_init(repository);
-+	configset_iter(repository->config, fn, data);
- }
- 
--const struct string_list *git_config_get_value_multi(const char *key)
-+static int repo_config_get_value(struct repo *repository,
-+				 const char *key, const char **value)
- {
--	git_config_check_init();
--	return git_configset_get_value_multi(&the_config_set, key);
-+	git_config_check_init(repository);
-+	return git_configset_get_value(repository->config, key, value);
- }
- 
--int git_config_get_string_const(const char *key, const char **dest)
-+static const struct string_list *repo_config_get_value_multi(struct repo *repository,
-+							     const char *key)
-+{
-+	git_config_check_init(repository);
-+	return git_configset_get_value_multi(repository->config, key);
-+}
++extern void setup_git_env(void);
 +
-+static int repo_config_get_string_const(struct repo *repository,
-+					const char *key, const char **dest)
- {
- 	int ret;
--	git_config_check_init();
--	ret = git_configset_get_string_const(&the_config_set, key, dest);
-+	git_config_check_init(repository);
-+	ret = git_configset_get_string_const(repository->config, key, dest);
- 	if (ret < 0)
- 		git_die_config(key, NULL);
- 	return ret;
- }
- 
-+static int repo_config_get_string(struct repo *repository,
-+				  const char *key, char **dest)
-+{
-+	git_config_check_init(repository);
-+	return repo_config_get_string_const(repository, key, (const char **)dest);
-+}
-+
-+static int repo_config_get_int(struct repo *repository,
-+			       const char *key, int *dest)
-+{
-+	git_config_check_init(repository);
-+	return git_configset_get_int(repository->config, key, dest);
-+}
-+
-+static int repo_config_get_ulong(struct repo *repository,
-+				const char *key, unsigned long *dest)
-+{
-+	git_config_check_init(repository);
-+	return git_configset_get_ulong(repository->config, key, dest);
-+}
-+
-+static int repo_config_get_bool(struct repo *repository,
-+				const char *key, int *dest)
-+{
-+	git_config_check_init(repository);
-+	return git_configset_get_bool(repository->config, key, dest);
-+}
-+
-+static int repo_config_get_bool_or_int(struct repo *repository,
-+				       const char *key, int *is_bool, int *dest)
-+{
-+	git_config_check_init(repository);
-+	return git_configset_get_bool_or_int(repository->config, key, is_bool, dest);
-+}
-+
-+static int repo_config_get_maybe_bool(struct repo *repository,
-+				      const char *key, int *dest)
-+{
-+	git_config_check_init(repository);
-+	return git_configset_get_maybe_bool(repository->config, key, dest);
-+}
-+
-+static int repo_config_get_pathname(struct repo *repository,
-+				    const char *key, const char **dest)
-+{
-+	int ret;
-+	git_config_check_init(repository);
-+	ret = git_configset_get_pathname(repository->config, key, dest);
-+	if (ret < 0)
-+		git_die_config(key, NULL);
-+	return ret;
-+}
-+
-+/* Functions used historically to read configuration from 'the_repository' */
-+void git_config(config_fn_t fn, void *data)
-+{
-+	repo_config(&the_repository, fn, data);
-+}
-+
-+void git_config_clear(void)
-+{
-+	repo_config_clear(&the_repository);
-+}
-+
-+int git_config_get_value(const char *key, const char **value)
-+{
-+	return repo_config_get_value(&the_repository, key, value);
-+}
-+
-+const struct string_list *git_config_get_value_multi(const char *key)
-+{
-+	return repo_config_get_value_multi(&the_repository, key);
-+}
-+
-+int git_config_get_string_const(const char *key, const char **dest)
-+{
-+	return repo_config_get_string_const(&the_repository, key, dest);
-+}
-+
- int git_config_get_string(const char *key, char **dest)
- {
--	git_config_check_init();
--	return git_config_get_string_const(key, (const char **)dest);
-+	return repo_config_get_string(&the_repository, key, dest);
- }
- 
- int git_config_get_int(const char *key, int *dest)
- {
--	git_config_check_init();
--	return git_configset_get_int(&the_config_set, key, dest);
-+	return repo_config_get_int(&the_repository, key, dest);
- }
- 
- int git_config_get_ulong(const char *key, unsigned long *dest)
- {
--	git_config_check_init();
--	return git_configset_get_ulong(&the_config_set, key, dest);
-+	return repo_config_get_ulong(&the_repository, key, dest);
- }
- 
- int git_config_get_bool(const char *key, int *dest)
- {
--	git_config_check_init();
--	return git_configset_get_bool(&the_config_set, key, dest);
-+	return repo_config_get_bool(&the_repository, key, dest);
- }
- 
- int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest)
- {
--	git_config_check_init();
--	return git_configset_get_bool_or_int(&the_config_set, key, is_bool, dest);
-+	return repo_config_get_bool_or_int(&the_repository, key, is_bool, dest);
- }
- 
- int git_config_get_maybe_bool(const char *key, int *dest)
- {
--	git_config_check_init();
--	return git_configset_get_maybe_bool(&the_config_set, key, dest);
-+	return repo_config_get_maybe_bool(&the_repository, key, dest);
- }
- 
- int git_config_get_pathname(const char *key, const char **dest)
- {
--	int ret;
--	git_config_check_init();
--	ret = git_configset_get_pathname(&the_config_set, key, dest);
--	if (ret < 0)
--		git_die_config(key, NULL);
--	return ret;
-+	return repo_config_get_pathname(&the_repository, key, dest);
- }
- 
- int git_config_get_expiry(const char *key, const char **output)
-diff --git a/config.h b/config.h
-index f7f8b66c5..4cd9e2915 100644
---- a/config.h
-+++ b/config.h
-@@ -149,6 +149,7 @@ struct config_set {
- };
- 
- extern void git_configset_init(struct config_set *cs);
-+extern int config_set_callback(const char *key, const char *value, void *cb);
- extern int git_configset_add_file(struct config_set *cs, const char *filename);
- extern int git_configset_get_value(struct config_set *cs, const char *key, const char **value);
- extern const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key);
-diff --git a/repo.c b/repo.c
-index 789ffdd78..c67cad5a2 100644
---- a/repo.c
-+++ b/repo.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "repo.h"
-+#include "config.h"
- 
  /*
-  * This may be the wrong place for this.
-@@ -89,6 +90,20 @@ void repo_set_worktree(struct repo *repo, const char *path)
- 	repo->worktree = real_pathdup(path, 1);
+  * Returns true iff we have a configured git repository (either via
+  * setup_git_directory, or in the environment via $GIT_DIR).
+diff --git a/environment.c b/environment.c
+index d40b21fb7..a73b08f5d 100644
+--- a/environment.c
++++ b/environment.c
+@@ -160,7 +160,7 @@ static char *git_path_from_env(const char *envvar, const char *git_dir,
+ 	return xstrdup(value);
  }
  
-+void repo_read_config(struct repo *repo)
-+{
-+	struct config_options opts = { 1, repo->commondir };
-+
-+	if (!repo->config)
-+		repo->config = xcalloc(1, sizeof(struct config_set));
-+	else
-+		git_configset_clear(repo->config);
-+
-+	git_configset_init(repo->config);
-+
-+	git_config_with_options(config_set_callback, repo->config, NULL, &opts);
-+}
-+
- int repo_init(struct repo *repo, const char *gitdir)
+-static void setup_git_env(void)
++void setup_git_env(void)
  {
- 	int error = 0;
-@@ -128,4 +143,10 @@ void repo_clear(struct repo *repo)
- 	repo_clear_env(repo);
- 	free(repo->worktree);
- 	repo->worktree = NULL;
-+
-+	if (repo->config) {
-+		git_configset_clear(repo->config);
-+		free(repo->config);
-+		repo->config = NULL;
-+	}
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *gitfile;
+@@ -205,28 +205,27 @@ int is_bare_repository(void)
+ int have_git_dir(void)
+ {
+ 	return startup_info->have_repository
+-		|| git_dir
+-		|| getenv(GIT_DIR_ENVIRONMENT);
++		|| git_dir;
  }
-diff --git a/repo.h b/repo.h
-index 95d021049..284452832 100644
---- a/repo.h
-+++ b/repo.h
-@@ -1,6 +1,8 @@
- #ifndef REPO_H
- #define REPO_H
  
-+struct config_set;
-+
- struct repo {
- 	/* Environment */
- 	char *gitdir;
-@@ -11,6 +13,14 @@ struct repo {
- 	char *namespace;
- 	char *worktree;
+ const char *get_git_dir(void)
+ {
+ 	if (!git_dir)
+-		setup_git_env();
++		BUG("git environment hasn't been setup");
+ 	return git_dir;
+ }
  
-+	/* Subsystems */
+ const char *get_git_common_dir(void)
+ {
+ 	if (!git_dir)
+-		setup_git_env();
++		BUG("git environment hasn't been setup");
+ 	return git_common_dir;
+ }
+ 
+ const char *get_git_namespace(void)
+ {
+ 	if (!namespace)
+-		setup_git_env();
++		BUG("git environment hasn't been setup");
+ 	return namespace;
+ }
+ 
+@@ -276,7 +275,7 @@ const char *get_git_work_tree(void)
+ char *get_object_directory(void)
+ {
+ 	if (!git_object_dir)
+-		setup_git_env();
++		BUG("git environment hasn't been setup");
+ 	return git_object_dir;
+ }
+ 
+@@ -316,14 +315,14 @@ int odb_pack_keep(const char *name)
+ char *get_index_file(void)
+ {
+ 	if (!git_index_file)
+-		setup_git_env();
++		BUG("git environment hasn't been setup");
+ 	return git_index_file;
+ }
+ 
+ char *get_graft_file(void)
+ {
+ 	if (!git_graft_file)
+-		setup_git_env();
++		BUG("git environment hasn't been setup");
+ 	return git_graft_file;
+ }
+ 
+diff --git a/setup.c b/setup.c
+index e99a82cbe..b2e05145c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1063,6 +1063,20 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	startup_info->have_repository = !nongit_ok || !*nongit_ok;
+ 	startup_info->prefix = prefix;
+ 
 +	/*
-+	 * Repository's config which contains key-value pairs from the usual
-+	 * set of config config files (i.e repo specific .git/config, user wide
-+	 * ~/.gitconfig, XDG config file and the global /etc/gitconfig)
++	 * Not all paths through the setup code will call 'set_git_dir()' (which
++	 * directly sets up the environment) so in order to guarantee that the
++	 * environment is in a consistent state after setup, explicitly setup
++	 * the environment if we have a repository.
++	 *
++	 * NEEDSWORK: currently we allow bogus GIT_DIR values to be set in some
++	 * code paths so we also need to explicitly setup the environment if
++	 * the user has set GIT_DIR.  It may be beneficial to disallow bogus
++	 * GIT_DIR values at some point in the future.
 +	 */
-+	struct config_set *config;
++	if (startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT))
++		setup_git_env();
 +
- 	/* Configurations */
- 	unsigned ignore_env:1;
- 	/* Indicates if a repository has a different 'commondir' from 'gitdir' */
-@@ -21,6 +31,7 @@ extern struct repo the_repository;
- 
- extern void repo_set_gitdir(struct repo *repo, const char *path);
- extern void repo_set_worktree(struct repo *repo, const char *path);
-+extern void repo_read_config(struct repo *repo);
- extern int repo_init(struct repo *repo, const char *path);
- extern void repo_clear(struct repo *repo);
+ 	strbuf_release(&dir);
+ 	strbuf_release(&gitdir);
  
 -- 
 2.13.0.506.g27d5fe0cd-goog
