@@ -2,96 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A1F41FD09
-	for <e@80x24.org>; Wed, 31 May 2017 19:08:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAFCE1FD09
+	for <e@80x24.org>; Wed, 31 May 2017 19:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751129AbdEaTIY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 15:08:24 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:37201 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751062AbdEaTIX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 15:08:23 -0400
-Received: by mail-it0-f51.google.com with SMTP id m47so1854166iti.0
-        for <git@vger.kernel.org>; Wed, 31 May 2017 12:08:23 -0700 (PDT)
+        id S1751177AbdEaTIg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 15:08:36 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:33162 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751037AbdEaTIf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 15:08:35 -0400
+Received: by mail-pf0-f177.google.com with SMTP id e193so15440438pfh.0
+        for <git@vger.kernel.org>; Wed, 31 May 2017 12:08:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=tFViCyECuJjtJ+KVbNdmgZqbpvh4t5mcW81gfsc9HcA=;
-        b=Yq6OlVXWoRksUcV1k5DvO/48jW0nwnapgUv09LiyD7gxrkqlau8smwww+m0YukFAja
-         hsnxKBu49izGydXVjLFcVlst/LtVF09M9UNRxrrGnRa/sck3rmejDvXf+NjXlhTRRiAa
-         uJfO+6XGMLKWJUcn6sdKcD64Jg59i84+e7XlFaaGscqp0EcOtX3oMiibWbOybAapzI9Y
-         w84o67Z1c4Cs8W4spXicB1TuXgy1ed8IZdjT6OVSucRFBomLtjGxHSp4VKWAu6IKLmTt
-         7itft2UgPrflWDg0YYuTqlaaQt+YdpRxu2jixNQUiZAJgl0irKyO00lv3Rpct4VqKfjD
-         W3Eg==
+        bh=qGwDf+GtrMEBgUMxV7H/LCQN2RyApBvUyU7QAbOSQoM=;
+        b=J4e0fWdU5EIN7WXTflht03WCzkZIB9RlG+RWjrmGFMusJvPJYtxjTu4GJLNg+hpb7z
+         RyLuFxg9m/XJ0meLHOS1+QJsWBRbE3kZ+9vya7fTIyiiynDFi6zpNAsutgQfdm1uImsv
+         7LIJX4OLJRAuJncPJvUtscJfE9HWafxa42S9DbfMFaQ9Xc9GaFgW4SPXWWVGSEclqHn/
+         F2LsoznuJdY+3j4m9GiYBNkrq0X1nvB+BNgk8v3HrNQpQ0X37Vm7Jea9U8N0d28wTmfF
+         azCU8wwMds+4rO4Hh5DinVNuACgqH6pkqf4eyVZRJgWTGg8TiFlO3zjT5jkpiy/tksEm
+         16Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=tFViCyECuJjtJ+KVbNdmgZqbpvh4t5mcW81gfsc9HcA=;
-        b=Ih9tRVdYcaiMJnuA9jHBCp2XU5Jk1fPIVJN9h9UPfW5IO317lHleB7XIKqV2pqfL7y
-         VkNyRqHSkbIVFkPhTPADNcBugXl6LOurQwcAb01sn+LfxdAW9rjqGtSdCRTsFDp2b6ZY
-         w26PGROZ2iZzoRcC1qKakE9EURVUWqjJISfRaXCo6t4s8gMzZkYIuantqPPjtlM/3Jt5
-         uqUFS6843nPV2KSe5ZUXsJgL/AS7TMq2VsmPW3LxpwtrgD/ke+SS+uIq1fDdKy30Vv3i
-         m78QwJd0pisb1phxWYrV2Jtf6EwPiiSr3FD3kkpvxWHRXXOYoQKyYwu4lmCcqb9olSGS
-         lRgw==
-X-Gm-Message-State: AODbwcDbeKbbebrNXY/i0Oy7qys20QcICJLPfUgZK7qpKUVAT3tIDdcd
-        Q0nPlP0AcZFDUlBqjlJvVSFLqGIfROtk0CHhlw==
-X-Received: by 10.36.70.211 with SMTP id j202mr8611440itb.22.1496257702336;
- Wed, 31 May 2017 12:08:22 -0700 (PDT)
+        bh=qGwDf+GtrMEBgUMxV7H/LCQN2RyApBvUyU7QAbOSQoM=;
+        b=W1JwQbT6Y87isrflKHHy6VSKKDsLjv521Pw7ArKaIa2buzHATbEnRVkjoc3c3iTpZ1
+         pV3zgXQMZjFz2zCOWmjQUcIKJKduchTdz/1gafz0+u2nBsCidtqElT7EkvbD0XhqWhys
+         UWfcNekng0eG1gJI+fhl4agjjrhRrg6w5ZFVTnZVvTc6H4WLHiRewsRN3gW4XlN2U+ev
+         QplXF0VnNiZc1jaCMaXvkTj+ZeM2JIYooXpbHFRKzQSSSnPIRrnoqCM8akLvdAohMEol
+         1o8awOYoQ2S082j/kFG6cQZBxoGw8XKHxGDZvqtzlOWZXEubDscopyvojkTvbfUm6NqF
+         pk5A==
+X-Gm-Message-State: AODbwcDgADZZF+eAKEKnRg3FOu4xLV/R6JXJC/0qkEpTxk5/KrhJrgDc
+        JMBu8GPXXfESnahCkFMY0iwFWqERIe6v
+X-Received: by 10.99.60.82 with SMTP id i18mr9982654pgn.183.1496257714536;
+ Wed, 31 May 2017 12:08:34 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.150.90 with HTTP; Wed, 31 May 2017 12:07:41 -0700 (PDT)
-In-Reply-To: <CAD1ypiWOcKaLJJzZC=gw75EDFnw_1ZqC94B5p9i722T-sijN1Q@mail.gmail.com>
-References: <CAD1ypiWOcKaLJJzZC=gw75EDFnw_1ZqC94B5p9i722T-sijN1Q@mail.gmail.com>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Wed, 31 May 2017 15:07:41 -0400
-Message-ID: <CAJZjrdWrrZBCR0xQMSFbCL6rwPThNNitkUA2AoOhOWQkxkUv9g@mail.gmail.com>
-Subject: Re: Coloring
-To:     Irving Rabin <irving@edmodo.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.100.170.200 with HTTP; Wed, 31 May 2017 12:08:34 -0700 (PDT)
+In-Reply-To: <20170531150427.7820-3-kewillf@microsoft.com>
+References: <20170531150427.7820-1-kewillf@microsoft.com> <20170531150427.7820-3-kewillf@microsoft.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 31 May 2017 12:08:34 -0700
+Message-ID: <CAGZ79kYns3CWS5acxGRk67mqdfBvPC=hngnNyovrOkjRRwhRCA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] rebase: turn on progress option by default for format-patch
+To:     Kevin Willford <kcwillford@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Kevin Willford <kewillf@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 31, 2017 at 2:33 PM, Irving Rabin <irving@edmodo.com> wrote:
->
-> Folks, I am reporting an issue with coloring of the output of Git
-> commands, like status, diff, etc.
->
-> Specifically, if the field is supposed to be white, it doesn't mean it
-> should be literally 0xFFFFFF. It should be the color that I have
-> configured as White color for my console emulator.
->
-> I like light-screen terminals, and I configure my ANSI colors in the
-> way that they are clearly visible on the background and clearly
-> distinct between themselves. In my terminal settings background is
-> light-yellow, Black is black, Yellow is brown, Red is dark red,
-> Magenta is purple and White is dark gray. I set it once and I can use
-> it everywhere - all Unix commands work correctly, I can edit
-> highlighted source code in Vim, and all my color settings are
-> respected.
+On Wed, May 31, 2017 at 8:04 AM, Kevin Willford <kcwillford@gmail.com> wrote:
+> This change passes the progress option of format-patch by
+> default and passes the -q --quiet option through to the
+> format-patch call so that it is respected as well.
 
-Can you elaborate on how it is that you redefine your terminal color
-scheme? There are multiple levels at which you can do that, which will
-have some bearing on the answer.
+This is not conflicting with Johannes rewrite of rebase in C?
+(rebase is a huge beast IIUC)
 
-> However Git behaves differently. When I run git diff, some of the
-> output is literally white on light yellow background. It is like "we
-> know what is White, so we ignore your settings". And it is quite
-> irritating.
+When passing the progress option by default to formatting patches,
+maybe we should use start_progress_delay in the previous patch instead
+to omit the progress for short lived patch formatting sessions?
+(say a delay of one second?)
+
+Thanks,
+Stefan
+
 >
-> Is there a way to make Git respect terminal settings and not to
-> override them with absolute colors? If so, please advise. If not, then
-> I guess it is a bug to fix, right?
+> Signed-off-by: Kevin Willford <kewillf@microsoft.com>
+> ---
+>  git-rebase--am.sh | 5 +++--
+>  git-rebase.sh     | 2 ++
+>  2 files changed, 5 insertions(+), 2 deletions(-)
 >
-> Thanks,
-> Irving Rabin
-> Software Developer @Edmodo
-> 408-242-1299
+> diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+> index 375239341f..ab2be30abf 100644
+> --- a/git-rebase--am.sh
+> +++ b/git-rebase--am.sh
+> @@ -51,8 +51,9 @@ then
+>  else
+>         rm -f "$GIT_DIR/rebased-patches"
+>
+> -       git format-patch -k --stdout --full-index --cherry-pick --right-only \
+> -               --src-prefix=a/ --dst-prefix=b/ --no-renames --no-cover-letter \
+> +       git format-patch $git_format_patch_opt -k --stdout --full-index \
+> +               --cherry-pick --right-only --src-prefix=a/ --dst-prefix=b/ \
+> +               --no-renames --no-cover-letter --progress \
+>                 "$revisions" ${restrict_revision+^$restrict_revision} \
+>                 >"$GIT_DIR/rebased-patches"
+>         ret=$?
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index db1deed846..b72e319ac9 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -73,6 +73,7 @@ test "$(git config --bool rebase.stat)" = true && diffstat=t
+>  autostash="$(git config --bool rebase.autostash || echo false)"
+>  fork_point=auto
+>  git_am_opt=
+> +git_format_patch_opt=
+>  rebase_root=
+>  force_rebase=
+>  allow_rerere_autoupdate=
+> @@ -308,6 +309,7 @@ do
+>         --quiet)
+>                 GIT_QUIET=t
+>                 git_am_opt="$git_am_opt -q"
+> +               git_format_patch_opt="$git_format_patch_opt -q"
+>                 verbose=
+>                 diffstat=
+>                 ;;
+> --
+> 2.13.0.92.g73a4ce6a77
+>
