@@ -7,93 +7,112 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 866F51FD09
-	for <e@80x24.org>; Wed, 31 May 2017 23:35:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 526221FD09
+	for <e@80x24.org>; Wed, 31 May 2017 23:35:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751370AbdEaXfb (ORCPT <rfc822;e@80x24.org>);
+        id S1751365AbdEaXfb (ORCPT <rfc822;e@80x24.org>);
         Wed, 31 May 2017 19:35:31 -0400
-Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:34854
-        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751033AbdEaXf3 (ORCPT
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:47504
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751349AbdEaXf3 (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 31 May 2017 19:35:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1496273712;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1496273713;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=EcOl2bRlUEayMUYT5XY1Rh+EpcCVe4EqmueL2Q0tUfs=;
-        b=HGNu+oYIPoIrv9C/OCJrZth8i3hV/cKEMfx014bjg2/kROAgDbh1Y8LNOdtt3Tac
-        7EGv4VcaRrwN2WVfwuZohT8L+VI1hPyXIvZKOtIAA0RyUiwNNkfHw15i3eeOt1hOmVC
-        YOX3MhUZwFkiMdLDGb3GgTXUY6BpqWcthLB8BCKA=
+        bh=NUpk4hA1OHNy25GQkT1dfvKF3AGZ9iA6UxsRxm6m82w=;
+        b=OB9j2Y0RlxqQ+gM6s+sp3HzeDD2odO2FlKBG+dShcVp8Zk8v4a+FAf+xGfL1tsFW
+        LTDREGAXbQBvmzFU3yx+f2u/Hd4ior6vqfCjaKQGEBd85b4pHFuBQ8XihKb+fpuu0uo
+        YYIHYz6fIgeJWHn+yZ5GYpHF50R5EHb63B0xZx9s=
 From:   Sahil Dua <sahildua2305@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102015c60dcf691-aeac42e6-0b21-4467-9af5-fea131665df3-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015c60dcf5f6-057de56f-3355-40dc-a0d3-ee62fa9b8259-000000@eu-west-1.amazonses.com>
-References: <0102015c60dcf5f6-057de56f-3355-40dc-a0d3-ee62fa9b8259-000000@eu-west-1.amazonses.com>
-Subject: [PATCH/RFC v2 3/6] config: abstract out create section from key
- logic
+Message-ID: <0102015c60dcf5f6-057de56f-3355-40dc-a0d3-ee62fa9b8259-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015c5146c8ca-e5144538-326b-47b8-8c81-af31da4cdfe0-000000@eu-west-1.amazonses.com>
+References: <0102015c5146c8ca-e5144538-326b-47b8-8c81-af31da4cdfe0-000000@eu-west-1.amazonses.com>
+Subject: [PATCH/RFC v2 1/6] branch: add tests for new copy branch feature
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Wed, 31 May 2017 23:35:12 +0000
-X-SES-Outgoing: 2017.05.31-54.240.7.11
+X-SES-Outgoing: 2017.05.31-54.240.7.12
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Abstracts out the logic for creating string buffer from given key for
-example - 'branch.b' and returns '[branch "b"]'.
-
-We want to keep the original config section intact in case of copy
-operation. For this we need to fetch the section with updated new branch
-name so that we can write that to the config file.
-
-For example - git branch -c foo bar
-The mentioned/edited function renames and overwrites this part in the
-config - [branch "foo"] to [branch "bar"]. However, in case of copy, we
-want to keep the original [branch "foo"] intact and get [branch "bar"]
-from "branch.bar" key. 'store_create_section' function will return
-[branch "bar"] when "branch.bar" is passed.
+Adds a few basic tests for getting any suggestions/feedback
+about expected behavior for this new feature. Aim is to have an option -c
+for copying a branch just like -m option for renaming a branch.
 
 Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
 ---
- config.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ t/t3200-branch.sh | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-diff --git a/config.c b/config.c
-index 78cf1ffac043e..d3d48bfae3b96 100644
---- a/config.c
-+++ b/config.c
-@@ -2169,10 +2169,10 @@ static int write_error(const char *filename)
- 	return 4;
- }
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index fe62e7c775da6..2c95ed6ebf3c5 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -341,6 +341,59 @@ test_expect_success 'config information was renamed, too' '
+ 	test_must_fail git config branch.s/s/dummy
+ '
  
--static int store_write_section(int fd, const char *key)
-+struct strbuf store_create_section(const char *key)
- {
- 	const char *dot;
--	int i, success;
-+	int i;
- 	struct strbuf sb = STRBUF_INIT;
- 
- 	dot = memchr(key, '.', store.baselen);
-@@ -2188,6 +2188,16 @@ static int store_write_section(int fd, const char *key)
- 		strbuf_addf(&sb, "[%.*s]\n", store.baselen, key);
- 	}
- 
-+	return sb;
-+}
++test_expect_success 'git branch -c dumps usage' '
++	test_expect_code 128 git branch -c 2>err &&
++	test_i18ngrep "branch name required" err
++'
 +
-+static int store_write_section(int fd, const char *key)
-+{
-+	int success;
++git config branch.d.dummy Hello
 +
-+	/* Create a section with the given key */
-+	struct strbuf sb = store_create_section(key);
++test_expect_success 'git branch -c d e should work' '
++	git branch -l d &&
++	git reflog exists refs/heads/d &&
++	git branch -c d e &&
++	git reflog exists refs/heads/d &&
++	git reflog exists refs/heads/e
++'
 +
- 	success = write_in_full(fd, sb.buf, sb.len) == sb.len;
- 	strbuf_release(&sb);
- 
++test_expect_success 'config information was copied, too' '
++	test $(git config branch.e.dummy) = Hello &&
++	test $(git config branch.d.dummy) = Hello
++'
++
++git config branch.f/f.dummy Hello
++
++test_expect_success 'git branch -c f/f g/g should work' '
++	git branch -l f/f &&
++	git reflog exists refs/heads/f/f &&
++	git branch -c f/f g/g &&
++	git reflog exists refs/heads/f/f &&
++	git reflog exists refs/heads/g/g
++'
++
++test_expect_success 'config information was copied, too' '
++	test $(git config branch.f/f.dummy) = Hello &&
++	test $(git config branch.g/g.dummy) = Hello
++'
++
++test_expect_success 'git branch -c m2 m2 should work' '
++	git branch -l m2 &&
++	git reflog exists refs/heads/m2 &&
++	git branch -c m2 m2 &&
++	git reflog exists refs/heads/m2
++'
++
++test_expect_success 'git branch -c a a/a should fail' '
++	git branch -l a &&
++	git reflog exists refs/heads/a &&
++	test_must_fail git branch -c a a/a
++'
++
++test_expect_success 'git branch -c b/b b should fail' '
++	git branch -l b/b &&
++	test_must_fail git branch -c b/b b
++'
++
+ test_expect_success 'deleting a symref' '
+ 	git branch target &&
+ 	git symbolic-ref refs/heads/symref refs/heads/target &&
 
 --
 https://github.com/git/git/pull/363
