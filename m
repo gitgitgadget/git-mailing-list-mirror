@@ -6,94 +6,99 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B223A2027C
-	for <e@80x24.org>; Wed, 31 May 2017 04:43:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0F7A2027C
+	for <e@80x24.org>; Wed, 31 May 2017 04:50:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750954AbdEaEny (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 00:43:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60375 "EHLO cloud.peff.net"
+        id S1750966AbdEaEux (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 00:50:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60380 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750911AbdEaEnx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 00:43:53 -0400
-Received: (qmail 14387 invoked by uid 109); 31 May 2017 04:43:50 -0000
+        id S1750930AbdEaEux (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 00:50:53 -0400
+Received: (qmail 14878 invoked by uid 109); 31 May 2017 04:50:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 04:43:50 +0000
-Received: (qmail 1642 invoked by uid 111); 31 May 2017 04:44:28 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 04:50:53 +0000
+Received: (qmail 1678 invoked by uid 111); 31 May 2017 04:51:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 00:44:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 May 2017 00:43:49 -0400
-Date:   Wed, 31 May 2017 00:43:49 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 00:51:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 May 2017 00:50:52 -0400
+Date:   Wed, 31 May 2017 00:50:52 -0400
 From:   Jeff King <peff@peff.net>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?RsOpbGl4?= Saparelli <felix@passcod.name>,
-        git@vger.kernel.org
-Subject: Re: [Non-Bug] cloning a repository with a default MASTER branch
- tries to check out the master branch
-Message-ID: <20170531044349.bcb6jlte5gmo6p6v@sigill.intra.peff.net>
-References: <xmqqa864mea3.fsf@gitster.mtv.corp.google.com>
- <76BD8B6A1511438B8CCB79C616F3BC5B@PhilipOakley>
- <20170524141947.2gguzcvyu6lch373@sigill.intra.peff.net>
- <xmqqshjtg1kh.fsf@gitster.mtv.corp.google.com>
- <xmqqa861fx34.fsf@gitster.mtv.corp.google.com>
- <20170525155924.hk5jskennph6tta3@sigill.intra.peff.net>
- <20170525191115.tqd6zlj5mxqls4wp@sigill.intra.peff.net>
- <CEF93B59EA3F49608B41892952454B1D@PhilipOakley>
- <xmqqh905c0tm.fsf@gitster.mtv.corp.google.com>
- <48CB2547397B471C99F54CFB3F113C3F@PhilipOakley>
+To:     Elliott Cable <me@ell.io>
+Cc:     Dennis Kaarsemaker <dennis.kaarsemaker@booking.com>,
+        Git Mailing List <git@vger.kernel.org>, bmwill@google.com
+Subject: Re: persistent-https, url insteadof, and `git submodule`
+Message-ID: <20170531045051.ctoo7sv3f66xurdf@sigill.intra.peff.net>
+References: <CAPZ477MCsBsfbqKzp69MT_brwz-0aes6twJofQrhizUBV7ZoeA@mail.gmail.com>
+ <1495230186.19473.7.camel@kaarsemaker.net>
+ <1495230934.19473.10.camel@booking.com>
+ <20170520070757.jekykxagzze3t2wy@sigill.intra.peff.net>
+ <CAPZ477PoSXqahxaQVpO+m==vng==o4vQahrg_WA8Oeh7wmoW0w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <48CB2547397B471C99F54CFB3F113C3F@PhilipOakley>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPZ477PoSXqahxaQVpO+m==vng==o4vQahrg_WA8Oeh7wmoW0w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 28, 2017 at 12:21:50PM +0100, Philip Oakley wrote:
+On Fri, May 26, 2017 at 11:22:37AM -0500, Elliott Cable wrote:
 
-> > Are you aware of the symref capability that is already advertised in
-> > the initial upload-pack response?  Right now, we do so only when
-> > HEAD actually points at something, and the earlier suggestion by
-> > Peff is to do so unconditionally, even when HEAD is dangling.
+> Hi! Thanks for the responses (I hope reply-all isn't bad mailing-list
+> etiquette? Feel free to yell at with a direct reply!). For whatever it's
+> worth, as a random user, here's my thoughts:
+
+No, reply-all is the preferred method on this list.
+
+> > The other approach is to declare that a url rewrite resets the
+> > protocol-from-user flag to 1. IOW, since the "persistent-https" protocol
+> > comes from our local config, it's not dangerous and we should behave as
+> > if the user themselves gave it to us. That makes Elliott's case work out
+> > of the box.
 > 
-> The suggestion is the otherway around. I would argue (as a viewpoint) that
-> what we advertise are object IDs and their associated refs, sorted by ref
-> name. (I'm thinking of the git/Documentation/technical/pack-protocol.txt
-> here). My suggestion was that when we get to the sorted ref that HEAD points
-> to (including the unborn oid) that we annotate that ref.
+> Well, now that I'm aware of security concerns, `GIT_PROTOCOL_FROM_USER`
+> and `GIT_ALLOW_PROTOCOL`, and so on, I wouldn't *at all* expect
+> `insteadOf` to disable that behaviour. Instead, one of two things seems
+> like a more ideal solution:
+> 
+> 1. Most simply, better documentation: mention `GIT_PROTOCOL_FROM_USER`
+>    explicitly in the documentation of/near `insteadOf`, most
+>    particularly in the README for `contrib/persistent-https`.
+> 
+> 2. Possibly, special-case “higher-security” porcelain (like
+>    `git-submodule`, as described in 33cfccbbf3) to ignore `insteadOf`
+>    rewrite-rules without additional, special configuration. This way,
+>    `git-submodule` works for ignorant users (like me) out of the box,
+>    just as it previously did, and there's no possible security
+>    compramise.
 
-It's hard to do that in a backwards-compatible way. The reason the
-symref capability works like it does (and supports only HEAD) is that
-the bits after the NUL are treated as a capability string, and older
-clients will actually _replace_ any earlier capability string they saw
-with the new one. So:
+After my other email, I was all set to write a patch to set
+"from_user=1" when we rewrite a URL. But I think it actually is a bit
+risky, because we don't know which parts of the URL are
+security-sensitive versus which parts were rewritten. A modification of
+a tainted string doesn't necessarily untaint it (but sometimes it does,
+as in your case).
 
-  1234abcd refs/heads/a\0symref=refs/heads/target1
-  5678abcd refs/heads/b\0symref=refs/heads/target2
+We could actually have a flag as part of the rewrite config, like:
 
-doesn't work as you'd like.
+  [url "persistent-https"]
+  insteadOf = "https"
+  untaint = true
 
-But even if it did, I don't think that solves the dangling symref
-problem by itself. As you note, we'd need to advertise a null sha1 line
-and annotate that. I didn't test, but I'd suspect that's another
-compatibility problem; clients will probably choke on the null sha1.
+but I don't think that really buys anything. If you know about the
+problem, you could just as easily do:
 
-> I didn't quite follow Peff's suggestion as to where the list change
-> went and if that was a protocol change.
+  [url "persistent-https"]
+  insteadOf = "https"
+  [protocol "persistent-https"]
+  allow = always
 
-The current protocol just advertises symref=source:target in the
-capability line, where "source" does not have to be the ref that is
-currently being advertised at all. So you are free to do:
+It really is an issue of the user knowing about the problem (and how to
+solve it), and I don't think we can get around that securely. So better
+documentation probably is the right solution.
 
-  1234abcd refs/heads/unrelated\0...symref=HEAD:refs/heads/target
-
-But the server does not bother to do so when the HEAD symref doesn't
-point to anything. We could fix that without changing the protocol
-syntax. It's possible that some picky client would complain that we
-mentioned the HEAD symref even though it was not advertised, but
-certainly older git.git clients are fine with it. They'd still need a
-client-side update in order to do something useful with it, but at least
-its presence would not make older clients behave any worse.
+I'll see if I can cook something up.
 
 -Peff
