@@ -2,195 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BA7A1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 21:46:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 955AB1FD09
+	for <e@80x24.org>; Wed, 31 May 2017 22:01:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751198AbdEaVqj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 17:46:39 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36255 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751149AbdEaVqi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 17:46:38 -0400
-Received: by mail-pf0-f196.google.com with SMTP id n23so4367643pfb.3
-        for <git@vger.kernel.org>; Wed, 31 May 2017 14:46:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=W7D9I5jx2WZUkTw6nqHPRqiR49C2R2Z1i4jtPMWFuu4=;
-        b=Lkec6+YnwuUPSAFAneao4sSb68S6bIt+fDul/R66gb2wabIme/1bTTUA2T6fGO7QXB
-         USWbQhtzyF48pRiWECY9y3d7n3m8Vv/xZZLBXeWYZsv9vIyocPFsMYIysDA7iH1EsYHs
-         AspSGbTXiYQ9NL7dcTwogpR63U7XNxvdCGy8YdRudyb0QLNi6MTDQUnl2tnGNzcRwd41
-         5TlOa/cGvTlQh+BXHtJFFxBEgB8OYfzBJXBWt05iXayGVVCFj4eCm8ZtdBSRhUYpPRSR
-         6B9pmCDA6zaRLjIeTn4GTJWo2WGfHSOoSg06lLziOmaW7M+Id5yojBfh6kWzg0Hv36+V
-         zvuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=W7D9I5jx2WZUkTw6nqHPRqiR49C2R2Z1i4jtPMWFuu4=;
-        b=bMG08XxeOfHOw+YhcTF6z9a2RAS383Zg1UwRJJBz3wNgCv363xKtxrqN/WlEbogkHY
-         Yq7f9g70RMxA3YSDz630BKZIrnjflgENHYfy7nz7UIwwoAnsI5Us668QSmp4iH9tR6qw
-         DvGK5DcBLFFWIO6yRtLlS834xENohC+2cq/dBRm1EOe0ZOea96JnmKeeMpzgFMCpVFZZ
-         6o2NCX9/wLCvCoFM2FcSnb5OjXEbnz50BZ4s6KLJTPtQSl+rpv6MhYdXK/OVjkWpiMQz
-         6oQypYLyoDe2LvDI3S6h+quvl0gO/h5sV97Q7kSyTv269erbxzVUkyydo20pJk4w1KeC
-         Zmrw==
-X-Gm-Message-State: AODbwcCaneZsVOEEyBgafRtUrQ7mEYRNUq/hT4UO95Iv8vH1E8QrIm6V
-        ww0/Hbw3XJndeA==
-X-Received: by 10.99.108.133 with SMTP id h127mr35561120pgc.175.1496267197459;
-        Wed, 31 May 2017 14:46:37 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:6469:e172:b5f4:6d97])
-        by smtp.gmail.com with ESMTPSA id g191sm265686pgc.49.2017.05.31.14.46.35
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 31 May 2017 14:46:36 -0700 (PDT)
-Date:   Wed, 31 May 2017 14:46:34 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] send-email: Net::SMTP::SSL is obsolete, use only when
- necessary
-Message-ID: <20170531214634.GB81679@aiede.mtv.corp.google.com>
-References: <CACBZZX5j1dYk8aeRED7T7iJ=b32aFUpfUWPpMpmtofBL3QnVXQ@mail.gmail.com>
- <20170324213732.29932-1-dennis@kaarsemaker.net>
+        id S1751113AbdEaWBC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 18:01:02 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:46860 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751015AbdEaWBC (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 31 May 2017 18:01:02 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E3FDF280AD;
+        Wed, 31 May 2017 22:01:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1496268060;
+        bh=CPoE3XAjkQikO49UK7R/Fbo6LuckDB1otbSBERYy0fU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RjyvPASgk0mj9zf+pVE7L3k05dvGbwaDFwB/FXwIkyRwSOlo7tUBWw+KvSx1o7+Vh
+         kYNnHqxI0n+5dpXH06iUsV/rhzux72kCiGMVE5k6NGR72bIIoDRo91LVxARVp+ivoc
+         xUTdriFFMOVH3ja8IurrqgqVir1yJ//0FiZhux4QURdCbRGcNvOviJc20cB0qdczR9
+         CvaRZaZaDO5nMmS1jzJ2FomfxzokvrxsJbhjVaqtUEc3lXItR04r52lzB1I4R0nLqW
+         kcmKGpDW6Jon74V/LfOpPeC+s0/NUsPRsIfd1uMdNDSAqYvluLX0SIvjVoB5vtzZTB
+         /qUx1tDm2D46poKaFxzYPueCM8O4KH6DdWfBorYqiq2yX2Qs9ijl+JdPg5oGO8gDqs
+         V/hJsUCIYCx5FH9lRFBzRMBVCrfFn6Cxm18j1dFRdZOiPR2PZYCqtsPS7k1M609CSJ
+         4eWMjH5tUWLQnndxiZmaOQIoVwWTAQXnXGDCEMLsrXBtFLKdYUp
+Date:   Wed, 31 May 2017 22:00:57 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+Subject: Re: [PATCH 22/33] notes-merge: convert notes_merge* to struct
+ object_id
+Message-ID: <20170530185653.cfy4cbq3pmxfq5x6@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, peff@peff.net
+References: <20170530173109.54904-1-bmwill@google.com>
+ <20170530173109.54904-23-bmwill@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="tnr3mgdpf3sfw247"
 Content-Disposition: inline
-In-Reply-To: <20170324213732.29932-1-dennis@kaarsemaker.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170530173109.54904-23-bmwill@google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-3-amd64)
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Dennis Kaarsemaker wrote:
+--tnr3mgdpf3sfw247
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Net::SMTP itself can do the necessary SSL and STARTTLS bits just fine
-> since version 1.28, and Net::SMTP::SSL is now deprecated. Since 1.28
-> isn't that old yet, keep the old code in place and use it when
-> necessary.
+On Tue, May 30, 2017 at 10:30:58AM -0700, Brandon Williams wrote:
+> @@ -596,47 +596,47 @@ int notes_merge(struct notes_merge_options *o,
+>  	/* Find merge bases */
+>  	bases =3D get_merge_bases(local, remote);
+>  	if (!bases) {
+> -		base_sha1 =3D null_sha1;
+> -		base_tree_sha1 =3D EMPTY_TREE_SHA1_BIN;
+> +		base_oid =3D &null_oid;
+> +		base_tree_oid =3D &empty_tree_oid;
+>  		if (o->verbosity >=3D 4)
+>  			printf("No merge base found; doing history-less merge\n");
+>  	} else if (!bases->next) {
+> -		base_sha1 =3D bases->item->object.oid.hash;
+> -		base_tree_sha1 =3D bases->item->tree->object.oid.hash;
+> +		base_oid =3D &bases->item->object.oid;
+> +		base_tree_oid =3D &bases->item->tree->object.oid;
+>  		if (o->verbosity >=3D 4)
+>  			printf("One merge base found (%.7s)\n",
+> -				sha1_to_hex(base_sha1));
+> +			       oid_to_hex(base_oid));
 
-This broke git send-email for me.  The error message is
+I noticed you fixed up the indentation.  Thanks.
 
-  Can't locate object method "starttls" via package "Net::SMTP" at /usr/lib/git-core/git-send-email line 1410.
+> diff --git a/notes-merge.h b/notes-merge.h
+> index 0d890563b..eaa8e3b86 100644
+> --- a/notes-merge.h
+> +++ b/notes-merge.h
+> @@ -33,15 +33,15 @@ void init_notes_merge_options(struct notes_merge_opti=
+ons *o);
+>   *
+>   * 1. The merge trivially results in an existing commit (e.g. fast-forwa=
+rd or
+>   *    already-up-to-date). 'local_tree' is untouched, the SHA1 of the re=
+sult
+> - *    is written into 'result_sha1' and 0 is returned.
+> + *    is written into 'result_oid' and 0 is returned.
+>   * 2. The merge successfully completes, producing a merge commit. local_=
+tree
+>   *    contains the updated notes tree, the SHA1 of the resulting commit =
+is
+> - *    written into 'result_sha1', and 1 is returned.
+> + *    written into 'result_oid', and 1 is returned.
+>   * 3. The merge results in conflicts. This is similar to #2 in that the
+>   *    partial merge result (i.e. merge result minus the unmerged entries)
+>   *    are stored in 'local_tree', and the SHA1 or the resulting commit
+>   *    (to be amended when the conflicts have been resolved) is written i=
+nto
+> - *    'result_sha1'. The unmerged entries are written into the
+> + *    'result_oid'. The unmerged entries are written into the
+>   *    .git/NOTES_MERGE_WORKTREE directory with conflict markers.
+>   *    -1 is returned.
+>   *
 
-Is 1.28 the right minimum version?
+Did you want to change the comment to say "object ID" or "OID" instead
+of "SHA1" like you did in an earlier patch?
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-  $ perl -e 'require Net::SMTP; print version->parse($Net::SMTP::VERSION); print "\n"'
-  2.31
-  $ grep VERSION /usr/share/perl/5.18.2/Net/SMTP.pm
-  use vars qw($VERSION @ISA);
-  $VERSION = "2.31";
-  $ grep starttls /usr/share/perl/5.18.2/Net/SMTP.pm
-  $ dpkg-query -W perl
-  perl    5.18.2-2ubuntu1.1
+--tnr3mgdpf3sfw247
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Patch left unsnipped for reference.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.21 (GNU/Linux)
 
-Thanks,
-Jonathan
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlkvPRkACgkQv1NdgR9S
+9os3qRAAh5sc9zynTIiaeqvw/8apnyN9hZEnC2MOczRRHSRVYZ/FxsjhbyJ+XpJ2
+fsFIaRFoiTQHAjS/xjkUazvARI5qRZck6LemCxjV6REJUbcsBb2xp78EgJOnawWV
+zXJ3hwtqxQc8pw99JgY/WioFTy4yJiY/XGaRg04HZNtnisgxWEMfb+c+gNd/bsa8
+NvNAe2gVGQtNCkazOYi3cmIeW4ltcVHUJjsC2TKK3SZO7UiQ+92fzSHOOQVaSMKg
+O9C9Lm0E82smyUYeTpycPdN2RzFAqn4uFadSYRDn9YiUH2Wtmp0LFXKcNE0AQNWW
+9YP3MRfn/E1DbOvm0q1QuPI+Cne19nQLjw69rlUeUgQcXUygLA48GhNemykTKuVJ
+h1hokdxH0ujocr7rvzmfJ4K8CdsgsY+Z3KPcD6F4Z4XwOx8gJfQ0i0ppS6ZsOYgz
+RMTLr6bwmCv7glEk/Kkp8qz0GBtBAhCipuXlUWisIusDUvzEZWdFZ0YLr5BfB3dc
+Lg3KXwmex0PE/GqW7i4mqDLsucSZnA1R1qMAeXFX1owdtDayqW4/cgOFROI7aYQI
+mgeDBnXswido0gZnfjCZxoQe5kCLpIWZ0Y3T2hfqmZ9TCeGnUXDvI1jKz4Pu16ck
+yeh+SktZ3tdoL9KEOuXJ0QFNelqrlc4TtHXrmX3r7/48Nw9VWfc=
+=IhS/
+-----END PGP SIGNATURE-----
 
-> While we're in the area, mark some messages for translation that were
-> not yet marked as such.
->
-> Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-> ---
->  git-send-email.perl | 54 ++++++++++++++++++++++++++++++++++-------------------
->  1 file changed, 35 insertions(+), 19 deletions(-)
-> 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index eea0a517f7..0d90439d9a 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1353,10 +1353,12 @@ EOF
->  			die __("The required SMTP server is not properly defined.")
->  		}
->  
-> +		require Net::SMTP;
-> +		my $use_net_smtp_ssl = version->parse($Net::SMTP::VERSION) < version->parse("1.28");
-> +		$smtp_domain ||= maildomain();
-> +
->  		if ($smtp_encryption eq 'ssl') {
->  			$smtp_server_port ||= 465; # ssmtp
-> -			require Net::SMTP::SSL;
-> -			$smtp_domain ||= maildomain();
->  			require IO::Socket::SSL;
->  
->  			# Suppress "variable accessed once" warning.
-> @@ -1368,34 +1370,48 @@ EOF
->  			# Net::SMTP::SSL->new() does not forward any SSL options
->  			IO::Socket::SSL::set_client_defaults(
->  				ssl_verify_params());
-> -			$smtp ||= Net::SMTP::SSL->new($smtp_server,
-> -						      Hello => $smtp_domain,
-> -						      Port => $smtp_server_port,
-> -						      Debug => $debug_net_smtp);
-> +
-> +			if ($use_net_smtp_ssl) {
-> +				require Net::SMTP::SSL;
-> +				$smtp ||= Net::SMTP::SSL->new($smtp_server,
-> +							      Hello => $smtp_domain,
-> +							      Port => $smtp_server_port,
-> +							      Debug => $debug_net_smtp);
-> +			}
-> +			else {
-> +				$smtp ||= Net::SMTP->new($smtp_server,
-> +							 Hello => $smtp_domain,
-> +							 Port => $smtp_server_port,
-> +							 Debug => $debug_net_smtp,
-> +							 SSL => 1);
-> +			}
->  		}
->  		else {
-> -			require Net::SMTP;
-> -			$smtp_domain ||= maildomain();
->  			$smtp_server_port ||= 25;
->  			$smtp ||= Net::SMTP->new($smtp_server,
->  						 Hello => $smtp_domain,
->  						 Debug => $debug_net_smtp,
->  						 Port => $smtp_server_port);
->  			if ($smtp_encryption eq 'tls' && $smtp) {
-> -				require Net::SMTP::SSL;
-> -				$smtp->command('STARTTLS');
-> -				$smtp->response();
-> -				if ($smtp->code == 220) {
-> +				if ($use_net_smtp_ssl) {
-> +					$smtp->command('STARTTLS');
-> +					$smtp->response();
-> +					if ($smtp->code != 220) {
-> +						die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
-> +					}
-> +					require Net::SMTP::SSL;
->  					$smtp = Net::SMTP::SSL->start_SSL($smtp,
->  									  ssl_verify_params())
-> -						or die "STARTTLS failed! ".IO::Socket::SSL::errstr();
-> -					$smtp_encryption = '';
-> -					# Send EHLO again to receive fresh
-> -					# supported commands
-> -					$smtp->hello($smtp_domain);
-> -				} else {
-> -					die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
-> +						or die sprintf(__("STARTTLS failed! %s"), IO::Socket::SSL::errstr());
-> +				}
-> +				else {
-> +					$smtp->starttls(ssl_verify_params())
-> +						or die sprintf(__("STARTTLS failed! %s"), IO::Socket::SSL::errstr());
->  				}
-> +				$smtp_encryption = '';
-> +				# Send EHLO again to receive fresh
-> +				# supported commands
-> +				$smtp->hello($smtp_domain);
->  			}
->  		}
->  
-> -- 
-> 2.12.0-488-gd3584ba
-> 
+--tnr3mgdpf3sfw247--
