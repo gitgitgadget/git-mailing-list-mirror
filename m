@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBAB11FD09
-	for <e@80x24.org>; Wed, 31 May 2017 21:45:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFE4A1FD09
+	for <e@80x24.org>; Wed, 31 May 2017 21:45:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751256AbdEaVpW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 17:45:22 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:35289 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751238AbdEaVpK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 17:45:10 -0400
-Received: by mail-pf0-f175.google.com with SMTP id n23so18565572pfb.2
-        for <git@vger.kernel.org>; Wed, 31 May 2017 14:45:10 -0700 (PDT)
+        id S1751252AbdEaVpV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 17:45:21 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:36003 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751240AbdEaVpM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 17:45:12 -0400
+Received: by mail-pf0-f177.google.com with SMTP id m17so18552320pfg.3
+        for <git@vger.kernel.org>; Wed, 31 May 2017 14:45:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7L1IfB28vMwwS9Fm/CxB0bYsMg3zWRALUZNt6wRuZtI=;
-        b=MR5SYmDU2jnovYOV94TPNjdwKWvOH5iWtl5r7ppwB7ANSNG9UqSQZYds3rjUiKGOL1
-         vyJMJ/FDz5WcfIzXWvrZJRKX36lESxWKIaik5U3jkxUocrlKA8hKa3IelzeOAYjWc1Ln
-         dAP7RDIwjgX1efyDVtSlgyN4Q9/03c5QFGoxjGXELECgPtDU/QlNjR7tKB3J8ZQRym45
-         miKkkRhKwdGB5XT//OSkSgLRY+wYkrCLI+Ki5e/KN1wYJfqdA50q/QTBHcezImvJ/MbJ
-         qXPQqNf/lNrPeR/qC/KX8KPkuzoCdf3qnXQqZfLb+2i6SyXnkbB36/CSwyOlsqnangvb
-         oFYQ==
+        bh=UWKsxm9NH58+kjHiak9z0/HP6RIpvgt6GMsG+FjnVCE=;
+        b=Fei5MORife2ZeuWjvk/IsUYlKxehfAQZJOrINvAuxHowFIaBXcO69iQu8Cr/oMmJmA
+         qMKqTxTdUhAU5pVGi7I442dI22ZjAYqsb6O+XnykLvjabxBgnU/VI0hq8MC2A6TnjsFk
+         zP8BmZvOEPfSzMwujt5A42L3SzcrIBgDhpJJl+G4w7/Qhp4hHftiuAyM6iYhPyfHM7bZ
+         ABi2vxtlvjeUN0zF6xb7yOxucflw16MGI50C3ygoOzHzHUfp9eS8gML9YvzXZ8S4xT9L
+         CvkKJjzCfWVVEASZMv+1uYQ2lQrtLgyqbiXzuyFLCg/eLrT964S8KDlHwH2noxG+t7oI
+         gj+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=7L1IfB28vMwwS9Fm/CxB0bYsMg3zWRALUZNt6wRuZtI=;
-        b=aJQ22QGILFpGAZe1vXsU85zjidcohEkvWKTeSGKxxY/JXZeU+87O1QAFly3wlG41yI
-         +qULM/ol2z5y35it5TxfjQWUxE8SzZ8vfTWTJ2TlgWBguOHnl+zjyuz9Hv0gzeeAvQHP
-         zC4QLGnBs7YkY/zRPvXXbgV34YEMMCs9GBW2Yu9d+Scc1gyUoWwlKm0iPQIO0O8uBig/
-         Baox8wXJcIIbP1WcOtTZRLIgHKSAaP5H8I0s6V2Fnj5hM4rvHvfxpo88WAW/qheNdpTH
-         Tq/S0wTOn1jVv7/NgdgHpMKx65/xEwHCu7jV9sb5hzRddCyypJWCmCQw/7hNLnWCDZqA
-         qSvA==
-X-Gm-Message-State: AODbwcC92VS1tEA7DZou9/UcLFkxzHXdR8i3KevWIKmCaZjNMQ8IN/UA
-        zdd8zWix9IQDXxBnBTnqkQ==
-X-Received: by 10.98.194.66 with SMTP id l63mr32711397pfg.234.1496267104317;
-        Wed, 31 May 2017 14:45:04 -0700 (PDT)
+        bh=UWKsxm9NH58+kjHiak9z0/HP6RIpvgt6GMsG+FjnVCE=;
+        b=Y6TVsZFn4kevhSi+v1D6Ecce2Yl9+/TXtN+FsE9pKw84zchptaU+XbY+qBA1oF4nKI
+         IJJMnQ8GY+emrTg8PY2RAQwa/kDOEA+W8SJd/qQGzFH4l28k4AJfIDNyZZ9Mk1Jsq4yq
+         59l52889pdPYjXP/6wog/CxNsIK8k/HfmtKn4N2Lzy2zRO4K1SQmmlSJqCIvl8T0oL5P
+         bWEDcPsnYKO+9AMvYM6H7UAAWGf8VkcxbE5+bVRpCk/Hyugv4F/CGF598oCxeIiXnSo9
+         5LR0AG9ibuHTNBZM2nwaxxtRcItm4WZ+AIhqkR8f+cU4rY5iS/Uy7akHkzaC3vIpynTN
+         SdJA==
+X-Gm-Message-State: AODbwcA3adGQ/MUcrSivOinj4r0/DAzyTacwF7mFCnCdcZ401Py1bSjP
+        iXNw3DvsknzlXqn5ECpCPA==
+X-Received: by 10.99.147.68 with SMTP id w4mr35611902pgm.189.1496267100899;
+        Wed, 31 May 2017 14:45:00 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.45.02
+        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 31 May 2017 14:45:03 -0700 (PDT)
+        Wed, 31 May 2017 14:44:59 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 20/31] tree: convert read_tree to take an index parameter
-Date:   Wed, 31 May 2017 14:44:06 -0700
-Message-Id: <20170531214417.38857-21-bmwill@google.com>
+Subject: [PATCH 18/31] convert: convert convert_to_git to take an index
+Date:   Wed, 31 May 2017 14:44:04 -0700
+Message-Id: <20170531214417.38857-19-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170531214417.38857-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -67,126 +67,178 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/ls-files.c |  2 +-
- tree.c             | 28 ++++++++++++++++++----------
- tree.h             |  3 ++-
- 3 files changed, 21 insertions(+), 12 deletions(-)
+ apply.c         | 2 +-
+ builtin/blame.c | 2 +-
+ combine-diff.c  | 2 +-
+ convert.c       | 7 ++++---
+ convert.h       | 8 +++++---
+ diff.c          | 6 +++---
+ dir.c           | 2 +-
+ sha1_file.c     | 4 ++--
+ 8 files changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index f16ce0053..620487a77 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -461,7 +461,7 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix)
- 			       PATHSPEC_PREFER_CWD, prefix, matchbuf);
- 	} else
- 		memset(&pathspec, 0, sizeof(pathspec));
--	if (read_tree(tree, 1, &pathspec))
-+	if (read_tree(tree, 1, &pathspec, &the_index))
- 		die("unable to read tree entries %s", tree_name);
- 
- 	for (i = 0; i < active_nr; i++) {
-diff --git a/tree.c b/tree.c
-index 603b29ee8..dd69423d9 100644
---- a/tree.c
-+++ b/tree.c
-@@ -1,3 +1,4 @@
-+#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "cache-tree.h"
- #include "tree.h"
-@@ -8,7 +9,11 @@
- 
- const char *tree_type = "tree";
- 
--static int read_one_entry_opt(const unsigned char *sha1, const char *base, int baselen, const char *pathname, unsigned mode, int stage, int opt)
-+static int read_one_entry_opt(struct index_state *istate,
-+			      const unsigned char *sha1,
-+			      const char *base, int baselen,
-+			      const char *pathname,
-+			      unsigned mode, int stage, int opt)
- {
- 	int len;
- 	unsigned int size;
-@@ -27,14 +32,15 @@ static int read_one_entry_opt(const unsigned char *sha1, const char *base, int b
- 	memcpy(ce->name, base, baselen);
- 	memcpy(ce->name + baselen, pathname, len+1);
- 	hashcpy(ce->oid.hash, sha1);
--	return add_cache_entry(ce, opt);
-+	return add_index_entry(istate, ce, opt);
- }
- 
- static int read_one_entry(const unsigned char *sha1, struct strbuf *base,
- 			  const char *pathname, unsigned mode, int stage,
- 			  void *context)
- {
--	return read_one_entry_opt(sha1, base->buf, base->len, pathname,
-+	struct index_state *istate = context;
-+	return read_one_entry_opt(istate, sha1, base->buf, base->len, pathname,
- 				  mode, stage,
- 				  ADD_CACHE_OK_TO_ADD|ADD_CACHE_SKIP_DFCHECK);
- }
-@@ -47,7 +53,8 @@ static int read_one_entry_quick(const unsigned char *sha1, struct strbuf *base,
- 				const char *pathname, unsigned mode, int stage,
- 				void *context)
- {
--	return read_one_entry_opt(sha1, base->buf, base->len, pathname,
-+	struct index_state *istate = context;
-+	return read_one_entry_opt(istate, sha1, base->buf, base->len, pathname,
- 				  mode, stage,
- 				  ADD_CACHE_JUST_APPEND);
- }
-@@ -144,7 +151,8 @@ static int cmp_cache_name_compare(const void *a_, const void *b_)
- 				  ce2->name, ce2->ce_namelen, ce_stage(ce2));
- }
- 
--int read_tree(struct tree *tree, int stage, struct pathspec *match)
-+int read_tree(struct tree *tree, int stage, struct pathspec *match,
-+	      struct index_state *istate)
- {
- 	read_tree_fn_t fn = NULL;
- 	int i, err;
-@@ -164,23 +172,23 @@ int read_tree(struct tree *tree, int stage, struct pathspec *match)
- 	 * do it the original slow way, otherwise, append and then
- 	 * sort at the end.
- 	 */
--	for (i = 0; !fn && i < active_nr; i++) {
--		const struct cache_entry *ce = active_cache[i];
-+	for (i = 0; !fn && i < istate->cache_nr; i++) {
-+		const struct cache_entry *ce = istate->cache[i];
- 		if (ce_stage(ce) == stage)
- 			fn = read_one_entry;
+diff --git a/apply.c b/apply.c
+index 87db9618d..8eca54325 100644
+--- a/apply.c
++++ b/apply.c
+@@ -2268,7 +2268,7 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
+ 	case S_IFREG:
+ 		if (strbuf_read_file(buf, path, st->st_size) != st->st_size)
+ 			return error(_("unable to open or read %s"), path);
+-		convert_to_git(path, buf->buf, buf->len, buf, 0);
++		convert_to_git(&the_index, path, buf->buf, buf->len, buf, 0);
+ 		return 0;
+ 	default:
+ 		return -1;
+diff --git a/builtin/blame.c b/builtin/blame.c
+index c0ae49298..317d2ec37 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2384,7 +2384,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 		if (strbuf_read(&buf, 0, 0) < 0)
+ 			die_errno("failed to read from stdin");
  	}
+-	convert_to_git(path, buf.buf, buf.len, &buf, 0);
++	convert_to_git(&the_index, path, buf.buf, buf.len, &buf, 0);
+ 	origin->file.ptr = buf.buf;
+ 	origin->file.size = buf.len;
+ 	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_oid.hash);
+diff --git a/combine-diff.c b/combine-diff.c
+index 2848034fe..74f723af3 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1053,7 +1053,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			if (is_file) {
+ 				struct strbuf buf = STRBUF_INIT;
  
- 	if (!fn)
- 		fn = read_one_entry_quick;
--	err = read_tree_recursive(tree, "", 0, stage, match, fn, NULL);
-+	err = read_tree_recursive(tree, "", 0, stage, match, fn, istate);
- 	if (fn == read_one_entry || err)
- 		return err;
- 
- 	/*
- 	 * Sort the cache entry -- we need to nuke the cache tree, though.
- 	 */
--	cache_tree_free(&active_cache_tree);
--	QSORT(active_cache, active_nr, cmp_cache_name_compare);
-+	cache_tree_free(&istate->cache_tree);
-+	QSORT(istate->cache, istate->cache_nr, cmp_cache_name_compare);
- 	return 0;
+-				if (convert_to_git(elem->path, result, len, &buf, safe_crlf)) {
++				if (convert_to_git(&the_index, elem->path, result, len, &buf, safe_crlf)) {
+ 					free(result);
+ 					result = strbuf_detach(&buf, &len);
+ 					result_size = len;
+diff --git a/convert.c b/convert.c
+index 824b606fa..5af6fdf3f 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1085,7 +1085,8 @@ const char *get_convert_attr_ascii(const char *path)
+ 	return "";
  }
  
-diff --git a/tree.h b/tree.h
-index 0d4734b94..744e6dc2a 100644
---- a/tree.h
-+++ b/tree.h
-@@ -34,6 +34,7 @@ extern int read_tree_recursive(struct tree *tree,
- 			       int stage, const struct pathspec *pathspec,
- 			       read_tree_fn_t fn, void *context);
+-int convert_to_git(const char *path, const char *src, size_t len,
++int convert_to_git(const struct index_state *istate,
++		   const char *path, const char *src, size_t len,
+                    struct strbuf *dst, enum safe_crlf checksafe)
+ {
+ 	int ret = 0;
+@@ -1101,7 +1102,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+-	ret |= crlf_to_git(&the_index, path, src, len, dst, ca.crlf_action, checksafe);
++	ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, checksafe);
+ 	if (ret && dst) {
+ 		src = dst->buf;
+ 		len = dst->len;
+@@ -1172,7 +1173,7 @@ int renormalize_buffer(const char *path, const char *src, size_t len, struct str
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+-	return ret | convert_to_git(path, src, len, dst, SAFE_CRLF_RENORMALIZE);
++	return ret | convert_to_git(&the_index, path, src, len, dst, SAFE_CRLF_RENORMALIZE);
+ }
  
--extern int read_tree(struct tree *tree, int stage, struct pathspec *pathspec);
-+extern int read_tree(struct tree *tree, int stage, struct pathspec *pathspec,
-+		     struct index_state *istate);
+ /*****************************************************************
+diff --git a/convert.h b/convert.h
+index 3a813a797..60cb41d6a 100644
+--- a/convert.h
++++ b/convert.h
+@@ -41,15 +41,17 @@ extern const char *get_wt_convert_stats_ascii(const char *path);
+ extern const char *get_convert_attr_ascii(const char *path);
  
- #endif /* TREE_H */
+ /* returns 1 if *dst was used */
+-extern int convert_to_git(const char *path, const char *src, size_t len,
++extern int convert_to_git(const struct index_state *istate,
++			  const char *path, const char *src, size_t len,
+ 			  struct strbuf *dst, enum safe_crlf checksafe);
+ extern int convert_to_working_tree(const char *path, const char *src,
+ 				   size_t len, struct strbuf *dst);
+ extern int renormalize_buffer(const char *path, const char *src, size_t len,
+ 			      struct strbuf *dst);
+-static inline int would_convert_to_git(const char *path)
++static inline int would_convert_to_git(const struct index_state *istate,
++				       const char *path)
+ {
+-	return convert_to_git(path, NULL, 0, NULL, 0);
++	return convert_to_git(istate, path, NULL, 0, NULL, 0);
+ }
+ /* Precondition: would_convert_to_git_filter_fd(path) == true */
+ extern void convert_to_git_filter_fd(const struct index_state *istate,
+diff --git a/diff.c b/diff.c
+index 2f2467c6d..87ed6d6d3 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2756,7 +2756,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
+ 	 * Similarly, if we'd have to convert the file contents anyway, that
+ 	 * makes the optimization not worthwhile.
+ 	 */
+-	if (!want_file && would_convert_to_git(name))
++	if (!want_file && would_convert_to_git(&the_index, name))
+ 		return 0;
+ 
+ 	len = strlen(name);
+@@ -2878,7 +2878,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+ 		 * point if the path requires us to run the content
+ 		 * conversion.
+ 		 */
+-		if (size_only && !would_convert_to_git(s->path))
++		if (size_only && !would_convert_to_git(&the_index, s->path))
+ 			return 0;
+ 
+ 		/*
+@@ -2905,7 +2905,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+ 		/*
+ 		 * Convert from working tree format to canonical git format
+ 		 */
+-		if (convert_to_git(s->path, s->data, s->size, &buf, crlf_warn)) {
++		if (convert_to_git(&the_index, s->path, s->data, s->size, &buf, crlf_warn)) {
+ 			size_t size = 0;
+ 			munmap(s->data, s->size);
+ 			s->should_munmap = 0;
+diff --git a/dir.c b/dir.c
+index 0c26a53d2..8dc74c5d2 100644
+--- a/dir.c
++++ b/dir.c
+@@ -796,7 +796,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 				 (pos = index_name_pos(istate, fname, strlen(fname))) >= 0 &&
+ 				 !ce_stage(istate->cache[pos]) &&
+ 				 ce_uptodate(istate->cache[pos]) &&
+-				 !would_convert_to_git(fname))
++				 !would_convert_to_git(istate, fname))
+ 				hashcpy(sha1_stat->sha1,
+ 					istate->cache[pos]->oid.hash);
+ 			else
+diff --git a/sha1_file.c b/sha1_file.c
+index 80e9ef3bb..a900b2804 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3547,7 +3547,7 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
+ 	 */
+ 	if ((type == OBJ_BLOB) && path) {
+ 		struct strbuf nbuf = STRBUF_INIT;
+-		if (convert_to_git(path, buf, size, &nbuf,
++		if (convert_to_git(&the_index, path, buf, size, &nbuf,
+ 				   write_object ? safe_crlf : SAFE_CRLF_FALSE)) {
+ 			buf = strbuf_detach(&nbuf, &size);
+ 			re_allocated = 1;
+@@ -3669,7 +3669,7 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
+ 	else if (!S_ISREG(st->st_mode))
+ 		ret = index_pipe(sha1, fd, type, path, flags);
+ 	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
+-		 (path && would_convert_to_git(path)))
++		 (path && would_convert_to_git(&the_index, path)))
+ 		ret = index_core(sha1, fd, xsize_t(st->st_size), type, path,
+ 				 flags);
+ 	else
 -- 
 2.13.0.506.g27d5fe0cd-goog
 
