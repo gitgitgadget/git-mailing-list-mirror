@@ -2,50 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7650D1FD09
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95A5E1FD09
 	for <e@80x24.org>; Wed, 31 May 2017 21:44:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751192AbdEaVov (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 17:44:51 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:36863 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751146AbdEaVor (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 17:44:47 -0400
-Received: by mail-pf0-f172.google.com with SMTP id m17so18544487pfg.3
-        for <git@vger.kernel.org>; Wed, 31 May 2017 14:44:41 -0700 (PDT)
+        id S1751186AbdEaVou (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 17:44:50 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33411 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751029AbdEaVop (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 17:44:45 -0400
+Received: by mail-pf0-f180.google.com with SMTP id e193so18618068pfh.0
+        for <git@vger.kernel.org>; Wed, 31 May 2017 14:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ONjwUQUU1qj9gYCHNDPyWQPakI+/s2C7OMb1wVmjG9o=;
-        b=EMcZdUOD4P1KKQF1E3IQ7Qs8zxGsZiVfsJp63TIsnqCUy5VJJIPucQtL/khh7n0bAQ
-         ctq87ppbIha4lGTZWrvJFKDEF6IXTD1R0jGyorZ1XnlA1MjWTnv7CS7nCZ7sR7NgtpBZ
-         bsgjE9V9RoNv9bGbP+aaqEFbu1KlAiMq16zUdgejlDldS4DJYP5OEFSiOVtwWEdOtxRx
-         qDusN4adDA+L7PHdpxG4soWyw2RFUTU5DEWmHp+EVfeH/+UmCGZBbOqbPrWt2qUBjhaU
-         zivCtWyum3F0PiXKGBpMkdff2rcKz2WRAkOgjtpntAdMvquLo87+WwhR7OJugHqqr255
-         lSRw==
+        bh=rpL9keHeye2gXI/3BxxWlGA/mFlNcybysBYpSZvIm0Q=;
+        b=pK9/tqOCLxZEWJ0UtSPJYyEvYbAWm/xB4MyMQpSbB57TVv9GgPg42c1N6nWYsarLY0
+         lHJQ0WUyfnr09pTx2xAVDNllxbHFkiufeBHcIs0+1sVlvCEMNHSfoO3czMEA2HWIjcdm
+         TuPGKLJDLcYRtAqEAlKZOXu2/E3aHLV1A8XlFBXJQjWvqANkNGbxhhQxrYCjBhws9QRA
+         lNPk7/Fjtd5Jfj64WLG9jhDQHh5j0+IFtUr/7p9kxMJ+vpgg4ozBuJz0yraD5B17kWlK
+         EGaRf397p1pB1QEIfiE3qKTsW8WBMG9C9egxPCQg4TAR08nzHdYCI5DFtUvgPlGz1KL4
+         mPVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ONjwUQUU1qj9gYCHNDPyWQPakI+/s2C7OMb1wVmjG9o=;
-        b=ObTjwtLo4mdvA0uMeAH9jJ56oQJYSnmPA102oKhA2bkrLz1anYTR1l1wAbJYbKn47c
-         u1CD9TWO/QfSBWsRBWhWwKXz1O2NzbYzMbsPHeDiKytb1VQUibqHTuAfBtaWojDU2FsM
-         2Zvu6pWi5mwhBbzd+XyQ5P2YwX8PbxX4BFk7oLDc7gEU6SXpQ+uC90nt95hhWfKoD18v
-         10jOYz5g86UuQtMMlfIPYP4bKaTLyx4pQHexp1UxmZBogIJ6nWtHuN6I+y87b69Pmx2L
-         88eIQHx7ffnnLZeZDADLWvuClwW4v6Tt31/HPyYHm2t57y2Fm9tsY/Yj3xdmidagaMQ2
-         AkIA==
-X-Gm-Message-State: AODbwcAIF83iE4PtMT044M0pPHOjSPWanrshq7If9hgHZKiOOCrHut8x
-        +1a9KSkNIkmBhSi3bzuxOA==
-X-Received: by 10.99.149.70 with SMTP id t6mr28194415pgn.168.1496267075894;
-        Wed, 31 May 2017 14:44:35 -0700 (PDT)
+        bh=rpL9keHeye2gXI/3BxxWlGA/mFlNcybysBYpSZvIm0Q=;
+        b=dRiYjuBgAS/M/0ehKdXhSYSNoRox0mhE3S/JRUDXFz6kKo0MStWIZRC/F9CQbzdJ9Z
+         gwmvzzh4Uq5Jv6VaFUw31pdyAcNdgJURi7AedtQWGIXD06zMES5Er57maG1Bb/NHbnoa
+         id0qSU0y5tibetBqwrgcsrmpSRPuAI/rd8KK82oarLi8LexdBG6nBpcBRwKuAiRikqEw
+         VuYodpldi0o7hgQRBCX372FKmPUKzyPweMW23cj9kUhEzQJfrvOG6Ruy05C2MUH4/0+v
+         OlwGKgyuvddCAoqjOKxuGJfyWOj6ucsd+HcDlJ1tBeJj8kXTikAVnuS5o0S+2fVAinUP
+         cnLQ==
+X-Gm-Message-State: AODbwcAhL9taqL2YY31gJiOlHRFX9P0PPmn2ExcbbbptT7w1xIOtZK7K
+        VLiukoSCWwVZGLfM
+X-Received: by 10.84.174.193 with SMTP id r59mr44293486plb.34.1496267084596;
+        Wed, 31 May 2017 14:44:44 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.34
+        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 31 May 2017 14:44:34 -0700 (PDT)
+        Wed, 31 May 2017 14:44:43 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -53,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 03/31] config: don't implicitly use gitdir
-Date:   Wed, 31 May 2017 14:43:49 -0700
-Message-Id: <20170531214417.38857-4-bmwill@google.com>
+Subject: [PATCH 08/31] environment: store worktree in the_repository
+Date:   Wed, 31 May 2017 14:43:54 -0700
+Message-Id: <20170531214417.38857-9-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170531214417.38857-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -64,54 +65,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 2185fde56 (config: handle conditional include when $GIT_DIR is
-not set up) added a 'git_dir' field to the config_options struct.  Let's
-use this option field explicitly all the time instead of occasionally
-falling back to calling 'git_pathdup("config")' to get the path to the
-local repository configuration.  This allows 'go_git_config_sequence()'
-to not implicitly rely on global repository state.
+Migrate 'work_tree' to be stored in 'the_repository'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/config.c | 2 ++
- config.c         | 4 ++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ environment.c | 9 ++++-----
+ repo.c        | 7 +++++++
+ repo.h        | 2 ++
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 753c40a5c..90f49a6ee 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -539,6 +539,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		config_options.respect_includes = !given_config_source.file;
- 	else
- 		config_options.respect_includes = respect_includes_opt;
-+	if (have_git_dir())
-+		config_options.git_dir = get_git_common_dir();
+diff --git a/environment.c b/environment.c
+index a0519f4f3..2722ebb9f 100644
+--- a/environment.c
++++ b/environment.c
+@@ -96,7 +96,6 @@ int ignore_untracked_cache_config;
  
- 	if (end_null) {
- 		term = '\0';
-diff --git a/config.c b/config.c
-index 2390f98e3..ff09b27b8 100644
---- a/config.c
-+++ b/config.c
-@@ -1548,8 +1548,6 @@ static int do_git_config_sequence(const struct config_options *opts,
+ /* This is set by setup_git_dir_gently() and/or git_default_config() */
+ char *git_work_tree_cfg;
+-static char *work_tree;
  
- 	if (opts->git_dir)
- 		repo_config = mkpathdup("%s/config", opts->git_dir);
--	else if (have_git_dir())
--		repo_config = git_pathdup("config");
- 	else
- 		repo_config = NULL;
+ static const char *super_prefix;
  
-@@ -1613,6 +1611,8 @@ static void git_config_raw(config_fn_t fn, void *data)
- 	struct config_options opts = {0};
+@@ -220,19 +219,19 @@ void set_git_work_tree(const char *new_work_tree)
+ {
+ 	if (git_work_tree_initialized) {
+ 		new_work_tree = real_path(new_work_tree);
+-		if (strcmp(new_work_tree, work_tree))
++		if (strcmp(new_work_tree, the_repository.worktree))
+ 			die("internal error: work tree has already been set\n"
+ 			    "Current worktree: %s\nNew worktree: %s",
+-			    work_tree, new_work_tree);
++			    the_repository.worktree, new_work_tree);
+ 		return;
+ 	}
+ 	git_work_tree_initialized = 1;
+-	work_tree = real_pathdup(new_work_tree, 1);
++	repo_set_worktree(&the_repository, new_work_tree);
+ }
  
- 	opts.respect_includes = 1;
-+	if (have_git_dir())
-+		opts.git_dir = get_git_common_dir();
- 	if (git_config_with_options(fn, data, NULL, &opts) < 0)
- 		/*
- 		 * git_config_with_options() normally returns only
+ const char *get_git_work_tree(void)
+ {
+-	return work_tree;
++	return the_repository.worktree;
+ }
+ 
+ char *get_object_directory(void)
+diff --git a/repo.c b/repo.c
+index f7c3617a9..789ffdd78 100644
+--- a/repo.c
++++ b/repo.c
+@@ -84,6 +84,11 @@ void repo_set_gitdir(struct repo *repo, const char *path)
+ 	repo_setup_env(repo);
+ }
+ 
++void repo_set_worktree(struct repo *repo, const char *path)
++{
++	repo->worktree = real_pathdup(path, 1);
++}
++
+ int repo_init(struct repo *repo, const char *gitdir)
+ {
+ 	int error = 0;
+@@ -121,4 +126,6 @@ int repo_init(struct repo *repo, const char *gitdir)
+ void repo_clear(struct repo *repo)
+ {
+ 	repo_clear_env(repo);
++	free(repo->worktree);
++	repo->worktree = NULL;
+ }
+diff --git a/repo.h b/repo.h
+index 453049e67..95d021049 100644
+--- a/repo.h
++++ b/repo.h
+@@ -9,6 +9,7 @@ struct repo {
+ 	char *index_file;
+ 	char *graft_file;
+ 	char *namespace;
++	char *worktree;
+ 
+ 	/* Configurations */
+ 	unsigned ignore_env:1;
+@@ -19,6 +20,7 @@ struct repo {
+ extern struct repo the_repository;
+ 
+ extern void repo_set_gitdir(struct repo *repo, const char *path);
++extern void repo_set_worktree(struct repo *repo, const char *path);
+ extern int repo_init(struct repo *repo, const char *path);
+ extern void repo_clear(struct repo *repo);
+ 
 -- 
 2.13.0.506.g27d5fe0cd-goog
 
