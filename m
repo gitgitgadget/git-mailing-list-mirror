@@ -2,51 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AB4F1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 21:45:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D70E1FD09
+	for <e@80x24.org>; Wed, 31 May 2017 21:45:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751216AbdEaVo7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 17:44:59 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:35882 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750977AbdEaVoy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 17:44:54 -0400
-Received: by mail-pf0-f177.google.com with SMTP id m17so18546685pfg.3
-        for <git@vger.kernel.org>; Wed, 31 May 2017 14:44:48 -0700 (PDT)
+        id S1751196AbdEaVox (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 17:44:53 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:33455 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750977AbdEaVow (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 17:44:52 -0400
+Received: by mail-pf0-f176.google.com with SMTP id e193so18620190pfh.0
+        for <git@vger.kernel.org>; Wed, 31 May 2017 14:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cBVlzmioNno1VKVEGoGgmZ+ly02ymbLUaeJw6PmiSxo=;
-        b=bFgFnIfZujdxk/ru1t+OE+j8WLHiZ00EhdzhGYBzZCrwqDbmkrXprkB4vHW6oYFx5a
-         gzznDU0QbTUs+GeGb3wByrqJecNeYC28+iPJXbg+2PKTxeWGYFi9SmtI8YaVmT4UubF5
-         nWgarP9G3yH/Ocb+CJptDMxQ6ncVh3nbEW9aybbbqwMv8q2LKjIaJwNRaDvIu0HmoorL
-         UsUJqTQ/gLogzSuEBfCR1puZH3o0F/Ahn3OgDA9DZo9UIEk12cnWqOfKqYIIGj8exTDR
-         VVX8FJbvMDTeebmTlJo8rY+2aMRVJ5rowboCEsOyjHNpA7xDA8V/EvKEJoXuIF4YImaf
-         MaDw==
+        bh=DDYyd7kRin3jktLdd8OdjHoMTGvpgdTd1OnICoc7upY=;
+        b=vpHGpagz3se/hNxhQOvGLlEMskWAE2WbM2Ul0z1IF6BRxpRVm7/BcAtBGjZRbcFG9v
+         3V0oWUmIoVOfQhGZ5Eu6aCbj4cWFultAKZqG6MWS4KN+fLqgbN+MOcj3BHdk1124nE0+
+         k4xynwz5JaSfY6DAJvf1T7W+WplfY711cHslDI4pni3bGdw67DQ9ova4fdwQyHoXVr0X
+         nykQBQCZgaAmX/Ppv2FnXeX95T00zAYjBBHL9x26Cj3NhTCcjfEaX3j/g71ySANcDXIM
+         psS2Yw/fBm0Yh8E18asdrA2EkzZRMuCtTvIoC3/CEpbR0RAmxdph9hQij6ZxhawVkY4f
+         va3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=cBVlzmioNno1VKVEGoGgmZ+ly02ymbLUaeJw6PmiSxo=;
-        b=AoC4OCJfY6Z6HJJswUke2IaSSfOJMuKoSbbYGY1Qxl3oeYQPMpMnxPD1gjMJNEGIVS
-         wnSYHkmYeS4u0jOJgIOd+ZkCgZzbWmNa4ZD6F7MxEnkw8zG2exIQ+G3fukzaSJe3m6tn
-         jdRd/Zvz7l22j29wWxyWbjGcaKeOnj0F4h/FCFbKl4JR2acFJGxgUsSocWTjDcKxU3Oo
-         wUamzvgmofMjMI0hbIT9UeJFT+6rLDSFzCtjySkwELXpm9nWObpCSyrDjcwAeLhvJkj/
-         YjedI4HA5Dp9G48v5VvDjwdHy466KJE/cxxwg9AqNgy/Vjb59fwbr4Er1cqMr7dgpizt
-         PirA==
-X-Gm-Message-State: AODbwcA3gsAlVEvxCoWuh3XtmdXizcEULKtYWl9Put6YOM1xrCAdM8mR
-        TSk1B4rBiPm3Lk041xNv7A==
-X-Received: by 10.98.201.212 with SMTP id l81mr32939939pfk.225.1496267082770;
-        Wed, 31 May 2017 14:44:42 -0700 (PDT)
+        bh=DDYyd7kRin3jktLdd8OdjHoMTGvpgdTd1OnICoc7upY=;
+        b=kBLrnQheQjKmAela+pEbYsy6+U3GSOX6oMXXtav83/+4z0rMycK4OzzP0n5DWDlfYQ
+         Y7RcVtWWNfRyCUUByjQODouPf4hAlVDmK6EbwoMcvBSHod1tl3w16NacngKBJqjP7B55
+         B4skTaqcpDStzQcVp6CQnHr0TPrHlnjYAM2lcDWhbp8kCDeiYSowuwoOd8JmAlqWqgkc
+         yUaL+3wuhSQEdjIyM5u0CWCRYCso3jjE7Pr68lc+ozJc20GgyuTA0AxeqjQ6FYqylKPB
+         vFNTzYsCVBQad/ag7NSKfz9MPf+9sFsmZN2p2pz23utrzyA0JfOWsl5WW0ELYOGgeyu/
+         c7PA==
+X-Gm-Message-State: AODbwcADq8Fwbq5vz15QlZ3mOT399ZUrEz+az+IsL5cVsH2FBHf7M6Vg
+        wFnxr8VBHeOBGR+Z
+X-Received: by 10.84.210.166 with SMTP id a35mr9446226pli.160.1496267091375;
+        Wed, 31 May 2017 14:44:51 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.41
+        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 31 May 2017 14:44:41 -0700 (PDT)
+        Wed, 31 May 2017 14:44:50 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +53,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 07/31] environment: place key repository state in the_repository
-Date:   Wed, 31 May 2017 14:43:53 -0700
-Message-Id: <20170531214417.38857-8-bmwill@google.com>
+Subject: [PATCH 12/31] submodule-config: store the_submodule_cache in the_repository
+Date:   Wed, 31 May 2017 14:43:58 -0700
+Message-Id: <20170531214417.38857-13-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170531214417.38857-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -65,263 +64,242 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Migrate 'git_dir', 'git_common_dir', 'git_object_dir', 'git_index_file',
-'git_graft_file', and 'namespace' to be stored in 'the_repository'.
+Refactor how 'the_submodule_cache' is handled so that it can be stored
+inside of a repository object.  Also migrate 'the_submodule_cache' to be
+stored in 'the_repository'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- cache.h       |  1 -
- environment.c | 65 ++++++++++++++---------------------------------------------
- path.c        | 11 +++++-----
- setup.c       | 17 ++++++++++++++--
- 4 files changed, 36 insertions(+), 58 deletions(-)
+ repo.c             |  6 +++++
+ repo.h             |  2 ++
+ submodule-config.c | 71 ++++++++++++++++++++++++++++++++++++++++--------------
+ submodule-config.h | 10 ++++++++
+ 4 files changed, 71 insertions(+), 18 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index c0b4c8d83..02ab5f801 100644
---- a/cache.h
-+++ b/cache.h
-@@ -769,7 +769,6 @@ extern int core_apply_sparse_checkout;
- extern int precomposed_unicode;
- extern int protect_hfs;
- extern int protect_ntfs;
--extern int git_db_env, git_index_env, git_graft_env, git_common_dir_env;
- 
- /*
-  * Include broken refs in all ref iterations, which will
-diff --git a/environment.c b/environment.c
-index 77900b31a..a0519f4f3 100644
---- a/environment.c
-+++ b/environment.c
-@@ -8,6 +8,7 @@
-  * are.
-  */
+diff --git a/repo.c b/repo.c
+index c79d29534..13b7d244f 100644
+--- a/repo.c
++++ b/repo.c
+@@ -1,6 +1,7 @@
  #include "cache.h"
-+#include "repo.h"
+ #include "repo.h"
  #include "config.h"
- #include "refs.h"
- #include "fmt-merge-msg.h"
-@@ -97,14 +98,8 @@ int ignore_untracked_cache_config;
- char *git_work_tree_cfg;
- static char *work_tree;
++#include "submodule-config.h"
  
--static const char *namespace;
--
- static const char *super_prefix;
- 
--static const char *git_dir, *git_common_dir;
--static char *git_object_dir, *git_index_file, *git_graft_file;
--int git_db_env, git_index_env, git_graft_env, git_common_dir_env;
--
  /*
-  * Repository-local GIT_* environment variables; see cache.h for details.
-  */
-@@ -148,47 +143,16 @@ char *expand_namespace(const char *raw_namespace)
- 	return strbuf_detach(&buf, NULL);
+  * This may be the wrong place for this.
+@@ -166,4 +167,9 @@ void repo_clear(struct repo *repo)
+ 		free(repo->index);
+ 		repo->index = NULL;
+ 	}
++
++	if (repo->submodule_cache) {
++		submodule_cache_free(repo->submodule_cache);
++		repo->submodule_cache = NULL;
++	}
  }
+diff --git a/repo.h b/repo.h
+index 756cda9e1..ebce2a408 100644
+--- a/repo.h
++++ b/repo.h
+@@ -3,6 +3,7 @@
  
--static char *git_path_from_env(const char *envvar, const char *git_dir,
--			       const char *path, int *fromenv)
--{
--	const char *value = getenv(envvar);
--	if (!value)
--		return xstrfmt("%s/%s", git_dir, path);
--	if (fromenv)
--		*fromenv = 1;
--	return xstrdup(value);
--}
--
- void setup_git_env(void)
- {
--	struct strbuf sb = STRBUF_INIT;
--	const char *gitfile;
- 	const char *shallow_file;
- 	const char *replace_ref_base;
+ struct config_set;
+ struct index_state;
++struct submodule_cache;
  
--	git_dir = getenv(GIT_DIR_ENVIRONMENT);
--	if (!git_dir) {
--		if (!startup_info->have_repository)
--			BUG("setup_git_env called without repository");
--		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
--	}
--	gitfile = read_gitfile(git_dir);
--	git_dir = xstrdup(gitfile ? gitfile : git_dir);
--	if (get_common_dir(&sb, git_dir))
--		git_common_dir_env = 1;
--	git_common_dir = strbuf_detach(&sb, NULL);
--	git_object_dir = git_path_from_env(DB_ENVIRONMENT, git_common_dir,
--					   "objects", &git_db_env);
--	git_index_file = git_path_from_env(INDEX_ENVIRONMENT, git_dir,
--					   "index", &git_index_env);
--	git_graft_file = git_path_from_env(GRAFT_ENVIRONMENT, git_common_dir,
--					   "info/grafts", &git_graft_env);
- 	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
- 		check_replace_refs = 0;
- 	replace_ref_base = getenv(GIT_REPLACE_REF_BASE_ENVIRONMENT);
- 	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
- 							  : "refs/replace/");
--	namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
- 	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
- 	if (shallow_file)
- 		set_alternate_shallow_file(shallow_file, 0);
-@@ -203,28 +167,28 @@ int is_bare_repository(void)
- int have_git_dir(void)
- {
- 	return startup_info->have_repository
--		|| git_dir;
-+		|| the_repository.gitdir;
- }
+ struct repo {
+ 	/* Environment */
+@@ -22,6 +23,7 @@ struct repo {
+ 	 */
+ 	struct config_set *config;
+ 	struct index_state *index;
++	struct submodule_cache *submodule_cache;
  
- const char *get_git_dir(void)
- {
--	if (!git_dir)
-+	if (!the_repository.gitdir)
- 		BUG("git environment hasn't been setup");
--	return git_dir;
-+	return the_repository.gitdir;
- }
- 
- const char *get_git_common_dir(void)
- {
--	if (!git_dir)
-+	if (!the_repository.commondir)
- 		BUG("git environment hasn't been setup");
--	return git_common_dir;
-+	return the_repository.commondir;
- }
- 
- const char *get_git_namespace(void)
- {
--	if (!namespace)
-+	if (!the_repository.namespace)
- 		BUG("git environment hasn't been setup");
--	return namespace;
-+	return the_repository.namespace;
- }
- 
- const char *strip_namespace(const char *namespaced_ref)
-@@ -273,9 +237,9 @@ const char *get_git_work_tree(void)
- 
- char *get_object_directory(void)
- {
--	if (!git_object_dir)
-+	if (!the_repository.objectdir)
- 		BUG("git environment hasn't been setup");
--	return git_object_dir;
-+	return the_repository.objectdir;
- }
- 
- int odb_mkstemp(struct strbuf *template, const char *pattern)
-@@ -313,22 +277,23 @@ int odb_pack_keep(const char *name)
- 
- char *get_index_file(void)
- {
--	if (!git_index_file)
-+	if (!the_repository.index_file)
- 		BUG("git environment hasn't been setup");
--	return git_index_file;
-+	return the_repository.index_file;
- }
- 
- char *get_graft_file(void)
- {
--	if (!git_graft_file)
-+	if (!the_repository.graft_file)
- 		BUG("git environment hasn't been setup");
--	return git_graft_file;
-+	return the_repository.graft_file;
- }
- 
- int set_git_dir(const char *path)
- {
- 	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
- 		return error("Could not set GIT_DIR to '%s'", path);
-+	repo_set_gitdir(&the_repository, path);
- 	setup_git_env();
- 	return 0;
- }
-diff --git a/path.c b/path.c
-index c1cb1cf62..a1a7c2653 100644
---- a/path.c
-+++ b/path.c
-@@ -2,6 +2,7 @@
-  * Utilities for paths and pathnames
-  */
- #include "cache.h"
-+#include "repo.h"
- #include "strbuf.h"
- #include "string-list.h"
- #include "dir.h"
-@@ -355,7 +356,7 @@ void report_linked_checkout_garbage(void)
- 	const struct common_dir *p;
- 	int len;
- 
--	if (!git_common_dir_env)
-+	if (!the_repository.different_commondir)
- 		return;
- 	strbuf_addf(&sb, "%s/", get_git_dir());
- 	len = sb.len;
-@@ -374,17 +375,17 @@ void report_linked_checkout_garbage(void)
- static void adjust_git_path(struct strbuf *buf, int git_dir_len)
- {
- 	const char *base = buf->buf + git_dir_len;
--	if (git_graft_env && is_dir_file(base, "info", "grafts"))
-+	if (is_dir_file(base, "info", "grafts"))
- 		strbuf_splice(buf, 0, buf->len,
- 			      get_graft_file(), strlen(get_graft_file()));
--	else if (git_index_env && !strcmp(base, "index"))
-+	else if (!strcmp(base, "index"))
- 		strbuf_splice(buf, 0, buf->len,
- 			      get_index_file(), strlen(get_index_file()));
--	else if (git_db_env && dir_prefix(base, "objects"))
-+	else if (dir_prefix(base, "objects"))
- 		replace_dir(buf, git_dir_len + 7, get_object_directory());
- 	else if (git_hooks_path && dir_prefix(base, "hooks"))
- 		replace_dir(buf, git_dir_len + 5, git_hooks_path);
--	else if (git_common_dir_env)
-+	else if (the_repository.different_commondir)
- 		update_common_dir(buf, git_dir_len, NULL);
- }
- 
-diff --git a/setup.c b/setup.c
-index b2e05145c..dba3abd00 100644
---- a/setup.c
-+++ b/setup.c
+ 	/* Configurations */
+ 	unsigned ignore_env:1;
+diff --git a/submodule-config.c b/submodule-config.c
+index d8f8d5ea3..cd356fec0 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
 @@ -1,4 +1,5 @@
  #include "cache.h"
 +#include "repo.h"
  #include "config.h"
- #include "dir.h"
- #include "string-list.h"
-@@ -376,6 +377,11 @@ void setup_work_tree(void)
- 	if (getenv(GIT_WORK_TREE_ENVIRONMENT))
- 		setenv(GIT_WORK_TREE_ENVIRONMENT, ".", 1);
+ #include "submodule-config.h"
+ #include "submodule.h"
+@@ -15,6 +16,7 @@
+ struct submodule_cache {
+ 	struct hashmap for_path;
+ 	struct hashmap for_name;
++	unsigned initialized:1;
+ };
  
-+	/*
-+	 * NEEDSWORK: this call can essentially be set_git_dir(get_git_dir())
-+	 * which can cause some problems when trying to free the old value of
-+	 * gitdir.
-+	 */
- 	set_git_dir(remove_leading_path(git_dir, work_tree));
- 	initialized = 1;
+ /*
+@@ -31,9 +33,6 @@ enum lookup_type {
+ 	lookup_path
+ };
+ 
+-static struct submodule_cache the_submodule_cache;
+-static int is_cache_init;
+-
+ static int config_path_cmp(const struct submodule_entry *a,
+ 			   const struct submodule_entry *b,
+ 			   const void *unused)
+@@ -50,10 +49,16 @@ static int config_name_cmp(const struct submodule_entry *a,
+ 	       hashcmp(a->config->gitmodules_sha1, b->config->gitmodules_sha1);
  }
-@@ -1074,8 +1080,15 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	 * the user has set GIT_DIR.  It may be beneficial to disallow bogus
- 	 * GIT_DIR values at some point in the future.
- 	 */
--	if (startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT))
--		setup_git_env();
-+	if (startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT)) {
-+		if (!the_repository.gitdir) {
-+			const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
-+			if (!gitdir)
-+				gitdir = DEFAULT_GIT_DIR_ENVIRONMENT;
-+			repo_set_gitdir(&the_repository, gitdir);
-+			setup_git_env();
-+		}
-+	}
  
- 	strbuf_release(&dir);
- 	strbuf_release(&gitdir);
+-static void cache_init(struct submodule_cache *cache)
++static struct submodule_cache *submodule_cache_alloc(void)
++{
++	return xcalloc(1, sizeof(struct submodule_cache));
++}
++
++static void submodule_cache_init(struct submodule_cache *cache)
+ {
+ 	hashmap_init(&cache->for_path, (hashmap_cmp_fn) config_path_cmp, 0);
+ 	hashmap_init(&cache->for_name, (hashmap_cmp_fn) config_name_cmp, 0);
++	cache->initialized = 1;
+ }
+ 
+ static void free_one_config(struct submodule_entry *entry)
+@@ -65,11 +70,14 @@ static void free_one_config(struct submodule_entry *entry)
+ 	free(entry->config);
+ }
+ 
+-static void cache_free(struct submodule_cache *cache)
++static void submodule_cache_clear(struct submodule_cache *cache)
+ {
+ 	struct hashmap_iter iter;
+ 	struct submodule_entry *entry;
+ 
++	if (!cache->initialized)
++		return;
++
+ 	/*
+ 	 * We iterate over the name hash here to be symmetric with the
+ 	 * allocation of struct submodule entries. Each is allocated by
+@@ -81,6 +89,13 @@ static void cache_free(struct submodule_cache *cache)
+ 
+ 	hashmap_free(&cache->for_path, 1);
+ 	hashmap_free(&cache->for_name, 1);
++	cache->initialized = 0;
++}
++
++void submodule_cache_free(struct submodule_cache *cache)
++{
++	submodule_cache_clear(cache);
++	free(cache);
+ }
+ 
+ static unsigned int hash_sha1_string(const unsigned char *sha1,
+@@ -494,43 +509,63 @@ static const struct submodule *config_from(struct submodule_cache *cache,
+ 	return submodule;
+ }
+ 
+-static void ensure_cache_init(void)
++static void submodule_cache_check_init(struct repo *repository)
+ {
+-	if (is_cache_init)
++	if (repository->submodule_cache && repository->submodule_cache->initialized)
+ 		return;
+ 
+-	cache_init(&the_submodule_cache);
+-	is_cache_init = 1;
++	if (!repository->submodule_cache)
++		repository->submodule_cache = submodule_cache_alloc();
++
++	submodule_cache_init(repository->submodule_cache);
+ }
+ 
+-int parse_submodule_config_option(const char *var, const char *value)
++int submodule_config_option(struct repo *repository,
++			    const char *var, const char *value)
+ {
+ 	struct parse_config_parameter parameter;
+-	parameter.cache = &the_submodule_cache;
++
++	submodule_cache_check_init(repository);
++
++	parameter.cache = repository->submodule_cache;
+ 	parameter.treeish_name = NULL;
+ 	parameter.gitmodules_sha1 = null_sha1;
+ 	parameter.overwrite = 1;
+ 
+-	ensure_cache_init();
+ 	return parse_config(var, value, &parameter);
+ }
+ 
++int parse_submodule_config_option(const char *var, const char *value)
++{
++	return submodule_config_option(&the_repository, var, value);
++}
++
+ const struct submodule *submodule_from_name(const unsigned char *treeish_name,
+ 		const char *name)
+ {
+-	ensure_cache_init();
+-	return config_from(&the_submodule_cache, treeish_name, name, lookup_name);
++	submodule_cache_check_init(&the_repository);
++	return config_from(the_repository.submodule_cache, treeish_name, name, lookup_name);
+ }
+ 
+ const struct submodule *submodule_from_path(const unsigned char *treeish_name,
+ 		const char *path)
+ {
+-	ensure_cache_init();
+-	return config_from(&the_submodule_cache, treeish_name, path, lookup_path);
++	submodule_cache_check_init(&the_repository);
++	return config_from(the_repository.submodule_cache, treeish_name, path, lookup_path);
+ }
+ 
++const struct submodule *submodule_from_cache(struct repo *repository,
++					     const unsigned char *treeish_name,
++					     const char *key)
++{
++	submodule_cache_check_init(repository);
++	return config_from(repository->submodule_cache, treeish_name,
++			   key, lookup_path);
++}
++
++
+ void submodule_free(void)
+ {
+-	cache_free(&the_submodule_cache);
+-	is_cache_init = 0;
++	if (the_repository.submodule_cache)
++		submodule_cache_clear(the_repository.submodule_cache);
+ }
+diff --git a/submodule-config.h b/submodule-config.h
+index d434ecdb4..2bfe78d89 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -22,14 +22,24 @@ struct submodule {
+ 	int recommend_shallow;
+ };
+ 
++struct submodule_cache;
++struct repo;
++
++extern void submodule_cache_free(struct submodule_cache *cache);
++
+ extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+ extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
+ extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
+ extern int parse_submodule_config_option(const char *var, const char *value);
++extern int submodule_config_option(struct repo *repository,
++				   const char *var, const char *value);
+ extern const struct submodule *submodule_from_name(
+ 		const unsigned char *commit_or_tree, const char *name);
+ extern const struct submodule *submodule_from_path(
+ 		const unsigned char *commit_or_tree, const char *path);
++extern const struct submodule *submodule_from_cache(struct repo *repository,
++						    const unsigned char *treeish_name,
++						    const char *key);
+ extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
+ 				      unsigned char *gitmodules_sha1,
+ 				      struct strbuf *rev);
 -- 
 2.13.0.506.g27d5fe0cd-goog
 
