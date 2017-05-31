@@ -2,179 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1481E1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 19:03:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A1F41FD09
+	for <e@80x24.org>; Wed, 31 May 2017 19:08:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751080AbdEaTC5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 15:02:57 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:58021 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751011AbdEaTC5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 15:02:57 -0400
-Received: from [192.168.2.240] ([92.22.34.189])
-        by smtp.talktalk.net with SMTP
-        id G8tSdjy1vHGLwG8tSdGzEO; Wed, 31 May 2017 20:02:55 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1496257375; bh=MIMTypvEArvuDEgKx9AwaRUJW+MtTHMbBeVtXSjmxDI=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=iPcmkUefZYZWMtXxq13rtkMFMK6BWJm35+10gh0VCrOXrRco6X6Cfd2Piu5weFWr2
-         npbyiLtaJCcOoblQJ1T0lqjr+wBZ2PW4Ete2yrbIIxTMT7sCKWJlc3mFYHVhatZICC
-         MbdXDq+OUBa0AEyNfv107uyKaQY+bAXeqDmjifFc=
-X-Originating-IP: [92.22.34.189]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=vjpdqwq13QoU7KiiDtdC/A==:117
- a=vjpdqwq13QoU7KiiDtdC/A==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
- a=A1X0JdhQAAAA:8 a=J0bozyjmhRP38CFvKPIA:9 a=shKY6gTsdA-D4Ph0:21
- a=1z6z2SDjsy-nUKZz:21 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
- a=Df3jFdWbhGDLdZNm0fyq:22
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/3] rebase: Add tests for console output
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
- <20170531104213.16944-3-phillip.wood@talktalk.net>
-Message-ID: <39cd140a-4ba1-f3ee-d945-bf43199d4a82@talktalk.net>
-Date:   Wed, 31 May 2017 20:02:53 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1751129AbdEaTIY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 15:08:24 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:37201 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751062AbdEaTIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 15:08:23 -0400
+Received: by mail-it0-f51.google.com with SMTP id m47so1854166iti.0
+        for <git@vger.kernel.org>; Wed, 31 May 2017 12:08:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tFViCyECuJjtJ+KVbNdmgZqbpvh4t5mcW81gfsc9HcA=;
+        b=Yq6OlVXWoRksUcV1k5DvO/48jW0nwnapgUv09LiyD7gxrkqlau8smwww+m0YukFAja
+         hsnxKBu49izGydXVjLFcVlst/LtVF09M9UNRxrrGnRa/sck3rmejDvXf+NjXlhTRRiAa
+         uJfO+6XGMLKWJUcn6sdKcD64Jg59i84+e7XlFaaGscqp0EcOtX3oMiibWbOybAapzI9Y
+         w84o67Z1c4Cs8W4spXicB1TuXgy1ed8IZdjT6OVSucRFBomLtjGxHSp4VKWAu6IKLmTt
+         7itft2UgPrflWDg0YYuTqlaaQt+YdpRxu2jixNQUiZAJgl0irKyO00lv3Rpct4VqKfjD
+         W3Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tFViCyECuJjtJ+KVbNdmgZqbpvh4t5mcW81gfsc9HcA=;
+        b=Ih9tRVdYcaiMJnuA9jHBCp2XU5Jk1fPIVJN9h9UPfW5IO317lHleB7XIKqV2pqfL7y
+         VkNyRqHSkbIVFkPhTPADNcBugXl6LOurQwcAb01sn+LfxdAW9rjqGtSdCRTsFDp2b6ZY
+         w26PGROZ2iZzoRcC1qKakE9EURVUWqjJISfRaXCo6t4s8gMzZkYIuantqPPjtlM/3Jt5
+         uqUFS6843nPV2KSe5ZUXsJgL/AS7TMq2VsmPW3LxpwtrgD/ke+SS+uIq1fDdKy30Vv3i
+         m78QwJd0pisb1phxWYrV2Jtf6EwPiiSr3FD3kkpvxWHRXXOYoQKyYwu4lmCcqb9olSGS
+         lRgw==
+X-Gm-Message-State: AODbwcDbeKbbebrNXY/i0Oy7qys20QcICJLPfUgZK7qpKUVAT3tIDdcd
+        Q0nPlP0AcZFDUlBqjlJvVSFLqGIfROtk0CHhlw==
+X-Received: by 10.36.70.211 with SMTP id j202mr8611440itb.22.1496257702336;
+ Wed, 31 May 2017 12:08:22 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170531104213.16944-3-phillip.wood@talktalk.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfPIFMCn2ck8xE8ENCkN2/vLV9M+fjD6vTNNLY4lLvI9QEcwcJ8iRgHyvM+4b++SSWY4z58zTso1/I8sHNwEeSKdVUWLgbsvKO/otH1v8yP6W1t2GXDFq
- gBPTd565b9vScUOgR+sIREHoSvZ9My6V3eeUJX+0OPlGUVAV+V6i6s/NizwpEsqI+qa0r/jVw5NT4uFV+gvqr3ISVwSJNYOY3DA9RQQBBklGjCAuBxOCSOhH
- sd32YvLm10l6nGnuENtTzj9Y+mc0i3QpUh17Ot0MpG3DoR87X/1onsbV7Z+M7tj0
+Received: by 10.79.150.90 with HTTP; Wed, 31 May 2017 12:07:41 -0700 (PDT)
+In-Reply-To: <CAD1ypiWOcKaLJJzZC=gw75EDFnw_1ZqC94B5p9i722T-sijN1Q@mail.gmail.com>
+References: <CAD1ypiWOcKaLJJzZC=gw75EDFnw_1ZqC94B5p9i722T-sijN1Q@mail.gmail.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Wed, 31 May 2017 15:07:41 -0400
+Message-ID: <CAJZjrdWrrZBCR0xQMSFbCL6rwPThNNitkUA2AoOhOWQkxkUv9g@mail.gmail.com>
+Subject: Re: Coloring
+To:     Irving Rabin <irving@edmodo.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 31/05/17 11:42, Phillip Wood wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> Check the console output when using --autostash and the stash applies
-> cleanly is what we expect. To avoid this test depending on commit and
-> stash hashes it uses sed to replace them with XXX. The sed script also
-> replaces carriage returns in the output with '\r' to avoid embedded
-> '^M's in the expected output files. Unfortunately this means we still
-> end up with an embedded '^M' in the sed script which may not be
-> preserved when sending this. The last line of the sed script should be
-> +s/^M/\\r/g
+On Wed, May 31, 2017 at 2:33 PM, Irving Rabin <irving@edmodo.com> wrote:
+>
+> Folks, I am reporting an issue with coloring of the output of Git
+> commands, like status, diff, etc.
+>
+> Specifically, if the field is supposed to be white, it doesn't mean it
+> should be literally 0xFFFFFF. It should be the color that I have
+> configured as White color for my console emulator.
+>
+> I like light-screen terminals, and I configure my ANSI colors in the
+> way that they are clearly visible on the background and clearly
+> distinct between themselves. In my terminal settings background is
+> light-yellow, Black is black, Yellow is brown, Red is dark red,
+> Magenta is purple and White is dark gray. I set it once and I can use
+> it everywhere - all Unix commands work correctly, I can edit
+> highlighted source code in Vim, and all my color settings are
+> respected.
 
-Thinking about this it might be better to create the sed script with 
-printf when running the test
+Can you elaborate on how it is that you redefine your terminal color
+scheme? There are multiple levels at which you can do that, which will
+have some bearing on the answer.
 
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->   t/t3420-rebase-autostash.sh          | 10 +++++++++-
->   t/t3420/expected-success-am          |  6 ++++++
->   t/t3420/expected-success-interactive |  4 ++++
->   t/t3420/expected-success-merge       | 30 ++++++++++++++++++++++++++++++
->   t/t3420/remove-ids.sed               |  6 ++++++
->   5 files changed, 55 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-> index ab8a63e8d6dc643b28eb0c74ba3f032b7532226f..886be63c6d13e1ac4197a1b185659fb3d7d7eb26 100755
-> --- a/t/t3420-rebase-autostash.sh
-> +++ b/t/t3420-rebase-autostash.sh
-> @@ -53,12 +53,20 @@ testrebase() {
->   		git checkout -b rebased-feature-branch feature-branch &&
->   		test_when_finished git branch -D rebased-feature-branch &&
->   		echo dirty >>file3 &&
-> -		git rebase$type unrelated-onto-branch &&
-> +		git rebase$type unrelated-onto-branch >tmp 2>&1 &&
->   		grep unrelated file4 &&
->   		grep dirty file3 &&
->   		git checkout feature-branch
->   	'
->   
-> +	test_expect_success "rebase$type --autostash: check output" '
-> +		suffix=${type#\ -} && suffix=${suffix:--am} &&
-> +		sed -f $TEST_DIRECTORY/t3420/remove-ids.sed tmp \
-> +			>actual-success$suffix &&
-> +		test_cmp $TEST_DIRECTORY/t3420/expected-success$suffix \
-> +			actual-success$suffix
-> +	'
-> +
->   	test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
->   		test_config rebase.autostash true &&
->   		git reset --hard &&
-> diff --git a/t/t3420/expected-success-am b/t/t3420/expected-success-am
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..c18ded04f703ed2aa83d5e62589a908d0a44cf7e
-> --- /dev/null
-> +++ b/t/t3420/expected-success-am
-> @@ -0,0 +1,6 @@
-> +Created autostash: XXX
-> +HEAD is now at XXX third commit
-> +First, rewinding head to replay your work on top of it...
-> +Applying: second commit
-> +Applying: third commit
-> +Applied autostash.
-> diff --git a/t/t3420/expected-success-interactive b/t/t3420/expected-success-interactive
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..b31f71c95ddc9c18ce9956c1aadf53cedd966801
-> --- /dev/null
-> +++ b/t/t3420/expected-success-interactive
-> @@ -0,0 +1,4 @@
-> +Created autostash: XXX
-> +HEAD is now at XXX third commit
-> +Rebasing (1/2)\rRebasing (2/2)\rSuccessfully rebased and updated refs/heads/rebased-feature-branch.
-> +Applied autostash.
-> diff --git a/t/t3420/expected-success-merge b/t/t3420/expected-success-merge
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..66386f7cb5242a255d9cc64aad741e651ec7ec1e
-> --- /dev/null
-> +++ b/t/t3420/expected-success-merge
-> @@ -0,0 +1,30 @@
-> +Created autostash: XXX
-> +HEAD is now at XXX third commit
-> +First, rewinding head to replay your work on top of it...
-> +Merging unrelated-onto-branch with HEAD~1
-> +Merging:
-> +XXX unrelated commit
-> +XXX second commit
-> +found 1 common ancestor:
-> +XXX initial commit
-> +[detached HEAD XXX] second commit
-> + Author: A U Thor <author@example.com>
-> + Date: Thu Apr 7 15:14:13 2005 -0700
-> + 2 files changed, 2 insertions(+)
-> + create mode 100644 file1
-> + create mode 100644 file2
-> +Committed: 0001 second commit
-> +Merging unrelated-onto-branch with HEAD~0
-> +Merging:
-> +XXX second commit
-> +XXX third commit
-> +found 1 common ancestor:
-> +XXX second commit
-> +[detached HEAD XXX] third commit
-> + Author: A U Thor <author@example.com>
-> + Date: Thu Apr 7 15:15:13 2005 -0700
-> + 1 file changed, 1 insertion(+)
-> + create mode 100644 file3
-> +Committed: 0002 third commit
-> +All done.
-> +Applied autostash.
-> diff --git a/t/t3420/remove-ids.sed b/t/t3420/remove-ids.sed
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..9e9048b02bd04d287461543d85db0bb715b89f8c
-> --- /dev/null
-> +++ b/t/t3420/remove-ids.sed
-> @@ -0,0 +1,6 @@
-> +s/^\(Created autostash: \)[0-9a-f]\{6,\}$/\1XXX/
-> +s/^\(HEAD is now at \)[0-9a-f]\{6,\}\( .* commit\)$/\1XXX\2/
-> +s/^[0-9a-f]\{6,\}\( .* commit\)$/XXX\1/
-> +s/\(detached HEAD \)[0-9a-f]\{6,\}/\1XXX/
-> +s/\(could not apply \)[0-9a-f]\{6,\}/\1XXX/g
-> +s//\\r/g
-> 
-
+> However Git behaves differently. When I run git diff, some of the
+> output is literally white on light yellow background. It is like "we
+> know what is White, so we ignore your settings". And it is quite
+> irritating.
+>
+> Is there a way to make Git respect terminal settings and not to
+> override them with absolute colors? If so, please advise. If not, then
+> I guess it is a bug to fix, right?
+>
+> Thanks,
+> Irving Rabin
+> Software Developer @Edmodo
+> 408-242-1299
