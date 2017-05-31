@@ -2,136 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 087612027C
-	for <e@80x24.org>; Wed, 31 May 2017 05:18:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CE4A2027C
+	for <e@80x24.org>; Wed, 31 May 2017 05:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751056AbdEaFSH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 01:18:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60392 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751042AbdEaFSH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 01:18:07 -0400
-Received: (qmail 16464 invoked by uid 109); 31 May 2017 05:18:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 05:18:05 +0000
-Received: (qmail 1838 invoked by uid 111); 31 May 2017 05:18:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 01:18:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 May 2017 01:18:04 -0400
-Date:   Wed, 31 May 2017 01:18:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elliott Cable <me@ell.io>
-Cc:     Dennis Kaarsemaker <dennis.kaarsemaker@booking.com>,
-        Git Mailing List <git@vger.kernel.org>, bmwill@google.com
-Subject: [PATCH] docs/config: mention protocol implications of url.insteadOf
-Message-ID: <20170531051804.w6f7yvz4k5wkrwvc@sigill.intra.peff.net>
-References: <CAPZ477MCsBsfbqKzp69MT_brwz-0aes6twJofQrhizUBV7ZoeA@mail.gmail.com>
- <1495230186.19473.7.camel@kaarsemaker.net>
- <1495230934.19473.10.camel@booking.com>
- <20170520070757.jekykxagzze3t2wy@sigill.intra.peff.net>
- <CAPZ477PoSXqahxaQVpO+m==vng==o4vQahrg_WA8Oeh7wmoW0w@mail.gmail.com>
+        id S1751057AbdEaFcz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 01:32:55 -0400
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:33041 "EHLO
+        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751039AbdEaFcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 01:32:54 -0400
+Received: by mail-oi0-f54.google.com with SMTP id w10so2944734oif.0
+        for <git@vger.kernel.org>; Tue, 30 May 2017 22:32:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YdtngpZACe1YGxwsdKl2Ex/aXYZAkcCB+DnpoQqflX8=;
+        b=mG1k4PvThl/xTxBxR/A9oz88wusK3BV7Xzmz9C+AxlJoXKhS0u386tgvWbRA3228Qd
+         0iKsIJkBnYr4licL/k5bc0Yl8afaoKMLoR+/g2Y/jsoNsz64aAn3vOtKRNfUnWiHCor/
+         mvu1DZfIiJgyoyIo6VPH3vWrSLqEuAhDvLsDjB4SIIrITA84qeqNVYzL3VSQRhDNIHPE
+         E0mEN8m7SVn4RLwo3AYp3oLQ6JUgVKkjAg77b/jYhO8Q2LknrrkNjj/GAcA1QU3ZOn+C
+         86nZVMu5CFOTKuMVzW79BScWSTXS550iKttDPTqe1ZuAG/7ocFjidRqxtilcpfxT4fnG
+         SqDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=YdtngpZACe1YGxwsdKl2Ex/aXYZAkcCB+DnpoQqflX8=;
+        b=Nk1gmFj04uj78gE8k12w8/kTueDNydPjjUoUIVznUgVJdTo7UO0tWxDLkf2dK6rfPG
+         bykKbT5mUdCrs7zibBC+KeifAKCD8DgFpDI0T+mFtEKZ/wKJOEGqSa6JFjKRFq3aeNn8
+         GYUKFTDxHRUFZVbMUru9H0fYTEmAXox8il8/0NW2qR9/Oz/EOyfGpoWTyMg536930DMy
+         YEpCT6Dq4dzCfkspUFaYz1gd73oyr9wHqmU3YMY8M1MTvzSaLRsHH7Fkqn7V41g/E2JH
+         qpFloG5lGkH4NsqyCl0hXmzKeshi1pyCJu4kY9ebOwiRTGFQI83DDacanwiyQxnd9QHZ
+         UpUw==
+X-Gm-Message-State: AODbwcDl5swuf5O41zP7M6sZWxWXEH4rLn2RCQ+8y1t4V+4ld6rzITPd
+        S/0uYA4I7q+32FyeO6Nw+PD/55h9XQ==
+X-Received: by 10.202.48.136 with SMTP id w130mr4734705oiw.65.1496208773067;
+ Tue, 30 May 2017 22:32:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPZ477PoSXqahxaQVpO+m==vng==o4vQahrg_WA8Oeh7wmoW0w@mail.gmail.com>
+Received: by 10.74.38.143 with HTTP; Tue, 30 May 2017 22:32:52 -0700 (PDT)
+In-Reply-To: <3d02b958-5f72-9676-bce9-afca962c07df@kdbg.org>
+References: <CALKRkrxHNao6NY+-_UmznHdq29yVJJynu8Xx5M__YfK9UkdOAw@mail.gmail.com>
+ <CA+izobvwRCwGEtpCbey=gFbCh9sHBb5xB1i1LpMG0JCUy0O2mQ@mail.gmail.com> <3d02b958-5f72-9676-bce9-afca962c07df@kdbg.org>
+From:   Atousa Duprat <atousa.p@gmail.com>
+Date:   Tue, 30 May 2017 22:32:52 -0700
+Message-ID: <CA+izobteEUSisKXNr=k5BcN9hVV4nyqYPWuRLAgV-rg9chH4_g@mail.gmail.com>
+Subject: Re: [Bug] git branch -v has problems with carriage returns
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Animi Vulpis <animi.vulpis@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="001a113cd7046df4db0550cb40c8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 26, 2017 at 11:22:37AM -0500, Elliott Cable wrote:
+--001a113cd7046df4db0550cb40c8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 1. Most simply, better documentation: mention `GIT_PROTOCOL_FROM_USER`
->    explicitly in the documentation of/near `insteadOf`, most
->    particularly in the README for `contrib/persistent-https`.
+Here is my first attempt at fixing the issue.
 
-I agree that a hint in both places would be helpful.  The patch for that
-is below.
+There are two problems in ref-filter.c:
 
-> 2. Possibly, special-case “higher-security” porcelain (like
->    `git-submodule`, as described in 33cfccbbf3) to ignore `insteadOf`
->    rewrite-rules without additional, special configuration. This way,
->    `git-submodule` works for ignorant users (like me) out of the box,
->    just as it previously did, and there's no possible security
->    compramise.
+First, copy_subject() has been modified to turn '\n' into a space and
+every other ascii control character to be ignored.
 
-I don't think we can do that. Rewrites of "git://" to "ssh://" are
-pretty common (and completely harmless). Besides, I think submodules are
-a case where you really would want persistent-https to kick in. IIRC,
-the original use case for that helper is Android development, where a
-user is likely to update a ton of repositories from the same server all
-at once. Right now the fetches are all done individually with the "repo"
-tool, but in theory the whole thing could be set up as submodules.
+Second, find_subpos() doesn't realize that a line that only contains a
+'\r\n' is a blank line =E2=80=93 at least when using crlf convention.
+I have changed things so that a sequence of either '\n' or "\r\n"
+separate the subject from the body of the commit message.
+I am not looking at the crlf setting because it doesn't seem like a
+useful distinction =E2=80=93 when one would we ever care for \r\n not to be=
+ a
+blank line?  But it could be done...
 
--- >8 --
-Subject: [PATCH] docs/config: mention protocol implications of url.insteadOf
+Both fixes are minimal, but it feels like they are a issues with the
+specific encoding.  Does git mandate ascii or utf-8 commit messages?
+If not, there may be a larger issue here with encodings and line-end
+conventions at the very least in ref-filter.c
+Guidance would be appreciated for how to deal with this issue...
 
-If a URL rewrite switches the protocol to something
-nonstandard (like "persistent-https" for "https"), the user
-may be bitten by the fact that the default protocol
-restrictions are different between the two. Let's drop a
-note in insteadOf that points the user in the right
-direction.
+Patch attached.
 
-It would be nice if we could make this work out of the box,
-but we can't without knowing the security implications of
-the user's rewrite. Only the documentation for a particular
-remote helper can advise one way or the other. Since we do
-include the persistent-https helper in contrib/ (and since
-it was the helper in the real-world case that inspired that
-patch), let's also drop a note there.
 
-Suggested-by: Elliott Cable <me@ell.io>
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/config.txt        |  7 +++++++
- contrib/persistent-https/README | 10 ++++++++++
- 2 files changed, 17 insertions(+)
+Atousa
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 43d830ee3..5218ecd37 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3235,6 +3235,13 @@ url.<base>.insteadOf::
- 	the best alternative for the particular user, even for a
- 	never-before-seen repository on the site.  When more than one
- 	insteadOf strings match a given URL, the longest match is used.
-++
-+Note that any protocol restrictions will be applied to the rewritten
-+URL. If the rewrite changes the URL to use a custom protocol or remote
-+helper, you may need to adjust the `protocol.*.allow` config to permit
-+the request.  In particular, protocols you expect to use for submodules
-+must be set to `always` rather than the default of `user`. See the
-+description of `protocol.allow` above.
- 
- url.<base>.pushInsteadOf::
- 	Any URL that starts with this value will not be pushed to;
-diff --git a/contrib/persistent-https/README b/contrib/persistent-https/README
-index f784dd2e6..7c4cd8d25 100644
---- a/contrib/persistent-https/README
-+++ b/contrib/persistent-https/README
-@@ -35,6 +35,16 @@ to use persistent-https:
- [url "persistent-http"]
- 	insteadof = http
- 
-+You may also want to allow the use of the persistent-https helper for
-+submodule URLs (since any https URLs pointing to submodules will be
-+rewritten, and Git's out-of-the-box defaults forbid submodules from
-+using unknown remote helpers):
-+
-+[protocol "persistent-https"]
-+	allow = always
-+[protocol "persistent-http"]
-+	allow = always
-+
- 
- #####################################################################
- # BUILDING FROM SOURCE
--- 
-2.13.0.678.ga17378094
 
+On Fri, May 19, 2017 at 11:48 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> Am 19.05.2017 um 23:55 schrieb Atousa Duprat:
+>>
+>> I have tried to repro this issue but git goes out of its way to store
+>> the commit messages using unix end-of-line format.
+>> I think that git itself cannot create a repo exhibiting this problem.
+>
+>
+> Here is a recipe to reproduce the error:
+>
+>   git init
+>   git commit --allow-empty -m initial
+>   git branch crlf $(printf '%s\r\n' subject '' line3_long line4 |
+>        git commit-tree HEAD:)
+>
+> The reason for the "bug" is obviously that a line having CR in addition t=
+o
+> LF is not "an empty line". Consequently, the second line is not treated a=
+s a
+> separator between subject and body, whereupon Git concatenates all lines
+> into one large subject line. This strips the LFs but leaves the CRs in ta=
+ct,
+> which, when printed on a terminal move the cursor to the beginning of the
+> line, so that text after the CRs overwrites what is already in the termin=
+al.
+>
+> This is just to give you a head start. I'm not going to look into this.
+>
+> -- Hannes
+>
+>
+>>> If I do `git branch -v` with such a subject line somehow the third and
+>>> second line get combined before the hash. Example:
+>>>
+>>> $ git branch -v
+>>> See merge request !XXXX temp space 84e18d22fd Merge branch
+>>> 'feature-XXX' into 'develop'
+>>> # <begins with third line> <ending of seconds line (if longer than
+>>> third)> <commit hash (correct)> <subject line (correct)>
+>>>
+>>> Before git v2.13.0 `git branch -v` worked completely normal.
+
+--001a113cd7046df4db0550cb40c8
+Content-Type: application/octet-stream; name="branch-crlf.patch"
+Content-Disposition: attachment; filename="branch-crlf.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_j3ck1eb70
+
+ZGlmZiAtLWdpdCBhL3JlZi1maWx0ZXIuYyBiL3JlZi1maWx0ZXIuYwppbmRleCAzYTY0MDQ0OGYu
+LmJjNTczZjQ4MSAxMDA2NDQKLS0tIGEvcmVmLWZpbHRlci5jCisrKyBiL3JlZi1maWx0ZXIuYwpA
+QCAtODM2LDExICs4MzYsMTUgQEAgc3RhdGljIGNvbnN0IGNoYXIgKmNvcHlfZW1haWwoY29uc3Qg
+Y2hhciAqYnVmKQogc3RhdGljIGNoYXIgKmNvcHlfc3ViamVjdChjb25zdCBjaGFyICpidWYsIHVu
+c2lnbmVkIGxvbmcgbGVuKQogewogCWNoYXIgKnIgPSB4bWVtZHVweihidWYsIGxlbik7Ci0JaW50
+IGk7CisJaW50IGksIGo7CiAKLQlmb3IgKGkgPSAwOyBpIDwgbGVuOyBpKyspCisJZm9yIChpID0g
+MCwgaiA9IDA7IGkgPCBsZW47IGkrKywgaisrKQogCQlpZiAocltpXSA9PSAnXG4nKQotCQkJcltp
+XSA9ICcgJzsKKwkJCXJbal0gPSAnICc7CisJCWVsc2UgaWYgKHJbaV0gPCAzMikKKyAgICAgICAg
+ICAgICAgICAgICAgai0tOyAvLyBza2lwIGFzY2lpIGNvbnRyb2wgY2hhcmFjdGVycyB0aGF0IGFy
+ZSBub3QgJ1xuJworICAgICAgICAgICAgICAgIGVsc2UgcltqXSA9IHJbaV07CisgICAgICAgIHJb
+al09MDsKIAogCXJldHVybiByOwogfQpAQCAtOTU2LDkgKzk2MCwxMiBAQCBzdGF0aWMgdm9pZCBm
+aW5kX3N1YnBvcyhjb25zdCBjaGFyICpidWYsIHVuc2lnbmVkIGxvbmcgc3osCiAJCQllb2wrKzsK
+IAkJYnVmID0gZW9sOwogCX0KKwogCS8qIHNraXAgYW55IGVtcHR5IGxpbmVzICovCiAJd2hpbGUg
+KCpidWYgPT0gJ1xuJykKIAkJYnVmKys7CisJd2hpbGUgKCpidWYgPT0gJ1xyJyAmJiAqKGJ1Zisx
+KSA9PSAnXG4nKQorCQlidWYgKz0gMjsKIAogCS8qIHBhcnNlIHNpZ25hdHVyZSBmaXJzdDsgd2Ug
+bWlnaHQgbm90IGV2ZW4gaGF2ZSBhIHN1YmplY3QgbGluZSAqLwogCSpzaWcgPSBidWYgKyBwYXJz
+ZV9zaWduYXR1cmUoYnVmLCBzdHJsZW4oYnVmKSk7Cg==
+--001a113cd7046df4db0550cb40c8--
