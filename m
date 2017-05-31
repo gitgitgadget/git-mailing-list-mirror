@@ -2,146 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 955AB1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 22:01:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDC121FD09
+	for <e@80x24.org>; Wed, 31 May 2017 22:01:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751113AbdEaWBC (ORCPT <rfc822;e@80x24.org>);
+        id S1751153AbdEaWBE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 18:01:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60971 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751083AbdEaWBC (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 31 May 2017 18:01:02 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:46860 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751015AbdEaWBC (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 31 May 2017 18:01:02 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E3FDF280AD;
-        Wed, 31 May 2017 22:01:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1496268060;
-        bh=CPoE3XAjkQikO49UK7R/Fbo6LuckDB1otbSBERYy0fU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RjyvPASgk0mj9zf+pVE7L3k05dvGbwaDFwB/FXwIkyRwSOlo7tUBWw+KvSx1o7+Vh
-         kYNnHqxI0n+5dpXH06iUsV/rhzux72kCiGMVE5k6NGR72bIIoDRo91LVxARVp+ivoc
-         xUTdriFFMOVH3ja8IurrqgqVir1yJ//0FiZhux4QURdCbRGcNvOviJc20cB0qdczR9
-         CvaRZaZaDO5nMmS1jzJ2FomfxzokvrxsJbhjVaqtUEc3lXItR04r52lzB1I4R0nLqW
-         kcmKGpDW6Jon74V/LfOpPeC+s0/NUsPRsIfd1uMdNDSAqYvluLX0SIvjVoB5vtzZTB
-         /qUx1tDm2D46poKaFxzYPueCM8O4KH6DdWfBorYqiq2yX2Qs9ijl+JdPg5oGO8gDqs
-         V/hJsUCIYCx5FH9lRFBzRMBVCrfFn6Cxm18j1dFRdZOiPR2PZYCqtsPS7k1M609CSJ
-         4eWMjH5tUWLQnndxiZmaOQIoVwWTAQXnXGDCEMLsrXBtFLKdYUp
-Date:   Wed, 31 May 2017 22:00:57 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Subject: Re: [PATCH 22/33] notes-merge: convert notes_merge* to struct
- object_id
-Message-ID: <20170530185653.cfy4cbq3pmxfq5x6@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, peff@peff.net
-References: <20170530173109.54904-1-bmwill@google.com>
- <20170530173109.54904-23-bmwill@google.com>
+Received: (qmail 18733 invoked by uid 109); 31 May 2017 22:01:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 22:01:01 +0000
+Received: (qmail 10868 invoked by uid 111); 31 May 2017 22:01:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 31 May 2017 18:01:39 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 31 May 2017 18:01:01 -0400
+Date:   Wed, 31 May 2017 18:01:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     Kevin Willford <kcwillford@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH 1/2] format-patch: have progress option while generating
+ patches
+Message-ID: <20170531220100.t27w3w642sn33h7s@sigill.intra.peff.net>
+References: <20170531150427.7820-1-kewillf@microsoft.com>
+ <20170531150427.7820-2-kewillf@microsoft.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="tnr3mgdpf3sfw247"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170530173109.54904-23-bmwill@google.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-3-amd64)
-User-Agent: NeoMutt/20170306 (1.8.0)
+In-Reply-To: <20170531150427.7820-2-kewillf@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, May 31, 2017 at 08:04:26AM -0700, Kevin Willford wrote:
 
---tnr3mgdpf3sfw247
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> When generating patches for the rebase command if the user does
+> not realize the branch they are rebasing onto is thousands of
+> commits different there is no progress indication after initial
+> rewinding message.
+> 
+> This patch allows a progress option to be passed to format-patch
+> so that the user can be informed the progress of generating the
+> patch.  This option will then be used by the rebase command when
+> calling format-patch.
 
-On Tue, May 30, 2017 at 10:30:58AM -0700, Brandon Williams wrote:
-> @@ -596,47 +596,47 @@ int notes_merge(struct notes_merge_options *o,
->  	/* Find merge bases */
->  	bases =3D get_merge_bases(local, remote);
->  	if (!bases) {
-> -		base_sha1 =3D null_sha1;
-> -		base_tree_sha1 =3D EMPTY_TREE_SHA1_BIN;
-> +		base_oid =3D &null_oid;
-> +		base_tree_oid =3D &empty_tree_oid;
->  		if (o->verbosity >=3D 4)
->  			printf("No merge base found; doing history-less merge\n");
->  	} else if (!bases->next) {
-> -		base_sha1 =3D bases->item->object.oid.hash;
-> -		base_tree_sha1 =3D bases->item->tree->object.oid.hash;
-> +		base_oid =3D &bases->item->object.oid;
-> +		base_tree_oid =3D &bases->item->tree->object.oid;
->  		if (o->verbosity >=3D 4)
->  			printf("One merge base found (%.7s)\n",
-> -				sha1_to_hex(base_sha1));
-> +			       oid_to_hex(base_oid));
+I'm generally in favor of progress meters, though it does seem a little
+funny to me that we'd need one on format-patch. It's basically the same
+operation as "git log -p", after all. I guess one difference is that
+usually the output of "log" would stream to the pager, so the user would
+see immediate output. That's true of format-patch, too, but in the
+instance you care about we're probably doing something more like:
 
-I noticed you fixed up the indentation.  Thanks.
+  git format-patch "$@" >patches
 
-> diff --git a/notes-merge.h b/notes-merge.h
-> index 0d890563b..eaa8e3b86 100644
-> --- a/notes-merge.h
-> +++ b/notes-merge.h
-> @@ -33,15 +33,15 @@ void init_notes_merge_options(struct notes_merge_opti=
-ons *o);
->   *
->   * 1. The merge trivially results in an existing commit (e.g. fast-forwa=
-rd or
->   *    already-up-to-date). 'local_tree' is untouched, the SHA1 of the re=
-sult
-> - *    is written into 'result_sha1' and 0 is returned.
-> + *    is written into 'result_oid' and 0 is returned.
->   * 2. The merge successfully completes, producing a merge commit. local_=
-tree
->   *    contains the updated notes tree, the SHA1 of the resulting commit =
-is
-> - *    written into 'result_sha1', and 1 is returned.
-> + *    written into 'result_oid', and 1 is returned.
->   * 3. The merge results in conflicts. This is similar to #2 in that the
->   *    partial merge result (i.e. merge result minus the unmerged entries)
->   *    are stored in 'local_tree', and the SHA1 or the resulting commit
->   *    (to be amended when the conflicts have been resolved) is written i=
-nto
-> - *    'result_sha1'. The unmerged entries are written into the
-> + *    'result_oid'. The unmerged entries are written into the
->   *    .git/NOTES_MERGE_WORKTREE directory with conflict markers.
->   *    -1 is returned.
->   *
+and the user sees nothing.
 
-Did you want to change the comment to say "object ID" or "OID" instead
-of "SHA1" like you did in an earlier patch?
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+That makes me wonder two things:
 
---tnr3mgdpf3sfw247
-Content-Type: application/pgp-signature; name="signature.asc"
+  1. Should this really be tied to isatty(2), as the documentation
+     claims?  It seems like you'd really only want it to kick in for
+     certain cases. Arguably whenever stdout is _not_ going to a tty
+     you'd want progress, but I think probably the caller should
+     probably just decide whether to ask for it or not.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.21 (GNU/Linux)
+  2. Should this apply to other commands in the log family besides
+     format-patch? E.g., should "git log --progress -p >commits" work?
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlkvPRkACgkQv1NdgR9S
-9os3qRAAh5sc9zynTIiaeqvw/8apnyN9hZEnC2MOczRRHSRVYZ/FxsjhbyJ+XpJ2
-fsFIaRFoiTQHAjS/xjkUazvARI5qRZck6LemCxjV6REJUbcsBb2xp78EgJOnawWV
-zXJ3hwtqxQc8pw99JgY/WioFTy4yJiY/XGaRg04HZNtnisgxWEMfb+c+gNd/bsa8
-NvNAe2gVGQtNCkazOYi3cmIeW4ltcVHUJjsC2TKK3SZO7UiQ+92fzSHOOQVaSMKg
-O9C9Lm0E82smyUYeTpycPdN2RzFAqn4uFadSYRDn9YiUH2Wtmp0LFXKcNE0AQNWW
-9YP3MRfn/E1DbOvm0q1QuPI+Cne19nQLjw69rlUeUgQcXUygLA48GhNemykTKuVJ
-h1hokdxH0ujocr7rvzmfJ4K8CdsgsY+Z3KPcD6F4Z4XwOx8gJfQ0i0ppS6ZsOYgz
-RMTLr6bwmCv7glEk/Kkp8qz0GBtBAhCipuXlUWisIusDUvzEZWdFZ0YLr5BfB3dc
-Lg3KXwmex0PE/GqW7i4mqDLsucSZnA1R1qMAeXFX1owdtDayqW4/cgOFROI7aYQI
-mgeDBnXswido0gZnfjCZxoQe5kCLpIWZ0Y3T2hfqmZ9TCeGnUXDvI1jKz4Pu16ck
-yeh+SktZ3tdoL9KEOuXJ0QFNelqrlc4TtHXrmX3r7/48Nw9VWfc=
-=IhS/
------END PGP SIGNATURE-----
+     I added a progress meter to rev-list a while ago (for connectivity
+     checks). I don't think we could push this down as far as the
+     revision traversal code, because only its callers really understand
+     what's the right unit to be counting.
 
---tnr3mgdpf3sfw247--
+     It may not be worth the trouble, though. Only "format-patch" does a
+     pre-pass to find the total number of commits. So "git log
+     --progress" would inherently just be counting up, with no clue what
+     the final number is.
+
+> @@ -283,6 +285,12 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+>  	range are always formatted as creation patches, independently
+>  	of this flag.
+>  
+> +--progress::
+> +	Progress status is reported on the standard error stream
+> +	by default when it is attached to a terminal, unless -q
+> +	is specified. This flag forces progress status even if the
+> +	standard error stream is not directed to a terminal.
+
+Checking whether stderr is a tty would match our usual progress meters.
+But I don't actually see any code in the patch implementing this.
+
+As I said above, I think I'd prefer it to require "--progress", as
+format-patch is quite often used as plumbing. But we'd need to fix the
+documentation here to match.
+
+> @@ -1739,8 +1744,12 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		start_number--;
+>  	}
+>  	rev.add_signoff = do_signoff;
+> +
+> +	if (show_progress && !quiet)
+> +		progress = start_progress(_("Generating patch"), total);
+
+The meter code here all looks correct, but let me bikeshed for a moment. :)
+
+Should this use start_progress_delay()? In most cases the command will
+complete very quickly, and the progress report is just noise. For many
+commands (e.g., checkout) we wait 1-2 seconds before bothering to show
+progress output.
+
+I would have expected this to say "Generating patches"; most of our
+other progress messages are pluralized. You could use Q_() to handle the
+mono/plural case, but I think it's fine to just always say "patches"
+(that's what other messages do).
+
+One final thought is whether callers would want to customize this
+message, since it will often be used as plumbing. E.g., would rebase
+want to say something besides "Generating patches". I'm not sure.
+Anyway, if you're interested in that direction, there's prior art in
+the way rev-list handles "--progress" (and its sole caller,
+check_connected()).
+
+-Peff
