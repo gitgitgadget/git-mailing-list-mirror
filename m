@@ -2,74 +2,40 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360911FD09
-	for <e@80x24.org>; Wed, 31 May 2017 13:37:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 970C51FD09
+	for <e@80x24.org>; Wed, 31 May 2017 13:50:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751157AbdEaNhg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 09:37:36 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:33429 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751150AbdEaNhg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 09:37:36 -0400
-Received: by mail-qt0-f193.google.com with SMTP id a46so1885337qte.0
-        for <git@vger.kernel.org>; Wed, 31 May 2017 06:37:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=U4dVoi4UNHN1LeBkXAILFAMwVvzegNPYWD3feuvv8fk=;
-        b=pgxfxGm9RG3VqoYGrf3Ln8TWQFTlwfWku/GbZReryHsu6i2pTrnxrLGz4/YMLdyMl2
-         YqdYo534gnVLWrlUc4XnxFoAE9BqdfrKxpry8WrGvGMsr0paXCstnwbXEzeZ/8bTWJ3p
-         x6d/6mOmQq2wOQ/9hPzwlCNN5uA0uozfsI/UmQHAmFj22FJP457PguqxORRDv9pkc7Gt
-         8f0WgDdqVDb54z2ABO5FkquH+6SS1R/E7ntifRyCTqDi/S3Zh1OfX3rcUPbQ5ng0GtSs
-         Hzur+w2hussNEww/6RSsc2gfTJUuJXqDusad/7Tu04qQdulJpqStIK2vSBcIBwOsHGTm
-         Da3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=U4dVoi4UNHN1LeBkXAILFAMwVvzegNPYWD3feuvv8fk=;
-        b=Oz0y/gCbKd5+gyVYBAHwx9Y/tVpzck/HTeyKBO6CwjxSX4U72Et3ECCOYPG5YGYSYU
-         8AcVykebY2LVrD0M5VB4c7QQfQLEmZQv4UIE3y9ZSvf54ES4kxyCwXmFIOCsfivMP9NU
-         TO7RoH+BSd5EjQHNUc7I69u62liUewNjZoFcXoyjgZnH+LlDU3a2GgtSc1AFajLje0tS
-         +KX1GNTIAfI0SISacgRcHIzCRVymIP4riMySbS2dM4I2Mk7QY9kpXaU6xHOOVxQEv5+k
-         4VSGuQh4HA60h4v3gWO5S3AvWVJC9eQPnhXBKTtLS8sQHGuhwK8/A+o8ZMzEsALUoiIw
-         9+BQ==
-X-Gm-Message-State: AODbwcBRevZ/g9WcHSbZAnXSNKJV5o3OzJq5x6UJWWzCDKxc3vENRH3w
-        zmJnqLtu/hwksg==
-X-Received: by 10.237.57.170 with SMTP id m39mr29461181qte.235.1496237855129;
-        Wed, 31 May 2017 06:37:35 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id x53sm10661438qta.36.2017.05.31.06.37.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 May 2017 06:37:34 -0700 (PDT)
-Subject: Re: [PATCH v2 0/6] Fast git status via a file system watcher
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        David Turner <David.Turner@twosigma.com>,
-        Jeff King <peff@peff.net>
-References: <20170518201333.13088-1-benpeart@microsoft.com>
- <CAP8UFD20gvTZqCOcpd1iozNDHOZR1sUKRwi062wL52FNHWNC3w@mail.gmail.com>
- <ab37d437-2a4e-b6ed-621f-5978083cd15b@gmail.com>
- <CAP8UFD3R0dEsX7BtzYoSmvaKTZYsm9=bpQsu0jEk2aKm83z-2A@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <f2c21d3e-9892-bdcb-2686-341de87ee15d@gmail.com>
-Date:   Wed, 31 May 2017 09:37:33 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        id S1750965AbdEaNuo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 09:50:44 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:38437 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750878AbdEaNun (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 09:50:43 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout07 with smtp
+        id T1qg1v0091keHif011qhdn; Wed, 31 May 2017 14:50:42 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=e1UXdVqf8rYVHs6MP_4A:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] submodule: mark some file-local symbols as static
+Message-ID: <a13cb454-f363-6f7e-46b8-c618d2c54fff@ramsayjones.plus.com>
+Date:   Wed, 31 May 2017 14:50:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.1.1
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD3R0dEsX7BtzYoSmvaKTZYsm9=bpQsu0jEk2aKm83z-2A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -77,43 +43,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-On 5/31/2017 3:59 AM, Christian Couder wrote:
-> On Thu, May 25, 2017 at 3:55 PM, Ben Peart <peartben@gmail.com> wrote:
->>
->> On 5/24/2017 6:54 AM, Christian Couder wrote:
->>>>
->>>> A new git hook (query-fsmonitor) must exist and be enabled
->>>> (core.fsmonitor=true) that takes a time_t formatted as a string and
->>>> outputs to stdout all files that have been modified since the requested
->>>> time.
->>>
->>> Is there a reason why there is a new hook, instead of a
->>> "core.fsmonitorquery" config option to which you could pass whatever
->>> command line with options?
->>
->> A hook is a simple and well defined way to integrate git with another
->> process.  If there is some fixed set of arguments that need to be passed to
->> a file system monitor (beyond the timestamp stored in the index extension),
->> they can be encoded in the integration script like I've done in the Watchman
->> integration sample hook.
-> 
-> Yeah, but a hook must also be called everytime git wants to
-> communicate with the file system monitor. And we could perhaps get a
-> speed up if we could have only one long running process to communicate
-> with the file system monitor.
-> 
+Hi Stefan,
 
-In this particular case a long running background processes isn't 
-helpful because refresh_by_fsmonitor() already has logic to ensure the 
-file system monitor is only called once per git process.
+If you need to re-roll your 'sb/submodule-blanket-recursive' branch,
+could you please squash this into the relevant patch (commit 0e5bca302a
+"Introduce 'submodule.recurse' option for worktree manipulators",
+26-05-2017).
 
-The overhead of that one call isn't significant as demonstrated by the 
-performance numbers I sent out in the cover letter.  Even with the cost 
-of the hook and all the associated post-processing, this patch series 
-still results in a nice performance win (even on Windows where spawning 
-processes is typically more expensive than on other platforms).
+Thanks!
 
-I appreciate the close look at this patch series!  Even when I'm pushing 
-back, I'm glad someone is asking questions and making sure I've thought 
-through things.
+ATB,
+Ramsay Jones
+
+ builtin/read-tree.c | 2 +-
+ builtin/reset.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index ad317c736..5bfd4c9f7 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -98,7 +98,7 @@ static int debug_merge(const struct cache_entry * const *stages,
+ 	return 0;
+ }
+ 
+-int git_read_tree_config(const char *var, const char *value, void *cb)
++static int git_read_tree_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "submodule.recurse"))
+ 		return git_default_submodule_config(var, value, cb);
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 48bc58cc7..45001e520 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -265,7 +265,7 @@ static int reset_refs(const char *rev, const struct object_id *oid)
+ 	return update_ref_status;
+ }
+ 
+-int git_reset_config(const char *var, const char *value, void *cb)
++static int git_reset_config(const char *var, const char *value, void *cb)
+ {
+ 	if (!strcmp(var, "submodule.recurse"))
+ 		return git_default_submodule_config(var, value, cb);
+-- 
+2.13.0
