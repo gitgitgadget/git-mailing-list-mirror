@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 493CB1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 18:09:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9170B1FD09
+	for <e@80x24.org>; Wed, 31 May 2017 18:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751037AbdEaSJV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 14:09:21 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:33582 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750952AbdEaSJU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 14:09:20 -0400
-Received: by mail-pg0-f43.google.com with SMTP id u13so1912896pgb.0
-        for <git@vger.kernel.org>; Wed, 31 May 2017 11:09:20 -0700 (PDT)
+        id S1751080AbdEaSYl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 14:24:41 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36122 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751078AbdEaSYj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 14:24:39 -0400
+Received: by mail-pf0-f176.google.com with SMTP id m17so14388870pfg.3
+        for <git@vger.kernel.org>; Wed, 31 May 2017 11:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=HYT5eXpeZgsIW1Tl+5xSgso/X4lRoX/O0W7tTr5P5aI=;
-        b=nIMXF0u1tFLWmK6/lUoBtAAldgWPhmHGag3a7IGtQ/k03nibPEnlrxzZxQ1QInQjSz
-         IXSJZCESWr/gkQe+WK8I7b2p7SgmbYmEuv37RalAZK8S3GDRxokw8K/SmrJedVWyzevX
-         dCyvaynZXhGUPJSfo5EmY+ZCbM4uqNe7+51nebLE6AI0j2Tem1j9XRWJiEucukWT2sE9
-         wlvfUBhX3M2reEaXbIEknoMz7dijb9NmnYkgt1fWWDSoAySIhp1lge7kbV3w0t3eYv2O
-         naCBVRY3Kpkm0BvFun9MMc2xWCGy1UPW/M3PKoZ7JKTQyYH8rIx+VB0w0z72HHUhNLvX
-         kcdg==
+        bh=8TudIHw33nwOtAa3oI1cbHWZu9cWTTNm21QeMggKrwI=;
+        b=bMaOvpOZl5JfmYRnfqvxr6tPhv2WhWhSS9rUShoElvQfvlkG/XZRqCexoIWsJHRDQL
+         EtTARqJqLltsZkIyvJ0ZRkM7kbRYP2fjG/HmVeB6tQPFmJRTCXghKHMtXBhT8MxSkFMU
+         Uz0fCYs1U9yYAI53h2aumt+E0oJojlkpJS4eYVHJk+nolVd6LA8IiFweqpgyW5bba+qB
+         idiTT8Tm6AbX5tP643//NDfybath0ZFQejxwI8ddpdfeMEFFYL4vVVqeJ0aGYLhzgy8i
+         mx4bnEmVEUhBNP53uSp0QffcXB4XsY4+jI1fk4+P4zXCX2kcAdvZ9t+lGKVXV0ALnHY5
+         WN2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=HYT5eXpeZgsIW1Tl+5xSgso/X4lRoX/O0W7tTr5P5aI=;
-        b=bhuOao2iKUauC4K9IVIVb5AiBbHOyFgQWuzOenofGCGm3u7NRQb4cCU2U3stMIo3Db
-         5Uw0zMWzm8FbihqkAcScqbhb+82dMAJ2LAljatn5VUeeZGlWOQKPUX+vXq36S9mDLTE0
-         9gxCqJvhxWtPsVSF3MQVnavk4DypSSDM4KYDri8x9TE0/LhtxsNw9BvNSeUHDg1uoeDF
-         n4h8eSIcZPjHmbTaP+exa1hmzGQL287vtnLh9KOuqX5IzmTAXZTEfwFCyA3AGaPRurW/
-         43DwhLkUBJpd715tiSzCupE29YREBHhhaGZwRqljIXgJrAw6xh19N5vLs0joAjnsGaPJ
-         Iipw==
-X-Gm-Message-State: AODbwcDQ8u6MjNtsKNbvTJl3YMGuNgilzBJPpwIgUt1fZnAZSfoVwsGc
-        nNT/x4Zssy2X/P7jl4/Ntz33l1mlvyWEDvvjtA==
-X-Received: by 10.98.205.65 with SMTP id o62mr31518722pfg.105.1496254159902;
- Wed, 31 May 2017 11:09:19 -0700 (PDT)
+        bh=8TudIHw33nwOtAa3oI1cbHWZu9cWTTNm21QeMggKrwI=;
+        b=BEPfWkaXl+rCZA4H2VKWmUCwkjrghTycVxhbQwPajiWvbTE2fiFC94X/LkYcgw3Hzx
+         TUW6AjjwvV5zHXfsUeuyamjAeY6IIWeDCfz7e6lrj/CQ/1qPUepi/ntyA/n9FMlREKTW
+         56WAQeGG9ClQCquDlp5YQQPov36Dagqdw3V0qpRurZVNa3XYT0h9XJ2XPva3zLJBQVp5
+         WE8MSfi3R53E78Lzh+FoMWah4DwXaHjd1aXVK7418IAs1m7jdAOjjvo9F4XDiDnzMw1k
+         EOD1LGNaE7manWPgNiAAs8SpHwP8xCeqMshzZX/WTwK9umchs4VyruPpzIFu1DEEvk+L
+         vSMg==
+X-Gm-Message-State: AODbwcCzq+K5ia9MI2w3sk6GyBT4eIxJA4EJjQ2AiW9tzLmnLBV+WzJN
+        fzzAtSNQwmxJ2tYErQnEjVucHUcXiQ5n
+X-Received: by 10.98.236.150 with SMTP id e22mr31751560pfm.48.1496255073652;
+ Wed, 31 May 2017 11:24:33 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Wed, 31 May 2017 11:09:19 -0700 (PDT)
-In-Reply-To: <20170530173109.54904-26-bmwill@google.com>
-References: <20170530173109.54904-1-bmwill@google.com> <20170530173109.54904-26-bmwill@google.com>
+Received: by 10.100.170.200 with HTTP; Wed, 31 May 2017 11:24:33 -0700 (PDT)
+In-Reply-To: <20170530173109.54904-31-bmwill@google.com>
+References: <20170530173109.54904-1-bmwill@google.com> <20170530173109.54904-31-bmwill@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 31 May 2017 11:09:19 -0700
-Message-ID: <CAGZ79kYz7jhBVivhVNVMHhO1NfC_j4CEHF5uis-S093dzZL8tw@mail.gmail.com>
-Subject: Re: [PATCH 25/33] notes-merge: convert verify_notes_filepair to
- struct object_id
+Date:   Wed, 31 May 2017 11:24:33 -0700
+Message-ID: <CAGZ79kZjVvk8GoUFMnR7XJMDyvjkKPhw_7kUYPFq_ShcW50pVQ@mail.gmail.com>
+Subject: Re: [PATCH 30/33] tree-diff: convert diff_tree_paths to struct object_id
 To:     Brandon Williams <bmwill@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -67,21 +67,31 @@ On Tue, May 30, 2017 at 10:31 AM, Brandon Williams <bmwill@google.com> wrote:
 >
 > Signed-off-by: Brandon Williams <bmwill@google.com>
 > ---
->  notes-merge.c | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
+>  combine-diff.c | 10 +++++-----
+>  diff.h         |  4 ++--
+>  tree-diff.c    | 63 +++++++++++++++++++++++++++++-----------------------------
+>  3 files changed, 39 insertions(+), 38 deletions(-)
 >
-> diff --git a/notes-merge.c b/notes-merge.c
-> index 55dbb3659..962e9b1bc 100644
-> --- a/notes-merge.c
-> +++ b/notes-merge.c
-> @@ -22,21 +22,21 @@ void init_notes_merge_options(struct notes_merge_options *o)
->         o->verbosity = NOTES_MERGE_VERBOSITY_DEFAULT;
->  }
->
-> -static int path_to_sha1(const char *path, unsigned char *sha1)
-> +static int path_to_oid(const char *path, struct object_id *oid)
+> diff --git a/combine-diff.c b/combine-diff.c
+> index 04c4ae856..ec9d93044 100644
+> --- a/combine-diff.c
+> +++ b/combine-diff.c
+> @@ -1364,22 +1364,22 @@ static struct combine_diff_path *find_paths_multitree(
+>         struct diff_options *opt)
 >  {
-> -       char hex_sha1[40];
-> +       char hex_oid[GIT_SHA1_HEXSZ];
+>         int i, nparent = parents->nr;
+> -       const unsigned char **parents_sha1;
+> +       const struct object_id **parents_oid;
+>         struct combine_diff_path paths_head;
+>         struct strbuf base;
+>
+> -       ALLOC_ARRAY(parents_sha1, nparent);
+> +       ALLOC_ARRAY(parents_oid, nparent);
+>         for (i = 0; i < nparent; i++)
+> -               parents_sha1[i] = parents->oid[i].hash;
+> +               parents_oid[i] = &parents->oid[i];
 
-Here we better use GIT_MAX_HEXSZ ?
+I have the impression that we could get away with one layer less
+of indirection. Previously we had a heap allocated array (*) of (char*),
+now we'd have a an array (*) of pointers(*) of the oid struct, that
+is a (char[]) essentially. Maybe I am just confused?
