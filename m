@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 593D81FD09
-	for <e@80x24.org>; Wed, 31 May 2017 21:45:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED6561FD09
+	for <e@80x24.org>; Wed, 31 May 2017 21:45:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751247AbdEaVpP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 17:45:15 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:34429 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751230AbdEaVpJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 17:45:09 -0400
-Received: by mail-pf0-f170.google.com with SMTP id 9so18586601pfj.1
-        for <git@vger.kernel.org>; Wed, 31 May 2017 14:45:09 -0700 (PDT)
+        id S1751221AbdEaVpN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 17:45:13 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:36041 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751223AbdEaVpH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 17:45:07 -0400
+Received: by mail-pf0-f181.google.com with SMTP id m17so18554139pfg.3
+        for <git@vger.kernel.org>; Wed, 31 May 2017 14:45:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BRzYlf9ziLltung7EHwsLmd9WtLAM35XQUVz/JC+Pys=;
-        b=s5SD/Hx8MKE1IKoKxvOZg/Nn9lDK85/X799yjtfWtY7g9zYtW2oLAvhFIQ6dlsyjPh
-         lBasWBxFf6+7WqpJKwb8Z2kzPYjD736anHk+SbQLPUq7fHL9zg3lwpVlce6uwIM/I3L0
-         ZkfKHSv1BFPx4ckJMP9xEyzjNXu2zhN5AEqwdchCj9SXTicYigS4UPXJcX5KsKFxrdBM
-         +FbDCk7kWQC260z44CTQGaSQni2dRY/V0YfS0hI8NxKZimvq3WGHxQ70vzg0vzdelDt6
-         8n/m2Bn6ZIamRZkuzekXZIlddyTG8L9StS+XeNaI0WIKuqR22hMYuXH2I42SIHFHReF5
-         ajpA==
+        bh=9JDeBddcqPq8mRVQLpzebZBidFr86hhD08Wv49GVFFs=;
+        b=d8/STwfb9BVBPmnl6zOHtM3VqW8O/bQlpCCillfSbLWXHmpHNAVY0Pp0kgKunYZ0OY
+         /SzMrRurVKLVwZgt1uPsPJBPVL/fxkubhqCH6ir3r0BPoin43PkpOpT/xVoXhthrk3Y1
+         HVEVlx39jRFH/QIKuW3jjFlzxbPAuMLqlad7zO/dz2NFug2oDjobpFTcdECWj9jBDoIU
+         F5ke1D+CIPnn0ZqFM/jCv6CMvlw7Yf0wx55+iTa8ac/chqNvHSsKcCl6oFqzAmsBheH7
+         9wzNQv4dkMNbjYpw5oip7gJWopkQlMHfbShJLSo5Ly6XsP4vTrKvs2G3Di1s+esUCU8J
+         IApQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=BRzYlf9ziLltung7EHwsLmd9WtLAM35XQUVz/JC+Pys=;
-        b=m4XbAo4rkQqXphvrJTMKYAzKQHqXF0SErgNG/KijGiEOJsXK0kBmYcZIOf3yIBeb8C
-         EgAaG3ylS4hvLtaZBP5BJAe1LjuK7STbCUyIe0GSax9Tj3KBhD5NOB1GxlExPX+HuEpN
-         2lXRvflbTtFCohCXpU7072Qa9z6NVWNfqfp0GyHqGA+LRRtH/Z5AutLo1mLRqEyKuJFX
-         XDNOvWVTSwxtuZEBlFkTiMYH/BxNCuqlEjiMjlIWRctngVLqecCfmqZSnIsClZXtT8vn
-         wFfCAkSJ+mbAXT7X0SQUYFOq8n8JkO3SpLWpBEqAqsx7CBpnyUT6ZIon1u0EaApPUDeH
-         lJiA==
-X-Gm-Message-State: AODbwcApN7SuWTm2DEG2BqdJ+mKSsI7uG9mv8J5aJZFiRkUbZuqHNson
-        7ZPEGBl1EyNN2Pj7wudwEw==
-X-Received: by 10.98.131.134 with SMTP id h128mr32974231pfe.0.1496267108150;
-        Wed, 31 May 2017 14:45:08 -0700 (PDT)
+        bh=9JDeBddcqPq8mRVQLpzebZBidFr86hhD08Wv49GVFFs=;
+        b=p1MLPjia6DU0crBcBmQOnjvEjp/d1DqXvb/YHW8TMX4G81rby8ObBduopSTcOaE+/q
+         ZTujxPWtAbtiQIkPRiTCla2Wd246znbkTtJIoluKmKvnjUZ0wfxJdc5qr351pIyfmC+B
+         RQuKkjZfso303pTPCUizT2GXjN/6cMiiYAWaMw3L7dZkVRYhSeMqzDTUwmA+sMo0JjzI
+         RxA3bMe2WB/D3h87kiiE0W04QuqR3tYR7lrd5rPQuRIU9AkpJjb0MsU/iRCbdtBsXN99
+         sHUr9NXAMUf7O5u2bfympypX6frbx7CcSe0rm+hDeYJMyg4ZtrqpbrZiVHi0snwfo80a
+         zTzg==
+X-Gm-Message-State: AODbwcALZdxDM6VU+/p3QK/Gdpdr12smyWgyi75EwLjTpSY63zGKWdB6
+        OL9wDwnu5VGlVt1o/LA6WQ==
+X-Received: by 10.98.11.196 with SMTP id 65mr32610558pfl.110.1496267106298;
+        Wed, 31 May 2017 14:45:06 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.45.06
+        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.45.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 31 May 2017 14:45:07 -0700 (PDT)
+        Wed, 31 May 2017 14:45:04 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 22/31] ls-files: convert write_eolinfo to take an index
-Date:   Wed, 31 May 2017 14:44:08 -0700
-Message-Id: <20170531214417.38857-23-bmwill@google.com>
+Subject: [PATCH 21/31] ls-files: convert overlay_tree_on_cache to take an index
+Date:   Wed, 31 May 2017 14:44:07 -0700
+Message-Id: <20170531214417.38857-22-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170531214417.38857-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -67,53 +67,88 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/ls-files.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ builtin/commit.c   |  3 ++-
+ builtin/ls-files.c | 15 ++++++++-------
+ cache.h            |  3 ++-
+ 3 files changed, 12 insertions(+), 9 deletions(-)
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 805da4915..3d98084fb 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -254,7 +254,8 @@ static int list_paths(struct string_list *list, const char *with_tree,
+ 
+ 	if (with_tree) {
+ 		char *max_prefix = common_prefix(pattern);
+-		overlay_tree_on_cache(with_tree, max_prefix ? max_prefix : prefix);
++		overlay_tree_on_index(&the_index, with_tree,
++				      max_prefix ? max_prefix : prefix);
+ 		free(max_prefix);
+ 	}
+ 
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index a5ceeb052..c37e9de11 100644
+index 620487a77..a5ceeb052 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -54,17 +54,16 @@ static const char *tag_modified = "";
- static const char *tag_skip_worktree = "";
- static const char *tag_resolve_undo = "";
- 
--static void write_eolinfo(const struct cache_entry *ce, const char *path)
-+static void write_eolinfo(const struct index_state *istate,
-+			  const struct cache_entry *ce, const char *path)
+@@ -432,7 +432,8 @@ static int get_common_prefix_len(const char *common_prefix)
+  * that were given from the command line.  We are not
+  * going to write this index out.
+  */
+-void overlay_tree_on_cache(const char *tree_name, const char *prefix)
++void overlay_tree_on_index(struct index_state *istate,
++			   const char *tree_name, const char *prefix)
  {
--	if (!show_eol)
--		return;
--	else {
-+	if (show_eol) {
- 		struct stat st;
- 		const char *i_txt = "";
- 		const char *w_txt = "";
- 		const char *a_txt = get_convert_attr_ascii(path);
- 		if (ce && S_ISREG(ce->ce_mode))
--			i_txt = get_cached_convert_stats_ascii(&the_index,
-+			i_txt = get_cached_convert_stats_ascii(istate,
- 							       ce->name);
- 		if (!lstat(path, &st) && S_ISREG(st.st_mode))
- 			w_txt = get_wt_convert_stats_ascii(path);
-@@ -106,7 +105,7 @@ static void show_dir_entry(const char *tag, struct dir_entry *ent)
- 		return;
+ 	struct tree *tree;
+ 	struct object_id oid;
+@@ -447,8 +448,8 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix)
+ 		die("bad tree-ish %s", tree_name);
  
- 	fputs(tag, stdout);
--	write_eolinfo(NULL, ent->name);
-+	write_eolinfo(NULL, NULL, ent->name);
- 	write_name(ent->name);
- }
+ 	/* Hoist the unmerged entries up to stage #3 to make room */
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+ 		ce->ce_flags |= CE_STAGEMASK;
+@@ -461,11 +462,11 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix)
+ 			       PATHSPEC_PREFER_CWD, prefix, matchbuf);
+ 	} else
+ 		memset(&pathspec, 0, sizeof(pathspec));
+-	if (read_tree(tree, 1, &pathspec, &the_index))
++	if (read_tree(tree, 1, &pathspec, istate))
+ 		die("unable to read tree entries %s", tree_name);
  
-@@ -276,7 +275,7 @@ static void show_ce_entry(const char *tag, const struct cache_entry *ce)
- 			       find_unique_abbrev(ce->oid.hash, abbrev),
- 			       ce_stage(ce));
- 		}
--		write_eolinfo(ce, ce->name);
-+		write_eolinfo(&the_index, ce, ce->name);
- 		write_name(ce->name);
- 		if (debug_mode) {
- 			const struct stat_data *sd = &ce->ce_stat_data;
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
+ 		switch (ce_stage(ce)) {
+ 		case 0:
+ 			last_stage0 = ce;
+@@ -680,7 +681,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		 */
+ 		if (show_stage || show_unmerged)
+ 			die("ls-files --with-tree is incompatible with -s or -u");
+-		overlay_tree_on_cache(with_tree, max_prefix);
++		overlay_tree_on_index(&the_index, with_tree, max_prefix);
+ 	}
+ 	show_files(&dir);
+ 	if (show_resolve_undo)
+diff --git a/cache.h b/cache.h
+index 02ab5f801..73724a3ad 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1993,7 +1993,8 @@ extern int ws_blank_line(const char *line, int len, unsigned ws_rule);
+ #define ws_tab_width(rule)     ((rule) & WS_TAB_WIDTH_MASK)
+ 
+ /* ls-files */
+-void overlay_tree_on_cache(const char *tree_name, const char *prefix);
++void overlay_tree_on_index(struct index_state *istate,
++			   const char *tree_name, const char *prefix);
+ 
+ char *alias_lookup(const char *alias);
+ int split_cmdline(char *cmdline, const char ***argv);
 -- 
 2.13.0.506.g27d5fe0cd-goog
 
