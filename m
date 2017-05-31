@@ -2,51 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFE4A1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 21:45:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A3321FD09
+	for <e@80x24.org>; Wed, 31 May 2017 21:45:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751252AbdEaVpV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 17:45:21 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36003 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751240AbdEaVpM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 17:45:12 -0400
-Received: by mail-pf0-f177.google.com with SMTP id m17so18552320pfg.3
-        for <git@vger.kernel.org>; Wed, 31 May 2017 14:45:01 -0700 (PDT)
+        id S1751269AbdEaVp1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 17:45:27 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:34494 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751238AbdEaVpX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 17:45:23 -0400
+Received: by mail-pf0-f174.google.com with SMTP id 9so18589688pfj.1
+        for <git@vger.kernel.org>; Wed, 31 May 2017 14:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UWKsxm9NH58+kjHiak9z0/HP6RIpvgt6GMsG+FjnVCE=;
-        b=Fei5MORife2ZeuWjvk/IsUYlKxehfAQZJOrINvAuxHowFIaBXcO69iQu8Cr/oMmJmA
-         qMKqTxTdUhAU5pVGi7I442dI22ZjAYqsb6O+XnykLvjabxBgnU/VI0hq8MC2A6TnjsFk
-         zP8BmZvOEPfSzMwujt5A42L3SzcrIBgDhpJJl+G4w7/Qhp4hHftiuAyM6iYhPyfHM7bZ
-         ABi2vxtlvjeUN0zF6xb7yOxucflw16MGI50C3ygoOzHzHUfp9eS8gML9YvzXZ8S4xT9L
-         CvkKJjzCfWVVEASZMv+1uYQ2lQrtLgyqbiXzuyFLCg/eLrT964S8KDlHwH2noxG+t7oI
-         gj+g==
+        bh=QgEMNos161e/tuj7TenkPCxJNYAWA0T7Vvg/DfaTUjA=;
+        b=lcmOOswbzVmQCWokorDJNrmPSP1F6HJKZfXbZP9G76UBPS7lAb1buRcREnX8vv3m2i
+         Md8a2XgZTgGhvGzfz5t2noZYj+r9VdSxn9DL8iYmZkBM66WfpSD+2Y8GHhLTeBcAYSV2
+         SqsD7SvE0lWs+MMbY2oO53DxXsgPp9hQAprU5Ws5Vjlt1JciebLai3bMjvyAxRpQ6J2Q
+         nQjbYNjAxnJo5Mt6hk2pXCRcabGQSiCzL7KSkOySz9M0+XRuI1mLRhO/+jeTgSIzDgYc
+         Hhl7jO7LX854ORK+5W0sgxuZ8ZSRMDcpNBR/iQsS41t5Jcau+651heNvt7FbdypxRP6n
+         Cw/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=UWKsxm9NH58+kjHiak9z0/HP6RIpvgt6GMsG+FjnVCE=;
-        b=Y6TVsZFn4kevhSi+v1D6Ecce2Yl9+/TXtN+FsE9pKw84zchptaU+XbY+qBA1oF4nKI
-         IJJMnQ8GY+emrTg8PY2RAQwa/kDOEA+W8SJd/qQGzFH4l28k4AJfIDNyZZ9Mk1Jsq4yq
-         59l52889pdPYjXP/6wog/CxNsIK8k/HfmtKn4N2Lzy2zRO4K1SQmmlSJqCIvl8T0oL5P
-         bWEDcPsnYKO+9AMvYM6H7UAAWGf8VkcxbE5+bVRpCk/Hyugv4F/CGF598oCxeIiXnSo9
-         5LR0AG9ibuHTNBZM2nwaxxtRcItm4WZ+AIhqkR8f+cU4rY5iS/Uy7akHkzaC3vIpynTN
-         SdJA==
-X-Gm-Message-State: AODbwcA3adGQ/MUcrSivOinj4r0/DAzyTacwF7mFCnCdcZ401Py1bSjP
-        iXNw3DvsknzlXqn5ECpCPA==
-X-Received: by 10.99.147.68 with SMTP id w4mr35611902pgm.189.1496267100899;
-        Wed, 31 May 2017 14:45:00 -0700 (PDT)
+        bh=QgEMNos161e/tuj7TenkPCxJNYAWA0T7Vvg/DfaTUjA=;
+        b=NfUtERoKijp548MBdWfjx4XDoDuYKNkq8K4THkUeiLl+9fnUtfv+Z1vnElKiF9Kher
+         Sb7EPCVw2zORTzFz83PSWYqtbfQMYvAbVryBKr3PT1+OwvAFTTFh+rw1mhd/E+e8pUoy
+         2TTK9bpAkCNcitb7yGnKsUPY36xk5ed2kKTTHuu4en6ZjUDYD7ZTaSJlM1WAn5mGbBde
+         Otcbx26XpNeD1jAlqnMzGOiD2zSu4lxKVnDBFmLeq59bdiyxZ9BngcRcLlfCD2UZ53WT
+         DXiz23OvJNfD9VS5wSxoguuxHtbalBW5lauXakD/tnRpwRTNkxRgPWqiLmeQMLiqsgLb
+         n+5Q==
+X-Gm-Message-State: AODbwcD5XBSthVgVxmmoN5NqJQJc37ahoNN1tyMsU3sSg0on6NQWWu6W
+        rEgDuh185TjSBBXTFaiz8A==
+X-Received: by 10.98.75.6 with SMTP id y6mr33305000pfa.157.1496267117535;
+        Wed, 31 May 2017 14:45:17 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.44.59
+        by smtp.gmail.com with ESMTPSA id 187sm26952745pgj.66.2017.05.31.14.45.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 31 May 2017 14:44:59 -0700 (PDT)
+        Wed, 31 May 2017 14:45:16 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +53,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 18/31] convert: convert convert_to_git to take an index
-Date:   Wed, 31 May 2017 14:44:04 -0700
-Message-Id: <20170531214417.38857-19-bmwill@google.com>
+Subject: [PATCH 28/31] ls-files: convert show_files to take an index
+Date:   Wed, 31 May 2017 14:44:14 -0700
+Message-Id: <20170531214417.38857-29-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.219.gdb65acc882-goog
 In-Reply-To: <20170531214417.38857-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -67,178 +66,80 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- apply.c         | 2 +-
- builtin/blame.c | 2 +-
- combine-diff.c  | 2 +-
- convert.c       | 7 ++++---
- convert.h       | 8 +++++---
- diff.c          | 6 +++---
- dir.c           | 2 +-
- sha1_file.c     | 4 ++--
- 8 files changed, 18 insertions(+), 15 deletions(-)
+ builtin/ls-files.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 87db9618d..8eca54325 100644
---- a/apply.c
-+++ b/apply.c
-@@ -2268,7 +2268,7 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
- 	case S_IFREG:
- 		if (strbuf_read_file(buf, path, st->st_size) != st->st_size)
- 			return error(_("unable to open or read %s"), path);
--		convert_to_git(path, buf->buf, buf->len, buf, 0);
-+		convert_to_git(&the_index, path, buf->buf, buf->len, buf, 0);
- 		return 0;
- 	default:
- 		return -1;
-diff --git a/builtin/blame.c b/builtin/blame.c
-index c0ae49298..317d2ec37 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2384,7 +2384,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 		if (strbuf_read(&buf, 0, 0) < 0)
- 			die_errno("failed to read from stdin");
- 	}
--	convert_to_git(path, buf.buf, buf.len, &buf, 0);
-+	convert_to_git(&the_index, path, buf.buf, buf.len, &buf, 0);
- 	origin->file.ptr = buf.buf;
- 	origin->file.size = buf.len;
- 	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_oid.hash);
-diff --git a/combine-diff.c b/combine-diff.c
-index 2848034fe..74f723af3 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1053,7 +1053,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			if (is_file) {
- 				struct strbuf buf = STRBUF_INIT;
- 
--				if (convert_to_git(elem->path, result, len, &buf, safe_crlf)) {
-+				if (convert_to_git(&the_index, elem->path, result, len, &buf, safe_crlf)) {
- 					free(result);
- 					result = strbuf_detach(&buf, &len);
- 					result_size = len;
-diff --git a/convert.c b/convert.c
-index 824b606fa..5af6fdf3f 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1085,7 +1085,8 @@ const char *get_convert_attr_ascii(const char *path)
- 	return "";
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index e2d8fb7f6..3061af2c5 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -329,7 +329,7 @@ static int ce_excluded(struct dir_struct *dir, struct index_state *istate,
+ 	return is_excluded(dir, istate, ce->name, &dtype);
  }
  
--int convert_to_git(const char *path, const char *src, size_t len,
-+int convert_to_git(const struct index_state *istate,
-+		   const char *path, const char *src, size_t len,
-                    struct strbuf *dst, enum safe_crlf checksafe)
+-static void show_files(struct dir_struct *dir)
++static void show_files(struct index_state *istate, struct dir_struct *dir)
  {
- 	int ret = 0;
-@@ -1101,7 +1102,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
- 		src = dst->buf;
- 		len = dst->len;
+ 	int i;
+ 
+@@ -337,17 +337,17 @@ static void show_files(struct dir_struct *dir)
+ 	if (show_others || show_killed) {
+ 		if (!show_others)
+ 			dir->flags |= DIR_COLLECT_KILLED_ONLY;
+-		fill_directory(dir, &the_index, &pathspec);
++		fill_directory(dir, istate, &pathspec);
+ 		if (show_others)
+-			show_other_files(&the_index, dir);
++			show_other_files(istate, dir);
+ 		if (show_killed)
+-			show_killed_files(&the_index, dir);
++			show_killed_files(istate, dir);
  	}
--	ret |= crlf_to_git(&the_index, path, src, len, dst, ca.crlf_action, checksafe);
-+	ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, checksafe);
- 	if (ret && dst) {
- 		src = dst->buf;
- 		len = dst->len;
-@@ -1172,7 +1173,7 @@ int renormalize_buffer(const char *path, const char *src, size_t len, struct str
- 		src = dst->buf;
- 		len = dst->len;
+ 	if (show_cached || show_stage) {
+-		for (i = 0; i < active_nr; i++) {
+-			const struct cache_entry *ce = active_cache[i];
++		for (i = 0; i < istate->cache_nr; i++) {
++			const struct cache_entry *ce = istate->cache[i];
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+-			    !ce_excluded(dir, &the_index, ce))
++			    !ce_excluded(dir, istate, ce))
+ 				continue;
+ 			if (show_unmerged && !ce_stage(ce))
+ 				continue;
+@@ -358,12 +358,12 @@ static void show_files(struct dir_struct *dir)
+ 		}
  	}
--	return ret | convert_to_git(path, src, len, dst, SAFE_CRLF_RENORMALIZE);
-+	return ret | convert_to_git(&the_index, path, src, len, dst, SAFE_CRLF_RENORMALIZE);
- }
+ 	if (show_deleted || show_modified) {
+-		for (i = 0; i < active_nr; i++) {
+-			const struct cache_entry *ce = active_cache[i];
++		for (i = 0; i < istate->cache_nr; i++) {
++			const struct cache_entry *ce = istate->cache[i];
+ 			struct stat st;
+ 			int err;
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+-			    !ce_excluded(dir, &the_index, ce))
++			    !ce_excluded(dir, istate, ce))
+ 				continue;
+ 			if (ce->ce_flags & CE_UPDATE)
+ 				continue;
+@@ -372,7 +372,7 @@ static void show_files(struct dir_struct *dir)
+ 			err = lstat(ce->name, &st);
+ 			if (show_deleted && err)
+ 				show_ce_entry(tag_removed, ce);
+-			if (show_modified && ce_modified(ce, &st, 0))
++			if (show_modified && ie_modified(istate, ce, &st, 0))
+ 				show_ce_entry(tag_modified, ce);
+ 		}
+ 	}
+@@ -686,7 +686,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 			die("ls-files --with-tree is incompatible with -s or -u");
+ 		overlay_tree_on_index(&the_index, with_tree, max_prefix);
+ 	}
+-	show_files(&dir);
++	show_files(&the_index, &dir);
+ 	if (show_resolve_undo)
+ 		show_ru_info(&the_index);
  
- /*****************************************************************
-diff --git a/convert.h b/convert.h
-index 3a813a797..60cb41d6a 100644
---- a/convert.h
-+++ b/convert.h
-@@ -41,15 +41,17 @@ extern const char *get_wt_convert_stats_ascii(const char *path);
- extern const char *get_convert_attr_ascii(const char *path);
- 
- /* returns 1 if *dst was used */
--extern int convert_to_git(const char *path, const char *src, size_t len,
-+extern int convert_to_git(const struct index_state *istate,
-+			  const char *path, const char *src, size_t len,
- 			  struct strbuf *dst, enum safe_crlf checksafe);
- extern int convert_to_working_tree(const char *path, const char *src,
- 				   size_t len, struct strbuf *dst);
- extern int renormalize_buffer(const char *path, const char *src, size_t len,
- 			      struct strbuf *dst);
--static inline int would_convert_to_git(const char *path)
-+static inline int would_convert_to_git(const struct index_state *istate,
-+				       const char *path)
- {
--	return convert_to_git(path, NULL, 0, NULL, 0);
-+	return convert_to_git(istate, path, NULL, 0, NULL, 0);
- }
- /* Precondition: would_convert_to_git_filter_fd(path) == true */
- extern void convert_to_git_filter_fd(const struct index_state *istate,
-diff --git a/diff.c b/diff.c
-index 2f2467c6d..87ed6d6d3 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2756,7 +2756,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
- 	 * Similarly, if we'd have to convert the file contents anyway, that
- 	 * makes the optimization not worthwhile.
- 	 */
--	if (!want_file && would_convert_to_git(name))
-+	if (!want_file && would_convert_to_git(&the_index, name))
- 		return 0;
- 
- 	len = strlen(name);
-@@ -2878,7 +2878,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		 * point if the path requires us to run the content
- 		 * conversion.
- 		 */
--		if (size_only && !would_convert_to_git(s->path))
-+		if (size_only && !would_convert_to_git(&the_index, s->path))
- 			return 0;
- 
- 		/*
-@@ -2905,7 +2905,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		/*
- 		 * Convert from working tree format to canonical git format
- 		 */
--		if (convert_to_git(s->path, s->data, s->size, &buf, crlf_warn)) {
-+		if (convert_to_git(&the_index, s->path, s->data, s->size, &buf, crlf_warn)) {
- 			size_t size = 0;
- 			munmap(s->data, s->size);
- 			s->should_munmap = 0;
-diff --git a/dir.c b/dir.c
-index 0c26a53d2..8dc74c5d2 100644
---- a/dir.c
-+++ b/dir.c
-@@ -796,7 +796,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 				 (pos = index_name_pos(istate, fname, strlen(fname))) >= 0 &&
- 				 !ce_stage(istate->cache[pos]) &&
- 				 ce_uptodate(istate->cache[pos]) &&
--				 !would_convert_to_git(fname))
-+				 !would_convert_to_git(istate, fname))
- 				hashcpy(sha1_stat->sha1,
- 					istate->cache[pos]->oid.hash);
- 			else
-diff --git a/sha1_file.c b/sha1_file.c
-index 80e9ef3bb..a900b2804 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3547,7 +3547,7 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
- 	 */
- 	if ((type == OBJ_BLOB) && path) {
- 		struct strbuf nbuf = STRBUF_INIT;
--		if (convert_to_git(path, buf, size, &nbuf,
-+		if (convert_to_git(&the_index, path, buf, size, &nbuf,
- 				   write_object ? safe_crlf : SAFE_CRLF_FALSE)) {
- 			buf = strbuf_detach(&nbuf, &size);
- 			re_allocated = 1;
-@@ -3669,7 +3669,7 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
- 	else if (!S_ISREG(st->st_mode))
- 		ret = index_pipe(sha1, fd, type, path, flags);
- 	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
--		 (path && would_convert_to_git(path)))
-+		 (path && would_convert_to_git(&the_index, path)))
- 		ret = index_core(sha1, fd, xsize_t(st->st_size), type, path,
- 				 flags);
- 	else
 -- 
 2.13.0.506.g27d5fe0cd-goog
 
