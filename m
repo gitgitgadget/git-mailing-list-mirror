@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 530B920D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 18:21:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA80C20D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 18:21:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751201AbdFASVS (ORCPT <rfc822;e@80x24.org>);
+        id S1751225AbdFASVT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 14:21:19 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35856 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751122AbdFASVS (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 1 Jun 2017 14:21:18 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36857 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751167AbdFASVQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 14:21:16 -0400
-Received: by mail-wm0-f65.google.com with SMTP id k15so13356037wmh.3
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 11:21:15 -0700 (PDT)
+Received: by mail-wm0-f66.google.com with SMTP id k15so13356223wmh.3
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 11:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=h09+9edpFNueJApX/zmHdxbRP8OMzpExmigKEr2YEiU=;
-        b=Cgpi7zFkRFuzb/1D1eQBkdj2NbZn6ca2gWvvQg9hVFpUlDhSsO4Q/WKt6eCoeN2cpz
-         TG2U4Ci/B+Ggo4fH20uXZhLo2d+nSkAZtH8C0x/5BfLwFIfRA0HY1Grzhcs8oLkLlAD5
-         3Om6PZn/LrwVNIsFS9gwKa/U++WH/eNIDGLyBdi1vCqNYA72587lF6dfqUI7yimi5yd0
-         WBzt08LiGogFU4ha9F4KoC4fx1R9itdKREqVDBXmoZjeSRNzY5ZGSJyj/J1UcUYBZF5G
-         CWQKgjY7p9RaQzklLWi6Hs79aqfXVrW128KPBA+RZJrepPX/MhwJpJ/80qSh4wiR8gGW
-         +wQw==
+        bh=g2y8laFzXb3XLgBxGUYO0V/iTICPAlMrJdPjNxPgrAE=;
+        b=e8t0Jxk5u/z6p8SnHgp5QZuksonUzU5p+fQYzbzoG3dnM4jOou4r7UI0XI9m9kKswV
+         GdCZu2e6hjROIvefsFsIp1gIf7in0vYJCtCfJ0RgAt3yLKk256uW490VAtfSKDW6MXM3
+         lqD6N7Gw4XO9CGPHgVOdYSJ+fWi5cphcxSf6mD26vV2kXj4Fui0aL+cEByeX57i1qwSt
+         qfT9xh6yFizp48xDOzuZh0DIlbiuurbfSqUO8oW7piDVp4FEBLhaltvOIWvScvBZABhh
+         LlqytsYVilxO2CY1Ewq+7IYlsIGCkyoQA3U0ekTXXE24NQ6XV+diBJs1YmwUeT/g6/37
+         selA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=h09+9edpFNueJApX/zmHdxbRP8OMzpExmigKEr2YEiU=;
-        b=poA+DamKuzDjOQ/4Vnd6jdRsFJOEKhNfFDu+FkRjLnyeAZmH9U5nYmeFxMtIyqVuso
-         a7kqD6IJNxPzpzFfsD7jCkmdI9OdsLBQL3AhBpkEEGxuGwXMquZWrB9GZFQ9LyfXnUKB
-         dryR1gUCHO3C0u8BmONNpM81X1ar6WvPfZWv5DkWdR7kXEGo7a8sRYDR6rL9OxdN6IbO
-         lMy7dH8QraPofEbJLMHIAI0mq9DRrDEnxw0MlhJ7clhcnoHxV0UOyqBC0xJau4SuX0LX
-         iev9C0wLMtKYEGc2GAEhL+NzlH7QCGfBXN4VmbeGMIto/UMqDXWNKceo1aoEnKeLGiiV
-         KPHA==
-X-Gm-Message-State: AODbwcASODRziKEyE7SeMjdmvWTI1Vb32oBoheQMT+lEr4XbxoVS2Jh0
-        zyX/FHM+Fnyfo0euKDZl8Q==
-X-Received: by 10.28.84.67 with SMTP id p3mr372557wmi.40.1496341274162;
-        Thu, 01 Jun 2017 11:21:14 -0700 (PDT)
+        bh=g2y8laFzXb3XLgBxGUYO0V/iTICPAlMrJdPjNxPgrAE=;
+        b=rOIGG/MdBeomNuHgPMunJccbkF7XR3NpJQDvzw2vNTqIygLlwAoWw01kTuma9VUhQU
+         1og7SAIexpB+FhjXWr0XBEGkCdLwOV81HQXLmIcgBXNiXPrnmDrIxKzIoLHKb1tGXZ8g
+         +z+PgwvaZ4Muf+EcuNzge/3IsZQwINK8bXD5LyY4uQUTL9GQzucZZGbfqXocqSf+1xe8
+         ijbR/SoHvkKG4dPiejIzgh1pk6oHaWMiuC5YWWxmBazSurSxHJaRu3u2K/paGlA9uLpi
+         3on63WkgOWa+orh4iS5WclY5R9u2mUhdV7RZ0vNxeB/1AHgXteR+/3QJlqbL+vm2+p8u
+         CdTw==
+X-Gm-Message-State: AODbwcBgJCfGmt9gevFsHlPml7aJbnihgQNMIlaeuN05iRTGVtQ8G9JF
+        slCRqLiS3aSKk7OdLyx5mA==
+X-Received: by 10.223.152.18 with SMTP id v18mr2672000wrb.8.1496341276331;
+        Thu, 01 Jun 2017 11:21:16 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 140sm151065wmu.23.2017.06.01.11.21.12
+        by smtp.gmail.com with ESMTPSA id 140sm151065wmu.23.2017.06.01.11.21.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Jun 2017 11:21:13 -0700 (PDT)
+        Thu, 01 Jun 2017 11:21:15 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 2/8] grep: skip pthreads overhead when using one thread
-Date:   Thu,  1 Jun 2017 18:20:50 +0000
-Message-Id: <20170601182056.31142-3-avarab@gmail.com>
+Subject: [PATCH v4 3/8] log: add -P as a synonym for --perl-regexp
+Date:   Thu,  1 Jun 2017 18:20:51 +0000
+Message-Id: <20170601182056.31142-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.303.g4ebf302169
 In-Reply-To: <20170601182056.31142-1-avarab@gmail.com>
 References: <20170601182056.31142-1-avarab@gmail.com>
@@ -77,38 +77,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Skip the administrative overhead of using pthreads when only using one
-thread. Instead take the non-threaded path which would be taken under
-NO_PTHREADS.
+Add a short -P option as a synonym for the longer --perl-regexp, for
+consistency with the options the corresponding grep invocations
+accept.
 
-The threading support was initially added in commit
-5b594f457a ("Threaded grep", 2010-01-25) with a hardcoded compile-time
-number of 8 threads. Later the number of threads was made configurable
-in commit 89f09dd34e ("grep: add --threads=<num> option and
-grep.threads configuration", 2015-12-15).
+This was intentionally omitted in commit 727b6fc3ed ("log --grep:
+accept --basic-regexp and --perl-regexp", 2012-10-03) for unspecified
+future use.
 
-That change did not add any special handling for --threads=1. Now we
-take a slightly faster path by skipping thread handling entirely when
-1 thread is requested.
+Make it consistent with "grep" rather than to keep it open for future
+use, and to avoid the confusion of -P meaning different things for
+grep & log, as is the case with the -G option.
+
+As noted in the aforementioned commit the --basic-regexp option can't
+have a corresponding -G argument, as the log command already uses that
+for -G<regex>.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/grep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/rev-list-options.txt |  1 +
+ revision.c                         |  2 +-
+ t/t4202-log.sh                     | 12 ++++++++++++
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 6e1744550c..a0a3922f92 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1238,6 +1238,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		num_threads = GREP_NUM_THREADS_DEFAULT;
- 	else if (num_threads < 0)
- 		die(_("invalid number of threads specified (%d)"), num_threads);
-+	if (num_threads == 1)
-+		num_threads = 0;
- #else
- 	if (num_threads)
- 		warning(_("no threads support, ignoring --threads"));
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index a46f70c2b1..9c44eae55d 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -91,6 +91,7 @@ endif::git-rev-list[]
+ 	Consider the limiting patterns to be fixed strings (don't interpret
+ 	pattern as a regular expression).
+ 
++-P::
+ --perl-regexp::
+ 	Consider the limiting patterns to be Perl-compatible regular
+ 	expressions.
+diff --git a/revision.c b/revision.c
+index eb87dce316..14b598644c 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1996,7 +1996,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		DIFF_OPT_SET(&revs->diffopt, PICKAXE_IGNORE_CASE);
+ 	} else if (!strcmp(arg, "--fixed-strings") || !strcmp(arg, "-F")) {
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_FIXED;
+-	} else if (!strcmp(arg, "--perl-regexp")) {
++	} else if (!strcmp(arg, "--perl-regexp") || !strcmp(arg, "-P")) {
+ 		revs->grep_filter.pattern_type_option = GREP_PATTERN_TYPE_PCRE;
+ 	} else if (!strcmp(arg, "--all-match")) {
+ 		revs->grep_filter.all_match = 1;
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 703da5a116..a4049ad678 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -404,8 +404,20 @@ test_expect_success 'log with various grep.patternType configurations & command-
+ 			--grep="(1|2)" >actual.fixed.short-arg &&
+ 		git log --pretty=tformat:%s -E \
+ 			--grep="\|2" >actual.extended.short-arg &&
++		if test_have_prereq PCRE
++		then
++			git log --pretty=tformat:%s -P \
++				--grep="[\d]\|" >actual.perl.short-arg
++		else
++			test_must_fail git log -P \
++				--grep="[\d]\|"
++		fi &&
+ 		test_cmp expect.fixed actual.fixed.short-arg &&
+ 		test_cmp expect.extended actual.extended.short-arg &&
++		if test_have_prereq PCRE
++		then
++			test_cmp expect.perl actual.perl.short-arg
++		fi &&
+ 
+ 		git log --pretty=tformat:%s --fixed-strings \
+ 			--grep="(1|2)" >actual.fixed.long-arg &&
 -- 
 2.13.0.303.g4ebf302169
 
