@@ -2,128 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E7BC20D12
-	for <e@80x24.org>; Thu,  1 Jun 2017 04:07:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1723B20D12
+	for <e@80x24.org>; Thu,  1 Jun 2017 04:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751036AbdFAEHV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 00:07:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32905 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750790AbdFAEHU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 00:07:20 -0400
-Received: (qmail 11871 invoked by uid 109); 1 Jun 2017 04:07:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Jun 2017 04:07:18 +0000
-Received: (qmail 14027 invoked by uid 111); 1 Jun 2017 04:07:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Jun 2017 00:07:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Jun 2017 00:07:17 -0400
-Date:   Thu, 1 Jun 2017 00:07:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Joel Teichroeb <joel@teichroeb.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 4/4] stash: implement builtin stash
-Message-ID: <20170601040717.63ajkcgr7ihhvgmz@sigill.intra.peff.net>
-References: <20170528165642.14699-1-joel@teichroeb.net>
- <20170528165642.14699-5-joel@teichroeb.net>
- <CACBZZX6uXnE+BTfsiLNF2OT3Dsr-J99uUFEwcu-qK45OrU+1hQ@mail.gmail.com>
- <20170528192149.dgzibu334n5ja57e@sigill.intra.peff.net>
- <CA+CzEk8NoGhDB6nX6RRL7J-KenoJBE7rVfskJfCQn_iCSnA4nA@mail.gmail.com>
- <CACBZZX4VP2GZSxw5MqBY=w1EhN64=75MFnjd0CYvPTvoVdFWQw@mail.gmail.com>
- <CA+CzEk9uV5Oqa=NMhd1bjnXP-vjUqVUMH9KSzW6ehi67hqU2+Q@mail.gmail.com>
+        id S1751242AbdFAEKw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 00:10:52 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:34026 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751091AbdFAEKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 00:10:51 -0400
+Received: by mail-io0-f193.google.com with SMTP id 12so3687829iol.1
+        for <git@vger.kernel.org>; Wed, 31 May 2017 21:10:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HOwSQDvxz11Ta0xIR/jPKJmO2BYBnI5X0KVzDy52iFs=;
+        b=HozATM3tjOdZDjE05YLhkot5wOvnf7y+OW8cNffOM7HpzfDP1tzzE/6JkDOSYww6Tw
+         c3qzGwtHfVhmTMI3Wy5AJAHKSx3GtKN80z4SHJmB809IHdKu0zeIMxIgKa3PkZbwkFfQ
+         1/3CKiNku6+tQtmhklXnQldYa+RDpy50sqXufFUNQu/3afeMqbU9CMtDfW52PxIsfvD8
+         ycv4HTve2Bp2FUssnv37s0fwYBghIgp9jSvKEoKMbUjsCc3E/0s7on8rQttM0WaIfP1A
+         OpBDScJLpS+CYc2GM1rkDyH4m/T5jovm2GauJi362db/9AP9lTvzMRyT0CbLRIodn+yL
+         n4Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HOwSQDvxz11Ta0xIR/jPKJmO2BYBnI5X0KVzDy52iFs=;
+        b=YVatKv9bE1Bnquu7IU0AKv+dmxihSa4E2EZmLSz7sgeHi0LyLY3/UdQh6IVwLtUjXK
+         +7Z1lzPcVp8zZJfIeP5/i6YxGtu2ubDM+80fVjv3T8h6l/YIKcOjZnSCS7VQZVqqj0Fk
+         P3Chk8fsH6YJo6w0bPKKhWgiQyTzmFunl/rls1IIy4cI6oWIFm+a8d1Grzh5CEPK4Uxp
+         rsU9Bt451MHJhktnhj5LpWIN+dL0pCrlaChIimvBQ7+w3yMGmrHyUQp1ugjTXXsVlPAt
+         C2/enMfmmLc1JRG0rsEEam3p15tREKosNxG+uMLxk4SsL92hALfXUOvh8Ue+U0d3ZMmI
+         StUA==
+X-Gm-Message-State: AODbwcAH6x0FO2zGUKX7Mf0QP3eHbltmsTWT6ctkKNSq1jehwVp6iQr8
+        8V3By0vsYnPf4Q==
+X-Received: by 10.107.84.1 with SMTP id i1mr23977315iob.72.1496290250113;
+        Wed, 31 May 2017 21:10:50 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:9c1c:dca9:c6e3:133e])
+        by smtp.gmail.com with ESMTPSA id 93sm7924327iod.17.2017.05.31.21.10.49
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 31 May 2017 21:10:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH 1/2] format-patch: have progress option while generating patches
+References: <20170531150427.7820-1-kewillf@microsoft.com>
+        <20170531150427.7820-2-kewillf@microsoft.com>
+        <20170531220100.t27w3w642sn33h7s@sigill.intra.peff.net>
+Date:   Thu, 01 Jun 2017 13:10:48 +0900
+In-Reply-To: <20170531220100.t27w3w642sn33h7s@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 31 May 2017 18:01:01 -0400")
+Message-ID: <xmqqpoeo73g7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+CzEk9uV5Oqa=NMhd1bjnXP-vjUqVUMH9KSzW6ehi67hqU2+Q@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 31, 2017 at 08:29:43PM -0700, Joel Teichroeb wrote:
+Jeff King <peff@peff.net> writes:
 
-> I'm running into a lot of trouble using argv_array_clear. It seems
-> that some of the builtin git cmd functions move the parameters around,
-> and write new pointers to argv. There's three options I have now, and
-> I'm not sure which is the best one.
+> As I said above, I think I'd prefer it to require "--progress", as
+> format-patch is quite often used as plumbing.
 
-Hrm. It's normal for parsing to reorder the parameters (e.g., shifting
-non-options to the front), but that should still allow a clear at the
-end. New pointers would definitely cause a problem, though. I don't know
-of any cases where we do that, but on the other hand I wouldn't be too
-surprised to find that the revision.c options parser does some nasty
-tricks.
+Yes, that sounds sensible.
 
-Do you have a specific example? I'd be curious to see if we can just fix
-the parser to be less surprising (i.e., your (1) below).
+Initially, my reaction was "Why do we even need --progress for
+format-patch, when it gives one-line per patch output to show the
+progress anyway?", but if that output is redirected to a file, of
+course you'd need --progress independently.
 
-> 1. Fix all the builtin cmd functions that I use to not mess around with argv
 
-If it's just one or two spots, this might be viable.
+> Should this use start_progress_delay()? In most cases the command will
+> complete very quickly, and the progress report is just noise. For many
+> commands (e.g., checkout) we wait 1-2 seconds before bothering to show
+> progress output.
 
-> 2. Stop using the builtin cmd functions, and use child processes exclusively
+It is better to use the "delay" version for progress meters for
+commands that may or may not last very long, and this may be a good
+candidate to heed that principle.
 
-That might not be the worst thing in the world for a first cut at a
-shell to C transition, because it eliminates a whole class of possible
-problems. But it really just side-steps the problem, as we'd want to
-eventually deal with it and reduce the process count.
+The subcommands that use start_progress() tend to be older and more
+batch oriented operations, e.g. fsck, pack-objects, etc., that are
+expected to last longer.  It may be a good idea to convert them to
+the "delay" variant, but obviously that is outside the scope of this
+patch.
 
-> 3. Don't worry about clearing the memory used for these function calls.
+> I would have expected this to say "Generating patches"; most of our
+> other progress messages are pluralized. You could use Q_() to handle the
+> mono/plural case, but I think it's fine to just always say "patches"
+> (that's what other messages do).
+>
+> One final thought is whether callers would want to customize this
+> message, since it will often be used as plumbing. E.g., would rebase
+> want to say something besides "Generating patches". I'm not sure.
+> Anyway, if you're interested in that direction, there's prior art in
+> the way rev-list handles "--progress" (and its sole caller,
+> check_connected()).
 
-That might be do-able, as long as the leaks are O(1) for a program run
-(and not say, a leak per commit). At the very least we should mark
-those spots with a "NEEDSWORK" comment and an explanation of the issue
-so that your work in finding them isn't wasted.
-
-> It looks like the rest of the code generally does #3.
-
-It looks like we don't actually pass argv arrays to setup_revisions()
-all that often. The three I see are:
-
-  - bisect_rev_setup(), which is a known leak. This is trickier, though,
-    because we actually pass the initialized rev_info out of the
-    function, and the memory needs to last until we're done with the
-    traversal
-
-  - http-push, which does seem to free the memory
-
-  - stat_tracking_info(), which does seem to free
-
-I could well believe there are places where we leak, though, especially
-for top-level functions that exit the program when they're done.
-
-A fourth option is to massage the argv array into something that can be
-massaged by the callee, and retain the original array for freeing. I.e.,
-something like:
-
-  struct argv_array argv = ARGV_ARRAY_INIT;
-  const char **massaged;
-
-  argv_array_pushl(&argv, ...whatever...);
-
-  ALLOC_ARRAY(massaged, argc);
-  COPY_ARRAY(massaged, argv, argc);
-
-  setup_revisions(argv.argc, massaged, &revs, NULL);
-
-  /*
-   * No clue what's in "massaged" now, as setup_revisions() may have
-   * reordered things, added new elements, deleted some, etc. But we
-   * don't have to care because any pointers we need to free are still
-   * in the original argv struct, and we should be safe to free the
-   * massaged array itself.
-   */
-  free(massaged);
-  argv_array_clear(&argv);
-
-That's pretty horrible, though. If setup_revisions() is requiring us to
-do that, I'd really prefer to look into fixing it.
-
--Peff
+These are all good suggestions.
