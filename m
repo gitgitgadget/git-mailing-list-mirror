@@ -2,188 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47A0F20D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 18:35:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E90C20D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 18:35:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751220AbdFASf3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 14:35:29 -0400
-Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:41066
-        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751130AbdFASf1 (ORCPT
+        id S1751201AbdFASf2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 14:35:28 -0400
+Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:50450
+        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751164AbdFASf1 (ORCPT
         <rfc822;git@vger.kernel.org>); Thu, 1 Jun 2017 14:35:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1496342126;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=/lsftD45xQlc94+3Wia9M9S9GQqe4gqYYm6WNECC3OU=;
-        b=NYb2Xospj0HD1hMHAklLoh0VLR+3cV2+hmsI57ABVcpDBDfFTug89RNBZKo43APT
-        AgH6RRUAIlnWjYLSV5apBCKBwMpWee1sqFFaJCh56okmHx7ckt8NZYKanZ7zCyFUVKl
-        NOvs9zvnRdnmaW1SXX1r/Qj1iSKCbyW51NL1U/6Y=
+        bh=Q8Ev9LgIVLy/j9TCQF9OzBjciy0Cq/7aincQfmPNOFk=;
+        b=Lqn8dF+jys2F8Dl5wLdLWhmf34AilTlTEzKYQXZ6L7tXpi2q0Af5tRaiA3Qwe41k
+        XdROuIk+EtfEGLQzNYrC1QcbL/fAucyIW0lH5vQ/nbNZUw3G5WS8ZMaMqAi1CPZwXpS
+        /7naSgX5RGvZd7OsT4PqTeZC9Jy0du1962hk3nqA=
 From:   Sahil Dua <sahildua2305@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <0102015c64f0dceb-02338e52-74d5-4d6c-9a9d-f41e98ff88bc-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015c60dcf5f6-057de56f-3355-40dc-a0d3-ee62fa9b8259-000000@eu-west-1.amazonses.com>
-References: <0102015c60dcf5f6-057de56f-3355-40dc-a0d3-ee62fa9b8259-000000@eu-west-1.amazonses.com>
-Subject: [PATCH/RFC v3 1/3] branch: add tests for new copy branch feature
+Message-ID: <0102015c64f0dd7b-736a46c7-cb00-43ea-b55d-826d451b6ee1-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015c64f0dceb-02338e52-74d5-4d6c-9a9d-f41e98ff88bc-000000@eu-west-1.amazonses.com>
+References: <0102015c64f0dceb-02338e52-74d5-4d6c-9a9d-f41e98ff88bc-000000@eu-west-1.amazonses.com>
+Subject: [PATCH/RFC v3 2/3] config: abstract out create section from key
+ logic
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Thu, 1 Jun 2017 18:35:25 +0000
-X-SES-Outgoing: 2017.06.01-54.240.7.19
+X-SES-Outgoing: 2017.06.01-54.240.7.18
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adds a few basic tests for the new copy branch option. Aim is to
-have an option -c for copying a branch just like -m option for
-renaming a branch.
+Abstracts out the logic for creating string buffer from given key for
+example - 'branch.b' and returns '[branch "b"]'.
 
-My definition of "copy" for this feature is "copying from A to create
-B, keeping A intact". That means "copy branch A to B" should do
-whatever "move branch A to B" does except it shouldn't delete A and
-should keep A unchanged.
+We want to keep the original config section intact in case of copy
+operation. For this we need to fetch the section with updated new branch
+name so that we can write that to the config file.
 
-1. When a branch topic-2 is created by copying from branch topic-1,
-topic-2 branch reflog should now contain the all the entries of
-topic-1 branch (before copying) followed by "Copied from topic-1".
-[This is debatable though, I want inputs/suggestions about this.]
-
-2. Copying a branch should also copy the git config section for that
-branch. This means if topic-2 branch is created from topic-1,
-"branch.topic-2.remote" should now be same as "branch.topic-1.remote",
-if set.
-
-3. "git push" to copied branch for example - topic-2 should push a new
-branch with the same name in the remote repo. That means if topic-1
-was previously pushed and a new branch topic-2 is copied from topic-1,
-"git push" on topic-2 branch won't push to the same branch as "git
-push on topic-1 branch would.
-
-4. "git branch -c new-branch" should copy the currently checked out
-branch and create a new branch with name "new-branch".
+For example - git branch -c foo bar
+The mentioned/edited function renames and overwrites this part in the
+config - [branch "foo"] to [branch "bar"]. However, in case of copy, we
+want to keep the original [branch "foo"] intact and get [branch "bar"]
+from "branch.bar" key. 'store_create_section' function will return
+[branch "bar"] when "branch.bar" is passed.
 
 Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
 ---
- t/t3200-branch.sh | 100 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
+ config.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index fe62e7c775da6..6176a9c5cd85a 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -341,6 +341,106 @@ test_expect_success 'config information was renamed, too' '
- 	test_must_fail git config branch.s/s/dummy
- '
+diff --git a/config.c b/config.c
+index 146cb3452adab..721aef1938081 100644
+--- a/config.c
++++ b/config.c
+@@ -2169,10 +2169,10 @@ static int write_error(const char *filename)
+ 	return 4;
+ }
  
-+test_expect_success 'git branch -c dumps usage' '
-+	test_expect_code 128 git branch -c 2>err &&
-+	test_i18ngrep "branch name required" err
-+'
+-static int store_write_section(int fd, const char *key)
++struct strbuf store_create_section(const char *key)
+ {
+ 	const char *dot;
+-	int i, success;
++	int i;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+ 	dot = memchr(key, '.', store.baselen);
+@@ -2188,6 +2188,16 @@ static int store_write_section(int fd, const char *key)
+ 		strbuf_addf(&sb, "[%.*s]\n", store.baselen, key);
+ 	}
+ 
++	return sb;
++}
 +
-+test_expect_success 'git branch -c d e should work' '
-+	git branch -l d &&
-+	git reflog exists refs/heads/d &&
-+	git config branch.d.dummy Hello &&
-+	git branch -c d e &&
-+	git reflog exists refs/heads/d &&
-+	git reflog exists refs/heads/e &&
-+	test $(git config branch.e.dummy) = Hello &&
-+	test $(git config branch.d.dummy) = Hello
-+'
++static int store_write_section(int fd, const char *key)
++{
++	int success;
 +
-+test_expect_success 'git branch -c f/f g/g should work' '
-+	git branch -l f/f &&
-+	git reflog exists refs/heads/f/f &&
-+	git config branch.f/f.dummy Hello &&
-+	git branch -c f/f g/g &&
-+	git reflog exists refs/heads/f/f &&
-+	git reflog exists refs/heads/g/g &&
-+	test $(git config branch.f/f.dummy) = Hello &&
-+	test $(git config branch.g/g.dummy) = Hello
-+'
++	/* Create a section with the given key */
++	struct strbuf sb = store_create_section(key);
 +
-+test_expect_success 'git branch -c m2 m2 should work' '
-+	git branch -l m2 &&
-+	git reflog exists refs/heads/m2 &&
-+	git config branch.m2.dummy Hello &&
-+	git branch -c m2 m2 &&
-+	git reflog exists refs/heads/m2 &&
-+	test $(git config branch.m2.dummy) = Hello
-+'
-+
-+test_expect_success 'git branch -c a a/a should fail' '
-+	git branch -l a &&
-+	git reflog exists refs/heads/a &&
-+	test_must_fail git branch -c a a/a
-+'
-+
-+test_expect_success 'git branch -c b/b b should fail' '
-+	git branch -l b/b &&
-+	test_must_fail git branch -c b/b b
-+'
-+
-+test_expect_success 'git branch -C o/q o/p should work when o/p exists' '
-+	git branch -l o/q &&
-+	git reflog exists refs/heads/o/q &&
-+	git reflog exists refs/heads/o/p &&
-+	git branch -C o/q o/p
-+'
-+
-+test_expect_success 'git branch -c -f o/q o/p should work when o/p exists' '
-+	git reflog exists refs/heads/o/q &&
-+	git reflog exists refs/heads/o/p &&
-+	git branch -m -f o/q o/p
-+'
-+
-+test_expect_success 'git branch -c q r/q should fail when r exists' '
-+	git branch q &&
-+	git branch r &&
-+	test_must_fail git branch -c q r/q
-+'
-+
-+test_expect_success 'git branch -C b1 b2 should fail when b2 is checked out' '
-+	git branch b1 &&
-+	git checkout -b b2 &&
-+	test_must_fail git branch -C b1 b2
-+'
-+
-+test_expect_success 'git branch -C c1 c2 should succeed when c1 is checked out' '
-+	git checkout -b c1 &&
-+	git branch c2 &&
-+	git branch -C c1 c2 &&
-+	test $(git rev-parse --abbrev-ref HEAD) = c2
-+'
-+
-+test_expect_success 'git branch -C c1 c2 should add entries to .git/logs/HEAD' '
-+	msg="Branch: copied refs/heads/c1 to refs/heads/c2" &&
-+	grep "^0\{40\}.*$msg$" .git/logs/HEAD
-+'
-+
-+test_expect_success 'git branch -C master should work when master is checked out' '
-+	git checkout master &&
-+	git branch -C master
-+'
-+
-+test_expect_success 'git branch -C master master should work when master is checked out' '
-+	git checkout master &&
-+	git branch -C master master
-+'
-+
-+test_expect_success 'git branch -C master5 master5 should work when master is checked out' '
-+	git checkout master &&
-+	git branch master5 &&
-+	git branch -C master5 master5
-+'
-+
- test_expect_success 'deleting a symref' '
- 	git branch target &&
- 	git symbolic-ref refs/heads/symref refs/heads/target &&
+ 	success = write_in_full(fd, sb.buf, sb.len) == sb.len;
+ 	strbuf_release(&sb);
+ 
 
 --
 https://github.com/git/git/pull/363
