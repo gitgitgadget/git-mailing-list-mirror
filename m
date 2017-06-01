@@ -7,125 +7,111 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F5B920D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 23:30:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EF3320D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 23:40:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751142AbdFAXa1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 19:30:27 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36183 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751114AbdFAXa0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 19:30:26 -0400
-Received: by mail-pf0-f193.google.com with SMTP id n23so9551823pfb.3
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 16:30:26 -0700 (PDT)
+        id S1751168AbdFAXkj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 19:40:39 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34882 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751105AbdFAXki (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 19:40:38 -0400
+Received: by mail-pf0-f177.google.com with SMTP id n23so40281394pfb.2
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 16:40:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=8uNxmGlLzLsWFfcfOAxOZ2Pw5RB7uowFvXSb02C4Xdo=;
-        b=oxfgbOvSTO1CAyyH0sZjukdjwc5CKsX4EDAFWHqBdhASqYfQnTtcINZ3MXwHL6nePO
-         IV2THUm/yhgfM7LcMYGi4+h6w7gfyCMZ5+mmRYpmzxW3rO30l+HdOH7wwyMe7UQnWlhV
-         /jPOWfphN976BVpUUf8u7IrW6NZyLsF/w63YxAdfU8WfA/8l0QLdAwvDEUcmqR8dSG/u
-         Y1R3bir8gDv1O9vSxmX6/478O5nxqq9m2RZ+hytv9CwduypJXX0c1DmbubIwvLU22fT1
-         hjVxbSgdtTe00JM4EG7HcR4uTX/G6oOxmAqf0CsAMoE0bEHZusMFeBDR+5F1eTGahHHI
-         rYZg==
+         :user-agent:mime-version;
+        bh=8Y1tS9OJQ9RDW660mLf/nHBvBXi28SQ6xSoVUOUE6FE=;
+        b=HI/3uFScsCj1OkF1kNzAl+wwJ5ab1pysyH/8X1JJ3d/9tFK/OP26GAlU1RxTwjNRCp
+         xrXWLCiObAOz/SZUwfZhl0eKt43Zh301lQxLlaullnz7HHuVD6T9wiX1Il6/YvH2Mby0
+         HjOlVwcMDe3hBT2Kl8fkIqnmtBHwpy+rNBxSef4JVy6yfgJJd5LX/VCkIsBY1laUm0pr
+         i4FYudoYGSqc31qX54Of3zwGId+5/1pFzQ+mkY7am8+hB/ZfKgc+JGnxNBr+mVLS6wyC
+         5odRz0pKkpVaXn/JYiRf1VBDBKxl9oRrstY/b6Cb95kZBFQiiDRkgublm/pp4UVpJg3L
+         yxdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=8uNxmGlLzLsWFfcfOAxOZ2Pw5RB7uowFvXSb02C4Xdo=;
-        b=q9k+ZnM/iUDIjB83KZuAhhg2+LFRAVmLAKh1PjbrgJhCZzRjgD4/ei2Sc3aVZVrak2
-         z4OYsNUZrHvULvGwjUtXoB8Cop3WvsQhdfeCdsfvopwd+j0sVR1mD9l/keNsYKXjMtI9
-         PTezTDmm8hs3pVRQwy7PHL1IKCHhp7uAUk0xrv8PdTjR+9vKPbJmXC8xbdonke8a39up
-         bPGFnCv1U2LfeoEdIzGxLx8P+ubbFg2Y5QHu2M/YO7f7jkjRbrSuC8Kb2g7Hk0d2xikg
-         rHyGH33t5daK03Zq80Fz2ldb1cEYN4prOQo7Uj4fYtSZD+0Rk3Ux4v8WOcBY7zIcO538
-         h7Jw==
-X-Gm-Message-State: AODbwcCGwnlIJ58h/a7wtdTPVdgeUZPd5cCEPe8PxL4JoXIaDvjLdf9P
-        5Zmddho7lzehPg==
-X-Received: by 10.98.9.91 with SMTP id e88mr3546622pfd.177.1496359825910;
-        Thu, 01 Jun 2017 16:30:25 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=8Y1tS9OJQ9RDW660mLf/nHBvBXi28SQ6xSoVUOUE6FE=;
+        b=mWUW7hC1xUJ8YBxL5Nwf0+OFMIP7iM0Gqz7sfQ6XbKlSf+I27s8W5V6N0MMmItwRhh
+         Ni3tXlZlGUzj6t1fh2wwEgH3KX+iDr3gGcQWM0WnePfac1B335UbByI3v99EJT1S2tiL
+         SJaJfIN95vxSzBjpOGE39ONt3HQwkTCyg2fvSN741fUfcfXtqkr3zRBFMgG1UagkAlSv
+         XiqVhQjqjqvg7iYVBgTW28hDTd7x4cLe5GlfbrGYicw3dMjirlG32A5EFfh20s2W2UU4
+         ODygQBH2WbZhzL46PoqcWMr8FLLcVcWNdw0KlZ1XfO9VzaG8Zx2YbS8yIANoAHcQV1n8
+         W8Nw==
+X-Gm-Message-State: AODbwcBKyy3sXamk4gG2iqV/5oiecn/GYAgE9OdF95xJfUQ4ESmZp1BM
+        NjV02Z8g4ln0RA==
+X-Received: by 10.98.217.7 with SMTP id s7mr3583308pfg.39.1496360437971;
+        Thu, 01 Jun 2017 16:40:37 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:ec2c:8ebb:3fc7:e0d4])
-        by smtp.gmail.com with ESMTPSA id f1sm30260806pgc.8.2017.06.01.16.30.24
+        by smtp.gmail.com with ESMTPSA id h15sm37500106pfk.120.2017.06.01.16.40.37
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 16:30:25 -0700 (PDT)
+        Thu, 01 Jun 2017 16:40:37 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 0/8] PCRE v2, PCRE v1 JIT, log -P & fixes
-References: <20170601182056.31142-1-avarab@gmail.com>
-Date:   Fri, 02 Jun 2017 08:30:24 +0900
-In-Reply-To: <20170601182056.31142-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 1 Jun 2017 18:20:48 +0000")
-Message-ID: <xmqqbmq74773.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org,
+        avarab@gmail.com
+Subject: Re: [PATCH 2/3] rebase: Add tests for console output
+References: <20170531104213.16944-1-phillip.wood@talktalk.net>
+        <20170531104213.16944-3-phillip.wood@talktalk.net>
+        <alpine.DEB.2.21.1.1706011329350.3610@virtualbox>
+Date:   Fri, 02 Jun 2017 08:40:36 +0900
+In-Reply-To: <alpine.DEB.2.21.1.1706011329350.3610@virtualbox> (Johannes
+        Schindelin's message of "Thu, 1 Jun 2017 14:56:13 +0200 (CEST)")
+Message-ID: <xmqq7f0v46q3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> See <20170525200528.22037-1-avarab@gmail.com> for v3
-> (https://public-inbox.org/git/20170525200528.22037-1-avarab@gmail.com/).
+> Also, about the commit IDs. As long as the tests are consistent (i.e. they
+> use test_commit rather than plain `git commit`, or at least call
+> `test_tick` beforehand), the commit IDs should actually be identical
+> between runs and not depend on the time of day or the date.
 >
-> This is on top of "[PATCH v4 00/31] Easy to review grep & pre-PCRE
-> changes".
->
-> Changes:
->
-> Ævar Arnfjörð Bjarmason (8):
->   grep: don't redundantly compile throwaway patterns under threading
->   grep: skip pthreads overhead when using one thread
->   log: add -P as a synonym for --perl-regexp
->   grep: add support for the PCRE v1 JIT API
->   grep: un-break building with PCRE < 8.32
->   grep: un-break building with PCRE < 8.20
->
-> No changes.
->
->   grep: un-break building with PCRE >= 8.32 without --enable-jit
->
-> NEW: It turns out that a PCRE version that supports JIT, but is built
-> without JIT support will fail at link time since there's no
-> pcre_jit_exec symbol.
->
-> It also turns out (contrary to what I claimed on list before, my
-> mistake) that there's no way to detect this through some macro. All
-> the pcre include files are the same with/without --enable-jit, only
-> the object file differs.
->
-> So there's now a NO_LIBPCRE1_JIT flag to the Makefile, which is off by
-> default, but turned on on MinGW. I have not tested that
-> config.mak.uname change, but everything else I could test on Linux.
->
-> The reason for why it's NO_LIBPCRE1_JIT not USE_LIBPCRE1_JIT is that
-> in practice pretty much everyone who builds pcre builds it with JIT
-> (I've looked through various Linux/BSD distro build files), it's MinGW
-> that's the exception here. Given the performance gain it makes sense
-> to make it the default.
->
->   grep: add support for PCRE v2
->
-> Almost no changes, just:
->
->  * A trivial change to stop redundantly assigning to pcre2_jit_on,
->    mistakenly left over from an earlier version.
->
->  * Updated commit message / perf numbers for the extra patches in the
->    series both here and in v3.
+> The only exception to that rule is when some previous test cases call
+> `test_commit` but are guarded behind some prereq and may not be executed
+> at all. In that case, the precise commit IDs depend on the particular set
+> of active prereqs.
 
-Nicely summarised and matches what I received; thanks, will replace.
+Good observation.  The tests written such a way may make later
+introduction of new hash function troublesome, though (we already
+have tons of them, and it is already a hassle just imagining that we
+will have to migrate them X-<).  
+
+And what you gave below is an excellent suggestion to even solve
+that future headaches.
+
+> But as far as I can tell, t3420 does not have any test cases guarded by
+> prereqs.
+>
+> Taking an additional step back, I wonder whether we have to hard-code the
+> commit IDs (or XXX) to begin with. Why not generate the `expect` files
+> with the information at hand? We can simply ask `git rev-parse --short`.
+>
+> For the stash's commit ID, there is no record in the ref space, of course
+> (because it was created with `git stash create`). But I think in this
+> case, it is legitimate to simply grep the output.
+>
+> That way, the test would be precise and resilient.
+>
+> So for example instead of adding the t/t3420/expected-success-am verbatim,
+> you could generate the output via
+>
+> 	cat >expect <<-EOF
+> 	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\\$" output)
+> 	HEAD is now at $(git rev-parse --short HEAD~2) third commit
+> 	First, rewinding head to replay your work on top of it...
+> 	Applying: second commit
+> 	Applying: third commit
+> 	Applied autostash.
+> 	EOF
+>
+> Ciao,
+> Johannes
