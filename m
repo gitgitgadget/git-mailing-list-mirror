@@ -7,93 +7,155 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8460B20D0A
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D2B520D0A
 	for <e@80x24.org>; Thu,  1 Jun 2017 15:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752274AbdFAPvj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 11:51:39 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:33848 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751138AbdFAPvf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 11:51:35 -0400
-Received: by mail-qt0-f196.google.com with SMTP id l39so6174657qtb.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 08:51:35 -0700 (PDT)
+        id S1752389AbdFAPvl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 11:51:41 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:34161 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752096AbdFAPva (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 11:51:30 -0400
+Received: by mail-qk0-f196.google.com with SMTP id d14so3039662qkb.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 08:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wUbWgi9OwEnIhShVXMcpBvy0wTnr62zJwvg9v0x8Jls=;
-        b=Z2zPHR/CWpkjpyew6sPgXL5s1eED7HzFqETEjhXe68GLIL8ydryHNa6URzPMsiy5m3
-         3ghfWJ/7nrltHnyXrcr74fLU1cSK0qaVQTSk8l5U5PPuGY+L9JQvV667hwGa9muHeAJf
-         cKNlwEQpz3KO6O5ogrJgy15kWyRRceUpxhPnchzy3k90VcYSwsY0m/Lgf2Q6IN9MpA+X
-         UulNrHh1jEPLRs6WITveZ4khrFzAOKJ2mlDNEteRGFz+FnuvRpbjYIUYGegtgjFA+CLP
-         Vn2B9P8qMqDsvWIF+PJS34ktUu90VX3d+XJqL+tfOC/YjYnDB0fFtyhpzFHHN1PyJ4Xp
-         bxVQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hCR9ouULWstfMWQlMpFAiNiUV154OVEWNrxiW6dPHD0=;
+        b=D0hfz8i2O6wBx9FlzocILITJxkIbcFomDLfkvKqS2djpsYu/IFqzyEAZp+3F+qQAwN
+         fwOHTMcRxmFVzDNDPfeZUTzhJM0ZkTBUcdAFwFYvJR2Kiw5D2S+8dDUMVcAPvKYBPV9r
+         vPFiog2Q3ii91a3qFbNtxhvdZx0pgsbOReVzTRp9o4ShI8WTUoIk0hfPVE5sqWgcw4PF
+         2fm1AG6wSYsvfJRKE4alhASqx9Nt56PcvGRIl6iVpVkXQ4hXFTv1tzJzuVl5PtWiuiQC
+         zeEcgN0RTOgH1B9MSGFp97Ss3auw013kk5hprrRHk+7dkcYBIJKlvvb6OABnbCxrPLmX
+         ZL9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=wUbWgi9OwEnIhShVXMcpBvy0wTnr62zJwvg9v0x8Jls=;
-        b=A8ZbN/jUBYD2rOjy7rH3bgguOWsVoQquNypCPnzx4VWzr6+FnfrxzoeDbXoUM313Gl
-         mlwWMs9iVX01rMUq2+EmDYkZggff6cfKgrXRjrVM9gOAyFjyoknaZmQCwQ1D6q1oRO/6
-         QSNtdfnkTJV5R7Rn21dROD2eLNNpDnvrXilFppvnHDGZQcbkd9pe+rJiHTy5n7ooIoVe
-         if6S/p4o6XTgnX4PY2BKLlLjlyz1TmQlv/wz0re58qBOt/8TYEQgTC5iVQJgJBYN4OKQ
-         sSxBOnyweNH1dKnSAL3rjH+lfVzTb87AXX3Wqg6trxhW9kierzXLey0nIkRiH/QlJ3WD
-         Mn8g==
-X-Gm-Message-State: AODbwcCyrDMzOeV37fz4ml2qY5wD0hhqgsjtM336Ym8Tt1lnnHJLxizX
-        bB65Qop6oO31DUjROv8=
-X-Received: by 10.237.58.33 with SMTP id n30mr2973370qte.101.1496332279333;
-        Thu, 01 Jun 2017 08:51:19 -0700 (PDT)
+         :references:mime-version:content-transfer-encoding;
+        bh=hCR9ouULWstfMWQlMpFAiNiUV154OVEWNrxiW6dPHD0=;
+        b=nT/8tHu0t2HTWLc67f10d9y3jKa5sttSSN8hwulKtu4/8T18UNWzLiqIxNe4sHMuhC
+         oOu2C+zWCXedidJuEat+IVjm7/V+nLFqK5qbdXl73VvBbm77ZFz9w/zYlD0vBkdsl1lL
+         qT3mqt0aWjZrnnk31/jXBayKk1JAwnBEZCY67IqK/2R/bOVr4poTBnj/TYhll0pIKAvo
+         g76+mIbaTFNAlS6FKBbzLIaJzCA7i9CyQ1prjiz2B80kqOZAJsVZjYFc4Yr1N7bmh4gm
+         KeQ17kxZ6fguztxp3BD8fMSh4o9Q1c4Xlvw5pHRZMYsmO34PGbIlbiGgll+siWEB+fVh
+         mklA==
+X-Gm-Message-State: AODbwcAaXFak5/3h7v4V9WRrCDCAIgZ1z12y33jsdhLjwczI3mJJIYaU
+        IrGPmPJcVnk0r8warRo=
+X-Received: by 10.55.98.135 with SMTP id w129mr2738121qkb.90.1496332284657;
+        Thu, 01 Jun 2017 08:51:24 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id w41sm12715524qtg.34.2017.06.01.08.51.17
+        by smtp.gmail.com with ESMTPSA id w41sm12715524qtg.34.2017.06.01.08.51.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 08:51:18 -0700 (PDT)
+        Thu, 01 Jun 2017 08:51:24 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com, pclouds@gmail.com,
         johannes.schindelin@gmx.de, David.Turner@twosigma.com,
         peff@peff.net, christian.couder@gmail.com, avarab@gmail.com
-Subject: [PATCH v4 1/6] bswap: add 64 bit endianness helper get_be64
-Date:   Thu,  1 Jun 2017 11:51:00 -0400
-Message-Id: <20170601155105.28356-2-benpeart@microsoft.com>
+Subject: [PATCH v4 6/6] fsmonitor: add a sample query-fsmonitor hook script for Watchman
+Date:   Thu,  1 Jun 2017 11:51:05 -0400
+Message-Id: <20170601155105.28356-7-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.13.0.windows.1.9.gc201c67b71
 In-Reply-To: <20170601155105.28356-1-benpeart@microsoft.com>
 References: <20170601155105.28356-1-benpeart@microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new get_be64 macro to enable 64 bit endian conversions on memory
-that may or may not be aligned.
+This hook script integrates the new fsmonitor capabilities of git with
+the cross platform Watchman file watching service. To use the script:
+
+Download and install Watchman from https://facebook.github.io/watchman/
+and instruct Watchman to watch your working directory for changes
+('watchman watch-project /usr/src/git').
+
+Rename the sample integration hook from query-fsmonitor.sample to
+query-fsmonitor.
+
+Configure git to use the extension ('git config core.fsmonitor true')
+and optionally turn on the untracked cache for optimal performance
+('git config core.untrackedcache true').
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- compat/bswap.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ templates/hooks--query-fsmonitor.sample | 60 +++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
+ create mode 100755 templates/hooks--query-fsmonitor.sample
 
-diff --git a/compat/bswap.h b/compat/bswap.h
-index d47c003544..f89fe7f4b5 100644
---- a/compat/bswap.h
-+++ b/compat/bswap.h
-@@ -158,6 +158,7 @@ static inline uint64_t git_bswap64(uint64_t x)
- 
- #define get_be16(p)	ntohs(*(unsigned short *)(p))
- #define get_be32(p)	ntohl(*(unsigned int *)(p))
-+#define get_be64(p)	ntohll(*(uint64_t *)(p))
- #define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
- 
- #else
-@@ -170,6 +171,9 @@ static inline uint64_t git_bswap64(uint64_t x)
- 	(*((unsigned char *)(p) + 1) << 16) | \
- 	(*((unsigned char *)(p) + 2) <<  8) | \
- 	(*((unsigned char *)(p) + 3) <<  0) )
-+#define get_be64(p)	( \
-+	((uint64_t)get_be32((unsigned char *)(p) + 0) << 32) | \
-+	((uint64_t)get_be32((unsigned char *)(p) + 4) <<  0)
- #define put_be32(p, v)	do { \
- 	unsigned int __v = (v); \
- 	*((unsigned char *)(p) + 0) = __v >> 24; \
+diff --git a/templates/hooks--query-fsmonitor.sample b/templates/hooks--query-fsmonitor.sample
+new file mode 100755
+index 0000000000..941c4c5b57
+--- /dev/null
++++ b/templates/hooks--query-fsmonitor.sample
+@@ -0,0 +1,60 @@
++#!/bin/sh
++#
++# An example hook script to integrate Watchman
++# (https://facebook.github.io/watchman/) with git to provide fast
++# git status.
++#
++# The hook is passed a version (currently 1) and a time in nanoseconds
++# formatted as a string and outputs to stdout all files that have been
++# modified since the given time. Paths must be relative to the root of
++# the working tree and separated by a single NUL.
++#
++# To enable this hook, rename this file to "query-fsmonitor"
++
++# check the hook interface version
++if [ $1 -eq 1 ]
++then
++	# convert nanoseconds to seconds
++	time_t=$(($2/1000000000))
++else
++	echo -e "Unsupported query-fsmonitor hook version.\nFalling back to scanning...\n" >&2
++	exit 1;
++fi
++
++# Convert unix style paths to escaped Windows style paths
++case "$(uname -s)" in
++MINGW*|MSYS_NT*)
++  GIT_WORK_TREE="$(cygpath -aw "$PWD" | sed 's,\\,\\\\,g')"
++  ;;
++*)
++  GIT_WORK_TREE="$PWD"
++  ;;
++esac
++
++# Query Watchman for all the changes since the requested time
++echo "[\"query\", \"$GIT_WORK_TREE\", {\"since\": $time_t, \"fields\":[\"name\"]}]" | \
++	watchman -j |
++	perl -0666 -e '
++		use strict;
++		use warnings;
++
++		my $stdin = <>;
++		die "Watchman: command returned no output.\nFalling back to scanning...\n" if $stdin eq "";
++		die "Watchman: command returned invalid output: $stdin\nFalling back to scanning...\n" unless $stdin =~ /^\{/;
++
++		my $json_pkg;
++		eval {
++			require JSON::XS;
++			$json_pkg = "JSON::XS";
++			1;
++		} or do {
++			require JSON::PP;
++			$json_pkg = "JSON::PP";
++		};
++
++		my $o = $json_pkg->new->utf8->decode($stdin);
++		die "Watchman: $o->{error}.\nFalling back to scanning...\n" if $o->{error};
++
++		local $, = "\0";
++		print @{$o->{files}};
++	'
 -- 
 2.13.0.windows.1.9.gc201c67b71
 
