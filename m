@@ -2,125 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC37120D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 19:28:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BA5220D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 19:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751264AbdFAT2d (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 15:28:33 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:36713 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751097AbdFAT2c (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 15:28:32 -0400
-Received: by mail-pf0-f181.google.com with SMTP id m17so35553647pfg.3
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 12:28:32 -0700 (PDT)
+        id S1751126AbdFATm0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 15:42:26 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35777 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751097AbdFATm0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 15:42:26 -0400
+Received: by mail-wm0-f65.google.com with SMTP id g15so13826934wmc.2
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 12:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=z4g12WGun0T8Z9XcBetbgQJ15LlqYo+6vEIK0VcC0qo=;
-        b=ghZymuA+KCfs9rMY6BmLi774Bsc+ZdBKvhhwowh62j2ux1s1w2sT2e1uLuKWMzDI8R
-         enR6po6UE4erCPFJo8XW6UrtUeB6zF0yGfwlKH11RaNAQPRw8jfxWZS6rD65kfRcWPlr
-         p/RADPuADxC+sFuGQu2LFOQGaRYKU4RqdpBIrm4ZfT9JRpKAvyZKdpWAf45dYyM92yYz
-         i6KsMfsMRjXuOFPlxVRMEEpqhkKf3IrWnhyhKQV/IPTYSTSehkYWP9RZqdzKHNWIweDk
-         ZU0pC806E62eWA6IvLVvh3/78+o6dqc1HgzzS6myyn9MgCK75MMv3O8YBH6XuRATTpE3
-         4n4A==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=TW96yGcJ2OVoOm4R10fcYxkkEUr3/yVK7sA0eUrunlQ=;
+        b=dJvlLDSr3rLrt/+e81wX3ElPOpWIHJGjkTqRWKYwv4RWdYgujSbQDtzdfIqJXHErkp
+         gglt7EXUfYp1dPhH4uBNZJKr1Lujq8jALPTn6j42k6UlWuSRAG+3W0WA1cel2D92qZpz
+         /6Xj25wxVS1O97bdZH5XGTk1iD2t+1Y+9vYKQ0/bzAbw5yGEsyl6YsLjczHQKQiX+zVy
+         4DvDtafh/IFJ5YQdYjT+baBzy2irP81uC1eB/icaDjoRQzOHhmKPP2+7SW183vMNc62U
+         qscwsxdfSPV8Q7yPqbYaUb6AJdVbgtyLkZQC1m2qbRIw7HjOtg8AVyqUgJsjt2xxFRUt
+         i6kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=z4g12WGun0T8Z9XcBetbgQJ15LlqYo+6vEIK0VcC0qo=;
-        b=LrE3z/sbHDIYju0CAbYPQI2FEbyp8r/HaeIU/Z6KYiUV2jQ+8ELZu7Jn3LR7LWQI4A
-         EtE8TIN9UGCBJpaECVYF5hPPF7dXV4NVA1CLQwMDNYjMVZ6j7plkA00SiS19GYX+1br/
-         C6z7W7F3fk65RIknjhzewGcKnp6CMwLz3jxEHT1uhvFaAxnqTDagcto+ttGxmIOWaskI
-         688JdbOe5MlkNkRm4MYIJzS+3UVd0ugr7j59pczlhCLO7fWl5nJ929EWhJRq6wWbsyvv
-         CCNZwR9hGeU2AcGfd/bzCcYlXFQTcO6Uvr9bUlQght+9UTwSCcnApvDlHS5jLeuCwZn6
-         D9Eg==
-X-Gm-Message-State: AODbwcCFEkLT0drIA8yXB51msJcFzAhK1Gs4rGJuYYKs8iiQH4IFbVt1
-        qfEXNyGjA5Hlo9+3AneLTUJPY3FC8dMn
-X-Received: by 10.98.205.65 with SMTP id o62mr2579832pfg.105.1496345311520;
- Thu, 01 Jun 2017 12:28:31 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Thu, 1 Jun 2017 12:28:31 -0700 (PDT)
-In-Reply-To: <20170531214417.38857-6-bmwill@google.com>
-References: <20170531214417.38857-1-bmwill@google.com> <20170531214417.38857-6-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 1 Jun 2017 12:28:31 -0700
-Message-ID: <CAGZ79kZF3mk40P1rRvV57X=JWveNoCmdvKmkUO=fo8Ts=BkZrA@mail.gmail.com>
-Subject: Re: [PATCH 05/31] environment: remove namespace_len variable
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ben Peart <peartben@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TW96yGcJ2OVoOm4R10fcYxkkEUr3/yVK7sA0eUrunlQ=;
+        b=PkDEZRoHnU9GX7AWOBU4ukeDwb7uyQ6Duli9+Ft+BTNwVMS39caQFu/S2fTlTmhSXx
+         EAmTBWKcjd3rpUlT344A6vp/wg5Y80Qlr8D9rcf7xYL8xznj4T9eVhdPThylux4IftxV
+         OU3gX6g3ZCiLz9f3kVdfTXn7GwAGvANe5pw2OGOy3EGrcpSbvB2P309XoY8hSskxGRWA
+         2yLU36ugUBB94m2Mg+rrJmoLCw6kYTm+kI9t2w20+N7UbjGIR+mDjhy5KtBx4gHEfWsR
+         I0pECAl3Zb5GWvDXU0aOHg0v1qryIdfzJZrLqrLsAO7UPg71hzOUQNgFCP28wznmG42w
+         CK2g==
+X-Gm-Message-State: AODbwcCyKW11M5Whh56rlqSLEmKYXjVyHHQjQ6KFhssk4N/402ziIDYk
+        vTRrnQBafujiUDF2
+X-Received: by 10.80.192.16 with SMTP id r16mr3093695edb.155.1496346144709;
+        Thu, 01 Jun 2017 12:42:24 -0700 (PDT)
+Received: from [192.168.1.80] ([145.129.9.233])
+        by smtp.gmail.com with ESMTPSA id a54sm11527950edd.68.2017.06.01.12.42.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 01 Jun 2017 12:42:23 -0700 (PDT)
+Message-ID: <1496346143.26495.1.camel@kaarsemaker.net>
+Subject: Re: [PATCH v2] send-email: Net::SMTP::SSL is obsolete, use only
+ when necessary
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com,
+        Eric Biggers <ebiggers3@gmail.com>
+Date:   Thu, 01 Jun 2017 21:42:23 +0200
+In-Reply-To: <xmqq37bkabfl.fsf@gitster.mtv.corp.google.com>
+References: <CACBZZX5j1dYk8aeRED7T7iJ=b32aFUpfUWPpMpmtofBL3QnVXQ@mail.gmail.com>
+         <20170324213732.29932-1-dennis@kaarsemaker.net>
+         <1493881302.20467.3.camel@kaarsemaker.net>
+         <1495227246.19473.3.camel@kaarsemaker.net>
+         <xmqq37bkabfl.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 31, 2017 at 2:43 PM, Brandon Williams <bmwill@google.com> wrote:
-> Use 'skip_prefix' instead of 'starts_with' so that we can drop the need
-> to keep around 'namespace_len'.
+On Thu, 2017-06-01 at 07:50 +0900, Junio C Hamano wrote:
+> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+> 
+> > Second ping. This problem is not going away, so if this solution is not
+> > acceptable, I'd like to know what needs to be improved.
+> 
+> Perhaps you needed to actually test with older installation that
+> people have, it seems, between pings.  Immediately after this was
+> merged to 'master', we start getting bug reports X-<.
+> 
+> Eric Biggers' message 
+> 
+>     https://public-inbox.org/git/<20170531222455.GD72735@gmail.com>;
+> 
+> seems to indicate that we should cut off at 3.01 not 1.28?
+> 
+> Thanks.
 
-Looks correct.
+Apologies for that. The version numbering of libnet is *weird*. The
+libnet version this was fixed in *is* 1.28, but the Net::SMTP module in
+ libnet version 1.28 has version 2.33.
 
-Performance wise:
-The strip_namespace function is only called from {receive/upload}-pack
-and http-backend, so all network operations, whose actual operations
-should far outweight the tiny CPU saving that this reverts.
-We should be fine?
+I did test with some older perl versions, but not far enough back it
+seems :(
 
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  environment.c | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
->
-> diff --git a/environment.c b/environment.c
-> index a73b08f5d..e035f6372 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -98,7 +98,6 @@ char *git_work_tree_cfg;
->  static char *work_tree;
->
->  static const char *namespace;
-> -static size_t namespace_len;
->
->  static const char *super_prefix;
->
-> @@ -190,7 +189,6 @@ void setup_git_env(void)
->         git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
->                                                           : "refs/replace/");
->         namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
-> -       namespace_len = strlen(namespace);
->         shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
->         if (shallow_file)
->                 set_alternate_shallow_file(shallow_file, 0);
-> @@ -231,9 +229,10 @@ const char *get_git_namespace(void)
->
->  const char *strip_namespace(const char *namespaced_ref)
->  {
-> -       if (!starts_with(namespaced_ref, get_git_namespace()))
-> -               return NULL;
-> -       return namespaced_ref + namespace_len;
-> +       const char *out;
-> +       if (skip_prefix(namespaced_ref, get_git_namespace(), &out))
-> +               return out;
-> +       return NULL;
->  }
->
->  const char *get_super_prefix(void)
-> --
-> 2.13.0.506.g27d5fe0cd-goog
->
+D.
