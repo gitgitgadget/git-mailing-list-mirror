@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FE2920D13
-	for <e@80x24.org>; Thu,  1 Jun 2017 08:22:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C07452027C
+	for <e@80x24.org>; Thu,  1 Jun 2017 08:22:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751385AbdFAIWO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 04:22:14 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35293 "EHLO
+        id S1751404AbdFAIWP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 04:22:15 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34775 "EHLO
         mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751036AbdFAIWJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 04:22:09 -0400
-Received: by mail-wm0-f68.google.com with SMTP id g15so9276119wmc.2
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 01:22:08 -0700 (PDT)
+        with ESMTP id S1751054AbdFAIWN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 04:22:13 -0400
+Received: by mail-wm0-f68.google.com with SMTP id d127so9277075wmf.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 01:22:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vrOhG8z9IC97PQfjDkWFGjRq7Sgq/cZ376kzUOKc0Io=;
-        b=CtdtNMqoJKVYYbKbxWfN9nGVc0F8+OabojkYBmNQpA28ere6YSidQ1oFXUN7CuvSdL
-         wNtp+Rs+OizVPJUcqBp5fDCHkRB75//bwdHRFet7syx2do+u6jzKh72wUt3rIUo841xE
-         eW4RBQq4vkPjb3nkz4fMpgDB81IY1ljsOJskLh6xj9g2N3f20mLAl4pZSB6oeU62XGBa
-         8WVEIpqgUf3vjSiNndC60NwN7zxeV+14W6Pr8LgBwBuA631bQSkTULYfvBKQOifR+FNv
-         u947jLuxrx+Hk0R2WmbFEePW7eRvx1MCtuxI2rBpfnt7CouiTfLA68/Sc2CzmZ1ZVXe0
-         3R+w==
+        bh=joQRLkdbJKaA4dJbIMn+fx4YLp8KezQed+2pph04GcQ=;
+        b=W31TDN4s4sX1sPbZgEYl0rKuZUNBUlnRn9Imt/9UhnFxbUEGQ8fsO8W/cjX8RtZdok
+         GMKO2LPvjKmCbCvcHgwDkhPib6a3Vc6glbadrvnIlFl87HjOOj+Gmri4VetUnwjaVrld
+         CYYD5Sgu6hH6W98aRfzvjt+EW4SYzVuj2o0Qo1CnfyBM0XnAvNO1wB7KrbO3tUcqIwW2
+         Hg2T+MQz4sBjYVlNfOALOZjejjlW76FmNT1DqJXUXYiwJLpi+DvRfdI6c0tELKFfjuBz
+         LOeEoQNGJhNnycQAofibbP76PuvruX6v9W9niRRnw9cpgSoG/6zOv/8HlSBJLQhQ0NzL
+         KKiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vrOhG8z9IC97PQfjDkWFGjRq7Sgq/cZ376kzUOKc0Io=;
-        b=OVbfGRWarqCxR9ASBOLsiK7GpiYfFB7Wb49Pi3F8m6PjHHeyenzHFZL3xhZ8Vjvf5a
-         TZ5ftY99RUjOLStXxVa420CNkCdcKmOQA2+yo47LZTZwJ7K3FvSgaHlx9fcXHYyuBuKC
-         D3iTZN6gAF7fQ/y76+cEWMinmlwyryYbQjoFjoNCdtCUJdZ/tO30OAjluSaDXLOJ9KSF
-         PMd5ISP1rVyrNw3n+L+7O8jHa6fdSoOpaRBYcww+84Qp749e/ENmP0IdOqskleUIBcwK
-         7J3BCqXnLYQ/smF95S0ZCOaXmwWEqf2tK7sMP52J0yAhpUqiSXn/iA7QeqqMVtK0XUX/
-         AEdQ==
-X-Gm-Message-State: AODbwcAvCoS5/xfIkEsWxk9OGepvlxGrIcHacfQ0P+1K7kw0WpaMAGy0
-        lzsbovCiGRCpqW4g
-X-Received: by 10.28.29.205 with SMTP id d196mr7872227wmd.30.1496305327503;
-        Thu, 01 Jun 2017 01:22:07 -0700 (PDT)
+        bh=joQRLkdbJKaA4dJbIMn+fx4YLp8KezQed+2pph04GcQ=;
+        b=QzqYJ6v+of+u63VC9CbiKM5zF/YWufo2eq32aGDDpOsZFOqqAvYWXKCxH2V7/fWWPT
+         /wEkh8jY4j3AHde1ADib1YE/uc6iDG6Anj/DASVQGdsF5n//4KFfbuVxE4qqyIN4uJ7Y
+         jBOc68HlYxqI4xEoPXwPQbPrDd40SXsfycSHclaO5DbhuIZDQylBZ6akYt+xyZ+kcMFt
+         lYTJqGVeo8576l6J/pA8SQtRZZQFXkfzOhFRtzO/TT1ZvLHSE6/ss/FeGMPN0cw8PPmk
+         svgiN83CrqLh54aG6lFW/bPzaiEo+lIHkwk+UWAx2ryzv4kqXF7wkyNXy1EJLaKux2i7
+         H8ww==
+X-Gm-Message-State: AODbwcA7MWTttOdbCc+o0d7bOkqOmI/mXaifMQebDs1cSwvmK0rG3s/B
+        SOOyESN7mtRS37zx
+X-Received: by 10.223.134.216 with SMTP id 24mr267535wry.31.1496305330844;
+        Thu, 01 Jun 2017 01:22:10 -0700 (PDT)
 Received: from slxBook4.fritz.box (p5DDB4864.dip0.t-ipconnect.de. [93.219.72.100])
-        by smtp.gmail.com with ESMTPSA id 140sm15351595wmu.23.2017.06.01.01.22.06
+        by smtp.gmail.com with ESMTPSA id 140sm15351595wmu.23.2017.06.01.01.22.09
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 01:22:07 -0700 (PDT)
+        Thu, 01 Jun 2017 01:22:10 -0700 (PDT)
 From:   Lars Schneider <larsxschneider@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, tboegi@web.de, e@80x24.org,
         ttaylorr@github.com, peartben@gmail.com
-Subject: [PATCH v5 2/5] t0021: make debug log file name configurable
-Date:   Thu,  1 Jun 2017 10:22:00 +0200
-Message-Id: <20170601082203.50397-3-larsxschneider@gmail.com>
+Subject: [PATCH v5 5/5] convert: add "status=delayed" to filter process protocol
+Date:   Thu,  1 Jun 2017 10:22:03 +0200
+Message-Id: <20170601082203.50397-6-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170601082203.50397-1-larsxschneider@gmail.com>
 References: <20170601082203.50397-1-larsxschneider@gmail.com>
@@ -62,243 +62,931 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "rot13-filter.pl" helper wrote its debug logs always to "rot13-filter.log".
-Make this configurable by defining the log file as first parameter of
-"rot13-filter.pl".
+Some `clean` / `smudge` filters might require a significant amount of
+time to process a single blob (e.g. the Git LFS smudge filter might
+perform network requests). During this process the Git checkout
+operation is blocked and Git needs to wait until the filter is done to
+continue with the checkout.
 
-This is useful if "rot13-filter.pl" is configured multiple times similar to the
-subsequent patch 'convert: add "status=delayed" to filter process protocol'.
+Teach the filter process protocol (introduced in edcc858) to accept the
+status "delayed" as response to a filter request. Upon this response Git
+continues with the checkout operation. After the checkout operation Git
+calls "finish_delayed_checkout" which queries the filter for remaining
+blobs. If the filter is still working on the completion, then the filter
+is expected to block. If the filter has completed all remaining blobs
+then an empty response is expected.
+
+Git has a multiple code paths that checkout a blob. Support delayed
+checkouts only in `clone` (in unpack-trees.c) and `checkout` operations.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- t/t0021-conversion.sh   | 44 ++++++++++++++++++++++----------------------
- t/t0021/rot13-filter.pl |  8 +++++---
- 2 files changed, 27 insertions(+), 25 deletions(-)
+ Documentation/gitattributes.txt |  65 +++++++++++++-
+ builtin/checkout.c              |   3 +
+ cache.h                         |   6 +-
+ convert.c                       | 119 +++++++++++++++++++++----
+ convert.h                       |  21 +++++
+ entry.c                         | 110 +++++++++++++++++++++--
+ t/t0021-conversion.sh           |  74 ++++++++++++++++
+ t/t0021/rot13-filter.pl         | 189 ++++++++++++++++++++++++++--------------
+ unpack-trees.c                  |   2 +
+ 9 files changed, 498 insertions(+), 91 deletions(-)
 
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 4736483865..5489e8b723 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -425,8 +425,8 @@ packet:          git< capability=clean
+ packet:          git< capability=smudge
+ packet:          git< 0000
+ ------------------------
+-Supported filter capabilities in version 2 are "clean" and
+-"smudge".
++Supported filter capabilities in version 2 are "clean", "smudge",
++and "delay".
+ 
+ Afterwards Git sends a list of "key=value" pairs terminated with
+ a flush packet. The list will contain at least the filter command
+@@ -512,12 +512,69 @@ the protocol then Git will stop the filter process and restart it
+ with the next file that needs to be processed. Depending on the
+ `filter.<driver>.required` flag Git will interpret that as error.
+ 
+-After the filter has processed a blob it is expected to wait for
+-the next "key=value" list containing a command. Git will close
++After the filter has processed a command it is expected to wait for
++a "key=value" list containing the next command. Git will close
+ the command pipe on exit. The filter is expected to detect EOF
+ and exit gracefully on its own. Git will wait until the filter
+ process has stopped.
+ 
++Delay
++^^^^^
++
++If the filter supports the "delay" capability, then Git can send the
++flag "can-delay" after the filter command and pathname. This flag
++denotes that the filter can delay filtering the current blob (e.g. to
++compensate network latencies) by responding with no content but with
++the status "delayed" and a flush packet.
++------------------------
++packet:          git> command=smudge
++packet:          git> pathname=path/testfile.dat
++packet:          git> can-delay=1
++packet:          git> 0000
++packet:          git> CONTENT
++packet:          git> 0000
++packet:          git< status=delayed
++packet:          git< 0000
++------------------------
++
++If the filter supports the "delay" capability then it must support the
++"list_available_blobs" command. If Git sends this command, then the
++filter is expected to return a list of pathnames of blobs that are
++available. The list must be terminated with a flush packet followed
++by a "success" status that is also terminated with a flush packet. If
++no blobs for the delayed paths are available, yet, then the filter is
++expected to block the response until at least one blob becomes
++available. The filter can tell Git that it has no more delayed blobs
++by sending an empty list.
++------------------------
++packet:          git> command=list_available_blobs
++packet:          git> 0000
++packet:          git< pathname=path/testfile.dat
++packet:          git< pathname=path/otherfile.dat
++packet:          git< 0000
++packet:          git< status=success
++packet:          git< 0000
++------------------------
++
++After Git received the pathnames, it will request the corresponding
++blobs again. These requests contain a pathname and an empty content
++section. The filter is expected to respond with the smudged content
++in the usual way as explained above.
++------------------------
++packet:          git> command=smudge
++packet:          git> pathname=path/testfile.dat
++packet:          git> 0000
++packet:          git> 0000  # empty content!
++packet:          git< status=success
++packet:          git< 0000
++packet:          git< SMUDGED_CONTENT
++packet:          git< 0000
++packet:          git< 0000  # empty list, keep "status=success" unchanged!
++------------------------
++
++Example
++^^^^^^^
++
+ A long running filter demo implementation can be found in
+ `contrib/long-running-filter/example.pl` located in the Git
+ core repository. If you develop your own long running filter
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index a6b2af39d3..c1a256df8d 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -376,6 +376,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	state.force = 1;
+ 	state.refresh_cache = 1;
+ 	state.istate = &the_index;
++
++	enable_delayed_checkout(&state);
+ 	for (pos = 0; pos < active_nr; pos++) {
+ 		struct cache_entry *ce = active_cache[pos];
+ 		if (ce->ce_flags & CE_MATCHED) {
+@@ -390,6 +392,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 			pos = skip_same_name(ce, pos) - 1;
+ 		}
+ 	}
++	errs |= finish_delayed_checkout(&state);
+ 
+ 	if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+ 		die(_("unable to write new index file"));
+diff --git a/cache.h b/cache.h
+index ae4c45d379..523ead1d95 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1543,16 +1543,20 @@ extern int ident_cmp(const struct ident_split *, const struct ident_split *);
+ struct checkout {
+ 	struct index_state *istate;
+ 	const char *base_dir;
++	struct delayed_checkout *delayed_checkout;
+ 	int base_dir_len;
+ 	unsigned force:1,
+ 		 quiet:1,
+ 		 not_new:1,
+ 		 refresh_cache:1;
+ };
+-#define CHECKOUT_INIT { NULL, "" }
++#define CHECKOUT_INIT { NULL, "", NULL }
++
+ 
+ #define TEMPORARY_FILENAME_LENGTH 25
+ extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
++extern void enable_delayed_checkout(struct checkout *state);
++extern int finish_delayed_checkout(struct checkout *state);
+ 
+ struct cache_def {
+ 	struct strbuf path;
+diff --git a/convert.c b/convert.c
+index a5e09bb0e8..c4df174378 100644
+--- a/convert.c
++++ b/convert.c
+@@ -496,6 +496,7 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
+ 
+ #define CAP_CLEAN    (1u<<0)
+ #define CAP_SMUDGE   (1u<<1)
++#define CAP_DELAY    (1u<<2)
+ 
+ struct cmd2process {
+ 	struct subprocess_entry subprocess; /* must be the first member! */
+@@ -533,7 +534,8 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
+ 	if (err)
+ 		goto done;
+ 
+-	err = packet_writel(process->in, "capability=clean", "capability=smudge", NULL);
++	err = packet_writel(process->in,
++		"capability=clean", "capability=smudge", "capability=delay", NULL);
+ 
+ 	for (;;) {
+ 		cap_buf = packet_read_line(process->out, NULL);
+@@ -549,6 +551,8 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
+ 			entry->supported_capabilities |= CAP_CLEAN;
+ 		} else if (!strcmp(cap_name, "smudge")) {
+ 			entry->supported_capabilities |= CAP_SMUDGE;
++		} else if (!strcmp(cap_name, "delay")) {
++			entry->supported_capabilities |= CAP_DELAY;
+ 		} else {
+ 			warning(
+ 				"external filter '%s' requested unsupported filter capability '%s'",
+@@ -590,9 +594,11 @@ static void handle_filter_error(const struct strbuf *filter_status,
+ 
+ static int apply_multi_file_filter(const char *path, const char *src, size_t len,
+ 				   int fd, struct strbuf *dst, const char *cmd,
+-				   const unsigned int wanted_capability)
++				   const unsigned int wanted_capability,
++				   struct delayed_checkout *dco)
+ {
+ 	int err;
++	int can_delay = 0;
+ 	struct cmd2process *entry;
+ 	struct child_process *process;
+ 	struct strbuf nbuf = STRBUF_INIT;
+@@ -647,6 +653,14 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	if (err)
+ 		goto done;
+ 
++	if (CAP_DELAY & entry->supported_capabilities &&
++	    dco && dco->state == CE_CAN_DELAY) {
++		can_delay = 1;
++		err = packet_write_fmt_gently(process->in, "can-delay=1\n");
++		if (err)
++			goto done;
++	}
++
+ 	err = packet_flush_gently(process->in);
+ 	if (err)
+ 		goto done;
+@@ -662,14 +676,78 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	if (err)
+ 		goto done;
+ 
+-	err = strcmp(filter_status.buf, "success");
++	if (can_delay && !strcmp(filter_status.buf, "delayed")) {
++		dco->state = CE_DELAYED;
++		string_list_insert(&dco->filters, cmd);
++		string_list_insert(&dco->paths, path);
++	} else {
++		/* The filter got the blob and wants to send us a response. */
++		err = strcmp(filter_status.buf, "success");
++		if (err)
++			goto done;
++
++		err = read_packetized_to_strbuf(process->out, &nbuf) < 0;
++		if (err)
++			goto done;
++
++		err = subprocess_read_status(process->out, &filter_status);
++		if (err)
++			goto done;
++
++		err = strcmp(filter_status.buf, "success");
++	}
++
++done:
++	sigchain_pop(SIGPIPE);
++
++	if (err)
++		handle_filter_error(&filter_status, entry, wanted_capability);
++	else
++		strbuf_swap(dst, &nbuf);
++	strbuf_release(&nbuf);
++	return !err;
++}
++
++
++int async_query_available_blobs(const char *cmd, struct string_list *delayed_paths)
++{
++	int err;
++	char *line;
++	struct cmd2process *entry;
++	struct child_process *process;
++	struct strbuf filter_status = STRBUF_INIT;
++
++	assert(subprocess_map_initialized);
++	entry = (struct cmd2process *)subprocess_find_entry(&subprocess_map, cmd);
++	if (!entry) {
++		error("external filter '%s' is not available anymore although "
++		      "not all paths have been filtered", cmd);
++		return 0;
++	}
++	process = &entry->subprocess.process;
++	sigchain_push(SIGPIPE, SIG_IGN);
++
++	err = packet_write_fmt_gently(
++		process->in, "command=list_available_blobs\n");
+ 	if (err)
+ 		goto done;
+ 
+-	err = read_packetized_to_strbuf(process->out, &nbuf) < 0;
++	err = packet_flush_gently(process->in);
+ 	if (err)
+ 		goto done;
+ 
++	for (;;) {
++		const char* pre = "pathname=";
++		const int pre_len = strlen(pre);
++		line = packet_read_line(process->out, NULL);
++		if (!line)
++			break;
++		err = strlen(line) <= pre_len || strncmp(line, pre, pre_len);
++		if (err)
++			goto done;
++		string_list_insert(delayed_paths, xstrdup(line+pre_len));
++	}
++
+ 	err = subprocess_read_status(process->out, &filter_status);
+ 	if (err)
+ 		goto done;
+@@ -680,10 +758,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	sigchain_pop(SIGPIPE);
+ 
+ 	if (err)
+-		handle_filter_error(&filter_status, entry, wanted_capability);
+-	else
+-		strbuf_swap(dst, &nbuf);
+-	strbuf_release(&nbuf);
++		handle_filter_error(&filter_status, entry, 0);
+ 	return !err;
+ }
+ 
+@@ -698,7 +773,8 @@ static struct convert_driver {
+ 
+ static int apply_filter(const char *path, const char *src, size_t len,
+ 			int fd, struct strbuf *dst, struct convert_driver *drv,
+-			const unsigned int wanted_capability)
++			const unsigned int wanted_capability,
++			struct delayed_checkout *dco)
+ {
+ 	const char *cmd = NULL;
+ 
+@@ -716,7 +792,8 @@ static int apply_filter(const char *path, const char *src, size_t len,
+ 	if (cmd && *cmd)
+ 		return apply_single_file_filter(path, src, len, fd, dst, cmd);
+ 	else if (drv->process && *drv->process)
+-		return apply_multi_file_filter(path, src, len, fd, dst, drv->process, wanted_capability);
++		return apply_multi_file_filter(path, src, len, fd, dst,
++			drv->process, wanted_capability, dco);
+ 
+ 	return 0;
+ }
+@@ -1057,7 +1134,7 @@ int would_convert_to_git_filter_fd(const char *path)
+ 	if (!ca.drv->required)
+ 		return 0;
+ 
+-	return apply_filter(path, NULL, 0, -1, NULL, ca.drv, CAP_CLEAN);
++	return apply_filter(path, NULL, 0, -1, NULL, ca.drv, CAP_CLEAN, NULL);
+ }
+ 
+ const char *get_convert_attr_ascii(const char *path)
+@@ -1094,7 +1171,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 
+ 	convert_attrs(&ca, path);
+ 
+-	ret |= apply_filter(path, src, len, -1, dst, ca.drv, CAP_CLEAN);
++	ret |= apply_filter(path, src, len, -1, dst, ca.drv, CAP_CLEAN, NULL);
+ 	if (!ret && ca.drv && ca.drv->required)
+ 		die("%s: clean filter '%s' failed", path, ca.drv->name);
+ 
+@@ -1119,7 +1196,7 @@ void convert_to_git_filter_fd(const char *path, int fd, struct strbuf *dst,
+ 	assert(ca.drv);
+ 	assert(ca.drv->clean || ca.drv->process);
+ 
+-	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN))
++	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN, NULL))
+ 		die("%s: clean filter '%s' failed", path, ca.drv->name);
+ 
+ 	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
+@@ -1128,7 +1205,7 @@ void convert_to_git_filter_fd(const char *path, int fd, struct strbuf *dst,
+ 
+ static int convert_to_working_tree_internal(const char *path, const char *src,
+ 					    size_t len, struct strbuf *dst,
+-					    int normalizing)
++					    int normalizing, struct delayed_checkout *dco)
+ {
+ 	int ret = 0, ret_filter = 0;
+ 	struct conv_attrs ca;
+@@ -1153,21 +1230,29 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
+ 		}
+ 	}
+ 
+-	ret_filter = apply_filter(path, src, len, -1, dst, ca.drv, CAP_SMUDGE);
++	ret_filter = apply_filter(
++		path, src, len, -1, dst, ca.drv, CAP_SMUDGE, dco);
+ 	if (!ret_filter && ca.drv && ca.drv->required)
+ 		die("%s: smudge filter %s failed", path, ca.drv->name);
+ 
+ 	return ret | ret_filter;
+ }
+ 
++int async_convert_to_working_tree(const char *path, const char *src,
++				  size_t len, struct strbuf *dst,
++				  void *dco)
++{
++	return convert_to_working_tree_internal(path, src, len, dst, 0, dco);
++}
++
+ int convert_to_working_tree(const char *path, const char *src, size_t len, struct strbuf *dst)
+ {
+-	return convert_to_working_tree_internal(path, src, len, dst, 0);
++	return convert_to_working_tree_internal(path, src, len, dst, 0, NULL);
+ }
+ 
+ int renormalize_buffer(const char *path, const char *src, size_t len, struct strbuf *dst)
+ {
+-	int ret = convert_to_working_tree_internal(path, src, len, dst, 1);
++	int ret = convert_to_working_tree_internal(path, src, len, dst, 1, NULL);
+ 	if (ret) {
+ 		src = dst->buf;
+ 		len = dst->len;
+diff --git a/convert.h b/convert.h
+index 82871a11d5..c4beaa5101 100644
+--- a/convert.h
++++ b/convert.h
+@@ -4,6 +4,8 @@
+ #ifndef CONVERT_H
+ #define CONVERT_H
+ 
++#include "string-list.h"
++
+ enum safe_crlf {
+ 	SAFE_CRLF_FALSE = 0,
+ 	SAFE_CRLF_FAIL = 1,
+@@ -32,6 +34,21 @@ enum eol {
+ #endif
+ };
+ 
++enum ce_delay_state {
++	CE_NO_DELAY = 0,
++	CE_CAN_DELAY = 1,
++	CE_DELAYED = 2,
++	CE_RETRY = 3
++};
++
++struct delayed_checkout {
++	enum ce_delay_state state;
++	/* List of filter drivers that signaled delayed blobs. */
++	struct string_list filters;
++	/* List of delayed blobs identified by their path. */
++	struct string_list paths;
++};
++
+ extern enum eol core_eol;
+ extern const char *get_cached_convert_stats_ascii(const char *path);
+ extern const char *get_wt_convert_stats_ascii(const char *path);
+@@ -42,6 +59,10 @@ extern int convert_to_git(const char *path, const char *src, size_t len,
+ 			  struct strbuf *dst, enum safe_crlf checksafe);
+ extern int convert_to_working_tree(const char *path, const char *src,
+ 				   size_t len, struct strbuf *dst);
++extern int async_convert_to_working_tree(const char *path, const char *src,
++					 size_t len, struct strbuf *dst,
++					 void *dco);
++extern int async_query_available_blobs(const char *cmd, struct string_list *delayed_paths);
+ extern int renormalize_buffer(const char *path, const char *src, size_t len,
+ 			      struct strbuf *dst);
+ static inline int would_convert_to_git(const char *path)
+diff --git a/entry.c b/entry.c
+index d6b263f78e..c9cb557559 100644
+--- a/entry.c
++++ b/entry.c
+@@ -137,6 +137,81 @@ static int streaming_write_entry(const struct cache_entry *ce, char *path,
+ 	return result;
+ }
+ 
++void enable_delayed_checkout(struct checkout *state)
++{
++	if (!state->delayed_checkout) {
++		state->delayed_checkout = xmalloc(sizeof(*state->delayed_checkout));
++		state->delayed_checkout->state = CE_CAN_DELAY;
++		string_list_init(&state->delayed_checkout->filters, 0);
++		string_list_init(&state->delayed_checkout->paths, 0);
++	}
++}
++
++static int remove_available_paths(struct string_list_item *item, void *cb_data)
++{
++	struct string_list *available_paths = cb_data;
++	return !string_list_has_string(available_paths, item->string);
++}
++
++int finish_delayed_checkout(struct checkout *state)
++{
++	int errs = 0;
++	struct string_list_item *filter, *path;
++	struct delayed_checkout *dco = state->delayed_checkout;
++
++	if (!state->delayed_checkout) {
++		return errs;
++	}
++
++	while (dco->filters.nr > 0) {
++		for_each_string_list_item(filter, &dco->filters) {
++			struct string_list available_paths;
++			string_list_init(&available_paths, 0);
++
++			if (!async_query_available_blobs(filter->string, &available_paths)) {
++				/* Filter reported an error */
++				errs = 1;
++				filter->string = "";
++				continue;
++			}
++			if (available_paths.nr <= 0) {
++				/* Filter responded with no entries. That means
++				   the filter is done and we can remove the
++				   filter from the list (see
++				   "string_list_remove_empty_items" call below).
++				*/
++				filter->string = "";
++				continue;
++			}
++
++			/* In dco->paths we store a list of all delayed paths.
++			   The filter just send us a list of available paths.
++			   Remove them from the list.
++			*/
++			filter_string_list(&dco->paths, 0,
++				&remove_available_paths, &available_paths);
++
++			for_each_string_list_item(path, &available_paths) {
++				struct cache_entry* ce = index_file_exists(
++					state->istate, path->string,
++					strlen(path->string), 0);
++				dco->state = CE_RETRY;
++				errs |= (ce ? checkout_entry(ce, state, NULL) : 1);
++			}
++		}
++		string_list_remove_empty_items(&dco->filters, 0);
++	}
++	string_list_clear(&dco->filters, 0);
++
++	/* At this point we should not have any delayed paths anymore. */
++	errs |= dco->paths.nr;
++
++	free(dco);
++	state->delayed_checkout = NULL;
++
++	return errs;
++}
++
+ static int write_entry(struct cache_entry *ce,
+ 		       char *path, const struct checkout *state, int to_tempfile)
+ {
+@@ -179,11 +254,36 @@ static int write_entry(struct cache_entry *ce,
+ 		/*
+ 		 * Convert from git internal format to working tree format
+ 		 */
+-		if (ce_mode_s_ifmt == S_IFREG &&
+-		    convert_to_working_tree(ce->name, new, size, &buf)) {
+-			free(new);
+-			new = strbuf_detach(&buf, &newsize);
+-			size = newsize;
++		if (ce_mode_s_ifmt == S_IFREG) {
++			struct delayed_checkout *dco = state->delayed_checkout;
++			if (dco && dco->state != CE_NO_DELAY) {
++				/* Do not send the blob in case of a retry. */
++				if (dco->state == CE_RETRY) {
++					new = NULL;
++					size = 0;
++				}
++				ret = async_convert_to_working_tree(
++					ce->name, new, size, &buf, dco);
++				if (ret && dco->state == CE_DELAYED) {
++					free(new);
++					/* Reset the state of the next blob */
++					dco->state = CE_CAN_DELAY;
++					goto finish;
++				}
++			} else
++				ret = convert_to_working_tree(
++					ce->name, new, size, &buf);
++
++			if (ret) {
++				free(new);
++				new = strbuf_detach(&buf, &newsize);
++				size = newsize;
++			}
++			/*
++			 * No "else" here as errors from convert are OK at this
++			 * point. If the error would have been fatal (e.g.
++			 * filter is required), then we would have died already.
++			 */
+ 		}
+ 
+ 		fd = open_output_fd(path, ce, to_tempfile);
 diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index ff2424225b..0139b460e7 100755
+index 0c04d346a1..4b5a45fd43 100755
 --- a/t/t0021-conversion.sh
 +++ b/t/t0021-conversion.sh
-@@ -28,7 +28,7 @@ file_size () {
- }
- 
- filter_git () {
--	rm -f rot13-filter.log &&
-+	rm -f *.log &&
- 	git "$@"
- }
- 
-@@ -342,7 +342,7 @@ test_expect_success 'diff does not reuse worktree files that need cleaning' '
- '
- 
- test_expect_success PERL 'required process filter should filter data' '
--	test_config_global filter.protocol.process "rot13-filter.pl clean smudge" &&
-+	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
- 	test_config_global filter.protocol.required true &&
- 	rm -rf repo &&
- 	mkdir repo &&
-@@ -375,7 +375,7 @@ test_expect_success PERL 'required process filter should filter data' '
- 			IN: clean testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
- 			STOP
- 		EOF
--		test_cmp_count expected.log rot13-filter.log &&
-+		test_cmp_count expected.log debug.log &&
- 
- 		git commit -m "test commit 2" &&
- 		rm -f test2.r "testsubdir/test3 '\''sq'\'',\$x=.r" &&
-@@ -388,7 +388,7 @@ test_expect_success PERL 'required process filter should filter data' '
- 			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
- 			STOP
- 		EOF
--		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+		test_cmp_exclude_clean expected.log debug.log &&
- 
- 		filter_git checkout --quiet --no-progress empty-branch &&
- 		cat >expected.log <<-EOF &&
-@@ -397,7 +397,7 @@ test_expect_success PERL 'required process filter should filter data' '
- 			IN: clean test.r $S [OK] -- OUT: $S . [OK]
- 			STOP
- 		EOF
--		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+		test_cmp_exclude_clean expected.log debug.log &&
- 
- 		filter_git checkout --quiet --no-progress master &&
- 		cat >expected.log <<-EOF &&
-@@ -409,7 +409,7 @@ test_expect_success PERL 'required process filter should filter data' '
- 			IN: smudge testsubdir/test3 '\''sq'\'',\$x=.r $S3 [OK] -- OUT: $S3 . [OK]
- 			STOP
- 		EOF
--		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+		test_cmp_exclude_clean expected.log debug.log &&
- 
- 		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.r &&
- 		test_cmp_committed_rot13 "$TEST_ROOT/test2.o" test2.r &&
-@@ -419,7 +419,7 @@ test_expect_success PERL 'required process filter should filter data' '
- 
- test_expect_success PERL 'required process filter takes precedence' '
- 	test_config_global filter.protocol.clean false &&
--	test_config_global filter.protocol.process "rot13-filter.pl clean" &&
-+	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean" &&
- 	test_config_global filter.protocol.required true &&
- 	rm -rf repo &&
- 	mkdir repo &&
-@@ -439,12 +439,12 @@ test_expect_success PERL 'required process filter takes precedence' '
- 			IN: clean test.r $S [OK] -- OUT: $S . [OK]
- 			STOP
- 		EOF
--		test_cmp_count expected.log rot13-filter.log
-+		test_cmp_count expected.log debug.log
+@@ -701,4 +701,78 @@ test_expect_success PERL 'invalid process filter must fail (and not hang!)' '
  	)
  '
  
- test_expect_success PERL 'required process filter should be used only for "clean" operation only' '
--	test_config_global filter.protocol.process "rot13-filter.pl clean" &&
-+	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean" &&
- 	rm -rf repo &&
- 	mkdir repo &&
- 	(
-@@ -462,7 +462,7 @@ test_expect_success PERL 'required process filter should be used only for "clean
- 			IN: clean test.r $S [OK] -- OUT: $S . [OK]
- 			STOP
- 		EOF
--		test_cmp_count expected.log rot13-filter.log &&
-+		test_cmp_count expected.log debug.log &&
- 
- 		rm test.r &&
- 
-@@ -474,12 +474,12 @@ test_expect_success PERL 'required process filter should be used only for "clean
- 			init handshake complete
- 			STOP
- 		EOF
--		test_cmp_exclude_clean expected.log rot13-filter.log
-+		test_cmp_exclude_clean expected.log debug.log
- 	)
- '
- 
- test_expect_success PERL 'required process filter should process multiple packets' '
--	test_config_global filter.protocol.process "rot13-filter.pl clean smudge" &&
-+	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
- 	test_config_global filter.protocol.required true &&
- 
- 	rm -rf repo &&
-@@ -514,7 +514,7 @@ test_expect_success PERL 'required process filter should process multiple packet
- 			IN: clean 3pkt_2+1.file $(($S*2+1)) [OK] -- OUT: $(($S*2+1)) ... [OK]
- 			STOP
- 		EOF
--		test_cmp_count expected.log rot13-filter.log &&
-+		test_cmp_count expected.log debug.log &&
- 
- 		rm -f *.file &&
- 
-@@ -529,7 +529,7 @@ test_expect_success PERL 'required process filter should process multiple packet
- 			IN: smudge 3pkt_2+1.file $(($S*2+1)) [OK] -- OUT: $(($S*2+1)) ... [OK]
- 			STOP
- 		EOF
--		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+		test_cmp_exclude_clean expected.log debug.log &&
- 
- 		for FILE in *.file
- 		do
-@@ -539,7 +539,7 @@ test_expect_success PERL 'required process filter should process multiple packet
- '
- 
- test_expect_success PERL 'required process filter with clean error should fail' '
--	test_config_global filter.protocol.process "rot13-filter.pl clean smudge" &&
-+	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
- 	test_config_global filter.protocol.required true &&
- 	rm -rf repo &&
- 	mkdir repo &&
-@@ -558,7 +558,7 @@ test_expect_success PERL 'required process filter with clean error should fail'
- '
- 
- test_expect_success PERL 'process filter should restart after unexpected write failure' '
--	test_config_global filter.protocol.process "rot13-filter.pl clean smudge" &&
-+	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
- 	rm -rf repo &&
- 	mkdir repo &&
- 	(
-@@ -579,7 +579,7 @@ test_expect_success PERL 'process filter should restart after unexpected write f
- 		git add . &&
- 		rm -f *.r &&
- 
--		rm -f rot13-filter.log &&
-+		rm -f debug.log &&
- 		git checkout --quiet --no-progress . 2>git-stderr.log &&
- 
- 		grep "smudge write error at" git-stderr.log &&
-@@ -595,7 +595,7 @@ test_expect_success PERL 'process filter should restart after unexpected write f
- 			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
- 			STOP
- 		EOF
--		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+		test_cmp_exclude_clean expected.log debug.log &&
- 
- 		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.r &&
- 		test_cmp_committed_rot13 "$TEST_ROOT/test2.o" test2.r &&
-@@ -609,7 +609,7 @@ test_expect_success PERL 'process filter should restart after unexpected write f
- '
- 
- test_expect_success PERL 'process filter should not be restarted if it signals an error' '
--	test_config_global filter.protocol.process "rot13-filter.pl clean smudge" &&
-+	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
- 	rm -rf repo &&
- 	mkdir repo &&
- 	(
-@@ -639,7 +639,7 @@ test_expect_success PERL 'process filter should not be restarted if it signals a
- 			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
- 			STOP
- 		EOF
--		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+		test_cmp_exclude_clean expected.log debug.log &&
- 
- 		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.r &&
- 		test_cmp_committed_rot13 "$TEST_ROOT/test2.o" test2.r &&
-@@ -648,7 +648,7 @@ test_expect_success PERL 'process filter should not be restarted if it signals a
- '
- 
- test_expect_success PERL 'process filter abort stops processing of all further files' '
--	test_config_global filter.protocol.process "rot13-filter.pl clean smudge" &&
-+	test_config_global filter.protocol.process "rot13-filter.pl debug.log clean smudge" &&
- 	rm -rf repo &&
- 	mkdir repo &&
- 	(
-@@ -676,7 +676,7 @@ test_expect_success PERL 'process filter abort stops processing of all further f
- 			IN: smudge abort.r $SA [OK] -- OUT: 0 [ABORT]
- 			STOP
- 		EOF
--		test_cmp_exclude_clean expected.log rot13-filter.log &&
-+		test_cmp_exclude_clean expected.log debug.log &&
- 
- 		test_cmp "$TEST_ROOT/test.o" test.r &&
- 		test_cmp "$TEST_ROOT/test2.o" test2.r &&
++test_expect_success PERL 'delayed checkout in process filter' '
++	test_config_global filter.a.process "rot13-filter.pl a.log clean smudge delay" &&
++	test_config_global filter.a.required true &&
++	test_config_global filter.b.process "rot13-filter.pl b.log clean smudge delay" &&
++	test_config_global filter.b.required true &&
++
++	rm -rf repo &&
++	mkdir repo &&
++	(
++		cd repo &&
++		git init &&
++		echo "*.a filter=a" >.gitattributes &&
++		echo "*.b filter=b" >>.gitattributes &&
++		cp "$TEST_ROOT/test.o" test.a &&
++		cp "$TEST_ROOT/test.o" test-delay10.a &&
++		cp "$TEST_ROOT/test.o" test-delay11.a &&
++		cp "$TEST_ROOT/test.o" test-delay20.a &&
++		cp "$TEST_ROOT/test.o" test-delay10.b &&
++		git add . &&
++		git commit -m "test commit 1"
++	) &&
++
++	S=$(file_size "$TEST_ROOT/test.o") &&
++	cat >a.exp <<-EOF &&
++		START
++		init handshake complete
++		IN: smudge test.a $S [OK] -- OUT: $S . [OK]
++		IN: smudge test-delay10.a $S [OK] -- [DELAYED]
++		IN: smudge test-delay11.a $S [OK] -- [DELAYED]
++		IN: smudge test-delay20.a $S [OK] -- [DELAYED]
++		IN: list_available_blobs test-delay10.a test-delay11.a [OK]
++		IN: smudge test-delay10.a 0 [OK] -- OUT: $S . [OK]
++		IN: smudge test-delay11.a 0 [OK] -- OUT: $S . [OK]
++		IN: list_available_blobs test-delay20.a [OK]
++		IN: smudge test-delay20.a 0 [OK] -- OUT: $S . [OK]
++		IN: list_available_blobs [OK]
++		STOP
++	EOF
++	cat >b.exp <<-EOF &&
++		START
++		init handshake complete
++		IN: smudge test-delay10.b $S [OK] -- [DELAYED]
++		IN: list_available_blobs test-delay10.b [OK]
++		IN: smudge test-delay10.b 0 [OK] -- OUT: $S . [OK]
++		IN: list_available_blobs [OK]
++		STOP
++	EOF
++
++	rm -rf repo-cloned &&
++	filter_git clone repo repo-cloned &&
++	test_cmp_count a.exp repo-cloned/a.log &&
++	test_cmp_count b.exp repo-cloned/b.log &&
++
++	(
++		cd repo-cloned &&
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.a &&
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test-delay10.a &&
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test-delay11.a &&
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test-delay20.a &&
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test-delay10.b &&
++
++		rm *.a *.b &&
++		filter_git checkout . &&
++		test_cmp_count ../a.exp a.log &&
++		test_cmp_count ../b.exp b.log &&
++
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test.a &&
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test-delay10.a &&
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test-delay11.a &&
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test-delay20.a &&
++		test_cmp_committed_rot13 "$TEST_ROOT/test.o" test-delay10.b
++	)
++'
++
+ test_done
 diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index 617f581e56..0b943bb377 100644
+index 5e43faeec1..f0dc0aff4a 100644
 --- a/t/t0021/rot13-filter.pl
 +++ b/t/t0021/rot13-filter.pl
-@@ -2,8 +2,9 @@
- # Example implementation for the Git filter protocol version 2
- # See Documentation/gitattributes.txt, section "Filter Protocol"
+@@ -18,6 +18,11 @@
+ #     operation then the filter signals that it cannot or does not want
+ #     to process the file and any file after that is processed with the
+ #     same command.
++# (5) If data with a pathname that is a key in the DELAY hash is
++#     requested (e.g. 'test-delay10.a') then the filter responds with
++#     a "delay" status and sets the "requested" field in the DELAY hash.
++#     The filter will signal the availability of this object after
++#     "count" (field in DELAY hash) "list_available_blobs" commands.
  #
--# The script takes the list of supported protocol capabilities as
--# arguments ("clean", "smudge", etc).
-+# The first argument defines a debug log file that the script write to.
-+# All remaining arguments define a list of supported protocol
-+# capabilities ("clean", "smudge", etc).
- #
- # This implementation supports special test cases:
- # (1) If data with the pathname "clean-write-fail.r" is processed with
-@@ -24,9 +25,10 @@ use warnings;
- use IO::File;
  
- my $MAX_PACKET_CONTENT_SIZE = 65516;
-+my $log_file                = shift @ARGV;
- my @capabilities            = @ARGV;
+ use strict;
+@@ -30,6 +35,13 @@ my @capabilities            = @ARGV;
  
--open my $debug, ">>", "rot13-filter.log" or die "cannot open log file: $!";
-+open my $debug, ">>", $log_file or die "cannot open log file: $!";
+ open my $debug, ">>", $log_file or die "cannot open log file: $!";
  
++my %DELAY = (
++	'test-delay10.a' => { "requested" => 0, "count" => 1 },
++	'test-delay11.a' => { "requested" => 0, "count" => 1 },
++	'test-delay20.a' => { "requested" => 0, "count" => 2 },
++	'test-delay10.b' => { "requested" => 0, "count" => 1 },
++);
++
  sub rot13 {
  	my $str = shift;
+ 	$str =~ y/A-Za-z/N-ZA-Mn-za-m/;
+@@ -66,7 +78,7 @@ sub packet_bin_read {
+ 
+ sub packet_txt_read {
+ 	my ( $res, $buf ) = packet_bin_read();
+-	unless ( $buf =~ s/\n$// ) {
++	unless ( $buf eq '' or $buf =~ s/\n$// ) {
+ 		die "A non-binary line MUST be terminated by an LF.";
+ 	}
+ 	return ( $res, $buf );
+@@ -101,6 +113,7 @@ packet_flush();
+ 
+ ( packet_txt_read() eq ( 0, "capability=clean" ) )  || die "bad capability";
+ ( packet_txt_read() eq ( 0, "capability=smudge" ) ) || die "bad capability";
++( packet_txt_read() eq ( 0, "capability=delay" ) )  || die "bad capability";
+ ( packet_bin_read() eq ( 1, "" ) )                  || die "bad capability end";
+ 
+ foreach (@capabilities) {
+@@ -115,84 +128,132 @@ while (1) {
+ 	print $debug "IN: $command";
+ 	$debug->flush();
+ 
+-	my ($pathname) = packet_txt_read() =~ /^pathname=(.+)$/;
+-	print $debug " $pathname";
+-	$debug->flush();
+-
+-	if ( $pathname eq "" ) {
+-		die "bad pathname '$pathname'";
+-	}
++	if ( $command eq "list_available_blobs" ) {
++		# Flush
++		packet_bin_read();
+ 
+-	# Flush
+-	packet_bin_read();
+-
+-	my $input = "";
+-	{
+-		binmode(STDIN);
+-		my $buffer;
+-		my $done = 0;
+-		while ( !$done ) {
+-			( $done, $buffer ) = packet_bin_read();
+-			$input .= $buffer;
++		foreach my $pathname (sort keys %DELAY) {
++			if ( $DELAY{$pathname}{"requested"} >= 1 ) {
++				$DELAY{$pathname}{"count"} = $DELAY{$pathname}{"count"} - 1;
++				if ($DELAY{$pathname}{"count"} == 0 ) {
++					print $debug " $pathname";
++					packet_txt_write("pathname=$pathname");
++				}
++			}
+ 		}
+-		print $debug " " . length($input) . " [OK] -- ";
+-		$debug->flush();
+-	}
+-
+-	my $output;
+-	if ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
+-		$output = "";
+-	}
+-	elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
+-		$output = rot13($input);
+-	}
+-	elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
+-		$output = rot13($input);
+-	}
+-	else {
+-		die "bad command '$command'";
+-	}
+ 
+-	if ( $pathname eq "error.r" ) {
+-		print $debug "[ERROR]\n";
+-		$debug->flush();
+-		packet_txt_write("status=error");
+ 		packet_flush();
+-	}
+-	elsif ( $pathname eq "abort.r" ) {
+-		print $debug "[ABORT]\n";
++
++		print $debug " [OK]\n";
+ 		$debug->flush();
+-		packet_txt_write("status=abort");
++		packet_txt_write("status=success");
+ 		packet_flush();
+ 	}
+ 	else {
+-		packet_txt_write("status=success");
+-		packet_flush();
++		my ($pathname) = packet_txt_read() =~ /^pathname=(.+)$/;
++		print $debug " $pathname";
++		$debug->flush();
++
++		if ( $pathname eq "" ) {
++			die "bad pathname '$pathname'";
++		}
++
++		# Read until flush
++		my ( $done, $buffer ) = packet_txt_read();
++		while ( $buffer ne '' ) {
++			if ( $buffer eq "can-delay=1" ) {
++				if ( exists $DELAY{$pathname} and $DELAY{$pathname}{"requested"} == 0 ) {
++					$DELAY{$pathname}{"requested"} = 1;
++				}
++			} else {
++				die "Unknown message '$buffer'";
++			}
+ 
+-		if ( $pathname eq "${command}-write-fail.r" ) {
+-			print $debug "[WRITE FAIL]\n";
++			( $done, $buffer ) = packet_txt_read();
++		}
++
++		my $input = "";
++		{
++			binmode(STDIN);
++			my $buffer;
++			my $done = 0;
++			while ( !$done ) {
++				( $done, $buffer ) = packet_bin_read();
++				$input .= $buffer;
++			}
++			print $debug " " . length($input) . " [OK] -- ";
+ 			$debug->flush();
+-			die "${command} write error";
+ 		}
+ 
+-		print $debug "OUT: " . length($output) . " ";
+-		$debug->flush();
++		my $output;
++		if ( exists $DELAY{$pathname} and exists $DELAY{$pathname}{"output"} ) {
++			$output = $DELAY{$pathname}{"output"}
++		}
++		elsif ( $pathname eq "error.r" or $pathname eq "abort.r" ) {
++			$output = "";
++		}
++		elsif ( $command eq "clean" and grep( /^clean$/, @capabilities ) ) {
++			$output = rot13($input);
++		}
++		elsif ( $command eq "smudge" and grep( /^smudge$/, @capabilities ) ) {
++			$output = rot13($input);
++		}
++		else {
++			die "bad command '$command'";
++		}
++
++		if ( $pathname eq "error.r" ) {
++			print $debug "[ERROR]\n";
++			$debug->flush();
++			packet_txt_write("status=error");
++			packet_flush();
++		}
++		elsif ( $pathname eq "abort.r" ) {
++			print $debug "[ABORT]\n";
++			$debug->flush();
++			packet_txt_write("status=abort");
++			packet_flush();
++		}
++		elsif ( $command eq "smudge" and
++			exists $DELAY{$pathname} and
++			$DELAY{$pathname}{"requested"} == 1
++		) {
++			print $debug "[DELAYED]\n";
++			$debug->flush();
++			packet_txt_write("status=delayed");
++			packet_flush();
++			$DELAY{$pathname}{"requested"} = 2;
++			$DELAY{$pathname}{"output"} = $output;
++		}
++		else {
++			packet_txt_write("status=success");
++			packet_flush();
+ 
+-		while ( length($output) > 0 ) {
+-			my $packet = substr( $output, 0, $MAX_PACKET_CONTENT_SIZE );
+-			packet_bin_write($packet);
+-			# dots represent the number of packets
+-			print $debug ".";
+-			if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
+-				$output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
++			if ( $pathname eq "${command}-write-fail.r" ) {
++				print $debug "[WRITE FAIL]\n";
++				$debug->flush();
++				die "${command} write error";
+ 			}
+-			else {
+-				$output = "";
++
++			print $debug "OUT: " . length($output) . " ";
++			$debug->flush();
++
++			while ( length($output) > 0 ) {
++				my $packet = substr( $output, 0, $MAX_PACKET_CONTENT_SIZE );
++				packet_bin_write($packet);
++				# dots represent the number of packets
++				print $debug ".";
++				if ( length($output) > $MAX_PACKET_CONTENT_SIZE ) {
++					$output = substr( $output, $MAX_PACKET_CONTENT_SIZE );
++				}
++				else {
++					$output = "";
++				}
+ 			}
++			packet_flush();
++			print $debug " [OK]\n";
++			$debug->flush();
++			packet_flush();
+ 		}
+-		packet_flush();
+-		print $debug " [OK]\n";
+-		$debug->flush();
+-		packet_flush();
+ 	}
+ }
+diff --git a/unpack-trees.c b/unpack-trees.c
+index d38c37e38c..491a2562ad 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -379,6 +379,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 	if (should_update_submodules() && o->update && !o->dry_run)
+ 		reload_gitmodules_file(index, &state);
+ 
++	enable_delayed_checkout(&state);
+ 	for (i = 0; i < index->cache_nr; i++) {
+ 		struct cache_entry *ce = index->cache[i];
+ 
+@@ -393,6 +394,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 			}
+ 		}
+ 	}
++	errs |= finish_delayed_checkout(&state);
+ 	stop_progress(&progress);
+ 	if (o->update)
+ 		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
 -- 
 2.13.0
 
