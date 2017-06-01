@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE1272027C
-	for <e@80x24.org>; Thu,  1 Jun 2017 08:22:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBAF12027C
+	for <e@80x24.org>; Thu,  1 Jun 2017 08:22:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751416AbdFAIWR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 04:22:17 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34755 "EHLO
+        id S1751363AbdFAIWN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 04:22:13 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34747 "EHLO
         mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751036AbdFAIWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 04:22:16 -0400
-Received: by mail-wm0-f68.google.com with SMTP id d127so9276929wmf.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 01:22:10 -0700 (PDT)
+        with ESMTP id S1751294AbdFAIWK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 04:22:10 -0400
+Received: by mail-wm0-f68.google.com with SMTP id d127so9276851wmf.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 01:22:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Wt1yXzvBDZTF875LA1ZYsO9BNDD0RMFsbpaVs6ce9sw=;
-        b=UI2h2EGFhIT2TWdC/aTXZLREohrrzmVMnSuhfMXHEQTTLy9Bv3F6Y/+I4uXAZiIeSN
-         2LHWuYz4MXP1jfdpPpJAGsEhCZ14tCrUXZ8odGKf0/fagKxXREw/RrJAi/vUOEJEnHCB
-         hRjJ5k2lrMZHYxgiMuFk1l0zyukaij+DA6g1jTuJVz9UWTXqeUkkbpRfHQUIG0BVQUB8
-         ToOkjwftveAIwcEMLQ1bXgRyEiw/BbVcHj6q/0j+XRMRWPsikQHilvWT8ZuVqK1XzlFV
-         TcPdyw2y0dwtV14sHdSTSCuRMvrEiueBSXpYQoETzXZ45p4EmlPA8k/9G+g+Ip6qxHtd
-         LZQQ==
+        bh=v+xfbbVoOjF+S1W8inBt7UaDDyM9cwPXO6S+VvhteMw=;
+        b=QEokdmxli+HP9gXsQybIBynzKDMOChw04PGRRTT56d32qLOKnpYrdSTp/pKGrG/qS6
+         RWrRf6Rt/hSDOrfHir2QFqR8B6NsuEDyP4o68zi5HRVfKR8j6mMf49SLkK4J3T9CbcrH
+         pk72nWY73XCg04UeZulVe/U9SInYAmCFRejw/mfoB2M5yHO2KOrcEfLasv41JLlI411y
+         x0EIA2yP604AoJmGRx3sI+owTSR/GbQ3fh+GwqIf0K263PWboqCsSQNK+P8UeYF1L5H7
+         DJJdqDbJis0oSnRREXEAAjAAIEK8iDD/YjIZGBC3/iFUm0GP1PwwALEN1//8mOJbZfif
+         o+fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Wt1yXzvBDZTF875LA1ZYsO9BNDD0RMFsbpaVs6ce9sw=;
-        b=S6DkF4GBV/p2YcZj2OiY4QnzdQ9uvxTt2mWxQwu0kQ8oKeUur0ouHeYFi3hO2DN5vO
-         a2OW5keImuvCwWz4RV3csoWR03MLZeoff75S9tz82xnxbMl1bc8MIsnQvLbmdfcY+hCh
-         oyZlCsx9W9LYKRcF9AQr39VaukhJ2/8v+WKYu6bLLJw4J6endNqtOrJFJDkZX3eB1KOv
-         RWKoJ++7J26mtP19yvHOktnTh+VBGUNBf0sxXZ10u4XWH1TSq6pL+SouQh0JI5ctchdm
-         EpQ5ZVE9o7XKXPIBkWD4XDyZ94/IC/e1X/2+jlmq7K56UyFBPvIw1q1ZRn6UsUMwgIGh
-         cioQ==
-X-Gm-Message-State: AODbwcDaAGN1Znb1/d87euudPU1+Ai8v6FOYRQMoB7FNUjMNZaSVguxN
-        NH/vTfmsDvdN7MaC
-X-Received: by 10.223.157.11 with SMTP id k11mr257539wre.71.1496305329697;
-        Thu, 01 Jun 2017 01:22:09 -0700 (PDT)
+        bh=v+xfbbVoOjF+S1W8inBt7UaDDyM9cwPXO6S+VvhteMw=;
+        b=UREq1/ADct1CVhnfHRGoxnS0QQo9unvhw7eGb1SxvdSrI9MvEqqvOHOFyH02dEIEgG
+         Azk/Ld2U4TMc+/KMNlqlMFnvUKrMDFtx9P8LajeFltU7SufOvfTe2Q02JTIM4hDPHNFE
+         gWcERqwgDl82ec1f3DjLmyjfXVqxd/ORCKCtSUlwp7icr3k5/pNQ1ZB/iGx8BOLPaaqz
+         /saj9tKFZvw7/0A2ogG2u7bpxPjKxRDD9XVsbSywYV71HgxrljXs6Epv4Po2Urm57EYr
+         hU4OYvEY+EkKqI1np6QVXSauZ7573ITnMEzvYsRRPbY0mYPYVNYEL1nJpWU/1mDKjNQl
+         Yj0A==
+X-Gm-Message-State: AODbwcC1hGRSRB+mCJYYnH8EevE5EIc9FLXwx+vp6KlRZeU9DqF69o+j
+        8W6Exub21U/9Pwsl
+X-Received: by 10.223.174.180 with SMTP id y49mr244679wrc.133.1496305328660;
+        Thu, 01 Jun 2017 01:22:08 -0700 (PDT)
 Received: from slxBook4.fritz.box (p5DDB4864.dip0.t-ipconnect.de. [93.219.72.100])
-        by smtp.gmail.com with ESMTPSA id 140sm15351595wmu.23.2017.06.01.01.22.08
+        by smtp.gmail.com with ESMTPSA id 140sm15351595wmu.23.2017.06.01.01.22.07
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 01:22:09 -0700 (PDT)
+        Thu, 01 Jun 2017 01:22:08 -0700 (PDT)
 From:   Lars Schneider <larsxschneider@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, tboegi@web.de, e@80x24.org,
         ttaylorr@github.com, peartben@gmail.com
-Subject: [PATCH v5 4/5] convert: move multiple file filter error handling to separate function
-Date:   Thu,  1 Jun 2017 10:22:02 +0200
-Message-Id: <20170601082203.50397-5-larsxschneider@gmail.com>
+Subject: [PATCH v5 3/5] t0021: write "OUT" only on success
+Date:   Thu,  1 Jun 2017 10:22:01 +0200
+Message-Id: <20170601082203.50397-4-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170601082203.50397-1-larsxschneider@gmail.com>
 References: <20170601082203.50397-1-larsxschneider@gmail.com>
@@ -62,80 +62,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"rot13-filter.pl" used to write "OUT <size>" to the debug log even in case of
+an abort or error. Fix this by writing "OUT <size>" to the debug log only in
+the successful case if output is actually written.
+
 This is useful for the subsequent patch 'convert: add "status=delayed" to
 filter process protocol'.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- convert.c | 47 ++++++++++++++++++++++++++---------------------
- 1 file changed, 26 insertions(+), 21 deletions(-)
+ t/t0021-conversion.sh   | 6 +++---
+ t/t0021/rot13-filter.pl | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index f1e168bc30..a5e09bb0e8 100644
---- a/convert.c
-+++ b/convert.c
-@@ -565,6 +565,29 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
- 	return err;
- }
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 0139b460e7..0c04d346a1 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -588,7 +588,7 @@ test_expect_success PERL 'process filter should restart after unexpected write f
+ 		cat >expected.log <<-EOF &&
+ 			START
+ 			init handshake complete
+-			IN: smudge smudge-write-fail.r $SF [OK] -- OUT: $SF [WRITE FAIL]
++			IN: smudge smudge-write-fail.r $SF [OK] -- [WRITE FAIL]
+ 			START
+ 			init handshake complete
+ 			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
+@@ -634,7 +634,7 @@ test_expect_success PERL 'process filter should not be restarted if it signals a
+ 		cat >expected.log <<-EOF &&
+ 			START
+ 			init handshake complete
+-			IN: smudge error.r $SE [OK] -- OUT: 0 [ERROR]
++			IN: smudge error.r $SE [OK] -- [ERROR]
+ 			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
+ 			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
+ 			STOP
+@@ -673,7 +673,7 @@ test_expect_success PERL 'process filter abort stops processing of all further f
+ 		cat >expected.log <<-EOF &&
+ 			START
+ 			init handshake complete
+-			IN: smudge abort.r $SA [OK] -- OUT: 0 [ABORT]
++			IN: smudge abort.r $SA [OK] -- [ABORT]
+ 			STOP
+ 		EOF
+ 		test_cmp_exclude_clean expected.log debug.log &&
+diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+index 0b943bb377..5e43faeec1 100644
+--- a/t/t0021/rot13-filter.pl
++++ b/t/t0021/rot13-filter.pl
+@@ -153,9 +153,6 @@ while (1) {
+ 		die "bad command '$command'";
+ 	}
  
-+static void handle_filter_error(const struct strbuf *filter_status,
-+				struct cmd2process *entry,
-+				const unsigned int wanted_capability) {
-+	if (!strcmp(filter_status->buf, "error")) {
-+		/* The filter signaled a problem with the file. */
-+	} else if (!strcmp(filter_status->buf, "abort") && wanted_capability) {
-+		/*
-+		 * The filter signaled a permanent problem. Don't try to filter
-+		 * files with the same command for the lifetime of the current
-+		 * Git process.
-+		 */
-+		 entry->supported_capabilities &= ~wanted_capability;
-+	} else {
-+		/*
-+		 * Something went wrong with the protocol filter.
-+		 * Force shutdown and restart if another blob requires filtering.
-+		 */
-+		error("external filter '%s' failed", entry->subprocess.cmd);
-+		subprocess_stop(&subprocess_map, &entry->subprocess);
-+		free(entry);
-+	}
-+}
+-	print $debug "OUT: " . length($output) . " ";
+-	$debug->flush();
+-
+ 	if ( $pathname eq "error.r" ) {
+ 		print $debug "[ERROR]\n";
+ 		$debug->flush();
+@@ -178,6 +175,9 @@ while (1) {
+ 			die "${command} write error";
+ 		}
+ 
++		print $debug "OUT: " . length($output) . " ";
++		$debug->flush();
 +
- static int apply_multi_file_filter(const char *path, const char *src, size_t len,
- 				   int fd, struct strbuf *dst, const char *cmd,
- 				   const unsigned int wanted_capability)
-@@ -656,28 +679,10 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- done:
- 	sigchain_pop(SIGPIPE);
- 
--	if (err) {
--		if (!strcmp(filter_status.buf, "error")) {
--			/* The filter signaled a problem with the file. */
--		} else if (!strcmp(filter_status.buf, "abort")) {
--			/*
--			 * The filter signaled a permanent problem. Don't try to filter
--			 * files with the same command for the lifetime of the current
--			 * Git process.
--			 */
--			 entry->supported_capabilities &= ~wanted_capability;
--		} else {
--			/*
--			 * Something went wrong with the protocol filter.
--			 * Force shutdown and restart if another blob requires filtering.
--			 */
--			error("external filter '%s' failed", cmd);
--			subprocess_stop(&subprocess_map, &entry->subprocess);
--			free(entry);
--		}
--	} else {
-+	if (err)
-+		handle_filter_error(&filter_status, entry, wanted_capability);
-+	else
- 		strbuf_swap(dst, &nbuf);
--	}
- 	strbuf_release(&nbuf);
- 	return !err;
- }
+ 		while ( length($output) > 0 ) {
+ 			my $packet = substr( $output, 0, $MAX_PACKET_CONTENT_SIZE );
+ 			packet_bin_write($packet);
 -- 
 2.13.0
 
