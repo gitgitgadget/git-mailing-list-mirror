@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98AC02027C
-	for <e@80x24.org>; Thu,  1 Jun 2017 09:42:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FF6B2027C
+	for <e@80x24.org>; Thu,  1 Jun 2017 09:44:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751283AbdFAJmB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 05:42:01 -0400
-Received: from mail-it0-f42.google.com ([209.85.214.42]:35388 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751209AbdFAJmA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 05:42:00 -0400
-Received: by mail-it0-f42.google.com with SMTP id f72so31526800ite.0
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 02:41:59 -0700 (PDT)
+        id S1751556AbdFAJoV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 05:44:21 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:36434 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751487AbdFAJoU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 05:44:20 -0400
+Received: by mail-it0-f67.google.com with SMTP id i206so4932970ita.3
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 02:44:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=B7d8ySsjr4QTi1Xl0oTp13tAc0DvFi67hqDNlHpCELI=;
-        b=SqjLIiEaKj+cyqvNhuIDSJlV6zXzsY3rP8gKeFm48iMXv5q2OSSzT3/xlOY7DufeeK
-         OwogYQRXrhmnodZBEkyCDat+3nevqrym+Z4MZeeCkMZenDDMLIVPVIPO3fShihs0vZmV
-         iU2J+dqXMA7cq14ouAaMeRRJJ8el7WqvF3t7yHqtgdC07mbar4E3k5czQTFEP/IcyjKe
-         p0wtQMapszuE0aMMwyJrJhzWE9UJvbcXh/on+EFra65I1VsqXoQR4cQGSDqEuQG4eysl
-         YWbVqUfZ59F7iq2PIVpmbQ+DPqO0FLSRdlDvdmSqXjER89ei2w7c0ASveLB9FZ6mwpQR
-         i/Tg==
+        bh=FHjlwcLpapIj2xnP4DaVEpav8L7Tsc09vwNUbMmq9sk=;
+        b=BWfOsfPFMu6v2cYWL4j177cgEeY0McT3xZ5v+ggR2snPqh4IoWd+hVQHBX8PRzG7bW
+         e3T6cnbURcd8ROAis2kKBxZ0YEGVvTeyopey1EKN/gheJ4Qu3e/8CPAqKrUhSCY1I6Wg
+         VRRj6vtkLHzIoJbv0rZXi/N0oepu+XJHbDIwnk08hE5QsMvFvMFoqvz2HXCWmW7ORZit
+         qpoe42MIUOI8bsPfczm/bO07k5ilw1GYIfIaO7RHXIb9Ap3q/fbI9ZinqYa7hm785855
+         Rxyc0nYwCO20ZLElLe4eccqDYgekHtGXN954FrtuACE6bBaGnVUDbhigVGuzWUYbtYfm
+         vSyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=B7d8ySsjr4QTi1Xl0oTp13tAc0DvFi67hqDNlHpCELI=;
-        b=Q1yNoLXIs3QBWkl3flC1M/aieLadP5hxStRIsZeBUYrE1dh+jGaLXrAaJIs9JBminx
-         8OzdiEThv9z6D1DSMTc0s1nWH4t2zY29RrqyPAdzwFhoMEbHkxyoQd7uxUPst2OZDxSz
-         RyumnLoVYiUZdMwglL9at3ACcYqtYzzzx2CPBFKBQ6YKCEyuU6Pi1ay2IUOYlwfjWzP8
-         Vt7j66JIzUw/63wcy5J3ZXPQO79Z3UqozorTdu4uLBDn7MLHHUmor6YSxfcuQy4lpOm0
-         W7J1O9gJnGaOweHciZiIkLEJXk7QaLng/5l51mOiILLITMbm/8IkH9jYkt2bt8Kmecxf
-         9Dlg==
-X-Gm-Message-State: AODbwcCQIOItEDJTQ17wl4KDAbm9ezNtjmj4TUHfZRrL6GP2bhkwfe6d
-        ejiXQ0Gtcw8g1Ga/sLc=
-X-Received: by 10.36.18.135 with SMTP id 129mr1744459itp.111.1496310119194;
-        Thu, 01 Jun 2017 02:41:59 -0700 (PDT)
+        bh=FHjlwcLpapIj2xnP4DaVEpav8L7Tsc09vwNUbMmq9sk=;
+        b=MgsC+kB/bGGH+iUWqXHlHeiVc5T2lh969isnCNn0Y4LqJBFVKjcaB+YRZmaIjNgvxu
+         CxG8xSz8es6A91rNB/Vez0AoW3QWUaUbhlna3uKk4Ql+rDyXz04cWf7bu6A1TVN8od0f
+         k8olUh7U/0jraNhVu7RiJ4joNZr12QLsgjFcvBGkdm6cbcBvjcJ1NNtN7MveyGgECtFb
+         Nm/sfPZ7wlrvSVM3SfixLaDFkuHD0cjKD65WYu2mCO+l6NHV9t4NJ77oVqAyzoB+Mxtt
+         sklrb9piOAj4tcBNo6Wqv6fGAKSELXDvdAb52d9f/FnEF1dR6Q0dqax9EDB1v1m9J7VL
+         pFWw==
+X-Gm-Message-State: AODbwcDN7w/fhPVGGmV+I2PPUD/AyRE/MDv4n+WRS3BIe9hhXRk1avH/
+        8CCQigF0j4aEqA==
+X-Received: by 10.36.194.129 with SMTP id i123mr1746965itg.9.1496310260195;
+        Thu, 01 Jun 2017 02:44:20 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:9c1c:dca9:c6e3:133e])
-        by smtp.gmail.com with ESMTPSA id h189sm12320446ith.6.2017.06.01.02.41.58
+        by smtp.gmail.com with ESMTPSA id e186sm8680931itc.21.2017.06.01.02.44.19
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 02:41:58 -0700 (PDT)
+        Thu, 01 Jun 2017 02:44:19 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Tyler Brazier <tyler@tylerbrazier.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3] pull: ff --rebase --autostash works in dirty repo
-References: <0102015c5c7054ac-5ec72a28-ff81-42b8-8224-26a588cef485-000000@eu-west-1.amazonses.com>
-        <0102015c61e06acf-70b79f3e-a6a8-43a9-b87d-273c1e2665f3-000000@eu-west-1.amazonses.com>
-Date:   Thu, 01 Jun 2017 18:41:57 +0900
-In-Reply-To: <0102015c61e06acf-70b79f3e-a6a8-43a9-b87d-273c1e2665f3-000000@eu-west-1.amazonses.com>
-        (Tyler Brazier's message of "Thu, 1 Jun 2017 04:18:36 +0000")
-Message-ID: <xmqq60gg59ju.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, tboegi@web.de, e@80x24.org,
+        ttaylorr@github.com, peartben@gmail.com
+Subject: Re: [PATCH v5 0/5] convert: add "status=delayed" to filter process protocol
+References: <20170601082203.50397-1-larsxschneider@gmail.com>
+Date:   Thu, 01 Jun 2017 18:44:18 +0900
+In-Reply-To: <20170601082203.50397-1-larsxschneider@gmail.com> (Lars
+        Schneider's message of "Thu, 1 Jun 2017 10:21:58 +0200")
+Message-ID: <xmqq1sr459fx.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,4 +66,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks.
+Lars Schneider <larsxschneider@gmail.com> writes:
+
+> here is the 5th iteration of my "status delayed" topic. Patch 1 to 3 are
+> minor t0021 test adjustments and haven't been changed since v3. Patch 4
+> is a minor "extract method" refactoring in convert. Patch 5 is the new
+> feature.
+
+Thanks.  
+
+Will replace but it will take a while for me to get to it (I expect
+that others may very well beat me to reviewing this series).
+
