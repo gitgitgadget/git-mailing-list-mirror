@@ -2,71 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B093A20D13
-	for <e@80x24.org>; Thu,  1 Jun 2017 22:08:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FA1E20D14
+	for <e@80x24.org>; Thu,  1 Jun 2017 22:09:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751116AbdFAWI0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 18:08:26 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:36155 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751078AbdFAWIZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 18:08:25 -0400
-Received: by mail-pf0-f174.google.com with SMTP id m17so38682732pfg.3
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 15:08:25 -0700 (PDT)
+        id S1751126AbdFAWJH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 18:09:07 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:35245 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751120AbdFAWJG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 18:09:06 -0400
+Received: by mail-it0-f44.google.com with SMTP id m62so2643501itc.0
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 15:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=GCA44/j2N9sb27BthAQWsZJnDLGG5fA/aOujrEm7rds=;
-        b=nBG18EMy0peYfJMIv/C4vBs2J/Qc2EvcHdP/0rjLRmHWWQgcgWnRgP1JAH1foPnRYf
-         O1dbNz1xUOExIQEykJF5rVKn0piSCEjpxV18QLN6DaBpclzBrXLVIebljN+1VkLk/udX
-         sxwZoj7U+Md5zU0YR6eZYNZK0GoIKjQqMJDzVnSFKerXFCSXcndCq7taPuBUCQL6k9eN
-         xVesrnoPXGzX912+vcNRZXkr5FguL9vIMmUBDdvPXzyiHydyXTckUihXljDvihu4o6s5
-         nKWAOSpMuXGqqY4JovZk6XS2V1xZHED19QD5FXA0w1kUcGzmdo8ZQ/MN7Pjfh/PUoFvp
-         y68g==
+        bh=flUZio8dXwvZIrZo+LmbX2XhPZ1VbyYrbXhxsGGTrQU=;
+        b=JXmGIEwO4G7SqgRKzHt8LPmi/094jCf2biNgMt2J6I7S6OPaPhwyboPvWYpaKLKDBC
+         Ej8dFDPYFg7qlzJhJxytecnYopw+aFmCGNd3iGmmyxaObq9L6+3Fxs/eaGMkOdDJRozt
+         be8ED+GoJra0oNIqQrPrFT7GrH9pcTK1Jy6IXl1bFbQLb2Gf+QLf8m4+pSRYqasvmE/z
+         ulZr0C97rchZT0FMjuaMsXy6A+orXdCmyPiPUEePhSoK3FVC19boiVE3foxDOjEVx/JK
+         wxiPUYVyE9N6bS5Luq7JXRC1b9PT/Og0jxbsvMXlzxOC1WI2DMFVRexxAHmJXR9u8Ktd
+         7JVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=GCA44/j2N9sb27BthAQWsZJnDLGG5fA/aOujrEm7rds=;
-        b=sZ5LgKcMU1jORuQIDDuNA0RUJsnJ/cHJ8bvLyBxu/OJgg3Z+lpxKiOzZ8ov5aIUoI+
-         tSEikdioPqwHNp/ZbChbqMzG0GaS7ocwnhAF5yG5y/jjSSuhqZrSXY9wKs5GE4Z51py2
-         Dl4KaDpqzgES0GeGxhZnOnYLPVOZJmCvf3SsKW7OJYZCMW5qbN13RGf+2eM2/Oq4ABwX
-         KgevOhjIJJGOQm95v9e1L4dzc00pVqU9sEJRzcVqiHftWmG3r3o3cr0IHMOfXkFFgPKz
-         JeLzjln1SgJYVirp73/1Ko8un26epVa5nSb5KjbYZY0BUvF7PFD9CN9zpI8o0++btUIm
-         OWMA==
-X-Gm-Message-State: AODbwcBLM/ePfscN+Nlf0umiPPO6yPzR7KoOsQPz/XtBBdG5eRN1iFg/
-        JI0lD4AqGTkoPr2hN4Qsggq75s8dBhus
-X-Received: by 10.84.174.3 with SMTP id q3mr39326153plb.52.1496354905105; Thu,
- 01 Jun 2017 15:08:25 -0700 (PDT)
+        bh=flUZio8dXwvZIrZo+LmbX2XhPZ1VbyYrbXhxsGGTrQU=;
+        b=TU4UdNm9A4uA5YHFXzvCqWG9ab02JIs0x6HhEtFvSuh6fLp39e+SbDkb7iBw/qBi2v
+         sOdm5Ma9FFuwdqYyBc0IDMMQn4lLL9ec80yWg+cK6aotpnIVJf492dxpvZoIub4gIiIY
+         d/XDdhGFH31zUlQ158g5kqdU6V9dllT8q+wnDpjo1FpboSlRK0LIK7EJHSrroxx00tgM
+         q5GGJVCoH8mry98g7crHwxyPGlqogV87VpwVEAB2AZZDJj0T/k5hchl+42fCYatCyKyQ
+         KpNrIeDoeHt6NxvTlESJlpKcB+q4lwir0z3IJOeuyqa444z4hSIB+370X4eXK61khXGk
+         /8wA==
+X-Gm-Message-State: AODbwcCJN78UDgR2P7aPn9m9I5GKLnwnrMrPT2c3KLGPp0086EQaEBpi
+        1v25PnpiW9oKXzmGF/GgA4jHn7LoFw==
+X-Received: by 10.36.222.69 with SMTP id d66mr1733566itg.14.1496354945709;
+ Thu, 01 Jun 2017 15:09:05 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Thu, 1 Jun 2017 15:08:24 -0700 (PDT)
-In-Reply-To: <CACBZZX78_eBswHCqcWL34xXbFgv=nZXG=R0ZjB_b97s_U4P=Ng@mail.gmail.com>
-References: <20170601182056.31142-1-avarab@gmail.com> <20170601182056.31142-3-avarab@gmail.com>
- <CAGZ79kb6O7hraY4caY8tdFn1d0Fi+LRr9cHk2UuXf79LbnPdhw@mail.gmail.com>
- <CACBZZX7hffa3iGndzyJMKYAwDqjjYO6XacWLrHnSo29xYSKAsQ@mail.gmail.com>
- <CACBZZX580g_fKMnCf0XGD4sGY6DjgH7t9cBtcXZf6muemKWXLA@mail.gmail.com>
- <CAGZ79kbcdSykdCku-skCY2FVNO-mpP8nkZ1rC1nXTKzAFQzb1Q@mail.gmail.com> <CACBZZX78_eBswHCqcWL34xXbFgv=nZXG=R0ZjB_b97s_U4P=Ng@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 1 Jun 2017 15:08:24 -0700
-Message-ID: <CAGZ79kYd7rVk8-CnmpyuLy0Ok2pnvYNjbZYHyPw5dfDJQD3zJg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/8] grep: skip pthreads overhead when using one thread
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Received: by 10.107.5.13 with HTTP; Thu, 1 Jun 2017 15:08:25 -0700 (PDT)
+In-Reply-To: <20170601152624.GA29442@alpha.vpn.ikke.info>
+References: <CAMOGhMJyO=+EZz6qCejxeTe5FdE=RheJX9A5g3U6eKhUKj8_BQ@mail.gmail.com>
+ <CAMOGhMLMo82RgH0HareB78KVWz2gMGzhB1i5s3SobW9wHk0zbg@mail.gmail.com> <20170601152624.GA29442@alpha.vpn.ikke.info>
+From:   SJR <haltekx@gmail.com>
+Date:   Fri, 2 Jun 2017 00:08:25 +0200
+Message-ID: <CAMOGhM+6wyKMN-XtMNSopjy399_CS7gavgvgybswXeQ1uxtrKQ@mail.gmail.com>
+Subject: Re: wrong language translation part7
+To:     Kevin Daudt <me@ikke.info>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -74,35 +62,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 1, 2017 at 2:55 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Thu, Jun 1, 2017 at 11:45 PM, Stefan Beller <sbeller@google.com> wrote=
-:
->>> I didn't mean to change this bit, it should remain "if
->>> (!num_threads)". I was in the middle of monkeypatching and didn't
->>> review the diff carefully enough. But it any case, without this change
->>> the rest of this diff is your proposed (but segfaulting) change as I
->>> understand it.
->>
->> Sorry for the proposing a sloppy alternative. (I missed one occurrence
->> of num_threads used in a conditional).
->> I think the original is still better than littering comments everywhere.
+So when v2 will be translated to Polish?
+
+Regards,
+JanR
+
+
+2017-06-01 17:26 GMT+02:00 Kevin Daudt <me@ikke.info>:
+> On Thu, Jun 01, 2017 at 01:16:11PM +0200, SJR wrote:
+>> W dniu 1 czerwca 2017 09:43 u=C5=BCytkownik SJR <haltekx@gmail.com> napi=
+sa=C5=82:
+>> >
+>> > Hi,
+>> >
+>> > https://git-scm.com/book/pl/v1/Dostosowywanie-Gita-Konfiguracja-Gita
+>> >
+>> > part in polish part in english.
+>> >
+>> > Can You repair translation?
+>> >
+>> > Regards,
+>> > JanR
 >
-> I should have said: None of these follow-up diffs of mine (including
-> the added comments) are something I think should be applied, I just
-> inlined that to explain the code in context.
-
-ok, cool. :)
-
+> The progit book is not maintained by the git community itself. You can
+> find the project at [0].
 >
-> Just to make 100% sure I understand you, do you mean you think the
-> original v4 version I posted here makes sense with that explanation or
-> do you have other outstanding concerns?
-
-Well as I said in the first message, I would have tried a different approac=
-h
-for this patch as I'd find that easier to understand. (Not sure what exactl=
-y
-is missing there to make it work).
-
-But the version v4 is fine with me, too, no other outstanding concerns.
+> If you look at this specific chapter in the Polish translation[1], then
+> you'll see that that chapter is just not completely translated. Someone
+> would need to step in and finish the translation.
+>
+> But note that this is version 1 of the book, while the latest release is
+> version 2. But that one does not have a polish translation at all.
+>
+> [0]: https://github.com/progit/progit/
+> [1]: https://github.com/progit/progit/blob/master/pl/07-customizing-git/0=
+1-chapter7.markdown
