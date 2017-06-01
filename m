@@ -2,139 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD6E720D12
-	for <e@80x24.org>; Thu,  1 Jun 2017 04:18:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C1D120D12
+	for <e@80x24.org>; Thu,  1 Jun 2017 05:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751146AbdFAESj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 00:18:39 -0400
-Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:35562
-        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750895AbdFAESj (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 1 Jun 2017 00:18:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1496290716;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=rRfIMLHzPNbiIzFgNUE9HyTVR3v6EtUiHnF5v5Ch1QQ=;
-        b=eRqO2sZGNNpuw+ChyG04sc7vftMnh3LGXvJGv/C27xlkBNk4YI/tv5MiVnh99SSL
-        CcOxqnX99IRyWaKXud4N0+1PLfmGSQkenOe7hq9k5xKRmG/DzXcBY/B2Z6iZZN/xCBp
-        DoNuqOr9bCbRsiimCn0QROC4Y1lcZHIUzYnuRSxY=
-From:   Tyler Brazier <tyler@tylerbrazier.com>
-To:     git@vger.kernel.org
-Message-ID: <0102015c61e06acf-70b79f3e-a6a8-43a9-b87d-273c1e2665f3-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015c5c7054ac-5ec72a28-ff81-42b8-8224-26a588cef485-000000@eu-west-1.amazonses.com>
-References: <0102015c5c7054ac-5ec72a28-ff81-42b8-8224-26a588cef485-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v3] pull: ff --rebase --autostash works in dirty repo
+        id S1751093AbdFAFfl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 01:35:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:32930 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751036AbdFAFfk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 01:35:40 -0400
+Received: (qmail 17543 invoked by uid 109); 1 Jun 2017 05:35:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Jun 2017 05:35:37 +0000
+Received: (qmail 14360 invoked by uid 111); 1 Jun 2017 05:36:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 01 Jun 2017 01:36:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Jun 2017 01:35:36 -0400
+Date:   Thu, 1 Jun 2017 01:35:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Zero King <l2dy@macports.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 8/8] t0012: test "-h" with builtins
+Message-ID: <20170601053536.zflna2bzclhvbeso@sigill.intra.peff.net>
+References: <20170530050949.dkgu3u26qj6ycusy@sigill.intra.peff.net>
+ <20170530051930.pqywvihwl5klg7hz@sigill.intra.peff.net>
+ <xmqqwp8yc255.fsf@gitster.mtv.corp.google.com>
+ <20170530060555.ponbsyp4agdo4yau@sigill.intra.peff.net>
+ <xmqqshjmc1wm.fsf@gitster.mtv.corp.google.com>
+ <20170530061546.tdpuhvq7yk34rvlj@sigill.intra.peff.net>
+ <xmqqo9uabhqt.fsf@gitster.mtv.corp.google.com>
+ <20170530152756.vs777v6unaxg6otb@sigill.intra.peff.net>
+ <xmqqinkg734c.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 1 Jun 2017 04:18:36 +0000
-X-SES-Outgoing: 2017.06.01-54.240.7.12
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqinkg734c.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `git pull --rebase --autostash` in a dirty repository resulted in a
-fast-forward, nothing was being autostashed and the pull failed. This
-was due to a shortcut to avoid running rebase when we can fast-forward,
-but autostash is ignored on that codepath.
+On Thu, Jun 01, 2017 at 01:17:55PM +0900, Junio C Hamano wrote:
 
-Now we will only take the shortcut if autostash is not in effect.
-Based on a few tests against the git.git repo, the shortcut does not
-seem to give us significant performance benefits, on Linux at least.
-Regardless, it is more important to be correct than to be fast.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Anyway, the problem is sk/dash-is-previous, specifically fc5684b47
+> > (revision.c: args starting with "-" might be a revision, 2017-02-25). It
+> > looks like the revision parser used to just bail on "-h", because
+> > revision.c would say "I don't recognize this" and then cmd_rev_list()
+> > would similarly say "I don't recognize this" and call usage(). But now
+> > we actually try to read it as a ref, which obviously requires being
+> > inside a repository.
+> 
+> Heh, I found another ;-)  
+> 
+> 95e98cd9 ("revision.c: use refs_for_each*() instead of
+> for_each_*_submodule()", 2017-04-19), which is in the middle of
+> Duy's nd/prune-in-worktree series, does this:
 
-Signed-off-by: Tyler Brazier <tyler@tylerbrazier.com>
----
- builtin/pull.c  | 25 ++++++++++++++-----------
- t/t5520-pull.sh | 18 ++++++++++++++++++
- 2 files changed, 32 insertions(+), 11 deletions(-)
+Hrm, yeah. The problem is that handle_revision_pseudo_opt() initializes
+the ref store at the top of the function, even if we don't see any
+arguments that require us to use it (and obviously in the "-h" case, we
+don't).
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index dd1a4a94e41ed..42f0560252e00 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -772,6 +772,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	struct oid_array merge_heads = OID_ARRAY_INIT;
- 	struct object_id orig_head, curr_head;
- 	struct object_id rebase_fork_point;
-+	int autostash;
- 
- 	if (!getenv("GIT_REFLOG_ACTION"))
- 		set_reflog_message(argc, argv);
-@@ -800,8 +801,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (!opt_rebase && opt_autostash != -1)
- 		die(_("--[no-]autostash option is only valid with --rebase."));
- 
-+	autostash = config_autostash;
- 	if (opt_rebase) {
--		int autostash = config_autostash;
- 		if (opt_autostash != -1)
- 			autostash = opt_autostash;
- 
-@@ -862,16 +863,18 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		die(_("Cannot rebase onto multiple branches."));
- 
- 	if (opt_rebase) {
--		struct commit_list *list = NULL;
--		struct commit *merge_head, *head;
--
--		head = lookup_commit_reference(orig_head.hash);
--		commit_list_insert(head, &list);
--		merge_head = lookup_commit_reference(merge_heads.oid[0].hash);
--		if (is_descendant_of(merge_head, list)) {
--			/* we can fast-forward this without invoking rebase */
--			opt_ff = "--ff-only";
--			return run_merge();
-+		if (!autostash) {
-+			struct commit_list *list = NULL;
-+			struct commit *merge_head, *head;
-+
-+			head = lookup_commit_reference(orig_head.hash);
-+			commit_list_insert(head, &list);
-+			merge_head = lookup_commit_reference(merge_heads.oid[0].hash);
-+			if (is_descendant_of(merge_head, list)) {
-+				/* we can fast-forward this without invoking rebase */
-+				opt_ff = "--ff-only";
-+				return run_merge();
-+			}
- 		}
- 		return run_rebase(&curr_head, merge_heads.oid, &rebase_fork_point);
- 	} else {
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 17f4d0fe4e724..f15f7a332960f 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -272,6 +272,24 @@ test_expect_success '--rebase fast forward' '
- 	test_cmp reflog.expected reflog.fuzzy
- '
- 
-+test_expect_success '--rebase --autostash fast forward' '
-+	test_when_finished "
-+		git reset --hard
-+		git checkout to-rebase
-+		git branch -D to-rebase-ff
-+		git branch -D behind" &&
-+	git branch behind &&
-+	git checkout -b to-rebase-ff &&
-+	echo another modification >>file &&
-+	git add file &&
-+	git commit -m mod &&
-+
-+	git checkout behind &&
-+	echo dirty >file &&
-+	git pull --rebase --autostash . to-rebase-ff &&
-+	test "$(git rev-parse HEAD)" = "$(git rev-parse to-rebase-ff)"
-+'
-+
- test_expect_success '--rebase with conflicts shows advice' '
- 	test_when_finished "git rebase --abort; git checkout -f to-rebase" &&
- 	git checkout -b seq &&
+That's an implementation detail that we could fix, but I do think in
+general that we should probably just declare it forbidden to call
+setup_revisions() when the repo hasn't been discovered.
 
---
-https://github.com/git/git/pull/365
+> I guess anything that calls setup_revisions() from the "git cmd -h"
+> bypass need to be prepared with that
+> 
+>   check_help_option(argc, argv, usage, options);
+> 
+> thing.  Which is a bit sad, but I tend to agree with you that
+> restructuring to make usage[] of everybody available to git.c
+> is probably too noisy for the benefit it would give us.
+
+The other options are:
+
+  - reverting the "-h" magic in git.c. It really is the source of most
+    of this confusion, I think, because functions which assume RUN_SETUP
+    are having that assumption broken. But at the same time I do think
+    it makes "-h" a lot friendlier, and I'd prefer to keep it.
+
+  - reverting the BUG() in setup_git_env(); this has been flushing out a
+    lot of bugs, and I think is worth keeping
+
+I did look at writing something like check_help_option(). One of the
+annoyances is that we have two different usage formats: one that's a
+straight string for usage(), and one that's an array-of-strings for
+parse_options(). We could probably unify those.
+
+It doesn't actually save that much code, though. The real value is that
+it abstracts the "did git.c decide to skip RUN_SETUP?" logic.
+
+-Peff
