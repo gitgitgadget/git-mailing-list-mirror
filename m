@@ -2,91 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 544C32027C
-	for <e@80x24.org>; Thu,  1 Jun 2017 09:21:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5A972027C
+	for <e@80x24.org>; Thu,  1 Jun 2017 09:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751435AbdFAJVh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 05:21:37 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37275 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751135AbdFAJVg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 05:21:36 -0400
-Received: by mail-wm0-f41.google.com with SMTP id d127so51890068wmf.0
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 02:21:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=BrGmPIulq5aKslpTCpf1DatDtFv/lJVdZpRz8hZCUjk=;
-        b=TB+Nzxac6T48DMujhuZA3m4b0H9og6eaCi1lX9pg/5XRd9xsFA7YfW6AKXkoTXCXUC
-         caoPVbMImef473EFDCB84HLM+UaoGYcRsc1TLXI8Tt4BTpxWCC2E7KObRn3hKj8jfAO5
-         4j39QvuD2O/EwOIq/m4rQ72lYw2dTmwUBsvLOc/NLPpdakTx9hgaBUILcEEC77iU2kFv
-         E4AWIEyygHQy6ZTUxDrFpfjQ/rszc4Tzg0TnGZUIL2+xTc/2P4wbWS8FCZSHrxrPXVfT
-         0UOxK0uGj/15MpnQ0Rsmd3FulgazrXoajokQVL/FwO3H7mSwwtVIMb/aaK2j2PGhoJ3t
-         ZM5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=BrGmPIulq5aKslpTCpf1DatDtFv/lJVdZpRz8hZCUjk=;
-        b=C0vn9hUd6o9zCFBteHJVIg2OEVHV9rjD7197wxVG9xob/wFhC0Bw1uoKufwtQW4CGd
-         JXj3H0FJxd2UsmEY3Tr+HDPpBiNZjBnfW1atb8RfgFkCbysoxSWViZTrehMkmF8krBaD
-         7H7ist/qM98DJU9qFghh894pfP2+moaBG+XZOE3vYAlPpm1Z9xMdLxt/+vTVMLLGQpZq
-         UoSFtalU3XeAxtvqwGVpwDEq0e7brJxW3QVJCOJtp0/mDM0p6dgyxKT6d+AzeDi03CYo
-         2Uu5i7h+lzlLwYMwSI8Kmusgy4nexVI//EGUJW+DbYTVSIMyrDYyNbC1Dde4AFSVMU79
-         bUBA==
-X-Gm-Message-State: AODbwcD0oxeujBGzABP/Pudg3WtmobuztuyusMeCq/EvXiJ9lRs0TRQ1
-        4bogbP4KQbqBBw==
-X-Received: by 10.80.144.14 with SMTP id b14mr1012832eda.36.1496308893944;
-        Thu, 01 Jun 2017 02:21:33 -0700 (PDT)
-Received: from [10.146.248.57] ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id g48sm8191385edc.8.2017.06.01.02.21.33
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 02:21:33 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Unaligned accesses in sha1dc
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <mvm4lw0un5n.fsf@suse.de>
-Date:   Thu, 1 Jun 2017 11:21:31 +0200
+        id S1751304AbdFAJcK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 05:32:10 -0400
+Received: from mx2.suse.de ([195.135.220.15]:50236 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751279AbdFAJcJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 05:32:09 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 2680AAAF2;
+        Thu,  1 Jun 2017 09:32:08 +0000 (UTC)
+From:   Andreas Schwab <schwab@suse.de>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org, Marc Stevens <marc@marc-stevens.nl>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5100A096-EBAC-4B01-A94D-69D31093148D@gmail.com>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: Unaligned accesses in sha1dc
 References: <mvm4lw0un5n.fsf@suse.de>
-To:     Andreas Schwab <schwab@suse.de>
-X-Mailer: Apple Mail (2.3124)
+        <20170601091856.r3oaddwzsndniyfa@genre.crustytoothpaste.net>
+X-Yow:  Where's the Coke machine?  Tell me a joke!!
+Date:   Thu, 01 Jun 2017 11:32:07 +0200
+In-Reply-To: <20170601091856.r3oaddwzsndniyfa@genre.crustytoothpaste.net>
+        (brian m. carlson's message of "Thu, 1 Jun 2017 09:18:57 +0000")
+Message-ID: <mvmr2z4t5ns.fsf@suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Jun 01 2017, "brian m. carlson" <sandals@crustytoothpaste.net> wrote:
 
-> On 01 Jun 2017, at 10:28, Andreas Schwab <schwab@suse.de> wrote:
->=20
-> The sh1dc implementation is making unaligned accesses, which will =
-crash
-> on some architectures, others have to emulate them in software.
+> On Thu, Jun 01, 2017 at 10:28:52AM +0200, Andreas Schwab wrote:
+>> The sh1dc implementation is making unaligned accesses, which will crash
+>> on some architectures, others have to emulate them in software.
+>> 
+>> Breakpoint 4, sha1_compression_states (ihv=0x600ffffffffe7010, 
+>>     m=<optimized out>, W=0x600ffffffffe70a8, states=0x600ffffffffe7328)
+>>     at sha1dc/sha1.c:398
+>> 398             SHA1COMPRESS_FULL_ROUND2_STEP(e, a, b, c, d, W, 21, temp);
+>> (gdb) n
+>> 403             SHA1COMPRESS_FULL_ROUND2_STEP(d, e, a, b, c, W, 22, temp);
+>> (gdb) 
+>> 408             SHA1COMPRESS_FULL_ROUND2_STEP(c, d, e, a, b, W, 23, temp);
+>> (gdb) 
+>> 413             SHA1COMPRESS_FULL_ROUND2_STEP(b, c, d, e, a, W, 24, temp);
+>> (gdb) 
+>> 418             SHA1COMPRESS_FULL_ROUND2_STEP(a, b, c, d, e, W, 25, temp);
+>> (gdb) 
+>> 291             SHA1COMPRESS_FULL_ROUND1_STEP_LOAD(a, b, c, d, e, m, W, 0, temp);
+>> (gdb) 
+>> git(21728): unaligned access to 0x600000000009f8d5, ip=0x40000000003336d0
+>> 423             SHA1COMPRESS_FULL_ROUND2_STEP(e, a, b, c, d, W, 26, temp);
+>
+> What architecture are you seeing this on?
 
-Is SPARC an architecture that would run into this problem? I think
-there was a thread a few days ago about this...
+It doesn't matter.
 
-What architectures are affected by this? I think I read somewhere
-that ARM requires aligned accesses, too, right?
+Andreas.
 
-I wonder if it makes sense to emulate SPARC/ARM/... with QEMU on =
-TravisCI [1].
-Is this what you had in mind with "emulate" or do you see a better way?
-If we compile and test in this environment - we should be able to catch
-those bugs, right?
-
-- Lars
-
-
-[1] https://www.tomaz.me/2013/12/02/running-travis-ci-tests-on-arm.html=
+-- 
+Andreas Schwab, SUSE Labs, schwab@suse.de
+GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
+"And now for something completely different."
