@@ -7,59 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCE042027C
-	for <e@80x24.org>; Thu,  1 Jun 2017 09:35:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98AC02027C
+	for <e@80x24.org>; Thu,  1 Jun 2017 09:42:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751767AbdFAJez (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 05:34:55 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:36219 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751610AbdFAJee (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 05:34:34 -0400
-Received: by mail-it0-f49.google.com with SMTP id m47so31871540iti.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 02:34:34 -0700 (PDT)
+        id S1751283AbdFAJmB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 05:42:01 -0400
+Received: from mail-it0-f42.google.com ([209.85.214.42]:35388 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751209AbdFAJmA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 05:42:00 -0400
+Received: by mail-it0-f42.google.com with SMTP id f72so31526800ite.0
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 02:41:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=OKPlPLW7Fe6N2b+OyPoCtqHI/hphVF4aeDMd1RtsD60=;
-        b=nr/ySSLRqXmY969BXx26qhlPPSZNJ524Mut6m3KZBN9o0zWeoe8mSWHkThJDyKGSTq
-         z4m3IE3cbQmXEewGIwnomidjyfF5Zo+OV1BcZIYY+D6E/2VDR0OVid4NotW2nkr8P3VQ
-         8HRyCGUcAE6NXjqbq2QdizC4gebjG5g79g6twz/qPTp/0US1pJJ1fpO29I+DjVkeldhf
-         8zz45Li8lkQ1q96ulG6L9VhCRJe+m/0+NTtObFD2UXQiaO/zZ9bKNKpDUChyyZ+jJAuh
-         1fceEg9IT6XfJzF3b/ML8bTrKSyfA9UV5Z6K66hYNiPWznTUWmAQbU59Dx4sGH4Uku4E
-         TOaA==
+        bh=B7d8ySsjr4QTi1Xl0oTp13tAc0DvFi67hqDNlHpCELI=;
+        b=SqjLIiEaKj+cyqvNhuIDSJlV6zXzsY3rP8gKeFm48iMXv5q2OSSzT3/xlOY7DufeeK
+         OwogYQRXrhmnodZBEkyCDat+3nevqrym+Z4MZeeCkMZenDDMLIVPVIPO3fShihs0vZmV
+         iU2J+dqXMA7cq14ouAaMeRRJJ8el7WqvF3t7yHqtgdC07mbar4E3k5czQTFEP/IcyjKe
+         p0wtQMapszuE0aMMwyJrJhzWE9UJvbcXh/on+EFra65I1VsqXoQR4cQGSDqEuQG4eysl
+         YWbVqUfZ59F7iq2PIVpmbQ+DPqO0FLSRdlDvdmSqXjER89ei2w7c0ASveLB9FZ6mwpQR
+         i/Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=OKPlPLW7Fe6N2b+OyPoCtqHI/hphVF4aeDMd1RtsD60=;
-        b=IVZlXIvqN9tYfk8dQqRTNIUNgjc7ZcXNXa0OAt6gPqpZqxe7Flm3ZljfvOxmjmZHtK
-         p3KIW73RRsqfrbja3N/82V41xoicwLhNcWxVDiUnGU4xNnYNEbn/IPrW5cEPQRfIhrIe
-         1SwdC7oT4thQ37cNK2jtz++AH1Hb5NOXAD+VqhOK+A/wZmvUktyWcpnOrdFWHb4OZGoA
-         8hQpjuFn3dLldA9ik2X/kSQKnrbHkYhSxygGXKM+/aamLPJK2jPQPXiV5vzjF/0s+q/s
-         oBPNU4wgQrYWKJDSQZDyImppsU2z1N5d4M3QLu8rOAMenST33Os66/nrWMO+7Yqpo5F2
-         GPfg==
-X-Gm-Message-State: AODbwcDk74JEfjDkUW4p5d+VpcmBCoIam/1S6oTvTuImaPCjT3kx50GE
-        TvRQzhM9NIVtGQ==
-X-Received: by 10.36.80.7 with SMTP id m7mr1764937itb.73.1496309668943;
-        Thu, 01 Jun 2017 02:34:28 -0700 (PDT)
+        bh=B7d8ySsjr4QTi1Xl0oTp13tAc0DvFi67hqDNlHpCELI=;
+        b=Q1yNoLXIs3QBWkl3flC1M/aieLadP5hxStRIsZeBUYrE1dh+jGaLXrAaJIs9JBminx
+         8OzdiEThv9z6D1DSMTc0s1nWH4t2zY29RrqyPAdzwFhoMEbHkxyoQd7uxUPst2OZDxSz
+         RyumnLoVYiUZdMwglL9at3ACcYqtYzzzx2CPBFKBQ6YKCEyuU6Pi1ay2IUOYlwfjWzP8
+         Vt7j66JIzUw/63wcy5J3ZXPQO79Z3UqozorTdu4uLBDn7MLHHUmor6YSxfcuQy4lpOm0
+         W7J1O9gJnGaOweHciZiIkLEJXk7QaLng/5l51mOiILLITMbm/8IkH9jYkt2bt8Kmecxf
+         9Dlg==
+X-Gm-Message-State: AODbwcCQIOItEDJTQ17wl4KDAbm9ezNtjmj4TUHfZRrL6GP2bhkwfe6d
+        ejiXQ0Gtcw8g1Ga/sLc=
+X-Received: by 10.36.18.135 with SMTP id 129mr1744459itp.111.1496310119194;
+        Thu, 01 Jun 2017 02:41:59 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:9c1c:dca9:c6e3:133e])
-        by smtp.gmail.com with ESMTPSA id l10sm12413946itl.4.2017.06.01.02.34.27
+        by smtp.gmail.com with ESMTPSA id h189sm12320446ith.6.2017.06.01.02.41.58
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 02:34:28 -0700 (PDT)
+        Thu, 01 Jun 2017 02:41:58 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Andreas Schwab <schwab@suse.de>
-Cc:     git@vger.kernel.org, Marc Stevens <marc@marc-stevens.nl>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: Unaligned accesses in sha1dc
-References: <mvm4lw0un5n.fsf@suse.de>
-        <xmqqk24w5asf.fsf@gitster.mtv.corp.google.com>
-        <mvmvaogt6eo.fsf@suse.de>
-Date:   Thu, 01 Jun 2017 18:34:27 +0900
-In-Reply-To: <mvmvaogt6eo.fsf@suse.de> (Andreas Schwab's message of "Thu, 01
-        Jun 2017 11:15:59 +0200")
-Message-ID: <xmqqfufk59wc.fsf@gitster.mtv.corp.google.com>
+To:     Tyler Brazier <tyler@tylerbrazier.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3] pull: ff --rebase --autostash works in dirty repo
+References: <0102015c5c7054ac-5ec72a28-ff81-42b8-8224-26a588cef485-000000@eu-west-1.amazonses.com>
+        <0102015c61e06acf-70b79f3e-a6a8-43a9-b87d-273c1e2665f3-000000@eu-west-1.amazonses.com>
+Date:   Thu, 01 Jun 2017 18:41:57 +0900
+In-Reply-To: <0102015c61e06acf-70b79f3e-a6a8-43a9-b87d-273c1e2665f3-000000@eu-west-1.amazonses.com>
+        (Tyler Brazier's message of "Thu, 1 Jun 2017 04:18:36 +0000")
+Message-ID: <xmqq60gg59ju.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,21 +65,5 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-
-Andreas Schwab <schwab@suse.de> writes:
-
-> This is git 2.13.0.
-
-Thanks.  It is a known issue with a known fix cooking in 'next' to
-be merged down to 'master' and 'maint' not in a too distant future.
-An extra testing to ensure that the "fix" actually works before it
-is merged down to a maintenance release is very much appreciated.
-
-    $ git fetch git://git.kernel.org/pub/scm/git/git.git/ next
-    $ git checkout v2.13.0^0
-    $ git merge a0103914
-
-should show what the proposed v2.13.x would look like wrt to this
-issue.
 
 Thanks.
