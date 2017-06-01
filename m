@@ -2,221 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD60620D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 20:51:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E78320D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 21:06:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751125AbdFAUvc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 16:51:32 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:33755 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751029AbdFAUvb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 16:51:31 -0400
-Received: by mail-io0-f194.google.com with SMTP id m4so6543103ioe.0
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 13:51:31 -0700 (PDT)
+        id S1751241AbdFAVGB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 17:06:01 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:35912 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751078AbdFAVGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 17:06:00 -0400
+Received: by mail-pf0-f181.google.com with SMTP id m17so37507809pfg.3
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 14:06:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=umich.edu; s=google-2016-06-03;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=3JmlnFSHbdDossb/qvLYWpF7nql7WPEuuWvrb7C9pEk=;
-        b=cSexF15mS13hu9PTCSMG7hVVL+oMzctjseyzCyJdnGJou0fC3hpCzCmk9oMqlO4W+i
-         n+fGPzJbRdmJnP9KtPZII9N2JWAdgV3wHD56akwYPkzhfExY9iL/SeBtQhmAR+UnhE41
-         3laMl45IMzBleYu0OlDpfq2/Mrlz+MlwcD0Rmj28fFwEZvAdA7/0hx4SAstiNJ0iTCYo
-         SFcsaMFaJGuFjQOZ9qCPTE2EXs1ItFgwoiulc37rtxr1JkPI6N8A44nRprtiwX+Rr8UO
-         pdFN7eKYNOnQzMNKbCbZ3FraG/aZ97V8bjog+LnNJbbxq0oBDLriouKQ8cmF2NtVnE/W
-         f6fQ==
+         :cc:content-transfer-encoding;
+        bh=Im98JK8G1l5gI/nNEp6MNt8e9vtAeTeF54ETJ4Zx3xQ=;
+        b=I8//jF7VKNsCdieVT55C8fomHqHRO2/yS0IPNALVgtlU0HxN0k7VZd1vspRi9X+ple
+         kr/dDyxfDK8TREfxGlamEaYxvm9STWie3anW/G7nSr0XtcV2aeeO0uVLtLyCnM64v5dn
+         95a1+7hLijDZUGu0VZXeBIW641pnnj0f4phNy7qnxVnP6VjQytpXelgH8WuDyRPcfrcL
+         wuZq+Tv0MdLRjZMVFkJkvej9DwjbQNSS0b/gZ0ooo1jlq3T1TccDmhSBYMKr7nLekLH0
+         moPwBpGgSmKD/icQMtn5HNEzeI2I8PhdbEM5NUfFSJo4L/11fEM5sh2VYLHqrCt9RTNj
+         T8gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=3JmlnFSHbdDossb/qvLYWpF7nql7WPEuuWvrb7C9pEk=;
-        b=d35qEctYlJL2+Gk6HOb5lGIF3fRleDHzxAjzNycggVFPXTjWVnPxO9pOr+t5hOAPx7
-         NHOZr0LQfXengI2avoxNoFWP0zsQIXv+vehD4MNSOAyHA29lCttvgxleg/WnkrthFdMN
-         gpuWTdbYOqoZj0EX7y6jsqePoyESn6P4IEv9VT4pEdwCDeMb6Dw4K5Z624DdI5eEvqDb
-         sCwbL50a6Gux7PULmgmqn4dNR9KW3eG5XS4wvkR4gqczqL8X54tksgok5DrReIckT21O
-         yXuy0Q0Ve8BIfxWvEWtsWs/BNqx63OjFE8aIk+XVUDnJn83yCTNJqJ78fliptCRZd3kl
-         2ywQ==
-X-Gm-Message-State: AODbwcDoA5GXhNvRO1yrxJJWOgiNyykXwPyMZBx38xlOHCEd8MOiRlp8
-        SFMCWLCY4nQpCHcEIx08y4ee2Q5JoHJIZ4o=
-X-Received: by 10.107.178.215 with SMTP id b206mr969146iof.50.1496350290633;
- Thu, 01 Jun 2017 13:51:30 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Im98JK8G1l5gI/nNEp6MNt8e9vtAeTeF54ETJ4Zx3xQ=;
+        b=KNqNo6oDsCSRUoqqKfVOofsaEp1URwpP1nNW3qdzVHhk7BoLYeQwG/4raZj+TY6y0A
+         By8GmcCeSs4VFFvb6bYlH7P6qaPZMBkQlUG/QXDdBL8i7SWM0egLHx7ZzrazZ3tiquq2
+         r4YtdgoRSN5MubEiZnp1cAYwcclNOXSvbVDtj9cH7aIBbwbTXmxuPykMlX+pQfmq1TMv
+         ebtuvJIh3zL7h7SfIg+FjDoU6IZOYgJJUu27S5e+eYavLIeRhGaKMcsonL6UfiffJUE2
+         Bu1lU/1opKMQwpzmFRKqCiyFYDm1g3BBx0xvkWdlngShq9LLMQGeKEJadfmkXGTLq9yY
+         HSjw==
+X-Gm-Message-State: AODbwcDfJ+qI41/5LzG8NAC1jX91ijR6Ietg5zpYpsA9mdP7G1JAGRe1
+        UBtp1mpCdfK42Ilwond8OSmHPvnDLfJp
+X-Received: by 10.99.163.25 with SMTP id s25mr3071003pge.191.1496351159730;
+ Thu, 01 Jun 2017 14:05:59 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Thu, 1 Jun 2017 13:51:09 -0700 (PDT)
-In-Reply-To: <20170601155105.28356-1-benpeart@microsoft.com>
-References: <20170601155105.28356-1-benpeart@microsoft.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 1 Jun 2017 22:51:09 +0200
-Message-ID: <CACBZZX5e58bWuf3NdDYTxu2KyZj29hHONzN=rp-7vXd8nURyWQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/6] Fast git status via a file system watcher
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        David Turner <David.Turner@twosigma.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
+Received: by 10.100.162.78 with HTTP; Thu, 1 Jun 2017 14:05:58 -0700 (PDT)
+In-Reply-To: <CACBZZX5j=g=Lnv-X9F5Uaf0wW922R3N=LgrzRKPw853ECmoqYQ@mail.gmail.com>
+References: <CA+dzEBn4EKzDqS0pCHHsPtGGJc1orf5weKKh0GN-GkE+fVYGcg@mail.gmail.com>
+ <CACBZZX7OhdRM+Mhx4FVX-Upvq169ZLvArL5ZxcTgz8u=WRh3aw@mail.gmail.com>
+ <20170531214019.bbhjdaejvgje3v6g@sigill.intra.peff.net> <CACBZZX5j=g=Lnv-X9F5Uaf0wW922R3N=LgrzRKPw853ECmoqYQ@mail.gmail.com>
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Thu, 1 Jun 2017 14:05:58 -0700
+Message-ID: <CA+dzEBkUgzz4Jrsm=VZOE=YNezPEPEMoUDW9iL1vDLxDJstz8w@mail.gmail.com>
+Subject: Re: bug: `git log --grep ... --invert-grep --author=...` negates /
+ ignores --author
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 1, 2017 at 5:50 PM, Ben Peart <peartben@gmail.com> wrote:
-> Changes from V3 include:
->  - update test script based on feedback
->  - update template hook proc with better post-processing code and make
->    it executable
+I actually only expected the --grep to be inverted -- I think I'm on
+the same page with what's documented.
 
-I have watchman running finally, so aside from issues applying this I
-can finally test this. I set up a watch of linux.git:
+I'd be happy to dig into the code and investigate this some more but I
+am not familiar with the git codebase, any code hints on where to get
+bootstrapped?
 
-$ watchman watch $PWD
-$ watchman watch-list|jq '.roots[]'
-"/home/avar/g/linux"
+Anthony
 
-And first, for simplicity, I'll be turning core.fsmonitore on later:
-
-$ for c in fsmonitor untrackedCache splitIndex; do git config core.$c
-false; done
-
-On a hot fs cache running "git status" takes me 80ms, but if I flush caches:
-
-# free && sync && echo 3 > /proc/sys/vm/drop_caches && free
-
-Running "git status" takes me 4s. Now, right after flushing those caches:
-
-$ date +%s
-1496349235
-$ time (echo '["query", "/home/avar/g/linux", {"since": 1496349235,
-"fields":["name"]}]' | watchman -j) | jq '.files[]'
-
-real    0m0.664s
-user    0m0.000s
-sys     0m0.004s
-$ touch foo bar
-$ time (echo '["query", "/home/avar/g/linux", {"since": 1496349235,
-"fields":["name"]}]' | watchman -j) | jq '.files[]'
-"bar"
-"foo"
-
-real    0m0.044s
-user    0m0.000s
-sys     0m0.000s
-
-Without the monitor running "git status' takes me ~2.5s, i.e. from cold cache:
-
-$ time GIT_TRACE=1 ~/g/git/git-status
-20:34:49.154731 git.c:369               trace: built-in: git 'status'
-On branch master
-Your branch is up-to-date with 'origin/master'.
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-        bar
-        foo
-
-nothing added to commit but untracked files present (use "git add" to track)
-
-real    0m2.546s
-user    0m0.060s
-sys     0m0.228s
-
-Now, I would expect the case where the working tree isn't in the fs
-cache to be lightning fast, since the watchman command is really fast
-(flushed the cache again, turned on the fsmonitor):
-
-$ date +%s
-1496349523
-$ time (echo '["query", "/home/avar/g/linux", {"since": 1496349523,
-"fields":["name"]}]' | watchman -j) | jq '.files[]'
-
-real    0m0.529s
-user    0m0.000s
-sys     0m0.004s
-$ touch foo bar
-$ time (echo '["query", "/home/avar/g/linux", {"since": 1496349523,
-"fields":["name"]}]' | watchman -j) | jq '.files[]'
-"bar"
-"foo"
-
-real    0m0.312s
-user    0m0.000s
-sys     0m0.000s
-
-But if I run "git status" (and I instrumented the hook to dump the
-changed files) it takes a long time (those 10s are just the disk being
-slow, but it should be ~0s, right?):
-
-$ time GIT_TRACE=1 ~/g/git/git-status
-20:39:11.250128 git.c:369               trace: built-in: git 'status'
-20:39:14.586720 run-command.c:626       trace: run_command:
-'.git/hooks/query-fsmonitor' '1' '1496349494197821000'
-Watchman says these changed: bar foo hi there .git .git/index.lock .git/index
-On branch master
-Your branch is up-to-date with 'origin/master'.
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-        bar
-        foo
-
-nothing added to commit but untracked files present (use "git add" to track)
-
-real    0m10.791s
-user    0m0.108s
-sys     0m0.228s
-
-If I re-run that it takes ~160-200ms with the hook, 80-120ms without
-it, so in this case once the data is in the fscache watchman is
-actually slower.
-
-But manually running watchman shows that it's really fast, usually
-returning within 3ms, I flush the fscache in the middle of this,
-that's the 600ms time, that could be some global kernel lock or
-something due to the odd manual proc operation, I haven't actually
-tested this on a system under memory pressure:
-
-$ for i in {1..10}; do (time (printf '["query", "/home/avar/g/linux",
-{"since": %s, "fields":["name"]}]' $(($(date +%s)-3)) | watchman -j |
-jq '.files[]')) 2>&1 | grep -e '"' -e ^real && touch $i && sleep 1;
-done
-real    0m0.004s
-"1"
-real    0m0.003s
-"2"
-"1"
-real    0m0.605s
-"3"
-real    0m0.003s
-"4"
-"3"
-real    0m0.003s
-"5"
-"4"
-real    0m0.003s
-"6"
-"5"
-real    0m0.003s
-"7"
-"6"
-real    0m0.003s
-"8"
-"7"
-real    0m0.003s
-"9"
-"8"
-real    0m0.003s
-
-So something really odd is going on here. This should be speeding up
-"git status" a lot, even with a hot fs cache doing stat on all of
-linux.git takes a lot longer than 3ms, but for some reason it's
-slower.
+On Thu, Jun 1, 2017 at 12:45 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Wed, May 31, 2017 at 11:40 PM, Jeff King <peff@peff.net> wrote:
+>> On Wed, May 31, 2017 at 08:08:54PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
+>>
+>>> $ git log --grep=3Dbar --author=3D=C3=86var --pretty=3Dformat:%an -100 =
+origin/pu
+>>> |sort|uniq -c|sort -nr
+>>> 5 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>>>
+>>> $ git log --author=3D=C3=86var --pretty=3Dformat:%an -100 origin/pu |so=
+rt|uniq
+>>> -c|sort -nr
+>>> 100 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>>>
+>>> $ git log --grep=3Dbar --invert-grep --author=3D=C3=86var --pretty=3Dfo=
+rmat:%an
+>>> -100 origin/pu |sort|uniq -c|sort -nr
+>>>      78 Junio C Hamano
+>>>      14 Jeff King
+>>>       2 Andreas Heiduk
+>>>       1 Sahil Dua
+>>>       1 Rikard Falkeborn
+>>>       1 Johannes Sixt
+>>>       1 Johannes Schindelin
+>>>       1 Ben Peart
+>>>       1 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>>>
+>>> That last command should only find my commits, but instead --author is
+>>> discarded.
+>>
+>> I would have thought that the last command wouldn't find _any_ of your
+>> commits. Don't we consider --author a greppable pattern and invert it?
+>
+> There's two unrelated things going on here AFAICT:
+>
+> * Anthony expected --author to be inverted by --invert-grep, but this
+> is not how it's documented, it's *only* for inverting the --grep
+> pattern: "Limit the commits output to ones with log message that do
+> not match the pattern specified with --grep=3D<pattern>."
+>
+> * The --author filter should be applied un-inverted, but isn't, it's
+> seemingly just ignored in the presence of --grep, actually mostly
+> ignored, this is bizarre:
+>
+> $ diff -ru <(git log --grep=3Dbar --invert-grep --pretty=3Dformat:%an -10=
+0
+> origin/pu |sort|uniq -c|sort -nr) <(git log --grep=3Dbar --invert-grep
+> --pretty=3Dformat:%an -100 --author=3DWeMostlyIgnoreThisButNotReally
+> origin/pu |sort|uniq -c|sort -nr)
+> --- /dev/fd/63  2017-06-01 21:44:08.952583804 +0200
+> +++ /dev/fd/62  2017-06-01 21:44:08.952583804 +0200
+> @@ -1,6 +1,6 @@
+> -     66 Junio C Hamano
+> +     65 Junio C Hamano
+>       10 Jeff King
+> -      8 Stefan Beller
+> +      9 Stefan Beller
+>        5 Lars Schneider
+>        2 SZEDER G=C3=A1bor
+>        1 Tyler Brazier
+>
+>
+>> By itself:
+>>
+>>   $ git log --author=3D=C3=86var --invert-grep --format=3D%an -100 origi=
+n/pu |
+>>     sort | uniq -c | sort -rn
+>>        79 Junio C Hamano
+>>         8 Stefan Beller
+>>         8 Jeff King
+>>         1 Sahil Dua
+>>         1 Rikard Falkeborn
+>>         1 Johannes Sixt
+>>         1 Johannes Schindelin
+>>         1 Andreas Heiduk
+>>
+>> So that makes sense from the "--author is invertable" world-view.
+>>
+>> But I'm puzzled that you show up at all when --grep=3Dbar is added (and
+>> moreover, that we get _one_ commit from you, not the 5 found in your
+>> initial command). That seems like a bug.
+>
+> I think that's the only thing that's not a bug, i.e. we just find 1
+> match in the first 100 (note -100), sorry for the confusing example.
+>
+> Anyway, much of the above may be incorrect, I haven't dug deeply
+> beyond just finding that something's funny going on and we definitely
+> have *some* bugs here.
