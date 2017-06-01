@@ -2,108 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13C9C20D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 13:33:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FFAD20D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 14:03:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751113AbdFANdb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 09:33:31 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:34906 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751096AbdFANda (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 09:33:30 -0400
-Received: by mail-qt0-f196.google.com with SMTP id r58so5664371qtb.2
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 06:33:29 -0700 (PDT)
+        id S1751108AbdFAODL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 10:03:11 -0400
+Received: from mail-lf0-f41.google.com ([209.85.215.41]:32968 "EHLO
+        mail-lf0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751078AbdFAODK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 10:03:10 -0400
+Received: by mail-lf0-f41.google.com with SMTP id a136so12831452lfa.0
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 07:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=2LxUFAa7Wk5FsXILfSICEsbT0PiXB8Et8hUVtoo/X0k=;
-        b=pZq8oBe+1N6iVBhIG6Wkhpu+0FHwW2WRFXatVXyJa4PW6H3r2v582x4RYr0/3bd/k5
-         RzEuYuiW0i3A5/x7OhhKtKFabxuYUzdMvZzrkgsm8ABmPhpdr/tiokZY1y8rqAgP68AV
-         DXv7TnOQ6QLn/ALaZ5KnLSWFAs2LitwdXq2DTTR92jYUpSw9l/ranerUpFT92U8Nqy8y
-         9UDgYxO0DhPtXkGvO/gz8ZI1Rtsuy6Ndsw8SPWXp17zASVfd9X37BC9/nHaPP7p4bg2n
-         39sy5a78ai0KlHQ8dLGs5oQSVnol90EftLfe6vLy+FE8fpMX8yGDFKbbZny1eLwgG4Tw
-         i4WQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ixz5IOX0h7ZYwE6YMAVZ9TgYS/piIQtXN0V/M2w6LOg=;
+        b=lYxwAW5ZnnltVQpSp+4C1FI1t7xxjMrlCy2s93nL0MSg/R6brYenCxfCEIcXUK1bQ8
+         f0f0fWsiWRqdj9DOet9Sx1AwHGzovFGhsVrOJN2ISV/zgJi9Qf8eyNxhUvhcIHv+dcgi
+         0KnwRE2S3yvDj/Bc7fo8x/YtVYI3RW2bWT/6Vpqh9WHu9u/hfIMCDeDOvLmHJb+V6VLE
+         W8oAvPCJ+XXAi6NZfPmq4XWpQJymzSUnZq/VGYkv16un+EigaykBQ+nHKfu3RsAKIBJ5
+         moxt11w+YaNcxwofCBZtLEC+rtCaOm36gkjM6l2oeiqPlUhg4Zj7Oizi/IrE8btrZiQe
+         1ItA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=2LxUFAa7Wk5FsXILfSICEsbT0PiXB8Et8hUVtoo/X0k=;
-        b=kXY0nQ4+SYGB7myWuPFthswWwsUIfkFYMyTSNkZTDmIJ7/88GD/1SXNVN8iqBKk0GX
-         e4OhwwidOyghYZyh31F9PkIzqGMA+fNEuKonF4l3PsddJAyYpBPvApAtlGzCfalsPioX
-         NOqA3hI50xN0urXS8LRYNNsi4ykNL/Gk2qU3u6qeRPDi3DtRsKMJdN1KffpLVrLQRlGs
-         6EZIDI0lu90JvXCWWH0CZq8DhKIrnsBbzEHtb9e7fhiz2GEzjHgHJeRQjUX3cRvor0B5
-         +dDuGwzBKr7Kulw+oh+zpJJ1xXF2BFi45adNdjnRDNqrng37hVFti/+eOXXThVTOxcO/
-         ACug==
-X-Gm-Message-State: AODbwcBcLIkw0eS4yaq+9s1T25YHiweRgDfv59DQ2kSA3bm+LygAh8s4
-        e45Hl6V8AKUyjuUDz/Y=
-X-Received: by 10.237.62.115 with SMTP id m48mr1743025qtf.179.1496324009182;
-        Thu, 01 Jun 2017 06:33:29 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id i51sm12939484qte.28.2017.06.01.06.33.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 01 Jun 2017 06:33:28 -0700 (PDT)
-Subject: Re: RFC: Would a config fetch.retryCount make sense?
-To:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <6762A30E-C558-4085-943B-AB85EBF18706@gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <cf8ce12b-8d5a-ae03-efd8-0f82ea40fce7@gmail.com>
-Date:   Thu, 1 Jun 2017 09:33:27 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ixz5IOX0h7ZYwE6YMAVZ9TgYS/piIQtXN0V/M2w6LOg=;
+        b=bOKkKtufRR3v2ZsOnRVOCDQ+mJQFIIh97QEt+zmr5Fs+CQUlq9QzDcoHaQTB/jHHmO
+         jECacXYEBOm6lqkq8eyXQACJfl2sjkNYGs/6sNPNRej2ma4aWoZEWEei3aL25s52HZqo
+         mAVEk1RRQb5jMcfLy7fE/9AOEt11WcbELvpYgM7E5M+enXX+4yiM+C5I/Fwm2Gm1+dA+
+         sKDF6ClKTNh1RYiZHWvDA60o6ID7tpCvH0oh7Nsg0PDoFbLa8+z7vX1wvSZdExd/Zb3E
+         Z00QlGJTKC0C7Y3BSBnxbGYj00xWmNarH+aJyUg2z0BYAVOuGzyEKRf7F//sFjlLvhKQ
+         1U8Q==
+X-Gm-Message-State: AODbwcAwr/saqejaUifE0UBk/Mt3lcFmSO90I49/wjV0fxtRWsQoxoVm
+        uveTmpWgBSfXgCtGpuKtm0NKC/0zXg==
+X-Received: by 10.46.70.10 with SMTP id t10mr640947lja.45.1496325788907; Thu,
+ 01 Jun 2017 07:03:08 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <6762A30E-C558-4085-943B-AB85EBF18706@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.25.217.20 with HTTP; Thu, 1 Jun 2017 07:03:08 -0700 (PDT)
+In-Reply-To: <20170515220939.vkgofpkdtpz7u26v@sigill.intra.peff.net>
+References: <CACBZZX6nmKK8af0-UpjCKWV4R+hV-uk2xWXVA5U+_UQ3VXU03g@mail.gmail.com>
+ <006301d2cd83$663b5520$32b1ff60$@marc-stevens.nl> <CACBZZX5Q9paMbYWH47fdK9GuNrE=F=FwR__E1yZ32EOAMw_w6w@mail.gmail.com>
+ <20170515220939.vkgofpkdtpz7u26v@sigill.intra.peff.net>
+From:   demerphq <demerphq@gmail.com>
+Date:   Thu, 1 Jun 2017 16:03:08 +0200
+Message-ID: <CANgJU+XQ4uk_OZ+bHxJ51qxAxM6Lq9yu-GNSqZ4BNiBU-8Zpqg@mail.gmail.com>
+Subject: Re: Git 2.13.0 segfaults on Solaris SPARC due to DC_SHA1=YesPlease
+ being on by default
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Marc Stevens <marc@marc-stevens.nl>,
+        Git Mailing List <git@vger.kernel.org>,
+        Michael Kebe <michael.kebe@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 16 May 2017 at 00:09, Jeff King <peff@peff.net> wrote:
+> On Mon, May 15, 2017 at 04:13:58PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> On Mon, May 15, 2017 at 3:58 PM, Marc Stevens <marc@marc-stevens.nl> wro=
+te:
+>> > Hi Aevar,
+>> >
+>> > Thank you for notifying us of this issue.
+>> > Big endianness is a tricky issue, also since I don't have access or ac=
+curate knowledge about all big endian systems.
+>> > Our github repo does check correct functioning, including an endiannes=
+s mistake, with 'make test'.
+>> > But I guess this is not included for SHA1DC in Git.
+>> >
+>> > Anyway, we can easily add the _BIG_ENDIAN macrotest to the git repo an=
+d will do so soon.
+>> >
+>> > I don't think the segfault is caused by buffer overflow, inproper acce=
+ss, or the endianness issue.
+>> > But I did notice an unexpected issue: the message block pointer m=3D0x=
+398ad5 is odd.
+>> > Can you confirm whether loading an uint32_t from an odd address trigge=
+rs a hardware interrupt on your platform?
+>> > This is not problem for x86, but maybe for your platform it is?
+>> > If it is then we should always copy buffer contents to the sha1context=
+ to avoid this issue.
+>>
+>> I don't have access to the box in question, Michael was testing this
+>> code for me. But unaligned access is probably the cause, although
+>> according to some info I found online that should give a SIGBUS not a
+>> SIGSEGV, but that may have changed:
+>
+> Yeah, I would have expected SIGBUS there. If we have alignment issues,
+> though, I'd expect that ARM systems will experience problems.
+>
+> Block-sha1 uses a macro which allows unaligned loads on platforms that
+> support it, and otherwise does the endian conversion on the fly as we
+> load the bytes into a local variable (which presumably happens all
+> in-register). That may be faster than doing a mass copy of the buffer.
+
+I agree. It is fairly normal to use that kind of macro and not do a
+memcpy with hash functions.
+
+In fact many hash functions ONLY use that kind of macro, as decent
+compilers will automagically convert the macro into an unaligned load
+on platforms that support fast unaligned loads.
+
+The only reason to expose the direct unaligned load is to make sure
+that the hashing code is fast on such platforms even when compiled
+under -g.
+
+Yves
 
 
-On 6/1/2017 8:48 AM, Lars Schneider wrote:
-> Hi,
-> 
-> we occasionally see "The remote end hung up unexpectedly" (pkt-line.c:265)
-> on our `git fetch` calls (most noticeably in our automations). I expect
-> random network glitches to be the cause.
-> 
-> In some places we added a basic retry mechanism and I was wondering
-> if this could be a useful feature for Git itself.
-> 
-
-Having a configurable retry mechanism makes sense especially if it 
-allows continuing an in-progress download rather than aborting and 
-trying over.  I would make it off by default so that any existing higher 
-level retry mechanism doesn't trigger a retry storm if the problem isn't 
-a transient network glitch.
-
-Internally we use a tool 
-(https://github.com/Microsoft/GVFS/tree/master/GVFS/FastFetch) to 
-perform fetch for our build machines.  It has several advantages 
-including retries when downloading pack files.
-
-It's biggest advantage is that it uses multiple threads to parallelize 
-the entire fetch and checkout operation from end to end (ie the download 
-happens in parallel as well as checkout happening in parallel with the 
-download) which makes it take a fraction of the overall time.
-
-When time permits, I hope to bring some of these enhancements over into 
-git itself.
-
-> E.g. a Git config such as "fetch.retryCount" or something.
-> Or is there something like this in Git already and I missed it?
-> 
-> Thanks,
-> Lars
-> 
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
