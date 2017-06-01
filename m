@@ -2,122 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A44BA20D12
-	for <e@80x24.org>; Thu,  1 Jun 2017 04:18:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6E720D12
+	for <e@80x24.org>; Thu,  1 Jun 2017 04:18:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751166AbdFAER7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 00:17:59 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:36536 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750895AbdFAER6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 00:17:58 -0400
-Received: by mail-io0-f169.google.com with SMTP id o12so26354496iod.3
-        for <git@vger.kernel.org>; Wed, 31 May 2017 21:17:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+n2/5ng7vxkEbAyAXMPZfMTMJjJgGP/wEeEgMhQ4yK0=;
-        b=N+bV6TVhZAagTgIEGO5j1PI0VM76I2daCZhp0O86xPDCnjMVNtzWqAngpntVDI9qcX
-         RZI7Cyus162mEQUqZKyRMJHdIdaLunViXJIyBkDmmQrVTRGWhsS/FqbgvIQXZTesRhCg
-         u19koxR2XhPRy2ulWoGVgq3rwNH+8lsImVaSKGHKl2T4TK4BSOpmZoLexaf2le2WOCG9
-         hZUxQL3cLDY9LyZWFBpR1VG5p6OrXkrbCpzJ2R5lw14JTicC7fVpuOx2lgHc0aFwkjVI
-         enjnlwYjMJypWXGi57U0YvmhxhJmL25uVnlGSIr3P6iDlWpXZ02ftYDUVSPvfZ+1FEa1
-         M54g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+n2/5ng7vxkEbAyAXMPZfMTMJjJgGP/wEeEgMhQ4yK0=;
-        b=PJb0MCGDuBJSHXXRtYeMpio6lf9tI027Y8zhwtXbB2Iz3eAeop2Wr8QSu/kqEYvCBY
-         EAMqhb9wMuTUx0DmUj47qjT3K8wx5Info8l+ZoZWNbGE3K9edqOIneTdelog/p4tpRhR
-         IJBEx0gGKWJqn82qMETGfaORwZLlnqSnbLfHo/nCq183/+CunuXIYhhAO+zQQ0P4WZYl
-         u7jWXVcGaBghZJCizDMcQ2srZC8aMdyiS6FRIQEPaufBKYYZGv+LHSTbEmC1A6+EjTvN
-         YOkCWx5LuAb9kN3jhgthpohPunVrwZ6UjpbBr6Z8MCKyDSTII9ik6CqAuGfBY/AwXsak
-         buPg==
-X-Gm-Message-State: AODbwcBW40bG+pcybvwYnHcutDvyFSm3Ww9KDcv2IRWguVUvNLNr/iQ/
-        9QSFhmjEvbJenw==
-X-Received: by 10.107.135.142 with SMTP id r14mr25288171ioi.36.1496290677742;
-        Wed, 31 May 2017 21:17:57 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:9c1c:dca9:c6e3:133e])
-        by smtp.gmail.com with ESMTPSA id r12sm5050845ita.30.2017.05.31.21.17.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 31 May 2017 21:17:56 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Zero King <l2dy@macports.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 8/8] t0012: test "-h" with builtins
-References: <20170530050949.dkgu3u26qj6ycusy@sigill.intra.peff.net>
-        <20170530051930.pqywvihwl5klg7hz@sigill.intra.peff.net>
-        <xmqqwp8yc255.fsf@gitster.mtv.corp.google.com>
-        <20170530060555.ponbsyp4agdo4yau@sigill.intra.peff.net>
-        <xmqqshjmc1wm.fsf@gitster.mtv.corp.google.com>
-        <20170530061546.tdpuhvq7yk34rvlj@sigill.intra.peff.net>
-        <xmqqo9uabhqt.fsf@gitster.mtv.corp.google.com>
-        <20170530152756.vs777v6unaxg6otb@sigill.intra.peff.net>
-Date:   Thu, 01 Jun 2017 13:17:55 +0900
-In-Reply-To: <20170530152756.vs777v6unaxg6otb@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 30 May 2017 11:27:56 -0400")
-Message-ID: <xmqqinkg734c.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751146AbdFAESj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 00:18:39 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:35562
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750895AbdFAESj (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 1 Jun 2017 00:18:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1496290716;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=rRfIMLHzPNbiIzFgNUE9HyTVR3v6EtUiHnF5v5Ch1QQ=;
+        b=eRqO2sZGNNpuw+ChyG04sc7vftMnh3LGXvJGv/C27xlkBNk4YI/tv5MiVnh99SSL
+        CcOxqnX99IRyWaKXud4N0+1PLfmGSQkenOe7hq9k5xKRmG/DzXcBY/B2Z6iZZN/xCBp
+        DoNuqOr9bCbRsiimCn0QROC4Y1lcZHIUzYnuRSxY=
+From:   Tyler Brazier <tyler@tylerbrazier.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015c61e06acf-70b79f3e-a6a8-43a9-b87d-273c1e2665f3-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015c5c7054ac-5ec72a28-ff81-42b8-8224-26a588cef485-000000@eu-west-1.amazonses.com>
+References: <0102015c5c7054ac-5ec72a28-ff81-42b8-8224-26a588cef485-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v3] pull: ff --rebase --autostash works in dirty repo
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 1 Jun 2017 04:18:36 +0000
+X-SES-Outgoing: 2017.06.01-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+When `git pull --rebase --autostash` in a dirty repository resulted in a
+fast-forward, nothing was being autostashed and the pull failed. This
+was due to a shortcut to avoid running rebase when we can fast-forward,
+but autostash is ignored on that codepath.
 
-> Anyway, the problem is sk/dash-is-previous, specifically fc5684b47
-> (revision.c: args starting with "-" might be a revision, 2017-02-25). It
-> looks like the revision parser used to just bail on "-h", because
-> revision.c would say "I don't recognize this" and then cmd_rev_list()
-> would similarly say "I don't recognize this" and call usage(). But now
-> we actually try to read it as a ref, which obviously requires being
-> inside a repository.
+Now we will only take the shortcut if autostash is not in effect.
+Based on a few tests against the git.git repo, the shortcut does not
+seem to give us significant performance benefits, on Linux at least.
+Regardless, it is more important to be correct than to be fast.
 
-Heh, I found another ;-)  
+Signed-off-by: Tyler Brazier <tyler@tylerbrazier.com>
+---
+ builtin/pull.c  | 25 ++++++++++++++-----------
+ t/t5520-pull.sh | 18 ++++++++++++++++++
+ 2 files changed, 32 insertions(+), 11 deletions(-)
 
-95e98cd9 ("revision.c: use refs_for_each*() instead of
-for_each_*_submodule()", 2017-04-19), which is in the middle of
-Duy's nd/prune-in-worktree series, does this:
+diff --git a/builtin/pull.c b/builtin/pull.c
+index dd1a4a94e41ed..42f0560252e00 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -772,6 +772,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	struct oid_array merge_heads = OID_ARRAY_INIT;
+ 	struct object_id orig_head, curr_head;
+ 	struct object_id rebase_fork_point;
++	int autostash;
+ 
+ 	if (!getenv("GIT_REFLOG_ACTION"))
+ 		set_reflog_message(argc, argv);
+@@ -800,8 +801,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (!opt_rebase && opt_autostash != -1)
+ 		die(_("--[no-]autostash option is only valid with --rebase."));
+ 
++	autostash = config_autostash;
+ 	if (opt_rebase) {
+-		int autostash = config_autostash;
+ 		if (opt_autostash != -1)
+ 			autostash = opt_autostash;
+ 
+@@ -862,16 +863,18 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		die(_("Cannot rebase onto multiple branches."));
+ 
+ 	if (opt_rebase) {
+-		struct commit_list *list = NULL;
+-		struct commit *merge_head, *head;
+-
+-		head = lookup_commit_reference(orig_head.hash);
+-		commit_list_insert(head, &list);
+-		merge_head = lookup_commit_reference(merge_heads.oid[0].hash);
+-		if (is_descendant_of(merge_head, list)) {
+-			/* we can fast-forward this without invoking rebase */
+-			opt_ff = "--ff-only";
+-			return run_merge();
++		if (!autostash) {
++			struct commit_list *list = NULL;
++			struct commit *merge_head, *head;
++
++			head = lookup_commit_reference(orig_head.hash);
++			commit_list_insert(head, &list);
++			merge_head = lookup_commit_reference(merge_heads.oid[0].hash);
++			if (is_descendant_of(merge_head, list)) {
++				/* we can fast-forward this without invoking rebase */
++				opt_ff = "--ff-only";
++				return run_merge();
++			}
+ 		}
+ 		return run_rebase(&curr_head, merge_heads.oid, &rebase_fork_point);
+ 	} else {
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 17f4d0fe4e724..f15f7a332960f 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -272,6 +272,24 @@ test_expect_success '--rebase fast forward' '
+ 	test_cmp reflog.expected reflog.fuzzy
+ '
+ 
++test_expect_success '--rebase --autostash fast forward' '
++	test_when_finished "
++		git reset --hard
++		git checkout to-rebase
++		git branch -D to-rebase-ff
++		git branch -D behind" &&
++	git branch behind &&
++	git checkout -b to-rebase-ff &&
++	echo another modification >>file &&
++	git add file &&
++	git commit -m mod &&
++
++	git checkout behind &&
++	echo dirty >file &&
++	git pull --rebase --autostash . to-rebase-ff &&
++	test "$(git rev-parse HEAD)" = "$(git rev-parse to-rebase-ff)"
++'
++
+ test_expect_success '--rebase with conflicts shows advice' '
+ 	test_when_finished "git rebase --abort; git checkout -f to-rebase" &&
+ 	git checkout -b seq &&
 
-#0  die (err=0x6128f8 "BUG: setup_git_env called without repository") at usage.c:114
-#1  0x00000000004f9467 in setup_git_env () at environment.c:172
-#2  0x00000000004f966c in get_git_dir () at environment.c:214
-#3  0x000000000055113b in get_main_ref_store () at refs.c:1544
-#4  0x0000000000570ee0 in handle_revision_pseudo_opt (submodule=0x0, 
-    revs=0x7fffffffd6a0, argc=1, argv=0x7fffffffe180, flags=0x7fffffffc59c)
-    at revision.c:2110
-#5  0x00000000005716f5 in setup_revisions (argc=2, argv=0x7fffffffe178, 
-    revs=0x7fffffffd6a0, opt=0x0) at revision.c:2254
-#6  0x000000000043074a in cmd_diff_files (argc=2, argv=0x7fffffffe178, prefix=0x0)
-    at builtin/diff-files.c:29
-#7  0x0000000000405907 in run_builtin (p=0x87ba00 <commands+672>, argc=2, 
-    argv=0x7fffffffe178) at git.c:376
-#8  0x0000000000405bb5 in handle_builtin (argc=2, argv=0x7fffffffe178) at git.c:584
-#9  0x0000000000405e04 in cmd_main (argc=2, argv=0x7fffffffe178) at git.c:683
-#10 0x00000000004a3364 in main (argc=2, argv=0x7fffffffe178) at common-main.c:43
-
-when jk/consistent-h is merged into it and then "git diff-files -h"
-is run.
-
-I guess anything that calls setup_revisions() from the "git cmd -h"
-bypass need to be prepared with that
-
-  check_help_option(argc, argv, usage, options);
-
-thing.  Which is a bit sad, but I tend to agree with you that
-restructuring to make usage[] of everybody available to git.c
-is probably too noisy for the benefit it would give us.
-
-
+--
+https://github.com/git/git/pull/365
