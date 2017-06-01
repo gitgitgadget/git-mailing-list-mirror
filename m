@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FF6B2027C
-	for <e@80x24.org>; Thu,  1 Jun 2017 09:44:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D10062027C
+	for <e@80x24.org>; Thu,  1 Jun 2017 09:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751556AbdFAJoV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 05:44:21 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:36434 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751487AbdFAJoU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 05:44:20 -0400
-Received: by mail-it0-f67.google.com with SMTP id i206so4932970ita.3
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 02:44:20 -0700 (PDT)
+        id S1751643AbdFAJyK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 05:54:10 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:34515 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751600AbdFAJyI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 05:54:08 -0400
+Received: by mail-it0-f68.google.com with SMTP id d68so4965206ita.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 02:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=FHjlwcLpapIj2xnP4DaVEpav8L7Tsc09vwNUbMmq9sk=;
-        b=BWfOsfPFMu6v2cYWL4j177cgEeY0McT3xZ5v+ggR2snPqh4IoWd+hVQHBX8PRzG7bW
-         e3T6cnbURcd8ROAis2kKBxZ0YEGVvTeyopey1EKN/gheJ4Qu3e/8CPAqKrUhSCY1I6Wg
-         VRRj6vtkLHzIoJbv0rZXi/N0oepu+XJHbDIwnk08hE5QsMvFvMFoqvz2HXCWmW7ORZit
-         qpoe42MIUOI8bsPfczm/bO07k5ilw1GYIfIaO7RHXIb9Ap3q/fbI9ZinqYa7hm785855
-         Rxyc0nYwCO20ZLElLe4eccqDYgekHtGXN954FrtuACE6bBaGnVUDbhigVGuzWUYbtYfm
-         vSyw==
+        bh=AmtYw7d9KS+WbLxTuuj6MSh0zojRazZi4mfRfK1ZeSc=;
+        b=MkRn0UthgXXZVobWhvSHBiscAz4YLahIIymgR0LGEVtZI7rGwOqAWh0iBp06vqu4VH
+         RNTxeHdSFDXtD8nDmMp8bFL605yP+xYVK75d9JRixotY1Y6Xyp8UcfNWyl/A5/ZMZxO5
+         P9k12v5Wx+1/s7dpNxCbPfrMdERWu1+biT/1iEWtAn2AqTwpYl1dlDAHg94rgOsQfTiE
+         +gY+wddR+8GZhmzzNKrfuV9oEgBVN/ymmVFF3GqdQwjppRoeUf2DN5jeWTBDMKUIauuL
+         SXLSWz2E/OhCs5Ht7TnMNyn3+8zigHF/JKcl0YRG+bSjILT2hlwYrO+hQuaRixahq92M
+         GPvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=FHjlwcLpapIj2xnP4DaVEpav8L7Tsc09vwNUbMmq9sk=;
-        b=MgsC+kB/bGGH+iUWqXHlHeiVc5T2lh969isnCNn0Y4LqJBFVKjcaB+YRZmaIjNgvxu
-         CxG8xSz8es6A91rNB/Vez0AoW3QWUaUbhlna3uKk4Ql+rDyXz04cWf7bu6A1TVN8od0f
-         k8olUh7U/0jraNhVu7RiJ4joNZr12QLsgjFcvBGkdm6cbcBvjcJ1NNtN7MveyGgECtFb
-         Nm/sfPZ7wlrvSVM3SfixLaDFkuHD0cjKD65WYu2mCO+l6NHV9t4NJ77oVqAyzoB+Mxtt
-         sklrb9piOAj4tcBNo6Wqv6fGAKSELXDvdAb52d9f/FnEF1dR6Q0dqax9EDB1v1m9J7VL
-         pFWw==
-X-Gm-Message-State: AODbwcDN7w/fhPVGGmV+I2PPUD/AyRE/MDv4n+WRS3BIe9hhXRk1avH/
-        8CCQigF0j4aEqA==
-X-Received: by 10.36.194.129 with SMTP id i123mr1746965itg.9.1496310260195;
-        Thu, 01 Jun 2017 02:44:20 -0700 (PDT)
+        bh=AmtYw7d9KS+WbLxTuuj6MSh0zojRazZi4mfRfK1ZeSc=;
+        b=QaKG4E9egBizDHZ/qthx4EjFyxxFkTDRaUGlezmoTeGJTrCx1u2BIZVjefq2G5uDXL
+         N7Bvqzdd4mFIRcdzmoS+7yOqUcu3eIu9eZxYjQhT2fvdt9zfPC8tyZqXUMW4BJMsDDBl
+         RIHkt7l2C5q1vXTkIzE80euhpooSUTdSfrqVrRuofnhxOLBKZLyaokqky9/BSe4ynnIT
+         TKi0rbZVNPGivmeqfG8CrpY29h0QRvIeraOBoagTSz+sZA+MQUaj27mhXWLUfs0mR1pn
+         Xx13kY2Qgr7xModqx1Qcgy+Y7O/ijNQzNE6Wp1ibRtQLyIhv12ca5O4TsVmr5ddj06kV
+         YbGg==
+X-Gm-Message-State: AODbwcBJcV4fP58+uWUhNSHb2g2uYl31a8UxRrJQ2nUt830/1GGdaSpy
+        Pfq57Mm9u3MipQ==
+X-Received: by 10.36.193.134 with SMTP id e128mr1734157itg.43.1496310838067;
+        Thu, 01 Jun 2017 02:53:58 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:9c1c:dca9:c6e3:133e])
-        by smtp.gmail.com with ESMTPSA id e186sm8680931itc.21.2017.06.01.02.44.19
+        by smtp.gmail.com with ESMTPSA id g12sm8480299iog.60.2017.06.01.02.53.57
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 02:44:19 -0700 (PDT)
+        Thu, 01 Jun 2017 02:53:57 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, tboegi@web.de, e@80x24.org,
-        ttaylorr@github.com, peartben@gmail.com
-Subject: Re: [PATCH v5 0/5] convert: add "status=delayed" to filter process protocol
-References: <20170601082203.50397-1-larsxschneider@gmail.com>
-Date:   Thu, 01 Jun 2017 18:44:18 +0900
-In-Reply-To: <20170601082203.50397-1-larsxschneider@gmail.com> (Lars
-        Schneider's message of "Thu, 1 Jun 2017 10:21:58 +0200")
-Message-ID: <xmqq1sr459fx.fsf@gitster.mtv.corp.google.com>
+Cc:     Andreas Schwab <schwab@suse.de>, git@vger.kernel.org,
+        Marc Stevens <marc@marc-stevens.nl>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: Unaligned accesses in sha1dc
+References: <mvm4lw0un5n.fsf@suse.de>
+        <5100A096-EBAC-4B01-A94D-69D31093148D@gmail.com>
+Date:   Thu, 01 Jun 2017 18:53:56 +0900
+In-Reply-To: <5100A096-EBAC-4B01-A94D-69D31093148D@gmail.com> (Lars
+        Schneider's message of "Thu, 1 Jun 2017 11:21:31 +0200")
+Message-ID: <xmqqwp8w3uff.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,13 +70,32 @@ X-Mailing-List: git@vger.kernel.org
 
 Lars Schneider <larsxschneider@gmail.com> writes:
 
-> here is the 5th iteration of my "status delayed" topic. Patch 1 to 3 are
-> minor t0021 test adjustments and haven't been changed since v3. Patch 4
-> is a minor "extract method" refactoring in convert. Patch 5 is the new
-> feature.
+>> On 01 Jun 2017, at 10:28, Andreas Schwab <schwab@suse.de> wrote:
+>> 
+>> The sh1dc implementation is making unaligned accesses, which will crash
+>> on some architectures, others have to emulate them in software.
+>
+> Is SPARC an architecture that would run into this problem? I think
+> there was a thread a few days ago about this...
+>
+> What architectures are affected by this? I think I read somewhere
+> that ARM requires aligned accesses, too, right?
+>
+> I wonder if it makes sense to emulate SPARC/ARM/... with QEMU on TravisCI [1].
+> Is this what you had in mind with "emulate" or do you see a better way?
 
-Thanks.  
+I think Andreas's "emulate" is that on these architectures often the
+kernel catches the hardware trap and makes the unaligned access
+appear to "just work" to the userland software, just like in very
+old days, i386 and i486 without 387/487 used software floating point
+"emulation" to give illusion to the userland softare that the co
+processor was available.
 
-Will replace but it will take a while for me to get to it (I expect
-that others may very well beat me to reviewing this series).
+Having to trap and emulate of course costs cycles, and if the
+userland is written in such a way not to do an unaligned access in
+the first place.
 
+Depending on the model of "ARM" (or "SPARC") emulated with QEMU, and
+depending on the OS that runs on such an "ARM" or "SPARC", we may
+not see this---if the emulated OS has the "software unaligned-access
+emulation" our userland may not see a SIGBUS.
