@@ -2,152 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F125D20D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 19:46:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D1DC20D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 19:53:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751140AbdFATqO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 15:46:14 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:37258 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751050AbdFATqM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 15:46:12 -0400
-Received: by mail-it0-f44.google.com with SMTP id m47so725256iti.0
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 12:46:12 -0700 (PDT)
+        id S1751078AbdFATxd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 15:53:33 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:36591 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751024AbdFATxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 15:53:32 -0400
+Received: by mail-pf0-f176.google.com with SMTP id m17so36055672pfg.3
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 12:53:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nli/kYdKbBRgjsvMjc5jDdP2rQ2umPESLo9LWZOIwE0=;
-        b=gvftZxMHyUcBMX33HuA2ZGMrnr5WftzZ1iZKv7ooif2X7S4ybehLPsFkXEKeLoFg4X
-         dC6FQIJDvjQrpKSd/sfwJDkrAW4HsHJNkhzhQOToYgT0GJRQAIxiT8HvxQPgRMgxmjLj
-         7O5+cYfKPbsrZGgNe8aYHLr+XEWZeyQLwYYscEP6MEHoW5ytqWAzoZ95yq0MP+Tue5Cc
-         ARHpSpjsLtg6SzAMOxqGt950MNiLha+gquBEdpsQj/m0fhof+yKiTPOoFMOCIM7EXvcw
-         e4gQEtMf0k59ika273QPMJ0rFyfxUhw3ZR8Om3aqsKqsoMuIvXy/tzMRExn4lwSZcP5a
-         zD7A==
+         :cc;
+        bh=Jd8sRq7OLLVMW4TgX1fU1ZzX4LRIzsYiMGIX8Dm6fqs=;
+        b=IcB+QhFUJKjaVpk5MYd7I+/dPh5jNZnCBfQ8e6nKkkqvSsNY1cJeWD44rAIQCtAVHe
+         o0obTAU+Ft4hwsW6dXVJVN43Ghp9CtY3POAba0ejrzyQ2dT4DQjDHQOD/HuzyRJvYfnW
+         Cg4Y9X1Fn2RPfDGNIkKMAUmkYEtC1F7/6k4xHdTNA5/do961JNzXpPGon5QLDVe6uFr/
+         uuafS+xYn6aW4Wv3kWBWLhjeCPM5lw3nQx+xw7KBCwX3O5n97vPpAVoSfGtQiHuq2gV2
+         Yiy52rs4oS4dAvrrxwoNKNLVQfhHA6eD2V4coI9H9EtrxLZ2PCcVKb8U++0aCxwrxcjg
+         0Fnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nli/kYdKbBRgjsvMjc5jDdP2rQ2umPESLo9LWZOIwE0=;
-        b=EGwDoNDBIIOR7WyfyBSB7aaprTW8zKx+BbsgWbr94JjX0LSKOZYhvu9AtCIFNTK2+N
-         VuFgxcKSj7dmQGFjI9g5yYj7yQNC4CiLvVR7LCPaASkaqIKTnGWzFh/GblJr/rWQABMu
-         vlRx82aG96HCO9LQ/zy4FLYNqBWzSc8ygA6S+rk+mNphqO1aCheafNkjQcowgF3IZohZ
-         ot21h6w6cnSUyHV/EpINxIDzaH1AJEKKPo/KY1OST6rhVLedde0ir9lR7JtxaPrSQrld
-         X/puQE40aaa19USQ0zYxpwn7vf44i8q43JcYkvRbxfnLXPAaNzGEJGo24yUYBkP1Y6ZB
-         T10g==
-X-Gm-Message-State: AODbwcADM5vRRuYRBuD+Pm+iFynUEOdIUwzYCC1QEnLAGl6XVLBuR6IU
-        HluJnkyhiJa6VWO175IbnTD/VTe2WQ==
-X-Received: by 10.36.29.150 with SMTP id 144mr975456itj.71.1496346372003; Thu,
- 01 Jun 2017 12:46:12 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=Jd8sRq7OLLVMW4TgX1fU1ZzX4LRIzsYiMGIX8Dm6fqs=;
+        b=l+e1UllubNhxYKrlNVlc0NsygQnFeqJV9fXMNDb21PJX3dmfNkCCgA5Jsq46zgu/S0
+         nzeu61ZmFZKXacYoQVKDMWeOxscYHxW3FRAuoLdqhkNQIw0jXdJ3UK47b+CGcuq+7Ano
+         sxk/oceaKe6jxnW0MCObcjt1xk1hnJI5VZ9Xe/bJRRwtN4+Ucfe/AgYuTWncCubDV3i9
+         EcuMbVqKF471yJZgcezjD2gGm1xEAMcF3pCq3Fh4v3XuK3hROsHs593QYBo3ekkYAjoe
+         Ak7o20qLlCEg4KhxrnSx/Mpvp2FXGXfhkM+uAKISg0s6XTLQkGMqcdpAwAJLA2pMr5Da
+         LnNQ==
+X-Gm-Message-State: AODbwcCboP25Es9/YMmchi3lz+w9KL+XI4rQJQu6JJHbIVoFnJUJ7KVT
+        Ilqx845Fj3m2xV50Hs02qT7PeCcLJTSy
+X-Received: by 10.98.91.5 with SMTP id p5mr2674748pfb.94.1496346811943; Thu,
+ 01 Jun 2017 12:53:31 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Thu, 1 Jun 2017 12:45:51 -0700 (PDT)
-In-Reply-To: <20170531214019.bbhjdaejvgje3v6g@sigill.intra.peff.net>
-References: <CA+dzEBn4EKzDqS0pCHHsPtGGJc1orf5weKKh0GN-GkE+fVYGcg@mail.gmail.com>
- <CACBZZX7OhdRM+Mhx4FVX-Upvq169ZLvArL5ZxcTgz8u=WRh3aw@mail.gmail.com> <20170531214019.bbhjdaejvgje3v6g@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 1 Jun 2017 21:45:51 +0200
-Message-ID: <CACBZZX5j=g=Lnv-X9F5Uaf0wW922R3N=LgrzRKPw853ECmoqYQ@mail.gmail.com>
-Subject: Re: bug: `git log --grep ... --invert-grep --author=...` negates /
- ignores --author
-To:     Jeff King <peff@peff.net>
-Cc:     Anthony Sottile <asottile@umich.edu>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 10.100.170.200 with HTTP; Thu, 1 Jun 2017 12:53:31 -0700 (PDT)
+In-Reply-To: <20170531214417.38857-7-bmwill@google.com>
+References: <20170531214417.38857-1-bmwill@google.com> <20170531214417.38857-7-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 1 Jun 2017 12:53:31 -0700
+Message-ID: <CAGZ79kbqsvuBG21teO2kT=H6G-xP0wJbd0f0BTjd9obRMSaxGQ@mail.gmail.com>
+Subject: Re: [PATCH 06/31] repo: introduce the repository object
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ben Peart <peartben@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 31, 2017 at 11:40 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, May 31, 2017 at 08:08:54PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+On Wed, May 31, 2017 at 2:43 PM, Brandon Williams <bmwill@google.com> wrote:
+> Introduce the repository object 'struct repo' which can be used hold all
+> state pertaining to a git repository.
 >
->> $ git log --grep=3Dbar --author=3D=C3=86var --pretty=3Dformat:%an -100 o=
-rigin/pu
->> |sort|uniq -c|sort -nr
->> 5 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->>
->> $ git log --author=3D=C3=86var --pretty=3Dformat:%an -100 origin/pu |sor=
-t|uniq
->> -c|sort -nr
->> 100 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->>
->> $ git log --grep=3Dbar --invert-grep --author=3D=C3=86var --pretty=3Dfor=
-mat:%an
->> -100 origin/pu |sort|uniq -c|sort -nr
->>      78 Junio C Hamano
->>      14 Jeff King
->>       2 Andreas Heiduk
->>       1 Sahil Dua
->>       1 Rikard Falkeborn
->>       1 Johannes Sixt
->>       1 Johannes Schindelin
->>       1 Ben Peart
->>       1 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->>
->> That last command should only find my commits, but instead --author is
->> discarded.
+> The aim of object-ifying the repository is to (1) make the code base
+> more readable and easier to reason about and (2) allow for working on
+> multiple repositories, specifically submodules, within the same process.
 >
-> I would have thought that the last command wouldn't find _any_ of your
-> commits. Don't we consider --author a greppable pattern and invert it?
+> TODO: Add more motivating points for adding a repository object?
 
-There's two unrelated things going on here AFAICT:
+Yes please (or delete this line).
+https://public-inbox.org/git/alpine.DEB.2.21.1.1705221501540.3610@virtualbox/
 
-* Anthony expected --author to be inverted by --invert-grep, but this
-is not how it's documented, it's *only* for inverting the --grep
-pattern: "Limit the commits output to ones with log message that do
-not match the pattern specified with --grep=3D<pattern>."
+> +++ b/repo.c
+> @@ -0,0 +1,124 @@
+> +#include "cache.h"
+> +#include "repo.h"
+> +
+> +/*
+> + * This may be the wrong place for this.
+> + * It may be better to go in env.c or setup for the time being?
 
-* The --author filter should be applied un-inverted, but isn't, it's
-seemingly just ignored in the presence of --grep, actually mostly
-ignored, this is bizarre:
+In env.c we say:
+/*
+ * We put all the git config variables in this same object
+ * file, so that programs can link against the config parser
+ * without having to link against all the rest of git.
+ *
+ * In particular, no need to bring in libz etc unless needed,
+ * even if you might want to know where the git directory etc
+ * are.
+ */
 
-$ diff -ru <(git log --grep=3Dbar --invert-grep --pretty=3Dformat:%an -100
-origin/pu |sort|uniq -c|sort -nr) <(git log --grep=3Dbar --invert-grep
---pretty=3Dformat:%an -100 --author=3DWeMostlyIgnoreThisButNotReally
-origin/pu |sort|uniq -c|sort -nr)
---- /dev/fd/63  2017-06-01 21:44:08.952583804 +0200
-+++ /dev/fd/62  2017-06-01 21:44:08.952583804 +0200
-@@ -1,6 +1,6 @@
--     66 Junio C Hamano
-+     65 Junio C Hamano
-      10 Jeff King
--      8 Stefan Beller
-+      9 Stefan Beller
-       5 Lars Schneider
-       2 SZEDER G=C3=A1bor
-       1 Tyler Brazier
+And setup.c only has a few variables that matter there locally.
+So I would think having 'the_repository' in repo.c is acceptable.
 
+> + */
+> +struct repo the_repository;
+> +
+> +static char *git_path_from_env(const char *envvar, const char *git_dir,
+> +                              const char *path, int fromenv)
+> +{
+> +       if (fromenv) {
+> +               const char *value = getenv(envvar);
+> +               if (value)
+> +                       return xstrdup(value);
+> +       }
+> +
+> +       return xstrfmt("%s/%s", git_dir, path);
+> +}
+> +
+> +static int find_common_dir(struct strbuf *sb, const char *gitdir, int fromenv)
+> +{
+> +       if (fromenv) {
+> +               const char *value = getenv(GIT_COMMON_DIR_ENVIRONMENT);
+> +               if (value) {
+> +                       strbuf_addstr(sb, value);
+> +                       return 1;
+> +               }
+> +       }
+> +
+> +       return get_common_dir_noenv(sb, gitdir);
+> +}
+> +
+> +/* called after setting gitdir */
+> +static void repo_setup_env(struct repo *repo)
+> +{
+> +       struct strbuf sb = STRBUF_INIT;
+> +
+> +       if (!repo->gitdir)
+> +               BUG("gitdir wasn't set before setting up the environment");
+> +
+> +       repo->different_commondir = find_common_dir(&sb, repo->gitdir,
+> +                                                   !repo->ignore_env);
+> +       repo->commondir = strbuf_detach(&sb, NULL);
+> +       repo->objectdir = git_path_from_env(DB_ENVIRONMENT, repo->commondir,
+> +                                           "objects", !repo->ignore_env);
+> +       repo->index_file = git_path_from_env(INDEX_ENVIRONMENT, repo->gitdir,
+> +                                            "index", !repo->ignore_env);
+> +       repo->graft_file = git_path_from_env(GRAFT_ENVIRONMENT, repo->commondir,
+> +                                            "info/grafts", !repo->ignore_env);
+> +       repo->namespace = expand_namespace(repo->ignore_env ? NULL :
+> +                                          getenv(GIT_NAMESPACE_ENVIRONMENT));
+> +}
+> +
+> +static void repo_clear_env(struct repo *repo)
+> +{
+> +       free(repo->gitdir);
+> +       repo->gitdir = NULL;
+> +       free(repo->commondir);
+> +       repo->commondir = NULL;
+> +       free(repo->objectdir);
+> +       repo->objectdir = NULL;
+> +       free(repo->index_file);
+> +       repo->index_file = NULL;
+> +       free(repo->graft_file);
+> +       repo->graft_file = NULL;
+> +       free(repo->namespace);
+> +       repo->namespace = NULL;
 
-> By itself:
->
->   $ git log --author=3D=C3=86var --invert-grep --format=3D%an -100 origin=
-/pu |
->     sort | uniq -c | sort -rn
->        79 Junio C Hamano
->         8 Stefan Beller
->         8 Jeff King
->         1 Sahil Dua
->         1 Rikard Falkeborn
->         1 Johannes Sixt
->         1 Johannes Schindelin
->         1 Andreas Heiduk
->
-> So that makes sense from the "--author is invertable" world-view.
->
-> But I'm puzzled that you show up at all when --grep=3Dbar is added (and
-> moreover, that we get _one_ commit from you, not the 5 found in your
-> initial command). That seems like a bug.
+I wonder if we can defer the NULL assignments to
+repo_clear, where we would just do a
+memset(repo, 0, sizeof(struct repo));
 
-I think that's the only thing that's not a bug, i.e. we just find 1
-match in the first 100 (note -100), sorry for the confusing example.
+> +
+> +       repo_set_gitdir(repo, resolved_gitdir);
+> +
+> +       /* NEEDSWORK: Verify repository format version */
 
-Anyway, much of the above may be incorrect, I haven't dug deeply
-beyond just finding that something's funny going on and we definitely
-have *some* bugs here.
+Care to elaborate on this? I do not understand why we would want
+to check the format version here?
+
+> +
+> +extern void repo_set_gitdir(struct repo *repo, const char *path);
+> +extern int repo_init(struct repo *repo, const char *path);
+> +extern void repo_clear(struct repo *repo);
+
+The init and clear method seem obvious to me, but what do we need the
+repo_set_gitdir for externally? I would assume the repo auto-discovers its
+gitdir on its own?
