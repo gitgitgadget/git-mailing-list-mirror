@@ -2,63 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1723B20D12
-	for <e@80x24.org>; Thu,  1 Jun 2017 04:10:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A44BA20D12
+	for <e@80x24.org>; Thu,  1 Jun 2017 04:18:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751242AbdFAEKw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 00:10:52 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34026 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751091AbdFAEKv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 00:10:51 -0400
-Received: by mail-io0-f193.google.com with SMTP id 12so3687829iol.1
-        for <git@vger.kernel.org>; Wed, 31 May 2017 21:10:50 -0700 (PDT)
+        id S1751166AbdFAER7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 00:17:59 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:36536 "EHLO
+        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750895AbdFAER6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 00:17:58 -0400
+Received: by mail-io0-f169.google.com with SMTP id o12so26354496iod.3
+        for <git@vger.kernel.org>; Wed, 31 May 2017 21:17:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=HOwSQDvxz11Ta0xIR/jPKJmO2BYBnI5X0KVzDy52iFs=;
-        b=HozATM3tjOdZDjE05YLhkot5wOvnf7y+OW8cNffOM7HpzfDP1tzzE/6JkDOSYww6Tw
-         c3qzGwtHfVhmTMI3Wy5AJAHKSx3GtKN80z4SHJmB809IHdKu0zeIMxIgKa3PkZbwkFfQ
-         1/3CKiNku6+tQtmhklXnQldYa+RDpy50sqXufFUNQu/3afeMqbU9CMtDfW52PxIsfvD8
-         ycv4HTve2Bp2FUssnv37s0fwYBghIgp9jSvKEoKMbUjsCc3E/0s7on8rQttM0WaIfP1A
-         OpBDScJLpS+CYc2GM1rkDyH4m/T5jovm2GauJi362db/9AP9lTvzMRyT0CbLRIodn+yL
-         n4Eg==
+        bh=+n2/5ng7vxkEbAyAXMPZfMTMJjJgGP/wEeEgMhQ4yK0=;
+        b=N+bV6TVhZAagTgIEGO5j1PI0VM76I2daCZhp0O86xPDCnjMVNtzWqAngpntVDI9qcX
+         RZI7Cyus162mEQUqZKyRMJHdIdaLunViXJIyBkDmmQrVTRGWhsS/FqbgvIQXZTesRhCg
+         u19koxR2XhPRy2ulWoGVgq3rwNH+8lsImVaSKGHKl2T4TK4BSOpmZoLexaf2le2WOCG9
+         hZUxQL3cLDY9LyZWFBpR1VG5p6OrXkrbCpzJ2R5lw14JTicC7fVpuOx2lgHc0aFwkjVI
+         enjnlwYjMJypWXGi57U0YvmhxhJmL25uVnlGSIr3P6iDlWpXZ02ftYDUVSPvfZ+1FEa1
+         M54g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=HOwSQDvxz11Ta0xIR/jPKJmO2BYBnI5X0KVzDy52iFs=;
-        b=YVatKv9bE1Bnquu7IU0AKv+dmxihSa4E2EZmLSz7sgeHi0LyLY3/UdQh6IVwLtUjXK
-         +7Z1lzPcVp8zZJfIeP5/i6YxGtu2ubDM+80fVjv3T8h6l/YIKcOjZnSCS7VQZVqqj0Fk
-         P3Chk8fsH6YJo6w0bPKKhWgiQyTzmFunl/rls1IIy4cI6oWIFm+a8d1Grzh5CEPK4Uxp
-         rsU9Bt451MHJhktnhj5LpWIN+dL0pCrlaChIimvBQ7+w3yMGmrHyUQp1ugjTXXsVlPAt
-         C2/enMfmmLc1JRG0rsEEam3p15tREKosNxG+uMLxk4SsL92hALfXUOvh8Ue+U0d3ZMmI
-         StUA==
-X-Gm-Message-State: AODbwcAH6x0FO2zGUKX7Mf0QP3eHbltmsTWT6ctkKNSq1jehwVp6iQr8
-        8V3By0vsYnPf4Q==
-X-Received: by 10.107.84.1 with SMTP id i1mr23977315iob.72.1496290250113;
-        Wed, 31 May 2017 21:10:50 -0700 (PDT)
+        bh=+n2/5ng7vxkEbAyAXMPZfMTMJjJgGP/wEeEgMhQ4yK0=;
+        b=PJb0MCGDuBJSHXXRtYeMpio6lf9tI027Y8zhwtXbB2Iz3eAeop2Wr8QSu/kqEYvCBY
+         EAMqhb9wMuTUx0DmUj47qjT3K8wx5Info8l+ZoZWNbGE3K9edqOIneTdelog/p4tpRhR
+         IJBEx0gGKWJqn82qMETGfaORwZLlnqSnbLfHo/nCq183/+CunuXIYhhAO+zQQ0P4WZYl
+         u7jWXVcGaBghZJCizDMcQ2srZC8aMdyiS6FRIQEPaufBKYYZGv+LHSTbEmC1A6+EjTvN
+         YOkCWx5LuAb9kN3jhgthpohPunVrwZ6UjpbBr6Z8MCKyDSTII9ik6CqAuGfBY/AwXsak
+         buPg==
+X-Gm-Message-State: AODbwcBW40bG+pcybvwYnHcutDvyFSm3Ww9KDcv2IRWguVUvNLNr/iQ/
+        9QSFhmjEvbJenw==
+X-Received: by 10.107.135.142 with SMTP id r14mr25288171ioi.36.1496290677742;
+        Wed, 31 May 2017 21:17:57 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:9c1c:dca9:c6e3:133e])
-        by smtp.gmail.com with ESMTPSA id 93sm7924327iod.17.2017.05.31.21.10.49
+        by smtp.gmail.com with ESMTPSA id r12sm5050845ita.30.2017.05.31.21.17.56
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 31 May 2017 21:10:49 -0700 (PDT)
+        Wed, 31 May 2017 21:17:56 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
-        Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [PATCH 1/2] format-patch: have progress option while generating patches
-References: <20170531150427.7820-1-kewillf@microsoft.com>
-        <20170531150427.7820-2-kewillf@microsoft.com>
-        <20170531220100.t27w3w642sn33h7s@sigill.intra.peff.net>
-Date:   Thu, 01 Jun 2017 13:10:48 +0900
-In-Reply-To: <20170531220100.t27w3w642sn33h7s@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 31 May 2017 18:01:01 -0400")
-Message-ID: <xmqqpoeo73g7.fsf@gitster.mtv.corp.google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Zero King <l2dy@macports.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 8/8] t0012: test "-h" with builtins
+References: <20170530050949.dkgu3u26qj6ycusy@sigill.intra.peff.net>
+        <20170530051930.pqywvihwl5klg7hz@sigill.intra.peff.net>
+        <xmqqwp8yc255.fsf@gitster.mtv.corp.google.com>
+        <20170530060555.ponbsyp4agdo4yau@sigill.intra.peff.net>
+        <xmqqshjmc1wm.fsf@gitster.mtv.corp.google.com>
+        <20170530061546.tdpuhvq7yk34rvlj@sigill.intra.peff.net>
+        <xmqqo9uabhqt.fsf@gitster.mtv.corp.google.com>
+        <20170530152756.vs777v6unaxg6otb@sigill.intra.peff.net>
+Date:   Thu, 01 Jun 2017 13:17:55 +0900
+In-Reply-To: <20170530152756.vs777v6unaxg6otb@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 30 May 2017 11:27:56 -0400")
+Message-ID: <xmqqinkg734c.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,42 +77,47 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> As I said above, I think I'd prefer it to require "--progress", as
-> format-patch is quite often used as plumbing.
+> Anyway, the problem is sk/dash-is-previous, specifically fc5684b47
+> (revision.c: args starting with "-" might be a revision, 2017-02-25). It
+> looks like the revision parser used to just bail on "-h", because
+> revision.c would say "I don't recognize this" and then cmd_rev_list()
+> would similarly say "I don't recognize this" and call usage(). But now
+> we actually try to read it as a ref, which obviously requires being
+> inside a repository.
 
-Yes, that sounds sensible.
+Heh, I found another ;-)  
 
-Initially, my reaction was "Why do we even need --progress for
-format-patch, when it gives one-line per patch output to show the
-progress anyway?", but if that output is redirected to a file, of
-course you'd need --progress independently.
+95e98cd9 ("revision.c: use refs_for_each*() instead of
+for_each_*_submodule()", 2017-04-19), which is in the middle of
+Duy's nd/prune-in-worktree series, does this:
+
+#0  die (err=0x6128f8 "BUG: setup_git_env called without repository") at usage.c:114
+#1  0x00000000004f9467 in setup_git_env () at environment.c:172
+#2  0x00000000004f966c in get_git_dir () at environment.c:214
+#3  0x000000000055113b in get_main_ref_store () at refs.c:1544
+#4  0x0000000000570ee0 in handle_revision_pseudo_opt (submodule=0x0, 
+    revs=0x7fffffffd6a0, argc=1, argv=0x7fffffffe180, flags=0x7fffffffc59c)
+    at revision.c:2110
+#5  0x00000000005716f5 in setup_revisions (argc=2, argv=0x7fffffffe178, 
+    revs=0x7fffffffd6a0, opt=0x0) at revision.c:2254
+#6  0x000000000043074a in cmd_diff_files (argc=2, argv=0x7fffffffe178, prefix=0x0)
+    at builtin/diff-files.c:29
+#7  0x0000000000405907 in run_builtin (p=0x87ba00 <commands+672>, argc=2, 
+    argv=0x7fffffffe178) at git.c:376
+#8  0x0000000000405bb5 in handle_builtin (argc=2, argv=0x7fffffffe178) at git.c:584
+#9  0x0000000000405e04 in cmd_main (argc=2, argv=0x7fffffffe178) at git.c:683
+#10 0x00000000004a3364 in main (argc=2, argv=0x7fffffffe178) at common-main.c:43
+
+when jk/consistent-h is merged into it and then "git diff-files -h"
+is run.
+
+I guess anything that calls setup_revisions() from the "git cmd -h"
+bypass need to be prepared with that
+
+  check_help_option(argc, argv, usage, options);
+
+thing.  Which is a bit sad, but I tend to agree with you that
+restructuring to make usage[] of everybody available to git.c
+is probably too noisy for the benefit it would give us.
 
 
-> Should this use start_progress_delay()? In most cases the command will
-> complete very quickly, and the progress report is just noise. For many
-> commands (e.g., checkout) we wait 1-2 seconds before bothering to show
-> progress output.
-
-It is better to use the "delay" version for progress meters for
-commands that may or may not last very long, and this may be a good
-candidate to heed that principle.
-
-The subcommands that use start_progress() tend to be older and more
-batch oriented operations, e.g. fsck, pack-objects, etc., that are
-expected to last longer.  It may be a good idea to convert them to
-the "delay" variant, but obviously that is outside the scope of this
-patch.
-
-> I would have expected this to say "Generating patches"; most of our
-> other progress messages are pluralized. You could use Q_() to handle the
-> mono/plural case, but I think it's fine to just always say "patches"
-> (that's what other messages do).
->
-> One final thought is whether callers would want to customize this
-> message, since it will often be used as plumbing. E.g., would rebase
-> want to say something besides "Generating patches". I'm not sure.
-> Anyway, if you're interested in that direction, there's prior art in
-> the way rev-list handles "--progress" (and its sole caller,
-> check_connected()).
-
-These are all good suggestions.
