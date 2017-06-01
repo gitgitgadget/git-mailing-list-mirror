@@ -2,134 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBAF12027C
-	for <e@80x24.org>; Thu,  1 Jun 2017 08:22:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3E632027C
+	for <e@80x24.org>; Thu,  1 Jun 2017 08:29:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751363AbdFAIWN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 04:22:13 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34747 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751294AbdFAIWK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 04:22:10 -0400
-Received: by mail-wm0-f68.google.com with SMTP id d127so9276851wmf.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 01:22:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=v+xfbbVoOjF+S1W8inBt7UaDDyM9cwPXO6S+VvhteMw=;
-        b=QEokdmxli+HP9gXsQybIBynzKDMOChw04PGRRTT56d32qLOKnpYrdSTp/pKGrG/qS6
-         RWrRf6Rt/hSDOrfHir2QFqR8B6NsuEDyP4o68zi5HRVfKR8j6mMf49SLkK4J3T9CbcrH
-         pk72nWY73XCg04UeZulVe/U9SInYAmCFRejw/mfoB2M5yHO2KOrcEfLasv41JLlI411y
-         x0EIA2yP604AoJmGRx3sI+owTSR/GbQ3fh+GwqIf0K263PWboqCsSQNK+P8UeYF1L5H7
-         DJJdqDbJis0oSnRREXEAAjAAIEK8iDD/YjIZGBC3/iFUm0GP1PwwALEN1//8mOJbZfif
-         o+fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=v+xfbbVoOjF+S1W8inBt7UaDDyM9cwPXO6S+VvhteMw=;
-        b=UREq1/ADct1CVhnfHRGoxnS0QQo9unvhw7eGb1SxvdSrI9MvEqqvOHOFyH02dEIEgG
-         Azk/Ld2U4TMc+/KMNlqlMFnvUKrMDFtx9P8LajeFltU7SufOvfTe2Q02JTIM4hDPHNFE
-         gWcERqwgDl82ec1f3DjLmyjfXVqxd/ORCKCtSUlwp7icr3k5/pNQ1ZB/iGx8BOLPaaqz
-         /saj9tKFZvw7/0A2ogG2u7bpxPjKxRDD9XVsbSywYV71HgxrljXs6Epv4Po2Urm57EYr
-         hU4OYvEY+EkKqI1np6QVXSauZ7573ITnMEzvYsRRPbY0mYPYVNYEL1nJpWU/1mDKjNQl
-         Yj0A==
-X-Gm-Message-State: AODbwcC1hGRSRB+mCJYYnH8EevE5EIc9FLXwx+vp6KlRZeU9DqF69o+j
-        8W6Exub21U/9Pwsl
-X-Received: by 10.223.174.180 with SMTP id y49mr244679wrc.133.1496305328660;
-        Thu, 01 Jun 2017 01:22:08 -0700 (PDT)
-Received: from slxBook4.fritz.box (p5DDB4864.dip0.t-ipconnect.de. [93.219.72.100])
-        by smtp.gmail.com with ESMTPSA id 140sm15351595wmu.23.2017.06.01.01.22.07
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 01:22:08 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
+        id S1751698AbdFAI2z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 04:28:55 -0400
+Received: from mx2.suse.de ([195.135.220.15]:39423 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751423AbdFAI2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 04:28:54 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 239AAAD4F;
+        Thu,  1 Jun 2017 08:28:53 +0000 (UTC)
+From:   Andreas Schwab <schwab@suse.de>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, tboegi@web.de, e@80x24.org,
-        ttaylorr@github.com, peartben@gmail.com
-Subject: [PATCH v5 3/5] t0021: write "OUT" only on success
-Date:   Thu,  1 Jun 2017 10:22:01 +0200
-Message-Id: <20170601082203.50397-4-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.13.0
-In-Reply-To: <20170601082203.50397-1-larsxschneider@gmail.com>
-References: <20170601082203.50397-1-larsxschneider@gmail.com>
+Subject: Unaligned accesses in sha1dc
+CC:     Marc Stevens <marc@marc-stevens.nl>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-Yow:  I guess you guys got BIG MUSCLES from doing too much STUDYING!
+Date:   Thu, 01 Jun 2017 10:28:52 +0200
+Message-ID: <mvm4lw0un5n.fsf@suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"rot13-filter.pl" used to write "OUT <size>" to the debug log even in case of
-an abort or error. Fix this by writing "OUT <size>" to the debug log only in
-the successful case if output is actually written.
+The sh1dc implementation is making unaligned accesses, which will crash
+on some architectures, others have to emulate them in software.
 
-This is useful for the subsequent patch 'convert: add "status=delayed" to
-filter process protocol'.
+Breakpoint 4, sha1_compression_states (ihv=0x600ffffffffe7010, 
+    m=<optimized out>, W=0x600ffffffffe70a8, states=0x600ffffffffe7328)
+    at sha1dc/sha1.c:398
+398             SHA1COMPRESS_FULL_ROUND2_STEP(e, a, b, c, d, W, 21, temp);
+(gdb) n
+403             SHA1COMPRESS_FULL_ROUND2_STEP(d, e, a, b, c, W, 22, temp);
+(gdb) 
+408             SHA1COMPRESS_FULL_ROUND2_STEP(c, d, e, a, b, W, 23, temp);
+(gdb) 
+413             SHA1COMPRESS_FULL_ROUND2_STEP(b, c, d, e, a, W, 24, temp);
+(gdb) 
+418             SHA1COMPRESS_FULL_ROUND2_STEP(a, b, c, d, e, W, 25, temp);
+(gdb) 
+291             SHA1COMPRESS_FULL_ROUND1_STEP_LOAD(a, b, c, d, e, m, W, 0, temp);
+(gdb) 
+git(21728): unaligned access to 0x600000000009f8d5, ip=0x40000000003336d0
+423             SHA1COMPRESS_FULL_ROUND2_STEP(e, a, b, c, d, W, 26, temp);
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- t/t0021-conversion.sh   | 6 +++---
- t/t0021/rot13-filter.pl | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+Andreas.
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 0139b460e7..0c04d346a1 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -588,7 +588,7 @@ test_expect_success PERL 'process filter should restart after unexpected write f
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge smudge-write-fail.r $SF [OK] -- OUT: $SF [WRITE FAIL]
-+			IN: smudge smudge-write-fail.r $SF [OK] -- [WRITE FAIL]
- 			START
- 			init handshake complete
- 			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
-@@ -634,7 +634,7 @@ test_expect_success PERL 'process filter should not be restarted if it signals a
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge error.r $SE [OK] -- OUT: 0 [ERROR]
-+			IN: smudge error.r $SE [OK] -- [ERROR]
- 			IN: smudge test.r $S [OK] -- OUT: $S . [OK]
- 			IN: smudge test2.r $S2 [OK] -- OUT: $S2 . [OK]
- 			STOP
-@@ -673,7 +673,7 @@ test_expect_success PERL 'process filter abort stops processing of all further f
- 		cat >expected.log <<-EOF &&
- 			START
- 			init handshake complete
--			IN: smudge abort.r $SA [OK] -- OUT: 0 [ABORT]
-+			IN: smudge abort.r $SA [OK] -- [ABORT]
- 			STOP
- 		EOF
- 		test_cmp_exclude_clean expected.log debug.log &&
-diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
-index 0b943bb377..5e43faeec1 100644
---- a/t/t0021/rot13-filter.pl
-+++ b/t/t0021/rot13-filter.pl
-@@ -153,9 +153,6 @@ while (1) {
- 		die "bad command '$command'";
- 	}
- 
--	print $debug "OUT: " . length($output) . " ";
--	$debug->flush();
--
- 	if ( $pathname eq "error.r" ) {
- 		print $debug "[ERROR]\n";
- 		$debug->flush();
-@@ -178,6 +175,9 @@ while (1) {
- 			die "${command} write error";
- 		}
- 
-+		print $debug "OUT: " . length($output) . " ";
-+		$debug->flush();
-+
- 		while ( length($output) > 0 ) {
- 			my $packet = substr( $output, 0, $MAX_PACKET_CONTENT_SIZE );
- 			packet_bin_write($packet);
 -- 
-2.13.0
-
+Andreas Schwab, SUSE Labs, schwab@suse.de
+GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
+"And now for something completely different."
