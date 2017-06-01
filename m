@@ -7,85 +7,134 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FED520D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 23:48:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70EC920D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 23:51:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751170AbdFAXry (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 19:47:54 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35400 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751122AbdFAXrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 19:47:45 -0400
-Received: by mail-pf0-f181.google.com with SMTP id n23so40399469pfb.2
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 16:47:45 -0700 (PDT)
+        id S1751122AbdFAXvV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 19:51:21 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:33909 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751105AbdFAXvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 19:51:20 -0400
+Received: by mail-pf0-f179.google.com with SMTP id 9so40426795pfj.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 16:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Z9IfH20gebo1WFBy3Vg8BsJedMM0fj1GQTsCoq5SNqo=;
-        b=djbYT7YJG+8MNkcsGfYd7y1tZBeqdwJf7Qn7ruQKoLhJshk0+ob1MAYp4VCyn2qO60
-         6GS0xPijYWxKDtkAKx3fQWpINriVkTQS+oAReTBoJ88aGsBQ5KK5PYIHtrArQtvyscGt
-         tU6SXyuFuGB+mdi1PtoPN4KyXtHqKxSPZk8Z4H06RV/z3GvcsxyKzkOaa/bShsPkMM0n
-         VL+vQLEdPfTplE0uTeWFgAb24N0DppjltqjnJvEvqTHZ+os5Q3+/xj3PKrz9oCDA2u3r
-         jimWIkdTSLc07BMsNO8LABS7WWbCMUWgsfXE1c/PsYupB/1KlIFdXXjFsvQH/erMUN3O
-         Kamg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=cbeiJEJKXO3RP+q39+lxFCzzzdjM6VlfMm472FJwHaI=;
+        b=Zwlp5U+w4IS+oT8F47iO8BhFeqOO9Ub6wH9MpaDnYOzlSfLmT2iIiNRjYpHYeeT0+i
+         olN7ExJnOqGeqYp4/C8eo9q/pAa03NnItJnyWDPe+7mxTWv/F2H2zKAC3ijNR80z6yUj
+         oTwT97Xd7Du55rIBNXvCFcRVn4bdwUr0J9TGHnRpyEywitn85YlFtEXfnLDSnvdzLVUc
+         doH/w1QrH4f3aleQcl+rr0btyMOw96axIh0g34v5xnx/2VwSOYopnRQQNANORj5LL59P
+         3WzbnQmnziU/qoBRQ24JFKKA0nKgJmOr/dqe39UgNjvuR722oP8ARsFKd3rwAj8tZi3d
+         0y8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Z9IfH20gebo1WFBy3Vg8BsJedMM0fj1GQTsCoq5SNqo=;
-        b=qa706aJTenj2BY7/YEr4RgXb0bFRoeGIQ3pBqm5RdXUYPQRjDKmGaAG5Vs/8a0iZ2l
-         bJHxXdrW2vS+3gVyzEhLF5c9pigRxSMNcoyzgAKjlSFxMA12gGf7AtAEir8G62HLnsyD
-         ILmsxAmLWptr3t2cVjrZVHOc4B+6TBgH8HAlW6g6L2hfJm68nn6HsoLWO731Q5K1Sdwi
-         j9Z1HBjByxLsabjs0YXAMBzlD8+0kuQ6iJT6d7K6u3KlMWQRi8p3CUF8jLwzUvC0Zf4x
-         p23G0DIk/qYXeNvPV0S00ULHW6UQdMYkqTq3KSSbkjg1MNm1nVkOMSb10d1+jp2rXisu
-         0AKw==
-X-Gm-Message-State: AODbwcA+/7REpbCty+Rxv2y1/Q9qmNuDWbTdEotZCh1tJm3Wr8R7HIhK
-        xZMfE8PfoIE8K6RIHKOqiKVVqa5mVbpdfHr+Qg==
-X-Received: by 10.99.188.9 with SMTP id q9mr3733706pge.178.1496360864566; Thu,
- 01 Jun 2017 16:47:44 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.170.200 with HTTP; Thu, 1 Jun 2017 16:47:44 -0700 (PDT)
-In-Reply-To: <xmqq7f0v46q3.fsf@gitster.mtv.corp.google.com>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
- <20170531104213.16944-3-phillip.wood@talktalk.net> <alpine.DEB.2.21.1.1706011329350.3610@virtualbox>
- <xmqq7f0v46q3.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 1 Jun 2017 16:47:44 -0700
-Message-ID: <CAGZ79kaM9ryT1gWx=L6S90HPCaDPNZ6H124HAJscpeJCQFDN8Q@mail.gmail.com>
-Subject: Re: [PATCH 2/3] rebase: Add tests for console output
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=cbeiJEJKXO3RP+q39+lxFCzzzdjM6VlfMm472FJwHaI=;
+        b=NGrl6QA6yM7VNVJ/M9C/DtEpyf/hwBvn/c4ZQHYS8q2goHtZrU23irvmbI3qSMoTk4
+         ZO9DpslVoU4oqBaeMDk9a/urwUyMSZ1fKxj79I+bll0yj9WYL3uA+Ifqrlz3cGn/bTpe
+         O0KlT251V/S9DTFYqok74xjgL6Insa457Deq+jMKeNEnPc0dgy+u5xmXwY6exJE/8ANk
+         a82XdD8Bu0yze8igak8kT2bf4RRYP5BmxZFmWNn9ibVAgIEysbOyDsw22CpRc5S8Inlq
+         cbABRuFs+5js1iVLILW7E5gNpurMyW9Y7wvLwYwjq4nMOqsNClZzdbdX1K+bOIXUImzf
+         F3OA==
+X-Gm-Message-State: AODbwcD6cqJGrXnUnlp18rzyWF/srg6C+aA+yFr7jOlP+X6suEegetN5
+        bM36c7XzO9J1kCACXxSogQ==
+X-Received: by 10.101.76.201 with SMTP id n9mr3858784pgt.40.1496361079783;
+        Thu, 01 Jun 2017 16:51:19 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id z7sm21074096pgr.3.2017.06.01.16.51.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 01 Jun 2017 16:51:18 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, bmwill@google.com,
+        gitster@pobox.com, jacob.keller@gmail.com
+Subject: [PATCH] send-email: check for repo before invoking hook
+Date:   Thu,  1 Jun 2017 16:50:55 -0700
+Message-Id: <20170601235055.22621-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.13.0.506.g27d5fe0cd-goog
+In-Reply-To: <CA+P7+xr39qk9qHE0=uU3HZE2wOhU9X7rmENoDfP=bp09j9N9Mg@mail.gmail.com>
+References: <CA+P7+xr39qk9qHE0=uU3HZE2wOhU9X7rmENoDfP=bp09j9N9Mg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 1, 2017 at 4:40 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> Also, about the commit IDs. As long as the tests are consistent (i.e. they
->> use test_commit rather than plain `git commit`, or at least call
->> `test_tick` beforehand), the commit IDs should actually be identical
->> between runs and not depend on the time of day or the date.
->>
->> The only exception to that rule is when some previous test cases call
->> `test_commit` but are guarded behind some prereq and may not be executed
->> at all. In that case, the precise commit IDs depend on the particular set
->> of active prereqs.
->
-> Good observation.  The tests written such a way may make later
-> introduction of new hash function troublesome, though (we already
-> have tons of them, and it is already a hassle just imagining that we
-> will have to migrate them X-<).
->
-> And what you gave below is an excellent suggestion to even solve
-> that future headaches.
->
+Unless --no-validate is passed, send-email will invoke
+$repo->repo_path() in its search for a validate hook regardless of
+whether a Git repo is actually present.  Teach send-email to first check
+for repo existence.
 
-We had a discussion off list how much of the test suite is in bad shape,
-and "$ git grep ^index" points out a lot of places as well.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Thanks for the notification. Here's a patch to fix that.
+---
+ git-send-email.perl   | 32 +++++++++++++++++---------------
+ t/t9001-send-email.sh |  8 ++++++++
+ 2 files changed, 25 insertions(+), 15 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index f0417f64e..94c54dc5a 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1755,21 +1755,23 @@ sub unique_email_list {
+ sub validate_patch {
+ 	my $fn = shift;
+ 
+-	my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'),
+-				    'sendemail-validate');
+-	my $hook_error;
+-	if (-x $validate_hook) {
+-		my $target = abs_path($fn);
+-		# The hook needs a correct cwd and GIT_DIR.
+-		my $cwd_save = cwd();
+-		chdir($repo->wc_path() or $repo->repo_path())
+-			or die("chdir: $!");
+-		local $ENV{"GIT_DIR"} = $repo->repo_path();
+-		$hook_error = "rejected by sendemail-validate hook"
+-			if system($validate_hook, $target);
+-		chdir($cwd_save) or die("chdir: $!");
+-	}
+-	return $hook_error if $hook_error;
++	if ($repo) {
++		my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'),
++					    'sendemail-validate');
++		my $hook_error;
++		if (-x $validate_hook) {
++			my $target = abs_path($fn);
++			# The hook needs a correct cwd and GIT_DIR.
++			my $cwd_save = cwd();
++			chdir($repo->wc_path() or $repo->repo_path())
++				or die("chdir: $!");
++			local $ENV{"GIT_DIR"} = $repo->repo_path();
++			$hook_error = "rejected by sendemail-validate hook"
++				if system($validate_hook, $target);
++			chdir($cwd_save) or die("chdir: $!");
++		}
++		return $hook_error if $hook_error;
++	}
+ 
+ 	open(my $fh, '<', $fn)
+ 		or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 15128c755..d1e4e8ad1 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -1953,4 +1953,12 @@ test_expect_success $PREREQ 'invoke hook' '
+ 	)
+ '
+ 
++test_expect_success $PREREQ 'test that send-email works outside a repo' '
++	nongit git send-email \
++		--from="Example <nobody@example.com>" \
++		--to=nobody@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		"$(pwd)/0001-add-master.patch"
++'
++
+ test_done
+-- 
+2.13.0.506.g27d5fe0cd-goog
+
