@@ -7,86 +7,70 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04E3020D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 21:55:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9E7920D13
+	for <e@80x24.org>; Thu,  1 Jun 2017 22:02:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751126AbdFAVzh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 17:55:37 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:36733 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751078AbdFAVzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 17:55:36 -0400
-Received: by mail-io0-f175.google.com with SMTP id o12so44840614iod.3
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 14:55:36 -0700 (PDT)
+        id S1751145AbdFAWCY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 18:02:24 -0400
+Received: from mail-it0-f45.google.com ([209.85.214.45]:38136 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751078AbdFAWCX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 18:02:23 -0400
+Received: by mail-it0-f45.google.com with SMTP id r63so2470529itc.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 15:02:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=H0Xdne2taTEJuwyR3WVykXRSa9R2MtInhe4dOKJ9UQ8=;
-        b=OB/crO5d/9UmvR9hEY1oeqGV+v3o5I0Z3P/LgUIth/Lu+KfKR/gIqcPyaqDdkUxycH
-         Visi3EKjWtfZ/dAqPv8fkVyEGztizFMBUfDWSSiH8rortvcMYDdfA59L1ZrmkD5AeIuZ
-         J0cben5OLc9TzENqKKD0638Z7zLBt2exnCoPsfnL2AqNhlsTBqoAIysA0DFAI4vKA0gw
-         HHFah7QrIi727PiOi7UQ7f2ggHcYVoiyfKCS1Ry86pVlwHlmmYgBfwlUR47PdNtMpa6d
-         rF9j67m0l7zj2aHKyICAtoDc14+JPbUGMSLKpkYv35omtOsrRDXe4uVxByxHBpyHLi3m
-         Hwig==
+        bh=DbkjHZ3W3/jHNOp1R2TFoZrs0YG6BcdKopbmV4MZV08=;
+        b=GOgwX4RxJvgwVIZhrOaB/9b0V4bUbg+FCxAUZzwKKtH2YbeTlSbtDOa6tXkhq1uiMd
+         220j/vXck6CjvSzbVA8uKt9eEfn4YF3GsXFB5rP/mHXyhL9h6nPwHSrcBWU9i/2mbMfW
+         iXBRsqv0TSu4xBJOVZaNqpAE+hLfguqba/zm6D8/LGN4Fo5jTrL90ElhgjNbECEwdSjk
+         xLKbcmLmUT+WpKgG5rZhBpaGuDdvzzLCYH8BCwz93snIwIuw7eUsnLJ28I69r4EVUZ6A
+         8HFYIagV1UOxTC0L86qErB3VdFF5f657xgyCsn+zwBqJfKOGEutrF7AI6Ct3ZMs3WBBz
+         n9dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=H0Xdne2taTEJuwyR3WVykXRSa9R2MtInhe4dOKJ9UQ8=;
-        b=AFGfhjOo94LSGLCbF4iiYSimuYHxZcT3vWxfeBVXCWvwJ60bfQ6zPClhzNdDJYG/fU
-         n41csvaKdkhj7qeeobp3m+SQV4ul2iBynZSYD4LTo4RkxA9WSoHt2LYBhfj4fEyj797F
-         JpFIAaUmlynRmKDX3yAdaUUwgOg/lBiOQvx17aqPP51fKVvIx4/Kcjj2y6Io75/2mMYZ
-         y9Tkll7D/S7dWPn4rhqdLeeX3fiB8XtgtB45Oi2vGT+rlhHOsO+922yQ5qg9AMf+y2kw
-         yKcfF9POMJiJZYtYUd2IbrWJXiPPkdaA3lWVokE5gpicIJ2z4P11sEXAWzhfqf/MNAZB
-         5sbg==
-X-Gm-Message-State: AODbwcC93/oloyWOvktZLR+Gk/wWSSvgJcs8HsYuaYVDOGHJ6x9oV59Y
-        cH4EoOZaPcrDhWF4AGFdbtw0XQhgRA==
-X-Received: by 10.107.178.215 with SMTP id b206mr1220899iof.50.1496354135561;
- Thu, 01 Jun 2017 14:55:35 -0700 (PDT)
+        bh=DbkjHZ3W3/jHNOp1R2TFoZrs0YG6BcdKopbmV4MZV08=;
+        b=LtoatD6WGPpeziFaiRWL9UUAw1iQDvBm5F5vnE5QAzn3bj179J/FR34ATt+rjSENCa
+         vi8vo0IAzv/0YDNe/WJXBAxAePWVNFqmU9kBdZ1qsGoxD7Dy4xSQkULbKGvbE0e52aqa
+         Bpb0kYXPOtR3TI+CatD/lYGYjuJN2e6z0Pf0Of3kH0+ypITlBN4qeopA7+u/bAZl7j2H
+         y0pWCkiOJGYFwshyJ/zXrKksum5kWw9fmWlHp/MowgbuSDY1rcpvV1UPTypSxGQjj6w/
+         CRfYSs4mD6LwRefZqFkycFXtj10oJ0WW4XLR6VsXNP94xyWXhBgiO8BbAg+FrYqLN40F
+         tA+w==
+X-Gm-Message-State: AODbwcBhvbcJZZ7XBI1WwEFnH9dbpG0e2A7x6/XhQNEVoHs+KMZv9P59
+        MRqNHWSGRIzpu1XClhAgV5ERXB8Uaw==
+X-Received: by 10.36.138.131 with SMTP id v125mr1622728itd.66.1496354542452;
+ Thu, 01 Jun 2017 15:02:22 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Thu, 1 Jun 2017 14:55:14 -0700 (PDT)
-In-Reply-To: <CAGZ79kbcdSykdCku-skCY2FVNO-mpP8nkZ1rC1nXTKzAFQzb1Q@mail.gmail.com>
-References: <20170601182056.31142-1-avarab@gmail.com> <20170601182056.31142-3-avarab@gmail.com>
- <CAGZ79kb6O7hraY4caY8tdFn1d0Fi+LRr9cHk2UuXf79LbnPdhw@mail.gmail.com>
- <CACBZZX7hffa3iGndzyJMKYAwDqjjYO6XacWLrHnSo29xYSKAsQ@mail.gmail.com>
- <CACBZZX580g_fKMnCf0XGD4sGY6DjgH7t9cBtcXZf6muemKWXLA@mail.gmail.com> <CAGZ79kbcdSykdCku-skCY2FVNO-mpP8nkZ1rC1nXTKzAFQzb1Q@mail.gmail.com>
+Received: by 10.107.8.220 with HTTP; Thu, 1 Jun 2017 15:02:01 -0700 (PDT)
+In-Reply-To: <20170527062552.13996-1-rikard.falkeborn@gmail.com>
+References: <20170527062552.13996-1-rikard.falkeborn@gmail.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 1 Jun 2017 23:55:14 +0200
-Message-ID: <CACBZZX78_eBswHCqcWL34xXbFgv=nZXG=R0ZjB_b97s_U4P=Ng@mail.gmail.com>
-Subject: Re: [PATCH v4 2/8] grep: skip pthreads overhead when using one thread
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Fri, 2 Jun 2017 00:02:01 +0200
+Message-ID: <CACBZZX6aGkBaQtjKNx09-XEbhXNubOnhJdVXYkNq419wetDvqg@mail.gmail.com>
+Subject: Re: [PATCH 0/6] Some more git config completions
+To:     Rikard Falkeborn <rikard.falkeborn@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 1, 2017 at 11:45 PM, Stefan Beller <sbeller@google.com> wrote:
->> I didn't mean to change this bit, it should remain "if
->> (!num_threads)". I was in the middle of monkeypatching and didn't
->> review the diff carefully enough. But it any case, without this change
->> the rest of this diff is your proposed (but segfaulting) change as I
->> understand it.
->
-> Sorry for the proposing a sloppy alternative. (I missed one occurrence
-> of num_threads used in a conditional).
-> I think the original is still better than littering comments everywhere.
+On Sat, May 27, 2017 at 8:25 AM, Rikard Falkeborn
+<rikard.falkeborn@gmail.com> wrote:
+> Some more completions (from what I could tell, there are probably more
+> missing). Please let me know if you prefer them in smaller (or larger)
+> batches (or if the patches aren't wanted at all).
 
-I should have said: None of these follow-up diffs of mine (including
-the added comments) are something I think should be applied, I just
-inlined that to explain the code in context.
+This all looks good to me, and I think it would be fine to have
+changes like these in bigger batches, they're easy to review.
 
-Just to make 100% sure I understand you, do you mean you think the
-original v4 version I posted here makes sense with that explanation or
-do you have other outstanding concerns?
+As an aside from this series, has anyone ever proposed some method of
+semi-automatically keeping this up-to-date? Seems we're in a continual
+cycle of adding flags/config, forgetting to update this, then updating
+it. At least the command-line flags should be easy to parse out in
+some test, ditto config variables from config.txt maybe...
