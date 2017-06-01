@@ -2,79 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3D1F2027C
-	for <e@80x24.org>; Thu,  1 Jun 2017 11:16:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4698E2027C
+	for <e@80x24.org>; Thu,  1 Jun 2017 11:16:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751521AbdFALQM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 07:16:12 -0400
-Received: from mout.gmx.net ([212.227.17.20]:59020 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751505AbdFALQL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 07:16:11 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSuYT-1dNheM2i3B-00Rpur; Thu, 01
- Jun 2017 13:15:59 +0200
-Date:   Thu, 1 Jun 2017 13:15:57 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     Kevin Willford <kcwillford@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com, Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [PATCH 1/2] format-patch: have progress option while generating
- patches
-In-Reply-To: <20170531220100.t27w3w642sn33h7s@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.21.1.1706011312510.3610@virtualbox>
-References: <20170531150427.7820-1-kewillf@microsoft.com> <20170531150427.7820-2-kewillf@microsoft.com> <20170531220100.t27w3w642sn33h7s@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751587AbdFALQx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 07:16:53 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:35181 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751556AbdFALQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 07:16:52 -0400
+Received: by mail-it0-f54.google.com with SMTP id f72so33900257ite.0
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 04:16:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=vH4o2cK4TgRiqvW6F6HSLmGfoFuyWd/UKfpseBWUwEM=;
+        b=lr2qtr1fPqEr0URRMFGXlGXMf9DqXGs5A7BCLhl0sPx4T6QT+44lA/9uHpsvtwm5IM
+         iAcD+IwonOfQjn9XRjSJdvVNlWsR6zXaE5GfkZzBrtihqlRszhQlIgiwK18HVAjT5QEQ
+         ARkh72jiS264EAnqZ1ah87l+4LBO3e6tL8N8Z/6rQLUgvFZWvNDFDFYLL7POhPByOMEK
+         Da1D7jFY5YzDDhkSY5cO6hBengzPU2mXZUrAvEf8PmzIqXyFMKQb9dSBgiZT0D7Qkio5
+         vIP6lns0P/0iwLaFIn8+uihMNSLhlIea7eW/LjWcmAi1DXSAQ4/rYStpAZYkqCh15kxC
+         bWQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=vH4o2cK4TgRiqvW6F6HSLmGfoFuyWd/UKfpseBWUwEM=;
+        b=Z/VoFI3y3x7aZANH9z3FvhFmBGpVSkB/TM742JbXCkR9nb4bvqK4DCwuNFa7qvEiD9
+         8DxFHEWm+PvzLdMR3Ruygd2oHB9LOfSoxCiWi5U3d9I24uAFudDEcyhEM03ATB+416N9
+         9eP/kv4FVpg4e4iiIDmjdleHDi+ofo0rn2ZPTfd6G0qwG1CCHBgEfSauIQ14Ot6bzjxG
+         5QpUOh9G+hHlNRmH1CTTX5XwZJo2vvpwUB6LOT0jZ28tf59Y+6kQZoE1uN4XMaJLd4vV
+         CmQnb1dpK5Wl3b681G2t5gD4PZMK+NRI5K7hag4YuOINsYis5g7gXaIV7doZNQsZ99G9
+         PNxA==
+X-Gm-Message-State: AODbwcDkfK3Vvef1swDIu1v/qtScmU0E+8M1eQc7LXRLUymNjLl2hnRj
+        QMsuKtdbBIwP/gsY+YmhFJZk6mgo/A==
+X-Received: by 10.36.222.69 with SMTP id d66mr13384876itg.14.1496315811472;
+ Thu, 01 Jun 2017 04:16:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Wj+fMka0NUkCTrri+CHArOY8hYfKg/6RF051HaeH6l0KUeFFLSh
- ye8xQc0tmgJCyWt1PovQT5e5vijw/9e0lRcQckpDzeDfd0vC6G6w54O/sDRFrqPHEologdh
- RK11V+6Q8wVBTUakl+zFwo0okCxBsAzzVAvAkz2joEQ+dn+zDPRG/2IrTdxDS4jQDD/MtrQ
- D4+13R/G/l33YReXmRpmQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Squ+E/nJ5RU=:68+es3HvlwAZJwCxBwpZt3
- xGXB5WelZTNJjy2ea+dq/Pr8I5DCz8c7MIYxZFt0TtbodtZavUbtlVgvN+EaP4bk06nZOjDcm
- R6hDO6rKW4zglLkfYlyUjA93eNotrqYGtppkhFDIEecVMDt7zcxx8wwwPWttcXNgDBwxMf65y
- yI/HxJRSJU8WZBxFQFyqU+b23DgU/Nxr/lw8+BdhUkF7hN3Kh2GxyPQsdB4M6nhsE2q+WmH8q
- pifCNxwSeN/5PvPDP7bz0u9ZiMwkr7/dDioZuuZkAt+nZVDwVnGJgr1zJFHlgtsQd/atwU373
- f/wsGImPGkmRYUFSzmPO4/JgOXbbxX4dtcxjIqn77Uqo9U+5z3tfFOQxxgN+anH/+Yflrdx5A
- mXpkvhQ+ElYvmIxNnqCDfwJZqDUx6yDKF7Yd1iiIoOGEzOOs6OdQGGU92rDe/5alrn0Bq7ADW
- dskXoODqnYjHSjC5Xzy7CuIldqtoPK/QFxaCmHxcU3nTWCGVHPB+QbGjMRkYkrzsaAiT9ojZq
- FhMiw+06hliIlbuBmYVe8Nj35F66+mJq+4OlSEO5rz/1lhag7RtT1Apn9pj/mzcKBKuRcO71i
- KCYzpEkKYVSMhC+EypOMp3lEQ4mN/Fth6itCQtVAPB6yfWCzf201ewYSp7bsNDyfqsCTKKHGr
- p53OuuDo6A8WCRZVIJSh9w7rOG5esJgozsGPCSXcbnI7R7phLckbYYvJGMsUsMrhAo8X5x2Yd
- /YXq18TRnEd1EULSxPBDeGWd09hIDHNls+Y0mnWB6wqK3ZJU2Q6JokL4kQkhmYdIs+PL8MyX+
- MBpVYoO
+Received: by 10.107.5.13 with HTTP; Thu, 1 Jun 2017 04:16:11 -0700 (PDT)
+In-Reply-To: <CAMOGhMJyO=+EZz6qCejxeTe5FdE=RheJX9A5g3U6eKhUKj8_BQ@mail.gmail.com>
+References: <CAMOGhMJyO=+EZz6qCejxeTe5FdE=RheJX9A5g3U6eKhUKj8_BQ@mail.gmail.com>
+From:   SJR <haltekx@gmail.com>
+Date:   Thu, 1 Jun 2017 13:16:11 +0200
+Message-ID: <CAMOGhMLMo82RgH0HareB78KVWz2gMGzhB1i5s3SobW9wHk0zbg@mail.gmail.com>
+Subject: Re: wrong language translation part7
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Wed, 31 May 2017, Jeff King wrote:
-
-> I'm generally in favor of progress meters, though it does seem a little
-> funny to me that we'd need one on format-patch.
-
-When working with huge repositories with a large number of branches, it is
-all too easy to pick the wrong branch to rebase to. In that case, it can
-take a long time for the `git rebase` call to even generate the mbox.
-
-Kevin's patch is a visual indication when this is happening.
-
-Instead of being puzzled by `git rebase` "hanging", the user will now see
-that (.../21957) patch is generated and will have a chance to say "wait a
-minute, *that* many patches? I think I meant a different branch".
-
-And since format-patch generates the patches for `git rebase` (actually,
-it generates an mbox that then has to be split again, but you get the
-gist), it is format-patch that needs to output the progress.
-
-Ciao,
-dscho
+W dniu 1 czerwca 2017 09:43 u=C5=BCytkownik SJR <haltekx@gmail.com> napisa=
+=C5=82:
+>
+> Hi,
+>
+> https://git-scm.com/book/pl/v1/Dostosowywanie-Gita-Konfiguracja-Gita
+>
+> part in polish part in english.
+>
+> Can You repair translation?
+>
+> Regards,
+> JanR
