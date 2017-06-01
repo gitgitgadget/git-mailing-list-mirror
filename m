@@ -2,80 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9434D20D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 18:56:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 730D920D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 18:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751148AbdFAS4u (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 14:56:50 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52946 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751097AbdFAS4t (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 14:56:49 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqzEB-1dmHK70DQJ-00eeFs; Thu, 01
- Jun 2017 20:56:32 +0200
-Date:   Thu, 1 Jun 2017 20:56:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, David Turner <dturner@twosigma.com>,
-        Ben Peart <benpeart@microsoft.com>
-Subject: preserve untracked cache, was Re: What's cooking in git.git (Jun
- 2017, #01; Thu, 1)
-In-Reply-To: <xmqqshjk5ezb.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1706012052480.3610@virtualbox>
-References: <xmqqshjk5ezb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751122AbdFAS7p (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 14:59:45 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:36109 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751105AbdFAS7o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 14:59:44 -0400
+Received: by mail-io0-f171.google.com with SMTP id o12so42321331iod.3
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 11:59:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NhbqQ2mRZlcfX+m1UuTwHaVrrdcqo3uqWR9qepKAT5Y=;
+        b=SYWWkYCkf1krAajQJs0nZItfNXrf48hv5fYDBVWySyWlRgyYmJWiM6jK4D5d2TWHaq
+         zuGqsvoRWZu09aM/g4yWjrM3z6XLFKKPNTx4APrP993t1LQeq5hsCou+jDNn9s91E7it
+         oz60y8uD8W6KsynS2wNULMEyaN0vaBRJyTAsdvl2TYcwZXLrHpHe7GQmdiFouGjXa7nH
+         U5+NazaKN93rRZ8MY4Ed3sOX/8JTJfiD6xykp5H9ukscF0y8cWxLVQ0+XwEyuHz1ae/Z
+         d0Ubjg1a1Wnno+W+vEPDzPptheMH8W6Kux6qGGGvHpkqe82Q505SORbaCmFv/54LDrmU
+         d19A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NhbqQ2mRZlcfX+m1UuTwHaVrrdcqo3uqWR9qepKAT5Y=;
+        b=aLLGqwOfEwDJ7DqjcJtRvGkLvUHGbc78Be7uGjcvBW26YhkDQUKUL9QLha25FLNSU2
+         X7JLSZskmIIgO8aKjMeJn4NIrp89gOIZallrSnNDKrvuGFDdKFV7mpikqer11dytEQxk
+         kF/RuO4eJDFDdvCZ1whmW8VRzTf7LwtvTil371yLxQAgPghOe4W6v2eZi2zHgl9+lRP7
+         oIjm9kuUNmJ4YUW9jcjInAzb+t9T13fc030TYWwBvl1Lvd/kw1Qo/oeAhBuAlmWbHl95
+         j4q0i4078bKJ1V0Hjky/Wyp0ZSfu8Z7G/2rawVe0uRDbv82EoK3JGiRIIbEc3LT1/d7M
+         fFjA==
+X-Gm-Message-State: AODbwcBfWqTEj6+/u+sgBoOEZ+sdIhVdB/mNPQNkYmMVaNN0uwc0qKep
+        M/Xt2qHBbG6gstDNVHWCPxnYeSatBQ==
+X-Received: by 10.107.178.215 with SMTP id b206mr498137iof.50.1496343583704;
+ Thu, 01 Jun 2017 11:59:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Tdos/lexivTXCYDDNB4B5bHz6FAvngF/xFj3JSTAgo+ChHnV9hH
- RpIlzuReuDmTEGU1i3P/3PWxfqNQ/FNgsCQHENDssf7v5Ww9sA7n8QeFtGkRXnlu0/HVdzE
- tJq5Tltzhy+lsNmM4zWa56HmvwOwEXM9QnRXW5+/ipNxDTfjkAGp+jmY6si4fRQf636g73q
- LQ6Ea2iz3Pe+H59Tkt+6w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1Bi+GWSkwVA=:ZHA4noeDU6nwhJntFMT1ns
- BYkrJxZAWCaWp2CUVP0vo+C0nAQ+vt5H5y7dxofRK4aQFkmSJ/7cA+2xKqcg3fvREpiugumgj
- LqPnd6XKwdXpRx+b1Ka0NnlXWNfMuH9Ed8vr9qUlL73/uJe9Hk8u586IwRm2eKZG9E5+rbM8U
- sackGQ+9uDCr8EFWihaxiITkHS+K05pz30O4ysxLTiOt0qlDbAWw3W2MqRChgPIJxIap9w/qT
- EEURMSbyqZ6Zg0G+7F3/a1xZV133iyzIcjPHYmZNO/AK1/VKa8yRuR/8rhg3NB/Ap0vhvWRVN
- gmd/6Bpxv2cpPfALQtswrzvgSr1jTw29ZbYgksMTWY8pznocfTcMABi1EYluaCDMhErx0Ow1E
- UpzrHVLBmUBgdPSKEJWHe3unPcjxLbIN0s0LDEp7vK7rFX1Hh5RgGLNJZ7ZiiouHJ/3KU3UFM
- WnF68kxCmQLioMPxKMjIzRGZU24N7FS+8gW5ut8v4GrvIYrfwnxWVXUZScO0AcOD21F+hdmJ0
- a9c9Tv9LLqCfYsIf97X1UP2sC38Wx1VlGgSWbcSxyt2JaKpWgARDGDESlJlchzhL3cghzY9a+
- B12hms9OxlbXB6f8JOZIrBeTmbXksgwwBKU2+sGfN7/h5f2GzU8KbgkbI4DOz/kF7P4/V/pKs
- UPIORvaQjrcJ5uEGjFNda+ncMILKIKjzI6Yk76956+dZCST+LKfBBm39P5UM9XzvVBmb5sc6i
- Smvjolqa2TxTHE++Un/9DSEgU62I3tU+qB2oxVohHoZlATiJ7RjNXmCiJYiALxkHmhDQXBS9n
- 5uKrvE8
+Received: by 10.107.8.220 with HTTP; Thu, 1 Jun 2017 11:59:22 -0700 (PDT)
+In-Reply-To: <0102015c64f0dd99-a702d419-2bbb-48a3-b541-296011972e7d-000000@eu-west-1.amazonses.com>
+References: <0102015c64f0dceb-02338e52-74d5-4d6c-9a9d-f41e98ff88bc-000000@eu-west-1.amazonses.com>
+ <0102015c64f0dd99-a702d419-2bbb-48a3-b541-296011972e7d-000000@eu-west-1.amazonses.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 1 Jun 2017 20:59:22 +0200
+Message-ID: <CACBZZX66dbdxuMx4EWdxYdRiMpBbXSbBCsmEO9uiEZYyyOmnDw@mail.gmail.com>
+Subject: Re: [PATCH/RFC v3 3/3] branch: add copy branch feature implementation
+To:     Sahil Dua <sahildua2305@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Thu, Jun 1, 2017 at 8:35 PM, Sahil Dua <sahildua2305@gmail.com> wrote:
+> Adds copy branch option available using -c or -C (forcefully).
 
-On Thu, 1 Jun 2017, Junio C Hamano wrote:
+Commenting on the series in general. I have a fixup branch for you
+with commits to squash:
+https://github.com/avar/git/tree/avar/sahildua-rename-branch-2 issues:
 
-> * dt/unpack-save-untracked-cache-extension (2017-05-20) 1 commit
->   (merged to 'next' on 2017-05-23 at 3196d093d6)
->  + unpack-trees: preserve index extensions
-> 
->  When "git checkout", "git merge", etc. manipulates the in-core
->  index, various pieces of information in the index extensions are
->  discarded from the original state, as it is usually not the case
->  that they are kept up-to-date and in-sync with the operation on the
->  main index.  The untracked cache extension is copied across these
->  operations now, which would speed up "git status" (as long as the
->  cache is properly invalidated).
+ - There's a mixed variable declaration  with code, should be predeclared.
+ - Stuff like printf(_("% branch), "copied") gives bad translations,
+needs to be expanded
+ - Fixed up comment style
 
-It was my understanding that Ben's analysis conclusively proved that the
-patch as well as the test are sound, and Dave agreed.
+In addition when I try to run the tests I get:
 
-What is holding this topic up? Anything Ben or I can do to move this
-closer to `next` or even `master`?
+    fatal: cannot lock ref 'refs/heads/a': 'refs/heads/a/b/c' exists;
+cannot create 'refs/heads/a'
+    not ok 45 - git branch -c a a/a should fail
 
-Ciao,
-Dscho
+And there's 18 other failures in that test script, although some could
+be from that first failure, doesn't this fail for you? I can't see why
+it wouldn't everywhere, i.e. you're trying to create a "a" ref when
+"a/b/c" exists.
