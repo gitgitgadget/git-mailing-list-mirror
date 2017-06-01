@@ -2,193 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04FBF1FD09
-	for <e@80x24.org>; Wed, 31 May 2017 23:35:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F358420D12
+	for <e@80x24.org>; Thu,  1 Jun 2017 00:15:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751382AbdEaXfm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 19:35:42 -0400
-Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:56022
-        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751033AbdEaXfj (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 31 May 2017 19:35:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1496273713;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=jfSm3AngEdwmglhNF46B+Qn5H+XeCaf4WtM3ZkLoLew=;
-        b=OM3nGoR/vQ6rMHrJ/EA54/SLebQlixZPdG1lDQnKWDckQAPTdbUzQiLTlJJdBPIJ
-        TME2ovIqxjjgwZdgDM7DVOkO6M31dgpWKlZCHyv0pqwLx8seBwoAi+o+cRi//yBm3b4
-        dm8lgcnnYxKP77OeMf6jbmoEQpJq8TqKf7/E4c64=
-From:   Sahil Dua <sahildua2305@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102015c60dcf6be-6001eb0c-c085-4972-a25b-2490a062e3f8-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015c60dcf5f6-057de56f-3355-40dc-a0d3-ee62fa9b8259-000000@eu-west-1.amazonses.com>
-References: <0102015c60dcf5f6-057de56f-3355-40dc-a0d3-ee62fa9b8259-000000@eu-west-1.amazonses.com>
-Subject: [PATCH/RFC v2 5/6] config: add copy config section logic
+        id S1751033AbdFAAPY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 20:15:24 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33466 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750977AbdFAAPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 20:15:23 -0400
+Received: by mail-pf0-f180.google.com with SMTP id e193so21349559pfh.0
+        for <git@vger.kernel.org>; Wed, 31 May 2017 17:15:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=nG2ncnj8IuoJlujC6BhGFZ3fh6k+IawKW5UC59ojmEo=;
+        b=CEx11vMFDj2s4SM+uF5j9RfmYAYGgBEE/XeW/tmmNDg9k1T3wXk+778JWKhxhoZwts
+         2vrg/oqq5rzHdPzzWGtl+q4G4P1+HeM5Qi6j9wgv0qO6x3nA3b7+NZNzqGAYIloSxCtL
+         M/CzpPgo1cA3XWeGM+27OBO0I4C9vbr0NclWC/4asZvhfzkTnEJPfN1WkYC+zN+e6RI9
+         Y+iIKK1YOA5CnBotZxGubTG4+L3SVY/fbo808rSxTpiK20aBNFV+2S+J+PbooDeXbH+T
+         EYVr9eZ9XKy/vub07LN44eFZXLZ180mrzGSiHxSu2Bd6c/Om5WdODic5UvEb6o5EodN1
+         PndA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=nG2ncnj8IuoJlujC6BhGFZ3fh6k+IawKW5UC59ojmEo=;
+        b=S8H5KbfVO/ZbVJdZq2HJYAzedMH8sxJwp0CTGAmCn9Qeu1P2xzIXlEv+QVD3UK0lS3
+         Q2Pqy2TxD9H2sAjBpSGo5bd5vhRBdU8197pGP/S/REKv66n52HbE/PF5a+li2vJSZrUE
+         Cg8qlZitIaqRz+uqQ65iStY6mUbRUX5KVlrzLJ+cgPNJTeXSCz4hxm79GjYTqjwAK0jN
+         bHwd7W5O9vQ0PK4ifbU3cFCV3KIYcnxLdHCtpwxcySsZMmWYBzBu24n1///nwowv3vVA
+         qrzGFGH6mOHQLZDXS8my0iRS8orPDyBYB7OMmUAOPqsshQg51GgYELl88kIDzBam+R26
+         SGoQ==
+X-Gm-Message-State: AODbwcDamKQ6MJgZecFDqspN/uYvYspojxoWsUcJdCMN2poZ1NSCa5Dp
+        ypDeZUv+GuDoMlYQ
+X-Received: by 10.84.236.72 with SMTP id h8mr93305685pln.187.1496276122910;
+        Wed, 31 May 2017 17:15:22 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:dcdb:b4e5:f1c4:8595])
+        by smtp.gmail.com with ESMTPSA id l65sm31526046pge.29.2017.05.31.17.15.21
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 31 May 2017 17:15:21 -0700 (PDT)
+Date:   Wed, 31 May 2017 17:15:20 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Elliott Cable <me@ell.io>,
+        Dennis Kaarsemaker <dennis.kaarsemaker@booking.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] docs/config: mention protocol implications of
+ url.insteadOf
+Message-ID: <20170601001520.GB43421@google.com>
+References: <CAPZ477MCsBsfbqKzp69MT_brwz-0aes6twJofQrhizUBV7ZoeA@mail.gmail.com>
+ <1495230186.19473.7.camel@kaarsemaker.net>
+ <1495230934.19473.10.camel@booking.com>
+ <20170520070757.jekykxagzze3t2wy@sigill.intra.peff.net>
+ <CAPZ477PoSXqahxaQVpO+m==vng==o4vQahrg_WA8Oeh7wmoW0w@mail.gmail.com>
+ <20170531051804.w6f7yvz4k5wkrwvc@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 31 May 2017 23:35:12 +0000
-X-SES-Outgoing: 2017.05.31-54.240.7.18
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170531051804.w6f7yvz4k5wkrwvc@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adds implementation for copying the config section while copying a
-branch.
+On 05/31, Jeff King wrote:
+> On Fri, May 26, 2017 at 11:22:37AM -0500, Elliott Cable wrote:
+> 
+> > 1. Most simply, better documentation: mention `GIT_PROTOCOL_FROM_USER`
+> >    explicitly in the documentation of/near `insteadOf`, most
+> >    particularly in the README for `contrib/persistent-https`.
+> 
+> I agree that a hint in both places would be helpful.  The patch for that
+> is below.
+> 
+> > 2. Possibly, special-case “higher-security” porcelain (like
+> >    `git-submodule`, as described in 33cfccbbf3) to ignore `insteadOf`
+> >    rewrite-rules without additional, special configuration. This way,
+> >    `git-submodule` works for ignorant users (like me) out of the box,
+> >    just as it previously did, and there's no possible security
+> >    compramise.
+> 
+> I don't think we can do that. Rewrites of "git://" to "ssh://" are
+> pretty common (and completely harmless). Besides, I think submodules are
+> a case where you really would want persistent-https to kick in. IIRC,
+> the original use case for that helper is Android development, where a
+> user is likely to update a ton of repositories from the same server all
+> at once. Right now the fetches are all done individually with the "repo"
+> tool, but in theory the whole thing could be set up as submodules.
 
-While we're parsing the config file, we need to make sure we start
-copying the config section once we find the matching block for our
-branch1 (for example when running 'git branch -c branch1 branch2').
+This right here is why Stefan and I have been working on submodules.
 
-There is one flag used - 'copying_section' which can take 0/1/2 values.
-0 - not copying currently
-1 - just started copying section
-2 - currently copying
-I thought of making this flag binary to keep things easier. However,
-since there was distinction in behavior(adding to currently copied
-section) depending upon whether it's the first line of config section or
-not.
+> 
+> -- >8 --
+> Subject: [PATCH] docs/config: mention protocol implications of url.insteadOf
+> 
+> If a URL rewrite switches the protocol to something
+> nonstandard (like "persistent-https" for "https"), the user
+> may be bitten by the fact that the default protocol
+> restrictions are different between the two. Let's drop a
+> note in insteadOf that points the user in the right
+> direction.
+> 
+> It would be nice if we could make this work out of the box,
+> but we can't without knowing the security implications of
+> the user's rewrite. Only the documentation for a particular
+> remote helper can advise one way or the other. Since we do
+> include the persistent-https helper in contrib/ (and since
+> it was the helper in the real-world case that inspired that
+> patch), let's also drop a note there.
 
-The copied section has first line which contains the new branch name
-(branch2 in our example). This is achieved using store_create_section
-method.
+Documentation changes look sane to me.  Thanks for whipping this up!
 
-Once we're done with reading the entire config file, we write our copied
-section. Hence, literally copying the config section from branch1 to
-branch2.
+> 
+> Suggested-by: Elliott Cable <me@ell.io>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/config.txt        |  7 +++++++
+>  contrib/persistent-https/README | 10 ++++++++++
+>  2 files changed, 17 insertions(+)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 43d830ee3..5218ecd37 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -3235,6 +3235,13 @@ url.<base>.insteadOf::
+>  	the best alternative for the particular user, even for a
+>  	never-before-seen repository on the site.  When more than one
+>  	insteadOf strings match a given URL, the longest match is used.
+> ++
+> +Note that any protocol restrictions will be applied to the rewritten
+> +URL. If the rewrite changes the URL to use a custom protocol or remote
+> +helper, you may need to adjust the `protocol.*.allow` config to permit
+> +the request.  In particular, protocols you expect to use for submodules
+> +must be set to `always` rather than the default of `user`. See the
+> +description of `protocol.allow` above.
+>  
+>  url.<base>.pushInsteadOf::
+>  	Any URL that starts with this value will not be pushed to;
+> diff --git a/contrib/persistent-https/README b/contrib/persistent-https/README
+> index f784dd2e6..7c4cd8d25 100644
+> --- a/contrib/persistent-https/README
+> +++ b/contrib/persistent-https/README
+> @@ -35,6 +35,16 @@ to use persistent-https:
+>  [url "persistent-http"]
+>  	insteadof = http
+>  
+> +You may also want to allow the use of the persistent-https helper for
+> +submodule URLs (since any https URLs pointing to submodules will be
+> +rewritten, and Git's out-of-the-box defaults forbid submodules from
+> +using unknown remote helpers):
+> +
+> +[protocol "persistent-https"]
+> +	allow = always
+> +[protocol "persistent-http"]
+> +	allow = always
+> +
+>  
+>  #####################################################################
+>  # BUILDING FROM SOURCE
+> -- 
+> 2.13.0.678.ga17378094
+> 
 
-However, there's one case which is not handled by this yet - when
-branch2 already has some configuration and -C command is used, operation
-should delete the present configuration for branch2.
-
-Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
----
- config.c | 67 +++++++++++++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 52 insertions(+), 15 deletions(-)
-
-diff --git a/config.c b/config.c
-index 155274f03b2b6..2bf711ca3e0da 100644
---- a/config.c
-+++ b/config.c
-@@ -2642,13 +2642,14 @@ static int section_name_is_ok(const char *name)
- int git_config_copy_or_rename_section_in_file(const char *config_filename,
- 				      const char *old_name, const char *new_name, int copy)
- {
--	int ret = 0, remove = 0;
-+	int ret = 0, remove = 0, copying_section = 0, copied_section_length;
- 	char *filename_buf = NULL;
- 	struct lock_file *lock;
- 	int out_fd;
- 	char buf[1024];
- 	FILE *config_file = NULL;
- 	struct stat st;
-+	struct strbuf copied_section;
- 
- 	if (new_name && !section_name_is_ok(new_name)) {
- 		ret = error("invalid section name: %s", new_name);
-@@ -2689,6 +2690,13 @@ int git_config_copy_or_rename_section_in_file(const char *config_filename,
- 			; /* do nothing */
- 		if (buf[i] == '[') {
- 			/* it's a section */
-+			if (copying_section) {
-+				/* Mark the end of copying the matching
-+				 * section, as this is the beginning
-+				 * of the new section
-+				 */
-+				copying_section = 0;
-+			}
- 			int offset = section_name_match(&buf[i], old_name);
- 			if (offset > 0) {
- 				ret++;
-@@ -2696,26 +2704,41 @@ int git_config_copy_or_rename_section_in_file(const char *config_filename,
- 					remove = 1;
- 					continue;
- 				}
--				store.baselen = strlen(new_name);
--				if (!store_write_section(out_fd, new_name)) {
--					ret = write_error(get_lock_file_path(lock));
--					goto out;
-+				if (!copy) {
-+					store.baselen = strlen(new_name);
-+					if (!store_write_section(out_fd, new_name)) {
-+						ret = write_error(get_lock_file_path(lock));
-+						goto out;
-+					}
-+				} else {
-+					/* Mark the beginning of copying the matching section */
-+					copying_section = 1;
-+
-+					/* TODO: Make this work for the
-+					 * case when there are multiple
-+					 * matching sections
-+					 */
-+					/* Create a section with new branch name */
-+					store.baselen = strlen(new_name);
-+					copied_section = store_create_section(new_name);
- 				}
- 				/*
- 				 * We wrote out the new section, with
- 				 * a newline, now skip the old
- 				 * section's length
- 				 */
--				output += offset + i;
--				if (strlen(output) > 0) {
--					/*
--					 * More content means there's
--					 * a declaration to put on the
--					 * next line; indent with a
--					 * tab
--					 */
--					output -= 1;
--					output[0] = '\t';
-+				if (!copy) {
-+					output += offset + i;
-+					if (strlen(output) > 0) {
-+						/*
-+						 * More content means there's
-+						 * a declaration to put on the
-+						 * next line; indent with a
-+						 * tab
-+						 */
-+						output -= 1;
-+						output[0] = '\t';
-+					}
- 				}
- 			}
- 			remove = 0;
-@@ -2723,11 +2746,25 @@ int git_config_copy_or_rename_section_in_file(const char *config_filename,
- 		if (remove)
- 			continue;
- 		length = strlen(output);
-+
-+		if (copying_section > 1) {
-+			strbuf_addf(&copied_section, "%s", output);
-+		} else if (copying_section == 1) {
-+			copying_section = 2;
-+		}
- 		if (write_in_full(out_fd, output, length) != length) {
- 			ret = write_error(get_lock_file_path(lock));
- 			goto out;
- 		}
- 	}
-+
-+	if (copy && copied_section.len > 0) {
-+		copied_section_length = strlen(copied_section.buf);
-+		if (write_in_full(out_fd, copied_section.buf, copied_section_length) != copied_section_length) {
-+			ret = write_error(get_lock_file_path(lock));
-+			goto out;
-+		}
-+	}
- 	fclose(config_file);
- 	config_file = NULL;
- commit_and_out:
-
---
-https://github.com/git/git/pull/363
+-- 
+Brandon Williams
