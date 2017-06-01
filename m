@@ -2,144 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A89D820D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 21:09:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E83D120D0A
+	for <e@80x24.org>; Thu,  1 Jun 2017 21:13:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751159AbdFAVJP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 17:09:15 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:35378 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751078AbdFAVJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 17:09:14 -0400
-Received: by mail-pf0-f177.google.com with SMTP id n23so37581184pfb.2
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 14:09:14 -0700 (PDT)
+        id S1751290AbdFAVNA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 17:13:00 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:36456 "EHLO
+        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751105AbdFAVM7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 17:12:59 -0400
+Received: by mail-io0-f173.google.com with SMTP id o12so44309811iod.3
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 14:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BxO5oHjCPyQpna1CLOOCBKPgWKspbnnt923uZzuzto8=;
-        b=ujPrf/6SfaTYSQqWdTnZCCji11gcZ4ODpZGhEIMpQfduwA1y2KeY+w/0F58HVP/d+U
-         Sd+RttYm9QRHC5GD0Y+eFjPQ/KA/uQzmTjpzrKW+nTDSBEVvqVMGMHAeGmqxEyijssOm
-         bpwGGw4zB7ysK8rZuWC1BHHCYM/q8RBue7EtSjGF+MBH11OMB6W6UKx5m26vZFn2pH5f
-         7bdnsGvMs1wIhpzs4PHwbPaKogMfnbvaKgCkNUdCj8Lpd505uwPaDtDBignrb1nbG9HG
-         23dSbyweSwy1zgn21f7QzkRoWAeuUoag/Bd0DcDs/goh2o7W7WqX4b/ANh+4WbDadg1J
-         5V/Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=VfjXB+TREd+6+oDR0AjbAa48sZjlWzrnl9Sitoi3HxU=;
+        b=GpDy52CdSLvbCLHcVpFCIg/EzFNbv/WagNFDE6t6iA/+b58HXlow/SlIfZ9NUlemAM
+         Bgv7qxm248ba9cbEjR5D1daPUbX4gV0Tv4tgc2AZAHskb5Ov7zFHnW7QnCvJLAX8pvQp
+         EPcsjiu9XL530hVE314O35ABr5qTPAeOhq/rT1Sqr8lcOL3G+0Q8h19xC7uOE9eoS+Er
+         CDDKJZZ6d5RD0Za6Dd6Tj8+V364vvI+LLEP00DbZGxhNZd1usSj6SIlx8nAm5j3teGrV
+         nNqAbe2vKK/v9f1e7Cg6twbNPwNdZpCJYDuY8NdylZN3Ae4XXqBS2L+AFyKv/iHpUuVW
+         m4yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BxO5oHjCPyQpna1CLOOCBKPgWKspbnnt923uZzuzto8=;
-        b=t9ez2m7wgECq9a7fxkiXQhDVteylyLwesL40GZI6ObY93WtuXaVfYzJyyVrufH0CA/
-         PpPIJGm9Qd9ESg6QXLtb3lgWYQmToIyIm9QTw5WvyYRUzgVueZnsIpkROe/h9HpHCagL
-         yviTsJqtIptdOa6sITZPA5mvPMLjCmMOHkzuCVQO+e/6/ilvAK2ZTc16M3B6PVchrOYo
-         LlAe8XHBt8OAYIzZ3/NEKOSuUA8MEqlzFhnF0CXtJBfPnI7riOh+9LbFP8mWlSeA5xBt
-         DkfgoeIBBlXHJcbTbSQoQEn/nxqFDjUAyOIyadIxX6O5v60ZJnuuTtgJMKBadXA6cTa1
-         4DJg==
-X-Gm-Message-State: AODbwcBQ4VMGKEIjNQpqpeaAHuS6UbzDWadDI9n2xjDK4kVeRtIqwyle
-        SXu6iCxh8vgZJHQ6
-X-Received: by 10.98.138.68 with SMTP id y65mr3016708pfd.131.1496351353661;
-        Thu, 01 Jun 2017 14:09:13 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:21ee:55f5:50a0:9409])
-        by smtp.gmail.com with ESMTPSA id a187sm8084469pge.45.2017.06.01.14.09.12
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 14:09:12 -0700 (PDT)
-Date:   Thu, 1 Jun 2017 14:09:11 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ben Peart <peartben@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 05/31] environment: remove namespace_len variable
-Message-ID: <20170601210911.GA159608@google.com>
-References: <20170531214417.38857-1-bmwill@google.com>
- <20170531214417.38857-6-bmwill@google.com>
- <CAGZ79kZF3mk40P1rRvV57X=JWveNoCmdvKmkUO=fo8Ts=BkZrA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VfjXB+TREd+6+oDR0AjbAa48sZjlWzrnl9Sitoi3HxU=;
+        b=G2VesXec59d7/72MNgKCyw2nQM9hd3KBwS/MS6NQBVKCmIVG4AvIkN29QFCM0NCr0k
+         cpYMyaHHuUxMLliKAQs2L9OOe/mXgceYYj/6v13h4Dmb1c910nyeGcXcgWFvCEzY0rKY
+         Y7A9fxPnoW6PccUOo/E1rVKio+nziaYEl78fkMs1X3U57ryjXGXXrtWmRTeARtYVpGc8
+         oaQfl+SibTVZNHeWIadF4TVAnSOO1p247phkhY5TB/A2GF2aVteQvEwVcUuQeRe6nFFH
+         wBgXX4OpVnVb/5sMzvjQopcgPwO0keBksGuJSgvcs6Kzdh9nPqDRggu7TSwLw6MgQdSq
+         KjbA==
+X-Gm-Message-State: AODbwcDops45xj/KEpxG7XpLEvCZSLchA8wP5AkXsvA5oRp4PYbuAoFZ
+        jedMmV+GBqB5gwg3zEjJWVisHAnwyg==
+X-Received: by 10.107.201.131 with SMTP id z125mr4252151iof.160.1496351578699;
+ Thu, 01 Jun 2017 14:12:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZF3mk40P1rRvV57X=JWveNoCmdvKmkUO=fo8Ts=BkZrA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.107.8.220 with HTTP; Thu, 1 Jun 2017 14:12:37 -0700 (PDT)
+In-Reply-To: <020b09ef-6035-285d-c033-8831564d8752@gmail.com>
+References: <20170601155105.28356-1-benpeart@microsoft.com>
+ <CACBZZX6+V6=gSs0pdN9WU+LPZv5qSAmE5u_f=NFYht2dT-hxEQ@mail.gmail.com> <020b09ef-6035-285d-c033-8831564d8752@gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 1 Jun 2017 23:12:37 +0200
+Message-ID: <CACBZZX5g+t_7ViCggB32WBaARV1cz_dj3gCGEqjvjN3A-QJhiA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/6] Fast git status via a file system watcher
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        David Turner <David.Turner@twosigma.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/01, Stefan Beller wrote:
-> On Wed, May 31, 2017 at 2:43 PM, Brandon Williams <bmwill@google.com> wrote:
-> > Use 'skip_prefix' instead of 'starts_with' so that we can drop the need
-> > to keep around 'namespace_len'.
-> 
-> Looks correct.
-> 
-> Performance wise:
-> The strip_namespace function is only called from {receive/upload}-pack
-> and http-backend, so all network operations, whose actual operations
-> should far outweight the tiny CPU saving that this reverts.
-> We should be fine?
+On Thu, Jun 1, 2017 at 11:06 PM, Ben Peart <peartben@gmail.com> wrote:
+> On 6/1/2017 3:57 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>> On Thu, Jun 1, 2017 at 5:50 PM, Ben Peart <peartben@gmail.com> wrote:
+>>>
+>>> Changes from V3 include:
+>>>   - update test script based on feedback
+>>>   - update template hook proc with better post-processing code and make
+>>>     it executable
+>>
+>>
+>> Thanks, exciting stuff, do you have this pushed somewhere? I didn't
+>> spot it it in your github repo. I had some issues applying this on top
+>> of master @ 0339965c70, on 5/6 I got
+>>
+>
+> I just pushed this to github at
+> https://github.com/benpeart/git-for-windows/tree/fsmonitor
+>
+>>      $ git am /tmp/original_msg.txt
+>>      Applying: fsmonitor: add documentation for the fsmonitor extension.
+>>      error: patch failed: Documentation/githooks.txt:448
+>>      error: Documentation/githooks.txt: patch does not apply
+>>      Patch failed at 0001 fsmonitor: add documentation for the
+>> fsmonitor extension.
+>>      The copy of the patch that failed is found in:
+>> .git/rebase-apply/patch
+>>      When you have resolved this problem, run "git am --continue".
+>>      If you prefer to skip this patch, run "git am --skip" instead.
+>>      To restore the original branch and stop patching, run "git am
+>> --abort".
+>>
+>
+> Sorry, no idea on why this didn't work.  The patch was formatted with git
+> format-patch but it's possible I've got something wrong.
+No idea what's going on there, anyway I can grab it from your github
+url, thanks!
+>> But it worked with patch, weirdly enough:
+>>
+>>      $ patch -p1 </tmp/original_msg.txt
+>>      (Stripping trailing CRs from patch; use --binary to disable.)
+>>      patching file Documentation/config.txt
+>>      Hunk #1 succeeded at 410 (offset 21 lines).
+>>      (Stripping trailing CRs from patch; use --binary to disable.)
+>>      patching file Documentation/githooks.txt
+>>      Hunk #1 succeeded at 456 with fuzz 1 (offset 8 lines).
+>>      (Stripping trailing CRs from patch; use --binary to disable.)
+>>      patching file Documentation/technical/index-format.txt
+>>
+>> The 6/6 patch failed due to an unknown charset y, you have
+>> "Content-Type: text/plain; charset=3Dy" in the header, worked after
+>> manually munging it to "UTF-8", although it gave a warning...
+>>
+>
+> The only thing I see different about this patch is the special characters=
+ of
+> your name in the sign-off line.  The call to git send-email prompted me
+> about encoding - I wonder if my answer was incorrect?  Given you've proba=
+bly
+> dealt with your name in git patches before :), what should my answer be?
 
-Actually there should be zero performance degradation with this change
-(maybe a very small improvement) because both functions need to do a
-char by char comparison, just skip_prefix returns a pointer into the
-string with the prefix already stripped.  So no need to do a strlen()
-calculation on 'namespace' as well as no additon operation adding
-'namespace_len' to 'namespaced_ref'.
-
-> 
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  environment.c | 9 ++++-----
-> >  1 file changed, 4 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/environment.c b/environment.c
-> > index a73b08f5d..e035f6372 100644
-> > --- a/environment.c
-> > +++ b/environment.c
-> > @@ -98,7 +98,6 @@ char *git_work_tree_cfg;
-> >  static char *work_tree;
-> >
-> >  static const char *namespace;
-> > -static size_t namespace_len;
-> >
-> >  static const char *super_prefix;
-> >
-> > @@ -190,7 +189,6 @@ void setup_git_env(void)
-> >         git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
-> >                                                           : "refs/replace/");
-> >         namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
-> > -       namespace_len = strlen(namespace);
-> >         shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
-> >         if (shallow_file)
-> >                 set_alternate_shallow_file(shallow_file, 0);
-> > @@ -231,9 +229,10 @@ const char *get_git_namespace(void)
-> >
-> >  const char *strip_namespace(const char *namespaced_ref)
-> >  {
-> > -       if (!starts_with(namespaced_ref, get_git_namespace()))
-> > -               return NULL;
-> > -       return namespaced_ref + namespace_len;
-> > +       const char *out;
-> > +       if (skip_prefix(namespaced_ref, get_git_namespace(), &out))
-> > +               return out;
-> > +       return NULL;
-> >  }
-> >
-> >  const char *get_super_prefix(void)
-> > --
-> > 2.13.0.506.g27d5fe0cd-goog
-> >
-
--- 
-Brandon Williams
+Hah! I didn't think that the "y" could be the result of "yes" in some
+interactive dialog. It never prompts me when I send patches, it just
+works, and with UTF-8 it seems to have been applied correctly.
