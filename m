@@ -7,96 +7,96 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92C8720D12
-	for <e@80x24.org>; Thu,  1 Jun 2017 02:06:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE69320D12
+	for <e@80x24.org>; Thu,  1 Jun 2017 02:20:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751105AbdFACGV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 31 May 2017 22:06:21 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:32894 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751037AbdFACGU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 31 May 2017 22:06:20 -0400
-Received: by mail-pf0-f172.google.com with SMTP id e193so23458151pfh.0
-        for <git@vger.kernel.org>; Wed, 31 May 2017 19:06:20 -0700 (PDT)
+        id S1751082AbdFACUY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 31 May 2017 22:20:24 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34146 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751033AbdFACUY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 31 May 2017 22:20:24 -0400
+Received: by mail-pf0-f178.google.com with SMTP id 9so23678515pfj.1
+        for <git@vger.kernel.org>; Wed, 31 May 2017 19:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=nSTiH1ap05B9HdQK6Hq9cWf+KCHfDbVBoqHOBmKEVsU=;
-        b=m42XI2BvRu/YKBKdVNGQgSRh58GfGfgTUA7xzM7Lu0GCEkzHEfgjnaSxcqa/xTGou0
-         AivMV4L3YQEURnuYx2aylMIrBu+iCW6+0K+A46BhoWL1A3ZvPSxd0z7XqxjBGFRPM/Ew
-         0nwSh5UUQxGUUDAwHozRnmfVHrz78qoOnsTQAtXu6COFVueSvIRDhIt9amiqQzyddhKH
-         tPIeB6cmbsz7Epuz9IN/QtpaqOk67iM4+OhomE932qmNPU/Ur2z4kDKbA5HBOJZgGsge
-         9h784r3M00ad3j2BebIkd7WT/O/pXJmSqv/YGX3306eF0TwrNDCQiX5AfusB1x0ViShk
-         9gsg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=+jGEX28W40WVk8cTfbBIoHP/Rf4hO1BIP5ZRDm2Nbps=;
+        b=cp7+vinDGHEuY5tQz+98jVFcBCQz6eCKjryd4LmKfsGVEjG2btXJT7XxJ4HsRwk1Sn
+         bywk4jb3ib8+fSlRC7MJrbSGtywwJ9aaEIL/DdIDegLPSks6Cq/yyT0/JWH8Qqm8KlEW
+         MULYzCXHDl/yzxhEpQ2MPax48Brn4/dKgNqzV7TXfNPar2jj26mCH751sJIpU55CXmbP
+         I4CKdQeDykrsm9UUOd9uxhTNposOzb7R/6MUETvm6q6OhEGQfcBBF8FJ08LnPAv7JaIu
+         RU/p0uH8xnGktdSJNiXRKyavItP4qvllooj+JE3iQj/zwVZD+wrvko00F9Dww1WsryEI
+         OCzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=nSTiH1ap05B9HdQK6Hq9cWf+KCHfDbVBoqHOBmKEVsU=;
-        b=R1FXa0S7iYxbbMHz1ihAikCuir/M6Cpr7wUTD0Dtd9hdsfdd1tMFN6XhzXf7+FvS0S
-         ZZppcVCvJtkcNFiRiQViTSaj7/8zRGIk2IhoHpq/xBdFPqrorxaMqNOfot1j6w4GZWhq
-         I92/IDVSRmM7dZZ4DaJEVPeF9chhc9pUaFowar8rbUCC8B1bmzNOKJyXWjkkuC6XmVbu
-         8pgJ3oGSgPRS/6EMUrV6GtIWiuaemnvjqWnsZ9sYdz9U3Q8zrbMc1aXy2N9AUjd1mNpM
-         tyRyROXsXJQqZKWp+kI1FbFMKgXWnJ6mvmT4HSjFR5k3HnzYinUhi/+UJ4Yv9RohuTlC
-         UTug==
-X-Gm-Message-State: AODbwcAHHBBPVGw6/J4rihUhYNMbiEKMyiynRCPlE9BLI84t73Q6kO5C
-        LDAIMpIk10metw==
-X-Received: by 10.98.206.131 with SMTP id y125mr33664477pfg.108.1496282779790;
-        Wed, 31 May 2017 19:06:19 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=+jGEX28W40WVk8cTfbBIoHP/Rf4hO1BIP5ZRDm2Nbps=;
+        b=XfoQ6esQyft12Tny79Z2Gb6ekHEWTqglkHLKW7zYfJpfzfqnb++ehytoeQ7QXVLeIR
+         Z/VsRp39/6pyMqUE4XekVm0JZxg/zttnSoRdF/bapqvpw+7EG7v4px4+VCL1pp7Cqyb+
+         sfU6IkDSO/2rF+c5wcnkYMNpyPvRdthRbptDFbJ6k5JEzdeBZv5k26sbmUHU1z1qTeXI
+         7Fyd0tww3WQOQA0ldteS4VmGIx7Gy1HYo+93zlw+cOTIsr+Mpgd8i33RrC/WDUoM1tHS
+         aeZPfblcVhqdPUq5XIhDQ44DfYbGWf386+C3TEkOuGZyWQxl75LFLY3+CoP4em7YOOnM
+         HR4g==
+X-Gm-Message-State: AODbwcCcLONm1ZJn2QaljLEi+wz+CrjY7dV3A/h/zSZfpSxBbYMVEfGA
+        5FOt0xYaXSgfOg==
+X-Received: by 10.84.230.129 with SMTP id e1mr17319542plk.88.1496283623302;
+        Wed, 31 May 2017 19:20:23 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:9c1c:dca9:c6e3:133e])
-        by smtp.gmail.com with ESMTPSA id 15sm29158857pfj.59.2017.05.31.19.06.19
+        by smtp.gmail.com with ESMTPSA id h28sm34191705pfd.55.2017.05.31.19.20.22
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 31 May 2017 19:06:19 -0700 (PDT)
+        Wed, 31 May 2017 19:20:22 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Adam Dinwoodie <adam@dinwoodie.org>, git@vger.kernel.org
-Subject: Re: [PATCH] docs: fix literal quoted spaces
-References: <20170531150624.GC18266@dinwoodie.org>
-        <20170531160721.4yimitnyy6pdxkq5@sigill.intra.peff.net>
-Date:   Thu, 01 Jun 2017 11:06:18 +0900
-In-Reply-To: <20170531160721.4yimitnyy6pdxkq5@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 31 May 2017 12:07:21 -0400")
-Message-ID: <xmqqy3tc797p.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Anthony Sottile <asottile@umich.edu>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: bug: `git log --grep ... --invert-grep --author=...` negates / ignores --author
+References: <CA+dzEBn4EKzDqS0pCHHsPtGGJc1orf5weKKh0GN-GkE+fVYGcg@mail.gmail.com>
+        <CACBZZX7OhdRM+Mhx4FVX-Upvq169ZLvArL5ZxcTgz8u=WRh3aw@mail.gmail.com>
+Date:   Thu, 01 Jun 2017 11:20:21 +0900
+In-Reply-To: <CACBZZX7OhdRM+Mhx4FVX-Upvq169ZLvArL5ZxcTgz8u=WRh3aw@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 31 May
+ 2017 20:08:54
+        +0200")
+Message-ID: <xmqqtw4078ka.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> On Wed, May 31, 2017 at 04:06:24PM +0100, Adam Dinwoodie wrote:
+> $ git log --grep=bar --invert-grep --author=Ævar --pretty=format:%an
+> -100 origin/pu |sort|uniq -c|sort -nr
+>      78 Junio C Hamano
+>      14 Jeff King
+>       2 Andreas Heiduk
+>       1 Sahil Dua
+>       1 Rikard Falkeborn
+>       1 Johannes Sixt
+>       1 Johannes Schindelin
+>       1 Ben Peart
+>       1 Ævar Arnfjörð Bjarmason
 >
->> When compiling the documentation, asciidoc thinks a backtick surrounded
->> by whitespace shouldn't be interpreted as marking the start or end of a
->> literal.  In most cases, that's useful behaviour, but in the git-pull
->> documentation the space is clearly intended to be part of the monospace
->> formatted text.
->
-> Good catch.
->
->> Instead, use + to avoid asciidoc's literal passthrough, and encode the
->> space as {sp}.  In particular, this means asciidoc will correctly detect
->> the end of the monospace formatting, rather than having it continue past
->> the backtick.
->
-> In these particular cases, is the space adding anything? Would a simpler
-> fix be to just use:
->
->   ...the value on `URL:` line
->
-> We've had such headaches with other entities like {sp} between different
-> asciidoc versions (not to mention asciidoctor) that I tend to reach for
-> the simplest solution.
+> That last command should only find my commits, but instead --author is
+> discarded.
 
-Me, too (and no, I am not from AOL).  If `URL:` is typeset correctly
-the approach to drop the space is much more preferred.
+Hmph, the way I read revision.c::commit_match() is that we check
+with "--grep=bar --author=Ævar" and then emit the commit if that
+check fails when --invert-grep is in effect (instead of emitting the
+commit when the check succeeds, which is the normal case).
 
-> (I'd also suggest the minor English correct of saying "_the_ URL line";
-> that's orthogonal to what you're trying to fix, but may make sense on
-> top while we're here).
->
-> -Peff
+So there is one commit that didn't pass "has 'bar' and written by
+Ævar" check that was written by you in the recent past (iow,
+recently you were writing bar all over the place).  Changes by other
+people by definition does not pass "has 'bar' and written by Ævar"
+check, on the other hand.
+
+
