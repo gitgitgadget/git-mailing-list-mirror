@@ -2,140 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8597220D0A
-	for <e@80x24.org>; Fri,  2 Jun 2017 00:49:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B98E20D11
+	for <e@80x24.org>; Fri,  2 Jun 2017 01:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751129AbdFBAtl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 20:49:41 -0400
-Received: from mail-lf0-f42.google.com ([209.85.215.42]:34244 "EHLO
-        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750851AbdFBAtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 20:49:40 -0400
-Received: by mail-lf0-f42.google.com with SMTP id v20so3399070lfa.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 17:49:39 -0700 (PDT)
+        id S1751129AbdFBBAl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 21:00:41 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35995 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750851AbdFBBAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 21:00:40 -0400
+Received: by mail-pf0-f195.google.com with SMTP id n23so9924505pfb.3
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 18:00:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FGNvwsK+j4H07eW5CSU4G90M0jclP6zx874Ki0TLHhI=;
-        b=uulthwhNN6UhTQmVuL8donjEath95LVtUbz+2x+G6fixFWiO0sJHl4SkXbtRkPGdfw
-         Z0a2LyqT4W4OJwxXVabXty9s1VcO5ll9FtOYD3cWKfcdsGv9kUk9E5bL6bTyWr4eCJWD
-         zcmEQBTuVkNTR8UaRaW2ZD0hwSj1410ezUjWqfoJyr7vLp2nHXebKBOVDSfduf+HXaxf
-         gslfmn0mnD9Q52iI2dgdllYQyKI42ktT0BLL/my2FcdRTxJPwCg0cLnPoE5m+0iB8S1t
-         HAOuUHwSrolvdFJOGCLuekHsAKwozKlhO2SYrtFeaPSaISYkFFqBRVGSw2ChuBDcFg+d
-         OFWw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=YkPG8A+sVVN1/1VLxcZ1uL/w2hlOwaVKfvBDUF8tQKA=;
+        b=ZcFDp1F3gCc4LntWOOvAC5fbi0jQxqgsgjFAJJuv5fBBCE/eZsRXUasmPYYV08D1Xi
+         0ek8Tw7ek2CswY6k5TVY4MMHW4SZFAfzSJRESMuZO1Um9y2ib86ExKPeZTVurL8hlI2s
+         iIGSCxRkOYeVfzKH09S5j0WKDQN7dMk0VW80h2IxHXBeKmvKabh3cLje1tdwg17w17uq
+         lSZy3AzDL35S4ErrkNMy199jqY/InfWFiNZTAMJN09YGTnbA7uGr35ptdC5jtlClRl7U
+         i+jrpnq1P8APZqf+NXcODepGFd/CHPO5jHHPqD+0aDSwasedJrrMYqOnAZTJ6IFQDsxO
+         tgNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FGNvwsK+j4H07eW5CSU4G90M0jclP6zx874Ki0TLHhI=;
-        b=AcgI8FFToR+m5SvjWWJIfI/zo4bQKPzyJ8FSXSrAEllEVd5L0w716VCOiQfZMizo4w
-         iWiNOErd2G6Wt67CMGQqvABmd0ULFcnVcJnJk32vB05iZx3wK0mSovOCbclanQ2lPVNX
-         3Y4s+IdvJ3Y6Tr2qPsAsgWBNjx7CkCftXGY/gAW71AqyityFV32exnhzVgJH51GMVWFd
-         HlrLCoNt+awK1zy7sQesf/gzPZ152Kmzh8TY/olVyXtcK+ZYOtdmPp7L69OIDLRMSvur
-         F9mDsVQ6o6Vz/mOug8L9sl/QVZztmu+GxH88r0QjyFVQzBxP6SOTvS9VhkIOk8K1VhCC
-         4lBA==
-X-Gm-Message-State: AODbwcBhDrKXIwBQ5lmNaVwz3GFV/KH5GTDNbPaWk3H7iLKWEccwrQ5u
-        PzvpnC2D180/FGgiINuR87o3UdEQhQ==
-X-Received: by 10.46.97.18 with SMTP id v18mr1436246ljb.123.1496364578680;
- Thu, 01 Jun 2017 17:49:38 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=YkPG8A+sVVN1/1VLxcZ1uL/w2hlOwaVKfvBDUF8tQKA=;
+        b=JY1eJ/MXCoZ6R0FRyFEJz3OA4yCJave/RNTHlop3bbOGkJaDyHX2fuQCEIzO+tQcbc
+         uvhc2I1vceGqzUYPFMR+Iq1ipIc9HT1ACu3BDNWCMLBYKLHmoWEe/Tcf5dCfTTt9Eiwb
+         a1vv3Wc4LmjN1U8gGbCAzlzyAtAGIjhMwAgdXTy6lxi1ng+ut5YC/SoYe5GTPtRT1+mv
+         y2z2wDTX4U2hsF8qFvZxPOsUZYcRjnVGzWP+YoaQK1st9jRwMLZfFxEywxVRWd5Pv+8x
+         2E8O8IZJL8Lx3Xdp01m2dxTgw9g7FMHMfIAY37M1MDI1Ee98ToWxFtA7vwVpzE1wcBHe
+         9t9Q==
+X-Gm-Message-State: AODbwcBKjNgLx+s9RETCITqyBRrZqRFaNVmEPCqcZmUk5hSN0FPI1TGn
+        O4p9z2U4vIkb9K9mhKYdcg==
+X-Received: by 10.99.53.4 with SMTP id c4mr260344pga.165.1496365239449;
+        Thu, 01 Jun 2017 18:00:39 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:ec2c:8ebb:3fc7:e0d4])
+        by smtp.gmail.com with ESMTPSA id z69sm8675482pff.0.2017.06.01.18.00.38
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 01 Jun 2017 18:00:38 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, sandals@crustytoothpaste.net
+Subject: Re: [PATCH 08/33] grep: convert to struct object_id
+References: <20170530173109.54904-1-bmwill@google.com>
+        <20170530173109.54904-9-bmwill@google.com>
+Date:   Fri, 02 Jun 2017 10:00:38 +0900
+In-Reply-To: <20170530173109.54904-9-bmwill@google.com> (Brandon Williams's
+        message of "Tue, 30 May 2017 10:30:44 -0700")
+Message-ID: <xmqqlgpb2og9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.32.133 with HTTP; Thu, 1 Jun 2017 17:49:18 -0700 (PDT)
-In-Reply-To: <20170602002249.GI25542@zaya.teonanacatl.net>
-References: <CA+P7+xr39qk9qHE0=uU3HZE2wOhU9X7rmENoDfP=bp09j9N9Mg@mail.gmail.com>
- <20170601235055.22621-1-jonathantanmy@google.com> <20170602002249.GI25542@zaya.teonanacatl.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 1 Jun 2017 17:49:18 -0700
-Message-ID: <CA+P7+xrb-a_UczPkdPSgZN7jW0zBU6v8yJ7Q20maNAROzyKBzA@mail.gmail.com>
-Subject: Re: [PATCH] send-email: check for repo before invoking hook
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 1, 2017 at 5:22 PM, Todd Zullinger <tmz@pobox.com> wrote:
-> Hi Jonathan,
->
-> Jonathan Tan wrote:
->>
->> Thanks for the notification. Here's a patch to fix that. ---
->> git-send-email.perl   | 32 +++++++++++++++++---------------
->> t/t9001-send-email.sh |  8 ++++++++ 2 files changed, 25 insertions(+), 15
->> deletions(-)
->>
->> diff --git a/git-send-email.perl b/git-send-email.perl index
->> f0417f64e..94c54dc5a 100755 --- a/git-send-email.perl +++
->> b/git-send-email.perl @@ -1755,21 +1755,23 @@ sub unique_email_list { sub
->> validate_patch {       my $fn = shift;
->>
->> -       my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'), -
->> 'sendemail-validate'); -    my $hook_error; -       if (-x $validate_hook) {
->> -              my $target = abs_path($fn); -           # The hook needs a
->> correct cwd and GIT_DIR. -           my $cwd_save = cwd(); -
->> chdir($repo->wc_path() or $repo->repo_path()) -                 or
->> die("chdir: $!"); -          local $ENV{"GIT_DIR"} = $repo->repo_path(); -
->> $hook_error = "rejected by sendemail-validate hook" -                   if
->> system($validate_hook, $target); -           chdir($cwd_save) or die("chdir:
->> $!"); - } -     return $hook_error if $hook_error; +    if ($repo) { +
->> my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'), +
->> 'sendemail-validate'); +            my $hook_error; +               if (-x
->> $validate_hook) { +                      my $target = abs_path($fn); +
->> # The hook needs a correct cwd and GIT_DIR. +                   my $cwd_save
->> = cwd(); +                 chdir($repo->wc_path() or $repo->repo_path()) +
->> or die("chdir: $!"); +                  local $ENV{"GIT_DIR"} =
->> $repo->repo_path(); +                   $hook_error = "rejected by
->> sendemail-validate hook" +                           if
->> system($validate_hook, $target); +                   chdir($cwd_save) or
->> die("chdir: $!"); +         } +             return $hook_error if
->> $hook_error; +    }
->
->
-> Would it be worth doing the $repo test when defining $validate_hook to avoid
-> a layer of indentation?  Something like this (with whatever proper
-> wrapping/indentation is used for perl, if I have that wildly incorrect, of
-> course)?
->
+Brandon Williams <bmwill@google.com> writes:
 
-This approach makes more sense to me, but either should fix the bug.
-The first approach might be more resilient against future changes
-though...?
+> Convert the remaining parts of grep to use struct object_id.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  builtin/grep.c | 22 +++++++++++-----------
+>  cache.h        |  7 +++++++
+>  grep.c         | 17 ++++++++---------
+>  grep.h         |  2 +-
+>  4 files changed, 27 insertions(+), 21 deletions(-)
+> ...
+> +static inline struct object_id *oiddup(const struct object_id *src)
+> +{
+> +	struct object_id *dst = xmalloc(sizeof(struct object_id));
+> +	oidcpy(dst, src);
+> +	return dst;
+> +}
+> +
+>  static inline void hashclr(unsigned char *hash)
+>  {
+>  	memset(hash, 0, GIT_SHA1_RAWSZ);
+> diff --git a/grep.c b/grep.c
+> index 47cee4506..a240b4cdb 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -1747,9 +1747,8 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
+>  		 * If the identifier is non-NULL (in the submodule case) it
+>  		 * will be a SHA1 that needs to be copied.
+>  		 */
+> -	case GREP_SOURCE_SHA1:
+> -		gs->identifier = xmalloc(20);
+> -		hashcpy(gs->identifier, identifier);
+> +	case GREP_SOURCE_OID:
+> +		gs->identifier = oiddup(identifier);
+>  		break;
+>  	case GREP_SOURCE_BUF:
+>  		gs->identifier = NULL;
 
-Thanks,
-Jake
+These hunks triggered my "Huh?" meter a bit, simply because I tend
+to wonder not just "is this useful in many other places?" but also
+"is it a good idea to encourage the use of this thing?"; these look
+OK.
 
-> -- >8 --
-> diff --git i/git-send-email.perl w/git-send-email.perl
-> index f0417f64e7..e78a0a728a 100755
-> --- i/git-send-email.perl
-> +++ w/git-send-email.perl
-> @@ -1755,8 +1755,9 @@ sub unique_email_list {
-> sub validate_patch {
->         my $fn = shift;
->
-> -       my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'),
-> -                                   'sendemail-validate');
-> +       my $validate_hook = $repo ?
-> +               catfile(catdir($repo->repo_path(), 'hooks'),
-> +                       'sendemail-validate') : '';
->         my $hook_error;
->         if (-x $validate_hook) {
->                 my $target = abs_path($fn);
->
-> --
-> Todd
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> I have to decide between two equally frightening options.  If I wanted
-> to do that, I'd vote.
->    -- Duckman
->
+Thanks.
+
