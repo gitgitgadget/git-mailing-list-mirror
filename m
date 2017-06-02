@@ -7,134 +7,85 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70EC920D0A
-	for <e@80x24.org>; Thu,  1 Jun 2017 23:51:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4E5C20D0A
+	for <e@80x24.org>; Fri,  2 Jun 2017 00:15:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751122AbdFAXvV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 19:51:21 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:33909 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751105AbdFAXvU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 19:51:20 -0400
-Received: by mail-pf0-f179.google.com with SMTP id 9so40426795pfj.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 16:51:20 -0700 (PDT)
+        id S1751159AbdFBAPK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 20:15:10 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34104 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751122AbdFBAPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 20:15:09 -0400
+Received: by mail-pf0-f181.google.com with SMTP id 9so40772927pfj.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 17:15:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=cbeiJEJKXO3RP+q39+lxFCzzzdjM6VlfMm472FJwHaI=;
-        b=Zwlp5U+w4IS+oT8F47iO8BhFeqOO9Ub6wH9MpaDnYOzlSfLmT2iIiNRjYpHYeeT0+i
-         olN7ExJnOqGeqYp4/C8eo9q/pAa03NnItJnyWDPe+7mxTWv/F2H2zKAC3ijNR80z6yUj
-         oTwT97Xd7Du55rIBNXvCFcRVn4bdwUr0J9TGHnRpyEywitn85YlFtEXfnLDSnvdzLVUc
-         doH/w1QrH4f3aleQcl+rr0btyMOw96axIh0g34v5xnx/2VwSOYopnRQQNANORj5LL59P
-         3WzbnQmnziU/qoBRQ24JFKKA0nKgJmOr/dqe39UgNjvuR722oP8ARsFKd3rwAj8tZi3d
-         0y8Q==
+        h=from:to:cc:subject:date:message-id;
+        bh=ODgHSDASTu3JNHlwFxoPnxqRpay5FKEYdD2tfNBoJRk=;
+        b=VTLVWibQTPRY+bn8gcp/OSCvZJU5GknildDxXgGn1LcOMs3wFJ68xyCPcUFznLjGb0
+         XC2d9HOEMhAKGbXORw9/1intvh7Y7DTuajsvLoHiXDfTflk76//Wbxfko5FAhgvWN6ze
+         RM6BYTOO7217lzGMYYLMXXuDtjuzVTg+H1VRnkYLeJ8oBprcfbbzGTmcHiOog8/PDPaS
+         MZ/m+5nfaRo2f1M3+YOruVt7dW+h1pDrcTCE6H77BnHEUdLJfGsdc9bpGp+kMeg40LeG
+         kZyBII8uHuMCUJvKBYZvuzFFQaU8Glbv8icrdvD0Tsdfl9g/nfTHYkEwxKZka5Y3BK8P
+         yQ7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=cbeiJEJKXO3RP+q39+lxFCzzzdjM6VlfMm472FJwHaI=;
-        b=NGrl6QA6yM7VNVJ/M9C/DtEpyf/hwBvn/c4ZQHYS8q2goHtZrU23irvmbI3qSMoTk4
-         ZO9DpslVoU4oqBaeMDk9a/urwUyMSZ1fKxj79I+bll0yj9WYL3uA+Ifqrlz3cGn/bTpe
-         O0KlT251V/S9DTFYqok74xjgL6Insa457Deq+jMKeNEnPc0dgy+u5xmXwY6exJE/8ANk
-         a82XdD8Bu0yze8igak8kT2bf4RRYP5BmxZFmWNn9ibVAgIEysbOyDsw22CpRc5S8Inlq
-         cbABRuFs+5js1iVLILW7E5gNpurMyW9Y7wvLwYwjq4nMOqsNClZzdbdX1K+bOIXUImzf
-         F3OA==
-X-Gm-Message-State: AODbwcD6cqJGrXnUnlp18rzyWF/srg6C+aA+yFr7jOlP+X6suEegetN5
-        bM36c7XzO9J1kCACXxSogQ==
-X-Received: by 10.101.76.201 with SMTP id n9mr3858784pgt.40.1496361079783;
-        Thu, 01 Jun 2017 16:51:19 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ODgHSDASTu3JNHlwFxoPnxqRpay5FKEYdD2tfNBoJRk=;
+        b=hye5jpgx/Vai2HRD3vWOBtpzScgkvdRHc0cOgpIR4g6jV2HUa9AWw5sM6Q/ZrtKPqM
+         eXvC2VmlqW7Qs44SjtnAVsgXBxaq3fusCfSQtqEoOE60ey5ueGY91p+ogwbTuIrD5YgU
+         J6hq2Pgz/RC2N1Xt0oQUE1YN062a3PixC67Wnyg5ysc+vvplrmIA85V0FxNSsfXlqJrB
+         JVObwtl8vdf2LDmkE5ss3b7gfbvtO6wzEvRBhNdEtHZEUYBhcYZBQnT9Rl4F8Bpgzgrf
+         ZazlnVnAggnb9774Nuhc7Bt+wboXx5FUuEAiF1Y6FICFZifaLp0PbF1lAhO2XcJWtsQj
+         Fkdg==
+X-Gm-Message-State: AODbwcDydZ3wQcqOZTJ9jTN8Kp87MzdPVLtU1SfV+R7ES/EcMvgx+6LU
+        acK3TaZvtQUiECF7
+X-Received: by 10.84.241.206 with SMTP id t14mr99285010plm.48.1496362509051;
+        Thu, 01 Jun 2017 17:15:09 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id z7sm21074096pgr.3.2017.06.01.16.51.17
+        by smtp.gmail.com with ESMTPSA id s23sm38046377pfg.81.2017.06.01.17.15.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 16:51:18 -0700 (PDT)
+        Thu, 01 Jun 2017 17:15:07 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, bmwill@google.com,
-        gitster@pobox.com, jacob.keller@gmail.com
-Subject: [PATCH] send-email: check for repo before invoking hook
-Date:   Thu,  1 Jun 2017 16:50:55 -0700
-Message-Id: <20170601235055.22621-1-jonathantanmy@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@jeffhostetler.com
+Subject: [WIP 0/2] Modifying pack-objects to support --blob-size-limit
+Date:   Thu,  1 Jun 2017 17:14:53 -0700
+Message-Id: <cover.1496361873.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.13.0.506.g27d5fe0cd-goog
-In-Reply-To: <CA+P7+xr39qk9qHE0=uU3HZE2wOhU9X7rmENoDfP=bp09j9N9Mg@mail.gmail.com>
-References: <CA+P7+xr39qk9qHE0=uU3HZE2wOhU9X7rmENoDfP=bp09j9N9Mg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unless --no-validate is passed, send-email will invoke
-$repo->repo_path() in its search for a validate hook regardless of
-whether a Git repo is actually present.  Teach send-email to first check
-for repo existence.
+I took a look at modifying builtin/pack-objects.c to support excluding
+oversized blobs and reporting the exclusions that it has performed.
+Here's a work in progress - it might be of aid to others who are working
+on a similar feature and/or are modifying pack-objects for something
+else.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Thanks for the notification. Here's a patch to fix that.
----
- git-send-email.perl   | 32 +++++++++++++++++---------------
- t/t9001-send-email.sh |  8 ++++++++
- 2 files changed, 25 insertions(+), 15 deletions(-)
+The way I used to obtain a blob's size seems inefficient and redundant
+with check_object() - if you have a suggestion to improve this, I'm
+interested.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index f0417f64e..94c54dc5a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1755,21 +1755,23 @@ sub unique_email_list {
- sub validate_patch {
- 	my $fn = shift;
- 
--	my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'),
--				    'sendemail-validate');
--	my $hook_error;
--	if (-x $validate_hook) {
--		my $target = abs_path($fn);
--		# The hook needs a correct cwd and GIT_DIR.
--		my $cwd_save = cwd();
--		chdir($repo->wc_path() or $repo->repo_path())
--			or die("chdir: $!");
--		local $ENV{"GIT_DIR"} = $repo->repo_path();
--		$hook_error = "rejected by sendemail-validate hook"
--			if system($validate_hook, $target);
--		chdir($cwd_save) or die("chdir: $!");
--	}
--	return $hook_error if $hook_error;
-+	if ($repo) {
-+		my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'),
-+					    'sendemail-validate');
-+		my $hook_error;
-+		if (-x $validate_hook) {
-+			my $target = abs_path($fn);
-+			# The hook needs a correct cwd and GIT_DIR.
-+			my $cwd_save = cwd();
-+			chdir($repo->wc_path() or $repo->repo_path())
-+				or die("chdir: $!");
-+			local $ENV{"GIT_DIR"} = $repo->repo_path();
-+			$hook_error = "rejected by sendemail-validate hook"
-+				if system($validate_hook, $target);
-+			chdir($cwd_save) or die("chdir: $!");
-+		}
-+		return $hook_error if $hook_error;
-+	}
- 
- 	open(my $fh, '<', $fn)
- 		or die sprintf(__("unable to open %s: %s\n"), $fn, $!);
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 15128c755..d1e4e8ad1 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1953,4 +1953,12 @@ test_expect_success $PREREQ 'invoke hook' '
- 	)
- '
- 
-+test_expect_success $PREREQ 'test that send-email works outside a repo' '
-+	nongit git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		"$(pwd)/0001-add-master.patch"
-+'
-+
- test_done
+This is similar to [1] except that this reports blobs and their sizes
+(after the packfile is printed), and is slightly more comprehensive in
+that the read_object_list_from_stdin() codepath is also covered in
+addition to the get_object_list() codepath. (Although, to be clear,
+upload-pack always passes "--revs" and thus only needs the
+get_object_list() codepath).
+
+[1] https://public-inbox.org/git/1488994685-37403-3-git-send-email-jeffhost@microsoft.com/
+
+Jonathan Tan (2):
+  pack-objects: rename want_.* to ignore_.*
+  pack-objects: support --blob-size-limit
+
+ Documentation/git-pack-objects.txt |  19 ++++-
+ builtin/pack-objects.c             | 163 ++++++++++++++++++++++++++++++-------
+ t/t5300-pack-object.sh             |  71 ++++++++++++++++
+ 3 files changed, 223 insertions(+), 30 deletions(-)
+
 -- 
 2.13.0.506.g27d5fe0cd-goog
 
