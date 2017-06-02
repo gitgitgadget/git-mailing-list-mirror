@@ -2,204 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4E9B2027C
-	for <e@80x24.org>; Fri,  2 Jun 2017 19:35:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E76C2027C
+	for <e@80x24.org>; Fri,  2 Jun 2017 19:38:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751326AbdFBTfQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 15:35:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34033 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751182AbdFBTfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 15:35:14 -0400
-Received: (qmail 21144 invoked by uid 109); 2 Jun 2017 18:35:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 02 Jun 2017 18:35:06 +0000
-Received: (qmail 30231 invoked by uid 111); 2 Jun 2017 18:35:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 02 Jun 2017 14:35:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Jun 2017 14:35:04 -0400
-Date:   Fri, 2 Jun 2017 14:35:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ulrich Mueller <ulm@gentoo.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git-2.13.0: log --date=format:%z not working
-Message-ID: <20170602183504.ii7arq2ssxgwgyxr@sigill.intra.peff.net>
-References: <22824.29946.305300.380299@a1i15.kph.uni-mainz.de>
- <CACBZZX6t0Q9AJ4cpnG298tf5Las-YpmvvJXgLNNYMszikLvtMQ@mail.gmail.com>
- <20170527214611.suohggo226tvmbgt@sigill.intra.peff.net>
- <0a56f99e-aaa4-17ea-245a-12897ba08dbb@web.de>
- <xmqq1sr3161p.fsf@gitster.mtv.corp.google.com>
- <20170602030825.hdpbaisn54d4fi4n@sigill.intra.peff.net>
- <72b001fc-80e7-42b9-bd9d-87621da7978a@web.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <72b001fc-80e7-42b9-bd9d-87621da7978a@web.de>
+        id S1751157AbdFBTiw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 15:38:52 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:32880 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750966AbdFBTiv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 15:38:51 -0400
+Received: by mail-pf0-f181.google.com with SMTP id e193so56125939pfh.0
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 12:38:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=KS50lMOhamdo/Ezj7+UKAgYuSciDoAN3lZ7D2T2/akA=;
+        b=kV3cBRrWFgMEvxPrqtFTYRTjyPQ6PMHWpJtz0+Hsgmc6S+Zgy3+HMo13+dLg9Y0qCL
+         64Vvij7JwO603wB+qoQqdruNPvVAh3OBw8PQ8OYdPjY7duwiX3YiRQkzxv3XE68R4il5
+         W0qTsaVtgWOY2iX68aUnnU274wY6pcDCaWOpfE/Pm0g8sbT/DjPROeCp1QCa9pY6Ur9P
+         RdvnMHL0yI3YqAAVUbXsbvC9BrDIy8Ppu8xNSJEMuNSBVUOnsEAMsRiXzkwqGFcpb9rk
+         Y7cI93nVHKMEFr5qALC/y9zfa2+D+N8kZTBzOCzbWXWuh6WueHAMXELtimdj2LPgJDcY
+         dyag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=KS50lMOhamdo/Ezj7+UKAgYuSciDoAN3lZ7D2T2/akA=;
+        b=NiJrDJAhNtGoFb3hvuJoZsWuvZk3iJ8w20+YVKOXDUNBVuGQjouFM6Z3HKZnBI+lKn
+         2MCdDHu/Q13gcvSGvuJNjYJ04UMhHlhQhENcRHpESYCmGg4mdcjWjQ/0bmLUk3Ehnu+C
+         0Wp/z3ptWBxroUz9RWQt+0cJbVW2XxujtoZmVvPRhqIqCy/T8cR89WojqXlOqGDD2X+R
+         OcgVbww9cY+okru1ZmDkwmNO1TCN77/HDI3QQO17s0Eh7QoAKYvHWFXmMnvmMTVXtjXl
+         vmnpSm+OUSSJ2L83d4iKlgruDN+1J1LJG/qOiN86AZ2lRdwPzY/L/ZB3jMtMcDbg+Ehq
+         9gzw==
+X-Gm-Message-State: AODbwcCF9pHPTMsMHriZXg3sLDySsH+SO+aO/Q+j6Au0sb2obORiK82j
+        a7LLhJe7DP6j9jVhhYPxcA==
+X-Received: by 10.98.92.67 with SMTP id q64mr8433218pfb.117.1496432329956;
+        Fri, 02 Jun 2017 12:38:49 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id p89sm42789627pfk.67.2017.06.02.12.38.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 02 Jun 2017 12:38:48 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
+Subject: [WIP v2 0/2] Modifying pack objects to support --blob-max-bytes
+Date:   Fri,  2 Jun 2017 12:38:43 -0700
+Message-Id: <cover.1496432147.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.13.0.506.g27d5fe0cd-goog
+In-Reply-To: <cover.1496361873.git.jonathantanmy@google.com>
+References: <cover.1496361873.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 02, 2017 at 07:25:43PM +0200, René Scharfe wrote:
+Here's a new version addressing Junio's comments.
 
-> Am 02.06.2017 um 05:08 schrieb Jeff King:
-> > In theory the solution is:
-> > 
-> >    1. Start using localtime() instead of gmtime() with an adjustment when
-> >       we are converting to the local timezone (i.e., format-local). We
-> >       should be able to do this portably.
-> > 
-> >       This is easy to do, and it's better than handling %z ourselves,
-> >       because it makes %Z work, too.
-> > 
-> >    2. When showing the author's timezone, do some trickery to set the
-> >       program's timezone, then use localtime(), then restore the program
-> >       timezone.
-> > 
-> >       I couldn't get this to work reliably. And anyway, we'd still have
-> >       nothing to put in %Z since we don't have a timezone name at all in
-> >       the git objects. We just have "+0400" or whatever.
-> > 
-> > So I don't see a portable way to make (2) work.
+> Hmph, that statement is a hard to read and agree to.  I thought an
+> ignored object that is not going to be packed is one that won't hit
+> to_pack?
+
+That is true currently, but will not be the full truth once the 2nd
+patch is applied.  I have expanded the commit message to explain the
+plan in more detail.
+
+> It would be nice if the name of the parameter hints that this is
+> counted in bytes, e.g. "--blob-max-bytes"; 
+
+Done. Originally I wanted to avoid terms like "max" because this
+disallowed the user from requesting that even 0-byte blobs not be sent,
+but realized that I probably shouldn't bother about that. :-)
+
+> Do we need to future-proof the output format so that we can later
+> use 32-byte hash?  The input to pack-objects (i.e. rev-list --objects)
+> is hexadecimal text, and it may not be so bad to make this also
+> text, e.g. "<hash> SP <length> LF".  That way, you do not have to
+> worry about byte order, hash size, or length limited to uint64.
+
+The reason for using binary is for the convenience of the client to
+avoid another conversion before storing it to disk (and also network
+savings). In a large repo, I think this list will be quite large. I
+realized that I didn't mention anything about this in the commit
+message, so I have added an explanation.
+
+I think this is sufficiently future-proof in that the format of this
+hash matches the format of the hashes used in the objects in the
+packfile. As for object size being limited to uint64, I think the
+benefits of the space savings (in using binary) outweigh the small risk
+that our files will get larger than that before we upgrade our protocol
+:-P
+
+>> ++
+>> +If pack-objects cannot efficiently determine, for an arbitrary blob,
+>> +that no to-be-packed tree has that blob with a filename beginning with
+>> +".git" (for example, if bitmaps are used to calculate the objects to be
+>> +packed), it will pack all blobs regardless of size.
+>> +
+> This is a bit hard to understand, at least to me.  Let me step-wise
+> deconstruct what I think you are saying.
 > 
-> We could create a strftime wrapper that also takes a time zone offset,
-> with platform-specific implementations.  Is it worth the effort?
+>  - A blob can appear in multiple trees, and each tree has name
+>    (i.e. pathname component) for the blob.
 > 
-> What reliability issues did you run into?
-
-My patch is below for reference.  The issue is that we have to stuff a
-name into $TZ that the system libc will parse into something sensible.
-Just setting it to "%+05d" doesn't work at all. glibc at least seems to
-accept names like FOO+4, but:
-
-  - I have no idea if that's portable
-
-  - it only allows single-hour offsets, so +0330 is out. There might be
-    some way to represent that, but I'm not sure if it's portable
-    (FOO+0300 doesn't seem to work even on glibc).
-
-  - that sets %Z to "FOO", which is obviously nonsense
-
-> > If we do handle "%z" ourselves (either always or for just the one case),
-> > what should the matching %Z say? Right now (and I think with René's
-> > patch) it says GMT, which is actively misleading. We should probably
-> > replace it with the same text as "%z". That's not quite what the user
-> > wanted, but at least it's accurate.
+>  - Sometimes we may know _all_ trees that contain a particular
+>    blob and hence _all_ names these trees call this blob.  In such a
+>    case, we can _prove_ that the blob never is used as ".git<something>"
+>    in any tree.
 > 
-> On Linux "%z %Z" is expanded to "+0200 CEST" for me, while on Windows I
-> get "Mitteleurop▒ische Sommerzeit Mitteleurop▒ische Sommerzeit".  (That
-> "▒" is probably supposed to be an "ä".)  POSIX requires  +hhmm or -hhmm
-> format for %z, and for %Z is to be "Replaced by the timezone name or
-> abbreviation".
+>  - We exclude a blob that is larger than the specified limit, but
+>    only when we can prove the above.  If it is possible that the
+>    blob might appear as ".git<something>" in some tree, the blob is
+>    not omitted no matter its size.
 > 
-> I'd say "GMT+0200" etc. is a nice enough timezone name, i.e. having %Z
-> resolve to the same as %z plus a literal prefix of "GMT" should at least
-> not be wrong.
-
-I thought that, too, but I think it is wrong based on my understanding
-of how $TZ is parsed. There something like "EDT-4" means "call this EDT,
-and by the way it is 4 hours behind GMT".
-
-So what you're proposing isn't wrong per se, but your notation means
-something totally different than what similar-looking notation looks
-like on the $TZ end, which is bound to create confusion.
-
-> Alternatively we could have a lookup table mapping a few typical offsets
-> to timezone names, but e.g. handling daylight saving times would
-> probably be too hard (when did that part of the world switch in the
-> given year?  north or south of the equator?)..
-
-Right, I don't think the mapping of zone to offset is reversible,
-because many zones map to the same offset. If I tell you I'm in -0500,
-even just in the US that could mean Eastern Standard Time (winter, no
-DST) or Central Daylight Time (summer, DST). Not to mention that other
-political entities in the same longitude have their own zones which do
-DST at different times (or were even established as zones at different
-times; historical dates need to use the zones as they were at that
-time).
-
-> > As far as the patch itself goes, I'm disappointed to lose the automatic
-> > "%" handling for all of the other callers. But I suspect the boilerplate
-> > involved in any solution that lets callers choose whether or not to use
-> > it would end up being longer than just handling it in each caller.
+> And this is a very conservative way to avoid omitting something that
+> could be one of those control files like ".gitignore".
 > 
-> Actually I felt uneasy when you added that forced %% handling because it
-> put a policy into an otherwise neutral interpreter function.  I just had
-> no practical argument against it -- until now.
+> Am I following your thought correctly?
+
+We only need to prove for *to-be-packed* trees (the trees that
+pack-objects are about to pack in the packfile(s) that it is printing),
+but otherwise, you are correct. I was trying to be thorough in saying
+that "if we don't have bitmaps, we know if a blob's name starts with
+'.git', so we can do filtering by size, but if we have bitmaps, we don't
+have any relevant name information" - any rewording suggestions are
+appreciated.
+
+> Can this multiplication overflow (hint: st_mult)?
+
+Thanks - used st_mult.
+
+> This sorting is a part of external contract (i.e. "output in hash
+> order" is documented), but is it necessary?  Just wondering.
+
+It is convenient for the client because the client can then store it
+directly and binary search when accessing it. (Added a note about
+convenience to the commit message.)
+
+> You do want to exclude the trailing thing out of the checksum, but
+> CSUM_CLOSE would close the fd and that is why you pass 0 here.  OK.
+>
+> Even though we are in "pack_to_stdout" codepath, I'd prefer to
+> consistently use f->fd, not a hardcoded 1 here.  Of course,
+> sha1close() would have freed 'f' at this point, so we need to grab
+> the return value from the function to learn which fd is connected to
+> our original "stdout" at this point.
 > 
-> I'd rather see strbuf_expand also lose the hard-coded percent sign, but
-> again I don't have an actual user for such a flexibility (yet).
+> Likewise for write_oversized_info(), which probably should just take
+> "int fd" as parameter.
+
+Done for write_oversized_info(), although now that we are moving the
+invocation of write_oversized_info() out of write_pack_file(), this
+might not be so important. (For the rest, I have reverted the code
+because we are now printing the excluded hashes before the packfile
+instead of after.)
+
+> I do not necessarily think it is a bad idea to show this as trailing
+> data after the pack, but when we come to this function, do we have
+> enough information to make the "oversize" information appear before
+> the pack data if we wanted to?  I have a suspicion that it is easier
+> to handle at the receiving end, after the capability exchange
+> decides to use this "omit oversized ones" extension, to receive this
+> before the packdata begins.  If it is at the end, the receiver needs
+> to spawn either unpack-objects or index-objects to cause it write to
+> the disk, but when it does so, it has to have a FD open to read from
+> their standard output so that the receiver can grab the "remainder"
+> that these programs did not process.  "Write to the end of the pack
+> stream data to these programs, and process the remainder ourselves"
+> is much harder to arrange, I'd suspect.
+
+Yes, we can write at the beginning - done.
+
+> > +/*
+> > + * Returns 1 and records this blob in oversized_blobs if the given blob does
+> > + * not meet any defined blob size limits.  Blobs that appear as a tree entry
+> > + * whose basename begins with ".git" are never considered oversized.
+> > + *
+> > + * If the tree entry corresponding to the given blob is unknown, pass NULL as
+> > + * name. In this case, this function will always return 0 to avoid false
+> > + * positives.
+> > + */
+> > +static int oversized(const unsigned char *sha1, const char *name) {  
+>
+> Not object_id?
+
+This would require a "(const struct object_id *) sha1" cast in its
+caller that potentially violates alignment constraints, as far as I
+know, so I used "const unsigned char *" for now. If the object_id
+conversion doesn't include this file in the near future, I'll try to
+send out a patch for this file.
+
+> When we have two paths to a blob, and the blob is first fed to this
+> function with one name that does not begin with ".git", we would
+> register it to the hashmap.  And then the other name that begins
+> with ".git" is later discovered to point at the same blob, what
+> happens?  Would we need to unregister it from the hashmap elsewhere
+> in the code?
+[snip]
+> Ah, is this where the "unregistering" happens?
+
+Yes.
+
+> >  static int add_object_entry(const unsigned char *sha1, enum object_type type,
+> > -			    const char *name, int exclude)
+> > +			    const char *name, int preferred_base)  
 > 
-> Perhaps we should add a fully neutral strbuf_expand_core (or whatever),
-> make strbuf_expand a wrapper with hard-coded % and %% handling and use
-> the core function in the strftime wrapper.  Except that the function is
-> not easily stackable.  Hmm..
+> This belongs to the previous step that renamed "exclude", no?
 
-Right, that's the boilerplate trickiness I was referring to. It's
-probably not worth the effort.
+Yes - done.
 
-Anyway, here's my patch. I've been testing it with:
+Jonathan Tan (2):
+  pack-objects: rename want_.* to ignore_.*
+  pack-objects: support --blob-max-bytes
 
-  ./git log --format='%ai%n%ad%n' --date=format:'%Y-%m-%d %H:%M:%S %z (%Z)'
+ Documentation/git-pack-objects.txt |  19 ++++-
+ builtin/pack-objects.c             | 159 ++++++++++++++++++++++++++++++-------
+ t/t5300-pack-object.sh             |  71 +++++++++++++++++
+ 3 files changed, 220 insertions(+), 29 deletions(-)
 
-which lets you compare a variety of commits with the existing formatting
-routine.
-
----
-diff --git a/date.c b/date.c
-index 63fa99685..a6214172e 100644
---- a/date.c
-+++ b/date.c
-@@ -196,6 +196,34 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
- 		return timebuf.buf;
- 	}
- 
-+	if (mode->type == DATE_STRFTIME) {
-+		char *orig_tz;
-+		time_t t = time;
-+
-+		if (!mode->local) {
-+			char *new_tz = xstrfmt("GIT%+d", -tz / 100);
-+			orig_tz = xstrdup_or_null(getenv("TZ"));
-+			setenv("TZ", new_tz, 1);
-+			free(new_tz);
-+			tzset();
-+		}
-+
-+		tm = localtime(&t);
-+		strbuf_reset(&timebuf);
-+		strbuf_addftime(&timebuf, mode->strftime_fmt, tm);
-+
-+		if (!mode->local) {
-+			if (orig_tz)
-+				setenv("TZ", orig_tz, 1);
-+			else
-+				unsetenv("TZ");
-+			free(orig_tz);
-+			tzset();
-+		}
-+
-+		return timebuf.buf;
-+	}
-+
- 	if (mode->local)
- 		tz = local_tzoffset(time);
- 
-@@ -245,8 +273,6 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
- 			weekday_names[tm->tm_wday], tm->tm_mday,
- 			month_names[tm->tm_mon], tm->tm_year + 1900,
- 			tm->tm_hour, tm->tm_min, tm->tm_sec, tz);
--	else if (mode->type == DATE_STRFTIME)
--		strbuf_addftime(&timebuf, mode->strftime_fmt, tm);
- 	else
- 		strbuf_addf(&timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
- 				weekday_names[tm->tm_wday],
+-- 
+2.13.0.506.g27d5fe0cd-goog
 
