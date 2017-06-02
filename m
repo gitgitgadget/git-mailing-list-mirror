@@ -7,126 +7,128 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AE912027C
-	for <e@80x24.org>; Fri,  2 Jun 2017 18:32:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0C742027C
+	for <e@80x24.org>; Fri,  2 Jun 2017 18:55:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751141AbdFBScm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 14:32:42 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:36311 "EHLO
+        id S1751184AbdFBSzd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 14:55:33 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:33330 "EHLO
         mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750807AbdFBScl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 14:32:41 -0400
-Received: by mail-pf0-f169.google.com with SMTP id m17so54840898pfg.3
-        for <git@vger.kernel.org>; Fri, 02 Jun 2017 11:32:41 -0700 (PDT)
+        with ESMTP id S1751007AbdFBSzc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 14:55:32 -0400
+Received: by mail-pf0-f169.google.com with SMTP id e193so55309547pfh.0
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 11:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=hkDB8hyVGL5ACxgx9/qgqe4U+lGNmDzBe5nhdaR5uA8=;
-        b=eepybDfVjUWiwe7qkmHA812sbRViB/CSqf9YJan4ULmLQPx1unbbjXB/thkORerlpq
-         56aFQTs0y/++XyOdVKm5Q6U4ijijQLvHW5w1m7icwEIr754JrtaIUWSB6gAKJo4OVbDg
-         V2RBTO2uriX7xDKa6UDunzuKAHKabRy0L/MsfmvKb0BuB/zqHtyZ7Fe0Tu7vBfzpwAPF
-         ejEYKdve/Oq9jNe+yfUptfvD+f5A1NfwoBUc2x36JL4mRyDSXAoilwx8c8cEMycLtZbB
-         CVAav9+586+oU5YInV6dFPvXQvetLHhrXyg8b31ijOPavFPk6cD++P2eM04q1NSw53i0
-         Wvzw==
+        bh=jh6JbgLtG2uzYNmHYRlTY5mglZvKo93zyZBXvHMYd9k=;
+        b=mdP4jrHK9Px+f6RiJnBlWvagshIDXCRGeBH0LuDx9MpuagrF+qNDRA+15F5VRwNebT
+         jHVf+j9htB2U0Vef+EcAvXISPYcmMMYWVT39luxrCoH1er0puE5hIOYCW6FEPdrztvHH
+         JVeNauyAjtXhZdSfOJ2sIUXH/Cmvjkrq4gAMxvLR0rPFA5j1f6oh5VDRDTGI77I9Vsti
+         U8NteBVGgJEhwbvib2gY3hFqnrOIqzyJRC1ehEC4E/67MzC8hS7HqXwNzUlbJA2fD5J7
+         Po/b+u0YuhINh+v7UWvIrJvz9v+KTVt/G4BMPWCq8EWobOtWwFqqQoErKbUFY7FdnuTW
+         fo5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hkDB8hyVGL5ACxgx9/qgqe4U+lGNmDzBe5nhdaR5uA8=;
-        b=hjj3Hl+FIp9+rw0vj2RTqk68TgHLsnMp0FQiqHur2V0AoOzG20YEoXPOkUYfguIfvk
-         a3JyhL/7bSo5qe2YjRIdTkawH28eDG740ukNWMHwGt0Y3btnHUJktNrTCBnUFb1lBxM2
-         bc7OG3JRwsQawcoV4fpEYvGrJap3Q5AIKa5Zuep2jksM4fBB9kH14lmwNfDBjjzW0uYJ
-         kpLSuyJi0CQKqLYaFI+ObCZwXtHV2iIo1TQ6yErU6Xer7BiM1SKnWFgrPHQCvvRGmn5b
-         +3P20q/HcYnxNjNwX8pjw5jksfHGQMmEDWTCBq640kKJZuqaNzO0RKgqy7vC5daU4LxM
-         6zXQ==
-X-Gm-Message-State: AODbwcCT77Eck/5ZSX5N6GIu7t/kJk3lZsLeaa1hN7iBXX71g9IMLu4z
-        z3w1ooXzWnFrrFw3
-X-Received: by 10.84.148.134 with SMTP id k6mr1256006pla.55.1496428360389;
-        Fri, 02 Jun 2017 11:32:40 -0700 (PDT)
+        bh=jh6JbgLtG2uzYNmHYRlTY5mglZvKo93zyZBXvHMYd9k=;
+        b=rByHetXmixK5MWZJDHAk20m6gy0PZlNOLdwRrOmrQhbaKxqXViZJqIl32qxQJeNfma
+         iqWggI1H5SiD+Vj4xpWBjeVN80ggTbPbn5x9dueRMKxCtq7nAe7WQKchWMOo/f/bGXhi
+         jkQcBzYGiqTXU33EvQ5zX9BW4mX2D9DLFfTq42nf/UkBe1fnCbE1PVJmOHV2Y5vLHk9w
+         nUzE+QZN3TKXw6Js9l+dcDO+NKe3td5Y65lgrtI0FeOIIPWRBqgbrByKu/44vp/DFGRC
+         NS9ap1NcvEZcqDSDLeM+4J6paenP8W2y3r2Qb0hYHjTquzhIGX/Q4KeBvpKmivsiSM6w
+         smfA==
+X-Gm-Message-State: AODbwcANMWKaBl+PYQDDogd57VVZULi2NYeviPmoy6n4LSJGadh7Rifc
+        BINm3kON+7I9ms9d
+X-Received: by 10.99.131.65 with SMTP id h62mr7672743pge.151.1496429731205;
+        Fri, 02 Jun 2017 11:55:31 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:89d2:8d21:abcd:1e61])
-        by smtp.gmail.com with ESMTPSA id n87sm40351989pfi.124.2017.06.02.11.32.39
+        by smtp.gmail.com with ESMTPSA id k86sm41148762pfk.125.2017.06.02.11.55.29
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Jun 2017 11:32:39 -0700 (PDT)
-Date:   Fri, 2 Jun 2017 11:32:38 -0700
+        Fri, 02 Jun 2017 11:55:30 -0700 (PDT)
+Date:   Fri, 2 Jun 2017 11:55:28 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Subject: Re: [PATCH 22/33] notes-merge: convert notes_merge* to struct
- object_id
-Message-ID: <20170602183238.GB57260@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net, sandals@crustytoothpaste.net
+Subject: Re: [PATCH 25/33] notes-merge: convert verify_notes_filepair to
+ struct object_id
+Message-ID: <20170602185528.GC57260@google.com>
 References: <20170530173109.54904-1-bmwill@google.com>
- <20170530173109.54904-23-bmwill@google.com>
- <20170530185653.cfy4cbq3pmxfq5x6@genre.crustytoothpaste.net>
+ <20170530173109.54904-26-bmwill@google.com>
+ <xmqqpoen2p2a.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170530185653.cfy4cbq3pmxfq5x6@genre.crustytoothpaste.net>
+In-Reply-To: <xmqqpoen2p2a.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/31, brian m. carlson wrote:
-> On Tue, May 30, 2017 at 10:30:58AM -0700, Brandon Williams wrote:
-> > @@ -596,47 +596,47 @@ int notes_merge(struct notes_merge_options *o,
-> >  	/* Find merge bases */
-> >  	bases = get_merge_bases(local, remote);
-> >  	if (!bases) {
-> > -		base_sha1 = null_sha1;
-> > -		base_tree_sha1 = EMPTY_TREE_SHA1_BIN;
-> > +		base_oid = &null_oid;
-> > +		base_tree_oid = &empty_tree_oid;
-> >  		if (o->verbosity >= 4)
-> >  			printf("No merge base found; doing history-less merge\n");
-> >  	} else if (!bases->next) {
-> > -		base_sha1 = bases->item->object.oid.hash;
-> > -		base_tree_sha1 = bases->item->tree->object.oid.hash;
-> > +		base_oid = &bases->item->object.oid;
-> > +		base_tree_oid = &bases->item->tree->object.oid;
-> >  		if (o->verbosity >= 4)
-> >  			printf("One merge base found (%.7s)\n",
-> > -				sha1_to_hex(base_sha1));
-> > +			       oid_to_hex(base_oid));
+On 06/02, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
 > 
-> I noticed you fixed up the indentation.  Thanks.
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  notes-merge.c | 20 ++++++++++----------
+> >  1 file changed, 10 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/notes-merge.c b/notes-merge.c
+> > index 55dbb3659..962e9b1bc 100644
+> > --- a/notes-merge.c
+> > +++ b/notes-merge.c
+> > @@ -22,21 +22,21 @@ void init_notes_merge_options(struct notes_merge_options *o)
+> >  	o->verbosity = NOTES_MERGE_VERBOSITY_DEFAULT;
+> >  }
+> >  
+> > -static int path_to_sha1(const char *path, unsigned char *sha1)
+> > +static int path_to_oid(const char *path, struct object_id *oid)
+> >  {
+> > -	char hex_sha1[40];
+> > +	char hex_oid[GIT_SHA1_HEXSZ];
+> >  	int i = 0;
+> > -	while (*path && i < 40) {
+> > +	while (*path && i < GIT_SHA1_HEXSZ) {
+> >  		if (*path != '/')
+> > -			hex_sha1[i++] = *path;
+> > +			hex_oid[i++] = *path;
+> >  		path++;
+> >  	}
 > 
-> > diff --git a/notes-merge.h b/notes-merge.h
-> > index 0d890563b..eaa8e3b86 100644
-> > --- a/notes-merge.h
-> > +++ b/notes-merge.h
-> > @@ -33,15 +33,15 @@ void init_notes_merge_options(struct notes_merge_options *o);
-> >   *
-> >   * 1. The merge trivially results in an existing commit (e.g. fast-forward or
-> >   *    already-up-to-date). 'local_tree' is untouched, the SHA1 of the result
-> > - *    is written into 'result_sha1' and 0 is returned.
-> > + *    is written into 'result_oid' and 0 is returned.
-> >   * 2. The merge successfully completes, producing a merge commit. local_tree
-> >   *    contains the updated notes tree, the SHA1 of the resulting commit is
-> > - *    written into 'result_sha1', and 1 is returned.
-> > + *    written into 'result_oid', and 1 is returned.
-> >   * 3. The merge results in conflicts. This is similar to #2 in that the
-> >   *    partial merge result (i.e. merge result minus the unmerged entries)
-> >   *    are stored in 'local_tree', and the SHA1 or the resulting commit
-> >   *    (to be amended when the conflicts have been resolved) is written into
-> > - *    'result_sha1'. The unmerged entries are written into the
-> > + *    'result_oid'. The unmerged entries are written into the
-> >   *    .git/NOTES_MERGE_WORKTREE directory with conflict markers.
-> >   *    -1 is returned.
-> >   *
+> It's no brainer to do s/GIT_SHA1_HEXSZ/GIT_MAX_HEXSZ/ for all of the
+> above, but ...
+
+I'll fix this.
+
 > 
-> Did you want to change the comment to say "object ID" or "OID" instead
-> of "SHA1" like you did in an earlier patch?
+> > -	if (*path || i != 40)
+> > +	if (*path || i != GIT_SHA1_HEXSZ)
+> >  		return -1;
+> 
+> ... this one is tricky.  
+> 
+> What's in our envisioned future?  Are we expecing to see object
+> names, named with two or more hash functions, in a same repository?
+> If so, and one is 20 bytes and another one is 32 bytes, then this
+> should check 'i' against 40 and 64 and pass if 'i' is one of these
+> expected lengths?
 
-Yep I can do that here and in the comment below this one.
+That's a good question, and at this point in time do we have an
+envisioned future?  From some of our conversations I seem to remember
+that we don't want a single repository to have objects based on two
+different hash functions, but rather some translation layer to convert
+between two hashing functions (for compatibility with other
+non-converted repos).  Though nothing has been settled upon yet so I
+don't know what the future would look like (and the best way to prepare
+for it).
 
-> -- 
-> brian m. carlson / brian with sandals: Houston, Texas, US
-> https://www.crustytoothpaste.net/~bmc | My opinion only
-> OpenPGP: https://keybase.io/bk2204
-
-
+> 
+> > -	return get_sha1_hex(hex_sha1, sha1);
+> > +	return get_oid_hex(hex_oid, oid);
+> >  }
 
 -- 
 Brandon Williams
