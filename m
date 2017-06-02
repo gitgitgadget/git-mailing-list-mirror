@@ -7,131 +7,303 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6FE92027C
-	for <e@80x24.org>; Fri,  2 Jun 2017 20:30:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A168A2027C
+	for <e@80x24.org>; Fri,  2 Jun 2017 20:39:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751162AbdFBU36 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 16:29:58 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:35523 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750966AbdFBU35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 16:29:57 -0400
-Received: by mail-it0-f67.google.com with SMTP id 67so12990189itx.2
-        for <git@vger.kernel.org>; Fri, 02 Jun 2017 13:29:57 -0700 (PDT)
+        id S1751162AbdFBUjC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 16:39:02 -0400
+Received: from mail-it0-f42.google.com ([209.85.214.42]:35067 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750966AbdFBUjB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 16:39:01 -0400
+Received: by mail-it0-f42.google.com with SMTP id m62so17487784itc.0
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 13:39:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/gBQ8y5ZWp4elewkC5bPQqXgk4rbUGJy37bWLfVF5gY=;
-        b=hBXzKbp54Foolk4UHS0suDXb6ga5KMOqtg5rej3t0xdKvgoIjFpk0zubezEFxTQdqg
-         mr/mN0SS0PetEjcurdR1AhMWt1ruLqS49BGepLxGWsWSMrFh2AaVMfAr9qzv6jRJFy28
-         ztD0fm4QSMYOIQ6iHiuzgY1Z20uNPINNAo76AxiOYTswRkkPhyMiJ1AK3eurI2wvlIj/
-         Aheipf9lorROExRSnUg+olM7YdGingZ46OZBa+zO5jFzx6ZZCdfN11pKxicre3WMNiVY
-         dWID+51AgPypxVqbHiKqnVFIp48iyESsUuMHe8U8gEcSLEO/LJNRAsYvOqNQJiaQ2Rye
-         2inA==
+         :cc:content-transfer-encoding;
+        bh=LCACSocYICZhFkVsWY0PJ7GOTp46lmqVDrEjzAPLnfI=;
+        b=Vi+va4ytHUNGloCMvvFHBwQlDdUMOdt3yZoOcgzkeWyBh1xLF1t/NiH5vZQC0YQznO
+         x7MzAEADzQCac2w2nnr3Sh47xLGYvs3DLaqogEavIRD8ltiisdwCY1tpKjIibn1rRuQt
+         piuB5poVRFSuRQnSu6+E1P18HifkvM24AE5k5zkq2cqOO20mtoSA+dujSzjCwnqKuni8
+         Vq2YJoN3+w8LwCD0ekxEH2pWhr/9jWHB3wIPhK0XfeqcSVcjeWiGRHLusaQZUHqDd7Jn
+         Uc2GvJIub+JdOzuEypnxLwCQqW4GExY8OF0nQv5ItmAsktYbB0F4oxIjDTol9S1GLMqT
+         Q3GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/gBQ8y5ZWp4elewkC5bPQqXgk4rbUGJy37bWLfVF5gY=;
-        b=nbEUsTt9kDo3LZIB7w7Zx8Nnrvz3IGhHq6HlkEGMatQ+NG2Q+F+b1rOjJak4GyHW2x
-         gEt2xLwwUrbQe+OsZg0VayRGJcULLBLOe4ZvJy4uKoS7FqQVlwKbyRMPZEO8otpaObbt
-         NvuE9xQGobdZEcXkgJR8P5oK2CjQy5PDZ+9l6bBelOLU6sukcydre3Enq+nE9saBm1Fc
-         J4zhTRUcDxQp/Ka2Xry+2MTwaYPbErrPHV1bngss1KHzplT/oSTmCZG93z/wjeFYfHpp
-         CbIVYH1e9bFotrydPxBA7otT4xa1V5Vctda5aI7Qom1uFYqjcevW+1HDob4o43vxReXN
-         tjlg==
-X-Gm-Message-State: AODbwcCvQ0XgJ8+qLtVDjjhFUSA1wTMGPTw9+2lWZgMyJ8ZU+NTmALC4
-        2xSdiY1rtTlZmKegxorNEY+mKobLRw==
-X-Received: by 10.36.53.79 with SMTP id k76mr1191737ita.71.1496435396716; Fri,
- 02 Jun 2017 13:29:56 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LCACSocYICZhFkVsWY0PJ7GOTp46lmqVDrEjzAPLnfI=;
+        b=ujcO32Bgp33qdekNTy768AZM/+96BJHUZxrTy3GCjkxlbtiP6WsZ0t3jI2Z/oRCwqf
+         PncEaLmTW/pioauVgmhowbOza7/pbcobJbrNsVw4zrsbh/Kkf4ZhWeNX0GGQMxw15V9p
+         LrvktovX0IKH9dgiKgF3ol/T2ZD9eFXJwz7vKsFolv0xwHNVYYsGEQdiS18ZoY0rTfDw
+         l8rfu2AdCaD+r/7B2TabJZzns1HkjXZipQz2eCEzwcFDBSzXd/3hzhD4u4PpXhbPATSm
+         g3K0dpxzxXZJNwlDq7o4K53AQGIVDvc5yBaUDZ4aPF3ZL8rYMmbfz0wZko7kcKmO2ILm
+         s5HQ==
+X-Gm-Message-State: AODbwcDqNAqyvPyuqMV7P/5Cfo0h3xmSAF16P4aTZaYEKssAiAOar3Uf
+        b2nBtPrpbypxSZ6BFVmexC5Oo67qYQ==
+X-Received: by 10.107.201.131 with SMTP id z125mr9181859iof.160.1496435940180;
+ Fri, 02 Jun 2017 13:39:00 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.3.231 with HTTP; Fri, 2 Jun 2017 13:29:36 -0700 (PDT)
-In-Reply-To: <20170602175455.GA30988@aiede.mtv.corp.google.com>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
- <20170531104213.16944-3-phillip.wood@talktalk.net> <alpine.DEB.2.21.1.1706011329350.3610@virtualbox>
- <xmqq7f0v46q3.fsf@gitster.mtv.corp.google.com> <CAGZ79kaM9ryT1gWx=L6S90HPCaDPNZ6H124HAJscpeJCQFDN8Q@mail.gmail.com>
- <alpine.DEB.2.21.1.1706021442190.171564@virtualbox> <20170602175455.GA30988@aiede.mtv.corp.google.com>
+Received: by 10.107.3.231 with HTTP; Fri, 2 Jun 2017 13:38:39 -0700 (PDT)
+In-Reply-To: <CANgJU+UzoaN3Urj=L4unMMtNwFm6G8LGxx19g49AR5R+76F2OA@mail.gmail.com>
+References: <mvm4lw0un5n.fsf@suse.de> <5100A096-EBAC-4B01-A94D-69D31093148D@gmail.com>
+ <xmqqwp8w3uff.fsf@gitster.mtv.corp.google.com> <mvmmv9st3yv.fsf@suse.de>
+ <CAN0heSrzpwhS3Zf83vTzHAAmi8YVD4CoCh_px5SBXBZhSKPqPQ@mail.gmail.com>
+ <CACBZZX6H9EZTLVnunoH2641fw6QmQL=hO9isinK07-dHnuxyFQ@mail.gmail.com>
+ <CAN0heSrZcW3b6Osa8XNs0ghg2RE0ZS6FdPq8oPpwLcJjXAtLHg@mail.gmail.com>
+ <CAN0heSp9DpW4_0QL57_oAHGu+os8k6yd=Z5+0MJnaL6iXTa-qQ@mail.gmail.com>
+ <xmqq37bj454a.fsf@gitster.mtv.corp.google.com> <CACBZZX7EvUqH28uni+r=RUBXb9=WTp732B4=rq+ViD_kecxZaw@mail.gmail.com>
+ <CAN0heSq3CSe=Hgygtzd+ZM4rW-qM1_chrNd7Pq0KnYnKEVXcpw@mail.gmail.com>
+ <CACBZZX5re5Ge1OzxYOE42nwBhhusya6=M9An08X-KzaqNH9Cog@mail.gmail.com> <CANgJU+UzoaN3Urj=L4unMMtNwFm6G8LGxx19g49AR5R+76F2OA@mail.gmail.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 2 Jun 2017 22:29:36 +0200
-Message-ID: <CACBZZX7JRA2niwt9wsGAxnzS+gWS8hTUgzWm8NaY1gs87o8xVQ@mail.gmail.com>
-Subject: Re: pushing for a new hash, was Re: [PATCH 2/3] rebase: Add tests for
- console output
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
+Date:   Fri, 2 Jun 2017 22:38:39 +0200
+Message-ID: <CACBZZX5ZLGpZFnPcGiohMTAk9ShBZe0Mrx2s42xNhmK_zPApDg@mail.gmail.com>
+Subject: Re: Unaligned accesses in sha1dc
+To:     demerphq <demerphq@gmail.com>
+Cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+        Andreas Schwab <schwab@suse.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Marc Stevens <marc@marc-stevens.nl>,
+        "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 2, 2017 at 7:54 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi Dscho,
->
-> Johannes Schindelin wrote:
->> On Thu, 1 Jun 2017, Stefan Beller wrote:
->
->>> We had a discussion off list how much of the test suite is in bad shape,
->>> and "$ git grep ^index" points out a lot of places as well.
+On Fri, Jun 2, 2017 at 10:17 PM, demerphq <demerphq@gmail.com> wrote:
+> On 2 June 2017 at 21:32, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
+mail.com> wrote:
+>> On Fri, Jun 2, 2017 at 11:49 AM, Martin =C3=85gren <martin.agren@gmail.c=
+om> wrote:
+>>> On 2 June 2017 at 10:51, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab=
+@gmail.com> wrote:
+>>>> On Fri, Jun 2, 2017 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>>>>> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>>>>>
+>>>>>> I looked into this some more. It turns out it is possible to trigger
+>>>>>> undefined behavior on "next". Here's what I did:
+>>>>>> ...
+>>>>>>
+>>>>>> This "fixes" the problem:
+>>>>>> ...
+>>>>>> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+>>>>>> index 3dff80a..d6f4c44 100644
+>>>>>> --- a/sha1dc/sha1.c
+>>>>>> +++ b/sha1dc/sha1.c
+>>>>>> @@ -66,9 +66,9 @@
+>>>>>> ...
+>>>>>> With this diff, various tests which seem relevant for SHA-1 pass,
+>>>>>> including t0013, and the UBSan-error is gone. The second diff is jus=
+t
+>>>>>> a monkey-patch. I have no reason to believe I will be able to come u=
+p
+>>>>>> with a proper and complete patch for sha1dc. And I guess such a thin=
+g
+>>>>>> would not really be Git's patch to carry, either. But at least Git
+>>>>>> could consider whether to keep relying on undefined behavior or not.
+>>>>>>
+>>>>>> There's a fair chance I've mangled the whitespace. I'm using gmail's
+>>>>>> web interface... Sorry about that.
+>>>>>
+>>>>> Thanks.  I see Marc Stevens is CC'ed in the thread, so I'd expect
+>>>>> that the final "fix" would come from his sha1collisiondetection
+>>>>> repository via =C3=86var.
+>>>>>
+>>>>> In the meantime, I am wondering if it makes sense to merge the
+>>>>> earlier update with #ifdef ALLOW_UNALIGNED_ACCESS and #ifdef
+>>>>> SHA1DC_FORCE_LITTLEENDIAN for the v2.13.x maintenance track, which
+>>>>> would at least unblock those on platforms v2.13.0 did not work
+>>>>> correctly at all.
+>>>>>
+>>>>> =C3=86var, thoughts?
+>>>>
+>>>> I think we're mixing up several things here, which need to be untangle=
+d:
+>>>>
+>>>> 1) The sha1dc works just fine on most platforms even with undefined
+>>>> behavior, as evidenced by 2.13.0 working.
+>>>
+>>> Right, with "platform" meaning "combination of hardware-architecture
+>>> and compiler". Nothing can be said about how the current code behaves
+>>> on "x86". Such statements can only be made with regard to "x86 and
+>>> this or that compiler". Even then, short of studying the compiler
+>>> implementation/documentation in detail, one cannot be certain that
+>>> seemingly unrelated changes in Git don't make the code do something
+>>> else entirely.
 >>
->> Maybe we should call out a specific month (or even a longer period) during
->> which we try to push toward that new hash function, and focus more on
->> those tasks (and on critical bug fixes, if any) than anything else.
+>> I think you're veering into a theoretical discussion here that has
+>> little to no bearing on the practicalities involved here.
+>>
+>> Yes if something is undefined behavior in C the compiler &
+>> architecture is free to do anything they want with it. In practice
+>> lots of undefined behavior is de-facto standardized across various
+>> platforms.
+>>
+>> As far as I can tell unaligned access is one of those things. I don't
+>> think there's ever been an x86 chip / compiler that would run this
+>> code with any semantic differences when it comes to unaligned access,
+>> and such a chip / compiler is unlikely to ever exist.
+>>
+>> I'm not advocating that we rely on undefined behavior willy-nilly,
+>> just that we should consider the real situation is (i.e. what actual
+>> architectures / compilers are doing or are likely to do) as opposed to
+>> the purely theoretical (if you gave a bunch of aliens who'd never
+>> heard of our technology the ANSI C standard to implement from
+>> scratch).
+>>
+>> Here's a performance test of your patch above against p3400-rebase.sh.
+>> I don't know how much these error bars from t/perf can be trusted.
+>> This is over 30 runs with -O3:
+>>
+>> - 3400.2: rebase on top of a lot of unrelated changes
+>>   v2.12.0     : 1.25(1.10+0.06)
+>>   v2.13.0     : 1.21(1.06+0.06) -3.2%
+>>   origin/next : 1.22(1.04+0.07) -2.4%
+>>   martin        : 1.23(1.06+0.07) -1.6%
+>> - 3400.4: rebase a lot of unrelated changes without split-index
+>>   v2.12.0     : 6.49(3.60+0.52)
+>>   v2.13.0     : 8.21(4.18+0.55) +26.5%
+>>   origin/next : 8.27(4.34+0.64) +27.4%
+>>   martin        : 8.80(4.36+0.62) +35.6%
+>> - 3400.6: rebase a lot of unrelated changes with split-index
+>>   v2.12.0     : 6.77(3.56+0.51)
+>>   v2.13.0     : 4.09(2.67+0.38) -39.6%
+>>   origin/next : 4.13(2.70+0.36) -39.0%
+>>   martin        : 4.30(2.80+0.32) -36.5%
+>>
+>> And just your patch v.s. next:
+>>
+>> - 3400.2: rebase on top of a lot of unrelated changes
+>>   origin/next : 1.22(1.06+0.06)
+>>   martin      : 1.22(1.06+0.05) +0.0%
+>> - 3400.4: rebase a lot of unrelated changes without split-index
+>>   origin/next : 7.54(4.13+0.60)
+>>   martin      : 7.75(4.34+0.67) +2.8%
+>> - 3400.6: rebase a lot of unrelated changes with split-index
+>>   origin/next : 4.19(2.92+0.31)
+>>   martin      : 4.14(2.84+0.39) -1.2%
+>>
+>> It seems to be a bit slower, is that speedup worth the use of
+>> unaligned access? I genuinely don't know. I'm just interested to find
+>> what if anything we need to urgently fix in a release version of git.
+>>
+>> One data point there is that the fallback blk-sha1 implementation
+>> we've shipped since 2009 has the same errors about unaligned access as
+>> before your patch with -fsanitize[..], and looking at the commit
+>> message this was something Linus knew about at the time, see
+>> d7c208a92e ("Add new optimized C 'block-sha1' routines", 2009-08-05).
+>>
+>> That's strong empirical data suggesting that whatever we want to do
+>> about unaligned access in the future it's not something which in
+>> practice would cause wrong sha1 results for the implementation
+>> shipping with v2.13.0.
+>>
+>> As an aside, when I was trying to apply your patch I made a mistake,
+>> and found that git's test suite could run 100% OK with a bad sha1
+>> implementation, I didn't apply this part (word diff):
+>>
+>> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+>> index 04b104fe58..d6f4c442b5 100644
+>> --- a/sha1dc/sha1.c
+>> +++ b/sha1dc/sha1.c
+>> @@ -312 +312 @@ static void sha1_compression_W(uint32_t ihv[5], const
+>> uint32_t W[80])
+>> void sha1_compression_states(uint32_t ihv[5], const
+>> [-uint32_t-]{+uint8_t+} m[64], uint32_t W[80], uint32_t states[80][5])
+>> @@ -1642 +1642 @@ static void sha1_recompression_step(uint32_t step,
+>> uint32_t ihvin[5], uint32_t i
+>> static void sha1_process(SHA1_CTX* ctx, const [-uint32_t-]{+uint8_t+} bl=
+ock[64])
+>> diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
+>> index 1d1d2b8d7c..1d181a1403 100644
+>> --- a/sha1dc/sha1.h
+>> +++ b/sha1dc/sha1.h
+>> @@ -21 +21 @@ extern "C" {
+>> void sha1_compression_states(uint32_t[5], const
+>> [-uint32_t-]{+uint8_t+}[64], uint32_t[80], uint32_t[80][5]);
 >
-> Thanks for offering. ;-)
 >
-> Here's a rough list of some useful tasks, in no particular order:
+> That change doesnt look right anyway.
 >
-> 1. bc/object-id: This patch series continues, eliminating assumptions
->    about the size of object ids by encapsulating them in a struct.
->    One straightforward way to find code that still needs to be
->    converted is to grep for "sha" --- often the conversion patches
->    change function and variable names to refer to oid_ where they used
->    to use sha1_, making the stragglers easier to spot.
+> The original code asserts that it will receive a pointer to 64
+> uint32_t's as the second argument.
 >
-> 2. Hard-coded object ids in tests: As Stefan hinted, many tests beyond
->    t00* make assumptions about the exact values of object ids.  That's
->    bad for maintainability for other reasons beyond the hash function
->    transition, too.
+> The changed code asserts that it will receive a pointer to 64
+> uint8_t's as the second argument.
 >
->    It should be possible to suss them out by patching git's sha1
->    routine to use the ones-complement of sha1 (~sha1) instead and
->    seeing which tests fail.
+> If you change the type you will need to change the *number* corresponding=
+ly.
+>
+> I would expect to see the uint32_t[64] to turn into uint8_t[256]
 
-I just hacked this up locally. While a lot of stuff fails, it's not
-exactly an out of control garbage fire and could be churned through by
-someone interested. A lot of it's just lazy sha1 hardcoding for no
-good reason where we could use a tag, or e.g. test_cmp on ls-tree
-output without the test really caring about the hash. Things that
-really need to test the sha1 could be guarded by some new prereq.
+Indeed, the full change is one where "uint32_t m[16]" is changed to
+"uint8_t m[64]". See Martin's patch upthread.
 
-Both of my attempts to fuzz SHA1DCInit though resulted in some
-segfaults, I tried both changing "0x" to "~0x" in the ihv assignment,
-and just calling SHA1DCUpdate(ctx, "x", 1) at the end of the function,
-not sure why that's happening.
+The word-diff I posted is in the context of my misapplying that patch
+(since GMail destroyed it I manually typed in the change). That
+produced "uint32_t m[16]" -> "uint32_t m[64]" instead of Martin's
+version.
 
-If someone knows offhand what I'm doing wrong here I might be
-interested in going through this if I don't have to sift through the
-segfaults. I.e. what's an easy hack to make all of git pretend that
-"foo" hashes to "xfoo", "" to "x" etc.
+That's obviously incorrect and results in a broken SHA-1
+implementation, but git's test suite isn't exhaustive enough that
+nothing in t/ caught it, only the t/perf rebase performance test.
 
-> 4. When choosing a hash function, people may argue about performance.
->    It would be useful for run some benchmarks for git (running
->    the test suite, t/perf tests, etc) using a variety of hash
->    functions as input to such a discussion.
+> I have noticed that gcc does not necessarily enforce these types of
+> declarations and I believe that the change might not have any affect
+> at all depending on how the pointers are being used. (C passes
+> pointers on the stack, so afaik these things are more hints than
+> anything else.)
+>
+> Looking at the code it looks like it conflates endianness with
+> alignedness when they arent the same thing, except that the majority
+> of little-endian boxes are x86 which do not require aligned access,
+> and many big-endian boxes do require aligned access. IOW, even they
+> are often related they are distinct properties.
+>
+> Most hash function implementations have code like the following
+> (extracted and reduced from hv_macro.h in perl.git [which only
+> supports little-endian hash functions]):
+>
+> #ifndef U32_ALIGNMENT_REQUIRED
+>   #if (BYTEORDER =3D=3D 0x1234 || BYTEORDER =3D=3D 0x12345678)
+>     #define U8TO32_LE(ptr)   (*((const U32*)(ptr)))
+> #elif (BYTEORDER =3D=3D 0x4321 || BYTEORDER =3D=3D 0x87654321)
+>     #if defined(__GNUC__) && (__GNUC__>4 || (__GNUC__=3D=3D4 && __GNUC_MI=
+NOR__>=3D3))
+>       #define U8TO32_LE(ptr)   (__builtin_bswap32(*((U32*)(ptr))))
+>     #endif
+>   #endif
+> #endif
+>
+> #ifndef U8TO16_LE
+>     /* Without a known fast bswap32 we're just as well off doing this */
+>   #define U8TO32_LE(ptr)
+> ((U32)(ptr)[0]|(U32)(ptr)[1]<<8|(U32)(ptr)[2]<<16|(U32)(ptr)[3]<<24)
+> #endif
+>
+> Of course, in the case of SHA1 it is defined as being big-endian
+> (making it a relatively poor choice for use on x86), so you would need
+> to reverse a bit of this logic.
+>
+> Note the form shown in that last block will work regardless of
+> endianness or alignedness requirements and should be optimised
+> properly by most compilers into the most efficient operation.
+>
+> In other words, if you guys just switch to that kind of pattern this
+> problem will go away everywhere, and the only issue you will have to
+> consider is if it makes some oddball platforms too slow.
 
-To the extent that such benchmarks matter, it seems prudent to heavily
-weigh them in favor of whatever seems to be likely to be the more
-common hash function going forward, since those are likely to get
-faster through future hardware acceleration.
+I think this is something Marc Stevens & co would be very interested
+to hear about at
+https://github.com/cr-marcstevens/sha1collisiondetection
 
-E.g. Intel announced Goldmont last year which according to one SHA-1
-implementation improved from 9.5 cycles per byte to 2.7 cpb[1]. They
-only have acceleration for SHA-1 and SHA-256[2]
-
-1. https://github.com/weidai11/cryptopp/issues/139#issuecomment-264283385
-
-2. https://en.wikipedia.org/wiki/Goldmont
+He's CC'd here but I suspect he's not keeping up with this deluge of
+E-Mails from the git project very closely, we're just using his
+software as-is.
