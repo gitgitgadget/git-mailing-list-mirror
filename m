@@ -2,283 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13A402027C
-	for <e@80x24.org>; Fri,  2 Jun 2017 19:32:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4E9B2027C
+	for <e@80x24.org>; Fri,  2 Jun 2017 19:35:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751388AbdFBTcg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 15:32:36 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:35506 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751383AbdFBTce (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 15:32:34 -0400
-Received: by mail-it0-f46.google.com with SMTP id m62so15941470itc.0
-        for <git@vger.kernel.org>; Fri, 02 Jun 2017 12:32:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9ThwDSv4df8PYhSZKW3p0nYE+wco2pKhHBL0OR16+yw=;
-        b=BY5IqpgxGX98yIZ1B0mn0v5ADtC5ez3KAkaIm+pzLXpIorpzV15G7yoszlU4lqutiO
-         rsZXwM3/YdY3/2ldqfihoVV2+N6kEtiiF3P0ayl+V6z3ZqyviiQsXXS1xYSZIuwmy+D1
-         Ag/YCvALUKquM+o/GxErfzBm7UCUGlBsbAHRGpOcoeAQarr5+B4H5eQpQvN+bBuQ2a1T
-         uGIu7XwlTPsFzKeOtWALsR0tfTFz6TXeYowRsquzlLd5o34SRWbZrncFQOM9SkWm6s+S
-         rQk9hKfgQrOKQlXC8ATgYotVlQipEsTl+AYMW4Em7Zh1+eTgKcF2TfUbOdaVykVDL2hB
-         yYHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9ThwDSv4df8PYhSZKW3p0nYE+wco2pKhHBL0OR16+yw=;
-        b=aYJ6Xi8h4hL1BGWfsV3yDbTePWSWArB8CShtl4jOTkesQpvBbS5DKPORd3slhuWmer
-         iMt1i5aAb5Zr5QX/UJeHwYSoOdwGyy4g4R9FynyfJ8Y4HuZNkSslFPg22ST/Zq+vkunx
-         lnLMVPPR9S98yHV7jmPRC+8PMvL4Fv9yCFssTkDCLJ3mLFqaHNHJVpHN0N2hR2snWMo0
-         r73WtvRqT9xbAiP8BNO3KIkajkRxxVDuJS2sSht2sp5RiWh+kHMBJiZkM/voRvuiInE0
-         idpIw2Gl9wbbKefEKudmMxMYH4kH9u6iX94PLzqGS9B8cG3OW8cu3i75lHCJ1wZGW+HR
-         ao+A==
-X-Gm-Message-State: AODbwcADwgXZ8ewoJp35KAoAzYcIvkfiW9Ac2Q6vvDtOfemxEa8AnItM
-        7ZsS+ccl5CjTRhqY72gxDGOcz5g/Oeo6Na0=
-X-Received: by 10.107.178.215 with SMTP id b206mr5906439iof.50.1496431953338;
- Fri, 02 Jun 2017 12:32:33 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Fri, 2 Jun 2017 12:32:12 -0700 (PDT)
-In-Reply-To: <CAN0heSq3CSe=Hgygtzd+ZM4rW-qM1_chrNd7Pq0KnYnKEVXcpw@mail.gmail.com>
-References: <mvm4lw0un5n.fsf@suse.de> <5100A096-EBAC-4B01-A94D-69D31093148D@gmail.com>
- <xmqqwp8w3uff.fsf@gitster.mtv.corp.google.com> <mvmmv9st3yv.fsf@suse.de>
- <CAN0heSrzpwhS3Zf83vTzHAAmi8YVD4CoCh_px5SBXBZhSKPqPQ@mail.gmail.com>
- <CACBZZX6H9EZTLVnunoH2641fw6QmQL=hO9isinK07-dHnuxyFQ@mail.gmail.com>
- <CAN0heSrZcW3b6Osa8XNs0ghg2RE0ZS6FdPq8oPpwLcJjXAtLHg@mail.gmail.com>
- <CAN0heSp9DpW4_0QL57_oAHGu+os8k6yd=Z5+0MJnaL6iXTa-qQ@mail.gmail.com>
- <xmqq37bj454a.fsf@gitster.mtv.corp.google.com> <CACBZZX7EvUqH28uni+r=RUBXb9=WTp732B4=rq+ViD_kecxZaw@mail.gmail.com>
- <CAN0heSq3CSe=Hgygtzd+ZM4rW-qM1_chrNd7Pq0KnYnKEVXcpw@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 2 Jun 2017 21:32:12 +0200
-Message-ID: <CACBZZX5re5Ge1OzxYOE42nwBhhusya6=M9An08X-KzaqNH9Cog@mail.gmail.com>
-Subject: Re: Unaligned accesses in sha1dc
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+        id S1751326AbdFBTfQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 15:35:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34033 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751182AbdFBTfO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 15:35:14 -0400
+Received: (qmail 21144 invoked by uid 109); 2 Jun 2017 18:35:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 02 Jun 2017 18:35:06 +0000
+Received: (qmail 30231 invoked by uid 111); 2 Jun 2017 18:35:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 02 Jun 2017 14:35:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Jun 2017 14:35:04 -0400
+Date:   Fri, 2 Jun 2017 14:35:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Andreas Schwab <schwab@suse.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Marc Stevens <marc@marc-stevens.nl>,
-        "Liam R. Howlett" <Liam.Howlett@oracle.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ulrich Mueller <ulm@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git-2.13.0: log --date=format:%z not working
+Message-ID: <20170602183504.ii7arq2ssxgwgyxr@sigill.intra.peff.net>
+References: <22824.29946.305300.380299@a1i15.kph.uni-mainz.de>
+ <CACBZZX6t0Q9AJ4cpnG298tf5Las-YpmvvJXgLNNYMszikLvtMQ@mail.gmail.com>
+ <20170527214611.suohggo226tvmbgt@sigill.intra.peff.net>
+ <0a56f99e-aaa4-17ea-245a-12897ba08dbb@web.de>
+ <xmqq1sr3161p.fsf@gitster.mtv.corp.google.com>
+ <20170602030825.hdpbaisn54d4fi4n@sigill.intra.peff.net>
+ <72b001fc-80e7-42b9-bd9d-87621da7978a@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <72b001fc-80e7-42b9-bd9d-87621da7978a@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 2, 2017 at 11:49 AM, Martin =C3=85gren <martin.agren@gmail.com>=
- wrote:
-> On 2 June 2017 at 10:51, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
-mail.com> wrote:
->> On Fri, Jun 2, 2017 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wrote=
-:
->>> Martin =C3=85gren <martin.agren@gmail.com> writes:
->>>
->>>> I looked into this some more. It turns out it is possible to trigger
->>>> undefined behavior on "next". Here's what I did:
->>>> ...
->>>>
->>>> This "fixes" the problem:
->>>> ...
->>>> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
->>>> index 3dff80a..d6f4c44 100644
->>>> --- a/sha1dc/sha1.c
->>>> +++ b/sha1dc/sha1.c
->>>> @@ -66,9 +66,9 @@
->>>> ...
->>>> With this diff, various tests which seem relevant for SHA-1 pass,
->>>> including t0013, and the UBSan-error is gone. The second diff is just
->>>> a monkey-patch. I have no reason to believe I will be able to come up
->>>> with a proper and complete patch for sha1dc. And I guess such a thing
->>>> would not really be Git's patch to carry, either. But at least Git
->>>> could consider whether to keep relying on undefined behavior or not.
->>>>
->>>> There's a fair chance I've mangled the whitespace. I'm using gmail's
->>>> web interface... Sorry about that.
->>>
->>> Thanks.  I see Marc Stevens is CC'ed in the thread, so I'd expect
->>> that the final "fix" would come from his sha1collisiondetection
->>> repository via =C3=86var.
->>>
->>> In the meantime, I am wondering if it makes sense to merge the
->>> earlier update with #ifdef ALLOW_UNALIGNED_ACCESS and #ifdef
->>> SHA1DC_FORCE_LITTLEENDIAN for the v2.13.x maintenance track, which
->>> would at least unblock those on platforms v2.13.0 did not work
->>> correctly at all.
->>>
->>> =C3=86var, thoughts?
->>
->> I think we're mixing up several things here, which need to be untangled:
->>
->> 1) The sha1dc works just fine on most platforms even with undefined
->> behavior, as evidenced by 2.13.0 working.
->
-> Right, with "platform" meaning "combination of hardware-architecture
-> and compiler". Nothing can be said about how the current code behaves
-> on "x86". Such statements can only be made with regard to "x86 and
-> this or that compiler". Even then, short of studying the compiler
-> implementation/documentation in detail, one cannot be certain that
-> seemingly unrelated changes in Git don't make the code do something
-> else entirely.
+On Fri, Jun 02, 2017 at 07:25:43PM +0200, René Scharfe wrote:
 
-I think you're veering into a theoretical discussion here that has
-little to no bearing on the practicalities involved here.
+> Am 02.06.2017 um 05:08 schrieb Jeff King:
+> > In theory the solution is:
+> > 
+> >    1. Start using localtime() instead of gmtime() with an adjustment when
+> >       we are converting to the local timezone (i.e., format-local). We
+> >       should be able to do this portably.
+> > 
+> >       This is easy to do, and it's better than handling %z ourselves,
+> >       because it makes %Z work, too.
+> > 
+> >    2. When showing the author's timezone, do some trickery to set the
+> >       program's timezone, then use localtime(), then restore the program
+> >       timezone.
+> > 
+> >       I couldn't get this to work reliably. And anyway, we'd still have
+> >       nothing to put in %Z since we don't have a timezone name at all in
+> >       the git objects. We just have "+0400" or whatever.
+> > 
+> > So I don't see a portable way to make (2) work.
+> 
+> We could create a strftime wrapper that also takes a time zone offset,
+> with platform-specific implementations.  Is it worth the effort?
+> 
+> What reliability issues did you run into?
 
-Yes if something is undefined behavior in C the compiler &
-architecture is free to do anything they want with it. In practice
-lots of undefined behavior is de-facto standardized across various
-platforms.
+My patch is below for reference.  The issue is that we have to stuff a
+name into $TZ that the system libc will parse into something sensible.
+Just setting it to "%+05d" doesn't work at all. glibc at least seems to
+accept names like FOO+4, but:
 
-As far as I can tell unaligned access is one of those things. I don't
-think there's ever been an x86 chip / compiler that would run this
-code with any semantic differences when it comes to unaligned access,
-and such a chip / compiler is unlikely to ever exist.
+  - I have no idea if that's portable
 
-I'm not advocating that we rely on undefined behavior willy-nilly,
-just that we should consider the real situation is (i.e. what actual
-architectures / compilers are doing or are likely to do) as opposed to
-the purely theoretical (if you gave a bunch of aliens who'd never
-heard of our technology the ANSI C standard to implement from
-scratch).
+  - it only allows single-hour offsets, so +0330 is out. There might be
+    some way to represent that, but I'm not sure if it's portable
+    (FOO+0300 doesn't seem to work even on glibc).
 
-Here's a performance test of your patch above against p3400-rebase.sh.
-I don't know how much these error bars from t/perf can be trusted.
-This is over 30 runs with -O3:
+  - that sets %Z to "FOO", which is obviously nonsense
 
-- 3400.2: rebase on top of a lot of unrelated changes
-  v2.12.0     : 1.25(1.10+0.06)
-  v2.13.0     : 1.21(1.06+0.06) -3.2%
-  origin/next : 1.22(1.04+0.07) -2.4%
-  martin        : 1.23(1.06+0.07) -1.6%
-- 3400.4: rebase a lot of unrelated changes without split-index
-  v2.12.0     : 6.49(3.60+0.52)
-  v2.13.0     : 8.21(4.18+0.55) +26.5%
-  origin/next : 8.27(4.34+0.64) +27.4%
-  martin        : 8.80(4.36+0.62) +35.6%
-- 3400.6: rebase a lot of unrelated changes with split-index
-  v2.12.0     : 6.77(3.56+0.51)
-  v2.13.0     : 4.09(2.67+0.38) -39.6%
-  origin/next : 4.13(2.70+0.36) -39.0%
-  martin        : 4.30(2.80+0.32) -36.5%
+> > If we do handle "%z" ourselves (either always or for just the one case),
+> > what should the matching %Z say? Right now (and I think with René's
+> > patch) it says GMT, which is actively misleading. We should probably
+> > replace it with the same text as "%z". That's not quite what the user
+> > wanted, but at least it's accurate.
+> 
+> On Linux "%z %Z" is expanded to "+0200 CEST" for me, while on Windows I
+> get "Mitteleurop▒ische Sommerzeit Mitteleurop▒ische Sommerzeit".  (That
+> "▒" is probably supposed to be an "ä".)  POSIX requires  +hhmm or -hhmm
+> format for %z, and for %Z is to be "Replaced by the timezone name or
+> abbreviation".
+> 
+> I'd say "GMT+0200" etc. is a nice enough timezone name, i.e. having %Z
+> resolve to the same as %z plus a literal prefix of "GMT" should at least
+> not be wrong.
 
-And just your patch v.s. next:
+I thought that, too, but I think it is wrong based on my understanding
+of how $TZ is parsed. There something like "EDT-4" means "call this EDT,
+and by the way it is 4 hours behind GMT".
 
-- 3400.2: rebase on top of a lot of unrelated changes
-  origin/next : 1.22(1.06+0.06)
-  martin      : 1.22(1.06+0.05) +0.0%
-- 3400.4: rebase a lot of unrelated changes without split-index
-  origin/next : 7.54(4.13+0.60)
-  martin      : 7.75(4.34+0.67) +2.8%
-- 3400.6: rebase a lot of unrelated changes with split-index
-  origin/next : 4.19(2.92+0.31)
-  martin      : 4.14(2.84+0.39) -1.2%
+So what you're proposing isn't wrong per se, but your notation means
+something totally different than what similar-looking notation looks
+like on the $TZ end, which is bound to create confusion.
 
-It seems to be a bit slower, is that speedup worth the use of
-unaligned access? I genuinely don't know. I'm just interested to find
-what if anything we need to urgently fix in a release version of git.
+> Alternatively we could have a lookup table mapping a few typical offsets
+> to timezone names, but e.g. handling daylight saving times would
+> probably be too hard (when did that part of the world switch in the
+> given year?  north or south of the equator?)..
 
-One data point there is that the fallback blk-sha1 implementation
-we've shipped since 2009 has the same errors about unaligned access as
-before your patch with -fsanitize[..], and looking at the commit
-message this was something Linus knew about at the time, see
-d7c208a92e ("Add new optimized C 'block-sha1' routines", 2009-08-05).
+Right, I don't think the mapping of zone to offset is reversible,
+because many zones map to the same offset. If I tell you I'm in -0500,
+even just in the US that could mean Eastern Standard Time (winter, no
+DST) or Central Daylight Time (summer, DST). Not to mention that other
+political entities in the same longitude have their own zones which do
+DST at different times (or were even established as zones at different
+times; historical dates need to use the zones as they were at that
+time).
 
-That's strong empirical data suggesting that whatever we want to do
-about unaligned access in the future it's not something which in
-practice would cause wrong sha1 results for the implementation
-shipping with v2.13.0.
+> > As far as the patch itself goes, I'm disappointed to lose the automatic
+> > "%" handling for all of the other callers. But I suspect the boilerplate
+> > involved in any solution that lets callers choose whether or not to use
+> > it would end up being longer than just handling it in each caller.
+> 
+> Actually I felt uneasy when you added that forced %% handling because it
+> put a policy into an otherwise neutral interpreter function.  I just had
+> no practical argument against it -- until now.
+> 
+> I'd rather see strbuf_expand also lose the hard-coded percent sign, but
+> again I don't have an actual user for such a flexibility (yet).
+> 
+> Perhaps we should add a fully neutral strbuf_expand_core (or whatever),
+> make strbuf_expand a wrapper with hard-coded % and %% handling and use
+> the core function in the strftime wrapper.  Except that the function is
+> not easily stackable.  Hmm..
 
-As an aside, when I was trying to apply your patch I made a mistake,
-and found that git's test suite could run 100% OK with a bad sha1
-implementation, I didn't apply this part (word diff):
+Right, that's the boilerplate trickiness I was referring to. It's
+probably not worth the effort.
 
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index 04b104fe58..d6f4c442b5 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -312 +312 @@ static void sha1_compression_W(uint32_t ihv[5], const
-uint32_t W[80])
-void sha1_compression_states(uint32_t ihv[5], const
-[-uint32_t-]{+uint8_t+} m[64], uint32_t W[80], uint32_t states[80][5])
-@@ -1642 +1642 @@ static void sha1_recompression_step(uint32_t step,
-uint32_t ihvin[5], uint32_t i
-static void sha1_process(SHA1_CTX* ctx, const [-uint32_t-]{+uint8_t+} block=
-[64])
-diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
-index 1d1d2b8d7c..1d181a1403 100644
---- a/sha1dc/sha1.h
-+++ b/sha1dc/sha1.h
-@@ -21 +21 @@ extern "C" {
-void sha1_compression_states(uint32_t[5], const
-[-uint32_t-]{+uint8_t+}[64], uint32_t[80], uint32_t[80][5]);
+Anyway, here's my patch. I've been testing it with:
 
-The p3400-rebase.sh test will fail with your patch without that
-change, but not any of the tests, gulp!
+  ./git log --format='%ai%n%ad%n' --date=format:'%Y-%m-%d %H:%M:%S %z (%Z)'
 
->> 2) There was a bug in practice with unaligned access on SPARC. It's
->> not clear to me whether anyone (Andreas, Liam?) still has any issues
->> in practice on any platform without specifying compile flags like what
->> Martin =C3=85gren suggested above.
->
-> True.
->
->> 3) Now we have another issue reported by Martin =C3=85gren here, which i=
-s
->> that while the code works in practice on most platforms it's using
->> undefined behavior.
-> ...
->> I think that this is definitely something worth looking into /
->> coordinating with upstream, but I haven't seen anything to suggest
->> that we need to be rushing to get a patch in to fix this given 1) and
->> nobody saying yet that 2) doesn't solve their issue as long as they're
->> not supplying some -fsanitize=3D* flags.
->>
->> Now, stepping a bit back from this whole thing: I didn't read the
->> entire discussion back in February when sha1dc was integrated, but I
->> really don't see given all this churn / bug reporting we're getting
->> now why another acceptable solution wouldn't be to just revert
->> e6b07da278 ("Makefile: make DC_SHA1 the default", 2017-03-17) &
->> release 2.13.1 with that.
->>
->> Clearly there are outstanding issues with it, and needing to do a
->> memcpy() as my `next` patch does will harm performance on some
->> platforms, and something like Martin's patch on top will slow it down
->> even more.
->
-> The only thing in my second "patch" which could possibly affect
-> performance as I see it would be the call to memcpy(.. ,.. ,4),
-> including pointer-calculation. Focusing on x86, I would not say that
-> it "will" slow it down until I'd measured performance. I wouldn't even
-> rule out that the compiled assembler could be identical. I would just
-> say the patch "would most likely slow it down even more on some
-> architectures, with some compilers and/or with some
-> compiler-settings".
->
-> If undefined behavior is avoided with memcpy(.., .., 4) then there
-> should be no formal need for your "big" memcpy where things are copied
-> into a known-to-be-aligned buffer. The behavior will be defined on all
-> architectures, anyway. Then your memcpy would simply be part of an
-> optimization to prefer one big memcpy and many loads instead of many
-> small memcpy-calls. On some architectures, that might be a very good
-> optimization. But on others, if the small memcpy is compiled to a
-> simple load, then I believe such an optimization would most likely be
-> a slow-down (modulo crazy-clever compiler optimizations).
->
->> It seems to me that we should give it more time to cook, and better
->> understand the various trade-offs involved. The shattered attack is
->> very unlikely to impact anything in practice, and users who are
->> paranoid about it can opt-in to this extra protection.
->
-> Regarding reverting and cooking, I don't feel like I'm in a position
-> to express an opinion. Thanks for thinking about this undefined
-> behavior, though, and I hope I'm contributing in some way, although
-> I'm aware I'm just standing at the side-line, waving my hands, and not
-> contributing any actual code.
+which lets you compare a variety of commits with the existing formatting
+routine.
+
+---
+diff --git a/date.c b/date.c
+index 63fa99685..a6214172e 100644
+--- a/date.c
++++ b/date.c
+@@ -196,6 +196,34 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+ 		return timebuf.buf;
+ 	}
+ 
++	if (mode->type == DATE_STRFTIME) {
++		char *orig_tz;
++		time_t t = time;
++
++		if (!mode->local) {
++			char *new_tz = xstrfmt("GIT%+d", -tz / 100);
++			orig_tz = xstrdup_or_null(getenv("TZ"));
++			setenv("TZ", new_tz, 1);
++			free(new_tz);
++			tzset();
++		}
++
++		tm = localtime(&t);
++		strbuf_reset(&timebuf);
++		strbuf_addftime(&timebuf, mode->strftime_fmt, tm);
++
++		if (!mode->local) {
++			if (orig_tz)
++				setenv("TZ", orig_tz, 1);
++			else
++				unsetenv("TZ");
++			free(orig_tz);
++			tzset();
++		}
++
++		return timebuf.buf;
++	}
++
+ 	if (mode->local)
+ 		tz = local_tzoffset(time);
+ 
+@@ -245,8 +273,6 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+ 			weekday_names[tm->tm_wday], tm->tm_mday,
+ 			month_names[tm->tm_mon], tm->tm_year + 1900,
+ 			tm->tm_hour, tm->tm_min, tm->tm_sec, tz);
+-	else if (mode->type == DATE_STRFTIME)
+-		strbuf_addftime(&timebuf, mode->strftime_fmt, tm);
+ 	else
+ 		strbuf_addf(&timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
+ 				weekday_names[tm->tm_wday],
+
