@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE32D20D11
-	for <e@80x24.org>; Fri,  2 Jun 2017 04:55:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA55F20D11
+	for <e@80x24.org>; Fri,  2 Jun 2017 05:08:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750918AbdFBEzW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 00:55:22 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34018 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750710AbdFBEzV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 00:55:21 -0400
-Received: by mail-pf0-f180.google.com with SMTP id 9so46111189pfj.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 21:55:21 -0700 (PDT)
+        id S1751147AbdFBFIH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 01:08:07 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:34462 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751136AbdFBFIG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 01:08:06 -0400
+Received: by mail-pf0-f182.google.com with SMTP id 9so46382069pfj.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 22:08:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=x2bWX2ryAEqri2/hQ0wuFCMbLPTvB+BORb6orLEm7TY=;
-        b=feDVwAwMB5OSAWyI06HyPzML1+w/xr7J/bExF/990wbz9QT274uD7iuoyAaFxFl9to
-         +unnx8ZO3gjyzrdI2bgEtUgR9Y/PDC6hubljb0jdpprYuaykW7c11GKYS7LQdiA1WOWG
-         V3q1Tiyl87s2jISjHOxoB2PJ7zfe4hOQA4a+jA86MCedxc7Gv07x2AkrfN3Y/Q6ubiP7
-         6eSU3qcpVlp++HESDMls2bO9TozQrJpQKxGwEudbz7jsuVohXTC/PJjLNhdKIopJLec6
-         uH+/CvGy9r1sTaxX/GBVHzopOz4dyDrQPTmZLClKYJky39jKdXYR0gDIfeYS0TDnlII/
-         sngA==
+        bh=aPM3uQJXVCum3mV5wWQs+IBJTDWmHk1b6lhmXaztFlk=;
+        b=abCmybjD+ssUz8l/I86kBRw3NlDJlIan7jC9JI8XWM18rvzrAfa5IE8TdXDH0Sct+t
+         nzE+R31hXfnabEhy9ZnY9qr7rgv/Soaw/T0og2M7htWgn2r1U069CE6XRlSHjRI7D/6E
+         SLaHk8LmeF74M72v9J+pnX+8kj+YXezxDD2beYtVUu/fu07FVgHJ4bl+dMmUBvyrrGUi
+         QtTdKJueUQdEDoNnUSNRRi93a9IC3UfrJ1MosjZz7BkzIwtGceMqbFp0rqK6ldWHnE5L
+         irQdiAEJ5GHBu2pZTNjwOUwlyvFpaC7RGNeTmVoBWZnMMRKRmgD5m7Fv2MCiFKwo05VE
+         Gjrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=x2bWX2ryAEqri2/hQ0wuFCMbLPTvB+BORb6orLEm7TY=;
-        b=HsHuojtJPQyQbOUIA57hnTqd/hYsOZ07s1+XTwve6UAjSoQZm/FEIyZcq/5MjiJr/n
-         +SCSOUxcDCFq25owDG1PiAANiBWs4ImxR1LsrwMzQm4extTjYBDilMSVaBypC/obp9NA
-         NztZvyfyZbV/Lb6DEG+qRTmcwSm/Ib8NataPR9nAG2YR2TyhXqVrxjbH1SocwGroanjq
-         S4kq6Srk1ilG+vc9A633K3MOJ5m8JNaqBIim61KlX1Kq5IyxdDC60H+YcPcaLlFTSNqy
-         8VXKRvkCCVZimbQG/XTUTagnclM6VA7xA1+9Ac1tuobro/dKb7AW/gbiagijJ+8q9Hvt
-         l0pQ==
-X-Gm-Message-State: AODbwcAc1TD6GiNaL+9JB+If+a+EV2GSqYJ2iguV9jrW4NJECDG3s6LG
-        U0X/FovNP+1ZEw==
-X-Received: by 10.99.55.88 with SMTP id g24mr5032719pgn.176.1496379321240;
-        Thu, 01 Jun 2017 21:55:21 -0700 (PDT)
+        bh=aPM3uQJXVCum3mV5wWQs+IBJTDWmHk1b6lhmXaztFlk=;
+        b=A/vGhkgLxTprxpEWAncf7DQKDaB2PpKys2qHlajHQe8oV2JY0oE7Jwcm85vgE1NDVa
+         lvRMvygu0L3XlPhGXX7yJ0qMXZZvRAefxihTFugZlOAKP/HRyAeulJPAC6vNoPjaBZ5H
+         RyzWwblA4BTmKwt/O5uTe/ttHpyU5bersiMdNdR5sFlkARbfV4rLdMP2sMvnO2XpXshn
+         wtiwySQh3fz/PolvmsxRXorgv8bMdiENOfS1GQoUQGWqozKNjp02wlCq9vRe5PS9XbIM
+         P7DZcrh9XM/YDX9uh325IShPbmqe0Y7ClUh1n0uluQuyAFlFQnEvNomZMBortFBJIamx
+         ybZw==
+X-Gm-Message-State: AODbwcCHi+Y1pVnL+xMFSjCKEHp+DkQUu4X4CYUyme/CAuTc6uasl3uA
+        PAkL50hlN09Yrw==
+X-Received: by 10.98.64.93 with SMTP id n90mr4837421pfa.96.1496380086017;
+        Thu, 01 Jun 2017 22:08:06 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:ec2c:8ebb:3fc7:e0d4])
-        by smtp.gmail.com with ESMTPSA id t30sm41329619pgo.63.2017.06.01.21.55.20
+        by smtp.gmail.com with ESMTPSA id m18sm38782597pfj.108.2017.06.01.22.08.05
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 21:55:20 -0700 (PDT)
+        Thu, 01 Jun 2017 22:08:05 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Pulkit Goyal <7895pulkit@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Incorrect Diff!
-References: <CAJ-kjL-Y+x-ZROnNm+Ray54hwxfkA6K6uxYoUVQpa3NmrzbEMg@mail.gmail.com>
-Date:   Fri, 02 Jun 2017 13:55:19 +0900
-In-Reply-To: <CAJ-kjL-Y+x-ZROnNm+Ray54hwxfkA6K6uxYoUVQpa3NmrzbEMg@mail.gmail.com>
-        (Pulkit Goyal's message of "Fri, 2 Jun 2017 09:41:34 +0530")
-Message-ID: <xmqqinkfyonc.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, sandals@crustytoothpaste.net
+Subject: Re: [PATCH 00/33] object id conversion (grep and diff)
+References: <20170530173109.54904-1-bmwill@google.com>
+        <xmqqzidr18an.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 02 Jun 2017 14:08:04 +0900
+In-Reply-To: <xmqqzidr18an.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 02 Jun 2017 10:34:56 +0900")
+Message-ID: <xmqqefv3yo23.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,25 +66,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pulkit Goyal <7895pulkit@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I was working on a Django project when I got the following diff which
-> is very much confusing.
+> Brandon Williams <bmwill@google.com> writes:
 >
-> The diff is pasted at https://bpaste.net/show/c2cb00728ff0.
+>> A month or so ago I thought I would lend a hand to Brian and do a round of
+>> conversions from sha1 -> struct object_id.  Now that Brian's latest series has
+>> hit master I can finally send these patches out.
+>>
+>> The first couple patches are from Brian which convert some of the notes logic
+>> to using 'struct object_id'.  The remaining patches are to convert the grep and
+>> diff machinery to using 'struct object_id'.
 >
-> As you can see on bpaste that in line number 9,10 I have changed
-> "class activationview" to "class activateuser", but in line number 14
-> the diff is again showing me "class activationview". Maybe Git is
-> trying to be smart here, but the diff is wrong and I was confused.
+> Nicely done for all of them.  Thanks.  Will queue (with tweaks
+> mentioned in the comments).
 
-I do not think Git is trying to be smart at all.  
-
-The function context lines @@ .. @@ consistently is showing the name
-in the preimage of the diff, no?  
-
-The function/class header that appears in the preimage before the
-hunk that begins at line 108 is activationview and that is shown
-there.  So is the header on the hunk that begins at line 149.
-
-So there is nothing remarkable in this patch as far as I can see.
+Oops.  I won't be able to queue this for now as it heavily conflicts
+with blame-lib topic.  The resolution should be trivial, mechanical
+and boring, but takes time that I do not have today.
