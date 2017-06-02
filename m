@@ -2,115 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8169F20D0A
-	for <e@80x24.org>; Fri,  2 Jun 2017 00:15:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E483820D14
+	for <e@80x24.org>; Fri,  2 Jun 2017 00:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751225AbdFBAPU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 20:15:20 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:36150 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751122AbdFBAPT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 20:15:19 -0400
-Received: by mail-pf0-f174.google.com with SMTP id m17so40808093pfg.3
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 17:15:19 -0700 (PDT)
+        id S1751142AbdFBAWz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 20:22:55 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:33893 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751134AbdFBAWy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 20:22:54 -0400
+Received: by mail-qt0-f193.google.com with SMTP id l39so7747598qtb.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 17:22:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=tzuVEFDSqEGdU+S82JabAPn9GKqpqtX3/2b4blN6/mk=;
-        b=RKMeTYt3rc0ZoUH9Xm/Rcrid5uYr/3ScCdq49kZNMezycATSLpNuGkmkjmVfdKqlZ0
-         5+8sTiSBA7dAamuUkWQyKPcBzcZqvTUk6J3nXgI3lrCVT+SyAB+PNvQJjBsilzXVryzH
-         D7SWF0lb1jFc3f03FQ0fp0JzygDRJMifo5q+Eoaz/z+PNW2pDxoU136BvDgfw50wPy0l
-         bpUXqaYa+LZHa008bcefDaUXewOZMydgjJq5DzxsrGLrThPeVsJip7Urltlfxyji39fC
-         KAdgwizfJIkCs7tOOc6yzYRiLpZUkzbCsC9AyfEOWmIa6Jae2FuYzNgRLlGOkVNpxcU7
-         oI/Q==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+LZzA5iX3aQWb1kgXtfjg7AjxLJWNzAiWC1ugjV1jfk=;
+        b=qAcpOPlPu+xJ3Lb8HXEF7ZSIZDXGwQFiv/XGSATlcvX4V9ZjKASLyuDcdw+zn3VMS2
+         PzrKVZduSzjkvEBS1+z/ULsb5wmSlJsJZbKSPPhipkKFPa4+iheC+qi2yZ/86hkpd2Ts
+         38/sWzobAcNIMM5xxtx5DCWEDl2bHVIzmckSo5aacB3gRlcD1h19snfmx2MHG8Dwwbvh
+         ZG/+SzYSVLMkP/PhYYXzIRfFUOjm4y4G1GUvKXI/cEKbVXSH031YcqSc5m/xxcJ9DuJm
+         +dj1HPaKyQb3u3L8md8fw/AqGG512FQMVIxgKn2EZ2O242kNsObCHrPxqvrGsxaRtnXH
+         izkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=tzuVEFDSqEGdU+S82JabAPn9GKqpqtX3/2b4blN6/mk=;
-        b=Zz3KEQiPGVz4Ow3zVuWTZz628fmRkZECL966mTi9t6361RQ+60uV4t1Bi27JAZqeel
-         7XYyTP/F0Cu/71lKq6xIHO4sr/7qdxpsQqlq+PU+4WL0nDR524eAcmUJbjYWm0Ih1Nap
-         aog+XMPttI3r3JAHh0ZdR4K3S3+zYm/tfiyK9BCMh8Ml6/mUDzN40LF7CRzfLXkrgR5R
-         dXVnqN7iCbgE5UUBsda6Te6IMldWflkJxYDKUEIAvUCsgSomauJcyw2Lenb97MjILsy3
-         JZkAqsd12uRGc7S0+g8f97kHvy5J384RpSfUYYwx4jw6WrBk/WbY0JmGiGPjufcDC2XU
-         2CVA==
-X-Gm-Message-State: AODbwcCMJ/VAHLPirrFzAxN5eHq0gor3IjDOfjcaKGvieCC9e+751/Tb
-        XI3nJBLvkg+b+Q==
-X-Received: by 10.98.43.206 with SMTP id r197mr3717854pfr.202.1496362518655;
-        Thu, 01 Jun 2017 17:15:18 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:ec2c:8ebb:3fc7:e0d4])
-        by smtp.gmail.com with ESMTPSA id z3sm37939937pfk.99.2017.06.01.17.15.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 17:15:17 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Andreas Schwab <schwab@suse.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Marc Stevens <marc@marc-stevens.nl>
-Subject: Re: Unaligned accesses in sha1dc
-References: <mvm4lw0un5n.fsf@suse.de>
-        <5100A096-EBAC-4B01-A94D-69D31093148D@gmail.com>
-        <xmqqwp8w3uff.fsf@gitster.mtv.corp.google.com>
-        <mvmmv9st3yv.fsf@suse.de>
-        <CAN0heSrzpwhS3Zf83vTzHAAmi8YVD4CoCh_px5SBXBZhSKPqPQ@mail.gmail.com>
-        <CACBZZX6H9EZTLVnunoH2641fw6QmQL=hO9isinK07-dHnuxyFQ@mail.gmail.com>
-        <CAN0heSrZcW3b6Osa8XNs0ghg2RE0ZS6FdPq8oPpwLcJjXAtLHg@mail.gmail.com>
-        <CAN0heSp9DpW4_0QL57_oAHGu+os8k6yd=Z5+0MJnaL6iXTa-qQ@mail.gmail.com>
-Date:   Fri, 02 Jun 2017 09:15:17 +0900
-In-Reply-To: <CAN0heSp9DpW4_0QL57_oAHGu+os8k6yd=Z5+0MJnaL6iXTa-qQ@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 1 Jun 2017 17:57:48
- +0200")
-Message-ID: <xmqq37bj454a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+LZzA5iX3aQWb1kgXtfjg7AjxLJWNzAiWC1ugjV1jfk=;
+        b=IzjStLwAtxLKhtlvjo3qDwmmh7pqBG7srTBXc/i8lsxDc9e4fEA5U5PmP4YwQv8TwG
+         SJsxLNLf8AxSLEW96B8NjoPXPvFZcuuV/K7GAvt+Cn07XPmEwTQyLZITKb6o/4NFZcW+
+         mC/88IOoUe3ZysVdwyYWQhy1bzuFLQjBbbFB7VI1kTBYRaCws4VZ72sE0y+UrvdkVlDn
+         4HZ/mHSyoUQrLm999CKZnzd7jXSLSsDt1Mz3WaRYA8HOS2L6lyK4smgEVGDyNJZ0Ivo8
+         bnpjvP/1G0gIN8WMUShxOdsRd7wgbUICaKio1KGYEqO9XH73jQJ4ZDYsF9DEFtW4H3c2
+         lblQ==
+X-Gm-Message-State: AODbwcCJzJ92uI4oPcQ+Pi/leF7sJ+7km55c5L0g22JJDG8FLGWfb/AK
+        AF4vMFxk1D7hyg==
+X-Received: by 10.200.52.165 with SMTP id w34mr5417672qtb.77.1496362973260;
+        Thu, 01 Jun 2017 17:22:53 -0700 (PDT)
+Received: from zaya.teonanacatl.net (pool-71-113-173-254.hrbgpa.fios.verizon.net. [71.113.173.254])
+        by smtp.gmail.com with ESMTPSA id l14sm13999155qtf.40.2017.06.01.17.22.51
+        (version=TLS1_1 cipher=AES128-SHA bits=128/128);
+        Thu, 01 Jun 2017 17:22:52 -0700 (PDT)
+Date:   Thu, 1 Jun 2017 20:22:49 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, bmwill@google.com, gitster@pobox.com,
+        jacob.keller@gmail.com
+Subject: Re: [PATCH] send-email: check for repo before invoking hook
+Message-ID: <20170602002249.GI25542@zaya.teonanacatl.net>
+References: <CA+P7+xr39qk9qHE0=uU3HZE2wOhU9X7rmENoDfP=bp09j9N9Mg@mail.gmail.com>
+ <20170601235055.22621-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20170601235055.22621-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.7.2 (2016-11-26)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
+Hi Jonathan,
 
-> I looked into this some more. It turns out it is possible to trigger
-> undefined behavior on "next". Here's what I did:
-> ...
+Jonathan Tan wrote:
+> Thanks for the notification. Here's a patch to fix that. 
+> --- 
+> git-send-email.perl   | 32 +++++++++++++++++--------------- 
+> t/t9001-send-email.sh |  8 ++++++++ 
+> 2 files changed, 25 insertions(+), 15 deletions(-)
 >
-> This "fixes" the problem:
-> ...
-> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-> index 3dff80a..d6f4c44 100644
-> --- a/sha1dc/sha1.c
-> +++ b/sha1dc/sha1.c
-> @@ -66,9 +66,9 @@
-> ...
-> With this diff, various tests which seem relevant for SHA-1 pass,
-> including t0013, and the UBSan-error is gone. The second diff is just
-> a monkey-patch. I have no reason to believe I will be able to come up
-> with a proper and complete patch for sha1dc. And I guess such a thing
-> would not really be Git's patch to carry, either. But at least Git
-> could consider whether to keep relying on undefined behavior or not.
+> diff --git a/git-send-email.perl b/git-send-email.perl 
+> index f0417f64e..94c54dc5a 100755 
+> --- a/git-send-email.perl 
+> +++ b/git-send-email.perl 
+> @@ -1755,21 +1755,23 @@ sub unique_email_list { 
+> sub validate_patch { 
+> 	my $fn = shift;
 >
-> There's a fair chance I've mangled the whitespace. I'm using gmail's
-> web interface... Sorry about that.
+> -	my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'), 
+> -				    'sendemail-validate'); 
+> -	my $hook_error; 
+> -	if (-x $validate_hook) { 
+> -		my $target = abs_path($fn); 
+> -		# The hook needs a correct cwd and GIT_DIR. 
+> -		my $cwd_save = cwd(); 
+> -		chdir($repo->wc_path() or $repo->repo_path()) 
+> -			or die("chdir: $!"); 
+> -		local $ENV{"GIT_DIR"} = $repo->repo_path(); 
+> -		$hook_error = "rejected by sendemail-validate hook" 
+> -			if system($validate_hook, $target); 
+> -		chdir($cwd_save) or die("chdir: $!"); 
+> -	} 
+> -	return $hook_error if $hook_error; 
+> +	if ($repo) { 
+> +		my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'), 
+> +					    'sendemail-validate'); 
+> +		my $hook_error; 
+> +		if (-x $validate_hook) { 
+> +			my $target = abs_path($fn); 
+> +			# The hook needs a correct cwd and GIT_DIR. 
+> +			my $cwd_save = cwd(); 
+> +			chdir($repo->wc_path() or $repo->repo_path()) 
+> +				or die("chdir: $!"); 
+> +			local $ENV{"GIT_DIR"} = $repo->repo_path(); 
+> +			$hook_error = "rejected by sendemail-validate hook" 
+> +				if system($validate_hook, $target); 
+> +			chdir($cwd_save) or die("chdir: $!"); 
+> +		} 
+> +		return $hook_error if $hook_error; 
+> +	}
 
-Thanks.  I see Marc Stevens is CC'ed in the thread, so I'd expect
-that the final "fix" would come from his sha1collisiondetection
-repository via Ævar.
+Would it be worth doing the $repo test when defining $validate_hook 
+to avoid a layer of indentation?  Something like this (with whatever 
+proper wrapping/indentation is used for perl, if I have that wildly 
+incorrect, of course)?
 
-In the meantime, I am wondering if it makes sense to merge the
-earlier update with #ifdef ALLOW_UNALIGNED_ACCESS and #ifdef
-SHA1DC_FORCE_LITTLEENDIAN for the v2.13.x maintenance track, which
-would at least unblock those on platforms v2.13.0 did not work
-correctly at all.
+-- >8 --
+diff --git i/git-send-email.perl w/git-send-email.perl
+index f0417f64e7..e78a0a728a 100755
+--- i/git-send-email.perl
++++ w/git-send-email.perl
+@@ -1755,8 +1755,9 @@ sub unique_email_list {
+ sub validate_patch {
+ 	my $fn = shift;
+ 
+-	my $validate_hook = catfile(catdir($repo->repo_path(), 'hooks'),
+-				    'sendemail-validate');
++	my $validate_hook = $repo ?
++		catfile(catdir($repo->repo_path(), 'hooks'),
++			'sendemail-validate') : '';
+ 	my $hook_error;
+ 	if (-x $validate_hook) {
+ 		my $target = abs_path($fn);
 
-Ævar, thoughts?
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+I have to decide between two equally frightening options.  If I wanted
+to do that, I'd vote.
+    -- Duckman
+
