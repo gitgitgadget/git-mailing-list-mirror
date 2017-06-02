@@ -3,94 +3,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA63520D12
-	for <e@80x24.org>; Fri,  2 Jun 2017 07:19:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D40A20D12
+	for <e@80x24.org>; Fri,  2 Jun 2017 07:40:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751298AbdFBHTX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 03:19:23 -0400
-Received: from mail-it0-f54.google.com ([209.85.214.54]:38418 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751126AbdFBHTW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 03:19:22 -0400
-Received: by mail-it0-f54.google.com with SMTP id r63so8118493itc.1
-        for <git@vger.kernel.org>; Fri, 02 Jun 2017 00:19:21 -0700 (PDT)
+        id S1751126AbdFBHk1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 03:40:27 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:35007 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750747AbdFBHkZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 03:40:25 -0400
+Received: by mail-it0-f46.google.com with SMTP id m62so258546itc.0
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 00:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=m3d1XJIzk+UAwdrAcQ+3Pb+4g9ppxWNRq9Jvx5rTvAo=;
-        b=LusUE2s2ze3nDKRxhNY7BQmzMz00L9E8jL7eftwlyz58ZYTDONenZytMDFs6h1B3pV
-         OazdvrgEdQQ/yXqOvbhPW3U4TBPHF+V12UIC/c3KFFHe9Sg2RMZxIkzcPhefMdeVN6qM
-         ccgDEY4iZgxSUTdeEYhpRQBZR185V3uIfYwBxdytlIYzhZJBbqZWFIIDRvGQWm/TMXCN
-         /8iGed2sAObtz435MUo5HkAxeeSEqn7M/iIYAUDxISiU9qK2Rwet+XxdxkU+DBHrfOrG
-         QtBg+nP9K/E2QuOFk09ZpIoVo3qUQV0KCXN1P+6MlepR3L8Ke/YM/9hNQZaI1FngzL1G
-         FG/Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=55vsXd+5XmeV8Aq2GOmwCwgjNuYCKDN6dBfFTQrkTOQ=;
+        b=ZxV/82Y8E0fPhRAzhwHGb/2yx4TQcV29Uj6dTJPMBtXfVsDZQGzSoFNqx4HpmKkBSK
+         sHhpd7In5GLfRLdyrd3wraruxujyKLl6nwWJG10bzjzSWQrRnJ1tM3xkiRmoYonT9Tix
+         DDZTPLl2+kw+bU/sNyN59F9con1XO8T+NShSUlcrKK+PDpOtU28EbJUikuX5e7Fq42X2
+         ghYjYqiT4K+7Ar6Ww1XElEdcrWpEBfTfTTLhvpDsAoFyiMTdIYZtoJJKz+NbT5+cCL2T
+         HjNK0c3zOyZpqshyqUPKg+fgJHIjuRCDQdL07OWDbyV2WQ7IPfv2ALn/8IwuKC/aaQ6q
+         jmAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=m3d1XJIzk+UAwdrAcQ+3Pb+4g9ppxWNRq9Jvx5rTvAo=;
-        b=YEgACMAIkbWbOQpLszIT6OnLJrAFZyc4xcDNa7Ff0Wa8w6Q0lBV2s7ys+f0zUSB1bw
-         42BWZE2QSwobu+tOi/7cZWlIGafV/k8EGRweHgTl2fbDBCqKMMo45sr+l3Q26SSa6qag
-         8isipYFMmnSEjQ5l/oC9Pv7SWHE6M6lJdLWTpNOENBN1irN4d7to4Ngp/n2kW77zJDQK
-         e8bPuTN9EACDrPeJn4oLYA2YjlwXbLImREzVTYZq/E1X3wsQkbJojkHW71L3P46NPf7B
-         6J60E35yqhW3MFwaALhId//dEkY/DGUxkYsut3cpxQ4cogw22Kg7BYrevIF1EJvBO9x7
-         0dcA==
-X-Gm-Message-State: AODbwcAtnnTbK56NouRGrmHIPYjh059+Bag39l1Zw/2b5wu0Z+qDnn9r
-        cEpOEzy2JGZ+BA==
-X-Received: by 10.84.132.2 with SMTP id 2mr102217458ple.46.1496387961219;
-        Fri, 02 Jun 2017 00:19:21 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:ec2c:8ebb:3fc7:e0d4])
-        by smtp.gmail.com with ESMTPSA id i5sm35750698pfj.41.2017.06.02.00.19.20
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Jun 2017 00:19:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, sandals@crustytoothpaste.net
-Subject: Re: [PATCH 00/33] object id conversion (grep and diff)
-References: <20170530173109.54904-1-bmwill@google.com>
-        <xmqqzidr18an.fsf@gitster.mtv.corp.google.com>
-        <xmqqefv3yo23.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 02 Jun 2017 16:19:19 +0900
-In-Reply-To: <xmqqefv3yo23.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 02 Jun 2017 14:08:04 +0900")
-Message-ID: <xmqqtw3yyhzc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=55vsXd+5XmeV8Aq2GOmwCwgjNuYCKDN6dBfFTQrkTOQ=;
+        b=VHqQaP9Hn8Py+KePa5cZ8+Tjimw2XP0Bp+fBxn3gV2j00CWNScW6CxDgXV+Ktm226a
+         lJi9jS1/2zdL1wX70D0C/Kw+SO9GVdCXhId5brG0bLgkMd71IvzPGE45SnNyKy2PEAAo
+         LG6c5bVYdmr+ykUPo3nn9kD6yhGxTTpq2U2nk2sfcQtNErFnNkS7fwJfKTYBI1+KzdnO
+         lV/PjwWCex2vFmVBYaLeHZAClaCj0yWIR6ViycnHTl7wd/8C8F49FumYRf7PEL9bEX/f
+         bebtmKQpp9UiM4AEqf8XiDR511bHBGYfFR5NKQDVpdkxivVhp6cjyX9p3Yb8quekrBqr
+         PXPw==
+X-Gm-Message-State: AODbwcDinuI+iSC7wnxIol3jgwId8Wfwzdpm3CQXAt7ex7iJcthJlAfb
+        Ue2FlyLchcsdBbl7/weVrZbiEF/L6A==
+X-Received: by 10.36.29.150 with SMTP id 144mr3097831itj.71.1496389153656;
+ Fri, 02 Jun 2017 00:39:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.8.220 with HTTP; Fri, 2 Jun 2017 00:38:52 -0700 (PDT)
+In-Reply-To: <xmqqy3tayi53.fsf@gitster.mtv.corp.google.com>
+References: <CAH8yC8k9pJHLuzWneb4aRAEF2zOTCVO_5YJxrCpw28x8bDox0A@mail.gmail.com>
+ <CAH8yC8mjTXQ_5uRedHi=fytKtQttyq_WemGFNQTP9C3PK4x5cQ@mail.gmail.com>
+ <20170602070052.3lq22arcncuh6rrl@tigra> <CAH8yC8nGR1heD9_xRuHRG-oerdoQr6Pi8mT=ZpFhoeH6LaFK2w@mail.gmail.com>
+ <xmqqy3tayi53.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 2 Jun 2017 09:38:52 +0200
+Message-ID: <CACBZZX4vEOD-4a-eK-uBxmFrb1GLSvJKxHW51whCSbCZdh7amQ@mail.gmail.com>
+Subject: Re: How to avoid "Please tell me who you are..."?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeffrey Walton <noloader@gmail.com>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>,
+        Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jun 2, 2017 at 9:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeffrey Walton <noloader@gmail.com> writes:
 >
->> Brandon Williams <bmwill@google.com> writes:
->>
->>> A month or so ago I thought I would lend a hand to Brian and do a round of
->>> conversions from sha1 -> struct object_id.  Now that Brian's latest series has
->>> hit master I can finally send these patches out.
->>>
->>> The first couple patches are from Brian which convert some of the notes logic
->>> to using 'struct object_id'.  The remaining patches are to convert the grep and
->>> diff machinery to using 'struct object_id'.
->>
->> Nicely done for all of them.  Thanks.  Will queue (with tweaks
->> mentioned in the comments).
+>> Is there no switch? Its the most efficient way to accomplish the task.
 >
-> Oops.  I won't be able to queue this for now as it heavily conflicts
-> with blame-lib topic.  The resolution should be trivial, mechanical
-> and boring, but takes time that I do not have today.
+> This is a safety to help normal human users from hurting themselves,
+> and it does not make any sense to have "I have no name, so record
+> garbage, please" option, switch or setting that is different from
+> "Here is the name I want you to use when recording things".
+>
+> The switch _is_ to set the names with whatever standard way.
 
-I lied.  This also conflicts somewhat with Peff's diff-blob topic.
-I think I resolved them correctly (there needs evil merges applied
-to two files when merging this topic), and hopefully can push out
-the result by the end of the day.
+Presumably OP doesn't want to mess with the env for whatever reason,
+in that case:
 
-Thanks.
+    git -c user.name=Nobody -c user.email=nobody@example.com
+cherry-pick <commit>
