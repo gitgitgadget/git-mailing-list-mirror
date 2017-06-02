@@ -2,190 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1569B2027C
-	for <e@80x24.org>; Fri,  2 Jun 2017 14:46:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7F2820D13
+	for <e@80x24.org>; Fri,  2 Jun 2017 16:11:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751194AbdFBOql convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 2 Jun 2017 10:46:41 -0400
-Received: from aserp1040.oracle.com ([141.146.126.69]:39376 "EHLO
-        aserp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751125AbdFBOqj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 10:46:39 -0400
-Received: from aserv0022.oracle.com (aserv0022.oracle.com [141.146.126.234])
-        by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v52EkQGa012764
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 2 Jun 2017 14:46:26 GMT
-Received: from aserv0122.oracle.com (aserv0122.oracle.com [141.146.126.236])
-        by aserv0022.oracle.com (8.14.4/8.14.4) with ESMTP id v52EkQ51002874
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Fri, 2 Jun 2017 14:46:26 GMT
-Received: from abhmp0015.oracle.com (abhmp0015.oracle.com [141.146.116.21])
-        by aserv0122.oracle.com (8.14.4/8.14.4) with ESMTP id v52EkPGC018836;
-        Fri, 2 Jun 2017 14:46:25 GMT
-Received: from oracle.com (/24.246.5.213)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Fri, 02 Jun 2017 07:46:25 -0700
-Date:   Fri, 2 Jun 2017 10:46:23 -0400
-From:   "Liam R. Howlett" <Liam.Howlett@Oracle.com>
-To:     ?var Arnfj?r? Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Martin ?gren <martin.agren@gmail.com>,
-        Andreas Schwab <schwab@suse.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Marc Stevens <marc@marc-stevens.nl>
-Subject: Re: Unaligned accesses in sha1dc
-Message-ID: <20170602144622.xottin6efikpkdel@oracle.com>
-References: <mvm4lw0un5n.fsf@suse.de>
- <5100A096-EBAC-4B01-A94D-69D31093148D@gmail.com>
- <xmqqwp8w3uff.fsf@gitster.mtv.corp.google.com>
- <mvmmv9st3yv.fsf@suse.de>
- <CAN0heSrzpwhS3Zf83vTzHAAmi8YVD4CoCh_px5SBXBZhSKPqPQ@mail.gmail.com>
- <CACBZZX6H9EZTLVnunoH2641fw6QmQL=hO9isinK07-dHnuxyFQ@mail.gmail.com>
- <CAN0heSrZcW3b6Osa8XNs0ghg2RE0ZS6FdPq8oPpwLcJjXAtLHg@mail.gmail.com>
- <CAN0heSp9DpW4_0QL57_oAHGu+os8k6yd=Z5+0MJnaL6iXTa-qQ@mail.gmail.com>
- <xmqq37bj454a.fsf@gitster.mtv.corp.google.com>
- <CACBZZX7EvUqH28uni+r=RUBXb9=WTp732B4=rq+ViD_kecxZaw@mail.gmail.com>
+        id S1751167AbdFBQLN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 12:11:13 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49359 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750955AbdFBQLM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 12:11:12 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MCtut-1d8Kig0uY7-009kru; Fri, 02
+ Jun 2017 18:10:57 +0200
+Date:   Fri, 2 Jun 2017 18:10:54 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v4 0/8] PCRE v2, PCRE v1 JIT, log -P & fixes
+In-Reply-To: <xmqqbmq74773.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1706021803460.171564@virtualbox>
+References: <20170601182056.31142-1-avarab@gmail.com> <xmqqbmq74773.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-In-Reply-To: <CACBZZX7EvUqH28uni+r=RUBXb9=WTp732B4=rq+ViD_kecxZaw@mail.gmail.com>
-User-Agent: NeoMutt/20161126 (1.7.1)
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
+Content-Type: multipart/mixed; boundary="8323329-1162236140-1496419857=:171564"
+X-Provags-ID: V03:K0:TsoGgBkQjYw/Z9znHre8PIR+qmHvkGQF2gRurzBU1c0zZlICivE
+ p48rf2KwNQmvSl6PZOO0yfZhiDOZU+tQPTSzjwJw9aJhgyEJqiqY58KUXd/7aeHHzYdvHv7
+ OLQ0tEMsxkjYekyiPbeOlz4quNRARa24CidLawlWYE/7dnHq7rqqFi2mL/ve2SjbAhCNBRM
+ ZEZ3DOzLCF3xNm6D74YoA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:K2JRQ73Ff2A=:uTK9Q6vi3oToTLs1YiapJG
+ APujMGZ45NogQejKcTZRnJbq4i1JibbGq0NIbCW94yBQfKtq0omQ5N/RBwMUOenT2EiH6a8nf
+ H7UqNGbyvlbZ13kavCKua+XBsuOY3GCDyeAxMPbJWCc1d/GmStUCsjpGAceVNdJXz9x18r6CT
+ xiVoIVeRUT3KIh2gTMB0AVbaZhHgYzToOp8gDdZ4QnUEcNl8KV7VU3cNTTh7vtAf5sIp4vpPc
+ XJ5Ojy9SxAPoTje9+Htp795Ic05J2Mz/JqseiQ72scbHBiLwrCAX5z1VVu1zU/mjQPX8UGNla
+ /P52HmDgH4tT6PKk5NIAmqPktJJvtGgNmZzw6+nJ1vVIsJszjm/DTclNXfJPjwGGvNNniFOkF
+ SWH/x2XjTwvQ7WkCKTk1jGdYRQGQ425OGX/h9/QnyeEg7uKh+xQOHm69jx7D+EZGjriuNjLsH
+ vrpramv33kRAST2t16xlcH559y1czb498yL48CvtVDftWE8H1reLNXfRgKjrBL7/+0VWTUL4n
+ oIUjFVXy7ogpdxfAP/gqo+cAOu4x/6rz8ze66E5FHFOq9kR5YUKr+tJ+VedFEnDDGTKlYUvOj
+ +SyLXeR8QyBB81nddhxZ77tkpUDF0zSdHjRTQt1v5UW8YhgyfMS/+ajx72K+NQROXIF0ic/+I
+ lC6h25gi3Q4RVwMhLEkgGZgF9TUZKAZKMt/FZwnRKOzXYge/DOAvOpZZ9UW19RkGke751Jb53
+ sA5NpjobfrX/o2hFELrx40Lp4QCUiPBickbUm6btVMaZLsRw425N555emk44wANKdCP/P6lb3
+ jJRso7R
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-* ?var Arnfj?r? Bjarmason <avarab@gmail.com> [170602 04:53]:
-> On Fri, Jun 2, 2017 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Martin Ågren <martin.agren@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-1162236140-1496419857=:171564
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi,
+
+On Fri, 2 Jun 2017, Junio C Hamano wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>=20
+> > See <20170525200528.22037-1-avarab@gmail.com> for v3
+> > (https://public-inbox.org/git/20170525200528.22037-1-avarab@gmail.com/)=
+=2E
 > >
-> >> I looked into this some more. It turns out it is possible to trigger
-> >> undefined behavior on "next". Here's what I did:
-> >> ...
-> >>
-> >> This "fixes" the problem:
-> >> ...
-> >> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-> >> index 3dff80a..d6f4c44 100644
-> >> --- a/sha1dc/sha1.c
-> >> +++ b/sha1dc/sha1.c
-> >> @@ -66,9 +66,9 @@
-> >> ...
-> >> With this diff, various tests which seem relevant for SHA-1 pass,
-> >> including t0013, and the UBSan-error is gone. The second diff is just
-> >> a monkey-patch. I have no reason to believe I will be able to come up
-> >> with a proper and complete patch for sha1dc. And I guess such a thing
-> >> would not really be Git's patch to carry, either. But at least Git
-> >> could consider whether to keep relying on undefined behavior or not.
-> >>
-> >> There's a fair chance I've mangled the whitespace. I'm using gmail's
-> >> web interface... Sorry about that.
+> > This is on top of "[PATCH v4 00/31] Easy to review grep & pre-PCRE
+> > changes".
 > >
-> > Thanks.  I see Marc Stevens is CC'ed in the thread, so I'd expect
-> > that the final "fix" would come from his sha1collisiondetection
-> > repository via Ævar.
+> > Changes:
 > >
-> > In the meantime, I am wondering if it makes sense to merge the
-> > earlier update with #ifdef ALLOW_UNALIGNED_ACCESS and #ifdef
-> > SHA1DC_FORCE_LITTLEENDIAN for the v2.13.x maintenance track, which
-> > would at least unblock those on platforms v2.13.0 did not work
-> > correctly at all.
+> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (8):
+> >   grep: don't redundantly compile throwaway patterns under threading
+> >   grep: skip pthreads overhead when using one thread
+> >   log: add -P as a synonym for --perl-regexp
+> >   grep: add support for the PCRE v1 JIT API
+> >   grep: un-break building with PCRE < 8.32
+> >   grep: un-break building with PCRE < 8.20
 > >
-> > Ævar, thoughts?
-> 
-> I think we're mixing up several things here, which need to be untangled:
-> 
-> 1) The sha1dc works just fine on most platforms even with undefined
-> behavior, as evidenced by 2.13.0 working.
-> 
-> 2) There was a bug in practice with unaligned access on SPARC. It's
-> not clear to me whether anyone (Andreas, Liam?) still has any issues
-> in practice on any platform without specifying compile flags like what
-> Martin Ågren suggested above.
-> 
-> Andreas: Is your initial report of unaligned access here fixed in the
-> next branch with my "sha1dc: update from upstream" commit? You didn't
-> say what platform you were on.
-> 
-> Liam: How about your issue on SPARC?
+> > No changes.
+> >
+> >   grep: un-break building with PCRE >=3D 8.32 without --enable-jit
+> >
+> > NEW: It turns out that a PCRE version that supports JIT, but is built
+> > without JIT support will fail at link time since there's no
+> > pcre_jit_exec symbol.
+> >
+> > It also turns out (contrary to what I claimed on list before, my
+> > mistake) that there's no way to detect this through some macro. All
+> > the pcre include files are the same with/without --enable-jit, only
+> > the object file differs.
+> >
+> > So there's now a NO_LIBPCRE1_JIT flag to the Makefile, which is off by
+> > default, but turned on on MinGW. I have not tested that
+> > config.mak.uname change, but everything else I could test on Linux.
+> >
+> > The reason for why it's NO_LIBPCRE1_JIT not USE_LIBPCRE1_JIT is that
+> > in practice pretty much everyone who builds pcre builds it with JIT
+> > (I've looked through various Linux/BSD distro build files), it's MinGW
+> > that's the exception here. Given the performance gain it makes sense
+> > to make it the default.
+> >
+> >   grep: add support for PCRE v2
+> >
+> > Almost no changes, just:
+> >
+> >  * A trivial change to stop redundantly assigning to pcre2_jit_on,
+> >    mistakenly left over from an earlier version.
+> >
+> >  * Updated commit message / perf numbers for the extra patches in the
+> >    series both here and in v3.
+>=20
+> Nicely summarised and matches what I received; thanks, will replace.
 
-2.13.0 is very much broken for me on SPARC.
-{maint//git} $ make -j120
-[...]
-{maint//git} $ ./git log
-[1]    1004506 bus error (core dumped)  ./git log
+For the record: I spent the entire development time I had today on trying
+to get PCRE2 to build and to figure out which PCRE2 tests fail and why.
 
-This is with b06d36431 (maint).
+I hoped to get to the bottom why the JIT is disabled in PCRE1, but ran out
+of time.
 
-The same thing happens on v2.13.0-384-g826c06412 (master).
+I seem to have gotten PCRE2 to build and figured out why the tests failed
+(spoiler: all of the failures were bogus and no indication of an
+incorrectly-built PCRE2).
 
-v2.13.0-539-g4b9c06c7d (next) works for me, as did following the
-instructions on upgrading the sha1dc code myself.
+I barely had time to build `pu` (forcing PCRE2) and to run the test
+scripts whose file names contain the substring "grep". Seems to work so
+far, but this is by no means comprehensive testing; it is more like hushed
+and rushed testing on a Friday night when I should have stopped working 10
+minutes ago.
 
-> 
-> 3) Now we have another issue reported by Martin Ågren here, which is
-> that while the code works in practice on most platforms it's using
-> undefined behavior. On my GCC 7.1.1 it's sufficient to:
-
-My platforms gcc is older than 7.1.1.
-
-> 
->     make -j8 CFLAGS="-fsanitize=undefined
-> -fsanitize-recover=undefined" LDFLAGS="-fsanitize=undefined
-> -fsanitize-recover=undefined" all
-> 
-> And then run e.g.:
-> 
->     ./t0020-crlf.sh -v
-
-These tests pass With my older gcc - which those flags are not
-recognized.
-
-# passed all 35 test(s)
-
-
-> 
-> To get spiel like:
-> 
->     sha1dc/sha1.c:346:2: runtime error: load of misaligned address
-> 0x5610bf16d005 for type 'const uint32_t', which requires 4 byte
-> alignment
->     0x5610bf16d005: note: pointer points here
->      65 6e 74 20 66 30 34  66 61 39 37 36 36 64 62  62 38 65 34 63 37
-> 33 38  34 37 30 61 31 36 63 61  62
-> 
-> I think that this is definitely something worth looking into /
-> coordinating with upstream, but I haven't seen anything to suggest
-> that we need to be rushing to get a patch in to fix this given 1) and
-> nobody saying yet that 2) doesn't solve their issue as long as they're
-> not supplying some -fsanitize=* flags.
-> 
-> Now, stepping a bit back from this whole thing: I didn't read the
-> entire discussion back in February when sha1dc was integrated, but I
-> really don't see given all this churn / bug reporting we're getting
-> now why another acceptable solution wouldn't be to just revert
-> e6b07da278 ("Makefile: make DC_SHA1 the default", 2017-03-17) &
-> release 2.13.1 with that.
-> 
-> Clearly there are outstanding issues with it, and needing to do a
-> memcpy() as my `next` patch does will harm performance on some
-> platforms, and something like Martin's patch on top will slow it down
-> even more.
-> 
-> It seems to me that we should give it more time to cook, and better
-> understand the various trade-offs involved. The shattered attack is
-> very unlikely to impact anything in practice, and users who are
-> paranoid about it can opt-in to this extra protection.
-
-I have not seen issues with DC_SAH1 with the newer code base on SPARC.
-
-Thanks,
-Liam
+Will continue with testing Git for Windows using PCRE2 next week and keep
+you posted,
+Dscho
+--8323329-1162236140-1496419857=:171564--
