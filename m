@@ -7,56 +7,61 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F131620D11
-	for <e@80x24.org>; Fri,  2 Jun 2017 01:35:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB32620D11
+	for <e@80x24.org>; Fri,  2 Jun 2017 01:37:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751129AbdFBBe7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 21:34:59 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:35873 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751120AbdFBBe6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 21:34:58 -0400
-Received: by mail-pf0-f179.google.com with SMTP id m17so42235371pfg.3
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 18:34:58 -0700 (PDT)
+        id S1751134AbdFBBhq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 21:37:46 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:32987 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751120AbdFBBhp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 21:37:45 -0400
+Received: by mail-pf0-f194.google.com with SMTP id f27so10144239pfe.0
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 18:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=b6LC5FgRtQz/poQ+83IS5kCdNjs+W1V473jdeb4wdYo=;
-        b=DW60A55fF7wmzB1xGSzakfxdx8tTWjlBlNwxNXrHY4vjd692yrs2u6nHOkBK1mxUV+
-         nYo/ousrEKa/vbgdBAEgQFEOH5+NxCrVFbKSrRV5jvQScYdQMpZj7TCCWgeONmweIhr2
-         nvwV9FBAZDNpTgDm4dVy11B4eNxybyt9ZSsnm6TEw1JInnfcmTbtU2fHWhvE7BAeU0oc
-         e23gHNbaURDIckFyUnY/LDp7APOlFI6DymU4Dql7JJh3BQFZvT5owHCJi+OlyUOuZYZU
-         50stQ+jidj/XNF876pzPbFYg1+1z9aTy4uVp2AiTEZm+6EcRS9oEfFUADJdwFqGps2zY
-         UnnQ==
+        bh=UIwFn2RWwqZC0bsqf2RzLB0bAgqwtJUVjHRyWxd+/O0=;
+        b=MyLAYJFj9f5EI9OaB4eKQ9enZfqDVaaqBADiin8ER7Y80G2eQGr1QSktXOaTQUDBDS
+         hRRzVvxlkZ4/NpgMbO9kdemsJSfuS1t6ziFDMs9w+McmFg2EItYylBdvgTPeCdKUsPT4
+         57H59vbNiHK0HkV/nHozVVNajnvyn3iSIJnoTG1uGGbzBhNIYFzOw82JPW+qRBHI1uys
+         h5LelZCVJ16v2IXuxcaiop22dmFoWSPPs8FCXYtnty4Gnaf8ER9ZdLocoy0HxlTaQNmu
+         gTwzIIB0VyORtxt7I5GpEGWqT1LjdSuAynZ3DNiQO4vKXBXBsb2Skasv59n/ZXu8BRZ7
+         2cmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=b6LC5FgRtQz/poQ+83IS5kCdNjs+W1V473jdeb4wdYo=;
-        b=fvk/44YFl0H6VLDXWdwr19Asp+12ZKEKrZceKkCpfKfiDwzPMke8SRp6cJthtqZMYL
-         YMtKyPMcIL5Tk6qPpaj/r1wDZvcWvugCHb3F/7hvJRrMpELwRH6ADPn4lUbAQq5snmjS
-         jygRZ/uDwZIPHvLhaZH24YX0v1uqxQ+oFpLyJjSfT5ikRqEf//OCeLD8l2vpkGV3H2Gt
-         CAe3Cu8tajQol4iTEpN5pxyMp3o+UPE1MpyZlIuaYODPVd5++bwuOY0la9fg+Pcx8ice
-         SykbRXhSWBM07EKGJYnOrAH1mek72h52oyMNZ9+z5OQTZInLqG97VGV4fXcMN1fJRrLU
-         9gCg==
-X-Gm-Message-State: AODbwcC30ODqiJpzfCmDLTa9B1gAxGQKX5Xtj1/HTztlbVfPLJoD8xIb
-        juM6l7pmd15Rmw==
-X-Received: by 10.84.175.65 with SMTP id s59mr29650522plb.20.1496367297648;
-        Thu, 01 Jun 2017 18:34:57 -0700 (PDT)
+        bh=UIwFn2RWwqZC0bsqf2RzLB0bAgqwtJUVjHRyWxd+/O0=;
+        b=nHZRKDrGZNp6chjyjBg7iZG/XMK1fQ3YjogwEdT9SjnDYD9W3pwbfeMeY94YhdYsuA
+         rPjMCnjGU6Hs+anJ9WWvLxwFtc+eb/ExEt4nMObvG84ZkI8groGFwTGUjI2vai75lYrO
+         y8YWTFdVzMzOE77hayBwyQ7cgA+HTKksoQZSaPinSoqSsa5swLBUsAHrz8xPO6FIJqFt
+         QcyVkLtMkFEjfbV89jf0pi9kpV0DzzaN+NVe991vXU/RCUJPX5QcuqPVNUxYJWxUMt2V
+         E1ePQhFsXtxxN7tGbTE6pNoZMf5aJCVwAEDqvf204EkAy6s3a3+00d5pBodb+nhFc0uk
+         I7vg==
+X-Gm-Message-State: AODbwcANd7biG5id+2Ap0gho1E6WHRjbz6HhJA8mMkkDGRPsJghdggHk
+        8e+1C/GO1T9M9Q==
+X-Received: by 10.84.236.4 with SMTP id q4mr94366315plk.10.1496367464618;
+        Thu, 01 Jun 2017 18:37:44 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:ec2c:8ebb:3fc7:e0d4])
-        by smtp.gmail.com with ESMTPSA id m5sm42716584pgd.28.2017.06.01.18.34.56
+        by smtp.gmail.com with ESMTPSA id g10sm30982779pgr.18.2017.06.01.18.37.43
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 18:34:57 -0700 (PDT)
+        Thu, 01 Jun 2017 18:37:43 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, sandals@crustytoothpaste.net
-Subject: Re: [PATCH 00/33] object id conversion (grep and diff)
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 20/33] combine-diff: convert find_paths_* to struct object_id
 References: <20170530173109.54904-1-bmwill@google.com>
-Date:   Fri, 02 Jun 2017 10:34:56 +0900
-In-Reply-To: <20170530173109.54904-1-bmwill@google.com> (Brandon Williams's
-        message of "Tue, 30 May 2017 10:30:36 -0700")
-Message-ID: <xmqqzidr18an.fsf@gitster.mtv.corp.google.com>
+        <20170530173109.54904-21-bmwill@google.com>
+        <CAGZ79kbPaWEuZr1yXKnMwUeLzW4h_pnD-f2bEj7dyE7Q12z2sw@mail.gmail.com>
+Date:   Fri, 02 Jun 2017 10:37:43 +0900
+In-Reply-To: <CAGZ79kbPaWEuZr1yXKnMwUeLzW4h_pnD-f2bEj7dyE7Q12z2sw@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 31 May 2017 10:49:53 -0700")
+Message-ID: <xmqqvaof1860.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,15 +70,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> A month or so ago I thought I would lend a hand to Brian and do a round of
-> conversions from sha1 -> struct object_id.  Now that Brian's latest series has
-> hit master I can finally send these patches out.
+> On Tue, May 30, 2017 at 10:30 AM, Brandon Williams <bmwill@google.com> wrote:
+>> Convert find_paths_generic and find_paths_multitree to use struct
+>> object_id.
+>>
+>>
 >
-> The first couple patches are from Brian which convert some of the notes logic
-> to using 'struct object_id'.  The remaining patches are to convert the grep and
-> diff machinery to using 'struct object_id'.
+> double empty line?
 
-Nicely done for all of them.  Thanks.  Will queue (with tweaks
-mentioned in the comments).
+Is it because
+
+	sed -e 's/^Change-ID:.*//'
+
+insead of
+
+	sed -e '/^Change-ID:.*/d'
+
+is used somewhere in a commit-message-rewriting-machinery?
+
+In any case, it doesn't bother Git at all---stripspace squishes
+duplicated empty lines into one while making other whitespace
+clean-ups like trailing SP removal and trailing blank line removal.
+
