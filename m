@@ -7,79 +7,67 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7023D20D11
-	for <e@80x24.org>; Fri,  2 Jun 2017 01:56:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0753920D11
+	for <e@80x24.org>; Fri,  2 Jun 2017 01:59:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751128AbdFBB4l (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 21:56:41 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34282 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751120AbdFBB4k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 21:56:40 -0400
-Received: by mail-pf0-f193.google.com with SMTP id w69so10222038pfk.1
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 18:56:39 -0700 (PDT)
+        id S1751157AbdFBB7f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 21:59:35 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35783 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751120AbdFBB7e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 21:59:34 -0400
+Received: by mail-pf0-f195.google.com with SMTP id u26so10224848pfd.2
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 18:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=V3P8u52Efz71WiRlZaXRAZAskGpMnIaMkC26jvIPONc=;
-        b=W8hMC7nrRPTvMmQjrQxIKYXOqFYHuew8cXcvlyT1YJzMmGNXJxFNIE1kwV8ZE2clwV
-         Zaerzp/1fjrMr02Q55OarIwUIweZ+wNZ9M4brLHHm2ap8P+gE5wdrqsPbyHpyn09tEhl
-         YaiCkQEj/IHBHI5sANDOmu9QbGOJIfqRs1dpgFgiLBoFuhyjdSvYcKSkfVhOei62xPrJ
-         H/abkezotucSWAYyg16pm4y1bnH4RRjzFiI8uVFRzfSk9sywoZAXB2f3NyotYbHTmyec
-         Z+gv5MvjALesOs9BaspuMa4esxEIKvm2mqVBOXMIO6bugjbcG4XBNRQM7xsSCg7JZEAW
-         R8pg==
+         :user-agent:mime-version;
+        bh=Kciatj8Cac938qIsPJMmW/Kisjc24L9XqYQFeDnns4c=;
+        b=k9kDquPF9EqVlkD5ip1BGZibTcvdwNNVX2U8mWJFAKPb9wHwGbpTyFoypBV/Hrdcgf
+         ktbFCPWVcZ9ZRPD1G7nn7pAGVAmBUielb5EUoQB+HYi8b93phjgcxj2Gl2y+VHhORVVM
+         Wsz5rKZFxTyCP6sWRQkQXVrVDGyB68+mLr9j8Kn3IUzfGhsOtBtv3rNY8z6pvhp33gXJ
+         irbQ39HtRO2cVaJa2L6tCcwZkS2O0gjENuZxT+iZ/MtVeAxQ16gIJBfOCeQCQvy9Wpzf
+         DDe7Oqn/XWJrOpMPrGpu35cVJeuxK1O6vLMHR7NnJPeaCAaDNgz8Slh/zQnIVElZb5jw
+         oUeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=V3P8u52Efz71WiRlZaXRAZAskGpMnIaMkC26jvIPONc=;
-        b=bn7r3XZ2Lv/qOF3MVOxiNunXmwR9AN2vdyFHsv4BY08c2Gk9Qyg67eAlvZ/yzRHwLF
-         9y4ymJwy6dVd+1tuxQY7bixP8/E5GdlpWIrN8urtQMGiPownEZse4SyOsC1NEgg/RSVX
-         QfTwgWZz95E9M2in3qFQYiI2iPw7tgjINdAeWrYOs6Ax1OJIxgoBTZ/tKMqh+ZlLcE8o
-         gtfM4k10PtMEXy/HPqo7N38PWRjmu0PCbV+m3qsLeLm2H74O9NB3oNWB97Bgu6ELdWVs
-         wwxSFvnBZ5Z568y48T4M5a3iNCjxcfae3xyYlNeczTTookLDjyTnJ9eihBcvhB+6hK8N
-         naUA==
-X-Gm-Message-State: AODbwcAtaCsYxG5h6XfdNsIzltP1TaXnWMR6oiz9nIQAaVTK6mCbz0iq
-        221H/Ydthy9wWzFPtQC8nA==
-X-Received: by 10.98.201.212 with SMTP id l81mr4197785pfk.225.1496368599468;
-        Thu, 01 Jun 2017 18:56:39 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Kciatj8Cac938qIsPJMmW/Kisjc24L9XqYQFeDnns4c=;
+        b=rv1d0MxcDZOAgb8//9rAa5kTphzX4PPerMStQ6CdsQbBEO4ucECavC/S5VrvRg9ie3
+         x2sa61OPbysYCxjU+LTGEUpJsalDn1bUHkdE7ARwYF4s6R9lDc4BLOBTs/e/G/FRf5Ci
+         L/R+tIQ0UOaI6qqS071Kip6YYsoNiAeEi7qWL3+gHyNIht2ZZ3sEHIVCEKKRYc/z4t6P
+         LcKkyToLSb6NCyG657DhTHn6ZoDpIQIx6yzOnNvEjbWhnxfU+0ueP6VAAUrPGDarMPqe
+         oEwoO4r/KZnLoo+4EsDlq9RzBYEQODXmWS4G6y49uLO9RtL2rY+Nhj+T7pGna1hv0Tba
+         UrcQ==
+X-Gm-Message-State: AODbwcBJootQRqEDuJiesmvO9GvqdyhkNyDU17jLB0gAoCBGN0rjhRJQ
+        ou6uQOLkkDFadA==
+X-Received: by 10.98.204.150 with SMTP id j22mr4177409pfk.236.1496368773541;
+        Thu, 01 Jun 2017 18:59:33 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:ec2c:8ebb:3fc7:e0d4])
-        by smtp.gmail.com with ESMTPSA id y5sm31444140pgb.4.2017.06.01.18.56.38
+        by smtp.gmail.com with ESMTPSA id g27sm36814747pfg.63.2017.06.01.18.59.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 18:56:38 -0700 (PDT)
+        Thu, 01 Jun 2017 18:59:33 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com, pclouds@gmail.com,
-        johannes.schindelin@gmx.de, David.Turner@twosigma.com,
-        peff@peff.net, christian.couder@gmail.com, avarab@gmail.com
-Subject: Re: [PATCH v4 0/6] Fast git status via a file system watcher
-References: <20170601155105.28356-1-benpeart@microsoft.com>
-Date:   Fri, 02 Jun 2017 10:56:38 +0900
-In-Reply-To: <20170601155105.28356-1-benpeart@microsoft.com> (Ben Peart's
-        message of "Thu, 1 Jun 2017 11:50:59 -0400")
-Message-ID: <xmqqmv9r17ah.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, bmwill@google.com, jacob.keller@gmail.com
+Subject: Re: [PATCH] send-email: check for repo before invoking hook
+References: <CA+P7+xr39qk9qHE0=uU3HZE2wOhU9X7rmENoDfP=bp09j9N9Mg@mail.gmail.com>
+        <20170601235055.22621-1-jonathantanmy@google.com>
+Date:   Fri, 02 Jun 2017 10:59:32 +0900
+In-Reply-To: <20170601235055.22621-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Thu, 1 Jun 2017 16:50:55 -0700")
+Message-ID: <xmqqinkf175n.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Thanks.  
 
-> Changes from V3 include:
->  - update test script based on feedback
->  - update template hook proc with better post-processing code and make
->    it executable
+"git show -w" tells readers how this fix is trivially correct ;-)
 
-I take it that the first three patches are the same as before,
-so is the "add documentation" one [5/6].
-
-Will replace; Ævar seems to have some interesting numbers, so I'll
-wait a bit more to see how the discussion goes.
-
-Thanks.
+Will apply.
