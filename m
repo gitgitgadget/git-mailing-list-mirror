@@ -2,102 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0282027C
-	for <e@80x24.org>; Fri,  2 Jun 2017 18:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEC9B2027C
+	for <e@80x24.org>; Fri,  2 Jun 2017 18:22:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751188AbdFBSFU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 14:05:20 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36295 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751180AbdFBSFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 14:05:19 -0400
-Received: by mail-pf0-f194.google.com with SMTP id n23so13091818pfb.3
-        for <git@vger.kernel.org>; Fri, 02 Jun 2017 11:05:19 -0700 (PDT)
+        id S1751142AbdFBSWS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 14:22:18 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33839 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750966AbdFBSWR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 14:22:17 -0400
+Received: by mail-pf0-f170.google.com with SMTP id 9so54550168pfj.1
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 11:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=wIpB4UW7+3mLNRCLnLWSjvqiNOOIX1/WKJJ3lfXlZa0=;
-        b=KYSFay+ja3spBpr57ClgTcp1HBOmJbCFg9pBNQ3SDjax/nNsBi6P3SV8gmRotw2bYq
-         zXITRdt608ZzmxC8Cl7Ouj1+Q69Mbwc1kBAlkv9vwB5X6li44v0vaEmEzYJ9U6lwZx7b
-         3af2HDr+JM7TllqJuVKl4lk+NdthhMYDnkQUYggc8JKIxWG6ykgDDg7qGZGq4EJVUe3g
-         jM8Wuk7Gj+o9tDOgu0r1NkM2ckj/e69wTBo9fzdgHNeh7SgqVlAzB8tw9zKkKI5LnPvK
-         ojWuVSW2whObFM9bTlhjIH1iAg79+u7CQ96e8Wja80QmMcz9t8+bh7BRPl8Wy+vIL7ft
-         rF7w==
+        bh=PTsCrYuz/OgNnpipu3KKCfcT/akwzSCYGl1MIaMZBtQ=;
+        b=E5d632IiMrpjUMDtZ9BqT9ar0Fjwo+3N/AKXjmWm/hGKr92Gp51aOBsmLXe70Ee3rM
+         SkftgnC5B6M861J16aa5eIkGi0AGq3u5mxzXr5AR6Ozbf1i9YrqyuPKjTRao8cJ2Hk19
+         576j3QuropYeHVyGVhx71hNuiTh/yHWiVmwOKw98f279Z+fRymnj3gRKHNDnQlRL4UE1
+         HQuenZIAJvpVwNugnP/z47rPZgqrjPdJEeBF2hLamFpwVvQiLwltOhE/37gqaa44xQaw
+         +4nF32nks2ua7jLtRoGnMrUZ+Nla+nOY5xegVk18i5xWfamkThGGhM2vgjYQEhkykBkj
+         1vpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wIpB4UW7+3mLNRCLnLWSjvqiNOOIX1/WKJJ3lfXlZa0=;
-        b=ZsqSM2rt+HYrRt5RpNUE5hDvAp/QfH1PZp+GUnNgm9RKPTn9Jg5e5CgCFPgYOT3U/v
-         V4zmyDh7Ix4PN4bCFkdBQFqrWG7t5GXbfdpp1ZXYfuqQp8F11/Rgr9jFgIv+5hDSIoQn
-         H0NA7HqXToyp7rfFxYN29zvHUC/SqVfrkhX4zSgQ+JVvJKzm9O/IoME4Kc8nk69+Y4aB
-         +DSspIJkbzQ1e3cC1q9uXRw79FSmQtszjST+7EZUCnvdH3Ib/7q4EGSngVwHGyaQlz5h
-         BVIVwnpPltM7iEEPJDFcJRwPJLotYs51PEQJk2pQdIwPK4lj9aa3u0rEJ/StIHRZOoFm
-         H6HQ==
-X-Gm-Message-State: AODbwcCzI6aYCCuDpwfz2hELN0JWbRUYHbZs/6StELGSZOStF3tmzj/m
-        7W3Ku8m4uOdIwA==
-X-Received: by 10.98.12.19 with SMTP id u19mr1294552pfi.47.1496426718548;
-        Fri, 02 Jun 2017 11:05:18 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:9141:378b:960d:5b13])
-        by smtp.gmail.com with ESMTPSA id g23sm37391387pfb.54.2017.06.02.11.05.16
+        bh=PTsCrYuz/OgNnpipu3KKCfcT/akwzSCYGl1MIaMZBtQ=;
+        b=oa0tFMfWOXkOu3XB9g1GY6U3hFn4v521nvwBufc7Z4cp4BByr8SO3K8nlcyct15sOo
+         pAUvxXu01AO3Nu4Q487GmCs3Oqq3+nVHCgNvNPu8/FBSLhOucoqX0XZAPoydwPU88iM2
+         srnr1ZOV9B9RubZXP+4V/Hy7gvaIQWOh0EOfmjqqOeTg+62HtSmZVhh/ah1o+aWBz8+b
+         X4h9vuZavEmYwTUBnIsMaQg4Gr6JF/NsrcV0Zxste87iUL2PDMeKYyWeFBScLNlYsQy/
+         p9ndS73rKMtHqVu82aKie22Lf/NzF2tiGsoVUFTwiOguibYAkyVKpScCidVKLkwmm1Bc
+         P/5Q==
+X-Gm-Message-State: AODbwcCQ1K0I4i0blOm/jDyGK3vL1oBWvbXDJ4u64uKZwa5+UKstczvc
+        QpGZ9L3amTT2g/LkpLN/nA==
+X-Received: by 10.99.60.6 with SMTP id j6mr8536548pga.18.1496427737093;
+        Fri, 02 Jun 2017 11:22:17 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:89d2:8d21:abcd:1e61])
+        by smtp.gmail.com with ESMTPSA id i71sm23317023pge.61.2017.06.02.11.22.15
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Jun 2017 11:05:17 -0700 (PDT)
-Date:   Fri, 2 Jun 2017 11:05:15 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "Brian M. Carlson" <sandals@crustytoothpaste.net>
-Subject: Re: pushing for a new hash, was Re: [PATCH 2/3] rebase: Add tests
- for console output
-Message-ID: <20170602180515.GB30988@aiede.mtv.corp.google.com>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
- <20170531104213.16944-3-phillip.wood@talktalk.net>
- <alpine.DEB.2.21.1.1706011329350.3610@virtualbox>
- <xmqq7f0v46q3.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kaM9ryT1gWx=L6S90HPCaDPNZ6H124HAJscpeJCQFDN8Q@mail.gmail.com>
- <alpine.DEB.2.21.1.1706021442190.171564@virtualbox>
- <20170602175455.GA30988@aiede.mtv.corp.google.com>
+        Fri, 02 Jun 2017 11:22:16 -0700 (PDT)
+Date:   Fri, 2 Jun 2017 11:22:15 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net, sandals@crustytoothpaste.net
+Subject: Re: [PATCH 00/33] object id conversion (grep and diff)
+Message-ID: <20170602182215.GA57260@google.com>
+References: <20170530173109.54904-1-bmwill@google.com>
+ <xmqqzidr18an.fsf@gitster.mtv.corp.google.com>
+ <xmqqefv3yo23.fsf@gitster.mtv.corp.google.com>
+ <xmqqtw3yyhzc.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170602175455.GA30988@aiede.mtv.corp.google.com>
+In-Reply-To: <xmqqtw3yyhzc.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder wrote:
+On 06/02, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> >> Brandon Williams <bmwill@google.com> writes:
+> >>
+> >>> A month or so ago I thought I would lend a hand to Brian and do a round of
+> >>> conversions from sha1 -> struct object_id.  Now that Brian's latest series has
+> >>> hit master I can finally send these patches out.
+> >>>
+> >>> The first couple patches are from Brian which convert some of the notes logic
+> >>> to using 'struct object_id'.  The remaining patches are to convert the grep and
+> >>> diff machinery to using 'struct object_id'.
+> >>
+> >> Nicely done for all of them.  Thanks.  Will queue (with tweaks
+> >> mentioned in the comments).
+> >
+> > Oops.  I won't be able to queue this for now as it heavily conflicts
+> > with blame-lib topic.  The resolution should be trivial, mechanical
+> > and boring, but takes time that I do not have today.
+> 
+> I lied.  This also conflicts somewhat with Peff's diff-blob topic.
+> I think I resolved them correctly (there needs evil merges applied
+> to two files when merging this topic), and hopefully can push out
+> the result by the end of the day.
+> 
+> Thanks.
 
-> Here's a rough list of some useful tasks, in no particular order:
->
-> 1. bc/object-id: This patch series continues, eliminating assumptions
->    about the size of object ids by encapsulating them in a struct.
->    One straightforward way to find code that still needs to be
->    converted is to grep for "sha" --- often the conversion patches
->    change function and variable names to refer to oid_ where they used
->    to use sha1_, making the stragglers easier to spot.
+If it ends up being too much of a headache for you to deal with, let me
+know and I can rebase on top of those series.  That way you don't have to
+deal with the conflict resolutions.  Just let me know what you'd like me
+to do.
 
-I forgot to say: please coordinate with Brian M. Carlson if working on
-this one.  That makes it possible to divide up the work in a way that
-doesn't lead to people patching the same files and stepping on each
-other's toes.
-
-This is one of the larger tasks and contributions to it are very
-useful.  Just do coordinate.
-
-For comparison, the other suggestions in the list should be possible
-for a rogue agent to experiment with alone, with advice from the list
-where they need it. :)
-
-Jonathan
+-- 
+Brandon Williams
