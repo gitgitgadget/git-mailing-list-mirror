@@ -3,124 +3,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B18B2027C
-	for <e@80x24.org>; Fri,  2 Jun 2017 23:26:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B208520D0C
+	for <e@80x24.org>; Fri,  2 Jun 2017 23:35:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751348AbdFBX0B (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 19:26:01 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33266 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750971AbdFBX0A (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 19:26:00 -0400
-Received: by mail-pg0-f67.google.com with SMTP id s62so3154284pgc.0
-        for <git@vger.kernel.org>; Fri, 02 Jun 2017 16:26:00 -0700 (PDT)
+        id S1751170AbdFBXfH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 19:35:07 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:33296 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750971AbdFBXfG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 19:35:06 -0400
+Received: by mail-pf0-f175.google.com with SMTP id 83so433836pfr.0
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 16:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=5ii2u7aeTcS04EPG9dxyzYAodGVxr5OZKITuz2YebNk=;
-        b=UM9jAS4AuNyv405o19qqn4OG4BrE5/WaQUdTv4mq8TvOq+oPWrG9oXP6tjnH/oQo+D
-         w4IOzzM6RXmw7g6ND6s4wM/c//vtDxp455fzDI7bIc00e226I/H/dh72xiQHoJmopE6I
-         zsNJV7J0dUu87a3bRhsOOd5zzaJQzSjL2NCaKtsK7/h8vxmxFxahO92lDmFLX5iKsnfZ
-         axxyhubl1OJQV6IlGrv4Z6XdPEWRrUU5zgGPcQHV2CkoTKpJBY/eqfV7Mwrz2ms80NQ9
-         rNXDrJV1gfjOgccQxXUZpJWlY2hak4rBSMQTxMKgsaPP+qAOfxfcZK6I6J+jkGyku4mi
-         p0Lw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Ob2e3R3CMK5PnfV3OT2gmAazaZ3vRPq2Ghvdp2cHsFM=;
+        b=AweL6m4Jue1bvZwPUQZZWv5zD/NA5JjYo+rTe7Y5SWXqjMEzzuoAbpNr1EYc9bbyDB
+         c26/EIbiKj5dQK1qhCMJEvfvQpk2bv34/FcnMplJwatw2KML+OcHJVQqIPANax/XKcOH
+         zzc6ARR1LTDzTTi0SyWx1F2+cSidw0yPaauQzGC80s7syAsKtjIgDjuhfTwhkF/4T/C5
+         v4sp1eEqESIkIk1csiKpsEl8MdmGQgy9YhZUf2hhL7nCHm67oCv5FohU4wAh8iC9d7eL
+         sSIAyOO8EbGfFVS5tRmKtuYOK7SOseRyfssDK6MzK8e7wcksjzYlR34JlDi2vuErV5RT
+         wVJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5ii2u7aeTcS04EPG9dxyzYAodGVxr5OZKITuz2YebNk=;
-        b=Y+OQ8/Z6evTflTK/M2D4AyziYrverjSJ8i6+HHklpZaYGa4Sv4d02/BSCf02uDYzbY
-         gNZZuRVrdkjGARUw1cA3J1L2otEYdJQGBX09iim0vPnVNqm7nHIWCY+WomRJYlhm+k2U
-         ftvlkiEX+9jPw7iG7Jw6EKrVYX/1HtU5j85KJLlDnvBzYSJMiTcJWfkg+eAzKI5SHQar
-         pvA49m/z0gVQkOZ/ZVEs3VMdHg20OHBf7nyUV0B2Z+IsRLSyz1qwuiiKRlxxTIK21DYr
-         ARm5N5trka10X71CNB22kdX8iiCkz9hyvP6b+xWZkqI+S9WMzgqgYwIRL4I57dwt6XYe
-         NmLw==
-X-Gm-Message-State: AODbwcAsD3wLUAXf6Ld38r0T7TOxZsFT2FXOYvg2LJofw2XJBabr5q81
-        kBg1U2ya/WJ2yw==
-X-Received: by 10.84.135.101 with SMTP id 92mr2377462pli.114.1496445960035;
-        Fri, 02 Jun 2017 16:26:00 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:c157:69:82e:3213])
-        by smtp.gmail.com with ESMTPSA id q28sm37416846pgc.0.2017.06.02.16.25.58
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Ob2e3R3CMK5PnfV3OT2gmAazaZ3vRPq2Ghvdp2cHsFM=;
+        b=KhCuy9SnQxbp6s82r4sg4cxTQIbQbP7UKeXMJhprCtf+Rdyld+Bf6y5wbPamJBEc41
+         wN88eEBtDXuJfKctnrD5C4vdB+OrvsvwDClpuD4WIzS63BzFHgjh1MEGOBH3omWzc9lY
+         isTRZ7uv8A83Zq6WXoVyZ37ZmR0NpyJBOQ6PTs9y3KoTCOHc9aTV3JpaGnOWli60W2kh
+         gb6CS/0QHT3Jgw29SIqONDKBlGOnPXXMo0/QCRiPnVFwVjj+QOCJ0ACCUkQsCrCPyJnZ
+         WRwry18Dwqyb3GIa66VhPCLv6KYhblQ/if9PBXNIzZM69p7Vn7ptc4XGFJUvLijB+5wu
+         pnLg==
+X-Gm-Message-State: AODbwcA4GmMKMDZRMNE+m/7n2PJfd+mLTM2Xzfyhyj4LafPF6zF3Vx3j
+        09bkwwBFnLx5gatV3NOikg==
+X-Received: by 10.99.42.68 with SMTP id q65mr9708449pgq.78.1496446505703;
+        Fri, 02 Jun 2017 16:35:05 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:49ac:b4b9:21bb:8989])
+        by smtp.gmail.com with ESMTPSA id t198sm43406578pgc.33.2017.06.02.16.35.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Jun 2017 16:25:58 -0700 (PDT)
-Date:   Fri, 2 Jun 2017 16:25:08 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [WIP v2 2/2] pack-objects: support --blob-max-bytes
-Message-ID: <20170602232508.GA21733@aiede.mtv.corp.google.com>
-References: <cover.1496361873.git.jonathantanmy@google.com>
- <cover.1496432147.git.jonathantanmy@google.com>
- <6f7934621717141ce3bb6bc05cf1d59c7900ccc5.1496432147.git.jonathantanmy@google.com>
- <20170602222640.u6vni5tdpjp3sayt@sigill.intra.peff.net>
+        Fri, 02 Jun 2017 16:35:04 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, sandals@crustytoothpaste.net
+Subject: Re: [PATCH 00/33] object id conversion (grep and diff)
+References: <20170530173109.54904-1-bmwill@google.com>
+        <xmqqzidr18an.fsf@gitster.mtv.corp.google.com>
+        <xmqqefv3yo23.fsf@gitster.mtv.corp.google.com>
+        <xmqqtw3yyhzc.fsf@gitster.mtv.corp.google.com>
+        <20170602182215.GA57260@google.com>
+Date:   Sat, 03 Jun 2017 08:35:03 +0900
+In-Reply-To: <20170602182215.GA57260@google.com> (Brandon Williams's message
+        of "Fri, 2 Jun 2017 11:22:15 -0700")
+Message-ID: <xmqqpoemx8t4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170602222640.u6vni5tdpjp3sayt@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Fri, Jun 02, 2017 at 12:38:45PM -0700, Jonathan Tan wrote:
+Brandon Williams <bmwill@google.com> writes:
 
->> +--blob-max-bytes=<n>::
->> +	This option can only be used with --stdout. If specified, a blob
->> +	larger than this will not be packed unless a to-be-packed tree
->> +	has that blob with a filename beginning with ".git".  The size
->> +	can be suffixed with "k", "m", or "g", and may be "0".
->> ++
->> +If specified, after printing the packfile, pack-objects will print the
->> +count of excluded blobs (8 bytes) . Subsequently, for each excluded blob
->> +in hash order, pack-objects will print its hash (20 bytes) and its size
->> +(8 bytes). All numbers are in network byte order.
->> ++
->> +If pack-objects cannot efficiently determine, for an arbitrary blob,
->> +that no to-be-packed tree has that blob with a filename beginning with
->> +".git" (for example, if bitmaps are used to calculate the objects to be
->> +packed), it will pack all blobs regardless of size.
+> On 06/02, Junio C Hamano wrote:
+>> 
+>> I lied.  This also conflicts somewhat with Peff's diff-blob topic.
+>> I think I resolved them correctly (there needs evil merges applied
+>> to two files when merging this topic), and hopefully can push out
+>> the result by the end of the day.
+>> 
+>> Thanks.
 >
-> Hmm. So this feature can't be used with bitmaps at all?  That seems like
-> a big downside, as we still have to walk the whole graph to come up with
-> the list of blobs (even if we're sending them). That's 30-40 seconds of
-> CPU per clone on torvalds/linux. I imagine it's much worse on
-> repositories big enough to need a full GVFS-style "don't send any blobs"
-> approach.
->
-> We have a name-hash cache extension in the bitmap file, but it doesn't
-> carry enough information to deduce the .git-ness of a file. I don't
-> think it would be too hard to add a "flags" extension, and give a single
-> bit to "this is a .git file".
+> If it ends up being too much of a headache for you to deal with, let me
+> know and I can rebase on top of those series.  That way you don't have to
+> deal with the conflict resolutions.  Just let me know what you'd like me
+> to do.
 
-A nicer approach IMHO is to include an extra bitmap, like the existing
-object-type bitmaps (see the dump_bitmap calls in
-bitmap_writer_finish).  This would would represent the set of all
-.git* blobs in the pack.
+Sorry, I forgot to push the result out, even though I double checked
+the conflict resolution I did last night.  Now it is in the public
+repository.  I have one squash queued at the right place to update
+SHA1s to OIDs in the comment Brian pointed out.
 
-[...]
->                      If you're not just avoiding large blobs but trying
-> to get a narrow clone, you don't want the .git files from the
-> uninteresting parts of the tree.
+If you ever need to rebase this on top of future 'master' that
+already has js/blame-lib topic, fetching from me and checking
+the evil merge I did may turn out to be helpful:
 
-This is something I've wondered about, too.  Part of the story is that
-we haven't started omitting trees, so there is already O(number of
-trees) objects being sent and some additional small blobs for .git*
-specials doesn't make it much worse.  Sending all .git* blobs keeps
-things simple since the server doesn't have to infer which .git* blobs
-are relevant to this client.
+ $ git fetch git://github.com/gitster/git refs/merge-fix/bw/object-id
+ $ git show FETCH_HEAD
 
-Longer term, we will likely want to allow clients to request omission
-of some trees, too.  Omitting the corresponding .git* files becomes
-more straightforward at that point.
+but I can take patches based on the same old 'master'; as long as
+the evil merge above is correct, that would probably be preferrable,
+as it makes it easier to compare the two iterations of your series.
 
-Does that make sense?
+Repeating some backstory of "merge-fix" might be beneficial, if a
+reader is interested.  Otherwise the remainder of this message can
+safely be skipped.
 
-Jonathan
+After a topic (i.e. js/blame-lib) moves a lot of code around (i.e. a
+bulk of what used to be in builtin/blame.c is now in blame.c and
+some in diff.c), merging a topic that touches places in the code
+that was moved in-place (i.e. bw/object-id, which updates the code
+in builtin/blame.c) will leave a conflict that looks like:
+
+    <<<<<<< HEAD
+    ... very little that is left after moving
+    ... bunch of code out of this file
+    ||||||| common
+    ... a lot of
+    ... stuff before
+    ... your change from SHA1 to OID
+    ... is here
+    =======
+    ... a lot of
+    ... stuff after
+    ... your change from SHA1 to OID
+    ... is here
+    >>>>>>> theirs
+
+As far as builtin/blame.c is concerned, the resolution for this
+set of conflicts is just to take the HEAD version, ignoring all of
+your SHA1-to-OID changes.  Once it is resolved, "rerere" can help
+us remember this resolution to builtin/blame.c
+
+But the ignored changes need to go somewhere else.
+
+What the user who is doing a merge does at this point is to compare
+what is between ||||||| and ======= (i.e. common ancestor's version)
+with what is between ======= and >>>>>>> (i.e. their version) to
+figure out what the branch being merged did.  And the user needs to
+know where the common code went in the version in HEAD.
+
+ $ git log [--no-merges] -p MERGE_HEAD.. -- builtin/blame.c
+
+is helpful to locate the commit that lost the common lines from the
+file.  And "git show" on it will tell us that they mostly went to
+blame.c while some migrating to diff.c; we found out what you did by
+comparing "common" and "theirs" in the previous step and we apply
+these changes to these "new" places.
+
+And that is the diff you see in refs/merge-fix/bw/object-id.  The
+script I use to re-build 'pu' every day (probably I use it three
+times a day on average) knows about that ref.  The script starts
+from the tip of 'master', and for each topic, (1) run "git merge"
+into HEAD, (2) take resolution recorded by "rerere" and (3) if
+merge/fix/$topic exists, cherry-pick it on top to squash into the
+merge made in (2).
+
+Once I have taught my rerere database and refs/merge-fix/ about this
+merge, it is not too big a deal to redo the merge to adjust to an
+updated 'master' or a new interation of your series because of the
+above mechanism.  And that is why I say it is OK for an updated series
+to be based on the same old 'master'.
+
+Thanks.
+
+
