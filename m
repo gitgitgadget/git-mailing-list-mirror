@@ -2,148 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7F2820D13
-	for <e@80x24.org>; Fri,  2 Jun 2017 16:11:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87BB02027C
+	for <e@80x24.org>; Fri,  2 Jun 2017 16:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751167AbdFBQLN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 12:11:13 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49359 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750955AbdFBQLM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 12:11:12 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MCtut-1d8Kig0uY7-009kru; Fri, 02
- Jun 2017 18:10:57 +0200
-Date:   Fri, 2 Jun 2017 18:10:54 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v4 0/8] PCRE v2, PCRE v1 JIT, log -P & fixes
-In-Reply-To: <xmqqbmq74773.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1706021803460.171564@virtualbox>
-References: <20170601182056.31142-1-avarab@gmail.com> <xmqqbmq74773.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751169AbdFBQig (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 12:38:36 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:35725 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751162AbdFBQie (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 12:38:34 -0400
+Received: by mail-it0-f53.google.com with SMTP id m62so11425561itc.0
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 09:38:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=UKJgZ6ExpxbuN9K8kRpr1UDo271w+zHuIhGUTK9esec=;
+        b=lvSlZgS+VjzWyYBoaaFghXuatSCv7zxZFvuwbAPycHptDMX42BoBH3m5kODYWeI6sf
+         p1liyspfozaCo46MPO8PQsSu4+NfnfAw+rM31XZcsQj6RIVxZGLWmQ/O8h9j9XU1bCaJ
+         xL6AKAWBzJWcZP6D+b+MKLE5lCeVf7ccq33Cte1ykpeiMs/AcwI+nqAm3rn1USb8of72
+         9ehVPBAuPI+FG9OuBqKwciDAqXkKDHZTze3+6sF+UKOTXk1o4w6r+NKTHUCcJUFHOZ9u
+         sUIiqt1msQieBvRtPRkvWO4iZDpT0yb8Paswi1M9ip9srvQsIxHwed+nWdKYvh/TKhRe
+         OlRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=UKJgZ6ExpxbuN9K8kRpr1UDo271w+zHuIhGUTK9esec=;
+        b=NiQMc4s8xZUbxJSf55WWXgNGh2yWyu9UC5pRJL9Z6EHZQSJiXLIS82ZJ83UOfX/W0c
+         PeFDic5xAKsa5xwS8KYTHTR7KrWtYZ1SEVgzneuzB6jSZ98B4zVdybZIpjn/MhvK7RnA
+         QQ/TWSlM2q9eEzlg6tSDQ/pLBk4jqejeBtiLBlp1ZyAfTkBVMbS8r3O9RArqQRqjfAoM
+         xvB5u+timXhHik9GgFHWoLqcJj3w2+muorq6l+PS7KjzY8+ELLND6IBjR4GdGWKKBoiM
+         vCrPwV0IHTYHCXXaEGCCQCMQVVOzLglMYZfZJ2Xju7FanKVqv16dQ6NVba6tX4xklIe6
+         BW5g==
+X-Gm-Message-State: AODbwcA/SA6CkK0UrYFdj/ydblI9ac0zVG088DQUn0hiRsdMNhC/oqyu
+        kQYmEYZGr19Fuyz/FzF0JkYDiIkVOOaGjDI=
+X-Received: by 10.107.178.215 with SMTP id b206mr5146403iof.50.1496421513140;
+ Fri, 02 Jun 2017 09:38:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1162236140-1496419857=:171564"
-X-Provags-ID: V03:K0:TsoGgBkQjYw/Z9znHre8PIR+qmHvkGQF2gRurzBU1c0zZlICivE
- p48rf2KwNQmvSl6PZOO0yfZhiDOZU+tQPTSzjwJw9aJhgyEJqiqY58KUXd/7aeHHzYdvHv7
- OLQ0tEMsxkjYekyiPbeOlz4quNRARa24CidLawlWYE/7dnHq7rqqFi2mL/ve2SjbAhCNBRM
- ZEZ3DOzLCF3xNm6D74YoA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:K2JRQ73Ff2A=:uTK9Q6vi3oToTLs1YiapJG
- APujMGZ45NogQejKcTZRnJbq4i1JibbGq0NIbCW94yBQfKtq0omQ5N/RBwMUOenT2EiH6a8nf
- H7UqNGbyvlbZ13kavCKua+XBsuOY3GCDyeAxMPbJWCc1d/GmStUCsjpGAceVNdJXz9x18r6CT
- xiVoIVeRUT3KIh2gTMB0AVbaZhHgYzToOp8gDdZ4QnUEcNl8KV7VU3cNTTh7vtAf5sIp4vpPc
- XJ5Ojy9SxAPoTje9+Htp795Ic05J2Mz/JqseiQ72scbHBiLwrCAX5z1VVu1zU/mjQPX8UGNla
- /P52HmDgH4tT6PKk5NIAmqPktJJvtGgNmZzw6+nJ1vVIsJszjm/DTclNXfJPjwGGvNNniFOkF
- SWH/x2XjTwvQ7WkCKTk1jGdYRQGQ425OGX/h9/QnyeEg7uKh+xQOHm69jx7D+EZGjriuNjLsH
- vrpramv33kRAST2t16xlcH559y1czb498yL48CvtVDftWE8H1reLNXfRgKjrBL7/+0VWTUL4n
- oIUjFVXy7ogpdxfAP/gqo+cAOu4x/6rz8ze66E5FHFOq9kR5YUKr+tJ+VedFEnDDGTKlYUvOj
- +SyLXeR8QyBB81nddhxZ77tkpUDF0zSdHjRTQt1v5UW8YhgyfMS/+ajx72K+NQROXIF0ic/+I
- lC6h25gi3Q4RVwMhLEkgGZgF9TUZKAZKMt/FZwnRKOzXYge/DOAvOpZZ9UW19RkGke751Jb53
- sA5NpjobfrX/o2hFELrx40Lp4QCUiPBickbUm6btVMaZLsRw425N555emk44wANKdCP/P6lb3
- jJRso7R
+Received: by 10.107.8.220 with HTTP; Fri, 2 Jun 2017 09:38:12 -0700 (PDT)
+In-Reply-To: <953845c2-4326-608a-c342-2d2141da561c@gortan.org>
+References: <953845c2-4326-608a-c342-2d2141da561c@gortan.org>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 2 Jun 2017 18:38:12 +0200
+Message-ID: <CACBZZX6H4wxQ7hrO1Y1u6Qyr5gpK9GeCxpv-x2q3Eq2WCbkK8Q@mail.gmail.com>
+Subject: Re: git-gui ignores core.hooksPath
+To:     Philipp Gortan <philipp@gortan.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Jun 2, 2017 at 3:41 PM, Philipp Gortan <philipp@gortan.org> wrote:
+> Hi git devs,
+>
+> First off, thanks for your awesome work!
+>
+> I've been unhappy for quite a while that I had to configure the hooks
+> manually for each of my repos - until I found out recently that there is
+> the core.hooksPath config variable that (when set globally) allows me to
+> specify a hooks directory to be used for all my repositories.
+>
+> Now I was happy - for a few minutes, until I tested this feature in
+> git-gui, and realized that it doesn't work there.
+>
+> This seems to be caused by "proc githook_read", which says "set pchook
+> [gitdir hooks $hook_name]" instead of querying "git config
+> core.hooksPath" first - cf
+> https://github.com/git/git/blob/2cc2e70264e0fcba04f9ef791d144bbc8b501206/git-gui/git-gui.sh#L627
+>
+> Would be great if this could get fixed...
 
---8323329-1162236140-1496419857=:171564
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Hi. I added core.hooksPath, glad to see it's useful to other people.
 
-Hi,
-
-On Fri, 2 Jun 2017, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->=20
-> > See <20170525200528.22037-1-avarab@gmail.com> for v3
-> > (https://public-inbox.org/git/20170525200528.22037-1-avarab@gmail.com/)=
-=2E
-> >
-> > This is on top of "[PATCH v4 00/31] Easy to review grep & pre-PCRE
-> > changes".
-> >
-> > Changes:
-> >
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (8):
-> >   grep: don't redundantly compile throwaway patterns under threading
-> >   grep: skip pthreads overhead when using one thread
-> >   log: add -P as a synonym for --perl-regexp
-> >   grep: add support for the PCRE v1 JIT API
-> >   grep: un-break building with PCRE < 8.32
-> >   grep: un-break building with PCRE < 8.20
-> >
-> > No changes.
-> >
-> >   grep: un-break building with PCRE >=3D 8.32 without --enable-jit
-> >
-> > NEW: It turns out that a PCRE version that supports JIT, but is built
-> > without JIT support will fail at link time since there's no
-> > pcre_jit_exec symbol.
-> >
-> > It also turns out (contrary to what I claimed on list before, my
-> > mistake) that there's no way to detect this through some macro. All
-> > the pcre include files are the same with/without --enable-jit, only
-> > the object file differs.
-> >
-> > So there's now a NO_LIBPCRE1_JIT flag to the Makefile, which is off by
-> > default, but turned on on MinGW. I have not tested that
-> > config.mak.uname change, but everything else I could test on Linux.
-> >
-> > The reason for why it's NO_LIBPCRE1_JIT not USE_LIBPCRE1_JIT is that
-> > in practice pretty much everyone who builds pcre builds it with JIT
-> > (I've looked through various Linux/BSD distro build files), it's MinGW
-> > that's the exception here. Given the performance gain it makes sense
-> > to make it the default.
-> >
-> >   grep: add support for PCRE v2
-> >
-> > Almost no changes, just:
-> >
-> >  * A trivial change to stop redundantly assigning to pcre2_jit_on,
-> >    mistakenly left over from an earlier version.
-> >
-> >  * Updated commit message / perf numbers for the extra patches in the
-> >    series both here and in v3.
->=20
-> Nicely summarised and matches what I received; thanks, will replace.
-
-For the record: I spent the entire development time I had today on trying
-to get PCRE2 to build and to figure out which PCRE2 tests fail and why.
-
-I hoped to get to the bottom why the JIT is disabled in PCRE1, but ran out
-of time.
-
-I seem to have gotten PCRE2 to build and figured out why the tests failed
-(spoiler: all of the failures were bogus and no indication of an
-incorrectly-built PCRE2).
-
-I barely had time to build `pu` (forcing PCRE2) and to run the test
-scripts whose file names contain the substring "grep". Seems to work so
-far, but this is by no means comprehensive testing; it is more like hushed
-and rushed testing on a Friday night when I should have stopped working 10
-minutes ago.
-
-Will continue with testing Git for Windows using PCRE2 next week and keep
-you posted,
-Dscho
---8323329-1162236140-1496419857=:171564--
+This indeed is something that should be fixed, but git-gui development
+is managed outside of git.git, it's just occasionally pulled in. I'm
+not what the best place to contact is, but I've CC'd
+Philip Oakley who's been making recent commits to git-gui.git at
+http://repo.or.cz/git-gui.git/
