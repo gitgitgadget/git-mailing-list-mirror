@@ -7,100 +7,126 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEC9B2027C
-	for <e@80x24.org>; Fri,  2 Jun 2017 18:22:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AE912027C
+	for <e@80x24.org>; Fri,  2 Jun 2017 18:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751142AbdFBSWS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 14:22:18 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:33839 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750966AbdFBSWR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 14:22:17 -0400
-Received: by mail-pf0-f170.google.com with SMTP id 9so54550168pfj.1
-        for <git@vger.kernel.org>; Fri, 02 Jun 2017 11:22:17 -0700 (PDT)
+        id S1751141AbdFBScm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 14:32:42 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36311 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750807AbdFBScl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 14:32:41 -0400
+Received: by mail-pf0-f169.google.com with SMTP id m17so54840898pfg.3
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 11:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
+        h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=PTsCrYuz/OgNnpipu3KKCfcT/akwzSCYGl1MIaMZBtQ=;
-        b=E5d632IiMrpjUMDtZ9BqT9ar0Fjwo+3N/AKXjmWm/hGKr92Gp51aOBsmLXe70Ee3rM
-         SkftgnC5B6M861J16aa5eIkGi0AGq3u5mxzXr5AR6Ozbf1i9YrqyuPKjTRao8cJ2Hk19
-         576j3QuropYeHVyGVhx71hNuiTh/yHWiVmwOKw98f279Z+fRymnj3gRKHNDnQlRL4UE1
-         HQuenZIAJvpVwNugnP/z47rPZgqrjPdJEeBF2hLamFpwVvQiLwltOhE/37gqaa44xQaw
-         +4nF32nks2ua7jLtRoGnMrUZ+Nla+nOY5xegVk18i5xWfamkThGGhM2vgjYQEhkykBkj
-         1vpQ==
+        bh=hkDB8hyVGL5ACxgx9/qgqe4U+lGNmDzBe5nhdaR5uA8=;
+        b=eepybDfVjUWiwe7qkmHA812sbRViB/CSqf9YJan4ULmLQPx1unbbjXB/thkORerlpq
+         56aFQTs0y/++XyOdVKm5Q6U4ijijQLvHW5w1m7icwEIr754JrtaIUWSB6gAKJo4OVbDg
+         V2RBTO2uriX7xDKa6UDunzuKAHKabRy0L/MsfmvKb0BuB/zqHtyZ7Fe0Tu7vBfzpwAPF
+         ejEYKdve/Oq9jNe+yfUptfvD+f5A1NfwoBUc2x36JL4mRyDSXAoilwx8c8cEMycLtZbB
+         CVAav9+586+oU5YInV6dFPvXQvetLHhrXyg8b31ijOPavFPk6cD++P2eM04q1NSw53i0
+         Wvzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+        h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=PTsCrYuz/OgNnpipu3KKCfcT/akwzSCYGl1MIaMZBtQ=;
-        b=oa0tFMfWOXkOu3XB9g1GY6U3hFn4v521nvwBufc7Z4cp4BByr8SO3K8nlcyct15sOo
-         pAUvxXu01AO3Nu4Q487GmCs3Oqq3+nVHCgNvNPu8/FBSLhOucoqX0XZAPoydwPU88iM2
-         srnr1ZOV9B9RubZXP+4V/Hy7gvaIQWOh0EOfmjqqOeTg+62HtSmZVhh/ah1o+aWBz8+b
-         X4h9vuZavEmYwTUBnIsMaQg4Gr6JF/NsrcV0Zxste87iUL2PDMeKYyWeFBScLNlYsQy/
-         p9ndS73rKMtHqVu82aKie22Lf/NzF2tiGsoVUFTwiOguibYAkyVKpScCidVKLkwmm1Bc
-         P/5Q==
-X-Gm-Message-State: AODbwcCQ1K0I4i0blOm/jDyGK3vL1oBWvbXDJ4u64uKZwa5+UKstczvc
-        QpGZ9L3amTT2g/LkpLN/nA==
-X-Received: by 10.99.60.6 with SMTP id j6mr8536548pga.18.1496427737093;
-        Fri, 02 Jun 2017 11:22:17 -0700 (PDT)
+        bh=hkDB8hyVGL5ACxgx9/qgqe4U+lGNmDzBe5nhdaR5uA8=;
+        b=hjj3Hl+FIp9+rw0vj2RTqk68TgHLsnMp0FQiqHur2V0AoOzG20YEoXPOkUYfguIfvk
+         a3JyhL/7bSo5qe2YjRIdTkawH28eDG740ukNWMHwGt0Y3btnHUJktNrTCBnUFb1lBxM2
+         bc7OG3JRwsQawcoV4fpEYvGrJap3Q5AIKa5Zuep2jksM4fBB9kH14lmwNfDBjjzW0uYJ
+         kpLSuyJi0CQKqLYaFI+ObCZwXtHV2iIo1TQ6yErU6Xer7BiM1SKnWFgrPHQCvvRGmn5b
+         +3P20q/HcYnxNjNwX8pjw5jksfHGQMmEDWTCBq640kKJZuqaNzO0RKgqy7vC5daU4LxM
+         6zXQ==
+X-Gm-Message-State: AODbwcCT77Eck/5ZSX5N6GIu7t/kJk3lZsLeaa1hN7iBXX71g9IMLu4z
+        z3w1ooXzWnFrrFw3
+X-Received: by 10.84.148.134 with SMTP id k6mr1256006pla.55.1496428360389;
+        Fri, 02 Jun 2017 11:32:40 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:89d2:8d21:abcd:1e61])
-        by smtp.gmail.com with ESMTPSA id i71sm23317023pge.61.2017.06.02.11.22.15
+        by smtp.gmail.com with ESMTPSA id n87sm40351989pfi.124.2017.06.02.11.32.39
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Jun 2017 11:22:16 -0700 (PDT)
-Date:   Fri, 2 Jun 2017 11:22:15 -0700
+        Fri, 02 Jun 2017 11:32:39 -0700 (PDT)
+Date:   Fri, 2 Jun 2017 11:32:38 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, sandals@crustytoothpaste.net
-Subject: Re: [PATCH 00/33] object id conversion (grep and diff)
-Message-ID: <20170602182215.GA57260@google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+Subject: Re: [PATCH 22/33] notes-merge: convert notes_merge* to struct
+ object_id
+Message-ID: <20170602183238.GB57260@google.com>
 References: <20170530173109.54904-1-bmwill@google.com>
- <xmqqzidr18an.fsf@gitster.mtv.corp.google.com>
- <xmqqefv3yo23.fsf@gitster.mtv.corp.google.com>
- <xmqqtw3yyhzc.fsf@gitster.mtv.corp.google.com>
+ <20170530173109.54904-23-bmwill@google.com>
+ <20170530185653.cfy4cbq3pmxfq5x6@genre.crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqtw3yyhzc.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170530185653.cfy4cbq3pmxfq5x6@genre.crustytoothpaste.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/02, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On 05/31, brian m. carlson wrote:
+> On Tue, May 30, 2017 at 10:30:58AM -0700, Brandon Williams wrote:
+> > @@ -596,47 +596,47 @@ int notes_merge(struct notes_merge_options *o,
+> >  	/* Find merge bases */
+> >  	bases = get_merge_bases(local, remote);
+> >  	if (!bases) {
+> > -		base_sha1 = null_sha1;
+> > -		base_tree_sha1 = EMPTY_TREE_SHA1_BIN;
+> > +		base_oid = &null_oid;
+> > +		base_tree_oid = &empty_tree_oid;
+> >  		if (o->verbosity >= 4)
+> >  			printf("No merge base found; doing history-less merge\n");
+> >  	} else if (!bases->next) {
+> > -		base_sha1 = bases->item->object.oid.hash;
+> > -		base_tree_sha1 = bases->item->tree->object.oid.hash;
+> > +		base_oid = &bases->item->object.oid;
+> > +		base_tree_oid = &bases->item->tree->object.oid;
+> >  		if (o->verbosity >= 4)
+> >  			printf("One merge base found (%.7s)\n",
+> > -				sha1_to_hex(base_sha1));
+> > +			       oid_to_hex(base_oid));
 > 
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> >> Brandon Williams <bmwill@google.com> writes:
-> >>
-> >>> A month or so ago I thought I would lend a hand to Brian and do a round of
-> >>> conversions from sha1 -> struct object_id.  Now that Brian's latest series has
-> >>> hit master I can finally send these patches out.
-> >>>
-> >>> The first couple patches are from Brian which convert some of the notes logic
-> >>> to using 'struct object_id'.  The remaining patches are to convert the grep and
-> >>> diff machinery to using 'struct object_id'.
-> >>
-> >> Nicely done for all of them.  Thanks.  Will queue (with tweaks
-> >> mentioned in the comments).
-> >
-> > Oops.  I won't be able to queue this for now as it heavily conflicts
-> > with blame-lib topic.  The resolution should be trivial, mechanical
-> > and boring, but takes time that I do not have today.
+> I noticed you fixed up the indentation.  Thanks.
 > 
-> I lied.  This also conflicts somewhat with Peff's diff-blob topic.
-> I think I resolved them correctly (there needs evil merges applied
-> to two files when merging this topic), and hopefully can push out
-> the result by the end of the day.
+> > diff --git a/notes-merge.h b/notes-merge.h
+> > index 0d890563b..eaa8e3b86 100644
+> > --- a/notes-merge.h
+> > +++ b/notes-merge.h
+> > @@ -33,15 +33,15 @@ void init_notes_merge_options(struct notes_merge_options *o);
+> >   *
+> >   * 1. The merge trivially results in an existing commit (e.g. fast-forward or
+> >   *    already-up-to-date). 'local_tree' is untouched, the SHA1 of the result
+> > - *    is written into 'result_sha1' and 0 is returned.
+> > + *    is written into 'result_oid' and 0 is returned.
+> >   * 2. The merge successfully completes, producing a merge commit. local_tree
+> >   *    contains the updated notes tree, the SHA1 of the resulting commit is
+> > - *    written into 'result_sha1', and 1 is returned.
+> > + *    written into 'result_oid', and 1 is returned.
+> >   * 3. The merge results in conflicts. This is similar to #2 in that the
+> >   *    partial merge result (i.e. merge result minus the unmerged entries)
+> >   *    are stored in 'local_tree', and the SHA1 or the resulting commit
+> >   *    (to be amended when the conflicts have been resolved) is written into
+> > - *    'result_sha1'. The unmerged entries are written into the
+> > + *    'result_oid'. The unmerged entries are written into the
+> >   *    .git/NOTES_MERGE_WORKTREE directory with conflict markers.
+> >   *    -1 is returned.
+> >   *
 > 
-> Thanks.
+> Did you want to change the comment to say "object ID" or "OID" instead
+> of "SHA1" like you did in an earlier patch?
 
-If it ends up being too much of a headache for you to deal with, let me
-know and I can rebase on top of those series.  That way you don't have to
-deal with the conflict resolutions.  Just let me know what you'd like me
-to do.
+Yep I can do that here and in the comment below this one.
+
+> -- 
+> brian m. carlson / brian with sandals: Houston, Texas, US
+> https://www.crustytoothpaste.net/~bmc | My opinion only
+> OpenPGP: https://keybase.io/bk2204
+
+
 
 -- 
 Brandon Williams
