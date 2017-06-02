@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0753920D11
-	for <e@80x24.org>; Fri,  2 Jun 2017 01:59:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE89820D14
+	for <e@80x24.org>; Fri,  2 Jun 2017 02:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751157AbdFBB7f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 1 Jun 2017 21:59:35 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35783 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751120AbdFBB7e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Jun 2017 21:59:34 -0400
-Received: by mail-pf0-f195.google.com with SMTP id u26so10224848pfd.2
-        for <git@vger.kernel.org>; Thu, 01 Jun 2017 18:59:34 -0700 (PDT)
+        id S1751142AbdFBCG1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 1 Jun 2017 22:06:27 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34762 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751130AbdFBCG0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Jun 2017 22:06:26 -0400
+Received: by mail-pf0-f193.google.com with SMTP id w69so10273054pfk.1
+        for <git@vger.kernel.org>; Thu, 01 Jun 2017 19:06:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=Kciatj8Cac938qIsPJMmW/Kisjc24L9XqYQFeDnns4c=;
-        b=k9kDquPF9EqVlkD5ip1BGZibTcvdwNNVX2U8mWJFAKPb9wHwGbpTyFoypBV/Hrdcgf
-         ktbFCPWVcZ9ZRPD1G7nn7pAGVAmBUielb5EUoQB+HYi8b93phjgcxj2Gl2y+VHhORVVM
-         Wsz5rKZFxTyCP6sWRQkQXVrVDGyB68+mLr9j8Kn3IUzfGhsOtBtv3rNY8z6pvhp33gXJ
-         irbQ39HtRO2cVaJa2L6tCcwZkS2O0gjENuZxT+iZ/MtVeAxQ16gIJBfOCeQCQvy9Wpzf
-         DDe7Oqn/XWJrOpMPrGpu35cVJeuxK1O6vLMHR7NnJPeaCAaDNgz8Slh/zQnIVElZb5jw
-         oUeg==
+        bh=owUqsnqBw3su7j2hb8XkUUT6txR6ADG8mSGwfRv2yK8=;
+        b=iS+/hHXBYHEpasmnqZeC3CsUN6Ts8+2U/ueRVehCQxuq1mKB2QhxVC8tdpf3egGJ/x
+         pIqGfe6j/bu8uzciB/nIwih6fBDUf1Wzf0EJDe+2Jncybt9VGZqP1BhuPLbLf1obJYmR
+         xo5QrOwK3E7yHZSxjB45yOG9ckxiuAxHIN7aDO2tpGx/zRRFiGgDyWhGBI1tsRYcqE7w
+         Bm/zCnq1Lvfg4/roSgePQlOt3cux29du8mu0UWmPCCAZLMMFU7xfoJeRSiHynJJMhkQh
+         8AB7ukCGzWzV8v43UFeJgWYPLf0SWwdwUgYdmkCqNauR9MMJAEVAbSxzaMvsUHtYsIQZ
+         cbdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=Kciatj8Cac938qIsPJMmW/Kisjc24L9XqYQFeDnns4c=;
-        b=rv1d0MxcDZOAgb8//9rAa5kTphzX4PPerMStQ6CdsQbBEO4ucECavC/S5VrvRg9ie3
-         x2sa61OPbysYCxjU+LTGEUpJsalDn1bUHkdE7ARwYF4s6R9lDc4BLOBTs/e/G/FRf5Ci
-         L/R+tIQ0UOaI6qqS071Kip6YYsoNiAeEi7qWL3+gHyNIht2ZZ3sEHIVCEKKRYc/z4t6P
-         LcKkyToLSb6NCyG657DhTHn6ZoDpIQIx6yzOnNvEjbWhnxfU+0ueP6VAAUrPGDarMPqe
-         oEwoO4r/KZnLoo+4EsDlq9RzBYEQODXmWS4G6y49uLO9RtL2rY+Nhj+T7pGna1hv0Tba
-         UrcQ==
-X-Gm-Message-State: AODbwcBJootQRqEDuJiesmvO9GvqdyhkNyDU17jLB0gAoCBGN0rjhRJQ
-        ou6uQOLkkDFadA==
-X-Received: by 10.98.204.150 with SMTP id j22mr4177409pfk.236.1496368773541;
-        Thu, 01 Jun 2017 18:59:33 -0700 (PDT)
+        bh=owUqsnqBw3su7j2hb8XkUUT6txR6ADG8mSGwfRv2yK8=;
+        b=he8tmOmvLsVPo9t6qpOi8I6AQn4JYs0weiklwqwGz0mWxXDFm9Q+SgPAA9dTCUFb3J
+         YY2JMaUFseYdts3Mr6xAs0sQVAgcWrQtx0mXCjpfOn5EI922QXQAD6SmyPD6m66AryVb
+         KwNNvHc4GExrjCmczCeSMrgueBkTEX8SNs5mzWfJFDI/4MIBUbp5h2oIiIjbSHV7R70d
+         Wmr3K74wIZNjrSx86425P/L/88ae7HBswE8NV49Y536FqB64uBGd9MCOF93Ir7WmLzsf
+         qmNNLeqLSYX2Ne9ipP4RSHledd05EbSMXAMBvSywQGQc6kBSMXrDhm8XT7qpGAvmgF+7
+         trXw==
+X-Gm-Message-State: AODbwcD6T24NF5fNxr5/U9QgpXZerfzSwbc2z4QgzjxeUNCYkDb2aPpx
+        8fuvX2Gsm3LrU0D5G8h0kg==
+X-Received: by 10.98.193.65 with SMTP id i62mr4218501pfg.134.1496369186241;
+        Thu, 01 Jun 2017 19:06:26 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:ec2c:8ebb:3fc7:e0d4])
-        by smtp.gmail.com with ESMTPSA id g27sm36814747pfg.63.2017.06.01.18.59.32
+        by smtp.gmail.com with ESMTPSA id x71sm37055150pgd.6.2017.06.01.19.06.25
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 01 Jun 2017 18:59:33 -0700 (PDT)
+        Thu, 01 Jun 2017 19:06:25 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, bmwill@google.com, jacob.keller@gmail.com
-Subject: Re: [PATCH] send-email: check for repo before invoking hook
-References: <CA+P7+xr39qk9qHE0=uU3HZE2wOhU9X7rmENoDfP=bp09j9N9Mg@mail.gmail.com>
-        <20170601235055.22621-1-jonathantanmy@google.com>
-Date:   Fri, 02 Jun 2017 10:59:32 +0900
-In-Reply-To: <20170601235055.22621-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Thu, 1 Jun 2017 16:50:55 -0700")
-Message-ID: <xmqqinkf175n.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, tboegi@web.de, e@80x24.org,
+        ttaylorr@github.com, peartben@gmail.com
+Subject: Re: [PATCH v5 0/5] convert: add "status=delayed" to filter process protocol
+References: <20170601082203.50397-1-larsxschneider@gmail.com>
+Date:   Fri, 02 Jun 2017 11:06:24 +0900
+In-Reply-To: <20170601082203.50397-1-larsxschneider@gmail.com> (Lars
+        Schneider's message of "Thu, 1 Jun 2017 10:21:58 +0200")
+Message-ID: <xmqqbmq716u7.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,8 +66,9 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks.  
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-"git show -w" tells readers how this fix is trivially correct ;-)
+> If you review this series then please read the "Delay" section in
+> "Documentation/gitattributes.txt" first for an overview of the delay mechanism.
 
-Will apply.
+OK.
