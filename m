@@ -2,86 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98257209FD
-	for <e@80x24.org>; Sat,  3 Jun 2017 16:20:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39AA1209FD
+	for <e@80x24.org>; Sat,  3 Jun 2017 16:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751077AbdFCQUk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Jun 2017 12:20:40 -0400
-Received: from mout.web.de ([212.227.15.14]:51868 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750775AbdFCQUk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jun 2017 12:20:40 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LZkTs-1dkjBn0R12-00lW4M; Sat, 03
- Jun 2017 18:20:19 +0200
-Subject: Re: [PATCH] strbuf: let strbuf_addftime handle %z and %Z itself
-To:     Ulrich Mueller <ulm@gentoo.org>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CACBZZX6t0Q9AJ4cpnG298tf5Las-YpmvvJXgLNNYMszikLvtMQ@mail.gmail.com>
- <20170527214611.suohggo226tvmbgt@sigill.intra.peff.net>
- <0a56f99e-aaa4-17ea-245a-12897ba08dbb@web.de>
- <xmqq1sr3161p.fsf@gitster.mtv.corp.google.com>
- <20170602030825.hdpbaisn54d4fi4n@sigill.intra.peff.net>
- <72b001fc-80e7-42b9-bd9d-87621da7978a@web.de>
- <20170602183504.ii7arq2ssxgwgyxr@sigill.intra.peff.net>
- <22833.57584.108133.30274@a1i15.kph.uni-mainz.de>
- <20170602223003.6etkdnnogb2jmoh3@sigill.intra.peff.net>
- <22833.60191.771422.3111@a1i15.kph.uni-mainz.de>
- <20170602225148.drkl7obwhzypgjtr@sigill.intra.peff.net>
- <a8b789e6-d0cd-6d96-1bfb-ccc5bc174013@web.de>
- <22834.46566.700197.257204@a1i15.kph.uni-mainz.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <52a998be-edbc-e8fb-afa9-e0c7ab682425@web.de>
-Date:   Sat, 3 Jun 2017 18:20:17 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1751163AbdFCQYh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Jun 2017 12:24:37 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:38001 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751154AbdFCQYg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jun 2017 12:24:36 -0400
+Received: by mail-it0-f49.google.com with SMTP id r63so44321997itc.1
+        for <git@vger.kernel.org>; Sat, 03 Jun 2017 09:24:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=rzPzcTWgYl2k664SRfLWM6p9CBZxLgflDSCI3gHrtQE=;
+        b=JdOKWd5gOF6h2XzKOZ27fnVQ0FRn1B48OETw7ZP0Q+YMn+o7z5b+gYfWqq45WSmpyT
+         tsWgjhj3CYHDspAm44O20C3NQQHwryR7fX/6lLJMH1j7NTZ7yRCdVvQiE613PrjrdXU6
+         TguNZq5DfgErc/yzo6yI9ahSlLvkJ4jRiRld5U+IFbUZ+l+G3c9orhL65yaZSG96YJK3
+         XGeGJvbnpe8SsjFxG1TCUslFxiJU1g8Ze+3J9LYBCpTgLlwRp5TsqHw/TeN/BzpJ8wZo
+         KMZ6oLBQQY+kUZy1CwkGewPZyCBCbST5UBxZwgSn8AxIjTGKG7fyQRRq7YsTg6YfCc3z
+         1JUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=rzPzcTWgYl2k664SRfLWM6p9CBZxLgflDSCI3gHrtQE=;
+        b=CLISeshU+90GeF3C4YUQDKoWeKthFwhF2tudqMcNo8OxYkU8EeGKXO7n4Qx8XOx1cv
+         YVsZANDF7U3z5u1gGmcCD/sEZXa7A+KmHuCB2jtduB6R9TS4GL3Y70/uWJPkF4PDrzNh
+         x4t9AsrUvMSyXMfdW/H90a15HsZy5SFAHSrlUbrbEeuPutsfjib2OwmPnsyYgVZCBWV9
+         HN0znscDDU4W1xgp+4OKh/KldXHhb5ErOP7VA8w9Aidv5FHgXs34rJTW9CpTWqO2Cd7R
+         7uHrp6wtp6YCkU7kNsH5VtExZKaFbklMrQlKo6xHtdOw6HZQ02zdhFFxOYVRQHFKV4Od
+         kMvQ==
+X-Gm-Message-State: AODbwcBjvo3s7W4G2r3KuAuQiOAEsEblvIM0QptbDzJ5oqY5jM5U6nS0
+        xGkKLo+tqwbe/6sNQK0BJpf3/Ab1ng==
+X-Received: by 10.107.178.215 with SMTP id b206mr9298894iof.50.1496507075454;
+ Sat, 03 Jun 2017 09:24:35 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <22834.46566.700197.257204@a1i15.kph.uni-mainz.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:4J/jjU8R+/AXbees29gJbtkzL4y10OfFVsXBB0/hJycV8sYIdVY
- jRI3/T8K2wEEFKPlg09oidxU+vCvzuoNFzZIqjSGSmV1XqjYYV7hyzKcJpHIeTxRYuwpXKx
- 4PZryH36yMWDr+IIYBEkCCu8QAfRuofxMxWnWvjV+BlWqIu78t251zyDeCeBka/WT/Wb0ME
- 0QMmOmlHVcQkkFqxktHJA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fjZvVMepM+c=:wn3R+BzazHwSQco6UgIxkB
- gkyLJ8scQUvasy2jD8LWD29FJJafEvlgNtcoR54sQgsowKTr3YgWlUsVbVisOgbJx8NkfqVX8
- 6s7oenzRg10ZW112Qita56Drg3EqB8K40qjAbUPz6oqlq1fI+QPE+s6pxQWI/Jl3rChsROQxK
- YWgX6zZR2ZomJWR4BNF3cYZd3aZ2oMfLKfdU9l/riiErMKZq3cdoxy627wYPJ3Oiu/u2Dvcq9
- uiybmsbjuKa04U0FL5syYdea1CTmzr/PCqIENfhhJ12ecj5d+VjZhroDOsgnkJt4YNYwOTPAh
- LvnwtGbCqcBx3E0uh9qBOYi8dCt3MoL7ldHZHEzAiC0xcNVLKJOJAi18dj60FUz8IkBFFK8mC
- t0jZwT77tRhZ0JIg3p4PrS3MHRwJo/anU2X3zmv421AztOIQzWc4F8xTXZi/cwLpQq7qzyPcy
- bXgl+h/ekdAf4WmNAk42sp1PPNLCnqgiXcdI645W2m6idKOYbV7vxda3j/byNe7fJyp8CVWlo
- xVWwvYppoE6Uy4Zc1uIlOvLCSj7RXhzbGc2p6U1D1MvDv7dko44DSPqQH8wEh359HFLa0HAp+
- tOLs/r4uVwB0uVdWUZg7eGwsCdISEsT2aWfNn0n2VoXQNc7DodA2GzEQ5MiEYUsmquU0D//y3
- iij6tIqa2mCUlpSCumroVM23hhMuW7WYSh+3DzuTvY8k8NqtATxihtSUfpl4Qh+lTkpl+PqzU
- zwgvabtCrMY5Kwx6ToBIPx1/yohqgRgg8cZjTDA09I9Wbx9blLU1iC95F4VCSM8OzliiRS9d2
- tyFnDnY
+Received: by 10.107.3.231 with HTTP; Sat, 3 Jun 2017 09:24:14 -0700 (PDT)
+In-Reply-To: <xmqqd1amx80f.fsf@gitster.mtv.corp.google.com>
+References: <20170602103330.25663-1-avarab@gmail.com> <20170602184506.x2inwswmcwafyvfy@sigill.intra.peff.net>
+ <xmqqd1amx80f.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 3 Jun 2017 18:24:14 +0200
+Message-ID: <CACBZZX52O9Pf=5Xtq1Lg1=ZU26tm7pupvubk1ZjNJZp7kR450g@mail.gmail.com>
+Subject: Re: [PATCH] perf: work around the tested repo having an index.lock
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.06.2017 um 15:13 schrieb Ulrich Mueller:
->>>>>> On Sat, 3 Jun 2017, René Scharfe wrote:
-> 
->> +			case 'Z':
->> +				strbuf_addstr(&munged_fmt, tz_name);
-> 
-> Is it guaranteed that tz_name cannot contain a percent sign itself?
+On Sat, Jun 3, 2017 at 1:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
+>
+>> But I think a more compelling case is that there may be an ongoing
+>> operation in the original repo (e.g., say you are in the middle of
+>> writing a commit message) when we do a blind copy of the filesystem
+>> contents. You might racily pick up a lockfile.
+>>
+>> Should we find and delete all *.lock files in the copied directory? That
+>> would get ref locks, etc. Half-formed object files are OK. Technically
+>> if you want to get an uncorrupted repository you'd also want to copy
+>> refs before objects (in case somebody makes a new object and updates a
+>> ref while you're copying).
+>>
+>> I don't know how careful it's worth being. I don't really _object_ to
+>> this patch exactly, but it does seem like it's picking up one random
+>> case (that presumably you hit) and ignoring all of the related cases.
+>
+> My feeling exactly.  Diagnosing and failing upfront saying "well you
+> made a copy but it is not suitable for testing" sounds more sensible
+> at lesat to me.
 
-Currently yes, because the only caller passes an empty string.
+This change makes the repo suitable for testing when it wasn't before.
 
-The fact that tz_name is subject to expansion by strftime could be
-mentioned explicitly in strbuf.h.  I'm not sure if that's a desirable
-property, but it allows callers to expand %z internally and %Z using
-strftime.
-
-René
+Yes, there are cases where there are other issues than index.lock
+preventing testing the repo, but I don't see why there shouldn't be a
+partial solution that solves a very common case in lieu of a perfect
+solution.
