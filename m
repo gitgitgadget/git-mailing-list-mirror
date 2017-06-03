@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF47D2027C
-	for <e@80x24.org>; Sat,  3 Jun 2017 00:13:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9736B2027C
+	for <e@80x24.org>; Sat,  3 Jun 2017 00:15:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751170AbdFCANW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 20:13:22 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:34673 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750971AbdFCANV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 20:13:21 -0400
-Received: by mail-pg0-f44.google.com with SMTP id t185so1811813pgd.1
-        for <git@vger.kernel.org>; Fri, 02 Jun 2017 17:13:21 -0700 (PDT)
+        id S1751180AbdFCAPP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 20:15:15 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34467 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750971AbdFCAPO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 20:15:14 -0400
+Received: by mail-pf0-f169.google.com with SMTP id 9so58357156pfj.1
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 17:15:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pzeG29a5LmF1Ueh9qWGDlTAS89MCkxgRpnSffiafIy8=;
-        b=kFt4HwDpqSHsEBnZpV7qNA+jKbfaDcfa2bF3aeab85EmnO+RWCgE6EHcBb8BRLdG02
-         IqwpRWYLuyFMdkhre15XB+JD3FnBd4B4pLCbYylbvCMuP8o4lwn534Gcis7yVIE2sJsL
-         hcPrs/pWjMer5eukRWaLLy8/1LiC0hIw3SEslQbxD/fy6tOkZ6FqpXzVz+5tD8mp0uW1
-         XGAUYhZ/o5EtZ155kQS2GXoZp+NsGUMQ0AuQtbIL8tEra/BdkS7joplk7ZxmEnv7BaWj
-         IPQiBf0cM9/87GtKttq/DUtTGiyaX1zkyt3B/BBBZDN2LWMWjWpTN9q+DfO90cV/htVo
-         mHIQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=lDziTfPdn9+SuXUSopDFKiHUnsU6KwGOGNScQ4IFiEs=;
+        b=tka2xBzYIvFdChPO6RzNyxeW7BF3a/D+ZrfLtHffEhvNJykIKSndFksdaKvXTWsla1
+         qwWRrrPaJDvRVfTC2HUaNVv1/EYAwffww3SwhKF4edC/Xgyt/tU2TRGsjbIS1wKH+TLH
+         USdhGH+iBbFkjfB1mGaNYgSMBRb2Wb9b17C+Cr6grjWEpUQeszCZGX1Dlu97asZf/0ya
+         VDdq+zccLZreUzo6GzRrYDJXOEg3MkwqHFrF45Ecld18ykJQ+/yY6hFhRHxol5dtH/8O
+         pP1mToZEWGo7KfZe3mBYzGFdT5Ol4WTpFE6etqaQ5s1vYS3D4pW+Ggn8HLXF3O/fQggd
+         bVgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pzeG29a5LmF1Ueh9qWGDlTAS89MCkxgRpnSffiafIy8=;
-        b=XXLu+NfsBAp+IA/ZaAzHrI+UOtryXQpn3RmNWyvhi+HThksXVOzmH1K2dma4ipeVRe
-         eXSGsEW9HeEvcu4f6soz/IWbxNOfh7LWrzvHZ7paXwHRF61lqyeu3SrWiLKBrHiVeyVA
-         MUMFI+o6IU9ufjvk93s1IWYx5qTjSVivrG9SM+zWlnQJHv3nC+kf3lUCYYeWd0/hiCBU
-         tCfH8OzCUx/qgz0C4HTuyQOe+/TT0EFS0aHzzwvKAsXD0zQRw4xsHhUFPjNhXFC4xByF
-         BPaZC1OA4/S5W6x5AKY0loE1cF/SfB4C2j7vB50W3v+0iK4yk+2XAyfEwLAhifB0Z/4J
-         L/Lw==
-X-Gm-Message-State: AODbwcAtkbmP3cXZJ/d/Ga3MyYSPceGZvCIDASLljo9mfmyVTWKAXVyP
-        CXgQXq2bvslzZg==
-X-Received: by 10.98.209.22 with SMTP id z22mr9068369pfg.95.1496448800659;
-        Fri, 02 Jun 2017 17:13:20 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=lDziTfPdn9+SuXUSopDFKiHUnsU6KwGOGNScQ4IFiEs=;
+        b=s9yjMukEMDP00xnz/YkfvQc0cP5vzNrZr6WH7bBmMG2yy8vAd2ejGrvl/t4TOv9l0f
+         mIfCXMOb4rxQkDx1QBJaEC0riHs1C9WZlOcBaYgBBxPQVs82JsDYLQ/MzweGzMgmLxDm
+         fglfjZz3vUrvvX01ZI2/n5sfEI7zCHvzDiT+iOy1/wTWbP3yKzrtUJx7q+5DjY9zTdt6
+         2cGVY33awd8lO2TnILJfQsDlGI3WNS04BjcP7LggZ0uukCWQzKrYSwrf34yd0mMRGY8w
+         ZD/ywUyd32YKhOa6NFM2KIdJW2A0/XJjUfLT35l55gTPIJ/vG9P8axf2JsDikHarxYCw
+         P2pA==
+X-Gm-Message-State: AODbwcCi28si2Quuz7jy7I9Lx67R60Mh87fGrTQzTDpbUpxB04HdW4Fr
+        0WgKzktYGNnUMQ==
+X-Received: by 10.99.109.9 with SMTP id i9mr9643585pgc.56.1496448913711;
+        Fri, 02 Jun 2017 17:15:13 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:49ac:b4b9:21bb:8989])
-        by smtp.gmail.com with ESMTPSA id r68sm41523324pfd.91.2017.06.02.17.13.19
+        by smtp.gmail.com with ESMTPSA id c123sm11674763pfa.100.2017.06.02.17.15.12
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Jun 2017 17:13:19 -0700 (PDT)
+        Fri, 02 Jun 2017 17:15:12 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     demerphq <demerphq@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     "Liam R. Howlett" <Liam.Howlett@oracle.com>,
+        "Martin \?gren" <martin.agren@gmail.com>,
         Andreas Schwab <schwab@suse.de>,
         Lars Schneider <larsxschneider@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Marc Stevens <marc@marc-stevens.nl>,
-        "Liam R. Howlett" <Liam.Howlett@oracle.com>
+        Marc Stevens <marc@marc-stevens.nl>
 Subject: Re: Unaligned accesses in sha1dc
 References: <mvm4lw0un5n.fsf@suse.de>
         <5100A096-EBAC-4B01-A94D-69D31093148D@gmail.com>
@@ -68,35 +68,45 @@ References: <mvm4lw0un5n.fsf@suse.de>
         <CAN0heSp9DpW4_0QL57_oAHGu+os8k6yd=Z5+0MJnaL6iXTa-qQ@mail.gmail.com>
         <xmqq37bj454a.fsf@gitster.mtv.corp.google.com>
         <CACBZZX7EvUqH28uni+r=RUBXb9=WTp732B4=rq+ViD_kecxZaw@mail.gmail.com>
-        <CAN0heSq3CSe=Hgygtzd+ZM4rW-qM1_chrNd7Pq0KnYnKEVXcpw@mail.gmail.com>
-        <CACBZZX5re5Ge1OzxYOE42nwBhhusya6=M9An08X-KzaqNH9Cog@mail.gmail.com>
-        <CANgJU+UzoaN3Urj=L4unMMtNwFm6G8LGxx19g49AR5R+76F2OA@mail.gmail.com>
-        <CA+55aFwL9LQfx8t7tixYgV+2w_=_dAABxk54_GLJoGod-w=mbw@mail.gmail.com>
-Date:   Sat, 03 Jun 2017 09:13:19 +0900
-In-Reply-To: <CA+55aFwL9LQfx8t7tixYgV+2w_=_dAABxk54_GLJoGod-w=mbw@mail.gmail.com>
-        (Linus Torvalds's message of "Fri, 2 Jun 2017 14:53:59 -0700")
-Message-ID: <xmqq4lvyx71c.fsf@gitster.mtv.corp.google.com>
+        <20170602144622.xottin6efikpkdel@oracle.com>
+        <CACBZZX5iSxKz9p1V5h=t0+QtrY75g6haqRqMu7GEfrJHpWkefA@mail.gmail.com>
+Date:   Sat, 03 Jun 2017 09:15:12 +0900
+In-Reply-To: <CACBZZX5iSxKz9p1V5h=t0+QtrY75g6haqRqMu7GEfrJHpWkefA@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 2 Jun
+ 2017 18:53:11
+        +0200")
+Message-ID: <xmqqzidqvsdr.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Dereferencing an unaligned pointer may be "undefined" in some
-> technical meaning, but it sure as hell isn't undefined in reality, and
-> compilers that willfully do stupid things should not be catered to
-> overly. Reality is a lot more important.
+> On Fri, Jun 2, 2017 at 4:46 PM, Liam R. Howlett <Liam.Howlett@oracle.com> wrote:
+>
+>> 2.13.0 is very much broken for me on SPARC.
+>> {maint//git} $ make -j120
+>> [...]
+>> {maint//git} $ ./git log
+>> [1]    1004506 bus error (core dumped)  ./git log
+>>
+>> This is with b06d36431 (maint).
+>>
+>> The same thing happens on v2.13.0-384-g826c06412 (master).
+>>
+>> v2.13.0-539-g4b9c06c7d (next) works for me, as did following the
+>> instructions on upgrading the sha1dc code myself.
+>
+> Thanks a lot. So that works as I suspect on SPARC, hopefully it'll be
+> in master (and 2.13.1) soon.
 
-Thanks for succinctly putting it this way.  I think you said the
-above number of times, and I was looking for one of them to include
-a reference to in the response I was preparing, but this message
-made it unnecessary ;-)
+Thanks.  Hopefully your ab/sha1dc-maint a0103914 ("sha1dc: update
+from upstream", 2017-05-20) should be sufficient for helping the
+users in the real-world, then.
 
-> And I think gcc can be tweaked to use "movbe" on x86 with the right
-> magic incantation (ie not just __builtin_bswap32(), but also the
-> switch to enable the new instructions).  So having code to detect gcc
-> and using __builtin_bswap32() would indeed be a good thing.
+
