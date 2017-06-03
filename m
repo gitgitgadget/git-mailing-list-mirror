@@ -2,111 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9736B2027C
-	for <e@80x24.org>; Sat,  3 Jun 2017 00:15:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7D932027C
+	for <e@80x24.org>; Sat,  3 Jun 2017 00:26:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751180AbdFCAPP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 20:15:15 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34467 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750971AbdFCAPO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 20:15:14 -0400
-Received: by mail-pf0-f169.google.com with SMTP id 9so58357156pfj.1
-        for <git@vger.kernel.org>; Fri, 02 Jun 2017 17:15:14 -0700 (PDT)
+        id S1751150AbdFCA0G (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 20:26:06 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33095 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750971AbdFCA0F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 20:26:05 -0400
+Received: by mail-pf0-f170.google.com with SMTP id 83so779907pfr.0
+        for <git@vger.kernel.org>; Fri, 02 Jun 2017 17:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=lDziTfPdn9+SuXUSopDFKiHUnsU6KwGOGNScQ4IFiEs=;
-        b=tka2xBzYIvFdChPO6RzNyxeW7BF3a/D+ZrfLtHffEhvNJykIKSndFksdaKvXTWsla1
-         qwWRrrPaJDvRVfTC2HUaNVv1/EYAwffww3SwhKF4edC/Xgyt/tU2TRGsjbIS1wKH+TLH
-         USdhGH+iBbFkjfB1mGaNYgSMBRb2Wb9b17C+Cr6grjWEpUQeszCZGX1Dlu97asZf/0ya
-         VDdq+zccLZreUzo6GzRrYDJXOEg3MkwqHFrF45Ecld18ykJQ+/yY6hFhRHxol5dtH/8O
-         pP1mToZEWGo7KfZe3mBYzGFdT5Ol4WTpFE6etqaQ5s1vYS3D4pW+Ggn8HLXF3O/fQggd
-         bVgg==
+         :user-agent:mime-version;
+        bh=C4+CSWUVIYUwwILM2TtbMRsh/5pqWqSGfGecwDnC4Fs=;
+        b=fZPmSG6UF5Sgt0JBzpuMOaZZ7qnJDjxVdFiFux9K2D2D4tjuijs+dPOnru4xaCeOrH
+         u0JbHZdQR9TrlfqGWUPTo/YFGp8/jt/W+NRdxjSKfNdouf9TRJ7pfAonrldkfdo2VRbS
+         gTScLmOJ7SexgcaVGNf0sk3TSesXyCUAmYroxLaKRNilgzecylp8cFAFiPjTxNwHeqAQ
+         C85MP7I69FVaD0VgP3TRgFz5lPiDPNQ4Gy8YbWlbTEtWouRClSZdmecXvLGIJCN8Goyc
+         H2MAsl+fqtcmZufAulBiRr0hO2nzKcrZ3Si+yL/906xwtT5Pe16SQIwJp2pzN6mcH8OO
+         QFmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=lDziTfPdn9+SuXUSopDFKiHUnsU6KwGOGNScQ4IFiEs=;
-        b=s9yjMukEMDP00xnz/YkfvQc0cP5vzNrZr6WH7bBmMG2yy8vAd2ejGrvl/t4TOv9l0f
-         mIfCXMOb4rxQkDx1QBJaEC0riHs1C9WZlOcBaYgBBxPQVs82JsDYLQ/MzweGzMgmLxDm
-         fglfjZz3vUrvvX01ZI2/n5sfEI7zCHvzDiT+iOy1/wTWbP3yKzrtUJx7q+5DjY9zTdt6
-         2cGVY33awd8lO2TnILJfQsDlGI3WNS04BjcP7LggZ0uukCWQzKrYSwrf34yd0mMRGY8w
-         ZD/ywUyd32YKhOa6NFM2KIdJW2A0/XJjUfLT35l55gTPIJ/vG9P8axf2JsDikHarxYCw
-         P2pA==
-X-Gm-Message-State: AODbwcCi28si2Quuz7jy7I9Lx67R60Mh87fGrTQzTDpbUpxB04HdW4Fr
-        0WgKzktYGNnUMQ==
-X-Received: by 10.99.109.9 with SMTP id i9mr9643585pgc.56.1496448913711;
-        Fri, 02 Jun 2017 17:15:13 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=C4+CSWUVIYUwwILM2TtbMRsh/5pqWqSGfGecwDnC4Fs=;
+        b=LcWcYrK90m8bNZgC8sICS9G/7T8m2hTHgLt9/7xPgO9wHd0PcUe9rKb9QyGBMWzQ7y
+         fL4UL7cX8xuaIVGrmtWrZo02QMZG5+mOMso3zg3LU7m9pfvpEPsH7tKYzu/kylWD6+2d
+         JiQZ+z696oDIqD+rSk8hUMVW11I+S4QpIPu9Y+CZbJgxTun14JEpmm5ODFfCSjcK/GHo
+         qkcEA2AdqM8hTZNWBm3RHq6m00PH6MdE9+gDUYbAUoHErwEcCQ9ftVUXILT5VxJgH3tY
+         QbgNT9ngTCALfEpszFO/XxG4gp1/QNa1/NIsk4DzvJ6mU6ELjwasvMg0V6/StthyfTXA
+         unDA==
+X-Gm-Message-State: AODbwcAplYQruMypmg9hLh1yUDOSuVp4ULd8Kq6yc4RG+pCcbtFoxYq+
+        F6NRGx3d76Hd6w==
+X-Received: by 10.98.58.83 with SMTP id h80mr9422628pfa.50.1496449564665;
+        Fri, 02 Jun 2017 17:26:04 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:49ac:b4b9:21bb:8989])
-        by smtp.gmail.com with ESMTPSA id c123sm11674763pfa.100.2017.06.02.17.15.12
+        by smtp.gmail.com with ESMTPSA id y5sm36034658pgb.4.2017.06.02.17.26.03
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 02 Jun 2017 17:15:12 -0700 (PDT)
+        Fri, 02 Jun 2017 17:26:03 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "Liam R. Howlett" <Liam.Howlett@oracle.com>,
-        "Martin \?gren" <martin.agren@gmail.com>,
-        Andreas Schwab <schwab@suse.de>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Marc Stevens <marc@marc-stevens.nl>
-Subject: Re: Unaligned accesses in sha1dc
-References: <mvm4lw0un5n.fsf@suse.de>
-        <5100A096-EBAC-4B01-A94D-69D31093148D@gmail.com>
-        <xmqqwp8w3uff.fsf@gitster.mtv.corp.google.com>
-        <mvmmv9st3yv.fsf@suse.de>
-        <CAN0heSrzpwhS3Zf83vTzHAAmi8YVD4CoCh_px5SBXBZhSKPqPQ@mail.gmail.com>
-        <CACBZZX6H9EZTLVnunoH2641fw6QmQL=hO9isinK07-dHnuxyFQ@mail.gmail.com>
-        <CAN0heSrZcW3b6Osa8XNs0ghg2RE0ZS6FdPq8oPpwLcJjXAtLHg@mail.gmail.com>
-        <CAN0heSp9DpW4_0QL57_oAHGu+os8k6yd=Z5+0MJnaL6iXTa-qQ@mail.gmail.com>
-        <xmqq37bj454a.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX7EvUqH28uni+r=RUBXb9=WTp732B4=rq+ViD_kecxZaw@mail.gmail.com>
-        <20170602144622.xottin6efikpkdel@oracle.com>
-        <CACBZZX5iSxKz9p1V5h=t0+QtrY75g6haqRqMu7GEfrJHpWkefA@mail.gmail.com>
-Date:   Sat, 03 Jun 2017 09:15:12 +0900
-In-Reply-To: <CACBZZX5iSxKz9p1V5h=t0+QtrY75g6haqRqMu7GEfrJHpWkefA@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 2 Jun
- 2017 18:53:11
-        +0200")
-Message-ID: <xmqqzidqvsdr.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Samuel Lijin <sxlijin@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        David Turner <dturner@twosigma.com>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: preserve untracked cache, was Re: What's cooking in git.git (Jun 2017, #01; Thu, 1)
+References: <xmqqshjk5ezb.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1706012052480.3610@virtualbox>
+        <CAJZjrdVS5e5udjLtZoZcTEUg8WGFPuaG+MB_enPJ9poti3LktQ@mail.gmail.com>
+        <xmqqfufj47oz.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1706021211300.171564@virtualbox>
+Date:   Sat, 03 Jun 2017 09:26:03 +0900
+In-Reply-To: <alpine.DEB.2.21.1.1706021211300.171564@virtualbox> (Johannes
+        Schindelin's message of "Fri, 2 Jun 2017 12:11:53 +0200 (CEST)")
+Message-ID: <xmqqvaodx6g4.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Fri, Jun 2, 2017 at 4:46 PM, Liam R. Howlett <Liam.Howlett@oracle.com> wrote:
+> Hi Junio,
 >
->> 2.13.0 is very much broken for me on SPARC.
->> {maint//git} $ make -j120
->> [...]
->> {maint//git} $ ./git log
->> [1]    1004506 bus error (core dumped)  ./git log
->>
->> This is with b06d36431 (maint).
->>
->> The same thing happens on v2.13.0-384-g826c06412 (master).
->>
->> v2.13.0-539-g4b9c06c7d (next) works for me, as did following the
->> instructions on upgrading the sha1dc code myself.
+> On Fri, 2 Jun 2017, Junio C Hamano wrote:
 >
-> Thanks a lot. So that works as I suspect on SPARC, hopefully it'll be
-> in master (and 2.13.1) soon.
+>> Samuel Lijin <sxlijin@gmail.com> writes:
+>> 
+>> >> What is holding this topic up? Anything Ben or I can do to move this
+>> >> closer to `next` or even `master`?
+>> >
+>> > It's in `next` right now (3196d093d6).
+>> 
+>> Thanks for pinging and checking ;-)  
+>> 
+>> I think the topic was merged to 'next' on the 23rd of last month and
+>> graduated to 'master' in the past few days, together with other
+>> topics.
+>
+> Okay. I never saw any "Will merge to" message, so I got worried.
 
-Thanks.  Hopefully your ab/sha1dc-maint a0103914 ("sha1dc: update
-from upstream", 2017-05-20) should be sufficient for helping the
-users in the real-world, then.
+Well, I cannot quite help if you are not reading them ;-)
+
+Issue #06 of May marked it to be merged to 'next':
+https://public-inbox.org/git/<xmqqo9ulo1yn.fsf@gitster.mtv.corp.google.com>
+
+Issue #07 of May marked it for 'master':
+https://public-inbox.org/git/<xmqqwp98j8q2.fsf@gitster.mtv.corp.google.com>
+
+Issue #08 of May kept it (i.e. no issues discovered in the
+meantime):
+https://public-inbox.org/git/<xmqq1sr889lb.fsf@gitster.mtv.corp.google.com>
+
+Issue #01 of June reports it in 'master':
+https://public-inbox.org/git/<xmqqshjk5ezb.fsf@gitster.mtv.corp.google.com>
 
 
