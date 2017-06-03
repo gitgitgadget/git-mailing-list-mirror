@@ -7,85 +7,110 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 39AA1209FD
-	for <e@80x24.org>; Sat,  3 Jun 2017 16:24:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DC73209FD
+	for <e@80x24.org>; Sat,  3 Jun 2017 16:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751163AbdFCQYh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Jun 2017 12:24:37 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:38001 "EHLO
+        id S1751168AbdFCQzp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Jun 2017 12:55:45 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:37805 "EHLO
         mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751154AbdFCQYg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jun 2017 12:24:36 -0400
-Received: by mail-it0-f49.google.com with SMTP id r63so44321997itc.1
-        for <git@vger.kernel.org>; Sat, 03 Jun 2017 09:24:35 -0700 (PDT)
+        with ESMTP id S1750991AbdFCQzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jun 2017 12:55:44 -0400
+Received: by mail-it0-f49.google.com with SMTP id m47so43874541iti.0
+        for <git@vger.kernel.org>; Sat, 03 Jun 2017 09:55:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=rzPzcTWgYl2k664SRfLWM6p9CBZxLgflDSCI3gHrtQE=;
-        b=JdOKWd5gOF6h2XzKOZ27fnVQ0FRn1B48OETw7ZP0Q+YMn+o7z5b+gYfWqq45WSmpyT
-         tsWgjhj3CYHDspAm44O20C3NQQHwryR7fX/6lLJMH1j7NTZ7yRCdVvQiE613PrjrdXU6
-         TguNZq5DfgErc/yzo6yI9ahSlLvkJ4jRiRld5U+IFbUZ+l+G3c9orhL65yaZSG96YJK3
-         XGeGJvbnpe8SsjFxG1TCUslFxiJU1g8Ze+3J9LYBCpTgLlwRp5TsqHw/TeN/BzpJ8wZo
-         KMZ6oLBQQY+kUZy1CwkGewPZyCBCbST5UBxZwgSn8AxIjTGKG7fyQRRq7YsTg6YfCc3z
-         1JUg==
+        bh=7tyHoJC2fAdn97/bvJQws/n/PXN62YhxgkaHDGhLFus=;
+        b=ZmIC8bbMourGfeC8xN1VILwPlEkUvXsaRkMWjh1YVau33XhcNvrMl3HtYvla3qzOuF
+         Bm5TgBHUTbTedxp4LT+WyCkiSokUDacdcnFWWbrDDljwDo8XyTfRKrwQ+wAdm84iEAqB
+         TY8RU/S9BBgKrRFUlteTlpwo5Cdgj1LdoHRQIx0hJ0CinWN6v72dvi2NVv5/D9e41hPp
+         fZn74yEs2TEH+6Ruk4JvGGsoPV6IO0N34kRnjmRl6JgqEang0gdzK45lM444u6GMTAXx
+         Izmp0NEcwm5Tma5BeptmrVPa0hjOHDqeeAK1WxE7Rm4AIAU2b0ThFQcVde/iAONMMpBH
+         dikg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=rzPzcTWgYl2k664SRfLWM6p9CBZxLgflDSCI3gHrtQE=;
-        b=CLISeshU+90GeF3C4YUQDKoWeKthFwhF2tudqMcNo8OxYkU8EeGKXO7n4Qx8XOx1cv
-         YVsZANDF7U3z5u1gGmcCD/sEZXa7A+KmHuCB2jtduB6R9TS4GL3Y70/uWJPkF4PDrzNh
-         x4t9AsrUvMSyXMfdW/H90a15HsZy5SFAHSrlUbrbEeuPutsfjib2OwmPnsyYgVZCBWV9
-         HN0znscDDU4W1xgp+4OKh/KldXHhb5ErOP7VA8w9Aidv5FHgXs34rJTW9CpTWqO2Cd7R
-         7uHrp6wtp6YCkU7kNsH5VtExZKaFbklMrQlKo6xHtdOw6HZQ02zdhFFxOYVRQHFKV4Od
-         kMvQ==
-X-Gm-Message-State: AODbwcBjvo3s7W4G2r3KuAuQiOAEsEblvIM0QptbDzJ5oqY5jM5U6nS0
-        xGkKLo+tqwbe/6sNQK0BJpf3/Ab1ng==
-X-Received: by 10.107.178.215 with SMTP id b206mr9298894iof.50.1496507075454;
- Sat, 03 Jun 2017 09:24:35 -0700 (PDT)
+        bh=7tyHoJC2fAdn97/bvJQws/n/PXN62YhxgkaHDGhLFus=;
+        b=SwwGJ9Woxs3bNzWgqzUYAwlg4cLYrwUsLULeiBwvdYSkfKP/9QMvAmB6q9rycrb3Wi
+         W2D/1exjIQvYC1ETGAN9OiR/4PXBXZdvnPX8K1t7+wMpl27KMyeaPWySbGCKPZzd1jEA
+         ZuvpiaNkOtIU5emRPvfMC4TrQlnjCRuQoSdrcFaIk02gshAS8fDuYLvSOcccrKQB4q51
+         4SPcuQQDrurHSboXDRBt5N/1jO/dPQQJUy/wFp+1VGHYu4GJZM6MpHzFIwfXLmAeqLQQ
+         m0ZJsWyv1MJTygA44ZV7wf/q1lN6/xiXQrJDImzLDu+tT64uZw3T0AGe7jnTYsizrgvh
+         XQVQ==
+X-Gm-Message-State: AODbwcCudJ4HRkIHEVqePVAuTKoUflcumatiDN3WzcppapAToJ6B/Plm
+        zuqahwUo+YUWoE1azJyuQxUYTDGjCzJgFjc=
+X-Received: by 10.36.91.212 with SMTP id g203mr4429886itb.94.1496508943316;
+ Sat, 03 Jun 2017 09:55:43 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.3.231 with HTTP; Sat, 3 Jun 2017 09:24:14 -0700 (PDT)
-In-Reply-To: <xmqqd1amx80f.fsf@gitster.mtv.corp.google.com>
-References: <20170602103330.25663-1-avarab@gmail.com> <20170602184506.x2inwswmcwafyvfy@sigill.intra.peff.net>
- <xmqqd1amx80f.fsf@gitster.mtv.corp.google.com>
+Received: by 10.107.3.231 with HTTP; Sat, 3 Jun 2017 09:55:22 -0700 (PDT)
+In-Reply-To: <20170603133120.715-1-jwilk@jwilk.net>
+References: <20170603133120.715-1-jwilk@jwilk.net>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 3 Jun 2017 18:24:14 +0200
-Message-ID: <CACBZZX52O9Pf=5Xtq1Lg1=ZU26tm7pupvubk1ZjNJZp7kR450g@mail.gmail.com>
-Subject: Re: [PATCH] perf: work around the tested repo having an index.lock
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Date:   Sat, 3 Jun 2017 18:55:22 +0200
+Message-ID: <CACBZZX7Sz6VPLQgzyQ1Dk+-899y0NzqMjVYL5ry0n-0axmR35w@mail.gmail.com>
+Subject: Re: [PATCH] git-p4: remove obsolete version check
+To:     Jakub Wilk <jwilk@jwilk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Luke Diamand <luke@diamand.org>,
+        "Eric S. Raymond" <esr@thyrsus.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 3, 2017 at 1:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
->
->> But I think a more compelling case is that there may be an ongoing
->> operation in the original repo (e.g., say you are in the middle of
->> writing a commit message) when we do a blind copy of the filesystem
->> contents. You might racily pick up a lockfile.
->>
->> Should we find and delete all *.lock files in the copied directory? That
->> would get ref locks, etc. Half-formed object files are OK. Technically
->> if you want to get an uncorrupted repository you'd also want to copy
->> refs before objects (in case somebody makes a new object and updates a
->> ref while you're copying).
->>
->> I don't know how careful it's worth being. I don't really _object_ to
->> this patch exactly, but it does seem like it's picking up one random
->> case (that presumably you hit) and ignoring all of the related cases.
->
-> My feeling exactly.  Diagnosing and failing upfront saying "well you
-> made a copy but it is not suitable for testing" sounds more sensible
-> at lesat to me.
+On Sat, Jun 3, 2017 at 3:31 PM, Jakub Wilk <jwilk@jwilk.net> wrote:
+> The file is syntactically correct only in Python >= 2.6, so the
+> version check never does anything.
 
-This change makes the repo suitable for testing when it wasn't before.
+[CC-ing Eric who added that check]
 
-Yes, there are cases where there are other issues than index.lock
-preventing testing the repo, but I don't see why there shouldn't be a
-partial solution that solves a very common case in lieu of a perfect
-solution.
+Your commit message doesn't give an example of this, but with e.g.
+python 2.0 you get:
+
+      File "git-p4.py", line 469
+        yield pattern
+                ^
+    SyntaxError: invalid syntax
+
+I checked the various other python files that had similar warnings,
+they all work correctly with python 2.0.
+
+One workaround to keep this would be to make git-p4.py import some
+library to do all its work, and use some subset of python syntax to
+just load and defer to that library. That works for me when I change
+it like that locally. Alternatively, does Python have something like
+Perl's BEGIN {} blocks where you can execute code right there before
+the file has finished parsing?
+
+Or we could just remove this, just wanted to note the above since I
+dug into it, and the commit message light on details.
+
+
+
+> Signed-off-by: Jakub Wilk <jwilk@jwilk.net>
+> ---
+>  git-p4.py | 4 ----
+>  1 file changed, 4 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index 8d151da91..4278cd9d4 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -8,10 +8,6 @@
+>  # License: MIT <http://www.opensource.org/licenses/mit-license.php>
+>  #
+>  import sys
+> -if sys.hexversion < 0x02040000:
+> -    # The limiter is the subprocess module
+> -    sys.stderr.write("git-p4: requires Python 2.4 or later.\n")
+> -    sys.exit(1)
+>  import os
+>  import optparse
+>  import marshal
+> --
+> 2.13.0.506.g27d5fe0cd
+>
