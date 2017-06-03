@@ -7,153 +7,93 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C10A20D09
-	for <e@80x24.org>; Sat,  3 Jun 2017 10:18:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B785820D09
+	for <e@80x24.org>; Sat,  3 Jun 2017 10:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751185AbdFCKSF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 3 Jun 2017 06:18:05 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:35538 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751177AbdFCKSF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Jun 2017 06:18:05 -0400
-Received: by mail-wr0-f196.google.com with SMTP id g76so3195650wrd.2
-        for <git@vger.kernel.org>; Sat, 03 Jun 2017 03:18:04 -0700 (PDT)
+        id S1751192AbdFCKSM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 3 Jun 2017 06:18:12 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:36740 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751177AbdFCKSL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Jun 2017 06:18:11 -0400
+Received: by mail-wr0-f195.google.com with SMTP id e23so2048469wre.3
+        for <git@vger.kernel.org>; Sat, 03 Jun 2017 03:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=cHnvqOTPO+ngJdkpXlG2nFKbcivwzpNq4BjoQDPBKDw=;
-        b=SyYbfzQN0u06acV7fniio+XqSTcCJR0FCEXHQ5BHH4JmBAM42dhjniSuHr18ZRn3Yu
-         PHTbfHAEJAwmaxh7B7AQOnFO5gIhlErEEqOcvMbrt+gG4TREMSAg0yz46KBfxiulAx4f
-         VDcMl4KHA5E1wngHq6KEK+Amg/zt+YZ9WkK/t8P/q4KTj5ofSf9koVats5WWK0g6ReO/
-         Swmpuyd0odU8WbrQIMnGNe6n1LUGCoNr64LCIV/BEo2wLe7Vx/3r7zPS5ashJirQfdHK
-         B0SpMiU2qukKRyCFwDm02im99vTJ421ydCziSLzzuWvLdw4ujQP5S82LpWnbnqMauNau
-         3d3A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vKxtTPwQ6eK5TxT2SKRXhY8vbh8Ye0pMBwF3U1Y9VzY=;
+        b=ankAu0n0EJPjvfRdITtQxJRi2HwUgNcsDO0/fNPtWs7C4Vp9rLly/lFF2+O6Ivq8qx
+         hIxW3nAFuoe7k6Yz5qCjKTvPACsn0HzFp2rlxxuwWPON2K3Z9c1CdLbfKIJtDc1JVXYG
+         IqWEz/XStDX7w5RiW7G2hidWTjCH36ABVLQTWj/fGNbEC+6rA5oht6mXYlWTfqdvfeoJ
+         eNGWFNPofce46LJWU047nMIbJwzfbAGke/Va4rMr0uzLzcM1JiNo2OiYBStl4CyiwbfL
+         +DGpVRl/r+XqdS2I7mPp+5yiKKpET+qKSS0N5C8ltt8qFp8di78AcL3t21M3/To+R6Bu
+         fk/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=cHnvqOTPO+ngJdkpXlG2nFKbcivwzpNq4BjoQDPBKDw=;
-        b=bP5Mh4qh9yz6JGz7whhPedv9tPT0bP9HlgJiKfNkaCbncOGrFF5fGkS9HQLdz+MQAH
-         PuUaa6xwM4mi35P144e+vE0TdhmBKzMCbqtjZs2yCKDjFenszaDQQiYhcAA0RnFvSzWL
-         sDBxlelrFQJ+d1LrRG/mPHfkRBT5Tnl25ug0jf1L3hihWvfPOCxX6pcyelEH1fb54PZI
-         lgzwwjKX/j6rqJt6d9dJncMNXrcTj3SnXxg0bUi4tewPawP4wXkgQiVKt/wyiDNqMYkS
-         GUDudeZ7G64jaS6BLlSZjZrycVOfywQAziNaZER3rp5aRNMD+VJw3D01BDr1Me0mjhCT
-         ri5A==
-X-Gm-Message-State: AODbwcBqnG8p0uc8tDt9jfkQRj1ZSMjKUnfQo+OcMDqCEIFvxG0hk7Oh
-        JT7kcePhAgfv+g==
-X-Received: by 10.223.172.118 with SMTP id v109mr9643114wrc.84.1496485083702;
-        Sat, 03 Jun 2017 03:18:03 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vKxtTPwQ6eK5TxT2SKRXhY8vbh8Ye0pMBwF3U1Y9VzY=;
+        b=QKuLCBAL5ePZPDfotSOIre50A7lKNdWu1M+IBKo4JDAEvSx73oquDPZ94IUwlRKgER
+         vXI4WMHdsGQd7yQLd1JZx3W24fWjdRtRlG6DlzuNcR36DHm8sYla0yxcSzsenTeCVJAX
+         m7oxTzPnCtUIflkh3rU19uBV2PeacXWRze5EjXAw2gX28hmvcUlcNHdMiqH5Xg+8rOa2
+         2jIniCGl74opU9AdMnTdx+dp77/Xc4cWxxfIdzPXScZLY+jh5eRdB7UiXxS8yDxNhv+e
+         ThpeSlWDgXfrADxFzXum2ebixcvMoC75QARv1n6U0oVF5n3n5S7l92b8dd59GEMIRL1M
+         jLIw==
+X-Gm-Message-State: AODbwcDb+aqwzh+69WY+0HsemL+sfmizhltb6NHuBhObueNfuZBiteIV
+        ou8EEv7uS3bQ4A==
+X-Received: by 10.223.139.152 with SMTP id o24mr9262267wra.20.1496485090066;
+        Sat, 03 Jun 2017 03:18:10 -0700 (PDT)
 Received: from arrakeen.fritz.box ([2001:a61:3405:6400:b08b:b890:381e:abd8])
-        by smtp.gmail.com with ESMTPSA id z23sm14696819wrz.0.2017.06.03.03.18.01
+        by smtp.gmail.com with ESMTPSA id z23sm14696819wrz.0.2017.06.03.03.18.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 03 Jun 2017 03:18:02 -0700 (PDT)
+        Sat, 03 Jun 2017 03:18:09 -0700 (PDT)
 From:   Andreas Heiduk <asheiduk@gmail.com>
 To:     gitster@pobox.com, git@vger.kernel.org
 Cc:     Andreas Heiduk <asheiduk@gmail.com>
-Subject: [PATCH 1/2] add setup step to filter-branch
-Date:   Sat,  3 Jun 2017 12:17:54 +0200
-Message-Id: <20170603101755.13619-1-asheiduk@gmail.com>
+Subject: [PATCH 2/2] add [--] to usage of filter-branch
+Date:   Sat,  3 Jun 2017 12:17:55 +0200
+Message-Id: <20170603101755.13619-2-asheiduk@gmail.com>
 X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170603101755.13619-1-asheiduk@gmail.com>
+References: <20170603101755.13619-1-asheiduk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A specific `--setup` step in `git filter-branch` makes it much easier
-to define the initial values of variables used in the real filters.
-Also sourcing/defining utility functions here instead of
-`--env-filter` improves performance and minimizes clogging the output
-in case of errors.
-
 Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
 ---
- Documentation/git-filter-branch.txt | 16 +++++++++++-----
- git-filter-branch.sh                | 18 +++++++++++++-----
- 2 files changed, 24 insertions(+), 10 deletions(-)
+ Documentation/git-filter-branch.txt | 3 ++-
+ git-filter-branch.sh                | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 6e4bb0220..45c849d8c 100644
+index 45c849d8c..1efdda804 100644
 --- a/Documentation/git-filter-branch.txt
 +++ b/Documentation/git-filter-branch.txt
-@@ -8,11 +8,11 @@ git-filter-branch - Rewrite branches
- SYNOPSIS
- --------
- [verse]
--'git filter-branch' [--env-filter <command>] [--tree-filter <command>]
--	[--index-filter <command>] [--parent-filter <command>]
--	[--msg-filter <command>] [--commit-filter <command>]
--	[--tag-name-filter <command>] [--subdirectory-filter <directory>]
--	[--prune-empty]
-+'git filter-branch' [--setup <command>] [--env-filter <command>]
-+	[--tree-filter <command>] [--index-filter <command>]
-+	[--parent-filter <command>] [--msg-filter <command>]
-+	[--commit-filter <command>] [--tag-name-filter <command>]
-+	[--subdirectory-filter <directory>] [--prune-empty]
- 	[--original <namespace>] [-d <directory>] [-f | --force]
- 	[--] [<rev-list options>...]
+@@ -86,7 +86,8 @@ OPTIONS
+ 	This is not a real filter executed for each commit but a one
+ 	time setup just before the loop. Therefore no commit-specific
+ 	variables are defined yet.  Functions or variables defined here
+-	can be used or modified in the following filter steps.
++	can be used or modified in the following filter steps except
++	the commit filter, for technical reasons.
  
-@@ -82,6 +82,12 @@ multiple commits.
- OPTIONS
- -------
- 
-+--setup <command>::
-+	This is not a real filter executed for each commit but a one
-+	time setup just before the loop. Therefore no commit-specific
-+	variables are defined yet.  Functions or variables defined here
-+	can be used or modified in the following filter steps.
-+
  --env-filter <command>::
  	This filter may be used if you only need to modify the environment
- 	in which the commit will be performed.  Specifically, you might
 diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index aafaf708d..2758ae5eb 100755
+index 2758ae5eb..3a74602ef 100755
 --- a/git-filter-branch.sh
 +++ b/git-filter-branch.sh
-@@ -81,11 +81,12 @@ set_ident () {
- 	finish_ident COMMITTER
- }
- 
--USAGE="[--env-filter <command>] [--tree-filter <command>]
--	[--index-filter <command>] [--parent-filter <command>]
--	[--msg-filter <command>] [--commit-filter <command>]
--	[--tag-name-filter <command>] [--subdirectory-filter <directory>]
--	[--original <namespace>] [-d <directory>] [-f | --force]
-+USAGE="[--setup <command>] [--env-filter <command>]
-+	[--tree-filter <command>] [--index-filter <command>]
-+	[--parent-filter <command>] [--msg-filter <command>]
-+	[--commit-filter <command>] [--tag-name-filter <command>]
-+	[--subdirectory-filter <directory>] [--original <namespace>]
-+	[-d <directory>] [-f | --force]
- 	[<rev-list options>...]"
+@@ -87,7 +87,7 @@ USAGE="[--setup <command>] [--env-filter <command>]
+ 	[--commit-filter <command>] [--tag-name-filter <command>]
+ 	[--subdirectory-filter <directory>] [--original <namespace>]
+ 	[-d <directory>] [-f | --force]
+-	[<rev-list options>...]"
++	[--] [<rev-list options>...]"
  
  OPTIONS_SPEC=
-@@ -96,6 +97,7 @@ if [ "$(is_bare_repository)" = false ]; then
- fi
- 
- tempdir=.git-rewrite
-+filter_setup=
- filter_env=
- filter_tree=
- filter_index=
-@@ -148,6 +150,9 @@ do
- 	-d)
- 		tempdir="$OPTARG"
- 		;;
-+	--setup)
-+		filter_setup="$OPTARG"
-+		;;
- 	--env-filter)
- 		filter_env="$OPTARG"
- 		;;
-@@ -317,6 +322,9 @@ else
- 	need_index=
- fi
- 
-+eval "$filter_setup" < /dev/null ||
-+	die "filter setup failed: $filter_setup"
-+
- while read commit parents; do
- 	git_filter_branch__commit_count=$(($git_filter_branch__commit_count+1))
- 
+ . git-sh-setup
 -- 
 2.13.0
 
