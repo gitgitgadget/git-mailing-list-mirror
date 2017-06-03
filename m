@@ -2,68 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 011791F7D2
-	for <e@80x24.org>; Sat,  3 Jun 2017 01:20:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 138C81F7D2
+	for <e@80x24.org>; Sat,  3 Jun 2017 01:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751320AbdFCBUn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 2 Jun 2017 21:20:43 -0400
-Received: from renepasing.de ([5.9.148.133]:60724 "EHLO mail.renepasing.de"
+        id S1751180AbdFCBYv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 2 Jun 2017 21:24:51 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:33204 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751135AbdFCBUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Jun 2017 21:20:42 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mail.renepasing.de (Postfix) with ESMTP id 3A3981001D9A;
-        Sat,  3 Jun 2017 03:20:41 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at mail.renepasing.de
-Received: from mail.renepasing.de ([127.0.0.1])
-        by localhost (mail.renepasing.de [127.0.0.1]) (amavisd-new, port 10024)
-        with LMTP id 2-gs1cP-uyjG; Sat,  3 Jun 2017 03:20:39 +0200 (CEST)
-Received: from [IPv6:2a02:908:1064:9240:224:beff:fe38:eaca] (unknown [IPv6:2a02:908:1064:9240:224:beff:fe38:eaca])
-        by mail.renepasing.de (Postfix) with ESMTPSA id 0BD171000559;
-        Sat,  3 Jun 2017 03:20:39 +0200 (CEST)
-Subject: Re: Wrong gitattributes documentation?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <e7734a23-12b2-8f62-ab5c-c856d59e3010@pasing.net>
- <xmqq8tlax7lm.fsf@gitster.mtv.corp.google.com>
-From:   Rene Pasing <rene@pasing.net>
-Message-ID: <2dc4c436-0886-ec05-7a4f-e051bbfbc49f@pasing.net>
-Date:   Sat, 3 Jun 2017 03:20:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1751135AbdFCBYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Jun 2017 21:24:50 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 7C9C41F7D2;
+        Sat,  3 Jun 2017 01:24:49 +0000 (UTC)
+Date:   Sat, 3 Jun 2017 01:24:49 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: public inbox links, was: Re: preserve untracked cache, was Re:
+ What's cooking in git.git (Jun 2017, #01; Thu, 1)
+Message-ID: <20170603012449.GA20194@dcvr>
+References: <CAGZ79kboxyUKy2j2GDZzWhOHeLHM17fYhQ0Wy=HxKaM-zXFC3A@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq8tlax7lm.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kboxyUKy2j2GDZzWhOHeLHM17fYhQ0Wy=HxKaM-zXFC3A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/03/2017 02:01 AM, Junio C Hamano wrote:
-> Your "/images/*" is the "Otherwise" case, isn't it?
+Stefan Beller <sbeller@google.com> wrote:
+> Today I learned again how public-inbox is awesome! Thanks Eric!
 
-Ok, sorry, didn't read your answer thoroughly enough the first time.
+You're welcome :)
 
-The problem is, when I have an entry in .gitignore like this:
-/images
+> * You can just copy the message ID INCLUDING the surrounding < >
+>   and public inbox still just shows you the correct message. I had assumed
+>   you would need to strip off the < > and I did so since.
 
-Then git will ignore that whole directory (and all of its subfolders
-etc.). Git will just ignore everything in the tree starting with that
-pathname.
+Yeah, it's a fallback since it's probably a common mistake.
+AFAIK, git-send-email also avoids redundantly adding '<>' and
+only adds them if necessary.
 
-But when I use the same pattern ('/images') in .gitattributes I would
-expect (due to the documentation) that git-lfs will be called for all
-files+subfolders+subfolderfiles and even the folder itself (this is what
-I understand from 'The rules how the pattern matches paths are the same
-as in .gitignore files').
+> On Fri, Jun 2, 2017 at 5:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+<snip>
+> > Issue #01 of June reports it in 'master':
+> > https://public-inbox.org/git/<xmqqshjk5ezb.fsf@gitster.mtv.corp.google.com>
+>
+> * However with the < > unstripped, the awesomeness is limited:
+>   Some tools (including my mail reader as well as public inbox itself[1])
+>   do not recognize the link when there are < > in there.
 
-This does not seem to be the case!
+Yeah, that's actually bad form on Junio's part.  public-inbox
+can only support it up to an extent...
 
-Sorry again for the confusion.
+I seem to recall seeing some standard or style recommendation
+that URLs (of any type) be surrounded by angle brackets in text:
 
+<https://public-inbox.org/git/xmqqshjk5ezb.fsf@gitster.mtv.corp.google.com/>
+
+So public-inbox (and other parsers) should stop looking for URLs
+outside of the '<>'
+
+But I think the newer style manuals state having spaces around the
+URL is enough.
+
+> While the second point is not the end of the world, it's still
+> slightly annoying,
+> which is why I thought I'll point it out here.
+> 
+> [1] https://public-inbox.org/git/xmqqvaodx6g4.fsf@gitster.mtv.corp.google.com/
