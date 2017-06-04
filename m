@@ -2,79 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FROM_STARTS_WITH_NUMS,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B339D1F7D2
-	for <e@80x24.org>; Sun,  4 Jun 2017 09:56:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 049D81F7D2
+	for <e@80x24.org>; Sun,  4 Jun 2017 10:22:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751115AbdFDJ4G (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Jun 2017 05:56:06 -0400
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:34101 "EHLO
-        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750847AbdFDJ4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jun 2017 05:56:05 -0400
-Received: by mail-lf0-f46.google.com with SMTP id v20so27293066lfa.1
-        for <git@vger.kernel.org>; Sun, 04 Jun 2017 02:56:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=XcQheIKWiodkdkV7HfftnglQqNqmgaxE1S/gdCwU0eA=;
-        b=oYU79xg096D3fsKbtgwFOdnfDudIJ6qV6254p+j2O9mwPRRPpZ3ZgzuQEJFCorBcWt
-         dJEwGvAjis1rCFNWRhPTxWm0V21dLKcfAI/+dWNKTfUr0QL1DFIa3+HoHbQTiWr0CyBC
-         eYI2LoPqPFZ7usC/vK2hAye2q6HJzg9RoU24zicgcFlJGb5qN3dzV0kucznGiXULGqp9
-         /FfO1NKFJRUstzGkP4ccuD6UpMp/HsyD7gcBUDa6LV6KYmPXvVc+OrotDzp7a2PnYjic
-         Q7rXNS4YulpMCs8lgphRjFclATEf/yQl7JJgHjYw6fIsPyKyiw40y+w81vAbKrm5OAe0
-         TB8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=XcQheIKWiodkdkV7HfftnglQqNqmgaxE1S/gdCwU0eA=;
-        b=TNZZIBArvWgshxnljCT8Ah6Q855guHZM/4r0zPjZYmvRCsibaQ8u3XmcZ9FyZutXES
-         4VzcvyldNiMH8VGqu3eQ2QEhrgHWJ5FDPENDxPdGiCPqXTWRNk4fg0MKV6h7MDCmHH59
-         oaMsZ29aBugxO8um+/xcW6YTFEyphUeyS3EEmDlmeHsVYC6nNDoHBH8SwWfDfZZpOm/i
-         39Z/wKwolk7+A2GTAPSOvBkjGszfGOfqBCYZgcggSwKp4nXt+0KyPzM3g2MhWAeJd654
-         ov2pC9UN4ktkG3EPCs54VDvTWNOMvGgvmQDlejvtzvJJOZBCfyxcfz0lZU6OLjoWoZ5V
-         mGcA==
-X-Gm-Message-State: AODbwcC8MzV6vjUF9K1Sz8nyRqI6DCDUaykQY+IOQkDbkISwNE3oQyfy
-        szo3Q3/0dtbHpRXEhP5iPIe+zsJ+szWSRVE=
-X-Received: by 10.25.234.147 with SMTP id y19mr1903218lfi.25.1496570163611;
- Sun, 04 Jun 2017 02:56:03 -0700 (PDT)
+        id S1751115AbdFDKW4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Jun 2017 06:22:56 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:28074 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750847AbdFDKWy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jun 2017 06:22:54 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id HSgOd3TfFgKstHSgOdBe9D; Sun, 04 Jun 2017 11:22:52 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=GdBVpkfL c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=5rxgeBVgAAAA:8
+ a=pGLkceISAAAA:8 a=vnREMb7VAAAA:8 a=-cvvwf0_AAAA:20 a=OepAGUGVHGhctzu2DvEA:9
+ a=wPNLvfGTeEIA:10 a=u09W0hvIdLUA:10 a=voZrjb6_8qcA:10
+ a=PwKx63F5tFurRwaNxrlG:22 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <9AC6BDC64AEE4E76B505094B1BADE2D7@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Git List" <git@vger.kernel.org>,
+        "git-for-windows" <git-for-windows@googlegroups.com>,
+        "Git Users" <git-users@googlegroups.com>
+Cc:     "Stefan Beller" <sbeller@google.com>
+Subject: Git Merge 2017 Videos
+Date:   Sun, 4 Jun 2017 11:24:17 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.46.14.9 with HTTP; Sun, 4 Jun 2017 02:56:03 -0700 (PDT)
-From:   =?UTF-8?B?0JDQvdC00YDQtdC5INCV0YTQsNC90L7Qsg==?= 
-        <1134togo@gmail.com>
-Date:   Sun, 4 Jun 2017 12:56:03 +0300
-X-Google-Sender-Auth: m4dj6lpeu0IY1glOJHJaPf2VTws
-Message-ID: <CAPRL90JeQ3i1m7ydYzTCFgtZ4cC+gYEXFeAKvCuAVwPLXpsgXg@mail.gmail.com>
-Subject: Git p4 sync changelist interval
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=response
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170603-0, 03/06/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfGDT/HmFQ/WqeIQkjZtNVkKNqEhSKWrud5GR2edm63qO/Snh045TZ8hnA3HjKeSwRCO7xLPUxg6n7EMkSiE4T326NaKDNl7Yi8fRoNhrw/iAYQFMS9nr
+ jYwKKgksRlLkK3VmdvDN553jGkSW35/dDN7cBkmMc3WgYvohuR7WBk8XAi+9HU1rvYs4WSqtT+JwteawC+NMlMIIq9sRwjrcdYB7nSx8tSa+uzqmUZ44/V5S
+ CFgCBJ+EANKeJILBIxZONhEnPwAvq3meEfIUv9mtZIMeeVPxBP3RC7CbnyGkXYpN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+While looking at the recent .gitignore issue (the need to use `**`) I came 
+up against a comment in
+https://public-inbox.org/git/CAGZ79kZQsauBfoTjyqm+-+LjyyEc2Ykj5exUY5KdErEzFH0GMA@mail.gmail.com/
+ noting that the Git Merge 2017 videos were not available at that time.
 
-My goal is to sync the repository from p4 using an interval of
-changelists so that the first changelist version of the repository
-would be considered as an initial commit.
-So I used the following command:
+Well, a search found them on Youtube on the GitHub channel : 
+https://www.youtube.com/results?search_query=git+merge+2017+videos
 
- git p4 clone //depot@cl1,cl2
+With a playlist : 
+https://www.youtube.com/watch?v=tvymSWfvkjw&list=PL0lo9MOBetEGRAJzoTCdco_fOKDfhqaOY
 
-And when it finished, the files, that were created before the cl1 were
-not in the HEAD.
+Enjoy the viewing. The first few have been good.
 
-The problem, as I see it, is that before syncing changes in the given
-range, p4 task does not sync to cl1 version of the repo, and applies
-commits to the empty repository.
-Is it a bug or my misunderstanding of how git p4 should work?
+--
+Philip 
 
-Regards,
-Andrew Yefanov
