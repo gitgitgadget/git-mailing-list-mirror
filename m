@@ -2,62 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 372A01F7D2
-	for <e@80x24.org>; Sun,  4 Jun 2017 07:37:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 965AF1F7D2
+	for <e@80x24.org>; Sun,  4 Jun 2017 07:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751112AbdFDHhc (ORCPT <rfc822;e@80x24.org>);
-        Sun, 4 Jun 2017 03:37:32 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:33715 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751005AbdFDHhb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Jun 2017 03:37:31 -0400
-Received: by mail-qk0-f179.google.com with SMTP id y201so83850781qka.0
-        for <git@vger.kernel.org>; Sun, 04 Jun 2017 00:37:30 -0700 (PDT)
+        id S1751115AbdFDHqs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 4 Jun 2017 03:46:48 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:38288 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750847AbdFDHql (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Jun 2017 03:46:41 -0400
+Received: by mail-it0-f52.google.com with SMTP id r63so52106996itc.1
+        for <git@vger.kernel.org>; Sun, 04 Jun 2017 00:46:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=vOUafMIFr9JN/CYg14siWdXp53lDjAKwUNLzYZRFQbc=;
-        b=s1tOouHXqiK53QCXtzacq6lytmK/84WLn8GOuXA1EMc43pFZehrUxgi2QKUvo7yEcJ
-         8L9xuyMvJcDhhGWqc8/2UYGiHWvBIUoo4BOgZlPm1ciUoNr3/jFmni0HXajGrPKYQZ+U
-         RCpy1k5zcN5EheO7hlXgTu7QU14vIJTC3G7wbsZd0hONBDW/94MxPpyGRXL7RG2N7pZn
-         IvFZJ82QC7+h1OoWM0DpjdGVHCriyqr94hm8MedSgnyZMNsJ4UQaoSLhd/glFVfgWL0r
-         5hJ+/ZKkfxHqj/xe19i+2O/nyDWuNdGIN6UQzodQd3SMrQ/M8gwmMHeR384/aI7LQQ03
-         weCQ==
+        bh=5uQkV+9zQ0LDeoqf2ELkamP2lS0jyzw2yhDxxX4E8DM=;
+        b=P6gKNq9xsYXSdadRaLwGtOY7TEJG3vhJ7FR3P5zxESFrmJHrMdJz+q1bxts0Z+Wy/f
+         /YaLmsEWdGGkkOEOBgSodWewRE9aOwDlZDgLgBSo/+zeS5qVMKOKG5pDL7OcGrlosyGt
+         RbKG/4xrKAWbnju/aUAw7Zw08CzATvzw9qo9IbXhi/evGqdmUBY72QihJJYB8ljB8swe
+         UB4jwyO+n2JGrS4oSMXMDXyOT7WeHJCDncG2nRmji09Gi2T5NA87pVLNg2pKw9mc1+I2
+         orjIEGtJH2ng2olF9khu1ElQpFmIBq1Ims3NqxwMY17tyYBAo/7BYvYwl3SiI/O0MvQt
+         315Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=vOUafMIFr9JN/CYg14siWdXp53lDjAKwUNLzYZRFQbc=;
-        b=egRudVLZ/m+JMDGlLNJ0gYM3VtqQ8DtYdg5/4142jey/bA2+tDbHahQD72KBZIzaqm
-         0dyYD0rm2ASs4oGPS4+IoZZE7IdAOzO5MmuQ04yXnEk9GqtJGAgv2TLFo0+5K/j3iJf+
-         bkfbPpU5NGxsE6W5Nln6FH1E0MiTzDgIahfptauScT3c891t8Bx07Cfm+d7i9EX6E6Jb
-         zvU2hUM8GKI8zBqHzT20ATlq07RRpUk6oCSMWhP+QdYuItxiP9oGc+sTeGudK57T+1A/
-         2O5ENwzk37n0WGlw2AyhE4LNRlxfG1Zs/YSzQvJ5Pw/w3m4R09OtefeDAoqLrxRn30MT
-         p74w==
-X-Gm-Message-State: AKS2vOzApF7WNVjzNjoXX6hrbZfdsuXRxslZPYHNj4n7VFE8TD0g0BAB
-        7Gr/RB7TS/CF/hZBLxMg9dNK2ZewQg==
-X-Received: by 10.55.5.135 with SMTP id 129mr16957698qkf.181.1496561850239;
- Sun, 04 Jun 2017 00:37:30 -0700 (PDT)
+        bh=5uQkV+9zQ0LDeoqf2ELkamP2lS0jyzw2yhDxxX4E8DM=;
+        b=qZXCN/2RJgUPBKZtVc4Gw4W4SNv6ybuNZnNWNflWMyOoTMrxeiXRO5ySl9nq3aos2T
+         TCGGXh82Rs7fM4h3hpHVgq6/PKsr4548xsz31WIeY8idGkBPjnVpKykrWY8X2oY4yGnR
+         WLWLb9h2I5ybwLHuECm6GEtvQUhGXlxZ0L+QJiqN2QtOLhTSAYG9uxiHM76fqAtzAReO
+         kbCLtRta6ZqaOw/2e90iLWunD9ntywhzO8KMQobqdas2h84pZQ+3duQ7ITY0/qd2K/AB
+         w76s12E1gG62SJHc4WVD8cJIGLl/ObzfqEKg2cpCiLiE6Nu1sd0Mhg1opd4fMhVo4C1g
+         18CQ==
+X-Gm-Message-State: AODbwcDpj7KMDUyxBaoGwLIvDer5EXdK2ZaME7jZoIgeghHXU43JVXq/
+        alKzEMCuyLcjBJvVEu58/RZhuxaPlw==
+X-Received: by 10.107.201.131 with SMTP id z125mr14098072iof.160.1496562400205;
+ Sun, 04 Jun 2017 00:46:40 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.55.162.85 with HTTP; Sun, 4 Jun 2017 00:37:29 -0700 (PDT)
-In-Reply-To: <xmqqefv0wrj7.fsf@gitster.mtv.corp.google.com>
-References: <20170602103330.25663-1-avarab@gmail.com> <20170602184506.x2inwswmcwafyvfy@sigill.intra.peff.net>
- <xmqqd1amx80f.fsf@gitster.mtv.corp.google.com> <CACBZZX52O9Pf=5Xtq1Lg1=ZU26tm7pupvubk1ZjNJZp7kR450g@mail.gmail.com>
- <xmqqefv0wrj7.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 4 Jun 2017 09:37:29 +0200
-Message-ID: <CAP8UFD1u-C-T2X+H8WxxB7O+ajcGfygRBLN0t7+zJcOh_SrvFQ@mail.gmail.com>
-Subject: Re: [PATCH] perf: work around the tested repo having an index.lock
+Received: by 10.107.3.231 with HTTP; Sun, 4 Jun 2017 00:46:19 -0700 (PDT)
+In-Reply-To: <xmqq1sr0wm0i.fsf@gitster.mtv.corp.google.com>
+References: <4c3fed40-774b-8ae6-fa1b-50efe6ef552f@gmail.com>
+ <20170602102853.23073-1-avarab@gmail.com> <xmqq1sr0wm0i.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sun, 4 Jun 2017 09:46:19 +0200
+Message-ID: <CACBZZX4XOaN8o89vetoU8NMqRH+BaqHGkxq77MpqzvAM40exEA@mail.gmail.com>
+Subject: Re: [WIP/PATCH 7/6] perf: add a performance test for core.fsmonitor
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Ben Peart <peartben@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        David Turner <David.Turner@twosigma.com>,
         Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
+        Christian Couder <christian.couder@gmail.com>,
+        Thomas Rast <tr@thomasrast.ch>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -65,44 +70,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 4, 2017 at 2:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Sun, Jun 4, 2017 at 3:59 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->>> My feeling exactly.  Diagnosing and failing upfront saying "well you
->>> made a copy but it is not suitable for testing" sounds more sensible
->>> at lesat to me.
->>
->> This change makes the repo suitable for testing when it wasn't before.
+>> This is WIP code for the reasons explained in the setup comments,
+>> unfortunately the perf code doesn't easily allow you to run different
+>> setup code for different versions you're testing. This test will stop
+>> working if the fsmonitor is merged into the master branch.
+>> ...
+>> +
+>> +     # Relies on core.fsmonitor not being merged into master. Needs
+>> +     # better per-test ways to disable it if it gets merged.
+>> +     git config core.fsmonitor true &&
 >
-> Perhaps "not suitable" was a bit too vague.
+> Will stop working and relies on not merged can be read but I cannot
+> read "why" explained, and I cannot quite guess what the reason is.
 >
-> The copy you made is not in a consistent state that is good for
-> testing.  This change may declare that it is now in a consistent
-> state, but removal of a single *.lock file does not make it so.  We
-> do not know what other transient inconsistency the resulting copy
-> has; it is inherent to git-unaware copy---that is why we discouraged
-> and removed rsync transport after all.
+> If the code to read the configuration is not there, setting this
+> would not have any effect.  If the code is there, setting this would
+> have effect (either talking fsmonitor helps or it hurts).
+>
+> And I do not think we'd ever see a version of Git that always relies
+> on talking to fsmonitor, i.e. "git config core.fsmonitor false" is not
+> a way to disable it, so...
+>
+> Puzzled.
 
-If we don't like git-unaware copies, maybe we should go back to the
-reasons why we are making one here.
-In 342e9ef2d9 (Introduce a performance testing framework, 2012-02-17),
-Thomas wrote:
+Sorry about the unclear brevity.
 
-    3. Creating test repos from scratch in every test is extremely
-       time-consuming, and shipping or downloading such large/weird repos
-       is out of the question.
+What I'm referring to is not a limitation of git (we'll always be able
+to turn off core.fsmonitor), but a limitation of the perf framework.
+There's no way to run a test like this:
 
-       We leave this decision to the user.  Two different sizes of test
-       repos can be configured, and the scripts just copy one or more of
-       those (using hardlinks for the object store).  By default it tries
-       to use the build tree's git.git repository.
+    ./run master next -- p*.sh
 
-       This is fairly fast and versatile.  Using a copy instead of a clone
-       preserves many properties that the user may want to test for, such
-       as lots of loose objects, unpacked refs, etc.
+And have some information passed to the test to apply different
+runtime options to the test depending on master or next, or be to test
+master twice, once with the fsmonitor, once without, which this
+hypothetical feature would do:
 
-Is a local clone really much slower these days? Wouldn't it is use
-hard links too?
-By the way the many properties that are preserved might not be worth
-preserving as they could make results depend a lot on the current
-state of the original repo.
+    ./run master:"GIT_PERF_7519_NO_FSMONITOR=3DY" master -- p*.sh
+
+So right now the test works because there's no core.fsmonitor in
+master, so turning it on all the time only impacts avar/fsmonitor, not
+master.
+
+I started trying to add this to the perf framework the other day but
+ran out of time, the option should also be passed down early enough to
+be intercepted by the GIT_PERF_MAKE_COMMAND, so you could do e.g.:
+
+    GIT_PERF_MAKE_COMMAND=3D'make CFLAGS=3D"$F"' \
+        ./run v2.13.0:"F=3D-O0" v2.13.0:"F=3D-O1" v2.13.0:"F=3D-O2"
+v2.13.0:"F=3D-O3" -- p*.sh
+
+To test the same revision with different compilation flags.
+
+A change like this would break the ability to enact certain perf
+optimizations, right now we unpack the revision(s) you specify into
+<sha1-it-points-to>, and e.g. make use of the fact that that directory
+is already unpacked so we don't need to unpack it again.
+
+If there was no way to pass a flag to specific revisions being tested,
+then perf could just optimize:
+
+    ./run v2.12.0 v2.13.0 b06d364310 -- p*.sh
+
+To skip the b06d364310 run entirely since it's the same as v2.13.0. I
+think breaking this minor assumption in the framework is fine, but
+it's worth noting that it's an assumption we couldn't make anymore.
