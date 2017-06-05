@@ -7,54 +7,57 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56E8020D09
-	for <e@80x24.org>; Mon,  5 Jun 2017 05:48:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 561D720D09
+	for <e@80x24.org>; Mon,  5 Jun 2017 06:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751267AbdFEFsw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 01:48:52 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:36002 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751241AbdFEFsv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 01:48:51 -0400
-Received: by mail-qt0-f170.google.com with SMTP id u19so14673995qta.3
-        for <git@vger.kernel.org>; Sun, 04 Jun 2017 22:48:50 -0700 (PDT)
+        id S1751320AbdFEGZD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 02:25:03 -0400
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:34361 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751262AbdFEGZD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 02:25:03 -0400
+Received: by mail-qt0-f175.google.com with SMTP id c10so18554015qtd.1
+        for <git@vger.kernel.org>; Sun, 04 Jun 2017 23:25:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=hWxZErIHchTpEmoKIz/DJwnxY6Tt766co+Anbd5A+1A=;
-        b=BObI+lZ5vaVsHhBQ9Gu0GbSngzOvTNNjvtcN93nBv7tlfKXeHKSyoDPMaNElTLcYdN
-         rPml20Ff/vdakN/dmvNR0uviQseY2ZTgPNKTaZKi60smsZjzYYElz285c1SB8kh8hWDI
-         8bV6Pozq9J849BqOx4PbMhxxPL3LyQ2K3Zs/9+uA17aIOw7w1z4uvxmw9orS3RbUFSM6
-         yuCIxuzj7OGL8djXhPlrd2ql98/LpZOjOimsE7mibzc64xROsC+m7ZNo+c0PXh0OnQAq
-         Y8v+uo+cTjOtOMNEwJr6NNOaMQIrMm5WP9oTc1vwa34QXh82650GN3HEcSK0GxhQ0XCd
-         2bIw==
+        bh=ZxxBQ0cFyLUCyXgt1NeK0KoPX6GSjACThDI5HgixjfQ=;
+        b=AW7RGv1HIo41Yk70mM1icmDtesbT6VYKepIoERBjvQL5rbPECUzqPRItDvFSztqVPL
+         Esd6MFkkEpZaSDCCuWivkKBN3Ae3Un7o1qoUmMUZIqebFXMj8BPS1Nci1m+jJqmTjW2a
+         +R0yiDWuEIXJgpp8D6EKv7Kjqil7JVGoDlWgPXkEEpunb5/rcsnkq3VscuV6uIIqaREG
+         Fcx7JqYVwAbkN1TKo5hRMpOqcoDTbKEh0fk4SEZVvkGWCXSwpirouCKNlrfR7ADgMWiL
+         FO2bKJ1tLP3Wkr7ZIq/FhwbJDg3haJ4FE5M55pPD3AqVy4Am3yAILI+z5LTk046bBMKY
+         zwPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hWxZErIHchTpEmoKIz/DJwnxY6Tt766co+Anbd5A+1A=;
-        b=sSuxgFbwL6R3YUQI0/n0EZTxpo4lUvRGN9Mnb1rYcOCQAdjQsHtbR9fQHiXYPbmRJK
-         K8h0SHXgLFBlZAlEROOtgf5lgjVIIAWJgPTTiYuW5FnskFQLV3ypcs6yVa2RJ0WbPlYd
-         zLtiLIpmJeo78m3ZKpKkp0G5qqr4t8ZIKhYKnCjMZMQeAZWurmAbMqv13zBxsLXrB5Tp
-         ykI1Dy2stL71oA797bEhpZCj27qvAw33cI66ICurM2nD2I/2q4rNEOud5gRCW0NSTNCB
-         nebnygUbk5jy6UWRGL2wKiR/nHn19R28dBHWgq3Gx1jMYzkVAPT5m+C9KqA88MOvilZ6
-         Sc7A==
-X-Gm-Message-State: AKS2vOyAsqONRqBuSCxzxCh/cR41bQ5/mf0KDgyqeD+Dqj+4WRUBz871
-        Va+PHns13exwgJadTu+PxKOIQugbjw==
-X-Received: by 10.55.140.193 with SMTP id o184mr4941036qkd.127.1496641730203;
- Sun, 04 Jun 2017 22:48:50 -0700 (PDT)
+        bh=ZxxBQ0cFyLUCyXgt1NeK0KoPX6GSjACThDI5HgixjfQ=;
+        b=Faeao8ldVybStXfjL/TlDELoPd2wYb/+AlTxa/JdxG10WcuzgzeUHCJgAsbkjSYAcI
+         zz34LytRtRU/7UaletnJh2dDzgaSIv2/GwVWOY8Pk3frXrjM//HsLUOwhqr+1WjRsvMY
+         EOyNCICTZ/61MaxoYVmF4RxzoC6N09T8EYUb8aipdc3ZzYpMKi39ZDoAV3k6TnuoLizU
+         608xN23I+SjKP7GRU0ZNDNTmYMadv6NoMvubslwGVb9cDPgYDvHOHWaZFi3KXWzEfNQI
+         aqtGUCRMZoWf5+Mib03N/I4sSuBqhSte9Y2jQte3JqW58sMnttnEW7wpz4DDNjK5Okxk
+         0pCw==
+X-Gm-Message-State: AKS2vOwKBeLhq8couOB3DOCJaMdC01ET+4ocmErPNWG9fSPVHHhTB4lJ
+        vkoNQ/WQbMq9q3leBbgkUzlB92KySQ==
+X-Received: by 10.55.221.24 with SMTP id n24mr2037657qki.46.1496643902324;
+ Sun, 04 Jun 2017 23:25:02 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.55.162.85 with HTTP; Sun, 4 Jun 2017 22:48:49 -0700 (PDT)
-In-Reply-To: <xmqqefuzurj5.fsf@gitster.mtv.corp.google.com>
-References: <20170603221335.3038-1-avarab@gmail.com> <xmqqa85owq3b.fsf@gitster.mtv.corp.google.com>
- <CACBZZX5_AYOXZMrgVZuERzOdzntw0ec36bKS5mcKT510cC3Y2g@mail.gmail.com> <xmqqefuzurj5.fsf@gitster.mtv.corp.google.com>
+Received: by 10.55.162.85 with HTTP; Sun, 4 Jun 2017 23:25:01 -0700 (PDT)
+In-Reply-To: <xmqqa85nur85.fsf@gitster.mtv.corp.google.com>
+References: <20170602103330.25663-1-avarab@gmail.com> <20170602184506.x2inwswmcwafyvfy@sigill.intra.peff.net>
+ <xmqqd1amx80f.fsf@gitster.mtv.corp.google.com> <CACBZZX52O9Pf=5Xtq1Lg1=ZU26tm7pupvubk1ZjNJZp7kR450g@mail.gmail.com>
+ <xmqqefv0wrj7.fsf@gitster.mtv.corp.google.com> <CAP8UFD1u-C-T2X+H8WxxB7O+ajcGfygRBLN0t7+zJcOh_SrvFQ@mail.gmail.com>
+ <xmqqa85nur85.fsf@gitster.mtv.corp.google.com>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 5 Jun 2017 07:48:49 +0200
-Message-ID: <CAP8UFD3-=sDQ2PEExLq_A3v5d8w8PJ1aLgBNP725mGHzocuqqQ@mail.gmail.com>
-Subject: Re: [PATCH] test-lib: add ability to cap the runtime of tests
+Date:   Mon, 5 Jun 2017 08:25:01 +0200
+Message-ID: <CAP8UFD1LD+FVNvS_bR8KB7TWqmz01+gsyesubu3o0SWJvGAX9g@mail.gmail.com>
+Subject: Re: [PATCH] perf: work around the tested repo having an index.lock
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
         Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -63,39 +66,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 5, 2017 at 3:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Jun 5, 2017 at 4:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
->> Realistically I'm going to submit this patch, I'm not going to take
->> the much bigger project of refactoring the entire test suite so that
->> no test runs under N second, and of course any such refactoring can
->> only aim for a fixed instead of dynamic N.
+>> On Sun, Jun 4, 2017 at 2:00 AM, Junio C Hamano <gitster@pobox.com> wrote=
+:
+>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>>
+>>>>> My feeling exactly.  Diagnosing and failing upfront saying "well you
+>>>>> made a copy but it is not suitable for testing" sounds more sensible
+>>>>> at lesat to me.
+>>>>
+>>>> This change makes the repo suitable for testing when it wasn't before.
+>>>
+>>> Perhaps "not suitable" was a bit too vague.
+>>>
+>>> The copy you made is not in a consistent state that is good for
+>>> testing.  This change may declare that it is now in a consistent
+>>> state, but removal of a single *.lock file does not make it so.  We
+>>> do not know what other transient inconsistency the resulting copy
+>>> has; it is inherent to git-unaware copy---that is why we discouraged
+>>> and removed rsync transport after all.
+>>
+>> If we don't like git-unaware copies, maybe we should go back to the
+>> reasons why we are making one here.
 >
-> I do not expect any single person to tackle the splitting.  I just
-> wished that a patch inspired by this patch (or better yet, a new
-> version of this patch) made the tail end of "make test" output to
-> read like this:
->
->    ...
->    [18:32:44] t9400-git-cvsserver-server.sh ...... ok    18331 ms
->    [18:32:49] t9402-git-cvsserver-refs.sh ........ ok    22902 ms
->    [18:32:49] t9200-git-cvsexportcommit.sh ....... ok    25163 ms
->    [18:32:51]
->    All tests successful.
->    Files=3D785, Tests=3D16928, 122 wallclock secs ( ...
->    Result: PASS
->
->    * The following tests took longer than 15 seconds to run.  We
->      may want to look into splitting them into smaller files.
->
->    t3404-rebase-interactive.sh ...    19 secs
->    t9001-send-email.sh ...........    22 secs
->    t9402-git-cvsserver-refs.sh ...    22 secs
->    t9200-git-cvsexportcommit.sh ..    25 secs
->
-> when the hidden feature is _not_ used, so that wider set of people
-> will be forced to see that some tests take inordinate amount of
-> time, and entice at least some of them to look into it.
+> We do need git-unaware bit-for-bit copy for testing, because you may
+> want to see the effect of unreachable objects, for example.
 
-I wonder if splitting tests would make a good GSoC microproject for next ye=
-ar.
+I think there might be different kind of people interested in performance t=
+ests.
+
+Users with existing repositories might want to see how the different
+Git versions perform on their real life repos.
+Developers might want to test Git on different repos with different
+characteristics.
+
+For example some developers might want to test on repos with and
+without a lot of unreachable objects, to make sure that the latest
+changes they made improve perf in both cases. While some users might
+only be interested in testing on their actual repositories to see how
+the latest Git versions improve things (or not) in practice.
+
+In this example the needs of developers would perhaps be better suited
+if they could control the amount of unreachable objects in the tests,
+while the needs of the users would be better suited if the tests just
+used actual repos as is.
+
+So I wonder what changes would be needed to the perf framework and the
+perf tests to accomodate both of these kinds of needs.
+
+
+
+> It's just that git-unaware copies, because it cannot be an atomic
+> snapshot, can introduce inconsistencies the original repository did
+> not have, rendering the result ineffective.
