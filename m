@@ -2,85 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B51C1F7D2
-	for <e@80x24.org>; Mon,  5 Jun 2017 22:25:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FA411F7D2
+	for <e@80x24.org>; Mon,  5 Jun 2017 22:38:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751237AbdFEWZG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 18:25:06 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:36160 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751180AbdFEWZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 18:25:05 -0400
-Received: by mail-pg0-f44.google.com with SMTP id a70so19167426pge.3
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 15:25:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vN33Jrw93Sqf3f92mCVlzcX2B1pQWEe1wU5QsEl7KTU=;
-        b=IXusKDqa6nlbiQWxRWrU2XosbdwbQZckVKrlN1sqJ6fyfdRRhZwTVEoYOjLm7NUjHi
-         teGZjOxQGpR9aL8Lzl/4WvjxJxSQaDJwR6odhc+9hQkedfzQc3nb54lcHqWUb+457H2y
-         KzadWynLuQaCjhZI83hkjORchmZah3cdaCwn1sVe+Ucq5lvmf1XbNtbqWX/x+P7K4q87
-         OX4Jrq7FNCn7ieiaxIgV+bEsVQlWKDt1zSpZaw1iTgJwtvIEGgcnfO28JXndkfFzPjqX
-         vuD2GwhzMr7hgtzMc05Ns1TlImF3xy4tzgu4qDZQWhfANK5KoUr8H9H3GGFVevEbIXu6
-         nb7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vN33Jrw93Sqf3f92mCVlzcX2B1pQWEe1wU5QsEl7KTU=;
-        b=T18MOWKS4nyLZ5NTP+cPjDGcv1FuMO7+ZL0ZJvCuZyG6EwCZw8gXeEtm4AV/fEIL0h
-         VYlwsYbxcWf+HjZN9o7WPSBDPzGQiw7eCs9pN+ra5Cp7efMcBGUQk5mLMD5Qd0XH+zgv
-         sKGR2E/Fjetz18G68zTkmxZMPYGXJRML99Ni+NgGo4BfmP1n942f5u40RHBMQsV/LvSj
-         QbiFawwx6d46S7ahPE2GdPCQ+sRKt4Hv5W1qglT5BZ1hDlTG9smFWjZP9bU5T6+CmbdH
-         0CA47GyMj1EtCsplqY0WLKhm8vPYpq7WVrnR9exRJT9W0XSpZzLGEKjS4M4ZZloMGqtO
-         iSwA==
-X-Gm-Message-State: AODbwcAu6iZEaI5PyoGlIorQ40YlvHvXtEEWBeW0F/3qbQVnb/dE5eO8
-        xTME9fPcNbvkHIIIUayyXrNysTgJIbl5
-X-Received: by 10.84.209.228 with SMTP id y91mr17695645plh.210.1496701504351;
- Mon, 05 Jun 2017 15:25:04 -0700 (PDT)
+        id S1751242AbdFEWi3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 18:38:29 -0400
+Received: from a7-17.smtp-out.eu-west-1.amazonses.com ([54.240.7.17]:53638
+        "EHLO a7-17.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751180AbdFEWi2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 5 Jun 2017 18:38:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1496702306;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=NizgdknJHuA2R3Hr8Uvlw5sSWq8n2HJHCt2KW3Xhrus=;
+        b=QwsSS89gUQqj6BbWrwSRqiRk7yyFo1m1eA80C6pHzN7TcOa6+AMr3Qqibx5eVvRn
+        qXc7n3A8AFxDjI9KcgtweF2qZWJnk10bB3U09HjYxbgcPIgqb11yjlXiybZiOLNZpG1
+        vGuU6QhTMjz/ydhxIjWW9blhoK2TzQ10B0oEiqdw=
+From:   Sahil Dua <sahildua2305@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015c7a68c647-372a5a13-5412-4838-921d-66980bac4099-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] t3200: add test for single parameter passed to -m option
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Mon, 5 Jun 2017 15:25:03 -0700 (PDT)
-In-Reply-To: <CAME+mvXACX7DejOKDJ=-qV8Ex9ZdYT4vXYV+7AeesaKYUk1sGw@mail.gmail.com>
-References: <CAME+mvXACX7DejOKDJ=-qV8Ex9ZdYT4vXYV+7AeesaKYUk1sGw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 5 Jun 2017 15:25:03 -0700
-Message-ID: <CAGZ79kasawzm19HtZmAe71FxwPq5GTuCWW+3S2CWYHymVSBTEg@mail.gmail.com>
-Subject: Re: [GSoC] Update: Week 3
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 5 Jun 2017 22:38:25 +0000
+X-SES-Outgoing: 2017.06.05-54.240.7.17
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 5, 2017 at 1:56 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> 1. foreach: After a discussion over the issue of the path variable in
->    windows, in this week my mentor, Stefan Beller came up with the
->    appropriate solution for the problem after discussing it with Ramsay
->    Jones.
+Adds a test for the case when only one parameter is passed to '-m'
+(move/rename) option.
 
-Thanks for having so much faith in my abilities, but it may not be
-appropriate, yet. (It does multiple things at once, which is generally
-a bad sign already. )
+For example - if 'git branch -m bbb' is run, it should rename the
+currently checked out branch to bbb. There was no test for this
+particular case with only one parameter for -m option. However,
+there's one similar test case for -M option.
 
-Maybe to be unblocked on the conversion of foreach, you could make
-the patch have the original behavior, i.e.
+Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
+---
+ t/t3200-branch.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-<up_path><submodule path>
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index fe62e7c775da6..7504f14bc52f8 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -100,6 +100,14 @@ test_expect_success 'git branch -m n/n n should work' '
+ 	git reflog exists refs/heads/n
+ '
+ 
++test_expect_success 'git branch -m bbb should rename checked out branch' '
++	test_when_finished git branch -d bbb &&
++	test_when_finished git checkout master &&
++	git checkout -b aaa &&
++	git branch -m bbb &&
++	git reflog exists refs/heads/bbb
++'
++
+ test_expect_success 'git branch -m o/o o should fail when o/p exists' '
+ 	git branch o/o &&
+ 	git branch o/p &&
 
-which makes sense in the way that it is only converting from shell to C,
-not fixing a bug along the way. As we discovered a bug, you could just put
-a NEEDSWORK comment explaining what the problem is; deferring solving
-the issue until later.
-
-I'll review the other patches.
-
-Thanks,
-Stefan
+--
+https://github.com/git/git/pull/371
