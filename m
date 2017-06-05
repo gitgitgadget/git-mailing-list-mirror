@@ -2,177 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 496AA1F7D2
-	for <e@80x24.org>; Mon,  5 Jun 2017 19:42:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79EEF1F7D2
+	for <e@80x24.org>; Mon,  5 Jun 2017 20:26:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751183AbdFETmc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 15:42:32 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:34880 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751178AbdFETma (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 15:42:30 -0400
-Received: by mail-pf0-f172.google.com with SMTP id l89so13211369pfi.2
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 12:42:30 -0700 (PDT)
+        id S1751189AbdFEU0U (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 16:26:20 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35932 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751180AbdFEU0T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 16:26:19 -0400
+Received: by mail-pg0-f68.google.com with SMTP id v18so7460279pgb.3
+        for <git@vger.kernel.org>; Mon, 05 Jun 2017 13:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=SdpvtKjtrI8pwYnU0/X7A3+mvjIw3KOxBQniVVDxKK8=;
-        b=aIo/kgluuvWqgsIGvqEMhBzGmMiQoSSqb2Z2yyPMp451D+QyCcvyNfEnSUq2jIoD9B
-         q+1R5XNC3h0Jx5n+bN6udhUWjUWA6ClUr34HMgGN6iDohsLTffReZehhmRcGpvWvGfvU
-         /5xxpXpeqLcbfc3Fm3Fxf7PHvbUOEcORg71k15VHBCIPCCUEaWzfbLpSmZzW6UgHB2uG
-         ZBkoi6OE6lGjW3WAJMljfCb5sskuyCG1Rz9twYal9w1KEdTxGjsVGmWangic7CvpGZrY
-         IuuqeRCDXELLFz4MdfBy6Z+cFdaQvAUXv4zq1Spc3SnJhf2mQY3evfh4VGX9E5zs0MSu
-         k47A==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Y4uG9dh7v5X8RDkvg9MoqHhkOMYqpOzePAGf0TVQp34=;
+        b=Z2YS+Cpnyyq045Ggt0zCpaCJCeUBqqHzg4XIzMODPmMy98IhZXI1U7F0wXvQJJ3vX+
+         +g/O6AapgL/FQPhDq7fka/ExziI77lPvQOhm+V3ue4Sp4xWZm9J1KPEGz4cfdr9uW5OG
+         j4CLwHgwuUHF0/1hc1o8hP7CNNtdjJIekTin81tW5Xt0AA4AfbWtndZgU5o62MWIGUIa
+         atMHuODbdCOMAi+0o/f1YG5kfzmMDEzptz9uveiy1KutiRLj9bHnSnT1dQ6uOt2U1+wu
+         G4VaoNaWYgGKvCM6sMNn3AT0la1EgwRyupWRNkD0c1s9nSi7juZXJEOrMRu16WD7Iln3
+         oYNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SdpvtKjtrI8pwYnU0/X7A3+mvjIw3KOxBQniVVDxKK8=;
-        b=b03+E2wn9yt/WaAQ/QpJ+sNeTLh+2YIB14SgbBIaKorp+vV8TG0x6pDzSdkbI8Ocig
-         iIaSOqcZELOkU6oV8N4BvT5dzOlc7Gyrb7gHZHsAi39Pi1468HxF7YVjA0YdPT8QTwim
-         gykoJBzM4G7uuudDJ0CjAeFfMFqv+HgS419x+jvAm4UYp3NIOahXZUiOAB0XaIABMBy+
-         rraD+Iurd0mKZECiUXzNvQD1CEwgJSidDGCJDLxTRBvGLptyVItV22As2CdTdWzrgMsr
-         AHJg6sWfBZ6kTiavkvShH9dPriyDlYmhYVeVXr8svdNRVF+Yi0Os4n5aex2M8Eding44
-         xCQg==
-X-Gm-Message-State: AODbwcDVQNDo4JRUgfNSInoAGCC4RZQRkjSctF0aSxTkJv7vYKe+6srG
-        +LaHN1CjEF+KOIs2ulOaCw==
-X-Received: by 10.84.217.134 with SMTP id p6mr17129367pli.192.1496691749880;
-        Mon, 05 Jun 2017 12:42:29 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:b834:3af4:2e37:8db3])
-        by smtp.gmail.com with ESMTPSA id b1sm18055963pfl.70.2017.06.05.12.42.28
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 05 Jun 2017 12:42:28 -0700 (PDT)
-Date:   Mon, 5 Jun 2017 12:42:27 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, sandals@crustytoothpaste.net
-Subject: Re: [PATCH 00/33] object id conversion (grep and diff)
-Message-ID: <20170605194227.GE40426@google.com>
-References: <20170530173109.54904-1-bmwill@google.com>
- <xmqqzidr18an.fsf@gitster.mtv.corp.google.com>
- <xmqqefv3yo23.fsf@gitster.mtv.corp.google.com>
- <xmqqtw3yyhzc.fsf@gitster.mtv.corp.google.com>
- <20170602182215.GA57260@google.com>
- <xmqqpoemx8t4.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpoemx8t4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Y4uG9dh7v5X8RDkvg9MoqHhkOMYqpOzePAGf0TVQp34=;
+        b=jCfZua74QkGDbhMXIx/30+jt8qaC6Ye5nxJb8IWmhvuDY+9CeWbkdOiySf1JTQHkGo
+         4QgBJe227vsMs9zvGT6FUUyz03bvnaueKEtOqjahji6fjxDnJOG2rYeL0hN1AncJT2rA
+         63RSZS5QzFLBt2kBGX9tK2QfqFh7cSc+cGhYXzfj0F+73QGiOdhjdWNScrxML7aOM4JG
+         jPKDJorbDyt48Jv3izBY7jligTCRXfjcU6YBJKgTO4s54fF2Orikm+c3mQBuNEN5MhrC
+         qdk+fJxinbLdEiD9CoZuNLeOx6O+HJgMfqJn875UmVsF/jKB08HULkJiItkw7VGxX2DA
+         cYdQ==
+X-Gm-Message-State: AODbwcChedeFZMtg4jtgMdPk3Mchju61J28gDJtT/14NurQPbIsMbZy1
+        awk6+qQrXXawAA==
+X-Received: by 10.84.233.141 with SMTP id l13mr17399528plk.298.1496694378917;
+        Mon, 05 Jun 2017 13:26:18 -0700 (PDT)
+Received: from prathampc-X550JX.domain.name ([116.73.72.60])
+        by smtp.gmail.com with ESMTPSA id s10sm29840633pfi.16.2017.06.05.13.26.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 05 Jun 2017 13:26:18 -0700 (PDT)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org, christian.couder@gmail.com,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: [GSoC][PATCH v2 1/2] submodule: port set_name_rev from shell to C
+Date:   Tue,  6 Jun 2017 01:55:28 +0530
+Message-Id: <20170605202529.22959-1-pc44800@gmail.com>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <CAGZ79kYeJoVGRFyeGsXevo2JmDMoxf=tJubWcy5Qt==3QK=Hjg@mail.gmail.com>
+References: <CAGZ79kYeJoVGRFyeGsXevo2JmDMoxf=tJubWcy5Qt==3QK=Hjg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/03, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > On 06/02, Junio C Hamano wrote:
-> >> 
-> >> I lied.  This also conflicts somewhat with Peff's diff-blob topic.
-> >> I think I resolved them correctly (there needs evil merges applied
-> >> to two files when merging this topic), and hopefully can push out
-> >> the result by the end of the day.
-> >> 
-> >> Thanks.
-> >
-> > If it ends up being too much of a headache for you to deal with, let me
-> > know and I can rebase on top of those series.  That way you don't have to
-> > deal with the conflict resolutions.  Just let me know what you'd like me
-> > to do.
-> 
-> Sorry, I forgot to push the result out, even though I double checked
-> the conflict resolution I did last night.  Now it is in the public
-> repository.  I have one squash queued at the right place to update
-> SHA1s to OIDs in the comment Brian pointed out.
-> 
+Since later on we want to port submodule subcommand status, and since
+set_name_rev is part of cmd_status, hence this function is ported. It
+has been ported to function print_name_rev in C, which calls get_name_rev
+to get the revname, and after formatting it, print_name_rev prints it.
+And hence in this way, the command `git submodule--helper print-name-rev
+"sm_path" "sha1"` sets value of revname in git-submodule.sh
 
-What you have at 'bw/object-id' matches the changes I made locally
-(changing SHA1 to OID) and looks good to me!
+The function get_name_rev returns the stdout of the git describe
+commands. Since there are four different git-describe commands used for
+generating the name rev, four child_process are introduced, each successive
+child process running only when previous has no stdout. The order of these
+four git-describe commands is maintained the same as it was in the function
+set_name_rev() in shell script.
 
-> If you ever need to rebase this on top of future 'master' that
-> already has js/blame-lib topic, fetching from me and checking
-> the evil merge I did may turn out to be helpful:
-> 
->  $ git fetch git://github.com/gitster/git refs/merge-fix/bw/object-id
->  $ git show FETCH_HEAD
-> 
-> but I can take patches based on the same old 'master'; as long as
-> the evil merge above is correct, that would probably be preferrable,
-> as it makes it easier to compare the two iterations of your series.
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+---
+ builtin/submodule--helper.c | 67 +++++++++++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            | 16 ++---------
+ 2 files changed, 69 insertions(+), 14 deletions(-)
 
-Sounds like basing it on the original 'master' would work easiest for
-you, so I'll continue to do that :)
-
-> 
-> Repeating some backstory of "merge-fix" might be beneficial, if a
-> reader is interested.  Otherwise the remainder of this message can
-> safely be skipped.
-> 
-> After a topic (i.e. js/blame-lib) moves a lot of code around (i.e. a
-> bulk of what used to be in builtin/blame.c is now in blame.c and
-> some in diff.c), merging a topic that touches places in the code
-> that was moved in-place (i.e. bw/object-id, which updates the code
-> in builtin/blame.c) will leave a conflict that looks like:
-> 
->     <<<<<<< HEAD
->     ... very little that is left after moving
->     ... bunch of code out of this file
->     ||||||| common
->     ... a lot of
->     ... stuff before
->     ... your change from SHA1 to OID
->     ... is here
->     =======
->     ... a lot of
->     ... stuff after
->     ... your change from SHA1 to OID
->     ... is here
->     >>>>>>> theirs
-> 
-> As far as builtin/blame.c is concerned, the resolution for this
-> set of conflicts is just to take the HEAD version, ignoring all of
-> your SHA1-to-OID changes.  Once it is resolved, "rerere" can help
-> us remember this resolution to builtin/blame.c
-> 
-> But the ignored changes need to go somewhere else.
-> 
-> What the user who is doing a merge does at this point is to compare
-> what is between ||||||| and ======= (i.e. common ancestor's version)
-> with what is between ======= and >>>>>>> (i.e. their version) to
-> figure out what the branch being merged did.  And the user needs to
-> know where the common code went in the version in HEAD.
-> 
->  $ git log [--no-merges] -p MERGE_HEAD.. -- builtin/blame.c
-> 
-> is helpful to locate the commit that lost the common lines from the
-> file.  And "git show" on it will tell us that they mostly went to
-> blame.c while some migrating to diff.c; we found out what you did by
-> comparing "common" and "theirs" in the previous step and we apply
-> these changes to these "new" places.
-> 
-> And that is the diff you see in refs/merge-fix/bw/object-id.  The
-> script I use to re-build 'pu' every day (probably I use it three
-> times a day on average) knows about that ref.  The script starts
-> from the tip of 'master', and for each topic, (1) run "git merge"
-> into HEAD, (2) take resolution recorded by "rerere" and (3) if
-> merge/fix/$topic exists, cherry-pick it on top to squash into the
-> merge made in (2).
-> 
-> Once I have taught my rerere database and refs/merge-fix/ about this
-> merge, it is not too big a deal to redo the merge to adjust to an
-> updated 'master' or a new interation of your series because of the
-> above mechanism.  And that is why I say it is OK for an updated series
-> to be based on the same old 'master'.
-> 
-> Thanks.
-> 
-> 
-
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 566a5b6a6..3022118d1 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -219,6 +219,72 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
+ 	return 0;
+ }
+ 
++enum describe_step {
++	step_bare = 0,
++	step_tags,
++	step_contains,
++	step_all_always,
++	step_end
++};
++
++static char *get_name_rev(int argc, const char **argv, const char *prefix)
++{
++	struct child_process cp;
++	struct strbuf sb = STRBUF_INIT;
++	enum describe_step cur_step;
++
++	for (cur_step = step_bare; cur_step < step_end; cur_step++) {
++		child_process_init(&cp);
++		prepare_submodule_repo_env(&cp.env_array);
++		cp.dir = argv[1];
++		cp.no_stderr = 1;
++
++		switch (cur_step) {
++			case step_bare:
++				argv_array_pushl(&cp.args, "git", "describe",
++						 argv[2], NULL);
++				break;
++			case step_tags:
++				argv_array_pushl(&cp.args, "git", "describe",
++						 "--tags", argv[2], NULL);
++				break;
++			case step_contains:
++				argv_array_pushl(&cp.args, "git", "describe",
++						 "--contains", argv[2], NULL);
++				break;
++			case step_all_always:
++				argv_array_pushl(&cp.args, "git", "describe",
++						 "--all", "--always", argv[2],
++						 NULL);
++				break;
++			default:
++				BUG("unknown describe step '%d'", cur_step);
++		}
++
++		if (!capture_command(&cp, &sb, 0) && sb.len) {
++			strbuf_strip_suffix(&sb, "\n");
++			return strbuf_detach(&sb, NULL);
++		}
++	}
++
++	strbuf_release(&sb);
++	return NULL;
++}
++
++static int print_name_rev(int argc, const char **argv, const char *prefix)
++{
++	char *namerev;
++	if (argc != 3)
++		die("print-name-rev only accepts two arguments: <path> <sha1>");
++
++	namerev = get_name_rev(argc, argv, prefix);
++	if (namerev && namerev[0])
++		printf(" (%s)", namerev);
++	printf("\n");
++
++	return 0;
++}
++
+ struct module_list {
+ 	const struct cache_entry **entries;
+ 	int alloc, nr;
+@@ -1212,6 +1278,7 @@ static struct cmd_struct commands[] = {
+ 	{"relative-path", resolve_relative_path, 0},
+ 	{"resolve-relative-url", resolve_relative_url, 0},
+ 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
++	{"print-name-rev", print_name_rev, 0},
+ 	{"init", module_init, SUPPORT_SUPER_PREFIX},
+ 	{"remote-branch", resolve_remote_submodule_branch, 0},
+ 	{"push-check", push_check, 0},
+diff --git a/git-submodule.sh b/git-submodule.sh
+index c0d0e9a4c..091051891 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -758,18 +758,6 @@ cmd_update()
+ 	}
+ }
+ 
+-set_name_rev () {
+-	revname=$( (
+-		sanitize_submodule_env
+-		cd "$1" && {
+-			git describe "$2" 2>/dev/null ||
+-			git describe --tags "$2" 2>/dev/null ||
+-			git describe --contains "$2" 2>/dev/null ||
+-			git describe --all --always "$2"
+-		}
+-	) )
+-	test -z "$revname" || revname=" ($revname)"
+-}
+ #
+ # Show commit summary for submodules in index or working tree
+ #
+@@ -1041,14 +1029,14 @@ cmd_status()
+ 		fi
+ 		if git diff-files --ignore-submodules=dirty --quiet -- "$sm_path"
+ 		then
+-			set_name_rev "$sm_path" "$sha1"
++			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
+ 			say " $sha1 $displaypath$revname"
+ 		else
+ 			if test -z "$cached"
+ 			then
+ 				sha1=$(sanitize_submodule_env; cd "$sm_path" && git rev-parse --verify HEAD)
+ 			fi
+-			set_name_rev "$sm_path" "$sha1"
++			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
+ 			say "+$sha1 $displaypath$revname"
+ 		fi
+ 
 -- 
-Brandon Williams
+2.13.0
+
