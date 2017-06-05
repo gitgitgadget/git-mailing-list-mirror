@@ -2,120 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_ADSP_ALL,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 994BA1F7D2
-	for <e@80x24.org>; Mon,  5 Jun 2017 23:30:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05C4D1F7D2
+	for <e@80x24.org>; Mon,  5 Jun 2017 23:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751333AbdFEXaB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 19:30:01 -0400
-Received: from mail-ot0-f172.google.com ([74.125.82.172]:36333 "EHLO
-        mail-ot0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751218AbdFEX3y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 19:29:54 -0400
-Received: by mail-ot0-f172.google.com with SMTP id i31so5965190ota.3
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 16:29:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dOnHsusd57LJobE/K0PMCOATpqnr+rBQ8QE21LUYUnc=;
-        b=U9c2rpBKUHHDf/PgC2L/da0V2oC9rPyjeREn5m+5IO3eoi1qhMdvarLCWNkClfhA+9
-         9/FhtOrbdM4Nj/0hQzYD+wZ9tRl1CbWssBDx9xN758XDZJ9IqqMqodavUkIVZ83ZwDBD
-         Bld/cUEUjA9essWGlM2q2ZyUD+nzvq36QzoNI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dOnHsusd57LJobE/K0PMCOATpqnr+rBQ8QE21LUYUnc=;
-        b=Q4BoSvwO5MXTXvmm1MHOP9I4aPeypPnNFRo10NQxHxnLnuyN3gM67MfGaTArfs0qMb
-         rzeuWoVIcW+H6UnF1+KG8NWtLxtLQm7JFGxLx3ohqTjQJ+V02GhBMWnxT6l/6FKElX5o
-         8x6dGaTsHq89LdoaJKgg6vrTSnfvMZK3wiwL/WOYAPyJiuyRHn59VaLTFeq0ypu8miUq
-         OAVzB9wW1B2/WrG0Dy6WOzfLK75LeAWvxt3QcN56HY4/4VUzynVW487FbvoNkL1C/uF3
-         iaUXdzMI1UnivJmzbpIlDngZPtTcmP7wdbp8PjJHYYR0ho3ZWuv0rz0p7lVITFWsfMSV
-         Sowg==
-X-Gm-Message-State: AKS2vOzdyl9tfylP5Hwoafyd5pa4hxqypuj4LT8HHPl8rffhUOwnKMto
-        daJVo5cyEnvJagObLCk9YWJkajZZRuo3
-X-Received: by 10.157.50.41 with SMTP id t41mr11911351otc.70.1496705393047;
- Mon, 05 Jun 2017 16:29:53 -0700 (PDT)
+        id S1751195AbdFEXhH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 19:37:07 -0400
+Received: from groups.winserver.com ([76.245.57.69]:61823 "EHLO
+        ftp.catinthebox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751181AbdFEXhG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 19:37:06 -0400
+DKIM-Signature: v=1; d=winserver.com; s=tms1; a=rsa-sha1;
+        c=simple/relaxed; t=1496705818; h=Received:Received:Message-ID:
+        Date:From:Organization:To:Subject:List-ID; bh=5j5U1J26CqyZg9if7o
+        XVXyEc4l0=; b=eNmS462pnFN+PzGw5g8T/CY2QkazlrChHImcbuSPZqYJzwm9Vd
+        Pc8AqrHJhj1ugszxvEQ+QaONuBIzCrdZyBqnB2Q6qXrPL8/EE3Rscyd7OEsvW2lH
+        wTnr8EKsyOLmQYnhP4G8gWU4wdZW0YEvOeeLz/jSs91Wq82+1a82bAB1o=
+Received: by winserver.com (Wildcat! SMTP Router v7.0.454.5)
+          for git@vger.kernel.org; Mon, 05 Jun 2017 19:36:58 -0400
+Received: from [192.168.1.68] ([99.121.5.8])
+          by winserver.com (Wildcat! SMTP v7.0.454.5) with ESMTP
+          id 1064711806.1.4492; Mon, 05 Jun 2017 19:36:57 -0400
+Message-ID: <5935EB1A.5010100@winserver.com>
+Date:   Mon, 05 Jun 2017 19:36:58 -0400
+From:   Hector Santos <winserver.support@winserver.com>
+Organization: Santronics Software, Inc
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.8.1
 MIME-Version: 1.0
-Received: by 10.157.62.71 with HTTP; Mon, 5 Jun 2017 16:29:52 -0700 (PDT)
-In-Reply-To: <CAKOu8-0DG_wQf4ch_MH=rjAncg1iP=uA1U7XHgXe7JNrEJSkGg@mail.gmail.com>
-References: <CAPRL90JeQ3i1m7ydYzTCFgtZ4cC+gYEXFeAKvCuAVwPLXpsgXg@mail.gmail.com>
- <CAE5ih7-Nmy2J6zO9mx7g=L7Ey9PnVUcD3wnXBN4_0znwOHaUeQ@mail.gmail.com>
- <CAKOu8-2iBV=sAP0WeRMQFT+0y5cJ1g6A3bQ5x=D=8q9ocxnBVg@mail.gmail.com> <CAKOu8-0DG_wQf4ch_MH=rjAncg1iP=uA1U7XHgXe7JNrEJSkGg@mail.gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Tue, 6 Jun 2017 00:29:52 +0100
-Message-ID: <CAE5ih79VCpmMmaq0AEW=5HeOmVdpjpSmh=1CheUZbqvbNfBFbA@mail.gmail.com>
-Subject: Re: Git p4 sync changelist interval
-To:     =?UTF-8?B?0JDQvdC00YDQtdC5INCV0YTQsNC90L7Qsg==?= 
-        <1134togo@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Git "Keeping Original Dates"
+References: <5935C999.5060801@winserver.com> <1C2B896999CB4549BCAC61EB369E932E@blackfat> <CACBZZX7VpmEjbzwGd+S15xVLRrkYRxqcf0LUKF1B7pAsd7Lr4w@mail.gmail.com>
+In-Reply-To: <CACBZZX7VpmEjbzwGd+S15xVLRrkYRxqcf0LUKF1B7pAsd7Lr4w@mail.gmail.com>
+Content-Type: multipart/mixed;
+ boundary="------------000706070600010400020407"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5 June 2017 at 19:50, =D0=90=D0=BD=D0=B4=D1=80=D0=B5=D0=B9 =D0=95=D1=84=
-=D0=B0=D0=BD=D0=BE=D0=B2 <1134togo@gmail.com> wrote:
-> 2017-06-04 14:09 GMT+03:00 Luke Diamand <luke@diamand.org>:
->>
->> On 4 June 2017 at 10:56, =D0=90=D0=BD=D0=B4=D1=80=D0=B5=D0=B9 =D0=95=D1=
-=84=D0=B0=D0=BD=D0=BE=D0=B2 <1134togo@gmail.com> wrote:
->> > Hello,
->> >
->> > My goal is to sync the repository from p4 using an interval of
->> > changelists so that the first changelist version of the repository
->> > would be considered as an initial commit.
->> > So I used the following command:
->> >
->> >  git p4 clone //depot@cl1,cl2
->> >
->> > And when it finished, the files, that were created before the cl1 were
->> > not in the HEAD.
->>
->> Do you mean that if foo.c was created at cl1+1, that after doing the
->> clone, it wasn't there?
->>
->> If so, that doesn't sound right to me.
->>
->> I have just tried doing what I think you mean:
->>
->> 1. Create p4 depot
->> 2. Add foo.c (at CL 2)
->> 3. Add bar.c (at CL 3)
->> 4. git-p4 clone //depot@2,3
->>
->> I end up with both files.
->>
->> >
->> > The problem, as I see it, is that before syncing changes in the given
->> > range, p4 task does not sync to cl1 version of the repo, and applies
->> > commits to the empty repository.
->> > Is it a bug or my misunderstanding of how git p4 should work?
->>
->> Possibly I'm misunderstanding what you're doing! Can you give a
->> sequence of steps to show the problem?
->
-> What I meant is:
->
-> 1. Create p4 depot
-> 2. Add first.file (CL 2)
-> 3. Add second.file (at CL 3)
-> 4. Add third.file (at CL 4)
-> 5. Modify first.file (at CL 5)
-> 4. git-p4 clone //depot@3,5
->
-> In this case first.file, will not be represented in the repository.
+This is a multi-part message in MIME format.
+--------------000706070600010400020407
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hmmm, it's not working right for me. Although in my case I seem to be
-missing the second file.
 
-It's fine if I don't use the revision range "3,5".
+On 6/5/2017 6:06 PM, Ævar Arnfjörð Bjarmason wrote:
+> On Mon, Jun 5, 2017 at 11:25 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
+>>> -----Original Message-----
+>>> From: Hector Santos
+>>> Sent: Monday, June 5, 2017 5:14 PM
+>>>
+>>> I'm implementing GIT.  If there an option or compile/version that "keep"
+>> file timestamps?
+>>
+>> That is not in the tree data structure, see below.
+>>
+>> root@blackfat /projects/tipsoftheday
+>> $ git cat-file -p head
+>> tree 4ca3c2a853c8e817d7de8563c331899cace8ee85
+>> parent 2a33f293df6df0d3978612e41fb1ecd52e2450a5
+>> author Jason Pyeron <jpyeron@pdinc.us> 1496424815 -0400
+>> committer Jason Pyeron <jpyeron@pdinc.us> 1496424815 -0400
+>>
+>> add JDK to CM
+>>
+>> root@blackfat /projects/tipsoftheday
+>> $ git cat-file -p 4ca3c2a853c8e817d7de8563c331899cace8ee85
+>> 040000 tree 76094b81b3877b5b27cd4fe518fa0708af3cefed    admin
+>> 040000 tree c66a88871c285e1485f92be0f8fa47185d94d0b3    client
+>> 040000 tree 460495af209a580e65b5d0b38132d774ddb283b7    database
+>> 040000 tree 264b191b036180039f3fd8c5d56c2b6800cb2ca2    doc
+>> 040000 tree dd128195971f7bafa56371aa6027d7c6bc80f351    middleware
+>> 040000 tree 7861fd39923950d501d4e39aeac4762f7daaca6b    reports
+>> 040000 tree 2ad3dedf0313ae775321c88c53741a4b4a7e87b0    tools
+>>
+>> I wish it was an allowable extension, the date could be between the mode and
+>> object type.
+> Yes it's not part of the tree structure, but in this case you can
+> simply set/update the mtime to the date of the last commit that
+> modified the file.
+>
+> It can be a bit expensive to bootstrap that, and git doesn't help you
+> along at all, you need to do it via hooks or some script you run, but
+> that's a neat way to shove it into the datamodel if you need this for
+> some reason.
+>
+>
 
-Luke
+Do you see any technical issues with using programmable hooks or 
+something like this would have to be patched in? I am giving it a 
+serious thought to exploring a fix to the Git Daemon over the wire 
+completion issues on Windows. It appears to be a Half Close socket issue.
+
+-- 
+Hector, Engineering & Technical Support
+Santronics Software, Inc.
+http://www.santronics.com (sales)
+http://www.winserver.com (support)
+http://www.winserver.com/AupInfo (Online AUP Help)
+Office: 305-248-3204
+
+
+--------------000706070600010400020407
+Content-Type: text/x-vcard; charset=utf-8;
+ name="winserver_support.vcf"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="winserver_support.vcf"
+
+YmVnaW46dmNhcmQNCmZuOkhlY3RvciBTYW50b3MNCm46U2FudG9zO0hlY3Rvcg0KZW1haWw7
+aW50ZXJuZXQ6d2luc2VydmVyLnN1cHBvcnRAd2luc2VydmVyLmNvbQ0KdGVsO3dvcms6MzA1
+LTI0OC0zMjA0DQp2ZXJzaW9uOjIuMQ0KZW5kOnZjYXJkDQoNCg==
+--------------000706070600010400020407--
+
