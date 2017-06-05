@@ -2,122 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D322E1F7D2
-	for <e@80x24.org>; Mon,  5 Jun 2017 22:20:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B51C1F7D2
+	for <e@80x24.org>; Mon,  5 Jun 2017 22:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751258AbdFEWUg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 18:20:36 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:34324 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751195AbdFEWUf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 18:20:35 -0400
-Received: by mail-pf0-f175.google.com with SMTP id 9so88987886pfj.1
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 15:20:35 -0700 (PDT)
+        id S1751237AbdFEWZG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 18:25:06 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:36160 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751180AbdFEWZF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 18:25:05 -0400
+Received: by mail-pg0-f44.google.com with SMTP id a70so19167426pge.3
+        for <git@vger.kernel.org>; Mon, 05 Jun 2017 15:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=KnTZoCV3xhFoKrFv+9VtB+MsDiCaa7GW/9Y7NZpx8CQ=;
-        b=WDQyzlGteOJ4p6mQbRXyXYnx4Gds3aqfVsOPoFxsT9ZpdxlZ95gRwIwqlwx03CGtfP
-         hn6eYtJOJIIrlVvM4iqHdYBqjTTdKMGntmh2D0+5HPWd1vUPs1uFj1yGmJnBQKuHtW3q
-         ea4U+HBAeI0Ktey5U8F0NIbE9A8j1cwx9MohbkFiKZt7vzhmXt1cDgN9xBM3WOtxjtJl
-         MPHztL/qYUJx/WJvmu+ZyPj2R90GWPk486Zk7PB/bWSgrGSdZg/pSU9CZu/ZJo2ezk1S
-         ufwdUt7GC4aM9c64jxt7yXlz5gxVxK/8xS0QJdyf2r6OqHFxnqdlTWxg4aVlKdtNVu3j
-         emnA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vN33Jrw93Sqf3f92mCVlzcX2B1pQWEe1wU5QsEl7KTU=;
+        b=IXusKDqa6nlbiQWxRWrU2XosbdwbQZckVKrlN1sqJ6fyfdRRhZwTVEoYOjLm7NUjHi
+         teGZjOxQGpR9aL8Lzl/4WvjxJxSQaDJwR6odhc+9hQkedfzQc3nb54lcHqWUb+457H2y
+         KzadWynLuQaCjhZI83hkjORchmZah3cdaCwn1sVe+Ucq5lvmf1XbNtbqWX/x+P7K4q87
+         OX4Jrq7FNCn7ieiaxIgV+bEsVQlWKDt1zSpZaw1iTgJwtvIEGgcnfO28JXndkfFzPjqX
+         vuD2GwhzMr7hgtzMc05Ns1TlImF3xy4tzgu4qDZQWhfANK5KoUr8H9H3GGFVevEbIXu6
+         nb7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KnTZoCV3xhFoKrFv+9VtB+MsDiCaa7GW/9Y7NZpx8CQ=;
-        b=qWUPxgtKc3aM1m6qHiOD6dE/hJeisaTcopUpZyQezm7+4toWZFu9Znt9641FISyS9n
-         QIOfpUHUxvagi9BjA5fn0vAyx9fn9RtqGc+LeI9ZbqDtpzX/lzKJMX+U1i3ZlAc2wGFV
-         3ZBn8ZgL8wZjn1eQs3r4MRJ3AjTOef7whRwYA5GFKN3GJ6xeIQmcS/HwbVYFSO9KLJ+H
-         6qK0d0HWKqh2HVmJcR1ejXjSt659QZ6QO+zjaaBKmkUAZwc2aUeNd7g0BKuZrJAdzBlR
-         FyWH60DTZu95MgliT/c4g+UVXTTlE79nWGZGaaSpyPKM3hCpYEd/+flysWEooppbsJRy
-         kMog==
-X-Gm-Message-State: AODbwcAYZ87iTYgfb86yirYkFtUO0NEQZr9CgrhAzIibLl8tvtiYwTzv
-        l2e4l3rV8jEPVw==
-X-Received: by 10.98.59.92 with SMTP id i89mr23038750pfa.122.1496701234874;
-        Mon, 05 Jun 2017 15:20:34 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:154d:ee74:14ee:e338])
-        by smtp.gmail.com with ESMTPSA id n22sm60916270pfa.123.2017.06.05.15.20.32
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 05 Jun 2017 15:20:33 -0700 (PDT)
-Date:   Mon, 5 Jun 2017 15:20:31 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     bmwill@google.com, gitster@pobox.com, git@vger.kernel.org,
-        pc44800@gmail.com, ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH] submodule foreach: correct $sm_path in nested submodules
- from a dir
-Message-ID: <20170605222031.GB21733@aiede.mtv.corp.google.com>
-References: <20170515183405.GA79147@google.com>
- <20170603003710.5558-1-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vN33Jrw93Sqf3f92mCVlzcX2B1pQWEe1wU5QsEl7KTU=;
+        b=T18MOWKS4nyLZ5NTP+cPjDGcv1FuMO7+ZL0ZJvCuZyG6EwCZw8gXeEtm4AV/fEIL0h
+         VYlwsYbxcWf+HjZN9o7WPSBDPzGQiw7eCs9pN+ra5Cp7efMcBGUQk5mLMD5Qd0XH+zgv
+         sKGR2E/Fjetz18G68zTkmxZMPYGXJRML99Ni+NgGo4BfmP1n942f5u40RHBMQsV/LvSj
+         QbiFawwx6d46S7ahPE2GdPCQ+sRKt4Hv5W1qglT5BZ1hDlTG9smFWjZP9bU5T6+CmbdH
+         0CA47GyMj1EtCsplqY0WLKhm8vPYpq7WVrnR9exRJT9W0XSpZzLGEKjS4M4ZZloMGqtO
+         iSwA==
+X-Gm-Message-State: AODbwcAu6iZEaI5PyoGlIorQ40YlvHvXtEEWBeW0F/3qbQVnb/dE5eO8
+        xTME9fPcNbvkHIIIUayyXrNysTgJIbl5
+X-Received: by 10.84.209.228 with SMTP id y91mr17695645plh.210.1496701504351;
+ Mon, 05 Jun 2017 15:25:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170603003710.5558-1-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.218.134 with HTTP; Mon, 5 Jun 2017 15:25:03 -0700 (PDT)
+In-Reply-To: <CAME+mvXACX7DejOKDJ=-qV8Ex9ZdYT4vXYV+7AeesaKYUk1sGw@mail.gmail.com>
+References: <CAME+mvXACX7DejOKDJ=-qV8Ex9ZdYT4vXYV+7AeesaKYUk1sGw@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 5 Jun 2017 15:25:03 -0700
+Message-ID: <CAGZ79kasawzm19HtZmAe71FxwPq5GTuCWW+3S2CWYHymVSBTEg@mail.gmail.com>
+Subject: Re: [GSoC] Update: Week 3
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Mon, Jun 5, 2017 at 1:56 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+> 1. foreach: After a discussion over the issue of the path variable in
+>    windows, in this week my mentor, Stefan Beller came up with the
+>    appropriate solution for the problem after discussing it with Ramsay
+>    Jones.
 
-This patch seems to aim to do multiple things.  Initial thoughts:
+Thanks for having so much faith in my abilities, but it may not be
+appropriate, yet. (It does multiple things at once, which is generally
+a bad sign already. )
 
-Stefan Beller wrote:
+Maybe to be unblocked on the conversion of foreach, you could make
+the patch have the original behavior, i.e.
 
-[...]
-> To ameliorate the situation, perform these changes
-> * Document 'sm_path' instead of 'path'.
->   As using a variable '$path' may be harmful to users due to
->   capitalization issues, see 64394e3ae9 (git-submodule.sh: Don't
->   use $path variable in eval_gettext string, 2012-04-17). Adjust
->   the documentation to advocate for using $sm_path,  which contains
->   the same value. We still make the 'path' variable available,
->   though not documented.
+<up_path><submodule path>
 
-Making sm_path part of the public API as described here sounds like a
-good idea (as a separate patch), to avoid conflicting with $PATH on
-Windows.  It's convenient that scripts have access to the private
-variable 'sm_path'.  The 'path' variable would still need to be
-documented as a deprecated synonym so people working with existing
-scripts can know how to update them.
+which makes sense in the way that it is only converting from shell to C,
+not fixing a bug along the way. As we discovered a bug, you could just put
+a NEEDSWORK comment explaining what the problem is; deferring solving
+the issue until later.
 
-> * Clarify the 'toplevel' variable documentation.
->   It does not contain the topmost superproject as the author assumed,
->   but the direct superproject, such that $toplevel/$sm_path is the
->   actual absolute path of the submodule.
+I'll review the other patches.
 
-This is very confusing.  I suspect it's a bug.  Can we make 'toplevel'
-point to the topmost superproject (as a separate path)?
-
-> * The variable '$displaypath' was accessible but undocumented.
->   Rename it '$displaypath' to '$dpath'. Document what it contains.
->   Users that are broken by the behavior change of 'sm_path' introduced
->   in this commit, can switch from '$path' to '$dpath'.
-
-What does dpath stand for?  Renaming the variable to $dpath means that
-scripts trying to adapt to this change would not work with previous
-versions of git.  Would it make sense to use $displaypath for this for
-compatibility?
-
-What is the intent behind the sm_path behavior change in this patch?
-Stepping back, what kind of scripts is this interface meant to support
-(e.g., what is an example script that used this interface that would
-be affected), and is there a straightforward way to support those use
-cases without breaking existing scripts except where necessary?
-
-To summarize, the patch leaves me a bit confused.  I think it would be
-best to have multiple patches that solve one problem at a time, which
-would hopefully make the story clearer.
-
-Thanks and hope that helps,
-Jonathan
+Thanks,
+Stefan
