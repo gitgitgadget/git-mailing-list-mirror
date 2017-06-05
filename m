@@ -2,94 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF6E31F7D2
-	for <e@80x24.org>; Mon,  5 Jun 2017 19:03:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12C1E1F7D2
+	for <e@80x24.org>; Mon,  5 Jun 2017 19:15:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751294AbdFETDE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 15:03:04 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:33855 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751271AbdFETDC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 15:03:02 -0400
-Received: by mail-pg0-f46.google.com with SMTP id v18so14623310pgb.1
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 12:03:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qisZ3VcwFSR0PUuSoTmcc0oFzlSMqg+6XLM+gwOxe9s=;
-        b=XMg7T5Pa6Ff9mDpK54FXGmCzzW4bX9ju2NiqENXRIoeuZjn/YnCK1ycah1LzNfnX0i
-         Sthr73fa/bHaeI9d5QO0fQeY/SZhwVaVgjtjmDeVIJY6oEIu+m4Z2Ssm2cLldFF9DIgs
-         dQ2OvvlzsiVzy5D/GvrzsD2tlv13CPGOJuP5fZOQsLbJDqbdm/1oEx4iqev5waDFcceU
-         y1Ruh6I++L4KIEAxRykWIbX1nlZLiXm7KR22QJi7/XoJQL+AkcCXUL0Mr29/wUOL7VLa
-         u7tvu8NW37JI769ErZ/V1FFFih3+4bq186Mkqpcq/d9Tlprx5Xnw8EFK7Q5JKO86hIs/
-         +eCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qisZ3VcwFSR0PUuSoTmcc0oFzlSMqg+6XLM+gwOxe9s=;
-        b=Hp69ZNS61DL413sqp017RX8FFNlmTI2MW+LZRfYL9qOoYaxzjIaVPjkKqoN1Mt6x69
-         o9PpIup2+tvG+lXSK1hxxQJWSAkFIogib/Pfg2l8PTB602tGGVFx7DYJd7b5vN6XOP/C
-         XzycACmVIUPbuUeBu3csDNICR607ra4HQvDaepKr9wY3VHDhDjlTHJV35hJAhyUiNuJl
-         po43atP0CkwXUhpFhvuYkAWn9s3TWUjEsSwFBvCIWlITDnD88vXmhsBmvKeVNNYIrSt5
-         uSJ8MMp+1weE3pKzsbJaZfNm+b5IdYbm03zZAjsjIp9DI2OIBwFoUiXrwa/5V2w/SkXi
-         QPgw==
-X-Gm-Message-State: AODbwcBGwOZcxgDoGifGo6b495viLeyuVGDh/iWW9K8lpkzvbEQTTJC/
-        46J6fXJ2OjFRdhR5QxU2oCL8oCA8xFHw
-X-Received: by 10.98.68.156 with SMTP id m28mr16533680pfi.48.1496689381029;
- Mon, 05 Jun 2017 12:03:01 -0700 (PDT)
+        id S1751194AbdFETP1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 15:15:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35024 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751181AbdFETP1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 15:15:27 -0400
+Received: (qmail 32133 invoked by uid 109); 5 Jun 2017 19:15:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Jun 2017 19:15:27 +0000
+Received: (qmail 17203 invoked by uid 111); 5 Jun 2017 19:16:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 05 Jun 2017 15:16:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Jun 2017 15:15:25 -0400
+Date:   Mon, 5 Jun 2017 15:15:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] t5313: make extended-table test more deterministic
+Message-ID: <20170605191525.666opa3se7gabdbv@sigill.intra.peff.net>
+References: <20170605185601.yzbq5e6r2tfbgzqw@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Mon, 5 Jun 2017 12:03:00 -0700 (PDT)
-In-Reply-To: <CACBZZX5FP_jxXaT+NW8g2JqH89iYajHPjHhxCj=_vWnkxZ=rYQ@mail.gmail.com>
-References: <20170603221335.3038-1-avarab@gmail.com> <xmqqa85owq3b.fsf@gitster.mtv.corp.google.com>
- <CACBZZX5_AYOXZMrgVZuERzOdzntw0ec36bKS5mcKT510cC3Y2g@mail.gmail.com>
- <1D06FFF7-C36D-4072-8B37-4C9DC45E4442@gmail.com> <CACBZZX5FP_jxXaT+NW8g2JqH89iYajHPjHhxCj=_vWnkxZ=rYQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 5 Jun 2017 12:03:00 -0700
-Message-ID: <CAGZ79kZn+bjtqBYTWuYqfsKdA=eWreNHQPCLVDGiS_8977VcTA@mail.gmail.com>
-Subject: Re: [PATCH] test-lib: add ability to cap the runtime of tests
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170605185601.yzbq5e6r2tfbgzqw@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> That's never going to be a problem on a less beefy machine with
-> --state=slow,save, since the 30s test is going to be long over by the
-> time the rest of the tests run.
->
-> Cutting down on these long tail tests allows me to e.g. replace this:
->
->     git rebase -i --exec '(make -j56 all && cd t && prove -j56 <some
-> limited glob>)'
->
-> With a glob that runs the entire test suite, with the rebase only
-> taking marginally longer in most cases while getting much better test
-> coverage than I'd otherwise bother with.
+Commit a1283866b (t5313: test bounds-checks of
+corrupted/malicious pack/idx files, 2016-02-25) added a test
+that requires our corrupted pack index to have two objects.
+The entry for the first one remains untouched, but we
+corrupt the entry for second one. Since the index stores the
+entries in sha1-sorted order, this means that the test must
+make sure that the sha1 of the object we expect to be
+corrupted ("$object") sorts after the other placeholder
+object.
 
-I wonder if this functionality is rather best put into prove?
+That commit used the HEAD commit as the placeholder, but the
+script never calls test_tick. That means that the commit
+object (and thus its sha1) depends on the timestamp when the
+test script is run. This usually works in practice, because
+the sha1 of $object starts with "fff". The commit object
+will sort after that only 1 in 4096 times, but when it does
+the test will fail.
 
-Also prove doesn't know which tests are "interesting",
-e.g. if you were working on interactive rebase, then you really
-want the longest test to be run in full?
+One obvious solution is to add the test_tick call to get a
+deterministic commit sha1. But since we're relying on the
+sort order for the test to function, let's make that very
+explicit by just generating a second blob with a known sha1.
 
-And this "judge by time, not by interest" doesn't bode well with
-me.
+Reported-by: Lars Schneider <larsxschneider@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5313-pack-bounds-checks.sh | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-I have a non-beefy machine such that this particular problem
-doesn't apply to me, but instead the whole test suite takes just
-long to run.
-
-For that I reduce testing intelligently, i.e. I know where I am
-working on, so I run only some given tests (in case of
-submodules I'd go with "prove t74*") which would also fix
-your issue IIUC?
+diff --git a/t/t5313-pack-bounds-checks.sh b/t/t5313-pack-bounds-checks.sh
+index a8a587abc..9372508c9 100755
+--- a/t/t5313-pack-bounds-checks.sh
++++ b/t/t5313-pack-bounds-checks.sh
+@@ -139,7 +139,13 @@ test_expect_success 'bogus offset into v2 extended table' '
+ test_expect_success 'bogus offset inside v2 extended table' '
+ 	# We need two objects here, so we can plausibly require
+ 	# an extended table (if the first object were larger than 2^31).
+-	do_pack "$object $(git rev-parse HEAD)" --index-version=2 &&
++	#
++	# Note that the value is important here. We want $object as
++	# the second entry in sorted-sha1 order. The sha1 of 1485 starts
++	# with "000", which sorts before that of $object (which starts
++	# with "fff").
++	second=$(echo 1485 | git hash-object -w --stdin) &&
++	do_pack "$object $second" --index-version=2 &&
+ 
+ 	# We have to make extra room for the table, so we cannot
+ 	# just munge in place as usual.
+-- 
+2.13.1.662.g6e89c999d
