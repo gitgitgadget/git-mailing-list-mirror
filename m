@@ -2,294 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54A041F7D2
-	for <e@80x24.org>; Mon,  5 Jun 2017 14:27:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53B1A1F7D2
+	for <e@80x24.org>; Mon,  5 Jun 2017 17:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751394AbdFEO1P (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 10:27:15 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:35142 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751112AbdFEO1O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 10:27:14 -0400
-Received: by mail-qt0-f195.google.com with SMTP id x58so8760837qtc.2
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 07:27:13 -0700 (PDT)
+        id S1751686AbdFERff (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 13:35:35 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:33224 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751677AbdFERfc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 13:35:32 -0400
+Received: by mail-pf0-f169.google.com with SMTP id 83so28451165pfr.0
+        for <git@vger.kernel.org>; Mon, 05 Jun 2017 10:35:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=MYnLPlK7jAJhJCIYYYILglg+PorYCcNHFM/NjOKRZlk=;
-        b=j7xWXS3o/uI25jngvGhD4N14kM9uPtk1y9PqiQTbcNVLe10Bj09o+BBf7hJHBNHEhP
-         rfzWsscZBJomDUq9aHxLqYIXJ5SE2kgjfNKmZnsBxtQhT+5s6dVcioGRueOmw27uNbsk
-         mSAwG3r2G14D7SlvDkReJ4xoEMNLQ30BiBknWOXp9ITW8TBm26fCWDg8Czt8lE/Sai1K
-         C5v4cUMKlFZDmCXyS0R2iKzMpDkT7Ne8qcpUkCyHdKf9wehzn2+TGELDWQ8GMv0tP79L
-         6K/+kv7tiuE2Dr7amkLVLzbNLZxNus//6U9sacacpImG7BJnomNBB2cUNibbnlmoqXAZ
-         /JiQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0XGlGqz17m+0Pcf5pkI/yjSbguZRTkwb+nue08O9XKQ=;
+        b=stZQvvB+VGOUyZTHk9j5vJabbQtgtluky9DI+dZGWIcy+7b4Sf4McJXSuVBO70QiyX
+         O3vk1vG/EQsNgBQwIH19OvI4HwmdFRe1JfxPLnA9N4tK/tTkDOcLg61g85Niw/BDMP5H
+         zb2pwjtVIKvuYkr0Akd8y5qlVoQ3yhHmOwlcQEQe3Gjvc+nI66eG/Ic4C8t+Ca1rGx6A
+         sRXrup0Po3Q55RRDnYSyHrbRQT5XT+VO/RiL2tBY9CrHXG5KA5R/1U+fnsqRbxYx8gLF
+         tJ8j4GQPavFk852VPgotxSkdRctMPB7sQQU3Locj29jlQpo7ZVmK+CcTyULhz2z07yC6
+         /SeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=MYnLPlK7jAJhJCIYYYILglg+PorYCcNHFM/NjOKRZlk=;
-        b=KrD/CuusqT6nL+lAFHdYNyIqLXy/VU16SDfEKdfB8oswSNOAZDRF6uYShVW+A2W9IA
-         22ZWwBW34fF8Q+cRDWz1Ftv2vPL9NhMMbEAEf78kwKL9q4TG/b/QAAQJtYwEB2+eVcAE
-         kYATYr9YdjQ5pGNf+FQyssWPIrvsFxBpV/puayeJ6v7mBtiuVGkb67XAz74DVZG0s3+R
-         bo/z2mNrQkOwx9Ceflw6faFClaxGjt0AVm0mgjNyn9YwJ5dGaE/r0M7NKPLVQciQGtwO
-         wBw+I49xYN5bu+R3h3cNfrIFzfxJUDo8jl69RB6K8WhyXTkhWoOBugZRSu3qq+rHiHKW
-         YuoQ==
-X-Gm-Message-State: AODbwcCsXltN/tFkQ6MwDUUBwEFHBHegKogS21DBJcSaJGYQVnBbbH+p
-        Q8gD6v2rnKG7kg==
-X-Received: by 10.237.45.103 with SMTP id h94mr24882683qtd.204.1496672832976;
-        Mon, 05 Jun 2017 07:27:12 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id x80sm15770338qkb.63.2017.06.05.07.27.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 05 Jun 2017 07:27:12 -0700 (PDT)
-Subject: Re: [WIP/PATCH 7/6] perf: add a performance test for core.fsmonitor
-To:     David Turner <David.Turner@twosigma.com>,
-        =?UTF-8?Q?'=c3=86var_Arnfj=c3=b6r=c3=b0_Bjarmason'?= 
-        <avarab@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-References: <4c3fed40-774b-8ae6-fa1b-50efe6ef552f@gmail.com>
- <20170602102853.23073-1-avarab@gmail.com>
- <75ecd288047648178ed93105ee1f7a9e@exmbdft7.ad.twosigma.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <65158deb-981f-47f2-4ded-e5f691e2264f@gmail.com>
-Date:   Mon, 5 Jun 2017 10:27:10 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0XGlGqz17m+0Pcf5pkI/yjSbguZRTkwb+nue08O9XKQ=;
+        b=FT5sPNcULKcCsSajAxQmv9bW8XNaG3iNrkWjSgqAB5XtGG5IK6twrDJJTyoSdK7Tbm
+         CcLNYqBYhc8836hvTVGnB1eqbFhqi3D0iA/HPaOhs/DjcfwDN8ctmxpfaOM64KD2UCIo
+         KtoKZxzB+P1SFUY1qW1qfM+Jfg+X8Bh3fNYg2WjmzB4gEhtR13hKp3gYdmmNKH8v/2K8
+         3VyDP11hFTWVtK00YURnuPZ+6If433PvcZ5ucCimujxSNqDK7JFJIKSH9MaqAcSuHoaX
+         eEBhHCWN+906nHhHMs1mMX7eZAvJbkQGqiki4r8dyif/eO+fnj8ncRHIVAGVLfZyivpL
+         2J0g==
+X-Gm-Message-State: AODbwcALFBADMPPapWVrYeNCj9HQf5qGa8RNixsJm8xqW6hhVt/FRj5O
+        oHdq6TxWtniJKDE4
+X-Received: by 10.99.185.5 with SMTP id z5mr18220318pge.231.1496684131187;
+        Mon, 05 Jun 2017 10:35:31 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:e08c:b56e:781e:900b])
+        by smtp.gmail.com with ESMTPSA id h28sm61051867pfd.55.2017.06.05.10.35.30
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 05 Jun 2017 10:35:30 -0700 (PDT)
+Date:   Mon, 5 Jun 2017 10:35:23 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [WIP v2 0/2] Modifying pack objects to support --blob-max-bytes
+Message-ID: <20170605103523.190c9f16@twelve2.svl.corp.google.com>
+In-Reply-To: <20170602221645.nsz6r6tgfndulc6c@sigill.intra.peff.net>
+References: <cover.1496361873.git.jonathantanmy@google.com>
+        <cover.1496432147.git.jonathantanmy@google.com>
+        <20170602221645.nsz6r6tgfndulc6c@sigill.intra.peff.net>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <75ecd288047648178ed93105ee1f7a9e@exmbdft7.ad.twosigma.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks for your comments.
 
+On Fri, 2 Jun 2017 18:16:45 -0400
+Jeff King <peff@peff.net> wrote:
 
-On 6/2/2017 5:44 PM, David Turner wrote:
-> BTW, a medium-sized (~250k files across 40k dirs) synthetic repo is available over bittorrent at:
-> http://bitmover.com/2015-04-03-1M-git-bare.tar.bz2.torrent
+> On Fri, Jun 02, 2017 at 12:38:43PM -0700, Jonathan Tan wrote:
 > 
-> I tried Ævar's perf test with that (on a beefy laptop with SSD), and got significantly slower results with bp/fsmonitor:
-> Test                          origin/master     bp/fsmonitor
-> -----------------------------------------------------------------------
-> 7519.2: status (first)        0.32(0.23+0.39)   0.32(0.26+0.36) +0.0%
-> 7519.3: status (subsequent)   0.18(0.14+0.34)   0.32(0.24+0.37) +77.8%
-> 7519.4: status -uno           0.11(0.08+0.32)   0.24(0.18+0.34) +118.2%
-> 7519.5: status -uall          0.49(0.22+0.56)   0.62(0.36+0.55) +26.5%
-> 7519.2: status (first)        0.32(0.23+0.39)   0.32(0.26+0.36) +0.0%
-> 7519.3: status (subsequent)   0.18(0.14+0.34)   0.32(0.24+0.37) +77.8%
-> 7519.4: status -uno           0.11(0.08+0.32)   0.24(0.18+0.34) +118.2%
-> 7519.5: status -uall          0.49(0.22+0.56)   0.62(0.36+0.55) +26.5%
+> > > Do we need to future-proof the output format so that we can later
+> > > use 32-byte hash?  The input to pack-objects (i.e. rev-list --objects)
+> > > is hexadecimal text, and it may not be so bad to make this also
+> > > text, e.g. "<hash> SP <length> LF".  That way, you do not have to
+> > > worry about byte order, hash size, or length limited to uint64.
+> > 
+> > The reason for using binary is for the convenience of the client to
+> > avoid another conversion before storing it to disk (and also network
+> > savings). In a large repo, I think this list will be quite large. I
+> > realized that I didn't mention anything about this in the commit
+> > message, so I have added an explanation.
+> > 
+> > I think this is sufficiently future-proof in that the format of this
+> > hash matches the format of the hashes used in the objects in the
+> > packfile. As for object size being limited to uint64, I think the
+> > benefits of the space savings (in using binary) outweigh the small risk
+> > that our files will get larger than that before we upgrade our protocol
+> > :-P
 > 
-> I have not yet looked into why this is.
+> The rest of the pack code uses a varint encoding which is generally
+> much smaller than a uint64 for most files, but can handle arbitrary
+> sizes.
 > 
-
-I was very focused on getting minute long status calls down to seconds 
-and multiple seconds down to sub-second.  The greatest benefits are when 
-the file system cache doesn't already have all the file information 
-cached and the current perf test doesn't test that case - just the warm 
-cache test which has the least benefit.
-
-That said, status times shouldn't be getting worse and this has 
-highlighted that they are.  I've found one reason (the current patch 
-series always flags the index as dirty so it gets written out every 
-time). I've got a fix that only flags it dirty when the extension is 
-turned on or off or when it actually finds an entry that has become 
-dirty.  This helps but there is more going on than that.
-
-I'm looking into why the minimum status time with fsmonitor turned on 
-and a warm cache seems to be ~30ms.  More to come...
-
->> -----Original Message-----
->> From: Ævar Arnfjörð Bjarmason [mailto:avarab@gmail.com]
->> Sent: Friday, June 2, 2017 6:29 AM
->> To: git@vger.kernel.org
->> Cc: Junio C Hamano <gitster@pobox.com>; Ben Peart
->> <peartben@gmail.com>; Nguyễn Thái Ngọc Duy <pclouds@gmail.com>;
->> Johannes Schindelin <johannes.schindelin@gmx.de>; David Turner
->> <David.Turner@twosigma.com>; Jeff King <peff@peff.net>; Christian
->> Couder <christian.couder@gmail.com>; Ævar Arnfjörð Bjarmason
->> <avarab@gmail.com>
->> Subject: [WIP/PATCH 7/6] perf: add a performance test for core.fsmonitor
->>
->> Add a performance test for the new core.fsmonitor facility using the sample
->> query-fsmonitor hook.
->>
->> This is WIP code for the reasons explained in the setup comments,
->> unfortunately the perf code doesn't easily allow you to run different setup
->> code for different versions you're testing. This test will stop working if the
->> fsmonitor is merged into the master branch.
->>
->> Output against linxu.git:
->>
->>      $ GIT_PERF_REPEAT_COUNT=10 GIT_PERF_LARGE_REPO=~/g/linux
->> GIT_PERF_MAKE_OPTS='-j8' ./run origin/master avar/fsmonitor ./p7519-
->> fsmonitor.sh
->>      [...]
->>      Test                          origin/master     avar/fsmonitor
->>      -----------------------------------------------------------------------
->>      7519.2: status (first)        0.08(0.04+0.09)   0.12(0.07+0.10) +50.0%
->>      7519.3: status (subsequent)   0.08(0.04+0.09)   0.12(0.06+0.11) +50.0%
->>      7519.4: status -uno           0.02(0.02+0.05)   0.06(0.05+0.06) +200.0%
->>      7519.5: status -uall          0.08(0.06+0.07)   0.12(0.07+0.10) +50.0%
->>
->> And against a larger in-house monorepo I have here, with the same options
->> (except the repo path):
->>
->>      Test                          origin/master     avar/fsmonitor
->>      -----------------------------------------------------------------------
->>      7519.2: status (first)        0.20(0.11+0.18)   0.27(0.15+0.21) +35.0%
->>      7519.3: status (subsequent)   0.20(0.11+0.18)   0.27(0.15+0.21) +35.0%
->>      7519.4: status -uno           0.04(0.03+0.10)   0.22(0.08+0.12) +450.0%
->>      7519.5: status -uall          0.20(0.13+0.16)   0.27(0.18+0.19) +35.0%
->>
->> Against linux.git with a hack to flush the FS cache (on Linux) before running
->> the first 'git status', only running one test so the result isn't discarded as the
->> slowest of N:
->>
->>      $ GIT_PERF_REPEAT_COUNT=1 GIT_PERF_LARGE_REPO=~/g/linux
->> GIT_PERF_MAKE_COMMAND='sudo sync && echo 3 | sudo tee
->> /proc/sys/vm/drop_caches >/dev/null && make -j8' ./run origin/master
->> avar/fsmonitor ./p7519-fsmonitor.sh
->>      [...]
->>      Test                          origin/master     avar/fsmonitor
->>      ------------------------------------------------------------------------
->>      7519.2: status (first)        0.30(0.18+0.10)   8.26(0.22+0.10) +2653.3%
->>      7519.3: status (subsequent)   0.08(0.04+0.08)   0.81(0.09+0.07) +912.5%
->>      7519.4: status -uno           0.02(0.01+0.06)   0.08(0.04+0.07) +300.0%
->>      7519.5: status -uall          0.08(0.06+0.07)   0.15(0.08+0.09) +87.5%
->>
->> Now obviously due to 1 run that has a lot of noise, but I would expect that
->> first invocation to be blindingly fast since watchman has info on what files
->> were modified since the cache was flushed.
->>
->> The same on the large monorepo noted above:
->>
->>      Test                          origin/master     avar/fsmonitor
->>      -----------------------------------------------------------------------
->>      7519.2: status (first)        0.59(0.28+0.24)   0.93(0.35+0.19) +57.6%
->>      7519.3: status (subsequent)   0.20(0.10+0.19)   0.28(0.16+0.20) +40.0%
->>      7519.4: status -uno           0.04(0.04+0.09)   0.11(0.08+0.12) +175.0%
->>      7519.5: status -uall          0.29(0.11+0.18)   0.40(0.16+0.19) +37.9%
->>
->> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> ---
->>
->>
->> On Fri, Jun 2, 2017 at 2:40 AM, Ben Peart <peartben@gmail.com> wrote:
->>> Any chance you can provide me with a bash script that contains the
->>> exact sequence of commands you are running to get this result?  I've
->>> been trying to replicate it using your notes but have not been able
->>> to.  I'd like to see if it is a repo difference, a platform
->>> difference, a command sequence difference (or something else entirely
->> :)).
->>
->> I can do better than that, here's a new perf test on top of this series which
->> demonstates the issue. I've only tested this on Linux
->> 4.9.0 with watchman 4.9.0 compiled from git (yes, they're coincidentally the
->> same version).
->>
->> A good addition to this would be `printf <fmt for date N sec in the
->> past> | watchman -j` as noted in my earlier mail, but I ran out of
->> time.
->>
->> You can also set any combination of GIT_PERF_7519_UNTRACKED_CACHE &
->> GIT_PERF_7519_SPLIT_INDEX to play with turning that on. I haven't tested all
->> combinations of that, but e.g. testing with untrackedCache didn't give results
->> that looked different from the performance regressions noted above.
->>
->> Aside from performance, I think a very good addition to stress-test this series
->> would be a patch to t/test-lib*sh guarded by some env flag to do a similar
->> watchman watch-del/watch/watch-list dance as the one I'm doing here in
->> the setup, and setting up the hook / config.
->>
->> That would allow testing the entire git test suite with this feature, to find any
->> subtle bugs this might have introduced in git-status.
->>
->>   t/perf/p7519-fsmonitor.sh | 58
->> +++++++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 58 insertions(+)
->>   create mode 100755 t/perf/p7519-fsmonitor.sh
->>
->> diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh new file
->> mode 100755 index 0000000000..b838a0ff14
->> --- /dev/null
->> +++ b/t/perf/p7519-fsmonitor.sh
->> @@ -0,0 +1,58 @@
->> +#!/bin/sh
->> +
->> +test_description="Test core.fsmonitor"
->> +
->> +. ./perf-lib.sh
->> +
->> +test_perf_large_repo
->> +test_checkout_worktree
->> +
->> +test_expect_success 'setup' '
->> +	# Maybe set untrackedCache & splitIndex depending on the
->> +	# environment, defaulting to false.
->> +	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
->> +	then
->> +		git config core.untrackedCache true
->> +	else
->> +		git config core.untrackedCache false
->> +	fi &&
->> +	if test -n "$GIT_PERF_7519_SPLIT_INDEX"
->> +	then
->> +		git config core.splitIndex true
->> +	else
->> +		git config core.splitIndex false
->> +	fi &&
->> +
->> +	# Relies on core.fsmonitor not being merged into master. Needs
->> +	# better per-test ways to disable it if it gets merged.
->> +	git config core.fsmonitor true &&
->> +
->> +	# Hook scaffolding
->> +	mkdir .git/hooks &&
->> +	cp ../../../templates/hooks--query-fsmonitor.sample
->> +.git/hooks/query-fsmonitor &&
->> +
->> +	# Setup watchman & ensure it is actually watching
->> +	watchman watch-del "$PWD" >/dev/null 2>&1 &&
->> +	watchman watch "$PWD" >/dev/null 2>&1 &&
->> +	watchman watch-list | grep -q -F "$PWD"
->> +'
->> +
->> +# Setting:
->> +#
->> +#    GIT_PERF_REPEAT_COUNT=1 GIT_PERF_MAKE_COMMAND='sudo sync
->> && echo 3 | sudo tee /proc/sys/vm/drop_caches && make -j8'
->> +#
->> +# Can be used as a hack to performance test 'git status' on a cold fs #
->> +cache with an existing watchman watching the directory, which should #
->> +be blindingly fast, compared to amazingly slow without watchman.
->> +test_perf 'status (first)'       'git status'
->> +
->> +
->> +# The same git-status once the fs cache has been warmed, if using the #
->> +GIT_PERF_MAKE_COMMAND above. Otherwise the same as above.
->> +test_perf 'status (subsequent)'  'git status'
->> +
->> +# Let's see if -uno & -uall make any difference
->> +test_perf 'status -uno'          'git status -uno'
->> +test_perf 'status -uall'         'git status -uall'
->> +
->> +test_done
->> --
->> 2.13.0.506.g27d5fe0cd
+> The one thing it loses is that you wouldn't have a fixed-size record, so
+> if you were planning to dump this directly to disk and binary-search it,
+> that won't work. OTOH, you could make pseudo-pack-entries and just
+> index them along with the rest of the objects in the pack .idx.
 > 
+> The one subtle thing there is that the pseudo-entry would have to say
+> "this is my sha1". And then we'd end up repeating that sha1 in the .idx
+> file. So it's optimal on the network but wastes 20 bytes on disk (unless
+> index-pack throws away the in-pack sha1s as it indexes, which is
+> certainly an option).
+
+If we end up going with the varint approach (which seems reasonable),
+maybe the client could just expand the varints into uint64s so that it
+has a binary-searchable file. I think it's better to keep this list
+separate from the pack .idx file (there has been some discussion on this
+- [1] and its replies).
+
+[1] https://public-inbox.org/git/777ab8f2-c31a-d07b-ffe3-f8333f408ea1@jeffhostetler.com/
+
+> > > Can this multiplication overflow (hint: st_mult)?
+> > 
+> > Thanks - used st_mult.
+> 
+> Actually, I think this is a good candidate for ALLOC_ARRAY().
+
+Thanks - I've made this change in my local version.
+
+> > > This sorting is a part of external contract (i.e. "output in hash
+> > > order" is documented), but is it necessary?  Just wondering.
+> > 
+> > It is convenient for the client because the client can then store it
+> > directly and binary search when accessing it. (Added a note about
+> > convenience to the commit message.)
+> 
+> In general the Git client doesn't trust the pack data coming from a
+> remote, and you can't corrupt a client by sending it bogus data. Either
+> the client computes it from scratch (e.g., the sha1s of each object) or
+> the client will reject nonsense (missing bases, refs pointing to objects
+> that aren't sent, etc).
+> 
+> I know this feature implies a certain amount of trust (after all, the
+> server could claim that it omitted any sha1 it likes), but we should
+> probably still be as strict as possible that what the other side is
+> sending makes sense. In this case, we should probably hashcmp() each
+> entry with the last and make sure they're strictly increasing (no
+> out-of-order and no duplicates).
+
+Good point.
