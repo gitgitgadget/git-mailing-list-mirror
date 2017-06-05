@@ -2,105 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C467320D11
-	for <e@80x24.org>; Mon,  5 Jun 2017 10:33:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE4D0209FD
+	for <e@80x24.org>; Mon,  5 Jun 2017 10:54:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751815AbdFEKdp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 06:33:45 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:38874 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751492AbdFEKdn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 06:33:43 -0400
-Received: by mail-wm0-f47.google.com with SMTP id n195so72153371wmg.1
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 03:33:43 -0700 (PDT)
+        id S1751310AbdFEKyn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 06:54:43 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33397 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751293AbdFEKyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 06:54:43 -0400
+Received: by mail-wm0-f65.google.com with SMTP id x3so1966320wme.0
+        for <git@vger.kernel.org>; Mon, 05 Jun 2017 03:54:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:date:message-id:cc:to
-         :mime-version;
-        bh=ZsfCz7s6DFnYAF0R6vt6SD9ESGRkD6jmVtFT1ViTQUo=;
-        b=myezbJaJxI+/iEfXaeFqzvRUPHYWtt4uB+bBNBAqmhD62swQZkau2VJ8UOv+qwtsu7
-         CxXQdtGTMzMTK7DMyMQ9l2Dw/dGPQ2LUBZaLMrfbSPJ0+KawBmipdayVem0HYvRpK/TK
-         ydusZv+ctpTqGRUE7D9mfu7pL4DPmqklVvtx8o+bcsKBAw+koVzmm6SdgWcwnap3C/JV
-         +wFILwwf59rBH6f8w0QNsm7Jy0ukiZWFhI/3ucz3xwtsrkRS9ZAH3Er10WGVJ1LOMRJF
-         lxi4oAbezHqRTilPqThhE7HjLT5cgdlTPzOU7YdG/mA9zq2Z+IKXNwOoFzjsePy08WAI
-         rZTw==
+        d=dinwoodie.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WijqeHvXgXpAfhKRIpgvEW53W1ttuaaYDlhS0w9Q9xo=;
+        b=Zv071OsUIYqsjvTttWOZtX/7X72ylSxqPPLQmLNGDL1kDsjPmkX75U2ZveGEYxrhUI
+         yvX00X6v8L7U8H9HRtwK8YkOtFlI2vGBpjyCAZhi4rU4u43zRltmlEQ+31A4Ee6jxvHF
+         OTiaDpPUDU9wc0Qnc303Ya1NCRVUjPQ7btFZ4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject:date
-         :message-id:cc:to:mime-version;
-        bh=ZsfCz7s6DFnYAF0R6vt6SD9ESGRkD6jmVtFT1ViTQUo=;
-        b=Y2NcoL6hz7vSVr7VHgFzJA3UJQGZBpYqb3TEQ2ur/529mocfk8h8PVkTk1xFlFuwQG
-         9Qd8cDQQg2nZz5hCDq4GwGfkdy009sto5BUW8/8v8FxyPHBN/tlZE1Kjr+E4jAHLBL23
-         IQUkFX1/qwMlJ1ZE1bI/u7J7+3PrcTJBSmdo1woI+gNKxi0R7PGtJnRRkhFXw/uxfssz
-         +tEIdDwe2GmZ2taQ7EzI8+aa5KmsvjSpgu+SGnf7HnvWF+Q7mXzw3CfKL0Pj0j9Bj+Bu
-         2Xb6Gyx0SiGGQIucwnLd8je+a+UNBXHlG7Nqr5FmY7gIIhms3+AF7ZJhK/8b1FCuEUsq
-         wnpA==
-X-Gm-Message-State: AODbwcCyjOF5JVvrDnW3AvYFoVEkv4YhpCG3a1lUsxCOoNMEueOevskg
-        2cM7cIEg4mvmGtKvYik=
-X-Received: by 10.28.131.213 with SMTP id f204mr7132680wmd.26.1496658822305;
-        Mon, 05 Jun 2017 03:33:42 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB44EB.dip0.t-ipconnect.de. [93.219.68.235])
-        by smtp.gmail.com with ESMTPSA id e19sm10425968wma.25.2017.06.05.03.33.40
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 05 Jun 2017 03:33:41 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Subject: t5313-pack-bounds-checks.sh flaky?
-Date:   Mon, 5 Jun 2017 12:33:44 +0200
-Message-Id: <9A7C995F-ED4F-4AEB-B2B7-00FF05B80E84@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-To:     Jeff King <peff@peff.net>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WijqeHvXgXpAfhKRIpgvEW53W1ttuaaYDlhS0w9Q9xo=;
+        b=ee2XBNmfEGnijhQHctXO5HHztvQSLoE4bme6ZQDE/Lc3jutFfAiI97/suldMRTW8z0
+         RCjL3o+zg7lJfiQRj5DWyTB648QCDXAL9EKKOjBJeMb5MEdoTWiht+/gYG0l/6uu+yCx
+         TwWk7ZBH42o2yP3a/JcGEfNOnIMUi7V22SgkpVqRifXSyiql011YPk9+Sd6ZZwdtuK6G
+         sNDbn5WJAxCwdY3XlLUygIp5gnf9/Yar3kGeoW4707om+zFJbGLUXFKx7bUq5fhbMzoq
+         5iLk+YE2iwKh5+syxRVLPv07EObPQ+Se9YiiGoHRwZfkf1k2Mk02dy7c0fzPawPuXMNZ
+         KX7g==
+X-Gm-Message-State: AODbwcBlNgK5LhEiTK/rR2uZKwbrDiQdxNWMN+lJbZV636g0HufZ08PG
+        014B0MjpbctvBnsRWrUEEw==
+X-Received: by 10.28.99.7 with SMTP id x7mr7273731wmb.39.1496660081378;
+        Mon, 05 Jun 2017 03:54:41 -0700 (PDT)
+Received: from PC5175.ad.datcon.co.uk ([2620:104:4001:73:9c60:500:54fe:f32e])
+        by smtp.gmail.com with ESMTPSA id l190sm13393946wmb.18.2017.06.05.03.54.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 05 Jun 2017 03:54:40 -0700 (PDT)
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Ren=C3=A9=20Genz?= <liebundartig@freenet.de>
+Subject: [PATCH] docs: suggest "Helped-by" rather than "Thanks-to"
+Date:   Mon,  5 Jun 2017 11:53:41 +0100
+Message-Id: <20170605105341.35096-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.12.3
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+The SubmittingPatches doc suggests adding "tags" in the style of
+"Signed-off-by" to commit messages, and suggests some in common usage.
+However, based on usage on the Git mailing list (and in particular,
+Junio C Hamano's email to René Genz on 23 April), the suggested
+"Thanks-to" is not common usage, and should instead be "Helped-by".
 
-t5313.7 failed recently on master [1]. Are you aware of any flaky parts
-in this test?
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
+ Documentation/SubmittingPatches | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Here is the output:
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 558d465b6..2de42b3fa 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -319,7 +319,7 @@ If you like, you can put extra tags at the end:
+    and found it to have the desired effect.
+ 
+ You can also create your own tag or use one that's in common usage
+-such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
++such as "Helped-by:", "Based-on-patch-by:", or "Mentored-by:".
+ 
+ ------------------------------------------------
+ Subsystems with dedicated maintainers
+-- 
+2.12.3
 
-expecting success:=20
-	# We need two objects here, so we can plausibly require
-	# an extended table (if the first object were larger than 2^31).
-	do_pack "$object $(git rev-parse HEAD)" --index-version=3D2 &&
-
-	# We have to make extra room for the table, so we cannot
-	# just munge in place as usual.
-	{
-		dd if=3D$idx bs=3D1 count=3D$(($(ofs_table 2) + 4)) &&
-		printf "\200\0\0\0" &&
-		printf "\377\0\0\0\0\0\0\0" &&
-		dd if=3D$idx bs=3D1 skip=3D$(extended_table 2)
-	} >tmp &&
-	mv tmp "$idx" &&
-	clear_base &&
-	test_must_fail git cat-file blob $object &&
-	test_must_fail git index-pack --verify $pack
-
-1084+0 records in
-1084+0 records out
-1084 bytes (1.1 kB) copied, 0.00119315 s, 909 kB/s
-40+0 records in
-40+0 records out
-40 bytes (40 B) copied, 6.9825e-05 s, 573 kB/s
-74
-test_must_fail: command succeeded: git cat-file blob =
-fff0a2476aa5c8e60a3ef21cfc66e0cc670920be
-
-
-Cheers,
-Lars
-
-
-[1] https://travis-ci.org/git/git/jobs/239451919=
