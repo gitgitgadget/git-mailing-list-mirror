@@ -7,141 +7,123 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53B1A1F7D2
-	for <e@80x24.org>; Mon,  5 Jun 2017 17:35:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7146E1F7D2
+	for <e@80x24.org>; Mon,  5 Jun 2017 17:43:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751686AbdFERff (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 13:35:35 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:33224 "EHLO
+        id S1751239AbdFERn5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 13:43:57 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34833 "EHLO
         mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751677AbdFERfc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 13:35:32 -0400
-Received: by mail-pf0-f169.google.com with SMTP id 83so28451165pfr.0
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 10:35:31 -0700 (PDT)
+        with ESMTP id S1751162AbdFERnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 13:43:55 -0400
+Received: by mail-pf0-f169.google.com with SMTP id l89so11909718pfi.2
+        for <git@vger.kernel.org>; Mon, 05 Jun 2017 10:43:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0XGlGqz17m+0Pcf5pkI/yjSbguZRTkwb+nue08O9XKQ=;
-        b=stZQvvB+VGOUyZTHk9j5vJabbQtgtluky9DI+dZGWIcy+7b4Sf4McJXSuVBO70QiyX
-         O3vk1vG/EQsNgBQwIH19OvI4HwmdFRe1JfxPLnA9N4tK/tTkDOcLg61g85Niw/BDMP5H
-         zb2pwjtVIKvuYkr0Akd8y5qlVoQ3yhHmOwlcQEQe3Gjvc+nI66eG/Ic4C8t+Ca1rGx6A
-         sRXrup0Po3Q55RRDnYSyHrbRQT5XT+VO/RiL2tBY9CrHXG5KA5R/1U+fnsqRbxYx8gLF
-         tJ8j4GQPavFk852VPgotxSkdRctMPB7sQQU3Locj29jlQpo7ZVmK+CcTyULhz2z07yC6
-         /SeA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=9kIttgjFpa3Uh5yK9OgT5Kc0uaOnBe8pmtcMDbw3Jjg=;
+        b=RQcEKOCfBPmvQccDsL3yaRbZWTpPr3bnHSIV7wR3x0CPv4+J8joWS4gAS6mHwTMqU/
+         ukJIubGlBh1sZPhZ9mCV5fcLkFwI2ibK2gx6+iMYy5FX9kPByQOMucPlks/ZpLisYUEc
+         iFkoBVvX2xDbvNMv47VsRcizjQEK9ldEXPzFIiUlPtjYBvBybryVgttrbr8H9oQDd9+4
+         t5N7ipnFEQvlp8qkKIZTxwn+FLNGBpFAKMlTwd2FSE2wGV8dn8q2igSN6DSitWtX7103
+         dwtGPfIFhNzSMJyl2E+zqEg+PrtNfoIqtcYn60KAJ4E+aiqAxJuDuLgUvNhpDEMs7zxP
+         tVNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0XGlGqz17m+0Pcf5pkI/yjSbguZRTkwb+nue08O9XKQ=;
-        b=FT5sPNcULKcCsSajAxQmv9bW8XNaG3iNrkWjSgqAB5XtGG5IK6twrDJJTyoSdK7Tbm
-         CcLNYqBYhc8836hvTVGnB1eqbFhqi3D0iA/HPaOhs/DjcfwDN8ctmxpfaOM64KD2UCIo
-         KtoKZxzB+P1SFUY1qW1qfM+Jfg+X8Bh3fNYg2WjmzB4gEhtR13hKp3gYdmmNKH8v/2K8
-         3VyDP11hFTWVtK00YURnuPZ+6If433PvcZ5ucCimujxSNqDK7JFJIKSH9MaqAcSuHoaX
-         eEBhHCWN+906nHhHMs1mMX7eZAvJbkQGqiki4r8dyif/eO+fnj8ncRHIVAGVLfZyivpL
-         2J0g==
-X-Gm-Message-State: AODbwcALFBADMPPapWVrYeNCj9HQf5qGa8RNixsJm8xqW6hhVt/FRj5O
-        oHdq6TxWtniJKDE4
-X-Received: by 10.99.185.5 with SMTP id z5mr18220318pge.231.1496684131187;
-        Mon, 05 Jun 2017 10:35:31 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:e08c:b56e:781e:900b])
-        by smtp.gmail.com with ESMTPSA id h28sm61051867pfd.55.2017.06.05.10.35.30
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9kIttgjFpa3Uh5yK9OgT5Kc0uaOnBe8pmtcMDbw3Jjg=;
+        b=syhBfsO0yxw3wvNVCL3ItiIqP3goBh9zsHcT7CcDrgzyvQ7A0Q3DLMVE2uB6h75Oi1
+         b8PZhVqPMdnKuMY1l6blKf/KuNCHwYsRTfbfOdkkZCblEQYjyGe8dVKJzDdAWRMxmWyH
+         +2jmq2MEKgPaAkHucltTyXKDXAgXs56LVLh4SIOZtCuSwQwoh15uQD23F6XsK1OajF5K
+         6xCd99dxI6gfVI1azEpJ0fhCq9IAQt5+IZ7GZZckQGTCbvHglxdO/2gtEyNA10FRmriT
+         mBQ07dLglQKF7YJ41IK8nqnl/08PKEqwirtvAw28ZXTbvS/glH2fPauyJnaPfNG1NB0K
+         nw7A==
+X-Gm-Message-State: AODbwcByZ2gD+IlK1mLiS8rdLEPLWji+znw7SYs5WlfP72WfjojKYMjn
+        MCcNwUYBzMtktQRZ
+X-Received: by 10.84.217.133 with SMTP id p5mr17167128pli.218.1496684635145;
+        Mon, 05 Jun 2017 10:43:55 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:b834:3af4:2e37:8db3])
+        by smtp.gmail.com with ESMTPSA id n24sm59083078pfb.14.2017.06.05.10.43.53
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 05 Jun 2017 10:35:30 -0700 (PDT)
-Date:   Mon, 5 Jun 2017 10:35:23 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
+        Mon, 05 Jun 2017 10:43:54 -0700 (PDT)
+Date:   Mon, 5 Jun 2017 10:43:52 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [WIP v2 0/2] Modifying pack objects to support --blob-max-bytes
-Message-ID: <20170605103523.190c9f16@twelve2.svl.corp.google.com>
-In-Reply-To: <20170602221645.nsz6r6tgfndulc6c@sigill.intra.peff.net>
-References: <cover.1496361873.git.jonathantanmy@google.com>
-        <cover.1496432147.git.jonathantanmy@google.com>
-        <20170602221645.nsz6r6tgfndulc6c@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ben Peart <peartben@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 04/31] setup: don't perform lazy initialization of
+ repository state
+Message-ID: <20170605174352.GA40426@google.com>
+References: <20170531214417.38857-1-bmwill@google.com>
+ <20170531214417.38857-5-bmwill@google.com>
+ <CAGZ79kafXpn+BXdMOVOPSX7eaFgcWBUULGR_PBXpMhjKjLEM-A@mail.gmail.com>
+ <20170602183933.pcjfdi4jtkk4epmg@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170602183933.pcjfdi4jtkk4epmg@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for your comments.
-
-On Fri, 2 Jun 2017 18:16:45 -0400
-Jeff King <peff@peff.net> wrote:
-
-> On Fri, Jun 02, 2017 at 12:38:43PM -0700, Jonathan Tan wrote:
+On 06/02, Jeff King wrote:
+> On Thu, Jun 01, 2017 at 12:23:25PM -0700, Stefan Beller wrote:
 > 
-> > > Do we need to future-proof the output format so that we can later
-> > > use 32-byte hash?  The input to pack-objects (i.e. rev-list --objects)
-> > > is hexadecimal text, and it may not be so bad to make this also
-> > > text, e.g. "<hash> SP <length> LF".  That way, you do not have to
-> > > worry about byte order, hash size, or length limited to uint64.
+> > On Wed, May 31, 2017 at 2:43 PM, Brandon Williams <bmwill@google.com> wrote:
+> > > Under some circumstances (bogus GIT_DIR value or the discovered gitdir
+> > > is '.git') 'setup_git_directory()' won't initialize key repository
+> > > state.  This leads to inconsistent state after running the setup code.
+> > > To account for this inconsistent state, lazy initialization is done once
+> > > a caller asks for the repository's gitdir or some other piece of
+> > > repository state.  This is confusing and can be error prone.
+> > >
+> > > Instead let's tighten the expected outcome of 'setup_git_directory()'
+> > > and ensure that it initializes repository state in all cases that would
+> > > have been handled by lazy initialization.
 > > 
-> > The reason for using binary is for the convenience of the client to
-> > avoid another conversion before storing it to disk (and also network
-> > savings). In a large repo, I think this list will be quite large. I
-> > realized that I didn't mention anything about this in the commit
-> > message, so I have added an explanation.
-> > 
-> > I think this is sufficiently future-proof in that the format of this
-> > hash matches the format of the hashes used in the objects in the
-> > packfile. As for object size being limited to uint64, I think the
-> > benefits of the space savings (in using binary) outweigh the small risk
-> > that our files will get larger than that before we upgrade our protocol
-> > :-P
+> > Lazy init is usually there for a reason. (As in: it took too long to perform
+> > it at all times, so it has been optimized to only perform the init when needed).
 > 
-> The rest of the pack code uses a varint encoding which is generally
-> much smaller than a uint64 for most files, but can handle arbitrary
-> sizes.
+> In the case of setup_git_env(), I think it was less about doing work and
+> more that we didn't want to have to do explicit setup in each program.
+> But over the years we've moved away from that, and in fact if you hit
+> the lazy initialization these days you'll generally BUG() anyway.
 > 
-> The one thing it loses is that you wouldn't have a fixed-size record, so
-> if you were planning to dump this directly to disk and binary-search it,
-> that won't work. OTOH, you could make pseudo-pack-entries and just
-> index them along with the rest of the objects in the pack .idx.
+> _But_ I suspect there are still some cases you'd need to handle. For
+> instance, it's still OK to skip calling setup_git_directory() if you've
+> got $GIT_DIR in the environment (which is why we have have_git_dir()
+> instead of checking startup_info->have_repository).
+
+Yes there are a couple places that rely on the lazy initialization but
+that's not due to setup not being run.  Rather it has to do with GIT_DIR
+being set to a bogus directory so when setup is run gently it does
+nothing.  Then at a later point in time the command tries to access
+files in the gitdir (which triggers lazy init of the git environment).
+
+So I think that explicitly doing the 'lazy init' portion (which ensures
+that the env gets setup even if GIT_DIR is bogus) at the end of setup
+should be sufficient, least it seems to be so though perhaps we can't
+rely on our tests to tell us that.
+
 > 
-> The one subtle thing there is that the pseudo-entry would have to say
-> "this is my sha1". And then we'd end up repeating that sha1 in the .idx
-> file. So it's optimal on the network but wastes 20 bytes on disk (unless
-> index-pack throws away the in-pack sha1s as it indexes, which is
-> certainly an option).
-
-If we end up going with the varint approach (which seems reasonable),
-maybe the client could just expand the varints into uint64s so that it
-has a binary-searchable file. I think it's better to keep this list
-separate from the pack .idx file (there has been some discussion on this
-- [1] and its replies).
-
-[1] https://public-inbox.org/git/777ab8f2-c31a-d07b-ffe3-f8333f408ea1@jeffhostetler.com/
-
-> > > Can this multiplication overflow (hint: st_mult)?
-> > 
-> > Thanks - used st_mult.
+> I think it would be nice to do away with that, too, but we're not quite
+> there yet (and if I am reading this patch correctly, we'd probably hit
+> these BUGs in such cases).
 > 
-> Actually, I think this is a good candidate for ALLOC_ARRAY().
+> -Peff
 
-Thanks - I've made this change in my local version.
-
-> > > This sorting is a part of external contract (i.e. "output in hash
-> > > order" is documented), but is it necessary?  Just wondering.
-> > 
-> > It is convenient for the client because the client can then store it
-> > directly and binary search when accessing it. (Added a note about
-> > convenience to the commit message.)
-> 
-> In general the Git client doesn't trust the pack data coming from a
-> remote, and you can't corrupt a client by sending it bogus data. Either
-> the client computes it from scratch (e.g., the sha1s of each object) or
-> the client will reject nonsense (missing bases, refs pointing to objects
-> that aren't sent, etc).
-> 
-> I know this feature implies a certain amount of trust (after all, the
-> server could claim that it omitted any sha1 it likes), but we should
-> probably still be as strict as possible that what the other side is
-> sending makes sense. In this case, we should probably hashcmp() each
-> entry with the last and make sure they're strictly increasing (no
-> out-of-order and no duplicates).
-
-Good point.
+-- 
+Brandon Williams
