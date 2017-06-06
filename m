@@ -2,128 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2446D209FD
-	for <e@80x24.org>; Tue,  6 Jun 2017 22:23:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4AD5209FD
+	for <e@80x24.org>; Tue,  6 Jun 2017 22:32:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751436AbdFFWXR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 18:23:17 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58087 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751399AbdFFWXQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 18:23:16 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaJWs-1djPgT252k-00lzjp; Wed, 07
- Jun 2017 00:22:51 +0200
-Date:   Wed, 7 Jun 2017 00:22:50 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: pushing for a new hash, was Re: [PATCH 2/3] rebase: Add tests
- for console output
-In-Reply-To: <20170602175455.GA30988@aiede.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1706070008440.171564@virtualbox>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net> <20170531104213.16944-3-phillip.wood@talktalk.net> <alpine.DEB.2.21.1.1706011329350.3610@virtualbox> <xmqq7f0v46q3.fsf@gitster.mtv.corp.google.com> <CAGZ79kaM9ryT1gWx=L6S90HPCaDPNZ6H124HAJscpeJCQFDN8Q@mail.gmail.com>
- <alpine.DEB.2.21.1.1706021442190.171564@virtualbox> <20170602175455.GA30988@aiede.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751464AbdFFWct (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 18:32:49 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:36077 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751433AbdFFWcs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 18:32:48 -0400
+Received: by mail-pg0-f48.google.com with SMTP id a70so32000433pge.3
+        for <git@vger.kernel.org>; Tue, 06 Jun 2017 15:32:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=mbiOm619Fu+uPmj/WWB8DxEQNQQRcDzDM1wQVbfE8Rw=;
+        b=XbJBPqL3RElmOs9Wlsv+jG9dwl3stagwdGy8Z+ai4mFfv2Zpa5tl7O9LU2PYcabFSi
+         x+xrUkBO+vOO6L+fDKz3ogF0zEKIe+Aa6jfybn8gI2GGSBl30fw4wPoYmwx8xiXfWQ1I
+         ha6VUHTqbcZzaIG1GtZ6pBTmApnislWTjxJhpUpxGaGzoNA5pUl7Zelzr1Pn8azv0uwL
+         wXBlhLBkw0UjYuX3HHN8+YnOLZgpusdrUAnreG3eBbBjAYgdx9wwNg9IoUk9A/bW/gA8
+         Fv8o73q6MixV6Qlbw1jthYZMScEhv13KiV1uU7AQi99FIe+Z9fHWzvNwKekqz37dhtq5
+         b52Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=mbiOm619Fu+uPmj/WWB8DxEQNQQRcDzDM1wQVbfE8Rw=;
+        b=d/kCjrpvTpI1hHFtG5HHecJH0CAUaqh1BSSYw6mhfyD2qIekHE76E3PuhRBJjLUrO/
+         AuK0R5ik+4wGCMsAVlSP5Tc+vSwECL/QJaDhnd8pCojo3ooAZCeEGr0aPpMiAWAeFqGr
+         u8Dc0kiGLfH9vyIMhc7xk0MTHb3p1emG7LAHjtfd0sFK3aXGaV8hE/PYUfoc2Mgq2Zce
+         vGK23WgDHKCCkWEEtSKELW8mrngi8AJC3o7vjdYslnhraqRlyOW8NKt9BDMub5iU15fL
+         QGzu+XWhu0uuZtkI7ecPjz/rYi2Vli2/qU/SrCW9myr5Hxrbs2LR1OrTmfjcF0DcL0ab
+         u1hw==
+X-Gm-Message-State: AODbwcATQNRZd6+w+aJjN/AQJH+XCmwJ59M7MzSKeZP2JWFGwmowLVHA
+        34o/b1E5Qiy9Og==
+X-Received: by 10.84.217.73 with SMTP id e9mr12745790plj.133.1496788368217;
+        Tue, 06 Jun 2017 15:32:48 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:411:1ad6:6716:25ff])
+        by smtp.gmail.com with ESMTPSA id 81sm790813pge.46.2017.06.06.15.32.47
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 06 Jun 2017 15:32:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeffrey Walton <noloader@gmail.com>
+Cc:     Davide Fiorentino <davide.fiorentino@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: How to avoid "Please tell me who you are..."?
+References: <CAH8yC8mjTXQ_5uRedHi=fytKtQttyq_WemGFNQTP9C3PK4x5cQ@mail.gmail.com>
+        <532E194B-3A76-4416-A652-4B1DCE78AB8A@gmail.com>
+        <CAH8yC8k9pJHLuzWneb4aRAEF2zOTCVO_5YJxrCpw28x8bDox0A@mail.gmail.com>
+Date:   Wed, 07 Jun 2017 07:32:46 +0900
+In-Reply-To: <CAH8yC8k9pJHLuzWneb4aRAEF2zOTCVO_5YJxrCpw28x8bDox0A@mail.gmail.com>
+        (Jeffrey Walton's message of "Fri, 2 Jun 2017 02:37:40 -0400")
+Message-ID: <xmqqefuw927l.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:av+QPt5NNdRTyNeHoU7aW6K208MA2LS+CRwDCiDROidOCd91yxV
- 11GzlcjzzAOKHO385Xn20zxQQWs1KqksdKXKE1mivO+Q2XLiMB9uV4Gbhg6f+qYSU/0EyF2
- uA2b1feMl3uH5iQzsUNWwrf4Vqpd/CJH3WAfl9N59ks69QulrAyvGLtqNCezke7DVAbcR+U
- 5bB4//7da8nNpBHbCf9qA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YS1i1sPWxmQ=:83liDcKBN7F3rwEdV6Ts9W
- 4o5TYX0stOZux/EuLDff/bQEN8jmMj6CWHr5vGjLjR5zjK36mHlJovE/wMebOzQAEqj5Soz1R
- oxjiYK/CdrvZghKLK6k/vBWIBpAsO17GJ7Zw4Y2/haVz/H8Yt3f7j47njqWB6tkVFO5/0aDGc
- JE7Wx+/TJmmr2EPiRCYLpnmAJdBsCuyXV78jv/oCw0SDvjmMQS5P0g1c6lOw8g5dB5OVSjrqA
- FnUEd55kNTHQccURHV6bBRDrwc1QzOcqJkI3GHxjf/aLo4CpDXUlk1VkdLGLcTQaF/QS2m4pK
- tQiWf4end9B/ZJXAiQeiCHJJIqNGlPm/piscCh6Wd3qwkE7IYnwZ0olgsYbAwFkHQv00sS8Ev
- jQ6N8y05fzUMHJN9lNbQBV9wvgnaFJspasQ+E2Rh5V8Ly+WLimLfH236Yy30Z+b2O1qc/7irc
- MJVzlQwWBgvMitKq2rKbpcuK8YjdcReLUReQBbgVONaC2myTuEmyPxg7nVznKvTM0ntSvXsyV
- NEGhK6bHAOsjrAOkzR+VdaXJjp7VzNFj1Z95TfNiiThIGONq7p9NwgStnqIdHFximDZIxJly8
- BAwJ2Hi56Nx6W+nxRF/PoGr/zt5l0qKD+TwMQ+N+Om6DQf6sfuOgskqoXzmsXa7Zgc6A87Jk/
- kcdW9fspzpBbWJCW8txUwv87pOHlp6GvacJHdELR95BTOiXb3pb4SnIVz6pQOz6qRa6UFCnAP
- oQH9yFF/snG8mxwlq9VJrvPFBmI9BFz5ZfiXePYoj5EYm8RBKy3jurWmHP/bGtTzkhnBAlPF1
- 1IrqKPs
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+Jeffrey Walton <noloader@gmail.com> writes:
 
-On Fri, 2 Jun 2017, Jonathan Nieder wrote:
+> On Fri, Jun 2, 2017 at 2:30 AM, Davide Fiorentino
+> <davide.fiorentino@gmail.com> wrote:
+>> Is there a reason why you don't want or can't set those details?
+>
+> Well, they don't exist so there's nothing to set.
+>
+> The machine below its a CubieBoard used for testing. I remote into it
+> with test@. As a matter of policy, no check-ins occur on it. Other
+> than the password database and authroized_keys file, there is no
+> information on it to be lost or stolen.
 
-> Johannes Schindelin wrote:
-> > On Thu, 1 Jun 2017, Stefan Beller wrote:
-> 
-> >> We had a discussion off list how much of the test suite is in bad shape,
-> >> and "$ git grep ^index" points out a lot of places as well.
-> >
-> > Maybe we should call out a specific month (or even a longer period) during
-> > which we try to push toward that new hash function, and focus more on
-> > those tasks (and on critical bug fixes, if any) than anything else.
-> 
-> Thanks for offering. ;-)
+One thing I forgot to ask you.  Are you reporting "I have used this
+exact procedure to set up a test machine in the past and did not
+have this problem, but with newer Git I get this message and cannot
+cherry-pick or tag or do anything"?  Or is this something you
+noticed with a version of Git you happened to have?
 
-Undoubtedly my lack of command of the English language is to blame for
-this misunderstanding.
+I am trying to make sure this is not reporting a regression, as I am
+not aware of any recent change that wanted to make the "unconfigured
+user" detection stricter than before.
 
-By no means did I try to indicate that I am ready to accept the
-responsibility of working toward a new hash dumped on me.
+Thanks.
 
-What I wanted to suggest instead was that the current direction looks very
-unfocused to me, and that I do not see anything going forward in a
-coherent manner. Hence my suggestion to make it public known that a
-certain time period would be dedicated (and contributions would be highly
-encouraged) to work on replacing SHA-1 by something else.
-
-But:
-
-1) this cannot be a one-person effort, it is too large
-
-2) it cannot even be as uncoordinated an effort as it is now, because that
-leads only to bikeshedding instead of progress
-
-3) the only person who could make that call is Junio
-
-4) we still have the problem that there is no cryptography expert among
-those who in the Git project are listened to
-
-> How did you get the impression that their opinion had no impact? We have
-> been getting feedback about the choice of hash function both on and off
-> list from a variety of people, some indisputably security experts.
-> Sometimes the best one can do is to just listen.
-
-I did get the impression by talking at length to a cryptography expert who
-successfully resisted any suggestions to get involved in the Git mailing
-list.
-
-There were also accounts floating around on Twitter that a certain
-cryptography expert who dared to mention already back in 2005 how
-dangerous it would be to hardcode SHA-1 into Git was essentially shown the
-finger, and I cannot fault him for essentially saying "I told you so"
-publicly.
-
-In my mind, it would have made sense to ask well-respected cryptographers
-about their opinions and then try to figure out a consensus among them (as
-opposed to what I saw so far, a lot of enthusastic talk by developers with
-little standing in the cryptography community, mostly revolving around
-hash size and speed as opposed to security). And then try to implement
-that consensus in Git. Given my recent success rate with SHA-1 related
-concerns, I am unfortunately not the person who can bring that about.
-
-But maybe you are.
-
-Ciao,
-Dscho
