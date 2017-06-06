@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50841209FD
-	for <e@80x24.org>; Tue,  6 Jun 2017 18:48:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FCAF209FD
+	for <e@80x24.org>; Tue,  6 Jun 2017 18:52:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751465AbdFFSsg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 14:48:36 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:34106 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751390AbdFFSsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 14:48:11 -0400
-Received: by mail-pf0-f170.google.com with SMTP id 9so100726678pfj.1
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 11:48:11 -0700 (PDT)
+        id S1751481AbdFFSwY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 14:52:24 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:35659 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751474AbdFFSv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 14:51:56 -0400
+Received: by mail-it0-f67.google.com with SMTP id 67so28593078itx.2
+        for <git@vger.kernel.org>; Tue, 06 Jun 2017 11:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=i0gKJI+dMnWASCSVBPLmHVEw5YOkAr32zQDrkGIxqY0=;
-        b=YyZMyQ3cMtTVtDhURi1BtFtZTa43g6WV1ak7q1lnocDqjICxfHZ2so2hKELdczNR84
-         ROGSK6TAxEP5RN4F+Yi1ZL07CpRUfi5kfD5QBIaAXKq03CLvtdanEf/5cZBgYF9JzuHe
-         jQrCJU435QPmeuIYhlXzF44UiDSGdV7XBqsWKt1xtN3s10h4wOQHBPiWuxO9cuoSkQhn
-         x6ojTXJ6cWETDam3LL2GWU8LnhgNJ1iYFP05RsebJF0XF2wwdLDAsVHoAvdfDUI2dsP7
-         /Nik29qUys2ZmlKb2BEdcvMIp4rZ71yxvn+8U7COo93gCldbOhjHw92KILEkho71jKoB
-         tFmw==
+        bh=GlrYxGrZnpX+NYJbKbpPZ9yFje+A7jHY0Ie3rO4rBMQ=;
+        b=CE07g+6v4xfCOzdU1AZbRsqybiYbL3N/lci0h4bsafPAKn6VuHuXc5M80tOvIqEJy4
+         lYu0KukhcJOWzP68CgAykf2kHdj9+8UVTGOzdIBvF0Axso/jWUt/RXCFLyrslB4GyIEW
+         wbGRWPc+WRxFqkpEjrNpo9D7pvGGTHXey1S7VfgbsSbbxkZRLjW7cJqk0fpVhKXkw4e7
+         hKq3sC57/8RkTz55pZco1QDIFTWey4ysHARNsY4XWNoXEl6Zq4oFjuZhlfdZr3QWdHx3
+         vLX+kou/0UUvOT0J4MnD9M2RJH0weFte/7ZIoDztM3pOfuSfX9jNYgC6npepFzxUD5GW
+         fcBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=i0gKJI+dMnWASCSVBPLmHVEw5YOkAr32zQDrkGIxqY0=;
-        b=PpClzkX8GAMQ/hEIxkvlw4jcWkt4hS1STZ89qE+/NeX41pyMjmjx93vBq4qjeG4aVi
-         XdL7JhnIA4Vvu+b8W00ctcKfNkcN4G7KzeVwf1Qk+l/mriKvNAkM9MvvAcXJpb43jS7y
-         QTD+EZavsn7jkJH2kD1jN1te87kZDBVabsgqYAzMtmHIG0kiNbHzbkUrHLfhFaPhl4Tt
-         koOgqGiojf11ibIs0vmEcgz+LkeXo5KjvhMIXY/ZSbnk7lyeZfFIBaE5QimwzSHvedzX
-         jeb+0u6i4VqaPjgZdap2ALhmB2SPpShoLLPjtK1p1sl/Cijqg++05jILAlmuvK7wsIS/
-         tHnA==
-X-Gm-Message-State: AODbwcCHXYcnWXibECvHNhOO77U9ecmaFIEJPcwElQNcRv7StkYitF0s
-        2vJ/vr26FgIrrIgED2KYbnH8wJqsLY5m
-X-Received: by 10.98.34.8 with SMTP id i8mr14564317pfi.194.1496774891132; Tue,
- 06 Jun 2017 11:48:11 -0700 (PDT)
+        bh=GlrYxGrZnpX+NYJbKbpPZ9yFje+A7jHY0Ie3rO4rBMQ=;
+        b=fDKk3ZWwRitJoa2h7RVD0g40So4bcWsODcUY338hJwwHl8Arwvnas0hyLhqAj5oDc9
+         WAoq90Zw7bNHctR0lyYq3+JHQnDqWUiJdvchQj8OUKm3MSKbzLKi0V/IhEah9nYOUIOA
+         yev0sHQMXujxTLcD7H89Kp6zKctthMjEgVXyj6jrxOkBczLIq7BMMNOiEZdVuqwtLpsc
+         YtNcKY1nMpWcma6b9NfkrNNYzcXBzYnV/m0/lrifHSCGMbKkapc1YvTyGF702fNuzQYC
+         SNnsqR1Nm0fACOuhZqRGOHwKpnyDS9NlyOw8lblkhQMXKBHj14T9gVh4eIxkwIqINQGQ
+         lZMw==
+X-Gm-Message-State: AODbwcBj271aSg/QvV1qJVKRJ7Vs1hXIwQJXPYKDQnvsd84cdnXrmi9z
+        AqmpvHm7M8rfwA1f3l5I3SwRtaZ3kw==
+X-Received: by 10.36.233.198 with SMTP id f189mr18447335ith.94.1496775115883;
+ Tue, 06 Jun 2017 11:51:55 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Tue, 6 Jun 2017 11:48:10 -0700 (PDT)
-In-Reply-To: <20170606151231.25172-3-avarab@gmail.com>
+Received: by 10.107.3.231 with HTTP; Tue, 6 Jun 2017 11:51:35 -0700 (PDT)
+In-Reply-To: <CAGZ79kaaRsUBAxRKLPxjuk=oRrw2zBdoHWd9iNDmTbY9MpqN-w@mail.gmail.com>
 References: <20170606124323.GD25777@dinwoodie.org> <20170606151231.25172-1-avarab@gmail.com>
- <20170606151231.25172-3-avarab@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Jun 2017 11:48:10 -0700
-Message-ID: <CAGZ79kYGaF6=RQZ2HpTZ8qE50V2SU0DO+-0nx-n9WEkQmM4WoA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] sha1dc: optionally use sha1collisiondetection as a submodule
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+ <CAGZ79kaaRsUBAxRKLPxjuk=oRrw2zBdoHWd9iNDmTbY9MpqN-w@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 6 Jun 2017 20:51:35 +0200
+Message-ID: <CACBZZX485+W99mRspDTf09LjP-C26PaAi+vNSBkW_aVyXAsQJg@mail.gmail.com>
+Subject: Re: [PATCH 0/3] update sha1dc
+To:     Stefan Beller <sbeller@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Adam Dinwoodie <adam@dinwoodie.org>,
@@ -67,26 +67,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 6, 2017 at 8:12 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Add an option to use the sha1collisiondetection library from the
-> submodule in sha1collisiondetection/ instead of in the copy in the
-> sha1dc/ directory.
+On Tue, Jun 6, 2017 at 8:23 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Jun 6, 2017 at 8:12 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> This updates sha1dc fixing the issue on Cygwin introduced in 2.13.1,
+>> and hopefully not regressing elsewhere. Liam, it would be much
+>> appreciated if you could test this on SPARC.
+>>
+>> As before the "sha1dc: update from upstream" patch is what should
+>> fast-track to master/maint and be in 2.13.2, the other two are the
+>> cooking submodule use, that's all unchanged aside from of course the
+>> submodule pointing to the same upstream commit as the code import
+>> itself does.
+>>
+>> Junio: There's a whitespace change to sha1.h that am warns about, but
+>> which it applies anyway that you didn't apply from my previous
+>> patch. I think it probably makes sense to just take upstream's
+>> whitespace shenanigans as-is instead of seeing that diff every time we
+>> update. I guess we could also send them a pull request...
 >
-> This allows us to try out the submodule in sha1collisiondetection
-> without breaking the build for anyone who's not expecting them as we
-> work out any kinks.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> I would suggest the pull request.
 
-Other projects using submodules sometimes have
-a .gitattributes entry to have .gitmodules not exported
-via git-archive. Do we want a similar thing?
+Looking at this again it's not a bug, just upstream choosing to indent
+a comment with spaces, not a bug.
 
-Speaking of attributes, I wonder if we want to specify
-the .gitmodules file to be text with unixy file endings:
-Having an entry
-    .gitattributes eol=3Dcrlf
-to simulate a Windows environment doesn't harm
-submodule operation, which is good. I'll check if we
-have a test for that.
+So it makes sense to just apply as-is so we don't have that diff with
+them / different sha1s on the files etc.
+
+> Also as to not make the mistake from before that I jump on the
+> submodule bandwagon here:
+> Patch 1 ought to go in its on series/patch, so with that out the way
+> we have more time to consider the pros and cons of the rest of
+> the series?
+
+Yes it makes perfect sense to just take the 1st patch here and make
+the submodule changes cook. This is just how I submitted it the last
+time and Junio took the 1st patch into a maint topic, so I figured I'd
+send it like this again.
