@@ -2,134 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 501E6209FD
-	for <e@80x24.org>; Tue,  6 Jun 2017 22:06:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2446D209FD
+	for <e@80x24.org>; Tue,  6 Jun 2017 22:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751481AbdFFWGA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 18:06:00 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:35373 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751401AbdFFWF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 18:05:59 -0400
-Received: by mail-lf0-f65.google.com with SMTP id v20so9655876lfa.2
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 15:05:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LkR8GLaDg7RMC0vrZyu73m4NBd/oGhTWUPf+7HNw7dU=;
-        b=vShrjLyUqPFAR4bXnXM7F83myekcwHfRmLmw9wh6s5omkjMiwUI+/BRfpXoqfdnOUE
-         avv1ibuEHgCK25syaT7hruKVYndIhHoApvZIyAyZMLrkLh6YOcS+GE57ytK2kEvDV9P0
-         FhO45FnxoJL06Dv3+9ax7YQCdz2aSGoQNk+PaHxGmH+oFDCunvQdkS6rOPXdLZ3DUVZm
-         P18BEHcRO6v42db/wAu/OCYN/zpYKJeGjbrkLTQ/7EOmQbV/m/3h6kfUbOr/TzhCdjtZ
-         twGc0gLTBtjnWp5iI/O5uOVb9COCyd45SIxypFy31hQoIqbpFVcuaowXKotZcbwLQ9+r
-         63eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LkR8GLaDg7RMC0vrZyu73m4NBd/oGhTWUPf+7HNw7dU=;
-        b=KrA1+iogZvfpsb3sbgNYQqzKWj1kMY2m7SvGYvf35wlUSiR+91LaR/gT6n7Vs0qAzR
-         XCYfPN/M8miof6gNFxC4p0iHtbK1oesdMs0NuSETzc0fLMxPPrVqlwPeL0e4jAaazmBb
-         BYIApzu+QR0t5wsYzkGPU2eIDjMkBMdJpYvEePRRNMDh4t/b3lbE6D9rsbqanSFNP5tY
-         GaCl9zVzOuzxdG2IWdexYlQfzM5nc5nQu3aUBpxtpcPXpr+0J0yhTEDS5U3jO2z3HX/N
-         TgVJh4uBO0QeYt40NzUqXtL+aCADerBBYf0KKTEu0uptmNBP+9FRH7hx2s2GzB/AwO++
-         aLfA==
-X-Gm-Message-State: AODbwcBMRnaKngdxFQgYAzpXyIxLFsbx5h83oMrkx5JDQ7tbK22EJPHA
-        r26IKnqC4teNB/3BC90rZFILSgIzvQ==
-X-Received: by 10.25.99.21 with SMTP id x21mr5417176lfb.66.1496786758143; Tue,
- 06 Jun 2017 15:05:58 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.79.17 with HTTP; Tue, 6 Jun 2017 15:05:37 -0700 (PDT)
-In-Reply-To: <CAMy9T_H4WAh6kA3K4VVv7oUwL3KHcK-mM-4bXxC0D1FinRa8mA@mail.gmail.com>
-References: <xmqq1sqzkrui.fsf@gitster.mtv.corp.google.com> <CAGZ79kY2Z-fJYxczbzheu1hChLkKkdjEcDMwsP-hkN0TjUBotQ@mail.gmail.com>
- <CAMy9T_H4WAh6kA3K4VVv7oUwL3KHcK-mM-4bXxC0D1FinRa8mA@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 6 Jun 2017 15:05:37 -0700
-Message-ID: <CA+P7+xr2xrVfUPppCa4gCj72enX-_qZsAK3bNtOusfh7wWH0rg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2017, #03; Mon, 5)
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Stefan Beller <sbeller@google.com>,
+        id S1751436AbdFFWXR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 18:23:17 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58087 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751399AbdFFWXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 18:23:16 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaJWs-1djPgT252k-00lzjp; Wed, 07
+ Jun 2017 00:22:51 +0200
+Date:   Wed, 7 Jun 2017 00:22:50 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Stefan Beller <sbeller@google.com>,
         Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: pushing for a new hash, was Re: [PATCH 2/3] rebase: Add tests
+ for console output
+In-Reply-To: <20170602175455.GA30988@aiede.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1706070008440.171564@virtualbox>
+References: <20170531104213.16944-1-phillip.wood@talktalk.net> <20170531104213.16944-3-phillip.wood@talktalk.net> <alpine.DEB.2.21.1.1706011329350.3610@virtualbox> <xmqq7f0v46q3.fsf@gitster.mtv.corp.google.com> <CAGZ79kaM9ryT1gWx=L6S90HPCaDPNZ6H124HAJscpeJCQFDN8Q@mail.gmail.com>
+ <alpine.DEB.2.21.1.1706021442190.171564@virtualbox> <20170602175455.GA30988@aiede.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:av+QPt5NNdRTyNeHoU7aW6K208MA2LS+CRwDCiDROidOCd91yxV
+ 11GzlcjzzAOKHO385Xn20zxQQWs1KqksdKXKE1mivO+Q2XLiMB9uV4Gbhg6f+qYSU/0EyF2
+ uA2b1feMl3uH5iQzsUNWwrf4Vqpd/CJH3WAfl9N59ks69QulrAyvGLtqNCezke7DVAbcR+U
+ 5bB4//7da8nNpBHbCf9qA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YS1i1sPWxmQ=:83liDcKBN7F3rwEdV6Ts9W
+ 4o5TYX0stOZux/EuLDff/bQEN8jmMj6CWHr5vGjLjR5zjK36mHlJovE/wMebOzQAEqj5Soz1R
+ oxjiYK/CdrvZghKLK6k/vBWIBpAsO17GJ7Zw4Y2/haVz/H8Yt3f7j47njqWB6tkVFO5/0aDGc
+ JE7Wx+/TJmmr2EPiRCYLpnmAJdBsCuyXV78jv/oCw0SDvjmMQS5P0g1c6lOw8g5dB5OVSjrqA
+ FnUEd55kNTHQccURHV6bBRDrwc1QzOcqJkI3GHxjf/aLo4CpDXUlk1VkdLGLcTQaF/QS2m4pK
+ tQiWf4end9B/ZJXAiQeiCHJJIqNGlPm/piscCh6Wd3qwkE7IYnwZ0olgsYbAwFkHQv00sS8Ev
+ jQ6N8y05fzUMHJN9lNbQBV9wvgnaFJspasQ+E2Rh5V8Ly+WLimLfH236Yy30Z+b2O1qc/7irc
+ MJVzlQwWBgvMitKq2rKbpcuK8YjdcReLUReQBbgVONaC2myTuEmyPxg7nVznKvTM0ntSvXsyV
+ NEGhK6bHAOsjrAOkzR+VdaXJjp7VzNFj1Z95TfNiiThIGONq7p9NwgStnqIdHFximDZIxJly8
+ BAwJ2Hi56Nx6W+nxRF/PoGr/zt5l0qKD+TwMQ+N+Om6DQf6sfuOgskqoXzmsXa7Zgc6A87Jk/
+ kcdW9fspzpBbWJCW8txUwv87pOHlp6GvacJHdELR95BTOiXb3pb4SnIVz6pQOz6qRa6UFCnAP
+ oQH9yFF/snG8mxwlq9VJrvPFBmI9BFz5ZfiXePYoj5EYm8RBKy3jurWmHP/bGtTzkhnBAlPF1
+ 1IrqKPs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 6, 2017 at 2:50 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On Mon, Jun 5, 2017 at 8:23 PM, Stefan Beller <sbeller@google.com> wrote:
->>
->> > [...]
->> >  "git diff" has been taught to optionally paint new lines that are
->> >  the same as deleted lines elsewhere differently from genuinely new
->> >  lines.
->> >
->> >  Are we happy with these changes?
->
->
-> I've been studiously ignoring this patch series due to lack of bandwidth.
->
->> [...]
->> Things to come, but not in this series as they are more advanced:
->>
->>     Discuss if a block/line needs a minimum requirement.
->>
->> When doing reviews with this series, a couple of lines such
->> as "\t\t}" were marked as a moved, which is not wrong as they
->> really occurred in the text with opposing sign.
->> But it was annoying as it drew my attention to just closing
->> braces, which IMO is not the point of code review.
->>
->> To solve this issue I had the idea of a "minimum requirement", e.g.
->> * at least 3 consecutive lines or
->> * at least one line with at least 3 non-ws characters or
->> * compute the entropy of a given moved block and if it is too low, do
->>   not mark it up.
->
-> Shooting from the hip here...
->
-> It seems obvious that for a line to be marked as moved, a minimum
-> requirement is that
->
-> 1. The line appears as both "+" and "-".
->
-> That doesn't seem strong enough evidence though, and if that is the
-> only criterion, I would expect a lot of boilerplate lines like "\t\t}"
-> to be marked as moved. It seems like a lot of noise could be
-> eliminated by *also* requiring that
->
-> 2a. The line doesn't appear elsewhere in the file(s) concerned.
->
-> Rule (2a) would probably get rid of most boilerplate lines without
-> having to try to measure entropy.
->
-> Maybe you are already using both criteria? I didn't see it in a quick
-> perusal of the code.
->
-> OTOH, it would be silly to refuse to mark lines like "\t\t}" as moved
-> *only* because they appear elsewhere in the file(s). If you did so,
-> you would have gaps of supposedly non-moved lines in the middle of
-> moved blocks. This suggests marking as moved lines matching (1) and
-> (2a) but also lines matching (1) and the following:
->
-> 2b. The line is adjacent to to another line that is thought to have
-> moved from the same old location to the same new location.
->
-> Rule (2b) would be applied recursively, with the net effect being that
-> any line satisfying (1) and (2a) is allowed to carry along any
-> neighboring lines within the same "+"/"-" block even if they are not
-> unique.
->
-> Michael
+Hi Jonathan,
 
-This sounds reasonable to me, though I'm not sure how easy it is to implement.
+On Fri, 2 Jun 2017, Jonathan Nieder wrote:
 
-Thanks,
-Jake
+> Johannes Schindelin wrote:
+> > On Thu, 1 Jun 2017, Stefan Beller wrote:
+> 
+> >> We had a discussion off list how much of the test suite is in bad shape,
+> >> and "$ git grep ^index" points out a lot of places as well.
+> >
+> > Maybe we should call out a specific month (or even a longer period) during
+> > which we try to push toward that new hash function, and focus more on
+> > those tasks (and on critical bug fixes, if any) than anything else.
+> 
+> Thanks for offering. ;-)
+
+Undoubtedly my lack of command of the English language is to blame for
+this misunderstanding.
+
+By no means did I try to indicate that I am ready to accept the
+responsibility of working toward a new hash dumped on me.
+
+What I wanted to suggest instead was that the current direction looks very
+unfocused to me, and that I do not see anything going forward in a
+coherent manner. Hence my suggestion to make it public known that a
+certain time period would be dedicated (and contributions would be highly
+encouraged) to work on replacing SHA-1 by something else.
+
+But:
+
+1) this cannot be a one-person effort, it is too large
+
+2) it cannot even be as uncoordinated an effort as it is now, because that
+leads only to bikeshedding instead of progress
+
+3) the only person who could make that call is Junio
+
+4) we still have the problem that there is no cryptography expert among
+those who in the Git project are listened to
+
+> How did you get the impression that their opinion had no impact? We have
+> been getting feedback about the choice of hash function both on and off
+> list from a variety of people, some indisputably security experts.
+> Sometimes the best one can do is to just listen.
+
+I did get the impression by talking at length to a cryptography expert who
+successfully resisted any suggestions to get involved in the Git mailing
+list.
+
+There were also accounts floating around on Twitter that a certain
+cryptography expert who dared to mention already back in 2005 how
+dangerous it would be to hardcode SHA-1 into Git was essentially shown the
+finger, and I cannot fault him for essentially saying "I told you so"
+publicly.
+
+In my mind, it would have made sense to ask well-respected cryptographers
+about their opinions and then try to figure out a consensus among them (as
+opposed to what I saw so far, a lot of enthusastic talk by developers with
+little standing in the cryptography community, mostly revolving around
+hash size and speed as opposed to security). And then try to implement
+that consensus in Git. Given my recent success rate with SHA-1 related
+concerns, I am unfortunately not the person who can bring that about.
+
+But maybe you are.
+
+Ciao,
+Dscho
