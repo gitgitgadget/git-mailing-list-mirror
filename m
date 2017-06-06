@@ -2,120 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_ADSP_ALL,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05C4D1F7D2
-	for <e@80x24.org>; Mon,  5 Jun 2017 23:37:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0097E2027C
+	for <e@80x24.org>; Tue,  6 Jun 2017 00:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751195AbdFEXhH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 19:37:07 -0400
-Received: from groups.winserver.com ([76.245.57.69]:61823 "EHLO
-        ftp.catinthebox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751181AbdFEXhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 19:37:06 -0400
-DKIM-Signature: v=1; d=winserver.com; s=tms1; a=rsa-sha1;
-        c=simple/relaxed; t=1496705818; h=Received:Received:Message-ID:
-        Date:From:Organization:To:Subject:List-ID; bh=5j5U1J26CqyZg9if7o
-        XVXyEc4l0=; b=eNmS462pnFN+PzGw5g8T/CY2QkazlrChHImcbuSPZqYJzwm9Vd
-        Pc8AqrHJhj1ugszxvEQ+QaONuBIzCrdZyBqnB2Q6qXrPL8/EE3Rscyd7OEsvW2lH
-        wTnr8EKsyOLmQYnhP4G8gWU4wdZW0YEvOeeLz/jSs91Wq82+1a82bAB1o=
-Received: by winserver.com (Wildcat! SMTP Router v7.0.454.5)
-          for git@vger.kernel.org; Mon, 05 Jun 2017 19:36:58 -0400
-Received: from [192.168.1.68] ([99.121.5.8])
-          by winserver.com (Wildcat! SMTP v7.0.454.5) with ESMTP
-          id 1064711806.1.4492; Mon, 05 Jun 2017 19:36:57 -0400
-Message-ID: <5935EB1A.5010100@winserver.com>
-Date:   Mon, 05 Jun 2017 19:36:58 -0400
-From:   Hector Santos <winserver.support@winserver.com>
-Organization: Santronics Software, Inc
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.8.1
+        id S1751209AbdFFAKd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 20:10:33 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:34781 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751192AbdFFAKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 20:10:32 -0400
+Received: by mail-pf0-f179.google.com with SMTP id 9so89973352pfj.1
+        for <git@vger.kernel.org>; Mon, 05 Jun 2017 17:10:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=GIWMRtQPkcHzHaTXaUzavP3x9ewA1D+XUTCCPQjaXzo=;
+        b=QK0OaDJ439IFg9MiYjHwKYE9M/wgPc5nKZ23cUbcAqBhVqxcPbcB2E/fzQDa+/groE
+         be0rnzsfiG+ePLMWZtEn8q+P+xyyWEmFjYK7zapXs+kBzoQrGi3txoDNP4gg1q+Dt0TB
+         5Vm5XcuTOFHy0Ju8ZBZqkI5DrG0UvqHA1AdP+SGGp9ZrVTy3u4UciJ0bj1QVMN6CxPm2
+         SgiMIBZI6+8GwOzYCrDQX0b12LKc1HT/wPzSfWbnq7MxNRi5nVXEksRTp4u90v3BU9SX
+         rcpM+NsKzlOwZdrQ8roLBDWOfQIyaGt6mm+RdMBStHW7p9Um+Fpjp+dWtME9b7hAW9/2
+         O8MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=GIWMRtQPkcHzHaTXaUzavP3x9ewA1D+XUTCCPQjaXzo=;
+        b=YGl8F3QjDxGaLhNi/RFFwDgFMX2P52B08lYFJhOPN2gHNb8eA5wAfaauHTzxlHK/yP
+         oe5wZWDueaHSyYUCpVRZWW5XXYTS4O7yi9pGrO5BkKa62bzzuWRzUAGk5OVxs4N4LQE8
+         XOSTaUFe2g0M17biJXnrlp82HH8Xjr3gRMSNE7J5yIVDDP0ugzyxWMnlM/UdkOpwcSkH
+         d9HtbVnk3bsypSGUjgQR1cPqc2FI7hxGCrEmNgL2m317WI889Cs0gDiBwYgGxHP9OL3N
+         YY3af40KvEXveRd0d5DnfW1v3KTstaiUnOzwSO0annYcfO12bfEvl0TIh/+yI3Cr5AEF
+         oYlg==
+X-Gm-Message-State: AODbwcC2baOEA7sQZSqdf7xk8oMs4LvFEepM08mCGsswyHWT9d8OV+OF
+        LwyjAn4T8vcDxg==
+X-Received: by 10.84.218.76 with SMTP id f12mr17893981plm.269.1496707832024;
+        Mon, 05 Jun 2017 17:10:32 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:5d03:f5d1:882a:10e])
+        by smtp.gmail.com with ESMTPSA id h15sm59728630pfk.120.2017.06.05.17.10.30
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 05 Jun 2017 17:10:31 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sahil Dua <sahildua2305@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH/RFC v4 3/3] branch: add copy branch feature implementation
+References: <0102015c79fcbda0-2779b4ff-54ad-46f4-bef0-14eeb58338d4-000000@eu-west-1.amazonses.com>
+        <0102015c79fcbe99-7e18cee7-d82d-4ab2-9d6a-ad7376a5ac27-000000@eu-west-1.amazonses.com>
+        <CALiud+=qoSSSg_p2MXZEaVTGMhFW_FtirDJ2-FnmNh+U0yf0Gw@mail.gmail.com>
+Date:   Tue, 06 Jun 2017 09:10:30 +0900
+In-Reply-To: <CALiud+=qoSSSg_p2MXZEaVTGMhFW_FtirDJ2-FnmNh+U0yf0Gw@mail.gmail.com>
+        (Sahil Dua's message of "Mon, 5 Jun 2017 22:52:16 +0200")
+Message-ID: <xmqqlgp69ds9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git "Keeping Original Dates"
-References: <5935C999.5060801@winserver.com> <1C2B896999CB4549BCAC61EB369E932E@blackfat> <CACBZZX7VpmEjbzwGd+S15xVLRrkYRxqcf0LUKF1B7pAsd7Lr4w@mail.gmail.com>
-In-Reply-To: <CACBZZX7VpmEjbzwGd+S15xVLRrkYRxqcf0LUKF1B7pAsd7Lr4w@mail.gmail.com>
-Content-Type: multipart/mixed;
- boundary="------------000706070600010400020407"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------000706070600010400020407
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Sahil Dua <sahildua2305@gmail.com> writes:
 
-
-On 6/5/2017 6:06 PM, Ævar Arnfjörð Bjarmason wrote:
-> On Mon, Jun 5, 2017 at 11:25 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
->>> -----Original Message-----
->>> From: Hector Santos
->>> Sent: Monday, June 5, 2017 5:14 PM
->>>
->>> I'm implementing GIT.  If there an option or compile/version that "keep"
->> file timestamps?
->>
->> That is not in the tree data structure, see below.
->>
->> root@blackfat /projects/tipsoftheday
->> $ git cat-file -p head
->> tree 4ca3c2a853c8e817d7de8563c331899cace8ee85
->> parent 2a33f293df6df0d3978612e41fb1ecd52e2450a5
->> author Jason Pyeron <jpyeron@pdinc.us> 1496424815 -0400
->> committer Jason Pyeron <jpyeron@pdinc.us> 1496424815 -0400
->>
->> add JDK to CM
->>
->> root@blackfat /projects/tipsoftheday
->> $ git cat-file -p 4ca3c2a853c8e817d7de8563c331899cace8ee85
->> 040000 tree 76094b81b3877b5b27cd4fe518fa0708af3cefed    admin
->> 040000 tree c66a88871c285e1485f92be0f8fa47185d94d0b3    client
->> 040000 tree 460495af209a580e65b5d0b38132d774ddb283b7    database
->> 040000 tree 264b191b036180039f3fd8c5d56c2b6800cb2ca2    doc
->> 040000 tree dd128195971f7bafa56371aa6027d7c6bc80f351    middleware
->> 040000 tree 7861fd39923950d501d4e39aeac4762f7daaca6b    reports
->> 040000 tree 2ad3dedf0313ae775321c88c53741a4b4a7e87b0    tools
->>
->> I wish it was an allowable extension, the date could be between the mode and
->> object type.
-> Yes it's not part of the tree structure, but in this case you can
-> simply set/update the mtime to the date of the last commit that
-> modified the file.
+> I want suggestions about one logical point raised by Evar.
 >
-> It can be a bit expensive to bootstrap that, and git doesn't help you
-> along at all, you need to do it via hooks or some script you run, but
-> that's a neat way to shove it into the datamodel if you need this for
-> some reason.
+> Let's consider a case that I'm on branch maint and then I do 'git
+> checkout master' followed by 'git branch -m feature', it will rename
+> master branch to feature. Now if I do 'git checkout -' to go to the
+> last branch, it will take me to maint since master branch doesn't
+> exist in this case.
 >
+> Now, for this copy operation - if I'm on branch maint and then I do
+> 'git checkout master' followed by 'git branch -c feature', it will
+> copy master branch to feature. Now if I do 'git checkout -' to go to
+> the last branch, it will again go to maint (according to the current
+> implementation). What do you think it should do? Is this the desired
+> behavior? Or should it go to master branch since that was the branch
+> checked out before copying.
 >
+> Also, in case this needs to be changed, can someone please point me to
+> how it's being handled so that I can change the behavior.
 
-Do you see any technical issues with using programmable hooks or 
-something like this would have to be patched in? I am giving it a 
-serious thought to exploring a fix to the Git Daemon over the wire 
-completion issues on Windows. It appears to be a Half Close socket issue.
+When somebody says "I want to rename my current branch to X", it is
+clear that the person wants to end up being on a branch called X.
 
--- 
-Hector, Engineering & Technical Support
-Santronics Software, Inc.
-http://www.santronics.com (sales)
-http://www.winserver.com (support)
-http://www.winserver.com/AupInfo (Online AUP Help)
-Office: 305-248-3204
+To me, "I want to copy my current branch to Y" sounds more like "I
+want to create another Y that looks just like the current branch,
+but I want stay on my current branch".
 
+If you think copy makes @{-1} problematic, perhaps your copy is
+doing more than it should (e.g. switching the current branch at the
+same time, or something).
 
---------------000706070600010400020407
-Content-Type: text/x-vcard; charset=utf-8;
- name="winserver_support.vcf"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="winserver_support.vcf"
-
-YmVnaW46dmNhcmQNCmZuOkhlY3RvciBTYW50b3MNCm46U2FudG9zO0hlY3Rvcg0KZW1haWw7
-aW50ZXJuZXQ6d2luc2VydmVyLnN1cHBvcnRAd2luc2VydmVyLmNvbQ0KdGVsO3dvcms6MzA1
-LTI0OC0zMjA0DQp2ZXJzaW9uOjIuMQ0KZW5kOnZjYXJkDQoNCg==
---------------000706070600010400020407--
 
