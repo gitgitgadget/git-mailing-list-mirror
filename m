@@ -2,138 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A57A20D09
-	for <e@80x24.org>; Tue,  6 Jun 2017 10:04:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D96E120D09
+	for <e@80x24.org>; Tue,  6 Jun 2017 10:14:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751383AbdFFKEA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 06:04:00 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:35752 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751329AbdFFKD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 06:03:59 -0400
-Received: by mail-wm0-f51.google.com with SMTP id x70so33367195wme.0
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 03:03:59 -0700 (PDT)
+        id S1751426AbdFFKON (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 06:14:13 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33235 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751345AbdFFKOM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 06:14:12 -0400
+Received: by mail-pg0-f67.google.com with SMTP id a70so4402447pge.0
+        for <git@vger.kernel.org>; Tue, 06 Jun 2017 03:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=lGb+Jo/BiLrSf48U+Ts5m2dRkJaAxzYNZ5vAe95Kd1Q=;
-        b=Q/L0LY6IFsIyB9NPzWkH1lT5vXXCslS7+ZEtHWt+P6m6WxWfP2YDgHAeZMKyeht6Lt
-         U5KP3cj8t08lFKr/6w+zRoNHKJHR3lsHuJPtznUDAvw1XoQ/5vRL61YaVqkRvXgdQVFy
-         mK3OA0/wr3VYScOg0YS/SfMYyDDX3UtpTQlXY=
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bDwiKHNWZ5Pa8QduHqgIS84OGcZXwWV37PmRa4KjqVQ=;
+        b=dejt8Dyebj/6xrHE0H1S4BKvDRIa14TqFaaPbNxLpS5wCqWuSKl59xPATQkhWMvJz+
+         aEQs1KVEtMWve8UhFoOW3Gg5DQQw0X1JOZgmODWrWqHBdcR5GWC0aX5KxAglfFr0AvxV
+         E6GbWXeqAitBJWv9rU1D4ohDR+RuPoJTUljdMcJZNP84GgpIvjqn/NNQimZsuDHESLSM
+         0bRBwjMJcNB5LUFIUYGgvbsYYvWQ681jofVieXnohrHn6u9yJsXlmSsi4aWFq4ioMyvN
+         8FQ8INApGooGNgLJGAvUJkVotJW/60loVoDUHlUF38jMZMHjeKZVaTuTh70u1fRsvwPw
+         Gv1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=lGb+Jo/BiLrSf48U+Ts5m2dRkJaAxzYNZ5vAe95Kd1Q=;
-        b=Vg/+u45N2dxFAV6XWW4mIlmIVY5SeW9QxrksY+8tg7jSbktOI43Zdz62wHmPplrkKk
-         OH8H9vmB0LcHPplIxSZteqoEQB4yNKNNGxb+gsYv9rNSgbiXXvGxjA1BDUu4up9O2jSd
-         TDQDQCLwOw/kFVo/6Mm3vbEUlD4JBu1bL+4ep4eCmi28bO/nJvCQi51OZLIoKVjhTpIv
-         0D/Nqrj61o60OeZGAr18gb/DkHsZED0hLu8We14s5rsz3mhWPHsTQ1u+aCkHuMf/ULRv
-         aQbGwj5zCdX8PGc9nxICEQo+hnzQ0WTCodHhdcNlVA35dIMrBmMbeBS5xSTjmjQVXzV6
-         igMQ==
-X-Gm-Message-State: AKS2vOwmt3Ql3AzJtCBejJp7jKULaD274x4drigqBONxdWrSqk9oS1vK
-        hY8FoCLjFwDnrfQ8
-X-Received: by 10.28.232.67 with SMTP id f64mr771744wmh.54.1496743438412;
-        Tue, 06 Jun 2017 03:03:58 -0700 (PDT)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id b131sm13049359wma.11.2017.06.06.03.03.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Jun 2017 03:03:57 -0700 (PDT)
-Date:   Tue, 6 Jun 2017 11:03:55 +0100
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Git v2.13.1 SHA1 very broken
-Message-ID: <20170606100355.GC25777@dinwoodie.org>
-References: <20170605203409.GB25777@dinwoodie.org>
- <CACBZZX6vOr+ZjUaAf8i1xdjEFfY_Exj+_Xn2-1u0RcWoLy+X1g@mail.gmail.com>
- <xmqq4lvtap3m.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bDwiKHNWZ5Pa8QduHqgIS84OGcZXwWV37PmRa4KjqVQ=;
+        b=mblF6T6Zb4ueRdpXJlic/U95z8ytKfhizlP9BmoDvwtaT4cqbWWoF6l8IrigPqpAie
+         wHViXuahjkmlI9NealBCcHxZ6e8ywrUdBcXdByc192HLDFVOIqC84UElh/UJgC1QbtFC
+         V7tPccCoVNJZSdjHcDMRcrKua9zr0rBjjW1BPD9aoBYus0pPf/l2Uj/7d3X4tBkMk2S9
+         LOUUtCMYeXAMNZ50xGFHgv962qjatCboBeuMmBQ/ouJ4Lm9bcr0MrLn3NGaTFbiKlaqa
+         t2ti6aX7V/A+jaXtbWH2AOJFVkLO5YLnuriJdweX/4uczJAmi4BB3iVb2SGTXfCrDPJk
+         5DrQ==
+X-Gm-Message-State: AODbwcCgbMn3gXPFWMsik7htqM+A5g9lER96chijxuaxQwB5emMymmfk
+        cwSrUhUwaPnuKyLIk0mZnfwfLY5thg==
+X-Received: by 10.84.218.136 with SMTP id r8mr20291213pli.265.1496744051814;
+ Tue, 06 Jun 2017 03:14:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq4lvtap3m.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.100.151.14 with HTTP; Tue, 6 Jun 2017 03:13:51 -0700 (PDT)
+In-Reply-To: <CACBZZX5OS_cz_mo4rpd+=DGtyN4SfipGrOXwVHJisv3CywoFaw@mail.gmail.com>
+References: <0102015c79fcbda0-2779b4ff-54ad-46f4-bef0-14eeb58338d4-000000@eu-west-1.amazonses.com>
+ <0102015c79fcbe99-7e18cee7-d82d-4ab2-9d6a-ad7376a5ac27-000000@eu-west-1.amazonses.com>
+ <CALiud+=qoSSSg_p2MXZEaVTGMhFW_FtirDJ2-FnmNh+U0yf0Gw@mail.gmail.com>
+ <xmqqlgp69ds9.fsf@gitster.mtv.corp.google.com> <CACBZZX5OS_cz_mo4rpd+=DGtyN4SfipGrOXwVHJisv3CywoFaw@mail.gmail.com>
+From:   Sahil Dua <sahildua2305@gmail.com>
+Date:   Tue, 6 Jun 2017 12:13:51 +0200
+Message-ID: <CALiud+mLAF4CK+-p7Ey0VvBp74XecxC8demcZSow94EfrRaUgA@mail.gmail.com>
+Subject: Re: [PATCH/RFC v4 3/3] branch: add copy branch feature implementation
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 06, 2017 at 10:20:45AM +0900, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
-> > That looks scary, can you please comment out this:
-> >
-> >     #define SHA1DC_ALLOW_UNALIGNED_ACCESS
-> >
-> > In sha1dc/sha1.c and see if that helps, alternatively comment out the
-> > ifdefs guarded by "#ifdef _MSC_VER" calls in sha1dc/sha1.c
-> 
-> That is merely a performance (and theoretical correctness) thing,
-> no?
+On Tue, Jun 6, 2017 at 9:39 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Tue, Jun 6, 2017 at 2:10 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Sahil Dua <sahildua2305@gmail.com> writes:
+>>
+>>> I want suggestions about one logical point raised by Evar.
+>>>
+>>> Let's consider a case that I'm on branch maint and then I do 'git
+>>> checkout master' followed by 'git branch -m feature', it will rename
+>>> master branch to feature. Now if I do 'git checkout -' to go to the
+>>> last branch, it will take me to maint since master branch doesn't
+>>> exist in this case.
+>>>
+>>> Now, for this copy operation - if I'm on branch maint and then I do
+>>> 'git checkout master' followed by 'git branch -c feature', it will
+>>> copy master branch to feature. Now if I do 'git checkout -' to go to
+>>> the last branch, it will again go to maint (according to the current
+>>> implementation). What do you think it should do? Is this the desired
+>>> behavior? Or should it go to master branch since that was the branch
+>>> checked out before copying.
+>>>
+>>> Also, in case this needs to be changed, can someone please point me to
+>>> how it's being handled so that I can change the behavior.
+>>
+>> When somebody says "I want to rename my current branch to X", it is
+>> clear that the person wants to end up being on a branch called X.
+>>
+>> To me, "I want to copy my current branch to Y" sounds more like "I
+>> want to create another Y that looks just like the current branch,
+>> but I want stay on my current branch".
+>
+> This would be more useful to me if the semantics were copy & checkout
+> instead of just copy, since when I'd like to copy branches it's almost
+> always because I'm on some topic branch and want to create & work on a
+> new copy of that topic branch.
+>
+> It would also be consistent with "git branch -m" and easier to
+> explain, i.e. "git branch -c just like -m except it doesn't delete the
+> branch name/config you moved away from".
+>
+> Like with -m, you can still move around random other branches, e.g.:
+>
+>     # While on master
+>     $ git branch -m some-other new-some-other
+>
+> This will just move some-other to new-some-other without checkout out
+> new-some-other, it's only when the source name is the same as your
+> currently checked out branch that you checkout a new branch,
+>
+> Now, of course the difference is that when you -m your current branch
+> it doesn't really have a choice of whether to move your checkout as
+> well (although I suppose it could leave you in a detached HEAD..) so
+> it *could* be done differently with -c, but the current behavior makes
+> more sense to me and matches the common case I'd use it for.
+>
+>> If you think copy makes @{-1} problematic, perhaps your copy is
+>> doing more than it should (e.g. switching the current branch at the
+>> same time, or something).
+>
+> I think what Sahil is getting at is asking where the @{-N} info is
+> stored and why this isn't equivalent to:
+>
+>     $ git checkout -b one master
+>     $ git checkout -b two master
+>     $ git checkout master
+>     $ git checkout one
+>     $ git checkout two
+>     $ git checkout - # Goes to "one", not "master"
+>
+> Which is in analogous flow without this feature that switches to the
+> last branch, but with "git branch -c" if you were on 'one' and copied
+> & checked out 'two' doing 'git checkout -' would bring you back to
+> 'master', not 'one'.
 
-Confirmed rebuilding with either of these suggested changes has t0000.46
-still failing.
-
-> > The functional differences between 2.13.0 and 2.13.1 on that platform
-> > should be none aside from possibly those changes, unless I've missed
-> > something.
-> 
-> If it does not hash correctly, the cause is more likely that the
-> endianness detection is going haywire.
-> 
->     make CFLAGS="-DSHA1DC_FORCE_LITTLEENDIAN -g -O2 -Wall"
-
-Confirmed rebuilding with this option has t0000 passing.  I can also get
-the test to pass with Ramsay Jones' suggestion of using OpenSSL's SHA1.
-
-Digging briefly into the endianness detection, it appears Cygwin has
-both _LITTLE_ENDIAN and _BIG_ENDIAN defined.  Git's detection works by
-assuming it's in a little endian environment and switching to big endian
-if it detects any of the defines that indicate such, and a010391 adds
-_BIG_ENDIAN to the set of defines that indicate big endianness.
-
-The obvious quick fix would be one of the two below patches.  I'll also
-take the discussion to the Cygwin mailing list in the hope that someone
-can explain why Cygwin defines both _LITTLE_ENDIAN and _BIG_ENDIAN (and
-indeed _PDP_ENDIAN).
-
-Patch 1 (probably safer?):
-
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index 3dff80ac7..e47d004b1 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -36,6 +36,7 @@
- #undef SHA1DC_BIGENDIAN
- #endif
- #if (!defined SHA1DC_FORCE_LITTLEENDIAN) && \
-+    (!defined _LITTLE_ENDIAN) && \
-     ((defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
-     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) || \
-     defined(_BIG_ENDIAN) || defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) ||  defined(__AARCH64EB__) || \
-
-Patch 2:
-
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index 3dff80ac7..8d7b1ee7d 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -38,7 +38,7 @@
- #if (!defined SHA1DC_FORCE_LITTLEENDIAN) && \
-     ((defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
-     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) || \
--    defined(_BIG_ENDIAN) || defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) ||  defined(__AARCH64EB__) || \
-+    defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) ||  defined(__AARCH64EB__) || \
-     defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__) || defined(SHA1DC_FORCE_BIGENDIAN))
-
- #define SHA1DC_BIGENDIAN
+Yes, indeed. I am not sure how @{-N} info is stored and why it's not
+doing the expected thing. Expected thing here will be to go to the
+original branch from where you copied the new branch if you run 'git
+checkout -'.
