@@ -2,79 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E89D2209FD
-	for <e@80x24.org>; Tue,  6 Jun 2017 18:45:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50841209FD
+	for <e@80x24.org>; Tue,  6 Jun 2017 18:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751455AbdFFSnk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 14:43:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35522 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751431AbdFFSmD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 14:42:03 -0400
-Received: (qmail 21118 invoked by uid 109); 6 Jun 2017 18:42:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Jun 2017 18:42:02 +0000
-Received: (qmail 26671 invoked by uid 111); 6 Jun 2017 18:42:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Jun 2017 14:42:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Jun 2017 14:42:01 -0400
-Date:   Tue, 6 Jun 2017 14:42:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        David <bouncingcats@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: What does this output of git supposed to mean ?
-Message-ID: <20170606184200.4xohdrwxqqvxgkr7@sigill.intra.peff.net>
-References: <D0E8FF50F1E74043AA0BD71E80C365E5@PhilipOakley>
- <20170606114355.30749-1-szeder.dev@gmail.com>
+        id S1751465AbdFFSsg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 14:48:36 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:34106 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751390AbdFFSsL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 14:48:11 -0400
+Received: by mail-pf0-f170.google.com with SMTP id 9so100726678pfj.1
+        for <git@vger.kernel.org>; Tue, 06 Jun 2017 11:48:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=i0gKJI+dMnWASCSVBPLmHVEw5YOkAr32zQDrkGIxqY0=;
+        b=YyZMyQ3cMtTVtDhURi1BtFtZTa43g6WV1ak7q1lnocDqjICxfHZ2so2hKELdczNR84
+         ROGSK6TAxEP5RN4F+Yi1ZL07CpRUfi5kfD5QBIaAXKq03CLvtdanEf/5cZBgYF9JzuHe
+         jQrCJU435QPmeuIYhlXzF44UiDSGdV7XBqsWKt1xtN3s10h4wOQHBPiWuxO9cuoSkQhn
+         x6ojTXJ6cWETDam3LL2GWU8LnhgNJ1iYFP05RsebJF0XF2wwdLDAsVHoAvdfDUI2dsP7
+         /Nik29qUys2ZmlKb2BEdcvMIp4rZ71yxvn+8U7COo93gCldbOhjHw92KILEkho71jKoB
+         tFmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=i0gKJI+dMnWASCSVBPLmHVEw5YOkAr32zQDrkGIxqY0=;
+        b=PpClzkX8GAMQ/hEIxkvlw4jcWkt4hS1STZ89qE+/NeX41pyMjmjx93vBq4qjeG4aVi
+         XdL7JhnIA4Vvu+b8W00ctcKfNkcN4G7KzeVwf1Qk+l/mriKvNAkM9MvvAcXJpb43jS7y
+         QTD+EZavsn7jkJH2kD1jN1te87kZDBVabsgqYAzMtmHIG0kiNbHzbkUrHLfhFaPhl4Tt
+         koOgqGiojf11ibIs0vmEcgz+LkeXo5KjvhMIXY/ZSbnk7lyeZfFIBaE5QimwzSHvedzX
+         jeb+0u6i4VqaPjgZdap2ALhmB2SPpShoLLPjtK1p1sl/Cijqg++05jILAlmuvK7wsIS/
+         tHnA==
+X-Gm-Message-State: AODbwcCHXYcnWXibECvHNhOO77U9ecmaFIEJPcwElQNcRv7StkYitF0s
+        2vJ/vr26FgIrrIgED2KYbnH8wJqsLY5m
+X-Received: by 10.98.34.8 with SMTP id i8mr14564317pfi.194.1496774891132; Tue,
+ 06 Jun 2017 11:48:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170606114355.30749-1-szeder.dev@gmail.com>
+Received: by 10.100.218.134 with HTTP; Tue, 6 Jun 2017 11:48:10 -0700 (PDT)
+In-Reply-To: <20170606151231.25172-3-avarab@gmail.com>
+References: <20170606124323.GD25777@dinwoodie.org> <20170606151231.25172-1-avarab@gmail.com>
+ <20170606151231.25172-3-avarab@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 6 Jun 2017 11:48:10 -0700
+Message-ID: <CAGZ79kYGaF6=RQZ2HpTZ8qE50V2SU0DO+-0nx-n9WEkQmM4WoA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] sha1dc: optionally use sha1collisiondetection as a submodule
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        "Liam R . Howlett" <Liam.Howlett@oracle.com>,
+        Michael Kebe <michael.kebe@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 06, 2017 at 01:43:55PM +0200, SZEDER Gábor wrote:
+On Tue, Jun 6, 2017 at 8:12 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Add an option to use the sha1collisiondetection library from the
+> submodule in sha1collisiondetection/ instead of in the copy in the
+> sha1dc/ directory.
+>
+> This allows us to try out the submodule in sha1collisiondetection
+> without breaking the build for anyone who's not expecting them as we
+> work out any kinks.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 
-> > An alternative ,with slightly less textual change, could be "Waiting for 
-> > initial commit"
-> > </bikeshed>
-> 
-> We should consider orphan/unborn branches, too:
-> 
->   git (master)$ git checkout --orphan newroot
->   Switched to a new branch 'newroot'
->   git (newroot +)$ git reset --hard
->   git (newroot #)$ git status
->   On branch newroot
->   
->   Initial commit
->   
->   nothing to commit (create/copy files and use "git add" to track)
-> 
-> A purely textual change will not be sufficient, I'm afraid.  Saying
-> "Repository is empty" right after 'git init' is fine, I like it.
-> However, on an unborn branch with empty index it would be just wrong.
-> 
-> "Waiting for initial commit" is much better even in this case, but I
-> still don't like that "initial", though I can't say why, and don't
-> have any better suggestion either.  Though users experienced enough to
-> create an empty unborn branch would probably not be confused by that.
+Other projects using submodules sometimes have
+a .gitattributes entry to have .gitmodules not exported
+via git-archive. Do we want a similar thing?
 
-I agree. If the state we are describing is limited to the current
-branch, how about saying so? Like "Your current branch has no commits".
-
--Peff
+Speaking of attributes, I wonder if we want to specify
+the .gitmodules file to be text with unixy file endings:
+Having an entry
+    .gitattributes eol=3Dcrlf
+to simulate a Windows environment doesn't harm
+submodule operation, which is good. I'll check if we
+have a test for that.
