@@ -2,100 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0097E2027C
-	for <e@80x24.org>; Tue,  6 Jun 2017 00:10:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 937FD2027C
+	for <e@80x24.org>; Tue,  6 Jun 2017 00:11:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751209AbdFFAKd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 20:10:33 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:34781 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751192AbdFFAKc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 20:10:32 -0400
-Received: by mail-pf0-f179.google.com with SMTP id 9so89973352pfj.1
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 17:10:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=GIWMRtQPkcHzHaTXaUzavP3x9ewA1D+XUTCCPQjaXzo=;
-        b=QK0OaDJ439IFg9MiYjHwKYE9M/wgPc5nKZ23cUbcAqBhVqxcPbcB2E/fzQDa+/groE
-         be0rnzsfiG+ePLMWZtEn8q+P+xyyWEmFjYK7zapXs+kBzoQrGi3txoDNP4gg1q+Dt0TB
-         5Vm5XcuTOFHy0Ju8ZBZqkI5DrG0UvqHA1AdP+SGGp9ZrVTy3u4UciJ0bj1QVMN6CxPm2
-         SgiMIBZI6+8GwOzYCrDQX0b12LKc1HT/wPzSfWbnq7MxNRi5nVXEksRTp4u90v3BU9SX
-         rcpM+NsKzlOwZdrQ8roLBDWOfQIyaGt6mm+RdMBStHW7p9Um+Fpjp+dWtME9b7hAW9/2
-         O8MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=GIWMRtQPkcHzHaTXaUzavP3x9ewA1D+XUTCCPQjaXzo=;
-        b=YGl8F3QjDxGaLhNi/RFFwDgFMX2P52B08lYFJhOPN2gHNb8eA5wAfaauHTzxlHK/yP
-         oe5wZWDueaHSyYUCpVRZWW5XXYTS4O7yi9pGrO5BkKa62bzzuWRzUAGk5OVxs4N4LQE8
-         XOSTaUFe2g0M17biJXnrlp82HH8Xjr3gRMSNE7J5yIVDDP0ugzyxWMnlM/UdkOpwcSkH
-         d9HtbVnk3bsypSGUjgQR1cPqc2FI7hxGCrEmNgL2m317WI889Cs0gDiBwYgGxHP9OL3N
-         YY3af40KvEXveRd0d5DnfW1v3KTstaiUnOzwSO0annYcfO12bfEvl0TIh/+yI3Cr5AEF
-         oYlg==
-X-Gm-Message-State: AODbwcC2baOEA7sQZSqdf7xk8oMs4LvFEepM08mCGsswyHWT9d8OV+OF
-        LwyjAn4T8vcDxg==
-X-Received: by 10.84.218.76 with SMTP id f12mr17893981plm.269.1496707832024;
-        Mon, 05 Jun 2017 17:10:32 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:5d03:f5d1:882a:10e])
-        by smtp.gmail.com with ESMTPSA id h15sm59728630pfk.120.2017.06.05.17.10.30
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 05 Jun 2017 17:10:31 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sahil Dua <sahildua2305@gmail.com>
+        id S1751218AbdFFALD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 20:11:03 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:44865 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751192AbdFFALD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 20:11:03 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout07 with smtp
+        id VCB01v0051keHif01CB1jQ; Tue, 06 Jun 2017 01:11:01 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=CrLPSjwD c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=FEWp7enXAAAA:8 a=SuciuFty-vAnAQxk42kA:9 a=QEXdDO2ut3YA:10
+ a=IjYSrUNMXUflr7qE6tl5:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: Git v2.13.1 SHA1 very broken
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC v4 3/3] branch: add copy branch feature implementation
-References: <0102015c79fcbda0-2779b4ff-54ad-46f4-bef0-14eeb58338d4-000000@eu-west-1.amazonses.com>
-        <0102015c79fcbe99-7e18cee7-d82d-4ab2-9d6a-ad7376a5ac27-000000@eu-west-1.amazonses.com>
-        <CALiud+=qoSSSg_p2MXZEaVTGMhFW_FtirDJ2-FnmNh+U0yf0Gw@mail.gmail.com>
-Date:   Tue, 06 Jun 2017 09:10:30 +0900
-In-Reply-To: <CALiud+=qoSSSg_p2MXZEaVTGMhFW_FtirDJ2-FnmNh+U0yf0Gw@mail.gmail.com>
-        (Sahil Dua's message of "Mon, 5 Jun 2017 22:52:16 +0200")
-Message-ID: <xmqqlgp69ds9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+References: <20170605203409.GB25777@dinwoodie.org>
+ <CACBZZX6vOr+ZjUaAf8i1xdjEFfY_Exj+_Xn2-1u0RcWoLy+X1g@mail.gmail.com>
+ <15c976f0-9203-dbba-86b6-240e44a1a56f@ramsayjones.plus.com>
+Message-ID: <8847fce7-1961-0006-37b7-3f10f7ebf32f@ramsayjones.plus.com>
+Date:   Tue, 6 Jun 2017 01:11:00 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <15c976f0-9203-dbba-86b6-240e44a1a56f@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sahil Dua <sahildua2305@gmail.com> writes:
 
-> I want suggestions about one logical point raised by Evar.
->
-> Let's consider a case that I'm on branch maint and then I do 'git
-> checkout master' followed by 'git branch -m feature', it will rename
-> master branch to feature. Now if I do 'git checkout -' to go to the
-> last branch, it will take me to maint since master branch doesn't
-> exist in this case.
->
-> Now, for this copy operation - if I'm on branch maint and then I do
-> 'git checkout master' followed by 'git branch -c feature', it will
-> copy master branch to feature. Now if I do 'git checkout -' to go to
-> the last branch, it will again go to maint (according to the current
-> implementation). What do you think it should do? Is this the desired
-> behavior? Or should it go to master branch since that was the branch
-> checked out before copying.
->
-> Also, in case this needs to be changed, can someone please point me to
-> how it's being handled so that I can change the behavior.
 
-When somebody says "I want to rename my current branch to X", it is
-clear that the person wants to end up being on a branch called X.
+On 06/06/17 00:20, Ramsay Jones wrote:
+> 
+> 
+> On 05/06/17 22:05, Ævar Arnfjörð Bjarmason wrote:
+>> On Mon, Jun 5, 2017 at 10:34 PM, Adam Dinwoodie <adam@dinwoodie.org> wrote:
+>>> I'm trying to compile Git v2.13.1 to release for Cygwin, but it appears
+>>> a010391 ("sha1dc: update from upstream", 2017-05-20) is breaking a very
+>>> significant number of test cases in both 32-bit and 64-bit Cygwin
+>>> builds.
+>>>
+>>> The first failure is t0000.46 "validate object ID of a known tree"; output with
+>>> -x and -v is below, although it's not very interesting:
+>>>
+>>>     expecting success:
+>>>             test "$tree" = 7bb943559a305bdd6bdee2cef6e5df2413c3d30a
+>>>
+>>>     ++ test ceb282701536fe61bea01075664405caa7d6343f = 7bb943559a305bdd6bdee2cef6e5df2413c3d30a
+>>>     + test_eval_ret_=1
+>>>     + want_trace
+>>>     + test t = t
+>>>     + test t = t
+>>>     + set +x
+>>>     error: last command exited with $?=1
+>>>     not ok 46 - validate object ID of a known tree
+>>>     #
+>>>     #               test "$tree" = 7bb943559a305bdd6bdee2cef6e5df2413c3d30a
+>>>     #
+>>>
+>>> I have no idea where to even begin debugging this, but I'm happy to take
+>>> pointers / try things out on my box.
+>>
+>> That looks scary, can you please comment out this:
+>>
+>>     #define SHA1DC_ALLOW_UNALIGNED_ACCESS
+> 
+> No, that doesn't fix it.
+> 
+>>
+>> In sha1dc/sha1.c and see if that helps, alternatively comment out the
+>> ifdefs guarded by "#ifdef _MSC_VER" calls in sha1dc/sha1.c
+> 
+> This can't possibly make a difference! ;-)
+> 
+> However, rebuilding with:
+> 
+>     $ make OPENSSL_SHA1=YesPlease >out2 2>&1
+> 
+> ... make t0000-basic.sh pass just fine, so ...
 
-To me, "I want to copy my current branch to Y" sounds more like "I
-want to create another Y that looks just like the current branch,
-but I want stay on my current branch".
+commit 7e71542e8b ("sha1dc: avoid CPP macro collisions", 25-03-2017)
+runs t0000-basic.sh just fine.
 
-If you think copy makes @{-1} problematic, perhaps your copy is
-doing more than it should (e.g. switching the current branch at the
-same time, or something).
+commit a0103914c2 ("sha1dc: update from upstream", 20-05-2017) fails
+when running t0000-basic.sh.
+
+I will look into this more tomorrow (it is late, I need sleep), unless
+someone finds the solution overnight, of course.
+
+Adam, you can build using the OPENSSL_SHA1 build variable for now
+(if you want to release v2.13.1), or wait for another maint release
+I suppose, ... I'll leave that to you! ;-)
+
+ATB,
+Ramsay Jones
 
 
