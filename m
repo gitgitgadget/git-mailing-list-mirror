@@ -2,115 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6A1A209FD
-	for <e@80x24.org>; Tue,  6 Jun 2017 19:10:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9F35209FD
+	for <e@80x24.org>; Tue,  6 Jun 2017 19:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751825AbdFFTJr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 15:09:47 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35597 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751581AbdFFTJp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 15:09:45 -0400
-Received: by mail-pf0-f173.google.com with SMTP id l89so26757690pfi.2
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 12:09:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=HEbgjnKbUXIaBggA7wN7YCXo588PcaBoi6yXVOTIc/o=;
-        b=fR1K7INE2tFE/0t76UdahPghgmh5sg7wYLophbv9j6LWycbVcyHG4i8ZebvLXvsy6+
-         Zw1L+a1yYyUKn4EyGztH6htlee+bVQ4k2Dn0TKw7fJbyIPJ09fFXHsw5q/z9dDVbXmYk
-         h81bUlGJy+jX/5pjhNf4+mTeFB6+YgLzdUWLIy4TF/7Bw1w502/5OpyhPc07VHOODs8f
-         zScgHLO3vEinDcYGDe1nL/XcPTlDOFBBpCj+ZQSUOF7ty365PzeoHXk3P2ICh9L7qgbc
-         boXp/TK3Ydf3U/2YoQH4qrULKBVI2lWqxdVqSLSNMJgqvwkBkE6n76lobQWPkyygSuPP
-         bZuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=HEbgjnKbUXIaBggA7wN7YCXo588PcaBoi6yXVOTIc/o=;
-        b=OC6qud2zO6cD526rTAe6HJIuVtvk7eBTebl3965KSDdr4yA24hfdvc0XxOM6FsliJX
-         FeXqvkqxCyUGixETBVyVq6NHlXSn/gbw6g3/2jy7lMwaQ6qtOkkjF1podFlDgallDM1J
-         2eGYiQAE/BGd++oTi7oVB+9WotBl4H9l6J6rLfxr0/mb+HDss3s47wJLUmAD4vLviSE7
-         iPE4WMR9yU6vwdTgUy/DK+OqYSB8Aqg0GMShnWa98XO/5nmPFnwdpFPwUrbdsyFkbWQD
-         fFS9CHYHw2kgIhLe/q720xNeNpW4XdJg2Z/agKv8m+Cra7eXOPozITe3FnT/X/tq7f7E
-         AkWw==
-X-Gm-Message-State: AODbwcByJrXl9aBXhFDZYTWrg2isY937l2vxBerTSF03qxYIIo97YkH8
-        ytIwTdKu7RoLz4KOMonVZjUTrdqgpQkJ
-X-Received: by 10.84.224.205 with SMTP id k13mr23303834pln.279.1496776179031;
- Tue, 06 Jun 2017 12:09:39 -0700 (PDT)
+        id S1751580AbdFFT0c (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 15:26:32 -0400
+Received: from forward2o.cmail.yandex.net ([37.9.109.243]:43558 "EHLO
+        forward2o.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751523AbdFFT0b (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 6 Jun 2017 15:26:31 -0400
+X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jun 2017 15:26:31 EDT
+Received: from mxback7g.mail.yandex.net (mxback7g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:168])
+        by forward2o.cmail.yandex.net (Yandex) with ESMTP id F183E20F31;
+        Tue,  6 Jun 2017 22:16:35 +0300 (MSK)
+Received: from web26j.yandex.ru (web26j.yandex.ru [5.45.198.67])
+        by mxback7g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id sbXY1wcMIE-GZEi0lks;
+        Tue, 06 Jun 2017 22:16:35 +0300
+Received: by web26j.yandex.ru with HTTP;
+        Tue, 06 Jun 2017 22:16:35 +0300
+From:   Konstantin Podsvirov <konstantin@podsvirov.pro>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <CAGZ79kbAwqb87nOm2sG7=uOO2jE6Rkgqofy5iYuZQrg1Jc2okw@mail.gmail.com>
+References: <227151496770459@web10m.yandex.ru> <CAGZ79kbAwqb87nOm2sG7=uOO2jE6Rkgqofy5iYuZQrg1Jc2okw@mail.gmail.com>
+Subject: Re: [BUG] Help > About Git Gui = crash
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Tue, 6 Jun 2017 12:09:38 -0700 (PDT)
-In-Reply-To: <CACBZZX6WJDrcUj4WMxZsShEaXK91CxR2sMUbWV+K3AudNYAXbA@mail.gmail.com>
-References: <20170606124323.GD25777@dinwoodie.org> <20170606151231.25172-1-avarab@gmail.com>
- <20170606151231.25172-3-avarab@gmail.com> <CAGZ79kYGaF6=RQZ2HpTZ8qE50V2SU0DO+-0nx-n9WEkQmM4WoA@mail.gmail.com>
- <CACBZZX6WJDrcUj4WMxZsShEaXK91CxR2sMUbWV+K3AudNYAXbA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Jun 2017 12:09:38 -0700
-Message-ID: <CAGZ79kYfX=QXLnwTcZSG=hoBKurYG_Nub5eE_kK4SCQYb6L+MQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] sha1dc: optionally use sha1collisiondetection as a submodule
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        "Liam R . Howlett" <Liam.Howlett@oracle.com>,
-        Michael Kebe <michael.kebe@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-Id: <463191496776595@web26j.yandex.ru>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date:   Tue, 06 Jun 2017 22:16:35 +0300
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 6, 2017 at 12:03 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Tue, Jun 6, 2017 at 8:48 PM, Stefan Beller <sbeller@google.com> wrote:
->> On Tue, Jun 6, 2017 at 8:12 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->> <avarab@gmail.com> wrote:
->>> Add an option to use the sha1collisiondetection library from the
->>> submodule in sha1collisiondetection/ instead of in the copy in the
->>> sha1dc/ directory.
->>>
->>> This allows us to try out the submodule in sha1collisiondetection
->>> without breaking the build for anyone who's not expecting them as we
->>> work out any kinks.
->>>
->>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+06.06.2017, 21:25, "Stefan Beller" <sbeller@google.com>:
+> On Tue, Jun 6, 2017 at 10:34 AM, Konstantin Podsvirov
+> <konstantin@podsvirov.pro> wrote:
+>>  Reproduction:
+>>  - Start git gui
+>>  - Go to menu panel: Help > About Git Gui
 >>
->> Other projects using submodules sometimes have
->> a .gitattributes entry to have .gitmodules not exported
->> via git-archive. Do we want a similar thing?
+>>  Output:
+>>  error: git-gui died of signal 11
+>>
+>>  Environment:
+>>  Debian 8 jessie amd64 KDE
 >
-> Right now we end up with an empty directory due to the issue you noted
-> in https://public-inbox.org/git/CAGZ79kZC98CxA69QjmX2s_SU6z1CSgKgwZeqvwiM=
-RAQc6+S3xg@mail.gmail.com/
+> Care to also share the output of
 >
-> It's probably best to have the .gitmodules file as some hint that
-> something should be there. We also ship the other .git* files.
+>   $ git gui --version
 
-Ok, but then let's talk about the other .git* files, would we want to
-distribute these via tarballs? (I guess it is a minor thing if at all and
-nobody downloading a git tarball would be surprised by these metadata
-files or annoyed by them, so all is good?)
+git-gui version 0.19.0.2.g3decb8e
+
+>   $ git --version
+
+git version 2.1.4
 
 >
->> Speaking of attributes, I wonder if we want to specify
->> the .gitmodules file to be text with unixy file endings:
->> Having an entry
->>     .gitattributes eol=3Dcrlf
->> to simulate a Windows environment doesn't harm
->> submodule operation, which is good. I'll check if we
->> have a test for that.
->
-> I have no idea what that would do or why we'd have it, but I'm going
-> to understand this as you looking into it :)
+> as I suspect this to come from git and git-gui not working well together.
 
-I looked briefly into it and it seems to be no problem just as config files
-on Windows are no problem. I just spoke up too quickly.
+--
+Regards,
+Konstantin Podsvirov
