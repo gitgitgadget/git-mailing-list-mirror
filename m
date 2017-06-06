@@ -2,133 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2ACD520D09
-	for <e@80x24.org>; Tue,  6 Jun 2017 08:51:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E2EC20D09
+	for <e@80x24.org>; Tue,  6 Jun 2017 09:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751333AbdFFIvb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 04:51:31 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:33335 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751274AbdFFIva (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 04:51:30 -0400
-Received: by mail-pf0-f181.google.com with SMTP id 83so37903834pfr.0
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 01:51:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JhHv2/kvz/GykT/QCBdzm30NkyYk8Usrb7SMaqbHV8o=;
-        b=ANc3clQCehasMXcGqHuypTEdZ9H5B1Pc97RLFJayMKftbiAl2mApLaplC4zJYxVp0n
-         oq1pakL5EQ3svk6HICXPRgnA2cjJoXTJc9+OYGkFM70tayHuOffeZSlZWJQ6thdc6cRR
-         e+Fl66fwOaSGLRQ+xyRCyJmDQ5iWCd/MbfU1RKY3Kc0NCkxHUTOspko0X9/RHBuMqP2G
-         InVH5uAYMf95dasDa1idaYzQ846uC/r9EZU/frbqDx5YSq+AzmIh7NW87pl9NCPDizUJ
-         7dyQbAznFCXQFD/fiOC60qye8A1+8WQrHpydjEy6kcrXDk1WzchgPCh+VADMa+HnYVXz
-         T8/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JhHv2/kvz/GykT/QCBdzm30NkyYk8Usrb7SMaqbHV8o=;
-        b=ppu5bTLEY0mVyyS/m8l3NVeSGTHXp+AY4ngZou8lb0Qzk8vIIHOXATqyPcKeQZe7Mj
-         ltlYg2G9NuulchaUQJ5tbKCue7ls9UogEN6BtGppRNm8CFj2i1HDdey4/prTbm05PArs
-         sQHz1rVr0+0Dw2S0uvS89FmyT2c2FAeWshmFvtrc5h1Jg7DshtECm8ar9E0NffnUrqlm
-         KG/JWJSk+nBtmlRIXa5b3Yn0HLquOUhUZSMYrZG3hPp3jYuMXXEFYYYstLDtlPuT22/o
-         pKLODVZsgXdEVBt103EpSOj5DUZ9T/4r1ixu6dGl64wo8x5pVW4+C/YHEZrFhrtKJusA
-         7v+Q==
-X-Gm-Message-State: AODbwcCPIQHTy62duMlwdhm8EgjjRcx2qe2+2fIDoFzEUqOj7ay5TnyL
-        lDnjGU72aZhppjk6kzpb4wGLHPvkPQ==
-X-Received: by 10.99.113.78 with SMTP id b14mr25183843pgn.229.1496739089392;
- Tue, 06 Jun 2017 01:51:29 -0700 (PDT)
+        id S1751404AbdFFJvC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 05:51:02 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:59580 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751397AbdFFJvB (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 6 Jun 2017 05:51:01 -0400
+X-AuditID: 1207440d-7fdff70000001eab-c3-59367b032a7e
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 90.18.07851.30B76395; Tue,  6 Jun 2017 05:50:59 -0400 (EDT)
+Received: from mail-it0-f41.google.com (mail-it0-f41.google.com [209.85.214.41])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v569owtL013551
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Tue, 6 Jun 2017 05:50:59 -0400
+Received: by mail-it0-f41.google.com with SMTP id m62so88020433itc.0
+        for <git@vger.kernel.org>; Tue, 06 Jun 2017 02:50:59 -0700 (PDT)
+X-Gm-Message-State: AODbwcCHcT1IwvV8dWujGyVZJjOMyPTSEv3Q/Wb5hS1DNwkDdI43PXwL
+        IxE4sz+4vne32VIoiTh3oqRy/4+lmw==
+X-Received: by 10.36.208.196 with SMTP id m187mr2162453itg.84.1496742658452;
+ Tue, 06 Jun 2017 02:50:58 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.151.14 with HTTP; Tue, 6 Jun 2017 01:51:08 -0700 (PDT)
-In-Reply-To: <xmqqzidl9a8l.fsf@gitster.mtv.corp.google.com>
-References: <0102015c7a68c647-372a5a13-5412-4838-921d-66980bac4099-000000@eu-west-1.amazonses.com>
- <xmqqzidl9a8l.fsf@gitster.mtv.corp.google.com>
-From:   Sahil Dua <sahildua2305@gmail.com>
-Date:   Tue, 6 Jun 2017 10:51:08 +0200
-Message-ID: <CALiud+mvAuDhcLr1DSxAxaf+-NtotBBSxgPM6tMJNueNdR8eAQ@mail.gmail.com>
-Subject: Re: [PATCH] t3200: add test for single parameter passed to -m option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Reply-To: mhagger@alum.mit.edu
+Received: by 10.107.48.212 with HTTP; Tue, 6 Jun 2017 02:50:57 -0700 (PDT)
+In-Reply-To: <CAGZ79kY2Z-fJYxczbzheu1hChLkKkdjEcDMwsP-hkN0TjUBotQ@mail.gmail.com>
+References: <xmqq1sqzkrui.fsf@gitster.mtv.corp.google.com> <CAGZ79kY2Z-fJYxczbzheu1hChLkKkdjEcDMwsP-hkN0TjUBotQ@mail.gmail.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Date:   Tue, 6 Jun 2017 11:50:57 +0200
+X-Gmail-Original-Message-ID: <CAMy9T_H4WAh6kA3K4VVv7oUwL3KHcK-mM-4bXxC0D1FinRa8mA@mail.gmail.com>
+Message-ID: <CAMy9T_H4WAh6kA3K4VVv7oUwL3KHcK-mM-4bXxC0D1FinRa8mA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2017, #03; Mon, 5)
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEKsWRmVeSWpSXmKPExsUixO6iqMtcbRZpcPuwmUXXlW4mB0aPz5vk
+        AhijuGxSUnMyy1KL9O0SuDK2vLjHVNAjXHH+9GXWBsaPfF2MnBwSAiYS289MYO1i5OIQEtjB
+        JHHrdQczhPOQSaL/9S8WCKePUaLxyH0miJZ8iZefnrFC2CUSv+4dZQGxeQUEJU7OfAJmCwnI
+        SbzacIOxi5EDyPaSuN/uAmJyCgRK9B02hKiol/jweiLYFDYBXYlFPc1g01kEVCT27FvIDjE9
+        UeLZlelsENMDJFp2TGcEsYUF7CQ+rP8J1isioCYxc9VsNpAzmQWaGSWO3WoDSzALaEq0bv/N
+        PoFReBaS62YhSS1gZFrFKJeYU5qrm5uYmVOcmqxbnJyYl5dapGukl5tZopeaUrqJERLEvDsY
+        /6+TOcQowMGoxMPbEGUaKcSaWFZcmXuIUZKDSUmUtzbBLFKILyk/pTIjsTgjvqg0J7X4EKME
+        B7OSCC/jXqBy3pTEyqrUonyYlDQHi5I4r9oSdT8hgfTEktTs1NSC1CKYrAwHh5IEr3oV0FDB
+        otT01Iq0zJwShDQTByfIcB6g4cqVQDW8xQWJucWZ6RD5U4yWHFeurPvCxNHRswFITjmw/QuT
+        EEtefl6qlDjvUpAGAZCGjNI8uJmwpPSKURzoRWFeaZAqHmBCg5v6CmghE9BCvksmIAtLEhFS
+        Ug2MjI/kLKTEJh26JPfj3PXG2rzYbIlJt5VXabzskfjoFOMh9Hl/2In5N0XmbBESFp79cNpJ
+        ee2N7ZFKqlNOx61Q6oyJ6lLa93EPo3WM3NdrsdFJS52V816fuP9Yx/tV5fXiSaapN1Tik0U/
+        8EZf2MF0ec8pmUkL7yy95MHyXZtjU470M2etyE3cSizFGYmGWsxFxYkAXWOF+CUDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 6, 2017 at 3:27 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Sahil Dua <sahildua2305@gmail.com> writes:
+On Mon, Jun 5, 2017 at 8:23 PM, Stefan Beller <sbeller@google.com> wrote:
 >
->> Adds a test for the case when only one parameter is passed to '-m'
->> (move/rename) option.
->>
->> For example - if 'git branch -m bbb' is run, it should rename the
->> currently checked out branch to bbb. There was no test for this
->> particular case with only one parameter for -m option. However,
->> there's one similar test case for -M option.
->>
->> Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
->> ---
->>  t/t3200-branch.sh | 8 ++++++++
->>  1 file changed, 8 insertions(+)
->>
->> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
->> index fe62e7c775da6..7504f14bc52f8 100755
->> --- a/t/t3200-branch.sh
->> +++ b/t/t3200-branch.sh
->> @@ -100,6 +100,14 @@ test_expect_success 'git branch -m n/n n should work' '
->>       git reflog exists refs/heads/n
->>  '
->>
->> +test_expect_success 'git branch -m bbb should rename checked out branch' '
->> +     test_when_finished git branch -d bbb &&
->> +     test_when_finished git checkout master &&
->> +     git checkout -b aaa &&
->> +     git branch -m bbb &&
->> +     git reflog exists refs/heads/bbb
->> +'
->
-> Looks almost good.  Don't we want to also make sure that HEAD points
-> at bbb branch, e.g.
->
->         git symbolic-ref HEAD >actual &&
->         echo refs/heads/bbb >expect &&
->         test_cmp expect actual &&
->
-> after the "do we have reflog for the bbb branch?" test?
->
-> Also, I suspect that we care about the reflog that is moved to 'bbb'
-> retains entries created for 'aaa'.  So perhaps "reflog exists" needs
-> to be replaced by something like
->
->         git checkout -b aaa &&
->         git commit --allow-empty -m "a new commit" &&
->         git rev-parse aaa@{1} >expect &&
->         git branch -m bbb &&
->         # the topmost entry is about branch creation
->         git rev-parse bbb@{2} >actual
->
-> no?
+> > [...]
+> >  "git diff" has been taught to optionally paint new lines that are
+> >  the same as deleted lines elsewhere differently from genuinely new
+> >  lines.
+> >
+> >  Are we happy with these changes?
 
-Both of these changes make complete sense and in my opinion will
-increase the quality of the tests if applied to the other tests too. I
-notice that no other test for this (-m|-M) option checks if the branch
-is actually checked out. Similarly, no other test checks if the
-operation retains reflog entries. They just check if the new reflog
-exists.
 
-Do you think I should make similar changes to the other tests for
-(-m|-M) option as well?
+I've been studiously ignoring this patch series due to lack of bandwidth.
 
+> [...]
+> Things to come, but not in this series as they are more advanced:
 >
->>  test_expect_success 'git branch -m o/o o should fail when o/p exists' '
->>       git branch o/o &&
->>       git branch o/p &&
->>
->> --
->> https://github.com/git/git/pull/371
+>     Discuss if a block/line needs a minimum requirement.
+>
+> When doing reviews with this series, a couple of lines such
+> as "\t\t}" were marked as a moved, which is not wrong as they
+> really occurred in the text with opposing sign.
+> But it was annoying as it drew my attention to just closing
+> braces, which IMO is not the point of code review.
+>
+> To solve this issue I had the idea of a "minimum requirement", e.g.
+> * at least 3 consecutive lines or
+> * at least one line with at least 3 non-ws characters or
+> * compute the entropy of a given moved block and if it is too low, do
+>   not mark it up.
+
+Shooting from the hip here...
+
+It seems obvious that for a line to be marked as moved, a minimum
+requirement is that
+
+1. The line appears as both "+" and "-".
+
+That doesn't seem strong enough evidence though, and if that is the
+only criterion, I would expect a lot of boilerplate lines like "\t\t}"
+to be marked as moved. It seems like a lot of noise could be
+eliminated by *also* requiring that
+
+2a. The line doesn't appear elsewhere in the file(s) concerned.
+
+Rule (2a) would probably get rid of most boilerplate lines without
+having to try to measure entropy.
+
+Maybe you are already using both criteria? I didn't see it in a quick
+perusal of the code.
+
+OTOH, it would be silly to refuse to mark lines like "\t\t}" as moved
+*only* because they appear elsewhere in the file(s). If you did so,
+you would have gaps of supposedly non-moved lines in the middle of
+moved blocks. This suggests marking as moved lines matching (1) and
+(2a) but also lines matching (1) and the following:
+
+2b. The line is adjacent to to another line that is thought to have
+moved from the same old location to the same new location.
+
+Rule (2b) would be applied recursively, with the net effect being that
+any line satisfying (1) and (2a) is allowed to carry along any
+neighboring lines within the same "+"/"-" block even if they are not
+unique.
+
+Michael
