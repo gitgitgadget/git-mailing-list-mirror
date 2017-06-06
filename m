@@ -2,102 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEB2420D11
-	for <e@80x24.org>; Tue,  6 Jun 2017 11:06:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E62F20D09
+	for <e@80x24.org>; Tue,  6 Jun 2017 11:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751440AbdFFLF7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 07:05:59 -0400
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:22504 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751412AbdFFLF6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 07:05:58 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id ICJAdDPhS46SJICJAd9AFh; Tue, 06 Jun 2017 12:05:57 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=ybZZDoGAAAAA:8 a=GFEwop068PHR33_XSSUA:9 a=QEXdDO2ut3YA:10
- a=6kGIvZw6iX1k4Y-7sg4_:22 a=0RhZnL1DYvcuLYC8JZ5M:22
-Message-ID: <D0E8FF50F1E74043AA0BD71E80C365E5@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "David" <bouncingcats@gmail.com>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Samuel Lijin" <sxlijin@gmail.com>,
+        id S1751433AbdFFLpI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 07:45:08 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35607 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751412AbdFFLpH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 07:45:07 -0400
+Received: by mail-wm0-f66.google.com with SMTP id g15so34460468wmc.2
+        for <git@vger.kernel.org>; Tue, 06 Jun 2017 04:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=ypAHwtos6v9c7HFfSv7+5NIYdeKrajPp7BPsaEXiL14=;
+        b=gV7Aom1bH1jF6CECCimeU+ugztdI9VV69zKaRyY0TzjdNABQ46rsmCRJUse5weJ6yr
+         u6JCUNH4nyKY2fbAt5EimLf/cuNgU9BjYkcQI1TW0tbIJpmuh74FrqzM0tfp4v4k9Y+A
+         0dQdgTRXHJiUhB/MPWDEMcK4MEHyIa30+iMIa/bGQmboEY2Kywf0/PVYfCJxEFthfvht
+         anMptTqEa27e4+6XuSfQEw7mPdU2Isr3PLIr9DycEUy6wq78TIx+EW4Hk1sxkmCCoeui
+         c3eyAJGiTyRDXA7sOS9prqH1KCan8oYIs0y58xFRzrlSNvmyLwZuwXPNVDZlRKeQHXfh
+         wSkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=ypAHwtos6v9c7HFfSv7+5NIYdeKrajPp7BPsaEXiL14=;
+        b=ZIqvgkUP7qyKgB+hr0JmHKMxbxU+vRroa8LeloVxM9KH/fgCwN9EAAN8TuNbUV7aQy
+         ol5fnAJ9fmIMClm+zxqY/vz791JfXjXOB7GvC0Zrcjk2SGdi0oPj38fWsOUEhpXLEd+J
+         k27DekYZ2AC/1HWTWc6noBZ4hY9rSr+sfuMNUMKDjSb2vC3T6E2+Uex9umGTkPVGXId5
+         YNcMRU+vS6D1HnYNS74jpmjbyKLlqYi861FNOuF19mSb1M94dje1HuCJ0msnxhOvopPG
+         AfjlEzSr77k3/r8V6EcBLE3+SMFxvAmrEXUXSRdQqX++xTuoetR8NhB7ibSBQ3ZHkC7V
+         4Nhg==
+X-Gm-Message-State: AODbwcBMUa2saZwtcPZJSTu59ugNJa/b7ky8oyg5LunBg1D57fZamC3R
+        ujfpxh4Jibug8w==
+X-Received: by 10.80.158.99 with SMTP id z90mr9174168ede.144.1496749506259;
+        Tue, 06 Jun 2017 04:45:06 -0700 (PDT)
+Received: from localhost.localdomain (x590d772b.dyn.telefonica.de. [89.13.119.43])
+        by smtp.gmail.com with ESMTPSA id t17sm5662162edd.69.2017.06.06.04.45.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 06 Jun 2017 04:45:05 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     "Philip Oakley" <philipoakley@iee.org>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        "David" <bouncingcats@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Samuel Lijin" <sxlijin@gmail.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         "Stefan Beller" <sbeller@google.com>,
         "Kaartic Sivaraam" <kaarticsivaraam91196@gmail.com>,
-        <git@vger.kernel.org>
-References: <1496671452.4809.2.camel@gmail.com> <20170605231058.pgb4fgfb4z45bzmk@genre.crustytoothpaste.net> <CAGZ79kYp6GepJxZjaXhosX=vCh0vwa57+zFHK2gHFociiyTnDg@mail.gmail.com> <xmqqd1ai9bhf.fsf@gitster.mtv.corp.google.com> <20170606011151.qe5ycih77vqlqgme@genre.crustytoothpaste.net> <CAJZjrdWoK__rZVCG3vRSSEOPgxK7b_wWjpJ3YUQcLxw+J8KfGQ@mail.gmail.com> <xmqqvao9991r.fsf@gitster.mtv.corp.google.com> <CAMPXz=oorE7MQa4a_1eC-+Huf1Tf2XQFjEBcQxsOdso9BJ1S-A@mail.gmail.com>
+        git@vger.kernel.org
 Subject: Re: What does this output of git supposed to mean ?
-Date:   Tue, 6 Jun 2017 12:07:21 +0100
-Organization: OPDS
+Date:   Tue,  6 Jun 2017 13:43:55 +0200
+Message-Id: <20170606114355.30749-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.13.0.420.g54001f015
+In-Reply-To: <D0E8FF50F1E74043AA0BD71E80C365E5@PhilipOakley>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 170606-0, 06/06/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfAhdn7X9u+GE3d5L1qu5HWUYaN021J+vyN77euj+RU7ewn80eKfhP1Omu+xd2DXHIfORH8I0uGPXW2K0o2eD69eyZeMHxER7VBTyF2sYZYIkSDiNZ1TQ
- flN53etL0lFCtI24P4CaHmmaDRHEHRTaITniloJIcwpKfoB/MyW3Lxo5lkuXAu8AammFLRLHDu26aD+S0IvrBYp5Yn0nGf5LgLp3c4p0+8nxFxuTaac/gIqX
- VnU0q4nSLVjuOmTKxmlwrSGUGQMpcpD5IMSs6mSVfwMkmmzaJGbsPHM9Oa4dXxxTTK+x2TOSr61SCRPx00rsdZMGSd2rg9WX2Utlacb11m6jC2WoFdS633/3
- KFb3LhW+IgbXq521vxH11rXHplrftw==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "David" <bouncingcats@gmail.com>
-> On 6 June 2017 at 11:52, Junio C Hamano <gitster@pobox.com> wrote:
->> Samuel Lijin <sxlijin@gmail.com> writes:
->>
->>> For what it's worth, I've never quite understood the "Initial commit"
->>> message, because the repository is in a state where there are no
->>> commits yet, not when HEAD is pointing to a root commit.
->>
->> In the context of "status", it probably is more logically correct if
->> it said "No commit yet" or something.  This is no longer "is initial
->> harder than root?" ;-)
->
-> Exactly. I agree with OP, in the context of running 'git status', I find
-> the string "Initial commit" confusing in the example below, because
-> at that time no commits exist. This creates confusion what git is
-> talking about. The 'git log' message is not very friendly either.
->
-> Perhaps say something like "Repository is empty." there.
 
-<bikeshed>
-I like that. I think that is a very appropriately descriptive statement.
+> >> In the context of "status", it probably is more logically correct if
+> >> it said "No commit yet" or something.  This is no longer "is initial
+> >> harder than root?" ;-)
+> >
+> > Exactly. I agree with OP, in the context of running 'git status', I find
+> > the string "Initial commit" confusing in the example below, because
+> > at that time no commits exist. This creates confusion what git is
+> > talking about. The 'git log' message is not very friendly either.
+> >
+> > Perhaps say something like "Repository is empty." there.
+> 
+> <bikeshed>
+> I like that. I think that is a very appropriately descriptive statement.
+> 
+> An alternative ,with slightly less textual change, could be "Waiting for 
+> initial commit"
+> </bikeshed>
 
-An alternative ,with slightly less textual change, could be "Waiting for 
-initial commit"
-</bikeshed>
+We should consider orphan/unborn branches, too:
 
->
-> $ mkdir test
-> $ cd test
-> $ git init
-> Initialized empty Git repository in 
-> /mnt/hart/home/david_d08/junk/test/.git/
-> $ git log
-> fatal: bad default revision 'HEAD'
-> $ git status
-> On branch master
->
-> Initial commit
->
-> nothing to commit (create/copy files and use "git add" to track) 
+  git (master)$ git checkout --orphan newroot
+  Switched to a new branch 'newroot'
+  git (newroot +)$ git reset --hard
+  git (newroot #)$ git status
+  On branch newroot
+  
+  Initial commit
+  
+  nothing to commit (create/copy files and use "git add" to track)
+
+A purely textual change will not be sufficient, I'm afraid.  Saying
+"Repository is empty" right after 'git init' is fine, I like it.
+However, on an unborn branch with empty index it would be just wrong.
+
+"Waiting for initial commit" is much better even in this case, but I
+still don't like that "initial", though I can't say why, and don't
+have any better suggestion either.  Though users experienced enough to
+create an empty unborn branch would probably not be confused by that.
 
