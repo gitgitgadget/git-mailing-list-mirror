@@ -2,99 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,STOX_REPLY_TYPE,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D963220D09
-	for <e@80x24.org>; Tue,  6 Jun 2017 10:55:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEB2420D11
+	for <e@80x24.org>; Tue,  6 Jun 2017 11:06:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751662AbdFFKzC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 06:55:02 -0400
-Received: from mail-ot0-f171.google.com ([74.125.82.171]:35513 "EHLO
-        mail-ot0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751624AbdFFKzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 06:55:00 -0400
-Received: by mail-ot0-f171.google.com with SMTP id a2so13514459oth.2
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 03:55:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qiK/nKg0PiXSn0JE6q65cF0GHLZu68ugo6aG+Gp+yOI=;
-        b=VRbO/b2W5XSIChib0zf0bRAK4WtjUD3AddpXyQcpKzBVsgsWO3fLKU0/dnPADastwA
-         UfDIZUNz4ZcioW6i7RM3QcFFBpVR80qPIXHVHHxWIz6/pk4rjVS4NBb330ajugFHHW1s
-         5g0rPOUFeS8zbvtdIBr+fme/L24uiuYBOeKcE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qiK/nKg0PiXSn0JE6q65cF0GHLZu68ugo6aG+Gp+yOI=;
-        b=P2Q6tNBflVZnZw4bwrLSKrSCTCTFsGDOqHFbl/5WSFU/V0VPIHtX54sA/g/OvbxgRl
-         EOYQfR5PtxnvxqgyCSNg1nKcA/H5IWp9GT+6PPxbapxbCz5VUJQzeAfmU/nySTe7vZKg
-         KkF+INEtFdnSnJdqEdrgccyJqbjEWkhnabtvMJ4lTsgBU6bARAGhyUSjxwqg9Y7OwlZ9
-         PI+FCo2Ugb6TWYv3cm936/ikSWUjF12QuuKqDicYX3UyKkNX2cmj1TNgsiwHSijvdJ6X
-         hw9lz+Y9Ft2Lljec0tArnQKeIJO1vqULOKc8GlitQXif852/DMb+WzbybFbuoe+pvt/o
-         zikw==
-X-Gm-Message-State: AKS2vOxXEqv5g9EyNCN++bZzyMDjxx19GN17i/ioGXL4m7WdIxUAfGSZ
-        MlwfGtPMazfwgI6zLB+RE0dzKDcQZ1aa
-X-Received: by 10.157.53.88 with SMTP id l24mr12950823ote.155.1496746499597;
- Tue, 06 Jun 2017 03:54:59 -0700 (PDT)
+        id S1751440AbdFFLF7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 07:05:59 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:22504 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751412AbdFFLF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 07:05:58 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id ICJAdDPhS46SJICJAd9AFh; Tue, 06 Jun 2017 12:05:57 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=ybZZDoGAAAAA:8 a=GFEwop068PHR33_XSSUA:9 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22 a=0RhZnL1DYvcuLYC8JZ5M:22
+Message-ID: <D0E8FF50F1E74043AA0BD71E80C365E5@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "David" <bouncingcats@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Samuel Lijin" <sxlijin@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Stefan Beller" <sbeller@google.com>,
+        "Kaartic Sivaraam" <kaarticsivaraam91196@gmail.com>,
+        <git@vger.kernel.org>
+References: <1496671452.4809.2.camel@gmail.com> <20170605231058.pgb4fgfb4z45bzmk@genre.crustytoothpaste.net> <CAGZ79kYp6GepJxZjaXhosX=vCh0vwa57+zFHK2gHFociiyTnDg@mail.gmail.com> <xmqqd1ai9bhf.fsf@gitster.mtv.corp.google.com> <20170606011151.qe5ycih77vqlqgme@genre.crustytoothpaste.net> <CAJZjrdWoK__rZVCG3vRSSEOPgxK7b_wWjpJ3YUQcLxw+J8KfGQ@mail.gmail.com> <xmqqvao9991r.fsf@gitster.mtv.corp.google.com> <CAMPXz=oorE7MQa4a_1eC-+Huf1Tf2XQFjEBcQxsOdso9BJ1S-A@mail.gmail.com>
+Subject: Re: What does this output of git supposed to mean ?
+Date:   Tue, 6 Jun 2017 12:07:21 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.157.62.71 with HTTP; Tue, 6 Jun 2017 03:54:59 -0700 (PDT)
-In-Reply-To: <CAKOu8-2mB=fcFUd86vdK+z==0bX3rUvY-VuNjQ-C6t++uik8YQ@mail.gmail.com>
-References: <CAPRL90JeQ3i1m7ydYzTCFgtZ4cC+gYEXFeAKvCuAVwPLXpsgXg@mail.gmail.com>
- <CAE5ih7-Nmy2J6zO9mx7g=L7Ey9PnVUcD3wnXBN4_0znwOHaUeQ@mail.gmail.com>
- <CAKOu8-2iBV=sAP0WeRMQFT+0y5cJ1g6A3bQ5x=D=8q9ocxnBVg@mail.gmail.com>
- <CAKOu8-0DG_wQf4ch_MH=rjAncg1iP=uA1U7XHgXe7JNrEJSkGg@mail.gmail.com>
- <CAE5ih79VCpmMmaq0AEW=5HeOmVdpjpSmh=1CheUZbqvbNfBFbA@mail.gmail.com>
- <CAE5ih7_yt4zjju3F34gUTKLPip9T98ow=shZY7EPe3yE8gk32Q@mail.gmail.com>
- <CAE5ih7-+EzUhjXCCOu_oELof_2X_qf5snoqUZyuRNqEu+p=ewg@mail.gmail.com> <CAKOu8-2mB=fcFUd86vdK+z==0bX3rUvY-VuNjQ-C6t++uik8YQ@mail.gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Tue, 6 Jun 2017 11:54:59 +0100
-Message-ID: <CAE5ih79_0XhT6Nb5WMki0kCZ_FaWSCYc5H=fZmp3esQSN-tF1w@mail.gmail.com>
-Subject: Re: Git p4 sync changelist interval
-To:     =?UTF-8?B?0JDQvdC00YDQtdC5INCV0YTQsNC90L7Qsg==?= 
-        <1134togo@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170606-0, 06/06/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfAhdn7X9u+GE3d5L1qu5HWUYaN021J+vyN77euj+RU7ewn80eKfhP1Omu+xd2DXHIfORH8I0uGPXW2K0o2eD69eyZeMHxER7VBTyF2sYZYIkSDiNZ1TQ
+ flN53etL0lFCtI24P4CaHmmaDRHEHRTaITniloJIcwpKfoB/MyW3Lxo5lkuXAu8AammFLRLHDu26aD+S0IvrBYp5Yn0nGf5LgLp3c4p0+8nxFxuTaac/gIqX
+ VnU0q4nSLVjuOmTKxmlwrSGUGQMpcpD5IMSs6mSVfwMkmmzaJGbsPHM9Oa4dXxxTTK+x2TOSr61SCRPx00rsdZMGSd2rg9WX2Utlacb11m6jC2WoFdS633/3
+ KFb3LhW+IgbXq521vxH11rXHplrftw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 6 June 2017 at 08:56, =D0=90=D0=BD=D0=B4=D1=80=D0=B5=D0=B9 =D0=95=D1=84=
-=D0=B0=D0=BD=D0=BE=D0=B2 <1134togo@gmail.com> wrote:
+From: "David" <bouncingcats@gmail.com>
+> On 6 June 2017 at 11:52, Junio C Hamano <gitster@pobox.com> wrote:
+>> Samuel Lijin <sxlijin@gmail.com> writes:
 >>
->> It seems to be something to do with the code around line 3395 that says:
+>>> For what it's worth, I've never quite understood the "Initial commit"
+>>> message, because the repository is in a state where there are no
+>>> commits yet, not when HEAD is pointing to a root commit.
 >>
->>     if self.changeRange =3D=3D "@all":
->>         self.changeRange =3D ""
->>     elif ',' not in self.changeRange:
->>
->> It's finding a lower revision number with which to later call
->> importHeadRevision(), but that only seems to be called if the revision
->> range does *not* have a "," in it. As a result, we never actually call
->> importHeadRevision() and so files end up missing.
->>
->> The obvious fix of fishing out the "@3" from the "@3,5" revision range
->> works in this instance, but breaks some of the regression tests.
->>
->> Luke
+>> In the context of "status", it probably is more logically correct if
+>> it said "No commit yet" or something.  This is no longer "is initial
+>> harder than root?" ;-)
 >
-> I did the same change before and it worked for me. I'd like to find
-> out if it is a bug (I think it is), a normal behavior or am I doing
-> something wrong.
+> Exactly. I agree with OP, in the context of running 'git status', I find
+> the string "Initial commit" confusing in the example below, because
+> at that time no commits exist. This creates confusion what git is
+> talking about. The 'git log' message is not very friendly either.
 >
-> So according to what you say, it is a bug.
+> Perhaps say something like "Repository is empty." there.
 
-It's a bug!
+<bikeshed>
+I like that. I think that is a very appropriately descriptive statement.
 
-I think you can workaround it by doing:
+An alternative ,with slightly less textual change, could be "Waiting for 
+initial commit"
+</bikeshed>
 
-$ git p4 clone //depot@3
-$ git p4 sync
+>
+> $ mkdir test
+> $ cd test
+> $ git init
+> Initialized empty Git repository in 
+> /mnt/hart/home/david_d08/junk/test/.git/
+> $ git log
+> fatal: bad default revision 'HEAD'
+> $ git status
+> On branch master
+>
+> Initial commit
+>
+> nothing to commit (create/copy files and use "git add" to track) 
 
-I'll see if I can workout why my obvious fix caused the tests to fail.
