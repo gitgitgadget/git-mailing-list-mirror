@@ -2,98 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41D50209FD
-	for <e@80x24.org>; Tue,  6 Jun 2017 12:49:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78869209FD
+	for <e@80x24.org>; Tue,  6 Jun 2017 12:58:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751703AbdFFMta (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 08:49:30 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:35549 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751689AbdFFMt3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 08:49:29 -0400
-Received: by mail-wm0-f46.google.com with SMTP id x70so36343315wme.0
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 05:49:29 -0700 (PDT)
+        id S1751445AbdFFM5y (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 08:57:54 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36348 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751305AbdFFM5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 08:57:52 -0400
+Received: by mail-wm0-f67.google.com with SMTP id k15so34800691wmh.3
+        for <git@vger.kernel.org>; Tue, 06 Jun 2017 05:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZmFQ6O4wVh7sM6A3z4uqo8hhgX5okLMrWRBCbWf8YNk=;
-        b=sajGqUBRqj6uQVy9KXMngnlakzna5R4oGfZDdQpWPhZbgmdJOUA1yK3syRItG3fiSP
-         1a4jdp37yXqi9bBYM6Zt3ekP3rkFJuSopL9orlCLmJmMRR0Fi3kJj7qxUbQrResFQ9SC
-         rYXCTDrek9GCMi6umLA5xUKY3rVe8jXQcl+McNJNcfSAWn2wgjGAfYNf8IrHR3512YJd
-         8+sYj4TVeq0aeJhTwrSNQhywlKXG6EwX6EsKpEaV/DvSmAzR/G7cndMaXvoBooBJczSG
-         7oeSUt7ODpFQ202HRoEUNwxrtNQA/4IrYNBTuZkrmJpV0JSpbBtZ3isEDmwL87ZoA4Xt
-         VTCA==
+        d=dinwoodie.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UQcghjZrC1S2D11lEFyhhoGmC97j1/3Uq5HljXb5Ilc=;
+        b=KcAF9EhP42r82ZIY9fKOKZfBzBpzKZwheXd4fB3x8Ooy607Kk7hWgK7csi37JcnwD2
+         ODbcB3Efgqf19MSKJetRPDjiqKUavBgk4MRGQxK1UoLgyBtoUGnm9xD3Ok4c+hF8j943
+         3+tdKUf016qoOf7l0BDd/bqB38s56qVz4u23A=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZmFQ6O4wVh7sM6A3z4uqo8hhgX5okLMrWRBCbWf8YNk=;
-        b=s8AF/IT8DDpjjwHWVq2KvF+2O36vNlirAsz2G7OidFFKu9dUYEG1owqnatlL3q+LOV
-         M3sZVp6I5KTcE0zwa5BRU8171A/hNCFArjLUtU+3jB3rp0Y3yuorXfL7wYLYa1GDeQF+
-         SGPsAnROqrUx7nFyBY0QUVaT42zDX4IrURczV6RvBP2E9pouS7c/C4NddXQL7e5sEPsZ
-         w+RrI5wqZikhlwCOVw1NHEWc8+97YCDhPdheaDP8A7h57iNJb3zHhKG9ty2xqfMExJaX
-         o9Y5aPaEn0PMb4NVpgXuorM3omvxj+T1xJO5b1L7QOGZ98y4pPxg0hpXYD5Wfoucol+C
-         0Zmw==
-X-Gm-Message-State: AODbwcCl9edTl6iiqigHv1vRLwN1x16PH4Ya3VMAwxPT2GMcxJzm2byx
-        0dd6tZIibLGrOexNiKmc79Wlehivag==
-X-Received: by 10.28.167.135 with SMTP id q129mr7092926wme.73.1496753363554;
- Tue, 06 Jun 2017 05:49:23 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UQcghjZrC1S2D11lEFyhhoGmC97j1/3Uq5HljXb5Ilc=;
+        b=OL+KPeIIR42WMD5HTZ6kVQiHEcz9gpMk2oPxWaXjLo5hcwF8rIy0HjUtFo0kVpohhX
+         FCZBAiRxBokkqp1DftbIWX3FHq+ZwDbvoRY5wb3WKm+HaCiaLuO657gn48R7Xa6Luh/D
+         M7aV01k2drPUsnh2KC2UNLqylinssNpBc4z5vTJ1pGtRUXt8zYSOXVmG0Pf2WNDCOZPD
+         n1D6iTIZdVb7YQe/gfVUlgXp2PYyozBukg6PEZVNhPh8Xdq3mLy2J7EV8ED0yqXlSKmX
+         IhAjgI0Evf63XYJbPGefRM4Fio7MTkYsS/yETRR1sc1vKMBy+wOZJoLLxVHNyA4VHzV+
+         wuHg==
+X-Gm-Message-State: AODbwcCln5x++X274YztI9HZKWa5n0es1rX+Z9UMkgcjxRjljmnUsAVJ
+        nQPjd+xY4aIcjDYf
+X-Received: by 10.28.43.130 with SMTP id r124mr11374651wmr.83.1496753866351;
+        Tue, 06 Jun 2017 05:57:46 -0700 (PDT)
+Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
+        by smtp.gmail.com with ESMTPSA id w17sm6311476wra.34.2017.06.06.05.57.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Jun 2017 05:57:45 -0700 (PDT)
+Date:   Tue, 6 Jun 2017 13:57:43 +0100
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?Ren=E9?= Genz <liebundartig@freenet.de>
+Subject: Re: [PATCH] docs: suggest "Helped-by" rather than "Thanks-to"
+Message-ID: <20170606125743.GE25777@dinwoodie.org>
+References: <20170605105341.35096-1-adam@dinwoodie.org>
+ <CAGZ79kYZ2yTHxxRUjFZpFWsOWwmh6RBXRd0_a1K9kMTo4exD6A@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.28.152.139 with HTTP; Tue, 6 Jun 2017 05:49:22 -0700 (PDT)
-In-Reply-To: <xmqqmv9l8h5z.fsf@gitster.mtv.corp.google.com>
-References: <20170605203409.GB25777@dinwoodie.org> <CACBZZX6vOr+ZjUaAf8i1xdjEFfY_Exj+_Xn2-1u0RcWoLy+X1g@mail.gmail.com>
- <xmqq4lvtap3m.fsf@gitster.mtv.corp.google.com> <20170606100355.GC25777@dinwoodie.org>
- <xmqqmv9l8h5z.fsf@gitster.mtv.corp.google.com>
-From:   Morten Welinder <mwelinder@gmail.com>
-Date:   Tue, 6 Jun 2017 08:49:22 -0400
-Message-ID: <CANv4PN=G82J86eaPkvy8ZaXZGSnHoJRuKFeLcF34aX6_9Y9fcg@mail.gmail.com>
-Subject: Re: Git v2.13.1 SHA1 very broken
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Adam Dinwoodie <adam@dinwoodie.org>,
-        GIT Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYZ2yTHxxRUjFZpFWsOWwmh6RBXRd0_a1K9kMTo4exD6A@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One could have configure ask some existing dependency that has already
-determined the byte order.  For example:
+On Mon, Jun 05, 2017 at 11:42:31AM -0700, Stefan Beller wrote:
+> So I was wondering if there is a command that shows all trailers?
+> Similar to a "shortlog -sne" I would want to have a list of all trailers.
+> This is because there might be an even more popular trailer than
+> "Helped-by", but we would not know when using the hack above.
+> 
+> While I do not think so, it would sure be interesting to have a list
+> of all these trailers available.
 
-# perl -e 'use Config; $o=$Config{byteorder}; print(($o=~/^1234/ ?
-"little" : ($o=~/4321$/ ? "big" : "weird")), "\n");'
-little
+I just did a quick search with the following knocked-together command:
 
-Good: less #ifdef soup; bad: not so great for cross-compiling.
+    git log --remotes --format=format:%B | sed -rn 's/^([A-Za-z0-9-]+): .* <.*@.*>.*/\1/p' | sort | uniq -c | sort -nr
 
-(That's the integer byte order.  The floating-point byte order can be different;
-hopefully git doesn't care.)
+The top 10 such tags according to this (which is coincidentally the same
+list as the list of all tags used more than 100 times), with
+frequencies, are:
 
-Morten
+  61535 Signed-off-by
+   1641 Acked-by
+    984 Reviewed-by
+    673 Helped-by
+    497 Reported-by
+    180 Cc
+    174 Suggested-by
+    159 Tested-by
+    158 Mentored-by
+    128 Noticed-by
 
-
-
-
-
-On Tue, Jun 6, 2017 at 7:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Adam Dinwoodie <adam@dinwoodie.org> writes:
->
->> Digging briefly into the endianness detection, it appears Cygwin has
->> both _LITTLE_ENDIAN and _BIG_ENDIAN defined.  Git's detection works by
->> assuming it's in a little endian environment and switching to big endian
->> if it detects any of the defines that indicate such, and a010391 adds
->> _BIG_ENDIAN to the set of defines that indicate big endianness.
->
-> I suspect that the upstream has already fixed this one to cope with
-> FreeBSD.  My preference is that we do another import on top of the
-> ab/sha1dc-maint topic, below the commit on ab/sha1dc that adds the
-> upstream as a submodule.
->
+As you might expect, there are a number of entertaining ones that have
+only been used once or twice, such as "Looks-fine-to-me-by",
+"Worriedly-Acked-by", "More-Spots-Found-By", "Looks-right-to-me-by",
+"Hopefully-signed-off-by"...
