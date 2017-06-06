@@ -2,79 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 921E2209FD
-	for <e@80x24.org>; Tue,  6 Jun 2017 18:25:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64219209FD
+	for <e@80x24.org>; Tue,  6 Jun 2017 18:37:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751467AbdFFSZj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 14:25:39 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:33843 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751390AbdFFSZi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 14:25:38 -0400
-Received: by mail-pf0-f181.google.com with SMTP id 9so100543789pfj.1
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 11:25:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=OobG9GnLcXbWuXc84kvMwQq3YB/iYGZlEyzoUaGk0RU=;
-        b=pZQaYzjodCD4a5QdlONPKbp0216wyy6YiXt/daFQEDH3NKz6PWPXfhB6kAIgz4zWET
-         fk1QGps2haIaIl53mfMW2KMnNSv2jQYxyz/i1f9AY2dUJn3MqUgDP7PN+wHctV22k6TD
-         c1PZCxehJ3g/GUfCnLG7KvULVOL/OAKp+VDZcik4bvNmtvjlBOyCeRPBGrzytix2T9AA
-         cC13SbimbMvSWsTRgX9I552PhoFDeHiGuSTz7gNvoM12qq99s9MH2IMKpkZ/ELGlj+nd
-         eUQapZ6bRdO+Gj8NK5qoXScmxYaMzo1ZN0Il4AlWKed3R5QaJm4QG+1HKHevw9eL/JHk
-         SmGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=OobG9GnLcXbWuXc84kvMwQq3YB/iYGZlEyzoUaGk0RU=;
-        b=Tmdhw9pHBAu8jen42N2PugUJ8XpwFJO9rvpD3XmGnzqTHmK+fOv/QYYCEYyKENxlby
-         r0ypiEVF2j+lfx8/CuhZRE84ItI7XMmTC/eEgg2zbdUxicqGLSrSLWyetfp6hLEsC+dA
-         pQjm6vgkLQAAdfz5FMDIwuTLQfOzvw18ig2LKsieWegwPWfdBSzanWtkmHt5ziFFrcxi
-         AUe4kcTXWCvKfHy2FQGp4FuKEypeT5CRKpBDmYbcIGmWeHKyc7m/r0Db/0iGEa7rm8ia
-         2A1wiii0XSuWceFgRkJpb/ct4GaGs2h3lEzqQfFRyBCGv/kPD9awrE4KnI0jZmFHheCD
-         tL2w==
-X-Gm-Message-State: AODbwcCFn6lISX1QrnoIYVud5yuNMqz9UKXfOdd5iZ/FbfTPz8mJq05D
-        BNPSlNzt0mdYhzUBzCMnp2OLKJ0NNty7ALj7Bw==
-X-Received: by 10.99.9.131 with SMTP id 125mr18849137pgj.178.1496773538049;
- Tue, 06 Jun 2017 11:25:38 -0700 (PDT)
+        id S1751516AbdFFSh2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 14:37:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35504 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751432AbdFFSh1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 14:37:27 -0400
+Received: (qmail 20767 invoked by uid 109); 6 Jun 2017 18:37:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Jun 2017 18:37:27 +0000
+Received: (qmail 26635 invoked by uid 111); 6 Jun 2017 18:38:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 06 Jun 2017 14:38:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Jun 2017 14:37:26 -0400
+Date:   Tue, 6 Jun 2017 14:37:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCHv4 1/2] clone: respect additional configured fetch
+ refspecs during initial fetch
+Message-ID: <20170606183726.ycl4k2aoyurj5sfr@sigill.intra.peff.net>
+References: <CAM0VKjnOSxQg_VCBO2cgtbqesmNYx+e_H7m=36PsNWi9K9rQ1Q@mail.gmail.com>
+ <20170530071244.32257-1-szeder.dev@gmail.com>
+ <20170531042304.unkxkuw6s3tcpzkm@sigill.intra.peff.net>
+ <CAM0VKjkfuyBzZmpJL47xmK24EOh6X5OjrxtxVdsgGupAseT_wQ@mail.gmail.com>
+ <20170605081845.tvzidc5nblbnuner@sigill.intra.peff.net>
+ <CAM0VKjngnRv6iAozvhY_c61CyWhQP2khcr0bs1=7G_-MDNu4kg@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Tue, 6 Jun 2017 11:25:37 -0700 (PDT)
-In-Reply-To: <227151496770459@web10m.yandex.ru>
-References: <227151496770459@web10m.yandex.ru>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 6 Jun 2017 11:25:37 -0700
-Message-ID: <CAGZ79kbAwqb87nOm2sG7=uOO2jE6Rkgqofy5iYuZQrg1Jc2okw@mail.gmail.com>
-Subject: Re: [BUG] Help > About Git Gui = crash
-To:     Konstantin Podsvirov <konstantin@podsvirov.pro>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAM0VKjngnRv6iAozvhY_c61CyWhQP2khcr0bs1=7G_-MDNu4kg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 6, 2017 at 10:34 AM, Konstantin Podsvirov
-<konstantin@podsvirov.pro> wrote:
-> Reproduction:
-> - Start git gui
-> - Go to menu panel: Help > About Git Gui
->
-> Output:
-> error: git-gui died of signal 11
->
-> Environment:
-> Debian 8 jessie amd64 KDE
+On Tue, Jun 06, 2017 at 08:19:09PM +0200, SZEDER Gábor wrote:
 
-Care to also share the output of
+> >   if (!remote->fetch)
+> >         BUG("cannot add refspec to an unparsed remote");
+> >
+> > ?
+> 
+> But as mentioned before, remote->fetch being NULL is not a bug in
+> itself, it's a perfectly valid value even in a fully parsed remote
+> when the remote has no fetch refspecs.
+> Therefore, I think, the condition should instead be:
+> 
+>   remote->fetch_refspec_nr && !remote->fetch
 
-  $ git gui --version
-  $ git --version
+Right, that would be a better check.
 
-as I suspect this to come from git and git-gui not working well together.
+> We could even try to be extra helpful by checking this condition and
+> calling parse_fetch_refspec() to initialize remote->fetch instead of
+> BUG()ing out.  However, that would mask the real issue, namely not
+> using remote_get() to get the remote, so I don't actually think that's
+> a good thing to do.
+
+OK.
+
+> To put your worries to rest we should eliminate remote->fetch_refspec
+> altogether and parse refspecs into remote->fetch right away, I'd
+> think.  After all, that's what's used in most places anyway, and it
+> can be easily turned back to a single string where needed (I think in
+> only 3 places in builtin/remote.c).
+
+I don't think we can parse right away without regressing the error
+handling. If I have two remotes, one with a bogus refspec, like:
+
+  [remote "one"]
+  url = ...
+  fetch = refs/heads/*:refs/remotes/one/*
+  [remote "two"]
+  url = ...
+  fetch = ***bogus***
+
+and I do:
+
+  git fetch one
+
+then read_config() will grab the data for _both_ of them, but only call
+remote_get() on the first one. If we parsed the refspecs during
+read_config(), we'd parse the bogus remote.two.fetch and die().
+
+I guess that's a minor case, but as far as I can tell that's the
+motivation for the lazy parsing.
+
+-Peff
