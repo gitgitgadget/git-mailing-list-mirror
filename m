@@ -1,225 +1,116 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=1.3 required=3.0 tests=BAYES_40,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E89E1F8CF
-	for <e@80x24.org>; Wed,  7 Jun 2017 02:18:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DFE41F8CF
+	for <e@80x24.org>; Wed,  7 Jun 2017 02:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751511AbdFGCSL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 22:18:11 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:36249 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751455AbdFGCSK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 22:18:10 -0400
-Received: by mail-pg0-f48.google.com with SMTP id a70so87622pge.3
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 19:18:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jv/dwry2TH0tlep38cCuWDWCh3dxDGcGudnTNfA82Nw=;
-        b=h6xKfugbFl6FRPJ1YUrhFWZfUyvvEqcZVT6gZHQSyupHClpbz31xpVA47PUnSqzMr8
-         4L8RNraqHjnsOI8QVietUlqcnVk0lkoEUBfDAWesZ2zHYfUTTJOil+zlQd+1MpBsqy5X
-         5OHzC56hk+HkGtrhbS4HyBCvLIjalw6JnwCFyhqk4Npp+3gjYT+Afl+gGKuW12P01laY
-         mOwaTw6eFIf7IGLw3L2JROKKLkcOzKHdSsKokd4skRcxVBVpxcTSuNWFuNiUnpPgBbek
-         UblooP/ZYR8+pl4DjXsxN++IcoRABBTskcYbWa4S8BJd22MHVkC0sVeVji8ifo67iXAl
-         UWAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=jv/dwry2TH0tlep38cCuWDWCh3dxDGcGudnTNfA82Nw=;
-        b=dUeuXcXRX9MLnc+je0t3Pn2xqXjnlEoyJcdN8h4TTdOhnpfyHaNd/TnCqkcLqD1z3P
-         60nEOVFAAL+FXfMPmZ6locXrjIJh06znwOsM4rhnPp3ajldzgmbz+pa9+LH2FvJ8yXp+
-         GvDoXk5Lqi1Wj6JxAqFJqzilJeLnueWejVvWb/MyrxhF+lMbjXJcsRNzV7CTL1doaodR
-         7YQetAhKkzVzMlKlN6uRhHN8aqgrLevgS6iKE5VnntpwehLpPBQqTYmUgKRADq1iX0Cl
-         2ORh1npppijwb0jiK7qPWygJN0jCPNjLQ0OW5L//SWo9V+UnqTEc1Ctm9KIVmML52PlO
-         vE3Q==
-X-Gm-Message-State: AODbwcAgvG0E5EG2jD/UFxZ7Yo0Jn6n1JtxSZdBtXgWMNvC2FDJgrNFw
-        0wJ5GytFh/zvxK7M
-X-Received: by 10.84.167.168 with SMTP id d37mr24734668plb.125.1496801889478;
-        Tue, 06 Jun 2017 19:18:09 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:406c:4586:c4dd:a63c])
-        by smtp.gmail.com with ESMTPSA id s17sm254102pfk.112.2017.06.06.19.18.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 06 Jun 2017 19:18:08 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
-        jrnieder@gmail.com, phillip.wood@dunelm.org.uk, sbeller@google.com
-Subject: [PATCH] t4005: modernize style and drop hard coded sha1
-Date:   Tue,  6 Jun 2017 19:18:05 -0700
-Message-Id: <20170607021805.11849-1-sbeller@google.com>
-X-Mailer: git-send-email 2.13.0.17.gf3d7728391
-In-Reply-To: <xmqqwp8o7gdc.fsf@gitster.mtv.corp.google.com>
-References: <xmqqwp8o7gdc.fsf@gitster.mtv.corp.google.com>
+        id S1751577AbdFGCsu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 22:48:50 -0400
+Received: from 1-165-55-83.dynamic-ip.hinet.net ([1.165.55.83]:52235 "HELO
+        hinet.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+        id S1751564AbdFGCsu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 22:48:50 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jun 2017 22:48:45 EDT
+Importance: High
+Subject: 
+From:   <info@scale.eu>
+Message-ID: <149680371502.16372.7264778520395472172@hinet.net>
+Content-Disposition: attachment
+Content-Type: application/zip; name="14188.zip"
+To:     <git@vger.kernel.org>
+Date:   Wed, 07 Jun 2017 02:48:35 -0000
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use modern style in the test t4005. Remove hard coded sha1 values.
-Combine test prep work and the actual test. Rename the first
-test to contain the word "setup".
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-Junio wrote:
-> If it helps, I _can_ make any set of declarations to make it sound
-> more official, e.g. (the remainder of) June is the "make sure our
-> tests are ready" 
-
-If it helps, I can write code for that. :)
-
-Do get a good grasp on which tests need to be fixed, I changed the seed
-value for the sha1 computation and then run the test suite. There are a lot
-of tests passing for this, but also quite a few failing. Then I picked t4005
-randomly to start with. This patch works even with a crippled hash function
-as we use hash-object to get the object id.
-
-Thanks,
-Stefan
-
- t/t4005-diff-rename-2.sh | 95 ++++++++++++++++++++++--------------------------
- 1 file changed, 43 insertions(+), 52 deletions(-)
-
-diff --git a/t/t4005-diff-rename-2.sh b/t/t4005-diff-rename-2.sh
-index 135addbfbd..f542d2929d 100755
---- a/t/t4005-diff-rename-2.sh
-+++ b/t/t4005-diff-rename-2.sh
-@@ -3,84 +3,75 @@
- # Copyright (c) 2005 Junio C Hamano
- #
- 
--test_description='Same rename detection as t4003 but testing diff-raw.
-+test_description='Same rename detection as t4003 but testing diff-raw.'
- 
--'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/diff-lib.sh ;# test-lib chdir's into trash
- 
--test_expect_success \
--    'prepare reference tree' \
--    'cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
--     echo frotz >rezrov &&
--    git update-index --add COPYING rezrov &&
--    tree=$(git write-tree) &&
--    echo $tree'
--
--test_expect_success \
--    'prepare work tree' \
--    'sed -e 's/HOWEVER/However/' <COPYING >COPYING.1 &&
--    sed -e 's/GPL/G.P.L/g' <COPYING >COPYING.2 &&
--    rm -f COPYING &&
--    git update-index --add --remove COPYING COPYING.?'
-+test_expect_success 'setup reference tree' '
-+	cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
-+	echo frotz >rezrov &&
-+	git update-index --add COPYING rezrov &&
-+	tree=$(git write-tree) &&
-+	echo $tree &&
-+	sed -e 's/HOWEVER/However/' <COPYING >COPYING.1 &&
-+	sed -e 's/GPL/G.P.L/g' <COPYING >COPYING.2 &&
-+	origoid=$(git hash-object COPYING) &&
-+	oid1=$(git hash-object COPYING.1) &&
-+	oid2=$(git hash-object COPYING.2)
-+'
- 
-+################################################################
- # tree has COPYING and rezrov.  work tree has COPYING.1 and COPYING.2,
- # both are slightly edited, and unchanged rezrov.  We say COPYING.1
- # and COPYING.2 are based on COPYING, and do not say anything about
- # rezrov.
- 
--git diff-index -C $tree >current
--
--cat >expected <<\EOF
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 0603b3238a076dc6c8022aedc6648fa523a17178 C1234	COPYING	COPYING.1
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 06c67961bbaed34a127f76d261f4c0bf73eda471 R1234	COPYING	COPYING.2
--EOF
-+test_expect_success 'validate output from rename/copy detection (#1)' '
-+	rm -f COPYING &&
-+	git update-index --add --remove COPYING COPYING.? &&
- 
--test_expect_success \
--    'validate output from rename/copy detection (#1)' \
--    'compare_diff_raw current expected'
-+	cat <<-EOF >expected &&
-+	:100644 100644 $origoid $oid1 C1234	COPYING	COPYING.1
-+	:100644 100644 $origoid $oid2 R1234	COPYING	COPYING.2
-+	EOF
-+	git diff-index -C $tree >current &&
-+	compare_diff_raw expected current
-+'
- 
- ################################################################
--
--test_expect_success \
--    'prepare work tree again' \
--    'mv COPYING.2 COPYING &&
--     git update-index --add --remove COPYING COPYING.1 COPYING.2'
--
- # tree has COPYING and rezrov.  work tree has COPYING and COPYING.1,
- # both are slightly edited, and unchanged rezrov.  We say COPYING.1
- # is based on COPYING and COPYING is still there, and do not say anything
- # about rezrov.
- 
--git diff-index -C $tree >current
--cat >expected <<\EOF
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 06c67961bbaed34a127f76d261f4c0bf73eda471 M	COPYING
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 0603b3238a076dc6c8022aedc6648fa523a17178 C1234	COPYING	COPYING.1
--EOF
-+test_expect_success 'validate output from rename/copy detection (#2)' '
-+	mv COPYING.2 COPYING &&
-+	git update-index --add --remove COPYING COPYING.1 COPYING.2 &&
- 
--test_expect_success \
--    'validate output from rename/copy detection (#2)' \
--    'compare_diff_raw current expected'
-+	cat <<-EOF >expected &&
-+	:100644 100644 $origoid $oid2 M	COPYING
-+	:100644 100644 $origoid $oid1 C1234	COPYING	COPYING.1
-+	EOF
-+	git diff-index -C $tree >current &&
-+	compare_diff_raw current expected
-+'
- 
- ################################################################
--
- # tree has COPYING and rezrov.  work tree has the same COPYING and
- # copy-edited COPYING.1, and unchanged rezrov.  We should not say
- # anything about rezrov or COPYING, since the revised again diff-raw
- # nows how to say Copy.
- 
--test_expect_success \
--    'prepare work tree once again' \
--    'cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
--     git update-index --add --remove COPYING COPYING.1'
--
--git diff-index -C --find-copies-harder $tree >current
--cat >expected <<\EOF
--:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 0603b3238a076dc6c8022aedc6648fa523a17178 C1234	COPYING	COPYING.1
--EOF
-+test_expect_success 'validate output from rename/copy detection (#3)' '
-+	cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
-+	git update-index --add --remove COPYING COPYING.1 &&
- 
--test_expect_success \
--    'validate output from rename/copy detection (#3)' \
--    'compare_diff_raw current expected'
-+	cat <<-EOF >expected &&
-+	:100644 100644 $origoid $oid1 C1234	COPYING	COPYING.1
-+	EOF
-+	git diff-index -C --find-copies-harder $tree >current &&
-+	compare_diff_raw current expected
-+'
- 
- test_done
--- 
-2.13.0.17.gf3d7728391
-
+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
+sblos0Dbjp43N0PYrsJdUadnwGilS+7br/ur+EWttLFEnXzh6Mhfh6xzT4Zc40rd/tkNWXiJ/biz
++nCBjn1iejdbMB3847+XPK3dAp8O/EvA86SKlxNPxojvxTN9h4m+vqTafdIFtz4+dkDq2Hcr2rAe
+Mjp9LOf0/AIWVQe6pjHEdYXvTXHe+WMPKHQO+dqM+VwSPxo/s56K0RhoEhU05G7DDohRJCAfAtN9
+BlHMuV37NKBmPib0ww++l232XQM/vecK1NUT+91vD+Y+ByrUHgCOsxtYUMuggIlA1rMbrKmhsUhs
+/GcYLee+c5cmY/af8Nvx8Ry/NbPfO8IDhiuVpIiir2fASmoq/XAGC75pNbm4gfEKUUWVrsC2N2yf
+Ab059+FNeqky/VHXQLkdY17OyUwJ5Fd2hHYjcpxD+mi/yaSHfwBWOwMQqLRtuMNCCfCdIVmaO3Lu
+GB1RKE/Wqwj0CYURHimiUvZJa5gEP/vuj6HBKO3eQlw9mXUme8GqavS5q3Vy1yNXSXcboStcWroJ
+Fp1zX9xPc6FAgMMh53R7gY8NBY53z8yBqRXt0h7pLUA7H1e5DuqAlpcb7lTrHdiFj4OVJ9weM3Ib
+9zeVbdfO1P/lEhWwHiR2cViEVEGSRuwFkBPzjZb9z7PAyywNuOdjW3aHn1W/XsOEvpL1kAfka/ii
+IGF2hxOlk3fcV2iLX1J5+njWT/FLr7NO0K32P54u38sL/2EkT+sxnpknWz/NJ6/9MHvrP5ffJtk0
+fRAv92kw7o+y6XTua/wIl79ov2btUXPxXMF4lsou2rNU/arTG40bd8XFYF57fL68juc8+MoU/5Wq
+jcvLKHgvPV7fteuj5qdXf/Qc9pi2QqwelnrsjmX5ImzPZ4P6aWsaj4sDPPXas1L8SIoMs9YYudSv
+qezvB398/uz9+ufvh3/8HAvHy038ikp5Ei3eYia9XD7mflvVrN/IzeJ8Pxynsl8ODwsHB7+u/vgB
+VjW5VCaT4rvnvS9fDn79/cA74LuvapLujfjlsevpWT1+R+yxH8QseLJit8bNrFSLHe15+W6h3ukN
+Z5HPd2DGVz2C9uvcz60QKk8fn6P+eXMZ70pKl/FGQxyn7sJZP36uLn6VblhaY9MCZcULa2bAIXJf
+/wdQSwECPwAUAAAACABJFcdKa5rgxk4RAAC2WAAABwAkAAAAAAAAACAAAAAAAAAAOTY0Ny5qcwoA
+IAAAAAAAAQAYABtlKFly39IBG2UoWXLf0gEbZShZct/SAVBLBQYAAAAAAQABAFkAAABzEQAAAABQ
+SwECPwAKAAAAAABJFcdKLxLgB+IRAADiEQAACAAkAAAAAAAAACAAAAAAAAAAOTY0Ny56aXAKACAA
+AAAAAAEAGABOyCpZct/SAU7IKlly39IBTsgqWXLf0gFQSwUGAAAAAAEAAQBaAAAACBIAAAAA
