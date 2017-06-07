@@ -7,98 +7,81 @@ X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 192291FACB
-	for <e@80x24.org>; Wed,  7 Jun 2017 15:51:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6D51FACB
+	for <e@80x24.org>; Wed,  7 Jun 2017 16:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751412AbdFGPvA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 11:51:00 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56719 "EHLO mout.gmx.net"
+        id S1751469AbdFGQGS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 12:06:18 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50695 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750831AbdFGPu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 11:50:58 -0400
+        id S1751190AbdFGQGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 12:06:16 -0400
 Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LsChr-1e0Xcb2vCp-013uB2; Wed, 07
- Jun 2017 17:50:42 +0200
-Date:   Wed, 7 Jun 2017 17:50:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOf5S-1dFtur0j1a-0068fe; Wed, 07
+ Jun 2017 18:06:07 +0200
+Date:   Wed, 7 Jun 2017 18:06:06 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v4 0/8] PCRE v2, PCRE v1 JIT, log -P & fixes
-In-Reply-To: <xmqqshjfuv48.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1706071749430.171564@virtualbox>
-References: <20170601182056.31142-1-avarab@gmail.com> <xmqqbmq74773.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1706021803460.171564@virtualbox> <CACBZZX7yEs0U4LnULYMGM5CoDCACeh8DM=ONV+UmeM4EQsk7Sw@mail.gmail.com>
- <xmqqshjfuv48.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/9] discover_git_directory(): avoid setting invalid
+ git_dir
+In-Reply-To: <cover.1496851544.git.johannes.schindelin@gmx.de>
+Message-ID: <300d32d72b67f8c12b6cc91c36a5735a77f5ed89.1496851544.git.johannes.schindelin@gmx.de>
+References: <cover.1496851544.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1190994942-1496850642=:171564"
-X-Provags-ID: V03:K0:NXh66ZSt5EjB8Y24/rthv0NBzBykQ7nik3XbZOfcupoFeama7k+
- uqDtSTreqYta7ud1fOde0vQ0heQ94neyamcQx5F3ezV05K87sr1f3TXy9Ly+cGn6Fe3w3H9
- AhIRGnOQ0RoOTw3Hch4KLqo8E+X/cl+IzjEEZjqxkcYoJP0CYV3hlh6wHeENLbG+93Ywvrt
- gaq7Yi9ih3UL0tS8Cssig==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NBYJxXhUhS4=:brEX6cFSl8K7G3NvSDm7mr
- 65FXFG9Nn4n/0fLzCWHSRQKBE5gbFzYN5wovE9X5ljTJGSVRipX8b9OgpSGIYq1STkUNAyyh/
- r5UjdI4E097sYvwFAiWQsNYtFDVA7H+rpGbMAP0vzHBEQ7geWRMrrWmjy3mQE3i0ET9KIJwt0
- b7i/PaKFa8keDiFGi7GUJesLTzos0NMqKUEmBZ7mOT/9kdkmKMgwAfUTzQMWBZ31TU+yAR4Qm
- nzGPlZBEa5ixiHqzRM843Fk0pWW4kvBlUr8HIur+IuTAuMn6R76KK5fXrRjNvBV+2xD7kNq++
- foctDZ9DejZCv65qHnd3LW7XdCHecKX0kiX8t87NmOGrCB+ju+SpaJerC48TYs4cDTOwKr0oa
- h3ayXt6rOBr11vKgN8NoMCh8JO26w+piANkpawuqZsFdUT5/7nyH/75Cgp+1JcS2xopsMmCTV
- gLX/Uxi5QeZJTqPGGBvbsV/wsXLNrb56IZMF2PIK246FLkrg0X3D236W+Bjn8rFZ+wP9PleWv
- NfpgBBeAWao1EpEHcsWsLdfhBS9vIONehReLI5i/fsfEPFLKJQsJl/csytETb3iSXdc8cVQDI
- 8G7Yxbbqnsx9cFWn0T1y//3Z4nd3bN/wNM78zu3hkFbJqD6vbJ4zaxTRrL9MUFSxTgfMAhG+X
- 9XvlMU/If3D4gdUotXgrnh3LariHLKlhYEZIvUop0DR9JXbobKfAikZKegUghEUfmSwIxhKGi
- qaWqbhw2ealdFftzQFyyGL6HLhfzD4IzDSsnze7ZSN4ONVzUXIYFQBEDhPZbU0/76bhqOfX/s
- e5FitXI
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:j17aVaamtyKfGwGN0kO0cJ5ZIlSLC0zJMFE1TtMp6GOHgVxrctM
+ bXD6iWynYNzmHR2dTXvw9D1f3CZAilREkIqTioXTWYHzHKo0saAjcIqbbmM52YoukluEyje
+ 17PaOo8npkZuQfdIQhl22HbiRuNI/CMqk2ig1NFxwtd+Wiv7IK/nwSf3FpU6G4sQ35XwHgB
+ WCDVttbJ8WtLVklML5M+w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ejEdjTCQN/g=:6O9qoM35YsMdhV5OAb6fo4
+ iCo7LxNM5n+pWx+tuY88UzE5E5igInXm6SVXMJx3WlZJYUZ/LzmC8geeo+3dPfSZ/jpZ3FNZt
+ pD5aa0Xryy0UItjcGWmylWHr/bTmc7rsZwpFekz5w2nR3Gqj9Ong7PYryNXg4gCIOEYr1XrDs
+ jN994nr6aq0yD1UidXmAjj8heEEp45PxNmqSOXYERkpf74tnlhOO0g+LOhPL7SmFzFDq17QXc
+ uzt5jbNLwU2JG2xvWZXgjjKvzVn7IkghbezIQ0KMhgbzx9w+1AXhsm3VtiIVUpVECXrQPmpX8
+ rX3WKQ5O7oKMh0txifQwbY4J5G0wsvV0iQAzqfeMUEVJS/WcjsaDGYGPORkJTyNx6Lq2c7Xfe
+ BjfapWZY87m+KA7/5iK2R3tzeyhKCHX0aZwMDKIo8CbowsLc1NtjKS7b5/qdXiy/+wBEYKzgt
+ dAtXAL/7CrUKoqcNgni6F5XpdunMkP55qExZRP7rsgiJ1KB47Q23eDwl0PaROhcvddMpMZA1d
+ bOSL/8lpV4uIFFQwCz+4tNvGddnqcq3IDQMgGk+kFGri6/FufDsbYrtnxvFEMBbxpEXASxOhz
+ 5Vl2rJKAZgeruWsBY5f75Temce8oMAmYlix0s9eGaItK89KnrV6AuRthvxw+0mdpddefFcLaU
+ w3+w3vKIWW9NTV+SBO0nYJDEYj8TBkAvO7dZlcPqbZnK6YvahzVSVTRVjSpLIm7FBfMGrHvYj
+ cljZtLxlcXymdX2npBhxyrtefICtFEb4e5Y73R8w9/MmhMcrHvJ0q/3qns+2Wblrdu4FvmRYq
+ YyLdBvx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+When discovering a .git/ directory, we take pains to ensure that its
+repository format version matches Git's expectations, and we return NULL
+otherwise.
 
---8323329-1190994942-1496850642=:171564
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+However, we still appended the invalid path to the strbuf passed as
+argument.
 
-Hi,
+Let's just reset the strbuf to the state before we appended the .git/
+directory that was eventually rejected.
 
-On Mon, 5 Jun 2017, Junio C Hamano wrote:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ setup.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->=20
-> > On Fri, Jun 2, 2017 at 6:10 PM, Johannes Schindelin
-> >>
-> >> Will continue with testing Git for Windows using PCRE2 next week and k=
-eep
-> >> you posted,
-> >
-> > Thanks a lot for testing it. Great to hear that it (definitely almost) =
-works!
-> >
-> > If the grep tests it's very likely that all of them will pass, the
-> > only tests I run when developing this series (outside of the full run
-> > for list submission) are t[0-9]*grep*.sh t[0-9]*log*.sh tests, since
-> > those are the only ones impacted by it.
->=20
-> 'ab/pcre-v2' was marked for 'next' in "What's cookin" a few issues
-> ago, but I'll keep it in 'pu' to wait for the above---please give me
-> a go ahead when we all are happy with the topic.  I expect to be
-> offline in the later part of this week, by the way.
+diff --git a/setup.c b/setup.c
+index e3f7699a902..2435186e448 100644
+--- a/setup.c
++++ b/setup.c
+@@ -982,6 +982,7 @@ const char *discover_git_directory(struct strbuf *gitdir)
+ 		warning("ignoring git dir '%s': %s",
+ 			gitdir->buf + gitdir_offset, err.buf);
+ 		strbuf_release(&err);
++		strbuf_setlen(gitdir, gitdir_offset);
+ 		return NULL;
+ 	}
+ 
+-- 
+2.13.0.windows.1.460.g13f583bedb5
 
-It turns out that the entire test suite passes when I enable PCRE2. I will
-try to make the packages available generally in Git for Windows' SDK
-tomorrow.
 
-Ciao,
-Dscho
---8323329-1190994942-1496850642=:171564--
