@@ -2,124 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB1371FACB
-	for <e@80x24.org>; Wed,  7 Jun 2017 17:51:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB3301FACB
+	for <e@80x24.org>; Wed,  7 Jun 2017 18:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751541AbdFGRvZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 13:51:25 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:35951 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751433AbdFGRvZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 13:51:25 -0400
-Received: by mail-pg0-f53.google.com with SMTP id a70so7653105pge.3
-        for <git@vger.kernel.org>; Wed, 07 Jun 2017 10:51:24 -0700 (PDT)
+        id S1751675AbdFGSFB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 14:05:01 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:35747 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751561AbdFGSFA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 14:05:00 -0400
+Received: by mail-it0-f43.google.com with SMTP id m62so114856613itc.0
+        for <git@vger.kernel.org>; Wed, 07 Jun 2017 11:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/bREPe35eR9m+5hF3eMNLaRZXjHA1I9B7wncKl9kZgg=;
-        b=u9FWs/PwUoP+5wmLELt3yYJEw6WR5hVoTblk9I8Lq9MNkA172/EA3PDtY0TFfcFDTT
-         MZJnnb0lDzKJQIQECpLMswkrkXPYL0j26NUeB3EktN8whM9GCvOkLeKict9z60TAGI1R
-         1DzOLEQLQvalgsBfPRX6HJ/dm7a5GpgouL51tqf7vNqcVt7gvIyVjTNozKZkIWCW0PJc
-         Nd71xn+cOTwsEjiCqc14tSEhspTeGiHsncNAfqoSaEaSxldklAhm8ALt7wqyNqlDCS5U
-         EQCCnsOFRZ9OsGpB1CHi+hVggEagUv6gC9WL/AhT6R2lc1XvrMTE/jPI1OisF7wZl2Px
-         puXg==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=mtNXZWrjgtjspz3kpAzJQqcjMTi8fZjyZ7Hrs+rOHds=;
+        b=p7bholPUA8vQFEm+yGn/BJS602xYCQvieePXjRrSFCHsEymmexzuGTI9FWhQqMqqcg
+         Rub77KgoMAxcP/xmPnM1n+eCmui4A/i19VtPeLGLhhuMs3GEmnpj9jxcfTJqEMxB2JXf
+         BfVYY9OVvnvMR3KVx+F0Pz4AZXMACb6tXfy3re6gw17wse/YtbBFPkKcPjckQ2uxiHrB
+         8RukuiFBCSCfAel3DLTkpAGhmGGM63Q7ZEKQ7EqlxcxXzrW79YDJAa8LAqpywS8QZxAB
+         Zbjcl6vGDZrBueMooMjMSJupkozIbfPcmcmGC66w8Jn4M6gV52wDd9lf88ZOTSFYTSIQ
+         nTOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/bREPe35eR9m+5hF3eMNLaRZXjHA1I9B7wncKl9kZgg=;
-        b=pIhVzJW2n1+xYZqZU74SjiaTh2fH3RmpjeMNYNM3VL4Xu1MHet3PfonyFr48bz9nl7
-         ltxV+kM+VHK73CZrcVvYqPoiYyhP1udsp3HqUIRQOkPrAK42juAUpUVZZQifVJ/rYp1o
-         3YRT+BE2YKqaL+9bPd807nsbvetV7YaRRmiam/qsm03zZk4uwLlYI19cbbgT87txV6Ly
-         DA9mH/c3Ib+lTc/gDNSKSoDXuLUtnoCVLcYxjbT67mPFJo9LqYieXZw/qxE+G9kNDINQ
-         yR4OfEgf8j974ovCajsYVS7mmPWoczxHhY/o1PAj6oWM0RpNZLxqmaB1syg19L/hvF57
-         EcGQ==
-X-Gm-Message-State: AODbwcByLN1Sm/GlP0zedlz4Rw+GQt71P4F9XCZ1P3fK3Hw78O6kMM4W
-        n5dRq3AMc1wHh74y
-X-Received: by 10.84.192.3 with SMTP id b3mr16669950pld.76.1496857884274;
-        Wed, 07 Jun 2017 10:51:24 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:793b:8a31:813b:ceb2])
-        by smtp.gmail.com with ESMTPSA id a187sm4918189pge.45.2017.06.07.10.51.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Jun 2017 10:51:23 -0700 (PDT)
-Date:   Wed, 7 Jun 2017 10:51:22 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/9] help: use early config when autocorrecting aliases
-Message-ID: <20170607175122.GC110638@google.com>
-References: <cover.1496851544.git.johannes.schindelin@gmx.de>
- <d7b77cbd688b7536aebee49df652af594d2a1293.1496851544.git.johannes.schindelin@gmx.de>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=mtNXZWrjgtjspz3kpAzJQqcjMTi8fZjyZ7Hrs+rOHds=;
+        b=lpv1Ed4H52D0qX/i1vgCo9rAJS2gwEu5Vxwmm7VsigWHyfo+kneC6EbjZ14Eq5jGmk
+         mtPNWf4ERS8svM8PDU+bV8CGOzRL5qfKwqXis0VGmM/U9L+HH7frb/ATkpgnrNeCtKjl
+         U7qpP2cUQvqw7g471sGwbP7rQ/jAB0nB6fp/8QLlvRbrmC2hv0cDpU5N9Tpr8hz8VHae
+         HqgJkgG38kol0o5vRsuqEMNEQ/JlV737iwFqA2Xg6P1O3lORWWj8DBJdI0bBTrtZSUUF
+         Mz/gsaMRM6DSwiNvop/6/giNadeVSx5dO8XWg5WHpyEcCxZxwl8pVzaIgc7tNIr+9bxK
+         DOZg==
+X-Gm-Message-State: AODbwcDuBRI0tmzXYi+UngGiAsCNXbmGdN9eCOdLbcsKbtsHgiMLsRoJ
+        93YmH48Q55sERhkpJTk4iNUxx/w2Jri1l7E=
+X-Received: by 10.36.212.71 with SMTP id x68mr692422itg.67.1496858699731; Wed,
+ 07 Jun 2017 11:04:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d7b77cbd688b7536aebee49df652af594d2a1293.1496851544.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.79.135.7 with HTTP; Wed, 7 Jun 2017 11:04:58 -0700 (PDT)
+In-Reply-To: <CACBZZX6AKYA5PmE6Le4cxCTCOOix1ErHyT21C=L83CQBYaN=RQ@mail.gmail.com>
+References: <CAKvHMgTBmdKrz-i9-uBFtx08pegjuY2=jKQE21pi=MabTuicrw@mail.gmail.com>
+ <CAKvHMgSgOyDhffPm=-QEQNzoCoPtmWbV_R7JDtBFTHQ-sL3Wug@mail.gmail.com> <CACBZZX6AKYA5PmE6Le4cxCTCOOix1ErHyT21C=L83CQBYaN=RQ@mail.gmail.com>
+From:   Liam Breck <liam@networkimprov.net>
+Date:   Wed, 7 Jun 2017 11:04:58 -0700
+X-Google-Sender-Auth: bxWBfyzhoBocud00qfanZuLQVn4
+Message-ID: <CAKvHMgRpS3AgRAm1ukH18kX5jNF6PEU8YTsq7mQ36myQgRe=Pw@mail.gmail.com>
+Subject: Re: send-email: Net::SMTP::SSL failure
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/07, Johannes Schindelin wrote:
-> Git has this feature where suggests similar commands (including aliases)
+Thanks for your help!
 
-nit: s/where/which/
+On Wed, Jun 7, 2017 at 10:16 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Wed, Jun 7, 2017 at 7:00 PM, Liam Breck <liam@networkimprov.net> wrote=
+:
+>> On Tue, Jun 6, 2017 at 10:47 PM, Liam Breck <liam@networkimprov.net> wro=
+te:
+>>>
+>>> This is configured to send via a gmail account
+>>> git send-email --to-cover --cc-cover <patch-list>
+>>>
+>>> I See
+>>> Attempt to reload IO/Socket/SSL.pm aborted.
+>>> Compilation failed in require at
+>>> /usr/share/perl5/vendor_perl/Net/SMTP/SSL.pm line 6.
+>>> BEGIN failed--compilation aborted at
+>>> /usr/share/perl5/vendor_perl/Net/SMTP/SSL.pm line 6.
+>>> Compilation failed in require at /usr/lib/git-core/git-send-email line =
+1386.
+>>> fatal: 'send-email' appears to be a git command, but we were not
+>>> able to execute it. Maybe git-send-email is broken?
+>>>
+>>> Net/SMTP/SSL.pm v1.04
+>>>
+>>> perl v5.26.0
+>>>
+>>> Seen in git 2.11.1, 2.12.2, 2.13.0, 2.13.1 on Arch Linux
+>>
+>> Also fails with perl 5.24.1 & 5.24.0
+>>
+>> Last working config was git 2.9.3 on perl 5.24.1
+>>
+>> The relevant code from git-send-email is:
+>>
+>>             require Net::SMTP;
+>>             $smtp_domain ||=3D maildomain();
+>>             $smtp_server_port ||=3D 25;
+>>             $smtp ||=3D Net::SMTP->new($smtp_server,
+>>                          Hello =3D> $smtp_domain,
+>>                          Debug =3D> $debug_net_smtp,
+>>                          Port =3D> $smtp_server_port);
+>>             if ($smtp_encryption eq 'tls' && $smtp) {
+>>                 require Net::SMTP::SSL;
+>>                 $smtp->command('STARTTLS');
+>>
+>> I really wish git bundled its non-core perl libs...
+>
+> What's the output from just:
+>
+>     perl -MNet::SMTP -we1
 
-> in case that the user specified an unknown command.
+No output, exit code 0, however...
 
-s/that//
+$ perl -MIO::Socket::SSL -we1
+Can't load '/usr/lib/perl5/site_perl/auto/Net/SSLeay/SSLeay.so' for
+module Net::SSLeay: libssl.so.1.0.0: cannot open shared object file:
+No such file or directory at /usr/lib/perl5/core_perl/DynaLoader.pm
+line 193.
+at /usr/share/perl5/vendor_perl/IO/Socket/SSL.pm line 19.
+Compilation failed in require at
+/usr/share/perl5/vendor_perl/IO/Socket/SSL.pm line 19.
+BEGIN failed--compilation aborted at
+/usr/share/perl5/vendor_perl/IO/Socket/SSL.pm line 19.
+Compilation failed in require.
+BEGIN failed--compilation aborted.
 
-> 
-> This feature currently relies on a side effect of the way we expand
-> aliases right now: when a command is not a builtin, we use the regular
-> config machinery (meaning: discovering the .git/ directory and
-> initializing global state such as the config cache) to see whether the
-> command refers to an alias.
-> 
-> However, we will change the way aliases are expanded in the next
-> commits, to use the early config instead. That means that the
-> autocorrect feature can no longer discover the available aliases by
-> looking at the config cache (because it has not yet been initialized).
-> 
-> So let's just use the early config machinery instead.
-> 
-> This is slightly less performant than the previous way, as the early
-> config is used *twice*: once to see whether the command refers to an
-> alias, and then to see what aliases are most similar. However, this is
-> hardly a performance-critical code path, so performance is less important
-> here.
+I don't have {vendor,site}_perl/auto/ tho I have the package for
+ssleay installed.
 
-Agreed, and it is more important to be correct than performant.
+Since which git release was that required?
 
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  help.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/help.c b/help.c
-> index db7f3d79a01..b44c55ec2da 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -289,7 +289,7 @@ const char *help_unknown_cmd(const char *cmd)
->  	memset(&other_cmds, 0, sizeof(other_cmds));
->  	memset(&aliases, 0, sizeof(aliases));
->  
-> -	git_config(git_unknown_cmd_config, NULL);
-> +	read_early_config(git_unknown_cmd_config, NULL);
->  
->  	load_command_list("git-", &main_cmds, &other_cmds);
->  
-> -- 
-> 2.13.0.windows.1.460.g13f583bedb5
-> 
-> 
 
--- 
-Brandon Williams
+> I have not looked deeply at this, but the error you're getting means
+> "we tried to load it before and failed, and here you are trying
+> again".
+>
+> This is almost definitely due to this line in git-send-email:
+>
+>         if (eval { require Net::SMTP; 1 }) {
+>
+> And more generally, this code is all buggy:
+>
+>     4 matches for "eval.*require" in buffer: git-send-email.perl
+>     153:my $have_email_valid =3D eval { require Email::Valid; 1 };
+>     154:my $have_mail_address =3D eval { require Mail::Address; 1 };
+>    1118:        if (eval { require Net::Domain; 1 }) {
+>    1129:        if (eval { require Net::SMTP; 1 }) {
+>
+> Well, "buggy" in the sense that we're just happy-go-lucky trying to
+> load these modules, and if they have an error we don't report it, then
+> when we try to load them again perl just emits a generic error saying
+> you're trying to require() something that already failed somewhere
+> before, a minimal test case for that is:
+>
+>     $ cat /tmp/Fails.pm
+>     package Fails;
+>     die "oh noes";
+>     $ perl -I/tmp -we 'eval { require Fails }; require Fails'
+>     Attempt to reload Fails.pm aborted.
+>     Compilation failed in require at -e line 1.
+>
+> Whereas what we really want to do is some variant of:
+>
+>     $ perl -MData::Dumper -I/tmp -we 'eval { require Fails } or warn
+> $@; require Fails'
+>     oh noes at /tmp/Fails.pm line 2.
+>     Compilation failed in require at -e line 1.
+>     Attempt to reload Fails.pm aborted.
+>     Compilation failed in require at -e line 1.
+>
+> Or even the more adventerous, this can have some bad side-effects with
+> some libraries (you lie to perl saying you haven't seen it before),
+> but I doubt Net::SMTP cares much, particularly when we're just about
+> to report an error:
+>
+>     $ perl -MData::Dumper -I/tmp -we 'eval { require Fails } or do {
+> delete $INC{"Fails.pm"} }; require Fails'
+>     oh noes at /tmp/Fails.pm line 2.
+>     Compilation failed in require at -e line 1.
