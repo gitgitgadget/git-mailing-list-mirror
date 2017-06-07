@@ -7,230 +7,173 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90A971FAEB
-	for <e@80x24.org>; Wed,  7 Jun 2017 21:46:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A406E1FAEB
+	for <e@80x24.org>; Wed,  7 Jun 2017 21:58:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751435AbdFGVqv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 17:46:51 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:36242 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751424AbdFGVqu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 17:46:50 -0400
-Received: by mail-io0-f175.google.com with SMTP id y77so12800299ioe.3
-        for <git@vger.kernel.org>; Wed, 07 Jun 2017 14:46:50 -0700 (PDT)
+        id S1751433AbdFGV6v (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 17:58:51 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:33516 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751072AbdFGV6u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 17:58:50 -0400
+Received: by mail-it0-f65.google.com with SMTP id l6so2340577iti.0
+        for <git@vger.kernel.org>; Wed, 07 Jun 2017 14:58:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=E6/neasSKir85EoWllGXrmMrmBRxEiPKUvRiW9KbZxY=;
-        b=Ssdu+K6Xkc03dhcL0tf5pQdOsq6Nys+sNvv0fV1TaRvGpsqO6ijqbhP6CB/zHkShYz
-         JfZHbS+A9ErkZT/hXuc86pKuKWvOefnORvHCnp0JVjTo/I2QjHduWxXs2z3Cqu3pQGm8
-         t3vZe98dKRFl/8Wi2rhFZ23xtdKRUszLUpjbwLekHfGiz8QzGJ4f6i+D2uSStc6Ahu1U
-         OVlBMJO4oxzyMpW3vcJuu0EhhyCxjmtnXrcZcFzRO8JCc4upUTFTnhQinb+xK0vSE7Pn
-         VcnG3eUuXnHdw+7pfhInZf8pWcoAgjoUuG3o0mkLarZQAgh3MyByfDOMhGhhvHBG85K2
-         JN+g==
+         :cc;
+        bh=fPkAQxWh2WH1gUas1SqMQLj89+WmwUzIA2pCKbOcvkQ=;
+        b=bYhYD1Z5EGP5nyvvZAGeT+gwn7rdnaEFNfi/R45TW7cm7mKpm88xRbGqkixh1A6f91
+         MT+j6/aJpYKiMSHUZ7C4DThJkCtr54FnH7Ir5ghwRr7t8mslIiPtsdd0GazoZzjdDBDv
+         8/UTXVKe2Ppy8vh1nfsiWKeztAVNIV/sti9WKrbU2yWFiR/mGYbtP35ey5ES3TJq+Cmq
+         oga9dh95Kkeu3v2C0c9s9K52UfdTs8xwopjs6Iu0AoDYP4Q3n6VHPz2uD22G0h4hnDO9
+         t1p5SLYsqlxX4NhdZrctSg+l7+rcg0pnnLQtKklIgq3GaZnXs2ZeFG18uRuo/key6O4Y
+         JtUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=E6/neasSKir85EoWllGXrmMrmBRxEiPKUvRiW9KbZxY=;
-        b=ePEG+qef+VDOSaSKNzsCfNS00VABXC0sQCjncmoIj1HRQc0VZFs9aXXlNjHYUuqNmK
-         xkX0AkNQseo4PzThJjvlEYJWNlQMEn49orWc0+AUqhojC1TZMfy4IR935A0t9LBBacfR
-         oF93OEwqkZGypV6rW7Q0XMYVLgN8QEOzLyZFg/fMBJg47ZwnlO4BJDQWccFtJXrRbFAx
-         DeugKLVrtuczsCdlUR/q2aCCUzwFvQbRr4eO00nKS/OfJIsCO98uSc0zKUIohpD9CP+x
-         jrtI4dHE9M3EAsCNkEdoWHasTD4AlDamw0hgu8r/oMWStLC+QkQOYfjMlFZvOfU9uph2
-         RmvA==
-X-Gm-Message-State: AODbwcDpISFiEfOmFl/LyjqPspHg9BExs9YTqmpKbbZKhhOVeXIZk17h
-        l/mku1HNsv5sq6LLLMUwAoYCfujXZA==
-X-Received: by 10.107.178.130 with SMTP id b124mr19813293iof.50.1496872009518;
- Wed, 07 Jun 2017 14:46:49 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=fPkAQxWh2WH1gUas1SqMQLj89+WmwUzIA2pCKbOcvkQ=;
+        b=kkv7mGWke5d+RhCZqY0fUOB6F6tyjE+tZmyPGZz0VwutASiAcHGY9h93kPjvoTZS94
+         8JdxjpArAilEIVTItXeI1htXmihXtTix4uudIrTkIWbHY6ABhjQPxogEsSKC98dRqkkH
+         cd2JrVEIXwUZ2w29PmeDOhvAJ1A7w68VR21UMXyGZYRwgFC6/KggCzdFyw7e6FtcXkJh
+         lVcaJt3KoYMXET8Vce5VUNb0jnog4OOLIEGrXz/DLUFr0qjrWvI0mXbXD6TOz561Piv2
+         iR6M/CrGL9EPP3F4KbQN7PJrZAXs7c/IWqGffLw79/jyMuAvhP1Wze1zLVlhbcfAYxEc
+         Um9g==
+X-Gm-Message-State: AODbwcApPa45vuE67+1GRiW5ReVTwDf/bGY8BrNJhh7Ji3x8qhkQeLUM
+        YggmXxUVXkZRIJj50Rm3XwTccvQt0w==
+X-Received: by 10.36.164.67 with SMTP id v3mr2292393iti.71.1496872729487; Wed,
+ 07 Jun 2017 14:58:49 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.3.231 with HTTP; Wed, 7 Jun 2017 14:46:28 -0700 (PDT)
-In-Reply-To: <0cfd57d3-4092-af06-0d6c-cb3ceecc4633@gmail.com>
-References: <4c3fed40-774b-8ae6-fa1b-50efe6ef552f@gmail.com>
- <20170602102853.23073-1-avarab@gmail.com> <c84864d3-9823-0b02-a337-29592b7c01f3@gmail.com>
- <CACBZZX48t3Jcy=eiga1f_ATSZZvy9_LG9wEe7avD2NCq2bsmJA@mail.gmail.com> <0cfd57d3-4092-af06-0d6c-cb3ceecc4633@gmail.com>
+Received: by 10.107.3.231 with HTTP; Wed, 7 Jun 2017 14:58:28 -0700 (PDT)
+In-Reply-To: <CAGZ79kZVB9Ld8m+Zjps0ysEvXaptp2_FzimqRhiOHEBfXdX91Q@mail.gmail.com>
+References: <xmqq1sqzkrui.fsf@gitster.mtv.corp.google.com> <CAGZ79kY2Z-fJYxczbzheu1hChLkKkdjEcDMwsP-hkN0TjUBotQ@mail.gmail.com>
+ <CAMy9T_H4WAh6kA3K4VVv7oUwL3KHcK-mM-4bXxC0D1FinRa8mA@mail.gmail.com>
+ <CA+P7+xr2xrVfUPppCa4gCj72enX-_qZsAK3bNtOusfh7wWH0rg@mail.gmail.com> <CAGZ79kZVB9Ld8m+Zjps0ysEvXaptp2_FzimqRhiOHEBfXdX91Q@mail.gmail.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 7 Jun 2017 23:46:28 +0200
-Message-ID: <CACBZZX6D8oC34qat7kdrDOWC5eYm-DRkMWG9eOPPvKKsQtgPyw@mail.gmail.com>
-Subject: Re: [WIP/PATCH 7/6] perf: add a performance test for core.fsmonitor
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+Date:   Wed, 7 Jun 2017 23:58:28 +0200
+Message-ID: <CACBZZX6FR-KD-TpRaGjLR0MfUt62w0KvYpikK7WcTS2EMQ2L8w@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2017, #03; Mon, 5)
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        David Turner <David.Turner@twosigma.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 7, 2017 at 9:51 PM, Ben Peart <peartben@gmail.com> wrote:
+On Wed, Jun 7, 2017 at 8:28 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Jun 6, 2017 at 3:05 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>> On Tue, Jun 6, 2017 at 2:50 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>>> On Mon, Jun 5, 2017 at 8:23 PM, Stefan Beller <sbeller@google.com> wrote:
+>>>>
+>>>> > [...]
+>>>> >  "git diff" has been taught to optionally paint new lines that are
+>>>> >  the same as deleted lines elsewhere differently from genuinely new
+>>>> >  lines.
+>>>> >
+>>>> >  Are we happy with these changes?
+>>>
+>>>
+>>> I've been studiously ignoring this patch series due to lack of bandwidth.
+>>>
+>>>> [...]
+>>>> Things to come, but not in this series as they are more advanced:
+>>>>
+>>>>     Discuss if a block/line needs a minimum requirement.
+>>>>
+>>>> When doing reviews with this series, a couple of lines such
+>>>> as "\t\t}" were marked as a moved, which is not wrong as they
+>>>> really occurred in the text with opposing sign.
+>>>> But it was annoying as it drew my attention to just closing
+>>>> braces, which IMO is not the point of code review.
+>>>>
+>>>> To solve this issue I had the idea of a "minimum requirement", e.g.
+>>>> * at least 3 consecutive lines or
+>>>> * at least one line with at least 3 non-ws characters or
+>>>> * compute the entropy of a given moved block and if it is too low, do
+>>>>   not mark it up.
+>>>
+>>> Shooting from the hip here...
+>>>
+>>> It seems obvious that for a line to be marked as moved, a minimum
+>>> requirement is that
+>>>
+>>> 1. The line appears as both "+" and "-".
+>>>
+>>> That doesn't seem strong enough evidence though, and if that is the
+>>> only criterion, I would expect a lot of boilerplate lines like "\t\t}"
+>>> to be marked as moved. It seems like a lot of noise could be
+>>> eliminated by *also* requiring that
+>>>
+>>> 2a. The line doesn't appear elsewhere in the file(s) concerned.
 >
+> 'elsewhere' in the opposing sign (+,-) or all the diff (including ' ' context)?
 >
-> On 6/2/2017 7:06 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>
->>
->> I don't have time to update the perf test now or dig into it, but most
->> of what you're describing in this mail doesn't at all match with the
->> ad-hoc tests I ran in
->>
->> https://public-inbox.org/git/CACBZZX5e58bWuf3NdDYTxu2KyZj29hHONzN=3Drp-7=
-vXd8nURyWQ@mail.gmail.com/
->>
->> There (at the very end of the E-Mail) I'm running watchman in a tight
->> loop while I flush the entire fs cache, its runtime is never longer
->> than 600ms, with 3ms being the norm.
+> This rule opens up the discussion on multi-copies, which I imagine
+> happens a lot in configuration files. So say you have a prod and staging
+> environment, then you might be tempted to make patches titled as:
+>   "1. preparation: duplicate common code into prod and staging"
+>   "2. Make an actual change to staging"
 >
+> For 1. you still want to see that there is faithful copy, but we'd have
+> 2 postimages having these lines.
 >
-> I added a perf trace around the entire query-fsmonitor hook proc (patch
-> below) to measure the total actual impact of running the hook script +
-> querying watchman + parsing the output with perl + passing the result bac=
-k
-> to git. On my machine, the total cost of the hook runs between 130 ms and
-> 180 ms when there are zero changes to report (ie best case).
+> Also what about de-duplication?
+> I just stumbled upon edb0c72428 ([PATCH] diff: consolidate test
+> helper script pieces., 2005-05-31) for unrelated reasons,
+> but the move coloring of the same content multiple times
+> helped me there to focus on the relevant part.
 >
-> With short status times, the overhead of watchman simply outweighs any ga=
-ins
-> in performance - especially when you have a warm file system cache as tha=
-t
-> cancels out the biggest win of avoiding the IO associated with scanning t=
-he
-> working directory.
+>>>
+>>> Rule (2a) would probably get rid of most boilerplate lines without
+>>> having to try to measure entropy.
 >
+> But it would also get rid of good use cases when not being very careful.
+> I intentionally left out the (2a) as I am not yet sure how the move
+> detection for multiple occurrences in post and preimage should
+> work in the desired case. The suppression of little-entropy closing braces
+> might be a side effect of just this. Or it can be treated separately.
 >
-> diff --git a/fsmonitor.c b/fsmonitor.c
-> index 763a8a3a3f..cb47f31863 100644
-> --- a/fsmonitor.c
-> +++ b/fsmonitor.c
-> @@ -210,9 +210,11 @@ void refresh_by_fsmonitor(struct index_state *istate=
-)
->          * If we have a last update time, call query-monitor for the set =
-of
->          * changes since that time.
->          */
-> -       if (istate->fsmonitor_last_update)
-> +       if (istate->fsmonitor_last_update) {
->                 query_success =3D !query_fsmonitor(HOOK_INTERFACE_VERSION=
-,
->                         istate->fsmonitor_last_update, &query_result);
-> +               trace_performance_since(last_update, "query-fsmonitor");
-> +       }
+>>>
+>>> Maybe you are already using both criteria? I didn't see it in a quick
+>>> perusal of the code.
+>>>
+>>> OTOH, it would be silly to refuse to mark lines like "\t\t}" as moved
+>>> *only* because they appear elsewhere in the file(s). If you did so,
+>>> you would have gaps of supposedly non-moved lines in the middle of
+>>> moved blocks. This suggests marking as moved lines matching (1) and
+>>> (2a) but also lines matching (1) and the following:
+>>>
+>>> 2b. The line is adjacent to to another line that is thought to have
+>>> moved from the same old location to the same new location.
 >
->         if (query_success) {
->                 /* Mark all entries returned by the monitor as dirty */
+> This is what we do, a "block detection" by comparing "line runs" against
+> the current lines. Based on these line runs we detect one block and
+> color up adjacent blocks.
 >
+>>>
+>>> Rule (2b) would be applied recursively, with the net effect being that
+>>> any line satisfying (1) and (2a) is allowed to carry along any
+>>> neighboring lines within the same "+"/"-" block even if they are not
+>>> unique.
 >
+> So you are saying each block has to have at least one unique line?
+> That doesn't go well with (de-)duplication IMHO.
 >
->>
->> I.e. flushing the cache doesn't slow things down much at all compared
->> to how long a "git status" takes from cold cache. Something else must
->> be going on, and the smoking gun is the gprof output I posted in the
->> follow-up E-Mail:
->>
->> https://public-inbox.org/git/CACBZZX4eZ3G8LQ8O+_BkbkJ-ZXTOkUi9cW=3DQKYjf=
-HKtmA3pgrA@mail.gmail.com/
->>
->> There with the fsmonitor we end up calling blk_SHA1_Block ~100K times
->> during "status", but IIRC (I don't have the output in front of me,
->> this is from memory) something like twenty times without the
->> fsmonitor.
->>
->> It can't be a coincidence that with the fscache:
->>
->> $ pwd; git ls-files | wc -l
->> /home/avar/g/linux
->> 59844
->>
->> And you can see that in the fsmonitor "git status" we make exactly
->> that many calls to cache_entry_from_ondisk(), but those calls don't
->> show up at all in the non-fscache codepath.
->>
->
-> I don't see how the gprof numbers for the non-fsmonitor case can be corre=
-ct.
-> It appears they don't contain any calls related to loading the index whil=
-e
-> the fsmonitor gprof numbers do.  Here is a typical call stack:
->
-> git.exe!cache_entry_from_ondisk()
-> git.exe!create_from_disk()
-> git.exe!do_read_index()
-> git.exe!read_index_from()
-> git.exe!read_index()
->
-> During read_index(), cache_entry_from_ondisk() gets called for every item=
- in
-> the index (which explains the 59K calls).  How can the non-fsmonitor
-> codepath not be loading the index?
->
->> So, again, I haven't dug and really must step away from the computer
->> now, but this really looks like the fscache saves us the recursive
->> readdir() / lstat() etc, but in return we somehow fall though to a
->> codepath where we re-read the entire on-disk state back into the
->> index, which we don't do in the non-fscache codepath.
->>
->
-> I've run multiple profiles and compared them with fsmonitor on and off an=
-d
-> have been unable to find any performance regression caused by fsmonitor
-> (other than flagging the index as dirty at times when it isn't required
-> which I have fixed for the next patch series).
->
-> I have done many performance runs and when I subtract the _actual_ time
-> spent in the hook from the overall command time, it comes in at slightly
-> less time than when status is run with fsmonitor off.  This also leads me=
- to
-> believe there is no regression with fsmonitor on.
->
-> All this leads me back to my original conclusion: the reason status is
-> slower in these specific cases is because the overhead of calling the hoo=
-k
-> exceeds the savings gained. If your status calls are taking less than a
-> second, it just doesn't make sense to add the complexity and overhead of
-> calling a file system watcher.
->
-> I'm working on an updated perf test that will demonstrate the best case
-> scenario (warm watchman, cold file system cache) in addition to the worst
-> case (cold watchman, warm file system cache).  The reality is that in nor=
-mal
-> use cases, perf will be between the two. I'll add that to the next iterat=
-ion
-> of the patch series.
+> Thanks for your shot from the hip. I'll think about these rules more to see
+> if I can make sense of them for duplication still.
 
-I'll try to dig further once we have the next submission + that perf test.
+I've just been skimming this topic so far, but a question, what variant of:
 
-On Linux the time spent calling the hook itself is minimal:
+    git diff ... | grep ...
 
-    $ touch foo; time .git/hooks/query-fsmonitor 1 $(($(date +%s) *
-1000000000 - 10))
-    Watchman says these changed: foo
-    foo
-    real    0m0.009s
-    user    0m0.004s
-    sys     0m0.000s
+Can I use to see whether the diff that's being emitted has hunks
+marked as moved? Presumably this needs -c ui.color=always & grepping
+for the color codes.
 
-So I'm fairly sure something else entirely is going on, but anyway, we
-can look at that later with the next submission.
-
-Aside from that, I wonder on Windows how much speedier this could be
-for you if the entire hook was written in perl instead of a
-shellscript that calls perl. I could help with that if you'd like.
-
-You can likely replace that call to uname with reading the $^O variable.
-
-What you're doing shelling out to cygpath can probably be done by
-loading the File::Spec library, but I'm not sure.
-
-The echo / watchman / perl would need to be an IPC::Open3 invocation I thin=
-k.
-
-I think it being in shellscript is fine, just a suggestion in case
-having it all in one process (aside from the watchman shell-out) would
-help or Windows.
+The use-case being to say add that diff | grep -q to a for-loop to
+find all diffs in a repo that have hunks marked as moved.
