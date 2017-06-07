@@ -2,131 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC4B01FACB
-	for <e@80x24.org>; Wed,  7 Jun 2017 16:06:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36A811FACB
+	for <e@80x24.org>; Wed,  7 Jun 2017 16:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751476AbdFGQGV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 12:06:21 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49728 "EHLO mout.gmx.net"
+        id S1751479AbdFGQGZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 12:06:25 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52796 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751445AbdFGQGR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 12:06:17 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MYOkT-1dNMXj2daj-00VCos; Wed, 07
- Jun 2017 18:06:02 +0200
-Date:   Wed, 7 Jun 2017 18:06:01 +0200 (CEST)
+        id S1751405AbdFGQGY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 12:06:24 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MGoU1-1d5hA43fF3-00DWeM; Wed, 07
+ Jun 2017 18:06:13 +0200
+Date:   Wed, 7 Jun 2017 18:06:12 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/9] Avoid problem where git_dir is set after alias
- expansion
-Message-ID: <cover.1496851544.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 3/9] help: use early config when autocorrecting aliases
+In-Reply-To: <cover.1496851544.git.johannes.schindelin@gmx.de>
+Message-ID: <d7b77cbd688b7536aebee49df652af594d2a1293.1496851544.git.johannes.schindelin@gmx.de>
+References: <cover.1496851544.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RXWrSg8FZf6ZRFBf0BQedZ2Df6ff54hxezytLritZ5ycEnWAKlI
- 6O3Xro2U4L7UBfs84LQ59lg/RcNiVeu64ZQEgcErmRJHCjf0WLOahiGqbYI8Q76VdzmfolS
- K9WTPTQi2RPw9W8uet5T3rfCUEXWARCyAAI8YNiSG3Fg5r2ErD9dLCQQQSvfnJuhbYWvG8q
- AX0Hg5Q/cesWEcZHSd0XA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rJ8QVXaRPbk=:xRLRqQaKYQOeLrP0LwsR7b
- pRXksWfdNiAZBoniM724CH3at5Y4+991tW7xNBuD/SbXmyfGUl2dvA6a5+Sv+yhVvG4D10QF9
- gRwnTG1nWJDLSsw7Ai6WXNitKWkB6n9+qUBER4w1DfgXeBLsk8uKoI0/l+4JI0Fb/MVptW5wC
- yk8xTjqTxTDY/XQI9t/8zRgwVnwe/Z2m0dePiIh5fKKpz5HJ6J+2YHK1lCWuZRzeoSQSArs74
- RS4/LbVl/anEKcjp3cmoEE1aOg3ebsFo+uqWQVtVXWtg0mVuxFyPY9z3AxseN92+dFPyqGtTc
- R/Ewn4VpR89jvkdGJi7Y8wyE0L5NnX4LpkXFRM5iaJwxuTfuM9NFmlV/e5rQ0LAlnAZ8O6FgA
- laDZ9IyYwegA2gu9aiQ3GAEHjKD8mCjuVLqVWHFnVHrwcJjkqbvJIYNZ9Hzymdk4YJajH128s
- RV4xMRD0psEytEY4LCihCv2Ze6UyqiTa6FGpEGaG8Z7cYzC8kB2mRVsAaP18W1WSqs6TFDlwO
- 4nMNLmaJr0EhwEzhiNu36Eqs9mFfHdVLQf0+rg8SXs/Bb8mhGNm3TDu1g+Xsm4MKz3/wUliaK
- UiHbML8qTOkcxqPBkIk8/7PX3ryv8qA6X00+VBPZpPvS8EfqEsLy8KQQ1mkthCq+tuIPqPUbY
- wZLTZFJ9jBJfPOPweVcVzcFTUJ5GtVkBXRNKca9yj1M41qKQoWpLv3bHborc3QO7TpCl96ZnH
- 3ocfVk01bysEk5Jj0dpkvglLWN9A2nqZofoJUC4iuQ0HwZaPpTbClEplT70q08O6/FjsaHZ3d
- OfG9TX7
+X-Provags-ID: V03:K0:sspP9Fc66xUCbxV0WEHGLvpItAHOi2Sj6nx9PWY8gwpZnTPn2GE
+ EUvfLqp3X5dqjJLN+A5ntIebvb6kXO0JqwBmDJDHir6vrAv0j7qLFLeJdRMfuB8I4Vwk36L
+ pKPaxEhlH1ecFn0QF0ZEymoojybsEoTvRC9tK/msvCqXZoqaZeETpO2oiEUaK+sbW8kgY6H
+ T79jsij2CBKicvXP50l4Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:m/ntqajA53A=:cZC/Cb+7jCizCTMHjj2MQ2
+ ua1pgHNBDbn+488/BSfgvzJQ8EfXcEzWiOzxDKHKKRXuM7YMKEKFPhPAcY8spbAUFM9RoDLXa
+ M2s1U3SyvYx6/tsqpOArJg5bpVHMUfvFRnlr3tCiKJg8EiXW0OM5BqJ3B7pVIJONxR+BtQATd
+ eBDApBAsApWVFi397hhiBkHmF+oYFWZxYj0bWmfFrgm4uRmTemaw2cAESimIefhp4Fry0LuOj
+ +HxCRi4USD/maAE8z9IzfjlEys7fzsxZplvSHszHogAnfJpnPZ0h81mUrrPx1rclTRBA6vquJ
+ E10cOy1/RByuRIcjMt0TCjhVcvewbd7YOVrblF+cEhZY3xbi4t+oWB5zTiQlxuafFyNQFJQfS
+ rCMgAemFilfJUvFGJnwzI9O4y+klwfOMgE9/zl8gMTNoUP934dTEF4LgqT+DVMpspKY7SblYJ
+ cXMQc+eaYo3fJ4wQFvZSH4gLMymgCg21+oRhlR/GY0gFrWQFrv/VRoXmYP/GMpWQV/ccmpNwL
+ cyF+++/3aQU97rnwTDr0xNNEOf2XNFLo3qY0xrH2DFK7TetOHCrx1Bk9EuWz9Oy/PjYcLx39S
+ uETD5tnEqEjTjtgAxyZm77AL8zV1SOvc8xC18MYCen4gPbWsPKEbyz1qHsVbtIKmaTjo8tNOd
+ wpSeVE5yTPSVXrZPo+GhRlMH5mo6W8Tq3oJpX6uHdyTZlMic/9r6phJ9BnxJlpJcgR6QMH505
+ UieUhzlRF0oFP/MHyZV7roCjanQyLvxc7MYEhYSUeckfrTYT4LM/4LjgciE2J5b8wo/34/VBm
+ 5IQQxl2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When expanding an alias in a subdirectory, we setup the git_dir
-(gently), read the config, and then restore the "env" (e.g. the current
-working directory) so that the command specified by the alias can run
-correctly.
+Git has this feature where suggests similar commands (including aliases)
+in case that the user specified an unknown command.
 
-What we failed to reset was the git_dir, meaning that in the most common
-case, it was now pointing to a .git/ directory *in the subdirectory*.
+This feature currently relies on a side effect of the way we expand
+aliases right now: when a command is not a builtin, we use the regular
+config machinery (meaning: discovering the .git/ directory and
+initializing global state such as the config cache) to see whether the
+command refers to an alias.
 
-This problem was identified in the GVFS fork, where a pre-command hook
-was introduced to allow pre-fetching missing blobs.
+However, we will change the way aliases are expanded in the next
+commits, to use the early config instead. That means that the
+autocorrect feature can no longer discover the available aliases by
+looking at the config cache (because it has not yet been initialized).
 
-An early quick fix in the GVFS fork simply built on top of the
-save_env_before_alias() hack, introducing another hack that saves the
-git_dir and restores it after an alias is expanded:
+So let's just use the early config machinery instead.
 
-	https://github.com/Microsoft/git/commit/2d859ba3b
+This is slightly less performant than the previous way, as the early
+config is used *twice*: once to see whether the command refers to an
+alias, and then to see what aliases are most similar. However, this is
+hardly a performance-critical code path, so performance is less important
+here.
 
-That is very hacky, though, and it is much better (although much more
-involved, too) to fix this "properly", i.e. by replacing the ugly
-save/restore logic by simply using the early config code path.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ help.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-However, aliases are strange beasts.
-
-When an alias refers to a single Git command (originally the sole
-intention of aliases), the current working directory is restored to what
-it had been before expanding the alias.
-
-But when an alias starts with an exclamation point, i.e. referring to a
-command-line to be interpreted by the shell, the current working
-directory is no longer in the subdirectory but instead in the worktree's
-top-level directory.
-
-This is even true for worktrees added by `git worktree add`.
-
-But when we are inside the .git/ directory, the current working
-directory is *restored* to the subdirectory inside the .git/ directory.
-
-In short, the logic is a bit complicated what is the expected current
-working directory after expanding an alias and before actually running
-it.
-
-That is why this patch series had to expand the signature of the early
-config machinery to return the additional information for aliases'
-benefit.
-
-
-Johannes Schindelin (9):
-  discover_git_directory(): avoid setting invalid git_dir
-  config: report correct line number upon error
-  help: use early config when autocorrecting aliases
-  read_early_config(): optionally return the worktree's top-level
-    directory
-  t1308: relax the test verifying that empty alias values are disallowed
-  t7006: demonstrate a problem with aliases in subdirectories
-  alias_lookup(): optionally return top-level directory
-  Use the early config machinery to expand aliases
-  TODO:
-
- alias.c                | 33 +++++++++++++++++++++-------
- builtin/help.c         |  2 +-
- cache.h                |  7 +++---
- config.c               |  7 +++---
- git.c                  | 59 ++++++--------------------------------------------
- help.c                 |  2 +-
- pager.c                |  4 ++--
- setup.c                | 13 +++++++++--
- t/helper/test-config.c |  2 +-
- t/t1308-config-set.sh  |  4 +++-
- t/t7006-pager.sh       | 11 ++++++++++
- 11 files changed, 70 insertions(+), 74 deletions(-)
-
-
-base-commit: 8d1b10321b20bd2a73a5b561cfc3cf2e8051b70b
-Published-As: https://github.com/dscho/git/releases/tag/alias-early-config-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git alias-early-config-v1
+diff --git a/help.c b/help.c
+index db7f3d79a01..b44c55ec2da 100644
+--- a/help.c
++++ b/help.c
+@@ -289,7 +289,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 	memset(&other_cmds, 0, sizeof(other_cmds));
+ 	memset(&aliases, 0, sizeof(aliases));
+ 
+-	git_config(git_unknown_cmd_config, NULL);
++	read_early_config(git_unknown_cmd_config, NULL);
+ 
+ 	load_command_list("git-", &main_cmds, &other_cmds);
+ 
 -- 
 2.13.0.windows.1.460.g13f583bedb5
+
 
