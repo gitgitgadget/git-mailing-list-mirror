@@ -2,155 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7EB1FACB
-	for <e@80x24.org>; Wed,  7 Jun 2017 18:30:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C74D11FACB
+	for <e@80x24.org>; Wed,  7 Jun 2017 18:32:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751805AbdFGSaL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 14:30:11 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:35417 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751641AbdFGSaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 14:30:11 -0400
-Received: by mail-pg0-f47.google.com with SMTP id k71so7966814pgd.2
-        for <git@vger.kernel.org>; Wed, 07 Jun 2017 11:30:10 -0700 (PDT)
+        id S1751889AbdFGSci (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 14:32:38 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36235 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751690AbdFGSch (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 14:32:37 -0400
+Received: by mail-wr0-f196.google.com with SMTP id e23so1896945wre.3
+        for <git@vger.kernel.org>; Wed, 07 Jun 2017 11:32:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=AVx3+zTsgz/+gp6BGd0SYk1nqGOm+IhirkmLfqBRrJc=;
-        b=R4mya4t4vVCsBU3akKRkt2/q7UD2Yo4A1O2Wnzb1ypMszRcgzhI7FcIOodbUWgXJEO
-         PB52vhI28m+5zG4yWtAU19Uel7pt3ea1g0XTGAgpiE5cZrlyMD140qsZwOBuWrleWdal
-         4mW/711wWv2MnawEDie4L13oETvZTch2hply0+ZRFPUn4Ahmjcqzgfw7+zGnbfU7+bfE
-         VfNgIvrI7tXTmF6ZH9AMxxFw6vlkYOP7GZsBB8FupVzdPgAODK9wLvBA2vXmmVkFub60
-         YYzWXMyw97yrk35jQAnefXWNKqdyhnsAq1IFigqSWiRQjhoezAQjxrXpHtYXEjtyRBui
-         5uPw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=JBnci5wn0TY0rGmYS6Q+t9uUPMRPjoz40oYZhJLDk7Y=;
+        b=OL11JF5iAPulZOg5IBWv2iY49U/b1EuIGftxUdY6WvuqxLBn8MQkRGzK/NgvWo/T4+
+         clu0ysop13VThnDJ99NjQ80o18uixgfD7mUZYKdCvU95jr73wPHDmGH71Kaad4ysnjvU
+         usezsJAwBJ+W/60j6mGQ52w9JKuDkB/w8RsUMu+X8k2oXNW+hqtcNE96YK6QojSrKakI
+         HXdaxqptO0dRoRHR22XV1tAL/AGgppApfESd5R7WCfd145b3Gp6oyGg4a4qrjTgjeDiQ
+         lB9FkGBLdrCdWm1uKOMEbVlagr2HyjEnUkiFPkvhQi8D5mrBNXmHkRVQfNr7MfK/BD/V
+         YrIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AVx3+zTsgz/+gp6BGd0SYk1nqGOm+IhirkmLfqBRrJc=;
-        b=MHZ7lvgLU/AdZag+69YWXZeUGhUurNG0U5//BFwkZCb3f2DttUk+VbDr9quV+lfIuK
-         m3ztd6P0mo2AMrQwkmYbddHOkyso2cHISs2u4KL8nxBQk9vC5/C9be8QcsqsEN+9zCn6
-         CPpHxa9A3mOMrvNNVJGkMh02881hv8Pm2MNsD+jYoZi1d0hmtfH2BE3DtbtSJjJOWV2V
-         u7scLN9VUiN+XvyOeSlvQeaQ6P6zerVG6xRyAwJcGQd64O80U+IskXE9cEq6fw8mYZyU
-         EPGbJIRymKEUqbOomaMKkpARmwxx+/wfFyt6UUNYwdqXqdsF1zlsvFQCHV/xtkt2fAEe
-         hzlw==
-X-Gm-Message-State: AODbwcCctSRZebQMq4Ka6UxrixdONXXk811IMl1mp4684yMimj73pxaa
-        IwHtli+JM65TL22y
-X-Received: by 10.98.37.68 with SMTP id l65mr33397503pfl.175.1496860210121;
-        Wed, 07 Jun 2017 11:30:10 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:793b:8a31:813b:ceb2])
-        by smtp.gmail.com with ESMTPSA id c67sm5533826pfe.37.2017.06.07.11.30.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Jun 2017 11:30:09 -0700 (PDT)
-Date:   Wed, 7 Jun 2017 11:30:08 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/9] Avoid problem where git_dir is set after alias
- expansion
-Message-ID: <20170607183008.GG110638@google.com>
-References: <cover.1496851544.git.johannes.schindelin@gmx.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1496851544.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=JBnci5wn0TY0rGmYS6Q+t9uUPMRPjoz40oYZhJLDk7Y=;
+        b=Idf7RyNEO9DyvPR02SXEpwArIIQbneqNYR3H+GPcART8vyXazwoTQv8R09U/Tklamd
+         VlA31CKtibVpZWmwJyZ/7B8MBMbMG7IEIPEjWNUurH7y/Z4LJ7FyG0ymUaWRaGPgBJq8
+         hpJ2i8/4w4TGAUIGmPzW9M/ZOy1aA0q7XntMSPtsOjdBM8vIFKhRZtns7weOOIC6vJWk
+         K+DStv7Fm4tStT909mSE+SKnacbgy3VIsRMS5VVLamz2nMKBl1Cy78SLhf5vzbEj/5qh
+         kwFb3v/CA2dAv5Qqd5AyhBO8Afklt+eNZFkBq5g7eeUJ7jkDipi2r6tzqTtbRC1kqVVN
+         FyBA==
+X-Gm-Message-State: AODbwcDZhuc0IDnrEb3tVWrEs/TnxI7hzb8hTCCHycbwnu+TIG+GF2DK
+        38PfU3ELQKUFsRxjSj8=
+X-Received: by 10.223.173.23 with SMTP id p23mr13725621wrc.56.1496860356020;
+        Wed, 07 Jun 2017 11:32:36 -0700 (PDT)
+Received: from arrakeen.fritz.box ([2001:a61:1006:a201:2c73:5f2f:b8a6:9ab1])
+        by smtp.gmail.com with ESMTPSA id l26sm4006975wrl.15.2017.06.07.11.32.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 07 Jun 2017 11:32:34 -0700 (PDT)
+From:   Andreas Heiduk <asheiduk@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Eric Wong <e@80x24.org>, Andreas Heiduk <asheiduk@gmail.com>
+Subject: [PATCH] doc: describe git svn init --ignore-refs
+Date:   Wed,  7 Jun 2017 20:32:14 +0200
+Message-Id: <20170607183214.21259-1-asheiduk@gmail.com>
+X-Mailer: git-send-email 2.13.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/07, Johannes Schindelin wrote:
-> When expanding an alias in a subdirectory, we setup the git_dir
-> (gently), read the config, and then restore the "env" (e.g. the current
-> working directory) so that the command specified by the alias can run
-> correctly.
-> 
-> What we failed to reset was the git_dir, meaning that in the most common
-> case, it was now pointing to a .git/ directory *in the subdirectory*.
-> 
-> This problem was identified in the GVFS fork, where a pre-command hook
-> was introduced to allow pre-fetching missing blobs.
-> 
-> An early quick fix in the GVFS fork simply built on top of the
-> save_env_before_alias() hack, introducing another hack that saves the
-> git_dir and restores it after an alias is expanded:
-> 
-> 	https://github.com/Microsoft/git/commit/2d859ba3b
-> 
-> That is very hacky, though, and it is much better (although much more
-> involved, too) to fix this "properly", i.e. by replacing the ugly
-> save/restore logic by simply using the early config code path.
-> 
-> However, aliases are strange beasts.
-> 
-> When an alias refers to a single Git command (originally the sole
-> intention of aliases), the current working directory is restored to what
-> it had been before expanding the alias.
-> 
-> But when an alias starts with an exclamation point, i.e. referring to a
-> command-line to be interpreted by the shell, the current working
-> directory is no longer in the subdirectory but instead in the worktree's
-> top-level directory.
-> 
-> This is even true for worktrees added by `git worktree add`.
-> 
-> But when we are inside the .git/ directory, the current working
-> directory is *restored* to the subdirectory inside the .git/ directory.
-> 
-> In short, the logic is a bit complicated what is the expected current
-> working directory after expanding an alias and before actually running
-> it.
-> 
-> That is why this patch series had to expand the signature of the early
-> config machinery to return the additional information for aliases'
-> benefit.
-> 
+Add the missing documentation for `git svn init --ignore-refs`.
 
-Looks good, I don't have any major issues with the series, just some
-comments for clarity mostly.  And relevant to this series, you may be
-interested in looking at patch 03/31 in my repository object series as
-that may have an impact on the early config stuff.
+Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+---
+ Documentation/git-svn.txt | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-> 
-> Johannes Schindelin (9):
->   discover_git_directory(): avoid setting invalid git_dir
->   config: report correct line number upon error
->   help: use early config when autocorrecting aliases
->   read_early_config(): optionally return the worktree's top-level
->     directory
->   t1308: relax the test verifying that empty alias values are disallowed
->   t7006: demonstrate a problem with aliases in subdirectories
->   alias_lookup(): optionally return top-level directory
->   Use the early config machinery to expand aliases
->   TODO:
-> 
->  alias.c                | 33 +++++++++++++++++++++-------
->  builtin/help.c         |  2 +-
->  cache.h                |  7 +++---
->  config.c               |  7 +++---
->  git.c                  | 59 ++++++--------------------------------------------
->  help.c                 |  2 +-
->  pager.c                |  4 ++--
->  setup.c                | 13 +++++++++--
->  t/helper/test-config.c |  2 +-
->  t/t1308-config-set.sh  |  4 +++-
->  t/t7006-pager.sh       | 11 ++++++++++
->  11 files changed, 70 insertions(+), 74 deletions(-)
-> 
-> 
-> base-commit: 8d1b10321b20bd2a73a5b561cfc3cf2e8051b70b
-> Published-As: https://github.com/dscho/git/releases/tag/alias-early-config-v1
-> Fetch-It-Via: git fetch https://github.com/dscho/git alias-early-config-v1
-> -- 
-> 2.13.0.windows.1.460.g13f583bedb5
-> 
-
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 9bee9b0c4..fba0b4eec 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -95,6 +95,10 @@ If you still want the old default, you can get it by passing
+ `--prefix ""` on the command line (`--prefix=""` may not work if
+ your Perl's Getopt::Long is < v2.37).
+ 
++--ignore-refs=<regex>;;
++	When passed to 'init' or 'clone' this regular expression will
++	be preserved as a config key.  See 'fetch' for a description
++	of `--ignore-refs`.
+ --ignore-paths=<regex>;;
+ 	When passed to 'init' or 'clone' this regular expression will
+ 	be preserved as a config key.  See 'fetch' for a description
+@@ -138,6 +142,18 @@ the same local time zone.
+ --parent;;
+ 	Fetch only from the SVN parent of the current HEAD.
+ 
++--ignore-refs=<regex>;;
++	Ignore refs for branches or tags matching the Perl regular
++	expression. A "negative look-ahead assertion" like
++	`^refs/remotes/origin/(?!tags/wanted-tag|wanted-branch).*$`
++	can be used to allow only certain refs.
+++
++[verse]
++config key: svn-remote.<name>.ignore-refs
+++
++If the ignore-refs configuration key is set, and the command-line
++option is also given, both regular expressions will be used.
++
+ --ignore-paths=<regex>;;
+ 	This allows one to specify a Perl regular expression that will
+ 	cause skipping of all matching paths from checkout from SVN.
 -- 
-Brandon Williams
+2.13.0
+
