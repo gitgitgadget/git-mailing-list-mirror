@@ -2,114 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E51D91FACB
-	for <e@80x24.org>; Wed,  7 Jun 2017 12:56:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFC9E1FACB
+	for <e@80x24.org>; Wed,  7 Jun 2017 12:57:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751454AbdFGM44 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 08:56:56 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35638 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751203AbdFGM4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 08:56:55 -0400
-Received: by mail-pg0-f66.google.com with SMTP id f127so1445332pgc.2
-        for <git@vger.kernel.org>; Wed, 07 Jun 2017 05:56:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=pnOOzTxi6gNbCBI9Qj4rJgW9Zy3N7Tc8Nxhxv6kg2a0=;
-        b=XsN0eAEjFxfb3rd9l1dOhKIJE2OJ1+BXfUgl9aA0nVnr5H7p0QcL6FQ2hDWzUXZrfg
-         yPXMABHLsNSOEl3WrPx+yPc6rykFIe+zJetyzZ5fYd69cix0Nr7YPLNqjAGdTc5JgnW3
-         VmFy56gZo72mFUv6zzsSwYyGe3jFokQedZdQcYYmZGmHbzO5D3PxYVjzxvmQg6OT9WE4
-         mDfrJXWPmSqJyWI0SIJ1zIl84a8b/ozPgtSbxCeZqqJLSDVjvTtfc1JLVng4ZHZFQ67w
-         QJp+Tu+8PDWjLlAsNw3z4feLRrF5buCME1dzXAixpTa3xh09wYr+N3hAljuz/sHDtfuc
-         eQzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=pnOOzTxi6gNbCBI9Qj4rJgW9Zy3N7Tc8Nxhxv6kg2a0=;
-        b=bXIKMdXwtaBNc/yk3v3NyCYd8FK/CD0xS0m6ZIbNLSC2+1bZKSspI+u3Z5PChkeDt2
-         suCYMP9S3zK+z7+pNUCzvXc1e7oeqqQjtkh4ZLydwZBIEHwRC75lqsy+UlO/N9Yyth1c
-         OBHwnoCrrMbUFYaF68PGnPamM5CvQ3LFzrIMJQWG3KMRiAxIQI9Q0AzpijX1VB1nA9TS
-         4ERK05YGps21mdsl9YaC1l0nKJQrp/MZEcOAiCbTmufqjP9Lw1dZYlQHYP7OKRwbTib2
-         O6M8/27Nzrbysa3KXybW1G1SSkdDuDsCM5ve9415ojO33L542SESkWZF7/pByx7PdAQ2
-         U84w==
-X-Gm-Message-State: AODbwcB0R9aRO9GeZa5RrEdv7N2ZY44Mg1z5By3L5QxZpOUCpo9Z2KRd
-        57KpQMMUWMxbG6XSTb+e/A==
-X-Received: by 10.99.141.200 with SMTP id z191mr20040191pgd.99.1496840214684;
-        Wed, 07 Jun 2017 05:56:54 -0700 (PDT)
-Received: from [10.4.2.238] ([182.73.79.179])
-        by smtp.gmail.com with ESMTPSA id m5sm5124870pgd.28.2017.06.07.05.56.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 07 Jun 2017 05:56:54 -0700 (PDT)
-Subject: Re: What does this output of git supposed to mean ?
-To:     Philip Oakley <philipoakley@iee.org>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     David <bouncingcats@gmail.com>, Samuel Lijin <sxlijin@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-References: <1496671452.4809.2.camel@gmail.com>
- <20170605231058.pgb4fgfb4z45bzmk@genre.crustytoothpaste.net>
- <CAGZ79kYp6GepJxZjaXhosX=vCh0vwa57+zFHK2gHFociiyTnDg@mail.gmail.com>
- <xmqqd1ai9bhf.fsf@gitster.mtv.corp.google.com>
- <20170606011151.qe5ycih77vqlqgme@genre.crustytoothpaste.net>
- <CAJZjrdWoK__rZVCG3vRSSEOPgxK7b_wWjpJ3YUQcLxw+J8KfGQ@mail.gmail.com>
- <xmqqvao9991r.fsf@gitster.mtv.corp.google.com>
- <CAMPXz=oorE7MQa4a_1eC-+Huf1Tf2XQFjEBcQxsOdso9BJ1S-A@mail.gmail.com>
- <D0E8FF50F1E74043AA0BD71E80C365E5@PhilipOakley>
- <xmqqr2yx8h9v.fsf@gitster.mtv.corp.google.com>
- <1496758102.6664.2.camel@gmail.com>
- <4A4DB115A50D432A8FF7B8589C5BAC84@PhilipOakley>
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Message-ID: <2d7e165d-b44c-ab3c-a4db-af5df64048a9@gmail.com>
-Date:   Wed, 7 Jun 2017 18:26:47 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1751490AbdFGM5S (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 08:57:18 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55672 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751203AbdFGM5R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 08:57:17 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtJAR-1e1iNd0Fyd-012nn2; Wed, 07
+ Jun 2017 14:57:14 +0200
+Date:   Wed, 7 Jun 2017 14:57:13 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Konstantin Podsvirov <konstantin@podsvirov.pro>
+cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG] Help > About Git Gui = crash
+In-Reply-To: <463191496776595@web26j.yandex.ru>
+Message-ID: <alpine.DEB.2.21.1.1706071454310.171564@virtualbox>
+References: <227151496770459@web10m.yandex.ru> <CAGZ79kbAwqb87nOm2sG7=uOO2jE6Rkgqofy5iYuZQrg1Jc2okw@mail.gmail.com> <463191496776595@web26j.yandex.ru>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <4A4DB115A50D432A8FF7B8589C5BAC84@PhilipOakley>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+Content-Type: multipart/mixed; boundary="8323329-86331634-1496840234=:171564"
+X-Provags-ID: V03:K0:+SnGjihqhFRDQ7wiOXVbZDvY4tkYV3EYkWtUPS6dTCFrj9N3PsT
+ VRxlgWKXcXeoHcu5EoewuUyU1x6sz1j2hFVd1i3/XL3UxY+LRCRowWXFScbZhqjT6afFlsX
+ 1Sc+6XlArOTDZ+ZdILM2ZyUK13WgbNbEjnlpKES3oA+DBAYspd/DeP/5/NrDHGNKWkciCw5
+ v71wNUTS4R6d04CmSQ20A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:r/jkdCN7AIE=:OYkwy+2xsViBrZ9e8GioK1
+ WAfvkdJJJ4xakqCFU2sj7/bFVoHY4qOK8gf8I+Lk7G77YLvaEsFwhVrkkgdt7SPQ3oDqAoEyz
+ lx9p2TYMxki+yiijYKQka/WKNl3cZhtYia9/sYplT1DrxdUCnbwbztice0/GwnR7I4Zp9HRhq
+ ZiLeikZeahYJT1gbbfBrAo9ichlCRXssad4adSMQgbJftBWVY7phfld4xwqlFwGEPcDmWSbIu
+ /Jtc2b4r5rGZ6OOYfEelxFoMcJFQR6VxelERC0XBSHY8klbAa+5Nv2n77omuMYQS5rq4llddX
+ u6tGvqVYa8FjeufJgO0alm+nOPA1QtYmMeWbcyHwMZA2REbOrRunYJhfqM54Q+iD7ekenDPbB
+ 9z/m7XIoWysVMK1X+QWmtiRax1YrLFfZ0rGMMjO1DEg6bKntoDaEPWtq8FZQqDHVRzvSMrr8/
+ u2ONr2QWH2DL/my1Js/F6/e6QcHTS6Y6WswyBCQlX9FML+7ptTIrGx9dOj7dxOkjaWqyY2rWG
+ wSX2F96mwgC2iBIXPi+seEpwFj7W4T5i7DSfoseEHhuFK9P4NaGE0fYYlzaYWA9hz4+1v7UQ9
+ kgNnnF/5fZdjLNmkAQAZkuxDq0+1O3doVd9fM7cCo1MclqkDBAC1FiidVy6SZUFzqehMpJTxn
+ Gward8/Hwlcn7sftAOawS8foRKiEqiovF6DRqRoVASfMz3wqJbzTRBnZiVvpWIvbZdnrXh1Es
+ H3ORDjxShyN5tzj055RU7iA+qtJFjOIHo761jnk3R08BhyfJAIH0fS7Aj1+Q3/Za8z/FWuXXt
+ 10OZbrw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 07 June 2017 03:35 AM, Philip Oakley wrote:
-> Maybe have a try at a patch to update the text? See the 
-> git/Documentation/SubmittingPatches for guidance.
-I guess this should be trivial (correct me if I'm wrong). I'll try when 
-I find time. In case I make the change which of the following message 
-should replace the message 'Initial commit' ? (this could be a poll, I 
-guess)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-1. No commit yet
-2. Waiting for initial commit
-3. Your current branch does not have any commits
+--8323329-86331634-1496840234=:171564
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Further what is to be done about the following comment,
+Hi,
 
-On Wednesday 07 June 2017 12:23 AM, Jeff King wrote:
+On Tue, 6 Jun 2017, Konstantin Podsvirov wrote:
 
-There is a slight complication, though. There's similar text in "git 
-status -sb", which shows: ## Initial commit on master Should that also 
-change to use consistent terminology? If so, we need a phrasing short 
-phrasing that matches (and the --porcelain and --porcelain=v2 formats of 
-course would need to remain the same).
+> 06.06.2017, 21:25, "Stefan Beller" <sbeller@google.com>:
+> > On Tue, Jun 6, 2017 at 10:34 AM, Konstantin Podsvirov
+> > <konstantin@podsvirov.pro> wrote:
+> >> =C2=A0Reproduction:
+> >> =C2=A0- Start git gui
+> >> =C2=A0- Go to menu panel: Help > About Git Gui
+> >>
+> >> =C2=A0Output:
+> >> =C2=A0error: git-gui died of signal 11
+> >>
+> >> =C2=A0Environment:
+> >> =C2=A0Debian 8 jessie amd64 KDE
+> >
+> > Care to also share the output of
+> >
+> > =C2=A0=C2=A0$ git gui --version
+>=20
+> git-gui version 0.19.0.2.g3decb8e
+>=20
+> > =C2=A0=C2=A0$ git --version
+>=20
+> git version 2.1.4
+>=20
+> >
+> > as I suspect this to come from git and git-gui not working well togethe=
+r.
 
-BTW, could anyone provide a pointer to the implementation that prints 
-this message ?
+FWIW v2.1.4 was released almost 2.5 years ago.
 
---
-Regards,
-Kaartic Sivaraam
+The crash does *not* happen with the version I am running here on Ubuntu
+16.04.2 LTS with
+
+=09git-gui version 0.21.GITGUI
+=09git version 2.13.0.windows.1.460.g13f583bedb5
+
+=09Tcl/Tk version 8.6.5
+
+Ciao,
+Johannes
+--8323329-86331634-1496840234=:171564--
