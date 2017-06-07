@@ -7,223 +7,162 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 550A11FACB
-	for <e@80x24.org>; Wed,  7 Jun 2017 18:26:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 163601FACB
+	for <e@80x24.org>; Wed,  7 Jun 2017 18:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751838AbdFGS0T (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 14:26:19 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34711 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751694AbdFGS0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 14:26:17 -0400
-Received: by mail-pg0-f50.google.com with SMTP id v18so7943257pgb.1
-        for <git@vger.kernel.org>; Wed, 07 Jun 2017 11:26:17 -0700 (PDT)
+        id S1751794AbdFGS2y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 14:28:54 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:33601 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751633AbdFGS2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 14:28:53 -0400
+Received: by mail-pg0-f52.google.com with SMTP id f185so7970834pgc.0
+        for <git@vger.kernel.org>; Wed, 07 Jun 2017 11:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=np17QYxcdX+FjbfO3DlP5kobffaWGFbLkePqfuxQUZ0=;
-        b=GVt/xNU88IWgRMGiyRWc4Xp/65OWiecI/AgJWuUpXlirBBjuRzNMIa724BHOP7pzu8
-         QHiTmGEWrCy9epLhC3I3+hIFsr281PULdC0sWl1xBuV5yn6VWSqZsTxxBwyuBsYQXqMW
-         Q458jWxto4hMz7ybWBcvsRtLWw9bChklytdUEnuMJ6f2BC+0v3YIJGJ/rwH/+ag4VIbb
-         QJF6dwS0EKCDLRa+QwF9Dc0fUsaJPko+OlvwTluBocxVaVlg7T3o3ggvXt31zNTE1DGu
-         hga8jX7s7wZ+y5kwc1salnMZzSx8AAi6hKA3NXC/IUfFdOq+2+1Ot7TkFdG+nK5ZqKAK
-         yQUA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=b+SK6/aUR8uw1feynXUjWJLd9Jf2PF3G7SsyHqxIO/4=;
+        b=ahh0M+DqCN+MWpvNKizJPfv191yLW4jFX0hgv0kKFE42eru7/xofOlPlv3Idu4cUlC
+         USUPwt8HIi1XSPAJX9jTzZCM1keYaeZXrtEGNV7Fn0HZX/l/Ujp/bTRlKV+7irnqe8Ip
+         4SnL78klsmgqvif7HNmyW6fwHxxzIFwpGYw/GaxRgJ/mWfTCvPaYY6g7VXFaEae1SdSC
+         7IWB/EvjSwoNV/py1j4HN5wHPo2WOscutZUaPQ+eXnyvXHeqfZuik5d/AZudwe7qOgTf
+         FpDse2VI+MU2avaso1A9W7QAbq706gZrGHMLSbj2N4HXOsT/CcXaFJgfrSSmbO9O+J1Y
+         2xJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=np17QYxcdX+FjbfO3DlP5kobffaWGFbLkePqfuxQUZ0=;
-        b=mwbd6ynoEX8UCf4MSXOjCl+Uo6zLCi6H9i8jU7UmKbHhUSUyRPDvB92yk9AYedcUQ4
-         HkPzvM2nP1cffphQlMmTnwsOl8DDItuibzIxtekaAJE7ws2VX8rfx5UTDm0/+UoZqEkp
-         rPAkKAs14KD+OueDR3asEiYan3AWXMqc6wIuqJCjC9jBoSI/EDO1co7wU+UWcY//INUq
-         YZe6K2FGVP1P4yy//faTdai8inyxN9038TTk2AJyeiv5LbD3AyUHq4ZP99ZOMe4BBgNY
-         g1dXtiSjXDfEHOBU0iOeL+AJvjuLrX/AcAz9lbp98ZgeEnkIJJIAMsAwhoTJqeX9MaT0
-         LJHw==
-X-Gm-Message-State: AODbwcCl4pSWorVQyrtgOXeLVypDFM8KAsOu9mfx+amLrT50WBSXvBWh
-        d3efLvvz+uu3SD7Z
-X-Received: by 10.99.101.132 with SMTP id z126mr33725377pgb.194.1496859976318;
-        Wed, 07 Jun 2017 11:26:16 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:793b:8a31:813b:ceb2])
-        by smtp.gmail.com with ESMTPSA id c123sm4779310pfa.100.2017.06.07.11.26.14
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Jun 2017 11:26:15 -0700 (PDT)
-Date:   Wed, 7 Jun 2017 11:26:14 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 8/9] Use the early config machinery to expand aliases
-Message-ID: <20170607182614.GF110638@google.com>
-References: <cover.1496851544.git.johannes.schindelin@gmx.de>
- <3b916e1f5055486795c784d55704b4720598f1a9.1496851544.git.johannes.schindelin@gmx.de>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=b+SK6/aUR8uw1feynXUjWJLd9Jf2PF3G7SsyHqxIO/4=;
+        b=DvcO+NLUJHt+JHoM23rgWW2h8KQw4R30FAAatWtM94dYdNAuO0ia9WgN+z5yrLnriQ
+         JhsH/GRRgiULDNUuI6vac/u1weOMPmi0HbGXmVazoAOhSvF2TBf7mhXn3d/NzO1xuK+R
+         URIWbOxnVZ/qv8jtYqVHYP84q2Nw+/qlXn6RsETWwmonBrSUf+ftCxXNqJkJm90zaT3Y
+         SJUQ9prejkI/jPJlA8fYm81l5ZJSKCbS7Djf8wzfi0JZyu8/K5Cg2+z9Etm4t6kOZe7I
+         cJcauShSkmtLi2cOsHIEsa9SBI7N3LhEh+P9MZvXnu2gT1b1g0CN3vCZrULSoTFuiE/i
+         XY/A==
+X-Gm-Message-State: AODbwcBWH4x3vI4ngrgU8sgORqoSykBkTF5299Yvlo18NeT3oozNDofz
+        7CrUpSQjuvRWR397yAm4WFDVDIs/E3hK
+X-Received: by 10.99.113.14 with SMTP id m14mr17909378pgc.63.1496860132058;
+ Wed, 07 Jun 2017 11:28:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3b916e1f5055486795c784d55704b4720598f1a9.1496851544.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.218.134 with HTTP; Wed, 7 Jun 2017 11:28:51 -0700 (PDT)
+In-Reply-To: <CA+P7+xr2xrVfUPppCa4gCj72enX-_qZsAK3bNtOusfh7wWH0rg@mail.gmail.com>
+References: <xmqq1sqzkrui.fsf@gitster.mtv.corp.google.com> <CAGZ79kY2Z-fJYxczbzheu1hChLkKkdjEcDMwsP-hkN0TjUBotQ@mail.gmail.com>
+ <CAMy9T_H4WAh6kA3K4VVv7oUwL3KHcK-mM-4bXxC0D1FinRa8mA@mail.gmail.com> <CA+P7+xr2xrVfUPppCa4gCj72enX-_qZsAK3bNtOusfh7wWH0rg@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 7 Jun 2017 11:28:51 -0700
+Message-ID: <CAGZ79kZVB9Ld8m+Zjps0ysEvXaptp2_FzimqRhiOHEBfXdX91Q@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2017, #03; Mon, 5)
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/07, Johannes Schindelin wrote:
-> We already taught alias_lookup() to use the early config if the .git/
-> directory was not yet discovered, of course, however, since we called
-> setup_git_directory_gently() before expanding the alias (if any), we
-> only used the early config code path only if outside of any Git-managed
-> directory.
-> 
-> With this commit, we finally switch over to really using the early
-> config code path.
-> 
-> Rather than just chdir()ing into the indicated directory in case of an
-> alias expanding to a shell command, we simply set up the .git/ directory
-> so that e.g. GIT_PREFIX is set as expected.
-> 
-> This change also fixes a known issue where Git tried to read the pager
-> config from an incorrect path in a subdirectory of a Git worktree if an
-> alias expanded to a shell command.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  git.c            | 59 +++++++-------------------------------------------------
->  t/t7006-pager.sh |  2 +-
->  2 files changed, 8 insertions(+), 53 deletions(-)
-> 
-> diff --git a/git.c b/git.c
-> index 4163beaead4..c82cd455948 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -16,50 +16,6 @@ const char git_more_info_string[] =
->  	   "to read about a specific subcommand or concept.");
->  
->  static int use_pager = -1;
-> -static char *orig_cwd;
-> -static const char *env_names[] = {
-> -	GIT_DIR_ENVIRONMENT,
-> -	GIT_WORK_TREE_ENVIRONMENT,
-> -	GIT_IMPLICIT_WORK_TREE_ENVIRONMENT,
-> -	GIT_PREFIX_ENVIRONMENT
-> -};
-> -static char *orig_env[4];
-> -static int save_restore_env_balance;
-> -
-> -static void save_env_before_alias(void)
-> -{
-> -	int i;
-> -
-> -	assert(save_restore_env_balance == 0);
-> -	save_restore_env_balance = 1;
-> -	orig_cwd = xgetcwd();
-> -	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
-> -		orig_env[i] = getenv(env_names[i]);
-> -		orig_env[i] = xstrdup_or_null(orig_env[i]);
-> -	}
-> -}
-> -
-> -static void restore_env(int external_alias)
-> -{
-> -	int i;
-> -
-> -	assert(save_restore_env_balance == 1);
-> -	save_restore_env_balance = 0;
-> -	if (!external_alias && orig_cwd && chdir(orig_cwd))
-> -		die_errno("could not move to %s", orig_cwd);
-> -	free(orig_cwd);
-> -	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
-> -		if (external_alias &&
-> -		    !strcmp(env_names[i], GIT_PREFIX_ENVIRONMENT))
-> -			continue;
-> -		if (orig_env[i]) {
-> -			setenv(env_names[i], orig_env[i], 1);
-> -			free(orig_env[i]);
-> -		} else {
-> -			unsetenv(env_names[i]);
-> -		}
-> -	}
-> -}
+On Tue, Jun 6, 2017 at 3:05 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Tue, Jun 6, 2017 at 2:50 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> On Mon, Jun 5, 2017 at 8:23 PM, Stefan Beller <sbeller@google.com> wrote:
+>>>
+>>> > [...]
+>>> >  "git diff" has been taught to optionally paint new lines that are
+>>> >  the same as deleted lines elsewhere differently from genuinely new
+>>> >  lines.
+>>> >
+>>> >  Are we happy with these changes?
+>>
+>>
+>> I've been studiously ignoring this patch series due to lack of bandwidth.
+>>
+>>> [...]
+>>> Things to come, but not in this series as they are more advanced:
+>>>
+>>>     Discuss if a block/line needs a minimum requirement.
+>>>
+>>> When doing reviews with this series, a couple of lines such
+>>> as "\t\t}" were marked as a moved, which is not wrong as they
+>>> really occurred in the text with opposing sign.
+>>> But it was annoying as it drew my attention to just closing
+>>> braces, which IMO is not the point of code review.
+>>>
+>>> To solve this issue I had the idea of a "minimum requirement", e.g.
+>>> * at least 3 consecutive lines or
+>>> * at least one line with at least 3 non-ws characters or
+>>> * compute the entropy of a given moved block and if it is too low, do
+>>>   not mark it up.
+>>
+>> Shooting from the hip here...
+>>
+>> It seems obvious that for a line to be marked as moved, a minimum
+>> requirement is that
+>>
+>> 1. The line appears as both "+" and "-".
+>>
+>> That doesn't seem strong enough evidence though, and if that is the
+>> only criterion, I would expect a lot of boilerplate lines like "\t\t}"
+>> to be marked as moved. It seems like a lot of noise could be
+>> eliminated by *also* requiring that
+>>
+>> 2a. The line doesn't appear elsewhere in the file(s) concerned.
 
-I like seeing chunks of old code being deleted :D
+'elsewhere' in the opposing sign (+,-) or all the diff (including ' ' context)?
 
->  
->  static void commit_pager_choice(void) {
->  	switch (use_pager) {
-> @@ -245,36 +201,37 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
->  
->  static int handle_alias(int *argcp, const char ***argv)
->  {
-> +	struct strbuf worktree_dir = STRBUF_INIT;
->  	int envchanged = 0, ret = 0, saved_errno = errno;
->  	int count, option_count;
->  	const char **new_argv;
->  	const char *alias_command;
->  	char *alias_string;
-> -	int unused_nongit;
-> -
-> -	save_env_before_alias();
-> -	setup_git_directory_gently(&unused_nongit);
->  
->  	alias_command = (*argv)[0];
-> -	alias_string = alias_lookup(alias_command, NULL);
-> +	alias_string = alias_lookup(alias_command, &worktree_dir);
->  	if (alias_string) {
->  		if (alias_string[0] == '!') {
->  			struct child_process child = CHILD_PROCESS_INIT;
->  
-> +			if (worktree_dir.len)
-> +				setup_git_directory();
+This rule opens up the discussion on multi-copies, which I imagine
+happens a lot in configuration files. So say you have a prod and staging
+environment, then you might be tempted to make patches titled as:
+  "1. preparation: duplicate common code into prod and staging"
+  "2. Make an actual change to staging"
 
-So if there is a worktree then we run the setup code explicitly.  I
-assume that is to ensure that all envvars are setup properly before
-running the alias.  Just interesting to note that the actual value of
-worktree_dir is never used, its just used essentially as a boolean
-indicator of there being a worktree/gitdir/repository.  I'm not
-suggesting to change from what you have here, its just food for thought.
+For 1. you still want to see that there is faithful copy, but we'd have
+2 postimages having these lines.
 
-> +
->  			commit_pager_choice();
-> -			restore_env(1);
->  
->  			child.use_shell = 1;
->  			argv_array_push(&child.args, alias_string + 1);
->  			argv_array_pushv(&child.args, (*argv) + 1);
->  
->  			ret = run_command(&child);
-> +			strbuf_release(&worktree_dir);
->  			if (ret >= 0)   /* normal exit */
->  				exit(ret);
->  
->  			die_errno("While expanding alias '%s': '%s'",
->  			    alias_command, alias_string + 1);
->  		}
-> +		strbuf_release(&worktree_dir);
->  		count = split_cmdline(alias_string, &new_argv);
->  		if (count < 0)
->  			die("Bad alias.%s string: %s", alias_command,
-> @@ -308,8 +265,6 @@ static int handle_alias(int *argcp, const char ***argv)
->  		ret = 1;
->  	}
->  
-> -	restore_env(0);
-> -
->  	errno = saved_errno;
->  
->  	return ret;
-> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-> index 83881ec3a0c..20b4d83c281 100755
-> --- a/t/t7006-pager.sh
-> +++ b/t/t7006-pager.sh
-> @@ -391,7 +391,7 @@ test_expect_success TTY 'core.pager in repo config works and retains cwd' '
->  	)
->  '
->  
-> -test_expect_failure TTY 'core.pager is found via alias in subdirectory' '
-> +test_expect_success TTY 'core.pager is found via alias in subdirectory' '
->  	sane_unset GIT_PAGER &&
->  	test_config core.pager "cat >via-alias" &&
->  	(
-> -- 
-> 2.13.0.windows.1.460.g13f583bedb5
+Also what about de-duplication?
+I just stumbled upon edb0c72428 ([PATCH] diff: consolidate test
+helper script pieces., 2005-05-31) for unrelated reasons,
+but the move coloring of the same content multiple times
+helped me there to focus on the relevant part.
 
--- 
-Brandon Williams
+>>
+>> Rule (2a) would probably get rid of most boilerplate lines without
+>> having to try to measure entropy.
+
+But it would also get rid of good use cases when not being very careful.
+I intentionally left out the (2a) as I am not yet sure how the move
+detection for multiple occurrences in post and preimage should
+work in the desired case. The suppression of little-entropy closing braces
+might be a side effect of just this. Or it can be treated separately.
+
+>>
+>> Maybe you are already using both criteria? I didn't see it in a quick
+>> perusal of the code.
+>>
+>> OTOH, it would be silly to refuse to mark lines like "\t\t}" as moved
+>> *only* because they appear elsewhere in the file(s). If you did so,
+>> you would have gaps of supposedly non-moved lines in the middle of
+>> moved blocks. This suggests marking as moved lines matching (1) and
+>> (2a) but also lines matching (1) and the following:
+>>
+>> 2b. The line is adjacent to to another line that is thought to have
+>> moved from the same old location to the same new location.
+
+This is what we do, a "block detection" by comparing "line runs" against
+the current lines. Based on these line runs we detect one block and
+color up adjacent blocks.
+
+>>
+>> Rule (2b) would be applied recursively, with the net effect being that
+>> any line satisfying (1) and (2a) is allowed to carry along any
+>> neighboring lines within the same "+"/"-" block even if they are not
+>> unique.
+
+So you are saying each block has to have at least one unique line?
+That doesn't go well with (de-)duplication IMHO.
+
+Thanks for your shot from the hip. I'll think about these rules more to see
+if I can make sense of them for duplication still.
+
+Thanks,
+Stefan
