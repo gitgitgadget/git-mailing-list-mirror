@@ -2,112 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D43EA1FAE5
-	for <e@80x24.org>; Wed,  7 Jun 2017 10:24:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C86F1FAE5
+	for <e@80x24.org>; Wed,  7 Jun 2017 10:33:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751561AbdFGKYw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 06:24:52 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35823 "EHLO cloud.peff.net"
+        id S1751694AbdFGKde (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 06:33:34 -0400
+Received: from ikke.info ([178.21.113.177]:34084 "EHLO vps892.directvps.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751501AbdFGKYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 06:24:51 -0400
-Received: (qmail 17070 invoked by uid 109); 7 Jun 2017 10:24:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Jun 2017 10:24:50 +0000
-Received: (qmail 32698 invoked by uid 111); 7 Jun 2017 10:24:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Jun 2017 06:24:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Jun 2017 06:24:48 -0400
-Date:   Wed, 7 Jun 2017 06:24:48 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] test-lib: add ability to cap the runtime of tests
-Message-ID: <20170607102448.bpgxce4kduzxf7a2@sigill.intra.peff.net>
-References: <20170603221335.3038-1-avarab@gmail.com>
- <xmqqa85owq3b.fsf@gitster.mtv.corp.google.com>
- <CACBZZX5_AYOXZMrgVZuERzOdzntw0ec36bKS5mcKT510cC3Y2g@mail.gmail.com>
- <xmqqefuzurj5.fsf@gitster.mtv.corp.google.com>
+        id S1751691AbdFGKdd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 06:33:33 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 138214400AE; Wed,  7 Jun 2017 12:33:26 +0200 (CEST)
+Date:   Wed, 7 Jun 2017 12:33:26 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     pedro rijo <pedrorijo91@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+Subject: Re: [BUG] Failed to sign commit
+Message-ID: <20170607103326.GB27719@alpha.vpn.ikke.info>
+References: <CAPMsMoAYpS8QMrfyed5=XPWJLbV6=kMg5gp-2a75kWMpVD3D1A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqefuzurj5.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CAPMsMoAYpS8QMrfyed5=XPWJLbV6=kMg5gp-2a75kWMpVD3D1A@mail.gmail.com>
+User-Agent: Mutt/1.8.2 (2017-04-18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 05, 2017 at 10:55:42AM +0900, Junio C Hamano wrote:
-
-> I do not expect any single person to tackle the splitting.  I just
-> wished that a patch inspired by this patch (or better yet, a new
-> version of this patch) made the tail end of "make test" output to
-> read like this:
+On Wed, Jun 07, 2017 at 10:46:08AM +0100, pedro rijo wrote:
+> Recently I've updated a bunch of stuff, including git and gpg. I'm using
 > 
->    ...
->    [18:32:44] t9400-git-cvsserver-server.sh ...... ok    18331 ms
->    [18:32:49] t9402-git-cvsserver-refs.sh ........ ok    22902 ms
->    [18:32:49] t9200-git-cvsexportcommit.sh ....... ok    25163 ms
->    [18:32:51]
->    All tests successful.
->    Files=785, Tests=16928, 122 wallclock secs ( ...
->    Result: PASS
+> - mac OS 10.10.5
+> - git 2.13.1
+> - gpg (GnuPG) 2.1.21 / libgcrypt 1.7.7
 > 
->    * The following tests took longer than 15 seconds to run.  We
->      may want to look into splitting them into smaller files.
+> When I do
 > 
->    t3404-rebase-interactive.sh ...    19 secs
->    t9001-send-email.sh ...........    22 secs
->    t9402-git-cvsserver-refs.sh ...    22 secs
->    t9200-git-cvsexportcommit.sh ..    25 secs
+> $ git commit --allow-empty -v -m "lol"
+> error: gpg failed to sign the data
+> fatal: failed to write commit object
 > 
-> when the hidden feature is _not_ used, so that wider set of people
-> will be forced to see that some tests take inordinate amount of
-> time, and entice at least some of them to look into it.
+> I tried the verbose flag hoping to have a better insight, but not very
+> useful. Not sure if it's a gpg problem, a git problem, or something
+> else.
+> 
+> Any clue on how to debug the problem? Do you need any gpg output to
+> better understand the problem?
+> 
+> Thanks,
+> Pedro
 
-If you use "prove", it already records this information, and it can
-print it with "--timer".
-
-I don't use that myself, though. What's much more interesting (but which
-I haven't found a way to get prove to do out-of-the-box) is to show the
-longest tests after the fact. I gave a perl snippet to do so in
-
-  http://public-inbox.org/git/20161019205638.m3ytxozzmeh47ml2@sigill.intra.peff.net/
-
-I've actually played with this splitting before, but on my quad-core
-(plus hyperthreading) box, I could never get it to make any improvement
-once --state=slow was used. The longest test for me is 28s, but the
-whole suite takes 50s to run. The slow tests get front-loaded, and then
-by the end we have lots of little tests to hand out to each processor
-and they all stay busy.
-
-The main difference with Ævar's run is that he has a huge number of
-processors. So I'm in favor of more splitting, but I also doubt that
-even most Git developers would see any improvement. Or maybe people
-really do have monstrous boxes. I dunno.
-
-The biggest changes I've seen in my runs are:
-
-  1. Use "prove --state=slow,save"; even with a few processors it makes
-     a big difference.
-
-  2. Point --root at a RAM disk.
-
-  3. I started using Michael's git-test[1], which I have testing each
-     commit on the current branch in the background[2]. That gives me an
-     early warning when there's a failure (I have it play a sad trombone
-     sound, since it's in a minimized terminal), and when I do ask the
-     tests to run, quite often it can answer "all tests pass" out of
-     the cache.
-
--Peff
-
-[1] https://github.com/mhagger/git-test
-
-[2] My hacky script is at https://github.com/peff/git/blob/meta/ci
+GIT_TRACE=1 git commit --allow-empty -v -m "lol" might give some extra
+feedback (ie, what gpg command git runs), and try to see if you can
+replicate it.
