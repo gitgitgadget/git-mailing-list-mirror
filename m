@@ -2,77 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45B6C1FAE5
-	for <e@80x24.org>; Wed,  7 Jun 2017 09:48:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E025C1FAE5
+	for <e@80x24.org>; Wed,  7 Jun 2017 09:50:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751523AbdFGJrY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 05:47:24 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:37346 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751473AbdFGJqu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 05:46:50 -0400
-Received: by mail-wm0-f43.google.com with SMTP id d73so7198591wma.0
-        for <git@vger.kernel.org>; Wed, 07 Jun 2017 02:46:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=6F5bx9R/8v/Q2aIVN6/0QP15YT4T6M4O4/ws6oCDoL0=;
-        b=fCH4sGRtfIYUXqIliYuI9DddwqrJQCVbjYpbM5zDm7q1rgqfwd/gNxI+f9ZDFHHE3+
-         vYOgIgGgvTnytud6YP9opaQ+fD+1c7ZaQgzmphKnide07AYr9YLLa+40vZiJ1Tt23Xfs
-         C1DNXJP/Z8TKuIlpbckkRwvfVp77DU2cObNEA2sLqDrOIi3q49TpPGAVDVc/GzyfCWyp
-         hesdv+z+8THy1FkCHnaFPmLJwpQ7kKnXwxaeaxauiUvSuO5FV3z+f0g3C9zfjNSilYlK
-         3/eGH6kCDvxqYGYYbhlbtd6Q+AKeSTYWiSHy1IAhaAPqKK6wIM04zbqeBpEMCqXqVPy2
-         +rKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=6F5bx9R/8v/Q2aIVN6/0QP15YT4T6M4O4/ws6oCDoL0=;
-        b=UNgrh6lSQVSd9j1y62+bnOWy386VrA6R5OUh+CK70G4EHBS66NFeJjVapze7MUosqX
-         wIkYG/sNYACuLq+JjHiFPFe21+dmzJVCQQbx8Q/hb2jO5oTySqiHDBadJNLJ9ZVD0vT+
-         dwo0kfx5CwIpord2+q/Clczf4gJLOELUDsiZlq/1f3QfOGlE6aNok23cyF1gFa3mpy3P
-         at/WR0CbCdZGHJmyWcuSHmkdw2ZIbV7xTd1H9yhDIjZmq5I7bxCP9E5lLJiDw+WbBkG7
-         ujMiP3H1WDAxwMFZN32YO1XVf0hMlCb2Y+HTWLNAX/D+ThdxsB7N4yK/5tByhs/EvWnC
-         lF2g==
-X-Gm-Message-State: AKS2vOwglCJQI0Nd3VpI+0DpefDlphym2bfdqoHp46Z8/XVBZvCO44B4
-        ITVpa9txkrt1ajAvL2nvTgAEl2as2cIx5+o=
-X-Received: by 10.28.46.23 with SMTP id u23mr1460643wmu.102.1496828809043;
- Wed, 07 Jun 2017 02:46:49 -0700 (PDT)
+        id S1751469AbdFGJpq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 05:45:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35802 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751478AbdFGJon (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 05:44:43 -0400
+Received: (qmail 14531 invoked by uid 109); 7 Jun 2017 09:44:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Jun 2017 09:44:42 +0000
+Received: (qmail 32299 invoked by uid 111); 7 Jun 2017 09:44:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Jun 2017 05:44:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Jun 2017 05:44:41 -0400
+Date:   Wed, 7 Jun 2017 05:44:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [WIP v2 2/2] pack-objects: support --blob-max-bytes
+Message-ID: <20170607094440.vg5ogy4bp5kg53s3@sigill.intra.peff.net>
+References: <cover.1496361873.git.jonathantanmy@google.com>
+ <cover.1496432147.git.jonathantanmy@google.com>
+ <6f7934621717141ce3bb6bc05cf1d59c7900ccc5.1496432147.git.jonathantanmy@google.com>
+ <20170602222640.u6vni5tdpjp3sayt@sigill.intra.peff.net>
+ <20170602232508.GA21733@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.28.105.139 with HTTP; Wed, 7 Jun 2017 02:46:08 -0700 (PDT)
-From:   pedro rijo <pedrorijo91@gmail.com>
-Date:   Wed, 7 Jun 2017 10:46:08 +0100
-Message-ID: <CAPMsMoAYpS8QMrfyed5=XPWJLbV6=kMg5gp-2a75kWMpVD3D1A@mail.gmail.com>
-Subject: [BUG] Failed to sign commit
-To:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170602232508.GA21733@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Recently I've updated a bunch of stuff, including git and gpg. I'm using
+On Fri, Jun 02, 2017 at 04:25:08PM -0700, Jonathan Nieder wrote:
 
-- mac OS 10.10.5
-- git 2.13.1
-- gpg (GnuPG) 2.1.21 / libgcrypt 1.7.7
+> > We have a name-hash cache extension in the bitmap file, but it doesn't
+> > carry enough information to deduce the .git-ness of a file. I don't
+> > think it would be too hard to add a "flags" extension, and give a single
+> > bit to "this is a .git file".
+> 
+> A nicer approach IMHO is to include an extra bitmap, like the existing
+> object-type bitmaps (see the dump_bitmap calls in
+> bitmap_writer_finish).  This would would represent the set of all
+> .git* blobs in the pack.
 
-When I do
+Yeah, it could be stored as a bitmap, which would be slightly smaller
+(since it would be mostly 0's). I think either way it would need an
+extension flag in the header to signal its presence.
 
-$ git commit --allow-empty -v -m "lol"
-error: gpg failed to sign the data
-fatal: failed to write commit object
+Older versions of Git are OK with having flags they don't understand. I
+know JGit used to complain about seeing a bitmap with unknown flags, but
+I'm not sure if that is still the case.
 
-I tried the verbose flag hoping to have a better insight, but not very
-useful. Not sure if it's a gpg problem, a git problem, or something
-else.
+> >                      If you're not just avoiding large blobs but trying
+> > to get a narrow clone, you don't want the .git files from the
+> > uninteresting parts of the tree.
+> 
+> This is something I've wondered about, too.  Part of the story is that
+> we haven't started omitting trees, so there is already O(number of
+> trees) objects being sent and some additional small blobs for .git*
+> specials doesn't make it much worse.  Sending all .git* blobs keeps
+> things simple since the server doesn't have to infer which .git* blobs
+> are relevant to this client.
+> 
+> Longer term, we will likely want to allow clients to request omission
+> of some trees, too.  Omitting the corresponding .git* files becomes
+> more straightforward at that point.
+> 
+> Does that make sense?
 
-Any clue on how to debug the problem? Do you need any gpg output to
-better understand the problem?
+Yeah, I agree we'd want to avoid the trees, too, in that case.
 
-Thanks,
-Pedro
+-Peff
