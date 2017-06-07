@@ -2,111 +2,224 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B4CC1F8CF
-	for <e@80x24.org>; Wed,  7 Jun 2017 01:09:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E89E1F8CF
+	for <e@80x24.org>; Wed,  7 Jun 2017 02:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751449AbdFGBJ5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 6 Jun 2017 21:09:57 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33543 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751436AbdFGBJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Jun 2017 21:09:56 -0400
-Received: by mail-pf0-f196.google.com with SMTP id f27so25847066pfe.0
-        for <git@vger.kernel.org>; Tue, 06 Jun 2017 18:09:55 -0700 (PDT)
+        id S1751511AbdFGCSL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 6 Jun 2017 22:18:11 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:36249 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751455AbdFGCSK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Jun 2017 22:18:10 -0400
+Received: by mail-pg0-f48.google.com with SMTP id a70so87622pge.3
+        for <git@vger.kernel.org>; Tue, 06 Jun 2017 19:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=09nCeHzKlj/+vQHgtoPfdvn71XHp1j9n0rAiMXxco/U=;
-        b=GYL3R/V9YcnrutIpfOofKm3rfI2785YngLn/voMLvdTmME7oD+km+n47gDGajDw/Xr
-         RryJouEIATVEcMaYEOMbxfnhATGcwW0BEInslIjwr+8hYV+F6RVzgWwFc9/q57CoaHMr
-         /zgqTTicRJZuGaQP5gvtibJcHWiLM6XuNjruwN9u+Pg/TfFGvs6Ii9yQQVkZ4ayLRScl
-         /+T0SWd3eTHZcUO6jutM09ZGS/1Y5dMOWHqLNh6aQuoyxo/NL6O99d3lt/q2bBxO45EQ
-         986UxxFBNDlQK+jE6bQiEhEBCllRI3aPdlkvQZDaNtuI22hHiESSHOZc8lxyQvFhD6eV
-         zWfg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=jv/dwry2TH0tlep38cCuWDWCh3dxDGcGudnTNfA82Nw=;
+        b=h6xKfugbFl6FRPJ1YUrhFWZfUyvvEqcZVT6gZHQSyupHClpbz31xpVA47PUnSqzMr8
+         4L8RNraqHjnsOI8QVietUlqcnVk0lkoEUBfDAWesZ2zHYfUTTJOil+zlQd+1MpBsqy5X
+         5OHzC56hk+HkGtrhbS4HyBCvLIjalw6JnwCFyhqk4Npp+3gjYT+Afl+gGKuW12P01laY
+         mOwaTw6eFIf7IGLw3L2JROKKLkcOzKHdSsKokd4skRcxVBVpxcTSuNWFuNiUnpPgBbek
+         UblooP/ZYR8+pl4DjXsxN++IcoRABBTskcYbWa4S8BJd22MHVkC0sVeVji8ifo67iXAl
+         UWAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=09nCeHzKlj/+vQHgtoPfdvn71XHp1j9n0rAiMXxco/U=;
-        b=qcqj17VsV1n3mv7I2NHaCDkmW8QJ/mw9skUCSexSjl16yZ4hFySmQJ5Skd2Wg1gZUV
-         CldGQLtDl4E+WADt0hL/kB7ja1mxt4d9uNARE4JW8OtGTh+85QJUxgC4Z/KHNbR7TQle
-         5MC1+dIHHDeozHQtKd5ktQ4zcA3KsZ8mCAKk7jw/Mp03bKpLRF44UUr4Q1LUVduQrnf5
-         ZPSModZhSCHMGzQu4z4La0ioasxeu2KAXtXVAG0TXisSZ1UBtHq1yy0HHm+uwaUQ+Sbq
-         crGRglIFV0G0NuRTMNn0QT45FooQxo9YRscIhmjPYepZFq5F3MVbombm3mif/rnnY0JY
-         RhCw==
-X-Gm-Message-State: AODbwcDyPXZPXZkQHo0zm1CgdUtp/JFiH+ZQy9zl9QMn9f0toWiVAg9J
-        ts6NkpbPOqJZiQ==
-X-Received: by 10.98.12.19 with SMTP id u19mr21779411pfi.47.1496797795379;
-        Tue, 06 Jun 2017 18:09:55 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:411:1ad6:6716:25ff])
-        by smtp.gmail.com with ESMTPSA id f72sm138134pfe.4.2017.06.06.18.09.52
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=jv/dwry2TH0tlep38cCuWDWCh3dxDGcGudnTNfA82Nw=;
+        b=dUeuXcXRX9MLnc+je0t3Pn2xqXjnlEoyJcdN8h4TTdOhnpfyHaNd/TnCqkcLqD1z3P
+         60nEOVFAAL+FXfMPmZ6locXrjIJh06znwOsM4rhnPp3ajldzgmbz+pa9+LH2FvJ8yXp+
+         GvDoXk5Lqi1Wj6JxAqFJqzilJeLnueWejVvWb/MyrxhF+lMbjXJcsRNzV7CTL1doaodR
+         7YQetAhKkzVzMlKlN6uRhHN8aqgrLevgS6iKE5VnntpwehLpPBQqTYmUgKRADq1iX0Cl
+         2ORh1npppijwb0jiK7qPWygJN0jCPNjLQ0OW5L//SWo9V+UnqTEc1Ctm9KIVmML52PlO
+         vE3Q==
+X-Gm-Message-State: AODbwcAgvG0E5EG2jD/UFxZ7Yo0Jn6n1JtxSZdBtXgWMNvC2FDJgrNFw
+        0wJ5GytFh/zvxK7M
+X-Received: by 10.84.167.168 with SMTP id d37mr24734668plb.125.1496801889478;
+        Tue, 06 Jun 2017 19:18:09 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:406c:4586:c4dd:a63c])
+        by smtp.gmail.com with ESMTPSA id s17sm254102pfk.112.2017.06.06.19.18.08
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 06 Jun 2017 18:09:52 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: pushing for a new hash, was Re: [PATCH 2/3] rebase: Add tests for console output
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
-        <20170531104213.16944-3-phillip.wood@talktalk.net>
-        <alpine.DEB.2.21.1.1706011329350.3610@virtualbox>
-        <xmqq7f0v46q3.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaM9ryT1gWx=L6S90HPCaDPNZ6H124HAJscpeJCQFDN8Q@mail.gmail.com>
-        <alpine.DEB.2.21.1.1706021442190.171564@virtualbox>
-        <20170602175455.GA30988@aiede.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1706070008440.171564@virtualbox>
-        <20170606224524.GC21733@aiede.mtv.corp.google.com>
-Date:   Wed, 07 Jun 2017 10:09:51 +0900
-In-Reply-To: <20170606224524.GC21733@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Tue, 6 Jun 2017 15:45:24 -0700")
-Message-ID: <xmqqwp8o7gdc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Tue, 06 Jun 2017 19:18:08 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     Johannes.Schindelin@gmx.de, avarab@gmail.com, git@vger.kernel.org,
+        jrnieder@gmail.com, phillip.wood@dunelm.org.uk, sbeller@google.com
+Subject: [PATCH] t4005: modernize style and drop hard coded sha1
+Date:   Tue,  6 Jun 2017 19:18:05 -0700
+Message-Id: <20170607021805.11849-1-sbeller@google.com>
+X-Mailer: git-send-email 2.13.0.17.gf3d7728391
+In-Reply-To: <xmqqwp8o7gdc.fsf@gitster.mtv.corp.google.com>
+References: <xmqqwp8o7gdc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Use modern style in the test t4005. Remove hard coded sha1 values.
+Combine test prep work and the actual test. Rename the first
+test to contain the word "setup".
 
->> 3) the only person who could make that call is Junio
->
-> I strongly disagree with this.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-If it helps, I _can_ make any set of declarations to make it sound
-more official, e.g. (the remainder of) June is the "make sure our
-tests are ready" month where we try to eradiate uchar[20] by
-advancing the object-id effort, replace EMPTY_TREE_SHA1_HEX and
-friends with EMPTY_TREE_OID_HEX, add a build-time configuration that
-allows us to build a Git binary that uses a phony hash e.g. ~sha1
-truncated to 16 bytes, and build Git with such a configuration and
-then run tests, and we concentrate on this effort without adding new
-things until we make the tests pass.
+Junio wrote:
+> If it helps, I _can_ make any set of declarations to make it sound
+> more official, e.g. (the remainder of) June is the "make sure our
+> tests are ready" 
 
-And make similar declarations for the remainder of the year.
+If it helps, I can write code for that. :)
 
-But the actual input for formulating what each step does and the
-timeline we aim for needs to come from the list wisdom; it won't
-have much impact if the project's official declaration is not
-followed-thru, and a unilateral declaration that is pulled out of
-thin-air likely will not be.
+Do get a good grasp on which tests need to be fixed, I changed the seed
+value for the sha1 computation and then run the test suite. There are a lot
+of tests passing for this, but also quite a few failing. Then I picked t4005
+randomly to start with. This patch works even with a crippled hash function
+as we use hash-object to get the object id.
 
-> I am happy to solicit more input from security researchers, though,
-> and your suggestion to do so is good advice.
+Thanks,
+Stefan
 
-One good thing is that we can prepare the framework to adopt a new
-hash before knowing what the exact hash function is; crypto-minded
-folks can work on the hash selection in parallel without waiting for
-the framework to become ready.  And I do agree with Dscho that
-having crypto experts would be very helpful for the latter.
+ t/t4005-diff-rename-2.sh | 95 ++++++++++++++++++++++--------------------------
+ 1 file changed, 43 insertions(+), 52 deletions(-)
+
+diff --git a/t/t4005-diff-rename-2.sh b/t/t4005-diff-rename-2.sh
+index 135addbfbd..f542d2929d 100755
+--- a/t/t4005-diff-rename-2.sh
++++ b/t/t4005-diff-rename-2.sh
+@@ -3,84 +3,75 @@
+ # Copyright (c) 2005 Junio C Hamano
+ #
+ 
+-test_description='Same rename detection as t4003 but testing diff-raw.
++test_description='Same rename detection as t4003 but testing diff-raw.'
+ 
+-'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/diff-lib.sh ;# test-lib chdir's into trash
+ 
+-test_expect_success \
+-    'prepare reference tree' \
+-    'cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
+-     echo frotz >rezrov &&
+-    git update-index --add COPYING rezrov &&
+-    tree=$(git write-tree) &&
+-    echo $tree'
+-
+-test_expect_success \
+-    'prepare work tree' \
+-    'sed -e 's/HOWEVER/However/' <COPYING >COPYING.1 &&
+-    sed -e 's/GPL/G.P.L/g' <COPYING >COPYING.2 &&
+-    rm -f COPYING &&
+-    git update-index --add --remove COPYING COPYING.?'
++test_expect_success 'setup reference tree' '
++	cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
++	echo frotz >rezrov &&
++	git update-index --add COPYING rezrov &&
++	tree=$(git write-tree) &&
++	echo $tree &&
++	sed -e 's/HOWEVER/However/' <COPYING >COPYING.1 &&
++	sed -e 's/GPL/G.P.L/g' <COPYING >COPYING.2 &&
++	origoid=$(git hash-object COPYING) &&
++	oid1=$(git hash-object COPYING.1) &&
++	oid2=$(git hash-object COPYING.2)
++'
+ 
++################################################################
+ # tree has COPYING and rezrov.  work tree has COPYING.1 and COPYING.2,
+ # both are slightly edited, and unchanged rezrov.  We say COPYING.1
+ # and COPYING.2 are based on COPYING, and do not say anything about
+ # rezrov.
+ 
+-git diff-index -C $tree >current
+-
+-cat >expected <<\EOF
+-:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 0603b3238a076dc6c8022aedc6648fa523a17178 C1234	COPYING	COPYING.1
+-:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 06c67961bbaed34a127f76d261f4c0bf73eda471 R1234	COPYING	COPYING.2
+-EOF
++test_expect_success 'validate output from rename/copy detection (#1)' '
++	rm -f COPYING &&
++	git update-index --add --remove COPYING COPYING.? &&
+ 
+-test_expect_success \
+-    'validate output from rename/copy detection (#1)' \
+-    'compare_diff_raw current expected'
++	cat <<-EOF >expected &&
++	:100644 100644 $origoid $oid1 C1234	COPYING	COPYING.1
++	:100644 100644 $origoid $oid2 R1234	COPYING	COPYING.2
++	EOF
++	git diff-index -C $tree >current &&
++	compare_diff_raw expected current
++'
+ 
+ ################################################################
+-
+-test_expect_success \
+-    'prepare work tree again' \
+-    'mv COPYING.2 COPYING &&
+-     git update-index --add --remove COPYING COPYING.1 COPYING.2'
+-
+ # tree has COPYING and rezrov.  work tree has COPYING and COPYING.1,
+ # both are slightly edited, and unchanged rezrov.  We say COPYING.1
+ # is based on COPYING and COPYING is still there, and do not say anything
+ # about rezrov.
+ 
+-git diff-index -C $tree >current
+-cat >expected <<\EOF
+-:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 06c67961bbaed34a127f76d261f4c0bf73eda471 M	COPYING
+-:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 0603b3238a076dc6c8022aedc6648fa523a17178 C1234	COPYING	COPYING.1
+-EOF
++test_expect_success 'validate output from rename/copy detection (#2)' '
++	mv COPYING.2 COPYING &&
++	git update-index --add --remove COPYING COPYING.1 COPYING.2 &&
+ 
+-test_expect_success \
+-    'validate output from rename/copy detection (#2)' \
+-    'compare_diff_raw current expected'
++	cat <<-EOF >expected &&
++	:100644 100644 $origoid $oid2 M	COPYING
++	:100644 100644 $origoid $oid1 C1234	COPYING	COPYING.1
++	EOF
++	git diff-index -C $tree >current &&
++	compare_diff_raw current expected
++'
+ 
+ ################################################################
+-
+ # tree has COPYING and rezrov.  work tree has the same COPYING and
+ # copy-edited COPYING.1, and unchanged rezrov.  We should not say
+ # anything about rezrov or COPYING, since the revised again diff-raw
+ # nows how to say Copy.
+ 
+-test_expect_success \
+-    'prepare work tree once again' \
+-    'cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
+-     git update-index --add --remove COPYING COPYING.1'
+-
+-git diff-index -C --find-copies-harder $tree >current
+-cat >expected <<\EOF
+-:100644 100644 6ff87c4664981e4397625791c8ea3bbb5f2279a3 0603b3238a076dc6c8022aedc6648fa523a17178 C1234	COPYING	COPYING.1
+-EOF
++test_expect_success 'validate output from rename/copy detection (#3)' '
++	cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
++	git update-index --add --remove COPYING COPYING.1 &&
+ 
+-test_expect_success \
+-    'validate output from rename/copy detection (#3)' \
+-    'compare_diff_raw current expected'
++	cat <<-EOF >expected &&
++	:100644 100644 $origoid $oid1 C1234	COPYING	COPYING.1
++	EOF
++	git diff-index -C --find-copies-harder $tree >current &&
++	compare_diff_raw current expected
++'
+ 
+ test_done
+-- 
+2.13.0.17.gf3d7728391
+
