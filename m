@@ -7,101 +7,179 @@ X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFC9E1FACB
-	for <e@80x24.org>; Wed,  7 Jun 2017 12:57:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D27DE1FACB
+	for <e@80x24.org>; Wed,  7 Jun 2017 15:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751490AbdFGM5S (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 08:57:18 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55672 "EHLO mout.gmx.net"
+        id S1751470AbdFGOt7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 10:49:59 -0400
+Received: from mout.gmx.net ([212.227.15.19]:65214 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751203AbdFGM5R (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 08:57:17 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtJAR-1e1iNd0Fyd-012nn2; Wed, 07
- Jun 2017 14:57:14 +0200
-Date:   Wed, 7 Jun 2017 14:57:13 +0200 (CEST)
+        id S1751252AbdFGOtr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 10:49:47 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ln7wj-1dmijH2EIP-00hPWD; Wed, 07
+ Jun 2017 16:47:06 +0200
+Date:   Wed, 7 Jun 2017 16:47:05 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Konstantin Podsvirov <konstantin@podsvirov.pro>
-cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [BUG] Help > About Git Gui = crash
-In-Reply-To: <463191496776595@web26j.yandex.ru>
-Message-ID: <alpine.DEB.2.21.1.1706071454310.171564@virtualbox>
-References: <227151496770459@web10m.yandex.ru> <CAGZ79kbAwqb87nOm2sG7=uOO2jE6Rkgqofy5iYuZQrg1Jc2okw@mail.gmail.com> <463191496776595@web26j.yandex.ru>
+To:     Stefan Beller <sbeller@google.com>
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: pushing for a new hash, was Re: [PATCH 2/3] rebase: Add tests
+ for console output
+In-Reply-To: <CAGZ79kaYMR9uB0G911yRPXeZjbCeef2LHz4J2FLDOEj+mYkmqQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1706071520280.171564@virtualbox>
+References: <20170531104213.16944-1-phillip.wood@talktalk.net> <20170531104213.16944-3-phillip.wood@talktalk.net> <alpine.DEB.2.21.1.1706011329350.3610@virtualbox> <xmqq7f0v46q3.fsf@gitster.mtv.corp.google.com> <CAGZ79kaM9ryT1gWx=L6S90HPCaDPNZ6H124HAJscpeJCQFDN8Q@mail.gmail.com>
+ <alpine.DEB.2.21.1.1706021442190.171564@virtualbox> <20170602175455.GA30988@aiede.mtv.corp.google.com> <alpine.DEB.2.21.1.1706070008440.171564@virtualbox> <CAGZ79kaYMR9uB0G911yRPXeZjbCeef2LHz4J2FLDOEj+mYkmqQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-86331634-1496840234=:171564"
-X-Provags-ID: V03:K0:+SnGjihqhFRDQ7wiOXVbZDvY4tkYV3EYkWtUPS6dTCFrj9N3PsT
- VRxlgWKXcXeoHcu5EoewuUyU1x6sz1j2hFVd1i3/XL3UxY+LRCRowWXFScbZhqjT6afFlsX
- 1Sc+6XlArOTDZ+ZdILM2ZyUK13WgbNbEjnlpKES3oA+DBAYspd/DeP/5/NrDHGNKWkciCw5
- v71wNUTS4R6d04CmSQ20A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:r/jkdCN7AIE=:OYkwy+2xsViBrZ9e8GioK1
- WAfvkdJJJ4xakqCFU2sj7/bFVoHY4qOK8gf8I+Lk7G77YLvaEsFwhVrkkgdt7SPQ3oDqAoEyz
- lx9p2TYMxki+yiijYKQka/WKNl3cZhtYia9/sYplT1DrxdUCnbwbztice0/GwnR7I4Zp9HRhq
- ZiLeikZeahYJT1gbbfBrAo9ichlCRXssad4adSMQgbJftBWVY7phfld4xwqlFwGEPcDmWSbIu
- /Jtc2b4r5rGZ6OOYfEelxFoMcJFQR6VxelERC0XBSHY8klbAa+5Nv2n77omuMYQS5rq4llddX
- u6tGvqVYa8FjeufJgO0alm+nOPA1QtYmMeWbcyHwMZA2REbOrRunYJhfqM54Q+iD7ekenDPbB
- 9z/m7XIoWysVMK1X+QWmtiRax1YrLFfZ0rGMMjO1DEg6bKntoDaEPWtq8FZQqDHVRzvSMrr8/
- u2ONr2QWH2DL/my1Js/F6/e6QcHTS6Y6WswyBCQlX9FML+7ptTIrGx9dOj7dxOkjaWqyY2rWG
- wSX2F96mwgC2iBIXPi+seEpwFj7W4T5i7DSfoseEHhuFK9P4NaGE0fYYlzaYWA9hz4+1v7UQ9
- kgNnnF/5fZdjLNmkAQAZkuxDq0+1O3doVd9fM7cCo1MclqkDBAC1FiidVy6SZUFzqehMpJTxn
- Gward8/Hwlcn7sftAOawS8foRKiEqiovF6DRqRoVASfMz3wqJbzTRBnZiVvpWIvbZdnrXh1Es
- H3ORDjxShyN5tzj055RU7iA+qtJFjOIHo761jnk3R08BhyfJAIH0fS7Aj1+Q3/Za8z/FWuXXt
- 10OZbrw
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:4/TtBifPp2nHoN1Jl5H6RRsNiDR9drDWT6vxVPuOnh9CcoP797r
+ gSi2l90lf8cR3xxK80WCnJkD4FYmFlxvRIu2REW5641GtXsS7aCjwajVEaWD53mVEM4EWpd
+ s50Rt+cA6G/9nrc+OyX97mbwayWBGpC2p0Le1SkkinMo0gG+6YmnhEhFwwbyjBmd3YXN/xk
+ B6K6O1O1zNg5VMa0j0xIw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:700NDpB35do=:q8i5lIEiEgIkYd1AfzkA8r
+ DjFBXTV3ZFDMfwa2/MEI3+TD5lgxx4wbaYBq28WMJGcYmk8M4baadjbFNp1PKShNnL0UoH5mK
+ Ayq7GyF5fIFspykxm/2kKoYUZzmnHwhZqeZZc7qQpAcA/X3eb1aQlkZspZidKEqU2gvvrIR8y
+ lIF2SRzDeuuq9EfWmcO0HCO7HjrC6op1c9F5fLZiv3c7X1lnrgiLtI9vZPs+AJ9CKoNymCXhq
+ S83W7154JTC7hIlYLWSyB/4iDK+7JHmTvpYca9Kk2ahmqCHCBjAG0q3e101ntPX1Lctf4SywS
+ m++1MVuqTuKltaTXRbxlheWCqaCHWETXLUJFBgl0JVkWhztLpqv4QUQCeU77G7b64SpkKdDGl
+ zmp0CoBIngJHlZX/ER0H3WTA7gGKDVZattOMcUcHCRJeEgUQmukh/u+y3qYWoF884UBrq0fWf
+ OXd03ZcvGn+W7Y+Gi5jvXR3E7A1XZo77OrIAUd2/ya9I9puEKOXmLsTE1/uHmTScTxKeUJLCZ
+ K8NknpIhzviivViaHLq4kvzDjdJ5cIZdcmh6R8485vnOTGLMSVZmSrBvq0oONnsrc1CM3pJD9
+ x7t9vJ4SpWqpOFQsHTXEKHF8u0fx7BCKiNlprAmrcdAzH8MTsPQX6+6hM+9/LnhnSBAY+kdgf
+ 7+6mzxuO1DKFXy3xJkbhkXWsyIr7eq/qIglICPjlNgPBMngPAjtqyU74YH+6FwqhF0B0ZKSVk
+ E68GMYG9xUQ5ZgmA6sSwfrwsdujQsJLuOGOg24T80GMKBwtmSDsxJIuIM4FutXx7R64ZVzxmJ
+ ZgRdNR/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Stefan,
 
---8323329-86331634-1496840234=:171564
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Tue, 6 Jun 2017, Stefan Beller wrote:
 
-Hi,
+> On Tue, Jun 6, 2017 at 3:22 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+>
+> > 3) the only person who could make that call is Junio
+> 
+> Occasionally I think the same, but in fact it is not true.
 
-On Tue, 6 Jun 2017, Konstantin Podsvirov wrote:
+Again my poor English skillz make sure I get misunderstood. So bear with
+me, please, and let me try again.
 
-> 06.06.2017, 21:25, "Stefan Beller" <sbeller@google.com>:
-> > On Tue, Jun 6, 2017 at 10:34 AM, Konstantin Podsvirov
-> > <konstantin@podsvirov.pro> wrote:
-> >> =C2=A0Reproduction:
-> >> =C2=A0- Start git gui
-> >> =C2=A0- Go to menu panel: Help > About Git Gui
-> >>
-> >> =C2=A0Output:
-> >> =C2=A0error: git-gui died of signal 11
-> >>
-> >> =C2=A0Environment:
-> >> =C2=A0Debian 8 jessie amd64 KDE
-> >
-> > Care to also share the output of
-> >
-> > =C2=A0=C2=A0$ git gui --version
->=20
-> git-gui version 0.19.0.2.g3decb8e
->=20
-> > =C2=A0=C2=A0$ git --version
->=20
-> git version 2.1.4
->=20
-> >
-> > as I suspect this to come from git and git-gui not working well togethe=
-r.
+The current What's cooking mails are full of stuff other than the
+transition from SHA-1 to a new function. In fact, every once in a while I
+see brian carlson's patch series with the remark "Needs review" while
+other patch series get reviewed even by Junio.
 
-FWIW v2.1.4 was released almost 2.5 years ago.
+In my mind, this sends a message.
 
-The crash does *not* happen with the version I am running here on Ubuntu
-16.04.2 LTS with
+If, hypothetically, a couple of What's cooking mails would have in their
+header some language to the extent that we need to focus on transitioning
+away from SHA-1, and maybe even have the promise that Junio would not
+review other patch series as long as there are patches to review that
+prepare the tests for the transition, that convert more 20 and 40
+constants, that convert more users to object_ids (and maybe strongly
+encourage to coordinate with brian so as not to trip over each others'
+toes), to implement a command to convert a SHA-1 based repository to a
+repository based on a different hash, to implement caching of legacy SHA-1
+<=> new hash mapping, then that would send a wholly different message.
 
-=09git-gui version 0.21.GITGUI
-=09git version 2.13.0.windows.1.460.g13f583bedb5
+And in my mind, if anybody else than Junio sent this message, it would
+sound ludicrous. For example, if I sent a mail to that extent, I would
+find it ridiculous myself, in particular since I am a very unprolific
+reviewer, and the promise to focus on favoring reviews of SHA-1 transition
+related patches would sound very unsincere from somebody like me.
 
-=09Tcl/Tk version 8.6.5
+> As said above, Junio has strong veto power for things going off rails,
+> but in his role as a maintainer he does not coordinate people. (He
+> occasionally asks them to coordinate between themselves, though)
+
+I never had in mind that Junio would coordinate people or distribute
+tasks.
+
+Instead, I had in mind that a certain time period could be called out as
+focusing on that pretty important direction.
+
+That would be mostly symbolic, of course. And encouraging. In a positive
+way. With a direction.
+
+> > 4) we still have the problem that there is no cryptography expert among
+> > those who in the Git project are listened to
+> 
+> I can assure you that Jonathan listened to crypto experts. It just did
+> not happen on the mailing list, which is sad regarding openness and
+> transparency.
+
+True. Same goes for me, of course. I just felt pretty uncomfortable
+sharing the contents of my private conversation publicly, when I tried
+very hard to convince my conversation partner to join the discussion on
+this mailing list, and they refused.
+
+The gist of it was: SHA-256 should be preferred to SHA3-256 because we
+will soon have good hardware support (and performance is really, really
+important when you need to work on the largest Git repository on this
+planet). And if there is no consensus about that, BLAKE should be
+considered over other algorithms because it has been studied pretty well.
 
 Ciao,
-Johannes
---8323329-86331634-1496840234=:171564--
+Dscho
+> 
+> 
+> 5. The timeline you seem to favor would be really great for people working
+> on Git at $BIG_CORP, as big corps usually plan things by the quarter. So maybe
+> by having a timeline (known in advance of the quarter) can convince managers
+> easier.
+> 
+> >
+> >> How did you get the impression that their opinion had no impact? We have
+> >> been getting feedback about the choice of hash function both on and off
+> >> list from a variety of people, some indisputably security experts.
+> >> Sometimes the best one can do is to just listen.
+> >
+> > I did get the impression by talking at length to a cryptography expert who
+> > successfully resisted any suggestions to get involved in the Git mailing
+> > list.
+> >
+> > There were also accounts floating around on Twitter that a certain
+> > cryptography expert who dared to mention already back in 2005 how
+> > dangerous it would be to hardcode SHA-1 into Git was essentially shown the
+> > finger, and I cannot fault him for essentially saying "I told you so"
+> > publicly.
+> 
+> Heh. The community between 2005 and now has changed. (I was not there
+> for example. ;-) ) So let's hope the community changes for the better.
+> 
+> > In my mind, it would have made sense to ask well-respected cryptographers
+> > about their opinions and then try to figure out a consensus among them (as
+> > opposed to what I saw so far, a lot of enthusastic talk by developers with
+> > little standing in the cryptography community, mostly revolving around
+> > hash size and speed as opposed to security). And then try to implement
+> > that consensus in Git.
+> 
+> Sounds good to me. That is why I personally think point (4) from
+> Jonathans list above over-emphasizes performance/size over security.
+> 
+> On the other hand if we find a smart way now, then this hash function
+> transition will open the road to switching the hash function down the road
+> once again with less or even no penalty if we make mistakes in choosing
+> yet another bad hash function now.
+> 
+> > Given my recent success rate with SHA-1 related
+> > concerns, I am unfortunately not the person who can bring that about.
+> >
+> > But maybe you are.
+> >
+> > Ciao,
+> > Dscho
+> 
+> Thanks for bringing the discussion back to life,
+> Stefan
+> 
