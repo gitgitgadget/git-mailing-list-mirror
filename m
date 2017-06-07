@@ -7,79 +7,81 @@ X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6D51FACB
-	for <e@80x24.org>; Wed,  7 Jun 2017 16:06:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6DEC1FACB
+	for <e@80x24.org>; Wed,  7 Jun 2017 16:06:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751469AbdFGQGS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 12:06:18 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50695 "EHLO mout.gmx.net"
+        id S1751464AbdFGQGR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 12:06:17 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60902 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751190AbdFGQGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751321AbdFGQGQ (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 7 Jun 2017 12:06:16 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MOf5S-1dFtur0j1a-0068fe; Wed, 07
- Jun 2017 18:06:07 +0200
-Date:   Wed, 7 Jun 2017 18:06:06 +0200 (CEST)
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3R1g-1e9dfG2V1M-00qwnc; Wed, 07
+ Jun 2017 18:06:10 +0200
+Date:   Wed, 7 Jun 2017 18:06:09 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/9] discover_git_directory(): avoid setting invalid
- git_dir
+Subject: [PATCH 2/9] config: report correct line number upon error
 In-Reply-To: <cover.1496851544.git.johannes.schindelin@gmx.de>
-Message-ID: <300d32d72b67f8c12b6cc91c36a5735a77f5ed89.1496851544.git.johannes.schindelin@gmx.de>
+Message-ID: <078fd144ddefa22892861488a7d3f48eb8d5b775.1496851544.git.johannes.schindelin@gmx.de>
 References: <cover.1496851544.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:j17aVaamtyKfGwGN0kO0cJ5ZIlSLC0zJMFE1TtMp6GOHgVxrctM
- bXD6iWynYNzmHR2dTXvw9D1f3CZAilREkIqTioXTWYHzHKo0saAjcIqbbmM52YoukluEyje
- 17PaOo8npkZuQfdIQhl22HbiRuNI/CMqk2ig1NFxwtd+Wiv7IK/nwSf3FpU6G4sQ35XwHgB
- WCDVttbJ8WtLVklML5M+w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ejEdjTCQN/g=:6O9qoM35YsMdhV5OAb6fo4
- iCo7LxNM5n+pWx+tuY88UzE5E5igInXm6SVXMJx3WlZJYUZ/LzmC8geeo+3dPfSZ/jpZ3FNZt
- pD5aa0Xryy0UItjcGWmylWHr/bTmc7rsZwpFekz5w2nR3Gqj9Ong7PYryNXg4gCIOEYr1XrDs
- jN994nr6aq0yD1UidXmAjj8heEEp45PxNmqSOXYERkpf74tnlhOO0g+LOhPL7SmFzFDq17QXc
- uzt5jbNLwU2JG2xvWZXgjjKvzVn7IkghbezIQ0KMhgbzx9w+1AXhsm3VtiIVUpVECXrQPmpX8
- rX3WKQ5O7oKMh0txifQwbY4J5G0wsvV0iQAzqfeMUEVJS/WcjsaDGYGPORkJTyNx6Lq2c7Xfe
- BjfapWZY87m+KA7/5iK2R3tzeyhKCHX0aZwMDKIo8CbowsLc1NtjKS7b5/qdXiy/+wBEYKzgt
- dAtXAL/7CrUKoqcNgni6F5XpdunMkP55qExZRP7rsgiJ1KB47Q23eDwl0PaROhcvddMpMZA1d
- bOSL/8lpV4uIFFQwCz+4tNvGddnqcq3IDQMgGk+kFGri6/FufDsbYrtnxvFEMBbxpEXASxOhz
- 5Vl2rJKAZgeruWsBY5f75Temce8oMAmYlix0s9eGaItK89KnrV6AuRthvxw+0mdpddefFcLaU
- w3+w3vKIWW9NTV+SBO0nYJDEYj8TBkAvO7dZlcPqbZnK6YvahzVSVTRVjSpLIm7FBfMGrHvYj
- cljZtLxlcXymdX2npBhxyrtefICtFEb4e5Y73R8w9/MmhMcrHvJ0q/3qns+2Wblrdu4FvmRYq
- YyLdBvx
+X-Provags-ID: V03:K0:HXyo9ne2zVdZYgSonwpTVwNvler7TnwKrlmjuv6M0fAdBCUcRoR
+ 8qTalPQ1E3G2WQiD0ol2QW9vUyjxjGJu4rIT1cfSWkE3J9HQUG94dMVzpXVyImLqzshllXW
+ +5hXCDpPjhVwy9OP5Ia434f12bnD9CbPJfzQ9L4ivm/A0o4dwb1/GnUDRhAEwFcIQp9f3Gf
+ ixYDlVBUofgqS5ctksm7A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3WGVBhxuz9o=:K++J2Uj0JelZgjXhgzT43z
+ XOm4PM4jtuh+nviStT2ZlkGQ6NrgUzppPLGi6ubUGdRZ9HM3Z1DkdVReMtITmZUtPeCXqeaHu
+ esuHnqZIfBRIToSvVJVnrOlanYl+rjHJecGbNyFw20XqTmSvKtB+yCWJMQzDWIWog+QZlJY8d
+ GUwB6Poahphohoac2StAzMc7lsdjmpPgFCNvvYByZaggDyn9AQnI9zRHvmiX6w1LE8H7bwDsN
+ rx0/JLYwuRNTn5VgBl/wPa83dU1TT4sxyPR4Zm2Z538XfkMfhIWVYN1Aa9cK8QGtD6y0sa2yy
+ 8EQMxk60ne126Wpfu4SMtqlJoLmKu/0Fr1l4zaRFquanhIhkMMR3K8/AlRf1T3EYsEnhHx1+c
+ 7oA1otRdqzousSX8gC4kvXGhZ9R7ToXuDMO5waaf5xn3tPp6MzTewsOj/nw0hZHxydlEXD7Jh
+ VlP7KuEhDqtyvVXih0HJukhAYXmJHGaNfJzhNBKkiBZ5hxvg4RLoeQWoHWpjLN3Nmollmgq0R
+ kEcbw8+vfUDw5krbsdOtfWE9tHehupujxCZA5ZUdm9dkWzbid0rVHQ9pw/D8HXVGSkEpxhiEz
+ IqBtgIL6IewU0vl2dZK4ICCBK0CsNTxoqbEa1xfTyYOw60KklxRG0i9nEtooSxx3TpGJFnoto
+ 412p0pninaewuxz5Jvj7qh5qjVSnts1d5/5L4i32a8doahnqA37a8lTxg68MvLdQ36FxF+pHh
+ Vcv/g9yqWUo5R4AAFHEkFmvLTvWDVXCJeEIFV+VZHruCYB/fh5mfDssxM4ovmewdRsUwA78bp
+ SAH48lK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When discovering a .git/ directory, we take pains to ensure that its
-repository format version matches Git's expectations, and we return NULL
-otherwise.
+When get_value() parses a key/value pair, it is possible that the line
+number is decreased (because the \n has been consumed already) before the
+key/value pair is passed to the callback function, to allow for the
+correct line to be attributed in case of an error.
 
-However, we still appended the invalid path to the strbuf passed as
-argument.
+However, when git_parse_source() asks get_value() to parse the key/value
+pair, the error reporting is performed *after* get_value() returns.
 
-Let's just reset the strbuf to the state before we appended the .git/
-directory that was eventually rejected.
+Which means that we have to be careful not to increase the line number
+in get_value() after the callback function returned an error.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- setup.c | 1 +
- 1 file changed, 1 insertion(+)
+ config.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/setup.c b/setup.c
-index e3f7699a902..2435186e448 100644
---- a/setup.c
-+++ b/setup.c
-@@ -982,6 +982,7 @@ const char *discover_git_directory(struct strbuf *gitdir)
- 		warning("ignoring git dir '%s': %s",
- 			gitdir->buf + gitdir_offset, err.buf);
- 		strbuf_release(&err);
-+		strbuf_setlen(gitdir, gitdir_offset);
- 		return NULL;
- 	}
+diff --git a/config.c b/config.c
+index 146cb3452ad..9b88531a70d 100644
+--- a/config.c
++++ b/config.c
+@@ -604,7 +604,8 @@ static int get_value(config_fn_t fn, void *data, struct strbuf *name)
+ 	 */
+ 	cf->linenr--;
+ 	ret = fn(name->buf, value, data);
+-	cf->linenr++;
++	if (!ret)
++		cf->linenr++;
+ 	return ret;
+ }
  
 -- 
 2.13.0.windows.1.460.g13f583bedb5
