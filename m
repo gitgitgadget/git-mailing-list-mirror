@@ -2,73 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E79461FAE5
-	for <e@80x24.org>; Wed,  7 Jun 2017 09:47:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45B6C1FAE5
+	for <e@80x24.org>; Wed,  7 Jun 2017 09:48:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751577AbdFGJr0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 05:47:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35806 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751026AbdFGJqn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 05:46:43 -0400
-Received: (qmail 14664 invoked by uid 109); 7 Jun 2017 09:46:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Jun 2017 09:46:43 +0000
-Received: (qmail 32307 invoked by uid 111); 7 Jun 2017 09:46:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 07 Jun 2017 05:46:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Jun 2017 05:46:41 -0400
-Date:   Wed, 7 Jun 2017 05:46:41 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [WIP v2 0/2] Modifying pack objects to support --blob-max-bytes
-Message-ID: <20170607094641.pibxlk5nbyii5p63@sigill.intra.peff.net>
-References: <cover.1496361873.git.jonathantanmy@google.com>
- <cover.1496432147.git.jonathantanmy@google.com>
- <20170602221645.nsz6r6tgfndulc6c@sigill.intra.peff.net>
- <20170605103523.190c9f16@twelve2.svl.corp.google.com>
+        id S1751523AbdFGJrY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 05:47:24 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:37346 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751473AbdFGJqu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 05:46:50 -0400
+Received: by mail-wm0-f43.google.com with SMTP id d73so7198591wma.0
+        for <git@vger.kernel.org>; Wed, 07 Jun 2017 02:46:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=6F5bx9R/8v/Q2aIVN6/0QP15YT4T6M4O4/ws6oCDoL0=;
+        b=fCH4sGRtfIYUXqIliYuI9DddwqrJQCVbjYpbM5zDm7q1rgqfwd/gNxI+f9ZDFHHE3+
+         vYOgIgGgvTnytud6YP9opaQ+fD+1c7ZaQgzmphKnide07AYr9YLLa+40vZiJ1Tt23Xfs
+         C1DNXJP/Z8TKuIlpbckkRwvfVp77DU2cObNEA2sLqDrOIi3q49TpPGAVDVc/GzyfCWyp
+         hesdv+z+8THy1FkCHnaFPmLJwpQ7kKnXwxaeaxauiUvSuO5FV3z+f0g3C9zfjNSilYlK
+         3/eGH6kCDvxqYGYYbhlbtd6Q+AKeSTYWiSHy1IAhaAPqKK6wIM04zbqeBpEMCqXqVPy2
+         +rKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=6F5bx9R/8v/Q2aIVN6/0QP15YT4T6M4O4/ws6oCDoL0=;
+        b=UNgrh6lSQVSd9j1y62+bnOWy386VrA6R5OUh+CK70G4EHBS66NFeJjVapze7MUosqX
+         wIkYG/sNYACuLq+JjHiFPFe21+dmzJVCQQbx8Q/hb2jO5oTySqiHDBadJNLJ9ZVD0vT+
+         dwo0kfx5CwIpord2+q/Clczf4gJLOELUDsiZlq/1f3QfOGlE6aNok23cyF1gFa3mpy3P
+         at/WR0CbCdZGHJmyWcuSHmkdw2ZIbV7xTd1H9yhDIjZmq5I7bxCP9E5lLJiDw+WbBkG7
+         ujMiP3H1WDAxwMFZN32YO1XVf0hMlCb2Y+HTWLNAX/D+ThdxsB7N4yK/5tByhs/EvWnC
+         lF2g==
+X-Gm-Message-State: AKS2vOwglCJQI0Nd3VpI+0DpefDlphym2bfdqoHp46Z8/XVBZvCO44B4
+        ITVpa9txkrt1ajAvL2nvTgAEl2as2cIx5+o=
+X-Received: by 10.28.46.23 with SMTP id u23mr1460643wmu.102.1496828809043;
+ Wed, 07 Jun 2017 02:46:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170605103523.190c9f16@twelve2.svl.corp.google.com>
+Received: by 10.28.105.139 with HTTP; Wed, 7 Jun 2017 02:46:08 -0700 (PDT)
+From:   pedro rijo <pedrorijo91@gmail.com>
+Date:   Wed, 7 Jun 2017 10:46:08 +0100
+Message-ID: <CAPMsMoAYpS8QMrfyed5=XPWJLbV6=kMg5gp-2a75kWMpVD3D1A@mail.gmail.com>
+Subject: [BUG] Failed to sign commit
+To:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 05, 2017 at 10:35:23AM -0700, Jonathan Tan wrote:
+Recently I've updated a bunch of stuff, including git and gpg. I'm using
 
-> > The rest of the pack code uses a varint encoding which is generally
-> > much smaller than a uint64 for most files, but can handle arbitrary
-> > sizes.
-> > 
-> > The one thing it loses is that you wouldn't have a fixed-size record, so
-> > if you were planning to dump this directly to disk and binary-search it,
-> > that won't work. OTOH, you could make pseudo-pack-entries and just
-> > index them along with the rest of the objects in the pack .idx.
-> > 
-> > The one subtle thing there is that the pseudo-entry would have to say
-> > "this is my sha1". And then we'd end up repeating that sha1 in the .idx
-> > file. So it's optimal on the network but wastes 20 bytes on disk (unless
-> > index-pack throws away the in-pack sha1s as it indexes, which is
-> > certainly an option).
-> 
-> If we end up going with the varint approach (which seems reasonable),
-> maybe the client could just expand the varints into uint64s so that it
-> has a binary-searchable file. I think it's better to keep this list
-> separate from the pack .idx file (there has been some discussion on this
-> - [1] and its replies).
-> 
-> [1] https://public-inbox.org/git/777ab8f2-c31a-d07b-ffe3-f8333f408ea1@jeffhostetler.com/
+- mac OS 10.10.5
+- git 2.13.1
+- gpg (GnuPG) 2.1.21 / libgcrypt 1.7.7
 
-OK. If we're keeping it separate anyway, then I agree that just
-expanding the varints is a good solution. And we don't have to care too
-much about the local storage, because it can be changed out later
-without touching the on-the-wire protocol.
+When I do
 
--Peff
+$ git commit --allow-empty -v -m "lol"
+error: gpg failed to sign the data
+fatal: failed to write commit object
+
+I tried the verbose flag hoping to have a better insight, but not very
+useful. Not sure if it's a gpg problem, a git problem, or something
+else.
+
+Any clue on how to debug the problem? Do you need any gpg output to
+better understand the problem?
+
+Thanks,
+Pedro
