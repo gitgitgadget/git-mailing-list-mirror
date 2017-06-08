@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A64651FAEB
-	for <e@80x24.org>; Thu,  8 Jun 2017 23:41:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 483601FAEB
+	for <e@80x24.org>; Thu,  8 Jun 2017 23:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751683AbdFHXls (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 19:41:48 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34201 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751671AbdFHXlr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 19:41:47 -0400
-Received: by mail-pf0-f169.google.com with SMTP id 9so22171865pfj.1
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:46 -0700 (PDT)
+        id S1751705AbdFHXly (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 19:41:54 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:35084 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751506AbdFHXlx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 19:41:53 -0400
+Received: by mail-pf0-f176.google.com with SMTP id l89so22167733pfi.2
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kTCrCEliAF90wX81aycO4Np/xI+kYouwx08gBtJldoo=;
-        b=HgMupMZ/gGdsC/nKRHZdHUxU9TrPwHAg31/tmiJAHJ7VlUOol+T18LthsyOzsK+vls
-         FXBBtJumC4QhJJppjLGjUVJO237mJH3SwAEWcp2OEFB0aVjZadx5xi3K+PkmHq1Vgwdr
-         reqJov5tlDsUxkCmOr2BtIZ3/WVwUsyRRtIdAT2YCbtXHqDgUd6ctbpNfH5Gqc82Zdgx
-         SzTy73rm2an/NeqJCyOfrmANmfj1WuLO0FSVO7YxFyRm6DRh0wIyNl6nwwAOpTr+Oks/
-         hUeWQWJOV/iiUvLnLOoio3kxq09cLtNiKER9zQNGHO0hcvqxI9QFnWiCtm6VXsRfyUyR
-         5qxw==
+        bh=lvMZ2NW0oL6zdhTkB3kgOodBdJwoHfyls/9CtOx9+OQ=;
+        b=JoMw0vl23pzxSdZcsHk19Pfgh4fK2HemBjJ79mraPcPIaZ9izqcSUGpnnRwNEooEUh
+         ZAtqzVtNB2zVy3EICIYjlfvFe+16RrMLnTTmWM4bEinN1EFQqWFViYf+HptzrcCQ0cLa
+         2Uu2fs0FpcOXlFnhuEJqob3b9vP2CaNs103Su9U26UKN+cX7iA3TeX8IztzJze1xqzI5
+         2BsR+HItIevPj3AfbqvS9XUy4TvAKeW4RIkDbk4vApO/85TLdAXohIOMA9YcGO5Ggygd
+         noohJRVBLTaHkaKH0JERYHOyul26NKkJP1ySf4guFqNY7GemeiEwcjEuRvy+9gfXUgfy
+         TVXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=kTCrCEliAF90wX81aycO4Np/xI+kYouwx08gBtJldoo=;
-        b=RZd2aO5RRqV/T+SYDXw8i3wbrX4ZoYHymERURx7eGpS04kNe1aBnM1+esUxDTsuYW5
-         Nr7LQ2TajiGR8lpxT5FlLvdHPOtRJKg/7/aoFnEOUVFmFxAC1CIZCmqy8znJ7mjoK7On
-         bPX+d+V3VAd66IeZCeylWFux0cf5DcYvpE82v0uJJVu/bCHTsFLFCufrDjfvMBn3Sp91
-         Gzw289bl/ISkVXNygl4tIQ8hZkUKnNNzhWuusGgk0plBoHXkpzcKunW0+SsnMrls5MWs
-         +AVNDqzEIASSzc1cwkSWLtnQwDGWGa1W654rqDzwYv9WlP+QnR++pi9sAdN+YMreRYTJ
-         SIGA==
-X-Gm-Message-State: AODbwcBIzTI/Z63y6BLjFeKnqhgSFgVVwh6sMK1wi5ApK+cAcAF+8GSo
-        IgmLz3kGhvB1H3JFoRSkKg==
-X-Received: by 10.98.208.198 with SMTP id p189mr39386125pfg.213.1496965305655;
-        Thu, 08 Jun 2017 16:41:45 -0700 (PDT)
+        bh=lvMZ2NW0oL6zdhTkB3kgOodBdJwoHfyls/9CtOx9+OQ=;
+        b=Z1KJFJ+6chGbwXSK2kdDqw+NzdIuawBZcP4gv52a5gqrsv5pui4ExhOu+fzRrUbuXV
+         zgkWFwvSLTZlSHR1hfjZA5CpPsuIxxEHHEO8Jy5zyhFOPIDhsjBU3qwfO/UntiHIyUSJ
+         TfXhMWMBJpHRYgmNBWCXebeDGJg6NISNXXdawjl1TW9sPKgLN63z8d+9Dm66vx7HADhl
+         SKXfcw27uPQW8dFRyIAohB1eNvoNKSiSVaqBV18okvPCxTI6NV/YZaVS2zGHneb9gL/G
+         i61oyOorABUEcipRjJDsiINYKfUBiN4fByMVJTlusenP7VlnxYser9JSPIyVlQPsO9i9
+         iJ5g==
+X-Gm-Message-State: AODbwcCkxCDNQa/KmKjgoZS0akh9Wgn/dLzQGyU6wC4OaFuwikqgRg1Q
+        BcMVC8uaQw3t6/tDEFOrSg==
+X-Received: by 10.98.110.138 with SMTP id j132mr38901998pfc.51.1496965311831;
+        Thu, 08 Jun 2017 16:41:51 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.44
+        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jun 2017 16:41:44 -0700 (PDT)
+        Thu, 08 Jun 2017 16:41:50 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 19/32] convert: convert convert_to_git to take an index
-Date:   Thu,  8 Jun 2017 16:40:47 -0700
-Message-Id: <20170608234100.188529-20-bmwill@google.com>
+Subject: [PATCH v2 22/32] ls-files: convert overlay_tree_on_cache to take an index
+Date:   Thu,  8 Jun 2017 16:40:50 -0700
+Message-Id: <20170608234100.188529-23-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.508.gb3defc5cc-goog
 In-Reply-To: <20170608234100.188529-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -68,178 +68,88 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- apply.c         | 2 +-
- builtin/blame.c | 2 +-
- combine-diff.c  | 2 +-
- convert.c       | 7 ++++---
- convert.h       | 8 +++++---
- diff.c          | 6 +++---
- dir.c           | 2 +-
- sha1_file.c     | 4 ++--
- 8 files changed, 18 insertions(+), 15 deletions(-)
+ builtin/commit.c   |  3 ++-
+ builtin/ls-files.c | 15 ++++++++-------
+ cache.h            |  3 ++-
+ 3 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 87db9618d..8eca54325 100644
---- a/apply.c
-+++ b/apply.c
-@@ -2268,7 +2268,7 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
- 	case S_IFREG:
- 		if (strbuf_read_file(buf, path, st->st_size) != st->st_size)
- 			return error(_("unable to open or read %s"), path);
--		convert_to_git(path, buf->buf, buf->len, buf, 0);
-+		convert_to_git(&the_index, path, buf->buf, buf->len, buf, 0);
- 		return 0;
- 	default:
- 		return -1;
-diff --git a/builtin/blame.c b/builtin/blame.c
-index c0ae49298..317d2ec37 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2384,7 +2384,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 		if (strbuf_read(&buf, 0, 0) < 0)
- 			die_errno("failed to read from stdin");
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 805da4915..3d98084fb 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -254,7 +254,8 @@ static int list_paths(struct string_list *list, const char *with_tree,
+ 
+ 	if (with_tree) {
+ 		char *max_prefix = common_prefix(pattern);
+-		overlay_tree_on_cache(with_tree, max_prefix ? max_prefix : prefix);
++		overlay_tree_on_index(&the_index, with_tree,
++				      max_prefix ? max_prefix : prefix);
+ 		free(max_prefix);
  	}
--	convert_to_git(path, buf.buf, buf.len, &buf, 0);
-+	convert_to_git(&the_index, path, buf.buf, buf.len, &buf, 0);
- 	origin->file.ptr = buf.buf;
- 	origin->file.size = buf.len;
- 	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_oid.hash);
-diff --git a/combine-diff.c b/combine-diff.c
-index 2848034fe..74f723af3 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1053,7 +1053,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 			if (is_file) {
- 				struct strbuf buf = STRBUF_INIT;
  
--				if (convert_to_git(elem->path, result, len, &buf, safe_crlf)) {
-+				if (convert_to_git(&the_index, elem->path, result, len, &buf, safe_crlf)) {
- 					free(result);
- 					result = strbuf_detach(&buf, &len);
- 					result_size = len;
-diff --git a/convert.c b/convert.c
-index 824b606fa..5af6fdf3f 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1085,7 +1085,8 @@ const char *get_convert_attr_ascii(const char *path)
- 	return "";
- }
- 
--int convert_to_git(const char *path, const char *src, size_t len,
-+int convert_to_git(const struct index_state *istate,
-+		   const char *path, const char *src, size_t len,
-                    struct strbuf *dst, enum safe_crlf checksafe)
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 620487a77..a5ceeb052 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -432,7 +432,8 @@ static int get_common_prefix_len(const char *common_prefix)
+  * that were given from the command line.  We are not
+  * going to write this index out.
+  */
+-void overlay_tree_on_cache(const char *tree_name, const char *prefix)
++void overlay_tree_on_index(struct index_state *istate,
++			   const char *tree_name, const char *prefix)
  {
- 	int ret = 0;
-@@ -1101,7 +1102,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
- 		src = dst->buf;
- 		len = dst->len;
- 	}
--	ret |= crlf_to_git(&the_index, path, src, len, dst, ca.crlf_action, checksafe);
-+	ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, checksafe);
- 	if (ret && dst) {
- 		src = dst->buf;
- 		len = dst->len;
-@@ -1172,7 +1173,7 @@ int renormalize_buffer(const char *path, const char *src, size_t len, struct str
- 		src = dst->buf;
- 		len = dst->len;
- 	}
--	return ret | convert_to_git(path, src, len, dst, SAFE_CRLF_RENORMALIZE);
-+	return ret | convert_to_git(&the_index, path, src, len, dst, SAFE_CRLF_RENORMALIZE);
- }
+ 	struct tree *tree;
+ 	struct object_id oid;
+@@ -447,8 +448,8 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix)
+ 		die("bad tree-ish %s", tree_name);
  
- /*****************************************************************
-diff --git a/convert.h b/convert.h
-index 3a813a797..60cb41d6a 100644
---- a/convert.h
-+++ b/convert.h
-@@ -41,15 +41,17 @@ extern const char *get_wt_convert_stats_ascii(const char *path);
- extern const char *get_convert_attr_ascii(const char *path);
+ 	/* Hoist the unmerged entries up to stage #3 to make room */
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+ 		ce->ce_flags |= CE_STAGEMASK;
+@@ -461,11 +462,11 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix)
+ 			       PATHSPEC_PREFER_CWD, prefix, matchbuf);
+ 	} else
+ 		memset(&pathspec, 0, sizeof(pathspec));
+-	if (read_tree(tree, 1, &pathspec, &the_index))
++	if (read_tree(tree, 1, &pathspec, istate))
+ 		die("unable to read tree entries %s", tree_name);
  
- /* returns 1 if *dst was used */
--extern int convert_to_git(const char *path, const char *src, size_t len,
-+extern int convert_to_git(const struct index_state *istate,
-+			  const char *path, const char *src, size_t len,
- 			  struct strbuf *dst, enum safe_crlf checksafe);
- extern int convert_to_working_tree(const char *path, const char *src,
- 				   size_t len, struct strbuf *dst);
- extern int renormalize_buffer(const char *path, const char *src, size_t len,
- 			      struct strbuf *dst);
--static inline int would_convert_to_git(const char *path)
-+static inline int would_convert_to_git(const struct index_state *istate,
-+				       const char *path)
- {
--	return convert_to_git(path, NULL, 0, NULL, 0);
-+	return convert_to_git(istate, path, NULL, 0, NULL, 0);
- }
- /* Precondition: would_convert_to_git_filter_fd(path) == true */
- extern void convert_to_git_filter_fd(const struct index_state *istate,
-diff --git a/diff.c b/diff.c
-index 2f2467c6d..87ed6d6d3 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2756,7 +2756,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
- 	 * Similarly, if we'd have to convert the file contents anyway, that
- 	 * makes the optimization not worthwhile.
- 	 */
--	if (!want_file && would_convert_to_git(name))
-+	if (!want_file && would_convert_to_git(&the_index, name))
- 		return 0;
- 
- 	len = strlen(name);
-@@ -2878,7 +2878,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		 * point if the path requires us to run the content
- 		 * conversion.
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
+ 		switch (ce_stage(ce)) {
+ 		case 0:
+ 			last_stage0 = ce;
+@@ -680,7 +681,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
  		 */
--		if (size_only && !would_convert_to_git(s->path))
-+		if (size_only && !would_convert_to_git(&the_index, s->path))
- 			return 0;
+ 		if (show_stage || show_unmerged)
+ 			die("ls-files --with-tree is incompatible with -s or -u");
+-		overlay_tree_on_cache(with_tree, max_prefix);
++		overlay_tree_on_index(&the_index, with_tree, max_prefix);
+ 	}
+ 	show_files(&dir);
+ 	if (show_resolve_undo)
+diff --git a/cache.h b/cache.h
+index 02ab5f801..73724a3ad 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1993,7 +1993,8 @@ extern int ws_blank_line(const char *line, int len, unsigned ws_rule);
+ #define ws_tab_width(rule)     ((rule) & WS_TAB_WIDTH_MASK)
  
- 		/*
-@@ -2905,7 +2905,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		/*
- 		 * Convert from working tree format to canonical git format
- 		 */
--		if (convert_to_git(s->path, s->data, s->size, &buf, crlf_warn)) {
-+		if (convert_to_git(&the_index, s->path, s->data, s->size, &buf, crlf_warn)) {
- 			size_t size = 0;
- 			munmap(s->data, s->size);
- 			s->should_munmap = 0;
-diff --git a/dir.c b/dir.c
-index 0c26a53d2..8dc74c5d2 100644
---- a/dir.c
-+++ b/dir.c
-@@ -796,7 +796,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 				 (pos = index_name_pos(istate, fname, strlen(fname))) >= 0 &&
- 				 !ce_stage(istate->cache[pos]) &&
- 				 ce_uptodate(istate->cache[pos]) &&
--				 !would_convert_to_git(fname))
-+				 !would_convert_to_git(istate, fname))
- 				hashcpy(sha1_stat->sha1,
- 					istate->cache[pos]->oid.hash);
- 			else
-diff --git a/sha1_file.c b/sha1_file.c
-index 80e9ef3bb..a900b2804 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3547,7 +3547,7 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
- 	 */
- 	if ((type == OBJ_BLOB) && path) {
- 		struct strbuf nbuf = STRBUF_INIT;
--		if (convert_to_git(path, buf, size, &nbuf,
-+		if (convert_to_git(&the_index, path, buf, size, &nbuf,
- 				   write_object ? safe_crlf : SAFE_CRLF_FALSE)) {
- 			buf = strbuf_detach(&nbuf, &size);
- 			re_allocated = 1;
-@@ -3669,7 +3669,7 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
- 	else if (!S_ISREG(st->st_mode))
- 		ret = index_pipe(sha1, fd, type, path, flags);
- 	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
--		 (path && would_convert_to_git(path)))
-+		 (path && would_convert_to_git(&the_index, path)))
- 		ret = index_core(sha1, fd, xsize_t(st->st_size), type, path,
- 				 flags);
- 	else
+ /* ls-files */
+-void overlay_tree_on_cache(const char *tree_name, const char *prefix);
++void overlay_tree_on_index(struct index_state *istate,
++			   const char *tree_name, const char *prefix);
+ 
+ char *alias_lookup(const char *alias);
+ int split_cmdline(char *cmdline, const char ***argv);
 -- 
 2.13.1.508.gb3defc5cc-goog
 
