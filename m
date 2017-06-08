@@ -2,90 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9A7F1F8CF
-	for <e@80x24.org>; Thu,  8 Jun 2017 11:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53F901FAE5
+	for <e@80x24.org>; Thu,  8 Jun 2017 12:45:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751233AbdFHL6o (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 07:58:44 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.31.25]:51670 "EHLO
-        smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750822AbdFHL6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 07:58:43 -0400
-X-Greylist: delayed 411 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Jun 2017 07:58:43 EDT
-Received: from [91.113.179.170] (helo=[192.168.92.20])
-        by smtprelay02.ispgateway.de with esmtpsa (TLSv1.2:DHE-RSA-AES128-SHA:128)
-        (Exim 4.84)
-        (envelope-from <marc.strapetz@syntevo.com>)
-        id 1dIvyf-00030G-DX
-        for git@vger.kernel.org; Thu, 08 Jun 2017 13:51:49 +0200
-To:     git@vger.kernel.org
-From:   Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: git stash --include-untracked possible destructive behavior
-Message-ID: <2b695c73-9de2-5502-6d19-ba4ad0114978@syntevo.com>
-Date:   Thu, 8 Jun 2017 13:52:13 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+        id S1751092AbdFHMpx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 08:45:53 -0400
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:35024 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750788AbdFHMpw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 08:45:52 -0400
+Received: by mail-wr0-f171.google.com with SMTP id q97so18101641wrb.2
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 05:45:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:subject:message-id:date:to
+         :mime-version;
+        bh=BgMw8kZ4WDBkO2Z+kpp1hIFGmWaQwuktiPPF/LY7BC0=;
+        b=p/gD0KE27P8UTw+7q/F3r8q90wOOzcVKUTlcK5IZntM3sDfZJhJ52j92QkfJ1EX1rl
+         l/fTsn2LPevkpCEgtQbE08yM3tlIaFIPQ2EBdEVET7YCesMua/2M2SyEB/ABpWoWJgVd
+         iR61fDiKa74PCAE4pI14iDyhj56UQtgYNifo3ur+fVTf7ejco3nGSBSFy47e6wkA/n4f
+         mbYu+n1+17jGeMbMlnttdpvbU29aqRLET1nrq2b9Cx+5VImracG8F3McEBO/nDdvVvg+
+         OAsE+Y61GsbzeWl2vkEhJEkm/V9dQTFoJS9M5Yorj7zk+rjZlj+vJvH0zWr+i/xpx17T
+         HugA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:subject
+         :message-id:date:to:mime-version;
+        bh=BgMw8kZ4WDBkO2Z+kpp1hIFGmWaQwuktiPPF/LY7BC0=;
+        b=XnYrKgb8Ft2eVDMKdGEIcjNVsd9BZfxpSNOkS0HysCB1hhFfOE4ek9Of9VmkYIpeez
+         fyU8L29L6FIf7NVy5TdknqilIV+L0aINxWZN4lpiDq+IZS2nO90xRI0eLlkvjQmUxAoM
+         pucdXmTY9a5V4oTyTu75oHeUCV0B2uD0qOJU/C/Zv0iENjLogiFpNBBfl6dY1qaSJitB
+         eJU6KJj7wtLTbRNBEUZS00Z+UyJGK3WFbDChzjd8E3sd1FsDy/qMtRHpgUHKc0GSZ3NN
+         o+IRUnwni2u4bTqorgh2yQ+tE8EK5FMKndu7lriK5AKZiXXvj9xNQRzwBKIJODObdVGw
+         J2RQ==
+X-Gm-Message-State: AODbwcDj7m/jZjmAfs2RHPoioufbFDqDL87uPCBpHTejV7SxQ3uIYddW
+        5OYoxoFAQBkpYgYP6os=
+X-Received: by 10.223.139.30 with SMTP id n30mr19704146wra.105.1496925950874;
+        Thu, 08 Jun 2017 05:45:50 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id p187sm7377246wmd.20.2017.06.08.05.45.49
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 08 Jun 2017 05:45:50 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-Df-Sender: bWFyYy5zdHJhcGV0ekBzeW50ZXZvLmNvbQ==
+Subject: "There are too many unreachable loose objects" - why don't we run 'git prune' automatically?
+Message-Id: <9C2F2EA2-0C59-4EA2-8C8E-10228FB82D90@gmail.com>
+Date:   Thu, 8 Jun 2017 14:45:48 +0200
+To:     Git Mailing List <git@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of our users has just discovered a destructive behavior of git stash 
---include-untracked: ignored files within non-ignored directories will 
-not be stashed as untracked files (expected), but will still be removed 
-from the working tree. The problem is reproducible by following command 
-sequence:
+Hi,
 
-   $ git init
-   $ echo "1" > file.txt
-   $ mkdir Data
-   $ echo "1" > Data/ignored.txt
-   $ echo "Data/*" > .gitignore
-   $ git add .
-   $ git commit -m "initial import"
-   $ echo "2" > file.txt
-   $ git stash save --include-untracked
-   Saved working directory and index state WIP on master: 6ce5303 initial
-   import
+I recently ran into "There are too many unreachable loose objects; run 
+'git prune' to remove them." after a "Auto packing the repository in 
+background for optimum performance." message.
 
-   $ git stash show stash@{1}
-    file.txt | 2 +-
-    1 file changed, 1 insertion(+), 1 deletion(-)
+This was introduced with a087cc9 "git-gc --auto: protect ourselves from 
+accumulated cruft" but I don't understand the commit message really.
 
-   $ ls Data
-   ls: cannot access 'Data': No such file or directory
+Why don't we call 'git prune' automatically? I though Git would prune
+unreachable objects after 90 days by default anyways. Is the warning 
+about unreachable objects that are not yet 90 days old?
 
-As you can see, after saving the stash, stash@{1} doesn't contain 
-Data/ignored.txt, but the entire Data directory is still gone from the 
-working tree. As a consequence, applying the stash won't bring back 
-Data/ignored.txt, too.
-
-   $ git stash apply
-   On branch master
-   Changes not staged for commit:
-     (use "git add <file>..." to update what will be committed)
-     (use "git checkout -- <file>..." to discard changes in working
-     directory)
-
-           modified:   file.txt
-
-   no changes added to commit (use "git add" and/or "git commit -a")
-
-   $ ls Data
-   ls: cannot access 'Data': No such file or directory
-
-Note that when changing .gitignore to "Data/" instead of "Data/*", 
---include-untracked works as expected.
-
-Tested with: git version 2.13.0.windows.1
-
--Marc
+Thanks,
+Lars
