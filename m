@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9B851FAEB
-	for <e@80x24.org>; Thu,  8 Jun 2017 23:42:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DBED1FAEB
+	for <e@80x24.org>; Thu,  8 Jun 2017 23:42:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751735AbdFHXmV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 19:42:21 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34484 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751557AbdFHXmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 19:42:13 -0400
-Received: by mail-pg0-f50.google.com with SMTP id v18so20716308pgb.1
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:42:13 -0700 (PDT)
+        id S1751699AbdFHXlx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 19:41:53 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:36588 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751679AbdFHXls (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 19:41:48 -0400
+Received: by mail-pg0-f47.google.com with SMTP id a70so20693597pge.3
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+1iEoektNikS4E4/QEITw+0kB6MnP4Nnr4L0yV1mdsA=;
-        b=ls6kOM3tYNfgrEJjO+FtwTs8edUVIO85APE7x8QcDrCoSTnCmFwrlJjC6Vwb/994pe
-         Df2CESHS2Sp+R2p+BdU5fUn7KpA1c95LLkPeEX+TjrWe7LKnJWKTgIFx1HXhLVxBIBxi
-         wn1l52x0widP6A6KSvIbGN9KQbPTm92O94E6CQzm11k47I1V3HebQJpmZIT2r4Lkg/FV
-         LMjDy9O/SgSC6zqxulDEMHQVNBKDj3GBjG28PLDf+pi+c25fEgtHdQNkaV1vQLkBzYpE
-         R18pSgDqwl5dGpRWNHfE2YjAm1vVtuHlgw97KvtrEz+BQMQj+vigXBLLAYf2zI11e+J3
-         XnYA==
+        bh=0ubRKToedvL//9P7jhXyGfoeodPLCDtwLFN5SKYt9sY=;
+        b=fC/YWvER4NhfxiaTTJcqi4LfFhjMPXbVyy51eRdG3YoUWCwAYMGyM4fwoIn0gfP7IZ
+         056SrwLjF/FNuf2vCssSDx1K0+lKeUrUXYkNaNM2WBjRpmNFw6GcenPveHfmbIm2V8aS
+         jbewNIhw7z2KNjR7xh2nsgCbpBV2VwTNo98gNyFvNUOl9h29nFLuRHrnB8FOO4VSjiYv
+         1TFz6gYWwQc3UJcAyXU7tolnUW9tVA4ttAHUETeS3e7o7xDVIj22vwTQinty3pnxB40Y
+         7vTS3cMTvaIk2fnFmRfDB3o8xzbXfcqzsak7l8zZQGpXYhuCyoC8OvOkOSv1z2JNkmKS
+         X9Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+1iEoektNikS4E4/QEITw+0kB6MnP4Nnr4L0yV1mdsA=;
-        b=Sr09SyZJYX4pFsieLnKU2er+S2/vATLSfRAj51s0CdT5e3NtlBex2R1W7ITUyb3Uff
-         a5oHsfPwUffNV5LT7qF6ri87tEQ8f2mLi74trJFjM5ZgqWytbs9HP7bgxHjE+pXcmnlz
-         TeCz0mfge24sDJIGMJak4KA+uF7gbiW8sii+3oplM6zmqGMOSc4XP5np6uBt1mS166yk
-         Inmj8U7YDHK8WgNtQ9A4IJvxgXkmFi1TizEzcc+OGtI/qiTDPu0QfahHyiAzHs/nK2yS
-         WfNRaPF68RYt62asApf3f2Thd8VEptgsS10/vptjFSaD5nEjKzC8EGiPY3sutDDAVlJP
-         FhsA==
-X-Gm-Message-State: AODbwcBISHRGRMqVFfqM1WFOTBhghYH8xkXG30zTRQs9NRDtCK46nwPJ
-        bX5TMdKemaE1mNOyY4gO6w==
-X-Received: by 10.84.225.146 with SMTP id u18mr37415873plj.264.1496965322039;
-        Thu, 08 Jun 2017 16:42:02 -0700 (PDT)
+        bh=0ubRKToedvL//9P7jhXyGfoeodPLCDtwLFN5SKYt9sY=;
+        b=bOsIP+cHVqeVlEdFeTk/bihAVe4vghO2EE6iQJ6IW82JvljcKiUd21O3rnysPOdA+u
+         eNpqwir9gkG0i69TOPhJYr7Y98pQYQAjNtB3ZhcCKueitQSxj9wdzqpSyl1EaRKomGoW
+         d5MquouFqXRDNB4z5VcxqbWitFIcdQgdMgoxdgzQyr/2vysYEVpP3LGWnSLqri/pyMPz
+         ySy+nCr7lQ+6wP9+YXRKirvNuIjWos0uxCYAsDojJ1iYMRv4QEfROBumM54pEbbt/ylK
+         JBYWpD5jDKgmhgsIakUjOUtX445EGo02uClHF+/NjkI6vXX+gtlf93O7G2ncHUo9ykip
+         qu6Q==
+X-Gm-Message-State: AODbwcDxq1F8RmDW9+m5KVjTx+XBl3EPFm1rc2+5hc+t3vsmU631zo9y
+        o/UvGYberRUa8jTVh98LAA==
+X-Received: by 10.98.18.148 with SMTP id 20mr20668084pfs.142.1496965302041;
+        Thu, 08 Jun 2017 16:41:42 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.42.00
+        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jun 2017 16:42:01 -0700 (PDT)
+        Thu, 08 Jun 2017 16:41:41 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 28/32] ls-files: convert prune_cache to take an index
-Date:   Thu,  8 Jun 2017 16:40:56 -0700
-Message-Id: <20170608234100.188529-29-bmwill@google.com>
+Subject: [PATCH v2 17/32] convert: convert crlf_to_git to take an index
+Date:   Thu,  8 Jun 2017 16:40:45 -0700
+Message-Id: <20170608234100.188529-18-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.508.gb3defc5cc-goog
 In-Reply-To: <20170608234100.188529-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -68,60 +68,67 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/ls-files.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ convert.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 289c6b2a5..e2d8fb7f6 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -381,30 +381,31 @@ static void show_files(struct dir_struct *dir)
- /*
-  * Prune the index to only contain stuff starting with "prefix"
-  */
--static void prune_cache(const char *prefix, size_t prefixlen)
-+static void prune_index(struct index_state *istate,
-+			const char *prefix, size_t prefixlen)
- {
- 	int pos;
- 	unsigned int first, last;
- 
- 	if (!prefix)
- 		return;
--	pos = cache_name_pos(prefix, prefixlen);
-+	pos = index_name_pos(istate, prefix, prefixlen);
- 	if (pos < 0)
- 		pos = -pos-1;
- 	first = pos;
--	last = active_nr;
-+	last = istate->cache_nr;
- 	while (last > first) {
- 		int next = (last + first) >> 1;
--		const struct cache_entry *ce = active_cache[next];
-+		const struct cache_entry *ce = istate->cache[next];
- 		if (!strncmp(ce->name, prefix, prefixlen)) {
- 			first = next+1;
- 			continue;
- 		}
- 		last = next;
+diff --git a/convert.c b/convert.c
+index 574003023..ff3e72657 100644
+--- a/convert.c
++++ b/convert.c
+@@ -219,13 +219,13 @@ static void check_safe_crlf(const char *path, enum crlf_action crlf_action,
  	}
--	memmove(active_cache, active_cache + pos,
-+	memmove(istate->cache, istate->cache + pos,
- 		(last - pos) * sizeof(struct cache_entry *));
--	active_nr = last - pos;
-+	istate->cache_nr = last - pos;
  }
  
- static int get_common_prefix_len(const char *common_prefix)
-@@ -662,7 +663,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		max_prefix = common_prefix(&pathspec);
- 	max_prefix_len = get_common_prefix_len(max_prefix);
+-static int has_cr_in_index(const char *path)
++static int has_cr_in_index(const struct index_state *istate, const char *path)
+ {
+ 	unsigned long sz;
+ 	void *data;
+ 	int has_cr;
  
--	prune_cache(max_prefix, max_prefix_len);
-+	prune_index(&the_index, max_prefix, max_prefix_len);
+-	data = read_blob_data_from_cache(path, &sz);
++	data = read_blob_data_from_index(istate, path, &sz);
+ 	if (!data)
+ 		return 0;
+ 	has_cr = memchr(data, '\r', sz) != NULL;
+@@ -255,7 +255,8 @@ static int will_convert_lf_to_crlf(size_t len, struct text_stat *stats,
  
- 	/* Treat unmatching pathspec elements as errors */
- 	if (pathspec.nr && error_unmatch)
+ }
+ 
+-static int crlf_to_git(const char *path, const char *src, size_t len,
++static int crlf_to_git(const struct index_state *istate,
++		       const char *path, const char *src, size_t len,
+ 		       struct strbuf *buf,
+ 		       enum crlf_action crlf_action, enum safe_crlf checksafe)
+ {
+@@ -287,7 +288,8 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+ 		 * unless we want to renormalize in a merge or
+ 		 * cherry-pick.
+ 		 */
+-		if ((checksafe != SAFE_CRLF_RENORMALIZE) && has_cr_in_index(path))
++		if ((checksafe != SAFE_CRLF_RENORMALIZE) &&
++		    has_cr_in_index(istate, path))
+ 			convert_crlf_into_lf = 0;
+ 	}
+ 	if ((checksafe == SAFE_CRLF_WARN ||
+@@ -1099,7 +1101,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+-	ret |= crlf_to_git(path, src, len, dst, ca.crlf_action, checksafe);
++	ret |= crlf_to_git(&the_index, path, src, len, dst, ca.crlf_action, checksafe);
+ 	if (ret && dst) {
+ 		src = dst->buf;
+ 		len = dst->len;
+@@ -1119,7 +1121,7 @@ void convert_to_git_filter_fd(const char *path, int fd, struct strbuf *dst,
+ 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN))
+ 		die("%s: clean filter '%s' failed", path, ca.drv->name);
+ 
+-	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
++	crlf_to_git(&the_index, path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
+ 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
+ }
+ 
 -- 
 2.13.1.508.gb3defc5cc-goog
 
