@@ -2,51 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5245E1FAEB
-	for <e@80x24.org>; Thu,  8 Jun 2017 23:42:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A6391FAEB
+	for <e@80x24.org>; Thu,  8 Jun 2017 23:42:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751623AbdFHXm3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 19:42:29 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:33225 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751499AbdFHXmI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 19:42:08 -0400
-Received: by mail-pg0-f47.google.com with SMTP id f185so20740307pgc.0
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:42:08 -0700 (PDT)
+        id S1751694AbdFHXlw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 19:41:52 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:33629 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751506AbdFHXlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 19:41:50 -0400
+Received: by mail-pf0-f172.google.com with SMTP id 83so22171159pfr.0
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QkcTh1QtQNh+Cu3QPyj9hXWLuZs48mQn0BLAGBg9jBw=;
-        b=vcxCvANV92glgbwmvGb5SRiTYPaG5iTXraS2tRo26/pHwdCNw63a9vLbCuh6m6bBdE
-         b+vi3CaoTPZlD01b+UVQKa1qnI9j3sDwZaMTpXD51KCp3q3UzyHyDhfstXyAuUcnQ4Md
-         varp2Aa6m7dxzZXdh1sor/6ozhHqobU7Np4vnwDiKiTfvx8LJ0ALbzg/BmVarC1ENegI
-         rGLHkptm8QwrYzfM8TAj6NH73+S9GW+EcExkm+5Ae7f5v2phbORaTqENX7Rz4S3+JfXK
-         BOJop+B+T/ZhKWKY3IqlhBipHuPjQqm0NeTe7pUINF60s+QgFptyyCi63UFo/VOkd+Rn
-         rT7g==
+        bh=Bmcdb1fKC6VbOoYPN6AwtvXA3xCBrcxKAsiMtZrDioc=;
+        b=rYjGaKTS422tbtGKbmSM8sPka3P2czre/1bNrUSkcu1XvQd1JqjHN/8P0/TDgODWtN
+         Y4rt5F0Y4mN/kZrS0oTshyquG3VETzy98vSKlyrFTrsoOsUbvYU/IJO3WrUo8o+jr3Gd
+         j1Yd3W4R7O7VXe7FzDX/97Ed8WoLjewTanxS1nbdLo5cfTJ8ggiFitVolYBzRZYsXpSc
+         IJFNRYEm6qjNy5lqQ3ze9iZ3gDUF2NDzZREPZo0YAS+lGNVOxxQY2VFgJ08D2OEWM4Jg
+         ZHyitjHbfI2cZIjGkFXCkzbwIjo7SMxKFdPABZMDltjJgFaFLVwIXcgVzm1uk9c+CuDF
+         BiBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=QkcTh1QtQNh+Cu3QPyj9hXWLuZs48mQn0BLAGBg9jBw=;
-        b=PGEbPnHH8iIoe4dpjSXYv+ennO2R/quq76OXwUCmgfYKY3qmFS5pgL8eWYP819NhtH
-         CS8Il4EoUEcEGkMnIH+aZnvaSnZnRgsZO3la8FexhyS3GXljPCRkRfVSE0qZ1LZ++CAc
-         Es+2CCBof9ZgbxFnlZw0TPzhDDMFk2Y67Z+RLEffCvBUrsmjklqkcjigtN/J/hTQNvR0
-         dYDSUZjAEErcQ0WchyDrisqUu6KdX67K4FaHn0eRWqtkgkwbocSMNwZgRxM4+nVhPEdf
-         aVKUpEzyLJCHmrLn07cT5Lekvsw/QAT/dwbSHshm7CU+1K9mniWrWTISyHng8XOS8kHK
-         DMow==
-X-Gm-Message-State: AODbwcAurZJHdUkKiidGZTT5KXGUXgrb2Nw4hJze1GeYJcohZMVqOqA1
-        6gZbYaCwHj1QqcozmXBz2A==
-X-Received: by 10.84.133.162 with SMTP id f31mr1822817plf.83.1496965327221;
-        Thu, 08 Jun 2017 16:42:07 -0700 (PDT)
+        bh=Bmcdb1fKC6VbOoYPN6AwtvXA3xCBrcxKAsiMtZrDioc=;
+        b=ZLXAU7eJhkUJR9Oxz1yEgNhQWARRlSSU2NXo1Qlr+VqhWgSIZGbsF6jaWa41NqmIXX
+         wv5idrqNr+GCYN0G3hkUM27RAwCKSUFcNBTCw9VastyhTADNRBMBDX+0dD9PlEzTSuhw
+         VLSAOoqwRMFbm7M5cJkR/S+RqqqbQZUq7eW3pdPoNqgIvLYoLBGUAjwM48j2gEifI6yK
+         sPdAvrwwCOhPcYiE9CGoOn3H6bI958n5f9TV9fdjrAB1NmV26uURUuGuwjUnXsJu7TBV
+         eNrE/YZA7O3EW44gV78j2rpAAtsbqIcYAN+dm/oH/TQu4SMYpmcCFiBmsVkK7cZx0VEQ
+         eByg==
+X-Gm-Message-State: AODbwcBINGGbTdDvlyio2E2FntxJXqrpL5NooEluscor93R9uwnEayCg
+        rr+ThbdUJ/X4RbUBLXXy7g==
+X-Received: by 10.98.50.129 with SMTP id y123mr39525634pfy.53.1496965304001;
+        Thu, 08 Jun 2017 16:41:44 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.42.05
+        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jun 2017 16:42:06 -0700 (PDT)
+        Thu, 08 Jun 2017 16:41:42 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 31/32] ls-files: factor out tag calculation
-Date:   Thu,  8 Jun 2017 16:40:59 -0700
-Message-Id: <20170608234100.188529-32-bmwill@google.com>
+Subject: [PATCH v2 18/32] convert: convert convert_to_git_filter_fd to take an index
+Date:   Thu,  8 Jun 2017 16:40:46 -0700
+Message-Id: <20170608234100.188529-19-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.508.gb3defc5cc-goog
 In-Reply-To: <20170608234100.188529-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -68,68 +68,61 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/ls-files.c | 41 +++++++++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
+ convert.c   | 5 +++--
+ convert.h   | 3 ++-
+ sha1_file.c | 2 +-
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 2849c9a65..6a0302a28 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -94,6 +94,30 @@ static void write_name(const char *name)
- 	strbuf_release(&full_name);
+diff --git a/convert.c b/convert.c
+index ff3e72657..824b606fa 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1109,7 +1109,8 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 	return ret | ident_to_git(path, src, len, dst, ca.ident);
  }
  
-+static const char *get_tag(const struct cache_entry *ce, const char *tag)
-+{
-+	static char alttag[4];
-+
-+	if (tag && *tag && show_valid_bit && (ce->ce_flags & CE_VALID)) {
-+		memcpy(alttag, tag, 3);
-+
-+		if (isalpha(tag[0])) {
-+			alttag[0] = tolower(tag[0]);
-+		} else if (tag[0] == '?') {
-+			alttag[0] = '!';
-+		} else {
-+			alttag[0] = 'v';
-+			alttag[1] = tag[0];
-+			alttag[2] = ' ';
-+			alttag[3] = 0;
-+		}
-+
-+		tag = alttag;
-+	}
-+
-+	return tag;
-+}
-+
- static void print_debug(const struct cache_entry *ce)
+-void convert_to_git_filter_fd(const char *path, int fd, struct strbuf *dst,
++void convert_to_git_filter_fd(const struct index_state *istate,
++			      const char *path, int fd, struct strbuf *dst,
+ 			      enum safe_crlf checksafe)
  {
- 	if (debug_mode) {
-@@ -264,22 +288,7 @@ static void show_ce_entry(const char *tag, const struct cache_entry *ce)
- 				  len, ps_matched,
- 				  S_ISDIR(ce->ce_mode) ||
- 				  S_ISGITLINK(ce->ce_mode))) {
--		if (tag && *tag && show_valid_bit &&
--		    (ce->ce_flags & CE_VALID)) {
--			static char alttag[4];
--			memcpy(alttag, tag, 3);
--			if (isalpha(tag[0]))
--				alttag[0] = tolower(tag[0]);
--			else if (tag[0] == '?')
--				alttag[0] = '!';
--			else {
--				alttag[0] = 'v';
--				alttag[1] = tag[0];
--				alttag[2] = ' ';
--				alttag[3] = 0;
--			}
--			tag = alttag;
--		}
-+		tag = get_tag(ce, tag);
+ 	struct conv_attrs ca;
+@@ -1121,7 +1122,7 @@ void convert_to_git_filter_fd(const char *path, int fd, struct strbuf *dst,
+ 	if (!apply_filter(path, NULL, 0, fd, dst, ca.drv, CAP_CLEAN))
+ 		die("%s: clean filter '%s' failed", path, ca.drv->name);
  
- 		if (!show_stage) {
- 			fputs(tag, stdout);
+-	crlf_to_git(&the_index, path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
++	crlf_to_git(istate, path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
+ 	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
+ }
+ 
+diff --git a/convert.h b/convert.h
+index 667b7dfe0..3a813a797 100644
+--- a/convert.h
++++ b/convert.h
+@@ -52,7 +52,8 @@ static inline int would_convert_to_git(const char *path)
+ 	return convert_to_git(path, NULL, 0, NULL, 0);
+ }
+ /* Precondition: would_convert_to_git_filter_fd(path) == true */
+-extern void convert_to_git_filter_fd(const char *path, int fd,
++extern void convert_to_git_filter_fd(const struct index_state *istate,
++				     const char *path, int fd,
+ 				     struct strbuf *dst,
+ 				     enum safe_crlf checksafe);
+ extern int would_convert_to_git_filter_fd(const char *path);
+diff --git a/sha1_file.c b/sha1_file.c
+index 44561e0b9..80e9ef3bb 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3581,7 +3581,7 @@ static int index_stream_convert_blob(unsigned char *sha1, int fd,
+ 	assert(path);
+ 	assert(would_convert_to_git_filter_fd(path));
+ 
+-	convert_to_git_filter_fd(path, fd, &sbuf,
++	convert_to_git_filter_fd(&the_index, path, fd, &sbuf,
+ 				 write_object ? safe_crlf : SAFE_CRLF_FALSE);
+ 
+ 	if (write_object)
 -- 
 2.13.1.508.gb3defc5cc-goog
 
