@@ -2,51 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2B251FAEB
-	for <e@80x24.org>; Thu,  8 Jun 2017 23:42:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 994511FAEB
+	for <e@80x24.org>; Thu,  8 Jun 2017 23:42:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751732AbdFHXmP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 19:42:15 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:34488 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751721AbdFHXmK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 19:42:10 -0400
-Received: by mail-pg0-f48.google.com with SMTP id v18so20716473pgb.1
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:42:05 -0700 (PDT)
+        id S1751726AbdFHXmJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 19:42:09 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:35092 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751564AbdFHXmB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 19:42:01 -0400
+Received: by mail-pf0-f179.google.com with SMTP id l89so22168040pfi.2
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=lXq66nD8oDIP512oPne8dQh8XlAtdTQ70SLBeBLRrNc=;
-        b=qLyZhcSQTkNZ/SXOjVv4FkNJyTpbFRgf48yWWY1C/CT0iGSNdjOUylaS1gikl5THGP
-         3SambTnqok0QDeks8v+urK1b22gJthrnNjYNLq1xXgMWIOLEvPq0o9e6VtQXm/SsGHF0
-         VM+Kac2curFi/3s4mnH+WJWlBfg7eGOZF9LxZudJjQNKu9isJ9O5viyO4LjadRJR/pD5
-         gytOHf/SKaRQBI0xLwuRszdQX5VglkZsr3g57n7EdGNZ9fK6676+wFpThhiz/hYTOYKh
-         hJJ1vV0dXWQvWnQ3+ZH/kkaAwlt0LPtgdqgM3vhLkw/14sk+ZpZcqW+pSQGxnGvuGBve
-         ckfw==
+        bh=HQWPwf6BWsQZ313oQ5XcERQJl1wZQF10lGJFSpeezPo=;
+        b=PKLyvNboqqA9oOXBsdryfvK0juiOomyEOdvIU9HvljcIMl86Q4sZZuEPJueDWzAuS7
+         nIVC8nAzqA4z4mdPyGPv7yfDvxZZ5ln4IM4+HIPly2FWiui/ASVZJF7L3wPgLapCz8vO
+         R6noV6htj3A46XfLwRIG08vy1lcPwccWolnHCX2+vnttEjhO0J/BIEgnrOIPXF6wvxTo
+         Fy8nSnu7Lw4W9sS7OHkQutW8Y++WDGw/tGrnKQpWP38qmSDhbRB7iKUmyAzfhjEMZnEA
+         ZBNjYOisxVCIklGQWJUPHO8sL/qgU0lwGvOMGxQpxlFRHV42qPBvJeCOitGIaBmZ876n
+         Mx5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=lXq66nD8oDIP512oPne8dQh8XlAtdTQ70SLBeBLRrNc=;
-        b=LLNg/QTziyElL6y51Fg8LE/BLpg9+hpjKD9NFsLUXRRsxttP4ER9/lVCTPVy/1kY+S
-         p5nOzP8VFRggclL6Lcg4+767MOWJDRUl3dNHLKktKW7oGP0kFZ26SoriU9xVFAWNJnIB
-         BRZNKSlBFCLJwGmGr8etSSyuq6PUlubveDWxFFG4cp1CJ7qSggu/VF72sjCQLZ79XsqV
-         8P3rLCTK0dbqNHBvbVMiidVmhjthTggbo35BPv45BlcxKxi1CXI2Ex/KUqWuHlmD3yzR
-         BmRKRgg1Y48PCF1Eb9BceoP/IuQQojSkfy+5Plb8JkWGWkLM8i1iRbLLE9alTql4iojo
-         7+5A==
-X-Gm-Message-State: AODbwcDSagiS5zXYYcPGYyQ/rfiP8iGy/UcIt4Dd0C+Qf8avoP2Fj/3O
-        UE1vlMMf9PoX738/Wu5L+Q==
-X-Received: by 10.98.192.81 with SMTP id x78mr33551143pff.1.1496965323576;
-        Thu, 08 Jun 2017 16:42:03 -0700 (PDT)
+        bh=HQWPwf6BWsQZ313oQ5XcERQJl1wZQF10lGJFSpeezPo=;
+        b=s2MU8ez5Ctg646oPTtcxKt+T2nsdwoK3qoCGmWy8tWc/dMF+VDtxGnr4qeMPNRCRY3
+         URINlB5uq+GmVCjNyN0//twnk230WQSbPBh9u6d1m6/wVTbAQK05inrkm4rhjwAkOqnV
+         rTyV0j4G87mEBu8uQsPFs2czonoowiQ2EYDZhOeiwryYvK670Gl6K659mSiTG80QnIIJ
+         75N8mTD8GbniT0p//u+1RMyTn0tOloaTC+pJHnr6HmE/iFrW3YZzdifLfGx8TVoXwD96
+         MpGLPIPBvp5cWQkhQdvZ0ULenCXHGatY2GaTM3A3FPJ2GgDWx66mtv4Rarf1iRdZiFhS
+         tVHQ==
+X-Gm-Message-State: AODbwcCBbCwyb8tZQ0+qmht+YgswgbKqBDMAKiQjeI3MjD0w0g8mOLmx
+        4MHXG9lrvejPov4VH/kfzg==
+X-Received: by 10.84.150.130 with SMTP id h2mr16478474plh.152.1496965315134;
+        Thu, 08 Jun 2017 16:41:55 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.42.02
+        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jun 2017 16:42:02 -0700 (PDT)
+        Thu, 08 Jun 2017 16:41:54 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 29/32] ls-files: convert show_files to take an index
-Date:   Thu,  8 Jun 2017 16:40:57 -0700
-Message-Id: <20170608234100.188529-30-bmwill@google.com>
+Subject: [PATCH v2 24/32] ls-files: convert show_killed_files to take an index
+Date:   Thu,  8 Jun 2017 16:40:52 -0700
+Message-Id: <20170608234100.188529-25-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.508.gb3defc5cc-goog
 In-Reply-To: <20170608234100.188529-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -68,80 +68,70 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/ls-files.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ builtin/ls-files.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index e2d8fb7f6..3061af2c5 100644
+index c37e9de11..f9578cf9f 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -329,7 +329,7 @@ static int ce_excluded(struct dir_struct *dir, struct index_state *istate,
- 	return is_excluded(dir, istate, ce->name, &dtype);
+@@ -121,7 +121,8 @@ static void show_other_files(struct dir_struct *dir)
+ 	}
  }
  
--static void show_files(struct dir_struct *dir)
-+static void show_files(struct index_state *istate, struct dir_struct *dir)
+-static void show_killed_files(struct dir_struct *dir)
++static void show_killed_files(const struct index_state *istate,
++			      const struct dir_struct *dir)
  {
  	int i;
- 
-@@ -337,17 +337,17 @@ static void show_files(struct dir_struct *dir)
- 	if (show_others || show_killed) {
- 		if (!show_others)
- 			dir->flags |= DIR_COLLECT_KILLED_ONLY;
--		fill_directory(dir, &the_index, &pathspec);
-+		fill_directory(dir, istate, &pathspec);
+ 	for (i = 0; i < dir->nr; i++) {
+@@ -135,29 +136,29 @@ static void show_killed_files(struct dir_struct *dir)
+ 				/* If ent->name is prefix of an entry in the
+ 				 * cache, it will be killed.
+ 				 */
+-				pos = cache_name_pos(ent->name, ent->len);
++				pos = index_name_pos(istate, ent->name, ent->len);
+ 				if (0 <= pos)
+ 					die("BUG: killed-file %.*s not found",
+ 						ent->len, ent->name);
+ 				pos = -pos - 1;
+-				while (pos < active_nr &&
+-				       ce_stage(active_cache[pos]))
++				while (pos < istate->cache_nr &&
++				       ce_stage(istate->cache[pos]))
+ 					pos++; /* skip unmerged */
+-				if (active_nr <= pos)
++				if (istate->cache_nr <= pos)
+ 					break;
+ 				/* pos points at a name immediately after
+ 				 * ent->name in the cache.  Does it expect
+ 				 * ent->name to be a directory?
+ 				 */
+-				len = ce_namelen(active_cache[pos]);
++				len = ce_namelen(istate->cache[pos]);
+ 				if ((ent->len < len) &&
+-				    !strncmp(active_cache[pos]->name,
++				    !strncmp(istate->cache[pos]->name,
+ 					     ent->name, ent->len) &&
+-				    active_cache[pos]->name[ent->len] == '/')
++				    istate->cache[pos]->name[ent->len] == '/')
+ 					killed = 1;
+ 				break;
+ 			}
+-			if (0 <= cache_name_pos(ent->name, sp - ent->name)) {
++			if (0 <= index_name_pos(istate, ent->name, sp - ent->name)) {
+ 				/* If any of the leading directories in
+ 				 * ent->name is registered in the cache,
+ 				 * ent->name will be killed.
+@@ -338,7 +339,7 @@ static void show_files(struct dir_struct *dir)
  		if (show_others)
--			show_other_files(&the_index, dir);
-+			show_other_files(istate, dir);
+ 			show_other_files(dir);
  		if (show_killed)
--			show_killed_files(&the_index, dir);
-+			show_killed_files(istate, dir);
+-			show_killed_files(dir);
++			show_killed_files(&the_index, dir);
  	}
  	if (show_cached || show_stage) {
--		for (i = 0; i < active_nr; i++) {
--			const struct cache_entry *ce = active_cache[i];
-+		for (i = 0; i < istate->cache_nr; i++) {
-+			const struct cache_entry *ce = istate->cache[i];
- 			if ((dir->flags & DIR_SHOW_IGNORED) &&
--			    !ce_excluded(dir, &the_index, ce))
-+			    !ce_excluded(dir, istate, ce))
- 				continue;
- 			if (show_unmerged && !ce_stage(ce))
- 				continue;
-@@ -358,12 +358,12 @@ static void show_files(struct dir_struct *dir)
- 		}
- 	}
- 	if (show_deleted || show_modified) {
--		for (i = 0; i < active_nr; i++) {
--			const struct cache_entry *ce = active_cache[i];
-+		for (i = 0; i < istate->cache_nr; i++) {
-+			const struct cache_entry *ce = istate->cache[i];
- 			struct stat st;
- 			int err;
- 			if ((dir->flags & DIR_SHOW_IGNORED) &&
--			    !ce_excluded(dir, &the_index, ce))
-+			    !ce_excluded(dir, istate, ce))
- 				continue;
- 			if (ce->ce_flags & CE_UPDATE)
- 				continue;
-@@ -372,7 +372,7 @@ static void show_files(struct dir_struct *dir)
- 			err = lstat(ce->name, &st);
- 			if (show_deleted && err)
- 				show_ce_entry(tag_removed, ce);
--			if (show_modified && ce_modified(ce, &st, 0))
-+			if (show_modified && ie_modified(istate, ce, &st, 0))
- 				show_ce_entry(tag_modified, ce);
- 		}
- 	}
-@@ -686,7 +686,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 			die("ls-files --with-tree is incompatible with -s or -u");
- 		overlay_tree_on_index(&the_index, with_tree, max_prefix);
- 	}
--	show_files(&dir);
-+	show_files(&the_index, &dir);
- 	if (show_resolve_undo)
- 		show_ru_info(&the_index);
- 
+ 		for (i = 0; i < active_nr; i++) {
 -- 
 2.13.1.508.gb3defc5cc-goog
 
