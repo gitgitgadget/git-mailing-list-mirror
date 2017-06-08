@@ -7,74 +7,104 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53F901FAE5
-	for <e@80x24.org>; Thu,  8 Jun 2017 12:45:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C79191FAE5
+	for <e@80x24.org>; Thu,  8 Jun 2017 12:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751092AbdFHMpx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 08:45:53 -0400
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:35024 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750788AbdFHMpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 08:45:52 -0400
-Received: by mail-wr0-f171.google.com with SMTP id q97so18101641wrb.2
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 05:45:52 -0700 (PDT)
+        id S1751405AbdFHMwq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 08:52:46 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:33911 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750914AbdFHMwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 08:52:46 -0400
+Received: by mail-wm0-f44.google.com with SMTP id d64so13996981wmf.1
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 05:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:message-id:date:to
-         :mime-version;
-        bh=BgMw8kZ4WDBkO2Z+kpp1hIFGmWaQwuktiPPF/LY7BC0=;
-        b=p/gD0KE27P8UTw+7q/F3r8q90wOOzcVKUTlcK5IZntM3sDfZJhJ52j92QkfJ1EX1rl
-         l/fTsn2LPevkpCEgtQbE08yM3tlIaFIPQ2EBdEVET7YCesMua/2M2SyEB/ABpWoWJgVd
-         iR61fDiKa74PCAE4pI14iDyhj56UQtgYNifo3ur+fVTf7ejco3nGSBSFy47e6wkA/n4f
-         mbYu+n1+17jGeMbMlnttdpvbU29aqRLET1nrq2b9Cx+5VImracG8F3McEBO/nDdvVvg+
-         OAsE+Y61GsbzeWl2vkEhJEkm/V9dQTFoJS9M5Yorj7zk+rjZlj+vJvH0zWr+i/xpx17T
-         HugA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=6Zx1yC8Fe8shWvP6/l1EBObPPupchJHcX4cd0svhbik=;
+        b=j0MpBjcpWCkpyAiVko7Bi3zqIUhHnE5oXweuzZyK9IsDSkb2T3pD0355R8Vyp5vWeY
+         uJ62yN/j6rZgo7B3KjHiwgqQYJJhUZybGdvDO61aHjnVxlMbzkAmu81gBnj08OjMdDjh
+         rIT2reo6Ha1VsYD9TlhSKc1fGqr5PLMcotF+1KqzgdXT5IIEM4Fipk/ETGyog7t0L/b7
+         MevJGfliU0pJE1jduAjtq0+UC9n/zUgQTzP9XLdvR41fWodP/HqF5A9llNKJNPwrPnUN
+         yr2YUisj99gEE2sb9PTJPN3pgETEOcn2QM04NAPsdMSTN5PpSBzjsiilKyJzBNm0kMGY
+         VGSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject
-         :message-id:date:to:mime-version;
-        bh=BgMw8kZ4WDBkO2Z+kpp1hIFGmWaQwuktiPPF/LY7BC0=;
-        b=XnYrKgb8Ft2eVDMKdGEIcjNVsd9BZfxpSNOkS0HysCB1hhFfOE4ek9Of9VmkYIpeez
-         fyU8L29L6FIf7NVy5TdknqilIV+L0aINxWZN4lpiDq+IZS2nO90xRI0eLlkvjQmUxAoM
-         pucdXmTY9a5V4oTyTu75oHeUCV0B2uD0qOJU/C/Zv0iENjLogiFpNBBfl6dY1qaSJitB
-         eJU6KJj7wtLTbRNBEUZS00Z+UyJGK3WFbDChzjd8E3sd1FsDy/qMtRHpgUHKc0GSZ3NN
-         o+IRUnwni2u4bTqorgh2yQ+tE8EK5FMKndu7lriK5AKZiXXvj9xNQRzwBKIJODObdVGw
-         J2RQ==
-X-Gm-Message-State: AODbwcDj7m/jZjmAfs2RHPoioufbFDqDL87uPCBpHTejV7SxQ3uIYddW
-        5OYoxoFAQBkpYgYP6os=
-X-Received: by 10.223.139.30 with SMTP id n30mr19704146wra.105.1496925950874;
-        Thu, 08 Jun 2017 05:45:50 -0700 (PDT)
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=6Zx1yC8Fe8shWvP6/l1EBObPPupchJHcX4cd0svhbik=;
+        b=Q3qH3RmD+foqtuGCwhwA1wPepn1OTNbyQcUhgh7tYJlXexSkdZKCN6FwqK+TwC5c0u
+         psBUclq7ipd+JF14xYTnjl/l4YyszKaM/WQCx26RTlGgcYavMT44pCGrefs2gjcjG6Ql
+         33xbiUDmmihU2Yf4Po3ObuBMU49n0ZEb2SsqYUNI70U9l66Gi5n1hvP3OajLif3FE4pb
+         cHACOhuBZpeGmO7prU77cVyUeYf2oxroDeie9AZzNKuOaW+rUJKH4rTY8V5YO9s1sehV
+         YTQ2/IfOFECjP3kzgEz8ZzX02t88GfsucWwjWDZ117Ama3vmrf0yZMMAqLWzNepAekEp
+         0T6Q==
+X-Gm-Message-State: AODbwcDq5zTN5lwnHTuHVVzYbOQBI87YkgDk6dHLu/o411ua9Go1YOkd
+        XNRKB9rV7YGZKg==
+X-Received: by 10.28.175.147 with SMTP id y141mr1748536wme.111.1496926364522;
+        Thu, 08 Jun 2017 05:52:44 -0700 (PDT)
 Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id p187sm7377246wmd.20.2017.06.08.05.45.49
-        for <git@vger.kernel.org>
+        by smtp.gmail.com with ESMTPSA id v72sm9499685wrc.53.2017.06.08.05.52.43
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jun 2017 05:45:50 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
+        Thu, 08 Jun 2017 05:52:43 -0700 (PDT)
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Subject: "There are too many unreachable loose objects" - why don't we run 'git prune' automatically?
-Message-Id: <9C2F2EA2-0C59-4EA2-8C8E-10228FB82D90@gmail.com>
-Date:   Thu, 8 Jun 2017 14:45:48 +0200
-To:     Git Mailing List <git@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: There are too many unreachable loose objects
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20170216225710.6nnbw65qoeb6lrw5@sigill.intra.peff.net>
+Date:   Thu, 8 Jun 2017 14:52:42 +0200
+Cc:     Git Users <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <987153C6-2F10-4229-8E59-B106604896DF@gmail.com>
+References: <CAE1pOi3bpL0zTS9w2QCOrXcWk5pHj=xthxo2nYi8KEwJ=TgXfA@mail.gmail.com> <CA+P7+xqWoUBOoFSiOTT5U-9aoqESUMnZeSGfvhGte2LqF18gmw@mail.gmail.com> <20170216225710.6nnbw65qoeb6lrw5@sigill.intra.peff.net>
+To:     Jeff King <peff@peff.net>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-I recently ran into "There are too many unreachable loose objects; run 
-'git prune' to remove them." after a "Auto packing the repository in 
-background for optimum performance." message.
+> On 16 Feb 2017, at 23:57, Jeff King <peff@peff.net> wrote:
+>=20
+> On Thu, Feb 16, 2017 at 02:36:10PM -0800, Jacob Keller wrote:
+>=20
+>>> Whenever I run "git push --force(-with-lease)" I get a variation of
+>>>=20
+>>> Counting objects: 187, done.
+>>> Delta compression using up to 12 threads.
+>>> Compressing objects: 100% (126/126), done.
+>>> Writing objects: 100% (187/187), 21.35 KiB | 0 bytes/s, done.
+>>> Total 187 (delta 78), reused 71 (delta 20)
+>>> warning: There are too many unreachable loose objects; run 'git =
+prune'
+>>> to remove them.
+>>> To git@git.company.com:project.git
+>>> + 51338ea...b0ebe39 my-branch -> my-branch (forced update)
+>>>=20
+>>> So I'll run "git prune" and, for good measure, "git gc" (which even
+>>> includes "git prune"?). The first seems to do nothing, the latter =
+does
+>>> its thing.
+>>>=20
+>>=20
+>> It may be that it's the server side that needs to git-prune, and not
+>> your local side? I'm not really certain but you're doing a push which
+>> talks to a remote server.
+>=20
+> Yes, certainly the position in the output implies that. These days you
+> should see:
+>=20
+>  remote: warning: There are too many...
+>=20
+> to make it more clear. Perhaps the server is too old to have 860a2ebec
+> (receive-pack: send auto-gc output over sideband 2, 2016-06-05).
 
-This was introduced with a087cc9 "git-gc --auto: protect ourselves from 
-accumulated cruft" but I don't understand the commit message really.
-
-Why don't we call 'git prune' automatically? I though Git would prune
-unreachable objects after 90 days by default anyways. Is the warning 
-about unreachable objects that are not yet 90 days old?
+Do you know if GHE 2.9.4 has this fix? (Is it OK to ask this here?)
+Context: =
+http://public-inbox.org/git/9C2F2EA2-0C59-4EA2-8C8E-10228FB82D90@gmail.com=
+/
 
 Thanks,
-Lars
+Lars=
