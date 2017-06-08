@@ -2,121 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BDEC1F8CF
-	for <e@80x24.org>; Thu,  8 Jun 2017 08:44:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DA2B1F8CF
+	for <e@80x24.org>; Thu,  8 Jun 2017 09:07:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751850AbdFHIna (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 04:43:30 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35820 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751600AbdFHIn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 04:43:28 -0400
-Received: by mail-wm0-f67.google.com with SMTP id g15so6131066wmc.2
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 01:43:27 -0700 (PDT)
+        id S1751629AbdFHJHH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 05:07:07 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:37650 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751427AbdFHJHG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 05:07:06 -0400
+Received: by mail-it0-f44.google.com with SMTP id m47so16947285iti.0
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 02:07:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=n8XRtt4v2/8XnsC9t5z1YAiTyNdQaMsgUQHVrKyFtFU=;
-        b=CI/koXvdp9v81KfEbI2rBHEfjn3TQZNWSeiXYOXLvAyjErpwEmJ+RP8ljACuis5Cg3
-         6uqP/Hc2w3gyBoxxaenOy5jzHmv8P5X9Gq+Z3YdfgStDiiy7dPQyI6kmVwWmmdQTdkm7
-         YPPSsWreDcX3ZBCSBC1ACnx3pH6eboIhCdT9o=
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NPItXgkQia/SPAAx9Cr3E3vD4iC2Qs6yi6f3SKKkhdQ=;
+        b=MGGwZyDGfFJKz8R/6gzKORPlwTkC+h5KCcpDDIMrzENGFBuvlJskkT2DgGcDlBbIyz
+         sXn4gVwdZ7YU5DD8HmJnENYx5mMcuRSFqyHc9fjlhX29FmV+14y/U7hnnskfadv0i7rf
+         IVhOdvY3r3Kv3qVEd885YrpuFtOGEfb9Zn8dfEuSYPqE7xdIDxFq+Rhw1Nw1vhiSp9lM
+         cKehWje2TWIeDGOlWugX89jQFHVXzK6tjF8QV/XZohM6DgWsNl8ezjj1g+ddJsik3Lz9
+         YmQusTYgskOH+vNYIil8XOA7Wlzs/bDOBQKsPPR38X0I8hbDsSPFUbfm0x36LYSbVD7Y
+         FTOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=n8XRtt4v2/8XnsC9t5z1YAiTyNdQaMsgUQHVrKyFtFU=;
-        b=JTExaqh9Do/S2I9alNSQuez2GO0QxTCWK8hkqLuSAKiiTzjPkBPCrdJz6J/MfQOcFd
-         hi5ogNdc7C+XxyxSuKvntKcYgQUaXWDQmO03+wlXbx1jX/oEuq5ofxlL4Icy6Z2wLONG
-         vCrlm8ng7FiFFdoU2CU9Hmog+Caf4fMg0ScOrtizEWUX6z7wPcFT4FHE2Pg8n9ArXGP5
-         lM4kdezBwqcK0TGZM6/YgpFBQH+T44g6kPq6z9D091AQs8DLxZmw1y+ekwdi/2RC5W1D
-         HCP5MY+7pKjazRaTaNqMlDdme56CYMiTyvAWasRZOgQA7q44MmTRiSEcEKwAcXaNn734
-         O8Cg==
-X-Gm-Message-State: AODbwcB9HeunVeQrdQmCEuXljlBB+Q/NvXz4xTUGX9zSd4gU0bDyPI+l
-        frw90oP9XHhBqxiX
-X-Received: by 10.28.169.131 with SMTP id s125mr2478904wme.4.1496911407107;
-        Thu, 08 Jun 2017 01:43:27 -0700 (PDT)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id s18sm2304209wra.20.2017.06.08.01.43.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 08 Jun 2017 01:43:26 -0700 (PDT)
-Date:   Thu, 8 Jun 2017 09:43:24 +0100
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        =?iso-8859-1?Q?Ren=E9?= Genz <liebundartig@freenet.de>
-Subject: Re: [PATCH] docs: suggest "Helped-by" rather than "Thanks-to"
-Message-ID: <20170608084324.GG25777@dinwoodie.org>
-References: <20170605105341.35096-1-adam@dinwoodie.org>
- <CAGZ79kYZ2yTHxxRUjFZpFWsOWwmh6RBXRd0_a1K9kMTo4exD6A@mail.gmail.com>
- <20170606125743.GE25777@dinwoodie.org>
- <xmqq7f0o8ywn.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NPItXgkQia/SPAAx9Cr3E3vD4iC2Qs6yi6f3SKKkhdQ=;
+        b=VMGfcc/n+mEwZmrk7QXnn/kxrMHuS5bq5Tck/EnmiBI1WLs7Cv/y4KLCu5xYtKdrXS
+         rnbqE0K9jYdci015obxLqZZWUfFJW72NdcS75JZDFKeauv7FjJ26urOkwJynzRLh5Lj+
+         pBwGLbPBn1iWFm0H44OsAFL/PcxlEZeLIyQfHi8xwjithg8n/GcG4G3XkE6OE3bGRqHv
+         U15F04C44qnKCO84M+pOdphvUVqtwMP8cFr7B9D+/LrV8Ue7k8RsnfSoswWR4NngnAt4
+         OKMQQ/EHDg7FFHtqwz/l6D3sql6LvMAwwE6wKsBOXLasw4gBo3EtYn8NdrjZdc/rnavN
+         nryA==
+X-Gm-Message-State: AODbwcAiruk+2JTJSrCQQmOvFYIAfj0I7+EohgKizQGZZMVUpdBsr3Fm
+        O+xU8ajvSiNDm9ewubhSWnNAt8U1RA==
+X-Received: by 10.36.120.66 with SMTP id p63mr4389955itc.22.1496912825671;
+ Thu, 08 Jun 2017 02:07:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq7f0o8ywn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.79.72.66 with HTTP; Thu, 8 Jun 2017 02:06:25 -0700 (PDT)
+In-Reply-To: <CACBZZX5wr2k0+i-0CKde_P5key=b+mh0jf47D9oJ449j=MohSw@mail.gmail.com>
+References: <CAJZjrdU=743ikOCxCJ9stQ5qZsndZDXt1jquxGwBrid4YhVsGA@mail.gmail.com>
+ <CACBZZX5wr2k0+i-0CKde_P5key=b+mh0jf47D9oJ449j=MohSw@mail.gmail.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Thu, 8 Jun 2017 05:06:25 -0400
+Message-ID: <CAJZjrdWkqNVLgZ5KYQ33zjO25raLhAHGxqPezjUsQ692wKTudg@mail.gmail.com>
+Subject: Re: send-email: Net::SSLeay failure
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Liam Breck <liam@networkimprov.net>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(Resending to everyone after only sending to Junio by mistake.)
+Sorry, I should've been clearer. Currently send-email fails for me
+with this error:
 
-On Wed, Jun 07, 2017 at 08:44:08AM +0900, Junio C Hamano wrote:
-> Adam Dinwoodie <adam@dinwoodie.org> writes:
-> 
-> > On Mon, Jun 05, 2017 at 11:42:31AM -0700, Stefan Beller wrote:
-> >> So I was wondering if there is a command that shows all trailers?
-> >> Similar to a "shortlog -sne" I would want to have a list of all trailers.
-> >> This is because there might be an even more popular trailer than
-> >> "Helped-by", but we would not know when using the hack above.
-> >> 
-> >> While I do not think so, it would sure be interesting to have a list
-> >> of all these trailers available.
-> >
-> > I just did a quick search with the following knocked-together command:
-> >
-> >     git log --remotes --format=format:%B | sed -rn 's/^([A-Za-z0-9-]+): .* <.*@.*>.*/\1/p' | sort | uniq -c | sort -nr
-> >
-> > The top 10 such tags according to this (which is coincidentally the same
-> > list as the list of all tags used more than 100 times), with
-> > frequencies, are:
-> >
-> >   61535 Signed-off-by
-> >    1641 Acked-by
-> >     984 Reviewed-by
-> >     673 Helped-by
-> >     497 Reported-by
-> >     180 Cc
-> >     174 Suggested-by
-> >     159 Tested-by
-> >     158 Mentored-by
-> >     128 Noticed-by
-> >
-> > As you might expect, there are a number of entertaining ones that have
-> > only been used once or twice, such as "Looks-fine-to-me-by",
-> > "Worriedly-Acked-by", "More-Spots-Found-By", "Looks-right-to-me-by",
-> > "Hopefully-signed-off-by"...
-> 
-> Thanks for an interesting list.  Your replacing (totally
-> unconventional) Thanks-to with more common Helped-by is certainly an
-> improvement, but I wonder if we should encourage people to be
-> "original" in this area by having that "You can also invent"
-> paragraph in the first place.
+SSLeay.c: loadable library and perl binaries are mismatched (got
+handshake key 0xdb80080, needed 0xde00080)
 
-I would expect we could never come up with a list that will cover every
-possible scenario. I suppose the question is whether it's worse for
-people to feel like it's encouraged to come up with non-standard options
-or for them to feel they can't deviate from a given list if none of the
-available options suits them.
-
-And I definitely don't feel I have a good enough grasp of what these
-lines are used for in practice to make any sort of informed comment, so
-I shall leave it to people with more experience than I to propose the
-patch or not.
+I thought the undefined symbol stuff in the .so could have been part
+of the problem, but I guess not. None of the fixes that worked for
+Liam worked for me either, so I'm not quite sure where the issue is.
+The closest I've found to a meaningful suggestion for the error is
+that Perl is relying on a library built against a different version of
+Perl, but I have no idea what library that might be.
