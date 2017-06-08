@@ -7,92 +7,83 @@ X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D82131FAE5
-	for <e@80x24.org>; Thu,  8 Jun 2017 19:53:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3C761FAE5
+	for <e@80x24.org>; Thu,  8 Jun 2017 19:53:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751720AbdFHTxv (ORCPT <rfc822;e@80x24.org>);
+        id S1751709AbdFHTxv (ORCPT <rfc822;e@80x24.org>);
         Thu, 8 Jun 2017 15:53:51 -0400
-Received: from mout.gmx.net ([212.227.15.18]:64356 "EHLO mout.gmx.net"
+Received: from mout.gmx.net ([212.227.15.15]:60216 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751523AbdFHTxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 15:53:44 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNHqL-1dCBkQ3LzN-006tTo; Thu, 08
- Jun 2017 21:53:39 +0200
-Date:   Thu, 8 Jun 2017 21:53:38 +0200 (CEST)
+        id S1751647AbdFHTxt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 15:53:49 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MN1C4-1dCSrR0Hv6-006hBr; Thu, 08
+ Jun 2017 21:53:45 +0200
+Date:   Thu, 8 Jun 2017 21:53:44 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/8] help: use early config when autocorrecting aliases
+Subject: [PATCH v2 5/8] t1308: relax the test verifying that empty alias
+ values are disallowed
 In-Reply-To: <cover.1496951503.git.johannes.schindelin@gmx.de>
-Message-ID: <2be3d75cd3341c1386f97c77cc63bec89c1f6a47.1496951503.git.johannes.schindelin@gmx.de>
+Message-ID: <b9e212d508e9103037da2070cc0aaed530ea7473.1496951503.git.johannes.schindelin@gmx.de>
 References: <cover.1496951503.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:NxwBMg1Hxp6usueBdcTNTTkSBFuwZzrIcPAGy9seV716tnb/RL2
- 6C8MvEWD7KZ7qrQfLBe0ECrCf+IU9OHLadYke6a07RSb61imLaz5B0oGcyScOugp+T6Xb8q
- EnYJFpHfMf1jW0u+H9fBEvsHLVY8M+hBnatCwX5fdLv3PXC9zdFm8sNqTRCGBMVD2WMWqS6
- AYyO6rKDfCrJvlCzeGr1g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gc6vNJ0u0/E=:SfMEpOAYxK6hBmALW0mVE/
- kBLTX+C3Jc193cylLVGxZ5co6r0od1aFGoUtAbLeGusdQ30EMT/0ZGM7mxLmwcHqK9MpmoDMn
- V8ovr8KBSUdng9SMal1YuuD5SFvvLloKT/BneWLxHbr5iEiP8qdYKTEH49GverdPqJNr+vd1A
- cPNztJLvq8TLGGWDnYF0zbg8zDk0s9PvIOiGIbBXWNYXIK5U8+BwZijPb3WRpyxmn79HG/lJ8
- LXaFukjCWOdmCGl/LfHNiuHh9ULHY8QBr+BZirL8+cqnOkZmhh2HBkhbD5K5MgAjIOmC6Nlup
- u59xgDnSL/YSW3KbeMNRUqYuRqEwADgOJ+4Dqpt+jEGFPmCgKvbA/X5V4ZRwaARcBE7Hb1D9m
- v1yxxRIIJDPHBhHap7Jgn8tm243MFEsRZKCfaIR1L8O8T2FOmQVePu9Imid7fa1wQ+lXs6Zzx
- YrMolPLVqk/WInmuTI1Qu76NN/bil4P1GyW/65bc3TQWCljs6I4Fw6CC7mmmAjWMW3NV/0ppw
- c1Sgt3UV2c7KRfSbiK9foUbHdljQhSJzEJT06rGG8eGjl23xKOSyH/Xdu1tBYXPw/B32L3V06
- N9Lqr+EvE90OZfglPFh5F+i0nb7ZkDtwQd+0NBE9JJJdvix79+dPzpUUBuBIIOkVM3I64aRcn
- IKrdzIhgp4FkVfDtebnCtnz31lCJs4DrO+7CqWBZTQKJx/k4dCXGfJbVbcKQsgIg6wd4kpXVz
- kZXrWVflIersHoFUaph+Mr6zRU0BG8MnCo1en7sFY6sauszReWmwhl1SqSG/+q3zbEbHqfxH3
- q7z5KYG
+X-Provags-ID: V03:K0:NRBRl/rno8wHYNf41opWvxq3XpWyb+fhymmZi9wXG1KqQG1f83E
+ yV6Ult3AKP2Y15qck5q9Ml5+fC0XRv+vRypOx+oNjzprkRAAP9Vvw5n21p93zlwz22mQ6UZ
+ dnzeXCYrResrHKhJ3pLclt2Vy83D2D0aRH69TU54ZGNLWJONJJcoIQccvpROdKtviR3hofA
+ i2H1khoS9Z/PYp29aE3+Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jPjtsArji58=:bN2GzhXHC9N9YnEiD9LpTl
+ vAAdLkr9VBaIrnLcKolicTlfpuHIAns2okSMFBkqRSgrgD5L5hxtClCGsEgv7DKdo7ltfIVtm
+ 1sAu4rUhm+CLrhtsYQA/NPiR39Gda9A8yMjj+01MgjsFyn9QxQFgW0IVhTjKmdqOl5UG3Vf5t
+ BG8e7sR8S4golyrmneHZiHHp4z96q47nVHo9YPhs2NpGcZLVTjP3/lYztC2ak0ui02LznLPQh
+ YYCzfyEsxBZluRP25uaFJ5gR/XBcrQvsQn4nhMmZE5LXI+0WCPnglpALFruFbUQ2uE6gGx28/
+ bO1hMqIojJM4HIyLLsz4tIn5gCtylojHEwf1EsQN4+rDtE/BL/uFFWz+Iw+VdwPgauY59Hdr7
+ y4iOrFcU5Tf+32KiqnO8NtjUgKymyYe8OU/zthSgEWcQ493+G65zSliPf6ZPAQtpcdvpEI1aB
+ 6B2M9GN4nwANbD8HGnA4cfGmJSe31Y43iencZhu238BtR/w1bJatu9huyUU00THrKYrBOR4Cn
+ pN0VQTEBdEOSz3yWK7UZE5Ty1xL9HuhBffkc0vbkKUzgl/4lBPNW/1RdDG/H/WQ+4HshDZs0m
+ VAnnZdN5jdNVkRxxpIlcPPVdtZnzLBFBquBp2JFqARBaRJhRIoxVYPA8ipiRlY/zC4voflEFb
+ PnERwjvGtr5ClKuONsQmMEntitPMbScEBV/yLD2M0/2UsuYaCKbLi9GEb1iYTeDiUoWwt7J2B
+ ZU9KhYO2nLRk8mvNqafayLumYCAlkCwDYxIOsCvJ5Q8ntcLqTF+Z/QRgcd+LSBmeTxdpypHi8
+ vZXM6E+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git has this feature which suggests similar commands (including aliases)
-in case the user specified an unknown command.
+We are about to change the way aliases are expanded, to use the early
+config machinery.
 
-This feature currently relies on a side effect of the way we expand
-aliases right now: when a command is not a builtin, we use the regular
-config machinery (meaning: discovering the .git/ directory and
-initializing global state such as the config cache) to see whether the
-command refers to an alias.
+This machinery reports errors in a slightly different manner than the
+cached config machinery.
 
-However, we will change the way aliases are expanded in the next
-commits, to use the early config instead. That means that the
-autocorrect feature can no longer discover the available aliases by
-looking at the config cache (because it has not yet been initialized).
-
-So let's just use the early config machinery instead.
-
-This is slightly less performant than the previous way, as the early
-config is used *twice*: once to see whether the command refers to an
-alias, and then to see what aliases are most similar. However, this is
-hardly a performance-critical code path, so performance is less important
-here.
+Let's not get hung up by the precise wording of the message mentioning
+the lin number. It is really sufficient to verify that all the relevant
+information is given to the user.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- help.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t1308-config-set.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/help.c b/help.c
-index db7f3d79a01..b44c55ec2da 100644
---- a/help.c
-+++ b/help.c
-@@ -289,7 +289,7 @@ const char *help_unknown_cmd(const char *cmd)
- 	memset(&other_cmds, 0, sizeof(other_cmds));
- 	memset(&aliases, 0, sizeof(aliases));
+diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+index ff50960ccae..69a0aa56d6d 100755
+--- a/t/t1308-config-set.sh
++++ b/t/t1308-config-set.sh
+@@ -215,7 +215,9 @@ test_expect_success 'check line errors for malformed values' '
+ 		br
+ 	EOF
+ 	test_expect_code 128 git br 2>result &&
+-	test_i18ngrep "fatal: .*alias\.br.*\.git/config.*line 2" result
++	test_i18ngrep "missing value for .alias\.br" result &&
++	test_i18ngrep "fatal: .*\.git/config" result &&
++	test_i18ngrep "fatal: .*line 2" result
+ '
  
--	git_config(git_unknown_cmd_config, NULL);
-+	read_early_config(git_unknown_cmd_config, NULL);
- 
- 	load_command_list("git-", &main_cmds, &other_cmds);
- 
+ test_expect_success 'error on modifying repo config without repo' '
 -- 
 2.13.0.windows.1.460.g13f583bedb5
 
