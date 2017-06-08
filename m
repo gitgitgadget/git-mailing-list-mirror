@@ -2,128 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A16E01FAEB
-	for <e@80x24.org>; Thu,  8 Jun 2017 00:59:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80A171FAED
+	for <e@80x24.org>; Thu,  8 Jun 2017 01:33:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751541AbdFHA75 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 7 Jun 2017 20:59:57 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:51478 "EHLO
-        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751435AbdFHA74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Jun 2017 20:59:56 -0400
-Received: from [10.0.2.15] ([143.159.212.80])
-        by avasout08 with smtp
-        id W0zu1v0011keHif010zv3b; Thu, 08 Jun 2017 01:59:55 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=FLJr/6gs c=1 sm=1 tr=0
- a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
- a=IkcTkHD0fZMA:10 a=H8XXGom_YRwkIMVfF5cA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] test-lib: add ability to cap the runtime of tests
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+        id S1751653AbdFHBdd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 7 Jun 2017 21:33:33 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:36072 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751410AbdFHBdd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Jun 2017 21:33:33 -0400
+Received: by mail-it0-f44.google.com with SMTP id m47so119066395iti.1
+        for <git@vger.kernel.org>; Wed, 07 Jun 2017 18:33:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=AiQbCAQfEenTSQE4nSYLFxfUxeKxCV9UmjBfsE58rkg=;
+        b=swe3jWkoLEAvMTzHvhzFnwbQ4Npeajt1tDkGXPyFf/wyMRupbt9Iei0wCjHwpfmy83
+         H2L2xd6jLUzswYxybzifz/9OPIxyqlDjo7n5pp7a6Ip2dVG9c3+QnsxrCfH8a85lorba
+         iRmkTHULIB3FFEwbOGO+zqK7Fm2dqKnh/tM/FBfUoQ6RyZ6SARFOeTg/ixnamkEXKp1b
+         QX2t70T2XFLkXxRryFZP2tCEAYRIFvttd9PL3SLofSCILLkLBS4dbxZDAzUNe9o/bCxr
+         /VsN7f2t45mlfj20RDggyYe25/YOomAqJOhSYM6QvA8fJVa/tuETVX+IsKdS6h/uOlAj
+         6lHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=AiQbCAQfEenTSQE4nSYLFxfUxeKxCV9UmjBfsE58rkg=;
+        b=pkvrEaZ1TllDGiZtk0JM0ppiGeCpst9+zJBM0QIBPyDabX7nbSUKTVT+VvegKfe2nq
+         cdHjjNSnTK9dKGNfg4EbE7kAEeTX/hPUrAqXsdtF1kFbgz9dUnUQRiHG7obCNScC8fcX
+         NFLsWNXgupkQ/+hWGdoubl1vTFhImqy+8EWF9e0eRM1H23NjZpKu3A4PWLGlmEcQ3xNO
+         nMRswXoJNsB1zXqwEhEna0pLqUV3d9X0PffWLZn6Uzo+SZy2RRSBuOga2nCU89bwSZeg
+         jywKoAQpxGwxmWwKCw0bu0moKokvqcEnJgoCI4JxmJPwQh3JS1a+VTjBoXBqrQiMJJGP
+         ppIg==
+X-Gm-Message-State: AODbwcBJbZ3agaoCASYIS8ktrsYm1j2mwUdJJtdhY4gWWqp7fPtimLnZ
+        h4gwIwRumAztc79nOtBiZ6c+b8V0XaXaUXQ=
+X-Received: by 10.36.61.76 with SMTP id n73mr3294306itn.51.1496885612078; Wed,
+ 07 Jun 2017 18:33:32 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.72.66 with HTTP; Wed, 7 Jun 2017 18:32:51 -0700 (PDT)
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Wed, 7 Jun 2017 21:32:51 -0400
+Message-ID: <CAJZjrdU=743ikOCxCJ9stQ5qZsndZDXt1jquxGwBrid4YhVsGA@mail.gmail.com>
+Subject: Re: send-email: Net::SSLeay failure
+To:     Liam Breck <liam@networkimprov.net>
 Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-References: <20170603221335.3038-1-avarab@gmail.com>
- <xmqqa85owq3b.fsf@gitster.mtv.corp.google.com>
- <CACBZZX5_AYOXZMrgVZuERzOdzntw0ec36bKS5mcKT510cC3Y2g@mail.gmail.com>
- <xmqqefuzurj5.fsf@gitster.mtv.corp.google.com>
- <20170607102448.bpgxce4kduzxf7a2@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <3ae7243b-93f9-d7ba-0e3f-d0b3388d57ac@ramsayjones.plus.com>
-Date:   Thu, 8 Jun 2017 01:59:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <20170607102448.bpgxce4kduzxf7a2@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Jun 7, 2017 at 8:26 PM, Liam Breck <liam@networkimprov.net> wrote:
+> On Wed, Jun 7, 2017 at 5:06 PM, Samuel Lijin <sxlijin@gmail.com> wrote:
+>> On Wed, Jun 7, 2017 at 4:43 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>> <avarab@gmail.com> wrote:
+>>> Ah, so you installed Net::SSLeay via CPAN, and then upgraded your Arch
+>>> openssl, breaking the CPAN-built *.so object?
+>>>
+>>>> Agreed that send-email should be report errors properly. It's a rather
+>>>> essential tool.
+>>>
+>>> Indeed, do you get a meaningful error if you apply my patch?
+>>
+>> FWIW I'm on Arch as well and am getting what I assume is a related error=
+:
+>>
+>> SSLeay.c: loadable library and perl binaries are mismatched (got
+>> handshake key 0xdb80080, needed 0xde00080)
+>>
+>> The last patch I sent out was on 5/23, and I just ran a system upgrade
+>> today (only one I've done since then), which presumably is what
+>> "broke" send-email. I used CPAN to install Net::SMTP::SSL,
+>> Mime::Base64, and Authen::SASL; I assume that Net::SSLeay is installed
+>> as a dependency of one of the three (presumably the first)?
+>>
+>> I know Net::SSLeay isn't controlled by Arch's package manager:
+>>
+>> $ perldoc -l Net::SSLeay
+>> /usr/lib/perl5/site_perl/Net/SSLeay.pod
+>> $ pacman -Qo /usr/lib/perl5/site_perl/Net/SSLeay.pod
+>> error: No package owns /usr/lib/perl5/site_perl/Net/SSLeay.pod
+>>
+>> =C3=86var's patch unfortunately does not fix or change anything for me.
+>
+> Right because it attempts to log a diff issue.
+>
+>> Liam: when you say "uninstall" /usr/{lib,share}/perl5/site_perl/*, do
+>> you just mean rm -rf?
+>
+> You need these new arch packages:
+> perl-mime-tools perl-net-smtp-ssl perl-authen-sasl
+>
+> To uninstall the cpan stuff I did this in case I need to put anything bac=
+k
+>
+> mkdir -p siteperl_uninstall/{lib,share}
+> sudo mv /usr/share/perl5/site_perl/*  siteperl_uninstall/share/
+> sudo mv /usr/lib/perl5/site_perl/*  siteperl_uninstall/lib/
+>
+> You could comment on this issue here
+> https://bugs.archlinux.org/task/54334
 
+Changed the subject line; my issue seems to be less related to yours
+than I thought. I followed the steps you describe and I'm still
+getting the mismatch error I mentioned above.
 
-On 07/06/17 11:24, Jeff King wrote:
-> On Mon, Jun 05, 2017 at 10:55:42AM +0900, Junio C Hamano wrote:
-> 
-> If you use "prove", it already records this information, and it can
-> print it with "--timer".
+The closest I've gotten to figuring this out is that for some reason
+SSLeay.so is unhappy:
 
-Yes I have
+$ ldd -r /usr/lib/perl5/vendor_perl/auto/Net/SSLeay/SSLeay.so
+                                linux-vdso.so.1 (0x00007ffc67fb0000)
+        libssl.so.1.1 =3D> /usr/lib64/libssl.so.1.1 (0x00007f891e58b000)
+        libcrypto.so.1.1 =3D> /usr/lib64/libcrypto.so.1.1 (0x00007f891e1100=
+00)
+        libc.so.6 =3D> /usr/lib64/libc.so.6 (0x00007f891dd6b000)
+        libpthread.so.0 =3D> /usr/lib64/libpthread.so.0 (0x00007f891db4d000=
+)
+        libdl.so.2 =3D> /usr/lib64/libdl.so.2 (0x00007f891d949000)
+        /usr/lib64/ld-linux-x86-64.so.2 (0x00005598da604000)
+undefined symbol: PL_thr_key
+(/usr/lib/perl5/vendor_perl/auto/Net/SSLeay/SSLeay.so)
+undefined symbol: Perl_sv_setnv_mg
+(/usr/lib/perl5/vendor_perl/auto/Net/SSLeay/SSLea
+[many more undefined symbol errors]
 
-    DEFAULT_TEST_TARGET=prove
-    GIT_PROVE_OPTS='--timer'
-
-in my config.mak and run the test: 'make test >test-out 2>&1'.
-
-> I don't use that myself, though. What's much more interesting (but which
-> I haven't found a way to get prove to do out-of-the-box) is to show the
-> longest tests after the fact.
-
-So, I have a perl script that can give me that info, like so:
-
-On Linux, (current master branch), the ten slowest tests:
-
-$ ./test-times.pl -n 10 test-out
-   1   22.269s   t9001-send-email.sh
-   2   15.222s   t7063-status-untracked-cache.sh
-   3   10.965s   t9500-gitweb-standalone-no-errors.sh
-   4    9.978s   t3404-rebase-interactive.sh
-   5    9.270s   t3421-rebase-topology-linear.sh
-   6    8.099s   t0027-auto-crlf.sh
-   7    6.056s   t7112-reset-submodule.sh
-   8    5.937s   t7610-mergetool.sh
-   9    5.711s   t5572-pull-submodule.sh
-  10    5.229s   t6030-bisect-porcelain.sh
-$ 
-
-... and those taking 10s or more:
-
-$ ./test-times.pl -t 10 test-out
-   1   22.269s   t9001-send-email.sh
-   2   15.222s   t7063-status-untracked-cache.sh
-   3   10.965s   t9500-gitweb-standalone-no-errors.sh
-$ 
-
-However, on cygwin (v2.13.0 test output file), the ten slowest:
-
-$ ./test-times.pl -n 10 test-out
-   1  385.057s   t3404-rebase-interactive.sh
-   2  339.694s   t3421-rebase-topology-linear.sh
-   3  224.854s   t7610-mergetool.sh
-   4  211.230s   t6030-bisect-porcelain.sh
-   5  180.297s   t3425-rebase-topology-merges.sh
-   6  179.446s   t3903-stash.sh
-   7  177.600s   t9001-send-email.sh
-   8  175.278s   t5572-pull-submodule.sh
-   9  160.422s   t2013-checkout-submodule.sh
-  10  158.615s   t1013-read-tree-submodule.sh
-$ 
-
-... and (some of) those taking 10s or more:
-
-$ ./test-times.pl -t 10 test-out
-   1  385.057s   t3404-rebase-interactive.sh
-   2  339.694s   t3421-rebase-topology-linear.sh
-   3  224.854s   t7610-mergetool.sh
-   4  211.230s   t6030-bisect-porcelain.sh
-
-...
-
- 175   10.389s   t4300-merge-tree.sh
- 176   10.324s   t4213-log-tabexpand.sh
- 177   10.143s   t3034-merge-recursive-rename-options.sh
- 178   10.108s   t1410-reflog.sh
-$ 
-
-[On linux a complete run is about 400s and on cygwin about 3hours!]
-
-ATB,
-Ramsay Jones
-
+=C3=86var and anyone else familiar with Perl, any ideas? The best I can get
+from the Arch forums is that this tends to occur when perl calls an
+external lib built against a different version of perl, but I can't
+tell if that's happening here.
