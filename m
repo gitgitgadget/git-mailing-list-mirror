@@ -7,84 +7,91 @@ X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5699A1FAE5
-	for <e@80x24.org>; Thu,  8 Jun 2017 19:53:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D82131FAE5
+	for <e@80x24.org>; Thu,  8 Jun 2017 19:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751548AbdFHTxo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 15:53:44 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52812 "EHLO mout.gmx.net"
+        id S1751720AbdFHTxv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 15:53:51 -0400
+Received: from mout.gmx.net ([212.227.15.18]:64356 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751469AbdFHTxn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 15:53:43 -0400
+        id S1751523AbdFHTxo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 15:53:44 -0400
 Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBnvD-1dBb6Q0W6p-00AlpA; Thu, 08
- Jun 2017 21:53:33 +0200
-Date:   Thu, 8 Jun 2017 21:53:32 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNHqL-1dCBkQ3LzN-006tTo; Thu, 08
+ Jun 2017 21:53:39 +0200
+Date:   Thu, 8 Jun 2017 21:53:38 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/8] discover_git_directory(): avoid setting invalid
- git_dir
+Subject: [PATCH v2 3/8] help: use early config when autocorrecting aliases
 In-Reply-To: <cover.1496951503.git.johannes.schindelin@gmx.de>
-Message-ID: <effd58a564e54ccd3d695d91bc9c4f32255b8ab7.1496951503.git.johannes.schindelin@gmx.de>
+Message-ID: <2be3d75cd3341c1386f97c77cc63bec89c1f6a47.1496951503.git.johannes.schindelin@gmx.de>
 References: <cover.1496951503.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:93RfzNJxcIp/ixbs7pw2Xn+2DLtLV4OQ+0up/LT/D4sQQRgHB7E
- kd9vNlOovqOqfXEpaeahZHzvbab8l8uTXcgmdIjEfzpYmbLIfE58P0cT2BUQXI5hwdhYoWU
- EnZxKVU62xUz3Q5A4LL9fSpT4SSeIJTiPP+pPjBPPG4+H2t7g496SfvHH63F7n18wwGUKVo
- 2oQEqKPnOdAaE2ZqkrmTg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MziMbeW7sX8=:hKt09lF9DePg9xfzFk69Sk
- G5MvG6S6MYjzeKBsd0Kg8ARLhIVkEoVOMhUdbpPWwdzePiDeQl5747UWJ3BbiUMpjtLQLBvYy
- 825Q9wzZpY/nB3pVut+lRXFW6OV9r+V7zksH5W9UfXEJiVO+imzA5TdspEHeYyf5y/Ew2IJA8
- XBVJQNeKhotDxfrDYk1DXp7GsZnRmqefmxa51aCKsiN2362ObIW8CiBLbD3l3yGA1ZnZ6lWPD
- GIdT65HL404t33W3gEt77E1dSZ5NvfB1jOYqsMjMi5pdLp4cc7rpijsGQOVL7dHpFl5h4R5QL
- /xC9MpyKg+p8mK4kDS7CU69pS1I2l7C6i6iKO/I2DLiXnN00f0zzxg88RRZM1H7NfXVqX/6l3
- vNmMIQMjlJI6v6aNG0k9TeXYSqiUDfNlAsWRdy/hMiTVYaOIqUZeEK4bGz0T2MA4Kc0j8GrcI
- xI+BZOlmwjf1UJAoj9K4urZ9kU/sUZ9/m0Nrea50BiN0Oe60n0IjqHha3ITnAZFMb+hhdbEB0
- EXYbCl3JZ/SHhmSN02XxhB11urOmJvk5kEaeFEhmi8XisE1EK3u+X0rXOmhMaU3fe8D59EXAx
- cJX69NFLSbbZ/oXJ4IBUqyc5BlniZ/N3L+q0JuL/cuqO3gAphL7QJdFjWHf3cnssXBzKk5LMh
- KkMRyNhn2S1eymZpqUox08UBv0SYib3K2ljFlIFuFVDL+CDYwBlxPNmTMsk7EywqUY97mVtfe
- A41PntwKrz4adpZ/v0xHEqS4lCrteWHd3/PuLT44keBE/dE5nZtaxHI8pEnnWopEl2D5gHcuA
- iCFnXwx
+X-Provags-ID: V03:K0:NxwBMg1Hxp6usueBdcTNTTkSBFuwZzrIcPAGy9seV716tnb/RL2
+ 6C8MvEWD7KZ7qrQfLBe0ECrCf+IU9OHLadYke6a07RSb61imLaz5B0oGcyScOugp+T6Xb8q
+ EnYJFpHfMf1jW0u+H9fBEvsHLVY8M+hBnatCwX5fdLv3PXC9zdFm8sNqTRCGBMVD2WMWqS6
+ AYyO6rKDfCrJvlCzeGr1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gc6vNJ0u0/E=:SfMEpOAYxK6hBmALW0mVE/
+ kBLTX+C3Jc193cylLVGxZ5co6r0od1aFGoUtAbLeGusdQ30EMT/0ZGM7mxLmwcHqK9MpmoDMn
+ V8ovr8KBSUdng9SMal1YuuD5SFvvLloKT/BneWLxHbr5iEiP8qdYKTEH49GverdPqJNr+vd1A
+ cPNztJLvq8TLGGWDnYF0zbg8zDk0s9PvIOiGIbBXWNYXIK5U8+BwZijPb3WRpyxmn79HG/lJ8
+ LXaFukjCWOdmCGl/LfHNiuHh9ULHY8QBr+BZirL8+cqnOkZmhh2HBkhbD5K5MgAjIOmC6Nlup
+ u59xgDnSL/YSW3KbeMNRUqYuRqEwADgOJ+4Dqpt+jEGFPmCgKvbA/X5V4ZRwaARcBE7Hb1D9m
+ v1yxxRIIJDPHBhHap7Jgn8tm243MFEsRZKCfaIR1L8O8T2FOmQVePu9Imid7fa1wQ+lXs6Zzx
+ YrMolPLVqk/WInmuTI1Qu76NN/bil4P1GyW/65bc3TQWCljs6I4Fw6CC7mmmAjWMW3NV/0ppw
+ c1Sgt3UV2c7KRfSbiK9foUbHdljQhSJzEJT06rGG8eGjl23xKOSyH/Xdu1tBYXPw/B32L3V06
+ N9Lqr+EvE90OZfglPFh5F+i0nb7ZkDtwQd+0NBE9JJJdvix79+dPzpUUBuBIIOkVM3I64aRcn
+ IKrdzIhgp4FkVfDtebnCtnz31lCJs4DrO+7CqWBZTQKJx/k4dCXGfJbVbcKQsgIg6wd4kpXVz
+ kZXrWVflIersHoFUaph+Mr6zRU0BG8MnCo1en7sFY6sauszReWmwhl1SqSG/+q3zbEbHqfxH3
+ q7z5KYG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When discovering a .git/ directory, we take pains to ensure that its
-repository format version matches Git's expectations, and we return NULL
-otherwise.
+Git has this feature which suggests similar commands (including aliases)
+in case the user specified an unknown command.
 
-However, we still appended the invalid path to the strbuf passed as
-argument.
+This feature currently relies on a side effect of the way we expand
+aliases right now: when a command is not a builtin, we use the regular
+config machinery (meaning: discovering the .git/ directory and
+initializing global state such as the config cache) to see whether the
+command refers to an alias.
 
-Let's just reset the strbuf to the state before we appended the .git/
-directory that was eventually rejected.
+However, we will change the way aliases are expanded in the next
+commits, to use the early config instead. That means that the
+autocorrect feature can no longer discover the available aliases by
+looking at the config cache (because it has not yet been initialized).
 
-There is another early return path in that function, when
-setup_git_directory_gently_1() returns GIT_DIR_NONE or an error. In that
-case, the gitdir parameter has not been touched, therefore there is no
-need for an equivalent change in that code path.
+So let's just use the early config machinery instead.
+
+This is slightly less performant than the previous way, as the early
+config is used *twice*: once to see whether the command refers to an
+alias, and then to see what aliases are most similar. However, this is
+hardly a performance-critical code path, so performance is less important
+here.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- setup.c | 1 +
- 1 file changed, 1 insertion(+)
+ help.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/setup.c b/setup.c
-index e3f7699a902..2435186e448 100644
---- a/setup.c
-+++ b/setup.c
-@@ -982,6 +982,7 @@ const char *discover_git_directory(struct strbuf *gitdir)
- 		warning("ignoring git dir '%s': %s",
- 			gitdir->buf + gitdir_offset, err.buf);
- 		strbuf_release(&err);
-+		strbuf_setlen(gitdir, gitdir_offset);
- 		return NULL;
- 	}
+diff --git a/help.c b/help.c
+index db7f3d79a01..b44c55ec2da 100644
+--- a/help.c
++++ b/help.c
+@@ -289,7 +289,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 	memset(&other_cmds, 0, sizeof(other_cmds));
+ 	memset(&aliases, 0, sizeof(aliases));
+ 
+-	git_config(git_unknown_cmd_config, NULL);
++	read_early_config(git_unknown_cmd_config, NULL);
+ 
+ 	load_command_list("git-", &main_cmds, &other_cmds);
  
 -- 
 2.13.0.windows.1.460.g13f583bedb5
