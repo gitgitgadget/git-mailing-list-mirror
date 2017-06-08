@@ -2,51 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6A4E1FAEB
-	for <e@80x24.org>; Thu,  8 Jun 2017 23:41:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 543591FAEB
+	for <e@80x24.org>; Thu,  8 Jun 2017 23:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751675AbdFHXlp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 19:41:45 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:35049 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751660AbdFHXll (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 19:41:41 -0400
-Received: by mail-pf0-f171.google.com with SMTP id l89so22166473pfi.2
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:41 -0700 (PDT)
+        id S1751673AbdFHXlo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 19:41:44 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:34416 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751661AbdFHXln (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 19:41:43 -0400
+Received: by mail-pg0-f43.google.com with SMTP id v18so20713846pgb.1
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KlkBz1SLpG2NGDB3bZlCuS09GLLXs/+bM88rSlFVQqI=;
-        b=Kd4WTNbyRqXP2byFZBor00L5uh/1xs4C61lZZ+IBEf6w1FA0Rmkj2Lu6sd1JmNkpae
-         kvVlKLHDxDApQZ0WY9NSGNti+SDrSg/NXflO1ylHDBWKcuLzeLf0lhR4uaA+XX/HtpOo
-         IbCqY7Lc5FG8fnMhSFh6N5131Gz8bj/9jnAxZq5j/0mVuFkHBHN9fedBETq59q96Q6Y7
-         D6PDfByS/epFoFwd/iNK/aBERKInirkZCghvzDzR95hqaw7+L7zGgo9ohcmKFqcE6AMM
-         JzCFFzpgZ3g/YoAS+Ym47oVarKTKjK8kDoycDI5JmvntltPgnY7KaW/mvrL/fuaoGybI
-         QnpQ==
+        bh=jFYTLnqPO9TsJTpvRzYHYT8Qd18fCRAm3Fv8sONuq3w=;
+        b=qkhyDkaMaH2VklavbdN2JBxgRXu5wS+L+EaHBClZYS0r44GG5dAfm224PHtrzZxeM7
+         2ZrJ4Ny9D6bx/GrXmlRZJS7EEWh8O3ANE1DHZsgIYhvrNyqeGOM1syPzxUfoyXYwUL+c
+         daqONiJh1kJSUNlhfpGaJMV+LMVSaajO23ffQQSNVQXasOWFq8SgROjMqaANTSVfnOhf
+         iaIYm1RMiuzRYIaaMVP+DBRNv4VORVE5jJCD+g8vt7Q/oxzBrmhR8BJ8L4j5at1FEd2H
+         tZ7x64+NZuI5ksDKCCKlB6k/zgnIKU3uVVmeMzGAYtJjNIQGZOilxXlAd98BUBtG9XmF
+         4UPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=KlkBz1SLpG2NGDB3bZlCuS09GLLXs/+bM88rSlFVQqI=;
-        b=UcruHDL4xfDlx/4wljTRnz9FGI5p00jnZnoAvspcJUfhYf9mo53KWazFyMo/lRaTky
-         gO8Slp2j5AdTVw8jbLvkaLn9X6s6LCgNsnxSwLII5zz3eMQQC9LmU1hiFu1BzTjqJMMg
-         kxlVnifA1q2GB9k1hOaraZVJFXgkmqFt6rLcGAtmsZz8M/ArVUHtuhWGOMAI40EghN/5
-         kFNLCNmoU5uLrt3iB3m2QnJiUkI+pLbcDN64T7qn7r3amGhPJnxmeD+NVxrjBKrq5kZK
-         cSvt2l2qbUVTweUbH9p4saOq0KyYKkO2Qt6Q0fcXXKNoXAXeWzHyiSPDaIr7i+1iO9k5
-         vfIQ==
-X-Gm-Message-State: AODbwcBQL92T5LCDrPRXrg7crUTJvdEuejiJKQc43+Vv8z88fg5KEsFM
-        vgSrt+Y15yZgRKB7CC3fwg==
-X-Received: by 10.98.194.73 with SMTP id l70mr8602628pfg.41.1496965300332;
-        Thu, 08 Jun 2017 16:41:40 -0700 (PDT)
+        bh=jFYTLnqPO9TsJTpvRzYHYT8Qd18fCRAm3Fv8sONuq3w=;
+        b=OKWKh/34hBw0jknwoGHtaxtIZz85dGO7D/GwEqtk8z/btY1FOcj3DQRDU7/fB6Yd5R
+         +8PCs+XoBacNIXIPwclO49q4lWAZEXE0PCRJNMQwNEVsNEVE8iLfTUylvjYIE5BnXvA6
+         CrJa7T48n2lhcwjerNrIgC1I7CA2YioN7mP9VBbCUlN4qmEiZNi9FI/1SbELhvewXkdR
+         UB+H+gcxyzZy4wwFX9yd7YMHNtKQ6BMMEJpkO9iZF3MBUS/1BOf4n3f+9yDgH28QBsYv
+         pHZjb+npHDS7vg/kpPf6iFkaEe35reOwn4ZIa+HF107JRW6yl3aCA2O96FmjbHEQxxU4
+         F48w==
+X-Gm-Message-State: AODbwcD/+D0tTMSxvmnFa1jRSUWguDhMLaAZIf6CIGtOMXV3OFtlCU2Z
+        godBezxlAbn5385MDyb/Jw==
+X-Received: by 10.98.141.199 with SMTP id p68mr39768519pfk.55.1496965296792;
+        Thu, 08 Jun 2017 16:41:36 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.38
+        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jun 2017 16:41:39 -0700 (PDT)
+        Thu, 08 Jun 2017 16:41:35 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 16/32] convert: convert get_cached_convert_stats_ascii to take an index
-Date:   Thu,  8 Jun 2017 16:40:44 -0700
-Message-Id: <20170608234100.188529-17-bmwill@google.com>
+Subject: [PATCH v2 14/32] submodule: add repo_read_gitmodules
+Date:   Thu,  8 Jun 2017 16:40:42 -0700
+Message-Id: <20170608234100.188529-15-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.508.gb3defc5cc-goog
 In-Reply-To: <20170608234100.188529-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -66,69 +66,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Teach the repo object to be able to populate the submodule_cache by
+reading the repository's gitmodules file.
+
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/ls-files.c | 3 ++-
- convert.c          | 5 +++--
- convert.h          | 5 ++++-
- 3 files changed, 9 insertions(+), 4 deletions(-)
+ submodule.c | 15 +++++++++++++++
+ submodule.h |  2 ++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index c4357dc30..f16ce0053 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -64,7 +64,8 @@ static void write_eolinfo(const struct cache_entry *ce, const char *path)
- 		const char *w_txt = "";
- 		const char *a_txt = get_convert_attr_ascii(path);
- 		if (ce && S_ISREG(ce->ce_mode))
--			i_txt = get_cached_convert_stats_ascii(ce->name);
-+			i_txt = get_cached_convert_stats_ascii(&the_index,
-+							       ce->name);
- 		if (!lstat(path, &st) && S_ISREG(st.st_mode))
- 			w_txt = get_wt_convert_stats_ascii(path);
- 		printf("i/%-5s w/%-5s attr/%-17s\t", i_txt, w_txt, a_txt);
-diff --git a/convert.c b/convert.c
-index 5f4a4b1f5..574003023 100644
---- a/convert.c
-+++ b/convert.c
-@@ -135,11 +135,12 @@ static const char *gather_convert_stats_ascii(const char *data, unsigned long si
+diff --git a/submodule.c b/submodule.c
+index 95328de61..65f60ab57 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "repository.h"
+ #include "config.h"
+ #include "submodule-config.h"
+ #include "submodule.h"
+@@ -202,6 +203,20 @@ void gitmodules_config(void)
  	}
  }
  
--const char *get_cached_convert_stats_ascii(const char *path)
-+const char *get_cached_convert_stats_ascii(const struct index_state *istate,
-+					   const char *path)
- {
- 	const char *ret;
- 	unsigned long sz;
--	void *data = read_blob_data_from_cache(path, &sz);
-+	void *data = read_blob_data_from_index(istate, path, &sz);
- 	ret = gather_convert_stats_ascii(data, sz);
- 	free(data);
- 	return ret;
-diff --git a/convert.h b/convert.h
-index 82871a11d..667b7dfe0 100644
---- a/convert.h
-+++ b/convert.h
-@@ -4,6 +4,8 @@
- #ifndef CONVERT_H
- #define CONVERT_H
- 
-+struct index_state;
++static int gitmodules_cb(const char *var, const char *value, void *data)
++{
++	struct repository *repo = data;
++	return submodule_config_option(repo, var, value);
++}
 +
- enum safe_crlf {
- 	SAFE_CRLF_FALSE = 0,
- 	SAFE_CRLF_FAIL = 1,
-@@ -33,7 +35,8 @@ enum eol {
- };
++void repo_read_gitmodules(struct repository *repo)
++{
++	char *gitmodules_path = repo_worktree_path(repo, ".gitmodules");
++
++	git_config_from_file(gitmodules_cb, gitmodules_path, repo);
++	free(gitmodules_path);
++}
++
+ void gitmodules_config_sha1(const unsigned char *commit_sha1)
+ {
+ 	struct strbuf rev = STRBUF_INIT;
+diff --git a/submodule.h b/submodule.h
+index 8fb0f2549..ec6ea8dfd 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -1,6 +1,7 @@
+ #ifndef SUBMODULE_H
+ #define SUBMODULE_H
  
- extern enum eol core_eol;
--extern const char *get_cached_convert_stats_ascii(const char *path);
-+extern const char *get_cached_convert_stats_ascii(const struct index_state *istate,
-+						  const char *path);
- extern const char *get_wt_convert_stats_ascii(const char *path);
- extern const char *get_convert_attr_ascii(const char *path);
- 
++struct repository;
+ struct diff_options;
+ struct argv_array;
+ struct oid_array;
+@@ -40,6 +41,7 @@ extern void set_diffopt_flags_from_submodule_config(struct diff_options *,
+ 		const char *path);
+ extern int submodule_config(const char *var, const char *value, void *cb);
+ extern void gitmodules_config(void);
++extern void repo_read_gitmodules(struct repository *repo);
+ extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
+ extern int is_submodule_initialized(const char *path);
+ /*
 -- 
 2.13.1.508.gb3defc5cc-goog
 
