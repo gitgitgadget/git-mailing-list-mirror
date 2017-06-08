@@ -2,51 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 543591FAEB
-	for <e@80x24.org>; Thu,  8 Jun 2017 23:41:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A64651FAEB
+	for <e@80x24.org>; Thu,  8 Jun 2017 23:41:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751673AbdFHXlo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 19:41:44 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:34416 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751661AbdFHXln (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 19:41:43 -0400
-Received: by mail-pg0-f43.google.com with SMTP id v18so20713846pgb.1
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:42 -0700 (PDT)
+        id S1751683AbdFHXls (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 19:41:48 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34201 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751671AbdFHXlr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 19:41:47 -0400
+Received: by mail-pf0-f169.google.com with SMTP id 9so22171865pfj.1
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jFYTLnqPO9TsJTpvRzYHYT8Qd18fCRAm3Fv8sONuq3w=;
-        b=qkhyDkaMaH2VklavbdN2JBxgRXu5wS+L+EaHBClZYS0r44GG5dAfm224PHtrzZxeM7
-         2ZrJ4Ny9D6bx/GrXmlRZJS7EEWh8O3ANE1DHZsgIYhvrNyqeGOM1syPzxUfoyXYwUL+c
-         daqONiJh1kJSUNlhfpGaJMV+LMVSaajO23ffQQSNVQXasOWFq8SgROjMqaANTSVfnOhf
-         iaIYm1RMiuzRYIaaMVP+DBRNv4VORVE5jJCD+g8vt7Q/oxzBrmhR8BJ8L4j5at1FEd2H
-         tZ7x64+NZuI5ksDKCCKlB6k/zgnIKU3uVVmeMzGAYtJjNIQGZOilxXlAd98BUBtG9XmF
-         4UPw==
+        bh=kTCrCEliAF90wX81aycO4Np/xI+kYouwx08gBtJldoo=;
+        b=HgMupMZ/gGdsC/nKRHZdHUxU9TrPwHAg31/tmiJAHJ7VlUOol+T18LthsyOzsK+vls
+         FXBBtJumC4QhJJppjLGjUVJO237mJH3SwAEWcp2OEFB0aVjZadx5xi3K+PkmHq1Vgwdr
+         reqJov5tlDsUxkCmOr2BtIZ3/WVwUsyRRtIdAT2YCbtXHqDgUd6ctbpNfH5Gqc82Zdgx
+         SzTy73rm2an/NeqJCyOfrmANmfj1WuLO0FSVO7YxFyRm6DRh0wIyNl6nwwAOpTr+Oks/
+         hUeWQWJOV/iiUvLnLOoio3kxq09cLtNiKER9zQNGHO0hcvqxI9QFnWiCtm6VXsRfyUyR
+         5qxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=jFYTLnqPO9TsJTpvRzYHYT8Qd18fCRAm3Fv8sONuq3w=;
-        b=OKWKh/34hBw0jknwoGHtaxtIZz85dGO7D/GwEqtk8z/btY1FOcj3DQRDU7/fB6Yd5R
-         +8PCs+XoBacNIXIPwclO49q4lWAZEXE0PCRJNMQwNEVsNEVE8iLfTUylvjYIE5BnXvA6
-         CrJa7T48n2lhcwjerNrIgC1I7CA2YioN7mP9VBbCUlN4qmEiZNi9FI/1SbELhvewXkdR
-         UB+H+gcxyzZy4wwFX9yd7YMHNtKQ6BMMEJpkO9iZF3MBUS/1BOf4n3f+9yDgH28QBsYv
-         pHZjb+npHDS7vg/kpPf6iFkaEe35reOwn4ZIa+HF107JRW6yl3aCA2O96FmjbHEQxxU4
-         F48w==
-X-Gm-Message-State: AODbwcD/+D0tTMSxvmnFa1jRSUWguDhMLaAZIf6CIGtOMXV3OFtlCU2Z
-        godBezxlAbn5385MDyb/Jw==
-X-Received: by 10.98.141.199 with SMTP id p68mr39768519pfk.55.1496965296792;
-        Thu, 08 Jun 2017 16:41:36 -0700 (PDT)
+        bh=kTCrCEliAF90wX81aycO4Np/xI+kYouwx08gBtJldoo=;
+        b=RZd2aO5RRqV/T+SYDXw8i3wbrX4ZoYHymERURx7eGpS04kNe1aBnM1+esUxDTsuYW5
+         Nr7LQ2TajiGR8lpxT5FlLvdHPOtRJKg/7/aoFnEOUVFmFxAC1CIZCmqy8znJ7mjoK7On
+         bPX+d+V3VAd66IeZCeylWFux0cf5DcYvpE82v0uJJVu/bCHTsFLFCufrDjfvMBn3Sp91
+         Gzw289bl/ISkVXNygl4tIQ8hZkUKnNNzhWuusGgk0plBoHXkpzcKunW0+SsnMrls5MWs
+         +AVNDqzEIASSzc1cwkSWLtnQwDGWGa1W654rqDzwYv9WlP+QnR++pi9sAdN+YMreRYTJ
+         SIGA==
+X-Gm-Message-State: AODbwcBIzTI/Z63y6BLjFeKnqhgSFgVVwh6sMK1wi5ApK+cAcAF+8GSo
+        IgmLz3kGhvB1H3JFoRSkKg==
+X-Received: by 10.98.208.198 with SMTP id p189mr39386125pfg.213.1496965305655;
+        Thu, 08 Jun 2017 16:41:45 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.35
+        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jun 2017 16:41:35 -0700 (PDT)
+        Thu, 08 Jun 2017 16:41:44 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 14/32] submodule: add repo_read_gitmodules
-Date:   Thu,  8 Jun 2017 16:40:42 -0700
-Message-Id: <20170608234100.188529-15-bmwill@google.com>
+Subject: [PATCH v2 19/32] convert: convert convert_to_git to take an index
+Date:   Thu,  8 Jun 2017 16:40:47 -0700
+Message-Id: <20170608234100.188529-20-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.508.gb3defc5cc-goog
 In-Reply-To: <20170608234100.188529-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -66,66 +66,180 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach the repo object to be able to populate the submodule_cache by
-reading the repository's gitmodules file.
-
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- submodule.c | 15 +++++++++++++++
- submodule.h |  2 ++
- 2 files changed, 17 insertions(+)
+ apply.c         | 2 +-
+ builtin/blame.c | 2 +-
+ combine-diff.c  | 2 +-
+ convert.c       | 7 ++++---
+ convert.h       | 8 +++++---
+ diff.c          | 6 +++---
+ dir.c           | 2 +-
+ sha1_file.c     | 4 ++--
+ 8 files changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 95328de61..65f60ab57 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "repository.h"
- #include "config.h"
- #include "submodule-config.h"
- #include "submodule.h"
-@@ -202,6 +203,20 @@ void gitmodules_config(void)
+diff --git a/apply.c b/apply.c
+index 87db9618d..8eca54325 100644
+--- a/apply.c
++++ b/apply.c
+@@ -2268,7 +2268,7 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
+ 	case S_IFREG:
+ 		if (strbuf_read_file(buf, path, st->st_size) != st->st_size)
+ 			return error(_("unable to open or read %s"), path);
+-		convert_to_git(path, buf->buf, buf->len, buf, 0);
++		convert_to_git(&the_index, path, buf->buf, buf->len, buf, 0);
+ 		return 0;
+ 	default:
+ 		return -1;
+diff --git a/builtin/blame.c b/builtin/blame.c
+index c0ae49298..317d2ec37 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2384,7 +2384,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 		if (strbuf_read(&buf, 0, 0) < 0)
+ 			die_errno("failed to read from stdin");
  	}
+-	convert_to_git(path, buf.buf, buf.len, &buf, 0);
++	convert_to_git(&the_index, path, buf.buf, buf.len, &buf, 0);
+ 	origin->file.ptr = buf.buf;
+ 	origin->file.size = buf.len;
+ 	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_oid.hash);
+diff --git a/combine-diff.c b/combine-diff.c
+index 2848034fe..74f723af3 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1053,7 +1053,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			if (is_file) {
+ 				struct strbuf buf = STRBUF_INIT;
+ 
+-				if (convert_to_git(elem->path, result, len, &buf, safe_crlf)) {
++				if (convert_to_git(&the_index, elem->path, result, len, &buf, safe_crlf)) {
+ 					free(result);
+ 					result = strbuf_detach(&buf, &len);
+ 					result_size = len;
+diff --git a/convert.c b/convert.c
+index 824b606fa..5af6fdf3f 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1085,7 +1085,8 @@ const char *get_convert_attr_ascii(const char *path)
+ 	return "";
  }
  
-+static int gitmodules_cb(const char *var, const char *value, void *data)
-+{
-+	struct repository *repo = data;
-+	return submodule_config_option(repo, var, value);
-+}
-+
-+void repo_read_gitmodules(struct repository *repo)
-+{
-+	char *gitmodules_path = repo_worktree_path(repo, ".gitmodules");
-+
-+	git_config_from_file(gitmodules_cb, gitmodules_path, repo);
-+	free(gitmodules_path);
-+}
-+
- void gitmodules_config_sha1(const unsigned char *commit_sha1)
+-int convert_to_git(const char *path, const char *src, size_t len,
++int convert_to_git(const struct index_state *istate,
++		   const char *path, const char *src, size_t len,
+                    struct strbuf *dst, enum safe_crlf checksafe)
  {
- 	struct strbuf rev = STRBUF_INIT;
-diff --git a/submodule.h b/submodule.h
-index 8fb0f2549..ec6ea8dfd 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -1,6 +1,7 @@
- #ifndef SUBMODULE_H
- #define SUBMODULE_H
+ 	int ret = 0;
+@@ -1101,7 +1102,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+-	ret |= crlf_to_git(&the_index, path, src, len, dst, ca.crlf_action, checksafe);
++	ret |= crlf_to_git(istate, path, src, len, dst, ca.crlf_action, checksafe);
+ 	if (ret && dst) {
+ 		src = dst->buf;
+ 		len = dst->len;
+@@ -1172,7 +1173,7 @@ int renormalize_buffer(const char *path, const char *src, size_t len, struct str
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+-	return ret | convert_to_git(path, src, len, dst, SAFE_CRLF_RENORMALIZE);
++	return ret | convert_to_git(&the_index, path, src, len, dst, SAFE_CRLF_RENORMALIZE);
+ }
  
-+struct repository;
- struct diff_options;
- struct argv_array;
- struct oid_array;
-@@ -40,6 +41,7 @@ extern void set_diffopt_flags_from_submodule_config(struct diff_options *,
- 		const char *path);
- extern int submodule_config(const char *var, const char *value, void *cb);
- extern void gitmodules_config(void);
-+extern void repo_read_gitmodules(struct repository *repo);
- extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
- extern int is_submodule_initialized(const char *path);
- /*
+ /*****************************************************************
+diff --git a/convert.h b/convert.h
+index 3a813a797..60cb41d6a 100644
+--- a/convert.h
++++ b/convert.h
+@@ -41,15 +41,17 @@ extern const char *get_wt_convert_stats_ascii(const char *path);
+ extern const char *get_convert_attr_ascii(const char *path);
+ 
+ /* returns 1 if *dst was used */
+-extern int convert_to_git(const char *path, const char *src, size_t len,
++extern int convert_to_git(const struct index_state *istate,
++			  const char *path, const char *src, size_t len,
+ 			  struct strbuf *dst, enum safe_crlf checksafe);
+ extern int convert_to_working_tree(const char *path, const char *src,
+ 				   size_t len, struct strbuf *dst);
+ extern int renormalize_buffer(const char *path, const char *src, size_t len,
+ 			      struct strbuf *dst);
+-static inline int would_convert_to_git(const char *path)
++static inline int would_convert_to_git(const struct index_state *istate,
++				       const char *path)
+ {
+-	return convert_to_git(path, NULL, 0, NULL, 0);
++	return convert_to_git(istate, path, NULL, 0, NULL, 0);
+ }
+ /* Precondition: would_convert_to_git_filter_fd(path) == true */
+ extern void convert_to_git_filter_fd(const struct index_state *istate,
+diff --git a/diff.c b/diff.c
+index 2f2467c6d..87ed6d6d3 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2756,7 +2756,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
+ 	 * Similarly, if we'd have to convert the file contents anyway, that
+ 	 * makes the optimization not worthwhile.
+ 	 */
+-	if (!want_file && would_convert_to_git(name))
++	if (!want_file && would_convert_to_git(&the_index, name))
+ 		return 0;
+ 
+ 	len = strlen(name);
+@@ -2878,7 +2878,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+ 		 * point if the path requires us to run the content
+ 		 * conversion.
+ 		 */
+-		if (size_only && !would_convert_to_git(s->path))
++		if (size_only && !would_convert_to_git(&the_index, s->path))
+ 			return 0;
+ 
+ 		/*
+@@ -2905,7 +2905,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+ 		/*
+ 		 * Convert from working tree format to canonical git format
+ 		 */
+-		if (convert_to_git(s->path, s->data, s->size, &buf, crlf_warn)) {
++		if (convert_to_git(&the_index, s->path, s->data, s->size, &buf, crlf_warn)) {
+ 			size_t size = 0;
+ 			munmap(s->data, s->size);
+ 			s->should_munmap = 0;
+diff --git a/dir.c b/dir.c
+index 0c26a53d2..8dc74c5d2 100644
+--- a/dir.c
++++ b/dir.c
+@@ -796,7 +796,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 				 (pos = index_name_pos(istate, fname, strlen(fname))) >= 0 &&
+ 				 !ce_stage(istate->cache[pos]) &&
+ 				 ce_uptodate(istate->cache[pos]) &&
+-				 !would_convert_to_git(fname))
++				 !would_convert_to_git(istate, fname))
+ 				hashcpy(sha1_stat->sha1,
+ 					istate->cache[pos]->oid.hash);
+ 			else
+diff --git a/sha1_file.c b/sha1_file.c
+index 80e9ef3bb..a900b2804 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3547,7 +3547,7 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
+ 	 */
+ 	if ((type == OBJ_BLOB) && path) {
+ 		struct strbuf nbuf = STRBUF_INIT;
+-		if (convert_to_git(path, buf, size, &nbuf,
++		if (convert_to_git(&the_index, path, buf, size, &nbuf,
+ 				   write_object ? safe_crlf : SAFE_CRLF_FALSE)) {
+ 			buf = strbuf_detach(&nbuf, &size);
+ 			re_allocated = 1;
+@@ -3669,7 +3669,7 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
+ 	else if (!S_ISREG(st->st_mode))
+ 		ret = index_pipe(sha1, fd, type, path, flags);
+ 	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
+-		 (path && would_convert_to_git(path)))
++		 (path && would_convert_to_git(&the_index, path)))
+ 		ret = index_core(sha1, fd, xsize_t(st->st_size), type, path,
+ 				 flags);
+ 	else
 -- 
 2.13.1.508.gb3defc5cc-goog
 
