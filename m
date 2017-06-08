@@ -7,48 +7,51 @@ X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04A661F8CF
-	for <e@80x24.org>; Thu,  8 Jun 2017 10:27:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67F491F8CF
+	for <e@80x24.org>; Thu,  8 Jun 2017 10:42:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751595AbdFHK11 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 06:27:27 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58877 "EHLO mout.gmx.net"
+        id S1751450AbdFHKmD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 06:42:03 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60212 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751583AbdFHK10 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 06:27:26 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQMBU-1dQeOZ1CHc-00Tob0; Thu, 08
- Jun 2017 12:27:11 +0200
-Date:   Thu, 8 Jun 2017 12:27:10 +0200 (CEST)
+        id S1750786AbdFHKmC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 06:42:02 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LsUDg-1dysOK42jQ-011yr5; Thu, 08
+ Jun 2017 12:41:09 +0200
+Date:   Thu, 8 Jun 2017 12:41:06 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Brandon Williams <bmwill@google.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/9] Avoid problem where git_dir is set after alias
- expansion
-In-Reply-To: <20170607183008.GG110638@google.com>
-Message-ID: <alpine.DEB.2.21.1.1706081225450.171564@virtualbox>
-References: <cover.1496851544.git.johannes.schindelin@gmx.de> <20170607183008.GG110638@google.com>
+cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com,
+        jacob.keller@gmail.com, sandals@crustytoothpaste.net,
+        peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
+        peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH 03/31] config: don't implicitly use gitdir
+In-Reply-To: <20170531214417.38857-4-bmwill@google.com>
+Message-ID: <alpine.DEB.2.21.1.1706081235130.171564@virtualbox>
+References: <20170531214417.38857-1-bmwill@google.com> <20170531214417.38857-4-bmwill@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:4RQ52H7RsXqDY/t5hRDgFzrAXOXymBN5z8M3TEb/YZCFAjP7VBm
- GUYcXirDAG4+DKEtYqklXvUm9sEz21VAnuYk6Rj7Fx9O8FDodZk7Ek6xh5o3TVcPVIwm69T
- Jm2fGh/aPnpkxnkFpjFEYT5x2CrM3mVEcy2NleZw80FF+1bxfcrop7IW//ndByid/+hiPZ/
- +g9TCvT5VQhpFTY5gZ5Gw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:17TiQrhkRhw=:uBpdHhLaoxiQBZxIaq1+E3
- Gvt//CJYF4zuk6yjFtnWFhIuGTQpaddvWG94lwDKAkGjP3l0FM6+GeKHm/TgyzY+dRQhYUZ0S
- m68omL3jVOX8pXseoJ5i7n2do3dqC56gQPbPOTqGDT9bEGVZE5AnGKhqwZN9rbTi3PC7GrEeM
- ISyehl1elsuEXpPd/aGEJbTlnMnqcj7x+HW2EjoejAAi6dlnnipFGVIsk1f1krPR3ylc2C3NN
- gqJcOitSEKZq9eOwdiCoswU7b1ksOG4Nh6T/PtT8H+xgOJ0KnUJES2j+A74Fxp+AyUL4hk19/
- z9OZKnr1DHzpgR30vPMd8i0+Y+NwzCuvHh9CdvPvZYmHz7RAZLWz36+8mZWkkwW3J+xUtF5K1
- GFcLD+x5UOYGet1j2Q1Y7QkNnFQC67VFjI7PgZskXw6JHdMR2KAoLI2IF+sIgDrrlb+nNoSNW
- 0J+UIe1nCUOvkMxJNb7s4cmDDjSD3HPL0YCR3KQrEoX+6pkUoZPWRSPCO9U4qmxEM515WtNMR
- r0pS801XtH2OvHkRv7emf5FI0hoA6q7EpFAgawZNVMjjKEQm39MX2L94h5TYkzxRvV9/VRwy3
- I+4vF4x+k5+Akj70KK3fTLoMCtui/EC2qiVy5DvgKHXeRZa/R8KwLFW/SVjxKyBWGdBd9ruj+
- A9Rrinvygh9SOEzjrtIBUCby+fDdJJ71cZawa0SqkeDdUjmCJph4GU/aPKpJ/MFmvFFJObwxc
- /yJkigbGClAUfHfew7i5J0so54oZMk/XwFv0cdA5iZXSoavgvxz8Zx3MVLQMYEurji+4bb0jo
- 6JDS8y8
+X-Provags-ID: V03:K0:PPe9tU2Z5pmS3f3Us7Zan/i9pjzSL6ZbkFxXiPYCJ0+RPh2u5Rs
+ OLcSz6Xv2T3gLNFKcI18OQqxjUZ53rgeoREqkteHm0/P9EIGxH3NOsTZtB9fOKn0odJ7ysD
+ JMpuP2DSjwqSjJpsen5MdlwtN8Hbgu0CWdQfAerSKbLKcNm6WA86pi2xKxd8wH3aurIzJHu
+ CsE/SFQMZT7VL2k4yYqWw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+O8LyiuxhIE=:1LmblTqmOdvrro+dAEQWgb
+ /K3lp4BcM7rjlsc39kQeHOvbrnLaJtDuF3KdkFMQFKAYjNMtwHt/f45lVtUd8BkPQVqeq8p8f
+ 3X8u0KZafeEg1lM9CRHz+9y8DXtXUsuyXHltu8cwFYcw7lVtCPFpESmyjybc7dK3eD/q3qidZ
+ EEu0C/0tHcBt2ppRAS60BvoNFUMMAnlZBPRJBHLQ3V+gcRdvy7+jz5Vof4b4few0vsqLOEH6W
+ PHOWq4MhxBVxyWxGeh0U/AgBETpW8W2++cdzu76pr24CwzzdZXJp4Wk1HyOMLWMNqAIQHclHK
+ yT2ZgwPL5B9okH4BeDNXQXsvQWHbqyb/hpoppdrdgwjlCS/Fut65+t2KuCXUXK2bMkAiKUVP6
+ 94l40IRDmx0e/P+4PpQ7R1Osg9J6Q2CFdV6CPalAcU/GlQ4uLCDG1MZv7sDgWQv/d7596vj8F
+ tcbUEmrw8GWsKAS7TDuq0kyWWURaATN3loXwhuHGqwAiSp2mZOhqCgxV/vHlyp0lnVA/imGiL
+ j8Hvj+ht8OSsUhLzmrL/UCBumDICGmHUE34KkAbQzMfJfqZhgDbGNIlqTCbLhT3p7ju9tRt1G
+ 8devkFwynDW+qk7taxGEBZAaNDRwV3ZVBzJBZR5NJg+oMAd26FIHXGA63Ht1M9Rf1jPIp5Mwr
+ nNuxauYcGrjiVhkUEiikN68lOc3uJ/iVOhBgDeflXUDB23drpgMF/vVVxVm+xBOp4ToYab26r
+ 2j1NjWKe9VRgtEB7ZYUfhYBwim7HxYO/TbDMyuq9rp6BbG6C6LDUdEr8BHdnYxmzHzKLYz3a1
+ avYKBFe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -56,22 +59,19 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Brandon,
 
-On Wed, 7 Jun 2017, Brandon Williams wrote:
+On Wed, 31 May 2017, Brandon Williams wrote:
 
-> Looks good, I don't have any major issues with the series, just some
-> comments for clarity mostly.
+> Commit 2185fde56 (config: handle conditional include when $GIT_DIR is
+> not set up) added a 'git_dir' field to the config_options struct.  Let's
+> use this option field explicitly all the time instead of occasionally
+> falling back to calling 'git_pathdup("config")' to get the path to the
+> local repository configuration.  This allows 'go_git_config_sequence()'
+> to not implicitly rely on global repository state.
 
-Thank you for the review!
+Oh wow. `git_pathdup()`...
 
-I will wait a couple of hours to see whether anybody else sees anything
-that needs to be changed, before sending out v2.
+Sadly, I lack the time to review the entire patch series, but this here
+change definitely looks correct to me.
 
-> And relevant to this series, you may be interested in looking at patch
-> 03/31 in my repository object series as that may have an impact on the
-> early config stuff.
-
-Thanks for the prod. I will have a specific look at this patch right after
-sending this mail.
-
-Ciao,
+Thanks,
 Dscho
