@@ -2,92 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00C8A1F8CF
-	for <e@80x24.org>; Thu,  8 Jun 2017 09:59:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6ABC81F8CF
+	for <e@80x24.org>; Thu,  8 Jun 2017 10:01:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751132AbdFHJ70 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 8 Jun 2017 05:59:26 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:36369 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750819AbdFHJ7Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 05:59:25 -0400
-Received: by mail-io0-f169.google.com with SMTP id y77so17928157ioe.3
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 02:59:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fA9FfQa4egQs/RjHoKrq3e0O72YQ59LSFbi9LNMVDuw=;
-        b=M6H4xPma04MN4Uat8xMnS62Su2pj5hVRXNGJxxnuwFPwxI+dDlTYswylt7sCoBIHV+
-         HksryhIQM7SYczGCOKzMGwOIjkPHFYli89yQube1E6RYwsdqxfS6pgC3+q+PNM3b4qZA
-         dXBKRQyZqgnEFwfyRpmMiSmHq5ALlusoAZsNLJy1eN9MsGO2ljpWj+hKNDWWOFcw3Brh
-         k9r6d97WyC3RPdH2pn7SswsNuhFktz67qtyD6yAYeetYTi97xSK2JjK7XTSbfISp1Sxr
-         14zSBaLdyp4nnl24s719eSbz7XltZNNWILPwpoiThDE5WnruyydkNI1MBhuiIjmm/6nR
-         b4Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fA9FfQa4egQs/RjHoKrq3e0O72YQ59LSFbi9LNMVDuw=;
-        b=D0p/FWBJGIyJiyYj9wTVIp2hCfhDocM2qnAZ17k1SUyXoTc9yGsiAHBuiycHaE0wua
-         iul4+lFUnDrI+tIbEtvQcUGI5jpmrYUYLybbtL25hfJ/hrKqFkE1rrJwZWpSgDGmQ1pU
-         uGwNI9OKEmKCsyZiAES0MsFfvWc7TPG65W2AgCotX6BMMeertzRKX6p899e9bEanz1dZ
-         HQsE55z81xSlMOZP6fMgV+Y8oZxFm+Yow/DoQQnbSry8hNHai7an1vB9u2wkH8KZt5WN
-         14LdWOeCTW72LWVmjJCaMSynQpJE2k5HJ0Q8SBsoIucplq0Cu4fz+8NQ30sjrN5QtdU+
-         OJaw==
-X-Gm-Message-State: AODbwcC86w3EUsfj6ljD857tbzxRlDFEPoEyeSBFFm4hYZvHLtqaqTZ/
-        QypieVMX2Z+44dmTK/K6oneZOu06WN4+
-X-Received: by 10.107.181.73 with SMTP id e70mr2808223iof.85.1496915964173;
- Thu, 08 Jun 2017 02:59:24 -0700 (PDT)
+        id S1751252AbdFHKBU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 06:01:20 -0400
+Received: from mout.gmx.net ([212.227.15.15]:62214 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751587AbdFHKBT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Jun 2017 06:01:19 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MhRUQ-1dWk8J0VFq-00MZKo; Thu, 08
+ Jun 2017 12:00:57 +0200
+Date:   Thu, 8 Jun 2017 12:00:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Brandon Williams <bmwill@google.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/9] discover_git_directory(): avoid setting invalid
+ git_dir
+In-Reply-To: <20170607174529.GB110638@google.com>
+Message-ID: <alpine.DEB.2.21.1.1706081143010.171564@virtualbox>
+References: <cover.1496851544.git.johannes.schindelin@gmx.de> <300d32d72b67f8c12b6cc91c36a5735a77f5ed89.1496851544.git.johannes.schindelin@gmx.de> <20170607174529.GB110638@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.79.72.66 with HTTP; Thu, 8 Jun 2017 02:58:43 -0700 (PDT)
-In-Reply-To: <CACBZZX57=y0kHFDDAKfiFjpr8_BUsBFK6ic--zv8=SAmtD0AoQ@mail.gmail.com>
-References: <CAJZjrdU=743ikOCxCJ9stQ5qZsndZDXt1jquxGwBrid4YhVsGA@mail.gmail.com>
- <CACBZZX5wr2k0+i-0CKde_P5key=b+mh0jf47D9oJ449j=MohSw@mail.gmail.com>
- <CAJZjrdWkqNVLgZ5KYQ33zjO25raLhAHGxqPezjUsQ692wKTudg@mail.gmail.com> <CACBZZX57=y0kHFDDAKfiFjpr8_BUsBFK6ic--zv8=SAmtD0AoQ@mail.gmail.com>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Thu, 8 Jun 2017 05:58:43 -0400
-Message-ID: <CAJZjrdUGpujOhYrcziO-ncF8g1LsJCG1+GMNbguMFHN-UJ6gKQ@mail.gmail.com>
-Subject: Re: send-email: Net::SSLeay failure
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Liam Breck <liam@networkimprov.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:M0K3XVNOEKx+kvt67n5OJm635/M8ytqrgC1myNvUIhAdPBh+FvJ
+ GV/0ItAeWGbImRraUM7ei0q0IfWQT2CpMi6P9nuflMZ9YmMsyk3Qfbr2bgf26UTgVwnoiNZ
+ 5dWX1aBVVWlHeSXKk6Jzdmeh4A95VN43PMSPGh0Hk7FOu6GXorIxvVw2prwjY0wpsrgL6QX
+ JGzfX3dpbmy1zyeyUxnkg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:byvDI2Zm92I=:hLR7MIW3kXtcLrltwOV8jU
+ H4GYlzSoy84HoJcPUbjMwwE2dA1/XtXsaUFHKhT5whrFnBjf4JMvpWyZV2KIfY962MPUmetGx
+ j4on4MY7Kuakc8TI5CRQrC67qhN/MINX6UwhffTgpPDn29r15i3YT0MTSJwR2ZR1Mtf5KgAly
+ sqN3ZS8gtuC50f4byboLlAf5SOzR0haY3eZJ1XJpmYMCVfgfQ/Ft+hdCkhtwFo8Dx1idN6p81
+ q+PHviBFjNJ7GsdFBnxejXiu0CRiAsVuAs665GbtcagYSUKSuMancKZf90eSEkVfX/+mDjaTJ
+ TXcG5c+KG8+hBhfgDAJAZqvTepR254T7OQ+7GJ8dcZkaT8MgJ1ctMrKWMNcBb3QtUdMBs909j
+ EHIT+URB5+CYZW3yoHkqyr8aLPCq7g2fLho/zxpEsANSRI2RJTK6AZdnU+b2aWIh+4qRaL6rD
+ Fo1ItdEmJWJe3hoiKAllHoRYx/mSCkkcIiqI60wBkpax32BCHluHgaWNnZC9ZVT0HGSHV0t2D
+ QBNcobHjHhyKbXzAyzetipkpf+8WVWGKjyGuM1GnGlTs7dlJlN/e12jWm4HHPVHuw3Bnj9lX7
+ praxLL2VJboqsuwomNg1lvfj9QYlHE1B0hfcNmhAMGxVy/v7zwoyBjOreiYHcUbFLaK1eOGPW
+ za1pgd3GgNI5zLY1oA6d99gMXNi1hMYMoHHzq9zr57Y7GjjrTyo66o8Y13RA0amVL3UzSretc
+ avovlUhVNJmEZ5V0Q2dIp2tEianYudasRGgDoKajrHN/zFmw2JAz88fd3jcfjuj0NeLpcs9Kb
+ CUvkO9j
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 8, 2017 at 5:53 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Thu, Jun 8, 2017 at 11:06 AM, Samuel Lijin <sxlijin@gmail.com> wrote:
->> Sorry, I should've been clearer. Currently send-email fails for me
->> with this error:
->>
->> SSLeay.c: loadable library and perl binaries are mismatched (got
->> handshake key 0xdb80080, needed 0xde00080)
->>
->> I thought the undefined symbol stuff in the .so could have been part
->> of the problem, but I guess not. None of the fixes that worked for
->> Liam worked for me either, so I'm not quite sure where the issue is.
->> The closest I've found to a meaningful suggestion for the error is
->> that Perl is relying on a library built against a different version of
->> Perl, but I have no idea what library that might be.
->
-> The issue is that SSLeay.so is compiled against a different version of
-> perl, presumably you installed it via CPAN in the past and then
-> upgraded your system perl version.
->
-> The easiest solution is probably just to re-run "sudo cpan
-> Net::SSLeay", or alternatively rm -rf all these files and install them
-> via your package system.
+Hi Brandon,
 
-I thought I already had rm -rf'd them, but upon double-checking it
-turns out I didn't nuke the CPAN version of Net::SSLeay properly.
-Thanks.
+On Wed, 7 Jun 2017, Brandon Williams wrote:
+
+> On 06/07, Johannes Schindelin wrote:
+>
+> > diff --git a/setup.c b/setup.c
+> > index e3f7699a902..2435186e448 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -982,6 +982,7 @@ const char *discover_git_directory(struct strbuf *gitdir)
+> >  		warning("ignoring git dir '%s': %s",
+> >  			gitdir->buf + gitdir_offset, err.buf);
+> >  		strbuf_release(&err);
+> > +		strbuf_setlen(gitdir, gitdir_offset);
+> >  		return NULL;
+> 
+> There is another part of this function that returns NULL (which isn't
+> shown by this diff) after performing 'setup_git_dir_gently_1', do we
+> need to worry about anything that 'setup_git_dir_gently_1' has
+> potentially appended to 'gitdir' upon 'setup_git_dir_gently_1' failing?
+
+The setup_git_dir_gently_1() function used to set the git_dir variable
+directly in case of success, and leave it unchanged in case of error. My
+work to allow an early config did not change that, with the exception that
+it is the gitdir parameter that is changed instead of git_dir.
+
+In other words: that `return NULL` is safe, as it returns due to an error
+reported by the setup_git_directory_gently_1() function (meaning that the
+gitdir strbuf has not been touched).
+
+I amended the commit message accordingly, and force-pushed the result.
+Meaning: v2 will have that change.
+
+Ciao,
+Dscho
