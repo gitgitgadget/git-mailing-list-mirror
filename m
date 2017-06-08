@@ -2,51 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C85911FAEB
-	for <e@80x24.org>; Thu,  8 Jun 2017 23:41:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DC3E1FAEB
+	for <e@80x24.org>; Thu,  8 Jun 2017 23:41:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751642AbdFHXla (ORCPT <rfc822;e@80x24.org>);
+        id S1751668AbdFHXlm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 8 Jun 2017 19:41:42 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:34395 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751638AbdFHXla (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 8 Jun 2017 19:41:30 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:34993 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751501AbdFHXlZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Jun 2017 19:41:25 -0400
-Received: by mail-pf0-f176.google.com with SMTP id l89so22164632pfi.2
-        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:24 -0700 (PDT)
+Received: by mail-pg0-f49.google.com with SMTP id v18so20713048pgb.1
+        for <git@vger.kernel.org>; Thu, 08 Jun 2017 16:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=r3oY8VAzT/YWqt/QHLl4o5Ky4yRFVS47KgFXbmNsO4s=;
-        b=oLTvY2paS7zfiLVnvBL3zRjv+8LOiS/8sOnXCuOteB/0Ok5DrJ5PpXV59fZ7umwQ0n
-         1R6/Px6Z6HlhOMYP8L0q51fjuW5iqt7TDwmIGWRX9TB0myjlYw7djTVuEqs6u0TOY5dH
-         8ZG8mN89GBjxQwk1/orr+ozPDavRSdG6fTaolIh7fP40k/hhGCFQNYTsuNnV1lPa80Ai
-         7AtQChhV6crkCwoh17DnMIEZaQ80wXEdLBe2VpqXrMWiXZ0uvKGyh3XAlyNM4mAHto1p
-         V728YIORxDlpKv4V/50ecBCHF+wzT0TLp3ajT/mufhdN3YvCqupc76EP95IEeg0PhYLV
-         WJ6Q==
+        bh=N2ClxUXSNY1KKprvCjH3C3T/n96ObQJioh7lqQF21fc=;
+        b=tGfsYhSeJuIDc4S/ca3GFWS0nm93mzTlmIALPTEfZrzlb2kQCq9PYMpISh9KLNfA39
+         f4ygRaLinZ78TGzx3ELyUYr5N/BfERhTOP+yVtvKKBH3uiOk2YJuVSk0qpDO+d4wN2Je
+         RnRcimJAS6Crl8+HavWvPNusxOQx48gU0o4252koAloQlFz173DgvB4M137xqRVLP4Sj
+         REF9WDR7RHIwROTE3iuOsCgS15iT97kwUoDMNgR2uf9q/ikNaB/LUDi+3Rvf+FUhuCDF
+         eQ2mGCdL09Xrt9f/toEaY8bSRkGvsE0qLJPEHnNd68ng1FEvMwyW741+Jdh7B2eeqYjF
+         VcpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=r3oY8VAzT/YWqt/QHLl4o5Ky4yRFVS47KgFXbmNsO4s=;
-        b=qayvDZTC+HPOSiSe5NBm4CbbZge+RYJTAhnJ3jKZ2Wqd0sMMl+gelO0oVNJf65a6vH
-         2QIJY2uck31IAE8VxWojHYQxuxjWl2/H8+khb+hcp8jUDthTxMGpz7UBo3gwyckLiIp6
-         G0QDEeLmjS8cmfljKcyHAAlDKL5HTjOigktoYdwQqPpDa6E1BuYlJph1WWauQQFyR5mV
-         hgzgJhDYBRowPdH3m5W4c8qFEPmFfenlnBPA+yOy5Q+H8wsFA0SOi4kk1dODivueKwzU
-         tdk2zt/x4zOkXGt5nilGOJOeHo5ioaLic/B5O0qwXACdq4ce0fCodqcGKRMHNFNLxB5S
-         eqOA==
-X-Gm-Message-State: AODbwcBZN/PWTqmQwmadol6p1hmXGDBQ7V5xgAQmOpFenCn3Va7oBia7
-        VWbXQaadmdMfdLzQwwNPIQ==
-X-Received: by 10.84.247.2 with SMTP id n2mr36284091pll.74.1496965283060;
-        Thu, 08 Jun 2017 16:41:23 -0700 (PDT)
+        bh=N2ClxUXSNY1KKprvCjH3C3T/n96ObQJioh7lqQF21fc=;
+        b=XSBU83p/pIH5KtnAHkgeXmkeHrBWq0gnX9YHq79p8PZ+UhIglG2lBFvxVCRZj6VP/8
+         jVXyE/T4NNIfET9Um+YZar9So0HIclbg+bQpDrRwwckKPwERLVcnHY3+czA7iaCKasOD
+         z4yDR+YPWc5sK1hvJI/bRw6h6eWyR4PPpzkCEK3iBuud8ryN9A77sqVxrsEaDElpatsA
+         WZJ7UwLU30MeC4AWZLHu2C3WYfn7+ys/pK1xfZKbP3wAzn+tZxowr4AGWMN4T2zchpvX
+         Ep2rNBqkWWjrI+OOGnKII8zO1MtvaZwGy3M6dmNvGHNe2NJz547NAtf2J009FE2UL25m
+         CTFA==
+X-Gm-Message-State: AODbwcAMDt8ZnWfLadUbrTYinLfpwbhg1C2F2K7JmUzPhRICPDexTBmv
+        12svHJn4DJ/D5x99sPesxQ==
+X-Received: by 10.84.232.130 with SMTP id i2mr37723532plk.251.1496965288216;
+        Thu, 08 Jun 2017 16:41:28 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.21
+        by smtp.gmail.com with ESMTPSA id m65sm11745237pfg.94.2017.06.08.16.41.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 08 Jun 2017 16:41:22 -0700 (PDT)
+        Thu, 08 Jun 2017 16:41:27 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 06/32] environment: remove namespace_len variable
-Date:   Thu,  8 Jun 2017 16:40:34 -0700
-Message-Id: <20170608234100.188529-7-bmwill@google.com>
+Subject: [PATCH v2 09/32] environment: store worktree in the_repository
+Date:   Thu,  8 Jun 2017 16:40:37 -0700
+Message-Id: <20170608234100.188529-10-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.508.gb3defc5cc-goog
 In-Reply-To: <20170608234100.188529-1-bmwill@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
@@ -66,48 +66,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use 'skip_prefix' instead of 'starts_with' so that we can drop the need
-to keep around 'namespace_len'.
+Migrate 'work_tree' to be stored in 'the_repository'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- environment.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ environment.c |  9 ++++-----
+ repository.c  | 12 ++++++++++++
+ repository.h  |  3 +++
+ 3 files changed, 19 insertions(+), 5 deletions(-)
 
 diff --git a/environment.c b/environment.c
-index a73b08f5d..e035f6372 100644
+index fb52c0daf..e390a6627 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -98,7 +98,6 @@ char *git_work_tree_cfg;
- static char *work_tree;
+@@ -96,7 +96,6 @@ int ignore_untracked_cache_config;
  
- static const char *namespace;
--static size_t namespace_len;
+ /* This is set by setup_git_dir_gently() and/or git_default_config() */
+ char *git_work_tree_cfg;
+-static char *work_tree;
  
  static const char *super_prefix;
  
-@@ -190,7 +189,6 @@ void setup_git_env(void)
- 	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
- 							  : "refs/replace/");
- 	namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
--	namespace_len = strlen(namespace);
- 	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
- 	if (shallow_file)
- 		set_alternate_shallow_file(shallow_file, 0);
-@@ -231,9 +229,10 @@ const char *get_git_namespace(void)
- 
- const char *strip_namespace(const char *namespaced_ref)
+@@ -220,19 +219,19 @@ void set_git_work_tree(const char *new_work_tree)
  {
--	if (!starts_with(namespaced_ref, get_git_namespace()))
--		return NULL;
--	return namespaced_ref + namespace_len;
-+	const char *out;
-+	if (skip_prefix(namespaced_ref, get_git_namespace(), &out))
-+		return out;
-+	return NULL;
+ 	if (git_work_tree_initialized) {
+ 		new_work_tree = real_path(new_work_tree);
+-		if (strcmp(new_work_tree, work_tree))
++		if (strcmp(new_work_tree, the_repository->worktree))
+ 			die("internal error: work tree has already been set\n"
+ 			    "Current worktree: %s\nNew worktree: %s",
+-			    work_tree, new_work_tree);
++			    the_repository->worktree, new_work_tree);
+ 		return;
+ 	}
+ 	git_work_tree_initialized = 1;
+-	work_tree = real_pathdup(new_work_tree, 1);
++	repo_set_worktree(the_repository, new_work_tree);
  }
  
- const char *get_super_prefix(void)
+ const char *get_git_work_tree(void)
+ {
+-	return work_tree;
++	return the_repository->worktree;
+ }
+ 
+ char *get_object_directory(void)
+diff --git a/repository.c b/repository.c
+index e952238d1..1b48cc816 100644
+--- a/repository.c
++++ b/repository.c
+@@ -104,6 +104,16 @@ static int repo_init_gitdir(struct repository *repo, const char *gitdir)
+ 	return ret;
+ }
+ 
++void repo_set_worktree(struct repository *repo, const char *path)
++{
++	repo->worktree = real_pathdup(path, 1);
++}
++
++char *repo_worktree_path(struct repository *repo, const char *path)
++{
++	return xstrfmt("%s/%s", repo->worktree, path);
++}
++
+ static int verify_repo_format(struct repository_format *format,
+ 			      const char *commondir)
+ {
+@@ -166,6 +176,8 @@ static void repo_clear_env(struct repository *repo)
+ void repo_clear(struct repository *repo)
+ {
+ 	repo_clear_env(repo);
++	free(repo->worktree);
++	repo->worktree = NULL;
+ 
+ 	memset(repo, 0, sizeof(*repo));
+ }
+diff --git a/repository.h b/repository.h
+index 174ab0f2d..a1163ae91 100644
+--- a/repository.h
++++ b/repository.h
+@@ -9,6 +9,7 @@ struct repository {
+ 	char *index_file;
+ 	char *graft_file;
+ 	char *namespace;
++	char *worktree;
+ 
+ 	/* Configurations */
+ 	unsigned ignore_env:1;
+@@ -19,6 +20,8 @@ struct repository {
+ extern struct repository *the_repository;
+ 
+ extern void repo_set_gitdir(struct repository *repo, const char *path);
++extern void repo_set_worktree(struct repository *repo, const char *path);
++extern char *repo_worktree_path(struct repository *repo, const char *path);
+ extern int repo_init(struct repository *repo, const char *path);
+ extern void repo_clear(struct repository *repo);
+ 
 -- 
 2.13.1.508.gb3defc5cc-goog
 
