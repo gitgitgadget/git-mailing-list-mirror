@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80EFA1F8CF
-	for <e@80x24.org>; Fri,  9 Jun 2017 19:23:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18E941F8CF
+	for <e@80x24.org>; Fri,  9 Jun 2017 19:23:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751803AbdFITXl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Jun 2017 15:23:41 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:36120 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751798AbdFITXk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jun 2017 15:23:40 -0400
-Received: by mail-pg0-f46.google.com with SMTP id a70so29341257pge.3
-        for <git@vger.kernel.org>; Fri, 09 Jun 2017 12:23:39 -0700 (PDT)
+        id S1751756AbdFITXt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Jun 2017 15:23:49 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34298 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751641AbdFITXs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jun 2017 15:23:48 -0400
+Received: by mail-pf0-f181.google.com with SMTP id 15so3914138pfc.1
+        for <git@vger.kernel.org>; Fri, 09 Jun 2017 12:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=Hes0M56Oo9OPye70E3WF4769hcr/zqGKLHdaXv16xIM=;
-        b=lC9TeBOfhHJ7aRIw2joEcOL96lazJUH/oSuVmxqjWcZuaagSW9PbEpGa7Fh0JICIGq
-         kIaZofaPWGc9Drj0CkOMgAZ9eHkb588qt57kXxEXFzuEGaoMNrucEyJ93uqVXoSTgtZV
-         7FSgfd2yEDkh+aHcnmh4MozF3Vfh8bBQQqUXSd2ThO/zcgLbIigT0rQvgw2hfPq8NGoG
-         kR7V2QsjmKFyPCHWPmJ9/wTDt1fF4CgR+zjoqjkWm41BC00bD0RKKDkRUkaSLZ3YNRVJ
-         5+adCGSvy8oAUJ9O86MQN8rpFh/a2ct3pD/xJgaocw3uKn4VqWQ8YeyYwjVSubEFGx3f
-         0Juw==
+        bh=KHjrkTfS54X01KcX5K3iaEVs8XevKvW2I93Q8nCtzmE=;
+        b=aitNA34qscuAP7z8eVuCaKnRpdA2mq9451lsw6l95NkszDYOcQOKelhyPojRmLTJoL
+         W8mIErdXinvonPeUiKACVVFGDNBtjSBpGoTEY2EYom5hGf2dWax9+T/KpTXrDTNgFaQy
+         pI+yL/K31BRk/EnFYFN/qkuFy6EBLpABBSVwwIF8XgewQZYTHDoUeVNlNYzEZjpOE4DR
+         t5uIyn+RzCEBANSHnnEuh5aKR0w6W+amSwSwB0mxeErd4jaegEaDoEE/qKovAQffbgyy
+         1TCVz8R21Vu7dvU0caUNn1HJ2X3JfnRULIyJDeTiIb1q4xS5EE/TRmMdoWClQUevaYox
+         scyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=Hes0M56Oo9OPye70E3WF4769hcr/zqGKLHdaXv16xIM=;
-        b=uIpp1wr0vtV9D4iFQE7aKgCoHmLwjEeN0bU7HT5/Lfnxlvy+i4zZOsar5a85pmJEdY
-         dH6NpLY6n1mJ+aRo8jatyOBW1QjIDkZgfclzql+67wd+eQnbIwKd2UIOwfUZJ3vzVmqf
-         wj/A4HbWL/LEh923A9XqRREYn7HtDsJB9FWNdJDxKJFrkhiGvCPfkrPRGYSA2BOw9fy2
-         Yz+4+iWOaYR8Ghw6tAtmPOt+jKK3PbSqKu2JyKQu9C6JZH4WwktO6hDn22oiwN6xlRlE
-         tn1+C/tWn+omRJVL9xN2ltjjpE3aDJdKClnij4DjVbfJb8k/iekOvSVhSREsntNDLcyY
-         IN+w==
-X-Gm-Message-State: AODbwcAOPdrMzwI32xZKZqQnybzLQu4zIzdMY1pWg6AiTJIbOORNVBwc
-        kRWv4HpONyfDkP3DM4nBzQ==
-X-Received: by 10.84.200.200 with SMTP id u8mr34991647plh.63.1497036218511;
-        Fri, 09 Jun 2017 12:23:38 -0700 (PDT)
+        bh=KHjrkTfS54X01KcX5K3iaEVs8XevKvW2I93Q8nCtzmE=;
+        b=EUZ8FITy6+r/ZuvuohL+YnnG+HDuMFKK+OXafMwmz7Ts2AiwteRMFuZaK2b7fEfrr1
+         6CQWQrVdov4DoF9s0PJrhYeezcqeE0RNJHoF5b3JykBM8pkYF8fAOJ3LLAqCyS9MpoyZ
+         wEkC9hdPgwObUUHaF+21yPLS2lA3yNTbcmYD+tfwQTHQzlcVyLdAQQ74RmM3VuS5iCOb
+         82Xq69b20I8Q2AlGC30o7VWdrLS2fBA8p4o267+LmpATvYl8xhI8yk39Hi20eNup3cW4
+         jVkF0UP0olvWJDeA3oW5/fnBsY+sSSmp7N/vguQftv+Fh1ObL0ThVivxHxbKWmFKTH/b
+         0aSQ==
+X-Gm-Message-State: AODbwcDzXPgAGtu+TTwmbqkGsbXxzaGb+K3zNGFsv8fQkyMOuf9O3AR6
+        uV5R1De45ZEBq9hoHAAhwQ==
+X-Received: by 10.84.137.3 with SMTP id 3mr41905264plm.68.1497036216819;
+        Fri, 09 Jun 2017 12:23:36 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id f72sm5757924pfe.4.2017.06.09.12.23.36
+        by smtp.gmail.com with ESMTPSA id f72sm5757924pfe.4.2017.06.09.12.23.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 09 Jun 2017 12:23:37 -0700 (PDT)
+        Fri, 09 Jun 2017 12:23:35 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [RFC PATCH 4/4] sha1_file, fsck: add missing blob support
-Date:   Fri,  9 Jun 2017 12:23:26 -0700
-Message-Id: <1672ff27f6b50c70f28edef9d0e76b5dff4042a4.1497035376.git.jonathantanmy@google.com>
+Subject: [RFC PATCH 3/4] sha1_file: consolidate storage-agnostic object fns
+Date:   Fri,  9 Jun 2017 12:23:25 -0700
+Message-Id: <7a361745f52ecebd9595862ee0a857b1ea28b316.1497035376.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.13.1.508.gb3defc5cc-goog
 In-Reply-To: <cover.1497035376.git.jonathantanmy@google.com>
 References: <cover.1497035376.git.jonathantanmy@google.com>
@@ -63,429 +63,470 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, Git does not support repos with very large numbers of blobs
-or repos that wish to minimize manipulation of certain blobs (for
-example, because they are very large) very well, even if the user
-operates mostly on part of the repo, because Git is designed on the
-assumption that every blob referenced by a tree object is available
-somewhere in the repo storage.
+This is patch 2 of 2 to consolidate all storage-agnostic object
+information functions.
 
-As a first step to reducing this problem, add rudimentary support for
-missing blobs by teaching sha1_file to invoke a hook whenever a blob is
-requested and unavailable but registered to be missing, and by updating
-fsck to tolerate such blobs.  The hook is a shell command that can be
-configured through "git config"; this hook takes in a list of hashes and
-writes (if successful) the corresponding objects to the repo's local
-storage.
+In sha1_file.c, there are a few functions that provide information on an
+object regardless of its storage (cached, loose, or packed). Looking
+through all non-static functions in sha1_file.c that take in an unsigned
+char * pointer, the relevant ones are:
+ - sha1_object_info_extended
+ - sha1_object_info (auto-fixed by sha1_object_info_extended)
+ - read_sha1_file_extended (uses read_object)
+ - read_object_with_reference (auto-fixed by read_sha1_file_extended)
+ - has_sha1_file_with_flags
+ - assert_sha1_type (auto-fixed by sha1_object_info)
 
-This commit does not include support for generating such a repo; neither
-has any command (other than fsck) been modified to either tolerate
-missing blobs (without invoking the hook) or be more efficient in
-invoking the missing blob hook. Only a fallback is provided in the form
-of sha1_file invoking the missing blob hook when necessary.
+Looking at the 3 primary functions (sha1_object_info_extended,
+read_object, has_sha1_file_with_flags), they independently implement
+mechanisms such as object replacement, retrying the packed store after
+failing to find the object in the packed store then the loose store, and
+being able to mark a packed object as bad and then retrying the whole
+process. Consolidating these mechanisms would be a great help to
+maintainability.
 
-In order to determine the code changes in sha1_file.c necessary, I
-investigated the following:
- (1) functions in sha1_file that take in a hash, without the user
-     regarding how the object is stored (loose or packed)
- (2) functions in sha1_file that operate on packed objects (because I
-     need to check callers that know about the loose/packed distinction
-     and operate on both differently, and ensure that they can handle
-     the concept of objects that are neither loose nor packed)
+Therefore, consolidate all 3 functions into 1 function.
 
-(1) is handled by the modification to get_object().
-
-For (2), I looked through the same functions as in (1) and also
-for_each_packed_object. The ones that are relevant are:
- - parse_pack_index
-   - http - indirectly from http_get_info_packs
- - find_pack_entry_one
-   - this searches a single pack that is provided as an argument; the
-     caller already knows (through other means) that the sought object
-     is in a specific pack
- - find_sha1_pack
-   - fast-import - appears to be an optimization to not store a
-     file if it is already in a pack
-   - http-walker - to search through a struct alt_base
-   - http-push - to search through remote packs
- - has_sha1_pack
-   - builtin/fsck - fixed in this commit
-   - builtin/count-objects - informational purposes only (check if loose
-     object is also packed)
-   - builtin/prune-packed - check if object to be pruned is packed (if
-     not, don't prune it)
-   - revision - used to exclude packed objects if requested by user
-   - diff - just for optimization
- - for_each_packed_object
-   - reachable - only to find recent objects
-   - builtin/fsck - fixed in this commit
-   - builtin/cat-file - see below
-
-As described in the list above, builtin/fsck has been updated. I have
-left builtin/cat-file alone; this means that cat-file
---batch-all-objects will only operate on objects physically in the repo.
-
-An alternative design that I considered but rejected:
-
- - Adding a hook whenever a packed blob is requested, not on any blob.
-   That is, whenever we attempt to search the packfiles for a blob, if
-   it is missing (from the packfiles and from the loose object storage),
-   to invoke the hook (which must then store it as a packfile), open the
-   packfile the hook generated, and report that the blob is found in
-   that new packfile. This reduces the amount of analysis needed (in
-   that we only need to look at how packed blobs are handled), but
-   requires that the hook generate packfiles (or for sha1_file to pack
-   whatever loose objects are generated), creating one packfile for each
-   missing blob and potentially very many packfiles that must be
-   linearly searched. This may be tolerable now for repos that only have
-   a few missing blobs (for example, repos that only want to exclude
-   large blobs), and might be tolerable in the future if we have
-   batching support for the most commonly used commands, but is not
-   tolerable now for repos that exclude a large amount of blobs.
+Note that has_sha1_file_with_flags() does not try cached storage,
+whereas the other 2 functions do - this functionality is preserved.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- Documentation/config.txt |  10 ++++
- builtin/fsck.c           |   7 +++
- cache.h                  |   6 ++
- sha1_file.c              | 147 +++++++++++++++++++++++++++++++++++++++++++----
- t/t3907-missing-blob.sh  |  69 ++++++++++++++++++++++
- 5 files changed, 229 insertions(+), 10 deletions(-)
- create mode 100755 t/t3907-missing-blob.sh
+ sha1_file.c | 294 ++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 165 insertions(+), 129 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index dd4beec39..10da5fde1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -390,6 +390,16 @@ The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
- will probe and set core.ignoreCase true if appropriate when the repository
- is created.
- 
-+core.missingBlobCommand::
-+	If set, whenever a blob in the local repo is attempted to be
-+	read but is missing, invoke this shell command to generate or
-+	obtain that blob before reporting an error. This shell command
-+	should take one or more hashes, each terminated by a newline, as
-+	standard input, and (if successful) should write the
-+	corresponding objects to the local repo (packed or loose).
-++
-+If set, fsck will not treat a missing blob as an error condition.
-+
- core.precomposeUnicode::
- 	This option is only used by Mac OS implementation of Git.
- 	When core.precomposeUnicode=true, Git reverts the unicode decomposition
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index cb2ba6cd1..6f10d6034 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -37,6 +37,7 @@ static int verbose;
- static int show_progress = -1;
- static int show_dangling = 1;
- static int name_objects;
-+static int missing_blob_ok;
- #define ERROR_OBJECT 01
- #define ERROR_REACHABLE 02
- #define ERROR_PACK 04
-@@ -93,6 +94,9 @@ static int fsck_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.missingblobcommand"))
-+		missing_blob_ok = 1;
-+
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -222,6 +226,9 @@ static void check_reachable_object(struct object *obj)
- 	if (!(obj->flags & HAS_OBJ)) {
- 		if (has_sha1_pack(obj->oid.hash))
- 			return; /* it is in pack - forget about it */
-+		if (missing_blob_ok && obj->type == OBJ_BLOB &&
-+		    has_missing_blob(obj->oid.hash, NULL))
-+			return;
- 		printf("missing %s %s\n", printable_type(obj),
- 			describe_object(obj));
- 		errors_found |= ERROR_REACHABLE;
-diff --git a/cache.h b/cache.h
-index bf09962e4..b9221b7e2 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1867,6 +1867,12 @@ struct object_info {
- extern int sha1_object_info_extended(const unsigned char *, enum object_type *typep, unsigned long *sizep, struct object_info *, unsigned flags);
- extern int packed_object_info(struct packed_git *pack, off_t offset, enum object_type *typep, unsigned long *sizep, struct object_info *);
- 
-+/*
-+ * Returns 1 if sha1 is the hash of a known missing blob. If size is not NULL,
-+ * also returns its size.
-+ */
-+extern int has_missing_blob(const unsigned char *sha1, unsigned long *size);
-+
- /* Dumb servers support */
- extern int update_server_info(int);
- 
 diff --git a/sha1_file.c b/sha1_file.c
-index deb08b0f1..87dc0a393 100644
+index ac4d77ccc..deb08b0f1 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -27,6 +27,9 @@
- #include "list.h"
- #include "mergesort.h"
- #include "quote.h"
-+#include "iterator.h"
-+#include "dir-iterator.h"
-+#include "sha1-lookup.h"
+@@ -1959,7 +1959,7 @@ static int parse_sha1_header_extended(const char *hdr, enum object_type *typep,
+ 	}
  
- #define SZ_FMT PRIuMAX
- static inline uintmax_t sz_fmt(size_t s) { return s; }
-@@ -1624,6 +1627,72 @@ static const struct packed_git *has_packed_and_bad(const unsigned char *sha1)
- 	return NULL;
+ 	type = type_from_string_gently(type_buf, type_len, 1);
+-	if (oi->typename)
++	if (oi && oi->typename)
+ 		strbuf_add(oi->typename, type_buf, type_len);
+ 	/*
+ 	 * Set type to 0 if its an unknown object and
+@@ -2001,12 +2001,13 @@ static int parse_sha1_header_extended(const char *hdr, enum object_type *typep,
+ 
+ int parse_sha1_header(const char *hdr, unsigned long *sizep)
+ {
+-	struct object_info oi = OBJECT_INFO_INIT;
+-	return parse_sha1_header_extended(hdr, NULL, sizep, &oi,
++	return parse_sha1_header_extended(hdr, NULL, sizep, NULL,
+ 					  LOOKUP_REPLACE_OBJECT);
  }
  
-+struct missing_blob_manifest {
-+	struct missing_blob_manifest *next;
-+	const char *data;
-+};
-+struct missing_blob_manifest *missing_blobs;
-+int missing_blobs_initialized;
-+
-+static void prepare_missing_blobs(void)
-+{
-+	int ok;
-+	char *dirname;
-+	struct dir_iterator *iter;
-+
-+	if (missing_blobs_initialized)
-+		return;
-+
-+	missing_blobs_initialized = 1;
-+
-+	dirname = xstrfmt("%s/missing", get_object_directory());
-+	iter = dir_iterator_begin(dirname);
-+
-+	while ((ok = dir_iterator_advance(iter)) == ITER_OK) {
-+		int fd;
-+		const char *data;
-+		struct missing_blob_manifest *m;
-+		if (!S_ISREG(iter->st.st_mode))
-+			continue;
-+		fd = git_open(iter->path.buf);
-+		data = xmmap(NULL, iter->st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-+		close(fd);
-+
-+		m = xmalloc(sizeof(*m));
-+		m->next = missing_blobs;
-+		m->data = data;
-+		missing_blobs = m;
-+	}
-+
-+	if (ok != ITER_DONE) {
-+		/* do something */
-+	}
-+
-+	free(dirname);
-+}
-+
-+int has_missing_blob(const unsigned char *sha1, unsigned long *size)
-+{
-+	struct missing_blob_manifest *m;
-+	prepare_missing_blobs();
-+	for (m = missing_blobs; m; m = m->next) {
-+		uint64_t nr_nbo, nr;
-+		int result;
-+		memcpy(&nr_nbo, m->data, sizeof(nr_nbo));
-+		nr = htonll(nr_nbo);
-+		result = sha1_entry_pos(m->data, GIT_SHA1_RAWSZ + 8, 8, 0, nr, nr, sha1);
-+		if (result >= 0) {
-+			if (size) {
-+				uint64_t size_nbo;
-+				memcpy(&size_nbo, m->data + 8 + result * (GIT_SHA1_RAWSZ + 8) + GIT_SHA1_RAWSZ, sizeof(size_nbo));
-+				*size = ntohll(size_nbo);
-+			}
-+			return 1;
-+		}
-+	}
-+	return 0;
-+}
-+
- /*
-  * With an in-core object data in "map", rehash it to make sure the
-  * object name actually matches "sha1" to detect object corruption.
-@@ -2949,6 +3018,49 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+-static void *unpack_sha1_file(void *map, unsigned long mapsize, enum object_type *type, unsigned long *size, const unsigned char *sha1)
++static void *unpack_sha1_file(void *map, unsigned long mapsize,
++			      enum object_type *type, unsigned long *size,
++			      const unsigned char *sha1)
+ {
+ 	int ret;
+ 	git_zstream stream;
+@@ -2274,18 +2275,18 @@ int packed_object_info(struct packed_git *p, off_t obj_offset,
+ 		}
+ 	}
+ 
+-	if (oi->disk_sizep) {
++	if (oi && oi->disk_sizep) {
+ 		struct revindex_entry *revidx = find_pack_revindex(p, obj_offset);
+ 		*oi->disk_sizep = revidx[1].offset - obj_offset;
+ 	}
+ 
+-	if (typep || oi->typename) {
++	if (typep || (oi && oi->typename)) {
+ 		enum object_type ptot;
+ 		ptot = packed_to_object_type(p, obj_offset, type, &w_curs,
+ 					     curpos);
+ 		if (typep)
+ 			*typep = ptot;
+-		if (oi->typename) {
++		if (oi && oi->typename) {
+ 			const char *tn = typename(ptot);
+ 			if (tn)
+ 				strbuf_addstr(oi->typename, tn);
+@@ -2296,7 +2297,7 @@ int packed_object_info(struct packed_git *p, off_t obj_offset,
+ 		}
+ 	}
+ 
+-	if (oi->delta_base_sha1) {
++	if (oi && oi->delta_base_sha1) {
+ 		if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
+ 			const unsigned char *base;
+ 
+@@ -2438,8 +2439,10 @@ static void *cache_or_unpack_entry(struct packed_git *p, off_t base_offset,
+ 	if (!ent)
+ 		return unpack_entry(p, base_offset, type, base_size);
+ 
+-	*type = ent->type;
+-	*base_size = ent->size;
++	if (type)
++		*type = ent->type;
++	if (base_size)
++		*base_size = ent->size;
+ 	return xmemdupz(ent->data, ent->size);
+ }
+ 
+@@ -2907,43 +2910,20 @@ struct packed_git *find_sha1_pack(const unsigned char *sha1,
+ }
+ 
+ static int sha1_loose_object_info(const unsigned char *sha1,
++				  void *map, unsigned long mapsize,
+ 				  enum object_type *typep,
+ 				  unsigned long *sizep,
+ 				  struct object_info *oi,
+ 				  int flags)
+ {
+ 	int status = 0;
+-	unsigned long mapsize;
+-	void *map;
+ 	git_zstream stream;
+ 	char hdr[32];
+ 	struct strbuf hdrbuf = STRBUF_INIT;
+ 
+-	if (oi->delta_base_sha1)
++	if (oi && oi->delta_base_sha1)
+ 		hashclr(oi->delta_base_sha1);
+-
+-	/*
+-	 * If we don't care about type or size, then we don't
+-	 * need to look inside the object at all. Note that we
+-	 * do not optimize out the stat call, even if the
+-	 * caller doesn't care about the disk-size, since our
+-	 * return value implicitly indicates whether the
+-	 * object even exists.
+-	 */
+-	if (!typep && !oi->typename && !sizep) {
+-		const char *path;
+-		struct stat st;
+-		if (stat_sha1_file(sha1, &st, &path) < 0)
+-			return -1;
+-		if (oi->disk_sizep)
+-			*oi->disk_sizep = st.st_size;
+-		return 0;
+-	}
+-
+-	map = map_sha1_file(sha1, &mapsize);
+-	if (!map)
+-		return -1;
+-	if (oi->disk_sizep)
++	if (oi && oi->disk_sizep)
+ 		*oi->disk_sizep = mapsize;
+ 	if ((flags & LOOKUP_UNKNOWN_OBJECT)) {
+ 		if (unpack_sha1_header_to_strbuf(&stream, map, mapsize, hdr, sizeof(hdr), &hdrbuf) < 0)
+@@ -2963,29 +2943,25 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 							flags)) < 0)
+ 		status = error("unable to parse %s header", sha1_to_hex(sha1));
+ 	git_inflate_end(&stream);
+-	munmap(map, mapsize);
+ 	if (status && typep)
+ 		*typep = status;
+ 	strbuf_release(&hdrbuf);
  	return (status < 0) ? status : 0;
  }
  
-+static char *missing_blob_command;
-+static int sha1_file_config(const char *conf_key, const char *value, void *cb)
-+{
-+	if (!strcmp(conf_key, "core.missingblobcommand")) {
-+		missing_blob_command = xstrdup(value);
+-int sha1_object_info_extended(const unsigned char *sha1,
+-			      enum object_type *typep,
+-			      unsigned long *sizep, struct object_info *oi,
+-			      unsigned flags)
++static int get_cached_object(const unsigned char *sha1, enum object_type *typep,
++			     unsigned long *sizep, struct object_info *oi,
++			     void **buf)
+ {
+-	struct cached_object *co;
+-	struct pack_entry e;
+-	int rtype;
+-	const unsigned char *real = lookup_replace_object_extended(sha1, flags);
++	struct cached_object *co = find_cached_object(sha1);
++	if (!co)
++		return 0;
+ 
+-	co = find_cached_object(real);
+-	if (co) {
+-		if (typep)
+-			*typep = co->type;
+-		if (sizep)
+-			*sizep = co->size;
++	if (typep)
++		*typep = co->type;
++	if (sizep)
++		*sizep = co->size;
++	if (oi) {
+ 		if (oi->disk_sizep)
+ 			*(oi->disk_sizep) = 0;
+ 		if (oi->delta_base_sha1)
+@@ -2993,75 +2969,160 @@ int sha1_object_info_extended(const unsigned char *sha1,
+ 		if (oi->typename)
+ 			strbuf_addstr(oi->typename, typename(co->type));
+ 		oi->whence = OI_CACHED;
 +	}
-+	return 0;
++	if (buf)
++		*buf = xmemdupz(co->buf, co->size);
++	return 1;
 +}
 +
-+static int configured;
-+static void ensure_configured(void)
++static int get_loose_object(const unsigned char *sha1, enum object_type *typep,
++			    unsigned long *sizep, struct object_info *oi,
++			    void **buf, int tolerate_bad_type)
 +{
-+	if (configured)
-+		return;
++	const char *path;
++	struct stat st;
 +
-+	git_config(sha1_file_config, NULL);
-+	configured = 1;
-+}
++	if (!typep && !sizep && !oi && !buf)
++		return has_loose_object(sha1);
 +
-+static void handle_missing_blob(const unsigned char *sha1)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	const char *argv[] = {missing_blob_command, NULL};
-+	char input[GIT_MAX_HEXSZ + 1];
-+
-+	memcpy(input, sha1_to_hex(sha1), 40);
-+	input[40] = '\n';
-+
-+	cp.argv = argv;
-+	cp.env = local_repo_env;
-+	cp.use_shell = 1;
-+
-+	if (pipe_command(&cp, input, sizeof(input), NULL, 0, NULL, 0)) {
-+		die("failed to load blob %s", sha1_to_hex(sha1));
++	if (buf || typep || sizep || (oi && oi->typename)) {
++		/* Need to look inside the object */
++		unsigned long mapsize;
++		int ret = 1;
++		void *map = map_sha1_file(sha1, &mapsize);
++		if (!map)
++			return 0;
++		if (buf) {
++			*buf = unpack_sha1_file(map, mapsize, typep, sizep,
++						sha1);
++			if (!*buf)
++				return 0;
++			/* avoid redundant type and size calculations */
++			typep = NULL;
++			sizep = NULL;
++		}
++		if (typep || sizep || oi) {
++			int f = tolerate_bad_type ? LOOKUP_UNKNOWN_OBJECT : 0;
++			if (sha1_loose_object_info(sha1, map, mapsize, typep,
++						   sizep, oi, f)) {
++				ret = 0;
++				goto cleanup;
++			}
++			if (oi)
++				oi->whence = OI_LOOSE;
++		}
++cleanup:
++		munmap(map, mapsize);
++		return ret;
 +	}
 +
 +	/*
-+	 * The command above may have updated packfiles, so update our record
-+	 * of them.
++	 * If we don't care about type or size, then we don't
++	 * need to look inside the object at all. Note that we
++	 * do not optimize out the stat call, even if the
++	 * caller doesn't care about the disk-size, since our
++	 * return value implicitly indicates whether the
++	 * object even exists.
 +	 */
-+	reprepare_packed_git();
++	if (stat_sha1_file(sha1, &st, &path) < 0)
+ 		return 0;
++	if (oi) {
++		if (oi->disk_sizep)
++			*oi->disk_sizep = st.st_size;
++		oi->whence = OI_LOOSE;
+ 	}
++	return 1;
 +}
-+
- static int get_cached_object(const unsigned char *sha1, enum object_type *typep,
- 			     unsigned long *sizep, struct object_info *oi,
- 			     void **buf)
-@@ -3075,25 +3187,40 @@ static int get_object(const unsigned char *sha1, enum object_type *typep,
- {
- 	struct pack_entry e;
- 	const unsigned char *real = lookup_replace_object_extended(sha1, flags);
-+	int already_retried = 0;
- 
- 	if (!(flags & GET_OBJECT_IGNORE_CACHED) &&
- 	    get_cached_object(real, typep, sizep, oi, buf))
- 		return 1;
-+retry:
-+	if (find_pack_entry(real, &e))
-+		goto found_packed;
  
 -	if (!find_pack_entry(real, &e)) {
 -		/* Most likely it's a loose object. */
--		if (get_loose_object(real, typep, sizep, oi, buf,
--				     flags & LOOKUP_UNKNOWN_OBJECT))
--			return 1;
-+	/* Most likely it's a loose object. */
-+	if (get_loose_object(real, typep, sizep, oi, buf,
-+			     flags & LOOKUP_UNKNOWN_OBJECT))
-+		return 1;
- 
--		/* Not a loose object; someone else may have just packed it. */
--		if (flags & GET_OBJECT_QUICK)
--			return 0;
-+	/* Not a loose object; someone else may have just packed it. */
-+	if (!(flags & GET_OBJECT_QUICK)) {
- 		reprepare_packed_git();
--		if (!find_pack_entry(real, &e))
--			return 0;
-+		if (find_pack_entry(real, &e))
-+			goto found_packed;
+-		if (!sha1_loose_object_info(real, typep, sizep, oi, flags)) {
+-			oi->whence = OI_LOOSE;
++static int get_packed_object(struct pack_entry *e, enum object_type *typep,
++			     unsigned long *sizep, struct object_info *oi,
++			     void **buf)
++{
++	int rtype;
++	if (buf) {
++		*buf = cache_or_unpack_entry(e->p, e->offset, sizep, typep);
++		if (!*buf)
+ 			return 0;
++		/* avoid redundant type and size calculations */
++		typep = NULL;
++		sizep = NULL;
 +	}
-+	
-+	/* Try the missing blobs */
-+	if (!already_retried) {
-+		ensure_configured();
-+		if (missing_blob_command && has_missing_blob(sha1, NULL)) {
-+			already_retried = 1;
-+			handle_missing_blob(sha1);
-+			goto retry;
-+		}
- 	}
- 
-+	return 0;
-+
-+found_packed:
- 	if (get_packed_object(&e, typep, sizep, oi, buf))
- 		return 1;
- 
-diff --git a/t/t3907-missing-blob.sh b/t/t3907-missing-blob.sh
-new file mode 100755
-index 000000000..e0ce0942d
---- /dev/null
-+++ b/t/t3907-missing-blob.sh
-@@ -0,0 +1,69 @@
-+#!/bin/sh
-+
-+test_description='core.missingblobcommand option'
-+
-+. ./test-lib.sh
-+
-+pack() {
-+	perl -e '$/ = undef; $input = <>; print pack("H*", $input)'
++	if (typep || sizep || oi) {
++		rtype = packed_object_info(e->p, e->offset, typep, sizep, oi);
++		if (rtype < 0)
++			return 0;
++	}
++	if (oi) {
++		if (in_delta_base_cache(e->p, e->offset)) {
++			oi->whence = OI_DBCACHED;
++		} else {
++			oi->whence = OI_PACKED;
++			oi->u.packed.offset = e->offset;
++			oi->u.packed.pack = e->p;
++			oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
++						 rtype == OBJ_OFS_DELTA);
+ 		}
++	}
++	return 1;
 +}
 +
-+test_expect_success 'sha1_object_info_extended and read_sha1_file (through git cat-file -p)' '
-+	rm -rf server client &&
++/* start at 1 << 5 to leave room for LOOKUP_ flags */
++#define GET_OBJECT_QUICK (1 << 5)
++#define GET_OBJECT_IGNORE_CACHED (1 << 6)
++static int get_object(const unsigned char *sha1, enum object_type *typep,
++		      unsigned long *sizep, struct object_info *oi,
++		      void **buf, unsigned flags)
++{
++	struct pack_entry e;
++	const unsigned char *real = lookup_replace_object_extended(sha1, flags);
 +
-+	git init server &&
-+	test_commit -C server 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	HASH=$(git hash-object server/1.t) &&
++	if (!(flags & GET_OBJECT_IGNORE_CACHED) &&
++	    get_cached_object(real, typep, sizep, oi, buf))
++		return 1;
 +
-+	git init client &&
-+	test_config -C client core.missingblobcommand \
-+		"git -C \"$(pwd)/server\" pack-objects --stdout | git unpack-objects" &&
++	if (!find_pack_entry(real, &e)) {
++		/* Most likely it's a loose object. */
++		if (get_loose_object(real, typep, sizep, oi, buf,
++				     flags & LOOKUP_UNKNOWN_OBJECT))
++			return 1;
+ 
+ 		/* Not a loose object; someone else may have just packed it. */
++		if (flags & GET_OBJECT_QUICK)
++			return 0;
+ 		reprepare_packed_git();
+ 		if (!find_pack_entry(real, &e))
+-			return -1;
++			return 0;
+ 	}
+ 
+-	rtype = packed_object_info(e.p, e.offset, typep, sizep, oi);
+-	if (rtype < 0) {
+-		mark_bad_packed_object(e.p, real);
+-		return sha1_object_info_extended(real, typep, sizep, oi, 0);
+-	} else if (in_delta_base_cache(e.p, e.offset)) {
+-		oi->whence = OI_DBCACHED;
+-	} else {
+-		oi->whence = OI_PACKED;
+-		oi->u.packed.offset = e.offset;
+-		oi->u.packed.pack = e.p;
+-		oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
+-					 rtype == OBJ_OFS_DELTA);
+-	}
++	if (get_packed_object(&e, typep, sizep, oi, buf))
++		return 1;
+ 
+-	return 0;
++	/*
++	 * Try to fetch the required object anyway from another pack or loose.
++	 * This should happen only in the presence of a corrupted
++	 * pack, and is better than failing outright.
++	 */
++	mark_bad_packed_object(e.p, real);
++	return get_object(real, typep, sizep, oi, buf, flags);
++}
 +
-+	# does not work if missing blob is not registered
-+	test_must_fail git -C client cat-file -p "$HASH" &&
-+
-+	mkdir -p client/.git/objects/missing &&
-+	printf "%016x%s%016x" 1 "$HASH" "$(wc -c <server/1.t)" |
-+		pack >client/.git/objects/missing/x &&
-+
-+	# works when missing blob is registered
-+	git -C client cat-file -p "$HASH"
-+'
-+
-+test_expect_success 'has_sha1_file (through git cat-file -e)' '
-+	rm -rf server client &&
-+
-+	git init server &&
-+	test_commit -C server 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	HASH=$(git hash-object server/1.t) &&
-+
-+	git init client &&
-+	test_config -C client core.missingblobcommand \
-+		"git -C \"$(pwd)/server\" pack-objects --stdout | git unpack-objects" &&
-+	mkdir -p client/.git/objects/missing &&
-+	printf "%016x%s%016x" 1 "$HASH" "$(wc -c <server/1.t)" |
-+		pack >client/.git/objects/missing/x &&
-+	git -C client cat-file -e "$HASH"
-+'
-+
-+test_expect_success 'fsck' '
-+	rm -rf server client &&
-+
-+	git init server &&
-+	test_commit -C server 1 &&
-+	test_config -C server uploadpack.allowanysha1inwant 1 &&
-+	HASH=$(git hash-object server/1.t) &&
-+	echo hash is $HASH &&
-+
-+	cp -r server client &&
-+	test_config -C client core.missingblobcommand "this-command-is-not-actually-run" &&
-+	mkdir -p client/.git/objects/missing &&
-+	printf "%016x%s%016x" 1 "$HASH" "$(wc -c <server/1.t)" |
-+		pack >client/.git/objects/missing/x &&
-+	rm client/.git/objects/$(echo $HASH | cut -c1-2)/$(echo $HASH | cut -c3-40) &&
-+	git -C client fsck
-+'
-+
-+test_done
++int sha1_object_info_extended(const unsigned char *sha1,
++			      enum object_type *typep, unsigned long *sizep,
++			      struct object_info *oi, unsigned flags)
++{
++	return get_object(sha1, typep, sizep, oi, NULL, flags) ? 0 : -1;
+ }
+ 
+ /* returns enum object_type or negative */
+ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
+ {
+ 	enum object_type type;
+-	struct object_info oi = OBJECT_INFO_INIT;
+-
+-	if (sha1_object_info_extended(sha1, &type, sizep, &oi,
++	if (sha1_object_info_extended(sha1, &type, sizep, NULL,
+ 				      LOOKUP_REPLACE_OBJECT) < 0)
+ 		return -1;
+ 	return type;
+ }
+ 
+-static void *read_packed_sha1(const unsigned char *sha1,
+-			      enum object_type *type, unsigned long *size)
+-{
+-	struct pack_entry e;
+-	void *data;
+-
+-	if (!find_pack_entry(sha1, &e))
+-		return NULL;
+-	data = cache_or_unpack_entry(e.p, e.offset, size, type);
+-	if (!data) {
+-		/*
+-		 * We're probably in deep shit, but let's try to fetch
+-		 * the required object anyway from another pack or loose.
+-		 * This should happen only in the presence of a corrupted
+-		 * pack, and is better than failing outright.
+-		 */
+-		error("failed to read object %s at offset %"PRIuMAX" from %s",
+-		      sha1_to_hex(sha1), (uintmax_t)e.offset, e.p->pack_name);
+-		mark_bad_packed_object(e.p, sha1);
+-		data = read_object(sha1, type, size);
+-	}
+-	return data;
+-}
+-
+ int pretend_sha1_file(void *buf, unsigned long len, enum object_type type,
+ 		      unsigned char *sha1)
+ {
+@@ -3083,28 +3144,10 @@ int pretend_sha1_file(void *buf, unsigned long len, enum object_type type,
+ static void *read_object(const unsigned char *sha1, enum object_type *type,
+ 			 unsigned long *size)
+ {
+-	unsigned long mapsize;
+-	void *map, *buf;
+-	struct cached_object *co;
+-
+-	co = find_cached_object(sha1);
+-	if (co) {
+-		*type = co->type;
+-		*size = co->size;
+-		return xmemdupz(co->buf, co->size);
+-	}
+-
+-	buf = read_packed_sha1(sha1, type, size);
+-	if (buf)
+-		return buf;
+-	map = map_sha1_file(sha1, &mapsize);
+-	if (map) {
+-		buf = unpack_sha1_file(map, mapsize, type, size, sha1);
+-		munmap(map, mapsize);
++	void *buf;
++	if (get_object(sha1, type, size, NULL, &buf, 0))
+ 		return buf;
+-	}
+-	reprepare_packed_git();
+-	return read_packed_sha1(sha1, type, size);
++	return NULL;
+ }
+ 
+ /*
+@@ -3456,7 +3499,7 @@ int force_object_loose(const unsigned char *sha1, time_t mtime)
+ 
+ 	if (has_loose_object(sha1))
+ 		return 0;
+-	buf = read_packed_sha1(sha1, &type, &len);
++	buf = read_object(sha1, &type, &len);
+ 	if (!buf)
+ 		return error("cannot read sha1_file for %s", sha1_to_hex(sha1));
+ 	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), len) + 1;
+@@ -3482,18 +3525,11 @@ int has_sha1_pack(const unsigned char *sha1)
+ 
+ int has_sha1_file_with_flags(const unsigned char *sha1, int flags)
+ {
+-	struct pack_entry e;
+-
++	int f = GET_OBJECT_IGNORE_CACHED |
++		(flags & HAS_SHA1_QUICK ? GET_OBJECT_QUICK : 0);
+ 	if (!startup_info->have_repository)
+ 		return 0;
+-	if (find_pack_entry(sha1, &e))
+-		return 1;
+-	if (has_loose_object(sha1))
+-		return 1;
+-	if (flags & HAS_SHA1_QUICK)
+-		return 0;
+-	reprepare_packed_git();
+-	return find_pack_entry(sha1, &e);
++	return get_object(sha1, NULL, NULL, NULL, NULL, f);
+ }
+ 
+ int has_object_file(const struct object_id *oid)
 -- 
 2.13.1.508.gb3defc5cc-goog
 
