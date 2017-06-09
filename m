@@ -6,47 +6,48 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60C9E1FAED
-	for <e@80x24.org>; Fri,  9 Jun 2017 08:54:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E8C81FAED
+	for <e@80x24.org>; Fri,  9 Jun 2017 08:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751668AbdFIIyE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Jun 2017 04:54:04 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35304 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751567AbdFIIyB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jun 2017 04:54:01 -0400
-Received: by mail-wm0-f65.google.com with SMTP id g15so10700591wmc.2
-        for <git@vger.kernel.org>; Fri, 09 Jun 2017 01:54:01 -0700 (PDT)
+        id S1751672AbdFIIyH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Jun 2017 04:54:07 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36207 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751664AbdFIIyD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jun 2017 04:54:03 -0400
+Received: by mail-wm0-f68.google.com with SMTP id d17so5874681wme.3
+        for <git@vger.kernel.org>; Fri, 09 Jun 2017 01:54:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ltfsI4oDtMeys98zLrLKRVfK/qGnEbYHV+o6cCmoutI=;
-        b=NkDxI/n8KZCDCtL+STdbfLizkKpD4Golzm53xo/I5zkqAo7ZLQ1VACLef3b7ifiLRU
-         N+SVYefGFj78SXIcWITQYNJa2/W13TY28UcKlEj+/9ZP4IzZsg6E+DnkLYTV0jbserEb
-         z9cmBHtFJBDv5tIfUThWShAPDvAbFM1yAgj5JP8zR2URWlQ96iRclZagT/7rB0gehgus
-         I5xre5SbxrRqDpEy3qPnRFASYMBFtgIM85hySkHxgRgtL4Nw/CaPcrBia6VmeVs/xHtU
-         Gso8jQa19kbwatB0fjFkO5TEcn03ktYywdsI68ShH99t+JX6INv1JRpBdd/XPIp+zIIw
-         lxOA==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=MrkPwBNsWQQNECr6h4S1jHcRzIP4jYguMRUNmKs0UuY=;
+        b=ED4a/vqRpPtDJLyQdDdj3Vh/tJn+a6VzdwLHOiIGO/0QkZaI1qqYvEoX7ZRnfu66Vy
+         tFd1C//LZGT2MI/PbdUBnWb0mQF+b8nAJpJ19pbvcThQlnQjwQ7+yLbjc+4vIlJLWrlD
+         +EmcruZRi4Jx6QrfnHCHtANC7gEGzER7EASOY1HK1Kn0ZzM14EWP4+qNfeNPZyU/MjtG
+         aSqTe5DCP1P2JEJzcuJDrK03LpOh4N4Oi696g81D5NmL3nCi64N7VT4yZAOR4PZxGada
+         X4Y7eQLuIPHmmBRVsOtTgYLXYjlpcClWmycvR8s9apfzcfeR1dpwL3M1vL0b2LVErD1c
+         hiNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ltfsI4oDtMeys98zLrLKRVfK/qGnEbYHV+o6cCmoutI=;
-        b=TLo2GfziPwizMhND1tlTi/2cpEzSmOc59rQMzCS2XSCu1GwoMMYXXEJnlV1L+2BDZ+
-         zJoTGgTJOhwaQa39Vv1Q0gIvhQCjIQf+mpJacCgttdt2Wb0RTb3S8txuBgbz6BoPhcdN
-         2bb8aFq8L9X7LwW6Fxs7tqBaliXKUhDPwfyviu82cSatT8uZz0zmE/u95NrO2A93JmD5
-         c0Uq088nHjl1wbjE6uTrUGsLzK96qs9yL0+N6/u/ptLrZso5nr5qzBbOsLYMCtTWpzr1
-         aHmE/AJ3NFZFKA+UGa6D+67jBe2MjmbxtqFqIFeakicUR12tdoEcl/201/zLEeD8iboQ
-         ER8g==
-X-Gm-Message-State: AODbwcAimcG2IbZ0PRWT01RNseugwJRM/PDgyts8663nan35x+XeUqHa
-        PdO7sONmQZb5Nu/OD4U=
-X-Received: by 10.80.144.132 with SMTP id c4mr30532618eda.139.1496998439967;
-        Fri, 09 Jun 2017 01:53:59 -0700 (PDT)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=MrkPwBNsWQQNECr6h4S1jHcRzIP4jYguMRUNmKs0UuY=;
+        b=GQKJz1Tr4xJ04zV9l2UEDehTKi9ttYR2G2x58tD8zN2hQ/8UU4EidivhUDNRs3FybK
+         LvzIfyIGMmhhL19ZtisBLI8V5h/3rds7tlUUoP6Gzw0FXGpDtyqKbtpf2jlr7zEu1fmu
+         L2gJFfjsWu+dNjsrbC93fy38LAZsQ2GwGm/c6HdMR0WKNa3nv/iIKQ5OWYnnZboZ+lPO
+         xGWpBaM8lIwkUD8/N/maMzQFQsMX1L/6Y1IJNDKgS7bb0PPkpYDRNOleCS/thHEMv+Y/
+         0w6whL0oFjxipDNfvnLY4KDmotuTWjZWgedNfbHkzld9Vi1ogCGQzNdMkkdK9GNfPTbZ
+         I40Q==
+X-Gm-Message-State: AODbwcClGbroj6qfy6KgIyideMoEqtWgI4HB6nLDDdzrc5r856VRLxnV
+        cxJuZafwRwhQUlWCd5Y=
+X-Received: by 10.80.161.166 with SMTP id 35mr32056278edk.96.1496998442115;
+        Fri, 09 Jun 2017 01:54:02 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w48sm399405edb.49.2017.06.09.01.53.58
+        by smtp.gmail.com with ESMTPSA id w48sm399405edb.49.2017.06.09.01.54.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 09 Jun 2017 01:53:58 -0700 (PDT)
+        Fri, 09 Jun 2017 01:54:01 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,10 +55,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/2] Add a freez() wrapper
-Date:   Fri,  9 Jun 2017 08:53:44 +0000
-Message-Id: <20170609085346.19974-1-avarab@gmail.com>
+Subject: [PATCH 1/2] git-compat-util: add a freez() wrapper around free(x); x = NULL
+Date:   Fri,  9 Jun 2017 08:53:45 +0000
+Message-Id: <20170609085346.19974-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.0.506.g27d5fe0cd
+In-Reply-To: <20170609085346.19974-1-avarab@gmail.com>
+References: <20170609085346.19974-1-avarab@gmail.com>
 In-Reply-To: <20170608234100.188529-8-bmwill@google.com>
 References: <20170608234100.188529-8-bmwill@google.com>
 MIME-Version: 1.0
@@ -68,93 +71,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 9, 2017 at 1:40 AM, Brandon Williams <bmwill@google.com> wrote:
-> Introduce the repository object 'struct repository' which can be used to
-> hold all state pertaining to a git repository.
-> [...]
-> +static void repo_clear_env(struct repository *repo)
-> +{
-> +       free(repo->gitdir);
-> +       repo->gitdir = NULL;
-> +       free(repo->commondir);
-> +       repo->commondir = NULL;
-> +       free(repo->objectdir);
-> +       repo->objectdir = NULL;
-> +       free(repo->index_file);
-> +       repo->index_file = NULL;
-> +       free(repo->graft_file);
-> +       repo->graft_file = NULL;
-> +       free(repo->namespace);
-> +       repo->namespace = NULL;
-> +}
+Add a freez() wrapper for the common pattern of freeing a pointer and
+assigning NULL to it right afterwards.
 
-When seeing this I wondered if it couldn't be less noisy as:
+The implementation is the same as the (currently unused) XDL_PTRFREE
+macro in xdiff/xmacros.h added in commit 3443546f6e ("Use a *real*
+built-in diff generator", 2006-03-24).
 
-> +       freez(repo->gitdir);
-> +       freez(repo->commondir);
-> +       freez(repo->objectdir);
-> +       freez(repo->index_file);
-> +       freez(repo->graft_file);
-> +       freez(repo->namespace);
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ git-compat-util.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-It's not a problem with your patch, but something I thought would be
-nice to have in general, so here's a patch series to implement that.
-
-Ævar Arnfjörð Bjarmason (2):
-  git-compat-util: add a freez() wrapper around free(x); x = NULL
-  *.[ch] refactoring: make use of the freez() wrapper
-
- alias.c                  |  6 ++----
- apply.c                  |  3 +--
- attr.c                   |  6 ++----
- blame.c                  |  3 +--
- branch.c                 |  3 +--
- builtin/am.c             | 18 +++++-------------
- builtin/clean.c          |  6 ++----
- builtin/config.c         |  6 ++----
- builtin/index-pack.c     |  6 ++----
- builtin/pack-objects.c   | 12 ++++--------
- builtin/unpack-objects.c |  3 +--
- builtin/worktree.c       |  6 ++----
- commit-slab.h            |  3 +--
- commit.c                 |  3 +--
- config.c                 |  3 +--
- credential.c             |  9 +++------
- diff-lib.c               |  3 +--
- diff.c                   |  6 ++----
- diffcore-rename.c        |  6 ++----
- dir.c                    |  9 +++------
- fast-import.c            |  6 ++----
- git-compat-util.h        |  1 +
- gpg-interface.c          | 15 +++++----------
- grep.c                   | 12 ++++--------
- help.c                   |  3 +--
- http-push.c              | 24 ++++++++----------------
- http.c                   | 15 +++++----------
- imap-send.c              |  3 +--
- line-log.c               |  6 ++----
- ll-merge.c               |  3 +--
- mailinfo.c               |  3 +--
- object.c                 |  3 +--
- pathspec.c               |  3 +--
- prio-queue.c             |  3 +--
- read-cache.c             |  6 ++----
- ref-filter.c             |  3 +--
- refs/files-backend.c     |  3 +--
- refs/ref-cache.c         |  3 +--
- remote-testsvn.c         |  3 +--
- rerere.c                 |  3 +--
- sequencer.c              |  3 +--
- sha1-array.c             |  3 +--
- sha1_file.c              |  3 +--
- split-index.c            |  3 +--
- transport-helper.c       | 27 +++++++++------------------
- transport.c              |  3 +--
- tree-diff.c              |  6 ++----
- tree-walk.c              |  3 +--
- tree.c                   |  3 +--
- 49 files changed, 98 insertions(+), 197 deletions(-)
-
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 4b7dcf21ad..21e3710755 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -787,6 +787,7 @@ extern char *xstrdup(const char *str);
+ extern void *xmalloc(size_t size);
+ extern void *xmallocz(size_t size);
+ extern void *xmallocz_gently(size_t size);
++#define freez(p) do { if (p) { free(p); (p) = NULL; } } while (0)
+ extern void *xmemdupz(const void *data, size_t len);
+ extern char *xstrndup(const char *str, size_t len);
+ extern void *xrealloc(void *ptr, size_t size);
 -- 
 2.13.0.506.g27d5fe0cd
 
