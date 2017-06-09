@@ -2,97 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D13E71F8CF
-	for <e@80x24.org>; Fri,  9 Jun 2017 23:19:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8C5B1F8CF
+	for <e@80x24.org>; Fri,  9 Jun 2017 23:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751583AbdFIXTk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Jun 2017 19:19:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37291 "EHLO cloud.peff.net"
+        id S1751562AbdFIXhD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Jun 2017 19:37:03 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:33008 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751545AbdFIXTk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jun 2017 19:19:40 -0400
-Received: (qmail 1822 invoked by uid 109); 9 Jun 2017 23:19:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 09 Jun 2017 23:19:39 +0000
-Received: (qmail 26263 invoked by uid 111); 9 Jun 2017 23:19:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 09 Jun 2017 19:19:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Jun 2017 19:19:35 -0400
-Date:   Fri, 9 Jun 2017 19:19:35 -0400
-From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [BUG?] gitlink without .gitmodules no longer fails recursive
- clone
-Message-ID: <20170609231935.ysolxkiuhhpa3xrd@sigill.intra.peff.net>
-References: <20170606035650.oykbz2uc4xkr3cr2@sigill.intra.peff.net>
- <CAGZ79kY-uzardfOvrJufatYgU9bqx4XZMU_GFq5zwc-vtzM-3Q@mail.gmail.com>
- <20170606181024.GA189073@google.com>
- <20170606183914.6iowfhimo5yrvmtf@sigill.intra.peff.net>
+        id S1751545AbdFIXhD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jun 2017 19:37:03 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 293D81F8CF;
+        Fri,  9 Jun 2017 23:37:02 +0000 (UTC)
+Date:   Fri, 9 Jun 2017 23:37:02 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v2 1/2] git-compat-util: add a FREEZ() wrapper around
+ free(ptr); ptr = NULL
+Message-ID: <20170609233701.GA7195@whir>
+References: <20170609085346.19974-1-avarab@gmail.com>
+ <20170609220420.4910-2-avarab@gmail.com>
+ <20170609222738.GF21733@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170606183914.6iowfhimo5yrvmtf@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170609222738.GF21733@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 06, 2017 at 02:39:14PM -0400, Jeff King wrote:
-
-> > Just for some background on the new behavior and how this functionality
-> > changed: My series changed how 'submodule init' behaved if you have
-> > 'submodule.active' set.  Once set (like how clone --recurse does now)
-> > when not provided any path to a submodule, a list of 'active' submodules
-> > matching the 'submodule.active' pathspec will be initialized.  One of
-> > the requirements to be 'active' is to have an entry in the .gitmodules
-> > file so gitlinks without an entry in the .gitmodules file will simply be
-> > ignored now.
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi,
 > 
-> OK, thanks for the explanation. I certainly agree that treating
-> .gitmodules as the source of truth is consistent and easy to explain.
-> I'll update my test to handle the new behavior (it's a regression test
-> for how GitHub Pages handles some broken setups).
+> Ævar Arnfjörð Bjarmason wrote:
+> 
+> > Add a FREEZ() wrapper marco for the common pattern of freeing a
+> > pointer and assigning NULL to it right afterwards.
+> 
+> I'm conflicted.  On one hand it makes code more concise and makes it
+> easier for people to remember to assign NULL after freeing a variable.
+> On the other hand it makes git more of a custom dialect of C, which
+> may make the code harder to read and hack on for new contributors.
 
-I've been chatting with Pages folks about the kinds of errors they see,
-and I was surprised how easy it is to get into this situation.
+I think this problem could be avoided by using a more explicit
+name, perhaps: "free_and_null"
 
-In an ideal world the user do:
+Seeing the initial subject, I thought this series was short for
+"freeze" (like "creat").
 
-  git submodule add git://host/repo.git path
+However, I admit FREEZ caught my eye because I thought it was
+a way to freeze a repository, somehow :)
 
-which adds the gitlink and the .gitmodules entry. But it doesn't seem
-unreasonable for somebody unfamiliar with submodules to do:
+> My feeling is that the costs outweigh the benefits, but I haven't
+> thought it through thoroughly.
 
-  git clone git://host/repo.git path
-  git add path
+<snip>
 
-This does add the entry as a gitlink, but doesn't write any sort of
-.gitmodules entry. With the old code, cloning the repository (either by
-another user, or in our case during a Pages build), a recursive clone or
-submodule init would complain loudly. But now it's just quietly ignored.
-Which seems unfortunate.
+> > index 4b7dcf21ad..ba2d0c8c80 100644
+> > --- a/git-compat-util.h
+> > +++ b/git-compat-util.h
+> > @@ -805,6 +805,12 @@ extern int xmkstemp_mode(char *template, int mode);
+> >  extern char *xgetcwd(void);
+> >  extern FILE *fopen_for_writing(const char *path);
+> > 
+> > +/*
+> > + * FREEZ(ptr) is like free(ptr) followed by ptr = NULL. Note that ptr
+> > + * is used twice, so don't pass e.g. ptr++.
+> > + */
+> > +#define FREEZ(p) do { free(p); (p) = NULL; } while (0)
+> > +
+> >  #define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
+> >  #define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), st_mult(sizeof(*(x)), (alloc)))
+> 
+> Golfing: it's possible to do this without ptr being used twice by
+> introducing a helper function:
+> 
+> 	static inline void freez_impl(void **p) {
+> 		free(*p);
+> 		*p = NULL;
+> 	}
 
-I actually don't think the old behavior was that great. Somebody _else_
-would see the error and was responsible for filtering it back to the
-original author. But what we really want is to warn the user when
-they're creating the broken situation.
+Yes.  I think it's prudent to avoid macros in case there are
+side effects.
 
-Should "git add" check whether there's a matching .gitmodules entry for
-the path and issue a warning otherwise?
+> 	#define FREEZ(p) freez_impl(&(p))
+> 
+> That way side-effectful callers like FREEZ(func() ? a : b) would
+> work.
 
-Sort of orthogonal, but I kind of wonder if the recursive clone should
-also issue a warning. Not for an inactive submodule (which obviously is
-normal) but for one that is inactive because it does not even have a
-.gitmodules entry. I suppose that _could_ be considered normal in a
-post-v2.13 world (e.g., if the owner of the repo "deactivates" a module
-by deleting its .gitmodules entry).  But since it's indistinguishable
-from the broken case, perhaps that would be better done with a specific
-"active = false" flag in .gitmodules.
+I don't see the point of a macro wrapper, forcing the user to
+type out the '&' should drive home the point that the pointer
+gets set to NULL.  I also find capitalization tiring-to-read
+because all characters are the same height.
 
--Peff
+<snip>
+
+> I kind of wish that 'free' returned NULL so that callers could do
+> 
+> 	p = free(p);
+> 
+> without requiring a custom helper.  We could introduce a free_wrapper
+> that works that way but that is probably not worth it, either.
+
+Sometimes I have wished similar things, too, but that means the
+same identifier shows up twice in one line and camouflages the
+code.
