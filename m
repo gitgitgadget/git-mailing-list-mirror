@@ -2,119 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90D081F8CF
-	for <e@80x24.org>; Fri,  9 Jun 2017 16:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9E0F1F8CF
+	for <e@80x24.org>; Fri,  9 Jun 2017 16:29:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751668AbdFIQ25 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Jun 2017 12:28:57 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:36252 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751616AbdFIQ24 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jun 2017 12:28:56 -0400
-Received: by mail-pg0-f65.google.com with SMTP id v18so8068699pgb.3
-        for <git@vger.kernel.org>; Fri, 09 Jun 2017 09:28:56 -0700 (PDT)
+        id S1751707AbdFIQ3c (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Jun 2017 12:29:32 -0400
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:34296 "EHLO
+        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751679AbdFIQ3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jun 2017 12:29:30 -0400
+Received: by mail-lf0-f49.google.com with SMTP id v20so31856557lfa.1
+        for <git@vger.kernel.org>; Fri, 09 Jun 2017 09:29:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=iGvPofeM7agtCAob3r9U3MP6PP8oPddUbSxY3JQIpeM=;
-        b=ms7bMBJ/dVY12O0EHTKYmbJr8kgcKwoJNehSfnyGS93KrQO4ihnidMY/wWpVNP3GiV
-         UfdmEwrKal3wzYDElyCYo90YAAIWZ7I6QLw0xb/UgmHo/ZbS0bHdSQ/3tJ6w4248K48l
-         NhY5I1wQSQXMnfqvtXilsHxmqQeJtt0eAay0+s8rKxetGK8v5CMciEfXUBStZi6N8YEy
-         HASGfQ8/SoO9NhivK5SAGeepLUpWnMjTEyV/boSpEH9NOVZrL9anDlMIUO31xyixn6La
-         GWUoQ6M/Xeo2WOCIQoN/1rNzf1ZXe3yYTJcFuoMIRj3Z4dt92RBiEbjq8S7z6T+e4mR1
-         ND5Q==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=wjwURsF1X5Iq/xSJsRy7QspcfPnIJin4qvh/8srF44w=;
+        b=VRpxB4+lcS57zLFFyJO8Qcf2ZgNUO9bIb9j/uMjx5FSYLcb54yaZmgXmZZIFIMkrb+
+         n6fRTtMPulbE1LN/LTNgAklZnT+eH8uoKJsI73utpq6H3z/5lm8rDqU5aU5kSt4w85Qv
+         da8GvE4iOrfGtMeXO7RK+jwWreGBmfT7FFhX9EgRgYBIH3Z9RIctLqbkVYKqSl3n62gW
+         w8r53vynjnHV4Tv+0g+M/cv+MsDnhneRstuvOaFY6zcYq/9Lp8ItC8cNr+bcgEc7ulp2
+         tRjSxmcUlVjMUrsAyU9yZk+eUTYcbdchXkYaOFrh5gn0xxKSLSOKFTv2Df04JvYjp/rj
+         0qxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=iGvPofeM7agtCAob3r9U3MP6PP8oPddUbSxY3JQIpeM=;
-        b=AgwsPa0qAQIhuCyjAGl9gtkkTyiq7gZ1I4ygZPAuiiSG56tzZ8vwIzLEJI+7EwfB3D
-         GctC55lwS5n0hj+M7pMbreF2OCYaI4nMG1zlJChFhLAlGxV/Sks9G5KFsczdb+vUiEIX
-         r+Qvp2zblxs8j7UjG56Cy6YMvpL4aEywsaf5oPHU7K1HVLxFjULzaOa/W1P2SZADtxEc
-         PBWdgpx5V4/tFR/8IO+xz3woF0KGcb2LReUWI0w+f2xYOgcco6Y0qjPH5XceyFRQjeXn
-         KqTvYszvGnJ82thYKqcZzROV20H5bhrtdn3jf/9emF8hhIiUgX9wCM/kzeHZpHVZqC3y
-         fYcw==
-X-Gm-Message-State: AODbwcDk6s5/IqpQIu+q/1lMkJv+JXyLV19dC3DWerSRnmydKIIcGZOE
-        v8J3goGqhC4aag==
-X-Received: by 10.84.171.193 with SMTP id l59mr43193097plb.139.1497025735901;
-        Fri, 09 Jun 2017 09:28:55 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:25b5:3bc1:d744:5d92])
-        by smtp.gmail.com with ESMTPSA id w10sm2882780pge.48.2017.06.09.09.28.54
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 09 Jun 2017 09:28:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Xie <emilyxxie@gmail.com>
-Cc:     git@vger.kernel.org, novalis@novalis.org
-Subject: Re: [PATCH] pathspec: die on empty strings as pathspec
-References: <20170607033308.33550-1-emilyxxie@gmail.com>
-Date:   Sat, 10 Jun 2017 01:28:54 +0900
-In-Reply-To: <20170607033308.33550-1-emilyxxie@gmail.com> (Emily Xie's message
-        of "Tue, 6 Jun 2017 23:33:08 -0400")
-Message-ID: <xmqq60g56s6x.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=wjwURsF1X5Iq/xSJsRy7QspcfPnIJin4qvh/8srF44w=;
+        b=n3qHmujFkOsA5X5gXYn3C+GBTyBAob/i9e1Wq5gbm/ceDf69JkyAn7tTzcn30LUg+a
+         8iCBuu0/6TkYOYKLNoURzxptNjILyywZ4i6pcsHdjC86A2Jw8+7EDYd82Q8A7VtORiqS
+         FFxbeNmlNpv3CJgRI+oUpAHwf4T4HtNvVvRrQKdgRczNfz8f3e1zhIzZraiiTqXoUy+s
+         fu1qncKgDuq/t2cahU3IGohBsaaxkCsikUihGHyTkLuNdlPWoZvDX6G6VUmt5nnudV4N
+         2GBwxSk3gcR0Rr89BRSvAhDvA8pAvPN6X9nJgxLekPOUvKfzjU0ApoWhgKuWevH+4nXQ
+         S/1A==
+X-Gm-Message-State: AKS2vOwnEsV7By+BC8rURf9SWmltB23ECBLO18jtXQz6QZbIpamnzYVO
+        VOd7PXqWvjvbkA==
+X-Received: by 10.28.173.206 with SMTP id w197mr397817wme.68.1497025769128;
+        Fri, 09 Jun 2017 09:29:29 -0700 (PDT)
+Received: from buc98hyl12.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id q77sm74712wmd.31.2017.06.09.09.29.28
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 09 Jun 2017 09:29:28 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v1] Configure Git contribution guidelines for github.com
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CACBZZX7O9DgLGOHKhojZRi7n=j3X0W9B_sRGLi6cBpc74GLyeg@mail.gmail.com>
+Date:   Fri, 9 Jun 2017 18:29:27 +0200
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Roberto Tyley <roberto.tyley@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <F9939C5D-C710-4788-81A0-4D7958971128@gmail.com>
+References: <20170609142151.94811-1-larsxschneider@gmail.com> <CACBZZX7O9DgLGOHKhojZRi7n=j3X0W9B_sRGLi6cBpc74GLyeg@mail.gmail.com>
+To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Xie <emilyxxie@gmail.com> writes:
 
-> An empty string as a pathspec element matches all paths.  A buggy
-> script, however, could accidentally assign an empty string to a
-> variable that then gets passed to a Git command invocation, e.g.:
->
->   path=... compute a path to be removed in $path ...
->         git rm -r "$path"
->
-> which would unintentionally remove all paths in the current
-> directory.
->
-> The fix for this issue comprises of two steps. Step 1, which warns
-> that empty strings as pathspecs will become invalid, has already
-> been implemented in commit d426430 ("pathspec: warn on empty strings
-> as pathspec", 2016-06-22).
->
-> This patch is step 2. It removes the warning and throws an error
-> instead.
->
-> Signed-off-by: Emily Xie <emilyxxie@gmail.com>
-> Reported-by: David Turner <novalis@novalis.org>
-> ---
+> On 09 Jun 2017, at 18:18, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
+<avarab@gmail.com> wrote:
+>=20
+> On Fri, Jun 9, 2017 at 4:21 PM, Lars Schneider =
+<larsxschneider@gmail.com> wrote:
+>> Many open source projects use github.com for their contribution =
+process.
+>> Although we mirror the Git core repository to github.com [1] we do =
+not
+>> use any other github.com service. This is unknown/unexpected to a
+>> number of (potential) contributors and consequently they create Pull
+>> Requests against our mirror with their contributions. These Pull
+>> Requests become stall [2]. This is frustrating to them as they think =
+we
+>> ignore them and it is also unsatisfactory for us as we miss potential
+>> code improvements and/or new contributors.
+>>=20
+>> GitHub offers a way to notify Pull Request contributors about the
+>> contribution guidelines for a project [3]. Let's make use of this!
+>>=20
+>> [1] https://github.com/git/git
+>> [2] https://github.com/git/git/pulls
+>> [3] =
+https://help.github.com/articles/creating-a-pull-request-template-for-your=
+-repository/
+>=20
+> It would be good to have some instructions, but instead of warning
+> people off we could just point them to submitgit.herokuapp.com
+>=20
+> You can submit patches to this list using that, and if someone's
+> trying to submit a pull request they might be much happier using that.
 
-We started this at v2.11.0 at the end of November 2016, and this
-cycle is expected to complete at around the end of July 2017, so
-this patch makes it a 8-month deprecation cycle.  I think that it
-should be long enough.
+Agreed! I wasn't sure if this solution is still active/maintained by =
+Roberto!
 
-Thanks.
-
-> diff --git a/pathspec.c b/pathspec.c
-> index 50f76ff..65e18b1 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -638,12 +638,10 @@ void parse_pathspec(struct pathspec *pathspec,
->  	}
->  
->  	n = 0;
-> -	warn_empty_string = 1;
->  	while (argv[n]) {
-> -		if (*argv[n] == '\0' && warn_empty_string) {
-> -			warning(_("empty strings as pathspecs will be made invalid in upcoming releases. "
-> -				  "please use . instead if you meant to match all paths"));
-> -			warn_empty_string = 0;
-> +		if (*argv[n] == '\0') {
-> +			die("empty string is not a valid pathspec. "
-> +				  "please use . instead if you meant to match all paths");
->  		}
->  		n++;
->  	}
-
-The {} around a single statement becomes unnecessary, so I'll remove
-them while queuing.
+- Lars=
