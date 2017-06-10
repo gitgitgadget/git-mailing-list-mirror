@@ -6,106 +6,84 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C09F31FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 17:24:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1DAA1FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 17:38:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752080AbdFJRY4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 13:24:56 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:35757 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751977AbdFJRYz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 13:24:55 -0400
-Received: by mail-wr0-f195.google.com with SMTP id g76so13195662wrd.2
-        for <git@vger.kernel.org>; Sat, 10 Jun 2017 10:24:54 -0700 (PDT)
+        id S1752070AbdFJRii (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 13:38:38 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:34943 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752041AbdFJRih (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 13:38:37 -0400
+Received: by mail-wr0-f196.google.com with SMTP id g76so13244110wrd.2
+        for <git@vger.kernel.org>; Sat, 10 Jun 2017 10:38:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=GsDY1M+qwptOZ6Rwawkj+diGKprImxrSEdhP9ibtab0=;
-        b=TUtiTQ/405ciJ7wcqEXbIaX8FMWf5tpnRvNpsMYgrzJztAX4HmfJnERTAhWoCVbDDv
-         rJl2Qd8uyAFKvWvB16C1IXITmfotEUqzqIOGu92ZlYD2E3SSgrk8w6shmLXu9cvVBrGy
-         3fpMu6l9qVbG3IPvVaV/ztVMO8Dw6L05/I8bQok68eD9yMsohElBLXxC/ccY7+G0JwVG
-         JhOO8m3AVPbRpEQlhF4NBvrWLYXtSkBWHDh79i973F+QOi2gdH5ICjwo5axv15dKJ+Pu
-         HswHkiAE4wGmvSrL3ooqJaw0KE26IpPVSuta+mA8BGlPiSrYusPdiyo8yqneZo9xYkuz
-         aqaA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Fa/rYys1YasXHKrHVi/c4eRaqTFVrkDal7dnuAHtDR8=;
+        b=R+JynUbRUw6RYJ8dgStbK1eLad0mOnr6Emw/i+7I2LSFoaW26pqTk5Bv+97YZsLXxu
+         spwfYk5Mr1xcLIPHV9Yu0aF4OdPtjGyfMEAmhs0P0rLcEIRL10UtTyLRAOue9MMr2rSF
+         slibo092sAemSoHgY6Z89sGpFJQA/F7eEahtUOgs9sX3tvMdYj7L6Nqq7F8p/b77NgNC
+         K9NDdXgSXTeBCuxmCL1v9GWc+wYKXE2l71+jF/VyfrB4jiQro8TEB04GojNDbII5CL9F
+         ZGZEq0FVQPUBPJQXtgYTIfT6AJz9JXNxB8zvmW22MOLkS7HAJLyYzSbJb8qYv9TLnRWr
+         CS4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=GsDY1M+qwptOZ6Rwawkj+diGKprImxrSEdhP9ibtab0=;
-        b=FCvvf9134vocCYiHLTrE/KpruoshfFO3ZvqMs4WZRFQwH4xdvlDARNYMIeZbSShErO
-         oISqA+/TWhLSdY7xd3+FtEKZGT1esdiMgZdlYO3PfYZ+aI54J1YpSn7wOF5hbKTLysbC
-         xeGeVQTs6HWtlXJzHCLz8PKhAZI15W4Ke36tB4Rkthsh2AixUtfeaIVuO+u1C6ZY5VsR
-         M471odkIvyXSK4vvmyXl7z/oCVYkgMo+5zpE4Gp3nxq/r2IG3WBdMtyn+g/pfNkyg2qR
-         eEPKP52PAq1qKMq6+9BLtlbE92ofvxyTtb1MNn+mTFq7zY/wE7aKe4FV3XnhRgQw7lfJ
-         3ctg==
-X-Gm-Message-State: AODbwcDtxQdZWV78re3jngZxhWhr7woIokRPizGDvOGsAQt/lZG/hp+K
-        I7SchEXVCVqpbw==
-X-Received: by 10.223.143.35 with SMTP id p32mr2341956wrb.120.1497115493845;
-        Sat, 10 Jun 2017 10:24:53 -0700 (PDT)
-Received: from ?IPv6:2001:a61:3439:7300:99fb:6818:11d2:739? ([2001:a61:3439:7300:99fb:6818:11d2:739])
-        by smtp.googlemail.com with ESMTPSA id m40sm4670594wrm.4.2017.06.10.10.24.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 10 Jun 2017 10:24:52 -0700 (PDT)
-Subject: Re: [PATCH] doc: fix location of index in worktree scenatio
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-References: <20170610090719.8429-1-asheiduk@gmail.com>
- <xmqqmv9g1487.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Fa/rYys1YasXHKrHVi/c4eRaqTFVrkDal7dnuAHtDR8=;
+        b=icglThgmgYpBOozgFcyBsumBmyfKvYqR73//hZeHd5U2+3/K9bwg6ObI3gew+SWruq
+         sDH6ZX7SMcFByeJNly/2lBw60mORDcjOVVML5ShP7IU6ZEXUtbDNa4jUEYMQ0je6wH+B
+         ULcOJ4Ghlr955FyZockGLToTNsOCpwd5ZEkYvZNi0HiQUPIcEDdepcMso3EUzCKqrZUr
+         mfW1gGe9FAEpTmgxS3fx5Wo6GKsP82uNXx7ydRkUSaiCVZ1L/QOqpPEfzywEqZ0NAvEx
+         GJc+K0y068zZ3MQo66tP98viGSmEnxhZYRylVP8u/JMVs5sJgpYDYPmJCNre2xk3FqBC
+         5+3g==
+X-Gm-Message-State: AKS2vOxe/0sRF7xs8CeB79HpRXMg4yLYX+l+lcO39y/Fw08JiS06h7Nz
+        aPI9cmeqjfLo2BN2lBY=
+X-Received: by 10.28.234.70 with SMTP id i67mr3292674wmh.91.1497116315890;
+        Sat, 10 Jun 2017 10:38:35 -0700 (PDT)
+Received: from arrakeen.fritz.box ([2001:a61:3439:7300:99fb:6818:11d2:739])
+        by smtp.gmail.com with ESMTPSA id y41sm5909446wrd.59.2017.06.10.10.38.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 10 Jun 2017 10:38:35 -0700 (PDT)
 From:   Andreas Heiduk <asheiduk@gmail.com>
-Message-ID: <d2b21102-eb32-7061-14ee-aa8906fe9eeb@gmail.com>
-Date:   Sat, 10 Jun 2017 19:24:51 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqmv9g1487.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Andreas Heiduk <asheiduk@gmail.com>
+Subject: [PATCH v2] doc: fix location of index in worktree scenatio
+Date:   Sat, 10 Jun 2017 19:38:24 +0200
+Message-Id: <20170610173824.19460-1-asheiduk@gmail.com>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170610090719.8429-1-asheiduk@gmail.com>
+References: <20170610090719.8429-1-asheiduk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.06.2017 um 13:17 schrieb Junio C Hamano:
-> Andreas Heiduk <asheiduk@gmail.com> writes:
-> 
->> When setting `.gitattributes` in a second worktree, a plain `rm .git/index`
->> does not actually delete the index.
->>
-[...]
-> Right.  
-> 
-> I however have to wonder if we can do the same without futzing
-> directly with the "index" file as a filesystem entity.  With or
-> without your update, what is taught in the document feels like
-> munging a disk block with binary editor to correct a corrupted
-> filesystem X-<.
+When setting `.gitattributes` in a second worktree, a plain `rm .git/index`
+does not actually delete the index.
 
-IMO `rm .git/index` is like munging a disk block WITHOUT a binary
-editor but with plain `dd seek=... skip=... count=...`, `hexdump`,
-`ed` and back - every step is clear in principle but painful and
-dangerous. :-)
+Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/gitattributes.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> For example, can we do this "empty the index" step with things like
-> 
->     $ git rm --cached .
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 473648386..2a2d7e2a4 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -229,7 +229,7 @@ From a clean working directory:
+ 
+ -------------------------------------------------
+ $ echo "* text=auto" >.gitattributes
+-$ rm .git/index     # Remove the index to re-scan the working directory
++$ git read-tree --empty   # Clean index, force re-scan of working directory
+ $ git add .
+ $ git status        # Show files that will be normalized
+ $ git commit -m "Introduce end-of-line normalization"
+-- 
+2.13.0
 
-That would be `git rm --cached -rq .`?
-
-Executing this in the git repo gives me an index file with 2.1kb. I
-don't know whether or not this index still contains something relevant
-for this case.
-
-> or
-> 
->     $ git read-tree --empty
-> 
-> instead?
-
-Nice! The `index` file contains 46 bytes.
-
-For me THAT one is like a nice binary editor apt for the job :-)
-I'll queue that.
