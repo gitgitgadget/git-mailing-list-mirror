@@ -6,59 +6,64 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9E681FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 11:03:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6990D1FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 11:12:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752007AbdFJLDT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 07:03:19 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:36553 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751941AbdFJLDS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 07:03:18 -0400
-Received: by mail-pf0-f175.google.com with SMTP id x63so36431968pff.3
-        for <git@vger.kernel.org>; Sat, 10 Jun 2017 04:03:18 -0700 (PDT)
+        id S1752009AbdFJLM3 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 07:12:29 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:34118 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751999AbdFJLM2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 07:12:28 -0400
+Received: by mail-pg0-f47.google.com with SMTP id v18so33321995pgb.1
+        for <git@vger.kernel.org>; Sat, 10 Jun 2017 04:12:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ebW69nh2gxCA88grqlgNT+0uxItP3N7/4J8YHif20NA=;
-        b=t9i59RnQhnZODYiq8qERMEPU6Xjgr/frS0kFztw+C8tmTPXHfl+UdHwLTK0DoGONIG
-         Y+roeMoed0xFMnI+Pm/56cQcx6Kfc1MdhV0zXsdMMo5dKW3fU/xJtVkYtzW8jb6rCGS0
-         U8n1GFfWOi2JUDAjuauuylwE4LQFGqljN95m86/kP+gy4jsZcpBb1+zfTWJ6yJ8ypYrz
-         b7JNu205OSuasXTtYjRrTKKUyaJ5TSBX0sE7DvOcK/x/KRs+EjJ5PB4m8A118BCowIz0
-         +nnM/EZTp/PCSRiaIlRKj19l168A5Dnuyy/LwD8+4C3q6aQvE41KfHPR/6GQOJG445yY
-         oToQ==
+        bh=eYQrMEAKcMVaU+xgbaF9WaeEFzrvaW1Ln2qqG928SBs=;
+        b=ANr6WzzQcr61qjtWucWGx+YFP1/iqdI6xqZ9o7BBHNYx/lKrwllO7gDdYdWFn2A80P
+         xlsKwZy/z25z0ckczBsPnKfeD3mt7z0ZzZvy7OJt2oFRmcJNOACg9aD4OvsE08Q1JlO2
+         K5lEioK/tSfQoz03kOU1EU1ZkhGtsiSPi+OC+xKxjT+1rjaz0B9tpwXkGrPRvScoMHfj
+         jpwrSJy3CKPpLp4yTe7c/h8klosQoB1/fVMBqGVVOyuRtuEq1IH1sUCNzogXA41QGP/7
+         naksTsLW1S+jls6JOr16bNplDvWBsI2RxxOTY+f11bAj6fNRxcp+zZktJFgRrp+3Ws2G
+         hrgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ebW69nh2gxCA88grqlgNT+0uxItP3N7/4J8YHif20NA=;
-        b=JB4eVj/e/1MrFJHFVfVaVsxAKu3+DthH034xmA6RIIPaVhJChVYYsukOC1MtLSK7dj
-         Ymu2b6PKD6EHXgo1W67R5y8dz+EMV0QxlBmMmuOzPqDK1NqAwegKEynQkSMAOwB0OUXf
-         fq3tjg+Vg8d+xw+j1eqQfGlWFOi1XomDCNga2saSsgoPKJxdBK2iNmo9b1xIb6IX8wjX
-         NYHscwpJF0mCOBzWY/OA1OzdDkUj07mtyqfyY5bQo53UVVlCkck+6sMSVZjYzoZwj6m3
-         O49iE/1QS8WIzr7VwlRvLdHuvW5n1+Sbrv2AGQZXFEycTaPLSlDcmaBQqRDa14BugOxK
-         0Arw==
-X-Gm-Message-State: AODbwcCfcAmJfsQu8h7il0lnpobYkpOfqutXTMM54Uh4eLO3F7YIMq7Y
-        GNuP5JPVpbum4A==
-X-Received: by 10.99.66.5 with SMTP id p5mr47930916pga.107.1497092597885;
-        Sat, 10 Jun 2017 04:03:17 -0700 (PDT)
+        bh=eYQrMEAKcMVaU+xgbaF9WaeEFzrvaW1Ln2qqG928SBs=;
+        b=iA/R4FuPbzkruQYTy3pClYB28OJ4PRw3tKRv52kUldujSe8MusdoA1GGTs3WXAj3R5
+         mTkOB3jhvDCC7TnucgphMlC4kfaUuHdqwMXcrmfmgJujmYnTUsneCFmpQLoJ12dSXs3b
+         D+JgsDfI+sZVK6V56dnSAAHQU7z3qhg5drDbf9W2+uHXagIvXnxlNd05BL3cC3h8eGlT
+         VffcqThXnLnm+1OSu9BMRNBY9tKXdDOK8ZuOqYfwLV2N8wcEsRNwxnXMMC/1Y751E3yy
+         HmG324wtEFvpnh+0h/fXoIKfenlZLS+CPvXIlUieDXOjKW84eraUNts8etnQkRJ0QViD
+         Xa9g==
+X-Gm-Message-State: AODbwcDXmmnlIOnc6uQm6uGa8STJSb+DKjqzNp6TkTThCK6Y6zeFHQAa
+        ImqrKi905GcyFw==
+X-Received: by 10.84.129.67 with SMTP id 61mr37275169plb.229.1497093147413;
+        Sat, 10 Jun 2017 04:12:27 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:d192:93c8:4f75:5879])
-        by smtp.gmail.com with ESMTPSA id b14sm9907881pga.12.2017.06.10.04.03.17
+        by smtp.gmail.com with ESMTPSA id v186sm6431561pgd.9.2017.06.10.04.12.26
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 10 Jun 2017 04:03:17 -0700 (PDT)
+        Sat, 10 Jun 2017 04:12:26 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Emily Xie <emilyxxie@gmail.com>, git@vger.kernel.org,
-        novalis@novalis.org
-Subject: Re: [PATCH] pathspec: die on empty strings as pathspec
-References: <20170607033308.33550-1-emilyxxie@gmail.com>
-        <xmqq60g56s6x.fsf@gitster.mtv.corp.google.com>
-        <20170610062151.fv7d4audrwav2hy3@sigill.intra.peff.net>
-Date:   Sat, 10 Jun 2017 20:03:16 +0900
-In-Reply-To: <20170610062151.fv7d4audrwav2hy3@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 10 Jun 2017 02:21:51 -0400")
-Message-ID: <xmqqvao414wb.fsf@gitster.mtv.corp.google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG?] gitlink without .gitmodules no longer fails recursive clone
+References: <20170606035650.oykbz2uc4xkr3cr2@sigill.intra.peff.net>
+        <CAGZ79kY-uzardfOvrJufatYgU9bqx4XZMU_GFq5zwc-vtzM-3Q@mail.gmail.com>
+        <20170606181024.GA189073@google.com>
+        <20170606183914.6iowfhimo5yrvmtf@sigill.intra.peff.net>
+        <20170609231935.ysolxkiuhhpa3xrd@sigill.intra.peff.net>
+        <xmqqbmpw4mpo.fsf@gitster.mtv.corp.google.com>
+        <20170610071342.gdmpgjqlho2xfvdt@sigill.intra.peff.net>
+Date:   Sat, 10 Jun 2017 20:12:25 +0900
+In-Reply-To: <20170610071342.gdmpgjqlho2xfvdt@sigill.intra.peff.net> (Jeff
+        King's message of "Sat, 10 Jun 2017 03:13:43 -0400")
+Message-ID: <xmqqr2ys14h2.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,24 +74,41 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> That's long enough for people who actually ran the intermediate
-> versions.  But what about people on distros who jump from v2.10 or lower
-> straight to v2.14?
->
-> I think to catch them we'd literally need years on our deprecation
-> schedules. Maybe it's not worth caring about. That's an awful long time
-> for people who _are_ upgrading each version to see the warning. Of
-> course the end game in this case is that it becomes an error, so they'll
-> be notified either way. :)
->
-> I'm OK with this case being a relatively quick deprecation, but your
-> "long enough" made me wonder how we would decide that.
->
-> -Peff
->
-> [1] Debian stable is set to release in a week or so. People doing that
->     stable upgrade will go from v2.1.4 to v2.11.0. So they won't
->     actually skip the deprecation notice, but they'll probably live with
->     the warning for 3 years or so.
+> Certainly I think it _could_ be a valid state. But traditionally it
+> caused "clone --recursive" to barf. And from what Stefan and Brandon
+> have said, we are moving in the opposite direction entirely, with
+> .gitmodules becoming the source of truth.
+> 
+> I could see arguments for going in either direction (gitlinks versus
+> .gitmodules as source of truth for submodules). But it bothers me that
+> it's so easy to create a state that will behave in a confusing manner.
+> ...
+> Allowing both is not in itself wrong.  But because we provide no
+> guidance for the expert route, it's easy to shoot yourself in the foot
+> and not even realize it. Which is why I suggested a warning and not
+> forbidding the operation. Or better still, an advise() block that tells
+> you how to recover (probably "git submodule add", though it might need
+> to learn to handle already-present gitlinks). And which can be disabled
+> if you really are an expert user.
 
-Yuck X-<.
+Yeah, the current situation is bad in that having both .gitmodules
+file and gitlinks in a tree allows for redundant pieces of
+information to go out of sync and result in contradiction.  A gitlink
+without an entry in the .gitmodules file is an obvious example.  An
+entry in .gitmodules file whose path does not have a gitlink in the
+tree would also be a broken case.  
+
+While "git submodule" was the only/primary interface to the
+submodule, it was rather easy to explain that ".gitmodules need to
+be consistent with the index and the tree iff you do 'git submodule'
+thing" (implying "if you only use gitlinks to bind two or more
+projects locally without sharing with others, you do not need 'git
+submodule' and you do not need .gitmodules"), but with the recent
+push to add "--recurse-submodules" to everything, the extent of what
+was historically "iff you do 'git submodule' thing" is getting
+larger and it becomes more and more important to keep .gitmodules
+consistent with gitlinks in the tree that house it.
+
+I find it a bit sad, but I do not think of a better way X-<.
+
+
