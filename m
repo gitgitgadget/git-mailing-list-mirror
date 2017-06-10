@@ -6,89 +6,191 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A658F1FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 10:07:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5437F1FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 10:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751929AbdFJKHe (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 06:07:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37608 "EHLO cloud.peff.net"
+        id S1751950AbdFJKLB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 06:11:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37612 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751890AbdFJKHd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 06:07:33 -0400
-Received: (qmail 9658 invoked by uid 109); 10 Jun 2017 10:07:32 -0000
+        id S1751890AbdFJKLA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 06:11:00 -0400
+Received: (qmail 9861 invoked by uid 109); 10 Jun 2017 10:10:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 10:07:32 +0000
-Received: (qmail 30310 invoked by uid 111); 10 Jun 2017 10:07:32 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 10:10:59 +0000
+Received: (qmail 30324 invoked by uid 111); 10 Jun 2017 10:11:00 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 06:07:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Jun 2017 06:07:30 -0400
-Date:   Sat, 10 Jun 2017 06:07:30 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 06:11:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Jun 2017 06:10:57 -0400
+Date:   Sat, 10 Jun 2017 06:10:57 -0400
 From:   Jeff King <peff@peff.net>
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2 8/8] Use the early config machinery to expand aliases
-Message-ID: <20170610100730.j62kh2hayt6zknr5@sigill.intra.peff.net>
+Message-ID: <20170610101057.yeemax73c2t6truz@sigill.intra.peff.net>
 References: <cover.1496951503.git.johannes.schindelin@gmx.de>
  <af40ce088de03130a5edfae187bb8274b5a9d3a9.1496951503.git.johannes.schindelin@gmx.de>
+ <20170610100730.j62kh2hayt6zknr5@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <af40ce088de03130a5edfae187bb8274b5a9d3a9.1496951503.git.johannes.schindelin@gmx.de>
+In-Reply-To: <20170610100730.j62kh2hayt6zknr5@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 08, 2017 at 09:53:53PM +0200, Johannes Schindelin wrote:
+On Sat, Jun 10, 2017 at 06:07:30AM -0400, Jeff King wrote:
 
-> @@ -245,36 +201,37 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
->  
->  static int handle_alias(int *argcp, const char ***argv)
->  {
-> +	struct strbuf cdup_dir = STRBUF_INIT;
->  	int envchanged = 0, ret = 0, saved_errno = errno;
->  	int count, option_count;
->  	const char **new_argv;
->  	const char *alias_command;
->  	char *alias_string;
-> -	int unused_nongit;
-> -
-> -	save_env_before_alias();
-> -	setup_git_directory_gently(&unused_nongit);
->  
->  	alias_command = (*argv)[0];
-> -	alias_string = alias_lookup(alias_command, NULL);
-> +	alias_string = alias_lookup(alias_command, &cdup_dir);
->  	if (alias_string) {
->  		if (alias_string[0] == '!') {
->  			struct child_process child = CHILD_PROCESS_INIT;
->  
-> +			if (cdup_dir.len)
-> +				setup_git_directory();
-> +
+> But couldn't we just unconditionally do:
+> 
+>   setup_git_directory_gently();
+> 
+> here to move into the top-level if there is one, without caring about
+> cdup_dir at all?
 
-I'm really confused here. We went to all the trouble to record the
-cdup_dir as part of the alias lookup so that we could make sure to
-chdir() to it. But we don't seem to ever look at its value. We just use
-it as a proxy for "did we find a git-dir". And if we did, we go to all
-the trouble to re-discover it via setup_git_directory().
+IOW, drop your patch 4, and then squash patches 7 and 8 into this:
 
-I understand why you must use setup_git_directory() and not just a
-chdir(), because the latter sets up variables like GIT_PREFIX and
-GIT_DIR that the shell alias may be depending on.
-
-But couldn't we just unconditionally do:
-
-  setup_git_directory_gently();
-
-here to move into the top-level if there is one, without caring about
-cdup_dir at all?
-
-That should be equally correct. It does do an extra discovery when we
-already know that there isn't a gitdir at all. But my earlier comments
-about optimizing apply (measure, and possibly cache). And in the common
-case that we are in a repo, it's exactly the same, since the setup call
-here would re-discover from scratch (though again, if we care, caching
-could solve that).
-
--Peff
+diff --git a/alias.c b/alias.c
+index 3b90397a9..6bdc93630 100644
+--- a/alias.c
++++ b/alias.c
+@@ -1,14 +1,31 @@
+ #include "cache.h"
+ 
++struct config_alias_data
++{
++	struct strbuf key;
++	char *v;
++};
++
++static int config_alias_cb(const char *key, const char *value, void *d)
++{
++	struct config_alias_data *data = d;
++
++	if (!strcmp(key, data->key.buf))
++		return git_config_string((const char **)&data->v, key, value);
++
++	return 0;
++}
++
+ char *alias_lookup(const char *alias)
+ {
+-	char *v = NULL;
+-	struct strbuf key = STRBUF_INIT;
+-	strbuf_addf(&key, "alias.%s", alias);
+-	if (git_config_key_is_valid(key.buf))
+-		git_config_get_string(key.buf, &v);
+-	strbuf_release(&key);
+-	return v;
++	struct config_alias_data data = { STRBUF_INIT, NULL };
++
++	strbuf_addf(&data.key, "alias.%s", alias);
++	if (git_config_key_is_valid(data.key.buf))
++		read_early_config(config_alias_cb, &data);
++	strbuf_release(&data.key);
++
++	return data.v;
+ }
+ 
+ #define SPLIT_CMDLINE_BAD_ENDING 1
+diff --git a/git.c b/git.c
+index 8ff44f081..4e556fa9a 100644
+--- a/git.c
++++ b/git.c
+@@ -16,50 +16,6 @@ const char git_more_info_string[] =
+ 	   "to read about a specific subcommand or concept.");
+ 
+ static int use_pager = -1;
+-static char *orig_cwd;
+-static const char *env_names[] = {
+-	GIT_DIR_ENVIRONMENT,
+-	GIT_WORK_TREE_ENVIRONMENT,
+-	GIT_IMPLICIT_WORK_TREE_ENVIRONMENT,
+-	GIT_PREFIX_ENVIRONMENT
+-};
+-static char *orig_env[4];
+-static int save_restore_env_balance;
+-
+-static void save_env_before_alias(void)
+-{
+-	int i;
+-
+-	assert(save_restore_env_balance == 0);
+-	save_restore_env_balance = 1;
+-	orig_cwd = xgetcwd();
+-	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
+-		orig_env[i] = getenv(env_names[i]);
+-		orig_env[i] = xstrdup_or_null(orig_env[i]);
+-	}
+-}
+-
+-static void restore_env(int external_alias)
+-{
+-	int i;
+-
+-	assert(save_restore_env_balance == 1);
+-	save_restore_env_balance = 0;
+-	if (!external_alias && orig_cwd && chdir(orig_cwd))
+-		die_errno("could not move to %s", orig_cwd);
+-	free(orig_cwd);
+-	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
+-		if (external_alias &&
+-		    !strcmp(env_names[i], GIT_PREFIX_ENVIRONMENT))
+-			continue;
+-		if (orig_env[i]) {
+-			setenv(env_names[i], orig_env[i], 1);
+-			free(orig_env[i]);
+-		} else {
+-			unsetenv(env_names[i]);
+-		}
+-	}
+-}
+ 
+ static void commit_pager_choice(void) {
+ 	switch (use_pager) {
+@@ -250,19 +206,17 @@ static int handle_alias(int *argcp, const char ***argv)
+ 	const char **new_argv;
+ 	const char *alias_command;
+ 	char *alias_string;
+-	int unused_nongit;
+-
+-	save_env_before_alias();
+-	setup_git_directory_gently(&unused_nongit);
+ 
+ 	alias_command = (*argv)[0];
+ 	alias_string = alias_lookup(alias_command);
+ 	if (alias_string) {
+ 		if (alias_string[0] == '!') {
++			int nongit_ok;
+ 			struct child_process child = CHILD_PROCESS_INIT;
+ 
++			setup_git_directory_gently(&nongit_ok);
++
+ 			commit_pager_choice();
+-			restore_env(1);
+ 
+ 			child.use_shell = 1;
+ 			argv_array_push(&child.args, alias_string + 1);
+@@ -308,8 +262,6 @@ static int handle_alias(int *argcp, const char ***argv)
+ 		ret = 1;
+ 	}
+ 
+-	restore_env(0);
+-
+ 	errno = saved_errno;
+ 
+ 	return ret;
+diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
+index 83881ec3a..20b4d83c2 100755
+--- a/t/t7006-pager.sh
++++ b/t/t7006-pager.sh
+@@ -391,7 +391,7 @@ test_expect_success TTY 'core.pager in repo config works and retains cwd' '
+ 	)
+ '
+ 
+-test_expect_failure TTY 'core.pager is found via alias in subdirectory' '
++test_expect_success TTY 'core.pager is found via alias in subdirectory' '
+ 	sane_unset GIT_PAGER &&
+ 	test_config core.pager "cat >via-alias" &&
+ 	(
