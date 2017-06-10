@@ -2,225 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02BC21FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 13:28:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A30811FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 13:40:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752036AbdFJN2p (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 09:28:45 -0400
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:34026 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751583AbdFJN2n (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 09:28:43 -0400
-Received: by mail-qt0-f179.google.com with SMTP id c10so96668909qtd.1
-        for <git@vger.kernel.org>; Sat, 10 Jun 2017 06:28:43 -0700 (PDT)
+        id S1752084AbdFJNkp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 09:40:45 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:32858 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751678AbdFJNko (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 09:40:44 -0400
+Received: by mail-qt0-f194.google.com with SMTP id w1so19546065qtg.0
+        for <git@vger.kernel.org>; Sat, 10 Jun 2017 06:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=icE0oLks+48v25Xg0+FKE+R1HkUeQHZCPw0CLVXYbI0=;
-        b=nyPeoFBlBte34y5HXXGaFBybp25KTv3xT7iUTpuTVrk/ZhIVbOQ/mEt1eZ89DfCIVj
-         VblnuJUrjByGdXv0B6jimm6E4iEDfjktZZRv34xgpm56eIVx4M1vqV7TtqyUxjwaBtif
-         5CTHeljAie0Gp4FU/iP1+LBo6cMcumAF4HIJ7Gvp0tJ2WTLC+IvKAWVsQPMe/Gksl2P7
-         XXUD4I5ybKkuuWUQ5+MhxfJQ/ej18maV13h8SjtQO2Y0XFsHMIBAC4fVPyPcMSewXT01
-         9d/fvR/fTCi7qXFvhm1a3UUxZwGzVq+JweII54qTOKKevw96xBRk4kbi1ved6FnBuJCm
-         HFmw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Dlm6VmRHe3s69XDv8gLysCRcSMQ9A+rUS2c/9lRUOJg=;
+        b=hl6R1m//RQ28MOiAze/VHgViqzDhRdGWIX7TeyNF90gsG9p1HIKbfjT/HJVq6Ct3bZ
+         yD7GWXhga6FSFewYkEVsm21elchB87r7AYRQgeOMREBLOW3eYXG7N67uxLcLSaMgX67g
+         4eY9mr1AL6IagWtR/CrGmuN5bUTc0YU7LlZ4+y/N2WxHXinhb/K9I1txXLKSM5dotwT4
+         rZ8zMmWAKF5LN4JNxFhcA94M/6RUWqwG+1PWIvocbT9/fXQAz3LAyYrLiZozkfTTeojF
+         bKWnQdpiWIzazxoO0W623EtCe9BH/czmaDUtr6tPILOoiEjFK6EnD3tx04cIYYJZyvc+
+         mpBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=icE0oLks+48v25Xg0+FKE+R1HkUeQHZCPw0CLVXYbI0=;
-        b=MQNyq7dZyAULO6xSG7DoJmI+V/PtNYoyxcOsNBE2Jd/0Qs26KjFu7TjP9p1H7geFu7
-         i1lhzhFZXESc1hcGSU1S+r9mdzWJjb+ENNFN2iR79hcuHpiiQR2qh7GU3fI1hOXqtDOX
-         RqxwnGNfjCwdVwL/L+JdB0ZOxFujFjvvvVl776Z5sjbLO3vPMa5E6eEBImC5Oryq2i8A
-         IX4hJJVaIksG+9HLltwchgVFxNhbRKb9n8F8DMZWWhHfA0xN+H2eTefwcYOxYT0F1AQK
-         0DktDTbyVZOk9L2f7w92V2hGRG+8bw0JuXkT4/0S7PXh1siYLtFkGh7EjpwfsI/UJWse
-         m5bg==
-X-Gm-Message-State: AKS2vOzuq8V5Wyedz5JldbWMlZkR1TlRxaptVgDzwcVJRpU/MaCp92lU
-        uRb65Y32WRengeToU8J/LHvvdqfwlw==
-X-Received: by 10.237.38.71 with SMTP id z65mr58984934qtc.52.1497101322632;
- Sat, 10 Jun 2017 06:28:42 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Dlm6VmRHe3s69XDv8gLysCRcSMQ9A+rUS2c/9lRUOJg=;
+        b=Rc0QyJaJKRWPeDHT0mynRSlCsr6M747iW/d8A90mL6qvCwGjEZfSzaHsvpdMRYo7cR
+         s90SqrJ6vmBOQllwLrt/iCcyMhKk4TxYpqNg21iHbS1lOuKDBTPRA+Ek8nxkQxhWi8UT
+         Ifg2+xqQxlfgi9Uzf5wSuj6odoG0exY+ol69czjm2BUKjCQOX2m4R8Me606p3qtyq7Zq
+         JAH0fDY5mGv8WNLdrGXCCLfXFXZFs4kN/SSHJbGPmV9saa/fJCaHDm6Yb7PgQ3SxLpw1
+         rTGTn3h047QZPhJD8/Ts6TtX9Endb2VRC6ljMVpxRuDdL39Pmd2jO6OYoaW0hFg+Fxq/
+         8SCQ==
+X-Gm-Message-State: AODbwcB2Qc3LXpCF5zUZ/goDpwUyyCLGIS2RLtVZJO31uh250onYKIx/
+        oTU7ENXbLW4xcK3Sq98=
+X-Received: by 10.200.35.122 with SMTP id b55mr26379133qtb.24.1497102043440;
+        Sat, 10 Jun 2017 06:40:43 -0700 (PDT)
+Received: from localhost.localdomain ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id f94sm2707503qtb.16.2017.06.10.06.40.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 10 Jun 2017 06:40:42 -0700 (PDT)
+From:   Ben Peart <peartben@gmail.com>
+X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, benpeart@microsoft.com, pclouds@gmail.com,
+        johannes.schindelin@gmx.de, David.Turner@twosigma.com,
+        peff@peff.net, christian.couder@gmail.com, avarab@gmail.com
+Subject: [PATCH v5 0/7] Fast git status via a file system watcher
+Date:   Sat, 10 Jun 2017 09:40:19 -0400
+Message-Id: <20170610134026.104552-1-benpeart@microsoft.com>
+X-Mailer: git-send-email 2.13.0
 MIME-Version: 1.0
-Received: by 10.140.86.48 with HTTP; Sat, 10 Jun 2017 06:28:22 -0700 (PDT)
-In-Reply-To: <CAE5=+KXPzY0QX+T26oUAHcV8HUYOCTrpuYN_Tb5cXxF71twmZQ@mail.gmail.com>
-References: <CAE5=+KX57KM+6n9NpePw9KYPXFy7UH-WRgSwaJDnvRofYFXm7Q@mail.gmail.com>
- <20170530181051.GA81679@aiede.mtv.corp.google.com> <CAE5=+KXPzY0QX+T26oUAHcV8HUYOCTrpuYN_Tb5cXxF71twmZQ@mail.gmail.com>
-From:   John Shahid <jvshahid@gmail.com>
-Date:   Sat, 10 Jun 2017 09:28:22 -0400
-Message-ID: <CAE5=+KUJr2=w3W=ZDTbd=L+8=KtwsV95Q7bcJassjzFncrnBKQ@mail.gmail.com>
-Subject: Re: git push recurse.submodules behavior changed in 2.13
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-bump. it's been a while and I'm still not clear what the next steps
-are. I'm happy to send a patch but I would like to get a consensus
-first.
+Changes from V4 include:
 
-On Wed, May 31, 2017 at 10:50 AM, John Shahid <jvshahid@gmail.com> wrote:
-> Hi Jonathan. Thanks a lot for the detailed and interesting response. I
-> included my comments/replies inline. tl;dr;
->
-> 1. I love the idea of having tools treat the repo as a unit.
-> 2. I think propagating the refspec when no refspec is passed on the
-> CLI is very surprising action that should be corrected
-> 3. I propose more changes to the git tools to support the unity view of the repo
->
-> On Tue, May 30, 2017 at 2:10 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Hi John,
->>
->> John Shahid wrote:
->>
->>> It looks like the git push recurse-submodules behavior has changed.
->>> Currently with 2.13 you cannot run "git push
->>> --recurse-submodules=on-demand" if the parent repo is on a different
->>> branch than the sub repos, e.g. parent repo is on "develop" and
->>> sub-repo on "master". I created a test that can be found here [1].
->>>
->>> A bisect shows that the change to propagate refspec [2] to the
->>> submodules is the culprit. imho this is an undesired change in
->>> behavior. I looked at the code but couldn't see an easy way to fix
->>> this issue without breaking the feature mentioned above. The only
->>> option I can think of is to control the refspec propagation behavior
->>> using a flag, e.g. "--propagate-refspecs" or add another
->>> recurse-submodules option, e.g. "--recurse-submodules=propagate"
->>
->> Thanks for reporting. The old behavior of "git push
->> --recurse-submodules" was a little loose (it would run "git push" in
->> the submodule and rely on defaults to determine the behavior) and when
->> propagating refspecs we considered taking the opportunity to tighten
->> that by propagating the default refspec when you run "git push
->> --recurse-submodules" without a refspec.
->>
->> We didn't make that change. If starting over, it might be a natural
->> thing to do, but we didn't want to break existing users. So
->>
->> git push --recurse-submodules=on-demand
->>
->> should continue to work as before. *puzzled*
->>
->> [...]
->>> We have a parent repo on a branch called "develop" and a submodule on
->>> a branch called "master". Prior to git version 2.13 if we had an
->>> unpushed commit in the submodule and ran "git push origin develop
->>> --recurse-submodules=on-demand" git would happily push the develop
->>> branch of the parent repo and the master branch of the submodule,
->> [...]
->>> pushing to ref refs/heads/develop:refs/heads/develop
->>> pushging to remote origin
->>> fatal: src refspec 'refs/heads/develop' must name a ref
->>> fatal: process for submodule 'sub' failed
->>> fatal: The remote end hung up unexpectedly
->>
->> Aha, you are passing a refspec!
->
-> Yes, we are used to passing a refspec but we will be happy not to if
-> that preserves the old behavior. In fact, the test case I linked to
-> earlier does not pass a refspec. I wrote the test that way because I
-> initially misunderstood the commit message and thought that not
-> passing a refspec preserves the old behavior. Long story short, I'm
-> happy with whatever option we have to maintain our current workflow.
->
->>
->> Can you say more about how this change affects you? Would you be able
->> to push without a refspec, or do you e.g. have scripting that was
->> relying on the existing loose behavior?
->
-> as i said before, pushing without a refspec would work for us. I'm
-> also talking to the team to see if we can switch the branch names to
-> be consistent, i.e. use either "master" or "develop" both in the
-> parent repo and sub repos.
->
->>
->> To put this in more context: part of the ideal that
->> --recurse-submodules options are trying to achieve is to allow
->> thinking of a repository as a single unit, including submodules, most
->> of the time. To this end, "git clone --recurse-submodules" clones a
->> repository including its submodules, "git checkout
->> --recurse-submodules" checks out submodules as part of a checkout
->> operation, avoiding a separate "git submodule update --init" operation,
->> "git fetch --recurse-submodules" fetches upstream changes for both the
->> parent repository and submodules, and so on.
->>
->> Unfortunately "git checkout --recurse-submodules" was missing a piece,
->> impacting this workflow. If I run
->>
->> git checkout --recurse-submodules -b develop
->>
->> then today this creates a "develop" branch in the superproject but not
->> within submodules. This hurts the illusion of the project being a single
->> unit and makes the meaning of operations like
->>
->> git push --recurse-submodules develop:master
->>
->> unclear.
->>
->> Ideas for next steps:
->>
->> 1. If "git checkout --recurse-submodules -b develop" does the right
->> thing, then this situation is harder to get in in the first place.
->> The series at [3] is meant to do that.
->>
->> 2. The error message shown above is very unclear. It leaks
->> implementation details and doesn't give the user a clear hint
->> about what to do to resolve it. Would some message like the
->> following have helped?
->>
->> $ git push --recurse-submodules origin develop
->> fatal: branch "develop" does not exist in submodule "sub"
->> hint: use "git -C sub branch develop <sha1>" to create such a branch
->> hint: or push without a branch name to push the current branch
->>
->> 3. Outside of the output from any particular command, we are missing
->> an equivalent of "man gitworkflows" to describe how the
->> --recurse-submodules options are meant to work. The series at [4]
->> aims to start addressing that.
->
-> I would also add to that list, "git pull --rebase
-> -recurse-submodules", "git merge --recurse-submodules", etc. Otherwise
-> "git checkout --recurse-submodules develop" won't make much sense,
-> since you'll have to go to each submodules and make sure the local
-> branch is up to date.
->
-> I like the idea of treating the entire repo as a single unit. In fact
-> the new feature (to propagate refspec) is very useful to me. For
-> example, when working on feature branches across the entire repo. That
-> said, i think "git push --recurse-submodules=on-demand" should do the
-> least surprising action and push the current branch, where "current"
-> is defined wrt the repo being pushed (and "push.default" of course).
-> Taking the refspec from the parent repo and forcing it on the
-> submodules feels weird to me.
->
->>
->> Given all the above, this looks like a real and serious bug but I
->> think to find a different way from --recurse-submodules=propagate to
->> fix it. The idea, especially with [5], is for submodules to work
->> intuitively without requiring special options. This can require more
->> work in the short term getting the default behavior to work well with
->> a variety of use cases but I think it is time well spent.
->
->>
->> Thoughts?
->>
->> Thanks and hope that helps,
->> Jonathan
->
-> Yes, that definitely helped. This track of work makes more sense now.
-> Thanks again for the detailed response.
->
-> JS
->
->>
->>> [1] https://gist.github.com/jvshahid/b778702cc3d825c6887d2707e866a9c8
->>> [2] https://github.com/git/git/commit/06bf4ad1db92c32af38e16d9b7f928edbd647780
->> [3] http://public-inbox.org/git/20170501180058.8063-1-sbeller@google.com/
->> [4] http://public-inbox.org/git/20170209020855.23486-1-sbeller@google.com/
->> [5] http://public-inbox.org/git/20170526191017.19155-1-sbeller@google.com/
+fsmonitor.c:
+	Only flag index dirty if fsmonitor extension is added or removed
+	or if new cache or untracked cache entries are marked dirty
+
+dir.c:
+	If an untracked cache entry is flagged as fsmonitor_dirty,
+	fall back to existing logic to stat the file and check for
+	changes instead of assuming it is dirty.
+
+hooks--query-fsmonitor.sample: 
+	Optimize query to exclude transitory files (files that were
+	created and deleted since the last call).
+	
+	Update path mangling on Windows to match Watchman beta.
+
+test-drop-caches.c:
+	Add perf helper to drop the disk cache on Windows.
+
+p7519-fsmonitor.sh:
+	Add perf test for fsmonitor changes
+
+Ben Peart (7):
+  bswap: add 64 bit endianness helper get_be64
+  dir: make lookup_untracked() available outside of dir.c
+  fsmonitor: teach git to optionally utilize a file system monitor to
+    speed up detecting new or changed files.
+  fsmonitor: add test cases for fsmonitor extension
+  fsmonitor: add documentation for the fsmonitor extension.
+  fsmonitor: add a sample query-fsmonitor hook script for Watchman
+  fsmonitor: add a performance test
+
+ Documentation/config.txt                 |   7 +
+ Documentation/githooks.txt               |  23 +++
+ Documentation/technical/index-format.txt |  19 +++
+ Makefile                                 |   2 +
+ builtin/update-index.c                   |   1 +
+ cache.h                                  |   5 +
+ compat/bswap.h                           |   4 +
+ config.c                                 |   4 +
+ dir.c                                    |  29 ++--
+ dir.h                                    |   5 +
+ entry.c                                  |   1 +
+ environment.c                            |   1 +
+ fsmonitor.c                              | 261 +++++++++++++++++++++++++++++++
+ fsmonitor.h                              |   9 ++
+ read-cache.c                             |  28 +++-
+ t/helper/test-drop-caches.c              | 107 +++++++++++++
+ t/perf/p7519-fsmonitor.sh                | 161 +++++++++++++++++++
+ t/t7519-status-fsmonitor.sh              | 173 ++++++++++++++++++++
+ templates/hooks--query-fsmonitor.sample  |  76 +++++++++
+ unpack-trees.c                           |   1 +
+ 20 files changed, 904 insertions(+), 13 deletions(-)
+ create mode 100644 fsmonitor.c
+ create mode 100644 fsmonitor.h
+ create mode 100644 t/helper/test-drop-caches.c
+ create mode 100755 t/perf/p7519-fsmonitor.sh
+ create mode 100755 t/t7519-status-fsmonitor.sh
+ create mode 100755 templates/hooks--query-fsmonitor.sample
+
+-- 
+2.13.0
+
