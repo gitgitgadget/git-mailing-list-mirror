@@ -2,117 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F7861FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 11:41:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4841FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 12:48:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752011AbdFJLlP (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 07:41:15 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33199 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751955AbdFJLlO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 07:41:14 -0400
-Received: by mail-wr0-f194.google.com with SMTP id v104so11863473wrb.0
-        for <git@vger.kernel.org>; Sat, 10 Jun 2017 04:41:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8QqxmQzZFG8smcJn3ZlqheEx/Hx5LPkKVzXkcZPQzEU=;
-        b=XTrgsQHSMjf0H1dFmF5yC/uJElo42bGG0lnUU5F6fxsaYh6Z+p1W/S9HTiSk8Ccwq5
-         YZgS63VLY+P3O3DKnfMSfMPUWl7nLQRiMjbOCwmebr9l8vbeiCUq+0zKKjXmYFS0I2KQ
-         C7fcFTlRgrQfZCka4IkPncugBBxLpyEA0FtTROya4+wyiUWQDxPmKjTbzXZo1jpWwnYZ
-         dE5i5DdvN8ZtjuKvfdZNzqlfJaTjo9Qf/NDXmYYm2KMCazVUdKU2JgE1fTjUAqtqqcjO
-         pgpmS/XTBC+Hz/EltY6BLhrJRrL0TNggBYV1/Q9t9E7Dz3lUPC4/GSns85nZM0hbcRHP
-         KUfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8QqxmQzZFG8smcJn3ZlqheEx/Hx5LPkKVzXkcZPQzEU=;
-        b=H/vgXA2Szoc9DzjsckhFvqchiuw1ZfIE3E54f2weK+sZw9J1ejAZof7ItGZIeQEEe7
-         dlEnF/tMcDBEluNS3dpeTVOYyfPjckj5mli3wnTglI5j7hliUnT2+F8c8F541QChBPrN
-         mgEBy3zrZvQnAL2poygk/2+fH/6igxD918JtyaJ2zxEJL2cYCG4P/wKD4LC2Ca24V1i9
-         FStl/4F/XGZViI+5x0lM0otjV4/rLftSBUf54mhmDsFzKcKTBuW8Q8OWLQRdIbG0KkYk
-         f7yVIX0M1T//GztJVuoPA8DubSDGWRKu3U7Ee9I7ZvEzaSMix4tZ4nUPWmFGgNJ24hKs
-         uC1A==
-X-Gm-Message-State: AKS2vOx+f6MZN4PgFUWpAKxITAplQuLRCv4h6SvLcyNfMXjP90TdFkfv
-        07QjcFm3Ia7MEQ==
-X-Received: by 10.28.138.16 with SMTP id m16mr2417719wmd.99.1497094872983;
-        Sat, 10 Jun 2017 04:41:12 -0700 (PDT)
-Received: from localhost.localdomain (x4db24cad.dyn.telefonica.de. [77.178.76.173])
-        by smtp.gmail.com with ESMTPSA id f75sm2757287wmi.14.2017.06.10.04.41.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 10 Jun 2017 04:41:12 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCHv2.1] revision.h: turn rev_info.early_output back into an unsigned int
-Date:   Sat, 10 Jun 2017 13:41:01 +0200
-Message-Id: <20170610114101.21026-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.13.0.420.g54001f015
-In-Reply-To: <20170610064102.w4kp6omxdznfe7fa@sigill.intra.peff.net>
-References: <20170610064102.w4kp6omxdznfe7fa@sigill.intra.peff.net>
+        id S1752070AbdFJMsj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 08:48:39 -0400
+Received: from ikke.info ([178.21.113.177]:38088 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751677AbdFJMsi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 08:48:38 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 977CA4400B7; Sat, 10 Jun 2017 14:48:36 +0200 (CEST)
+Date:   Sat, 10 Jun 2017 14:48:36 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: 'pu' broken at t5304 tonight
+Message-ID: <20170610124836.GD27719@alpha.vpn.ikke.info>
+References: <xmqq4lvo2x6i.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq4lvo2x6i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.8.2 (2017-04-18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-rev_info.early_output started out as an unsigned int in cdcefbc97 (Add
-"--early-output" log flag for interactive GUI use, 2007-11-03), but
-later it was turned into a single bit in a bit field in cc243c3ce
-(show: --ignore-missing, 2011-05-18) without explanation, though the
-code using it still expects it to be a regular integer type and uses
-it as a counter.  Consequently, any even number given via
-'--early-output=<N>', or indeed a plain '--early-output' defaulting to
-100 effectively disabled the feature.
+On Sat, Jun 10, 2017 at 03:07:01PM +0900, Junio C Hamano wrote:
+> I didn't check where it goes wrong.  Here is a list of suspects,
+> taken by
+> 
+>     $ git shortlog --no-merges pu@{8.hours}..pu
+> 
+> i.e. patches that weren't in pu before today's integration cycle.
+> 
+> Andreas Heiduk (1):
+>       doc: describe git svn init --ignore-refs
+> 
+> Brandon Williams (32):
+>       config: create config.h
+>       config: remove git_config_iter
+>       config: don't include config.h by default
+>       config: don't implicitly use gitdir
+>       setup: don't perform lazy initialization of repository state
+>       environment: remove namespace_len variable
+>       repository: introduce the repository object
+>       environment: place key repository state in the_repository
+>       environment: store worktree in the_repository
+>       setup: add comment indicating a hack
+>       config: read config from a repository object
+>       repository: add index_state to struct repo
+>       submodule-config: store the_submodule_cache in the_repository
+>       submodule: add repo_read_gitmodules
+>       submodule: convert is_submodule_initialized to work on a repository
+>       convert: convert get_cached_convert_stats_ascii to take an index
+>       convert: convert crlf_to_git to take an index
+>       convert: convert convert_to_git_filter_fd to take an index
+>       convert: convert convert_to_git to take an index
+>       convert: convert renormalize_buffer to take an index
+>       tree: convert read_tree to take an index parameter
+>       ls-files: convert overlay_tree_on_cache to take an index
+>       ls-files: convert write_eolinfo to take an index
+>       ls-files: convert show_killed_files to take an index
+>       ls-files: convert show_other_files to take an index
+>       ls-files: convert show_ru_info to take an index
+>       ls-files: convert ce_excluded to take an index
+>       ls-files: convert prune_cache to take an index
+>       ls-files: convert show_files to take an index
+>       ls-files: factor out debug info into a function
+>       ls-files: factor out tag calculation
+>       ls-files: use repository object
+> 
+> Jeff King (1):
+>       date: use localtime() for "-local" time formats
+> 
+> Johannes Schindelin (8):
+>       discover_git_directory(): avoid setting invalid git_dir
+>       config: report correct line number upon error
+>       help: use early config when autocorrecting aliases
+>       read_early_config(): optionally return the worktree's top-level directory
+>       t1308: relax the test verifying that empty alias values are disallowed
+>       t7006: demonstrate a problem with aliases in subdirectories
+>       alias_lookup(): optionally return top-level directory
+>       Use the early config machinery to expand aliases
+> 
+> Junio C Hamano (1):
+>       ### match next
+> 
+> Prathamesh Chavan (1):
+>       dir: create function count_slashes
+> 
+> SZEDER Gábor (5):
+>       revision.h: turn rev_info.early_output back into an unsigned int
+>       revision.c: stricter parsing of '--no-{min,max}-parents'
+>       revision.c: stricter parsing of '--early-output'
+>       revision.c: use skip_prefix() in handle_revision_opt()
+>       revision.c: use skip_prefix() in handle_revision_pseudo_opt()
+> 
+> Stefan Beller (1):
+>       t4005: modernize style and drop hard coded sha1
+> 
 
-Turn rev_info.early_output back into its origin unsigned int data
-type, making '--early-output' work again.
+For me, this bisects to the latest merge:
 
-Signed-off-by: SZEDER GÃ¡bor <szeder.dev@gmail.com>
----
-
-> But the "users still expect" bit was a bit subtle to me, as I thought
-> you meant users of Git. But you mean that the feature itself is not a
-> boolean, but rather an integer count of how much early output to show.
-
-Yeah, I wrote "callsites" first, but then realized it's not a
-function...
-
-Here is the same patch with an updated commit message now saying "code
-using it" and "used as a counter" to make it clearer.  It also
-mentions that an argumentless '--early-output' turns off the feature,
-too.
-
-I won't resend the rest of the series.
-
- revision.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/revision.h b/revision.h
-index a91dd3d5d..f96e7f7f4 100644
---- a/revision.h
-+++ b/revision.h
-@@ -74,8 +74,9 @@ struct rev_info {
- 	/* topo-sort */
- 	enum rev_sort_order sort_order;
- 
--	unsigned int	early_output:1,
--			ignore_missing:1,
-+	unsigned int early_output;
-+
-+	unsigned int	ignore_missing:1,
- 			ignore_missing_links:1;
- 
- 	/* Traversal flags */
--- 
-2.13.0.420.g54001f015
-
+2047eebd3 (Merge branch 'bw/repo-object' into pu, 2017-06-10), but
+neither of the parent of the merge break this test, so it looks like
+it's because of an interaction between the repo-object topic and another
+topic.
