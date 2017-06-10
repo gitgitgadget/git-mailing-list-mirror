@@ -6,66 +6,80 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34A451FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 06:55:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD2B51FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 07:01:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751817AbdFJGzz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 02:55:55 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:35802 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751785AbdFJGzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 02:55:54 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 3wl90l6ZV4z1qsF0;
-        Sat, 10 Jun 2017 08:55:51 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 3wl90l5d7Mz3jR9h;
-        Sat, 10 Jun 2017 08:55:51 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id 6AowzzO1tQ4W; Sat, 10 Jun 2017 08:55:50 +0200 (CEST)
-X-Auth-Info: Nk6mIazj/tpnDbjaNgXX+36ySBAolCKIkYgruHFlGgJYFMpdn7/n2qjPSOuuCuUO
-Received: from linux.local (ppp-88-217-7-34.dynamic.mnet-online.de [88.217.7.34])
-        by mail.mnet-online.de (Postfix) with ESMTPA;
-        Sat, 10 Jun 2017 08:55:50 +0200 (CEST)
-Received: by linux.local (Postfix, from userid 501)
-        id A18D91E563C; Sat, 10 Jun 2017 08:55:48 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2 1/2] git-compat-util: add a FREEZ() wrapper around free(ptr); ptr = NULL
-References: <20170609085346.19974-1-avarab@gmail.com>
-        <20170609220420.4910-2-avarab@gmail.com>
-        <20170609222738.GF21733@aiede.mtv.corp.google.com>
-X-Yow:  While my BRAINPAN is being refused service in BURGER KING,
- Jesuit priests are DATING CAREER DIPLOMATS!!
-Date:   Sat, 10 Jun 2017 08:55:46 +0200
-In-Reply-To: <20170609222738.GF21733@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Fri, 9 Jun 2017 15:27:38 -0700")
-Message-ID: <m2vao4jpql.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751871AbdFJHBg (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 03:01:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37480 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751866AbdFJHBg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 03:01:36 -0400
+Received: (qmail 30654 invoked by uid 109); 10 Jun 2017 07:01:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 07:01:35 +0000
+Received: (qmail 29078 invoked by uid 111); 10 Jun 2017 07:01:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 03:01:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Jun 2017 03:01:33 -0400
+Date:   Sat, 10 Jun 2017 03:01:33 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 2/4] sha1_file: extract type and size from object_info
+Message-ID: <20170610070133.boicdvkudifz7b4c@sigill.intra.peff.net>
+References: <cover.1497035376.git.jonathantanmy@google.com>
+ <b090fef9ff8593a6d77c3d3363b4af7e73ac12dc.1497035376.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b090fef9ff8593a6d77c3d3363b4af7e73ac12dc.1497035376.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Jun 09 2017, Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Fri, Jun 09, 2017 at 12:23:24PM -0700, Jonathan Tan wrote:
 
-> That way side-effectful callers like FREEZ(func() ? a : b) would
-> work.
+> Looking at the 3 primary functions (sha1_object_info_extended,
+> read_object, has_sha1_file_with_flags), they independently implement
+> mechanisms such as object replacement, retrying the packed store after
+> failing to find the object in the packed store then the loose store, and
+> being able to mark a packed object as bad and then retrying the whole
+> process. Consolidating these mechanisms would be a great help to
+> maintainability.
+> 
+> Such a consolidated function would need to handle the read_object() case
+> (which returns the object data, type, and size) and the
+> sha1_object_info_extended() case (which returns the object type, size,
+> and some additional information, not all of which can be "turned off" by
+> passing NULL in "struct object_info").
 
-Except that you cannot take the address of a non-lvalue.
+I like the idea of consolidating the logic. But I can't help but feel
+that pulling these fields out of object_info is a step backwards. The
+point of that struct is to let the caller specify which aspects of the
+object they're interested in, and let the lookup function decide how
+best to optimize the query.
 
-Andreas.
+So it seems like places which actually want to read the object should be
+passing in a new field in the object_info for "yes, I actually want the
+object contents, too", and then the consolidated function can decide
+which approach to take based on whether or not the contents are
+requested (e.g., unpacking the whole thing, or just the header).
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+If a caller asks for the contents but not the size, that's OK. We'd find
+the size incidentally while unpacking the contents, but just not include
+it in the returned object_info.
+
+Another approach to this whole mess is to have a single function for
+acquiring a "handle" to an object, along with functions to query aspects
+of a handle. That would let callers iteratively ask for the parts they
+care about, and we could lazily fill the handle info (so information we
+pick up while servicing one property of the object gets cached and
+returned for free if the caller asks for it later).
+
+That's a much bigger change, though it may have other benefits (e.g., we
+could be passing around handles instead of object buffers, which would
+make it more natural to stream object content in many cases).
+
+-Peff
