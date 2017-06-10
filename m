@@ -6,58 +6,56 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 740901F8CF
-	for <e@80x24.org>; Sat, 10 Jun 2017 01:51:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77FA01F8CF
+	for <e@80x24.org>; Sat, 10 Jun 2017 01:53:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751686AbdFJBvS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Jun 2017 21:51:18 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33021 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751637AbdFJBvR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jun 2017 21:51:17 -0400
-Received: by mail-pf0-f193.google.com with SMTP id w12so171003pfk.0
-        for <git@vger.kernel.org>; Fri, 09 Jun 2017 18:51:17 -0700 (PDT)
+        id S1751740AbdFJBxD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Jun 2017 21:53:03 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:35102 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751595AbdFJBxC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jun 2017 21:53:02 -0400
+Received: by mail-pf0-f171.google.com with SMTP id l89so33742961pfi.2
+        for <git@vger.kernel.org>; Fri, 09 Jun 2017 18:53:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=5zFv3WVYCyia2heZ0RGt7/mPVZkspaO6H1Cne3EnvW0=;
-        b=sfxsnHniWt9MAGvXshS1JamJnb6X6cT5Y2jKe6vAa6lZ8/z1dpiScdU6J8TWhXDhPc
-         JfGkj7HmALrGMIcPPHPLzuoeKAxrf1Ugha1OSd3Pqvs43YGgMmH8DtS7SHjtuR+1d7Nt
-         2RJJ7pN9/CUNeFpyL7N1Xcj1oM+SvIfvw7zaiQQV/s5GLnvPG2BBo5FlWCNdZXh9dGno
-         NaLmsPBeGmEDiJMFe9z1HlpnaBa7f/bqAF6truGlnSmpvi9xVxXaUlY+AOY9EL/teGj7
-         e4Qo19tkVFfjTApkGYKNDewtIHYU7pnkvejyaNPW3T1k++ziYuecM5EVUom2NDP4KqbT
-         HxKA==
+        bh=+m0eF/6Tt2wdYwWOlxi12z/A/AyU0XwBgTARKI0jCQI=;
+        b=r7C53m0hY9Jjp6kpXR2riRa3DWfG9UcpL/1rQwZJpujo1t+UOH5dJJa16OotjEpFnS
+         ds1sCRzJcKVG/xtQYbsUnFjn5wewggpvx+XDr1hXaIQjbJUxpHZt/S4s3N/zru/V1ERg
+         w3Q2REWP5tAkbfXbr3ReKNRFxn2tmSucRtIQNELSXnddcfpRRzRJvR6bhhPgFNMaNXvh
+         2eP66vojNKhE40x6nKi3CZ79W3LyAbG623YIfeh2MdoiWZr/8QjdUx5zRB8+bDAacrfe
+         L6CBH7b6aI9mCmO4izkJBHvwGkCs1l937eqtyI7qy2BWj5J6ZgtG5ckUHnsS4hWVra/X
+         KOrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=5zFv3WVYCyia2heZ0RGt7/mPVZkspaO6H1Cne3EnvW0=;
-        b=KcU++hgRhlTfIUzolm8crSYI6V1j2PLm6j1QP0gn2QLA8jHz52HMjwvqnzBPEvM/oi
-         7ZmZEuYiTCfPDZjiyD75Gty/WtA+AL+c2FdMXYui6Tl2o97if5payi2mZpEViwXLqzKd
-         Epgm0pDkxRkS7ITL8rvWmWOxTSqBY7t8ty32sQBSVuEwomFnMxMjNQqa2yy+/9cIvgdE
-         4l1IJTbpaHw3wPrGH7fwk5fbbk3MWXZWj+sxr0wuIFBmj0p33PqmADZ6mQVS7Ly6gFDt
-         pH8f9Im1EKn02K3B2MhpUPxjd2neoINNiRU2mZxCdsUBu0QyY1J7H3UxXOm+FA1VGgt+
-         lQ4w==
-X-Gm-Message-State: AODbwcCaKmpozatPIHh0yoXcPsK7SUtIzsgyl0swg9CA/2ALkNb+RHD7
-        +1LAEl7yQpKN6g==
-X-Received: by 10.84.233.198 with SMTP id m6mr43283744pln.292.1497059476712;
-        Fri, 09 Jun 2017 18:51:16 -0700 (PDT)
+        bh=+m0eF/6Tt2wdYwWOlxi12z/A/AyU0XwBgTARKI0jCQI=;
+        b=RnJTKqOWYhNmlYxbqrlKCBcWv4QvPXuctHlnvjzSLOiOam+0cE4Eke/aY+uR0bx6XB
+         Fi/fCyg15d2399gROqtrUm5BfCSTRoTet5aTvGvLqR9kUfi7gOcH7VpZSdiFGFkC5pVk
+         gGvE6i0Ih3NbLIJpxt45Ky8nJKtEuz+GJ9gtgqKIzZlWAKmLRWjuj3BuoPmjjewUgWEZ
+         48Fy/+clsxSt6dptHRZI67hh3IrNtE/M2Q83tmtMXdXMsWvSxKbwkzWWhlA4euLK5mD+
+         UU2l9t13c2RVG9FgEkuKXSh4RSFQoRd5bWS50Ts1+9LrVhPx5jrs6o1yua/gZNOkztIU
+         dUbg==
+X-Gm-Message-State: AODbwcAdayksvZ3/CD2NpdxZAEkbyy78pD5sD+Oaqd0MyUoolQ6RlXBW
+        cuZz142svcgKhg==
+X-Received: by 10.84.231.135 with SMTP id g7mr43847084plk.110.1497059581861;
+        Fri, 09 Jun 2017 18:53:01 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:25b5:3bc1:d744:5d92])
-        by smtp.gmail.com with ESMTPSA id n71sm5146175pfg.46.2017.06.09.18.51.15
+        by smtp.gmail.com with ESMTPSA id r85sm5468321pfb.61.2017.06.09.18.53.01
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 09 Jun 2017 18:51:15 -0700 (PDT)
+        Fri, 09 Jun 2017 18:53:01 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        peff@peff.net
-Subject: Re: [PATCH v1] Configure Git contribution guidelines for github.com
-References: <20170609142151.94811-1-larsxschneider@gmail.com>
-        <20170609170357.GE21733@aiede.mtv.corp.google.com>
-Date:   Sat, 10 Jun 2017 10:51:15 +0900
-In-Reply-To: <20170609170357.GE21733@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Fri, 9 Jun 2017 10:03:57 -0700")
-Message-ID: <xmqqtw3o4nl8.fsf@gitster.mtv.corp.google.com>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     Git <git@vger.kernel.org>
+Subject: Re: How to git push mirror local refs only?
+References: <CAHd499BBNsai4SScOe6kADsgbGRLyGnDKyUcm8LZL-w8c9Webw@mail.gmail.com>
+Date:   Sat, 10 Jun 2017 10:53:00 +0900
+In-Reply-To: <CAHd499BBNsai4SScOe6kADsgbGRLyGnDKyUcm8LZL-w8c9Webw@mail.gmail.com>
+        (Robert Dailey's message of "Fri, 9 Jun 2017 11:12:22 -0500")
+Message-ID: <xmqqpoec4nib.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,33 +64,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-> Lars Schneider wrote:
+> So I want to update my remote fork with all my local branches.
+> Normally I'd do this:
 >
->> Many open source projects use github.com for their contribution process.
->> Although we mirror the Git core repository to github.com [1] we do not
->> use any other github.com service. This is unknown/unexpected to a
->> number of (potential) contributors and consequently they create Pull
->> Requests against our mirror with their contributions. These Pull
->> Requests become stall [2]. This is frustrating to them as they think we
->> ignore them and it is also unsatisfactory for us as we miss potential
->> code improvements and/or new contributors.
+> $ git push --mirror fork
 >
-> I think this description could be more focused.  It's also not
-> self-contained --- e.g. the link to stalled pull requests is likely to
-> become stale over time, especially if GitHub gives us a way to disable
-> pull requests for the repository some day.
+> However this will also push everything under `refs/remotes` which I do
+> not want. And it fails if I specify a refspec parameter with --mirror.
 >
-> Could you summarize for me the motivation behind this patch?  Is it to
-> make Git more approachable, to avoid frustrating contributors, etc?
+> Is there a way to achieve this through one or more git commands? Note
+> I'm doing this on a non-bare clone and have to keep it that way since
+> I'm pushing branches I actively work on.
+>
+> An intrinsic benefit of what I'm trying to do is that the mirror
+> command will also batch delete branches on the remote that do not
+> exist locally, which is behavior I want since I do not need them
+> anymore.
 
-I wonder if s/stall/stale/ is what Lars meant.  I think it is fair
-to say that new contributors who are used to GitHub pull request
-would find workflow with the mailing list unfamiliar, and from that
-point of view, this is a step in a good direction.  Back when I
-added GitHub as one of the publishing repositories, the best way to
-convey this message available to us was to have a short comment on
-the repository telling the readers not to throw a pull-request at
-us.  If there are other mechanisms to do so more effectively, we
-should use it.
+Something along this line in your .git/config:
+
+	[remote "fork"]
+		url = ...
+		push = refs/heads/*:refs/heads/*
+
+and then
+
+	$ git push --prune --follow-tags fork
+
+
+
+
+
