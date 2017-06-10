@@ -2,117 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	STOX_REPLY_TYPE,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4841FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 12:48:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19C7F1FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 12:48:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752070AbdFJMsj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 08:48:39 -0400
-Received: from ikke.info ([178.21.113.177]:38088 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751677AbdFJMsi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 08:48:38 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 977CA4400B7; Sat, 10 Jun 2017 14:48:36 +0200 (CEST)
-Date:   Sat, 10 Jun 2017 14:48:36 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: 'pu' broken at t5304 tonight
-Message-ID: <20170610124836.GD27719@alpha.vpn.ikke.info>
-References: <xmqq4lvo2x6i.fsf@gitster.mtv.corp.google.com>
+        id S1752086AbdFJMsz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 08:48:55 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:5907 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751677AbdFJMsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 08:48:53 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id Jfowd2KylHGLwJfowdMV1z; Sat, 10 Jun 2017 13:48:51 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=NEAV23lmAAAA:8 a=8nJEP1OIZ-IA:10
+ a=pGLkceISAAAA:8 a=5rxgeBVgAAAA:8 a=VwQbUJbxAAAA:8 a=-AnQz9JOAAAA:8
+ a=8HJBe0yQAAAA:20 a=z6WkSEa86NyGc9HzAAAA:9 a=aVt2s2O6pSMvfWxN:21
+ a=Lut-y9zJrws4RfMX:21 a=wPNLvfGTeEIA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
+ a=PwKx63F5tFurRwaNxrlG:22 a=AjGcO6oz07-iQ99wixmX:22 a=3bnadFWGKyIZm4bBUiDd:22
+Message-ID: <31A456B20D984421AA958A39B2FCD29D@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Lars Schneider" <larsxschneider@gmail.com>, <git@vger.kernel.org>
+Cc:     <gitster@pobox.com>, <peff@peff.net>
+References: <20170609142151.94811-1-larsxschneider@gmail.com>
+Subject: Re: [PATCH v1] Configure Git contribution guidelines for github.com
+Date:   Sat, 10 Jun 2017 13:48:50 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq4lvo2x6i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.8.2 (2017-04-18)
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170609-4, 09/06/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfBCK4G7z1ONzH4O3o/7f/iF/mkPd738uXIgZsyXTsjikLkn9ck6BKi2gz+RhiG7XXwWCLP9yyUJ/3yql/nbaWA3V9qieU6a06ikkMtUT5MQYhhZUTzwk
+ jrRPAzSNAQE9e02tuzIUvTwyhyU/F3Q7NhuImRx7Od5Im7aOAxbeOiY79DY6WFsrutlAjPa2iFZ+qcw/5DgfK8EIZnlSWx/JoQdaEITxJTdOJ/IXqR8FUOOP
+ WtloRbQm7HMasmTXQ/7Zhw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 10, 2017 at 03:07:01PM +0900, Junio C Hamano wrote:
-> I didn't check where it goes wrong.  Here is a list of suspects,
-> taken by
-> 
->     $ git shortlog --no-merges pu@{8.hours}..pu
-> 
-> i.e. patches that weren't in pu before today's integration cycle.
-> 
-> Andreas Heiduk (1):
->       doc: describe git svn init --ignore-refs
-> 
-> Brandon Williams (32):
->       config: create config.h
->       config: remove git_config_iter
->       config: don't include config.h by default
->       config: don't implicitly use gitdir
->       setup: don't perform lazy initialization of repository state
->       environment: remove namespace_len variable
->       repository: introduce the repository object
->       environment: place key repository state in the_repository
->       environment: store worktree in the_repository
->       setup: add comment indicating a hack
->       config: read config from a repository object
->       repository: add index_state to struct repo
->       submodule-config: store the_submodule_cache in the_repository
->       submodule: add repo_read_gitmodules
->       submodule: convert is_submodule_initialized to work on a repository
->       convert: convert get_cached_convert_stats_ascii to take an index
->       convert: convert crlf_to_git to take an index
->       convert: convert convert_to_git_filter_fd to take an index
->       convert: convert convert_to_git to take an index
->       convert: convert renormalize_buffer to take an index
->       tree: convert read_tree to take an index parameter
->       ls-files: convert overlay_tree_on_cache to take an index
->       ls-files: convert write_eolinfo to take an index
->       ls-files: convert show_killed_files to take an index
->       ls-files: convert show_other_files to take an index
->       ls-files: convert show_ru_info to take an index
->       ls-files: convert ce_excluded to take an index
->       ls-files: convert prune_cache to take an index
->       ls-files: convert show_files to take an index
->       ls-files: factor out debug info into a function
->       ls-files: factor out tag calculation
->       ls-files: use repository object
-> 
-> Jeff King (1):
->       date: use localtime() for "-local" time formats
-> 
-> Johannes Schindelin (8):
->       discover_git_directory(): avoid setting invalid git_dir
->       config: report correct line number upon error
->       help: use early config when autocorrecting aliases
->       read_early_config(): optionally return the worktree's top-level directory
->       t1308: relax the test verifying that empty alias values are disallowed
->       t7006: demonstrate a problem with aliases in subdirectories
->       alias_lookup(): optionally return top-level directory
->       Use the early config machinery to expand aliases
-> 
-> Junio C Hamano (1):
->       ### match next
-> 
-> Prathamesh Chavan (1):
->       dir: create function count_slashes
-> 
-> SZEDER Gábor (5):
->       revision.h: turn rev_info.early_output back into an unsigned int
->       revision.c: stricter parsing of '--no-{min,max}-parents'
->       revision.c: stricter parsing of '--early-output'
->       revision.c: use skip_prefix() in handle_revision_opt()
->       revision.c: use skip_prefix() in handle_revision_pseudo_opt()
-> 
-> Stefan Beller (1):
->       t4005: modernize style and drop hard coded sha1
-> 
+From: "Lars Schneider" <larsxschneider@gmail.com>
+> Many open source projects use github.com for their contribution process.
+> Although we mirror the Git core repository to github.com [1] we do not
+> use any other github.com service. This is unknown/unexpected to a
+> number of (potential) contributors and consequently they create Pull
+> Requests against our mirror with their contributions. These Pull
+> Requests become stall [2]. This is frustrating to them as they think we
+> ignore them and it is also unsatisfactory for us as we miss potential
+> code improvements and/or new contributors.
+>
+> GitHub offers a way to notify Pull Request contributors about the
+> contribution guidelines for a project [3]. Let's make use of this!
+>
+> [1] https://github.com/git/git
+> [2] https://github.com/git/git/pulls
+> [3] 
+> https://help.github.com/articles/creating-a-pull-request-template-for-your-repository/
+>
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+> ---
 
-For me, this bisects to the latest merge:
+I see there are currently 84 open PRs (13 in the last 14 days), so it is 
+real.
 
-2047eebd3 (Merge branch 'bw/repo-object' into pu, 2017-06-10), but
-neither of the parent of the merge break this test, so it looks like
-it's because of an interaction between the repo-object topic and another
-topic.
+I also see that the Issues page for git.git appears to be disabled, and will 
+redirect to the pulls page.
+
+Maybe the instructions should also be part of an Issues template which could 
+reduce the potential number of PRs being created (but could create its own 
+problems)
+
+
+>
+> Hi,
+>
+> I am perfectly aware that adding a ".github" directory in the Git core
+> tree is ugly. However, I believe the benefits ("well informed new
+> contributors") outweigh the injury.
+>
+> You can see how a github.com Pull Request creation window would like here:
+> https://github.com/larsxschneider/git/compare/master...larsxschneider-patch-1?quick_pull=1
+>
+> I added a link that jumps to a part my GitMerge 2017 talk which explains
+> Git core contributions from my point view. Although I tried my best, the
+> presentation is not perfect and might not reflect the view of the Git
+> community. I wouldn't have a problem at all with removing the link.
+>
+> I also did not break the lines in the .github/*.md files as I thought it
+> renders nicer on the github.com web interface. I am happy to change that,
+> too, though.
+>
+> Cheers,
+> Lars
+>
+>
+> Notes:
+>    Base Ref: master
+>    Web-Diff: https://github.com/larsxschneider/git/commit/d859be5016
+>    Checkout: git fetch https://github.com/larsxschneider/git 
+> contrib-guide-v1 && git checkout d859be5016
+>
+> .github/CONTRIBUTING.md          | 10 ++++++++++
+> .github/PULL_REQUEST_TEMPLATE.md |  3 +++
+> 2 files changed, 13 insertions(+)
+> create mode 100644 .github/CONTRIBUTING.md
+> create mode 100644 .github/PULL_REQUEST_TEMPLATE.md
+>
+> diff --git a/.github/CONTRIBUTING.md b/.github/CONTRIBUTING.md
+> new file mode 100644
+> index 0000000000..8d01be6a71
+> --- /dev/null
+> +++ b/.github/CONTRIBUTING.md
+> @@ -0,0 +1,10 @@
+> +## Contributing to Git
+> +
+> +Thanks for taking the time to contribute to Git! Please be advised, that 
+> the Git community does not use github.com for their contributions. 
+> Instead, we use a [mailing list](http://public-inbox.org/git/) for code 
+> submissions, code reviews, and bug reports.
+
+Isn't the mailing list git@vger.kernel.org, with an archive at 
+http://public-inbox.org/git/ ?
+
+> +
+> +Please [read the maintainer 
+> notes](http://repo.or.cz/w/git.git?a=blob_plain;f=MaintNotes;hb=todo) to 
+> learn how the Git
+
+Is using the repo.or.cz address deliberate as a way of highlighting that 
+Github isn't the centre of the universe when accessing a DVCS repo?
+
+Maybe the kernel.org repo should be first, or at least the alt-git.git repo 
+at repo.or.cz listed in those same notes.
+
+> +project is managed, and how you can work with it. In addition, we highly 
+> recommend you to [read our submission 
+> guidelines](../Documentation/SubmittingPatches).
+> +
+> +If you prefer video, then [this 
+> talk](https://www.youtube.com/watch?v=Q7i_qQW__q4&feature=youtu.be&t=6m4s) 
+> might be useful to you as the presenter walks you through the contribution 
+> process by example.
+> +
+> +Your Git community
+> diff --git a/.github/PULL_REQUEST_TEMPLATE.md 
+> b/.github/PULL_REQUEST_TEMPLATE.md
+> new file mode 100644
+> index 0000000000..c737a64620
+> --- /dev/null
+> +++ b/.github/PULL_REQUEST_TEMPLATE.md
+> @@ -0,0 +1,3 @@
+> +Thanks for taking the time to contribute to Git! Please be advised, that 
+> the Git community does not use github.com for their contributions. 
+> Instead, we use a mailing list for code submissions, code reviews, and bug 
+> reports.
+> +
+> +Please read the "guidelines for contributing" linked above!
+>
+> base-commit: 8d1b10321b20bd2a73a5b561cfc3cf2e8051b70b
+> --
+> 2.13.0
+>
+It's still a good idea though.
+--
+Philip 
+
