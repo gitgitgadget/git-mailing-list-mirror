@@ -2,182 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19C7F1FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 12:48:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02BC21FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 13:28:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752086AbdFJMsz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 08:48:55 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:5907 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751677AbdFJMsx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 08:48:53 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id Jfowd2KylHGLwJfowdMV1z; Sat, 10 Jun 2017 13:48:51 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=NEAV23lmAAAA:8 a=8nJEP1OIZ-IA:10
- a=pGLkceISAAAA:8 a=5rxgeBVgAAAA:8 a=VwQbUJbxAAAA:8 a=-AnQz9JOAAAA:8
- a=8HJBe0yQAAAA:20 a=z6WkSEa86NyGc9HzAAAA:9 a=aVt2s2O6pSMvfWxN:21
- a=Lut-y9zJrws4RfMX:21 a=wPNLvfGTeEIA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
- a=PwKx63F5tFurRwaNxrlG:22 a=AjGcO6oz07-iQ99wixmX:22 a=3bnadFWGKyIZm4bBUiDd:22
-Message-ID: <31A456B20D984421AA958A39B2FCD29D@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Lars Schneider" <larsxschneider@gmail.com>, <git@vger.kernel.org>
-Cc:     <gitster@pobox.com>, <peff@peff.net>
-References: <20170609142151.94811-1-larsxschneider@gmail.com>
-Subject: Re: [PATCH v1] Configure Git contribution guidelines for github.com
-Date:   Sat, 10 Jun 2017 13:48:50 +0100
-Organization: OPDS
+        id S1752036AbdFJN2p (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 09:28:45 -0400
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:34026 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751583AbdFJN2n (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 09:28:43 -0400
+Received: by mail-qt0-f179.google.com with SMTP id c10so96668909qtd.1
+        for <git@vger.kernel.org>; Sat, 10 Jun 2017 06:28:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=icE0oLks+48v25Xg0+FKE+R1HkUeQHZCPw0CLVXYbI0=;
+        b=nyPeoFBlBte34y5HXXGaFBybp25KTv3xT7iUTpuTVrk/ZhIVbOQ/mEt1eZ89DfCIVj
+         VblnuJUrjByGdXv0B6jimm6E4iEDfjktZZRv34xgpm56eIVx4M1vqV7TtqyUxjwaBtif
+         5CTHeljAie0Gp4FU/iP1+LBo6cMcumAF4HIJ7Gvp0tJ2WTLC+IvKAWVsQPMe/Gksl2P7
+         XXUD4I5ybKkuuWUQ5+MhxfJQ/ej18maV13h8SjtQO2Y0XFsHMIBAC4fVPyPcMSewXT01
+         9d/fvR/fTCi7qXFvhm1a3UUxZwGzVq+JweII54qTOKKevw96xBRk4kbi1ved6FnBuJCm
+         HFmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=icE0oLks+48v25Xg0+FKE+R1HkUeQHZCPw0CLVXYbI0=;
+        b=MQNyq7dZyAULO6xSG7DoJmI+V/PtNYoyxcOsNBE2Jd/0Qs26KjFu7TjP9p1H7geFu7
+         i1lhzhFZXESc1hcGSU1S+r9mdzWJjb+ENNFN2iR79hcuHpiiQR2qh7GU3fI1hOXqtDOX
+         RqxwnGNfjCwdVwL/L+JdB0ZOxFujFjvvvVl776Z5sjbLO3vPMa5E6eEBImC5Oryq2i8A
+         IX4hJJVaIksG+9HLltwchgVFxNhbRKb9n8F8DMZWWhHfA0xN+H2eTefwcYOxYT0F1AQK
+         0DktDTbyVZOk9L2f7w92V2hGRG+8bw0JuXkT4/0S7PXh1siYLtFkGh7EjpwfsI/UJWse
+         m5bg==
+X-Gm-Message-State: AKS2vOzuq8V5Wyedz5JldbWMlZkR1TlRxaptVgDzwcVJRpU/MaCp92lU
+        uRb65Y32WRengeToU8J/LHvvdqfwlw==
+X-Received: by 10.237.38.71 with SMTP id z65mr58984934qtc.52.1497101322632;
+ Sat, 10 Jun 2017 06:28:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 170609-4, 09/06/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfBCK4G7z1ONzH4O3o/7f/iF/mkPd738uXIgZsyXTsjikLkn9ck6BKi2gz+RhiG7XXwWCLP9yyUJ/3yql/nbaWA3V9qieU6a06ikkMtUT5MQYhhZUTzwk
- jrRPAzSNAQE9e02tuzIUvTwyhyU/F3Q7NhuImRx7Od5Im7aOAxbeOiY79DY6WFsrutlAjPa2iFZ+qcw/5DgfK8EIZnlSWx/JoQdaEITxJTdOJ/IXqR8FUOOP
- WtloRbQm7HMasmTXQ/7Zhw==
+Received: by 10.140.86.48 with HTTP; Sat, 10 Jun 2017 06:28:22 -0700 (PDT)
+In-Reply-To: <CAE5=+KXPzY0QX+T26oUAHcV8HUYOCTrpuYN_Tb5cXxF71twmZQ@mail.gmail.com>
+References: <CAE5=+KX57KM+6n9NpePw9KYPXFy7UH-WRgSwaJDnvRofYFXm7Q@mail.gmail.com>
+ <20170530181051.GA81679@aiede.mtv.corp.google.com> <CAE5=+KXPzY0QX+T26oUAHcV8HUYOCTrpuYN_Tb5cXxF71twmZQ@mail.gmail.com>
+From:   John Shahid <jvshahid@gmail.com>
+Date:   Sat, 10 Jun 2017 09:28:22 -0400
+Message-ID: <CAE5=+KUJr2=w3W=ZDTbd=L+8=KtwsV95Q7bcJassjzFncrnBKQ@mail.gmail.com>
+Subject: Re: git push recurse.submodules behavior changed in 2.13
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Lars Schneider" <larsxschneider@gmail.com>
-> Many open source projects use github.com for their contribution process.
-> Although we mirror the Git core repository to github.com [1] we do not
-> use any other github.com service. This is unknown/unexpected to a
-> number of (potential) contributors and consequently they create Pull
-> Requests against our mirror with their contributions. These Pull
-> Requests become stall [2]. This is frustrating to them as they think we
-> ignore them and it is also unsatisfactory for us as we miss potential
-> code improvements and/or new contributors.
->
-> GitHub offers a way to notify Pull Request contributors about the
-> contribution guidelines for a project [3]. Let's make use of this!
->
-> [1] https://github.com/git/git
-> [2] https://github.com/git/git/pulls
-> [3] 
-> https://help.github.com/articles/creating-a-pull-request-template-for-your-repository/
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
+bump. it's been a while and I'm still not clear what the next steps
+are. I'm happy to send a patch but I would like to get a consensus
+first.
 
-I see there are currently 84 open PRs (13 in the last 14 days), so it is 
-real.
-
-I also see that the Issues page for git.git appears to be disabled, and will 
-redirect to the pulls page.
-
-Maybe the instructions should also be part of an Issues template which could 
-reduce the potential number of PRs being created (but could create its own 
-problems)
-
-
+On Wed, May 31, 2017 at 10:50 AM, John Shahid <jvshahid@gmail.com> wrote:
+> Hi Jonathan. Thanks a lot for the detailed and interesting response. I
+> included my comments/replies inline. tl;dr;
 >
-> Hi,
+> 1. I love the idea of having tools treat the repo as a unit.
+> 2. I think propagating the refspec when no refspec is passed on the
+> CLI is very surprising action that should be corrected
+> 3. I propose more changes to the git tools to support the unity view of the repo
 >
-> I am perfectly aware that adding a ".github" directory in the Git core
-> tree is ugly. However, I believe the benefits ("well informed new
-> contributors") outweigh the injury.
+> On Tue, May 30, 2017 at 2:10 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Hi John,
+>>
+>> John Shahid wrote:
+>>
+>>> It looks like the git push recurse-submodules behavior has changed.
+>>> Currently with 2.13 you cannot run "git push
+>>> --recurse-submodules=on-demand" if the parent repo is on a different
+>>> branch than the sub repos, e.g. parent repo is on "develop" and
+>>> sub-repo on "master". I created a test that can be found here [1].
+>>>
+>>> A bisect shows that the change to propagate refspec [2] to the
+>>> submodules is the culprit. imho this is an undesired change in
+>>> behavior. I looked at the code but couldn't see an easy way to fix
+>>> this issue without breaking the feature mentioned above. The only
+>>> option I can think of is to control the refspec propagation behavior
+>>> using a flag, e.g. "--propagate-refspecs" or add another
+>>> recurse-submodules option, e.g. "--recurse-submodules=propagate"
+>>
+>> Thanks for reporting. The old behavior of "git push
+>> --recurse-submodules" was a little loose (it would run "git push" in
+>> the submodule and rely on defaults to determine the behavior) and when
+>> propagating refspecs we considered taking the opportunity to tighten
+>> that by propagating the default refspec when you run "git push
+>> --recurse-submodules" without a refspec.
+>>
+>> We didn't make that change. If starting over, it might be a natural
+>> thing to do, but we didn't want to break existing users. So
+>>
+>> git push --recurse-submodules=on-demand
+>>
+>> should continue to work as before. *puzzled*
+>>
+>> [...]
+>>> We have a parent repo on a branch called "develop" and a submodule on
+>>> a branch called "master". Prior to git version 2.13 if we had an
+>>> unpushed commit in the submodule and ran "git push origin develop
+>>> --recurse-submodules=on-demand" git would happily push the develop
+>>> branch of the parent repo and the master branch of the submodule,
+>> [...]
+>>> pushing to ref refs/heads/develop:refs/heads/develop
+>>> pushging to remote origin
+>>> fatal: src refspec 'refs/heads/develop' must name a ref
+>>> fatal: process for submodule 'sub' failed
+>>> fatal: The remote end hung up unexpectedly
+>>
+>> Aha, you are passing a refspec!
 >
-> You can see how a github.com Pull Request creation window would like here:
-> https://github.com/larsxschneider/git/compare/master...larsxschneider-patch-1?quick_pull=1
+> Yes, we are used to passing a refspec but we will be happy not to if
+> that preserves the old behavior. In fact, the test case I linked to
+> earlier does not pass a refspec. I wrote the test that way because I
+> initially misunderstood the commit message and thought that not
+> passing a refspec preserves the old behavior. Long story short, I'm
+> happy with whatever option we have to maintain our current workflow.
 >
-> I added a link that jumps to a part my GitMerge 2017 talk which explains
-> Git core contributions from my point view. Although I tried my best, the
-> presentation is not perfect and might not reflect the view of the Git
-> community. I wouldn't have a problem at all with removing the link.
+>>
+>> Can you say more about how this change affects you? Would you be able
+>> to push without a refspec, or do you e.g. have scripting that was
+>> relying on the existing loose behavior?
 >
-> I also did not break the lines in the .github/*.md files as I thought it
-> renders nicer on the github.com web interface. I am happy to change that,
-> too, though.
+> as i said before, pushing without a refspec would work for us. I'm
+> also talking to the team to see if we can switch the branch names to
+> be consistent, i.e. use either "master" or "develop" both in the
+> parent repo and sub repos.
 >
-> Cheers,
-> Lars
+>>
+>> To put this in more context: part of the ideal that
+>> --recurse-submodules options are trying to achieve is to allow
+>> thinking of a repository as a single unit, including submodules, most
+>> of the time. To this end, "git clone --recurse-submodules" clones a
+>> repository including its submodules, "git checkout
+>> --recurse-submodules" checks out submodules as part of a checkout
+>> operation, avoiding a separate "git submodule update --init" operation,
+>> "git fetch --recurse-submodules" fetches upstream changes for both the
+>> parent repository and submodules, and so on.
+>>
+>> Unfortunately "git checkout --recurse-submodules" was missing a piece,
+>> impacting this workflow. If I run
+>>
+>> git checkout --recurse-submodules -b develop
+>>
+>> then today this creates a "develop" branch in the superproject but not
+>> within submodules. This hurts the illusion of the project being a single
+>> unit and makes the meaning of operations like
+>>
+>> git push --recurse-submodules develop:master
+>>
+>> unclear.
+>>
+>> Ideas for next steps:
+>>
+>> 1. If "git checkout --recurse-submodules -b develop" does the right
+>> thing, then this situation is harder to get in in the first place.
+>> The series at [3] is meant to do that.
+>>
+>> 2. The error message shown above is very unclear. It leaks
+>> implementation details and doesn't give the user a clear hint
+>> about what to do to resolve it. Would some message like the
+>> following have helped?
+>>
+>> $ git push --recurse-submodules origin develop
+>> fatal: branch "develop" does not exist in submodule "sub"
+>> hint: use "git -C sub branch develop <sha1>" to create such a branch
+>> hint: or push without a branch name to push the current branch
+>>
+>> 3. Outside of the output from any particular command, we are missing
+>> an equivalent of "man gitworkflows" to describe how the
+>> --recurse-submodules options are meant to work. The series at [4]
+>> aims to start addressing that.
 >
+> I would also add to that list, "git pull --rebase
+> -recurse-submodules", "git merge --recurse-submodules", etc. Otherwise
+> "git checkout --recurse-submodules develop" won't make much sense,
+> since you'll have to go to each submodules and make sure the local
+> branch is up to date.
 >
-> Notes:
->    Base Ref: master
->    Web-Diff: https://github.com/larsxschneider/git/commit/d859be5016
->    Checkout: git fetch https://github.com/larsxschneider/git 
-> contrib-guide-v1 && git checkout d859be5016
+> I like the idea of treating the entire repo as a single unit. In fact
+> the new feature (to propagate refspec) is very useful to me. For
+> example, when working on feature branches across the entire repo. That
+> said, i think "git push --recurse-submodules=on-demand" should do the
+> least surprising action and push the current branch, where "current"
+> is defined wrt the repo being pushed (and "push.default" of course).
+> Taking the refspec from the parent repo and forcing it on the
+> submodules feels weird to me.
 >
-> .github/CONTRIBUTING.md          | 10 ++++++++++
-> .github/PULL_REQUEST_TEMPLATE.md |  3 +++
-> 2 files changed, 13 insertions(+)
-> create mode 100644 .github/CONTRIBUTING.md
-> create mode 100644 .github/PULL_REQUEST_TEMPLATE.md
+>>
+>> Given all the above, this looks like a real and serious bug but I
+>> think to find a different way from --recurse-submodules=propagate to
+>> fix it. The idea, especially with [5], is for submodules to work
+>> intuitively without requiring special options. This can require more
+>> work in the short term getting the default behavior to work well with
+>> a variety of use cases but I think it is time well spent.
 >
-> diff --git a/.github/CONTRIBUTING.md b/.github/CONTRIBUTING.md
-> new file mode 100644
-> index 0000000000..8d01be6a71
-> --- /dev/null
-> +++ b/.github/CONTRIBUTING.md
-> @@ -0,0 +1,10 @@
-> +## Contributing to Git
-> +
-> +Thanks for taking the time to contribute to Git! Please be advised, that 
-> the Git community does not use github.com for their contributions. 
-> Instead, we use a [mailing list](http://public-inbox.org/git/) for code 
-> submissions, code reviews, and bug reports.
-
-Isn't the mailing list git@vger.kernel.org, with an archive at 
-http://public-inbox.org/git/ ?
-
-> +
-> +Please [read the maintainer 
-> notes](http://repo.or.cz/w/git.git?a=blob_plain;f=MaintNotes;hb=todo) to 
-> learn how the Git
-
-Is using the repo.or.cz address deliberate as a way of highlighting that 
-Github isn't the centre of the universe when accessing a DVCS repo?
-
-Maybe the kernel.org repo should be first, or at least the alt-git.git repo 
-at repo.or.cz listed in those same notes.
-
-> +project is managed, and how you can work with it. In addition, we highly 
-> recommend you to [read our submission 
-> guidelines](../Documentation/SubmittingPatches).
-> +
-> +If you prefer video, then [this 
-> talk](https://www.youtube.com/watch?v=Q7i_qQW__q4&feature=youtu.be&t=6m4s) 
-> might be useful to you as the presenter walks you through the contribution 
-> process by example.
-> +
-> +Your Git community
-> diff --git a/.github/PULL_REQUEST_TEMPLATE.md 
-> b/.github/PULL_REQUEST_TEMPLATE.md
-> new file mode 100644
-> index 0000000000..c737a64620
-> --- /dev/null
-> +++ b/.github/PULL_REQUEST_TEMPLATE.md
-> @@ -0,0 +1,3 @@
-> +Thanks for taking the time to contribute to Git! Please be advised, that 
-> the Git community does not use github.com for their contributions. 
-> Instead, we use a mailing list for code submissions, code reviews, and bug 
-> reports.
-> +
-> +Please read the "guidelines for contributing" linked above!
+>>
+>> Thoughts?
+>>
+>> Thanks and hope that helps,
+>> Jonathan
 >
-> base-commit: 8d1b10321b20bd2a73a5b561cfc3cf2e8051b70b
-> --
-> 2.13.0
+> Yes, that definitely helped. This track of work makes more sense now.
+> Thanks again for the detailed response.
 >
-It's still a good idea though.
---
-Philip 
-
+> JS
+>
+>>
+>>> [1] https://gist.github.com/jvshahid/b778702cc3d825c6887d2707e866a9c8
+>>> [2] https://github.com/git/git/commit/06bf4ad1db92c32af38e16d9b7f928edbd647780
+>> [3] http://public-inbox.org/git/20170501180058.8063-1-sbeller@google.com/
+>> [4] http://public-inbox.org/git/20170209020855.23486-1-sbeller@google.com/
+>> [5] http://public-inbox.org/git/20170526191017.19155-1-sbeller@google.com/
