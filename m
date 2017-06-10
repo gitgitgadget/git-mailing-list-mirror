@@ -6,374 +6,152 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6CD61FAEB
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1E121FAEB
 	for <e@80x24.org>; Sat, 10 Jun 2017 13:41:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752136AbdFJNlB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 09:41:01 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:35196 "EHLO
+        id S1752127AbdFJNk6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 09:40:58 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:34014 "EHLO
         mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752113AbdFJNkx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 09:40:53 -0400
-Received: by mail-qt0-f195.google.com with SMTP id x58so19592684qtc.2
-        for <git@vger.kernel.org>; Sat, 10 Jun 2017 06:40:52 -0700 (PDT)
+        with ESMTP id S1752038AbdFJNku (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 09:40:50 -0400
+Received: by mail-qt0-f195.google.com with SMTP id o21so19589718qtb.1
+        for <git@vger.kernel.org>; Sat, 10 Jun 2017 06:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ESs9lpEtzl0U9rN/Jhv05/YF/8yu/4nazKswK2+IbK8=;
-        b=X109WDtWEbKK04X4yuspSX7glkYJQXNDhsfFeqlBBcGw8Od9Sd7ES7154vwoZqILnd
-         tyuoAe55lsr5AB5UMddZ1nOdzNsySeednqBxZn1ZU0G3ktXEFu5LixN4DgcPyBOEH+ke
-         P5iWkm1cqozf1atcpCqj5thkIPLIb8Ja1OOavAhtF5R33tObZckyaog3bESNPZ9RckzK
-         ib40Un28wafWYqVqyFJ+7sMDKQvLaGK/wJ+JZQ6WaHQASxLZCmore0hrJ8hDh3wfxnTY
-         XdxmvkrHHV2kbecHbTkXEpEbddwKsbldPwZGVrakMquTt/A7qUzFQgIE7IoMFyNvu2aG
-         5bxQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=kvve6ybX3LyHsK6l2M9W00c/STZCi3uXauQhoORotmg=;
+        b=COWtB/27DNE9nGnwsI6QTECrVf0xAGfakgIdiIvVeFYwpyCC9b+i+gRh0xZO3a5+JX
+         8WTo36c6u30/ydno8Kekf+7sL0DJbVhJzSr26brBv/NhrThAG81yN7fk9M1jVUQpkx4q
+         d9jf+phfl9pO6gF8Ht7n9GuVgGz6yF59TAfb6ulJmyubokKJxbs3pft2BlIlJBv95P57
+         nREWONmN47c3cB/npc9GW8TW7gM/AfMJC3u+0eaZykDfyyZE3XRtPP00Er2/0OlJuC2E
+         1FAOJsbgZUqRPZ4t1t0fIiDiGwEYQRTcg6En7YpS9ZD0SBlL0J4vTfh1VwyanEVV63+V
+         VEbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ESs9lpEtzl0U9rN/Jhv05/YF/8yu/4nazKswK2+IbK8=;
-        b=o7jldvnTpiFa/gGFGq4fSj+XDCEgs8OVmmsS9wvPwmMcyn/UukF0vE+hkxtYPOWcmU
-         T9n2cLO1NWF9iskWZVi3cVWSmz5qakr0z666BALo94EtESdM1mMr1vEtCbDeO8mLtVRl
-         tMu2AWMN8wwYwfbMSAo237fCTgy/DR6cIiyq6echvDv65aR9VSw3jN+9ZEOCJLsu0c2O
-         xLlCXgaDnnOvY+G506AkEnsNp7TTirUFU9M5Qa1HmqK9OIM1tgDAFwQ1IMN4fLqumtZm
-         zzsuZsUw5j0hcmm5uXjskJDSyP6dbFtYCZEamOjWEJ6BzB3NPH6TADKf9BZOnZSve5jQ
-         MvJQ==
-X-Gm-Message-State: AODbwcCWZLG62PMIpl/lveTwTAMnWN+Rsa4Pm6d9/MKLcuOiOtPKif9u
-        P4y087KOQPyLz5SfLHI=
-X-Received: by 10.237.49.166 with SMTP id 35mr49597550qth.53.1497102051941;
-        Sat, 10 Jun 2017 06:40:51 -0700 (PDT)
+         :references;
+        bh=kvve6ybX3LyHsK6l2M9W00c/STZCi3uXauQhoORotmg=;
+        b=BXWIxeudfgCi7i5VVGBEo42NWXgV2+0K86Mx7ZOGCBFDKketEjTES4jza4IO42onmB
+         YnpAswwF1ZBc7HfS5U/leTJGSO0fjaEgi86scVrGc7VSzgxGXRL8OtBIwXBBCLJI+QIN
+         DTga/WOF4H48NuadAN0eIXcEpgurR8YVzKm1898mfL69syvxppwsw3bzTKRca7CQP85D
+         mqGFTgnbdIj6GEijxOY/G50wDggWMkPYjpZ7W6Yh45Dd4TM9XG9w1QhRqQlY9H2FU5LM
+         Jx3Wnb5uQOiYpNL3cLO6vnROsUPVQeLBNVcaYZ4YoYK8rQaaYWcMXWAcZZkY/wEVkvfz
+         s2iQ==
+X-Gm-Message-State: AKS2vOx8dNThOJGhS4nteyLj5qvZEBe0OdodiL29wB2NNArapFomRElq
+        ovYjxUZQzc4lTHlFuQg=
+X-Received: by 10.200.51.173 with SMTP id c42mr20013385qtb.71.1497102049177;
+        Sat, 10 Jun 2017 06:40:49 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id f94sm2707503qtb.16.2017.06.10.06.40.50
+        by smtp.gmail.com with ESMTPSA id f94sm2707503qtb.16.2017.06.10.06.40.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 10 Jun 2017 06:40:51 -0700 (PDT)
+        Sat, 10 Jun 2017 06:40:48 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com, pclouds@gmail.com,
         johannes.schindelin@gmx.de, David.Turner@twosigma.com,
         peff@peff.net, christian.couder@gmail.com, avarab@gmail.com
-Subject: [PATCH v5 7/7] fsmonitor: add a performance test
-Date:   Sat, 10 Jun 2017 09:40:26 -0400
-Message-Id: <20170610134026.104552-8-benpeart@microsoft.com>
+Subject: [PATCH v5 5/7] fsmonitor: add documentation for the fsmonitor extension.
+Date:   Sat, 10 Jun 2017 09:40:24 -0400
+Message-Id: <20170610134026.104552-6-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170610134026.104552-1-benpeart@microsoft.com>
 References: <20170610134026.104552-1-benpeart@microsoft.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test utility (test-drop-caches) that enables dropping the file
-system cache on Windows.
-
-Add a perf test (p7519-fsmonitor.sh) for fsmonitor.
+This includes the core.fsmonitor setting, the query-fsmonitor hook,
+and the fsmonitor index extension.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile                    |   1 +
- t/helper/test-drop-caches.c | 107 +++++++++++++++++++++++++++++
- t/perf/p7519-fsmonitor.sh   | 161 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 269 insertions(+)
- create mode 100644 t/helper/test-drop-caches.c
- create mode 100755 t/perf/p7519-fsmonitor.sh
+ Documentation/config.txt                 |  7 +++++++
+ Documentation/githooks.txt               | 23 +++++++++++++++++++++++
+ Documentation/technical/index-format.txt | 19 +++++++++++++++++++
+ 3 files changed, 49 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 992dd58801..893947839f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -648,6 +648,7 @@ TEST_PROGRAMS_NEED_X += test-subprocess
- TEST_PROGRAMS_NEED_X += test-svn-fe
- TEST_PROGRAMS_NEED_X += test-urlmatch-normalization
- TEST_PROGRAMS_NEED_X += test-wildmatch
-+TEST_PROGRAMS_NEED_X += test-drop-caches
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index dd4beec39d..d883e3318c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -410,6 +410,13 @@ core.protectNTFS::
+ 	8.3 "short" names.
+ 	Defaults to `true` on Windows, and `false` elsewhere.
  
- TEST_PROGRAMS = $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
++core.fsmonitor::
++	If set to true, call the query-fsmonitor hook proc which will
++	identify all files that may have had changes since the last
++	request. This information is used to speed up operations like
++	'git commit' and 'git status' by limiting what git must scan to
++	detect changes.
++
+ core.trustctime::
+ 	If false, the ctime differences between the index and the
+ 	working tree are ignored; useful when the inode change time
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index b2514f4d44..219786b2da 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -456,6 +456,29 @@ non-zero status causes 'git send-email' to abort before sending any
+ e-mails.
  
-diff --git a/t/helper/test-drop-caches.c b/t/helper/test-drop-caches.c
-new file mode 100644
-index 0000000000..80830d920b
---- /dev/null
-+++ b/t/helper/test-drop-caches.c
-@@ -0,0 +1,107 @@
-+#include "git-compat-util.h"
-+#include <stdio.h>
+ 
++[[query-fsmonitor]]
++query-fsmonitor
++~~~~~~~~~~~~~~~
 +
-+typedef DWORD NTSTATUS;
++This hook is invoked when the configuration option core.fsmonitor is
++set and git needs to identify changed or untracked files.  It takes
++two arguments, a version (currently 1) and the time in elapsed
++nanoseconds since midnight, January 1, 1970.
 +
-+#ifdef GIT_WINDOWS_NATIVE
-+#include <tchar.h>
++The hook should output to stdout the list of all files in the working
++directory that may have changed since the requested time.  The logic
++should be inclusive so that it does not miss any potential changes.
++The paths should be relative to the root of the working directory
++and be separated by a single NUL.
 +
-+#define STATUS_SUCCESS			(0x00000000L)
-+#define STATUS_PRIVILEGE_NOT_HELD	(0xC0000061L)
++Git will limit what files it checks for changes as well as which
++directories are checked for untracked files based on the path names
++given.
 +
-+typedef enum _SYSTEM_INFORMATION_CLASS {
-+	SystemMemoryListInformation = 80, // 80, q: SYSTEM_MEMORY_LIST_INFORMATION; s: SYSTEM_MEMORY_LIST_COMMAND (requires SeProfileSingleProcessPrivilege)
-+} SYSTEM_INFORMATION_CLASS;
++The exit status determines whether git will use the data from the
++hook to limit its search.  On error, it will fall back to verifying
++all files and folders.
 +
-+// private
-+typedef enum _SYSTEM_MEMORY_LIST_COMMAND
-+{
-+	MemoryCaptureAccessedBits,
-+	MemoryCaptureAndResetAccessedBits,
-+	MemoryEmptyWorkingSets,
-+	MemoryFlushModifiedList,
-+	MemoryPurgeStandbyList,
-+	MemoryPurgeLowPriorityStandbyList,
-+	MemoryCommandMax
-+} SYSTEM_MEMORY_LIST_COMMAND;
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/technical/index-format.txt b/Documentation/technical/index-format.txt
+index ade0b0c445..7aeeea6f94 100644
+--- a/Documentation/technical/index-format.txt
++++ b/Documentation/technical/index-format.txt
+@@ -295,3 +295,22 @@ The remaining data of each directory block is grouped by type:
+     in the previous ewah bitmap.
+ 
+   - One NUL.
 +
-+BOOL GetPrivilege(HANDLE TokenHandle, LPCSTR lpName, int flags)
-+{
-+	BOOL bResult;
-+	DWORD dwBufferLength;
-+	LUID luid;
-+	TOKEN_PRIVILEGES tpPreviousState;
-+	TOKEN_PRIVILEGES tpNewState;
++== File System Monitor cache
 +
-+	dwBufferLength = 16;
-+	bResult = LookupPrivilegeValueA(0, lpName, &luid);
-+	if (bResult)
-+	{
-+		tpNewState.PrivilegeCount = 1;
-+		tpNewState.Privileges[0].Luid = luid;
-+		tpNewState.Privileges[0].Attributes = 0;
-+		bResult = AdjustTokenPrivileges(TokenHandle, 0, &tpNewState, (DWORD)((LPBYTE)&(tpNewState.Privileges[1]) - (LPBYTE)&tpNewState), &tpPreviousState, &dwBufferLength);
-+		if (bResult)
-+		{
-+			tpPreviousState.PrivilegeCount = 1;
-+			tpPreviousState.Privileges[0].Luid = luid;
-+			tpPreviousState.Privileges[0].Attributes = flags != 0 ? 2 : 0;
-+			bResult = AdjustTokenPrivileges(TokenHandle, 0, &tpPreviousState, dwBufferLength, 0, 0);
-+		}
-+	}
-+	return bResult;
-+}
-+#endif
++  The file system monitor cache tracks files for which the query-fsmonitor
++  hook has told us about changes.  The signature for this extension is
++  { 'F', 'S', 'M', 'N' }.
 +
-+int cmd_main(int argc, const char **argv)
-+{
-+	NTSTATUS status = 1;
-+#ifdef GIT_WINDOWS_NATIVE
-+	HANDLE hProcess = GetCurrentProcess();
-+	HANDLE hToken;
-+	if (!OpenProcessToken(hProcess, TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, &hToken))
-+	{
-+		_ftprintf(stderr, _T("Can't open current process token\n"));
-+		return 1;
-+	}
++  The extension starts with
 +
-+	if (!GetPrivilege(hToken, "SeProfileSingleProcessPrivilege", 1))
-+	{
-+		_ftprintf(stderr, _T("Can't get SeProfileSingleProcessPrivilege\n"));
-+		return 1;
-+	}
++  - 32-bit version number: the current supported version is 1.
 +
-+	CloseHandle(hToken);
++  - 64-bit time: the extension data reflects all changes through the given
++	time which is stored as the nanoseconds elapsed since midnight,
++	January 1, 1970.
 +
-+	HMODULE ntdll = LoadLibrary(_T("ntdll.dll"));
-+	if (!ntdll)
-+	{
-+		_ftprintf(stderr, _T("Can't load ntdll.dll, wrong Windows version?\n"));
-+		return 1;
-+	}
++  - 32-bit bitmap size: the size of the CE_FSMONITOR_DIRTY bitmap.
 +
-+	NTSTATUS(WINAPI *NtSetSystemInformation)(INT, PVOID, ULONG) = (NTSTATUS(WINAPI *)(INT, PVOID, ULONG))GetProcAddress(ntdll, "NtSetSystemInformation");
-+	if (!NtSetSystemInformation)
-+	{
-+		_ftprintf(stderr, _T("Can't get function addresses, wrong Windows version?\n"));
-+		return 1;
-+	}
-+
-+	SYSTEM_MEMORY_LIST_COMMAND command = MemoryPurgeStandbyList;
-+	status = NtSetSystemInformation(
-+		SystemMemoryListInformation,
-+		&command,
-+		sizeof(SYSTEM_MEMORY_LIST_COMMAND)
-+	);
-+	if (status == STATUS_PRIVILEGE_NOT_HELD)
-+	{
-+		_ftprintf(stderr, _T("Insufficient privileges to execute the memory list command"));
-+	}
-+	else if (status != STATUS_SUCCESS)
-+	{
-+		_ftprintf(stderr, _T("Unable to execute the memory list command %lX"), status);
-+	}
-+#endif
-+
-+	return status;
-+}
-diff --git a/t/perf/p7519-fsmonitor.sh b/t/perf/p7519-fsmonitor.sh
-new file mode 100755
-index 0000000000..e41905cb9b
---- /dev/null
-+++ b/t/perf/p7519-fsmonitor.sh
-@@ -0,0 +1,161 @@
-+#!/bin/sh
-+
-+test_description="Test core.fsmonitor"
-+
-+. ./perf-lib.sh
-+
-+# This has to be run with GIT_PERF_REPEAT_COUNT=1 to generate valid results.
-+# Otherwise the caching that happens for the nth run will negate the validity
-+# of the comparisons.
-+if [ "$GIT_PERF_REPEAT_COUNT" -ne 1 ]
-+then
-+	echo "warning: This test must be run with GIT_PERF_REPEAT_COUNT=1 to generate valid results." >&2
-+	echo "warning: Setting GIT_PERF_REPEAT_COUNT=1" >&2
-+	GIT_PERF_REPEAT_COUNT=1
-+fi
-+
-+test_perf_large_repo
-+test_checkout_worktree
-+
-+# Convert unix style paths to what Watchman expects
-+case "$(uname -s)" in
-+MINGW*|MSYS_NT*)
-+  GIT_WORK_TREE="$(cygpath -aw "$PWD" | sed 's,\\,/,g')"
-+  ;;
-+*)
-+  GIT_WORK_TREE="$PWD"
-+  ;;
-+esac
-+
-+# The big win for using fsmonitor is the elimination of the need to scan
-+# the working directory looking for changed files and untracked files. If
-+# the file information is all cached in RAM, the benefits are reduced.
-+
-+flush_disk_cache () {
-+	case "$(uname -s)" in
-+	MINGW*|MSYS_NT*)
-+	  sync && test-drop-caches
-+	  ;;
-+	*)
-+	  sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches
-+	  ;;
-+	esac
-+
-+}
-+
-+test_lazy_prereq UNTRACKED_CACHE '
-+	{ git update-index --test-untracked-cache; ret=$?; } &&
-+	test $ret -ne 1
-+'
-+
-+test_expect_success "setup" '
-+	# Maybe set untrackedCache & splitIndex depending on the environment
-+	if test -n "$GIT_PERF_7519_UNTRACKED_CACHE"
-+	then
-+		git config core.untrackedCache "$GIT_PERF_7519_UNTRACKED_CACHE"
-+	else
-+		if test_have_prereq UNTRACKED_CACHE
-+		then
-+			git config core.untrackedCache true
-+		else
-+			git config core.untrackedCache false
-+		fi
-+	fi &&
-+
-+	if test -n "$GIT_PERF_7519_SPLIT_INDEX"
-+	then
-+		git config core.splitIndex "$GIT_PERF_7519_SPLIT_INDEX"
-+	fi &&
-+
-+	# Hook scaffolding
-+	mkdir .git/hooks &&
-+	cp ../../../templates/hooks--query-fsmonitor.sample .git/hooks/query-fsmonitor &&
-+
-+	# have Watchman monitor the test folder
-+	watchman watch "$GIT_WORK_TREE" &&
-+	watchman watch-list | grep -q -F "$GIT_WORK_TREE"
-+'
-+
-+# Worst case without fsmonitor
-+test_expect_success "clear fs cache" '
-+	git config core.fsmonitor false &&
-+	flush_disk_cache
-+'
-+test_perf "status (fsmonitor=false, cold fs cache)" '
-+	git status
-+'
-+
-+# Best case without fsmonitor
-+test_perf "status (fsmonitor=false, warm fs cache)" '
-+	git status
-+'
-+
-+# Let's see if -uno & -uall make any difference
-+test_expect_success "clear fs cache" '
-+	flush_disk_cache
-+'
-+test_perf "status -uno (fsmonitor=false, cold fs cache)" '
-+	git status -uno
-+'
-+
-+test_expect_success "clear fs cache" '
-+	flush_disk_cache
-+'
-+test_perf "status -uall (fsmonitor=false, cold fs cache)" '
-+	git status -uall
-+'
-+
-+# The first run with core.fsmonitor=true has to do a normal scan and write
-+# out the index extension.
-+test_expect_success "populate extension" '
-+	# core.preloadIndex defeats the benefits of core.fsMonitor as it
-+	# calls lstat for the index entries. Turn it off as _not_ doing
-+	# the work is faster than doing the work across multiple threads.
-+	git config core.fsmonitor true &&
-+	git config core.preloadIndex false &&
-+	git status
-+'
-+
-+# Worst case with fsmonitor
-+test_expect_success "shutdown fsmonitor, clear fs cache" '
-+	watchman shutdown-server &&
-+	flush_disk_cache
-+'
-+test_perf "status (fsmonitor=true, cold fs cache, cold fsmonitor)" '
-+	git status
-+'
-+
-+# Best case with fsmonitor
-+test_perf "status (fsmonitor=true, warm fs cache, warm fsmonitor)" '
-+	git status
-+'
-+
-+# Best improved with fsmonitor (compare to worst case without fsmonitor)
-+test_expect_success "clear fs cache" '
-+	flush_disk_cache
-+'
-+test_perf "status (fsmonitor=true, cold fs cache, warm fsmonitor)" '
-+	git status
-+'
-+
-+# Let's see if -uno & -uall make any difference
-+test_expect_success "clear fs cache" '
-+	flush_disk_cache
-+'
-+test_perf "status -uno (fsmonitor=true, cold fs cache)" '
-+	git status -uno
-+'
-+
-+test_expect_success "clear fs cache" '
-+	flush_disk_cache
-+'
-+test_perf "status -uall (fsmonitor=true, cold fs cache)" '
-+	git status -uall
-+'
-+
-+test_expect_success "cleanup" '
-+	watchman watch-del "$GIT_WORK_TREE" &&
-+	watchman shutdown-server
-+'
-+
-+test_done
++  - An ewah bitmap, the n-th bit indicates whether the n-th index entry
++    is CE_FSMONITOR_DIRTY.
 -- 
 2.13.0
 
