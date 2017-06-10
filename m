@@ -2,88 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1DAA1FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 17:38:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F6311FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 19:05:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752070AbdFJRii (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 13:38:38 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34943 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752041AbdFJRih (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 13:38:37 -0400
-Received: by mail-wr0-f196.google.com with SMTP id g76so13244110wrd.2
-        for <git@vger.kernel.org>; Sat, 10 Jun 2017 10:38:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Fa/rYys1YasXHKrHVi/c4eRaqTFVrkDal7dnuAHtDR8=;
-        b=R+JynUbRUw6RYJ8dgStbK1eLad0mOnr6Emw/i+7I2LSFoaW26pqTk5Bv+97YZsLXxu
-         spwfYk5Mr1xcLIPHV9Yu0aF4OdPtjGyfMEAmhs0P0rLcEIRL10UtTyLRAOue9MMr2rSF
-         slibo092sAemSoHgY6Z89sGpFJQA/F7eEahtUOgs9sX3tvMdYj7L6Nqq7F8p/b77NgNC
-         K9NDdXgSXTeBCuxmCL1v9GWc+wYKXE2l71+jF/VyfrB4jiQro8TEB04GojNDbII5CL9F
-         ZGZEq0FVQPUBPJQXtgYTIfT6AJz9JXNxB8zvmW22MOLkS7HAJLyYzSbJb8qYv9TLnRWr
-         CS4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Fa/rYys1YasXHKrHVi/c4eRaqTFVrkDal7dnuAHtDR8=;
-        b=icglThgmgYpBOozgFcyBsumBmyfKvYqR73//hZeHd5U2+3/K9bwg6ObI3gew+SWruq
-         sDH6ZX7SMcFByeJNly/2lBw60mORDcjOVVML5ShP7IU6ZEXUtbDNa4jUEYMQ0je6wH+B
-         ULcOJ4Ghlr955FyZockGLToTNsOCpwd5ZEkYvZNi0HiQUPIcEDdepcMso3EUzCKqrZUr
-         mfW1gGe9FAEpTmgxS3fx5Wo6GKsP82uNXx7ydRkUSaiCVZ1L/QOqpPEfzywEqZ0NAvEx
-         GJc+K0y068zZ3MQo66tP98viGSmEnxhZYRylVP8u/JMVs5sJgpYDYPmJCNre2xk3FqBC
-         5+3g==
-X-Gm-Message-State: AKS2vOxe/0sRF7xs8CeB79HpRXMg4yLYX+l+lcO39y/Fw08JiS06h7Nz
-        aPI9cmeqjfLo2BN2lBY=
-X-Received: by 10.28.234.70 with SMTP id i67mr3292674wmh.91.1497116315890;
-        Sat, 10 Jun 2017 10:38:35 -0700 (PDT)
-Received: from arrakeen.fritz.box ([2001:a61:3439:7300:99fb:6818:11d2:739])
-        by smtp.gmail.com with ESMTPSA id y41sm5909446wrd.59.2017.06.10.10.38.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 10 Jun 2017 10:38:35 -0700 (PDT)
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Andreas Heiduk <asheiduk@gmail.com>
-Subject: [PATCH v2] doc: fix location of index in worktree scenatio
-Date:   Sat, 10 Jun 2017 19:38:24 +0200
-Message-Id: <20170610173824.19460-1-asheiduk@gmail.com>
-X-Mailer: git-send-email 2.13.0
-In-Reply-To: <20170610090719.8429-1-asheiduk@gmail.com>
-References: <20170610090719.8429-1-asheiduk@gmail.com>
+        id S1751623AbdFJTFM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 15:05:12 -0400
+Received: from ikke.info ([178.21.113.177]:45480 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751555AbdFJTFM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 15:05:12 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 3E14A4400B7; Sat, 10 Jun 2017 21:05:10 +0200 (CEST)
+Date:   Sat, 10 Jun 2017 21:05:10 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: 'pu' broken at t5304 tonight
+Message-ID: <20170610190510.GE27719@alpha.vpn.ikke.info>
+References: <xmqq4lvo2x6i.fsf@gitster.mtv.corp.google.com>
+ <20170610124836.GD27719@alpha.vpn.ikke.info>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170610124836.GD27719@alpha.vpn.ikke.info>
+User-Agent: Mutt/1.8.2 (2017-04-18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When setting `.gitattributes` in a second worktree, a plain `rm .git/index`
-does not actually delete the index.
+On Sat, Jun 10, 2017 at 02:48:36PM +0200, Kevin Daudt wrote:
+> On Sat, Jun 10, 2017 at 03:07:01PM +0900, Junio C Hamano wrote:
+> > I didn't check where it goes wrong.  Here is a list of suspects,
+> > taken by
+> > 
+> >     $ git shortlog --no-merges pu@{8.hours}..pu
+> > 
+> > i.e. patches that weren't in pu before today's integration cycle.
+> > 
+> > Andreas Heiduk (1):
+> >       doc: describe git svn init --ignore-refs
+> > 
+> > Brandon Williams (32):
+> >       config: create config.h
+> >       config: remove git_config_iter
+> >       config: don't include config.h by default
+> >       config: don't implicitly use gitdir
+> >       setup: don't perform lazy initialization of repository state
+> >       environment: remove namespace_len variable
+> >       repository: introduce the repository object
+> >       environment: place key repository state in the_repository
+> >       environment: store worktree in the_repository
+> >       setup: add comment indicating a hack
+> >       config: read config from a repository object
+> >       repository: add index_state to struct repo
+> >       submodule-config: store the_submodule_cache in the_repository
+> >       submodule: add repo_read_gitmodules
+> >       submodule: convert is_submodule_initialized to work on a repository
+> >       convert: convert get_cached_convert_stats_ascii to take an index
+> >       convert: convert crlf_to_git to take an index
+> >       convert: convert convert_to_git_filter_fd to take an index
+> >       convert: convert convert_to_git to take an index
+> >       convert: convert renormalize_buffer to take an index
+> >       tree: convert read_tree to take an index parameter
+> >       ls-files: convert overlay_tree_on_cache to take an index
+> >       ls-files: convert write_eolinfo to take an index
+> >       ls-files: convert show_killed_files to take an index
+> >       ls-files: convert show_other_files to take an index
+> >       ls-files: convert show_ru_info to take an index
+> >       ls-files: convert ce_excluded to take an index
+> >       ls-files: convert prune_cache to take an index
+> >       ls-files: convert show_files to take an index
+> >       ls-files: factor out debug info into a function
+> >       ls-files: factor out tag calculation
+> >       ls-files: use repository object
+> > 
+> > Jeff King (1):
+> >       date: use localtime() for "-local" time formats
+> > 
+> > Johannes Schindelin (8):
+> >       discover_git_directory(): avoid setting invalid git_dir
+> >       config: report correct line number upon error
+> >       help: use early config when autocorrecting aliases
+> >       read_early_config(): optionally return the worktree's top-level directory
+> >       t1308: relax the test verifying that empty alias values are disallowed
+> >       t7006: demonstrate a problem with aliases in subdirectories
+> >       alias_lookup(): optionally return top-level directory
+> >       Use the early config machinery to expand aliases
+> > 
+> > Junio C Hamano (1):
+> >       ### match next
+> > 
+> > Prathamesh Chavan (1):
+> >       dir: create function count_slashes
+> > 
+> > SZEDER Gábor (5):
+> >       revision.h: turn rev_info.early_output back into an unsigned int
+> >       revision.c: stricter parsing of '--no-{min,max}-parents'
+> >       revision.c: stricter parsing of '--early-output'
+> >       revision.c: use skip_prefix() in handle_revision_opt()
+> >       revision.c: use skip_prefix() in handle_revision_pseudo_opt()
+> > 
+> > Stefan Beller (1):
+> >       t4005: modernize style and drop hard coded sha1
+> > 
+> 
+> For me, this bisects to the latest merge:
+> 
+> 2047eebd3 (Merge branch 'bw/repo-object' into pu, 2017-06-10), but
+> neither of the parent of the merge break this test, so it looks like
+> it's because of an interaction between the repo-object topic and another
+> topic.
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/gitattributes.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Merging the repo-object with different other topic branches reveals this
+topic to cause the bad interaction:
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 473648386..2a2d7e2a4 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -229,7 +229,7 @@ From a clean working directory:
- 
- -------------------------------------------------
- $ echo "* text=auto" >.gitattributes
--$ rm .git/index     # Remove the index to re-scan the working directory
-+$ git read-tree --empty   # Clean index, force re-scan of working directory
- $ git add .
- $ git status        # Show files that will be normalized
- $ git commit -m "Introduce end-of-line normalization"
--- 
-2.13.0
+b56c91004 (Merge branch 'nd/prune-in-worktree' into pu, 2017-06-10)
 
+Still investigating why it happens.
