@@ -2,117 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	STOX_REPLY_TYPE,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF07A1FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 14:44:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C09F31FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 17:24:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752089AbdFJOoL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 10:44:11 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:49491 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751958AbdFJOoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 10:44:10 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id JhcVdc24N3fb0JhcVdRVTP; Sat, 10 Jun 2017 15:44:08 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=TerUjlYh c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=Q9fys5e9bTEA:10 a=pGLkceISAAAA:8
- a=WaOnP9b13GN8YlazSqwA:9 a=PUjeQqilurYA:10 a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <0E6CC91ED74848B78F9A2DFC7DF48AE5@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Kaartic Sivaraam" <kaarticsivaraam91196@gmail.com>,
-        "Junio C Hamano" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>, <sandals@crustytoothpaste.net>
-References: <20170610015236.5237-1-kaarticsivaraam91196@gmail.com>         <xmqq7f0k4m3e.fsf@gitster.mtv.corp.google.com> <1497084241.8531.2.camel@gmail.com>
-Subject: Re: [PATCH] wt-status.c: Modified status message shown for a parent-less branch
-Date:   Sat, 10 Jun 2017 15:44:08 +0100
-Organization: OPDS
+        id S1752080AbdFJRY4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 13:24:56 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:35757 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751977AbdFJRYz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 13:24:55 -0400
+Received: by mail-wr0-f195.google.com with SMTP id g76so13195662wrd.2
+        for <git@vger.kernel.org>; Sat, 10 Jun 2017 10:24:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GsDY1M+qwptOZ6Rwawkj+diGKprImxrSEdhP9ibtab0=;
+        b=TUtiTQ/405ciJ7wcqEXbIaX8FMWf5tpnRvNpsMYgrzJztAX4HmfJnERTAhWoCVbDDv
+         rJl2Qd8uyAFKvWvB16C1IXITmfotEUqzqIOGu92ZlYD2E3SSgrk8w6shmLXu9cvVBrGy
+         3fpMu6l9qVbG3IPvVaV/ztVMO8Dw6L05/I8bQok68eD9yMsohElBLXxC/ccY7+G0JwVG
+         JhOO8m3AVPbRpEQlhF4NBvrWLYXtSkBWHDh79i973F+QOi2gdH5ICjwo5axv15dKJ+Pu
+         HswHkiAE4wGmvSrL3ooqJaw0KE26IpPVSuta+mA8BGlPiSrYusPdiyo8yqneZo9xYkuz
+         aqaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GsDY1M+qwptOZ6Rwawkj+diGKprImxrSEdhP9ibtab0=;
+        b=FCvvf9134vocCYiHLTrE/KpruoshfFO3ZvqMs4WZRFQwH4xdvlDARNYMIeZbSShErO
+         oISqA+/TWhLSdY7xd3+FtEKZGT1esdiMgZdlYO3PfYZ+aI54J1YpSn7wOF5hbKTLysbC
+         xeGeVQTs6HWtlXJzHCLz8PKhAZI15W4Ke36tB4Rkthsh2AixUtfeaIVuO+u1C6ZY5VsR
+         M471odkIvyXSK4vvmyXl7z/oCVYkgMo+5zpE4Gp3nxq/r2IG3WBdMtyn+g/pfNkyg2qR
+         eEPKP52PAq1qKMq6+9BLtlbE92ofvxyTtb1MNn+mTFq7zY/wE7aKe4FV3XnhRgQw7lfJ
+         3ctg==
+X-Gm-Message-State: AODbwcDtxQdZWV78re3jngZxhWhr7woIokRPizGDvOGsAQt/lZG/hp+K
+        I7SchEXVCVqpbw==
+X-Received: by 10.223.143.35 with SMTP id p32mr2341956wrb.120.1497115493845;
+        Sat, 10 Jun 2017 10:24:53 -0700 (PDT)
+Received: from ?IPv6:2001:a61:3439:7300:99fb:6818:11d2:739? ([2001:a61:3439:7300:99fb:6818:11d2:739])
+        by smtp.googlemail.com with ESMTPSA id m40sm4670594wrm.4.2017.06.10.10.24.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 10 Jun 2017 10:24:52 -0700 (PDT)
+Subject: Re: [PATCH] doc: fix location of index in worktree scenatio
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+References: <20170610090719.8429-1-asheiduk@gmail.com>
+ <xmqqmv9g1487.fsf@gitster.mtv.corp.google.com>
+From:   Andreas Heiduk <asheiduk@gmail.com>
+Message-ID: <d2b21102-eb32-7061-14ee-aa8906fe9eeb@gmail.com>
+Date:   Sat, 10 Jun 2017 19:24:51 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-15";
-        reply-type=original
+In-Reply-To: <xmqqmv9g1487.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 170609-4, 09/06/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfIlQ3A7IE8DFmjRU4r83hHeT22nD409sMcjO3ZoPtPZevB2QH4PoR5hZm9V/Ttw8hWr3jaFlg4l8+9bLmn1y3j12uCpX5TU/xhiXbWeuCi3ZEZTZqqXq
- rX8BEmQFHKK/WsEUPEgJ70EafghWzX176BcyDN5P75ERaKRJnoaEijNz7jE62UjZzA7FK8p70WnMycN4G5fuSZVoDZ+6qbkVD+102eDPTtl67auenCtFAf8Y
- KiRvpQlZtETli7Jfp550ppAkJxggzFwbAjIGfvuwUSHlV7mhxY183Qy8+bo6xdwy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Kaartic Sivaraam" <kaarticsivaraam91196@gmail.com>
-> On Sat, 2017-06-10 at 11:23 +0900, Junio C Hamano wrote:
->> $ git shortlog -20 --no-merges
+Am 10.06.2017 um 13:17 schrieb Junio C Hamano:
+> Andreas Heiduk <asheiduk@gmail.com> writes:
+> 
+>> When setting `.gitattributes` in a second worktree, a plain `rm .git/index`
+>> does not actually delete the index.
 >>
->> may help learning the preferred style of writing the title. We do
->> not say "[I] did this". Instead we phrase things in imperative
->> mood, giving an order to the codebase to "become like so". E.g.
-> This style is a little new to me thus my commit message turned out to
-> be a repercussion of my own style (which, I guess, targets other
-> developers who read the log). Will be careful the next time :). Made
-> the requested changes except for a few doubts they raised (see comments
-> below).
->
->> And it wasn't just "a little" confusing.
->>
->> "git status" indicated "Initial commit" when HEAD points at
->> an unborn branch. This message is shared with the commit
->> log template "git commit" prepares for the user when
->> creating a commit (i.e. "You are about to create the initial
->> commit"),
-> I didn't get that, where should I be seeing the line, "You are about to
-> create the initial commit" in the commit template ? I just saw "Initial
-> commit" in it.
->
->> Does this break "git commit", or is the update limited to "git
->> status"?
-> This does seem to be breaking 'git commit' as it seems to be using the
-> output of 'git status'. This change results in the following commit
-> template for the initial commit,
->
-> # Please enter the commit message for your changes. Lines starting
-> # with '#' will be ignored, and an empty message aborts the commit.
-> # On branch master
-> #
-> # Waiting for initial commit
+[...]
+> Right.  
+> 
+> I however have to wonder if we can do the same without futzing
+> directly with the "index" file as a filesystem entity.  With or
+> without your update, what is taught in the document feels like
+> munging a disk block with binary editor to correct a corrupted
+> filesystem X-<.
 
-To me this sounds perfectly natural. It is the current status. The line will 
-be ignored by the commit message anyway unless the user edits the start of 
-the line.
+IMO `rm .git/index` is like munging a disk block WITHOUT a binary
+editor but with plain `dd seek=... skip=... count=...`, `hexdump`,
+`ed` and back - every step is clear in principle but painful and
+dangerous. :-)
 
-At most it is a feeling that maybe we should provide an imperative 
-statement, but even then, it's still stating the obvious (which is normally 
-a bad thing). If the user is adding a .gitignore file then the commit 
-message should say so, etc. Maybe the "Initial commit" is meant to be the 
-default (by convention) separator, or its just a convention we've become 
-used to.
+> For example, can we do this "empty the index" step with things like
+> 
+>     $ git rm --cached .
 
-> #
-> # Changes to be committed:
-> # new file: test-file
-> #
->
-> Looks odd. Not sure how to fix this. Maybe on of the alternatives have
-> to be considered. "Your current branch does not have any commits" seems
-> a good one.
->
-> -- 
-> Regards,
-> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+That would be `git rm --cached -rq .`?
 
---
-Philip 
+Executing this in the git repo gives me an index file with 2.1kb. I
+don't know whether or not this index still contains something relevant
+for this case.
 
+> or
+> 
+>     $ git read-tree --empty
+> 
+> instead?
+
+Nice! The `index` file contains 46 bytes.
+
+For me THAT one is like a nice binary editor apt for the job :-)
+I'll queue that.
