@@ -2,125 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2A861F8CF
-	for <e@80x24.org>; Sat, 10 Jun 2017 02:10:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC4BF1F8CF
+	for <e@80x24.org>; Sat, 10 Jun 2017 02:23:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751729AbdFJCKz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Jun 2017 22:10:55 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:32809 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751685AbdFJCKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jun 2017 22:10:55 -0400
-Received: by mail-pf0-f196.google.com with SMTP id w12so205171pfk.0
-        for <git@vger.kernel.org>; Fri, 09 Jun 2017 19:10:54 -0700 (PDT)
+        id S1751685AbdFJCXg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Jun 2017 22:23:36 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33244 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751595AbdFJCXf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jun 2017 22:23:35 -0400
+Received: by mail-pg0-f66.google.com with SMTP id a70so9114242pge.0
+        for <git@vger.kernel.org>; Fri, 09 Jun 2017 19:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=KRtPZuia1pg53bbqmN3ZjTekNbIApaenmU0Y3qbz+SE=;
-        b=i35o7tJVTzwlbpmHHYsxhzsuzs5yzGh527SPtpzIxvdDv2wQ7jmJwqvvXva8vJ05aa
-         23P4O3v/vZsaoDu0jUYvh/wOOLMOLbSztVrwVW/YjPTM2WhVUIc4Ig2hGTmHXqqmP4Dw
-         BSqP7/zAS9cvaD/NKo12IJ44aNQ6UqFf9AjVXvf+QptEq66bTLy4+PGv7qjIdyrbu4T2
-         /FpyDmJdZoedQ9WMb54qaWFZ5oidJnK1bmu6Z/FOh/r9LuhVGo/6HZLBA8/vIqkHoILV
-         jBOH6uIis5d51O115wRxGuPGldJqsqYzSu146FChl0KkX3zthwe0DSqrbXcdMFSOJMkO
-         hPEQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=/z5qmO0aG+DMR6mc3lBSFgZ3ICiXLaxY3TKWW7cPEew=;
+        b=C1+MNRMsbPQDpNODLnhqEDYIck8uKkO2pNsRb6lg3nJp+jsayiRO3EaiYI8CX+jZTx
+         NDalUyrwSl5Hv3wlvstUFSRlf9y4uRlW3/550OWDqyQzlPaayHxc9DY09WOI/48paFD5
+         LE2CJ1gfFqs8mr1AuJqCZ9BVzXzzBBZgyYdA5rel4eryh1Qn9+bMn9DTkkIj+dEp/hJW
+         g7jJI2RoZF4MDBHnpnQByx5wlh+jvq9aEGPMRwwAglH4sR1+kamoxnblmCowMfF01g//
+         g4rSA4xBl1idxyzz6Eo3m60sftSFMPdZZ+PRGTMAgqqiJJjn5+9QlmZjvsPHFNu6+8e4
+         2QhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=KRtPZuia1pg53bbqmN3ZjTekNbIApaenmU0Y3qbz+SE=;
-        b=Zd1yjxseRLD6y4LMe/sv0mYj7CEdlFDbm0XyvAt1QhLRvTzXVb5+yGYTlGnJTGF7S5
-         mqBZrgyj+7oqpnHSUL46/7eD/Wt22FQPCsUWGU4U4XleuqevZPR8RAZ998/14m0G1/qB
-         J77WYf2eVEpQsbTi6OTCCsE3RAwWaoHagOy58nha11gI+1+VICMXxdWnhfPbCXXiTO3w
-         VUzwt741sIiyjUYQ5yO1W0YN4s4fiIl1zgHsNcVSKO2GiVFF9aYZKPZ0P4RGzSVxXhpg
-         lHAx2M3Th/E7skawKYpZheDR7DtdmA6QnBE8EuQXbF3rsiIRDpK0kW9GDqsi+47ss03V
-         QLqQ==
-X-Gm-Message-State: AODbwcBaM3I5KRgsQoJA36uyh6XyEXnOBckg/TNWZPJWOJQin5QpQAHP
-        TnqGVmAOtpja3wLxxEA457X9
-X-Received: by 10.84.211.7 with SMTP id b7mr14553170pli.124.1497060654415;
-        Fri, 09 Jun 2017 19:10:54 -0700 (PDT)
-Received: from unique-pc ([2405:205:800f:e175:79da:a1fa:c50e:c98d])
-        by smtp.googlemail.com with ESMTPSA id i17sm4725311pgn.60.2017.06.09.19.10.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 09 Jun 2017 19:10:54 -0700 (PDT)
-Message-ID: <1497060629.5324.0.camel@gmail.com>
-Subject: Re: [PATCH] wt-status.c: Modified status message shown for a
- parent-less branch
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=/z5qmO0aG+DMR6mc3lBSFgZ3ICiXLaxY3TKWW7cPEew=;
+        b=cwDdflbEcBppo4MCYbNrtrvDNPEsR+t4rj7CLPjj9csocn5bnG2E6WtWM+K++TcHbP
+         qgXZIt/fxW7/nNaGlfpk9Ay4+b71JDRk0T1M/vMeLWZDYFzKg483yi9Mn2Gve7RVV9q0
+         m2YgiflYR/mJvZ5NjMtfOpsQweKv3iEE0ELLUOrQxaowbl5FbasNELJyhJNjZLhZTmSv
+         V3XwZrcMwXxoehULBrwMhq3RoybqR50C1EHd5jmhoe3f/3nl9WHr+rICwvJ6YizIsQwC
+         NuSkviiIdKjvXhVn7umxy+PsQaLAWm11fvYsNzYQQZdxlhHe/Ov7H89gPgwz55lAowSi
+         WGxA==
+X-Gm-Message-State: AODbwcBNEpBFaP4ZYLYwz1+B36TWr4hLf5ML2GhZrxqPUe/AjTYMvrlx
+        uroLvFcAMhm/Fg==
+X-Received: by 10.84.198.35 with SMTP id o32mr17210348pld.194.1497061414880;
+        Fri, 09 Jun 2017 19:23:34 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:25b5:3bc1:d744:5d92])
+        by smtp.gmail.com with ESMTPSA id w26sm7021789pgc.13.2017.06.09.19.23.34
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 09 Jun 2017 19:23:34 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net
-Date:   Sat, 10 Jun 2017 07:40:29 +0530
-In-Reply-To: <20170610015236.5237-1-kaarticsivaraam91196@gmail.com>
+Subject: Re: [PATCH] wt-status.c: Modified status message shown for a parent-less branch
 References: <20170610015236.5237-1-kaarticsivaraam91196@gmail.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date:   Sat, 10 Jun 2017 11:23:33 +0900
+In-Reply-To: <20170610015236.5237-1-kaarticsivaraam91196@gmail.com> (Kaartic
+        Sivaraam's message of "Sat, 10 Jun 2017 07:22:36 +0530")
+Message-ID: <xmqq7f0k4m3e.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The status message shown for a parent-less branch wasn't so
-descriptive and was a little confusing.
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
-The message has been changed to be more descriptive to users in
-such a way that it clearly shows the state of the branch / repository.
+>Subject: Re: [PATCH] wt-status.c: Modified status message shown for a parent-less branch
 
-This allows the users to be reminded that they are about to make
-their initial commit which the previous message didn't seem to do
-communicate well.
+$ git shortlog -20 --no-merges
 
-A few alternatives were,
+may help learning the preferred style of writing the title.  We do
+not say "[I] did this".  Instead we phrase things in imperative
+mood, giving an order to the codebase to "become like so".  E.g.
 
-* No commit yet
-* Your current branch does not have any commits
-* Current branch waiting for initial commit
+    Subject: wt-status.c: rephrase "Initial commit" in "git status" output
 
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- Corrected a little typo in the commit message
+or something like that.
 
+> The status message shown for a paren-less branch wasn't so
+> descriptive and was a little confusing.
 
- wt-status.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+s/paren/parent/; It was descritive enough, but the problem lied
+elsewhere. It assumed that the user knows that "git status" message
+is relative to the next commit the user creates from the state.
 
-diff --git a/wt-status.c b/wt-status.c
-index 037548496..7bfdde46d 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1576,7 +1576,7 @@ static void wt_longstatus_print(struct wt_status
-*s)
- 
- 	if (s->is_initial) {
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s",
-"");
--		status_printf_ln(s, color(WT_STATUS_HEADER, s),
-_("Initial commit"));
-+		status_printf_ln(s, color(WT_STATUS_HEADER, s),
-_("Waiting for initial commit"));
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s",
-"");
- 	}
- 
-@@ -1746,7 +1746,7 @@ static void wt_shortstatus_print_tracking(struct
-wt_status *s)
- #define LABEL(string) (s->no_gettext ? (string) : _(string))
- 
- 	if (s->is_initial)
--		color_fprintf(s->fp, header_color, LABEL(N_("Initial
-commit on ")));
-+		color_fprintf(s->fp, header_color, LABEL(N_("Waiting
-for initial commit on ")));
- 
- 	if (!strcmp(s->branch, "HEAD")) {
- 		color_fprintf(s->fp, color(WT_STATUS_NOBRANCH, s),
-"%s",
--- 
-2.11.0
+And it wasn't just "a little" confusing.
+
+	"git status" indicated "Initial commit" when HEAD points at
+	an unborn branch.  This message is shared with the commit
+	log template "git commit" prepares for the user when
+	creating a commit (i.e. "You are about to create the initial
+	commit"), and is OK as long as the reader is aware of the
+	nature of the message (i.e. it guides the user working
+	toward the next commit), but was confusing to new users,
+	especially the ones who do "git commit -m message" without
+	having a chance to pay attention to the commit log template.
+
+> The message has been changed to be more descriptive to users in
+> such a way that it clearly shows the state of the branch / repository.
+
+Again, not "This commit did X".
+
+	Rephrase the message so that it is more clear that the state
+	of the current branch (not the whole repository) is being
+	described to remove this confusion.
+
+> This allows the users to be reminded that they are about to make
+> their initial commit which the previous message didn't seem to do
+> communicate well.
+
+And this paragraph becomes unnecessary.
+
+> A few alternatives were,
+
+s/were/considered were/;
+
+>
+> * No commit yet
+> * Your current branch does not have any commits
+> * Current branch waiting for initial commit
+>
+> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+> ---
+
+Does this break "git commit", or is the update limited to "git
+status"?
+
+>  wt-status.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/wt-status.c b/wt-status.c
+> index 0375484..7bfdde4 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -1576,7 +1576,7 @@ static void wt_longstatus_print(struct wt_status *s)
+>  
+>  	if (s->is_initial) {
+>  		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
+> -		status_printf_ln(s, color(WT_STATUS_HEADER, s), _("Initial commit"));
+> +		status_printf_ln(s, color(WT_STATUS_HEADER, s), _("Waiting for initial commit"));
+>  		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
+>  	}
+>  
+> @@ -1746,7 +1746,7 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+>  #define LABEL(string) (s->no_gettext ? (string) : _(string))
+>  
+>  	if (s->is_initial)
+> -		color_fprintf(s->fp, header_color, LABEL(N_("Initial commit on ")));
+> +		color_fprintf(s->fp, header_color, LABEL(N_("Waiting for initial commit on ")));
+>  
+>  	if (!strcmp(s->branch, "HEAD")) {
+>  		color_fprintf(s->fp, color(WT_STATUS_NOBRANCH, s), "%s",
