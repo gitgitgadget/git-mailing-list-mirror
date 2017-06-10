@@ -6,60 +6,70 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 606631FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 08:25:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C8321FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 08:40:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751890AbdFJIZi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 04:25:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37551 "EHLO cloud.peff.net"
+        id S1751953AbdFJIkT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 04:40:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37558 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751844AbdFJIZg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 04:25:36 -0400
-Received: (qmail 3441 invoked by uid 109); 10 Jun 2017 08:25:35 -0000
+        id S1751844AbdFJIkS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 04:40:18 -0400
+Received: (qmail 4357 invoked by uid 109); 10 Jun 2017 08:40:17 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 08:25:35 +0000
-Received: (qmail 29582 invoked by uid 111); 10 Jun 2017 08:25:36 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 08:40:17 +0000
+Received: (qmail 29627 invoked by uid 111); 10 Jun 2017 08:40:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 04:25:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Jun 2017 04:25:34 -0400
-Date:   Sat, 10 Jun 2017 04:25:34 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 04:40:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Jun 2017 04:40:16 -0400
+Date:   Sat, 10 Jun 2017 04:40:16 -0400
 From:   Jeff King <peff@peff.net>
-To:     Houston Fortney <houstonfortney@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Feature Request: Show status of the stash in git status command
-Message-ID: <20170610082534.6437ifexzly4oqg6@sigill.intra.peff.net>
-References: <CA+B9myHRahTd+FDgzK5AhXW+hq_Y_czMX9X6MXYBcr9WSPeiDw@mail.gmail.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/8] discover_git_directory(): avoid setting invalid
+ git_dir
+Message-ID: <20170610084015.ej62tkw7gb26z4no@sigill.intra.peff.net>
+References: <cover.1496951503.git.johannes.schindelin@gmx.de>
+ <effd58a564e54ccd3d695d91bc9c4f32255b8ab7.1496951503.git.johannes.schindelin@gmx.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+B9myHRahTd+FDgzK5AhXW+hq_Y_czMX9X6MXYBcr9WSPeiDw@mail.gmail.com>
+In-Reply-To: <effd58a564e54ccd3d695d91bc9c4f32255b8ab7.1496951503.git.johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 07, 2017 at 06:46:18PM -0400, Houston Fortney wrote:
+On Thu, Jun 08, 2017 at 09:53:32PM +0200, Johannes Schindelin wrote:
 
-> I sometimes forget about something that I stashed. It would be nice if
-> the git status command would just say "There are x entries in the
-> stash." It can say nothing if there is nothing stashed so it is
-> usually not adding clutter.
+> When discovering a .git/ directory, we take pains to ensure that its
+> repository format version matches Git's expectations, and we return NULL
+> otherwise.
+> 
+> However, we still appended the invalid path to the strbuf passed as
+> argument.
+> 
+> Let's just reset the strbuf to the state before we appended the .git/
+> directory that was eventually rejected.
+> 
+> There is another early return path in that function, when
+> setup_git_directory_gently_1() returns GIT_DIR_NONE or an error. In that
+> case, the gitdir parameter has not been touched, therefore there is no
+> need for an equivalent change in that code path.
 
-I think the clutter issue would depend on your workflow around stash.
+After reading this, I thought at first this was a user-visible (albeit
+obscure) bug where something like:
 
-Some people carry tidbits in their stash for days or weeks. E.g., I
-sometimes start on an idea and decide it's not worth pursuing (or more
-likely, I post a snippet of a patch as a "how about this" to the mailing
-list but don't plan on taking it further). Rather than run "git reset
---hard", I usually "git stash" the result. That means if I really do
-decide I want it back, I can prowl through the stash list and find it.
+  git init
+  git init bogus
+  cd bogus
+  git config core.repositoryformatversion 5
 
-All of which is to say that if we had such a feature, it should probably
-be optional. For some people it would be very useful, and for others it
-would be a nuisance.
+would mean that early-config barfs on seeing our bogus ".git", but that
+screws up the discovery going back to the real repository root. But
+that's not the case, because we always stop walking anyway when we see
+such a bogus git dir.
 
-Do you want to try a patch? I think you'd need to find the right spot in
-wt-status.c to show the output, and then call for_each_reflog_ent() on
-"refs/stash" and count the number of entries you see.
+So it's just a cleanup (though obviously a sensible one).
 
 -Peff
