@@ -6,65 +6,66 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4463C1FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 06:44:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34A451FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 06:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751848AbdFJGo3 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 02:44:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37474 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751741AbdFJGo2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 02:44:28 -0400
-Received: (qmail 29630 invoked by uid 109); 10 Jun 2017 06:44:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 06:44:27 +0000
-Received: (qmail 29022 invoked by uid 111); 10 Jun 2017 06:44:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 02:44:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Jun 2017 02:44:26 -0400
-Date:   Sat, 10 Jun 2017 02:44:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/3] revision.c: use skip_prefix() in
- handle_revision_opt()
-Message-ID: <20170610064426.ylzdx2v4ffdz2jkh@sigill.intra.peff.net>
-References: <20170602201143.6avkhp224no3dukb@sigill.intra.peff.net>
- <20170609181733.6793-1-szeder.dev@gmail.com>
+        id S1751817AbdFJGzz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 02:55:55 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:35802 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751785AbdFJGzy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 02:55:54 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3wl90l6ZV4z1qsF0;
+        Sat, 10 Jun 2017 08:55:51 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 3wl90l5d7Mz3jR9h;
+        Sat, 10 Jun 2017 08:55:51 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id 6AowzzO1tQ4W; Sat, 10 Jun 2017 08:55:50 +0200 (CEST)
+X-Auth-Info: Nk6mIazj/tpnDbjaNgXX+36ySBAolCKIkYgruHFlGgJYFMpdn7/n2qjPSOuuCuUO
+Received: from linux.local (ppp-88-217-7-34.dynamic.mnet-online.de [88.217.7.34])
+        by mail.mnet-online.de (Postfix) with ESMTPA;
+        Sat, 10 Jun 2017 08:55:50 +0200 (CEST)
+Received: by linux.local (Postfix, from userid 501)
+        id A18D91E563C; Sat, 10 Jun 2017 08:55:48 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v2 1/2] git-compat-util: add a FREEZ() wrapper around free(ptr); ptr = NULL
+References: <20170609085346.19974-1-avarab@gmail.com>
+        <20170609220420.4910-2-avarab@gmail.com>
+        <20170609222738.GF21733@aiede.mtv.corp.google.com>
+X-Yow:  While my BRAINPAN is being refused service in BURGER KING,
+ Jesuit priests are DATING CAREER DIPLOMATS!!
+Date:   Sat, 10 Jun 2017 08:55:46 +0200
+In-Reply-To: <20170609222738.GF21733@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Fri, 9 Jun 2017 15:27:38 -0700")
+Message-ID: <m2vao4jpql.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170609181733.6793-1-szeder.dev@gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 09, 2017 at 08:17:28PM +0200, SZEDER Gábor wrote:
+On Jun 09 2017, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> So, here comes v2.  The interdiff is below, the changes since v1 are:
-> 
->  - Patch 1/5 is new to fix a more fundamental problem with
->    '--early-output'.
->  - Patch 3/5 is new to fix this '--early-output-foo' issue and also
->    to tighten up the parsing of its integer argument, while at it.
->  - A fix for '--show-linear-break-foo' in v1.
->  - A little cleanup in the handling of '--show-notes/--notes'.
-> 
-> 
-> SZEDER Gábor (5):
->   revision.h: turn rev_info.early_output back into an unsigned int
->   revision.c: stricter parsing of '--no-{min,max}-parents'
->   revision.c: stricter parsing of '--early-output'
->   revision.c: use skip_prefix() in handle_revision_opt()
->   revision.c: use skip_prefix() in handle_revision_pseudo_opt()
-> 
->  revision.c | 87 +++++++++++++++++++++++++++++---------------------------------
->  revision.h |  5 ++--
->  2 files changed, 44 insertions(+), 48 deletions(-)
+> That way side-effectful callers like FREEZ(func() ? a : b) would
+> work.
 
-I noted a minor nit in the first commit message, but otherwise these all
-look good to me.
+Except that you cannot take the address of a non-lvalue.
 
--Peff
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
