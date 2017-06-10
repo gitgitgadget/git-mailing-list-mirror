@@ -2,74 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C8321FAEB
-	for <e@80x24.org>; Sat, 10 Jun 2017 08:40:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 106BC1FAEB
+	for <e@80x24.org>; Sat, 10 Jun 2017 08:45:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751953AbdFJIkT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 04:40:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37558 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751844AbdFJIkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 04:40:18 -0400
-Received: (qmail 4357 invoked by uid 109); 10 Jun 2017 08:40:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 08:40:17 +0000
-Received: (qmail 29627 invoked by uid 111); 10 Jun 2017 08:40:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 10 Jun 2017 04:40:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 10 Jun 2017 04:40:16 -0400
-Date:   Sat, 10 Jun 2017 04:40:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/8] discover_git_directory(): avoid setting invalid
- git_dir
-Message-ID: <20170610084015.ej62tkw7gb26z4no@sigill.intra.peff.net>
-References: <cover.1496951503.git.johannes.schindelin@gmx.de>
- <effd58a564e54ccd3d695d91bc9c4f32255b8ab7.1496951503.git.johannes.schindelin@gmx.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <effd58a564e54ccd3d695d91bc9c4f32255b8ab7.1496951503.git.johannes.schindelin@gmx.de>
+        id S1751996AbdFJIow (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 04:44:52 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34954 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751965AbdFJIoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 04:44:32 -0400
+Received: by mail-pg0-f66.google.com with SMTP id f127so9753480pgc.2
+        for <git@vger.kernel.org>; Sat, 10 Jun 2017 01:44:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=O42qknDZ9YEcnU1g+MjEZHu+Oe/Zf3BQd/4K0P+e3jA=;
+        b=nkl4rklaS6jSZpqyffUylpC4psFW/H+kcbYy6FKUFWhMFMDbY6Kw6oArIY8bNEBy6G
+         c0EhzlKtnEG2OMSztG041pLZnSv9nlefSFA/Uc6/rXQVSVzoY58z1PrA+qRzzp6TmTnT
+         Jg4DI8qq5YiZEYyEOCUZ97REa4MDksAh28f3XpWuMT2LnK0e29nAU6pm1Tv4jDY8vS1V
+         /3KvMPksDjUZQ5jUgmSDkJATepifYM46e3E7fQ43m3WaZUqK0MvTCeAYu1eUIyN1oA7H
+         AjmnD4ia5KzGxhbOulstKVHKkmfLvaJH+HYa7Ilk224k8dTaroCoQUK0L1MfeXSvuTBO
+         Re5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=O42qknDZ9YEcnU1g+MjEZHu+Oe/Zf3BQd/4K0P+e3jA=;
+        b=kmo9APThZXWDMi45T9DNy3RqS+Q3o5FiNjO3kxi6z0/3QtY89AWqqcCkGCCuTrt6YE
+         yGrG83jKPYR7syHQtYy9A/eET0vrATse3e/oL2nd1YfSZ1cUTBXU3Miv6mN1pYT4Lqsc
+         gQnFZDRcLRd/tcIF360rUG8F6YcSa3ve2kvd4Nrcryox5RLO/CZ0tdnqIsfUeKRGuXUI
+         Nsa/cm3g3LQ6HCg5q+HfaI4LfNlOAdxys1ctSf9UdGoPjDgi5mWzZ+gigOx3bLSKGMk7
+         Nn/4eY7rTJoqVraCtk8tM0sWlvzFN4W8makMAmoa7kRhjSc1v9fuqaX3lQKZcPJ3PvSk
+         7rdQ==
+X-Gm-Message-State: AODbwcDXFVv1fx+nzCNdhRn0icch5SyRNE6N5Jmq64Uvnpm4HlnDaEoC
+        6tztj2KX+rLdAA==
+X-Received: by 10.99.160.82 with SMTP id u18mr27834696pgn.176.1497084271668;
+        Sat, 10 Jun 2017 01:44:31 -0700 (PDT)
+Received: from unique-pc ([2405:205:800f:e175:94b2:5f2f:a42d:438b])
+        by smtp.googlemail.com with ESMTPSA id u45sm11333879pgn.28.2017.06.10.01.44.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 10 Jun 2017 01:44:31 -0700 (PDT)
+Message-ID: <1497084241.8531.2.camel@gmail.com>
+Subject: Re: [PATCH] wt-status.c: Modified status message shown for a
+ parent-less branch
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net
+Date:   Sat, 10 Jun 2017 14:14:01 +0530
+In-Reply-To: <xmqq7f0k4m3e.fsf@gitster.mtv.corp.google.com>
+References: <20170610015236.5237-1-kaarticsivaraam91196@gmail.com>
+         <xmqq7f0k4m3e.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 08, 2017 at 09:53:32PM +0200, Johannes Schindelin wrote:
-
-> When discovering a .git/ directory, we take pains to ensure that its
-> repository format version matches Git's expectations, and we return NULL
-> otherwise.
+On Sat, 2017-06-10 at 11:23 +0900, Junio C Hamano wrote:
+> $ git shortlog -20 --no-merges
 > 
-> However, we still appended the invalid path to the strbuf passed as
-> argument.
+> may help learning the preferred style of writing the title.  We do
+> not say "[I] did this".  Instead we phrase things in imperative
+> mood, giving an order to the codebase to "become like so".  E.g.
+This style is a little new to me thus my commit message turned out to
+be a repercussion of my own style (which, I guess, targets other
+developers who read the log). Will be careful the next time :). Made
+the requested changes except for a few doubts they raised (see comments
+below).
+
+> And it wasn't just "a little" confusing.
 > 
-> Let's just reset the strbuf to the state before we appended the .git/
-> directory that was eventually rejected.
-> 
-> There is another early return path in that function, when
-> setup_git_directory_gently_1() returns GIT_DIR_NONE or an error. In that
-> case, the gitdir parameter has not been touched, therefore there is no
-> need for an equivalent change in that code path.
+> 	"git status" indicated "Initial commit" when HEAD points at
+> 	an unborn branch.  This message is shared with the commit
+> 	log template "git commit" prepares for the user when
+> 	creating a commit (i.e. "You are about to create the initial
+> 	commit"),
+I didn't get that, where should I be seeing the line, "You are about to
+create the initial commit" in the commit template ? I just saw "Initial
+commit" in it.
 
-After reading this, I thought at first this was a user-visible (albeit
-obscure) bug where something like:
+> Does this break "git commit", or is the update limited to "git
+> status"?
+This does seem to be breaking 'git commit' as it seems to be using the
+output of 'git status'. This change results in the following commit
+template for the initial commit,
 
-  git init
-  git init bogus
-  cd bogus
-  git config core.repositoryformatversion 5
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+#
+# Waiting for initial commit
+#
+# Changes to be committed:
+#       new file:   test-file
+#
 
-would mean that early-config barfs on seeing our bogus ".git", but that
-screws up the discovery going back to the real repository root. But
-that's not the case, because we always stop walking anyway when we see
-such a bogus git dir.
+Looks odd. Not sure how to fix this. Maybe on of the alternatives have
+to be considered. "Your current branch does not have any commits" seems
+a good one.
 
-So it's just a cleanup (though obviously a sensible one).
-
--Peff
+-- 
+Regards,
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
