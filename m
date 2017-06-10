@@ -2,119 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8C5B1F8CF
-	for <e@80x24.org>; Fri,  9 Jun 2017 23:37:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 783B91F8CF
+	for <e@80x24.org>; Sat, 10 Jun 2017 00:40:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751562AbdFIXhD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 9 Jun 2017 19:37:03 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:33008 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751545AbdFIXhD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Jun 2017 19:37:03 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 293D81F8CF;
-        Fri,  9 Jun 2017 23:37:02 +0000 (UTC)
-Date:   Fri, 9 Jun 2017 23:37:02 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2 1/2] git-compat-util: add a FREEZ() wrapper around
- free(ptr); ptr = NULL
-Message-ID: <20170609233701.GA7195@whir>
-References: <20170609085346.19974-1-avarab@gmail.com>
- <20170609220420.4910-2-avarab@gmail.com>
- <20170609222738.GF21733@aiede.mtv.corp.google.com>
+        id S1751596AbdFJAkm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 9 Jun 2017 20:40:42 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:36653 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751562AbdFJAkl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Jun 2017 20:40:41 -0400
+Received: by mail-pg0-f46.google.com with SMTP id a70so31020623pge.3
+        for <git@vger.kernel.org>; Fri, 09 Jun 2017 17:40:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=bPXjIuGcb08sPS/9EwJMWgfcG1CUnaFiinYpvgOMW7U=;
+        b=q0W1VQoIdogBcgIk/Yk+xg+pJiOC/0UmuyvH1tzfLTixKmvR6ZphGCnOf7GjzFjFNl
+         5z0AlDzbGQap8Q36U/qUtbaiDn1Fkj97mbhdIk48/B38bFdkfgCGQ2bJ499ekGPiW9eT
+         lELHqai0gKUMYVFQdufc/VinEHKW1LF2s3vqzRui7d6tirmTEywrQgCc6ZIS1HvW6mvN
+         L1WO8v819U9OSOLfRh+BRgkN93OeCEIrpOrKhbOOvfOKClsqSgDXh8iVxhUXh8aJWZXM
+         ojkXCcHMHhSigbp1PGxTqQkuvQWPwhMW8/Z9EY3Am3Up4H0608HHyIxrepG8h5cSbB0p
+         8lew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=bPXjIuGcb08sPS/9EwJMWgfcG1CUnaFiinYpvgOMW7U=;
+        b=acv0eP6nXPv4McQw34gGxq0VMX0s4Pbb71OuwaaOeZ+SY81XluP+UtBOij/SkTYsn3
+         ZUyLURyYp3iOOJzQzx9uaSYja37pB0MvKic9h9bNszP6kMj+Y9BK9Gd2J+Z6jP/73iGm
+         I6379aUvhiWR78y+UuRhJ8S3xEXJwXBusQt9iPeu3Zhpn2AbKnqANm7UN2xA0GQlJTRY
+         f2jfVTI3+EEaUxS09a/+FWxEj/+KMRW5DVujftKyzNtmo7sug1iZSQ2WX1cetn5qq/2r
+         rG655DbNE5M5Dc3L1hLU/CuxBek2JI0zKzA2+lKo32cgp6Q61lNZ6eli7RDoihWYOTe5
+         pc6Q==
+X-Gm-Message-State: AODbwcAP2CW95WnbOJXwtfvOtVJalGYBqWWrRRjY7VuaSkvWWe2JSrN6
+        CRvcFSh+JbIwkKgK
+X-Received: by 10.84.238.129 with SMTP id v1mr43264488plk.102.1497055240819;
+        Fri, 09 Jun 2017 17:40:40 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:4da7:e783:6b5b:e69e])
+        by smtp.gmail.com with ESMTPSA id t20sm3900537pgo.29.2017.06.09.17.40.39
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 09 Jun 2017 17:40:40 -0700 (PDT)
+Date:   Fri, 9 Jun 2017 17:40:34 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com,
+        jacob.keller@gmail.com, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, peartben@gmail.com,
+        pclouds@gmail.com, gitster@pobox.com, peff@peff.net,
+        git@jeffhostetler.com, avarab@gmail.com
+Subject: Re: [PATCH v2 00/32] repository object
+Message-ID: <20170609174034.61889ae8@twelve2.svl.corp.google.com>
+In-Reply-To: <20170608234100.188529-1-bmwill@google.com>
+References: <20170531214417.38857-1-bmwill@google.com>
+        <20170608234100.188529-1-bmwill@google.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170609222738.GF21733@aiede.mtv.corp.google.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
+On Thu,  8 Jun 2017 16:40:28 -0700
+Brandon Williams <bmwill@google.com> wrote:
+
+> When I sent out my RFC series there seemed to be a lot of interest but I
+> haven't seen many people jump to review this series.  Despite lack of review I
+> wanted to get out another version which includes some changes to fix things
+> that were bugging me about the series.  Hopfully this v2 will prod some more
+> people to take a look.
 > 
-> Ævar Arnfjörð Bjarmason wrote:
-> 
-> > Add a FREEZ() wrapper marco for the common pattern of freeing a
-> > pointer and assigning NULL to it right afterwards.
-> 
-> I'm conflicted.  On one hand it makes code more concise and makes it
-> easier for people to remember to assign NULL after freeing a variable.
-> On the other hand it makes git more of a custom dialect of C, which
-> may make the code harder to read and hack on for new contributors.
+> The meat of the series is really from 04-15 and patch 32 which converts
+> ls-files to recurse using a repository object.  So if you're pressed for time
+> you can focus on those patches.
 
-I think this problem could be avoided by using a more explicit
-name, perhaps: "free_and_null"
+Thanks - I can see in patch 32 that one immediate benefit is that
+ls-files can now recurse into submodules without needing to invoke an
+extra process just to change the GIT_DIR.
 
-Seeing the initial subject, I thought this series was short for
-"freeze" (like "creat").
+Before I get into the details, I have some questions:
 
-However, I admit FREEZ caught my eye because I thought it was
-a way to freeze a repository, somehow :)
+1. I am concerned that "struct repository" will end up growing without
+bounds as we store more and more repo-specific concerns in it. Could it
+be restricted to just the fields populated by repo_init()?
+repo_read_index() will then return the index itself, instead of using
+"struct repository" as a cache. This means that code using
+repo_read_index() will need to maintain its own variable holding the
+returned index, but that is likely a positive - it's better for code to
+just pass around the specific thing needed between functions anyway, as
+opposed to passing a giant "struct repository" (which partially defeats
+the purpose of eliminating the usage of globals).
 
-> My feeling is that the costs outweigh the benefits, but I haven't
-> thought it through thoroughly.
+2. If we do the above, another potential benefit is that (I think) the
+repo_config_get_.* functions would no longer be necessary, since we
+would have a function that generates a "struct config_set" given a repo,
+and then we just use the git_configset_get_.* functions on it. This
+would also reduce the urgency of extracting the config methods into its
+own header file, and reduce the size of this patch set.
 
-<snip>
-
-> > index 4b7dcf21ad..ba2d0c8c80 100644
-> > --- a/git-compat-util.h
-> > +++ b/git-compat-util.h
-> > @@ -805,6 +805,12 @@ extern int xmkstemp_mode(char *template, int mode);
-> >  extern char *xgetcwd(void);
-> >  extern FILE *fopen_for_writing(const char *path);
-> > 
-> > +/*
-> > + * FREEZ(ptr) is like free(ptr) followed by ptr = NULL. Note that ptr
-> > + * is used twice, so don't pass e.g. ptr++.
-> > + */
-> > +#define FREEZ(p) do { free(p); (p) = NULL; } while (0)
-> > +
-> >  #define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
-> >  #define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), st_mult(sizeof(*(x)), (alloc)))
-> 
-> Golfing: it's possible to do this without ptr being used twice by
-> introducing a helper function:
-> 
-> 	static inline void freez_impl(void **p) {
-> 		free(*p);
-> 		*p = NULL;
-> 	}
-
-Yes.  I think it's prudent to avoid macros in case there are
-side effects.
-
-> 	#define FREEZ(p) freez_impl(&(p))
-> 
-> That way side-effectful callers like FREEZ(func() ? a : b) would
-> work.
-
-I don't see the point of a macro wrapper, forcing the user to
-type out the '&' should drive home the point that the pointer
-gets set to NULL.  I also find capitalization tiring-to-read
-because all characters are the same height.
-
-<snip>
-
-> I kind of wish that 'free' returned NULL so that callers could do
-> 
-> 	p = free(p);
-> 
-> without requiring a custom helper.  We could introduce a free_wrapper
-> that works that way but that is probably not worth it, either.
-
-Sometimes I have wished similar things, too, but that means the
-same identifier shows up twice in one line and camouflages the
-code.
+(I was also going to suggest that you remove the "convert" patches, but
+that is not possible - ls-files uses get_cached_convert_stats_ascii()
+from convert.h despite not #include-ing it.)
