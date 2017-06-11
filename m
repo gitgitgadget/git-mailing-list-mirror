@@ -6,48 +6,50 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E8211FAED
-	for <e@80x24.org>; Sun, 11 Jun 2017 00:35:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5281FAED
+	for <e@80x24.org>; Sun, 11 Jun 2017 00:43:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751660AbdFKAfF (ORCPT <rfc822;e@80x24.org>);
-        Sat, 10 Jun 2017 20:35:05 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:36302 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751634AbdFKAfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 10 Jun 2017 20:35:04 -0400
-Received: by mail-pf0-f175.google.com with SMTP id x63so39829479pff.3
-        for <git@vger.kernel.org>; Sat, 10 Jun 2017 17:35:04 -0700 (PDT)
+        id S1751668AbdFKAnf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 10 Jun 2017 20:43:35 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:33310 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751646AbdFKAnd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Jun 2017 20:43:33 -0400
+Received: by mail-pg0-f49.google.com with SMTP id f185so35794332pgc.0
+        for <git@vger.kernel.org>; Sat, 10 Jun 2017 17:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=m+gb3R0HoHt4m3j2iBvZL8Sw30WNXbgEpRHp09o4J0A=;
-        b=l1tzDKl1576OWG44LCds5pIwvA79cGPy3rDBpMmEuWwnudAQAIqkiohhNM3ISLn/dP
-         Rv+mEh6aUR6Hze4ik5H4Q4NjNaLA0RRGai0QuXZYWvPrNx7QfwQIWIM3B9K24DL8vWbg
-         n20bnsMVkkATPE0NkxVCmonBzkJfTaPy3SnWhZlKvPNydlKDVa7cXfSpg84Kp1ByNlOu
-         aNkSe9iSei6CY81UKROszohhGTktn7ALmyZl//Qd8dBzcwsPJ2/HJj0DYdKRMtocgjNu
-         pDVtbNda80ndk3Qn1ORWzg+vU4iSZyZ6H0qIvq9CmFnB3BPo3B32b2x0y7JMPIe1hSMv
-         60jw==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=f++SdPZlxkCRGHhy1KzRdVubBgUGZlja9OMDb6K2Rv0=;
+        b=AzKMN3ebXGX3W5l8qzDz/ozdG7XzZ5PzXEvsD3H1823H68E8+kmcLl29wvxPYU/+fI
+         H+q1N6iBGhLUhgwmPbAINj5fLzjpizZ8lrjojKYvmAkUu5FP4+Wcb9vAE+oOw+djNEX5
+         YKAGuCf2WLU6436+DZpcNfaR1NQ/63DSsCta7yScrdztOIwR0qRq6qulLKBu6NWJz5yB
+         77f8U4EQFAcNiY5EQIQLwxqJPZVRAmF0kOZJmyGIboyXkCklt8pBZV4FdF+o6zP+brxP
+         UODReNf99FXcLQj5fwHclo5fLMkrU8D3pIRprMj9QsABQLfP4mAhAqzp440Ql1lzY9dq
+         8giw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=m+gb3R0HoHt4m3j2iBvZL8Sw30WNXbgEpRHp09o4J0A=;
-        b=THvFgqwnHFf3h/5TKzul9W7CIWsxlTn9jzVrIqPJ/TPhZa73PER+YSUV81q2wn4s0k
-         og0KF+Jtbh1pkeNZTI5Ma/5C6/hLA0IbacyE+0ARyU+Pl255hgTSbqD1zatZV8XVQNfG
-         qnODhTdLSz5MaoCgL/tH/0QydAQGT8VNu95oUGHlX9RsnTtKX68rw5w34r9S+e9npiRA
-         ZKCFdkbPD7f7x/Z8oLC0TnnBQs00E0T4TC6nmL6A6kcxpTcTX1K5egrCQdYoKI7QJNke
-         JJqK30Iwhe6afnKbj9fUif+c+WjaJlx+ugr5QIWG7RFUZmHaxm0fw4mOTHWRXXXECbjB
-         NPQA==
-X-Gm-Message-State: AODbwcB7qfZ/W9j+b5hka5W7R0O3A4LU6WyrW5YXrUnKnC56IT4k1X7w
-        4LKvb9oASTVkAqIm
-X-Received: by 10.84.217.11 with SMTP id o11mr48326916pli.299.1497141303512;
-        Sat, 10 Jun 2017 17:35:03 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=f++SdPZlxkCRGHhy1KzRdVubBgUGZlja9OMDb6K2Rv0=;
+        b=Z5vsR9OCv2pSKfgBYgYZBpyizIKMluMJbv/aCQ9Ks/EJYO/oJVT1qhsb71Xrj6UA45
+         xTO+W/wLE56uWNGlL7TUuMfN3UG/me9fPBuHf7xSOBfYjTG+MUkKgX5DigZ/5tOKFAKa
+         n0ztRiwrykUqO1FkZOThFsw+dQ9txW+N+tV2573P1RfHjmb/jO14sufsVwpty2ixFxcD
+         vfpN1F/FxkE+B+lJlv4mgBoWYbXCa//JT9BA8ptD5ZOf0ufHVU8WqgYzy91MC+x9xEpw
+         Fc1AwfW0gGGkSKLhInahI7QQ1sWN6vf1/KMHVCJOw4HHz+5dAXeuzva3OEkgAbEztYi9
+         uW0w==
+X-Gm-Message-State: AKS2vOyfsOw29NjRcBIegGhxte4iMGXL2xXDbfmGGxs1G99XFgf0FjZO
+        hYXEareF1vb1ultq
+X-Received: by 10.98.79.149 with SMTP id f21mr1361585pfj.222.1497141812826;
+        Sat, 10 Jun 2017 17:43:32 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:b5f4:f53d:2985:c426])
-        by smtp.gmail.com with ESMTPSA id m25sm9892206pfk.15.2017.06.10.17.35.01
+        by smtp.gmail.com with ESMTPSA id s131sm9951864pgc.61.2017.06.10.17.43.30
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 10 Jun 2017 17:35:02 -0700 (PDT)
-Date:   Sat, 10 Jun 2017 17:35:00 -0700
+        Sat, 10 Jun 2017 17:43:31 -0700 (PDT)
+Date:   Sat, 10 Jun 2017 17:43:29 -0700
 From:   Brandon Williams <bmwill@google.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
@@ -56,15 +58,17 @@ Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         git@jeffhostetler.com, avarab@gmail.com
 Subject: Re: [PATCH v2 00/32] repository object
-Message-ID: <20170611003500.GD81269@google.com>
+Message-ID: <20170611004329.GE81269@google.com>
 References: <20170531214417.38857-1-bmwill@google.com>
  <20170608234100.188529-1-bmwill@google.com>
  <20170609174034.61889ae8@twelve2.svl.corp.google.com>
  <20170610060712.foqre5fscaxu3tnx@sigill.intra.peff.net>
+ <20170610061326.2dkdnvpjdq5d7223@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20170610060712.foqre5fscaxu3tnx@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170610061326.2dkdnvpjdq5d7223@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -72,63 +76,72 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 06/10, Jeff King wrote:
-> On Fri, Jun 09, 2017 at 05:40:34PM -0700, Jonathan Tan wrote:
+> On Sat, Jun 10, 2017 at 02:07:12AM -0400, Jeff King wrote:
 > 
-> > Before I get into the details, I have some questions:
+> > I think the repository object has to become a kitchen sink of sorts,
+> > because we have tons of global variables representing repo-wide config.
+> > ls-files doesn't respect a lot of config, but what should, e.g.:
 > > 
-> > 1. I am concerned that "struct repository" will end up growing without
-> > bounds as we store more and more repo-specific concerns in it. Could it
-> > be restricted to just the fields populated by repo_init()?
-> > repo_read_index() will then return the index itself, instead of using
-> > "struct repository" as a cache. This means that code using
-> > repo_read_index() will need to maintain its own variable holding the
-> > returned index, but that is likely a positive - it's better for code to
-> > just pass around the specific thing needed between functions anyway, as
-> > opposed to passing a giant "struct repository" (which partially defeats
-> > the purpose of eliminating the usage of globals).
+> >   git config core.quotepath true
+> >   git -C submodule config core.quotepath false
+> >   git ls-files --recurse-submodules
+> >
+> > [...]
+> >
+> > [1] I wanted to see how Brandon's series behaved for this quotepath
+> >     case, but unfortunately I couldn't get it to work in even a simple
+> >     case.  :(
+> > 
+> >       $ git ls-files --recurse-submodules
+> >       fatal: index file corrupt
 > 
-> I think the repository object has to become a kitchen sink of sorts,
-> because we have tons of global variables representing repo-wide config.
-> ls-files doesn't respect a lot of config, but what should, e.g.:
+> Ah, this was just hitting the bug mentioned later in the thread. With
+> that fix, I can see that it does indeed behave differently than the
+> current code:
 > 
 >   git config core.quotepath true
 >   git -C submodule config core.quotepath false
+>   (cd submodule &&
+>    echo hello >buenos_días &&
+>    git add .
+>   )
 >   git ls-files --recurse-submodules
 > 
-> do?  Right now, with a separate process, we respect the submodule
-> version of the config. But in a single process[1] we'd need one copy of
-> the quote_path_fully variable for each repo object. It's tempting for
-> this case to say that core.quotepath from the super-project should just
-> take precedence, as that's where the command is issued from (and why the
-> heck would anybody have per-repo settings for this anyway?). But I
-> suspect as we get into more complicated commands that there are likely
-> to be config variables that are important to match to each repo.
+> shows:
 > 
-> I do agree that "pass just what the sub-function needs" is a good rule
-> of thumb. But the reason that these are globals in the first place is
-> that there are a ton of them, and they are used at the lowest levels of
-> call chains. So I have a feeling that we're always going to need some
-> big object to hold all that context when doing multi-repo operations in
-> a single process.
+>   submodule/buenos_días
 > 
-> For config, in theory that could be a big "config_set" object, but
-> that's not quite how we treat our config. We usually parse it once into
-> actual variables. So really you end up with a big parsed-config object
-> that gets passed around, I'd think.
+> before the patch series, and:
 > 
-> -Peff
+>   "submodule/buenos_d\303\255as"
 > 
-> [1] I wanted to see how Brandon's series behaved for this quotepath
->     case, but unfortunately I couldn't get it to work in even a simple
->     case.  :(
+> after.
 > 
->       $ git ls-files --recurse-submodules
->       fatal: index file corrupt
+> Like I said, I doubt this is a bug that anybody cares much about, but
+> it's hard to know what other repo-specific global-variable usage is
+> lurking in low-level code.
 
-Yeah sorry about that...I commented on patch 32 indicating that I made a
-small mistake and forgot a '> 0' when checking the index.  I made a last
-minute change before sending v2 out and forgot to run tests again (I'm
-terrible i know!).
+I disagree with a few points of what jonathan said (mostly about
+removing the config from the repo object, as I like the idea of nothing
+knowing about a 'config_set' object) and I think this problem could be
+solved in a couple ways.
+
+I don't think that the in-memory global variable 'quotepath' (or
+whatever its called) should live in the repository object (I mean it's
+already contained in the config) but rather 'quotepath' is specific to
+how ls-files handles its output.  So really what should happen is you
+pass a pair of objects to the ls-files machinery (or any other command's
+machinery) (1) the repository object being operated on and (2) an
+options struct which can be configured based on the repository.  So when
+recursing you can do something like the following:
+
+  repo_init(submodule, path_to_submodule);
+  configure_opts(sub_opts, submodule, super_opts)
+  ls_files(submodule, sub_opts);
+
+This eliminates bloating 'struct repository' and would allow you to have
+things configured differently in submodules (which is crazy if you ask
+me, but people do crazy things).
 
 -- 
 Brandon Williams
