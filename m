@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A23120282
-	for <e@80x24.org>; Mon, 12 Jun 2017 05:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0DA01FA7B
+	for <e@80x24.org>; Mon, 12 Jun 2017 07:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752034AbdFLFdJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 01:33:09 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34727 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752002AbdFLFdI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 01:33:08 -0400
-Received: by mail-pg0-f51.google.com with SMTP id v18so41662933pgb.1
-        for <git@vger.kernel.org>; Sun, 11 Jun 2017 22:33:08 -0700 (PDT)
+        id S1752191AbdFLHDP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 03:03:15 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:33240 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752128AbdFLHDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 03:03:14 -0400
+Received: by mail-qt0-f170.google.com with SMTP id u12so115783153qth.0
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 00:03:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RP2s9fDOxDc/5bmf5OSdS/lsaTFFT5W117wZrudLY7w=;
-        b=sR829PubOc8FWusF5FhniAvGUJ53JczgREcuob6W3YQOWYIlt015CJ9YP6qzt8whZX
-         UjPMWbl0SBAuXVbBchhF/j0a9pjJ+KnPa/mCJ9TzV4DxeW+AtK89uLBhX+RkjEeEyBoF
-         mgunkUwnA47hXGVmDs91/BxH+nhYhJgxoi0SpfPLi1yCwWkEiO4YM5hS8f0js7HVjqcZ
-         7yC2tA+uq53VZ5xB3JqAsCdCFHdL5b4sHStGqzxxp5DVjsUN71aB75NnsazWR2hta4qx
-         otOE3fo1/opnx1u/q08QjuAM6RpbHPzi5/3ivhrYa6HNTVF8MSatO+zW+zs25jmC8Yv/
-         4OeQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=JwKudqIuasmpz2Mz4jS6ymCUcQmRKPIZwAcFAJ4nKss=;
+        b=JZKIZNPw6esaqZmpiIXVxV+2+0JrTsejvfbvdySu05cLvMTYG/fihceCDxqQ+ytCsi
+         MPkWSQSXAkssdGcso2J9YjVkU+/00DwQ9+rpb/UkQGOreF8nO/TBWetKlPpxRhpGwhPq
+         TFOZVBD2OQtdq2YYHQftyAKJBgScL+Pjk/g8rYHAVaILUuWID8Oqitta7utUKpn5AVXM
+         o5BLQbK7qCA+w8oVxQiSB5Veb9VUUqFYDOFYc0uCeBAEfQecTBHnE0HHj7kDBUfXIYjF
+         I5/Yfqb8Nx5mJW3yYwY4HTQiwjj37cWmSTva+TYcpHCd4CUJriBfBOBDXZEzR/VyT8/Y
+         //Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RP2s9fDOxDc/5bmf5OSdS/lsaTFFT5W117wZrudLY7w=;
-        b=Sd4wxG1epG3CVzoIeJQWtlPR5gYvhlapA2Nvw0RJWsgt4k/M2b2CxejWSdFBTEHme2
-         uia3elKNtoTV8WSCvgXJPAAsWUVGoCSoqKxIASvE+x5nL8HS/+F7pD0fOMCZvq5ipHeo
-         +T3+LnxiIZJdiJSkdMj3jI4ShtmQsFV/1ojRACBiv8v6IxT7sTyBSQ019jVFombQI2BN
-         tU0cgW3MvsbrOZozZbkTPqslEUfFQQSq8QKX5/p8dlPZ5n2NuHBWXMMeNjX9QMhuWSVE
-         xfx6LL40Im/vS2R9XlNk0tpXCTBhqzCXk65cbAf3qKM5PPU1o3YeBNEAfZUHEfzSwITx
-         OoFQ==
-X-Gm-Message-State: AKS2vOwFsRZt1IDGKuz2hh9ot1TqJ6QmyXpZ8S1aBNKLqb96ydTtWMri
-        jkCUoNWoVDXpJBHMOQe3MT+st38/pQkx
-X-Received: by 10.99.116.2 with SMTP id p2mr1574551pgc.162.1497245587674; Sun,
- 11 Jun 2017 22:33:07 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=JwKudqIuasmpz2Mz4jS6ymCUcQmRKPIZwAcFAJ4nKss=;
+        b=saEewMRxDGjvS3yS7moegF1SxjjAsUe0wzvyQRLUrLNTGbGqK459cmpoAZIm/2I6x2
+         ea18lmnAHUgKJE9fcHkOmqDRCS7SBenHaPDVymHJtHS/ofOAhgbcuBaqsMHH7HIwjllX
+         z8/HQ32/KIw6c29FugYpo5hv2GvGHfU0VlMoN4VTg1WI2W7k9vjyBhckAvd8Ohimcgi7
+         VQLpVanj5f3KP0CRx/B+IwF0sVfUySf+uaMDgE1ULMyOxXsDGQOnpdSZp6NmnZMiDubR
+         qupLwc/YwH7G3kk5j02Bd93ufBijsDzHOp0qiHM2kHpKtE8rHUSiRtO+PcJE63fm7A7p
+         KAtg==
+X-Gm-Message-State: AODbwcAooKL4lIJ7MJszPhJwdQuy9FWb09MEF3g8gfBa8LOKt57eOpuu
+        ko4Dv5ML3uhgTznBdyHKW0F7odff0ZQD
+X-Received: by 10.237.46.226 with SMTP id k89mr19902983qtd.158.1497250993524;
+ Mon, 12 Jun 2017 00:03:13 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Sun, 11 Jun 2017 22:33:07 -0700 (PDT)
-In-Reply-To: <20170608180812.6678-1-pc44800@gmail.com>
-References: <20170608180812.6678-1-pc44800@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Sun, 11 Jun 2017 22:33:07 -0700
-Message-ID: <CAGZ79kaKfdeyM41S2huGwYq8z3brRVpotA-CZzYe429-cA=mZg@mail.gmail.com>
-Subject: Re: [PATCH v1] dir: create function count_slashes
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 10.55.162.85 with HTTP; Mon, 12 Jun 2017 00:03:13 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 12 Jun 2017 09:03:13 +0200
+Message-ID: <CAP8UFD3fK5SYmyKjR7TQ=TyiMy3DovHDvgD9cBfpm1L+tU5AEw@mail.gmail.com>
+Subject: Draft of Git Rev News edition 28
+To:     git <git@vger.kernel.org>
+Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Eric Rannaud <eric.rannaud@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Kevin Daudt <me@ikke.info>, John Shahid <jvshahid@gmail.com>,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 8, 2017 at 11:08 AM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> Similar functions exist in apply.c and builtin/show-branch.c for
-> counting the number of slashes in a string. Also in the later
-> patches, we introduce a third caller for the same. Hence, we unify
-> it now by cleaning the existing functions and declaring a common
-> function count_slashes in dir.h and implementing it in dir.c to
-> remove this code duplication.
->
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
-> ---
-> In future, I intend to use this function in builtin/submodule--helper.c
-> as well, hence this change was introduced now.
->
+Hi,
 
-Thanks for upstreaming this early!
+A draft of a new Git Rev News edition is available here:
 
-I think this is a good change even
-without the submodule work thrown into the soup as well,
-but with the given promise to have it used a third time this
-is a no-brainer later on.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-28.md
+
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
+
+  https://github.com/git/git.github.io/issues/246
+
+You can also reply to this email.
+
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Thomas, Jakub, Markus and myself plan to publish this edition on
+Wednesday June 14th.
+
+Thanks,
+Christian.
