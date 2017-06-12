@@ -2,121 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6A5420401
-	for <e@80x24.org>; Mon, 12 Jun 2017 22:10:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8A5220401
+	for <e@80x24.org>; Mon, 12 Jun 2017 22:14:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752619AbdFLWKL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 18:10:11 -0400
-Received: from mail-ua0-f171.google.com ([209.85.217.171]:35355 "EHLO
-        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752430AbdFLWKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 18:10:10 -0400
-Received: by mail-ua0-f171.google.com with SMTP id q15so64850926uaa.2
-        for <git@vger.kernel.org>; Mon, 12 Jun 2017 15:10:10 -0700 (PDT)
+        id S1752583AbdFLWOU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 18:14:20 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:32879 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752371AbdFLWOT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 18:14:19 -0400
+Received: by mail-pg0-f50.google.com with SMTP id f185so50812415pgc.0
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 15:14:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=hUO+pQ/cTpOviW79+CdzkS3UTwUE5zcFEUeL3VSU1dg=;
-        b=RDnWiyyoDs/T+tNSqHbkO0KatMNteVP28J1iKsSNc9hneDM3MNvd7gvmMtAD5CI6Oi
-         N4q9B7l1Yer+vckxF9eaw2rgejQ5js+DAZzBqD9IlZeVqbbX7ye/YcZ6ipZbYJUR100o
-         63RZRNGcGsxpjQeHAg5dyxNcFpZXZVXwcaC4tOMRWT9qNeXgGg8g3Aiyqgmi8qKEANvZ
-         GhpeK+gTvwmUP39edoTyqf/Fs9CyOu7rA+7al3NSaDqHqXbJ+vjbyg95sSXETcJ4QBUx
-         PY1FhqB3TDo4C673a5t2H3sDNNBtliOAv/6l7AvKuFLjrm//4SOfUZ7riCOMwuECCuKo
-         uYZw==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=nAgmnWo6kRC9pG9XYZTt3ZdWGfQpFOgvxdI6k3RvW+k=;
+        b=pMr+tGhuFupSpNZffER2yzuVtgwSuFWc9bhZQ0qba8BRMWdjJ5MV51KB5JBg0KAwpM
+         pr3o4l0No/agRbcrV4euVFh66ypd2CLRe/cZipth5EJX2kDywNMgkrisZk8mzi6LgbJt
+         kxEw7JwCBgIniSH824x3+G19TPUEChCtuc1M3+B7NMlRxl32+MwYrPGBEyB+QDNlGZC6
+         19RZ4t47VmsAXglhzs8kUFwq4Zym5jba+DsBmBYtuhpvO1qlpVS1U79YzIxuWzKIPu8v
+         sIWz3cKG3UVTPwFqxV1n6tjurBtq6QsXsS1zMJwiCcweKNGDbXpdL2jeCK1pnfNGd2uy
+         beFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=hUO+pQ/cTpOviW79+CdzkS3UTwUE5zcFEUeL3VSU1dg=;
-        b=ct50iSxNiDaWpHnz64S1MHqN/506Fym8d1GqcHRbgqE8rqlLFIs2O2EQ35z0Ef0c88
-         FK+exCFPr/wALPic5e1Nv2AlEgikOjSovJu2m0gZtIV/YqENhnvIazSzXxjbd+3yJwXT
-         BVOR3SVMMCHFc4fqHaY4JuSiwth+T0+bSmaaYrps+3Ztg3gEvQT1y+dBcrFMrgg55AYw
-         UxWaU0l/sfFLreJCQRRS4lE5/DFBzkRtp8H6rYhBV1QAd+NPPLnvqkhHtNW9a7sb79+v
-         LliSC/8cJOEoKAXlJSXmFmAIGqheVGagNG3tzgJoq2V+3xd3DJ5ib939rHg7qDHyuerS
-         8hmA==
-X-Gm-Message-State: AKS2vOxG8RdoFwh9iSE2vNMuGMGJ0a0ZxzPpOyA/DbEEWyir6dIJBBjV
-        x+koT1dgEDwqpctFtIlIGspDhxsujAV+
-X-Received: by 10.176.25.99 with SMTP id u35mr756592uag.16.1497305409571; Mon,
- 12 Jun 2017 15:10:09 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.81.205 with HTTP; Mon, 12 Jun 2017 15:10:09 -0700 (PDT)
-From:   Prathamesh Chavan <pc44800@gmail.com>
-Date:   Tue, 13 Jun 2017 03:40:09 +0530
-Message-ID: <CAME+mvUrzVxpRdPDvA1ZyatNm2R27QGJVjSB3=KX85CEedMaRQ@mail.gmail.com>
-Subject: [GSoC] Update: Week 4
-To:     git <git@vger.kernel.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=nAgmnWo6kRC9pG9XYZTt3ZdWGfQpFOgvxdI6k3RvW+k=;
+        b=GO8fn37I7nzEA9MdLElmm4lgezCY2zN8WENjZ9SYxDPNpmt9aLw98JOzWJLtiYSxiv
+         tSp8bTcj5GuGEWnirqbjm6QEIF9pHkjYA1vhp7fE/J2lGnu8TOXId+HqO3/SIF/usEu8
+         oY7nZFzElOC1cQ512QdMOFBlT/DrLYM+FxafU+D+7Un1+x/rxbEcNzTznLAGmQSOERRx
+         B1VNPh71UmJJnn+VTfeqOHqlfnjPusAVjAoaUeoZJCKpkyY6ZG7gvb3U6LcUOfo20y0D
+         cHzrCh9zblcXWR3rXIfPZGabAZcd/DlPYhomqqJQB5GFm6wPvaO/RZOwjS/Y12+5PXf1
+         dQtQ==
+X-Gm-Message-State: AODbwcC6NvJ/fElDwklMceOP6U+CTJjYdC6OIWKfA5SNM1k/PbZpAQQg
+        +LhTxbAfpBbLGaMNuHPnHg==
+X-Received: by 10.99.218.69 with SMTP id l5mr60970764pgj.88.1497305657903;
+        Mon, 12 Jun 2017 15:14:17 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id i68sm22403884pfi.72.2017.06.12.15.14.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 12 Jun 2017 15:14:16 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Brandon Williams <bmwill@google.com>
+Subject: [PATCH 00/17] convert ls-files internals to pass around an index
+Date:   Mon, 12 Jun 2017 15:13:51 -0700
+Message-Id: <20170612221408.173876-1-bmwill@google.com>
+X-Mailer: git-send-email 2.13.1.518.g3df882009-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SUMMARY OF MY PROJECT:
+This is the second chunk of patches I want to carve off of my 'repository
+object' series.  As you can see its 17 patches long so by eliminating this the
+repository series shrinks by a considerable amount.
 
-Git submodule subcommands are currently implemented by using shell script
-'git-submodule.sh'. There are several reasons why we'll prefer not to
-use the shell script. My project intends to convert the subcommands into
-C code, thus making them builtins. This will increase Git's portability
-and hence the efficiency of working with the git-submodule commands.
-Link to the complete proposal: [1]
+The point of this series is to stop having some of the internals of ls-files
+(and subsequent library routines) from implicitly referencing 'the_index'.
+Instead a pointer to an 'index_state' struct is passed around and operated on.
+This is a preparatory step to enabling ls-files to able to recurse submodule
+in-process.  They other step being the actual introduction of a repository object.
 
-Mentors:
-Stefan Beller <sbeller@google.com>
-Christian Couder <christian.couder@gmail.com>
+Brandon Williams (17):
+  convert: convert get_cached_convert_stats_ascii to take an index
+  convert: convert crlf_to_git to take an index
+  convert: convert convert_to_git_filter_fd to take an index
+  convert: convert convert_to_git to take an index
+  convert: convert renormalize_buffer to take an index
+  tree: convert read_tree to take an index parameter
+  ls-files: convert overlay_tree_on_cache to take an index
+  ls-files: convert write_eolinfo to take an index
+  ls-files: convert show_killed_files to take an index
+  ls-files: convert show_other_files to take an index
+  ls-files: convert show_ru_info to take an index
+  ls-files: convert ce_excluded to take an index
+  ls-files: convert prune_cache to take an index
+  ls-files: convert show_ce_entry to take an index
+  ls-files: convert show_files to take an index
+  ls-files: factor out debug info into a function
+  ls-files: factor out tag calculation
 
-UPDATES:
+ apply.c            |   2 +-
+ blame.c            |   2 +-
+ builtin/commit.c   |   3 +-
+ builtin/ls-files.c | 178 +++++++++++++++++++++++++++++------------------------
+ cache.h            |   3 +-
+ combine-diff.c     |   2 +-
+ convert.c          |  31 ++++++----
+ convert.h          |  19 ++++--
+ diff.c             |   6 +-
+ dir.c              |   2 +-
+ ll-merge.c         |   2 +-
+ merge-recursive.c  |   4 +-
+ sha1_file.c        |   6 +-
+ tree.c             |  28 ++++++---
+ tree.h             |   3 +-
+ 15 files changed, 168 insertions(+), 123 deletions(-)
 
-Following are the updates about my ongoing project:
+-- 
+2.13.1.518.g3df882009-goog
 
-1. sync and status: The improvisions for the ported functions were
-   implemented. I'm planning on floating a series patches,
-   containing all the ported functions put together, but
-   recently encountered some issue with the get_submodule_displaypath
-   function, I haven't yet posted an updated version of the above
-   ported function.The issues are now resolved. Hence, soon I plan
-   on posting their updated versions.
-
-2. deinit: As planned for the week, this submodule subcommand is
-   ported from shell to C. But still, there are some tests, the
-   ported functions are failing. Along with the updated versions
-   of 'status' and 'sync', I'll also be posting a WIP patch
-   about this subcommand ported.
-
-3. summary: Porting of this subcommand is still underway. I choose
-   to do the porting of this subcommand after deinit as it was
-   smaller and hence porting this subcommand is still left.
-
-4. count_slashes: A function was introduced in dir.h for reducing
-   the code-duplication as similar functions exist in apply.c and
-   builtin/show-branch.c
-
-PLAN FOR WEEK-5 (13 June 2017 to 19 June 2017):
-
-1. sync and status: Since the changes are ready, I plan to post the
-   complete series of the updated version soon as a single series of
-   patches.
-
-2. summary: As this is still underway, I'll be finishing this submodule
-   subcommand in the following week.
-
-3. foreach: To unblock the conversion of this submodule subcommand,
-   I'll be focusing on porting the original cmd_foreach, and
-   will not be including the BUG-FIX patch here.
-   An additional NEEDSWORK comment will be added to the ported function,
-   stating the reported bug, and not resolving the bug in this patch
-   series.
-
-4. deinit: As mentioned earlier, there is still some debugging left for
-   the ported functions. I plan to debug them and discuss the patch
-   for further improvisions this week.
-
-[1]: https://docs.google.com/document/d/1krxVLooWl--75Pot3dazhfygR3wCUUWZWzTXtK1L-xU/
-
-Thanks,
-Prathamesh Chavan
