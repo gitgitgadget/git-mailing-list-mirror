@@ -2,137 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C264320C4C
-	for <e@80x24.org>; Mon, 12 Jun 2017 20:04:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB65C20C4C
+	for <e@80x24.org>; Mon, 12 Jun 2017 20:36:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752636AbdFLUEQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 16:04:16 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:35803 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752509AbdFLUEP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 16:04:15 -0400
-Received: by mail-pf0-f169.google.com with SMTP id l89so55881073pfi.2
-        for <git@vger.kernel.org>; Mon, 12 Jun 2017 13:04:15 -0700 (PDT)
+        id S1752837AbdFLUgL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 16:36:11 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:33848 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752558AbdFLUgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 16:36:10 -0400
+Received: by mail-pf0-f174.google.com with SMTP id 15so28651746pfc.1
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 13:36:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rktkfoyVLRipgqEjkXNzdN9iUqsMO54vleK9ssfjDDk=;
-        b=U67OHRbZ0EdB/hwe4zwrSMAyzcxLKX/1+ozT1Txin3TvLUpjFK/ctsF6iufZ8S65k+
-         EvuWF17R1KUHWfAPRWoEQsvHoemGmP2OnqlVky9DfMppWFloOO98d1jAs7/MsaMR1Hzb
-         C0fKLUBCLZw7nG6aDLZJAG1SYWdy5dvsduCtJkM+Vh5ELqhoSljWTiCsWl3doYETQNHw
-         FDTGtdDG+dU2seC/Win7dHYtupyYvJxhEQEADDywKI0s86r2ctxSv21a7bNc4Zs77Teh
-         v8YabH0u9YrutLaeow7vFIDamhhy66Fd8ZxYBMj3rtnEMa7h/M6jDK4lcv2vw5vSZfrF
-         xkRg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=damCWBAcXOLh0f+eyY1zI8xD3IjYG3msDubgHFERFws=;
+        b=AMN++4SldRfgiGKiovnXrNm5MGpxSZ+OcxIi9lQpixmszTBRjCSbVJR3Ig4lqIU8+m
+         3SO/yaydvyW6P0eBPN28JkhXDe3sbptf0OVNEmcH17H6EEafBP8rb7JS82nI2FcCjujg
+         r7y1RoDBSm3a3jZdbU9oOea1ObUC9Pv0/kWL3qBGr3/Qr2Y2JLNh5dUtFBdcFr+j7g06
+         K3I0Iw1PyywQdidwyI1aeUmognVVRgSmmvFoLvmMRozLiLWhP7yCn015yfsfB+TnhsrH
+         lKTmQ/lOQ+Tw8hF5VlVu6gLiP0C4j9IchAzNp1NEJy59xCaD6miZ05eoJXiol3kzBWzM
+         cgWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rktkfoyVLRipgqEjkXNzdN9iUqsMO54vleK9ssfjDDk=;
-        b=QsPxxR1tph6vHx3jAijEb/ZUnphqaKNtmqNylHBP6bXxO2gt+0QXuWLT3nr1YxWfdQ
-         zWGhjjCBjH2lvnX9z+Iv5TcWO9FhTP65zFBlnNkd8fKe9QtjsxUYIpypVj9h4z4oMtQy
-         kj3sEqIF1c+k5bO/nrlSgd4JsWYs/LIvpXEEQm+0iIpLnUhhph+1KeFHbk6YJTpB/P/H
-         Q4tXa5iB0SN+cxa9wvtXCNashAuWHqIi5tkaN3KEN3crlwKem1d6D4OVJCERv4Wk0FH3
-         mxDnF9pyrruvesucvklZNjanmp3/txLoz8Aedz/YSYJCPJHw0McRjVgq9DanHBLDc3tM
-         e6Bw==
-X-Gm-Message-State: AODbwcDmg/sL7lHoT+hLVwPDq9TVHqhhOwDl/1xWJWSfuUkjJwGxVMpT
-        rI0lhkE88LSAvnWTqq/O53Rn
-X-Received: by 10.99.52.1 with SMTP id b1mr58018271pga.91.1497297854341;
-        Mon, 12 Jun 2017 13:04:14 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:a1c6:b49e:dc41:58c])
-        by smtp.gmail.com with ESMTPSA id g23sm20667865pfj.131.2017.06.12.13.04.13
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=damCWBAcXOLh0f+eyY1zI8xD3IjYG3msDubgHFERFws=;
+        b=NnGmFAdUGknXHSyHV4YlI+z6jD8r/A9HjhzRozDO2fUfbl6t8B/A8Mpqk+zdVLUDOs
+         wSrYMtEcYNFcGKDYDzhAsZ9yVbZmVRhLwDiH/wBedBtGcuZhn8hPC6D3xWX/zLe9M7pr
+         7nXTJtudSCw5/thOn22z3Rf4yqG0VC+SP1R+HecoeM35d9d3+khgQQUmEx4ArT+ZINMK
+         4A/lXr9MluM4qCsc59JDqUFzCcj7OG8wLvXb+1SsCPg+G6zgR6D9twKElzrS9cp05roH
+         CvXycxd3rb5Tp4rFJRdQ9C2gkHqpVZ8KONwZCeSRzwvl5eQuSbXC7k3xWPvgTexO8VTa
+         n+KA==
+X-Gm-Message-State: AKS2vOw+1l8bSHQy6HXxWqNPUyhYrYp8p6Puzkx+tJAPh1C3f/Ci/idS
+        Zri8ofc+LjrTnw==
+X-Received: by 10.98.141.89 with SMTP id z86mr8870395pfd.34.1497299769952;
+        Mon, 12 Jun 2017 13:36:09 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:695d:4129:fb97:59df])
+        by smtp.gmail.com with ESMTPSA id v9sm18911865pgb.25.2017.06.12.13.36.08
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 12 Jun 2017 13:04:14 -0700 (PDT)
-Date:   Mon, 12 Jun 2017 13:04:09 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, sbeller@google.com,
-        jrnieder@gmail.com, jacob.keller@gmail.com,
-        Johannes.Schindelin@gmx.de, sandals@crustytoothpaste.net,
-        peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
-        git@jeffhostetler.com, avarab@gmail.com
-Subject: Re: [PATCH v2 00/32] repository object
-Message-ID: <20170612130409.07725a75@twelve2.svl.corp.google.com>
-In-Reply-To: <20170612191121.GB154599@google.com>
-References: <20170531214417.38857-1-bmwill@google.com>
-        <20170608234100.188529-1-bmwill@google.com>
-        <20170609174034.61889ae8@twelve2.svl.corp.google.com>
-        <20170610060712.foqre5fscaxu3tnx@sigill.intra.peff.net>
-        <20170612120140.3da90194@twelve2.svl.corp.google.com>
-        <20170612191121.GB154599@google.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        Mon, 12 Jun 2017 13:36:08 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCHv2 1/5] revision.h: turn rev_info.early_output back into an unsigned int
+References: <20170602201143.6avkhp224no3dukb@sigill.intra.peff.net>
+        <20170609181733.6793-1-szeder.dev@gmail.com>
+        <20170609181733.6793-2-szeder.dev@gmail.com>
+        <20170610064102.w4kp6omxdznfe7fa@sigill.intra.peff.net>
+Date:   Mon, 12 Jun 2017 13:36:08 -0700
+In-Reply-To: <20170610064102.w4kp6omxdznfe7fa@sigill.intra.peff.net> (Jeff
+        King's message of "Sat, 10 Jun 2017 02:41:02 -0400")
+Message-ID: <xmqq60g1ndtz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 12 Jun 2017 12:11:21 -0700
-Brandon Williams <bmwill@google.com> wrote:
+Jeff King <peff@peff.net> writes:
 
-> On 06/12, Jonathan Tan wrote:
-> > On Sat, 10 Jun 2017 02:07:12 -0400
-> > Jeff King <peff@peff.net> wrote:
-> > 
-> > > I do agree that "pass just what the sub-function needs" is a good rule
-> > > of thumb. But the reason that these are globals in the first place is
-> > > that there are a ton of them, and they are used at the lowest levels of
-> > > call chains. So I have a feeling that we're always going to need some
-> > > big object to hold all that context when doing multi-repo operations in
-> > > a single process.
-> > 
-> > From my experience with the codebase, it seems that most of these config
-> > variables are static (file-local). This means that the lowest levels of
-> > call chains could probably get away with storing per-repo configs in a
-> > static hashmap or associative array keyed by repo (if they cannot just
-> > pass the config around).
-> > 
-> > Having said that, if it did come to the hashmap, I probably would prefer
-> > just putting the config in the repo object too. So maybe that is the way
-> > to go.
-> 
-> This is how the config is already handled.  A config_set is just a
-> wrapper around a fancy hashmap.  Callers query using a string as a key
-> and are returned the value for that config option.  I say fancy because
-> it does stuff to handle multiple values, etc.
+> On Fri, Jun 09, 2017 at 08:17:29PM +0200, SZEDER Gábor wrote:
+>
+>> rev_info.early_output started out as an unsigned int in cdcefbc97 (Add
+>> "--early-output" log flag for interactive GUI use, 2007-11-03), but
+>> later it was turned into a single bit in a bit field in cc243c3ce
+>> (show: --ignore-missing, 2011-05-18) without explanation, though its
+>> users still expect it to be a regular integer type.  Consequently, any
+>> even number given via '--early-output=<N>' effectively disabled the
+>> feature.
+>> 
+>> Turn it back into an unsigned int, restoring its original data type.
+>
+> This confused me for a moment, as on my first read it seems like the
+> obvious solution is to normalize the input to a bit-field, like:
+>
+>   revs->early_output = !!atoi(optarg);
+>
+> But the "users still expect" bit was a bit subtle to me, as I thought
+> you meant users of Git. But you mean that the feature itself is not a
+> boolean, but rather an integer count of how much early output to show.
+>
+> I'm not sure if I was just being thick or if that point (and the fact
+> that --early-output has basically been a noop since 2011!) should be
+> made more explicit.
+>
+> Given that nobody noticed, I kind of wonder if we should consider
+> ripping the feature out entirely.
 
-The hashmap I meant is one wrapping the one you describe:
+Yes, we may want to think about deprecating it, especially given
+that it is not advertised anywhere.
 
-  repo -> configset
-
-Or equivalently:
-
-  repo -> (string -> value(s))
-
-> I'm not sure I know what you mean by config variables which are static,
-> are you referring to the in-memory options which are populated by
-> querying the config?  Those I wouldn't want to see placed in a
-> 'repository object'.
-
-Yes. I agree that I wouldn't want to see them placed in a repository
-object, but after reading Peff's e-mail, I was thinking of what happens
-if a file repeatedly invokes a config-sensitive function in another
-file. For example:
-
- a.c
-  for (i = 0; i < 100; i++) b_output(repo, x);
-
- b.c
-  void b_output(struct repository *repo, int x)
-  {
-   /* print the configured "b.prefix" followed by x */
-  }
-
-We probably wouldn't want to parse the repo's configset every time
-b_output() is invoked, but then, where to store our parsed "b.prefix"?
-The only alternatives I see is to have a static hashmap in b.c (keyed by
-repo, as described above), which would work if such a situation is rare
-(or can be made rare), but if it is common, maybe we have no choice but
-to put it in struct repository.
+In any case, the patch looks correct ;-)
