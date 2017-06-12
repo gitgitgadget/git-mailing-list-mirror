@@ -2,125 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCD171F8CF
-	for <e@80x24.org>; Mon, 12 Jun 2017 16:58:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 012921F8CF
+	for <e@80x24.org>; Mon, 12 Jun 2017 17:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754364AbdFLQ6w (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 12:58:52 -0400
-Received: from mout.web.de ([212.227.15.4]:57826 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753838AbdFLQ6u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 12:58:50 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lm9T7-1dtnYE47Qv-00ZkL3; Mon, 12
- Jun 2017 18:58:16 +0200
-Subject: Re: [PATCH] strbuf: let strbuf_addftime handle %z and %Z itself
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Ulrich Mueller <ulm@gentoo.org>,
-        Git Mailing List <git@vger.kernel.org>
-References: <0a56f99e-aaa4-17ea-245a-12897ba08dbb@web.de>
- <xmqq1sr3161p.fsf@gitster.mtv.corp.google.com>
- <20170602030825.hdpbaisn54d4fi4n@sigill.intra.peff.net>
- <72b001fc-80e7-42b9-bd9d-87621da7978a@web.de>
- <20170602183504.ii7arq2ssxgwgyxr@sigill.intra.peff.net>
- <22833.57584.108133.30274@a1i15.kph.uni-mainz.de>
- <20170602223003.6etkdnnogb2jmoh3@sigill.intra.peff.net>
- <22833.60191.771422.3111@a1i15.kph.uni-mainz.de>
- <20170602225148.drkl7obwhzypgjtr@sigill.intra.peff.net>
- <a8b789e6-d0cd-6d96-1bfb-ccc5bc174013@web.de>
- <20170607081729.6pz5yo2hmp4fwuas@sigill.intra.peff.net>
- <662a84da-8a66-3a37-d9d2-4ff8b5f996c3@web.de>
- <xmqq37b5qly8.fsf@gitster.mtv.corp.google.com>
- <CACBZZX5ofJC70S09rfL_EMK2KWAoPCMun1eisi+CXeX=FSwy6Q@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <d7e3abd9-0fac-8336-de34-dbd9aad39bd9@web.de>
-Date:   Mon, 12 Jun 2017 18:58:13 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1753765AbdFLRLT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 13:11:19 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35684 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752933AbdFLRLS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 13:11:18 -0400
+Received: by mail-pg0-f68.google.com with SMTP id f127so14802306pgc.2
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 10:11:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=thwZDAE7uMYPvQpjVTatlw18V7jp/r00PSmdmrsnHhE=;
+        b=fTZF1a+Ubm0bflmmhBQ4kU5yEdoweEOJFeEgCyXDpHRPIC1iHeCJr54ma8p2OvWtnn
+         9MkFW8iR1Sw12uY6p8/Eo1K+vmFamkU5zC6jwif3thADDqOZNtYLtClFcPUFJnBInIVD
+         zTWp151PomaBhn49n+FVQBViRvhlZDmukUVwxJS4y2BlfxPPM6wwwQ+FH//GDO4OSIZQ
+         eYGgOlC83J2X7TghkRPyO7GWRCZEdw2FSKii5QX+dZ7orZ+0d9/31PeHEUsigQnTTfVY
+         k45vLHnkxDlKtCG1w0Bl4vyq6xHl4m6BxDlD5RqA/A8bf/QFjcTt8wyvw92Txkq0VN0h
+         QlCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=thwZDAE7uMYPvQpjVTatlw18V7jp/r00PSmdmrsnHhE=;
+        b=OG2tH0rN+hz7nimOLqQEd6Td/z1osgWBqtvWcVYJ6Lz7tZEiAhJUmV15HloAXhMYrf
+         hGY5uY1YJflnIKLUTB0ZxI5a6HgGo1xqUU4jrbmKSat1j7QKahPgHVndWy18aXObYUHh
+         LKuqIlKQH2UiXSlkTm1eqoutSHDPL7yad9evclqQcbI1TsZyuUz/f+OMCyMuoH5IkY0L
+         HZ1Tneo05xK92fbk8cyEMZmDuz3/sOJqD0avenezTMeR17O3/m4zLoxkoeVQgTzbmiaw
+         W2mzjZwmQvAf7vtZFd2DLBDSOqnIi8FuCWdrVNOR0DcJqat9dntbGNicUbpsLNWSehmq
+         MaVw==
+X-Gm-Message-State: AODbwcDj2sPaD9iISDCSdNSDFQY9NGXUcM3u7lZ8S5N7ONBpMN318BzY
+        gvlod6fkw51ZFg==
+X-Received: by 10.98.74.5 with SMTP id x5mr44357888pfa.149.1497287477591;
+        Mon, 12 Jun 2017 10:11:17 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:695d:4129:fb97:59df])
+        by smtp.gmail.com with ESMTPSA id y8sm21913824pge.0.2017.06.12.10.11.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 12 Jun 2017 10:11:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Yurzin <jurzin.s@gmail.com>
+Cc:     git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH] Fix KeyError "fileSize" in verbose mode
+References: <0102015c9b535a84-fd59d55d-387a-419e-b8ec-439873c4b7f5-000000@eu-west-1.amazonses.com>
+Date:   Mon, 12 Jun 2017 10:11:16 -0700
+In-Reply-To: <0102015c9b535a84-fd59d55d-387a-419e-b8ec-439873c4b7f5-000000@eu-west-1.amazonses.com>
+        (Sergey Yurzin's message of "Mon, 12 Jun 2017 08:02:30 +0000")
+Message-ID: <xmqq1sqpp1vv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CACBZZX5ofJC70S09rfL_EMK2KWAoPCMun1eisi+CXeX=FSwy6Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:O+JKyUClq+kiwXfgcbJ8INwJM98lDVZPt9YgOQBHZpJVFqftlU6
- Wi9K4VgLTdmMVeSjEarlycXUSd+6SanIhgDYC+JKrMP07O0f837Hh+ORiPZdDQIsydSurRi
- xY2K3FPkjV0/aLyzfR0HemDmEwVM37vC/V8aNH8MK78LW9eURKGiKDsWeD1/gK7bGMxRQ2u
- 04Zqzt/KawYmB6u/lFd3A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:P5Rqh4ex5nM=:iUn2gh6jAvpC4SGqKXJ1WF
- Tyv1L6NIdQF2Nt0qVChUY82l2SRvC8eGNeFZcyyHklnK2242EGF9Oeqptc+7xm9nBdzvC8rHq
- gv0DMKcX3Lv1CFp6JwRP6kRg4exUl//crMH+Rq7bi6OdmOtVrYD2mCw9N6QKbC19xUPsYNwaa
- IFxoLnujflzpdOwrEkpnumYL7XVB5+/8/9h0n+LP2nRISJDZgdNzZW6c7MRrIKkek3yhQClMC
- tumLcutZrSWXTK0gZmwC/CFKQl/i9BDW9Daz6HbTMVT9ayXol/6MQZq8ANKy2Qxh89wVKsO4g
- lDW7O3rOu9NBdSPqXfk8wrSdNRpbqnUOfFWp0qWwTen+r9hFQSUk1IzmPCBdliKkSCq3y1kOP
- lHE4LuYXwHS1FgyY6jJoOUBACSh+YBvcKzUb+ku0qkyt4Nahe7I4VLNCyA7Y9vgHx0H6fjExx
- wbyQ+kQ9ugfb35x66OELQK5o05cJBcf7eHGOuKy5mO/AmRJ6+I5Rkr/uNyRyvnUVt1UGXHdlZ
- XHJgcQoYoTKHd6t3dvTYAvsOyeIppOJWRSY+lposLEm5pJ4Qm3r0yIJP3B6nN2QsOuxOl3O7M
- JiWdzWDCn8XnqZL56yZpN9EG1XD4Q3N0bzH1PeoKNnfp/yO10oeRO+WnIP3kzUJcKfJzdiFR4
- 2qjT3u0EUOqJFLIlIymB+s6E6inrQsY8fswwuHWIbE/JzNV5D2r6XbuPZ7CIJj0jzfxz+BRfm
- wxMcovzj3LfFCPn5agSqL6DOagUnSgwYuiMaZFTTfr5Cr6uXOLh7okYf3w9/ysDRbtp9LpNG7
- tb4Xnyo
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.06.2017 um 18:16 schrieb Ævar Arnfjörð Bjarmason:
-> On Mon, Jun 12, 2017 at 5:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> René Scharfe <l.s.r@web.de> writes:
->>
->>> Am 07.06.2017 um 10:17 schrieb Jeff King:
->>>> On Sat, Jun 03, 2017 at 12:40:34PM +0200, René Scharfe wrote:
->>>>> Duplicates strbuf_expand to a certain extent, but not too badly, I
->>>>> think.  Leaves the door open for letting strftime handle the local
->>>>> case.
->>>>
->>>> I guess you'd plan to do that like this in the caller:
->>>>
->>>>     if (date->local)
->>>>       tz_name = NULL;
->>>>     else
->>>>       tz_name = "";
->>>>
->>>> and then your strftime() doesn't do any %z expansion when tz_name is
->>>> NULL.
->>>
->>> Yes, or you could look up a time zone name somewhere else -- except we
->>> don't have a way to do that, at least for now.
->>
->> Is that only "for now"?  I have a feeling that it is fundamentally
->> impossible with the data we record.  When GMTOFF 9:00 is the only
->> thing we have for a timestamp, can we tell if we should label it as
->> JST (aka Asia/Tokyo) or KST (aka Asia/Seoul)?
+Sergey Yurzin <jurzin.s@gmail.com> writes:
 
-We could track the time zone on commit, e.g. in a new header.  I doubt
-that the need for showing time zone names will be strong enough to go to
-that length, though.
+> Subject: Re: [PATCH] Fix KeyError "fileSize" in verbose mode
 
-> It's obviously not perfect for all the reasons mentioned in this
-> thread, but we already have a timezone->offset mapping in the
-> timezone_names variable in date.c, a good enough solution might be to
-> simply reverse that lookup when formatting %Z
-> 
-> Of course we can never know if you were in Tokyo or Seul from the info
-> in the commit object, but we don't need to, it's enough that we just
-> emit JST for +0900 and anyone reading the output has at least some
-> idea what +0900 maps to.
+The convention around here is to think how a single change appears
+in "git shortlog --no-merges" output.  The above commit title does
+not tell readers of "shortlog" what the change is about in the
+context of the whole system.
 
-I suspect that there will be different opinions, for cultural and
-political reasons.
+    Subject: [PATCH] git-p4: do not fail in verbose mode for missing `fileSize`
 
-> We could also simply replace "%Z" with the empty string, as the the
-> POSIX strftime() documentation allows for:
-> http://pubs.opengroup.org/onlinepubs/009695399/functions/strftime.html
-> ("Replaced by the timezone name or abbreviation, or by no bytes if no
-> timezone information exists.").
+or something?
 
-Yes, that's what the patch does.
+> From: Sergei Iurzin <sergei_iurzin@epam.com>
+>
+> ---
 
-René
+The blank space above is to explain why this change is needed and a
+good idea, followed by your Signed-off-by: line (please see
+Documentation/SubmittingPatches).
+
+>  git-p4.py | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index 8d151da91b969..b3666eddf12e3 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -2523,8 +2523,11 @@ def streamOneP4File(self, file, contents):
+>          relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
+>          relPath = self.encodeWithUTF8(relPath)
+>          if verbose:
+> -            size = int(self.stream_file['fileSize'])
+> -            sys.stdout.write('\r%s --> %s (%i MB)\n' % (file['depotFile'], relPath, size/1024/1024))
+> +            if 'fileSize' in self.stream_file:
+> +                size = int(self.stream_file['fileSize'])
+> +                sys.stdout.write('\r%s --> %s (%i MB)\n' % (file['depotFile'], relPath, size/1024/1024))
+> +            else:
+> +                sys.stdout.write('\r%s --> %s\n' % (file['depotFile'], relPath))
+>              sys.stdout.flush()
+
+I can see from your patch that self.stream_file[] sometimes may not
+have `fileSize` and when that happens the current code will barf.  I
+also can see that with your patch, the code will NOT barf but output
+would lack the size information (obviously, because it is not
+available).
+
+However, it is not at all obvious if this is fixing the problem or
+sweeping the problem under the rug.  The proposed log message you
+write before the patch is the ideal place to say something like
+
+    In such and such circumstances, it is perfectly normal that
+    P4Sync.stream_file does not know its file and lacks `fileSize`.
+    streamOneP4File() method, however, assumes that this key is
+    always available and tries to write it under the verbose mode.
+
+    Check the existence of the `fileSize` key and show it only when
+    available.
+
+Note that the above _assumes_ that a stream_file that lacks
+`fileSize` is perfectly normal; if that assumption is incorrect,
+then perhaps a real fix may be to set `fileSize` in the codepath
+that forgets to set it (I am not a git-p4 expert, and I am asking
+Luke to review this patch by CC'ing him).
+
+Also note that in a real log message that is helpful for future
+readers, "In such and such circumstances" in the above illustration
+needs to become a more concrete description.
+
+Thanks, and welcome to Git development community.
+
+>          (type_base, type_mods) = split_p4_type(file["type"])
+>
+> --
+> https://github.com/git/git/pull/373
