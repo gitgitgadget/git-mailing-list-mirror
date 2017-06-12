@@ -6,96 +6,127 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5150620282
-	for <e@80x24.org>; Mon, 12 Jun 2017 05:24:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CEF420282
+	for <e@80x24.org>; Mon, 12 Jun 2017 05:30:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752052AbdFLFYO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 01:24:14 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:34456 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752002AbdFLFYN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 01:24:13 -0400
-Received: by mail-pf0-f170.google.com with SMTP id 15so19907161pfc.1
-        for <git@vger.kernel.org>; Sun, 11 Jun 2017 22:24:13 -0700 (PDT)
+        id S1752022AbdFLFaz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 01:30:55 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35789 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752002AbdFLFaz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 01:30:55 -0400
+Received: by mail-pf0-f182.google.com with SMTP id l89so47536357pfi.2
+        for <git@vger.kernel.org>; Sun, 11 Jun 2017 22:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=BoG6FiNWF44N0Z+uQy1+lzQqPD+pDBXaqlLcYwMS+k8=;
-        b=r3gJp5dlj/+6ZxV5PNFHL6WMATh0pd63i6WUTyhbbmWGvWKANK6FJOmTEiW6unqxIU
-         1HlcjJ2+489aDw1sniDwWwbAoAc32BvlFV5UWI7HQi2GWMtLMlcC9vTMcroj3bg0RodQ
-         sGMI1Lc8x4Lzca3aFhu6ZjGlVewJnOUsu/SH+wOOszPALLvSWjEovOUC2oPIAibejHNm
-         ep5x/gGHbBg6zEqBbrbY9xRkMagpc0yWia/aF2la6gu90bVVYHCAA1xxJF2c+S3CJniV
-         hUn5rIlYMMlQNdkzFk4/krf8ZbARrGEqlBHK1oecN0BFtUuVmqE9p6pv6OyZxo8hHyg7
-         8Jmg==
+        bh=NnzBxzBs24QjK372pgQFu6foXnerTP4Z10mW8k5y4d8=;
+        b=bHc0Ie+AzBjlDZg32pHAFwbnEQeo7Tgl+n2tEXd0MzRTpOv2/bSMDRUaikLmST9NEH
+         6Vizt9g0YNNd4aa1xcGvYOvPkVRROjPkcP5Fqa/tczO3BBkCVAp9ep54cTO7iPWmzIop
+         D1C2cqNkasLLZ46PIcqiq50AKLXEx3uemDL2/CBJafbknwVjdFmBbrpbtCMTAV7OY1UP
+         t48LPLmRuQ/6tEXf8N3JWxALzL3oHV0WW6pn7yghphOxc9qr8rusHYdbbC7H7MkUDt3s
+         17poQtblNVJnHmnR9A843tZDlX1NeuZ9z2pGaH2jZi5zZ6hLlOIAINRNpBATJNR5MVE8
+         Q1rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=BoG6FiNWF44N0Z+uQy1+lzQqPD+pDBXaqlLcYwMS+k8=;
-        b=E7w+lvp2sHa90YP805v9zcgSR521qet+OHV+Un39xYOzyAaLUbIgvJmN36YsFrGPfX
-         sI+gpdchvwuuNKawaGzGHejWydPO146DH9wBSjbTL9ObQlK5AQKK/FKPCOcw0IBJZP+Z
-         FuD8dDS23daLX+h8DLLMairY85OrNW0CM7jQbnp97DY3MgN1/CJMGbZMuRw2s+34I/Z0
-         meowhbQnTnj1OInmsHTEk0qnTUkJUEdd57F6HRuV3i+owck9M02RuzAN/l9EE5i9foz8
-         RVIYw/7eGLOmXtl5mAB/jSPO0Z1v2lcw4WUzBN0WXOI6JPQ6s8xwyjKKwLs80tSO+Jyu
-         fMcw==
-X-Gm-Message-State: AODbwcCtXSfEneajhgQkjKpsRFwjAghs7LbLuOHipTDEmqQTC2tVAaj8
-        GApTR7uZtANpCMvj5RFb27ni8dHfGbYZ
-X-Received: by 10.84.209.228 with SMTP id y91mr54423240plh.210.1497245053107;
- Sun, 11 Jun 2017 22:24:13 -0700 (PDT)
+        bh=NnzBxzBs24QjK372pgQFu6foXnerTP4Z10mW8k5y4d8=;
+        b=iKJr/pX3HAJ8a79gE5ZOGfib0+7LriWCf85x9MLRqAoqkTEE521UTIMAg6jNdGLPlc
+         JpQ/fVel4TRhED9Lezg/wXEN7TQuc+IgzmZfYYhSSHrRfhQC6vPvVkzYsZAZ5OAlCvQ2
+         PPR986KMk6MVYxPFtVSxwvHg75jPca400Ta2ipoHWcknzAe7f6kdjsg4G0bAJ4dV09yr
+         QsANxj+IGs4E080/zmDfEcAM12dFf6uhmwRxmhEc3MdmTcG/qE8fvmcOcCvzUSHA8LPO
+         X/lj3OqOYnbbv31vjfVPd/seOUMq2+3RryBLAy9WkSPjGsWQG4Tl1a9Q5hY6FZL9c2Hk
+         Xuvg==
+X-Gm-Message-State: AODbwcDGzg2skol7uxH1B691tz0LuyIlgPfrUMcpkIButOjjdn9FBHSA
+        NQja1sNwfPz+3OPS4+b57pK/2ZvQLocL
+X-Received: by 10.99.9.131 with SMTP id 125mr46378036pgj.178.1497245454255;
+ Sun, 11 Jun 2017 22:30:54 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Sun, 11 Jun 2017 22:24:12 -0700 (PDT)
-In-Reply-To: <20170610060712.foqre5fscaxu3tnx@sigill.intra.peff.net>
-References: <20170531214417.38857-1-bmwill@google.com> <20170608234100.188529-1-bmwill@google.com>
- <20170609174034.61889ae8@twelve2.svl.corp.google.com> <20170610060712.foqre5fscaxu3tnx@sigill.intra.peff.net>
+Received: by 10.100.218.134 with HTTP; Sun, 11 Jun 2017 22:30:53 -0700 (PDT)
+In-Reply-To: <xmqqbmpw4mpo.fsf@gitster.mtv.corp.google.com>
+References: <20170606035650.oykbz2uc4xkr3cr2@sigill.intra.peff.net>
+ <CAGZ79kY-uzardfOvrJufatYgU9bqx4XZMU_GFq5zwc-vtzM-3Q@mail.gmail.com>
+ <20170606181024.GA189073@google.com> <20170606183914.6iowfhimo5yrvmtf@sigill.intra.peff.net>
+ <20170609231935.ysolxkiuhhpa3xrd@sigill.intra.peff.net> <xmqqbmpw4mpo.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Sun, 11 Jun 2017 22:24:12 -0700
-Message-ID: <CAGZ79kbtZJd3O1vZBEkqU5_VRs5LmJhxUKtWu4RWTyk5M1r__Q@mail.gmail.com>
-Subject: Re: [PATCH v2 00/32] repository object
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ben Peart <peartben@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sun, 11 Jun 2017 22:30:53 -0700
+Message-ID: <CAGZ79kZuwjQ1qYm5wLXXdMurwyAieWuLETV-Cx61ipO=QcsG+Q@mail.gmail.com>
+Subject: Re: [BUG?] gitlink without .gitmodules no longer fails recursive clone
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 9, 2017 at 11:07 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jun 09, 2017 at 05:40:34PM -0700, Jonathan Tan wrote:
+On Fri, Jun 9, 2017 at 7:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
->> Before I get into the details, I have some questions:
+>> In an ideal world the user do:
 >>
->> 1. I am concerned that "struct repository" will end up growing without
->> bounds as we store more and more repo-specific concerns in it. Could it
->> be restricted to just the fields populated by repo_init()?
->> repo_read_index() will then return the index itself, instead of using
->> "struct repository" as a cache. This means that code using
->> repo_read_index() will need to maintain its own variable holding the
->> returned index, but that is likely a positive - it's better for code to
->> just pass around the specific thing needed between functions anyway, as
->> opposed to passing a giant "struct repository" (which partially defeats
->> the purpose of eliminating the usage of globals).
+>>   git submodule add git://host/repo.git path
+>>
+>> which adds the gitlink and the .gitmodules entry. But it doesn't seem
+>> unreasonable for somebody unfamiliar with submodules to do:
+>>
+>>   git clone git://host/repo.git path
+>>   git add path
+>>
+>> This does add the entry as a gitlink, but doesn't write any sort of
+>> .gitmodules entry.
 >
-> I think the repository object has to become a kitchen sink of sorts,
-> because we have tons of global variables representing repo-wide config.
+> I actually would think that is a perfectly valid state.
 
-AFAICT we want to operate on struct 'the_repo' and struct 'the_cmd_options'
-eventually. In our use case of submodules the submodules would ignore the
-settings of the main repo, but still accept guidance of the_cmd_config or
-'the_config.
+me too.
 
-> So I have a feeling that we're always going to need some
-> big object to hold all that context when doing multi-repo operations in
-> a single process.
+But on the other hand I do not want to offend non-submodule-gitlink-users
+too much. So maybe:
 
-Well not just one big struct, but two. (or more?)
+  $ git add <gitlink>
+  # Adding a raw gitlink to the index,
+  # in case you want to use a submodule,
+  # use add a .gitmodules file or use 'git submodule add'
+
+> In that
+> original repository pair (i.e. the superproject with a submodule
+> without an entry in .gitmodules), as long as the configuration in
+> the submodule repository "path/.git/config" has necessary remote
+> definitions, "git push/fetch --recursive" etc., should also be able
+> to work without having to consult .gitmodules at the top-level
+> superproject, I would think.
+
+but these are the 2nd step, clone fails first.
+
+>
+>> With the old code, cloning the repository (either by
+>> another user, or in our case during a Pages build), a recursive clone or
+>> submodule init would complain loudly. But now it's just quietly ignored.
+>> Which seems unfortunate.
+>
+> Of course, if such an original superproject gets pushed to a
+> publishing location and then the result is cloned, without an entry
+> in .gitmodules, no information "git submodule" can use to work on
+> that "path" exists in that clone.  I would say it is OK to leave it
+> as-is when going "--recursive" (what you called "inactive because
+> it does not even have a .gitmodules entry).
+>
+> But even in such a clone, once the user who cloned learns where the
+> submodule commit that is recorded in the superproject's tree can be
+> obtained out-of-band and makes a clone at "path" manually (which
+> replicates the state the original repository pair), things that only
+> need to look at "path/.git/config" should be able to work (e.g. "git
+> fetch --recursive"), I'd say.
+
+But the user would never learn, because
+
+  $ git clone --recurse-submodules ...
+
+does not complain, but put an empty dir instead.
+
+
+>
+>
