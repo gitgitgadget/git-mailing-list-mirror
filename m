@@ -2,108 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FB8920401
-	for <e@80x24.org>; Mon, 12 Jun 2017 22:06:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6A5420401
+	for <e@80x24.org>; Mon, 12 Jun 2017 22:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752661AbdFLWGJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 18:06:09 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:36505 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752619AbdFLWGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 18:06:08 -0400
-Received: by mail-pg0-f51.google.com with SMTP id a70so50676736pge.3
-        for <git@vger.kernel.org>; Mon, 12 Jun 2017 15:06:08 -0700 (PDT)
+        id S1752619AbdFLWKL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 18:10:11 -0400
+Received: from mail-ua0-f171.google.com ([209.85.217.171]:35355 "EHLO
+        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752430AbdFLWKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 18:10:10 -0400
+Received: by mail-ua0-f171.google.com with SMTP id q15so64850926uaa.2
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 15:10:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8xhQJeAjI8uHkvvuVicJ38dggEWjp2URxQROdK8dcqY=;
-        b=hDDQmqBEj/bL80y0TRbCij7hW3GzwocZ6hjNJ/B4DBcDuJ6B+IpWJostsJY2oLLVac
-         UtyEjFGvIcrlf+/790mfUZ3VwYBZZixC7JGKUibUnwGFlUGSwOeceTSMY+gtJKp9PlO6
-         2YJybLnLZBjAz1fHsuvyBwOWvGcceJFdysi4jVf6+7xceerhag6HusW3bP4p/rMmCOed
-         hy8AgsjsBgBobmY4cdUuJdarYd5ZPABX6j4TY3WlyB7wxscMktjqDPgSOHlMZko133f7
-         iqFanmNzkxmFLlznZIwoB2KbtreHuhRwozdwvM1mMofZdkrUHWzl2iSiVol0Hk9nPVHU
-         Z6kg==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=hUO+pQ/cTpOviW79+CdzkS3UTwUE5zcFEUeL3VSU1dg=;
+        b=RDnWiyyoDs/T+tNSqHbkO0KatMNteVP28J1iKsSNc9hneDM3MNvd7gvmMtAD5CI6Oi
+         N4q9B7l1Yer+vckxF9eaw2rgejQ5js+DAZzBqD9IlZeVqbbX7ye/YcZ6ipZbYJUR100o
+         63RZRNGcGsxpjQeHAg5dyxNcFpZXZVXwcaC4tOMRWT9qNeXgGg8g3Aiyqgmi8qKEANvZ
+         GhpeK+gTvwmUP39edoTyqf/Fs9CyOu7rA+7al3NSaDqHqXbJ+vjbyg95sSXETcJ4QBUx
+         PY1FhqB3TDo4C673a5t2H3sDNNBtliOAv/6l7AvKuFLjrm//4SOfUZ7riCOMwuECCuKo
+         uYZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8xhQJeAjI8uHkvvuVicJ38dggEWjp2URxQROdK8dcqY=;
-        b=otLpIEDKrXrCYuGlINo4r1GP2qRe7e8L/CEnye2znzqyV0HWIki0zuYFtMzw4lq2IZ
-         fq8PN3Q+ggmAPA/JW0+Nv5wYhdV7dJkqrWG/WAHo1bVcXq/hYpZ+GIIGQtyrBCLYkx7V
-         Ytm0KE3VtvQQBmwlHckvlZyKUpI9pvlwADtZhAR8M96uwnZRaUIzgLukufXLRvlXYAm1
-         MPvDaS2V920thAce+1K4Ii/ziiqO2RDl2iU/RabkO7nJDKBSjQT2sB9ttqOXRNkvqnof
-         Cr8OqFP3E7tjcbDX2kCx6VtsRAzaoQD+ekRUg8po4cuINuPqybPIcI9l19LqcDO+3QRD
-         KG9Q==
-X-Gm-Message-State: AODbwcA7zIZ9ePZvkdhX0fQoQcA0Z+49IW5Ee6FxdQCmX36keFYC5pGc
-        QC0Hg1AXQH0GMCfNpmWSkg==
-X-Received: by 10.98.51.129 with SMTP id z123mr58847241pfz.100.1497305167903;
-        Mon, 12 Jun 2017 15:06:07 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:9d75:7c5f:d212:fb28])
-        by smtp.gmail.com with ESMTPSA id 67sm20213791pfn.84.2017.06.12.15.06.06
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 12 Jun 2017 15:06:07 -0700 (PDT)
-Date:   Mon, 12 Jun 2017 15:06:05 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com
-Subject: Re: [PATCH 0/4] config.h
-Message-ID: <20170612220605.GF154599@google.com>
-References: <20170612213406.83247-1-bmwill@google.com>
- <20170612214502.xynyfswj2ipf25ah@sigill.intra.peff.net>
- <20170612215352.GE154599@google.com>
- <20170612220244.dcndhmxpnsz2tg5d@sigill.intra.peff.net>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=hUO+pQ/cTpOviW79+CdzkS3UTwUE5zcFEUeL3VSU1dg=;
+        b=ct50iSxNiDaWpHnz64S1MHqN/506Fym8d1GqcHRbgqE8rqlLFIs2O2EQ35z0Ef0c88
+         FK+exCFPr/wALPic5e1Nv2AlEgikOjSovJu2m0gZtIV/YqENhnvIazSzXxjbd+3yJwXT
+         BVOR3SVMMCHFc4fqHaY4JuSiwth+T0+bSmaaYrps+3Ztg3gEvQT1y+dBcrFMrgg55AYw
+         UxWaU0l/sfFLreJCQRRS4lE5/DFBzkRtp8H6rYhBV1QAd+NPPLnvqkhHtNW9a7sb79+v
+         LliSC/8cJOEoKAXlJSXmFmAIGqheVGagNG3tzgJoq2V+3xd3DJ5ib939rHg7qDHyuerS
+         8hmA==
+X-Gm-Message-State: AKS2vOxG8RdoFwh9iSE2vNMuGMGJ0a0ZxzPpOyA/DbEEWyir6dIJBBjV
+        x+koT1dgEDwqpctFtIlIGspDhxsujAV+
+X-Received: by 10.176.25.99 with SMTP id u35mr756592uag.16.1497305409571; Mon,
+ 12 Jun 2017 15:10:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170612220244.dcndhmxpnsz2tg5d@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.176.81.205 with HTTP; Mon, 12 Jun 2017 15:10:09 -0700 (PDT)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+Date:   Tue, 13 Jun 2017 03:40:09 +0530
+Message-ID: <CAME+mvUrzVxpRdPDvA1ZyatNm2R27QGJVjSB3=KX85CEedMaRQ@mail.gmail.com>
+Subject: [GSoC] Update: Week 4
+To:     git <git@vger.kernel.org>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/12, Jeff King wrote:
-> On Mon, Jun 12, 2017 at 02:53:52PM -0700, Brandon Williams wrote:
-> 
-> > > These all seem reasonable to me. Patch 3 made me shrug a little, because
-> > > it seems like the majority of C files end up including it anyway. I
-> > > suspect you could break config.h down into two files: the few things
-> > > that everybody needs (git_config() and the few parsing functions needed
-> > > in callbacks) and the ones for commands that actually manipulate the
-> > > config.
-> > > 
-> > > That would reduce the surface area of the module that most callers look
-> > > at, but I don't think there's a huge benefit to doing so (mostly it just
-> > > makes re-compiling faster by decreasing the chance that a dependent
-> > > header has changed for each file).
-> > 
-> > Yes, ultimately I think it would be a good thing to break config.c down
-> > into at least 2 more files (the file parsing logic and the config_set
-> > logic) but that can be done at a later point.  I started looking at
-> > doing that now but that logic is a little more entangled than I thought
-> > it was.
-> 
-> To be clear, I don't mind that sort of module refactoring and like the
-> results.  But it almost certainly isn't the biggest bang-for-buck in
-> terms of the time it takes versus the benefit it brings. So take my
-> comment as "we could also do..." but not "we should not take your patch
-> because it does not go far enough".
+SUMMARY OF MY PROJECT:
 
-Yes, that's how I understood your comment.  I realize that there's a lot
-of improvements that can be done across our code base and one rabbit
-hole that is easy to fall into is "fix all the things right now!" hence
-why I decided to defer doing that to a later date.  And I agree that
-doing that extra work doesn't buy us 'all too much'.
+Git submodule subcommands are currently implemented by using shell script
+'git-submodule.sh'. There are several reasons why we'll prefer not to
+use the shell script. My project intends to convert the subcommands into
+C code, thus making them builtins. This will increase Git's portability
+and hence the efficiency of working with the git-submodule commands.
+Link to the complete proposal: [1]
 
-Having said that I do think it was worthwhile to remove the config
-declarations from cache.h.  I think in the long term it would be nice to
-limit cache.h's scope as it is very unapproachable in its current form.
+Mentors:
+Stefan Beller <sbeller@google.com>
+Christian Couder <christian.couder@gmail.com>
 
--- 
-Brandon Williams
+UPDATES:
+
+Following are the updates about my ongoing project:
+
+1. sync and status: The improvisions for the ported functions were
+   implemented. I'm planning on floating a series patches,
+   containing all the ported functions put together, but
+   recently encountered some issue with the get_submodule_displaypath
+   function, I haven't yet posted an updated version of the above
+   ported function.The issues are now resolved. Hence, soon I plan
+   on posting their updated versions.
+
+2. deinit: As planned for the week, this submodule subcommand is
+   ported from shell to C. But still, there are some tests, the
+   ported functions are failing. Along with the updated versions
+   of 'status' and 'sync', I'll also be posting a WIP patch
+   about this subcommand ported.
+
+3. summary: Porting of this subcommand is still underway. I choose
+   to do the porting of this subcommand after deinit as it was
+   smaller and hence porting this subcommand is still left.
+
+4. count_slashes: A function was introduced in dir.h for reducing
+   the code-duplication as similar functions exist in apply.c and
+   builtin/show-branch.c
+
+PLAN FOR WEEK-5 (13 June 2017 to 19 June 2017):
+
+1. sync and status: Since the changes are ready, I plan to post the
+   complete series of the updated version soon as a single series of
+   patches.
+
+2. summary: As this is still underway, I'll be finishing this submodule
+   subcommand in the following week.
+
+3. foreach: To unblock the conversion of this submodule subcommand,
+   I'll be focusing on porting the original cmd_foreach, and
+   will not be including the BUG-FIX patch here.
+   An additional NEEDSWORK comment will be added to the ported function,
+   stating the reported bug, and not resolving the bug in this patch
+   series.
+
+4. deinit: As mentioned earlier, there is still some debugging left for
+   the ported functions. I plan to debug them and discuss the patch
+   for further improvisions this week.
+
+[1]: https://docs.google.com/document/d/1krxVLooWl--75Pot3dazhfygR3wCUUWZWzTXtK1L-xU/
+
+Thanks,
+Prathamesh Chavan
