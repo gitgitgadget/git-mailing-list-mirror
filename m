@@ -2,66 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF2D51FA7B
-	for <e@80x24.org>; Mon, 12 Jun 2017 08:02:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6380A1FA7B
+	for <e@80x24.org>; Mon, 12 Jun 2017 08:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751796AbdFLICd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 04:02:33 -0400
-Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:54578
-        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750730AbdFLICc (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 12 Jun 2017 04:02:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1497254550;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=Tfu49brScLzm22n4LVa6XDZONx1S+XCPyd/r4FQk0SU=;
-        b=e1KVS53/ru1z+Ltsx7fNY7JFOuugQlGeROiGzA0NSQGGQjSpoXts1ciL8+McbRMe
-        EUTQ+TE8GY3stY2pJ6Hm++WD9KUmeCCNNWuHzJCLqm0APFXEZLsiCy6GAggB1OB7mNI
-        huZykUO3ZZ5usgWH1/XvX6tQPHrhhmf4TyXcAguY=
-From:   Sergey Yurzin <jurzin.s@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <0102015c9b535a84-fd59d55d-387a-419e-b8ec-439873c4b7f5-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] Fix KeyError "fileSize" in verbose mode
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 12 Jun 2017 08:02:30 +0000
-X-SES-Outgoing: 2017.06.12-54.240.7.11
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+        id S1751918AbdFLIG0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 04:06:26 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:49171 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750730AbdFLIGZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 12 Jun 2017 04:06:25 -0400
+X-AuditID: 12074413-d7bff7000000742e-a6-593e4b7f1b24
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id CB.F9.29742.F7B4E395; Mon, 12 Jun 2017 04:06:23 -0400 (EDT)
+Received: from bagpipes.fritz.box (p57BCCCC5.dip0.t-ipconnect.de [87.188.204.197])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5C86Ic4002255
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Mon, 12 Jun 2017 04:06:20 -0400
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 0/1] Fix for mh/packed-ref-store-prep
+Date:   Mon, 12 Jun 2017 10:06:12 +0200
+Message-Id: <cover.1497253685.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.11.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrAIsWRmVeSWpSXmKPExsUixO6iqFvvbRdpcOCApcXaZ3eYLJ6vP8Fu
+        0XWlm8miofcKs8WTuXeZLW6vmM9sseTha2aL7ilvGS1+tPQwW2ze3M7iwOXx9/0HJo+ds+6y
+        eyzYVOrx8FUXu0dX+xE2j2e9exg9Ll5S9vi8SS6AI4rLJiU1J7MstUjfLoEro2FnH2PBNZaK
+        GS1nmRoYXzB3MXJySAiYSNx53cPSxcjFISSwg0ni5oTzbCAJIYFTTBLrlymD2GwCuhKLepqZ
+        QGwRATWJiW2HwBqYBTYwS7yZvhosISxgKnF6420wm0VAVeL3nLtgNq+AucS+4ydZIbbJS+xq
+        u8g6gZFrASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdc73czBK91JTSTYyQwBLewbjrpNwh
+        RgEORiUe3oS9tpFCrIllxZW5hxglOZiURHm3XLGJFOJLyk+pzEgszogvKs1JLT7EKMHBrCTC
+        e8/DLlKINyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUgtQgmK8PBoSTBq+IF1ChYlJqe
+        WpGWmVOCkGbi4AQZzgM0fI8nyPDigsTc4sx0iPwpRl2Opg9bvjAJseTl56VKifOKgAwSACnK
+        KM2DmwNLCK8YxYHeEua9AVLFA0wmcJNeAS1hAlpyHeQ73uKSRISUVAOjs8zJ2Y/vfJb22q4j
+        GKj9r05BKrZJUftgyP6SlxMcQmT5pL5LsK+Pmi9xQDFU3PakbN3WNINejiLhiaqiyaYbXTv+
+        z7p3+hhbOhd33Nxfe2RvhK5tf5gsezfzScYifuZpKsv3Kv7ePcmuVvb1v5TKXvdFPJ+P2m5R
+        tWb+zMW/9E/Rf6HMo+xKLMUZiYZazEXFiQDE8qyN4wIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sergei Iurzin <sergei_iurzin@epam.com>
+When preparing a new patch series, I noticed a bug that crept into
+mh/packed-ref-store-prep while I was shuffling patches around. It
+introduces a race condition if another process rewrites the
+`packed-refs` file just before we lock it. See the commit message for
+more information.
 
----
- git-p4.py | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+This patch applies on top of mh/packed-ref-store-prep and merges to
+master without problems.
 
-diff --git a/git-p4.py b/git-p4.py
-index 8d151da91b969..b3666eddf12e3 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2523,8 +2523,11 @@ def streamOneP4File(self, file, contents):
-         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
-         relPath = self.encodeWithUTF8(relPath)
-         if verbose:
--            size = int(self.stream_file['fileSize'])
--            sys.stdout.write('\r%s --> %s (%i MB)\n' % (file['depotFile'], relPath, size/1024/1024))
-+            if 'fileSize' in self.stream_file:
-+                size = int(self.stream_file['fileSize'])
-+                sys.stdout.write('\r%s --> %s (%i MB)\n' % (file['depotFile'], relPath, size/1024/1024))
-+            else:
-+                sys.stdout.write('\r%s --> %s\n' % (file['depotFile'], relPath))
-             sys.stdout.flush()
- 
-         (type_base, type_mods) = split_p4_type(file["type"])
+Michael
 
---
-https://github.com/git/git/pull/373
+Michael Haggerty (1):
+  lock_packed_refs(): fix cache validity check
+
+ refs/files-backend.c | 32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
+
+-- 
+2.11.0
+
