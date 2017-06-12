@@ -2,112 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A305E1F8CF
-	for <e@80x24.org>; Mon, 12 Jun 2017 14:34:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B643C1F8CF
+	for <e@80x24.org>; Mon, 12 Jun 2017 15:12:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752661AbdFLOd7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 10:33:59 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:33163 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752142AbdFLOd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 10:33:57 -0400
-Received: by mail-pg0-f48.google.com with SMTP id f185so46054054pgc.0
-        for <git@vger.kernel.org>; Mon, 12 Jun 2017 07:33:57 -0700 (PDT)
+        id S1752093AbdFLPMf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 11:12:35 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:35126 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752088AbdFLPMe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 11:12:34 -0400
+Received: by mail-pg0-f53.google.com with SMTP id k71so46368715pgd.2
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 08:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:disposition-notification-to
-         :mime-version:content-transfer-encoding;
-        bh=M528chuKHH5S1n5V4zEn5Ht9bm7Qptwe9u4c9uD6NYg=;
-        b=EAMoWlElQAX743XVJw4ysY9pFBM0O+Q2UgYyxptYEwfd8b36SqgYW8+V4DgRva/ARb
-         Q/2wia7ujdXeSWguSmG21ZeJWongigjv/hWxoxi7b7BaDUnmHD+JbyyEXYNr6VxykLkb
-         3JL2ihGZlamCyCDi1mNEufd7D9e+L7TYM28giIJcDH5ZVS9KpetNPUuqfV3ikMCtrWsu
-         7u+ttSDSWeT7oGoUKCj1+rdyB+TMzayC++3uaFa8Qc6t4I1jAvHZttPmDGX5lSy4NzM+
-         r+Gz6LpMRRIyMphlXw4qd9rKwq7t8RQd6EA2x37sMkKJwuauqJh5EHIVTVsFiNZXRjdO
-         jjlg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=fHyk1qpUe3pgbGYcj2vOUU/nbaRSBwrIGgVnhXQjArI=;
+        b=lzgRkixrIczJ3NENHS46RmGX3rmzmbx5TDu7u5y9A5OGj4X4tQRUuSGrMi8aav3a6/
+         qLJ/8893ov3b4aMaZ8LBHb9pum4BMuPiYR6cZaGBiTavdewln3qqV9doWkyYVaRh6l9U
+         GSMTmw0XindF5d7TXb9EGA/3ke+UUq9ljYTCSLBwYP9tVl7e8CuF4ZOmtIuQ9aGujNwa
+         p6uSGAyTlsWp+KrIxjeqdw8580jGBIbAxRVHdDFkkAY25KZhytBDawmiwpvdERpgvy8t
+         SgDDsZ0jYwdk8KFDFCRdEv54YWS7kP1O5XzWRuuDXfL107kPUIXA77W8/itmbHBy+Kom
+         xKMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=M528chuKHH5S1n5V4zEn5Ht9bm7Qptwe9u4c9uD6NYg=;
-        b=suE/Ko4N9mHoZHg+3cPZQZ2oepwLE5Pndjp9tBsCd/Oh39S/EAgG5P3AQR1tU9R4St
-         uq1e9UBiaJepKb22iLlQOA5shjyReZwQSKARpThq7H7tquy/Bi1yUnFHkbzqlTGaMv3F
-         rsgAOCe50Xf0IRBBymxyjE2a6x8+9qXZyN8zDCUD8wzX602LAuzk9HMMxS0PM15U4Wpm
-         JhKXnoLxTpHT8oW5CA9HcmmxCc04tGLpMnxJ/uJYb0IM48mQAoW2lEQ6WHAh5T61jhP4
-         oD79nvqtRT82JxQxT39TuJChKlMpIQ+pogvgBZkVj1BpfO/zlYp/4nGHqzPumgt9G0rc
-         hB1Q==
-X-Gm-Message-State: AODbwcAYKmX+qBYAKHba5wbJjYpiSLWKYlpKHb/5stcb4UyKM/vuasQh
-        /9kuC0Lsdmn9ut9qZwk=
-X-Received: by 10.98.166.18 with SMTP id t18mr41164087pfe.66.1497278036492;
-        Mon, 12 Jun 2017 07:33:56 -0700 (PDT)
-Received: from unique-pc ([2405:205:8100:7f26:2f1e:ad3f:8899:445e])
-        by smtp.googlemail.com with ESMTPSA id 15sm19600251pfk.115.2017.06.12.07.33.54
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Jun 2017 07:33:55 -0700 (PDT)
-Message-ID: <1497278015.7302.13.camel@gmail.com>
-Subject: Small issue with "add untracked" option of 'git add -i'
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     git@vger.kernel.org
-Date:   Mon, 12 Jun 2017 20:03:35 +0530
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=fHyk1qpUe3pgbGYcj2vOUU/nbaRSBwrIGgVnhXQjArI=;
+        b=O6VOEH7+u07HvUkQM2LBelGFLK3saiy0wFr6u35YyCbayKKmaup6IRwKcGIdAWcV/7
+         CBdVfKvo6txJ9IJfMYOlXRxGWNW9A/rNo+KgBR3lt4izf3eyP79vCZqgB8SY2y8uVoJf
+         +/23kNfrhWPNEvY8BQvuX+pMHG9QIjQpH7iNStz/ci9vUsGuMp3cnai0SXilZktuLm+4
+         HL4zX6gc/VFgHBXnUHOSdyrJBE/9LuKfyK3tLOr89zt1YQ24u/EIV2DghHHUjBgqSjNG
+         8p6W164THyPA/xnq1bQ4vl/jyRRX5Y/d0DDpfgCvQTonsVPkVVMq6F+84yW9ECk87auy
+         a33g==
+X-Gm-Message-State: AODbwcDAwttYy33HnHb1TZOZt1jVfzUG04vJAQLIyX5vtRillkQb+0UN
+        NxQov4yYfEHaxQ==
+X-Received: by 10.84.215.158 with SMTP id l30mr56406555pli.266.1497280353289;
+        Mon, 12 Jun 2017 08:12:33 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:695d:4129:fb97:59df])
+        by smtp.gmail.com with ESMTPSA id b65sm21411028pfm.29.2017.06.12.08.12.31
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 12 Jun 2017 08:12:32 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>, Ulrich Mueller <ulm@gentoo.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] strbuf: let strbuf_addftime handle %z and %Z itself
+References: <0a56f99e-aaa4-17ea-245a-12897ba08dbb@web.de>
+        <xmqq1sr3161p.fsf@gitster.mtv.corp.google.com>
+        <20170602030825.hdpbaisn54d4fi4n@sigill.intra.peff.net>
+        <72b001fc-80e7-42b9-bd9d-87621da7978a@web.de>
+        <20170602183504.ii7arq2ssxgwgyxr@sigill.intra.peff.net>
+        <22833.57584.108133.30274@a1i15.kph.uni-mainz.de>
+        <20170602223003.6etkdnnogb2jmoh3@sigill.intra.peff.net>
+        <22833.60191.771422.3111@a1i15.kph.uni-mainz.de>
+        <20170602225148.drkl7obwhzypgjtr@sigill.intra.peff.net>
+        <a8b789e6-d0cd-6d96-1bfb-ccc5bc174013@web.de>
+        <20170607081729.6pz5yo2hmp4fwuas@sigill.intra.peff.net>
+        <662a84da-8a66-3a37-d9d2-4ff8b5f996c3@web.de>
+Date:   Mon, 12 Jun 2017 08:12:31 -0700
+In-Reply-To: <662a84da-8a66-3a37-d9d2-4ff8b5f996c3@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 11 Jun 2017 19:36:47 +0200")
+Message-ID: <xmqq37b5qly8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+Ren√© Scharfe <l.s.r@web.de> writes:
 
-There seems to be a small issue with the output of the "add untracked"
-option of 'git add -i'. Consider the following scenario,
+> Am 07.06.2017 um 10:17 schrieb Jeff King:
+>> On Sat, Jun 03, 2017 at 12:40:34PM +0200, Ren√© Scharfe wrote:
+>>> Duplicates strbuf_expand to a certain extent, but not too badly, I
+>>> think.  Leaves the door open for letting strftime handle the local
+>>> case.
+>>
+>> I guess you'd plan to do that like this in the caller:
+>>
+>>    if (date->local)
+>> 	tz_name = NULL;
+>>    else
+>> 	tz_name = "";
+>>
+>> and then your strftime() doesn't do any %z expansion when tz_name is
+>> NULL.
+>
+> Yes, or you could look up a time zone name somewhere else -- except we
+> don't have a way to do that, at least for now.
 
-* A user makes a change to a tracked file
-* His repo has a few untracked files which he has left it in that way
-intentionally
-* He chooses to use 'git add -i' to stage changes
-* He chooses option 4, accidentally, instead of option 5. He is shown
-the following menu,
-
-> *** Commands ***
-> † 1: status	††2: update	††3: revert	††4: add
-> untracked
-> † 5: patch	††6: diff	††7: quit	††8: help
-> What now> 4
-> † 1: test-file
-> Add untracked>>†
-
-* He exits by hitting return but he is shown this weird message found
-below.
-
-> No untracked files.
-
-* He is surprised on seeing this.
-
-Why is that message shown when "there are untracked files" but the user
-doesn't add them to the staging area ? If that message is relative to
-the staging area shouldn't it be made more explicit? Further in that
-case it doesn't seem to be consistent with the another output shown in
-the scenario in which the developer chooses the 'add untracked' option
-when he really doesn't have any untracked files in his working
-directory.
-
-> *** Commands ***
-> † 1: status	††2: update	††3: revert	††4: add
-> untracked
-> † 5: patch	††6: diff	††7: quit	††8: help
-> What now> 4
-> No untracked files.
-> 
-
-
--- 
-Regards,
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Is that only "for now"?  I have a feeling that it is fundamentally
+impossible with the data we record.  When GMTOFF 9:00 is the only
+thing we have for a timestamp, can we tell if we should label it as
+JST (aka Asia/Tokyo) or KST (aka Asia/Seoul)?
