@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	T_RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 776E920401
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CDEF20401
 	for <e@80x24.org>; Mon, 12 Jun 2017 22:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753041AbdFLWOy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 18:14:54 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:32930 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753000AbdFLWOt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 18:14:49 -0400
-Received: by mail-pg0-f48.google.com with SMTP id f185so50814599pgc.0
-        for <git@vger.kernel.org>; Mon, 12 Jun 2017 15:14:43 -0700 (PDT)
+        id S1753030AbdFLWOx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 18:14:53 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:36288 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752371AbdFLWOu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 18:14:50 -0400
+Received: by mail-pg0-f42.google.com with SMTP id a70so50760843pge.3
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 15:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=I2Wm0p+GOr25oSHmyznq7DiqY/I0iBtxl9aZmw49+kc=;
-        b=sH6eHP/z/jP/4IDvunNxyUGG7DFFZiI93Zl6wgwgKnkgEw851+Pw3UezB9YN/f6wmr
-         c39ouFfrEidiGc39821JIJcrgaAi+SnMqoJ0OsPaMqPH+AGZwnFAI6Tx5cIRBrcxyrIg
-         megn/li9CSmIScgWzDxh/9/ZLqeenxoqXUC3yafF+fRzyDHMIZLnxAMujDve1SggpMxp
-         SriOxw84SuPGW+rt7x98mNdT7kaeqqfVduWrSiFWgc1texfCGXrq36DJU5rX7QrppG1z
-         av5vRwnxprO2wZyfXP8BMWJbHUMT8WM8RQa/6gaI+EyakuYv2Az0pDJhxf52YhNNN5Oc
-         wTeg==
+        bh=dIItHQEXEAwqimVToRmDR7BdG69Hlmthspe5YGiwRko=;
+        b=TBFALsiCHJvrdSGtJb+6EfXcMfUwF7QlJJJbpLmIpRA/rIE2NwLc+O9598XZvN1tgW
+         VFmo6OYse01eIJ0b76M83VpfLrekP/yKWBnqmZgkK8KwbvGqlfWRs8f+6SLiVdtjPR07
+         lhnzxDhXxxvHuR497oNrSJbJ1S8CW123zr9zyTemSBc7XZuyyCKGKU9MAY77hn4jQ5vo
+         fJeY3Ifmu6HKUGAyk0BeFcfJ2VUTL70eKYiJV0/lPwfZ8Q2PIE+wyedxpN7bbTVzurex
+         xUoHXdxL2NEwVErFQe4SEqCw0gyNTGQ3hOJbuDe/nbemWUcSWIZuIm/PUQ2OmvnSAclv
+         827w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=I2Wm0p+GOr25oSHmyznq7DiqY/I0iBtxl9aZmw49+kc=;
-        b=E6SPDefOrBKS7iQN2Q6Ivsr0tRkZWa2ayE+Ptpcow81vbedOe+2ITaXhkMJDo9V66k
-         SjyYDq5274okNxYJJiWJKljNMjq+GBLu+qd5ncXerl+9Wksmf7Fd+sZMTO4m0A3e/JLn
-         RrYSTRN7PUmKDj/Pl1nXWZg3jf4UuWYfWZJPTQSEdmb8Pygs6yz0kInWFZBg9VXvF8tj
-         cJleFnCHBiSDrudYk0AFxxXvhcXsKLPrJG+lNbD/cIIh9Su57jofKQ1bcOPjaR3d/KuE
-         hxE2PkMIFjz9YFkCdGaLKkkv80wpH5PfhN4h8PzYr7DYAvySehYkGfu3cSJPy7qS1kS6
-         hqTA==
-X-Gm-Message-State: AODbwcBqJXyFW0Uz2lp7s5jTRtiTkScGAq7D6HJ3e7i3kNRJ4CX8ne9K
-        8oKlGOBbZbywCeFKxmyLxA==
-X-Received: by 10.101.89.66 with SMTP id g2mr45391442pgu.146.1497305672292;
-        Mon, 12 Jun 2017 15:14:32 -0700 (PDT)
+        bh=dIItHQEXEAwqimVToRmDR7BdG69Hlmthspe5YGiwRko=;
+        b=inu3C5hVqevAdEOtNuUlz8rgDmocS+m9d/+smAUsy/rX6ceOT2zWMoTo4us3fP5w7H
+         +fwQZ0o84oBblip1yWxx5d+GE3RssAtyKqiC1AiM7h5RKprM1sZLY+oEVcmR6hN8v5mD
+         Lnh6wqS8Gcp/2XgdRL0GrwxQyog48CLVQ6R1xLjEn5RyJAqAi73QxVxtX4NfmbKvMRta
+         xQ1o6xxiZuFDF1vBHEHhe/rkllee5U3RBKl5s9lsKbRTZ8uGTdXmgtZ8Us2EPA3w2R50
+         Kot6D9Ul0e/cDRFG4pe/xZuB4lCOiEqIZH8V5O8f/ab2Ds6Xom3JhcvQQNXW/yGJ5OCU
+         a7Pw==
+X-Gm-Message-State: AKS2vOySwkak8+BBpeAft0SKlCdO5Nfznj3CE3f++FNTC1o4/M49Kkof
+        hgIPkYichhgGBFXIkQ+hew==
+X-Received: by 10.98.7.11 with SMTP id b11mr1911622pfd.188.1497305684082;
+        Mon, 12 Jun 2017 15:14:44 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id i68sm22403884pfi.72.2017.06.12.15.14.30
+        by smtp.gmail.com with ESMTPSA id i68sm22403884pfi.72.2017.06.12.15.14.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Jun 2017 15:14:30 -0700 (PDT)
+        Mon, 12 Jun 2017 15:14:42 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 09/17] ls-files: convert show_killed_files to take an index
-Date:   Mon, 12 Jun 2017 15:14:00 -0700
-Message-Id: <20170612221408.173876-10-bmwill@google.com>
+Subject: [PATCH 16/17] ls-files: factor out debug info into a function
+Date:   Mon, 12 Jun 2017 15:14:07 -0700
+Message-Id: <20170612221408.173876-17-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.518.g3df882009-goog
 In-Reply-To: <20170612221408.173876-1-bmwill@google.com>
 References: <20170612221408.173876-1-bmwill@google.com>
@@ -63,70 +63,50 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/ls-files.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ builtin/ls-files.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 8c3f3d8ca..b82b78036 100644
+index 55d6f54fd..c9307f9ef 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -120,7 +120,8 @@ static void show_other_files(struct dir_struct *dir)
- 	}
+@@ -93,6 +93,19 @@ static void write_name(const char *name)
+ 	strbuf_release(&full_name);
  }
  
--static void show_killed_files(struct dir_struct *dir)
-+static void show_killed_files(const struct index_state *istate,
-+			      const struct dir_struct *dir)
++static void print_debug(const struct cache_entry *ce)
++{
++	if (debug_mode) {
++		const struct stat_data *sd = &ce->ce_stat_data;
++
++		printf("  ctime: %d:%d\n", sd->sd_ctime.sec, sd->sd_ctime.nsec);
++		printf("  mtime: %d:%d\n", sd->sd_mtime.sec, sd->sd_mtime.nsec);
++		printf("  dev: %d\tino: %d\n", sd->sd_dev, sd->sd_ino);
++		printf("  uid: %d\tgid: %d\n", sd->sd_uid, sd->sd_gid);
++		printf("  size: %d\tflags: %x\n", sd->sd_size, ce->ce_flags);
++	}
++}
++
+ static void show_dir_entry(const char *tag, struct dir_entry *ent)
  {
- 	int i;
- 	for (i = 0; i < dir->nr; i++) {
-@@ -134,29 +135,29 @@ static void show_killed_files(struct dir_struct *dir)
- 				/* If ent->name is prefix of an entry in the
- 				 * cache, it will be killed.
- 				 */
--				pos = cache_name_pos(ent->name, ent->len);
-+				pos = index_name_pos(istate, ent->name, ent->len);
- 				if (0 <= pos)
- 					die("BUG: killed-file %.*s not found",
- 						ent->len, ent->name);
- 				pos = -pos - 1;
--				while (pos < active_nr &&
--				       ce_stage(active_cache[pos]))
-+				while (pos < istate->cache_nr &&
-+				       ce_stage(istate->cache[pos]))
- 					pos++; /* skip unmerged */
--				if (active_nr <= pos)
-+				if (istate->cache_nr <= pos)
- 					break;
- 				/* pos points at a name immediately after
- 				 * ent->name in the cache.  Does it expect
- 				 * ent->name to be a directory?
- 				 */
--				len = ce_namelen(active_cache[pos]);
-+				len = ce_namelen(istate->cache[pos]);
- 				if ((ent->len < len) &&
--				    !strncmp(active_cache[pos]->name,
-+				    !strncmp(istate->cache[pos]->name,
- 					     ent->name, ent->len) &&
--				    active_cache[pos]->name[ent->len] == '/')
-+				    istate->cache[pos]->name[ent->len] == '/')
- 					killed = 1;
- 				break;
- 			}
--			if (0 <= cache_name_pos(ent->name, sp - ent->name)) {
-+			if (0 <= index_name_pos(istate, ent->name, sp - ent->name)) {
- 				/* If any of the leading directories in
- 				 * ent->name is registered in the cache,
- 				 * ent->name will be killed.
-@@ -337,7 +338,7 @@ static void show_files(struct dir_struct *dir)
- 		if (show_others)
- 			show_other_files(dir);
- 		if (show_killed)
--			show_killed_files(dir);
-+			show_killed_files(&the_index, dir);
+ 	int len = max_prefix_len;
+@@ -279,15 +292,7 @@ static void show_ce_entry(const struct index_state *istate,
+ 		}
+ 		write_eolinfo(istate, ce, ce->name);
+ 		write_name(ce->name);
+-		if (debug_mode) {
+-			const struct stat_data *sd = &ce->ce_stat_data;
+-
+-			printf("  ctime: %d:%d\n", sd->sd_ctime.sec, sd->sd_ctime.nsec);
+-			printf("  mtime: %d:%d\n", sd->sd_mtime.sec, sd->sd_mtime.nsec);
+-			printf("  dev: %d\tino: %d\n", sd->sd_dev, sd->sd_ino);
+-			printf("  uid: %d\tgid: %d\n", sd->sd_uid, sd->sd_gid);
+-			printf("  size: %d\tflags: %x\n", sd->sd_size, ce->ce_flags);
+-		}
++		print_debug(ce);
  	}
- 	if (show_cached || show_stage) {
- 		for (i = 0; i < active_nr; i++) {
+ 
+ 	strbuf_release(&name);
 -- 
 2.13.1.518.g3df882009-goog
 
