@@ -2,112 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28C5E1F8CF
-	for <e@80x24.org>; Mon, 12 Jun 2017 16:16:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEB1C1F8CF
+	for <e@80x24.org>; Mon, 12 Jun 2017 16:45:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754254AbdFLQQx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 12:16:53 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:36201 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754098AbdFLQQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 12:16:50 -0400
-Received: by mail-io0-f177.google.com with SMTP id y77so57465172ioe.3
-        for <git@vger.kernel.org>; Mon, 12 Jun 2017 09:16:50 -0700 (PDT)
+        id S1754527AbdFLPfl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 11:35:41 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34317 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754409AbdFLPfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 11:35:37 -0400
+Received: by mail-pg0-f67.google.com with SMTP id v14so14585195pgn.1
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 08:35:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xWCP3iP477Q9rxqRCsG/KuD9GsSEaHcvOjMbKVeWLdQ=;
-        b=q9gxsXozWawHZwU+lmiNrmgHThWMISBHC9/mkQO4OfDaGic04/sf2D52fCJci/gtqc
-         FBq3f0gRCbUFtxN94SNaqPW1u8II9bFaa9CgEsrP2AE3sH5ICaZOGa9nVwOlrcaB9/aD
-         HRTyjybSEMb9DNbQ58CCue8H71Nr/B/9QzLD5DkDJ/AVhasGoiVvHsgbN31zPbmD/SmV
-         UljP6EyQrbndFwwBeWdYMskvPqM/1rRdaX1Bu3Nvo4LN99lZIxDZA990/+rfR+QXJMNZ
-         MatkZ1SXYGavbI8lDKU7MlEifNkQuaS7IM7LC8cUkXppD5azQQeVHZY5VR2P2XlIkFIb
-         8pjA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zd1R5hm+obpZUa/mnv3TnYJUGgfzzvlQhwijOUED3fU=;
+        b=ZOqp5Ljo9X3EKxjwRRZdxrNHwLCgb+KaqDXzEvoD0iifryrhWMxgxUtF4e9/eSj9U4
+         WwzDEeKL11k8DRtyD+0xxxWanq2vh1cqAoC5FiBA0lcDyuMnnd/uRRF7LvcicOxh/EWj
+         YM/kD4Z28udMxI/+iz6SVpQCuyDo6BWaXldy6jCUIIfBEKl/+UzzxL1BSHgqOr9yH6uu
+         hOvLJGHRtRxHTpAGka7ej+xElTx4PGEgZ1ssnzqjSEnwx4VJJ816163ujPxA7KJNc+En
+         UseOFkVtEV71cT9Cmw/uxdWCoj7GPhgMV3aVKA+7570zzoMy+btqyWVN4VTI20/fwjk6
+         B9GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xWCP3iP477Q9rxqRCsG/KuD9GsSEaHcvOjMbKVeWLdQ=;
-        b=M+GNu90HFbBJuqdkrcXGm5TqMlcUY98z7SzIyMs/lDl6FbZCmh9hvABAPIpuusAiqR
-         5bp/kGdUA1OpR/5q/5Tsxv9M6athBFKrYi93YRJZteZniKgjCbLh/r2hGdrNe4smDaMZ
-         pQQHLHsLf26cXLqHkCzl7h0FQ9Ud0DOHj1H8r0vlzAfCU1w18hZ4DXrDHKHuKWsOmeqc
-         VKoSBaOKn7uyUgIZRRv4k96eNZQzocxQPz6qFWVRt2cdEcbTDo0NfExIINFu6uULg16s
-         QWWR28cpCxP84Y7VbIlji4lmwri3nJZh2+Yi3CauHovLQC3Mr6cgYz28vhe1Pgt7lJul
-         dWBA==
-X-Gm-Message-State: AODbwcARXW2AUspU+1CoKeLxBpzKAVBsIYIi2PYEfxMSn1OKJUzDV6qI
-        RcAoHifiHNVVIeWgfOu2kK6kBDALaw==
-X-Received: by 10.107.178.130 with SMTP id b124mr39973041iof.50.1497284209543;
- Mon, 12 Jun 2017 09:16:49 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zd1R5hm+obpZUa/mnv3TnYJUGgfzzvlQhwijOUED3fU=;
+        b=Ed64oCCoLcUjr0keEPJNlt2iILmaRYyleGoDmgoFxnggCks1/5o99kOmHVzRvvyV59
+         6h3ZiT9Z9rYpbAbK9pV2b1IvjSyfSdpETifIxmQQuGblgwCz2DTcNeMKE8yWXSyM0PRz
+         70vWrTS23qOp8qwywv0YtBWv8hzGdP8E18yrOQ6X7IeK0IpVJW+GhsEBcZaERh8U+WkQ
+         W2kRE4g/3VDsIWnSTy8IEY/xGMrs98UwJZyFHk3+9rKl53bi0QNqK8fy28/J0mm7x5ug
+         MRfElF/qlr9USrfZD7ZY8OVOVEGmhc+5ARxANltz4/RL8fmux07fVo9XTG+YQ9RdFVHo
+         Xadw==
+X-Gm-Message-State: AODbwcD0TPPY5D3ngS6tWQ+9jJ3x2bq4/jJ6U6JzD01BSrRvYPA6tZNS
+        258awcmOQfOstA==
+X-Received: by 10.98.30.129 with SMTP id e123mr57535963pfe.240.1497281726476;
+        Mon, 12 Jun 2017 08:35:26 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:695d:4129:fb97:59df])
+        by smtp.gmail.com with ESMTPSA id x12sm18665055pgc.47.2017.06.12.08.35.25
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 12 Jun 2017 08:35:25 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     liam Beguin <liambeguin@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Samuel Lijin <sxlijin@gmail.com>,
+        Houston Fortney <houstonfortney@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Feature Request: Show status of the stash in git status command
+References: <CA+B9myHRahTd+FDgzK5AhXW+hq_Y_czMX9X6MXYBcr9WSPeiDw@mail.gmail.com>
+        <20170610082534.6437ifexzly4oqg6@sigill.intra.peff.net>
+        <CAJZjrdXCHVKQOxR=+z5cOkieKzE-iSMta--kHVjSYXuansb34Q@mail.gmail.com>
+        <20170610102217.vxf6tsrdfp6srupr@sigill.intra.peff.net>
+        <1c04d689-6796-17d1-e058-18874768c22a@gmail.com>
+Date:   Mon, 12 Jun 2017 08:35:24 -0700
+In-Reply-To: <1c04d689-6796-17d1-e058-18874768c22a@gmail.com> (liam Beguin's
+        message of "Sun, 11 Jun 2017 13:07:03 -0400")
+Message-ID: <xmqqpoe9p6bn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.3.231 with HTTP; Mon, 12 Jun 2017 09:16:28 -0700 (PDT)
-In-Reply-To: <xmqq37b5qly8.fsf@gitster.mtv.corp.google.com>
-References: <0a56f99e-aaa4-17ea-245a-12897ba08dbb@web.de> <xmqq1sr3161p.fsf@gitster.mtv.corp.google.com>
- <20170602030825.hdpbaisn54d4fi4n@sigill.intra.peff.net> <72b001fc-80e7-42b9-bd9d-87621da7978a@web.de>
- <20170602183504.ii7arq2ssxgwgyxr@sigill.intra.peff.net> <22833.57584.108133.30274@a1i15.kph.uni-mainz.de>
- <20170602223003.6etkdnnogb2jmoh3@sigill.intra.peff.net> <22833.60191.771422.3111@a1i15.kph.uni-mainz.de>
- <20170602225148.drkl7obwhzypgjtr@sigill.intra.peff.net> <a8b789e6-d0cd-6d96-1bfb-ccc5bc174013@web.de>
- <20170607081729.6pz5yo2hmp4fwuas@sigill.intra.peff.net> <662a84da-8a66-3a37-d9d2-4ff8b5f996c3@web.de>
- <xmqq37b5qly8.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 12 Jun 2017 18:16:28 +0200
-Message-ID: <CACBZZX5ofJC70S09rfL_EMK2KWAoPCMun1eisi+CXeX=FSwy6Q@mail.gmail.com>
-Subject: Re: [PATCH] strbuf: let strbuf_addftime handle %z and %Z itself
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>, Ulrich Mueller <ulm@gentoo.org>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 12, 2017 at 5:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> Am 07.06.2017 um 10:17 schrieb Jeff King:
->>> On Sat, Jun 03, 2017 at 12:40:34PM +0200, Ren=C3=A9 Scharfe wrote:
->>>> Duplicates strbuf_expand to a certain extent, but not too badly, I
->>>> think.  Leaves the door open for letting strftime handle the local
->>>> case.
->>>
->>> I guess you'd plan to do that like this in the caller:
->>>
->>>    if (date->local)
->>>      tz_name =3D NULL;
->>>    else
->>>      tz_name =3D "";
->>>
->>> and then your strftime() doesn't do any %z expansion when tz_name is
->>> NULL.
->>
->> Yes, or you could look up a time zone name somewhere else -- except we
->> don't have a way to do that, at least for now.
->
-> Is that only "for now"?  I have a feeling that it is fundamentally
-> impossible with the data we record.  When GMTOFF 9:00 is the only
-> thing we have for a timestamp, can we tell if we should label it as
-> JST (aka Asia/Tokyo) or KST (aka Asia/Seoul)?
+liam Beguin <liambeguin@gmail.com> writes:
 
-It's obviously not perfect for all the reasons mentioned in this
-thread, but we already have a timezone->offset mapping in the
-timezone_names variable in date.c, a good enough solution might be to
-simply reverse that lookup when formatting %Z
+> +static int stash_count_refs(struct object_id *ooid, struct object_id *noid,
+> +			    const char *email, timestamp_t timestamp, int tz,
+> +			    const char *message, void *cb_data)
+> +{
+> +	int *c = cb_data;
+> +	(*c)++;
+> +	return 0;
+> +}
 
-Of course we can never know if you were in Tokyo or Seul from the info
-in the commit object, but we don't need to, it's enough that we just
-emit JST for +0900 and anyone reading the output has at least some
-idea what +0900 maps to.
+Count up, and tell the caller to keep going by returning 0.  That
+sounds sane.
 
-We could also simply replace "%Z" with the empty string, as the the
-POSIX strftime() documentation allows for:
-http://pubs.opengroup.org/onlinepubs/009695399/functions/strftime.html
-("Replaced by the timezone name or abbreviation, or by no bytes if no
-timezone information exists.").
+> +static void wt_longstatus_print_stash_summary(struct wt_status *s)
+> +{
+> +	int stash_count = 0;
+> +
+> +	for_each_reflog_ent("refs/stash", stash_count_refs, &stash_count);
+
+And do so with a counter initialized to 0.  Also sane.
+
+> +	if (stash_count > 0)
+> +		status_printf_ln(s, GIT_COLOR_NORMAL,
+> +				 Q_("Your stash currently has %d commit",
+> +				    "Your stash currently has %d commits", stash_count),
+> +				 stash_count);
+
+Conceptually, the contents of the stash are *not* commits, even
+though the implementation happens to use a commit to represent each
+stash entry.  Perhaps "has %d entry/entries" is an improvement, but
+a quick scanning of an early part of "git stash --help" tells me
+that
+
+	You have 1 stash / You have 4 stashes
+
+would be the best, as the documentation calls each entry "a stash".
+E.g. "list" is explained to list "the stashes", and "show <stash>"
+is explained to show the changes recorded in "the stash".
+
+> +}
+> +
+>  static void wt_longstatus_print_submodule_summary(struct wt_status *s, int uncommitted)
+>  {
+>  	struct child_process sm_summary = CHILD_PROCESS_INIT;
+> @@ -1536,6 +1557,7 @@ static void wt_longstatus_print(struct wt_status *s)
+>  	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
+>  	const char *branch_status_color = color(WT_STATUS_HEADER, s);
+>  	struct wt_status_state state;
+> +	int show_stash = 0;
+>  
+>  	memset(&state, 0, sizeof(state));
+>  	wt_status_get_state(&state,
+> @@ -1641,6 +1663,8 @@ static void wt_longstatus_print(struct wt_status *s)
+>  		} else
+>  			printf(_("nothing to commit, working tree clean\n"));
+>  	}
+> +	if (!git_config_get_bool("status.showStash", &show_stash) && show_stash)
+> +		wt_longstatus_print_stash_summary(s);
+>  }
+
+Try to get "status.showstash" as a boolean, and only when it
+succeeds and the value is true, give this extra info (i.e. when the
+variable does not exist, do not complain and do not show).  Sounds
+sensible.
+
+Overall the logic looks good to me; just the phrasing is
+questionable, relative to the existing documentation.
+
+Thanks.
