@@ -2,123 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1C8F1FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 20:29:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D08A1FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 20:58:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753436AbdFMU3Q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 16:29:16 -0400
-Received: from mout.web.de ([212.227.15.3]:52132 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752168AbdFMU3P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 16:29:15 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MPYMT-1dPZGD1Een-004lXS; Tue, 13
- Jun 2017 22:29:04 +0200
-Subject: Re: [BUG] add_again() off-by-one error in custom format
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael Giuffrida <michaelpg@chromium.org>, git@vger.kernel.org
-References: <CACi5S_1j46SbP7cQMdUnULmgGD7xBkSUrS2PKbzq8ZydybHE=w@mail.gmail.com>
- <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
- <d229403a-d078-87b4-f3e8-89058fa4b548@web.de>
- <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
-Date:   Tue, 13 Jun 2017 22:29:01 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1752644AbdFMU6W (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 16:58:22 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:34463 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752109AbdFMU6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 16:58:21 -0400
+Received: by mail-io0-f196.google.com with SMTP id a96so14293695ioj.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 13:58:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=c+9tqsNjS/WS9RpSUMP+YTKXRAc29Mz8sDW3i8OVJx4=;
+        b=R/U4v9HBU+ikQT/0lcpcj5W3X0KyTe1RKE32ndYNb82KHlbxdMSUctZRs3KAXrAVlY
+         TT0AmImBxM3Ynz/d4TDtM+ScB4g+4SPtmlRrqMsSORZ33E02eYaGrvdMeOr9QRtiPgdf
+         TLyRMAcXktC9XF1s66s4Z2aThirGd95US3bO+wB59HLnch5y+ZmigKI4P+3t29brskgu
+         ifXwen0y2YoU4F5E9632Eo6B5fR50wAoeAnBT8i6Wc1FRqwBw3v3ZUOlta437h93bYKN
+         iw03o5aOgwFRusa6jK+fFeKvWZ5FCj272VhHw52p0A0dpEgBFYYLtsGyKcLNA08X6aBU
+         O2sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=c+9tqsNjS/WS9RpSUMP+YTKXRAc29Mz8sDW3i8OVJx4=;
+        b=kyVGs/VLL4qQRspjfADH40I5OA+tHh0KDeCxcKGdTtqmbiQZ/DeAftO8wG7tyUAPYy
+         FeKHua8QPyn/zS0kj+dkRJ7yiIo5S6d/ky78GxJweBbSPdr0Y7EjaLkMhAJVjRXUZjYT
+         ykTIF0pc/4F5iUCR7ReNhesvCUXDSQdfNCsJxQ7X0FIYitSJDdqoEDrNZ7J0p8m8zkNq
+         5rG9vtP6QPOzEg+CKiY3Dgb8t54tkLt95MDtIbSMIYwcsqW1ekbvQyim3px98+xYhHvl
+         UPB35M2BDZsjqTkyx9x/YcWBMsjv0jVeImjJ8u53/5l5ZT0Labb75rr5KrTr0zNnYK1B
+         VKUA==
+X-Gm-Message-State: AKS2vOz78mZDHu2Es1C/VTdI19ZejkoXvEq/UT4e5yMPda74Z/+tHa9T
+        UmC3eQ7WFcVf6g==
+X-Received: by 10.107.28.76 with SMTP id c73mr2381372ioc.142.1497387500925;
+        Tue, 13 Jun 2017 13:58:20 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
+        by smtp.gmail.com with ESMTPSA id 73sm69918ion.11.2017.06.13.13.58.18
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 13 Jun 2017 13:58:18 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Joel Teichroeb <joel@teichroeb.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
+        <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v4 3/5] stash: add test for stashing in a detached state
+References: <20170608005535.13080-1-joel@teichroeb.net>
+        <20170608005535.13080-4-joel@teichroeb.net>
+        <xmqqa85b65a8.fsf@gitster.mtv.corp.google.com>
+        <CA+CzEk8U6P58OqruPkP1HePFurNWjgf=Q-h=Hu57zoHpDeenmA@mail.gmail.com>
+Date:   Tue, 13 Jun 2017 13:58:17 -0700
+In-Reply-To: <CA+CzEk8U6P58OqruPkP1HePFurNWjgf=Q-h=Hu57zoHpDeenmA@mail.gmail.com>
+        (Joel Teichroeb's message of "Tue, 13 Jun 2017 12:48:54 -0700")
+Message-ID: <xmqq1sqn61w6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:q6Riz7AzCyVWaic7u2y3xm+g/dN+qVD6Jz8smQ76GjNMUgXqUOz
- A+Y2gdciflsWK5kvwFQxFY4kInmyRW4ZrZYL8HdNNqZwfCH7IrKqycU7vHDvsOL/QIyLoRs
- LjgRo30HhIluvCgJbW+vhz6msVVG+AEFrZsFhLeqJ24hDVVpduBh+SE3VWA/wo61g/aavvd
- f5BTLllNOxezLxMszfBKQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ed23LOMULp8=:2xCbnAmkJWWb4LRiGc27TP
- Ngu4YLrBFzorZ86dJRRaDP5cJtJBMZdEF/cZxe779EyX9S8A/s60UiZXwwcd7GCOH7FbOy6Zl
- 2nTm1CJHfMiWHbkejcsOJyGqle22EGrQUXSzVSvSgnoC3C7R279k3o/ZGxUr+YZzg+Hn3AVPm
- sWSIIUr23wCHzXIC9LK1JRc1KeIFb7kUBtdvpcvqM2dOrORL8OW5HLSnwVCbnVlc8t64TbQXp
- EtJZ8tGlnClh0d13pv056tRt79ZDzz5OZf9TA4xoIpI1Q4YlQUAwgReg2xO9cmQL42Rh2k36o
- vARR+q7jf9frZbpvi6m4rLtonLCXvM9a8UZ4t7J3FfktSnL6MvcGa3JRlSzTJM9t6edVjTt4q
- K1jaFqDq73OhFI4XQknbYQpFtp5XVDaykGcmOspSkAs0kz2j2Askgx99SMgeOUONYnkcajhgS
- pIX+udkYHGtxm9mpzRQhZRjHTzUfdw2q3ctymcS2y6qdR5vCFRtNHyE6f5pczOyZGv7tkSAwv
- c72MDdWL/uPRCZInhMws3sTwmTfC3D3zYB6quWZs3wROVqdLQb9M0yXgdKzKNhjYgCmyN0EN0
- 2h6lPnBOksQ6lin7HeDi4JiIpP6QkRQ8UtlP3i9S67QWjUytRok4ImoOTRWWvZxkEl5L6kSGS
- NFE9dgdVgQYeAl9ZlRIonmoSOm9e2CZf6WByQhGFU+QtPgBtHOH4xyab8nq97staH78Agtg1E
- MrXFjFwwNTj3IgrFAapK/mtbwMelLP5MlRFu7bS2Sx75VvgIu78RMZivVEDuUEm1h0d7OrDTy
- LOwfGOF
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.06.2017 um 20:29 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> Indeed, a very nice bug report!
+Joel Teichroeb <joel@teichroeb.net> writes:
+
+>>> +test_expect_success 'create in a detached state' '
+>>> +     test_when_finished "git checkout master" &&
+>>> +     git checkout HEAD~1 &&
+>>> +     >foo &&
+>>> +     git add foo &&
+>>> +     STASH_ID=$(git stash create) &&
+>>> +     HEAD_ID=$(git rev-parse --short HEAD) &&
+>>> +     echo "WIP on (no branch): ${HEAD_ID} initial" >expect &&
+>>> +     git show --pretty=%s -s ${STASH_ID} >actual &&
+>>> +     test_cmp expect actual
+>>> +'
 >>
->>> I think the call to format_commit_one() needs to be taught to pass
->>> 'magic' through, and then add_again() mechanism needs to be told not
->>> to cache when magic is in effect, or something like that.
->>>
->>> Perhaps something along this line...?
->>>
->>>    pretty.c | 64 ++++++++++++++++++++++++++++++++++++++--------------------------
->>>    1 file changed, 38 insertions(+), 26 deletions(-)
->>
->> That looks quite big.  You even invent a way to classify magic.
-> 
-> Hmph, by "a way to classify", do you mean the enum?  That thing was
-> there from before, just moved.
+>> Hmph.  Is the title automatically given to the stash the
+>> only/primary thing that is of interest to us in this test?  I think
+>> we care more about that we record the right thing in the resulting
+>> stash and also after creating the stash the working tree and the
+>> index becomes clean.  Shouldn't we be testing that?
+>
+> In this case, the title is really what I wanted to test. There are
+> other tests already to make sure that stash create works, but there
+> were no tests to ensure that a stash was created with the correct
+> title when not on a branch.
 
-Oh, yes, sorry.  I didn't even get that far into the patch.  (I'll
-better go to bed after hitting send..)
+Ah, OK.
 
-> Also I think we do not have to change add_again() at all, because
-> chunk->off tolerates being given a garbage value as long as
-> chunk->len stays 0, and add_again() does not change chunk->len at
-> all.
-> 
-> Which cuts the diffstat down to
-> 
->   pretty.c | 40 +++++++++++++++++++++++++---------------
->   1 file changed, 25 insertions(+), 15 deletions(-)
-> 
->> Does the caching feature justify the added complexity?
-> 
-> That's a good question.  I thought about your second alternative
-> while adding the "don't cache" thing, but if we can measure and find
-> out that we are not gaining much from caching, certainly that sounds
-> much simpler.
-
-The difference is about the same as the one between:
-
-	$ time git log --format="" >/dev/null
-
-	real    0m0.463s
-	user    0m0.448s
-	sys     0m0.012s
-
-and:
-
-	$ time git log --format="%h" >/dev/null
-
-	real    0m1.062s
-	user    0m0.636s
-	sys     0m0.416s
-
-With caching duplicates are basically free and without it short
-hashes have to be looked up again.  Other placeholders may reduce
-the relative slowdown, depending on how expensive they are.
-
-Forgot a third option, probably because it's not a particularly good
-idea: Replacing the caching in pretty.c with a short static cache in
-find_unique_abbrev_r().
-
-René
+Thanks.
