@@ -2,87 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 456AD1FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 21:15:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F8701FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 21:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753958AbdFMVPB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 17:15:01 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:34744 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752695AbdFMVPA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 17:15:00 -0400
-Received: by mail-it0-f66.google.com with SMTP id 201so13850106itu.1
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 14:15:00 -0700 (PDT)
+        id S1754108AbdFMVUU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 17:20:20 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:36682 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753934AbdFMVUT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 17:20:19 -0400
+Received: by mail-it0-f67.google.com with SMTP id 185so12949056itv.3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 14:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9nSnfY7VBV9wdzldg7+ReVpqvha0I3PrdA2PSUwwEYQ=;
-        b=tLsKgw52FzpKecgPKXrpEXdd6EbVPtObkdpf8q1uMn2pZplSskplVgGRP7xuGWvs7v
-         td6lN4JXETG9DCWkaUEy0MKYNX/fYU96Fr0BjkKUGGjEpnu5d61/HR78VqhtznWC9Jcf
-         gyfxKTYI5D87trrQByiK3252t3dWeKa9psxtBKXjoMzo4GwIE3us+0fqJXfVsedq9Sk7
-         ZXNkSNiwFlOYHM7iH6s+ZeYcT1PYMvD4F6p8CoyNjVlUm/UPvP5KR5vqqBYDqzg2NwPT
-         uZzf+dMNrIMU6D7nZK/1Q2mJYuOv9HqmKWJgmp/63Uv3GRqHps1BiZzKqXUJWi6RppNz
-         UdYQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=OBoOnBR6EQPV84BIGKdvsV0zchwm78BCOkDXwRL60fo=;
+        b=RZoI3RlYCq4gIYsUWn1XNCzjgksSmlyiw1f5g9NPvGY+nkkVWHJ6oaY1Nl8n39gv21
+         kIP27VPolUOvGGXTMc9FvSAQjycVeNrnXQuxCugbdrbeeBv5rqzcBTSrQw7/W38L2e6M
+         af7AaXxKo9E3UCVlYBdy2rdrlHNrgD1XrvL80Jw2CHc5ZXnd2HPQg5Z1X4rcugOdZv3O
+         oScd2/eu20Euo41H5nVmGlkbhR8VY53rmLroz9Q97nIUznN7FLh9NnlGd+qB1Dr0IFGV
+         1P5Ru+7JNr/2r9AIxnv9/CkWS2On5yYSm2ABnnxZIAS8RHPyr176lvsXgUV08KBORr1H
+         t/uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9nSnfY7VBV9wdzldg7+ReVpqvha0I3PrdA2PSUwwEYQ=;
-        b=FzQ/tEksvUBtirscN5oARyW5sQtwHggjX9jRtF18DDM6Xhk7gvYjf8iaukR7L+Gzfn
-         x8LqNNMbvHI07zBjoWIXLlHnagO0PhJFmOrR5QNM0nC4QVqna12U90nxbZcbVCbqM0kp
-         JIhfVbF+Zfbog0pNgLtQM/sAiko/AyDs2bvBCRp1W0g3mzzNfxB6/ntFskbtEHuqILOu
-         GMYJfWm441EvwvAt20l+RCT6vTjRi80I6dUdcVbOhvzCYw/me5bnBzigsxbJ4J/vspaw
-         hnFPv66gmzgjJjBwQmp7voD3EzrYN2nbksq34vfQle4txV7nYsVudeyDNGx4JVZPY///
-         9weQ==
-X-Gm-Message-State: AODbwcBTJZCycllGC4XjCvWthHmRe52VMFZbNZkTj6Oax560gdGCEk++
-        icm8aPSXiNQ+BQ==
-X-Received: by 10.36.81.20 with SMTP id s20mr18909954ita.29.1497388499920;
-        Tue, 13 Jun 2017 14:14:59 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:8130:47b0:791f:5985])
-        by smtp.gmail.com with ESMTPSA id y188sm6569232ity.9.2017.06.13.14.14.58
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=OBoOnBR6EQPV84BIGKdvsV0zchwm78BCOkDXwRL60fo=;
+        b=YvviNKoAHWO/9rfH/ACApbHbJwUFx5ZZ6c15sQmKuZ81zmnXBjeLWSQgoneQgicdDx
+         PVvGN0u0OA3Z+201vWFejjjrRW0RTkh1nBPEkKs9yS+igoRY14Pm7Efgo3NTKNdSNOQw
+         TfhrCNoOTrLmP1TR5bmoJdwlB03puU26DMld6Yhsw2O6GuflCYQl+D8fnMxNBGOwFHoQ
+         6mRK6R1zD1qbHdGWT6igZlRlwahCMFhhaqb6siuqdOK9Dgjsbo5WtVz3jUwhynU76BUY
+         OmaPn5g/HEcv3uIvnX802pf3E/cLLf5CkDzFzRD/maNmvpBv6ei96peM2Cib9/GyBLty
+         NmFw==
+X-Gm-Message-State: AODbwcCYgrY5kNMcF6Bcj62p3OQ9/N6Ive84IbOTrMpG42vrlxegnMMv
+        DsmBqZiw+XOM6g==
+X-Received: by 10.36.51.82 with SMTP id k79mr20380890itk.32.1497388818927;
+        Tue, 13 Jun 2017 14:20:18 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
+        by smtp.gmail.com with ESMTPSA id u63sm2425775ita.16.2017.06.13.14.20.17
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 14:14:58 -0700 (PDT)
-Date:   Tue, 13 Jun 2017 14:14:56 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
-        peff@peff.net
-Subject: Re: [PATCH v2 2/6] config: remove git_config_iter
-Message-ID: <20170613211456.GL133952@aiede.mtv.corp.google.com>
-References: <20170612213406.83247-1-bmwill@google.com>
- <20170613210321.152978-1-bmwill@google.com>
- <20170613210321.152978-3-bmwill@google.com>
+        Tue, 13 Jun 2017 14:20:18 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Michael Giuffrida <michaelpg@chromium.org>, git@vger.kernel.org
+Subject: Re: [BUG] add_again() off-by-one error in custom format
+References: <CACi5S_1j46SbP7cQMdUnULmgGD7xBkSUrS2PKbzq8ZydybHE=w@mail.gmail.com>
+        <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
+        <d229403a-d078-87b4-f3e8-89058fa4b548@web.de>
+        <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
+        <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
+Date:   Tue, 13 Jun 2017 14:20:17 -0700
+In-Reply-To: <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Tue, 13 Jun 2017 22:29:01 +0200")
+Message-ID: <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170613210321.152978-3-bmwill@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
+René Scharfe <l.s.r@web.de> writes:
 
-> Since there is no implementation of the function 'git_config_iter' lets
-> stop exporting it and remove the prototype from config.h.
+> The difference is about the same as the one between:
 >
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  config.h | 1 -
->  1 file changed, 1 deletion(-)
+> 	$ time git log --format="" >/dev/null
+>
+> 	real    0m0.463s
+> 	user    0m0.448s
+> 	sys     0m0.012s
+>
+> and:
+>
+> 	$ time git log --format="%h" >/dev/null
+>
+> 	real    0m1.062s
+> 	user    0m0.636s
+> 	sys     0m0.416s
+>
+> With caching duplicates are basically free and without it short
+> hashes have to be looked up again.  Other placeholders may reduce
+> the relative slowdown, depending on how expensive they are.
 
-Language nit:
+I think the real question is how likely people use more than one
+occurrence of the same thing in their custom format, and how deeply
+they care that --format='%h %h' costs more than --format='%h'.  The
+cost won't of course be double (because the main traversal costs
+without any output), but it would be rather unreasonable to expect
+that --format='%h %h %h %h %h' to cost the same as --format='%h';
+after all, Git is doing more for them ;-)
 
-	s/' lets/', let's/
+So in that sense, I am actually OK if we decide to remove the caching.
 
-That is, there is a comma and an apostrophe missing.
+> Forgot a third option, probably because it's not a particularly good
+> idea: Replacing the caching in pretty.c with a short static cache in
+> find_unique_abbrev_r().
 
-With or without that tweak,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Indeed.
