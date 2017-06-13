@@ -2,134 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2188E1FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 17:30:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8AC61FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 17:30:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752168AbdFMRaY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 13:30:24 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33224 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751822AbdFMRaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 13:30:23 -0400
-Received: by mail-pf0-f176.google.com with SMTP id 83so71096605pfr.0
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:30:23 -0700 (PDT)
+        id S1753285AbdFMRak (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 13:30:40 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34020 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752211AbdFMRaj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 13:30:39 -0400
+Received: by mail-pf0-f195.google.com with SMTP id d5so10521871pfe.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VNpL5xLoO9u5yiHr+urpEb6i/ZXCFI09LnN9GDcx/20=;
-        b=E8lphENWiQzAp3dClDHosxnyBaXVdkfxXZ6OnLYmWRoysd0+7jq64wCTBh9HT1lVrl
-         3PsApuc7WH/8izwTkBQS7DgXT8D/kpjTOLvBmp6oz69jku6U1jzdtFnT+g/E8qzWGQfG
-         1CnE6qeHFqKU84+ICMI0jrxtIkFV0pbi1BG11nPhbpaFDsyO64VB6BEZdv1XttG5AF22
-         z7EWh/ZppyWmqIhskMy4eJgr5KrtCATvSrnZRSwKvM3ZMP/GPcw9x/7Q93jxf4H0WMD2
-         KmKKlMT4G/W3Wo4iyPFmLU/L8sCohTB4yuEK/HkUxfZTHwYkZ1PocU39spCY+f6KBeLX
-         BDmQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Lw06MYxvHHljj69z9/TD00TEPb98zsyKJNYeYWMJh0k=;
+        b=if784GH2yNp8F4SQKql57otu+NsaO8jB3CZlLOLrUnKa1rsl1ohajoH6GUySQ1eyFM
+         qBZzgUuTXlhGboe6DufEd7cc7jU42n4r0w4ijuTVVOK7sL0AAEGdqFN/d/ZeAwwMWK6E
+         /mWKHGpRyZpy12I5ylf+j71Ut0NX1et03dpf0wdGw57k7HKU9p087XW+JkPGcUTUghH7
+         BSgzH+zuquzqQqJ1CzIXt2+8dNUMcJuTQSd58gHThCD66QBACa22bE9+n2ubtCpVNKiD
+         x8Cr0cEBq8VmGhJdpBnuq/8EIDQfg1T0xneCGc1gFl3kRwk0DC8MTReSskRu+9pwW/RS
+         U+kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VNpL5xLoO9u5yiHr+urpEb6i/ZXCFI09LnN9GDcx/20=;
-        b=ixA+TECV3nlH5EIJRTR6RNuPkE8yxQUtHee5YGgtaehM5lV+AqoLb8rsObQelQ18mv
-         kn9HliUE9OMaPJLdj2d/n6euJ84LiYjvNFDCZ8JKPyWCVQnkY2omM6sPH74bh9G/DPsR
-         CydCz3W2iXY0SmAzjPFf4xC59OaOrUP1QpquKXzVYLNbo2IquhIo+/hU5uCQI+ht6Wmp
-         y8RA4PJnLiQg4rzuxIkLcvOh7ZOoqb5xj8vXaX5TekFrN6Ku+oUf1iFpFJwi3oO/TO+n
-         ISCkg+ePmtP2HcJm8p5oWqP6ENMQkM0/pCGORnCXIXU88OneIp2Hxs+srFDcMnZ3R+mf
-         pUQw==
-X-Gm-Message-State: AKS2vOwy9rGJS+Tk8X/CPo69JafRPWqe/Xaj/niR2cZyd6XSn0XCPKwt
-        whQ6H3UUHa81obxaSbim4jeCZKDSL4mF0hRX2g==
-X-Received: by 10.84.224.205 with SMTP id k13mr783579pln.279.1497375022861;
- Tue, 13 Jun 2017 10:30:22 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Lw06MYxvHHljj69z9/TD00TEPb98zsyKJNYeYWMJh0k=;
+        b=mbg/7YHgEDB/CNRD4nmHCCpVaGynTNiZ6rFHyKCY/jrFD6jas/1MPwj4+mPhwKME2i
+         M/q4RA9SQkYW1onH+dd9Fq8FLJR14Wbx1ibfeuYa+kUobP5dR+mchDwE7FdqKJpGicwH
+         KbSSPi/FE4r9B5B1NnPQQYuNB5dcOTujmjsuq740cYba4cfqQMk973iSRmRAO+MYA7rB
+         W98KrnBEw5+xDQEYeBSuXwXsweiGZuPYJjhCBh5/nbmOMQljTfzeMpu1mIL6Xy2FSrAT
+         ZVdMex/QeEfx2cgEoYiAKaziLD/7DkIgCUR0h7mIREqeb7zn5BGYSObdh6ADL1qe46EM
+         6fUw==
+X-Gm-Message-State: AKS2vOyKHhdZBkVPMcDvB7iGvg9bFIV8bEL1H85QGSURRhP17qYCPygJ
+        Km9HObw3etKxlw==
+X-Received: by 10.84.216.88 with SMTP id f24mr823319plj.103.1497375038441;
+        Tue, 13 Jun 2017 10:30:38 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
+        by smtp.gmail.com with ESMTPSA id 15sm26478872pfk.115.2017.06.13.10.30.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 13 Jun 2017 10:30:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sahil Dua <sahildua2305@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/3] branch: add a --copy (-c) option to go with --move (-m)
+References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
+        <0102015ca23f054b-b7c281d9-c9e0-4691-bfa9-8c46fb77dfc7-000000@eu-west-1.amazonses.com>
+        <xmqq60fz95sb.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 13 Jun 2017 10:30:37 -0700
+In-Reply-To: <xmqq60fz95sb.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Tue, 13 Jun 2017 10:05:56 -0700")
+Message-ID: <xmqqfuf37q2q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Tue, 13 Jun 2017 10:30:22 -0700 (PDT)
-In-Reply-To: <xmqqo9tr7qkk.fsf@gitster.mtv.corp.google.com>
-References: <20170613023151.9688-1-sbeller@google.com> <xmqqvanz9afq.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYR+qh1X-dQixdpDbcr5z-DJ2mkdncaVn_8y90kNco9tw@mail.gmail.com>
- <xmqqa85b9626.fsf@gitster.mtv.corp.google.com> <CAGZ79kYV8Ngis=ux50Zs1r5XOBUJ=hw2=8BEkNqk7PiGamX0AA@mail.gmail.com>
- <xmqqo9tr7qkk.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 13 Jun 2017 10:30:22 -0700
-Message-ID: <CAGZ79kafV5aXd9SAOHHGOgsAdpuY=YV6yWoWSsuG9rncLYhphA@mail.gmail.com>
-Subject: Re: [RFC/PATCH] builtin/blame: darken redundant line information
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 13, 2017 at 10:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Sahil Dua <sahildua2305@gmail.com> writes:
 >
->> Here is what currently happens:
+>> Add the ability to --copy a branch and its reflog and configuration,
+>> this uses the same underlying machinery as the --move (-m) option
+>> except the reflog and configuration is copied instead of being moved.
 >>
->>>
->>>          context
->>>         -B              dim  oldMoved
->>>         -B              dim  oldMoved
->>>         -B              highlight oldMovedAlternative
->>>         -A              highlight oldMovedAlternative
->>>         -A              dim  oldMoved
->>>         -A              dim  oldMoved
->>>          context
->>>         +A              dim  newMoved
->>>         +A              dim  newMoved
->>>         +A              highlight  newMovedAlternative
->>>         +B              highlight  newMovedAlternative
->>>         +B              dim  newMoved
->>>         +B              dim  newMoved
->>>          context
->>>
+>> This is useful for e.g. copying a topic branch to a new version,
+>> e.g. work to work-2 after submitting the work topic to the list, while
+>> preserving all the tracking info and other configuration that goes
+>> with the branch, and unlike --move keeping the other already-submitted
+>> branch around for reference.
 >>
->> So the there is only one "highlight" color in each block.
->> There is no separate hightligh-for-ending-block and
->> highlight-for-new-block respectively.
+>> Like --move, when the source branch is the currently checked out
+>> branch the HEAD is moved to the destination branch. In the case of
+>> --move we don't really have a choice (other than remaining on a
+>> detached HEAD), but it makes sense to do the same for --copy.
 >
-> I think the adjacentbounds mode is simply broken if that is the
-> design.
-
-ok. Going by this reasoning, would you claim that allbounds would
-also be broken design:
-
-> git show --color-moved=allbounds:
->          context
->         -B              oldMovedAlternative
->         -B              oldMoved
->         -B              oldMovedAlternative
->         -A              oldMovedAlternative
->         -A              oldMoved
->         -A              oldMovedAlternative
->          context
->         +A              newMovedAlternative
->         +A              newMoved
->         +A              newMovedAlternative
->         +B              newMovedAlternative
->         +B              newMoved
->         +B              newMovedAlternative
->          context
-
-
+> I strongly disagree with this "it makes sense to do the same".  It
+> would equally (if not more) make sense to keep the HEAD pointing at
+> the same.
 >
-> In the above simplified case, you can get away with only a single
-> "highlight" color, but you cannot tell where the boundaries are when
-> three or more lines are shuffled, no?
+> Personally, I may use this feature if it didn't move HEAD, but I
+> wouldn't if HEAD gets moved.  But that may be just me.
 
-But you do not want to (yet)? The goal is not to tell you where the bounds
-are, but the goal is to point out that extra care is required for review of
-these particular 3 lines.
+Ah, that came out to be stronger than I intended.
 
-So IMHO this feature helps for drawing reviewer attention, but not for
-explaining blocks.
+While I do prefer "the HEAD is not moved by this command---if you
+want to move to the newly created branch after copying, check it out
+yourself" a lot better than what the patch does, I do not think I'd
+care so strongly that I'd reject this patch series unless the
+behaviour is changed.
 
-In an extreme alternative design, we would have just annotated
-each hunk in the context lines for example telling that there are
-n out of m new lines. But that information by itself is not useful for
-review
-
-Instead this alternative moved line detection could have an impact
-on diff stats.
+But I do react strongly to an unsubstantiated claim "it makes sense
+to do the same".  I can buy "We anticipate that in 50% of the case
+users would find this branch switching annoying and in the other 50%
+of the case, users would find it useful; since we need to pick one,
+we just randomly decide to do the same as --move", though.
