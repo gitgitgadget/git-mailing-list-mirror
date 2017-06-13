@@ -2,96 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69D661FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 17:16:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA3D31FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 17:17:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752627AbdFMRQM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 13:16:12 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:34256 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751802AbdFMRQL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 13:16:11 -0400
-Received: by mail-pf0-f182.google.com with SMTP id s66so2810384pfs.1
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:16:11 -0700 (PDT)
+        id S1753654AbdFMRQT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 13:16:19 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:36446 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752253AbdFMRQR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 13:16:17 -0400
+Received: by mail-pg0-f44.google.com with SMTP id a70so63447439pge.3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:16:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Lw4Zaf4GHfyTsxIy10A5V5KMxCbwusZChA9WZmYtPYw=;
-        b=SR1EeUYDtVLgFDu8cwTgjLHxB7jo+F51bOJkrrF7vFrTOaqMbADM3JccXLrOvz4tCB
-         +je5PspqEJqFkaOinH/07UiR2jdxyThEOayhLHQnXElbHjiBmnZ+PT/FdQXA0k2BQ+8T
-         1tXwbLBOxZ8uaiVAZO1Zgr6llUpTPj4U28nwhM2llx7UPHz1onVTdXgJQWfJwS8KjLy1
-         tHzyyDiAjEOWpUF3q2/HjuVHBC50TCuPUeRKGoh8vwdzMUS5k+kpe+NQAhQRWPSnHsIc
-         fi/mI8ZxPHReQNpnbw+Cmd+0wukI2/Lm+i4U1vbxT31uWB9oZRx2prrVoydxbmEg3NHU
-         Hymw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=qHtDIPWdVJ82fESWNSJfUW5b+kwxG+0piMOkbn8UEzI=;
+        b=AcdszQFrVJPMi2icyFH0zuqaiIZU6XceROLKlUsW0JjrClWjPuv57DEDi84LToGFKe
+         Fglzo0yC6KgtkA3RDsQX/1+SFdX5IiNTVrMFOo5io5qra6CuIMaRY6WTjYh3qIxXQoRo
+         561BqouGo0fHWANgqtqu1InRKmi8qnl0z9rfzusMpXoc8lK6XaBKTDUoBN7sf7/zOQPW
+         59pcu13n3bQRjcDPTFTIvbtQ1DMcpBCxXw5htXjj6R4qSYlcBUS3l2QjhJ5UDD5wSoLg
+         PCEri4cYaNY8LiJjj5SU8ZyxKteFpxlWD2NpBfHGP1XgGn/zlHgTj9RXIXuQekkxrqsc
+         6hOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Lw4Zaf4GHfyTsxIy10A5V5KMxCbwusZChA9WZmYtPYw=;
-        b=US1qqxoJT9BxgrZzWd+DG/PmMJC1c5XAhEFHbG3lE3bOdqZ0nPzVvddBa0I0+/Rppw
-         YqE5T4XBZxVV/mBPQc6g0Y1GgaL+nXpH1YGMVTVG1VYX6/3Rc+RukfGQmH6V0yM/umeP
-         daN4YggC/t773BekL9YWG0lBbq+2Rjy0M0gqsiw8V8c9fRbLdmdJh82hW2K0QP5CgJd1
-         JYIVN0lYEztzuTarJoSZG7d6p7lYrG/h4tJ5iqrdB/u+JshxwOUinN9TaayYOjNKOYlg
-         Qk+xa8cvKAqrNCQcERWJwU9Oj0tnbN+BsUDXGn/xSS//1q0EcHM5gMq5vyDIWNj/MP5v
-         Rnpw==
-X-Gm-Message-State: AKS2vOzcMuqQEQIn5Iw85dF/5qL0THvige7gsKHfjDWam752yf0Mz+xz
-        wEJ1SZkgBAZFI/5m
-X-Received: by 10.98.98.6 with SMTP id w6mr592057pfb.67.1497374170778;
-        Tue, 13 Jun 2017 10:16:10 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:dd0d:448e:29f9:5e86])
-        by smtp.gmail.com with ESMTPSA id f71sm26227444pfd.98.2017.06.13.10.16.09
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=qHtDIPWdVJ82fESWNSJfUW5b+kwxG+0piMOkbn8UEzI=;
+        b=C0UVcfpXdercqqhjLd9GzWzHV7O7ERgnOb0/cZ+ST0ShRE88P0O2f08HZAQ9zFkldP
+         ohah+EgxwwrXiJBjUTKZJQKrBmyMnwcjx6EzIVUoBZ7c9gsrAS7sX30zqIcZuiwP845F
+         GEB3k9IeFfwKUzJxmCbT2vQCs7VhQhF01N46gmwNil/DFAHUXpYVgZibjtPshIXJY5l1
+         aj+sKiZJT+B7/LMTYXWp7T5hEibTH1yEVD/iL7UkOhUo93Az+Apo9c6wsbddVkFK6NRT
+         1NfkiiOTZvEDuBOrSG+DXHOmoIE8HF45WxBgYHBuQ/XQVpY60qV9+nRJuu0mpcsB2YyM
+         TJGQ==
+X-Gm-Message-State: AKS2vOwcdgyzFYxU5Bx80KR21Lf1kmMWT2quaS3cuGJvXoYKwt/F3lbj
+        6BZolF6NI1jbTQ==
+X-Received: by 10.99.163.110 with SMTP id v46mr646177pgn.210.1497374177192;
+        Tue, 13 Jun 2017 10:16:17 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
+        by smtp.gmail.com with ESMTPSA id g27sm25151214pfd.80.2017.06.13.10.16.15
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 10:16:09 -0700 (PDT)
-Date:   Tue, 13 Jun 2017 10:16:08 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+        Tue, 13 Jun 2017 10:16:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: [PATCH 1/2] add: warn when adding an embedded repository
-Message-ID: <20170613171608.GN154599@google.com>
 References: <20170613091452.ew2rwx5r6axxo65p@sigill.intra.peff.net>
- <20170613092408.db22ygki6wg2t23d@sigill.intra.peff.net>
- <CAGZ79kbbTwQicVkRs51fV91R_7ZhDtC+FR8Z-SQzRpF2cjFfag@mail.gmail.com>
+        <20170613092408.db22ygki6wg2t23d@sigill.intra.peff.net>
+Date:   Tue, 13 Jun 2017 10:16:15 -0700
+In-Reply-To: <20170613092408.db22ygki6wg2t23d@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 13 Jun 2017 05:24:08 -0400")
+Message-ID: <xmqqshj37qqo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbbTwQicVkRs51fV91R_7ZhDtC+FR8Z-SQzRpF2cjFfag@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/13, Stefan Beller wrote:
-> On Tue, Jun 13, 2017 at 2:24 AM, Jeff King <peff@peff.net> wrote:
-> 
-> > There is a config knob that can disable the (long) hint. But
-> > I intentionally omitted a config knob to disable the warning
-> > entirely. Whether the warning is sensible or not is
-> > generally about context, not about the user's preferences.
-> > If there's a tool or workflow that adds gitlinks without
-> > matching .gitmodules, it should probably be taught about the
-> > new command-line option, rather than blanket-disabling the
-> > warning.
-> >
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> > The check for "is this a gitlink" is done by looking for a
-> > trailing "/" in the added path. This feels kind of hacky,
-> > but actually seems to work well in practice.
-> 
-> This whole "slash at the end" thing comes from extensive use
-> of shell completion adding the slash at the end of a directory
-> IMHO. (cf. PATHSPEC_STRIP_SUBMODULE_SLASH_* is
-> the same underlying hack.)
+Jeff King <peff@peff.net> writes:
 
-I got rid of PATHSPEC_STRIP_SUBMODULE_SLASH_* recently, just an fyi.
+> I also waffled on whether we should ask the submodule code
+> whether it knows about a particular path. Technically:
+>
+>   git config submodule.foo.path foo
+>   git config submodule.foo.url git://...
+>   git add foo
+>
+> is legal, but would still warn with this patch. 
 
--- 
-Brandon Williams
+Did you mean "git config -f .gitmodules" for the first two?  If so,
+I think I agree that (1) it should be legal and (2) we should be
+able to add the check on top of this patch.
+
+Or do you really mean the case in which these are in .git/config?
