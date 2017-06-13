@@ -2,97 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 640191FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 21:55:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96AB71FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 21:55:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752854AbdFMVzF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 17:55:05 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:34735 "EHLO
-        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752327AbdFMVzE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 17:55:04 -0400
-Received: by mail-io0-f179.google.com with SMTP id i7so82149466ioe.1
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 14:55:03 -0700 (PDT)
+        id S1753311AbdFMVzc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 17:55:32 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:33262 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752327AbdFMVzb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 17:55:31 -0400
+Received: by mail-io0-f177.google.com with SMTP id t87so62406116ioe.0
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 14:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+bfrJ1At4N7ToJ0qKbFmu1N2UOEr/KIEFY/9/j2H6So=;
-        b=Jj5zt4DoumfJFoKISfk8tak3vbvoWtdZ2Srw39Zy06oq8QzOzYwFT/KgEu4UQz7Shg
-         inUfOGOL5xuwj/ogG1ODo7yO7GNDDClXQMlkpXH4aGezhPKLZ0fm97TMdq0GLLLGrz+B
-         cnkTTCBYPdHVNRUTZ31PGXL6Mpu+nH3kLbWgP0kspr78YchmDmXhTLejRdyWetiOf9mK
-         bC16rOul5gMyLvhufrbjO/yOCcuud15owuLj8vSv1zbZmjQVe7P3MM65qKvff8qOZgvk
-         d9A7uRZIeSW8h+Lhg4aN+rGc9cALa27jcRNE/bc3zqVpTvek8aN/noqMl/mIaRXaJ72A
-         Y5dA==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=WBytalLJ2wvXhfiODReiv8AzKI/9rJ+zYbxE5cEScKQ=;
+        b=AmfPnyVgK+LxLUaIwFGlT9Bsih/PBoDIsm4ze3aoQD6Nk59KmTVaAHte1fBDxmQtR0
+         LwnS7HjyP2ZyrYXipUuDSqAwiwDO72PEttLWePXPpZy3m9+wSBnb6mKy3lQ9J6PfADOZ
+         GQxYHgl/X+S6Ni7Z6EFmWjx1p3o0swpZEy+HB18oZpt8B2T5ic+JmVCmdEPD6p7jeRn3
+         iAb3cK5Hrnz+yzHW5p5msgd1Rje4/fwJ8ENtE1L3JSYtmKw+ZUPwJ5pRxiUfY7HldES+
+         FY9KCW+qaZHZj/FvABMERBxpQF8IWcUl7nB+USf5u7iHodG9/bSBAtikOTuUokImXDru
+         7NTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+bfrJ1At4N7ToJ0qKbFmu1N2UOEr/KIEFY/9/j2H6So=;
-        b=ClLJUVfH87Qamdam8M+kFUpM6+qbXz+oCcmaUcsHx7yy28GUMk83l9gP3fmPSrJnDA
-         UZFtAZQ/jASwVTKwiYjZXkz6bNar33o+kyVWns+jDPUYBDyMEZ6HYEhkikzJ510jqpUv
-         gGjw2Wt/LIgMBDvQGi9ZKfKJWcLc3LEKvK3v84BQSSCEY5byrBPn5K/CMJyHvYCmv9rT
-         popZ9AAkVPm8hcdAqkLxYOHdNPUHeY2/CWhn2G1SOufS61b6OW/KdaaYixR8xVzfqnvs
-         m6odTkN/Fn9x8QTdBogC9jNXFARGTADlVqYOl15tB2pKBJ+cpiBTSbtX2EI9jZCE9+Xv
-         fWFw==
-X-Gm-Message-State: AKS2vOynG/4p+iSVeegYmZUDitPOKWvpgczycd62X3f0wGQygoXrCzY+
-        df/GgLgEIeCfnobmCC+tjA==
-X-Received: by 10.107.41.12 with SMTP id p12mr2794715iop.126.1497390903033;
-        Tue, 13 Jun 2017 14:55:03 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:85a0:52c1:8d73:eb63])
-        by smtp.gmail.com with ESMTPSA id b69sm2484035itb.23.2017.06.13.14.55.02
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 14:55:02 -0700 (PDT)
-Date:   Tue, 13 Jun 2017 14:54:57 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, bmwill@google.com,
-        jrnieder@gmail.com, peff@peff.net, mhagger@alum.mit.edu
-Subject: Re: [PATCHv5 04/17] diff: introduce more flexible emit function
-Message-ID: <20170613145457.2e888c27@twelve2.svl.corp.google.com>
-In-Reply-To: <20170524214036.29623-5-sbeller@google.com>
-References: <20170523024048.16879-1-sbeller@google.com/>
-        <20170524214036.29623-1-sbeller@google.com>
-        <20170524214036.29623-5-sbeller@google.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=WBytalLJ2wvXhfiODReiv8AzKI/9rJ+zYbxE5cEScKQ=;
+        b=otAu8+2ZWTatF5YnwiB0xpIDSio3FTsmvCtpuAlJ8jYN4U6/f0Ris5YjJD4A/OSuXM
+         GkvAoU0lqU22O5es82vePJEha+0ew9M0iYlMWVdXg8XUXEV2CfxTJne/HPrkikmhLGTn
+         EyGgkKMvg5RcrND4gLXuFcmMH0P7/Ii2C8aDbTWsx1LBND+x8IJjBzxrfQpFSUmmi0/J
+         mwYMPH20SLvR+q559M4/+ge2fQ8quxs1gkylqjJSEpynm6sDOgNE6TXfr0zwCSdvMtkr
+         RDo6bgxUszYZ2x4iJ0BdBi5B7pr3xkBodQwaTlx3uoN3J6rYC+lmcwxu9oe6qjEHjFzL
+         f5iA==
+X-Gm-Message-State: AKS2vOz0ccAiNyrLyLBpbrFydUkuQnAd64buJU1cmpnP3e823RZAttLI
+        HrBJw/xYcD1eLqgSDu5rU8USOE1RTA==
+X-Received: by 10.107.201.129 with SMTP id z123mr3044477iof.156.1497390931033;
+ Tue, 13 Jun 2017 14:55:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Received: by 10.107.142.208 with HTTP; Tue, 13 Jun 2017 14:55:10 -0700 (PDT)
+In-Reply-To: <20170613215138.GM133952@aiede.mtv.corp.google.com>
+References: <20170612213406.83247-1-bmwill@google.com> <20170613210321.152978-1-bmwill@google.com>
+ <20170613210321.152978-5-bmwill@google.com> <20170613210806.GJ133952@aiede.mtv.corp.google.com>
+ <20170613213815.GP154599@google.com> <20170613215138.GM133952@aiede.mtv.corp.google.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Tue, 13 Jun 2017 14:55:10 -0700
+X-Google-Sender-Auth: inGYoKJNUGD6MjMDQFPeB0nS-y0
+Message-ID: <CAPc5daWpXnkNyuGNtFi4YTyB+Np5Yw8yZCGwu5VNzv+WON1u2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 4/6] config: don't implicitly use gitdir
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 24 May 2017 14:40:23 -0700
-Stefan Beller <sbeller@google.com> wrote:
+On Tue, Jun 13, 2017 at 2:51 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> What is the next step, then?  You can find the notion ridiculous but
+> it's how this project has worked in my experience (and how other
+> projects with similar patch-based workflows work).
 
-> Currently, diff output is written either through the emit_line_0
-> function or through the FILE * in struct diff_options directly. To
-> make it easier to teach diff to buffer its output (which will be done
-> in a subsequent commit), introduce a more flexible emit_line() function.
-> In this commit, direct usages of emit_line_0() are replaced with
-> emit_line(); subsequent commits will also replace usages of the
-> FILE * with emit().
-
-Check the names of the functions in this paragraph.
-
-> diff --git a/diff.c b/diff.c
-> index 2f9722b382..3569857818 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -516,36 +516,30 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
->  	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
->  }
->  
-> -static void emit_line_0(struct diff_options *o, const char *set, const char *reset,
-> -			int first, const char *line, int len)
-> +static void emit_line(struct diff_options *o, const char *set, const char *reset,
-> +		      int add_line_prefix, int sign, const char *line, int len)
-
-In the future, this function is going to be used even to emit partial
-lines - could this be called emit() instead?
+Does "patch-based" have much to do with this? I agree that distributed
+nature of the development would bring this issue, but I tend to think that
+using merge/pull based workflow would not alleviate it--am I mistaken?
