@@ -2,91 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B14220282
-	for <e@80x24.org>; Tue, 13 Jun 2017 10:31:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1315520401
+	for <e@80x24.org>; Tue, 13 Jun 2017 10:47:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753162AbdFMKbO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 06:31:14 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:43524 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752781AbdFMKbN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 06:31:13 -0400
-Received: from a1i15.kph.uni-mainz.de (host2092.kph.uni-mainz.de [134.93.134.92])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: ulm)
-        by smtp.gentoo.org (Postfix) with ESMTPSA id 466CE34071C;
-        Tue, 13 Jun 2017 10:31:11 +0000 (UTC)
+        id S1752168AbdFMKrZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 06:47:25 -0400
+Received: from a7-12.smtp-out.eu-west-1.amazonses.com ([54.240.7.12]:52672
+        "EHLO a7-12.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752078AbdFMKrY (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 13 Jun 2017 06:47:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1497350842;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=ITJernXTqUN4orh+tK5qKWtntM4ZorrsOlSX3LEQ9Fw=;
+        b=WqUJa1NVxi5+jNdnAHfRDGGJcdm2IH1UMHOV7Qy4jcaw9Yc3QyYlT0HREwGXWDKS
+        bqJrHqjNLQXnfXqXOONVkmgH32aJpSCmPEvEfIWta19xoLcjiXEbC1KyBWLdHBMf7fq
+        KhzDmopKo0jQl5ysvhugi+KrYFFFT4Gs24AJ/XgA=
+From:   Sahil Dua <sahildua2305@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015ca110a839-f4703e91-1a4d-4d8e-8406-df06b24683da-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015c96f631f3-557a7960-2557-4aab-894b-efccf6728f31-000000@eu-west-1.amazonses.com>
+References: <0102015c96f631f3-557a7960-2557-4aab-894b-efccf6728f31-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v3] t3200: add test for single parameter passed to -m option
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Message-ID: <22847.48875.297447.531147@a1i15.kph.uni-mainz.de>
-Date:   Tue, 13 Jun 2017 12:31:07 +0200
-To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] strbuf: let strbuf_addftime handle %z and %Z itself
-In-Reply-To: <c7532160-53eb-a0c5-94e6-483aadf0cfc5@web.de>
-References: <20170602223003.6etkdnnogb2jmoh3@sigill.intra.peff.net>
-        <22833.60191.771422.3111@a1i15.kph.uni-mainz.de>
-        <20170602225148.drkl7obwhzypgjtr@sigill.intra.peff.net>
-        <a8b789e6-d0cd-6d96-1bfb-ccc5bc174013@web.de>
-        <20170607081729.6pz5yo2hmp4fwuas@sigill.intra.peff.net>
-        <662a84da-8a66-3a37-d9d2-4ff8b5f996c3@web.de>
-        <xmqq37b5qly8.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX5ofJC70S09rfL_EMK2KWAoPCMun1eisi+CXeX=FSwy6Q@mail.gmail.com>
-        <22846.51138.555606.729612@a1i15.kph.uni-mainz.de>
-        <CACBZZX6AH2nEGPHMq6XOLDxr4SH9v-zT_YGovLXN_ZQ+fB345g@mail.gmail.com>
-        <20170612182045.z4d37ph5uqqhwmas@sigill.intra.peff.net>
-        <CACBZZX5OQc45fUyDVayE89rkT=+8m5S4efSXCAbCy7Upme5zLA@mail.gmail.com>
-        <c7532160-53eb-a0c5-94e6-483aadf0cfc5@web.de>
-X-Mailer: VM 8.2.0b under 24.3.1 (x86_64-pc-linux-gnu)
-From:   Ulrich Mueller <ulm@gentoo.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 13 Jun 2017 10:47:22 +0000
+X-SES-Outgoing: 2017.06.13-54.240.7.12
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>>>> On Tue, 13 Jun 2017, René Scharfe wrote:
+Add a test for the case when only one parameter is passed to '-m'
+(move/rename) option.
 
-> Am 12.06.2017 um 21:02 schrieb Ævar Arnfjörð Bjarmason:
->> Which gives me a pretty good idea of where the people who are making
->> my colleges / collaborators who are making commits all over the world
->> are located, for the purposes of reinforcing the abstract numeric
->> mapping with a best-guess at what the location might be, or at least
->> something that's close to the actual location.
+For example - if 'git branch -m bbb' is run while checked out on aaa
+branch, it should rename the currently checked out branch to bbb.
+There was no test for this particular case with only one parameter
+for -m option. However, there's one similar test case for -M option.
 
-> Half the time this would be off by a zone in areas that use daylight
-> saving time, or you'd need to determine when DST starts and ends, but
-> since that depends on the exact time zone it will be tricky.
+Add test for making sure HEAD points to the bbb (new branch name). Also
+add a test for making sure the reflog that is moved to 'bbb' retains
+entries created for the currently checked out branch. Note that since
+the topmost entry on reflog for bbb will be about branch creation, we
+compare bbb@{1} (instead of bbb@{0}) with aaa@{0} to make sure the
+reflog for bbb retains entries from aaa.
 
-And sometimes it would be impossible since DST rules differ between
-hemispheres. For example, there is Europe/Berlin vs Africa/Windhoek,
-or America/Halifax vs America/Santiago.
+Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
+---
+ t/t3200-branch.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-> You could use military time zones, which are nice and easy to convert:
-> Alpha (UTC+1) to Mike (UTC+12) (Juliet is skipped), November (UTC-1) to 
-> Yankee (UTC-12), and Zulu time zone (UTC+0).  Downside: Most civilians
-> don't use them. :)
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index fe62e7c775da6..8c9cd70696f87 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -100,6 +100,23 @@ test_expect_success 'git branch -m n/n n should work' '
+ 	git reflog exists refs/heads/n
+ '
+ 
++# The topmost entry in reflog for branch bbb is about branch creation.
++# Hence, we compare bbb@{1} (instead of bbb@{0}) with aaa@{0}.
++
++test_expect_success 'git branch -m bbb should rename checked out branch' '
++	test_when_finished git branch -D bbb &&
++	test_when_finished git checkout master &&
++	git checkout -b aaa &&
++	git commit --allow-empty -m "a new commit" &&
++	git rev-parse aaa@{0} >expect &&
++	git branch -m bbb &&
++	git rev-parse bbb@{1} >actual &&
++	test_cmp expect actual &&
++	git symbolic-ref HEAD >actual &&
++	echo refs/heads/bbb >expect &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'git branch -m o/o o should fail when o/p exists' '
+ 	git branch o/o &&
+ 	git branch o/p &&
 
-Yeah, that would ensure complete confusion. :) You'd have "Quebec"
-for -0400 whereas the city of Quebec is in zone -0500. Similar for
-"Lima" denoting +1100.
-
-> Also there are no names for zones that have an offset of a fraction
-> of an hour.
-
-There are also zones like Pacific/Tongatapu which have +1300 (and +1400
-in summer).
-
-All in all I think that Jeff's suggestion makes most sense: Expand %Z
-to the timezone name for the -local case, when the name is readily
-available. Otherwise, expand it to the empty string.
-
-Ulrich
+--
+https://github.com/git/git/pull/371
