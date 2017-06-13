@@ -2,70 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8A8020282
-	for <e@80x24.org>; Tue, 13 Jun 2017 06:42:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C02AF20282
+	for <e@80x24.org>; Tue, 13 Jun 2017 06:45:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752709AbdFMGmL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 02:42:11 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:54616 "EHLO
-        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752642AbdFMGmJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 02:42:09 -0400
-Received: from tigra (tigra.domain007.com [192.168.2.102])
-        by hermes.domain007.com (Postfix) with SMTP id BF821D400B2;
-        Tue, 13 Jun 2017 09:42:02 +0300 (MSK)
-Date:   Tue, 13 Jun 2017 09:42:02 +0300
-From:   Konstantin Khomoutov <kostix+git@007spb.ru>
-To:     liam Beguin <liambeguin@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        Houston Fortney <houstonfortney@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Feature Request: Show status of the stash in git status command
-Message-ID: <20170613064142.aww23a75pu3ytym6@tigra>
-References: <CA+B9myHRahTd+FDgzK5AhXW+hq_Y_czMX9X6MXYBcr9WSPeiDw@mail.gmail.com>
- <20170610082534.6437ifexzly4oqg6@sigill.intra.peff.net>
- <CAJZjrdXCHVKQOxR=+z5cOkieKzE-iSMta--kHVjSYXuansb34Q@mail.gmail.com>
- <20170610102217.vxf6tsrdfp6srupr@sigill.intra.peff.net>
- <1c04d689-6796-17d1-e058-18874768c22a@gmail.com>
- <xmqqpoe9p6bn.fsf@gitster.mtv.corp.google.com>
- <2217b9a1-dc8c-635a-649e-eae2dec5aaa5@gmail.com>
+        id S1752285AbdFMGpg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 02:45:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38838 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752167AbdFMGpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 02:45:35 -0400
+Received: (qmail 11737 invoked by uid 109); 13 Jun 2017 06:45:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 06:45:34 +0000
+Received: (qmail 21017 invoked by uid 111); 13 Jun 2017 06:45:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 02:45:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Jun 2017 02:45:32 -0400
+Date:   Tue, 13 Jun 2017 02:45:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 4/4] config: don't implicitly use gitdir
+Message-ID: <20170613064532.pucjnyrftulmjinj@sigill.intra.peff.net>
+References: <20170612213406.83247-1-bmwill@google.com>
+ <20170612213406.83247-5-bmwill@google.com>
+ <20170613010518.GB133952@aiede.mtv.corp.google.com>
+ <20170613012337.GH154599@google.com>
+ <20170613013817.GE133952@aiede.mtv.corp.google.com>
+ <20170613025945.v54vrza2n23tk5pw@sigill.intra.peff.net>
+ <20170613061627.GJ154599@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2217b9a1-dc8c-635a-649e-eae2dec5aaa5@gmail.com>
-User-Agent: NeoMutt/20170306 (1.8.0)
+In-Reply-To: <20170613061627.GJ154599@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 12, 2017 at 11:42:44PM -0400, liam Beguin wrote:
+On Mon, Jun 12, 2017 at 11:16:27PM -0700, Brandon Williams wrote:
 
-[...]
->> Conceptually, the contents of the stash are *not* commits, even
->> though the implementation happens to use a commit to represent each
->> stash entry.  Perhaps "has %d entry/entries" is an improvement, but
->> a quick scanning of an early part of "git stash --help" tells me
->> that
+> > If the parameter is now required, then it might make sense for it to
+> > become an actual function parameter instead of being stuffed into the
+> > config_options struct. That would give you your breaking change, plus
+> > make it more obvious to the reader that it is not optional.
+> > 
+> > The downside is that has to get shuttled around manually through the
+> > callstack. Most of the damage is in builtin/config.c, where we call
+> > git_config_with_options() a lot.
+> > 
+> > include_by_gitdir is also a bit annoying, as we pass around the
+> > config_options struct through our void-pointer callbacks. But we can
+> > solve that by sticking the git_dir into the include_data struct (whose
+> > exact purpose is to carry the information we need to handle includes).
+> > 
+> > The patch below (on top of Brandon's series does that).
 > 
-> what's different between a stash and a commit? 
+> I really don't understand why this has to be so difficult and why a
+> 'breaking change' is even needed.  Duy just added the 'git_dir' field to
+> the config_options struct in April of this year (2185fde56 config:
+> handle conditional include when $GIT_DIR is not set up) and now we want
+> to strip it out again?  That's not even two months. Seems very counter
+> productive and makes the api more unwieldy.
 
-The same that exists between an interface and a concrete implementation
-in a programming language.
+I could go either way on it. But note that you're not just changing the
+existing opt->git_dir behavior.
 
-"A stash entry" is a concept which is defined to keep explicitly
-recorded untracked files and which can be applied, shown and deleted
-from the stash bag (well, you can create a branch off it as well).
+If I call git_config_with_options() without having set opt->git_dir, the
+call will now quietly ignore repo config. But even before opt->git_dir
+existed, calling that function would always have read from repo config
+(when we're in one, of course). So if there's a patch in flight that
+adds a call to git_config_with_options(), it's now very subtly broken.
 
-The fact a stash entry is a merge commit of two synthetic commits is an
-implementation detail.  It can be very useful at times for power users,
-but regular Git users need not be concerned with this.
+The reason I say "I could go either way" is that we can make a guess as
+to whether there are any topics in flight that add such a call.
 
-Another fact worth reiterating that what the UI displays to the user is
-better to match what the user reads in the docs. ;-)
+There aren't any in pu right now. That's not the whole world, of course;
+people may have topics they haven't yet published. Or they may have long
+running forks. Git for Windows is one, and I maintain one that GitHub
+uses internally. But GfW is public and doesn't have any new calls (and
+nor does my fork).  In general, it's kind of an unlikely call for a fork
+or a new branch to add.
 
+So at some point I think we say "good enough, it's not worth the hassle"
+and this may be such a case.
+
+-Peff
