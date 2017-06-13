@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC36220282
-	for <e@80x24.org>; Tue, 13 Jun 2017 07:45:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54BB320282
+	for <e@80x24.org>; Tue, 13 Jun 2017 07:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752004AbdFMHph (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 03:45:37 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33657 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751953AbdFMHpg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 03:45:36 -0400
-Received: by mail-wr0-f194.google.com with SMTP id v104so27201020wrb.0
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 00:45:35 -0700 (PDT)
+        id S1751851AbdFMHs7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 03:48:59 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35759 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751753AbdFMHs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 03:48:58 -0400
+Received: by mail-wr0-f193.google.com with SMTP id g76so27317222wrd.2
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 00:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
+        h=subject:mime-version:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=StIfiCaYGgXrysrA59hUnm60+n/yGmt3I+nMLZBwL+8=;
-        b=vhMdHo0KGBnVeZ5EQQU/y4gmM8v5QNvTwlG0V+fnnVce7ExtE3Fbr+nww5GmOScKHY
-         thygBARtHV1Z6gPKVzvD8Fp0UR8qPj2Gs5ETVeM1q9DLVTxS2pDxPDUhR6KW29zCsEiq
-         voVKuugXtgecLWXYMy2hHUcxVmUmlzzvthhE75eLS6O3KwRJ7T8/tJdNrU67Pv4PxnJM
-         qHsXCG1PtxCYa6tJbMBHnDotAV6NNniT+IAUMa764mjd4Mqlq1jfujhFq7ajWebSLLwO
-         jIB9GkbXJKgwNCtMc16VxCbY0Kbwj1J5Y2JqEeFTmenI27LNJKfR6TVSPzm8XlqWVs2m
-         puuQ==
+        bh=B1Q6CnzgJr5KgGS8VKz2/KI9e0jSWc4kqC2KyhGHmKE=;
+        b=GsscQh1vpfupGAynCqpLRgqtlBkScNdghm3AhIZ0ijfgkgnJ9JpblY77DATs2FdywR
+         PNWV9oabBupKvxVz1Cq47Dijf3b16Z9fIANk4YCN+zDV2SuQaD1pz1vaPPQmjI/RJD8+
+         CpaUSCqyOL2UVMwAeUYxtrG0ST+sEAp63es4JdkAZfOiao8femmF8ZGY++MeEfN++CTt
+         nz2Do21LaGzXfy7ML9iem/3IHkoD9ILGuTHhowDqv+VtGr0aKGlziv2S0ECt1PLMomHV
+         +QNFBWgR7yS71gHzdlCx+XALFy34Ua2I9ACO+JQWRMppDqrNNlLb7TCp+cvMLODTY/tq
+         R3rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+        h=x-gm-message-state:subject:mime-version:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=StIfiCaYGgXrysrA59hUnm60+n/yGmt3I+nMLZBwL+8=;
-        b=P0TeIsV74WDRVWsAtY/eEZcjIdANyAjmpdi0Iz9X+izI9HSz/zEqbeRht+FGrYGg+A
-         AQRxgKcGkzrQrADHA21DRW3oSxErbDgugSm5Qc62M4eeCXULE6WJKig4Diq/z/wBFd3k
-         swMfgZH4G+p+q7jAKKs+745VC3NIdWq8SlHbvtWHEkJkuBenyCJUEIAuPyx9rGUF7BP3
-         1tKyORK87VxDWlBM29pEgvVRNzS2Wicv3X5zV8cYkFPBMEAs+K5DZXKPzohE+r/TYKIQ
-         qnPaw2Cv4abeRqWjhsMOthmIGyNX3SA4pVjK1pZwWP1mruZh2c7Refy0ly8JFDgcJG6i
-         TeaQ==
-X-Gm-Message-State: AKS2vOyCfL2zTF5xVbECGlfueIPk+CynAFqQ4WpHPC7IwhnXhgYVAikZ
-        iJXCSa4gmdo5xg==
-X-Received: by 10.223.162.156 with SMTP id s28mr1990968wra.97.1497339934269;
-        Tue, 13 Jun 2017 00:45:34 -0700 (PDT)
+        bh=B1Q6CnzgJr5KgGS8VKz2/KI9e0jSWc4kqC2KyhGHmKE=;
+        b=OdJljASYv8qJW+Huesa6FPYsnPqEjdKwragNQBEhNwkhhDB15RxxuJB9UShRW3VFo1
+         L54KWLQVi0dbmtszvFUCfxkohkcHH934cUm+WhMRR0MfmB4fDO8Ria7PXyWK+dtLtl/o
+         d+x4CO4CMWiLg1Kxf7ot49mHqimQJ6VoDg13vN+AbtyD9RnL3iP2Uwqt8ZrpjRCm5uK8
+         8a4cMhdxOFPdx3yzSRLnPI3ls8/Ls4ojRcFU8ggaAWk2RpPET54132UmD+1oucAeeDr/
+         K9pNAsJT40XhR1DE2Gt4zRmpKmuwj0rp3IZ6ogw0bnnielveOssCugG3NBm7K/dtqtdW
+         p2XQ==
+X-Gm-Message-State: AKS2vOwB+ZoaMox91fDX34gpa4RxeU4u5Lz+3oia598vgS0aJhhbSKHr
+        v87BxYGiAjwTqV8Z0R4=
+X-Received: by 10.28.174.131 with SMTP id x125mr1647478wme.47.1497340136874;
+        Tue, 13 Jun 2017 00:48:56 -0700 (PDT)
 Received: from slxbook4.fritz.box (p5DDB4C1A.dip0.t-ipconnect.de. [93.219.76.26])
-        by smtp.gmail.com with ESMTPSA id f47sm18774216wra.1.2017.06.13.00.45.33
+        by smtp.gmail.com with ESMTPSA id f8sm3050614wme.26.2017.06.13.00.48.55
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 00:45:33 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+        Tue, 13 Jun 2017 00:48:56 -0700 (PDT)
 Subject: Re: [PATCH v1] Configure Git contribution guidelines for github.com
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Content-Type: text/plain; charset=iso-8859-1
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqlgoxp5ig.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 13 Jun 2017 09:45:32 +0200
-Cc:     Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org,
-        peff@peff.net
+X-Priority: 3
+In-Reply-To: <31A456B20D984421AA958A39B2FCD29D@PhilipOakley>
+Date:   Tue, 13 Jun 2017 09:48:55 +0200
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <04B48EAE-E709-4A2A-A9C2-3473896B2F1E@gmail.com>
-References: <20170609142151.94811-1-larsxschneider@gmail.com> <31A456B20D984421AA958A39B2FCD29D@PhilipOakley> <xmqqlgoxp5ig.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Roberto Tyley <roberto.tyley@gmail.com>
+Message-Id: <A712386E-0C4B-4A6C-B231-EA52FA285F34@gmail.com>
+References: <20170609142151.94811-1-larsxschneider@gmail.com> <31A456B20D984421AA958A39B2FCD29D@PhilipOakley>
+To:     Philip Oakley <philipoakley@iee.org>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,115 +67,79 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 12 Jun 2017, at 17:52, Junio C Hamano <gitster@pobox.com> wrote:
+> On 10 Jun 2017, at 14:48, Philip Oakley <philipoakley@iee.org> wrote:
 >=20
-> "Philip Oakley" <philipoakley@iee.org> writes:
->=20
->> From: "Lars Schneider" <larsxschneider@gmail.com>
->>> Many open source projects use github.com for their contribution =
+> From: "Lars Schneider" <larsxschneider@gmail.com>
+>> Many open source projects use github.com for their contribution =
 process.
->>> Although we mirror the Git core repository to github.com [1] we do =
+>> Although we mirror the Git core repository to github.com [1] we do =
 not
->>> use any other github.com service. This is unknown/unexpected to a
->>> number of (potential) contributors and consequently they create Pull
->>> Requests against our mirror with their contributions. These Pull
->>> Requests become stall [2]. This is frustrating to them as they think =
+>> use any other github.com service. This is unknown/unexpected to a
+>> number of (potential) contributors and consequently they create Pull
+>> Requests against our mirror with their contributions. These Pull
+>> Requests become stall [2]. This is frustrating to them as they think =
 we
->>> ignore them and it is also unsatisfactory for us as we miss =
-potential
->>> code improvements and/or new contributors.
->>>=20
->>> GitHub offers a way to notify Pull Request contributors about the
->>> contribution guidelines for a project [3]. Let's make use of this!
->>>=20
->>> [1] https://github.com/git/git
->>> [2] https://github.com/git/git/pulls
->>> [3]
->>> =
+>> ignore them and it is also unsatisfactory for us as we miss potential
+>> code improvements and/or new contributors.
+>>=20
+>> GitHub offers a way to notify Pull Request contributors about the
+>> contribution guidelines for a project [3]. Let's make use of this!
+>>=20
+>> [1] https://github.com/git/git
+>> [2] https://github.com/git/git/pulls
+>> [3] =
 https://help.github.com/articles/creating-a-pull-request-template-for-your=
 -repository/
->>>=20
->>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->>> ---
 >>=20
->> I see there are currently 84 open PRs (13 in the last 14 days), so it
->> is real.
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> ---
 >=20
-> Not so insignificant fraction of these are done purely for the
-> purpose of using submitgit, though.  In other words, if submitgit
-> were improved not to require a pull request against [1] (instead, it
-> could be pointed at a branch in a contributor's repository and do
-> the fromatting), these numbers will go down.
-
-As an alternative, could SubmitGit close the Pull Request automatically
-after the mails have been send successfully?
-
-
->>> +Thanks for taking the time to contribute to Git! Please be advised,
->>> that the Git community does not use github.com for their
->>> contributions. Instead, we use a [mailing
->>> list](http://public-inbox.org/git/) for code submissions, code
->>> reviews, and bug reports.
->>=20
->> Isn't the mailing list git@vger.kernel.org, with an archive at
->> http://public-inbox.org/git/ ?
->>=20
+> I see there are currently 84 open PRs (13 in the last 14 days), so it =
+is real.
 >=20
-> I agree that I found the URL of the archive somewhat misleading for
-> those who want to contribute.  Giving the mailing list address makes
-> a lot more sense.  As suggested by =C3=86var in the thread, it would =
-also
-> be good to suggest submitgit, given that the target audience of this
-> message was already prepared to throw a pull request at us.
+> I also see that the Issues page for git.git appears to be disabled, =
+and will redirect to the pulls page.
+>=20
+> Maybe the instructions should also be part of an Issues template which =
+could reduce the potential number of PRs being created (but could create =
+its own problems)
 
-OK, will fix!
+I don't think that is necessary as Issues are disabled for this repo.
 
+>> ...
 
->>> +Please [read the maintainer
->>> =
+>> +Thanks for taking the time to contribute to Git! Please be advised, =
+that the Git community does not use github.com for their contributions. =
+Instead, we use a [mailing list](http://public-inbox.org/git/) for code =
+submissions, code reviews, and bug reports.
+>=20
+> Isn't the mailing list git@vger.kernel.org, with an archive at =
+http://public-inbox.org/git/ ?
+
+Agreed!
+
+>=20
+>> +
+>> +Please [read the maintainer =
 notes](http://repo.or.cz/w/git.git?a=3Dblob_plain;f=3DMaintNotes;hb=3Dtodo=
-)
->>> to learn how the Git
+) to learn how the Git
 >=20
-> Two minor issues here.
->=20
-> 1. push the "read" outside [], i.e.
->=20
-> 	Please read [<human readable name of the thing>](<URL for
-> 	the thing>) to learn...
->=20
->   as what is inside [] and what is inside () ought to be the moral
->   equivalents.
->=20
-> 2. the thing is not called "the maintainer notes"; it is called "A
->   note from the maintainer".=20
+> Is using the repo.or.cz address deliberate as a way of highlighting =
+that Github isn't the centre of the universe when accessing a DVCS repo?
 
-OK, will fix!
+Haha, partly yes. Plus, I wasn't able to figure out quickly how to =
+access the todo blob on GitHub.=20
 
 
->> Is using the repo.or.cz address deliberate as a way of highlighting
->> that Github isn't the centre of the universe when accessing a DVCS
->> repo?
->>=20
->> Maybe the kernel.org repo should be first, or at least the =
-alt-git.git
->> repo at repo.or.cz listed in those same notes.
->=20
-> I'd prefer [the k.org =
-address](https://git.kernel.org/pub/scm/git/git.git/plain/MaintNotes?h=3Dt=
-odo).
+> Maybe the kernel.org repo should be first, or at least the alt-git.git =
+repo at repo.or.cz listed in those same notes.
 
-OK, will fix!
+Agreed!
 
 
->=20
->>> +project is managed, and how you can work with it. In addition, we
->>> highly recommend you to [read our submission
->>> guidelines](../Documentation/SubmittingPatches).
->=20
-> Again, push "read our" outside [].
+> It's still a good idea though.
 
-OK, will fix!
+Thanks :)
 
-Thanks,
-Lars=
+
+- Lars=
