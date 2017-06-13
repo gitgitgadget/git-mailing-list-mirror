@@ -2,75 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DF3120282
-	for <e@80x24.org>; Tue, 13 Jun 2017 07:08:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C785720282
+	for <e@80x24.org>; Tue, 13 Jun 2017 07:35:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752804AbdFMHIS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 03:08:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38850 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752304AbdFMHIQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 03:08:16 -0400
-Received: (qmail 13075 invoked by uid 109); 13 Jun 2017 07:08:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 07:08:15 +0000
-Received: (qmail 21166 invoked by uid 111); 13 Jun 2017 07:08:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 03:08:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Jun 2017 03:08:14 -0400
-Date:   Tue, 13 Jun 2017 03:08:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH 4/4] config: don't implicitly use gitdir
-Message-ID: <20170613070813.v3vthqlqsga7djgz@sigill.intra.peff.net>
-References: <20170612213406.83247-1-bmwill@google.com>
- <20170612213406.83247-5-bmwill@google.com>
- <20170613010518.GB133952@aiede.mtv.corp.google.com>
- <20170613012337.GH154599@google.com>
- <20170613013817.GE133952@aiede.mtv.corp.google.com>
- <20170613025945.v54vrza2n23tk5pw@sigill.intra.peff.net>
- <20170613061627.GJ154599@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170613061627.GJ154599@google.com>
+        id S1751856AbdFMHfL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 03:35:11 -0400
+Received: from mail-wr0-f170.google.com ([209.85.128.170]:35615 "EHLO
+        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750818AbdFMHfK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 03:35:10 -0400
+Received: by mail-wr0-f170.google.com with SMTP id q97so129279688wrb.2
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 00:35:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=qLqmQsQBmQwsKKQkaCc4ikI0KwQU8MyVfBolH8PtQbY=;
+        b=pgq8Be4fSMiC22Nu2QEHjsIwqnyMaan/D07uxQiOP4VrS4AiKKS9AOeiuDL79OH6gW
+         ChS2tT+MoXdmm7wqlKfqOV+ZjDOLgb14qzV9oRSTb8FeBY6HctbPo7cYPD0B0Tm7GDVh
+         UH4vu8aGaG2wqH1y+6Xb7Ej1HTBtE6te57mav8L7rwg077dI7p+QyXLSe4jsu7DNuXVp
+         +gzakq3DIU0HjOvLvqI0oBe4o5OSe9aZ0xJXUF3KoqsSIbRqFcB23X6zVum6i46i/Pd4
+         EQLxruujdki+6bEJLMbE4ohMxHJezur7C/M0GV/zNorFpkLP/5fyAMSyzDDdkp8MNDSt
+         Uymw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=qLqmQsQBmQwsKKQkaCc4ikI0KwQU8MyVfBolH8PtQbY=;
+        b=nSFpNcUdJh09Idj0gAvYfg/r2Vy+tSNc7MW3jQ3IWInu9SGlbQi2K0xXHYjBWY/nb6
+         OETMmFk0Ej9VfsOtcuKJoCOpiJwaUv76E1Haw3A4qPv4I9pqU88xbVQaT2RYBLc/BSdz
+         sO5IT7oxY4vGndMyIG5xLgX6C3sR+OLuu8St08tdNOptnLupJIBAVkaJg8rsc68X7WEU
+         qyKLQ31ITxPsm4qkAJ67ZwPj3L/1prsR2BAKf8tuzwnh9DBJon3L1xz+rhMHSU2+D+T7
+         0w7YBLxWZrO6JInKseLQk95UVZVsMKeh9uooiCyh1MeQUNjhui+IiXLCfogMwSuC9T1n
+         xrIg==
+X-Gm-Message-State: AKS2vOxTEm603Aw2kQeXG7KERVdwjvzQK5DfjlkRb1glIGknvg+r9N/4
+        rzhsjFkemlhb0g==
+X-Received: by 10.28.65.68 with SMTP id o65mr1128408wma.68.1497339308769;
+        Tue, 13 Jun 2017 00:35:08 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB4C1A.dip0.t-ipconnect.de. [93.219.76.26])
+        by smtp.gmail.com with ESMTPSA id c11sm5799325wrb.58.2017.06.13.00.35.07
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 13 Jun 2017 00:35:08 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] Fix KeyError "fileSize" in verbose mode
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqq1sqpp1vv.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 13 Jun 2017 09:35:06 +0200
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Luke Diamand <luke@diamand.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B3689D6E-A6B8-42F8-9105-242178FE16E0@gmail.com>
+References: <0102015c9b535a84-fd59d55d-387a-419e-b8ec-439873c4b7f5-000000@eu-west-1.amazonses.com> <xmqq1sqpp1vv.fsf@gitster.mtv.corp.google.com>
+To:     Sergey Yurzin <jurzin.s@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 12, 2017 at 11:16:27PM -0700, Brandon Williams wrote:
 
-> > > *puzzled* Why wasn't this needed before, then?  The rest of the patch
-> > > should result in no functional change, but this part seems different.
-> > 
-> > Now I'm puzzled, too. The original that got filled in lazily by the
-> > config functions was always get_git_dir(). I can buy the argument that
-> > this was a bug (I'm not familiar enough with worktree to say one way or
-> > the other), but if it's a fix it should definitely go into another
-> > patch.
-> 
-> Well actually... in do_git_config_sequence 'git_path("config")' is
-> called which will convert gitdir to commondir under the hood.  you can't
-> use vanilla gitdir because the config isn't stored in a worktree's
-> gitdir but rather in the commondir as the config is shared by all
-> worktrees.
+> On 12 Jun 2017, at 19:11, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Sergey Yurzin <jurzin.s@gmail.com> writes:
+>=20
+>> Subject: Re: [PATCH] Fix KeyError "fileSize" in verbose mode
+>=20
+> ...
+>=20
+>> git-p4.py | 7 +++++--
+>> 1 file changed, 5 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/git-p4.py b/git-p4.py
+>> index 8d151da91b969..b3666eddf12e3 100755
+>> --- a/git-p4.py
+>> +++ b/git-p4.py
+>> @@ -2523,8 +2523,11 @@ def streamOneP4File(self, file, contents):
+>>         relPath =3D self.stripRepoPath(file['depotFile'], =
+self.branchPrefixes)
+>>         relPath =3D self.encodeWithUTF8(relPath)
+>>         if verbose:
+>> -            size =3D int(self.stream_file['fileSize'])
+>> -            sys.stdout.write('\r%s --> %s (%i MB)\n' % =
+(file['depotFile'], relPath, size/1024/1024))
+>> +            if 'fileSize' in self.stream_file:
+>> +                size =3D int(self.stream_file['fileSize'])
+>> +                sys.stdout.write('\r%s --> %s (%i MB)\n' % =
+(file['depotFile'], relPath, size/1024/1024))
+>> +            else:
+>> +                sys.stdout.write('\r%s --> %s\n' % =
+(file['depotFile'], relPath))
+>>             sys.stdout.flush()
+>=20
 
-Sorry, I missed the fact that there were two sites changed on the first
-read.
+Are you working with P4 Streams? I think I ran into the same problem
+if Streams are involved and I solved it like this:
 
-> So maybe we actually need to add a field to the 'config_options' struct
-> of 'commondir' such that the commondir can be used to load the actual
-> config file and 'gitdir' can be used to handle the 'IncludeIf' stuff.
+         if verbose:
+-            size =3D int(self.stream_file['fileSize'])
++            if 'fileSize' in self.stream_file:
++                size =3D int(self.stream_file['fileSize'])
++            elif 'streamContentSize' in self.stream_file:
++                size =3D int(self.stream_file['streamContentSize'])
++            else:
++                size =3D 0
+             sys.stdout.write('\r%s --> %s (%i MB)\n' % =
+(file['depotFile'], relPath, size/1024/1024))
+             sys.stdout.flush()
 
-On reflection, I suspect that probably is the case. If you have a
-workdir in ~/foo, you probably want to match IncludeIf against that
-instead of wherever the common dir happens to be.
+However "streamContentSize" is something we define ourselves elsewhere
+in git-p4 and not something we get from P4. Therefore it might be
+garbage. I haven't looked into it further, yet.
 
--Peff
+Your 'fileSize' check is definitively correct!
+
+Cheers,
+Lars
+
+
+> I can see from your patch that self.stream_file[] sometimes may not
+> have `fileSize` and when that happens the current code will barf.  I
+> also can see that with your patch, the code will NOT barf but output
+> would lack the size information (obviously, because it is not
+> available).
+>=20
+> However, it is not at all obvious if this is fixing the problem or
+> sweeping the problem under the rug.  The proposed log message you
+> write before the patch is the ideal place to say something like
+>=20
+>    In such and such circumstances, it is perfectly normal that
+>    P4Sync.stream_file does not know its file and lacks `fileSize`.
+>    streamOneP4File() method, however, assumes that this key is
+>    always available and tries to write it under the verbose mode.
+>=20
+>    Check the existence of the `fileSize` key and show it only when
+>    available.
+>=20
+> Note that the above _assumes_ that a stream_file that lacks
+> `fileSize` is perfectly normal; if that assumption is incorrect,
+> then perhaps a real fix may be to set `fileSize` in the codepath
+> that forgets to set it (I am not a git-p4 expert, and I am asking
+> Luke to review this patch by CC'ing him).
+>=20
+> Also note that in a real log message that is helpful for future
+> readers, "In such and such circumstances" in the above illustration
+> needs to become a more concrete description.
+>=20
+> Thanks, and welcome to Git development community.
+>=20
+>>         (type_base, type_mods) =3D split_p4_type(file["type"])
+>>=20
+>> --
+>> https://github.com/git/git/pull/373
+
