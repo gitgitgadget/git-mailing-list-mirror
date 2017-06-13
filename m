@@ -7,129 +7,83 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E7941FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 23:42:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8504B1FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 23:43:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752854AbdFMXl7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 19:41:59 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34322 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752456AbdFMXl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 19:41:58 -0400
-Received: by mail-pg0-f51.google.com with SMTP id v18so67032018pgb.1
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 16:41:58 -0700 (PDT)
+        id S1753964AbdFMXnD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 19:43:03 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:35886 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751802AbdFMXnC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 19:43:02 -0400
+Received: by mail-pf0-f179.google.com with SMTP id x63so74774612pff.3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 16:43:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=AAjjm5PfNUPXTRf64G1AWLJ2KQuSXbUv2pUgCQNJils=;
-        b=YUNocqXZfi54wvrYjrIU9r4yJNwg6g05/PiUTxM3m1q0Ug9gYFSqZliqAKPVXSmf0Q
-         WXaU9s5BbHaLZF985szeZOVY7P42F9Fbipjrgl5GxTWcxt2z9lscV1XOHqRF6JvRwuTv
-         /pka3MOuvQbUpv1rTY2igYOMiIBFnRP7hLLbhvlhLmJ5TXF7pWItmuxP01LGW2jNfRv7
-         J70kITVT+DWBG3UaQMw/6ML7tqgOobgHz4Hm0yv/kQqcV5B4FirWLmpJlvIIGhutU62E
-         EqC+jJLZaljTV+pzXKz0zwXxNWJe5hvO4K/UWO4HKGnwjbTVsKdNlJat+beb84YVPlug
-         OFhQ==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ggnXkRtAgjcRCdzTUomSPhZPRfdNtW3iV2/DFtJk0AI=;
+        b=QCVR3HUmco7T4ZIrA9HXDsSsgykIuqYmWUWcoErkORsDeCcdp3l64TFZVlujIEMusI
+         MNRKiCqtCTndvUdBpS3iO8q0s8JFS13zixWmojnZuyAxtQ4fhDxjfH8ia69tkCu9NUd8
+         /QxXkF0XO/gQi/g01Oq9Netl1ZQa9u8faZAwJsCnvHyJj7ClW4RpLwZLbambXDWJq8hz
+         JCEntp3rAHyWESJDRfMCO7vwjugXGlQSdQIpRf95kj9tZ1+4C71fq+a14+g0jUDYzG+5
+         gVySFkap2Rf6vXR5BRNKz72yzjZMtc+kaoagiTpya36L+titgvIuNw0wa/k5RXms7rCt
+         ZzKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=AAjjm5PfNUPXTRf64G1AWLJ2KQuSXbUv2pUgCQNJils=;
-        b=sQCEiv8Nay6ut3JuZMV2va+aHaF4ZIrQ/G1QP9Q0uwOxLUNXAJIbcUW97EH/sQt6Ot
-         vY27GRxi5uzG0sBG7DVZY1qyM3FfK8UsFCeqc3uHLUBXQih2eKf1W6faHcAdOukxCFoI
-         yvxw/c4W8XhAsBk3F03qGL5EprxndkHaCqHHV3JyjFbrZl+jdNijpBB3Yl6pLHbldhHX
-         InBBknJAyOgtjOqwDHttVe0of3U+ojwlO2wytpqSbH5UHyJtuiGOCE6D7SYXbjf+K4aT
-         ynXQoSqqAvcJgMNvGg7dwZLw3J/EI7uFGQ/IKa8AJ0Ywj2QW/XQ4p4NjA2DPqERL2Okd
-         RsLw==
-X-Gm-Message-State: AKS2vOx2rwnKN7Y96HOSXZt+Zbt72A6lFRrpOfts2EvBPhWNJNE6vafN
-        uL44cWWZwXR0Nuz0nw5NPwcrAYXfCbvv
-X-Received: by 10.98.68.156 with SMTP id m28mr1528188pfi.48.1497397317817;
- Tue, 13 Jun 2017 16:41:57 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ggnXkRtAgjcRCdzTUomSPhZPRfdNtW3iV2/DFtJk0AI=;
+        b=HdhJwwh2Kp7YXHYHrT9G84M4J4eBX4ghKf5cZlM9f2HIFptgurQ+iAv62XZb//1ngd
+         tJIZ/aAdTyA4dxN9mn9+VFyv/8nKy0dW+kXFmuKzG7ha6rMxA4/unLXBwUh9SCb8vVD0
+         dp5TNWIirylKj1KSwU7ndroRcIIwUtaFLYZvEScawE0XKdE/iR/obXooPvnwu7UNQDaG
+         YFzFCashFXSQsXVNUKwbbt1Ta9d/8tB2QrWOwKUS5np+VOQw8WPTv1/WqvNuk2kkVxyf
+         +mn9BQAj7ldTp823t3nit90/J5byuzvLtTqG6JPrB3C8iHSabDugWxBuBDvEmcqyhNO5
+         aSog==
+X-Gm-Message-State: AKS2vOyWnUTwS6GAHDsGReaqgr3BMlKlH7njZg/CIgS80S0Qu399QKgL
+        fPVcA86upRgGLfd9
+X-Received: by 10.84.216.88 with SMTP id f24mr1952831plj.103.1497397381506;
+        Tue, 13 Jun 2017 16:43:01 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:85a0:52c1:8d73:eb63])
+        by smtp.gmail.com with ESMTPSA id r2sm22127382pfa.96.2017.06.13.16.43.00
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 13 Jun 2017 16:43:01 -0700 (PDT)
+Date:   Tue, 13 Jun 2017 16:42:56 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC/PATCH] builtin/blame: darken redundant line information
+Message-ID: <20170613164256.1773a62d@twelve2.svl.corp.google.com>
+In-Reply-To: <20170613023151.9688-1-sbeller@google.com>
+References: <20170613023151.9688-1-sbeller@google.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Tue, 13 Jun 2017 16:41:57 -0700 (PDT)
-In-Reply-To: <20170613145457.2e888c27@twelve2.svl.corp.google.com>
-References: <20170523024048.16879-1-sbeller@google.com/> <20170524214036.29623-1-sbeller@google.com>
- <20170524214036.29623-5-sbeller@google.com> <20170613145457.2e888c27@twelve2.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 13 Jun 2017 16:41:57 -0700
-Message-ID: <CAGZ79kY9ByaHe_fx+S3neT6+1LcA_Q13bbVha8AKHUUO32FgeA@mail.gmail.com>
-Subject: Re: [PATCHv5 04/17] diff: introduce more flexible emit function
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 13, 2017 at 2:54 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> On Wed, 24 May 2017 14:40:23 -0700
-> Stefan Beller <sbeller@google.com> wrote:
->
->> Currently, diff output is written either through the emit_line_0
->> function or through the FILE * in struct diff_options directly. To
->> make it easier to teach diff to buffer its output (which will be done
->> in a subsequent commit), introduce a more flexible emit_line() function.
->> In this commit, direct usages of emit_line_0() are replaced with
->> emit_line(); subsequent commits will also replace usages of the
->> FILE * with emit().
->
-> Check the names of the functions in this paragraph.
+On Mon, 12 Jun 2017 19:31:51 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-Only the very last word needed replacement of /s/emit/emit_line/.
+> When using git-blame lots of lines contain redundant information, for
+> example in hunks that consist of multiple lines, the metadata (commit name,
+> author, timezone) are repeated. A reader may not be interested in those,
+> so darken them. The darkening is not just based on hunk, but actually
+> takes the previous lines content for that field to compare to.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+> 
+>  Example output (blame of blame): http://i.imgur.com/0Y12p2f.png
 
->
->> diff --git a/diff.c b/diff.c
->> index 2f9722b382..3569857818 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -516,36 +516,30 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
->>       ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
->>  }
->>
->> -static void emit_line_0(struct diff_options *o, const char *set, const char *reset,
->> -                     int first, const char *line, int len)
->> +static void emit_line(struct diff_options *o, const char *set, const char *reset,
->> +                   int add_line_prefix, int sign, const char *line, int len)
->
-> In the future, this function is going to be used even to emit partial
-> lines
+Looking at this image, how does blame decide what to dim? As it is, I see many
+identical timestamps (and also from the same commit) not being dimmed.
+(For example, see the very last line with "2013-01-05 ..." which is
+identical to the previous line, and I would expect that to be dimmed.)
 
-Yes.
-
-> - could this be called emit() instead?
-
-Despite having good IDEs available some (including me)
-very much like working with raw text, and then having a function
-named as a common string doesn't help.
-
-After this patch
-
-  $ git grep emit_line |wc -l
-  16
-  # not all are this function, there is
-  emit_line_checked as well. But 16 is not too much.
-
-But if renamed to emit():
-
-  $ git grep emit -- diff.c |wc -l
-  60
-
-You could argue I'd just have to grep
-for "emit (" instead, but that then I would have
-rely on correct whitespacing or use a regex already.
-Complexity which I would not like.
-
-So I am not sure if this is helping a reader. (Not the casual
-reader, but the one grepping for this function)
-
-Maybe we can settle on a different name though,
-such as emit_string which is not a prefix of a dozen
-different other functions?
-
-Thanks,
-Stefan
+Also, my preference is to have all-or-nothing dimming (dim the whole
+line up to and including the time zone if nothing has changed, and dim
+nothing otherwise) but I know that this is a subjective issue.
