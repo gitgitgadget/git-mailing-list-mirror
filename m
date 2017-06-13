@@ -2,325 +2,351 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19E7620401
-	for <e@80x24.org>; Tue, 13 Jun 2017 02:31:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D411720401
+	for <e@80x24.org>; Tue, 13 Jun 2017 02:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751822AbdFMCb4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 22:31:56 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:33442 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751608AbdFMCbz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 22:31:55 -0400
-Received: by mail-pg0-f51.google.com with SMTP id f185so53242107pgc.0
-        for <git@vger.kernel.org>; Mon, 12 Jun 2017 19:31:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=iBmLeIstupnBjNdM03gOoiS/XMa6MMUvme3HXwK4lFE=;
-        b=jVTDEEhmDgYVhcOYfwjmCB6ZNALzxlrG4kwYKDaHqDhlHWW7fPVoZgUkT0jnqHnFqW
-         p6juvMYMjVEEBwgjp3oY/h8tL1NC6Q+CxPXMyuntnA7qZE7wAxWT7aM7VIsFO7n+h6uh
-         XgzdzJeZXw2B31G+n4rdy4/ma+eQiCOuIujzhdf5p7pWZ3tDVqyi+99JWlzI5KAHz5Fg
-         feStDmKxf0/XSwk4a3VbAp8I7A6G2A99SFvQQH0rzcLEHZa9vLwEKVjFP7VMpE09oJaW
-         b7ud0JZTK7Z8jSf0lpU9JDWedBiSyGmAPls5CDpxLMpI5kTQbf/ZtmWtSDSXSxMCYTdf
-         eWhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=iBmLeIstupnBjNdM03gOoiS/XMa6MMUvme3HXwK4lFE=;
-        b=PfLA0uSTGxVUpFnxsJzqlgq2H51NB8FXuzTHIkWv1ha3Th4SXUQj8226+b9QchbN+z
-         V1sljyz85cwBDc99h0baBw/3Nzq7c8hkEravd/eJiFahHH1yGzLNFIUbOIWtI8MdGIA+
-         U2c4wWrrepGmj8NeVgPoRyQQ3DWfKeKerJ/OXp7H9d0PZ5uiUbichauQu8zzSQiBsUz0
-         aGTS4u9g+AbCQwX0eBQPmdqUp6aAGI+dYp3pg/Ws/zIVOhPRBCBBBNkdteDr5AKnR2fX
-         hlMT6wUWMfPbOVrya9jmgFoKvLFu1PMcfL+yzPp6owZqbGkXyu+7lVdS2BZrQsPI3Ay8
-         c4Ow==
-X-Gm-Message-State: AKS2vOxM7JlmloSHJUwRoFYd08h6FCNV0o4XNxX64xFxOaMXG+97e1s0
-        px3Ru32Qo0HWcxah59gDDQ==
-X-Received: by 10.84.129.4 with SMTP id 4mr16154589plb.9.1497321114119;
-        Mon, 12 Jun 2017 19:31:54 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:4d85:5ee9:13d8:3666])
-        by smtp.gmail.com with ESMTPSA id n4sm21419532pgt.3.2017.06.12.19.31.53
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 12 Jun 2017 19:31:53 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [RFC/PATCH] builtin/blame: darken redundant line information
-Date:   Mon, 12 Jun 2017 19:31:51 -0700
-Message-Id: <20170613023151.9688-1-sbeller@google.com>
-X-Mailer: git-send-email 2.13.0.17.gf3d7728391
+        id S1751842AbdFMC7s (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 22:59:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38739 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751768AbdFMC7r (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 22:59:47 -0400
+Received: (qmail 27058 invoked by uid 109); 13 Jun 2017 02:59:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 02:59:47 +0000
+Received: (qmail 19300 invoked by uid 111); 13 Jun 2017 02:59:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jun 2017 22:59:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Jun 2017 22:59:45 -0400
+Date:   Mon, 12 Jun 2017 22:59:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 4/4] config: don't implicitly use gitdir
+Message-ID: <20170613025945.v54vrza2n23tk5pw@sigill.intra.peff.net>
+References: <20170612213406.83247-1-bmwill@google.com>
+ <20170612213406.83247-5-bmwill@google.com>
+ <20170613010518.GB133952@aiede.mtv.corp.google.com>
+ <20170613012337.GH154599@google.com>
+ <20170613013817.GE133952@aiede.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170613013817.GE133952@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When using git-blame lots of lines contain redundant information, for
-example in hunks that consist of multiple lines, the metadata (commit name,
-author, timezone) are repeated. A reader may not be interested in those,
-so darken them. The darkening is not just based on hunk, but actually
-takes the previous lines content for that field to compare to.
+On Mon, Jun 12, 2017 at 06:38:17PM -0700, Jonathan Nieder wrote:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
+> Brandon Williams wrote:
+> > On 06/12, Jonathan Nieder wrote:
+> 
+> >> Alternatively, could this patch rename git_config_with_options?  That
+> >> way any other patch in flight that calls git_config_with_options would
+> >> conflict with this patch, giving us an opportunity to make sure it
+> >> also sets git_dir.  As another nice side benefit it would make it easy
+> >> for someone reading the patch to verify it didn't miss any callers.
+> [...]
+> > And I don't know if I agree with renaming a function just to rename it.
+> 
+> I forgot to say: another way to accomplish the same thing can be to
+> reorder the function's arguments.  The relevant thing is to make code
+> that calls the function without being aware of the new requirements
+> fail to compile.
+
+If the parameter is now required, then it might make sense for it to
+become an actual function parameter instead of being stuffed into the
+config_options struct. That would give you your breaking change, plus
+make it more obvious to the reader that it is not optional.
+
+The downside is that has to get shuttled around manually through the
+callstack. Most of the damage is in builtin/config.c, where we call
+git_config_with_options() a lot.
+
+include_by_gitdir is also a bit annoying, as we pass around the
+config_options struct through our void-pointer callbacks. But we can
+solve that by sticking the git_dir into the include_data struct (whose
+exact purpose is to carry the information we need to handle includes).
+
+The patch below (on top of Brandon's series does that).
+
+> >>> +	if (have_git_dir())
+> >>> +		opts.git_dir = get_git_common_dir();
+> >>
+> >> curious: Why get_git_common_dir() instead of get_git_dir()?
+> >
+> > Needs to be commondir since the config is stored in the common git
+> > directory and not a per worktree git directory.
+> 
+> *puzzled* Why wasn't this needed before, then?  The rest of the patch
+> should result in no functional change, but this part seems different.
+
+Now I'm puzzled, too. The original that got filled in lazily by the
+config functions was always get_git_dir(). I can buy the argument that
+this was a bug (I'm not familiar enough with worktree to say one way or
+the other), but if it's a fix it should definitely go into another
+patch.
+
 ---
+ builtin/config.c | 17 ++++++++++----
+ config.c         | 43 +++++++++++++++++++----------------
+ config.h         |  4 ++--
+ 3 files changed, 37 insertions(+), 27 deletions(-)
 
- Example output (blame of blame): http://i.imgur.com/0Y12p2f.png
-
- builtin/blame.c | 135 ++++++++++++++++++++++++++++++++++++++++++++++----------
- color.h         |   1 +
- 2 files changed, 112 insertions(+), 24 deletions(-)
-
-diff --git a/builtin/blame.c b/builtin/blame.c
-index d7a2df3b47..7f921df0e7 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -6,6 +6,7 @@
-  */
+diff --git a/builtin/config.c b/builtin/config.c
+index 90f49a6ee..f5dd6f7ff 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -29,6 +29,7 @@ static int actions, types;
+ static int end_null;
+ static int respect_includes_opt = -1;
+ static struct config_options config_options;
++const char *config_git_dir;
+ static int show_origin;
  
- #include "cache.h"
-+#include "color.h"
- #include "builtin.h"
- #include "commit.h"
- #include "diff.h"
-@@ -282,7 +283,8 @@ static void found_guilty_entry(struct blame_entry *ent, void *data)
- }
- 
- static const char *format_time(timestamp_t time, const char *tz_str,
--			       int show_raw_time)
-+			       int show_raw_time,
-+			       timestamp_t difftime, const char *difftz_str)
- {
- 	static struct strbuf time_buf = STRBUF_INIT;
- 
-@@ -291,12 +293,41 @@ static const char *format_time(timestamp_t time, const char *tz_str,
- 		strbuf_addf(&time_buf, "%"PRItime" %s", time, tz_str);
+ #define ACTION_GET (1<<0)
+@@ -244,7 +245,9 @@ static int get_value(const char *key_, const char *regex_)
  	}
- 	else {
--		const char *time_str;
-+		const char *time_str, *prev_str;
- 		size_t time_width;
- 		int tz;
-+
-+		if (difftime)
-+			prev_str = xstrdup(show_date(difftime,
-+						     atoi(difftz_str),
-+						     &blame_date_mode));
- 		tz = atoi(tz_str);
- 		time_str = show_date(time, tz, &blame_date_mode);
--		strbuf_addstr(&time_buf, time_str);
-+
-+
-+		if (difftime) {
-+			int len = strlen(prev_str) > strlen(time_str) ?
-+				  strlen(time_str) : strlen(prev_str);
-+			int i, j;
-+			int last_nondigit = 0;
-+			for (i = 0; i < len; i++) {
-+				if (isdigit(time_str[i]) &&
-+				    time_str[i] != prev_str[i])
-+					break;
-+				if (!isdigit(time_str[i])) {
-+					strbuf_addstr(&time_buf, GIT_COLOR_DARK);
-+					for (j = last_nondigit; j < i; j++)
-+						strbuf_addch(&time_buf, time_str[j]);
-+					strbuf_addstr(&time_buf, GIT_COLOR_RESET);
-+					last_nondigit = i;
-+				}
-+			}
-+			for (i = last_nondigit; i < strlen(time_str); i++)
-+				strbuf_addch(&time_buf, time_str[i]);
-+		} else {
-+			strbuf_addstr(&time_buf, time_str);
-+		}
-+
- 		/*
- 		 * Add space paddings to time_buf to display a fixed width
- 		 * string, and use time_width for display width calibration.
-@@ -319,6 +350,7 @@ static const char *format_time(timestamp_t time, const char *tz_str,
- #define OUTPUT_NO_AUTHOR       0200
- #define OUTPUT_SHOW_EMAIL	0400
- #define OUTPUT_LINE_PORCELAIN 01000
-+#define OUTPUT_SHOW_REDUNDANT 02000
  
- static void emit_porcelain_details(struct blame_origin *suspect, int repeat)
- {
-@@ -366,19 +398,43 @@ static void emit_porcelain(struct blame_scoreboard *sb, struct blame_entry *ent,
- 		putchar('\n');
- }
+ 	git_config_with_options(collect_config, &values,
+-				&given_config_source, &config_options);
++				&given_config_source,
++				config_git_dir,
++				&config_options);
  
--static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int opt)
-+static void emit_other(struct blame_scoreboard *sb,
-+		       struct blame_entry *ent,
-+		       struct blame_entry *prev,
-+		       int opt)
- {
- 	int cnt;
- 	const char *cp;
- 	struct blame_origin *suspect = ent->suspect;
--	struct commit_info ci;
-+	struct commit_info ci, prev_ci;
- 	char hex[GIT_MAX_HEXSZ + 1];
- 	int show_raw_time = !!(opt & OUTPUT_RAW_TIMESTAMP);
-+	int prev_same_field = 0;
-+	const char *use_color, *reset_color = GIT_COLOR_RESET;
+ 	ret = !values.nr;
  
- 	get_commit_info(suspect->commit, &ci, 1);
- 	oid_to_hex_r(hex, &suspect->commit->object.oid);
+@@ -322,7 +325,8 @@ static void get_color(const char *var, const char *def_color)
+ 	get_color_found = 0;
+ 	parsed_color[0] = '\0';
+ 	git_config_with_options(git_get_color_config, NULL,
+-				&given_config_source, &config_options);
++				&given_config_source,
++				config_git_dir, &config_options);
  
- 	cp = blame_nth_line(sb, ent->lno);
-+
-+	commit_info_init(&prev_ci);
-+	if ((opt & OUTPUT_SHOW_REDUNDANT) && prev) {
-+		get_commit_info(prev->suspect->commit, &prev_ci, 1);
-+		if ((opt & OUTPUT_SHOW_SCORE) && ent->score == prev->score)
-+			prev_same_field |= OUTPUT_SHOW_SCORE;
-+		if ((opt & OUTPUT_SHOW_NAME) && prev->suspect && !strcmp(suspect->path, prev->suspect->path))
-+			prev_same_field |= OUTPUT_SHOW_NAME;
-+		if ((opt & OUTPUT_SHOW_NUMBER) &&
-+		    ent->s_lno == prev->s_lno + prev->num_lines - 1)
-+			prev_same_field |= OUTPUT_SHOW_NUMBER;
-+		if (!(opt & OUTPUT_NO_AUTHOR)) {
-+			if (((opt & OUTPUT_SHOW_EMAIL) &&
-+			     !strcmp(ci.author_mail.buf, prev_ci.author_mail.buf)) ||
-+			    !strcmp(ci.author.buf, prev_ci.author.buf))
-+				prev_same_field |= OUTPUT_NO_AUTHOR;
-+		}
-+	}
-+
- 	for (cnt = 0; cnt < ent->num_lines; cnt++) {
- 		char ch;
- 		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? GIT_SHA1_HEXSZ : abbrev;
-@@ -391,8 +447,12 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 				putchar('^');
- 			}
- 		}
-+		use_color = GIT_COLOR_NORMAL;
-+		if ((opt & OUTPUT_SHOW_REDUNDANT) && cnt > 0)
-+			use_color = GIT_COLOR_DARK;
-+
-+		printf("%s%.*s%s", use_color, length, hex, reset_color);
+ 	if (!get_color_found && def_color) {
+ 		if (color_parse(def_color, parsed_color) < 0)
+@@ -354,7 +358,8 @@ static int get_colorbool(const char *var, int print)
+ 	get_diff_color_found = -1;
+ 	get_color_ui_found = -1;
+ 	git_config_with_options(git_get_colorbool_config, NULL,
+-				&given_config_source, &config_options);
++				&given_config_source,
++				config_git_dir, &config_options);
  
--		printf("%.*s", length, hex);
- 		if (opt & OUTPUT_ANNOTATE_COMPAT) {
- 			const char *name;
- 			if (opt & OUTPUT_SHOW_EMAIL)
-@@ -401,20 +461,36 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 				name = ci.author.buf;
- 			printf("\t(%10s\t%10s\t%d)", name,
- 			       format_time(ci.author_time, ci.author_tz.buf,
--					   show_raw_time),
-+					   show_raw_time, 0, NULL),
- 			       ent->lno + 1 + cnt);
- 		} else {
--			if (opt & OUTPUT_SHOW_SCORE)
--				printf(" %*d %02d",
-+			if (opt & OUTPUT_SHOW_SCORE) {
-+				use_color = GIT_COLOR_NORMAL;
-+				if ((opt & OUTPUT_SHOW_REDUNDANT) &&
-+				    (cnt > 0 || prev_same_field & OUTPUT_SHOW_SCORE))
-+					use_color = GIT_COLOR_DARK;
-+				printf(" %s%*d %02d%s", use_color,
- 				       max_score_digits, ent->score,
--				       ent->suspect->refcnt);
--			if (opt & OUTPUT_SHOW_NAME)
--				printf(" %-*.*s", longest_file, longest_file,
--				       suspect->path);
--			if (opt & OUTPUT_SHOW_NUMBER)
--				printf(" %*d", max_orig_digits,
--				       ent->s_lno + 1 + cnt);
--
-+				       ent->suspect->refcnt, reset_color);
-+			}
-+			if (opt & OUTPUT_SHOW_NAME) {
-+				use_color = GIT_COLOR_NORMAL;
-+				if ((opt & OUTPUT_SHOW_REDUNDANT) &&
-+				    (cnt > 0 || prev_same_field & OUTPUT_SHOW_NAME))
-+					use_color = GIT_COLOR_DARK;
-+				printf(" %s%-*.*s%s", use_color, longest_file,
-+						      longest_file,
-+						      suspect->path,
-+						      reset_color);
-+			}
-+			if (opt & OUTPUT_SHOW_NUMBER) {
-+				use_color = GIT_COLOR_NORMAL;
-+				if ((opt & OUTPUT_SHOW_REDUNDANT) &&
-+				    (cnt > 0 || prev_same_field & OUTPUT_SHOW_NUMBER))
-+					use_color = GIT_COLOR_DARK;
-+				printf(" %s%*d%s", use_color, max_orig_digits,
-+				       ent->s_lno + 1 + cnt, reset_color);
-+			}
- 			if (!(opt & OUTPUT_NO_AUTHOR)) {
- 				const char *name;
- 				int pad;
-@@ -422,12 +498,21 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 					name = ci.author_mail.buf;
- 				else
- 					name = ci.author.buf;
-+
-+				use_color = GIT_COLOR_NORMAL;
-+				if ((opt & OUTPUT_SHOW_REDUNDANT) &&
-+				    (cnt > 0 || prev_same_field & OUTPUT_NO_AUTHOR))
-+					use_color = GIT_COLOR_DARK;
-+
- 				pad = longest_author - utf8_strwidth(name);
--				printf(" (%s%*s %10s",
--				       name, pad, "",
--				       format_time(ci.author_time,
--						   ci.author_tz.buf,
--						   show_raw_time));
-+				printf(" %s(%s%*s%s", use_color,
-+						      name, pad, "",
-+						      reset_color);
-+				printf(" %10s", format_time(ci.author_time,
-+							    ci.author_tz.buf,
-+							    show_raw_time,
-+							    prev_ci.author_time,
-+							    prev_ci.author_tz.buf));
- 			}
- 			printf(" %*d) ",
- 			       max_digits, ent->lno + 1 + cnt);
-@@ -447,7 +532,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 
- static void output(struct blame_scoreboard *sb, int option)
- {
--	struct blame_entry *ent;
-+	struct blame_entry *ent, *prev = NULL;
- 
- 	if (option & OUTPUT_PORCELAIN) {
- 		for (ent = sb->ent; ent; ent = ent->next) {
-@@ -469,7 +554,8 @@ static void output(struct blame_scoreboard *sb, int option)
- 		if (option & OUTPUT_PORCELAIN)
- 			emit_porcelain(sb, ent, option);
- 		else {
--			emit_other(sb, ent, option);
-+			emit_other(sb, ent, prev, option);
-+			prev = ent;
- 		}
+ 	if (get_colorbool_found < 0) {
+ 		if (!strcmp(get_colorbool_slot, "color.diff"))
+@@ -443,7 +448,8 @@ static int get_urlmatch(const char *var, const char *url)
  	}
- }
-@@ -680,6 +766,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		OPT_BIT('s', NULL, &output_option, N_("Suppress author name and timestamp (Default: off)"), OUTPUT_NO_AUTHOR),
- 		OPT_BIT('e', "show-email", &output_option, N_("Show author email instead of name (Default: off)"), OUTPUT_SHOW_EMAIL),
- 		OPT_BIT('w', NULL, &xdl_opts, N_("Ignore whitespace differences"), XDF_IGNORE_WHITESPACE),
-+		OPT_BIT('r', "redundant", &output_option, N_("darken redundancy from previous line (Default: off)"), OUTPUT_SHOW_REDUNDANT),
  
+ 	git_config_with_options(urlmatch_config_entry, &config,
+-				&given_config_source, &config_options);
++				&given_config_source, config_git_dir,
++				&config_options);
+ 
+ 	ret = !values.nr;
+ 
+@@ -540,7 +546,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	else
+ 		config_options.respect_includes = respect_includes_opt;
+ 	if (have_git_dir())
+-		config_options.git_dir = get_git_common_dir();
++		config_git_dir = get_git_common_dir();
+ 
+ 	if (end_null) {
+ 		term = '\0';
+@@ -587,6 +593,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		check_argc(argc, 0, 0);
+ 		if (git_config_with_options(show_all_config, NULL,
+ 					    &given_config_source,
++					    config_git_dir,
+ 					    &config_options) < 0) {
+ 			if (given_config_source.file)
+ 				die_errno("unable to read config file '%s'",
+diff --git a/config.c b/config.c
+index 4e2842689..e1566f7b4 100644
+--- a/config.c
++++ b/config.c
+@@ -208,21 +208,18 @@ static int prepare_include_condition_pattern(struct strbuf *pat)
+ 	return prefix;
+ }
+ 
+-static int include_by_gitdir(const struct config_options *opts,
++static int include_by_gitdir(const struct config_include_data *inc,
+ 			     const char *cond, size_t cond_len, int icase)
+ {
+ 	struct strbuf text = STRBUF_INIT;
+ 	struct strbuf pattern = STRBUF_INIT;
+ 	int ret = 0, prefix;
+-	const char *git_dir;
+ 	int already_tried_absolute = 0;
+ 
+-	if (opts->git_dir)
+-		git_dir = opts->git_dir;
+-	else
++	if (!inc->git_dir)
+ 		goto done;
+ 
+-	strbuf_realpath(&text, git_dir, 1);
++	strbuf_realpath(&text, inc->git_dir, 1);
+ 	strbuf_add(&pattern, cond, cond_len);
+ 	prefix = prepare_include_condition_pattern(&pattern);
+ 
+@@ -256,7 +253,7 @@ static int include_by_gitdir(const struct config_options *opts,
+ 		 * which'll do the right thing
+ 		 */
+ 		strbuf_reset(&text);
+-		strbuf_add_absolute_path(&text, git_dir);
++		strbuf_add_absolute_path(&text, inc->git_dir);
+ 		already_tried_absolute = 1;
+ 		goto again;
+ 	}
+@@ -266,14 +263,14 @@ static int include_by_gitdir(const struct config_options *opts,
+ 	return ret;
+ }
+ 
+-static int include_condition_is_true(const struct config_options *opts,
++static int include_condition_is_true(const struct config_include_data *inc,
+ 				     const char *cond, size_t cond_len)
+ {
+ 
+ 	if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
+-		return include_by_gitdir(opts, cond, cond_len, 0);
++		return include_by_gitdir(inc, cond, cond_len, 0);
+ 	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
+-		return include_by_gitdir(opts, cond, cond_len, 1);
++		return include_by_gitdir(inc, cond, cond_len, 1);
+ 
+ 	/* unknown conditionals are always false */
+ 	return 0;
+@@ -298,7 +295,7 @@ int git_config_include(const char *var, const char *value, void *data)
+ 		ret = handle_path_include(value, inc);
+ 
+ 	if (!parse_config_key(var, "includeif", &cond, &cond_len, &key) &&
+-	    (cond && include_condition_is_true(inc->opts, cond, cond_len)) &&
++	    (cond && include_condition_is_true(inc, cond, cond_len)) &&
+ 	    !strcmp(key, "path"))
+ 		ret = handle_path_include(value, inc);
+ 
+@@ -1537,6 +1534,7 @@ int git_config_system(void)
+ }
+ 
+ static int do_git_config_sequence(const struct config_options *opts,
++				  const char *git_dir,
+ 				  config_fn_t fn, void *data)
+ {
+ 	int ret = 0;
+@@ -1544,8 +1542,8 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	char *user_config = expand_user_path("~/.gitconfig", 0);
+ 	char *repo_config;
+ 
+-	if (opts->git_dir)
+-		repo_config = mkpathdup("%s/config", opts->git_dir);
++	if (git_dir)
++		repo_config = mkpathdup("%s/config", git_dir);
+ 	else
+ 		repo_config = NULL;
+ 
+@@ -1578,6 +1576,7 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 
+ int git_config_with_options(config_fn_t fn, void *data,
+ 			    struct git_config_source *config_source,
++			    const char *git_dir,
+ 			    const struct config_options *opts)
+ {
+ 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
+@@ -1585,7 +1584,7 @@ int git_config_with_options(config_fn_t fn, void *data,
+ 	if (opts->respect_includes) {
+ 		inc.fn = fn;
+ 		inc.data = data;
+-		inc.opts = opts;
++		inc.git_dir = git_dir;
+ 		fn = git_config_include;
+ 		data = &inc;
+ 	}
+@@ -1601,17 +1600,18 @@ int git_config_with_options(config_fn_t fn, void *data,
+ 	else if (config_source && config_source->blob)
+ 		return git_config_from_blob_ref(fn, config_source->blob, data);
+ 
+-	return do_git_config_sequence(opts, fn, data);
++	return do_git_config_sequence(opts, git_dir, fn, data);
+ }
+ 
+ static void git_config_raw(config_fn_t fn, void *data)
+ {
+ 	struct config_options opts = {0};
++	const char *git_dir;
+ 
+ 	opts.respect_includes = 1;
+ 	if (have_git_dir())
+-		opts.git_dir = get_git_common_dir();
+-	if (git_config_with_options(fn, data, NULL, &opts) < 0)
++		git_dir = get_git_common_dir();
++	if (git_config_with_options(fn, data, NULL, git_dir, &opts) < 0)
  		/*
- 		 * The following two options are parsed by parse_revision_opt()
-diff --git a/color.h b/color.h
-index 90627650fc..bad2d7e29c 100644
---- a/color.h
-+++ b/color.h
-@@ -30,6 +30,7 @@ struct strbuf;
- #define GIT_COLOR_BLUE		"\033[34m"
- #define GIT_COLOR_MAGENTA	"\033[35m"
- #define GIT_COLOR_CYAN		"\033[36m"
-+#define GIT_COLOR_DARK		"\033[1;30m"
- #define GIT_COLOR_BOLD_RED	"\033[1;31m"
- #define GIT_COLOR_BOLD_GREEN	"\033[1;32m"
- #define GIT_COLOR_BOLD_YELLOW	"\033[1;33m"
--- 
-2.13.0.17.gf3d7728391
-
+ 		 * git_config_with_options() normally returns only
+ 		 * zero, as most errors are fatal, and
+@@ -1653,11 +1653,12 @@ void read_early_config(config_fn_t cb, void *data)
+ {
+ 	struct config_options opts = {0};
+ 	struct strbuf buf = STRBUF_INIT;
++	const char *git_dir;
+ 
+ 	opts.respect_includes = 1;
+ 
+ 	if (have_git_dir())
+-		opts.git_dir = get_git_dir();
++		git_dir = get_git_dir();
+ 	/*
+ 	 * When setup_git_directory() was not yet asked to discover the
+ 	 * GIT_DIR, we ask discover_git_directory() to figure out whether there
+@@ -1667,9 +1668,11 @@ void read_early_config(config_fn_t cb, void *data)
+ 	 * call).
+ 	 */
+ 	else if (discover_git_directory(&buf))
+-		opts.git_dir = buf.buf;
++		git_dir = buf.buf;
++	else
++		git_dir = NULL;
+ 
+-	git_config_with_options(cb, data, NULL, &opts);
++	git_config_with_options(cb, data, NULL, git_dir, &opts);
+ 
+ 	strbuf_release(&buf);
+ }
+diff --git a/config.h b/config.h
+index c70599bd5..47a8e8845 100644
+--- a/config.h
++++ b/config.h
+@@ -30,7 +30,6 @@ enum config_origin_type {
+ 
+ struct config_options {
+ 	unsigned int respect_includes : 1;
+-	const char *git_dir;
+ };
+ 
+ typedef int (*config_fn_t)(const char *, const char *, void *);
+@@ -46,6 +45,7 @@ extern void read_early_config(config_fn_t cb, void *data);
+ extern void git_config(config_fn_t fn, void *);
+ extern int git_config_with_options(config_fn_t fn, void *,
+ 				   struct git_config_source *config_source,
++				   const char *git_dir,
+ 				   const struct config_options *opts);
+ extern int git_parse_ulong(const char *, unsigned long *);
+ extern int git_parse_maybe_bool(const char *);
+@@ -97,7 +97,7 @@ struct config_include_data {
+ 	int depth;
+ 	config_fn_t fn;
+ 	void *data;
+-	const struct config_options *opts;
++	const char *git_dir;
+ };
+ #define CONFIG_INCLUDE_INIT { 0 }
+ extern int git_config_include(const char *name, const char *value, void *data);
