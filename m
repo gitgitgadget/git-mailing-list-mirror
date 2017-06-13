@@ -2,159 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D01BA20401
-	for <e@80x24.org>; Tue, 13 Jun 2017 03:42:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25DEF20401
+	for <e@80x24.org>; Tue, 13 Jun 2017 03:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751834AbdFMDms (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 23:42:48 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:34790 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751811AbdFMDmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 23:42:47 -0400
-Received: by mail-it0-f65.google.com with SMTP id 201so11236402itu.1
-        for <git@vger.kernel.org>; Mon, 12 Jun 2017 20:42:46 -0700 (PDT)
+        id S1751856AbdFMDnn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 23:43:43 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:34457 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751811AbdFMDnm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 23:43:42 -0400
+Received: by mail-pg0-f42.google.com with SMTP id v18so53929741pgb.1
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 20:43:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=tDmoiqF6RxoxlvkotqtPgWLMAtaz1QopKErxYQHJrK4=;
-        b=ErxgA0OQ/UwYQigitZEUwUvgsxn8m7RSBM3t+k37arkWDfkNgVnLWU7EW9+T4NXQKi
-         sLksCPP6VsF+ManZylbLEqTZrixV8K1orqR1wy7pTQcqNFFAPWU2tFf9XKLVHfAHKwp6
-         SpVf5GzcMzeww3JspGIddDpRN7vT18XaPcGCURdxQer020MVbidD0dlmZW1HXClpVH1U
-         bXijBqvaXYU9J/Og79cuS3farxEpybGbOPrHYEM6n/1RTzkbVXI7/LYjxFs3hd9ttQyM
-         u0imo8YiSTqZkMQZ9OKJZKbOJrZnZbUp5eDfr9nW6a64k/YOEJuF7XHb0fZmj4R8GVR+
-         rZwg==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=X0O99XeqVGBzKOe65ytzj3exf5Uo9lkG3IJsacPCl2w=;
+        b=QOxqBqo2qH2VfWjwXR+pJr46XX55QJO4PzYpuxjLk8w4Yat7n7rlj9hLvSW0c7gJcZ
+         ndqeakS7vdJc7xvJ6r/gU2kbQUsNIIHTWB6fQ2ZiidVfCiKLtU1xtsO7zy9EHv6ekPNB
+         w30s9QbRbG1BFnXAt4AmLla5Y3BNkuaMMfbzo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=tDmoiqF6RxoxlvkotqtPgWLMAtaz1QopKErxYQHJrK4=;
-        b=osgMOkcQ4Jvj0uZVq+qBbxcgDSHc6MfIyD3dUXw4AVJWZKSLA5Z/YzGme9MdhuBQ9G
-         wZa3dteCuE5VPmrgEGb9/igxTKw/K2G2x/y2Jp9bfAk66MnweCWYaLh6wyO1YPgWe+1q
-         MhECs86XHRYEf2eguVXbNg3XYD02GY9KqFKfYA93P0b5N3RG5DR4/Lv6RK3Tuio8p17e
-         Pb3SRfvmFpURflC/JUA7iaqgu6HOTxikkDHz4PELD6wl4VjUqFbH8jxRoLZMDeeuNtgq
-         BrI+i5lZMPqS56l9nBtfvszIxsCcgjIr6GtmIVnnSDvju2jb//I/qYFW+i22qAqHwSEt
-         cgXw==
-X-Gm-Message-State: AKS2vOwYFelYqW3lFmlXpcVGwZ6sevCukd/V5mrt1b7TkazYmmbuAm7o
-        C3Q2HuDgqiYdOCrg4EK9ww==
-X-Received: by 10.36.54.18 with SMTP id l18mr1367838itl.55.1497325366084;
-        Mon, 12 Jun 2017 20:42:46 -0700 (PDT)
-Received: from [192.168.2.102] (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.gmail.com with ESMTPSA id w65sm5010726ita.21.2017.06.12.20.42.44
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=X0O99XeqVGBzKOe65ytzj3exf5Uo9lkG3IJsacPCl2w=;
+        b=mKNN6NHwV+cYGlsCuOxIrJK30tckjpS/ck0gX5D/CAj8w01iN8AggaA3mgBzF4CeSD
+         Vverh+wsQkIiugrzuL0WGYvQoDG6jmCrXfay2WgbMsp8g08p3VMwi4aZiHm1dHcVW4nA
+         t62jCWtipq4SjuTXnwp2hp1z+HGSqZPAYya30NIjqb8zfCdTFcG5O7hUF3WBE6L18JI9
+         LKWOug5sZpIi+KUVEColTDS6wXyAxv+P8EsdDG1be66CcOUf4yLDfXu50qOySf+ZyUV/
+         uTBHzqLYItFtPoueeFLEBdxXrUiI7L1qx6RLTMzSM0YcDThJGj5kfbDnjfQmAj23K774
+         KwVw==
+X-Gm-Message-State: AODbwcBU3NyhRd7n7p1nOwmUpuSVjiwvVmBr0o9WSP3/qAkz2ybq8YND
+        V9IWa4g0K9i7Ofvb2VAVAw==
+X-Received: by 10.98.138.143 with SMTP id o15mr36193445pfk.125.1497325421525;
+        Mon, 12 Jun 2017 20:43:41 -0700 (PDT)
+Received: from localhost ([122.172.35.3])
+        by smtp.gmail.com with ESMTPSA id q7sm19523177pfk.108.2017.06.12.20.43.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Jun 2017 20:42:45 -0700 (PDT)
-Subject: Re: Feature Request: Show status of the stash in git status command
+        Mon, 12 Jun 2017 20:43:39 -0700 (PDT)
+Date:   Tue, 13 Jun 2017 09:13:37 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Samuel Lijin <sxlijin@gmail.com>,
-        Houston Fortney <houstonfortney@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <CA+B9myHRahTd+FDgzK5AhXW+hq_Y_czMX9X6MXYBcr9WSPeiDw@mail.gmail.com>
- <20170610082534.6437ifexzly4oqg6@sigill.intra.peff.net>
- <CAJZjrdXCHVKQOxR=+z5cOkieKzE-iSMta--kHVjSYXuansb34Q@mail.gmail.com>
- <20170610102217.vxf6tsrdfp6srupr@sigill.intra.peff.net>
- <1c04d689-6796-17d1-e058-18874768c22a@gmail.com>
- <xmqqpoe9p6bn.fsf@gitster.mtv.corp.google.com>
-From:   liam Beguin <liambeguin@gmail.com>
-Message-ID: <2217b9a1-dc8c-635a-649e-eae2dec5aaa5@gmail.com>
-Date:   Mon, 12 Jun 2017 23:42:44 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+Cc:     git@vger.kernel.org, avarab@gmail.com,
+        Vincent Guittot <vincent.guittot@linaro.org>
+Subject: Re: [PATCH] send-email: Add tocmd option to suppress-cc
+Message-ID: <20170613034337.GF5297@vireshk-i7>
+References: <6367777092d93a62cc83c444061dde853ba3369e.1495107179.git.viresh.kumar@linaro.org>
+ <20170612043313.GE5297@vireshk-i7>
+ <xmqq8tkxp4nw.fsf@gitster.mtv.corp.google.com>
+ <xmqqmv9dnkut.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqpoe9p6bn.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqmv9dnkut.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, 
+On 12-06-17, 11:04, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Viresh Kumar <viresh.kumar@linaro.org> writes:
+> >
+> >> On 18-05-17, 17:05, Viresh Kumar wrote:
+> >>> This adds tocmd option to suppress-cc command which already supports
+> >>> cccmd and others.
+> >>> 
+> >>> Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+> >>> ---
+> >>>  Documentation/git-send-email.txt | 1 +
+> >>>  git-send-email.perl              | 8 ++++----
+> >>>  2 files changed, 5 insertions(+), 4 deletions(-)
+> >>
+> >> Ping !!
+> >
+> > Pong?
+> >
+> > I didn't get the impression that in the discussion that led to your
+> > patch (or in any response to the patch) we established that it is a
+> > good idea to change the behaviour of suppress-cc unconditionally
+> > like this patch does.
 
-Thanks for the feedback. I'll be sending a patch with the updates shortly!
+Yeah, there were no conclusions there but we agreed that we have a
+problem to solve. And this patch tried one of the ways.
 
-On 12/06/17 11:35 AM, Junio C Hamano wrote:
-> liam Beguin <liambeguin@gmail.com> writes:
+> I think suppress-cc that suppresses cccmd output is very sensible
+> (after all, it is about suppressing CC and cccmd is about producing
+> CC), but I am not convinced that it is a good idea to suppress tocmd
+> (which is about producing To) via suppress-cc.
 > 
->> +static int stash_count_refs(struct object_id *ooid, struct object_id *noid,
->> +			    const char *email, timestamp_t timestamp, int tz,
->> +			    const char *message, void *cb_data)
->> +{
->> +	int *c = cb_data;
->> +	(*c)++;
->> +	return 0;
->> +}
+> Going back to the core part of your change, i.e.
 > 
-> Count up, and tell the caller to keep going by returning 0.  That
-> sounds sane.
+> -	foreach my $entry (qw (cccmd cc author self sob body bodycc)) {
+> +	foreach my $entry (qw (tocmd cccmd cc author self sob body bodycc)) {
 > 
->> +static void wt_longstatus_print_stash_summary(struct wt_status *s)
->> +{
->> +	int stash_count = 0;
->> +
->> +	for_each_reflog_ent("refs/stash", stash_count_refs, &stash_count);
-> 
-> And do so with a counter initialized to 0.  Also sane.
-> 
->> +	if (stash_count > 0)
->> +		status_printf_ln(s, GIT_COLOR_NORMAL,
->> +				 Q_("Your stash currently has %d commit",
->> +				    "Your stash currently has %d commits", stash_count),
->> +				 stash_count);
-> 
-> Conceptually, the contents of the stash are *not* commits, even
-> though the implementation happens to use a commit to represent each
-> stash entry.  Perhaps "has %d entry/entries" is an improvement, but
-> a quick scanning of an early part of "git stash --help" tells me
-> that
+> to think about it a bit more, I notice that all the existing ones
+> are about CC.  So I am not just not convinced that tocmd belongs to
+> the same class.  I am inclined to say that it smells quite different
+> from others.
 
-what's different between a stash and a commit? 
+That's right but how do we solve this problem then?
 
-> 
-> 	You have 1 stash / You have 4 stashes
-> 
-> would be the best, as the documentation calls each entry "a stash".
-> E.g. "list" is explained to list "the stashes", and "show <stash>"
-> is explained to show the changes recorded in "the stash".
-> 
->> +}
->> +
->>  static void wt_longstatus_print_submodule_summary(struct wt_status *s, int uncommitted)
->>  {
->>  	struct child_process sm_summary = CHILD_PROCESS_INIT;
->> @@ -1536,6 +1557,7 @@ static void wt_longstatus_print(struct wt_status *s)
->>  	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
->>  	const char *branch_status_color = color(WT_STATUS_HEADER, s);
->>  	struct wt_status_state state;
->> +	int show_stash = 0;
->>  
->>  	memset(&state, 0, sizeof(state));
->>  	wt_status_get_state(&state,
->> @@ -1641,6 +1663,8 @@ static void wt_longstatus_print(struct wt_status *s)
->>  		} else
->>  			printf(_("nothing to commit, working tree clean\n"));
->>  	}
->> +	if (!git_config_get_bool("status.showStash", &show_stash) && show_stash)
->> +		wt_longstatus_print_stash_summary(s);
->>  }
-> 
-> Try to get "status.showstash" as a boolean, and only when it
-> succeeds and the value is true, give this extra info (i.e. when the
-> variable does not exist, do not complain and do not show).  Sounds
-> sensible.
-> 
-> Overall the logic looks good to me; just the phrasing is
-> questionable, relative to the existing documentation.
-> 
-> Thanks.
-> 
+Add another optional argument like suppress-to ? I thought that it
+would be better to override suppress-cc rather than attempting any
+such thing.
 
-Thanks,
+I am fine with any solution that address the concerns raised by this
+patch though.
 
- - Liam 
+-- 
+viresh
