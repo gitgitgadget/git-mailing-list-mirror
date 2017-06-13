@@ -2,102 +2,226 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D08A1FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 20:58:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B5501FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 21:03:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752644AbdFMU6W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 16:58:22 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:34463 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752109AbdFMU6V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 16:58:21 -0400
-Received: by mail-io0-f196.google.com with SMTP id a96so14293695ioj.1
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 13:58:21 -0700 (PDT)
+        id S1753902AbdFMVD2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 17:03:28 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33629 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753742AbdFMVD0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 17:03:26 -0400
+Received: by mail-pf0-f170.google.com with SMTP id 83so73425684pfr.0
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 14:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=c+9tqsNjS/WS9RpSUMP+YTKXRAc29Mz8sDW3i8OVJx4=;
-        b=R/U4v9HBU+ikQT/0lcpcj5W3X0KyTe1RKE32ndYNb82KHlbxdMSUctZRs3KAXrAVlY
-         TT0AmImBxM3Ynz/d4TDtM+ScB4g+4SPtmlRrqMsSORZ33E02eYaGrvdMeOr9QRtiPgdf
-         TLyRMAcXktC9XF1s66s4Z2aThirGd95US3bO+wB59HLnch5y+ZmigKI4P+3t29brskgu
-         ifXwen0y2YoU4F5E9632Eo6B5fR50wAoeAnBT8i6Wc1FRqwBw3v3ZUOlta437h93bYKN
-         iw03o5aOgwFRusa6jK+fFeKvWZ5FCj272VhHw52p0A0dpEgBFYYLtsGyKcLNA08X6aBU
-         O2sA==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=+tZBgePLGjSzivAu6OKu0LEo6J++ZBZZv/r6ya/VDv4=;
+        b=CNA/PHI9JNFjo7eZL+gfLALc4oWYOvY1N5kA05vmPHwjem08/90g5MQjlG2TjLw+e6
+         9Snbv7k8PYwmFjPQd9IDz/78HCCQidbzLEZrxPvNgm9CpmgcFxQdJphIIjLXdifBTArM
+         cSOLWZxaGiVq9QjBrwuPvGNGuRd8wRjHeHti675kahlz+2AWTA7A/0ObZx8QIFNIon+/
+         FG9VBplZSb9HQefhP1Yvl6SvSMa6oAYiyn/GQDrM0a7SO01mpdcGosRxcGyanJjyWA/C
+         fOoZz2cCszKGjEkDbaa5vyjPwY4fzQcv1vcjoDMZ/nvCm9kYpvnbtTJEtDiSzSC2s2E2
+         0QOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=c+9tqsNjS/WS9RpSUMP+YTKXRAc29Mz8sDW3i8OVJx4=;
-        b=kyVGs/VLL4qQRspjfADH40I5OA+tHh0KDeCxcKGdTtqmbiQZ/DeAftO8wG7tyUAPYy
-         FeKHua8QPyn/zS0kj+dkRJ7yiIo5S6d/ky78GxJweBbSPdr0Y7EjaLkMhAJVjRXUZjYT
-         ykTIF0pc/4F5iUCR7ReNhesvCUXDSQdfNCsJxQ7X0FIYitSJDdqoEDrNZ7J0p8m8zkNq
-         5rG9vtP6QPOzEg+CKiY3Dgb8t54tkLt95MDtIbSMIYwcsqW1ekbvQyim3px98+xYhHvl
-         UPB35M2BDZsjqTkyx9x/YcWBMsjv0jVeImjJ8u53/5l5ZT0Labb75rr5KrTr0zNnYK1B
-         VKUA==
-X-Gm-Message-State: AKS2vOz78mZDHu2Es1C/VTdI19ZejkoXvEq/UT4e5yMPda74Z/+tHa9T
-        UmC3eQ7WFcVf6g==
-X-Received: by 10.107.28.76 with SMTP id c73mr2381372ioc.142.1497387500925;
-        Tue, 13 Jun 2017 13:58:20 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id 73sm69918ion.11.2017.06.13.13.58.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 13:58:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Joel Teichroeb <joel@teichroeb.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v4 3/5] stash: add test for stashing in a detached state
-References: <20170608005535.13080-1-joel@teichroeb.net>
-        <20170608005535.13080-4-joel@teichroeb.net>
-        <xmqqa85b65a8.fsf@gitster.mtv.corp.google.com>
-        <CA+CzEk8U6P58OqruPkP1HePFurNWjgf=Q-h=Hu57zoHpDeenmA@mail.gmail.com>
-Date:   Tue, 13 Jun 2017 13:58:17 -0700
-In-Reply-To: <CA+CzEk8U6P58OqruPkP1HePFurNWjgf=Q-h=Hu57zoHpDeenmA@mail.gmail.com>
-        (Joel Teichroeb's message of "Tue, 13 Jun 2017 12:48:54 -0700")
-Message-ID: <xmqq1sqn61w6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=+tZBgePLGjSzivAu6OKu0LEo6J++ZBZZv/r6ya/VDv4=;
+        b=DPDKH3gxwM2cKS7NiOn4EUSqtGG5VDU26XvUU4YHb4+a9i9wIanHyEeV6XC8xky7Hn
+         7JWbO4G+rph3/aGxFklqewmT2xvWahVXmojrsrizD0RLO9pxGdXWB3gNuslNgxo5ha89
+         P9/N6fVGZ94lORKGvoz3ZOJvotkl1jSucYdOvqsifjqFioqw2Luo1LDHxZ7PHejGCRtR
+         goWRpWhf5K2B+iEF1IHvmr7hk3TZxTd2BmtTO/dQn+svFtRxfcNi9lO7oJ5VJ1GTnnXC
+         cKnaQlbnk6ShGRY5n7P0+6kikaORt850M1sgqQjXWWh+H685WSZIoGu87kqWFW3LJ+Nw
+         IOnQ==
+X-Gm-Message-State: AKS2vOwDfoCDlYHUHu2gFOLl28204++vmMukBtj8MbIT/swVHpM1COQB
+        muojY1ry4dm56XTsJ9RAyw==
+X-Received: by 10.84.233.204 with SMTP id m12mr1544690pln.273.1497387805600;
+        Tue, 13 Jun 2017 14:03:25 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id b65sm29154065pfm.29.2017.06.13.14.03.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 13 Jun 2017 14:03:24 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Johannes.Schindelin@gmx.de, peff@peff.net,
+        jrnieder@gmail.com, Brandon Williams <bmwill@google.com>
+Subject: [PATCH v2 0/6] config.h
+Date:   Tue, 13 Jun 2017 14:03:15 -0700
+Message-Id: <20170613210321.152978-1-bmwill@google.com>
+X-Mailer: git-send-email 2.13.1.518.g3df882009-goog
+In-Reply-To: <20170612213406.83247-1-bmwill@google.com>
+References: <20170612213406.83247-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Joel Teichroeb <joel@teichroeb.net> writes:
+Changes in v2:
+ * Fix a small nit in builtin/config.c that Jonathan pointed out.
+ * Added two patches which ensure that the repository wide config is properly
+   read by providing 'commondir' as a field in the 'config_options' struct.
 
->>> +test_expect_success 'create in a detached state' '
->>> +     test_when_finished "git checkout master" &&
->>> +     git checkout HEAD~1 &&
->>> +     >foo &&
->>> +     git add foo &&
->>> +     STASH_ID=$(git stash create) &&
->>> +     HEAD_ID=$(git rev-parse --short HEAD) &&
->>> +     echo "WIP on (no branch): ${HEAD_ID} initial" >expect &&
->>> +     git show --pretty=%s -s ${STASH_ID} >actual &&
->>> +     test_cmp expect actual
->>> +'
->>
->> Hmph.  Is the title automatically given to the stash the
->> only/primary thing that is of interest to us in this test?  I think
->> we care more about that we record the right thing in the resulting
->> stash and also after creating the stash the working tree and the
->> index becomes clean.  Shouldn't we be testing that?
->
-> In this case, the title is really what I wanted to test. There are
-> other tests already to make sure that stash create works, but there
-> were no tests to ensure that a stash was created with the correct
-> title when not on a branch.
+Brandon Williams (6):
+  config: create config.h
+  config: remove git_config_iter
+  config: don't include config.h by default
+  config: don't implicitly use gitdir
+  setup: teach discover_git_directory to respect the commondir
+  config: respect commondir
 
-Ah, OK.
+--- interdiff with 'origin/bw/config-h'
 
-Thanks.
+diff --git a/builtin/config.c b/builtin/config.c
+index 90f49a6ee..8b6e227c5 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -539,8 +539,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		config_options.respect_includes = !given_config_source.file;
+ 	else
+ 		config_options.respect_includes = respect_includes_opt;
+-	if (have_git_dir())
+-		config_options.git_dir = get_git_common_dir();
++	if (!nongit) {
++		config_options.commondir = get_git_common_dir();
++		config_options.git_dir = get_git_dir();
++	}
+ 
+ 	if (end_null) {
+ 		term = '\0';
+diff --git a/cache.h b/cache.h
+index fd45b8c55..a4176436d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -530,7 +530,8 @@ extern void setup_work_tree(void);
+  * appended to gitdir. The return value is either NULL if no repository was
+  * found, or pointing to the path inside gitdir's buffer.
+  */
+-extern const char *discover_git_directory(struct strbuf *gitdir);
++extern const char *discover_git_directory(struct strbuf *commondir,
++					  struct strbuf *gitdir);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+ extern char *prefix_path(const char *prefix, int len, const char *path);
+diff --git a/config.c b/config.c
+index 4e2842689..81151fb54 100644
+--- a/config.c
++++ b/config.c
+@@ -1544,8 +1544,8 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	char *user_config = expand_user_path("~/.gitconfig", 0);
+ 	char *repo_config;
+ 
+-	if (opts->git_dir)
+-		repo_config = mkpathdup("%s/config", opts->git_dir);
++	if (opts->commondir)
++		repo_config = mkpathdup("%s/config", opts->commondir);
+ 	else
+ 		repo_config = NULL;
+ 
+@@ -1609,8 +1609,11 @@ static void git_config_raw(config_fn_t fn, void *data)
+ 	struct config_options opts = {0};
+ 
+ 	opts.respect_includes = 1;
+-	if (have_git_dir())
+-		opts.git_dir = get_git_common_dir();
++	if (have_git_dir()) {
++		opts.commondir = get_git_common_dir();
++		opts.git_dir = get_git_dir();
++	}
++
+ 	if (git_config_with_options(fn, data, NULL, &opts) < 0)
+ 		/*
+ 		 * git_config_with_options() normally returns only
+@@ -1652,11 +1655,13 @@ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
+ void read_early_config(config_fn_t cb, void *data)
+ {
+ 	struct config_options opts = {0};
+-	struct strbuf buf = STRBUF_INIT;
++	struct strbuf commondir = STRBUF_INIT;
++	struct strbuf gitdir = STRBUF_INIT;
+ 
+ 	opts.respect_includes = 1;
+ 
+-	if (have_git_dir())
++	if (have_git_dir()) {
++		opts.commondir = get_git_common_dir();
+ 		opts.git_dir = get_git_dir();
+ 	/*
+ 	 * When setup_git_directory() was not yet asked to discover the
+@@ -1666,12 +1671,15 @@ void read_early_config(config_fn_t cb, void *data)
+ 	 * notably, the current working directory is still the same after the
+ 	 * call).
+ 	 */
+-	else if (discover_git_directory(&buf))
+-		opts.git_dir = buf.buf;
++	} else if (discover_git_directory(&commondir, &gitdir)) {
++		opts.commondir = commondir.buf;
++		opts.git_dir = gitdir.buf;
++	}
+ 
+ 	git_config_with_options(cb, data, NULL, &opts);
+ 
+-	strbuf_release(&buf);
++	strbuf_release(&commondir);
++	strbuf_release(&gitdir);
+ }
+ 
+ static void git_config_check_init(void);
+diff --git a/config.h b/config.h
+index c70599bd5..63b92784c 100644
+--- a/config.h
++++ b/config.h
+@@ -30,6 +30,7 @@ enum config_origin_type {
+ 
+ struct config_options {
+ 	unsigned int respect_includes : 1;
++	const char *commondir;
+ 	const char *git_dir;
+ };
+ 
+diff --git a/setup.c b/setup.c
+index e99a82cbe..7bbb8736f 100644
+--- a/setup.c
++++ b/setup.c
+@@ -946,10 +946,12 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 	}
+ }
+ 
+-const char *discover_git_directory(struct strbuf *gitdir)
++const char *discover_git_directory(struct strbuf *commondir,
++				   struct strbuf *gitdir)
+ {
+ 	struct strbuf dir = STRBUF_INIT, err = STRBUF_INIT;
+ 	size_t gitdir_offset = gitdir->len, cwd_len;
++	size_t commondir_offset = commondir->len;
+ 	struct repository_format candidate;
+ 
+ 	if (strbuf_getcwd(&dir))
+@@ -974,8 +976,10 @@ const char *discover_git_directory(struct strbuf *gitdir)
+ 		strbuf_insert(gitdir, gitdir_offset, dir.buf, dir.len);
+ 	}
+ 
++	get_common_dir(commondir, gitdir->buf + gitdir_offset);
++
+ 	strbuf_reset(&dir);
+-	strbuf_addf(&dir, "%s/config", gitdir->buf + gitdir_offset);
++	strbuf_addf(&dir, "%s/config", commondir->buf + commondir_offset);
+ 	read_repository_format(&candidate, dir.buf);
+ 	strbuf_release(&dir);
+ 
+@@ -983,6 +987,7 @@ const char *discover_git_directory(struct strbuf *gitdir)
+ 		warning("ignoring git dir '%s': %s",
+ 			gitdir->buf + gitdir_offset, err.buf);
+ 		strbuf_release(&err);
++		strbuf_setlen(commondir, commondir_offset);
+ 		return NULL;
+ 	}
+
+-- 
+2.13.1.518.g3df882009-goog
+
