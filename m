@@ -2,103 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE4BD1FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 17:53:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 158841FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 17:55:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753549AbdFMRxi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 13:53:38 -0400
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:34866 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752081AbdFMRxi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 13:53:38 -0400
-Received: by mail-wr0-f172.google.com with SMTP id q97so154547589wrb.2
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:53:37 -0700 (PDT)
+        id S1753498AbdFMRzK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 13:55:10 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:33146 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753164AbdFMRzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 13:55:06 -0400
+Received: by mail-pg0-f49.google.com with SMTP id f185so63937819pgc.0
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=oOD1j85+jW5Wg9xmPilqPOuEGe7O51BVSwtPBr8cRm4=;
-        b=iXvVEt2h2niBON8x4Wg9oRTZ3hEkl4gX9Q1+k9Ukt/jnnS2AAd4T9BuPV3Fjf7vvtI
-         CHfShVG90Kh0Lo78SBCmszR1mB0l6p9GSU3e95cQmds9yLgvFDGj9LLeiGCY/n2LcRtL
-         +bWM4yi5bDttpgKFYkWUDZ7VmXRzqfYKnatvVHWhjb0TJ7vDbsJl64lXUGWnwaO5S0jc
-         VWAozaTnsJ4VGcqblC+VDkBo/Hfo9NM4yow5Hzj6p09T3m5UeEW4jVeeCJX+dpVNJDM0
-         kdwLuOx7aVbryRj3mXdg0m5M9085x3mbSqEtAC4qxwRiC9EVTciUi5TwWCoPZ3b+CckP
-         vCEw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=yBxQPV3CLtgdFcd6+d6xZAVjiBQpuTUHGqfgobtgKaE=;
+        b=HPN/zv51tnM/lbNHW7vDxI9hXReL3v6JFcodiwkk2aGVHxtRO2ZM0rojsXx4t/PwGU
+         DXiPv9Tjw7fJ3EVzS7r0MBB6ZtD/qR7GLflQAv7Ojn9g9vqA36lhiuW5USosi6+fIVtL
+         SlhNEn/uu5JD2dr4HxejoihNrj4bJfJtJ/z9H4XC5wv74FeyIXgq0Pj4Vl7Skzqh72YW
+         p81uPEUmLgDPEu7nIKs5YZHTTlPmyDHSfvQ5S0erXsx3RzZeWzgkZGBCZpopCxuC8TZO
+         DOJsWUzIzkGHuFGY7O4b4NlhdS9/o8nrP6x9rclsjnioNqPfU6QO15KbpP++G9Ifzhut
+         1MBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=oOD1j85+jW5Wg9xmPilqPOuEGe7O51BVSwtPBr8cRm4=;
-        b=E5TlMwYRRgiNlQYjgqDAkVhEsYFspHO/DbCC7iHlSJyKWQCKbI/STRSuVf6AaZAgDt
-         uoq0OeXsuTqhOC3uyfrQKrkNe1jQNVtsZswiGid92EJocJZO+Ff+wCgfUenX4gjuKGCq
-         GNjuoA15YnuhzAThYxvsh11OCnFooZaKolNGYTKiEYbbCoBeZBjRmaxJFwDBJIFVIuNE
-         WeDD5QBc/djjE4IwqVOwfJcusYaE4Q0e3KUqyq+QqirdMX8oTcNRMaOWVDsycr5q33lY
-         azskM03yKFWrWhi0aL5130G4S3OgV+MJ/q4OM3EmEmiI+H7ZAy2pKOBKISFSf+3edJ1R
-         gNNQ==
-X-Gm-Message-State: AKS2vOwNwXAcXQRfHvmVYtO8Kjws4X4nKQvgmGZfhU4RD5LJq1CW3+nR
-        0UMyebX0OAT4sQ==
-X-Received: by 10.80.132.99 with SMTP id 90mr873823edp.50.1497376416713;
-        Tue, 13 Jun 2017 10:53:36 -0700 (PDT)
-Received: from snth ([92.109.130.42])
-        by smtp.gmail.com with ESMTPSA id f22sm7262755edf.59.2017.06.13.10.53.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Jun 2017 10:53:35 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dKq0U-0000ZA-UO; Tue, 13 Jun 2017 19:53:34 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=yBxQPV3CLtgdFcd6+d6xZAVjiBQpuTUHGqfgobtgKaE=;
+        b=tRcUO6EeIjBU5QvbpKBh9Op3daeuiX/MTpnp2lhPodb/PvnkQ7cRpdjZt/u+BIqopt
+         G8o8UjMdYUQbbYrYKWA8tMAP49GdExOeOWOLBOQcXMzKmPR2U9PmaKDq9YKq8mWubZOe
+         9OatkoNGGAoJHTBO5EYgZFt0Y2pNP97je68CcC7NHPGM8uEq1E1LzjeQ273XyCd3qAaH
+         C8APYwmMJgjhBrGzbTcTMa8yHGMRXMbCz326Pu0AorP0RjX+NNOA6CuaIRL8wTXhm/08
+         Ngfn+FOizdItYvIBZH1fEAiuaS65CcKcMh9vFNatPWp9LXvI0A1SP1EwHQoRzDjDD+BG
+         rBLw==
+X-Gm-Message-State: AKS2vOztuU6NmfQgXy7mnLO+Qr+Dery6FERxmUzxH14Rvi5ZSFEeNmzB
+        LhUn5YDFQ+cIAA==
+X-Received: by 10.84.224.1 with SMTP id r1mr933642plj.262.1497376504699;
+        Tue, 13 Jun 2017 10:55:04 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:e453:89d5:deb:c7b6])
+        by smtp.gmail.com with ESMTPSA id b1sm30517820pfl.70.2017.06.13.10.55.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 13 Jun 2017 10:55:03 -0700 (PDT)
+Date:   Tue, 13 Jun 2017 10:55:01 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     Sahil Dua <sahildua2305@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/3] branch: add test for -m renaming multiple config sections
-References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com> <0102015ca23f0529-c860f75d-e3bb-48b0-b2c0-502f7ab9d667-000000@eu-west-1.amazonses.com> <xmqqwp8f7r01.fsf@gitster.mtv.corp.google.com> <CACBZZX5e1cGKeHZhA1vWebdZek=a+TdYzXc5GuXaDi8SpL1YXw@mail.gmail.com> <xmqq7f0f7pnt.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <xmqq7f0f7pnt.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 13 Jun 2017 19:53:34 +0200
-Message-ID: <87poe73hb5.fsf@gmail.com>
+Subject: Re: [PATCH/RFC] branch: add tests for new copy branch feature
+Message-ID: <20170613175501.GH133952@aiede.mtv.corp.google.com>
+References: <0102015c5146c8ca-e5144538-326b-47b8-8c81-af31da4cdfe0-000000@eu-west-1.amazonses.com>
+ <CACBZZX4LpRK5q+cxToWqGeW2ZgN4ggo4h9SJpx0mZkZUR15jNw@mail.gmail.com>
+ <CALiud+mGovAoPriJxzCB93jwkChyRb49yxVtNijfag2zx-jZ0Q@mail.gmail.com>
+ <CACBZZX6LcTzFKTe0fENj95Vm7GrxT5HHs3pzrqajG0XApN-rbw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX6LcTzFKTe0fENj95Vm7GrxT5HHs3pzrqajG0XApN-rbw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Tue, Jun 13 2017, Junio C. Hamano jotted:
+∆var Arnfjˆr Bjarmason wrote:
 
-> √Üvar Arnfj√∂r√∞ Bjarmason <avarab@gmail.com> writes:
+> So the reason we have this for -m is:
 >
->> On Tue, Jun 13, 2017 at 7:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Indenting using <<- would make it easier to read.  I.e.
->>>
->>>         cat >config.branch <<-\EOF &&
->>>         ;; Comment for ...
->>>         [branch "source"]
->>>                 ;; Comment for ...
->>>         ...
->>>         EOF
->>
->> I should have added a comment for that, I can't find any portable (but
->> suggestions welcome) way to do that and preserve the indentation, so
->> the test_cmp would still succeed if the moving/renaming function
->> munged all leading whitespace in the config with -\EOF as opposed to
->> \EOF.
+>     commit 3f59481e33
+>     Author: Jonathan Nieder <jrnieder@gmail.com>
+>     Date:   Fri Nov 25 20:30:02 2011 -0600
 >
-> Ah, I see why it is done that way.  You could indent the lines in
-> the configuration file with SPs (<<- strips only HTs, no?)
-
-Sure, we'll do that for v2.
-
->> It's just a sufficiently large number, I thought -A was portable
->> enough after grepping the test suite, but on closer inspection it
->> turns out those were all git-grep invocations, oops. Yeah all I need
->> here is all lines after a line matching a given string, so that sed
->> command works, will fix it up to use that.
+>     branch: allow a no-op "branch -M <current-branch> HEAD"
 >
-> Oops, indeed ;-)  Thanks.
+>     Overwriting the current branch with a different commit is forbidden, as it
+>     will make the status recorded in the index and the working tree out of
+>     sync with respect to the HEAD. There however is no reason to forbid it if
+>     the current branch is renamed to itself, which admittedly is something
+>     only an insane user would do, but is handy for scripts.
+>
+> My understanding of that last part is that Jonathan/someone (see
+> reported-by in that patch) had some script which was renaming
+> branches, and it was easier for whatever reason to just make it no-op
+> if the rename would have yielded the same result as doing nothing at
+> all.
+>
+> Most likely your implementation will consist of just re-using the
+> logic in rename_branch() (and renaming it to e.g.
+> copy_or_rename_branch() ...) so you could just re-use the no-op
+> behavior we use for -m, or if there's some reason not to no-op and
+> error instead for -c we could just do that, but in any case this case
+> of `git branch -c master master` or `git branch -c currentbranch`
+> should be tested for.
+
+I may be missing some context, but notice that the above mentioned
+commit is about -M, not -m.
+
+Thanks and hope that helps,
+Jonathan
