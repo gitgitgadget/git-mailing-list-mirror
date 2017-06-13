@@ -2,106 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 958471FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 22:16:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE0251FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 22:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753863AbdFMWP6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 18:15:58 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34887 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752615AbdFMWP5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 18:15:57 -0400
-Received: by mail-wr0-f193.google.com with SMTP id z45so3607824wrb.2
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 15:15:57 -0700 (PDT)
+        id S1753448AbdFMWTR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 18:19:17 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:35678 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752452AbdFMWTQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 18:19:16 -0400
+Received: by mail-pg0-f50.google.com with SMTP id k71so66288226pgd.2
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 15:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bB4qY4bNWTo3+Z+YVpn8Pte+CtamRNoz0GQIzOwCQ+I=;
-        b=pwX3T5QEPxOX2CxcKXrJ/Ugexp+7fbf+akz07G31eOfsLh2Ww0TJMLsmh841PlALVZ
-         4+6Ns/t5kPw90w8aaA1bgjUCGEs2oI7qC6ahmK3X2hKIcW90SkP7KhARdgagQ8x+pRH+
-         cNtjbxQSBsgxG0UQxkjMwBg34ZxSr+MviB5pQ2cJFx/u6pgBgU7XAZgRt7VzEMZBn+Tz
-         PomjEMQwH+b3tYZLSfSn+JpjOIIYo2SD1403rBFzk6nAtneAruO3p3ix4VF3z46mMA0q
-         9UgW7NQjf6ruHM6GTB7NJA07XGlIjJQmWyQHIMqT40TrNMe82wIP9vQ09dBiZ/qdplQN
-         Lm0A==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=26XDycUj3TOmmLF/lJhP2WxDuRFFyyDzPh5RByS20sk=;
+        b=ooSkMbwuOlkjA+chHsKHCOnYJKuMriRW6VcSkgQThb6OrlRsz6ey4LGnZiWxHF2w/S
+         +sL7iLVjFaNPOO9QUXJpopqgTXQHhFY9XhtfC4jF+aU3gwMRUxueGJqPAowd6hvgwUyr
+         LkOaBGX1nVH0rUeUMi41RaSly9w1QNMxDa562b6/NjuL9+y1rGKN5TdqvTzHNpSKkzx+
+         VAmGHdXMhwR+bMgwFGhK04nhCymDh+QQW0n6ZbW0CMVVw8J8qhsDOfBaX/tUXR/STENa
+         trE+EHIUthWa9EoFcsa7AVayxY48Woz946v0eGwdwicbyNERxzmLhzImLWqqz+NNM1Qc
+         wIog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bB4qY4bNWTo3+Z+YVpn8Pte+CtamRNoz0GQIzOwCQ+I=;
-        b=QFO4m8BGhpYhIhjlyJrPOOI62ytai5FBkPPuHa2+WPu1KnKbgWDZd/hZewKi2w2rdw
-         e2XCo4P9ZuCGETh8Y/+a5n/UX0DleL+k9fypshThX2xMumy/NKKMFXPx8IgG2WbZ/w9E
-         VoooqMEH7MXzGtigDQaDCcxAIJfk6+mtWJRyuRKz63R7ZV22PWutCq4YFjTcUcek8XY/
-         YV4PxortIunqloDjdpM8y7OcSF/xsrffiWc9aqLj5wbGy913N/eMoD955KxBU0mXpRDv
-         KkBMRZbGViSTlrkxYWoMi49fnatcVPk6Da8Ch0J6O8KmLeuHyB+UZZohgz1IPwMd2bvb
-         FNnQ==
-X-Gm-Message-State: AKS2vOzYBVajRw/H5tiiBHsnTQ2Zh2BOK5JkRhZUdIgxE8r/2laWDUG2
-        D1GyJbB71cM2sbOg6rw=
-X-Received: by 10.28.8.72 with SMTP id 69mr1412290wmi.102.1497392155913;
-        Tue, 13 Jun 2017 15:15:55 -0700 (PDT)
-Received: from arrakeen.fritz.box ([2001:a61:3406:1800:9037:6bc3:44c4:8640])
-        by smtp.gmail.com with ESMTPSA id 62sm14250785wrs.18.2017.06.13.15.15.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 15:15:54 -0700 (PDT)
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     git@vger.kernel.org
-Cc:     asheiduk@gmail.com, tboegi@web.de,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3] doc: do not use `rm .git/index` when normalizing line endings
-Date:   Wed, 14 Jun 2017 00:15:06 +0200
-Message-Id: <20170613221506.32732-1-asheiduk@gmail.com>
-X-Mailer: git-send-email 2.13.0
-In-Reply-To: <20170610090719.8429-1-asheiduk@gmail.com>
-References: <20170610090719.8429-1-asheiduk@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=26XDycUj3TOmmLF/lJhP2WxDuRFFyyDzPh5RByS20sk=;
+        b=k/5gwT6oo3qmj11iyIYs4jG5q8yNLQ/Bl/V5buFb3yJhd1yAqRLzjhdCN1wHPe2ydZ
+         2Mh2oP6R+ekx+okx2SRNZ6um41daKQVBKj5RaAfmGpoL7EZjfxlpd3MzbxEgj3aEtnFP
+         hEa78zO7Exwy8uyigY+v6qwyA9EVxQhtLY8asaDFbTYiHtgyXHtztjeVCka/z3iwFEMJ
+         FI/TwPHl+DifGIrJeThPIJcc6k7S2pbW/6GCLi/yVE/0wXseOTKVCsvTsPJ/1GcQXXts
+         hAcy0eRt4LSDNE0bK/yEFOx+bHJzTlQ2Fm1RKGw+7IBEGf5dnGfSO7E4KuNV45GlEL8o
+         0taw==
+X-Gm-Message-State: AKS2vOzoR3vbIOLaABcDAjyRg4/t0+hSEieG48ma8vzwhZb9PQuDhP8G
+        sfp59fxRimkltfGm8B55GJmRtVRDXr82
+X-Received: by 10.99.55.84 with SMTP id g20mr1213873pgn.243.1497392355760;
+ Tue, 13 Jun 2017 15:19:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.100.218.134 with HTTP; Tue, 13 Jun 2017 15:19:15 -0700 (PDT)
+In-Reply-To: <CA+P7+xpCWUBap757N45DrGjvh+v51dg=A9MNOgN8xfVDqZtvog@mail.gmail.com>
+References: <xmqq1sqzkrui.fsf@gitster.mtv.corp.google.com> <CAGZ79kY2Z-fJYxczbzheu1hChLkKkdjEcDMwsP-hkN0TjUBotQ@mail.gmail.com>
+ <xmqq8tl5apkk.fsf@gitster.mtv.corp.google.com> <CA+P7+xpvZDHum-A4omMySTebgBLFzhkpD=DiL-_Mm_Qv-OkMaw@mail.gmail.com>
+ <CA+P7+xpCWUBap757N45DrGjvh+v51dg=A9MNOgN8xfVDqZtvog@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 13 Jun 2017 15:19:15 -0700
+Message-ID: <CAGZ79kZU-QGYAiv+9tK9UoujuLVD8Ejar=zaHVm8YR2p4cbgOQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2017, #03; Mon, 5)
+To:     Jacob Keller <jacob.keller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When illustrating how to normalize the line endings, the
-documentation in gitattributes tells the user to `rm .git/index`.
+On Wed, Jun 7, 2017 at 10:41 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> On Mon, Jun 5, 2017 at 11:52 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>>
+>> I will try to find some time tomorrow to go over it in detail.
+>>
 
-This is incorrect for two reasons:
+https://public-inbox.org/git/20170613023151.9688-1-sbeller@google.com/
+restarted the discussion on this feature, so I assembled a team of color experts
+(my office mates), and we came to this conclusion more or less:
 
- - Users shouldn't be instructed to mess around with the internal
-   implementation of Git using raw file system tools like `rm`.
+There are different ways to implement a move detection. Different
+  people prefer different things, the main contenders are:
 
- - Within a submodule or an additional working tree `.git` is just a
-   file containing a `gitdir: <path>` pointer into the real `.git`
-   directory.  Therefore `rm .git/index` does not work.
+1)    "Zebra mode" (in the last patch known as "alternate" mode.
 
-The purpose or `rm .git/index` instruction is to remove all entries
-from the index without touching the working tree.  The way to do this
-with Git is to use `read-tree --empty`.
+    This alternates between 2 colors for blocks of moved code.
+    This may or may not reset to the first color, but the main features are:
+    a) the whole block is in one color
+    b) adjacent blocks have different colors.
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Torsten Bögershausen <tboegi@web.de>
----
- Documentation/gitattributes.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+For this implementation we need 4 new colors (2 colors for +, 2 for -)
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 473648386..2a2d7e2a4 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -229,7 +229,7 @@ From a clean working directory:
- 
- -------------------------------------------------
- $ echo "* text=auto" >.gitattributes
--$ rm .git/index     # Remove the index to re-scan the working directory
-+$ git read-tree --empty   # Clean index, force re-scan of working directory
- $ git add .
- $ git status        # Show files that will be normalized
- $ git commit -m "Introduce end-of-line normalization"
--- 
-2.13.0
+2)    "Highlight bounds + dimming in between"
 
+    A block is generally in a dim color. Depending on further configuration
+    the boundaries are highlighted. There are different modes for that:
+    a) all boundaries are highlighted
+    b) bounds adjacent to other moved blocks of same sign are highlighted
+    c) no bounds highlighted, moved code is only dimmed.
+        (sucks for seeing blocks)
+    d) [NEW] only the first (last) border line.
+        This is consistent with the thread that started the discussion as
+        this is done in the RFC for blame.
+
+  The configured colors "oldMoved" and "oldMovedAlternative"
+  are assumed that one is highlighting and the other is the dim color.
+
+  Depending on the exact implementation we'd need up to 6 new
+  colors (dim, highlight, highlight alternative for each + and -)
+  The user may configure these to be the same though, e.g.
+  both dims could be 'context'.
+
+3) Combine 1) and 2)
+
+    The algorithm would look like this:
+    a) Find moved blocks
+    b) Take one option from 2) to highlight the bounds. (all bounds
+      or adjacent bounds are the only serious contenders IMHO)
+
+  This needs 8 new colors configured:
+  for each of (new, old):
+    for each of (Zebra black, Zebra white):
+      for each of (dim, highlight):
+        define_color()
+
+The color experts agreed that (3) might be the best solution
+as this gives most flexibility:
+
+    "I would be happy as I can configure the bounds highlighting
+    to not exist, it would degenerate to a pure Zebra, which is
+    very simple to understand. Junio seemed to like (2) a lot, so
+    he would configure both dim colors to be 'context', but configure
+    the highlight colors to be attention drawing. So everybody would
+    be happy. It is also not too many colors, we are good at for loops."
+
+I hope to have summarized this adequately.
+
+Thanks,
+Stefan
