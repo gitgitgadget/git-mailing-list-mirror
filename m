@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D494A1FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 15:25:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC5A41FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 15:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753389AbdFMPZe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 11:25:34 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:36404 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752987AbdFMPZd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 11:25:33 -0400
-Received: by mail-io0-f196.google.com with SMTP id i93so13317450iod.3
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 08:25:33 -0700 (PDT)
+        id S1753482AbdFMPda (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 11:33:30 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:36063 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752781AbdFMPd3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 11:33:29 -0400
+Received: by mail-it0-f65.google.com with SMTP id 185so11932968itv.3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 08:33:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=VR2rGRdrxWyaBzNK9u2mkAAkG/ecPII0UECkxxbLxRE=;
-        b=uzYn/uzSCXoj7OBq7Hryb9oMESexbdfYJ5y07mnar8iGhzXo5a23GHww7NIWR3CSdX
-         V2tIcbwBhBV2EvsviRRVy5pETdWmQbGoG+KV5i0OFJGCXtxiPePMrcCHxBr5EPPxT5i6
-         WwTYOfn2g1NVhOCPcVKRgYclWbeUKx0tEE44yCgDSnSZolk3aP9qTzcMDxhFT3p1cF27
-         IxHnxo5L4T5PIUZsKHo8LAIHUzzhVrahP+NHb5W/KGCadVGPplFes4QyQT8A8os/F6c4
-         J3IM0Lda8tZF4+8D2u+Lt1KKrw8+iA6zYW3KMudRU3Jt1k4ZlVHFCzhsQ6mt1pw0jjgA
-         FPsQ==
+        bh=uDW74GcDrzzwfh/jr/0T405knCuoQ0XUHH5KB27itJI=;
+        b=qJROPrAeTu9NLr4xolqGiRroh5CUe75AMKXPT1Whq7M4AysD0a1ftC7sBsJBHgbbQ9
+         km5mqSoCtaplJ154KHyjKLJ85VXeSrUEIdcUTlTvnakpkxutfCnYAq+lovQz8NOjgWJQ
+         TOcpjJFPUZ3lBZVBYM2rP3O+7Yv1pybl9MVxr0jztlZ/BmZGGKix2kHbUXLzqKjA0P7n
+         7sNbIMUSR45u7vht7oRjsKokZWvi3qcqrhSOLrbLIoN4Q4Us1BNf+ctKUFpzuf1DzWTh
+         0rKAGYZtvmGiF+NqvZmgvC7eMcyAMkSVqsmVjMZqADFh7nUkPlwNnrRbv5BrApunIjPJ
+         8Asw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=VR2rGRdrxWyaBzNK9u2mkAAkG/ecPII0UECkxxbLxRE=;
-        b=NXBLffcRkK3SYDVRasR/Xnoox6uotQo6q13ExRBsJaw3JQZZh4sG+KW8qNTiRkYqmD
-         2j/OIImZEFzNpIJ6Rcgbuvi/TqP9GbDkExtwtRMVzaD+QNS23sPbDKWoU6VT5QpfobL9
-         sGEvB3IEvrj3tIwCs/liTAmmjeWfJANia+ID91o6Y7AplJ8o9EHWP90uB5LgLisgqWHX
-         liK7IqGm53iqQtcl6DXcIroTHyrDDQ8RI57h2Rj2GRZPQWqhQv4gg1rc3P9AWQCur1Zr
-         JDSNEXoIZY3DbHxzTu/qdPdc+2++v66zt1/zDmZTcfglBWUQRLEsSqtuiFI6OzLj2b++
-         BtBg==
-X-Gm-Message-State: AKS2vOx6ivD4z6VK+snKOVxGOJZPLjX2+CT/O+VMWyvnx8ydVwXHEEZW
-        ya8lxV02faSaynmniRo=
-X-Received: by 10.107.136.211 with SMTP id s80mr504401ioi.18.1497367533052;
-        Tue, 13 Jun 2017 08:25:33 -0700 (PDT)
+        bh=uDW74GcDrzzwfh/jr/0T405knCuoQ0XUHH5KB27itJI=;
+        b=sW33HJbTDyZkQZ2fOeChaGAfo42C+LMPA/vm7Exo184t3QU2DdviUFDG3olOdT++kN
+         BaclfryA5yHMG+iqns/SY9gyTei6DGFxf88xd0NZwK6XPt4/nhlW497jgjaIPHLpLuP/
+         ISXwQYNOipP1ZQewVZZnOvLNpDKfIlDCRRLKMpKTrsw3o9cLcJBvHOv+m2y0f5H0rWfI
+         w/zU8KIylt1mMdH70MT4XJzY7MFH4KD/SbE1VWlYLeY/hRiuO1Hy0A6MdO8wgKV4BK33
+         uK7cCkIVjzqh0EX3jshYuf6LEtOTOZDR5IGRPz7tZv7JmsryhPfig9TUkq0+1dCeMBoI
+         /viQ==
+X-Gm-Message-State: AKS2vOwI65Z5Pmf4UIN4w05tynqlFJJ2XbPjiyTb2fT0ewAUhd8lZPi9
+        vWvmyWtUpSoceA==
+X-Received: by 10.36.33.210 with SMTP id e201mr534047ita.112.1497368008553;
+        Tue, 13 Jun 2017 08:33:28 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id b24sm6156166iod.33.2017.06.13.08.25.29
+        by smtp.gmail.com with ESMTPSA id a138sm1076899ioa.15.2017.06.13.08.33.27
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 08:25:30 -0700 (PDT)
+        Tue, 13 Jun 2017 08:33:27 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH] builtin/blame: darken redundant line information
-References: <20170613023151.9688-1-sbeller@google.com>
-Date:   Tue, 13 Jun 2017 08:25:29 -0700
-In-Reply-To: <20170613023151.9688-1-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 12 Jun 2017 19:31:51 -0700")
-Message-ID: <xmqqvanz9afq.fsf@gitster.mtv.corp.google.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: [PATCH] git-stash: fix pushing stash with pathspec from subdir
+References: <6200f6bf1a9ac81d02391b898d203d650c6af962.1497353866.git.ps@pks.im>
+Date:   Tue, 13 Jun 2017 08:33:26 -0700
+In-Reply-To: <6200f6bf1a9ac81d02391b898d203d650c6af962.1497353866.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Tue, 13 Jun 2017 13:38:34 +0200")
+Message-ID: <xmqqr2yn9a2h.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,29 +65,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> When using git-blame lots of lines contain redundant information, for
-> example in hunks that consist of multiple lines, the metadata (commit name,
-> author, timezone) are repeated. A reader may not be interested in those,
-> so darken them. The darkening is not just based on hunk, but actually
-> takes the previous lines content for that field to compare to.
+> The `git stash push` command recently gained the ability to get a
+> pathspec as its argument to only stash matching files. Calling this
+> command from a subdirectory does not work, though, as one of the first
+> things we do is changing to the top level directory without keeping
+> track of the prefix from which the command is being run.
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Fix the shortcoming by storing the prefix previous to the call to
+> `cd_to_toplevel` and then subsequently using `git rev-parse --prefix` to
+> correctly resolve the pathspec. Add a test to catch future breakage of
+> this usecase.
+
+It sounds more like a simple bug than "shortcoming" ;-), and the
+right approach to fix it is to add the original prefix before the
+pathspecs before using them, which is exactly what your patch does.
+Looks good.
+
+I suspect that "rev-parse --prefix" needs a bit of tweak to make it
+truly usable for pathspecs with magic, but that is a totally
+separate issue.
+
+Thanks.
+
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
-
-Not about "blame", but I was trying the --color-moved stuff on
-Brandon's "create config.h" patch and found its behaviour somewhat
-different from what I recall we discussed.  I thought that the
-adjacentbounds mode was invented to dim (i.e. not attract undue
-attention) to most of the moved lines, but highlight only the
-boundary of moved blocks, so I expected most of the new and old
-lines in that patch would be shown in the "context" color, except
-for the boundary between two blocks of removed lines that have gone
-to different location (and similarly two blocks of new lines that
-have come from different location) would be painted in oldmoved and
-newmoved colors and their alternatives.  Instead I see all old and
-new lines that are moved painted in these colors, without any
-dimming.
-
-Is my expectation off?
+>  git-stash.sh     |  3 +++
+>  t/t3903-stash.sh | 16 ++++++++++++++++
+>  2 files changed, 19 insertions(+)
+>
+> diff --git a/git-stash.sh b/git-stash.sh
+> index 2fb651b2b..e7b85932d 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -19,6 +19,7 @@ OPTIONS_SPEC=
+>  START_DIR=$(pwd)
+>  . git-sh-setup
+>  require_work_tree
+> +prefix=$(git rev-parse --show-prefix) || exit 1
+>  cd_to_toplevel
+>  
+>  TMP="$GIT_DIR/.git-stash.$$"
+> @@ -273,6 +274,8 @@ push_stash () {
+>  		shift
+>  	done
+>  
+> +	eval "set $(git rev-parse --sq --prefix "$prefix" -- "$@")"
+> +
+>  	if test -n "$patch_mode" && test -n "$untracked"
+>  	then
+>  		die "$(gettext "Can't use --patch and --include-untracked or --all at the same time")"
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 3b4bed5c9..4046817d7 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -812,6 +812,22 @@ test_expect_success 'stash -- <pathspec> stashes and restores the file' '
+>  	test_path_is_file bar
+>  '
+>  
+> +test_expect_success 'stash -- <pathspec> stashes in subdirectory' '
+> +	mkdir sub &&
+> +	>foo &&
+> +	>bar &&
+> +	git add foo bar &&
+> +	(
+> +		cd sub &&
+> +		git stash push -- ../foo
+> +	) &&
+> +	test_path_is_file bar &&
+> +	test_path_is_missing foo &&
+> +	git stash pop &&
+> +	test_path_is_file foo &&
+> +	test_path_is_file bar
+> +'
+> +
+>  test_expect_success 'stash with multiple pathspec arguments' '
+>  	>foo &&
+>  	>bar &&
