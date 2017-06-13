@@ -2,351 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D411720401
-	for <e@80x24.org>; Tue, 13 Jun 2017 02:59:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D01BA20401
+	for <e@80x24.org>; Tue, 13 Jun 2017 03:42:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751842AbdFMC7s (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Jun 2017 22:59:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38739 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751768AbdFMC7r (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Jun 2017 22:59:47 -0400
-Received: (qmail 27058 invoked by uid 109); 13 Jun 2017 02:59:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 02:59:47 +0000
-Received: (qmail 19300 invoked by uid 111); 13 Jun 2017 02:59:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 12 Jun 2017 22:59:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Jun 2017 22:59:45 -0400
-Date:   Mon, 12 Jun 2017 22:59:45 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH 4/4] config: don't implicitly use gitdir
-Message-ID: <20170613025945.v54vrza2n23tk5pw@sigill.intra.peff.net>
-References: <20170612213406.83247-1-bmwill@google.com>
- <20170612213406.83247-5-bmwill@google.com>
- <20170613010518.GB133952@aiede.mtv.corp.google.com>
- <20170613012337.GH154599@google.com>
- <20170613013817.GE133952@aiede.mtv.corp.google.com>
+        id S1751834AbdFMDms (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Jun 2017 23:42:48 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:34790 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751811AbdFMDmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Jun 2017 23:42:47 -0400
+Received: by mail-it0-f65.google.com with SMTP id 201so11236402itu.1
+        for <git@vger.kernel.org>; Mon, 12 Jun 2017 20:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tDmoiqF6RxoxlvkotqtPgWLMAtaz1QopKErxYQHJrK4=;
+        b=ErxgA0OQ/UwYQigitZEUwUvgsxn8m7RSBM3t+k37arkWDfkNgVnLWU7EW9+T4NXQKi
+         sLksCPP6VsF+ManZylbLEqTZrixV8K1orqR1wy7pTQcqNFFAPWU2tFf9XKLVHfAHKwp6
+         SpVf5GzcMzeww3JspGIddDpRN7vT18XaPcGCURdxQer020MVbidD0dlmZW1HXClpVH1U
+         bXijBqvaXYU9J/Og79cuS3farxEpybGbOPrHYEM6n/1RTzkbVXI7/LYjxFs3hd9ttQyM
+         u0imo8YiSTqZkMQZ9OKJZKbOJrZnZbUp5eDfr9nW6a64k/YOEJuF7XHb0fZmj4R8GVR+
+         rZwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=tDmoiqF6RxoxlvkotqtPgWLMAtaz1QopKErxYQHJrK4=;
+        b=osgMOkcQ4Jvj0uZVq+qBbxcgDSHc6MfIyD3dUXw4AVJWZKSLA5Z/YzGme9MdhuBQ9G
+         wZa3dteCuE5VPmrgEGb9/igxTKw/K2G2x/y2Jp9bfAk66MnweCWYaLh6wyO1YPgWe+1q
+         MhECs86XHRYEf2eguVXbNg3XYD02GY9KqFKfYA93P0b5N3RG5DR4/Lv6RK3Tuio8p17e
+         Pb3SRfvmFpURflC/JUA7iaqgu6HOTxikkDHz4PELD6wl4VjUqFbH8jxRoLZMDeeuNtgq
+         BrI+i5lZMPqS56l9nBtfvszIxsCcgjIr6GtmIVnnSDvju2jb//I/qYFW+i22qAqHwSEt
+         cgXw==
+X-Gm-Message-State: AKS2vOwYFelYqW3lFmlXpcVGwZ6sevCukd/V5mrt1b7TkazYmmbuAm7o
+        C3Q2HuDgqiYdOCrg4EK9ww==
+X-Received: by 10.36.54.18 with SMTP id l18mr1367838itl.55.1497325366084;
+        Mon, 12 Jun 2017 20:42:46 -0700 (PDT)
+Received: from [192.168.2.102] (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
+        by smtp.gmail.com with ESMTPSA id w65sm5010726ita.21.2017.06.12.20.42.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Jun 2017 20:42:45 -0700 (PDT)
+Subject: Re: Feature Request: Show status of the stash in git status command
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Samuel Lijin <sxlijin@gmail.com>,
+        Houston Fortney <houstonfortney@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CA+B9myHRahTd+FDgzK5AhXW+hq_Y_czMX9X6MXYBcr9WSPeiDw@mail.gmail.com>
+ <20170610082534.6437ifexzly4oqg6@sigill.intra.peff.net>
+ <CAJZjrdXCHVKQOxR=+z5cOkieKzE-iSMta--kHVjSYXuansb34Q@mail.gmail.com>
+ <20170610102217.vxf6tsrdfp6srupr@sigill.intra.peff.net>
+ <1c04d689-6796-17d1-e058-18874768c22a@gmail.com>
+ <xmqqpoe9p6bn.fsf@gitster.mtv.corp.google.com>
+From:   liam Beguin <liambeguin@gmail.com>
+Message-ID: <2217b9a1-dc8c-635a-649e-eae2dec5aaa5@gmail.com>
+Date:   Mon, 12 Jun 2017 23:42:44 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqpoe9p6bn.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170613013817.GE133952@aiede.mtv.corp.google.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 12, 2017 at 06:38:17PM -0700, Jonathan Nieder wrote:
+Hi, 
 
-> Brandon Williams wrote:
-> > On 06/12, Jonathan Nieder wrote:
+Thanks for the feedback. I'll be sending a patch with the updates shortly!
+
+On 12/06/17 11:35 AM, Junio C Hamano wrote:
+> liam Beguin <liambeguin@gmail.com> writes:
 > 
-> >> Alternatively, could this patch rename git_config_with_options?  That
-> >> way any other patch in flight that calls git_config_with_options would
-> >> conflict with this patch, giving us an opportunity to make sure it
-> >> also sets git_dir.  As another nice side benefit it would make it easy
-> >> for someone reading the patch to verify it didn't miss any callers.
-> [...]
-> > And I don't know if I agree with renaming a function just to rename it.
+>> +static int stash_count_refs(struct object_id *ooid, struct object_id *noid,
+>> +			    const char *email, timestamp_t timestamp, int tz,
+>> +			    const char *message, void *cb_data)
+>> +{
+>> +	int *c = cb_data;
+>> +	(*c)++;
+>> +	return 0;
+>> +}
 > 
-> I forgot to say: another way to accomplish the same thing can be to
-> reorder the function's arguments.  The relevant thing is to make code
-> that calls the function without being aware of the new requirements
-> fail to compile.
-
-If the parameter is now required, then it might make sense for it to
-become an actual function parameter instead of being stuffed into the
-config_options struct. That would give you your breaking change, plus
-make it more obvious to the reader that it is not optional.
-
-The downside is that has to get shuttled around manually through the
-callstack. Most of the damage is in builtin/config.c, where we call
-git_config_with_options() a lot.
-
-include_by_gitdir is also a bit annoying, as we pass around the
-config_options struct through our void-pointer callbacks. But we can
-solve that by sticking the git_dir into the include_data struct (whose
-exact purpose is to carry the information we need to handle includes).
-
-The patch below (on top of Brandon's series does that).
-
-> >>> +	if (have_git_dir())
-> >>> +		opts.git_dir = get_git_common_dir();
-> >>
-> >> curious: Why get_git_common_dir() instead of get_git_dir()?
-> >
-> > Needs to be commondir since the config is stored in the common git
-> > directory and not a per worktree git directory.
+> Count up, and tell the caller to keep going by returning 0.  That
+> sounds sane.
 > 
-> *puzzled* Why wasn't this needed before, then?  The rest of the patch
-> should result in no functional change, but this part seems different.
+>> +static void wt_longstatus_print_stash_summary(struct wt_status *s)
+>> +{
+>> +	int stash_count = 0;
+>> +
+>> +	for_each_reflog_ent("refs/stash", stash_count_refs, &stash_count);
+> 
+> And do so with a counter initialized to 0.  Also sane.
+> 
+>> +	if (stash_count > 0)
+>> +		status_printf_ln(s, GIT_COLOR_NORMAL,
+>> +				 Q_("Your stash currently has %d commit",
+>> +				    "Your stash currently has %d commits", stash_count),
+>> +				 stash_count);
+> 
+> Conceptually, the contents of the stash are *not* commits, even
+> though the implementation happens to use a commit to represent each
+> stash entry.  Perhaps "has %d entry/entries" is an improvement, but
+> a quick scanning of an early part of "git stash --help" tells me
+> that
 
-Now I'm puzzled, too. The original that got filled in lazily by the
-config functions was always get_git_dir(). I can buy the argument that
-this was a bug (I'm not familiar enough with worktree to say one way or
-the other), but if it's a fix it should definitely go into another
-patch.
+what's different between a stash and a commit? 
 
----
- builtin/config.c | 17 ++++++++++----
- config.c         | 43 +++++++++++++++++++----------------
- config.h         |  4 ++--
- 3 files changed, 37 insertions(+), 27 deletions(-)
+> 
+> 	You have 1 stash / You have 4 stashes
+> 
+> would be the best, as the documentation calls each entry "a stash".
+> E.g. "list" is explained to list "the stashes", and "show <stash>"
+> is explained to show the changes recorded in "the stash".
+> 
+>> +}
+>> +
+>>  static void wt_longstatus_print_submodule_summary(struct wt_status *s, int uncommitted)
+>>  {
+>>  	struct child_process sm_summary = CHILD_PROCESS_INIT;
+>> @@ -1536,6 +1557,7 @@ static void wt_longstatus_print(struct wt_status *s)
+>>  	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
+>>  	const char *branch_status_color = color(WT_STATUS_HEADER, s);
+>>  	struct wt_status_state state;
+>> +	int show_stash = 0;
+>>  
+>>  	memset(&state, 0, sizeof(state));
+>>  	wt_status_get_state(&state,
+>> @@ -1641,6 +1663,8 @@ static void wt_longstatus_print(struct wt_status *s)
+>>  		} else
+>>  			printf(_("nothing to commit, working tree clean\n"));
+>>  	}
+>> +	if (!git_config_get_bool("status.showStash", &show_stash) && show_stash)
+>> +		wt_longstatus_print_stash_summary(s);
+>>  }
+> 
+> Try to get "status.showstash" as a boolean, and only when it
+> succeeds and the value is true, give this extra info (i.e. when the
+> variable does not exist, do not complain and do not show).  Sounds
+> sensible.
+> 
+> Overall the logic looks good to me; just the phrasing is
+> questionable, relative to the existing documentation.
+> 
+> Thanks.
+> 
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 90f49a6ee..f5dd6f7ff 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -29,6 +29,7 @@ static int actions, types;
- static int end_null;
- static int respect_includes_opt = -1;
- static struct config_options config_options;
-+const char *config_git_dir;
- static int show_origin;
- 
- #define ACTION_GET (1<<0)
-@@ -244,7 +245,9 @@ static int get_value(const char *key_, const char *regex_)
- 	}
- 
- 	git_config_with_options(collect_config, &values,
--				&given_config_source, &config_options);
-+				&given_config_source,
-+				config_git_dir,
-+				&config_options);
- 
- 	ret = !values.nr;
- 
-@@ -322,7 +325,8 @@ static void get_color(const char *var, const char *def_color)
- 	get_color_found = 0;
- 	parsed_color[0] = '\0';
- 	git_config_with_options(git_get_color_config, NULL,
--				&given_config_source, &config_options);
-+				&given_config_source,
-+				config_git_dir, &config_options);
- 
- 	if (!get_color_found && def_color) {
- 		if (color_parse(def_color, parsed_color) < 0)
-@@ -354,7 +358,8 @@ static int get_colorbool(const char *var, int print)
- 	get_diff_color_found = -1;
- 	get_color_ui_found = -1;
- 	git_config_with_options(git_get_colorbool_config, NULL,
--				&given_config_source, &config_options);
-+				&given_config_source,
-+				config_git_dir, &config_options);
- 
- 	if (get_colorbool_found < 0) {
- 		if (!strcmp(get_colorbool_slot, "color.diff"))
-@@ -443,7 +448,8 @@ static int get_urlmatch(const char *var, const char *url)
- 	}
- 
- 	git_config_with_options(urlmatch_config_entry, &config,
--				&given_config_source, &config_options);
-+				&given_config_source, config_git_dir,
-+				&config_options);
- 
- 	ret = !values.nr;
- 
-@@ -540,7 +546,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	else
- 		config_options.respect_includes = respect_includes_opt;
- 	if (have_git_dir())
--		config_options.git_dir = get_git_common_dir();
-+		config_git_dir = get_git_common_dir();
- 
- 	if (end_null) {
- 		term = '\0';
-@@ -587,6 +593,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_argc(argc, 0, 0);
- 		if (git_config_with_options(show_all_config, NULL,
- 					    &given_config_source,
-+					    config_git_dir,
- 					    &config_options) < 0) {
- 			if (given_config_source.file)
- 				die_errno("unable to read config file '%s'",
-diff --git a/config.c b/config.c
-index 4e2842689..e1566f7b4 100644
---- a/config.c
-+++ b/config.c
-@@ -208,21 +208,18 @@ static int prepare_include_condition_pattern(struct strbuf *pat)
- 	return prefix;
- }
- 
--static int include_by_gitdir(const struct config_options *opts,
-+static int include_by_gitdir(const struct config_include_data *inc,
- 			     const char *cond, size_t cond_len, int icase)
- {
- 	struct strbuf text = STRBUF_INIT;
- 	struct strbuf pattern = STRBUF_INIT;
- 	int ret = 0, prefix;
--	const char *git_dir;
- 	int already_tried_absolute = 0;
- 
--	if (opts->git_dir)
--		git_dir = opts->git_dir;
--	else
-+	if (!inc->git_dir)
- 		goto done;
- 
--	strbuf_realpath(&text, git_dir, 1);
-+	strbuf_realpath(&text, inc->git_dir, 1);
- 	strbuf_add(&pattern, cond, cond_len);
- 	prefix = prepare_include_condition_pattern(&pattern);
- 
-@@ -256,7 +253,7 @@ static int include_by_gitdir(const struct config_options *opts,
- 		 * which'll do the right thing
- 		 */
- 		strbuf_reset(&text);
--		strbuf_add_absolute_path(&text, git_dir);
-+		strbuf_add_absolute_path(&text, inc->git_dir);
- 		already_tried_absolute = 1;
- 		goto again;
- 	}
-@@ -266,14 +263,14 @@ static int include_by_gitdir(const struct config_options *opts,
- 	return ret;
- }
- 
--static int include_condition_is_true(const struct config_options *opts,
-+static int include_condition_is_true(const struct config_include_data *inc,
- 				     const char *cond, size_t cond_len)
- {
- 
- 	if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
--		return include_by_gitdir(opts, cond, cond_len, 0);
-+		return include_by_gitdir(inc, cond, cond_len, 0);
- 	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
--		return include_by_gitdir(opts, cond, cond_len, 1);
-+		return include_by_gitdir(inc, cond, cond_len, 1);
- 
- 	/* unknown conditionals are always false */
- 	return 0;
-@@ -298,7 +295,7 @@ int git_config_include(const char *var, const char *value, void *data)
- 		ret = handle_path_include(value, inc);
- 
- 	if (!parse_config_key(var, "includeif", &cond, &cond_len, &key) &&
--	    (cond && include_condition_is_true(inc->opts, cond, cond_len)) &&
-+	    (cond && include_condition_is_true(inc, cond, cond_len)) &&
- 	    !strcmp(key, "path"))
- 		ret = handle_path_include(value, inc);
- 
-@@ -1537,6 +1534,7 @@ int git_config_system(void)
- }
- 
- static int do_git_config_sequence(const struct config_options *opts,
-+				  const char *git_dir,
- 				  config_fn_t fn, void *data)
- {
- 	int ret = 0;
-@@ -1544,8 +1542,8 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	char *user_config = expand_user_path("~/.gitconfig", 0);
- 	char *repo_config;
- 
--	if (opts->git_dir)
--		repo_config = mkpathdup("%s/config", opts->git_dir);
-+	if (git_dir)
-+		repo_config = mkpathdup("%s/config", git_dir);
- 	else
- 		repo_config = NULL;
- 
-@@ -1578,6 +1576,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 
- int git_config_with_options(config_fn_t fn, void *data,
- 			    struct git_config_source *config_source,
-+			    const char *git_dir,
- 			    const struct config_options *opts)
- {
- 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
-@@ -1585,7 +1584,7 @@ int git_config_with_options(config_fn_t fn, void *data,
- 	if (opts->respect_includes) {
- 		inc.fn = fn;
- 		inc.data = data;
--		inc.opts = opts;
-+		inc.git_dir = git_dir;
- 		fn = git_config_include;
- 		data = &inc;
- 	}
-@@ -1601,17 +1600,18 @@ int git_config_with_options(config_fn_t fn, void *data,
- 	else if (config_source && config_source->blob)
- 		return git_config_from_blob_ref(fn, config_source->blob, data);
- 
--	return do_git_config_sequence(opts, fn, data);
-+	return do_git_config_sequence(opts, git_dir, fn, data);
- }
- 
- static void git_config_raw(config_fn_t fn, void *data)
- {
- 	struct config_options opts = {0};
-+	const char *git_dir;
- 
- 	opts.respect_includes = 1;
- 	if (have_git_dir())
--		opts.git_dir = get_git_common_dir();
--	if (git_config_with_options(fn, data, NULL, &opts) < 0)
-+		git_dir = get_git_common_dir();
-+	if (git_config_with_options(fn, data, NULL, git_dir, &opts) < 0)
- 		/*
- 		 * git_config_with_options() normally returns only
- 		 * zero, as most errors are fatal, and
-@@ -1653,11 +1653,12 @@ void read_early_config(config_fn_t cb, void *data)
- {
- 	struct config_options opts = {0};
- 	struct strbuf buf = STRBUF_INIT;
-+	const char *git_dir;
- 
- 	opts.respect_includes = 1;
- 
- 	if (have_git_dir())
--		opts.git_dir = get_git_dir();
-+		git_dir = get_git_dir();
- 	/*
- 	 * When setup_git_directory() was not yet asked to discover the
- 	 * GIT_DIR, we ask discover_git_directory() to figure out whether there
-@@ -1667,9 +1668,11 @@ void read_early_config(config_fn_t cb, void *data)
- 	 * call).
- 	 */
- 	else if (discover_git_directory(&buf))
--		opts.git_dir = buf.buf;
-+		git_dir = buf.buf;
-+	else
-+		git_dir = NULL;
- 
--	git_config_with_options(cb, data, NULL, &opts);
-+	git_config_with_options(cb, data, NULL, git_dir, &opts);
- 
- 	strbuf_release(&buf);
- }
-diff --git a/config.h b/config.h
-index c70599bd5..47a8e8845 100644
---- a/config.h
-+++ b/config.h
-@@ -30,7 +30,6 @@ enum config_origin_type {
- 
- struct config_options {
- 	unsigned int respect_includes : 1;
--	const char *git_dir;
- };
- 
- typedef int (*config_fn_t)(const char *, const char *, void *);
-@@ -46,6 +45,7 @@ extern void read_early_config(config_fn_t cb, void *data);
- extern void git_config(config_fn_t fn, void *);
- extern int git_config_with_options(config_fn_t fn, void *,
- 				   struct git_config_source *config_source,
-+				   const char *git_dir,
- 				   const struct config_options *opts);
- extern int git_parse_ulong(const char *, unsigned long *);
- extern int git_parse_maybe_bool(const char *);
-@@ -97,7 +97,7 @@ struct config_include_data {
- 	int depth;
- 	config_fn_t fn;
- 	void *data;
--	const struct config_options *opts;
-+	const char *git_dir;
- };
- #define CONFIG_INCLUDE_INIT { 0 }
- extern int git_config_include(const char *name, const char *value, void *data);
+Thanks,
+
+ - Liam 
