@@ -2,98 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28BF81FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 22:05:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C75691FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 22:07:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752456AbdFMWFh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 18:05:37 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:35730 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751802AbdFMWFg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 18:05:36 -0400
-Received: by mail-it0-f41.google.com with SMTP id m62so49332751itc.0
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 15:05:36 -0700 (PDT)
+        id S1752525AbdFMWH3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 18:07:29 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:37721 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751802AbdFMWH2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 18:07:28 -0400
+Received: by mail-it0-f54.google.com with SMTP id m47so45926707iti.0
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 15:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fFbH2UhR7AoVUM50Muu/lQhWPqiZVksehlO6jQ6OIzY=;
-        b=lzHCtaMCfr6uZ1sOKCg/m4Qi+/dNXUBZXKXOKbqUSaC/zlGt6DVG0+LgCKCa1+Xy8i
-         T+QDCYgtpL4Jj+wf9ne/OcwiKAbntQDZHk0cukON4t26N1b8v3KkqAiuUrx8RUYRDAkw
-         nlliJ7ACk8hjWXQpjFGCg5MAO97RZ1+9atTy2aEM3ZpvKonhE0UycWxjGY/v042bYGe1
-         y5kAAPcFL6aoRAHuPkl2SnGClNvhDt8tKrgOXLbILJx44BkycFd6pjp2Bwwj7JQtD1+q
-         7eEdZQLBYgtnx9+MsR1TwRqAKx+GrmjsHhzfKBAjxx0tPGa4HeQnog8tas+xS3nXMS/E
-         KCqw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=e7tsqCY33ovnQe0h/R+gwwgvzpLH3Ad1+zZcigngQFE=;
+        b=bHFEvoN8qHFxp4iYFcJPcfVdrk289+B27Bh91rj1wyYsf6xYmo8VHPGx/d3g59/X6b
+         FbLw24y+4kre3g/X8mAcQQ0yYwV9ud7TnwoTTiiGmnsprS6BJW5Hw0gV8jaWyccB+SDU
+         uS1nwl5mcUcCBThzLAGnJ7qbxfGxO2rQyvcCQVhdBLn+vaMafvgm0wXRUeOJ8oOhiX6V
+         f4bQfeQidJJ8w1GU4G5d2/5Sg4qG70hFmb0AkE6xl/o04JCVjv29/7ZYLXZ7xtLXgnWi
+         IGsqF0bpZJHSfyq7WK82b5yKO3ZsKL4IuTO6BEVnPsSBDTpxMDdGfhc09My4bOL48ybe
+         IVAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fFbH2UhR7AoVUM50Muu/lQhWPqiZVksehlO6jQ6OIzY=;
-        b=PXwDGn87umFtwD2lguqBQoqkDG+f5nY5T73A3YGDBDdUC574huAN4x0Ua//7aMMH+D
-         oGUsy27iFMGQgx/SoOyEYHNtkIUI9Gph/K+kdpJxkxTbUlFoU137iVRAXZvhmcVO69sH
-         /CfGd8iltm3Xlw+ETXyxE3ppwucdYvc3umdPrwaxOGWDC2qEtHSxGIqdki68tD2QQ0rT
-         yLGO8t4zyKHouFMZYpVGmfKADVgZJwdPNYlt6ldb3rsMslzVkLrrPYRxFQHrxGcaNPvx
-         FEsyTgLK3JLZgCmSDdEAyW2bMgyCzTpC3UwjGDZA7igdgYrA3+SHpI9gjRBbgaxGswzY
-         D0SA==
-X-Gm-Message-State: AKS2vOw71JbPkfHzsm3srMQ+uwLlAPcoEUJedt4gT9feOo6Hgh+MmNYZ
-        +pO4GzcKf40/Pw==
-X-Received: by 10.36.3.198 with SMTP id e189mr2783670ite.92.1497391535977;
-        Tue, 13 Jun 2017 15:05:35 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:8130:47b0:791f:5985])
-        by smtp.gmail.com with ESMTPSA id o14sm2538389itb.8.2017.06.13.15.05.34
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=e7tsqCY33ovnQe0h/R+gwwgvzpLH3Ad1+zZcigngQFE=;
+        b=ePKGELDT1Y4k3t7EQDAspk94Oj+Egau2ARe/RTYJX7qWo8DI83VkmTYOMGkqya+eJ/
+         gTWuI4T7a0Pjj2vP5uBA6NCWKDFfRPixPkWSLjlIHZwF+jxBM2tarp4U3PoH9X8NOzE/
+         WvL57dgiTnMPC98JxBG09GV8QglntQ41cKWT5p1j+r54T4KFyNJstUS9Uc/pNZjMKSlc
+         e+1Xut3fN7CPW+pRtQkQs4Pk528+7L7xRosnHwJXMsloWd2g79ypUMdM5p6SAfL8frEq
+         bVEueYwe2ZaRbSrNzJEWkJ+HCjgINKbjgJZAsoNalTkZdHUGP0HOooGnKOwDwMFI17vK
+         OuvQ==
+X-Gm-Message-State: AKS2vOyZJn/JnlZ345Wd4iS/zePj62wcQif7wefxrDjcX4U4tplGHQ6C
+        qUZKYncF4MoK8hFY
+X-Received: by 10.36.74.148 with SMTP id k142mr17042400itb.94.1497391647841;
+        Tue, 13 Jun 2017 15:07:27 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:85a0:52c1:8d73:eb63])
+        by smtp.gmail.com with ESMTPSA id n103sm6916490ioe.48.2017.06.13.15.07.26
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 15:05:34 -0700 (PDT)
-Date:   Tue, 13 Jun 2017 15:05:32 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/6] config: don't implicitly use gitdir
-Message-ID: <20170613220532.GO133952@aiede.mtv.corp.google.com>
-References: <20170612213406.83247-1-bmwill@google.com>
- <20170613210321.152978-1-bmwill@google.com>
- <20170613210321.152978-5-bmwill@google.com>
- <20170613210806.GJ133952@aiede.mtv.corp.google.com>
- <20170613213815.GP154599@google.com>
- <20170613215138.GM133952@aiede.mtv.corp.google.com>
- <CAPc5daWpXnkNyuGNtFi4YTyB+Np5Yw8yZCGwu5VNzv+WON1u2Q@mail.gmail.com>
+        Tue, 13 Jun 2017 15:07:27 -0700 (PDT)
+Date:   Tue, 13 Jun 2017 15:07:22 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, bmwill@google.com,
+        jrnieder@gmail.com, peff@peff.net, mhagger@alum.mit.edu
+Subject: Re: [PATCHv5 16/17] diff: buffer all output if asked to
+Message-ID: <20170613150722.0bd8fa56@twelve2.svl.corp.google.com>
+In-Reply-To: <20170524214036.29623-17-sbeller@google.com>
+References: <20170523024048.16879-1-sbeller@google.com/>
+        <20170524214036.29623-1-sbeller@google.com>
+        <20170524214036.29623-17-sbeller@google.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPc5daWpXnkNyuGNtFi4YTyB+Np5Yw8yZCGwu5VNzv+WON1u2Q@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> On Tue, Jun 13, 2017 at 2:51 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Wed, 24 May 2017 14:40:35 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
->> What is the next step, then?  You can find the notion ridiculous but
->> it's how this project has worked in my experience (and how other
->> projects with similar patch-based workflows work).
->
-> Does "patch-based" have much to do with this? I agree that distributed
-> nature of the development would bring this issue, but I tend to think that
-> using merge/pull based workflow would not alleviate it--am I mistaken?
+> diff --git a/diff.h b/diff.h
+> index 85948ed65a..fad1258556 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -115,6 +115,42 @@ enum diff_submodule_format {
+>  	DIFF_SUBMODULE_INLINE_DIFF
+>  };
+>  
+> +/*
+> + * This struct is used when we need to buffer the output of the diff output.
+> + *
+> + * NEEDSWORK: Instead of storing a copy of the line, add an offset pointer
+> + * into the pre/post image file. This pointer could be a union with the
+> + * line pointer. By storing an offset into the file instead of the literal line,
+> + * we can decrease the memory footprint for the buffered output. At first we
+> + * may want to only have indirection for the content lines, but we could also
+> + * enhance the state for emitting prefabricated lines, e.g. the similarity
+> + * score line or hunk/file headers would only need to store a number or path
+> + * and then the output can be constructed later on depending on state.
+> + */
+> +struct diff_line {
 
-Thanks, you're right.  Distributed is the relevant feature.
+Probably should be called diff_emission (or just emission), since these
+may not be full lines.
 
-The same issue can even come up when using a centralized version
-control system like Subversion or Perforce --- without attention to
-API compatibility, someone's change that was thoroughly reviewed and
-well tested locally in a developer's working directory can introduce
-subtle breakage once they run "svn commit", causing it to merge with
-the latest upstream changes.  The problem becomes more likely the more
-distributed a project is since each developer becomes less aware of
-the other changes that their modifications need to be compatible with.
+Also, can this definition be in the .c file? Callers should use the
+diff_emit_line() below, and not need to know how it is implemented
+internally.
 
-Jonathan
+> +	const char *set;
+> +	const char *reset;
+> +	const char *line;
+> +	int len;
+> +	int sign;
+> +	int add_line_prefix;
+> +	enum {
+> +		/*
+> +		 * Emits [lineprefix][set][sign][reset] and then calls
+> +		 * ws_check_emit which will output "line", marked up
+> +		 * according to ws_rule.
+> +		 */
+> +		DIFF_LINE_WS,
+> +
+> +		/* Emits [lineprefix][set][sign] line [reset] */
+> +		DIFF_LINE_ASIS,
+> +
+> +		/* Reloads the ws_rule; line contains the file name */
+> +		DIFF_LINE_RELOAD_WS_RULE
+> +	} state;
+> +};
+> +#define diff_line_INIT {NULL, NULL, NULL, 0, 0, 0}
+
+Should be DIFF_LINE_INIT (capitalization), and {NULL} is sufficient, I
+think.
