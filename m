@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E37B11FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 19:41:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 683FE1FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 19:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753968AbdFMTlC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 15:41:02 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35738 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753774AbdFMTlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 15:41:01 -0400
-Received: by mail-pf0-f196.google.com with SMTP id s66so8671496pfs.2
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 12:41:01 -0700 (PDT)
+        id S1753311AbdFMTpH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 15:45:07 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:34291 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752168AbdFMTpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 15:45:06 -0400
+Received: by mail-pg0-f65.google.com with SMTP id v14so20483036pgn.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 12:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=AQOex+1ekflsV7ifWdOA7kRKTimJRV4bUzyKbtjaQc0=;
-        b=FbJOTWnaWG1ZYVlMKawx62rBKXmahGVUhGbbXyG0By5cMs989C633sBne5wE+wlQBQ
-         D5gsFSgrr0qbG1Uhx6qlHojXgFJ/HIaEDCrj/Ist2lrdMPTqUVpJaGbYwFS1N2gRaJgn
-         rC6OOZVJUjiK/o1Kr42bEq4E4CpNKV2+Ekzqkm6FWBZIXhZvQdfX3hwbF9ybcMOU9i8D
-         xU0NpgU8xQWTYIJ5gFreBilYKlmvPqF2+PrtJDz6jynF4IVb5itdEOwPi9MNQt/tC54Q
-         adiDE1dbWVqRbAHUZFDAfhJhTieuDmFRDgmzYDrvao7LIDrBV3EJ8Of6bmCTbzZjL8hf
-         9VZA==
+        bh=2YYJ1ykbjx5Z1TR2CqDYquecKasMGp4StviAq1t8Lso=;
+        b=E6CZIfcEGfVt6GuXbC1xfCNU6sHFDa3R2SrQeYlm9GqNXhK2SxP2g7oaux1uuZy9K9
+         ishL4KM1WSHzrKYPHFesL6jD5biuRyGL8ajNPoTS34Hp0YUoAxKZ1pmKP2hm4wvNlmgZ
+         JUhLgZxeijusSMZegTVUobQPsXjnUAW7KyzAB2LNg5FlbLSUqsO7Y3xL6+MZW0vI+uMq
+         iT5FWyyf4eO/vWW2ohiRoN6mT++Gp+36HMCf2VSbrM+PE5WAUG4JWCPb1kT5p4kGXEbv
+         B5ng5k8IOEu/Aou7YgSwLdp6BskoXTO8gAby9KyicIfsXu9AnArGYkiE5uLYh6CPRASU
+         r8Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=AQOex+1ekflsV7ifWdOA7kRKTimJRV4bUzyKbtjaQc0=;
-        b=fWIVPAOuBGZQAgCJB1A9HLm3IAqvHUnxu4ZgNgAUDYLdlI42iW+jlchPKdyRETBa25
-         w25j/gB/FaKqrfxkS6FJ8+fqQdw7XQhdkfLmeO+TgPx8VXDuwhJvqobnbYHi87ddTV9A
-         3YATDaRCuaPjKaOYhd3x5PqSBnk8wXmlsiwRb3x+tade/U9SBVWXi3LAoBnvXRgUqSsS
-         oGoHZ1MAN6hJYiAIQ7P/Fygn/G08XIcUMJYPKnwr6PCl7tm7ztoVbXVmZxZqTA0bkiQv
-         mqBYUrwXh0n0VqE2C8yfP/oBgq0R6BddkcXDIDEHHs5K/i+4DiQcWUMiC38m81rUpCrq
-         rA1w==
-X-Gm-Message-State: AKS2vOwwSiq6xU/3Acl78ma8n0AgkG5k7JNC0NJhtKaVgEXqfqmhH76B
-        nk2/sJwC49DWEQ==
-X-Received: by 10.98.15.134 with SMTP id 6mr1138844pfp.32.1497382860568;
-        Tue, 13 Jun 2017 12:41:00 -0700 (PDT)
+        bh=2YYJ1ykbjx5Z1TR2CqDYquecKasMGp4StviAq1t8Lso=;
+        b=J3kd/cyF68dB6oWvWSrcLjmYzs4pGkZ/eo1Nn5pRctrm08agHdbf10j7s8Uf2fJ3CP
+         w/MxZ7RzxNGmcYL2JE/2TBNisSbdP8vQmScIaIAMSI6zXRAZs9Ivxf8FMTp2qm4J5W7P
+         rQ+1ZehU4GKo+viScW8cS1jsURTlygXYUVmWNBoPw8UR3m1OkVbv3kvr4mH3nqYfRZa4
+         6gql7rm9GNN2uhM1QQhXWojLxS4+KIeDs6yip7nx7zu0nEODv9AEwIMe8lOKLdLMdK04
+         raevKaI8STn6GApw7J21fZmsMHO/APYo5Inaehh/5B1hr0ri1or2zFbg9tcScRNVBiei
+         VTPg==
+X-Gm-Message-State: AKS2vOxEp4qa9eqkYQQ8g6Lm8zI3QjCU3GWFm+Cz8Hc4dcEe9rPYwz56
+        eyKW3dDjPDMb+aNoIqw=
+X-Received: by 10.98.39.2 with SMTP id n2mr1109253pfn.182.1497383105584;
+        Tue, 13 Jun 2017 12:45:05 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id s7sm25513073pfd.86.2017.06.13.12.40.59
+        by smtp.gmail.com with ESMTPSA id o13sm19930970pfa.120.2017.06.13.12.45.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 12:40:59 -0700 (PDT)
+        Tue, 13 Jun 2017 12:45:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Joel Teichroeb <joel@teichroeb.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -56,13 +56,13 @@ Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>,
         Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v4 2/5] stash: Add a test for when apply fails during stash branch
+Subject: Re: [PATCH v4 3/5] stash: add test for stashing in a detached state
 References: <20170608005535.13080-1-joel@teichroeb.net>
-        <20170608005535.13080-3-joel@teichroeb.net>
-Date:   Tue, 13 Jun 2017 12:40:59 -0700
-In-Reply-To: <20170608005535.13080-3-joel@teichroeb.net> (Joel Teichroeb's
-        message of "Wed, 7 Jun 2017 17:55:32 -0700")
-Message-ID: <xmqqefun65h0.fsf@gitster.mtv.corp.google.com>
+        <20170608005535.13080-4-joel@teichroeb.net>
+Date:   Tue, 13 Jun 2017 12:45:03 -0700
+In-Reply-To: <20170608005535.13080-4-joel@teichroeb.net> (Joel Teichroeb's
+        message of "Wed, 7 Jun 2017 17:55:33 -0700")
+Message-ID: <xmqqa85b65a8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,55 +73,42 @@ X-Mailing-List: git@vger.kernel.org
 
 Joel Teichroeb <joel@teichroeb.net> writes:
 
-> If the return value of merge recurisve is not checked, the stash could end
-> up being dropped even though it was not applied properly
-
-s/recurisve/recursive/
-
 > Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
 > ---
->  t/t3903-stash.sh | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+>  t/t3903-stash.sh | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 >
 > diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index cc923e6335..5399fb05ca 100755
+> index 5399fb05ca..ce4c8fe3d6 100755
 > --- a/t/t3903-stash.sh
 > +++ b/t/t3903-stash.sh
-> @@ -656,6 +656,20 @@ test_expect_success 'stash branch should not drop the stash if the branch exists
->  	git rev-parse stash@{0} --
+> @@ -822,6 +822,18 @@ test_expect_success 'create with multiple arguments for the message' '
+>  	test_cmp expect actual
 >  '
 >  
-> +test_expect_success 'stash branch should not drop the stash if the apply fails' '
-> +	git stash clear &&
-> +	git reset HEAD~1 --hard &&
-> +	echo foo >file &&
-> +	git add file &&
-> +	git commit -m initial &&
-
-It's not quite intuitive to call a non-root commit "initial" ;-)
-
-> +	echo bar >file &&
-> +	git stash &&
-> +	echo baz >file &&
-
-OK, so 'file' has 'foo' in HEAD, 'bar' in the stash@{0}.
-
+> +test_expect_success 'create in a detached state' '
 > +	test_when_finished "git checkout master" &&
-> +	test_must_fail git stash branch new_branch stash@{0} &&
-
-Hmph.  Do we blindly checkout new_branch out of stash@{0}^1 and
-unstash, but because 'file' in the working tree is dirty, we fail to
-apply the stash and stop?
-
-This sounds like a bug to me.  Shouldn't we be staying on 'master',
-and fail without even creating 'new_branch', when this happens?
-
-In any case we should be testing what branch we are on after this
-step.  What branch should we be on after "git stash branch" fails?
-
-> +	git rev-parse stash@{0} --
+> +	git checkout HEAD~1 &&
+> +	>foo &&
+> +	git add foo &&
+> +	STASH_ID=$(git stash create) &&
+> +	HEAD_ID=$(git rev-parse --short HEAD) &&
+> +	echo "WIP on (no branch): ${HEAD_ID} initial" >expect &&
+> +	git show --pretty=%s -s ${STASH_ID} >actual &&
+> +	test_cmp expect actual
 > +'
-> +
->  test_expect_success 'stash apply shows status same as git status (relative to current directory)' '
->  	git stash clear &&
->  	echo 1 >subdir/subfile1 &&
+
+Hmph.  Is the title automatically given to the stash the
+only/primary thing that is of interest to us in this test?  I think
+we care more about that we record the right thing in the resulting
+stash and also after creating the stash the working tree and the
+index becomes clean.  Shouldn't we be testing that?
+
+If "git stash create" fails to make the working tree and the index
+clean, then "git checkout master" run by when-finished will carry
+the local modifications with us, which probably is not what you
+meant.  You'd need "reset --hard" there, too, perhaps?
+
+>  test_expect_success 'stash -- <pathspec> stashes and restores the file' '
+>  	>foo &&
+>  	>bar &&
