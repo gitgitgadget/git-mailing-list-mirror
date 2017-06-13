@@ -2,112 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7A091FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 19:47:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F6D31FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 19:49:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753783AbdFMTrd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 15:47:33 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33673 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753448AbdFMTrc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 15:47:32 -0400
-Received: by mail-pf0-f193.google.com with SMTP id w12so13285087pfk.0
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 12:47:32 -0700 (PDT)
+        id S1753801AbdFMTtR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 15:49:17 -0400
+Received: from mail-ot0-f179.google.com ([74.125.82.179]:35840 "EHLO
+        mail-ot0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752168AbdFMTtQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 15:49:16 -0400
+Received: by mail-ot0-f179.google.com with SMTP id s7so2861154otb.3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 12:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=icBO3Nhczn++l4Xk7GHGa6n69HOjfRgSfTPtMQbFIqU=;
-        b=KDzbYujD0TC+gNtS10uBRjBFElr3Ow3bDv0P0T98/6n8JfP8iAtiqSh8ap56GuESx8
-         KYGLctebsP5exAjZeZ/pHsC0P6Y3TMA0Mxg+MbORW5fFC9b74srQ9iXPvX3uxKrymGVd
-         yN2XeYP2gfhGoaUCZRKmivcMTAoJ81FmL9ybsvaIMzq6rsD27cvqTVcsKAOUvh8mEV2l
-         R2ys9sS9/UORMbPWSCn+d7BLtchfsPJcDo8wd2tcm0f7Zc441r91ivRU0c9bti1lXqpm
-         QmzVPn29R0Bif4hYv+HJuOlIPWRl0OT5id40gkCGxHc5sClxwvJF7hnLz9eHGT8zXuRG
-         NzUg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=uOhaM2xUa6rF8cMjTv1K1Moh2OhWVhUEk5G16nld178=;
+        b=srx+es/hx6zNIAmOBEjU7m658CK9WJW49o/aEY/Bqe2gLzhzr8S3l82GfJg9Dn7zEM
+         q1n55C1g3W0y2poqd5FIpK09j524vKOngxckF3YwqSDGsIqH3WEMGP3zcKuIbFlHSkN9
+         SgRN4uiE0du6YhPSPtSAGT++Z740xFi9PrDXYzGg/RM09wYBUlh0gU4RlWo7XbNdqrnZ
+         OUp2i2EZtttg5N2GkmX9O7Pjeece7s94OzGEeClXy/RQCd35qXVBCj8CPnl78nQvlH5m
+         rqXGyOgs6V9rv7b9wJLtQK6Iwrhqq1JMI3eUwYSXo7e+2c3oJH1zHKcgjaHdnwzQtPUW
+         dkVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=icBO3Nhczn++l4Xk7GHGa6n69HOjfRgSfTPtMQbFIqU=;
-        b=KOxuMv/U+xcCqm0NDbYmbFJ43Gat+XWFULvgzjZkVGAV+sd9tiOY+k7pMNYStHnMoU
-         KNvrBViyg/c6t4+Or5mXQosBI6OUNdpmWSjTyY4hHrcMSh0v3CUIbErjt+fFO+4gLn5J
-         IkGahRQr/rqXD9yY5y768r9tTPDw/UfAB+OnDRpBnIIR5aY5C2jiKgiRX+5LW37VVj+5
-         skzKb2zFgbUXgUA1ZkTpcmHAZDVY4eYUXMW0zPAnkyVHAX09VBSlSanZRmqUJRarWC1G
-         WTIkxvWPAZhL+lpLCDcw/dKIc4/3yGvlC2flHnY0qwQLh7WfnFK4wbGkyT5t7sc7dYef
-         eQ2g==
-X-Gm-Message-State: AKS2vOzs1DUPSfDwTpc0OxZ5Y1RN5HNJM366aMxLoQYmgBPqXdjKu2Kc
-        /G26V8Z+Tsz/wg==
-X-Received: by 10.99.98.6 with SMTP id w6mr1154643pgb.207.1497383252077;
-        Tue, 13 Jun 2017 12:47:32 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id b65sm29012453pfm.29.2017.06.13.12.47.31
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 12:47:31 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Joel Teichroeb <joel@teichroeb.net>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=uOhaM2xUa6rF8cMjTv1K1Moh2OhWVhUEk5G16nld178=;
+        b=ppwxfYrQ0LB5Kc/EvJ2TzOJYOoHEjJuvK2mAa/4iQLjq3VWXzistkMGS0NX9RgjDuv
+         58hEAWeb5p8BjI2EhPJL9yVIvdxCY00HDHCCoYYzXztTII8eqTXuuU+96qafDLcLKHBk
+         dMdqqB1Misj4BXEFdi2VSK5r6hG34gDSJ3mn+lJKbKAuQLP2JI2yBWbmiK9mGkupZWv1
+         yE4P5lO19uTvWcMiQUWuypyBaMTH6Ak7f8lZRMo9vupAEPFaz7/pAfvYTGpcEWfIAGR7
+         OsIZButbhg363EatDTme0IoADAs37X79+6YFwqIJgzrboJCWc8TlqaE8Q80XYv9rZxG4
+         rhHA==
+X-Gm-Message-State: AKS2vOzauXX6YBCSVWSDEVwJax/lPrH+oz1+f/NZ7Dq/ItyMoLarOXeo
+        tq7v7Lqkbpg5LZLyEKnWM/YsF715xQ==
+X-Received: by 10.157.60.119 with SMTP id j52mr1198907ote.31.1497383355305;
+ Tue, 13 Jun 2017 12:49:15 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.157.51.169 with HTTP; Tue, 13 Jun 2017 12:48:54 -0700 (PDT)
+In-Reply-To: <xmqqa85b65a8.fsf@gitster.mtv.corp.google.com>
+References: <20170608005535.13080-1-joel@teichroeb.net> <20170608005535.13080-4-joel@teichroeb.net>
+ <xmqqa85b65a8.fsf@gitster.mtv.corp.google.com>
+From:   Joel Teichroeb <joel@teichroeb.net>
+Date:   Tue, 13 Jun 2017 12:48:54 -0700
+X-Google-Sender-Auth: DofenZ5e_U7LfBzFFB9yrnVk2HU
+Message-ID: <CA+CzEk8U6P58OqruPkP1HePFurNWjgf=Q-h=Hu57zoHpDeenmA@mail.gmail.com>
+Subject: Re: [PATCH v4 3/5] stash: add test for stashing in a detached state
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmo=?= =?utf-8?B?w7Zyw7A=?= Bjarmason 
-        <avarab@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>,
         Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v4 4/5] merge: close the index lock when not writing the new index
-References: <20170608005535.13080-1-joel@teichroeb.net>
-        <20170608005535.13080-5-joel@teichroeb.net>
-Date:   Tue, 13 Jun 2017 12:47:30 -0700
-In-Reply-To: <20170608005535.13080-5-joel@teichroeb.net> (Joel Teichroeb's
-        message of "Wed, 7 Jun 2017 17:55:34 -0700")
-Message-ID: <xmqq60fz6565.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Joel Teichroeb <joel@teichroeb.net> writes:
-
-> If the merge does not have anything to do, it does not unlock the index,
-> causing any further index operations to fail. Thus, always unlock the index
-> regardless of outcome.
+On Tue, Jun 13, 2017 at 12:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Joel Teichroeb <joel@teichroeb.net> writes:
 >
-> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
-> ---
-
-This one makes sense.  
-
-So far, nobody who calls this function performs further index
-manipulations and letting the atexit handlers automatically release
-the lock was sufficient.  This allows new callers to do more work on
-the index after a merge finishes.
-
-
->  merge-recursive.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
+>> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
+>> ---
+>>  t/t3903-stash.sh | 12 ++++++++++++
+>>  1 file changed, 12 insertions(+)
+>>
+>> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+>> index 5399fb05ca..ce4c8fe3d6 100755
+>> --- a/t/t3903-stash.sh
+>> +++ b/t/t3903-stash.sh
+>> @@ -822,6 +822,18 @@ test_expect_success 'create with multiple arguments for the message' '
+>>       test_cmp expect actual
+>>  '
+>>
+>> +test_expect_success 'create in a detached state' '
+>> +     test_when_finished "git checkout master" &&
+>> +     git checkout HEAD~1 &&
+>> +     >foo &&
+>> +     git add foo &&
+>> +     STASH_ID=$(git stash create) &&
+>> +     HEAD_ID=$(git rev-parse --short HEAD) &&
+>> +     echo "WIP on (no branch): ${HEAD_ID} initial" >expect &&
+>> +     git show --pretty=%s -s ${STASH_ID} >actual &&
+>> +     test_cmp expect actual
+>> +'
 >
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index ae5238d82c..16bb5512ef 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -2145,9 +2145,12 @@ int merge_recursive_generic(struct merge_options *o,
->  	if (clean < 0)
->  		return clean;
->  
-> -	if (active_cache_changed &&
-> -	    write_locked_index(&the_index, lock, COMMIT_LOCK))
-> -		return err(o, _("Unable to write index."));
-> +	if (active_cache_changed) {
-> +		if (write_locked_index(&the_index, lock, COMMIT_LOCK))
-> +			return err(o, _("Unable to write index."));
-> +	} else {
-> +		rollback_lock_file(lock);
-> +	}
->  
->  	return clean ? 0 : 1;
->  }
+> Hmph.  Is the title automatically given to the stash the
+> only/primary thing that is of interest to us in this test?  I think
+> we care more about that we record the right thing in the resulting
+> stash and also after creating the stash the working tree and the
+> index becomes clean.  Shouldn't we be testing that?
+
+In this case, the title is really what I wanted to test. There are
+other tests already to make sure that stash create works, but there
+were no tests to ensure that a stash was created with the correct
+title when not on a branch. That being said though, I'll add more
+validation as more validation is always better.
+
+>
+> If "git stash create" fails to make the working tree and the index
+> clean, then "git checkout master" run by when-finished will carry
+> the local modifications with us, which probably is not what you
+> meant.  You'd need "reset --hard" there, too, perhaps?
+
+Agreed.
+
+>
+>>  test_expect_success 'stash -- <pathspec> stashes and restores the file' '
+>>       >foo &&
+>>       >bar &&
