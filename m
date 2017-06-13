@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C02AF20282
-	for <e@80x24.org>; Tue, 13 Jun 2017 06:45:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DF3120282
+	for <e@80x24.org>; Tue, 13 Jun 2017 07:08:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752285AbdFMGpg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 02:45:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38838 "EHLO cloud.peff.net"
+        id S1752804AbdFMHIS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 03:08:18 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38850 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752167AbdFMGpf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 02:45:35 -0400
-Received: (qmail 11737 invoked by uid 109); 13 Jun 2017 06:45:34 -0000
+        id S1752304AbdFMHIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 03:08:16 -0400
+Received: (qmail 13075 invoked by uid 109); 13 Jun 2017 07:08:15 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 06:45:34 +0000
-Received: (qmail 21017 invoked by uid 111); 13 Jun 2017 06:45:36 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 07:08:15 +0000
+Received: (qmail 21166 invoked by uid 111); 13 Jun 2017 07:08:17 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 02:45:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Jun 2017 02:45:32 -0400
-Date:   Tue, 13 Jun 2017 02:45:32 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 13 Jun 2017 03:08:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Jun 2017 03:08:14 -0400
+Date:   Tue, 13 Jun 2017 03:08:14 -0400
 From:   Jeff King <peff@peff.net>
 To:     Brandon Williams <bmwill@google.com>
 Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
         gitster@pobox.com
 Subject: Re: [PATCH 4/4] config: don't implicitly use gitdir
-Message-ID: <20170613064532.pucjnyrftulmjinj@sigill.intra.peff.net>
+Message-ID: <20170613070813.v3vthqlqsga7djgz@sigill.intra.peff.net>
 References: <20170612213406.83247-1-bmwill@google.com>
  <20170612213406.83247-5-bmwill@google.com>
  <20170613010518.GB133952@aiede.mtv.corp.google.com>
@@ -47,49 +47,30 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Jun 12, 2017 at 11:16:27PM -0700, Brandon Williams wrote:
 
-> > If the parameter is now required, then it might make sense for it to
-> > become an actual function parameter instead of being stuffed into the
-> > config_options struct. That would give you your breaking change, plus
-> > make it more obvious to the reader that it is not optional.
+> > > *puzzled* Why wasn't this needed before, then?  The rest of the patch
+> > > should result in no functional change, but this part seems different.
 > > 
-> > The downside is that has to get shuttled around manually through the
-> > callstack. Most of the damage is in builtin/config.c, where we call
-> > git_config_with_options() a lot.
-> > 
-> > include_by_gitdir is also a bit annoying, as we pass around the
-> > config_options struct through our void-pointer callbacks. But we can
-> > solve that by sticking the git_dir into the include_data struct (whose
-> > exact purpose is to carry the information we need to handle includes).
-> > 
-> > The patch below (on top of Brandon's series does that).
+> > Now I'm puzzled, too. The original that got filled in lazily by the
+> > config functions was always get_git_dir(). I can buy the argument that
+> > this was a bug (I'm not familiar enough with worktree to say one way or
+> > the other), but if it's a fix it should definitely go into another
+> > patch.
 > 
-> I really don't understand why this has to be so difficult and why a
-> 'breaking change' is even needed.  Duy just added the 'git_dir' field to
-> the config_options struct in April of this year (2185fde56 config:
-> handle conditional include when $GIT_DIR is not set up) and now we want
-> to strip it out again?  That's not even two months. Seems very counter
-> productive and makes the api more unwieldy.
+> Well actually... in do_git_config_sequence 'git_path("config")' is
+> called which will convert gitdir to commondir under the hood.  you can't
+> use vanilla gitdir because the config isn't stored in a worktree's
+> gitdir but rather in the commondir as the config is shared by all
+> worktrees.
 
-I could go either way on it. But note that you're not just changing the
-existing opt->git_dir behavior.
+Sorry, I missed the fact that there were two sites changed on the first
+read.
 
-If I call git_config_with_options() without having set opt->git_dir, the
-call will now quietly ignore repo config. But even before opt->git_dir
-existed, calling that function would always have read from repo config
-(when we're in one, of course). So if there's a patch in flight that
-adds a call to git_config_with_options(), it's now very subtly broken.
+> So maybe we actually need to add a field to the 'config_options' struct
+> of 'commondir' such that the commondir can be used to load the actual
+> config file and 'gitdir' can be used to handle the 'IncludeIf' stuff.
 
-The reason I say "I could go either way" is that we can make a guess as
-to whether there are any topics in flight that add such a call.
-
-There aren't any in pu right now. That's not the whole world, of course;
-people may have topics they haven't yet published. Or they may have long
-running forks. Git for Windows is one, and I maintain one that GitHub
-uses internally. But GfW is public and doesn't have any new calls (and
-nor does my fork).  In general, it's kind of an unlikely call for a fork
-or a new branch to add.
-
-So at some point I think we say "good enough, it's not worth the hassle"
-and this may be such a case.
+On reflection, I suspect that probably is the case. If you have a
+workdir in ~/foo, you probably want to match IncludeIf against that
+instead of wherever the common dir happens to be.
 
 -Peff
