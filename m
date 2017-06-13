@@ -7,59 +7,67 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5A4620D11
-	for <e@80x24.org>; Tue, 13 Jun 2017 12:59:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1E2C1FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 13:06:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753379AbdFMM7L (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 08:59:11 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35211 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752480AbdFMM7I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 08:59:08 -0400
-Received: by mail-pg0-f66.google.com with SMTP id f127so18661218pgc.2
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 05:59:08 -0700 (PDT)
+        id S1752756AbdFMNGb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 09:06:31 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:36222 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752456AbdFMNGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 09:06:31 -0400
+Received: by mail-pg0-f41.google.com with SMTP id a70so60524924pge.3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 06:06:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=CN28bYAf/Jk59K3BV177qncuKmX+hrvAIDx/kpx4Ims=;
-        b=QIGmKKLenbb/k3LKWCbiJi7TJN+1QUKnlVqpQJQK5K27rlbtLQi5vohIZGxLx78J5A
-         PkKZwNYPnSqjXQqEyYY7h1KhrlwRwLX5dC8AI0xjqiG64/HwOPyyv2HmbqVp04PbmsMn
-         /kEa2irB4kkzS15dpYZwyQDmdo/0RAoZ8+wlN9eRGKKpqDfwIR6BkK1aTPISkEfV47pM
-         tBWdJtWlHZDuujtrYDNDDf+cnrEfjhyYSkIUTcbJ0VCE5Gv1EoQYND4fHatJlrPhQ3Zp
-         BPGlicJ/R6Vb1FXjBKvp6QSGwqeHBVbYKQkX8u2fEtradUNdpxIyfJ8HGRdd5zlIjhZO
-         Q8YQ==
+        bh=V2O75GTIpkRh2M+uzvlBpa656o9QaG/ia10ydHBo2jQ=;
+        b=Q7aIx3/IzK6tBkWouUjwBHpk4YS+x06qdFPHXkGBKFzAFcv10jImYQklYk+E/CcEt8
+         mJ0g5pgqiNJ/wqA8iN4PCgWaFnxcSnnTMuAji6AawZQM7F3iXWdm/A0oIdt4ho4I5f4l
+         v504Iz7WJmsrJUm2DvllqR2paftiaSFKleZLK1M1AwoX9NmwCysvGf0OgRSC16gK5quP
+         5J4TdZAmbcog4n8gKZwv9Hc22exnKvmldjPiHlLOabmPeb5e0f6cJWuu7vCV7VFcUqr4
+         njJqlY0vrtNH2ZY/c5AUuf4J7R9hlyXRfsyDuvHxb6yelhgmdvOgXG1w/BRRaFjjlw1G
+         aD1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=CN28bYAf/Jk59K3BV177qncuKmX+hrvAIDx/kpx4Ims=;
-        b=G9Mv5Ybjt2jFcITHoX3Q5Z9o91IAVMAUlBksgPPp2chAxXBDZMu8PKpLcOXPTQIMUO
-         MJhptPSdIGza+OIeihQLEQz4Ym0wGl0ShPyqFkLLJLoZpJnkzxcmj8bDuVcPUW2TWFwl
-         eJcqwgSbHasZD4lOWccXNmMHbV8srZPnDivtpz1Mbr/SZpcxrpSl2tAESOtObzMUtbzV
-         SgNnjQAxmaXIb8h1OBeCJQR2VFqH8kYSyeQWoTPaeQXqH13ryCAHe1nalNFuTPMMBUEx
-         5iFhktneGlxaFBHrnpEETc1bDp9X6rYvVAcHT8tgAWJZQX4LDT/uokhi86QYouuf4w2O
-         CCDw==
-X-Gm-Message-State: AODbwcAyhGZlJIEB+TlgF2bWgT4jW4PQ5PymRv3YzEwpp97E9VfvvCGK
-        itxKcArwVsSiVMYijI8=
-X-Received: by 10.84.241.132 with SMTP id b4mr63345505pll.107.1497358748080;
-        Tue, 13 Jun 2017 05:59:08 -0700 (PDT)
+        bh=V2O75GTIpkRh2M+uzvlBpa656o9QaG/ia10ydHBo2jQ=;
+        b=b6JYnlS5eYO9oJOa0At83LmnWSHS33PMAe44nxtZP+EHxirwdElvegq0Dc4+my5kwH
+         HPRwrSRFDv4Y3pouyl3TWkVZiRVR2JWd2XOkoAL358V3/kin9KRLt3giIljt2aZ5sV03
+         4+vgzXc23gZuqBoxV25BoC4+QS4Eai4NEexD1MXXFr/uPtfsBHxeNb3OupNmHgDzJUxD
+         0ipDiaSRghkWqOUKkrPCwRMLkeOrRvFju5RHPXm4hQmAHR5a0NjRbe10MI6vnw7mMgWO
+         5HRyl+JrLbCOrpcj7XwBuKNUJ6BlcRYX4Rdveke1C3YNgKZPcR1u9tjKbO4LqylLc0MU
+         19Kg==
+X-Gm-Message-State: AODbwcAclAHzhQoocdpWqg9a6lJCN34mKJtFyVCklPLkOXaDtLQ0QAFX
+        jh4GNdNkAs63oA==
+X-Received: by 10.99.127.89 with SMTP id p25mr47310860pgn.120.1497359190382;
+        Tue, 13 Jun 2017 06:06:30 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id x30sm27418773pge.23.2017.06.13.05.59.06
+        by smtp.gmail.com with ESMTPSA id c27sm26802083pfj.107.2017.06.13.06.06.29
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 05:59:07 -0700 (PDT)
+        Tue, 13 Jun 2017 06:06:29 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 5/8] t1308: relax the test verifying that empty alias values are disallowed
-References: <cover.1496951503.git.johannes.schindelin@gmx.de>
-        <b9e212d508e9103037da2070cc0aaed530ea7473.1496951503.git.johannes.schindelin@gmx.de>
-        <xmqq37b84g9t.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1706131244150.171564@virtualbox>
-Date:   Tue, 13 Jun 2017 05:59:06 -0700
-In-Reply-To: <alpine.DEB.2.21.1.1706131244150.171564@virtualbox> (Johannes
-        Schindelin's message of "Tue, 13 Jun 2017 12:50:16 +0200 (CEST)")
-Message-ID: <xmqq8tkw9h7p.fsf@gitster.mtv.corp.google.com>
+To:     liam Beguin <liambeguin@gmail.com>
+Cc:     Konstantin Khomoutov <kostix+git@007spb.ru>,
+        Jeff King <peff@peff.net>, Samuel Lijin <sxlijin@gmail.com>,
+        Houston Fortney <houstonfortney@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Feature Request: Show status of the stash in git status command
+References: <CA+B9myHRahTd+FDgzK5AhXW+hq_Y_czMX9X6MXYBcr9WSPeiDw@mail.gmail.com>
+        <20170610082534.6437ifexzly4oqg6@sigill.intra.peff.net>
+        <CAJZjrdXCHVKQOxR=+z5cOkieKzE-iSMta--kHVjSYXuansb34Q@mail.gmail.com>
+        <20170610102217.vxf6tsrdfp6srupr@sigill.intra.peff.net>
+        <1c04d689-6796-17d1-e058-18874768c22a@gmail.com>
+        <xmqqpoe9p6bn.fsf@gitster.mtv.corp.google.com>
+        <2217b9a1-dc8c-635a-649e-eae2dec5aaa5@gmail.com>
+        <20170613064142.aww23a75pu3ytym6@tigra>
+        <be7311a1-1dfa-2cb6-4426-6771db545892@gmail.com>
+Date:   Tue, 13 Jun 2017 06:06:28 -0700
+In-Reply-To: <be7311a1-1dfa-2cb6-4426-6771db545892@gmail.com> (liam Beguin's
+        message of "Tue, 13 Jun 2017 08:34:17 -0400")
+Message-ID: <xmqq4lvk9gvf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,20 +76,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+liam Beguin <liambeguin@gmail.com> writes:
 
-> Sadly, I do not think so. It is just different, not better. Maybe less
-> redundant... See for yourself:
+>> The fact a stash entry is a merge commit of two synthetic commits is an
+>> implementation detail.  It can be very useful at times for power users,
+>> but regular Git users need not be concerned with this.
+>> 
+>> Another fact worth reiterating that what the UI displays to the user is
+>> better to match what the user reads in the docs. ;-)
+>
+> I'll make changes as suggested by Junio. I slightly prefer
+> "Your stash has %d entry/entries" over "You have %d stash/stashes" 
+> but I'll go with what's used elsewhere in the documentation. 
 
-Yup, I noticed and was referring to this "less redundant" as an
-improvement, actually.
+Yup, I agree that I would definitely call them "stash entries" if I
+were writing the documentation today, but lets match the new message
+to the existing lingo first and think about renaming "a stash" to "a
+stash entry" as a separate step.  The latter would become a larger
+change (we'd also need to add an entry to glossary-contents.txt).
 
-> The real fix would indeed be (as mentioned by Brandon elsewhere) to unify
-> the code paths between the cached and the non-cached config machinery, so
-> as to provide the exact same error message in this case.
-
-Yeah, the unifying of the messages would be a good addition in the
-mid term but I tend to agree that it can be done after this series
-lands.
-
-Thanks for clarification.
+Thanks.
