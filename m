@@ -2,229 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DE531FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 12:04:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C3C21FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 12:34:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753095AbdFMMEx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 08:04:53 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61674 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752249AbdFMMEv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 08:04:51 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lvkwm-1durW73FaW-017V5t; Tue, 13
- Jun 2017 14:04:39 +0200
-Date:   Tue, 13 Jun 2017 14:04:39 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 6/6] Use the early config machinery to expand aliases
-In-Reply-To: <cover.1497355444.git.johannes.schindelin@gmx.de>
-Message-ID: <822765b002488f03523bf440097492be3c14931a.1497355444.git.johannes.schindelin@gmx.de>
-References: <cover.1497355444.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1753239AbdFMMeV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 08:34:21 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:34418 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753095AbdFMMeU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 08:34:20 -0400
+Received: by mail-it0-f65.google.com with SMTP id 201so12286460itu.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 05:34:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=giCWuI+/iszmstYkEo9M+eJ8VPICOH8Tvtg5QV2uFig=;
+        b=q0dbhhy3ioN6RuDWBZBkDqxHIeoL6tJUNuj8z8UNn19WAkdjbmfGgy5WI1nsL4m0CI
+         FkVhxdofwvOhnAaQ75EkD4uPIgtI4niajfHRM2g2b8baKI7PQEB+l4rSouA6/5ZRv40u
+         iBVP2Zb79x32u3f8E3EHP09RGW5vRKtzPJ+18WUh7MeO6ZV+D4M4XAxQnyJIkgtPqGXP
+         hSan5dXq2BWftks6n82xAifQR3zS2gaAwjFGtzzPi3IbYArTCu2btNmXgmf3Cy+sQZXb
+         37ZR0TmJ7Cy3ljEVQvMOpwLRwFGU1N+ASpf0Ba3pOQbqyRBRgaLUy5R8k8x4xNX3Rh4J
+         Wx2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=giCWuI+/iszmstYkEo9M+eJ8VPICOH8Tvtg5QV2uFig=;
+        b=Cl4hGbiiciZeWPqumwxeNkkHdmFgJm7VV89uBDBVda/1otcdJR4j6sgMul+ufdcIq6
+         ZFecQTUiCJzydSHe8lJpp/ISMYdhcSQKPuJB553348/oPk8GuRc07tu9YWY5Gu6N7Vwa
+         0KotKJPlMchfkyFng90JpcZYYYmXqkcCKJ0N1abrI6/r5DTAXitrvJacEJvKBX3+HQsC
+         ShjisfM26u/hT8dMICJnjQHlCb73rCHec//jtxZGm2oD/XWU6ZJohbQYr0t26Gs1PX7i
+         qnpgSpfCWEX4+zZk/u2b/Bp6Cqv8LrwlVYJ+GFuBX00UOH0+1srv5NCQDqXtmb2RhYOQ
+         9cWQ==
+X-Gm-Message-State: AODbwcBniSjmHlokff9r2MFpko+gy6EgwFWEgtX8LQaVq5s5v+f3kfvg
+        zYyXASo6I/EK1gZlOXfKGw==
+X-Received: by 10.36.61.130 with SMTP id n124mr16782142itn.52.1497357259326;
+        Tue, 13 Jun 2017 05:34:19 -0700 (PDT)
+Received: from [192.168.2.102] (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
+        by smtp.gmail.com with ESMTPSA id k2sm1455226itk.3.2017.06.13.05.34.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Jun 2017 05:34:18 -0700 (PDT)
+Subject: Re: Feature Request: Show status of the stash in git status command
+To:     Konstantin Khomoutov <kostix+git@007spb.ru>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        Houston Fortney <houstonfortney@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CA+B9myHRahTd+FDgzK5AhXW+hq_Y_czMX9X6MXYBcr9WSPeiDw@mail.gmail.com>
+ <20170610082534.6437ifexzly4oqg6@sigill.intra.peff.net>
+ <CAJZjrdXCHVKQOxR=+z5cOkieKzE-iSMta--kHVjSYXuansb34Q@mail.gmail.com>
+ <20170610102217.vxf6tsrdfp6srupr@sigill.intra.peff.net>
+ <1c04d689-6796-17d1-e058-18874768c22a@gmail.com>
+ <xmqqpoe9p6bn.fsf@gitster.mtv.corp.google.com>
+ <2217b9a1-dc8c-635a-649e-eae2dec5aaa5@gmail.com>
+ <20170613064142.aww23a75pu3ytym6@tigra>
+From:   liam Beguin <liambeguin@gmail.com>
+Message-ID: <be7311a1-1dfa-2cb6-4426-6771db545892@gmail.com>
+Date:   Tue, 13 Jun 2017 08:34:17 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:RQJQ/5FWytXje39DpUFRr/qy9AyNZpTAaCbrA4yZcwKuA0khtLR
- AZm+m6hu8d6HBjWwqYHIbonE3opecDJzYzuzLY17oF69lg9wneHmurzlV1N9kf+L7/sbsXJ
- rlpgo1PsDZplsfUJKVWRxGKdxh3g+L39Y8gphpHHTxhHsEH9B0d5VRi3Tjc7qpFvZTa6T0M
- KxdKwQy0xNmnKGoUdtEeA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AMrR4VI3uIo=:qV2NS9PpCLmOVNqpq6tdbV
- 6tTngIyR04zKxpAuIasSHWEoMHW68bitKTA5WK2jFmtfyGSJs1GSbkojpoF/TYVabvt6S8rzO
- mcDdh+V5fDKgVUmoLXBRd1fm7j84gArPn+bNFVWfkf37ELWGxhRsNS3uA9n7hFmkg7HtEDOwX
- KSmTvfAaWKI+6u+lISUfcyyxuh9dntUTXvRhVCcG5cjfKRaNGTJLsu/8Mr5Dnx+iVGcvQZJVg
- Ty6iYi6fCVjVdlOm3ppAY/eieNBOeAaKvfhXLbM2nBa7leA1Sr/RMSJfr0ny6rXn3JYVBQgaP
- Eh/Id2TWrUnrtsKTFebNJ3ENHhIhqUuVcAu0J5r9HwfWB9eBk61hzuGO2F9JVFF2x80I2OZ7M
- 4DeW1dvttS9HZES1nwQzEM+13g4Gf2KSpD/pwkkw5d9zcT74XDkZsCBnkre0VblB4mW47InKE
- xcebrLmaZ55tf03Mv4RrVh0T541qRdIIwk1BOwpdaqPKYUWryUjZbPBAvDNb58zWKuq09e0iJ
- A6NumqVtnbIX7EnakWdjIypx87CRKg1YT+GyvhusFMG0b6RqttxY5ifROgnoRs0PgtSptjTKI
- UKyLES4ZZ4PVRe/MQvQTnQK3HxSs6GWnhccemok0KSOQmwbDa3HYK6QsoyAm8JfSvjyoUt5/N
- ygUatHrXErrz0tRxDKhg7nvYLZRGeCzVSAz4pv1lMHp8Y+Yh+l0+hE0aFN6kPiClVlld3sL4k
- g9sRSRUNBKFzXd1J7y+OuoW5YuyCGI+jeXd+n/k2+SlJAhRYjoRVke8kfqoCRpYNbP4Pnpsv+
- NHifKz5
+In-Reply-To: <20170613064142.aww23a75pu3ytym6@tigra>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of discovering the .git/ directory, read the config and then
-trying to painstakingly reset all the global state if we did not find a
-matching alias, let's use the early config machinery instead.
+Hi, 
 
-It may look like unnecessary work to discover the .git/ directory in the
-early config machinery and then call setup_git_directory_gently() in the
-case of a shell alias, repeating the very same discovery *again*.
-However, we have to do this as the early config machinery takes pains
-*not* to touch any global state, while shell aliases expect a possibly
-changed working directory and at least the GIT_PREFIX and GIT_DIR
-variables to be set.
+On 13/06/17 02:42 AM, Konstantin Khomoutov wrote:
+> On Mon, Jun 12, 2017 at 11:42:44PM -0400, liam Beguin wrote:
+> 
+> [...]
+>>> Conceptually, the contents of the stash are *not* commits, even
+>>> though the implementation happens to use a commit to represent each
+>>> stash entry.  Perhaps "has %d entry/entries" is an improvement, but
+>>> a quick scanning of an early part of "git stash --help" tells me
+>>> that
+>>
+>> what's different between a stash and a commit? 
+> 
+> The same that exists between an interface and a concrete implementation
+> in a programming language.
 
-Also, one might be tempted to streamline the code in alias_lookup() to
-*not* use a strbuf for the key. However, if the config reports an error,
-it is far superior to tell the user that the `alias.xyz` key had a
-problem than to claim that it was the `xyz` key.
+Makes sense, I thought there was a more fundamental difference.
 
-This change also fixes a known issue where Git tried to read the pager
-config from an incorrect path in a subdirectory of a Git worktree if an
-alias expanded to a shell command.
+> 
+> "A stash entry" is a concept which is defined to keep explicitly
+> recorded untracked files and which can be applied, shown and deleted
+> from the stash bag (well, you can create a branch off it as well).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- alias.c          | 31 ++++++++++++++++++++++++-------
- git.c            | 55 ++++---------------------------------------------------
- t/t7006-pager.sh |  2 +-
- 3 files changed, 29 insertions(+), 59 deletions(-)
+I've noticed this but I don't understand when it can be used.
+I'll try to find out more on this.
 
-diff --git a/alias.c b/alias.c
-index 3b90397a99d..6bdc9363037 100644
---- a/alias.c
-+++ b/alias.c
-@@ -1,14 +1,31 @@
- #include "cache.h"
- 
-+struct config_alias_data
-+{
-+	struct strbuf key;
-+	char *v;
-+};
-+
-+static int config_alias_cb(const char *key, const char *value, void *d)
-+{
-+	struct config_alias_data *data = d;
-+
-+	if (!strcmp(key, data->key.buf))
-+		return git_config_string((const char **)&data->v, key, value);
-+
-+	return 0;
-+}
-+
- char *alias_lookup(const char *alias)
- {
--	char *v = NULL;
--	struct strbuf key = STRBUF_INIT;
--	strbuf_addf(&key, "alias.%s", alias);
--	if (git_config_key_is_valid(key.buf))
--		git_config_get_string(key.buf, &v);
--	strbuf_release(&key);
--	return v;
-+	struct config_alias_data data = { STRBUF_INIT, NULL };
-+
-+	strbuf_addf(&data.key, "alias.%s", alias);
-+	if (git_config_key_is_valid(data.key.buf))
-+		read_early_config(config_alias_cb, &data);
-+	strbuf_release(&data.key);
-+
-+	return data.v;
- }
- 
- #define SPLIT_CMDLINE_BAD_ENDING 1
-diff --git a/git.c b/git.c
-index 8ff44f081d4..58ef570294d 100644
---- a/git.c
-+++ b/git.c
-@@ -16,50 +16,6 @@ const char git_more_info_string[] =
- 	   "to read about a specific subcommand or concept.");
- 
- static int use_pager = -1;
--static char *orig_cwd;
--static const char *env_names[] = {
--	GIT_DIR_ENVIRONMENT,
--	GIT_WORK_TREE_ENVIRONMENT,
--	GIT_IMPLICIT_WORK_TREE_ENVIRONMENT,
--	GIT_PREFIX_ENVIRONMENT
--};
--static char *orig_env[4];
--static int save_restore_env_balance;
--
--static void save_env_before_alias(void)
--{
--	int i;
--
--	assert(save_restore_env_balance == 0);
--	save_restore_env_balance = 1;
--	orig_cwd = xgetcwd();
--	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
--		orig_env[i] = getenv(env_names[i]);
--		orig_env[i] = xstrdup_or_null(orig_env[i]);
--	}
--}
--
--static void restore_env(int external_alias)
--{
--	int i;
--
--	assert(save_restore_env_balance == 1);
--	save_restore_env_balance = 0;
--	if (!external_alias && orig_cwd && chdir(orig_cwd))
--		die_errno("could not move to %s", orig_cwd);
--	free(orig_cwd);
--	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
--		if (external_alias &&
--		    !strcmp(env_names[i], GIT_PREFIX_ENVIRONMENT))
--			continue;
--		if (orig_env[i]) {
--			setenv(env_names[i], orig_env[i], 1);
--			free(orig_env[i]);
--		} else {
--			unsetenv(env_names[i]);
--		}
--	}
--}
- 
- static void commit_pager_choice(void) {
- 	switch (use_pager) {
-@@ -250,19 +206,18 @@ static int handle_alias(int *argcp, const char ***argv)
- 	const char **new_argv;
- 	const char *alias_command;
- 	char *alias_string;
--	int unused_nongit;
--
--	save_env_before_alias();
--	setup_git_directory_gently(&unused_nongit);
- 
- 	alias_command = (*argv)[0];
- 	alias_string = alias_lookup(alias_command);
- 	if (alias_string) {
- 		if (alias_string[0] == '!') {
- 			struct child_process child = CHILD_PROCESS_INIT;
-+			int nongit_ok;
-+
-+			/* Aliases expect GIT_PREFIX, GIT_DIR etc to be set */
-+			setup_git_directory_gently(&nongit_ok);
- 
- 			commit_pager_choice();
--			restore_env(1);
- 
- 			child.use_shell = 1;
- 			argv_array_push(&child.args, alias_string + 1);
-@@ -308,8 +263,6 @@ static int handle_alias(int *argcp, const char ***argv)
- 		ret = 1;
- 	}
- 
--	restore_env(0);
--
- 	errno = saved_errno;
- 
- 	return ret;
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index 83881ec3a0c..20b4d83c281 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -391,7 +391,7 @@ test_expect_success TTY 'core.pager in repo config works and retains cwd' '
- 	)
- '
- 
--test_expect_failure TTY 'core.pager is found via alias in subdirectory' '
-+test_expect_success TTY 'core.pager is found via alias in subdirectory' '
- 	sane_unset GIT_PAGER &&
- 	test_config core.pager "cat >via-alias" &&
- 	(
--- 
-2.13.0.windows.1.460.g13f583bedb5
+> 
+> The fact a stash entry is a merge commit of two synthetic commits is an
+> implementation detail.  It can be very useful at times for power users,
+> but regular Git users need not be concerned with this.
+> 
+> Another fact worth reiterating that what the UI displays to the user is
+> better to match what the user reads in the docs. ;-)
+> 
+
+I'll make changes as suggested by Junio. I slightly prefer
+"Your stash has %d entry/entries" over "You have %d stash/stashes" 
+but I'll go with what's used elsewhere in the documentation. 
+
+Thanks,
+
+ - Liam
