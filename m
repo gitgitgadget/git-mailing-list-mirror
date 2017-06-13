@@ -2,102 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 467D41FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 13:35:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64E4D1FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 14:42:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752987AbdFMNfa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 09:35:30 -0400
-Received: from mout.gmx.net ([212.227.15.18]:57862 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752326AbdFMNfa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 09:35:30 -0400
-Received: from localhost.localdomain ([37.201.192.198]) by mail.gmx.com
- (mrgmx003 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0MhAVV-1dXe9u2Q41-00MI4z; Tue, 13 Jun 2017 15:35:27 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.13.1
-Date:   Tue, 13 Jun 2017 15:35:10 +0200
-Message-Id: <20170613133510.7688-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.12.1.windows.1
-Content-Type: text/plain; charset=UTF-8
+        id S1753175AbdFMOl6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 10:41:58 -0400
+Received: from smtp114.iad3a.emailsrvr.com ([173.203.187.114]:47629 "EHLO
+        smtp114.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752326AbdFMOl6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 13 Jun 2017 10:41:58 -0400
+Received: from smtp39.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+        by smtp39.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id EE86C6147;
+        Tue, 13 Jun 2017 10:41:56 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp39.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C31E557AF;
+        Tue, 13 Jun 2017 10:41:56 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Tue, 13 Jun 2017 10:41:56 -0400
+Subject: Re: proposal for how to share other refs as part of refs/tracking/*
+To:     Jacob Keller <jacob.keller@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+References: <CA+P7+xrMX+gxQrsB9kcy3RkDL=eDXb_TQ-V+2vH+ir0Sbef8Xg@mail.gmail.com>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <48064f67-6d88-8c14-853e-fd9214d26647@xiplink.com>
+Date:   Tue, 13 Jun 2017 10:41:56 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Fcc:    Sent
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:gqkqWsDpjaQko2GEQoHfRp/JUWBD8jC1sqRpH4iN3q93TNq84ap
- LEODVK3ITH0pJgTp0QjEbPNh9CH4d72zxlsU132+Yg5Ah0UetKpIewvExx+vpVSpKKlYLUM
- Rm54gmdbyg8fi7VnGh+q3OZdFbQUUR84oZdEwjQlK7jX6Te+Nf/4iN8qo/KVqu1TUsAy3sb
- lX9/1a608sO6sXfLuPHpw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AKVCk58r/Ko=:kxR7tbrQvfbUM5jtm09T+N
- ESjkzsuzkPcyk3PFXnyOju3dckaBa8Tpgy0mQ3TeR8C4ElBfOixEHRud6P6CZ74Xi7hSFMH/H
- vXTLowEQer54nzvThXzTvKFbfyIq9kHRLclhtont0KU+Yq+HZClFQSmzoMRazxf+Y+Is1skpl
- cCapdavGzXWAmITz5xLisgmWsxOurKlqBzH0SWwpN2qrHDI+IGdCX8hVURl9wMEHHqJYFTVFp
- GqO/6apkGjC9hLigUrZvFTBx5i7VmMwVuXHcnMFZbo6eiwk9c4Hu4E00zc+RjbfhL5yO6Qx2q
- lgCTmzTxZA9FvHnY6DgTJai3jud+z2hXrWejMbwu+5jxuGgICWzAMN7+kg4bcYlRuMrbRXgkL
- ji+hsgd9hhPu4T1y761tRdRUQwBHDzYNDLv3lO9gHMTVSRlHNbqOLT0y3KqNXn3NJ8pKKXx3x
- qH1VIJbmfTAXBKklb5CoL6yp8LVyrbwqv4JMena5a8lC+Q0JbQfNpCLsoayVyGwKLEDZvUpED
- 5hMFGYM3Bm7X+82Uvm5vu2KIPfWxvfsvyuZM1dzIWNlkIAHsCPAGjMr5IOIUaiJa2aEs+7JcO
- iuoX74FUT3oWmqMKcPQFJ2TPF/kBAExgKwKAY560dIhT7Cs5OVmXwH728Jpe0I9dw44ReGJjT
- ID25vhnB5iE5blWfiDOFMYFSsDn19d1O7QlmdTTd0wfVMrTUSXNZ+7XeeOQxDtrqQ/tEn5xCo
- egw+n1o2yPW7lgDiwX5BngWeigI2LwFqk7pAeCQOeBvLbrkT7YwHDMkf2DNCQF2Kbw1b9IHU0
- vut+7R7
+In-Reply-To: <CA+P7+xrMX+gxQrsB9kcy3RkDL=eDXb_TQ-V+2vH+ir0Sbef8Xg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On 2017-06-12 06:58 PM, Jacob Keller wrote:
+> Hi,
+> 
+> There's no actual code yet, (forgive me), but I've been thinking back
+> to a while ago about attempting to find a way to share things like
+> refs/notes, and similar refs which are usually not shared across a
+> remote.
+> 
+> By default, those refs are not propagated when you do a push or a
+> pull, and this makes using them in any project which has more then one
+> repository quite difficult.
+> 
+> I'm going to focus the discussion primarily on refs/notes as this is
+> what I am most interested in, but I think similar issues exist for
+> refs/grafts and refs/replace, and maybe other sources?
 
-It is my pleasure to announce that Git for Windows 2.13.1 is available from:
+More formal support for custom ref namespaces would be a boon.  For 
+example, we have our nightly builds create a "build/w.x.y-z" ref (we 
+only want to tag official releases).  Sharing those refs is not hard, 
+but a bit obscure.
 
-	https://git-for-windows.github.io/
+> For branches, we already have a system to share the status of remote
+> branches, called "refs/remotes/<remote-name>/<branch-name>"
+> 
+> This hierarchy unfortunately does not keep space for non-branches,
+> because you can't simply add a "refs/remotes/notes/<>" or
+> "refs/remotes/<name>/notes" to this as it would be ambiguous.
+> 
+> Now, you might just decide to push the refs/notes directly, ie:
+> 
+> git push origin refs/notes/...:refs/notes/...
+> 
+> Unfortunately, this has problems because it leaves no standard way to
+> distinguish your local work from what is on the remote, so you can't
+> easily merge the remote work into yours.
 
-Changes since Git for Windows v2.13.0 (May 10th 2017)
+There was a related discussion in the run-up to 1.8.0, about a "remote 
+tag namespace" to support having different remotes with the same tag 
+name for different objects.  See these messages and their surrounding 
+threads:
 
-New Features
+http://public-inbox.org/git/AANLkTikeqsg+qJ0z4iQ6ZmKL=_HB8YX_z20L=dFFApmA@mail.gmail.com/
 
-  * Comes with Git v2.13.1.
-  * Comes with Git Credential Manager v1.10.0.
-  * Comes with OpenSSH 7.5p1.
-  * Comes with Git Flow v1.11.0.
-  * Comes with Git LFS v2.1.1.
-  * Git now uses the flag introduced with Windows 10 Creators Update to
-    create symbolic links without requiring elevated privileges in
-    Developer Mode.
+http://public-inbox.org/git/AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com/
 
-Bug Fixes
+http://public-inbox.org/git/201102020322.00171.johan@herland.net/
 
-  * The documentation of Git for Windows' several config files was
-    improved.
-  * When interrupting Git processes in Git Bash by pressing Ctrl+C, Git
-    now removes .lock files as designed (accompanying Git PR; this
-    should also fix issue #338).
-  * git status -uno now treats submodules in ignored directories
-    correctly.
-  * The fscache feature no longer slows down git commit -m <message> in
-    large worktrees.
-  * Executing git.exe in Git Bash when the current working directory is
-    a UNC path now works as expected.
-  * Staging/unstaging multiple files in Git GUI via Ctrl+C now works.
-  * When hitting Ctrl+T in Git GUI to stage files, but the file list is
-    empty, Git GUI no longer shows an exception window.
+The discussion explored, among other things, making 
+refs/remotes/$remote/* a mirror of a remote's own refs/* hierarchy 
+(well, within reason -- I think there are limits to what should be 
+mirrored).
 
-Filename | SHA-256
--------- | -------
-Git-2.13.1-64-bit.exe | fe834ec34b6cbda5b973fb4a210998471451efaa42ffe20d6b5de197a95ffc13
-Git-2.13.1-32-bit.exe | 6b8f7605eafb982efcec53f128cedaa2535d589207b368cade61ce7ca5f04b26
-PortableGit-2.13.1-64-bit.7z.exe | f47957cf596019ace07ef3fc17d08591f0e85092f4ca760850b6f34cabba95ba
-PortableGit-2.13.1-32-bit.7z.exe | 8468716d1c32f22394b17534d8346cf352ddce1cecaf6df985d2338106350242
-MinGit-2.13.1-64-bit.zip | 4e361db36ebec015797499c197c4e994070cfa76f80efa283c3eef89e9d1ae81
-MinGit-2.13.1-32-bit.zip | 8985d57a4410103db339719e9143f367f5645a4ee74d72246a74253fb4ede70b
-Git-2.13.1-64-bit.tar.bz2 | a87df3c348d32c91d3f8f76bbe3b621339880b659a5c904bce10c7c96626d756
-Git-2.13.1-32-bit.tar.bz2 | 2efd7a1049fcdadfd7ee23fc41bdbf61cf4b185eac706028418991d5882f56a9
+So I like your refs/tracking proposal, and hope that it aims for 
+mirroring a remote's refs, to eventually replace refs/remotes entirely.
 
-Ciao,
-Johannes
+		M.
+
+
+> For example, if Alice creates a new note and pushes it, then Bob
+> creates a different note on the same commit, he needs to be able to
+> merge Alice's changes into his note, just like one would do when two
+> people commit to the same branch.
+> 
+> Today, he must pull the remote notes into a separate location, (since
+> pulling directly into refs/notes will overwrite his work), and then
+> update, and then push.
+> 
+> Because this is not standardized, it becomes unwieldy to actually
+> perform on a day to day basis.
+> 
+> I propose that we add a new "refs/tracking" hierarchy which will be
+> used to track these type of refs
+> 
+> We could even (long term) migrate refs/remotes into refs/tracking
+> instead, or provide both with the refs/remotes being pointers or
+> something like that..
+> 
+> Essentially, refs/notes would be pulled into
+> refs/tracking/<remote>/notes/* or something along these lines.
+> 
+> Then, git notes would be modified to be able to have commands to
+> "pull" and "push" notes which would fetch the remote, and then attempt
+> a merge into the local notes, while a push would update the remote.
+> 
+> I chose "tracking" because it sort of fits the concept and does not
+> include things like "remote-notes" or "remotes-v2" which are a bit
+> weird.
+> 
+> I'm posting this on the mailing list prior to having code because I
+> wanted to get a sense of how people felt about the question and
+> whether others still felt it was an issue.
+> 
+> Essentially the goal is to standardize how any refs namespace can be
+> shared in such a way that local copies can tell what the remote had at
+> a fetch time, in order to allow easier handling of conflicts between
+> local and remote changes, just like we do for branches (heads) but
+> generalized so that other refs namespaces can get the same ability to
+> handle conflicts.
+> 
+> Thanks,
+> Jake
+> 
