@@ -2,108 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F89A1FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 18:09:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6150C1FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 18:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753778AbdFMSJI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 14:09:08 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:35370 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753766AbdFMSJG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 14:09:06 -0400
-Received: by mail-pg0-f53.google.com with SMTP id k71so64051278pgd.2
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 11:09:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=CMJd3M2uzxqgrGQkFcGm/NFyckNtBjtr3cFqBwjK3fU=;
-        b=QQ+ln60YC//uEwRR8qP3CQI2Grzea0xYuTJGJyXfhYYI2A4f1uzHS/2Jsx2xdDDcSs
-         2o8D1jcVWV8YIAL1lQ7Nu6IqsXKY71olqyl1a2b0tg4du+uQ1YTBOvA9ExJ4bK2aUKWK
-         ypGnYKrJjt3V0QI4E4uDDLQkqf46gUlMoPAApxUYZdJBMYr2RcK1j4TQkU6rYRYt4cIx
-         /cu38GA1J6/aZEKbVHWb45d0xfQYvlumFihj3Y5Bx7yyTYg/QginJUJnQUt0gLGotP6Z
-         KZxA6UjWJZLrDAaewsHGJUh1LKcdADg6KZWayF7QxqJtYss3VI4w7OZP5CfLHx8EZKQw
-         i0PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=CMJd3M2uzxqgrGQkFcGm/NFyckNtBjtr3cFqBwjK3fU=;
-        b=iCZPZFlIt1mEYa489T6oloVtPOX97dojGxjwwiGCXKTi/tHqrsaeV+HpRj/jBDwNZK
-         lBtq9zute7RYwQJh9HAOPslBDGiG0+cpubOi87Hq/D0ZFCuYzww2bnIqDtddAP+oLgps
-         VplI2/o5ZEoNXAHUqNza3rl3EgyZPRoz0EFSsC8vzr5L2aiRSgtKhpDsZl25aQ5JzWv1
-         DlJH57g9Wg+qpLlyxQO6vW2WEBIt0I26lzQWgSJNfydgr1byXKzzYr36iDRQqRrVPrAK
-         yBAKozbh8/9FRCkUjwCOb56sMfB3AVt+Le7EEXAvpD2a7JTWBg0x4BqC2x/jtEd/OFx2
-         4BkQ==
-X-Gm-Message-State: AKS2vOy0uIw0XcDn1nIBZQl8C4VrfycDPOTFZpvH1WgWMlHMv7LM+wqW
-        Uc879M5SzbQrw7337UU=
-X-Received: by 10.98.153.6 with SMTP id d6mr622590pfe.223.1497377340293;
-        Tue, 13 Jun 2017 11:09:00 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:e453:89d5:deb:c7b6])
-        by smtp.gmail.com with ESMTPSA id 62sm22515757pfz.39.2017.06.13.11.08.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 11:08:59 -0700 (PDT)
-Date:   Tue, 13 Jun 2017 11:08:57 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Sahil Dua <sahildua2305@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC] branch: add tests for new copy branch feature
-Message-ID: <20170613180857.GI133952@aiede.mtv.corp.google.com>
-References: <0102015c5146c8ca-e5144538-326b-47b8-8c81-af31da4cdfe0-000000@eu-west-1.amazonses.com>
- <CACBZZX4LpRK5q+cxToWqGeW2ZgN4ggo4h9SJpx0mZkZUR15jNw@mail.gmail.com>
- <CALiud+mGovAoPriJxzCB93jwkChyRb49yxVtNijfag2zx-jZ0Q@mail.gmail.com>
- <CACBZZX6LcTzFKTe0fENj95Vm7GrxT5HHs3pzrqajG0XApN-rbw@mail.gmail.com>
- <20170613175501.GH133952@aiede.mtv.corp.google.com>
- <87o9tr3gxs.fsf@gmail.com>
+        id S1753424AbdFMSJd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 14:09:33 -0400
+Received: from mout.web.de ([212.227.15.4]:64550 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752674AbdFMSJc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 14:09:32 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MUVrX-1dCttL055P-00RISs; Tue, 13
+ Jun 2017 20:09:20 +0200
+Subject: Re: [BUG] add_again() off-by-one error in custom format
+To:     Junio C Hamano <gitster@pobox.com>,
+        Michael Giuffrida <michaelpg@chromium.org>
+Cc:     git@vger.kernel.org
+References: <CACi5S_1j46SbP7cQMdUnULmgGD7xBkSUrS2PKbzq8ZydybHE=w@mail.gmail.com>
+ <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <d229403a-d078-87b4-f3e8-89058fa4b548@web.de>
+Date:   Tue, 13 Jun 2017 20:09:17 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87o9tr3gxs.fsf@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:OPs6clTDdUlkdtOjCoVdpVg+YvBHtcLydETnt4z849TQglsalEY
+ rGCZYIPliJkG0mlO9CswAiaa9pbMHrZ4xx1mDxgBePfW+HHIoSBrIIkdClLvRxTAt6xdkxZ
+ y0A0Yw9QyhTVpiSWRu/JFmmZERuTliiYO6I/KHCGj3jrI1oMajpoDP3bLs1BqSyAGKq4WsI
+ GW9enGwRG43pbw3ac34WA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ir9Hl60/I0A=:Q+mFtC13TD2DvFqfc7HBB9
+ Pm2q4icqAV0PAMFyILvRSS4qj9bETvRsyxGGgnOgFUPK7SSsN0PGoIQVUn8iHoqi0xlqzNc6Q
+ BUgjT8BokI3puX7I1CJLhcmpeekJ2kkh7H69iH9XGWdVTRCnOeRECzvq0ZjQUyRNuxKzyPSCT
+ 3ym+xwnn25+JKWLWayFwMHGYuHDcIoQ8nHJ4viQ9//rRzz9xE2T3sUcP+UgCNpZsJxdapYDLC
+ KDB5OZRVTtig9zXy+WNyPpmkUhQ5qo93LvVffF2AzpQ6GlN0LfIGb/eiPXHVSaPSZxR8HQLlt
+ q9WmFu6WyXNGj7RcgA4Qx+hL4wJplyPKX2OsD5sj5xhlId4GAPbLMK+5GyA5ZE5qlER8btCxO
+ 93Je4DEDSkpyDDKCBJ641RVgXW/Onx8DRPS1NDTeEFGnebh+fpikRdEPSie0UNEGVRPpcyCpf
+ UD2BCu2jbn5BQz0CwnzdjJUzGyjbFSeU1rLBVTaOTRXnpVepRdAPWrzdyIunKGnnusrFfZuRq
+ vJwteFeqkbRUipSXAAmYxJ+QjH9iTeCKk2ATUNDioUFzfA28hOYTpRqy1z9l11eHsWMRaTCTf
+ rZDZ7v6tGsJl22JC90K7RaBI2tH73eImK992QnncJ8cqYDIa9v+P8TxUcNsFv+pbmkN3ZkyLn
+ K6yfkBTBqc35TCVSpJSInQRAfsROxyEISl/WgJ1SwXduaP0kYL2D7gDYNFtVQXHoe40FeA4K9
+ gsbSZQ2XxKOnZWdsl4Xk0/OPl8e8KOmSF+LC+fkV54dxoIZipXRxxCdW3mnHe/SrxVcCfugvg
+ LBHCIk+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-∆var Arnfjˆr Bjarmason wrote:
-> On Tue, Jun 13 2017, Jonathan Nieder jotted:
-> > ∆var Arnfjˆr Bjarmason wrote:
-
->>> My understanding of that last part is that Jonathan/someone (see
->>> reported-by in that patch) had some script which was renaming
->>> branches, and it was easier for whatever reason to just make it no-op
->>> if the rename would have yielded the same result as doing nothing at
->>> all.
->>>
->>> Most likely your implementation will consist of just re-using the
->>> logic in rename_branch() (and renaming it to e.g.
->>> copy_or_rename_branch() ...) so you could just re-use the no-op
->>> behavior we use for -m, or if there's some reason not to no-op and
->>> error instead for -c we could just do that, but in any case this case
->>> of `git branch -c master master` or `git branch -c currentbranch`
->>> should be tested for.
+Am 13.06.2017 um 00:49 schrieb Junio C Hamano:
+> Michael Giuffrida <michaelpg@chromium.org> writes:
+> 
+>> For the abbreviated commit hash placeholder ('h'), pretty.c uses
+>> add_again() to cache the result of the expansion, and then uses that
+>> result in future expansions. This causes problems when the expansion
+>> includes whitespace:
 >>
->> I may be missing some context, but notice that the above mentioned
->> commit is about -M, not -m.
->
-> The context was just that that commit added a change in how -M
-> interacted when clobbering the current HEAD, and that -C should have a
-> test for that behavior, which the patch now submitted to the list has:
->
->     +test_expect_success 'git branch -C master master should work when master is checked out' '
->     +       git checkout master &&
->     +       git branch -C master master
->     +'
+>>      $ git log -n 1 --pretty='format:newline:%+h%nno_newline:%h'
+>>      newline:
+>>      a0b1c2d
+>>      no_newline:
+>>      a0b1c2
+>>
+>> The second expansion of the hash added an unwanted newline and removed
+>> the final character. It seemingly used the cached expansion *starting
+>> from the inserted newline*.
+>>
+>> The expected output is:
+>>
+>>      $ git log -n 1 --pretty='format:newline:%+h%nno_newline:%h'
+>>      newline:
+>>      a0b1c2d
+>>      no_newline:a0b1c2d
+> 
+> Nicely explained.  The add_again() mechanism caches an earlier
+> result by remembering the offset and the length in the strbuf the
+> formatted string is being accumulated to, but because %+x (and
+> probably %-x) magic placeholders futz with the result of
+> format_commit_one() in place, the cache goes out of sync, of course.
 
-Perfect, thanks.  Carry on. :)
+Indeed, a very nice bug report!
 
-Jonathan
+> I think the call to format_commit_one() needs to be taught to pass
+> 'magic' through, and then add_again() mechanism needs to be told not
+> to cache when magic is in effect, or something like that.
+> 
+> Perhaps something along this line...?
+> 
+>   pretty.c | 64 ++++++++++++++++++++++++++++++++++++++--------------------------
+>   1 file changed, 38 insertions(+), 26 deletions(-)
+
+That looks quite big.  You even invent a way to classify magic. Does the
+caching feature justify the added complexity?  Alternatives:
+
+- Don't cache anymore, now that we have placeholders that change output
+   on top of the original append-only ones.  Yields a net code reduction.
+   Duplicated %h, %t and %p will have to be resolved at each occurrence.
+
+- Provide some space for the cache instead of reusing the output, like
+   a strbuf for each placeholder.  Adds a memory allocation to each
+   first occurrence of %h, %t and %p.  Such a cache could be reused for
+   multiple commits by truncating it instead of releasing; not sure how
+   to pass it in nicely for it to survive a sequence of calls, though.
+
+Ren√©
