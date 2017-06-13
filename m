@@ -2,148 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64E4D1FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 14:42:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 202AA1FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 14:43:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753175AbdFMOl6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 10:41:58 -0400
-Received: from smtp114.iad3a.emailsrvr.com ([173.203.187.114]:47629 "EHLO
-        smtp114.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752326AbdFMOl6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 13 Jun 2017 10:41:58 -0400
-Received: from smtp39.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
-        by smtp39.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id EE86C6147;
-        Tue, 13 Jun 2017 10:41:56 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp39.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C31E557AF;
-        Tue, 13 Jun 2017 10:41:56 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Tue, 13 Jun 2017 10:41:56 -0400
-Subject: Re: proposal for how to share other refs as part of refs/tracking/*
-To:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-References: <CA+P7+xrMX+gxQrsB9kcy3RkDL=eDXb_TQ-V+2vH+ir0Sbef8Xg@mail.gmail.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <48064f67-6d88-8c14-853e-fd9214d26647@xiplink.com>
-Date:   Tue, 13 Jun 2017 10:41:56 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1753103AbdFMOnU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 10:43:20 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34467 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752078AbdFMOnU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 10:43:20 -0400
+Received: by mail-pf0-f181.google.com with SMTP id s66so924397pfs.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 07:43:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HY9tLkd+ryWzLpnEv9eBIXsL+IKWgeRml1IAAu4eWM4=;
+        b=NAJN4yYGAgxvYeDXE0wJiKrcc6Q//o2gUmBYRJebO9p9ulfRztCCXgTgS0es0AbTyA
+         F249k/WByGYrzPASMVIXyGCDitnV73nDBHltsf6eo5556oUlB2Shrs85SgTIvswkzX8U
+         1F8gwNeRTJTSd9TW35wFYdRwdxvZpCfBY7/EZGbKg6FlhCgodVQ/cCQnIkkEBSNYaWUl
+         SPtyTH2x/MIBkJOoFDrDkUDKG7yPYE91b2BQ4T+QsJg7ykWtpTSbti7aVDVCcSBB6CTf
+         1D8oaIHFABQGbt52lWLqCDlvmv2kAml8r2a7R7cHC1gcywEflLR8pUrAKIz2xhbYTsQc
+         neXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HY9tLkd+ryWzLpnEv9eBIXsL+IKWgeRml1IAAu4eWM4=;
+        b=Mau6K12zeC0103tnPKj7hsbIFU1JLWqDnjFWIDEsyjoU8hBLk+ybK7Tixpax4PGech
+         m3+mTqQL0aK+YTwo1Qm0Sr9ydVZVPsdsW6VYrGS1lOVmhJnSWn3ef6Ydgj7ImRoS0ELG
+         83pR8bIwz6my/Dv9T+G6tYGhttDHMv5Y9rz0Lef6s8bK0vzBJelU915wfJpPa8LC3LkD
+         3djB25Jrb0hDQNQNIUdF9exNtWZoU5FOuB+zJu5tlefsDk9cBKinP6v/nprRwB9zzmlv
+         E/uK45dip1cGaG8MubtkVwg57uJWaw+Q5xBR1EU/S4OU4hk75fnP3E1/fLuNEIbTAwWy
+         1XnA==
+X-Gm-Message-State: AKS2vOzscOW1lM8l8sPPpZcpTmzQcQD+YF0zKi4YZiS+VAzT7dI0Az+F
+        GdfjErDdLx8xh/ko
+X-Received: by 10.84.131.1 with SMTP id 1mr214337pld.232.1497364999260;
+        Tue, 13 Jun 2017 07:43:19 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:dd0d:448e:29f9:5e86])
+        by smtp.gmail.com with ESMTPSA id a187sm22114800pgc.37.2017.06.13.07.43.17
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 13 Jun 2017 07:43:18 -0700 (PDT)
+Date:   Tue, 13 Jun 2017 07:43:16 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH 4/4] config: don't implicitly use gitdir
+Message-ID: <20170613144316.GK154599@google.com>
+References: <20170612213406.83247-1-bmwill@google.com>
+ <20170612213406.83247-5-bmwill@google.com>
+ <20170613010518.GB133952@aiede.mtv.corp.google.com>
+ <20170613012337.GH154599@google.com>
+ <20170613013817.GE133952@aiede.mtv.corp.google.com>
+ <20170613025945.v54vrza2n23tk5pw@sigill.intra.peff.net>
+ <20170613061627.GJ154599@google.com>
+ <20170613070813.v3vthqlqsga7djgz@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <CA+P7+xrMX+gxQrsB9kcy3RkDL=eDXb_TQ-V+2vH+ir0Sbef8Xg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170613070813.v3vthqlqsga7djgz@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-06-12 06:58 PM, Jacob Keller wrote:
-> Hi,
+On 06/13, Jeff King wrote:
+> On Mon, Jun 12, 2017 at 11:16:27PM -0700, Brandon Williams wrote:
 > 
-> There's no actual code yet, (forgive me), but I've been thinking back
-> to a while ago about attempting to find a way to share things like
-> refs/notes, and similar refs which are usually not shared across a
-> remote.
+> > > > *puzzled* Why wasn't this needed before, then?  The rest of the patch
+> > > > should result in no functional change, but this part seems different.
+> > > 
+> > > Now I'm puzzled, too. The original that got filled in lazily by the
+> > > config functions was always get_git_dir(). I can buy the argument that
+> > > this was a bug (I'm not familiar enough with worktree to say one way or
+> > > the other), but if it's a fix it should definitely go into another
+> > > patch.
+> > 
+> > Well actually... in do_git_config_sequence 'git_path("config")' is
+> > called which will convert gitdir to commondir under the hood.  you can't
+> > use vanilla gitdir because the config isn't stored in a worktree's
+> > gitdir but rather in the commondir as the config is shared by all
+> > worktrees.
 > 
-> By default, those refs are not propagated when you do a push or a
-> pull, and this makes using them in any project which has more then one
-> repository quite difficult.
-> 
-> I'm going to focus the discussion primarily on refs/notes as this is
-> what I am most interested in, but I think similar issues exist for
-> refs/grafts and refs/replace, and maybe other sources?
+> Sorry, I missed the fact that there were two sites changed on the first
+> read.
 
-More formal support for custom ref namespaces would be a boon.  For 
-example, we have our nightly builds create a "build/w.x.y-z" ref (we 
-only want to tag official releases).  Sharing those refs is not hard, 
-but a bit obscure.
+Well I missed that fact when I first wrote these patches too :)
 
-> For branches, we already have a system to share the status of remote
-> branches, called "refs/remotes/<remote-name>/<branch-name>"
 > 
-> This hierarchy unfortunately does not keep space for non-branches,
-> because you can't simply add a "refs/remotes/notes/<>" or
-> "refs/remotes/<name>/notes" to this as it would be ambiguous.
+> > So maybe we actually need to add a field to the 'config_options' struct
+> > of 'commondir' such that the commondir can be used to load the actual
+> > config file and 'gitdir' can be used to handle the 'IncludeIf' stuff.
 > 
-> Now, you might just decide to push the refs/notes directly, ie:
-> 
-> git push origin refs/notes/...:refs/notes/...
-> 
-> Unfortunately, this has problems because it leaves no standard way to
-> distinguish your local work from what is on the remote, so you can't
-> easily merge the remote work into yours.
+> On reflection, I suspect that probably is the case. If you have a
+> workdir in ~/foo, you probably want to match IncludeIf against that
+> instead of wherever the common dir happens to be.
 
-There was a related discussion in the run-up to 1.8.0, about a "remote 
-tag namespace" to support having different remotes with the same tag 
-name for different objects.  See these messages and their surrounding 
-threads:
+K I'll look into adding that then.  I will say keeping track of
+'commondir' vs 'gitdir' does get slightly confusing.
 
-http://public-inbox.org/git/AANLkTikeqsg+qJ0z4iQ6ZmKL=_HB8YX_z20L=dFFApmA@mail.gmail.com/
-
-http://public-inbox.org/git/AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com/
-
-http://public-inbox.org/git/201102020322.00171.johan@herland.net/
-
-The discussion explored, among other things, making 
-refs/remotes/$remote/* a mirror of a remote's own refs/* hierarchy 
-(well, within reason -- I think there are limits to what should be 
-mirrored).
-
-So I like your refs/tracking proposal, and hope that it aims for 
-mirroring a remote's refs, to eventually replace refs/remotes entirely.
-
-		M.
-
-
-> For example, if Alice creates a new note and pushes it, then Bob
-> creates a different note on the same commit, he needs to be able to
-> merge Alice's changes into his note, just like one would do when two
-> people commit to the same branch.
-> 
-> Today, he must pull the remote notes into a separate location, (since
-> pulling directly into refs/notes will overwrite his work), and then
-> update, and then push.
-> 
-> Because this is not standardized, it becomes unwieldy to actually
-> perform on a day to day basis.
-> 
-> I propose that we add a new "refs/tracking" hierarchy which will be
-> used to track these type of refs
-> 
-> We could even (long term) migrate refs/remotes into refs/tracking
-> instead, or provide both with the refs/remotes being pointers or
-> something like that..
-> 
-> Essentially, refs/notes would be pulled into
-> refs/tracking/<remote>/notes/* or something along these lines.
-> 
-> Then, git notes would be modified to be able to have commands to
-> "pull" and "push" notes which would fetch the remote, and then attempt
-> a merge into the local notes, while a push would update the remote.
-> 
-> I chose "tracking" because it sort of fits the concept and does not
-> include things like "remote-notes" or "remotes-v2" which are a bit
-> weird.
-> 
-> I'm posting this on the mailing list prior to having code because I
-> wanted to get a sense of how people felt about the question and
-> whether others still felt it was an issue.
-> 
-> Essentially the goal is to standardize how any refs namespace can be
-> shared in such a way that local copies can tell what the remote had at
-> a fetch time, in order to allow easier handling of conflicts between
-> local and remote changes, just like we do for branches (heads) but
-> generalized so that other refs namespaces can get the same ability to
-> handle conflicts.
-> 
-> Thanks,
-> Jake
-> 
+-- 
+Brandon Williams
