@@ -2,126 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFBC51FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 17:10:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 672A31FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 17:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752369AbdFMRKl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 13:10:41 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:36111 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751805AbdFMRKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 13:10:40 -0400
-Received: by mail-pg0-f42.google.com with SMTP id a70so63381993pge.3
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:10:40 -0700 (PDT)
+        id S1752249AbdFMRNp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 13:13:45 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:36825 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751802AbdFMRNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 13:13:44 -0400
+Received: by mail-pg0-f51.google.com with SMTP id a70so63416625pge.3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dO6h+DKK1/DFgPemFnnaYdlxa8AUaBkTQFs/3cCOcTs=;
-        b=prw3HVo4fltjjC2f/Tc2L5cO9Nf8mUBpY4AKCeoy8AMJvQzCK5n6LtLfXCpBH3Bk/M
-         WjtU1VkfyDwzZh4P5/3IZby8NNVpBo+DzTr2gKcRp8qo6V78CbUekq/4RPqC9L212aJx
-         Gwd/x2OlwwHS4tNI+OMscyAmTaGAKVXQynrayfmJXBY/7IZaLh/Zsjvkb010TR7JPfzq
-         pi55yhAKDY6axt6h6AZy5dVFdDwdzGMsKeqbSsQY28KOJxtJirQiMLnNWGhZwHNuHVMp
-         xovUy0OgA86wTUD1XNcXhbbVBOg4lpOyXmPgFfZQYR4JKRexPcIC1qNikqxiW9Nb6sPN
-         l8Ig==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=aowoWVLQENeW7ygZnUQbaVLskIskJCpIAHl9Ic6yEQg=;
+        b=LKCXIMye8Yzdg0FZ6fxoVhG0QaZwsQlGTMNyPyBl2CBu1Zp9Z/fIp7UXGDSsndld1l
+         /EiD/G4MWWxoeYd1t1boOD7rcmL4zxrH8GkXhte4eBnOazgVSHKR3nxm/FGCtJl1VMEk
+         mAeqxX3yiYImfrfxv8O6PVleck6VLzikzaEHXRzSosYJ4WAZ8TwLHaUbn6xjfIXoMO+i
+         GfbFDkqo6CZQ9fjoMQnJXq0IcJABrusrm0DI+sd2Bfd0TULVmCT6dZ7Hj2U4D/DCydb4
+         Yw40ekZAYBYipeuymYQfVwfn3RxpceyJ6sQOPuaJcihzk6kcVfYH5/oe34tmfMSj4A1F
+         UWNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dO6h+DKK1/DFgPemFnnaYdlxa8AUaBkTQFs/3cCOcTs=;
-        b=WAZss35ME5o+eObhkiIkT4HQTs8t2CqH0aSPGLmz1Np2LqCzen7M/lfJS+MSJKW/kR
-         E8ANUd77AepdhIZWg0oGMbxZeFNsFATCLwEo9PdgphnqEme3DTQ2BQK8VqTreKLbtyHa
-         LtGYEW3F8b0/MwkqoDXWFGaht/3wygND5cBJKvH2pamYMSfSV2SbYcU8sJhOSm2kNnqt
-         0rprIlpDQ1yHWa/Z2z4b8GkceF8+s6AyCrcEqIAvq3tTN1yaO22NAOXT+QezXRrmf3hC
-         5/NiAWJ2nrwNKre/knGuonyXuPbyO0WxzIyRH+y1aHHAcnBMnW9SV31BElyN6ubFEfSx
-         d4mQ==
-X-Gm-Message-State: AKS2vOy1FuxKzW0k0yCfBtoDGl4iCkpaRzR5XX4VnrUjAPXK6sAWomYn
-        LeiKkLtPGuPgMQ==
-X-Received: by 10.98.197.130 with SMTP id j124mr413135pfg.239.1497373839964;
-        Tue, 13 Jun 2017 10:10:39 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id e124sm24005191pgc.17.2017.06.13.10.10.39
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 10:10:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sahil Dua <sahildua2305@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] branch: add test for -m renaming multiple config sections
-References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
-        <0102015ca23f0529-c860f75d-e3bb-48b0-b2c0-502f7ab9d667-000000@eu-west-1.amazonses.com>
-Date:   Tue, 13 Jun 2017 10:10:38 -0700
-In-Reply-To: <0102015ca23f0529-c860f75d-e3bb-48b0-b2c0-502f7ab9d667-000000@eu-west-1.amazonses.com>
-        (Sahil Dua's message of "Tue, 13 Jun 2017 16:17:38 +0000")
-Message-ID: <xmqqwp8f7r01.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=aowoWVLQENeW7ygZnUQbaVLskIskJCpIAHl9Ic6yEQg=;
+        b=N3LTmRmG8xtqo322BW0RmBZBnn6q5aZyVljMpAHQQ8XDWFXfDPBUXszbNY3XOCooJr
+         XcmY6S8JGyDgOzCEFXY62zfZ4OnHOxEcSwUYpwH8xiS1Qy1s1afgVtXIqbHHJ6qlrQRa
+         AWO84uu5ea1RYR/u7UhYFk9HssMS76VaRi/PnKkb4XYCaV1XnT9/uGnoRV13TFCX4VsP
+         h1Iu53CDpif6DkjdDyLnHX4J0iU+dk6mZCVHLKJz70AMOz6Ok1DG+Yi8UcjeH2AR1Dax
+         3BoCJSsEFi/C9Gqqey7Glzx3yTFdmzjKc7wGXW8Kq0WSpOX5boRk5oXmaJ/YuMIgQdg3
+         vtMw==
+X-Gm-Message-State: AKS2vOwhknUCPFVmUEmnc1uER60qAzRm9q/tp+S2DxzKohJ1oKXVyLdc
+        KsL9Jg541/uTdxESld7CopE15ssL850D
+X-Received: by 10.84.209.228 with SMTP id y91mr760639plh.210.1497374024001;
+ Tue, 13 Jun 2017 10:13:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.218.134 with HTTP; Tue, 13 Jun 2017 10:13:43 -0700 (PDT)
+In-Reply-To: <xmqqa85b9626.fsf@gitster.mtv.corp.google.com>
+References: <20170613023151.9688-1-sbeller@google.com> <xmqqvanz9afq.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kYR+qh1X-dQixdpDbcr5z-DJ2mkdncaVn_8y90kNco9tw@mail.gmail.com> <xmqqa85b9626.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 13 Jun 2017 10:13:43 -0700
+Message-ID: <CAGZ79kYV8Ngis=ux50Zs1r5XOBUJ=hw2=8BEkNqk7PiGamX0AA@mail.gmail.com>
+Subject: Re: [RFC/PATCH] builtin/blame: darken redundant line information
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sahil Dua <sahildua2305@gmail.com> writes:
-
-> +	cat >expect <<-\EOF &&
-> +	branch.dest.key1=value1
-> +	some.gar.b=age
-> +	branch.dest.key2=value2
-> +	EOF
-> +	cat >config.branch <<\EOF &&
-> +;; Comment for source
-> +[branch "source"]
-> +	;; Comment for the source value
-> +	key1 = value1
-> +	;; Comment for some.gar
-> +[some "gar"]
-> +	;; Comment for the some.gar value
-> +	b = age
-> +	;; Comment for source, again
-> +[branch "source"]
-> +	;; Comment for the source value, again
-> +	key2 = value2
-> +EOF
-
-Indenting using <<- would make it easier to read.  I.e.
-
-	cat >config.branch <<-\EOF &&
-	;; Comment for ...
-	[branch "source"]
-		;; Comment for ...
-	...
-	EOF
-
-> +	cat config.branch >>.git/config &&
-> +	git branch -m source dest &&
-> +	git config -f .git/config -l | grep -F -e source -e dest -e some.gar >actual &&
-> +	test_cmp expect actual &&
-> +
-> +	# ...and that the comments for those sections are also
-> +	# preserved.
-> +	cat config.branch | sed "s/\"source\"/\"dest\"/" >expect &&
-> +	grep -A 9001 "Comment for source" .git/config >actual &&
-
-Where does 9001 come from?  Is that just "an arbitrary large
-number"?
-	
-Besides, "grep -A" is quite unportable.  Would
-
-	sed -n -e "/Comment for source/,$p" .git/config >actual
-
-work equally well?
-
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'deleting a symref' '
->  	git branch target &&
->  	git symbolic-ref refs/heads/symref refs/heads/target &&
+On Tue, Jun 13, 2017 at 10:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> --
-> https://github.com/git/git/pull/363
+>> * As you have an individual color setup, maybe you can fix this
+>>   for you by setting the appropriate slots to your perception of
+>>   dimmed?
+>
+> I do not think it is possible with only {new,old}{,alternative} 4
+> colors.
+>
+> Consider this diff:
+>
+>          context
+>         -B
+>         -B
+>         -B
+>         -A
+>         -A
+>         -A
+>          context
+>         +A
+>         +A
+>         +A
+>         +B
+>         +B
+>         +B
+>          context
+>
+> Two blocks (A and B) that are adjacent are moved but swapped to form
+> a pair of new adjacent blocks.
+>
+> We would like the boundary between the last "-B" and the first "-A"
+> to be highlighted differently; all other "-A" and "-B" lines do not
+> disappear but go elsewhere, so they want to be dimmed.
+>
+> The newly added 6 lines are actually moved from elsewhere, and we
+> would like the boundary between the last "+A" and the first "+B" to
+> be highlighted differently, and others are dimmed.
+>
+> So I'd think you would need at least two kinds of highlight colors
+> plus a dimmed color.
+
+Here is what currently happens:
+
+>
+>          context
+>         -B              dim  oldMoved
+>         -B              dim  oldMoved
+>         -B              highlight oldMovedAlternative
+>         -A              highlight oldMovedAlternative
+>         -A              dim  oldMoved
+>         -A              dim  oldMoved
+>          context
+>         +A              dim  newMoved
+>         +A              dim  newMoved
+>         +A              highlight  newMovedAlternative
+>         +B              highlight  newMovedAlternative
+>         +B              dim  newMoved
+>         +B              dim  newMoved
+>          context
+>
+
+So the there is only one "highlight" color in each block.
+There is no separate hightligh-for-ending-block and
+highlight-for-new-block respectively.
+
+> If old_moved and old_moved_alternative are meant for highlighting
+> "-B" and "-A" above differently, while new_moved and
+> new_moved_alternative are for highlighting "+A" and "+B"
+> differently, you'd need a way to specify "dim" for old and new moved
+> lines, which seems to be impossible with only 4 new colors.
+
+The standard non alternative was dim in my mind for the
+adjacentbounds mode.
+
+If you prefer to have the alternate mode, you rather want no dim,
+no highlight, but just 2 alternating colors of equal attention-drawing.
