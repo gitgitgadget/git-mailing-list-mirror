@@ -2,110 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F8701FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 21:20:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 462B71FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 21:38:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754108AbdFMVUU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 17:20:20 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:36682 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753934AbdFMVUT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 17:20:19 -0400
-Received: by mail-it0-f67.google.com with SMTP id 185so12949056itv.3
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 14:20:19 -0700 (PDT)
+        id S1753885AbdFMViU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 17:38:20 -0400
+Received: from mail-it0-f45.google.com ([209.85.214.45]:34083 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753870AbdFMViS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 17:38:18 -0400
+Received: by mail-it0-f45.google.com with SMTP id m47so3894324iti.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 14:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=OBoOnBR6EQPV84BIGKdvsV0zchwm78BCOkDXwRL60fo=;
-        b=RZoI3RlYCq4gIYsUWn1XNCzjgksSmlyiw1f5g9NPvGY+nkkVWHJ6oaY1Nl8n39gv21
-         kIP27VPolUOvGGXTMc9FvSAQjycVeNrnXQuxCugbdrbeeBv5rqzcBTSrQw7/W38L2e6M
-         af7AaXxKo9E3UCVlYBdy2rdrlHNrgD1XrvL80Jw2CHc5ZXnd2HPQg5Z1X4rcugOdZv3O
-         oScd2/eu20Euo41H5nVmGlkbhR8VY53rmLroz9Q97nIUznN7FLh9NnlGd+qB1Dr0IFGV
-         1P5Ru+7JNr/2r9AIxnv9/CkWS2On5yYSm2ABnnxZIAS8RHPyr176lvsXgUV08KBORr1H
-         t/uw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=saRIc6FAbzWR7THydHpQPvhE0mOIFPaDVGcg8wQPj4A=;
+        b=MsDaCVhK98u4uhJPVCVRceCI0kVXYcZXReeUSysBm+ywP+yA60XBajo7h/CkIMJfJH
+         YCuimLpdEzYzDMq1IEZUtPbf5emfkG4kR+s5KFOYlyjjGO0Hwrrnv3CTFOWhshRBWSVU
+         DrsbHUt0zzK2f8c5d+O+ELoF2wmor+FmJSVgGVe1prPrgIghSh2oqW85dLuEj4TryZYA
+         qr3fLk63G/+VmUPybQpKpBws8wN0rNZh7Bs8jHlUO8QD3Q1a8fOrPHWNV/GqMZ5VHfZd
+         U1cxcSejxc+WkeXlvndRqDtrBjGSVi+KkGlUqckFpUjNbnlFJwV7w+IvWOd4M7vO1NVW
+         zlOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=OBoOnBR6EQPV84BIGKdvsV0zchwm78BCOkDXwRL60fo=;
-        b=YvviNKoAHWO/9rfH/ACApbHbJwUFx5ZZ6c15sQmKuZ81zmnXBjeLWSQgoneQgicdDx
-         PVvGN0u0OA3Z+201vWFejjjrRW0RTkh1nBPEkKs9yS+igoRY14Pm7Efgo3NTKNdSNOQw
-         TfhrCNoOTrLmP1TR5bmoJdwlB03puU26DMld6Yhsw2O6GuflCYQl+D8fnMxNBGOwFHoQ
-         6mRK6R1zD1qbHdGWT6igZlRlwahCMFhhaqb6siuqdOK9Dgjsbo5WtVz3jUwhynU76BUY
-         OmaPn5g/HEcv3uIvnX802pf3E/cLLf5CkDzFzRD/maNmvpBv6ei96peM2Cib9/GyBLty
-         NmFw==
-X-Gm-Message-State: AODbwcCYgrY5kNMcF6Bcj62p3OQ9/N6Ive84IbOTrMpG42vrlxegnMMv
-        DsmBqZiw+XOM6g==
-X-Received: by 10.36.51.82 with SMTP id k79mr20380890itk.32.1497388818927;
-        Tue, 13 Jun 2017 14:20:18 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id u63sm2425775ita.16.2017.06.13.14.20.17
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=saRIc6FAbzWR7THydHpQPvhE0mOIFPaDVGcg8wQPj4A=;
+        b=jnLndyhJ4+YmZ+8Bs5ERfUXNsj8lPhBuDKE24Vg/r3BS/n+/NLL9MwAEBi37z2Pmdn
+         S1uUYOBmwzH67MZwwTQL8EdqMT9Uz9pOp4vacGt/yWEkmJE2fKtwjaKNrf9jI3DRuWWB
+         tVEhhnJTcbS4vaAL3wPSkf1KOrDMtU8VEQ7QnPDxyrOeNv2zsq6lfQQ+a76kw1RxGYT7
+         E5QSm0zsM30aGa0EIRGesbD3mjgnDy0P4PMPgB0xc57mYFdxo4AOcd1nIiWwDJUgKhWf
+         Shmg2wknbb7S/yVpGG8n6H05GqYwVUSxQRpzP3TogQ0MMpK/ylW5GcudgvbBucqdGQGv
+         +4oA==
+X-Gm-Message-State: AKS2vOyElUJT7/LT68IAcL6aQjox8CBSP91H/Bn0HPqMUW9fq0ZDu0J/
+        u59XugFE6RLshUIP
+X-Received: by 10.36.123.5 with SMTP id q5mr2773408itc.16.1497389897764;
+        Tue, 13 Jun 2017 14:38:17 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:dd0d:448e:29f9:5e86])
+        by smtp.gmail.com with ESMTPSA id h89sm6895800ioi.18.2017.06.13.14.38.16
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 14:20:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Michael Giuffrida <michaelpg@chromium.org>, git@vger.kernel.org
-Subject: Re: [BUG] add_again() off-by-one error in custom format
-References: <CACi5S_1j46SbP7cQMdUnULmgGD7xBkSUrS2PKbzq8ZydybHE=w@mail.gmail.com>
-        <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
-        <d229403a-d078-87b4-f3e8-89058fa4b548@web.de>
-        <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
-        <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
-Date:   Tue, 13 Jun 2017 14:20:17 -0700
-In-Reply-To: <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 13 Jun 2017 22:29:01 +0200")
-Message-ID: <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        Tue, 13 Jun 2017 14:38:16 -0700 (PDT)
+Date:   Tue, 13 Jun 2017 14:38:15 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+        peff@peff.net
+Subject: Re: [PATCH v2 4/6] config: don't implicitly use gitdir
+Message-ID: <20170613213815.GP154599@google.com>
+References: <20170612213406.83247-1-bmwill@google.com>
+ <20170613210321.152978-1-bmwill@google.com>
+ <20170613210321.152978-5-bmwill@google.com>
+ <20170613210806.GJ133952@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170613210806.GJ133952@aiede.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+On 06/13, Jonathan Nieder wrote:
+> Brandon Williams wrote:
+> 
+> > Commit 2185fde56 (config: handle conditional include when $GIT_DIR is
+> > not set up) added a 'git_dir' field to the config_options struct.  Let's
+> > use this option field explicitly all the time instead of occasionally
+> > falling back to calling 'git_pathdup("config")' to get the path to the
+> > local repository configuration.  This allows 'do_git_config_sequence()'
+> > to not implicitly rely on global repository state.
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  builtin/config.c | 2 ++
+> >  config.c         | 6 ++----
+> >  2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> The same comments as before still apply:
+> 
+> - this changes API to make opts->git_dir mandatory, which is error prone
+>   and easily avoidable, e.g. by making git_dir an argument to
+>   git_config_with_options
 
-> The difference is about the same as the one between:
->
-> 	$ time git log --format="" >/dev/null
->
-> 	real    0m0.463s
-> 	user    0m0.448s
-> 	sys     0m0.012s
->
-> and:
->
-> 	$ time git log --format="%h" >/dev/null
->
-> 	real    0m1.062s
-> 	user    0m0.636s
-> 	sys     0m0.416s
->
-> With caching duplicates are basically free and without it short
-> hashes have to be looked up again.  Other placeholders may reduce
-> the relative slowdown, depending on how expensive they are.
+I still don't agree with this.  I have looked at all callers and ensured
+that 'git_dir' will be set when appropriate in the 'config_options'
+struct.  I find the notion ridiculous that I would need to change a
+function's name or arguments every time the internals of the function
+are adjusted or when an options struct obtains a new field.  Plus, there
+is already an aptly named parameter of type 'config_options' with which
+to hold options for the config machinery.  This struct is also added to
+in a later patch to include commondir so that the gitdir vs commondir
+issue can be resolved.
 
-I think the real question is how likely people use more than one
-occurrence of the same thing in their custom format, and how deeply
-they care that --format='%h %h' costs more than --format='%h'.  The
-cost won't of course be double (because the main traversal costs
-without any output), but it would be rather unreasonable to expect
-that --format='%h %h %h %h %h' to cost the same as --format='%h';
-after all, Git is doing more for them ;-)
+> - the commit message doesn't say anything about to git dir vs common dir
+>   change.  It needs to, or even better, the switch to use common dir
+>   instead of git dir can happen as a separate patch.
 
-So in that sense, I am actually OK if we decide to remove the caching.
+There really isn't any switching in this patch.  One of the following
+patches in this series addresses this problem in more detail though.
 
-> Forgot a third option, probably because it's not a particularly good
-> idea: Replacing the caching in pretty.c with a short static cache in
-> find_unique_abbrev_r().
-
-Indeed.
+-- 
+Brandon Williams
