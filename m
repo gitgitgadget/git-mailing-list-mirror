@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D31F31FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 21:03:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E5251FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 21:03:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753996AbdFMVDe (ORCPT <rfc822;e@80x24.org>);
+        id S1754001AbdFMVDf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 17:03:35 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:35903 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752326AbdFMVDe (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 13 Jun 2017 17:03:34 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:34937 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752326AbdFMVDa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 17:03:30 -0400
-Received: by mail-pf0-f174.google.com with SMTP id l89so73438155pfi.2
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 14:03:29 -0700 (PDT)
+Received: by mail-pf0-f179.google.com with SMTP id x63so73423686pff.3
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 14:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JAYT1Ik6308rojk564r+ALr0yTxpyLMJtc+NeWFrISI=;
-        b=X5AcnPEfR6Tz86kpSsCHnhpn5TXZsUQdO3LTfnDR5Ml/m0BMlOFuNt1DUFl3MWL1lp
-         XTfxzj5URqkIDpJN6moCRUv9Kb+SOZV/nWNxExRIlDdKAmBnkSux9OAt9zBmSznZT7+U
-         HPW5BnkMYAmzqWjpvFQXPZJfSOR/Gd5CYU0B0QXieiglIbj5ToaFZR6D1TBAw+b11szt
-         xgM8QGTCoX9zxWEUItdRPgj/iCh8oumhBmWX24INp6OZhk5pXEwF9q4At+8YU9DhuEdw
-         x9j0WMZ9F2Qfv+QB/l3qEmXBNKRsAxXoUwNBnqYRwWxMXGHcl0hwEXE8fRRczF4/O+4X
-         G+1Q==
+        bh=oLx8gEjo2S696x2/GfKgzRs4SKzQjf4SZ9CvHKTLFT8=;
+        b=sUchvB72SKWjHe6jOtZHZ5IfVbaQEaGERd5cE69756MC5XlpoPBqhTMGWkwkWfhSKj
+         70QDpojLO8Nsg/+6paX2nwUxtEACFtTxNkXu31vCoezhyX9ZzdjgYUJ18+PTAl/MpnFN
+         LimG8KkxqykHEuk0lS0TzwwyvqoOdB2qo/qN5+nAfEq01qacolQVTjjjM8qvMjcFXg7z
+         KeGf4uV4fu4J5plTukDpn66ZU8kHVlOzN0nJ4t7Xj+c9E7qhz0ieQUu6/iddQl4E6+Op
+         wWWsWJnbFZD2flN14onAEFd+QMWDhgNxWmMZ0KCKunCbYRu5q0V0F9i1ZHnsfwVYTQGo
+         IjtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JAYT1Ik6308rojk564r+ALr0yTxpyLMJtc+NeWFrISI=;
-        b=BffbB7Ye4cEYY+vw73maJBtA2keecH8nXAQkNGgnvYzB4VIboBr+UeQS7pf+/VS5XG
-         SLV001WVAnoySoAQEuPTrSBueOAJagK3QNM5P0pXz28KjgDw+JrqBR+VlUlYRmXVQIck
-         PZA/wEQy2Ss2gIjqt/WvM9vklLfLVSES8V/SRN4BI86iq+QhMhKeN6dsufMjMtYMFR2V
-         vGV6E248kDnJnLw+1eEWoI0vOZq1jfWUyR6BCq8xsyr760/kFUI5O72hN/WElhH6h+PX
-         Xgl/YVjiNcXWhdmV8eClHin9Mq6gw2JwzaDuFcvF5WaHRqTkw4bI6WhU+PxrtBYeWQyQ
-         WrOw==
-X-Gm-Message-State: AKS2vOwivVpqQZ0QSpCu8ruzYegtlRJodRr4812qI34EiKcJsR9jkZfi
-        OOqNTseM+p7JVy6GsBzT6Q==
-X-Received: by 10.98.40.132 with SMTP id o126mr1292088pfo.238.1497387808740;
-        Tue, 13 Jun 2017 14:03:28 -0700 (PDT)
+        bh=oLx8gEjo2S696x2/GfKgzRs4SKzQjf4SZ9CvHKTLFT8=;
+        b=J7EMklvtFyWlu5znBAaCIu5D+EqBMOAZhl/TEU8jr5nBzPKvWfCXXhjgYD/qjyNzwo
+         zFbZKd3WVvMc6+83g2VrrGL6tLNDrUwEIETeLPCn9cas3MLV8V9viJqzI6OFoR5hkAr3
+         Of71ik53bEheFfdCEfGEnpNqPoKV0LoszhW1tSpp1c+XHz4AY8ualGnPi4PuuoJpmlSJ
+         X/n0SvMe2vkMHb1yjlyR/i+60sJJY7CXe3VgBajlbsvC3fsIjtWd8Bddm/CRjetYqxwX
+         IHHyaSK3dxpkuEz7HtSB9temJ1FvkyZBR6i083MQZKDbq4MMiwhb8glT0ONgP/bFIKE/
+         08GQ==
+X-Gm-Message-State: AKS2vOxtxXjOCD6OA4N8yc0JL6zzDvTM3eONhNJ3AUrQ8McHC8oNhz1v
+        zc7Ia16kEwlctfqTEJI51g==
+X-Received: by 10.99.175.19 with SMTP id w19mr1366358pge.67.1497387813312;
+        Tue, 13 Jun 2017 14:03:33 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id b65sm29154065pfm.29.2017.06.13.14.03.27
+        by smtp.gmail.com with ESMTPSA id b65sm29154065pfm.29.2017.06.13.14.03.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 14:03:27 -0700 (PDT)
+        Tue, 13 Jun 2017 14:03:32 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Johannes.Schindelin@gmx.de, peff@peff.net,
         jrnieder@gmail.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 2/6] config: remove git_config_iter
-Date:   Tue, 13 Jun 2017 14:03:17 -0700
-Message-Id: <20170613210321.152978-3-bmwill@google.com>
+Subject: [PATCH v2 5/6] setup: teach discover_git_directory to respect the commondir
+Date:   Tue, 13 Jun 2017 14:03:20 -0700
+Message-Id: <20170613210321.152978-6-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.518.g3df882009-goog
 In-Reply-To: <20170613210321.152978-1-bmwill@google.com>
 References: <20170612213406.83247-1-bmwill@google.com>
@@ -63,26 +63,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since there is no implementation of the function 'git_config_iter' lets
-stop exporting it and remove the prototype from config.h.
+Currently 'discover_git_directory' only looks at the gitdir to determine
+if a git directory was discovered.  This causes a problem in the event
+that the gitdir which was discovered was in fact a per-worktree git
+directory and not the common git directory.  This is because the
+repository config, which is checked to verify the repository's format,
+is stored in the commondir and not in the per-worktree gitdir.  Correct
+this behavior by checking the config stored in the commondir.
+
+It will also be of use for callers to have access to the commondir, so
+lets also return that upon successfully discovering a git directory.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- config.h | 1 -
- 1 file changed, 1 deletion(-)
+ cache.h  |  3 ++-
+ config.c | 10 ++++++----
+ setup.c  |  9 +++++++--
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/config.h b/config.h
-index f7f8b66c5..c70599bd5 100644
---- a/config.h
-+++ b/config.h
-@@ -165,7 +165,6 @@ extern int git_configset_get_pathname(struct config_set *cs, const char *key, co
- extern int git_config_get_value(const char *key, const char **value);
- extern const struct string_list *git_config_get_value_multi(const char *key);
- extern void git_config_clear(void);
--extern void git_config_iter(config_fn_t fn, void *data);
- extern int git_config_get_string_const(const char *key, const char **dest);
- extern int git_config_get_string(const char *key, char **dest);
- extern int git_config_get_int(const char *key, int *dest);
+diff --git a/cache.h b/cache.h
+index fd45b8c55..a4176436d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -530,7 +530,8 @@ extern void setup_work_tree(void);
+  * appended to gitdir. The return value is either NULL if no repository was
+  * found, or pointing to the path inside gitdir's buffer.
+  */
+-extern const char *discover_git_directory(struct strbuf *gitdir);
++extern const char *discover_git_directory(struct strbuf *commondir,
++					  struct strbuf *gitdir);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+ extern char *prefix_path(const char *prefix, int len, const char *path);
+diff --git a/config.c b/config.c
+index 4e2842689..9aa9b9715 100644
+--- a/config.c
++++ b/config.c
+@@ -1652,7 +1652,8 @@ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
+ void read_early_config(config_fn_t cb, void *data)
+ {
+ 	struct config_options opts = {0};
+-	struct strbuf buf = STRBUF_INIT;
++	struct strbuf commondir = STRBUF_INIT;
++	struct strbuf gitdir = STRBUF_INIT;
+ 
+ 	opts.respect_includes = 1;
+ 
+@@ -1666,12 +1667,13 @@ void read_early_config(config_fn_t cb, void *data)
+ 	 * notably, the current working directory is still the same after the
+ 	 * call).
+ 	 */
+-	else if (discover_git_directory(&buf))
+-		opts.git_dir = buf.buf;
++	else if (discover_git_directory(&commondir, &gitdir))
++		opts.git_dir = gitdir.buf;
+ 
+ 	git_config_with_options(cb, data, NULL, &opts);
+ 
+-	strbuf_release(&buf);
++	strbuf_release(&commondir);
++	strbuf_release(&gitdir);
+ }
+ 
+ static void git_config_check_init(void);
+diff --git a/setup.c b/setup.c
+index e99a82cbe..7bbb8736f 100644
+--- a/setup.c
++++ b/setup.c
+@@ -946,10 +946,12 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 	}
+ }
+ 
+-const char *discover_git_directory(struct strbuf *gitdir)
++const char *discover_git_directory(struct strbuf *commondir,
++				   struct strbuf *gitdir)
+ {
+ 	struct strbuf dir = STRBUF_INIT, err = STRBUF_INIT;
+ 	size_t gitdir_offset = gitdir->len, cwd_len;
++	size_t commondir_offset = commondir->len;
+ 	struct repository_format candidate;
+ 
+ 	if (strbuf_getcwd(&dir))
+@@ -974,8 +976,10 @@ const char *discover_git_directory(struct strbuf *gitdir)
+ 		strbuf_insert(gitdir, gitdir_offset, dir.buf, dir.len);
+ 	}
+ 
++	get_common_dir(commondir, gitdir->buf + gitdir_offset);
++
+ 	strbuf_reset(&dir);
+-	strbuf_addf(&dir, "%s/config", gitdir->buf + gitdir_offset);
++	strbuf_addf(&dir, "%s/config", commondir->buf + commondir_offset);
+ 	read_repository_format(&candidate, dir.buf);
+ 	strbuf_release(&dir);
+ 
+@@ -983,6 +987,7 @@ const char *discover_git_directory(struct strbuf *gitdir)
+ 		warning("ignoring git dir '%s': %s",
+ 			gitdir->buf + gitdir_offset, err.buf);
+ 		strbuf_release(&err);
++		strbuf_setlen(commondir, commondir_offset);
+ 		return NULL;
+ 	}
+ 
 -- 
 2.13.1.518.g3df882009-goog
 
