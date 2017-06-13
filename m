@@ -2,283 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AA7120D0C
-	for <e@80x24.org>; Tue, 13 Jun 2017 18:26:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D04E11FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 18:30:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752987AbdFMS0L (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 14:26:11 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:36449 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752565AbdFMS0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 14:26:10 -0400
-Received: by mail-pg0-f54.google.com with SMTP id a70so64225433pge.3
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 11:26:09 -0700 (PDT)
+        id S1752211AbdFMSaC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 14:30:02 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:34348 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752033AbdFMSaB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 14:30:01 -0400
+Received: by mail-pg0-f51.google.com with SMTP id v18so64306751pgb.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 11:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1P2z/r5G5K3IVbhV8932NWWjR8aaDKzTp77e6d6SQKc=;
-        b=g66UNsPnIHGmpIyAyVctGEJNAkAbz2Bfl4pJa/yRt4Yx7BX77MkDYv+/qRQgp3UdoS
-         yZERRXmVK/TZJwUKHBFnh8ZqkqQmuy3rNWJV+kXFQYew0qEE/SouRASxc/reiNUakaFn
-         aBGL5cYSdBqxo2HJ02UENYSTvzq4ya4aVuWoz3pVr8jx/aDwTq78245kB2xnOxcFV1Mg
-         G5auuii3xhtuP47pReJweFrI/1KD8zR6A2LXUImq3aWCRvytra1JrKry5AnH9AeJowrl
-         HfuccDHeZbuFwqPQTtmyziZQYAZOmvRnNnuw7vlieGE6zkJzV26LSNqMvd5ma3T0cmG5
-         F38A==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=WgP+UKSXKWcPY5iUWhOo9z7g8Fkj5+0BK9tlp/D3wUY=;
+        b=VRGkCTF5Ywv+ZU5Z778IXgJHiQZpc1eVv2rfMvE83h/SnnAGaNu7J+bQ9lXy/F4z0q
+         JPWwzCO7QinK7j0emItwX5SrQk+uF/EmRRAvuW1UigbDjURJW80+45WLKPDKTPFmucj5
+         /rFuJOszesWQWYl3mpZU+NTA/BAc6rY9FziFSybTsa7E6hmMgZx+R8NXvuxxNUl2OOMB
+         bt2j1WQxjAFnhrwi7M6ullC+gn8GHGA5yjJe+oQqwDvs3vhz5HMZULArqCVnALYuPElD
+         rYkA+AL1D/MHnz6rFUaV1PigrLUtNBtCXvmspiydRZd3r3peHgPb6BE6Ws/0iopmOZN1
+         IvEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1P2z/r5G5K3IVbhV8932NWWjR8aaDKzTp77e6d6SQKc=;
-        b=VEHF2DFLgiaeZG0QqYte24xL6NzBaovFOYFqA3juJ7ym003vgrwAulwkDeA4EsoD+P
-         W0oqRQSBHst+he7LvqTbkWwEfwn/hlDTE39TKWU+RucL0sR/yjFAWtm+B9gSoKj+hv/i
-         PXHhNzfrG7tAkKvwfd6XRmVS8j1hnPgTupxxh6VDnOel16GBJACzMpskWX5hJDFoOi6Q
-         AqQidLwFoqix9vs4+Dmz6tV2oaqi3d6UZlPbwHv9Nmv+/+3ovQUXL5i//3z8DSe8otPD
-         MAGy9wG6MF3oxpYwhuvJY6CQkcN83fpzUcESPJE/PMbyKa2edSmkDZIvkt4De+XSMgMb
-         fzwg==
-X-Gm-Message-State: AKS2vOx2wEEA+Xni/5ZHP+hu+kF6fSGgV6iB0+wSe0/s34Txwcv8SNY2
-        1TBYoGb9bTjvmafx
-X-Received: by 10.98.62.65 with SMTP id l62mr874481pfa.114.1497378368933;
-        Tue, 13 Jun 2017 11:26:08 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:dd0d:448e:29f9:5e86])
-        by smtp.gmail.com with ESMTPSA id n90sm20446700pfb.127.2017.06.13.11.26.07
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=WgP+UKSXKWcPY5iUWhOo9z7g8Fkj5+0BK9tlp/D3wUY=;
+        b=YDhyNiN3vbTkEQlsUGYxuWt8QJa0uu1ZNSa0WZjvzLlco/XGNIaqqgMYZQYlAjBopK
+         SEK5CcsPxX06y4lJyJ9C6StCLt/cLpgSY2JyJqAugRCCzN0nUP/me0pjJVXturzFQhHc
+         q+yry6GI2JmCVXAB6To/Rxbg4g7KEwZa5MEAJ00riR+Pze5aWqJvK3ND4Ydt4wqQK+qd
+         X8kHtmvXQc7BTb0BeJ3eRMdocSEICPk1IA2t4kLXBclAfN10At/288IkCk/IxIl5gg5p
+         yQR6gbLRIdJrQU6W+6GAtqL9or4URRPZTIlEZBQtMtldCb4oKmc7STW5GukJcrwyJtEL
+         r+7A==
+X-Gm-Message-State: AKS2vOy88oeuDVcw7kAgxrkKDVZ7TgoZxDSFjlYK5DJxqphIDhM/sMeg
+        6+Sw8Lk9HRgaJbkg1yU=
+X-Received: by 10.98.100.8 with SMTP id y8mr821403pfb.79.1497378600807;
+        Tue, 13 Jun 2017 11:30:00 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
+        by smtp.gmail.com with ESMTPSA id p186sm21178827pga.32.2017.06.13.11.29.59
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 11:26:07 -0700 (PDT)
-Date:   Tue, 13 Jun 2017 11:26:06 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 6/6] Use the early config machinery to expand aliases
-Message-ID: <20170613182606.GO154599@google.com>
-References: <cover.1497355444.git.johannes.schindelin@gmx.de>
- <822765b002488f03523bf440097492be3c14931a.1497355444.git.johannes.schindelin@gmx.de>
+        Tue, 13 Jun 2017 11:30:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Michael Giuffrida <michaelpg@chromium.org>, git@vger.kernel.org
+Subject: Re: [BUG] add_again() off-by-one error in custom format
+References: <CACi5S_1j46SbP7cQMdUnULmgGD7xBkSUrS2PKbzq8ZydybHE=w@mail.gmail.com>
+        <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
+        <d229403a-d078-87b4-f3e8-89058fa4b548@web.de>
+Date:   Tue, 13 Jun 2017 11:29:59 -0700
+In-Reply-To: <d229403a-d078-87b4-f3e8-89058fa4b548@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Tue, 13 Jun 2017 20:09:17 +0200")
+Message-ID: <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <822765b002488f03523bf440097492be3c14931a.1497355444.git.johannes.schindelin@gmx.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/13, Johannes Schindelin wrote:
-> Instead of discovering the .git/ directory, read the config and then
-> trying to painstakingly reset all the global state if we did not find a
-> matching alias, let's use the early config machinery instead.
-> 
-> It may look like unnecessary work to discover the .git/ directory in the
-> early config machinery and then call setup_git_directory_gently() in the
-> case of a shell alias, repeating the very same discovery *again*.
-> However, we have to do this as the early config machinery takes pains
-> *not* to touch any global state, while shell aliases expect a possibly
-> changed working directory and at least the GIT_PREFIX and GIT_DIR
-> variables to be set.
-> 
-> Also, one might be tempted to streamline the code in alias_lookup() to
-> *not* use a strbuf for the key. However, if the config reports an error,
-> it is far superior to tell the user that the `alias.xyz` key had a
-> problem than to claim that it was the `xyz` key.
-> 
-> This change also fixes a known issue where Git tried to read the pager
-> config from an incorrect path in a subdirectory of a Git worktree if an
-> alias expanded to a shell command.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+René Scharfe <l.s.r@web.de> writes:
 
-So because I've been looking at the config machinery lately, I've
-noticed a lot of issues with how things are handled with respect to
-gitdir vs commondir.  Essentially the config resides at commondir/config
-always, and only at gitdir/config when not working with a worktree.
-Because of this, your patches point out a bug in how early config is
-handled.  I'll illustrate this using aliases.
+> Indeed, a very nice bug report!
+>
+>> I think the call to format_commit_one() needs to be taught to pass
+>> 'magic' through, and then add_again() mechanism needs to be told not
+>> to cache when magic is in effect, or something like that.
+>>
+>> Perhaps something along this line...?
+>>
+>>   pretty.c | 64 ++++++++++++++++++++++++++++++++++++++--------------------------
+>>   1 file changed, 38 insertions(+), 26 deletions(-)
+>
+> That looks quite big.  You even invent a way to classify magic. 
 
-Before this series (because aliases are read using the standard config
-machinery):
+Hmph, by "a way to classify", do you mean the enum?  That thing was
+there from before, just moved.
 
-  > git init main
-  > git -C main config alias.test '!echo hello'
-  > git -C main test
-    hello
-  > git -C main worktree add ../worktree
-  > git -C worktree test
-    hello
+Also I think we do not have to change add_again() at all, because
+chunk->off tolerates being given a garbage value as long as
+chunk->len stays 0, and add_again() does not change chunk->len at
+all.
 
-After this series (using read_early_config()):
+Which cuts the diffstat down to
 
-  > git init main
-  > git -C main config alias.test '!echo hello'
-  > git -C main test
-    hello
-  > git -C main worktree add ../worktree
-  > git -C worktree test
-    git: 'test' is not a git command. See 'git --help'.
+ pretty.c | 40 +++++++++++++++++++++++++---------------
+ 1 file changed, 25 insertions(+), 15 deletions(-)
 
-The issue is that read_early_config passes the gitdir and not the
-commondir when reading the config.
+> Does the caching feature justify the added complexity?
 
-The solution would be to add a 'commondir' field to the config_options
-struct and populate that before reading the config.  I'm planning on
-fixing this in v2 of my config cleanup series which I'll hopefully have
-finished by the end of the day.
+That's a good question.  I thought about your second alternative
+while adding the "don't cache" thing, but if we can measure and find
+out that we are not gaining much from caching, certainly that sounds
+much simpler.
 
-> ---
->  alias.c          | 31 ++++++++++++++++++++++++-------
->  git.c            | 55 ++++---------------------------------------------------
->  t/t7006-pager.sh |  2 +-
->  3 files changed, 29 insertions(+), 59 deletions(-)
-> 
-> diff --git a/alias.c b/alias.c
-> index 3b90397a99d..6bdc9363037 100644
-> --- a/alias.c
-> +++ b/alias.c
-> @@ -1,14 +1,31 @@
->  #include "cache.h"
->  
-> +struct config_alias_data
-> +{
-> +	struct strbuf key;
-> +	char *v;
-> +};
-> +
-> +static int config_alias_cb(const char *key, const char *value, void *d)
-> +{
-> +	struct config_alias_data *data = d;
-> +
-> +	if (!strcmp(key, data->key.buf))
-> +		return git_config_string((const char **)&data->v, key, value);
-> +
-> +	return 0;
-> +}
-> +
->  char *alias_lookup(const char *alias)
->  {
-> -	char *v = NULL;
-> -	struct strbuf key = STRBUF_INIT;
-> -	strbuf_addf(&key, "alias.%s", alias);
-> -	if (git_config_key_is_valid(key.buf))
-> -		git_config_get_string(key.buf, &v);
-> -	strbuf_release(&key);
-> -	return v;
-> +	struct config_alias_data data = { STRBUF_INIT, NULL };
-> +
-> +	strbuf_addf(&data.key, "alias.%s", alias);
-> +	if (git_config_key_is_valid(data.key.buf))
-> +		read_early_config(config_alias_cb, &data);
-> +	strbuf_release(&data.key);
-> +
-> +	return data.v;
->  }
->  
->  #define SPLIT_CMDLINE_BAD_ENDING 1
-> diff --git a/git.c b/git.c
-> index 8ff44f081d4..58ef570294d 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -16,50 +16,6 @@ const char git_more_info_string[] =
->  	   "to read about a specific subcommand or concept.");
->  
->  static int use_pager = -1;
-> -static char *orig_cwd;
-> -static const char *env_names[] = {
-> -	GIT_DIR_ENVIRONMENT,
-> -	GIT_WORK_TREE_ENVIRONMENT,
-> -	GIT_IMPLICIT_WORK_TREE_ENVIRONMENT,
-> -	GIT_PREFIX_ENVIRONMENT
-> -};
-> -static char *orig_env[4];
-> -static int save_restore_env_balance;
-> -
-> -static void save_env_before_alias(void)
-> -{
-> -	int i;
-> -
-> -	assert(save_restore_env_balance == 0);
-> -	save_restore_env_balance = 1;
-> -	orig_cwd = xgetcwd();
-> -	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
-> -		orig_env[i] = getenv(env_names[i]);
-> -		orig_env[i] = xstrdup_or_null(orig_env[i]);
-> -	}
-> -}
-> -
-> -static void restore_env(int external_alias)
-> -{
-> -	int i;
-> -
-> -	assert(save_restore_env_balance == 1);
-> -	save_restore_env_balance = 0;
-> -	if (!external_alias && orig_cwd && chdir(orig_cwd))
-> -		die_errno("could not move to %s", orig_cwd);
-> -	free(orig_cwd);
-> -	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
-> -		if (external_alias &&
-> -		    !strcmp(env_names[i], GIT_PREFIX_ENVIRONMENT))
-> -			continue;
-> -		if (orig_env[i]) {
-> -			setenv(env_names[i], orig_env[i], 1);
-> -			free(orig_env[i]);
-> -		} else {
-> -			unsetenv(env_names[i]);
-> -		}
-> -	}
-> -}
->  
->  static void commit_pager_choice(void) {
->  	switch (use_pager) {
-> @@ -250,19 +206,18 @@ static int handle_alias(int *argcp, const char ***argv)
->  	const char **new_argv;
->  	const char *alias_command;
->  	char *alias_string;
-> -	int unused_nongit;
-> -
-> -	save_env_before_alias();
-> -	setup_git_directory_gently(&unused_nongit);
->  
->  	alias_command = (*argv)[0];
->  	alias_string = alias_lookup(alias_command);
->  	if (alias_string) {
->  		if (alias_string[0] == '!') {
->  			struct child_process child = CHILD_PROCESS_INIT;
-> +			int nongit_ok;
-> +
-> +			/* Aliases expect GIT_PREFIX, GIT_DIR etc to be set */
-> +			setup_git_directory_gently(&nongit_ok);
->  
->  			commit_pager_choice();
-> -			restore_env(1);
->  
->  			child.use_shell = 1;
->  			argv_array_push(&child.args, alias_string + 1);
-> @@ -308,8 +263,6 @@ static int handle_alias(int *argcp, const char ***argv)
->  		ret = 1;
->  	}
->  
-> -	restore_env(0);
-> -
->  	errno = saved_errno;
->  
->  	return ret;
-> diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-> index 83881ec3a0c..20b4d83c281 100755
-> --- a/t/t7006-pager.sh
-> +++ b/t/t7006-pager.sh
-> @@ -391,7 +391,7 @@ test_expect_success TTY 'core.pager in repo config works and retains cwd' '
->  	)
->  '
->  
-> -test_expect_failure TTY 'core.pager is found via alias in subdirectory' '
-> +test_expect_success TTY 'core.pager is found via alias in subdirectory' '
->  	sane_unset GIT_PAGER &&
->  	test_config core.pager "cat >via-alias" &&
->  	(
-> -- 
-> 2.13.0.windows.1.460.g13f583bedb5
-
--- 
-Brandon Williams
+>
+> - Don't cache anymore, now that we have placeholders that change output
+>   on top of the original append-only ones.  Yields a net code reduction.
+>   Duplicated %h, %t and %p will have to be resolved at each occurrence.
+>
+> - Provide some space for the cache instead of reusing the output, like
+>   a strbuf for each placeholder.  Adds a memory allocation to each
+>   first occurrence of %h, %t and %p.  Such a cache could be reused for
+>   multiple commits by truncating it instead of releasing; not sure how
+>   to pass it in nicely for it to survive a sequence of calls, though.
+>
+> René
