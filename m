@@ -2,107 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8AC61FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 17:30:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 957921FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 17:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753285AbdFMRak (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 13:30:40 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34020 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752211AbdFMRaj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 13:30:39 -0400
-Received: by mail-pf0-f195.google.com with SMTP id d5so10521871pfe.1
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:30:38 -0700 (PDT)
+        id S1752525AbdFMRbq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 13:31:46 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:38756 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751826AbdFMRbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 13:31:45 -0400
+Received: by mail-it0-f51.google.com with SMTP id l6so33363458iti.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 10:31:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Lw06MYxvHHljj69z9/TD00TEPb98zsyKJNYeYWMJh0k=;
-        b=if784GH2yNp8F4SQKql57otu+NsaO8jB3CZlLOLrUnKa1rsl1ohajoH6GUySQ1eyFM
-         qBZzgUuTXlhGboe6DufEd7cc7jU42n4r0w4ijuTVVOK7sL0AAEGdqFN/d/ZeAwwMWK6E
-         /mWKHGpRyZpy12I5ylf+j71Ut0NX1et03dpf0wdGw57k7HKU9p087XW+JkPGcUTUghH7
-         BSgzH+zuquzqQqJ1CzIXt2+8dNUMcJuTQSd58gHThCD66QBACa22bE9+n2ubtCpVNKiD
-         x8Cr0cEBq8VmGhJdpBnuq/8EIDQfg1T0xneCGc1gFl3kRwk0DC8MTReSskRu+9pwW/RS
-         U+kg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=W4MnsQ1K38BdSOjUmWRIDtoBYYoL1ObLg4QI5iwxF2I=;
+        b=vMweMMjixYd+JQaEHRBk3DXatUX5VHIfUh21MPw3a8hnFaMuI7MJsZiTx8ark752bl
+         my267NK5BYqV8d9OdKGBNDVntv/+M5zmEZPF5Oksh1LFL7sYa0HaO93mdg8Yxg6sDtl2
+         WWt1evN9bcRl1NdeNM/64QFcP71tritA/BKcB9GrymrI+ufWnalSxSBMQ5BuzAorf53F
+         rcR2tIn7rbpdyhHHQ9NRQtX9v3F0ydEpvMkKeaNpYMlydLLjhUnvFHiknPp4MdsAUUBI
+         4TQR85pNRjgUBdcad/FI+N0KUgtdO5tRVmF7qaBNexZqRyDu859MYBIZ0IZLoeBlWSQF
+         J+eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Lw06MYxvHHljj69z9/TD00TEPb98zsyKJNYeYWMJh0k=;
-        b=mbg/7YHgEDB/CNRD4nmHCCpVaGynTNiZ6rFHyKCY/jrFD6jas/1MPwj4+mPhwKME2i
-         M/q4RA9SQkYW1onH+dd9Fq8FLJR14Wbx1ibfeuYa+kUobP5dR+mchDwE7FdqKJpGicwH
-         KbSSPi/FE4r9B5B1NnPQQYuNB5dcOTujmjsuq740cYba4cfqQMk973iSRmRAO+MYA7rB
-         W98KrnBEw5+xDQEYeBSuXwXsweiGZuPYJjhCBh5/nbmOMQljTfzeMpu1mIL6Xy2FSrAT
-         ZVdMex/QeEfx2cgEoYiAKaziLD/7DkIgCUR0h7mIREqeb7zn5BGYSObdh6ADL1qe46EM
-         6fUw==
-X-Gm-Message-State: AKS2vOyKHhdZBkVPMcDvB7iGvg9bFIV8bEL1H85QGSURRhP17qYCPygJ
-        Km9HObw3etKxlw==
-X-Received: by 10.84.216.88 with SMTP id f24mr823319plj.103.1497375038441;
-        Tue, 13 Jun 2017 10:30:38 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id 15sm26478872pfk.115.2017.06.13.10.30.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 10:30:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sahil Dua <sahildua2305@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] branch: add a --copy (-c) option to go with --move (-m)
-References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
-        <0102015ca23f054b-b7c281d9-c9e0-4691-bfa9-8c46fb77dfc7-000000@eu-west-1.amazonses.com>
-        <xmqq60fz95sb.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 13 Jun 2017 10:30:37 -0700
-In-Reply-To: <xmqq60fz95sb.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 13 Jun 2017 10:05:56 -0700")
-Message-ID: <xmqqfuf37q2q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=W4MnsQ1K38BdSOjUmWRIDtoBYYoL1ObLg4QI5iwxF2I=;
+        b=eAp1fNu+9XkRRQlmYsECP5XAg0D3rtV3AyYRISNUlO7iTPOSttBMuwsyg7vHA3Bugu
+         SMSZvx9cLnEECq8zybVofZvOAYtB5Se2XJRgtiO0qOMAhpzWGM6b2e0hoIL98jTa8H69
+         qtdVnfjFiSLLvmqxsPTSgU7vZDYkiMFF9hIvxrEINTzphoRojbnx+zAu9BwclrtPguYH
+         +OHB/43ozH0U8azyZwGxHeMWMHm0WE7V9EKQP9rIPfDtksHJmctcOwc8JdqeHfl3lyDC
+         X21+qC2UioQ6Jyx5qlmlQ1dwLfXni4WYO+17jjeZeCzpr6b7u05E3TDqC1ghSi5SyTvP
+         GD3w==
+X-Gm-Message-State: AKS2vOyD0IYAZ7wx8C4vLL6iBleS00QL0rClXplffpnwlUZlZ0ggYF4d
+        u8a8qfzt8ufZXy9KKPxPgVcF9ic5VVpc
+X-Received: by 10.36.233.198 with SMTP id f189mr1316905ith.94.1497375104680;
+ Tue, 13 Jun 2017 10:31:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.3.231 with HTTP; Tue, 13 Jun 2017 10:31:23 -0700 (PDT)
+In-Reply-To: <xmqqwp8f7r01.fsf@gitster.mtv.corp.google.com>
+References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
+ <0102015ca23f0529-c860f75d-e3bb-48b0-b2c0-502f7ab9d667-000000@eu-west-1.amazonses.com>
+ <xmqqwp8f7r01.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 13 Jun 2017 19:31:23 +0200
+Message-ID: <CACBZZX5e1cGKeHZhA1vWebdZek=a+TdYzXc5GuXaDi8SpL1YXw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] branch: add test for -m renaming multiple config sections
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sahil Dua <sahildua2305@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On Tue, Jun 13, 2017 at 7:10 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Sahil Dua <sahildua2305@gmail.com> writes:
 >
->> Add the ability to --copy a branch and its reflog and configuration,
->> this uses the same underlying machinery as the --move (-m) option
->> except the reflog and configuration is copied instead of being moved.
->>
->> This is useful for e.g. copying a topic branch to a new version,
->> e.g. work to work-2 after submitting the work topic to the list, while
->> preserving all the tracking info and other configuration that goes
->> with the branch, and unlike --move keeping the other already-submitted
->> branch around for reference.
->>
->> Like --move, when the source branch is the currently checked out
->> branch the HEAD is moved to the destination branch. In the case of
->> --move we don't really have a choice (other than remaining on a
->> detached HEAD), but it makes sense to do the same for --copy.
+>> +     cat >expect <<-\EOF &&
+>> +     branch.dest.key1=value1
+>> +     some.gar.b=age
+>> +     branch.dest.key2=value2
+>> +     EOF
+>> +     cat >config.branch <<\EOF &&
+>> +;; Comment for source
+>> +[branch "source"]
+>> +     ;; Comment for the source value
+>> +     key1 = value1
+>> +     ;; Comment for some.gar
+>> +[some "gar"]
+>> +     ;; Comment for the some.gar value
+>> +     b = age
+>> +     ;; Comment for source, again
+>> +[branch "source"]
+>> +     ;; Comment for the source value, again
+>> +     key2 = value2
+>> +EOF
 >
-> I strongly disagree with this "it makes sense to do the same".  It
-> would equally (if not more) make sense to keep the HEAD pointing at
-> the same.
+> Indenting using <<- would make it easier to read.  I.e.
 >
-> Personally, I may use this feature if it didn't move HEAD, but I
-> wouldn't if HEAD gets moved.  But that may be just me.
+>         cat >config.branch <<-\EOF &&
+>         ;; Comment for ...
+>         [branch "source"]
+>                 ;; Comment for ...
+>         ...
+>         EOF
 
-Ah, that came out to be stronger than I intended.
+I should have added a comment for that, I can't find any portable (but
+suggestions welcome) way to do that and preserve the indentation, so
+the test_cmp would still succeed if the moving/renaming function
+munged all leading whitespace in the config with -\EOF as opposed to
+\EOF.
 
-While I do prefer "the HEAD is not moved by this command---if you
-want to move to the newly created branch after copying, check it out
-yourself" a lot better than what the patch does, I do not think I'd
-care so strongly that I'd reject this patch series unless the
-behaviour is changed.
+>> +     cat config.branch >>.git/config &&
+>> +     git branch -m source dest &&
+>> +     git config -f .git/config -l | grep -F -e source -e dest -e some.gar >actual &&
+>> +     test_cmp expect actual &&
+>> +
+>> +     # ...and that the comments for those sections are also
+>> +     # preserved.
+>> +     cat config.branch | sed "s/\"source\"/\"dest\"/" >expect &&
+>> +     grep -A 9001 "Comment for source" .git/config >actual &&
+>
+> Where does 9001 come from?  Is that just "an arbitrary large
+> number"?
+>
+> Besides, "grep -A" is quite unportable.  Would
+>
+>         sed -n -e "/Comment for source/,$p" .git/config >actual
+>
+> work equally well?
 
-But I do react strongly to an unsubstantiated claim "it makes sense
-to do the same".  I can buy "We anticipate that in 50% of the case
-users would find this branch switching annoying and in the other 50%
-of the case, users would find it useful; since we need to pick one,
-we just randomly decide to do the same as --move", though.
+It's just a sufficiently large number, I thought -A was portable
+enough after grepping the test suite, but on closer inspection it
+turns out those were all git-grep invocations, oops. Yeah all I need
+here is all lines after a line matching a given string, so that sed
+command works, will fix it up to use that.
+
+>> +     test_cmp expect actual
+>> +'
+>> +
+>>  test_expect_success 'deleting a symref' '
+>>       git branch target &&
+>>       git symbolic-ref refs/heads/symref refs/heads/target &&
+>>
+>> --
+>> https://github.com/git/git/pull/363
