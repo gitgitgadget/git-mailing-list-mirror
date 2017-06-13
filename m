@@ -2,122 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82FD01FA7B
-	for <e@80x24.org>; Tue, 13 Jun 2017 23:24:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E7941FA7B
+	for <e@80x24.org>; Tue, 13 Jun 2017 23:42:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754096AbdFMXYM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 19:24:12 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36331 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751802AbdFMXYL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 19:24:11 -0400
-Received: by mail-pg0-f67.google.com with SMTP id v18so20997588pgb.3
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 16:24:10 -0700 (PDT)
+        id S1752854AbdFMXl7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 19:41:59 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:34322 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752456AbdFMXl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 19:41:58 -0400
+Received: by mail-pg0-f51.google.com with SMTP id v18so67032018pgb.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 16:41:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=AAczDbbeEeE/uE5uH6WUMYqLYphvkOJiNRXyskEHsLg=;
-        b=puZhnXX5sCd9mMe8cTNWZwOwUq1aKe+z/z65psjyjcbaRzF6JkxKXQNSqmgbgc8h2e
-         xA20MECquh4Q9xJ4oMmoTjIIJmMGG6NjtDfTdkNFndkATw5pDdkoFgp4qv30wnuOKLVT
-         e1IhODXEsVYiSllpL+Hx5pgipfiCFO1K5c9zJ2oKyZgTJGVGRGbISpyBZ/FV8t+hNyo6
-         z2xiRCdlspDbGfe2eIsB0RHX73WRlj9oZw8iLDW3oahixlAIug8QKR/GcuW6JBJxVSNe
-         7MwO8I/f5Wif8Jf0X9w6An0X5kJVzpA4lEJsJPctQZlY126lOPjGBZFVL9lB1o7MHFA4
-         gxVw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=AAjjm5PfNUPXTRf64G1AWLJ2KQuSXbUv2pUgCQNJils=;
+        b=YUNocqXZfi54wvrYjrIU9r4yJNwg6g05/PiUTxM3m1q0Ug9gYFSqZliqAKPVXSmf0Q
+         WXaU9s5BbHaLZF985szeZOVY7P42F9Fbipjrgl5GxTWcxt2z9lscV1XOHqRF6JvRwuTv
+         /pka3MOuvQbUpv1rTY2igYOMiIBFnRP7hLLbhvlhLmJ5TXF7pWItmuxP01LGW2jNfRv7
+         J70kITVT+DWBG3UaQMw/6ML7tqgOobgHz4Hm0yv/kQqcV5B4FirWLmpJlvIIGhutU62E
+         EqC+jJLZaljTV+pzXKz0zwXxNWJe5hvO4K/UWO4HKGnwjbTVsKdNlJat+beb84YVPlug
+         OFhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=AAczDbbeEeE/uE5uH6WUMYqLYphvkOJiNRXyskEHsLg=;
-        b=aeEW7NuyfzyTXM0y5iJJ4I7sTkQ4TA594nfHQgISaMPmpqT5pxez3ir1zZKZnXRrlz
-         p3uKqDqDIHJq996si8/sPrpKIcySUni6A7gL7nCVrqtgg4OPXq9SmBMZMoe9rkaA3VDf
-         oaWntva2yMTrb9NB8XmLIWYoEu2vCNlHD64kktU0ZsKaABi12bXhcbhwPU2v/wF8ajtv
-         z4JsbF8bgJcjB66grGiHUJFEIF7jmtXY1RIFKRP0cykFN/pCq0Dqw05tUmMIMFBapYC1
-         TPDtH8qwsjYaq/N+fkWDY3CE/46Cj4HErFYNPwIXH585VXX2PQqjO6aLe7+Z3AwsvTEh
-         s3DA==
-X-Gm-Message-State: AKS2vOxpZ7sbgIzaeFcdAhMGok0wkYGtqHgQW8qI0YGvH3ManGVkLOB+
-        GCG6/YwPcIU9Ug==
-X-Received: by 10.98.43.206 with SMTP id r197mr1452400pfr.202.1497396250378;
-        Tue, 13 Jun 2017 16:24:10 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:8130:47b0:791f:5985])
-        by smtp.gmail.com with ESMTPSA id 69sm26759027pfy.119.2017.06.13.16.24.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 13 Jun 2017 16:24:09 -0700 (PDT)
-Date:   Tue, 13 Jun 2017 16:24:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCHv4 2/2] Documentation/clone: document ignored
- configuration variables
-Message-ID: <20170613232407.GQ133952@aiede.mtv.corp.google.com>
-References: <CAM0VKjnOSxQg_VCBO2cgtbqesmNYx+e_H7m=36PsNWi9K9rQ1Q@mail.gmail.com>
- <20170530071244.32257-1-szeder.dev@gmail.com>
- <20170530071244.32257-2-szeder.dev@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AAjjm5PfNUPXTRf64G1AWLJ2KQuSXbUv2pUgCQNJils=;
+        b=sQCEiv8Nay6ut3JuZMV2va+aHaF4ZIrQ/G1QP9Q0uwOxLUNXAJIbcUW97EH/sQt6Ot
+         vY27GRxi5uzG0sBG7DVZY1qyM3FfK8UsFCeqc3uHLUBXQih2eKf1W6faHcAdOukxCFoI
+         yvxw/c4W8XhAsBk3F03qGL5EprxndkHaCqHHV3JyjFbrZl+jdNijpBB3Yl6pLHbldhHX
+         InBBknJAyOgtjOqwDHttVe0of3U+ojwlO2wytpqSbH5UHyJtuiGOCE6D7SYXbjf+K4aT
+         ynXQoSqqAvcJgMNvGg7dwZLw3J/EI7uFGQ/IKa8AJ0Ywj2QW/XQ4p4NjA2DPqERL2Okd
+         RsLw==
+X-Gm-Message-State: AKS2vOx2rwnKN7Y96HOSXZt+Zbt72A6lFRrpOfts2EvBPhWNJNE6vafN
+        uL44cWWZwXR0Nuz0nw5NPwcrAYXfCbvv
+X-Received: by 10.98.68.156 with SMTP id m28mr1528188pfi.48.1497397317817;
+ Tue, 13 Jun 2017 16:41:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170530071244.32257-2-szeder.dev@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.218.134 with HTTP; Tue, 13 Jun 2017 16:41:57 -0700 (PDT)
+In-Reply-To: <20170613145457.2e888c27@twelve2.svl.corp.google.com>
+References: <20170523024048.16879-1-sbeller@google.com/> <20170524214036.29623-1-sbeller@google.com>
+ <20170524214036.29623-5-sbeller@google.com> <20170613145457.2e888c27@twelve2.svl.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 13 Jun 2017 16:41:57 -0700
+Message-ID: <CAGZ79kY9ByaHe_fx+S3neT6+1LcA_Q13bbVha8AKHUUO32FgeA@mail.gmail.com>
+Subject: Re: [PATCHv5 04/17] diff: introduce more flexible emit function
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-SZEDER Gábor wrote:
-
-> Due to limitations/bugs in the current implementation, some
-> configuration variables specified via 'git clone -c var=val' (or 'git
-> -c var=val clone') are ignored during the initial fetch and checkout.
+On Tue, Jun 13, 2017 at 2:54 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> On Wed, 24 May 2017 14:40:23 -0700
+> Stefan Beller <sbeller@google.com> wrote:
 >
-> Let the users know which configuration variables are known to be
-> ignored ('remote.origin.mirror' and 'remote.origin.tagOpt') under the
-> documentation of 'git clone -c'.
+>> Currently, diff output is written either through the emit_line_0
+>> function or through the FILE * in struct diff_options directly. To
+>> make it easier to teach diff to buffer its output (which will be done
+>> in a subsequent commit), introduce a more flexible emit_line() function.
+>> In this commit, direct usages of emit_line_0() are replaced with
+>> emit_line(); subsequent commits will also replace usages of the
+>> FILE * with emit().
 >
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
->  Documentation/git-clone.txt | 4 ++++
->  1 file changed, 4 insertions(+)
+> Check the names of the functions in this paragraph.
 
-Makes sense.
+Only the very last word needed replacement of /s/emit/emit_line/.
 
-> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> index ec41d3d69..4f1e7d4ba 100644
-> --- a/Documentation/git-clone.txt
-> +++ b/Documentation/git-clone.txt
-> @@ -186,6 +186,10 @@ objects from the source repository into a pack in the cloned repository.
->  	values are given for the same key, each value will be written to
->  	the config file. This makes it safe, for example, to add
->  	additional fetch refspecs to the origin remote.
-> +	Note that due to limitations of the current implementation some
-> +	configuration variables don't take effect during the initial
-> +	fetch and checkout.  Configuration variables known to not take
-> +	effect are: `remote.<name>.mirror` and `remote.<name>.tagOpt`.
->  
+>
+>> diff --git a/diff.c b/diff.c
+>> index 2f9722b382..3569857818 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -516,36 +516,30 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
+>>       ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
+>>  }
+>>
+>> -static void emit_line_0(struct diff_options *o, const char *set, const char *reset,
+>> -                     int first, const char *line, int len)
+>> +static void emit_line(struct diff_options *o, const char *set, const char *reset,
+>> +                   int add_line_prefix, int sign, const char *line, int len)
+>
+> In the future, this function is going to be used even to emit partial
+> lines
 
-Tiny nit: the paragraph of --config description is already a bit
-overwhelming, and I think this additional note takes it over the edge
-where I give up and stop reading.  Could it go in a separate
-paragraph?
+Yes.
 
-		the config file. This makes it safe, for example, to add
-		additional fetch refspecs to the origin remote.
-	+
-	Due to limitations in the current implementation, some
-	configuration variables do not take effect until after the
-	initial fetch and checkout. Configuration variables known
-	not to take effect are `remote.<name>.mirror` and
-	`remote.<name>.tagOpt`.
+> - could this be called emit() instead?
+
+Despite having good IDEs available some (including me)
+very much like working with raw text, and then having a function
+named as a common string doesn't help.
+
+After this patch
+
+  $ git grep emit_line |wc -l
+  16
+  # not all are this function, there is
+  emit_line_checked as well. But 16 is not too much.
+
+But if renamed to emit():
+
+  $ git grep emit -- diff.c |wc -l
+  60
+
+You could argue I'd just have to grep
+for "emit (" instead, but that then I would have
+rely on correct whitespacing or use a regex already.
+Complexity which I would not like.
+
+So I am not sure if this is helping a reader. (Not the casual
+reader, but the one grepping for this function)
+
+Maybe we can settle on a different name though,
+such as emit_string which is not a prefix of a dozen
+different other functions?
 
 Thanks,
-Jonathan
+Stefan
