@@ -2,233 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8606D20282
-	for <e@80x24.org>; Wed, 14 Jun 2017 18:08:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCC7920282
+	for <e@80x24.org>; Wed, 14 Jun 2017 18:23:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752897AbdFNSIC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 14:08:02 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:35455 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752879AbdFNSH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 14:07:59 -0400
-Received: by mail-pg0-f45.google.com with SMTP id k71so3528053pgd.2
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 11:07:54 -0700 (PDT)
+        id S1752733AbdFNSXq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 14:23:46 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:33414 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752628AbdFNSXp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 14:23:45 -0400
+Received: by mail-pg0-f51.google.com with SMTP id f185so3736247pgc.0
+        for <git@vger.kernel.org>; Wed, 14 Jun 2017 11:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=z2X+IBGmIbJbFriZquYK1P6XvdcTv5xNuoyOYRyISMw=;
-        b=Yw38YQz0fco1npU0mJJrL/Polh74resAyPz+poHH1yGGH2fd/+BeOQ0KJSfYAlQEq8
-         qvdHVBc9qmx+4JNWgdEtpg5BDS3f/9bsOukLGQCsX7SeZNUl8VueUiLVXiaJjoPGHgK2
-         P30HV+V/54fLWQEYZn5rP+4Ulw+gYYTvpSX9sQUGTS1TJP4H5qYpin2gtB8GPH7xc4c9
-         OiAWmQLdzfWkWXYivEumbr0sEg7cIqeJMME3x59X7rVpobjkNfQtJRWHzbokhbjGQoxI
-         aJBtDtqHCi9rPMYZHDK4O4A8/GY/HL0KIzEEkHVESH7OF2Asp4QvE+LCaJY6gVlzyLLu
-         1+2g==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=26buH+qDHm5XTF5nzlORZJwF5lA1/VIn1KDE+/MXCK0=;
+        b=cKzFgXZiBB3U8FLCvBao084JXehTTQEblJRS4abBRkE53OVyKuX4TZq1zhNOWcIo8h
+         WYoz9TfZbVDv/IAzoUjJNEUMSBof5vD8VCnWGWadcIZ3iTOQAB54BlAIAGZViaVa8oxj
+         6K/YHHwLFfTEmwLi4YLM8NeY8pad+IeYQXZhU3yDHev/i3AlqQFTM/CNJPu/IxmYVL0E
+         dcJwwuKoxPdSGrzBfTuKYM1nlBS4//hU/cQt0yRg1ggUIvlXYYDkCFbklr1ZM9ptM33R
+         9E2JuimRhrgvaln+RVJJxJkOuXbcJN2GdhuH3wuUh8mZhifMEk5yC8jkoZOMgZG8/8YU
+         jO0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=z2X+IBGmIbJbFriZquYK1P6XvdcTv5xNuoyOYRyISMw=;
-        b=XVou3j0bj79KVpnGo7cqOPG0dlNBVz0AQucWIa54S1OmAyv1lTkUa7rDSUXlDlcJJn
-         YbqiJnhJ7glaGuW2cbilXZmJaW2iU5obo7ojRluM3wxGTBUUEJ+3ecBfiw5q7aLQ0klx
-         ol1FYRAoBsP4pSTYhFHwBE8CiOLrMQ+COci5oz2Jk4ZKsjw52kFh1gAT6hLNleBMFsDV
-         EZUBSRxGmaXLcPGLlP7Y/REfSx+kSeQwlKiuy/dHtlLGQCNpp6Qhm48jALl2EtWQIjg/
-         lEKqjvjNDTjyhkQwkJT80Sz6IQ1kHMLldYO28kROE5cVtP2Mgzj7OUMN7RKQuX5+2qWk
-         N+IQ==
-X-Gm-Message-State: AKS2vOxCLn4NBTiN0EDHG5v6cq4C7uobJYxEMiwhfeEhQ98+dkdckwjD
-        HGYsL0v3sOa8tR+AX7TVpA==
-X-Received: by 10.98.64.6 with SMTP id n6mr1216804pfa.196.1497463673002;
-        Wed, 14 Jun 2017 11:07:53 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id t2sm1001646pfi.76.2017.06.14.11.07.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 Jun 2017 11:07:52 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, jrnieder@gmail.com, gitster@pobox.com,
-        Johannes.Schindelin@gmx.de, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 6/6] config: don't implicitly use gitdir or commondir
-Date:   Wed, 14 Jun 2017 11:07:39 -0700
-Message-Id: <20170614180739.72193-7-bmwill@google.com>
-X-Mailer: git-send-email 2.13.1.518.g3df882009-goog
-In-Reply-To: <20170614180739.72193-1-bmwill@google.com>
-References: <20170613210321.152978-1-bmwill@google.com>
- <20170614180739.72193-1-bmwill@google.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=26buH+qDHm5XTF5nzlORZJwF5lA1/VIn1KDE+/MXCK0=;
+        b=prDgR43+BKbKPaXd+7xCchWyrIdhsQklseWgbboSmEQI0zVdm+LUt7JfNYHTCARsNU
+         b9nGwdrfrKpx4a7zlbqg2yzC7o4V3aaCWq69U7KuRXFPJoQVoU81NH9bfVdcn5Im8W5D
+         Oj7R7AUE/WIfxH0JzFtl0/EOHWGPR5SFpYyjK8Rat5WoR5aWFCZBFwoUh0nejpWX6XhJ
+         Mn8p1BpG3mK1R1TTcJBZo11gGHHK853ztldw7aix6X2/NYieND/e1pssDnRINyaY0oLM
+         QM+BpJk/g4bkP90baB3gcJHUDAwIiCgJVDDh+bi2wySszP2cQ21FuzMTDJE0AUsGT009
+         a3dA==
+X-Gm-Message-State: AKS2vOzXEjErd1EqVfm1My3FTHgUsLHAu8iWQKzsRIeFgj0iM/IEmgsd
+        d7Fk/mKV1dVWPQ==
+X-Received: by 10.84.216.93 with SMTP id f29mr1450852plj.297.1497464624607;
+        Wed, 14 Jun 2017 11:23:44 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:9e8:46fc:1af4:4618])
+        by smtp.gmail.com with ESMTPSA id o13sm1060070pfa.120.2017.06.14.11.23.43
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 14 Jun 2017 11:23:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+Subject: Re: rs/strbuf-addftime-zZ, was Re: What's cooking in git.git (Jun 2017, #04; Tue, 13)
+References: <xmqqshj34ldr.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1706141245520.171564@virtualbox>
+Date:   Wed, 14 Jun 2017 11:23:42 -0700
+In-Reply-To: <alpine.DEB.2.21.1.1706141245520.171564@virtualbox> (Johannes
+        Schindelin's message of "Wed, 14 Jun 2017 12:57:06 +0200 (CEST)")
+Message-ID: <xmqqzida2ztd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git_config_with_options()' takes a 'config_options' struct which
-contains feilds for 'git_dir' and 'commondir'.  If those feilds happen
-to be NULL the config machinery falls back to querying global repository
-state.  Let's change this and instead use these fields in the
-'config_options' struct explicilty all the time.  Since the API is
-slightly changing to require these two fields to be set if callers want
-the config machinery to load the repository's config, let's change the
-name to 'config_with_optison()'.  This allows the config machinery to
-not implicitly rely on any global repository state.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- builtin/config.c | 26 +++++++++++++++-----------
- config.c         | 21 +++++++++++----------
- config.h         |  6 +++---
- 3 files changed, 29 insertions(+), 24 deletions(-)
+> Hold on. Have you tried to build this branch?
+>
+> -- snip --
+>     CC date.o
+> date.c:63:36: error: unknown type name ‘timestamp_t’
+>  static struct tm *time_to_tm_local(timestamp_t time)
+>                                     ^
+> date.c: In function ‘show_date’:
+> date.c:211:8: error: implicit declaration of function ‘time_to_tm_local’
+> [-Werror=implicit-function-declaration]
+>    tm = time_to_tm_local(time);
+>         ^
+> date.c:211:6: error: assignment makes pointer from integer without a cast
+> [-Werror=int-conversion]
+>    tm = time_to_tm_local(time);
+>       ^
+> cc1: all warnings being treated as errors
+> -- snap --
+>
+> I would expect this to be rebased *at least* to dddbad728c9 (timestamp_t:
+> a new data type for timestamps, 2017-04-26).
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 753c40a5c..82db29fae 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -243,8 +243,8 @@ static int get_value(const char *key_, const char *regex_)
- 		}
- 	}
- 
--	git_config_with_options(collect_config, &values,
--				&given_config_source, &config_options);
-+	config_with_options(collect_config, &values,
-+			    &given_config_source, &config_options);
- 
- 	ret = !values.nr;
- 
-@@ -321,8 +321,8 @@ static void get_color(const char *var, const char *def_color)
- 	get_color_slot = var;
- 	get_color_found = 0;
- 	parsed_color[0] = '\0';
--	git_config_with_options(git_get_color_config, NULL,
--				&given_config_source, &config_options);
-+	config_with_options(git_get_color_config, NULL,
-+			    &given_config_source, &config_options);
- 
- 	if (!get_color_found && def_color) {
- 		if (color_parse(def_color, parsed_color) < 0)
-@@ -353,8 +353,8 @@ static int get_colorbool(const char *var, int print)
- 	get_colorbool_found = -1;
- 	get_diff_color_found = -1;
- 	get_color_ui_found = -1;
--	git_config_with_options(git_get_colorbool_config, NULL,
--				&given_config_source, &config_options);
-+	config_with_options(git_get_colorbool_config, NULL,
-+			    &given_config_source, &config_options);
- 
- 	if (get_colorbool_found < 0) {
- 		if (!strcmp(get_colorbool_slot, "color.diff"))
-@@ -442,8 +442,8 @@ static int get_urlmatch(const char *var, const char *url)
- 		show_keys = 1;
- 	}
- 
--	git_config_with_options(urlmatch_config_entry, &config,
--				&given_config_source, &config_options);
-+	config_with_options(urlmatch_config_entry, &config,
-+			    &given_config_source, &config_options);
- 
- 	ret = !values.nr;
- 
-@@ -539,6 +539,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		config_options.respect_includes = !given_config_source.file;
- 	else
- 		config_options.respect_includes = respect_includes_opt;
-+	if (!nongit) {
-+		config_options.commondir = get_git_common_dir();
-+		config_options.git_dir = get_git_dir();
-+	}
- 
- 	if (end_null) {
- 		term = '\0';
-@@ -583,9 +587,9 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 
- 	if (actions == ACTION_LIST) {
- 		check_argc(argc, 0, 0);
--		if (git_config_with_options(show_all_config, NULL,
--					    &given_config_source,
--					    &config_options) < 0) {
-+		if (config_with_options(show_all_config, NULL,
-+					&given_config_source,
-+					&config_options) < 0) {
- 			if (given_config_source.file)
- 				die_errno("unable to read config file '%s'",
- 					  given_config_source.file);
-diff --git a/config.c b/config.c
-index dd7ad5e1e..822d63787 100644
---- a/config.c
-+++ b/config.c
-@@ -219,8 +219,6 @@ static int include_by_gitdir(const struct config_options *opts,
- 
- 	if (opts->git_dir)
- 		git_dir = opts->git_dir;
--	else if (have_git_dir())
--		git_dir = get_git_dir();
- 	else
- 		goto done;
- 
-@@ -1549,8 +1547,6 @@ static int do_git_config_sequence(const struct config_options *opts,
- 
- 	if (opts->commondir)
- 		repo_config = mkpathdup("%s/config", opts->commondir);
--	else if (have_git_dir())
--		repo_config = git_pathdup("config");
- 	else
- 		repo_config = NULL;
- 
-@@ -1581,9 +1577,9 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	return ret;
- }
- 
--int git_config_with_options(config_fn_t fn, void *data,
--			    struct git_config_source *config_source,
--			    const struct config_options *opts)
-+int config_with_options(config_fn_t fn, void *data,
-+			struct git_config_source *config_source,
-+			const struct config_options *opts)
- {
- 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
- 
-@@ -1614,9 +1610,14 @@ static void git_config_raw(config_fn_t fn, void *data)
- 	struct config_options opts = {0};
- 
- 	opts.respect_includes = 1;
--	if (git_config_with_options(fn, data, NULL, &opts) < 0)
-+	if (have_git_dir()) {
-+		opts.commondir = get_git_common_dir();
-+		opts.git_dir = get_git_dir();
-+	}
-+
-+	if (config_with_options(fn, data, NULL, &opts) < 0)
- 		/*
--		 * git_config_with_options() normally returns only
-+		 * config_with_options() normally returns only
- 		 * zero, as most errors are fatal, and
- 		 * non-fatal potential errors are guarded by "if"
- 		 * statements that are entered only when no error is
-@@ -1676,7 +1677,7 @@ void read_early_config(config_fn_t cb, void *data)
- 		opts.git_dir = gitdir.buf;
- 	}
- 
--	git_config_with_options(cb, data, NULL, &opts);
-+	config_with_options(cb, data, NULL, &opts);
- 
- 	strbuf_release(&commondir);
- 	strbuf_release(&gitdir);
-diff --git a/config.h b/config.h
-index 63b92784c..9e038cce2 100644
---- a/config.h
-+++ b/config.h
-@@ -45,9 +45,9 @@ extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern void read_early_config(config_fn_t cb, void *data);
- extern void git_config(config_fn_t fn, void *);
--extern int git_config_with_options(config_fn_t fn, void *,
--				   struct git_config_source *config_source,
--				   const struct config_options *opts);
-+extern int config_with_options(config_fn_t fn, void *,
-+			       struct git_config_source *config_source,
-+			       const struct config_options *opts);
- extern int git_parse_ulong(const char *, unsigned long *);
- extern int git_parse_maybe_bool(const char *);
- extern int git_config_int(const char *, const char *);
--- 
-2.13.1.518.g3df882009-goog
+Thanks for noticing.
+
+My preference is to use ulong in the commit at the tip by Peff.  We
+can do s/ulong/timestamp_t/ in a merge that merges the topic to
+newer integration branches that have the timestamp_t topic merged
+(e.g. 'master'), as that allows older integration branches
+(e.g. 'maint') to have the %z/%Z fix independently.
+
+It would be another valid approach to fork it at b15667bb ("Merge
+branch 'js/larger-timestamps'", 2017-05-16) or a commit that appears
+later than that one on 'master', and tweak Peff's commit to use
+timestamp_t, if we declare that the %z/%Z fix will only be in 2.14
+and later and will never go to 'maint'.
+
+
 
