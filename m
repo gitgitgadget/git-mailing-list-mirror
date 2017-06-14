@@ -2,114 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 940BF20401
-	for <e@80x24.org>; Wed, 14 Jun 2017 10:01:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C874220401
+	for <e@80x24.org>; Wed, 14 Jun 2017 10:03:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751875AbdFNKB3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 06:01:29 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33152 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751857AbdFNKB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 06:01:27 -0400
-Received: by mail-pg0-f67.google.com with SMTP id a70so23010250pge.0
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 03:01:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/tlyKKfdxLpNHSPR9UyjVd3n1EFd/kx9RiRv9XSrWY8=;
-        b=UvxsroWIsj1MUedNx/VY1/YjxUFRjQnBBxBdty+AFgNTn5InatRHmRuJWZy4T9Khvw
-         5pVT5zpJY4VihwxuWGnfkW/HUyDdAdKegLacGoFatTlV+sUV/oVwO73TKc/s/gsQUvzz
-         c8ZYV2XIRfJh5eeE5i3plHoh6KFAKnCg+K/UUq2go/2mB5uie0BHHLcAlrdfwfYVgVRW
-         wLDS42NxxUlk4dmyJa0eTgNyvYwina//CoogJh+nBkWANNMBHCpUjYIYFblHaqR8sOa0
-         EsvqCn2xWUXVU2ygspaiE6QRzeSMcLVTJSFI3kKoPYLCZhbXsL3sSchPiOD0DL7Ah76K
-         c+Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/tlyKKfdxLpNHSPR9UyjVd3n1EFd/kx9RiRv9XSrWY8=;
-        b=PIQz1h/DYaFngcSFKPjbK4BoyQdJVkpxQMUm3gy1MPOAw93GWsI6ARSp+9scP/I9rL
-         SQ4fOPEddu2co4LG1LgS2sYUg16iifkSMygnHQ9EgDml+eOPfD96otLq6DyG4lreo2H+
-         wz9wbJhC9xZBLLMrLVCmFBdEU4YTq/cKLEYyF52FBjbQErWRu70Hw14G5pFKogdiae2b
-         mwoFbVclY2nsGC8M+kSVsLsHxGt5F/bZvE7mx05ShusXsA6Ev70IVvb9BQaxeTCQ2Twa
-         Me3fhbq1oeK4haITPObCEL15dRYqMV7d3rI1tLCkIyDO3Ql8MZ5hbxjVMsR8aoRkC6sG
-         v/0w==
-X-Gm-Message-State: AKS2vOw1bHwWfPTy+psbWSvGTlvUBZNT5O+0hlg2QS/2wm0ncegYn6Yw
-        6XKEWn45F1AFFQ==
-X-Received: by 10.84.218.134 with SMTP id r6mr4105290pli.288.1497434487215;
-        Wed, 14 Jun 2017 03:01:27 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id 10sm987746pgh.59.2017.06.14.03.01.26
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 14 Jun 2017 03:01:26 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        philipoakley@iee.org, jrnieder@gmail.com, avarab@gmail.com
-Subject: Re: [PATCH v2] Configure Git contribution guidelines for github.com
-References: <20170613081807.33196-1-larsxschneider@gmail.com>
-        <20170613090427.igjz7erniblh3wie@sigill.intra.peff.net>
-        <FEFF27D2-1A56-4F37-8114-126613C144A0@gmail.com>
-Date:   Wed, 14 Jun 2017 03:01:25 -0700
-In-Reply-To: <FEFF27D2-1A56-4F37-8114-126613C144A0@gmail.com> (Lars
-        Schneider's message of "Wed, 14 Jun 2017 09:28:03 +0200")
-Message-ID: <xmqqk24e51my.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751730AbdFNKDT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 06:03:19 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57390 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750770AbdFNKDS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 06:03:18 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwW8p-1dthzO0wCl-018OIg; Wed, 14
+ Jun 2017 12:03:09 +0200
+Date:   Wed, 14 Jun 2017 12:03:07 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH v2 7/8] alias_lookup(): optionally return top-level
+ directory
+In-Reply-To: <xmqqefun96y6.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1706141158380.171564@virtualbox>
+References: <cover.1496951503.git.johannes.schindelin@gmx.de> <aa6601bbfa50c728b7820e0a2991da76288509a5.1496951503.git.johannes.schindelin@gmx.de> <20170610101813.n26wmxcueicecptz@sigill.intra.peff.net> <alpine.DEB.2.21.1.1706131319130.171564@virtualbox>
+ <alpine.DEB.2.21.1.1706131339320.171564@virtualbox> <20170613114254.oo6r6oqwtchvjuim@sigill.intra.peff.net> <xmqqefun96y6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:5wdtOFKBya39vq9MSVNs0MAD7a2JuyU8UlxOIAyZ/uHRS31Vjfx
+ puI5DTQDxFs+kEUTxLmBHW/c8ACMsBmBdRY3xP0ULis6hTG1idOWmyFWk/I7XLIN0xL4u7X
+ YtiUBh2oZA2KfFDeY2Uoie69uj6FHKePmCsXBYM+rR+qB76HmVDHGdvTt11OmBwA2nByc95
+ Fqvw44culmXIKjt454LPg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jkIYjw0+90I=:7zVCFPm9W7Vh46IPA+SLFd
+ zFZiY8be0aD6G5FYHTlWzrPTmniYy9p1AuyMufp2cVaXmTTpYT7NMftggAZF140wlF2sV8JN8
+ 6k6o4T6moUR2dszKh3txSEjzhQ6+CnZqW8nZV0PWikDs7OIXxC/gPpeqxLcsfV5dD3iHQNZEE
+ YfzROPUm63PeB+IIWfe3sd9GK2pgHrEMrfyVTXHREg+6uq6qMF9qoydAer1Jgan40B8io4S0s
+ xJKIwq4JtFIXnseevxiFzNyDolPmQ03B0TqFng6TqU/9iy3i3j0QZT+8CXknomln0CkXpouL3
+ ngkNBOKpz/sSj9aAY2AEmjiSWp5C2okLXTl9xH14PPfsRieEkE5JyXNS2Teyi87QqYR7tOECM
+ 0gewI6Xr8xxlDRRiJQTs+6xRH1L7UlCmRuItzbSrFzS+bz+4VuoQ1gvjwyifUtgjQslPFW57y
+ tOwVdpajOG7QvMnV/tKkHN3NDJlaDsjn7S8/N5t4T/nI/r2xZnTBr5tx154ziiRQdmao/2axm
+ VHwtwcPe86XlsNeI/g2RuAtpuL0gsL/05YJGWO36g8nzx9ZV3J/qDg5ZkOX5tdnm/dgZP3j3b
+ BvEgSZL7BR8jGGo0Xb72TKjkXbhG/s6zgpUDlhwa0Ropc2kte9n6beYNd/qMt+bk1p8IZZizD
+ 4okHDwG9ncWACraRAilIcEJ25QI6FoPsxMazaxWIu02oia+xQeztB3G+1TJQTIWsoPPwJxJet
+ wQmCpVBTb2NI+LhNxUxGYcc+6pOhniqQKK7hnmODiXnXUrfmn41ib8JiVYDTjXxPcEqC3LRub
+ MAXkIWc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Hi Junio,
 
->> On 13 Jun 2017, at 11:04, Jeff King <peff@peff.net> wrote:
->> 
->> On Tue, Jun 13, 2017 at 10:18:07AM +0200, Lars Schneider wrote:
->> 
->>> changes since v1:
->>> * mention submitGit
->>> * link to mailing list address instead of mailing list archive
->> 
->> You might want to link to https://git-scm.com/community/, which has a
->> section on the mailing list at the top. It gives the list address but
->> also talks about the archive, that you can send to it without
->> subscribing, etc.
->
-> Agreed. I removed the mailing list email address as this is not
-> useful until you have subscribed to the list.
+On Tue, 13 Jun 2017, Junio C Hamano wrote:
 
-Wait a minite.  As Peff explained above, you *can* send to it
-without subscribing, so "as this is not useful until you have
-subscribed" is quite wrong, no?
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Tue, Jun 13, 2017 at 01:42:02PM +0200, Johannes Schindelin wrote:
+> >
+> >> > As you probably guessed, I had tried that first and then figured that if
+> >> > I needed to keep the config_key_is_valid() test anyway, I could just as
+> >> > well keep the strbuf around for later use.
+> >> > 
+> >> > Will change the code,
+> >> 
+> >> Alas, I won't change the code after all.
+> >> 
+> >> It is really tempting to avoid the extra strbuf, but then the error
+> >> message would change from
+> >> 
+> >> 	error: missing value for 'alias.br'
+> >> 
+> >> to
+> >> 
+> >> 	error: missing value for 'br'
+> >> 
+> >> which is of course no good at all.
+> >> 
+> >> And since I already have to keep that strbuf, I'll simply keep the
+> >> config_key_is_valid() guard, too (because why not).
+> >
+> > Oof, yeah, that is definitely worse. I'm fine with keeping both parts.
+> 
+> When you replace Dscho's "compare 'var' with 'alias.br' that is in
+> strbuf naively with the "skip-prefix and compare with br" without
+> changing anything else, i.e.
+> 
+>     if (skip_prefix(var, "alias.", &key) && !strcmp(key, data->key))
+> 	return git_config_string((const char **)&data->v, key, value);
+> 
+> it would cause the "br" to be fed to git_config_string() and result
+> in problem reported for "br", not "alias.br".  
+> 
+> But this can be trivially fixed by passing "var" instead of "key" to
+> git_config_string(), no?  Am I mistaken?
 
->> The text itself looks good, but two minor grammar nits:
->> ... 
->
-> Agreed!
+Oh my. You are right! The `git_config_string()` function uses the `key`
+parameter only for reporting, not for anything else.
 
-This I think I've already squashed in to v2 before pushing the
-result out.
+So all I had to do was to introduce another variable so that the `key`
+pointer would not advance beyond the "alias.".
 
-I do not terribly mind what you did in v3 to the list address,
-and I do agree with Peff that mentioning the "community" page
-is a good idea.  But
-
-     Git community does not use github.com for their contributions. Instead, we use
-     a [mailing list](https://git-scm.com/community/) for code submissions,...
-     ... and bug reports.
-
-looks quite wrong.  If it were
-
-     Git community does not use github.com for their contributions. Instead, we use
-     a [mailing list](mailto:git@vger.kernel.org) for code submissions,...
-     ... and bug reports.  See [the community page](https://git-scm.com/community/)
-     for further information.
-
-I won't find it questionable at all, though.
+Will fix,
+Dscho
