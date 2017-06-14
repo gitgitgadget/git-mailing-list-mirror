@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7749820401
-	for <e@80x24.org>; Wed, 14 Jun 2017 09:09:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E72020401
+	for <e@80x24.org>; Wed, 14 Jun 2017 09:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752092AbdFNJHt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 05:07:49 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:50900 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751768AbdFNJHj (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Jun 2017 05:07:39 -0400
-X-AuditID: 1207440e-20fff70000000c7e-47-5940fcd9bdd5
+        id S1751863AbdFNJJO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 05:09:14 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:44858 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751768AbdFNJHt (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Jun 2017 05:07:49 -0400
+X-AuditID: 12074413-d93ff7000000742e-20-5940fcdf4d00
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 5C.A6.03198.9DCF0495; Wed, 14 Jun 2017 05:07:37 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 7C.FC.29742.FDCF0495; Wed, 14 Jun 2017 05:07:43 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCBFA.dip0.t-ipconnect.de [87.188.203.250])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5E97WEP022456
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5E97WER022456
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Wed, 14 Jun 2017 05:07:34 -0400
+        Wed, 14 Jun 2017 05:07:40 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -38,78 +38,63 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?=C3=98yvind=20Holm?= <sunny@sunbase.org>,
         Linus Torvalds <torvalds@linux-foundation.org>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 0/2] Fix a refname trimming problem in `log --bisect`
-Date:   Wed, 14 Jun 2017 11:07:25 +0200
-Message-Id: <cover.1497430232.git.mhagger@alum.mit.edu>
+Subject: [PATCH 2/2] prefix_ref_iterator_advance(): relax the check of trim length
+Date:   Wed, 14 Jun 2017 11:07:27 +0200
+Message-Id: <0c63f38bf922f285d6d62fc9cbbc3f5b756e75bf.1497430232.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
-References: <5a3f6af6-f936-50e7-5fca-c41b3aeefdce@alum.mit.edu>
-In-Reply-To: <5a3f6af6-f936-50e7-5fca-c41b3aeefdce@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrAIsWRmVeSWpSXmKPExsUixO6iqHvzj0OkweNWG4u1z+4wWTxff4Ld
-        outKN5NFQ+8VZosnc+8yW9xeMZ/ZYsnD18wW3VPeMlr8aOlhtti8uZ3FYsKRFSwWj/resjvw
-        ePx9/4HJY+esu+weCzaVejx81cXucWLGbxaPrvYjbB7Pevcwely8pOxxd0IPi8fnTXIBXFFc
-        NimpOZllqUX6dglcGUsOT2UvmM5X8fD5HsYGxkncXYycHBICJhJ3H/xi7WLk4hAS2MEksfZL
-        F5Rzikmi4f0+ZpAqNgFdiUU9zUwgtoiAmsTEtkMsIEXMAstYJLrO/GIESQgLuEo8W3iLBcRm
-        EVCV6DsxG6yBV8BcYtGMBewQ6+QldrVdBNrAAbTBXuLem3iQMKeAg0TnonUsExh5FjAyrGKU
-        S8wpzdXNTczMKU5N1i1OTszLSy3SNdbLzSzRS00p3cQICVi+HYzt62UOMQpwMCrx8Ha8tY8U
+In-Reply-To: <cover.1497430232.git.mhagger@alum.mit.edu>
+References: <cover.1497430232.git.mhagger@alum.mit.edu>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsUixO6iqHv/j0OkwZTvghZrn91hsni+/gS7
+        RdeVbiaLht4rzBZP5t5ltri9Yj6zxZKHr5ktuqe8ZbT40dLDbLF5czuLxYQjK1gsHvW9ZXfg
+        8fj7/gOTx85Zd9k9Fmwq9Xj4qovd48SM3yweXe1H2Dye9e5h9Lh4Sdnj7oQeFo/Pm+QCuKK4
+        bFJSczLLUov07RK4MrYfWcBUMIW7Yu/8H+wNjO85uhg5OSQETCSuT3/F0sXIxSEksINJovvU
+        M0YI5xSTxJrHT5hBqtgEdCUW9TQzgdgiAmoSE9sOgXUwCyxjkeg684sRJCEsECTRdP0TK4jN
+        IqAq0XL5IVgzr0CUxJOHE5kh1slL7Gq7CFbDKWAhcet6CwuILSRgLjGx8yTbBEaeBYwMqxjl
+        EnNKc3VzEzNzilOTdYuTE/PyUot0zfVyM0v0UlNKNzFCQlZ4B+Ouk3KHGAU4GJV4eB+8t48U
         Yk0sK67MPcQoycGkJMpbv9khUogvKT+lMiOxOCO+qDQntfgQowQHs5IIr8R5oBxvSmJlVWpR
-        PkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYJX4TdQo2BRanpqRVpmTglCmomDE2Q4
-        D9Dw7J8gw4sLEnOLM9Mh8qcYFaXEeZtBmgVAEhmleXC9sITyilEc6BVh3r0gVTzAZATX/Qpo
-        MBPQ4KALYINLEhFSUg2MidYFH8ubtlQ6fG4SWZa97TeHkurVZteLlrqr3qQHcNxf2P3spUBd
-        dNpyzfCoJY17/3+2qpM4mqctsiHs2Pn6ZaqHHvhniYjt/jXR+clRcZEVWmZZb2dOMLcIr2Lb
-        s4DhxBfxbX/TxaKTMpy38LxhmsgplLPKTNbdavp0faMPn+0XOURGs8orsRRnJBpqMRcVJwIA
-        ODr7nAMDAAA=
+        PkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYJ34W+gRsGi1PTUirTMnBKENBMHJ8hw
+        HqDh2T9BhhcXJOYWZ6ZD5E8xKkqJ8zaDNAuAJDJK8+B6YSnlFaM40CvCvHtBqniA6Qiu+xXQ
+        YCagwUEXwAaXJCKkpBoYJWZu1+y78uCy1QTZz2sU29kMa5z/liS+kvt2KCv/anCo76Sw2Flf
+        ItILw558eXJ55aYoCwn9s+Hxj38mylW8Pndvrk1k1229xxOcky32Wx6+kDv5DttFhd0/9xzY
+        IvVw530nsQ17niRU7hW0SWyJsmGVNbqw4rlBVB/fspxK11/K/Q+YumTUlFiKMxINtZiLihMB
+        Ank/jQQDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code for `git log --bisect` was calling
-`for_each_ref_in_submodule()` with prefix set to "refs/bisect/bad",
-which is the actual name of the reference that it wants. This resulted
-in the refname being trimmed completely away and the empty string
-being passed to the callback. That became impermissible after
+Before the previous commit, `for_each_bad_bisect_ref()` called
+`for_each_fullref_in_submodule()` in such a way as to trim the whole
+refname away. This is a questionable use of the API, but is not ipso
+facto dangerous, so tolerate it in case there are other callers
+relying on this behavior. But continue to refuse to trim *more*
+characters than the refname contains, as that really makes no sense.
 
-    b9c8e7f2fb prefix_ref_iterator: don't trim too much, 2017-05-22
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+ refs/iterator.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-, so the command was failing.
-
-Fix the problem in two orthogonal ways:
-
-1. Add a new function, `for_each_fullref_in_submodule()`, that doesn't
-   trim the refnames that it passes to callbacks, and us that instead.
-   I *think* that this is a strict improvement, though I don't know
-   the `git log` code well enough to be sure that it won't have bad
-   side-effects.
-
-2. Relax the "trimming too many characters" check to allow the full
-   length of the refname to be trimmed away (though not more than
-   that).
-
-In an ideal world the second patch shouldn't be necessary, because
-this calling pattern is questionable and it might be better that we
-learn about any other offenders. But if we'd rather be conservative
-and not break any other code that might rely on the old behavior,
-patch 2 is my suggestion for how to do it.
-
-This patch series can be applied on top of branch
-`mh/packed-ref-store-prep`, but it also applies cleanly to master. It
-is also available as branch `fix-bisect-trim-check` from my GitHub
-fork [1].
-
-Michael
-
-[1] https://github.com/mhagger/git
-
-Michael Haggerty (2):
-  for_each_bisect_ref(): don't trim refnames
-  prefix_ref_iterator_advance(): relax the check of trim length
-
- refs.c          | 12 ++++++++++++
- refs.h          |  5 ++++-
- refs/iterator.c |  8 ++++----
- revision.c      |  2 +-
- 4 files changed, 21 insertions(+), 6 deletions(-)
-
+diff --git a/refs/iterator.c b/refs/iterator.c
+index 4cf449ef66..de52d5fe93 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -298,11 +298,11 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 			 * you haven't already checked for via a
+ 			 * prefix check, whether via this
+ 			 * `prefix_ref_iterator` or upstream in
+-			 * `iter0`). So if there wouldn't be at least
+-			 * one character left in the refname after
+-			 * trimming, report it as a bug:
++			 * `iter0`. So consider it a bug if we are
++			 * asked to trim off more characters than the
++			 * refname contains:
+ 			 */
+-			if (strlen(iter->iter0->refname) <= iter->trim)
++			if (strlen(iter->iter0->refname) < iter->trim)
+ 				die("BUG: attempt to trim too many characters");
+ 			iter->base.refname = iter->iter0->refname + iter->trim;
+ 		} else {
 -- 
 2.11.0
 
