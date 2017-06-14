@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BC3B20282
-	for <e@80x24.org>; Wed, 14 Jun 2017 18:07:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB7120282
+	for <e@80x24.org>; Wed, 14 Jun 2017 18:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752835AbdFNSHr (ORCPT <rfc822;e@80x24.org>);
+        id S1752848AbdFNSHt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 14:07:49 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:36568 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752790AbdFNSHr (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 14 Jun 2017 14:07:47 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:35428 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752790AbdFNSHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 14:07:46 -0400
-Received: by mail-pg0-f44.google.com with SMTP id k71so3526573pgd.2
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 11:07:45 -0700 (PDT)
+Received: by mail-pf0-f181.google.com with SMTP id x63so3914994pff.3
+        for <git@vger.kernel.org>; Wed, 14 Jun 2017 11:07:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vauvKP1W3cc0U7I57JQF8/Fc0/w6CnYzRmPgvSWX+H4=;
-        b=UAJfXObeL4wwP6wZ7b7g2vdkR3+znznfTjeZ349pBECo97+CDlmGBjI05bdDCI7Mvv
-         DaOnzpnVkigg4HCUG+GG3Yzly+9uY18i5wML1bB43thr4oZ76TmOa6XWO3GRhQuw/9+T
-         v04be105pBWDFQUAzJeA1p6uI8sDeD5LeB1Zcdslgnwuqmmfywjs908nePyIxjkoIA+q
-         Luyzgd81aMDyTQpkWUQpDBnHWSsrBq7D9S4QlalTOgbdDHaD+gTJIxcViVMGBEivEMrs
-         11mBMXY8hbK9tUrLTPshO1Vr2L8VqH1oA8tyjG81VQYrU8fKAW/r6f6vqUXs1tTO3GzD
-         c3AQ==
+        bh=F3U7KRJh9IcEzDGpyOe/ehY0om2xdvqRmQQiSAWDgJ4=;
+        b=XXOXieThtBsKvSdc47HfUHEeVB5S4m4+z9riyHBH00e7+12CfwM1et959rqHaACbeO
+         XH/2aGZicNglDYV8t4eybRgx50bshMGkht4j/39/kpDyp1W+DSR5x/dKqgrIwMr9NkS/
+         Otiau/xDLjDn+zsT+nT7E6wH4wW9l7q8b8vNwyzU/pVBkgPJsGqZhZvSfXbLsDh58Bcf
+         gx4NqW0Dg8n7207it6t+MgHPmGm2F3rfwjeaW1+CoxPdy3OZz+lV1v7BxvYzC1928nhB
+         PYO5SP5gYQVdez83n+6MRhgUeAJiG48UwspVyRD0Hq0vpaHChKXM3IgmF395VW4qkvks
+         EnJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vauvKP1W3cc0U7I57JQF8/Fc0/w6CnYzRmPgvSWX+H4=;
-        b=Zlf/HHuWp1td2PgE/F124TkHpN0Z9bXrylbtxw3cbFHaOOaP0J29/MB9gY2fvzkml1
-         ZhchGN09o5FxTAkgbT2sd75lBNge3M5ekApihsDlfoiM7TMP8BumhMS1/SDmoz1ggYdI
-         LOT7kSLeTpB/ckPIqQOPlFro++wzyX2JW2WKhauA6bucs0YhPoEIlfUpPoczzrVu1bux
-         CExEO6zVtmH9LUrmv4y/q7YTnn9ldsjPEdeeC6tXDw+yV+gYjvtrESZYMykXgTWHqmZk
-         S0YcVQvs154Bcxdz0x7zBhvB1OrO/aD8GHviWpy6dX4wb1xX79XWzq4lj2idSE+2WMtK
-         72dg==
-X-Gm-Message-State: AKS2vOw0LeB3Uyhsg9uLBtxxGIp3c9y275NxQS6OIS9lXuCtINBXAYfs
-        Qk1zazJcVJKeO0yewgxTEA==
-X-Received: by 10.84.197.69 with SMTP id m63mr1483954pld.50.1497463664776;
-        Wed, 14 Jun 2017 11:07:44 -0700 (PDT)
+        bh=F3U7KRJh9IcEzDGpyOe/ehY0om2xdvqRmQQiSAWDgJ4=;
+        b=HEgsHa50ISV86z18EAivFNqa3J3pHwSIRIOTLvCv/DVg81EHxIdrvjtjv2Z7n9lGRQ
+         M68HOl2ZGlCPxD1e6P4NuAXHUo90o01Uhz8oj7ZscHVO3SE9KVcPEJAfKaA80gya3vz4
+         K1od8MgdXaBvgTfLuYggURReOSwoPXgRK6NFy1BmSJTIgq9VrI058+FC2r3BznL261az
+         YLGumivvAdr13Zyzb3lOtN0DptP/u1w/IvF9GcAb19fM02TFfHU0IrVBlzY/70bsfFxj
+         PeHJ7KBekl0R+xgKI3lXqPJlGhxFq/0yyWUF8TxJgv3lurK8SaM7VQdGris5og4Ppz3d
+         9nvA==
+X-Gm-Message-State: AKS2vOyR0Rngy890AXWp3MwSyK6TBSwTb/wmiQXaZihSPdO1qy9jmXBg
+        B5vuF1vZYbYnVWNBXfZhYg==
+X-Received: by 10.84.128.68 with SMTP id 62mr1470830pla.184.1497463666744;
+        Wed, 14 Jun 2017 11:07:46 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id t2sm1001646pfi.76.2017.06.14.11.07.43
+        by smtp.gmail.com with ESMTPSA id t2sm1001646pfi.76.2017.06.14.11.07.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 Jun 2017 11:07:43 -0700 (PDT)
+        Wed, 14 Jun 2017 11:07:45 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, jrnieder@gmail.com, gitster@pobox.com,
         Johannes.Schindelin@gmx.de, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 1/6] config: create config.h
-Date:   Wed, 14 Jun 2017 11:07:34 -0700
-Message-Id: <20170614180739.72193-2-bmwill@google.com>
+Subject: [PATCH v3 2/6] config: remove git_config_iter
+Date:   Wed, 14 Jun 2017 11:07:35 -0700
+Message-Id: <20170614180739.72193-3-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.518.g3df882009-goog
 In-Reply-To: <20170614180739.72193-1-bmwill@google.com>
 References: <20170613210321.152978-1-bmwill@google.com>
@@ -62,435 +62,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move all config related declarations from cache.h to a new config.h
-header file.  This makes cache.h smaller and allows for the opportunity
-in a following patch to only include config.h when needed.
+Since there is no implementation of the function 'git_config_iter',
+let's stop exporting it and remove the prototype from config.h.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- cache.h  | 190 +------------------------------------------------------------
- config.h | 194 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 195 insertions(+), 189 deletions(-)
- create mode 100644 config.h
+ config.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 4d92aae0e..ed56f8818 100644
---- a/cache.h
-+++ b/cache.h
-@@ -11,6 +11,7 @@
- #include "string-list.h"
- #include "pack-revindex.h"
- #include "hash.h"
-+#include "config.h"
- 
- #ifndef platform_SHA_CTX
- /*
-@@ -1872,188 +1873,9 @@ extern int packed_object_info(struct packed_git *pack, off_t offset, struct obje
- /* Dumb servers support */
- extern int update_server_info(int);
- 
--/* git_config_parse_key() returns these negated: */
--#define CONFIG_INVALID_KEY 1
--#define CONFIG_NO_SECTION_OR_NAME 2
--/* git_config_set_gently(), git_config_set_multivar_gently() return the above or these: */
--#define CONFIG_NO_LOCK -1
--#define CONFIG_INVALID_FILE 3
--#define CONFIG_NO_WRITE 4
--#define CONFIG_NOTHING_SET 5
--#define CONFIG_INVALID_PATTERN 6
--#define CONFIG_GENERIC_ERROR 7
--
--#define CONFIG_REGEX_NONE ((void *)1)
--
--struct git_config_source {
--	unsigned int use_stdin:1;
--	const char *file;
--	const char *blob;
--};
--
--enum config_origin_type {
--	CONFIG_ORIGIN_BLOB,
--	CONFIG_ORIGIN_FILE,
--	CONFIG_ORIGIN_STDIN,
--	CONFIG_ORIGIN_SUBMODULE_BLOB,
--	CONFIG_ORIGIN_CMDLINE
--};
--
--struct config_options {
--	unsigned int respect_includes : 1;
--	const char *git_dir;
--};
--
--typedef int (*config_fn_t)(const char *, const char *, void *);
--extern int git_default_config(const char *, const char *, void *);
--extern int git_config_from_file(config_fn_t fn, const char *, void *);
--extern int git_config_from_mem(config_fn_t fn, const enum config_origin_type,
--					const char *name, const char *buf, size_t len, void *data);
--extern int git_config_from_blob_sha1(config_fn_t fn, const char *name,
--				     const unsigned char *sha1, void *data);
--extern void git_config_push_parameter(const char *text);
--extern int git_config_from_parameters(config_fn_t fn, void *data);
--extern void read_early_config(config_fn_t cb, void *data);
--extern void git_config(config_fn_t fn, void *);
--extern int git_config_with_options(config_fn_t fn, void *,
--				   struct git_config_source *config_source,
--				   const struct config_options *opts);
--extern int git_parse_ulong(const char *, unsigned long *);
--extern int git_parse_maybe_bool(const char *);
--extern int git_config_int(const char *, const char *);
--extern int64_t git_config_int64(const char *, const char *);
--extern unsigned long git_config_ulong(const char *, const char *);
--extern ssize_t git_config_ssize_t(const char *, const char *);
--extern int git_config_bool_or_int(const char *, const char *, int *);
--extern int git_config_bool(const char *, const char *);
--extern int git_config_maybe_bool(const char *, const char *);
--extern int git_config_string(const char **, const char *, const char *);
--extern int git_config_pathname(const char **, const char *, const char *);
--extern int git_config_set_in_file_gently(const char *, const char *, const char *);
--extern void git_config_set_in_file(const char *, const char *, const char *);
--extern int git_config_set_gently(const char *, const char *);
--extern void git_config_set(const char *, const char *);
--extern int git_config_parse_key(const char *, char **, int *);
--extern int git_config_key_is_valid(const char *key);
--extern int git_config_set_multivar_gently(const char *, const char *, const char *, int);
--extern void git_config_set_multivar(const char *, const char *, const char *, int);
--extern int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, int);
--extern void git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int);
--extern int git_config_rename_section(const char *, const char *);
--extern int git_config_rename_section_in_file(const char *, const char *, const char *);
--extern const char *git_etc_gitconfig(void);
--extern int git_env_bool(const char *, int);
--extern unsigned long git_env_ulong(const char *, unsigned long);
--extern int git_config_system(void);
--extern int config_error_nonbool(const char *);
--#if defined(__GNUC__)
--#define config_error_nonbool(s) (config_error_nonbool(s), const_error())
--#endif
- extern const char *get_log_output_encoding(void);
- extern const char *get_commit_output_encoding(void);
- 
--extern int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
--
--enum config_scope {
--	CONFIG_SCOPE_UNKNOWN = 0,
--	CONFIG_SCOPE_SYSTEM,
--	CONFIG_SCOPE_GLOBAL,
--	CONFIG_SCOPE_REPO,
--	CONFIG_SCOPE_CMDLINE,
--};
--
--extern enum config_scope current_config_scope(void);
--extern const char *current_config_origin_type(void);
--extern const char *current_config_name(void);
--
--struct config_include_data {
--	int depth;
--	config_fn_t fn;
--	void *data;
--	const struct config_options *opts;
--};
--#define CONFIG_INCLUDE_INIT { 0 }
--extern int git_config_include(const char *name, const char *value, void *data);
--
--/*
-- * Match and parse a config key of the form:
-- *
-- *   section.(subsection.)?key
-- *
-- * (i.e., what gets handed to a config_fn_t). The caller provides the section;
-- * we return -1 if it does not match, 0 otherwise. The subsection and key
-- * out-parameters are filled by the function (and *subsection is NULL if it is
-- * missing).
-- *
-- * If the subsection pointer-to-pointer passed in is NULL, returns 0 only if
-- * there is no subsection at all.
-- */
--extern int parse_config_key(const char *var,
--			    const char *section,
--			    const char **subsection, int *subsection_len,
--			    const char **key);
--
--struct config_set_element {
--	struct hashmap_entry ent;
--	char *key;
--	struct string_list value_list;
--};
--
--struct configset_list_item {
--	struct config_set_element *e;
--	int value_index;
--};
--
--/*
-- * the contents of the list are ordered according to their
-- * position in the config files and order of parsing the files.
-- * (i.e. key-value pair at the last position of .git/config will
-- * be at the last item of the list)
-- */
--struct configset_list {
--	struct configset_list_item *items;
--	unsigned int nr, alloc;
--};
--
--struct config_set {
--	struct hashmap config_hash;
--	int hash_initialized;
--	struct configset_list list;
--};
--
--extern void git_configset_init(struct config_set *cs);
--extern int git_configset_add_file(struct config_set *cs, const char *filename);
--extern int git_configset_get_value(struct config_set *cs, const char *key, const char **value);
--extern const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key);
--extern void git_configset_clear(struct config_set *cs);
--extern int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest);
--extern int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
--extern int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
--extern int git_configset_get_ulong(struct config_set *cs, const char *key, unsigned long *dest);
--extern int git_configset_get_bool(struct config_set *cs, const char *key, int *dest);
--extern int git_configset_get_bool_or_int(struct config_set *cs, const char *key, int *is_bool, int *dest);
--extern int git_configset_get_maybe_bool(struct config_set *cs, const char *key, int *dest);
--extern int git_configset_get_pathname(struct config_set *cs, const char *key, const char **dest);
--
--extern int git_config_get_value(const char *key, const char **value);
--extern const struct string_list *git_config_get_value_multi(const char *key);
--extern void git_config_clear(void);
--extern void git_config_iter(config_fn_t fn, void *data);
--extern int git_config_get_string_const(const char *key, const char **dest);
--extern int git_config_get_string(const char *key, char **dest);
--extern int git_config_get_int(const char *key, int *dest);
--extern int git_config_get_ulong(const char *key, unsigned long *dest);
--extern int git_config_get_bool(const char *key, int *dest);
--extern int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest);
--extern int git_config_get_maybe_bool(const char *key, int *dest);
--extern int git_config_get_pathname(const char *key, const char **dest);
--extern int git_config_get_untracked_cache(void);
--extern int git_config_get_split_index(void);
--extern int git_config_get_max_percent_split_change(void);
--
--/* This dies if the configured or default date is in the future */
--extern int git_config_get_expiry(const char *key, const char **output);
--
- /*
-  * This is a hack for test programs like test-dump-untracked-cache to
-  * ensure that they do not modify the untracked cache when reading it.
-@@ -2061,16 +1883,6 @@ extern int git_config_get_expiry(const char *key, const char **output);
-  */
- extern int ignore_untracked_cache_config;
- 
--struct key_value_info {
--	const char *filename;
--	int linenr;
--	enum config_origin_type origin_type;
--	enum config_scope scope;
--};
--
--extern NORETURN void git_die_config(const char *key, const char *err, ...) __attribute__((format(printf, 2, 3)));
--extern NORETURN void git_die_config_linenr(const char *key, const char *filename, int linenr);
--
- extern int committer_ident_sufficiently_given(void);
- extern int author_ident_sufficiently_given(void);
- 
 diff --git a/config.h b/config.h
-new file mode 100644
-index 000000000..f7f8b66c5
---- /dev/null
+index f7f8b66c5..c70599bd5 100644
+--- a/config.h
 +++ b/config.h
-@@ -0,0 +1,194 @@
-+#ifndef CONFIG_H
-+#define CONFIG_H
-+
-+/* git_config_parse_key() returns these negated: */
-+#define CONFIG_INVALID_KEY 1
-+#define CONFIG_NO_SECTION_OR_NAME 2
-+/* git_config_set_gently(), git_config_set_multivar_gently() return the above or these: */
-+#define CONFIG_NO_LOCK -1
-+#define CONFIG_INVALID_FILE 3
-+#define CONFIG_NO_WRITE 4
-+#define CONFIG_NOTHING_SET 5
-+#define CONFIG_INVALID_PATTERN 6
-+#define CONFIG_GENERIC_ERROR 7
-+
-+#define CONFIG_REGEX_NONE ((void *)1)
-+
-+struct git_config_source {
-+	unsigned int use_stdin:1;
-+	const char *file;
-+	const char *blob;
-+};
-+
-+enum config_origin_type {
-+	CONFIG_ORIGIN_BLOB,
-+	CONFIG_ORIGIN_FILE,
-+	CONFIG_ORIGIN_STDIN,
-+	CONFIG_ORIGIN_SUBMODULE_BLOB,
-+	CONFIG_ORIGIN_CMDLINE
-+};
-+
-+struct config_options {
-+	unsigned int respect_includes : 1;
-+	const char *git_dir;
-+};
-+
-+typedef int (*config_fn_t)(const char *, const char *, void *);
-+extern int git_default_config(const char *, const char *, void *);
-+extern int git_config_from_file(config_fn_t fn, const char *, void *);
-+extern int git_config_from_mem(config_fn_t fn, const enum config_origin_type,
-+					const char *name, const char *buf, size_t len, void *data);
-+extern int git_config_from_blob_sha1(config_fn_t fn, const char *name,
-+				     const unsigned char *sha1, void *data);
-+extern void git_config_push_parameter(const char *text);
-+extern int git_config_from_parameters(config_fn_t fn, void *data);
-+extern void read_early_config(config_fn_t cb, void *data);
-+extern void git_config(config_fn_t fn, void *);
-+extern int git_config_with_options(config_fn_t fn, void *,
-+				   struct git_config_source *config_source,
-+				   const struct config_options *opts);
-+extern int git_parse_ulong(const char *, unsigned long *);
-+extern int git_parse_maybe_bool(const char *);
-+extern int git_config_int(const char *, const char *);
-+extern int64_t git_config_int64(const char *, const char *);
-+extern unsigned long git_config_ulong(const char *, const char *);
-+extern ssize_t git_config_ssize_t(const char *, const char *);
-+extern int git_config_bool_or_int(const char *, const char *, int *);
-+extern int git_config_bool(const char *, const char *);
-+extern int git_config_maybe_bool(const char *, const char *);
-+extern int git_config_string(const char **, const char *, const char *);
-+extern int git_config_pathname(const char **, const char *, const char *);
-+extern int git_config_set_in_file_gently(const char *, const char *, const char *);
-+extern void git_config_set_in_file(const char *, const char *, const char *);
-+extern int git_config_set_gently(const char *, const char *);
-+extern void git_config_set(const char *, const char *);
-+extern int git_config_parse_key(const char *, char **, int *);
-+extern int git_config_key_is_valid(const char *key);
-+extern int git_config_set_multivar_gently(const char *, const char *, const char *, int);
-+extern void git_config_set_multivar(const char *, const char *, const char *, int);
-+extern int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, int);
-+extern void git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int);
-+extern int git_config_rename_section(const char *, const char *);
-+extern int git_config_rename_section_in_file(const char *, const char *, const char *);
-+extern const char *git_etc_gitconfig(void);
-+extern int git_env_bool(const char *, int);
-+extern unsigned long git_env_ulong(const char *, unsigned long);
-+extern int git_config_system(void);
-+extern int config_error_nonbool(const char *);
-+#if defined(__GNUC__)
-+#define config_error_nonbool(s) (config_error_nonbool(s), const_error())
-+#endif
-+
-+extern int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
-+
-+enum config_scope {
-+	CONFIG_SCOPE_UNKNOWN = 0,
-+	CONFIG_SCOPE_SYSTEM,
-+	CONFIG_SCOPE_GLOBAL,
-+	CONFIG_SCOPE_REPO,
-+	CONFIG_SCOPE_CMDLINE,
-+};
-+
-+extern enum config_scope current_config_scope(void);
-+extern const char *current_config_origin_type(void);
-+extern const char *current_config_name(void);
-+
-+struct config_include_data {
-+	int depth;
-+	config_fn_t fn;
-+	void *data;
-+	const struct config_options *opts;
-+};
-+#define CONFIG_INCLUDE_INIT { 0 }
-+extern int git_config_include(const char *name, const char *value, void *data);
-+
-+/*
-+ * Match and parse a config key of the form:
-+ *
-+ *   section.(subsection.)?key
-+ *
-+ * (i.e., what gets handed to a config_fn_t). The caller provides the section;
-+ * we return -1 if it does not match, 0 otherwise. The subsection and key
-+ * out-parameters are filled by the function (and *subsection is NULL if it is
-+ * missing).
-+ *
-+ * If the subsection pointer-to-pointer passed in is NULL, returns 0 only if
-+ * there is no subsection at all.
-+ */
-+extern int parse_config_key(const char *var,
-+			    const char *section,
-+			    const char **subsection, int *subsection_len,
-+			    const char **key);
-+
-+struct config_set_element {
-+	struct hashmap_entry ent;
-+	char *key;
-+	struct string_list value_list;
-+};
-+
-+struct configset_list_item {
-+	struct config_set_element *e;
-+	int value_index;
-+};
-+
-+/*
-+ * the contents of the list are ordered according to their
-+ * position in the config files and order of parsing the files.
-+ * (i.e. key-value pair at the last position of .git/config will
-+ * be at the last item of the list)
-+ */
-+struct configset_list {
-+	struct configset_list_item *items;
-+	unsigned int nr, alloc;
-+};
-+
-+struct config_set {
-+	struct hashmap config_hash;
-+	int hash_initialized;
-+	struct configset_list list;
-+};
-+
-+extern void git_configset_init(struct config_set *cs);
-+extern int git_configset_add_file(struct config_set *cs, const char *filename);
-+extern int git_configset_get_value(struct config_set *cs, const char *key, const char **value);
-+extern const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key);
-+extern void git_configset_clear(struct config_set *cs);
-+extern int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest);
-+extern int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
-+extern int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
-+extern int git_configset_get_ulong(struct config_set *cs, const char *key, unsigned long *dest);
-+extern int git_configset_get_bool(struct config_set *cs, const char *key, int *dest);
-+extern int git_configset_get_bool_or_int(struct config_set *cs, const char *key, int *is_bool, int *dest);
-+extern int git_configset_get_maybe_bool(struct config_set *cs, const char *key, int *dest);
-+extern int git_configset_get_pathname(struct config_set *cs, const char *key, const char **dest);
-+
-+extern int git_config_get_value(const char *key, const char **value);
-+extern const struct string_list *git_config_get_value_multi(const char *key);
-+extern void git_config_clear(void);
-+extern void git_config_iter(config_fn_t fn, void *data);
-+extern int git_config_get_string_const(const char *key, const char **dest);
-+extern int git_config_get_string(const char *key, char **dest);
-+extern int git_config_get_int(const char *key, int *dest);
-+extern int git_config_get_ulong(const char *key, unsigned long *dest);
-+extern int git_config_get_bool(const char *key, int *dest);
-+extern int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest);
-+extern int git_config_get_maybe_bool(const char *key, int *dest);
-+extern int git_config_get_pathname(const char *key, const char **dest);
-+extern int git_config_get_untracked_cache(void);
-+extern int git_config_get_split_index(void);
-+extern int git_config_get_max_percent_split_change(void);
-+
-+/* This dies if the configured or default date is in the future */
-+extern int git_config_get_expiry(const char *key, const char **output);
-+
-+struct key_value_info {
-+	const char *filename;
-+	int linenr;
-+	enum config_origin_type origin_type;
-+	enum config_scope scope;
-+};
-+
-+extern NORETURN void git_die_config(const char *key, const char *err, ...) __attribute__((format(printf, 2, 3)));
-+extern NORETURN void git_die_config_linenr(const char *key, const char *filename, int linenr);
-+
-+#endif /* CONFIG_H */
+@@ -165,7 +165,6 @@ extern int git_configset_get_pathname(struct config_set *cs, const char *key, co
+ extern int git_config_get_value(const char *key, const char **value);
+ extern const struct string_list *git_config_get_value_multi(const char *key);
+ extern void git_config_clear(void);
+-extern void git_config_iter(config_fn_t fn, void *data);
+ extern int git_config_get_string_const(const char *key, const char **dest);
+ extern int git_config_get_string(const char *key, char **dest);
+ extern int git_config_get_int(const char *key, int *dest);
 -- 
 2.13.1.518.g3df882009-goog
 
