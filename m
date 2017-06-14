@@ -2,108 +2,241 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCC7920282
-	for <e@80x24.org>; Wed, 14 Jun 2017 18:23:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22C9C20D34
+	for <e@80x24.org>; Wed, 14 Jun 2017 18:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752733AbdFNSXq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 14:23:46 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:33414 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752628AbdFNSXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 14:23:45 -0400
-Received: by mail-pg0-f51.google.com with SMTP id f185so3736247pgc.0
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 11:23:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=26buH+qDHm5XTF5nzlORZJwF5lA1/VIn1KDE+/MXCK0=;
-        b=cKzFgXZiBB3U8FLCvBao084JXehTTQEblJRS4abBRkE53OVyKuX4TZq1zhNOWcIo8h
-         WYoz9TfZbVDv/IAzoUjJNEUMSBof5vD8VCnWGWadcIZ3iTOQAB54BlAIAGZViaVa8oxj
-         6K/YHHwLFfTEmwLi4YLM8NeY8pad+IeYQXZhU3yDHev/i3AlqQFTM/CNJPu/IxmYVL0E
-         dcJwwuKoxPdSGrzBfTuKYM1nlBS4//hU/cQt0yRg1ggUIvlXYYDkCFbklr1ZM9ptM33R
-         9E2JuimRhrgvaln+RVJJxJkOuXbcJN2GdhuH3wuUh8mZhifMEk5yC8jkoZOMgZG8/8YU
-         jO0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=26buH+qDHm5XTF5nzlORZJwF5lA1/VIn1KDE+/MXCK0=;
-        b=prDgR43+BKbKPaXd+7xCchWyrIdhsQklseWgbboSmEQI0zVdm+LUt7JfNYHTCARsNU
-         b9nGwdrfrKpx4a7zlbqg2yzC7o4V3aaCWq69U7KuRXFPJoQVoU81NH9bfVdcn5Im8W5D
-         Oj7R7AUE/WIfxH0JzFtl0/EOHWGPR5SFpYyjK8Rat5WoR5aWFCZBFwoUh0nejpWX6XhJ
-         Mn8p1BpG3mK1R1TTcJBZo11gGHHK853ztldw7aix6X2/NYieND/e1pssDnRINyaY0oLM
-         QM+BpJk/g4bkP90baB3gcJHUDAwIiCgJVDDh+bi2wySszP2cQ21FuzMTDJE0AUsGT009
-         a3dA==
-X-Gm-Message-State: AKS2vOzXEjErd1EqVfm1My3FTHgUsLHAu8iWQKzsRIeFgj0iM/IEmgsd
-        d7Fk/mKV1dVWPQ==
-X-Received: by 10.84.216.93 with SMTP id f29mr1450852plj.297.1497464624607;
-        Wed, 14 Jun 2017 11:23:44 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:9e8:46fc:1af4:4618])
-        by smtp.gmail.com with ESMTPSA id o13sm1060070pfa.120.2017.06.14.11.23.43
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 14 Jun 2017 11:23:43 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
-Subject: Re: rs/strbuf-addftime-zZ, was Re: What's cooking in git.git (Jun 2017, #04; Tue, 13)
-References: <xmqqshj34ldr.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1706141245520.171564@virtualbox>
-Date:   Wed, 14 Jun 2017 11:23:42 -0700
-In-Reply-To: <alpine.DEB.2.21.1.1706141245520.171564@virtualbox> (Johannes
-        Schindelin's message of "Wed, 14 Jun 2017 12:57:06 +0200 (CEST)")
-Message-ID: <xmqqzida2ztd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752548AbdFNSYl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 14:24:41 -0400
+Received: from mout.web.de ([212.227.17.11]:52571 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752126AbdFNSYk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 14:24:40 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MGign-1dY50R0vHl-00DXEy; Wed, 14
+ Jun 2017 20:24:30 +0200
+Subject: Re: [BUG] add_again() off-by-one error in custom format
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michael Giuffrida <michaelpg@chromium.org>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <CACi5S_1j46SbP7cQMdUnULmgGD7xBkSUrS2PKbzq8ZydybHE=w@mail.gmail.com>
+ <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
+ <d229403a-d078-87b4-f3e8-89058fa4b548@web.de>
+ <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
+ <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
+ <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
+Date:   Wed, 14 Jun 2017 20:24:25 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
+In-Reply-To: <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:nFsunlk1nG2jcFOJ+LEb3cAOC82Z4eRImPI1s2YSmCeKdI6oGp/
+ m79mjUNz/mj2kf+b+nGu4+/qGdE02ENvanIFkawY07rScLwHM/z+LGFXHzRr6bh27d7EkIX
+ BvyJte50dy1mcSuAEEfe22I9Js7yZ/NRMFghu9vUG7s9fw6emt4CZ8mblq37PN17gr7VIA3
+ W6FEGlw9ZxV+M9I73/U3w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:asBLSZAqhO4=:6c96LXs9CRqEqta4Ib5o7c
+ Og189fvvBHzzhA4+IxNndin9EDY6o863yPD/m1wj5jWwaJsHs7prsjuonQwItL2wD74b/SE28
+ 7zdZZTcuQKxXVFhj77YiJQw0kGC9laMtJKj4SwoVqcTK8QSRkVYJHGIpiTBUsXyTm7nRgS0qM
+ 9pW2gSOkSLzJZI2vxOyIqI4zlMK4DRkGFqeU1WMZAvyPTGq1t30OKrC1454TFLpCI7mC6QRVG
+ 9J03AIpUF4J3DqpdfbX6zU7n6aydWHvYUpTx7WzZUHWZqxv49+G8ferbCiGRemGbK1hd2SDUo
+ b0ydMKb6wqp/t+g/B9GbLYG+gTq/11mXfNGpGKj7x5IZXYuVr3WHyRS/1MFT3y59O9nymxUl4
+ IAPjkz/ftTKuJ5cnsMeyYQ5zP07X+j8X4zrXyB76tiQsIFSYgVkLMV1NJ/odGn0TAiol4Vj2y
+ nnyJThTvTGeEinxUJq6sjxcOg+3ymUanTT5zRzoJkVO51+rMYXBbkiP+xWyorJEt27y1NGc0V
+ qqt1te292Zwl+P3v4AGR6tUImDmJz27sa6y9bMSEJUVQYfRVdNrZuqqOmCI1H4FJdwgSpmXDT
+ 9Wsg5TYGQ5RhffzIVZxsHMWxZA7szFy8EJySLukwvW+2UOUnYXHvfaC5Q636vUA1XSEhIrS0R
+ huPazXCVxS2zMnnmFC1/gxfVJdN6FGwpfk5YA90Kd25NY/WGTKAc4LnXAcJeCjV+0/iyc7zSh
+ 3He5FQ0cZe+SNS35wuG49BfGJBsK45djnY2XivQIfXk7f49/6LqwGFcXUi0uiGP3vIa1SNkQR
+ U+uhl07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Am 13.06.2017 um 23:20 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>> The difference is about the same as the one between:
+>>
+>> 	$ time git log --format="" >/dev/null
+>>
+>> 	real    0m0.463s
+>> 	user    0m0.448s
+>> 	sys     0m0.012s
+>>
+>> and:
+>>
+>> 	$ time git log --format="%h" >/dev/null
+>>
+>> 	real    0m1.062s
+>> 	user    0m0.636s
+>> 	sys     0m0.416s
+>>
+>> With caching duplicates are basically free and without it short
+>> hashes have to be looked up again.  Other placeholders may reduce
+>> the relative slowdown, depending on how expensive they are.
+> 
+> I think the real question is how likely people use more than one
+> occurrence of the same thing in their custom format, and how deeply
+> they care that --format='%h %h' costs more than --format='%h'.  The
+> cost won't of course be double (because the main traversal costs
+> without any output), but it would be rather unreasonable to expect
+> that --format='%h %h %h %h %h' to cost the same as --format='%h';
+> after all, Git is doing more for them ;-)
 
-> Hold on. Have you tried to build this branch?
->
-> -- snip --
->     CC date.o
-> date.c:63:36: error: unknown type name ‘timestamp_t’
->  static struct tm *time_to_tm_local(timestamp_t time)
->                                     ^
-> date.c: In function ‘show_date’:
-> date.c:211:8: error: implicit declaration of function ‘time_to_tm_local’
-> [-Werror=implicit-function-declaration]
->    tm = time_to_tm_local(time);
->         ^
-> date.c:211:6: error: assignment makes pointer from integer without a cast
-> [-Werror=int-conversion]
->    tm = time_to_tm_local(time);
->       ^
-> cc1: all warnings being treated as errors
-> -- snap --
->
-> I would expect this to be rebased *at least* to dddbad728c9 (timestamp_t:
-> a new data type for timestamps, 2017-04-26).
+The answer to the first half is obviously "very likely" -- otherwise
+this bug wouldn't have been found, right? :)
 
-Thanks for noticing.
+Regarding the question of how bad a 50% slowdown for a second %h
+would be: No idea.  If ran interactively it may not even be noticeable
+because the user can read the first few lines in less while the rest
+is prepared in the background.  We don't have a perf test for formats
+with duplicate short hashes, so we don't promise anything, right? :)
 
-My preference is to use ulong in the commit at the tip by Peff.  We
-can do s/ulong/timestamp_t/ in a merge that merges the topic to
-newer integration branches that have the timestamp_t topic merged
-(e.g. 'master'), as that allows older integration branches
-(e.g. 'maint') to have the %z/%Z fix independently.
+René
 
-It would be another valid approach to fork it at b15667bb ("Merge
-branch 'js/larger-timestamps'", 2017-05-16) or a commit that appears
-later than that one on 'master', and tweak Peff's commit to use
-timestamp_t, if we declare that the %z/%Z fix will only be in 2.14
-and later and will never go to 'maint'.
+-- >8 --
+Subject: [PATCH] pretty: recalculate duplicate short hashes
 
+b9c6232138 (--format=pretty: avoid calculating expensive expansions
+twice) optimized adding short hashes multiple times by using the
+fact that the output strbuf was only ever simply appended to and
+copying the added string from the previous run.  That prerequisite
+is no longer given; we now have modfiers like %< and %+ that can
+cause the cache to lose track of the correct offsets.  Remove it.
 
+Reported-by: Michael Giuffrida <michaelpg@chromium.org>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+I'm sending this out in the hope that there might be a simple way
+to fix it after all, like Gábor's patch does for %+.  %< and %>
+seem to be the only other problematic modifiers for now -- I'm
+actually surprised that %w seems to be OK.
+
+ pretty.c | 32 --------------------------------
+ strbuf.c |  7 -------
+ strbuf.h |  6 ------
+ 3 files changed, 45 deletions(-)
+
+diff --git a/pretty.c b/pretty.c
+index 09701bd2ff..cc099dfdd1 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -783,29 +783,9 @@ struct format_commit_context {
+ 	size_t body_off;
+ 
+ 	/* The following ones are relative to the result struct strbuf. */
+-	struct chunk abbrev_commit_hash;
+-	struct chunk abbrev_tree_hash;
+-	struct chunk abbrev_parent_hashes;
+ 	size_t wrap_start;
+ };
+ 
+-static int add_again(struct strbuf *sb, struct chunk *chunk)
+-{
+-	if (chunk->len) {
+-		strbuf_adddup(sb, chunk->off, chunk->len);
+-		return 1;
+-	}
+-
+-	/*
+-	 * We haven't seen this chunk before.  Our caller is surely
+-	 * going to add it the hard way now.  Remember the most likely
+-	 * start of the to-be-added chunk: the current end of the
+-	 * struct strbuf.
+-	 */
+-	chunk->off = sb->len;
+-	return 0;
+-}
+-
+ static void parse_commit_header(struct format_commit_context *context)
+ {
+ 	const char *msg = context->message;
+@@ -1147,24 +1127,16 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		return 1;
+ 	case 'h':		/* abbreviated commit hash */
+ 		strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_COMMIT));
+-		if (add_again(sb, &c->abbrev_commit_hash)) {
+-			strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_RESET));
+-			return 1;
+-		}
+ 		strbuf_add_unique_abbrev(sb, commit->object.oid.hash,
+ 					 c->pretty_ctx->abbrev);
+ 		strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_RESET));
+-		c->abbrev_commit_hash.len = sb->len - c->abbrev_commit_hash.off;
+ 		return 1;
+ 	case 'T':		/* tree hash */
+ 		strbuf_addstr(sb, oid_to_hex(&commit->tree->object.oid));
+ 		return 1;
+ 	case 't':		/* abbreviated tree hash */
+-		if (add_again(sb, &c->abbrev_tree_hash))
+-			return 1;
+ 		strbuf_add_unique_abbrev(sb, commit->tree->object.oid.hash,
+ 					 c->pretty_ctx->abbrev);
+-		c->abbrev_tree_hash.len = sb->len - c->abbrev_tree_hash.off;
+ 		return 1;
+ 	case 'P':		/* parent hashes */
+ 		for (p = commit->parents; p; p = p->next) {
+@@ -1174,16 +1146,12 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		}
+ 		return 1;
+ 	case 'p':		/* abbreviated parent hashes */
+-		if (add_again(sb, &c->abbrev_parent_hashes))
+-			return 1;
+ 		for (p = commit->parents; p; p = p->next) {
+ 			if (p != commit->parents)
+ 				strbuf_addch(sb, ' ');
+ 			strbuf_add_unique_abbrev(sb, p->item->object.oid.hash,
+ 						 c->pretty_ctx->abbrev);
+ 		}
+-		c->abbrev_parent_hashes.len = sb->len -
+-		                              c->abbrev_parent_hashes.off;
+ 		return 1;
+ 	case 'm':		/* left/right/bottom */
+ 		strbuf_addstr(sb, get_revision_mark(NULL, commit));
+diff --git a/strbuf.c b/strbuf.c
+index 00457940cf..9103bc75e4 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -204,13 +204,6 @@ void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2)
+ 	strbuf_setlen(sb, sb->len + sb2->len);
+ }
+ 
+-void strbuf_adddup(struct strbuf *sb, size_t pos, size_t len)
+-{
+-	strbuf_grow(sb, len);
+-	memcpy(sb->buf + sb->len, sb->buf + pos, len);
+-	strbuf_setlen(sb, sb->len + len);
+-}
+-
+ void strbuf_addchars(struct strbuf *sb, int c, size_t n)
+ {
+ 	strbuf_grow(sb, n);
+diff --git a/strbuf.h b/strbuf.h
+index 80047b1bb7..d785258649 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -264,12 +264,6 @@ static inline void strbuf_addstr(struct strbuf *sb, const char *s)
+ extern void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2);
+ 
+ /**
+- * Copy part of the buffer from a given position till a given length to the
+- * end of the buffer.
+- */
+-extern void strbuf_adddup(struct strbuf *sb, size_t pos, size_t len);
+-
+-/**
+  * This function can be used to expand a format string containing
+  * placeholders. To that end, it parses the string and calls the specified
+  * function for every percent sign found.
+-- 
+2.13.0
 
