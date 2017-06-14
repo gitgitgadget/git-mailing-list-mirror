@@ -2,105 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0D031FA7B
-	for <e@80x24.org>; Wed, 14 Jun 2017 03:48:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AF321FA7B
+	for <e@80x24.org>; Wed, 14 Jun 2017 04:06:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754122AbdFNDsA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 23:48:00 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33867 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754044AbdFNDr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 23:47:58 -0400
-Received: by mail-pf0-f176.google.com with SMTP id s66so9256335pfs.1
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 20:47:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Q0ycH5is388IB/gzcXM5D12jikcXdJRUsGrGDS88eWU=;
-        b=hFWhOBLQRs7psxGBrnI3HFY/HR3eDWLRKmES4AOIjgJ8jvl3H/4jTxoPJID6hJhOqS
-         IW97tuRpixBnjOCJBNiA+UkVrBB2yERQPPof5SVo0wiM5/OF8Z5QpqXgNU5LkSiUQkTu
-         vWa/o7hclBDyLpM91fGrTDXa9GR+ndamn8oKI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Q0ycH5is388IB/gzcXM5D12jikcXdJRUsGrGDS88eWU=;
-        b=Ca8G/Tmnl/qNpBPQpjjGRdkYmhgRIKsOUbKOMUzJPblLR2TCbX5icugnnCjWiiKGd+
-         apBUcTWI8pGpaW2ktdVUki/z2zwC2mzSCm6tJM4J58eTLY/h9wn15gmNtqrTyDz/t0yE
-         SpEqMi6Cvhzeb40cDpUaEzma+Ay9aT/1zST0Awph+bFYAo21kyWP2m5eZgwNne7uqRrC
-         Zblz0p7Nu2HGIiQex8RF4yNTvhNOBhNtxes/gogfuFNaa84+JObuvuxLSulq+lN/rlns
-         9aEoXI7i1YSuLH36J3eZG03PJqgIn7zX/NI2UA+ry9XbQB13i9o2hOG8nTVdcOvIoPVi
-         vIKQ==
-X-Gm-Message-State: AKS2vOxHGjFyHj3J26/CINa13pfGOpmCw+Mjh1en8jJesmh9WDZiPl4o
-        DcipHBL4n6FyGT3E
-X-Received: by 10.99.97.137 with SMTP id v131mr2190015pgb.235.1497412078137;
-        Tue, 13 Jun 2017 20:47:58 -0700 (PDT)
-Received: from localhost ([122.172.35.3])
-        by smtp.gmail.com with ESMTPSA id s131sm26609702pgs.6.2017.06.13.20.47.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Jun 2017 20:47:56 -0700 (PDT)
-Date:   Wed, 14 Jun 2017 09:17:54 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com,
-        Vincent Guittot <vincent.guittot@linaro.org>
-Subject: Re: [PATCH] send-email: Add tocmd option to suppress-cc
-Message-ID: <20170614034754.GI5297@vireshk-i7>
-References: <6367777092d93a62cc83c444061dde853ba3369e.1495107179.git.viresh.kumar@linaro.org>
- <20170612043313.GE5297@vireshk-i7>
- <xmqq8tkxp4nw.fsf@gitster.mtv.corp.google.com>
- <xmqqmv9dnkut.fsf@gitster.mtv.corp.google.com>
- <20170613034337.GF5297@vireshk-i7>
- <xmqqk24f7qep.fsf@gitster.mtv.corp.google.com>
+        id S1752602AbdFNEGM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 00:06:12 -0400
+Received: from mout.web.de ([212.227.15.14]:65459 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751324AbdFNEGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 00:06:11 -0400
+Received: from [192.168.88.159] ([194.47.243.242]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MAMTy-1dWVsd20Xy-00BaD9; Wed, 14
+ Jun 2017 06:06:05 +0200
+Subject: Re: [PATCH v3] doc: do not use `rm .git/index` when normalizing line
+ endings
+To:     Andreas Heiduk <asheiduk@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <20170610090719.8429-1-asheiduk@gmail.com>
+ <20170613221506.32732-1-asheiduk@gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <dc2070f9-f76f-d569-69f0-61edb7a80610@web.de>
+Date:   Wed, 14 Jun 2017 06:06:49 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqk24f7qep.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20170613221506.32732-1-asheiduk@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:lD4rM/+N/vv/BSa/D9XW140dwvvnKpLeil9Bzm+74rba+mVArlD
+ ApKcnywJPC8dKhpihMtMApxFxK8M4Wkrn5nKBEm54Stzo2sDlCYkO8FgBeflbQAuo4afUMK
+ aj1Vaa2bxRXqTuAKX2uKqf366bbY/ngKBsD2EZnxOEga6o6Y53rreeOHwzIrNC+lMXMCwZN
+ HGAxIz2b/zp0UcwAz1ZWg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:W0vK4YMODyU=:+HioirS7T8LrBh4AuJ7cqL
+ 43Jg/xEfHXpQA+xj9VLLPESc0hGWu9aFJ1N0ZZsjy7KrBO/86nMLasrPJaI/GvY0Kn/+uLTaS
+ oVploHC/mfh1GZXEtpLLO3R/H2/+lDHkxscIYcAhLOWiNicpvY7GRmrO5bFx8x9+KYfeqHZu2
+ kooO0As5qGLAxBrSV/X6mSOqIIr6bh6gxdDi2jHVnUGmIkrKKPl5ZrVTZyuGzJ/j/MdhzNiYr
+ LgQ6gPTA/VIJtNEDyCChcL7DX8XeyDpIQKJDkDvPMBgA9ZdpYFS1Ttf9hMAi8X8GjLdmkTyfd
+ eacgPM6wwazGRpmneV1wa0Tg5MZVEdHyJQWjeba2vnpKNNybsx/7MURijCbrcL50k46/4Jlvy
+ hYzvVhPd5+sUn9jRq2OdiGKKTsW/wNlryfSP/llTUy/8rhsu/jZLTRMF8G/etFDO5JjZW9ihl
+ iJMS8v0TlaPJWRUlopRq8nn+or5xtyMUU4Lkoq6XqqOTE1giUxnGeMgqxMMW4VsgzR1fNGKu6
+ VEbWeGVBj4FmWETtFwv7P5/aAvFmGVxIZBS088ls0kVPgp/pdqPdR0ut2pQ12P/uQ8IhzOcBM
+ W2rEJMY2fHwmHLxty4kguKsM/eEqjyvLFgQv4A/H1lF/9UX2FdFScWIj5BERi8NH+pLBf4ok6
+ mkK4Yo8WBmnsJXcdyGQF8X9we9y224XdfHJZbGgIZ/JB36CfOUrqD7Al3g7qUJiiV6Xk+Y82X
+ bAKHjk2jkkGC+mGTS33pnj+kP2z9SF7QPkDyRg5whQfe6cKE5tStGakkt5OYIi7EQ5IX+knpl
+ PJPLhLX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13-06-17, 10:23, Junio C Hamano wrote:
-> Viresh Kumar <viresh.kumar@linaro.org> writes:
-> 
-> >> Going back to the core part of your change, i.e.
-> >> 
-> >> -	foreach my $entry (qw (cccmd cc author self sob body bodycc)) {
-> >> +	foreach my $entry (qw (tocmd cccmd cc author self sob body bodycc)) {
-> >> 
-> >> to think about it a bit more, I notice that all the existing ones
-> >> are about CC.  So I am not just not convinced that tocmd belongs to
-> >> the same class.  I am inclined to say that it smells quite different
-> >> from others.
-> >
-> > That's right but how do we solve this problem then?
-> >
-> > Add another optional argument like suppress-to ? I thought that it
-> > would be better to override suppress-cc rather than attempting any
-> > such thing.
-> >
-> > I am fine with any solution that address the concerns raised by this
-> > patch though.
-> 
-> I am not sure what problem is being solved, quite honestly.  "I have
-> tocmd configured and I want a way not to specify tocmd for a single
-> invocation?"  Would something along the lines of 
-> 
->     git -c sendemail.tocmd=true send-email ...
-> 
-> how you do it in general?
 
-Yeah, it works. I can use this instead.
 
-This patch can be dropped now. Thanks.
+On 14/06/17 00:15, Andreas Heiduk wrote:
+Looks good to me, one minor typo below
 
--- 
-viresh
+> When illustrating how to normalize the line endings, the
+> documentation in gitattributes tells the user to `rm .git/index`.
+> 
+> This is incorrect for two reasons:
+> 
+>   - Users shouldn't be instructed to mess around with the internal
+>     implementation of Git using raw file system tools like `rm`.
+> 
+>   - Within a submodule or an additional working tree `.git` is just a
+>     file containing a `gitdir: <path>` pointer into the real `.git`
+>     directory.  Therefore `rm .git/index` does not work.
+> 
+> The purpose or `rm .git/index` instruction is to remove all entries
+               ^^
+> from the index without touching the working tree.  The way to do this
+> with Git is to use `read-tree --empty`.
+[]
