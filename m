@@ -2,89 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFC3C20401
-	for <e@80x24.org>; Wed, 14 Jun 2017 09:45:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23F3E20401
+	for <e@80x24.org>; Wed, 14 Jun 2017 09:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752124AbdFNJo6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 05:44:58 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33501 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751920AbdFNJm5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 05:42:57 -0400
-Received: by mail-wr0-f196.google.com with SMTP id v104so37635625wrb.0
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 02:42:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VysmB7L0FrRV9r9if3InqAhjoUU+YDWl02hk5HzsqLg=;
-        b=M9C6jqh7n0nxIG3+tC1WJe5ReJxyHYkxhiYN4MoeTKzjiO1xsoSEV/fd+PQ6ZQsmjS
-         XAYwrSS9BZjy6KnAMmXGzv5aNtiYvH4bsPPS7pcnUUCRP3D5oAqFdsysa/00oMS3p/wN
-         +CbDnMVh1Jy+3x6GRz9qFZ7e6SJ6kuu6kEEWGAKmbB3Pl0Bu/xUMtWw0477mjmy2jvFo
-         VjtqNW30sTqfWvLjqoSXYvPWwKRFl19ddYr0KThAh1Xl8Y/vQ27XFKWl8W7W/agsLC8U
-         +qPE6oBRwMfXxhYKgVY8WbyVVbnb9/pSiLBshVQe+kGjXDQJFQiiyjfkblDP8fShgxmX
-         ntdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VysmB7L0FrRV9r9if3InqAhjoUU+YDWl02hk5HzsqLg=;
-        b=mkKewgCawy4hFdq054k3uXX7QT1d9xSMVEfool3uyyayrkOd6O3iLkRitK+RM3uInd
-         cBFrdzCSX8M43jDK18X/6k6TAg4mWA6uz91RjfaAiQcoIRHAav29R4MHUf0saFLLR/S9
-         L1QtpqVQXNmF7EJqAgQl6hptyY5jiEHYG5cXr5wa8fomdg58w2p/pXWwmuTJt9gJXQ5A
-         pNkZ2SDqQMTN+tCntdrExRRBwNxLiyj0TZ1vIeXieBisqfvtGrN4ju7pLirvPfxn70fC
-         gM210dHAdqa/KFJeafNShvfWZKK4v9YXFUZMKR31G5hg0q5vS7MKwB9L4Du+ipdnFueZ
-         mSjA==
-X-Gm-Message-State: AKS2vOytDfSw6nP3hgIHXnImxURBHnS52PXDlR98eYwdDb3DHoHV3iXP
-        exG4hR2dU3h0H3wJ
-X-Received: by 10.28.156.197 with SMTP id f188mr368235wme.76.1497433376046;
-        Wed, 14 Jun 2017 02:42:56 -0700 (PDT)
-Received: from localhost ([185.112.167.114])
-        by smtp.gmail.com with ESMTPSA id x126sm772541wme.12.2017.06.14.02.42.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Jun 2017 02:42:55 -0700 (PDT)
-From:   =?UTF-8?q?=C5=A0t=C4=9Bp=C3=A1n=20N=C4=9Bmec?= <stepnem@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, christian.couder@gmail.com
-Subject: [PATCH] doc: git-reset: clarify the --keep usage example
-Date:   Wed, 14 Jun 2017 11:35:55 +0200
-Message-Id: <1497432955-28525-1-git-send-email-stepnem@gmail.com>
-X-Mailer: git-send-email 2.1.4
+        id S1752042AbdFNJvU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 05:51:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39887 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751884AbdFNJu0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 05:50:26 -0400
+Received: (qmail 15673 invoked by uid 109); 14 Jun 2017 09:50:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jun 2017 09:50:25 +0000
+Received: (qmail 10060 invoked by uid 111); 14 Jun 2017 09:50:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jun 2017 05:50:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Jun 2017 05:50:23 -0400
+Date:   Wed, 14 Jun 2017 05:50:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCHv4 1/2] clone: respect additional configured fetch
+ refspecs during initial fetch
+Message-ID: <20170614095023.nzu535pv6cluzdz7@sigill.intra.peff.net>
+References: <CAM0VKjnOSxQg_VCBO2cgtbqesmNYx+e_H7m=36PsNWi9K9rQ1Q@mail.gmail.com>
+ <20170530071244.32257-1-szeder.dev@gmail.com>
+ <20170614004816.GR133952@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170614004816.GR133952@aiede.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The example doesn't work as provided (you get an error) when the 'edit'
-and 'commit' steps affect the same files.
-Add a note and reference the DISCUSSION to that effect.
+On Tue, Jun 13, 2017 at 05:48:16PM -0700, Jonathan Nieder wrote:
 
-Signed-off-by: Štěpán Němec <stepnem@gmail.com>
----
- Documentation/git-reset.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> > The reason for this is that the initial fetch is not a fully fledged
+> > 'git fetch' but a bunch of direct calls into the fetch/transport
+> > machinery with clone's own refs-to-refspec matching logic, which
+> > bypasses parts of 'git fetch' processing configured fetch refspecs.
+> 
+> Agh, subtle.
+> 
+> I'm hoping that longer term we can make fetch behave more like a
+> library and make the initial fetch into a fully fledged 'git fetch'
+> like thing again.  But this smaller change is the logical fix in the
+> meantime.
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 70f3753..727ba46 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -290,7 +290,8 @@ $ git reset --keep start                    <3>
-     to branch2 (i.e. "git checkout -b branch2 start"), but nobody is
-     perfect.
- <3> But you can use "reset --keep" to remove the unwanted commit after
--    you switched to "branch2".
-+    you switched to "branch2" (as long as the commit doesn't conflict with your
-+    working tree changes, see the "DISCUSSION" below for more details).
- 
- Split a commit apart into a sequence of commits::
- +
--- 
-2.1.4
+We talked about this earlier in the thread, but I doubt that will ever
+happen. Things like --single-branch means that clone has to actually
+look at what the remote has before it decides what to fetch.
 
+Of course we _could_ teach all that logic to fetch, too, but I don't
+think you'll ever get the nice simple:
+
+  1. configure refspecs
+  2. fetch
+  3. checkout
+
+So the best thing is probably to push any repeated logic down into the
+transport layer, where it can be easily used by both commands.
+
+> > +	/* Not free_refspecs(), as we copied its pointers above */
+> > +	free(rs);
+> 
+> Allocating an array to put the parsed refspec in and then freeing it
+> seems wasteful.  Should parse_refspec_internal be changed to take an
+> output parameter so it can put the refspec into remote->fetch
+> directly?
+
+It's not quite trivial to make that change. parse_refspec_internal()
+actually handles an array of refspecs. So its callers would all have to
+start allocating the correctly-sized array.
+
+I doubt that one malloc per clone is worth caring about. I'd worry more
+about the trickiness that merited the comment above, but it's at least
+contained in this one function.
+
+-Peff
