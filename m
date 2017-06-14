@@ -2,97 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7B6B20D0C
-	for <e@80x24.org>; Wed, 14 Jun 2017 12:31:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D141420282
+	for <e@80x24.org>; Wed, 14 Jun 2017 12:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752310AbdFNMbl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 08:31:41 -0400
-Received: from mail-wr0-f178.google.com ([209.85.128.178]:35300 "EHLO
-        mail-wr0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751938AbdFNMbd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 08:31:33 -0400
-Received: by mail-wr0-f178.google.com with SMTP id q97so187833414wrb.2
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 05:31:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=OeNQfq0K1D0YLJtWcMDHAda10aJBqXp9TRb3Yg1wLc0=;
-        b=lEXRXaw0ndICjPImg0hGzCKCZa1r9UGxPJHqcuQ7n6D0TItBdwflchz87KY58DdBsy
-         GNo21D4ba8mbMsOmWtFm0Tr3YVyVgkhIrtIL0XqgtP30+MGsApVVOSljqxU59hoje0qB
-         zNNAIzQ3ReDGM4K6ilPZQ45AQoJChbOOIO4wBhYV/aWWyR6bMiOjzMkBEn7HOHTRf7gb
-         43W38LJjAwZzP/CNaNyWVdf06bMul6j0jwuPLzawU6uKDv9IIgZzJTXWjf75w7hus3Aj
-         bz230pmsow5sQwUJzVaKi/JlMapnNYyTMIFasmSJV5vT2GsdpG4/EbyhMIwTbpnFZZYx
-         Ojhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=OeNQfq0K1D0YLJtWcMDHAda10aJBqXp9TRb3Yg1wLc0=;
-        b=tERqMwHGMA+rfkGuu9+77Bcrwq0yJXeHbYi74YrwOQd/Z562IOy1dx4NmBBIGog8s0
-         xNB+a9FzXbOtsS0rfAlvlKbRvcUZMwPJ2Tyb7wwjYCtRTu/jGUKvzwk+nzZad7Sr3vcK
-         47YCjJuk/rU3L9pvbzRNXLkDiOoOUkoJFXIZ4ISTM70NBi0rQo9qv+P28BJ73f09gpL9
-         cHnviIEvVKDD0bbZX22w8OjwdOzxEPiIkpvfpIFdVhx8nQBttfQ1F5whDH8ARWZkWtzY
-         QjzkUrovxWpiMap7tICHlbcv9imrBUsRv+qaLct0foY7ClaJValwKnMj2LLVOaI5W12X
-         svIQ==
-X-Gm-Message-State: AKS2vOyvNdgpSMrXcWMsvphtH7se3OIrvE5zwHIIoxuADGzJHCx4WRmu
-        gO5mhjZm8H/cUIHPOlFpg8GeQ2sUKQ==
-X-Received: by 10.28.128.22 with SMTP id b22mr949700wmd.42.1497443492282; Wed,
- 14 Jun 2017 05:31:32 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.223.130.41 with HTTP; Wed, 14 Jun 2017 05:31:11 -0700 (PDT)
-From:   Yichao Yu <yyc1992@gmail.com>
-Date:   Wed, 14 Jun 2017 08:31:11 -0400
-Message-ID: <CAMvDr+Qxjdgnm0aW3WenDpFs2NBhyrNXZA2M7sjsCjJs+RzM3Q@mail.gmail.com>
-Subject: Minor missing features in worktree compare to new-workdir
-To:     git <git@vger.kernel.org>
+        id S1752631AbdFNMlj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 08:41:39 -0400
+Received: from gproxy6-pub.mail.unifiedlayer.com ([67.222.39.168]:49047 "EHLO
+        gproxy6.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1752624AbdFNMlf (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Jun 2017 08:41:35 -0400
+Received: from cmgw3 (unknown [10.0.90.84])
+        by gproxy6.mail.unifiedlayer.com (Postfix) with ESMTP id C146B1E096A
+        for <git@vger.kernel.org>; Wed, 14 Jun 2017 06:41:34 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmgw3 with 
+        id YchX1v00A0QvKlu01chaz2; Wed, 14 Jun 2017 06:41:34 -0600
+X-Authority-Analysis: v=2.2 cv=VKStp5HX c=1 sm=1 tr=0
+ a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
+ a=IkcTkHD0fZMA:10 a=LWSFodeU3zMA:10 a=59-1Do2XgdqkvuIjYDgA:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
+        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=gmzKvIr4Co8u3DljmEa6POn1+iyOirdzK9Yv1tpCyJY=; b=LcA3c8SE7zm4wFLtvcCHKJLZF8
+        V105WUjwECNuZAGfDoNQJAPHBsOcWDhA97WspNV21IqSaIb4DgMBXyMrbthVWGNSWZQDU2zq7vNUQ
+        Qfgg8BjSlfCEjUroFdoAdHT+s;
+Received: from pool-72-70-58-27.bstnma.fios.verizon.net ([72.70.58.27]:35280 helo=homebase)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.87)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1dL7c3-0005vW-1A; Wed, 14 Jun 2017 06:41:31 -0600
+Message-ID: <1497444089.13409.108.camel@mad-scientist.net>
+Subject: Re: Minor missing features in worktree compare to new-workdir
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Yichao Yu <yyc1992@gmail.com>, git <git@vger.kernel.org>
+Date:   Wed, 14 Jun 2017 08:41:29 -0400
+In-Reply-To: <CAMvDr+Qxjdgnm0aW3WenDpFs2NBhyrNXZA2M7sjsCjJs+RzM3Q@mail.gmail.com>
+References: <CAMvDr+Qxjdgnm0aW3WenDpFs2NBhyrNXZA2M7sjsCjJs+RzM3Q@mail.gmail.com>
+Organization: Please remain calm!
 Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 72.70.58.27
+X-Exim-ID: 1dL7c3-0005vW-1A
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-72-70-58-27.bstnma.fios.verizon.net (homebase) [72.70.58.27]:35280
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, 2017-06-14 at 08:31 -0400, Yichao Yu wrote:
+> 1. the branch name in new-workdir has the same behavior as checkout,
+> i.e. when it matches a remote branch name a local branch tracking that
+> remote branch will be created and checked out. worktree gives an error
+> in this case. This is very useful for fetching someone else' feature
+> branch into a different work dir for testing.
 
-I've just learnt recently that the new-workdir script has finally got
-a builtin version, i.e. worktree. I've given it a short try and for
-the most part it works as good or better than new-workdir.
+I agree; this behavior of worktree is frustrating.  It's a very common
+use-case to aid in code reviews etc. and it's not easy to explain to
+people what they need to do to make this work.
 
-However, there's few minor features that I use in new-workdir that
-doesn't seem to be supported by worktree.
+> 2. worktree doesn't seem to support multiple worktree on the same
+> branch.
 
-1. the branch name in new-workdir has the same behavior as checkout,
-i.e. when it matches a remote branch name a local branch tracking that
-remote branch will be created and checked out. worktree gives an error
-in this case. This is very useful for fetching someone else' feature
-branch into a different work dir for testing.
+I think this is a very good thing about worktrees as opposed to
+workdirs.
 
-2. worktree doesn't seem to support multiple worktree on the same
-branch. I do this for testing different options and also to checkout a
-base branch on a worktree before deleting the dev branch checked out
-in the workdir. This will indeed cause one of the checkout to be dirty
-when the branch is updated somewhere else but it doesn't seem to cause
-much issue otherwise. (this mainly happen when I forgot to remove a
-workdir so the solution is usually just remove that out-of-date
-checkout).
-
-3. There's an error when the branch name is omitted but the default
-brach name already exist. Can it default to checking out the branch if
-it already exist instead? (The behavior of creating new branch is of
-course also useful when the branch doesn't exist)
-
-4. worktree doesn't seem to be runable outside a git repo. new-workdir
-can. This is pretty minor and mainly useful when checking out a branch
-that matches the nested structure in the branch name (i.e. I'd like to
-checkout branch A/B/C into A/B/C/ while master branch is in master/. I
-usually first cd to A/B before running git new-workdir ../../master C)
-This only saves a little typing in certain cases so it's a very minor
-issue.....
-
-All tests are done 2.13.1 from ArchLinux official repo.
-
-Thanks.
-
-Yichao Yu
+In a situation where I may want multiple worktrees pointing to the same
+commit I just check out the SHA rather than the branch: you can have as
+many branches set to the same SHA (detached HEAD) as you like, and
+there's no concern about dirty workspaces.  This latter can actually be
+a really big problem (suppose the workdir contained some modified files
+then you update another workdir with the same branch... it's not easy to
+figure out what happened here!)
