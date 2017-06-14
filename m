@@ -6,19 +6,19 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5F9F20282
-	for <e@80x24.org>; Wed, 14 Jun 2017 13:08:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 632FB20282
+	for <e@80x24.org>; Wed, 14 Jun 2017 13:08:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752464AbdFNNIN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 09:08:13 -0400
-Received: from mout.gmx.net ([212.227.17.20]:61314 "EHLO mout.gmx.net"
+        id S1752530AbdFNNIX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 09:08:23 -0400
+Received: from mout.gmx.net ([212.227.17.20]:63670 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752106AbdFNNIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 09:08:12 -0400
+        id S1752106AbdFNNIV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 09:08:21 -0400
 Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mh5h7-1d7hm12l6n-00MMRs; Wed, 14
- Jun 2017 15:08:04 +0200
-Date:   Wed, 14 Jun 2017 15:07:49 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbyUS-1e4KCb0ClI-00jHAr; Wed, 14
+ Jun 2017 15:08:09 +0200
+Date:   Wed, 14 Jun 2017 15:08:07 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,31 +27,31 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH v5 07/10] rebase -i: check for missing commits in the
+Subject: [PATCH v5 08/10] rebase -i: skip unnecessary picks using the
  rebase--helper
 In-Reply-To: <cover.1497444257.git.johannes.schindelin@gmx.de>
-Message-ID: <fe4dd5e016efb032e41c0db5c94025e1235ea0d9.1497444257.git.johannes.schindelin@gmx.de>
+Message-ID: <72bbfcae2abcb14f6b1288051a244faadbee29e0.1497444257.git.johannes.schindelin@gmx.de>
 References: <cover.1497444257.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:wYnrECIgxk8nF0i8L6vrl3x8AimSw3/ksc0qpyhtHb8HUXPwzvC
- 4vatXeWpvR3FvZL73RbKofCdtXgy9rQvt8zLNTOOwGQtRq8G8QZP3PU3AEH4f7P98XiGH6z
- 0c8V0nX7q6SC6aE5lBetNWBkyfb4/2Yfel8P1Za2Rzm46AkJlqeaaFALnSJcQkveUxFIuw3
- iV4o/+pxp5klc1SXUZ/ag==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/DuSGIyYC7o=:4xP8sWxzDGPNq8GBxF9bGs
- JlXPQW+kGaUPr1bZAgkwjsfZZvn6c2sedy9iaMX/MOKuyN1xCY0+o+o2Tr5ZNeyk3rHK9K7/w
- FB92jeK9Vl02HzQBxHkRsnbX8QmZgW5Bxb9FJKz5RT/KdZhjEgqyZWeXGho+wYp85X/NdQZFu
- SgCCF7oPRd8eLIf+LtxUKksvr98ZiDHEAQP3reJaLU+hJQgWnP8PzQzX0gt4cUVDADhQLdMXm
- q5x69XSz5uWr1Pmspc+cJ6FieH4DwvXyMSgFzvf2lc2Szq6O+YJAmJayCW4ssrU83xNPLtrfp
- eyvIUSDEMT9hv94yY75w+VF6MN4f91knjBSVTs1kYcWCXXHAYdfNYKcUsCZn9z5R1RK14jfgg
- moKAHhjyoCaK1Y+oUOy1y7M2boddKLPksXvZ7shidV37tIMJZ8ftltNpXDH2Xsh7q802JZW/n
- Js7Us9Wqo64S/O73xjB9ALuHUK+lCzLkMOwHFFcosSFoy6aPuycN+CLIJMWeVSvmZd2cMaFon
- kmGLtLqnYSJ9Y2o1HI+THJK6aqC6lEqJHgdRlsxIhOyk20KnpbiTXlkrkgcIoXtHjA19mxr1f
- v+WD0dCjVr3CmVzmC0Sc37NxTxQ8sEYSa8eY8DOvHTvgVsDfg6WcG88XfsOsyNG3WOvfCXcb9
- 1scoP1amaN/KS2Ho4OHgyQ58lYFaCDsGprLQZ+3pOviVcB0YLvzBf3nzoUgpVMk62HqBDCC3p
- 6UwduZdCnPz2NAP/ov9ya4ERDI+6WProSkAu90Kx6Mb4JeV5g0VzHCKiMlp//ujgk4HaPn8uq
- prJ2t/x
+X-Provags-ID: V03:K0:SGm5PNLvONBsl2usB+647jDP10C1Gxn/WIrBm2FKKk90OwfjkMO
+ KqscIh6MJb2sLM0ySg3LjcInJ2MbgT+0xbX3ElTjkGmAqmrqXJoqwtLNZRvRj/qsRK6FpGs
+ 3np7Rdwk5oifprfbVEsuXo+G+K5/yjMBbTZ3UuU1U2pKQiOvv36Vk85j9vchqWEFs9hkhJa
+ 12VL6CAj53+4P5SiAO3kQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2m8aWoO82Xo=:1xBTp0+oCyL3lyhthuCuJh
+ esB1obFkTy6obmcQRCZ84N+aMJqle+1MdIv7fYASs828QGMIkUU3eq+3BBa61GepLJYoxnRxd
+ 6XLBzlmumueMId6WyLZ5UkpG9nKPMRPLH9WGkXQzaeoQRzIUuvlNTnZG+bJwzkltesZbtdUP3
+ fHKn1m4YNPRpAXZfIFwDXkC1FGx6zGCBO2IbhkoHBY94vbHb2v2xjRcNwfxJ9zef1RlF2B2G+
+ OyR+J3aLnLM4Dm6T82JDujIutRJ5pJNgCBf0jyWB6FHRroHg3gMMsx9gKGBibuBriapm4L+pW
+ 2blKt4+VNg0i3D8ard8TMQ2dwH/y+syazVXqPH/TvLLSWsY5TFhG9VnPx76zgp1ATPFQI+cW4
+ QHT42rnlJhns7TNfmtignc4teWN6LQzN5bQCvcJASsE4/k7baVn3iYOZNcDJ5t6+onTLKvc7P
+ mBTBDkHxwaLtjmbGXopyefKoUB7KV7A1FcxSyXprFhCPylSn23zPObZpBk/HL7ajOkHdO7BGu
+ oI2RHw6zouiStw54k8Co/6wQnxSpcKMf22gaE0AtNiYgjgJ+fqFjPHcWAI1IQBg/XpkuMYtug
+ 3zr959mwnsLKASRuChAk5uukrpDcGy2Byby1xspzw1Zqw0KHSO3KLvb4Qzm+ygBTcHoJ/G26I
+ goytQ4E9TvpfAJ2ZmGcMJVSnamXSVrKzYoVQXDY9xivyDfb7s8H6WFIGuVXMIvYJVGf/XcKze
+ oQBcDkB6X4eATS7+3MX6d5RlOLFUGqBOrupz/6OuLgyXBTd8bxA9FFOdVfRixlluZCkF8TZA4
+ ooLZuQa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,373 +61,231 @@ In particular on Windows, where shell scripts are even more expensive
 than on MacOSX or Linux, it makes sense to move a loop that forks
 Git at least once for every line in the todo list into a builtin.
 
+Note: The original code did not try to skip unnecessary picks of root
+commits but punts instead (probably --root was not considered common
+enough of a use case to bother optimizing). We do the same, for now.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase--helper.c   |   7 +-
- git-rebase--interactive.sh | 164 ++-------------------------------------------
- sequencer.c                | 122 +++++++++++++++++++++++++++++++++
+ builtin/rebase--helper.c   |   6 ++-
+ git-rebase--interactive.sh |  41 ++---------------
+ sequencer.c                | 107 +++++++++++++++++++++++++++++++++++++++++++++
  sequencer.h                |   1 +
- 4 files changed, 134 insertions(+), 160 deletions(-)
+ 4 files changed, 116 insertions(+), 39 deletions(-)
 
 diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index b6ad4008398..0deba9d1945 100644
+index 0deba9d1945..fdc933dc64a 100644
 --- a/builtin/rebase--helper.c
 +++ b/builtin/rebase--helper.c
-@@ -13,7 +13,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 	struct replay_opts opts = REPLAY_OPTS_INIT;
+@@ -14,7 +14,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  	int keep_empty = 0;
  	enum {
--		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_SHA1S, EXPAND_SHA1S
-+		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_SHA1S, EXPAND_SHA1S,
-+		CHECK_TODO_LIST
+ 		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_SHA1S, EXPAND_SHA1S,
+-		CHECK_TODO_LIST
++		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS
  	} command = 0;
  	struct option options[] = {
  		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
-@@ -28,6 +29,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 			N_("shorten SHA-1s in the todo list"), SHORTEN_SHA1S),
- 		OPT_CMDMODE(0, "expand-ids", &command,
+@@ -31,6 +31,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  			N_("expand SHA-1s in the todo list"), EXPAND_SHA1S),
-+		OPT_CMDMODE(0, "check-todo-list", &command,
-+			N_("check the todo list"), CHECK_TODO_LIST),
+ 		OPT_CMDMODE(0, "check-todo-list", &command,
+ 			N_("check the todo list"), CHECK_TODO_LIST),
++		OPT_CMDMODE(0, "skip-unnecessary-picks", &command,
++			N_("skip unnecessary picks"), SKIP_UNNECESSARY_PICKS),
  		OPT_END()
  	};
  
-@@ -50,5 +53,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		return !!transform_todo_ids(1);
- 	if (command == EXPAND_SHA1S && argc == 1)
+@@ -55,5 +57,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  		return !!transform_todo_ids(0);
-+	if (command == CHECK_TODO_LIST && argc == 1)
-+		return !!check_todo_list();
+ 	if (command == CHECK_TODO_LIST && argc == 1)
+ 		return !!check_todo_list();
++	if (command == SKIP_UNNECESSARY_PICKS && argc == 1)
++		return !!skip_unnecessary_picks();
  	usage_with_options(builtin_rebase_helper_usage, options);
  }
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index d5df02435ae..c8cad318fa4 100644
+index c8cad318fa4..af8d7bd77fb 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -867,96 +867,6 @@ add_exec_commands () {
- 	mv "$1.new" "$1"
+@@ -713,43 +713,6 @@ do_rest () {
+ 	done
  }
  
--# Check if the SHA-1 passed as an argument is a
--# correct one, if not then print $2 in "$todo".badsha
--# $1: the SHA-1 to test
--# $2: the line number of the input
--# $3: the input filename
--check_commit_sha () {
--	badsha=0
--	if test -z "$1"
--	then
--		badsha=1
--	else
--		sha1_verif="$(git rev-parse --verify --quiet $1^{commit})"
--		if test -z "$sha1_verif"
--		then
--			badsha=1
--		fi
--	fi
--
--	if test $badsha -ne 0
--	then
--		line="$(sed -n -e "${2}p" "$3")"
--		warn "$(eval_gettext "\
--Warning: the SHA-1 is missing or isn't a commit in the following line:
-- - \$line")"
--		warn
--	fi
--
--	return $badsha
--}
--
--# prints the bad commits and bad commands
--# from the todolist in stdin
--check_bad_cmd_and_sha () {
--	retval=0
--	lineno=0
+-# skip picking commits whose parents are unchanged
+-skip_unnecessary_picks () {
+-	fd=3
 -	while read -r command rest
 -	do
--		lineno=$(( $lineno + 1 ))
--		case $command in
--		"$comment_char"*|''|noop|x|exec)
--			# Doesn't expect a SHA-1
+-		# fd=3 means we skip the command
+-		case "$fd,$command" in
+-		3,pick|3,p)
+-			# pick a commit whose parent is current $onto -> skip
+-			sha1=${rest%% *}
+-			case "$(git rev-parse --verify --quiet "$sha1"^)" in
+-			"$onto"*)
+-				onto=$sha1
+-				;;
+-			*)
+-				fd=1
+-				;;
+-			esac
 -			;;
--		"$cr")
--			# Work around CR left by "read" (e.g. with Git for
--			# Windows' Bash).
--			;;
--		pick|p|drop|d|reword|r|edit|e|squash|s|fixup|f)
--			if ! check_commit_sha "${rest%%[ 	]*}" "$lineno" "$1"
--			then
--				retval=1
--			fi
--			;;
--		*)
--			line="$(sed -n -e "${lineno}p" "$1")"
--			warn "$(eval_gettext "\
--Warning: the command isn't recognized in the following line:
-- - \$line")"
--			warn
--			retval=1
--			;;
--		esac
--	done <"$1"
--	return $retval
--}
--
--# Print the list of the SHA-1 of the commits
--# from stdin to stdout
--todo_list_to_sha_list () {
--	git stripspace --strip-comments |
--	while read -r command sha1 rest
--	do
--		case $command in
--		"$comment_char"*|''|noop|x|"exec")
+-		3,"$comment_char"*|3,)
+-			# copy comments
 -			;;
 -		*)
--			long_sha=$(git rev-list --no-walk "$sha1" 2>/dev/null)
--			printf "%s\n" "$long_sha"
+-			fd=1
 -			;;
 -		esac
--	done
+-		printf '%s\n' "$command${rest:+ }$rest" >&$fd
+-	done <"$todo" >"$todo.new" 3>>"$done" &&
+-	mv -f "$todo".new "$todo" &&
+-	case "$(peek_next_command)" in
+-	squash|s|fixup|f)
+-		record_in_rewritten "$onto"
+-		;;
+-	esac ||
+-		die "$(gettext "Could not skip unnecessary pick commands")"
 -}
 -
--# Use warn for each line in stdin
--warn_lines () {
--	while read -r line
--	do
--		warn " - $line"
--	done
--}
--
- # Switch to the branch in $into and notify it in the reflog
- checkout_onto () {
- 	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
-@@ -971,74 +881,6 @@ get_missing_commit_check_level () {
- 	printf '%s' "$check_level" | tr 'A-Z' 'a-z'
+ expand_todo_ids() {
+ 	git rebase--helper --expand-ids
  }
- 
--# Check if the user dropped some commits by mistake
--# Behaviour determined by rebase.missingCommitsCheck.
--# Check if there is an unrecognized command or a
--# bad SHA-1 in a command.
--check_todo_list () {
--	raise_error=f
--
--	check_level=$(get_missing_commit_check_level)
--
--	case "$check_level" in
--	warn|error)
--		# Get the SHA-1 of the commits
--		todo_list_to_sha_list <"$todo".backup >"$todo".oldsha1
--		todo_list_to_sha_list <"$todo" >"$todo".newsha1
--
--		# Sort the SHA-1 and compare them
--		sort -u "$todo".oldsha1 >"$todo".oldsha1+
--		mv "$todo".oldsha1+ "$todo".oldsha1
--		sort -u "$todo".newsha1 >"$todo".newsha1+
--		mv "$todo".newsha1+ "$todo".newsha1
--		comm -2 -3 "$todo".oldsha1 "$todo".newsha1 >"$todo".miss
--
--		# Warn about missing commits
--		if test -s "$todo".miss
--		then
--			test "$check_level" = error && raise_error=t
--
--			warn "$(gettext "\
--Warning: some commits may have been dropped accidentally.
--Dropped commits (newer to older):")"
--
--			# Make the list user-friendly and display
--			opt="--no-walk=sorted --format=oneline --abbrev-commit --stdin"
--			git rev-list $opt <"$todo".miss | warn_lines
--
--			warn "$(gettext "\
--To avoid this message, use \"drop\" to explicitly remove a commit.
--
--Use 'git config rebase.missingCommitsCheck' to change the level of warnings.
--The possible behaviours are: ignore, warn, error.")"
--			warn
--		fi
--		;;
--	ignore)
--		;;
--	*)
--		warn "$(eval_gettext "Unrecognized setting \$check_level for option rebase.missingCommitsCheck. Ignoring.")"
--		;;
--	esac
--
--	if ! check_bad_cmd_and_sha "$todo"
--	then
--		raise_error=t
--	fi
--
--	if test $raise_error = t
--	then
--		# Checkout before the first commit of the
--		# rebase: this way git rebase --continue
--		# will work correctly as it expects HEAD to be
--		# placed before the commit of the next action
--		checkout_onto
--
--		warn "$(gettext "You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.")"
--		die "$(gettext "Or you can abort the rebase with 'git rebase --abort'.")"
--	fi
--}
--
- # The whole contents of this file is run by dot-sourcing it from
- # inside a shell function.  It used to be that "return"s we see
- # below were not inside any function, and expected to return
-@@ -1299,7 +1141,11 @@ git_sequence_editor "$todo" ||
- has_action "$todo" ||
- 	return 2
- 
--check_todo_list
-+git rebase--helper --check-todo-list || {
-+	ret=$?
-+	checkout_onto
-+	exit $ret
-+}
+@@ -1149,7 +1112,9 @@ git rebase--helper --check-todo-list || {
  
  expand_todo_ids
  
+-test -d "$rewritten" || test -n "$force_rebase" || skip_unnecessary_picks
++test -d "$rewritten" || test -n "$force_rebase" ||
++onto="$(git rebase--helper --skip-unnecessary-picks)" ||
++die "Could not skip unnecessary pick commands"
+ 
+ checkout_onto
+ if test -z "$rebase_root" && test ! -d "$rewritten"
 diff --git a/sequencer.c b/sequencer.c
-index 5b893ca3878..a697906d463 100644
+index a697906d463..a0e020dab09 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2518,3 +2518,125 @@ int transform_todo_ids(int shorten_ids)
- 	todo_list_release(&todo_list);
- 	return 0;
+@@ -2640,3 +2640,110 @@ int check_todo_list(void)
+ 
+ 	return res;
  }
 +
-+enum check_level {
-+	CHECK_IGNORE = 0, CHECK_WARN, CHECK_ERROR
-+};
-+
-+static enum check_level get_missing_commit_check_level(void)
++/* skip picking commits whose parents are unchanged */
++int skip_unnecessary_picks(void)
 +{
-+	const char *value;
-+
-+	if (git_config_get_value("rebase.missingcommitscheck", &value) ||
-+			!strcasecmp("ignore", value))
-+		return CHECK_IGNORE;
-+	if (!strcasecmp("warn", value))
-+		return CHECK_WARN;
-+	if (!strcasecmp("error", value))
-+		return CHECK_ERROR;
-+	warning(_("unrecognized setting %s for option"
-+		  "rebase.missingCommitsCheck. Ignoring."), value);
-+	return CHECK_IGNORE;
-+}
-+
-+/*
-+ * Check if the user dropped some commits by mistake
-+ * Behaviour determined by rebase.missingCommitsCheck.
-+ * Check if there is an unrecognized command or a
-+ * bad SHA-1 in a command.
-+ */
-+int check_todo_list(void)
-+{
-+	enum check_level check_level = get_missing_commit_check_level();
-+	struct strbuf todo_file = STRBUF_INIT;
++	const char *todo_file = rebase_path_todo();
++	struct strbuf buf = STRBUF_INIT;
 +	struct todo_list todo_list = TODO_LIST_INIT;
-+	struct strbuf missing = STRBUF_INIT;
-+	int advise_to_edit_todo = 0, res = 0, fd, i;
++	struct object_id onto_oid, *oid = &onto_oid, *parent_oid;
++	int fd, i;
 +
-+	strbuf_addstr(&todo_file, rebase_path_todo());
-+	fd = open(todo_file.buf, O_RDONLY);
++	if (!read_oneliner(&buf, rebase_path_onto(), 0))
++		return error(_("could not read 'onto'"));
++	if (get_sha1(buf.buf, onto_oid.hash)) {
++		strbuf_release(&buf);
++		return error(_("need a HEAD to fixup"));
++	}
++	strbuf_release(&buf);
++
++	fd = open(todo_file, O_RDONLY);
 +	if (fd < 0) {
-+		res = error_errno(_("could not open '%s'"), todo_file.buf);
-+		goto leave_check;
++		return error_errno(_("could not open '%s'"), todo_file);
 +	}
 +	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
 +		close(fd);
-+		res = error(_("could not read '%s'."), todo_file.buf);
-+		goto leave_check;
++		return error(_("could not read '%s'."), todo_file);
 +	}
 +	close(fd);
-+	advise_to_edit_todo = res =
-+		parse_insn_buffer(todo_list.buf.buf, &todo_list);
++	if (parse_insn_buffer(todo_list.buf.buf, &todo_list) < 0) {
++		todo_list_release(&todo_list);
++		return -1;
++	}
 +
-+	if (res || check_level == CHECK_IGNORE)
-+		goto leave_check;
-+
-+	/* Mark the commits in git-rebase-todo as seen */
 +	for (i = 0; i < todo_list.nr; i++) {
-+		struct commit *commit = todo_list.items[i].commit;
-+		if (commit)
-+			commit->util = (void *)1;
-+	}
-+
-+	todo_list_release(&todo_list);
-+	strbuf_addstr(&todo_file, ".backup");
-+	fd = open(todo_file.buf, O_RDONLY);
-+	if (fd < 0) {
-+		res = error_errno(_("could not open '%s'"), todo_file.buf);
-+		goto leave_check;
-+	}
-+	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
-+		close(fd);
-+		res = error(_("could not read '%s'."), todo_file.buf);
-+		goto leave_check;
-+	}
-+	close(fd);
-+	strbuf_release(&todo_file);
-+	res = !!parse_insn_buffer(todo_list.buf.buf, &todo_list);
-+
-+	/* Find commits in git-rebase-todo.backup yet unseen */
-+	for (i = todo_list.nr - 1; i >= 0; i--) {
 +		struct todo_item *item = todo_list.items + i;
-+		struct commit *commit = item->commit;
-+		if (commit && !commit->util) {
-+			strbuf_addf(&missing, " - %s %.*s\n",
-+				    short_commit_name(commit),
-+				    item->arg_len, item->arg);
-+			commit->util = (void *)1;
++
++		if (item->command >= TODO_NOOP)
++			continue;
++		if (item->command != TODO_PICK)
++			break;
++		if (parse_commit(item->commit)) {
++			todo_list_release(&todo_list);
++			return error(_("could not parse commit '%s'"),
++				oid_to_hex(&item->commit->object.oid));
 +		}
++		if (!item->commit->parents)
++			break; /* root commit */
++		if (item->commit->parents->next)
++			break; /* merge commit */
++		parent_oid = &item->commit->parents->item->object.oid;
++		if (hashcmp(parent_oid->hash, oid->hash))
++			break;
++		oid = &item->commit->object.oid;
++	}
++	if (i > 0) {
++		int offset = i < todo_list.nr ?
++			todo_list.items[i].offset_in_buf : todo_list.buf.len;
++		const char *done_path = rebase_path_done();
++
++		fd = open(done_path, O_CREAT | O_WRONLY | O_APPEND, 0666);
++		if (fd < 0) {
++			error_errno(_("could not open '%s' for writing"),
++				    done_path);
++			todo_list_release(&todo_list);
++			return -1;
++		}
++		if (write_in_full(fd, todo_list.buf.buf, offset) < 0) {
++			error_errno(_("could not write to '%s'"), done_path);
++			todo_list_release(&todo_list);
++			close(fd);
++			return -1;
++		}
++		close(fd);
++
++		fd = open(rebase_path_todo(), O_WRONLY, 0666);
++		if (fd < 0) {
++			error_errno(_("could not open '%s' for writing"),
++				    rebase_path_todo());
++			todo_list_release(&todo_list);
++			return -1;
++		}
++		if (write_in_full(fd, todo_list.buf.buf + offset,
++				todo_list.buf.len - offset) < 0) {
++			error_errno(_("could not write to '%s'"),
++				    rebase_path_todo());
++			close(fd);
++			todo_list_release(&todo_list);
++			return -1;
++		}
++		if (ftruncate(fd, todo_list.buf.len - offset) < 0) {
++			error_errno(_("could not truncate '%s'"),
++				    rebase_path_todo());
++			todo_list_release(&todo_list);
++			close(fd);
++			return -1;
++		}
++		close(fd);
++
++		todo_list.current = i;
++		if (is_fixup(peek_command(&todo_list, 0)))
++			record_in_rewritten(oid, peek_command(&todo_list, 0));
 +	}
 +
-+	/* Warn about missing commits */
-+	if (!missing.len)
-+		goto leave_check;
-+
-+	if (check_level == CHECK_ERROR)
-+		advise_to_edit_todo = res = 1;
-+
-+	fprintf(stderr,
-+		_("Warning: some commits may have been dropped accidentally.\n"
-+		"Dropped commits (newer to older):\n"));
-+
-+	/* Make the list user-friendly and display */
-+	fputs(missing.buf, stderr);
-+	strbuf_release(&missing);
-+
-+	fprintf(stderr, _("To avoid this message, use \"drop\" to "
-+		"explicitly remove a commit.\n\n"
-+		"Use 'git config rebase.missingCommitsCheck' to change "
-+		"the level of warnings.\n"
-+		"The possible behaviours are: ignore, warn, error.\n\n"));
-+
-+leave_check:
-+	strbuf_release(&todo_file);
 +	todo_list_release(&todo_list);
++	printf("%s\n", oid_to_hex(oid));
 +
-+	if (advise_to_edit_todo)
-+		fprintf(stderr,
-+			_("You can fix this with 'git rebase --edit-todo' "
-+			  "and then run 'git rebase --continue'.\n"
-+			  "Or you can abort the rebase with 'git rebase"
-+			  " --abort'.\n"));
-+
-+	return res;
++	return 0;
 +}
 diff --git a/sequencer.h b/sequencer.h
-index 71d25374afe..878dd296f8c 100644
+index 878dd296f8c..04a57e09a1d 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -49,6 +49,7 @@ int sequencer_make_script(int keep_empty, FILE *out,
- 		int argc, const char **argv);
+@@ -50,6 +50,7 @@ int sequencer_make_script(int keep_empty, FILE *out,
  
  int transform_todo_ids(int shorten_ids);
-+int check_todo_list(void);
+ int check_todo_list(void);
++int skip_unnecessary_picks(void);
  
  extern const char sign_off_header[];
  
