@@ -2,112 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3A1B20401
-	for <e@80x24.org>; Wed, 14 Jun 2017 08:01:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24A6E20401
+	for <e@80x24.org>; Wed, 14 Jun 2017 08:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751971AbdFNIBy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 04:01:54 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:35701 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750751AbdFNIBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 04:01:53 -0400
-Received: by mail-pf0-f174.google.com with SMTP id l89so80501653pfi.2
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 01:01:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=z2sD9hF75P9JRmDS2ATGbb8ZFJy6m/7L0UyvKDvhLaA=;
-        b=VqtMRVO/Eb/26lDbhZO7g/kWE4YQ2hbTCyw3B/IaIg07LV/XolNkNsA51pK016sg71
-         Nz281iFs1EZ2HYW4HFe0gxYluVqv4TZz7SKVbVOJqC3wOGR/zvecP4Ux0wiuvJK91/2Q
-         7wn5PII6FlJyfDs6dbgbHfEfpy3kqFBn5hBOml2B6hADSTyCwxOs9L7BoDMEubG8IbFR
-         0eyDwPTo2S0py7nRvDTAfqkPjVhKpe5QEieIgFCaTk0nHrohXBNl/09LZogNljtFO8dI
-         Ja/7XnkpHWqb3oEGutG4kXFkf1vpEpJpF2NQ73vzkjP8peHBLT3gKDKZi1+d/GeI05Wn
-         HV2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=z2sD9hF75P9JRmDS2ATGbb8ZFJy6m/7L0UyvKDvhLaA=;
-        b=VMUU7h5Iog+DNb8Odatuwn11p2Cdx327UO7vmx2otnrv32ZLTCtuh1GxwlgLTi4h4O
-         Vwy8kN4RvfuNQIGy+frLNX9lT5HM6jesb8iFjC/Iei7zapV0XDdJE5gTLUXZvMj/fnUg
-         +sPQzOwaJDf+4cGKlqCwHr94lR7nDMa5f2N10aM5B8yaulX0Clc8XJnmrdBOBHExKu8+
-         5pKIeIp6kam4sA7BQ/K/zlVfCeVofhr0elklFulcdxH3xGVee6o4RAYJ3sHp5dDX9gFD
-         l3dLJ7Txr76khlhfBX62RhUN4gEvLXcOtEYETctKYidaQzrtpHRuaJijDhK2+LQtCSDG
-         vi1A==
-X-Gm-Message-State: AKS2vOzk5rbbuWWGY0cftba6RkMn3uceauX0KIN6xC03N0XCQrDYqh9F
-        D0KQQEtfVZkrOprq5p3tV+a3Cv+lUQ==
-X-Received: by 10.98.1.72 with SMTP id 69mr2883939pfb.124.1497427313014; Wed,
- 14 Jun 2017 01:01:53 -0700 (PDT)
+        id S1754437AbdFNIg4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 04:36:56 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:44653 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754175AbdFNIgv (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Jun 2017 04:36:51 -0400
+X-AuditID: 12074413-d93ff7000000742e-08-5940f59ed375
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 35.7C.29742.E95F0495; Wed, 14 Jun 2017 04:36:49 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCCBFA.dip0.t-ipconnect.de [87.188.203.250])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5E8aiUi021105
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 14 Jun 2017 04:36:45 -0400
+Subject: Re: [BUG] b9c8e7f2fb6e breaks git bisect visualize
+To:     "=?UTF-8?Q?=c3=98yvind_A._Holm?=" <sunny@sunbase.org>,
+        Git mailing list <git@vger.kernel.org>
+References: <20170614000630.44uctc5y7dyyleqy@sunbase.org>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Message-ID: <5a3f6af6-f936-50e7-5fca-c41b3aeefdce@alum.mit.edu>
+Date:   Wed, 14 Jun 2017 10:36:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.100.182.236 with HTTP; Wed, 14 Jun 2017 01:01:32 -0700 (PDT)
-In-Reply-To: <xmqqfuf37q2q.fsf@gitster.mtv.corp.google.com>
-References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
- <0102015ca23f054b-b7c281d9-c9e0-4691-bfa9-8c46fb77dfc7-000000@eu-west-1.amazonses.com>
- <xmqq60fz95sb.fsf@gitster.mtv.corp.google.com> <xmqqfuf37q2q.fsf@gitster.mtv.corp.google.com>
-From:   Sahil Dua <sahildua2305@gmail.com>
-Date:   Wed, 14 Jun 2017 10:01:32 +0200
-Message-ID: <CALiud+=mE77ak2x9KHWHW1oumAecyBN8R+J8dnUw+fUnyurrVQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] branch: add a --copy (-c) option to go with --move (-m)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20170614000630.44uctc5y7dyyleqy@sunbase.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsUixO6iqLvwq0OkwaSXZhZdV7qZLBp6rzBb
+        TDiygsXiUd9bdgcWjxMzfrN4XLyk7HF3Qg+Lx+dNcgEsUVw2Kak5mWWpRfp2CVwZZ+dEFfxU
+        rDg66Sh7A+NumS5GTg4JAROJNecfM3cxcnEICexgkng/6yAjhHOBSaJ//QpGkCphAWuJGRu3
+        s4LYIgJZEkdPLmcCsYUELCU6rm5gA7HZBHQlFvU0g8WZBeIlZhx6A2RzcPAK2Etsbg0ACbMI
+        qErMvfIWbKSoQITEw85d7CA2r4CgxMmZT1hAbE4BK4nfszewQoxRl/gz7xIzhC0v0bx1NvME
+        Rv5ZSFpmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdc73czBK91JTSTYyQkBXe
+        wbjrpNwhRgEORiUe3gfv7SOFWBPLiitzDzFKcjApifLWb3aIFOJLyk+pzEgszogvKs1JLT7E
+        KMHBrCTCK3EeKMebklhZlVqUD5OS5mBREudVW6LuJySQnliSmp2aWpBaBJOV4eBQkuAV+QLU
+        KFiUmp5akZaZU4KQZuLgBBnOAzR87jOQ4cUFibnFmekQ+VOMilLivG0gzQIgiYzSPLheWEp5
+        xSgO9Iow73OQKh5gOoLrfgU0mAlocNAFsMEliQgpqQbGtqcWk5tOxf1XV5Bz98zJeNttsWS+
+        mcLaSSsvhRYxnNgv2jjbLTIgwVtMbW+sx5lDuXrbw46JtZ7k0Gh026zytOFa0Mpfurt3HFoR
+        2nDkW+HTJ7xG37r5fjOXP1p4RG1ienHw2pzUo//f33z8dc55yb2Z5bylJ8KPTmZ+s2H3Qqtk
+        ZWtVht2nlViKMxINtZiLihMBVQc4RAQDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 13, 2017 at 7:30 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Sahil Dua <sahildua2305@gmail.com> writes:
->>
->>> Add the ability to --copy a branch and its reflog and configuration,
->>> this uses the same underlying machinery as the --move (-m) option
->>> except the reflog and configuration is copied instead of being moved.
->>>
->>> This is useful for e.g. copying a topic branch to a new version,
->>> e.g. work to work-2 after submitting the work topic to the list, while
->>> preserving all the tracking info and other configuration that goes
->>> with the branch, and unlike --move keeping the other already-submitted
->>> branch around for reference.
->>>
->>> Like --move, when the source branch is the currently checked out
->>> branch the HEAD is moved to the destination branch. In the case of
->>> --move we don't really have a choice (other than remaining on a
->>> detached HEAD), but it makes sense to do the same for --copy.
->>
->> I strongly disagree with this "it makes sense to do the same".  It
->> would equally (if not more) make sense to keep the HEAD pointing at
->> the same.
->>
->> Personally, I may use this feature if it didn't move HEAD, but I
->> wouldn't if HEAD gets moved.  But that may be just me.
->
-> Ah, that came out to be stronger than I intended.
->
-> While I do prefer "the HEAD is not moved by this command---if you
-> want to move to the newly created branch after copying, check it out
-> yourself" a lot better than what the patch does, I do not think I'd
-> care so strongly that I'd reject this patch series unless the
-> behaviour is changed.
->
-> But I do react strongly to an unsubstantiated claim "it makes sense
-> to do the same".  I can buy "We anticipate that in 50% of the case
-> users would find this branch switching annoying and in the other 50%
-> of the case, users would find it useful; since we need to pick one,
-> we just randomly decide to do the same as --move", though.
+On 06/14/2017 02:06 AM, Øyvind A. Holm wrote:
+> Commit b9c8e7f2fb6e ("prefix_ref_iterator: don't trim too much") breaks 
+> git bisect visualize, this reproduces the bug:
+> 
+>   $ git bisect start
+>   $ git bisect bad
+>   $ git bisect good HEAD^^
+>   $ git bisect visualize
+>   fatal: BUG: attempt to trim too many characters
+>   $
+> 
+> Reverting b9c8e7f2fb6e makes git bisect visualize work again.
 
-Okay, "it makes sense to do the same" was not the best way to say it.
-Basically what it meant was that considering there are conflicting
-opinions about how --copy should work with respect to checking out
-branch automatically, it makes sense to do it the same way as --move
-just to come to a conclusion. If we get user feedback that a lot of
-users find it annoying, we can make it work the other way around
-(without checkout branch automatically).
+Thanks for the bug report.
 
-I will fix the commit message to explain this in v2. Is that okay?
+The same error occurs if the last step is simplified to
+
+    git log --bisect
+
+The corresponding stack trace is
+
+#0  prefix_ref_iterator_advance (ref_iterator=0x91c5a0) at
+refs/iterator.c:305
+#1  0x000000000054edd7 in ref_iterator_advance (ref_iterator=0x91c5a0)
+    at refs/iterator.c:13
+#2  0x000000000054f62f in do_for_each_ref_iterator (iter=0x91c5a0,
+    fn=0x56337a <handle_one_ref>, cb_data=0x7fffffffcdb0)
+    at refs/iterator.c:382
+#3  0x0000000000546a40 in do_for_each_ref (refs=0x8ce3c0,
+    prefix=0x8c1af0 "refs/bisect/bad", fn=0x56337a <handle_one_ref>,
+trim=15,
+    flags=0, cb_data=0x7fffffffcdb0) at refs.c:1298
+#4  0x0000000000546b2d in refs_for_each_ref_in (refs=0x8ce3c0,
+    prefix=0x8c1af0 "refs/bisect/bad", fn=0x56337a <handle_one_ref>,
+    cb_data=0x7fffffffcdb0) at refs.c:1319
+#5  0x0000000000546bf9 in for_each_ref_in_submodule (submodule=0x0,
+    prefix=0x8c1af0 "refs/bisect/bad", fn=0x56337a <handle_one_ref>,
+    cb_data=0x7fffffffcdb0) at refs.c:1340
+#6  0x0000000000566842 in for_each_bisect_ref (submodule=0x0,
+    fn=0x56337a <handle_one_ref>, cb_data=0x7fffffffcdb0, term=0x8ce600
+"bad")
+    at revision.c:2083
+#7  0x0000000000566885 in for_each_bad_bisect_ref (submodule=0x0,
+    fn=0x56337a <handle_one_ref>, cb_data=0x7fffffffcdb0) at revision.c:2090
+#8  0x0000000000563541 in handle_refs (submodule=0x0, revs=0x7fffffffd210,
+    flags=0, for_each=0x566856 <for_each_bad_bisect_ref>) at revision.c:1196
+#9  0x0000000000566a09 in handle_revision_pseudo_opt (submodule=0x0,
+    revs=0x7fffffffd210, argc=1, argv=0x7fffffffdd28, flags=0x7fffffffcf44)
+    at revision.c:2125
+#10 0x000000000056711e in setup_revisions (argc=2, argv=0x7fffffffdd20,
+    revs=0x7fffffffd210, opt=0x7fffffffd1f0) at revision.c:2247
+#11 0x0000000000448ce4 in cmd_log_init_finish (argc=2, argv=0x7fffffffdd20,
+    prefix=0x0, rev=0x7fffffffd210, opt=0x7fffffffd1f0) at builtin/log.c:168
+#12 0x0000000000448f53 in cmd_log_init (argc=2, argv=0x7fffffffdd20,
+    prefix=0x0, rev=0x7fffffffd210, opt=0x7fffffffd1f0) at builtin/log.c:220
+#13 0x000000000044a37f in cmd_log (argc=2, argv=0x7fffffffdd20, prefix=0x0)
+    at builtin/log.c:692
+#14 0x0000000000405983 in run_builtin (p=0x870158 <commands+1176>, argc=2,
+    argv=0x7fffffffdd20) at git.c:371
+#15 0x0000000000405bed in handle_builtin (argc=2, argv=0x7fffffffdd20)
+    at git.c:572
+#16 0x0000000000405d62 in run_argv (argcp=0x7fffffffdbdc,
+argv=0x7fffffffdbd0)
+    at git.c:624
+#17 0x0000000000405f04 in cmd_main (argc=2, argv=0x7fffffffdd20) at
+git.c:701
+#18 0x0000000000498ba6 in main (argc=3, argv=0x7fffffffdd18)
+    at common-main.c:43
+
+The code for `git log --bisect` is questionable. It calls
+`for_each_ref_in_submodule()` with prefix "refs/bisect/bad", which is
+the actual name (not a prefix) of the reference that it is interested
+in. So the callback is called with the empty string as path, and that in
+turn is passed to a variety of functions, like `ref_excluded()`,
+`get_reference()`, `add_rev_cmdline()`, and `add_pending_oid()`. I'm not
+sure whom to ping; the code in question was introduced eons ago:
+
+    ad3f9a71a8 Add '--bisect' revision machinery argument, 2009-10-27
+
+It seems to me that we should add a `for_each_fullref_in_submodule()`
+and call that instead. I'll submit a patch doing that, though I'm not
+certain that no new problems will arise from the callbacks getting full
+rather than trimmed reference names (also for "refs/bisect/good").
+
+Another possible orthogonal "fix" is to make the refs side tolerate
+being asked to trim a refname down to the empty string, while still
+refusing to trim even more than that. I'll also submit a patch to that
+effect.
+
+Either of the patches fix the issue that was reported and pass the whole
+test suite (except for t1308, which seems to be broken in master for
+unrelated reasons).
+
+Michael
+
