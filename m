@@ -2,135 +2,321 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D31420401
-	for <e@80x24.org>; Wed, 14 Jun 2017 10:57:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC9E320401
+	for <e@80x24.org>; Wed, 14 Jun 2017 10:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752314AbdFNK5T (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 06:57:19 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58584 "EHLO mout.gmx.net"
+        id S1752127AbdFNK6Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 06:58:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39965 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752271AbdFNK5S (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 06:57:18 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LvzF3-1dt9BO1GFZ-017q9x; Wed, 14
- Jun 2017 12:57:07 +0200
-Date:   Wed, 14 Jun 2017 12:57:06 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-Subject: rs/strbuf-addftime-zZ, was Re: What's cooking in git.git (Jun 2017,
- #04; Tue, 13)
-In-Reply-To: <xmqqshj34ldr.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.21.1.1706141245520.171564@virtualbox>
-References: <xmqqshj34ldr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752035AbdFNK6Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 06:58:24 -0400
+Received: (qmail 20808 invoked by uid 109); 14 Jun 2017 10:58:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jun 2017 10:58:23 +0000
+Received: (qmail 11191 invoked by uid 111); 14 Jun 2017 10:58:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jun 2017 06:58:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Jun 2017 06:58:22 -0400
+Date:   Wed, 14 Jun 2017 06:58:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [PATCH v2 1/2] add: warn when adding an embedded repository
+Message-ID: <20170614105821.mg3465itzvqiginz@sigill.intra.peff.net>
+References: <20170614105437.cgdlykmtocdj5vzw@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1987298872-1497437827=:171564"
-X-Provags-ID: V03:K0:RNEad23m4hmVFN3bksj+qn7OvGOUiQm4u7esZHkxOqs2dnefx2h
- PyUyQxPGqo2BMG3B+wuKiXZeU1gW4F+2VlHHo6C7s5dgOXNfmBXS9/z3kdL+xKdGq+DlGGH
- w8K31xGyMukd2whKMvAwPViJIzRFUTbaAfs5hvv49Ow+7Fw/MpxtSjkdEkRpNqJ/YKuiaCk
- 89E7L3nJPf2BA+llY8MlQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:v2u5r9slu5U=:OJromJqCljB23/ZDTdAnk3
- nX3u2GqAaS+PxEYGvmdeDXxDgYjqzWyy4JseXjznQxybCmMNG2QSieXXZvVO6WCs7pwIfrMjw
- Cb5o2JCxgBmagPiKNV4s2yUQVedIK+EUIf5xn56ZGPRISUfnFJ+5dB6iTZ58MAdb4qPu/y51u
- jD/+TwHI9p7qPC/aouRV0PHlHd5SN2FLB3slEPPVjAD0AawEa3RwzpzHno8tGni9Pq7Cypsox
- pF0d+m0AKEFWtC6laHA8ggRoyu7tKRtwRGG8qGlXSosZGSkwIhBj2Vc4fuEcdG3IoidI5u9vQ
- pdQMAUg40EnjaCzOjoj9L4WZg3pxtULIk/FHvq5qNihdI5RwDrLb61oRQe+lk1qENkikXYvPu
- AbwGj6wCQ7JuIVJ7xFxjeRnBpzR+cg51T0uz1TXoUDF+xQxk+0zjibjFZ8oAba0K2+i9zmlix
- yrpPuLVayp98DHxFH6v4cGIlnzsJ/a600A+p44vrCM3jhh34UllVGzoYb9XJ7mMTIgEvpDByA
- jUsssAnSJ362etrmLkWJQ5DThpwdLlXxL6ozMNYnie/3L13Iteulc8V31Oo89Xh0o7a3Xwicn
- 6amPdidYm/fJel0VJk72FYLSfKp0GL1KgVg2g1YgPlrJColwKSasropuY+s9fZD2iQCWw2A49
- KQtUkQfqSe8+mDWX1g06DdG5+CHVBl1cTxIiKlcg9idltkUn6x7Bdp8CAYFZ2TuJXLCNvJiOz
- 5I+PDyD7LNxnMKHR9gKa+k0axy+nqAzDJTbJlvai6PvTXa8v6eV040YBaWY0TMp5cezCJ/vpJ
- 2jw833v
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170614105437.cgdlykmtocdj5vzw@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+It's an easy mistake to add a repository inside another
+repository, like:
 
---8323329-1987298872-1497437827=:171564
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+  git clone $url
+  git add .
 
-Hi Junio,
+The resulting entry is a gitlink, but there's no matching
+.gitmodules entry. Trying to use "submodule init" (or clone
+with --recursive) doesn't do anything useful. Prior to
+v2.13, such an entry caused git-submodule to barf entirely.
+In v2.13, the entry is considered "inactive" and quietly
+ignored. Either way, no clone of your repository can do
+anything useful with the gitlink without the user manually
+adding the submodule config.
 
-On Tue, 13 Jun 2017, Junio C Hamano wrote:
+In most cases, the user probably meant to either add a real
+submodule, or they forgot to put the embedded repository in
+their .gitignore file.
 
-> * rs/strbuf-addftime-zZ (2017-06-10) 2 commits
->  - date: use localtime() for "-local" time formats
->  - strbuf: let strbuf_addftime handle %z and %Z itself
->=20
->  As there is no portable way to pass timezone information to
->  strftime, some output format from "git log" and friends are
->  impossible to produce.  Teach our own strbuf_addftime to replace %z
->  and %Z with caller-supplied values to help working around this.
->=20
->  Will merge to 'next'.
+Let's issue a warning when we see this case. There are a few
+things to note:
 
-Hold on. Have you tried to build this branch?
+  - the warning will go in the git-add porcelain; anybody
+    wanting to do low-level manipulation of the index is
+    welcome to create whatever funny states they want.
 
--- snip --
-    CC date.o
-date.c:63:36: error: unknown type name =E2=80=98timestamp_t=E2=80=99
- static struct tm *time_to_tm_local(timestamp_t time)
-                                    ^
-date.c: In function =E2=80=98show_date=E2=80=99:
-date.c:211:8: error: implicit declaration of function =E2=80=98time_to_tm_l=
-ocal=E2=80=99
-[-Werror=3Dimplicit-function-declaration]
-   tm =3D time_to_tm_local(time);
-        ^
-date.c:211:6: error: assignment makes pointer from integer without a cast
-[-Werror=3Dint-conversion]
-   tm =3D time_to_tm_local(time);
-      ^
-cc1: all warnings being treated as errors
--- snap --
+  - we detect the case by looking for a newly added gitlink;
+    updates via "git add submodule" are perfectly reasonable,
+    and this avoids us having to investigate .gitmodules
+    entirely
 
-I would expect this to be rebased *at least* to dddbad728c9 (timestamp_t:
-a new data type for timestamps, 2017-04-26).
+  - there's a command-line option to suppress the warning.
+    This is needed for git-submodule itself (which adds the
+    entry before adding any submodule config), but also
+    provides a mechanism for other scripts doing
+    submodule-like things.
 
-But even then, it fails in t0006 on Windows with this error:
+We could make this a hard error instead of a warning.
+However, we do add lots of sub-repos in our test suite. It's
+not _wrong_ to do so. It just creates a state where users
+may be surprised. Pointing them in the right direction with
+a gentle hint is probably the best option.
 
--- snip --
-++ eval 'diff -u "$@" '
-+++ diff -u expect actual
---- expect      2017-06-14 10:53:40.126136900 +0000
-+++ actual      2017-06-14 10:53:40.171146800 +0000
-@@ -1 +1 @@
--1466000000 +0200 -> 2016-06-15 14:13:20 +0000 (UTC)
-+1466000000 +0200 -> 2016-06-15 14:13:20 UTC (UTC)
-+ test_eval_ret_=3D1
-+ want_trace
-+ test t =3D t
-+ test t =3D t
-+ set +x
-error: last command exited with $?=3D1
-not ok 23 - show date (format-local:%Y-%m-%d %H:%M:%S %z (%Z):1466000000 +0=
-200)
-#
-#                       echo "$time -> $expect" >expect &&
-#                       (
-#                               if test -n "$zone"
-#                               then
-#                                       TZ=3D$zone
-#                                       export $TZ
-#                               fi &&
-#                               test-date show:"$format" "$time" >actual
-#                       ) &&
-#                       test_cmp expect actual
--- snap --
+There is a config knob that can disable the (long) hint. But
+I intentionally omitted a config knob to disable the warning
+entirely. Whether the warning is sensible or not is
+generally about context, not about the user's preferences.
+If there's a tool or workflow that adds gitlinks without
+matching .gitmodules, it should probably be taught about the
+new command-line option, rather than blanket-disabling the
+warning.
 
-What gives?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/config.txt      |  3 +++
+ Documentation/git-add.txt     |  7 +++++++
+ advice.c                      |  2 ++
+ advice.h                      |  1 +
+ builtin/add.c                 | 46 ++++++++++++++++++++++++++++++++++++++++++-
+ git-submodule.sh              |  5 +++--
+ t/t7414-submodule-mistakes.sh | 37 ++++++++++++++++++++++++++++++++++
+ 7 files changed, 98 insertions(+), 3 deletions(-)
+ create mode 100755 t/t7414-submodule-mistakes.sh
 
-Ciao,
-Dscho
---8323329-1987298872-1497437827=:171564--
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f6278a5ae..781ce3e85 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -348,6 +348,9 @@ advice.*::
+ 	rmHints::
+ 		In case of failure in the output of linkgit:git-rm[1],
+ 		show directions on how to proceed from the current state.
++	addEmbeddedRepo::
++		Advice on what to do when you've accidentally added one
++		git repo inside of another.
+ --
+ 
+ core.fileMode::
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 7ed63dce0..f4169fb1e 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -165,6 +165,13 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
+ 	be ignored, no matter if they are already present in the work
+ 	tree or not.
+ 
++--no-warn-embedded-repo::
++	By default, `git add` will warn when adding an embedded
++	repository to the index without using `git submodule add` to
++	create an entry in `.gitmodules`. This option will suppress the
++	warning (e.g., if you are manually performing operations on
++	submodules).
++
+ --chmod=(+|-)x::
+ 	Override the executable bit of the added files.  The executable
+ 	bit is only changed in the index, the files on disk are left
+diff --git a/advice.c b/advice.c
+index b84ae4960..e0611d52b 100644
+--- a/advice.c
++++ b/advice.c
+@@ -15,6 +15,7 @@ int advice_detached_head = 1;
+ int advice_set_upstream_failure = 1;
+ int advice_object_name_warning = 1;
+ int advice_rm_hints = 1;
++int advice_add_embedded_repo = 1;
+ 
+ static struct {
+ 	const char *name;
+@@ -35,6 +36,7 @@ static struct {
+ 	{ "setupstreamfailure", &advice_set_upstream_failure },
+ 	{ "objectnamewarning", &advice_object_name_warning },
+ 	{ "rmhints", &advice_rm_hints },
++	{ "addembeddedrepo", &advice_add_embedded_repo },
+ 
+ 	/* make this an alias for backward compatibility */
+ 	{ "pushnonfastforward", &advice_push_update_rejected }
+diff --git a/advice.h b/advice.h
+index b341a55ce..c84a44531 100644
+--- a/advice.h
++++ b/advice.h
+@@ -18,6 +18,7 @@ extern int advice_detached_head;
+ extern int advice_set_upstream_failure;
+ extern int advice_object_name_warning;
+ extern int advice_rm_hints;
++extern int advice_add_embedded_repo;
+ 
+ int git_default_advice_config(const char *var, const char *value);
+ __attribute__((format (printf, 1, 2)))
+diff --git a/builtin/add.c b/builtin/add.c
+index d9a2491e4..d7cab1bd8 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -249,6 +249,7 @@ N_("The following paths are ignored by one of your .gitignore files:\n");
+ 
+ static int verbose, show_only, ignored_too, refresh_only;
+ static int ignore_add_errors, intent_to_add, ignore_missing;
++static int warn_on_embedded_repo = 1;
+ 
+ #define ADDREMOVE_DEFAULT 1
+ static int addremove = ADDREMOVE_DEFAULT;
+@@ -282,6 +283,8 @@ static struct option builtin_add_options[] = {
+ 	OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
+ 	OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
+ 	OPT_STRING( 0 , "chmod", &chmod_arg, N_("(+/-)x"), N_("override the executable bit of the listed files")),
++	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
++			N_("warn when adding an embedded repository")),
+ 	OPT_END(),
+ };
+ 
+@@ -295,6 +298,45 @@ static int add_config(const char *var, const char *value, void *cb)
+ 	return git_default_config(var, value, cb);
+ }
+ 
++static const char embedded_advice[] = N_(
++"You've added another git repository inside your current repository.\n"
++"Clones of the outer repository will not contain the contents of\n"
++"the embedded repository and will not know how to obtain it.\n"
++"If you meant to add a submodule, use:\n"
++"\n"
++"	git submodule add <url> %s\n"
++"\n"
++"If you added this path by mistake, you can remove it from the\n"
++"index with:\n"
++"\n"
++"	git rm --cached %s\n"
++"\n"
++"See \"git help submodule\" for more information."
++);
++
++static void check_embedded_repo(const char *path)
++{
++	struct strbuf name = STRBUF_INIT;
++
++	if (!warn_on_embedded_repo)
++		return;
++	if (!ends_with(path, "/"))
++		return;
++
++	/* Drop trailing slash for aesthetics */
++	strbuf_addstr(&name, path);
++	strbuf_strip_suffix(&name, "/");
++
++	warning(_("adding embedded git repository: %s"), name.buf);
++	if (advice_add_embedded_repo) {
++		advise(embedded_advice, name.buf, name.buf);
++		/* there may be multiple entries; advise only once */
++		advice_add_embedded_repo = 0;
++	}
++
++	strbuf_release(&name);
++}
++
+ static int add_files(struct dir_struct *dir, int flags)
+ {
+ 	int i, exit_status = 0;
+@@ -307,12 +349,14 @@ static int add_files(struct dir_struct *dir, int flags)
+ 		exit_status = 1;
+ 	}
+ 
+-	for (i = 0; i < dir->nr; i++)
++	for (i = 0; i < dir->nr; i++) {
++		check_embedded_repo(dir->entries[i]->name);
+ 		if (add_file_to_index(&the_index, dir->entries[i]->name, flags)) {
+ 			if (!ignore_add_errors)
+ 				die(_("adding files failed"));
+ 			exit_status = 1;
+ 		}
++	}
+ 	return exit_status;
+ }
+ 
+diff --git a/git-submodule.sh b/git-submodule.sh
+index c0d0e9a4c..e131760ee 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -213,7 +213,8 @@ cmd_add()
+ 		die "$(eval_gettext "'\$sm_path' already exists in the index and is not a submodule")"
+ 	fi
+ 
+-	if test -z "$force" && ! git add --dry-run --ignore-missing "$sm_path" > /dev/null 2>&1
++	if test -z "$force" &&
++		! git add --dry-run --ignore-missing --no-warn-embedded-repo "$sm_path" > /dev/null 2>&1
+ 	then
+ 		eval_gettextln "The following path is ignored by one of your .gitignore files:
+ \$sm_path
+@@ -267,7 +268,7 @@ or you are unsure what this means choose another name with the '--name' option."
+ 	fi
+ 	git config submodule."$sm_name".url "$realrepo"
+ 
+-	git add $force "$sm_path" ||
++	git add --no-warn-embedded-repo $force "$sm_path" ||
+ 	die "$(eval_gettext "Failed to add submodule '\$sm_path'")"
+ 
+ 	git config -f .gitmodules submodule."$sm_name".path "$sm_path" &&
+diff --git a/t/t7414-submodule-mistakes.sh b/t/t7414-submodule-mistakes.sh
+new file mode 100755
+index 000000000..f2e7df59c
+--- /dev/null
++++ b/t/t7414-submodule-mistakes.sh
+@@ -0,0 +1,37 @@
++#!/bin/sh
++
++test_description='handling of common mistakes people may make with submodules'
++. ./test-lib.sh
++
++test_expect_success 'create embedded repository' '
++	git init embed &&
++	test_commit -C embed one
++'
++
++test_expect_success 'git-add on embedded repository warns' '
++	test_when_finished "git rm --cached -f embed" &&
++	git add embed 2>stderr &&
++	test_i18ngrep warning stderr
++'
++
++test_expect_success '--no-warn-embedded-repo suppresses warning' '
++	test_when_finished "git rm --cached -f embed" &&
++	git add --no-warn-embedded-repo embed 2>stderr &&
++	test_i18ngrep ! warning stderr
++'
++
++test_expect_success 'no warning when updating entry' '
++	test_when_finished "git rm --cached -f embed" &&
++	git add embed &&
++	git -C embed commit --allow-empty -m two &&
++	git add embed 2>stderr &&
++	test_i18ngrep ! warning stderr
++'
++
++test_expect_success 'submodule add does not warn' '
++	test_when_finished "git rm -rf submodule .gitmodules" &&
++	git submodule add ./embed submodule 2>stderr &&
++	test_i18ngrep ! warning stderr
++'
++
++test_done
+-- 
+2.13.1.766.g6bea926c5
+
