@@ -6,66 +6,59 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3911A20401
-	for <e@80x24.org>; Wed, 14 Jun 2017 09:54:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 940BF20401
+	for <e@80x24.org>; Wed, 14 Jun 2017 10:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752320AbdFNJyg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 05:54:36 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:36620 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752306AbdFNJy3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 05:54:29 -0400
-Received: by mail-pg0-f53.google.com with SMTP id a70so73639534pge.3
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 02:54:24 -0700 (PDT)
+        id S1751875AbdFNKB3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 06:01:29 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33152 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751857AbdFNKB1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 06:01:27 -0400
+Received: by mail-pg0-f67.google.com with SMTP id a70so23010250pge.0
+        for <git@vger.kernel.org>; Wed, 14 Jun 2017 03:01:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=l1I/KMhfR63VzzhpiHXcplZ3JfLuLrAIMudamcc6e3s=;
-        b=rpyhApNHKG8byj+GEi7Bcqeq2D1k7TR4H37ovLjL1fwRsQoNH5QBCXT+91Z/IzGXTc
-         +MFbpjiUmMWerxxU1X1ZHBJGgDh7kH0Qrnju3OJeRQUY7VJeZG+sZe61dvoTFg+u14pc
-         g/yF/46JtnVj7go8Wyopic15vGR9qCMgpOBmzVnIxmx/oq9ro1KJHAvFSrmul2FfAAQX
-         aQkFGfIjut2c6wQt7mwysJUyYyrgig1hejLvnFYKLK9Rlu1lDjbPPiWY6lbFbT59xzB7
-         ZeR8GdQ14yMLvv/GQ8k18F39Z5Bkl2P0WabDLJDFWJDri15vfocM56Yw/zDpWzZ+ry5C
-         7WEg==
+        bh=/tlyKKfdxLpNHSPR9UyjVd3n1EFd/kx9RiRv9XSrWY8=;
+        b=UvxsroWIsj1MUedNx/VY1/YjxUFRjQnBBxBdty+AFgNTn5InatRHmRuJWZy4T9Khvw
+         5pVT5zpJY4VihwxuWGnfkW/HUyDdAdKegLacGoFatTlV+sUV/oVwO73TKc/s/gsQUvzz
+         c8ZYV2XIRfJh5eeE5i3plHoh6KFAKnCg+K/UUq2go/2mB5uie0BHHLcAlrdfwfYVgVRW
+         wLDS42NxxUlk4dmyJa0eTgNyvYwina//CoogJh+nBkWANNMBHCpUjYIYFblHaqR8sOa0
+         EsvqCn2xWUXVU2ygspaiE6QRzeSMcLVTJSFI3kKoPYLCZhbXsL3sSchPiOD0DL7Ah76K
+         c+Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=l1I/KMhfR63VzzhpiHXcplZ3JfLuLrAIMudamcc6e3s=;
-        b=oUPWxjJChDKLrBin+N+FBoSCTtJmKc2D1Cbd2MQYQvg7yolagTWrzlKAAXoPguPqaG
-         JVnAxAnea+c96dty1EsltLXPaas1M/aT3bjda0QSz8n67l+1ecyB1X/OF0Q3XkmquclR
-         AqT93OnzLTdymxkXbHFRBDA7l++Rc8WBLkgufoSRxMQyFgER6NpUramlBt2eYbclmg5s
-         vA8AJCNnCZ97hzQxxNhs1I+EwitkYxbgbmDfjjqJQ49ubYCBfFuUilIgOU855S+rNLiG
-         sJ4LirTaR7aLCoyeeYSXGSQl974vVR+ezoMppdlvUFeqAnopxVvVCN+k5z7mY6803MtB
-         gsNA==
-X-Gm-Message-State: AKS2vOxntXjcTshnk4HkC0haTBKk9e+ePr108BV9RKWRQiP7jDvEOJFp
-        NV+Hk+NhMKN8OQ==
-X-Received: by 10.98.102.28 with SMTP id a28mr3255176pfc.200.1497434063706;
-        Wed, 14 Jun 2017 02:54:23 -0700 (PDT)
+        bh=/tlyKKfdxLpNHSPR9UyjVd3n1EFd/kx9RiRv9XSrWY8=;
+        b=PIQz1h/DYaFngcSFKPjbK4BoyQdJVkpxQMUm3gy1MPOAw93GWsI6ARSp+9scP/I9rL
+         SQ4fOPEddu2co4LG1LgS2sYUg16iifkSMygnHQ9EgDml+eOPfD96otLq6DyG4lreo2H+
+         wz9wbJhC9xZBLLMrLVCmFBdEU4YTq/cKLEYyF52FBjbQErWRu70Hw14G5pFKogdiae2b
+         mwoFbVclY2nsGC8M+kSVsLsHxGt5F/bZvE7mx05ShusXsA6Ev70IVvb9BQaxeTCQ2Twa
+         Me3fhbq1oeK4haITPObCEL15dRYqMV7d3rI1tLCkIyDO3Ql8MZ5hbxjVMsR8aoRkC6sG
+         v/0w==
+X-Gm-Message-State: AKS2vOw1bHwWfPTy+psbWSvGTlvUBZNT5O+0hlg2QS/2wm0ncegYn6Yw
+        6XKEWn45F1AFFQ==
+X-Received: by 10.84.218.134 with SMTP id r6mr4105290pli.288.1497434487215;
+        Wed, 14 Jun 2017 03:01:27 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b4c1:e9f6:bf2b:dcec])
-        by smtp.gmail.com with ESMTPSA id d88sm1618604pfk.133.2017.06.14.02.54.22
+        by smtp.gmail.com with ESMTPSA id 10sm987746pgh.59.2017.06.14.03.01.26
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 14 Jun 2017 02:54:22 -0700 (PDT)
+        Wed, 14 Jun 2017 03:01:26 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jun 2017, #03; Mon, 5)
-References: <xmqq1sqzkrui.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kY2Z-fJYxczbzheu1hChLkKkdjEcDMwsP-hkN0TjUBotQ@mail.gmail.com>
-        <xmqq8tl5apkk.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xpvZDHum-A4omMySTebgBLFzhkpD=DiL-_Mm_Qv-OkMaw@mail.gmail.com>
-        <CA+P7+xpCWUBap757N45DrGjvh+v51dg=A9MNOgN8xfVDqZtvog@mail.gmail.com>
-        <CAGZ79kZU-QGYAiv+9tK9UoujuLVD8Ejar=zaHVm8YR2p4cbgOQ@mail.gmail.com>
-Date:   Wed, 14 Jun 2017 02:54:21 -0700
-In-Reply-To: <CAGZ79kZU-QGYAiv+9tK9UoujuLVD8Ejar=zaHVm8YR2p4cbgOQ@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 13 Jun 2017 15:19:15 -0700")
-Message-ID: <xmqqo9tq51yq.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        philipoakley@iee.org, jrnieder@gmail.com, avarab@gmail.com
+Subject: Re: [PATCH v2] Configure Git contribution guidelines for github.com
+References: <20170613081807.33196-1-larsxschneider@gmail.com>
+        <20170613090427.igjz7erniblh3wie@sigill.intra.peff.net>
+        <FEFF27D2-1A56-4F37-8114-126613C144A0@gmail.com>
+Date:   Wed, 14 Jun 2017 03:01:25 -0700
+In-Reply-To: <FEFF27D2-1A56-4F37-8114-126613C144A0@gmail.com> (Lars
+        Schneider's message of "Wed, 14 Jun 2017 09:28:03 +0200")
+Message-ID: <xmqqk24e51my.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,39 +67,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> The color experts agreed that (3) might be the best solution
-> as this gives most flexibility:
+>> On 13 Jun 2017, at 11:04, Jeff King <peff@peff.net> wrote:
+>> 
+>> On Tue, Jun 13, 2017 at 10:18:07AM +0200, Lars Schneider wrote:
+>> 
+>>> changes since v1:
+>>> * mention submitGit
+>>> * link to mailing list address instead of mailing list archive
+>> 
+>> You might want to link to https://git-scm.com/community/, which has a
+>> section on the mailing list at the top. It gives the list address but
+>> also talks about the archive, that you can send to it without
+>> subscribing, etc.
 >
->     "I would be happy as I can configure the bounds highlighting
->     to not exist, it would degenerate to a pure Zebra, which is
->     very simple to understand. Junio seemed to like (2) a lot, so
->     he would configure both dim colors to be 'context', but configure
->     the highlight colors to be attention drawing. So everybody would
->     be happy. It is also not too many colors, we are good at for loops."
+> Agreed. I removed the mailing list email address as this is not
+> useful until you have subscribed to the list.
 
-Another thing I found a bit confusing in the description of choices
-in the documentation was that description for some began with "Based
-on X.", and as a plain reader, I couldn't tell if that is saying
-"the implementation happens to be similar or shares code with X"
-(which is not all that interesting to the end user) or "the meaning
-this mode tries to convey is the same as X but the presentation is a
-bit different" (in which case the end user is hinted that it is
-benefitial to understand what informacion the mode X shows and how).
+Wait a minite.  As Peff explained above, you *can* send to it
+without subscribing, so "as this is not useful until you have
+subscribed" is quite wrong, no?
 
-For example, I view what I prefer (i.e. (2)) as a variant of Zebra
-(i.e. (1)).  Conceptually, you paint the diff output using water
-soluble paint into a Zebra pattern, then apply thin strips of
-protective tape to places where two Zebra colors are adjacent to
-each other (i.e. do not cover the boundary between a block of a
-Zebra colored moved lines and a block of context lines), dunk the
-whole thing in water and then remove the strips of tape.  Regions
-covered by the strips of tape will retain the Zebra colors, while
-the remainder of the Zebra colored part are colored in a much subdued
-way.  Understanding how Zebra mode marks the moved lines would help
-understanding its output, but your implementation may not share much
-code with the actual implementation of Zebra-painting.
+>> The text itself looks good, but two minor grammar nits:
+>> ... 
+>
+> Agreed!
 
-Thanks.
+This I think I've already squashed in to v2 before pushing the
+result out.
 
+I do not terribly mind what you did in v3 to the list address,
+and I do agree with Peff that mentioning the "community" page
+is a good idea.  But
+
+     Git community does not use github.com for their contributions. Instead, we use
+     a [mailing list](https://git-scm.com/community/) for code submissions,...
+     ... and bug reports.
+
+looks quite wrong.  If it were
+
+     Git community does not use github.com for their contributions. Instead, we use
+     a [mailing list](mailto:git@vger.kernel.org) for code submissions,...
+     ... and bug reports.  See [the community page](https://git-scm.com/community/)
+     for further information.
+
+I won't find it questionable at all, though.
