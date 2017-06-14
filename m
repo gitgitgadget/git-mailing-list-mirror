@@ -2,139 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61FDC20282
-	for <e@80x24.org>; Wed, 14 Jun 2017 17:21:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 677A720282
+	for <e@80x24.org>; Wed, 14 Jun 2017 17:34:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752126AbdFNRVB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 13:21:01 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:35328 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751904AbdFNRVA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 13:21:00 -0400
-Received: by mail-pf0-f171.google.com with SMTP id l89so3382244pfi.2
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 10:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=c0GiM39P5mJe72LetYyEpEYx4n0wE6t11jpbmS4UjuA=;
-        b=LHO4X3AR34X0yFlSA5GKR452X2UHck9+XQkuJiy6XKjmjicPJn26rlxfPMIVqLPCOA
-         dDOqXyxYhIda09RMqzYPJxdFqph6HzinOgOFY3w93YMBFTX4rn7EbVyyMnQgOvwb7x0/
-         PXL/ZI1pPrCgYglDgmUoG5yTgKLni3JRxctzwVJFnHsiFIBS8UrH+lSseNV0oQHWL/K8
-         0B5sbqCo+ZvEtYEJxrGgRK/7mPKu85Mz9G5vkJRsUsBghR66v67IVvzkSWSfXXwaSJ+7
-         Y0dXk3mhkSxTuTqZBRt3MUvRlIPSt2fHxLF8eV/67UEjD5VZhtxDRccvurr1rJXY/gFn
-         rRzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=c0GiM39P5mJe72LetYyEpEYx4n0wE6t11jpbmS4UjuA=;
-        b=j0Fo7N2KH5HfL4iqaT0oOLzCnIjsfgPfcO9vS6/sY6fiUsC8w4YE2MZc4etV7TvWK4
-         JH6VarryiNaoUbdM8uXRdgaIQSNtAsBqX+P0DLHg0d08yPStQoMaUe2EFIGvAj+BSxuB
-         KYeZh3w/bP99CwmM1FdLfO58iwX/wc2TxcH+e27Prth6y9S/OElK0jPFKLI0vFN/mT8j
-         IkrkogMYMDHBMGWo4raQl5lRmXwe75uwpdxWRhoe2zzUI4UAbzKDwl18doQdEf3XTSq3
-         3i7coAwQZisMGCcgyLlvvfFCkwMlLK3q2AF21ZEdIu2arf+ntWOIJ8Xvw2uGfkrFTBqK
-         NBlg==
-X-Gm-Message-State: AKS2vOzRv4bmc41xuI5MqGA4wTz2qssjdZ2WRCI5wbRk1OqNTNpzsfHH
-        wlHI70ISXD237yHNtZ/DnA==
-X-Received: by 10.84.131.35 with SMTP id 32mr1270613pld.142.1497460859776;
-        Wed, 14 Jun 2017 10:20:59 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:cd44:1c15:d824:b4e])
-        by smtp.gmail.com with ESMTPSA id v3sm1046788pfi.73.2017.06.14.10.20.58
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 14 Jun 2017 10:20:58 -0700 (PDT)
-Date:   Wed, 14 Jun 2017 10:20:57 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 6/6] Use the early config machinery to expand aliases
-Message-ID: <20170614172057.GC55677@google.com>
-References: <cover.1497355444.git.johannes.schindelin@gmx.de>
- <822765b002488f03523bf440097492be3c14931a.1497355444.git.johannes.schindelin@gmx.de>
- <20170613182606.GO154599@google.com>
- <20170614055824.p2ueyiyfsdf6inve@sigill.intra.peff.net>
- <alpine.DEB.2.21.1.1706141223021.171564@virtualbox>
+        id S1752577AbdFNRej (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 13:34:39 -0400
+Received: from mout.web.de ([217.72.192.78]:49631 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752554AbdFNRei (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 13:34:38 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MOilO-1dREKe3x9K-0064xQ; Wed, 14
+ Jun 2017 19:34:31 +0200
+Subject: Re: [BUG] add_again() off-by-one error in custom format
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Giuffrida <michaelpg@chromium.org>, git@vger.kernel.org
+References: <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
+ <20170613222445.15575-1-szeder.dev@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <1d4c9a93-5061-96db-d8aa-e798948650dc@web.de>
+Date:   Wed, 14 Jun 2017 19:34:26 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1706141223021.171564@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170613222445.15575-1-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:KFNqbVLz579qD4g1auoMOSR2ZBxTpJk9dpps73/6v/j8fNrTQay
+ rIYQqoEflVILjMBYxKyqp5k0CVtVjlLUbfgubLn0uPcYhkH4NWyjbZtnGpSvCXEB8wD08sm
+ v6vIKo1fFj4QJ1vJYIDViqCHQrtKyBSpb8MwYSRY8uDRDw8wELE4LcH/8KPSPLAyMaKJsnB
+ agYrmqnFFZnXzcNprx3Dg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1MkrDPukiQk=:avVkl1/DrmAnC7K4xA04gH
+ mHZZqju2k4EHZXpf1ch+6NzBX5lyc9hNcAXU4RqXK5i2R9V53OjE0axpSoc5RMdiHXvybR1Bb
+ jwRWtMsxi90va+7wlY7+UXkLxQnGbamdLQ0FAUnAOY6A6Ikhv1Z7r0AkwLk47AW8pkIND1hhB
+ c/bvwd+J/9SHm90h6S/9a7a7ClaMGYo4siYeCDyzQqtcz6gwTeLEz0L4OXY3Fhaz7s1Me5Tgn
+ 7pGqzDuwf5NKDZl9JtHoq9psz3530defEgLVAqA69WQPtTxvxE3SJQf++wK+yCkjmuZpmt8tI
+ rm9jJriOgNzu4nC2IwtH1ZAjYmuuKUFUbsUVPCUUn9wVNsuqP0FPcKCs1nKCHm45WOH58eGsF
+ FQx9jzPhOmLR6Maux2Nt772c3uXf1Df6zmQi1Hg7rnOto0eZzbvSpxOml7kYXxZFUGcBA9jfQ
+ oZrfWHE9rKIRUMvilzH34vj9wX/z0Eh2HS29xuQx0HjjiQyOfqQ/fvIoQt5hme3A0945eI+nN
+ pzZUQmZo6FwZhBSTUuE5cMRlYWh6TWN64fycpIC20cG+bD+06prStslM3yTOjPJYYJP5sKHbF
+ P+pUZAV9s1dTxoAEoFI3txzMWGx1fv3/V8vQuLQI70Jfhx4n9ZXQaH/l3d9FI96vJ0Hx47sU4
+ WZzErVoDewp1FYbKl8Ror1nYUNf7DwDT2eTx+KHDRZHk57WHE/CpZFscItz2bP+4ZnzOeWvvC
+ U6f+5eDo8eSDpNlmL4n9C+JZVDioPKViNSOTkKHyxHIWWo1mTejO5BLLloWzCmsWblMYnX1TP
+ 9Oa0XJ3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/14, Johannes Schindelin wrote:
-> Hi Peff & Brandon,
+Am 14.06.2017 um 00:24 schrieb SZEDER Gábor:
+> [sorry for double post, forgot the mailing list...]
 > 
-> On Wed, 14 Jun 2017, Jeff King wrote:
+> To throw in a fourth option, this one adjusts the expansions' cached
+> offsets when the magic makes it necessary.  It's not necessary for
+> '%-', because it only makes a difference when the expansion is empty,
+> and in that case
 > 
-> > On Tue, Jun 13, 2017 at 11:26:06AM -0700, Brandon Williams wrote:
-> > 
-> > > So because I've been looking at the config machinery lately, I've
-> > > noticed a lot of issues with how things are handled with respect to
-> > > gitdir vs commondir.  Essentially the config resides at commondir/config
-> > > always, and only at gitdir/config when not working with a worktree.
-> > > Because of this, your patches point out a bug in how early config is
-> > > handled.  I'll illustrate this using aliases.
-> > > 
-> > > Before this series (because aliases are read using the standard config
-> > > machinery):
-> > > 
-> > >   > git init main
-> > >   > git -C main config alias.test '!echo hello'
-> > >   > git -C main test
-> > >     hello
-> > >   > git -C main worktree add ../worktree
-> > >   > git -C worktree test
-> > >     hello
-> > > 
-> > > After this series (using read_early_config()):
-> > > 
-> > >   > git init main
-> > >   > git -C main config alias.test '!echo hello'
-> > >   > git -C main test
-> > >     hello
-> > >   > git -C main worktree add ../worktree
-> > >   > git -C worktree test
-> > >     git: 'test' is not a git command. See 'git --help'.
-> > > 
-> > > The issue is that read_early_config passes the gitdir and not the
-> > > commondir when reading the config.
-> > 
-> > Good catch.
+>    - add_again() doesn't consider it cached,
+>    - and even if it did, the offset of a zero-length string wouldn't
+>      matter.
 > 
-> Oh wow.
-> 
-> > > The solution would be to add a 'commondir' field to the config_options
-> > > struct and populate that before reading the config.  I'm planning on
-> > > fixing this in v2 of my config cleanup series which I'll hopefully have
-> > > finished by the end of the day.
-> > 
-> > I think that read_early_config() really meant to set the commondir, as
-> > it was always about actual config-file lookup. So it was sort-of buggy
-> > already, though I suspect it was pretty hard to trigger.
-> > 
-> > But I agree that since include_by_gitdir now reads the same struct
-> > field, swapping it out fixes the config-reading at the cost of breaking
-> > that function. And we really need to pass both in.
-> > 
-> > I'm not sure whether we should care about this for Dscho's series or
-> > not. I think his series _does_ make the problem easier to trigger. But
-> > it's a minor enough bug that I think I'd be OK with letting your
-> > solution proceed independently.
-> 
-> Brandon, how hard would it be to build on top of my series? I ask because
-> I have to take care of some other things and would not have the time to
-> adjust my patch series on top of yours anytime soon.
+>   pretty.c | 32 +++++++++++++++++++++-----------
+>   1 file changed, 21 insertions(+), 11 deletions(-)
 
-It should be pretty easy to just rebase ontop of your series.  I'll make
-sure to do that before sending out the next revision of mine.
+There are other modifiers, e.g. try the format '%h%>(20)%h' -- its
+output is obviously wrong (contains control characters), even with your
+patch.  We'd have to update the offsets for each placeholder that
+changes the output of others.  I don't think that approach scales, alas.
 
--- 
-Brandon Williams
+René
