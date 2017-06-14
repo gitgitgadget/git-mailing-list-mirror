@@ -2,89 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B35B1FA7B
-	for <e@80x24.org>; Wed, 14 Jun 2017 02:52:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0D031FA7B
+	for <e@80x24.org>; Wed, 14 Jun 2017 03:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753646AbdFNCwy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Jun 2017 22:52:54 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:36562 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752854AbdFNCwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Jun 2017 22:52:53 -0400
-Received: by mail-pf0-f178.google.com with SMTP id x63so76754479pff.3
-        for <git@vger.kernel.org>; Tue, 13 Jun 2017 19:52:53 -0700 (PDT)
+        id S1754122AbdFNDsA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Jun 2017 23:48:00 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:33867 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754044AbdFNDr6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Jun 2017 23:47:58 -0400
+Received: by mail-pf0-f176.google.com with SMTP id s66so9256335pfs.1
+        for <git@vger.kernel.org>; Tue, 13 Jun 2017 20:47:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+ADeJljs5MMP9EMI3aZB2AHTXReERTBy7a7V7VJ8nXI=;
-        b=m/VP8S8BLYkx82SpXntBh09kdaBxqJ3r9aIWCZljgudxNlbW+XSyZnMlaUD95VROOY
-         s18hGMgc1xoYIAdQdbqQCLpxk8bdkfRqyRx/4+t30nryk7g1yn5fo9L8dkYyd9AAnEVo
-         EidJ667lsJ2G0TeBnds0V74pUE33eMHHsTQrgd6ETEc5t4NjKIjGVXGSSE56i6meBJXZ
-         s2KFVPPdYUICE4XI/JHSzwxPtq5dKeldVfdUReC5V/d7b+M+UpN1DkSyTTDTrlsdK6B8
-         NpE4OUgd0hfWnITv+6kf0Q6c2r6I8rJDvCq1ndJjwGSF1bJzjzJVuY7ucQTrmf6OlP8M
-         eV6w==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Q0ycH5is388IB/gzcXM5D12jikcXdJRUsGrGDS88eWU=;
+        b=hFWhOBLQRs7psxGBrnI3HFY/HR3eDWLRKmES4AOIjgJ8jvl3H/4jTxoPJID6hJhOqS
+         IW97tuRpixBnjOCJBNiA+UkVrBB2yERQPPof5SVo0wiM5/OF8Z5QpqXgNU5LkSiUQkTu
+         vWa/o7hclBDyLpM91fGrTDXa9GR+ndamn8oKI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+ADeJljs5MMP9EMI3aZB2AHTXReERTBy7a7V7VJ8nXI=;
-        b=kOVP/Q3tXEZBBLz9Pu6hFtjxeFrH2Gpf5Av2gOEht++AlFmWXgVioUvALXHQXYcDjd
-         20jW/Ui+4GrNn3mhvpLE8Lfo3eGo9b2zPvdqDMCA5cZrSAM66Z8t5zfwcUboYA2Yw9W4
-         j07FWWfeIAuI9h0DEg2tNTJn+uH2WMEstS8AtyMDfHTuPlnT5vY0dkxP4QDkCpxY4GZX
-         twftZ9VWop1wEYCrj43rKYEf/usfweSTPcIOPqrnF9o/fP62FGV+xxLfDBc6cPeIrWgC
-         fTGQ7sXGhDJ4xbsVVDaKhGwhCh4QzTjTSu1ewYAWTHISP+xj6IZ28oxhEsIIjyqlzeUo
-         gGPQ==
-X-Gm-Message-State: AKS2vOzB7GVhDT2JN3Cp4JPRR32ojqJFxrKhW7WNLcQrXFXzQbMOLFLT
-        neDp1ZzOBPu2cU0AFnlNe64/HVCkgfIe
-X-Received: by 10.99.186.91 with SMTP id l27mr2217716pgu.87.1497408772734;
- Tue, 13 Jun 2017 19:52:52 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Q0ycH5is388IB/gzcXM5D12jikcXdJRUsGrGDS88eWU=;
+        b=Ca8G/Tmnl/qNpBPQpjjGRdkYmhgRIKsOUbKOMUzJPblLR2TCbX5icugnnCjWiiKGd+
+         apBUcTWI8pGpaW2ktdVUki/z2zwC2mzSCm6tJM4J58eTLY/h9wn15gmNtqrTyDz/t0yE
+         SpEqMi6Cvhzeb40cDpUaEzma+Ay9aT/1zST0Awph+bFYAo21kyWP2m5eZgwNne7uqRrC
+         Zblz0p7Nu2HGIiQex8RF4yNTvhNOBhNtxes/gogfuFNaa84+JObuvuxLSulq+lN/rlns
+         9aEoXI7i1YSuLH36J3eZG03PJqgIn7zX/NI2UA+ry9XbQB13i9o2hOG8nTVdcOvIoPVi
+         vIKQ==
+X-Gm-Message-State: AKS2vOxHGjFyHj3J26/CINa13pfGOpmCw+Mjh1en8jJesmh9WDZiPl4o
+        DcipHBL4n6FyGT3E
+X-Received: by 10.99.97.137 with SMTP id v131mr2190015pgb.235.1497412078137;
+        Tue, 13 Jun 2017 20:47:58 -0700 (PDT)
+Received: from localhost ([122.172.35.3])
+        by smtp.gmail.com with ESMTPSA id s131sm26609702pgs.6.2017.06.13.20.47.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Jun 2017 20:47:56 -0700 (PDT)
+Date:   Wed, 14 Jun 2017 09:17:54 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com,
+        Vincent Guittot <vincent.guittot@linaro.org>
+Subject: Re: [PATCH] send-email: Add tocmd option to suppress-cc
+Message-ID: <20170614034754.GI5297@vireshk-i7>
+References: <6367777092d93a62cc83c444061dde853ba3369e.1495107179.git.viresh.kumar@linaro.org>
+ <20170612043313.GE5297@vireshk-i7>
+ <xmqq8tkxp4nw.fsf@gitster.mtv.corp.google.com>
+ <xmqqmv9dnkut.fsf@gitster.mtv.corp.google.com>
+ <20170613034337.GF5297@vireshk-i7>
+ <xmqqk24f7qep.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Tue, 13 Jun 2017 19:52:52 -0700 (PDT)
-In-Reply-To: <20170613150722.0bd8fa56@twelve2.svl.corp.google.com>
-References: <20170523024048.16879-1-sbeller@google.com/> <20170524214036.29623-1-sbeller@google.com>
- <20170524214036.29623-17-sbeller@google.com> <20170613150722.0bd8fa56@twelve2.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 13 Jun 2017 19:52:52 -0700
-Message-ID: <CAGZ79kZEcURkeBv2T4D3cFOQ7Tnzc-GVTfk_QT6K9iW1hvA55g@mail.gmail.com>
-Subject: Re: [PATCHv5 16/17] diff: buffer all output if asked to
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqk24f7qep.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 13, 2017 at 3:07 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+On 13-06-17, 10:23, Junio C Hamano wrote:
+> Viresh Kumar <viresh.kumar@linaro.org> writes:
+> 
+> >> Going back to the core part of your change, i.e.
+> >> 
+> >> -	foreach my $entry (qw (cccmd cc author self sob body bodycc)) {
+> >> +	foreach my $entry (qw (tocmd cccmd cc author self sob body bodycc)) {
+> >> 
+> >> to think about it a bit more, I notice that all the existing ones
+> >> are about CC.  So I am not just not convinced that tocmd belongs to
+> >> the same class.  I am inclined to say that it smells quite different
+> >> from others.
+> >
+> > That's right but how do we solve this problem then?
+> >
+> > Add another optional argument like suppress-to ? I thought that it
+> > would be better to override suppress-cc rather than attempting any
+> > such thing.
+> >
+> > I am fine with any solution that address the concerns raised by this
+> > patch though.
+> 
+> I am not sure what problem is being solved, quite honestly.  "I have
+> tocmd configured and I want a way not to specify tocmd for a single
+> invocation?"  Would something along the lines of 
+> 
+>     git -c sendemail.tocmd=true send-email ...
+> 
+> how you do it in general?
 
->> +struct diff_line {
->
-> Probably should be called diff_emission (or just emission), since these
-> may not be full lines.
+Yeah, it works. I can use this instead.
 
-I think emitted_string would do as well?
+This patch can be dropped now. Thanks.
 
->
-> Also, can this definition be in the .c file? Callers should use the
-> diff_emit_line() below, and not need to know how it is implemented
-> internally.
-
-done
-
->> +#define diff_line_INIT {NULL, NULL, NULL, 0, 0, 0}
->
-> Should be DIFF_LINE_INIT (capitalization), and {NULL} is sufficient, I
-> think.
-
-done.
+-- 
+viresh
