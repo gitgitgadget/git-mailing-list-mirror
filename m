@@ -6,19 +6,19 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED21A20282
-	for <e@80x24.org>; Wed, 14 Jun 2017 13:07:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53D7920282
+	for <e@80x24.org>; Wed, 14 Jun 2017 13:07:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751889AbdFNNHN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 09:07:13 -0400
-Received: from mout.gmx.net ([212.227.15.15]:63607 "EHLO mout.gmx.net"
+        id S1752167AbdFNNHT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 09:07:19 -0400
+Received: from mout.gmx.net ([212.227.15.15]:51209 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750756AbdFNNHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 09:07:13 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEFlg-1daU4j1vce-00FWs5; Wed, 14
- Jun 2017 15:07:01 +0200
-Date:   Wed, 14 Jun 2017 15:06:58 +0200 (CEST)
+        id S1751934AbdFNNHS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 09:07:18 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M3RVA-1dcvsb3jH6-00qyv5; Wed, 14
+ Jun 2017 15:07:10 +0200
+Date:   Wed, 14 Jun 2017 15:07:08 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,180 +27,244 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH v5 00/10] The final building block for a faster rebase -i
-Message-ID: <cover.1497444257.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v5 02/10] rebase -i: generate the script via rebase--helper
+In-Reply-To: <cover.1497444257.git.johannes.schindelin@gmx.de>
+Message-ID: <7cdf532fe2d1798a5371dcbb07ee13857f161c3a.1497444257.git.johannes.schindelin@gmx.de>
+References: <cover.1497444257.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:aE4/ZkkTL71QomsKeKdXLXOUvi1VIp1Paf+UtF4bjsc9dE/SS2p
- QnO8Otyu2oAB63FRM8ZcRP7+eBq6mj3SOE8Agn+oTrILsXsMG6KlP67YdX429ykXdZAn7NJ
- oEWcSbwcwoQu67dzvtvFYYBx94S68dE2tH0luRq14V/4oxTrtB1SLTYuae+W/C0gKdFq94s
- sHzKnitY29R1V1DporwQQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:05zaLDvDdTc=:NksFt1e+7D/s/og1J8MV9Y
- C7p5gaQmWujKbfv0XSufJqIACZ6diaq935g2feSs4+v68K0MqAPhMRwW0vmbFPFXYgf1JQXPB
- paKd1B0BeQE4Q9TsFsSH0T2nOyjjEt6+t1dUMOIrip3LvPIDfWyPvTT1kBU7JRNnwoMruUTBm
- aNX4gCh1y/K5zxPFJiTdnKmIiiSaiYYEutn7sZ90It9fRSbcDkXj5zdORBid58Uubi4iZFHJR
- uacCwKRTUCzXZTR8qqy8QTjm1kwQJK2aTyXbtw2ZZ4C0xFQQsmW1/V8khtZ/nddLjLwvm8EaI
- ix/za/HsiEsKtTjoXhN77RrTrfK79qHBIqjO1z70PKQbtt0murRbWZyy/2/vYd2hM8p9h0Rjq
- KM0eS4Uwi9B3kzAfaquI1Oj5iInGw3aMyreRtmxJrIBt+0KKCzTEJmfG0EDOV6Zw4JjzPDEvJ
- selrjHFlKGKB5zwicKRnfEfPR6hmKTMwyv0hO2zMZJVywmvru46tbxcHNBmZ/cUGs5tL3dqAN
- +Y14Tsw0Vq4HZuD20MhybZtUQ73M0vjC7e519rRE3mWf0DbG7R26ybzwD4PoaKT+OWYhnI52N
- 00tqSu99IyggiMqrrbBlkvsNTmmNmghOwVdCg34V0ZAUssN5uHMOF2017WfEJWEHQAvUL7AB4
- DrGm+jUjet0wBEjSQI/S8wmNk19Y0nkUlr2qgEfeyKDB3EmCyShBRqHinVsPZVThcc7SvWriG
- cO2J1gTeN0DZv05YZ1rR9U/G27PYrUjPuG1DPImI4CjjN1Nlohoo467bNXj6Ebyk5sffhxpqz
- Q0SDmuy
+X-Provags-ID: V03:K0:r3Fgezcv2QMXzBgPF/7HZIyWCNLkMcBLet25Mvv+wGXjKuhMjXa
+ ZyNQRKRIdaTJIwpViYeks6tSf30aATg03H867xP3A4tt1jdt9C8vsvQyF3VJKW0cXUULcWd
+ Uw45d0gqj6R+dh6oXyov9hHIsmp/rfKHjwKWVoEpk9VGHBazDTDTUZ6910u5u8CCylVV1A+
+ XlggGe2OP291ldNcL7ICA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vx1pTgJPIMM=:Cy8Ny2IHz2j82a5BQ88uQZ
+ gd4xtSEwf1Sm9ph9z5ewpubUvGV7VT8fzxmgi79nIwIyf4yJTjjNFea345xYOSZO9s0TmiTGH
+ rkk12Ly1kipgnWEjgV9Rsl7+A837pQ0sx1zMEbRMyyktAOGDG5Ee+i+skYnE8kMTSJ4lRvq2J
+ OwNNRncZt8/B8uzcfglfVl6jPm67dD7q5ErBTXBcpESxb1IbtmpRJ51GIgT0DNdZQYDFFqRYm
+ ReCoAkiCiKkB5OCPjwZ1xqGEqPT4lXo7QBokhDqkYiOunpXDEusUhmhqEz/E6wqn3lbYPKfh3
+ aMioD7H8Iqo12msF7xuK1+h5k4CgovQd8IsZX69TPezfyW7ztNooyNd3jgi2vRrqvA0vDVAtO
+ TSzvfKfa99fxBRV0572DbwrV93tbUFzoTcuha060mHsNH6Qo6yMHQxpHnZuJXiU7wF97bDHJy
+ R7Y8UjmaTx2EM0/B420Nc+PzGOnpDf0ezpTeL6S9HQY0cdMnV+/LrQpK4NUlKSvlaNxt+Ofzc
+ NC2awClnaOGj52yn00wSuMXf5v7ueHKAx7UsK9c6TstgFH9OG5q9I1wDl3RzSA76lTdRFfTXz
+ W3qvuV4eW1QO4MsXAKGt4KNY4fe3z3Px2noBF6U3o/NbdhuMuZT8UzKw+8YDfnPn78oLId+gM
+ zE8Hzoryy6ZCgE+m6eOcT1CPrJBcREVTEuQlbGei/xhUMhoQncESwb1XN0IzknlTeN/2Vfvh3
+ pjIP0HSU/yy5OOJDSQ+d2kdrzyj9Z7TAm74kXo6nx/F4ch8jSxx68orNsS+DDhYdrOCfj3Oeg
+ MEidsf3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series reimplements the expensive pre- and post-processing of
-the todo script in C.
+The first step of an interactive rebase is to generate the so-called "todo
+script", to be stored in the state directory as "git-rebase-todo" and to
+be edited by the user.
 
-And it concludes the work I did to accelerate rebase -i so far.
+Originally, we adjusted the output of `git log <options>` using a simple
+sed script. Over the course of the years, the code became more
+complicated. We now use shell scripting to edit the output of `git log`
+conditionally, depending whether to keep "empty" commits (i.e. commits
+that do not change any files).
 
-I am still unwilling to replace a compile-time safe way to pass the
-options to the revision machinery by the alternative (which I am still
-flabbergasted about) proposed by Junio. This will not change.
+On platforms where shell scripting is not native, this can be a serious
+drag. And it opens the door for incompatibilities between platforms when
+it comes to shell scripting or to Unix-y commands.
 
-Changes since v4:
+Let's just re-implement the todo script generation in plain C, using the
+revision machinery directly.
 
-- replaced the "sha1s" part of the names by "ids", to reflect the
-  current effort to move away from the cryptographically unsafe SHA-1
+This is substantially faster, improving the speed relative to the
+shell script version of the interactive rebase from 2x to 3x on Windows.
 
-- replaced the confusing term "instruction sheet" in an error message by
-  the more commonly used "todo list"
+Note that the rearrange_squash() function in git-rebase--interactive
+relied on the fact that we set the "format" variable to the config setting
+rebase.instructionFormat. Relying on a side effect like this is no good,
+hence we explicitly perform that assignment (possibly again) in
+rearrange_squash().
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/rebase--helper.c   |  8 +++++++-
+ git-rebase--interactive.sh | 44 +++++++++++++++++++++--------------------
+ sequencer.c                | 49 ++++++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h                |  3 +++
+ 4 files changed, 82 insertions(+), 22 deletions(-)
 
-Johannes Schindelin (10):
-  t3415: verify that an empty instructionFormat is handled as before
-  rebase -i: generate the script via rebase--helper
-  rebase -i: remove useless indentation
-  rebase -i: do not invent onelines when expanding/collapsing SHA-1s
-  rebase -i: also expand/collapse the SHA-1s via the rebase--helper
-  t3404: relax rebase.missingCommitsCheck tests
-  rebase -i: check for missing commits in the rebase--helper
-  rebase -i: skip unnecessary picks using the rebase--helper
-  t3415: test fixup with wrapped oneline
-  rebase -i: rearrange fixup/squash lines using the rebase--helper
-
- Documentation/git-rebase.txt  |  16 +-
- builtin/rebase--helper.c      |  29 ++-
- git-rebase--interactive.sh    | 373 ++++-------------------------
- sequencer.c                   | 530 ++++++++++++++++++++++++++++++++++++++++++
- sequencer.h                   |   8 +
- t/t3404-rebase-interactive.sh |  22 +-
- t/t3415-rebase-autosquash.sh  |  28 ++-
- 7 files changed, 646 insertions(+), 360 deletions(-)
-
-
-base-commit: 02a2850ad58eff6de70eb2dc5f96345c463857ac
-Based-On: rebase--helper at https://github.com/dscho/git
-Fetch-Base-Via: git fetch https://github.com/dscho/git rebase--helper
-Published-As: https://github.com/dscho/git/releases/tag/rebase-i-extra-v5
-Fetch-It-Via: git fetch https://github.com/dscho/git rebase-i-extra-v5
-
-Interdiff vs v4:
- diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
- index e6591f01112..64b36d429fa 100644
- --- a/builtin/rebase--helper.c
- +++ b/builtin/rebase--helper.c
- @@ -25,9 +25,9 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
-  				ABORT),
-  		OPT_CMDMODE(0, "make-script", &command,
-  			N_("make rebase script"), MAKE_SCRIPT),
- -		OPT_CMDMODE(0, "shorten-sha1s", &command,
- +		OPT_CMDMODE(0, "shorten-ids", &command,
-  			N_("shorten SHA-1s in the todo list"), SHORTEN_SHA1S),
- -		OPT_CMDMODE(0, "expand-sha1s", &command,
- +		OPT_CMDMODE(0, "expand-ids", &command,
-  			N_("expand SHA-1s in the todo list"), EXPAND_SHA1S),
-  		OPT_CMDMODE(0, "check-todo-list", &command,
-  			N_("check the todo list"), CHECK_TODO_LIST),
- diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
- index 71d190766cf..3b0340e7cc9 100644
- --- a/git-rebase--interactive.sh
- +++ b/git-rebase--interactive.sh
- @@ -714,11 +714,11 @@ do_rest () {
-  }
-  
-  expand_todo_ids() {
- -	git rebase--helper --expand-sha1s
- +	git rebase--helper --expand-ids
-  }
-  
-  collapse_todo_ids() {
- -	git rebase--helper --shorten-sha1s
- +	git rebase--helper --shorten-ids
-  }
-  
-  # Add commands after a pick or after a squash/fixup serie
- diff --git a/sequencer.c b/sequencer.c
- index 6373f20a019..06c97e12267 100644
- --- a/sequencer.c
- +++ b/sequencer.c
- @@ -2464,7 +2464,7 @@ int sequencer_make_script(int keep_empty, FILE *out,
-  }
-  
-  
- -int transform_todo_ids(int shorten_sha1s)
- +int transform_todo_ids(int shorten_ids)
-  {
-  	const char *todo_file = rebase_path_todo();
-  	struct todo_list todo_list = TODO_LIST_INIT;
- @@ -2484,7 +2484,7 @@ int transform_todo_ids(int shorten_sha1s)
-  	res = parse_insn_buffer(todo_list.buf.buf, &todo_list);
-  	if (res) {
-  		todo_list_release(&todo_list);
- -		return error(_("unusable instruction sheet: '%s'"), todo_file);
- +		return error(_("unusable todo list: '%s'"), todo_file);
-  	}
-  
-  	out = fopen(todo_file, "w");
- @@ -2503,7 +2503,7 @@ int transform_todo_ids(int shorten_sha1s)
-  		if (item->command >= TODO_EXEC && item->command != TODO_DROP)
-  			fwrite(p, eol - bol, 1, out);
-  		else {
- -			const char *sha1 = shorten_sha1s ?
- +			const char *id = shorten_ids ?
-  				short_commit_name(item->commit) :
-  				oid_to_hex(&item->commit->object.oid);
-  			int len;
- @@ -2512,7 +2512,7 @@ int transform_todo_ids(int shorten_sha1s)
-  			len = strcspn(p, " \t"); /* length of command */
-  
-  			fprintf(out, "%.*s %s %.*s\n",
- -				len, p, sha1, item->arg_len, item->arg);
- +				len, p, id, item->arg_len, item->arg);
-  		}
-  	}
-  	fclose(out);
- @@ -2762,9 +2762,9 @@ static int subject2item_cmp(const struct subject2item_entry *a,
-  }
-  
-  /*
- - * Rearrange the todo list that has both "pick sha1 msg" and "pick sha1
- - * fixup!/squash! msg" in it so that the latter is put immediately after the
- - * former, and change "pick" to "fixup"/"squash".
- + * Rearrange the todo list that has both "pick commit-id msg" and "pick
- + * commit-id fixup!/squash! msg" in it so that the latter is put immediately
- + * after the former, and change "pick" to "fixup"/"squash".
-   *
-   * Note that if the config has specified a custom instruction format, each log
-   * message will have to be retrieved from the commit (as the oneline in the
- diff --git a/sequencer.h b/sequencer.h
- index 1c94bec7622..6f3d3df82c0 100644
- --- a/sequencer.h
- +++ b/sequencer.h
- @@ -48,7 +48,7 @@ int sequencer_remove_state(struct replay_opts *opts);
-  int sequencer_make_script(int keep_empty, FILE *out,
-  		int argc, const char **argv);
-  
- -int transform_todo_ids(int shorten_sha1s);
- +int transform_todo_ids(int shorten_ids);
-  int check_todo_list(void);
-  int skip_unnecessary_picks(void);
-  int rearrange_squash(void);
+diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+index ca1ebb2fa18..821058d452d 100644
+--- a/builtin/rebase--helper.c
++++ b/builtin/rebase--helper.c
+@@ -11,15 +11,19 @@ static const char * const builtin_rebase_helper_usage[] = {
+ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
++	int keep_empty = 0;
+ 	enum {
+-		CONTINUE = 1, ABORT
++		CONTINUE = 1, ABORT, MAKE_SCRIPT
+ 	} command = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
++		OPT_BOOL(0, "keep-empty", &keep_empty, N_("keep empty commits")),
+ 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
+ 				CONTINUE),
+ 		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
+ 				ABORT),
++		OPT_CMDMODE(0, "make-script", &command,
++			N_("make rebase script"), MAKE_SCRIPT),
+ 		OPT_END()
+ 	};
+ 
+@@ -36,5 +40,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		return !!sequencer_continue(&opts);
+ 	if (command == ABORT && argc == 1)
+ 		return !!sequencer_remove_state(&opts);
++	if (command == MAKE_SCRIPT && argc > 1)
++		return !!sequencer_make_script(keep_empty, stdout, argc, argv);
+ 	usage_with_options(builtin_rebase_helper_usage, options);
+ }
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 90b1fbe9cf6..05766835de1 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -785,6 +785,7 @@ collapse_todo_ids() {
+ # each log message will be re-retrieved in order to normalize the
+ # autosquash arrangement
+ rearrange_squash () {
++	format=$(git config --get rebase.instructionFormat)
+ 	# extract fixup!/squash! lines and resolve any referenced sha1's
+ 	while read -r pick sha1 message
+ 	do
+@@ -1210,26 +1211,27 @@ else
+ 	revisions=$onto...$orig_head
+ 	shortrevisions=$shorthead
+ fi
+-format=$(git config --get rebase.instructionFormat)
+-# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
+-git rev-list $merges_option --format="%m%H ${format:-%s}" \
+-	--reverse --left-right --topo-order \
+-	$revisions ${restrict_revision+^$restrict_revision} | \
+-	sed -n "s/^>//p" |
+-while read -r sha1 rest
+-do
+-
+-	if test -z "$keep_empty" && is_empty_commit $sha1 && ! is_merge_commit $sha1
+-	then
+-		comment_out="$comment_char "
+-	else
+-		comment_out=
+-	fi
++if test t != "$preserve_merges"
++then
++	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
++		$revisions ${restrict_revision+^$restrict_revision} >"$todo"
++else
++	format=$(git config --get rebase.instructionFormat)
++	# the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
++	git rev-list $merges_option --format="%m%H ${format:-%s}" \
++		--reverse --left-right --topo-order \
++		$revisions ${restrict_revision+^$restrict_revision} | \
++		sed -n "s/^>//p" |
++	while read -r sha1 rest
++	do
++
++		if test -z "$keep_empty" && is_empty_commit $sha1 && ! is_merge_commit $sha1
++		then
++			comment_out="$comment_char "
++		else
++			comment_out=
++		fi
+ 
+-	if test t != "$preserve_merges"
+-	then
+-		printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
+-	else
+ 		if test -z "$rebase_root"
+ 		then
+ 			preserve=t
+@@ -1248,8 +1250,8 @@ do
+ 			touch "$rewritten"/$sha1
+ 			printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
+ 		fi
+-	fi
+-done
++	done
++fi
+ 
+ # Watch for commits that been dropped by --cherry-pick
+ if test t = "$preserve_merges"
+diff --git a/sequencer.c b/sequencer.c
+index 5282fb849c5..133d9aa7c74 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2412,3 +2412,52 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+ 
+ 	strbuf_release(&sob);
+ }
++
++int sequencer_make_script(int keep_empty, FILE *out,
++		int argc, const char **argv)
++{
++	char *format = NULL;
++	struct pretty_print_context pp = {0};
++	struct strbuf buf = STRBUF_INIT;
++	struct rev_info revs;
++	struct commit *commit;
++
++	init_revisions(&revs, NULL);
++	revs.verbose_header = 1;
++	revs.max_parents = 1;
++	revs.cherry_pick = 1;
++	revs.limited = 1;
++	revs.reverse = 1;
++	revs.right_only = 1;
++	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
++	revs.topo_order = 1;
++
++	revs.pretty_given = 1;
++	git_config_get_string("rebase.instructionFormat", &format);
++	if (!format || !*format) {
++		free(format);
++		format = xstrdup("%s");
++	}
++	get_commit_format(format, &revs);
++	free(format);
++	pp.fmt = revs.commit_format;
++	pp.output_encoding = get_log_output_encoding();
++
++	if (setup_revisions(argc, argv, &revs, NULL) > 1)
++		return error(_("make_script: unhandled options"));
++
++	if (prepare_revision_walk(&revs) < 0)
++		return error(_("make_script: error preparing revisions"));
++
++	while ((commit = get_revision(&revs))) {
++		strbuf_reset(&buf);
++		if (!keep_empty && is_original_commit_empty(commit))
++			strbuf_addf(&buf, "%c ", comment_line_char);
++		strbuf_addf(&buf, "pick %s ", oid_to_hex(&commit->object.oid));
++		pretty_print_commit(&pp, commit, &buf);
++		strbuf_addch(&buf, '\n');
++		fputs(buf.buf, out);
++	}
++	strbuf_release(&buf);
++	return 0;
++}
+diff --git a/sequencer.h b/sequencer.h
+index f885b68395f..83f2943b7a9 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -45,6 +45,9 @@ int sequencer_continue(struct replay_opts *opts);
+ int sequencer_rollback(struct replay_opts *opts);
+ int sequencer_remove_state(struct replay_opts *opts);
+ 
++int sequencer_make_script(int keep_empty, FILE *out,
++		int argc, const char **argv);
++
+ extern const char sign_off_header[];
+ 
+ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
 -- 
 2.13.1.windows.1.1.ga36e14b3aaa
+
 
