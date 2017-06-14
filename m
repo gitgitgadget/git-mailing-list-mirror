@@ -6,155 +6,133 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A097920282
-	for <e@80x24.org>; Wed, 14 Jun 2017 13:16:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1898E20282
+	for <e@80x24.org>; Wed, 14 Jun 2017 13:24:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751869AbdFNNQD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 09:16:03 -0400
-Received: from mout.gmx.net ([212.227.17.20]:62550 "EHLO mout.gmx.net"
+        id S1752243AbdFNNYK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 09:24:10 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52624 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750756AbdFNNQC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 09:16:02 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mcgur-1d3KBR2RST-00HwDh; Wed, 14
- Jun 2017 15:15:56 +0200
-Date:   Wed, 14 Jun 2017 15:15:55 +0200 (CEST)
+        id S1750756AbdFNNYJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 09:24:09 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0McEkx-1d4z6R04wh-00JbYG; Wed, 14
+ Jun 2017 15:24:04 +0200
+Date:   Wed, 14 Jun 2017 15:24:02 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Philipp Gortan <philipp@gortan.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Philip Oakley <philipoakley@iee.org>
-Subject: Re: git-gui ignores core.hooksPath
-In-Reply-To: <CACBZZX6H4wxQ7hrO1Y1u6Qyr5gpK9GeCxpv-x2q3Eq2WCbkK8Q@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1706141457500.171564@virtualbox>
-References: <953845c2-4326-608a-c342-2d2141da561c@gortan.org> <CACBZZX6H4wxQ7hrO1Y1u6Qyr5gpK9GeCxpv-x2q3Eq2WCbkK8Q@mail.gmail.com>
+To:     Philipp Gortan <philipp@gortan.org>
+cc:     philipoakley@iee.org, avarab@gmail.com, git@vger.kernel.org,
+        matthias.serfling@googlemail.com
+Subject: Re: [PATCH] respect core.hooksPath, falling back to .git/hooks
+In-Reply-To: <20170602202301.6413-1-philipp@gortan.org>
+Message-ID: <alpine.DEB.2.21.1.1706141516540.171564@virtualbox>
+References: <CACBZZX6H4wxQ7hrO1Y1u6Qyr5gpK9GeCxpv-x2q3Eq2WCbkK8Q@mail.gmail.com> <20170602202301.6413-1-philipp@gortan.org>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-710790736-1497445612=:171564"
-Content-ID: <alpine.DEB.2.21.1.1706141510020.171564@virtualbox>
-X-Provags-ID: V03:K0:lc+a1FWYmms/g19rXzdfGMiI45uSrzgmre3R6WGnhrLSDS1Kf32
- GwomGSdVkhKzbdo5VM8aDIcAiL15ddjD3KEwZb7oTQcGVQRR0UmUEX8bZqkkSg+kNPTOb+J
- yjHaJmrvaUJw0V8FBmW/uAQNn2xVIQWfl8K1GfbmDT2X8BlYLz7krb2hzrrKId3rCHZXq+V
- 3Z3SDpnsQSAnSOqZ7NSBw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:chcakf7iUCk=:mBNQaVyQSEz9RMwxpqNviR
- VbcS0ljH5An4gU3NsnSFuh5IGPTeG4Em3I2xlRIxh3b8kbJP9m6GNS8AlSiiUvc1+8eu3pZLg
- 2Gb1VnkMtivtXUnm8AVheG5s1aHwdMfpPS1z55PSU72JUmAQjlPIINtIkKAsEznN/OnmQGms9
- vB6b9Ez9mSZS/buA2K43lEibHDzZMGRYmGthEL5sW/H6u+R/ndTrD9Zkw+Rk3G2mw8T3Pp6mb
- XYyEt8Hkq1aMF1NYpmENa27Q70EiQEHkZHOJTXps1vJYiTDTBOCYOsna/2HW6zJ1GwgY8vDQ+
- kfsFDsejC9ec/V9EWS1NkRWU2/kdUbQmsPWYaQBVllDWFtK14rGmUn+0hUBC9ad3xRFc8buls
- 3yPXMA9mIZ9QycqrbnGCuPja0kJveuhkPNZ0+6WctWgToeBmK2xOHPCNpvhhhRhERGLiTDflI
- cIF51pB1Wm1NyaqPTGp27le3T9r1yaJCVWwGULNa3tW6ruw1RKoB90Fe3gHJYstVh3gnc19Vd
- P1fSgc9fYFziFJMeV3yK+A4vHsRKCu+JdxuKyO6zkxNNC5ziGZ00fTg3CUxbpM3xqnesCGpXe
- nUbP2dI8Z/RptDmcHfoKMhZzeHIyYKiqEbOjjzlroHL0Pz6VwdpEXeYAHIzyiVDn5a879tnjk
- tTUXnuTfcyoTjMdf/ar4DeJ47Om3bF78A5Bhjux5+FyaNAI3k0FLQ7qz97a/ecEdqxGXMz0BP
- APUBLNA8x6Vbyj9ksCDNEVjLI82DFR7JwxzE74KuAkncga37nlBdJjPH9VUya92O0Gx1PjJQl
- CMXbNuK
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:HoUTsq90ZaS6TvlfVfET69+pSLLKGMki1d80aGdbcdBT0GWqZjV
+ Fkx5SxC+znG/QcD8EQwBvQHDoDl2bXC1sFQJTT+KZb4r5BlWHMXy5NA59/T6qhxL8ee+4cZ
+ mcMUCN/odyli0Dd4WK/pmr8L38Inp+rvlVBHYJ47T6wZcrlmLpgO5sfH23/1aeiRjYRIK6e
+ z+peH4KJBz3WurLBq95fw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:V7ig+7gOZ34=:rx3GYhClHRT3EANQMczBYY
+ Tt4IGW2mgrBkqIKTHDtKPsHPL7H0Aisnf5S/Zauq9LJw41LnrpOtzobkZsjO+Llc9tiUpOHjt
+ i0f8fr8gR8NA4vG11tAdnUB5M16inWvLkMA1MUMk5PYSz4dMnQujLR0Q75pt2tOSBgcIjaQNu
+ gounXyyBsTNIYf3nTb667lPgXi7QQXh/qGTASMxKGHdFII0+r5zC00hXNCT9Ep4kX9swWexYo
+ LGwLF+1YhqTHPE+x4tl0GLqzrBWlUlyXDAABZtiKSd3eAs0P1v7SXkjmkixRK7r+pwiNcil/3
+ atvw+3rv0RiwdtN635aBWnH0Q4CUmhvrTWx/TT0pLQpScTeExDDwc4+DaDEj8kXznMZhowkHT
+ Q3WdWfFsWJUU8VUFqppkGx/g8dDv7ivgVPv0Fnu5L5or7hbRH9iIHHMKsc1daHu2nIopi8HPH
+ pUBCNPtYN3Mqu/+39LKAcZ3bzN6W/z5BxWlTdVI4+0BK8yiJNyyonTAGbh7nnfAdwm5jD1Lem
+ V90geIHqSgehbh8zCXcBEDy/g8dTix8O2LVyHjtojlJPV5Hcodt0cU2+OWu9WWSQq6tyGli2R
+ 2/1FWr0wez+nPGHggY1kXCQI5QAbK9Dq02jNiwagpUYVIYDlxG75uQm8JK9x1VPdso4wsV55T
+ GONY5CI1p9YP1tzzImLTNCyG4yr4GiP0dUMX4+dQwQow2fGjSxpJstPxKNT3hOcI7p86qOfDr
+ +K504vwZabbeeP5x1J6pcLKLj0yDAc+zn6e3CY4nNN5pYF9KM0E2Ps0t4ToNW8cy2Gr5eScMQ
+ 196VXho
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Philipp,
 
---8323329-710790736-1497445612=:171564
-Content-Type: text/plain; CHARSET=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <alpine.DEB.2.21.1.1706141510021.171564@virtualbox>
+On Fri, 2 Jun 2017, Philipp Gortan wrote:
 
-Hi,
+> Signed-off-by: Philipp Gortan <philipp@gortan.org>
 
-On Fri, 2 Jun 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+I just saw this. I made sure that the thread to which I just replied did
+not have any news from you, but you simply started a new thread ;-)
 
-> On Fri, Jun 2, 2017 at 3:41 PM, Philipp Gortan <philipp@gortan.org> wrote=
-:
->
-> > I've been unhappy for quite a while that I had to configure the hooks
-> > manually for each of my repos - until I found out recently that there
-> > is the core.hooksPath config variable that (when set globally) allows
-> > me to specify a hooks directory to be used for all my repositories.
-> >
-> > Now I was happy - for a few minutes, until I tested this feature in
-> > git-gui, and realized that it doesn't work there.
-> >
-> > This seems to be caused by "proc githook_read", which says "set pchook
-> > [gitdir hooks $hook_name]" instead of querying "git config
-> > core.hooksPath" first - cf
-> > https://github.com/git/git/blob/2cc2e70264e0fcba04f9ef791d144bbc8b50120=
-6/git-gui/git-gui.sh#L627
-> >
-> > Would be great if this could get fixed...
+This commit message needs a little bit of love. Something along the lines:
 
-Indeed. Why don't you give it a try?
+	Since v2.9.0, Git knows about the config variable core.hookspath
+	that allows overriding the path to the directory containing the
+	Git hooks.
 
-> This indeed is something that should be fixed, but git-gui development
-> is managed outside of git.git, it's just occasionally pulled in. I'm
-> not what the best place to contact is, but I've CC'd
-> Philip Oakley who's been making recent commits to git-gui.git at
-> http://repo.or.cz/git-gui.git/
+	Since v2.10.0, the `--git-path` option respects that config
+	variable, too, so we may just as well use that command.
 
-Philip is in the same spot as I am: we both worked on Git GUI to improve
-it for Git for Windows users, but Pat has been silent for over half a year
-on all of our PRs.
+	For Git versions older than v2.5.0 (which was the first version to
+	support the `--git-path` option for the `rev-parse` command), we
+	simply fall back to the previous code.
 
-In the meantime, I managed to get a couple of changes into git.git via
-Junio, but the situation is far from ideal.
+(This assumes that you'll go with the approach I outlined in the other
+thread, comparing the Git version to 2.5.0 and going with --git-path if
+available.)
 
-So what I settled on is to carry a couple of Git GUI patches in Git for
-Windows' fork, until the time when the patches finally get accepted into
-https://github.com/patthoyts/git-gui.
+> ---
+> 
+> The following patch tries to fix git-gui to respect the core.hooksPath config
+> variable, falling back to the old behavior.
 
-In this particular instance, the only question is whether to use `git
-rev-parse --git-path hooks` or re-roll the core.hookspath logic in
-git-gui.
+That would also have been a decent commit message, if a bit short. But you
+need to put this text before the `---` line, even before the
+`Signed-off-by:` footer.
 
-Both approaches have their downsides:
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 5bc21b8..a5335b1 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -624,7 +624,10 @@ proc git_write {args} {
+>  }
+>  
+>  proc githook_read {hook_name args} {
+> -	set pchook [gitdir hooks $hook_name]
+> +	if {[catch {set hooksdir [git config core.hooksPath]}]} {
 
-- rev-parse --git-path was broken in subdirectories for a *really* long
-  time. Since Git GUI is supposed to be relatively independent from the
-  version of the installed git executable, that would imply a couple of
-  ugly extra code just to make sure that it works correctly.
+Did you not mean [get_config core.hookspath] here, i.e. get_config and the
+key all lower-case?
 
-- duplicating the core.hookspath logic is prone to become stale over time,
-  as Git may change the behavior (as it did with the core.hookspath
-  setting).
+> +		set hooksdir [gitdir hooks]
+> +	}
+> +	set pchook [file join $hooksdir $hook_name]
+>  	lappend args 2>@1
+>  
 
-The subdirectory problem of --git-path is actually not that bad, as Git
-GUI cd's to the top-level directory anyway. So that bug does not affect
-us. The only caveat is that --git-path was only introduced into v2.5.0,
-and Git GUI has conditional code to even support pre-1.6.3 versions.
+The problem I see with that is, as I mentioned in the other thread, that
+it duplicates the logic in config.c that may change at any stage.
 
-Happily, pre-1.6.3 versions are not supposed to handle core.hookspath in
-the way v2.9.0 and later handle it.
+Even worse: it is inconsistent with the way Git handles core.hooksPath, if
+the installed `git` executable predates v2.9.0. Git GUI explicitly allows
+for being used with a large range of Git versions.
 
-So something like this *may* work:
+In short: I think it would be better to go with the approach I outlined in
+the other thread. I'll reproduce the patch (completely untested) here:
 
--- snip --
+-- snipsnap --
 diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
 index 37c1c5d227b..3067a3b000a 100755
 --- a/git-gui/git-gui.sh
 +++ b/git-gui/git-gui.sh
 @@ -624,7 +624,11 @@ proc git_write {args} {
  }
-=20
+ 
  proc githook_read {hook_name args} {
--=09set pchook [gitdir hooks $hook_name]
-+=09if {[package vcompare $::_git_version 2.5.0] >=3D 0} {
-+=09=09set pchook [git rev-parse --git-path "hooks/$hook_name"]
-+=09} else {
-+=09=09set pchook [gitdir hooks $hook_name]
-+=09}
- =09lappend args 2>@1
-=20
- =09# On Windows [file executable] might lie so we need to ask
--- snap --
-
-Philipp, this is as far as I will go with this. If you truly desire this
-to be fixed, please take it from here (read: test, fix and submit with a
-good commit message).
-
-Ciao,
-Johannes
---8323329-710790736-1497445612=:171564--
+-	set pchook [gitdir hooks $hook_name]
++	if {[package vcompare $::_git_version 2.5.0] >= 0} {
++		set pchook [git rev-parse --git-path "hooks/$hook_name"]
++	} else {
++		set pchook [gitdir hooks $hook_name]
++	}
+ 	lappend args 2>@1
+ 
+ 	# On Windows [file executable] might lie so we need to ask
