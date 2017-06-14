@@ -2,131 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B8A720282
-	for <e@80x24.org>; Wed, 14 Jun 2017 13:04:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED21A20282
+	for <e@80x24.org>; Wed, 14 Jun 2017 13:07:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752408AbdFNNEz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 09:04:55 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:35578 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752124AbdFNNEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 09:04:54 -0400
-Received: by mail-pf0-f174.google.com with SMTP id l89so84351383pfi.2
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 06:04:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=CGAQ+qdWvPVXqI/BDYfGlPbPVJSWyo5Jb3p2zEmT1bg=;
-        b=St9mFzOmKGkLskdwAKjh2P5Cl1gymPtXlyWmiC7fgZxKZvv33yhflSTXjjT7LsWTQo
-         WtHKz7dm2oSSWNulwzjPlahUEaEry9VhfuUtproEAnNSCeTY/Me+MCGiSAqLy5YgCeX/
-         /oDDnMuWW9GuydRWNOw+9xsVLY+bGvIwQRThflc+8NzTif1CRYBdy7WeH68tuwVtSHcb
-         di0YlczQYR08YNkclrRiVZnZPYFxO7LpRKZdp0X0seBvMzbXHJ6ZqNB0wgSyl4NcDf1Q
-         TcYQmyJA1CJxoyyb4x2+I6hoHrdByu25HxDwyY5QS/teSyBpsyFYPamw6EhcvKgtBBiG
-         5sdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=CGAQ+qdWvPVXqI/BDYfGlPbPVJSWyo5Jb3p2zEmT1bg=;
-        b=ZGJr22UEpTfdK3wSjFK8EqzOlm5oVPSSrIOukohEqjg20DTVRWCDXFwXq95+rugd5U
-         xsVX1ECMzmSHdoP2zjqfnwihAng+LXPHDTzP79LRCK/NdsOKoGElpzeljTLwJQZYKEzZ
-         uFxMKdK1OutIXUpdQzvVNvluVQdqsxBy/8TzdzRiFHrYDpPUPfLHl6nOC0FI3aQRMAah
-         Xf7BZIB6BR0hisCni+1/04crJ+++dnMY1cPkiveBkTgbAY9pzYu3JAZgs38xA791ZTVw
-         nKNshfCioxix69Z/xjQhLUMmcY+4+gu9OegJkh5k8ZZ3gx1vZYSJqZLsCzDfe24y504b
-         mB7w==
-X-Gm-Message-State: AKS2vOztPhGXnw2NnwJgNnI/KXXxQGgz+DRE8zbaEU3oABRz3nlZ1aP/
-        166WkUncdDND+Q==
-X-Received: by 10.98.214.146 with SMTP id a18mr1251pfl.40.1497445493517;
-        Wed, 14 Jun 2017 06:04:53 -0700 (PDT)
-Received: from unique-pc ([2405:204:714e:9214:b972:3835:c42c:3ffd])
-        by smtp.googlemail.com with ESMTPSA id w2sm2411688pfb.18.2017.06.14.06.04.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Jun 2017 06:04:52 -0700 (PDT)
-Message-ID: <1497445448.2678.1.camel@gmail.com>
-Subject: Re: Small issue with "add untracked" option of 'git add -i'
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Wed, 14 Jun 2017 18:34:08 +0530
-In-Reply-To: <xmqqshj5nl3o.fsf@gitster.mtv.corp.google.com>
-References: <1497278015.7302.13.camel@gmail.com>
-         <xmqqwp8hnm1v.fsf@gitster.mtv.corp.google.com>
-         <xmqqshj5nl3o.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S1751889AbdFNNHN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 09:07:13 -0400
+Received: from mout.gmx.net ([212.227.15.15]:63607 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750756AbdFNNHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 09:07:13 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEFlg-1daU4j1vce-00FWs5; Wed, 14
+ Jun 2017 15:07:01 +0200
+Date:   Wed, 14 Jun 2017 15:06:58 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Liam Beguin <liambeguin@gmail.com>
+Subject: [PATCH v5 00/10] The final building block for a faster rebase -i
+Message-ID: <cover.1497444257.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:aE4/ZkkTL71QomsKeKdXLXOUvi1VIp1Paf+UtF4bjsc9dE/SS2p
+ QnO8Otyu2oAB63FRM8ZcRP7+eBq6mj3SOE8Agn+oTrILsXsMG6KlP67YdX429ykXdZAn7NJ
+ oEWcSbwcwoQu67dzvtvFYYBx94S68dE2tH0luRq14V/4oxTrtB1SLTYuae+W/C0gKdFq94s
+ sHzKnitY29R1V1DporwQQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:05zaLDvDdTc=:NksFt1e+7D/s/og1J8MV9Y
+ C7p5gaQmWujKbfv0XSufJqIACZ6diaq935g2feSs4+v68K0MqAPhMRwW0vmbFPFXYgf1JQXPB
+ paKd1B0BeQE4Q9TsFsSH0T2nOyjjEt6+t1dUMOIrip3LvPIDfWyPvTT1kBU7JRNnwoMruUTBm
+ aNX4gCh1y/K5zxPFJiTdnKmIiiSaiYYEutn7sZ90It9fRSbcDkXj5zdORBid58Uubi4iZFHJR
+ uacCwKRTUCzXZTR8qqy8QTjm1kwQJK2aTyXbtw2ZZ4C0xFQQsmW1/V8khtZ/nddLjLwvm8EaI
+ ix/za/HsiEsKtTjoXhN77RrTrfK79qHBIqjO1z70PKQbtt0murRbWZyy/2/vYd2hM8p9h0Rjq
+ KM0eS4Uwi9B3kzAfaquI1Oj5iInGw3aMyreRtmxJrIBt+0KKCzTEJmfG0EDOV6Zw4JjzPDEvJ
+ selrjHFlKGKB5zwicKRnfEfPR6hmKTMwyv0hO2zMZJVywmvru46tbxcHNBmZ/cUGs5tL3dqAN
+ +Y14Tsw0Vq4HZuD20MhybZtUQ73M0vjC7e519rRE3mWf0DbG7R26ybzwD4PoaKT+OWYhnI52N
+ 00tqSu99IyggiMqrrbBlkvsNTmmNmghOwVdCg34V0ZAUssN5uHMOF2017WfEJWEHQAvUL7AB4
+ DrGm+jUjet0wBEjSQI/S8wmNk19Y0nkUlr2qgEfeyKDB3EmCyShBRqHinVsPZVThcc7SvWriG
+ cO2J1gTeN0DZv05YZ1rR9U/G27PYrUjPuG1DPImI4CjjN1Nlohoo467bNXj6Ebyk5sffhxpqz
+ Q0SDmuy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2017-06-12 at 10:59 -0700, Junio C Hamano wrote:
-> Together with your other wishes, perhaps something like this is what
-> you have in mind.  The original tried to throw in a blank line as a
-> separator to help interactive users to more easily tell the boundary
-> of blocks of text, but it wasn't consistently doing so (e.g. "update"
-> when nothing is dirty was very silent, while "status" gave one blank
-> line that is supposed to be shown after the list of changed ones even
-> when the list is empty).
-> 
-That's right. Though I'm not sure of the implementation, I guess the
-following patch would make `git add -i` do what I thought it should.
+This patch series reimplements the expensive pre- and post-processing of
+the todo script in C.
 
->  git-add--interactive.perl | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
-> 
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index 709a5f6ce6..0ec09361b4 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -537,7 +537,7 @@ sub list_and_choose {
->  				$last_lf = 1;
->  			}
->  		}
-> -		if (!$last_lf) {
-> +		if (@stuff && !$last_lf) {
->  			print "\n";
->  		}
->  
-> @@ -634,7 +634,6 @@ sub prompt_help_cmd {
->  sub status_cmd {
->  	list_and_choose({ LIST_ONLY => 1, HEADER => $status_head },
->  			list_modified());
-> -	print "\n";
->  }
->  
->  sub say_n_paths {
-> @@ -667,7 +666,6 @@ sub update_cmd {
->  		       map { $_->{VALUE} } @update);
->  		say_n_paths('updated', @update);
->  	}
-> -	print "\n";
->  }
->  
->  sub revert_cmd {
-> @@ -701,7 +699,6 @@ sub revert_cmd {
->  		refresh();
->  		say_n_paths('reverted', @update);
->  	}
-> -	print "\n";
->  }
->  
->  sub add_untracked_cmd {
-> @@ -711,9 +708,8 @@ sub add_untracked_cmd {
->  		system(qw(git update-index --add --), @add);
->  		say_n_paths('added', @add);
->  	} else {
-> -		print __("No untracked files.\n");
-> +		print __("No untracked file chosen.\n");
->  	}
-> -	print "\n";
->  }
->  
->  sub run_git_apply {
+And it concludes the work I did to accelerate rebase -i so far.
+
+I am still unwilling to replace a compile-time safe way to pass the
+options to the revision machinery by the alternative (which I am still
+flabbergasted about) proposed by Junio. This will not change.
+
+Changes since v4:
+
+- replaced the "sha1s" part of the names by "ids", to reflect the
+  current effort to move away from the cryptographically unsafe SHA-1
+
+- replaced the confusing term "instruction sheet" in an error message by
+  the more commonly used "todo list"
+
+
+Johannes Schindelin (10):
+  t3415: verify that an empty instructionFormat is handled as before
+  rebase -i: generate the script via rebase--helper
+  rebase -i: remove useless indentation
+  rebase -i: do not invent onelines when expanding/collapsing SHA-1s
+  rebase -i: also expand/collapse the SHA-1s via the rebase--helper
+  t3404: relax rebase.missingCommitsCheck tests
+  rebase -i: check for missing commits in the rebase--helper
+  rebase -i: skip unnecessary picks using the rebase--helper
+  t3415: test fixup with wrapped oneline
+  rebase -i: rearrange fixup/squash lines using the rebase--helper
+
+ Documentation/git-rebase.txt  |  16 +-
+ builtin/rebase--helper.c      |  29 ++-
+ git-rebase--interactive.sh    | 373 ++++-------------------------
+ sequencer.c                   | 530 ++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h                   |   8 +
+ t/t3404-rebase-interactive.sh |  22 +-
+ t/t3415-rebase-autosquash.sh  |  28 ++-
+ 7 files changed, 646 insertions(+), 360 deletions(-)
+
+
+base-commit: 02a2850ad58eff6de70eb2dc5f96345c463857ac
+Based-On: rebase--helper at https://github.com/dscho/git
+Fetch-Base-Via: git fetch https://github.com/dscho/git rebase--helper
+Published-As: https://github.com/dscho/git/releases/tag/rebase-i-extra-v5
+Fetch-It-Via: git fetch https://github.com/dscho/git rebase-i-extra-v5
+
+Interdiff vs v4:
+ diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+ index e6591f01112..64b36d429fa 100644
+ --- a/builtin/rebase--helper.c
+ +++ b/builtin/rebase--helper.c
+ @@ -25,9 +25,9 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+  				ABORT),
+  		OPT_CMDMODE(0, "make-script", &command,
+  			N_("make rebase script"), MAKE_SCRIPT),
+ -		OPT_CMDMODE(0, "shorten-sha1s", &command,
+ +		OPT_CMDMODE(0, "shorten-ids", &command,
+  			N_("shorten SHA-1s in the todo list"), SHORTEN_SHA1S),
+ -		OPT_CMDMODE(0, "expand-sha1s", &command,
+ +		OPT_CMDMODE(0, "expand-ids", &command,
+  			N_("expand SHA-1s in the todo list"), EXPAND_SHA1S),
+  		OPT_CMDMODE(0, "check-todo-list", &command,
+  			N_("check the todo list"), CHECK_TODO_LIST),
+ diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+ index 71d190766cf..3b0340e7cc9 100644
+ --- a/git-rebase--interactive.sh
+ +++ b/git-rebase--interactive.sh
+ @@ -714,11 +714,11 @@ do_rest () {
+  }
+  
+  expand_todo_ids() {
+ -	git rebase--helper --expand-sha1s
+ +	git rebase--helper --expand-ids
+  }
+  
+  collapse_todo_ids() {
+ -	git rebase--helper --shorten-sha1s
+ +	git rebase--helper --shorten-ids
+  }
+  
+  # Add commands after a pick or after a squash/fixup serie
+ diff --git a/sequencer.c b/sequencer.c
+ index 6373f20a019..06c97e12267 100644
+ --- a/sequencer.c
+ +++ b/sequencer.c
+ @@ -2464,7 +2464,7 @@ int sequencer_make_script(int keep_empty, FILE *out,
+  }
+  
+  
+ -int transform_todo_ids(int shorten_sha1s)
+ +int transform_todo_ids(int shorten_ids)
+  {
+  	const char *todo_file = rebase_path_todo();
+  	struct todo_list todo_list = TODO_LIST_INIT;
+ @@ -2484,7 +2484,7 @@ int transform_todo_ids(int shorten_sha1s)
+  	res = parse_insn_buffer(todo_list.buf.buf, &todo_list);
+  	if (res) {
+  		todo_list_release(&todo_list);
+ -		return error(_("unusable instruction sheet: '%s'"), todo_file);
+ +		return error(_("unusable todo list: '%s'"), todo_file);
+  	}
+  
+  	out = fopen(todo_file, "w");
+ @@ -2503,7 +2503,7 @@ int transform_todo_ids(int shorten_sha1s)
+  		if (item->command >= TODO_EXEC && item->command != TODO_DROP)
+  			fwrite(p, eol - bol, 1, out);
+  		else {
+ -			const char *sha1 = shorten_sha1s ?
+ +			const char *id = shorten_ids ?
+  				short_commit_name(item->commit) :
+  				oid_to_hex(&item->commit->object.oid);
+  			int len;
+ @@ -2512,7 +2512,7 @@ int transform_todo_ids(int shorten_sha1s)
+  			len = strcspn(p, " \t"); /* length of command */
+  
+  			fprintf(out, "%.*s %s %.*s\n",
+ -				len, p, sha1, item->arg_len, item->arg);
+ +				len, p, id, item->arg_len, item->arg);
+  		}
+  	}
+  	fclose(out);
+ @@ -2762,9 +2762,9 @@ static int subject2item_cmp(const struct subject2item_entry *a,
+  }
+  
+  /*
+ - * Rearrange the todo list that has both "pick sha1 msg" and "pick sha1
+ - * fixup!/squash! msg" in it so that the latter is put immediately after the
+ - * former, and change "pick" to "fixup"/"squash".
+ + * Rearrange the todo list that has both "pick commit-id msg" and "pick
+ + * commit-id fixup!/squash! msg" in it so that the latter is put immediately
+ + * after the former, and change "pick" to "fixup"/"squash".
+   *
+   * Note that if the config has specified a custom instruction format, each log
+   * message will have to be retrieved from the commit (as the oneline in the
+ diff --git a/sequencer.h b/sequencer.h
+ index 1c94bec7622..6f3d3df82c0 100644
+ --- a/sequencer.h
+ +++ b/sequencer.h
+ @@ -48,7 +48,7 @@ int sequencer_remove_state(struct replay_opts *opts);
+  int sequencer_make_script(int keep_empty, FILE *out,
+  		int argc, const char **argv);
+  
+ -int transform_todo_ids(int shorten_sha1s);
+ +int transform_todo_ids(int shorten_ids);
+  int check_todo_list(void);
+  int skip_unnecessary_picks(void);
+  int rearrange_squash(void);
+-- 
+2.13.1.windows.1.1.ga36e14b3aaa
+
