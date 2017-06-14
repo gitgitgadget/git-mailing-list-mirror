@@ -6,19 +6,19 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF1F620282
-	for <e@80x24.org>; Wed, 14 Jun 2017 13:08:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5F9F20282
+	for <e@80x24.org>; Wed, 14 Jun 2017 13:08:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752507AbdFNNH7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 09:07:59 -0400
-Received: from mout.gmx.net ([212.227.17.20]:64472 "EHLO mout.gmx.net"
+        id S1752464AbdFNNIN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 09:08:13 -0400
+Received: from mout.gmx.net ([212.227.17.20]:61314 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752495AbdFNNHz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 09:07:55 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lwarz-1dtf6i44jf-018JP4; Wed, 14
- Jun 2017 15:07:48 +0200
-Date:   Wed, 14 Jun 2017 15:07:46 +0200 (CEST)
+        id S1752106AbdFNNIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 09:08:12 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mh5h7-1d7hm12l6n-00MMRs; Wed, 14
+ Jun 2017 15:08:04 +0200
+Date:   Wed, 14 Jun 2017 15:07:49 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,101 +27,410 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH v5 06/10] t3404: relax rebase.missingCommitsCheck tests
+Subject: [PATCH v5 07/10] rebase -i: check for missing commits in the
+ rebase--helper
 In-Reply-To: <cover.1497444257.git.johannes.schindelin@gmx.de>
-Message-ID: <bc86ff44d5fa0ee2bf69ab6a7e06d52d4b9df3d8.1497444257.git.johannes.schindelin@gmx.de>
+Message-ID: <fe4dd5e016efb032e41c0db5c94025e1235ea0d9.1497444257.git.johannes.schindelin@gmx.de>
 References: <cover.1497444257.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0://Q/SGFMELYxDb4J3b3N3wfyCcLQzH79I0u/Ue2Z4WAxDymiBWh
- xc3KoZBDQui95UdYZW7DxuhCfHnwwEYQLSLEEJA/A85K1Y7q93F1WnVPjMQfj0srRG2sdWG
- AeM3FAZNZmBu1AP+1geUhqS2++9riSP/O1N7692VAHxnYY4eiWR5kTlYLtt4sjqJGlwxxAh
- ohwJchvaLVXXjsNnSZMyQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vfCKv+wQ43A=:wqvHzXKeeVQ/XdqAxxcGUx
- j8/qqRkarmBFELE1kAe7y+9ITyGIv+iPuFA+dJqZeeC39J0zhgcw87Il65AAX9wJn9jpO+tdE
- Q6Ob3UrDmI0hVxrTRHW2zcYwhVnidX2QPpSdcPWWdepbX9pNbI48ULqrftCweZ0jilMDTMZj9
- fkdOUnmJByyc8J7K0H08kGJFR5N5vvspNDRQOh33SwwtiH7YUJ4rGu3maQsPtRWEuc1h1jscy
- Etgu3qwkSmkKIPy9FLkGhcnnP6sMh0KH/zLMs2nT/DQlK1hvqQWDof1J9mUdt5MmuLgRDgfTf
- ersACpzsfRZP1CqK3hJC3hPOKJ5/Ht14WB62nBJZfZUGbkNHO6B2ZIOhC0AylF50yy/hKZ/qz
- NQD2C8BdCrZuZHn2JAyi6Ckna/EQ//i262wgCKhIQxNXo7VcW2/k4sYaGT/YtNjklldLSpYGj
- hJVqLguywOfdCO3iDqgXEDApbViyxYWg6oNL3PicQn2xKc0bt/0H8u7KdXbwwqr9cR8aMbpUc
- dOn8J/HVgv1R7jqIUJVvWEerAM2ZbiBoFodN/5QuqzW0t3kATv0YHa0gDoF1+kIHNyWTNpAJX
- e4uY8zbLQVs0sLa/UdATViwf8AjI7mpa4OhhiXq0eP7gTBZbDAL6DE9DS8fpSW7X6ZH+7NgGs
- Os31RdXjNnSdFz0Du8sCMfrjqiZHucKyc8EMWSB1c0m6ui+ZCd50PsrwtX5nU/jLzDc821u2Y
- CSbJwxJjdkNr6QqpwNegYjEIP8AQz8Atr8khXyQvd37/Fcio0Fv0LhZrQ6nqw5TxjT2yNB6xH
- pE27axC
+X-Provags-ID: V03:K0:wYnrECIgxk8nF0i8L6vrl3x8AimSw3/ksc0qpyhtHb8HUXPwzvC
+ 4vatXeWpvR3FvZL73RbKofCdtXgy9rQvt8zLNTOOwGQtRq8G8QZP3PU3AEH4f7P98XiGH6z
+ 0c8V0nX7q6SC6aE5lBetNWBkyfb4/2Yfel8P1Za2Rzm46AkJlqeaaFALnSJcQkveUxFIuw3
+ iV4o/+pxp5klc1SXUZ/ag==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/DuSGIyYC7o=:4xP8sWxzDGPNq8GBxF9bGs
+ JlXPQW+kGaUPr1bZAgkwjsfZZvn6c2sedy9iaMX/MOKuyN1xCY0+o+o2Tr5ZNeyk3rHK9K7/w
+ FB92jeK9Vl02HzQBxHkRsnbX8QmZgW5Bxb9FJKz5RT/KdZhjEgqyZWeXGho+wYp85X/NdQZFu
+ SgCCF7oPRd8eLIf+LtxUKksvr98ZiDHEAQP3reJaLU+hJQgWnP8PzQzX0gt4cUVDADhQLdMXm
+ q5x69XSz5uWr1Pmspc+cJ6FieH4DwvXyMSgFzvf2lc2Szq6O+YJAmJayCW4ssrU83xNPLtrfp
+ eyvIUSDEMT9hv94yY75w+VF6MN4f91knjBSVTs1kYcWCXXHAYdfNYKcUsCZn9z5R1RK14jfgg
+ moKAHhjyoCaK1Y+oUOy1y7M2boddKLPksXvZ7shidV37tIMJZ8ftltNpXDH2Xsh7q802JZW/n
+ Js7Us9Wqo64S/O73xjB9ALuHUK+lCzLkMOwHFFcosSFoy6aPuycN+CLIJMWeVSvmZd2cMaFon
+ kmGLtLqnYSJ9Y2o1HI+THJK6aqC6lEqJHgdRlsxIhOyk20KnpbiTXlkrkgcIoXtHjA19mxr1f
+ v+WD0dCjVr3CmVzmC0Sc37NxTxQ8sEYSa8eY8DOvHTvgVsDfg6WcG88XfsOsyNG3WOvfCXcb9
+ 1scoP1amaN/KS2Ho4OHgyQ58lYFaCDsGprLQZ+3pOviVcB0YLvzBf3nzoUgpVMk62HqBDCC3p
+ 6UwduZdCnPz2NAP/ov9ya4ERDI+6WProSkAu90Kx6Mb4JeV5g0VzHCKiMlp//ujgk4HaPn8uq
+ prJ2t/x
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These tests were a bit anal about the *exact* warning/error message
-printed by git rebase. But those messages are intended for the *end
-user*, therefore it does not make sense to test so rigidly for the
-*exact* wording.
-
-In the following, we will reimplement the missing commits check in
-the sequencer, with slightly different words.
-
-So let's just test for the parts in the warning/error message that
-we *really* care about, nothing more, nothing less.
+In particular on Windows, where shell scripts are even more expensive
+than on MacOSX or Linux, it makes sense to move a loop that forks
+Git at least once for every line in the todo list into a builtin.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3404-rebase-interactive.sh | 22 ++++------------------
- 1 file changed, 4 insertions(+), 18 deletions(-)
+ builtin/rebase--helper.c   |   7 +-
+ git-rebase--interactive.sh | 164 ++-------------------------------------------
+ sequencer.c                | 122 +++++++++++++++++++++++++++++++++
+ sequencer.h                |   1 +
+ 4 files changed, 134 insertions(+), 160 deletions(-)
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 5bd0275930b..3b411ea8f1b 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1242,20 +1242,13 @@ test_expect_success 'rebase -i respects rebase.missingCommitsCheck = error' '
- 	test B = $(git cat-file commit HEAD^ | sed -ne \$p)
- '
+diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+index b6ad4008398..0deba9d1945 100644
+--- a/builtin/rebase--helper.c
++++ b/builtin/rebase--helper.c
+@@ -13,7 +13,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
+ 	int keep_empty = 0;
+ 	enum {
+-		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_SHA1S, EXPAND_SHA1S
++		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_SHA1S, EXPAND_SHA1S,
++		CHECK_TODO_LIST
+ 	} command = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
+@@ -28,6 +29,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 			N_("shorten SHA-1s in the todo list"), SHORTEN_SHA1S),
+ 		OPT_CMDMODE(0, "expand-ids", &command,
+ 			N_("expand SHA-1s in the todo list"), EXPAND_SHA1S),
++		OPT_CMDMODE(0, "check-todo-list", &command,
++			N_("check the todo list"), CHECK_TODO_LIST),
+ 		OPT_END()
+ 	};
  
--cat >expect <<EOF
--Warning: the command isn't recognized in the following line:
-- - badcmd $(git rev-list --oneline -1 master~1)
--
--You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
--Or you can abort the rebase with 'git rebase --abort'.
--EOF
--
- test_expect_success 'static check of bad command' '
- 	rebase_setup_and_clean bad-cmd &&
- 	set_fake_editor &&
- 	test_must_fail env FAKE_LINES="1 2 3 bad 4 5" \
- 		git rebase -i --root 2>actual &&
--	test_i18ncmp expect actual &&
-+	test_i18ngrep "badcmd $(git rev-list --oneline -1 master~1)" actual &&
-+	test_i18ngrep "You can fix this with .git rebase --edit-todo.." actual &&
- 	FAKE_LINES="1 2 3 drop 4 5" git rebase --edit-todo &&
- 	git rebase --continue &&
- 	test E = $(git cat-file commit HEAD | sed -ne \$p) &&
-@@ -1277,20 +1270,13 @@ test_expect_success 'tabs and spaces are accepted in the todolist' '
- 	test E = $(git cat-file commit HEAD | sed -ne \$p)
- '
+@@ -50,5 +53,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		return !!transform_todo_ids(1);
+ 	if (command == EXPAND_SHA1S && argc == 1)
+ 		return !!transform_todo_ids(0);
++	if (command == CHECK_TODO_LIST && argc == 1)
++		return !!check_todo_list();
+ 	usage_with_options(builtin_rebase_helper_usage, options);
+ }
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index d5df02435ae..c8cad318fa4 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -867,96 +867,6 @@ add_exec_commands () {
+ 	mv "$1.new" "$1"
+ }
  
--cat >expect <<EOF
+-# Check if the SHA-1 passed as an argument is a
+-# correct one, if not then print $2 in "$todo".badsha
+-# $1: the SHA-1 to test
+-# $2: the line number of the input
+-# $3: the input filename
+-check_commit_sha () {
+-	badsha=0
+-	if test -z "$1"
+-	then
+-		badsha=1
+-	else
+-		sha1_verif="$(git rev-parse --verify --quiet $1^{commit})"
+-		if test -z "$sha1_verif"
+-		then
+-			badsha=1
+-		fi
+-	fi
+-
+-	if test $badsha -ne 0
+-	then
+-		line="$(sed -n -e "${2}p" "$3")"
+-		warn "$(eval_gettext "\
 -Warning: the SHA-1 is missing or isn't a commit in the following line:
-- - edit XXXXXXX False commit
+- - \$line")"
+-		warn
+-	fi
 -
--You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.
--Or you can abort the rebase with 'git rebase --abort'.
--EOF
+-	return $badsha
+-}
 -
- test_expect_success 'static check of bad SHA-1' '
- 	rebase_setup_and_clean bad-sha &&
- 	set_fake_editor &&
- 	test_must_fail env FAKE_LINES="1 2 edit fakesha 3 4 5 #" \
- 		git rebase -i --root 2>actual &&
--	test_i18ncmp expect actual &&
-+	test_i18ngrep "edit XXXXXXX False commit" actual &&
-+	test_i18ngrep "You can fix this with .git rebase --edit-todo.." actual &&
- 	FAKE_LINES="1 2 4 5 6" git rebase --edit-todo &&
- 	git rebase --continue &&
- 	test E = $(git cat-file commit HEAD | sed -ne \$p)
+-# prints the bad commits and bad commands
+-# from the todolist in stdin
+-check_bad_cmd_and_sha () {
+-	retval=0
+-	lineno=0
+-	while read -r command rest
+-	do
+-		lineno=$(( $lineno + 1 ))
+-		case $command in
+-		"$comment_char"*|''|noop|x|exec)
+-			# Doesn't expect a SHA-1
+-			;;
+-		"$cr")
+-			# Work around CR left by "read" (e.g. with Git for
+-			# Windows' Bash).
+-			;;
+-		pick|p|drop|d|reword|r|edit|e|squash|s|fixup|f)
+-			if ! check_commit_sha "${rest%%[ 	]*}" "$lineno" "$1"
+-			then
+-				retval=1
+-			fi
+-			;;
+-		*)
+-			line="$(sed -n -e "${lineno}p" "$1")"
+-			warn "$(eval_gettext "\
+-Warning: the command isn't recognized in the following line:
+- - \$line")"
+-			warn
+-			retval=1
+-			;;
+-		esac
+-	done <"$1"
+-	return $retval
+-}
+-
+-# Print the list of the SHA-1 of the commits
+-# from stdin to stdout
+-todo_list_to_sha_list () {
+-	git stripspace --strip-comments |
+-	while read -r command sha1 rest
+-	do
+-		case $command in
+-		"$comment_char"*|''|noop|x|"exec")
+-			;;
+-		*)
+-			long_sha=$(git rev-list --no-walk "$sha1" 2>/dev/null)
+-			printf "%s\n" "$long_sha"
+-			;;
+-		esac
+-	done
+-}
+-
+-# Use warn for each line in stdin
+-warn_lines () {
+-	while read -r line
+-	do
+-		warn " - $line"
+-	done
+-}
+-
+ # Switch to the branch in $into and notify it in the reflog
+ checkout_onto () {
+ 	GIT_REFLOG_ACTION="$GIT_REFLOG_ACTION: checkout $onto_name"
+@@ -971,74 +881,6 @@ get_missing_commit_check_level () {
+ 	printf '%s' "$check_level" | tr 'A-Z' 'a-z'
+ }
+ 
+-# Check if the user dropped some commits by mistake
+-# Behaviour determined by rebase.missingCommitsCheck.
+-# Check if there is an unrecognized command or a
+-# bad SHA-1 in a command.
+-check_todo_list () {
+-	raise_error=f
+-
+-	check_level=$(get_missing_commit_check_level)
+-
+-	case "$check_level" in
+-	warn|error)
+-		# Get the SHA-1 of the commits
+-		todo_list_to_sha_list <"$todo".backup >"$todo".oldsha1
+-		todo_list_to_sha_list <"$todo" >"$todo".newsha1
+-
+-		# Sort the SHA-1 and compare them
+-		sort -u "$todo".oldsha1 >"$todo".oldsha1+
+-		mv "$todo".oldsha1+ "$todo".oldsha1
+-		sort -u "$todo".newsha1 >"$todo".newsha1+
+-		mv "$todo".newsha1+ "$todo".newsha1
+-		comm -2 -3 "$todo".oldsha1 "$todo".newsha1 >"$todo".miss
+-
+-		# Warn about missing commits
+-		if test -s "$todo".miss
+-		then
+-			test "$check_level" = error && raise_error=t
+-
+-			warn "$(gettext "\
+-Warning: some commits may have been dropped accidentally.
+-Dropped commits (newer to older):")"
+-
+-			# Make the list user-friendly and display
+-			opt="--no-walk=sorted --format=oneline --abbrev-commit --stdin"
+-			git rev-list $opt <"$todo".miss | warn_lines
+-
+-			warn "$(gettext "\
+-To avoid this message, use \"drop\" to explicitly remove a commit.
+-
+-Use 'git config rebase.missingCommitsCheck' to change the level of warnings.
+-The possible behaviours are: ignore, warn, error.")"
+-			warn
+-		fi
+-		;;
+-	ignore)
+-		;;
+-	*)
+-		warn "$(eval_gettext "Unrecognized setting \$check_level for option rebase.missingCommitsCheck. Ignoring.")"
+-		;;
+-	esac
+-
+-	if ! check_bad_cmd_and_sha "$todo"
+-	then
+-		raise_error=t
+-	fi
+-
+-	if test $raise_error = t
+-	then
+-		# Checkout before the first commit of the
+-		# rebase: this way git rebase --continue
+-		# will work correctly as it expects HEAD to be
+-		# placed before the commit of the next action
+-		checkout_onto
+-
+-		warn "$(gettext "You can fix this with 'git rebase --edit-todo' and then run 'git rebase --continue'.")"
+-		die "$(gettext "Or you can abort the rebase with 'git rebase --abort'.")"
+-	fi
+-}
+-
+ # The whole contents of this file is run by dot-sourcing it from
+ # inside a shell function.  It used to be that "return"s we see
+ # below were not inside any function, and expected to return
+@@ -1299,7 +1141,11 @@ git_sequence_editor "$todo" ||
+ has_action "$todo" ||
+ 	return 2
+ 
+-check_todo_list
++git rebase--helper --check-todo-list || {
++	ret=$?
++	checkout_onto
++	exit $ret
++}
+ 
+ expand_todo_ids
+ 
+diff --git a/sequencer.c b/sequencer.c
+index 5b893ca3878..a697906d463 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2518,3 +2518,125 @@ int transform_todo_ids(int shorten_ids)
+ 	todo_list_release(&todo_list);
+ 	return 0;
+ }
++
++enum check_level {
++	CHECK_IGNORE = 0, CHECK_WARN, CHECK_ERROR
++};
++
++static enum check_level get_missing_commit_check_level(void)
++{
++	const char *value;
++
++	if (git_config_get_value("rebase.missingcommitscheck", &value) ||
++			!strcasecmp("ignore", value))
++		return CHECK_IGNORE;
++	if (!strcasecmp("warn", value))
++		return CHECK_WARN;
++	if (!strcasecmp("error", value))
++		return CHECK_ERROR;
++	warning(_("unrecognized setting %s for option"
++		  "rebase.missingCommitsCheck. Ignoring."), value);
++	return CHECK_IGNORE;
++}
++
++/*
++ * Check if the user dropped some commits by mistake
++ * Behaviour determined by rebase.missingCommitsCheck.
++ * Check if there is an unrecognized command or a
++ * bad SHA-1 in a command.
++ */
++int check_todo_list(void)
++{
++	enum check_level check_level = get_missing_commit_check_level();
++	struct strbuf todo_file = STRBUF_INIT;
++	struct todo_list todo_list = TODO_LIST_INIT;
++	struct strbuf missing = STRBUF_INIT;
++	int advise_to_edit_todo = 0, res = 0, fd, i;
++
++	strbuf_addstr(&todo_file, rebase_path_todo());
++	fd = open(todo_file.buf, O_RDONLY);
++	if (fd < 0) {
++		res = error_errno(_("could not open '%s'"), todo_file.buf);
++		goto leave_check;
++	}
++	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
++		close(fd);
++		res = error(_("could not read '%s'."), todo_file.buf);
++		goto leave_check;
++	}
++	close(fd);
++	advise_to_edit_todo = res =
++		parse_insn_buffer(todo_list.buf.buf, &todo_list);
++
++	if (res || check_level == CHECK_IGNORE)
++		goto leave_check;
++
++	/* Mark the commits in git-rebase-todo as seen */
++	for (i = 0; i < todo_list.nr; i++) {
++		struct commit *commit = todo_list.items[i].commit;
++		if (commit)
++			commit->util = (void *)1;
++	}
++
++	todo_list_release(&todo_list);
++	strbuf_addstr(&todo_file, ".backup");
++	fd = open(todo_file.buf, O_RDONLY);
++	if (fd < 0) {
++		res = error_errno(_("could not open '%s'"), todo_file.buf);
++		goto leave_check;
++	}
++	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
++		close(fd);
++		res = error(_("could not read '%s'."), todo_file.buf);
++		goto leave_check;
++	}
++	close(fd);
++	strbuf_release(&todo_file);
++	res = !!parse_insn_buffer(todo_list.buf.buf, &todo_list);
++
++	/* Find commits in git-rebase-todo.backup yet unseen */
++	for (i = todo_list.nr - 1; i >= 0; i--) {
++		struct todo_item *item = todo_list.items + i;
++		struct commit *commit = item->commit;
++		if (commit && !commit->util) {
++			strbuf_addf(&missing, " - %s %.*s\n",
++				    short_commit_name(commit),
++				    item->arg_len, item->arg);
++			commit->util = (void *)1;
++		}
++	}
++
++	/* Warn about missing commits */
++	if (!missing.len)
++		goto leave_check;
++
++	if (check_level == CHECK_ERROR)
++		advise_to_edit_todo = res = 1;
++
++	fprintf(stderr,
++		_("Warning: some commits may have been dropped accidentally.\n"
++		"Dropped commits (newer to older):\n"));
++
++	/* Make the list user-friendly and display */
++	fputs(missing.buf, stderr);
++	strbuf_release(&missing);
++
++	fprintf(stderr, _("To avoid this message, use \"drop\" to "
++		"explicitly remove a commit.\n\n"
++		"Use 'git config rebase.missingCommitsCheck' to change "
++		"the level of warnings.\n"
++		"The possible behaviours are: ignore, warn, error.\n\n"));
++
++leave_check:
++	strbuf_release(&todo_file);
++	todo_list_release(&todo_list);
++
++	if (advise_to_edit_todo)
++		fprintf(stderr,
++			_("You can fix this with 'git rebase --edit-todo' "
++			  "and then run 'git rebase --continue'.\n"
++			  "Or you can abort the rebase with 'git rebase"
++			  " --abort'.\n"));
++
++	return res;
++}
+diff --git a/sequencer.h b/sequencer.h
+index 71d25374afe..878dd296f8c 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -49,6 +49,7 @@ int sequencer_make_script(int keep_empty, FILE *out,
+ 		int argc, const char **argv);
+ 
+ int transform_todo_ids(int shorten_ids);
++int check_todo_list(void);
+ 
+ extern const char sign_off_header[];
+ 
 -- 
 2.13.1.windows.1.1.ga36e14b3aaa
 
