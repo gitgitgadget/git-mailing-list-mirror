@@ -2,99 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FC0E20282
-	for <e@80x24.org>; Wed, 14 Jun 2017 18:26:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB8C20282
+	for <e@80x24.org>; Wed, 14 Jun 2017 18:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752739AbdFNS0M (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 14:26:12 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34203 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752403AbdFNS0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 14:26:11 -0400
-Received: by mail-pg0-f68.google.com with SMTP id v14so1039949pgn.1
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 11:26:11 -0700 (PDT)
+        id S1751713AbdFNSgb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 14:36:31 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33229 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751628AbdFNSga (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 14:36:30 -0400
+Received: by mail-pg0-f65.google.com with SMTP id a70so1072866pge.0
+        for <git@vger.kernel.org>; Wed, 14 Jun 2017 11:36:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=b3T0H3lYHe+xwXBD73UNOjhh7Gs5nJQppUhf4X64ugQ=;
-        b=uOR63SAGWeTkrOADsrQ8LG+aYYqNdZvvT1ZX+HR9WKhFqhixzga6HIlJ8lgRVmNaxQ
-         ihE8DVu+/LOxzUVQ4lob291xXI0qY9AlF6RrOsae0+3rhPgA+Pffcujtk4IRi3cbfXl3
-         MxcT4DeQfxNv5MI4fEx+1rys1JUGAyB8h+1sZhPtmY+pg+VBa/554dV0bFT7FGofpNc4
-         nwGu/rmo51BfUxWEou5hx1XgvN+Ujz6BI3qiXlN1YfyBvVhpzy0YHzObZrubd1qJdyfI
-         xxF4YagUcK1tWv/fGF3UkTHW5IjWMx/xi2g7FSIlGZNDl4mR3sCfgvhZYS0mEGi4kmUq
-         ZaBw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=06Zzgy+nZoxWL6koDY4m76EB/pF/HXlddW2QCdTxtlg=;
+        b=nlq1k4wP0/fdKMKIiPkIigd/BQB7IGLX+PmJgDhazwOt0yXyT/sWfePxGGELoew0CQ
+         aq74SjIVgFtll2Uja3U97/cS0v9yDb/8ONRgMqmRxWoLwyjhDJTe6SwrtNWEKcD9141l
+         ASodwf4cG50y+H5KUILMFebxajVKM4Fv2WGQ87uHVfOMO2dIeUBFgPzTUp8DiPoqVnoy
+         WeCPTAVp1ZkBroCGltUoJp6pVmUugUQiViPeQJBqiBCcT/FJgrP5bgwH4cr09COOO+Tr
+         CVIYbAXshAoQRknWyXkEXMQVoW1SfpPoj7PGuAsi8hVQ/uZs8V0mHbh2sSxMh4F7Gpul
+         iArg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=b3T0H3lYHe+xwXBD73UNOjhh7Gs5nJQppUhf4X64ugQ=;
-        b=ql7AC5OZOZdBHY1JvZpzPaGd+OXHUelGwoEm1BRJvsBCjegdHL3f3WVvnCg5DmQdb1
-         O1kDFKFvyTDmfWnn7cJXM3P9vQDY0Z/7J4/631IL6fVkhCisQ0pQH32cFuLP6v9Zp9GM
-         IWjsIRX+mo/sCTv78CoEPDq9oj95+542ccGZKAZdDG7+Jm9DA9b7CQG6LpNz4/O6GD9n
-         Ql6kLWMei8Xv+jwU480zdGrlP4O4T+YA/wL2le+N9LhWATNSnQp1ztds7jJ8mvz4w7UJ
-         EUhek8FvL9vysJeWe3xTberCcpw/L9ycKNmExppzGsEgzf1VkyTLitbl9/tdXOD/s56O
-         0OHA==
-X-Gm-Message-State: AKS2vOykh+hjw37RcmOUEpIKOXeQyfqFUxpt1DhIWJUYGCQ8E4d7CSfa
-        AkRg8F1zymz77g==
-X-Received: by 10.84.241.197 with SMTP id t5mr1543261plm.48.1497464770555;
-        Wed, 14 Jun 2017 11:26:10 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:8130:47b0:791f:5985])
-        by smtp.gmail.com with ESMTPSA id m26sm1143809pgn.30.2017.06.14.11.26.09
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=06Zzgy+nZoxWL6koDY4m76EB/pF/HXlddW2QCdTxtlg=;
+        b=iK5nxACxzD39CnOA5j/bTZwzN6+tDDtUyRzA0rVXGxCOm1JfuXbVN4XXa6XHZ5Ub0l
+         rOsnH33ZCP0l4ZEa9xPZjzRg1vklvl0+/Tdfswut5wrq6TVcIH9usnc2GHG7bN95KcI5
+         luMtwrnizZhZkrDU+4PirhhTj5xqpbVRDGk0cMbUkp51tFFJTSa43rcFyKXzGX30Yg98
+         9h0JoLlnttILF77fNPUr2G+6tyu+9WkCq1fg1hvBinvMJYoFQGX4/0NEkasck6snNVeM
+         eubkBS6NLgz1a0fTN1bj0TgoIlHwHze/uRcONKxNSRdKxQc9Ivp4GFAZDYkE1b3Ajv2C
+         LXsA==
+X-Gm-Message-State: AKS2vOyxDu3eJHS7UfNZF+J4ePyMfcbW76r07ji/9hs2g0+/QUVJ/+iT
+        DL857JIeEgYgyg==
+X-Received: by 10.84.217.87 with SMTP id e23mr1540209plj.143.1497465389530;
+        Wed, 14 Jun 2017 11:36:29 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:9e8:46fc:1af4:4618])
+        by smtp.gmail.com with ESMTPSA id m134sm1177634pga.15.2017.06.14.11.36.28
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 14 Jun 2017 11:26:09 -0700 (PDT)
-Date:   Wed, 14 Jun 2017 11:26:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <peartben@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] sub-process: fix comment about api-sub-process.txt
-Message-ID: <20170614182607.GW133952@aiede.mtv.corp.google.com>
-References: <20170614151225.31055-1-chriscool@tuxfamily.org>
+        Wed, 14 Jun 2017 11:36:28 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git@vger.kernel.org, benpeart@microsoft.com, pclouds@gmail.com,
+        johannes.schindelin@gmx.de, David.Turner@twosigma.com,
+        peff@peff.net, christian.couder@gmail.com, avarab@gmail.com
+Subject: Re: [PATCH v5 7/7] fsmonitor: add a performance test
+References: <20170610134026.104552-1-benpeart@microsoft.com>
+        <20170610134026.104552-8-benpeart@microsoft.com>
+        <xmqqo9tsn9qg.fsf@gitster.mtv.corp.google.com>
+        <9c1ed8d4-6bdb-e709-758d-4b010525e9e3@gmail.com>
+Date:   Wed, 14 Jun 2017 11:36:27 -0700
+In-Reply-To: <9c1ed8d4-6bdb-e709-758d-4b010525e9e3@gmail.com> (Ben Peart's
+        message of "Wed, 14 Jun 2017 10:12:42 -0400")
+Message-ID: <xmqqvany2z84.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170614151225.31055-1-chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder wrote:
+Ben Peart <peartben@gmail.com> writes:
 
-> Subject: sub-process: fix comment about api-sub-process.txt
+>> Having said all that, I think you are using this ONLY on windows;
+>> perhaps it is better to drop #ifdef GIT_WINDOWS_NATIVE from all of
+>> the above and arrange Makefile to build test-drop-cache only on that
+>> platform, or something?
+>
+> I didn't find any other examples of Windows only tools.  I'll update
+> the #ifdef to properly dump the file system cache on Linux as well and
+> only error out on other platforms.
 
-nit: this one-line description doesn't describe what was wrong and is
-being fixed.  I think something like
+If this will become Windows-only, then I have no problem with
+platform specfic typedef ;-) I have no problem with CamelCase,
+either, as that follows the local convention on the platform
+(similar to those in compat/* that are only for Windows).
 
-	sub-process: correct path to API docs in comment
+Having said all that.
 
-would be easier to understand in "git log" output.
+Another approach is to build this helper on all platforms, with
+sections protected by "#ifdef LINUX", "#ifdef WINDOWS", etc.  That
+way, the platform detection and switching between running this
+program and echoing something into /proc filesystem performed in
+p7519 can be removed (this test-helper program will be responsible
+to implement that logic instead).  When p7519 wants to drop the
+filesystem cache, regardless of the platform, it can call this
+test-helper without having to know how the filesystem cache is
+dropped.
 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  sub-process.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+I do not have strong preference either way, but I have a slight
+suspicion that the "another approach" above may give us a better
+result.  For one thing, the test-helper can be reused in new perf
+scripts people will write in the future.
 
-With or without such a tweak,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-> diff --git a/sub-process.h b/sub-process.h
-> index 7d451e1cde..d9a45cd359 100644
-> --- a/sub-process.h
-> +++ b/sub-process.h
-> @@ -7,7 +7,7 @@
->  
->  /*
->   * Generic implementation of background process infrastructure.
-> - * See Documentation/technical/api-background-process.txt.
-> + * See: Documentation/technical/api-sub-process.txt
->   */
->  
->   /* data structures */
+Thanks.
