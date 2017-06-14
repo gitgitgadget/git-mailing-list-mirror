@@ -2,76 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0206520401
-	for <e@80x24.org>; Wed, 14 Jun 2017 10:18:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F4BA20401
+	for <e@80x24.org>; Wed, 14 Jun 2017 10:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751771AbdFNKSN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 06:18:13 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:23684 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751645AbdFNKSM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 06:18:12 -0400
-Received: from [192.168.2.201] ([92.22.42.39])
-        by smtp.talktalk.net with SMTP
-        id L5NKdvC5b9tMzL5NKdjKOp; Wed, 14 Jun 2017 11:18:11 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1497435491; bh=ZdElJDD/fS3049975BBxaNj9disIpHSDlHXUCphTp4o=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=elHMDGFRd1pCr/kDuLZqpTx3mS9F8ZwJwKus7UaVV/+YTVhYfSa96I3YQn4MuDOc4
-         DADLzlSLhJnH+TWMdB1z2Q2Mo0kA6xqsJ5vVwpeUUM5cVE1PY0v+C/7goFNzHKxGnh
-         spETY52DpxH8ksUc6asewW0zWSKQWf8CXgZVPOnM=
-X-Originating-IP: [92.22.42.39]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=WOE9ZTkR c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
- a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=9K8dpytg-LWxa6SWud4A:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/3] rebase: Add tests for console output
+        id S1751836AbdFNKU5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 06:20:57 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57171 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750728AbdFNKU4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 06:20:56 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbyUS-1e4Lmh1ChI-00jHAh; Wed, 14
+ Jun 2017 12:20:43 +0200
+Date:   Wed, 14 Jun 2017 12:20:42 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
- <20170531104213.16944-3-phillip.wood@talktalk.net>
- <alpine.DEB.2.21.1.1706011329350.3610@virtualbox>
- <5309bbe7-edd8-0c34-82ff-c3162d7d9e66@talktalk.net>
- <xmqqr2yt5d4g.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <699c6d43-4c1b-d3c2-3b01-8925f5c21511@talktalk.net>
-Date:   Wed, 14 Jun 2017 11:18:10 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH v3 6/6] Use the early config machinery to expand
+ aliases
+In-Reply-To: <xmqqk24f97ud.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1706141219260.171564@virtualbox>
+References: <cover.1497355444.git.johannes.schindelin@gmx.de> <822765b002488f03523bf440097492be3c14931a.1497355444.git.johannes.schindelin@gmx.de> <xmqqk24f97ud.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqr2yt5d4g.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfJt1P+VQNW+yONCmNFobwFmzf9hd+vXAkZTJpn4kEpc/jfLLqFBSr8MxsAvIM57Z8zr0RjzsD4lS5vHG6meuvG/xBlH/grIKh+djsuY0JtyxZoVk6Vdo
- yileww3Faj6jd1oaiwcC3k1UBUxIoV5mGArUnAKkU9PnKojFLubevldcDNL+ARcEdc4ZnEFhU/ha4YCotngsJi3+vhE5cuZCW8mlS4wQDqi8q4J30qTtntAJ
- LTP9zkF4GEe+8GYvwVmjtaGCvGqHOiEqWPtslhGPY7A=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:JDNgkP2UOJd/PR2i+1XTW6tZ7IAnK3crNrXgpNEEBa2UUih9GMG
+ igEZ29AnYv68ZqBvFRfeUxke/d2gW3bgNse80IgWA+aqfJ/29Miw+dHVhdqE+oIeeIIwWCd
+ LZ9MDZn1WPxxsJnArr4avRrOGQAfuX532RI6t+6eHbsAHULViv1q5Xv1wPhwp5KFGdw37xd
+ 4w5n1kZGfC4cA8cNmgp9g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hW4Ko123S9Y=:vsS+m1Zyx2x89ZCQJeS6rU
+ uyqfJxjJ5pod86yo+u0H/Zu5jSH/JzR2j/cNyXr9yjbUTJEnUXpvxRo6CkScIwBI0DOipcGqi
+ Ke/BlkxG6/ZgSBUv3zP3fVJXSLz0LSlHCT6aURRWRRkzR6w2TJlgiP+4TM92H8rmm/fbn8BrG
+ YWubWV5lJquwVE9E/05lJ9W6mN+44uFTw871Tnfq1z14S5UTNr5+yXeBrVBetUKav7XtFYPTP
+ 6Fh2ODpx9ak1pU858Oi4itW1m9RJpHn6w2GniIEhBAFat/M+e1+NmjPsk+mi1erLXFqSUu1I1
+ vFlJ9F5VzCa5wDKoVO6LzJ4C1DB558bIXhKtZU2K8PMaMvN4CPdO707saxNzze7ABsQ1L1ZGG
+ /cpGYoik6uT5EEskxOF0biXt5gNSDldwUEMC+5+g2W+d86rr1lgdErXUdqSyHBTjCR6o1mGKs
+ C88+/EWnpngbuDg7DB/h3Ene4dVd6ttQts/WdELRqdWwrDZgvaeFM1vWCgRqFXjsLDHLsgXBG
+ T7SBB4Q+/ljwed9++/DdhqE9ya4wbjj3kTctIwQKAqEAA0jxG+Raojq6TIddYDkwpnAvqo1Wd
+ +4eH6QPYXFKSLGzcuE7gX6xQNAE3PV+PYlpVzi85Ez1M+WuOwOQPDBBAZFCBlGrzB+FZnshdP
+ qYMfIhu975/Dy3OrGwfiP+AjEB3z+EuRk65hDHUXJa3Tl+WI4l6JDn0MjAC+d4biB5PPGMpt6
+ oifSS1rEd3yQAf3QPBJ2E8KBF4xKmTGNysBUbd5JczbpWLJ7j5+Ux3fXawT22BQqVf1HUqBDu
+ qutWI/M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/06/17 17:39, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
->> I'm confused by this as my script does not use the escape sequence "\r"
->> out of portability concerns. It has a literal carriage return as you get
->> from typing Ctrl-Q Ctrl-M in emacs or Ctrl-V Ctrl-M in bash ...
-> 
-> I think the worry is that some implementations of sed may be unhappy
-> to see these raw control characters in the sed script.
-> 
+Hi Junio,
 
-Ah, I'd misunderstood the problem, thanks for taking the time to point
-that out. I'll redo the tests as Johannes suggested
+On Tue, 13 Jun 2017, Junio C Hamano wrote:
 
-Thanks
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > Instead of discovering the .git/ directory, read the config and then
+> > trying to painstakingly reset all the global state if we did not find a
+> > matching alias, let's use the early config machinery instead.
+> 
+> s/read/&ing/, I think.  My reading hiccupped while trying to figure
+> out what two alternative approaches are being compared.
 
-Phillip
+Whoa. Brainfart on my side. Sorry.
+
+> > Also, one might be tempted to streamline the code in alias_lookup() to
+> > *not* use a strbuf for the key. However, if the config reports an error,
+> > it is far superior to tell the user that the `alias.xyz` key had a
+> > problem than to claim that it was the `xyz` key.
+> 
+> The mention of "streamline" is puzzling to me.  When we are trying
+> "git xyz", "alias.xyz" is the key we would look up, not "xyz"; it is
+> not clear to anybody who didn't read the discussion on v2 (which
+> includes the readers of "git log" in a few months) what kind of flawed
+> streamlining could look up "xyz" and result in a bad configuration
+> reported on it.
+
+As I changed it (thanks for pointing out my mistake to assume that
+skip_prefix() has to change the pointer passed as first parameter), this
+paragraph is now gone anyway.
+
+> >  alias.c          | 31 ++++++++++++++++++++++++-------
+> >  git.c            | 55 ++++---------------------------------------------------
+> >  t/t7006-pager.sh |  2 +-
+> >  3 files changed, 29 insertions(+), 59 deletions(-)
+> 
+> Happy to see the deletion of all the save/restore-env stuff.
+
+Yep.
+
+Ciao,
+Dscho
