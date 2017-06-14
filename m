@@ -6,19 +6,19 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 865FC20282
-	for <e@80x24.org>; Wed, 14 Jun 2017 13:07:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B41C320282
+	for <e@80x24.org>; Wed, 14 Jun 2017 13:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752499AbdFNNHj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 09:07:39 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55308 "EHLO mout.gmx.net"
+        id S1752559AbdFNNH4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 09:07:56 -0400
+Received: from mout.gmx.net ([212.227.15.18]:61756 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751934AbdFNNHh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 09:07:37 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3x6-1dzwU73v7M-00erPO; Wed, 14
- Jun 2017 15:07:28 +0200
-Date:   Wed, 14 Jun 2017 15:07:12 +0200 (CEST)
+        id S1752531AbdFNNHy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 09:07:54 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ltqb7-1dmWFC3RMz-0117O9; Wed, 14
+ Jun 2017 15:07:39 +0200
+Date:   Wed, 14 Jun 2017 15:07:39 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,74 +27,81 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH v5 03/10] rebase -i: remove useless indentation
+Subject: [PATCH v5 04/10] rebase -i: do not invent onelines when expanding/collapsing
+ SHA-1s
 In-Reply-To: <cover.1497444257.git.johannes.schindelin@gmx.de>
-Message-ID: <c7af03867e96e6ce6bf0a7bb858f6018513a4341.1497444257.git.johannes.schindelin@gmx.de>
+Message-ID: <4eb4ea601185225c05f391c0855d80711797a994.1497444257.git.johannes.schindelin@gmx.de>
 References: <cover.1497444257.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:WDfmIn/+B8qSel/m0+2zudi/1VBcoGXU8TZhpKtnlpMFNMO02xc
- g7tiWcBspBGXecuFBJ4SCeTVgJm5sNjL1HiE2CQVvY3SD8MohhkibuchCcWraLS3pklfgI2
- CYxgm6Ao2HJx3RYbnaoYcVkfMayzipnEx5rPrAF5ytNzKiyRlAsBgAJ/GTl7rMEMBIdv22X
- rlHpsMoiqtHwDDJkBx9yA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:eQaUSEHb/QE=:uJgRPpDOxvGh26+O8Z/3R7
- n4qZ9/yEGPVtu0QKjsdQAObWa/zBXp6tDQmF3pMu6lMN5ckvVaj76FP/KXK3RL/Co9nD4rmxk
- JLGpjBVGd5XqvF807Ih5aSEk3E/8CznXvKt3SNfy4jxh4G/0R1IL4uc7huMD3isiryNwiOtHh
- UDJFN0g50PW+BfPn5qy3YFFuRYzMgEbDtCU4LrQpFKFk5gT8Q7f09WRZChqqoT2rDizzuiwqv
- xOoz7wqPpZ6QAIlmtAzz4D9xaGrFggqXQrmQhgD1wN8OBoDR3QakfjD4RlVesFsUMwTOqXarH
- tJ/H03W8NVf2ExMACkQ5H//vi6ImQEOu7EPDHQDkwIG/eksPoMhskFltQMhYScDWzxaEx73YV
- H2tnCnnzkSEHklhD2serS+gnz3fZ3PkZa9D6WD0occx4XXbpqKoNzTAIBY1Cue9LvWeUcukL3
- OgVFT7VuGw6BMHiV/2Y0y5Vf94k03Vxff2OGf8F2VsVvb/GqHeXIu3reRUiekocQqvQAxItNO
- xZ59vdKBmrCE5XbS7TTil0cYN9qBT4hTWv+fqhfdIM3tQ8h841Z1R8fc5Gav7GQYDzjXzmliy
- r7Bpd+XPZEH2nWdoEq2nDuNcUQxsePu9/kmcUZq2kdDkVm9/MiZ3MA0cjwqxHWYqvlDoNpbo8
- NBAVU4sH0LP+USS/111cX6W3YEFAyi8Nzmi32s3G6hJtPUJxFPNm1Nn8nPGIlPQXnewzDZVA5
- dLjH8lx7/1KGsgl5xrYrVzKgQ9Xbw+/3HAkDogkOm1TZpLa5vxCTuAjDKCURHdCQtMwbEpARB
- 6gg7GLi
+X-Provags-ID: V03:K0:96VXP0wcBmY8h/2k9bEdfuoZ1krmgaBJOY9zRNEAyiMy/9xtwQG
+ Oge1kGEE9uttmrP1F7JJ/6u0saqqMaNZWZaz00ZMlwt2hZvD19BEvaBhIUNjC3VNCkPPegY
+ 5VYYmklibhC5Ifmra/IZisr8+Xd5JvCVm8Ot+NzN/I51bz7iiKUzq0rbFlhC6u42zrJafzb
+ 4n+KwyMMEATqxL+NJ82Vw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nm5A0/zS+Uw=:oJFXf8eKFGUMerBWPV0xdV
+ +Z5oUhQbz8+Lv/h5KGHIyWxIsEv+N1seWdEOMv/oDMRXHNlxQO1WAPZsOWYKLO9uNT5UTY7pq
+ 0n8tmLwSfzvJ+K0A5GLgpi/iZNAwZqOf+KVrXQGnAuiQAG/yaRlSBOlviSygIJCZ/5aOTLz8q
+ 62BTKeyUaKSoDJ4lMwGKm/rYxWJOxvLKKaM0fSVw2GiUYbAu7P7ibsXFidnpxCzDgr2Ijgzod
+ uRVtyqSdRErQWdrLWY3fqSBLHkPLnj8CyjDz+aHBveWxMo8kuDIDE8yRZ5s0YTArsXK3q3HPw
+ Pts9c+XzFOaDfz4yEszeSSKXvSuqWoKhXerxUT6lEO/ZD4JUfhTRXqnXafOR1PHIZa5PwvBNv
+ x/i4vZWO1csaSRe7hDEN2QqYI6V6pRIe2NkggWcPXKxEuE1wPmcdYFs751eaTgK6NlllOpOMC
+ eioFHAIBrYcrwN+wFVnLU3aRxlKoxoG2qfWGQTkaUMZtm7MZTuGUgXRQqCe+EzO4pf67wVC8S
+ ZgDzfYkyA4v9avYL7DfXTQioUyZxhg3iGv6L/FJRFdR6YnbVo6RgOLEt6ARwtPBYLLl8pO/q5
+ mAztm0Fn5NLgFdwvhiSgUqPmPwey4i22AC71pYFAEX/oaxa+WojXaijxKkMZRX7v7TpLIc4kD
+ Jq57aVYpNrEsZf8hyyDBM1vQl+ctDsNTK4WNz5rNemG2te5/Nh7+6MCxPhfDOT/5s2Lh1Uwbl
+ qzLGY1g1E/5q0XTwvWo+s9+3h7SW711/SH2yJVIvqshjsg+UIiP7YACm6rwyNWHE1YjLlYrS+
+ 068WuNv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The commands used to be indented, and it is nice to look at, but when we
-transform the SHA-1s, the indentation is removed. So let's do away with it.
+To avoid problems with short SHA-1s that become non-unique during the
+rebase, we rewrite the todo script with short/long SHA-1s before and
+after letting the user edit the script. Since SHA-1s are not intuitive
+for humans, rebase -i also provides the onelines (commit message
+subjects) in the script, purely for the user's convenience.
 
-For the moment, at least: when we will use the upcoming rebase--helper
-to transform the SHA-1s, we *will* keep the indentation and can
-reintroduce it. Yet, to be able to validate the rebase--helper against
-the output of the current shell script version, we need to remove the
-extra indentation.
+It is very possible to generate a todo script via different means than
+rebase -i and then to let rebase -i run with it; In this case, these
+onelines are not required.
+
+And this is where the expand/collapse machinery has a bug: it *expects*
+that oneline, and failing to find one reuses the previous SHA-1 as
+"oneline".
+
+It was most likely an oversight, and made implementation in the (quite
+limiting) shell script language less convoluted. However, we are about
+to reimplement performance-critical parts in C (and due to spawning a
+git.exe process for every single line of the todo script, the
+expansion/collapsing of the SHA-1s *is* performance-hampering on
+Windows), therefore let's fix this bug to make cross-validation with the
+C version of that functionality possible.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git-rebase--interactive.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ git-rebase--interactive.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 05766835de1..93372c62b2e 100644
+index 93372c62b2e..9d65212b7f1 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -155,13 +155,13 @@ reschedule_last_action () {
- append_todo_help () {
- 	gettext "
- Commands:
-- p, pick = use commit
-- r, reword = use commit, but edit the commit message
-- e, edit = use commit, but stop for amending
-- s, squash = use commit, but meld into previous commit
-- f, fixup = like \"squash\", but discard this commit's log message
-- x, exec = run command (the rest of the line) using shell
-- d, drop = remove commit
-+p, pick = use commit
-+r, reword = use commit, but edit the commit message
-+e, edit = use commit, but stop for amending
-+s, squash = use commit, but meld into previous commit
-+f, fixup = like \"squash\", but discard this commit's log message
-+x, exec = run command (the rest of the line) using shell
-+d, drop = remove commit
- 
- These lines can be re-ordered; they are executed from top to bottom.
- " | git stripspace --comment-lines >>"$todo"
+@@ -760,7 +760,12 @@ transform_todo_ids () {
+ 			;;
+ 		*)
+ 			sha1=$(git rev-parse --verify --quiet "$@" ${rest%%[	 ]*}) &&
+-			rest="$sha1 ${rest#*[	 ]}"
++			if test "a$rest" = "a${rest#*[	 ]}"
++			then
++				rest=$sha1
++			else
++				rest="$sha1 ${rest#*[	 ]}"
++			fi
+ 			;;
+ 		esac
+ 		printf '%s\n' "$command${rest:+ }$rest"
 -- 
 2.13.1.windows.1.1.ga36e14b3aaa
 
