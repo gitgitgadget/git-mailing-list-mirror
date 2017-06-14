@@ -2,120 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0785420401
-	for <e@80x24.org>; Wed, 14 Jun 2017 10:24:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 681AD20401
+	for <e@80x24.org>; Wed, 14 Jun 2017 10:25:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752143AbdFNKYz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 06:24:55 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63991 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751820AbdFNKYy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 06:24:54 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4WuC-1dkaz40U9s-00ygaz; Wed, 14
- Jun 2017 12:24:38 +0200
-Date:   Wed, 14 Jun 2017 12:24:36 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 6/6] Use the early config machinery to expand
- aliases
-In-Reply-To: <20170614055824.p2ueyiyfsdf6inve@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.21.1.1706141223021.171564@virtualbox>
-References: <cover.1497355444.git.johannes.schindelin@gmx.de> <822765b002488f03523bf440097492be3c14931a.1497355444.git.johannes.schindelin@gmx.de> <20170613182606.GO154599@google.com> <20170614055824.p2ueyiyfsdf6inve@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:xdoe5vnrEWfuZPjAy1u9JpnQiROYqTQoXmpIpEAph1A9S+6zagr
- b1a6sjp+q+ENqq+O4BHeHw9QgVAjxKyp4qiDv6RsYwSjRcF62tmtQwozIh5PSaO5MOQOsPc
- 3jBRljYX7L9W5+YK3/Fg65zmCy+qZpl6Q6PXLwCLTs3InO1NWn3hMGGdWn8F8mqKEhPnMa3
- dfKwKcM3/YWf3hxkoBIVw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Z0iG0mmiYX4=:d2JxxSCYD95vaOxNwNIgs5
- 3J7In8eaIAlIQMu3ASLpZ1K/UL3e81LEvw0iHvCtd44dndieW5QwKd6lploeHKEcOm/uN84lj
- zDHJIJ5xKUcwqGwi5hl/9Leepn+gOXcrQ1ChDxNB+o/06wrb0wrESTDjLaszwleJ6SgAxnT8G
- 51bm7tknX4QHidRM1YDHoKz5AkVVtf46vnJBommNu/FPiaICJYqon4OVpmVmZ2t+z1Ceah70Y
- 9BBvGkacQ3jnzzUB9/X1Vz5pEbASnqwqTUogEANRKorX0ES0l0vGEljfYHN7acwlQAcwqw4zn
- ejUSdwHVP5hGXJm/aA6R2+i1xMaFNYUc8A8XDpnZj88xqzaRiDfStHcaUbT+9qly6qRFNPV7L
- 4gTaOSBEH4/x8a5z9PQvhhUW4FJCN5Z+LQ6AEWn3lHhApWlHVpTBbEx/u3q7QnDeI6r2E9vt/
- pzRF/75J0ymxJDQGfH9MdbX/CALHUC2+SWABxOcuruuOlS2R1f/2LckH/zcIzHpC07Qi4Ur5I
- y/TGMZEUiQkPsJ/eHjulpwTlYODmZramVmHdr1h8/UfK7gwNNZEUxUCV3V30lje4kjrRt5gdi
- yC2IBh/YCnPEttVjrLkanLLCpXw2fR0vU01W+oRnu90u36IgRHY3TQF0I/ajvfBSlNOmnoNKx
- SRXZTSurKxaRw1yf4ut+IYmTtQtKHNDv3kSs6hSc9Ik9H5Dv5FSuLCgU6jeBaoSetE1YOrkkj
- geOXbzGpfsTQZNZ5/RUIwiwmPeDemjB1Vr48ajDpazP5IJuZB1pJekcltm1ql5o4L3DsYeG+e
- C7sJH5h
+        id S1752051AbdFNKY7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 06:24:59 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:47765 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751820AbdFNKY6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 06:24:58 -0400
+Received: from lindisfarne.localdomain ([92.22.42.39])
+        by smtp.talktalk.net with SMTP
+        id L5TSdvCsT9tMzL5TsdjKhs; Wed, 14 Jun 2017 11:24:57 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1497435897; bh=IlbyRK8aKG4KPsHLvD20drKFC5gJDBSVlClV23XQ1Yw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=OYMOxLE9YiYOFzLjOR20IT2V66ZV9pqXtCo/TjGdpMRLOhzmnflwFnv3A3z1zjfoS
+         QPE5ln+EBp/ysYvhuJjIisIYK7fT3+VISZGwoSglZciZnzoOws1ai7C/o4qyUsx9A7
+         V93M55DGEP3JYU216j4433xSiPwiPd3dbkMnG6og=
+X-Originating-IP: [92.22.42.39]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=WOE9ZTkR c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
+ a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=evINK-nbAAAA:8 a=7gz-IJMLiO6ZI-wDAvAA:9
+ a=9A_41kZySjNGcpa8:21 a=mGc0pmItOCr-rUzD:21 a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 1/3] rebase -i: Add test for reflog message
+Date:   Wed, 14 Jun 2017 11:24:25 +0100
+Message-Id: <20170614102427.5220-2-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170614102427.5220-1-phillip.wood@talktalk.net>
+References: <20170531104213.16944-1-phillip.wood@talktalk.net>
+ <20170614102427.5220-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfA2qYbkdX/dZJD6EWpSzxSl+M20cWkXGZGDZZFj/JaqOZRY6nhSIKJrkkg0dbpVEyapxVBiRtx+/uhKZTJkYQyPFiGgbrWV+lR1+AFEb2A4a2zMIXsfb
+ CWFCUNVN6KZA18kUxe0TwTsQtX5VJT7KxOlA79Bj86X13S1PEPhlf/dZMJF2oxLt46+6WtRdc2YpXdle3tyRbVXOc9F/fvHaITi712Q41WDC7Fos5HKHO2V3
+ TyNwYEDIb7KJyL6pytI2L24nHN8PdHft2ul9Fn1wXqlVriZvQdIB75ZJ2/5tX/JyAB9MbObPHywJZ6F5nGAPLA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff & Brandon,
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-On Wed, 14 Jun 2017, Jeff King wrote:
+Check that the reflog message written to the branch reflog when the
+rebase is completed is correct
 
-> On Tue, Jun 13, 2017 at 11:26:06AM -0700, Brandon Williams wrote:
-> 
-> > So because I've been looking at the config machinery lately, I've
-> > noticed a lot of issues with how things are handled with respect to
-> > gitdir vs commondir.  Essentially the config resides at commondir/config
-> > always, and only at gitdir/config when not working with a worktree.
-> > Because of this, your patches point out a bug in how early config is
-> > handled.  I'll illustrate this using aliases.
-> > 
-> > Before this series (because aliases are read using the standard config
-> > machinery):
-> > 
-> >   > git init main
-> >   > git -C main config alias.test '!echo hello'
-> >   > git -C main test
-> >     hello
-> >   > git -C main worktree add ../worktree
-> >   > git -C worktree test
-> >     hello
-> > 
-> > After this series (using read_early_config()):
-> > 
-> >   > git init main
-> >   > git -C main config alias.test '!echo hello'
-> >   > git -C main test
-> >     hello
-> >   > git -C main worktree add ../worktree
-> >   > git -C worktree test
-> >     git: 'test' is not a git command. See 'git --help'.
-> > 
-> > The issue is that read_early_config passes the gitdir and not the
-> > commondir when reading the config.
-> 
-> Good catch.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ t/t3404-rebase-interactive.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Oh wow.
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 5bd0275930b715c25507fc9744c8946e7f73900b..37821d245433f757fa13f0a3e27da0312bebb7db 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -169,6 +169,13 @@ test_expect_success 'reflog for the branch shows state before rebase' '
+ 	test $(git rev-parse branch1@{1}) = $(git rev-parse original-branch1)
+ '
+ 
++test_expect_success 'reflog for the branch shows correct finish message' '
++	printf "rebase -i (finish): refs/heads/branch1 onto %s\n" \
++		"$(git rev-parse branch2)" >expected &&
++	git log -g --pretty=%gs -1 refs/heads/branch1 >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'exchange two commits' '
+ 	set_fake_editor &&
+ 	FAKE_LINES="2 1" git rebase -i HEAD~2 &&
+-- 
+2.13.0
 
-> > The solution would be to add a 'commondir' field to the config_options
-> > struct and populate that before reading the config.  I'm planning on
-> > fixing this in v2 of my config cleanup series which I'll hopefully have
-> > finished by the end of the day.
-> 
-> I think that read_early_config() really meant to set the commondir, as
-> it was always about actual config-file lookup. So it was sort-of buggy
-> already, though I suspect it was pretty hard to trigger.
-> 
-> But I agree that since include_by_gitdir now reads the same struct
-> field, swapping it out fixes the config-reading at the cost of breaking
-> that function. And we really need to pass both in.
-> 
-> I'm not sure whether we should care about this for Dscho's series or
-> not. I think his series _does_ make the problem easier to trigger. But
-> it's a minor enough bug that I think I'd be OK with letting your
-> solution proceed independently.
-
-Brandon, how hard would it be to build on top of my series? I ask because
-I have to take care of some other things and would not have the time to
-adjust my patch series on top of yours anytime soon.
-
-Ciao,
-Dscho
