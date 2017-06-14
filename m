@@ -6,66 +6,72 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B544120282
-	for <e@80x24.org>; Wed, 14 Jun 2017 20:36:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8110020282
+	for <e@80x24.org>; Wed, 14 Jun 2017 21:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752098AbdFNUgE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 16:36:04 -0400
-Received: from mout.gmx.net ([212.227.17.21]:61435 "EHLO mout.gmx.net"
+        id S1752394AbdFNVEn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 17:04:43 -0400
+Received: from mout.gmx.net ([212.227.15.18]:58411 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751754AbdFNUgD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 16:36:03 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjdS8-1dwUe33IYS-00bezj; Wed, 14
- Jun 2017 22:35:48 +0200
-Date:   Wed, 14 Jun 2017 22:35:45 +0200 (CEST)
+        id S1752166AbdFNVEm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 17:04:42 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M3zT0-1ddKVr3j0c-00rX5p; Wed, 14
+ Jun 2017 23:04:30 +0200
+Date:   Wed, 14 Jun 2017 23:04:26 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v2 0/3] Add regression tests for rectent rebase -i
- fixes
-In-Reply-To: <20170614102427.5220-1-phillip.wood@talktalk.net>
-Message-ID: <alpine.DEB.2.21.1.1706142235260.171564@virtualbox>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net> <20170614102427.5220-1-phillip.wood@talktalk.net>
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: rs/strbuf-addftime-zZ, was Re: What's cooking in git.git (Jun
+ 2017, #04; Tue, 13)
+In-Reply-To: <e9260c40-c49f-d7f6-70c2-a28c1b3104a2@web.de>
+Message-ID: <alpine.DEB.2.21.1.1706142303510.171564@virtualbox>
+References: <xmqqshj34ldr.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1706141245520.171564@virtualbox> <20170614111043.xlfsgclbyrqektb3@sigill.intra.peff.net> <e9260c40-c49f-d7f6-70c2-a28c1b3104a2@web.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:QzopCv0koQNNi+wr1R1LRyqT23M6BE/3R0qWgFS2EqPXvFXVr1K
- WSpsYB5DE7IPnFUiyabi+nYExFDu99VB9Lv0haJ5qpM8CXfDYdbg1bcBjdvco5kaERk/yXO
- ZIFg5U3QIy6IfL8d1lzN1+u+/1QFd5hM/afw9tqiP3UgrIpjrYZaqTQcoXmo0zoWMKES2e9
- RhxA7reAdypCfeFMka7UA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JOzcia+2rrs=:XeWxpLZSb8PjZjxCOtc2Ac
- dvEYUECybBlA8zgza4hA1ncTy9k3b52FX+9y6l/WmqzBGM91nSPxk0eFilRuPVz22Py2k+02H
- LiihQwSQLzhYaXH9kI4QfkIyIHiksJw0UZqc4JS0d7sq+s/KTBzy6lxdV7gD+prMbsNr5EBFc
- nt/GTWN3ley/8cvS2LpHA6PCPLhZF3gfAJYuS/280kRxiZCIB7sZ+WRHiraw3LV5keBkkqM8n
- B/rZg62h/8O/CZCj+VCJF/lSXzJgd7p2JcBiJTfzUSgaHrRtZn7EvzLqLJPh1hqOmrNchCO7J
- CWm8VevXlYC9EsgMKdbuZrEF8uRiikCrSXeTEHotBv5MD9t5ktTLhIeSlZNRPuRYUpfq4zhtv
- dcl1Iczau45ED5+f+ZK7S8l4zrq/v+nmq0K05nCXgU/fU6GHldcSeDixfeSyvUu0NUtg7yEqi
- wPubklG7uGIsFEgVAjnAnzR3NsuEMNpQmGREmzTxh0JX8/JiPdsoIlG4m1PugzRNDTvgtbfTA
- /j85Ab69PCM12LFktc+JMplf6130F6GmJPFEGB13GDuroyyIjHbBsyKYpDEqJMhXQk4eMSjEf
- d2EUs0nTAd9Xd5dxPWi9ox0slWrSmTFuWNLRBe0ONGIMToB/YXbEWGmZm6xYs5M3AZi+gHIkL
- tljgQ27/Pm61nc7xf+W3T7yI+vtehkUxSIsGyT2iiKpHHug/cjoswxMgSgQXocg5kt198FYsf
- RuTs2H0P18BCV3jXbLJ5npGjKXeW1PVm+OJ4w7sukX21oECI+h53hO/2bMEM+Aik2kTvrS/F/
- vkWqILP
+Content-Type: multipart/mixed; boundary="8323329-2064436537-1497474270=:171564"
+X-Provags-ID: V03:K0:VJ1OeVPl519hMusPqUIuKyJtMT4wWA76CZNUc5g/jklNx8krETu
+ PDV2KR64bZMXIkPd6xDT19yHLE1U1lLHTbsfs1fRoZmGcXerDJe3R4OA+zg9/kzjI6i7/Ob
+ huycdaTYt6QzIe/88YiQH0v7CjF0UNh+m+XD+n7Wq8S8u8Cn1RkUbJuMxgs2YOqeVqYjGSj
+ ae2u7OGevAQ4ZQ7PMMYEw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6qUqQQt96eQ=:UieS44y8qPr/71m27AdaTv
+ DgIbQUTxbxdzHIOsGa0myU+yHGkkTAIpMGg0xCHVdVUjIJN73v82bO8O41awSW0+QLyvwP4/c
+ Bb7zqECgufHPcX2u5p/ALSUD+O4qtvOEkEvuzHP18PcNqmqi82gGmbDpK2FD5Y8hM4p4/6vei
+ XJi7Bkkh64JmB950wYlz8l2SVEnMgs9Nu8EtrVUMvoKwbdo6EkM0d+A/iUoLn7L1HVcdWBXw4
+ 0gPvk8PpKr8RK26U2xwD4jxcXjCer48gFS0FS4ReumDTIbAZrMHbhgUoOIGbuHSgHtxL+l+gG
+ aeJNj2urZhx///Bk09CpSJ6eYQWwN/5id7S3bs/7r2JEYLcuJFy1UdskCANnnoNeRCluSlnPU
+ pZd4eBTRO47Rf3+mEswnAGGO7h4KIScuvfSqrcAfeyrT+nbqy5fVzYxdOdDShnW5+oaL3V1x5
+ ULn863Zu/rnPAegZbLaoq7nzidax/lI+k9YAL5HbcX2apruRjB/Q1QiYE+rLYUY0RCOqrZovq
+ YSVRDQ90gWNIWAlM3kZkkcZk+sX8ZpV45Dt8cL9klVefvG1/LoXX28hkJ3Ydp0xEMSrLFdIMh
+ 5zgrXpimePJDE7AaviWbv+ptw6CwLa+390yAtYFG9f7rBsiWtXiZqEaRL9G4awW10LCvhUbIz
+ UMkoVDWo3ScvJkvl4GkJIhbK1+zRNHEmi2Fx9qLEcwEl1Ks/Y1Bcrjxx+mSWcEE8YSfj02FPv
+ sF+inXjv9s7kmaxRvedKqI+PrqDA8+ILx8xyfK3B1V+siW1TytPRodN15C6lnD6aFzoPlw4ss
+ YPN0hsC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, 14 Jun 2017, Phillip Wood wrote:
+--8323329-2064436537-1497474270=:171564
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> I've revised the second two tests as Johannes suggested to drop the
-> sed script. The first one is unchanged.
+Hi,
 
-This iteration looks pretty good to me!
+On Wed, 14 Jun 2017, Ren=C3=A9 Scharfe wrote:
+
+> Does someone actually expect %z to show time zone names instead of
+> offsets on Windows?
+
+Not me ;-)
+
+I cannot speak for anyone else, as I lack that information, though.
 
 Ciao,
-Johannes
+Dscho
+--8323329-2064436537-1497474270=:171564--
