@@ -6,19 +6,19 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5689E20282
-	for <e@80x24.org>; Wed, 14 Jun 2017 13:07:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 865FC20282
+	for <e@80x24.org>; Wed, 14 Jun 2017 13:07:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752438AbdFNNHa (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 09:07:30 -0400
-Received: from mout.gmx.net ([212.227.17.20]:61770 "EHLO mout.gmx.net"
+        id S1752499AbdFNNHj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 09:07:39 -0400
+Received: from mout.gmx.net ([212.227.15.18]:55308 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751869AbdFNNH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 09:07:27 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIhDo-1dNKvx3TZo-002KK3; Wed, 14
- Jun 2017 15:07:05 +0200
-Date:   Wed, 14 Jun 2017 15:07:04 +0200 (CEST)
+        id S1751934AbdFNNHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 09:07:37 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lp3x6-1dzwU73v7M-00erPO; Wed, 14
+ Jun 2017 15:07:28 +0200
+Date:   Wed, 14 Jun 2017 15:07:12 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,73 +27,74 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH v5 01/10] t3415: verify that an empty instructionFormat is
- handled as before
+Subject: [PATCH v5 03/10] rebase -i: remove useless indentation
 In-Reply-To: <cover.1497444257.git.johannes.schindelin@gmx.de>
-Message-ID: <5ab90ad1de6ece32c959115b046ab303503cd1ae.1497444257.git.johannes.schindelin@gmx.de>
+Message-ID: <c7af03867e96e6ce6bf0a7bb858f6018513a4341.1497444257.git.johannes.schindelin@gmx.de>
 References: <cover.1497444257.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:NZZ+PGg5Z+mW9b61QA+mfHoomQn73lwTsMVIbEX/q+a6BRNimyn
- ruTatgXSKb/jOewt66hHYQgS5lhWJiAXhHPdJEv3R0XsRJiKdOUG5/4F0tHO5PImLi2UQQm
- 0dy8825/sq34uBE7NyGUTTESOUAH2tkV2482c+TTerxjwOcJ9fvgJWIparHYf4grt+Hukci
- P/bo6Z6gd3xQmevWiIKSw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FE3rEyFSAfM=:Dqws2iTtqrOwugdtplDWvI
- vqAiv/Gqqhsl5qDmNNDQXAXps5/J6YxsjS+enMbvUW7wkJqnHxKJJ+7/Q2Zq3Uty05uBYrzu/
- 1nWtw5sodW4Co2OGpIGdiT2OLCpLXkEH0lUbxDcNE4g7j4grURlZvcYeQyHyIr8hOG455cAo6
- Y0XI0e9TvkdUzc5O8hg2iAkA21JauqyBr3f9BA9z4qAHMvmsRkq68Z0wIRBKk3uPkASemS5TM
- ertAM5rZd0bjw37h6XlwLyEmvH04B6d5kSisgZYc2eTxFHF3ZcQyyfsmJ6avBgabj5E7LF1E+
- bsYcytymtrt6Dnm8ciO/lZLU1fJ3ZW8HzhmVpQIqcIvvOvt1Lt7GBFluz8hBowiuh4XuSqo83
- 8ALzdHDSF/15AMmCUGPSJ0Qw9OCcppyr2UjlavSB14JRfpFV8VrvUFXELVGuzIY7afgbysahA
- g3AyO/BfXg2D+dmwt2tvfyBgMUXwM4hlo13cRXMt18/R0pi3VMij2KrwEE8vZMK0HetIll64j
- +GZWHsvJ2Z61xong+STorUKoo7/fyOWEIRRXNthVaSMNLTrrOIfoRaF3DtDu4LsO53dQCVzN8
- SUxoajIhryEXn2VUmAbiZ9gqA4btXReLYGmdBjUOgEsxCj7MkTnx2PSMTm+uMKef7fRFExV12
- nTCgYhsvt+7Ck1z5wbHyLGE7SZRuPWCx5myo6iWyuSPD4jr3/KomrAbg39IfOiSWJLuEo/JK2
- Y7yky8p52i8E0/cK4jMIP5pwl/HRrd8XLa6/D/5obER6LoY7cAPFvx95P1J2WSVKn5IX/R2LQ
- n9QQwN3
+X-Provags-ID: V03:K0:WDfmIn/+B8qSel/m0+2zudi/1VBcoGXU8TZhpKtnlpMFNMO02xc
+ g7tiWcBspBGXecuFBJ4SCeTVgJm5sNjL1HiE2CQVvY3SD8MohhkibuchCcWraLS3pklfgI2
+ CYxgm6Ao2HJx3RYbnaoYcVkfMayzipnEx5rPrAF5ytNzKiyRlAsBgAJ/GTl7rMEMBIdv22X
+ rlHpsMoiqtHwDDJkBx9yA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:eQaUSEHb/QE=:uJgRPpDOxvGh26+O8Z/3R7
+ n4qZ9/yEGPVtu0QKjsdQAObWa/zBXp6tDQmF3pMu6lMN5ckvVaj76FP/KXK3RL/Co9nD4rmxk
+ JLGpjBVGd5XqvF807Ih5aSEk3E/8CznXvKt3SNfy4jxh4G/0R1IL4uc7huMD3isiryNwiOtHh
+ UDJFN0g50PW+BfPn5qy3YFFuRYzMgEbDtCU4LrQpFKFk5gT8Q7f09WRZChqqoT2rDizzuiwqv
+ xOoz7wqPpZ6QAIlmtAzz4D9xaGrFggqXQrmQhgD1wN8OBoDR3QakfjD4RlVesFsUMwTOqXarH
+ tJ/H03W8NVf2ExMACkQ5H//vi6ImQEOu7EPDHQDkwIG/eksPoMhskFltQMhYScDWzxaEx73YV
+ H2tnCnnzkSEHklhD2serS+gnz3fZ3PkZa9D6WD0occx4XXbpqKoNzTAIBY1Cue9LvWeUcukL3
+ OgVFT7VuGw6BMHiV/2Y0y5Vf94k03Vxff2OGf8F2VsVvb/GqHeXIu3reRUiekocQqvQAxItNO
+ xZ59vdKBmrCE5XbS7TTil0cYN9qBT4hTWv+fqhfdIM3tQ8h841Z1R8fc5Gav7GQYDzjXzmliy
+ r7Bpd+XPZEH2nWdoEq2nDuNcUQxsePu9/kmcUZq2kdDkVm9/MiZ3MA0cjwqxHWYqvlDoNpbo8
+ NBAVU4sH0LP+USS/111cX6W3YEFAyi8Nzmi32s3G6hJtPUJxFPNm1Nn8nPGIlPQXnewzDZVA5
+ dLjH8lx7/1KGsgl5xrYrVzKgQ9Xbw+/3HAkDogkOm1TZpLa5vxCTuAjDKCURHdCQtMwbEpARB
+ 6gg7GLi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-An upcoming patch will move the todo list generation into the
-rebase--helper. An early version of that patch regressed on an empty
-rebase.instructionFormat value (the shell version could not discern
-between an empty one and a non-existing one, but the C version used the
-empty one as if that was intended to skip the oneline from the `pick
-<hash>` lines).
+The commands used to be indented, and it is nice to look at, but when we
+transform the SHA-1s, the indentation is removed. So let's do away with it.
 
-Let's verify that this still works as before.
+For the moment, at least: when we will use the upcoming rebase--helper
+to transform the SHA-1s, we *will* keep the indentation and can
+reintroduce it. Yet, to be able to validate the rebase--helper against
+the output of the current shell script version, we need to remove the
+extra indentation.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3415-rebase-autosquash.sh | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ git-rebase--interactive.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index 5848949ec37..6d99f624b62 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -271,6 +271,18 @@ test_expect_success C_LOCALE_OUTPUT 'autosquash with custom inst format' '
- 	test 2 = $(git cat-file commit HEAD^ | grep squash | wc -l)
- '
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 05766835de1..93372c62b2e 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -155,13 +155,13 @@ reschedule_last_action () {
+ append_todo_help () {
+ 	gettext "
+ Commands:
+- p, pick = use commit
+- r, reword = use commit, but edit the commit message
+- e, edit = use commit, but stop for amending
+- s, squash = use commit, but meld into previous commit
+- f, fixup = like \"squash\", but discard this commit's log message
+- x, exec = run command (the rest of the line) using shell
+- d, drop = remove commit
++p, pick = use commit
++r, reword = use commit, but edit the commit message
++e, edit = use commit, but stop for amending
++s, squash = use commit, but meld into previous commit
++f, fixup = like \"squash\", but discard this commit's log message
++x, exec = run command (the rest of the line) using shell
++d, drop = remove commit
  
-+test_expect_success 'autosquash with empty custom instructionFormat' '
-+	git reset --hard base &&
-+	test_commit empty-instructionFormat-test &&
-+	(
-+		set_cat_todo_editor &&
-+		test_must_fail git -c rebase.instructionFormat= \
-+			rebase --autosquash  --force -i HEAD^ >actual &&
-+		git log -1 --format="pick %h %s" >expect &&
-+		test_cmp expect actual
-+	)
-+'
-+
- set_backup_editor () {
- 	write_script backup-editor.sh <<-\EOF
- 	cp "$1" .git/backup-"$(basename "$1")"
+ These lines can be re-ordered; they are executed from top to bottom.
+ " | git stripspace --comment-lines >>"$todo"
 -- 
 2.13.1.windows.1.1.ga36e14b3aaa
 
