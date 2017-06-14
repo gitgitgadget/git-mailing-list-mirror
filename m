@@ -2,219 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F272920282
-	for <e@80x24.org>; Wed, 14 Jun 2017 17:53:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A34BE20282
+	for <e@80x24.org>; Wed, 14 Jun 2017 18:07:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752026AbdFNRxP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 13:53:15 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:35443 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751624AbdFNRxN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 13:53:13 -0400
-Received: by mail-pf0-f178.google.com with SMTP id l89so3774870pfi.2
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 10:53:13 -0700 (PDT)
+        id S1752773AbdFNSHp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 14:07:45 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:36554 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752403AbdFNSHo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 14:07:44 -0400
+Received: by mail-pf0-f182.google.com with SMTP id x63so3914346pff.3
+        for <git@vger.kernel.org>; Wed, 14 Jun 2017 11:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=KX2MGTxYaAV+TpdfFqI9L161NXOumk6CmcfF3wCfmvY=;
-        b=OK6xM5VmjXNAl+tiSUgkk+7jbbZgt3NssfgtvGOUXjRFUglNJzKkkXG6Jvai3MBwvk
-         Fjge1rP1QZrJt07RpKkw28lyaDcs8s5ukYqX9cIuYN3jMZrA/cpZrEFiHa/5gTdk1C+s
-         DlnII+VxzGxTM/7kT0cRGqT7VXGrDaeRhvs3j0/ETGUtqb21sZXt7bRf0BaUSGCl1sSA
-         oC8TFUrMhdL5hHEz22nUk2Pc0ZoaVtlDi1JhnRAKz5cKu1NR59y2TvBevW6dGgj1tOnu
-         sPVHsDrCrWCzhF+boo/Q7g1GHonM5Ah8xPBSri2vFDqq7RVA1DVN6ampixuGGh0dZsuH
-         oW0w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=gfGfY5cPVLbcKcedy5BKwtwL73ylRQ6WsCtx3i+fxro=;
+        b=uZmwjOkxZs1+4FeYy0JbgMoM4kLBcYTfmPRKbhbQ4Re579XaPeBv8A49i4GifIJ/UR
+         6RsOLU/9b8RT4hHtzUonEJ0wfW2njfSoAN9H8ZYz+t/j0ghrOPQvz697DT+KkyuvHcTa
+         +LT0uwJ7/KXZv0GaPMy+HIl4FBhnE4s2Yoe2S7AnFs4hco5zb4BxPk1KwfXkXkeaws4c
+         AjqJvpwmRwqD+gNtUTsst2s5btwqb+ms0OVted2vg+V/FFfvn7N9XDgUj6vPQVUPoovI
+         RD0s/Wqp9clsF3W53yQaj+jP/Yu7sTt1WkVxrFSSqK6rmNDd5PtnyZP9PxlY2mxhcyRW
+         e9QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=KX2MGTxYaAV+TpdfFqI9L161NXOumk6CmcfF3wCfmvY=;
-        b=cdO2wnJbvrurerFVcW8iq+5wsarr9IPHEQ9kbI1Xi/0mnNfGObPLs28ItjVSmSv3A+
-         BZFZ1cXpL1XJgJkf+3xKDiI1WjFu2qYdbFzwSNbZayvvEBm1yH/jVLlgtO9wz3vWjCIU
-         qaa3P21lRuANb6i/1X+WSqXnbwnv4VsuqJSjHe6uFhJSikZRekmvikk4UAFgzHDYO0WU
-         owY3wWKDaDdhtQDvlYTw/hlucZNW7U6h36cNediMyjBW0lMphLtXWwdmVFEqW3ky3iAj
-         KDw4TO8S+0bLf8UCAU7fLB6S7Z/GM8vluD2Kh8a3DCX6iWKXx9Ew5EMkATX6cuk/PzU4
-         +rAw==
-X-Gm-Message-State: AKS2vOzHLI8+4kdY++FQzIdLTSkwdZWz9s3qxCLMJNnIrASLWkXyXKjj
-        aoTaVPc0jAeSEgdYM7JztGpvi5rmdL+k
-X-Received: by 10.84.137.165 with SMTP id 34mr1320092pln.167.1497462793015;
- Wed, 14 Jun 2017 10:53:13 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Wed, 14 Jun 2017 10:53:12 -0700 (PDT)
-In-Reply-To: <20170614063614.a34ovimjpz2g24qe@sigill.intra.peff.net>
-References: <20170613091452.ew2rwx5r6axxo65p@sigill.intra.peff.net>
- <20170613092408.db22ygki6wg2t23d@sigill.intra.peff.net> <CAGZ79kbbTwQicVkRs51fV91R_7ZhDtC+FR8Z-SQzRpF2cjFfag@mail.gmail.com>
- <20170614063614.a34ovimjpz2g24qe@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 14 Jun 2017 10:53:12 -0700
-Message-ID: <CAGZ79kaN=XVe3OWE5DHsMfbzW_rZOdRurgSfpz52dSZDA_V6fg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] add: warn when adding an embedded repository
-To:     Jeff King <peff@peff.net>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=gfGfY5cPVLbcKcedy5BKwtwL73ylRQ6WsCtx3i+fxro=;
+        b=cU61N6XGdODsXia0L7Y+67CecJySSnsg+jOdtI4AlU9l7VyyfEGnGkOjqpCs06gJsp
+         ubkGrTcrb4FMzcXhtRlRFKgqW/rptvI7j7UADvakVrfs0WU3GdxOcGD/lkVVG6F5hwpF
+         gcRUBl3BLLEoQ/hdWhAbk+1vdiFN2Zv2bwRsfKIDO0/7kFo6EoEZh7xclw9HJWVKcEmR
+         t681EsebnxVhI2Xk2ujuTnWxWwfr/L/361LpcbAP0/6bxgB/c9Uro3bnT50kZFDMszT4
+         epOrFKMeVIFcnzkGlIKaTF1y6f9DJ51wTpxcCBEWqyG7o2CcmVJv8iDIME/QbW8CEl4j
+         bfSQ==
+X-Gm-Message-State: AKS2vOyr1HAY2DeMINvDaUOkSyaYZiKIVLWDE1vCKDs5YvCTCelxXuzf
+        YTVR2NkOqvV1noGLmYUjeQ==
+X-Received: by 10.99.55.18 with SMTP id e18mr1192799pga.245.1497463663259;
+        Wed, 14 Jun 2017 11:07:43 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id t2sm1001646pfi.76.2017.06.14.11.07.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 14 Jun 2017 11:07:42 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, jrnieder@gmail.com, gitster@pobox.com,
+        Johannes.Schindelin@gmx.de, Brandon Williams <bmwill@google.com>
+Subject: [PATCH v3 0/6] config.h
+Date:   Wed, 14 Jun 2017 11:07:33 -0700
+Message-Id: <20170614180739.72193-1-bmwill@google.com>
+X-Mailer: git-send-email 2.13.1.518.g3df882009-goog
+In-Reply-To: <20170613210321.152978-1-bmwill@google.com>
+References: <20170613210321.152978-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 13, 2017 at 11:36 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jun 13, 2017 at 10:07:43AM -0700, Stefan Beller wrote:
->
->> > I also waffled on whether we should ask the submodule code
->> > whether it knows about a particular path. Technically:
->> >
->> >   git config submodule.foo.path foo
->> >   git config submodule.foo.url git://...
->> >   git add foo
->> >
->> > is legal, but would still warn with this patch. I don't know
->> > how much we should care (it would also be easy to do on
->> > top).
->>
->> And here I was thinking this is not legal, because you may override
->> anything *except* submodule.*.path in the config. That is because
->> all the other settings (such as url, active flag, branch,
->> shallow recommendation) are dependent on the use case, the user,
->> changes to the environment (url) or such. The name<->path mapping
->> however is only to be changed via changes to the tracked content.
->> That is why it would make sense to disallow overriding the path
->> outside the tracked content.
->
-> It was probably a mistake to use normal config as the example. Junio
-> mentioned it as a case that could work if you communicate the submodule
-> URL to somebody else out-of-band. My understanding was that you could
-> set whatever you like in the regular config, but I think that is just
-> showing my ignorance of submodules.
->
-> Pretend like I said "-f .gitmodules" in each line above. ;)
->
->> In my ideal dream world of submodules we would have the following:
->>
->>   $ cat .gitmodules
->>   [submodule "sub42"]
->>     path = foo
->>   # path only in tree!
->
-> TBH, I am not sure why we need "path"; couldn't we just use the
-> subsection name as an implicit path?
+Changes in v3:
 
-That is what was done back in the time. But then people wanted to rename
-submodules (i.e. move them around in the worktree), so the path is not
-constant, so either we'd have to move around the git dir whenever the
-submodule is renamed (bad idea IMO), or instead introduce a mapping
-between (constant name <-> variable path). So that was done.
+* tweaked the discover_git_directory function's API based on Peff's feedback
+* reordered the last three patches so that they flowed a bit better
+* renamed 'git_config_with_options'
+* rebased ontop of v4 of Dscho's alias series
+  https://public-inbox.org/git/cover.1497440104.git.johannes.schindelin@gmx.de/
 
-Historically (IIUC) we had submodule.path.url which then was changed
-to submodule.name.url + name->path resolution. And as a hack(?) or
-easy way out of a problem then, the name is often the same as the path
-hence confusing people, when they see:
 
-    [submodule "foo"]
-        path = foo
-        url = dadada/foo
+Brandon Williams (6):
+  config: create config.h
+  config: remove git_config_iter
+  config: don't include config.h by default
+  setup: teach discover_git_directory to respect the commondir
+  config: respect commondir
+  config: don't implicitly use gitdir or commondir
 
-What foo means what now? ;)
-As a tangent: I want to make the default name different to the path.
+ advice.c                         |   1 +
+ alias.c                          |   1 +
+ apply.c                          |   1 +
+ archive-tar.c                    |   1 +
+ archive-zip.c                    |   1 +
+ archive.c                        |   1 +
+ attr.c                           |   1 +
+ bisect.c                         |   1 +
+ branch.c                         |   1 +
+ builtin/add.c                    |   1 +
+ builtin/am.c                     |   1 +
+ builtin/blame.c                  |   2 +
+ builtin/branch.c                 |   1 +
+ builtin/cat-file.c               |   1 +
+ builtin/check-attr.c             |   1 +
+ builtin/check-ignore.c           |   1 +
+ builtin/check-mailmap.c          |   1 +
+ builtin/checkout-index.c         |   1 +
+ builtin/checkout.c               |   1 +
+ builtin/clean.c                  |   1 +
+ builtin/clone.c                  |   1 +
+ builtin/column.c                 |   1 +
+ builtin/commit-tree.c            |   1 +
+ builtin/commit.c                 |   1 +
+ builtin/config.c                 |  27 +++---
+ builtin/count-objects.c          |   1 +
+ builtin/describe.c               |   1 +
+ builtin/diff-files.c             |   1 +
+ builtin/diff-index.c             |   1 +
+ builtin/diff-tree.c              |   1 +
+ builtin/diff.c                   |   1 +
+ builtin/difftool.c               |   1 +
+ builtin/fast-export.c            |   1 +
+ builtin/fetch.c                  |   1 +
+ builtin/fmt-merge-msg.c          |   1 +
+ builtin/for-each-ref.c           |   1 +
+ builtin/fsck.c                   |   1 +
+ builtin/gc.c                     |   1 +
+ builtin/grep.c                   |   1 +
+ builtin/hash-object.c            |   1 +
+ builtin/help.c                   |   1 +
+ builtin/index-pack.c             |   1 +
+ builtin/init-db.c                |   1 +
+ builtin/log.c                    |   1 +
+ builtin/ls-files.c               |   1 +
+ builtin/ls-tree.c                |   1 +
+ builtin/merge-base.c             |   1 +
+ builtin/merge-file.c             |   1 +
+ builtin/merge.c                  |   1 +
+ builtin/mv.c                     |   1 +
+ builtin/name-rev.c               |   1 +
+ builtin/notes.c                  |   1 +
+ builtin/pack-objects.c           |   1 +
+ builtin/patch-id.c               |   1 +
+ builtin/pull.c                   |   1 +
+ builtin/push.c                   |   1 +
+ builtin/read-tree.c              |   1 +
+ builtin/rebase--helper.c         |   1 +
+ builtin/receive-pack.c           |   1 +
+ builtin/reflog.c                 |   1 +
+ builtin/remote.c                 |   1 +
+ builtin/repack.c                 |   1 +
+ builtin/replace.c                |   1 +
+ builtin/rerere.c                 |   1 +
+ builtin/reset.c                  |   1 +
+ builtin/rev-list.c               |   1 +
+ builtin/rev-parse.c              |   1 +
+ builtin/revert.c                 |   1 +
+ builtin/rm.c                     |   1 +
+ builtin/send-pack.c              |   1 +
+ builtin/shortlog.c               |   1 +
+ builtin/show-branch.c            |   1 +
+ builtin/stripspace.c             |   1 +
+ builtin/submodule--helper.c      |   1 +
+ builtin/symbolic-ref.c           |   1 +
+ builtin/tag.c                    |   1 +
+ builtin/unpack-file.c            |   1 +
+ builtin/unpack-objects.c         |   1 +
+ builtin/update-index.c           |   1 +
+ builtin/update-ref.c             |   1 +
+ builtin/update-server-info.c     |   1 +
+ builtin/var.c                    |   1 +
+ builtin/verify-commit.c          |   1 +
+ builtin/verify-pack.c            |   1 +
+ builtin/verify-tag.c             |   1 +
+ builtin/worktree.c               |   1 +
+ builtin/write-tree.c             |   1 +
+ cache.h                          | 204 ++-------------------------------------
+ color.c                          |   1 +
+ column.c                         |   1 +
+ compat/precompose_utf8.c         |   1 +
+ config.c                         |  41 ++++----
+ config.h                         | 194 +++++++++++++++++++++++++++++++++++++
+ connect.c                        |   1 +
+ convert.c                        |   1 +
+ credential-cache--daemon.c       |   1 +
+ credential.c                     |   1 +
+ daemon.c                         |   1 +
+ diff.c                           |   1 +
+ dir.c                            |   1 +
+ environment.c                    |   1 +
+ fast-import.c                    |   1 +
+ fetch-pack.c                     |   1 +
+ git.c                            |   1 +
+ gpg-interface.c                  |   1 +
+ graph.c                          |   1 +
+ grep.c                           |   1 +
+ help.c                           |   1 +
+ http-backend.c                   |   1 +
+ http-fetch.c                     |   1 +
+ http.c                           |   1 +
+ ident.c                          |   1 +
+ imap-send.c                      |   1 +
+ ll-merge.c                       |   1 +
+ log-tree.c                       |   1 +
+ mailinfo.c                       |   1 +
+ merge-recursive.c                |   1 +
+ notes-utils.c                    |   1 +
+ notes.c                          |   1 +
+ pager.c                          |   1 +
+ parse-options.c                  |   1 +
+ pathspec.c                       |   1 +
+ pretty.c                         |   1 +
+ prompt.c                         |   1 +
+ read-cache.c                     |   1 +
+ refs.c                           |   1 +
+ refs/files-backend.c             |   1 +
+ remote-curl.c                    |   1 +
+ remote.c                         |   1 +
+ rerere.c                         |   1 +
+ send-pack.c                      |   1 +
+ sequencer.c                      |   1 +
+ setup.c                          |  18 ++--
+ sha1_file.c                      |   1 +
+ sha1_name.c                      |   1 +
+ submodule-config.c               |   1 +
+ submodule.c                      |   1 +
+ t/helper/test-config.c           |   1 +
+ t/helper/test-submodule-config.c |   1 +
+ trailer.c                        |   1 +
+ transport.c                      |   1 +
+ unpack-trees.c                   |   1 +
+ upload-pack.c                    |   1 +
+ userdiff.c                       |   1 +
+ versioncmp.c                     |   1 +
+ wrapper.c                        |   1 +
+ xdiff-interface.c                |   1 +
+ 147 files changed, 398 insertions(+), 229 deletions(-)
+ create mode 100644 config.h
 
-So yeah, we want to keep the name and not mingle with implicit path.
+-- 
+2.13.1.518.g3df882009-goog
 
-I think we may even have bugs in our code base where the
-name/path confusion shows.
-
-Talking about another tangent:
-
-  For files there is a rename detection available. For submodules
-  It is hard to imagine that there ever will be such a rename detection
-  as files have because of the explciit name<->path mapping.
-
-  We *know* when a submodule was moved. So why even try
-  to do rename detection? As we record only sha1s for a submodule
-  you could swap two submodule object names by accident.
-  Consider a superproject that contains different kernels, such as
-  a kernel for your phone/embedded device and then a kernel for
-  your workstation or other device. And these two kernels are different
-  for technical reasons but share the same history.
-
-  Now the inattentive user may make a mistake and git-add the
-  "wrong" kernel submodule.  The smart Git would tell that it is a
-  rename/move just as we have with files.
-
->
->> > +       OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
->> > +                       N_("warn when adding an embedded repository")),
->>
->> We do not have a lot of OPT_HIDDEN_BOOLs throughout the code base.
->> We should use them more often.
->>
->> It makes sense though in this case.
->
-> Actually, my main reason is that it's nonsense to show
-> "--warn-embedded-repo" in the help, when it's already the default. I
-> would like to have written:
->
->   OPT_NEGBOOL(0, "no-warn-embedded-repo", &warn_on_embedded_repo,
->                 N_("disable warning when adding an embedded repository"))
->
-> but we don't have such a thing (and the last discussion on it a few
-> months ago left a lot of open questions). So given that this really
-> isn't something I'd expect users to want, I figured hiding it was a good
-> idea. I mentioned it in the manpage for script writers, but it's really
-> not worth cluttering "git add -h".
-
-ok :) If you really wanted, you could go with a raw OPTION though. ;)
-This is fine with me though.
-
->
->> > +static const char embedded_advice[] = N_(
->> > +"You've added another git repository inside your current repository.\n"
->> > +"Clones of the outer repository will not also contain the contents of\n"
->> > +"the embedded repository. If you meant to add a submodule, use:\n"
->>
->> The "will not also" sounds a bit off to me. Maybe:
->>   ...
->>   Clones of the outer repository will not contain the contents
->>   of the embedded repository and has no way of knowing how
->>   to obtain the inner repo. If you meant to add a submodule ...
->
-> Yeah, I think we could just strike the "also" (I played around with the
-> wording here quite a bit and I think it was left from an earlier attempt
-> where it made more sense).
->
-> Your "no way of knowing" is probably a good thing to mention.
->
->> > +"See \"git help submodule\" for more information."
->>
->> Once the overhaul of the submodule documentation
->> comes along[1], we rather want to point at
->> "man 7 git-submodules", which explains the concepts and
->> then tell you about commands how to use it. For now the
->> git-submodule man page is ok.
->>
->> [1] https://public-inbox.org/git/20170607185354.10050-1-sbeller@google.com/
->
-> Yeah, I poked around looking for a definitive "here's how submodules
-> work" intro. I'm happy one is in the works, and I agree this should
-> point there once it exists.
->
->> > +++ b/t/t7414-submodule-mistakes.sh
->> > @@ -0,0 +1,40 @@
->> > +#!/bin/sh
->> > +
->> > +test_description='handling of common mistakes people may make with submodules'
->>
->> That is one way to say it. Do we have other tests for
->> "you think it is a bug, but it is features" ? ;)
->> I like it though. :)
->
-> Heh. I didn't know how else to lump it together. Just "test git add on a
-> repository" felt like too little for its own script. I almost added it
-> to t7400, but I think that script is plenty long enough as it is (it's
-> also one of the longest-running scripts, I think).
-
-Thanks for not doing that. :)
