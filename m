@@ -2,99 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1701E20282
-	for <e@80x24.org>; Wed, 14 Jun 2017 18:55:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3C8420282
+	for <e@80x24.org>; Wed, 14 Jun 2017 19:37:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752003AbdFNSzY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 14:55:24 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:35687 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751711AbdFNSzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 14:55:23 -0400
-Received: by mail-pg0-f45.google.com with SMTP id k71so4024896pgd.2
-        for <git@vger.kernel.org>; Wed, 14 Jun 2017 11:55:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Wb4VQaC3qSal5ePn9umfcD/YSi39Q1XNB9i3ayExRkw=;
-        b=uY1kwlQ5JEhHRXbQeYFbjIqJ+7Owfax+Gr89rxhzu2J9pxAplSBW6UdD/9coYBLK2x
-         mlDaCronB+BqAnwiiWchj6YRke2790PS/PQVZz9g0NPIWXqvaLnUz9NhVNqnchpGy0BP
-         mznFv8i3fVkkxLbi6Zz/pzLJDclKdxavo19BxNnssW7b90xwHJT0Zw6NdYcfVd+i596e
-         x41wF/Tqz+CSfVWR08g8ZRx/PXd+Zbmmy5lkb8eiSuqoutU15itxYTdBi2st9SOXRxf3
-         QyCvl5md7tWI7ll24MmdZDNOmPNcHOT0Pjc+WBGZvN6gM7ErQINVroe96B8ge5TWgauS
-         B2uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Wb4VQaC3qSal5ePn9umfcD/YSi39Q1XNB9i3ayExRkw=;
-        b=oJy7PQ1E9EkH2dL51QpTKr3NUH57Ieqi8K1+gR68xbUg5PYeXdwFS0HOh5SaIVO5CG
-         fIO6qaooyBxvWScidlpJIAcmt20HXd4jy4TqAykrD82WPQKoNYrph6OWP/PRhoOTjXfD
-         Hbw1ch0BX4/WDDAGYO49G+JbBuZ5ejexpNH9/0wlw7ZNyuXtYSePxB64LvuUqa6tO1Nf
-         0BwIBbSpYxCLZKdJ+VRmlkECLRt/DoGlFQd+lEH3+VAXIZ4ubQuMjgdlBkY/qFJuxHZl
-         BlaURthv9Sq+s9y5KrFGLqTlLw3160X38bP0FftI7vBNgoZgZTFJY+VPh3LfSGqRFJUo
-         BaRw==
-X-Gm-Message-State: AKS2vOwZ61/PBc6VajbGRYyiNu12Hx/tfhAxrlOHP776pu2qTLrsI1lV
-        JNms55VbQI+DPybr8JUuKQ1aFZ3jq1hXkMs=
-X-Received: by 10.101.76.201 with SMTP id n9mr1449276pgt.40.1497466512526;
- Wed, 14 Jun 2017 11:55:12 -0700 (PDT)
+        id S1752401AbdFNThE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 15:37:04 -0400
+Received: from mout.web.de ([212.227.17.11]:62199 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752133AbdFNThD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 15:37:03 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lmu2K-1e1yy70wyi-00h8EH; Wed, 14
+ Jun 2017 21:36:43 +0200
+Subject: Re: rs/strbuf-addftime-zZ, was Re: What's cooking in git.git (Jun
+ 2017, #04; Tue, 13)
+To:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqshj34ldr.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1706141245520.171564@virtualbox>
+ <20170614111043.xlfsgclbyrqektb3@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <e9260c40-c49f-d7f6-70c2-a28c1b3104a2@web.de>
+Date:   Wed, 14 Jun 2017 21:36:38 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Wed, 14 Jun 2017 11:55:12 -0700 (PDT)
-In-Reply-To: <20170613155158.2454d9c7@twelve2.svl.corp.google.com>
-References: <CAGZ79kbq3XiP8W_01FV133aMjZP9_GvpEg86N=XC2rTy24ZZGQ@mail.gmail.com>
- <20170601002429.3470-1-sbeller@google.com> <20170613155158.2454d9c7@twelve2.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 14 Jun 2017 11:55:12 -0700
-Message-ID: <CAGZ79kaqjQYmkt77kk5m=fdBfbZAvwd0YhhT7=O5b-FkQmDfHg@mail.gmail.com>
-Subject: Re: [PATCH] diff.c: color moved lines differently
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20170614111043.xlfsgclbyrqektb3@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:wd66Vmx/zd5aDzSok648vA0eumDPy6Brsf4FW12ThEAtoNKorpM
+ lgf914chl9DFTDoJFMvbOrcoPtwjBBb5p9N8tOIO6TGJQ2o531/1b9RG9GJ4dxpt9luxwcT
+ MfdBT461MZGqapifpaAwhPAkdKEIPfWpwhiKJqMTf68HLvpkCrgStnlMLKE2m+AcDRNHsO+
+ 1Nuaw03QdvHb6hyrExNfQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:81DeLAvtdU4=:4h02LyUJ8yylwuWlmsGN/0
+ nixEHouirDKNBFKVWTyBHHdV+uJnBfYwyRPbVhynFGtMfvE/uG1u4Xe91prwHLrUX2pIrCbj0
+ Ow/Ky9XwEkU8rt8XVaBlsZsT4viWgJ3wCp0RtKGiW2QKJ3OlVY6fLdTth+mDYZj36p0O9jn7s
+ 83bIhIrdFpMWAzPQ/n/24dlnCoMhxhOEY2FLdj/PUgkbS7UH9edqhozSFR7KtRlZ1UZskWs2E
+ xeE/1cjAUhxXXLmZCQIV9AqUUhLlajQWE4+hG0wTE8iqot+3aPUhjeFsf4PeoQg1AO5WDcJ9b
+ ZTpOpW6AiKToRpM2vGJwr45fmPizN71Hts3z3GF4pAsiQLgTTBaODRBgcFVJZuHfLCfsrPQa4
+ +91ie1LHsDUGZLRK2gsxZADBcMXc86HL3yL4mOaVZXeRbTmxGgQeYApCCpEi5QR7AvCgM8n/q
+ EPCvi1tQ1s3Ixe4/eYnvfLIg7h150pKYVom+xIpdXmJBXiT9ZbvCBq9QZbXwGDA81156iKaDw
+ oS6C396F6+bGKYOYsPR4yd+Ui4m8+ahRYkPiHJMyocneeRpekeMjyWvcjMb2J+DYEikyFwR/t
+ CmKZzQfIaVKpygsOhfxDDUEdheZa533DBhWWViD+cgJIdNk/PA0ZHSFqW5BKuhaBxQ4SZszoa
+ 4x3YnSzqkJC7QD8AxxAIUkUYvrc5vLmWojBE2V96eyLiZiGiCH3kFZP2qTrdHcklXynoUeRuM
+ 8aFC+X97vk78YH4HvaJzc1KrqGSyHr2D6+jAmnZ3RKQYgCk+t4HM6DW7D9eadX6LmAH7BIqDH
+ jiaqzQK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 13, 2017 at 3:51 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> On Wed, 31 May 2017 17:24:29 -0700
-> Stefan Beller <sbeller@google.com> wrote:
->
->> When a patch consists mostly of moving blocks of code around, it can
->> be quite tedious to ensure that the blocks are moved verbatim, and not
->> undesirably modified in the move. To that end, color blocks that are
->> moved within the same patch differently. For example (OM, del, add,
->> and NM are different colors):
->
-> [snip]
->
-> Junio asks "are we happy with these changes" [1] and my answer is, in
-> general, yes - this seems like a very useful feature to have, and I'm OK
-> with the current design.
->
-> I do feel a bit of unease at how the emitted strings are collected
-> without many guarantees as to their contents (e.g. whether they are full
-> lines or even whether they originate from the text of a file), but this
-> is already true for the existing code. The potential danger is that we
-> are now relying more on the format of these strings, but we don't plan
-> to do anything other than to color them, so this seems fine.
+Am 14.06.2017 um 13:10 schrieb Jeff King:
+> On Wed, Jun 14, 2017 at 12:57:06PM +0200, Johannes Schindelin wrote:
+>> But even then, it fails in t0006 on Windows with this error:
+>>
+>> -- snip --
+>> ++ eval 'diff -u "$@" '
+>> +++ diff -u expect actual
+>> --- expect      2017-06-14 10:53:40.126136900 +0000
+>> +++ actual      2017-06-14 10:53:40.171146800 +0000
+>> @@ -1 +1 @@
+>> -1466000000 +0200 -> 2016-06-15 14:13:20 +0000 (UTC)
+>> +1466000000 +0200 -> 2016-06-15 14:13:20 UTC (UTC)
+> 
+> Ugh, I was worried about that some systems might display timezones
+> differently (that's why I _didn't_ check %Z in the EST5 case). But I
+> must admit this was not an incompatibility I was expecting. It looks
+> like your system strftime() turns %z into "UTC". POSIX says:
+> 
+>    %z
+>      Replaced by the offset from UTC in the ISO 8601:2000 standard format
+>      (+hhmm or -hhmm), or by no characters if no timezone is
+>      determinable.
+> 
+> So it seems like the mingw strftime is violating POSIX. I don't see an
+> easy solution beyond marking this as !MINGW. Though if we wanted a
+> partial test, we could test %z and %Z separately.
 
-I will add comments into the code for that.
+Hmm.  The patches currently either let strftime handle both %z and %Z
+(in the local case) or handle both internally.  Perhaps we need a third
+option, namely to handle %z internally in all cases for systems whose
+implementation violates POSIX?  Nah, it would be easier to always handle
+%z internally.  Any downsides?  Does someone actually expect %z to show
+time zone names instead of offsets on Windows?
 
->
-> I would also prefer if there was only one coloring method, to ease
-> testing, but I can tolerate the current multiplicity of options.
-
-I *think* by now everyone involved in the discussion agrees that we
-want Zebra + optional aggressive dimming (inside blocks as well as
-at bounds that are not adjacent to other blocks, i.e. anything
-non-adjacent to a different block)
+René
