@@ -6,93 +6,71 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D43020401
-	for <e@80x24.org>; Wed, 14 Jun 2017 09:18:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE9C120D0C
+	for <e@80x24.org>; Wed, 14 Jun 2017 09:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751829AbdFNJSj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Jun 2017 05:18:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39829 "EHLO cloud.peff.net"
+        id S1752265AbdFNJY7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Jun 2017 05:24:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39856 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750770AbdFNJSi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Jun 2017 05:18:38 -0400
-Received: (qmail 12984 invoked by uid 109); 14 Jun 2017 09:18:32 -0000
+        id S1752243AbdFNJY5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Jun 2017 05:24:57 -0400
+Received: (qmail 13519 invoked by uid 109); 14 Jun 2017 09:24:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jun 2017 09:18:32 +0000
-Received: (qmail 9610 invoked by uid 111); 14 Jun 2017 09:18:34 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jun 2017 09:24:56 +0000
+Received: (qmail 9686 invoked by uid 111); 14 Jun 2017 09:24:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jun 2017 05:18:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Jun 2017 05:18:30 -0400
-Date:   Wed, 14 Jun 2017 05:18:30 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 14 Jun 2017 05:24:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Jun 2017 05:24:54 -0400
+Date:   Wed, 14 Jun 2017 05:24:54 -0400
 From:   Jeff King <peff@peff.net>
 To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>,
-        Git mailing list <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [BUG] b9c8e7f2fb6e breaks git bisect visualize
-Message-ID: <20170614091830.et7bmoxmcmgosun3@sigill.intra.peff.net>
-References: <20170614000630.44uctc5y7dyyleqy@sunbase.org>
- <5a3f6af6-f936-50e7-5fca-c41b3aeefdce@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        =?utf-8?Q?=C3=98yvind?= Holm <sunny@sunbase.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Fix a refname trimming problem in `log --bisect`
+Message-ID: <20170614092454.7mtaqnvhiho5yslx@sigill.intra.peff.net>
+References: <5a3f6af6-f936-50e7-5fca-c41b3aeefdce@alum.mit.edu>
+ <cover.1497430232.git.mhagger@alum.mit.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5a3f6af6-f936-50e7-5fca-c41b3aeefdce@alum.mit.edu>
+In-Reply-To: <cover.1497430232.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 14, 2017 at 10:36:43AM +0200, Michael Haggerty wrote:
+On Wed, Jun 14, 2017 at 11:07:25AM +0200, Michael Haggerty wrote:
 
-> The code for `git log --bisect` is questionable. It calls
-> `for_each_ref_in_submodule()` with prefix "refs/bisect/bad", which is
-> the actual name (not a prefix) of the reference that it is interested
-> in. So the callback is called with the empty string as path, and that in
-> turn is passed to a variety of functions, like `ref_excluded()`,
-> `get_reference()`, `add_rev_cmdline()`, and `add_pending_oid()`. I'm not
-> sure whom to ping; the code in question was introduced eons ago:
+> Fix the problem in two orthogonal ways:
 > 
->     ad3f9a71a8 Add '--bisect' revision machinery argument, 2009-10-27
+> 1. Add a new function, `for_each_fullref_in_submodule()`, that doesn't
+>    trim the refnames that it passes to callbacks, and us that instead.
+>    I *think* that this is a strict improvement, though I don't know
+>    the `git log` code well enough to be sure that it won't have bad
+>    side-effects.
+
+I think this is fine, for the reasons I gave elsewhere in the thread.
+
+> 2. Relax the "trimming too many characters" check to allow the full
+>    length of the refname to be trimmed away (though not more than
+>    that).
 > 
-> It seems to me that we should add a `for_each_fullref_in_submodule()`
-> and call that instead. I'll submit a patch doing that, though I'm not
-> certain that no new problems will arise from the callbacks getting full
-> rather than trimmed reference names (also for "refs/bisect/good").
+> In an ideal world the second patch shouldn't be necessary, because
+> this calling pattern is questionable and it might be better that we
+> learn about any other offenders. But if we'd rather be conservative
+> and not break any other code that might rely on the old behavior,
+> patch 2 is my suggestion for how to do it.
 
-I doubt that would be a problem. The current values are nonsensical (an
-empty string for bad, and "-$sha1" for good. They're mostly used in the
-cmdline and pending lists. It would affect things like --exclude or
---source. I doubt anybody cares, but if they do IMHO the full names
-would be a vast improvement.
-
-Another option would be for this code to ask for:
-
-  for_each_ref_in("refs/bisect", ...);
-
-and then match the various names in the callback. That gives sane short
-names ("bad" and "good-$sha1"). But I think the full names are a much
-better outcome. Some code (though note code I'd expect to use with
---bisect) assumes that the contents of the "name" field for pending
-objects can be used to look up the object again. That's definitely not
-true of the nonsense we produce now, but it would also not be true of
-"bad" (because we don't DWIM refs/bisect).
-
-> Another possible orthogonal "fix" is to make the refs side tolerate
-> being asked to trim a refname down to the empty string, while still
-> refusing to trim even more than that. I'll also submit a patch to that
-> effect.
-
-Even though the resulting "name" is silly, it does seem possible that
-some caller would want to ask for all of refs/foo, even if it didn't
-know if that was a single ref or a hierarchy. I do agree that any such
-caller should probably be using for_each_fullref_in, though.
-
-> Either of the patches fix the issue that was reported and pass the whole
-> test suite (except for t1308, which seems to be broken in master for
-> unrelated reasons).
-
-It's broken if you use autoconf. See the patch I posted a few hours ago:
-
-  http://public-inbox.org/git/20170614053018.pbeftfyz2md4o73h@sigill.intra.peff.net/
+My preference would be to hold off on (2) if we can avoid it. It's
+cleaner, and I think flushing out these kinds of bugs is useful.
 
 -Peff
