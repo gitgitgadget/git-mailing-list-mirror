@@ -2,91 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 901161FA7B
-	for <e@80x24.org>; Thu, 15 Jun 2017 10:36:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87C821FA7B
+	for <e@80x24.org>; Thu, 15 Jun 2017 10:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751662AbdFOKgP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 06:36:15 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33646 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750777AbdFOKgO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 06:36:14 -0400
-Received: by mail-wr0-f196.google.com with SMTP id x23so2666674wrb.0
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 03:36:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pjwB3HQFBWJdbtXGHvyxRfbTikL/kKw2mxYAa9YxPsI=;
-        b=e7byfUWNZ2MoRZEwHncEljZu0DZEJXo41o+wDFrlW3hIoBqbYaPM83j8B1rY3Te2Wt
-         YzYgEl0OfycSmrgz/kgnBHAZTyOqX+q8ZTS9ZewehPpIlh57rEQQzukMedesFgykY8Yu
-         dEbFBtUdHJkQQar4l/uP8rEMWpKWlEx+8WwUOyOYVWwCsZcmnnfC6gt8KW6n35Hgx6St
-         cZs6whgN1grJiCQlZsBb+7qVc+ARW/+rqK71hwE8/1lxXOYAls8HF+BF1xyKo+40RAn9
-         seGt/2d+vpsxo3Pm0KRawRitdI4wAKromwPbbi3JzkAHi1J/zZDPSQHolrsoSyzpUcjG
-         06jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pjwB3HQFBWJdbtXGHvyxRfbTikL/kKw2mxYAa9YxPsI=;
-        b=cVPXFgH49rGC1BwatF4LryL4CQ+nijljD/piJmSwxJ25JDM5WiWdQmP+yIj9qdu4Cy
-         2gj3IVEHOGP37dWnz6GJD/9w82xvgrckLGqXrzEu4erZTyBz1YFz+K98h+w4yhJ5gUUi
-         zotVMfHvzcPdPK9Ys/EdCBA5rJ6/lAjIjFimEl1SEdJ6qSfI+KYUbRHejVf86VLZrlWD
-         j9EDH7LhjBwdWZQ0dk2y1tczBkLONfTyjXyJXpM2pKuusydNwVu3x+4q07AJ4W3PTZdI
-         4+lvlsbjrAXemmGkNeucrJEdtTH7stG9IQJcxC3pxngIjxLXrQrd2jJY97sN7yAAum2v
-         DNgw==
-X-Gm-Message-State: AKS2vOzs8CsifNkUUk7jqTIq8E/fqkrylM+qUyQAySxR2CPic8H1tval
-        akgztLOd7JXsUA==
-X-Received: by 10.28.181.201 with SMTP id e192mr3106532wmf.48.1497522973349;
-        Thu, 15 Jun 2017 03:36:13 -0700 (PDT)
-Received: from localhost.localdomain (x4db032c5.dyn.telefonica.de. [77.176.50.197])
-        by smtp.gmail.com with ESMTPSA id z32sm3998244wrc.12.2017.06.15.03.36.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 Jun 2017 03:36:12 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] docs/pretty-formats: stress that %- removes all preceding line-feeds
-Date:   Thu, 15 Jun 2017 12:36:07 +0200
-Message-Id: <20170615103607.11119-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.13.1.505.g7cc9fcafb
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1751937AbdFOKho (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 06:37:44 -0400
+Received: from mail.centricular.com ([50.116.37.142]:39432 "EHLO
+        mail.centricular.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751673AbdFOKho (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 06:37:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mail.centricular.com (Postfix) with ESMTP id 0E83E58BE2;
+        Thu, 15 Jun 2017 20:37:43 +1000 (AEST)
+X-Virus-Scanned: Debian amavisd-new at centricular.com
+Received: from mail.centricular.com ([127.0.0.1])
+        by localhost (worm-farm.widgetgrove.com.au [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 61x7R2eICeJb; Thu, 15 Jun 2017 20:37:42 +1000 (AEST)
+Received: from lotus (unknown [188.117.216.123])
+        by mail.centricular.com (Postfix) with ESMTPSA id AEE5958BA5;
+        Thu, 15 Jun 2017 20:37:41 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=centricular.com;
+        s=201701; t=1497523062;
+        bh=LL4X5qH5SCUcPdgjf0tBtCPpoZ6i6cqrlT30Dm2oUaQ=;
+        h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+        b=IL+68aeIXSkMBTQVwxPtq2hXttmZ0UNWFgSqxx5bJkvxdV9J1+9BboSKDR+rATK8G
+         qjB6IcDylaVJTTTlPCM8VJ1oBb2eq7S1DjvJ/38TaFIZ9A9khFOwXXqoKbdxLR3ims
+         phL3AHo/wOFLQve8ZM3c133P2HRe8mSCY2Jy6uhH6bLafmWCNVsiINpwTVfW/0wYeQ
+         fjj8geBkOy2CWE3suUZre9W8b5Myr0LH3TwLAQMrK4vtyNIiZEmRfyzZpM5hT3bOmM
+         Ay0aU8BRucJ0a/eKwJxzrKxu+uk9sUynKOA0wmQ+tAr94gLs+zfEEcX6OLObcdhb9d
+         Dt6NHcZB9joJw==
+Message-ID: <1497523056.2239.107.camel@centricular.com>
+Subject: Re: [BUG] git cherry-pick segfaults with local changes in working
+ directory
+From:   Sebastian =?ISO-8859-1?Q?Dr=F6ge?= <sebastian@centricular.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Date:   Thu, 15 Jun 2017 13:37:36 +0300
+In-Reply-To: <20170615103215.45sp5adzu6zcorct@sigill.intra.peff.net>
+References: <1497517910.2239.105.camel@centricular.com>
+         <20170615103215.45sp5adzu6zcorct@sigill.intra.peff.net>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+        protocol="application/pgp-signature"; boundary="=-/UHRhOkN6IyPLsu4iDqS"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
 
-A mere plural "line-feeds" was too subtle for me to grasp on first
-(and second...) reading.
+--=-/UHRhOkN6IyPLsu4iDqS
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- Documentation/pretty-formats.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Hi Jeff,
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 38040e95b..a48d267e2 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -213,8 +213,8 @@ If you add a `+` (plus sign) after '%' of a placeholder, a line-feed
- is inserted immediately before the expansion if and only if the
- placeholder expands to a non-empty string.
- 
--If you add a `-` (minus sign) after '%' of a placeholder, line-feeds that
--immediately precede the expansion are deleted if and only if the
-+If you add a `-` (minus sign) after '%' of a placeholder, all consecutive
-+line-feeds immediately preceding the expansion are deleted if and only if the
- placeholder expands to an empty string.
- 
- If you add a ` ` (space) after '%' of a placeholder, a space
--- 
-2.13.1.505.g7cc9fcafb
+Thanks for the fast reply!
+
+On Thu, 2017-06-15 at 06:32 -0400, Jeff King wrote:
+> On Thu, Jun 15, 2017 at 12:11:50PM +0300, Sebastian Dr=C3=B6ge wrote:
+>=20
+> > This is with git 2.11.0 (Debian 2.11.0-4) and can be reproduced with
+> > the packed checkout here:
+> > =C2=A0 https://people.freedesktop.org/~slomo/git-cherry-pick-segfault_g=
+st-plugins-good.tar.xz
+> >=20
+> > $ tar xf git-cherry-pick-segfault_gst-plugins-good.tar.xz
+> > $ cd gst-plugins-good
+> > $ git cherry-pick 0421fb04470af90e8810e7e5e69955d3192896ba
+> > Segmentation fault (core dumped)
+>=20
+> Note that the tarball doesn't have all the necessary objects. Its
+> .git/objects/info/alternates points to another full clone of
+> git://anongit.freedesktop.org/gstreamer/gst-plugins-good.
+
+Ah good to know, I thought this only happens if you clone with
+--reference and not otherwise.
+
+> The segfault was fixed in 55e9f0e5c (merge-recursive: handle NULL in
+> add_cacheinfo() correctly, 2016-11-26), which is in v2.11.1.
+
+I can confirm that this also fixes my specific problem. Thanks!
+
+--=20
+Sebastian Dr=C3=B6ge, Centricular Ltd =C2=B7 http://www.centricular.com
+--=-/UHRhOkN6IyPLsu4iDqS
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEf0vHzDygb5cza7/rBmjMFIbC17UFAllCY3BfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDdG
+NEJDN0NDM0NBMDZGOTczMzZCQkZFQjA2NjhDQzE0ODZDMkQ3QjUACgkQBmjMFIbC
+17V9bRAAmAeRzo3XeZ9XAw5Qo+AFTzC25svxr/nnLjc9xyS8KK9r25X8jWyXft3D
+AbG6DzJhddHZSekLcviwRKcEGmhx392IJ5NJkvJS3sB/HYz/r+1anjNf305NNaF5
+DQ5aAV50zclqwSLhTcLxEoqIe/UzLcfeKeOIr2FSS5ieY2CrhehPTRb6Xla81h9t
+O36p+lQdpt+yPkxVRXpmvTXIp9Q43THTiynLriv3UwGseb1TvQaQi+qqpuKboaHm
+waftiIORVqGZv3nosk5FzXvBqTny9/Fi0P0Dec6f25Z05FHvOitlxy9YUWUVLbP7
+WrXmsvkKBvhT7khI1j33Vzqcx6ZSC/9zwewGFOLrvO5w34aVncYitvu9wPh1eLbw
+KaEScRKT5K82oB9sg29ErfISBHizVYN6Rykwh4+56SmLjBPi6HhEbE7ZG0+HD1/N
+wuQ1ZTATwqdEgLECMY/ztVFKRO9fjjnuPqsk6KNzcDAXAwTDzR/Ach7tq6GPFGrk
+0eBA9rduTC79OMQMAtPOZf33HjNfX4HNVkbcJ+lbKF9RCcR5z1VF2fVdssfQiyVV
+Zk29UUXxuyNZFZWSdTDTcUIUEi2VxsqNKyuzW5n25MZNp1YTQAPKz2jFCWm174gf
+1xhvpI9SGwiRsYlUV8PrROD+h3sDRGPLtkaDTFN9J3VK4DfGrSI=
+=Q3Hi
+-----END PGP SIGNATURE-----
+
+--=-/UHRhOkN6IyPLsu4iDqS--
 
