@@ -2,109 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C462920401
-	for <e@80x24.org>; Thu, 15 Jun 2017 14:10:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D03E720401
+	for <e@80x24.org>; Thu, 15 Jun 2017 14:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751955AbdFOOKu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 10:10:50 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:33199 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751016AbdFOOKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 10:10:50 -0400
-Received: by mail-qt0-f196.google.com with SMTP id w1so3379544qtg.0
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 07:10:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=oEiVLGv3BP7TE/H4gogwjk5Q7YlVcDXq5MdOO9S4Z5Q=;
-        b=dQ6rXx+O5BzPZQAhBgPsAzgeJms3xyJ67VFh/ujeJSkuilg/EB5ckP9FY50n578LW0
-         Gxf4kfFFSaWV047H63Dl2BvOF4DBjiGZIwIWVLQEWoEn7hqsXxHTL3n8AaYT+f0v9e7s
-         K1SYkzlYZIJ9OJaMvtW71KcN1D3NcbHM0VCoLjDUskvJE1FGCnbwwnDXtrlUAGp+X4IL
-         xkcQw6rgOziecD9GP2LbfwzXYEzP/2LhWK+sr3Z3GgjgHkcd2lLP1wozY/SjlPggP+1r
-         267ex2/mW4XPmp52wILiuEPX61d+v1/vln/JIRi7kA2wL7jE86hbvDetWFhI2pooB/sA
-         kRwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=oEiVLGv3BP7TE/H4gogwjk5Q7YlVcDXq5MdOO9S4Z5Q=;
-        b=t/uDSLBluvwcEJ4TJ4kgQ6YN5PGvdCd2JlPMzEkR7dyJ3qLGZJEnuvjRARLltlIznl
-         DKsVBdvAJyjxkMNRpWCHHjX0rhXHhalBTzmmM1XIq9q5B5B0Tm3ZXm8IcXm5NCDoyxKV
-         dp7x9dmjYgdxUq+eN2TUOSzlVw1w/D5F15PEriiQ9S3etSSO2io4aqGiOaOvnhycXyZl
-         lSqVseP/fsThWjj/UEugwxbLawDuQqFnBWnbA6wV/PVrsD+5kXxrDLeHdeVhB4GYGaaq
-         SYDZHl2MGQd4Py3Kxulr5sBkgP0rDYRmyTkmZAlWV3GRbhVzVrI6n+WWVsBiex78fMDQ
-         K9BQ==
-X-Gm-Message-State: AKS2vOwUOuokVD5lYCGXcw35dF1iGfx5JiLM/cWD0ZXfamxPIk9XSsd/
-        9PUZRjgcwGDulA==
-X-Received: by 10.237.47.130 with SMTP id m2mr7044301qtd.31.1497535848946;
-        Thu, 15 Jun 2017 07:10:48 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id a203sm152599qkg.20.2017.06.15.07.10.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 15 Jun 2017 07:10:48 -0700 (PDT)
-Subject: Re: [PATCH] sub-process: fix comment about api-sub-process.txt
-To:     Jonathan Nieder <jrnieder@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-References: <20170614151225.31055-1-chriscool@tuxfamily.org>
- <20170614182607.GW133952@aiede.mtv.corp.google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <62acd48f-8442-e9bf-9e96-ce9fa2228dac@gmail.com>
-Date:   Thu, 15 Jun 2017 10:10:37 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <20170614182607.GW133952@aiede.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        id S1752605AbdFOOro (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 10:47:44 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:56121 "EHLO
+        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752161AbdFOOrn (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 15 Jun 2017 10:47:43 -0400
+X-AuditID: 12074414-d17ff7000000283f-60-59429e0de3ab
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id B2.C0.10303.D0E92495; Thu, 15 Jun 2017 10:47:42 -0400 (EDT)
+Received: from bagpipes.fritz.box (p57BCCC0A.dip0.t-ipconnect.de [87.188.204.10])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5FElbQs014537
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Thu, 15 Jun 2017 10:47:39 -0400
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 00/28] Create a reference backend for packed refs
+Date:   Thu, 15 Jun 2017 16:47:05 +0200
+Message-Id: <cover.1497534157.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.11.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrFIsWRmVeSWpSXmKPExsUixO6iqMs3zynS4EWfqMXaZ3eYLJ6vP8Fu
+        0XWlm8miofcKs8XtFfOZLZY8fM1s0T3lLaPFj5YeZovNm9tZHDg9/r7/wOSxc9Zddo8Fm0o9
+        utqPsHk8693D6HHxkrLH501yAexRXDYpqTmZZalF+nYJXBnf2w4zFXxTrtjyvIulgfGjbBcj
+        B4eEgInEh42OXYxcHEICO5gkvi+cxQzhnGSSmHy+m6WLkZODTUBXYlFPMxOILSKgJjGx7RAL
+        SBGzwCRmibfXFoIlhAUcJZ4/amUHsVkEVCX2fu4Es3kFzIEGfWMGsSUE5CV2tV1kncDItYCR
+        YRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRroVebmaJXmpK6SZGSBCJ7GA8clLuEKMAB6MSD++J
+        WqdIIdbEsuLK3EOMkhxMSqK8/HJAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8U+cA5XhTEiur
+        UovyYVLSHCxK4rzfFqv7CQmkJ5akZqemFqQWwWRlODiUJHiN5wI1ChalpqdWpGXmlCCkmTg4
+        QYbzAA3/Cza8uCAxtzgzHSJ/ilFRSpzXAyQhAJLIKM2D64VF+StGcaBXhHnngVTxABMEXPcr
+        oMFMQIODLjiADC5JREhJNTCqZwmFTGua8GnPTqWVH4/H3mXlWLTD/33k99AHp1rVf30+w37R
+        7mTOL40JLc6RHD1rIs3+/hU0Ob7xh1rxnrau8Lr29BnC71d7XP5xS7FO9djtyXWqta4bsmwm
+        bXpndWyijHfgmaPRtRfubFu46n/Uj+TAq9EznWc9Pf4sqN50s7NkLMNTxYJ8JZbijERDLeai
+        4kQAD9n+380CAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This patch series continues the saga of picking apart the code for
+handling packed references from the code for handling loose
+references, all in preparation for making big changes to how the
+packed-ref reading and writing works as described in [1]. As a
+reminder, the final goal is to read the "packed-refs" file using mmap,
+parsing it on the fly instead of storing it into an in-memory
+`ref_cache`, and to read and parse only the parts of the file that are
+actually needed, giving a big speedup for many operations in
+repositories that have lots of refs.
 
+In this episode, we create a `packed_ref_store` class, implementing
+part of the `ref_store` API, that represents the packed references
+within a repository. The `files_ref_store` now contains an instance of
+`packed_ref_store` and delegates to it for the operations that have to
+touch the packed refs.
 
-On 6/14/2017 2:26 PM, Jonathan Nieder wrote:
-> Christian Couder wrote:
-> 
->> Subject: sub-process: fix comment about api-sub-process.txt
-> 
-> nit: this one-line description doesn't describe what was wrong and is
-> being fixed.  I think something like
-> 
-> 	sub-process: correct path to API docs in comment
+After this patch series, `packed_ref_store` supports:
 
-Looks good to me.  Thanks for finding/fixing this.
+* Iteration
+* `peel_ref`
+* `pack_refs` (they're already packed, so it's a NOOP)
+* `read_raw_ref`
 
-> 
-> would be easier to understand in "git log" output.
-> 
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>   sub-process.h | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> With or without such a tweak,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> 
->> diff --git a/sub-process.h b/sub-process.h
->> index 7d451e1cde..d9a45cd359 100644
->> --- a/sub-process.h
->> +++ b/sub-process.h
->> @@ -7,7 +7,7 @@
->>   
->>   /*
->>    * Generic implementation of background process infrastructure.
->> - * See Documentation/technical/api-background-process.txt.
->> + * See: Documentation/technical/api-sub-process.txt
->>    */
->>   
->>    /* data structures */
+A future patch series will add support for:
+
+* Reference transactions (`transaction_prepare`, `transaction_finish`,
+  `transaction_abort`, `initial_transaction_commit`)
+* `delete_refs`
+
+Operations that `packed_ref_store` will probably never support:
+
+* `create_symref`
+* `rename_ref` (could be supported, but is probably not useful)
+* Reflog-related operations
+
+In addition, all of the packed-refs related code has been moved to a
+new module, "refs/packed-backend.{c,h}". This includes some functions
+that are still called by `files_ref_store` directly to update the
+packed refs.
+
+The patch series is long, but I think relatively straightforward. In
+particular, patches 2-14 are quite mechanical. Its main point is to
+separate concerns, but it does bring one end-user advantage: if there
+is a problem parsing the "packed-refs" file, we now report an error
+and die. The old code just ignored lines that it didn't understand.
+
+I've developed these patches on top of master plus the following
+patches, which are followups to mh/packed-refs-store-prep:
+
+* lock_packed_refs(): fix cache validity check
+* for_each_bisect_ref(): don't trim refnames
+
+The patches can also be obtained from my GitHub fork [2] as branch
+"packed-ref-store".
+
+Michael
+
+[1] http://public-inbox.org/git/cover.1490026594.git.mhagger@alum.mit.edu/
+[2] https://github.com/mhagger/git
+
+Michael Haggerty (28):
+  add_packed_ref(): teach function to overwrite existing refs
+  packed_ref_store: new struct
+  packed_ref_store: move `packed_refs_path` here
+  packed_ref_store: move `packed_refs_lock` member here
+  clear_packed_ref_cache(): take a `packed_ref_store *` parameter
+  validate_packed_ref_cache(): take a `packed_ref_store *` parameter
+  get_packed_ref_cache(): take a `packed_ref_store *` parameter
+  get_packed_refs(): take a `packed_ref_store *` parameter
+  add_packed_ref(): take a `packed_ref_store *` parameter
+  lock_packed_refs(): take a `packed_ref_store *` parameter
+  commit_packed_refs(): take a `packed_ref_store *` parameter
+  rollback_packed_refs(): take a `packed_ref_store *` parameter
+  get_packed_ref(): take a `packed_ref_store *` parameter
+  repack_without_refs(): take a `packed_ref_store *` parameter
+  packed_peel_ref(): new function, extracted from `files_peel_ref()`
+  packed_ref_store: support iteration
+  packed_read_raw_ref(): new function, replacing `resolve_packed_ref()`
+  packed-backend: new module for handling packed references
+  packed_ref_store: make class into a subclass of `ref_store`
+  commit_packed_refs(): report errors rather than dying
+  commit_packed_refs(): use a staging file separate from the lockfile
+  packed_refs_lock(): function renamed from lock_packed_refs()
+  packed_refs_lock(): report errors via a `struct strbuf *err`
+  packed_refs_unlock(), packed_refs_is_locked(): new functions
+  clear_packed_ref_cache(): don't protest if the lock is held
+  commit_packed_refs(): remove call to `packed_refs_unlock()`
+  repack_without_refs(): don't lock or unlock the packed refs
+  read_packed_refs(): die if `packed-refs` contains bogus data
+
+ Makefile              |   1 +
+ refs.c                |  18 ++
+ refs/files-backend.c  | 619 ++++-------------------------------
+ refs/packed-backend.c | 868 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs/packed-backend.h |  25 ++
+ refs/refs-internal.h  |  10 +
+ 6 files changed, 981 insertions(+), 560 deletions(-)
+ create mode 100644 refs/packed-backend.c
+ create mode 100644 refs/packed-backend.h
+
+-- 
+2.11.0
+
