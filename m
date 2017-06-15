@@ -2,87 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D53C20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 16:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BEE120401
+	for <e@80x24.org>; Thu, 15 Jun 2017 16:19:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751909AbdFOQMv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 12:12:51 -0400
-Received: from mout.web.de ([212.227.17.12]:62506 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751883AbdFOQMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 12:12:50 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M6E6g-1dj6sL0n4U-00y6Pz; Thu, 15
- Jun 2017 18:12:35 +0200
-Subject: Re: [PATCH 2/2] date: use localtime() for "-local" time formats
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Ulrich Mueller <ulm@gentoo.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20170615134958.mzmdmhonjsnconu2@sigill.intra.peff.net>
- <20170615135216.2jfsrjpicku6zxv3@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <b79d1c3d-e43e-a82b-2d33-2283cb0aa5ef@web.de>
-Date:   Thu, 15 Jun 2017 18:12:31 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1752495AbdFOQTq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 12:19:46 -0400
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:34149 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752121AbdFOQTn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 12:19:43 -0400
+Received: by mail-qt0-f179.google.com with SMTP id c10so26808404qtd.1
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 09:19:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=863+PKJmpbTIr5fCTt7FgAa2juvnGcvHv6IyowuqB2Y=;
+        b=A0peHeJ575Y6TE4YpjO9ra9/uB/iIwVjNLxp0At+tVyhO4ALOw078y9OBdqx9Qdyfq
+         MBLGiMzwbcL3us0GdkTjPhseI1HMfSAIUupGOTvKGZ/9qUTLrCf/A7RAfvzqk8otwmXZ
+         CCrl7DpmUnPwfdtY+P+M6uygIWyzl5AoLiYL8akNBnNWYZgr+t0egG4uIjtJAd7myrEw
+         /bwUE7ptMAMFYkTxmbkEqSvQvsbl04VOQJqF/crDh/dnPxPX+CdqCUwVgoMwMoi7CYNN
+         A0+KhkGSl5l74mV0f7PtdlXhtm5SCu8xyFJ79dnbsM9y5hco83ucrpEddTgG1m9IhSjI
+         FTFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=863+PKJmpbTIr5fCTt7FgAa2juvnGcvHv6IyowuqB2Y=;
+        b=pLrfJFTADLE4Vyw9YmnGRtyZPCwS92FJSibAVpM26jUrXFBPIiyvM8+yui/6lYY/li
+         4dDRTNu6p62SoKFL/m/Eie7i/LPrKblOHb9YKQtrhNG3cCNSeDDWwoYag8Hk4NUoKcFG
+         zIczfPY8jqF+kKR/w202RuGw0RT590gut4VKe2IxSQrmtojoJEV4WlkQpl48xBUBAix1
+         ggtp3M7NiRfBoVaEHchoCDwCIQUfKptxw4VZrhoRVvQbKaWWMoF6smg47u+ZWL6dC+Cm
+         CYffXv83UdnzjK76I8Ji04UIdwnTYfk0abw8qjNqGiLOaq6IhTEjvODhBQ/PeAeSjZMl
+         dwrQ==
+X-Gm-Message-State: AKS2vOyvGJRX6mfhXL8bejvW/N0reLhMIkYJGZGoI1EZBYSC5tipA9YE
+        k9Px0qXA/nUTbn5efGw=
+X-Received: by 10.55.168.17 with SMTP id r17mr7790657qke.146.1497543582742;
+        Thu, 15 Jun 2017 09:19:42 -0700 (PDT)
+Received: from Matthews-MacBook-Pro.local ([2603:3005:b04:ee00:a4fd:f40c:8436:ec27])
+        by smtp.gmail.com with ESMTPSA id j54sm391153qtc.59.2017.06.15.09.19.42
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 15 Jun 2017 09:19:42 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Matthew Groth <mgroth49@gmail.com>
+Subject: git diff sometimes brings up buggy pager
+Message-ID: <3cdbb6a5-55d3-673c-ce31-c3da4d7e17cf@gmail.com>
+Date:   Thu, 15 Jun 2017 12:19:41 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 Thunderbird/52.2.0
 MIME-Version: 1.0
-In-Reply-To: <20170615135216.2jfsrjpicku6zxv3@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:xVe5S8eAqlhIzBhAJvPvcBlo3W2auzH8KfM700sYvwT/LFSj2BO
- MhKCFWIbuED7d3ikGP9drz8XF9Ln9LcQc9tWEXZC2mqpTPp5vK7FxMJZGPBJ3SJx0Axc9m1
- ydYX+1JEa9nyutwfQFtM7JS1CZABEjyEo1ojLgWtIvn9RlHKjj3kymrnyjEmj0sjSND69ZH
- n0eweW7ZRF7g8LhS+kg8w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6aZDXyWJtTs=:ZsndQWY5m6AntVdk6iGETL
- pv9gsTS4E6+yGypdYa2JumqITnpKWi1O8Qo7BHY8ImxSqDuJqyfIt2tjaFgKDiJRVfGd+ZZwX
- dT0M/iU8BPeLAGAKQorJJ3SHh8UnACVVVUq4uvCsyfLq/kImfID5WmTMi9oJ7cx5IhATW1fJF
- uTebAjNBz+dhlnNo85ECvu9XLy1rrQLj3iSGdrfEh9csl3mdWf4BEt3DGuYD+9c9W8fm6hw7n
- NByIbYJSUnJnZ7zifdOJbAMimxzF1vdVr9x9CV9LG6j2MSPuUs8KVI0pqShBzC+rkwWQaHTfE
- rP3SEXG+/KNHVZMYxq7tsrte8Y0BNAExLzuoVXeTovJy8plooRd1ZO6w1BbVgL6KPcN8AH5uF
- wPDj85hTU6lrFH2R9+h5Zb80VUS2Sm4tknccEtFHRdcWiq2gmQtrAE6i8SEH4+/P7LezE+rJ4
- RitfbbrUoGMeV8gSrKUJfmYhYDNcA6FupE6BJ2v8vvOXb+TqxyGBlNk7pDZ1HOzbTLhqTZGh8
- a/rhDPm/OqM4U5JsbHBD+2KM/IzWBVKFd/Eb5qhMnp+/Okc7QfjrOlq1tMtDUCDWpzKQNPJte
- Cnxo7RVlZ8qxiXAH/KhRfOls2OLmYrGlm+Z1T8hW4mzzEaPdOBQRU560vTIsiBkcvM2ag2coL
- 1vFTncQmSCDQu1HCPUSYjA42A0mlS3mznaY9RqrZjahwNN5YBnhLKPjORkBIwWm5FUG916M88
- W3Urzkj5Fbzyl6BKn3FwxBkevh/4TpnIzPGZ8iEog94A3+57noPLdKoCG3twQ6H9QXNzGSO67
- BcIrmeF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.06.2017 um 15:52 schrieb Jeff King:
-> But for the special case of the "-local" formats, we can
-> just skip the adjustment and use localtime() instead of
-> gmtime(). This makes --date=format-local:%Z work correctly,
-> showing the local timezone instead of an empty string.
+When I do `git diff` sometimes I get this:
 
-Documentation/rev-list-options.txt should be updated to mention that %Z
-is passed to strftime in the local case, no?
 
-> The new test checks the result for "UTC", our default
-> test-lib value for $TZ. Using something like EST5 might be
-> more interesting, but the actual zone string is
-> system-dependent (for instance, on my system it expands to
-> just EST). Hopefully "UTC" is vanilla enough that every
-> system treats it the same.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I don't have a Windows system to test this on, but from the output Dscho
-> provided earlier, I believe this should pass.
+...skipping...
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+...skipping...
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+...skipping...
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
 
-The first patch applies with some fuzz on master of Git for Windows, the
-second one applies cleanly.  A "typedef unsigned long timestamp_t;" is
-required to compile it; such a fixup won't be needed for long, I guess.
-t0006 succeeds.
 
-René
+.... it goes on like this for about 10 times the length. Looks like this 
+happens exclusively when I use git diff with a github remote that is at 
+the same commit. I will update if I find any other case where this happens.
+
+
+
+
