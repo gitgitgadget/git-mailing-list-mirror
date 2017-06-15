@@ -2,96 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C129920401
-	for <e@80x24.org>; Thu, 15 Jun 2017 21:03:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD64A20401
+	for <e@80x24.org>; Thu, 15 Jun 2017 21:07:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751598AbdFOVDL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 17:03:11 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:32795 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750814AbdFOVDK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 17:03:10 -0400
-Received: by mail-pg0-f49.google.com with SMTP id f185so11641630pgc.0
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 14:03:10 -0700 (PDT)
+        id S1750830AbdFOVHN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 17:07:13 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:35514 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750727AbdFOVHM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 17:07:12 -0400
+Received: by mail-wr0-f196.google.com with SMTP id z45so4776147wrb.2
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 14:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KEV4zUmKSPGkV05hql2+9tYER1PvMZeswcq8gwTxRs0=;
-        b=AiLF6Wp8MMiLGXRTo4OrkQBUMnZXi/q6WFefyEtIYvbm3WumX6+Wqt205Ysvo0ucpo
-         3V/DRokOfW3WWe3767m42wg2kaxSPXObwoN7eA8v11QC0h8y29oomrA2jDxdlBd5zQNK
-         58Czu+F/BMyrD/+V7IbVNBmd7nuohDJqXBs9cCMJMtBEKb1kHHU5n6uGcWEBjn/h12zu
-         jJh1MHY7Ppmxr4vQvMikfJv8RYs6McTDBYdIFm0eaFbzG5a8zK8iAu8fnUS/zVaO/4yA
-         1zUmP3jpZzbXjNT+/D+xeZE/4ql+ulZmFsbCE43HMPlzuZrt1jHIwl26q3Fz9mbVqdAE
-         lbJQ==
+        bh=tfgEPktyYyf6tLTpYQVHjQt8H5mkO5uHndi5ZYxkAa4=;
+        b=MUjMw16YupB5gjot26nUNx0QonsnqKDN4y2s6r/ZGDcPoDHnVp3H0tEAr73I9G6bEo
+         XWS24ABxlrtIcUBUP0QXXgterPyx4Fcy+piH4AzfGT/72F4tlz0ewcTBDJbiw4FppTqx
+         hxqw/hS58xS7dlU9cFFZq4nzh2B/3Y57KRJPf4yiWGe7cEU1d4fH66mJNFBRNCEVyLGZ
+         o/sHcPM4Rx3MLZmL8gywBXSF33BavdkWWznBazGFOrXJmfz6/xxR0L5I1omkSJ7ES5lG
+         gVzidRIEqJQ6KTPU1LWUZDaAQaHY320UdzyABk/TUI3+WlVGdzEuB/7mCeazBi+Fn6il
+         aNHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KEV4zUmKSPGkV05hql2+9tYER1PvMZeswcq8gwTxRs0=;
-        b=ENgcbFEoqXUxSO2uPia5OvpX73AtprEbL/JVNz1LbemOvypvCGC2u7IhieC6iEZbBg
-         +kzBYWsLwmQY3TGXzMQafCNXpfEtvMTmBJ9+DY1xa436t+K6j4Cu6QyYEDsvqG+tXlrw
-         +oSs3PgNo5veAXnng62Y+huxTXEhGzZtwm3i2XGb7rhe8JDjRCiTQEFNa4Xg8WIPF8ua
-         /hBPcakIHvKHjNdl2GnxNMJZ8vFqr95VUh6uvHDWrkNxwgiQy/8qc2sxfMS/qdq0B2zF
-         YH0gOyFZkhwfKzFRHjVLfYDg0kL3N0bteevE0mIxJalGhai9X7rMUOnekvKTP43kbSrB
-         acig==
-X-Gm-Message-State: AKS2vOwTKidMr26NCDEdpJ1wTPXgBUwemqdxghRlGgfYVBunq1zpZhn6
-        tP1AsKs6pgv6srDP5k/p0w==
-X-Received: by 10.84.214.150 with SMTP id j22mr8373059pli.137.1497560589649;
-        Thu, 15 Jun 2017 14:03:09 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:a05c:fb80:1fb9:b013])
-        by smtp.gmail.com with ESMTPSA id e18sm315465pfk.118.2017.06.15.14.03.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 15 Jun 2017 14:03:09 -0700 (PDT)
-Date:   Thu, 15 Jun 2017 14:03:05 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [WIP v2 2/2] pack-objects: support --blob-max-bytes
-Message-ID: <20170615140305.4f79f5f0@twelve2.svl.corp.google.com>
-In-Reply-To: <14b1fbb0-d4fb-1dd3-936c-deea6d20a99b@jeffhostetler.com>
-References: <cover.1496361873.git.jonathantanmy@google.com>
-        <cover.1496432147.git.jonathantanmy@google.com>
-        <6f7934621717141ce3bb6bc05cf1d59c7900ccc5.1496432147.git.jonathantanmy@google.com>
-        <20170602222640.u6vni5tdpjp3sayt@sigill.intra.peff.net>
-        <14b1fbb0-d4fb-1dd3-936c-deea6d20a99b@jeffhostetler.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        bh=tfgEPktyYyf6tLTpYQVHjQt8H5mkO5uHndi5ZYxkAa4=;
+        b=Rlx+mHfyffqRjWJQRLMwUAp9S6U6x/eFM0qUP++ZEkdqQrNweBew8I9Q3fyaayZGaT
+         ++TmVD7on+CNO2EDIdCTpDChyW4M63pWjU1y1DLAEqWsXNkai7c7ozzx9+ZwUoIBZcwm
+         9/LVndbBnim+n5oOCSI/RnCrbeBubRzxYujvjgOcNsHtbSiXC47zgHQfoDxoLo56A7ap
+         CjEqq3pVpibYIT0oQE7awlHX0JhszMmunz6Nw6WYf861v6iLIX50XYlTrZLw3op9VZAa
+         TGLSbIRWJmAXx7rKVe6dHIfu5y4764KLRfIhWha2RIPv+MH1lwUPjCPkzmbE/ZczJY9K
+         AgcQ==
+X-Gm-Message-State: AKS2vOzmuLlgezCTBwu0FoMlvQ2CeYwLHf1khwaHf9aZ/uFxSbiEziaE
+        wjnBOSZKB5g7bGk6Cq0=
+X-Received: by 10.80.136.110 with SMTP id c43mr4776089edc.171.1497560830836;
+        Thu, 15 Jun 2017 14:07:10 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id o1sm267230edc.22.2017.06.15.14.07.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 15 Jun 2017 14:07:09 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/2] Add a FREE_AND_NULL() wrapper macro
+Date:   Thu, 15 Jun 2017 21:06:58 +0000
+Message-Id: <20170615210700.16310-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.13.1.508.gb3defc5cc
+In-Reply-To: <CACBZZX7S9A=mPSgqtmVyZbLdR3GVH+ux3tGN1QXBMEzbg8Ffog@mail.gmail.com>
+References: <CACBZZX7S9A=mPSgqtmVyZbLdR3GVH+ux3tGN1QXBMEzbg8Ffog@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 15 Jun 2017 16:28:24 -0400
-Jeff Hostetler <git@jeffhostetler.com> wrote:
+On Thu, Jun 15 2017, Ævar Arnfjörð Bjarmason jotted:
+> I'll change it to FREE_AND_NULL and submit my patch as-is, my reading
+> of the rest of this thread is that making it a function instead of a
+> macro would be interesting, but has its own caveats that are likely
+> better considered as part of its own series, whereas this just changes
+> existing code to its macro-expanded functional equivalent.
 
-> I agree with Peff here.  I've been working on my partial/narrow/sparse
-> clone/fetch ideas since my original RFC and have come to the conclusion
-> that the server can do the size limiting efficiently, but we should
-> leave the pathname filtering to the client.  That is, let the client
-> get the commits and trees and then locally apply pattern matching,
-> whether that be a sparse-checkout definition or simple ".git*"
-> matching and then make a later request for the "blobs of interest".
+Here's v3 with that change. Nothing but the macro name (and comments,
+commit messages etc. referring to it) have changed.
 
-This means that the client would need to inflate all the trees it
-received, but that might not be that bad.
+Ævar Arnfjörð Bjarmason (2):
+  git-compat-util: add a FREE_AND_NULL() wrapper around free(ptr); ptr =
+    NULL
+  *.[ch] refactoring: make use of the FREE_AND_NULL() macro
 
-> Whether we "fault-in" the missing blobs or have a "fetch-blobs"
-> command (like fetch-pack) to get them is open to debate.
-> 
-> There are concerns about the size of the requested blob-id list in a
-> fetch-blobs approach, but I think there are ways to say I need all
-> of the blobs referenced by the directory /foo in commit xxxx (and
-> optionally, that aren't present in directory /foo in commit yyyy
-> or in the range yyyy..xxxx).  (handwave)
+ alias.c                  |  6 ++----
+ apply.c                  |  3 +--
+ attr.c                   |  6 ++----
+ blame.c                  |  3 +--
+ branch.c                 |  3 +--
+ builtin/am.c             | 18 +++++-------------
+ builtin/clean.c          |  6 ++----
+ builtin/config.c         |  6 ++----
+ builtin/index-pack.c     |  6 ++----
+ builtin/pack-objects.c   | 12 ++++--------
+ builtin/unpack-objects.c |  3 +--
+ builtin/worktree.c       |  6 ++----
+ commit-slab.h            |  3 +--
+ commit.c                 |  3 +--
+ config.c                 |  3 +--
+ credential.c             |  9 +++------
+ diff-lib.c               |  3 +--
+ diff.c                   |  6 ++----
+ diffcore-rename.c        |  6 ++----
+ dir.c                    |  9 +++------
+ fast-import.c            |  6 ++----
+ git-compat-util.h        |  6 ++++++
+ gpg-interface.c          | 15 +++++----------
+ grep.c                   | 12 ++++--------
+ help.c                   |  3 +--
+ http-push.c              | 24 ++++++++----------------
+ http.c                   | 15 +++++----------
+ imap-send.c              |  3 +--
+ line-log.c               |  6 ++----
+ ll-merge.c               |  3 +--
+ mailinfo.c               |  3 +--
+ object.c                 |  3 +--
+ pathspec.c               |  3 +--
+ prio-queue.c             |  3 +--
+ read-cache.c             |  6 ++----
+ ref-filter.c             |  3 +--
+ refs/files-backend.c     |  3 +--
+ refs/ref-cache.c         |  3 +--
+ remote-testsvn.c         |  3 +--
+ rerere.c                 |  3 +--
+ sequencer.c              |  3 +--
+ sha1-array.c             |  3 +--
+ sha1_file.c              |  3 +--
+ split-index.c            |  3 +--
+ transport-helper.c       | 27 +++++++++------------------
+ transport.c              |  3 +--
+ tree-diff.c              |  6 ++----
+ tree-walk.c              |  3 +--
+ tree.c                   |  3 +--
+ 49 files changed, 103 insertions(+), 197 deletions(-)
 
-Unless the server no longer has the relevant commit (e.g. because a
-branch was rewound), but even then, even if we only sent blob hashes,
-the list would be probably much smaller than the downloaded pack anyway,
-so things might still be OK.
+-- 
+2.13.1.508.gb3defc5cc
+
