@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C714F20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 14:48:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2658220401
+	for <e@80x24.org>; Thu, 15 Jun 2017 14:48:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752671AbdFOOs1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 10:48:27 -0400
+        id S1752704AbdFOOsa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 10:48:30 -0400
 Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49177 "EHLO
         alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752693AbdFOOs0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 15 Jun 2017 10:48:26 -0400
-X-AuditID: 12074411-f47ff70000007ac9-5a-59429e39baf4
+        by vger.kernel.org with ESMTP id S1752693AbdFOOs2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 15 Jun 2017 10:48:28 -0400
+X-AuditID: 12074411-f47ff70000007ac9-5e-59429e3b0a6f
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 16.B6.31433.93E92495; Thu, 15 Jun 2017 10:48:25 -0400 (EDT)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 17.B6.31433.B3E92495; Thu, 15 Jun 2017 10:48:27 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCC0A.dip0.t-ipconnect.de [87.188.204.10])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5FElbRE014537
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5FElbRF014537
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Thu, 15 Jun 2017 10:48:23 -0400
+        Thu, 15 Jun 2017 10:48:25 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -35,236 +35,149 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         <avarab@gmail.com>, David Turner <novalis@novalis.org>,
         Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 20/28] commit_packed_refs(): report errors rather than dying
-Date:   Thu, 15 Jun 2017 16:47:25 +0200
-Message-Id: <7766f7b4eeccf408dd6b03fd8656f59c84c1f2b1.1497534157.git.mhagger@alum.mit.edu>
+Subject: [PATCH 21/28] commit_packed_refs(): use a staging file separate from the lockfile
+Date:   Thu, 15 Jun 2017 16:47:26 +0200
+Message-Id: <2779ee9a75e75ff80898e51e46d561b8074e0dc2.1497534157.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1497534157.git.mhagger@alum.mit.edu>
 References: <cover.1497534157.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqGs5zynS4PZsLYu1z+4wWTxff4Ld
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrEIsWRmVeSWpSXmKPExsUixO6iqGs9zynS4NE/fYu1z+4wWTxff4Ld
         outKN5NFQ+8VZovbK+YzWyx5+JrZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4LNpV6
-        dLUfYfN41ruH0ePiJWWPz5vkAtijuGxSUnMyy1KL9O0SuDK6f51jKvhmXrFnZ0wD4wLdLkZO
-        DgkBE4mdp+YxdTFycQgJ7GCSmHa0gxnCOckkMWnDO0aQKjYBXYlFPc1MILaIgJrExLZDLCBF
-        zAKTmCXeXlsIlhAW8JF49KsPzGYRUJW4+/c2C4jNKxAlcfjbYWaIdfISu9ousoLYnAIWErO/
-        rAOKcwBtM5c4tlxjAiPPAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6pnq5mSV6qSmlmxgh
-        ISe4g3HGSblDjAIcjEo8vAoNTpFCrIllxZW5hxglOZiURHn55YBCfEn5KZUZicUZ8UWlOanF
-        hxglOJiVRHinzgHK8aYkVlalFuXDpKQ5WJTEefmWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeI3n
-        AjUKFqWmp1akZeaUIKSZODhBhvMADf8LNry4IDG3ODMdIn+KUVFKnNcDJCEAksgozYPrhaWE
-        V4ziQK8I8yqDrOABphO47ldAg5mABgddcAAZXJKIkJJqYDTuNIzcWCF4Q+3FnMMRQR4JOwXL
-        S5bf+dp2aQrzzNuXF96JbT+2Z6UV4xkXEfejJxmUX/P4Tsgry2JnMvSomb9pgUhGz2GLKBkG
-        ibM8V7SP7mg9l/6797j6sgmrWqTVlzAuW5EZFnX6tjYvj45WH69PtsYFo5/1PKEy75clFsha
-        b3oRlrJguRJLcUaioRZzUXEiABjsuTDkAgAA
+        dLUfYfN41ruH0ePiJWWPz5vkAtijuGxSUnMyy1KL9O0SuDK+7vjKVLBVvuJjwyGmBsZ/El2M
+        nBwSAiYSiyY9Y+ti5OIQEtjBJHH3zG12COckk8SL90dYQarYBHQlFvU0M4HYIgJqEhPbDrGA
+        FDELTGKWeHttIVhCWCBKYtnWPWwgNouAqsTFM61gNi9QfNWie0wQ6+QldrVdBBvKKWAhMfvL
+        OuYuRg6gbeYSx5ZrTGDkWcDIsIpRLjGnNFc3NzEzpzg1Wbc4OTEvL7VI11QvN7NELzWldBMj
+        JOgEdzDOOCl3iFGAg1GJh1ehwSlSiDWxrLgy9xCjJAeTkigvvxxQiC8pP6UyI7E4I76oNCe1
+        +BCjBAezkgjv1DlAOd6UxMqq1KJ8mJQ0B4uSOC/fEnU/IYH0xJLU7NTUgtQimKwMB4eSBK/x
+        XKBGwaLU9NSKtMycEoQ0EwcnyHAeoOF/wYYXFyTmFmemQ+RPMSpKifN6gCQEQBIZpXlwvbCk
+        8IpRHOgVYV5lkBU8wIQC1/0KaDAT0OCgCw4gg0sSEVJSDYyc137yz5FqOVjubGL04JGDytN3
+        Zfc3fwy8EnmsonJxdfy5oraP6R69VznVL5oxfxB+F2g8+fehEs/566x3lna93LJ53WcBxxib
+        hUpt6tJLkkO38Tw8+E1NiNMsweDhbetrp+YeTF+cKTxz5t7GJC9LQz0p16WfhS9lJjt8umyg
+        dyl4ZrDIfQ0lluKMREMt5qLiRAAbQOBe5QIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Report errors via a `struct strbuf *err` rather than by calling
-`die()`. To enable this goal, change `write_packed_entry()` to report
-errors via a return value and `errno` rather than dying.
+We will want to be able to hold the lockfile for `packed-refs` even
+after we have activated the new values. So use a separate tempfile,
+`packed-refs.new`, as a place to stage the new contents of the
+`packed-refs` file. For now this is all done within
+`commit_packed_refs()`, but that will change shortly.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c  | 10 +++---
- refs/packed-backend.c | 85 +++++++++++++++++++++++++++++++++------------------
- refs/packed-backend.h |  2 +-
- 3 files changed, 61 insertions(+), 36 deletions(-)
+ refs/packed-backend.c | 40 ++++++++++++++++++++++++++++++++--------
+ 1 file changed, 32 insertions(+), 8 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 039d0343cb..4323394a52 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1082,6 +1082,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 	struct ref_iterator *iter;
- 	int ok;
- 	struct ref_to_prune *refs_to_prune = NULL;
-+	struct strbuf err = STRBUF_INIT;
- 
- 	lock_packed_refs(refs->packed_ref_store, LOCK_DIE_ON_ERROR);
- 
-@@ -1116,10 +1117,11 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 	if (ok != ITER_DONE)
- 		die("error while iterating over references");
- 
--	if (commit_packed_refs(refs->packed_ref_store))
--		die_errno("unable to overwrite old ref-pack file");
-+	if (commit_packed_refs(refs->packed_ref_store, &err))
-+		die("unable to overwrite old ref-pack file: %s", err.buf);
- 
- 	prune_refs(refs, refs_to_prune);
-+	strbuf_release(&err);
- 	return 0;
- }
- 
-@@ -2681,9 +2683,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
- 				       &update->new_oid);
- 	}
- 
--	if (commit_packed_refs(refs->packed_ref_store)) {
--		strbuf_addf(err, "unable to commit packed-refs file: %s",
--			    strerror(errno));
-+	if (commit_packed_refs(refs->packed_ref_store, err)) {
- 		ret = TRANSACTION_GENERIC_ERROR;
- 		goto cleanup;
- 	}
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 5dbe4e4e59..5bee49d497 100644
+index 5bee49d497..6619052e96 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -493,15 +493,19 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 
- /*
-  * Write an entry to the packed-refs file for the specified refname.
-- * If peeled is non-NULL, write it as the entry's peeled value.
-+ * If peeled is non-NULL, write it as the entry's peeled value. On
-+ * error, return a nonzero value and leave errno set at the value left
-+ * by the failing call to `fprintf()`.
-  */
--static void write_packed_entry(FILE *fh, const char *refname,
--			       const unsigned char *sha1,
--			       const unsigned char *peeled)
-+static int write_packed_entry(FILE *fh, const char *refname,
-+			      const unsigned char *sha1,
-+			      const unsigned char *peeled)
- {
--	fprintf_or_die(fh, "%s %s\n", sha1_to_hex(sha1), refname);
--	if (peeled)
--		fprintf_or_die(fh, "^%s\n", sha1_to_hex(peeled));
-+	if (fprintf(fh, "%s %s\n", sha1_to_hex(sha1), refname) < 0 ||
-+	    (peeled && fprintf(fh, "^%s\n", sha1_to_hex(peeled)) < 0))
-+		return -1;
+@@ -68,6 +68,13 @@ struct packed_ref_store {
+ 	 * thus the enclosing `packed_ref_store`) must not be freed.
+ 	 */
+ 	struct lock_file lock;
 +
-+	return 0;
- }
++	/*
++	 * Temporary file used when rewriting new contents to the
++	 * "packed-refs" file. Note that this (and thus the enclosing
++	 * `packed_ref_store`) must not be freed.
++	 */
++	struct tempfile tempfile;
+ };
  
- int lock_packed_refs(struct ref_store *ref_store, int flags)
-@@ -550,49 +554,74 @@ static const char PACKED_REFS_HEADER[] =
- /*
-  * Write the current version of the packed refs cache from memory to
-  * disk. The packed-refs file must already be locked for writing (see
-- * lock_packed_refs()). Return zero on success. On errors, set errno
-- * and return a nonzero value.
-+ * lock_packed_refs()). Return zero on success. On errors, rollback
-+ * the lockfile, write an error message to `err`, and return a nonzero
-+ * value.
-  */
--int commit_packed_refs(struct ref_store *ref_store)
-+int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err)
- {
- 	struct packed_ref_store *refs =
- 	        packed_downcast(ref_store, REF_STORE_WRITE | REF_STORE_MAIN,
- 				"commit_packed_refs");
- 	struct packed_ref_cache *packed_ref_cache =
+ struct ref_store *packed_ref_store_create(const char *path,
+@@ -522,10 +529,16 @@ int lock_packed_refs(struct ref_store *ref_store, int flags)
+ 		timeout_configured = 1;
+ 	}
+ 
++	/*
++	 * Note that we close the lockfile immediately because we
++	 * don't write new content to it, but rather to a separate
++	 * tempfile.
++	 */
+ 	if (hold_lock_file_for_update_timeout(
+ 			    &refs->lock,
+ 			    refs->path,
+-			    flags, timeout_value) < 0)
++			    flags, timeout_value) < 0 ||
++	    close_lock_file(&refs->lock))
+ 		return -1;
+ 
+ 	/*
+@@ -567,13 +580,23 @@ int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err)
  		get_packed_ref_cache(refs);
--	int ok, error = 0;
--	int save_errno = 0;
-+	int ok;
-+	int ret = -1;
+ 	int ok;
+ 	int ret = -1;
++	struct strbuf sb = STRBUF_INIT;
  	FILE *out;
  	struct ref_iterator *iter;
  
  	if (!is_lock_file_locked(&refs->lock))
--		die("BUG: packed-refs not locked");
-+		die("BUG: commit_packed_refs() called when unlocked");
+ 		die("BUG: commit_packed_refs() called when unlocked");
  
- 	out = fdopen_lock_file(&refs->lock, "w");
--	if (!out)
--		die_errno("unable to fdopen packed-refs descriptor");
-+	if (!out) {
-+		strbuf_addf(err, "unable to fdopen packed-refs tempfile: %s",
-+			    strerror(errno));
-+		goto error;
-+	}
- 
--	fprintf_or_die(out, "%s", PACKED_REFS_HEADER);
-+	if (fprintf(out, "%s", PACKED_REFS_HEADER) < 0) {
-+		strbuf_addf(err, "error writing to %s: %s",
-+			    get_lock_file_path(&refs->lock), strerror(errno));
-+		goto error;
-+	}
- 
- 	iter = cache_ref_iterator_begin(packed_ref_cache->cache, NULL, 0);
- 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
- 		struct object_id peeled;
- 		int peel_error = ref_iterator_peel(iter, &peeled);
- 
--		write_packed_entry(out, iter->refname, iter->oid->hash,
--				   peel_error ? NULL : peeled.hash);
-+		if (write_packed_entry(out, iter->refname, iter->oid->hash,
-+				       peel_error ? NULL : peeled.hash)) {
-+			strbuf_addf(err, "error writing to %s: %s",
-+				    get_lock_file_path(&refs->lock),
-+				    strerror(errno));
-+			ref_iterator_abort(iter);
-+			goto error;
-+		}
- 	}
- 
--	if (ok != ITER_DONE)
--		die("error while iterating over references");
-+	if (ok != ITER_DONE) {
-+		strbuf_addf(err, "unable to write packed-refs file: "
-+			    "error iterating over old contents");
-+		goto error;
-+	}
- 
- 	if (commit_lock_file(&refs->lock)) {
--		save_errno = errno;
--		error = -1;
-+		strbuf_addf(err, "error overwriting %s: %s",
-+			    refs->path, strerror(errno));
+-	out = fdopen_lock_file(&refs->lock, "w");
++	strbuf_addf(&sb, "%s.new", refs->path);
++	if (create_tempfile(&refs->tempfile, sb.buf) < 0) {
++		strbuf_addf(err, "unable to create file %s: %s",
++			    sb.buf, strerror(errno));
++		strbuf_release(&sb);
 +		goto out;
++	}
++	strbuf_release(&sb);
++
++	out = fdopen_tempfile(&refs->tempfile, "w");
+ 	if (!out) {
+ 		strbuf_addf(err, "unable to fdopen packed-refs tempfile: %s",
+ 			    strerror(errno));
+@@ -582,7 +605,7 @@ int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err)
+ 
+ 	if (fprintf(out, "%s", PACKED_REFS_HEADER) < 0) {
+ 		strbuf_addf(err, "error writing to %s: %s",
+-			    get_lock_file_path(&refs->lock), strerror(errno));
++			    get_tempfile_path(&refs->tempfile), strerror(errno));
+ 		goto error;
  	}
-+
-+	ret = 0;
-+	goto out;
-+
-+error:
+ 
+@@ -594,7 +617,7 @@ int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err)
+ 		if (write_packed_entry(out, iter->refname, iter->oid->hash,
+ 				       peel_error ? NULL : peeled.hash)) {
+ 			strbuf_addf(err, "error writing to %s: %s",
+-				    get_lock_file_path(&refs->lock),
++				    get_tempfile_path(&refs->tempfile),
+ 				    strerror(errno));
+ 			ref_iterator_abort(iter);
+ 			goto error;
+@@ -602,13 +625,13 @@ int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err)
+ 	}
+ 
+ 	if (ok != ITER_DONE) {
+-		strbuf_addf(err, "unable to write packed-refs file: "
++		strbuf_addf(err, "unable to rewrite packed-refs file: "
+ 			    "error iterating over old contents");
+ 		goto error;
+ 	}
+ 
+-	if (commit_lock_file(&refs->lock)) {
+-		strbuf_addf(err, "error overwriting %s: %s",
++	if (rename_tempfile(&refs->tempfile, refs->path)) {
++		strbuf_addf(err, "error replacing %s: %s",
+ 			    refs->path, strerror(errno));
+ 		goto out;
+ 	}
+@@ -617,9 +640,10 @@ int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err)
+ 	goto out;
+ 
+ error:
+-	rollback_lock_file(&refs->lock);
++	delete_tempfile(&refs->tempfile);
+ 
+ out:
 +	rollback_lock_file(&refs->lock);
-+
-+out:
  	release_packed_ref_cache(packed_ref_cache);
--	errno = save_errno;
--	return error;
-+	return ret;
+ 	return ret;
  }
- 
- /*
-@@ -628,7 +657,7 @@ int repack_without_refs(struct ref_store *ref_store,
- 				"repack_without_refs");
- 	struct ref_dir *packed;
- 	struct string_list_item *refname;
--	int ret, needs_repacking = 0, removed = 0;
-+	int needs_repacking = 0, removed = 0;
- 
- 	packed_assert_main_repository(refs, "repack_without_refs");
- 	assert(err);
-@@ -665,11 +694,7 @@ int repack_without_refs(struct ref_store *ref_store,
- 	}
- 
- 	/* Write what remains */
--	ret = commit_packed_refs(&refs->base);
--	if (ret)
--		strbuf_addf(err, "unable to overwrite old ref-pack file: %s",
--			    strerror(errno));
--	return ret;
-+	return commit_packed_refs(&refs->base, err);
- }
- 
- static int packed_init_db(struct ref_store *ref_store, struct strbuf *err)
-diff --git a/refs/packed-backend.h b/refs/packed-backend.h
-index beea9c14b5..3d4057b65b 100644
---- a/refs/packed-backend.h
-+++ b/refs/packed-backend.h
-@@ -14,7 +14,7 @@ int lock_packed_refs(struct ref_store *ref_store, int flags);
- void add_packed_ref(struct ref_store *ref_store,
- 		    const char *refname, const struct object_id *oid);
- 
--int commit_packed_refs(struct ref_store *ref_store);
-+int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err);
- 
- int repack_without_refs(struct ref_store *ref_store,
- 			struct string_list *refnames, struct strbuf *err);
 -- 
 2.11.0
 
