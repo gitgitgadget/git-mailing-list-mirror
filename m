@@ -2,164 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FF7420401
-	for <e@80x24.org>; Thu, 15 Jun 2017 17:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5D4320401
+	for <e@80x24.org>; Thu, 15 Jun 2017 17:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751546AbdFORgU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 13:36:20 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:35534 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750820AbdFORgT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 13:36:19 -0400
-Received: by mail-pg0-f44.google.com with SMTP id k71so9531949pgd.2
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 10:36:19 -0700 (PDT)
+        id S1751789AbdFORk5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 13:40:57 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:33804 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751752AbdFORk5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 13:40:57 -0400
+Received: by mail-io0-f172.google.com with SMTP id i7so16347650ioe.1
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 10:40:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cCqzmxbabzqtuKsxakqUcpeJzgHqtHDurdtE2rdaGUI=;
-        b=vmaUKIK/glSYBAncUJVme+dTESoKLP5q6uerhsaSvVRBYeYhaQAM1Kdr2LAG8f1GAT
-         54q0+vLs4i3mXFdenGEf5r8TLfb8LFPThyUL+Rb+mXmOO398tqG0laxYiwBTn4M1L+Vu
-         28SqOGmsExIFbFnWIBLeyBGboJHblZuKtXiwz6xcEq0mICQk203k7zFSx/qSmfkLbuQR
-         2Z6em29zWB9aNJY9Vc89DdnFZ8I+MxdnUwJBrtvVLl5YtgK6y8aRsFVMQwy8oEpSNkbm
-         RwR6jIc3ux54UzaaZaQOEulams6osx7ZOwSozMkto+3NlZ2SajyBV80KIoZ25rSmQxz1
-         T62Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vPVCct/V+LpEZ0JHtIW4HM4jVRC1Kw3gjTcI6ij9UMM=;
+        b=EKMw+SZgDESxc5Cigpn5HJ6wRMvjpAykYnQVsc/irZiQ1DFUXt3V/TdEQXVYtLOX4k
+         pW9QtvcMZ053ery/hInyQVLY/ICQ5HH0kH6LLK0EK1Ekpxr5P8E4C96Xf2h4zeLwini+
+         xUBwfl0Jm2stUUDIRF+jAdyCNm+vR14Pu4Ic0/JQcMZsxHFztWhW9E0jGrBt/0q7Myou
+         0sU4BNF2j1R3f9iqSXK/vg50fxUiAt2nrmq3pEyQBtQdXD9rMUToLIgsrsIgI2pDSV8Y
+         MP+CwrppYAX+KKU5y8AP3EsTYrSHma0BhpA/dlTH7DM2Kly5dRcZXm1FlN+TkSurD/PU
+         y19Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cCqzmxbabzqtuKsxakqUcpeJzgHqtHDurdtE2rdaGUI=;
-        b=fkIA3d/o7snwXteGmMaHpeKx+th67GNcBNj08tp3sGb+N2iQzVt7e93BslHWlCDRtl
-         XoS4STGCPTcXffZh3c0+eG3w5iTR6RvDi3Pk7wZkdI1ZL2P3IuK6M1cR0Fhe2YkOzcvz
-         FYgPlVNAd0sZHbXt14oTbrc7wa8ET0ddtkvaDjEPq5azF5i7FJR62awKZ+EJVqxzE5hp
-         CYVpspEimZDrOr6I9BMwjEiNsmtPDzU5LfaZqotXPqrAgBYPb7u3v0Gvp+1bd3Mh8CoZ
-         dKfcmVZEfmoPKFVL+irsF2S7f2f/nhHvAN7DazFEhm5A8T18ArIm/XWriMP7q6YuGVhe
-         Oh/Q==
-X-Gm-Message-State: AKS2vOwCHyeyfBxUMaH2uK7KL0dFD1vbJVy9z2DYx5pYcp98CWgoG8tp
-        vMvEk7EBFTKXIHHm
-X-Received: by 10.99.152.25 with SMTP id q25mr6428604pgd.93.1497548178806;
-        Thu, 15 Jun 2017 10:36:18 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:2d7f:7526:8947:80f4])
-        by smtp.gmail.com with ESMTPSA id v186sm1262651pgd.9.2017.06.15.10.36.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 15 Jun 2017 10:36:17 -0700 (PDT)
-Date:   Thu, 15 Jun 2017 10:36:16 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
-        Jeff King <peff@peff.net>, Junio Hamano <gitster@pobox.com>
-Subject: Re: Which hash function to use, was Re: RFC: Another proposed hash
- function transition plan
-Message-ID: <20170615173616.GA176947@google.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170306002642.xlatomtcrhxwshzn@genre.crustytoothpaste.net>
- <20170306182423.GB183239@google.com>
- <alpine.DEB.2.21.1.1706151122180.4200@virtualbox>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vPVCct/V+LpEZ0JHtIW4HM4jVRC1Kw3gjTcI6ij9UMM=;
+        b=d37d2V8E7NK82tIcFLmEJ4LoH8ckhrxrB0X45LITCtRJHcXBTRBnLXoWvPCF+qwMIr
+         NVSCS90ru55sKNKtltBUALPtbYbexIUjHQBrSr8eaeZVXDj8s2WRttmeFd0rn0NG2yxM
+         xqkOCzJxovcrgx/bKSVLnPefKOtaU1Amt8+cpb2V3ClqGp0UEqMaytTfrEaFDhdza3KB
+         EWtu65E8zE/YYVnrEN6u/u8v+K7pRHX8XI/paluJQ1trb9uW9DRRrF9uJH63evp1wxCw
+         BXZ1Xt8hEv2UW1v0JnsHKzLyi3SeCO6yAh9jsqN5KGgbFgSkW2NZlEJBazcj8rF7/mOE
+         GWcw==
+X-Gm-Message-State: AKS2vOxl32RPnb8MDQLN8Le8I39uAjo9gIBLj6cEq76OyfDd3aqyyjyn
+        2NEFHImLsq4NLiPRStLpHRb++d44KQ==
+X-Received: by 10.107.150.203 with SMTP id y194mr7077041iod.17.1497548456157;
+ Thu, 15 Jun 2017 10:40:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1706151122180.4200@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.79.72.66 with HTTP; Thu, 15 Jun 2017 10:40:15 -0700 (PDT)
+In-Reply-To: <3cdbb6a5-55d3-673c-ce31-c3da4d7e17cf@gmail.com>
+References: <3cdbb6a5-55d3-673c-ce31-c3da4d7e17cf@gmail.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Thu, 15 Jun 2017 13:40:15 -0400
+Message-ID: <CAJZjrdWjcbgqXWYWnc4p5afCuTkr+nK30aQmhTz19PwTcKoraw@mail.gmail.com>
+Subject: Re: git diff sometimes brings up buggy pager
+To:     Matthew Groth <mgroth49@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/15, Johannes Schindelin wrote:
-> Hi,
-> 
-> I thought it better to revive this old thread rather than start a new
-> thread, so as to automatically reach everybody who chimed in originally.
-> 
-> On Mon, 6 Mar 2017, Brandon Williams wrote:
-> 
-> > On 03/06, brian m. carlson wrote:
-> >
-> > > On Sat, Mar 04, 2017 at 06:35:38PM -0800, Linus Torvalds wrote:
-> > >
-> > > > Btw, I do think the particular choice of hash should still be on the
-> > > > table. sha-256 may be the obvious first choice, but there are
-> > > > definitely a few reasons to consider alternatives, especially if
-> > > > it's a complete switch-over like this.
-> > > > 
-> > > > One is large-file behavior - a parallel (or tree) mode could improve
-> > > > on that noticeably. BLAKE2 does have special support for that, for
-> > > > example. And SHA-256 does have known attacks compared to SHA-3-256
-> > > > or BLAKE2 - whether that is due to age or due to more effort, I
-> > > > can't really judge. But if we're switching away from SHA1 due to
-> > > > known attacks, it does feel like we should be careful.
-> > > 
-> > > I agree with Linus on this.  SHA-256 is the slowest option, and it's
-> > > the one with the most advanced cryptanalysis.  SHA-3-256 is faster on
-> > > 64-bit machines (which, as we've seen on the list, is the overwhelming
-> > > majority of machines using Git), and even BLAKE2b-256 is stronger.
-> > > 
-> > > Doing this all over again in another couple years should also be a
-> > > non-goal.
-> > 
-> > I agree that when we decide to move to a new algorithm that we should
-> > select one which we plan on using for as long as possible (much longer
-> > than a couple years).  While writing the document we simply used
-> > "sha256" because it was more tangible and easier to reference.
-> 
-> The SHA-1 transition *requires* a knob telling Git that the current
-> repository uses a hash function different from SHA-1.
-> 
-> It would make *a whole of a lot of sense* to make that knob *not* Boolean,
-> but to specify *which* hash function is in use.
+Any chance you can tell us what repo this happens on? + git version,
+OS, and what the triggering diff invocation is.
 
-100% agree on this point.  I believe the current plan is to have the
-hashing function used for a repository be a repository format extension
-which would be a value (most likely a string like 'sha1', 'sha256',
-'black2', etc) stored in a repository's .git/config.  This way, upon
-startup git will die or ignore a repository which uses a hashing
-function which it does not recognize or does not compiled to handle.
-
-I hope (and expect) that the end produce of this transition is a nice,
-clean hashing API and interface with sufficient abstractions such that
-if I wanted to switch to a different hashing function I would just need
-to implement the interface with the new hashing function and ensure that
-'verify_repository_format' allows the new function.
-
-> 
-> That way, it will be easier to switch another time when it becomes
-> necessary.
-> 
-> And it will also make it easier for interested parties to use a different
-> hash function in their infrastructure if they want.
-> 
-> And it lifts part of that burden that we have to consider *very carefully*
-> which function to pick. We still should be more careful than in 2005, when
-> Git was born, and when, incidentally, when the first attacks on SHA-1
-> became known, of course. We were just lucky for almost 12 years.
-> 
-> Now, with Dunning-Kruger in mind, I feel that my degree in mathematics
-> equips me with *just enough* competence to know just how little *even I*
-> know about cryptography.
-> 
-> The smart thing to do, hence, was to get involved in this discussion and
-> act as Lt Tawney Madison between us Git developers and experts in
-> cryptography.
-> 
-> It just so happens that I work at a company with access to excellent
-> cryptographers, and as we own the largest Git repository on the planet, we
-> have a vested interest in ensuring Git's continued success.
-> 
-> After a couple of conversations with a couple of experts who I cannot
-> thank enough for their time and patience, let alone their knowledge about
-> this matter, it would appear that we may not have had a complete enough
-> picture yet to even start to make the decision on the hash function to
-> use.
-> 
-
--- 
-Brandon Williams
+On Thu, Jun 15, 2017 at 12:19 PM, Matthew Groth <mgroth49@gmail.com> wrote:
+> When I do `git diff` sometimes I get this:
+>
+>
+> ...skipping...
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ...skipping...
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ...skipping...
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+> ~
+>
+>
+> .... it goes on like this for about 10 times the length. Looks like this
+> happens exclusively when I use git diff with a github remote that is at the
+> same commit. I will update if I find any other case where this happens.
+>
+>
+>
+>
