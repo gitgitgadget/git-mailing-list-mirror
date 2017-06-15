@@ -2,92 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C63C71FA7B
-	for <e@80x24.org>; Thu, 15 Jun 2017 11:33:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80F371FA7B
+	for <e@80x24.org>; Thu, 15 Jun 2017 11:44:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752500AbdFOLdx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 07:33:53 -0400
-Received: from mout.web.de ([212.227.15.3]:58951 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752438AbdFOLdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 07:33:50 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MEmbK-1daH901H8E-00G4vD; Thu, 15
- Jun 2017 13:33:44 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] checkout: don't write merge results into the object database
-Message-ID: <b46827a5-2a8f-c343-ac1f-814fc8a16943@web.de>
-Date:   Thu, 15 Jun 2017 13:33:42 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1752455AbdFOLoA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 07:44:00 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:33126 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752311AbdFOLn7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 07:43:59 -0400
+Received: by mail-io0-f195.google.com with SMTP id j200so1612876ioe.0
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 04:43:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=r9paJ49YlZid9cbnoPvZ5U9zwlyRemLcxrOb/dl4/lY=;
+        b=l1pDU+EmZVMN0KDiWLdUPHXYmCibZvz7CAdgmab/P5DFQkI/WB61vLHXa8PCtYbT4m
+         cnBd3hN0m/xJId6GJVYAjAtv88mquCGQSHgVLY+OKsvt2vhsfKB49oL08B6dh5zile45
+         UsRwNMcpNWuadZDQwyOJqkPzRUOjzSu9id5ufyYvIiwWo2inheTDjjn/SGDJvX7x9jfl
+         aissYGjhONapPFSeUmNXVCKlXhYhaeH4292gL0KgThsy92EzQdE237fg6O7LXh+EmFk4
+         5nbd1yk2UgpWXsu3J8VZ2lWNzsRBRI4tZwNu8jr5KHgQoEQNqDwRtBxpMr/gSWJT2/2K
+         aAlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=r9paJ49YlZid9cbnoPvZ5U9zwlyRemLcxrOb/dl4/lY=;
+        b=kpL30BiptUtT3k1w/ZA19TDs8nnVB9OZHHMwUD62jA0TFP+80DHsMHRAzZPcyCyY30
+         9M8jEnsh5oj/D/KWb5k7g41cgPKCOPy6VwmNRxYvlM1/pRGYqCXFdywnfWCO2C1vGBQt
+         0SxCX2VwQkfWLa4hFg8WnBFCW4TbS0TiOCSAysLUbrnWNH2diPlX5ICN8IrwMP80CASj
+         4oKAEQmrhxFmAoob07vNYP/RSkFDHBkHLWnRMlikUtzsBYMFnM8XChPPGqDKGqThh2yx
+         1kYuXA3HGb2gqVI5Uc3sfu8euK0ZG93UCLXvJVrlsbHv4JsBjWRdzbFmOITcORQ0nPm/
+         Nukw==
+X-Gm-Message-State: AKS2vOxjIanOrlJruvZ2Y/1QUnBtHLZQWSrimxzKtofJXFkNOicrmQn5
+        lRmLsBHQGqV9lguhC2TOpntZM7elpg==
+X-Received: by 10.107.181.22 with SMTP id e22mr5189733iof.85.1497527038500;
+ Thu, 15 Jun 2017 04:43:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:/7C9+G1ItxszvgVgm9mk51ZvGaM3m3+J9Z2fl/4lrpmMmTh98I1
- veQxmVLRo6h3fHomPecJ9AXrRZDiS8shMfLtu6hdsg7rUu3rPfQbr3gEFfk7IS4aP9PirNg
- j5lkB7AMF/2Ji3D0J128IPuY9I3Gc0lKmme/m20m9DsxWjYio0hohsqKIiRFO92YHM+/wqR
- ZREhPZt5W8jv2q1n5A0zw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/iD4dfqJb2Y=:yvXdywguxcWKZwfEtMo0Ag
- s3cWE8DtI4fMV6mE7ZuxSvTTEIk6YL3UpiwdJO0J9KyXgZKVsuU1VEMFqSmJiYtnTacav7bvz
- SmPgtf3LoaMTISp+mCzQueyuJjakk1K4xHvBiL6oZLCCblvIcjEzpXZevZ2aKkctRv/HVaA3R
- /qgLiHNU7+sr1d4lIaCjy0JcLKvComhu5ij2RoC8v1vgRe+TDbWDd7L3BG2549C0Xq0dsmuA+
- MP2maFl5gXOJaQOQ5F+oZAD7dKSJP0FtQ5MkThhrQqB7xzwL94ZwqaloN743jZ8ck7Pk9vbSu
- /5/X84fU0SBIJCy2v2OEQJf3lmCk9gLXgAHqRcnUPVnRP9wjf6evS67JFl8Iuosuez1cRkIHc
- tVdKjNzQGSsAtG+rO9CXnQVnOdYekzTm0+sXH7eBb5Z+/vim8fRjyKfXJDdPSwiUECTQB06tr
- g99W43Tr1y12pj/7YnGhBQ11j4myEdsfU30jvm4CUoN9ryxPqsOVuFGtER32rOyHfaKAA8VWH
- OaUIjh5zd5gaVoJ8YrIKT6mLNBdiaNgeeMU3YPc1bP7O41keLCQZiCd2neUqvX76y7n6q+Pwu
- 8ix2RLwfCmVjHht0fi96wjx3kKLOGgVg8zk89YaK3VFXFDGpxwGOi8WvLWXHkgCWHrq7Qtg4r
- J0xu2Iw1FxbHskEDPYJ8UaZQehVUzo2pgvlXhpKYUDscGOCL3g0o8h+Q282yTxyL6+B8BoqS1
- sa7EWZLW+aoXhHh3X+lgaEjFpDdJjjIMzAkhyhbyMJdIUTSPQdu76n1cn3+e7e/NiR9twsftR
- cgygjgm
+Received: by 10.79.72.66 with HTTP; Thu, 15 Jun 2017 04:43:17 -0700 (PDT)
+In-Reply-To: <20170615084248.elfsh4of5qdsk3pa@sigill.intra.peff.net>
+References: <xmqq7f0k4m3e.fsf@gitster.mtv.corp.google.com> <1497084241.8531.2.camel@gmail.com>
+ <20170610102127.ftvko3m7gazavpj7@sigill.intra.peff.net> <xmqqzidg14xn.fsf@gitster.mtv.corp.google.com>
+ <1497255003.1718.1.camel@gmail.com> <xmqqa85dnjpz.fsf@gitster.mtv.corp.google.com>
+ <20170612212025.ytyukvmmthfcsejh@sigill.intra.peff.net> <xmqqshj4nb9u.fsf@gitster.mtv.corp.google.com>
+ <20170612213759.f2scl3r46vboolna@sigill.intra.peff.net> <1497514760.2394.6.camel@gmail.com>
+ <20170615084248.elfsh4of5qdsk3pa@sigill.intra.peff.net>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Thu, 15 Jun 2017 07:43:17 -0400
+Message-ID: <CAJZjrdXXGb-QrvJW9JusPT597QDnQD_shzVJq-5GN=hZCBJYeA@mail.gmail.com>
+Subject: Re: [PATCH] wt-status.c: Modified status message shown for a
+ parent-less branch
+To:     Jeff King <peff@peff.net>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Merge results need to be written to the worktree, of course, but we
-don't necessarily need object entries for them, especially if they
-contain conflict markers.  Use pretend_sha1_file() to create fake
-blobs to pass to make_cache_entry() and checkout_entry() instead.
+On Thu, Jun 15, 2017 at 4:42 AM, Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Jun 15, 2017 at 01:49:20PM +0530, Kaartic Sivaraam wrote:
+>
+> > What about, "not making any assumptions" about what the user would
+> > think when he views the output of `git status` ? Why not try some
+> > general messages like,
+> >
+> > * Staged changes
+> > * Unstaged changes
+> >
+> > instead of the messages such as
+> >
+> > * Changes to be committed, Changes already in the index
+> > * Changes not staged for commit, Changes not yet in the index
+> >
+> > which seem to make assumptions about the user who view the output ?
+>
+> Saying just "staged changes" is definitely accurate. I don't know if
+> some users would find that too terse, too. The phrase "not staged for
+> commit" gives more information if you don't know what "staged" means in
+> the Git world.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/checkout.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Perhaps there should be a message pointing people at documentation
+explaining the index and staging terminology?
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 1624eed7e7..f51c15af9f 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -215,7 +215,7 @@ static int checkout_merged(int pos, const struct checkout *state)
- 
- 	/*
- 	 * NEEDSWORK:
--	 * There is absolutely no reason to write this as a blob object
-+	 * There is absolutely no reason to build a fake blob object
- 	 * and create a phony cache entry.  This hack is primarily to get
- 	 * to the write_entry() machinery that massages the contents to
- 	 * work-tree format and writes out which only allows it for a
-@@ -225,8 +225,8 @@ static int checkout_merged(int pos, const struct checkout *state)
- 	 * (it also writes the merge result to the object database even
- 	 * when it may contain conflicts).
- 	 */
--	if (write_sha1_file(result_buf.ptr, result_buf.size,
--			    blob_type, oid.hash))
-+	if (pretend_sha1_file(result_buf.ptr, result_buf.size,
-+			      OBJ_BLOB, oid.hash))
- 		die(_("Unable to add merge result for '%s'"), path);
- 	free(result_buf.ptr);
- 	ce = make_cache_entry(mode, oid.hash, path, 2, 0);
--- 
-2.13.0
+Offhand, this is something I was wondering about the other day - has
+there ever been a discussion of what level of proficiency Git expects
+of its users?
 
+> -Peff
