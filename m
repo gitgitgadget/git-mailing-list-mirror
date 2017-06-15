@@ -2,267 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 522AE20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 16:31:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB7E020401
+	for <e@80x24.org>; Thu, 15 Jun 2017 16:43:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751888AbdFOQa6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 12:30:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40881 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751578AbdFOQa5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 12:30:57 -0400
-Received: (qmail 7207 invoked by uid 109); 15 Jun 2017 16:30:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 16:30:57 +0000
-Received: (qmail 26505 invoked by uid 111); 15 Jun 2017 16:30:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 12:30:59 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 12:30:55 -0400
-Date:   Thu, 15 Jun 2017 12:30:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Scott Baker <scott@perturb.org>
-Subject: [PATCH] diff-highlight: split code into module
-Message-ID: <20170615163055.b63hcivjogafkerq@sigill.intra.peff.net>
+        id S1752348AbdFOQnk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 12:43:40 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:33820 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751926AbdFOQni (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 12:43:38 -0400
+Received: by mail-pf0-f176.google.com with SMTP id s66so9885812pfs.1
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 09:43:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=WmIofi7Vz5BMux8BrtfihEe2Aqv9s6YFSduS6P8YhUA=;
+        b=MAAT2rv7xsJJIFKMoSoHo0x47NUYJHs0Xzh33DrQvZB8D/8hDLcFMeYEgCCbsvs68q
+         B9QwFtmBNQ/ymF5ByplAuUUQsYuHvzJNQEdo1B48mZ8jCaNwCe7tGOtJHE0LcA3fcxlE
+         1qlDBpYW1+rM1hasWyX+Og2CwkVsrzzid+yvOOfVXMa0u2S1Pg4OPR+zPBDnxfcdjGiA
+         ZCU1YaV9VYG8UglzRdMS+EQMWkAvIDhrWFHA8FAGvKIKCMveJO2NREZSvcFMqdqTpT/s
+         1YIk3ueGUGSVWkXXFe3hPkg2wyx61P49mExPrsRRjNY9Xqrya7X3VHHmb+nugpnLzQg9
+         +wew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=WmIofi7Vz5BMux8BrtfihEe2Aqv9s6YFSduS6P8YhUA=;
+        b=EhWDt40MUOID/wxQvMFzmcPj6nVTOABo6aTM37Sf6/avfcPB0D2lWyTyYX//brlYZj
+         Z10asCpmS6QUMNdSthEIQOzAezLtM76bi7AgwCwSyR2Bsql6BNTbE+qqvw41EwO3+RjK
+         28rGUYLVkiy+NHUnBa1XoiTG4PQEZyyOM2de8RBuBQTIekuuMvDExQ/i8G+xrgSXE0fj
+         qMDCdtlTVlzoXmoFZqIVXqfPTSPO6qGo2zzZmifOTkwyu/Tv9BsORTwIbOVpW1gbTES2
+         XUbdFc9TlN0rcDxucWoXnLGwO22jCQ0NdGLYSwmNltIS3sEkIEz0NRb87EvOg4jjRADK
+         3nrQ==
+X-Gm-Message-State: AKS2vOwO7kGoc7wgbn+m4ljNNlY4WPWfI0PE6N6GIG0AWLwrCVL2Ahp3
+        tjTtezJAZqgVpw==
+X-Received: by 10.84.231.141 with SMTP id g13mr7195659plk.157.1497545017662;
+        Thu, 15 Jun 2017 09:43:37 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:88c8:4433:c52b:12d7])
+        by smtp.gmail.com with ESMTPSA id a187sm998192pgc.37.2017.06.15.09.43.36
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 15 Jun 2017 09:43:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Philip Oakley <philipoakley@iee.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v1] Configure Git contribution guidelines for github.com
+References: <20170609142151.94811-1-larsxschneider@gmail.com>
+        <31A456B20D984421AA958A39B2FCD29D@PhilipOakley>
+        <xmqqlgoxp5ig.fsf@gitster.mtv.corp.google.com>
+        <CACBZZX42JcqFAsWgi0bSuRv5CC8hiUF1Ahnx3nJL=LyHkk03Cg@mail.gmail.com>
+Date:   Thu, 15 Jun 2017 09:43:35 -0700
+In-Reply-To: <CACBZZX42JcqFAsWgi0bSuRv5CC8hiUF1Ahnx3nJL=LyHkk03Cg@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 15 Jun
+ 2017 10:09:11
+        +0200")
+Message-ID: <xmqqk24d2oco.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The diff-so-fancy project is also written in perl, and most
-of its users pipe diffs through both diff-highlight and
-diff-so-fancy. It would be nice if this could be done in a
-single script. So let's pull most of diff-highlight's code
-into its own module which can be used by diff-so-fancy.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-In addition, we'll abstract a few basic items like reading
-from stdio so that a script using the module can do more
-processing before or after diff-highlight handles the lines.
-See the README update for more details.
+> There are things we get out of this that would regress if
+> submitGit were changed this way:
+>
+>  * Now when you submit a pull request you get a Travis build for
+> git/git, I don't get this if I push to any random branch in my
+> avar/git, and although I could probably set it up, it's extra work
+> etc.
 
-One small downside is that the diff-highlight script must
-now be built using the Makefile. There are ways around this,
-but it quickly gets into perl arcana. Let's go with the
-simple solution. As a bonus, our Makefile now respects the
-PERL_PATH variable if it is set.
+Thanks for pointing this out.  I agree that this indeed is a
+downside.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Scott and I discussed this off-list, and this was the least-gross
-solution I came up with.  The plan would be for diff-so-fancy to pull in
-this copy of diff-highlight from git.git and have a wrapper script
-similar to the diff-highlight.perl found here.
+>  * I like being able to "git fetch" patches I'm reviewing. Now I can
+> just set "+refs/pull/*:refs/remotes/origin/pull/*" in the refspec for
+> git/git, if it were pulling from target repos I'd need to "git remote
+> add" for each one, not a big deal, but less convenient.
+>
+>  * There would be no single place to list submitGit requests, which
+> you can do now through the pull page, although I think this is largely
+> stale now because nothing auto-closes them if they're merged (by which
+> point they'll have different sha1s), but that could be improved with
+> some bot...
 
- contrib/diff-highlight/.gitignore                  |  2 ++
- .../{diff-highlight => DiffHighlight.pm}           | 40 +++++++++++++---------
- contrib/diff-highlight/Makefile                    | 21 ++++++++++--
- contrib/diff-highlight/README                      | 30 ++++++++++++++++
- contrib/diff-highlight/diff-highlight.perl         |  8 +++++
- 5 files changed, 82 insertions(+), 19 deletions(-)
- create mode 100644 contrib/diff-highlight/.gitignore
- rename contrib/diff-highlight/{diff-highlight => DiffHighlight.pm} (91%)
- mode change 100755 => 100644
- create mode 100644 contrib/diff-highlight/diff-highlight.perl
+I do not think these two are 'regressions', unless your definition
+of 'regression' is a "this thing I used to be able to do, now I no
+longer can", which is slightly different from mine, which is "this
+useful thing I used to be able to do, now I no longer can".
 
-diff --git a/contrib/diff-highlight/.gitignore b/contrib/diff-highlight/.gitignore
-new file mode 100644
-index 000000000..c07454824
---- /dev/null
-+++ b/contrib/diff-highlight/.gitignore
-@@ -0,0 +1,2 @@
-+shebang.perl
-+diff-highlight
-diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/DiffHighlight.pm
-old mode 100755
-new mode 100644
-similarity index 91%
-rename from contrib/diff-highlight/diff-highlight
-rename to contrib/diff-highlight/DiffHighlight.pm
-index 81bd8040e..663992e53
---- a/contrib/diff-highlight/diff-highlight
-+++ b/contrib/diff-highlight/DiffHighlight.pm
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl
-+package DiffHighlight;
- 
- use 5.008;
- use warnings FATAL => 'all';
-@@ -29,13 +29,14 @@ my @removed;
- my @added;
- my $in_hunk;
- 
--# Some scripts may not realize that SIGPIPE is being ignored when launching the
--# pager--for instance scripts written in Python.
--$SIG{PIPE} = 'DEFAULT';
-+our $line_cb = sub { print @_ };
-+our $flush_cb = sub { local $| = 1 };
-+
-+sub handle_line {
-+	local $_ = shift;
- 
--while (<>) {
- 	if (!$in_hunk) {
--		print;
-+		$line_cb->($_);
- 		$in_hunk = /^$GRAPH*$COLOR*\@\@ /;
- 	}
- 	elsif (/^$GRAPH*$COLOR*-/) {
-@@ -49,7 +50,7 @@ while (<>) {
- 		@removed = ();
- 		@added = ();
- 
--		print;
-+		$line_cb->($_);
- 		$in_hunk = /^$GRAPH*$COLOR*[\@ ]/;
- 	}
- 
-@@ -62,15 +63,22 @@ while (<>) {
- 	# place to flush. Flushing on a blank line is a heuristic that
- 	# happens to match git-log output.
- 	if (!length) {
--		local $| = 1;
-+		$flush_cb->();
- 	}
- }
- 
--# Flush any queued hunk (this can happen when there is no trailing context in
--# the final diff of the input).
--show_hunk(\@removed, \@added);
-+sub flush {
-+	# Flush any queued hunk (this can happen when there is no trailing
-+	# context in the final diff of the input).
-+	show_hunk(\@removed, \@added);
-+}
- 
--exit 0;
-+sub highlight_stdin {
-+	while (<STDIN>) {
-+		handle_line($_);
-+	}
-+	flush();
-+}
- 
- # Ideally we would feed the default as a human-readable color to
- # git-config as the fallback value. But diff-highlight does
-@@ -88,7 +96,7 @@ sub show_hunk {
- 
- 	# If one side is empty, then there is nothing to compare or highlight.
- 	if (!@$a || !@$b) {
--		print @$a, @$b;
-+		$line_cb->(@$a, @$b);
- 		return;
- 	}
- 
-@@ -97,17 +105,17 @@ sub show_hunk {
- 	# stupid, and only handle multi-line hunks that remove and add the same
- 	# number of lines.
- 	if (@$a != @$b) {
--		print @$a, @$b;
-+		$line_cb->(@$a, @$b);
- 		return;
- 	}
- 
- 	my @queue;
- 	for (my $i = 0; $i < @$a; $i++) {
- 		my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
--		print $rm;
-+		$line_cb->($rm);
- 		push @queue, $add;
- 	}
--	print @queue;
-+	$line_cb->(@queue);
- }
- 
- sub highlight_pair {
-diff --git a/contrib/diff-highlight/Makefile b/contrib/diff-highlight/Makefile
-index 901872452..fbf5c5824 100644
---- a/contrib/diff-highlight/Makefile
-+++ b/contrib/diff-highlight/Makefile
-@@ -1,5 +1,20 @@
--# nothing to build
--all:
-+all: diff-highlight
- 
--test:
-+PERL_PATH = /usr/bin/perl
-+-include ../../config.mak
-+
-+PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
-+
-+diff-highlight: shebang.perl DiffHighlight.pm diff-highlight.perl
-+	cat $^ >$@+
-+	chmod +x $@+
-+	mv $@+ $@
-+
-+shebang.perl: FORCE
-+	@echo '#!$(PERL_PATH_SQ)' >$@+
-+	@cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@
-+
-+test: all
- 	$(MAKE) -C t
-+
-+.PHONY: FORCE
-diff --git a/contrib/diff-highlight/README b/contrib/diff-highlight/README
-index 836b97a73..d4c234317 100644
---- a/contrib/diff-highlight/README
-+++ b/contrib/diff-highlight/README
-@@ -99,6 +99,36 @@ newHighlight = "black #aaffaa"
- ---------------------------------------------
- 
- 
-+Using diff-highlight as a module
-+--------------------------------
-+
-+If you want to pre- or post- process the highlighted lines as part of
-+another perl script, you can use the DiffHighlight module. You can
-+either "require" it or just cat the module together with your script (to
-+avoid run-time dependencies).
-+
-+Your script may set up one or more of the following variables:
-+
-+  - $DiffHighlight::line_cb - this should point to a function which is
-+    called whenever DiffHighlight has lines (which may contain
-+    highlights) to output. The default function prints each line to
-+    stdout. Note that the function may be called with multiple lines.
-+
-+  - $DiffHighlight::flush_cb - this should point to a function which
-+    flushes the output (because DiffHighlight believes it has completed
-+    processing a logical chunk of input). The default function flushes
-+    stdout.
-+
-+The script may then feed lines, one at a time, to DiffHighlight::handle_line().
-+When lines are done processing, they will be fed to $line_cb. Note that
-+DiffHighlight may queue up many input lines (to analyze a whole hunk)
-+before calling $line_cb. After providing all lines, call
-+DiffHighlight::flush() to flush any unprocessed lines.
-+
-+If you just want to process stdin, DiffHighlight::highlight_stdin()
-+is a convenience helper which will loop and flush for you.
-+
-+
- Bugs
- ----
- 
-diff --git a/contrib/diff-highlight/diff-highlight.perl b/contrib/diff-highlight/diff-highlight.perl
-new file mode 100644
-index 000000000..9b3e9c1f4
---- /dev/null
-+++ b/contrib/diff-highlight/diff-highlight.perl
-@@ -0,0 +1,8 @@
-+package main;
-+
-+# Some scripts may not realize that SIGPIPE is being ignored when launching the
-+# pager--for instance scripts written in Python.
-+$SIG{PIPE} = 'DEFAULT';
-+
-+DiffHighlight::highlight_stdin();
-+exit 0;
--- 
-2.13.1.766.g6bea926c5
+It would be useful to be able to do the above two things, if the
+list of submitGit requests and what you can get from pull/*
+hierarchy (1) covered most of the changes proposed, allowing people
+to check only this place and nowhere else, and/or (2) covered the
+more interesting changes that are worth looking at than other
+proposed changes.
+
+I do not think either is the case.  The submitGit mechanism being an
+easier way to propose a change to the mailing list, by definition,
+(1) will not hold true.  And among the changes proposed to be made
+to Git, the "selection criteria" to be in the set to be discoverable
+by going to github.com/git/git.git and checking the submitGit pull
+requests is not that they are of higher quality or touch interesting
+topics.  The only common trait these proposed changes share, compared
+to other proposed changes we see on the mailing list, are that they
+were originally made as pull requests and (2) will not hold true.
+
+Another thing that may regress that you did not mention is that we
+would lose a convenient way to _count_ proposed changes coming via
+submitGit (i.e. you can simply go to the pull-request page), so that
+the number can be compared with the number of proposed changes
+directly made on the mailing list, which would be a good way to
+gauge how submitGit service is helping our community.  But even for
+that, you'd need to go to the list to find the denominator
+(i.e. total number of changes proposed), and by the time you do
+that, counting the numerator (i.e. those come via submitGit) by
+finding the telltale sign submitGit leaves in its output among these
+denominator messages should be trivial.
+
+So in all, I see the only downside is the loss of automated
+triggering of Travis.  But I do agree with you that it is a rather
+significant downside.
+
+> There's probably ways to do this without git/git pull requests, but I
+> don't see what problem would be solved by moving this off git/git,
+> even if there's open requests submitGit is the only thing using these,
+> and any confusion about that pull UI would remain if it wasn't (AFAIK
+> there's no way to completely disable pull requests on github, but I
+> may be wrong).
+
+Hopefully the pull-request template update Lars proposes will keep
+the pull request useful, in that they create one and then have
+submitGit relay it to the official channel.
