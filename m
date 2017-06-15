@@ -6,114 +6,148 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 361DB20D0C
-	for <e@80x24.org>; Thu, 15 Jun 2017 16:48:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1496320401
+	for <e@80x24.org>; Thu, 15 Jun 2017 17:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751757AbdFOQsp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 12:48:45 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:32934 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751459AbdFOQsn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 12:48:43 -0400
-Received: by mail-pg0-f67.google.com with SMTP id a70so2259124pge.0
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 09:48:43 -0700 (PDT)
+        id S1751016AbdFORAo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 13:00:44 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35479 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750803AbdFORAn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 13:00:43 -0400
+Received: by mail-pg0-f65.google.com with SMTP id f127so2286401pgc.2
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 10:00:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=E3ntoASbG4muwYtERlx0sqtWwhrnxDrTLh357OX92DA=;
-        b=ZFtFDZhEocjMWIWapgaHPuoyMC21sEwojuwB9dUuRo5re/d2NK3VdPNIqYFPvHcUN8
-         nDfhj0RIMlBKGYSlT6n4rD+FfZYjruA2u+D0riDyeU488FmdEBqRxDosKx9gM0Ec4zkF
-         1wcSDqpranQ+82vDkMOQI81hvC8ukcEy+mrUuWF01+ERFTf33ROA3TDL+MXmgu+x+eXq
-         bwl1oKnPCZZ8m3lH2OTgix5Y8lnFs1nzeltXQeDXbLXLgMXJYSGTYjye4t2IMazF+U+F
-         5PEFM3C5ogjQJ8Yo3SztJiIYPK9KJHfB6LcTotwWKQxoUFrkklQPVBMb7MjxdvqfmJt9
-         dcpw==
+         :user-agent:mime-version;
+        bh=0q2GzJ+9Kxzal1Wf7Rj8emTH0bxsxmkJjqAFy5l4n+M=;
+        b=XcTc3TkOvdW3umGnFrlg7IkBGmdbpo2jzsIxrEzr7YomW2HwZn33AfLldumwUMAmCY
+         sjYYTk6TSlNrmva79vyCh3MvyEzlkn/j6HC4L4Eq2nZYISm8QiojX/NujIIVWJJH1jqA
+         4bBpp7wcb7mLi9CsOkYPWWJdXWRjIif6Sb06bFZ5aTZ4TXPtCb9z+9sF31YyMcSA6+eR
+         jVI9lxGTVUKnPrtjGO57ee60Ap7Jkg8fyk0hw1+/RbdCJSt/we9c3LnZhLTHUqoj5NX1
+         Av1EKPD0DGcg0zuGWBAnDLKkSqOGT2ewzKJBfdXkDMyZAG13ttnFLOWX9s6rsuI9Ib9H
+         U41A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=E3ntoASbG4muwYtERlx0sqtWwhrnxDrTLh357OX92DA=;
-        b=UyPBJ/1olQQQVpNaqTRjFNJugAbT+8KWBEfPfIVGkUIAw4OWu0f/GngnruRuTmQ2Qc
-         Qot4Bor29Ql/TvCFL2evayDzW3wGqco4EA5zhK25zrreV421j0yfd+ElSNfw7mlaqkwO
-         hzIDLYJA3Pr1t5qcZg2u3FSKrSCHqH5fq1i7gXexVxCL/17p1vy4gEi/fEIMvHmVOYJV
-         RmRzth34nwz+ZmHCYe+9ArnBy0o7JG1EeTYyR1+usIa2M4eqkU0rbar69vNwG51GkE4C
-         S0FipJ6ift84G8qaq1MCknZqOsvIxm72QU85MxmpXht3Jsez4GtbNooe/3dtgmL7yWig
-         QF8w==
-X-Gm-Message-State: AKS2vOy9arwQApx7wUnm7QCLupCwHEJZWBbygSS3dnqEBKRrr3YjV6wr
-        3kdVvY5EX7D/lQ==
-X-Received: by 10.84.134.34 with SMTP id 31mr7427110plg.51.1497545323058;
-        Thu, 15 Jun 2017 09:48:43 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=0q2GzJ+9Kxzal1Wf7Rj8emTH0bxsxmkJjqAFy5l4n+M=;
+        b=EYuPrafZKPwuyZIWaP2R+8+2cUa8yaVWwomFWyo6QPesWd5QTSk3OhA9RNRV+9mq43
+         5cDTZlSoTt1MCS65Cf07uTOYAyiVW6gQy+Ju7kZSrCSPhCz1leVoqySBgyULrZah1O35
+         BrogbDfos4w7/ivH8a3CDFOiRoE9Ap1R1Zly2lqpduDs7g/9SdhDjW3vMrSRVm0afdKy
+         9+I6iXBQ9pH5C8VPOdo9fddh7AbQcw2BIow0xg5Ul7o7cF9BrHn/iHCPUQvLgJVz7vN6
+         3cgIKlYFfB5H43zEnwXJ4OnHS7bPwyJ1vG+qCqbAz8DrNGhFjKZh+ArF29dmw8sRm6cD
+         mrEg==
+X-Gm-Message-State: AKS2vOzRCCfD4kx88i6oANp4EhE/vfOKcr2ZPUErH5vpThT1cw8OjCOT
+        RoImBac5tkzfn6jAcyY=
+X-Received: by 10.98.2.151 with SMTP id 145mr6149293pfc.52.1497546041719;
+        Thu, 15 Jun 2017 10:00:41 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:88c8:4433:c52b:12d7])
-        by smtp.gmail.com with ESMTPSA id t11sm1753548pfl.3.2017.06.15.09.48.41
+        by smtp.gmail.com with ESMTPSA id k192sm1138168pgc.31.2017.06.15.10.00.40
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 15 Jun 2017 09:48:42 -0700 (PDT)
+        Thu, 15 Jun 2017 10:00:40 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Wong <e@80x24.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v2 1/2] git-compat-util: add a FREEZ() wrapper around free(ptr); ptr = NULL
-References: <20170609085346.19974-1-avarab@gmail.com>
-        <20170609220420.4910-2-avarab@gmail.com>
-        <20170609222738.GF21733@aiede.mtv.corp.google.com>
-        <20170609233701.GA7195@whir>
-        <xmqq60g462nd.fsf@gitster.mtv.corp.google.com>
-        <20170610032143.GA7880@starla>
-        <20170610072506.embaavscstmjnv6v@sigill.intra.peff.net>
-Date:   Thu, 15 Jun 2017 09:48:41 -0700
-In-Reply-To: <20170610072506.embaavscstmjnv6v@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 10 Jun 2017 03:25:06 -0400")
-Message-ID: <xmqqfuf12o46.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v2 2/4] sha1_file: move delta base cache code up
+References: <cover.1497387713.git.jonathantanmy@google.com>
+        <cover.1497035376.git.jonathantanmy@google.com>
+        <cover.1497387713.git.jonathantanmy@google.com>
+        <36b7984ee85d22800b974a04952c50eef043fa67.1497387714.git.jonathantanmy@google.com>
+Date:   Thu, 15 Jun 2017 10:00:39 -0700
+In-Reply-To: <36b7984ee85d22800b974a04952c50eef043fa67.1497387714.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Tue, 13 Jun 2017 14:05:58 -0700")
+Message-ID: <xmqqbmpp2nk8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> On Sat, Jun 10, 2017 at 03:21:43AM +0000, Eric Wong wrote:
+> In a subsequent patch, packed_object_info() will be modified to use the
+> delta base cache, so move the relevant code to before
+> packed_object_info().
 >
->> > So make Jonathan's freez_impl a public API and rename it to
->> > free_and_null(), perhaps?
->> 
->> Perhaps...  I think it needs to take "void *" to avoid warnings:
->> 
->> 	static inline void free_and_null(void *ptrptr)
->> 	{
->> 		void **tmp = ptrptr;
->> 
->> 		free(*tmp);
->> 		*tmp = NULL;
->> 	}
->
-> That unfortunately makes it very easy to get it wrong in the callers.
-> Both:
->
->   free_and_null(&p);
->
-> and
->
->   free_and_null(p);
->
-> would be accepted by the compiler, but one of them causes undefined
-> behavior.
->
-> Unfortunately using "void **" in the declaration doesn't work, because
-> C's implicit casting rules don't apply to pointer-to-pointer types.
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  sha1_file.c | 226 +++++++++++++++++++++++++++++++-----------------------------
+>  1 file changed, 116 insertions(+), 110 deletions(-)
 
-All true.  
+Hmph, is this meant to be just moving two whole functions?
 
-I still think the macro FREEZ() is too confusing a name to live;
-perhaps we can take Ævar's patch with s/FREEZ/FREE_AND_NULL/ and be
-done with it?  By spelling it in all caps, readers will know that
-there is something special going on in that macro, and Eric's
-"forcing the readers to type & in front to let them be aware that
-the ptr variable is being manipulated" may become less necessary.
+> diff --git a/sha1_file.c b/sha1_file.c
+> index a52b27541..a158907d1 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2239,116 +2239,6 @@ static enum ...
+> ...
+> -int packed_object_info(struct packed_git *p, off_t obj_offset,
+> -		       struct object_info *oi)
+> -{
+> -...
+> -	if (oi->delta_base_sha1) {
+> -		if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
+> -			const unsigned char *base;
+> -
+> -			base = get_delta_base_sha1(p, &w_curs, curpos,
+> -						   type, obj_offset);
+> -			if (!base) {
+> -				type = OBJ_BAD;
+> -				goto out;
+> -			}
+> -
+> -			hashcpy(oi->delta_base_sha1, base);
+> -		} else
+> -			hashclr(oi->delta_base_sha1);
+> -	}
+> -
+> -out:
+> -	unuse_pack(&w_curs);
+> -	return type;
+> -}
+> -...
 
+The above is what was removed, while ...
+
+> @@ -2486,6 +2376,122 @@ static void ...
+> ...
+> +int packed_object_info(struct packed_git *p, off_t obj_offset,
+> +		       struct object_info *oi)
+> +{
+> +...
+> +	if (oi->delta_base_sha1) {
+> +		if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
+> +			const unsigned char *base;
+> +
+> +			base = get_delta_base_sha1(p, &w_curs, curpos,
+> +						   type, obj_offset);
+> +			if (!base) {
+> +				type = OBJ_BAD;
+> +				goto out;
+> +			}
+> +
+> +			hashcpy(oi->delta_base_sha1, base);
+> +		} else
+> +			hashclr(oi->delta_base_sha1);
+> +	}
+> +
+> +	oi->whence = OI_PACKED;
+> +	oi->u.packed.offset = obj_offset;
+> +	oi->u.packed.pack = p;
+> +	oi->u.packed.is_delta = (type == OBJ_REF_DELTA ||
+> +				 type == OBJ_OFS_DELTA);
+> +
+> +out:
+> +	unuse_pack(&w_curs);
+> +	return type;
+> +}
+
+... we somehow gained code to update *oi that used to be (and still
+is) done by its sole caller, sha1_object_info_extended().
+
+Perhaps this is a rebase-gotcha?
