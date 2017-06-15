@@ -6,135 +6,76 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 611FE20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 13:52:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 114A120401
+	for <e@80x24.org>; Thu, 15 Jun 2017 13:58:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751893AbdFONwT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 09:52:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40674 "EHLO cloud.peff.net"
+        id S1752599AbdFON6A (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 09:58:00 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40685 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750923AbdFONwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 09:52:19 -0400
-Received: (qmail 29907 invoked by uid 109); 15 Jun 2017 13:52:18 -0000
+        id S1752170AbdFON57 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 09:57:59 -0400
+Received: (qmail 30309 invoked by uid 109); 15 Jun 2017 13:57:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 13:52:18 +0000
-Received: (qmail 23272 invoked by uid 111); 15 Jun 2017 13:52:20 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 13:57:53 +0000
+Received: (qmail 23319 invoked by uid 111); 15 Jun 2017 13:57:55 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 09:52:20 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 09:52:17 -0400
-Date:   Thu, 15 Jun 2017 09:52:17 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 09:57:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 09:57:52 -0400
+Date:   Thu, 15 Jun 2017 09:57:52 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Ulrich Mueller <ulm@gentoo.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH 2/2] date: use localtime() for "-local" time formats
-Message-ID: <20170615135216.2jfsrjpicku6zxv3@sigill.intra.peff.net>
-References: <20170615134958.mzmdmhonjsnconu2@sigill.intra.peff.net>
+Subject: Re: [PATCH] checkout: don't write merge results into the object
+ database
+Message-ID: <20170615135751.qxn6bsfsxz5es236@sigill.intra.peff.net>
+References: <b46827a5-2a8f-c343-ac1f-814fc8a16943@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170615134958.mzmdmhonjsnconu2@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b46827a5-2a8f-c343-ac1f-814fc8a16943@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we convert seconds-since-epochs timestamps into a
-broken-down "struct tm", we do so by adjusting the timestamp
-according to the known offset and then using gmtime() to
-break down the result. This means that the resulting struct
-"knows" that it's in GMT, even though the time it represents
-is adjusted for a different zone. The fields where it stores
-this data are not portably accessible, so we have no way to
-override them to tell them the real zone info.
+On Thu, Jun 15, 2017 at 01:33:42PM +0200, René Scharfe wrote:
 
-For the most part, this works. Our date-formatting routines
-don't pay attention to these inaccessible fields, and use
-the same tz info we provided for adjustment. The one
-exception is when we call strftime(), whose %Z format
-reveals this hidden timezone data.
+> Merge results need to be written to the worktree, of course, but we
+> don't necessarily need object entries for them, especially if they
+> contain conflict markers.  Use pretend_sha1_file() to create fake
+> blobs to pass to make_cache_entry() and checkout_entry() instead.
 
-We solved that by always showing the empty string for %Z.
-This is allowed by POSIX, but not very helpful to the user.
-We can't make this work in the general case, as there's no
-portable function for setting an arbitrary timezone (and
-anyway, we don't have the zone name for the author zones,
-only their offsets).
+Conceptually this makes sense, although I have a comment below.
 
-But for the special case of the "-local" formats, we can
-just skip the adjustment and use localtime() instead of
-gmtime(). This makes --date=format-local:%Z work correctly,
-showing the local timezone instead of an empty string.
+Out of curiosity, did this come up when looking into the cherry-pick
+segfault/error from a few hours ago?
 
-The new test checks the result for "UTC", our default
-test-lib value for $TZ. Using something like EST5 might be
-more interesting, but the actual zone string is
-system-dependent (for instance, on my system it expands to
-just EST). Hopefully "UTC" is vanilla enough that every
-system treats it the same.
+> @@ -225,8 +225,8 @@ static int checkout_merged(int pos, const struct checkout *state)
+>  	 * (it also writes the merge result to the object database even
+>  	 * when it may contain conflicts).
+>  	 */
+> -	if (write_sha1_file(result_buf.ptr, result_buf.size,
+> -			    blob_type, oid.hash))
+> +	if (pretend_sha1_file(result_buf.ptr, result_buf.size,
+> +			      OBJ_BLOB, oid.hash))
+>  		die(_("Unable to add merge result for '%s'"), path);
+>  	free(result_buf.ptr);
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I don't have a Windows system to test this on, but from the output Dscho
-provided earlier, I believe this should pass.
+I wondered if pretend_sha1_file() makes a copy of the buffer, and indeed
+it does. So this is correct.
 
- date.c          | 14 ++++++++++++--
- t/t0006-date.sh |  1 +
- 2 files changed, 13 insertions(+), 2 deletions(-)
+But that raises an interesting question: how big are these objects, and
+is it a good idea to store them in RAM? Obviously they're in RAM
+already, but I'm not sure if it's one-at-a-time. We could be bumping the
+peak RAM used if there's a large number of these entries. Touching the
+on-disk odb does feel hacky, but it also means they behave like other
+objects.
 
-diff --git a/date.c b/date.c
-index 558057733..1fd6d6637 100644
---- a/date.c
-+++ b/date.c
-@@ -70,6 +70,12 @@ static struct tm *time_to_tm(timestamp_t time, int tz)
- 	return gmtime(&t);
- }
- 
-+static struct tm *time_to_tm_local(timestamp_t time)
-+{
-+	time_t t = time;
-+	return localtime(&t);
-+}
-+
- /*
-  * What value of "tz" was in effect back then at "time" in the
-  * local timezone?
-@@ -214,7 +220,10 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
- 		return timebuf.buf;
- 	}
- 
--	tm = time_to_tm(time, tz);
-+	if (mode->local)
-+		tm = time_to_tm_local(time);
-+	else
-+		tm = time_to_tm(time, tz);
- 	if (!tm) {
- 		tm = time_to_tm(0, 0);
- 		tz = 0;
-@@ -246,7 +255,8 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
- 			month_names[tm->tm_mon], tm->tm_year + 1900,
- 			tm->tm_hour, tm->tm_min, tm->tm_sec, tz);
- 	else if (mode->type == DATE_STRFTIME)
--		strbuf_addftime(&timebuf, mode->strftime_fmt, tm, tz, "");
-+		strbuf_addftime(&timebuf, mode->strftime_fmt, tm, tz,
-+				mode->local ? NULL : "");
- 	else
- 		strbuf_addf(&timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
- 				weekday_names[tm->tm_wday],
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 9f81bec7a..7ac9466d5 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -56,6 +56,7 @@ check_show unix-local "$TIME" '1466000000'
- check_show 'format:%z' "$TIME" '+0200'
- check_show 'format-local:%z' "$TIME" '+0000'
- check_show 'format:%Z' "$TIME" ''
-+check_show 'format-local:%Z' "$TIME" 'UTC'
- check_show 'format:%%z' "$TIME" '%z'
- check_show 'format-local:%%z' "$TIME" '%z'
- 
--- 
-2.13.1.766.g6bea926c5
+If it is a concern, I think it could be solved by "unpretending" after
+our call to checkout_entry completes. That would need a new call in
+sha1_file.c, but it should be easy to write.
+
+-Peff
