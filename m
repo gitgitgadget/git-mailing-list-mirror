@@ -2,129 +2,267 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71C7820401
-	for <e@80x24.org>; Thu, 15 Jun 2017 16:30:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 522AE20401
+	for <e@80x24.org>; Thu, 15 Jun 2017 16:31:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751909AbdFOQaM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 12:30:12 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:38198 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750899AbdFOQaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 12:30:11 -0400
-Received: by mail-wm0-f45.google.com with SMTP id n195so4033296wmg.1
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 09:30:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=2q8jxR/hGSz3zX3p7Ow0p2AZHN6DACWmqGFOP5YEDw0=;
-        b=L/I9C1DIbdAzD7ZbMpMyKIbV+j/31lveFjM/xC42kO6CMrx/z9crr0cWWclm/0sj1/
-         YrhR+q02w+Aqf2yluLRMbjlSWEkWjT3DdKyQC+HkEjmVe2OqyK6Er3jEIDbLqBee1Hu1
-         ofhSt2AUkxj29IWotj9WqoxUQo0umwmrqvEJFGr/dC4SuX1jNmSG/WUDu/O4XhenSNbx
-         NEMhhhKgwBdgh7NvSEQAi8m6xKre6GOUd4HsWZu2E2vJTrskajuQWdm/JInJI22fbJtL
-         BjiEY8EdGYP/GW/nFDkpgdIRoB4fPA7pk+PIjvTg7QCAcYdJ09AmioAnxdgbyEs7kOwp
-         VnsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=2q8jxR/hGSz3zX3p7Ow0p2AZHN6DACWmqGFOP5YEDw0=;
-        b=dgIT0nKgzY2VH3VyFh9il8efeTxpqmPpxeYYMf29H8V1hlPAe4fzyLDog8cktBmdPP
-         WxIje8PYHBFCk1ua/zgjuyJ+Z/1QRL4dCxyiTR6mA9Th0V+EtTL4sUnnE1FY1ydQ00xT
-         2xQGl2iy4ZvCIbp5dhFJjtBMZZm4ir/SizYYQWJGwcMBdlzxlUMQ8PnmXG0N+XOBOWyl
-         u6blWY9M+S/ljrC64Y9WhB+Gxqj24PmbLEn6tIhWkjQx+YmrSFwp7bToiQ5DPsqyj2e9
-         KKfq9BDtH/c09bHn8PZFO/XP8iLRz31Zi7DhDBI04dX7pnJw+Fos3qJySwIe7Lt9DJ/T
-         N6zA==
-X-Gm-Message-State: AKS2vOwfFi8xJ0nDQXGx80ebbWklJHkqs5/yRYTV7QZ+o8UWQt0PsnAE
-        0WG1eLQNliiJzQ==
-X-Received: by 10.80.148.129 with SMTP id s1mr4116218eda.106.1497544209659;
-        Thu, 15 Jun 2017 09:30:09 -0700 (PDT)
-Received: from snth ([92.109.130.42])
-        by smtp.gmail.com with ESMTPSA id m53sm347618edc.29.2017.06.15.09.30.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 15 Jun 2017 09:30:08 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dLXep-0002GS-Ov; Thu, 15 Jun 2017 18:30:07 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Mike Hommey <mh@glandium.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Brandon Williams <bmwill@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
-        Junio Hamano <gitster@pobox.com>
-Subject: Re: Which hash function to use, was Re: RFC: Another proposed hash function transition plan
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com> <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com> <20170306002642.xlatomtcrhxwshzn@genre.crustytoothpaste.net> <20170306182423.GB183239@google.com> <alpine.DEB.2.21.1.1706151122180.4200@virtualbox> <20170615110518.ordr43idf2jluips@glandium.org> <20170615130145.stwbtict7q6oel7e@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20170615130145.stwbtict7q6oel7e@sigill.intra.peff.net>
-Date:   Thu, 15 Jun 2017 18:30:07 +0200
-Message-ID: <87shj1ciy8.fsf@gmail.com>
+        id S1751888AbdFOQa6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 12:30:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40881 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751578AbdFOQa5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 12:30:57 -0400
+Received: (qmail 7207 invoked by uid 109); 15 Jun 2017 16:30:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 16:30:57 +0000
+Received: (qmail 26505 invoked by uid 111); 15 Jun 2017 16:30:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 12:30:59 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 12:30:55 -0400
+Date:   Thu, 15 Jun 2017 12:30:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Scott Baker <scott@perturb.org>
+Subject: [PATCH] diff-highlight: split code into module
+Message-ID: <20170615163055.b63hcivjogafkerq@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The diff-so-fancy project is also written in perl, and most
+of its users pipe diffs through both diff-highlight and
+diff-so-fancy. It would be nice if this could be done in a
+single script. So let's pull most of diff-highlight's code
+into its own module which can be used by diff-so-fancy.
 
-On Thu, Jun 15 2017, Jeff King jotted:
+In addition, we'll abstract a few basic items like reading
+from stdio so that a script using the module can do more
+processing before or after diff-highlight handles the lines.
+See the README update for more details.
 
-> On Thu, Jun 15, 2017 at 08:05:18PM +0900, Mike Hommey wrote:
->
->> On Thu, Jun 15, 2017 at 12:30:46PM +0200, Johannes Schindelin wrote:
->> > Footnote *1*: SHA-256, as all hash functions whose output is essentially
->> > the entire internal state, are susceptible to a so-called "length
->> > extension attack", where the hash of a secret+message can be used to
->> > generate the hash of secret+message+piggyback without knowing the secret.
->> > This is not the case for Git: only visible data are hashed. The type of
->> > attacks Git has to worry about is very different from the length extension
->> > attacks, and it is highly unlikely that that weakness of SHA-256 leads to,
->> > say, a collision attack.
->>
->> What do the experts think or SHA512/256, which completely removes the
->> concerns over length extension attack? (which I'd argue is better than
->> sweeping them under the carpet)
->
-> I don't think it's sweeping them under the carpet. Git does not use the
-> hash as a MAC, so length extension attacks aren't a thing (and even if
-> we later wanted to use the same algorithm as a MAC, the HMAC
-> construction is a well-studied technique for dealing with it).
->
-> That said, SHA-512 is typically a little faster than SHA-256 on 64-bit
-> platforms. I don't know if that will change with the advent of hardware
-> instructions oriented towards SHA-256.
+One small downside is that the diff-highlight script must
+now be built using the Makefile. There are ways around this,
+but it quickly gets into perl arcana. Let's go with the
+simple solution. As a bonus, our Makefile now respects the
+PERL_PATH variable if it is set.
 
-Quoting my own
-CACBZZX7JRA2niwt9wsGAxnzS+gWS8hTUgzWm8NaY1gs87o8xVQ@mail.gmail.com sent
-~2 weeks ago to the list:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Scott and I discussed this off-list, and this was the least-gross
+solution I came up with.  The plan would be for diff-so-fancy to pull in
+this copy of diff-highlight from git.git and have a wrapper script
+similar to the diff-highlight.perl found here.
 
-    On Fri, Jun 2, 2017 at 7:54 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-    [...]
-    > 4. When choosing a hash function, people may argue about performance.
-    >    It would be useful for run some benchmarks for git (running
-    >    the test suite, t/perf tests, etc) using a variety of hash
-    >    functions as input to such a discussion.
+ contrib/diff-highlight/.gitignore                  |  2 ++
+ .../{diff-highlight => DiffHighlight.pm}           | 40 +++++++++++++---------
+ contrib/diff-highlight/Makefile                    | 21 ++++++++++--
+ contrib/diff-highlight/README                      | 30 ++++++++++++++++
+ contrib/diff-highlight/diff-highlight.perl         |  8 +++++
+ 5 files changed, 82 insertions(+), 19 deletions(-)
+ create mode 100644 contrib/diff-highlight/.gitignore
+ rename contrib/diff-highlight/{diff-highlight => DiffHighlight.pm} (91%)
+ mode change 100755 => 100644
+ create mode 100644 contrib/diff-highlight/diff-highlight.perl
 
-    To the extent that such benchmarks matter, it seems prudent to heavily
-    weigh them in favor of whatever seems to be likely to be the more
-    common hash function going forward, since those are likely to get
-    faster through future hardware acceleration.
-
-    E.g. Intel announced Goldmont last year which according to one SHA-1
-    implementation improved from 9.5 cycles per byte to 2.7 cpb[1]. They
-    only have acceleration for SHA-1 and SHA-256[2]
-
-    1. https://github.com/weidai11/cryptopp/issues/139#issuecomment-264283385
-
-    2. https://en.wikipedia.org/wiki/Goldmont
-
-Maybe someone else knows of better numbers / benchmarks, but such a
-reduction in CBP likely makes it faster than SHA-512.
+diff --git a/contrib/diff-highlight/.gitignore b/contrib/diff-highlight/.gitignore
+new file mode 100644
+index 000000000..c07454824
+--- /dev/null
++++ b/contrib/diff-highlight/.gitignore
+@@ -0,0 +1,2 @@
++shebang.perl
++diff-highlight
+diff --git a/contrib/diff-highlight/diff-highlight b/contrib/diff-highlight/DiffHighlight.pm
+old mode 100755
+new mode 100644
+similarity index 91%
+rename from contrib/diff-highlight/diff-highlight
+rename to contrib/diff-highlight/DiffHighlight.pm
+index 81bd8040e..663992e53
+--- a/contrib/diff-highlight/diff-highlight
++++ b/contrib/diff-highlight/DiffHighlight.pm
+@@ -1,4 +1,4 @@
+-#!/usr/bin/perl
++package DiffHighlight;
+ 
+ use 5.008;
+ use warnings FATAL => 'all';
+@@ -29,13 +29,14 @@ my @removed;
+ my @added;
+ my $in_hunk;
+ 
+-# Some scripts may not realize that SIGPIPE is being ignored when launching the
+-# pager--for instance scripts written in Python.
+-$SIG{PIPE} = 'DEFAULT';
++our $line_cb = sub { print @_ };
++our $flush_cb = sub { local $| = 1 };
++
++sub handle_line {
++	local $_ = shift;
+ 
+-while (<>) {
+ 	if (!$in_hunk) {
+-		print;
++		$line_cb->($_);
+ 		$in_hunk = /^$GRAPH*$COLOR*\@\@ /;
+ 	}
+ 	elsif (/^$GRAPH*$COLOR*-/) {
+@@ -49,7 +50,7 @@ while (<>) {
+ 		@removed = ();
+ 		@added = ();
+ 
+-		print;
++		$line_cb->($_);
+ 		$in_hunk = /^$GRAPH*$COLOR*[\@ ]/;
+ 	}
+ 
+@@ -62,15 +63,22 @@ while (<>) {
+ 	# place to flush. Flushing on a blank line is a heuristic that
+ 	# happens to match git-log output.
+ 	if (!length) {
+-		local $| = 1;
++		$flush_cb->();
+ 	}
+ }
+ 
+-# Flush any queued hunk (this can happen when there is no trailing context in
+-# the final diff of the input).
+-show_hunk(\@removed, \@added);
++sub flush {
++	# Flush any queued hunk (this can happen when there is no trailing
++	# context in the final diff of the input).
++	show_hunk(\@removed, \@added);
++}
+ 
+-exit 0;
++sub highlight_stdin {
++	while (<STDIN>) {
++		handle_line($_);
++	}
++	flush();
++}
+ 
+ # Ideally we would feed the default as a human-readable color to
+ # git-config as the fallback value. But diff-highlight does
+@@ -88,7 +96,7 @@ sub show_hunk {
+ 
+ 	# If one side is empty, then there is nothing to compare or highlight.
+ 	if (!@$a || !@$b) {
+-		print @$a, @$b;
++		$line_cb->(@$a, @$b);
+ 		return;
+ 	}
+ 
+@@ -97,17 +105,17 @@ sub show_hunk {
+ 	# stupid, and only handle multi-line hunks that remove and add the same
+ 	# number of lines.
+ 	if (@$a != @$b) {
+-		print @$a, @$b;
++		$line_cb->(@$a, @$b);
+ 		return;
+ 	}
+ 
+ 	my @queue;
+ 	for (my $i = 0; $i < @$a; $i++) {
+ 		my ($rm, $add) = highlight_pair($a->[$i], $b->[$i]);
+-		print $rm;
++		$line_cb->($rm);
+ 		push @queue, $add;
+ 	}
+-	print @queue;
++	$line_cb->(@queue);
+ }
+ 
+ sub highlight_pair {
+diff --git a/contrib/diff-highlight/Makefile b/contrib/diff-highlight/Makefile
+index 901872452..fbf5c5824 100644
+--- a/contrib/diff-highlight/Makefile
++++ b/contrib/diff-highlight/Makefile
+@@ -1,5 +1,20 @@
+-# nothing to build
+-all:
++all: diff-highlight
+ 
+-test:
++PERL_PATH = /usr/bin/perl
++-include ../../config.mak
++
++PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
++
++diff-highlight: shebang.perl DiffHighlight.pm diff-highlight.perl
++	cat $^ >$@+
++	chmod +x $@+
++	mv $@+ $@
++
++shebang.perl: FORCE
++	@echo '#!$(PERL_PATH_SQ)' >$@+
++	@cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@
++
++test: all
+ 	$(MAKE) -C t
++
++.PHONY: FORCE
+diff --git a/contrib/diff-highlight/README b/contrib/diff-highlight/README
+index 836b97a73..d4c234317 100644
+--- a/contrib/diff-highlight/README
++++ b/contrib/diff-highlight/README
+@@ -99,6 +99,36 @@ newHighlight = "black #aaffaa"
+ ---------------------------------------------
+ 
+ 
++Using diff-highlight as a module
++--------------------------------
++
++If you want to pre- or post- process the highlighted lines as part of
++another perl script, you can use the DiffHighlight module. You can
++either "require" it or just cat the module together with your script (to
++avoid run-time dependencies).
++
++Your script may set up one or more of the following variables:
++
++  - $DiffHighlight::line_cb - this should point to a function which is
++    called whenever DiffHighlight has lines (which may contain
++    highlights) to output. The default function prints each line to
++    stdout. Note that the function may be called with multiple lines.
++
++  - $DiffHighlight::flush_cb - this should point to a function which
++    flushes the output (because DiffHighlight believes it has completed
++    processing a logical chunk of input). The default function flushes
++    stdout.
++
++The script may then feed lines, one at a time, to DiffHighlight::handle_line().
++When lines are done processing, they will be fed to $line_cb. Note that
++DiffHighlight may queue up many input lines (to analyze a whole hunk)
++before calling $line_cb. After providing all lines, call
++DiffHighlight::flush() to flush any unprocessed lines.
++
++If you just want to process stdin, DiffHighlight::highlight_stdin()
++is a convenience helper which will loop and flush for you.
++
++
+ Bugs
+ ----
+ 
+diff --git a/contrib/diff-highlight/diff-highlight.perl b/contrib/diff-highlight/diff-highlight.perl
+new file mode 100644
+index 000000000..9b3e9c1f4
+--- /dev/null
++++ b/contrib/diff-highlight/diff-highlight.perl
+@@ -0,0 +1,8 @@
++package main;
++
++# Some scripts may not realize that SIGPIPE is being ignored when launching the
++# pager--for instance scripts written in Python.
++$SIG{PIPE} = 'DEFAULT';
++
++DiffHighlight::highlight_stdin();
++exit 0;
+-- 
+2.13.1.766.g6bea926c5
