@@ -6,168 +6,101 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A58420401
-	for <e@80x24.org>; Thu, 15 Jun 2017 20:31:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E114C20401
+	for <e@80x24.org>; Thu, 15 Jun 2017 20:33:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751906AbdFOUbH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 16:31:07 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:35776 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751590AbdFOUbG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 16:31:06 -0400
-Received: by mail-pf0-f174.google.com with SMTP id l89so12390559pfi.2
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 13:31:06 -0700 (PDT)
+        id S1750830AbdFOUdg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 16:33:36 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35647 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750814AbdFOUdf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 16:33:35 -0400
+Received: by mail-pg0-f41.google.com with SMTP id k71so11304526pgd.2
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 13:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tggLYcjegzNWoGbEz1dA9VvRlbRyxUe+VMJg3/yJDck=;
-        b=FUKH6vnW9s3QBJHN85hWEfi5Xl2z/9sDFkE+guRd4vyJKTe4x9Ktef/IHgqTbTy4NA
-         2cYZR2MUc5S4irkOIq4mEkFJzWqNrFdPRXkdCbBaZ1X8T1w9R69ZNiT8eJw8rodzCRDj
-         rINOjJbSSgUEGWHiJyEaZNJnVUVITOK4m84w8Uz1ElCKc1qhnlmxp7LFtfejiwVfnzVl
-         Q6hUqik9bMxKy8OuFmZCWqGfLejazXa3+prddhC/P7pPo9B2dJvwLsI6Bsn++uoHVbqm
-         G74tyAdTDvKvbZgqwv6rCqTCfiJfs2lylm+3guXJ5jxbv6ZWNjBNYLad6CxmsXDlBiJi
-         Bq4A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5PS1cVFO15F4Q9mvpkRehJjg/7l9zz31+7ZiennwXo8=;
+        b=HyZuvFuGVkfj2yr2mAvWQX8WgtWPhJC/ocH8rRBpYa12vJ4OXzbn7Jxxi1unlMPPXc
+         qHJfY9GIL8f0bqXQ5EUGdgLA/m37/tHaGDCkvZUXXrXFRAXHjVg8WZhg1+9IUl4IvMoc
+         eJ4cbtDOiN2xVqaltvoElrsP/VDxsCQBhC4fESHVE3Qhsv6WYl1/LOFkyQskVa0FFbYr
+         KJXxxUpa9UnJmxybOT/SaKisrTeUpkywOlbJCPvtHEfJjQARycxE8bU+EOgJ38gqxwDo
+         AlcQU9HRUXowN1kE/xyMQRlarmctc0zRDVIS+BQgsgTLW3U8vNtYau47U4frSOaPyRpM
+         qqoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tggLYcjegzNWoGbEz1dA9VvRlbRyxUe+VMJg3/yJDck=;
-        b=XjhKNUAcKq5FU/MYjH3bxh9o0Abi9kjqSQILiEhSZ0KUP9w7zYuiFNJRMlt19CDmam
-         AOGrFLzEfQkDUITndWzNW95BdCDAu/yZWgcgvVlQk6V4GICBmD0TaLJ/Ok0kN1FlAToq
-         PUQ77a752Ba3Vz2JJEAS8/WXc10KP/+aLQO0BD9vYw3Xe4O/5B98BJHcDkLM2UUZCuh2
-         VmyqCW+1bjxLlUrGtLC+kpF3x9awKr65K9X+5MCppFINNZZvJTpWuF+oRPd/ra5NiBZs
-         GwK9T/m1mWsy5LkTf+AXgi9/WPph9ijZm73TPHJOsImQHFoPPCJwQlklXOt7W+3VV160
-         hgEA==
-X-Gm-Message-State: AKS2vOxupmfIC9sGCXaHNvLllALYGyyLLLJ6tpI1GqhZAnthXjrCaRKm
-        /eGIYXbg6KB8o3P9
-X-Received: by 10.84.232.141 with SMTP id i13mr8228594plk.172.1497558665053;
-        Thu, 15 Jun 2017 13:31:05 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:a05c:fb80:1fb9:b013])
-        by smtp.gmail.com with ESMTPSA id v62sm229039pfb.124.2017.06.15.13.31.04
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5PS1cVFO15F4Q9mvpkRehJjg/7l9zz31+7ZiennwXo8=;
+        b=VR+vjESSKvKTNOyVqCc2IDPOmOpho0cshGVIWf6ioFZCEMIWmcZUNKw/iZF1I0Xxxu
+         enE2CGXQQq25/dj9Ky/hhqWw+NisiOTj3ZoIFPyrPokzWVDAtiIJANx3NBffT1tWxgSM
+         FltB5g+jPGN5HKxwlvClO0VHdSgLE1M5/ID47N8gflBElVItvrt/iRSPxAct+yAkP0J6
+         or5Ff+fPo5nTSczH8YMKgx78MBGYcqhGpE4UrEdxpB+3J63GXr9JUOCZ3F6MXcaNSOZY
+         lsVRDPFNnB1hi9OdsQrDuccxscYTBHUCDVEZDQ9AIAgQfRvE8Px/qdmD7FytLs/jGCnJ
+         2Oaw==
+X-Gm-Message-State: AKS2vOy4Z/IGUNZaPGXdrYkDyNA4rNG4aeaYMy/7nCQyCLh5nUyIfj55
+        84/i6yT+HjFZpsWGdYIWZw==
+X-Received: by 10.99.7.129 with SMTP id 123mr7203212pgh.171.1497558814840;
+        Thu, 15 Jun 2017 13:33:34 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:2d7f:7526:8947:80f4])
+        by smtp.gmail.com with ESMTPSA id 15sm261780pfj.59.2017.06.15.13.33.33
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 15 Jun 2017 13:31:04 -0700 (PDT)
-Date:   Thu, 15 Jun 2017 13:31:00 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
+        Thu, 15 Jun 2017 13:33:33 -0700 (PDT)
+Date:   Thu, 15 Jun 2017 13:33:32 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v2 4/4] sha1_file, fsck: add missing blob support
-Message-ID: <20170615133100.55561be6@twelve2.svl.corp.google.com>
-In-Reply-To: <xmqqy3st14my.fsf@gitster.mtv.corp.google.com>
-References: <cover.1497387713.git.jonathantanmy@google.com>
-        <cover.1497035376.git.jonathantanmy@google.com>
-        <cover.1497387713.git.jonathantanmy@google.com>
-        <aa3904dbe16050188a6b70a209bfcbfa86ea3213.1497387714.git.jonathantanmy@google.com>
-        <xmqqy3st14my.fsf@gitster.mtv.corp.google.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v3 0/6] config.h
+Message-ID: <20170615203332.GB176947@google.com>
+References: <20170613210321.152978-1-bmwill@google.com>
+ <20170614180739.72193-1-bmwill@google.com>
+ <xmqq8tkt10pt.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8tkt10pt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A reroll is coming soon, but there is an interesting discussion point
-here so I'll reply to this e-mail first.
-
-On Thu, 15 Jun 2017 11:34:45 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
-
-> Jonathan Tan <jonathantanmy@google.com> writes:
+On 06/15, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
 > 
-> > +struct missing_blob_manifest {
-> > +	struct missing_blob_manifest *next;
-> > +	const char *data;
-> > +};
-> > +struct missing_blob_manifest *missing_blobs;
-> > +int missing_blobs_initialized;
+> > Changes in v3:
+> >
+> > * tweaked the discover_git_directory function's API based on Peff's feedback
+> > * reordered the last three patches so that they flowed a bit better
+> > * renamed 'git_config_with_options'
+> > * rebased ontop of v4 of Dscho's alias series
+> >   https://public-inbox.org/git/cover.1497440104.git.johannes.schindelin@gmx.de/
 > 
-> I do not think you meant to make these non-static.  The type of the
-> former is not even visible to the outside world, and the latter is
-> something that could be made into static to prepare_missing_blobs()
-> function (unless and until you start allowing the missing-blobs
-> manifest to be re-initialized).  Your ensure_configured() below
-> seems to do the "static" right, on the other hand ;-).
-
-Good catch - done.
-
-> Do we expect that we will have only a handful of these missing blob
-> manifests?  Each manifest seems to be efficiently looked-up with a
-> binary search, but it makes me wonder if it is a good idea to
-> consolidate these manifests into a single list of object names to
-> eliminate the outer loop in has_missing_blob().  Unlike pack .idx
-> files that must stay one-to-one with .pack files, it appears to me
-> that there is no reason why we need to keep multiple ones separate
-> for extended period of time (e.g. whenever we learn that we receieved
-> an incomplete pack from the other side with a list of newly missing
-> blobs, we could incorporate that into existing missing blob list).
-
-There is indeed no reason why we need to keep multiple ones separate for
-an extended period of time - my thinking was to let fetch/clone be fast
-by not needing to scan through the entire existing manifest (in order to
-create the new one), letting GC take care of consolidating them (since
-it would have to check individual entries to delete those corresponding
-to objects that have entered the repo through other means). But this is
-at the expense of making the individual object lookups a bit slower.
-
-For now, I'll leave the possibility of multiple files open while I try
-to create a set of patches that can implement missing blob support from
-fetch to day-to-day usage. But I am not opposed to changing it to a
-single-file manifest.
-
-> > +int has_missing_blob(const unsigned char *sha1, unsigned long *size)
-> > +{
+> Applying this series was messier than necessary, I'd have to say, as
+> this series would not apply cleanly on top of the result of applying
+> Dscho's v4 on top of the same base as Dscho's v3 was applied (which
+> is v2.13.0).  It applied cleanly only when Dscho's v4 and then this
+> series were applied on top of 02a2850a ("Sync with maint",
+> 2017-06-13), which is a much newer commit than v2.13.0.
 > 
-> This function that answers "is it expected to be missing?" is
-> confusingly named.  Is it missing, or does it exist?
-
-Renamed to in_missing_blob_manifest().
-
-> > @@ -2981,11 +3050,55 @@ static int sha1_loose_object_info(const unsigned char *sha1,
-> >  	return (status < 0) ? status : 0;
-> >  }
-> >  
-> > +static char *missing_blob_command;
-> > +static int sha1_file_config(const char *conf_key, const char *value, void *cb)
-> > +{
-> > +	if (!strcmp(conf_key, "core.missingblobcommand")) {
-> > +		missing_blob_command = xstrdup(value);
-> > +	}
-> > +	return 0;
-> > +}
-> > +
-> > +static int configured;
-> > +static void ensure_configured(void)
-> > +{
-> > +	if (configured)
-> > +		return;
+> Which in turn means these two fixes cannot be merged to 'maint' as
+> you two collaboratively prepared.
 > 
-> Do not be selfish and pretend that this is the _only_ kind of
-> configuration that needs to be done inside sha1_file.c.  Call the
-> function ensure_<something>_is_configured() and rename the run-once
-> guard to match.
-
-My thinking was that any additional configuration could be added to this
-function, but individual configuration for each feature is fine too. I
-have renamed things according to your suggestion.
-
-> The run-once guard can be made static to the "ensure" function, and
-> if you do so, then its name can stay to be "configured", as at that
-> point it is clear what it is guarding.
-
-Done.
-
-> > +pack() {
+> I've applied Dscho's v4 on top of v2.13.0 (just like his v3 was
+> queued in my tree on the same base), and then tweaked this series to
+> apply on top of that, so that they can go to 'maint' if we chose to.
 > 
-> Style: "pack () {"
+> But it is possible that during this unnecessary patch shuffling, I
+> may have made some mistake, so please eyeball the resulting 12
+> patches carefully when they are pushed out.
 
-Done.
+Ugh, I'm terribly sorry.  Completely my bad as I didn't consider what
+you would need to do on your end.  When I built my patches on top of his
+I naively just applied his v4 to what ever the current origin/master was
+at that point in time.  I'll be sure to be more careful with this
+next time.
 
-> 
-> > +	perl -e '$/ = undef; $input = <>; print pack("H*", $input)'
-> 
-> high-nybble first to match ntohll() done in has_missing_blob()?  OK.
-
-Actually it's to match the printf behavior below that prints the high
-nybble first (like in English).
+-- 
+Brandon Williams
