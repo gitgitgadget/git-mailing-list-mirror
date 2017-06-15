@@ -2,30 +2,30 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E03C20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 14:48:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BDA820401
+	for <e@80x24.org>; Thu, 15 Jun 2017 14:48:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752607AbdFOOsG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 10:48:06 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:58201 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752584AbdFOOsE (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 15 Jun 2017 10:48:04 -0400
-X-AuditID: 12074412-431ff70000001956-b1-59429e23febd
+        id S1752624AbdFOOsI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 10:48:08 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:49162 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752592AbdFOOsG (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 15 Jun 2017 10:48:06 -0400
+X-AuditID: 12074411-f2fff70000007ac9-1d-59429e25dcd6
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id CC.D6.06486.32E92495; Thu, 15 Jun 2017 10:48:03 -0400 (EDT)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 40.B6.31433.52E92495; Thu, 15 Jun 2017 10:48:05 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCC0A.dip0.t-ipconnect.de [87.188.204.10])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5FElbR4014537
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5FElbR5014537
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Thu, 15 Jun 2017 10:48:01 -0400
+        Thu, 15 Jun 2017 10:48:04 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -35,25 +35,25 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         <avarab@gmail.com>, David Turner <novalis@novalis.org>,
         Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 10/28] lock_packed_refs(): take a `packed_ref_store *` parameter
-Date:   Thu, 15 Jun 2017 16:47:15 +0200
-Message-Id: <91360272dd266d2635721b5afac9fa2fbda5494f.1497534157.git.mhagger@alum.mit.edu>
+Subject: [PATCH 11/28] commit_packed_refs(): take a `packed_ref_store *` parameter
+Date:   Thu, 15 Jun 2017 16:47:16 +0200
+Message-Id: <1af134b756a56acd0c2f651708c1d8e67d6b6f52.1497534157.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1497534157.git.mhagger@alum.mit.edu>
 References: <cover.1497534157.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrEIsWRmVeSWpSXmKPExsUixO6iqKs8zynSoOWKscXaZ3eYLJ6vP8Fu
-        0XWlm8miofcKs8XtFfOZLZY8fM1s0T3lLaPFj5YeZovNm9tZHDg9/r7/wOSxc9Zddo8Fm0o9
-        utqPsHk8693D6HHxkrLH501yAexRXDYpqTmZZalF+nYJXBldW+8wFkyWqejb9YG1gXGaeBcj
-        J4eEgInE1rUN7F2MXBxCAjuYJH6cWsQG4Zxkkrhy9wQLSBWbgK7Eop5mJhBbREBNYmLbIRaQ
-        ImaBScwSb68tBEsICwRI3P/WxA5iswioSiw4t4gVxOYViJKYeW81I8Q6eYldbRfB4pwCFhKz
-        v6xj7mLkANpmLnFsucYERp4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3TN9HIzS/RSU0o3
-        MUKCTmgH4/qTcocYBTgYlXh4T9Q6RQqxJpYVV+YeYpTkYFIS5eWXAwrxJeWnVGYkFmfEF5Xm
-        pBYfYpTgYFYS4Z06ByjHm5JYWZValA+TkuZgURLn/blY3U9IID2xJDU7NbUgtQgmK8PBoSTB
-        azwXqFGwKDU9tSItM6cEIc3EwQkynAdo+F+w4cUFibnFmekQ+VOMilLivB4gCQGQREZpHlwv
-        LCm8YhQHekWYdx5IFQ8wocB1vwIazAQ0OOiCA8jgkkSElFQDY4L05USLsLdrF53Y3OT7g+32
-        LU/Doz/urf/H/8MmJPJ8e0CT09kPO20tLtus+a4xd9LhM4KpMRELXlj8CJU98nruhMKKL9aM
-        x9UOzf9gGnN7mXHCo50Nt1YyJK2XF1orWc0zwU/1+++4LwVGKRsZ5Dden/pk46ojiarCy1cw
-        561dyq6+Zp6V8nQlluKMREMt5qLiRAC/189u5QIAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrEIsWRmVeSWpSXmKPExsUixO6iqKs6zynS4Ol1S4u1z+4wWTxff4Ld
+        outKN5NFQ+8VZovbK+YzWyx5+JrZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4LNpV6
+        dLUfYfN41ruH0ePiJWWPz5vkAtijuGxSUnMyy1KL9O0SuDJeXP/HWLBItOL7m5nMDYxXBLsY
+        OTkkBEwknly+xtbFyMUhJLCDSWLmj8esEM5JJomzT1pYQarYBHQlFvU0M4HYIgJqEhPbDrGA
+        FDELTGKWeHttIVhCWCBIYselOWA2i4CqxO7b5xlBbF6BKImfPxvZINbJS+xquwg2lFPAQmL2
+        l3XMXYwcQNvMJY4t15jAyLOAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6pXm5miV5qSukm
+        RkjQCe5gnHFS7hCjAAejEg+vQoNTpBBrYllxZe4hRkkOJiVRXn45oBBfUn5KZUZicUZ8UWlO
+        avEhRgkOZiUR3qlzgHK8KYmVValF+TApaQ4WJXFeviXqfkIC6YklqdmpqQWpRTBZGQ4OJQle
+        47lAjYJFqempFWmZOSUIaSYOTpDhPEDD/4INLy5IzC3OTIfIn2JUlBLn9QBJCIAkMkrz4Hph
+        SeEVozjQK8K8yiAreIAJBa77FdBgJqDBQRccQAaXJCKkpBoYwz/JHqhseyruEzfh7nXDnpk9
+        iluurPubcsC+fdpyM7lFsd1yTyesqHsVKmmf1aaRdONExPnu/k/L/dlY63UuJPi+ilv6UUOm
+        p3LRUvfQhd4rNzUv/cnt2tHFF9OQLP53RTlT2ccNn2QXdD+KCpfvMw6SXZktsvYCg5fOfUnv
+        nWF6OpcWq/YpsRRnJBpqMRcVJwIA8BJxbeUCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,97 +63,74 @@ It only cares about the packed-refs part of the reference store.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 31 ++++++++++++++++++++++---------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ refs/files-backend.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 4943207098..0d8f39089f 100644
+index 0d8f39089f..5d159620f0 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -80,6 +80,19 @@ static struct packed_ref_store *packed_ref_store_create(
- 	return refs;
- }
- 
-+/*
-+ * Die if refs is not the main ref store. caller is used in any
-+ * necessary error messages.
-+ */
-+static void packed_assert_main_repository(struct packed_ref_store *refs,
-+					  const char *caller)
-+{
-+	if (refs->store_flags & REF_STORE_MAIN)
-+		return;
-+
-+	die("BUG: operation %s only allowed for main ref store", caller);
-+}
-+
- /*
-  * Future: need to be in "struct repository"
-  * when doing a full libification.
-@@ -1334,13 +1347,13 @@ static void write_packed_entry(FILE *fh, const char *refname,
-  * hold_lock_file_for_update(). Return 0 on success. On errors, set
-  * errno appropriately and return a nonzero value.
+@@ -1388,21 +1388,21 @@ static int lock_packed_refs(struct packed_ref_store *refs, int flags)
+  * lock_packed_refs()). Return zero on success. On errors, set errno
+  * and return a nonzero value
   */
--static int lock_packed_refs(struct files_ref_store *refs, int flags)
-+static int lock_packed_refs(struct packed_ref_store *refs, int flags)
+-static int commit_packed_refs(struct files_ref_store *refs)
++static int commit_packed_refs(struct packed_ref_store *refs)
  {
- 	static int timeout_configured = 0;
- 	static int timeout_value = 1000;
- 	struct packed_ref_cache *packed_ref_cache;
+ 	struct packed_ref_cache *packed_ref_cache =
+-		get_packed_ref_cache(refs->packed_ref_store);
++		get_packed_ref_cache(refs);
+ 	int ok, error = 0;
+ 	int save_errno = 0;
+ 	FILE *out;
+ 	struct ref_iterator *iter;
  
--	files_assert_main_repository(refs, "lock_packed_refs");
-+	packed_assert_main_repository(refs, "lock_packed_refs");
+-	files_assert_main_repository(refs, "commit_packed_refs");
++	packed_assert_main_repository(refs, "commit_packed_refs");
  
- 	if (!timeout_configured) {
- 		git_config_get_int("core.packedrefstimeout", &timeout_value);
-@@ -1348,8 +1361,8 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
+-	if (!is_lock_file_locked(&refs->packed_ref_store->lock))
++	if (!is_lock_file_locked(&refs->lock))
+ 		die("BUG: packed-refs not locked");
+ 
+-	out = fdopen_lock_file(&refs->packed_ref_store->lock, "w");
++	out = fdopen_lock_file(&refs->lock, "w");
+ 	if (!out)
+ 		die_errno("unable to fdopen packed-refs descriptor");
+ 
+@@ -1420,7 +1420,7 @@ static int commit_packed_refs(struct files_ref_store *refs)
+ 	if (ok != ITER_DONE)
+ 		die("error while iterating over references");
+ 
+-	if (commit_lock_file(&refs->packed_ref_store->lock)) {
++	if (commit_lock_file(&refs->lock)) {
+ 		save_errno = errno;
+ 		error = -1;
+ 	}
+@@ -1606,7 +1606,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
+ 	if (ok != ITER_DONE)
+ 		die("error while iterating over references");
+ 
+-	if (commit_packed_refs(refs))
++	if (commit_packed_refs(refs->packed_ref_store))
+ 		die_errno("unable to overwrite old ref-pack file");
+ 
+ 	prune_refs(refs, refs_to_prune);
+@@ -1662,7 +1662,7 @@ static int repack_without_refs(struct files_ref_store *refs,
  	}
  
- 	if (hold_lock_file_for_update_timeout(
--			    &refs->packed_ref_store->lock,
--			    refs->packed_ref_store->path,
-+			    &refs->lock,
-+			    refs->path,
- 			    flags, timeout_value) < 0)
- 		return -1;
- 
-@@ -1361,9 +1374,9 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
- 	 * cache is still valid. We've just locked the file, but it
- 	 * might have changed the moment *before* we locked it.
- 	 */
--	validate_packed_ref_cache(refs->packed_ref_store);
-+	validate_packed_ref_cache(refs);
- 
--	packed_ref_cache = get_packed_ref_cache(refs->packed_ref_store);
-+	packed_ref_cache = get_packed_ref_cache(refs);
- 	/* Increment the reference count to prevent it from being freed: */
- 	acquire_packed_ref_cache(packed_ref_cache);
- 	return 0;
-@@ -1560,7 +1573,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 	int ok;
- 	struct ref_to_prune *refs_to_prune = NULL;
- 
--	lock_packed_refs(refs, LOCK_DIE_ON_ERROR);
-+	lock_packed_refs(refs->packed_ref_store, LOCK_DIE_ON_ERROR);
- 
- 	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL, 0);
- 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
-@@ -1629,7 +1642,7 @@ static int repack_without_refs(struct files_ref_store *refs,
- 	if (!needs_repacking)
- 		return 0; /* no refname exists in packed refs */
- 
--	if (lock_packed_refs(refs, 0)) {
-+	if (lock_packed_refs(refs->packed_ref_store, 0)) {
- 		unable_to_lock_message(refs->packed_ref_store->path, errno, err);
- 		return -1;
- 	}
-@@ -3198,7 +3211,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
- 		}
+ 	/* Write what remains */
+-	ret = commit_packed_refs(refs);
++	ret = commit_packed_refs(refs->packed_ref_store);
+ 	if (ret)
+ 		strbuf_addf(err, "unable to overwrite old ref-pack file: %s",
+ 			    strerror(errno));
+@@ -3227,7 +3227,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+ 				       &update->new_oid);
  	}
  
--	if (lock_packed_refs(refs, 0)) {
-+	if (lock_packed_refs(refs->packed_ref_store, 0)) {
- 		strbuf_addf(err, "unable to lock packed-refs file: %s",
+-	if (commit_packed_refs(refs)) {
++	if (commit_packed_refs(refs->packed_ref_store)) {
+ 		strbuf_addf(err, "unable to commit packed-refs file: %s",
  			    strerror(errno));
  		ret = TRANSACTION_GENERIC_ERROR;
 -- 
