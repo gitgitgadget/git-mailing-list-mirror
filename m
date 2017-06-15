@@ -2,108 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB34E20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 15:48:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D09120401
+	for <e@80x24.org>; Thu, 15 Jun 2017 15:54:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750835AbdFOPsf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 11:48:35 -0400
-Received: from mout.web.de ([212.227.17.11]:58006 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750728AbdFOPse (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 11:48:34 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MBTQo-1dUqPb2fEk-00AYGx; Thu, 15
- Jun 2017 17:48:21 +0200
-Subject: Re: [PATCH] checkout: don't write merge results into the object
- database
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <b46827a5-2a8f-c343-ac1f-814fc8a16943@web.de>
- <20170615135751.qxn6bsfsxz5es236@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f7d38553-484b-ee81-e059-2c737dad2bc4@web.de>
-Date:   Thu, 15 Jun 2017 17:48:18 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1750816AbdFOPyp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 11:54:45 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35588 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750727AbdFOPyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 11:54:43 -0400
+Received: by mail-pf0-f196.google.com with SMTP id s66so2209258pfs.2
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 08:54:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=qgSG4eBm7d1PyRZyi4AcijEc0fUVTxnGAoPy5AxRgUI=;
+        b=aRq3LclCFTJTu1vlJUA/KBvBX2gu1paxRQhUw6TnNbvD7fAk/Fa4qoTZt1gSK4B0/g
+         OeMDr3vtz+yC7G0XwQt+KLMXgrDmtUr3xmXm9vANWaRp5+dgACmC6lyl+YocljFtb3wx
+         WD73mhHXKJdO/Klcn5Iktdb6gUen3fsWinq89rN59jrdETKjlcCsRfUdaPZR09lil3/G
+         4W2jTG+pAeIAY7d11+1LKAn5ZxtUhHCdVxpEV0imjD40gBA0CQ4ebcrJ8+sRCJPqubuP
+         jn+kpGLH9XUO/PGEasEcSXLgqUMaeodMMej+pKKT2Yc2KyiAJY6P6GdbnQEkW3jVf9WA
+         ++5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=qgSG4eBm7d1PyRZyi4AcijEc0fUVTxnGAoPy5AxRgUI=;
+        b=J8LokQulLTgW6o1E7td4xCRRoDcEOknE8Mbnn7BstX6qXkWc9HE0yXEn7BkkDaVcZf
+         4U1KUdfJxRWWFeGRu0Focb/6SEyVFb22ZaR+7hFkyalaFL++Ey5xTlI1ZG0y8D5keH6p
+         6xtXIhtepZE/+ZMLU9hc5Hn16enGmg5whtILGTcGIOLFgTJT/dEpTHgVgX+HYe7E+Nkf
+         KNkWWgOubRhmTXy+Gpc7JJAvp6dt9ENvzxlaWqvutyZLSpi2o81QV7ds73ItMpnvwvBE
+         Tm66Wmjw8ewG4D/tItzkOl6ap4FE61bqzUO+ZvXcqcf2xsCkZW3QouX5KVR7smp2Ky5j
+         CRyQ==
+X-Gm-Message-State: AKS2vOzJUAicYGdfctHBy0alhJiGgEJt8GJRiPkDpSw+wPN/mnlFRaDE
+        HZaziyD3LkiecQ==
+X-Received: by 10.84.208.236 with SMTP id c41mr6840665plj.95.1497542083033;
+        Thu, 15 Jun 2017 08:54:43 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:88c8:4433:c52b:12d7])
+        by smtp.gmail.com with ESMTPSA id 186sm1088795pfv.15.2017.06.15.08.54.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 15 Jun 2017 08:54:41 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2017, #04; Tue, 13)
+References: <xmqqshj34ldr.fsf@gitster.mtv.corp.google.com>
+        <20170614005247.GT133952@aiede.mtv.corp.google.com>
+Date:   Thu, 15 Jun 2017 08:54:41 -0700
+In-Reply-To: <20170614005247.GT133952@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Tue, 13 Jun 2017 17:52:47 -0700")
+Message-ID: <xmqqo9tp2qm6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170615135751.qxn6bsfsxz5es236@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:W/wmTvNofOGilYAljFU3j3X5ONGw3hpxeD59JdQd0xInpCUE7hj
- WBjUv+kwh5fIostTO225FWl5Iuqr2odYnLUQlBDJSj21OfIFLOwzvlrLAshHb/d+cJAqvmg
- l5OHdeVFkMJ3XKr8ef6NmHE/RcA9pESDsmZmXs5DvXQuQ8wbPG5p99yAdEHmy6KColDKMLy
- VF502ekk0wvZ/kh51cpwQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:96DdYKne5TI=:SEHi0rVFX+VRtWVIUs3YVz
- sxWpnGNZagh02fquRe7qM4kKypvtLwErJoDLdn94LBCqko31zMpszRJ2Mpa7KJKDPPvP+mwxs
- 6cF/tJYl2thUeLW7b6eV7mmHanfjZWWpa62J1qN81X849iJ4NeSISFB9TpDT1g+n9NrrocWfF
- QK9493MvB8TTZgtcLrT9nOimlM+MePhDlsieQGSVDlIv6mTUqtNcoUqfF0KL8F7gQWuROre/K
- UgVHVnpiSQEndJZgczGr0eA4FSFii68vKaSlsdetR6QmH1z/EMEM2PoHKCxDUvQ6hsRVXkDMW
- LdB1dczJByJ5q7EPIm4mcC8oc/IBMeMOhaibQQ04LnPnILPQezAS2tj5bdNBwzMuHiHlwTQ7B
- IRFpjfntcnN3tmseclJTblc4STMeuYwiBnugxlvpW6E8JLaDFvLEDNcAlHmkNQOAK1bd0iij7
- 6BjMNjqXj1trizy35B4BlOyeNUjzcrb7yLVW7kfP9dgTEODrwpvXE/wH5Z9wph1e35ASX8YB0
- BOr3WHfOFPgGvPWAskpJsuiI91k1DU2mGEyN2ZhllEU/aHKjnw0P+SXcvQYHgZPulMnRLaPr+
- 7dfW01kFhxUGgECuh3PSXWJXsxy+IhBd1+mG6aJxRwQujnRYzah44NLWVbPsO+E0MxPdErrit
- GRq8V8/JVlbxBMjarl0YlrSQkhTyfigCCIQqj1nHI5g1FJF/cjETiHmse4qTtg2ted5NlxOEI
- mMeZ96psp2nzaqxUk5NUpIBHN0vN9qbZOtQHeGVNlZq/znroJQCmGQO31qjjbXY/auHeK7aBu
- nGO3p3E
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 15.06.2017 um 15:57 schrieb Jeff King:
-> On Thu, Jun 15, 2017 at 01:33:42PM +0200, René Scharfe wrote:
-> 
->> Merge results need to be written to the worktree, of course, but we
->> don't necessarily need object entries for them, especially if they
->> contain conflict markers.  Use pretend_sha1_file() to create fake
->> blobs to pass to make_cache_entry() and checkout_entry() instead.
-> 
-> Conceptually this makes sense, although I have a comment below.
-> 
-> Out of curiosity, did this come up when looking into the cherry-pick
-> segfault/error from a few hours ago?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-No, it came up in the discussion of Dscho's memory leak plug series [1].
+>>  It is not known if a simple "yes/no" is sufficient in the longer
+>>  term, and what should happen when --recurse-submodules option starts
+>>  taking "recurse into them how?" parameter, though.
+>
+> Any pointers for where this has been discussed, if anywhere (e.g. was
 
->> @@ -225,8 +225,8 @@ static int checkout_merged(int pos, const struct checkout *state)
->>   	 * (it also writes the merge result to the object database even
->>   	 * when it may contain conflicts).
->>   	 */
->> -	if (write_sha1_file(result_buf.ptr, result_buf.size,
->> -			    blob_type, oid.hash))
->> +	if (pretend_sha1_file(result_buf.ptr, result_buf.size,
->> +			      OBJ_BLOB, oid.hash))
->>   		die(_("Unable to add merge result for '%s'"), path);
->>   	free(result_buf.ptr);
-> 
-> I wondered if pretend_sha1_file() makes a copy of the buffer, and indeed
-> it does. So this is correct.
-> 
-> But that raises an interesting question: how big are these objects, and
-> is it a good idea to store them in RAM? Obviously they're in RAM
-> already, but I'm not sure if it's one-at-a-time. We could be bumping the
-> peak RAM used if there's a large number of these entries. Touching the
-> on-disk odb does feel hacky, but it also means they behave like other
-> objects.
-> 
-> If it is a concern, I think it could be solved by "unpretending" after
-> our call to checkout_entry completes. That would need a new call in
-> sha1_file.c, but it should be easy to write.
+If this were discussed, then the answer to the question we may know
+by now ;-)  I do not think anybody gave a serious thought to convince
+the public why a boolean is enough, hence this comment.
 
-Good point; we'd accumulate fake entries that we'll never need again.
-The patch should clean them up.
+>> * bw/config-h (2017-06-13) 4 commits
+>>  - config: don't implicitly use gitdir
+>>  - config: don't include config.h by default
+>>  - config: remove git_config_iter
+>>  - config: create config.h
+>>
+>>  Code clean-up.
+>
+> Patches 1-3 are good to go IMHO.
+>
+> Patch 4 in pu is marked with my Reviewed-by.  I think it's getting
+> there but not there yet.  Did some script pull the tag from my reply
+> to the cover letter?
 
-Alternatively we could finally address the NEEDSWORK comment and
-provide a way to checkout a file without faking an index entry..
+No, nothing that elaborate.  
 
-René
+I go through each message in Gnus newsreader and feed the article to
+a shell command, e.g. "Meta/add-by -r jrnieder@ | git am -s3c".  The
+UI remembers the last command I used when I choose to feed the next
+article to a shell command, and after running it to first three, I
+forgot to remove the 'add-by' bit from the command line for the fourth
+one.
 
-
-[1] https://public-inbox.org/git/2704e145927c851c4163a68cfdfd5ada48fff21d.1493906085.git.johannes.schindelin@gmx.de/
