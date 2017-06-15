@@ -6,54 +6,81 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB4D20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 13:03:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB7D920401
+	for <e@80x24.org>; Thu, 15 Jun 2017 13:13:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752161AbdFONDd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 09:03:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40637 "EHLO cloud.peff.net"
+        id S1752469AbdFONMx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 09:12:53 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40641 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750777AbdFONDd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 09:03:33 -0400
-Received: (qmail 26101 invoked by uid 109); 15 Jun 2017 13:03:32 -0000
+        id S1752434AbdFONMw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 09:12:52 -0400
+Received: (qmail 26845 invoked by uid 109); 15 Jun 2017 13:12:47 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 13:03:32 +0000
-Received: (qmail 23006 invoked by uid 111); 15 Jun 2017 13:03:35 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 13:12:47 +0000
+Received: (qmail 23060 invoked by uid 111); 15 Jun 2017 13:12:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 09:03:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 09:03:31 -0400
-Date:   Thu, 15 Jun 2017 09:03:31 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 09:12:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 09:12:45 -0400
+Date:   Thu, 15 Jun 2017 09:12:45 -0400
 From:   Jeff King <peff@peff.net>
-To:     Sebastian =?utf-8?B?RHLDtmdl?= <sebastian@centricular.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] git cherry-pick segfaults with local changes in working
- directory
-Message-ID: <20170615130331.tak725h2i3fe7npw@sigill.intra.peff.net>
-References: <1497517910.2239.105.camel@centricular.com>
- <20170615103215.45sp5adzu6zcorct@sigill.intra.peff.net>
- <1497523056.2239.107.camel@centricular.com>
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] wt-status.c: Modified status message shown for a
+ parent-less branch
+Message-ID: <20170615131245.zh5nuipmaadcfpdx@sigill.intra.peff.net>
+References: <20170610102127.ftvko3m7gazavpj7@sigill.intra.peff.net>
+ <xmqqzidg14xn.fsf@gitster.mtv.corp.google.com>
+ <1497255003.1718.1.camel@gmail.com>
+ <xmqqa85dnjpz.fsf@gitster.mtv.corp.google.com>
+ <20170612212025.ytyukvmmthfcsejh@sigill.intra.peff.net>
+ <xmqqshj4nb9u.fsf@gitster.mtv.corp.google.com>
+ <20170612213759.f2scl3r46vboolna@sigill.intra.peff.net>
+ <1497514760.2394.6.camel@gmail.com>
+ <20170615084248.elfsh4of5qdsk3pa@sigill.intra.peff.net>
+ <CAJZjrdXXGb-QrvJW9JusPT597QDnQD_shzVJq-5GN=hZCBJYeA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1497523056.2239.107.camel@centricular.com>
+In-Reply-To: <CAJZjrdXXGb-QrvJW9JusPT597QDnQD_shzVJq-5GN=hZCBJYeA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 15, 2017 at 01:37:36PM +0300, Sebastian Dröge wrote:
+On Thu, Jun 15, 2017 at 07:43:17AM -0400, Samuel Lijin wrote:
 
-> > Note that the tarball doesn't have all the necessary objects. Its
-> > .git/objects/info/alternates points to another full clone of
-> > git://anongit.freedesktop.org/gstreamer/gst-plugins-good.
-> 
-> Ah good to know, I thought this only happens if you clone with
-> --reference and not otherwise.
+> > Saying just "staged changes" is definitely accurate. I don't know if
+> > some users would find that too terse, too. The phrase "not staged for
+> > commit" gives more information if you don't know what "staged" means in
+> > the Git world.
 
-If you do a local-filesystem clone of a repository with alternates, the
-clone will have the same alternates. So I'm guessing you may have done
-such a clone of your --reference repository as part of preparing the
-tarball.
+Oops, I meant to say "too terse, though". But it sounds like you got my
+meaning.
+
+> Perhaps there should be a message pointing people at documentation
+> explaining the index and staging terminology?
+
+Maybe. I wouldn't want this message to get too verbose. People see it a
+lot. There advice.statusHints message is already pretty verbose (though
+I turned it off myself years ago).
+
+> Offhand, this is something I was wondering about the other day - has
+> there ever been a discussion of what level of proficiency Git expects
+> of its users?
+
+There have been lots of discussions, but none that I can think of as
+definitive.
+
+I think the general strategy these days is to try to give hints via
+advise() for confusing situations, and to make it possible for expert
+users to turn those off.
+
+In general, I think using words from "git help glossary" is OK, but when
+we can use plainer language without loss of precision, that seems like a
+good idea. That's just my personal opinion, though.
 
 -Peff
