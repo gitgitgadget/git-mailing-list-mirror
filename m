@@ -6,98 +6,101 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62AE320282
-	for <e@80x24.org>; Thu, 15 Jun 2017 05:56:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E673720282
+	for <e@80x24.org>; Thu, 15 Jun 2017 06:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752120AbdFOF45 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 01:56:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40426 "EHLO cloud.peff.net"
+        id S1752059AbdFOGBe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 02:01:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40440 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751623AbdFOF44 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 01:56:56 -0400
-Received: (qmail 25863 invoked by uid 109); 15 Jun 2017 05:56:56 -0000
+        id S1750774AbdFOGBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 02:01:33 -0400
+Received: (qmail 26127 invoked by uid 109); 15 Jun 2017 06:01:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 05:56:56 +0000
-Received: (qmail 19686 invoked by uid 111); 15 Jun 2017 05:56:58 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 06:01:33 +0000
+Received: (qmail 19776 invoked by uid 111); 15 Jun 2017 06:01:34 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 01:56:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 01:56:54 -0400
-Date:   Thu, 15 Jun 2017 01:56:54 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 02:01:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 02:01:31 -0400
+Date:   Thu, 15 Jun 2017 02:01:31 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Giuffrida <michaelpg@chromium.org>,
-        git@vger.kernel.org,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [BUG] add_again() off-by-one error in custom format
-Message-ID: <20170615055654.efvsouhr3leszz3i@sigill.intra.peff.net>
-References: <CACi5S_1j46SbP7cQMdUnULmgGD7xBkSUrS2PKbzq8ZydybHE=w@mail.gmail.com>
- <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
- <d229403a-d078-87b4-f3e8-89058fa4b548@web.de>
- <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
- <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
- <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
- <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 1/2] add: warn when adding an embedded repository
+Message-ID: <20170615060131.cntluubjgkfsiehh@sigill.intra.peff.net>
+References: <20170613091452.ew2rwx5r6axxo65p@sigill.intra.peff.net>
+ <20170613092408.db22ygki6wg2t23d@sigill.intra.peff.net>
+ <CAGZ79kbbTwQicVkRs51fV91R_7ZhDtC+FR8Z-SQzRpF2cjFfag@mail.gmail.com>
+ <20170614063614.a34ovimjpz2g24qe@sigill.intra.peff.net>
+ <CAGZ79kaN=XVe3OWE5DHsMfbzW_rZOdRurgSfpz52dSZDA_V6fg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
+In-Reply-To: <CAGZ79kaN=XVe3OWE5DHsMfbzW_rZOdRurgSfpz52dSZDA_V6fg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 14, 2017 at 08:24:25PM +0200, René Scharfe wrote:
+On Wed, Jun 14, 2017 at 10:53:12AM -0700, Stefan Beller wrote:
 
-> > I think the real question is how likely people use more than one
-> > occurrence of the same thing in their custom format, and how deeply
-> > they care that --format='%h %h' costs more than --format='%h'.  The
-> > cost won't of course be double (because the main traversal costs
-> > without any output), but it would be rather unreasonable to expect
-> > that --format='%h %h %h %h %h' to cost the same as --format='%h';
-> > after all, Git is doing more for them ;-)
+> >> In my ideal dream world of submodules we would have the following:
+> >>
+> >>   $ cat .gitmodules
+> >>   [submodule "sub42"]
+> >>     path = foo
+> >>   # path only in tree!
+> >
+> > TBH, I am not sure why we need "path"; couldn't we just use the
+> > subsection name as an implicit path?
 > 
-> The answer to the first half is obviously "very likely" -- otherwise
-> this bug wouldn't have been found, right? :)
+> That is what was done back in the time. But then people wanted to rename
+> submodules (i.e. move them around in the worktree), so the path is not
+> constant, so either we'd have to move around the git dir whenever the
+> submodule is renamed (bad idea IMO), or instead introduce a mapping
+> between (constant name <-> variable path). So that was done.
+
+Ah, right. That makes sense. I forgot that in addition to the in-tree
+path, we have to store the submodule repository itself as some name. The
+extra level of indirection there isn't strictly necessary, but it lets
+the "name" act as a unique id.
+
+> Historically (IIUC) we had submodule.path.url which then was changed
+> to submodule.name.url + name->path resolution. And as a hack(?) or
+> easy way out of a problem then, the name is often the same as the path
+> hence confusing people, when they see:
 > 
-> Regarding the question of how bad a 50% slowdown for a second %h
-> would be: No idea.  If ran interactively it may not even be noticeable
-> because the user can read the first few lines in less while the rest
-> is prepared in the background.  We don't have a perf test for formats
-> with duplicate short hashes, so we don't promise anything, right? :)
+>     [submodule "foo"]
+>         path = foo
+>         url = dadada/foo
+> 
+> What foo means what now? ;)
 
-One interesting thing is that the cost of finding short hashes very much
-depends on your loose object setup. I timed:
+Right, I am such a person that has been confused. ;)
 
-  git log --format=%H >/dev/null
+Thanks for explaining.
 
-versus
+> Talking about another tangent:
+> 
+>   For files there is a rename detection available. For submodules
+>   It is hard to imagine that there ever will be such a rename detection
+>   as files have because of the explciit name<->path mapping.
+> 
+>   We *know* when a submodule was moved. So why even try
+>   to do rename detection? As we record only sha1s for a submodule
+>   you could swap two submodule object names by accident.
+>   Consider a superproject that contains different kernels, such as
+>   a kernel for your phone/embedded device and then a kernel for
+>   your workstation or other device. And these two kernels are different
+>   for technical reasons but share the same history.
 
-  git log --format=%h >/dev/null
+Do you mean during the rename detection phase of a diff, check to see if
+.gitmodules registered a change in path for a particular module (by
+finding its entry in the diff and looking at both sides), and if so then
+mark that as a rename for the submodule paths?
 
-on git.git. It went from about 400ms to about 800ms. But then I noticed
-I had a lot of loose object directories, and ran "git gc --prune=now".
-Afterwards, my timings were more like 380ms and 460ms.
-
-The difference is that in the "before" case, we actually opened each
-directory and ran getdents(). But after gc, the directories are gone
-totally and open() fails. We also have to do a linear walk through the
-objects in each directory, since the contents are sorted.
-
-So I wonder if it is worth trying to optimize the short-sha1 computation
-in the first place. Double-%h aside, that would make _everything_
-faster, including --oneline.
-
-I'm not really sure how, though, short of caching the directory
-contents. That opens up questions of whether and when to invalidate the
-cache. If the cache were _just_ about short hashes, it might be OK to
-just assume that it remains valid through the length of the program (so
-worst case, a simultaneous write might mean that we generate a sha1
-which just became ambiguous, but that's generally going to be racy
-anyway).
-
-The other downside of course is that we'd spend RAM on it. We could
-bound the size of the cache, I suppose.
+From a cursory glance, that sounds like an interesting approach.
 
 -Peff
