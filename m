@@ -6,106 +6,107 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88A4C20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 13:25:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3147720401
+	for <e@80x24.org>; Thu, 15 Jun 2017 13:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751955AbdFONZf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 09:25:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40650 "EHLO cloud.peff.net"
+        id S1752503AbdFONuB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 09:50:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40660 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751016AbdFONZe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 09:25:34 -0400
-Received: (qmail 27883 invoked by uid 109); 15 Jun 2017 13:25:33 -0000
+        id S1751955AbdFONuA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 09:50:00 -0400
+Received: (qmail 29643 invoked by uid 109); 15 Jun 2017 13:50:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 13:25:33 +0000
-Received: (qmail 23111 invoked by uid 111); 15 Jun 2017 13:25:36 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 13:50:00 +0000
+Received: (qmail 23216 invoked by uid 111); 15 Jun 2017 13:50:02 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 09:25:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 09:25:32 -0400
-Date:   Thu, 15 Jun 2017 09:25:32 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 15 Jun 2017 09:50:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Jun 2017 09:49:58 -0400
+Date:   Thu, 15 Jun 2017 09:49:58 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Giuffrida <michaelpg@chromium.org>,
-        git@vger.kernel.org,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [BUG] add_again() off-by-one error in custom format
-Message-ID: <20170615132532.nivmj22dctowxssm@sigill.intra.peff.net>
-References: <CACi5S_1j46SbP7cQMdUnULmgGD7xBkSUrS2PKbzq8ZydybHE=w@mail.gmail.com>
- <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
- <d229403a-d078-87b4-f3e8-89058fa4b548@web.de>
- <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
- <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
- <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
- <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
- <20170615055654.efvsouhr3leszz3i@sigill.intra.peff.net>
- <ec36f9fa-5f3e-b511-3985-3d0301b4847f@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Ulrich Mueller <ulm@gentoo.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3] strbuf: let strbuf_addftime handle %z and %Z itself
+Message-ID: <20170615134958.mzmdmhonjsnconu2@sigill.intra.peff.net>
+References: <20170602030825.hdpbaisn54d4fi4n@sigill.intra.peff.net>
+ <72b001fc-80e7-42b9-bd9d-87621da7978a@web.de>
+ <20170602183504.ii7arq2ssxgwgyxr@sigill.intra.peff.net>
+ <22833.57584.108133.30274@a1i15.kph.uni-mainz.de>
+ <20170602223003.6etkdnnogb2jmoh3@sigill.intra.peff.net>
+ <22833.60191.771422.3111@a1i15.kph.uni-mainz.de>
+ <20170602225148.drkl7obwhzypgjtr@sigill.intra.peff.net>
+ <a8b789e6-d0cd-6d96-1bfb-ccc5bc174013@web.de>
+ <d578d104-79c6-6c07-db4d-3e4ccb0c0dd9@web.de>
+ <5f398cf6-2bc3-f999-acfa-0ef6d7a43435@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ec36f9fa-5f3e-b511-3985-3d0301b4847f@web.de>
+In-Reply-To: <5f398cf6-2bc3-f999-acfa-0ef6d7a43435@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 15, 2017 at 01:33:34PM +0200, René Scharfe wrote:
+On Thu, Jun 15, 2017 at 02:29:53PM +0200, René Scharfe wrote:
 
-> > The difference is that in the "before" case, we actually opened each
-> > directory and ran getdents(). But after gc, the directories are gone
-> > totally and open() fails. We also have to do a linear walk through the
-> > objects in each directory, since the contents are sorted.
+> There is no portable way to pass timezone information to strftime.  Add
+> parameters for timezone offset and name to strbuf_addftime and let it
+> handle the timezone-related format specifiers %z and %Z internally.
 > 
-> Do you mean "unsorted"?
-
-Er yeah, sorry, I meant to say "aren't".
-
-> > I'm not really sure how, though, short of caching the directory
-> > contents. That opens up questions of whether and when to invalidate the
-> > cache. If the cache were _just_ about short hashes, it might be OK to
-> > just assume that it remains valid through the length of the program (so
-> > worst case, a simultaneous write might mean that we generate a sha1
-> > which just became ambiguous, but that's generally going to be racy
-> > anyway).
-> > 
-> > The other downside of course is that we'd spend RAM on it. We could
-> > bound the size of the cache, I suppose.
+> Callers can opt out for %Z by passing NULL as timezone name.  %z is
+> always handled internally -- this helps on Windows, where strftime would
+> expand it to a timezone name (same as %Z), in violation of POSIX.
+> Modifiers are not handled, e.g. %Ez is still passed to strftime.
 > 
-> You mean like an in-memory pack index for loose objects?  In order to
-> avoid the readdir call in sha1_name.c::find_short_object_filename()?
-> We'd only need to keep the hashes of found objects.  An oid_array
-> would be quite compact.
+> Use an empty string as timezone name in show_date (the only current
+> caller) for now because we only have the timezone offset in non-local
+> mode.  POSIX allows %Z to resolve to an empty string in case of missing
+> information.
+> 
+> Helped-by: Ulrich Mueller <ulm@gentoo.org>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> Changes from v3:
+> - Updated developer documentation in strbuf.h.
+> - Added short note to user documentation.
 
-Yes, that's what I was thinking of.
+This looks good to me overall.
 
-> Non-racy writes inside a process should not be ignored (write, read
-> later) -- e.g. checkout does something like that.
+> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+> index 42d4ea61ef..71082008f0 100755
+> --- a/t/t0006-date.sh
+> +++ b/t/t0006-date.sh
+> @@ -51,6 +51,12 @@ check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
+>  check_show raw-local "$TIME" '1466000000 +0000'
+>  check_show unix-local "$TIME" '1466000000'
+>  
+> +check_show 'format:%z' "$TIME" '+0200'
+> +check_show 'format-local:%z' "$TIME" '+0000'
+> +check_show 'format:%Z' "$TIME" ''
+> +check_show 'format:%%z' "$TIME" '%z'
+> +check_show 'format-local:%%z' "$TIME" '%z'
 
-Ideally, yes. Though thinking on this more, it's racy even today,
-because we rely on the in-memory packed_git list. We usually re-check the
-directory only when we look for an object and it's missing. So any new
-packs which have been added while the process runs will be missed when
-doing short-sha1 lookups (and actually, find_short_packed_object does
-not even seem to do the usual retry-on-miss).
+These check that the zone output is correct, but I don't think we ever
+check that the value we feed to strftime is actually in the correct zone
+in the first place (i.e., that %H shows the correct time).
 
-A normal process like "checkout" isn't writing new packs, but a
-simultaneous repack could be migrating its new objects to a pack behind
-its back. (It also _can_ write packs, but only for large blobs).
+I think that should go in a separate test from the %z/%Z handling, as
+there are some subtleties.
 
-Given that we are talking about finding "unique" abbreviations here, and
-that those abbreviations can become invalidated immediately anyway as
-more objects are added (even by the same process), I'm not sure we need
-to strive for absolute accuracy.
+So here are two patches on top of yours: more tests, and then the
+format-local handling of %Z.
 
-> Can we trust object directory time stamps for cache invalidation?
+  [1/2]: t0006: check --date=format zone offsets
+  [2/2]: date: use localtime() for "-local" time formats
 
-I think it would work on POSIX-ish systems, since loose object changes
-always involve new files, not modifications of existing ones. I don't
-know if there are systems that don't update directory mtimes even for
-newly added files.
-
-That would still be a stat() per request. I'd be curious how the timing
-compares to the opendir/readdir that happens now.
+ date.c          | 14 ++++++++++++--
+ t/t0006-date.sh | 10 ++++++++--
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
 -Peff
