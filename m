@@ -2,143 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB1C20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 19:13:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 635FE20401
+	for <e@80x24.org>; Thu, 15 Jun 2017 19:15:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752070AbdFOTNT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 15:13:19 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:36361 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750835AbdFOTNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 15:13:16 -0400
-Received: by mail-pg0-f65.google.com with SMTP id v18so2599460pgb.3
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 12:13:16 -0700 (PDT)
+        id S1751590AbdFOTPX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 15:15:23 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:33662 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750814AbdFOTPW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 15:15:22 -0400
+Received: by mail-pg0-f47.google.com with SMTP id f185so10604252pgc.0
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 12:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fW8JTGyiJU3jdMHsTGk5nQqKA+7dJ9Ct6sjkGPO1m3Y=;
-        b=hCo53HwYQin9BAOdzfkKD1/ZeDD5OtAyDTcejuRJ/2UizrEYGM45oHA1eWDXqhTumC
-         43C9g8o35ciHFeFDsFhquLdj+f6IsfpsRo7D/+3QDaIslYizHNUiVE53Tf4jxiIJTZ0q
-         WETIkPpbrJKbkd9faLP97YevQ1T+EWZ8EZddEmZoVe+T2q4ZXuEBMVFRtfoj2c1Q+u72
-         +k6s6G5RPv4zyx/TW/Ybtv8zfVpzOquSSGmxPmKKjHAl2vKCjUF4YIgbjEY3f+5DGspJ
-         9PpGqxA2ZkBVP/dYLVARu9lnf2S/S65zsrPdWlRKNKJ3TCzwMSJbIk+HoSwuN1vlLqIx
-         3qYA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=03RAYmRDImxw0rNqmFc7B2F3s8JjDAveiySJNrDxTas=;
+        b=H2+0P859O+xxAzsfXZzYhIBlY+5xna0GcYkolBrOtWWIzHYB8j1mfPr9K2+Rge9QUr
+         gVCIlX2+Nk7KtncN/MiDYoe0c4sE7x5w/m4vXvmgcptMpW2Sx2tir3UVmQh/NNf5PHQm
+         frBm1sqpumGIp7jaXhNe37Bsl3qF9Rm4uJek6ysiIxis2vhw7YooW+MNhRzUOZa5JWCI
+         e+bQviGkEX/448McCVrOjBTTTvYuR/6dqw7jZgLIrcOt3+aSPl/2/xGiMP0Le308r04Q
+         IwphRqPZFFN8zUWtW8My6+b9L7xEseG9skzMBFRCMzjD80aRUtRiyLbJxJsRiyG3OFRL
+         vrgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fW8JTGyiJU3jdMHsTGk5nQqKA+7dJ9Ct6sjkGPO1m3Y=;
-        b=IarbBbM9DZGdEznqfC8548Rz9rPWlcL0e7fkSd09NktOSY8ZxQDNiw4bgpHpfWXQ65
-         j4k9OI8kLJzK1KRlcQcp6NpUThVmy/fEKXGZtuIkn8XtMy5FNJ+S1V4BGcU5FR/kbVDm
-         D6V9ENJKhGo1I/Hq/8vDTSeJn+yLbOrC1lCsB9uShP2MgXKEkeqTjQayckgeHWc8Y6Y5
-         Ov+lkviT5I413kWkvoIbGqtbwDGbqVha+DXaTm9IrI/2zxsvPoYYYjYb0Zmeve7TRDbo
-         ovscz95kewP6nI01A09xX0fvQXFeU4ezd+78AHJ15XwQIgy4saftezXH6rFlR3H3GcM6
-         HL5g==
-X-Gm-Message-State: AKS2vOy+KbDXTyGFcRUNXc+FieKu3gK89SWH8hibXIt5raBoiOl+wUyR
-        xwwzkwbz00RsxQ==
-X-Received: by 10.84.195.131 with SMTP id j3mr7999195pld.97.1497553990941;
-        Thu, 15 Jun 2017 12:13:10 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:658a:74a7:91cb:4852])
-        by smtp.gmail.com with ESMTPSA id n71sm92732pfg.46.2017.06.15.12.13.08
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=03RAYmRDImxw0rNqmFc7B2F3s8JjDAveiySJNrDxTas=;
+        b=OFsgb5Yj2thrb72zUGYPigzBqGwHgwYNkChECZrSfpaMiDcKoOlqDlV2YNvQrlesEa
+         zajD3n/pjMxzgp89UH7ytNQZNitWfptOqDdhsSVyxGNXf5I2pgjt4Rf6aipnjLiCJKqE
+         ngT0R2xJkCmekBq6qHzJCspDkSckejEFys3r8FdDOOoYAQTUOjHp2HUnwI/XFt2ZaB1I
+         bPcUm8bDBYppbpSoHsmO9T/Q5aE3SzvN9JxxuC566HYzWPSZwNrY6Z1hXj+nLol42P/T
+         tpMRPpfCCkdOH3ddbwfaPjb5LgAwuxUj9e+vI3JF+J9g05CHavpq8kQClTX3dKJod/io
+         vOQQ==
+X-Gm-Message-State: AKS2vOzS67E+gJUemwypWF5nd/NH9WMGH+IVD5MAaTm8dC/I8omhtCti
+        S1mhhDme5yCTk5Bsm44=
+X-Received: by 10.98.15.134 with SMTP id 6mr6913098pfp.32.1497554121309;
+        Thu, 15 Jun 2017 12:15:21 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:88c8:4433:c52b:12d7])
+        by smtp.gmail.com with ESMTPSA id y68sm112493pfy.12.2017.06.15.12.15.20
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 15 Jun 2017 12:13:09 -0700 (PDT)
-Date:   Thu, 15 Jun 2017 12:13:05 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
-        Jeff King <peff@peff.net>, Junio Hamano <gitster@pobox.com>
-Subject: Re: Which hash function to use, was Re: RFC: Another proposed hash
- function transition plan
-Message-ID: <20170615191151.GA45444@aiede.mtv.corp.google.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170306002642.xlatomtcrhxwshzn@genre.crustytoothpaste.net>
- <20170306182423.GB183239@google.com>
- <alpine.DEB.2.21.1.1706151122180.4200@virtualbox>
+        Thu, 15 Jun 2017 12:15:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Scott Baker <scott@perturb.org>
+Subject: Re: [PATCH] diff-highlight: split code into module
+References: <20170615163055.b63hcivjogafkerq@sigill.intra.peff.net>
+Date:   Thu, 15 Jun 2017 12:15:19 -0700
+In-Reply-To: <20170615163055.b63hcivjogafkerq@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 15 Jun 2017 12:30:55 -0400")
+Message-ID: <xmqqpoe512rc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1706151122180.4200@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Jeff King <peff@peff.net> writes:
 
-Johannes Schindelin wrote:
-
-> From what I read, pretty much everybody who participated in the discussion
-> was aware that the essential question is: performance vs security.
-
-I don't completely agree with this framing.  The essential question is:
-how to get the right security properties without abysmal performance.
-
-> It turns out that we can have essentially both.
+> The diff-so-fancy project is also written in perl, and most
+> of its users pipe diffs through both diff-highlight and
+> diff-so-fancy. It would be nice if this could be done in a
+> single script. So let's pull most of diff-highlight's code
+> into its own module which can be used by diff-so-fancy.
 >
-> SHA-256 is most likely the best-studied hash function we currently know
-[... etc ...]
+> In addition, we'll abstract a few basic items like reading
+> from stdio so that a script using the module can do more
+> processing before or after diff-highlight handles the lines.
+> See the README update for more details.
+>
+> One small downside is that the diff-highlight script must
+> now be built using the Makefile. There are ways around this,
+> but it quickly gets into perl arcana. Let's go with the
+> simple solution. As a bonus, our Makefile now respects the
+> PERL_PATH variable if it is set.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Scott and I discussed this off-list, and this was the least-gross
+> solution I came up with.  The plan would be for diff-so-fancy to pull in
+> this copy of diff-highlight from git.git and have a wrapper script
+> similar to the diff-highlight.perl found here.
+>
+>  contrib/diff-highlight/.gitignore                  |  2 ++
+>  .../{diff-highlight => DiffHighlight.pm}           | 40 +++++++++++++---------
+>  contrib/diff-highlight/Makefile                    | 21 ++++++++++--
+>  contrib/diff-highlight/README                      | 30 ++++++++++++++++
+>  contrib/diff-highlight/diff-highlight.perl         |  8 +++++
+>  5 files changed, 82 insertions(+), 19 deletions(-)
+>  create mode 100644 contrib/diff-highlight/.gitignore
+>  rename contrib/diff-highlight/{diff-highlight => DiffHighlight.pm} (91%)
+>  mode change 100755 => 100644
+>  create mode 100644 contrib/diff-highlight/diff-highlight.perl
 
-Thanks for a thoughtful restart to the discussion.  This is much more
-concrete than your previous objections about process, and that is very
-helpful.
+Do you want +x bit for the last one?  I could throw that bit in
+while queuing if you want.
 
-In the interest of transparency: here are my current questions for
-cryptographers to whom I have forwarded this thread.  Several of these
-questions involve predictions or opinions, so in my ideal world we'd
-want multiple, well reasoned answers to them.  Please feel free to
-forward them to appropriate people or add more.
-
- 1. Now it sounds like SHA-512/256 is the safest choice (see also Mike
-    Hommey's response to Dscho's message).  Please poke holes in my
-    understanding.
-
- 2. Would you be willing to weigh in publicly on the mailing list? I
-    think that would be the most straightforward way to move this
-    forward (and it would give you a chance to ask relevant questions,
-    etc).  Feel free to contact me privately if you have any questions
-    about how this particular mailing list works.
-
- 3. On the speed side, Dscho states "SHA-256 will be faster than BLAKE
-    (and even than BLAKE2) once the Intel and AMD CPUs with hardware
-    support for SHA-256 become common."  Do you agree?
-
- 4. On the security side, Dscho states "to compete in the SHA-3
-    contest, BLAKE added complexity so that it would be roughly on par
-    with its competitors.  To allow for faster execution in software,
-    this complexity was *removed* from BLAKE to create BLAKE2, making
-    it weaker than SHA-256."  Putting aside the historical questions,
-    do you agree with this "weaker than" claim?
-
- 5. On the security side, Dscho states, "The type of attacks Git has to
-    worry about is very different from the length extension attacks,
-    and it is highly unlikely that that weakness of SHA-256 leads to,
-    say, a collision attack", and Jeff King states, "Git does not use
-    the hash as a MAC, so length extension attacks aren't a thing (and
-    even if we later wanted to use the same algorithm as a MAC, the
-    HMAC construction is a well-studied technique for dealing with
-    it)."  Is this correct in spirit?  Is SHA-256 equally strong to
-    SHA-512/256 for Git's purposes, or are the increased bits of
-    internal state (or other differences) relevant?  How would you
-    compare the two functions' properties?
-
- 6. On the speed side, Jeff King states "That said, SHA-512 is
-    typically a little faster than SHA-256 on 64-bit platforms. I
-    don't know if that will change with the advent of hardware
-    instructions oriented towards SHA-256."  Thoughts?
-
- 7. If the answer to (2) is "no", do I have permission to quote or
-    paraphrase your replies that were given here?
-
-Thanks, sincerely,
-Jonathan
+Thanks.
