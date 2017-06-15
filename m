@@ -6,47 +6,48 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD64A20401
-	for <e@80x24.org>; Thu, 15 Jun 2017 21:07:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D928920401
+	for <e@80x24.org>; Thu, 15 Jun 2017 21:07:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750830AbdFOVHN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 17:07:13 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:35514 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750727AbdFOVHM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 17:07:12 -0400
-Received: by mail-wr0-f196.google.com with SMTP id z45so4776147wrb.2
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 14:07:11 -0700 (PDT)
+        id S1751656AbdFOVHR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 17:07:17 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36301 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750727AbdFOVHP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 17:07:15 -0400
+Received: by mail-wm0-f65.google.com with SMTP id d17so1752752wme.3
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 14:07:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tfgEPktyYyf6tLTpYQVHjQt8H5mkO5uHndi5ZYxkAa4=;
-        b=MUjMw16YupB5gjot26nUNx0QonsnqKDN4y2s6r/ZGDcPoDHnVp3H0tEAr73I9G6bEo
-         XWS24ABxlrtIcUBUP0QXXgterPyx4Fcy+piH4AzfGT/72F4tlz0ewcTBDJbiw4FppTqx
-         hxqw/hS58xS7dlU9cFFZq4nzh2B/3Y57KRJPf4yiWGe7cEU1d4fH66mJNFBRNCEVyLGZ
-         o/sHcPM4Rx3MLZmL8gywBXSF33BavdkWWznBazGFOrXJmfz6/xxR0L5I1omkSJ7ES5lG
-         gVzidRIEqJQ6KTPU1LWUZDaAQaHY320UdzyABk/TUI3+WlVGdzEuB/7mCeazBi+Fn6il
-         aNHg==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=JIxqvNfGQ7sT/cF6JSb2PnhCRsx4n6sQVOs3gyXwa24=;
+        b=vG1z5YFx8mLRO3P5q+4lW2Vbdoc1EJlE2nRbf261WgaSsJmlXaBcUy2qNaVt59fzur
+         GaUq990E6lRTKw/uajquKi5sHMJziraKu8li4RMR39Yy1vLDh/wF8gO8+1E3TEp8kLDf
+         SDV0XX+gxz03wvRBUypM62j1UhvLg6BZvSgbs6cqjT+14h4XF9H+hfuG12ga7Q218xeV
+         RlQSLR63kr5Fi42yZasS6fZgOV895RFDqOKpW0cUsCGuISO5T9VIlfU54K3i4ZMzVtTg
+         xKKd7+xRiKRLsLNwnN0/2JT7yTpe7gRdL1EzAyH2wSHuhz701WAMlKDv2cfl7Do0tajb
+         rkEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tfgEPktyYyf6tLTpYQVHjQt8H5mkO5uHndi5ZYxkAa4=;
-        b=Rlx+mHfyffqRjWJQRLMwUAp9S6U6x/eFM0qUP++ZEkdqQrNweBew8I9Q3fyaayZGaT
-         ++TmVD7on+CNO2EDIdCTpDChyW4M63pWjU1y1DLAEqWsXNkai7c7ozzx9+ZwUoIBZcwm
-         9/LVndbBnim+n5oOCSI/RnCrbeBubRzxYujvjgOcNsHtbSiXC47zgHQfoDxoLo56A7ap
-         CjEqq3pVpibYIT0oQE7awlHX0JhszMmunz6Nw6WYf861v6iLIX50XYlTrZLw3op9VZAa
-         TGLSbIRWJmAXx7rKVe6dHIfu5y4764KLRfIhWha2RIPv+MH1lwUPjCPkzmbE/ZczJY9K
-         AgcQ==
-X-Gm-Message-State: AKS2vOzmuLlgezCTBwu0FoMlvQ2CeYwLHf1khwaHf9aZ/uFxSbiEziaE
-        wjnBOSZKB5g7bGk6Cq0=
-X-Received: by 10.80.136.110 with SMTP id c43mr4776089edc.171.1497560830836;
-        Thu, 15 Jun 2017 14:07:10 -0700 (PDT)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=JIxqvNfGQ7sT/cF6JSb2PnhCRsx4n6sQVOs3gyXwa24=;
+        b=PgYD47qnL49/vVeNDg9iE2V0kSo5jafS+5eUUrDyV+tg7b/MJjb34QHfiuWFzFYAnW
+         qURcAY+fSP0EtLtbgK2PwZgVXLyDwGMkF0WLBgYrBBiVvZcR9RD4NgA6IdCTO7StdG90
+         A2Fmjkta17aeswE2hLYUgVlRbl4eLJAR9cW6wuSJ2xaWJdjdtlTOLw/y9dvl2V5GEq+T
+         XhnxeIFudWYNdbEbzFn3wv1RYJKN4c0F/sCwtmGYv+5r7EeWCGD6c0dpePTewsxmpISh
+         s43f0/F+J2AijUBxR/SLdQPtA+nksHOKHCzx2h/XputH8UDUE7xB0ebURp+5R0i65NP2
+         okzA==
+X-Gm-Message-State: AKS2vOx2b9TCaI4OXNeX5mdrS/3u9W4XpgcKtQsjwe+EwJtyNYFvOcwN
+        2YAE4hNxVKKY72XD4Lk=
+X-Received: by 10.80.146.154 with SMTP id k26mr5037131eda.23.1497560833442;
+        Thu, 15 Jun 2017 14:07:13 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o1sm267230edc.22.2017.06.15.14.07.09
+        by smtp.gmail.com with ESMTPSA id o1sm267230edc.22.2017.06.15.14.07.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 15 Jun 2017 14:07:09 -0700 (PDT)
+        Thu, 15 Jun 2017 14:07:12 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,10 +57,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/2] Add a FREE_AND_NULL() wrapper macro
-Date:   Thu, 15 Jun 2017 21:06:58 +0000
-Message-Id: <20170615210700.16310-1-avarab@gmail.com>
+Subject: [PATCH v3 1/2] git-compat-util: add a FREE_AND_NULL() wrapper around free(ptr); ptr = NULL
+Date:   Thu, 15 Jun 2017 21:06:59 +0000
+Message-Id: <20170615210700.16310-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.1.508.gb3defc5cc
+In-Reply-To: <20170615210700.16310-1-avarab@gmail.com>
+References: <20170615210700.16310-1-avarab@gmail.com>
 In-Reply-To: <CACBZZX7S9A=mPSgqtmVyZbLdR3GVH+ux3tGN1QXBMEzbg8Ffog@mail.gmail.com>
 References: <CACBZZX7S9A=mPSgqtmVyZbLdR3GVH+ux3tGN1QXBMEzbg8Ffog@mail.gmail.com>
 MIME-Version: 1.0
@@ -70,72 +73,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 15 2017, Ævar Arnfjörð Bjarmason jotted:
-> I'll change it to FREE_AND_NULL and submit my patch as-is, my reading
-> of the rest of this thread is that making it a function instead of a
-> macro would be interesting, but has its own caveats that are likely
-> better considered as part of its own series, whereas this just changes
-> existing code to its macro-expanded functional equivalent.
+Add a FREE_AND_NULL() wrapper marco for the common pattern of freeing
+a pointer and assigning NULL to it right afterwards.
 
-Here's v3 with that change. Nothing but the macro name (and comments,
-commit messages etc. referring to it) have changed.
+The implementation is similar to the (currently unused) XDL_PTRFREE
+macro in xdiff/xmacros.h added in commit 3443546f6e ("Use a *real*
+built-in diff generator", 2006-03-24). The only difference is that
+free() is called unconditionally, see [1].
 
-Ævar Arnfjörð Bjarmason (2):
-  git-compat-util: add a FREE_AND_NULL() wrapper around free(ptr); ptr =
-    NULL
-  *.[ch] refactoring: make use of the FREE_AND_NULL() macro
+See [2] for a suggested alternative which does this via a function
+instead of a macro. As covered in replies to that message, while it's
+a viable approach, it would introduce caveats which this approach
+doesn't have, so that potential change is left to a future follow-up
+change.
 
- alias.c                  |  6 ++----
- apply.c                  |  3 +--
- attr.c                   |  6 ++----
- blame.c                  |  3 +--
- branch.c                 |  3 +--
- builtin/am.c             | 18 +++++-------------
- builtin/clean.c          |  6 ++----
- builtin/config.c         |  6 ++----
- builtin/index-pack.c     |  6 ++----
- builtin/pack-objects.c   | 12 ++++--------
- builtin/unpack-objects.c |  3 +--
- builtin/worktree.c       |  6 ++----
- commit-slab.h            |  3 +--
- commit.c                 |  3 +--
- config.c                 |  3 +--
- credential.c             |  9 +++------
- diff-lib.c               |  3 +--
- diff.c                   |  6 ++----
- diffcore-rename.c        |  6 ++----
- dir.c                    |  9 +++------
- fast-import.c            |  6 ++----
- git-compat-util.h        |  6 ++++++
- gpg-interface.c          | 15 +++++----------
- grep.c                   | 12 ++++--------
- help.c                   |  3 +--
- http-push.c              | 24 ++++++++----------------
- http.c                   | 15 +++++----------
- imap-send.c              |  3 +--
- line-log.c               |  6 ++----
- ll-merge.c               |  3 +--
- mailinfo.c               |  3 +--
- object.c                 |  3 +--
- pathspec.c               |  3 +--
- prio-queue.c             |  3 +--
- read-cache.c             |  6 ++----
- ref-filter.c             |  3 +--
- refs/files-backend.c     |  3 +--
- refs/ref-cache.c         |  3 +--
- remote-testsvn.c         |  3 +--
- rerere.c                 |  3 +--
- sequencer.c              |  3 +--
- sha1-array.c             |  3 +--
- sha1_file.c              |  3 +--
- split-index.c            |  3 +--
- transport-helper.c       | 27 +++++++++------------------
- transport.c              |  3 +--
- tree-diff.c              |  6 ++----
- tree-walk.c              |  3 +--
- tree.c                   |  3 +--
- 49 files changed, 103 insertions(+), 197 deletions(-)
+This merely allows us to translate exactly what we're doing now to a
+less verbose & idiomatic form using a macro, while guaranteeing that
+we don't introduce any functional changes.
 
+1. <alpine.DEB.2.20.1608301948310.129229@virtualbox>
+   (http://public-inbox.org/git/alpine.DEB.2.20.1608301948310.129229@virtualbox/)
+
+2. <20170610032143.GA7880@starla>
+   (https://public-inbox.org/git/20170610032143.GA7880@starla/)
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ git-compat-util.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 51ba4e6b3b..047172d173 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -808,6 +808,12 @@ extern char *xgetcwd(void);
+ extern FILE *fopen_for_writing(const char *path);
+ extern FILE *fopen_or_warn(const char *path, const char *mode);
+ 
++/*
++ * FREE_AND_NULL(ptr) is like free(ptr) followed by ptr = NULL. Note
++ * that ptr is used twice, so don't pass e.g. ptr++.
++ */
++#define FREE_AND_NULL(p) do { free(p); (p) = NULL; } while (0)
++
+ #define ALLOC_ARRAY(x, alloc) (x) = xmalloc(st_mult(sizeof(*(x)), (alloc)))
+ #define REALLOC_ARRAY(x, alloc) (x) = xrealloc((x), st_mult(sizeof(*(x)), (alloc)))
+ 
 -- 
 2.13.1.508.gb3defc5cc
 
