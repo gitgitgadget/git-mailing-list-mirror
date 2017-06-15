@@ -2,141 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5BE20D0C
-	for <e@80x24.org>; Thu, 15 Jun 2017 23:16:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B357B20D11
+	for <e@80x24.org>; Thu, 15 Jun 2017 23:13:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752360AbdFOXQD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Jun 2017 19:16:03 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33632 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752140AbdFOXQC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Jun 2017 19:16:02 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f90so2095469wmh.0
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 16:16:01 -0700 (PDT)
+        id S1751789AbdFOXNZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Jun 2017 19:13:25 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:32901 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750899AbdFOXNY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Jun 2017 19:13:24 -0400
+Received: by mail-pg0-f45.google.com with SMTP id f185so12795173pgc.0
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 16:13:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DjLu3baRV3B+xze9MKKtBxCMefx42CEOV5zPXk7X7UY=;
-        b=svXbKmmRrOjdsH6wxecn7hr1CSZJ8OgZpi+WZv3y8tuwr0C7HAI0HdavZB83sQ8/oS
-         5cbKDYl+og7UcBfqEMBHT7JBgHwDivFKwpkR2nIJkMUTsbIOSMAxCuBqWBLpb++T8UCr
-         D13Ewxy4mKn/lILJX/Ix/Kd0vIzODcnprJQhBlVbpCy+SyVfCkbwlREW5m26xcMxFD5r
-         Eib1ptAt7b2YuJq5WdfntUAIKrSoJBfN2ICnTgh/c8hMzgLJXHN4+LdfTw80fZOd0WJM
-         QkVq1poTfZ4X4Mgq7G1XytOF10g9fJ6zMomYHPJGUeRoJDUO8hj0xf6/8Q4pb2nrfqNK
-         h6Xw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=JWUs0pjH3q3tk626IM1qNEMF1NZlOi8mBnlMLM6e+ns=;
+        b=uVSFsbIED9f2PUegRuh5zo46nQi9frfKNBxRSGTG6jd9R7StGY6h6H2jRkAXcDVfar
+         rQy7/EdkvpTzRc0orlM+iCtjemaVJylw/FZ+QayEb2GIJhFuuyCL2b98OkI9LuDpx3ta
+         yT3OrTs6aA1q4XBIQr652pPVP47zPBHqyFmUFkQOJb8Q88Pg2jib8QWS0MOLTgBuUiz9
+         AD8HKPQkiToekD+2G5ozTkqIkzkcf6LnTS9TmT0hKlKfI+ApqC1/XIbMhq8J3/NFsh54
+         Dt73WkFiWptaSftp5oKq+cv8GKikYj8mWEp9CCbt5gw0FKcXR950q/5MS13Tb+emRGU4
+         0BRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DjLu3baRV3B+xze9MKKtBxCMefx42CEOV5zPXk7X7UY=;
-        b=UkFYOf7wcmQDQLeoLJydPekxMvrX0snWiivKjZehgChiWHt6fxIbMarn82bQ8j679/
-         7kc263PmYryHjUD8kktT59BmLQa//0v0JmQHzvAZJHUvHiHiyeBcOHRbq6orTvVRl0Yp
-         rN9j5HImKWgBDUfwzIWpMXMlsxXG2n30g1OIQ4z8s8v/2G3IBBVelEiTG2vW1i9tlbQu
-         +QDNC4pKoCwcsMTSAFMGr23jw2cN70l8UONNP4GM4y42VNI92bJ/s6UD5uLWwPV4BJav
-         S71U2RtKv005oOVG50FFbPOkrrBkTkA+G5RwA5uJJVkfG5g34b+VQe94SfE4wUvklggB
-         wrDA==
-X-Gm-Message-State: AKS2vOy4LlTuwspKL1xuTLkjrwKheE3mspU/gGHN65JuxbRN8lAzvZRE
-        JG7fSJf6xJzeux6Aks4=
-X-Received: by 10.80.209.215 with SMTP id i23mr5076504edg.165.1497568560609;
-        Thu, 15 Jun 2017 16:16:00 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o15sm305130edo.68.2017.06.15.16.15.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 15 Jun 2017 16:15:59 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 0/6] Add a FREE_AND_NULL() wrapper macro
-Date:   Thu, 15 Jun 2017 23:15:43 +0000
-Message-Id: <20170615231549.20085-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.13.1.508.gb3defc5cc
-In-Reply-To: <xmqqa858zzb3.fsf@gitster.mtv.corp.google.com>
-References: <xmqqa858zzb3.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=JWUs0pjH3q3tk626IM1qNEMF1NZlOi8mBnlMLM6e+ns=;
+        b=kMEhC+1nPkT66PNIaD2unZe/Qm5RueFh5jGBE0J6EXeSfjyxyXZqDxN4mypVrN+eSX
+         hLTwv8nNlW2whrllm/Wz+3D6HjPDF4WJRcEWB4PWpAA7BK0xZ0bdSXuTWK8OH1LCDsSD
+         v744txI318AoVlPnyf6u8b65ZgnsKENWhpzGONi90ybcxGPPZwy4jyRRZ0taMuyuUo/o
+         ls1P+KjAmVbr6p4Ry/cOm8hRZpG2+OegGNsFDms0sDcVLgb1ztOO7D3S5cScIfvECw7V
+         8zmywX+Vj6RDeoboD4vaB8nw76+DfLlGo48mkKstpT7jUf3spPg/Rs5wuIx8wgHh2uNh
+         vfSw==
+X-Gm-Message-State: AKS2vOygf2HJGV+w1npksjObMqgIRmNteeMc1O5WHIubpmcyvCjuVshY
+        jtCDJnV72JwvPg==
+X-Received: by 10.84.174.131 with SMTP id r3mr8755810plb.90.1497568403974;
+        Thu, 15 Jun 2017 16:13:23 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:88c8:4433:c52b:12d7])
+        by smtp.gmail.com with ESMTPSA id u74sm619916pfg.20.2017.06.15.16.13.23
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 15 Jun 2017 16:13:23 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Liam Beguin <liambeguin@gmail.com>
+Subject: Re: [PATCH v5 00/10] The final building block for a faster rebase -i
+References: <cover.1497444257.git.johannes.schindelin@gmx.de>
+Date:   Thu, 15 Jun 2017 16:13:22 -0700
+In-Reply-To: <cover.1497444257.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Wed, 14 Jun 2017 15:06:58 +0200 (CEST)")
+Message-ID: <xmqqo9toyhd9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I didn't know about the coccinelle semantic patch facility. This adds
-coccinelle rules to do the code changes, and adds subsequent follow-up
-commits which apply that change, with the series ending with a patch
-that I manually authored.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-This fixes a bug in earlier versions of the series. I was mistakenly
-freeing the wrong thing in the tree-walk.c change, that change is now
-gone, and all the changes not made by coccinelle are in one commit,
-making it easier to review.
+> Changes since v4:
+>
+> - replaced the "sha1s" part of the names by "ids", to reflect the
+>   current effort to move away from the cryptographically unsafe SHA-1
+>
+> - replaced the confusing term "instruction sheet" in an error message by
+>   the more commonly used "todo list"
 
-Ævar Arnfjörð Bjarmason (6):
-  git-compat-util: add a FREE_AND_NULL() wrapper around free(ptr); ptr =
-    NULL
-  coccinelle: add a rule to make "type" code use FREE_AND_NULL()
-  coccinelle: make use of the "type" FREE_AND_NULL() rule
-  coccinelle: add a rule to make "expression" code use FREE_AND_NULL()
-  coccinelle: make use of the "expression" FREE_AND_NULL() rule
-  *.[ch] refactoring: make use of the FREE_AND_NULL() macro
+Both are good changes.  Once this follows the API properly, it would
+be perfect.
 
- alias.c                       |  6 ++----
- apply.c                       |  3 +--
- attr.c                        |  6 ++----
- blame.c                       |  3 +--
- branch.c                      |  3 +--
- builtin/am.c                  | 18 +++++-------------
- builtin/clean.c               |  6 ++----
- builtin/config.c              |  6 ++----
- builtin/index-pack.c          |  6 ++----
- builtin/pack-objects.c        | 12 ++++--------
- builtin/unpack-objects.c      |  3 +--
- builtin/worktree.c            |  6 ++----
- commit-slab.h                 |  3 +--
- commit.c                      |  3 +--
- config.c                      |  3 +--
- contrib/coccinelle/free.cocci | 15 +++++++++++++++
- credential.c                  |  9 +++------
- diff-lib.c                    |  3 +--
- diff.c                        |  6 ++----
- diffcore-rename.c             |  6 ++----
- dir.c                         |  9 +++------
- fast-import.c                 |  6 ++----
- git-compat-util.h             |  6 ++++++
- gpg-interface.c               | 15 +++++----------
- grep.c                        | 12 ++++--------
- help.c                        |  3 +--
- http-push.c                   | 24 ++++++++----------------
- http.c                        | 15 +++++----------
- imap-send.c                   |  3 +--
- line-log.c                    |  6 ++----
- ll-merge.c                    |  3 +--
- mailinfo.c                    |  3 +--
- object.c                      |  3 +--
- pathspec.c                    |  3 +--
- prio-queue.c                  |  3 +--
- read-cache.c                  |  6 ++----
- ref-filter.c                  |  3 +--
- refs/files-backend.c          |  3 +--
- refs/ref-cache.c              |  3 +--
- remote-testsvn.c              |  3 +--
- rerere.c                      |  3 +--
- sequencer.c                   |  3 +--
- sha1-array.c                  |  3 +--
- sha1_file.c                   |  3 +--
- split-index.c                 |  3 +--
- transport-helper.c            | 27 +++++++++------------------
- transport.c                   |  3 +--
- tree-diff.c                   |  6 ++----
- tree.c                        |  3 +--
- 49 files changed, 117 insertions(+), 195 deletions(-)
-
--- 
-2.13.1.508.gb3defc5cc
-
+Will replace.
