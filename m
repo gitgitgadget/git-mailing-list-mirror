@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29E9F1FA7B
-	for <e@80x24.org>; Fri, 16 Jun 2017 19:29:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F319D1FA7B
+	for <e@80x24.org>; Fri, 16 Jun 2017 19:29:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752163AbdFPT2y (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 15:28:54 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:38369 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751098AbdFPT2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 15:28:53 -0400
-Received: by mail-wm0-f47.google.com with SMTP id u195so19201278wmd.1
-        for <git@vger.kernel.org>; Fri, 16 Jun 2017 12:28:52 -0700 (PDT)
+        id S1752272AbdFPT3C (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 15:29:02 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33341 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752147AbdFPT27 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 15:28:59 -0400
+Received: by mail-wr0-f196.google.com with SMTP id x23so7481396wrb.0
+        for <git@vger.kernel.org>; Fri, 16 Jun 2017 12:28:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xtJyqYsqWubk0EbfmQt/ov2AkPTXRbt6bciJtHAGsok=;
-        b=mF1YqEVcNGyuKBW+PIfCtrms5g/T4G+KJpXsoNeOv1FgaAzTkUN3nRYaPE1ZxIw/eu
-         4Ua1RUefyamCs7/L8OEDKMHXemdmZ2ih3tUixY9lCdXyHlqPgf90Oy3IgaGTQH5Fh7Mr
-         uTIi1Ryz0vTfQE7TbDEsNdaW/rusgASEeesIhSiL3Y8kn9ji00WLy5LspLDhLuDPbpFl
-         Nos0F57xuSerGK7bVzdTWuKvhxyvjvfRG6cYeevkyQ+1KrxybiVJ/iQetcq/z/OKEa+P
-         5fChnn+AzhQ8CSDv/ixSCBfcAIczgnD5lqVxN66AEZebNqRozLnNqybWZuDRkphtwsBH
-         fi+A==
+        bh=qGWgrLGP5ZdfTJYnEHw0oWy+8D1mLJ+fZACsFrHVQc8=;
+        b=BpLIW+cfBiqG+nfrZScfn1FuWuqVbm65Bar2eUYYU0crZpGM92ggzVRSdPosm2XuEV
+         p3RaVM36aOAektoISIxbqa6i1wIK4de8WvKRUN0uVo/rHM98rHC8g29iCb1iebnPLrfH
+         9ovLKsrbnYyVdQdu5ORqhBhLaumFieCeSnCujGcYgx5JcZRZA5aau1gDmUxx6ln45sKU
+         0yNcL0B/ELHdZ7KZJkIg236/X2PNnB0OaWp0W6bPQLUgOVqOuoLEjKTvPxKH/4ayn+J5
+         ybrYYBh8yfemSsUBcPkQ5O3+EK3Oum3nZwd5jfkTxfE5VGghvqyTNLtHCEYr2iDBb+n3
+         s+Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xtJyqYsqWubk0EbfmQt/ov2AkPTXRbt6bciJtHAGsok=;
-        b=qjJRq37/nQXkPrpNc7/TPyEJnxWyDWRt4J7X+IdofpuvQ21cbZppV1OvQqsydlaBUd
-         F86scRdMcrikZLIhDrap5zWr120vzDvlcpC8DUWZJ1mjU7LwjbTrrwMJxMJ+SfuYXld2
-         Hh5smS+2q9VkOrVQA2gA7AqvmIJhn6bf90Z8lcbcrWFh6RwnDpGOBohZW2V4aBa8/ecM
-         w1UPBZF1HZREM7lrV/Nw65YraJMIlfW0Ox0DfD6CB/nad1ySkjDa2TZov83Axb8+GWdq
-         +ERGb6SW2w0uNgI1Oz3YEQaInUyi7xLJ0UqoC4cagkQvpS/wXPW9QJlygtK7D/tRRJ5T
-         vFqw==
-X-Gm-Message-State: AKS2vOwOx4HC3YVvH9F0EED9BJcQ9oNu8Bv4xDPjHqqgtzVfM0EcGfnO
-        A6XUDLkcjRW6ntU+
-X-Received: by 10.28.146.12 with SMTP id u12mr8467967wmd.15.1497641331171;
-        Fri, 16 Jun 2017 12:28:51 -0700 (PDT)
+        bh=qGWgrLGP5ZdfTJYnEHw0oWy+8D1mLJ+fZACsFrHVQc8=;
+        b=TRKRSz7nw8qR5BeM8NGRMv82tciTUS2/s1peQrsESMK7fxey1y/qVohiFjUzJ8qz67
+         Dsabe/EnJ+2QVYRVFIN5497rgUoU/t+Qmw6MoaF57jMDmI0Hh+mrW9ob6dfK4qy329qE
+         XCyjc7KkZfSfGqB+Z/vEFlC2Xs1kOeX+wW2/Uw3me33APrQkqMvmfbmujDq91xKdATVB
+         0LA/wXOtwa1VTdc8uvfhmgAw/RMvQrUei7Q7FYo8GnVCon2dMLIrK2v+QAXgvAn5HupQ
+         SW96uwiLSSCwv052NTMZFddJBS+PIGBNt6JD8b0bGhOyr+YmkQqqAqFBLUICFANYHpNz
+         THTQ==
+X-Gm-Message-State: AKS2vOwCUb53Xj062TTCxoJYIoVna/9rSxEKws3GRBmo8YUcxnD6b1zm
+        iGHOTHMf4w6KIrIL
+X-Received: by 10.223.136.216 with SMTP id g24mr9534339wrg.162.1497641333198;
+        Fri, 16 Jun 2017 12:28:53 -0700 (PDT)
 Received: from localhost.localdomain (x4db0ef0e.dyn.telefonica.de. [77.176.239.14])
-        by smtp.gmail.com with ESMTPSA id c71sm2658026wmh.21.2017.06.16.12.28.50
+        by smtp.gmail.com with ESMTPSA id c71sm2658026wmh.21.2017.06.16.12.28.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 16 Jun 2017 12:28:50 -0700 (PDT)
+        Fri, 16 Jun 2017 12:28:52 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 1/5] remote: don't use remote->{fetch,push}_refspec
-Date:   Fri, 16 Jun 2017 21:28:33 +0200
-Message-Id: <20170616192837.11035-2-szeder.dev@gmail.com>
+Subject: [PATCH 3/5] remote.c: extract a helper function to parse a single refspec
+Date:   Fri, 16 Jun 2017 21:28:35 +0200
+Message-Id: <20170616192837.11035-4-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.13.1.501.g45ae33cbf
 In-Reply-To: <20170616192837.11035-1-szeder.dev@gmail.com>
 References: <20170616192837.11035-1-szeder.dev@gmail.com>
@@ -67,125 +66,272 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-builtin/remote.c uses remote->fetch_refspec and remote->push_refspec,
-i.e. refspecs as strings, in a few places, e.g. in an error message or
-to set configuration variables.
+Fetch refspecs read from the configuration are currently parsed
+lazily: they are collected into a string array for each remote while
+reading the configuration and then refspecs of a particular remote are
+parsed together later when the remote is accessed by remote_get() or
+for_each_remote().
 
-Since we are about to eliminate remote->{fetch,push}_refspec, recreate
-those strings from the corresponding remote->{fetch,push} entries.
+We are about to parse refspecs _while_ reading them from the
+configuration, one by one, and a function parsing a single refspec
+into a memory location provided by the caller will be quite useful
+then.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/remote.c | 22 +++++++++++++++-------
- remote.c         | 20 ++++++++++++++++++++
- remote.h         |  2 ++
- 3 files changed, 37 insertions(+), 7 deletions(-)
+ remote.c | 231 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 122 insertions(+), 109 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index f1a88fe26..7f0072fe5 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -334,7 +334,7 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 	for (i = 0; i < states->remote->fetch_refspec_nr; i++)
- 		if (get_fetch_map(remote_refs, states->remote->fetch + i, &tail, 1))
- 			die(_("Could not get fetch map for refspec %s"),
--				states->remote->fetch_refspec[i]);
-+			      refspec_to_string(&states->remote->fetch[i]));
- 
- 	states->new.strdup_strings = 1;
- 	states->tracked.strdup_strings = 1;
-@@ -576,7 +576,7 @@ static int read_remote_branches(const char *refname,
- 
- static int migrate_file(struct remote *remote)
- {
--	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf buf = STRBUF_INIT, refspec = STRBUF_INIT;
- 	int i;
- 
- 	strbuf_addf(&buf, "remote.%s.url", remote->name);
-@@ -584,17 +584,25 @@ static int migrate_file(struct remote *remote)
- 		git_config_set_multivar(buf.buf, remote->url[i], "^$", 0);
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.push", remote->name);
--	for (i = 0; i < remote->push_refspec_nr; i++)
--		git_config_set_multivar(buf.buf, remote->push_refspec[i], "^$", 0);
-+	for (i = 0; i < remote->push_refspec_nr; i++) {
-+		strbuf_add_refspec(&refspec, &remote->push[i]);
-+		git_config_set_multivar(buf.buf, refspec.buf, "^$", 0);
-+		strbuf_reset(&refspec);
-+	}
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
--	for (i = 0; i < remote->fetch_refspec_nr; i++)
--		git_config_set_multivar(buf.buf, remote->fetch_refspec[i], "^$", 0);
-+	for (i = 0; i < remote->fetch_refspec_nr; i++) {
-+		strbuf_add_refspec(&refspec, &remote->fetch[i]);
-+		git_config_set_multivar(buf.buf, refspec.buf, "^$", 0);
-+		strbuf_reset(&refspec);
-+	}
- 	if (remote->origin == REMOTE_REMOTES)
- 		unlink_or_warn(git_path("remotes/%s", remote->name));
- 	else if (remote->origin == REMOTE_BRANCHES)
- 		unlink_or_warn(git_path("branches/%s", remote->name));
- 
-+	strbuf_release(&buf);
-+	strbuf_release(&refspec);
- 	return 0;
- }
- 
-@@ -647,7 +655,7 @@ static int mv(int argc, const char **argv)
- 		char *ptr;
- 
- 		strbuf_reset(&buf2);
--		strbuf_addstr(&buf2, oldremote->fetch_refspec[i]);
-+		strbuf_add_refspec(&buf2, &oldremote->fetch[i]);
- 		ptr = strstr(buf2.buf, old_remote_context.buf);
- 		if (ptr) {
- 			refspec_updated = 1;
 diff --git a/remote.c b/remote.c
-index 336db8298..a021decee 100644
+index d23518afd..fc1d3cf7a 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -919,6 +919,26 @@ char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
- 	return query.dst;
+@@ -484,123 +484,136 @@ static void read_config(void)
+ 	alias_all_urls();
  }
  
-+void strbuf_add_refspec(struct strbuf *sb, const struct refspec *refspec)
++static int parse_one_refspec(struct refspec *rs, const char *refspec,
++			     int fetch, int gently)
 +{
-+	if (refspec->force)
-+		strbuf_addch(sb, '+');
-+	if (refspec->src)
-+		strbuf_addstr(sb, refspec->src);
-+	if (refspec->dst) {
-+		strbuf_addch(sb, ':');
-+		strbuf_addstr(sb, refspec->dst);
-+	} else if (!refspec->src)
-+		strbuf_addch(sb, ':');
++	size_t llen;
++	int is_glob;
++	const char *lhs, *rhs;
++	int flags;
++
++	memset(rs, 0, sizeof(*rs));
++
++	is_glob = 0;
++
++	lhs = refspec;
++	if (*lhs == '+') {
++		rs->force = 1;
++		lhs++;
++	}
++
++	rhs = strrchr(lhs, ':');
++
++	/*
++	 * Before going on, special case ":" (or "+:") as a refspec
++	 * for pushing matching refs.
++	 */
++	if (!fetch && rhs == lhs && rhs[1] == '\0') {
++		rs->matching = 1;
++		return 0;
++	}
++
++	if (rhs) {
++		size_t rlen = strlen(++rhs);
++		is_glob = (1 <= rlen && strchr(rhs, '*'));
++		rs->dst = xstrndup(rhs, rlen);
++	}
++
++	llen = (rhs ? (rhs - lhs - 1) : strlen(lhs));
++	if (1 <= llen && memchr(lhs, '*', llen)) {
++		if ((rhs && !is_glob) || (!rhs && fetch))
++			goto invalid;
++		is_glob = 1;
++	} else if (rhs && is_glob) {
++		goto invalid;
++	}
++
++	rs->pattern = is_glob;
++	rs->src = xstrndup(lhs, llen);
++	flags = REFNAME_ALLOW_ONELEVEL | (is_glob ? REFNAME_REFSPEC_PATTERN : 0);
++
++	if (fetch) {
++		struct object_id unused;
++
++		/* LHS */
++		if (!*rs->src)
++			; /* empty is ok; it means "HEAD" */
++		else if (llen == GIT_SHA1_HEXSZ && !get_oid_hex(rs->src, &unused))
++			rs->exact_sha1 = 1; /* ok */
++		else if (!check_refname_format(rs->src, flags))
++			; /* valid looking ref is ok */
++		else
++			goto invalid;
++		/* RHS */
++		if (!rs->dst)
++			; /* missing is ok; it is the same as empty */
++		else if (!*rs->dst)
++			; /* empty is ok; it means "do not store" */
++		else if (!check_refname_format(rs->dst, flags))
++			; /* valid looking ref is ok */
++		else
++			goto invalid;
++	} else {
++		/*
++		 * LHS
++		 * - empty is allowed; it means delete.
++		 * - when wildcarded, it must be a valid looking ref.
++		 * - otherwise, it must be an extended SHA-1, but
++		 *   there is no existing way to validate this.
++		 */
++		if (!*rs->src)
++			; /* empty is ok */
++		else if (is_glob) {
++			if (check_refname_format(rs->src, flags))
++				goto invalid;
++		}
++		else
++			; /* anything goes, for now */
++		/*
++		 * RHS
++		 * - missing is allowed, but LHS then must be a
++		 *   valid looking ref.
++		 * - empty is not allowed.
++		 * - otherwise it must be a valid looking ref.
++		 */
++		if (!rs->dst) {
++			if (check_refname_format(rs->src, flags))
++				goto invalid;
++		} else if (!*rs->dst) {
++			goto invalid;
++		} else {
++			if (check_refname_format(rs->dst, flags))
++				goto invalid;
++		}
++	}
++
++	return 0;
++
++ invalid:
++	if (gently) {
++		free(rs->src);
++		free(rs->dst);
++		return -1;
++	}
++	die("Invalid refspec '%s'", refspec);
 +}
 +
-+char *refspec_to_string(const struct refspec *refspec)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	strbuf_add_refspec(&sb, refspec);
-+	return strbuf_detach(&sb, NULL);
-+}
-+
- int remote_find_tracking(struct remote *remote, struct refspec *refspec)
+ static struct refspec *parse_refspec_internal(int nr_refspec, const char **refspec, int fetch, int verify)
  {
- 	return query_refspecs(remote->fetch, remote->fetch_refspec_nr, refspec);
-diff --git a/remote.h b/remote.h
-index 9619f94dd..ee6c432d0 100644
---- a/remote.h
-+++ b/remote.h
-@@ -177,6 +177,8 @@ void free_refspec(int nr_refspec, struct refspec *refspec);
- extern int query_refspecs(struct refspec *specs, int nr, struct refspec *query);
- char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
- 		     const char *name);
-+void strbuf_add_refspec(struct strbuf *sb, const struct refspec *refspec);
-+char *refspec_to_string(const struct refspec *refspec);
+ 	int i;
+-	struct refspec *rs = xcalloc(nr_refspec, sizeof(*rs));
++	struct refspec *rs;
++
++	ALLOC_ARRAY(rs, nr_refspec);
  
- int check_push_refs(struct ref *src, int nr_refspec, const char **refspec);
- int match_push_refs(struct ref *src, struct ref **dst,
+ 	for (i = 0; i < nr_refspec; i++) {
+-		size_t llen;
+-		int is_glob;
+-		const char *lhs, *rhs;
+-		int flags;
+-
+-		is_glob = 0;
+-
+-		lhs = refspec[i];
+-		if (*lhs == '+') {
+-			rs[i].force = 1;
+-			lhs++;
+-		}
+-
+-		rhs = strrchr(lhs, ':');
+-
+-		/*
+-		 * Before going on, special case ":" (or "+:") as a refspec
+-		 * for pushing matching refs.
+-		 */
+-		if (!fetch && rhs == lhs && rhs[1] == '\0') {
+-			rs[i].matching = 1;
+-			continue;
+-		}
+-
+-		if (rhs) {
+-			size_t rlen = strlen(++rhs);
+-			is_glob = (1 <= rlen && strchr(rhs, '*'));
+-			rs[i].dst = xstrndup(rhs, rlen);
+-		}
+-
+-		llen = (rhs ? (rhs - lhs - 1) : strlen(lhs));
+-		if (1 <= llen && memchr(lhs, '*', llen)) {
+-			if ((rhs && !is_glob) || (!rhs && fetch))
+-				goto invalid;
+-			is_glob = 1;
+-		} else if (rhs && is_glob) {
+-			goto invalid;
+-		}
+-
+-		rs[i].pattern = is_glob;
+-		rs[i].src = xstrndup(lhs, llen);
+-		flags = REFNAME_ALLOW_ONELEVEL | (is_glob ? REFNAME_REFSPEC_PATTERN : 0);
+-
+-		if (fetch) {
+-			struct object_id unused;
+-
+-			/* LHS */
+-			if (!*rs[i].src)
+-				; /* empty is ok; it means "HEAD" */
+-			else if (llen == GIT_SHA1_HEXSZ && !get_oid_hex(rs[i].src, &unused))
+-				rs[i].exact_sha1 = 1; /* ok */
+-			else if (!check_refname_format(rs[i].src, flags))
+-				; /* valid looking ref is ok */
+-			else
+-				goto invalid;
+-			/* RHS */
+-			if (!rs[i].dst)
+-				; /* missing is ok; it is the same as empty */
+-			else if (!*rs[i].dst)
+-				; /* empty is ok; it means "do not store" */
+-			else if (!check_refname_format(rs[i].dst, flags))
+-				; /* valid looking ref is ok */
+-			else
+-				goto invalid;
+-		} else {
+-			/*
+-			 * LHS
+-			 * - empty is allowed; it means delete.
+-			 * - when wildcarded, it must be a valid looking ref.
+-			 * - otherwise, it must be an extended SHA-1, but
+-			 *   there is no existing way to validate this.
+-			 */
+-			if (!*rs[i].src)
+-				; /* empty is ok */
+-			else if (is_glob) {
+-				if (check_refname_format(rs[i].src, flags))
+-					goto invalid;
+-			}
+-			else
+-				; /* anything goes, for now */
+-			/*
+-			 * RHS
+-			 * - missing is allowed, but LHS then must be a
+-			 *   valid looking ref.
+-			 * - empty is not allowed.
+-			 * - otherwise it must be a valid looking ref.
+-			 */
+-			if (!rs[i].dst) {
+-				if (check_refname_format(rs[i].src, flags))
+-					goto invalid;
+-			} else if (!*rs[i].dst) {
+-				goto invalid;
+-			} else {
+-				if (check_refname_format(rs[i].dst, flags))
+-					goto invalid;
+-			}
++		if (parse_one_refspec(&rs[i], refspec[i], fetch, verify) < 0) {
++			/* verify != 0 here, because parse_one_refspec()
++			 * would have already die()d otherwise. */
++			free_refspec(i, rs);
++			return NULL;
+ 		}
+ 	}
+ 	return rs;
+-
+- invalid:
+-	if (verify) {
+-		/*
+-		 * nr_refspec must be greater than zero and i must be valid
+-		 * since it is only possible to reach this point from within
+-		 * the for loop above.
+-		 */
+-		free_refspec(i+1, rs);
+-		return NULL;
+-	}
+-	die("Invalid refspec '%s'", refspec[i]);
+ }
+ 
+ int valid_fetch_refspec(const char *fetch_refspec_str)
 -- 
 2.13.1.505.g7cc9fcafb
 
