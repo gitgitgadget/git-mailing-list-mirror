@@ -2,106 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ABB01FA7B
-	for <e@80x24.org>; Fri, 16 Jun 2017 19:43:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D8141FA7B
+	for <e@80x24.org>; Fri, 16 Jun 2017 20:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752139AbdFPTn5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 15:43:57 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36572 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752041AbdFPTn4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 15:43:56 -0400
-Received: by mail-pf0-f196.google.com with SMTP id y7so7909674pfd.3
-        for <git@vger.kernel.org>; Fri, 16 Jun 2017 12:43:56 -0700 (PDT)
+        id S1751818AbdFPUhv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 16:37:51 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:35343 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750780AbdFPUhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 16:37:50 -0400
+Received: by mail-pg0-f44.google.com with SMTP id k71so24791301pgd.2
+        for <git@vger.kernel.org>; Fri, 16 Jun 2017 13:37:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=kgp4+kECaB8ajeY73GQcrCj1O5AgVmJUqLFcvxlhcoU=;
-        b=qgASVh3QQveqhpU9l4Tm3fIuoN33BWTFIO1v7dxSlmcGxKj6sI5g3M2GcAciusXr0c
-         XF7RYLi9icTfmqIRqMG1dKJclF50rOv62zXc1PH27OkbUSY0IKxMK180Dn+sdDVQTK0x
-         zPv0MDSzfH/mf+DdpShIz8Svt7OUmQ6z47BUg0I60gSjWNL3WVjIVvfeXKxov1DTrTis
-         JjH3UMT9LxJbXzAvqAo6h1ouZRieDdbcPnfphV04y5IFYNeODFz5zg8ThyB5Jr4JgddT
-         nM/3agTIh9QqHktz3Ue3BTRftYYNiLSs2mcI7fF6g3WX0wogr2DHxAnRDl2DH1Kzqr3c
-         5jKw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=fY6j4jLoB+yH9TBMqLQaxeB9kmQdP2thFsQsUNIlxWQ=;
+        b=LIq5iar1ae6lBfdsOSr01F1WAgTggEhZLLw/oTfQ8sLGG589UcXRjP24xrFwpPS4/D
+         SxtXpshsMSBdUN+PnFsvE5/ezgwv71F6ronZNW0wQS5fjvZ4rfJHdM4gQZ4I5mHwgAmk
+         RrmiwdkRwPSTs8AezgGZfKuimzBXrk8ZiQFTvEE1H2nElEVr1Ch4/mKuzUk+hEwZt6xD
+         Eb0vQh89rClQRNu3Z0EEvKGGgQFEy4Cw5ZUeOiD2HykpAjnUZmLaeMwuO3fKv92JMCJz
+         3SqiPjSHv3kWNZz2DUWYTtfIhL8/IF0vmOFEZy+a7fpIVgqv+obBhv1oVDLDOwmrQn3z
+         vm0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=kgp4+kECaB8ajeY73GQcrCj1O5AgVmJUqLFcvxlhcoU=;
-        b=M3Y1sxQAkmeCJLsdZ2mmX+UleJ5MYiv2JASvBt6bt4OPHXpqyC2GNm9yb5vBYJkNjB
-         fEQCQcmG0Xcvs6IvgH2stfJcCTDRKTMmVpZ+MnZTPKENslMzRE6pFm4v3Yh1PZcf6Fz+
-         0XUwllqo1jjLg4QsyS7M0x56fqAH/KQrvrRAvH5VvDmtGYsq0MPhk0VH3dIk7snc7I95
-         ln5HEtnC7wrs7Owmiv03a79dY1J6eTUFnufVtRF1a5cVbS3OQmkbxLOD4PuSV/cBPNJQ
-         272obzgdlcdQqhZxaTvabEMh5MMy09aMSC20O7pXa7/A2F2qxRao36Jy5iFlHQkrnU8X
-         odFA==
-X-Gm-Message-State: AKS2vOzrpqLQdpnuWsvjAqu1bHMqCu7DxuDvXn9D/r8Qc///ThjjQk5e
-        JhVT4mx7U8gCPw==
-X-Received: by 10.99.39.194 with SMTP id n185mr13180294pgn.94.1497642235417;
-        Fri, 16 Jun 2017 12:43:55 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3047:3460:ee36:a98a])
-        by smtp.gmail.com with ESMTPSA id b86sm6527481pfc.27.2017.06.16.12.43.54
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=fY6j4jLoB+yH9TBMqLQaxeB9kmQdP2thFsQsUNIlxWQ=;
+        b=lYeYLn0lVZ5ZouxRYh1U+1k+8KGAR19V+sRp035nqUpi2+rpZM1k14jR1pzoVYoGdD
+         Et4OOj77yO6Uth8HL9Y1TXl78lQaPh0Y0J5Zry/tJWibImCwVPNq6KK6euupq86fWbu1
+         Fk6oOC0by2VzYrX3rUQ9YcYePbgjidcUkJqL0sGG96cJYTIYrgBGtkCu7WuJcTCCw9jx
+         F1qD0lTCnG104MVS7d73+QmhEoQDtWo1VQdkAEEmUtuMrbJbRnRihwxTzu9XY8IiV/WG
+         witHM3Qm3qwQRuvwXPrtXz+Vir1A+lFJJMmYmBKF8QVXYwdGARFTKKZOKvNIg1KerVjI
+         IjmA==
+X-Gm-Message-State: AKS2vOyX4ViqXClE50Uq+m5YHdu2QC/UMlCVS2ieZKX+wpLo9gBOG4fG
+        zvruKBD7/M4ZNQ==
+X-Received: by 10.98.236.66 with SMTP id k63mr13170383pfh.3.1497645469445;
+        Fri, 16 Jun 2017 13:37:49 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:61d1:2cfd:fa77:c70e])
+        by smtp.gmail.com with ESMTPSA id s7sm7189145pfd.86.2017.06.16.13.37.46
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 16 Jun 2017 12:43:54 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 4/6] coccinelle: add a rule to make "expression" code use FREE_AND_NULL()
-References: <20170615231549.20085-1-avarab@gmail.com>
-        <xmqqa858zzb3.fsf@gitster.mtv.corp.google.com>
-        <20170615231549.20085-5-avarab@gmail.com>
-Date:   Fri, 16 Jun 2017 12:43:53 -0700
-In-Reply-To: <20170615231549.20085-5-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 15 Jun 2017 23:15:47 +0000")
-Message-ID: <xmqq7f0byayu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        Fri, 16 Jun 2017 13:37:47 -0700 (PDT)
+Date:   Fri, 16 Jun 2017 13:37:45 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCHv5 1/2] clone: respect additional configured fetch
+ refspecs during initial fetch
+Message-ID: <20170616203745.GZ133952@aiede.mtv.corp.google.com>
+References: <CAM0VKjmxtqB2zrWOW8T9O1ReWNPTZA7V3-Dei7GecB3nxVh2Dg@mail.gmail.com>
+ <20170616173849.8071-1-szeder.dev@gmail.com>
+ <20170616173849.8071-2-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170616173849.8071-2-szeder.dev@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+SZEDER G�bor wrote:
 
-> A follow-up to the existing "type" rule added in an earlier
-> change. This catches some occurrences that are missed by the previous
-> rule.
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: SZEDER G�bor <szeder.dev@gmail.com>
 > ---
+>  builtin/clone.c         | 36 +++++++++++++++++++-----------------
+>  remote.c                | 13 +++++++++++++
+>  remote.h                |  1 +
+>  t/t5611-clone-config.sh | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 80 insertions(+), 17 deletions(-)
 
-Hmph, I wonder if the "type" thing is really needed.  Over there,
-"ptr" is an expression and we can find "free(ptr); ptr = NULL" with
-the rule in this patch already, no?
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-In any case, I'll queue these patches as-is.  Thanks for working on
-this.
-
-
->  contrib/coccinelle/free.cocci | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
-> index 35fb992621..f2d97e755b 100644
-> --- a/contrib/coccinelle/free.cocci
-> +++ b/contrib/coccinelle/free.cocci
-> @@ -17,3 +17,10 @@ T *ptr;
->  - free(ptr);
->  - ptr = NULL;
->  + FREE_AND_NULL(ptr);
-> +
-> +@@
-> +expression E;
-> +@@
-> +- free(E);
-> +- E = NULL;
-> ++ FREE_AND_NULL(E);
+Thanks.
