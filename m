@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5F0B1FA7B
-	for <e@80x24.org>; Fri, 16 Jun 2017 21:55:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB08F1FA7B
+	for <e@80x24.org>; Fri, 16 Jun 2017 22:00:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750879AbdFPVzg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 17:55:36 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:35801 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750792AbdFPVzf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 17:55:35 -0400
-Received: by mail-pg0-f41.google.com with SMTP id k71so25424724pgd.2
-        for <git@vger.kernel.org>; Fri, 16 Jun 2017 14:55:35 -0700 (PDT)
+        id S1750907AbdFPWAy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 18:00:54 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:36313 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750792AbdFPWAx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 18:00:53 -0400
+Received: by mail-pf0-f175.google.com with SMTP id x63so27886392pff.3
+        for <git@vger.kernel.org>; Fri, 16 Jun 2017 15:00:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=Cvg7MzLf3G3oLJIR3DnU6SffQDbvPxiDyOBorayHl+E=;
-        b=IMqiWPHgrNJjAKPAOMh3rteb0Wngem3sPF7GN0rw4cIdmx0/yRbpIaRjwx1ceHfYU0
-         HQgriU1KoRe/rMsu3wzAZ/TqxyVKxzqCPrbnQfC5mZ+t4EjDgWMZkkhHYWveiVMu6+A5
-         zOw5fuKENAq9/RVhAEfezZJTdp81a4Z4HodHubZ969jj4SO4QLXwfYZYTI47J1Y2dx6A
-         WYRVo0gfRKvxCp78cRokRXrMDH2YWejbJR+iVIN88LWFUw4P1hQYC8YfvUDd4s4H45mA
-         s5RhFId91SgLF5K2itu/HdxXEA0puAUYYcHXGPGM2iu9yP3gOMu14awbRaNGS36mV/Sb
-         V5hg==
+        bh=pzlVGAs6+hpFbh7uk/Mx9MGbr1emXwtFeTa+JUJ+H54=;
+        b=pB0C8dAY2pN4cLQGt+csnDtTwL/Jg2fIKddLBkJKu10nVWJvdOjkBAJgFupRam5jbD
+         Ko6ZZ4uR+dKXZgdNxoHqEKSWfut4HpTIYwGe78pDWc+W9OSK972Dk0oDue6Qi7Bz803b
+         Ct+BVcDPGnOTE9LTTqBOIDWU/CgAYyFKAQr+SUAXcbBBQY0csrhvUspWzcPSlBIlueUd
+         VK/YWVK0YQQvp6/lozEmmD2LzEItCZZ72nJQ2kWf3mELakA+3YPO3C9y8RrGq/pB3ysB
+         axWfZQtecAfaJUVlCjpEq1vC0Gp0zt1ZDdexCdbA0oOvY5pTKxj3K8e3wkgNVIQQsDiU
+         MnTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=Cvg7MzLf3G3oLJIR3DnU6SffQDbvPxiDyOBorayHl+E=;
-        b=eSNto3tMiDzDTAYyX4dkuBSYz35J4V0dHC4zvfzo3fE1xwFO102/DMbcPNz1/Os+5I
-         fGfZHQ4Em1BNPzyFw4dFSdgsFswuMZSKlMisu7Q9b1ZUjxzIl7/9DfVwJXJI2SaE9e7O
-         K3KZSIuV9h3LkWOFu6xlb+NvFrwECMkqF329pvlkv5dkKWZodsEdEQ3L7RoxRP4cxjlN
-         yugilvpdNr9MmhUnLIEf762E3phwSNpvOIcNGbzWNrQASBVx7R2deu1Jl+RmI+syFRm+
-         wSkqFFg681KLGpq0S4CRkR4NOrWfUbXlWQPUmmkLI3KONHTJPcIhxYHCUyXiBIMmLScz
-         O5Dw==
-X-Gm-Message-State: AKS2vOzy0w+aTPpiylTaVt5hXAvr4k2S06YVta5HC6nFt1DbfLIqZO3Z
-        xsMvz2zcvv2fnA==
-X-Received: by 10.84.238.137 with SMTP id v9mr15713007plk.154.1497650134613;
-        Fri, 16 Jun 2017 14:55:34 -0700 (PDT)
+        bh=pzlVGAs6+hpFbh7uk/Mx9MGbr1emXwtFeTa+JUJ+H54=;
+        b=SmbMAjGFfGHf9X1Y/Dx5yApZ2Ckr9jJ3MDprwggYq60JF7XlYqu4Ic/03dgbwLCXHy
+         4GFLkKe9FUK98UelLauTtlnIGK0iXdD6l20KmlN6AXG++enrjS0/7PdqJNBLdsKt8+3D
+         OldiigaFyBPv662ox38Wm+WI4cr7DzCJaOiVCWVPA13aHmeAmPBebzN2Zs9oow12MQP1
+         cFOyHUk6Wb2OVlhvhoDREfOIG77HytJ7QSV17zJn/I/YdyrCXiqkDgt82WEybMO9YpkO
+         fLNQR9ARHU41WC3/wLFD2iv3W8h9Za5Dk/Osr0l9sZhIHoBNu+/ehdb0ySdgni5dbnHD
+         Yk5Q==
+X-Gm-Message-State: AKS2vOySooiMIw7+1t8GZeOUd4eCUFq3TUeq04cHe8iBcxtgiu5o1ju3
+        HMyYM4K5GjAgRg==
+X-Received: by 10.84.198.129 with SMTP id p1mr15195001pld.225.1497650453213;
+        Fri, 16 Jun 2017 15:00:53 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3047:3460:ee36:a98a])
-        by smtp.gmail.com with ESMTPSA id i186sm3162157pgd.55.2017.06.16.14.55.33
+        by smtp.gmail.com with ESMTPSA id n63sm6619195pfa.62.2017.06.16.15.00.51
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 16 Jun 2017 14:55:33 -0700 (PDT)
+        Fri, 16 Jun 2017 15:00:51 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 0/5] remote: eliminate remote->{fetch,push}_refspec and lazy parsing of refspecs
+Subject: Re: [PATCH 1/5] remote: don't use remote->{fetch,push}_refspec
 References: <20170616192837.11035-1-szeder.dev@gmail.com>
-Date:   Fri, 16 Jun 2017 14:55:33 -0700
-In-Reply-To: <20170616192837.11035-1-szeder.dev@gmail.com> ("SZEDER
+        <20170616192837.11035-2-szeder.dev@gmail.com>
+Date:   Fri, 16 Jun 2017 15:00:51 -0700
+In-Reply-To: <20170616192837.11035-2-szeder.dev@gmail.com> ("SZEDER
  =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Fri, 16 Jun 2017 21:28:32 +0200")
-Message-ID: <xmqqa857wqay.fsf@gitster.mtv.corp.google.com>
+        message of "Fri, 16 Jun 2017 21:28:33 +0200")
+Message-ID: <xmqq60fvwq24.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -71,69 +72,34 @@ X-Mailing-List: git@vger.kernel.org
 
 SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> 'struct remote' stores refspecs twice: once in their original string
-> form in remote->{fetch,push}_refspecs and once in their parsed form in
-> remote->{fetch,push}.  This is necessary, because we need the refspecs
-> for lazy parsing after we finished reading the configuration: we don't
-> want to die() on a bogus refspec while reading the configuration of a
-> remote we are not going to access at all.
->
-> However, storing refspecs in both forms has some drawbacks:
->
->   - The same information is stored twice, wasting memory.
+> diff --git a/remote.c b/remote.c
+> index 336db8298..a021decee 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -919,6 +919,26 @@ char *apply_refspecs(struct refspec *refspecs, int nr_refspec,
+>  	return query.dst;
+>  }
+>  
+> +void strbuf_add_refspec(struct strbuf *sb, const struct refspec *refspec)
+> +{
+> +	if (refspec->force)
+> +		strbuf_addch(sb, '+');
+> +	if (refspec->src)
+> +		strbuf_addstr(sb, refspec->src);
+> +	if (refspec->dst) {
+> +		strbuf_addch(sb, ':');
+> +		strbuf_addstr(sb, refspec->dst);
+> +	} else if (!refspec->src)
+> +		strbuf_addch(sb, ':');
+> +}
 
-True (but a few hundred bytes is nothing among friends ;-)
+Hmph, don't we support wildcarding (aka refspec->pattern)?
 
->   - remote->{fetch,push}_refspecs, i.e. the string arrays are
->     conveniently ALLOC_GROW()-able with associated
->     {fetch,push}_refspec_{nr,alloc} fields, but remote->{fetch,push}
->     are not.
+    ... goes and looks ...
 
-This is a more real issue.
+Ah, even when we set the .pattern bit, we retain '*' in the string,
+so the above is correct.
 
->   - Wherever remote->{fetch,push} are accessed, the number of parsed
->     refspecs in there is specified by remote->{fetch,push}_refspec_nr.
->     This requires us to keep the two arrays in sync and makes adding
->     additional refspecs cumbersome and error prone.
+The last one looks a bit sloppy; shouldn't it be inspecting the
+.matching bit?
 
-You haven't told us which way you want to dedup.  Are you keeping
-the original and removing the pre-parsed?  or are you only keeping
-the pre-parsed ones?  As long as you want ALLOC_GROW() ability, you
-need to maintain the invariants in three-tuple (foo, foo_alloc,
-foo_nr).
-
->   - And worst of all, it pissed me off while working on
->     sg/clone-refspec-from-command-line-config ;)
-
-Your feelings (or mine) do not count ;-).
-
-I do not think we would terribly mind if you only kept a list of
-pre-parsed form, with some mechanism to keep an "error" entry in
-that list with its original, so that an error can be reported with
-the refspec as the user originally gave us (which may mean the
-"error" entry may have to keep the original form, since it wasn't
-correctly parsable in the first place for it to trigger an error).
-
-> So here is my crack at getting rid of them.
-
-You still haven't told us what "them" are.  Parsed form, or the
-original?  Let's find out by reading on....
-
-> The idea is to parse refspecs gently while reading the configuration:
-> this way we won't need to store all refspecs as strings, and won't
-> die() on a bogus refspec right away.  A bogus refspec, if there's one,
-> will be stored in the remote it belongs to, so it will be available
-> later when that remote is accessed and can be used in the error
-> message.
-
-So normally we only have a list of parsed ones, but optionally there
-is a list of malformed originals that are before attempted (and
-failed) parsing used for error reporting?  That sounds sensible,
-especially given that we can recreate the original textual form from
-correctly parsed result (which allows us to report on other kinds
-of errors as necessary).
-
-> This applies on top of a merge of master and the fresh reroll (v5) of
-> sg/clone-refspec-from-command-line-config:
-
-Thanks.  Will take a look (but not immediately).
