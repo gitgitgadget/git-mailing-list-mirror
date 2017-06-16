@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D4F520401
-	for <e@80x24.org>; Fri, 16 Jun 2017 05:39:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2186C20401
+	for <e@80x24.org>; Fri, 16 Jun 2017 05:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751989AbdFPFjK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 01:39:10 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:33619 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751098AbdFPFjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 01:39:09 -0400
-Received: by mail-pg0-f47.google.com with SMTP id f185so16358126pgc.0
-        for <git@vger.kernel.org>; Thu, 15 Jun 2017 22:39:09 -0700 (PDT)
+        id S1750989AbdFPFme (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 01:42:34 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:35982 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750879AbdFPFmd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 01:42:33 -0400
+Received: by mail-pf0-f177.google.com with SMTP id x63so17851101pff.3
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 22:42:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=n59XJ3zvF8YnQw77VqqBm7hWradJmFs+yGzNJ0QdtY8=;
-        b=Bp4ziSryXIlIgsWF/tT8lXUN67BChuROoslZVUQs26Y+X0IRzRq5Dvn/OWfaE5o1T8
-         uesGXxQwHuWeluaXGL+vHP/DgTyd9Nl7dHCYt67j/yZkk6DfztHM4eEWS5Wa2MMdyZ8o
-         lCiUa1t3ZNk3GHCouapVg2XKUq3IPCpvaUN5szSyclEkmvM4WoqJl/zNUXYcewEu4g9v
-         t8WgUQfA7l383mx1OFlCFkGO1pQtzOBtF9RJiGs62eFcdFuWiEM2JsqTd4DVFUD0+xox
-         iNptp2T2LU+84LtLsgkHSN3F/DSlVe2YMiScz26xIEp6KLuZiLFqyI5F6V0dT7JSxqYX
-         44gw==
+        bh=Hu/8zEe6hYYbew2aE5mZNZgdH12JAaILKuaTrGH3ARI=;
+        b=IXyql8bpJb5x/rZUiB+kFNyQkPkfD3dnwNVe0XzNATadjP0qGhaWethQirsbHDMWvq
+         Bq+sTM9YUsPmRxlVAbjtFjvo5SO+DxPBBgqunm3Y/Nr1Gv7Qhf6CuyMmF1y1IIEd1w25
+         qp0x6mt/txxzrqA3P60goak7Xrn8E9UnUdZGjgygPdmjNNsu72cO3JUmohYALtTZwSEy
+         pWpgOakRYUdmpWDJ5I8B2BRkffMhIvPR4TftWiNkMyXkQQHFM/df1M1GvfYeWklRtAS+
+         LtBDqQ8ks4w3PbkJwZ405DTA3CsaAr5B++DZDbuHLPpbodWKVWCq9g03+cG4wWxj7zrm
+         Y+2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=n59XJ3zvF8YnQw77VqqBm7hWradJmFs+yGzNJ0QdtY8=;
-        b=r+2p3XjdMzSiUgg8H2BB/G1DWW5qOAfg7Dt6B3aFJEkrSemzCKgh5+pEuMsZwxY4ol
-         b9nOZrY7BmGQwrJslO9IbHLogGc3roD7fLai/eCpRSN5YPx+SetudYXDiqmx/X1oEAjQ
-         kHrLMvLP20fFyblG5JhfLpxZcgvyx/cN7R3PKKXQVV/KMEm4jA5hBkrfzKnQsUxK/iAQ
-         ZRJ99ZU69JWcCO9gRFnJp/cyQiDdn7Mz6saTr5fgSAg2wtvecCxtd+9SEIrIgT4zYgUi
-         jjTCtFKcLOCN98RDe3BrCVhoUA4B/e92RPPzhS73zCP3n0/qcp71/ZqyzrWoOSvLGscM
-         +z4w==
-X-Gm-Message-State: AKS2vOyYupPBpFfjzDht7F9tWPprHA4TScLtqZ9AFYMkPWulB/U9YwDB
-        u4TmOsZIxxUIJ3ZdgHniYBkmmqo/N9L4
-X-Received: by 10.98.68.156 with SMTP id m28mr8989943pfi.48.1497591548631;
- Thu, 15 Jun 2017 22:39:08 -0700 (PDT)
+        bh=Hu/8zEe6hYYbew2aE5mZNZgdH12JAaILKuaTrGH3ARI=;
+        b=kNAd4AKjFuhXT0B5s3+fMNn+rduhlJvje0YgCN+vp/m24P6LO1f9vMsiojEqvKU0Lz
+         H+wk9IUSzjVnNllY9lANGU/bSEZqqg9Vu0yO0yYetil1WvuW2SoQQwwkhRo7v6WAn1uE
+         YKMoCAIP0LBr0h78IiISnjeaYQKl/e5nXiUxxS4kOy8KH8WyxsYdXXPyRY+bDpK1NmBj
+         PA5bIUSp7O4mSfdyDfXMiUc3IY9v82m/aMkCiNYcJK4mxyN+M8AvykKU0jFB+tOSOoNV
+         1Xqz6JWZxBbR3QtxZGIOUdzANNieuPT5Eq/Gsoa+VJuXTXVn63tuo0Yd4F8EnjHcxKZ2
+         7JXQ==
+X-Gm-Message-State: AKS2vOw8rjCxH7nJQoPq39XQaGQJzhLe2qKgaibbO/wpGjjWohFYnFUE
+        IqP0V5GAawaQjKglJoZCCn0fGvUa7vOi
+X-Received: by 10.99.186.91 with SMTP id l27mr9267039pgu.87.1497591752695;
+ Thu, 15 Jun 2017 22:42:32 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Thu, 15 Jun 2017 22:39:08 -0700 (PDT)
-In-Reply-To: <eea8f3d25e9d3d3a0b63604338f10cfa658bbb43.1497534157.git.mhagger@alum.mit.edu>
-References: <cover.1497534157.git.mhagger@alum.mit.edu> <eea8f3d25e9d3d3a0b63604338f10cfa658bbb43.1497534157.git.mhagger@alum.mit.edu>
+Received: by 10.100.218.134 with HTTP; Thu, 15 Jun 2017 22:42:32 -0700 (PDT)
+In-Reply-To: <f9c4c47e52c076c42896d22d89591a93163afda3.1497534157.git.mhagger@alum.mit.edu>
+References: <cover.1497534157.git.mhagger@alum.mit.edu> <f9c4c47e52c076c42896d22d89591a93163afda3.1497534157.git.mhagger@alum.mit.edu>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 15 Jun 2017 22:39:08 -0700
-Message-ID: <CAGZ79ka3u_otP6M+oRBb4dQdMQx6kFHaXihLsBpM23gqzwqOGw@mail.gmail.com>
-Subject: Re: [PATCH 04/28] packed_ref_store: move `packed_refs_lock` member here
+Date:   Thu, 15 Jun 2017 22:42:32 -0700
+Message-ID: <CAGZ79kbeJk5PmJVdLva-VauLPa4MbQdNRWfQmyHtVqVa3JDL+A@mail.gmail.com>
+Subject: Re: [PATCH 15/28] packed_peel_ref(): new function, extracted from `files_peel_ref()`
 To:     Michael Haggerty <mhagger@alum.mit.edu>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -66,57 +66,8 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Thu, Jun 15, 2017 at 7:47 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> Move the `packed_refs_lock` member from `files_ref_store` to
-> `packed_ref_store`, and rename it to `lock` since it's now more
-> obvious what it is locking.
->
-> Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
-> ---
->  refs/files-backend.c | 31 ++++++++++++++++---------------
->  1 file changed, 16 insertions(+), 15 deletions(-)
->
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index c4b8e2f63b..de8293493f 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -62,6 +62,12 @@ struct packed_ref_store {
->          * it might still be current; otherwise, NULL.
->          */
->         struct packed_ref_cache *cache;
-> +
-> +       /*
-> +        * Lock used for the "packed-refs" file. Note that this (and
-> +        * thus the enclosing `packed_ref_store`) must not be freed.
-> +        */
-> +       struct lock_file lock;
->  };
->
->  static struct packed_ref_store *packed_ref_store_create(
-> @@ -87,12 +93,6 @@ struct files_ref_store {
->
->         struct ref_cache *loose;
->
-> -       /*
-> -        * Lock used for the "packed-refs" file. Note that this (and
-> -        * thus the enclosing `files_ref_store`) must not be freed.
-> -        */
-> -       struct lock_file packed_refs_lock;
-> -
->         struct packed_ref_store *packed_ref_store;
->  };
->
-> @@ -125,7 +125,7 @@ static void clear_packed_ref_cache(struct files_ref_store *refs)
->         if (refs->packed_ref_store->cache) {
->                 struct packed_ref_cache *packed_refs = refs->packed_ref_store->cache;
->
-> -               if (is_lock_file_locked(&refs->packed_refs_lock))
-> +               if (is_lock_file_locked(&refs->packed_ref_store->lock))
+> This will later become a method of `packed_ref_store`.
 
-I sort of stumble over the name due to singular/plural/genetive issues:
-The store contains multiple of "packed ref"(s) or the store is specialized in
-packed ref(s). On the other hand in English you seem to reference the
-specialisation of a store in singular: It's a "gun store" (not "guns store")
-or "furniture store" or "fresh fish store" (though that could be
-plural as well).
-
-It just sounded odd to me. (though think of it as a minor nit)
+Also while touching it, maybe rename sha1 to object_hash
+(not saying object_id as that would be confusing with the actual
+oid struct), maybe?
