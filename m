@@ -2,66 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A36B20282
-	for <e@80x24.org>; Fri, 16 Jun 2017 06:32:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54CFB20282
+	for <e@80x24.org>; Fri, 16 Jun 2017 06:43:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751879AbdFPGcK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 02:32:10 -0400
-Received: from resqmta-po-03v.sys.comcast.net ([96.114.154.162]:47228 "EHLO
-        resqmta-po-03v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751755AbdFPGcJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 16 Jun 2017 02:32:09 -0400
-Received: from resomta-po-10v.sys.comcast.net ([96.114.154.234])
-        by resqmta-po-03v.sys.comcast.net with SMTP
-        id LknQdcT3PWFyRLknhdG3nx; Fri, 16 Jun 2017 06:32:09 +0000
-Received: from vm-fedora21.eagercon.com ([IPv6:2601:647:4d04:5190:20c:29ff:fe70:d3be])
-        by resomta-po-10v.sys.comcast.net with SMTP
-        id Lkngdue0emQlXLkngdnHlh; Fri, 16 Jun 2017 06:32:09 +0000
-Subject: Re: Best practices for updating old repos
+        id S1752462AbdFPGnZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 02:43:25 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:51972 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752436AbdFPGnT (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 16 Jun 2017 02:43:19 -0400
+X-AuditID: 1207440c-631ff70000002ef9-dc-59437e0472fb
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 45.5E.12025.40E73495; Fri, 16 Jun 2017 02:43:18 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCCABB.dip0.t-ipconnect.de [87.188.202.187])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5G6hAT9031919
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Fri, 16 Jun 2017 02:43:14 -0400
+Subject: Re: [PATCH 04/28] packed_ref_store: move `packed_refs_lock` member
+ here
 To:     Stefan Beller <sbeller@google.com>
-References: <59432BCC.2040901@eagerm.com>
- <CAGZ79kZMCz9g7PW6km3gQJU5qipw27jvkVDXD64MUNKJykYZOw@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Michael Eager <eager@eagerm.com>
-Message-ID: <59437B68.5090601@eagerm.com>
-Date:   Thu, 15 Jun 2017 23:32:08 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
+References: <cover.1497534157.git.mhagger@alum.mit.edu>
+ <eea8f3d25e9d3d3a0b63604338f10cfa658bbb43.1497534157.git.mhagger@alum.mit.edu>
+ <CAGZ79ka3u_otP6M+oRBb4dQdMQx6kFHaXihLsBpM23gqzwqOGw@mail.gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <bf1fcee3-2f2f-b153-5774-dee5b2a2790d@alum.mit.edu>
+Date:   Fri, 16 Jun 2017 08:43:09 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZMCz9g7PW6km3gQJU5qipw27jvkVDXD64MUNKJykYZOw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <CAGZ79ka3u_otP6M+oRBb4dQdMQx6kFHaXihLsBpM23gqzwqOGw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfGcNuMB6PituoaBqNUjQ9qnfGxZ5+g+9M0LpxUBemdXSUUKIzqtMhVql8/LCpwcyKzYQDHTiFiY5h2ENjaNwc1I36/+CAqbhBdFv3AoddVNN5W98nsd9
- /O8TYkJfO9qYqp+x5G8CmabhFXY+HnVKNBj+nl0dRLytxd0UpOWaWd6MT374ED6F4zzxcAQUBufm+A==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqMtW5xxp0PxS3WLtsztMFs/Xn2C3
+        6LrSzWTR0HuF2WLJw9fMFt1T3jJa/GjpYbbYvLmdxYHDY+esu+weCzaVenS1H2HzeNa7h9Hj
+        4iVlj8+b5ALYorhsUlJzMstSi/TtErgyZsw8z1jwnbOi6d9htgbGV+xdjJwcEgImEmvfrWTr
+        YuTiEBLYwSTx5vAbFpCEkMAFJon2uYwgtrBAkMS73ulMILaIgJrEzFWzoRrOM0rMXXiFCcRh
+        FvjNJPHo+16wKjYBXYlFPc1gNq+AvcTDI9vAprIIqErcWDEdzBYViJB42LmLHaJGUOLkzCdg
+        cU6BQIm9n1+ygdjMAuoSf+ZdYoaw5SW2v53DPIGRfxaSlllIymYhKVvAyLyKUS4xpzRXNzcx
+        M6c4NVm3ODkxLy+1SNdQLzezRC81pXQTIyTkeXYwflsnc4hRgINRiYdXocEpUog1say4MvcQ
+        oyQHk5IoL78cUIgvKT+lMiOxOCO+qDQntfgQowQHs5II7+dg50gh3pTEyqrUonyYlDQHi5I4
+        r+oSdT8hgfTEktTs1NSC1CKYrAwHh5IEb0stUKNgUWp6akVaZk4JQpqJgxNkOA/QcP9KkOHF
+        BYm5xZnpEPlTjIpS4rzBIM0CIImM0jy4XlhKesUoDvSKMO+xGqAqHmA6g+t+BTSYCWhw0AUH
+        kMEliQgpqQbGlk9vpXTrzMVDzwud6l/5im1KQ4dZ0snjnHmeYnFn8hXWOvC5lAk+387Z2bH1
+        6FqZWZbxnRcinv7fLn9puv6jjYXhJzvUV/2w9LHPlV61XYP52sJ/M6euSspTfaL9pru4Wsg3
+        YUfS123nclWs50u1vX+h479T4iBT8PHZ/4PeT94eZhev/b5WiaU4I9FQi7moOBEA2d5b4SQD
+        AAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/15/2017 09:22 PM, Stefan Beller wrote:
-> On Thu, Jun 15, 2017 at 5:52 PM, Michael Eager <eager@eagerm.com> wrote:
->
->> One other variant of the rebase approach I've thought of is to do
->> this incrementally, rebasing the old repo against an upstream commit
->> a short time after the old repo was forked, fixing any conflicts,
->> rebuilding and fixing build failures.  Then repeat, with a bit
->> newer commit.  Then repeat, until I get to the top.  This sounds
->> tedious, but some of it can be automated.  It also might result in
->> my making the changes compatible with upstream code which was later
->> abandoned or significantly changed.
->
-> This sounds like
->
-> https://github.com/mhagger/git-imerge
-> https://www.youtube.com/watch?v=FMZ2_-Ny_zc
+On 06/16/2017 07:39 AM, Stefan Beller wrote:
+> On Thu, Jun 15, 2017 at 7:47 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> [...]
+>> @@ -125,7 +125,7 @@ static void clear_packed_ref_cache(struct files_ref_store *refs)
+>>         if (refs->packed_ref_store->cache) {
+>>                 struct packed_ref_cache *packed_refs = refs->packed_ref_store->cache;
+>>
+>> -               if (is_lock_file_locked(&refs->packed_refs_lock))
+>> +               if (is_lock_file_locked(&refs->packed_ref_store->lock))
+> 
+> I sort of stumble over the name due to singular/plural/genetive issues:
+> The store contains multiple of "packed ref"(s) or the store is specialized in
+> packed ref(s). On the other hand in English you seem to reference the
+> specialisation of a store in singular: It's a "gun store" (not "guns store")
+> or "furniture store" or "fresh fish store" (though that could be
+> plural as well).
+> 
+> It just sounded odd to me. (though think of it as a minor nit)
 
-Thanks, Stefan.   I'll look into this; it may be similar to what
-I was thinking of doing.  I'll have to watch the video.
+I chose that name because it is a `ref_store`, with `packed_` being a
+short prefix that tells what kind of `ref_store`.
 
--- 
-Michael Eager	 eager@eagercon.com
-1960 Park Blvd., Palo Alto, CA 94306  650-325-8077
+The next question is, why `ref_store` as opposed to `refs_store`? To me
+it sounds more natural in English for the reasons that you mentioned.
+
+Michael
+
