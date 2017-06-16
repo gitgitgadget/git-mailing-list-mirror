@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB141FA7B
-	for <e@80x24.org>; Fri, 16 Jun 2017 15:45:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CA631FA7B
+	for <e@80x24.org>; Fri, 16 Jun 2017 15:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751639AbdFPPo6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 11:44:58 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35560 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750792AbdFPPo5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 11:44:57 -0400
-Received: by mail-pf0-f173.google.com with SMTP id l89so24117970pfi.2
-        for <git@vger.kernel.org>; Fri, 16 Jun 2017 08:44:57 -0700 (PDT)
+        id S1750863AbdFPPrt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 11:47:49 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:36545 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750780AbdFPPrs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 11:47:48 -0400
+Received: by mail-pg0-f45.google.com with SMTP id u62so2773788pgb.3
+        for <git@vger.kernel.org>; Fri, 16 Jun 2017 08:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=XNJxwuD9bMniz9mj/rKbKgJkHGtxM7C9wwoePo2KrGQ=;
-        b=uLOiinFKnokRqVn1bqRh5wGBOGE+PHSjjsssQItIXlolMs1xu6LEsPSY0n/b8Rs2iI
-         0r+Jjf9eLPoNcW55ByC356TEioXBeQbak8w7nRcTpQPkCdIZkRV5esDEzNvJuSPdQ4OT
-         QNzQIKWB8oxIRoAR8lerySEtbmocyOZ16JuM7IhPnd4usAJzi5TLJbP6iynmI2rjaq1r
-         6InizeUCZwe47WGe6yaT+jWHkYQWFQOPThu+d12TEjHMXoBwV6XY5/2v+qaPLDneqfuZ
-         FI41Kf5TNkQ+fL7EtjcEOZYHdhVWGZj8tG8jac+YxuAxDz8zKdT2WRx6xkzty7sl4ZNo
-         ln1Q==
+        bh=89vSxFxVYWlwO6pme371su+e/jKUNp7I6dcOZrmX5sY=;
+        b=EU7N15f/Ee31poHZExriPboyMoEEj9Ik0Ewk3u/BmZP1a8YZnIk4w6OMW6cGXkWpAY
+         NlgjDJZxW/hioFaZ7d6Lx78qJU8jVpB4Q0mXoBdn6JAEDkGzonkcOzYtlVdvTZbxCLBN
+         PHvokHCRbWSjEXksA66a2NlfNWRv25CExsfO4J+RgYHXR5pPNljKddKOxYlnQyprp2Ky
+         Mxrz8dS8GFneN3Lw/LNfiftfR+2ZXgtDXYuUidjAmONBjn+9uCQ5XEx2lfHdz82fT/h1
+         qhMVkwddobGlpSn3dHiJ8p2xo6nZFgnURrdQxkXG7eHVKUWV83jg/Sva6XMfMVxXMaaM
+         ZqUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=XNJxwuD9bMniz9mj/rKbKgJkHGtxM7C9wwoePo2KrGQ=;
-        b=IPdjA4uExmTHupFSaMb+AcCI6PbeoiDyxBC/r6fiNXp3YMJL3XcjlvVit4MA5K0yeO
-         sOvBOgMyxyAWFuNo9XCO0T0Snl6f7UypFRXkvtv//9OzpSZUbIg8CU/YeFmrkdJRdO5K
-         35EJJu72c8fGa8fq55GQS186NsM6kQpw3mnMh1HHmVMZDwErsaq/otame+Hx4/WKQZEM
-         riaq1bp7ZA9PILf3INLrXsRelDF8vAZjUPutWjCzTNZ0sGx1+BwUZ+DiGyrqPVnjm7F2
-         blQbrH+4laT09IhJnmaRKNj4aLXPoExDdiKDn4cRh2kIGXYl1uYot8ghO58Bs2YIazEP
-         a+ZQ==
-X-Gm-Message-State: AKS2vOygamMbzrpU3MfdOX4FRuA9BhVrl9icO0NlmInfGfGyiyj5LCyD
-        6c7ITyMgtBMZqP9njpI063WctRzEIjf7
-X-Received: by 10.99.120.199 with SMTP id t190mr11015712pgc.176.1497627896622;
- Fri, 16 Jun 2017 08:44:56 -0700 (PDT)
+        bh=89vSxFxVYWlwO6pme371su+e/jKUNp7I6dcOZrmX5sY=;
+        b=GZVPxQ7p7CivhOGlMA0m4xljY5PYwjj+yFrqSz9/g0mt5esBVFPUpVbdkJHs7h1nMy
+         OoY0pbSlFabf26u7772cZVnzWbbUExwDkLj3n5WQx+Me64i3tPNXyeg+7cCt6jz7QdVe
+         TD1oees43aWfjvV4anOZTFhTundAAEzUNhUcahKxLdjlSNus2g22P4bUXy0VngKWDWs6
+         7Aheijqf2xWl1GJWaWF6qEvfGOR6qiq7safdi4vAL8KSH5Or8QxlyH+OgsQsy1YAHePq
+         w4xZGDs3LqZvot/QRJHFdGQNktvcIND0ySWsslgAFusIPpAYGnhNJnnJ4UcK4vT++FZI
+         EvBQ==
+X-Gm-Message-State: AKS2vOyx8CRfoD6Zf+325LwACD0gMc4u1ipTzfPwVQyYL98bFWxoMg1X
+        6glzI/tncOAO8T1bdNg6yT+znn5UVxJQ
+X-Received: by 10.101.76.201 with SMTP id n9mr12144764pgt.40.1497628067767;
+ Fri, 16 Jun 2017 08:47:47 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.218.134 with HTTP; Fri, 16 Jun 2017 08:44:56 -0700 (PDT)
-In-Reply-To: <bf1fcee3-2f2f-b153-5774-dee5b2a2790d@alum.mit.edu>
-References: <cover.1497534157.git.mhagger@alum.mit.edu> <eea8f3d25e9d3d3a0b63604338f10cfa658bbb43.1497534157.git.mhagger@alum.mit.edu>
- <CAGZ79ka3u_otP6M+oRBb4dQdMQx6kFHaXihLsBpM23gqzwqOGw@mail.gmail.com> <bf1fcee3-2f2f-b153-5774-dee5b2a2790d@alum.mit.edu>
+Received: by 10.100.218.134 with HTTP; Fri, 16 Jun 2017 08:47:47 -0700 (PDT)
+In-Reply-To: <db616bc6-4d31-6f7c-4862-9161f4bb36ce@alum.mit.edu>
+References: <cover.1497534157.git.mhagger@alum.mit.edu> <f9c4c47e52c076c42896d22d89591a93163afda3.1497534157.git.mhagger@alum.mit.edu>
+ <CAGZ79kbeJk5PmJVdLva-VauLPa4MbQdNRWfQmyHtVqVa3JDL+A@mail.gmail.com> <db616bc6-4d31-6f7c-4862-9161f4bb36ce@alum.mit.edu>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 16 Jun 2017 08:44:56 -0700
-Message-ID: <CAGZ79kbavn0QdqaoJJ+DXh28OLb1jDgdqA01soawQZ86fp0XkA@mail.gmail.com>
-Subject: Re: [PATCH 04/28] packed_ref_store: move `packed_refs_lock` member here
+Date:   Fri, 16 Jun 2017 08:47:47 -0700
+Message-ID: <CAGZ79kb=eq88VR5nQggnLQJX-gTZ37uhm3PhuhC4oX8dw8vG5w@mail.gmail.com>
+Subject: Re: [PATCH 15/28] packed_peel_ref(): new function, extracted from `files_peel_ref()`
 To:     Michael Haggerty <mhagger@alum.mit.edu>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -67,12 +67,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 15, 2017 at 11:43 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> I chose that name because it is a `ref_store`, with `packed_` being a
-> short prefix that tells what kind of `ref_store`.
+On Thu, Jun 15, 2017 at 11:46 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 06/16/2017 07:42 AM, Stefan Beller wrote:
+>> On Thu, Jun 15, 2017 at 7:47 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>>> This will later become a method of `packed_ref_store`.
+>>
+>> Also while touching it, maybe rename sha1 to object_hash
+>> (not saying object_id as that would be confusing with the actual
+>> oid struct), maybe?
 >
-> The next question is, why `ref_store` as opposed to `refs_store`? To me
-> it sounds more natural in English for the reasons that you mentioned.
+> Hmmm, my impression was that most of the `unsigned char *` hashes are
+> still called sha1, and they are renamed to `oid` at the moment that they
+> are converted to `struct object_id *`. I only see two instances of the
+> string "object_hash" in the code:
+>
+> $ git grep object_hash
+> object.c:static void grow_object_hash(void)
+> object.c:               grow_object_hash();
+>
+> Michael
 
-Yeah after some thought on language this sounds good to me, too.
-I still have to work on natural. ;)
+Yeah maybe we can just defer it to the proper conversion series.
+I just jumped the gun here.
