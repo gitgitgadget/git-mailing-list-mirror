@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 271C21FA7B
-	for <e@80x24.org>; Fri, 16 Jun 2017 21:41:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5F0B1FA7B
+	for <e@80x24.org>; Fri, 16 Jun 2017 21:55:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751906AbdFPVlK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 17:41:10 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:36794 "EHLO
+        id S1750879AbdFPVzg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 17:55:36 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35801 "EHLO
         mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751798AbdFPVlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 17:41:09 -0400
-Received: by mail-pg0-f41.google.com with SMTP id u62so6114948pgb.3
-        for <git@vger.kernel.org>; Fri, 16 Jun 2017 14:41:09 -0700 (PDT)
+        with ESMTP id S1750792AbdFPVzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 17:55:35 -0400
+Received: by mail-pg0-f41.google.com with SMTP id k71so25424724pgd.2
+        for <git@vger.kernel.org>; Fri, 16 Jun 2017 14:55:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=Q6xrOo29tGUWjYs+rwPEQGCyR0FVkktzZhpUwJDmfRk=;
-        b=f8rdvyQljHC4ILUvILf5OEhp5j3kS5aTvMmH7rFXzpzI4UXrhiLlDhMmufjm6MieNI
-         dlqlX96Yzf0sWYeSvZejCCdU8ho5zOnQT82q56yseRDndXHLVzEi0Vpy5zdCF0D7prXW
-         Z1U9Ib1ZCovJ4o3aKcGuk5xyEENKDskucy6rCv8ivoWRyOJZq+jZ09w65s0RDmX1PRJW
-         psXUD/RxZRjnZHz3jT2y3FMEo5rDEmX7M2vumGpTPaGJ46VEy1/cjENlmYaKhN+EYqFI
-         0wYrqQz02GfAS++UKRWqJ91X+JOX4LILdGRyM6v9GPFIo0VQP4MkVDqM2FkFH4SJl/LE
-         eFcg==
+        bh=Cvg7MzLf3G3oLJIR3DnU6SffQDbvPxiDyOBorayHl+E=;
+        b=IMqiWPHgrNJjAKPAOMh3rteb0Wngem3sPF7GN0rw4cIdmx0/yRbpIaRjwx1ceHfYU0
+         HQgriU1KoRe/rMsu3wzAZ/TqxyVKxzqCPrbnQfC5mZ+t4EjDgWMZkkhHYWveiVMu6+A5
+         zOw5fuKENAq9/RVhAEfezZJTdp81a4Z4HodHubZ969jj4SO4QLXwfYZYTI47J1Y2dx6A
+         WYRVo0gfRKvxCp78cRokRXrMDH2YWejbJR+iVIN88LWFUw4P1hQYC8YfvUDd4s4H45mA
+         s5RhFId91SgLF5K2itu/HdxXEA0puAUYYcHXGPGM2iu9yP3gOMu14awbRaNGS36mV/Sb
+         V5hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=Q6xrOo29tGUWjYs+rwPEQGCyR0FVkktzZhpUwJDmfRk=;
-        b=RoZE0s0iixDxo2uEuiJxDLDI4U3F6hgNSCDDeaTMgZoNSO4P7XqNdLUed6BG2tdZuo
-         vjL5VHEeFQsyMoRa0kEmyCfFhV3cY2TebyVQ6aY27Fz2Yxc/XyGfI1yQelyHhYvilOgM
-         eFndj4e3R5xcOaGI32e6oqy+hQrQ5KZSn8u37IkLBn3NpD0zcQEnE0YPkai8fzFalePL
-         ct4EO+xm4X7Ah2nIUIBI2z8W+4SVuP1b/I4bTan0jFrimCLrOOkd6NfQH02DzSxY/Vog
-         oJfacPjJrujd2otry0sH6zBkTt+Na+kd2rRCnJ6Er8R64vXGgnHolRYAQgbyHw7tLTlg
-         aLMw==
-X-Gm-Message-State: AKS2vOxEfzJscdPq+KczMcZJcvfOo7eZV4yxz62pBH5APKZKyAsz5+Qs
-        wGJOQ+GoP9M29Q==
-X-Received: by 10.98.11.80 with SMTP id t77mr13242700pfi.104.1497649268549;
-        Fri, 16 Jun 2017 14:41:08 -0700 (PDT)
+        bh=Cvg7MzLf3G3oLJIR3DnU6SffQDbvPxiDyOBorayHl+E=;
+        b=eSNto3tMiDzDTAYyX4dkuBSYz35J4V0dHC4zvfzo3fE1xwFO102/DMbcPNz1/Os+5I
+         fGfZHQ4Em1BNPzyFw4dFSdgsFswuMZSKlMisu7Q9b1ZUjxzIl7/9DfVwJXJI2SaE9e7O
+         K3KZSIuV9h3LkWOFu6xlb+NvFrwECMkqF329pvlkv5dkKWZodsEdEQ3L7RoxRP4cxjlN
+         yugilvpdNr9MmhUnLIEf762E3phwSNpvOIcNGbzWNrQASBVx7R2deu1Jl+RmI+syFRm+
+         wSkqFFg681KLGpq0S4CRkR4NOrWfUbXlWQPUmmkLI3KONHTJPcIhxYHCUyXiBIMmLScz
+         O5Dw==
+X-Gm-Message-State: AKS2vOzy0w+aTPpiylTaVt5hXAvr4k2S06YVta5HC6nFt1DbfLIqZO3Z
+        xsMvz2zcvv2fnA==
+X-Received: by 10.84.238.137 with SMTP id v9mr15713007plk.154.1497650134613;
+        Fri, 16 Jun 2017 14:55:34 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3047:3460:ee36:a98a])
-        by smtp.gmail.com with ESMTPSA id y13sm316961pgs.30.2017.06.16.14.41.07
+        by smtp.gmail.com with ESMTPSA id i186sm3162157pgd.55.2017.06.16.14.55.33
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 16 Jun 2017 14:41:07 -0700 (PDT)
+        Fri, 16 Jun 2017 14:55:33 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Mahmoud Al-Qudsi <mqudsi@neosmart.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [suggestion] Include commit-ish in git status output
-References: <CACcTrKfPKdPCVONMcGRbisK_WOt70yLdjavZnLTMMVocrwzk1w@mail.gmail.com>
-Date:   Fri, 16 Jun 2017 14:41:07 -0700
-In-Reply-To: <CACcTrKfPKdPCVONMcGRbisK_WOt70yLdjavZnLTMMVocrwzk1w@mail.gmail.com>
-        (Mahmoud Al-Qudsi's message of "Thu, 15 Jun 2017 18:43:46 -0500")
-Message-ID: <xmqqefujwqz0.fsf@gitster.mtv.corp.google.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH 0/5] remote: eliminate remote->{fetch,push}_refspec and lazy parsing of refspecs
+References: <20170616192837.11035-1-szeder.dev@gmail.com>
+Date:   Fri, 16 Jun 2017 14:55:33 -0700
+In-Reply-To: <20170616192837.11035-1-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Fri, 16 Jun 2017 21:28:32 +0200")
+Message-ID: <xmqqa857wqay.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -67,56 +69,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mahmoud Al-Qudsi <mqudsi@neosmart.net> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> I hope it is not considered too forward of me for my first post to this list
-> to be a suggestion on a change to git’s behavior (though not in any
-> functional manner); but a persistent frustration for me and everyone I’ve
-> worked with (so, yes, 100% based off of anecdata) has been that the output
-> of `git status` does not include the commit or commit-ish, and one must
-> resort to a `git rev-parse HEAD` call.
+> 'struct remote' stores refspecs twice: once in their original string
+> form in remote->{fetch,push}_refspecs and once in their parsed form in
+> remote->{fetch,push}.  This is necessary, because we need the refspecs
+> for lazy parsing after we finished reading the configuration: we don't
+> want to die() on a bogus refspec while reading the configuration of a
+> remote we are not going to access at all.
+>
+> However, storing refspecs in both forms has some drawbacks:
+>
+>   - The same information is stored twice, wasting memory.
 
-HEAD is, unless you are about to create a root commit, always a
-commit and not other kind of commit-ish, so there is no need to say
-"or commit-ish" here.
+True (but a few hundred bytes is nothing among friends ;-)
 
-If this were a proposal to add human-readable information about the
-current commit (e.g. the title of the commit), perhaps next to "On
-branch my-topic" line, e.g.
+>   - remote->{fetch,push}_refspecs, i.e. the string arrays are
+>     conveniently ALLOC_GROW()-able with associated
+>     {fetch,push}_refspec_{nr,alloc} fields, but remote->{fetch,push}
+>     are not.
 
-    $ git status
-    On branch my-topic
-    HEAD is at "*.[ch] refactoring: make use of the FREE_AND_NULL() macro"
-    Changes to be committed:
-       ...
+This is a more real issue.
 
-I can understand why sometimes such a piece of information may be
-useful to users.  But I am puzzled by your `git rev-parse HEAD`.
+>   - Wherever remote->{fetch,push} are accessed, the number of parsed
+>     refspecs in there is specified by remote->{fetch,push}_refspec_nr.
+>     This requires us to keep the two arrays in sync and makes adding
+>     additional refspecs cumbersome and error prone.
 
-Suppose you get frustrated due to lack of HEAD information in the
-output from 'git status':
+You haven't told us which way you want to dedup.  Are you keeping
+the original and removing the pre-parsed?  or are you only keeping
+the pre-parsed ones?  As long as you want ALLOC_GROW() ability, you
+need to maintain the invariants in three-tuple (foo, foo_alloc,
+foo_nr).
 
-    $ git status
-    On branch my-topic
-    Changes to be committed:
-	...
-    $ git rev-parse HEAD
+>   - And worst of all, it pissed me off while working on
+>     sg/clone-refspec-from-command-line-config ;)
 
-and that was the reason why you resorted to "git rev-parse HEAD"
-immediately after asking "git status" about the current state.
+Your feelings (or mine) do not count ;-).
 
-That command may say
+I do not think we would terribly mind if you only kept a list of
+pre-parsed form, with some mechanism to keep an "error" entry in
+that list with its original, so that an error can be reported with
+the refspec as the user originally gave us (which may mean the
+"error" entry may have to keep the original form, since it wasn't
+correctly parsable in the first place for it to trigger an error).
 
-    $ git rev-parse HEAD
-    88ce3ef636b1385e861ec0e9e2155248b999b032
+> So here is my crack at getting rid of them.
 
-or it may say
+You still haven't told us what "them" are.  Parsed form, or the
+original?  Let's find out by reading on....
 
-    $ git rev-parse HEAD
-    e140f7afddcdce2bae062ea1578eac38c744e3a5
+> The idea is to parse refspecs gently while reading the configuration:
+> this way we won't need to store all refspecs as strings, and won't
+> die() on a bogus refspec right away.  A bogus refspec, if there's one,
+> will be stored in the remote it belongs to, so it will be available
+> later when that remote is accessed and can be used in the error
+> message.
 
-What would you do differently, after seeing this random-looking
-40-character string, based on what it is?  Do you know recent commit
-object names by heart and can tell, immediately when you see 88ce3...,
-"ah, that was me fixing foo", as opposed to e140f7a... that is a
-different change you can immediately identify?
+So normally we only have a list of parsed ones, but optionally there
+is a list of malformed originals that are before attempted (and
+failed) parsing used for error reporting?  That sounds sensible,
+especially given that we can recreate the original textual form from
+correctly parsed result (which allows us to report on other kinds
+of errors as necessary).
+
+> This applies on top of a merge of master and the fresh reroll (v5) of
+> sg/clone-refspec-from-command-line-config:
+
+Thanks.  Will take a look (but not immediately).
