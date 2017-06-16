@@ -2,119 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDAD71FA7B
-	for <e@80x24.org>; Fri, 16 Jun 2017 21:12:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 914B11FA7B
+	for <e@80x24.org>; Fri, 16 Jun 2017 21:24:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750907AbdFPVMQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 17:12:16 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36291 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750792AbdFPVMP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 17:12:15 -0400
-Received: by mail-pf0-f194.google.com with SMTP id y7so8148187pfd.3
-        for <git@vger.kernel.org>; Fri, 16 Jun 2017 14:12:15 -0700 (PDT)
+        id S1750981AbdFPVYT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 17:24:19 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:36193 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750792AbdFPVYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 17:24:18 -0400
+Received: by mail-pg0-f41.google.com with SMTP id u62so5981292pgb.3
+        for <git@vger.kernel.org>; Fri, 16 Jun 2017 14:24:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=aByNl3DYpKIrPVBnt+Q4jRJkJWBEBMojMFlJVOFix6Q=;
-        b=dIph/eGPpHqyF2TveZq2+JZNakhFNkxgY0I3wY6rLDIY0Xd8Gu/qn9x+nI5I8Q2WFl
-         v0o6ujv3WOKv8kZv+iqJ/d5bZcgeXCd7DqL/WelAoossO/dbDhsXXuK/ztE0ZNYXdUth
-         xfrpUOI5qVlIOSjF2KRAWlJ+LxsM1PUyEy0jWZTvzgwV6uI5HkjQgz99H7Q/BAYmz2pO
-         BkJ9jXROumrVXt2vbddPBg6tBICcCJp6APNtDnT4TD11uvkOoeTALTk60jFSbT17++Mi
-         j9nQhZLCsT0K5YfILOgDPvd3UB4g+3IkQoQg3j/+b+6NOGY4PgZQnw0bm5pW/EVQY2mo
-         h7TQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VkGdWaFtL+PSORE2KqrvnKuO7c9Pfsk8Bj1cJinw9rQ=;
+        b=WvHLbJ6/21hMFblAPV66dLLoZNLGo2pc7gKpUzYNddJv7kXOVJR1oqJT8x6d842no/
+         dJAx7P5e6nxA6PluxUu2j/V1woZZl45Ykm02+Lp8UffMhPGgFPCtUiOmDqwoSzgonNA9
+         lcTHhHUDkw2mPrewHYNmm/pPWXrKMRBGSFFNwynWk/hG8Q+NwJydq7pZ4vN4hwAA7KXX
+         iqyBTsfxgKiwDuGn1Fa513hlcVWwwjTs8fGvmbCpukaivhS9IAkcuRbtx24/Y4BDl7pj
+         WhXEHpUkyqI1OxjMKZflubIT3U9nEaRskhCXqLWpGtnxdryTMBjJyuyPMhABd9+v5fOy
+         F7Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=aByNl3DYpKIrPVBnt+Q4jRJkJWBEBMojMFlJVOFix6Q=;
-        b=mcWpkc0gWbIwclMzNkNLB8KlF3ihH7ffnoen8owKCgdd2hjPGVvqsC4wNO36z6huVI
-         Bk598+8X3mQ/A4cwHUqmM2m2QTlW++OwTCvtEORz506g05i+OL2mTZPc0EgahT0XyR/c
-         pBnHanZKcs4WzHXZrwo/8X5HeF0GPyMtL4aIH+LZiZTBV9uB13OWVv8mV/gcd0wGXG8V
-         zxCLy4ygk/U2V8bLMfg07UAsOIVgWIFT/9B6a3PKV+g5iz8Yc2Dg2FVCbezRxXMz7bti
-         I4S7jsIsEzh+O22D+FQy/efY9PZCv5NS2uAV96pinWTpUTmJxYO2OMSy36Uiq6aQDwXi
-         J/Lw==
-X-Gm-Message-State: AKS2vOy1zVMKpGSc6xW5LKC11EPUkFTvAnHaDEYzPmsIbsa12izpDbhx
-        4tSUiPHlI0VCpw==
-X-Received: by 10.101.70.193 with SMTP id n1mr13585050pgr.249.1497647535249;
-        Fri, 16 Jun 2017 14:12:15 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3047:3460:ee36:a98a])
-        by smtp.gmail.com with ESMTPSA id l22sm6363938pfb.55.2017.06.16.14.12.13
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VkGdWaFtL+PSORE2KqrvnKuO7c9Pfsk8Bj1cJinw9rQ=;
+        b=Y2iBEO9BL4JrQ5e1+Ek4iXJidtqLZ33SNb47WE2IZys5J7c7954XeyCZQy8xoubyMb
+         BmE9/s5cX3bj2LLI2lbmMSE65aN0kqBEhcKdJNS4xzda2d3f50oNJNrdFM2ofweQJeYG
+         Zmfvp7GYLd9mVdEbu+Xuopq2ceLmLij4KUyLlUwxd8+YU0qQwk7R9YJxJ6ydh5AE3g8N
+         1hkIdKMVFleHaYWrfic9GDU72r0GQ5c5K6BMgi9Bc2oz/J8Lo7RjivFUjp4eYh6OpEie
+         4DvVu5xB2FNW4qj7gO7rzpdw8TR4MJKt2HLNat35l8VPuB8W3/IizlTrWOPMofH4RRlF
+         hUKw==
+X-Gm-Message-State: AKS2vOy5hhA/j6ZlGZQtZ/iJA0hCWCJmS4k/nAcB4sDvucI5BW/KIggM
+        mx2fHBQ3jyNz8Q==
+X-Received: by 10.101.91.197 with SMTP id o5mr13756730pgr.206.1497648257957;
+        Fri, 16 Jun 2017 14:24:17 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:6ce4:5915:18fd:ad77])
+        by smtp.gmail.com with ESMTPSA id i190sm5968478pfc.69.2017.06.16.14.24.16
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 16 Jun 2017 14:12:13 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Adam Langley <agl@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>,
+        Fri, 16 Jun 2017 14:24:16 -0700 (PDT)
+Date:   Fri, 16 Jun 2017 14:24:14 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Adam Langley <agl@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Jeff King <peff@peff.net>, Mike Hommey <mh@glandium.org>,
         Brandon Williams <bmwill@google.com>,
         Linus Torvalds <torvalds@linux-foundation.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Which hash function to use, was Re: RFC: Another proposed hash function transition plan
-References: <20170306002642.xlatomtcrhxwshzn@genre.crustytoothpaste.net>
-        <20170306182423.GB183239@google.com>
-        <alpine.DEB.2.21.1.1706151122180.4200@virtualbox>
-        <20170615110518.ordr43idf2jluips@glandium.org>
-        <20170615130145.stwbtict7q6oel7e@sigill.intra.peff.net>
-        <87shj1ciy8.fsf@gmail.com>
-        <alpine.DEB.2.21.1.1706152123060.4200@virtualbox>
-        <CAL9PXLzhPyE+geUdcLmd=pidT5P8eFEBbSgX_dS88knz2q_LSw@mail.gmail.com>
-        <20170615224110.kvrjs3lmwxcoqfaw@genre.crustytoothpaste.net>
-        <CACBZZX5Z3kQHe_5TgOeuJSgzuvpQdaLo6RrgX_EvuZfdz856sA@mail.gmail.com>
-        <20170616001738.affg4qby7y7yahos@genre.crustytoothpaste.net>
-        <87y3ss8n4h.fsf@gmail.com>
-        <alpine.DEB.2.21.1.1706161438470.4200@virtualbox>
-        <CAL9PXLxMHG1nP5_GQaK_WSJTNKs=_qbaL6V5v2GzVG=9VU2+gA@mail.gmail.com>
-        <xmqq37azy7ru.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 16 Jun 2017 14:12:13 -0700
-In-Reply-To: <xmqq37azy7ru.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 16 Jun 2017 13:52:53 -0700")
-Message-ID: <xmqqr2yjwsb6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+Subject: Re: Which hash function to use, was Re: RFC: Another proposed hash
+ function transition plan
+Message-ID: <20170616212414.GC133952@aiede.mtv.corp.google.com>
+References: <alpine.DEB.2.21.1.1706152123060.4200@virtualbox>
+ <CAL9PXLzhPyE+geUdcLmd=pidT5P8eFEBbSgX_dS88knz2q_LSw@mail.gmail.com>
+ <20170615224110.kvrjs3lmwxcoqfaw@genre.crustytoothpaste.net>
+ <CACBZZX5Z3kQHe_5TgOeuJSgzuvpQdaLo6RrgX_EvuZfdz856sA@mail.gmail.com>
+ <20170616001738.affg4qby7y7yahos@genre.crustytoothpaste.net>
+ <87y3ss8n4h.fsf@gmail.com>
+ <alpine.DEB.2.21.1.1706161438470.4200@virtualbox>
+ <CAL9PXLxMHG1nP5_GQaK_WSJTNKs=_qbaL6V5v2GzVG=9VU2+gA@mail.gmail.com>
+ <xmqq37azy7ru.fsf@gitster.mtv.corp.google.com>
+ <xmqqr2yjwsb6.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr2yjwsb6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>> Adam Langley <agl@google.com> writes:
 
-> Adam Langley <agl@google.com> writes:
+>>> However, as I'm not a git developer, I've no opinion on whether the
+>>> cost of carrying implementations of these functions is worth the speed
+>>> vs using SHA-256, which can be assumed to be supported everywhere
+>>> already.
+>>
+>> Thanks.
+>>
+>> My impression from this thread is that even though fast may be
+>> better than slow, ubiquity trumps it for our use case, as long as
+>> the thing is not absurdly and unusably slow, of course.  Which makes
+>> me lean towards something older/more established like SHA-256, and
+>> it would be a very nice bonus if it gets hardware acceleration more
+>> widely than others ;-)
 >
->> However, as I'm not a git developer, I've no opinion on whether the
->> cost of carrying implementations of these functions is worth the speed
->> vs using SHA-256, which can be assumed to be supported everywhere
->> already.
->
-> Thanks.
->
-> My impression from this thread is that even though fast may be
-> better than slow, ubiquity trumps it for our use case, as long as
-> the thing is not absurdly and unusably slow, of course.  Which makes
-> me lean towards something older/more established like SHA-256, and
-> it would be a very nice bonus if it gets hardware acceleration more
-> widely than others ;-)
+> Ah, I recall one thing that was mentioned but not discussed much in
+> the thread: possible use of tree-hashing to exploit multiple cores
+> hashing a large-ish payload.  As long as it is OK to pick a sound
+> tree hash coding on top of any (secure) underlying hash function,
+> I do not think the use of tree-hashing should not affect which exact
+> underlying hash function is to be used, and I also am not convinced
+> if we really want tree hashing (some codepaths that deal with a large
+> payload wants to stream the data in single pass from head to tail)
+> in the context of Git, but I am not a crypto person, so ...
 
-Ah, I recall one thing that was mentioned but not discussed much in
-the thread: possible use of tree-hashing to exploit multiple cores
-hashing a large-ish payload.  As long as it is OK to pick a sound
-tree hash coding on top of any (secure) underlying hash function,
-I do not think the use of tree-hashing should not affect which exact
-underlying hash function is to be used, and I also am not convinced
-if we really want tree hashing (some codepaths that deal with a large
-payload wants to stream the data in single pass from head to tail)
-in the context of Git, but I am not a crypto person, so ...
+Tree hashing also affects single-core performance because of the
+availability of SIMD instructions.
 
+That is how software implementations of e.g. blake2bp-256 and
+SHA-256x16[1] are able to have competitive performance with (slightly
+better performance than, at least in some cases) hardware
+implementations of SHA-256.
 
+It is also satisfying that we have options like these that are faster
+than SHA-1.
+
+All that said, SHA-256 seems like a fine choice, despite its worse
+performance.  The wide availability of reasonable-quality
+implementations (e.g. in Java you can use
+'MessageDigest.getInstance("SHA-256")') makes it a very tempting one.
+
+Part of the reason I suggested previously that it would be helpful to
+try to benchmark Git with various hash functions (which didn't go over
+well, for some reason) is that it makes these comparisons more
+concrete.  Without measuring, it is hard to get a sense of the
+distribution of input sizes and how much practical effect the
+differences we are talking about have.
+
+Thanks,
+Jonathan
+
+[1] https://eprint.iacr.org/2012/476.pdf
