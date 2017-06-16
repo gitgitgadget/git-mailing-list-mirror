@@ -2,107 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7528D1FA7B
-	for <e@80x24.org>; Fri, 16 Jun 2017 21:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 931151FA7B
+	for <e@80x24.org>; Fri, 16 Jun 2017 21:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751888AbdFPVFH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 17:05:07 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:33608 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751869AbdFPVFF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 17:05:05 -0400
-Received: by mail-pg0-f65.google.com with SMTP id u62so2188724pgb.0
-        for <git@vger.kernel.org>; Fri, 16 Jun 2017 14:05:04 -0700 (PDT)
+        id S1751812AbdFPVKs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 17:10:48 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:37787 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750907AbdFPVKr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 17:10:47 -0400
+Received: by mail-wm0-f53.google.com with SMTP id d73so32670020wma.0
+        for <git@vger.kernel.org>; Fri, 16 Jun 2017 14:10:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=5WR0UBHCPwCZzSSiDX0VYLy8e7rhE1/gZ426Q/y606Y=;
-        b=hcDT9+dF5UHGsfXX05FEv51CojJDSgEHsr3KPuJqdWd+WupnAE57RePolylmfyrQgu
-         jR9zXrsPzO15NCv+YkZikarhF20J7+bNrg1Z3BFol0fODa8ghG2Tlw+lkpYnzPZp1A7V
-         YKgW96OLXCDw89BR3kp4fQBBW6C/jtniB9VTVPQvVkdMJyW6cAWGmJgPRiDfrtajuqDn
-         p/P/WOIkqNz6O1cTbnPjzLd8evsFTun9tTJdZBsBsIyC85fSM3YFfbJ69HyxpB0i6A9y
-         viVRHosqoDFrxufRcq+v9ECpu55+EgDAMe7jhQG8Qzg6Sm8BvxIDzFtDorw3pT+OSc0y
-         UslQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=qDy8JPzWL9F9aVFaKdU0iyNudpnsEpwV3BMW4xbjc7A=;
+        b=bUSV6+6K/qD+VZn+U4EWNEtLOz7oTnw+iPi8N/KSxFuESoAcpEv2/vYf+EdqpayKlg
+         zt1Ru+xqZGI5FDUUu+H06RAKmBTNP2tVYjC1fYZ0WCVVo0scLzcDuXznxHUDmToP4HYX
+         V8ONjUuLRNOHyCVlVDXWQPRGxn17Pv7WloupEuspwbl5dBBaK0+5Wpxn1iP5jxzwtUn8
+         DAPl9GVvhr6OIs1QPFPSFquwjs0v8U5Ofl9CSf+L+Nu9TJDin8B/xMurEcVr/Hyf8Aoi
+         TV96Vz+iShB9lIh3CH2DDwdkix4K2Iqn1AIeILb11GXF/kybNR7q8RDdrCpRI+kPqCh3
+         zLvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=5WR0UBHCPwCZzSSiDX0VYLy8e7rhE1/gZ426Q/y606Y=;
-        b=kwQLlaEqcwanQM06ZTMky5n5xH4ZurLuQmL2+No3DgUb8RijYzPE7ZkTKHSRxJaKyk
-         PZfcUfPfOzGOkahHSuVF1pkVMOkgkX82hSlZGtBAopVrLew5OCTVvoHBzA3DWbSDFFOW
-         dfF/m6/yX0nG4xdzAGd/Z3V/DcBPtLDVIw7OLVon/ZD3R4heDh90fRxm3S4aQpKrIJbl
-         7iFfX74EhUq/9MBeGQ6q8qakqaV+YN08ftH1rVDgJpho7x7Wb7cbLyTfDvPL7W8LFeQ6
-         G412qWalgL7mJKEQCkdcoP9ebGVx1vfF8lP1RXYLia06QIKsNlNEGKOv29CoUThwrZnl
-         n28A==
-X-Gm-Message-State: AKS2vOxcsH6n6MbE5Hi/ZFptzMWLZFC3hvkC4bDmcwxIJaGQIgPkDLZ3
-        6CTDxHqP46JwGg==
-X-Received: by 10.101.76.136 with SMTP id m8mr13229363pgt.159.1497647104264;
-        Fri, 16 Jun 2017 14:05:04 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3047:3460:ee36:a98a])
-        by smtp.gmail.com with ESMTPSA id 66sm6332487pfm.82.2017.06.16.14.05.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 16 Jun 2017 14:05:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/3] Add regression tests for rectent rebase -i fixes
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
-        <20170614102427.5220-1-phillip.wood@talktalk.net>
-        <xmqqshj0yhq1.fsf@gitster.mtv.corp.google.com>
-        <xmqqk24cygvm.fsf@gitster.mtv.corp.google.com>
-        <xmqqfuf0ygmu.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1706161527140.4200@virtualbox>
-        <3c975634-8651-af74-66bf-ee793bc073fc@kdbg.org>
-Date:   Fri, 16 Jun 2017 14:05:02 -0700
-In-Reply-To: <3c975634-8651-af74-66bf-ee793bc073fc@kdbg.org> (Johannes Sixt's
-        message of "Fri, 16 Jun 2017 20:43:26 +0200")
-Message-ID: <xmqqvanvwsn5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=qDy8JPzWL9F9aVFaKdU0iyNudpnsEpwV3BMW4xbjc7A=;
+        b=JZ0uPGyo1W4SK1EBaOSgQdS9/IiE1clJHmk5sSOiIbGPwid1vR+xQTjcNCyLNuu/yB
+         GUuQOiDf2J32gjWSYCGjG5slVfszasKAUQi0LfWtMT4GP0NLEF9nK1PvJ1+WT//kgU8Q
+         56EHHItBgNpr602EJlGdltDfJgpT2Xss6TJ69G1kKv8HQApM0SQyYbvwj0AYs7p5HD04
+         0dOa8b18zBv/Xxs2KRzhCUqpxxcbAP4O46OsMhb7T4OuDgfOqd/mWdB2Qiq9OMj7LKap
+         Fk6MLQfn5L+vluo2UyXJGXiPmBsY6AwjFIjmPRgYx/lV6TaOv78JvHUVSP4VOs0O+Tgh
+         fstg==
+X-Gm-Message-State: AKS2vOzX8qg5iWSeQ+uug4QzrhfoNush1DJUG19tS0jNdAu6zoObvlZD
+        dnqROMZqgdaZ9g==
+X-Received: by 10.80.152.22 with SMTP id g22mr8672081edb.10.1497647445558;
+        Fri, 16 Jun 2017 14:10:45 -0700 (PDT)
+Received: from snth ([92.109.130.42])
+        by smtp.gmail.com with ESMTPSA id o1sm2589650edc.22.2017.06.16.14.10.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 Jun 2017 14:10:44 -0700 (PDT)
+Received: from avar by snth with local (Exim 4.84_2)
+        (envelope-from <avarab@gmail.com>)
+        id 1dLyVv-0001yP-Ll; Fri, 16 Jun 2017 23:10:43 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCHv5 2/2] Documentation/clone: document ignored configuration variables
+References: <CAM0VKjmxtqB2zrWOW8T9O1ReWNPTZA7V3-Dei7GecB3nxVh2Dg@mail.gmail.com> <20170616173849.8071-1-szeder.dev@gmail.com> <20170616173849.8071-3-szeder.dev@gmail.com> <87wp8b94gb.fsf@gmail.com> <20170616204109.GB133952@aiede.mtv.corp.google.com>
+User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <20170616204109.GB133952@aiede.mtv.corp.google.com>
+Date:   Fri, 16 Jun 2017 23:10:43 +0200
+Message-ID: <87vanv8wq4.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
 
-> Am 16.06.2017 um 15:49 schrieb Johannes Schindelin:
->> On Thu, 15 Jun 2017, Junio C Hamano wrote:
->>> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
->>> index 325ec75353..801bce25da 100755
->>> --- a/t/t3420-rebase-autostash.sh
->>> +++ b/t/t3420-rebase-autostash.sh
->>> @@ -45,7 +45,7 @@ create_expected_success_am() {
->>>   }
->>>     create_expected_success_interactive() {
->>> -	cr=$'\r' &&
->>> +	cr=$(echo . | tr '.' '\015') &&
->>>   	cat >expected <<-EOF
->>>   	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
->>>   	HEAD is now at $(git rev-parse --short feature-branch) third commit
->>
->> This is still incorrect, as the \r\n (which $(echo . | tr \.\ '\015')
->> would emit) is interpreted correctly as a line break on Windows, meaning
->> that cr is now *empty*. Not what we want.
->>
->> What I did is to replace the `cat` by `q_to_cr` (we have that lovely
->> function, might just as well use it), replace `${cr}` by `Q` and skip the
->> cr variable altogether.
+On Fri, Jun 16 2017, Jonathan Nieder jotted:
+
+> Ævar Arnfjörð Bjarmason wrote:
+>> On Fri, Jun 16 2017, SZEDER Gábor jotted:
 >
-> You beat me to it. I came up with the identical q_to_cr changes, but
-> haven't dug the remaining failure regarding the swapped output
-> lines. You seem to have nailed it. Will test your proposed changes
-> tomorrow.
+>>> --- a/Documentation/git-clone.txt
+>>> +++ b/Documentation/git-clone.txt
+>>> @@ -186,6 +186,11 @@ objects from the source repository into a pack in the cloned repository.
+>>>  	values are given for the same key, each value will be written to
+>>>  	the config file. This makes it safe, for example, to add
+>>>  	additional fetch refspecs to the origin remote.
+>>> ++
+>>> +Due to limitations if the current implementation, some configuration
+>>> +variables do not take effect until after the initial fetch and checkout.
+>>> +Configuration variables known to not take effect are:
+>>> +`remote.<name>.mirror` and `remote.<name>.tagOpt`.
+>>>
+>>>  --depth <depth>::
+>>>  	Create a 'shallow' clone with a history truncated to the
+> [...]
+>> But this is now cooking in pu, Junio: is it clear that this patchu
+>> as-cooking ideally shouldn't land in next/master without the fix on top
+>> which I mentioned in my mail above? I can just submit that as a patch on
+>> top, but I'm confused about the current state with this cooking in pu,
+>> so I thought I'd ask first how this should be handled.
+>
+> I think it's simplest to write a patch on top that discusses --no-tags.
+> That way, Junio (and anyone else applying the patch) has the
+> flexibility to apply or cherry-pick this change to old branches
+> without the --no-tags discussion and newer branches with it.
+>
+> Would you like to write it (or suggest wording), or would you prefer
+> if someone else does?
 
-Ouch.  Thanks, both of you.
+I can do that no problem.
+
+I just first wanted to clarify what the status of this was, from
+SZEDER's comments in the referenced E-Mails I had the impression that
+this was only meant for an old maintenance release:
+
+    SZEDER: "I assume because, as a bugfix, it will be included in
+    maintenance releases for older releases, and those won't have the
+    '--no-tags' option."
+
+But thinking about it I don't see why we'd be doing such minor doc
+changes in an old maintenance release. I haven't read the whole backlog
+of this topic though, so maybe I missed something.
+
+I initially suggested just adding "Instead supply the --mirror and
+--no-tags options, respectively" to the patch quoted above.
+
+But actually, thinking about this again now, and being recently familiar
+with this code after having implemented  on --no-tags, I think this
+whole wording is just misleading. It makes it sound as though git clone
+is init + fetch, and that the initial fetch just ignores these two
+specific options because of some quirk of the implementation.
+
+In reality clone doesn't use fetch at all, they just share some of the
+underlying fetch machinery.
+
+I think something like this as a replacement is better, assuming this
+really needs to be applied to pre-2.13.0:
+
+    diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+    index 35cc34b2fb..2169e5c97f 100644
+    --- a/Documentation/git-clone.txt
+    +++ b/Documentation/git-clone.txt
+    @@ -189,6 +189,14 @@ objects from the source repository into a pack in the cloned repository.
+            values are given for the same key, each value will be written to
+            the config file. This makes it safe, for example, to add
+            additional fetch refspecs to the origin remote.
+    ++
+    +The underlying implementation of `git clone` isn't equivalent to `git
+    +init` followed by a `git fetch`, but the two share some of the
+    +underlying fetch machinery. Because of this, setting configuration
+    +variables which would impact `git fetch` doesn't have any effect on
+    +`git clone` at all. For example, setting `remote.<name>.mirror` and
+    +`remote.<name>.tagOpt` will do to change how the initial fetch is
+    +carried out.
+
+     --depth <depth>::
+            Create a 'shallow' clone with a history truncated to the
+
+Or, in case this just needs to be applied on top of master we can
+mention --no-tags:
+
+    diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+    index 83c8e9b394..52a371176e 100644
+    --- a/Documentation/git-clone.txt
+    +++ b/Documentation/git-clone.txt
+    @@ -189,6 +189,16 @@ objects from the source repository into a pack in the cloned repository.
+            values are given for the same key, each value will be written to
+            the config file. This makes it safe, for example, to add
+            additional fetch refspecs to the origin remote.
+    ++
+    +The underlying implementation of `git clone` isn't equivalent to `git
+    +init` followed by a `git fetch`, but the two share some of the
+    +underlying fetch machinery. Because of this, setting configuration
+    +variables which would impact `git fetch` doesn't have any effect on
+    +`git clone` at all.
+    ++
+    +For example, setting `remote.<name>.mirror` and `remote.<name>.tagOpt`
+    +will do to change how the initial fetch is carried out. Instead supply
+    +the --mirror and --no-tags options, respectively.
+
+     --depth <depth>::
+            Create a 'shallow' clone with a history truncated to the
