@@ -2,72 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6DFB1FA7B
-	for <e@80x24.org>; Fri, 16 Jun 2017 12:18:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91B201FA7B
+	for <e@80x24.org>; Fri, 16 Jun 2017 12:19:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752990AbdFPMSA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 08:18:00 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:38882 "EHLO
-        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752707AbdFPMR7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 08:17:59 -0400
-X-Greylist: delayed 479 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Jun 2017 08:17:59 EDT
-Received: from tigra (unknown [192.168.2.102])
-        by hermes.domain007.com (Postfix) with ESMTP id 035F1D400D0;
-        Fri, 16 Jun 2017 15:09:58 +0300 (MSK)
-Date:   Fri, 16 Jun 2017 15:09:57 +0300
-From:   Konstantin Khomoutov <flatworm@users.sourceforge.net>
-To:     =?iso-8859-1?B?Q2zpYmlvIEMu?= Felix <clebiofelix@yahoo.com.br>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] GITK don't show unstaged changes
-Message-ID: <20170616120957.finyyp2mrvtc7xf2@tigra>
-References: <905919609.12947564.1497527369339.ref@mail.yahoo.com>
- <905919609.12947564.1497527369339@mail.yahoo.com>
- <1527808373.12987632.1497527566906@mail.yahoo.com>
- <20170616063031.mxx72dlg5ccc3vtq@tigra>
- <1466340834.14042132.1497612459300@mail.yahoo.com>
+        id S1753167AbdFPMTC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 08:19:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41484 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752993AbdFPMTC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 08:19:02 -0400
+Received: (qmail 15802 invoked by uid 109); 16 Jun 2017 12:19:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jun 2017 12:19:01 +0000
+Received: (qmail 4435 invoked by uid 111); 16 Jun 2017 12:19:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jun 2017 08:19:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jun 2017 08:18:59 -0400
+Date:   Fri, 16 Jun 2017 08:18:59 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Ulrich Mueller <ulm@gentoo.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] date: use localtime() for "-local" time formats
+Message-ID: <20170616121859.oas4v2ddleflufus@sigill.intra.peff.net>
+References: <20170615134958.mzmdmhonjsnconu2@sigill.intra.peff.net>
+ <20170615135216.2jfsrjpicku6zxv3@sigill.intra.peff.net>
+ <b79d1c3d-e43e-a82b-2d33-2283cb0aa5ef@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1466340834.14042132.1497612459300@mail.yahoo.com>
-User-Agent: NeoMutt/20170306 (1.8.0)
+In-Reply-To: <b79d1c3d-e43e-a82b-2d33-2283cb0aa5ef@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 16, 2017 at 11:27:39AM +0000, Clébio C. Felix wrote:
+On Thu, Jun 15, 2017 at 06:12:31PM +0200, RenÃ© Scharfe wrote:
 
->>> Details:  https://github.com/git-for-windows/git/issues/1203 
->>> 
->>> Version with bug: 2.13.1
->>> Normal: 2.13.0
->> 
->> Attached are the pictures for those who doesn't want to browse that bug
->> and dig them up.
->> 
->> Basically, the idea is that Gitk in 2.13.1 won't show that "Local
->> uncommitted changes blah blah ..." entry above the one representing the
->> tip commit even though the `git status` command shows them.
-> If this is an intentional change and not a bug, then gitk has become
-> less useful to me, since I've always used it to do a quick review
-> before committing. It's easier than using bash. Sad.
+> Am 15.06.2017 um 15:52 schrieb Jeff King:
+> > But for the special case of the "-local" formats, we can
+> > just skip the adjustment and use localtime() instead of
+> > gmtime(). This makes --date=format-local:%Z work correctly,
+> > showing the local timezone instead of an empty string.
+> 
+> Documentation/rev-list-options.txt should be updated to mention that %Z
+> is passed to strftime in the local case, no?
 
-Hi!
+I wasn't sure if we wanted to get into that. Your documentation update
+(with an empty string) says only that they are "handled internally".
+While it is true that we aren't handling %Z internally anymore, the
+point is that we try to do something sane which may or may not match
+what your system strftime() does. And that continues to be the case
+after my patch.
 
-Well, my message with your pic displaying the bug seemingly failed to
-come through the filters of the list hosting software.
+So unless we are going to give the full breakdown of when %Z is empty
+and when it is not, I prefer to leave it unspecified.
 
-But while we're on it -- please, when you're asked to report your
-problem somewhere else don't just drop a link to a prior discussion:
-chances are very high, most of those who would otherwise pay attention
-to your problem will simply skim over and ignore it whatsoever.
+> > I don't have a Windows system to test this on, but from the output Dscho
+> > provided earlier, I believe this should pass.
+> 
+> The first patch applies with some fuzz on master of Git for Windows, the
+> second one applies cleanly.  A "typedef unsigned long timestamp_t;" is
+> required to compile it; such a fixup won't be needed for long, I guess.
+> t0006 succeeds.
 
-I tried to correct this without much fuss but it seems like that did not
-quite work out ;-)
+Thanks for checking.
 
+-Peff
