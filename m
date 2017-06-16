@@ -2,80 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E34820401
-	for <e@80x24.org>; Fri, 16 Jun 2017 04:30:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E46E920401
+	for <e@80x24.org>; Fri, 16 Jun 2017 04:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750837AbdFPEao (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 00:30:44 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41213 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750760AbdFPEan (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 00:30:43 -0400
-Received: (qmail 19008 invoked by uid 109); 16 Jun 2017 04:30:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jun 2017 04:30:43 +0000
-Received: (qmail 32108 invoked by uid 111); 16 Jun 2017 04:30:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 16 Jun 2017 00:30:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Jun 2017 00:30:41 -0400
-Date:   Fri, 16 Jun 2017 00:30:41 -0400
-From:   Jeff King <peff@peff.net>
-To:     Mike Hommey <mh@glandium.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Brandon Williams <bmwill@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com,
-        Junio Hamano <gitster@pobox.com>
-Subject: Re: Which hash function to use, was Re: RFC: Another proposed hash
- function transition plan
-Message-ID: <20170616043040.sofnpqthmt2skdjt@sigill.intra.peff.net>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <CA+55aFz+gkAsDZ24zmePQuEs1XPS9BP_s8O7Q4wQ7LV7X5-oDA@mail.gmail.com>
- <20170306002642.xlatomtcrhxwshzn@genre.crustytoothpaste.net>
- <20170306182423.GB183239@google.com>
- <alpine.DEB.2.21.1.1706151122180.4200@virtualbox>
- <20170615110518.ordr43idf2jluips@glandium.org>
- <20170615130145.stwbtict7q6oel7e@sigill.intra.peff.net>
- <20170615211022.vmedlcwmvtdiseqx@glandium.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170615211022.vmedlcwmvtdiseqx@glandium.org>
+        id S1750854AbdFPEbA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 00:31:00 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:34939 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750760AbdFPEbA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 00:31:00 -0400
+Received: by mail-io0-f196.google.com with SMTP id f79so3466455ioi.2
+        for <git@vger.kernel.org>; Thu, 15 Jun 2017 21:30:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=GchydvX7jI2MnMPFcWGcCqb9je+RlkPMnfDwYltKjj4=;
+        b=S94UzrcMmQFJZlh00WqWtuSbl0gk9xEKvFBC7/GODLCcDP+EMDFuIKlWVonAjwOwoX
+         uFA0p5omZT6mw1SxjH3M+u88uVtXQ/49VlcxnGaUPG7APUiURfxlBmaOSWzvOIsNT3Rd
+         b6yDFwimDHX2EAEryfW8CKyRp8ifTxbwJorFNHen1PUF+8siibFwT/cSrfwT2oCpAdYG
+         8vuQZD+GU9oa9EB9iIJbSKkGea1w7jRpI2CgxCoe2SGuF7EB4oTpkn0HsPRyR5DyjHR6
+         g/mCplVgM/yOzDeAYj2EUVl3kCuVfkWBvrCdK9Zm052cfpJwTIMxE9SZGml41b9jh5Ok
+         vHJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=GchydvX7jI2MnMPFcWGcCqb9je+RlkPMnfDwYltKjj4=;
+        b=sVMrcB9VMtcWcPHR/xM5j+WSYo19Fb++HKxajs9M7ds4+zyKe45JGQVnmyXfME7P6x
+         f7yPhWDAEUJu0XMMTMLQi8ALJunyoJ54J0nUlLOby1iRmoTfHt4jZF+a9MGdsKE8FJ8j
+         OWMRhuhCYuepQ/Ha8IY3drXucHN0PMf+wIaOsxYu6LFh975r4pEMjxPko7QaD/t7V/Xp
+         Dk3VXu4I1iHd1NNsFXmnTlXtuTfz9Zmvqb382PmmDhjKXsn39uA91AfHgXUd432l9MfR
+         aIRPAjcfibjR1yyenboyx9FaHlv9zqevdsjQ+Y0kWDXEPxkLH+tBS+jXb0CvUCoof2A3
+         aHTQ==
+X-Gm-Message-State: AKS2vOx0/B/kci0gTImNZ7SKV/FuPQ8ajCy5jaFj4tlhPdsUYMem10yz
+        CEkINuag0j+0CB3CvJc=
+X-Received: by 10.107.18.16 with SMTP id a16mr8502002ioj.93.1497587459047;
+        Thu, 15 Jun 2017 21:30:59 -0700 (PDT)
+Received: from localhost.localdomain (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
+        by smtp.gmail.com with ESMTPSA id p22sm627405iod.22.2017.06.15.21.30.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 15 Jun 2017 21:30:58 -0700 (PDT)
+From:   Liam Beguin <liambeguin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, houstonfortney@gmail.com, kostix+git@007spb.ru,
+        peff@peff.net, sxlijin@gmail.com,
+        Liam Beguin <liambeguin@gmail.com>
+Subject: [PATCH 0/3] add stash count information to git-status command
+Date:   Fri, 16 Jun 2017 00:30:47 -0400
+Message-Id: <20170616043050.29192-1-liambeguin@gmail.com>
+X-Mailer: git-send-email 2.9.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 16, 2017 at 06:10:22AM +0900, Mike Hommey wrote:
+As discussed here [*1*], this allows `git status` to show the number of
+entries currently stashed away.
 
-> > > What do the experts think or SHA512/256, which completely removes the
-> > > concerns over length extension attack? (which I'd argue is better than
-> > > sweeping them under the carpet)
-> > 
-> > I don't think it's sweeping them under the carpet. Git does not use the
-> > hash as a MAC, so length extension attacks aren't a thing (and even if
-> > we later wanted to use the same algorithm as a MAC, the HMAC
-> > construction is a well-studied technique for dealing with it).
-> 
-> AIUI, length extension does make brute force collision attacks (which,
-> really Shattered was) cheaper by allowing one to create the collision
-> with a small message and extend it later.
-> 
-> This might not be a credible thread against git, but if we go by that
-> standard, post-shattered Sha-1 is still fine for git. As a matter of
-> fact, MD5 would also be fine: there is still, to this day, no preimage
-> attack against them.
+I also tried to update the related parts of the documentation to use
+'stash entry' instead of 'stash' as we agreed that it was a bit better.
+I don't mind dropping the documentation update and using something like
+"You have %d stash/stashes" in the status message if it makes the change
+"too big".
 
-I think collision attacks are of interest to Git. But I would think
-2^128 would be enough (TBH, 2^80 probably would have been enough for
-SHA-1; it was the weaknesses that brought that down by a factor of a
-million that made it a problem).
+*1* https://public-inbox.org/git/CA+B9myHRahTd+FDgzK5AhXW+hq_Y_czMX9X6MXYBcr9WSPeiDw@mail.gmail.com/
 
--Peff
+Liam Beguin (3):
+  stash: update documentation to use 'stash entries'
+  wt-status: add optional stash status information
+  glossary: define stash entries
+
+ Documentation/config.txt           | 11 ++++++---
+ Documentation/git-pull.txt         |  2 +-
+ Documentation/git-rebase.txt       |  2 +-
+ Documentation/git-stash.txt        | 49 +++++++++++++++++++-------------------
+ Documentation/gitcli.txt           |  2 +-
+ Documentation/glossary-content.txt |  4 ++++
+ git-stash.sh                       |  6 ++---
+ wt-status.c                        | 24 +++++++++++++++++++
+ 8 files changed, 67 insertions(+), 33 deletions(-)
+
+-- 
+2.9.4
+
