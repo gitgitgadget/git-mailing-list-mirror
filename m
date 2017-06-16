@@ -7,60 +7,50 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 381C21FA7B
-	for <e@80x24.org>; Fri, 16 Jun 2017 13:25:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E08E21FA7B
+	for <e@80x24.org>; Fri, 16 Jun 2017 13:50:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753459AbdFPNZP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Jun 2017 09:25:15 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61574 "EHLO mout.gmx.net"
+        id S1752876AbdFPNt7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Jun 2017 09:49:59 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59324 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752566AbdFPNZO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Jun 2017 09:25:14 -0400
+        id S1750967AbdFPNt6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Jun 2017 09:49:58 -0400
 Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MIMQR-1dOK4o1wHH-0047xg; Fri, 16
- Jun 2017 15:24:21 +0200
-Date:   Fri, 16 Jun 2017 15:24:19 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLunc-1dTarK3Dzw-007iwm; Fri, 16
+ Jun 2017 15:49:50 +0200
+Date:   Fri, 16 Jun 2017 15:49:49 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Adam Langley <agl@google.com>, Jeff King <peff@peff.net>,
-        Mike Hommey <mh@glandium.org>,
-        Brandon Williams <bmwill@google.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Phillip Wood <phillip.wood@talktalk.net>,
         Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio Hamano <gitster@pobox.com>
-Subject: Re: Which hash function to use, was Re: RFC: Another proposed hash
- function transition plan
-In-Reply-To: <87y3ss8n4h.fsf@gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1706161438470.4200@virtualbox>
-References: <20170306002642.xlatomtcrhxwshzn@genre.crustytoothpaste.net> <20170306182423.GB183239@google.com> <alpine.DEB.2.21.1.1706151122180.4200@virtualbox> <20170615110518.ordr43idf2jluips@glandium.org> <20170615130145.stwbtict7q6oel7e@sigill.intra.peff.net>
- <87shj1ciy8.fsf@gmail.com> <alpine.DEB.2.21.1.1706152123060.4200@virtualbox> <CAL9PXLzhPyE+geUdcLmd=pidT5P8eFEBbSgX_dS88knz2q_LSw@mail.gmail.com> <20170615224110.kvrjs3lmwxcoqfaw@genre.crustytoothpaste.net> <CACBZZX5Z3kQHe_5TgOeuJSgzuvpQdaLo6RrgX_EvuZfdz856sA@mail.gmail.com>
- <20170616001738.affg4qby7y7yahos@genre.crustytoothpaste.net> <87y3ss8n4h.fsf@gmail.com>
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 0/3] Add regression tests for rectent rebase -i
+ fixes
+In-Reply-To: <xmqqfuf0ygmu.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1706161527140.4200@virtualbox>
+References: <20170531104213.16944-1-phillip.wood@talktalk.net> <20170614102427.5220-1-phillip.wood@talktalk.net> <xmqqshj0yhq1.fsf@gitster.mtv.corp.google.com> <xmqqk24cygvm.fsf@gitster.mtv.corp.google.com> <xmqqfuf0ygmu.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1306072282-1497619461=:4200"
-X-Provags-ID: V03:K0:fnMFm86qY/sO/Xz69ed0OuA8h20ZV5ZMITPvf1HS2dzfPU6NDC9
- Ls60g5DB56gbu4uLUytYbWuODKqJ+3Txy7FpxHKIpaIPmR0hBMGPTpuy3UEmZsT5JIJllTu
- SrhlnuLHdwV8EJlLCa/6BQeFSFCIzPs6w2krvPxBllHxHlLMVbuO3bdyaxS0Q19dV9ijyXA
- U8JV73aw+qT++yjQpL4bw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CFCWgxhCkjw=:j1Q799xSugmGs2+iuY360/
- DC8CA2DoXJObL9bixwALGdSGS66vrH/2NQ/CprLDm6FVtKszwLqWINgCK0B9gJwWWTrHUP+8C
- Dx90GJdFQmhQOtbRJtmeLGpTdbuLQTG0jfOr0Tqf64csNBDHLUjJLnMJ1K5CoCa1rmiXFX1Hl
- uBJZI2KFNGNhxeEYV6QnadmaZSqtlRIIJQG+B3dyB0BjQ5YXTH5lY0O1ISc7GIEj2GvoDiPnq
- 5BPAlIy6Qpq8H9ExK+QFRo5tKNJ+5v6iqkVYhCgF27fYfcu9EKlsTBJNWJN85gw7czn51VICv
- T9bUE/h7L7Vbi/F+b5ZOzK2qV4FNngvQZIMUG3bR6VM8s6YvAMDlP5DCCZddGHZHQvx5cT44p
- AhAfzpRyablpEEFRdO5dgzdrZ3VocJmbSfEUUNW5fP05C0xvUS4gAMwKqBvoBZf2vBd5m7ZQX
- pVcCGPAlljQv31P4uLqeCaAZNxgMRVMMR60G8uGn/wf+64Go4CU+FDjEEsNGxGlKQ2JESAdTn
- xhM4qSlNgLcA+EHwWLZAnjPI/WWtXYXP0IUyP2q6l6vQB2KOeaAg/iyc9kNWuqTl7c4Bikzw9
- bhBxHenJQurQI5vQRotKFe1lOAamGCs5jL9MIixLfDFr6NHKG7F95tCPnvWUfu+5c7lRekVwl
- Ny53K8kjoxeCwOtfuu5VrPBS5Up6534dkFDYqpKmxcFVDdo2un7oS6+ejNLWOz2a5d91Yibhw
- GrGEbs0ZMR9Mw2aIgq/bffaqcl8qq3jkvXQmovO8eJn80JlaeQyVQn3WWJU3RaY8wLE7dydBq
- m8cQGvT
+Content-Type: multipart/mixed; boundary="8323329-503763727-1497620990=:4200"
+X-Provags-ID: V03:K0:/roOeq7fDaEXCg/GipUD6z1kGS21X2ccNBfgCDwZA2KOFk3FiSn
+ kfq/pfGXgssfRYiuBqZiPoQRq9SCn7ufkW+jWlI3GOr/xVnYemuxe9nIkEjARORx8HvJlBj
+ wxIIDzXNyBjDcacvii5TySI9u/oWQaxgfn7I8oFwoiOOPQqWdTKCjQg7/82FjxyaIL/YWXf
+ qsAl5rqdvoVtAIkMUl+8g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+DuUZbcyMk8=:i8tAp0JNt6xlYJLwZk931u
+ U1q6vZbKg8er3vc0/WqJu1qzsQTcZwknsrgb4kOsCYVm3ImftSgj81q67fxtdWEtKOjW4aX7e
+ mYyhprdgMjvfZkm4nLkSMUKgOuHhVyOPW8Om3IErXtaYJDZsJPFE5O9TYdrmqlGa1CRa4avhN
+ klOkNCRSMhSVT/Aj8ukeX6ImEnBLpCmE1NuctKt3UOxzr34mnM5LHyL6PeQOpRc+tYAiUqQbg
+ UqAHLwHv4m8RPLnQuMgiv99C8wR/564fW18MNPTJAqOFT1qEwMRj/Pw42ye5yRC55FsWGODK7
+ DkMQUoH0+6xWlfvSzb7v5RZNcfj98vTpZWri6yDWipRXHAHlDn0oqdZ3x2+UL8Thssh+8QHKV
+ NS3nDREaeE+8P8gDMyms4xdccge/GaFg9Os+6/bknJ7CMkVrm1IovbaSVXTlU/u1Yr8QVsoFW
+ tfDGeRyX9KjFDLg4I1kl+31DcOUK4F4oO8xJHU/6RfW8wx2qg+w8SblqNW9ISKXkGmb8DU1XF
+ HjpvXdUfejgcDVg0zJMCadXKVuKuXRvys3FakfIYY0WsEBrxfW1MeIRw1Y8UP3Hwy29RCjPCt
+ r8uJINcH7pDsHaF58W2PmXI35Nc1iMg1WH6HXmLSMNWFN7v2I0aF7PIBjQEciEZFgFntMv+Zq
+ SPMwWu4ki9zOzdGrOyBH7CXoW+cJIDYbj5Tx13X/bX+WHvukj++qqU1BDiP0z5MM+K6UUlyI2
+ xlzKXmXCTbqp3TSJzF5MN27yW0UjOQCnDLMcM6VaQNs4vkMrrETS6qDaaeQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,157 +59,218 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-1306072282-1497619461=:4200
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+--8323329-503763727-1497620990=:4200
+Content-Type: text/plain; charset=US-ASCII
 
-Hi,
+Hi Junio,
 
-On Fri, 16 Jun 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Thu, 15 Jun 2017, Junio C Hamano wrote:
 
-> On Fri, Jun 16 2017, brian m. carlson jotted:
->=20
-> > On Fri, Jun 16, 2017 at 01:36:13AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
-> >
-> >> So I don't follow the argument that we shouldn't weigh future HW
-> >> acceleration highly just because you can't easily buy a laptop today
-> >> with these features.
-> >>
-> >> Aside from that I think you've got this backwards, it's AMD that's
-> >> adding SHA acceleration to their high-end Ryzen chips[1] but Intel is
-> >> starting at the lower end this year with Goldmont which'll be in
-> >> lower-end consumer devices[2]. If you read the github issue I linked
-> >> to upthread[3] you can see that the cryptopp devs already tested
-> >> their SHA accelerated code on a consumer Celeron[4] recently.
-> >>
-> >> I don't think Intel has announced the SHA extensions for future Xeon
-> >> releases, but it seems given that they're going to have it there as
-> >> well. Have there every been x86 extensions that aren't eventually
-> >> portable across the entire line, or that they've ended up removing
-> >> from x86 once introduced?
-> >>
-> >> In any case, I think by the time we're ready to follow-up the current
-> >> hash refactoring efforts with actually changing the hash
-> >> implementation many of us are likely to have laptops with these
-> >> extensions, making this easy to test.
-> >
-> > I think you underestimate the life of hardware and software.  I have
-> > servers running KVM development instances that have been running since
-> > at least 2012.  Those machines are not scheduled for replacement
-> > anytime soon.
-> >
-> > Whatever we deploy within the next year is going to run on existing
-> > hardware for probably a decade, whether we want it to or not.  Most of
-> > those machines don't have acceleration.
->=20
-> To clarify, I'm not dismissing the need to consider existing hardware
-> without these acceleration functions or future processors without them.
-> I don't think that makes any sense, we need to keep those in mind.
->=20
-> I was replying to a bit in your comment where you (it seems to me) were
-> making the claim that we shouldn't consider the HW acceleration of
-> certain hash functions either.
+> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+> index 325ec75353..801bce25da 100755
+> --- a/t/t3420-rebase-autostash.sh
+> +++ b/t/t3420-rebase-autostash.sh
+> @@ -45,7 +45,7 @@ create_expected_success_am() {
+>  }
+>  
+>  create_expected_success_interactive() {
+> -	cr=$'\r' &&
+> +	cr=$(echo . | tr '.' '\015') &&
+>  	cat >expected <<-EOF
+>  	$(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+>  	HEAD is now at $(git rev-parse --short feature-branch) third commit
 
-Yes, I also had the impression that it stressed the status quo quite a bit
-too much.
+This is still incorrect, as the \r\n (which $(echo . | tr \.\ '\015')
+would emit) is interpreted correctly as a line break on Windows, meaning
+that cr is now *empty*. Not what we want.
 
-We know for a fact that SHA-256 acceleration is coming to consumer CPUs.
-We know of no plans for any of the other mentioned hash functions to
-hardware-accelerate them in consumer CPUs.
+What I did is to replace the `cat` by `q_to_cr` (we have that lovely
+function, might just as well use it), replace `${cr}` by `Q` and skip the
+cr variable altogether.
 
-And remember: for those who are affected most (humongous monorepos, source
-code hosters), upgrading hardware is less of an issue than having a secure
-hash function for the rest of us.
+Additionally, there is another huge problem: the "Applied autostash." is
+printed to stdout, not stderr, in line with how things were done in the
+shell version of rebase -i.
 
-And while I am really thankful that Adam chimed in, I think he would agree
-that BLAKE2 is a purposefully weakened version of BLAKE, for the benefit
-of speed (with the caveat that one of my experts disagrees that BLAKE2b
-would be faster than hardware-accelerated SHA-256). And while BLAKE has
-seen roughly equivalent cryptanalysis as Keccak (which became SHA-3),
-BLAKE2 has not.
+While this was just a minor bug previously, now we exercise that bug, by
+redirecting stderr to stdout and redirecting stdout to the file `actual`.
+Nothing says that stderr should be printed to that file before stdout, but
+that is exactly what the test case tries to verify.
 
-That makes me *very* uneasy about choosing BLAKE2.
+There is only one slight problem: in my Git for Windows SDK, stdout is
+printed first.
 
-> > Furthermore, you need a reasonably modern crypto library to get hardwar=
-e
-> > acceleration.  OpenSSL has only recently gained support for it.  RHEL 7
-> > does not currently support it, and probably never will.  That OS is
-> > going to be around for the next 6 years.
-> >
-> > If we're optimizing for performance, I don't want to optimize for the
-> > latest, greatest machines.  Those machines are going to outperform
-> > everything else either way.  I'd rather optimize for something which
-> > performs well on the whole everywhere.  There are a lot of developers
-> > who have older machines, for cost reasons or otherwise.
->=20
-> We have real data showing that the intersection between people who care
-> about the hash slowing down and those who can't afford the latest
-> hardware is pretty much nil.
->=20
-> I.e. in 2.13.0 SHA-1 got slower, and pretty much nobody noticed or cared
-> except Johannes Schindelin, myself & Christian Couder. This is because
-> in practice hashing only becomes a bottleneck on huge monorepos that
-> need to e.g. re-hash the contents of a huge index.
+The quick fix would be to redirect stderr and stdout independently.
 
-Indeed. I am still concerned about that. As you mention, though, it really
-only affects users of ginormous monorepos, and of course source code
-hosters.
+However, I think it is time for that bug to be fixed: autostash messages
+should really go to stderr, just like the rest of them rebase messages.
 
-The jury's still out on how much it impacts my colleagues, by the way.
+I attached the patch, together with the two fixups to Phillip's patches,
+and a fixup for the autostash-messages-to-stderr patch that I think should
+be squashed in but I really ran out of time testing this.
 
-I have no doubt that Visual Studio Team Services, GitHub and Atlassian
-will eventually end up with FPGAs for hash computation. So that's that.
-
-Side note: BLAKE is actually *not* friendly to hardware acceleration, I
-have been told by one cryptography expert. In contrast, the Keccak team
-claims SHA3-256 to be the easiest to hardware-accelerate, making it "a
-green cryptographic primitive":
-http://keccak.noekeon.org/is_sha3_slow.html
-
-> > Here are some stats (cycles/byte for long messages):
-> >
-> >                    SHA-256    BLAKE2b
-> > Ryzen                 1.89       3.06
-> > Knight's Landing     19.00       5.65
-> > Cortex-A72            1.99       5.48
-> > Cortex-A57           11.81       5.47
-> > Cortex-A7            28.19      15.16
-> >
-> > In other words, BLAKE2b performs well uniformly across a wide variety o=
-f
-> > architectures even without acceleration.  I'd rather tell people that
-> > upgrading to a new hash algorithm is a performance win either way, not
-> > just if they have the latest hardware.
->=20
-> Yup, all of those need to be considered, although given my comment above
-> about big repos a 40% improvement on Ryzen (a processor likely to be
-> used for big repos) stands out, where are those numbers from, and is
-> that with or without HW accel for SHA-256 on Ryzen?
-
-When it comes to BLAKE2, I would actually strongly suggest to consider the
-amount of attempts to break it. Or rather, how much less attention it got
-than, say, SHA-256.
-
-In any case, I have been encouraged to stress the importance of
-"crypto-agility", i.e. the ability to switch to another algorithm when the
-current one gets broken "enough".
-
-And I am delighted that that is exactly the direction we are going. In
-other words, even if I still think (backed up by the experts on whose
-knowledge I lean heavily to form my opinions) that SHA-256 would be the
-best choice for now, it should be relatively easy to offer BLAKE2b support
-for (and by [*1*]) those who want it.
+Phillip, would you mind picking those changes up as you deem appropriate?
 
 Ciao,
 Dscho
+--8323329-503763727-1497620990=:4200
+Content-Type: text/x-diff; name=0001-sequencer-print-autostash-messages-to-stderr.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <alpine.DEB.2.21.1.1706161549490.4200@virtualbox>
+Content-Description: 
+Content-Disposition: attachment; filename=0001-sequencer-print-autostash-messages-to-stderr.patch
 
-Footnote *1*: I say that the support for BLAKE2b should come from those
-parties who desire it also because it is not as ubiquituous as SHA-256.
-Hence, it would add the burden of having a performant and reasonably
-bug-free implementation in Git's source tree. IIUC OpenSSL added BLAKE2b
-support only in OpenSSL 1.1.0, the 1.0.2 line (which is still in use in
-many places, e.g. Git for Windows' SDK) does not, meaning: Git's
-implementation would be the one *everybody* relies on, with *no*
-fall-back.
---8323329-1306072282-1497619461=:4200--
+RnJvbSBjNWE4MzE5ZjAzNzhkOTNiZTVhZWEwNWI4MzNiYjVlMjNjOWYwYjNk
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQ0KRnJvbTogSm9oYW5uZXMgU2No
+aW5kZWxpbiA8am9oYW5uZXMuc2NoaW5kZWxpbkBnbXguZGU+DQpEYXRlOiBG
+cmksIDE2IEp1biAyMDE3IDE1OjM0OjUwICswMjAwDQpTdWJqZWN0OiBbUEFU
+Q0ggMS80XSBzZXF1ZW5jZXI6IHByaW50IGF1dG9zdGFzaCBtZXNzYWdlcyB0
+byBzdGRlcnINCg0KVGhlIHJlYmFzZSBtZXNzYWdlcyBhcmUgcHJpbnRlZCB0
+byBzdGRlcnIgdHJhZGl0aW9uYWxseS4gSXQgd2FzIGEgYnVnDQppbnRyb2R1
+Y2VkIGluIDU4Nzk0Nzc1MGJkIChyZWJhc2U6IGltcGxlbWVudCAtLVtuby1d
+YXV0b3N0YXNoIGFuZA0KcmViYXNlLmF1dG9zdGFzaCwgMjAxMy0wNS0xMikg
+YW5kIHRoYXQgYnVnIGhhcyBiZWVuIGZhaXRoZnVsbHkgY29waWVkDQp3aGVu
+IHJlaW1wbGVtZW50aW5nIHBhcnRzIG9mIHRoZSBpbnRlcmFjdGl2ZSByZWJh
+c2UgaW4gdGhlIHNlcXVlbmNlci4NCg0KSXQgaXMgdGltZSB0byBmaXggdGhh
+dDogbGV0J3MgcHJpbnQgdGhlIGF1dG9zdGFzaCBtZXNzYWdlcyB0byBzdGRl
+cnINCmluc3RlYWQgb2Ygc3Rkb3V0Lg0KDQpTaWduZWQtb2ZmLWJ5OiBKb2hh
+bm5lcyBTY2hpbmRlbGluIDxqb2hhbm5lcy5zY2hpbmRlbGluQGdteC5kZT4N
+Ci0tLQ0KIHNlcXVlbmNlci5jIHwgMTEgKysrKysrLS0tLS0NCiAxIGZpbGUg
+Y2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQ0KDQpk
+aWZmIC0tZ2l0IGEvc2VxdWVuY2VyLmMgYi9zZXF1ZW5jZXIuYw0KaW5kZXgg
+YTU5NDA4YTIzYTIuLjg3MTNjYzhkMWQ1IDEwMDY0NA0KLS0tIGEvc2VxdWVu
+Y2VyLmMNCisrKyBiL3NlcXVlbmNlci5jDQpAQCAtMTkyMyw3ICsxOTIzLDcg
+QEAgc3RhdGljIGludCBhcHBseV9hdXRvc3Rhc2goc3RydWN0IHJlcGxheV9v
+cHRzICpvcHRzKQ0KIAlhcmd2X2FycmF5X3B1c2goJmNoaWxkLmFyZ3MsICJh
+cHBseSIpOw0KIAlhcmd2X2FycmF5X3B1c2goJmNoaWxkLmFyZ3MsIHN0YXNo
+X3NoYTEuYnVmKTsNCiAJaWYgKCFydW5fY29tbWFuZCgmY2hpbGQpKQ0KLQkJ
+cHJpbnRmKF8oIkFwcGxpZWQgYXV0b3N0YXNoLlxuIikpOw0KKwkJZnByaW50
+ZihzdGRlcnIsIF8oIkFwcGxpZWQgYXV0b3N0YXNoLlxuIikpOw0KIAllbHNl
+IHsNCiAJCXN0cnVjdCBjaGlsZF9wcm9jZXNzIHN0b3JlID0gQ0hJTERfUFJP
+Q0VTU19JTklUOw0KIA0KQEAgLTE5MzcsMTAgKzE5MzcsMTEgQEAgc3RhdGlj
+IGludCBhcHBseV9hdXRvc3Rhc2goc3RydWN0IHJlcGxheV9vcHRzICpvcHRz
+KQ0KIAkJaWYgKHJ1bl9jb21tYW5kKCZzdG9yZSkpDQogCQkJcmV0ID0gZXJy
+b3IoXygiY2Fubm90IHN0b3JlICVzIiksIHN0YXNoX3NoYTEuYnVmKTsNCiAJ
+CWVsc2UNCi0JCQlwcmludGYoXygiQXBwbHlpbmcgYXV0b3N0YXNoIHJlc3Vs
+dGVkIGluIGNvbmZsaWN0cy5cbiINCi0JCQkJIllvdXIgY2hhbmdlcyBhcmUg
+c2FmZSBpbiB0aGUgc3Rhc2guXG4iDQotCQkJCSJZb3UgY2FuIHJ1biBcImdp
+dCBzdGFzaCBwb3BcIiBvciINCi0JCQkJIiBcImdpdCBzdGFzaCBkcm9wXCIg
+YXQgYW55IHRpbWUuXG4iKSk7DQorCQkJZnByaW50ZihzdGRlcnIsDQorCQkJ
+CV8oIkFwcGx5aW5nIGF1dG9zdGFzaCByZXN1bHRlZCBpbiBjb25mbGljdHMu
+XG4iDQorCQkJCSAgIllvdXIgY2hhbmdlcyBhcmUgc2FmZSBpbiB0aGUgc3Rh
+c2guXG4iDQorCQkJCSAgIllvdSBjYW4gcnVuIFwiZ2l0IHN0YXNoIHBvcFwi
+IG9yIg0KKwkJCQkgICIgXCJnaXQgc3Rhc2ggZHJvcFwiIGF0IGFueSB0aW1l
+LlxuIikpOw0KIAl9DQogDQogCXN0cmJ1Zl9yZWxlYXNlKCZzdGFzaF9zaGEx
+KTsNCi0tIA0KMi4xMi4yLndpbmRvd3MuMQ0KDQo=
+
+--8323329-503763727-1497620990=:4200
+Content-Type: text/x-diff; name=0002-fixup-rebase-add-regression-tests-for-console-output.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <alpine.DEB.2.21.1.1706161549491.4200@virtualbox>
+Content-Description: 
+Content-Disposition: attachment; filename=0002-fixup-rebase-add-regression-tests-for-console-output.patch
+
+RnJvbSAzNDI1ZjdjOWJmYjYyYzNkMmQ0YWRhZmY0MWE2NjRkZDRhZTJlZmE5
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQ0KRnJvbTogSm9oYW5uZXMgU2No
+aW5kZWxpbiA8am9oYW5uZXMuc2NoaW5kZWxpbkBnbXguZGU+DQpEYXRlOiBG
+cmksIDE2IEp1biAyMDE3IDE1OjM5OjIwICswMjAwDQpTdWJqZWN0OiBbUEFU
+Q0ggMi80XSBmaXh1cCEgcmViYXNlOiBhZGQgcmVncmVzc2lvbiB0ZXN0cyBm
+b3IgY29uc29sZSBvdXRwdXQNCg0KU2lnbmVkLW9mZi1ieTogSm9oYW5uZXMg
+U2NoaW5kZWxpbiA8am9oYW5uZXMuc2NoaW5kZWxpbkBnbXguZGU+DQotLS0N
+CiB0L3QzNDIwLXJlYmFzZS1hdXRvc3Rhc2guc2ggfCA3ICsrKy0tLS0NCiAx
+IGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspLCA0IGRlbGV0aW9ucygt
+KQ0KDQpkaWZmIC0tZ2l0IGEvdC90MzQyMC1yZWJhc2UtYXV0b3N0YXNoLnNo
+IGIvdC90MzQyMC1yZWJhc2UtYXV0b3N0YXNoLnNoDQppbmRleCA4MDFiY2Uy
+NWRhNC4uNjQ5MDRiZWYwNjkgMTAwNzU1DQotLS0gYS90L3QzNDIwLXJlYmFz
+ZS1hdXRvc3Rhc2guc2gNCisrKyBiL3QvdDM0MjAtcmViYXNlLWF1dG9zdGFz
+aC5zaA0KQEAgLTQ1LDEyICs0NSwxMSBAQCBjcmVhdGVfZXhwZWN0ZWRfc3Vj
+Y2Vzc19hbSgpIHsNCiB9DQogDQogY3JlYXRlX2V4cGVjdGVkX3N1Y2Nlc3Nf
+aW50ZXJhY3RpdmUoKSB7DQotCWNyPSQoZWNobyAuIHwgdHIgJy4nICdcMDE1
+JykgJiYNCi0JY2F0ID5leHBlY3RlZCA8PC1FT0YNCisJcV90b19jciA+ZXhw
+ZWN0ZWQgPDwtRU9GDQogCSQoZ3JlcCAiXkNyZWF0ZWQgYXV0b3N0YXNoOiBb
+MC05YS1mXVswLTlhLWZdKlwkIiBhY3R1YWwpDQogCUhFQUQgaXMgbm93IGF0
+ICQoZ2l0IHJldi1wYXJzZSAtLXNob3J0IGZlYXR1cmUtYnJhbmNoKSB0aGly
+ZCBjb21taXQNCi0JUmViYXNpbmcgKDEvMikke2NyfVJlYmFzaW5nICgyLzIp
+JHtjcn1TdWNjZXNzZnVsbHkgcmViYXNlZCBhbmQgdXBkYXRlZCByZWZzL2hl
+YWRzL3JlYmFzZWQtZmVhdHVyZS1icmFuY2guDQotCUFwcGxpZWQgYXV0b3N0
+YXNoLg0KKwlSZWJhc2luZyAoMS8yKVFSZWJhc2luZyAoMi8yKVFBcHBsaWVk
+IGF1dG9zdGFzaC4NCisJU3VjY2Vzc2Z1bGx5IHJlYmFzZWQgYW5kIHVwZGF0
+ZWQgcmVmcy9oZWFkcy9yZWJhc2VkLWZlYXR1cmUtYnJhbmNoLg0KIAlFT0YN
+CiB9DQogDQotLSANCjIuMTIuMi53aW5kb3dzLjENCg0K
+
+--8323329-503763727-1497620990=:4200
+Content-Type: text/x-diff; name=0003-fixup-rebase-add-more-regression-tests-for-console-o.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <alpine.DEB.2.21.1.1706161549492.4200@virtualbox>
+Content-Description: 
+Content-Disposition: attachment; filename=0003-fixup-rebase-add-more-regression-tests-for-console-o.patch
+
+RnJvbSBlMTZhZDk4OWM4NWM1NWJkZmNmNDVmZTU2MTkxMWE2OTllOTYyYjQ0
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQ0KRnJvbTogSm9oYW5uZXMgU2No
+aW5kZWxpbiA8am9oYW5uZXMuc2NoaW5kZWxpbkBnbXguZGU+DQpEYXRlOiBG
+cmksIDE2IEp1biAyMDE3IDE1OjM5OjM1ICswMjAwDQpTdWJqZWN0OiBbUEFU
+Q0ggMy80XSBmaXh1cCEgcmViYXNlOiBhZGQgbW9yZSByZWdyZXNzaW9uIHRl
+c3RzIGZvciBjb25zb2xlDQogb3V0cHV0DQoNClNpZ25lZC1vZmYtYnk6IEpv
+aGFubmVzIFNjaGluZGVsaW4gPGpvaGFubmVzLnNjaGluZGVsaW5AZ214LmRl
+Pg0KLS0tDQogdC90MzQyMC1yZWJhc2UtYXV0b3N0YXNoLnNoIHwgNyArKyst
+LS0tDQogMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgNCBkZWxl
+dGlvbnMoLSkNCg0KZGlmZiAtLWdpdCBhL3QvdDM0MjAtcmViYXNlLWF1dG9z
+dGFzaC5zaCBiL3QvdDM0MjAtcmViYXNlLWF1dG9zdGFzaC5zaA0KaW5kZXgg
+NjQ5MDRiZWYwNjkuLjJjMDFhZTZhZDJhIDEwMDc1NQ0KLS0tIGEvdC90MzQy
+MC1yZWJhc2UtYXV0b3N0YXNoLnNoDQorKysgYi90L3QzNDIwLXJlYmFzZS1h
+dXRvc3Rhc2guc2gNCkBAIC0xMDIsMTQgKzEwMiwxMyBAQCBjcmVhdGVfZXhw
+ZWN0ZWRfZmFpbHVyZV9hbSgpIHsNCiB9DQogDQogY3JlYXRlX2V4cGVjdGVk
+X2ZhaWx1cmVfaW50ZXJhY3RpdmUoKSB7DQotCWNyPSQoZWNobyAuIHwgdHIg
+Jy4nICdcMDE1JykgJiYNCi0JY2F0ID5leHBlY3RlZCA8PC1FT0YNCisJcV90
+b19jciA+ZXhwZWN0ZWQgPDwtRU9GDQogCSQoZ3JlcCAiXkNyZWF0ZWQgYXV0
+b3N0YXNoOiBbMC05YS1mXVswLTlhLWZdKlwkIiBhY3R1YWwpDQogCUhFQUQg
+aXMgbm93IGF0ICQoZ2l0IHJldi1wYXJzZSAtLXNob3J0IGZlYXR1cmUtYnJh
+bmNoKSB0aGlyZCBjb21taXQNCi0JUmViYXNpbmcgKDEvMikke2NyfVJlYmFz
+aW5nICgyLzIpJHtjcn1TdWNjZXNzZnVsbHkgcmViYXNlZCBhbmQgdXBkYXRl
+ZCByZWZzL2hlYWRzL3JlYmFzZWQtZmVhdHVyZS1icmFuY2guDQotCUFwcGx5
+aW5nIGF1dG9zdGFzaCByZXN1bHRlZCBpbiBjb25mbGljdHMuDQorCVJlYmFz
+aW5nICgxLzIpUVJlYmFzaW5nICgyLzIpUUFwcGx5aW5nIGF1dG9zdGFzaCBy
+ZXN1bHRlZCBpbiBjb25mbGljdHMuDQogCVlvdXIgY2hhbmdlcyBhcmUgc2Fm
+ZSBpbiB0aGUgc3Rhc2guDQogCVlvdSBjYW4gcnVuICJnaXQgc3Rhc2ggcG9w
+IiBvciAiZ2l0IHN0YXNoIGRyb3AiIGF0IGFueSB0aW1lLg0KKwlTdWNjZXNz
+ZnVsbHkgcmViYXNlZCBhbmQgdXBkYXRlZCByZWZzL2hlYWRzL3JlYmFzZWQt
+ZmVhdHVyZS1icmFuY2guDQogCUVPRg0KIH0NCiANCi0tIA0KMi4xMi4yLndp
+bmRvd3MuMQ0KDQo=
+
+--8323329-503763727-1497620990=:4200
+Content-Type: text/x-diff; name=0004-fixup-sequencer-print-autostash-messages-to-stderr.patch
+Content-Transfer-Encoding: BASE64
+Content-ID: <alpine.DEB.2.21.1.1706161549493.4200@virtualbox>
+Content-Description: 
+Content-Disposition: attachment; filename=0004-fixup-sequencer-print-autostash-messages-to-stderr.patch
+
+RnJvbSAxMjhjNGE2NmFiMzQxM2IyMTM1MjY0ZjE3MDI0ZTFmNWU5MjUwZjAz
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQ0KRnJvbTogSm9oYW5uZXMgU2No
+aW5kZWxpbiA8am9oYW5uZXMuc2NoaW5kZWxpbkBnbXguZGU+DQpEYXRlOiBG
+cmksIDE2IEp1biAyMDE3IDE1OjQwOjQ2ICswMjAwDQpTdWJqZWN0OiBbUEFU
+Q0ggNC80XSBmaXh1cCEgc2VxdWVuY2VyOiBwcmludCBhdXRvc3Rhc2ggbWVz
+c2FnZXMgdG8gc3RkZXJyDQoNClRoaXMgaXMgdGhlIGNvbXBhbmlvbiB0byB0
+aGUgcHJvcG9zZWQgcGF0Y2gsIGJ1dCBJIGhhZCBubyB0aW1lIHRvIHZlcmlm
+eQ0KdGhhdCB0aGUgdGVzdCBzdWl0ZSBzdGlsbCBwYXNzZXMgKGl0IG1heSBh
+Y3R1YWxseSB0ZXN0IGZvciB0aGUgYnVnZ3kNCmJlaGF2aW9yLi4uKQ0KDQpT
+aWduZWQtb2ZmLWJ5OiBKb2hhbm5lcyBTY2hpbmRlbGluIDxqb2hhbm5lcy5z
+Y2hpbmRlbGluQGdteC5kZT4NCi0tLQ0KIGdpdC1yZWJhc2Uuc2ggfCA0ICsr
+LS0NCiAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCAyIGRlbGV0
+aW9ucygtKQ0KDQpkaWZmIC0tZ2l0IGEvZ2l0LXJlYmFzZS5zaCBiL2dpdC1y
+ZWJhc2Uuc2gNCmluZGV4IGRiMWRlZWQ4NDY0Li4yY2Y3M2I4OGU4ZSAxMDA3
+NTUNCi0tLSBhL2dpdC1yZWJhc2Uuc2gNCisrKyBiL2dpdC1yZWJhc2Uuc2gN
+CkBAIC0xNjYsMTQgKzE2NiwxNCBAQCBhcHBseV9hdXRvc3Rhc2ggKCkgew0K
+IAkJc3Rhc2hfc2hhMT0kKGNhdCAiJHN0YXRlX2Rpci9hdXRvc3Rhc2giKQ0K
+IAkJaWYgZ2l0IHN0YXNoIGFwcGx5ICRzdGFzaF9zaGExIDI+JjEgPi9kZXYv
+bnVsbA0KIAkJdGhlbg0KLQkJCWVjaG8gIiQoZ2V0dGV4dCAnQXBwbGllZCBh
+dXRvc3Rhc2guJykiDQorCQkJZWNobyAiJChnZXR0ZXh0ICdBcHBsaWVkIGF1
+dG9zdGFzaC4nKSIgPiYyDQogCQllbHNlDQogCQkJZ2l0IHN0YXNoIHN0b3Jl
+IC1tICJhdXRvc3Rhc2giIC1xICRzdGFzaF9zaGExIHx8DQogCQkJZGllICIk
+KGV2YWxfZ2V0dGV4dCAiQ2Fubm90IHN0b3JlIFwkc3Rhc2hfc2hhMSIpIg0K
+IAkJCWdldHRleHQgJ0FwcGx5aW5nIGF1dG9zdGFzaCByZXN1bHRlZCBpbiBj
+b25mbGljdHMuDQogWW91ciBjaGFuZ2VzIGFyZSBzYWZlIGluIHRoZSBzdGFz
+aC4NCiBZb3UgY2FuIHJ1biAiZ2l0IHN0YXNoIHBvcCIgb3IgImdpdCBzdGFz
+aCBkcm9wIiBhdCBhbnkgdGltZS4NCi0nDQorJyA+JjINCiAJCWZpDQogCWZp
+DQogfQ0KLS0gDQoyLjEyLjIud2luZG93cy4xDQoNCg==
+
+--8323329-503763727-1497620990=:4200--
