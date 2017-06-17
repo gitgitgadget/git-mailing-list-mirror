@@ -2,145 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2516820282
-	for <e@80x24.org>; Sat, 17 Jun 2017 12:19:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63B4220282
+	for <e@80x24.org>; Sat, 17 Jun 2017 12:25:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752983AbdFQMTh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Jun 2017 08:19:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42001 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752967AbdFQMTg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Jun 2017 08:19:36 -0400
-Received: (qmail 19196 invoked by uid 109); 17 Jun 2017 12:19:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 17 Jun 2017 12:19:36 +0000
-Received: (qmail 13798 invoked by uid 111); 17 Jun 2017 12:19:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 17 Jun 2017 08:19:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Jun 2017 08:19:34 -0400
-Date:   Sat, 17 Jun 2017 08:19:34 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] sha1_file: consolidate storage-agnostic object fns
-Message-ID: <20170617121934.a6onn7f2luhkuuym@sigill.intra.peff.net>
-References: <cover.1497387713.git.jonathantanmy@google.com>
- <cover.1497035376.git.jonathantanmy@google.com>
- <cover.1497387713.git.jonathantanmy@google.com>
- <33a75a60b1d4298ec0af21c0df19e12bb0e43e2d.1497387714.git.jonathantanmy@google.com>
- <xmqq7f0d2l8p.fsf@gitster.mtv.corp.google.com>
+        id S1752951AbdFQMZm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Jun 2017 08:25:42 -0400
+Received: from mail-ua0-f178.google.com ([209.85.217.178]:34424 "EHLO
+        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752924AbdFQMZl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Jun 2017 08:25:41 -0400
+Received: by mail-ua0-f178.google.com with SMTP id m31so38554224uam.1
+        for <git@vger.kernel.org>; Sat, 17 Jun 2017 05:25:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Gmx2DQgi5dyiem08EWqhQNxlwJod+B0ZsHH4ni8ObR0=;
+        b=Kb9g3LWoYkL8SDbF36VkISL82Nrepx7pWcBOdfK2o6nyPKbmTdJHKtttCtnz9VqhvY
+         tXmVKhxFsq1CxLss/dhR02z1o4K1a+Nszb+Y24sQubmIt5lkPhr+Cua5Jiqcy9WZ1EX+
+         4Ab7biHQxnItzp3YDFM1OyaMVddHDFfeDvNsSBQqHUYwbpLd3ZDddf/heLiwRNcIJajI
+         l4D5S+/R1TAsIC0gsj9SI2pTEAxb0UUT4lS+DDyzoIASoJv0A/iC1Ra7bsmXyJ4CVMmR
+         lUbVbZ8oKC2ftmry/3VZO7e0EaUJ2WDXkmluDFlTTEdR2dJzb+6x0geIK7I6sNassttT
+         Oamw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Gmx2DQgi5dyiem08EWqhQNxlwJod+B0ZsHH4ni8ObR0=;
+        b=WM4cy4QREwPZ4prvQdvOI3UIolfgr5JgBs+dQfb+LuFCaiVzkdEm5UxRe4EbrL5ZSd
+         HdDnn5R+8eoVTinLKqG920yPo3xNR6el8TuiCiS5fs+D1+sdNy3EEpYfdpjhJqzUYAkW
+         pVU1e/WmPcBBDtgmKP1xPuQE7aJ4gImGrjgdjiGzbEWktc0xlwdRSYS2OnUzjwdCMNEu
+         0fzWHODsxHMkkFlfC22e8bsa4I+3tt5XYuZ3i8xwsejgU4OcY4hHXTpYEg4AK2rr1PfC
+         NU+1dRq9QT5nsUkONSE6dswS3lRdk40OL7ru63vTwaMI5cbtPUjeXo00tvinKtnu+oqN
+         5STQ==
+X-Gm-Message-State: AKS2vOzfDfXk6gvwRl5iKw9MQO2We379G+EZTkMrxWfAWAljMEH3fN1F
+        p6v8ZI+AxBxS69eBQYR3Q4Ls0jEmt38O
+X-Received: by 10.159.36.147 with SMTP id 19mr8043050uar.152.1497702340339;
+ Sat, 17 Jun 2017 05:25:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7f0d2l8p.fsf@gitster.mtv.corp.google.com>
+Received: by 10.176.80.214 with HTTP; Sat, 17 Jun 2017 05:25:39 -0700 (PDT)
+In-Reply-To: <xmqqa857wqay.fsf@gitster.mtv.corp.google.com>
+References: <20170616192837.11035-1-szeder.dev@gmail.com> <xmqqa857wqay.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Sat, 17 Jun 2017 14:25:39 +0200
+Message-ID: <CAM0VKj=1DiPZzGot34Ar9SQR8VWV8ugvzFhAMibnZ8d-4F+1QA@mail.gmail.com>
+Subject: Re: [RFC/PATCH 0/5] remote: eliminate remote->{fetch,push}_refspec
+ and lazy parsing of refspecs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 15, 2017 at 10:50:46AM -0700, Junio C Hamano wrote:
+On Fri, Jun 16, 2017 at 11:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>
+>> 'struct remote' stores refspecs twice: once in their original string
+>> form in remote->{fetch,push}_refspecs and once in their parsed form in
+>> remote->{fetch,push}.  This is necessary, because we need the refspecs
+>> for lazy parsing after we finished reading the configuration: we don't
+>> want to die() on a bogus refspec while reading the configuration of a
+>> remote we are not going to access at all.
+>>
+>> However, storing refspecs in both forms has some drawbacks:
+>>
+>>   - The same information is stored twice, wasting memory.
+>
+> True (but a few hundred bytes is nothing among friends ;-)
 
-> >  	if (!find_pack_entry(real, &e)) {
-> >  		/* Most likely it's a loose object. */
-> > -		if (!sha1_loose_object_info(real, oi, flags)) {
-> > +		if (oi && !sha1_loose_object_info(real, oi, flags)) {
-> >  			oi->whence = OI_LOOSE;
-> >  			return 0;
-> >  		}
-> > +		if (!oi && has_loose_object(real))
-> > +			return 0;
-> 
-> This conversion is not incorrect per-se.  
-> 
-> We can see that has_sha1_file_with_flags() after this patch still
-> calls has_loose_object().  But it bothers me that there is no hint
-> to future developers to warn that a rewrite of the above like this
-> is incorrect:
-> 
->         if (!find_pack_entry(read, &e)) {
->                 /* Most likely it's a loose object. */
->        +        struct object_info dummy_oi;
->        +        if (!oi) {
->        +                memset(&dummy_oi, 0, sizeof(dummy_oi);
->        +                oi = &dummy_oi;
->        +        }
->        -        if (oi && !sha1_loose_object_info(real, oi, flags)) {
->        +        if (!sha1_loose_object_info(real, oi, flags)) {
->                         oi->whence = OI_LOOSE;
->                         return 0;
->                 }
->        -        if (!oi && has_loose_object(real))
->        -                return 0;
-> 
-> It used to be very easy to see that has_sha1_file_with_flags() will
-> call has_loose_object() when it does not find the object in a pack,
-> which will result in the loose object file freshened.  In the new
-> code, it is very subtle to see that---it will happen when the caller
-> passes oi == NULL, and has_sha1_file_with_flags() is such a caller,
-> but it is unclear if there are other callers of this "consolidated"
-> sha1_object_info_extended() that passes oi == NULL, and if they do
-> also want to freshen the loose object file when they do so.
+Indeed.  Even in my repos with close to 10k remotes the amount of
+memory wasted by the duplicated refspecs is not an problem, there are
+more pressing issues there.
 
-I also found this quite subtle. However, I don't think that
-has_sha1_file() actually freshens. It's a bit confusing because
-has_loose_object() reuses the check_and_freshen() function to do the
-lookup, but it actually sets the "freshen" flag to false.
+>>   - remote->{fetch,push}_refspecs, i.e. the string arrays are
+>>     conveniently ALLOC_GROW()-able with associated
+>>     {fetch,push}_refspec_{nr,alloc} fields, but remote->{fetch,push}
+>>     are not.
+>
+> This is a more real issue.
+>
+>>   - Wherever remote->{fetch,push} are accessed, the number of parsed
+>>     refspecs in there is specified by remote->{fetch,push}_refspec_nr.
+>>     This requires us to keep the two arrays in sync and makes adding
+>>     additional refspecs cumbersome and error prone.
+>
+> You haven't told us which way you want to dedup.
 
-That's why in 33d4221c7 (write_sha1_file: freshen existing objects,
-2014-10-15), which introduced the freshening functions and converted
-has_loose_object(), the actual write_sha1_file() function switched to
-using the freshening functions directly (and obviously sets the freshen
-parameter to true).
+Well, I actually did, right at the beginning.  The Subject:
+specifically mentions which fields will be removed, and the first one
+and a half line says in more usual terms what their roles are.
 
-I actually think all of that infrastructure could become part of
-Jonathan's consolidated lookup, too. We would just need:
+Anyway, made a note to use more natural language in the subjects (and
+elsewhere) when we get there, maybe "remote.c: don't store refspecs as
+strings in 'struct remote'" or something.
 
-  1. A QUICK flag to avoid re-reading objects/pack when we don't find
-     anything (which it looks like he already has).
+>  Are you keeping
+> the original and removing the pre-parsed?  or are you only keeping
+> the pre-parsed ones?  As long as you want ALLOC_GROW() ability, you
+> need to maintain the invariants in three-tuple (foo, foo_alloc,
+> foo_nr).
+>
+>>   - And worst of all, it pissed me off while working on
+>>     sg/clone-refspec-from-command-line-config ;)
+>
+> Your feelings (or mine) do not count ;-).
 
-  2. A FRESHEN flag to update the mtime of any item that we do find.
+Feelings have nothing to do with it, "it pissed me off" is a concise
+way of saying "it made me waste quite some time debugging segfaults
+and other nonsense resulting from ALLOC_GROW()ing remote->fetch,
+misled by the previous point and the confusing order in which these
+fields are listed in 'struct remote's definition".
 
-I suspect we may also need something like ONLY_LOOSE and ONLY_NONLOCAL
-to meet all the callers (e.g., has_loose_object_nonlocal). Those should
-be easy to implement, I'd think.
+> I do not think we would terribly mind if you only kept a list of
+> pre-parsed form, with some mechanism to keep an "error" entry in
+> that list with its original, so that an error can be reported with
+> the refspec as the user originally gave us (which may mean the
+> "error" entry may have to keep the original form, since it wasn't
+> correctly parsable in the first place for it to trigger an error).
+>
+>> So here is my crack at getting rid of them.
+>
+> You still haven't told us what "them" are.  Parsed form, or the
+> original?  Let's find out by reading on....
+>
+>> The idea is to parse refspecs gently while reading the configuration:
+>> this way we won't need to store all refspecs as strings, and won't
+>> die() on a bogus refspec right away.  A bogus refspec, if there's one,
+>> will be stored in the remote it belongs to, so it will be available
+>> later when that remote is accessed and can be used in the error
+>> message.
+>
+> So normally we only have a list of parsed ones, but optionally there
+> is a list of malformed originals that are before attempted (and
+> failed) parsing used for error reporting?
 
-> I would have preferred to see the new variable not to be called 'f',
-> as that makes it unclear what it is (is that a callback function
-> pointer?).  In this case, uyou are forcing the flag bits passed
-> down, so perhaps you can reuse the same variable?  
-> 
-> If you allocated a separate variable because
-> has_sha1_file_with_flags() and sha1_object_info_extended() take flag
-> bits from two separate vocabularies, that is a valid reasoning, but
-> if that is the case, then I would have named 'f' to reflect that
-> fact that this is different from parameter 'flag' that is defined in
-> the has_sha1_file_with_flags() world, but a different thing that is
-> defined in sha1_object_info_extended() world, e.g. "soie_flag" or
-> something like that.
+For each remote there are two arrays of parsed refspecs, one for fetch
+and one for push, and a single malformed original as string.
 
-I had the same thoughts (both on the name and the "vocabularies"). IMHO
-we should consider allocating the bits from the same set. There's only
-one HAS_SHA1 flag, and it has an exact match in OBJECT_INFO_QUICK.
+The reason for storing only a single malformed refspec per remote is
+that I didn't want to noteworthily change the behaviour: the current
+implementation die()s on the first malformed refspec it encounters
+while parsing and reports only that one malformed refspec in the error
+message.  This series essentially does the same as far as observable
+behaviour goes, though it might happen that a different malformed
+refspec is reported in the error message (if there are more than one,
+depending on their order in the configuration).
 
-I think this patch might be a bit easier to review if it were broken
-down more in a sequence of:
+Of course, if we want to, then this could be extended to record all
+malformed refspecs while reading the configuration and report all of
+them in the error message.  But that's a behaviour change which I
+think should come on top as a separate patch.
 
-  1. Add features to the consolidated function to support everything
-     that function X supports.
-
-  2. Preparatory cleanup around X (e.g., pointing HAS_SHA1_QUICK at
-     OBJECT_INFO_QUICK).
-
-  3. Convert X to use the consolidated function.
-
-  4. Repeat for each X we wish to consolidate.
-
-That's going to end up with probably 12 patches instead of one, but I
-think it may be a lot easier to communicate the reason for the various
-design decisions.
-
--Peff
+>  That sounds sensible,
+> especially given that we can recreate the original textual form from
+> correctly parsed result (which allows us to report on other kinds
+> of errors as necessary).
+>
+>> This applies on top of a merge of master and the fresh reroll (v5) of
+>> sg/clone-refspec-from-command-line-config:
+>
+> Thanks.  Will take a look (but not immediately).
