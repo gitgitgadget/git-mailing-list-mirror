@@ -2,113 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9065820401
-	for <e@80x24.org>; Sun, 18 Jun 2017 13:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB5020401
+	for <e@80x24.org>; Sun, 18 Jun 2017 21:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752992AbdFRN40 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Jun 2017 09:56:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42343 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752950AbdFRN40 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Jun 2017 09:56:26 -0400
-Received: (qmail 14246 invoked by uid 109); 18 Jun 2017 13:56:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 18 Jun 2017 13:56:25 +0000
-Received: (qmail 21008 invoked by uid 111); 18 Jun 2017 13:56:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 18 Jun 2017 09:56:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Jun 2017 09:56:23 -0400
-Date:   Sun, 18 Jun 2017 09:56:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Giuffrida <michaelpg@chromium.org>,
-        git@vger.kernel.org,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [BUG] add_again() off-by-one error in custom format
-Message-ID: <20170618135623.3b27zhzdxur6gpg3@sigill.intra.peff.net>
-References: <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
- <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
- <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
- <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
- <20170615055654.efvsouhr3leszz3i@sigill.intra.peff.net>
- <ec36f9fa-5f3e-b511-3985-3d0301b4847f@web.de>
- <20170615132532.nivmj22dctowxssm@sigill.intra.peff.net>
- <b0bc9dab-bd93-c321-9f2e-f1621f857708@web.de>
- <20170618114923.bffmbr5dqe4oivyw@sigill.intra.peff.net>
- <96c26ba2-8548-1693-e803-3a3434ae3a62@web.de>
+        id S1752757AbdFRVQf (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Jun 2017 17:16:35 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33089 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752569AbdFRVQe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Jun 2017 17:16:34 -0400
+Received: by mail-wm0-f65.google.com with SMTP id f90so13766406wmh.0
+        for <git@vger.kernel.org>; Sun, 18 Jun 2017 14:16:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Ozx9TCq64kOO6YFIN5NR/OH4dl/mN6pasKOps4NCLXc=;
+        b=eYCPeyowJvAYyZ5FziivWKXgqzKHp8GTaboMb7CMYo667udcN2I4iADr1TczvTuwuZ
+         Ast3Aa2j4iXbDKuQ70IkLuigzi/jP5wNe8HoGmnjsb+WF22MMa7J/J+0LfGNgf7uzjKr
+         fCQauA5S2fw99P7EZMiQ4RiTdFYteiplNYV5pFnlGC6RUs9HRTvbwPtLlF9y4fGiFZNl
+         FmHQamh8E7Qz2bEQfJrSHYsCMf/wuuGNl/Q8pY1ZR1FtrD8D2VUEbGtqkYsTzfIi4G4A
+         pj6gWemvlb2gwwepYte3ISrEXwg5aT4v6+UD2PTTVD2l2B7fiWgCTRGdMd1IS+LZkpHK
+         yXUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Ozx9TCq64kOO6YFIN5NR/OH4dl/mN6pasKOps4NCLXc=;
+        b=R49T29965TZeLvENMrstMijRL/CsUYX3xBwLHPEivOOStAFDZ8h6LleJDeHd2TzJ97
+         M3MuKaxoho7sIQ95xudBzmRKECAt344M/AB7hvA+p1MU9IT53ADR7rBx9M6aRyfW2819
+         CqbrLiud/fKOqpfEynEnd+dIxSGELJu9QhFVIwS9tkXps3YJf6+by9ipFrckH6m+OwCa
+         2Mb4r5jMycCHLs30ahMhfCJ6J7bEjWnXNIeo504+f6OpATk4nedyCFIMdKSINevwbr4i
+         n8DOkA6RCDNBkCt1jdcKjXQ2fA33P9VuNHZyYTKTuuvVt9LVFcTov7DmLLc8UUHNu/qh
+         Tzug==
+X-Gm-Message-State: AKS2vOxG4+a7BNciAxsG4QZd9WaWm0RvVjEbcmQ+h4tmBUI1l6FYLX0P
+        saQTGLhfDJc1LAKB
+X-Received: by 10.80.169.193 with SMTP id n59mr14500943edc.181.1497820592992;
+        Sun, 18 Jun 2017 14:16:32 -0700 (PDT)
+Received: from localhost.localdomain (ip-213-127-51-182.ip.prioritytelecom.net. [213.127.51.182])
+        by smtp.gmail.com with ESMTPSA id r28sm4818744edd.33.2017.06.18.14.16.31
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sun, 18 Jun 2017 14:16:32 -0700 (PDT)
+From:   Sahil Dua <sahildua2305@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH v2 1/3] config: create a function to format section headers
+Date:   Sun, 18 Jun 2017 23:16:31 +0200
+Message-Id: <1497820591-93434-1-git-send-email-sahildua2305@gmail.com>
+X-Mailer: git-send-email 2.7.4 (Apple Git-66)
+In-Reply-To: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
+References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <96c26ba2-8548-1693-e803-3a3434ae3a62@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jun 18, 2017 at 02:59:04PM +0200, René Scharfe wrote:
+Factor out the logic which creates section headers in the config file,
+e.g. the 'branch.foo' key will be turned into '[branch "foo"]'.
 
-> > > @@ -1586,6 +1587,9 @@ extern struct alternate_object_database {
-> > >   	struct strbuf scratch;
-> > >   	size_t base_len;
-> > > +	uint32_t loose_objects_subdir_bitmap[8];
-> > 
-> > Is it worth the complexity of having an actual bitmap and not just an
-> > array of char? I guess it's not _that_ complex to access the bits, but
-> > there are a lot of magic numbers involved.
-> 
-> That would be 224 bytes more per alternate_object_database, and we'd
-> gain simpler code.  Hmm.  We could add some bitmap helper macros, but
-> you're probably right that the first version should use the simplest
-> form for representing small bitmaps that we currently have.
+This introduces no function changes, but is needed for a later change
+which adds support for copying branch sections in the config file.
 
-I'd be OK with keeping it if we could reduce the number of magic
-numbers. E.g,. rather than 32 elsewhere use:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
+---
+ config.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-  (sizeof(*loose_objects_subdir_bitmap) * CHAR_BIT)
+diff --git a/config.c b/config.c
+index 34a139c..32fd3c8 100644
+--- a/config.c
++++ b/config.c
+@@ -2169,10 +2169,10 @@ static int write_error(const char *filename)
+ 	return 4;
+ }
+ 
+-static int store_write_section(int fd, const char *key)
++static struct strbuf store_create_section(const char *key)
+ {
+ 	const char *dot;
+-	int i, success;
++	int i;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+ 	dot = memchr(key, '.', store.baselen);
+@@ -2188,6 +2188,15 @@ static int store_write_section(int fd, const char *key)
+ 		strbuf_addf(&sb, "[%.*s]\n", store.baselen, key);
+ 	}
+ 
++	return sb;
++}
++
++static int store_write_section(int fd, const char *key)
++{
++	int success;
++
++	struct strbuf sb = store_create_section(key);
++
+ 	success = write_in_full(fd, sb.buf, sb.len) == sb.len;
+ 	strbuf_release(&sb);
+ 
+-- 
+2.7.4 (Apple Git-66)
 
-and similarly rather than 8 here use
-
-  256 / sizeof(*loose_objects_subdir_bitmap) / CHAR_BIT
-
-There's also already a bitmap data structure in ewah/bitmap.c. It's a
-little bit overkill, though, because it mallocs and will grow the bitmap
-as needed.
-
-> > We should probably insert a comment here warning that the cache may go
-> > out of date during the process run, and should only be used when that's
-> > an acceptable tradeoff.
-> 
-> Then we need to offer a way for opting out.  Through a global variable?
-> (I'd rather reduce their number, but don't see how allow programs to
-> nicely toggle this cache otherwise.)
-
-Sorry, I didn't mean disabling it for a particular run of a program. I
-just meant that we know this is an OK tradeoff for short-sha1 lookups,
-but has_sha1_file(), for example, would never want to use it. So we are
-warning programmers from using it in more code, not giving users a way
-to turn it off run-to-run.
-
-> > > +static void read_loose_object_subdir(struct alternate_object_database *alt,
-> > > +				     int subdir_nr)
-> > 
-> > I think it's nice to pull this out into a helper function. I do wonder
-> > if it should just be reusing for_each_loose_file_in_objdir(). You'd just
-> > need to expose the in_obj_subdir() variant publicly.
-> > 
-> > It does do slightly more than we need (for the callbacks it actually
-> > builds the filename), but I doubt memcpy()ing a few bytes would be
-> > measurable.
-> 
-> Good point.  The function also copies the common first two hex digits
-> for each entry.  But all that extra work is certainly dwarfed by the
-> readdir calls.
-
-Yes. You're welcome to micro-optimize that implementation if you want. ;)
-
--Peff
