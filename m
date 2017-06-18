@@ -2,99 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EC7B20401
-	for <e@80x24.org>; Sun, 18 Jun 2017 13:40:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9065820401
+	for <e@80x24.org>; Sun, 18 Jun 2017 13:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753169AbdFRNkC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Jun 2017 09:40:02 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:42205 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753161AbdFRNkA (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 18 Jun 2017 09:40:00 -0400
-X-AuditID: 1207440e-20fff70000000c7e-cb-594682aeb946
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 34.32.03198.EA286495; Sun, 18 Jun 2017 09:39:59 -0400 (EDT)
-Received: from bagpipes.fritz.box (p54AAE99B.dip0.t-ipconnect.de [84.170.233.155])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5IDdj8i017544
-        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sun, 18 Jun 2017 09:39:55 -0400
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
-        Brandon Williams <bmwill@google.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?q?=C3=98yvind=20Holm?= <sunny@sunbase.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 2/2] prefix_ref_iterator_advance(): relax the check of trim length
-Date:   Sun, 18 Jun 2017 15:39:42 +0200
-Message-Id: <7ea7841cf2ea9eb17535d5e655c7834347d5acfe.1497792827.git.mhagger@alum.mit.edu>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <cover.1497792827.git.mhagger@alum.mit.edu>
-References: <cover.1497792827.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrIIsWRmVeSWpSXmKPExsUixO6iqLu+yS3S4PURGYu1z+4wWTxff4Ld
-        outKN5NFQ+8VZosnc+8yW9xeMZ/ZYsnD18wW3VPeMlr8aOlhtti8uZ3FYsKRFSwWj/resjvw
-        ePx9/4HJY+esu+weCzaVejx81cXucWLGbxaPrvYjbB7Pevcwely8pOxxd0IPi8fnTXIBXFFc
-        NimpOZllqUX6dglcGduPLGAqmMJdsXf+D/YGxvccXYycHBICJhJXO+6wdTFycQgJ7GCS2Nd0
-        jh3COcUkcf/QJUaQKjYBXYlFPc1MILaIgJrExLZDLCBFzALLWCS6zvwCKxIWCJW4OPkzWBGL
-        gKrEysezWEFsXoEoiW9nf7NBrJOX2NV2ESzOKWAh8f7kNWYQW0jAXOJSWzvzBEaeBYwMqxjl
-        EnNKc3VzEzNzilOTdYuTE/PyUot0jfVyM0v0UlNKNzFCQpZvB2P7eplDjAIcjEo8vC/aXSOF
-        WBPLiitzDzFKcjApifJ+knWLFOJLyk+pzEgszogvKs1JLT7EKMHBrCTC2+0JlONNSaysSi3K
-        h0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfD6NgI1ChalpqdWpGXmlCCkmTg4QYbz
-        AA2XrgUZXlyQmFucmQ6RP8WoKCXOe7UBKCEAksgozYPrhaWUV4ziQK8I8x4CWcEDTEdw3a+A
-        BjMBDWY+4wIyuCQRISXVwKgSu/BJapjy5PtH1d8qSa98cGpvcs2y9jte/gq+szSvzn7LL/h/
-        sc3pLNPIV3xCbXGdUoe2BV29+SXh3oWda+5qM05fYXZ3W6tTSqpZWteNP1VLf1UvTi5yur/1
-        gYv4/NcT7zYd+VD7s3COqYSwcKuxzpwP0dJ/QupXG+RJNhwN9UkyC+2f6KzEUpyRaKjFXFSc
-        CACVLBwVBAMAAA==
+        id S1752992AbdFRN40 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Jun 2017 09:56:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42343 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752950AbdFRN40 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Jun 2017 09:56:26 -0400
+Received: (qmail 14246 invoked by uid 109); 18 Jun 2017 13:56:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 18 Jun 2017 13:56:25 +0000
+Received: (qmail 21008 invoked by uid 111); 18 Jun 2017 13:56:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 18 Jun 2017 09:56:28 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Jun 2017 09:56:23 -0400
+Date:   Sun, 18 Jun 2017 09:56:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Giuffrida <michaelpg@chromium.org>,
+        git@vger.kernel.org,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [BUG] add_again() off-by-one error in custom format
+Message-ID: <20170618135623.3b27zhzdxur6gpg3@sigill.intra.peff.net>
+References: <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
+ <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
+ <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
+ <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
+ <20170615055654.efvsouhr3leszz3i@sigill.intra.peff.net>
+ <ec36f9fa-5f3e-b511-3985-3d0301b4847f@web.de>
+ <20170615132532.nivmj22dctowxssm@sigill.intra.peff.net>
+ <b0bc9dab-bd93-c321-9f2e-f1621f857708@web.de>
+ <20170618114923.bffmbr5dqe4oivyw@sigill.intra.peff.net>
+ <96c26ba2-8548-1693-e803-3a3434ae3a62@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <96c26ba2-8548-1693-e803-3a3434ae3a62@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before the previous commit, `for_each_bad_bisect_ref()` called
-`for_each_fullref_in_submodule()` in such a way as to trim the whole
-refname away. This is a questionable use of the API, but is not ipso
-facto dangerous, so tolerate it in case there are other callers
-relying on this behavior. But continue to refuse to trim *more*
-characters than the refname contains, as that really makes no sense.
+On Sun, Jun 18, 2017 at 02:59:04PM +0200, René Scharfe wrote:
 
-Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
----
- refs/iterator.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+> > > @@ -1586,6 +1587,9 @@ extern struct alternate_object_database {
+> > >   	struct strbuf scratch;
+> > >   	size_t base_len;
+> > > +	uint32_t loose_objects_subdir_bitmap[8];
+> > 
+> > Is it worth the complexity of having an actual bitmap and not just an
+> > array of char? I guess it's not _that_ complex to access the bits, but
+> > there are a lot of magic numbers involved.
+> 
+> That would be 224 bytes more per alternate_object_database, and we'd
+> gain simpler code.  Hmm.  We could add some bitmap helper macros, but
+> you're probably right that the first version should use the simplest
+> form for representing small bitmaps that we currently have.
 
-diff --git a/refs/iterator.c b/refs/iterator.c
-index 4cf449ef66..de52d5fe93 100644
---- a/refs/iterator.c
-+++ b/refs/iterator.c
-@@ -298,11 +298,11 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 			 * you haven't already checked for via a
- 			 * prefix check, whether via this
- 			 * `prefix_ref_iterator` or upstream in
--			 * `iter0`). So if there wouldn't be at least
--			 * one character left in the refname after
--			 * trimming, report it as a bug:
-+			 * `iter0`. So consider it a bug if we are
-+			 * asked to trim off more characters than the
-+			 * refname contains:
- 			 */
--			if (strlen(iter->iter0->refname) <= iter->trim)
-+			if (strlen(iter->iter0->refname) < iter->trim)
- 				die("BUG: attempt to trim too many characters");
- 			iter->base.refname = iter->iter0->refname + iter->trim;
- 		} else {
--- 
-2.11.0
+I'd be OK with keeping it if we could reduce the number of magic
+numbers. E.g,. rather than 32 elsewhere use:
 
+  (sizeof(*loose_objects_subdir_bitmap) * CHAR_BIT)
+
+and similarly rather than 8 here use
+
+  256 / sizeof(*loose_objects_subdir_bitmap) / CHAR_BIT
+
+There's also already a bitmap data structure in ewah/bitmap.c. It's a
+little bit overkill, though, because it mallocs and will grow the bitmap
+as needed.
+
+> > We should probably insert a comment here warning that the cache may go
+> > out of date during the process run, and should only be used when that's
+> > an acceptable tradeoff.
+> 
+> Then we need to offer a way for opting out.  Through a global variable?
+> (I'd rather reduce their number, but don't see how allow programs to
+> nicely toggle this cache otherwise.)
+
+Sorry, I didn't mean disabling it for a particular run of a program. I
+just meant that we know this is an OK tradeoff for short-sha1 lookups,
+but has_sha1_file(), for example, would never want to use it. So we are
+warning programmers from using it in more code, not giving users a way
+to turn it off run-to-run.
+
+> > > +static void read_loose_object_subdir(struct alternate_object_database *alt,
+> > > +				     int subdir_nr)
+> > 
+> > I think it's nice to pull this out into a helper function. I do wonder
+> > if it should just be reusing for_each_loose_file_in_objdir(). You'd just
+> > need to expose the in_obj_subdir() variant publicly.
+> > 
+> > It does do slightly more than we need (for the callbacks it actually
+> > builds the filename), but I doubt memcpy()ing a few bytes would be
+> > measurable.
+> 
+> Good point.  The function also copies the common first two hex digits
+> for each entry.  But all that extra work is certainly dwarfed by the
+> readdir calls.
+
+Yes. You're welcome to micro-optimize that implementation if you want. ;)
+
+-Peff
