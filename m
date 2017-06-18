@@ -2,95 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FF351FA7B
-	for <e@80x24.org>; Sun, 18 Jun 2017 07:36:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EA241FA7B
+	for <e@80x24.org>; Sun, 18 Jun 2017 07:46:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751088AbdFRHf5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Jun 2017 03:35:57 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35414 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751082AbdFRHf4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Jun 2017 03:35:56 -0400
-Received: by mail-pf0-f194.google.com with SMTP id s66so12419879pfs.2
-        for <git@vger.kernel.org>; Sun, 18 Jun 2017 00:35:56 -0700 (PDT)
+        id S1751011AbdFRHqJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Jun 2017 03:46:09 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:33378 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750916AbdFRHqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Jun 2017 03:46:08 -0400
+Received: by mail-pf0-f182.google.com with SMTP id 83so40508133pfr.0
+        for <git@vger.kernel.org>; Sun, 18 Jun 2017 00:46:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=9KFL5vHhcQJrmMyz1sEyu/9EF1ogoyfFA9ETeDY1tjs=;
-        b=XgHIiOnSIYpuJERds/nmbyH4L6EUXUsMfMOWlz3dNdN1j9j2p5FoWEU8TecCPf/9Qb
-         vkBfzv1sx7HAXfFyyATB1YGTS55Uj9vqA7nFOchcHhZz3guwzz/3/8DVoTN2Lt+QnWUb
-         bfkRLc/7YgSRwRWiiZQPd2dzGKBKwby4I3W4HJCR8edhYuAAbcR/GpHjNrntiHew8w0J
-         uliDHjVSm2ky7ZutkOsFuLhIfZL+I9RA9Sucxo26kbYDFrtvHhrb1hlX0Jw/uqoQ1Qzu
-         u0A5bOfBehiJqTnPHYlEI+gJFHhrZ6F/QbyOiIxVJ4ummkCZxot8jA8fbPFZbIaQ556Y
-         +AnQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=N4+b6uycUeKAImXrUhh9/wvAYi77Ln6lxhaKG/hv4Ls=;
+        b=ir0jAxmYAz5UN+xott8i90uCcPaQnDtwHwaElf8QYY/KSqGQxk6fTs0ILB1ttDSiD4
+         VMSdFJRr3uPYezaE9bjWPy4Ud8dYAtV23mVzYiTVI+U9DWajCPjGWaCcUUuZh3UZiZkb
+         3gEa6MJaO1mIyUhoDxQDGJ/YxTKUEy64bWIh7QRA/wf0kn55bYsERDFtfg1aKBBGwaDt
+         2MK4EWRkwjx1OvkLaMQ26Rj36D7YFEmS1KDPYp/mExyDp62A7A+69q6o3XKzoe6OXVXr
+         9k8enl2M/t5paSCg+YRMd/9Uz2YK508INiu9IYfqyXccqJnuOZWfR8WOe4jwe0IY9lKw
+         2K4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=9KFL5vHhcQJrmMyz1sEyu/9EF1ogoyfFA9ETeDY1tjs=;
-        b=DQJzjQg1tFZ7MUYyT1lD1b69AcQXno7Uq+qg+6cACI4jcz+JLeTNGL8E3raFonxhVZ
-         se+/KE/UwHrDZTNBwmRN3FqYcOQlDRDVgomJBlr+ikAzTkmYGm4zQzhrafCda7ZWkn8H
-         cwQ/JwRHm7n8nI5+gfPrdupcdzGWFA0Q38M4G+23fCtXTg/hn7/ojr6G9u7HJvYm5aJd
-         GCohv610+6SCNxysL2y9BZPDW97DHjdCRV3jAHkcOLdhCQsBbckxM0TlAZSV1Y9Qo7zI
-         Iy5+G85lIQJN7en/1TZDzbYYceuCgZUnWDBexgZjzcuKoxInBYH+goi9sIGIh9VzvVoP
-         uuqA==
-X-Gm-Message-State: AKS2vOwFmNMnESDNPrYjqTzAU9kyQWg6jSjbSSvxz/0SGbO+YzS9+1kC
-        x2ck932mHpujxw==
-X-Received: by 10.84.173.67 with SMTP id o61mr13957949plb.236.1497771355964;
-        Sun, 18 Jun 2017 00:35:55 -0700 (PDT)
-Received: from unique-pc ([2405:204:7208:1ff:86ae:df58:5f4e:dbf8])
-        by smtp.googlemail.com with ESMTPSA id 189sm13790375pgj.67.2017.06.18.00.35.52
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=N4+b6uycUeKAImXrUhh9/wvAYi77Ln6lxhaKG/hv4Ls=;
+        b=OP3EIgU4ipFVX6EiH2jjRvt0Dn6azas6FgxQCV0DC1cJGWC2Gb1YFno8KUeEXGRZxP
+         ueH8sULcuCchM7rempzWvzAS8QORJ8VD6BNGwIG/SA1mraLnTNoa6TcP34XanYRSavTF
+         XDSCpvpqQ5/+mqMGcN/4yJuhg+siwjG7D9+3FOPR5PJq/OHs6Ke6nxFIkhxmW5H+1Cl4
+         GRmN4uyCD6aoc4jFytElm3u0dM8wHLVi1Ep8M6E2F/MTL7LzAguY0hIF0FFsbDwyPC2T
+         ZTzF2a8A6BRiJEdxFph5AB/CvqUWs8ObI+dZJI6Q5cGq5ny51T5aoRn6+13uQ18p8ROG
+         cM4A==
+X-Gm-Message-State: AKS2vOyG2iN2/YHXvw6/XOEmH+//PMxzbK+CfT/gh9IzwJWeJq31cXgj
+        o381kcOESLCy6Q==
+X-Received: by 10.99.185.28 with SMTP id z28mr9371222pge.123.1497771967477;
+        Sun, 18 Jun 2017 00:46:07 -0700 (PDT)
+Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
+        by smtp.gmail.com with ESMTPSA id q135sm14239898pgq.41.2017.06.18.00.46.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 18 Jun 2017 00:35:55 -0700 (PDT)
-Message-ID: <1497771338.1689.4.camel@gmail.com>
-Subject: Re: [PATCH/Almost final] wt-status.c: Modified status message shown
- for a parent-less branch
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Samuel Lijin <sxlijin@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Date:   Sun, 18 Jun 2017 13:05:38 +0530
-In-Reply-To: <20170616105032.rjmmql56ifol34mk@sigill.intra.peff.net>
-References: <1497255003.1718.1.camel@gmail.com>
-         <xmqqa85dnjpz.fsf@gitster.mtv.corp.google.com>
-         <20170612212025.ytyukvmmthfcsejh@sigill.intra.peff.net>
-         <xmqqshj4nb9u.fsf@gitster.mtv.corp.google.com>
-         <20170612213759.f2scl3r46vboolna@sigill.intra.peff.net>
-         <1497514760.2394.6.camel@gmail.com>
-         <20170615084248.elfsh4of5qdsk3pa@sigill.intra.peff.net>
-         <CAJZjrdXXGb-QrvJW9JusPT597QDnQD_shzVJq-5GN=hZCBJYeA@mail.gmail.com>
-         <20170615131245.zh5nuipmaadcfpdx@sigill.intra.peff.net>
-         <1497609408.2517.4.camel@gmail.com>
-         <20170616105032.rjmmql56ifol34mk@sigill.intra.peff.net>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Sun, 18 Jun 2017 00:46:06 -0700 (PDT)
+Date:   Sun, 18 Jun 2017 00:46:03 -0700
+From:   David Aguilar <davvid@gmail.com>
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Matthew Groth <mgroth49@gmail.com>
+Subject: Re: [PATCH] mergetools/meld: improve backwards-compatibiilty when
+ using "--output"
+Message-ID: <20170618074603.epf3vhsi4pevg6jn@gmail.com>
+References: <20170617102454.2040-1-davvid@gmail.com>
+ <CAJZjrdX=8DbRTsdJ+bH5BABJG0m=y2QpT8C4kFviUsxVqVLVLg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJZjrdX=8DbRTsdJ+bH5BABJG0m=y2QpT8C4kFviUsxVqVLVLg@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2017-06-16 at 06:50 -0400, Jeff King wrote:
-> Wouldn't you want this in cmd_commit(), not cmd_status()?
+On Sat, Jun 17, 2017 at 10:11:36AM -0400, Samuel Lijin wrote:
+> On Sat, Jun 17, 2017 at 6:24 AM, David Aguilar <davvid@gmail.com> wrote:
+> > Meld 3.16.0 requires a "=" in the --output argument, as it uses
+> > a simple hand-rolled command-line parser.
+> >
+> > Newer versions of Meld (3.16.4, and possibly earlier) use
+> > optpaarse, which accepts either "--output <file>" or
+> > "--output=<file>".
+
+Junio, there's an optpaarse -> optparse typo in the commit message
+here in case you want to fix that up.
+
 > 
-That's right. I made a little mistake while trying to replicate a
-change specified by Mr. Junio C. Hamano in a previous mail in this
-thread. 
+> Do older versions also support both?
 
-Seems there aren't any other changes required as far as I could see,
-hence this mail will follow with an "almost final" patch.
+No.  When the "--output" option was first added (3.16.0, or possibly
+earlier) it used the simpler parser that does not undertand the
+"--output <filename>" form.
 
---
-Regards,
-Kaartic
+Much older versions didn't support "--output" at all, so we don't have
+to worry about them since we already use the "--output" flag
+selectively based on whether or not it's supported.
+-- 
+David
