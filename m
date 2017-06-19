@@ -2,86 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3315420282
-	for <e@80x24.org>; Mon, 19 Jun 2017 09:27:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEA1A20282
+	for <e@80x24.org>; Mon, 19 Jun 2017 09:30:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753761AbdFSJ1n (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 05:27:43 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49863 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752389AbdFSJ1l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 05:27:41 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LwaMR-1druAs2oYB-018Nno; Mon, 19
- Jun 2017 11:26:45 +0200
-Date:   Mon, 19 Jun 2017 11:26:44 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Adam Langley <agl@google.com>, Mike Hommey <mh@glandium.org>,
-        Brandon Williams <bmwill@google.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio Hamano <gitster@pobox.com>
-Subject: Re: Which hash function to use, was Re: RFC: Another proposed hash
- function transition plan
-In-Reply-To: <20170616204208.ak5twydrloxefm42@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.21.1.1706191125510.57822@virtualbox>
-References: <20170615110518.ordr43idf2jluips@glandium.org> <20170615130145.stwbtict7q6oel7e@sigill.intra.peff.net> <87shj1ciy8.fsf@gmail.com> <alpine.DEB.2.21.1.1706152123060.4200@virtualbox> <CAL9PXLzhPyE+geUdcLmd=pidT5P8eFEBbSgX_dS88knz2q_LSw@mail.gmail.com>
- <20170615224110.kvrjs3lmwxcoqfaw@genre.crustytoothpaste.net> <CACBZZX5Z3kQHe_5TgOeuJSgzuvpQdaLo6RrgX_EvuZfdz856sA@mail.gmail.com> <20170616001738.affg4qby7y7yahos@genre.crustytoothpaste.net> <87y3ss8n4h.fsf@gmail.com> <alpine.DEB.2.21.1.1706161438470.4200@virtualbox>
- <20170616204208.ak5twydrloxefm42@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:xc1CDw17zCQnjFathTA2EC4xx5B76tS/q4R54qQ687XMroftki2
- zysWbPj9XzPoKzZVVj1jph563wzaJeVKZku4vzLgJ1o/b59+4YENjDskiPgoOoWSZ5SdZNz
- oLwJ5FhkhecE3KRTeSPwo+8JQe97u3E0QeGmXVNbW9kpGp7Jj8rNocfGgsPgD6B0+nWGIqn
- HBT7atecABZj/QLaJ7axQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/BrvdTo0I4U=:X0Xnx9xMGKNuwxUVk4jIjg
- XrjrMfzJ8j/aSY6Zwu4vLqU+Ua1aPGCTaFORgoVt8IOTJaKq1KjW8MywgrZZJQAXX08dAatiP
- 3C/tOLY7KwtY/LJNxU9ztyKY4Ia0kJzCyWwO1P3CgHGJuhChzFYLbLQrrkOwu1t3k14KpOCk5
- QIkTwF7X5Miz1Rv+96UwWxtf015ZDzs1BQZOp3CSSnnsYuz34VipVw+ELgp74wCQuVLDPiPSr
- NgNbuUaHACm0gb7K7w8yDC4T4IomGYcX3jozVLh51HXdBVlgHdxcaoHRPa5HgOfqtyU9z34NS
- JNY4OXi/sTzX0Oean7HbtDvGsnz43ZxB1ubYUGbmVDEtKZePCFbao9MrPiPOruTxGFTbbXGdE
- ADTcPw1jEG/GxRP3wu9pt8IhebIDudYD6UdB56Nlp12W21qv+ZeW3SJqqgMvk1hQDSOrjYDXI
- VG1w+ZRJWhhSbAAMkMXAXft/FR4az/fP6eQX9NErJMoTrpSNkmnZJRldhUTXiL9uBo1jShqrQ
- auY8yLMoY0UxM1P4ZyTVMmm3fD1x73iMHS5/u1NrWNUB8kQkCbZRtH/WrboMyJ5wDvIRJSB6u
- 4wD0+jdK2OZ/BrpTvkluUYU//NOLIVy0AbP9VxGZOgA32iUz4G8EKvCJiSqyr5FVTs1vSN4qL
- S4fDg+ih2Esw8kyjbJ0jM/qe9sHnM5v7BWPbmGO3/SitjamTei9HK3hi86ZZKV37XxhZWyvc2
- d/0r7XELIk1XX2JmA1Gk+IH7MObIUxi8veVQ6lDCxRMPM/EzWp2tiw/dgBs/R2XZvFiaW8The
- 0/obqCC
+        id S1753599AbdFSJa0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 05:30:26 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:38398 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753368AbdFSJa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 05:30:26 -0400
+Received: by mail-wm0-f50.google.com with SMTP id u195so56071538wmd.1
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 02:30:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QLarnISFHUfkH1RNzqJbbwnfgAzdLwkJKaJUsOs99vY=;
+        b=akl2EFRCwuFJJ7xFzaJT7Fk9WdbOXxnDAioGf6E/tMsncJv6s3Mbp2yckSOU9DOAcO
+         Tt1jdLrCTAcn5a/vvP1v0vbzrpcQNQ44TMotCNOyH+5tXIW+FsoGW835X7tY+CRTcbwW
+         4SmKL5Kp9oOcfCbERJ+WOhtP0TIxq+n1qPrdqbHvc4XSjOm8MXzQ0yCD3r+hRJTZz5uy
+         NzG92k7aZYRiRhOAZ2rwzSdkH762bFY9ryCgy2nvoIz3aHWu843Rp3ihbrneVUAFF6T0
+         kIMs2jC8J9NnFBV2a/gnK8gRQ7Z/6KtATvYd8kG/oZbRY6jd/NMPkUebDpqU9hQ9UCSO
+         ucaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=QLarnISFHUfkH1RNzqJbbwnfgAzdLwkJKaJUsOs99vY=;
+        b=N/xw2Jb7Ey+pLQ2c51lWhwNOA+GjQgHuLdNb74qiYzJMAcY2utG4m71LDWrarwq85G
+         jHEcHaG8IQecONCd6JLihaw2piZDU+/fdC9b+xHVdO/h2PHDLgjeudjyTPiCvfA5G2E9
+         hcv2Zw2eZ13iVnstkgxBvnTYpvb5CouTL1bTBs9ZMdLZyAfw3cyDLqvDTtbmKpBDiWcM
+         eb9+2uYI5515wzIulEDhNbEk/DLNUCuA1LFu0+UTCCe/8eiLoWR2fPYgEj9cdyRhMnPb
+         qfWIdcOhb/d87f4sRc0wuUo9WFEuEuW2SjtkVR3YoXYqHyAeCnV3cZHKyR8EnEBhzZyc
+         u6JA==
+X-Gm-Message-State: AKS2vOyk6zSRQ2D42y8Vql/uxfI7g/ocNsy4W9XMN4ovCF3xsoBM8z5E
+        suk0+V3jYS7zM8vi/CY=
+X-Received: by 10.28.151.207 with SMTP id z198mr15184039wmd.48.1497864624537;
+        Mon, 19 Jun 2017 02:30:24 -0700 (PDT)
+Received: from [10.146.248.54] ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id 130sm5797835wms.30.2017.06.19.02.30.23
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 19 Jun 2017 02:30:23 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: Restoring detached HEADs after Git operations
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <0092CDD27C5F9D418B0F3E9B5D05BE08010287DF@SBS2011.opfingen.plc2.de>
+Date:   Mon, 19 Jun 2017 11:30:21 +0200
+Cc:     Git Mailinglist <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <88AC6179-75D6-416B-9235-C628D6C59CA5@gmail.com>
+References: <0092CDD27C5F9D418B0F3E9B5D05BE08010287DF@SBS2011.opfingen.plc2.de>
+To:     Patrick Lehmann <Patrick.Lehmann@plc2.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
 
-On Fri, 16 Jun 2017, Jeff King wrote:
+> On 19 Jun 2017, at 10:46, Patrick Lehmann <Patrick.Lehmann@plc2.de> =
+wrote:
+>=20
+> Hello,
+>=20
+> I wrote a Bash script to recover branch names after Git operations =
+have create detached HEADs in a Git repository containing lots of Git =
+submodules. The script works recursively.
 
-> On Fri, Jun 16, 2017 at 03:24:19PM +0200, Johannes Schindelin wrote:
-> 
-> > I have no doubt that Visual Studio Team Services, GitHub and Atlassian
-> > will eventually end up with FPGAs for hash computation. So that's
-> > that.
-> 
-> I actually doubt this from the GitHub side. Hash performance is not even
-> on our radar as a bottleneck. In most cases the problem is touching
-> uncompressed data _at all_, not computing the hash over it (so things
-> like reusing on-disk deltas are really important).
+I did run into this situation myself and therefore
+I understand your motivation. I've CC'ed Stefan as
+he is a Submodule expert!
 
-Thanks for pointing that out! As a mainly client-side person, I rarely get
-insights into the server side...
 
-Ciao,
-Dscho
+> I would like to see:
+> a) that script or algorithm being integrated into Git by default
+> b) that as a default behavior for all Git operations creating detached =
+HEADs
+>=20
+> That's the command:
+> --------------------------------
+> git submodule foreach --recursive  'HEAD=3D$(git branch --list | head =
+-n 1); if [[ "$HEAD" =3D=3D *HEAD* ]]; then REF=3D$(git rev-parse HEAD); =
+FOUND=3D0; for Branch in $(git branch --list | grep "^  " | sed -e "s/  =
+//" ); do if [[ "$(git rev-parse "$Branch")" =3D=3D $REF ]]; then echo =
+-e "  \e[36mCheckout $Branch...\e[0m"; git checkout $Branch; FOUND=3D1; =
+break; fi done; if [[ $FOUND -eq 0 ]]; then echo -e "  \e[31mNo matching =
+branch found.\e[0m"; fi else echo -e "  \e[36mNothing to do.\e[0m"; fi'
+> --------------------------------
+>=20
+> How does it work:
+> 1. It uses git submodule foreach to dive into each Git submodule and =
+execute a series of Bash commands.
+> 2. It's reading the list of branches and checks if the submodule is in =
+detached mode. The first line contains the string HEAD.
+> 3. Retrieve the hash of the detached HEAD
+> 4. Iterate all local branches and get their hashes
+> 5. Compare the branch hashes with the detached HEAD's hash. If it =
+matches do a checkout.
+
+If there are multiple branches with the same hash then
+your script would pick the first one. Can you imagine a
+situation where this would be a problem?
+
+Plus, you are looking only at local branches. Wouldn't it
+make sense to look at remote branches, too?
+
+
+> 6. Report if no branch name was found or if a HEAD was not in detached =
+mode.
+>=20
+> The Bash code with line breaks and indentation:
+> --------------------------------
+> HEAD=3D$(git branch --list | head -n 1)
+> if [[ "$HEAD" =3D=3D *HEAD* ]]; then
+>  REF=3D$(git rev-parse HEAD)
+>  FOUND=3D0
+>  for Branch in $(git branch --list | grep "^  " | sed -e "s/  //" ); =
+do
+
+There is a convenient "git for-each-ref" function to iterate over
+branches in scripts. See here an example:
+=
+https://github.com/larsxschneider/scotty/blob/master/admin/oss-fork.sh#L88=
+
+
+
+>    if [[ "$(git rev-parse "$Branch")" =3D=3D $REF ]]; then
+>      echo -e "  \e[36mCheckout $Branch...\e[0m"
+>      git checkout $Branch
+>      FOUND=3D1
+>      break
+>    fi
+>  done
+>  if [[ $FOUND -eq 0 ]]; then
+>    echo -e "  \e[31mNo matching branch found.\e[0m"
+>  fi
+> else
+>  echo -e "  \e[36mNothing to do.\e[0m"
+> fi
+> --------------------------------
+>=20
+> Are their any chances to get it integrated into Git?
+>=20
+> I tried to register that code as a Git alias, but git config complains =
+about quote problem not showing where. It neither specifies if it's a =
+single or double quote problem. Any advice on how to register that piece =
+of code as an alias?
+
+Try to escape ". See here for an example:
+=
+https://github.com/Autodesk/enterprise-config-for-git/blob/master/config.i=
+nclude#L76-L94
+
+
+> If wished, I think I could expand the script to also recover hash =
+values to Git tags if no branch was found.
+
+It would be indeed nice to see the tagged version on my prompt.
+
+--
+
+Submodule processing is already quite slow if you have many of them.
+I wonder how much this approach would affect the performance.
+
+- Lars
+
