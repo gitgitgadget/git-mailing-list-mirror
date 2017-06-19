@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA16D1FA7B
+	by dcvr.yhbt.net (Postfix) with ESMTP id C66511FA7B
 	for <e@80x24.org>; Mon, 19 Jun 2017 21:51:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752670AbdFSVuy (ORCPT <rfc822;e@80x24.org>);
+        id S1752676AbdFSVu5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 17:50:57 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:34938 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752665AbdFSVuy (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 19 Jun 2017 17:50:54 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34920 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752539AbdFSVuw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 17:50:52 -0400
-Received: by mail-pg0-f68.google.com with SMTP id f127so18208686pgc.2
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 14:50:52 -0700 (PDT)
+Received: by mail-pg0-f65.google.com with SMTP id f127so18208802pgc.2
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 14:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0hm0cTUVi6RQa3QLBz+pwZ5C7NWvjbO6TzUSMyE8QVc=;
-        b=W2DnzvqXAxN8rBLFpNLvDk2AhR0HE9f6LOFipD/Qaras3biBiFQ7lt4l3ghpbbMhnu
-         oRfr3yK6OOdv0hksWYcmwOY2JSdvH5hGAGU+r9bIT7PpPi+ldU2NuNorrrVQyq78WXK0
-         oDNzymmXcegh/mlBiSVKB26OoLQTCCvLgA9PzpzVWv1YlcMH8PiBEYsQsgQzDQTVz1qs
-         V30AvDk+h1+GGqFgySzGACKiGaPtNA5yeuQFakiqZSvlgQLWRQQzCRmM9/ZAr6mzWCHj
-         SUCaMylo5OAPcVSD3EmFbD4Ti811H6lxr1pB4MHE6BRk+Ez50SO+8tDjooGWLNcsifxn
-         F2IQ==
+        bh=/0kw1O0CvQgAbp/LvP8ALH02v3kQVlmnnD76AEwGDUw=;
+        b=fdNr/JPESjgzUZ2nSsopwKf4roGTaBd56dFkn9ZF17OUvp77qgCRy0fDiRWqNNOnUe
+         f6oqjSvENcnwz9HJ8jYmeHU5HLpESJu6DG5Vu5dGqIlscOG3EcS/x6hH2MYxygx1cHcD
+         4HRCDtdnK1RP4+copOJfk4wWPMGMNv7c3yNZ7Cy0QMmATaF/Hu6YrvmJw2RPQrXmYEUk
+         i8+gmuTwuSBFdsGltQvXEDhzFOZCqjIcSsgr5RLDeSTQLjxAoaXDIDxmfoz6hbKmZjOm
+         Sk7Y777YVr5Z7HXX96l0jTkkc0ebV2Z/dbJd7nkQaIogDX71+qJCYXfmRBi84ui2W3dD
+         FBLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0hm0cTUVi6RQa3QLBz+pwZ5C7NWvjbO6TzUSMyE8QVc=;
-        b=YP9OsRDuvkGJPvcMVmE96DyQsJ28KqrX1DEpiJVqZqVoYxP428NO31IlB5SC4fdNzv
-         +PRxlaWuJvDdQ45mjEb9bzNiCrcWCDSYvjQrlnvLiEh6ngNqnr4iRuD/142LuZOgeSU/
-         lureW+VpEJ10rRWYqgbC22gZZPOXH5VMNSMmZnnrjPeMOqMFasfRJkJ6XERmkfdZNmCr
-         L9Xq93rMTWxw9i+4Zu8pqwl4v+h/JIBzxzayPjTIYFnYr0GQJXMbCWjRJ6eCN+xtbbWU
-         2VpFRiYqc67q9mSyhCo2FWB6oiuK6Z2fTlpu2Uv5qdNdhJRrFIGSHeJbk/ISaXIHR02W
-         qYkg==
-X-Gm-Message-State: AKS2vOyJ4nu651K4b12XicZ3Gslzy38LN40xq+8wKRKetLj/JLRXewlc
-        xnBtKUg+IugjWQFC
-X-Received: by 10.99.60.68 with SMTP id i4mr28610647pgn.250.1497909049607;
-        Mon, 19 Jun 2017 14:50:49 -0700 (PDT)
+        bh=/0kw1O0CvQgAbp/LvP8ALH02v3kQVlmnnD76AEwGDUw=;
+        b=SivzKLxJYeVZ76ubkaZ+VPYhJXFtqaT/WEiVwufhEmqekVENRU26lN3iPBv9leKqlz
+         pZwovCR4btz7pqP0qwH0oWHaVs4yuK5tQ382oC+FvCPVINM1Yvu5Iy4u6d1lJ+m/Lp4z
+         ubdjisF/Y7Q23mBf33Xcpoc2WFD2wk/C9MPeGm7b93X+uusIPhjofWCxHauxl3z7jBAT
+         9JoLXmmWv5CsHIHiveMbiO3HK6ORaaAIMXP2m5gGY9DZ7rO8qae4DlbkeOEFGJ2LpuIA
+         ThBxDGjwXRsdQK3gj2NwurlBvwaE84GQAA09OKVA2tjvt7XbZ1luo8tY3RpvVjL+ODio
+         Uiaw==
+X-Gm-Message-State: AKS2vOxgp40c0rl12iVSeYDLIsb3Gugz18slY99dQS4bNZw7BDqIq2kL
+        PmWKN81whnO5Sqio
+X-Received: by 10.101.69.207 with SMTP id m15mr27586996pgr.242.1497909052017;
+        Mon, 19 Jun 2017 14:50:52 -0700 (PDT)
 Received: from prathampc-X550JX.domain.name ([116.73.72.60])
-        by smtp.gmail.com with ESMTPSA id 5sm20744309pfe.60.2017.06.19.14.50.47
+        by smtp.gmail.com with ESMTPSA id 5sm20744309pfe.60.2017.06.19.14.50.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 19 Jun 2017 14:50:49 -0700 (PDT)
+        Mon, 19 Jun 2017 14:50:51 -0700 (PDT)
 From:   Prathamesh Chavan <pc44800@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, christian.couder@gmail.com,
         Prathamesh Chavan <pc44800@gmail.com>
-Subject: [GSoC][PATCH 2/6] submodule--helper: introduce get_submodule_displaypath and for_each_submodule_list
-Date:   Tue, 20 Jun 2017 03:20:21 +0530
-Message-Id: <20170619215025.10086-2-pc44800@gmail.com>
+Subject: [GSoC][PATCH 3/6] submodule: port set_name_rev from shell to C
+Date:   Tue, 20 Jun 2017 03:20:22 +0530
+Message-Id: <20170619215025.10086-3-pc44800@gmail.com>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170619215025.10086-1-pc44800@gmail.com>
 References: <CAME+mvUQJFneV7b1G7zmAidP-5L=nimvY43V0ug-Gtesr83tzg@mail.gmail.com>
@@ -62,150 +62,155 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Functions get_submodule_displaypath and for_each_submodule_list
-for using them in the later patches, related to porting submodule
-subcommands from shell to C.
-These new functions are also used in ported submodule subcommand
-init
+Since later on we want to port submodule subcommand status, and since
+set_name_rev is part of cmd_status, hence this function is ported. It
+has been ported to function print_name_rev in C, which calls get_name_rev
+to get the revname, and after formatting it, print_name_rev prints it.
+And hence in this way, the command `git submodule--helper print-name-rev
+"sm_path" "sha1"` sets value of revname in git-submodule.sh
+
+The function get_name_rev returns the stdout of the git describe
+commands. Since there are four different git-describe commands used for
+generating the name rev, four child_process are introduced, each successive
+child process running only when previous has no stdout. The order of these
+four git-describe commands is maintained the same as it was in the function
+set_name_rev() in shell script.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 ---
- builtin/submodule--helper.c | 69 ++++++++++++++++++++++++++++++++-------------
- 1 file changed, 50 insertions(+), 19 deletions(-)
+ builtin/submodule--helper.c | 69 +++++++++++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            | 16 ++---------
+ 2 files changed, 71 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 8cc648d85..f7adca95b 100644
+index f7adca95b..6fd861e42 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -13,6 +13,9 @@
- #include "refs.h"
- #include "connect.h"
- 
-+typedef void (*submodule_list_func_t)(const struct cache_entry *list_item,
-+				      void *cb_data);
-+
- static char *get_default_remote(void)
- {
- 	char *dest = NULL, *ret;
-@@ -219,6 +222,27 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
- 	return 0;
+@@ -243,6 +243,74 @@ static char *get_submodule_displaypath(const char *path, const char *prefix)
+ 	}
  }
  
-+static char *get_submodule_displaypath(const char *path, const char *prefix)
-+{
-+	const char *super_prefix = get_super_prefix();
++enum describe_step {
++	step_bare,
++	step_tags,
++	step_contains,
++	step_all_always,
++	step_end
++};
 +
-+	if (prefix && super_prefix) {
-+		BUG("cannot have prefix '%s' and superprefix '%s'",
-+		    prefix, super_prefix);
-+	} else if (prefix) {
-+		struct strbuf sb = STRBUF_INIT;
-+		char *displaypath = xstrdup(relative_path(path, prefix, &sb));
-+		strbuf_release(&sb);
-+		return displaypath;
-+	} else if (super_prefix) {
-+		int len = strlen(super_prefix);
-+		const char *format = is_dir_sep(super_prefix[len-1]) ? "%s%s" : "%s/%s";
-+		return xstrfmt(format, super_prefix, path);
-+	} else {
-+		return xstrdup(path);
++static char *get_name_rev(const char *sub_path, const char* object_id)
++{
++	struct strbuf sb = STRBUF_INIT;
++	enum describe_step cur_step;
++
++	for (cur_step = step_bare; cur_step < step_end; cur_step++) {
++		struct child_process cp = CHILD_PROCESS_INIT;
++		prepare_submodule_repo_env(&cp.env_array);
++		cp.dir = sub_path;
++		cp.git_cmd = 1;
++		cp.no_stderr = 1;
++
++		switch (cur_step) {
++			case step_bare:
++				argv_array_pushl(&cp.args, "describe",
++						 object_id, NULL);
++				break;
++			case step_tags:	
++				argv_array_pushl(&cp.args, "describe",
++						 "--tags", object_id, NULL);
++				break;
++			case step_contains:
++				argv_array_pushl(&cp.args, "describe",
++						 "--contains", object_id,
++						 NULL);
++				break;
++			case step_all_always:
++				argv_array_pushl(&cp.args, "describe",
++						 "--all", "--always",
++						 object_id, NULL);
++				break;
++			default:
++				BUG("unknown describe step '%d'", cur_step);
++		}
++
++		if (!capture_command(&cp, &sb, 0) && sb.len) {
++			strbuf_strip_suffix(&sb, "\n");
++			return strbuf_detach(&sb, NULL);
++		}
++
 +	}
++
++	strbuf_release(&sb);
++	return NULL;
++}
++
++static int print_name_rev(int argc, const char **argv, const char *prefix)
++{
++	char *namerev;
++	if (argc != 3)
++		die("print-name-rev only accepts two arguments: <path> <sha1>");
++
++	namerev = get_name_rev(argv[1], argv[2]);
++	if (namerev && namerev[0])
++		printf(" (%s)", namerev);
++	printf("\n");
++
++	return 0;
 +}
 +
  struct module_list {
  	const struct cache_entry **entries;
  	int alloc, nr;
-@@ -330,26 +354,30 @@ static int module_list(int argc, const char **argv, const char *prefix)
- 	return 0;
+@@ -1242,6 +1310,7 @@ static struct cmd_struct commands[] = {
+ 	{"relative-path", resolve_relative_path, 0},
+ 	{"resolve-relative-url", resolve_relative_url, 0},
+ 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
++	{"print-name-rev", print_name_rev, 0},
+ 	{"init", module_init, SUPPORT_SUPER_PREFIX},
+ 	{"remote-branch", resolve_remote_submodule_branch, 0},
+ 	{"push-check", push_check, 0},
+diff --git a/git-submodule.sh b/git-submodule.sh
+index c0d0e9a4c..091051891 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -758,18 +758,6 @@ cmd_update()
+ 	}
  }
  
--static void init_submodule(const char *path, const char *prefix, int quiet)
-+static void for_each_submodule_list(const struct module_list list,
-+				    submodule_list_func_t fn, void *cb_data)
- {
-+	int i;
-+	for (i = 0; i < list.nr; i++)
-+		fn(list.entries[i], cb_data);
-+}
-+
-+struct init_cb {
-+	const char *prefix;
-+	unsigned int quiet: 1;
-+};
-+#define INIT_CB_INIT { NULL, 0 }
-+
-+static void init_submodule(const struct cache_entry *list_item, void *cb_data)
-+{
-+	struct init_cb *info = cb_data;
- 	const struct submodule *sub;
- 	struct strbuf sb = STRBUF_INIT;
- 	char *upd = NULL, *url = NULL, *displaypath;
+-set_name_rev () {
+-	revname=$( (
+-		sanitize_submodule_env
+-		cd "$1" && {
+-			git describe "$2" 2>/dev/null ||
+-			git describe --tags "$2" 2>/dev/null ||
+-			git describe --contains "$2" 2>/dev/null ||
+-			git describe --all --always "$2"
+-		}
+-	) )
+-	test -z "$revname" || revname=" ($revname)"
+-}
+ #
+ # Show commit summary for submodules in index or working tree
+ #
+@@ -1041,14 +1029,14 @@ cmd_status()
+ 		fi
+ 		if git diff-files --ignore-submodules=dirty --quiet -- "$sm_path"
+ 		then
+-			set_name_rev "$sm_path" "$sha1"
++			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
+ 			say " $sha1 $displaypath$revname"
+ 		else
+ 			if test -z "$cached"
+ 			then
+ 				sha1=$(sanitize_submodule_env; cd "$sm_path" && git rev-parse --verify HEAD)
+ 			fi
+-			set_name_rev "$sm_path" "$sha1"
++			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
+ 			say "+$sha1 $displaypath$revname"
+ 		fi
  
--	/* Only loads from .gitmodules, no overlay with .git/config */
--	gitmodules_config();
--
--	if (prefix && get_super_prefix())
--		die("BUG: cannot have prefix and superprefix");
--	else if (prefix)
--		displaypath = xstrdup(relative_path(path, prefix, &sb));
--	else if (get_super_prefix()) {
--		strbuf_addf(&sb, "%s%s", get_super_prefix(), path);
--		displaypath = strbuf_detach(&sb, NULL);
--	} else
--		displaypath = xstrdup(path);
-+	displaypath = get_submodule_displaypath(list_item->name, info->prefix);
- 
--	sub = submodule_from_path(null_sha1, path);
-+	sub = submodule_from_path(null_sha1, list_item->name);
- 
- 	if (!sub)
- 		die(_("No url found for submodule path '%s' in .gitmodules"),
-@@ -361,7 +389,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
- 	 *
- 	 * Set active flag for the submodule being initialized
- 	 */
--	if (!is_submodule_initialized(path)) {
-+	if (!is_submodule_initialized(list_item->name)) {
- 		strbuf_reset(&sb);
- 		strbuf_addf(&sb, "submodule.%s.active", sub->name);
- 		git_config_set_gently(sb.buf, "true");
-@@ -404,7 +432,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
- 		if (git_config_set_gently(sb.buf, url))
- 			die(_("Failed to register url for submodule path '%s'"),
- 			    displaypath);
--		if (!quiet)
-+		if (!info->quiet)
- 			fprintf(stderr,
- 				_("Submodule '%s' (%s) registered for path '%s'\n"),
- 				sub->name, url, displaypath);
-@@ -433,10 +461,10 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
- 
- static int module_init(int argc, const char **argv, const char *prefix)
- {
-+	struct init_cb info = INIT_CB_INIT;
- 	struct pathspec pathspec;
- 	struct module_list list = MODULE_LIST_INIT;
- 	int quiet = 0;
--	int i;
- 
- 	struct option module_init_options[] = {
- 		OPT__QUIET(&quiet, N_("Suppress output for initializing a submodule")),
-@@ -461,8 +489,11 @@ static int module_init(int argc, const char **argv, const char *prefix)
- 	if (!argc && git_config_get_value_multi("submodule.active"))
- 		module_list_active(&list);
- 
--	for (i = 0; i < list.nr; i++)
--		init_submodule(list.entries[i]->name, prefix, quiet);
-+	info.prefix = prefix;
-+	info.quiet = !!quiet;
-+
-+	gitmodules_config();
-+	for_each_submodule_list(list, init_submodule, &info);
- 
- 	return 0;
- }
 -- 
 2.13.0
 
