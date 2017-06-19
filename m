@@ -2,99 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31A8120401
-	for <e@80x24.org>; Mon, 19 Jun 2017 02:44:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9A1A20401
+	for <e@80x24.org>; Mon, 19 Jun 2017 03:02:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753313AbdFSCok (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Jun 2017 22:44:40 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36159 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753227AbdFSCoj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Jun 2017 22:44:39 -0400
-Received: by mail-pf0-f195.google.com with SMTP id y7so14602288pfd.3
-        for <git@vger.kernel.org>; Sun, 18 Jun 2017 19:44:39 -0700 (PDT)
+        id S1753324AbdFSDCt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Jun 2017 23:02:49 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:32837 "EHLO
+        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753298AbdFSDCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Jun 2017 23:02:48 -0400
+Received: by mail-io0-f170.google.com with SMTP id t87so55917873ioe.0
+        for <git@vger.kernel.org>; Sun, 18 Jun 2017 20:02:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cuGp1srLpm37vCSds5Q8H4ewcMAnD2u0ivHf85Ll8V0=;
-        b=Knyt62VyyhX6BzwigPKwe4mthkSB56q+ESfTwj0AHSj/gts56gAqts+eTzMmqz61CQ
-         W6ruPsdw148w0dSiKGY0IvVDLmQblgnd7Xv4zdLFB2ebEJrTp0oWKMTasMQ0iGYacSbV
-         AkFB4JBrNYNUPU+ucol+318EwmyaAPKU5Ldh2GgDh1TOlSFE9FWetMRHZ+/GNh2RNPO0
-         KcxiIBtNyLzma44JNb4uV7XTi0G4CSfKV7X0/52sU7xVIhdhvul9KYgXwe+JaWFfB157
-         m8NBA+mVfAcBka1L62QorHPw+BI90Wwead239SjyyxT4hoXHaQsqQTC1buXY++2ZV4w6
-         cbog==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=u38v9JRfNOkqWdtpaArr7aC/+GWeaivw+N8xmZrGoo4=;
+        b=gv4t9q0rP8n3l43NevEpwv0eM/dsCyuBgbt1jZsCb2f/8NTxl+ZyGv/4af85+F6s86
+         c1Fj1t7Z9XXXQ29BN3AcBdvgU/AodI31wC2yxypVC3hVOYz9rbTVKGs1jLKMv1uwVkok
+         wEKifoRGeqIZeXyRy1tbzEKwGZBg78lFnYt+2C7QMt7ri+0qZ3zbvCybKqdy1JMJNQdN
+         fpoZfVOBYSBoDcq5A6KQDut3om7j19vjLZ9eQ88zcpjOtwkfhFyyANtuqvjp80ASRwsy
+         UyR5gJVTNndrnqpwOqnyKiUAjwEG9nl4W3wr++hE3+MMIytuFskhJCxpTsBXLX53yfSD
+         L2SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cuGp1srLpm37vCSds5Q8H4ewcMAnD2u0ivHf85Ll8V0=;
-        b=sjOuI361HTd6Ix+qBojrpODcL7uT6s/PObXEcW8DfoZMh0LSkgH+jiAKaz/1CPzEbM
-         +hLfgW2Mv+Pjr/tOSpWOgTcx0L30r9BnFEhQHY2ueHB6ga9fVx1hgoGcHkxf/pARONTo
-         rwtyQLjfLVBjUs9I3AR7sY6SATGF4cDc35fqq3xMkjKGCE1wDZKVRUfOGP228i2wHBUV
-         wN7FcdvD3BJ19aUxSHtwgM5jnL4IJqGlY3I7CPiR6K3dOzr7VhITtS9q5QU6I1QYg3YK
-         BfgTI/h4uKv8Vb+20BlxZtEK36qzQBIYjxzOhdD1YrQiCpW6gj/MP0jM1jv1UKZxfqp3
-         YyEQ==
-X-Gm-Message-State: AKS2vOzg+G1mwbJt74nmF80HsOXFQypnyTDBaqVRBVbH6GgPPzZTfAFT
-        gpZNADIzUxh/sg==
-X-Received: by 10.84.137.165 with SMTP id 34mr26601399pln.167.1497840279060;
-        Sun, 18 Jun 2017 19:44:39 -0700 (PDT)
-Received: from localhost.localdomain ([2405:205:8284:9daf:c00c:2460:a1a2:73fc])
-        by smtp.gmail.com with ESMTPSA id t6sm7567821pgs.33.2017.06.18.19.44.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Jun 2017 19:44:38 -0700 (PDT)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, peff@peff.net, git@vger.kernel.org,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Subject: [PATCH 2/2] Add test for the new status message
-Date:   Mon, 19 Jun 2017 08:14:12 +0530
-Message-Id: <20170619024412.5861-1-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170619024123.5438-1-kaarticsivaraam91196@gmail.com>
-References: <20170619024123.5438-1-kaarticsivaraam91196@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=u38v9JRfNOkqWdtpaArr7aC/+GWeaivw+N8xmZrGoo4=;
+        b=LIFHQiTrRvjBztWD6d/drujieDttsP4iCmDAGWOoJYepaUavb5X5QqqhvCv34XGYsu
+         VGGPtOV3QOmNxQssGzrKYQxQ2SRVeIFbiYYsFvTGJJoIY782pIqqjzcdmcoUZca557C/
+         1bt6k/mSxwomxVV7+WPlv0WvxPLj03a0/RTER0suemt70Rl9vWGKBlCT+zr+K86Vs7DV
+         pqpZOFxShUp6lLPlQWT7d5DpMcFj5+Mpc0tCWpUCDMzY0u2azw+c6uitU9WrrFHJ40S0
+         rSmkurcVKRK8L3e4Mn+k+2/vQ4KJWIZDiPSD8uFe2spfX1PbEGKKeKTLivPH1nAT9dLz
+         wrMQ==
+X-Gm-Message-State: AKS2vOyxWymIoAt5lOlnZ75P4JQelfOz+IgWn3Qk7Hi3RZCebXq/t88W
+        o7FMopUPgyNtShHXMUR46Rbt91onuQ==
+X-Received: by 10.107.181.22 with SMTP id e22mr22562663iof.85.1497841367635;
+ Sun, 18 Jun 2017 20:02:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.79.72.66 with HTTP; Sun, 18 Jun 2017 20:02:07 -0700 (PDT)
+In-Reply-To: <20170619021033.22968-1-davvid@gmail.com>
+References: <20170619021033.22968-1-davvid@gmail.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Sun, 18 Jun 2017 23:02:07 -0400
+Message-ID: <CAJZjrdV5k2nUm3SRrA-AqQ=fJBm1CeLc1VLmGkWL1Wh+p9MNDg@mail.gmail.com>
+Subject: Re: [PATCH v3] mergetools/meld: improve compatibiilty with Meld on
+ macOS X
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Matthew Groth <mgroth49@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patch-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
+On Sun, Jun 18, 2017 at 10:10 PM, David Aguilar <davvid@gmail.com> wrote:
+> The macOS X fork of Meld[1] requires a "=" in the "--output"
+> argument, as it uses a wrapper[2] script that munges the
+> "--output" argument before calling into the common "meld"
+> script.
+>
+> The macOS X wrapper script[2] accepts "--output=<filename>"
+> only, despite the fact that the underlying meld code accepts
+> both "--output <filename" and "--output=<filename>"[3].
+>
+> All versions of meld which accept "--output" accept it in
+> the "--output=<filename>" form, so use "--output=<file>" for
+> maximum compatibility.
 
-Resending as a continuation of previous patch
+Aha, then if that's the case this looks fine to me. Thanks!
 
- t/t7508-status.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index fb00e6d9b..e9337c728 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1499,4 +1499,15 @@ test_expect_success 'git commit -m will commit a staged but ignored submodule' '
- 	git config -f .gitmodules  --remove-section submodule.subname
- '
- 
-+test_expect_success 'No commits yet should be noted in status output' '
-+       git init initial &&
-+       cd initial &&
-+       git status >output &&
-+       test_i18ngrep "No commits yet" output &&
-+       test_commit initial &&
-+       git status >output &&
-+       test_i18ngrep ! "No commits yet" output &&
-+       test_i18ngrep "nothing.*to commit" output
-+'
-+
- test_done
--- 
-2.11.0
-
+> [1] https://github.com/yousseb/meld
+> [2] https://github.com/yousseb/meld/blob/master/osx/Meld
+> [3] https://github.com/yousseb/meld/issues/42
+>
+> Reported-by: Matthew Groth <mgroth49@gmail.com>
+> Helped-by: Samuel Lijin <sxlijin@gmail.com>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+> I cloned the meld repo and could not find the code reported in the original
+> issue, but I did find that same exact code existed in a macOS fork.
+>
+> After more investigation, this turned out to be a macOS-only issue.  The
+> commit message has been updated to better reflect what's really going on.
+>
+>  mergetools/meld | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/mergetools/meld b/mergetools/meld
+> index bc178e8882..7a08470f88 100644
+> --- a/mergetools/meld
+> +++ b/mergetools/meld
+> @@ -10,7 +10,7 @@ merge_cmd () {
+>
+>         if test "$meld_has_output_option" = true
+>         then
+> -               "$merge_tool_path" --output "$MERGED" \
+> +               "$merge_tool_path" --output="$MERGED" \
+>                         "$LOCAL" "$BASE" "$REMOTE"
+>         else
+>                 "$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
+> --
+> 2.13.1.453.gc0395165f3
+>
