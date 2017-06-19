@@ -2,136 +2,286 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66E481FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 17:40:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 791291FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 17:47:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750925AbdFSRj6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 13:39:58 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:32786 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750780AbdFSRj5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 13:39:57 -0400
-Received: by mail-pg0-f68.google.com with SMTP id u62so11612268pgb.0
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 10:39:57 -0700 (PDT)
+        id S1751018AbdFSRr1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 13:47:27 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:34574 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750811AbdFSRr0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 13:47:26 -0400
+Received: by mail-wr0-f195.google.com with SMTP id y25so12413987wrd.1
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 10:47:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=DluEaAPp2V5HJvgyU5/j4ABiA9aMTpJ/Ev+WFO1nv8E=;
-        b=SKjAJZs2ckao48jYopYw6sAXu0E8ml+9w/Jgl2NpekFSj366l91QwCXHHXZby62T6V
-         c9pJk7MK44AM0358G0rmYY3//jSjwL62ck/kWG3Y3Gxses5KAydAsPdo8tA3FdYml7TY
-         z6kQ5SP3NNTfGtd6GJWG/t26hTIu8G6fZP+7l01PnomeYpSLAL5DUyRyzBabG0TMT1NF
-         1fdSY0tO1s8H0u4LcVUocQ1ZgS/qpdRyj3VKfBpUuFttaAb2wTHqsrHUaY3HSkxTYE6z
-         GijAEBS/V0E8o9v5cgx3ZX7ypLD6iFni4gZDHf3TOccO9QdQqeqEQsqwwi7LUjC3Omsv
-         NGTw==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=a0qr455w44yPlUo5wyGEnyLRl1xV6bhflMqM6/POwmM=;
+        b=Cu4uA/avrPLGBgLseRpyinO/+nSVwQ/EYl8p2MvNvw/V3Y/2qKTt1y+mBJrqvQtv2/
+         dTKhKY8jfg9cHr2tVRr1HgjwGl94zilHm6hgaNFV5WpsxxsGwMBZcaxp1LfezqeIGtjY
+         s4Lm6YnLLSI0yvzJWxSsKKDo0mPV3dt4ZJhLxazMcTKBQ04pJ/2+tzz1tuOeAbU7Teay
+         ENqVhsu8lIK++a2PdQFNDys+LMK+YYUJANqwcgQcvowB23wFz8SD9iWK8IjgHlT8CYzw
+         JeAZaHeDVI0PJXNFvuvRXnBTJeMMzQxo9yP1llYVBooA4fbm4ioIVjQZ5kTkJ6orC3xV
+         o2hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=DluEaAPp2V5HJvgyU5/j4ABiA9aMTpJ/Ev+WFO1nv8E=;
-        b=JO69Ul0nXq4/I311/qfknzPbYeL9Fycv0DdXwkyeFb2Rtg0rD04Osb692XmwKkGF5s
-         Qx+BMpzWho1th4RElJD0wSDdKCR/k3nmifE31mwCpxt9CL3AGPsD5gCwksHXfWrrl6Oa
-         deuXL6k6PuuSP6OxJ/WtbVdEPmLY+bOCBK5MXEb4fSY48vCcx7JjUP4pE4f/wJRZULM1
-         +3CuD3jHxFiz96fL/1zUZzNSmTG61+5RQhGfBhkk789WPn0miNNKHg1KIL6AciV9qd1f
-         JUCuE7M8ZWxHcN3l+m4wDW29jGMURmpWMnNqwLVTZAep9z17EQDxoyMyN9B6pRdjjy+I
-         9yCQ==
-X-Gm-Message-State: AKS2vOx2waOT3PJ38AoWckAn0maLaq9hIsia0oXEQXYsgFPu8eAGG8U2
-        DdPHgx4hfD8j8g==
-X-Received: by 10.98.166.196 with SMTP id r65mr26141922pfl.120.1497893996628;
-        Mon, 19 Jun 2017 10:39:56 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:7466:3d2b:4ee9:fc7])
-        by smtp.gmail.com with ESMTPSA id t23sm20589020pgb.25.2017.06.19.10.39.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 19 Jun 2017 10:39:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Liam Beguin <liambeguin@gmail.com>, git@vger.kernel.org,
-        Philip Oakley <philipoakley@iee.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v5 08/10] rebase -i: skip unnecessary picks using the rebase--helper
-References: <cover.1497444257.git.johannes.schindelin@gmx.de>
-        <72bbfcae2abcb14f6b1288051a244faadbee29e0.1497444257.git.johannes.schindelin@gmx.de>
-        <a12767b9-a947-e0a2-fc82-fc25992fd0d1@gmail.com>
-        <alpine.DEB.2.21.1.1706161551030.4200@virtualbox>
-        <529f6cc7-ab2b-72bb-bc51-f4cca4e98652@gmail.com>
-        <alpine.DEB.2.21.1.1706191127450.57822@virtualbox>
-        <20170619161051.silyrlwrnjjspoxe@sigill.intra.peff.net>
-Date:   Mon, 19 Jun 2017 10:39:54 -0700
-In-Reply-To: <20170619161051.silyrlwrnjjspoxe@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 19 Jun 2017 12:10:51 -0400")
-Message-ID: <xmqqinjrub9x.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=a0qr455w44yPlUo5wyGEnyLRl1xV6bhflMqM6/POwmM=;
+        b=N4/vI9dmnUeUccBKhO/xiViFFA/nA5G7HJf1DtMYnOnt8LeVFIL8HuFkibUtFd1WRW
+         j/QRjjtqxwj4THi89X1HmgfQExBUpkesDYAc8Ky6+1UZxqak/DHjJmzRLRDQpCO28Hp6
+         t6F1Asm/MJSmT7l6/0vdr5apvJzvrJjLE8D+a1p2e9oq6/6Ou9tRDLjsEgHDluoGTi+7
+         guc+OLptRbsQLd/BmeGyUOuuyHC75XLO8m+oEk0PYtig7C7RT1g0/PqlTeutqUTCeZL7
+         Wh4G+b3KO/U2nZLqpmuwL3jjGnsu31gaZGmw6GzGkSob/nhzaw0FIjrgX/4Ll247NT6u
+         sp5A==
+X-Gm-Message-State: AKS2vOzq0UdDBzRGa4FQsJTD7ohf8zVKp1Gi+JtEdsLikHYgVJgemevH
+        eroXtxMNFZ/Nrw==
+X-Received: by 10.223.133.211 with SMTP id 19mr2872671wru.27.1497894444280;
+        Mon, 19 Jun 2017 10:47:24 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id w79sm6250640wrc.33.2017.06.19.10.47.23
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 19 Jun 2017 10:47:23 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v5 4/5] convert: move multiple file filter error handling to separate function
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <cedddaed-829d-9bde-3399-5b4e85dcbe57@web.de>
+Date:   Mon, 19 Jun 2017 19:47:22 +0200
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, e@80x24.org, ttaylorr@github.com,
+        peartben@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <AE3AB022-B7C8-4C13-AF8F-E561E9AA57D2@gmail.com>
+References: <20170601082203.50397-1-larsxschneider@gmail.com> <20170601082203.50397-5-larsxschneider@gmail.com> <be787e74-5f37-8429-9976-abdf8725737c@web.de> <28D2B758-7E5D-4EEA-A33D-57871960D5E1@gmail.com> <cedddaed-829d-9bde-3399-5b4e85dcbe57@web.de>
+To:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Mon, Jun 19, 2017 at 11:45:50AM +0200, Johannes Schindelin wrote:
->
->> The reason for this suggestion is that one of the revision machinery's
->> implementation details is an ugly little semi-secret: the pretty-printing
->> machinery uses a global state, and that is why we need the "pretty_given"
->> flag in the first place.
->
-> I think that's mis-stating Junio's complaint. The point is not the
-> pretty_given flag itself, which we know about and can work around. The
-> point is that we don't know what other similar problems we have or will
-> have due to future changes in the revision code.
->
-> In other words, there are two APIs: the one where C code manipulates
-> rev_info directly, and the one where revision.c responds to string
-> arguments. From a maintenance perspective, it is easy for somebody make
-> a change that works for the latter but not the former.
+> On 19 Jun 2017, at 19:18, Torsten B=C3=B6gershausen <tboegi@web.de> =
+wrote:
+>=20
+> On 2017-06-18 13:47, Lars Schneider wrote:
+>>=20
+>>> On 18 Jun 2017, at 09:20, Torsten B=C3=B6gershausen <tboegi@web.de> =
+wrote:
+>>>=20
+>>>=20
+>>> On 2017-06-01 10:22, Lars Schneider wrote:
+>>>> This is useful for the subsequent patch 'convert: add =
+"status=3Ddelayed" to
+>>>> filter process protocol'.
+>>>=20
+>>> May be
+>>> Collecting all filter error handling is useful for the subsequent =
+patch
+>>> 'convert: add "status=3Ddelayed" to filter process protocol'.
+>>=20
+>> I think I get your point. However, I feel "Collecting" is not the =
+right word.
+>>=20
+>> How about:
+>> "Refactoring filter error handling is useful..."?
+>=20
+> OK
 
-There are (1) the API for users of revision traversal machinery and
-(2) the implementation detail of the API.  Of course, the code that
-actually parses the plumbing and end-user supplied set of options
-needs to manipulate rev_info directly, but we should avoid direct
-manipulation when we can to future-proof the codebase.
+OK, I'll change it in the next round.
 
-My main complaint is that Johannes's "compiler can catch mistakes"
-is true only for the most trivial kind of mistakes.
+>>>>=20
+>>>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>>>> ---
+>>>> convert.c | 47 ++++++++++++++++++++++++++---------------------
+>>>> 1 file changed, 26 insertions(+), 21 deletions(-)
+>>>>=20
+>>>> diff --git a/convert.c b/convert.c
+>>>> index f1e168bc30..a5e09bb0e8 100644
+>>>> --- a/convert.c
+>>>> +++ b/convert.c
+>>>> @@ -565,6 +565,29 @@ static int start_multi_file_filter_fn(struct =
+subprocess_entry *subprocess)
+>>>> 	return err;
+>>>> }
+>>>>=20
+>>>> +static void handle_filter_error(const struct strbuf =
+*filter_status,
+>>>> +				struct cmd2process *entry,
+>>>> +				const unsigned int wanted_capability) {
+>>>> +	if (!strcmp(filter_status->buf, "error")) {
+>>>> +		/* The filter signaled a problem with the file. */
+>>>> +	} else if (!strcmp(filter_status->buf, "abort") && =
+wanted_capability) {
+>>>> +		/*
+>>>> +		 * The filter signaled a permanent problem. Don't try to =
+filter
+>>>> +		 * files with the same command for the lifetime of the =
+current
+>>>> +		 * Git process.
+>>>> +		 */
+>>>> +		 entry->supported_capabilities &=3D ~wanted_capability;
+>>>> +	} else {
+>>>> +		/*
+>>>> +		 * Something went wrong with the protocol filter.
+>>>> +		 * Force shutdown and restart if another blob requires =
+filtering.
+>>>> +		 */
+>>>> +		error("external filter '%s' failed", =
+entry->subprocess.cmd);
+>>>> +		subprocess_stop(&subprocess_map, &entry->subprocess);
+>>>> +		free(entry);
+>>>> +	}
+>>>> +}
+>>>> +
+>>>> static int apply_multi_file_filter(const char *path, const char =
+*src, size_t len,
+>>>> 				   int fd, struct strbuf *dst, const =
+char *cmd,
+>>>> 				   const unsigned int wanted_capability)
+>>>> @@ -656,28 +679,10 @@ static int apply_multi_file_filter(const char =
+*path, const char *src, size_t len
+>>>> done:
+>>>> 	sigchain_pop(SIGPIPE);
+>>>>=20
+>>>> -	if (err) {
+>>>> -		if (!strcmp(filter_status.buf, "error")) {
+>>>> -			/* The filter signaled a problem with the file. =
+*/
+>>>               Note1: Do we need a line with a single ";" here ?
+>>=20
+>> The single ";" wouldn't hurt but I don't think it is helpful either.
+>> I can't find anything in the coding guidelines about this...
+>=20
+> OK about that. I was thinking to remove the {}, and the we -need- the =
+";"
 
-The current implementation detail for reacting to --format="<string>"
-given by the revision traversal machinery happens to be to set three
-things in rev_info structure: set verbose_header and pretty_given to
-1 and then call get_commit_format() on the format string.  Dscho is
-correct to say that the compiler can catch a mistake that misspells,
-say verbose_header as verbos_header.  The compiler would not catch
-an equivalent mistake to misspell the option as --formta="<string>",
-so from that point of view, his argument may seem to make sense.
+True. However, I prefer the {} style here. Would that be OK with you?
+Plus, this commit is not supposed to change code. I just want to move =
+the
+code to a different function.
 
-But the compiler would not help catching a copy-and-paste mistake to
-do only two out of the three things needed (e.g. forgetting to set
-pretty_given).  If the code relies on setup_revisions() to react to
-options just the way "rev-list" plumbing does, such a mistake cannot
-happen in the first place---there is no need to worry about "catching".
 
-As you clarified correctly, the writer of the code that _uses_ the
-machinery, like the one in sequencer_make_script(), cannot
-anticipate how the internal implementation of reacting to the
-features will change, and more importantly, it should not have to
-know how it will change.  By using the setup_revisions() API that
-uses the exactly the same parser as plumbing command "git rev-list"
-does, the forward compatibility is guaranteed.  Copying and pasting
-the current internal implementation detail will break that.
+>>>               Question: What should/will happen to the file ?
+>>>               Will Git complain later ? Retry later ?
+>>=20
+>> The file is not filtered and Git does not try, again.=20
+>> That might be OK for certain filters:
+>> If "filter.foo.required =3D false" then this would be OK.=20
+>> If "filter.foo.required =3D true" then this would cause an error.
+>=20
+> Does it make sense to add it as a comment ?
+> I know, everything is documented otherwise, but when looking at the =
+source
+> code only, the context may be useful, it may be not.
 
-> I do agree that the lack of compile-time safety for obvious mistakes
-> like "--pertty" is a downside, though. On the other hand, there are
-> strong run-time checks there, so the tests would catch it.
+I agree. I'll add a comment!
 
-True.
+>>=20
+>>>> -		} else if (!strcmp(filter_status.buf, "abort")) {
+>>>> -			/*
+>>>> -			 * The filter signaled a permanent problem. =
+Don't try to filter
+>>>> -			 * files with the same command for the lifetime =
+of the current
+>>>> -			 * Git process.
+>>>> -			 */
+>>>> -			 entry->supported_capabilities &=3D =
+~wanted_capability;
+>>>                        Hm, could this be clarified somewhat ?
+>>>                        Mapping "abort" to "permanent problem" makes =
+sense as
+>>>                        such, but the only action that is done is to =
+reset
+>>>                        a capablity.
+>>=20
+>> I am not sure what you mean with "reset capability". We disable the =
+capability here.
+>> That means Git will not use the capability for the active session.
+>=20
+> Sorry, my wrong - reset is a bad word here.
+> "Git will not use the capability for the active session" is perfect!
 
-After setup_revisions() returns, if there are unrecognized options
-(e.g. misspelt "--pertty"), that can be used as the indication of a
-programming error, as the new code is not even parsing arbitrary set
-of options given by the end-user.
+OK :)
+
+
+>>> 		/*
+>>> 		 * The filter signaled a missing capabilty. Don't try to =
+filter
+>>> 		 * files with the same command for the lifetime of the =
+current
+>>> 		 * Git process.
+>>> 		 */
+>>=20
+>> I like the original version better because the capability is not =
+"missing".
+>> There is "a permanent problem" and the filter wants to signal Git to =
+not use
+>> this capability for the current session anymore.
+>=20
+> Git and the filter are in a negotiation phase to find out which side =
+is able
+> to do what.So I don't think there is a "problem" (in the sense that I =
+understand
+> it) at all.
+
+No, at this point they are passed the negotiation phase. A problem =
+actually
+happened.
+
+
+> And back to the "abort":
+> I still think that the word feels to harsh...
+> "abort" in my understanding smells too much "a program is terminated".
+> If it is not too late, does it may sense to use something like "nack" =
+?
+
+Well, at this point it is too late because we don't retry.
+
+Plus, I would prefer to not change code here as this commit is supposed
+to just move existing code. Changing "abort" would change the protocol
+that was released with Git 2.11.
+
+
+>>=20
+>>>                # And the there is a question why the answer is =
+"abort" and not
+>>>                # "unsupported"
+>>=20
+>> Because the filter supports the capability. There is just some kind =
+of failure that=20
+>> that causes the capability to not work as expected. Again, depending =
+on the filter
+>> "required" flag this is an error or not.
+>>=20
+>=20
+> May be I misunderstood the whole sequence, and abort is the right =
+thing.
+> If yes, how about this ?
+>=20
+> 	} else if (!strcmp(filter_status->buf, "abort") && =
+wanted_capability) {
+> 		/*
+> 		 * Don't try to filter files with this capability for =
+lifetime
+> 		 * of the current Git process.
+> 		 */
+> 		 entry->supported_capabilities &=3D ~wanted_capability;
+
+How about this:
+
+The filter signaled a problem. Don't try to filter files with this =
+capability=20
+for the lifetime of the current Git process.
+
+?
+
+Thanks,
+Lars=
