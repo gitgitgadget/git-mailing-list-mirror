@@ -2,107 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA96320D0C
-	for <e@80x24.org>; Mon, 19 Jun 2017 12:19:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F10CA1FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 13:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754012AbdFSMTa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 08:19:30 -0400
-Received: from hel-mailgw-01.vaisala.com ([193.143.230.17]:44821 "EHLO
-        hel-mailgw-01.vaisala.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751768AbdFSMT3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 08:19:29 -0400
-X-Greylist: delayed 598 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Jun 2017 08:19:29 EDT
-IronPort-PHdr: =?us-ascii?q?9a23=3A9htrkRaE4BEu8os762K0LAb/LSx+4OfEezUN459i?=
- =?us-ascii?q?sYplN5qZoMW4bnLW6fgltlLVR4KTs6sC0LuJ9fC9EjBQqb+681k6OKRWUBEEjc?=
- =?us-ascii?q?hE1ycBO+WiTXPBEfjxciYhF95DXlI2t1uyMExSBdqsLwaK+i764jEdAAjwOhRo?=
- =?us-ascii?q?LerpBIHSk9631+ev8JHPfglEnjSwbLdwIRmsrgjctsYajIRhJ60s1hbHv3xEdv?=
- =?us-ascii?q?hMy2h1P1yThRH85smx/J5n7Stdvu8q+tBDX6vnYak2VKRUAzs6PW874s3rrgTD?=
- =?us-ascii?q?QhCU5nQASGUWkwFHDBbD4RrnQ5r+qCr6tu562CmHIc37SK0/VDq+46t3ThLjlS?=
- =?us-ascii?q?EKPCM7/m7KkMx9lKJVrgy8qRxjzYDaY4CVO+ZxcKzSZt4aWXFOU9xNWyBdHo+x?=
- =?us-ascii?q?bY0CBPcBM+ZCqIn9okMDoBygCgayHuPvzSVEiWXs0q0+z+QhFgfG0xImH98Vrn?=
- =?us-ascii?q?TbttT1NLwIXuCx1qbE1ynMb/RT2Trk7oXDbxMvoemUUL5tc8fd11MjGx3Kg1mK?=
- =?us-ascii?q?tIDpJTCY2+QVv2SG7edsS/ijh3Aopg1rozWix90ghpTKi48a0lzE+zt2zYUpKd?=
- =?us-ascii?q?C9TUN2YdqpH4ZNuyyfKod5WMEvTmR2tyknyLAGt5u2cDYXx5g6xRPSbeGMfZKS?=
- =?us-ascii?q?7RL5TumRJC91hHdieL2imRm/6VOgyujgVsms11ZKszZFnsHMtn8T0xzT7dCKRP?=
- =?us-ascii?q?ly8EmnwDqB2AHc5/9GL0wtiabXNYQtzaI3lpoJqUTPBDH2l1/3jK+NbEok/vKn?=
- =?us-ascii?q?5/77bbXho5+QL450igfgPaQygsGzHOY1PhYUU2SF9umwzqDv8Vf6TbhKlvE2l7?=
- =?us-ascii?q?PWsJHeJcQVvK65BApV35495BmhFTem184UkmMdI1JBZBKHiI7pNE/IIP3jE/ew?=
- =?us-ascii?q?mVWskCxxyPDCJLLtGInCLn/GkLv5Z7Zy91ZcyBYvzdBY/59UBbABIO7oV0/vu9?=
- =?us-ascii?q?zXEAU5Pxa3w+n5EtV90J0RWWaVDq+eKqPSvgzA2uV6d+aNeKcLtzvnbfso/fjj?=
- =?us-ascii?q?iTk+g1BLLoez2p5CPH21BPMgKkydfX3qj9EpD24LpQM6Rarhj1jUAm0bXGq7Q6?=
- =?us-ascii?q?9pvmJzM4mhF4qWHo0=3D?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2EzCgB3vkdZ/1UBGKxcHgYMGQYMhSODZ?=
- =?us-ascii?q?JtxghCWGoZAgnQVAQEBAQEBAQEBAQECgRCCMyKCbQQNVwEiAiYCBDAVEgS4R4F?=
- =?us-ascii?q?sOowTgQuHYwuHP2KCRoJhBYlZlQWBX4kOjF6OIZUJNYEtdIVqHYFmiUqBDQEBA?=
- =?us-ascii?q?Q?=
-X-IPAS-Result: =?us-ascii?q?A2EzCgB3vkdZ/1UBGKxcHgYMGQYMhSODZJtxghCWGoZAgnQ?=
- =?us-ascii?q?VAQEBAQEBAQEBAQECgRCCMyKCbQQNVwEiAiYCBDAVEgS4R4FsOowTgQuHYwuHP?=
- =?us-ascii?q?2KCRoJhBYlZlQWBX4kOjF6OIZUJNYEtdIVqHYFmiUqBDQEBAQ?=
-X-IronPort-AV: E=Sophos;i="5.39,361,1493672400"; 
-   d="scan'208";a="42431466"
-Received: from hel-exch-02.corp.vaisala.com ([172.24.1.85])
-  by hel-mailgw-01.vaisala.com with ESMTP/TLS/AES256-SHA; 19 Jun 2017 15:09:29 +0300
-Received: from HEL-EXCH-02.corp.vaisala.com (172.24.1.85) by
- HEL-EXCH-02.corp.vaisala.com (172.24.1.85) with Microsoft SMTP Server (TLS)
- id 15.0.1210.3; Mon, 19 Jun 2017 15:09:28 +0300
-Received: from HEL-EXCH-02.corp.vaisala.com ([fe80::59d1:1a7:ed7f:2d17]) by
- HEL-EXCH-02.corp.vaisala.com ([fe80::59d1:1a7:ed7f:2d17%14]) with mapi id
- 15.00.1210.000; Mon, 19 Jun 2017 15:09:28 +0300
-From:   <eero.aaltonen@vaisala.com>
-To:     <git@vger.kernel.org>
-Subject: Behavior of 'git fetch' for commit hashes
-Thread-Topic: Behavior of 'git fetch' for commit hashes
-Thread-Index: AQHS6PTmljaresomX0G+oE4gpNMbnQ==
-Date:   Mon, 19 Jun 2017 12:09:28 +0000
-Message-ID: <14e804c6-0798-8bbd-b182-66c3cd2b870c@vaisala.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.24.66.184]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <B622368629B602499BD3AC8ED26E3D06@exch.vaisala.com>
-Content-Transfer-Encoding: base64
+        id S1750907AbdFSNS2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 09:18:28 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53827 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750733AbdFSNS1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 09:18:27 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPUZ7-1dR5Pv2O7F-004o2M; Mon, 19
+ Jun 2017 15:16:50 +0200
+Date:   Mon, 19 Jun 2017 15:16:48 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Joel Teichroeb <joel@teichroeb.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v4 5/5] stash: implement builtin stash
+In-Reply-To: <xmqqvanvv9be.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1706191516350.57822@virtualbox>
+References: <20170608005535.13080-1-joel@teichroeb.net> <20170608005535.13080-6-joel@teichroeb.net> <xmqqvanvv9be.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:zHIG0ZSPJelRH5b2I+6TTgxqQTmiYff/wRqvf9m70YypuVvG9+O
+ rh0S7LS4QbMMdaYzin5NnQvYtTg50K0dbaNWiDvngm8Hq5klzz/KM0RVNyLuMNxjhGoyE6c
+ Z0cX+w4lApAqWMbaCe2si9Al+u8QTKcKDoCzI2YddLhg63OKJLeRcNeoiAGna1M24qHmL+6
+ RPVG4+1ZRV+HpbIY9vyKQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OEVHqtcVq5o=:vthsGLNe8mkFnmxVnBKcxm
+ Raud4AuY45TpuWw7TTbdZtUeARlKCRHrW4sNFRJy66ApgGPnE3u4DMHHyQcaAOGnyH9+JC6bD
+ TQVp4lYy6NT9E6bfd4XG+lqeAe6FmipWHvCdYh1U6Ng4F8rBFqvfOG+CKO7688ql+rHFTsk2T
+ PN2Lg/XQK0Io/LUOk+YqahbU4A7E+JDoks+yFJ2dxCrODDgdT5DW+JS5KtOeb2Ldz+OaBWANT
+ FzYBe8DPrpFNAp3CKaoHQ1UfJVNJ+WYlgHzpRJ8SR3JHeTmc9Z+IQU68gSpTD9cuxtwJ4JmDv
+ 5jDuZWARu8Scc9ULBST39wMPeZndctKxSlCd1xEZjupbPAPln5/3g3MBAkZB8ubs6ci8Nuo65
+ Aa6toUJcMhEQtVhmG7PwMME0qENV8fW3Ql6Ur5MTjchKC+fCLbDzjBuUcWyo9IuPiPJhRmHOG
+ Av8eJPFnh6jyyre6d/Trhhzl8weqSkbyxulQ/tfnG29Ignu8Ds4u8jdGGiPPcyZFJdpicL7ar
+ st3HRGISbgtwht9Gr/ESPGCfYcrBTIAwOL3wn7N5ZKebIxRFUI8WvlK36GcM5EiPj/b/GuGJ7
+ BXMjUpeb8IDszUc18LQdobUJt4eK88CqX9du85Zh86WxtUQhXgVrsZILuUAeTxOxgoFJXJHA5
+ M5vY2yiNvu7s1HDbf/JDDLUAYGtIK+fAqE4hq4jCj8ncybb57BUs+a6gzhnrDNkgWBWkJH41Q
+ i0sFbH+ETclKLqpAHd+h12TrOpEwvdGfkcmfxLf/G4Em00Wygx0HwUm2Br4mx1maXJAGwKKpb
+ 555EyO6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGVsbG8sDQoNCkkgYW0gc2VlaW5nIGdyZWF0bHkgZGlmZmVyZW50IGJlaGF2aW9yIGZvciAnZ2l0
-IGZldGNoJyBjb21tYW5kcyBvbg0KdmVyc2lvbiAyLjcuNCBhbmQgMi4xMy4xIHdoZW4gdGhlIGFy
-Z3VtZW50IHRvIGZldGNoIGlzIGEgY29tbWl0IGhhc2guDQoNCkkgYW0gd29ya2luZyBvbiBhIGN1
-c3RvbSBDb250aW51b3VzIEludGVncmF0aW9uIChDSSkgc3lzdGVtLiBUaGUNCnByb2plY3RzIGhh
-dmUgZGVwZW5kZW5jaWVzIHRoYXQgYXJlIHNpbXBseSBmZXRjaGVkIGFzIHJlcG9zaXRvcmllcyB0
-byBhDQpwcm9qZWN0IHN1YmRpcmVjdG9yeS4NCg0KSW4gb3JkZXIgdG8gcHJldmVudCBhIHJhY2Ug
-Y29uZGl0aW9uIGluIHVwZGF0aW5nIGJyYW5jaGVzLCBJIHdhbnQgdG8NCmNoZWNrb3V0IHRoZSBh
-Y3R1YWwgY29tbWl0IHRoYXQgd2FzIGJ1aWx0IGluIGEgcHJldmlvdXMgam9iLg0KDQpFbnZpcm9u
-bWVudA0KPT09PT09PT09PT0NClByb2JsZW0gb2NjdXJzIHdpdGggR2l0IGNsaWVudHMNCi0gMi43
-LjQNCi0gMi4xMy4xDQoNCmFuZCBHaXQgc2VydmVyDQotIEF0bGFzc2lhbiBCaXRidWNrZXQgdjQu
-MTQuMw0KLSBnaXQgdmVyc2lvbiAyLjEyLjANCg0KDQpUaGUgcHJvYmxlbSBjYW4gYmUgcmVwcm9k
-dWNlZCBhcyBmb2xsb3dzLCB3aXRoDQotIDxhdXRob3JpdGF0aXZlVXJsPiA9IFVSTCB0byBwcmlt
-YXJ5IHJlcG9zaXRvcnkNCi0gPGZvcmtVcmw+ID0gVVJMIHRvIGZvcmsgb2YgdGhlIHByaW1hcnkN
-Ci0gPHNoYTE+IGNvbW1pdCBoYXNoIGluIGEgcmVjZW50IGJyYW5jaA0KDQoxLiBnaXQgY2xvbmUg
-PGF1dGhvcml0YXRpdmVVcmw+DQoyLiBjZCByZXN1bHRpbmdfZGlyZWN0b3J5DQozLiBnaXQgZmV0
-Y2ggPGZvcmtVcmw+IDxzaGExPg0KDQpGb3IgdmVyc2lvbiAyLjcuNA0KPT09PT09PT09PT09PT09
-PT0NCkdpdCBleGl0cyB3aXRoIGV4aXQgY29kZSAxLg0KDQpIb3dldmVyLCBpZiBJIGZpcnN0IGRv
-ICdnaXQgZmV0Y2ggPGJyYW5jaD4nLCB0aGVuICdnaXQgZmV0Y2ggPHNoYTE+IHdpbGwNCmFsc28g
-d29yaw0KDQogKiBicmFuY2ggICA8c2hhMT4gLT4gRkVUQ0hfSEVBRA0KDQpGb3IgdmVyc2lvbiAy
-LjEzLjMNCj09PT09PT09PT09PT09PT09PQ0KR2l0IGV4aXRzIHdpdGggZXhpdCBjb2RlIDEyOCBh
-bmQgbWVzc2FnZQ0KZmF0YWw6IENvdWxkbid0IGZpbmQgcmVtb3RlIHJlZg0KDQpIb3dldmVyLCB0
-aGUgd29ya2Fyb3VuZCBmb3IgZGVzY2JpYmVkIGFib3QgZm9yIGdpdCB2ZXJzaW9uIDIuNy40IG5v
-DQpsb25nZXIgd29ya3MuIFRoZSByZXN1bHQgaXMgYWx3YXlzDQpmYXRhbDogQ291bGRuJ3QgZmlu
-ZCByZW1vdGUgcmVmDQoNCkRlc2lyZWQgcmVzdWx0DQo9PT09PT09PT09PT09PQ0KQ29tbWl0IGlz
-IGluIC5naXQvRkVUQ0hfSEVBRCBhbmQgY2FuIGJlIGNoZWNrZWQgb3V0Lg0KDQoNCkkgd2FudCB0
-byBjaGVja291dCBhIHNwZWNpZmljIGNvbW1pdCB3aXRob3V0IGNyZWF0aW5nIGFueSBleHRyYSBu
-YW1lZA0KcmVtb3RlcyBpbiB0aGUgbG9jYWwgZ2l0IGNsb25lLg0KDQpGaW5hbGx5LA0KV2hhdCBp
-cyB0aGUgZXhwZWN0ZWQgYmVoYXZpb3IgZm9yICdnaXQgZmV0Y2gnIGluIHRoaXMgY2FzZT8NCklz
-IHRoZXJlIHNvbWUgb3RoZXIgd2F5IEkgY2FuIGFjaGlldmUgbXkgZ29hbHM/DQoNCi0tIA0KQmVz
-dCByZWdhcmRzLA0KRWVybyBBYWx0b25lbg==
+Hi Junio,
+
+On Fri, 16 Jun 2017, Junio C Hamano wrote:
+
+> Joel Teichroeb <joel@teichroeb.net> writes:
+> 
+> > +static void stash_create_callback(struct diff_queue_struct *q,
+> > +				struct diff_options *opt, void *cbdata)
+> > +{
+> > +	int i;
+> > +
+> > +	for (i = 0; i < q->nr; i++) {
+> > +		struct diff_filepair *p = q->queue[i];
+> > +		const char *path = p->one->path;
+> > +		struct stat st;
+> 
+> The order is somewhat ugly.  Move "struct stat st;" that does not
+> have any initialization at the beginning.
+
+Let's not call it "ugly". You may find it ugly, but maybe you may want to
+avoid contributors feeling judged negatively, either.
+
+Instead, let's say that it is preferred in Git's source code to declare
+uninitialized variables first, and then declare variables which are
+initialized at the same time.
+
+This convention, however, would need to be documented in CodingGuidelines
+first. We do not want to make contributors feel dumb now, do we?
+
+In this particular case, I also wonder whether it is worth the time to
+point out an unwritten (and not always obeyed) rule. The variable block is
+small enough that it does not matter much in which order the variables are
+declared.
+
+However, trying to be very strict even in such a small matter may well
+cost us contributors (and it is dubious whether the most critical parts of
+our technical debt has anything to do with small code style issues similar
+to this one). It's not like our bar of entry to new contributors is very
+low, exactly...
+
+And if you disagree with this assessment, you should point out the same
+issues in literally all of my patches, as I always put initialized
+variables first, uninitialized last.
+
+> > +	strbuf_reset(&out);
+> > +
+> > +	discard_cache();
+> > +	read_cache_from(stash_index_path);
+> > +
+> > +	write_index_as_tree(orig_tree.hash, &the_index, stash_index_path, 0,NULL);
+> 
+> SP before "NULL".
+
+If only we had automated source code formatting, saving us from these
+distractions during patch review.
+
+The rest of the review, modulo all the "Hmpf"s, seems helpful enough that
+I will try to find time to review the next iteration of this patch series
+(with a fresh mind, as I only skimmed the previous iteration) instead of
+adding my comments here.
+
+Ciao,
+Dscho
