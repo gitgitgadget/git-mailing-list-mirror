@@ -2,224 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CEA61FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 20:14:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BA181FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 20:20:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751680AbdFSUOB convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 19 Jun 2017 16:14:01 -0400
-Received: from mail.plc2.de ([212.43.91.138]:58675 "EHLO mail.plc2.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751062AbdFSUOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 16:14:00 -0400
-Received: from SBS2011.opfingen.plc2.de ([fe80::48e5:6c6d:d5a9:75eb]) by
- SBS2011.opfingen.plc2.de ([fe80::48e5:6c6d:d5a9:75eb%10]) with mapi id
- 14.01.0438.000; Mon, 19 Jun 2017 22:13:58 +0200
-From:   Patrick Lehmann <Patrick.Lehmann@plc2.de>
+        id S1752187AbdFSUUb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 16:20:31 -0400
+Received: from washoe.dartmouth.edu ([129.170.30.229]:49653 "EHLO
+        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751689AbdFSUUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 16:20:30 -0400
+Received: from [129.170.31.151] (helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.80)
+        (envelope-from <yoh@onerussian.com>)
+        id 1dN39u-00017c-Lx; Mon, 19 Jun 2017 16:20:27 -0400
+Date:   Mon, 19 Jun 2017 16:20:21 -0400
+From:   Yaroslav Halchenko <yoh@onerussian.com>
 To:     Stefan Beller <sbeller@google.com>
-CC:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailinglist <git@vger.kernel.org>
-Subject: AW: Restoring detached HEADs after Git operations
-Thread-Topic: Restoring detached HEADs after Git operations
-Thread-Index: AdLo2JTYy82hS69wTnuiUW9EIL+4M///6qaAgAAkeNWAAFK+gIAAL/wm///jxgCAACeMAP//8q4AgAArZeY=
-Date:   Mon, 19 Jun 2017 20:13:57 +0000
-Message-ID: <0092CDD27C5F9D418B0F3E9B5D05BE0801028CD6@SBS2011.opfingen.plc2.de>
-References: <0092CDD27C5F9D418B0F3E9B5D05BE08010287DF@SBS2011.opfingen.plc2.de>
- <88AC6179-75D6-416B-9235-C628D6C59CA5@gmail.com>
- <0092CDD27C5F9D418B0F3E9B5D05BE080102887B@SBS2011.opfingen.plc2.de>
- <CAGZ79kY0gwk7KRY2iAVTXPBjPzx+mkciVWRR2z2cDgiBjQ2uuw@mail.gmail.com>
- <0092CDD27C5F9D418B0F3E9B5D05BE0801028A86@SBS2011.opfingen.plc2.de>
- <CAGZ79kbMOdkKiVsvxk4UeKKPicyi958LpomeY=ypXT0_=5d8BQ@mail.gmail.com>
- <0092CDD27C5F9D418B0F3E9B5D05BE0801028B70@SBS2011.opfingen.plc2.de>,<CAGZ79kYB__LOK5MhK_OrXYL1xYgYW0Hk5XfjYfRWAcH_AJ78uQ@mail.gmail.com>
-In-Reply-To: <CAGZ79kYB__LOK5MhK_OrXYL1xYgYW0Hk5XfjYfRWAcH_AJ78uQ@mail.gmail.com>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [109.42.2.129]
-x-g-data-mailsecurity-for-exchange-spamlevel: 0
-x-g-data-mailsecurity-for-exchange-state: 0
-x-g-data-mailsecurity-for-exchange-error: 0
-x-g-data-mailsecurity-for-exchange-sender: 32
-x-g-data-mailsecurity-for-exchange-server: 70cd0149-74d1-4df2-bc08-c934d48ac3c3
-x-g-data-mailsecurity-for-exchange-guid: 14366CE4-0BB8-43FA-ABFC-2DE2AECAD355
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+Cc:     Prathamesh Chavan <pc44800@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <20170619202021.dmomy5ztwoeat3eg@hopa.kiewit.dartmouth.edu>
+References: <20170619155924.7ra2vwvaelr2yj2v@hopa.kiewit.dartmouth.edu>
+ <CAGZ79kZhj31eBYnboyxDLuFp1ceeqk8kj0nrnQaCmpRJCVFU4w@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZhj31eBYnboyxDLuFp1ceeqk8kj0nrnQaCmpRJCVFU4w@mail.gmail.com>
+X-URL:  http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 129.170.31.151
+X-SA-Exim-Rcpt-To: sbeller@google.com, pc44800@gmail.com, git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: Re: in case you want a use-case with lots of submodules
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Stefan,
 
-I never have tapped into the DLL Hell trap. That's maybe I never did C++ development or I started with VB .NET / C# as .NET solved major parts of the DLL Hell :). That doesn't mean my new beloved language Python doesn't have a similar problem ...
+On Mon, 19 Jun 2017, Stefan Beller wrote:
 
+> On Mon, Jun 19, 2017 at 8:59 AM, Yaroslav Halchenko <yoh@onerussian.com> wrote:
+> > Hi All,
 
-Thinking about DLL Hell is a thinking in big version numbers like 1.0, 2.0 oder even 2.1, 2.2, ...
-We are here talking about revisions in the build numbers which need to be synchronized between the parent repository and the sub modules (IP cores). Both sides are under heavy development and interfaces evolving from day to day because hardware design can't be planned as easy as software design.
+> > On a recent trip I've listened to the git minutes podcast episode and
+> > got excited to hear  Stefan Beller (CCed just in case) describing
+> > ongoing work on submodules mechanism.  I got excited, since e.g.
+> > performance improvements would be of great benefit to us too.
 
-So by using Git submodules a developer - responsible for a submodule / IP core - can after he finished interface level 1 now go on and implement interface level 2. The parent project can finish it's integration and testing of the level 1 interface before proceeding with level 2. More over if the same IP core is used multiple time in different sub IP cores, it's possible to update one usage place to interface level 2 by a second developer so he can finish his IP core at level 2, which other usage places can still use the level 1 interface.
+> If you're mostly interested in performance improvements of the status
+> quo (i.e. "make git-submodule fast"), then the work of Prathamesh
+> Chavan (cc'd) might be more interesting to you than what I do.
+> He is porting git-submodule (which is mostly a shell script nowadays)
+> to C, such that we can save a lot of process invocations and can do
+> processing within one process.
 
-Start situation:
---------------------------------------
-TOPLEVEL (developer A)
-  o- IP_1 @level1 (developer B)
-       o- IP_2 @level1 (developer C)
-  o- IP_3 @level1 (developer D)
-       o- IP_2 @level1
+ah -- cool.  I would be eager to test it out, thanks!  would be
+interesting to see if it positively affects our overall performance.
+Pointers to that development would be welcome!
 
+> > http://datasets.datalad.org ATM provides quite a sizeable (ATM 370
+> > repositories, up to 4 levels deep) hierarchy of git/git-annex
+> > repositories all tied together via git submodules mechanism.  And as the
+> > collection grows, interactions with it become slower, so additional
+> > options (such as --ignore-submodules=dirty  to status) become our
+> > friends.
 
-Developer C creates interface level 2, but all instances use level1 of IP_2:
---------------------------------------
-TOPLEVEL (developer A)
-  o- IP_1 @level1 (developer B)
-       o- IP_2 @level1 (developer C)
-  o- IP_3 @level1 (developer D)
-       o- IP_2 @level1
+> I am not as much concerned about the 370 number than about the
+> 4 layers of nesting. In my experience the nested submodule case
+> is a little bit error prone and the bug reports are not as frequent as
+> there are not as many users of nesting, yet(?)
 
+well -- part of the story here is that we are forced to use/have full
+blown .git/ directories (for git-annex symlinks to content files to
+work) within submodules instead of .git file with a reference under
+parent's .git/modules.   So we can 'slice' at any level and I
+guess that is why may be avoiding some possibly issues due to nesting
+and the "parent has all .git/modules" approach.
 
-Developer D updates instance of IP_2 to level 2 and completes level 2 of IP_3:
---------------------------------------
-TOPLEVEL (developer A)
-  o- IP_1 @level1 (developer B)
-       o- IP_2 @level1 (developer C)
-  o- IP_3 @level1 (developer D)
-       o- IP_2 @level2
+> In a neighboring thread on the mailing list we have a discussion
+> on the usefulness of being on branches than in detached HEAD
+> in the submodules.
+> https://public-inbox.org/git/0092CDD27C5F9D418B0F3E9B5D05BE08010287DF@SBS2011.opfingen.plc2.de/
 
-Developer A updates instance of IP_3 to level 2:
---------------------------------------
-TOPLEVEL (developer A)
-  o- IP_1 @level1 (developer B)
-       o- IP_2 @level1 (developer C)
-  o- IP_3 @level2 (developer D)
-       o- IP_2 @level2
+> This would not break non-ambiguously, rather it would add
+> ease of use.
 
-Developer B has finished his testing for IP_1 and can now update the instance if IP_2:
---------------------------------------
-TOPLEVEL (developer A)
-  o- IP_1 @level1 (developer B)
-       o- IP_2 @level2 (developer C)
-  o- IP_3 @level2 (developer D)
-       o- IP_2 @level2
+that is indeed a common caveat... I am not sure if any heuristic
+approach would provide a 'bullet proof' solution.  I might even prefer a
+hardcoded 'branch-name' to be listed/associated with each submodule
+within .gitmodules.  In the datalad case, detached HEAD is common
+whenever someone installs "outdated" (branch of which progressed
+forward) submodule.  In this case we just check if the branch after "git
+clone"  (but before git submodule update) includes the pointed by
+Subproject commit, and if so -- we announce that it must be the branch
+(so far it is always "master" branch anyways ;) )
 
+> > So I thought to share this as a use-case happen you need more
+> > motivation or just a real-case test-bed for your work.  And thank
+> > you again for making Git even Greater.
 
-So now imaging 8 developers, whereof 6 are working remote on the project. There is one responsible developer per IP core (maintainer) and an overall maintainer overseeing all integration merges and test results (CI).
+> Thanks for the motivation. :)
 
+the least I could do ;)
 
-Kind regards
-    Patrick
-
-________________________________________
-Von: Stefan Beller [sbeller@google.com]
-Gesendet: Montag, 19. Juni 2017 21:21
-Bis: Patrick Lehmann
-Cc: Lars Schneider; Git Mailinglist
-Betreff: Re: Restoring detached HEADs after Git operations
-
-On Mon, Jun 19, 2017 at 11:09 AM, Patrick Lehmann
-<Patrick.Lehmann@plc2.de> wrote:
-> Hello Stefan,
->
-> the use case is as follows:
->
-> The projects consists of circa 18 IP cores. Each IP core is represented by a Git repository. Think of an IP core as of a lonestanding DLL or SO file project. Each IP core references 2 submodules, which bring the verification environments for testing the IP core standalone.
-
-So phrased differently: You are using submodules to avoid "DLL hell"
-(sharing a lib, with ease of versioning as the submodules in the different IP
-cores may be pointing at different versions).
-
->
-> These 18 IP cores are grouped to bigger IP cores, referencing the low-level IP cores and each again the 2 verification submodules. Finally, the main project references the bigger IP cores and again the 2 verification cores.
->
-> TOPLEVEL
->   o- IP1
->        o- UVVM
->        o- VUnit
->   o- IP2
->        o- UVVM
->        o- VUnit
->   o- IP3
->        o- UVVM
->        o- VUnit
->   o- IP4
->        o- UVVM
->        o- VUnit
->        o- IP5
->            o- UVVM
->            o- VUnit
->        o- IP6
->            o- UVVM
->            o- VUnit
->        o- IP7
->            o- UVVM
->            o- VUnit
->   o- IP8
->        o- UVVM
->        o- VUnit
->        o- IP9
->            o- UVVM
->            o- VUnit
->        o- IP10
->            o- UVVM
->            o- VUnit
->   o- IP11
->        o- UVVM
->        o- VUnit
->        o- IP9
->            o- UVVM
->            o- VUnit
->        o- IP12
->            o- UVVM
->            o- VUnit
->    o- UVVM
->    o- VUnit
->
-> That's the simplified structure. I can't write more, because it's a closed source project. You can find other usecases e.g. in my other open source projects. E.g. The PoC-Library or The PicoBlaze-Library and the corresponding PoC-Examples repository.
->
-> Example: PoC
-> Pile of Cores includes 4 Git submodules and is itself an IP core library.
-> So PoC-Examples again references PoC. This looks like this tree:
->
-> PoC-Examples
->   |- lib/
->        o- PoC
->             |- lib
->                 o- Cocotb
->                 o- OSVVM
->                 o- VUnit
->                      o- .... OSVVM
->                 o- UVVM
->
-> The library VUnit itself already includes OSVVM as a library.
->
-> ----------------------
-> Forcast:
-> I'll write a new question / idea about multiple equal submodules and the memory footprint soon...
-> Here is my original question posted on StackOverflow: https://stackoverflow.com/questions/44585425/how-to-reduce-the-memory-footprint-for-multiple-submodules-of-the-same-source
-> ----------------------
->
-> Do you need more use cases?
->
-
-Well this use case points out a different issue than I hoped for. ;)
-From the stackoverflow post and from looking at the layout here,
-one of the major questions is how to deduplicate the submodule
-object store for example.
-
-By use case I rather meant a sales pitch for your initial email:
-
-    I use this bash script because it fits in my workflow because
-    I need branches instead of detached HEADS, because $REASONS
-
-and I'd be interested in these $REASONS, which I assumed to be
-* easier to work with branches than detached HEADS (it aids the workflow)
-* we're not challenging the underlying mental model of tracking sha1s in
-  the superproject rather than branches.
-
-At least I gave these reasons in the "reattach HEAD" stuff that I wrote,
-but maybe there are others? (I know the code base of submodules very
-well, but I do not work with submodules on a day-to-day basis myself...)
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
