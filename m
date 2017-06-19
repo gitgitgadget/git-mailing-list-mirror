@@ -2,107 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7627120401
-	for <e@80x24.org>; Mon, 19 Jun 2017 02:10:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29AE720401
+	for <e@80x24.org>; Mon, 19 Jun 2017 02:41:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753348AbdFSCKi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Jun 2017 22:10:38 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34944 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753236AbdFSCKh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Jun 2017 22:10:37 -0400
-Received: by mail-pf0-f196.google.com with SMTP id s66so14521603pfs.2
-        for <git@vger.kernel.org>; Sun, 18 Jun 2017 19:10:37 -0700 (PDT)
+        id S1753422AbdFSClr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Jun 2017 22:41:47 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33009 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753227AbdFSClr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Jun 2017 22:41:47 -0400
+Received: by mail-pg0-f67.google.com with SMTP id u62so8133800pgb.0
+        for <git@vger.kernel.org>; Sun, 18 Jun 2017 19:41:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=EdS1EByOddfYjhCvMEquEaZUws3p8PXjdxW7enlooZg=;
-        b=NNOwoZR6Aqd1uuYkYmHCJ1U9GpnoVRfTEvfdRuqvAvDa91a01fk/2eD5yl7dNiGMX4
-         oHEFNrIjoYL8kzFdpTS4JchDcpd9GWnbF8T5LMs/yzDXO4GZFjD8BX2ZrmTDlFY7HsPX
-         nTdkmFj13Fd/JopG1T8O9azXKMCzRXNSGK4xs4kSC3LDRxKzYBNZn9T8f465kcMp49eG
-         Gqrp1pHLY2E7s/QuuV+OCWyTkAQ9bsoLQGuKoTWXmtCCmGHdiKKI6R89BOTCausExVf2
-         uAxJ6NHxdtfyEkrmrUnxdtsQhIUK12UcDgSBAa/uhQ4GCdDIOUfTdFCD8tp+T6iMyJOT
-         /ygQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=NlLZ55mCAUhhBMEFCCO3UuPsrcQAMhSoZ1YWpaaRYVM=;
+        b=eEq/YFuhvlYM1Hh1qOUsNSBFkhKbpyqCx4md7xkKM936CgMp2Ovb/vMp6bDE0qaQDy
+         IyJ2CD1eenLtqrM/kRMoOHTtvM8dkbed8Yr+rX/swohxZ5Cz5GC2f+fmrpD7lURpTiBD
+         9MIofu3xPpTNGn+u1h0UHCURtQMYTdssL9jy96rv0EqRVcJKpIB1qAfz6xPl/l+74B4s
+         oz8HzCteSiwL8dW9tHE8dEDt8z8eLQeMQdVEJ21gqXnDTQcrM9WFTHzhyh5c0TD+veoJ
+         8Sc/IfjQVNwPoFNPyeFxAxPxU734UJQ9o+cSt6PLi9qWxkTWgfUPVzzKbkXMLpyD0G+o
+         xKeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=EdS1EByOddfYjhCvMEquEaZUws3p8PXjdxW7enlooZg=;
-        b=I4mfsQvq9YCov80DdsTtuMlH+8XPWsBiqEdOy0/NATs7eo/hAmghqGWGJIWNbSUwyQ
-         zYT8G2e1xaqbemhhyC98J2/w1n9s/vj0QtqlVyTjJQnA0GV1TFGtd6urd64tITiLcGPO
-         KkD8B1eJm9vHLhu8+jUIB7OUkP7wHnU5WRkS8/l/iWmHYaH5FGheTWv0j8Kcq5GBFeVZ
-         2VexjV5hSw3ts2VC7fTYpw9xA1Xu27308PP5VV2Osmkm5fcz7Irh9xg2cOydgdQ1UFNg
-         VGTjDmgdtoUrsk/iNh7ENHzq9pKUbxxRLpQbM+wSjVqxBh14VNkeFUG8Gkyc38H2cPRO
-         0IRw==
-X-Gm-Message-State: AKS2vOzvdXDS37nu2I14PI8uthIf7UUzgFRFI1bhKBdsE2IxzHy3/XVW
-        yP+Sdj2SUQV2VrvCBwM=
-X-Received: by 10.99.114.18 with SMTP id n18mr11220579pgc.6.1497838236911;
-        Sun, 18 Jun 2017 19:10:36 -0700 (PDT)
-Received: from localhost.localdomain (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id r5sm16715231pfe.94.2017.06.18.19.10.34
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=NlLZ55mCAUhhBMEFCCO3UuPsrcQAMhSoZ1YWpaaRYVM=;
+        b=aRABvhwNKUJlfl1S67NOyoMcph1rFaxWLOROwcsiusESsl5QBPppUMIQPh04xY8fmr
+         /fp02koBloRbeZ+O1nDKyI2ZzPJlMbPN+3RgrRpnVVWTODwNUpjHpE8+SVb/i4+nfhtI
+         sawCvnrLMQELGg6qObfGXkHgkuVuu5je7S/vwHwiv782U3I+Np+92Un4MPJlWuaq/IR4
+         mkPYL0WGxnqi+65tpfQSk515TyNlgHc/stYnSEBI44QxVeZV7M5uuthX0Gs6SQ3VBRgi
+         z46M2wydwCErk8W33DWVjP/pucMK/aYSKwVssLCDqRF0uWFshu8ov+LaW9FwlHbr3Vit
+         vR7g==
+X-Gm-Message-State: AKS2vOyD0ai3qRQr0AEwisejzE5qww20xvXAuGPFPYYg5psraFnkQvJT
+        NHPm0xI8zGPQmQ==
+X-Received: by 10.99.140.9 with SMTP id m9mr24050150pgd.49.1497840106331;
+        Sun, 18 Jun 2017 19:41:46 -0700 (PDT)
+Received: from localhost.localdomain ([2405:205:8284:9daf:c00c:2460:a1a2:73fc])
+        by smtp.gmail.com with ESMTPSA id a12sm17360351pgn.62.2017.06.18.19.41.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Jun 2017 19:10:35 -0700 (PDT)
-From:   David Aguilar <davvid@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Matthew Groth <mgroth49@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>
-Subject: [PATCH v3] mergetools/meld: improve compatibiilty with Meld on macOS X
-Date:   Sun, 18 Jun 2017 19:10:33 -0700
-Message-Id: <20170619021033.22968-1-davvid@gmail.com>
-X-Mailer: git-send-email 2.13.1.453.ga53a62295c
+        Sun, 18 Jun 2017 19:41:45 -0700 (PDT)
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     gitster@pobox.com
+Cc:     avarab@gmail.com, peff@peff.net, git@vger.kernel.org,
+        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Subject: [PATCH 1/2] Contextually notify user about an initial commit
+Date:   Mon, 19 Jun 2017 08:11:23 +0530
+Message-Id: <20170619024123.5438-1-kaarticsivaraam91196@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <87shix8zik.fsf@gmail.com>
+References: <87shix8zik.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The macOS X fork of Meld[1] requires a "=" in the "--output"
-argument, as it uses a wrapper[2] script that munges the
-"--output" argument before calling into the common "meld"
-script.
+"git status" indicated "Initial commit" when HEAD points at
+an unborn branch.  This message is shared with the commit
+log template "git commit" prepares for the user when
+creating a commit (i.e. "You are about to create the initial
+commit"), and is OK as long as the reader is aware of the
+nature of the message (i.e. it guides the user working
+toward the next commit), but was confusing to new users,
+especially the ones who do "git commit -m message" without
+having a chance to pay attention to the commit log template.
 
-The macOS X wrapper script[2] accepts "--output=<filename>"
-only, despite the fact that the underlying meld code accepts
-both "--output <filename" and "--output=<filename>"[3].
+The "Initial commit" indication wasn't an issue in the commit
+template. Taking that into consideration, a good solution would
+be to contextually use different messages to indicate the user
+that there were no commits in this branch.
 
-All versions of meld which accept "--output" accept it in
-the "--output=<filename>" form, so use "--output=<file>" for
-maximum compatibility.
+A few alternatives considered were,
 
-[1] https://github.com/yousseb/meld
-[2] https://github.com/yousseb/meld/blob/master/osx/Meld
-[3] https://github.com/yousseb/meld/issues/42
+* Waiting for initial commit
+* Your current branch does not have any commits
+* Current branch waiting for initial commit
 
-Reported-by: Matthew Groth <mgroth49@gmail.com>
-Helped-by: Samuel Lijin <sxlijin@gmail.com>
-Signed-off-by: David Aguilar <davvid@gmail.com>
+Patch-derived-from: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 ---
-I cloned the meld repo and could not find the code reported in the original
-issue, but I did find that same exact code existed in a macOS fork.
+  Hope this would be final :)
 
-After more investigation, this turned out to be a macOS-only issue.  The
-commit message has been updated to better reflect what's really going on.
+ builtin/commit.c | 1 +
+ wt-status.c      | 5 ++++-
+ wt-status.h      | 1 +
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
- mergetools/meld | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/mergetools/meld b/mergetools/meld
-index bc178e8882..7a08470f88 100644
---- a/mergetools/meld
-+++ b/mergetools/meld
-@@ -10,7 +10,7 @@ merge_cmd () {
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1d805f5da..0f36d2ac3 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1648,6 +1648,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(builtin_commit_usage, builtin_commit_options);
  
- 	if test "$meld_has_output_option" = true
- 	then
--		"$merge_tool_path" --output "$MERGED" \
-+		"$merge_tool_path" --output="$MERGED" \
- 			"$LOCAL" "$BASE" "$REMOTE"
- 	else
- 		"$merge_tool_path" "$LOCAL" "$MERGED" "$REMOTE"
+ 	status_init_config(&s, git_commit_config);
++	s.commit_template = 1;
+ 	status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
+ 	s.colopts = 0;
+ 
+diff --git a/wt-status.c b/wt-status.c
+index 037548496..e6a9ee34f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1576,7 +1576,10 @@ static void wt_longstatus_print(struct wt_status *s)
+ 
+ 	if (s->is_initial) {
+ 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
+-		status_printf_ln(s, color(WT_STATUS_HEADER, s), _("Initial commit"));
++		status_printf_ln(s, color(WT_STATUS_HEADER, s),
++				 s->commit_template
++				 ? _("Initial commit")
++				 : _("No commits yet"));
+ 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
+ 	}
+ 
+diff --git a/wt-status.h b/wt-status.h
+index 6018c627b..782b2997f 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -76,6 +76,7 @@ struct wt_status {
+ 	char color_palette[WT_STATUS_MAXSLOT][COLOR_MAXLEN];
+ 	unsigned colopts;
+ 	int null_termination;
++	int commit_template;
+ 	int show_branch;
+ 	int hints;
+ 
 -- 
-2.13.1.453.gc0395165f3
+2.11.0
 
