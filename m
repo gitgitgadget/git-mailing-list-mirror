@@ -2,162 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B1161FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 18:09:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88B511FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 18:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751036AbdFSSJY convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 19 Jun 2017 14:09:24 -0400
-Received: from mail.plc2.de ([212.43.91.138]:56758 "EHLO mail.plc2.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750811AbdFSSJY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 14:09:24 -0400
-Received: from SBS2011.opfingen.plc2.de ([fe80::48e5:6c6d:d5a9:75eb]) by
- SBS2011.opfingen.plc2.de ([fe80::48e5:6c6d:d5a9:75eb%10]) with mapi id
- 14.01.0438.000; Mon, 19 Jun 2017 20:09:22 +0200
-From:   Patrick Lehmann <Patrick.Lehmann@plc2.de>
+        id S1751015AbdFSSKV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 14:10:21 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:34130 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750987AbdFSSKU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 14:10:20 -0400
+Received: by mail-pf0-f169.google.com with SMTP id s66so57293326pfs.1
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 11:10:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EejLh9PfkEjvng8I/SidEnEXwXdn66XK+TD/u0Rn9qI=;
+        b=JA8ln1UGR8LmT8vEWivoV8Ai0f3TiVUa3G9Zu15qPqcKNr8EuOHqLVf2A2Pm0+yO4M
+         +RkLZaLrXREgsPrwPfGvzOHNTLnVKuTmZzoSq7g0/0S+rFumqBZexLbetsHcJcuDlQnW
+         0PUkA4WkyAdHUXXNO9WVy2wPXEVeqXzuuJfZDscXk/HLQVZ7IQwK+LN95rG57p7JIspx
+         ob7iO7oCubqRpHPzfrSpn4FR/oi9fYU4neQNOT6WZ4/26aM90BZd7liruLJlBRzTrjl2
+         dVDoE9jhyYnpvvrdVMeazWR33biqPsRxomaJJBupq/+HDKPtSDTdj1z1lOPGveb0ec5S
+         wxWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EejLh9PfkEjvng8I/SidEnEXwXdn66XK+TD/u0Rn9qI=;
+        b=tRgPtmKHAarCaSVrQ8JPlEU53uG9pxs5TWpDIbQakhSl77llpnnGYYaMGcuQdmyQ6T
+         PjHXSuLcQOv+s88dalydfwPdTTMil9zeJpDql9oHy9ooEXE2xXjvfUQ/mmmoqzASkMnX
+         E94oYR3sOmSm4RRnlZukPged7wufZb0tZQfdGS2dcR+7khUmpQEPZBFW27yVQKF/QHPl
+         Di1DQX9UAiix2fnS0nxGXK+1gf+b4apOuAoaaabeTSoUpIW9ToM7xvMhPtpw/3vfHvse
+         cVwy/297rQeyii/Pq/VVwZeV6zvenrgwej/DsQnoAsX00guopy/QrWwcfElhV0V+keTp
+         ojsg==
+X-Gm-Message-State: AKS2vOzoJVdUIYaUnZ5btSmXwn978gsYnvvthkS1KMZNHMBxTvFCk6kD
+        x69LSqynVbqkPf5U
+X-Received: by 10.99.177.78 with SMTP id g14mr692537pgp.131.1497895820091;
+        Mon, 19 Jun 2017 11:10:20 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:a192:f5d5:865:c29d])
+        by smtp.gmail.com with ESMTPSA id d185sm21187329pgc.39.2017.06.19.11.10.18
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 19 Jun 2017 11:10:19 -0700 (PDT)
+Date:   Mon, 19 Jun 2017 11:10:17 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     Stefan Beller <sbeller@google.com>
-CC:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailinglist <git@vger.kernel.org>
-Subject: AW: Restoring detached HEADs after Git operations
-Thread-Topic: Restoring detached HEADs after Git operations
-Thread-Index: AdLo2JTYy82hS69wTnuiUW9EIL+4M///6qaAgAAkeNWAAFK+gIAAL/wm///jxgCAACeMAA==
-Date:   Mon, 19 Jun 2017 18:09:21 +0000
-Message-ID: <0092CDD27C5F9D418B0F3E9B5D05BE0801028B70@SBS2011.opfingen.plc2.de>
-References: <0092CDD27C5F9D418B0F3E9B5D05BE08010287DF@SBS2011.opfingen.plc2.de>
- <88AC6179-75D6-416B-9235-C628D6C59CA5@gmail.com>
- <0092CDD27C5F9D418B0F3E9B5D05BE080102887B@SBS2011.opfingen.plc2.de>
- <CAGZ79kY0gwk7KRY2iAVTXPBjPzx+mkciVWRR2z2cDgiBjQ2uuw@mail.gmail.com>
- <0092CDD27C5F9D418B0F3E9B5D05BE0801028A86@SBS2011.opfingen.plc2.de>,<CAGZ79kbMOdkKiVsvxk4UeKKPicyi958LpomeY=ypXT0_=5d8BQ@mail.gmail.com>
-In-Reply-To: <CAGZ79kbMOdkKiVsvxk4UeKKPicyi958LpomeY=ypXT0_=5d8BQ@mail.gmail.com>
-Accept-Language: de-DE, en-US
-Content-Language: de-DE
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [109.42.2.129]
-x-g-data-mailsecurity-for-exchange-spamlevel: 0
-x-g-data-mailsecurity-for-exchange-state: 0
-x-g-data-mailsecurity-for-exchange-error: 0
-x-g-data-mailsecurity-for-exchange-sender: 32
-x-g-data-mailsecurity-for-exchange-server: 70cd0149-74d1-4df2-bc08-c934d48ac3c3
-x-g-data-mailsecurity-for-exchange-guid: B876F998-50AD-46B2-B6EF-C490404D0673
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC/PATCH] submodules: overhaul documentation
+Message-ID: <20170619181017.GA194323@google.com>
+References: <20170607185354.10050-1-sbeller@google.com>
+ <xmqqo9tr660x.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZdUARvhO=UwexFGkWQzsYSnyyiXJMX69W9ofhz13zjHQ@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZdUARvhO=UwexFGkWQzsYSnyyiXJMX69W9ofhz13zjHQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Stefan,
+On 06/13, Stefan Beller wrote:
+> Adding two native speakers as we start word smithing.
+> 
+> On Tue, Jun 13, 2017 at 12:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> >> +
+> >> +A submodule is another Git repository tracked in a subdirectory of your
+> >> +repository. The tracked repository has its own history, which does not
+> >> +interfere with the history of the current repository.
+> >
+> > "tracked in a subdirectory" sounds as if your top-level superproject
+> > has a dedicated submodules/ directory and in it there live a bunch
+> > of submodules.  Which obviously is not what you meant.  If phrased
+> > "tracked as a subdirectory", I think the sentence makes sense.
+> 
+> Given this explanation "as a" also sounds wrong[1], maybe we need to
+> separate (1) where it is put/mounted and (2) the fact that is tracked,
+> i.e. the superproject has an idea of what should be there at a given
+> revision. (I shortly thought about /s/as a/using/ in the above, but):
+> 
+>   A submodule is another Git repository at an arbitrary place inside
+>   the working tree, and also tracked. The tracked repository has its
+>   own history, which does not interfere with the history of the current
+>   repository.
 
-the use case is as follows:
+I would probably change the first sentence to:
 
-The projects consists of circa 18 IP cores. Each IP core is represented by a Git repository. Think of an IP core as of a lonestanding DLL or SO file project. Each IP core references 2 submodules, which bring the verification environments for testing the IP core standalone.
+  A submodule is another Git repository tracked at an arbitrary place
+  inside the working tree.
 
-These 18 IP cores are grouped to bigger IP cores, referencing the low-level IP cores and each again the 2 verification submodules. Finally, the main project references the bigger IP cores and again the 2 verification cores.
+> 
+> [1] http://www.thesaurus.com/browse/as
+> 
+> >
+> > While "which does not interfere" may be technically correct, I am
+> > not sure what the value of saying that is.
+> 
+> I think we can drop it here. When writing I wanted to separate it from
+> subtrees, but this is the wrong place for that.
+> 
+> >
+> >> +Submodules are composed from a so-called `gitlink` tree entry
+> >> +in the main repository that refers to a particular commit object
+> >> +within the inner repository.
+> >
+> > Correct, but it may be unclear to the readers why we do so.  Perhaps
+> >
+> >         ... and this way, the tree of each commit in the main repository
+> >         "knows" which commit from the submodule's history is "tied" to it.
+> >
+> > or something like that?
+> 
+> sounds good to me.
+> 
+> >
+> >> +Additionally to the gitlink entry the `.gitmodules` file (see
+> >> +linkgit:gitmodules[5]) at the root of the source tree contains
+> >> +information needed for submodules.
+> >
+> > Is that really true?  Each submodule do not *need* what is in
+> > .gitmodules; the top-level superproject needs to learn about
+> > its submodules from the contents of that file, though.
+> 
+> Ha! The ediled words in my mind were:
+> 
+>  ... information needed for submodules [to work in the superproject].
+> 
+> But maybe we need to reword that as
+> 
+>   Additionally to the gitlink entry the `.gitmodules` file (see
+>   linkgit:gitmodules[5]) at the root of the source tree contains
+>   information on how to handle submodules.
 
-TOPLEVEL
-  o- IP1
-       o- UVVM
-       o- VUnit
-  o- IP2
-       o- UVVM
-       o- VUnit
-  o- IP3
-       o- UVVM
-       o- VUnit
-  o- IP4
-       o- UVVM
-       o- VUnit
-       o- IP5
-           o- UVVM
-           o- VUnit
-       o- IP6
-           o- UVVM
-           o- VUnit
-       o- IP7
-           o- UVVM
-           o- VUnit
-  o- IP8
-       o- UVVM
-       o- VUnit
-       o- IP9
-           o- UVVM
-           o- VUnit
-       o- IP10
-           o- UVVM
-           o- VUnit
-  o- IP11
-       o- UVVM
-       o- VUnit
-       o- IP9
-           o- UVVM
-           o- VUnit
-       o- IP12
-           o- UVVM
-           o- VUnit
-   o- UVVM
-   o- VUnit
+This sounds slightly awkward.  Maybe:
 
-That's the simplified structure. I can't write more, because it's a closed source project. You can find other usecases e.g. in my other open source projects. E.g. The PoC-Library or The PicoBlaze-Library and the corresponding PoC-Examples repository.
-
-Example: PoC
-Pile of Cores includes 4 Git submodules and is itself an IP core library.
-So PoC-Examples again references PoC. This looks like this tree:
-
-PoC-Examples
-  |- lib/
-       o- PoC
-            |- lib
-                o- Cocotb
-                o- OSVVM
-                o- VUnit
-                     o- .... OSVVM
-                o- UVVM
-
-The library VUnit itself already includes OSVVM as a library.
-
-----------------------
-Forcast:
-I'll write a new question / idea about multiple equal submodules and the memory footprint soon...
-Here is my original question posted on StackOverflow: https://stackoverflow.com/questions/44585425/how-to-reduce-the-memory-footprint-for-multiple-submodules-of-the-same-source
-----------------------
-
-Do you need more use cases?
+    In addition to the gitlink entry, the `.gitmodules` file (see
+    linkgit:gitmodules[5]) at the root of the source tree contains
+    information on how to handle submodules.
 
 
-Kind regards
-    Patrick
-________________________________________
-Von: git-owner@vger.kernel.org [git-owner@vger.kernel.org]&quot; im Auftrag von &quot;Stefan Beller [sbeller@google.com]
-Gesendet: Montag, 19. Juni 2017 19:47
-Bis: Patrick Lehmann
-Cc: Lars Schneider; Git Mailinglist
-Betreff: Re: Restoring detached HEADs after Git operations
-
-On Mon, Jun 19, 2017 at 10:34 AM, Patrick Lehmann
-<Patrick.Lehmann@plc2.de> wrote:
-> Hello,
->
-> I'm just an advanced Git user, not a Git developer. So I might find some time to improve the suggested script, which I provided with the hints given on the mailing list, but I have no time to do a complete feature release in your patch based Git flow.
-
-ok, thanks for letting us know. I may re-prioritize the "reattach
-HEAD" patches that I referenced earlier.
-I would have hoped that additionally to the shell lines you'd have
-given a good use case/summary.
-
-> I have no experience with other shells then Bash. So if you rely on a Bash with less features, please port the syntax to such a shell system. (I personally do not support legacy programs or out-date programs).
->
-> ------
-> We are talking about circa 50 submodules in total with a maximum depth of 4. The platforms are:
-> - Mint OS with Git in Bash
-> - Windows 7 with Git-Bash
-> - Windows 10 with Git-Bash
-> - Windows 10 with Posh-Git
-
-Thanks,
-Stefan
+-- 
+Brandon Williams
