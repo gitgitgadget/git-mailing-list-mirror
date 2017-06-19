@@ -2,151 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88B511FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 18:10:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D023A1FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 18:51:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751015AbdFSSKV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 14:10:21 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34130 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750987AbdFSSKU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 14:10:20 -0400
-Received: by mail-pf0-f169.google.com with SMTP id s66so57293326pfs.1
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 11:10:20 -0700 (PDT)
+        id S1753572AbdFSSvw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 14:51:52 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34114 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753768AbdFSSvu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 14:51:50 -0400
+Received: by mail-pg0-f67.google.com with SMTP id j186so17601463pge.1
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 11:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EejLh9PfkEjvng8I/SidEnEXwXdn66XK+TD/u0Rn9qI=;
-        b=JA8ln1UGR8LmT8vEWivoV8Ai0f3TiVUa3G9Zu15qPqcKNr8EuOHqLVf2A2Pm0+yO4M
-         +RkLZaLrXREgsPrwPfGvzOHNTLnVKuTmZzoSq7g0/0S+rFumqBZexLbetsHcJcuDlQnW
-         0PUkA4WkyAdHUXXNO9WVy2wPXEVeqXzuuJfZDscXk/HLQVZ7IQwK+LN95rG57p7JIspx
-         ob7iO7oCubqRpHPzfrSpn4FR/oi9fYU4neQNOT6WZ4/26aM90BZd7liruLJlBRzTrjl2
-         dVDoE9jhyYnpvvrdVMeazWR33biqPsRxomaJJBupq/+HDKPtSDTdj1z1lOPGveb0ec5S
-         wxWQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=EQp5YKg6OsAZGGG545rgF6jlrQsRpBOMSfIZRkB/gAw=;
+        b=gX8qW5nJ//JBOMHEBzbE09GRTtgrQ1P7wGCtku/Fjg/ityDCJIT6mVWt9Nz208p5Te
+         TsWRN5TjoPCxzKS3fvjQKEdFi5tGt11MLdQSgKcyvXN6xyCaVTitHwFXVEWX//1jQ5Ij
+         Y9hJHmMyzUpFMczyhyuDDopMtxHOnvWfWDlCmRwNEXFdoXghdXIaofXXN+QU+auAo7AM
+         fD1YsqTepfuQACE3O2ubzf64VhpcSl5NerDvjMWtE1I2Pc+1F8PI0ti7wrU9zrbmo/j4
+         4S+DR6a1HzlDCWDjDOQgVmQfwhIRO69F6QVYyw7o8xitNRmDP9FMl2LQSklHj3XoRSg4
+         wi+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EejLh9PfkEjvng8I/SidEnEXwXdn66XK+TD/u0Rn9qI=;
-        b=tRgPtmKHAarCaSVrQ8JPlEU53uG9pxs5TWpDIbQakhSl77llpnnGYYaMGcuQdmyQ6T
-         PjHXSuLcQOv+s88dalydfwPdTTMil9zeJpDql9oHy9ooEXE2xXjvfUQ/mmmoqzASkMnX
-         E94oYR3sOmSm4RRnlZukPged7wufZb0tZQfdGS2dcR+7khUmpQEPZBFW27yVQKF/QHPl
-         Di1DQX9UAiix2fnS0nxGXK+1gf+b4apOuAoaaabeTSoUpIW9ToM7xvMhPtpw/3vfHvse
-         cVwy/297rQeyii/Pq/VVwZeV6zvenrgwej/DsQnoAsX00guopy/QrWwcfElhV0V+keTp
-         ojsg==
-X-Gm-Message-State: AKS2vOzoJVdUIYaUnZ5btSmXwn978gsYnvvthkS1KMZNHMBxTvFCk6kD
-        x69LSqynVbqkPf5U
-X-Received: by 10.99.177.78 with SMTP id g14mr692537pgp.131.1497895820091;
-        Mon, 19 Jun 2017 11:10:20 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:a192:f5d5:865:c29d])
-        by smtp.gmail.com with ESMTPSA id d185sm21187329pgc.39.2017.06.19.11.10.18
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=EQp5YKg6OsAZGGG545rgF6jlrQsRpBOMSfIZRkB/gAw=;
+        b=FagyYHCjqT+pDoCky6WgkJUFkOO/WFyI4vzRjZYWXkttcMgMtWTYj4x2kW9ywJptM4
+         AIiXj3KUDxTtvx0Vr7x/o/IK1hxNlWB8Q7JVCde1+vyJMq2Ce0uMvgzFadM4azjSgtLe
+         o4czZ76mbGA9705hVayjV/6o+FaeXVQ7LHRi7OoLaXzyCY7+KrCxl3gre+nTdobHfnLK
+         BcC9wBQ4WvYwTJydLU+jmLT+vy7d7YjWC8HZhMAWEXyFUw6HPIYuSSm8dtMmgw+frv9D
+         zj5BOod3+Uw/wxIHyaovTLVnLoebFjqDLR+JGkV9g/ZU0ylJ7R2aE6ZvqRxYzgdBbiMW
+         NYxw==
+X-Gm-Message-State: AKS2vOzccMG5mhTz4cYTAi42UIg6gUHGkbiW/Ij60UpHW6YqNJ96mMyN
+        h/VNDDk3C0h3Vg==
+X-Received: by 10.99.247.83 with SMTP id f19mr27875934pgk.190.1497898301444;
+        Mon, 19 Jun 2017 11:51:41 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:7466:3d2b:4ee9:fc7])
+        by smtp.gmail.com with ESMTPSA id z69sm24773115pff.0.2017.06.19.11.51.40
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 19 Jun 2017 11:10:19 -0700 (PDT)
-Date:   Mon, 19 Jun 2017 11:10:17 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [RFC/PATCH] submodules: overhaul documentation
-Message-ID: <20170619181017.GA194323@google.com>
-References: <20170607185354.10050-1-sbeller@google.com>
- <xmqqo9tr660x.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZdUARvhO=UwexFGkWQzsYSnyyiXJMX69W9ofhz13zjHQ@mail.gmail.com>
+        Mon, 19 Jun 2017 11:51:40 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 00/28] Create a reference backend for packed refs
+References: <cover.1497534157.git.mhagger@alum.mit.edu>
+Date:   Mon, 19 Jun 2017 11:51:39 -0700
+In-Reply-To: <cover.1497534157.git.mhagger@alum.mit.edu> (Michael Haggerty's
+        message of "Thu, 15 Jun 2017 16:47:05 +0200")
+Message-ID: <xmqqzid3stdw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZdUARvhO=UwexFGkWQzsYSnyyiXJMX69W9ofhz13zjHQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/13, Stefan Beller wrote:
-> Adding two native speakers as we start word smithing.
-> 
-> On Tue, Jun 13, 2017 at 12:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> >> +
-> >> +A submodule is another Git repository tracked in a subdirectory of your
-> >> +repository. The tracked repository has its own history, which does not
-> >> +interfere with the history of the current repository.
-> >
-> > "tracked in a subdirectory" sounds as if your top-level superproject
-> > has a dedicated submodules/ directory and in it there live a bunch
-> > of submodules.  Which obviously is not what you meant.  If phrased
-> > "tracked as a subdirectory", I think the sentence makes sense.
-> 
-> Given this explanation "as a" also sounds wrong[1], maybe we need to
-> separate (1) where it is put/mounted and (2) the fact that is tracked,
-> i.e. the superproject has an idea of what should be there at a given
-> revision. (I shortly thought about /s/as a/using/ in the above, but):
-> 
->   A submodule is another Git repository at an arbitrary place inside
->   the working tree, and also tracked. The tracked repository has its
->   own history, which does not interfere with the history of the current
->   repository.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-I would probably change the first sentence to:
+> I've developed these patches on top of master plus the following
+> patches, which are followups to mh/packed-refs-store-prep:
+>
+> * lock_packed_refs(): fix cache validity check
+> * for_each_bisect_ref(): don't trim refnames
+>
+> The patches can also be obtained from my GitHub fork [2] as branch
+> "packed-ref-store".
+>
+> Michael
+>
+> [1] http://public-inbox.org/git/cover.1490026594.git.mhagger@alum.mit.edu/
+> [2] https://github.com/mhagger/git
 
-  A submodule is another Git repository tracked at an arbitrary place
-  inside the working tree.
+Thanks.
 
-> 
-> [1] http://www.thesaurus.com/browse/as
-> 
-> >
-> > While "which does not interfere" may be technically correct, I am
-> > not sure what the value of saying that is.
-> 
-> I think we can drop it here. When writing I wanted to separate it from
-> subtrees, but this is the wrong place for that.
-> 
-> >
-> >> +Submodules are composed from a so-called `gitlink` tree entry
-> >> +in the main repository that refers to a particular commit object
-> >> +within the inner repository.
-> >
-> > Correct, but it may be unclear to the readers why we do so.  Perhaps
-> >
-> >         ... and this way, the tree of each commit in the main repository
-> >         "knows" which commit from the submodule's history is "tied" to it.
-> >
-> > or something like that?
-> 
-> sounds good to me.
-> 
-> >
-> >> +Additionally to the gitlink entry the `.gitmodules` file (see
-> >> +linkgit:gitmodules[5]) at the root of the source tree contains
-> >> +information needed for submodules.
-> >
-> > Is that really true?  Each submodule do not *need* what is in
-> > .gitmodules; the top-level superproject needs to learn about
-> > its submodules from the contents of that file, though.
-> 
-> Ha! The ediled words in my mind were:
-> 
->  ... information needed for submodules [to work in the superproject].
-> 
-> But maybe we need to reword that as
-> 
->   Additionally to the gitlink entry the `.gitmodules` file (see
->   linkgit:gitmodules[5]) at the root of the source tree contains
->   information on how to handle submodules.
+Both in the version I queued and a fresh fetching of c13b2fad
+("read_packed_refs(): die if `packed-refs` contains bogus data",
+2017-06-12) from your https://github.com/mhagger/git repository
+seems to exhibit an annoying error message in my local repository I
+use for the primary work:
 
-This sounds slightly awkward.  Maybe:
+    $ git fetch https://github.com/mhagger/git packed-ref-store
+    $ git checkout FETCH_HEAD
+    $ make
+    $ ./git describe next
+    error: refs/notes/amlog does not point to a valid object!
+    v2.13.1-611-g7e3b11ae1b
+    $ grep refs/notes/amlog .git/packed-refs
+    ed07e83cff8e407464fb2f5e84bd311da9c87565 refs/notes/amlog
+    $ git rev-parse refs/notes/amlog
+    b3079212325398e406078585c785c892d6e572f0
+    $ git cat-file -t ed07e83cff8e407464fb2f5e84bd311da9c87565
+    fatal: git cat-file: could not get object info
+    $ git cat-file -t b3079212325398e406078585c785c892d6e572f0
+    commit
 
-    In addition to the gitlink entry, the `.gitmodules` file (see
-    linkgit:gitmodules[5]) at the root of the source tree contains
-    information on how to handle submodules.
-
-
--- 
-Brandon Williams
+Is the iterator over packed-refs correctly skipping over what are
+covered by loose refs?  The entries in the packed-refs file that are
+superseded by loose refs should be allowed to point at an already
+expired object.
