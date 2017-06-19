@@ -2,108 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 982BE1FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 12:08:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA96320D0C
+	for <e@80x24.org>; Mon, 19 Jun 2017 12:19:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752415AbdFSMIj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 08:08:39 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:37857 "EHLO
-        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751054AbdFSMIi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 08:08:38 -0400
-Received: from [10.0.2.15] ([143.159.212.80])
-        by avasout08 with smtp
-        id ac8b1v0041keHif01c8cda; Mon, 19 Jun 2017 13:08:36 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=FLJr/6gs c=1 sm=1 tr=0
- a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=EBOSESyhAAAA:8 a=M9-LbYC3As7KQQK61nEA:9
- a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 1/3] config: create a function to format section
- headers
-To:     Sahil Dua <sahildua2305@gmail.com>, git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
- <1497820591-93434-1-git-send-email-sahildua2305@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <087c8d6e-10f0-2c1f-1974-a97f4f685288@ramsayjones.plus.com>
-Date:   Mon, 19 Jun 2017 13:08:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1754012AbdFSMTa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 08:19:30 -0400
+Received: from hel-mailgw-01.vaisala.com ([193.143.230.17]:44821 "EHLO
+        hel-mailgw-01.vaisala.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751768AbdFSMT3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 08:19:29 -0400
+X-Greylist: delayed 598 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Jun 2017 08:19:29 EDT
+IronPort-PHdr: =?us-ascii?q?9a23=3A9htrkRaE4BEu8os762K0LAb/LSx+4OfEezUN459i?=
+ =?us-ascii?q?sYplN5qZoMW4bnLW6fgltlLVR4KTs6sC0LuJ9fC9EjBQqb+681k6OKRWUBEEjc?=
+ =?us-ascii?q?hE1ycBO+WiTXPBEfjxciYhF95DXlI2t1uyMExSBdqsLwaK+i764jEdAAjwOhRo?=
+ =?us-ascii?q?LerpBIHSk9631+ev8JHPfglEnjSwbLdwIRmsrgjctsYajIRhJ60s1hbHv3xEdv?=
+ =?us-ascii?q?hMy2h1P1yThRH85smx/J5n7Stdvu8q+tBDX6vnYak2VKRUAzs6PW874s3rrgTD?=
+ =?us-ascii?q?QhCU5nQASGUWkwFHDBbD4RrnQ5r+qCr6tu562CmHIc37SK0/VDq+46t3ThLjlS?=
+ =?us-ascii?q?EKPCM7/m7KkMx9lKJVrgy8qRxjzYDaY4CVO+ZxcKzSZt4aWXFOU9xNWyBdHo+x?=
+ =?us-ascii?q?bY0CBPcBM+ZCqIn9okMDoBygCgayHuPvzSVEiWXs0q0+z+QhFgfG0xImH98Vrn?=
+ =?us-ascii?q?TbttT1NLwIXuCx1qbE1ynMb/RT2Trk7oXDbxMvoemUUL5tc8fd11MjGx3Kg1mK?=
+ =?us-ascii?q?tIDpJTCY2+QVv2SG7edsS/ijh3Aopg1rozWix90ghpTKi48a0lzE+zt2zYUpKd?=
+ =?us-ascii?q?C9TUN2YdqpH4ZNuyyfKod5WMEvTmR2tyknyLAGt5u2cDYXx5g6xRPSbeGMfZKS?=
+ =?us-ascii?q?7RL5TumRJC91hHdieL2imRm/6VOgyujgVsms11ZKszZFnsHMtn8T0xzT7dCKRP?=
+ =?us-ascii?q?ly8EmnwDqB2AHc5/9GL0wtiabXNYQtzaI3lpoJqUTPBDH2l1/3jK+NbEok/vKn?=
+ =?us-ascii?q?5/77bbXho5+QL450igfgPaQygsGzHOY1PhYUU2SF9umwzqDv8Vf6TbhKlvE2l7?=
+ =?us-ascii?q?PWsJHeJcQVvK65BApV35495BmhFTem184UkmMdI1JBZBKHiI7pNE/IIP3jE/ew?=
+ =?us-ascii?q?mVWskCxxyPDCJLLtGInCLn/GkLv5Z7Zy91ZcyBYvzdBY/59UBbABIO7oV0/vu9?=
+ =?us-ascii?q?zXEAU5Pxa3w+n5EtV90J0RWWaVDq+eKqPSvgzA2uV6d+aNeKcLtzvnbfso/fjj?=
+ =?us-ascii?q?iTk+g1BLLoez2p5CPH21BPMgKkydfX3qj9EpD24LpQM6Rarhj1jUAm0bXGq7Q6?=
+ =?us-ascii?q?9pvmJzM4mhF4qWHo0=3D?=
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: =?us-ascii?q?A2EzCgB3vkdZ/1UBGKxcHgYMGQYMhSODZ?=
+ =?us-ascii?q?JtxghCWGoZAgnQVAQEBAQEBAQEBAQECgRCCMyKCbQQNVwEiAiYCBDAVEgS4R4F?=
+ =?us-ascii?q?sOowTgQuHYwuHP2KCRoJhBYlZlQWBX4kOjF6OIZUJNYEtdIVqHYFmiUqBDQEBA?=
+ =?us-ascii?q?Q?=
+X-IPAS-Result: =?us-ascii?q?A2EzCgB3vkdZ/1UBGKxcHgYMGQYMhSODZJtxghCWGoZAgnQ?=
+ =?us-ascii?q?VAQEBAQEBAQEBAQECgRCCMyKCbQQNVwEiAiYCBDAVEgS4R4FsOowTgQuHYwuHP?=
+ =?us-ascii?q?2KCRoJhBYlZlQWBX4kOjF6OIZUJNYEtdIVqHYFmiUqBDQEBAQ?=
+X-IronPort-AV: E=Sophos;i="5.39,361,1493672400"; 
+   d="scan'208";a="42431466"
+Received: from hel-exch-02.corp.vaisala.com ([172.24.1.85])
+  by hel-mailgw-01.vaisala.com with ESMTP/TLS/AES256-SHA; 19 Jun 2017 15:09:29 +0300
+Received: from HEL-EXCH-02.corp.vaisala.com (172.24.1.85) by
+ HEL-EXCH-02.corp.vaisala.com (172.24.1.85) with Microsoft SMTP Server (TLS)
+ id 15.0.1210.3; Mon, 19 Jun 2017 15:09:28 +0300
+Received: from HEL-EXCH-02.corp.vaisala.com ([fe80::59d1:1a7:ed7f:2d17]) by
+ HEL-EXCH-02.corp.vaisala.com ([fe80::59d1:1a7:ed7f:2d17%14]) with mapi id
+ 15.00.1210.000; Mon, 19 Jun 2017 15:09:28 +0300
+From:   <eero.aaltonen@vaisala.com>
+To:     <git@vger.kernel.org>
+Subject: Behavior of 'git fetch' for commit hashes
+Thread-Topic: Behavior of 'git fetch' for commit hashes
+Thread-Index: AQHS6PTmljaresomX0G+oE4gpNMbnQ==
+Date:   Mon, 19 Jun 2017 12:09:28 +0000
+Message-ID: <14e804c6-0798-8bbd-b182-66c3cd2b870c@vaisala.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.24.66.184]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <B622368629B602499BD3AC8ED26E3D06@exch.vaisala.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <1497820591-93434-1-git-send-email-sahildua2305@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 18/06/17 22:16, Sahil Dua wrote:
-> Factor out the logic which creates section headers in the config file,
-> e.g. the 'branch.foo' key will be turned into '[branch "foo"]'.
-> 
-> This introduces no function changes, but is needed for a later change
-> which adds support for copying branch sections in the config file.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-
-Adding my SOB isn't really appropriate here - I only made a very
-very minor contribution. At _most_ you might consider 'Helped-by:',
-but even that would probably be overkill. ;-)
-
-Thanks.
-
-ATB,
-Ramsay Jones
-
-
-> Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
-> ---
->  config.c | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
-> 
-> diff --git a/config.c b/config.c
-> index 34a139c..32fd3c8 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -2169,10 +2169,10 @@ static int write_error(const char *filename)
->  	return 4;
->  }
->  
-> -static int store_write_section(int fd, const char *key)
-> +static struct strbuf store_create_section(const char *key)
->  {
->  	const char *dot;
-> -	int i, success;
-> +	int i;
->  	struct strbuf sb = STRBUF_INIT;
->  
->  	dot = memchr(key, '.', store.baselen);
-> @@ -2188,6 +2188,15 @@ static int store_write_section(int fd, const char *key)
->  		strbuf_addf(&sb, "[%.*s]\n", store.baselen, key);
->  	}
->  
-> +	return sb;
-> +}
-> +
-> +static int store_write_section(int fd, const char *key)
-> +{
-> +	int success;
-> +
-> +	struct strbuf sb = store_create_section(key);
-> +
->  	success = write_in_full(fd, sb.buf, sb.len) == sb.len;
->  	strbuf_release(&sb);
->  
-> 
+SGVsbG8sDQoNCkkgYW0gc2VlaW5nIGdyZWF0bHkgZGlmZmVyZW50IGJlaGF2aW9yIGZvciAnZ2l0
+IGZldGNoJyBjb21tYW5kcyBvbg0KdmVyc2lvbiAyLjcuNCBhbmQgMi4xMy4xIHdoZW4gdGhlIGFy
+Z3VtZW50IHRvIGZldGNoIGlzIGEgY29tbWl0IGhhc2guDQoNCkkgYW0gd29ya2luZyBvbiBhIGN1
+c3RvbSBDb250aW51b3VzIEludGVncmF0aW9uIChDSSkgc3lzdGVtLiBUaGUNCnByb2plY3RzIGhh
+dmUgZGVwZW5kZW5jaWVzIHRoYXQgYXJlIHNpbXBseSBmZXRjaGVkIGFzIHJlcG9zaXRvcmllcyB0
+byBhDQpwcm9qZWN0IHN1YmRpcmVjdG9yeS4NCg0KSW4gb3JkZXIgdG8gcHJldmVudCBhIHJhY2Ug
+Y29uZGl0aW9uIGluIHVwZGF0aW5nIGJyYW5jaGVzLCBJIHdhbnQgdG8NCmNoZWNrb3V0IHRoZSBh
+Y3R1YWwgY29tbWl0IHRoYXQgd2FzIGJ1aWx0IGluIGEgcHJldmlvdXMgam9iLg0KDQpFbnZpcm9u
+bWVudA0KPT09PT09PT09PT0NClByb2JsZW0gb2NjdXJzIHdpdGggR2l0IGNsaWVudHMNCi0gMi43
+LjQNCi0gMi4xMy4xDQoNCmFuZCBHaXQgc2VydmVyDQotIEF0bGFzc2lhbiBCaXRidWNrZXQgdjQu
+MTQuMw0KLSBnaXQgdmVyc2lvbiAyLjEyLjANCg0KDQpUaGUgcHJvYmxlbSBjYW4gYmUgcmVwcm9k
+dWNlZCBhcyBmb2xsb3dzLCB3aXRoDQotIDxhdXRob3JpdGF0aXZlVXJsPiA9IFVSTCB0byBwcmlt
+YXJ5IHJlcG9zaXRvcnkNCi0gPGZvcmtVcmw+ID0gVVJMIHRvIGZvcmsgb2YgdGhlIHByaW1hcnkN
+Ci0gPHNoYTE+IGNvbW1pdCBoYXNoIGluIGEgcmVjZW50IGJyYW5jaA0KDQoxLiBnaXQgY2xvbmUg
+PGF1dGhvcml0YXRpdmVVcmw+DQoyLiBjZCByZXN1bHRpbmdfZGlyZWN0b3J5DQozLiBnaXQgZmV0
+Y2ggPGZvcmtVcmw+IDxzaGExPg0KDQpGb3IgdmVyc2lvbiAyLjcuNA0KPT09PT09PT09PT09PT09
+PT0NCkdpdCBleGl0cyB3aXRoIGV4aXQgY29kZSAxLg0KDQpIb3dldmVyLCBpZiBJIGZpcnN0IGRv
+ICdnaXQgZmV0Y2ggPGJyYW5jaD4nLCB0aGVuICdnaXQgZmV0Y2ggPHNoYTE+IHdpbGwNCmFsc28g
+d29yaw0KDQogKiBicmFuY2ggICA8c2hhMT4gLT4gRkVUQ0hfSEVBRA0KDQpGb3IgdmVyc2lvbiAy
+LjEzLjMNCj09PT09PT09PT09PT09PT09PQ0KR2l0IGV4aXRzIHdpdGggZXhpdCBjb2RlIDEyOCBh
+bmQgbWVzc2FnZQ0KZmF0YWw6IENvdWxkbid0IGZpbmQgcmVtb3RlIHJlZg0KDQpIb3dldmVyLCB0
+aGUgd29ya2Fyb3VuZCBmb3IgZGVzY2JpYmVkIGFib3QgZm9yIGdpdCB2ZXJzaW9uIDIuNy40IG5v
+DQpsb25nZXIgd29ya3MuIFRoZSByZXN1bHQgaXMgYWx3YXlzDQpmYXRhbDogQ291bGRuJ3QgZmlu
+ZCByZW1vdGUgcmVmDQoNCkRlc2lyZWQgcmVzdWx0DQo9PT09PT09PT09PT09PQ0KQ29tbWl0IGlz
+IGluIC5naXQvRkVUQ0hfSEVBRCBhbmQgY2FuIGJlIGNoZWNrZWQgb3V0Lg0KDQoNCkkgd2FudCB0
+byBjaGVja291dCBhIHNwZWNpZmljIGNvbW1pdCB3aXRob3V0IGNyZWF0aW5nIGFueSBleHRyYSBu
+YW1lZA0KcmVtb3RlcyBpbiB0aGUgbG9jYWwgZ2l0IGNsb25lLg0KDQpGaW5hbGx5LA0KV2hhdCBp
+cyB0aGUgZXhwZWN0ZWQgYmVoYXZpb3IgZm9yICdnaXQgZmV0Y2gnIGluIHRoaXMgY2FzZT8NCklz
+IHRoZXJlIHNvbWUgb3RoZXIgd2F5IEkgY2FuIGFjaGlldmUgbXkgZ29hbHM/DQoNCi0tIA0KQmVz
+dCByZWdhcmRzLA0KRWVybyBBYWx0b25lbg==
