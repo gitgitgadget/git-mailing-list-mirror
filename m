@@ -2,214 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C54F1FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 17:19:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 559581FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 17:34:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751882AbdFSRS6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 13:18:58 -0400
-Received: from mout.web.de ([212.227.17.11]:57053 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750878AbdFSRS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 13:18:57 -0400
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Ls91n-1dnMxp2UEZ-013xxd; Mon, 19
- Jun 2017 19:18:42 +0200
-Subject: Re: [PATCH v5 4/5] convert: move multiple file filter error handling
- to separate function
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, peff@peff.net,
-        e@80x24.org, ttaylorr@github.com, peartben@gmail.com
-References: <20170601082203.50397-1-larsxschneider@gmail.com>
- <20170601082203.50397-5-larsxschneider@gmail.com>
- <be787e74-5f37-8429-9976-abdf8725737c@web.de>
- <28D2B758-7E5D-4EEA-A33D-57871960D5E1@gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <cedddaed-829d-9bde-3399-5b4e85dcbe57@web.de>
-Date:   Mon, 19 Jun 2017 19:18:36 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <28D2B758-7E5D-4EEA-A33D-57871960D5E1@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+        id S1751012AbdFSReC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 13:34:02 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36712 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750844AbdFSReB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 13:34:01 -0400
+Received: by mail-pf0-f194.google.com with SMTP id y7so18341463pfd.3
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 10:34:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=BTfFfjaddCK2HLzPMsyWqofgpzhdLSzI0zoxxphAV5Y=;
+        b=P6ItUloNMEPCU55J/emJdUO+8UTYwW+eqG5YehgV7BxItEaYa4kyHuX9q+bL0qE953
+         4azUL3vljBDZYpp2+09nUG9YZQykyW5MfCnEJwgIyh3yutOFzt0Zv4wA6FyZHI7nWg3X
+         38fFLeHE+fWERruthfg6lhip2lzOaiNN2Q4sEK76qUhGXZFgcMLYvrsm21izjJUlQrXi
+         7TliR4hf5GouWTf6IT7buRTUmCBRYmBZj977nGfDm8YE8n+Ud73VLAG1wVCkQ94euj6s
+         d2u3m0FL4Jm3slBWin8eo49auE+ntSvaBarry1Dp3ybWcMf+i2vm3fsAzLDFpaWf0/jb
+         zSsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=BTfFfjaddCK2HLzPMsyWqofgpzhdLSzI0zoxxphAV5Y=;
+        b=jiDD9bCZ5R/oa8tH5nSnSM8RdfqjlrbOdeMxAZ9QyTbwfW241XmxDNfwwA7+TRINjp
+         jALCGh0w3e40ZpC+QmMMYwOWkn/Hp/ReG195Uwj1iKydOXN8ZmslPs9TK0PA6ZDGyN1d
+         Dkbk4NSI5NSnzT6qxB/CJ6V38GH5pOHfzq+ZXjHM7jv/CZs1MPXlKwUwX/PnrPKxXB3l
+         EH1IxO92uufRpwHi9vyc1H/wTGRXv87Fhr8mTMlNXKg6iMVkZr7B6azCU5bIwv34WeFO
+         Gix8sIO6jmWrbi7WW9CbCWq1VtR0fWvuHilhVct1DgTxsxbPdyA6SsMxD7hLkPosuuD5
+         WSlA==
+X-Gm-Message-State: AKS2vOwyceOF55UIm87pWHBa3xucaP/pMcc5yGgoeF60Q8OM0rELqYW3
+        hlsZ9hrcYCZkfA==
+X-Received: by 10.84.224.200 with SMTP id k8mr23614010pln.215.1497893640564;
+        Mon, 19 Jun 2017 10:34:00 -0700 (PDT)
+Received: from unique-pc ([218.248.21.162])
+        by smtp.googlemail.com with ESMTPSA id q76sm22788040pfg.117.2017.06.19.10.33.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 19 Jun 2017 10:33:59 -0700 (PDT)
+Message-ID: <1497893625.18850.2.camel@gmail.com>
+Subject: Re: [PATCH/RFC] Cleanup Documentation
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>, mlevedahl@gmail.com
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Mon, 19 Jun 2017 23:03:45 +0530
+In-Reply-To: <CAGZ79kbqBXZ5S2TBk6B5gRk+Y-ev2rdgkQZrF-MmHQc0Thj7EQ@mail.gmail.com>
+References: <20170619030518.6712-1-kaarticsivaraam91196@gmail.com>
+         <xmqq1sqgv9ax.fsf@gitster.mtv.corp.google.com>
+         <CAGZ79kbqBXZ5S2TBk6B5gRk+Y-ev2rdgkQZrF-MmHQc0Thj7EQ@mail.gmail.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:lnLZOTdCTVPe+iY/0elB5Yld3sZbIEMaFoX3dxLFtiedK9wk+Hd
- bTM/qSlCMoEUT4uKmUT1cK0rmN0f2f3jxqSCiBsMtbXJ7jrI5n0KPlSPksjYp4Hs/S1Bc48
- vmBXobyC/9zPlUsC4+dqFoscSm1EhMcjVOSVrTPM0NkgNlKhgGjGFL0OACzEgcz3wzXG8Hx
- M/8AwUCeFISDNSXRsHJPQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:IFnWyv5CfDk=:5ALw0ukBd4YKiLaD45cC/6
- FvhvGgerbRQKyyB0Y4RqBrwIHRSVDRA+6m6u3J5aHu4apKbgl0IMEBfg2uMJ/c3QLQkv5OJ78
- MsMZ9te/Rc7eI3JHQbx/B3EkYKtEAtOPO0COIPgGFLPJzFdRzavHPjp2MR+MN+U8crGNuphcm
- GkUu8kyatPOuS3wSzsl18vv/aqhPi7lele8WZJcgD39V1nqtFkO8ZbZxX8fCXpVu1LT5Z2ZPw
- 0Kjwnir4tYwCK/j/r5Sg2a123Q8vVZzF5YSmcHMCBFznpDrSoSSbDSqmPfvTTQqpvxsnl9Dap
- 0iRQX8bNVb0SORHxHr9t1/q1l7bTrwyumOr2YgNJDjqQeH/KjJZaXOh+9PLmX33vNWsN/HSlk
- eIMchctq1B7sd+DEQ+xSP2Y4Xe5lK764UrzixoU7gAttQO6yzHFsddd2qPMlXTwHn8Qvq+zjE
- wAAj3zKUh6TMcS3qiThMjDq/5tXvJZQqBOIO8tstWFOHlxljP7zauiTSXR0YEEEI6pzeuGKur
- bm2bOvX5cQbCQUnNrWVTJhcYV+oIgS/9zBxaCNza5AsMZ3BE5YyvWcSna8ZzoMOM3cDbwSGVJ
- KyFkwnTwz1u1mWUf7UI8EkTzM93/ah5lTmEa0tsITFKStjXZY5M2+5o4nqV/tuf9CYvx9/obZ
- qFFWqB2b6saWkroYZzRyJPXCbBEaIg8SbNaUxmevitWyjdx2fGaS/ctv3SFQW0KuBwP0EhKWt
- WYd2r0hJwT8fTrt/WQ6R/+p24AkEumdr4k31lCIwSDi49yG+HiQsmhdznoVab+SSx6ghtE7SO
- AZ6KUNA
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-06-18 13:47, Lars Schneider wrote:
+On Sun, 2017-06-18 at 22:50 -0700, Stefan Beller wrote:
+> > > diff --git a/Documentation/git-submodule.txt b/Documentation/git-
+> > > submodule.txt
+> > > index 74bc6200d..9812b0655 100644
+> > > --- a/Documentation/git-submodule.txt
+> > > +++ b/Documentation/git-submodule.txt
+> > > @@ -63,13 +63,7 @@ add [-b <branch>] [-f|--force] [--name <name>]
+> > > [--reference <repository>] [--dep
+> > >       to the changeset to be committed next to the current
+> > >       project: the current project is termed the "superproject".
+> > >  +
+> > > -This requires at least one argument: <repository>. The optional
+> > > -argument <path> is the relative location for the cloned
+> > > submodule
+> > > -to exist in the superproject. If <path> is not given, the
+> > > -"humanish" part of the source repository is used ("repo" for
+> > > -"/path/to/repo.git" and "foo" for "host.xz:foo/.git").
+> > > -The <path> is also used as the submodule's logical name in its
+> > > -configuration entries unless `--name` is used to specify a
+> > > logical name.
+> > > +This requires at least one argument: <repository>.
+> > >  +
 > 
->> On 18 Jun 2017, at 09:20, Torsten BÃ¶gershausen <tboegi@web.de> wrote:
->>
->>
->> On 2017-06-01 10:22, Lars Schneider wrote:
->>> This is useful for the subsequent patch 'convert: add "status=delayed" to
->>> filter process protocol'.
->>
->> May be
->> Collecting all filter error handling is useful for the subsequent patch
->> 'convert: add "status=delayed" to filter process protocol'.
-> 
-> I think I get your point. However, I feel "Collecting" is not the right word.
-> 
-> How about:
-> "Refactoring filter error handling is useful..."?
+> So we're losing the information how the submodule name is chosen.
+I just moved it. I don't think we're losing anything related to how the
+name is chosen. Please let me know if I misinterpreted your statement.
 
-OK
-
-
+> This may be fine as I plan (long term) to make the name an arbitrary
+> random
+> string (IMHO that reduces confusion as there will be less 'nearly the
+> same'
+> things)
 > 
->>>
->>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
->>> ---
->>> convert.c | 47 ++++++++++++++++++++++++++---------------------
->>> 1 file changed, 26 insertions(+), 21 deletions(-)
->>>
->>> diff --git a/convert.c b/convert.c
->>> index f1e168bc30..a5e09bb0e8 100644
->>> --- a/convert.c
->>> +++ b/convert.c
->>> @@ -565,6 +565,29 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
->>> 	return err;
->>> }
->>>
->>> +static void handle_filter_error(const struct strbuf *filter_status,
->>> +				struct cmd2process *entry,
->>> +				const unsigned int wanted_capability) {
->>> +	if (!strcmp(filter_status->buf, "error")) {
->>> +		/* The filter signaled a problem with the file. */
->>> +	} else if (!strcmp(filter_status->buf, "abort") && wanted_capability) {
->>> +		/*
->>> +		 * The filter signaled a permanent problem. Don't try to filter
->>> +		 * files with the same command for the lifetime of the current
->>> +		 * Git process.
->>> +		 */
->>> +		 entry->supported_capabilities &= ~wanted_capability;
->>> +	} else {
->>> +		/*
->>> +		 * Something went wrong with the protocol filter.
->>> +		 * Force shutdown and restart if another blob requires filtering.
->>> +		 */
->>> +		error("external filter '%s' failed", entry->subprocess.cmd);
->>> +		subprocess_stop(&subprocess_map, &entry->subprocess);
->>> +		free(entry);
->>> +	}
->>> +}
->>> +
->>> static int apply_multi_file_filter(const char *path, const char *src, size_t len,
->>> 				   int fd, struct strbuf *dst, const char *cmd,
->>> 				   const unsigned int wanted_capability)
->>> @@ -656,28 +679,10 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
->>> done:
->>> 	sigchain_pop(SIGPIPE);
->>>
->>> -	if (err) {
->>> -		if (!strcmp(filter_status.buf, "error")) {
->>> -			/* The filter signaled a problem with the file. */
->>                Note1: Do we need a line with a single ";" here ?
+> On the other hand the newly added line
+>   'This requires at least one argument: <repository'
+> (actually moved, but) is sort of redundant. The notation in the
+> argument line
+> should make that clear, already?
 > 
-> The single ";" wouldn't hurt but I don't think it is helpful either.
-> I can't find anything in the coding guidelines about this...
+Makes clear sense. Removed it.
 
-OK about that. I was thinking to remove the {}, and the we -need- the ";"
-
+> This sounds good, it consolidates all information about [<path>]
+> in one paragraph. While at it, maybe let's find another (better)
+> substitute for "humanish" as that can be anything(?).
 > 
+> Maybe "the last part of the URL" (without any .git)
 > 
->>                Question: What should/will happen to the file ?
->>                Will Git complain later ? Retry later ?
+How about "meaningful"? Put in place it reads like,
+
+If <path> is not given, the meaningful part of the source repository
+...
+
+> Please markup the '.gitmodules' either via single quotes or `.
+> (or even link to 'gitmodules(5)' )
 > 
-> The file is not filtered and Git does not try, again. 
-> That might be OK for certain filters:
-> If "filter.foo.required = false" then this would be OK. 
-> If "filter.foo.required = true" then this would cause an error.
+Marked it up using `. Help needed to link to 'gitmodules(5)', as I'm
+not sure how to provide alternative text to 'linkgit:'.
 
-Does it make sense to add it as a comment ?
-I know, everything is documented otherwise, but when looking at the source
- code only, the context may be useful, it may be not.
-
+> I am undecided if this is really removing (2) unclearness, but the
+> (1) redundancy seems fine to me.
 > 
-> 
->>> -		} else if (!strcmp(filter_status.buf, "abort")) {
->>> -			/*
->>> -			 * The filter signaled a permanent problem. Don't try to filter
->>> -			 * files with the same command for the lifetime of the current
->>> -			 * Git process.
->>> -			 */
->>> -			 entry->supported_capabilities &= ~wanted_capability;
->>                         Hm, could this be clarified somewhat ?
->>                         Mapping "abort" to "permanent problem" makes sense as
->>                         such, but the only action that is done is to reset
->>                         a capablity.
-> 
-> I am not sure what you mean with "reset capability". We disable the capability here.
-> That means Git will not use the capability for the active session.
+Sorry about that. The commit message should have been,
 
-Sorry, my wrong - reset is a bad word here.
-"Git will not use the capability for the active session" is perfect!
+...
+2. Removed unclear back reference
+...
 
-> 
-> 
->> 		/*
->> 		 * The filter signaled a missing capabilty. Don't try to filter
->> 		 * files with the same command for the lifetime of the current
->> 		 * Git process.
->> 		 */
-> 
-> I like the original version better because the capability is not "missing".
-> There is "a permanent problem" and the filter wants to signal Git to not use
-> this capability for the current session anymore.
+by which I intend to denote the following removal,
+> -In either case, the given URL is recorded into .gitmodules for
+> -use by subsequent users cloning the superproject.
 
-Git and the filter are in a negotiation phase to find out which side is able
-to do what.So I don't think there is a "problem" (in the sense that I understand
-it) at all.
-
-And back to the "abort":
-I still think that the word feels to harsh...
-"abort" in my understanding smells too much "a program is terminated".
-If it is not too late, does it may sense to use something like "nack" ?
-
-
-> 
-> 
->>                 # And the there is a question why the answer is "abort" and not
->>                 # "unsupported"
-> 
-> Because the filter supports the capability. There is just some kind of failure that 
-> that causes the capability to not work as expected. Again, depending on the filter
-> "required" flag this is an error or not.
-> 
-
-May be I misunderstood the whole sequence, and abort is the right thing.
-If yes, how about this ?
-
-	} else if (!strcmp(filter_status->buf, "abort") && wanted_capability) {
-		/*
-		 * Don't try to filter files with this capability for lifetime
-		 * of the current Git process.
-		 */
-		 entry->supported_capabilities &= ~wanted_capability;
-
-
+Note: Will follow up with a patch, soon.
+-- 
+Regards,
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
