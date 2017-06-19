@@ -2,84 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B68911FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 19:45:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A09471FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 19:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751032AbdFSTpo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 15:45:44 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:57091 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750844AbdFSTpn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 15:45:43 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3ws1fs3y9Zz5tlG;
-        Mon, 19 Jun 2017 21:45:41 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id EC756252;
-        Mon, 19 Jun 2017 21:45:39 +0200 (CEST)
-Subject: Re: [PATCH v2 0/3] Add regression tests for rectent rebase -i fixes
-From:   Johannes Sixt <j6t@kdbg.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
- <20170614102427.5220-1-phillip.wood@talktalk.net>
- <xmqqshj0yhq1.fsf@gitster.mtv.corp.google.com>
- <xmqqk24cygvm.fsf@gitster.mtv.corp.google.com>
- <xmqqfuf0ygmu.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.21.1.1706161527140.4200@virtualbox>
- <3c975634-8651-af74-66bf-ee793bc073fc@kdbg.org>
-Message-ID: <8be59224-5bb7-50e6-4381-29c250fb10ec@kdbg.org>
-Date:   Mon, 19 Jun 2017 21:45:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+        id S1751955AbdFSTxd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 15:53:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44930 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751054AbdFSTxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 15:53:32 -0400
+Received: (qmail 22683 invoked by uid 109); 19 Jun 2017 19:47:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 19 Jun 2017 19:47:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31092 invoked by uid 111); 19 Jun 2017 19:53:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Jun 2017 15:53:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Jun 2017 15:53:30 -0400
+Date:   Mon, 19 Jun 2017 15:53:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 00/28] Create a reference backend for packed refs
+Message-ID: <20170619195330.fhjlfiqmcwhgttaa@sigill.intra.peff.net>
+References: <cover.1497534157.git.mhagger@alum.mit.edu>
+ <xmqqzid3stdw.fsf@gitster.mtv.corp.google.com>
+ <xmqqvanrsru4.fsf@gitster.mtv.corp.google.com>
+ <20170619194315.tzdmo7xel2dztoju@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <3c975634-8651-af74-66bf-ee793bc073fc@kdbg.org>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170619194315.tzdmo7xel2dztoju@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.06.2017 um 20:43 schrieb Johannes Sixt:
-> Am 16.06.2017 um 15:49 schrieb Johannes Schindelin:
->> On Thu, 15 Jun 2017, Junio C Hamano wrote:
->>> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
->>> index 325ec75353..801bce25da 100755
->>> --- a/t/t3420-rebase-autostash.sh
->>> +++ b/t/t3420-rebase-autostash.sh
->>> @@ -45,7 +45,7 @@ create_expected_success_am() {
->>>   }
->>>   create_expected_success_interactive() {
->>> -    cr=$'\r' &&
->>> +    cr=$(echo . | tr '.' '\015') &&
->>>       cat >expected <<-EOF
->>>       $(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
->>>       HEAD is now at $(git rev-parse --short feature-branch) third 
->>> commit
->>
->> This is still incorrect, as the \r\n (which $(echo . | tr \.\ '\015')
->> would emit) is interpreted correctly as a line break on Windows, meaning
->> that cr is now *empty*. Not what we want.
->>
->> What I did is to replace the `cat` by `q_to_cr` (we have that lovely
->> function, might just as well use it), replace `${cr}` by `Q` and skip the
->> cr variable altogether.
+On Mon, Jun 19, 2017 at 03:43:15PM -0400, Jeff King wrote:
+
+> > > Is the iterator over packed-refs correctly skipping over what are
+> > > covered by loose refs?  The entries in the packed-refs file that are
+> > > superseded by loose refs should be allowed to point at an already
+> > > expired object.
+> > 
+> > Here it is in a test form for easier diagnosis.
 > 
-> You beat me to it. I came up with the identical q_to_cr changes, but 
-> haven't dug the remaining failure regarding the swapped output lines. 
-> You seem to have nailed it. Will test your proposed changes tomorrow.
+> Thanks, I was just starting to do that myself. The problem is in
+> ca6b06eb7 (packed_ref_store: support iteration, 2017-05-15) and is
+> pretty obvious: the packed_ref iterator checks whether the entry
+> resolves.
+> 
+> I think that _neither_ of the loose and packed iterators should be
+> checking this. It's only the merged result (where loose trumps packed)
+> that should bother checking.
 
-As expected, the patches fix the observed test failures for me, too, if 
-that's still relevant.
+It looks like this is mostly already the case. files_ref_iterator
+combines the two and does check. The loose iteration is done by
+cache_ref_iterator[1], and does not. So it's just this new packed_refs
+iterator that is wrong, and we just need:
 
--- Hannes
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 311fd014c..ad1143e64 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -416,12 +416,6 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 		    ref_type(iter->iter0->refname) != REF_TYPE_PER_WORKTREE)
+ 			continue;
+ 
+-		if (!(iter->flags & DO_FOR_EACH_INCLUDE_BROKEN) &&
+-		    !ref_resolves_to_object(iter->iter0->refname,
+-					    iter->iter0->oid,
+-					    iter->iter0->flags))
+-			continue;
+-
+ 		iter->base.refname = iter->iter0->refname;
+ 		iter->base.oid = iter->iter0->oid;
+ 		iter->base.flags = iter->iter0->flags;
+@@ -473,8 +467,6 @@ static struct ref_iterator *packed_ref_iterator_begin(
+ 	struct ref_iterator *ref_iterator;
+ 	unsigned int required_flags = REF_STORE_READ;
+ 
+-	if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN))
+-		required_flags |= REF_STORE_ODB;
+ 	refs = packed_downcast(ref_store, required_flags, "ref_iterator_begin");
+ 
+ 	iter = xcalloc(1, sizeof(*iter));
+
+At least that makes sense to me and passes the tests (including the new
+one). I haven't actually reviewed the patches yet.
+
+-Peff
