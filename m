@@ -2,122 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BA181FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 20:20:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25BF41FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 20:32:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752187AbdFSUUb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 16:20:31 -0400
-Received: from washoe.dartmouth.edu ([129.170.30.229]:49653 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751689AbdFSUUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 16:20:30 -0400
-Received: from [129.170.31.151] (helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.80)
-        (envelope-from <yoh@onerussian.com>)
-        id 1dN39u-00017c-Lx; Mon, 19 Jun 2017 16:20:27 -0400
-Date:   Mon, 19 Jun 2017 16:20:21 -0400
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Prathamesh Chavan <pc44800@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <20170619202021.dmomy5ztwoeat3eg@hopa.kiewit.dartmouth.edu>
-References: <20170619155924.7ra2vwvaelr2yj2v@hopa.kiewit.dartmouth.edu>
- <CAGZ79kZhj31eBYnboyxDLuFp1ceeqk8kj0nrnQaCmpRJCVFU4w@mail.gmail.com>
+        id S1752142AbdFSUc4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 16:32:56 -0400
+Received: from mail-vk0-f54.google.com ([209.85.213.54]:32909 "EHLO
+        mail-vk0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751097AbdFSUcz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 16:32:55 -0400
+Received: by mail-vk0-f54.google.com with SMTP id p62so58813588vkp.0
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 13:32:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=PwR4UkyyV3hecwIJN9FfvPJq33DEdr1G/pBFOHBM8Mo=;
+        b=u2YZHrcYA/i9Luvn0cZDlxTyOXsJTPN23aLdleWNHsZ+8DxfpHi56PXt8+GtdPyV24
+         XkCEsDTOYjFh4PthXO2u22u0mawqfEYbCT4YECl/0yoLYF8QvaFdhvqBEVxmQNgGTBSC
+         NwvKTdiNCudFRkHMUbeljRFWq+dQy1JV3WXwsukpuMUYopxeVhIvetCFG4keaZoyeBfC
+         QgUBWQMorev82j5Og4i5Fgcjbp/82tB3aDxcXZpprFtj6YZ4cwBAsMsWC9ueazubfSvX
+         ym6OcXqmo8oz/8Ykvsrbgt4KMkclVgfalFCIJH+JEojTz3J4737oHpaeyiYslGBsPQjz
+         GfHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=PwR4UkyyV3hecwIJN9FfvPJq33DEdr1G/pBFOHBM8Mo=;
+        b=i8DibNIs8D0nbiNT3Qy9KWjGu3dz3+0s6sTwDJMq5iceipj/LDTh+P4qPVp1xYyUZO
+         kdjuX5Ys2CpLcFzPIgFQXEGDppwCzRgBLS5iSaZGuDJ1QVT4AFwMCdshh6koE4WPBeyf
+         31RipGarbY/F0Kd29Uq0aXVDydbM3uOpsYEqUId4F7PCxWaPdcilv7Bq57RT36ECXUoh
+         ArLlHwGzGzp5donZudQRXLw2iPHL0qjieSQhrVJgsIFHfaEXfPd7vuQQn+EDfCz33b8D
+         b2P5aBzAmDXbz12s92yGBzy/Fo6GFe5hCRpcWAFxUvKZG92QtO2/6Me8sp8H67I+NJHe
+         G1Ng==
+X-Gm-Message-State: AKS2vOz/V4pFba+ZS5MgMwC5kFtJnTqWN7U0ZlGu7ji9OQAWMd8hbheB
+        7xo1AE4q83RsuuS244JcmWI+POHiqpDR
+X-Received: by 10.31.108.83 with SMTP id h80mr14903907vkc.33.1497904374979;
+ Mon, 19 Jun 2017 13:32:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZhj31eBYnboyxDLuFp1ceeqk8kj0nrnQaCmpRJCVFU4w@mail.gmail.com>
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 129.170.31.151
-X-SA-Exim-Rcpt-To: sbeller@google.com, pc44800@gmail.com, git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: in case you want a use-case with lots of submodules
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.176.85.157 with HTTP; Mon, 19 Jun 2017 13:32:54 -0700 (PDT)
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Mon, 19 Jun 2017 15:32:54 -0500
+X-Google-Sender-Auth: 4Q1vvd4yT91pb3anXOeE78QB2o8
+Message-ID: <CAHd499C8x_zWJyRNXO-410gxudk897-okJaA3uOPYr38QNHjpA@mail.gmail.com>
+Subject: Better usability of stash refs
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+To drop a stash, I have to do this (example):
 
-On Mon, 19 Jun 2017, Stefan Beller wrote:
+$ git stash drop stash@{3}
 
-> On Mon, Jun 19, 2017 at 8:59 AM, Yaroslav Halchenko <yoh@onerussian.com> wrote:
-> > Hi All,
+Using the full "stash@{N}" seems superfluous since the documentation
+states it must be a stash in the first place. It would make more sense
+(and be quicker to type) to do:
 
-> > On a recent trip I've listened to the git minutes podcast episode and
-> > got excited to hear  Stefan Beller (CCed just in case) describing
-> > ongoing work on submodules mechanism.  I got excited, since e.g.
-> > performance improvements would be of great benefit to us too.
+$ git stash drop 3
 
-> If you're mostly interested in performance improvements of the status
-> quo (i.e. "make git-submodule fast"), then the work of Prathamesh
-> Chavan (cc'd) might be more interesting to you than what I do.
-> He is porting git-submodule (which is mostly a shell script nowadays)
-> to C, such that we can save a lot of process invocations and can do
-> processing within one process.
+Is there a trick I can use to make this shorthand possible? I thought
+about creating a "s" script for "stash" that intercepted the
+parameters for only a couple of stash sub-commands and created the
+ref, but that seems a lot of work.
 
-ah -- cool.  I would be eager to test it out, thanks!  would be
-interesting to see if it positively affects our overall performance.
-Pointers to that development would be welcome!
-
-> > http://datasets.datalad.org ATM provides quite a sizeable (ATM 370
-> > repositories, up to 4 levels deep) hierarchy of git/git-annex
-> > repositories all tied together via git submodules mechanism.  And as the
-> > collection grows, interactions with it become slower, so additional
-> > options (such as --ignore-submodules=dirty  to status) become our
-> > friends.
-
-> I am not as much concerned about the 370 number than about the
-> 4 layers of nesting. In my experience the nested submodule case
-> is a little bit error prone and the bug reports are not as frequent as
-> there are not as many users of nesting, yet(?)
-
-well -- part of the story here is that we are forced to use/have full
-blown .git/ directories (for git-annex symlinks to content files to
-work) within submodules instead of .git file with a reference under
-parent's .git/modules.   So we can 'slice' at any level and I
-guess that is why may be avoiding some possibly issues due to nesting
-and the "parent has all .git/modules" approach.
-
-> In a neighboring thread on the mailing list we have a discussion
-> on the usefulness of being on branches than in detached HEAD
-> in the submodules.
-> https://public-inbox.org/git/0092CDD27C5F9D418B0F3E9B5D05BE08010287DF@SBS2011.opfingen.plc2.de/
-
-> This would not break non-ambiguously, rather it would add
-> ease of use.
-
-that is indeed a common caveat... I am not sure if any heuristic
-approach would provide a 'bullet proof' solution.  I might even prefer a
-hardcoded 'branch-name' to be listed/associated with each submodule
-within .gitmodules.  In the datalad case, detached HEAD is common
-whenever someone installs "outdated" (branch of which progressed
-forward) submodule.  In this case we just check if the branch after "git
-clone"  (but before git submodule update) includes the pointed by
-Subproject commit, and if so -- we announce that it must be the branch
-(so far it is always "master" branch anyways ;) )
-
-> > So I thought to share this as a use-case happen you need more
-> > motivation or just a real-case test-bed for your work.  And thank
-> > you again for making Git even Greater.
-
-> Thanks for the motivation. :)
-
-the least I could do ;)
-
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+Any productivity tips here? Thanks in advance.
