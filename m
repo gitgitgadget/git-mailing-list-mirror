@@ -2,99 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C29461FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 19:44:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B68911FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 19:45:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751842AbdFSSdu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 14:33:50 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:32916 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751039AbdFSSdq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 14:33:46 -0400
-Received: by mail-pf0-f178.google.com with SMTP id 83so57615159pfr.0
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 11:33:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=qIYO+emcDdQwU/IYKGprQhQfX+Hn27W1/tAZEK1WzY8=;
-        b=gCjr3Ih+Ohh7lfhC2X2znxir/HfiqDZ3dy0gAO3OsfWIDcNv7IcVyWQb5ufRQxw0ZA
-         33U8UPhZ23MGfzIDgXLyQJ21/W9FLKHF9n1gFRWxxDhMnMxxxnqp983ReiOhxYbU34ZY
-         poeWqdwjc8MqmGOIKXrxMjuvJ52V5igtqj/LMZ5pU+FcVWd2/2WXlLPXlQlLULGShqc+
-         8OvviXR5Nv7fyPQ+QiwuYdZmKy5o/5lVLyAJj3iYKjzwe7JbjTP4KaCrK84TvZeoNdbX
-         uEtlN91mh8G3z+QG4OTtlS2AT6OJkZsPgrRyp5blwohJiqxXMHyjfc5OhOWIX4G6A85N
-         TeCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=qIYO+emcDdQwU/IYKGprQhQfX+Hn27W1/tAZEK1WzY8=;
-        b=O+RvsBurPp+aV/gQj081CjdssWAymQULIq7Tk4Ra1Nf7+EKeoD5Aj8+OItVyjTlACg
-         yB2aLXjJDiOyPDhYaoUqK8Tl+Ym3cVjSc+IZ3Z74L0cqNZjWtGGUPy0W/uyJdvmVxyC1
-         15VOnKSyRkHHEraJGbxIUtWVpI1OPu5SxqR7Jzrf/692mTY1YZyflVUTXJScZH2arOyu
-         A0AqRbhl1FM/nxq7z8EkD4HzCQKCftJP1lGYxRqp6FA572q8dpyoQzmj+L/Ak8FVmb6H
-         MLYRhwjICj5o3PwIpuE6rqK3rw0cCk24kuYRt4G4/oBWupTSowQ8zH/Qcv9G24KRNyF6
-         Vz2A==
-X-Gm-Message-State: AKS2vOzdXWySwHhfzUWXiyO4QldyA143BuZG3zX5lzkxuhZI1EGWi5fh
-        /nc9kjYb8+ghUw==
-X-Received: by 10.98.10.155 with SMTP id 27mr19079468pfk.4.1497897225366;
-        Mon, 19 Jun 2017 11:33:45 -0700 (PDT)
-Received: from unique-pc ([218.248.21.162])
-        by smtp.googlemail.com with ESMTPSA id l22sm22547391pfb.55.2017.06.19.11.33.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 19 Jun 2017 11:33:44 -0700 (PDT)
-Message-ID: <1497897210.18850.11.camel@gmail.com>
-Subject: Re: [PATCH 2/2] Add test for the new status message
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, avarab@gmail.com,
-        git@vger.kernel.org
-Date:   Tue, 20 Jun 2017 00:03:30 +0530
-In-Reply-To: <20170619180450.tjldpkltdwqad4ic@sigill.intra.peff.net>
-References: <20170619024123.5438-1-kaarticsivaraam91196@gmail.com>
-         <20170619024412.5861-1-kaarticsivaraam91196@gmail.com>
-         <xmqqh8zcvbq8.fsf@gitster.mtv.corp.google.com>
-         <1497895189.18850.9.camel@gmail.com>
-         <20170619180450.tjldpkltdwqad4ic@sigill.intra.peff.net>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        id S1751032AbdFSTpo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 15:45:44 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:57091 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750844AbdFSTpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 15:45:43 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3ws1fs3y9Zz5tlG;
+        Mon, 19 Jun 2017 21:45:41 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id EC756252;
+        Mon, 19 Jun 2017 21:45:39 +0200 (CEST)
+Subject: Re: [PATCH v2 0/3] Add regression tests for rectent rebase -i fixes
+From:   Johannes Sixt <j6t@kdbg.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170531104213.16944-1-phillip.wood@talktalk.net>
+ <20170614102427.5220-1-phillip.wood@talktalk.net>
+ <xmqqshj0yhq1.fsf@gitster.mtv.corp.google.com>
+ <xmqqk24cygvm.fsf@gitster.mtv.corp.google.com>
+ <xmqqfuf0ygmu.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1706161527140.4200@virtualbox>
+ <3c975634-8651-af74-66bf-ee793bc073fc@kdbg.org>
+Message-ID: <8be59224-5bb7-50e6-4381-29c250fb10ec@kdbg.org>
+Date:   Mon, 19 Jun 2017 21:45:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
+MIME-Version: 1.0
+In-Reply-To: <3c975634-8651-af74-66bf-ee793bc073fc@kdbg.org>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 16.06.2017 um 20:43 schrieb Johannes Sixt:
+> Am 16.06.2017 um 15:49 schrieb Johannes Schindelin:
+>> On Thu, 15 Jun 2017, Junio C Hamano wrote:
+>>> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+>>> index 325ec75353..801bce25da 100755
+>>> --- a/t/t3420-rebase-autostash.sh
+>>> +++ b/t/t3420-rebase-autostash.sh
+>>> @@ -45,7 +45,7 @@ create_expected_success_am() {
+>>>   }
+>>>   create_expected_success_interactive() {
+>>> -    cr=$'\r' &&
+>>> +    cr=$(echo . | tr '.' '\015') &&
+>>>       cat >expected <<-EOF
+>>>       $(grep "^Created autostash: [0-9a-f][0-9a-f]*\$" actual)
+>>>       HEAD is now at $(git rev-parse --short feature-branch) third 
+>>> commit
+>>
+>> This is still incorrect, as the \r\n (which $(echo . | tr \.\ '\015')
+>> would emit) is interpreted correctly as a line break on Windows, meaning
+>> that cr is now *empty*. Not what we want.
+>>
+>> What I did is to replace the `cat` by `q_to_cr` (we have that lovely
+>> function, might just as well use it), replace `${cr}` by `Q` and skip the
+>> cr variable altogether.
+> 
+> You beat me to it. I came up with the identical q_to_cr changes, but 
+> haven't dug the remaining failure regarding the swapped output lines. 
+> You seem to have nailed it. Will test your proposed changes tomorrow.
 
-On Mon, 2017-06-19 at 14:04 -0400, Jeff King wrote:
-> On Mon, Jun 19, 2017 at 11:29:49PM +0530, Kaartic Sivaraam wrote:
-> 
-> > Is there a way to test for the "Initial commit" message in the
-> > commit
-> > template?
-> 
-> You can do "git commit --dry-run", which produces the template on
-> stdout.
-Thanks for the help :)
+As expected, the patches fix the observed test failures for me, too, if 
+that's still relevant.
 
-> 
-> That should be good enough for our purposes here, as it's the same
-> code
-> that produces the text that goes into the editor template. If you
-> really
-> wanted to test what the editor sees, you could do something like:
-> 
->   GIT_EDITOR='cat >editor-input' git commit
-> 
-> but I don't think it's worth the trouble.
-> 
-That's right. I thinks it's not worth the trouble too.
-
+-- Hannes
