@@ -2,97 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CA831FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 14:20:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F2B91FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 14:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750846AbdFSOUY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 10:20:24 -0400
-Received: from mail-ua0-f182.google.com ([209.85.217.182]:34598 "EHLO
-        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750761AbdFSOUX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 10:20:23 -0400
-Received: by mail-ua0-f182.google.com with SMTP id d45so19925437uai.1
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 07:20:23 -0700 (PDT)
+        id S1751113AbdFSOvm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 10:51:42 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:36633 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751101AbdFSOvl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 10:51:41 -0400
+Received: by mail-pg0-f67.google.com with SMTP id e187so7626754pgc.3
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 07:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=IDR7y+EkjNAiJNtndYlq2339gysM2TOOJ0/fZYcj80k=;
-        b=E0/WSKv0F7kUw5SCkjKHWYQVugmfHKe6BKs6nZF4PrIE35H527Um6NuLSo+8mrixqg
-         mERa4dwMHQcSEqCKNVSdaHH6xGBFR8vfNdGRKNYWYqDD0R6NYfU/V6LblQPtbbNMzMxy
-         +EHdOjMOIP4Mt72yVgIZa6v2fZm1xCQ3GjcuNS1y1a1vqfAMHDEzFEi0hSAiGh7BquGx
-         q1uM0Fs+NScTy+V+XfdCL7oCaZ7dlj+zPXo5BYbWzTRUaL23fJCSZufpi/7RJaERsa1M
-         TfjPbgiva3Bb7L0bPHvYMEw0LQjCx95gKaRA2MZ54/mB0mlh8nCqNvjJQuC2wqV8Zzz3
-         1xqw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ReGQLH8cA0fEoeOVR3ggX7HX4BqHZDI3j4qrlJaOO2c=;
+        b=UwrxdTrv6WtXY1HL00zIeg0HlRg0UvOj4loXx6Gy7gYK6evxn2LxRCDhWVowbVLAY9
+         elDHQYCxoKh4kLTkvSE78sRtboKD/hdVzeSHmZd+S4KqelNpNa2gqPwVnQlAPFdBzSXW
+         iouL+fTOYPIyGSSCr23YUWsCury4KEfO2nwKM4RZ5cYBq3wY9bpWvpC60cuy9L1SIaRX
+         IneHU8/PbDYyMzUar7dVXfWbs7iEQgt7qADAWmlOPgtWkZLRt+BR4v/fetjqsXHmozYY
+         3hbiwHtowLrLvlB1TZF0H6BCFrHRCzsaj65tVuFx/n42/O6pPinMuLtVyZpTQDEcHa96
+         AO/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=IDR7y+EkjNAiJNtndYlq2339gysM2TOOJ0/fZYcj80k=;
-        b=FJxRYPycNQ+vETKYHithqYqKITgKXupjsnpS+JxyLDCsmTv5XGHHfg/bEptsnVoN0L
-         /J8Z1fknhI4mtDJ3PE+dqsaBJxbTGXIiF3gSb0gPdFQ4sTZALbH2vBuLZkpYjlhfyL7f
-         JqpV7BH7EwWLqwl2l0NoLVoAlpHajwtrv2ejNmYgCQSdyPkxfSbvs/D+Jz5DKSyWKX++
-         7WVMAqB40tQYsq+IJ2jXvSFAMaBDBOJH2GnoYd9VTo+fG36sdLEOjHmFmHZHzZ1/r0aS
-         K+cHpq8pTf0HLXNuz0t5aJSivqSm3bCvYVCON/Cf3x0AIbQe80bfZsPd7aZuFxaTNbuY
-         Jmcw==
-X-Gm-Message-State: AKS2vOwiIbA70yhwyoAJ0IIThZA4PW8o8JVBMI9I35V+HluU69DRFTDU
-        G6U62Qolp9K/CPVMTwqEuIuWYL1pBw==
-X-Received: by 10.176.76.23 with SMTP id l23mr13081529uaf.63.1497882022463;
- Mon, 19 Jun 2017 07:20:22 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ReGQLH8cA0fEoeOVR3ggX7HX4BqHZDI3j4qrlJaOO2c=;
+        b=Wqx3DGcUz7Hv94VCArlK0PkUw95HBnFZy3dCpgGebtZDt5phRMFQ2eBW/pRkaXmNy5
+         1K0WMi2eieft4XH9cdM0bY1v4jq12wX5l/Nzic3hr8QWmLblRwbhUDL/fljAKYs6IoZZ
+         QhUD5by1BxBR8mlYhMB3dqn3Dki4mZFBWfmiPdaSD+2eqVTG3HaEKsBbGniu/+83CVp6
+         4V3C5BKSkvhN655EBQYKkqABgVqPM+/gJZ81Qh0IcWIVSPoZyOWB67HfmbYTrLUcsZM0
+         KknwbflcRvtYvnS1BmRqyBZOK10D4VzPAYHzoUW2w0Krf1/gmn6Iuxy/DW4ygns6AQgV
+         I8PQ==
+X-Gm-Message-State: AKS2vOzRGmufzmiJnHpx2Nw48sRQKSTJTNNk4fRatB3z4TsTwBF5myJS
+        wkyGO8wde2Pi2nGCtzJ0sEvXq82FNw==
+X-Received: by 10.98.69.76 with SMTP id s73mr20948365pfa.94.1497883900552;
+ Mon, 19 Jun 2017 07:51:40 -0700 (PDT)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.159.55.234 with HTTP; Mon, 19 Jun 2017 07:20:22 -0700 (PDT)
-In-Reply-To: <xmqqpoec4nib.fsf@gitster.mtv.corp.google.com>
-References: <CAHd499BBNsai4SScOe6kADsgbGRLyGnDKyUcm8LZL-w8c9Webw@mail.gmail.com>
- <xmqqpoec4nib.fsf@gitster.mtv.corp.google.com>
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Mon, 19 Jun 2017 09:20:22 -0500
-X-Google-Sender-Auth: ZeHrbMSwwJFQF-EONxpI_-Mu_oQ
-Message-ID: <CAHd499Aft6yE=8f8DGRVxMYNR5kg6AVs3tECVtz1VDdwFeL5fg@mail.gmail.com>
-Subject: Re: How to git push mirror local refs only?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git <git@vger.kernel.org>
+Received: by 10.100.182.236 with HTTP; Mon, 19 Jun 2017 07:51:20 -0700 (PDT)
+In-Reply-To: <087c8d6e-10f0-2c1f-1974-a97f4f685288@ramsayjones.plus.com>
+References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
+ <1497820591-93434-1-git-send-email-sahildua2305@gmail.com> <087c8d6e-10f0-2c1f-1974-a97f4f685288@ramsayjones.plus.com>
+From:   Sahil Dua <sahildua2305@gmail.com>
+Date:   Mon, 19 Jun 2017 16:51:20 +0200
+Message-ID: <CALiud+=By79=ngbi6KoeSEW7PYAhrZR2my_=objq8Mgmx7h-RQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] config: create a function to format section headers
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 9, 2017 at 8:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Robert Dailey <rcdailey.lists@gmail.com> writes:
+On Mon, Jun 19, 2017 at 2:08 PM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
 >
->> So I want to update my remote fork with all my local branches.
->> Normally I'd do this:
+>
+> On 18/06/17 22:16, Sahil Dua wrote:
+>> Factor out the logic which creates section headers in the config file,
+>> e.g. the 'branch.foo' key will be turned into '[branch "foo"]'.
 >>
->> $ git push --mirror fork
+>> This introduces no function changes, but is needed for a later change
+>> which adds support for copying branch sections in the config file.
 >>
->> However this will also push everything under `refs/remotes` which I do
->> not want. And it fails if I specify a refspec parameter with --mirror.
->>
->> Is there a way to achieve this through one or more git commands? Note
->> I'm doing this on a non-bare clone and have to keep it that way since
->> I'm pushing branches I actively work on.
->>
->> An intrinsic benefit of what I'm trying to do is that the mirror
->> command will also batch delete branches on the remote that do not
->> exist locally, which is behavior I want since I do not need them
->> anymore.
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 >
-> Something along this line in your .git/config:
->
->         [remote "fork"]
->                 url = ...
->                 push = refs/heads/*:refs/heads/*
->
-> and then
->
->         $ git push --prune --follow-tags fork
+> Adding my SOB isn't really appropriate here - I only made a very
+> very minor contribution. At _most_ you might consider 'Helped-by:',
+> but even that would probably be overkill. ;-)
 
-Sorry for the late reply, I was out of town all last week. Thanks for
-your help. Does this serve as a good general default? I can't imagine
-a case where I'd ever want to push something inside refs/remotes.
+You sent a minor patch and I just applied it and squashed into my
+patch. I'm okay with keeping your SOB, unless it's not appropriate to
+keep it. (it's my first patch, so advise me. I don't have a strong
+preference.)
+
+>
+> Thanks.
+>
+> ATB,
+> Ramsay Jones
+>
+>
+>> Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
+>> ---
+>>  config.c | 13 +++++++++++--
+>>  1 file changed, 11 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/config.c b/config.c
+>> index 34a139c..32fd3c8 100644
+>> --- a/config.c
+>> +++ b/config.c
+>> @@ -2169,10 +2169,10 @@ static int write_error(const char *filename)
+>>       return 4;
+>>  }
+>>
+>> -static int store_write_section(int fd, const char *key)
+>> +static struct strbuf store_create_section(const char *key)
+>>  {
+>>       const char *dot;
+>> -     int i, success;
+>> +     int i;
+>>       struct strbuf sb =3D STRBUF_INIT;
+>>
+>>       dot =3D memchr(key, '.', store.baselen);
+>> @@ -2188,6 +2188,15 @@ static int store_write_section(int fd, const char=
+ *key)
+>>               strbuf_addf(&sb, "[%.*s]\n", store.baselen, key);
+>>       }
+>>
+>> +     return sb;
+>> +}
+>> +
+>> +static int store_write_section(int fd, const char *key)
+>> +{
+>> +     int success;
+>> +
+>> +     struct strbuf sb =3D store_create_section(key);
+>> +
+>>       success =3D write_in_full(fd, sb.buf, sb.len) =3D=3D sb.len;
+>>       strbuf_release(&sb);
+>>
+>>
