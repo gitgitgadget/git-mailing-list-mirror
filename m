@@ -2,73 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 955FE1FA7B
-	for <e@80x24.org>; Mon, 19 Jun 2017 16:11:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ABA411FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 16:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751656AbdFSQK7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 12:10:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44582 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752170AbdFSQK6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 12:10:58 -0400
-Received: (qmail 10433 invoked by uid 109); 19 Jun 2017 16:05:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 19 Jun 2017 16:05:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29047 invoked by uid 111); 19 Jun 2017 16:10:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 19 Jun 2017 12:10:56 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Jun 2017 12:10:51 -0400
-Date:   Mon, 19 Jun 2017 12:10:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Liam Beguin <liambeguin@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v5 08/10] rebase -i: skip unnecessary picks using the
- rebase--helper
-Message-ID: <20170619161051.silyrlwrnjjspoxe@sigill.intra.peff.net>
-References: <cover.1497444257.git.johannes.schindelin@gmx.de>
- <72bbfcae2abcb14f6b1288051a244faadbee29e0.1497444257.git.johannes.schindelin@gmx.de>
- <a12767b9-a947-e0a2-fc82-fc25992fd0d1@gmail.com>
- <alpine.DEB.2.21.1.1706161551030.4200@virtualbox>
- <529f6cc7-ab2b-72bb-bc51-f4cca4e98652@gmail.com>
- <alpine.DEB.2.21.1.1706191127450.57822@virtualbox>
+        id S1751166AbdFSQOq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 12:14:46 -0400
+Received: from washoe.dartmouth.edu ([129.170.30.229]:45807 "EHLO
+        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751119AbdFSQOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 12:14:44 -0400
+X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Jun 2017 12:14:43 EDT
+Received: from hopa.kiewit.dartmouth.edu ([129.170.31.151] helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.80)
+        (envelope-from <yoh@onerussian.com>)
+        id 1dMz5O-0003nz-31; Mon, 19 Jun 2017 11:59:31 -0400
+Date:   Mon, 19 Jun 2017 11:59:24 -0400
+From:   Yaroslav Halchenko <yoh@onerussian.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Message-ID: <20170619155924.7ra2vwvaelr2yj2v@hopa.kiewit.dartmouth.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1706191127450.57822@virtualbox>
+X-URL:  http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 129.170.31.151
+X-SA-Exim-Rcpt-To: git@vger.kernel.org, sbeller@google.com
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: in case you want a use-case with lots of submodules
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 19, 2017 at 11:45:50AM +0200, Johannes Schindelin wrote:
+Hi All,
 
-> The reason for this suggestion is that one of the revision machinery's
-> implementation details is an ugly little semi-secret: the pretty-printing
-> machinery uses a global state, and that is why we need the "pretty_given"
-> flag in the first place.
+On a recent trip I've listened to the git minutes podcast episode and
+got excited to hear  Stefan Beller (CCed just in case) describing
+ongoing work on submodules mechanism.  I got excited, since e.g.
+performance improvements would be of great benefit to us too.
 
-I think that's mis-stating Junio's complaint. The point is not the
-pretty_given flag itself, which we know about and can work around. The
-point is that we don't know what other similar problems we have or will
-have due to future changes in the revision code.
+In our project, http://datalad.org, git submodules is the basic
+mechanism to bring multiple "datasets" (mix of git and git-annex'ed
+repositories)  under the same roof so we could non-ambiguously
+version them all at any level.
 
-In other words, there are two APIs: the one where C code manipulates
-rev_info directly, and the one where revision.c responds to string
-arguments. From a maintenance perspective, it is easy for somebody make
-a change that works for the latter but not the former.
+http://datasets.datalad.org ATM provides quite a sizeable (ATM 370
+repositories, up to 4 levels deep) hierarchy of git/git-annex
+repositories all tied together via git submodules mechanism.  And as the
+collection grows, interactions with it become slower, so additional
+options (such as --ignore-submodules=dirty  to status) become our
+friends.
 
-I do agree that the lack of compile-time safety for obvious mistakes
-like "--pertty" is a downside, though. On the other hand, there are
-strong run-time checks there, so the tests would catch it.
+So I thought to share this as a use-case happen you need more
+motivation or just a real-case test-bed for your work.  And thank
+you again for making Git even Greater.
 
-I do not have a strong opinion myself in either direction.
+P.S. Please CCme in your replies (if any), I am not on the list
 
--Peff
+With best regards,
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
