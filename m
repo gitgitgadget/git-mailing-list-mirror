@@ -2,97 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EE5A20282
-	for <e@80x24.org>; Mon, 19 Jun 2017 09:52:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 982BE1FA7B
+	for <e@80x24.org>; Mon, 19 Jun 2017 12:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752176AbdFSJwg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 05:52:36 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:54563 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753906AbdFSJwe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 05:52:34 -0400
-Received: from [192.168.2.201] ([92.22.42.39])
-        by smtp.talktalk.net with SMTP
-        id MtMGdJY62HGLwMtMGdUxAG; Mon, 19 Jun 2017 10:52:33 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1497865953; bh=GQI40VuGVR+6U2oNe7OL10dbzEIpbLTfOkE6AMLxncQ=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=BOB9KO1pN4kB57rpFISF6Uo8Jmr4C1kBtEMoa8rPul8rfY8a6fUq8FzstQzhPBfMv
-         W6KJr6xiUB0fVR1BTmbAR2ebMKvYcc7fXzZPpE+Yhdc5K0c9xxWkLqspfL0EzjcUHk
-         s2gr/vu90VKg4GGw/YtxPw09K523LTjeAkFh5ZKs=
-X-Originating-IP: [92.22.42.39]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
- a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
- a=nN7BH9HXAAAA:8 a=evINK-nbAAAA:8 a=HynW4SlSJommDz6qhnMA:9 a=QEXdDO2ut3YA:10
- a=ezPG0ZpnnpEA:10 a=UF-tvkePCJwA:10 a=SHUmGpGg8TAA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/3] Add regression tests for rectent rebase -i fixes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
- <20170614102427.5220-1-phillip.wood@talktalk.net>
- <xmqqshj0yhq1.fsf@gitster.mtv.corp.google.com>
- <xmqqk24cygvm.fsf@gitster.mtv.corp.google.com>
- <xmqqfuf0ygmu.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <0013aa76-d743-e002-72b6-68e1a567fdbc@talktalk.net>
-Date:   Mon, 19 Jun 2017 10:52:33 +0100
+        id S1752415AbdFSMIj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 08:08:39 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:37857 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751054AbdFSMIi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 08:08:38 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout08 with smtp
+        id ac8b1v0041keHif01c8cda; Mon, 19 Jun 2017 13:08:36 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=FLJr/6gs c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=EBOSESyhAAAA:8 a=M9-LbYC3As7KQQK61nEA:9
+ a=QEXdDO2ut3YA:10 a=6kGIvZw6iX1k4Y-7sg4_:22 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2 1/3] config: create a function to format section
+ headers
+To:     Sahil Dua <sahildua2305@gmail.com>, git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <0102015ca23f0488-7423db93-b65f-4214-8221-af6a1bb4c2e5-000000@eu-west-1.amazonses.com>
+ <1497820591-93434-1-git-send-email-sahildua2305@gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <087c8d6e-10f0-2c1f-1974-a97f4f685288@ramsayjones.plus.com>
+Date:   Mon, 19 Jun 2017 13:08:35 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.1.1
 MIME-Version: 1.0
-In-Reply-To: <xmqqfuf0ygmu.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1497820591-93434-1-git-send-email-sahildua2305@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfAK4HZXKmnLNlq4bsuZiqEUg5t0tlClMbB5TWqAEPlouYeVyisvFiUHrkpqhxQddFP0yfEycnP/OK6pRzCM6Q/nuWJZlGuOVn4eF6PnRv7pU9Dp2Qgiq
- /zswTvpUuV32M7Zytz/IXgrRkvFxu/lgg/GNQPZ/zfyPshhjI5Yz09UU/7qBlGNGz88SRESCG+vUIshq4/SUUUBuotGnAaGJjXGD5LE6ltzXHLqHW7gJzsCA
- S5wZXTt8UICXqal4ZlRRo5cj2N/xshG3Gz3FRYL3fKNiyZyA9XQmBXs4+ObzUWDqpghsxaRsIzqhU+oyyy6oKg==
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 16/06/17 00:29, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Phillip Wood <phillip.wood@talktalk.net> writes:
->>>
->>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>>>
->>>> I've revised the second two tests as Johannes suggested to drop the
->>>> sed script. The first one is unchanged.
->>>>
->>>> Phillip Wood (3):
->>>>   rebase -i: Add test for reflog message
->>>>   rebase: Add regression tests for console output
->>>>   rebase: Add more regression tests for console output
->>>>
->>>>  t/t3404-rebase-interactive.sh |   7 +++
->>>>  t/t3420-rebase-autostash.sh   | 138 ++++++++++++++++++++++++++++++++++++++++--
->>>>  2 files changed, 141 insertions(+), 4 deletions(-)
->>>
->>> Thanks (and thanks for Dscho for reading it over).
->>>
->>> Unfortunately this breaks unless your shell is bash (I didn't have
->>> time to look further into it), i.e. "make SHELL_PATH=/bin/dash test"
->>
->> This is the bash-ism that broke it, I think.
->>
->>     create_expected_success_interactive() {
->>             cr=$'\r' &&
->>             cat >expected <<-EOF
 
-Sorry about that, for some reason I thought $' was in the posix shell
-standard but it's not. I'll redo the patches with the changes Johannes
-suggested.
+
+On 18/06/17 22:16, Sahil Dua wrote:
+> Factor out the logic which creates section headers in the config file,
+> e.g. the 'branch.foo' key will be turned into '[branch "foo"]'.
+> 
+> This introduces no function changes, but is needed for a later change
+> which adds support for copying branch sections in the config file.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+
+Adding my SOB isn't really appropriate here - I only made a very
+very minor contribution. At _most_ you might consider 'Helped-by:',
+but even that would probably be overkill. ;-)
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
+
+> Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
+> ---
+>  config.c | 13 +++++++++++--
+>  1 file changed, 11 insertions(+), 2 deletions(-)
+> 
+> diff --git a/config.c b/config.c
+> index 34a139c..32fd3c8 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -2169,10 +2169,10 @@ static int write_error(const char *filename)
+>  	return 4;
+>  }
+>  
+> -static int store_write_section(int fd, const char *key)
+> +static struct strbuf store_create_section(const char *key)
+>  {
+>  	const char *dot;
+> -	int i, success;
+> +	int i;
+>  	struct strbuf sb = STRBUF_INIT;
+>  
+>  	dot = memchr(key, '.', store.baselen);
+> @@ -2188,6 +2188,15 @@ static int store_write_section(int fd, const char *key)
+>  		strbuf_addf(&sb, "[%.*s]\n", store.baselen, key);
+>  	}
+>  
+> +	return sb;
+> +}
+> +
+> +static int store_write_section(int fd, const char *key)
+> +{
+> +	int success;
+> +
+> +	struct strbuf sb = store_create_section(key);
+> +
+>  	success = write_in_full(fd, sb.buf, sb.len) == sb.len;
+>  	strbuf_release(&sb);
+>  
+> 
