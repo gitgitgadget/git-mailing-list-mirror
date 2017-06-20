@@ -6,54 +6,54 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FD231FA7B
-	for <e@80x24.org>; Tue, 20 Jun 2017 02:49:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C7DC1FA7B
+	for <e@80x24.org>; Tue, 20 Jun 2017 02:49:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751963AbdFTCtb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 22:49:31 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:33828 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751640AbdFTCsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 22:48:46 -0400
-Received: by mail-pf0-f179.google.com with SMTP id s66so62711260pfs.1
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 19:48:41 -0700 (PDT)
+        id S1751042AbdFTCs3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 22:48:29 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35007 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750999AbdFTCs1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 22:48:27 -0400
+Received: by mail-pg0-f41.google.com with SMTP id 132so22940278pgb.2
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 19:48:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0Lj0OdFZRjXKttXF086iMB6tPRl13lD0Im3HYn2bLPA=;
-        b=NtSOaI2zA1voOAAPbbITOqE/NTnCtVPnPUEyE0njMzeYaEYks2UXolyJhrZueEgwJI
-         KZwpFeWHKp33nfa2NsvwXwqTHley02crPcWqOwrXDmvrfU6b+nOs1sqxxe4fnG4IUXW6
-         RqYsStU4UN7x9yV5KJmpeybL768/ZbxJ/v2Z9ZygHJMSPhIw/vT8yUIA+yvVMtWbGwh9
-         hW5CnD75yAQcjQFBf9bKgzyf4DsBSNYuurU5nepEkBjy6GquVvXPYLNnaKgCNj+Tigu4
-         MhJN7uE4rK1Lzunb1WBjVPmJBQ10mKJlvJDnxZ5SthP7wXdJGdM4fv83MOc2TdP3YBP7
-         L9uA==
+        bh=JDcybFjxc0T/4dojFqcQZbqNYq22S5CI7HusdCP9fbE=;
+        b=KEPI0lwPW/MRa5Js221bcgtflsdAoBwQnKr7DCa1Cnb9teBdl3Sb8duBodNhdwzHZ3
+         ZAok7TPXHCXOuKRpNj/M/3oLQ+2ciyraXxTyXhLkjaL2H3ldRg3pXJnMeQ19onj9s1ds
+         LUXfXi/gpFrMUh0VARsP1tVFp55DjiiSE6BoOb8TMv+oVYIKaSBjrLsCdkrUGsPriNta
+         DJZ3H+VYurCBI1uPhmddnulkpNZ5LxJ+E3TdZdvoi2FWT7IXYN/i46GFC4RjH/Blw3DT
+         mtlZbdr8WwgfNF0rR5d2dqtNbNV7VIe+U0FnqC4HALB9wxnJlqemkckvvETAE9b7JoeR
+         qbnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0Lj0OdFZRjXKttXF086iMB6tPRl13lD0Im3HYn2bLPA=;
-        b=LT1shn4oV4w8UKrAICFVJIgwXkPf7DAFGCcmSu6SkIjgL6OWVHmeCG2cxZo6EPBZrV
-         7hXt48qyAACQEDodliW4V3Blog7Eo43HOiCv4Hvzm50//g6s2eoLV6b1QF5rntrurcJQ
-         C0mMIT7fQm7zbHYBR4WP6KIIDZAbXHwLZ8qiN+fMjTxq3bC1mpgP3NvV7nemlvVgvpTM
-         5lLeHq1oI8Wkyd2tlHze82vyt+uf2V2dD9HyL/7fL39FBR87zYvrUoBgAseUXkW2zm7D
-         68u4gjWIh6Mv4ZwP/NDZ0YVTHzjOhteuM6j40qZuH0NKkxiJin/cSiWYvu+2id5CeEz2
-         3lcA==
-X-Gm-Message-State: AKS2vOzBulCcEYAjwWFKbGWUZ3sVZN+qPzRSwcZ0PfqurPiL4dtz4jxa
-        q9oU6M4pWbx/XrU6
-X-Received: by 10.98.215.23 with SMTP id b23mr27615777pfh.95.1497926920580;
-        Mon, 19 Jun 2017 19:48:40 -0700 (PDT)
+        bh=JDcybFjxc0T/4dojFqcQZbqNYq22S5CI7HusdCP9fbE=;
+        b=G8otWdDGHhHCTbgogToB3qEAA8us/00ksqS61Nk3UwS5/BAWFLT6a1PPwG5kCxphRj
+         8w7NhSqzEdDtQuyVDYnk9paM/EdbHUmA0e3A9pNCoMmkl04TykoS2JSzpjAwJsiOEMGq
+         9bTuLG0IPu48wlDw2m69rajafsyQPBKkt82wZb2CH7IvDLRHm9rEnTNJ80tlVrs/z/l5
+         rCc4KBj2kqW8aJqXmUQ4paPeEFO/YSB/JYuvYE1JEsvnLI8BaD7DV1zubQTIhceYwf8j
+         fRje9GvXgsRbnInRLftI2TKvZWXFoY3WlWcvLUtSL3Y/LMcUDYzobETTXZ0Rz0FvTKIp
+         8h9A==
+X-Gm-Message-State: AKS2vOz6iLhv6/brfXkitCH89yjnXh9+U1sSN0uI3HTlziFNLduXELXn
+        f/H1CzoVRwFmFPKO
+X-Received: by 10.84.175.65 with SMTP id s59mr32756585plb.20.1497926906630;
+        Mon, 19 Jun 2017 19:48:26 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:bc0c:b118:3a9a:5fd4])
-        by smtp.gmail.com with ESMTPSA id g78sm21897115pfb.122.2017.06.19.19.48.39
+        by smtp.gmail.com with ESMTPSA id u1sm22671842pgq.53.2017.06.19.19.48.25
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 19 Jun 2017 19:48:39 -0700 (PDT)
+        Mon, 19 Jun 2017 19:48:26 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, mhagger@alum.mit.edu,
         peff@peff.net, philipoakley@iee.org
-Subject: [PATCH 13/26] diff.c: emit_diff_symbol learns about DIFF_SYMBOL_BINARY_FILES
-Date:   Mon, 19 Jun 2017 19:48:03 -0700
-Message-Id: <20170620024816.20021-14-sbeller@google.com>
+Subject: [PATCH 01/26] diff.c: readability fix
+Date:   Mon, 19 Jun 2017 19:47:51 -0700
+Message-Id: <20170620024816.20021-2-sbeller@google.com>
 X-Mailer: git-send-email 2.12.2.575.gb14f27f917
 In-Reply-To: <20170620024816.20021-1-sbeller@google.com>
 References: <CAGZ79kaqjQYmkt77kk5m=fdBfbZAvwd0YhhT7=O5b-FkQmDfHg@mail.gmail.com>
@@ -63,71 +63,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+We already have dereferenced 'p->two' into a local variable 'two'.
+Use that.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ diff.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 95f11ea86f..e56962b844 100644
+index 74283d9001..3f5bf8b5a4 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -572,6 +572,7 @@ enum diff_symbol {
- 	DIFF_SYMBOL_WORDS,
- 	DIFF_SYMBOL_FILEPAIR,
- 	DIFF_SYMBOL_HEADER,
-+	DIFF_SYMBOL_BINARY_FILES,
- };
- /*
-  * Flags for content lines:
-@@ -689,6 +690,10 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
- 	case DIFF_SYMBOL_HEADER:
- 		fprintf(o->file, "%s", line);
- 		break;
-+	case DIFF_SYMBOL_BINARY_FILES:
-+		fprintf(o->file, "%sBinary files %s differ\n",
-+			diff_line_prefix(o), line);
-+		break;
- 	default:
- 		die("BUG: unknown diff symbol");
- 	}
-@@ -2537,6 +2542,7 @@ static void builtin_diff(const char *name_a,
- 	} else if (!DIFF_OPT_TST(o, TEXT) &&
- 	    ( (!textconv_one && diff_filespec_is_binary(one)) ||
- 	      (!textconv_two && diff_filespec_is_binary(two)) )) {
-+		struct strbuf sb = STRBUF_INIT;
- 		if (!one->data && !two->data &&
- 		    S_ISREG(one->mode) && S_ISREG(two->mode) &&
- 		    !DIFF_OPT_TST(o, BINARY)) {
-@@ -2549,8 +2555,10 @@ static void builtin_diff(const char *name_a,
- 			}
- 			emit_diff_symbol(o, DIFF_SYMBOL_HEADER,
- 					 header.buf, header.len, 0);
--			fprintf(o->file, "%sBinary files %s and %s differ\n",
--				line_prefix, lbl[0], lbl[1]);
-+			strbuf_addf(&sb, "%s and %s", lbl[0], lbl[1]);
-+			emit_diff_symbol(o, DIFF_SYMBOL_BINARY_FILES,
-+					 sb.buf, sb.len, 0);
-+			strbuf_release(&sb);
- 			goto free_ab_and_return;
- 		}
- 		if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
-@@ -2567,9 +2575,12 @@ static void builtin_diff(const char *name_a,
- 		strbuf_reset(&header);
- 		if (DIFF_OPT_TST(o, BINARY))
- 			emit_binary_diff(o->file, &mf1, &mf2, line_prefix);
--		else
--			fprintf(o->file, "%sBinary files %s and %s differ\n",
--				line_prefix, lbl[0], lbl[1]);
-+		else {
-+			strbuf_addf(&sb, "%s and %s", lbl[0], lbl[1]);
-+			emit_diff_symbol(o, DIFF_SYMBOL_BINARY_FILES,
-+					 sb.buf, sb.len, 0);
-+			strbuf_release(&sb);
-+		}
- 		o->found_changes = 1;
- 	} else {
- 		/* Crazy xdl interfaces.. */
+@@ -3283,8 +3283,8 @@ static void run_diff(struct diff_filepair *p, struct diff_options *o)
+ 	const char *other;
+ 	const char *attr_path;
+ 
+-	name  = p->one->path;
+-	other = (strcmp(name, p->two->path) ? p->two->path : NULL);
++	name  = one->path;
++	other = (strcmp(name, two->path) ? two->path : NULL);
+ 	attr_path = name;
+ 	if (o->prefix_length)
+ 		strip_prefix(o->prefix_length, &name, &other);
 -- 
 2.12.2.575.gb14f27f917
 
