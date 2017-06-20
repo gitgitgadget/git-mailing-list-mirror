@@ -2,96 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AD6A20282
-	for <e@80x24.org>; Tue, 20 Jun 2017 13:46:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 910A520282
+	for <e@80x24.org>; Tue, 20 Jun 2017 13:48:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752538AbdFTNqM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 09:46:12 -0400
-Received: from mail-ua0-f169.google.com ([209.85.217.169]:35058 "EHLO
-        mail-ua0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751098AbdFTNqL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 09:46:11 -0400
-Received: by mail-ua0-f169.google.com with SMTP id j53so67925955uaa.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 06:46:11 -0700 (PDT)
+        id S1751919AbdFTNss (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 09:48:48 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:33923 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751590AbdFTNsq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 09:48:46 -0400
+Received: by mail-io0-f180.google.com with SMTP id i7so84918670ioe.1
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 06:48:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=7bUfsd2xaKE7J0WGef9hI2A6hUkRwXXVJyLa/pxa6MI=;
-        b=uhKdWOX4yOKd6rEJysfWtLy5lyFxxbYsc9Py5j5BHUz+AZg4jUlA/H/HOAXDcs2NdI
-         IMWMP2pBaCF5JXYveGT3/0OEOCCrHBpzC4iGk8Y1mQBMBWxgAipaMfz+3XqeO5srW/SF
-         ugOT77TIUONAaJELI1mt5/7UKgY2wZ2YnaCW2w61xxpzNOqXKigNFBQb470YINu2wUpc
-         xp+NBCqFGLQfK61/4GWr6efXVFhrXugesafGBvfP+YEaN8dgRM59ecVZS6cDZW4whALu
-         qilpyXp90H/EdaxvRpjBFfrXguCKLmpMDWusdBRS50yejsPONDnVg7XV6OS7pztf3+yd
-         BKSA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LGjr2NjIYpQNraLJBHW/hm6qf3W+IHYri1HPEXBTBB8=;
+        b=M7Lk+LJMVAh+8VA6zbSj1bmZBqviUPxiqzgNv4/mAM/5i7m4qWJoZS9m0y1x8bCQex
+         OXNqh4ooqKMyTznrapxqxk6XDa/+MIt158DWLK/4CLf2rkulbLsySyb9qqwnYLL3CRnS
+         9R07u+YB3dNm9gHS4UOW4mMnA7lte9foKFFsuwuJg1zSv+WtqTA31Q33nQfOelEF8S2B
+         7KUN/gYMthNTiHWq8Jvi14e0s8PBj1uMWAzq8jGSbOpMNF9XdbRpMlSYjM3+mq0QtslY
+         VDTfpRDzeUuHVWtnLASo/tq4LznafWMQXWhFZoc8HcMVpcW5wdc2PxiPYlVFkaQIbRdE
+         3LyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=7bUfsd2xaKE7J0WGef9hI2A6hUkRwXXVJyLa/pxa6MI=;
-        b=k7PdopvxMNCOxPCW7glTcREmKqcw62Kt8+uzTVRcasB8svyqPcqN1+cj5JvkrpeP4M
-         kajU3hpBhou2X7uy0z6uhmt/uJ5I9zmMsNpi71/Aux2zgSxaZTQ11gLgKvNz20nqFe2C
-         Pi8aJrDAJQ0/Fgh3cT2s5bjxC0Xu0e6YFo2R+Pu7+iYq+/PIS8GX+MurXQP3WnHm7Jd5
-         u1AvGarhpa9kwaQYmtxbxAJgBrLxTUrclKMHi49a8COaL+y1b63c3o6mPZchB3BXnCU8
-         LKF06CLZ+SWuFI4nRsg5jXZFgdyayyBYm7enNN+RWAaXh4IheFHWkUMOmRIb1m3rfIBH
-         x5iw==
-X-Gm-Message-State: AKS2vOxkTsS6O83KGhIK+hEba3/XBQUIXgf3CvbWdPGX7bT8abGjQXCI
-        GnH4pQ3TBJTpWCjufdvhRsNolQOE5Q==
-X-Received: by 10.176.2.203 with SMTP id 69mr11235162uah.36.1497966370747;
- Tue, 20 Jun 2017 06:46:10 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LGjr2NjIYpQNraLJBHW/hm6qf3W+IHYri1HPEXBTBB8=;
+        b=EjzBb4SLQuEpNzzDlEOGJMOdvcA4x7BbAXuffMWAW1jGKbVmls+dyPVUbqBOgRktNs
+         ltv+WRLTKtkiTLutPOLVgLbWEwH4JM0Czx+xGEOxEeIh6AhPuaj2kCPQpcCm+yytQXy3
+         tjXyyYrj3L1zIBzccAnFMT6JIynIzmSyOpjL8kgd5yOpbzr88OoWttGNRizuLRyyzXVB
+         6j5XCDUQULaRiyONez8BW8yQ4fpS7kJUf06nJg8I7ovMAPLh/BFodq+BQ5cQp31Mcpaa
+         9RGAUlXKCc9EoFHDBM6tpWrYEsErB9Volob7vl4hezu9vWOtssXtRwuxgWw0FRNGdrN5
+         nDwg==
+X-Gm-Message-State: AKS2vOw24ixqTnqXwx4R0B9JEZLCPRN1HiwKzAbZdiNW0GVZm0C/EYWG
+        97VErDH0cauv6EMNzQ4jh45TSHO8MeXz
+X-Received: by 10.107.145.86 with SMTP id t83mr30782914iod.129.1497966525114;
+ Tue, 20 Jun 2017 06:48:45 -0700 (PDT)
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.176.85.157 with HTTP; Tue, 20 Jun 2017 06:46:10 -0700 (PDT)
-In-Reply-To: <20170619205636.7adzgolilpfch3ux@sigill.intra.peff.net>
-References: <CAHd499C8x_zWJyRNXO-410gxudk897-okJaA3uOPYr38QNHjpA@mail.gmail.com>
- <20170619205636.7adzgolilpfch3ux@sigill.intra.peff.net>
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Tue, 20 Jun 2017 08:46:10 -0500
-X-Google-Sender-Auth: T-fL1gB7PJcGxEJXgVClZQ3NTLM
-Message-ID: <CAHd499Ckn4QQp4s3kO61a4wRxopu7rywPOpNXJ=_zmHffp0d1Q@mail.gmail.com>
-Subject: Re: Better usability of stash refs
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git <git@vger.kernel.org>
+Received: by 10.107.40.70 with HTTP; Tue, 20 Jun 2017 06:48:44 -0700 (PDT)
+In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
+References: <20170620075523.26961-1-chriscool@tuxfamily.org>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 20 Jun 2017 15:48:44 +0200
+Message-ID: <CAP8UFD2S21er8U8KA6MBfu5uES5iNd8zV0=wcVNtAbKv5wVpuQ@mail.gmail.com>
+Subject: Re: [RFC/PATCH v4 00/49] Add initial experimental external ODB support
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 19, 2017 at 3:56 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jun 19, 2017 at 03:32:54PM -0500, Robert Dailey wrote:
+On Tue, Jun 20, 2017 at 9:54 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
 >
->> To drop a stash, I have to do this (example):
->>
->> $ git stash drop stash@{3}
->>
->> Using the full "stash@{N}" seems superfluous since the documentation
->> states it must be a stash in the first place. It would make more sense
->> (and be quicker to type) to do:
->>
->> $ git stash drop 3
->>
->> Is there a trick I can use to make this shorthand possible? I thought
->> about creating a "s" script for "stash" that intercepted the
->> parameters for only a couple of stash sub-commands and created the
->> ref, but that seems a lot of work.
->>
->> Any productivity tips here? Thanks in advance.
+> Future work
+> ~~~~~~~~~~~
 >
-> Junio mentioned that this is already possible. I suspect the problem may
-> be that your Git is not recent enough. It was added in a56c8f5aa (stash:
-> allow stashes to be referenced by index only, 2016-10-24), which is in
-> v2.11.0.
+> First sorry about the state of this patch series, it is not as clean
+> as I would have liked, butI think it is interesting to get feedback
+> from the mailing list at this point, because the previous RFC was sent
+> a long time ago and a lot of things changed.
 >
-> -Peff
+> So a big part of the future work will be about cleaning this patch series.
+>
+> Other things I think I am going to do:
+>
+>   -
 
-Thanks guys. Actually I'm running 2.13, I just haven't tried it since
-way before 2.11. I always assumed it wasn't working like I expected
-since last time I tried it. Yesterday I just happened to remember that
-this would be nice to have, so I wrote the email but didn't bother
-testing it on the newest version first. Sorry about that.
+Ooops, I had not save my emacs buffer where I wrote this when I sent
+the patch series.
+
+This should have been:
+
+Other things I think I may work on:
+
+  - Remove the "odb.<odbname>.scriptMode" and "odb.<odbname>.command"
+    options and instead have just "odb.<odbname>.scriptCommand" and
+    "odb.<odbname>.subprocessCommand".
+
+  - Use capabilities instead of "odb.<odbname>.fetchKind" to decide
+    which kind of "get" will be used.
+
+  - Better test all the combinations of the above modes with and
+    without "have" and "put" instructions.
+
+  - Maybe also have different kinds of "put" so that Git could pass
+    either a git object a plain object or ask the helper to retreive
+    it directly from Git's object database.
+
+  - Maybe add an "init" instruction as the script mode has something
+    like this called "get_cap" and it would help the sub-process mode
+    too, as it makes it possible for Git to know the capabilities
+    before trying to send any instruction (that might not be supported
+    by the helper). The "init" instruction would be the only required
+    instruction for any helper to implement.
+
+  - Add more long running tests and improve tests in general.
