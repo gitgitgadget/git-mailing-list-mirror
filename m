@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0112520401
-	for <e@80x24.org>; Tue, 20 Jun 2017 07:58:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98B7E20401
+	for <e@80x24.org>; Tue, 20 Jun 2017 07:58:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752121AbdFTH6N (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 03:58:13 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35746 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752060AbdFTH4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 03:56:09 -0400
-Received: by mail-wm0-f65.google.com with SMTP id d64so21283790wmf.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:08 -0700 (PDT)
+        id S1752019AbdFTH4F (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 03:56:05 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:32887 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751819AbdFTH4B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 03:56:01 -0400
+Received: by mail-wr0-f194.google.com with SMTP id x23so16334607wrb.0
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MSDljYQGfq7lR5+KlvtRunglaalbBai8QxNQ+QRaIxU=;
-        b=G25Zlt25xwJGgcqKtOKW/ELrTZf/7hSLktnRRY5R46LQdbBoafZRrBY5AoZcddDOo5
-         LVW95rnLi8Y9uA/o6AYsO7ItGoeBZo/xsnApCfHISEQo0xxAYI+qAYlxAe68xWGpV2q0
-         BPo3839YYTpkUCtb6g4TC+W3qJ1rcxN/XBPod0dwcVNMeNdyGO/DED262wYQNj47ZNfC
-         dhnr/jiRUVOcg4kkaIYgCyUdtFimaZmJId/aYIB67W5e6U2wS3nRIwvlqvh2R2aMpdub
-         /kWt3tJavK+gOfnN0zoENTlyRKrGFuM8UQG/lw80W98a3sIT5iNlXUP8bmztkPclAgn2
-         xsZA==
+        bh=Xpw1Z74VDnWX4mSsl4gYaF+mxVbxBdzxx0jpO2iLJEM=;
+        b=uIXx0TVuo1X9ZvOuG9s0khyNU+vrN/+Bu6fft1CwXrKyJSQZjWjiYNiCLWSPjPO1/b
+         +dr3bwYJQU7LHI7A136s20gfY5qDO8dgvu2wFOPWmOK2EUHLfQ6oVRX5ZEJN/gdHK8fO
+         vL+1cjrsTPy2hPJMXig371MyJpOFIvMcvHz3f7gWKPv5/cLbdeRgOsJy6c+kPZO23Dbe
+         st/d++Je7xALI+RAdu/BwQ3XhV3s7ZPCTcHOUXWiOYzMt1yv2bt/8lzyU0+5FqD47DSB
+         NjQJlP+jrfSWHcosJDroOmX8LL6BrMXWYCYHOiGIVbo2KXFIzeUVfxZCEmOw2uXU97b5
+         deeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=MSDljYQGfq7lR5+KlvtRunglaalbBai8QxNQ+QRaIxU=;
-        b=bzsWMvxNg+78pCK4CzKW/7pM9Rl3JAlCgs7ErE2f8c/aGk1MFAQEOh042Zfav9UL8a
-         7dgOgjGq3fXVQN79vZ/m0QAYecCH1mD8uuSyXaQUuEaklfM2BxZiAA9+0J0QtV6jkZoS
-         03QlTA6hHh3eeUfsb9jncPCETa2cRv99BdLBjr/yKTG2RAjyYdzhtROm0vXE8X2q2009
-         WCyWCAnIcUgYb38zmTdtsUBeWOzKIXIKatFgoWQsxaDWCfBCl4yScIBigNwWIKxv4ERQ
-         YaXvJEG6j88qmgWSiZ7h/SI7Hlxo8TlleIZXRyJH/6W42God0BN1SHVdi66NTCctqc/M
-         +N+g==
-X-Gm-Message-State: AKS2vOxNi0e3hbrprdJoClicZ36LoUTB4sQGkMN7sL9cOnuXNolZp2Z9
-        uKvlmustNv4mAo1j
-X-Received: by 10.28.107.88 with SMTP id g85mr1659202wmc.42.1497945362789;
-        Tue, 20 Jun 2017 00:56:02 -0700 (PDT)
+        bh=Xpw1Z74VDnWX4mSsl4gYaF+mxVbxBdzxx0jpO2iLJEM=;
+        b=g9Ny2KzcGkBZCUqev3CH9cgv637NDQ5gSyM1ZWJxsKByMJpkyx2iNQjyyoXTq4PZBl
+         Lob1MKD/qzbuHC1m413kf5nT52Exj6vMdd9cvr3dvkx4mKvOB2HshcNNaYRCH1LehHf9
+         ZgJEMUsWWi4QpLacxuIU3iq0n+ENRLkp+JydWaKoYYNQsSujULYeg4gbeeAQIDw+t75+
+         EpZY6X+MnVe2C0emXKkJqhyzdS64vt3urf5G1ZwtZYdE4jEu8g0Jr1DQ8BObCrgGRj2l
+         +mx1biSr0JSXnoYFnDKh+UItFAPnLyRRjMnGKsXtoVpKrWMCkTaF4+rhPBBnTffiCqQz
+         x26Q==
+X-Gm-Message-State: AKS2vOyROQxbzpS85z9CENQW9VIzTFkIh+n0CL+PxT+UnOt6/pO6dJxe
+        zhBPOwaMl65B8WIt
+X-Received: by 10.223.172.231 with SMTP id o94mr19078275wrc.201.1497945359308;
+        Tue, 20 Jun 2017 00:55:59 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.01
+        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.55.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 00:56:02 -0700 (PDT)
+        Tue, 20 Jun 2017 00:55:58 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH v4 10/49] external odb foreach
-Date:   Tue, 20 Jun 2017 09:54:44 +0200
-Message-Id: <20170620075523.26961-11-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v4 08/49] Git/Packet: add capability functions
+Date:   Tue, 20 Jun 2017 09:54:42 +0200
+Message-Id: <20170620075523.26961-9-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.565.gbfcd7a9048
 In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
 References: <20170620075523.26961-1-chriscool@tuxfamily.org>
@@ -67,96 +67,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+Add functions to help read and write capabilities.
+Use these functions in 't/t0021/rot13-filter.pl'.
 
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- external-odb.c | 14 ++++++++++++++
- external-odb.h |  6 ++++++
- odb-helper.c   | 15 +++++++++++++++
- odb-helper.h   |  4 ++++
- 4 files changed, 39 insertions(+)
+ perl/Git/Packet.pm      | 33 +++++++++++++++++++++++++++++++++
+ t/t0021/rot13-filter.pl |  9 ++-------
+ 2 files changed, 35 insertions(+), 7 deletions(-)
 
-diff --git a/external-odb.c b/external-odb.c
-index 1ccfa99a01..42978a3298 100644
---- a/external-odb.c
-+++ b/external-odb.c
-@@ -113,3 +113,17 @@ int external_odb_fetch_object(const unsigned char *sha1)
+diff --git a/perl/Git/Packet.pm b/perl/Git/Packet.pm
+index b0233caf37..4443b67724 100644
+--- a/perl/Git/Packet.pm
++++ b/perl/Git/Packet.pm
+@@ -20,6 +20,9 @@ our @EXPORT = qw(
+ 			packet_txt_write
+ 			packet_flush
+ 			packet_initialize
++			packet_read_capabilities
++			packet_write_capabilities
++			packet_read_and_check_capabilities
+ 		);
+ our @EXPORT_OK = @EXPORT;
  
- 	return -1;
+@@ -83,3 +86,33 @@ sub packet_initialize {
+ 	packet_txt_write( "version=" . $version );
+ 	packet_flush();
  }
 +
-+int external_odb_for_each_object(each_external_object_fn fn, void *data)
-+{
-+	struct odb_helper *o;
-+
-+	external_odb_init();
-+
-+	for (o = helpers; o; o = o->next) {
-+		int r = odb_helper_for_each_object(o, fn, data);
-+		if (r)
-+			return r;
++sub packet_read_capabilities {
++	my @cap;
++	while (1) {
++		my ( $res, $buf ) = packet_bin_read();
++		return ( $res, @cap ) if ( $res != 0 );
++		unless ( $buf =~ s/\n$// ) {
++			die "A non-binary line MUST be terminated by an LF.\n"
++			    . "Received: '$buf'";
++		}
++		die "bad capability buf: '$buf'" unless ( $buf =~ s/capability=// );
++		push @cap, $buf;
 +	}
-+	return 0;
 +}
-diff --git a/external-odb.h b/external-odb.h
-index 2397477684..cea8570a49 100644
---- a/external-odb.h
-+++ b/external-odb.h
-@@ -5,4 +5,10 @@ const char *external_odb_root(void);
- int external_odb_has_object(const unsigned char *sha1);
- int external_odb_fetch_object(const unsigned char *sha1);
- 
-+typedef int (*each_external_object_fn)(const unsigned char *sha1,
-+				       enum object_type type,
-+				       unsigned long size,
-+				       void *data);
-+int external_odb_for_each_object(each_external_object_fn, void *);
 +
- #endif /* EXTERNAL_ODB_H */
-diff --git a/odb-helper.c b/odb-helper.c
-index de5562da9c..d8ef5cbf4b 100644
---- a/odb-helper.c
-+++ b/odb-helper.c
-@@ -243,3 +243,18 @@ int odb_helper_fetch_object(struct odb_helper *o, const unsigned char *sha1,
- 
- 	return 0;
- }
-+
-+int odb_helper_for_each_object(struct odb_helper *o,
-+			       each_external_object_fn fn,
-+			       void *data)
-+{
-+	int i;
-+	for (i = 0; i < o->have_nr; i++) {
-+		struct odb_helper_object *obj = &o->have[i];
-+		int r = fn(obj->sha1, obj->type, obj->size, data);
-+		if (r)
-+			return r;
++sub packet_read_and_check_capabilities {
++	my @local_caps = @_;
++	my @remote_res_caps = packet_read_capabilities();
++	my $res = shift @remote_res_caps;
++	my %remote_caps = map { $_ => 1 } @remote_res_caps;
++	foreach (@local_caps) {
++	    die "'$_' capability not available" unless (exists($remote_caps{$_}));
 +	}
-+
-+	return 0;
++	return $res;
 +}
-diff --git a/odb-helper.h b/odb-helper.h
-index 0f704f9452..8c3916d215 100644
---- a/odb-helper.h
-+++ b/odb-helper.h
-@@ -1,6 +1,8 @@
- #ifndef ODB_HELPER_H
- #define ODB_HELPER_H
- 
-+#include "external-odb.h"
 +
- struct odb_helper {
- 	const char *name;
- 	const char *cmd;
-@@ -21,5 +23,7 @@ struct odb_helper *odb_helper_new(const char *name, int namelen);
- int odb_helper_has_object(struct odb_helper *o, const unsigned char *sha1);
- int odb_helper_fetch_object(struct odb_helper *o, const unsigned char *sha1,
- 			    int fd);
-+int odb_helper_for_each_object(struct odb_helper *o,
-+			       each_external_object_fn, void *);
++sub packet_write_capabilities {
++	packet_txt_write( "capability=" . $_ ) foreach (@_);
++	packet_flush();
++}
+diff --git a/t/t0021/rot13-filter.pl b/t/t0021/rot13-filter.pl
+index 5b05518640..bbfd52619d 100644
+--- a/t/t0021/rot13-filter.pl
++++ b/t/t0021/rot13-filter.pl
+@@ -42,14 +42,9 @@ $debug->flush();
  
- #endif /* ODB_HELPER_H */
+ packet_initialize("git-filter", 2);
+ 
+-( packet_txt_read() eq ( 0, "capability=clean" ) )  || die "bad capability";
+-( packet_txt_read() eq ( 0, "capability=smudge" ) ) || die "bad capability";
+-( packet_bin_read() eq ( 1, "" ) )                  || die "bad capability end";
++packet_read_and_check_capabilities("clean", "smudge");
++packet_write_capabilities(@capabilities);
+ 
+-foreach (@capabilities) {
+-	packet_txt_write( "capability=" . $_ );
+-}
+-packet_flush();
+ print $debug "init handshake complete\n";
+ $debug->flush();
+ 
 -- 
 2.13.1.565.gbfcd7a9048
 
