@@ -2,140 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31EE21FA7B
-	for <e@80x24.org>; Tue, 20 Jun 2017 01:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E9A420D0C
+	for <e@80x24.org>; Tue, 20 Jun 2017 02:12:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752807AbdFTBDl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 21:03:41 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:36135 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752482AbdFTBDi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 21:03:38 -0400
-Received: by mail-pf0-f171.google.com with SMTP id x63so61537115pff.3
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 18:03:38 -0700 (PDT)
+        id S1750930AbdFTCMm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 22:12:42 -0400
+Received: from mail-ot0-f176.google.com ([74.125.82.176]:35246 "EHLO
+        mail-ot0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750846AbdFTCMl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 22:12:41 -0400
+Received: by mail-ot0-f176.google.com with SMTP id u13so66031642otd.2
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 19:12:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=s4kZ5BWiYn4NjfCEwl9xYvxkdcFH+hBG53hbH2qodvY=;
-        b=lnLz4UDTg74zqf7gv7cXQzl/t04ps87mdwFbPbMu6S160tCcuHap/or9gA8X2v39XD
-         wBwH2LbNk0M9e5b/C9YMaQILymN5ovt289rBOff5zOoeD+eeBbkenCCHdOvco2w8HOof
-         td8p82LFBTs1LWWyuRKwHxvwI+L+guaV7dlOKnZzs2z8tHyb1LSYVO5iQNr3HwFmaBn/
-         5LJa7hkvDFKr/u/qLfs7Eq5j4x3Ho9PA4+Un/gxkl8HvcGYu/03VkrAwmVrmMEvcBHu2
-         Trhm/MNOLM/xngwdAimWKzZxWagcSE5M0yBD9tKhsKy+beWeRHQQwTNf239JkpIik959
-         9TQw==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=AvmCRLwYfItjWlZBqQDBZJfzyo9QR3sjEuuQakXkbxk=;
+        b=QdhbXqjOXtNK1qMOOfGndKJNyukvHed/oBOMsWUPsYQQishaQ0ruvzqbo5ydwBHtPk
+         xDuEsl5u6+OI+V5YkL8eLGqG7uQG2kaMk2OVRhuT7IyoVBoh54wNNAxZ/lONWGrpk5n1
+         a+FYd9i0qnUChEag064NpXzcPoxdFNff7NhnYDjrlSOdqpvvRW4IMm8WKBcfk3Jgj/d3
+         xacnpe/j1oy2Dx9yRWeYTjQIMYPaQ0Q8kkiJhqnzkj23KTMzmY5Kyukr2C4KpujL81Ox
+         sOrrE5t+3EW8j3KwXMSjK5T1AU0wx5UBFRd/CImrpYRkmD7uYShiVfHmDCerY1sSwZDL
+         Zufg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=s4kZ5BWiYn4NjfCEwl9xYvxkdcFH+hBG53hbH2qodvY=;
-        b=aamLHCzzK3BWibjzgzYRMfmxGuIMSlUMmGd6l4USYYvcR5V9tpmc888TMb2a4+kNa6
-         APXfy0eLYGPS33iPm9j1rpMqrM60jAY45nHwgWIpD6Q356EbowXgISctM2aSXMKMJVeL
-         zWgnEDf93bWSymcDhPmhAKLkH2iVT2zcFvzoDE9nlDY/4jbSeBy99sow+c7h46Ec95m/
-         KlrxTgavfZ3KVj+YgZDiEOEQE1MV7BnCge9/x2y6s6YgcuSd7GPW1AS1vNQdhQJENmKJ
-         xehmIGeIrmTYbh35JF9zkuRQ2WQ+DrfF5rXFrBIbgRaNIS1h33heqIf6JbD7K/sCzDzn
-         0BLQ==
-X-Gm-Message-State: AKS2vOysal/XzyBr5hATqZgZnfzmsElhMCmd9lcaeHG5DVU36fDwvScd
-        glqhOPve3VYKfdoCi/61cA==
-X-Received: by 10.99.147.19 with SMTP id b19mr25095449pge.154.1497920612360;
-        Mon, 19 Jun 2017 18:03:32 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id l63sm22249819pfc.132.2017.06.19.18.03.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 19 Jun 2017 18:03:31 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
-        peff@peff.net
-Subject: [PATCH v4 7/8] sha1_file: do not access pack if unneeded
-Date:   Mon, 19 Jun 2017 18:03:14 -0700
-Message-Id: <fb656dfeb96e3c69f612fed924d0d9dec592c772.1497920092.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1-goog
-In-Reply-To: <cover.1497920092.git.jonathantanmy@google.com>
-References: <cover.1497920092.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1497920092.git.jonathantanmy@google.com>
-References: <cover.1497035376.git.jonathantanmy@google.com> <cover.1497920092.git.jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=AvmCRLwYfItjWlZBqQDBZJfzyo9QR3sjEuuQakXkbxk=;
+        b=psw9XpSEuhQaKBABFSCoFHY++pX2qe2T5m9nsrv5nqNF1C0nGhBABSj/V9dWFBa5sC
+         a2PvA6TQLVQ3btXu7VRSUPFPVQpd7JR0fCUF0HZAldVNv3tzeJFE/xCUjFPmwovjHEIn
+         j43oNQLdQKZfL+SV6UR2Jdj0/dn8zUZfNYAuzoePK8RgEyzwPAQ5AyADVHL0s6TrxuQs
+         9QpEEwGf3IeJESG06cmjVGDYYwu1jgkTUA6kkS4YjDEsY2vxeE+q/wa0g+uRqm3OzDwz
+         k99XR69A5lfjGoFr3NqS3OLi9dYwvLlA0ZSUqvgTaQmXRh7pG5oVUfywObB1v7X68Sgk
+         Pl4A==
+X-Gm-Message-State: AKS2vOwGlj4mA2xcio4gELc+PZen636dXXWiUS5G10h9SzsURB8xrXhM
+        KjYGy+pqxLWPD/KAxJ5Pk4nTDLrY7zGz
+X-Received: by 10.157.43.10 with SMTP id o10mr4379629otb.73.1497924760867;
+ Mon, 19 Jun 2017 19:12:40 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.157.36.136 with HTTP; Mon, 19 Jun 2017 19:12:20 -0700 (PDT)
+In-Reply-To: <xmqqvanvv9be.fsf@gitster.mtv.corp.google.com>
+References: <20170608005535.13080-1-joel@teichroeb.net> <20170608005535.13080-6-joel@teichroeb.net>
+ <xmqqvanvv9be.fsf@gitster.mtv.corp.google.com>
+From:   Joel Teichroeb <joel@teichroeb.net>
+Date:   Mon, 19 Jun 2017 19:12:20 -0700
+X-Google-Sender-Auth: GD76c6gqm6jISnoQSq4grJvCltY
+Message-ID: <CA+CzEk8+B71RoMeiZukfST-e6Ry+BijkNzHBusHycq2nhh2sPw@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] stash: implement builtin stash
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an option to struct object_info to suppress population of additional
-information about a packed object if unneeded. This allows an
-optimization in which sha1_object_info_extended() does not even need to
-access the pack if no information besides provenance is requested. A
-subsequent patch will make use of this optimization.
+On Fri, Jun 16, 2017 at 3:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Joel Teichroeb <joel@teichroeb.net> writes:
+>> +/*
+>> + * Untracked files are stored by themselves in a parentless commit, for
+>> + * ease of unpacking later.
+>> + */
+>> +static int save_untracked(struct stash_info *info, const char *message,
+>> +             int include_untracked, int include_ignored, const char **argv)
+>> +{
+>> +     struct child_process cp = CHILD_PROCESS_INIT;
+>> +     struct strbuf out = STRBUF_INIT;
+>> +     struct object_id orig_tree;
+>> +     int ret;
+>> +     const char *index_file = get_index_file();
+>> +
+>> +     set_alternate_index_output(stash_index_path);
+>> +     untracked_files(&out, include_untracked, include_ignored, argv);
+>> +
+>> +     cp.git_cmd = 1;
+>> +     argv_array_pushl(&cp.args, "update-index", "-z", "--add", "--remove",
+>> +             "--stdin", NULL);
+>> +     argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s", stash_index_path);
+>> +
+>> +     if (pipe_command(&cp, out.buf, out.len, NULL, 0, NULL, 0)) {
+>> +             strbuf_release(&out);
+>> +             return 1;
+>> +     }
+>> +
+>
+> OK, that's a very straight-forward way of doing this, and as we do
+> not care too much about performance in this initial conversion to C,
+> it is even sensible.  In a later update after this patch lands, you
+> may want to use dir.c's fill_directory() API to find the untracked
+> files and add them yourself internally, without running ls-files (in
+> untracked_files()) or update-index (here) as subprocesses, but that
+> is in the future.  Let's get this round finished.
+>
+>> +     strbuf_reset(&out);
+>> +
+>> +     discard_cache();
+>> +     read_cache_from(stash_index_path);
+>> +
+>> +     write_index_as_tree(orig_tree.hash, &the_index, stash_index_path, 0,NULL);
+>
+> SP before "NULL".
+>
+>> +     discard_cache();
+>> +
+>> +     read_cache_from(stash_index_path);
+>
+> Hmph, what did anybody change in the on-disk stash_index (or
+> contents in the_index) since you read_cache_from()?
+>
+>> +     write_cache_as_tree(info->u_tree.hash, 0, NULL);
+>
+> Then you write exactly the same index contents again, this time to
+> info->u_tree here.  I am not sure why you need to do this twice, and
+> I do not see how orig_tree.hash you wrote earlier is used?
+>
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- cache.h     |  1 +
- sha1_file.c | 17 +++++++++++++----
- streaming.c |  1 +
- 3 files changed, 15 insertions(+), 4 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 7cf2ca466..2e1cc3fe2 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1828,6 +1828,7 @@ struct object_info {
- 	unsigned char *delta_base_sha1;
- 	struct strbuf *typename;
- 	void **contentp;
-+	unsigned populate_u : 1;
- 
- 	/* Response */
- 	enum {
-diff --git a/sha1_file.c b/sha1_file.c
-index 24f7a146e..68e3a3400 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3020,6 +3020,13 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 		}
- 	}
- 
-+	if (!oi->typep && !oi->sizep && !oi->disk_sizep &&
-+	    !oi->delta_base_sha1 && !oi->typename && !oi->contentp &&
-+	    !oi->populate_u) {
-+		oi->whence = OI_PACKED;
-+		return 0;
-+	}
-+
- 	rtype = packed_object_info(e.p, e.offset, oi);
- 	if (rtype < 0) {
- 		mark_bad_packed_object(e.p, real);
-@@ -3028,10 +3035,12 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 		oi->whence = OI_DBCACHED;
- 	} else {
- 		oi->whence = OI_PACKED;
--		oi->u.packed.offset = e.offset;
--		oi->u.packed.pack = e.p;
--		oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
--					 rtype == OBJ_OFS_DELTA);
-+		if (oi->populate_u) {
-+			oi->u.packed.offset = e.offset;
-+			oi->u.packed.pack = e.p;
-+			oi->u.packed.is_delta = (rtype == OBJ_REF_DELTA ||
-+						 rtype == OBJ_OFS_DELTA);
-+		}
- 	}
- 
- 	return 0;
-diff --git a/streaming.c b/streaming.c
-index 9afa66b8b..deebc18a8 100644
---- a/streaming.c
-+++ b/streaming.c
-@@ -113,6 +113,7 @@ static enum input_source istream_source(const unsigned char *sha1,
- 
- 	oi->typep = type;
- 	oi->sizep = &size;
-+	oi->populate_u = 1;
- 	status = sha1_object_info_extended(sha1, oi, 0);
- 	if (status < 0)
- 		return stream_error;
--- 
-2.13.1.611.g7e3b11ae1-goog
-
+I'm not sure I understand what's happening here either. When I was
+writing this, it was essentially a lot of trial and error in order to
+get the index handling correct. Getting rid of any single one of these
+lines makes the test fail. At some point I'd like to redo all the
+index handling parts here, as I think I can do without an additional
+index, but I'd need to make sure the error handling is perfect first.
