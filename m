@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5A8620401
-	for <e@80x24.org>; Tue, 20 Jun 2017 07:56:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B05D820D17
+	for <e@80x24.org>; Tue, 20 Jun 2017 07:56:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752210AbdFTH4n (ORCPT <rfc822;e@80x24.org>);
+        id S1752249AbdFTH4p (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 03:56:45 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:36599 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752198AbdFTH4n (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Jun 2017 03:56:43 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36512 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752187AbdFTH4k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 03:56:40 -0400
-Received: by mail-wm0-f67.google.com with SMTP id d17so21333815wme.3
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:39 -0700 (PDT)
+Received: by mail-wr0-f194.google.com with SMTP id 77so16320048wrb.3
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=52urNxnbi0bCIu2Ea9osSTep9kr1XoEhuhzhlh75cCs=;
-        b=a6jVk6khSvi0Saxq6YvosJtnb7IjX+xQQ2fgtCxtz+e2brJeddJ+819KU+ETVbASbm
-         dfdA6MQ9E6/FX9AF48qtvz8X2hRtmgSZ+tGNUby+t3qjWobQ82lSiIQRYccxTegVjYOE
-         2Ljqn8UWx8QuwLDOJTkBQnLwZHSKblHiM8xMPmQJwwYu1VwpZCkO4pLARf+avwITNuoB
-         E1Z6Nm/GPqaqg8Ey8aJdepCzp+Q6Yrf/9GjQja90e+z5/ly6yw73wFK8oErc5bncIHDD
-         YekDFNlRWzRjIjIV/MPi84HL9OOe2tIAaKQsPQzaPCoLRjKIWob6PoTySYx0EZ6ucDP6
-         keTg==
+        bh=8BBWfuJQ7DSfUDAjn0sWiphnrGRlVGSMIcnDgVenrqk=;
+        b=X3R65JX7dG9bOqoBXmaz3meKkAyVtaXleaD53aUw3+uhDKW3k6i/GUXRhPRgZ/idx9
+         xDvGNGgeivJeL0yVsgoWr0xbzxq8qSc5PyCc6a7URxR+mwoLl/LmLepZzGuwK9bbEeDc
+         e2Q2ypUf4WDCUSfHj5/IX0qzC98ST2TF+lNNhEf3xEGXYZJh9A28KF3ZhpzZoh92Lxlf
+         C4lxNgKHHVgvCvBXav0D4iiIvV7ek3mo99Eo1UeLs7IpZD0T3fKDYhY23XN+3jY6mZl/
+         KeF30QFDwoRY5CdTIp6us+d8OLztd7uv7vDPQjdFmYFFMNOCvJHkthUPWv2Ra+aBTcE2
+         IWPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=52urNxnbi0bCIu2Ea9osSTep9kr1XoEhuhzhlh75cCs=;
-        b=oWtzP+PmGJyYFTCpGxGlq4nAyzgbDeMel4U9rxRoWiinv3Kwi+Tv6mGg6Of6x+m4U4
-         8Y0rUmSvwhaANyGruEMemgWWIhLRhsifS8UZ69fiCmwTln+UyD5BbZV2RBJsZoflaev7
-         WVHBVK6oe27TYJzqfpnQTkRGnqZcUnd3Ydp0Y97c0lTLp/eBPzJ7JkLsnTGRdFDF6+1s
-         IOGrcGRjeGlQSSjXytIfgvUrkjScg8pHHLkCuuby3VPaEvnrDLz/apY5PKOTrqPUYu1R
-         itgcfhUzsc303kwhTJNSIb9jI+itL+Ki10BFYYB70LKBkOeMEydLQQlYKOxijpwYdxI0
-         5brg==
-X-Gm-Message-State: AKS2vOz4PxeKQGaZjpsMvAqCeFP5z9JnaWf7HJeBNuVRla8zp68CCxg5
-        hletd3zwxSc+zfst
-X-Received: by 10.28.1.205 with SMTP id 196mr1734940wmb.100.1497945398410;
-        Tue, 20 Jun 2017 00:56:38 -0700 (PDT)
+        bh=8BBWfuJQ7DSfUDAjn0sWiphnrGRlVGSMIcnDgVenrqk=;
+        b=FYLtYLNYbXSpRjPQ6qozPu5HoZWTeg0D+q6ZLhKf74qUqogMbmj7Imv/3Wq18icaYl
+         3ZVAWzpD/HWranQ0I+u9o8bpiliXWSd9SsYAH/faEDKWniqBjFrVTNr19gdBCTA+DYP5
+         vBru0GM/z2wfsqspMWP0JOehUJOJRTg2GnewNb36zCDVo/OM7+wexoWv++Yo9U1iU5z9
+         6LwjFTX4CeSCtQg9uGpUu7j04+gKT6608gjJdL8JshpaSSuwb34xc6j1A7BIvXOyIjeC
+         xeivdCtx4UYNfYPUm42OgOSMuhT75zGch5Zxl9E2D13eoM5bUuDBb5Q359Drp5hc/nf9
+         cneg==
+X-Gm-Message-State: AKS2vOzG22wqvUTLWclFMvhJfrnH9d8nBqsQR9RgdXgXb7F/5YtQyU5I
+        aOVILhxDm0gMB6wr
+X-Received: by 10.223.161.138 with SMTP id u10mr4940871wru.191.1497945396947;
+        Tue, 20 Jun 2017 00:56:36 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.37
+        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 00:56:37 -0700 (PDT)
+        Tue, 20 Jun 2017 00:56:36 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH v4 38/49] Add t0470 to test passing plain objects
-Date:   Tue, 20 Jun 2017 09:55:12 +0200
-Message-Id: <20170620075523.26961-39-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v4 37/49] odb-helper: add read_packetized_plain_object_to_fd()
+Date:   Tue, 20 Jun 2017 09:55:11 +0200
+Message-Id: <20170620075523.26961-38-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.565.gbfcd7a9048
 In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
 References: <20170620075523.26961-1-chriscool@tuxfamily.org>
@@ -69,240 +69,146 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0470-read-object-http-e-odb.sh | 123 ++++++++++++++++++++++++++++++++++++++
- t/t0470/read-object-plain         |  93 ++++++++++++++++++++++++++++
- 2 files changed, 216 insertions(+)
- create mode 100755 t/t0470-read-object-http-e-odb.sh
- create mode 100755 t/t0470/read-object-plain
+ odb-helper.c | 119 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 118 insertions(+), 1 deletion(-)
 
-diff --git a/t/t0470-read-object-http-e-odb.sh b/t/t0470-read-object-http-e-odb.sh
-new file mode 100755
-index 0000000000..3360a98ec3
---- /dev/null
-+++ b/t/t0470-read-object-http-e-odb.sh
-@@ -0,0 +1,123 @@
-+#!/bin/sh
+diff --git a/odb-helper.c b/odb-helper.c
+index a27208463c..b2d86a7928 100644
+--- a/odb-helper.c
++++ b/odb-helper.c
+@@ -142,6 +142,121 @@ static int check_object_process_error(int err,
+ 	return err;
+ }
+ 
++static struct odb_helper_object *odb_helper_lookup(struct odb_helper *o,
++						   const unsigned char *sha1);
 +
-+test_description='tests for read-object process passing plain objects to an HTTPD server'
++static ssize_t read_packetized_plain_object_to_fd(struct odb_helper *o,
++						  const unsigned char *sha1,
++						  int fd_in, int fd_out)
++{
++	ssize_t total_read = 0;
++	unsigned long total_got = 0;
++	int packet_len;
 +
-+. ./test-lib.sh
++	char hdr[32];
++	int hdrlen;
 +
-+# If we don't specify a port, the current test number will be used
-+# which will not work as it is less than 1024, so it can only be used by root.
-+LIB_HTTPD_PORT=$(expr ${this_test#t} + 12000)
++	int ret = Z_STREAM_END;
++	unsigned char compressed[4096];
++	git_zstream stream;
++	git_SHA_CTX hash;
++	unsigned char real_sha1[20];
 +
-+. "$TEST_DIRECTORY"/lib-httpd.sh
++	off_t size;
++	enum object_type type;
++	const char *s;
++	int pkt_size;
++	char *size_buf;
 +
-+start_httpd apache-e-odb.conf
++	size_buf = packet_read_line(fd_in, &pkt_size);
++	if (!skip_prefix(size_buf, "size=", &s))
++		return error("odb helper '%s' did not send size of plain object", o->name);
++	size = strtoumax(s, NULL, 10);
++	if (!skip_prefix(packet_read_line(fd_in, NULL), "kind=", &s))
++		return error("odb helper '%s' did not send kind of plain object", o->name);
++	/* Check if the object is not available */
++	if (!strcmp(s, "none"))
++		return -1;
++	type = type_from_string_gently(s, strlen(s), 1);
++	if (type < 0)
++		return error("odb helper '%s' sent bad type '%s'", o->name, s);
 +
-+PATH="$PATH:$TEST_DIRECTORY/t0470"
++	/* Set it up */
++	git_deflate_init(&stream, zlib_compression_level);
++	stream.next_out = compressed;
++	stream.avail_out = sizeof(compressed);
++	git_SHA1_Init(&hash);
 +
-+# odb helper script must see this
-+export HTTPD_URL
++	/* First header.. */
++	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", typename(type), size) + 1;
++	stream.next_in = (unsigned char *)hdr;
++	stream.avail_in = hdrlen;
++	while (git_deflate(&stream, 0) == Z_OK)
++		; /* nothing */
++	git_SHA1_Update(&hash, hdr, hdrlen);
 +
-+HELPER="read-object-plain"
++	for (;;) {
++		/* packet_read() writes a '\0' extra byte at the end */
++		char buf[LARGE_PACKET_DATA_MAX + 1];
 +
-+test_expect_success 'setup repo with a root commit' '
-+	test_commit zero
-+'
++		packet_len = packet_read(fd_in, NULL, NULL,
++			buf, LARGE_PACKET_DATA_MAX + 1,
++			PACKET_READ_GENTLE_ON_EOF);
 +
-+test_expect_success 'setup another repo from the first one' '
-+	git init other-repo &&
-+	(cd other-repo &&
-+	 git remote add origin .. &&
-+	 git pull origin master &&
-+	 git checkout master &&
-+	 git log)
-+'
++		if (packet_len <= 0)
++			break;
 +
-+test_expect_success 'setup the helper in the root repo' '
-+	git config odb.magic.command "$HELPER" &&
-+	git config odb.magic.fetchKind "plainObject"
-+'
++		total_got += packet_len;
 +
-+UPLOADFILENAME="hello_apache_upload.txt"
++		/* Then the data itself.. */
++		stream.next_in = (void *)buf;
++		stream.avail_in = packet_len;
++		do {
++			unsigned char *in0 = stream.next_in;
++			ret = git_deflate(&stream, Z_FINISH);
++			git_SHA1_Update(&hash, in0, stream.next_in - in0);
++			write_or_die(fd_out, compressed, stream.next_out - compressed);
++			stream.next_out = compressed;
++			stream.avail_out = sizeof(compressed);
++		} while (ret == Z_OK);
 +
-+UPLOAD_URL="$HTTPD_URL/upload/?sha1=$UPLOADFILENAME&size=123&type=blob"
-+
-+test_expect_success 'can upload a file' '
-+	echo "Hello Apache World!" >hello_to_send.txt &&
-+	echo "How are you?" >>hello_to_send.txt &&
-+	curl --data-binary @hello_to_send.txt --include "$UPLOAD_URL" >out_upload
-+'
-+
-+LIST_URL="$HTTPD_URL/list/"
-+
-+test_expect_success 'can list uploaded files' '
-+	curl --include "$LIST_URL" >out_list &&
-+	grep "$UPLOADFILENAME" out_list
-+'
-+
-+test_expect_success 'can delete uploaded files' '
-+	curl --data "delete" --include "$UPLOAD_URL&delete=1" >out_delete &&
-+	curl --include "$LIST_URL" >out_list2 &&
-+	! grep "$UPLOADFILENAME" out_list2
-+'
-+
-+FILES_DIR="httpd/www/files"
-+
-+test_expect_success 'new blobs are transfered to the http server' '
-+	test_commit one &&
-+	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
-+	echo "$hash1-4-blob" >expected &&
-+	ls "$FILES_DIR" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blobs can be retrieved from the http server' '
-+	git cat-file blob "$hash1" &&
-+	git log -p >expected
-+'
-+
-+test_expect_success 'update other repo from the first one' '
-+	(cd other-repo &&
-+	 git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*" &&
-+	 test_must_fail git cat-file blob "$hash1" &&
-+	 git config odb.magic.command "$HELPER" &&
-+	 git config odb.magic.fetchKind "plainObject" &&
-+	 git cat-file blob "$hash1" &&
-+	 git pull origin master)
-+'
-+
-+test_expect_success 'local clone from the first repo' '
-+	mkdir my-clone &&
-+	(cd my-clone &&
-+	 git clone .. . &&
-+	 git cat-file blob "$hash1")
-+'
-+
-+test_expect_success 'no-local clone from the first repo fails' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 test_must_fail git clone --no-local .. .) &&
-+	rm -rf my-other-clone
-+'
-+
-+test_expect_success 'no-local clone from the first repo with helper succeeds' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 git clone -c odb.magic.command="$HELPER" \
-+		-c odb.magic.plainObjects="true" \
-+		--no-local .. .) &&
-+	rm -rf my-other-clone
-+'
-+
-+test_expect_success 'no-local initial-refspec clone succeeds' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 git config odb.magic.command "$HELPER" &&
-+	 git config odb.magic.fetchKind "plainObject" &&
-+	 git -c odb.magic.command="$HELPER" \
-+		-c odb.magic.plainObjects="true" \
-+		clone --no-local --initial-refspec "refs/odbs/magic/*:refs/odbs/magic/*" .. .)
-+'
-+
-+stop_httpd
-+
-+test_done
-diff --git a/t/t0470/read-object-plain b/t/t0470/read-object-plain
-new file mode 100755
-index 0000000000..bb65ca908a
---- /dev/null
-+++ b/t/t0470/read-object-plain
-@@ -0,0 +1,93 @@
-+#!/usr/bin/perl
-+#
-+
-+use 5.008;
-+use lib (split(/:/, $ENV{GITPERLLIB}));
-+use strict;
-+use warnings;
-+use Git::Packet;
-+use LWP::UserAgent;
-+use HTTP::Request::Common;
-+
-+print STDERR "read-object-plain: starting\n";
-+
-+packet_initialize("git-read-object", 1);
-+
-+print STDERR "read-object-plain: after init\n";
-+
-+packet_read_and_check_capabilities("get", "put");
-+packet_write_capabilities("get", "put");
-+
-+print STDERR "read-object-plain: after reading and writing get capability\n";
-+
-+my $http_url = $ENV{HTTPD_URL};
-+
-+while (1) {
-+	my ($command) = packet_txt_read() =~ /^command=([^=]+)$/;
-+
-+	print STDERR "read-object-plain: command: '$command'\n";
-+
-+	if ( $command eq "get" ) {
-+		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
-+		packet_bin_read();
-+
-+		my $get_url = $http_url . "/list/?sha1=" . $sha1;
-+		print STDERR "read-object-plain: get_url: '$get_url'\n";
-+
-+		my $userAgent = LWP::UserAgent->new();
-+
-+		my $response = $userAgent->get( $get_url );
-+
-+		if ($response->is_error) {
-+		    print STDERR $response->error_as_HTML . "\n";
-+		    packet_txt_write("size=0");
-+		    packet_txt_write("kind=none");	    
-+		    packet_txt_write("status=notfound");
-+		} else {
-+		    print STDERR "content: \n";
-+		    print STDERR $response->content;
-+		    packet_txt_write("size=" . length($response->content));
-+		    packet_txt_write("kind=blob");
-+		    packet_bin_write($response->content);
-+		    packet_flush();
-+		    packet_txt_write("status=success");
-+		}
-+
-+		packet_flush();
-+	} elsif ( $command eq "put" ) {
-+		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
-+		print STDERR "read-object-plain: put sha1: '$sha1'\n";
-+
-+		my ($size) = packet_txt_read() =~ /^size=([0-9]+)$/;
-+		print STDERR "read-object-plain: put size: '$size'\n";
-+
-+		my ($kind) = packet_txt_read() =~ /^kind=(\w+)$/;
-+		print STDERR "read-object-plain: put kind: '$kind'\n";
-+
-+		packet_bin_read();
-+
-+		# We must read the content we are sent and send it to the right url
-+		my ($res, $buf) = packet_bin_read();
-+		die "bad packet_bin_read res ($res)" unless ($res eq 0);
-+		( packet_bin_read() eq ( 1, "" ) ) || die "bad send end";		
-+
-+		my $upload_url = $http_url . "/upload/?sha1=" . $sha1 . "&size=" . $size . "&type=blob";
-+		print STDERR "read-object-plain: upload_url: '$upload_url'\n";
-+		print STDERR "read-object-plain: upload buffer: '$buf'\n";
-+
-+		my $userAgent = LWP::UserAgent->new();
-+		my $request = POST $upload_url, Content_Type => 'multipart/form-data', Content => $buf;
-+
-+		my $response = $userAgent->request($request);
-+
-+		if ($response->is_error) {
-+			print STDERR $response->error_as_HTML . "\n";
-+			packet_txt_write("status=failure");
-+		} else {
-+			packet_txt_write("status=success");
-+		}
-+		packet_flush();
-+	} else {
-+		die "bad command '$command'";
++		total_read += packet_len;
 +	}
++
++	if (packet_len < 0) {
++		error("unable to read from odb helper '%s': %s",
++		      o->name, strerror(errno));
++		git_deflate_end(&stream);
++		return packet_len;
++	}
++
++	if (ret != Z_STREAM_END) {
++		warning("bad zlib data from odb helper '%s' for %s",
++			o->name, sha1_to_hex(sha1));
++		return -1;
++	}
++
++	ret = git_deflate_end_gently(&stream);
++	if (ret != Z_OK) {
++		warning("deflateEnd on object %s from odb helper '%s' failed (%d)",
++			sha1_to_hex(sha1), o->name, ret);
++		return -1;
++	}
++	git_SHA1_Final(real_sha1, &hash);
++	if (hashcmp(sha1, real_sha1)) {
++		warning("sha1 mismatch from odb helper '%s' for %s (got %s)",
++			o->name, sha1_to_hex(sha1), sha1_to_hex(real_sha1));
++		return -1;
++	}
++	if (total_got != size) {
++		warning("size mismatch from odb helper '%s' for %s (%lu != %lu)",
++			o->name, sha1_to_hex(sha1), total_got, size);
++		return -1;
++	}
++
++	return total_read;
 +}
++
+ static ssize_t read_packetized_git_object_to_fd(struct odb_helper *o,
+ 						const unsigned char *sha1,
+ 						int fd_in, int fd_out)
+@@ -250,7 +365,9 @@ static int read_object_process(struct odb_helper *o, const unsigned char *sha1,
+ 	if (err)
+ 		goto done;
+ 
+-	if (o->fetch_kind != ODB_FETCH_KIND_FAULT_IN)
++	if (o->fetch_kind == ODB_FETCH_KIND_PLAIN_OBJECT)
++		err = read_packetized_plain_object_to_fd(o, sha1, process->out, fd) < 0;
++	else if (o->fetch_kind == ODB_FETCH_KIND_GIT_OBJECT)
+ 		err = read_packetized_git_object_to_fd(o, sha1, process->out, fd) < 0;
+ 
+ 	subprocess_read_status(process->out, &status);
 -- 
 2.13.1.565.gbfcd7a9048
 
