@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F1F820D18
-	for <e@80x24.org>; Tue, 20 Jun 2017 07:56:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A84A320401
+	for <e@80x24.org>; Tue, 20 Jun 2017 07:57:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752332AbdFTH4y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 03:56:54 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34987 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752193AbdFTH4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 03:56:53 -0400
-Received: by mail-wm0-f67.google.com with SMTP id d64so21286045wmf.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:33 -0700 (PDT)
+        id S1752368AbdFTH5C (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 03:57:02 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33130 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752338AbdFTH45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 03:56:57 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f90so21272663wmh.0
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=da2WIjwlSTlPrh+uyiJcIzabqukcQ6E7h7BrvzifZQE=;
-        b=EhRpqg/c606t81CQjrbB9h+Ls2cKK5oD4LhMJXUek79i4CGLdfi4dtpPnFApFM3Mma
-         o2yO3LC4jRiT5S0HJ8jJbXx4fIdicr8ggmw0nWlx1VVHU+nu6iff2+6Lx5DplWZ+0kNE
-         7pRoj3Jchs1y2gAOgHFWC9tGyMe+zqSQT/b3Bv6D4Xdj6ddbwE9OLPAJWFMSWRg64h91
-         ftvclheSDRJVFZTfJ/EDRDNtkXy7Ls+qcw/Up3Wst8EOkqLBNNQKi+fcuDWSKjfIqlm7
-         WwiBFLqDEEnc5c/R/LYy1gkjV3NGAbx0B9BLsgn8o9AXCzWBIQ02k1/oH+HTqXQXv/zx
-         0gyw==
+        bh=nADKf6Bjhupr/w7WIKpvl3CVAEYUEtES/vSMMT7NX8c=;
+        b=DLSHIhTw8A8QjV7wxwtt1D0xpBs81ij4R6FnfBlFUS9or0qluItpZ5zhaX54oMfnHj
+         zjrtjjRRPDE00D58hDm7lI0DhL5A7oxIJRr5wcJVpRrt66Obc4VudsaWel2//0PnedFZ
+         0hUUa4wTMSjx53vJY40xDZke7faSm5vWm+v8WDM/HXaK1TsRY0in8QnEXtKW29cRNGqu
+         X53tc6T1SxaX3JpsZu1huLdezTJgP821u5V71vNBWm6zfDu2/Bc35wUlI3EyhwbRagCR
+         5WD/HsousbeNXE8O3hs7DQAk1Vevs9OlmmP65fOz3LNYM6qzfL1DDCKCOFnc61aVHe3u
+         8vCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=da2WIjwlSTlPrh+uyiJcIzabqukcQ6E7h7BrvzifZQE=;
-        b=eDI+NjmM7OVlQm+faOUmt9cdPHJfeRVoWuMZmhVn3mhdMy/yFMRBCrr6roe1CDpkO4
-         xTfmQ4JAGXK2LXig5xRDZRjI6Rwzf78lrNbJWMxM9fZyqWyh0L4YfdTyi8KLIEJPnEto
-         7Ft++2aues0w+IU94OwmcLgpfkNGUTeGH6966p/wfccMKyuXYq3bKzEHfVLrtAYGMTov
-         BvCKSl946QuxsolXtnyh0KU92UiiDuzxjmhDb45OSbiPEKSfDevCD22b5RD1mR585sEf
-         l3tRqMJstSSSGdIdNZG3cz+Zpp/7KYFU/gA3X5TrroFNuhw7G4q8WoZdiFahmDsdvwx9
-         DLAw==
-X-Gm-Message-State: AKS2vOwKJEPT6yLFzU+XYiDB09mNMPe7lK9YpCPG9A7o19dMTglmCMlY
-        RJRAM5iOo6eWKSL7
-X-Received: by 10.28.35.196 with SMTP id j187mr1673324wmj.26.1497945387225;
-        Tue, 20 Jun 2017 00:56:27 -0700 (PDT)
+        bh=nADKf6Bjhupr/w7WIKpvl3CVAEYUEtES/vSMMT7NX8c=;
+        b=YEFyBgoqfQBWzPi0ykcs68jBjcJrJ51qfpIR51sT5ZQTowqF6BSz519mktJnACCrM/
+         lIZszsE4gtqCfnVCRuuLQ/W7IzNvDu8E96rHRp+l5Lcdw5eS+p09bCyYX9XTeERjooEA
+         oHIPnWac6AEsgnpKmD+DL7CNJqtM46yCxB1XEwGECJ0bMQStkyuxiJ3f4yiuFHDvaGvW
+         DdeRWcdXL1Y1DeXt/28HwQu0qcZ+G7GnBRBuq7BR0H8V4c50uQWxkhz/YfJGGmJBShx+
+         zU11RQBWc4hqxR8S+RMGaqv0GaPSr4xNiPVFsHYtqh0KyHjQNtVi2in62ZJtxZ/QN1pv
+         Fzzw==
+X-Gm-Message-State: AKS2vOwMyeoUfJenJn+G2k8M/Z6xK9YTctgeVpoztjXfSVgGchgracCh
+        Ld8RtwUxMNh5g66g
+X-Received: by 10.28.50.70 with SMTP id y67mr1817874wmy.62.1497945410831;
+        Tue, 20 Jun 2017 00:56:50 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.25
+        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 00:56:26 -0700 (PDT)
+        Tue, 20 Jun 2017 00:56:50 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,11 +55,10 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Mike Hommey <mh@glandium.org>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Ben Peart <benpeart@microsoft.com>
-Subject: [RFC/PATCH v4 29/49] Add t0410 to test read object mechanism
-Date:   Tue, 20 Jun 2017 09:55:03 +0200
-Message-Id: <20170620075523.26961-30-chriscool@tuxfamily.org>
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v4 45/49] clone: add initial param to write_remote_refs()
+Date:   Tue, 20 Jun 2017 09:55:19 +0200
+Message-Id: <20170620075523.26961-46-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.565.gbfcd7a9048
 In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
 References: <20170620075523.26961-1-chriscool@tuxfamily.org>
@@ -68,115 +67,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Peart <benpeart@microsoft.com>
-
-Signed-off-by: Ben Peart <benpeart@microsoft.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0450-read-object.sh | 30 +++++++++++++++++++++++++++
- t/t0450/read-object    | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 86 insertions(+)
- create mode 100755 t/t0450-read-object.sh
- create mode 100755 t/t0450/read-object
+ builtin/clone.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/t/t0450-read-object.sh b/t/t0450-read-object.sh
-new file mode 100755
-index 0000000000..18d726fe28
---- /dev/null
-+++ b/t/t0450-read-object.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
-+
-+test_description='tests for long running read-object process'
-+
-+. ./test-lib.sh
-+
-+PATH="$PATH:$TEST_DIRECTORY/t0450"
-+
-+test_expect_success 'setup host repo with a root commit' '
-+	test_commit zero &&
-+	hash1=$(git ls-tree HEAD | grep zero.t | cut -f1 | cut -d\  -f3)
-+'
-+
-+HELPER="read-object"
-+
-+test_expect_success 'blobs can be retrieved from the host repo' '
-+	git init guest-repo &&
-+	(cd guest-repo &&
-+	 git config odb.magic.command "$HELPER" &&
-+	 git config odb.magic.fetchKind "faultin" &&
-+	 git cat-file blob "$hash1")
-+'
-+
-+test_expect_success 'invalid blobs generate errors' '
-+	cd guest-repo &&
-+	test_must_fail git cat-file blob "invalid"
-+'
-+
-+
-+test_done
-diff --git a/t/t0450/read-object b/t/t0450/read-object
-new file mode 100755
-index 0000000000..bf5fa2652b
---- /dev/null
-+++ b/t/t0450/read-object
-@@ -0,0 +1,56 @@
-+#!/usr/bin/perl
-+#
-+# Example implementation for the Git read-object protocol version 1
-+# See Documentation/technical/read-object-protocol.txt
-+#
-+# Allows you to test the ability for blobs to be pulled from a host git repo
-+# "on demand."  Called when git needs a blob it couldn't find locally due to
-+# a lazy clone that only cloned the commits and trees.
-+#
-+# A lazy clone can be simulated via the following commands from the host repo
-+# you wish to create a lazy clone of:
-+#
-+# cd /host_repo
-+# git rev-parse HEAD
-+# git init /guest_repo
-+# git cat-file --batch-check --batch-all-objects | grep -v 'blob' |
-+#	cut -d' ' -f1 | git pack-objects /e/guest_repo/.git/objects/pack/noblobs
-+# cd /guest_repo
-+# git config core.virtualizeobjects true
-+# git reset --hard <sha from rev-parse call above>
-+#
-+# Please note, this sample is a minimal skeleton. No proper error handling 
-+# was implemented.
-+#
-+
-+use 5.008;
-+use lib (split(/:/, $ENV{GITPERLLIB}));
-+use strict;
-+use warnings;
-+use Git::Packet;
-+
-+#
-+# Point $DIR to the folder where your host git repo is located so we can pull
-+# missing objects from it
-+#
-+my $DIR = "../.git/";
-+
-+packet_initialize("git-read-object", 1);
-+
-+packet_read_and_check_capabilities("get");
-+packet_write_capabilities("get");
-+
-+while (1) {
-+	my ($command) = packet_txt_read() =~ /^command=([^=]+)$/;
-+
-+	if ( $command eq "get" ) {
-+		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
-+		packet_bin_read();
-+
-+		system ('git --git-dir="' . $DIR . '" cat-file blob ' . $sha1 . ' | GIT_NO_EXTERNAL_ODB=1 git hash-object -w --stdin >/dev/null 2>&1');
-+		packet_txt_write(($?) ? "status=error" : "status=success");
-+		packet_flush();
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 370a233d22..bd690576e6 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -572,7 +572,7 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
+ 	return local_refs;
+ }
+ 
+-static void write_remote_refs(const struct ref *local_refs)
++static void write_remote_refs(const struct ref *local_refs, int initial)
+ {
+ 	const struct ref *r;
+ 
+@@ -591,8 +591,13 @@ static void write_remote_refs(const struct ref *local_refs)
+ 			die("%s", err.buf);
+ 	}
+ 
+-	if (initial_ref_transaction_commit(t, &err))
+-		die("%s", err.buf);
++	if (initial) {
++		if (initial_ref_transaction_commit(t, &err))
++			die("%s", err.buf);
 +	} else {
-+		die "bad command '$command'";
++		if (ref_transaction_commit(t, &err))
++			die("%s", err.buf);
 +	}
-+}
+ 
+ 	strbuf_release(&err);
+ 	ref_transaction_free(t);
+@@ -639,7 +644,8 @@ static void update_remote_refs(const struct ref *refs,
+ 			       const char *branch_top,
+ 			       const char *msg,
+ 			       struct transport *transport,
+-			       int check_connectivity)
++			       int check_connectivity,
++			       int initial)
+ {
+ 	const struct ref *rm = mapped_refs;
+ 
+@@ -654,7 +660,7 @@ static void update_remote_refs(const struct ref *refs,
+ 	}
+ 
+ 	if (refs) {
+-		write_remote_refs(mapped_refs);
++		write_remote_refs(mapped_refs, initial);
+ 		if (option_single_branch && !option_no_tags)
+ 			write_followtags(refs, msg);
+ 	}
+@@ -1163,7 +1169,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		transport_fetch_refs(transport, mapped_refs);
+ 
+ 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
+-			   branch_top.buf, reflog_msg.buf, transport, !is_local);
++			   branch_top.buf, reflog_msg.buf, transport,
++			   !is_local, 0);
+ 
+ 	update_head(our_head_points_at, remote_head, reflog_msg.buf);
+ 
 -- 
 2.13.1.565.gbfcd7a9048
 
