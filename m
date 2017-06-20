@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A19120D20
-	for <e@80x24.org>; Tue, 20 Jun 2017 19:20:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 448CD20D18
+	for <e@80x24.org>; Tue, 20 Jun 2017 19:20:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752097AbdFTTUk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 15:20:40 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:33286 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752056AbdFTTUg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 15:20:36 -0400
-Received: by mail-pf0-f169.google.com with SMTP id 83so73769688pfr.0
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 12:20:26 -0700 (PDT)
+        id S1752014AbdFTTUR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 15:20:17 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:35590 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751036AbdFTTUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 15:20:16 -0400
+Received: by mail-pf0-f177.google.com with SMTP id c73so13545435pfk.2
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 12:20:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=q2n+IoxMW2y8uNe8Sd7HPtPfIYlB4jjHBm97EHfIipY=;
-        b=qzJLA6oJG8DaB7UroXs4JF4kmzkNyLSPpnqpCXmTYQ5sO6YfowZh+TWDQL9PtijfMM
-         fn0uGXCUUJWyDfCGgG7xuMjRxALadS5kHFHRm/sEPOrp56Q9k1u/k3+PVUD3eHXO5UMw
-         alAeUnfhaBkCuvU/zsTCEhA+PP/piOyXXJea3mNYV2b4oP9tGPuHJmpY4G4CcDEqmmAx
-         Lka5M02BkC9vedfZ9CCl2Q0zye/e4VsHK8SXaE5uqgD7vTjnOSp01U7hUshX35AxURhT
-         kmHGaxGxfd6JDSdF1YTjeaQ+explGkCGZIDarXtQF9B2bUtKsBSBh4JMPrVFHoQI6+TW
-         kYcw==
+        bh=IYLqqaKPCkWi5kLzGcXHfYKgD1pzdMl3tAAmg8lw/X4=;
+        b=innypOx0fV1uN7ehAvcOoN/kIJATaqb+ZNimfm1qTPa0PtXLHzGbDaKtF0IQ5Qb4hc
+         Z4N7cSY1IkIuwSgLtVofs307R5c9ypInHKBshCZb3yM15dPwB0SfY37pfiTvTrAMWUg/
+         nd8Gf5kF9ysqXy8BnWoy2pic8xgH0Hqpe670wg65lw8YuvLE545QHNtUrncopqfwqwha
+         muPjdkdg5XRpirxxlAWSkNAYPQR4/ypPW9ET891Gi8Bmwll7sY6guZnUr8DeA8qblJIm
+         7XtfZaBNCpLjrJs9mPnSs6bpuM/c4+u1/P107+WbbRMOafh0DtE3nGM/W4V/uv4SWqv+
+         zR8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=q2n+IoxMW2y8uNe8Sd7HPtPfIYlB4jjHBm97EHfIipY=;
-        b=MyuuIdpqO2sfARG4oE5l0VfrWGdV462znw7GGUBxzXey5txQXtg4qsBMTgri/1eEnN
-         niQHHh794KyN+oUqW1ixlfgSB1MVSMNexqcttEZcewZmucO9ZFcvMSEXM3tvUPWJOgKn
-         LrkwSdtjRB3jc29p5hDnqxe0MekMsy/yZdOs2lihTAQ8LWoTwIL2kVzFltj+1Lu316bi
-         QSlU3JAyaxNf/UNXggVGRrzqKOnztU83I47dXupOQBjK+CBa6ifQmc7h/RgneSkj55xB
-         wFsaxJKwzttQ/W9zjVTG09JqkDJpvhQn5hd1hMQGEIR7ewYcDxRmjjr76MmolTe8kHSs
-         y4AQ==
-X-Gm-Message-State: AKS2vOx635Kupl6tElR2Ia+0YMujiXm1tQc9WXkep3Y+M0EhE2G7vwgJ
-        r/hG63ZJpfQ52xoAANhiPg==
-X-Received: by 10.98.207.68 with SMTP id b65mr32250548pfg.6.1497986420587;
-        Tue, 20 Jun 2017 12:20:20 -0700 (PDT)
+        bh=IYLqqaKPCkWi5kLzGcXHfYKgD1pzdMl3tAAmg8lw/X4=;
+        b=eztABVes2grmr71SjaRGch7aHBiQgEKASMedcF/yQZTLuPP1q5+xy1My0Rp5pCh1FL
+         L9opZ6ZLoKGG3wXaaHl96JXVoykI2qgciygi+1rA444vktiI5vSyJiW4xx7dGDzZMxjr
+         MFsl2YTV6D2yumEJUk61o+ovkIu6t80Rqn1dZoCIp6qlDqeyU2HG3Zt7ZNNWo7h4XGNh
+         3x1ZYDz2K3bkFgeFuU/X2iLTuHPuS7WI9LNvcxNIrovLMTGUWlr7+K2SqW8vidoLJuiB
+         hnprkxlCXjXZ0IX8Kwe4T+LUofyeUKnIzQgF0yeTK7A8H8dTqlu4sF/rsIzyXbj5vu8e
+         jd0w==
+X-Gm-Message-State: AKS2vOzqqV8lDIZ0lD+GTmpKdPVmLs4KmGhaBgf23Y+t5FNqkB2F3f6N
+        B8fajbTnyXY5PgrPrdujjg==
+X-Received: by 10.98.220.193 with SMTP id c62mr32593957pfl.140.1497986415231;
+        Tue, 20 Jun 2017 12:20:15 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id t6sm18680500pgs.33.2017.06.20.12.20.18
+        by smtp.gmail.com with ESMTPSA id t6sm18680500pgs.33.2017.06.20.12.20.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 12:20:19 -0700 (PDT)
+        Tue, 20 Jun 2017 12:20:13 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -53,9 +53,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 06/20] environment: store worktree in the_repository
-Date:   Tue, 20 Jun 2017 12:19:37 -0700
-Message-Id: <20170620191951.84791-7-bmwill@google.com>
+Subject: [PATCH v3 03/20] environment: remove namespace_len variable
+Date:   Tue, 20 Jun 2017 12:19:34 -0700
+Message-Id: <20170620191951.84791-4-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1-goog
 In-Reply-To: <20170620191951.84791-1-bmwill@google.com>
 References: <20170608234100.188529-1-bmwill@google.com>
@@ -65,7 +65,8 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Migrate 'work_tree' to be stored in 'the_repository'.
+Use 'skip_prefix' instead of 'starts_with' so that we can drop the need
+to keep around 'namespace_len'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
@@ -73,41 +74,39 @@ Signed-off-by: Brandon Williams <bmwill@google.com>
  1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/environment.c b/environment.c
-index aa79ef83e..3fd4b1084 100644
+index a73b08f5d..e035f6372 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -96,7 +96,6 @@ int ignore_untracked_cache_config;
- 
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
- char *git_work_tree_cfg;
--static char *work_tree;
+@@ -98,7 +98,6 @@ char *git_work_tree_cfg;
+ static char *work_tree;
  
  static const char *namespace;
+-static size_t namespace_len;
  
-@@ -223,19 +222,19 @@ void set_git_work_tree(const char *new_work_tree)
+ static const char *super_prefix;
+ 
+@@ -190,7 +189,6 @@ void setup_git_env(void)
+ 	git_replace_ref_base = xstrdup(replace_ref_base ? replace_ref_base
+ 							  : "refs/replace/");
+ 	namespace = expand_namespace(getenv(GIT_NAMESPACE_ENVIRONMENT));
+-	namespace_len = strlen(namespace);
+ 	shallow_file = getenv(GIT_SHALLOW_FILE_ENVIRONMENT);
+ 	if (shallow_file)
+ 		set_alternate_shallow_file(shallow_file, 0);
+@@ -231,9 +229,10 @@ const char *get_git_namespace(void)
+ 
+ const char *strip_namespace(const char *namespaced_ref)
  {
- 	if (git_work_tree_initialized) {
- 		new_work_tree = real_path(new_work_tree);
--		if (strcmp(new_work_tree, work_tree))
-+		if (strcmp(new_work_tree, the_repository->worktree))
- 			die("internal error: work tree has already been set\n"
- 			    "Current worktree: %s\nNew worktree: %s",
--			    work_tree, new_work_tree);
-+			    the_repository->worktree, new_work_tree);
- 		return;
- 	}
- 	git_work_tree_initialized = 1;
--	work_tree = real_pathdup(new_work_tree, 1);
-+	repo_set_worktree(the_repository, new_work_tree);
+-	if (!starts_with(namespaced_ref, get_git_namespace()))
+-		return NULL;
+-	return namespaced_ref + namespace_len;
++	const char *out;
++	if (skip_prefix(namespaced_ref, get_git_namespace(), &out))
++		return out;
++	return NULL;
  }
  
- const char *get_git_work_tree(void)
- {
--	return work_tree;
-+	return the_repository->worktree;
- }
- 
- char *get_object_directory(void)
+ const char *get_super_prefix(void)
 -- 
 2.13.1.611.g7e3b11ae1-goog
 
