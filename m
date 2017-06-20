@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A8D520401
-	for <e@80x24.org>; Tue, 20 Jun 2017 07:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC47A20401
+	for <e@80x24.org>; Tue, 20 Jun 2017 07:57:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752450AbdFTH5b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 03:57:31 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:35078 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752151AbdFTH4h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 03:56:37 -0400
-Received: by mail-wm0-f68.google.com with SMTP id d64so21286877wmf.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:36 -0700 (PDT)
+        id S1752159AbdFTH4d (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 03:56:33 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:32810 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752149AbdFTH4b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 03:56:31 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f90so21270001wmh.0
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=33aVgo8tcRz18W8dRTEwzWfDQRiRq0/O1f1VhjZTuB4=;
-        b=MupE1DbfM2+GRw3NtIMsVNwdGrBfB/i5qstuy4jwQqjI5EofQzru8fElrUR3N8D979
-         ZySZThCzOWafQydLlLMxj3p4pj92DPdOqwXv4I3gm1hBWCTG2bcu4PKYyUlUpZLb0//3
-         ueYEFtEzXBUK33Y64ljXVPOTO8H8Qmj80JY51IVh8TIUNd6V+d4g8BVtZPzHqcHi6KwZ
-         HUx3q/+/3gaeiGTHCn1+/v13gBh03D6zTF4wIIdxsIvLCay5JA+CGtCEmQ8ldoOw4zmT
-         cAmOjNYGx1+PgTtz5LuiuVRYDU6phTJglgV6aZvpk/Albc4Parx7IyWsg7R4gsMRhmtE
-         sS8A==
+        bh=Dx5RKdCR/Q2VBc8GkqzSPCkJBntKUK5ry1DbRCUE0ZQ=;
+        b=L67ORtjnCIBwg8QdDctpoIoBj3WAQoMfinul9AsmXD4OWzhwuiKJjl0qda1Y8YlUzm
+         RcH2+IsE8tkuZfxpHNeDqBMz9wu6smTkdZiFQI1vUl6M2AhSn4iVLdloYMf3Q0h2TXTx
+         gbZ9wKt3zQh99KuCU5w9+iuVutcsunFWjbO7PAnFrpmbi21atI+Yhs5gtZNH+Mt+hP5V
+         +Ad4bTu7RP4rhNUzKaR0Oncj3hhe/Xqclo241f4yqD5/NUyDbSzDMo8dXAXmMUJtuRGq
+         BKjlo21at2xCkRYD55MzR1DlhN+jeb2azc3VW0ixsNpBFYDCRPgxeluvrQ70DChBMYlt
+         GHKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=33aVgo8tcRz18W8dRTEwzWfDQRiRq0/O1f1VhjZTuB4=;
-        b=h7dZukWJ8Qa62gnVCT5xJEg4OCvCnQIlUDk5r3wXmEeAx1QxGpAE3nJiZyCSew+rq7
-         o2Z9dtOtpw67vq0I6nuUJRvegE3WvOU8XOKY2Tq0uU7UU9T63UbQ+WUFxzr1SMqByNuu
-         c/NaBTiKRK5g2Pm6Yd40TnEKj6xsq27SBDd6wobhhOlMUqAF1G+6NI1msYK8HzfWqoc1
-         hFvOALXiQbZr1FRo50Mt346CXBXQxbaLVIQYUF2LkD0wfy2xlNq/17cHbvf3nhlyPyAN
-         TU7ENi/p6bhxJyntEvan/bBpoU5yMdSr+8bSxIYyn9Z5jKUV25RhnnWZ2GIvX07+uwiM
-         b0zw==
-X-Gm-Message-State: AKS2vOwCyHzJf5czLHou1xkOVz/XYsXhy9RrbN5LwC0Ie50ZNB5WvELr
-        lK43RWzeSCXaiAK6
-X-Received: by 10.28.105.218 with SMTP id z87mr1764339wmh.121.1497945395711;
-        Tue, 20 Jun 2017 00:56:35 -0700 (PDT)
+        bh=Dx5RKdCR/Q2VBc8GkqzSPCkJBntKUK5ry1DbRCUE0ZQ=;
+        b=R3rW+LdBhJMv73R9FJ3po/WILra1TzeVDEK1VtoSm9yJCgLKivZ4Oggf3EYcQCGBqC
+         Tvu42IZAiqoqZDqnB+OI93ETe5JRy8UrtqN712HeAZZtZyG8X89bawjXyriSJpQribGv
+         2wSRJlyYUR+Ndm2qhN1XhK2DiK0H8EOUa9AA09NuvT6DhQ87koP328cb4BXQ8UoS34Uh
+         VMEhRC8jCXZWT7XIzlU6eYCfGhPwkU8yISSVMD/R6IxSGCSdGNXjQdBW//Pq2pU0H+5A
+         ukqXfDPOk/pD03/MhnQwRXPUgyM/w+tqxWvrPepd/nXSQQh7BAyOpt0yGkYloaxesPAt
+         VhmQ==
+X-Gm-Message-State: AKS2vOyTHySEwGhT89fZHwbXx0aNCHmaP61++ZPKXlsRJQ0mn+yKxUGo
+        EOl8kSeZVKGMtnGe
+X-Received: by 10.28.92.13 with SMTP id q13mr1749071wmb.20.1497945379563;
+        Tue, 20 Jun 2017 00:56:19 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.34
+        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 00:56:35 -0700 (PDT)
+        Tue, 20 Jun 2017 00:56:18 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH v4 36/49] odb-helper: add read_packetized_git_object_to_fd()
-Date:   Tue, 20 Jun 2017 09:55:10 +0200
-Message-Id: <20170620075523.26961-37-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v4 23/49] t0420: add test with HTTP external odb
+Date:   Tue, 20 Jun 2017 09:54:57 +0200
+Message-Id: <20170620075523.26961-24-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.565.gbfcd7a9048
 In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
 References: <20170620075523.26961-1-chriscool@tuxfamily.org>
@@ -67,113 +67,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This tests that an apache web server can be used as an
+external object database and store files in their native
+format instead of converting them to a Git object.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- odb-helper.c | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 78 insertions(+), 6 deletions(-)
+ t/t0420-transfer-http-e-odb.sh | 150 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 150 insertions(+)
+ create mode 100755 t/t0420-transfer-http-e-odb.sh
 
-diff --git a/odb-helper.c b/odb-helper.c
-index 0017faa36e..a27208463c 100644
---- a/odb-helper.c
-+++ b/odb-helper.c
-@@ -142,6 +142,82 @@ static int check_object_process_error(int err,
- 	return err;
- }
- 
-+static ssize_t read_packetized_git_object_to_fd(struct odb_helper *o,
-+						const unsigned char *sha1,
-+						int fd_in, int fd_out)
-+{
-+	ssize_t total_read = 0;
-+	unsigned long total_got = 0;
-+	int packet_len;
-+	git_zstream stream;
-+	int zret = Z_STREAM_END;
-+	git_SHA_CTX hash;
-+	unsigned char real_sha1[20];
+diff --git a/t/t0420-transfer-http-e-odb.sh b/t/t0420-transfer-http-e-odb.sh
+new file mode 100755
+index 0000000000..716d722e97
+--- /dev/null
++++ b/t/t0420-transfer-http-e-odb.sh
+@@ -0,0 +1,150 @@
++#!/bin/sh
 +
-+	memset(&stream, 0, sizeof(stream));
-+	git_inflate_init(&stream);
-+	git_SHA1_Init(&hash);
++test_description='tests for transfering external objects to an HTTPD server'
 +
-+	for (;;) {
-+		/* packet_read() writes a '\0' extra byte at the end */
-+		char buf[LARGE_PACKET_DATA_MAX + 1];
++. ./test-lib.sh
 +
-+		packet_len = packet_read(fd_in, NULL, NULL,
-+			buf, LARGE_PACKET_DATA_MAX + 1,
-+			PACKET_READ_GENTLE_ON_EOF);
++# If we don't specify a port, the current test number will be used
++# which will not work as it is less than 1024, so it can only be used by root.
++LIB_HTTPD_PORT=$(expr ${this_test#t} + 12000)
 +
-+		if (packet_len <= 0)
-+			break;
++. "$TEST_DIRECTORY"/lib-httpd.sh
 +
-+		write_or_die(fd_out, buf, packet_len);
++start_httpd apache-e-odb.conf
 +
-+		stream.next_in = (unsigned char *)buf;
-+		stream.avail_in = packet_len;
-+		do {
-+			unsigned char inflated[4096];
-+			unsigned long got;
++# odb helper script must see this
++export HTTPD_URL
 +
-+			stream.next_out = inflated;
-+			stream.avail_out = sizeof(inflated);
-+			zret = git_inflate(&stream, Z_SYNC_FLUSH);
-+			got = sizeof(inflated) - stream.avail_out;
-+
-+			git_SHA1_Update(&hash, inflated, got);
-+			/* skip header when counting size */
-+			if (!total_got) {
-+				const unsigned char *p = memchr(inflated, '\0', got);
-+				if (p)
-+					got -= p - inflated + 1;
-+				else
-+					got = 0;
-+			}
-+			total_got += got;
-+		} while (stream.avail_in && zret == Z_OK);
-+
-+		total_read += packet_len;
-+	}
-+
-+	git_inflate_end(&stream);
-+
-+	if (packet_len < 0)
-+		return packet_len;
-+
-+	git_SHA1_Final(real_sha1, &hash);
-+
-+	if (zret != Z_STREAM_END) {
-+		warning("bad zlib data from odb helper '%s' for %s",
-+			o->name, sha1_to_hex(sha1));
-+		return -1;
-+	}
-+	if (hashcmp(real_sha1, sha1)) {
-+		warning("sha1 mismatch from odb helper '%s' for %s (got %s)",
-+			o->name, sha1_to_hex(sha1), sha1_to_hex(real_sha1));
-+		return -1;
-+	}
-+
-+	return total_read;
++write_script odb-http-helper <<\EOF
++die() {
++	printf >&2 "%s\n" "$@"
++	exit 1
 +}
++echo >&2 "odb-http-helper args:" "$@"
++case "$1" in
++have)
++	list_url="$HTTPD_URL/list/"
++	curl "$list_url" ||
++	die "curl '$list_url' failed"
++	;;
++get)
++	get_url="$HTTPD_URL/list/?sha1=$2"
++	curl "$get_url" ||
++	die "curl '$get_url' failed"
++	;;
++put)
++	sha1="$2"
++	size="$3"
++	kind="$4"
++	upload_url="$HTTPD_URL/upload/?sha1=$sha1&size=$size&type=$kind"
++	curl --data-binary @- --include "$upload_url" >out ||
++	die "curl '$upload_url' failed"
++	ref_hash=$(echo "$sha1 $size $kind" | GIT_NO_EXTERNAL_ODB=1 git hash-object -w -t blob --stdin) || exit
++	git update-ref refs/odbs/magic/"$sha1" "$ref_hash"
++	;;
++*)
++	die "unknown command '$1'"
++	;;
++esac
++EOF
++HELPER="\"$PWD\"/odb-http-helper"
 +
- static int read_object_process(struct odb_helper *o, const unsigned char *sha1, int fd)
- {
- 	int err;
-@@ -174,12 +250,8 @@ static int read_object_process(struct odb_helper *o, const unsigned char *sha1,
- 	if (err)
- 		goto done;
- 
--	if (o->fetch_kind != ODB_FETCH_KIND_FAULT_IN) {
--		struct strbuf buf;
--		read_packetized_to_strbuf(process->out, &buf);
--		if (err)
--			goto done;
--	}
-+	if (o->fetch_kind != ODB_FETCH_KIND_FAULT_IN)
-+		err = read_packetized_git_object_to_fd(o, sha1, process->out, fd) < 0;
- 
- 	subprocess_read_status(process->out, &status);
- 	err = strcmp(status.buf, "success");
++
++test_expect_success 'setup repo with a root commit and the helper' '
++	test_commit zero &&
++	git config odb.magic.command "$HELPER" &&
++	git config odb.magic.plainObjects "true"
++'
++
++test_expect_success 'setup another repo from the first one' '
++	git init other-repo &&
++	(cd other-repo &&
++	 git remote add origin .. &&
++	 git pull origin master &&
++	 git checkout master &&
++	 git log)
++'
++
++UPLOADFILENAME="hello_apache_upload.txt"
++
++UPLOAD_URL="$HTTPD_URL/upload/?sha1=$UPLOADFILENAME&size=123&type=blob"
++
++test_expect_success 'can upload a file' '
++	echo "Hello Apache World!" >hello_to_send.txt &&
++	echo "How are you?" >>hello_to_send.txt &&
++	curl --data-binary @hello_to_send.txt --include "$UPLOAD_URL" >out_upload
++'
++
++LIST_URL="$HTTPD_URL/list/"
++
++test_expect_success 'can list uploaded files' '
++	curl --include "$LIST_URL" >out_list &&
++	grep "$UPLOADFILENAME" out_list
++'
++
++test_expect_success 'can delete uploaded files' '
++	curl --data "delete" --include "$UPLOAD_URL&delete=1" >out_delete &&
++	curl --include "$LIST_URL" >out_list2 &&
++	! grep "$UPLOADFILENAME" out_list2
++'
++
++FILES_DIR="httpd/www/files"
++
++test_expect_success 'new blobs are transfered to the http server' '
++	test_commit one &&
++	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
++	echo "$hash1-4-blob" >expected &&
++	ls "$FILES_DIR" >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'blobs can be retrieved from the http server' '
++	git cat-file blob "$hash1" &&
++	git log -p >expected
++'
++
++test_expect_success 'update other repo from the first one' '
++	(cd other-repo &&
++	 git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*" &&
++	 test_must_fail git cat-file blob "$hash1" &&
++	 git config odb.magic.command "$HELPER" &&
++	 git config odb.magic.plainObjects "true" &&
++	 git cat-file blob "$hash1" &&
++	 git pull origin master)
++'
++
++test_expect_success 'local clone from the first repo' '
++	mkdir my-clone &&
++	(cd my-clone &&
++	 git clone .. . &&
++	 git cat-file blob "$hash1")
++'
++
++test_expect_success 'no-local clone from the first repo fails' '
++	mkdir my-other-clone &&
++	(cd my-other-clone &&
++	 test_must_fail git clone --no-local .. .) &&
++	rm -rf my-other-clone
++'
++
++test_expect_success 'no-local clone from the first repo with helper succeeds' '
++	mkdir my-other-clone &&
++	(cd my-other-clone &&
++	 git clone -c odb.magic.command="$HELPER" \
++		-c odb.magic.plainObjects="true" \
++		--no-local .. .) &&
++	rm -rf my-other-clone
++'
++
++test_expect_success 'no-local initial-refspec clone succeeds' '
++	mkdir my-other-clone &&
++	(cd my-other-clone &&
++	 git config odb.magic.command "$HELPER" &&
++	 git config odb.magic.plainObjects "true" &&
++	 git -c odb.magic.command="$HELPER" -c odb.magic.plainObjects="true" \
++		clone --no-local --initial-refspec "refs/odbs/magic/*:refs/odbs/magic/*" .. .)
++'
++
++stop_httpd
++
++test_done
 -- 
 2.13.1.565.gbfcd7a9048
 
