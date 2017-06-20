@@ -2,139 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 523CB1FA7B
-	for <e@80x24.org>; Tue, 20 Jun 2017 03:12:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A55361FA7B
+	for <e@80x24.org>; Tue, 20 Jun 2017 05:43:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751265AbdFTDMq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 23:12:46 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34901 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751131AbdFTDMp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 23:12:45 -0400
-Received: by mail-pf0-f193.google.com with SMTP id s66so20502436pfs.2
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 20:12:45 -0700 (PDT)
+        id S1750987AbdFTFnk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 01:43:40 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:36359 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750884AbdFTFnj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 01:43:39 -0400
+Received: by mail-pf0-f182.google.com with SMTP id x63so64469132pff.3
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 22:43:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=2+fGO7bO7+ycsgBlhMfcoHxjZXeMeXUcEHmSAP2lJLw=;
-        b=a5EynJRgC1ClaEr6pDZAJH9IcpCeutCbNYeLmkTLTWCrjhgAYEk9bIDwrnIYY4noHS
-         0tmdpgLzE0ZjDAcM9wpDOIPalVXWV4VLgFfpFJD+2DolkMEt12AJhBJT35dc0kdaX979
-         fjlXyNsa3msr7Vs5iaKkfTrQZns8ddQA8KWiFNJMeLzPITCyXNRn5cK6mMHCbuweHRLx
-         VOI1Sh0EpTAFVIGxbCs6AMrL1fN0NCB52wldpk35T2lDwM2UCY+gR1XiY7dfrb7UiYfM
-         m5kfaJU+EP7CE+axEqf3BNWg3US3qkyQuVrQ1Bhc4KV7odFRuJQHTfJe1DqwcImuzEtk
-         99mg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=SqP6W5mDsicpm5X2LgaSPDIHoxQP+tlr0Z6XDt9Hekw=;
+        b=a/ARhmxt3v2sanb7K14l0+FGLOvVognNYN1ORxwAtSVSEv7UXL+Z9lXKvNdOfNdwAj
+         nAl7zdvXwefwpNwICzclJvd6h+mQkrVv2lq8UlTNhY3Xth4PDADCL6uPnJgGPm4blSEb
+         /BzH7/WcJAIgmdYQA/NKDs4LuK9p7R7oJvFVEb3kksJbvJVwb9NaIq2N3JcWqybvY4rC
+         tmPiGdjmXN8100Uq9aBTSRPc/CU5IyrKSsiZQSi+NkEJ/FIohTmV7OVkgLYJGYT9lDsR
+         GHeWlVFMC2U8l+zGoSsabWJNuPaIMV/Uds+bo7x4vSyaZ+ZrgHAfpw2h0Ve0tlvz1NWJ
+         bHSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=2+fGO7bO7+ycsgBlhMfcoHxjZXeMeXUcEHmSAP2lJLw=;
-        b=fqQeT8c+FWNa0jhi76Q42YScuQ+pvdrps0AafZd4X07PmQJt/OmygJchMMU6rBApEU
-         pCeiXtvPQJ/XLtgRvwU9m8JcuclpvXIcVQSo6MFghAht9G/x/qzB5mxMyLCcsJtSH+8t
-         sZGANOpyAc3qMkEDlewPzO1srmp73mcevkVkZ/DPGx3wO5IuaL0aVs8dzlaCQXhSYMDT
-         TNnmMtVfOBqPMwTWAvFxrL/EVz5v2trV7lNaDt11GqyO1hZI84kh4WxYEik5Di8fNzKa
-         92lnHvMfoyULKCXTf7Afnxu5dpwJ0X5lYcTvczYiQgvdndrI7r/vJtA7dysRFwnFqfjw
-         cPEQ==
-X-Gm-Message-State: AKS2vOzvchkXHrbuwIVMOXn7yCZuxNU5KvehuhuTo1Pjme3+OjpUio9B
-        C6zjEDzBfpMuByx8r3WORw==
-X-Received: by 10.99.65.7 with SMTP id o7mr30090181pga.90.1497928364913;
-        Mon, 19 Jun 2017 20:12:44 -0700 (PDT)
-Received: from localhost.localdomain ([2405:204:7088:3652:1086:ad92:af48:f1cf])
-        by smtp.gmail.com with ESMTPSA id z69sm25921432pff.0.2017.06.19.20.12.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Jun 2017 20:12:44 -0700 (PDT)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     sbeller@google.com
-Cc:     gitster@pobox.com, git@vger.kernel.org,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Subject: [PATCH/RFC] Cleanup Documentation
-Date:   Tue, 20 Jun 2017 08:42:14 +0530
-Message-Id: <20170620031214.7616-1-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <CAGZ79kbMhQpxUa5TXK=WCzzKUCZ5vx3oC+fFTTozpgQihsUjTA@mail.gmail.com>
-References: <CAGZ79kbMhQpxUa5TXK=WCzzKUCZ5vx3oC+fFTTozpgQihsUjTA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=SqP6W5mDsicpm5X2LgaSPDIHoxQP+tlr0Z6XDt9Hekw=;
+        b=ktN5pS2sXF8RMIwQ3AiIF+upomK6dEhyTDJksnX4gfPCg3zMdeHigaPu9i/nC9v0+/
+         E8UDDcL9m5IGwfiEEFTDKmUwqsyBTDdgWNoa9gUqKNgFg/xXYq1sPRZQbXhRiOo8Wf4J
+         uqSNBPwDvr1D5LXB11+XnGADtxy5n+ROHgWd+KoSYeoxH/0+JRQQ4Di7ANX3ZP7TGXKG
+         76MFJ2FWRjcmgh2Ly/EviGmgSjBSbl4wtUyoZ0xCnAkqQuoHTqaKq3aAiSXtX9OpNgAh
+         df2UdH1YuemtzhZm7I155ODtr0ibiFjtwYNg2Sj3JrjVJNCIGA+UDj7gXT1qSioy7F4Y
+         Xznw==
+X-Gm-Message-State: AKS2vOx1tupWG/bplbvq3bzT5pR9GMel8Y7Rinq3Jl/dns0YDLoZPhll
+        qID4VKlJTqmyrdis2H/RDLARgyX9e3tX
+X-Received: by 10.98.63.10 with SMTP id m10mr28579779pfa.19.1497937418074;
+ Mon, 19 Jun 2017 22:43:38 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.218.134 with HTTP; Mon, 19 Jun 2017 22:43:37 -0700 (PDT)
+In-Reply-To: <20170619202021.dmomy5ztwoeat3eg@hopa.kiewit.dartmouth.edu>
+References: <20170619155924.7ra2vwvaelr2yj2v@hopa.kiewit.dartmouth.edu>
+ <CAGZ79kZhj31eBYnboyxDLuFp1ceeqk8kj0nrnQaCmpRJCVFU4w@mail.gmail.com> <20170619202021.dmomy5ztwoeat3eg@hopa.kiewit.dartmouth.edu>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 19 Jun 2017 22:43:37 -0700
+Message-ID: <CAGZ79kbVAfhgqug=UVXwriwxtckB0=x7mgxetVnQA2JFA0DYPg@mail.gmail.com>
+Subject: Re: in case you want a use-case with lots of submodules
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     Prathamesh Chavan <pc44800@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make following changes to the git-submodule
-documentation:
+On Mon, Jun 19, 2017 at 1:20 PM, Yaroslav Halchenko <yoh@onerussian.com> wrote:
+>
+> On Mon, 19 Jun 2017, Stefan Beller wrote:
+>
+>> On Mon, Jun 19, 2017 at 8:59 AM, Yaroslav Halchenko <yoh@onerussian.com> wrote:
+>> > Hi All,
+>
+>> > On a recent trip I've listened to the git minutes podcast episode and
+>> > got excited to hear  Stefan Beller (CCed just in case) describing
+>> > ongoing work on submodules mechanism.  I got excited, since e.g.
+>> > performance improvements would be of great benefit to us too.
+>
+>> If you're mostly interested in performance improvements of the status
+>> quo (i.e. "make git-submodule fast"), then the work of Prathamesh
+>> Chavan (cc'd) might be more interesting to you than what I do.
+>> He is porting git-submodule (which is mostly a shell script nowadays)
+>> to C, such that we can save a lot of process invocations and can do
+>> processing within one process.
+>
+> ah -- cool.  I would be eager to test it out, thanks!  would be
+> interesting to see if it positively affects our overall performance.
+> Pointers to that development would be welcome!
 
-* Remove redundancy
-* Remove unclear back reference
-* Use more appropriate word
-* Quote important word
-
-Suggestions-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- Currently used the word "canonical" instead of "humanish". If that word
- sounds more suitable then this is a [PATCH] and not a [PATCH/RFC].
+The latest from today:
+https://public-inbox.org/git/CAME+mvUQJFneV7b1G7zmAidP-5L=nimvY43V0ug-Gtesr83tzg@mail.gmail.com/
 
 
- Documentation/git-submodule.txt | 37 +++++++++++++++----------------------
- 1 file changed, 15 insertions(+), 22 deletions(-)
+>
+>> > http://datasets.datalad.org ATM provides quite a sizeable (ATM 370
+>> > repositories, up to 4 levels deep) hierarchy of git/git-annex
+>> > repositories all tied together via git submodules mechanism.  And as the
+>> > collection grows, interactions with it become slower, so additional
+>> > options (such as --ignore-submodules=dirty  to status) become our
+>> > friends.
+>
+>> I am not as much concerned about the 370 number than about the
+>> 4 layers of nesting. In my experience the nested submodule case
+>> is a little bit error prone and the bug reports are not as frequent as
+>> there are not as many users of nesting, yet(?)
+>
+> well -- part of the story here is that we are forced to use/have full
+> blown .git/ directories (for git-annex symlinks to content files to
+> work) within submodules instead of .git file with a reference under
+> parent's .git/modules.   So we can 'slice' at any level and I
+> guess that is why may be avoiding some possibly issues due to nesting
+> and the "parent has all .git/modules" approach.
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 74bc6200d..045fef417 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -63,14 +63,6 @@ add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--dep
- 	to the changeset to be committed next to the current
- 	project: the current project is termed the "superproject".
- +
--This requires at least one argument: <repository>. The optional
--argument <path> is the relative location for the cloned submodule
--to exist in the superproject. If <path> is not given, the
--"humanish" part of the source repository is used ("repo" for
--"/path/to/repo.git" and "foo" for "host.xz:foo/.git").
--The <path> is also used as the submodule's logical name in its
--configuration entries unless `--name` is used to specify a logical name.
--+
- <repository> is the URL of the new submodule's origin repository.
- This may be either an absolute URL, or (if it begins with ./
- or ../), the location relative to the superproject's default remote
-@@ -87,21 +79,22 @@ If the superproject doesn't have a default remote configured
- the superproject is its own authoritative upstream and the current
- working directory is used instead.
- +
--<path> is the relative location for the cloned submodule to
--exist in the superproject. If <path> does not exist, then the
--submodule is created by cloning from the named URL. If <path> does
--exist and is already a valid Git repository, then this is added
--to the changeset without cloning. This second form is provided
--to ease creating a new submodule from scratch, and presumes
--the user will later push the submodule to the given URL.
-+The optional argument <path> is the relative location for the cloned
-+submodule to exist in the superproject. If <path> is not given, the
-+canonical part of the source repository is used ("repo" for
-+"/path/to/repo.git" and "foo" for "host.xz:foo/.git"). If <path>
-+exists and is already a valid Git repository, then this is added
-+to the changeset without cloning. The <path> is also used as the
-+submodule's logical name in its configuration entries unless `--name`
-+is used to specify a logical name.
- +
--In either case, the given URL is recorded into .gitmodules for
--use by subsequent users cloning the superproject. If the URL is
--given relative to the superproject's repository, the presumption
--is the superproject and submodule repositories will be kept
--together in the same relative location, and only the
--superproject's URL needs to be provided: git-submodule will correctly
--locate the submodule using the relative URL in .gitmodules.
-+The given URL is recorded into `.gitmodules` for use by subsequent users
-+cloning the superproject. If the URL is given relative to the
-+superproject's repository, the presumption is the superproject and
-+submodule repositories will be kept together in the same relative
-+location, and only the superproject's URL needs to be provided.
-+git-submodule will correctly locate the submodule using the relative
-+URL in .gitmodules.
- 
- status [--cached] [--recursive] [--] [<path>...]::
- 	Show the status of the submodules. This will print the SHA-1 of the
--- 
-2.11.0
+That sounds like you either want to configure to have the submodules
+git dirs in-place or you want to convince git-annex to learn about the
+gitdir pointer files.
 
+>
+>> In a neighboring thread on the mailing list we have a discussion
+>> on the usefulness of being on branches than in detached HEAD
+>> in the submodules.
+>> https://public-inbox.org/git/0092CDD27C5F9D418B0F3E9B5D05BE08010287DF@SBS2011.opfingen.plc2.de/
+>
+>> This would not break non-ambiguously, rather it would add
+>> ease of use.
+>
+> that is indeed a common caveat... I am not sure if any heuristic
+> approach would provide a 'bullet proof' solution.  I might even prefer a
+> hardcoded 'branch-name' to be listed/associated with each submodule
+> within .gitmodules.
+
+hardcoded as submodule.NAME.branch, maybe?
+https://git-scm.com/docs/gitmodules
+
+>  In the datalad case, detached HEAD is common
+
+So you are accustomed to detached HEADs and would not
+gain much from being back on a branch?  That's cool, too.
+
+
+> whenever someone installs "outdated" (branch of which progressed
+> forward) submodule.  In this case we just check if the branch after "git
+> clone"  (but before git submodule update) includes the pointed by
+> Subproject commit, and if so -- we announce that it must be the branch
+> (so far it is always "master" branch anyways ;) )
+
+heh, having just one branch. That is retro-style. :)
