@@ -2,91 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4AFC1FA7B
-	for <e@80x24.org>; Tue, 20 Jun 2017 00:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A293F1FA7B
+	for <e@80x24.org>; Tue, 20 Jun 2017 01:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752666AbdFTAib (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 20:38:31 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:36255 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752561AbdFTAia (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 20:38:30 -0400
-Received: by mail-pf0-f178.google.com with SMTP id x63so61288408pff.3
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 17:38:30 -0700 (PDT)
+        id S1752715AbdFTBDX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 21:03:23 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:33239 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752482AbdFTBDW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 21:03:22 -0400
+Received: by mail-pf0-f177.google.com with SMTP id 83so61666967pfr.0
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 18:03:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mH9wMdvgqlXJddmeS/745/kngcA3DYnpzsVOVHgvT7Y=;
-        b=dQ1lzcmRbezjTiD3iWPIbWuHEZeAAqZMGu4E0oYiOtRDD5BDV+VIYSKGWA6T/5vzIH
-         OLz0FhwvJgkbqp1IexlHNUU8GPBymM4Ai5Z2Zq6OXQalFiAA3i24FiGbv9AOu6kMDmuw
-         sB03GntsTy6DgTpwL7toYIJRq44HTZIM4ijsjDPG/8DlDWLsufBFO1zpaYjsN0ufUSX5
-         4ChDjAtPKbCM7WhG9o4CK9R6D7DAH1JkI04yNcrQy/J5rW2qtQjNUN5CwqRWOBBMQzh3
-         IiVGQKD1w8Hp+l+jV0AyBxSBUHtr16tBt0y0pXA8wLCQPsiYZ/1xvJ5o3xasSmINEpCd
-         lrZg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vrH53LyNN7wH5lmruOQJ1O8eWZ+d5oxAC8v/0hUj8ks=;
+        b=mI+YjZ7ZgMZrX4Dz7z31NsuA35XV+IppeLFhwULG8B8PzjHUGBm5NwrdtpcxaJHDQr
+         cdu+GAGFmPCSkvgp8idzhLa/x3/EM4tSBfJhiygDnR8nTsXKiVd+AzQoGIw1JqlEv3b5
+         ubQZEFx6m/5SZpXWzQdN3pGAwDA2byEr8lX/IfUgxa6kSe1zdA8KVigmt9FONRRn+Xdk
+         /f787oGKLQb37DlR71SJSA7jqE19M1Ye9TFlW+wl5oTJzsp8t9Kn6GzIQLjgWu0O4uCa
+         whnNpF+3tKVBSLf9qFW0X3s/NtxaQhg/tmejXWxZzKLIcCjXG7z7A1gMhtiIp9EmTMB+
+         vLVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mH9wMdvgqlXJddmeS/745/kngcA3DYnpzsVOVHgvT7Y=;
-        b=ates5jXiHY5Gl9UrcO3gztwB3iHk5MvN+3/NnXieMVNAuUXJdI/RxKsqCpDlS37zSf
-         WEVBHBQhRrVBhsHDzsm/h8vxgC/SkX8aUw1JVWHhKcXMyPfq7JOlW0Umv8tqdpFAWGp6
-         TAaeM0NeKoiB8eT9ODX4UFDKeQfw56hXL7lHs1Dd3/l0OGmXUwGcVlVM+2g/bIaRe+9k
-         XG/fc92sFtO0rB2Jw6IOLrdO7x9wEvG4LOZvKeHRmJXBCMEpgbo02YN3cQ3qvgF6hzqC
-         p0iNUflhUmJQZCS3GmFGwfeRyD+ggnPvQ66pq3buvOc0KHsB1kMrmstIHtquc8dfqSkR
-         Pikg==
-X-Gm-Message-State: AKS2vOxR5naq97yrTVFc8/+bDDsXcmYYBKgRFyKiUSgCp5WXkC8+IwKQ
-        VyrNKQm8X5tv3uHFsLLNsA==
-X-Received: by 10.84.229.5 with SMTP id b5mr5706593plk.164.1497919109549;
-        Mon, 19 Jun 2017 17:38:29 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:a192:f5d5:865:c29d])
-        by smtp.gmail.com with ESMTPSA id m11sm23234196pfg.85.2017.06.19.17.38.28
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 19 Jun 2017 17:38:28 -0700 (PDT)
-Date:   Mon, 19 Jun 2017 17:38:27 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Andrew Ardill <andrew.ardill@gmail.com>
-Cc:     Prathamesh Chavan <pc44800@gmail.com>, git <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [GSoC] Update: Week 5
-Message-ID: <20170620003827.GB194323@google.com>
-References: <CAME+mvUQJFneV7b1G7zmAidP-5L=nimvY43V0ug-Gtesr83tzg@mail.gmail.com>
- <CAH5451n4XDdeAz4T7aAsaSC00hnZ53Gb7j0CSiTg4QLUZKvxXw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH5451n4XDdeAz4T7aAsaSC00hnZ53Gb7j0CSiTg4QLUZKvxXw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vrH53LyNN7wH5lmruOQJ1O8eWZ+d5oxAC8v/0hUj8ks=;
+        b=ccdINUcdhN8tVVV++WyQIhph7UobN3oVAWEDl3wkciUR9kUAHBNPFaAsqbBWEf1kl0
+         wUBz3l5bmZuovMTEjOoI5kSOdeG+NibQOYyqPop3lbehU33xDdmzxFsF6Ngm6YNGlree
+         3QLV1TUYjbrUjn2uAgwStdetnJH44tjYkKI7UXlL4Bj+E+yyh0rImflze1IZzH/+mIKH
+         zU7R/a5wNzD8SaVjMh2AjP3cXXTvM9+l7IAHHpnpRfHfd/RYs7Sz4UxlLuuCQRmQF2+C
+         6KGLb6j9CrTelvrTSLDbh/yjNbQTAzX1OGhB88YRGyf5EqUwePLpIW/CECLVcuVjtcPJ
+         YlwA==
+X-Gm-Message-State: AKS2vOw832cbOltIwpEvhSDVMArqcfJf/dLM1Ezdf+lFLgVdvec4TdJB
+        SMninE9xI+j+SzznakKqxg==
+X-Received: by 10.98.130.3 with SMTP id w3mr28229321pfd.128.1497920600865;
+        Mon, 19 Jun 2017 18:03:20 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id l63sm22249819pfc.132.2017.06.19.18.03.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 19 Jun 2017 18:03:19 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
+        peff@peff.net
+Subject: [PATCH v4 0/8] Improvements to sha1_file
+Date:   Mon, 19 Jun 2017 18:03:07 -0700
+Message-Id: <cover.1497920092.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1-goog
+In-Reply-To: <cover.1497035376.git.jonathantanmy@google.com>
+References: <cover.1497035376.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/20, Andrew Ardill wrote:
-> On 20 June 2017 at 07:41, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> 
-> >    But as communicating between child_process is still an issue
-> >    and so there was no simple was to current carry out the
-> >    porting. And hence, a hack was used instead. But after
-> >    discussing it, instead using the repository-object patch
-> >    series will help to resolve these issues in this situation.
-> 
-> Just wondering, does that mean that your patch series is dependent on
-> the repository-object one? I saw some discussion around it recently
-> but couldn't see it in the latest whats cooking so maybe I missed what
-> has happened to it.
-> 
+Thanks, Peff and Junio for your comments. Here's an updated version and
+some replies to comments.
 
-Due to some of the discussion (and finding a bug with how git_path works
-with worktrees) I decided to break the series up into smaller bits since
-the original series was 30+ patches.  Once 'bw/config-h' and
-'bw/ls-files-sans-the-index' have been merged into next I'll probably
-send out v3 of the repository object series.
+> I also found this quite subtle. However, I don't think that
+> has_sha1_file() actually freshens. It's a bit confusing because
+> has_loose_object() reuses the check_and_freshen() function to do the
+> lookup, but it actually sets the "freshen" flag to false.
+> 
+> That's why in 33d4221c7 (write_sha1_file: freshen existing objects,
+> 2014-10-15), which introduced the freshening functions and converted
+> has_loose_object(), the actual write_sha1_file() function switched to
+> using the freshening functions directly (and obviously sets the freshen
+> parameter to true).
+
+Good catch.
+
+> I actually think all of that infrastructure could become part of
+> Jonathan's consolidated lookup, too. We would just need:
+> 
+>   1. A QUICK flag to avoid re-reading objects/pack when we don't find
+>      anything (which it looks like he already has).
+> 
+>   2. A FRESHEN flag to update the mtime of any item that we do find.
+> 
+> I suspect we may also need something like ONLY_LOOSE and ONLY_NONLOCAL
+> to meet all the callers (e.g., has_loose_object_nonlocal). Those should
+> be easy to implement, I'd think.
+
+For things like FRESHEN, ONLY_LOOSE, and ONLY_NONLOCAL, I was thinking
+that I would like to restrict these patches to only handle the cases
+that are agnostic to the type of storage (in preparation for missing
+blob handling patches).
+
+> I had the same thoughts (both on the name and the "vocabularies"). IMHO
+> we should consider allocating the bits from the same set. There's only
+> one HAS_SHA1 flag, and it has an exact match in OBJECT_INFO_QUICK.
+
+Agreed - in this patch set, I have also consolidated the relevant flags,
+including LOOKUP_REPLACE_OBJECT and LOOKUP_UNKNOWN_OBJECT.
+
+In addition, Junio has mentioned the potential confusion in behavior
+between a NULL and an empty struct passed to
+sha1_object_info_extended(). In this patch set, I require non-NULL, and
+have added an optimization that avoids accessing the pack in certain
+situations, but this optimization requires checking a lot of fields. Let
+me know what you think.
+
+Jonathan Tan (8):
+  sha1_file: teach packed_object_info about typename
+  sha1_file: rename LOOKUP_UNKNOWN_OBJECT
+  sha1_file: rename LOOKUP_REPLACE_OBJECT
+  sha1_file: move delta base cache code up
+  sha1_file: refactor read_object
+  sha1_file: improve sha1_object_info_extended
+  sha1_file: do not access pack if unneeded
+  sha1_file: refactor has_sha1_file_with_flags
+
+ builtin/cat-file.c   |   7 +-
+ builtin/fetch.c      |  10 +-
+ builtin/index-pack.c |   3 +-
+ cache.h              |  37 +++--
+ sha1_file.c          | 391 ++++++++++++++++++++++++++-------------------------
+ streaming.c          |   1 +
+ 6 files changed, 228 insertions(+), 221 deletions(-)
 
 -- 
-Brandon Williams
+2.13.1.611.g7e3b11ae1-goog
+
