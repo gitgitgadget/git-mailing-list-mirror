@@ -2,124 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83D5F1FA7B
-	for <e@80x24.org>; Tue, 20 Jun 2017 03:03:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 523CB1FA7B
+	for <e@80x24.org>; Tue, 20 Jun 2017 03:12:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751118AbdFTDDk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Jun 2017 23:03:40 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:32857 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750960AbdFTDDj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Jun 2017 23:03:39 -0400
-Received: by mail-pg0-f67.google.com with SMTP id u62so13480730pgb.0
-        for <git@vger.kernel.org>; Mon, 19 Jun 2017 20:03:39 -0700 (PDT)
+        id S1751265AbdFTDMq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Jun 2017 23:12:46 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34901 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751131AbdFTDMp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Jun 2017 23:12:45 -0400
+Received: by mail-pf0-f193.google.com with SMTP id s66so20502436pfs.2
+        for <git@vger.kernel.org>; Mon, 19 Jun 2017 20:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=k9W+m5qe9mRXdBKdmLCr+2RqsDTrwgyGVzqczs772pY=;
-        b=Jl6BnnBifNnmZmerQ1Zbh+I1ikjiss/+vj0nIJF/7j7GXUYIERFgVc09AsG6szmvlS
-         Wh7avAQmD33qY2Al7yH7AHFJl6hGeqRvFB57EVyVtQzt3qvi+zeKT4MHO0Q2zg9Yogd8
-         Fzq2N5YonyAlMPqh93M7SeZui+RkJ6GRUsfXBTRWnw/9e6vZEDjv2H1LttF1MB8cePOa
-         QsV8rzOgVv/i57Jskt1NgRswPxeBEON1LNFU4CTCGU77d34TsqmmtGPylSIkQofwiJVL
-         L/juCmlKkyz3gw5nT+ic/VZwY5ck0CFpNK6GjrbrDnVRMrGugJ7TYMPV5NWCmFsOO8A/
-         brPg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=2+fGO7bO7+ycsgBlhMfcoHxjZXeMeXUcEHmSAP2lJLw=;
+        b=a5EynJRgC1ClaEr6pDZAJH9IcpCeutCbNYeLmkTLTWCrjhgAYEk9bIDwrnIYY4noHS
+         0tmdpgLzE0ZjDAcM9wpDOIPalVXWV4VLgFfpFJD+2DolkMEt12AJhBJT35dc0kdaX979
+         fjlXyNsa3msr7Vs5iaKkfTrQZns8ddQA8KWiFNJMeLzPITCyXNRn5cK6mMHCbuweHRLx
+         VOI1Sh0EpTAFVIGxbCs6AMrL1fN0NCB52wldpk35T2lDwM2UCY+gR1XiY7dfrb7UiYfM
+         m5kfaJU+EP7CE+axEqf3BNWg3US3qkyQuVrQ1Bhc4KV7odFRuJQHTfJe1DqwcImuzEtk
+         99mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=k9W+m5qe9mRXdBKdmLCr+2RqsDTrwgyGVzqczs772pY=;
-        b=UActf9tMrQ8eSF1ONkvTX2u511XSPSmqjbHHOM8sRUeJLTfughI81YHg3HsOtbCcFv
-         XcocscJp/79ezMmehek7Eu5eMJDc02jZzsJJ3T8q6tkueB6Btf4RCmp/hIzJnBkRAw4D
-         XbNjYXGBgPRLR1cbRp/maAv5wV2fxkQ9Ya2cTWNvCt9HgKNaD2uLmurI/oqKp/7zJrPi
-         owoed9TC8SG1Zt5DGf214HE7YODtTeDqvb49A1P5WufgWaxDG1j1GsKQgztxj7ShkV0n
-         FPWj2rO/eLZvmGxwYmMfrtVjxEwdnQ3iccwvaMfPNHAk8uaC8ncMsBCnLM7oZ4SgoQut
-         1Bdw==
-X-Gm-Message-State: AKS2vOy1ZotKOGA3CiMoGz1G8Nr4dykSEHSX/E+Sj8tjKkI3VU8HC7at
-        ZYQjmyDGsS1smg==
-X-Received: by 10.98.135.200 with SMTP id i191mr28666312pfe.227.1497927819144;
-        Mon, 19 Jun 2017 20:03:39 -0700 (PDT)
+         :references;
+        bh=2+fGO7bO7+ycsgBlhMfcoHxjZXeMeXUcEHmSAP2lJLw=;
+        b=fqQeT8c+FWNa0jhi76Q42YScuQ+pvdrps0AafZd4X07PmQJt/OmygJchMMU6rBApEU
+         pCeiXtvPQJ/XLtgRvwU9m8JcuclpvXIcVQSo6MFghAht9G/x/qzB5mxMyLCcsJtSH+8t
+         sZGANOpyAc3qMkEDlewPzO1srmp73mcevkVkZ/DPGx3wO5IuaL0aVs8dzlaCQXhSYMDT
+         TNnmMtVfOBqPMwTWAvFxrL/EVz5v2trV7lNaDt11GqyO1hZI84kh4WxYEik5Di8fNzKa
+         92lnHvMfoyULKCXTf7Afnxu5dpwJ0X5lYcTvczYiQgvdndrI7r/vJtA7dysRFwnFqfjw
+         cPEQ==
+X-Gm-Message-State: AKS2vOzvchkXHrbuwIVMOXn7yCZuxNU5KvehuhuTo1Pjme3+OjpUio9B
+        C6zjEDzBfpMuByx8r3WORw==
+X-Received: by 10.99.65.7 with SMTP id o7mr30090181pga.90.1497928364913;
+        Mon, 19 Jun 2017 20:12:44 -0700 (PDT)
 Received: from localhost.localdomain ([2405:204:7088:3652:1086:ad92:af48:f1cf])
-        by smtp.gmail.com with ESMTPSA id 186sm22585415pfv.15.2017.06.19.20.03.36
+        by smtp.gmail.com with ESMTPSA id z69sm25921432pff.0.2017.06.19.20.12.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Jun 2017 20:03:38 -0700 (PDT)
+        Mon, 19 Jun 2017 20:12:44 -0700 (PDT)
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
-Cc:     peff@peff.net, git@vger.kernel.org,
+To:     sbeller@google.com
+Cc:     gitster@pobox.com, git@vger.kernel.org,
         Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Subject: [PATCH 3/3] Add tests for the contextual initial status message
-Date:   Tue, 20 Jun 2017 08:32:20 +0530
-Message-Id: <20170620030220.7323-3-kaarticsivaraam91196@gmail.com>
+Subject: [PATCH/RFC] Cleanup Documentation
+Date:   Tue, 20 Jun 2017 08:42:14 +0530
+Message-Id: <20170620031214.7616-1-kaarticsivaraam91196@gmail.com>
 X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170620030220.7323-1-kaarticsivaraam91196@gmail.com>
-References: <xmqqshiwt1w6.fsf@gitster.mtv.corp.google.com>
- <20170620030220.7323-1-kaarticsivaraam91196@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGZ79kbMhQpxUa5TXK=WCzzKUCZ5vx3oC+fFTTozpgQihsUjTA@mail.gmail.com>
+References: <CAGZ79kbMhQpxUa5TXK=WCzzKUCZ5vx3oC+fFTTozpgQihsUjTA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Also, fixed minor spacing issue
+Make following changes to the git-submodule
+documentation:
 
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
+* Remove redundancy
+* Remove unclear back reference
+* Use more appropriate word
+* Quote important word
+
+Suggestions-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 ---
- t/t7508-status.sh | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ Currently used the word "canonical" instead of "humanish". If that word
+ sounds more suitable then this is a [PATCH] and not a [PATCH/RFC].
 
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index fb00e6d9b..6cf3af9d9 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1494,9 +1494,39 @@ EOF
- test_expect_success 'git commit -m will commit a staged but ignored submodule' '
- 	git commit -uno -m message &&
- 	git status -s --ignore-submodules=dirty >output &&
--	 test_i18ngrep ! "^M. sm" output &&
-+	test_i18ngrep ! "^M. sm" output &&
- 	git config --remove-section submodule.subname &&
- 	git config -f .gitmodules  --remove-section submodule.subname
- '
+
+ Documentation/git-submodule.txt | 37 +++++++++++++++----------------------
+ 1 file changed, 15 insertions(+), 22 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 74bc6200d..045fef417 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -63,14 +63,6 @@ add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--dep
+ 	to the changeset to be committed next to the current
+ 	project: the current project is termed the "superproject".
+ +
+-This requires at least one argument: <repository>. The optional
+-argument <path> is the relative location for the cloned submodule
+-to exist in the superproject. If <path> is not given, the
+-"humanish" part of the source repository is used ("repo" for
+-"/path/to/repo.git" and "foo" for "host.xz:foo/.git").
+-The <path> is also used as the submodule's logical name in its
+-configuration entries unless `--name` is used to specify a logical name.
+-+
+ <repository> is the URL of the new submodule's origin repository.
+ This may be either an absolute URL, or (if it begins with ./
+ or ../), the location relative to the superproject's default remote
+@@ -87,21 +79,22 @@ If the superproject doesn't have a default remote configured
+ the superproject is its own authoritative upstream and the current
+ working directory is used instead.
+ +
+-<path> is the relative location for the cloned submodule to
+-exist in the superproject. If <path> does not exist, then the
+-submodule is created by cloning from the named URL. If <path> does
+-exist and is already a valid Git repository, then this is added
+-to the changeset without cloning. This second form is provided
+-to ease creating a new submodule from scratch, and presumes
+-the user will later push the submodule to the given URL.
++The optional argument <path> is the relative location for the cloned
++submodule to exist in the superproject. If <path> is not given, the
++canonical part of the source repository is used ("repo" for
++"/path/to/repo.git" and "foo" for "host.xz:foo/.git"). If <path>
++exists and is already a valid Git repository, then this is added
++to the changeset without cloning. The <path> is also used as the
++submodule's logical name in its configuration entries unless `--name`
++is used to specify a logical name.
+ +
+-In either case, the given URL is recorded into .gitmodules for
+-use by subsequent users cloning the superproject. If the URL is
+-given relative to the superproject's repository, the presumption
+-is the superproject and submodule repositories will be kept
+-together in the same relative location, and only the
+-superproject's URL needs to be provided: git-submodule will correctly
+-locate the submodule using the relative URL in .gitmodules.
++The given URL is recorded into `.gitmodules` for use by subsequent users
++cloning the superproject. If the URL is given relative to the
++superproject's repository, the presumption is the superproject and
++submodule repositories will be kept together in the same relative
++location, and only the superproject's URL needs to be provided.
++git-submodule will correctly locate the submodule using the relative
++URL in .gitmodules.
  
-+test_expect_success '"No commits yet" should be noted in status output' '
-+	git checkout --orphan empty-branch-1 &&
-+	git status >output &&
-+	test_i18ngrep "No commits yet" output
-+'
-+
-+test_expect_success '"No commits yet" should not be noted in status output' '
-+	git checkout --orphan empty-branch-2 &&
-+	test_commit test-commit-1 &&
-+	git status >output &&
-+	test_i18ngrep ! "No commits yet" output
-+'
-+
-+test_expect_success '"Initial commit" should be noted in commit template' '
-+	git checkout --orphan empty-branch-3 &&
-+	touch to_be_committed_1 &&
-+	git add to_be_committed_1 &&
-+	git commit --dry-run >output &&
-+	test_i18ngrep "Initial commit" output
-+'
-+
-+test_expect_success '"Initial commit" should not be noted in commit template' '
-+	git checkout --orphan empty-branch-4 &&
-+	test_commit test-commit-2 &&
-+	touch to_be_committed_2 &&
-+	git add to_be_committed_2 &&
-+	git commit --dry-run >output &&
-+	test_i18ngrep ! "Initial commit" output
-+'
-+
- test_done
+ status [--cached] [--recursive] [--] [<path>...]::
+ 	Show the status of the submodules. This will print the SHA-1 of the
 -- 
 2.11.0
 
