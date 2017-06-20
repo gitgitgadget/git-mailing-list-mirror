@@ -2,112 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 910A520282
-	for <e@80x24.org>; Tue, 20 Jun 2017 13:48:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D64C520282
+	for <e@80x24.org>; Tue, 20 Jun 2017 14:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751919AbdFTNss (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 09:48:48 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:33923 "EHLO
-        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751590AbdFTNsq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 09:48:46 -0400
-Received: by mail-io0-f180.google.com with SMTP id i7so84918670ioe.1
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 06:48:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LGjr2NjIYpQNraLJBHW/hm6qf3W+IHYri1HPEXBTBB8=;
-        b=M7Lk+LJMVAh+8VA6zbSj1bmZBqviUPxiqzgNv4/mAM/5i7m4qWJoZS9m0y1x8bCQex
-         OXNqh4ooqKMyTznrapxqxk6XDa/+MIt158DWLK/4CLf2rkulbLsySyb9qqwnYLL3CRnS
-         9R07u+YB3dNm9gHS4UOW4mMnA7lte9foKFFsuwuJg1zSv+WtqTA31Q33nQfOelEF8S2B
-         7KUN/gYMthNTiHWq8Jvi14e0s8PBj1uMWAzq8jGSbOpMNF9XdbRpMlSYjM3+mq0QtslY
-         VDTfpRDzeUuHVWtnLASo/tq4LznafWMQXWhFZoc8HcMVpcW5wdc2PxiPYlVFkaQIbRdE
-         3LyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LGjr2NjIYpQNraLJBHW/hm6qf3W+IHYri1HPEXBTBB8=;
-        b=EjzBb4SLQuEpNzzDlEOGJMOdvcA4x7BbAXuffMWAW1jGKbVmls+dyPVUbqBOgRktNs
-         ltv+WRLTKtkiTLutPOLVgLbWEwH4JM0Czx+xGEOxEeIh6AhPuaj2kCPQpcCm+yytQXy3
-         tjXyyYrj3L1zIBzccAnFMT6JIynIzmSyOpjL8kgd5yOpbzr88OoWttGNRizuLRyyzXVB
-         6j5XCDUQULaRiyONez8BW8yQ4fpS7kJUf06nJg8I7ovMAPLh/BFodq+BQ5cQp31Mcpaa
-         9RGAUlXKCc9EoFHDBM6tpWrYEsErB9Volob7vl4hezu9vWOtssXtRwuxgWw0FRNGdrN5
-         nDwg==
-X-Gm-Message-State: AKS2vOw24ixqTnqXwx4R0B9JEZLCPRN1HiwKzAbZdiNW0GVZm0C/EYWG
-        97VErDH0cauv6EMNzQ4jh45TSHO8MeXz
-X-Received: by 10.107.145.86 with SMTP id t83mr30782914iod.129.1497966525114;
- Tue, 20 Jun 2017 06:48:45 -0700 (PDT)
+        id S1752343AbdFTOIm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 10:08:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46268 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752310AbdFTOIj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 10:08:39 -0400
+Received: (qmail 22918 invoked by uid 109); 20 Jun 2017 14:08:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 20 Jun 2017 14:08:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13249 invoked by uid 111); 20 Jun 2017 14:08:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 20 Jun 2017 10:08:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Jun 2017 10:08:38 -0400
+Date:   Tue, 20 Jun 2017 10:08:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: "There are too many unreachable loose objects" - why don't we
+ run 'git prune' automatically?
+Message-ID: <20170620140837.fq3wxb63lnqay6xz@sigill.intra.peff.net>
+References: <9C2F2EA2-0C59-4EA2-8C8E-10228FB82D90@gmail.com>
+ <20170609052755.dsuqd4gizi2opoya@sigill.intra.peff.net>
+ <7497DFA7-3F4E-4DB2-B31B-FDDEB2F30BB8@gmail.com>
+ <20170610080626.sjujpmgkli4muh7h@sigill.intra.peff.net>
+ <EDF2B923-8A5F-436E-BDB8-82249C6052ED@gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.40.70 with HTTP; Tue, 20 Jun 2017 06:48:44 -0700 (PDT)
-In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
-References: <20170620075523.26961-1-chriscool@tuxfamily.org>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 20 Jun 2017 15:48:44 +0200
-Message-ID: <CAP8UFD2S21er8U8KA6MBfu5uES5iNd8zV0=wcVNtAbKv5wVpuQ@mail.gmail.com>
-Subject: Re: [RFC/PATCH v4 00/49] Add initial experimental external ODB support
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <EDF2B923-8A5F-436E-BDB8-82249C6052ED@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 20, 2017 at 9:54 AM, Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Future work
-> ~~~~~~~~~~~
->
-> First sorry about the state of this patch series, it is not as clean
-> as I would have liked, butI think it is interesting to get feedback
-> from the mailing list at this point, because the previous RFC was sent
-> a long time ago and a lot of things changed.
->
-> So a big part of the future work will be about cleaning this patch series.
->
-> Other things I think I am going to do:
->
->   -
+On Sun, Jun 18, 2017 at 03:22:29PM +0200, Lars Schneider wrote:
 
-Ooops, I had not save my emacs buffer where I wrote this when I sent
-the patch series.
+> > To be honest, the fact that we have to write this warning at all is a
+> > sign that Git is not doing a very good job. The best place to spend
+> > effort would be to teach git-gc to pack all of the unreachable objects
+> > into a single "cruft" pack, so this problem doesn't happen at all (and
+> > it's way more efficient, as well).
+> > 
+> > The big problem with that approach is that we lose individual-object
+> > timestamps. Each object just gets the timestamp of its surrounding pack,
+> > so as we continually ran auto-gc, the cruft-pack timestamp would get
+> > updated and we'd never drop objects. So we'd need some auxiliary file
+> > (e.g., pack-1234abcd.times) that stores the per-object timestamps. This
+> > can be as small as a 32- or 64-bit int per object, since we can just
+> > index it by the existing object list in the pack .idx.
+> 
+> Why can't we generate a new cruft-pack on every gc run that detects too
+> many unreachable objects? That would not be as efficient as a single
+> cruft-pack but it should be way more efficient than the individual
+> objects, no?
+> 
+> Plus, chances are that the existing cruft-packs are purged with the next
+> gc run anyways.
 
-This should have been:
+Interesting idea. Here are some thoughts in random order.
 
-Other things I think I may work on:
+That loses some delta opportunities between the cruft packs, but that's
+certainly no worse than the all-loose storage we have today.
 
-  - Remove the "odb.<odbname>.scriptMode" and "odb.<odbname>.command"
-    options and instead have just "odb.<odbname>.scriptCommand" and
-    "odb.<odbname>.subprocessCommand".
+One nice aspect is that it means cruft objects don't incur any I/O cost
+during a repack.
 
-  - Use capabilities instead of "odb.<odbname>.fetchKind" to decide
-    which kind of "get" will be used.
+It doesn't really solve the "too many loose objects after gc" problem.
+It just punts it to "too many packs after gc". This is likely to be
+better because the number of packs would scale with the number of gc
+runs, rather than the number of crufty objects. But there would still be
+corner cases if you run gc frequently. Maybe that would be acceptable.
 
-  - Better test all the combinations of the above modes with and
-    without "have" and "put" instructions.
+I'm not sure how the pruning process would work, especially with respect
+to objects reachable from other unreachable-but-recent objects. Right
+now the repack-and-delete procedure is done by git-repack, and is
+basically:
 
-  - Maybe also have different kinds of "put" so that Git could pass
-    either a git object a plain object or ask the helper to retreive
-    it directly from Git's object database.
+  1. Get a list of all of the current packs.
 
-  - Maybe add an "init" instruction as the script mode has something
-    like this called "get_cap" and it would help the sub-process mode
-    too, as it makes it possible for Git to know the capabilities
-    before trying to send any instruction (that might not be supported
-    by the helper). The "init" instruction would be the only required
-    instruction for any helper to implement.
+  2. Ask pack-objects to pack everything into a new pack. Normally this
+     is reachable objects, but we also include recent objects and
+     objects reachable from recent objects. And of course with "-k" all
+     objects are kept.
 
-  - Add more long running tests and improve tests in general.
+  3. Delete everything in the list from (1), under the assumption that
+     anything worth keeping was repacked in step (2), and anything else
+     is OK to drop.
+
+So if there are regular packs and cruft packs, we'd have to know in step
+3 which are which. We'd delete the regular ones, whose objects have all
+been migrated to the new pack (either a "real" one or a cruft one), but
+keep the crufty ones whose timestamps are still fresh.
+
+That's a small change, and works except for one thing: the reachable
+from recent objects. You can't just delete a whole cruft pack. Some of
+its objects may be reachable from objects in other cruft packs that
+we're keeping. In other words, you have cruft packs where you want to
+keep half of the objects they contain. How do you do that?
+
+I think you'd have to make pack-objects aware of the concept of cruft
+packs, and that it should include reachable-from-recent objects in the
+new pack only if they're in a cruft pack that is going to be deleted. So
+those objects would be "rescued" from the cruft pack before it goes away
+and migrated to the new cruft pack. That would effectively refresh their
+timestamp, but that's fine. They're reachable from objects with that
+fresh timestamp already, so effectively they couldn't be deleted until
+that timestamp is hit.
+
+So I think it's do-able, but it is a little complicated.
+
+-Peff
