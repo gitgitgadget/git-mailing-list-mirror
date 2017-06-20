@@ -2,164 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F35420282
-	for <e@80x24.org>; Tue, 20 Jun 2017 12:46:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7707220282
+	for <e@80x24.org>; Tue, 20 Jun 2017 13:37:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751124AbdFTMq0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 08:46:26 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:33206 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750993AbdFTMqZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 08:46:25 -0400
-Received: by mail-wr0-f173.google.com with SMTP id r103so91302585wrb.0
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 05:46:24 -0700 (PDT)
+        id S1751940AbdFTNhe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 09:37:34 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36477 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751060AbdFTNhd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 09:37:33 -0400
+Received: by mail-pf0-f196.google.com with SMTP id y7so23127061pfd.3
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 06:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=4A8dmLBnpjrTLf8WEkfFiMClnD5Ck7KbUc8lRCl+fBQ=;
-        b=XUSF0ZSmE7QAeyqhDmKh1ghWmiQRGTwhy+o3biaMLjKCkxoVRZ/TLbwE3QJAmYQkFW
-         LYG37gLpkIVr80fDlzhpy9l0v5SeKOkOPUcRjIhNVOliZhGCoFufB8aLqWgiiwHrz2x6
-         igKt24euGH0ChS955VWFePOMTAtzv8niTLgtVvEzKVeTU89PY7iA0abfMzyJOxSuKwlF
-         /J1kjImddAk4dgwKeR2W7IWK2Ayr3NaJKaosPydHc3LfbF6eT3DFbcJh22kCErV9+1U/
-         8RdWcHKtfJX4dDCyamCjwt4CJ1JM6JA7DUKDEWK952l/kl0IPP0hRPFyETrq+PaNEKnq
-         6ncA==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=zZ4XH7EbMcqSx+F1wo7Wndt9s6IusdXVXo4Ufhfwyzc=;
+        b=I1Bq/wZyfQ5/unB43KBPSvL4bMSpLpeBy7PiQ4sMxGEJEhp5T/jagk7uGB6eMjOOL1
+         N0YjW6FP/ezzeMQxATLJj4ywId2ZkArYN7Yca+GAcipc0c0EpHoNl4dgf38LsV46GSzI
+         Wy85NUwZfBICpQHd+SP3pPX1OSpvjBIfFjPrdMehA8RPg6BbhKXQXf48KrGjYvzOYwk5
+         pMxq6AvDbmea+qQx7X4KmrpxMZDb9HI8ucAWkj3bjoGf7ZJHVFMs9vP3SWgqZD5ZTYCh
+         Co2A3B51APqIKFJep0A7Oj4LlxTQ2xh92DO18AexSqzjRyJ/Bw3ZRdaTy5yY9SaswLQR
+         n9wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=4A8dmLBnpjrTLf8WEkfFiMClnD5Ck7KbUc8lRCl+fBQ=;
-        b=USAX6wVr7j7nxp//gOLAMN1j9xlHr/20S036DRhETjEj0hKDkP0x1+oXvU9Hm4XCS5
-         +WZVfe1f/8z3Mdr5WGiTTnGGpYR8ZKJFRefu7cf+8waxm9at1GYNQ0F2vaw5x/yodg8Z
-         pQrVILTroE5T1osJBencMcPJrZO6IqBeNwTi1X18yAYHgEqIXppqq9ONFtdsgTs5BYxR
-         FQR9mIgKLYcS9yeOwglCk7RVd4za1nF7q0QYtI7PWgAyLjeftLsdp1Ys3sGSuHDfEvUk
-         pjFpTf4trNLLa2FUnbmQhNfnG5mWL4Q89yTXIARXnHqhBE+8EpJagkJa75gGjXi6Zq2u
-         ig8Q==
-X-Gm-Message-State: AKS2vOzEVYqu1fPGTjUzrEI6sPhBr+3nCywMbqVtUukbKMOE/K6QPmqP
-        Cw/gnewIZQvDRZfXkhY=
-X-Received: by 10.223.163.85 with SMTP id d21mr6136431wrb.95.1497962783372;
-        Tue, 20 Jun 2017 05:46:23 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id i5sm7513669wmc.0.2017.06.20.05.46.22
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 05:46:22 -0700 (PDT)
-Content-Type: text/plain; charset=iso-8859-1
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Transform log message during migration svn -> git (using git-svn)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <90ee80a910884e1e98fa8a5001ae850c@GTLBML3EX0005.bagmail.net>
-Date:   Tue, 20 Jun 2017 14:46:22 +0200
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <BDA6D349-0DF9-49F3-B2B6-0B1AE3BBD052@gmail.com>
-References: <8ce2bf074fcf4d6181a29eb3e7fff132@GTLBML3EX0005.bagmail.net> <EAA4B747-FA00-4A3B-88CD-AF8EBE1F8586@gmail.com> <90ee80a910884e1e98fa8a5001ae850c@GTLBML3EX0005.bagmail.net>
-To:     paul.mattke@s4m.com
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=zZ4XH7EbMcqSx+F1wo7Wndt9s6IusdXVXo4Ufhfwyzc=;
+        b=fG2+gMdbcrp5b3+DHeVEuoDrX+k1kdZVy2gCP0reF74emiuJST1K54kB4jIX+Myfec
+         DHfof/3xG71VnCUqJbaRFrlO6WHtuc+krRHSDxazl44mF18mqOJ0s022L1b2UsG5iXAa
+         eHaDQ0l7J4X4y2/DUjZaOgrO9ZSD7s3mpfPMStN8rTozCQS2lT+WQzpOTjIZ1L0Dl37Q
+         roz/QblqXQXnA6nShHGlQdMGCyCUg8LCQjykjQF6492BGPrYKXjduhCtQBT/piw76Sc0
+         Iw+K9Pk5xuGDgscJdvaiYGtlv00oJeWqwUApa28T9/d4PYsFYdDb9cNwLQL8y7QqKL7u
+         I0mQ==
+X-Gm-Message-State: AKS2vOw8v8dZOJC1v5vqJ8iia6K1iaskno0zFEZsI4sIVGterWZGKsTg
+        6n6KI/PX+tdBDQ==
+X-Received: by 10.84.129.4 with SMTP id 4mr36892081plb.9.1497965852036;
+        Tue, 20 Jun 2017 06:37:32 -0700 (PDT)
+Received: from unique-pc ([182.73.79.179])
+        by smtp.googlemail.com with ESMTPSA id u73sm27857708pfi.105.2017.06.20.06.37.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 20 Jun 2017 06:37:31 -0700 (PDT)
+Message-ID: <1497965839.2792.2.camel@gmail.com>
+Subject: Re: [PATCH 1/3] Contextually notify user about an initial commit
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     gitster@pobox.com, peff@peff.net, git@vger.kernel.org
+Date:   Tue, 20 Jun 2017 19:07:19 +0530
+In-Reply-To: <87o9tj86hs.fsf@gmail.com>
+References: <xmqqshiwt1w6.fsf@gitster.mtv.corp.google.com>
+         <20170620030220.7323-1-kaarticsivaraam91196@gmail.com>
+         <87o9tj86hs.fsf@gmail.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks for trying to help. A few comments regarding your suggestions.
 
-> On 20 Jun 2017, at 14:32, <paul.mattke@s4m.com> <paul.mattke@s4m.com> =
-wrote:
->=20
-> Well this is a possibility, of course. Our problem is that our SVN
-> repository contains about 220.000 revisions currently. As a colleague =
-of
-> mine said that the command you suggest might take about 4 seconds per
-> revision, it would take about 10 days to do this for our whole =
-repository.
-> So of course it could save a lot of time generally if such operation =
-could
-> be done immediately during git-svn.
+>  * Let's do that spacing fix (unrelated fix) in its own commit.
+> 
+Ok. That's a good point.
 
-You colleague is most likely correct. I suggested it as this is a one =
-time
-operation and therefore still somewhat practical from my point of view.
+>   * You should add tests along with the code being changed, and
+>     especially change tests that would fail with your new code,
+>     otherwise you break bisection.
+> 
+I'm not sure if the convention here is to keep tests along with change
+it tests. I thought it would be better to separate them as they are
+"separate" changes. They're separate because in case of any issues with
+the test it should be possible to identify them separately. This isn't
+possible when they are added along with the change. 
 
-If you don't like the solution then you need to change the git-svn code.
-Probably here somewhere (I am not familiar with this code):
-https://github.com/git/git/blob/master/git-svn.perl#L1836
+Further, adding them as a separate change change (commit) immediately
+after the change it tests would ease the task of finding the change it
+tests.
 
-- Lars
+If the convention here, really, is to add tests along with the
+change, I can't do anything but to follow it. I guess it should be
+mentioned somewhere in the Documentation/SubmittingPatches. AFAIK, I
+don't think it's mentioned there.
 
-PS: Please don't top post on this mailing list :-)
-https://en.wikipedia.org/wiki/Posting_style#Top-posting
+>  * I think the commit message here could be shorter & clearer at the
+>    same time.
+I don't think it's unclear. It's longer for the reason that follows.
+The commit message was crafted based on the following guideline found
+in Documentation/SubmittingPatches
 
+> The body should provide a meaningful commit message, which:
+> 
+>   . explains the problem the change tries to solve, i.e. what is 
+>     wrong with the current code without the change.
+> 
+>   . justifies the way the change solves the problem, i.e. why the
+>     result with the change is better.
+> 
+>   . alternate solutions considered but discarded, if any.
+> 
+I don't think the new commit message follows this. Both the commit
+messages are found below for comparison.
 
+Old one
+-------
+> On Tue, Jun 20 2017, Kaartic Sivaraam jotted:
+> 
+>  "git status" indicated "Initial commit" when HEAD points at
+>  an unborn branch.  This message is shared with the commit
+>  log template "git commit" prepares for the user when
+>  creating a commit (i.e. "You are about to create the initial
+>  commit"), and is OK as long as the reader is aware of the
+>  nature of the message (i.e. it guides the user working
+>  toward the next commit), but was confusing to new users,
+>  especially the ones who do "git commit -m message" without
+>  having a chance to pay attention to the commit log template.
+>  
+>  The "Initial commit" indication wasn't an issue in the commit
+>  template. Taking that into consideration, a good solution would
+>  be to contextually use different messages to indicate the user
+>  that there were no commits in this branch.
+> 
+>  A few alternatives considered were,
+>  
+>  * Waiting for initial commit
+>  * Your current branch does not have any commits
+>  * Current branch waiting for initial commit
+>  
+>  The most succint one, "No commits yet", among the alternatives
+>  was chosen.
+>  
+>  Helped-by: Junio C Hamano <gitster@pobox.com>
+>  Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+> 
 
->=20
-> Paul Mattke
-> Software Developer
-> -------------------------------------------------
-> Arvato Systems S4M GmbH
-> Am Coloneum 3
-> 50829 K=F6ln
-> =20
-> Phone: +49 221 28555-443
-> Fax: +49 221 28555-210
-> E-Mail: paul.mattke@s4m.com
-> www.s4m.arvato-systems.com
->=20
->=20
-> -----Urspr=FCngliche Nachricht-----
-> Von: Lars Schneider [mailto:larsxschneider@gmail.com]=20
-> Gesendet: Dienstag, 20. Juni 2017 11:32
-> An: Mattke, Paul, NMM-BPDD <paul.mattke@s4m.com>
-> Cc: git@vger.kernel.org
-> Betreff: Re: Transform log message during migration svn -> git (using
-> git-svn)
->=20
->=20
->> On 20 Jun 2017, at 09:32, paul.mattke@s4m.com wrote:
->>=20
->> Hi there,
->>=20
->> this is actually not really a bug report, but much more a feature=20
->> request (if I did not oversee an already existing feature like this):
->>=20
->> We want to migrate our SVN repository to GIT and will be using =
-git-svn=20
->> for that of course. Currently in SVN, all our commit log messages=20
->> start either
->> with:
->>=20
->> 123456 (a number, representing the Bug Id in our old legacy bug=20
->> tracker)
->>=20
->> or
->>=20
->> T123456 (a number, but prefixed with T, referring a TFS item in this=20=
+New one
+-------
+>  status: contextually notify user about an initial commit
+> 
+>  Change the output of "status" to say "No commits yet" when "git
+>  retaining the current "Initial commit" message displayed in the
+>  template that's displayed in the editor when the initial commit is
+>  being authored.
+> 
+>  The existing "Initial commit" message makes sense for the commit
+>  template where we're making the initial commit, but is confusing 
+>  when merely checking the status of a fresh repository without 
+>  having any commits yet.
+> 
+>  Helped-by: Junio C Hamano <gitster@pobox.com>
+>  Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+>  Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>  
 
->> case)
->>=20
->> During conversion to GIT, we want to replace the T in such log=20
->> messages with a #, so commits, referring a TFS item will start with
-> #123456 in the future.
->> We don=92t care about log messages which do not start with a T, only =
-the=20
->> TXXXXXX messages need to be transformed here.
->>=20
->> I guess an operation like this is currently not possible with =
-git-svn,=20
->> isn=92t it? So it would be nice, if a feature could be implemented =
-that=20
->> gives the user the possibility to specify some kind of script file =
-for=20
->> example, which transforms the log message in any way we want it.
->=20
-> You can migrate your repo from SVN to Git as is. Afterwards you can =
-fix up
-> the commit messages with the following command:
->=20
-> git filter-branch -f --msg-filter 'perl -lape "s/^T(\d+)/#\$1/"'
->=20
-> (this might take a while on a large repo)
->=20
-> - Lars
+>  * The commit message doesn't follow our usual format.
+Could you be more specific about where it's not following the format?
 
+-- 
+Regards,
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
