@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9418520D14
-	for <e@80x24.org>; Tue, 20 Jun 2017 07:56:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15CD520D11
+	for <e@80x24.org>; Tue, 20 Jun 2017 07:56:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752139AbdFTH41 (ORCPT <rfc822;e@80x24.org>);
+        id S1752143AbdFTH43 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 03:56:29 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:34423 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752130AbdFTH41 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 20 Jun 2017 03:56:27 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34948 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752103AbdFTH4Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 03:56:25 -0400
-Received: by mail-wm0-f67.google.com with SMTP id d64so21285796wmf.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:24 -0700 (PDT)
+Received: by mail-wr0-f194.google.com with SMTP id y25so14133016wrd.1
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Xv9iPgsvUuoQY/cSL5o/o5Y+uJ5e79HWXkssP4B5qcM=;
-        b=aU8IEAmSLxNDfKb5x/5S7k6tmyGHcfUD3VnU3ObMONtYWKX1pCzkoEUvIgafMdWq4m
-         PcUXmnQn8oMW/8Lmi8l6pfkmYjH9GI4btPf1ZV63n+LWCschqBcdvfepY2Pvo2p61DqA
-         RZ4H7tYMg4XbLrMn1c1MlDy3M5CL1LJaC5kSVzjYJGvuuvms1KDbJ9lfetNFbSoRlMvu
-         391q8AYYBUW3XR+WhNx7qb1ooPKR8gdKsrFYSTK4Yyr3ihqdY9U59alGxehM/ml9/9gQ
-         q0ZtEBkOkigLttq0w5HspcXclOf2lc3NG4WP44DD3XRUnS3403Z1a//vvaSISBGH/Azn
-         w0Uw==
+        bh=6qFoUhq/8WU8tLhnjZ3k3z21QyGKplggE5Y5QdI3iLc=;
+        b=TBu0wYGtrDIKnZXZcEIO29jiUjTcUur1lpgsnFLv0Ast15b58W6yY1lJu7hAwMi6IH
+         E/aZk9aPnKk2kXT90Mse+rsDuWROZAIp3zdsLozoYSruqKdIoY41CkR+0fh4/NVKAqj/
+         EboMfMA71mr71tRoGtsZ9YIQgbnueomlo/xU3Y7pXqdoV2Gi/tYN1a7hdaPK2lF10xIm
+         L4I4XoTF9E4Xj5+418Luf5xWSliQwGbqgsbFKGEonez4LgGIyi7DDfADzn8SUQNsbnP4
+         fORHP8kp2qfLxOlVQq+35ly6y7F7kMc/GP1YhSE5btDxinQboaLiiyOmh94KfRFkJVuH
+         DEfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Xv9iPgsvUuoQY/cSL5o/o5Y+uJ5e79HWXkssP4B5qcM=;
-        b=LN6MJRTSMNH2umkRdxXkmDHplKDCzyBbDMR8+imZES3R5RhqoUTVOH9lu2UBqh/oY+
-         kfDNrypKvAQaRJPz0Q2XtTiuuSao1QgTOOPTiqc05hVh/uyT3JPGXgetFxmzxEufPLRS
-         9deAsB/jIIkYIg7VmagE9j7fysCuBkibtY/GC1JgXtxzVp+clIrxLirPccakuBdhpdG2
-         naYyUWOo2I5s+r/pxvKe7JYHh5ufBaKo3LrLBuWBP8PH7PH/1JO4vu9kt+mDukvQtdFB
-         iE9ix6YeY18bYyi1UV5SGu9nTYUPvm4VGG0DbCS3vkzam9YnyfF8SwMcU09K+Pkv4fm+
-         yfUw==
-X-Gm-Message-State: AKS2vOzEdURP+NcwhK35YU69OEmF07wA4vsaYbsASgYrlAjmn0i6eSRu
-        wSFxSnLbGFuWKQgQ
-X-Received: by 10.28.50.70 with SMTP id y67mr1816417wmy.62.1497945383451;
-        Tue, 20 Jun 2017 00:56:23 -0700 (PDT)
+        bh=6qFoUhq/8WU8tLhnjZ3k3z21QyGKplggE5Y5QdI3iLc=;
+        b=oBbHKaiWRdX8VuBDeycBARQCEApl/+yzjIkxpKPDG6wxUo3EUgtvNwSUWTa6kQDbtN
+         uUvm5Oe+BYSr0ihlBZEOUaZuHTT8h9MaPADZS2e9aDcbyAtn/HYrnp7+AZsJr3oE4jsB
+         ppjNPK+oqtT8nxnncnhRTFbOpSEPrg+utS6dtaL1TGWxgio++PEa5NSBCsPfa4DaW0Kj
+         Uimt4MSsH1C/KChRZy8XOixos5BhYHiOUsOKu42vc+gKyopsEagVa01+TM6XG480RT36
+         NkftIxNHSqcl5qBynasBBtZVfYCqfe1HKhJLrI4BZk/8XfTxRlbHFS53s5+O6wJYsKut
+         DmuA==
+X-Gm-Message-State: AKS2vOxvhAQwWdLSSKxq/AOBj7zCLi+HHDx+pAUnIroaFI2OHLX9y20m
+        GhGs+WY5xbiE4C+M
+X-Received: by 10.223.182.136 with SMTP id j8mr11580753wre.122.1497945384687;
+        Tue, 20 Jun 2017 00:56:24 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.22
+        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 00:56:22 -0700 (PDT)
+        Tue, 20 Jun 2017 00:56:24 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -55,10 +55,11 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Mike Hommey <mh@glandium.org>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH v4 26/49] odb-helper: add script_mode
-Date:   Tue, 20 Jun 2017 09:55:00 +0200
-Message-Id: <20170620075523.26961-27-chriscool@tuxfamily.org>
+        Christian Couder <chriscool@tuxfamily.org>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: [RFC/PATCH v4 27/49] Documentation: add read-object-protocol.txt
+Date:   Tue, 20 Jun 2017 09:55:01 +0200
+Message-Id: <20170620075523.26961-28-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.565.gbfcd7a9048
 In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
 References: <20170620075523.26961-1-chriscool@tuxfamily.org>
@@ -67,121 +68,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Ben Peart <benpeart@microsoft.com>
+
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- external-odb.c                 | 4 ++++
- odb-helper.h                   | 1 +
- t/t0400-external-odb.sh        | 2 ++
- t/t0410-transfer-e-odb.sh      | 2 ++
- t/t0420-transfer-http-e-odb.sh | 7 ++++++-
- 5 files changed, 15 insertions(+), 1 deletion(-)
+ Documentation/technical/read-object-protocol.txt | 102 +++++++++++++++++++++++
+ 1 file changed, 102 insertions(+)
+ create mode 100644 Documentation/technical/read-object-protocol.txt
 
-diff --git a/external-odb.c b/external-odb.c
-index 502380cac2..2efa805d12 100644
---- a/external-odb.c
-+++ b/external-odb.c
-@@ -49,6 +49,10 @@ static int external_odb_config(const char *var, const char *value, void *data)
- 
- 	if (!strcmp(key, "command"))
- 		return git_config_string(&o->cmd, var, value);
-+	if (!strcmp(key, "scriptmode")) {
-+		o->script_mode = git_config_bool(var, value);
-+		return 0;
-+	}
- 	if (!strcmp(key, "fetchkind")) {
- 		const char *fetch_kind;
- 		int ret = git_config_string(&fetch_kind, var, value);
-diff --git a/odb-helper.h b/odb-helper.h
-index 2dc6d96c40..44c98bbf56 100644
---- a/odb-helper.h
-+++ b/odb-helper.h
-@@ -13,6 +13,7 @@ struct odb_helper {
- 	const char *name;
- 	const char *cmd;
- 	enum odb_helper_fetch_kind fetch_kind;
-+	int script_mode;
- 
- 	struct odb_helper_object {
- 		unsigned char sha1[20];
-diff --git a/t/t0400-external-odb.sh b/t/t0400-external-odb.sh
-index c3cb0fdc84..18d8c38862 100755
---- a/t/t0400-external-odb.sh
-+++ b/t/t0400-external-odb.sh
-@@ -49,6 +49,7 @@ test_expect_success 'alt objects are missing' '
- 
- test_expect_success 'helper can retrieve alt objects' '
- 	test_config odb.magic.command "$HELPER" &&
-+	test_config odb.magic.scriptMode true &&
- 	test_config odb.magic.fetchKind "gitObject" &&
- 	cat >expect <<-\EOF &&
- 	two
-@@ -69,6 +70,7 @@ test_expect_success 'helper can add objects to alt repo' '
- 
- test_expect_success 'commit adds objects to alt repo' '
- 	test_config odb.magic.command "$HELPER" &&
-+	test_config odb.magic.scriptMode true &&
- 	test_config odb.magic.fetchKind "gitObject" &&
- 	test_commit three &&
- 	hash3=$(git ls-tree HEAD | grep three.t | cut -f1 | cut -d\  -f3) &&
-diff --git a/t/t0410-transfer-e-odb.sh b/t/t0410-transfer-e-odb.sh
-index cba89866e2..8de9a08d7c 100755
---- a/t/t0410-transfer-e-odb.sh
-+++ b/t/t0410-transfer-e-odb.sh
-@@ -90,6 +90,7 @@ test_expect_success 'setup first alternate repo' '
- 	git init alt-repo1 &&
- 	test_commit zero &&
- 	git config odb.magic.command "$HELPER1" &&
-+	git config odb.magic.scriptMode true &&
- 	git config odb.magic.fetchKind "gitObject"
- '
- 
-@@ -120,6 +121,7 @@ test_expect_success 'other repo gets the blobs from object store' '
- 	 test_must_fail git cat-file blob "$hash1" &&
- 	 test_must_fail git cat-file blob "$hash2" &&
- 	 git config odb.magic.command "$HELPER2" &&
-+	 git config odb.magic.scriptMode true &&
- 	 git config odb.magic.fetchKind "gitObject"
- 	 git cat-file blob "$hash1" &&
- 	 git cat-file blob "$hash2"
-diff --git a/t/t0420-transfer-http-e-odb.sh b/t/t0420-transfer-http-e-odb.sh
-index 8a5f3adaa7..b8062d14c0 100755
---- a/t/t0420-transfer-http-e-odb.sh
-+++ b/t/t0420-transfer-http-e-odb.sh
-@@ -53,6 +53,7 @@ HELPER="\"$PWD\"/odb-http-helper"
- test_expect_success 'setup repo with a root commit and the helper' '
- 	test_commit zero &&
- 	git config odb.magic.command "$HELPER" &&
-+	git config odb.magic.scriptMode true &&
- 	git config odb.magic.fetchKind "plainObject"
- '
- 
-@@ -108,6 +109,7 @@ test_expect_success 'update other repo from the first one' '
- 	 git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*" &&
- 	 test_must_fail git cat-file blob "$hash1" &&
- 	 git config odb.magic.command "$HELPER" &&
-+	 git config odb.magic.scriptMode true &&
- 	 git config odb.magic.fetchKind "plainObject" &&
- 	 git cat-file blob "$hash1" &&
- 	 git pull origin master)
-@@ -131,6 +133,7 @@ test_expect_success 'no-local clone from the first repo with helper succeeds' '
- 	mkdir my-other-clone &&
- 	(cd my-other-clone &&
- 	 git clone -c odb.magic.command="$HELPER" \
-+		-c odb.magic.scriptMode="true" \
- 		-c odb.magic.plainObjects="true" \
- 		--no-local .. .) &&
- 	rm -rf my-other-clone
-@@ -141,7 +144,9 @@ test_expect_success 'no-local initial-refspec clone succeeds' '
- 	(cd my-other-clone &&
- 	 git config odb.magic.command "$HELPER" &&
- 	 git config odb.magic.fetchKind "plainObject" &&
--	 git -c odb.magic.command="$HELPER" -c odb.magic.plainObjects="true" \
-+	 git -c odb.magic.command="$HELPER" \
-+		-c odb.magic.plainObjects="true" \
-+		-c odb.magic.scriptMode="true" \
- 		clone --no-local --initial-refspec "refs/odbs/magic/*:refs/odbs/magic/*" .. .)
- '
- 
+diff --git a/Documentation/technical/read-object-protocol.txt b/Documentation/technical/read-object-protocol.txt
+new file mode 100644
+index 0000000000..a893b46e7c
+--- /dev/null
++++ b/Documentation/technical/read-object-protocol.txt
+@@ -0,0 +1,102 @@
++Read Object Process
++^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The read-object process enables Git to read all missing blobs with a
++single process invocation for the entire life of a single Git command.
++This is achieved by using a packet format (pkt-line, see technical/
++protocol-common.txt) based protocol over standard input and standard
++output as follows. All packets, except for the "*CONTENT" packets and
++the "0000" flush packet, are considered text and therefore are
++terminated by a LF.
++
++Git starts the process when it encounters the first missing object that
++needs to be retrieved. After the process is started, Git sends a welcome
++message ("git-read-object-client"), a list of supported protocol version
++numbers, and a flush packet. Git expects to read a welcome response
++message ("git-read-object-server"), exactly one protocol version number
++from the previously sent list, and a flush packet. All further
++communication will be based on the selected version.
++
++The remaining protocol description below documents "version=1". Please
++note that "version=42" in the example below does not exist and is only
++there to illustrate how the protocol would look with more than one
++version.
++
++After the version negotiation Git sends a list of all capabilities that
++it supports and a flush packet. Git expects to read a list of desired
++capabilities, which must be a subset of the supported capabilities list,
++and a flush packet as response:
++------------------------
++packet: git> git-read-object-client
++packet: git> version=1
++packet: git> version=42
++packet: git> 0000
++packet: git< git-read-object-server
++packet: git< version=1
++packet: git< 0000
++packet: git> capability=get
++packet: git> capability=have
++packet: git> capability=put
++packet: git> capability=not-yet-invented
++packet: git> 0000
++packet: git< capability=get
++packet: git< 0000
++------------------------
++The only supported capability in version 1 is "get".
++
++Afterwards Git sends a list of "key=value" pairs terminated with a flush
++packet. The list will contain at least the command (based on the
++supported capabilities) and the sha1 of the object to retrieve. Please
++note, that the process must not send any response before it received the
++final flush packet.
++
++When the process receives the "get" command, it should make the requested
++object available in the git object store and then return success. Git will
++then check the object store again and this time find it and proceed.
++------------------------
++packet: git> command=get
++packet: git> sha1=0a214a649e1b3d5011e14a3dc227753f2bd2be05
++packet: git> 0000
++------------------------
++
++The process is expected to respond with a list of "key=value" pairs
++terminated with a flush packet. If the process does not experience
++problems then the list must contain a "success" status.
++------------------------
++packet: git< status=success
++packet: git< 0000
++------------------------
++
++In case the process cannot or does not want to process the content, it
++is expected to respond with an "error" status.
++------------------------
++packet: git< status=error
++packet: git< 0000
++------------------------
++
++In case the process cannot or does not want to process the content as
++well as any future content for the lifetime of the Git process, then it
++is expected to respond with an "abort" status at any point in the
++protocol.
++------------------------
++packet: git< status=abort
++packet: git< 0000
++------------------------
++
++Git neither stops nor restarts the process in case the "error"/"abort"
++status is set.
++
++If the process dies during the communication or does not adhere to the
++protocol then Git will stop the process and restart it with the next
++object that needs to be processed.
++
++After the read-object process has processed an object it is expected to
++wait for the next "key=value" list containing a command. Git will close
++the command pipe on exit. The process is expected to detect EOF and exit
++gracefully on its own. Git will wait until the process has stopped.
++
++A long running read-object process demo implementation can be found in
++`contrib/long-running-read-object/example.pl` located in the Git core
++repository. If you develop your own long running process then the
++`GIT_TRACE_PACKET` environment variables can be very helpful for
++debugging (see linkgit:git[1]).
 -- 
 2.13.1.565.gbfcd7a9048
 
