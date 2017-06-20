@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DACBE20401
-	for <e@80x24.org>; Tue, 20 Jun 2017 07:57:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A8D520401
+	for <e@80x24.org>; Tue, 20 Jun 2017 07:57:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752288AbdFTH4u (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 03:56:50 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35069 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752230AbdFTH4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 03:56:46 -0400
-Received: by mail-wm0-f67.google.com with SMTP id d64so21286750wmf.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:40 -0700 (PDT)
+        id S1752450AbdFTH5b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 03:57:31 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35078 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752151AbdFTH4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 03:56:37 -0400
+Received: by mail-wm0-f68.google.com with SMTP id d64so21286877wmf.2
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fBA/gs7IgK/P/t6DAiLywqS8rAtguZ5NBA2P5tJVtXs=;
-        b=aFleGBbIME3ZA56mmpTEvAknDm7iXc00P4R+yn+ILQ0JvInvFMlSZwNG9ZzQlcboV1
-         6HIkaXdFJisFBtLuJm2sZhJkSP4gOSOoHi9M7zEk00s6O/7qyjpOOYAVsa44gL8VDi2i
-         nmx29SbIozLcnMy7KxTS2rYbJTkHpHI+F1hkT5dwigvAyWfVsdlkKVZJz+pnbYJdkVhg
-         IdA+3NMCP0ProYj/7KdFpy+CzKf+WnBsA+MQaIBawPr7iyUdFCunCUmyWT+ANYNpowDk
-         NxUkNTC9bWp1QraBWKArzdiXL/Z0KSq1UfErIm8vAx9nlYcnkGFSdZyaehOWnSN34PPS
-         +XAg==
+        bh=33aVgo8tcRz18W8dRTEwzWfDQRiRq0/O1f1VhjZTuB4=;
+        b=MupE1DbfM2+GRw3NtIMsVNwdGrBfB/i5qstuy4jwQqjI5EofQzru8fElrUR3N8D979
+         ZySZThCzOWafQydLlLMxj3p4pj92DPdOqwXv4I3gm1hBWCTG2bcu4PKYyUlUpZLb0//3
+         ueYEFtEzXBUK33Y64ljXVPOTO8H8Qmj80JY51IVh8TIUNd6V+d4g8BVtZPzHqcHi6KwZ
+         HUx3q/+/3gaeiGTHCn1+/v13gBh03D6zTF4wIIdxsIvLCay5JA+CGtCEmQ8ldoOw4zmT
+         cAmOjNYGx1+PgTtz5LuiuVRYDU6phTJglgV6aZvpk/Albc4Parx7IyWsg7R4gsMRhmtE
+         sS8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fBA/gs7IgK/P/t6DAiLywqS8rAtguZ5NBA2P5tJVtXs=;
-        b=Yax3pWfL9uVt4nwCx6CVKKCR5Wtr6RmiWd9djeB7YUEP9qQOBJZqLFgtuGPb51qQk3
-         +1F7olMyqGomL3dWUTrbpPcVJiG6cGNqDjbcAo2xComeVk8/TdXh01zkdTrzOXK3v1+T
-         ADGidFLItqBiQBr0fnkWvbtpTlIGIQjic38YcSD8aXL7QLMSU0Nt60CLoR6Qpq8bYoL8
-         N2Q3ie1dsyTatSvSyA1ymqjkZLSkO0jKSDNqilkWwZ2lK6LC1I96yKFaOdr1KGLsBNxY
-         B9Ax2BBr6mp4aSM40SYAR1AF/j57qDf7FrFTFMvt0YXJhDGZQA9RcKCJE9kp+L+/8feV
-         MJ3w==
-X-Gm-Message-State: AKS2vOwZgZFSyHHEgDFhU/Y612+ffxUbn2gkXmmzP4KGPOBgJ20HFeR7
-        /gkYvvrS1cxY6upg
-X-Received: by 10.28.50.70 with SMTP id y67mr1817021wmy.62.1497945394561;
-        Tue, 20 Jun 2017 00:56:34 -0700 (PDT)
+        bh=33aVgo8tcRz18W8dRTEwzWfDQRiRq0/O1f1VhjZTuB4=;
+        b=h7dZukWJ8Qa62gnVCT5xJEg4OCvCnQIlUDk5r3wXmEeAx1QxGpAE3nJiZyCSew+rq7
+         o2Z9dtOtpw67vq0I6nuUJRvegE3WvOU8XOKY2Tq0uU7UU9T63UbQ+WUFxzr1SMqByNuu
+         c/NaBTiKRK5g2Pm6Yd40TnEKj6xsq27SBDd6wobhhOlMUqAF1G+6NI1msYK8HzfWqoc1
+         hFvOALXiQbZr1FRo50Mt346CXBXQxbaLVIQYUF2LkD0wfy2xlNq/17cHbvf3nhlyPyAN
+         TU7ENi/p6bhxJyntEvan/bBpoU5yMdSr+8bSxIYyn9Z5jKUV25RhnnWZ2GIvX07+uwiM
+         b0zw==
+X-Gm-Message-State: AKS2vOwCyHzJf5czLHou1xkOVz/XYsXhy9RrbN5LwC0Ie50ZNB5WvELr
+        lK43RWzeSCXaiAK6
+X-Received: by 10.28.105.218 with SMTP id z87mr1764339wmh.121.1497945395711;
+        Tue, 20 Jun 2017 00:56:35 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.33
+        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 00:56:34 -0700 (PDT)
+        Tue, 20 Jun 2017 00:56:35 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH v4 35/49] Add t0460 to test passing git objects
-Date:   Tue, 20 Jun 2017 09:55:09 +0200
-Message-Id: <20170620075523.26961-36-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v4 36/49] odb-helper: add read_packetized_git_object_to_fd()
+Date:   Tue, 20 Jun 2017 09:55:10 +0200
+Message-Id: <20170620075523.26961-37-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.565.gbfcd7a9048
 In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
 References: <20170620075523.26961-1-chriscool@tuxfamily.org>
@@ -69,120 +69,111 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0460-read-object-git.sh | 29 ++++++++++++++++++++
- t/t0460/read-object-git    | 67 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 96 insertions(+)
- create mode 100755 t/t0460-read-object-git.sh
- create mode 100755 t/t0460/read-object-git
+ odb-helper.c | 84 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 78 insertions(+), 6 deletions(-)
 
-diff --git a/t/t0460-read-object-git.sh b/t/t0460-read-object-git.sh
-new file mode 100755
-index 0000000000..d08b44cdce
---- /dev/null
-+++ b/t/t0460-read-object-git.sh
-@@ -0,0 +1,29 @@
-+#!/bin/sh
+diff --git a/odb-helper.c b/odb-helper.c
+index 0017faa36e..a27208463c 100644
+--- a/odb-helper.c
++++ b/odb-helper.c
+@@ -142,6 +142,82 @@ static int check_object_process_error(int err,
+ 	return err;
+ }
+ 
++static ssize_t read_packetized_git_object_to_fd(struct odb_helper *o,
++						const unsigned char *sha1,
++						int fd_in, int fd_out)
++{
++	ssize_t total_read = 0;
++	unsigned long total_got = 0;
++	int packet_len;
++	git_zstream stream;
++	int zret = Z_STREAM_END;
++	git_SHA_CTX hash;
++	unsigned char real_sha1[20];
 +
-+test_description='tests for long running read-object process passing git objects'
++	memset(&stream, 0, sizeof(stream));
++	git_inflate_init(&stream);
++	git_SHA1_Init(&hash);
 +
-+. ./test-lib.sh
++	for (;;) {
++		/* packet_read() writes a '\0' extra byte at the end */
++		char buf[LARGE_PACKET_DATA_MAX + 1];
 +
-+PATH="$PATH:$TEST_DIRECTORY/t0460"
++		packet_len = packet_read(fd_in, NULL, NULL,
++			buf, LARGE_PACKET_DATA_MAX + 1,
++			PACKET_READ_GENTLE_ON_EOF);
 +
-+test_expect_success 'setup host repo with a root commit' '
-+	test_commit zero &&
-+	hash1=$(git ls-tree HEAD | grep zero.t | cut -f1 | cut -d\  -f3)
-+'
++		if (packet_len <= 0)
++			break;
 +
-+HELPER="read-object-git"
++		write_or_die(fd_out, buf, packet_len);
 +
-+test_expect_success 'blobs can be retrieved from the host repo' '
-+	git init guest-repo &&
-+	(cd guest-repo &&
-+	 git config odb.magic.command "$HELPER" &&
-+	 git config odb.magic.fetchKind "gitObject" &&
-+	 git cat-file blob "$hash1")
-+'
++		stream.next_in = (unsigned char *)buf;
++		stream.avail_in = packet_len;
++		do {
++			unsigned char inflated[4096];
++			unsigned long got;
 +
-+test_expect_success 'invalid blobs generate errors' '
-+	cd guest-repo &&
-+	test_must_fail git cat-file blob "invalid"
-+'
++			stream.next_out = inflated;
++			stream.avail_out = sizeof(inflated);
++			zret = git_inflate(&stream, Z_SYNC_FLUSH);
++			got = sizeof(inflated) - stream.avail_out;
 +
-+test_done
-diff --git a/t/t0460/read-object-git b/t/t0460/read-object-git
-new file mode 100755
-index 0000000000..356a22cd4c
---- /dev/null
-+++ b/t/t0460/read-object-git
-@@ -0,0 +1,67 @@
-+#!/usr/bin/perl
-+#
-+# Example implementation for the Git read-object protocol version 1
-+# See Documentation/technical/read-object-protocol.txt
-+#
-+# Allows you to test the ability for blobs to be pulled from a host git repo
-+# "on demand."  Called when git needs a blob it couldn't find locally due to
-+# a lazy clone that only cloned the commits and trees.
-+#
-+# A lazy clone can be simulated via the following commands from the host repo
-+# you wish to create a lazy clone of:
-+#
-+# cd /host_repo
-+# git rev-parse HEAD
-+# git init /guest_repo
-+# git cat-file --batch-check --batch-all-objects | grep -v 'blob' |
-+#	cut -d' ' -f1 | git pack-objects /e/guest_repo/.git/objects/pack/noblobs
-+# cd /guest_repo
-+# git config core.virtualizeobjects true
-+# git reset --hard <sha from rev-parse call above>
-+#
-+# Please note, this sample is a minimal skeleton. No proper error handling 
-+# was implemented.
-+#
++			git_SHA1_Update(&hash, inflated, got);
++			/* skip header when counting size */
++			if (!total_got) {
++				const unsigned char *p = memchr(inflated, '\0', got);
++				if (p)
++					got -= p - inflated + 1;
++				else
++					got = 0;
++			}
++			total_got += got;
++		} while (stream.avail_in && zret == Z_OK);
 +
-+use 5.008;
-+use lib (split(/:/, $ENV{GITPERLLIB}));
-+use strict;
-+use warnings;
-+use Git::Packet;
-+
-+#
-+# Point $DIR to the folder where your host git repo is located so we can pull
-+# missing objects from it
-+#
-+my $DIR = "../.git/";
-+
-+packet_initialize("git-read-object", 1);
-+
-+packet_read_and_check_capabilities("get");
-+packet_write_capabilities("get");
-+
-+while (1) {
-+	my ($command) = packet_txt_read() =~ /^command=([^=]+)$/;
-+
-+	if ( $command eq "get" ) {
-+		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
-+		packet_bin_read();
-+
-+		my $path = $sha1;
-+		$path =~ s{..}{$&/};
-+		$path = $DIR . "/objects/" . $path;
-+
-+		my $contents = do {
-+		    local $/;
-+		    open my $fh, $path or die "Can't open '$path': $!";
-+		    <$fh>
-+		};
-+
-+		packet_bin_write($contents);
-+		packet_flush();
-+		packet_txt_write("status=success");
-+		packet_flush();
-+	} else {
-+		die "bad command '$command'";
++		total_read += packet_len;
 +	}
++
++	git_inflate_end(&stream);
++
++	if (packet_len < 0)
++		return packet_len;
++
++	git_SHA1_Final(real_sha1, &hash);
++
++	if (zret != Z_STREAM_END) {
++		warning("bad zlib data from odb helper '%s' for %s",
++			o->name, sha1_to_hex(sha1));
++		return -1;
++	}
++	if (hashcmp(real_sha1, sha1)) {
++		warning("sha1 mismatch from odb helper '%s' for %s (got %s)",
++			o->name, sha1_to_hex(sha1), sha1_to_hex(real_sha1));
++		return -1;
++	}
++
++	return total_read;
 +}
++
+ static int read_object_process(struct odb_helper *o, const unsigned char *sha1, int fd)
+ {
+ 	int err;
+@@ -174,12 +250,8 @@ static int read_object_process(struct odb_helper *o, const unsigned char *sha1,
+ 	if (err)
+ 		goto done;
+ 
+-	if (o->fetch_kind != ODB_FETCH_KIND_FAULT_IN) {
+-		struct strbuf buf;
+-		read_packetized_to_strbuf(process->out, &buf);
+-		if (err)
+-			goto done;
+-	}
++	if (o->fetch_kind != ODB_FETCH_KIND_FAULT_IN)
++		err = read_packetized_git_object_to_fd(o, sha1, process->out, fd) < 0;
+ 
+ 	subprocess_read_status(process->out, &status);
+ 	err = strcmp(status.buf, "success");
 -- 
 2.13.1.565.gbfcd7a9048
 
