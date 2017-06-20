@@ -2,50 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5700D20D22
-	for <e@80x24.org>; Tue, 20 Jun 2017 19:20:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 134B120D1A
+	for <e@80x24.org>; Tue, 20 Jun 2017 19:20:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752107AbdFTTUp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 15:20:45 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34206 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751076AbdFTTUk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 15:20:40 -0400
-Received: by mail-pg0-f51.google.com with SMTP id e187so14380207pgc.1
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 12:20:40 -0700 (PDT)
+        id S1752026AbdFTTUY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 15:20:24 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:34635 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751036AbdFTTUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 15:20:23 -0400
+Received: by mail-pf0-f180.google.com with SMTP id s66so73669279pfs.1
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 12:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/qrqR9Aro4XbSQKma9b6zFMKdocJ//u5gB6C4+lrxIs=;
-        b=W/UA24SkZ3d0WXJ3hYtD2oNnxR39vt7z08DEp8brBqCYbbBv5uhYZoJ8WW6/tmwZoL
-         eRXd8MzfM63DjqYn8vqPnMj3E1w2BVF8k6u5bLS374xJqnYUCBdP7RusrzSC6i+2vA7u
-         Aj7SBR6kaeep11/0lrkJa/Utanwsl3nsqaXc92hiVJwD9yVQlub0SE7T5ZhwE/Gc1+rx
-         cgTY6xJ7qGANiVC/1rReXcdXHtPeP2zCRiLKlQmQdCFfbisZ78qnj0Bt++7mFeMC4aY7
-         BUwWGCbbzapHeRC1qtHiAKzlqgcfipQS32mt5KE+hlxAF3m+9uPwbYcdjKcOibyhTtaD
-         jC+g==
+        bh=kbclYqEsVtewWchTNuJHbqfJ3V+IG7tKfsUJfPoOCQs=;
+        b=uKrbalWFKMT9D+H8FUSKiVEBpvlNniGNkf4r6MhUBQIWnP7TMXen2Ue3oAU2zorexs
+         NydFubVl7O2ZW43Tin52F/4fJQBsFaK64oPB6fNWiWe79OCSJ1g1qOfKbw0wKIMk3IPk
+         HfxBUJte3wtheVxIkKDt1Fa/9k7CGzSen4ZSdNHpNHEpCmiid0Xu2/ZAMbk/fnT0qtKS
+         Toh81bHjvcUOPsati0PtTlTL+UvzRLaFf6MS2QzMMPm+7fEim74Tf7L0AOO0NLgw40Ww
+         HIHB8QtuOvWg5VThMBJnrxvTEfLuba2DqNK58+sHWB10Rm8OaYl6JAcU4F8/FTCpb7Ye
+         oSTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/qrqR9Aro4XbSQKma9b6zFMKdocJ//u5gB6C4+lrxIs=;
-        b=VDu0CdZKAw63Jz0Zz9DY1G7vN3zaqRoTm5OnAk6nF425a93LCoS8BdYuC1+/O7hswx
-         to7PQFT6Fz7A/DgfrlSg/bzkp78XWeJemFgk4S6ox/BXVcJzMStmoRoOIY/GLqdyMfeb
-         JmnrmcAVxu3hybJNBtnzAlKChMx/CmtrxKvhTBLZ/knXjV9ut+F2PdRtTiFMr5TSQcva
-         3gXsSpcGKk2pn1sl19I6XvnXJmEeGA5iJEdXhykLdHeClF5NHibMDoMQZTfIs7Q3na/S
-         FufakCcpkYLgcjyR2f4UFh1qUM9/NMD4IlsZ2B549vhqR3Xpncp96iNDEu/1EKVzT4rY
-         2ySA==
-X-Gm-Message-State: AKS2vOz5LP5l5+bAppDYvZmNyI1CqpNCr2t70J623w/J0pVxQVFSwdZn
-        z7wdGDoTc3mwkgO6x0rtnA==
-X-Received: by 10.101.86.11 with SMTP id l11mr32432849pgs.202.1497986439039;
-        Tue, 20 Jun 2017 12:20:39 -0700 (PDT)
+        bh=kbclYqEsVtewWchTNuJHbqfJ3V+IG7tKfsUJfPoOCQs=;
+        b=YqRt4Exo9GgA+rphD5YdtVG+KyNJbluCeVQn9jfpca3+Ubo32l9r+odZ6he/Blv53E
+         zTWXXY9C7fDH17rdIYf+8ydqOL6euHpMY+h9yi3SSXBg3Vlc5ccecECLM705UhV+b/MR
+         YaE8g3krJu5ZI9bgWGqQG8y/gc4+QJX4gQcYEcxpBb9U9/3h4ZisRUz/uVIV0H4R+9n9
+         23IPc9cY0D0cbnKtKFoqU1jWUmOJB88cjR/oaE43ACC0joU7NzgirSlN2Tn51mUlMJEn
+         s+rCAb3J6foMu2TwiTYUWUz/DkqWzKGfw5Qzwgeq1dEPNtVGDA7FZ2Cg5LRPjNashYiO
+         qUoQ==
+X-Gm-Message-State: AKS2vOxiEI00vwMEm+oZm6QO+qSzTSFUHVUADnGcOXZ/q5Lv6Ye9Hnox
+        fpBApCkafTkYwVCpJXhPNA==
+X-Received: by 10.84.197.3 with SMTP id m3mr37326000pld.40.1497986422191;
+        Tue, 20 Jun 2017 12:20:22 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id t6sm18680500pgs.33.2017.06.20.12.20.37
+        by smtp.gmail.com with ESMTPSA id t6sm18680500pgs.33.2017.06.20.12.20.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 12:20:38 -0700 (PDT)
+        Tue, 20 Jun 2017 12:20:21 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -53,9 +53,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 17/20] submodule: add repo_read_gitmodules
-Date:   Tue, 20 Jun 2017 12:19:48 -0700
-Message-Id: <20170620191951.84791-18-bmwill@google.com>
+Subject: [PATCH v3 07/20] path: create path.h
+Date:   Tue, 20 Jun 2017 12:19:38 -0700
+Message-Id: <20170620191951.84791-8-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1-goog
 In-Reply-To: <20170620191951.84791-1-bmwill@google.com>
 References: <20170608234100.188529-1-bmwill@google.com>
@@ -65,66 +65,175 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach the repo object to be able to populate the submodule_cache by
-reading the repository's gitmodules file.
+Move all path related declarations from cache.h to a new path.h header
+file.  This makes cache.h smaller and makes it easier to add new path
+related functions.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- submodule.c | 15 +++++++++++++++
- submodule.h |  2 ++
- 2 files changed, 17 insertions(+)
+ cache.h | 59 +----------------------------------------------------------
+ path.c  |  1 +
+ path.h  | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 58 deletions(-)
+ create mode 100644 path.h
 
-diff --git a/submodule.c b/submodule.c
-index da0b80549..d0b894772 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "repository.h"
- #include "config.h"
- #include "submodule-config.h"
- #include "submodule.h"
-@@ -255,6 +256,20 @@ void gitmodules_config(void)
- 	}
- }
+diff --git a/cache.h b/cache.h
+index cd64cbc81..c958fc3ce 100644
+--- a/cache.h
++++ b/cache.h
+@@ -11,6 +11,7 @@
+ #include "string-list.h"
+ #include "pack-revindex.h"
+ #include "hash.h"
++#include "path.h"
  
-+static int gitmodules_cb(const char *var, const char *value, void *data)
-+{
-+	struct repository *repo = data;
-+	return submodule_config_option(repo, var, value);
-+}
-+
-+void repo_read_gitmodules(struct repository *repo)
-+{
-+	char *gitmodules_path = repo_worktree_path(repo, ".gitmodules");
-+
-+	git_config_from_file(gitmodules_cb, gitmodules_path, repo);
-+	free(gitmodules_path);
-+}
-+
- void gitmodules_config_sha1(const unsigned char *commit_sha1)
- {
- 	struct strbuf rev = STRBUF_INIT;
-diff --git a/submodule.h b/submodule.h
-index cbe5c1726..8a3771ec6 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -1,6 +1,7 @@
- #ifndef SUBMODULE_H
- #define SUBMODULE_H
- 
-+struct repository;
- struct diff_options;
- struct argv_array;
- struct oid_array;
-@@ -46,6 +47,7 @@ int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
- 						     const char *arg, int unset);
- void load_submodule_cache(void);
- extern void gitmodules_config(void);
-+extern void repo_read_gitmodules(struct repository *repo);
- extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
- extern int is_submodule_initialized(const char *path);
+ #ifndef platform_SHA_CTX
  /*
+@@ -892,64 +893,6 @@ extern void check_repository_format(void);
+ #define DATA_CHANGED    0x0020
+ #define TYPE_CHANGED    0x0040
+ 
+-/*
+- * Return a statically allocated filename, either generically (mkpath), in
+- * the repository directory (git_path), or in a submodule's repository
+- * directory (git_path_submodule). In all cases, note that the result
+- * may be overwritten by another call to _any_ of the functions. Consider
+- * using the safer "dup" or "strbuf" formats below (in some cases, the
+- * unsafe versions have already been removed).
+- */
+-extern const char *mkpath(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
+-extern const char *git_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
+-extern const char *git_common_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
+-
+-extern char *mksnpath(char *buf, size_t n, const char *fmt, ...)
+-	__attribute__((format (printf, 3, 4)));
+-extern void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
+-	__attribute__((format (printf, 2, 3)));
+-extern void strbuf_git_common_path(struct strbuf *sb, const char *fmt, ...)
+-	__attribute__((format (printf, 2, 3)));
+-extern char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
+-	__attribute__((format (printf, 2, 3)));
+-extern int strbuf_git_path_submodule(struct strbuf *sb, const char *path,
+-				     const char *fmt, ...)
+-	__attribute__((format (printf, 3, 4)));
+-extern char *git_pathdup(const char *fmt, ...)
+-	__attribute__((format (printf, 1, 2)));
+-extern char *mkpathdup(const char *fmt, ...)
+-	__attribute__((format (printf, 1, 2)));
+-extern char *git_pathdup_submodule(const char *path, const char *fmt, ...)
+-	__attribute__((format (printf, 2, 3)));
+-
+-extern void report_linked_checkout_garbage(void);
+-
+-/*
+- * You can define a static memoized git path like:
+- *
+- *    static GIT_PATH_FUNC(git_path_foo, "FOO");
+- *
+- * or use one of the global ones below.
+- */
+-#define GIT_PATH_FUNC(func, filename) \
+-	const char *func(void) \
+-	{ \
+-		static char *ret; \
+-		if (!ret) \
+-			ret = git_pathdup(filename); \
+-		return ret; \
+-	}
+-
+-const char *git_path_cherry_pick_head(void);
+-const char *git_path_revert_head(void);
+-const char *git_path_squash_msg(void);
+-const char *git_path_merge_msg(void);
+-const char *git_path_merge_rr(void);
+-const char *git_path_merge_mode(void);
+-const char *git_path_merge_head(void);
+-const char *git_path_fetch_head(void);
+-const char *git_path_shallow(void);
+-
+ /*
+  * Return the name of the file in the local object database that would
+  * be used to store a loose object with the specified sha1.  The
+diff --git a/path.c b/path.c
+index e4abea083..41c861c96 100644
+--- a/path.c
++++ b/path.c
+@@ -8,6 +8,7 @@
+ #include "dir.h"
+ #include "worktree.h"
+ #include "submodule-config.h"
++#include "path.h"
+ 
+ static int get_st_mode_bits(const char *path, int *mode)
+ {
+diff --git a/path.h b/path.h
+new file mode 100644
+index 000000000..522cd029b
+--- /dev/null
++++ b/path.h
+@@ -0,0 +1,62 @@
++#ifndef PATH_H
++#define PATH_H
++
++/*
++ * Return a statically allocated filename, either generically (mkpath), in
++ * the repository directory (git_path), or in a submodule's repository
++ * directory (git_path_submodule). In all cases, note that the result
++ * may be overwritten by another call to _any_ of the functions. Consider
++ * using the safer "dup" or "strbuf" formats below (in some cases, the
++ * unsafe versions have already been removed).
++ */
++extern const char *mkpath(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
++extern const char *git_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
++extern const char *git_common_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
++
++extern char *mksnpath(char *buf, size_t n, const char *fmt, ...)
++	__attribute__((format (printf, 3, 4)));
++extern void strbuf_git_path(struct strbuf *sb, const char *fmt, ...)
++	__attribute__((format (printf, 2, 3)));
++extern void strbuf_git_common_path(struct strbuf *sb, const char *fmt, ...)
++	__attribute__((format (printf, 2, 3)));
++extern char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
++	__attribute__((format (printf, 2, 3)));
++extern int strbuf_git_path_submodule(struct strbuf *sb, const char *path,
++				     const char *fmt, ...)
++	__attribute__((format (printf, 3, 4)));
++extern char *git_pathdup(const char *fmt, ...)
++	__attribute__((format (printf, 1, 2)));
++extern char *mkpathdup(const char *fmt, ...)
++	__attribute__((format (printf, 1, 2)));
++extern char *git_pathdup_submodule(const char *path, const char *fmt, ...)
++	__attribute__((format (printf, 2, 3)));
++
++extern void report_linked_checkout_garbage(void);
++
++/*
++ * You can define a static memoized git path like:
++ *
++ *    static GIT_PATH_FUNC(git_path_foo, "FOO");
++ *
++ * or use one of the global ones below.
++ */
++#define GIT_PATH_FUNC(func, filename) \
++	const char *func(void) \
++	{ \
++		static char *ret; \
++		if (!ret) \
++			ret = git_pathdup(filename); \
++		return ret; \
++	}
++
++const char *git_path_cherry_pick_head(void);
++const char *git_path_revert_head(void);
++const char *git_path_squash_msg(void);
++const char *git_path_merge_msg(void);
++const char *git_path_merge_rr(void);
++const char *git_path_merge_mode(void);
++const char *git_path_merge_head(void);
++const char *git_path_fetch_head(void);
++const char *git_path_shallow(void);
++
++#endif /* PATH_H */
 -- 
 2.13.1.611.g7e3b11ae1-goog
 
