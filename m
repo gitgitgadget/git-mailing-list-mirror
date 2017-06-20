@@ -2,389 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CA9720282
-	for <e@80x24.org>; Tue, 20 Jun 2017 22:56:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 942A520282
+	for <e@80x24.org>; Tue, 20 Jun 2017 23:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752356AbdFTW44 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 18:56:56 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:34034 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751131AbdFTW4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 18:56:55 -0400
-Received: by mail-pg0-f49.google.com with SMTP id e187so16526079pgc.1
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 15:56:54 -0700 (PDT)
+        id S1752743AbdFTXCH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 19:02:07 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34987 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752506AbdFTXCF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 19:02:05 -0400
+Received: by mail-pf0-f194.google.com with SMTP id s66so26322064pfs.2
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 16:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UOx2jL8G3DlABkeVplHuja3UZVWUrhbxymW+pGT5fjo=;
-        b=ZEEgS+tnHk59Myn2/6Ljy/QgKpmQXOnFWK59nPeYTHbMhidRFKvMEDfARHqZ/9JVI1
-         i6DBwyOV2fAzQfrvlQOKPrmcP50UhG6YuMgaEefRQj3jw2p/fRasIfdcyqUW8h+8K0yt
-         /VJpJcMnXf4vQXaOwexZ7IfdLNegH7MyOwAPvxlKGcoiD/suVtab9vYrnlvYy8q90MJW
-         OMRWtczDMdiSR+6S2l/k8Zi6VJjN1EAOvrMam+d7FEvBHyOO3yCzqQnoEALu5Wuoii8V
-         +TM4o3QKGsbOGawGi6ySaSm6sgH9JYOVYtW/82qm6R+qI7+cj3MGy/uEc8ceHjYMdls2
-         6O7w==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ytXkCv7hEEzAGfmwFNrWq31MkCbTD7Oh9P/rGB3U3KI=;
+        b=u6E02f0xIsQZ3V5jtsuUrbt4xXxBwn9TSgWEjt9QZ0H9SVptSCIfNzmtJnYa2teef+
+         0aymT+JJ4rFJwW3Ic8+8w95I7hlkjFhCcuCmoBj8QKMG5YFigfZsc1a+xLgUR6KaR8N7
+         Z04pxpeMsZ9GyAVXajbl87uKW2g7mhZcX4jch9H8WGztdItY1gk8W/ZP2MhjdxuXcoIk
+         EO6Dj2J5IdvLoJ5aEq//nzrfJiJ7zwU8he/Ri4KYakzMP6AuXDlttwH5o+kiOC02FmrI
+         WNeKfYSYQnfuCczncwrszw3nNXOA1xbAs5DUJQzIZMuckjCWh5mSZM2a7CSwWumIlVIC
+         ycjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=UOx2jL8G3DlABkeVplHuja3UZVWUrhbxymW+pGT5fjo=;
-        b=epYD/mqiAkLOHaXTFFShR6m3gEb8c5s5VDCf2qqUPq6US99u3K8Fn3oOVnXaLj9dY0
-         hukM+FnRKudr2pXVViA9vMDMPIhVf4dmYxHrZwYQ6JPXd9GaVfwJY8+ERzAPeZFjHSBC
-         aYdyP0usQQTp/YzRpeoV0Nas80+/y746DATviit4ZmAYRwi7yuAVOYJaasfuwIRbpRUJ
-         5PIuXqMt7T3CizqSeyCty96yvTo1sboUeRVsh/bWZTp+7HVIrxXldrqaq06LUfonXIT7
-         N0pSsicBfxEhSts7BR/n9/Tjz1eEXIH4kByzhaEuz6xMw/L4TOaO8g5g4Kw51/4kFikY
-         fnVQ==
-X-Gm-Message-State: AKS2vOx7IP0IgvDDz9wK8l+Ul6zKy3/8TJ99tp2zzkeX/SZQUwPXqQUj
-        XCX/0aF3SUS7F6Cp
-X-Received: by 10.98.76.140 with SMTP id e12mr32642725pfj.78.1497999413954;
-        Tue, 20 Jun 2017 15:56:53 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:c80:865c:a15:8a68])
-        by smtp.gmail.com with ESMTPSA id r63sm28892906pgr.65.2017.06.20.15.56.53
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ytXkCv7hEEzAGfmwFNrWq31MkCbTD7Oh9P/rGB3U3KI=;
+        b=f44gyG7ltU5/NoewAEMb/YfD6sNyRTl6T3mDpd+XNFKldxYYrAkgamdxClxz0eOBIT
+         wQBLPWKupFg4nuBeLc4it1jR4nodYrEDMw0WMrPZlGrXYs6W5iCurG44d8VqZhEMwJGE
+         UfXTuAtks4dCJasgNF6H/unfSKUVujP8NZ7PGN//qIyMp56c8t7MCf4ELjN9qAAC0nlW
+         3T2qRj3YhewVZ+xqb+AgKb+pxFA1YafDSQaaxkFz1B14NqShvGUno7pMx51cjAC1lD4r
+         PMamB2NegEHgfYXgse9Vo5rfXAs/K2B2jD/hDLYni6MzpJs/Q04z3DB3QvTz8uPnKOUB
+         9Xfw==
+X-Gm-Message-State: AKS2vOzVsW2fOzD1YuXdg4Vr7VwsvsJqYWHmy5ZEPyK4L7vtcORUzWTq
+        A4nP16KVjaFRTECD3AU=
+X-Received: by 10.99.43.5 with SMTP id r5mr33443912pgr.135.1497999724052;
+        Tue, 20 Jun 2017 16:02:04 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:14d3:6dca:1831:2943])
+        by smtp.gmail.com with ESMTPSA id w190sm372681pgb.30.2017.06.20.16.02.02
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 15:56:53 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, bmwill@google.com, jrnieder@gmail.com,
-        gitster@pobox.com, jonathantanmy@google.com
-Subject: [PATCHv2] submodules: overhaul documentation
-Date:   Tue, 20 Jun 2017 15:56:50 -0700
-Message-Id: <20170620225650.7573-1-sbeller@google.com>
-X-Mailer: git-send-email 2.12.2.575.gb14f27f917
-In-Reply-To: <20170607185354.10050-1-sbeller@google.com>
-References: <20170607185354.10050-1-sbeller@google.com>
+        Tue, 20 Jun 2017 16:02:02 -0700 (PDT)
+Date:   Tue, 20 Jun 2017 16:02:00 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jacob.keller@gmail.com,
+        Johannes.Schindelin@gmx.de, sandals@crustytoothpaste.net,
+        peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
+        peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v3 11/20] path: construct correct path to a worktree's
+ index
+Message-ID: <20170620230200.GB60603@aiede.mtv.corp.google.com>
+References: <20170608234100.188529-1-bmwill@google.com>
+ <20170620191951.84791-1-bmwill@google.com>
+ <20170620191951.84791-12-bmwill@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170620191951.84791-12-bmwill@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch aims to detangle (a) the usage of `git-submodule`
-from (b) the concept of submodules and (c) how the actual
-implementation looks like, such as where they are configured
-and (d) what the best practices are.
+Hi,
 
-To do so, move the conceptual parts of the 'git-submodule'
-man page to a new man page gitsubmodules(7). This new page
-is just like gitmodules(5), gitattributes(5), gitcredentials(7),
-gitnamespaces(7), gittutorial(7), which introduce a concept
-rather than explaining a specific command.
+Brandon Williams wrote:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+> When working with worktrees the git directory is split into two part,
+> the per-worktree gitdir and a commondir which contains things which are
+> shared among all worktrees (like the object store).  With this notion of
+> having a split git directory, 557bd833b (git_path(): be aware of file
+> relocation in $GIT_DIR) and c7b3a3d2f ($GIT_COMMON_DIR: a new
+> environment variable) changed the way that 'git_path()' functioned so
+> that paths would be adjusted if they referred to files or directories
+> that are stored in the commondir or have been changed via an environment
+> variable.
+>
+> One interesting problem with this is the index file as it is not shared
+> across worktrees yet when asking for a path to a specific worktree's
+> index it will be replaced with a path to the current worktree's index.
+> In order to prevent this, teach 'adjuct_git_path' to replace the
+> path to the index with the path recorded in a repository (which would be
+> the current, active worktree) only when not asked to construct a path
+> for a specific worktree.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  path.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
 
-I have considered most of the feedback, and stopped marking it RFC,
-but I'd like to propose this as a serious patch.
+Thanks --- this is subtle.  I don't think that what this patch does is
+right.  Commenting below.
 
-Thanks,
-Stefan
+> --- a/path.c
+> +++ b/path.c
+> @@ -372,13 +372,20 @@ void report_linked_checkout_garbage(void)
+>  }
+>  
+>  static void adjust_git_path(const struct repository *repo,
+> +			    const struct worktree *wt,
+>  			    struct strbuf *buf, int git_dir_len)
+>  {
+>  	const char *base = buf->buf + git_dir_len;
+>  	if (is_dir_file(base, "info", "grafts"))
+>  		strbuf_splice(buf, 0, buf->len,
+>  			      repo->graft_file, strlen(repo->graft_file));
+> -	else if (!strcmp(base, "index"))
+> +	/*
+> +	 * Only try to replace the path '$gitdir/index' with the index file
+> +	 * recorded in the repository when not constructing a path for a
+> +	 * worktree.  This way we can retrieve the correct path to a particular
+> +	 * worktree's index file.
+> +	 */
+> +	else if (!wt && !strcmp(base, "index"))
+>  		strbuf_splice(buf, 0, buf->len,
+>  			      repo->index_file, strlen(repo->index_file));
 
- Documentation/Makefile          |   1 +
- Documentation/git-rm.txt        |   4 +-
- Documentation/git-submodule.txt |  44 +++-------
- Documentation/gitsubmodules.txt | 189 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 202 insertions(+), 36 deletions(-)
- create mode 100644 Documentation/gitsubmodules.txt
+Some context that may have been missing: GIT_INDEX_FILE is a low-level
+tool to allow script authors to specify an alternate index file to use
+when running commands like "git read-tree" or "git checkout-index".
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index b5be2e2d3f..2415e0d657 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -31,6 +31,7 @@ MAN7_TXT += giteveryday.txt
- MAN7_TXT += gitglossary.txt
- MAN7_TXT += gitnamespaces.txt
- MAN7_TXT += gitrevisions.txt
-+MAN7_TXT += gitsubmodules.txt
- MAN7_TXT += gittutorial-2.txt
- MAN7_TXT += gittutorial.txt
- MAN7_TXT += gitworkflows.txt
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index f1efc116eb..db444693dd 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -152,8 +152,8 @@ Ignored files are deemed expendable and won't stop a submodule's work
- tree from being removed.
- 
- If you only want to remove the local checkout of a submodule from your
--work tree without committing the removal,
--use linkgit:git-submodule[1] `deinit` instead.
-+work tree without committing the removal, use linkgit:git-submodule[1] `deinit`
-+instead. Also see linkgit:gitsubmodules[7] for details on submodule removal.
- 
- EXAMPLES
- --------
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 74bc6200d5..9ffd129bbc 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -24,37 +24,7 @@ DESCRIPTION
- -----------
- Inspects, updates and manages submodules.
- 
--A submodule allows you to keep another Git repository in a subdirectory
--of your repository. The other repository has its own history, which does not
--interfere with the history of the current repository. This can be used to
--have external dependencies such as third party libraries for example.
--
--When cloning or pulling a repository containing submodules however,
--these will not be checked out by default; the 'init' and 'update'
--subcommands will maintain submodules checked out and at
--appropriate revision in your working tree.
--
--Submodules are composed from a so-called `gitlink` tree entry
--in the main repository that refers to a particular commit object
--within the inner repository that is completely separate.
--A record in the `.gitmodules` (see linkgit:gitmodules[5]) file at the
--root of the source tree assigns a logical name to the submodule and
--describes the default URL the submodule shall be cloned from.
--The logical name can be used for overriding this URL within your
--local repository configuration (see 'submodule init').
--
--Submodules are not to be confused with remotes, which are other
--repositories of the same project; submodules are meant for
--different projects you would like to make part of your source tree,
--while the history of the two projects still stays completely
--independent and you cannot modify the contents of the submodule
--from within the main project.
--If you want to merge the project histories and want to treat the
--aggregated whole as a single project from then on, you may want to
--add a remote for the other project and use the 'subtree' merge strategy,
--instead of treating the other project as a submodule. Directories
--that come from both projects can be cloned and checked out as a whole
--if you choose to go that route.
-+For more information about submodules, see linkgit:gitsubmodules[7].
- 
- COMMANDS
- --------
-@@ -149,15 +119,17 @@ deinit [-f|--force] (--all|[--] <path>...)::
- 	tree. Further calls to `git submodule update`, `git submodule foreach`
- 	and `git submodule sync` will skip any unregistered submodules until
- 	they are initialized again, so use this command if you don't want to
--	have a local checkout of the submodule in your working tree anymore. If
--	you really want to remove a submodule from the repository and commit
--	that use linkgit:git-rm[1] instead.
-+	have a local checkout of the submodule in your working tree anymore.
- +
- When the command is run without pathspec, it errors out,
- instead of deinit-ing everything, to prevent mistakes.
- +
- If `--force` is specified, the submodule's working tree will
- be removed even if it contains local modifications.
-++
-+If you really want to remove a submodule from the repository and commit
-+that use linkgit:git-rm[1] instead. See linkgit:gitsubmodules[7] for removal
-+options.
- 
- update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth <depth>] [--recursive] [--jobs <n>] [--] [<path>...]::
- +
-@@ -435,6 +407,10 @@ This file should be formatted in the same way as `$GIT_DIR/config`. The key
- to each submodule url is "submodule.$name.url".  See linkgit:gitmodules[5]
- for details.
- 
-+SEE ALSO
-+--------
-+linkgit:gitsubmodules[7], linkgit:gitmodules[5].
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.txt
-new file mode 100644
-index 0000000000..80e71ff55c
---- /dev/null
-+++ b/Documentation/gitsubmodules.txt
-@@ -0,0 +1,189 @@
-+gitsubmodules(7)
-+================
-+
-+NAME
-+----
-+gitsubmodules - mounting one repository inside another
-+
-+SYNOPSIS
-+--------
-+.gitmodules, $GIT_DIR/config
-+------------------
-+git submodule
-+git <command> --recurse-submodules
-+------------------
-+
-+DESCRIPTION
-+-----------
-+
-+A submodule is another Git repository tracked inside a repository.
-+The tracked repository has its own history, which does not
-+interfere with the history of the current repository.
-+
-+It consists of a tracking subdirectory in the working directory,
-+a 'gitlink' in the working tree and an entry in the `.gitmodules`
-+file (see linkgit:gitmodules[5]) at the root of the source tree.
-+
-+The tracking subdirectory appears in the main repositorys working
-+tree at the point where the submodules gitlink is tracked in the
-+tree.  It is empty when the submodule is not populated, otherwise
-+it contains the content of the submodule repository.
-+The main repository is often referred to as superproject.
-+
-+The gitlink contains the object name of a particular commit
-+of the submodule.
-+
-+The `.gitmodules` file establishes a relationship between the
-+path, which is where the gitlink is in the tree, and the logical
-+name, which is used for the location of the submodules git
-+directory. The `.gitmodules` file has the same syntax as the
-+$Git_DIR/config file and the mapping of path to name
-+is done via setting `submodule.<name value>.path = <path value>`.
-+
-+The submodules git directory is found in in the main repositories
-+'$GIT_DIR/modules/<name>' or inside the tracking subdirectory.
-+
-+Submodules can be used for at least two different use cases:
-+
-+1. Using another project while maintaining independent history.
-+  Submodules allow you to contain the working tree of another project
-+  within your own working tree while keeping the history of both
-+  projects separate. Also, since submodules are fixed to a an arbitrary
-+  version, the other project can be independently developed without
-+  affecting the superproject, allowing the superproject project to
-+  fix itself to new versions only whenever desired.
-+
-+2. Splitting a (logically single) project into multiple
-+   repositories and tying them back together. This can be used to
-+   overcome current limitations of Gits implementation to have
-+   finer grained access:
-+
-+* Size of the git repository
-+  In its current form Git scales up poorly for very large repositories that
-+  change a lot, as the history grows very large.
-+  However you can also use submodules to e.g. hold large binary assets
-+  and these repositories are then shallowly cloned such that you do not
-+  have a large history locally.
-+
-+* Transfer size
-+  In its current form Git requires the whole working tree present. It
-+  does not allow partial trees to be transferred in fetch or clone.
-+
-+* Access control
-+  By restricting user access to submodules, this can be used to implement
-+  read/write policies for different users.
-+
-+The configuration of submodules
-+-------------------------------
-+
-+Submodule operations can be configured using the following mechanisms
-+(from highest to lowest precedence):
-+
-+ * the command line for those commands that support taking submodule specs.
-+
-+ * the configuration file `$GIT_DIR/config` in the superproject.
-+
-+ * the `.gitmodules` file inside the superproject. A project usually
-+   includes this file to suggest defaults for the upstream collection
-+   of repositories.
-+
-+On the location of the git directory
-+------------------------------------
-+
-+Since v1.7.7 of Git, the git directory of submodules is either stored inside
-+the superprojects git directory at $GIT_DIR/modules/<submodule-name> or
-+in the submodule.
-+The location inside the superproject allows for the working tree to be
-+non existent while keeping the history around. So we can delete a submodule
-+working tree without losing information that may only be local. It is also
-+possible to checkout the superproject before and after the deletion of the
-+submodule without the need to reclone the submodule as it is kept locally.
-+
-+Workflow for a third party library
-+----------------------------------
-+
-+  # add the submodule
-+  git submodule add <url> <path>
-+
-+  # occasionally update the submodule to a new version:
-+  git -C <path> checkout <new version>
-+  git add <path>
-+  git commit -m "update submodule to new version"
-+
-+  # see the discussion below on deleting submodules
-+
-+
-+Workflow for an artifically split repo
-+--------------------------------------
-+
-+  # Enable recursion for relevant commands, such that
-+  # regular commands recurse into submodules by default
-+  git config --global submodule.recurse true
-+
-+  # Unlike the other commands below clone still needs
-+  # its own recurse flag:
-+  git clone --recurse <URL> <directory>
-+  cd <directory>
-+
-+  # Get to know the code:
-+  git grep foo
-+  git ls-files
-+
-+  # Get new code
-+  git fetch
-+  git pull --rebase
-+
-+  # change worktree
-+  git checkout
-+  git reset
-+
-+Deleting a submodule
-+--------------------
-+
-+Deleting a submodule can happen on different levels:
-+
-+1) Removing it from the local working tree without tampering with
-+   the history of the superproject.
-+
-+You may no longer need the submodule, but still want to keep it recorded
-+in the superproject history as others may have use for it. The command
-+`git submodule deinit <submodule path>` will remove any configuration
-+entries from the config file, such that the submodule becomes
-+uninitialized. The tracking directory in the superprojects working
-+tree that holds the submodules working directory is emptied.
-+This step can be undone via `git submodule init`.
-+
-+2) Remove it from history:
-+--
-+   git rm <submodule path>
-+   git commit
-+--
-+This removes the submodules gitlink from the superprojects tree, as well
-+as removing the entries from the `.gitmodules` file, but keeps the
-+local configuration for the submodule. This can be undone using `git revert`.
-+
-+
-+3) Remove the submodules git directory:
-+
-+When you also want to free up the disk space that the submodules git
-+directory uses, you have to delete it manually as this
-+step cannot be undone using git tools. It is found in `$GIT_DIR/modules`.
-+
-+Implementation details
-+----------------------
-+
-+When cloning or pulling a repository containing submodules the submodules
-+will not be checked out by default; You can instruct 'clone' to recurse
-+into submodules. The 'init' and 'update' subcommands of 'git submodule'
-+will maintain submodules checked out and at an appropriate revision in
-+your working tree. Alternatively you can set 'submodule.recurse' to have
-+'checkout' recursing into submodules.
-+
-+
-+SEE ALSO
-+--------
-+linkgit:git-submodule[1], linkgit:gitmodules[5].
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
--- 
-2.12.2.575.gb14f27f917
+The above would make it not take effect for git_path() callers when
+'wt != NULL'.  As a result, if any caller reaches this code path, then
+scripts specifying GIT_INDEX_FILE would stop working when run from a
+worktree that borrows refs and objects from a separate repository.
+I'm pretty sure that such a subtle flip in behavior based on whether
+they are in "git worktree" created worktree or the main working tree
+is not what the end user would intend, so this looks like a step in
+the wrong direction.
 
+Fortunately this code path doesn't actually get called.
+
+In fact, rewriting git_path("index") in this function feels to me like
+a layering violation.  Shouldn't callers be using get_index_file() to
+express their intent more clearly?  That's what all current callers
+do.
+
+IIUC this came up when a patch from nd/prune-in-worktree (e7a6a3b15,
+revision.c: --indexed-objects add objects from all worktrees), which
+is currently not in pu, introduced a caller that does call
+git_path("index").  The old behavior of replacing git_path("index")
+with $GIT_INDEX_FILE when the latter is set was mostly harmless
+because typically GIT_INDEX_FILE is not set, especially when people
+are running "git prune".  Patch 05/20 (environment: place key
+repository state in the_repository) made the substitution harmful: now
+we would use repo->index_file unconditionally instead of allowing the
+ordinary worktree-relative resolution as a fallback when
+GIT_INDEX_FILE is unset.
+
+Possible next steps:
+
+ 1. I think we should make git_path less magical and discourage
+    callers from relying on it to handle the GIT_INDEX_FILE envvar.
+    We can do that by removing the !strcmp(base, "index") case
+    completely.
+
+ 2. Optionally, it is possible to be more cautious by keeping the
+    !strcmp(base, "index") case and making it call BUG() to force
+    people not to use it.  This would help steer callers toward
+    get_index_file().  But given that the only caller did not actually
+    want GIT_INDEX_FILE substitution, I don't think that that is
+    necessary or useful.
+
+ 3. A docstring for git_path should explain the substitutions it
+    currently makes and more straightforward alternatives that callers
+    can use.
+
+ 4. Specifying GIT_INDEX_FILE when running "git prune" is a
+    meaningless combination.  It would be nice for "git prune" to
+    error out to save the user from confusion.
+
+ 5. There are likely other commands that don't make sense with
+    GIT_INDEX_FILE.  Tracking them all down to make them print a
+    meaningful error message might be a bit of a slog, though.
+
+>  	else if (dir_prefix(base, "objects"))
+> @@ -411,7 +418,7 @@ static void do_git_path(const struct repository *repo,
+>  		strbuf_addch(buf, '/');
+>  	gitdir_len = buf->len;
+>  	strbuf_vaddf(buf, fmt, args);
+> -	adjust_git_path(repo, buf, gitdir_len);
+> +	adjust_git_path(repo, wt, buf, gitdir_len);
+>  	strbuf_cleanup_path(buf);
+>  }
+
+Thanks and hope that helps,
+Jonathan
