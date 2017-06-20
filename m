@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4C6D20D15
-	for <e@80x24.org>; Tue, 20 Jun 2017 07:56:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA0C720401
+	for <e@80x24.org>; Tue, 20 Jun 2017 07:56:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752294AbdFTH4w (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 03:56:52 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36540 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752193AbdFTH4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 03:56:42 -0400
-Received: by mail-wm0-f66.google.com with SMTP id d17so21334054wme.3
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:42 -0700 (PDT)
+        id S1752307AbdFTH4x (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 03:56:53 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:36554 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752161AbdFTH4l (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 03:56:41 -0400
+Received: by mail-wr0-f195.google.com with SMTP id 77so16319647wrb.3
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BH1GcmjvMgqiexEylcjylxbFHi3ocaVRXdu+ESJ9BKk=;
-        b=kr4GFjciNXUah+LAJJyf1zFrBdT8+BCSRDjdiDWnFoWqwRswHUnq6ycxecbDM5JFin
-         fSCTgohgmX/QvN5cF6ovtWVptqYAfrWMXwXHKH09IGctdekbGmESx3Eqno9a+mUSngQC
-         zBbbPfQRBzYqDf1c7l38YLE+IWyhoOzkV/NuwhAsLoOeMjSkKOahTnr39jAbbItdO9dg
-         Bu7bCcOo0Nk9A6o5PeLpMjcVnoh8CZZlU3xkPhb6cqkWOVPRZPgzvEAzOqMA79yTdLFt
-         v28C9SUpPg8KiZP5orTrGVIvWniImNP8U4q3/PHqBcZQspdpNwPd0IOHJVb8DIb3U+OC
-         f9+A==
+        bh=g+JqpWbq2zrraMZvmKDBoy092Z6bJ8WBNFDCauUZc4w=;
+        b=HN5qkFyV05dC3cl0vvniQykcFie/NVKmvwzNWesJYuzPT0XxIWLK0jdpXrZf/5tMZW
+         fb6jlRHOkJwq4ONdOFicrsesSJgFtFkEmFv0nZuEafUhl3sTrmRqbHxGcYavIvbk3ptV
+         GDgtyN5v+8F9iQRYuRE4cB9Kxkcnbzm8ez9f2n2YdmM8tMFLLZsJoodImtxrW0tBOz7O
+         3ta8rSd2XOj/W7KtWNVms8Irtzg1zZsAeD/FKu0e9MlyZ5Wjr/r4aPPqaLQKiNj6yaGv
+         HxKJm5Hkt9TV3KM5MZBXyc3rlU2H4DQXlJ5Tv+Pks8OwWmWJY3NeozV/pJkcSaW5Ge5g
+         jPTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=BH1GcmjvMgqiexEylcjylxbFHi3ocaVRXdu+ESJ9BKk=;
-        b=fF4pfv2hvu8IbTmOnmhhy9TX9NZba+xThweeP4sMkFS9tWiIu0iFX9tBz0YU4AnsSJ
-         qiqSyqaGhGLY+JIPyoSLi3mUOpaflEKY1gorMw/dpNuHe67zqQaeIpjV3bOeKCwMYlex
-         i7xhBwrG7RBbCv3boP1svFZAqHrd3OJoB1ZWQTjyIgyry4QacTE0AxpWuW7fmOg80jSe
-         7ybV9javZWHnCznw6qqnBd1sPx4v1bI9uycdvVQj51FsSj466Dc3yshRYmHwkXp8x+J6
-         B3C3G8Gky/TjseHuS/YW635I9LUo8oZ9TvhXS+DlmzfbsH173AZ1lFIMNPnZFt+4H6jt
-         53/g==
-X-Gm-Message-State: AKS2vOyVzSH2MSiPGkUu5C90l6Wvf6qnWgI8C/bnP6ttzcsT6q3xuXtn
-        NEtMLQBlCMiyARdA
-X-Received: by 10.28.54.204 with SMTP id y73mr1785636wmh.53.1497945400997;
-        Tue, 20 Jun 2017 00:56:40 -0700 (PDT)
+        bh=g+JqpWbq2zrraMZvmKDBoy092Z6bJ8WBNFDCauUZc4w=;
+        b=XrlEC4nXi1s9w/P9dQJeoQb+rJ13n0rJDkDZQRs9tM+LCAXYXEvN8Je7FPya7j304o
+         VvfY+ecXdkckmSMkBX5yEvbjcJqdSZH5vQU96sKiOGBw00tSLLRLlCf1f+bpcqxuMMOH
+         rEse+jLSNWXdH1zuu5ZyyTuXT76ydJ1IomyOfPggFj0hbEZ4x10ieAQ0S+/745VEqjbb
+         FPaYsfXx7dfXQyBa5t56Zrn848ElMtRpdJH4bR9/2OzeyimpQvqCPIDy7NpUZ97pMSGO
+         +v1he0VtY2NUbVjhSXyJ9fQOvPnM/S3+/UHNW4NKME+ThNsVYerHIILpkmLB6hWFrDTe
+         aZNg==
+X-Gm-Message-State: AKS2vOwQb3udA5von9jX9Jvt0jQiw2rFa0hq4cCW2xePQQQEQTmoS+go
+        +dxlUMJvU+pPGpVZ
+X-Received: by 10.223.154.141 with SMTP id a13mr18402481wrc.139.1497945389743;
+        Tue, 20 Jun 2017 00:56:29 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.39
+        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 00:56:40 -0700 (PDT)
+        Tue, 20 Jun 2017 00:56:29 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH v4 40/49] Add t0480 to test "have" capability and plain objects
-Date:   Tue, 20 Jun 2017 09:55:14 +0200
-Message-Id: <20170620075523.26961-41-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v4 31/49] external-odb: add external_odb_get_capabilities()
+Date:   Tue, 20 Jun 2017 09:55:05 +0200
+Message-Id: <20170620075523.26961-32-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.565.gbfcd7a9048
 In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
 References: <20170620075523.26961-1-chriscool@tuxfamily.org>
@@ -69,263 +69,99 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0480-read-object-have-http-e-odb.sh | 123 +++++++++++++++++++++++++++++++++
- t/t0480/read-object-plain-have         | 116 +++++++++++++++++++++++++++++++
- 2 files changed, 239 insertions(+)
- create mode 100755 t/t0480-read-object-have-http-e-odb.sh
- create mode 100755 t/t0480/read-object-plain-have
+ external-odb.c | 15 ++++++++++++++-
+ odb-helper.c   | 23 +++++++++++++++++++++++
+ odb-helper.h   |  1 +
+ 3 files changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/t/t0480-read-object-have-http-e-odb.sh b/t/t0480-read-object-have-http-e-odb.sh
-new file mode 100755
-index 0000000000..52fb4d46c9
---- /dev/null
-+++ b/t/t0480-read-object-have-http-e-odb.sh
-@@ -0,0 +1,123 @@
-+#!/bin/sh
+diff --git a/external-odb.c b/external-odb.c
+index 2efa805d12..8c2570b2e7 100644
+--- a/external-odb.c
++++ b/external-odb.c
+@@ -66,6 +66,14 @@ static int external_odb_config(const char *var, const char *value, void *data)
+ 	return 0;
+ }
+ 
++static void external_odb_get_capabilities(void)
++{
++	struct odb_helper *o;
 +
-+test_description='tests for read-object process with "have" cap and plain objects'
-+
-+. ./test-lib.sh
-+
-+# If we don't specify a port, the current test number will be used
-+# which will not work as it is less than 1024, so it can only be used by root.
-+LIB_HTTPD_PORT=$(expr ${this_test#t} + 12000)
-+
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+
-+start_httpd apache-e-odb.conf
-+
-+PATH="$PATH:$TEST_DIRECTORY/t0480"
-+
-+# odb helper script must see this
-+export HTTPD_URL
-+
-+HELPER="read-object-plain-have"
-+
-+test_expect_success 'setup repo with a root commit' '
-+	test_commit zero
-+'
-+
-+test_expect_success 'setup another repo from the first one' '
-+	git init other-repo &&
-+	(cd other-repo &&
-+	 git remote add origin .. &&
-+	 git pull origin master &&
-+	 git checkout master &&
-+	 git log)
-+'
-+
-+test_expect_success 'setup the helper in the root repo' '
-+	git config odb.magic.command "$HELPER" &&
-+	git config odb.magic.fetchKind "plainObject"
-+'
-+
-+UPLOADFILENAME="hello_apache_upload.txt"
-+
-+UPLOAD_URL="$HTTPD_URL/upload/?sha1=$UPLOADFILENAME&size=123&type=blob"
-+
-+test_expect_success 'can upload a file' '
-+	echo "Hello Apache World!" >hello_to_send.txt &&
-+	echo "How are you?" >>hello_to_send.txt &&
-+	curl --data-binary @hello_to_send.txt --include "$UPLOAD_URL" >out_upload
-+'
-+
-+LIST_URL="$HTTPD_URL/list/"
-+
-+test_expect_success 'can list uploaded files' '
-+	curl --include "$LIST_URL" >out_list &&
-+	grep "$UPLOADFILENAME" out_list
-+'
-+
-+test_expect_success 'can delete uploaded files' '
-+	curl --data "delete" --include "$UPLOAD_URL&delete=1" >out_delete &&
-+	curl --include "$LIST_URL" >out_list2 &&
-+	! grep "$UPLOADFILENAME" out_list2
-+'
-+
-+FILES_DIR="httpd/www/files"
-+
-+test_expect_success 'new blobs are transfered to the http server' '
-+	test_commit one &&
-+	hash1=$(git ls-tree HEAD | grep one.t | cut -f1 | cut -d\  -f3) &&
-+	echo "$hash1-4-blob" >expected &&
-+	ls "$FILES_DIR" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'blobs can be retrieved from the http server' '
-+	git cat-file blob "$hash1" &&
-+	git log -p >expected
-+'
-+
-+test_expect_success 'update other repo from the first one' '
-+	(cd other-repo &&
-+	 git fetch origin "refs/odbs/magic/*:refs/odbs/magic/*" &&
-+	 test_must_fail git cat-file blob "$hash1" &&
-+	 git config odb.magic.command "$HELPER" &&
-+	 git config odb.magic.fetchKind "plainObject" &&
-+	 git cat-file blob "$hash1" &&
-+	 git pull origin master)
-+'
-+
-+test_expect_success 'local clone from the first repo' '
-+	mkdir my-clone &&
-+	(cd my-clone &&
-+	 git clone .. . &&
-+	 git cat-file blob "$hash1")
-+'
-+
-+test_expect_success 'no-local clone from the first repo fails' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 test_must_fail git clone --no-local .. .) &&
-+	rm -rf my-other-clone
-+'
-+
-+test_expect_success 'no-local clone from the first repo with helper succeeds' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 git clone -c odb.magic.command="$HELPER" \
-+		-c odb.magic.plainObjects="true" \
-+		--no-local .. .) &&
-+	rm -rf my-other-clone
-+'
-+
-+test_expect_success 'no-local initial-refspec clone succeeds' '
-+	mkdir my-other-clone &&
-+	(cd my-other-clone &&
-+	 git config odb.magic.command "$HELPER" &&
-+	 git config odb.magic.fetchKind "plainObject" &&
-+	 git -c odb.magic.command="$HELPER" \
-+		-c odb.magic.plainObjects="true" \
-+		clone --no-local --initial-refspec "refs/odbs/magic/*:refs/odbs/magic/*" .. .)
-+'
-+
-+stop_httpd
-+
-+test_done
-diff --git a/t/t0480/read-object-plain-have b/t/t0480/read-object-plain-have
-new file mode 100755
-index 0000000000..dbed8eaefb
---- /dev/null
-+++ b/t/t0480/read-object-plain-have
-@@ -0,0 +1,116 @@
-+#!/usr/bin/perl
-+#
-+
-+use 5.008;
-+use lib (split(/:/, $ENV{GITPERLLIB}));
-+use strict;
-+use warnings;
-+use Git::Packet;
-+use LWP::UserAgent;
-+use HTTP::Request::Common;
-+
-+print STDERR "read-object-plain-have: starting\n";
-+
-+packet_initialize("git-read-object", 1);
-+
-+print STDERR "read-object-plain-have: after init\n";
-+
-+packet_read_and_check_capabilities("get", "put", "have");
-+packet_write_capabilities("get", "put", "have");
-+
-+print STDERR "read-object-plain-have: after reading and writing get and have capabilities\n";
-+
-+my $http_url = $ENV{HTTPD_URL};
-+
-+while (1) {
-+	my ($command) = packet_txt_read() =~ /^command=([^=]+)$/;
-+
-+	print STDERR "read-object-plain-have: command: '$command'\n";
-+
-+	if ( $command eq "have" ) {
-+		# read the flush after the command
-+		packet_bin_read();
-+
-+		my $have_url = $http_url . "/list/";
-+		print STDERR "read-object-plain-have: have_url: '$have_url'\n";
-+
-+		my $userAgent = LWP::UserAgent->new();
-+		my $response = $userAgent->get( $have_url );
-+
-+		if ($response->is_error) {
-+		    print STDERR $response->error_as_HTML . "\n";
-+		    packet_bin_write("");
-+		    packet_flush();
-+		    packet_txt_write("status=failure");
-+		} else {
-+		    print STDERR "content: \n";
-+		    print STDERR $response->content;
-+		    packet_bin_write($response->content);
-+		    packet_flush();
-+		    packet_txt_write("status=success");
-+		}
-+		packet_flush();
-+	} elsif ( $command eq "get" ) {
-+		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
-+		packet_bin_read();
-+
-+		my $get_url = $http_url . "/list/?sha1=" . $sha1;
-+		print STDERR "read-object-plain-have: get_url: '$get_url'\n";
-+
-+		my $userAgent = LWP::UserAgent->new();
-+
-+		my $response = $userAgent->get( $get_url );
-+
-+		if ($response->is_error) {
-+		    print STDERR $response->error_as_HTML . "\n";
-+		    packet_txt_write("size=0");
-+		    packet_txt_write("kind=none");	    
-+		    packet_txt_write("status=notfound");
-+		} else {
-+		    print STDERR "content: \n";
-+		    print STDERR $response->content;
-+		    packet_txt_write("size=" . length($response->content));
-+		    packet_txt_write("kind=blob");
-+		    packet_bin_write($response->content);
-+		    packet_flush();
-+		    packet_txt_write("status=success");
-+		}
-+
-+		packet_flush();
-+	} elsif ( $command eq "put" ) {
-+		my ($sha1) = packet_txt_read() =~ /^sha1=([0-9a-f]{40})$/;
-+		print STDERR "read-object-plain-have: put sha1: '$sha1'\n";
-+
-+		my ($size) = packet_txt_read() =~ /^size=([0-9]+)$/;
-+		print STDERR "read-object-plain-have: put size: '$size'\n";
-+
-+		my ($kind) = packet_txt_read() =~ /^kind=(\w+)$/;
-+		print STDERR "read-object-plain-have: put kind: '$kind'\n";
-+
-+		packet_bin_read();
-+
-+		# We must read the content we are sent and send it to the right url
-+		my ($res, $buf) = packet_bin_read();
-+		die "bad packet_bin_read res ($res)" unless ($res eq 0);
-+		( packet_bin_read() eq ( 1, "" ) ) || die "bad send end";		
-+
-+		my $upload_url = $http_url . "/upload/?sha1=" . $sha1 . "&size=" . $size . "&type=blob";
-+		print STDERR "read-object-plain-have: upload_url: '$upload_url'\n";
-+		print STDERR "read-object-plain-have: upload buffer: '$buf'\n";
-+
-+		my $userAgent = LWP::UserAgent->new();
-+		my $request = POST $upload_url, Content_Type => 'multipart/form-data', Content => $buf;
-+
-+		my $response = $userAgent->request($request);
-+
-+		if ($response->is_error) {
-+			print STDERR $response->error_as_HTML . "\n";
-+			packet_txt_write("status=failure");
-+		} else {
-+			packet_txt_write("status=success");
-+		}
-+		packet_flush();
-+	} else {
-+		die "bad command '$command'";
-+	}
++	for (o = helpers; o; o = o->next)
++		odb_helper_get_capabilities(o);
 +}
++
+ static void external_odb_init(void)
+ {
+ 	static int initialized;
+@@ -75,6 +83,8 @@ static void external_odb_init(void)
+ 	initialized = 1;
+ 
+ 	git_config(external_odb_config, NULL);
++
++	external_odb_get_capabilities();
+ }
+ 
+ const char *external_odb_root(void)
+@@ -94,9 +104,12 @@ int external_odb_has_object(const unsigned char *sha1)
+ 
+ 	external_odb_init();
+ 
+-	for (o = helpers; o; o = o->next)
++	for (o = helpers; o; o = o->next) {
++		if (!(o->supported_capabilities & ODB_HELPER_CAP_HAVE))
++			return 1;
+ 		if (odb_helper_has_object(o, sha1))
+ 			return 1;
++	}
+ 	return 0;
+ }
+ 
+diff --git a/odb-helper.c b/odb-helper.c
+index 20e83cb55a..a6bf81af8d 100644
+--- a/odb-helper.c
++++ b/odb-helper.c
+@@ -260,6 +260,29 @@ static int odb_helper_finish(struct odb_helper *o,
+ 	return 0;
+ }
+ 
++int odb_helper_get_capabilities(struct odb_helper *o)
++{
++	struct odb_helper_cmd cmd;
++	FILE *fh;
++	struct strbuf line = STRBUF_INIT;
++
++	if (!o->script_mode)
++		return 0;
++
++	if (odb_helper_start(o, &cmd, 0, "get_cap") < 0)
++		return -1;
++
++	fh = xfdopen(cmd.child.out, "r");
++	while (strbuf_getline(&line, fh) != EOF)
++		parse_capabilities(line.buf, &o->supported_capabilities, o->name);
++
++	strbuf_release(&line);
++	fclose(fh);
++	odb_helper_finish(o, &cmd);
++
++	return 0;
++}
++
+ static int parse_object_line(struct odb_helper_object *o, const char *line)
+ {
+ 	char *end;
+diff --git a/odb-helper.h b/odb-helper.h
+index b23544aa4a..8e0b0fc781 100644
+--- a/odb-helper.h
++++ b/odb-helper.h
+@@ -33,6 +33,7 @@ struct odb_helper {
+ };
+ 
+ struct odb_helper *odb_helper_new(const char *name, int namelen);
++int odb_helper_get_capabilities(struct odb_helper *o);
+ int odb_helper_has_object(struct odb_helper *o, const unsigned char *sha1);
+ int odb_helper_fetch_object(struct odb_helper *o, const unsigned char *sha1,
+ 			    int fd);
 -- 
 2.13.1.565.gbfcd7a9048
 
