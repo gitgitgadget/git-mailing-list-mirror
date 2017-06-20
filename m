@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FDDA20401
-	for <e@80x24.org>; Tue, 20 Jun 2017 07:58:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7FC20401
+	for <e@80x24.org>; Tue, 20 Jun 2017 07:58:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752060AbdFTH6S (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 03:58:18 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35757 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751998AbdFTH4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 03:56:05 -0400
-Received: by mail-wm0-f67.google.com with SMTP id d64so21283960wmf.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:05 -0700 (PDT)
+        id S1752501AbdFTH6W (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 03:58:22 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:32860 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751205AbdFTHzz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 03:55:55 -0400
+Received: by mail-wr0-f194.google.com with SMTP id x23so16334421wrb.0
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=eefpvZVSsC1X2Hcs/hshQm0z6eOUzIA19j3yEou84IM=;
-        b=hDrLgZdq4rx94qUH2fSNoM59wf7BinjX1rRp10OYFIIPzXnfS5yJmorEOU2SZWSypD
-         l8+9Zm1IV1A3ITpCahEPSh26cn8027wz+SDc+0xk3SJvJ8XwUVhUGZc9SsYrKL/RTlmC
-         DaalrSNTKBpLQtdYIYxGGmFPsnnSOomR92MKuTrj8R9ywmLoO6qw5m4StMhheszcui2I
-         HeCnc25xx/D9N3hWj9SZ6zuHwGRRZVh73uXjyNBPPYBhG/bEBBSHDmlSLKCgzmsd6NJ5
-         H6P2t0pNhSWkuO5venxT8qZe+B26Ki0uum9MJcMRcZCzoDblAgvELEtCKCmx6RDKLPnH
-         kHww==
+        bh=fMj2ujz88n3MuHlaDOPG4jx8+PC6w+Sy0Z/zBGyX+U8=;
+        b=fZAZ2Wj6V4DFTPDgkkUsIpROXNun9zaSvyIpexWIecDqp8iOyUUzgO5bFkvOeukYrO
+         09U+7pmb1wK1tzlaXo69Rpg6djwNrSXIhHD/dVVUkeHku6jpzAe2vQuWMCiP+j/NUH+b
+         gIcRVyUzdZwUV01gS0b51yZKgUQqNmNfQ//1aFjc/DqH29vfbkw8OAyE1UJzH5QNcGRX
+         AyrX7Dfeq3XhRp5fLRXR/izzDh30f+Z6oyXHYkqUwsrFWDdLOcaWDSlqKduk/PVrqJ6H
+         H6TPdZVWDGc3XmksHpspihQb8QY45RA2qG3SvuEAasNIN53Oaeaf6pC6ak5Bi2hEij61
+         k8BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=eefpvZVSsC1X2Hcs/hshQm0z6eOUzIA19j3yEou84IM=;
-        b=tdTvqJsJWJWw9WZlesgH17WuvXSOXsALQkm0Y5gUY+yDw1HyDSnYdIL3xXY2Gl2hfK
-         hombRE8yNt+XE2+Oe6ec2TQO73wJzgY9/PLr8CWKhsQNrC+AW+dGuQI7mtgTDJPiKjqX
-         uGpB/JQPHgcLjmVlrrSlFy9aVTUEZYWzrgXOKTOZR6jIfM/LyDf6VCsJiyEHQ9r7BK3G
-         74S2/CZjcnPAxwCO3TaEXomFmGlagapI4AJT0wpGBYewa9AswD8VRIRgwLq+2A0Ms2g9
-         OYb0o/69CXr36bSBxbu8wsPO8MvNJootnInbwuv2Fe63RBZ7t0U3KuVJsphdbZf4fbov
-         hN4A==
-X-Gm-Message-State: AKS2vOyM05otUwJNXb7CxJFmbLzxhhfBMCQLPcfN9Kx8CnEdneRPSsKK
-        ZQ7mNUZLh4HJR7sC
-X-Received: by 10.28.48.83 with SMTP id w80mr1612048wmw.34.1497945364039;
-        Tue, 20 Jun 2017 00:56:04 -0700 (PDT)
+        bh=fMj2ujz88n3MuHlaDOPG4jx8+PC6w+Sy0Z/zBGyX+U8=;
+        b=NXRVy5j+KSTprGnKzdY9dY0gkp8IMelR6WYDVY81wOe2dY7VaPoUXq9EQ68iKRnJ4V
+         /p/omDJohGHh5gdW6XdCbLzeiK6Mtq81hdzrQiEn3MfwV7+rHJxq8AjT073mVdJO2ro9
+         54U3q29c7RfhLWxnntzAb4l6SAjW4BlET1mMxdIL9TB+5802QAkG+FNEnAEDTCJQVX8d
+         7yMDSHDvA1Yy98uDIXB5l/4t9yWAwmYr/VCLkmao/JrJbx3fggFmKWG3HnXjndJ025Bw
+         +hvItevPJYPCXryuxO9SFVZPu3HbCkPOTGXKnwDDor5W9ab8JrM3uo4CCCJDEDg1619d
+         13Mw==
+X-Gm-Message-State: AKS2vOxE2Aub4R06WksozuszOC3ZxWYt9Ip+D46HKiSbm/4iijA11lDX
+        1Y5XrUXxye+sb8w0
+X-Received: by 10.223.148.226 with SMTP id 89mr6449275wrr.169.1497945354080;
+        Tue, 20 Jun 2017 00:55:54 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.02
+        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.55.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 00:56:03 -0700 (PDT)
+        Tue, 20 Jun 2017 00:55:53 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH v4 11/49] t0400: add 'put' command to odb-helper script
-Date:   Tue, 20 Jun 2017 09:54:45 +0200
-Message-Id: <20170620075523.26961-12-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v4 04/49] Add Git/Packet.pm from parts of t0021/rot13-filter.pl
+Date:   Tue, 20 Jun 2017 09:54:38 +0200
+Message-Id: <20170620075523.26961-5-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.565.gbfcd7a9048
 In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
 References: <20170620075523.26961-1-chriscool@tuxfamily.org>
@@ -67,57 +67,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This will make it possible to reuse packet reading and writing
+functions in other test scripts.
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t0400-external-odb.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ perl/Git/Packet.pm | 71 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
+ create mode 100644 perl/Git/Packet.pm
 
-diff --git a/t/t0400-external-odb.sh b/t/t0400-external-odb.sh
-index fe85413725..6c6da5cf4f 100755
---- a/t/t0400-external-odb.sh
-+++ b/t/t0400-external-odb.sh
-@@ -7,6 +7,10 @@ test_description='basic tests for external object databases'
- ALT_SOURCE="$PWD/alt-repo/.git"
- export ALT_SOURCE
- write_script odb-helper <<\EOF
-+die() {
-+	printf >&2 "%s\n" "$@"
-+	exit 1
+diff --git a/perl/Git/Packet.pm b/perl/Git/Packet.pm
+new file mode 100644
+index 0000000000..aaffecbe2a
+--- /dev/null
++++ b/perl/Git/Packet.pm
+@@ -0,0 +1,71 @@
++package Git::Packet;
++use 5.008;
++use strict;
++use warnings;
++BEGIN {
++	require Exporter;
++	if ($] < 5.008003) {
++		*import = \&Exporter::import;
++	} else {
++		# Exporter 5.57 which supports this invocation was
++		# released with perl 5.8.3
++		Exporter->import('import');
++	}
 +}
- GIT_DIR=$ALT_SOURCE; export GIT_DIR
- case "$1" in
- have)
-@@ -16,6 +20,16 @@ have)
- get)
- 	cat "$GIT_DIR"/objects/$(echo $2 | sed 's#..#&/#')
- 	;;
-+put)
-+	sha1="$2"
-+	size="$3"
-+	kind="$4"
-+	writen=$(git hash-object -w -t "$kind" --stdin)
-+	test "$writen" = "$sha1" || die "bad sha1 passed '$sha1' vs writen '$writen'"
-+	;;
-+*)
-+	die "unknown command '$1'"
-+	;;
- esac
- EOF
- HELPER="\"$PWD\"/odb-helper"
-@@ -43,4 +57,13 @@ test_expect_success 'helper can retrieve alt objects' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'helper can add objects to alt repo' '
-+	hash=$(echo "Hello odb!" | git hash-object -w -t blob --stdin) &&
-+	test -f .git/objects/$(echo $hash | sed "s#..#&/#") &&
-+	size=$(git cat-file -s "$hash") &&
-+	git cat-file blob "$hash" | ./odb-helper put "$hash" "$size" blob &&
-+	alt_size=$(cd alt-repo && git cat-file -s "$hash") &&
-+	test "$size" -eq "$alt_size"
-+'
 +
- test_done
++our @EXPORT = qw(
++			packet_bin_read
++			packet_txt_read
++			packet_bin_write
++			packet_txt_write
++			packet_flush
++		);
++our @EXPORT_OK = @EXPORT;
++
++sub packet_bin_read {
++	my $buffer;
++	my $bytes_read = read STDIN, $buffer, 4;
++	if ( $bytes_read == 0 ) {
++		# EOF - Git stopped talking to us!
++		return ( -1, "" );
++	} elsif ( $bytes_read != 4 ) {
++		die "invalid packet: '$buffer'";
++	}
++	my $pkt_size = hex($buffer);
++	if ( $pkt_size == 0 ) {
++		return ( 1, "" );
++	} elsif ( $pkt_size > 4 ) {
++		my $content_size = $pkt_size - 4;
++		$bytes_read = read STDIN, $buffer, $content_size;
++		if ( $bytes_read != $content_size ) {
++			die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
++		}
++		return ( 0, $buffer );
++	} else {
++		die "invalid packet size: $pkt_size";
++	}
++}
++
++sub packet_txt_read {
++	my ( $res, $buf ) = packet_bin_read();
++	unless ( $res == -1 || $buf =~ s/\n$// ) {
++		die "A non-binary line MUST be terminated by an LF.";
++	}
++	return ( $res, $buf );
++}
++
++sub packet_bin_write {
++	my $buf = shift;
++	print STDOUT sprintf( "%04x", length($buf) + 4 );
++	print STDOUT $buf;
++	STDOUT->flush();
++}
++
++sub packet_txt_write {
++	packet_bin_write( $_[0] . "\n" );
++}
++
++sub packet_flush {
++	print STDOUT sprintf( "%04x", 0 );
++	STDOUT->flush();
++}
 -- 
 2.13.1.565.gbfcd7a9048
 
