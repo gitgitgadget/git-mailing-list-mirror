@@ -6,46 +6,46 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D33020401
-	for <e@80x24.org>; Tue, 20 Jun 2017 07:57:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2BED20401
+	for <e@80x24.org>; Tue, 20 Jun 2017 07:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752253AbdFTH4v (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 03:56:51 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34525 "EHLO
+        id S1752444AbdFTH5X (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 03:57:23 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:34587 "EHLO
         mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752247AbdFTH4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 03:56:46 -0400
-Received: by mail-wr0-f196.google.com with SMTP id y25so14133829wrd.1
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:40 -0700 (PDT)
+        with ESMTP id S1752198AbdFTH4v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 03:56:51 -0400
+Received: by mail-wr0-f196.google.com with SMTP id y25so14134230wrd.1
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 00:56:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CO2s7+7Tr/Bam+F+T9inyv1bbt/3K0r8kD/Xiy/uc5A=;
-        b=eQ92Icj+KkxeBw7e4HFXR+dLbfQdsjBvtUySKDPb3ToDdm4sccy+GyPYQ1x5/FE8w+
-         x34iqm1Ht+sZ/NZ9e8K+ebdBZw4rVc3pITmy45Po5qqqICbOF6F42a+PMoPgD6EPBkwR
-         4USA3xAO6fKxbu9diu3d+N+3Dc13QyIHin7jNaWsOWDd9TWNLd5szwQcMeEsSTi8dMGd
-         x060Fmx/FnDqoUR5Ab7UJPLgEhE7/ps75UHvgXLAggdud0BUiNPCrYoDZIUW8EerbAdr
-         dkJJj/SVgW7QJYpvZ95/2F5NUyfn9B3I7lWvratnTUw9YttijqyUudCggf3zKnt/FCAY
-         Xb3Q==
+        bh=FfDNfdcRgEl4nW+WuFSqtrnHuvNRBBG0CppxHIif2Sg=;
+        b=ZM++biI7gXMCfIkdvnKfe6b2sdMDf8mf00U4GHJc1nEmM83Rw1x7Qc+5YHN6bPtfTi
+         AjqqqKirYPLc+kLXooMpIXXtfX41LQYHdRxVRLK58gl1SjWzlI061QGMpwxvnvqe+9Wi
+         3t3ZAPFelQ4j59+YQa+vn0n3KjMxp9rKp6vdDYaAnG3wPX16DoHtgtcJzzyqaHJsFfTF
+         UUjrYZjQUK3Mn0JnPc4vwqdq993hlT1jJHPzo/zS0sjv6oKa6hcxpZW/J2HcrsLbIeZE
+         e5oe71Hj6HZ4hBLC8mxPs/4KvvASWSYi78FZDlmFW53RZ11AuhU7Jq+73qfJSPsiFmv0
+         4eVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=CO2s7+7Tr/Bam+F+T9inyv1bbt/3K0r8kD/Xiy/uc5A=;
-        b=Rw1bd93+6IGZ0RS7c+tvjyE/ZiijMvidIPFYCANqUMs5Nz+om/juatKW7Y8OJjFitH
-         48TpuSSTKChX5vVz/YUxYUyqmERO/HDDk9JR1LKoUqqJm0kyv69iGlFviiDP6VXVborq
-         2VphWFFSN1hDArvoHbCunsDd2ghrSMHifZbKZRYFYwuMn/ZYhOowbV6fiDpUT3lvo+qv
-         jK7bpfwO/X4NG6T24mW/LC3Kot8Yr0I38GQkCTFDDQGEo7sRpL1piLoMxb/F+cTN6Ob4
-         uY9HWkEN8I0Th44x6ztc1WfabEzK16wq6XlfzlJ2GtqXe625Yt0Rtz8wlpfmZDAhVgw9
-         ILtA==
-X-Gm-Message-State: AKS2vOzhyHi8mhrJ7JYPPJ0AVBiPDLCqu8mxS1OMbfeKbqocmVxGWKrz
-        zcR3/FhXnJ96gOoL
-X-Received: by 10.223.133.4 with SMTP id 4mr22146918wrh.30.1497945399684;
-        Tue, 20 Jun 2017 00:56:39 -0700 (PDT)
+        bh=FfDNfdcRgEl4nW+WuFSqtrnHuvNRBBG0CppxHIif2Sg=;
+        b=jwajHVe9MWxNFSGjjL0MCFwuEbyxc4BNu12AgsqTumWypCh3U3qxP3vFuTg5mgLXKh
+         +uI1xt4DChwUzdheLnTXpkR7N7d7JZSN6C3C5LaLoPDy3gh1yd6vrsXun5M0pQkjkSWn
+         Gfvalt6oeCRT6tqpHw6Xsxbzk0+JuLk++QnM8firVVU2Gn+irTvlNAPfx744E+ZOHbGc
+         pC5feJkPRwwXIsE4TcHFH7EQ8htYWaC0W7Bm3XbrAs+2Up9YKDPaOi/EVf3g8xfUCEjq
+         dDkj4wBCiSKG8lXdzS5RLrmgQG22qmiWNqgwtrlxhj1LxAZgDWmmXxutC6ndJhpKm6lD
+         Hwhw==
+X-Gm-Message-State: AKS2vOwaEuoaO8m7e9VEo4guELKUlXrKYLPxIKtGkmpOkyvp6u+FJa+0
+        84lt0/nHaSxm2H1J
+X-Received: by 10.223.178.143 with SMTP id g15mr17558160wrd.144.1497945409712;
+        Tue, 20 Jun 2017 00:56:49 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.38
+        by smtp.gmail.com with ESMTPSA id k86sm11577890wmi.16.2017.06.20.00.56.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 00:56:39 -0700 (PDT)
+        Tue, 20 Jun 2017 00:56:49 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Lars Schneider <larsxschneider@gmail.com>,
         Eric Wong <e@80x24.org>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH v4 39/49] odb-helper: add write_object_process()
-Date:   Tue, 20 Jun 2017 09:55:13 +0200
-Message-Id: <20170620075523.26961-40-chriscool@tuxfamily.org>
+Subject: [RFC/PATCH v4 44/49] odb-helper: add have_object_process()
+Date:   Tue, 20 Jun 2017 09:55:18 +0200
+Message-Id: <20170620075523.26961-45-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.565.gbfcd7a9048
 In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
 References: <20170620075523.26961-1-chriscool@tuxfamily.org>
@@ -69,20 +69,18 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- odb-helper.c | 76 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 73 insertions(+), 3 deletions(-)
+ odb-helper.c | 103 ++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 91 insertions(+), 12 deletions(-)
 
 diff --git a/odb-helper.c b/odb-helper.c
-index b2d86a7928..e21113c0b8 100644
+index 2e5d8af526..01cd6a713c 100644
 --- a/odb-helper.c
 +++ b/odb-helper.c
-@@ -383,6 +383,65 @@ static int read_object_process(struct odb_helper *o, const unsigned char *sha1,
- 	return err;
+@@ -579,27 +579,106 @@ static int odb_helper_object_cmp(const void *va, const void *vb)
+ 	return hashcmp(a->sha1, b->sha1);
  }
  
-+static int write_object_process(struct odb_helper *o,
-+				const void *buf, size_t len,
-+				const char *type, unsigned char *sha1)
++static int have_object_process(struct odb_helper *o)
 +{
 +	int err;
 +	struct read_object_process *entry;
@@ -90,6 +88,9 @@ index b2d86a7928..e21113c0b8 100644
 +	struct strbuf status = STRBUF_INIT;
 +	const char *cmd = o->cmd;
 +	uint64_t start;
++	char *line;
++	int packet_len;
++	int total_got = 0;
 +
 +	start = getnanotime();
 +
@@ -97,24 +98,12 @@ index b2d86a7928..e21113c0b8 100644
 +	process = &entry->subprocess.process;
 +	o->supported_capabilities = entry->supported_capabilities;
 +
-+	if (!(ODB_HELPER_CAP_PUT & entry->supported_capabilities))
++	if (!(ODB_HELPER_CAP_HAVE & entry->supported_capabilities))
 +		return -1;
 +
 +	sigchain_push(SIGPIPE, SIG_IGN);
 +
-+	err = packet_write_fmt_gently(process->in, "command=put\n");
-+	if (err)
-+		goto done;
-+
-+	err = packet_write_fmt_gently(process->in, "sha1=%s\n", sha1_to_hex(sha1));
-+	if (err)
-+		goto done;
-+
-+	err = packet_write_fmt_gently(process->in, "size=%"PRIuMAX"\n", len);
-+	if (err)
-+		goto done;
-+
-+	err = packet_write_fmt_gently(process->in, "kind=blob\n");
++	err = packet_write_fmt_gently(process->in, "command=have\n");
 +	if (err)
 +		goto done;
 +
@@ -122,9 +111,35 @@ index b2d86a7928..e21113c0b8 100644
 +	if (err)
 +		goto done;
 +
-+	err = write_packetized_from_buf(buf, len, process->in);
-+	if (err)
++	for (;;) {
++		/* packet_read() writes a '\0' extra byte at the end */
++		char buf[LARGE_PACKET_DATA_MAX + 1];
++		char *p = buf;
++		int more;
++
++		packet_len = packet_read(process->out, NULL, NULL,
++			buf, LARGE_PACKET_DATA_MAX + 1,
++			PACKET_READ_GENTLE_ON_EOF);
++
++		if (packet_len <= 0)
++			break;
++
++		total_got += packet_len;
++
++		do {
++			char *eol = strchrnul(p, '\n');
++			more = (*eol == '\n');
++			*eol = '\0';
++			if (add_have_entry(o, p))
++				break;
++			p = eol + 1;
++		} while (more);
++	}
++
++	if (packet_len < 0) {
++		err = packet_len;
 +		goto done;
++	}
 +
 +	subprocess_read_status(process->out, &status);
 +	err = strcmp(status.buf, "success");
@@ -132,44 +147,54 @@ index b2d86a7928..e21113c0b8 100644
 +done:
 +	sigchain_pop(SIGPIPE);
 +
-+	err = check_object_process_error(err, status.buf, entry, cmd, ODB_HELPER_CAP_PUT);
++	err = check_object_process_error(err, status.buf, entry, cmd, ODB_HELPER_CAP_HAVE);
 +
-+	trace_performance_since(start, "write_object_process");
++	trace_performance_since(start, "have_object_process");
 +
 +	return err;
 +}
 +
- struct odb_helper *odb_helper_new(const char *name, int namelen)
+ static void odb_helper_load_have(struct odb_helper *o)
  {
- 	struct odb_helper *o;
-@@ -804,9 +863,9 @@ int odb_helper_for_each_object(struct odb_helper *o,
- 	return 0;
- }
+-	struct odb_helper_cmd cmd;
+-	FILE *fh;
+-	struct strbuf line = STRBUF_INIT;
  
--int odb_helper_write_object(struct odb_helper *o,
--			    const void *buf, size_t len,
--			    const char *type, unsigned char *sha1)
-+int odb_helper_write_plain_object(struct odb_helper *o,
-+				  const void *buf, size_t len,
-+				  const char *type, unsigned char *sha1)
- {
- 	struct odb_helper_cmd cmd;
+ 	if (o->have_valid)
+ 		return;
+ 	o->have_valid = 1;
  
-@@ -832,3 +891,14 @@ int odb_helper_write_object(struct odb_helper *o,
- 	odb_helper_finish(o, &cmd);
- 	return 0;
- }
-+
-+int odb_helper_write_object(struct odb_helper *o,
-+			    const void *buf, size_t len,
-+			    const char *type, unsigned char *sha1)
-+{
+-	if (odb_helper_start(o, &cmd, 0, "have") < 0)
+-		return;
 +	if (o->script_mode) {
-+		return odb_helper_write_plain_object(o, buf, len, type, sha1);
++		struct odb_helper_cmd cmd;
++		FILE *fh;
++		struct strbuf line = STRBUF_INIT;
+ 
+-	fh = xfdopen(cmd.child.out, "r");
+-	while (strbuf_getline(&line, fh) != EOF)
+-		if (add_have_entry(o, line.buf))
+-			break;
++		if (odb_helper_start(o, &cmd, 0, "have") < 0)
++			return;
+ 
+-	strbuf_release(&line);
+-	fclose(fh);
+-	odb_helper_finish(o, &cmd);
++		fh = xfdopen(cmd.child.out, "r");
++		while (strbuf_getline(&line, fh) != EOF)
++			if (add_have_entry(o, line.buf))
++				break;
++
++		strbuf_release(&line);
++		fclose(fh);
++		odb_helper_finish(o, &cmd);
 +	} else {
-+		return write_object_process(o, buf, len, type, sha1);
++		have_object_process(o);
 +	}
-+}
+ 
+ 	qsort(o->have, o->have_nr, sizeof(*o->have), odb_helper_object_cmp);
+ }
 -- 
 2.13.1.565.gbfcd7a9048
 
