@@ -2,115 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9899920282
-	for <e@80x24.org>; Wed, 21 Jun 2017 00:21:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A228C20282
+	for <e@80x24.org>; Wed, 21 Jun 2017 00:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752706AbdFUAVV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 20:21:21 -0400
-Received: from mail-ua0-f172.google.com ([209.85.217.172]:34065 "EHLO
-        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752377AbdFUAVU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 20:21:20 -0400
-Received: by mail-ua0-f172.google.com with SMTP id z22so2677591uah.1
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 17:21:20 -0700 (PDT)
+        id S1752676AbdFUAjH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 20:39:07 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35593 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752592AbdFUAjG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 20:39:06 -0400
+Received: by mail-pg0-f41.google.com with SMTP id 132so36172153pgb.2
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 17:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=gc6TkV44yXXzA0+AGuu3KhXx1nros3OOX7lnDx2U6pg=;
-        b=Jna8qYont0IxTaJAAJ1rbUX6GbxbEWscoCH8HLRnt115Nbf+37uV8+8tFbb3Xv/Bzc
-         TDrrf5k0a13Sdvzk6axEKSITSZHQgj/fOfBoIoANSGuuGZkN4RYibk4xGG8cRNTI8pio
-         T9Y8QI5sfDpg4md43gMCdsDpkn4zzEhYJJple9BjR6+HMrITmhqTry3baI5tov9VxDY4
-         aCM8tPe5Qffct+/Jz4oN6fBMdTf9boaRSzGY7pM0dL3TIwDum3CpR6H5+Jqv2iuH+cDo
-         2bKLSn8Ta5tDxzaYKEPCinLWOOaYBwrBkRHZqdw6JGi6mbUxyKs+yZ9mn05t4hvN5ni1
-         psyA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fKVc5FtQb84Z8jZRMVBdOsSkjbe06CmiUKo0w74olRA=;
+        b=h2FYkUG/H7rauK8suhMdxeyECWFEtuOmlWqS7yE0k/YtHVxi/Euj0wHVyr+VILs5Ns
+         xTu9kECijb71mOKqAb8vKzt7WAqp9fxxuqLIH2BIUYZ1/qWoZz0N3HxanFQKsKQ9eQEn
+         WhrTqICoVo8hOe5aeCcpYgwrb+W9eGShs4ZguvK+penH29F2Kw1ZKZSWlt8b5ffP8FBN
+         BUPPOd4B9K1F49ENv6p9zCG+KimtHee7oKBso6JDGSOExg117BXMEHUuWj1eE4ssHIQZ
+         V7BY9kglqMY/zytmlmIk+keQiPBNvRHQ1ZNhy1yh0K1vOFyjPM+UPVucm8emtft+QBmO
+         u8sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=gc6TkV44yXXzA0+AGuu3KhXx1nros3OOX7lnDx2U6pg=;
-        b=I8hok7OHMIDX5WfthMqKG5H2nrp4IiP7YLARWSNkHaCh4DSfyMLyicQRtwdLB24yz3
-         ImE4sWnS9pdLccnbzbJKTIbnPIxa98CVAVV7gs6Yta5et98+XqnrWcLRQyZbwBeBcQ0L
-         ZZmhyRHVpm4X1k+T4ST/4+qkGoP4rwjYMCLGLMpnVfHlOkKVNASeW2OFyzFz/fhxh+eK
-         P//4HU0Mc7aMtF6nuWWtvT7Mv9QEmPvhu5WlTtkDqtGZmoF8rLMGaoDrqLc2pguJ6/9L
-         qodg1odXzxa1d27Std5CXx/dMuoyqljnFo0vtUkr3JNKKvV34krNY/+7/f99zFa7FQA6
-         XmFQ==
-X-Gm-Message-State: AKS2vOxTvW+uovGBlo4JuM0AQQL9jZe6KO3guODWKextALD+e4a+4eF4
-        eilZoMz+n9HNzfL09xD0KmW5DilCVg==
-X-Received: by 10.176.80.19 with SMTP id b19mr15659315uaa.139.1498004479595;
- Tue, 20 Jun 2017 17:21:19 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fKVc5FtQb84Z8jZRMVBdOsSkjbe06CmiUKo0w74olRA=;
+        b=p2zZs+qGW7ij3oGWJiQhEDiC/WfiGCLx54Ze/10ARfCIFG3nUF6bho2dCZaBI2PAZK
+         Sc/40Wr6PsRp24Ezs49u97E8PJAUiozNV3rHH9PKM9G9YgdxSDomutxv/WF8/6Wue3FW
+         hMEg6cmvMP9rRsscRu0Ya6FV/N5NtqEfOM2xj7JgXEpVDr4sX/PhXN6j46NGb1w9HVeh
+         1zXx205h+mGUKztGjsEVjh/QQb37BcTpcLzPPdgtJtJneMbUIlcpjQpVKSJEweDSwv+N
+         OaBpCYjsdb6Rw9JOm2xd6QQChUuTusK9Hd/ZtMSlLV0CPP7P/6SCezNR2L4TMlQ5OFKH
+         0PhQ==
+X-Gm-Message-State: AKS2vOyekZ90ZYA49T6/YPAOJiTc0GdCc+fnOFUztUklfBBnEQPgWX3I
+        AQFCWFI/WO8NgT6G
+X-Received: by 10.99.124.65 with SMTP id l1mr33811211pgn.279.1498005545335;
+        Tue, 20 Jun 2017 17:39:05 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:292c:ffc6:f991:bee9])
+        by smtp.gmail.com with ESMTPSA id f8sm31152289pfc.14.2017.06.20.17.39.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 20 Jun 2017 17:39:04 -0700 (PDT)
+Date:   Tue, 20 Jun 2017 17:39:03 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jacob.keller@gmail.com,
+        Johannes.Schindelin@gmx.de, sandals@crustytoothpaste.net,
+        peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
+        peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v3 11/20] path: construct correct path to a worktree's
+ index
+Message-ID: <20170621003903.GD60134@google.com>
+References: <20170608234100.188529-1-bmwill@google.com>
+ <20170620191951.84791-1-bmwill@google.com>
+ <20170620191951.84791-12-bmwill@google.com>
+ <20170620230200.GB60603@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.176.80.214 with HTTP; Tue, 20 Jun 2017 17:21:19 -0700 (PDT)
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Wed, 21 Jun 2017 02:21:19 +0200
-Message-ID: <CAM0VKjnfVuVnUfnfCceD-QfUdj=6sWTdBDXkj9jZujqMJqdAQA@mail.gmail.com>
-Subject: Why 10k remotes? Was: Re: [RFC/PATCH 0/5] remote: eliminate
- remote->{fetch,push}_refspec and lazy parsing of refspecs
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170620230200.GB60603@aiede.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 17, 2017 at 2:33 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Jun 17, 2017 at 02:25:39PM +0200, SZEDER G=C3=A1bor wrote:
->> Indeed.  Even in my repos with close to 10k remotes the amount of
->> memory wasted by the duplicated refspecs is not an problem, there are
->> more pressing issues there.
->
-> This is sort of a side note, but I'm curious why you need 10k remotes.
+On 06/20, Jonathan Nieder wrote:
+> Hi,
+> 
+> Brandon Williams wrote:
+> 
+> > When working with worktrees the git directory is split into two part,
+> > the per-worktree gitdir and a commondir which contains things which are
+> > shared among all worktrees (like the object store).  With this notion of
+> > having a split git directory, 557bd833b (git_path(): be aware of file
+> > relocation in $GIT_DIR) and c7b3a3d2f ($GIT_COMMON_DIR: a new
+> > environment variable) changed the way that 'git_path()' functioned so
+> > that paths would be adjusted if they referred to files or directories
+> > that are stored in the commondir or have been changed via an environment
+> > variable.
+> >
+> > One interesting problem with this is the index file as it is not shared
+> > across worktrees yet when asking for a path to a specific worktree's
+> > index it will be replaced with a path to the current worktree's index.
+> > In order to prevent this, teach 'adjuct_git_path' to replace the
+> > path to the index with the path recorded in a repository (which would be
+> > the current, active worktree) only when not asked to construct a path
+> > for a specific worktree.
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  path.c | 11 +++++++++--
+> >  1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> Thanks --- this is subtle.  I don't think that what this patch does is
+> right.  Commenting below.
+> 
+> > --- a/path.c
+> > +++ b/path.c
+> > @@ -372,13 +372,20 @@ void report_linked_checkout_garbage(void)
+> >  }
+> >  
+> >  static void adjust_git_path(const struct repository *repo,
+> > +			    const struct worktree *wt,
+> >  			    struct strbuf *buf, int git_dir_len)
+> >  {
+> >  	const char *base = buf->buf + git_dir_len;
+> >  	if (is_dir_file(base, "info", "grafts"))
+> >  		strbuf_splice(buf, 0, buf->len,
+> >  			      repo->graft_file, strlen(repo->graft_file));
+> > -	else if (!strcmp(base, "index"))
+> > +	/*
+> > +	 * Only try to replace the path '$gitdir/index' with the index file
+> > +	 * recorded in the repository when not constructing a path for a
+> > +	 * worktree.  This way we can retrieve the correct path to a particular
+> > +	 * worktree's index file.
+> > +	 */
+> > +	else if (!wt && !strcmp(base, "index"))
+> >  		strbuf_splice(buf, 0, buf->len,
+> >  			      repo->index_file, strlen(repo->index_file));
+> 
+> Some context that may have been missing: GIT_INDEX_FILE is a low-level
+> tool to allow script authors to specify an alternate index file to use
+> when running commands like "git read-tree" or "git checkout-index".
+> 
+> The above would make it not take effect for git_path() callers when
+> 'wt != NULL'.  As a result, if any caller reaches this code path, then
+> scripts specifying GIT_INDEX_FILE would stop working when run from a
+> worktree that borrows refs and objects from a separate repository.
+> I'm pretty sure that such a subtle flip in behavior based on whether
+> they are in "git worktree" created worktree or the main working tree
+> is not what the end user would intend, so this looks like a step in
+> the wrong direction.
+> 
+> Fortunately this code path doesn't actually get called.
+> 
+> In fact, rewriting git_path("index") in this function feels to me like
+> a layering violation.  Shouldn't callers be using get_index_file() to
+> express their intent more clearly?  That's what all current callers
+> do.
+> 
+> IIUC this came up when a patch from nd/prune-in-worktree (e7a6a3b15,
+> revision.c: --indexed-objects add objects from all worktrees), which
+> is currently not in pu, introduced a caller that does call
+> git_path("index").  The old behavior of replacing git_path("index")
+> with $GIT_INDEX_FILE when the latter is set was mostly harmless
+> because typically GIT_INDEX_FILE is not set, especially when people
+> are running "git prune".  Patch 05/20 (environment: place key
+> repository state in the_repository) made the substitution harmful: now
+> we would use repo->index_file unconditionally instead of allowing the
+> ordinary worktree-relative resolution as a fallback when
+> GIT_INDEX_FILE is unset.
+> 
+> Possible next steps:
+> 
+>  1. I think we should make git_path less magical and discourage
+>     callers from relying on it to handle the GIT_INDEX_FILE envvar.
+>     We can do that by removing the !strcmp(base, "index") case
+>     completely.
 
-For fun! :o)
+From our conversation off-line it seems like we agree that this is
+probably the best course of action.  So I'll plan to drop the case
+completely since it isn't even used currently.  I'll also go ahead and
+drop the graft_file one as well since it doesn't make much sense to keep
+it around when it is only queried for once.
 
-I have a couple of repos containing all branches from all forks (and
-forks of forks, recursively) of a few interesting repos on GitHub,
-where each fork is a remote.
+> 
+>  2. Optionally, it is possible to be more cautious by keeping the
+>     !strcmp(base, "index") case and making it call BUG() to force
+>     people not to use it.  This would help steer callers toward
+>     get_index_file().  But given that the only caller did not actually
+>     want GIT_INDEX_FILE substitution, I don't think that that is
+>     necessary or useful.
+> 
+>  3. A docstring for git_path should explain the substitutions it
+>     currently makes and more straightforward alternatives that callers
+>     can use.
+> 
+>  4. Specifying GIT_INDEX_FILE when running "git prune" is a
+>     meaningless combination.  It would be nice for "git prune" to
+>     error out to save the user from confusion.
+> 
+>  5. There are likely other commands that don't make sense with
+>     GIT_INDEX_FILE.  Tracking them all down to make them print a
+>     meaningful error message might be a bit of a slog, though.
+> 
+> >  	else if (dir_prefix(base, "objects"))
+> > @@ -411,7 +418,7 @@ static void do_git_path(const struct repository *repo,
+> >  		strbuf_addch(buf, '/');
+> >  	gitdir_len = buf->len;
+> >  	strbuf_vaddf(buf, fmt, args);
+> > -	adjust_git_path(repo, buf, gitdir_len);
+> > +	adjust_git_path(repo, wt, buf, gitdir_len);
+> >  	strbuf_cleanup_path(buf);
+> >  }
+> 
+> Thanks and hope that helps,
+> Jonathan
 
-  (Why on earth would I want to do that?
-  Sometimes it's good to see what others are up to.  Apparently a lot
-  of people fork projects, push their changes, but then never upstream
-  them.
-  Such an all-forks-in-one repo allows me to run e.g. 'git log --all
-  -p master.. relevant.c' and then search its output for changes in
-  interesting functions (thankfully function names are included in
-  hunk headers; alas line log doesn't work with --all).  Occasionally
-  this unearths some treasures: other people's commits and branches
-  scratching the same itch that I was about to scratch, or at least
-  solving part of my problem and I can build on top of them.)
-
-> We used to do this at GitHub as part of our fork storage (the shared
-> repository had each fork as a remote). We fixed the quadratic issues
-> like d0da003d5 (use a hashmap to make remotes faster, 2014-07-29). But
-> even the linear work to read the config is noticeable (and hits you on
-> every command, even ones that don't care about remotes).
-
-Indeed, that's one of those "more pressing issues".
-I worked it around by storing the remotes in a separate config file
-which is not included from .git/config, because they're not needed for
-local operations.  And when I occasionally do want to fetch, then I
-run 'git -c include.path=3D..../.git/config.forks fetch ...'.
-
-> Now instead we
-> pass the refspecs directly to fetch whenever move objects between the
-> storage repos. They were the same for every remote anyway (and I'd guess
-> that is true, too, of your 10k remotes).
-
-I do have different fetch refspecs for every remote, i.e. the repo
-'github.com/user/repo' has '+refs/heads/*:refs/forks/user/repo/*'.
-
-Incidentally, this was what triggered
-sg/clone-refspec-from-command-line-config back then, because 'git
-clone' didn't grab 'refs/forks/*', and the means advertised in the
-docs to do so didn't work.
-
-
-G=C3=A1bor
+-- 
+Brandon Williams
