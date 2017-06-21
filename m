@@ -2,87 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9839C20401
-	for <e@80x24.org>; Wed, 21 Jun 2017 18:12:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 465EF20401
+	for <e@80x24.org>; Wed, 21 Jun 2017 18:15:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751154AbdFUSMb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 14:12:31 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:36663 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751083AbdFUSMa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 14:12:30 -0400
-Received: by mail-pf0-f172.google.com with SMTP id q86so4507372pfl.3
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 11:12:30 -0700 (PDT)
+        id S1751789AbdFUSPE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 14:15:04 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33962 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751149AbdFUSPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 14:15:03 -0400
+Received: by mail-pg0-f68.google.com with SMTP id j186so29390101pge.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 11:15:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:disposition-notification-to
-         :mime-version:content-transfer-encoding;
-        bh=G4tRlrOnnX6YUO3W6Y5G40qmCPbSNcXETTATI2lCUjw=;
-        b=pG/l5JDX5A5ZAnEHjXaTNDKrao0WhevX0mfgmwoofxwdj2ChOabuB+5tXQd1rAZGiq
-         0di9X5QNQO3qAkdReMxTU0hORaiKWBaIgq+qJq5jN8tBsYdqJ7ANJGJ9d3Sj5HqlWUvz
-         e0KH/w8R2olRPbLG2ip/n1fxR9dDxB1n+OsCnQqmBePNt8sBcBLh7SxfuBWTut/9wLEj
-         bm+UR7IpGHKp1KhPAIzi/gQ6sJvOPrfinBbRWOJUKISfDlA6DI//lb6XNYZ/nojB1EOd
-         mwdkV6wQ07coskm46Zsd23/jY0Mwq4tfr1os+Tt33FP6VF17DHtkABk52zGga6Srb12R
-         254g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=/IgAjmwIpb+3W/FvIdwcsbDWy6pT2nd/rGWXFcc+ljY=;
+        b=Se++tcd532hklhDjTQQ71pt8fT75/npjU7vVxTwupFqI7ZE8+umYGJ3d7ou1RQMynk
+         Ix1Uuc10anXlL4t6oK/+VfOPC34f5x5zrjaVoAmM7C4viE0QTyxYxAUMtONyIp/kW8uk
+         DfvZidGOnKTMqhuCZ2ciVwp6gkc9r1YJmCVI+8X+yBDE+vuHLXEKe5lE03JG1l0+c677
+         FNgstyH+sTIL4irR8NAuyHm5aOhCOVPcyWpajWjNVRhBvPTn7ks8dS6SJzY35rUW1xpB
+         0+KgsfrDKFjX2Rs6chKaCTV74DgJokBVsYX6hto8Ln9QETmFaNqGizmA6wb5SJ5+9yh8
+         BVzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=G4tRlrOnnX6YUO3W6Y5G40qmCPbSNcXETTATI2lCUjw=;
-        b=Jr3W3AVmNfxmQdIVtiZk+4sW2eItrCK6uTWg/SeaL8wuPrLbc13MgN4uh+G0CNyQx4
-         a9LU78L383/ih4AslVyXccdmrd0N0Uwx/Zstxz/UugN0/G63Dvy99mXrZmdI+5EWOWKn
-         ndZzA6++YQCrzymD1wmD8PdZndUso2R8kSscYq2H/qQlTutuT+kf+chbCd283rZkRIMz
-         JP3UEYS+elmsozAldopefXKUtStyD68NZm3fn0b/vxMbsS3FiNdSadsLRYUPcUU2OgW1
-         ImtVGhcMu91Oiy5XOk4V13PMQKXomlOu5drSAaZlZaN+KbcuFg4dyfqJUBSMFJqN98oK
-         bXzQ==
-X-Gm-Message-State: AKS2vOzRRrfpqK2lxPAXzYUIuFU+t7dQ2f0jxCbGnYwQooYCXEYaDDvf
-        L0lLA2uIuRKNbxfsXpS9iQ==
-X-Received: by 10.101.91.8 with SMTP id y8mr17417213pgq.207.1498068749747;
-        Wed, 21 Jun 2017 11:12:29 -0700 (PDT)
-Received: from unique-pc ([218.248.21.162])
-        by smtp.googlemail.com with ESMTPSA id j6sm35281655pgc.1.2017.06.21.11.12.27
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 21 Jun 2017 11:12:28 -0700 (PDT)
-Message-ID: <1498068738.32360.7.camel@gmail.com>
-Subject: Does 'git config' accept the '--remove' option?
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     git@vger.kernel.org
-Date:   Wed, 21 Jun 2017 23:42:18 +0530
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=/IgAjmwIpb+3W/FvIdwcsbDWy6pT2nd/rGWXFcc+ljY=;
+        b=UMqzQUcQXndX2zrL7t5PURz/sIEm13jbZOyDWmL/2wT5ayRyN4L07BgifU6r517B5k
+         EIEGL8uvHjC91bifHtl0tSBrPhC3aFkdjq2raKUYbCTnd20DCnEfYwIxcrgo9afukNcc
+         RBLou8rjG2aYREuDdXgAxX7dBCYYHcZvBoV8qnsWX5Tul7JpSWlFomrZ2M5Fcu8/CYY7
+         Xb1YVdv+8MqXjDB/ZL4mYUaHqi5VWQa9htVUdSzKU4mkqliRrhM0AntGwnS9dE9lp8Zv
+         bLI8MvWOeGkT0wOc2kfOq+yRyMw9F0taF2JXizIMN/hd0Ic074FM3Mc6w3NSL90LytFE
+         1guQ==
+X-Gm-Message-State: AKS2vOxx/VVBC/k1/AsSOXgro6EdWZCfLznlX5Y05t7BEK9R3GNLf743
+        zzxpyzLY3QgTMw==
+X-Received: by 10.84.254.11 with SMTP id b11mr43364688plm.209.1498068902699;
+        Wed, 21 Jun 2017 11:15:02 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b0bd:d7d3:4f2e:5016])
+        by smtp.gmail.com with ESMTPSA id g86sm34811175pfk.101.2017.06.21.11.15.01
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 21 Jun 2017 11:15:01 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v4 7/8] sha1_file: do not access pack if unneeded
+References: <cover.1497920092.git.jonathantanmy@google.com>
+        <cover.1497035376.git.jonathantanmy@google.com>
+        <cover.1497920092.git.jonathantanmy@google.com>
+        <fb656dfeb96e3c69f612fed924d0d9dec592c772.1497920092.git.jonathantanmy@google.com>
+Date:   Wed, 21 Jun 2017 11:15:01 -0700
+In-Reply-To: <fb656dfeb96e3c69f612fed924d0d9dec592c772.1497920092.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Mon, 19 Jun 2017 18:03:14 -0700")
+Message-ID: <xmqq8tklqkbe.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,	
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-I recently noticed that when I run 'git config' with the '--remove
-<non_existing_section>' I get a warning that section doesn't exist.
-When I scrolled through the man page of git-config I could see any
-mention about the '--remove' option. I only see that there is a '
---remove-section' option. Sample output,
+> Add an option to struct object_info to suppress population of additional
+> information about a packed object if unneeded. This allows an
+> optimization in which sha1_object_info_extended() does not even need to
+> access the pack if no information besides provenance is requested. A
+> subsequent patch will make use of this optimization.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 
-> $ git config --remove test
-> fatal: No such section!
-> $ git config --remove-section test
-> fatal: No such section!
+I think the motivation is sound, but...
 
-Is this a bug (or) is the documentation stale ?
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 24f7a146e..68e3a3400 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -3020,6 +3020,13 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+>  		}
+>  	}
+>  
+> +	if (!oi->typep && !oi->sizep && !oi->disk_sizep &&
+> +	    !oi->delta_base_sha1 && !oi->typename && !oi->contentp &&
+> +	    !oi->populate_u) {
+> +		oi->whence = OI_PACKED;
+> +		return 0;
+> +	}
+> +
 
--- 
+... this "if" statement feels like a maintenance nightmare.  The
+intent of the guard, I think, is "when the call wants absolutely
+nothing but whence", but the implementation of the guard will not
+stay true to the intent whenever somebody adds a new field to oi.
 
-Regards,
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+I wonder if it makes more sense to have a new field "whence_only",
+which is set only by such a specialized caller, which this guard
+checks (and no other fields).
+
+> diff --git a/streaming.c b/streaming.c
+> index 9afa66b8b..deebc18a8 100644
+> --- a/streaming.c
+> +++ b/streaming.c
+> @@ -113,6 +113,7 @@ static enum input_source istream_source(const unsigned char *sha1,
+>  
+>  	oi->typep = type;
+>  	oi->sizep = &size;
+> +	oi->populate_u = 1;
+>  	status = sha1_object_info_extended(sha1, oi, 0);
+>  	if (status < 0)
+>  		return stream_error;
+
+By the way, populate_u feels very misnamed.  Even if that union
+gains details about other types of representations, your caller that
+flips populate_u would not care about them.  This bit is about
+learning even more detail about a packed object, so a name with
+"packed" somewhere would be more appropriate, I would think.
