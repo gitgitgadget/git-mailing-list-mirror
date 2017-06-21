@@ -2,136 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2A7B20401
-	for <e@80x24.org>; Wed, 21 Jun 2017 19:52:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9735120D0C
+	for <e@80x24.org>; Wed, 21 Jun 2017 19:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751265AbdFUTwx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 15:52:53 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:59604 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751028AbdFUTww (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 15:52:52 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 3E3DE20401;
-        Wed, 21 Jun 2017 19:52:52 +0000 (UTC)
-Date:   Wed, 21 Jun 2017 19:52:52 +0000
-From:   Eric Wong <e@80x24.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Tim Hutt <tdhutt@gmail.com>, git@vger.kernel.org
-Subject: Re: Monitoring a repository for changes
-Message-ID: <20170621195252.GA31582@starla>
-References: <CAKuVd4Bdhreu6wrwDp1Bia56Db=TXYMQcitsznaRM+QcYVzJnQ@mail.gmail.com>
- <87efud8jrn.fsf@gmail.com>
+        id S1751994AbdFUTzM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 15:55:12 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35095 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751989AbdFUTzL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 15:55:11 -0400
+Received: by mail-pf0-f182.google.com with SMTP id c73so29466615pfk.2
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 12:55:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Rjf7oDeqfAx/PcLqhbiLt4q7iSt8ms5COrG5fuyfHMo=;
+        b=Qf5ZEjYPhQ5WVJQQyNTqFwMfQx6XKwToMY5+f9fL1xkj19iIgtdafHfWaeucOND+RL
+         d1Ah5QnGpKcQiKRpYWfRiyDUp4bQw2Le2kT9n3mSH7lnrrYzPSnMbXcPFprzfSm0ZFjK
+         NM1SvoVRAgFxhiZpik5Ok/u9inlXwEa+lGhD8BKaPUfyKfHmMUY4Blqy3tuCncCWUqnx
+         z/ZPdYJOlP052/uXUFwEZxVQaUBT2o8J3tqAqDrc50UtbQYsfMgQiTcPEoRcgZP4k7DX
+         XqJ5ObMlIJ1HyFIFUXIkx/WqHCDhYvZCCE0GbJRiav2+SxhTEOwN83KBjw55YIuAerjC
+         eZxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Rjf7oDeqfAx/PcLqhbiLt4q7iSt8ms5COrG5fuyfHMo=;
+        b=m+Pz+3J2U4bji1LqYmseVju1STi9yD3qfkAp3cABrhZFbncpvIhibh2KskPoNbTLv3
+         OyaIZIIRvs0IKB0nAd/gtkbQxhF6aP620xZfQnm0U6a9yT9oDBDFLQz/9Xu5VCNxFBsg
+         sDzlKxu4MHbLW4mgsZR7GkPvAvyl9epIAIFvQZdjB13GD2PlH7GHV8yyUKnX6FrYkZT8
+         GmGVhZJlFkKu7PE2DFUBRgxbbQvaoQ2XTRM+NjTVWB7Rzw/EIMSL1BPYkcoGAwPHTTvu
+         VLBXbXE3EfEIr+7mNe8peNp8GO29qFSEb4Cm1I335UDVNFq7RCC5AEDATxDoi0mEQUDq
+         llTA==
+X-Gm-Message-State: AKS2vOy3sktdi8nuft/XmvVHzwOS+zKECuVWNdHkPmmzsf+BelXB1SbN
+        41b1SZ4685TOaHrpLU0yuWyO4vg1vvYr
+X-Received: by 10.99.141.76 with SMTP id z73mr18917567pgd.40.1498074905872;
+ Wed, 21 Jun 2017 12:55:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87efud8jrn.fsf@gmail.com>
+Received: by 10.100.161.227 with HTTP; Wed, 21 Jun 2017 12:55:05 -0700 (PDT)
+In-Reply-To: <20170621194425.vcu6qdmoddwpi3ht@sigill.intra.peff.net>
+References: <CAKuVd4Bdhreu6wrwDp1Bia56Db=TXYMQcitsznaRM+QcYVzJnQ@mail.gmail.com>
+ <87efud8jrn.fsf@gmail.com> <20170621194425.vcu6qdmoddwpi3ht@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 21 Jun 2017 12:55:05 -0700
+Message-ID: <CAGZ79kau0cxRw6_bFKw6-wc2J9fBPPjRfpRhSxD+BGi2usvNpg@mail.gmail.com>
+Subject: Re: Monitoring a repository for changes
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Tim Hutt <tdhutt@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> On Wed, Jun 21 2017, Tim Hutt jotted:
-> 
-> > Hi,
-> >
-> > Currently if you want to monitor a repository for changes there are
-> > three options:
-> >
-> > * Polling - run a script to check for updates every 60 seconds.
-> > * Server side hooks
-> > * Web hooks (on Github, Bitbucket etc.)
-> >
-> > Unfortunately for many (most?) cases server-side hooks and web hooks
-> > are not suitable. They require you to both have admin access to the
-> > repo and have a public server available to push updates to. That is a
-> > huge faff when all I want to do is run some local code when a repo is
-> > updated (e.g. play a sound).
+On Wed, Jun 21, 2017 at 12:44 PM, Jeff King <peff@peff.net> wrote:
+>
+> Yeah. The naive way to implement this would be to have the client
+> connect and receive the ref advertisement. And then when it's a noop
+> (nothing to fetch), instead of saying "I want these objects", say
+> "Please pause until one or more refs change". But I don't think we'd
+> want to leave actual upload-pack processes sitting paused on the server.
+> Their memory usage is too high.
 
-Yeah, it kinda sucks that way.
+https://git.eclipse.org/r/#/c/6587/
 
-Currently, for one of my public-inbox mirrors which has ssh
-access to the primary server on public-inbox.org, I have:
+JGit has had its experiments with some standing connection and then
+having some sort of Pub/Sub system. AFAICT it did not go anywhere
+because of the number of connections (even if you optimize for
+the serverside, such that each connection is just the cost of a java
+thread and a file descriptor).
 
-	#!/bin/sh
-	while true
-	do
-		# GNU tail(1) uses inotify to avoid polling on Linux
-		ssh public-inbox.org tail -F /path/to/git-vger.git/info/refs | \
-				while read sha1 ref
-		do
-			for GIT_DIR in git-vger.git
-			do
-				export GIT_DIR
-				git fetch || continue
-				git update-server-info
-				public-inbox-index # update Xapian index
-			done
-		done
-	done
+>
+> The sticking point on both is that the client needs to speak before the
+> ref advertisement begins, which is why we have to deal with the protocol
+> v2 headache.
 
-It's not perfect as it requires multiple processes on the
-server, but it's better than polling for my limited use.
-
-> > Currently people resort to polling
-> > (https://stackoverflow.com/a/5199111/265521) which is just ugly. I
-> > would like to propose that there should be a forth option that uses a
-> > persistent connection to monitor the repo. It would be used something
-> > like this:
-> >
-> >     git watch https://github.com/git/git.git
-> >
-> > or
-> >
-> >     git watch git@github.com:git/git.git
-> >
-> > It would then print simple messages to stdout. The complexity of what
-> > it prints is up for debate, - it could be something as simple as
-> > "PUSH\n", or it could include more information, e.g. JSON-encoded
-> > information about the commits. I'd be happy with just "PUSH\n" though.
-> 
-> Insofar as this could be implemented in some standard way in Git it's
-> likely to have a large overlap with the "protocol v2" that keeps coming
-> up here on-list. You might want to search for past threads discussing
-> that.
-
-Yeah, it hasn't been a priority for me, either...
-
-> > In terms of implementation, the HTTP transport could use Server-Sent
-> > Events, and the SSH transport can pretty much do whatever so that
-> > should be easy.
-> 
-> In case you didn't know, any of the non-trivially sized git hosting
-> providers (e.g. github, gitlab) provide you access over ssh, but you
-> can't just run any arbitrary command, it's a tiny set of whitelisted
-> commands. See the "git-shell" manual page (github doesn't use that exact
-> software, but something similar).
-> 
-> But overall, it would be nice to have some rationale for this approach
-> other than that you think polling is ugly. There's a lot of advantages
-> to polling for something you don't need near-instantly, e.g. imagine how
-> many active connections a site like GitHub would need to handle if
-> something like this became widely used, that's in a lot of ways harder
-> to scale and load balance than just having clients that poll something
-> that's trivially cached as static content.
-
-Polling becomes more expensive with TLS and high-latency
-connections, and also increases power consumption if done
-frequently for redundancy purposes.
-
-I've long wanted to do something better to allow others to keep
-public-inbox mirrors up-to-date.  Having only 64-128 bytes of
-overhead per userspace per-connection should be totally doable
-based on my experience working on cmogstored; at which point
-port exhaustion will become the limiting factor (or TLS overhead
-for HTTPS).
-
-But perhaps a cheaper option might be the traditional email/IRC
-notification and having a client-side process watch for that
-before fetching.
+I would not call it headache, but large project that is not to be tackled
+by one person alone. ;)
