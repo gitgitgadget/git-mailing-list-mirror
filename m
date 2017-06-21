@@ -2,92 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C270620D0C
-	for <e@80x24.org>; Wed, 21 Jun 2017 21:13:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6CC620401
+	for <e@80x24.org>; Wed, 21 Jun 2017 21:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751946AbdFUVNm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 17:13:42 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:33663 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751108AbdFUVNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 17:13:41 -0400
-Received: by mail-pf0-f169.google.com with SMTP id e7so10756503pfk.0
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 14:13:40 -0700 (PDT)
+        id S1752019AbdFUVTO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 17:19:14 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:34370 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751755AbdFUVTM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 17:19:12 -0400
+Received: by mail-pf0-f170.google.com with SMTP id s66so90468071pfs.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 14:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=UVDWc1Agblkn9PuxMtTO76B9lf9Evw8gqHGTnERqsAM=;
-        b=cJSuZDhVZnqIhnX29OLxtI4PyeU0CqNxcoJA+2adJAl05l1D0zcRzOzd9t9bReW9iE
-         p82Ixk/r6v7UBthHf66LiypbeQ5TL6ovEsetiVYRwz0te3rzy7Vlt2WIFoWVXiDclUee
-         yx3JMutuocYbEQsIupeT2u/GZ2j08bzWIJ6arryA5Tg+XzIRzm+5laezczioqNBeMZmA
-         uGeIMcW1CpY2sr9kHOxp52sfj9OyKU3CHPNIr3M2DV1LzGpspbFyi9RgBf0kj+GxcTV5
-         0y7zfDazDu7+a4TSdnpRrXKoQscUjiNrK89v9DNFQFgOvUde9QlBSeo0Q8oqg2XZcVCX
-         67Jg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tIVowW5NRkLOHz391G/z16u4MV04qtBr5QhcmsXp+0Y=;
+        b=me+5INKRZWPwj/+5tbkt1r/i76s0cEI7pmvg+OrKDP91nGK46FK4GE4AyykC0aQPBK
+         jHscAwWD+eJ/2JIQmNvaDWZokcHf3RW8v2K3WhSeS7GWe+whfgMB64hMeRnE6euUtGwu
+         UI+2+d1rpRDPxMIXZ5uh5qJm1HPzMMFng7DRgdiEaolJLAsoVzJ1XBJAh6ammwN+MFVE
+         ZqQRb284r5r3Thq0Ac5mRB7PXK1M4+FrqRr747HpisQH05JCMXHFfxZV2J3MMvVr8++E
+         mZ5aKxlMwLNIti1gfJSecqRWH2mMaU0bteSqHBl/rd8MEyDqipPQz2dRRBFeH68MGKp+
+         VG7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=UVDWc1Agblkn9PuxMtTO76B9lf9Evw8gqHGTnERqsAM=;
-        b=Xj89M0qZf+3Yp/ROPb5U6NsqhVwYhL31D+/a9xdgSyVdxrFr0xi+lQOXIVSfzas5zx
-         glc87Fi7D/9UGRWtqQRsKJp3uNhL5oaLdzsEsS4zPsxqDrWh61CkCTbOSdDnqzYMuyI+
-         cNV03NL1/Au4cLikJDGtD7Brj+igsSWzWIc3NsjkUjmzjxn5PwnyRM1pM+XYahLSx/Of
-         GNL1NKat9SpjBlv9arrkCm9Mg9Xyb2qkPctUwfhnlNowMSibEEU9fOokA32yizUC2zFD
-         +fSqKDDNJLVpRJzdgjIQVMLE/Qmqq69+18CNuCfr87xsYWkxU6+w6kI2i92HX/uH9qYv
-         9Uug==
-X-Gm-Message-State: AKS2vOyg+7Ly/xBqYyslzGNTaO+cf7dOj99aamcX3m9aiMAoTZFMOCf7
-        YoEg62DOVLE39w==
-X-Received: by 10.84.224.134 with SMTP id s6mr11147283plj.263.1498079620391;
-        Wed, 21 Jun 2017 14:13:40 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:b0bd:d7d3:4f2e:5016])
-        by smtp.gmail.com with ESMTPSA id g27sm34409248pfd.80.2017.06.21.14.13.39
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tIVowW5NRkLOHz391G/z16u4MV04qtBr5QhcmsXp+0Y=;
+        b=hISOb1E9apXzeBXL6QxTVMWjzgfK+O3WahWjpbldWTR6GMquMO0G/dR/h6W/Gis4jA
+         UAGzRjMJl2sVx0QnpzLTk89BreK8fj3ABCVCFoyFR6Lg+Hkb7km4SglBcZDayluksBLF
+         BAPujb+D4AuXAAk/ARP13EB2pV9JFYwjGco28kFbbiDxnbyI6OFaCyw4ZDNEl7tlxZ1m
+         86aiBmLvG7MtFXPgMFnAmmac3QJB7lX2ydzUyjrRJtbrKL50/RzJF+x79cYV2nGOQO5v
+         N4WuCLdn1IqFfEsAPzWbmPcgzW6b29khHqviXzGfHvAJ4KAsyLfXzOuKiMsToxuFzYBK
+         huyA==
+X-Gm-Message-State: AKS2vOzbQlDh3D3YVX0QrfntZSQ2OMoeZ9DjZsqf6xX21+n1DQ6UNPC3
+        W9pZa9+LB/60svERjSQ=
+X-Received: by 10.99.111.201 with SMTP id k192mr38426836pgc.192.1498079951423;
+        Wed, 21 Jun 2017 14:19:11 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:708c:2191:5b14:b1a])
+        by smtp.gmail.com with ESMTPSA id q7sm35152191pfk.108.2017.06.21.14.19.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 21 Jun 2017 14:13:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH 04/26] diff.c: introduce emit_diff_symbol
-References: <CAGZ79kaqjQYmkt77kk5m=fdBfbZAvwd0YhhT7=O5b-FkQmDfHg@mail.gmail.com>
-        <20170620024816.20021-1-sbeller@google.com>
-        <20170620024816.20021-5-sbeller@google.com>
-        <xmqq7f05p1z7.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYUpJxX-wBU=ALPgJwVaA8h_iJRtAu3T7p4J7qmy=U4dg@mail.gmail.com>
-Date:   Wed, 21 Jun 2017 14:13:38 -0700
-In-Reply-To: <CAGZ79kYUpJxX-wBU=ALPgJwVaA8h_iJRtAu3T7p4J7qmy=U4dg@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 21 Jun 2017 12:46:09 -0700")
-Message-ID: <xmqq7f05niwt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        Wed, 21 Jun 2017 14:19:10 -0700 (PDT)
+Date:   Wed, 21 Jun 2017 14:19:08 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Tim Hutt <tdhutt@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Monitoring a repository for changes
+Message-ID: <20170621211908.GF60603@aiede.mtv.corp.google.com>
+References: <CAKuVd4Bdhreu6wrwDp1Bia56Db=TXYMQcitsznaRM+QcYVzJnQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKuVd4Bdhreu6wrwDp1Bia56Db=TXYMQcitsznaRM+QcYVzJnQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi,
 
->>>
->>> +enum diff_symbol {
->>> +     DIFF_SYMBOL_SEPARATOR,
->>
->> Drop the last comma from enum?
+Tim Hutt wrote:
+
+> Currently if you want to monitor a repository for changes there are
+> three options:
 >
-> I looked through out code base and for enums this is
-> actually strictly enforced, so I guess I have to play
-> by the rules here as I do not want to be the first
-> to deviate from an upheld standard.
+> * Polling - run a script to check for updates every 60 seconds.
+> * Server side hooks
+> * Web hooks (on Github, Bitbucket etc.)
+>
+> Unfortunately for many (most?) cases server-side hooks and web hooks
+> are not suitable. They require you to both have admin access to the
+> repo and have a public server available to push updates to. That is a
+> huge faff when all I want to do is run some local code when a repo is
+> updated (e.g. play a sound).
 
-You sound like you are trying to find an excuse "not to play by the
-rules".  Don't.
+On the polling side, it is possible to improve things a little:
+https://www.kernel.org/mirroring-kernelorg-repositories.html
+https://github.com/mricon/grokmirror
 
+A hanging GET or websocket is more client-friendly but more expensive
+server-side.  That doesn't rule out making it happen on some servers
+if someone does the work.  If I understand correctly then this
+architecture tends to lead to centralization --- a small number of
+services providing notifications pushed from multiple sources, as with
+https://developers.google.com/web/fundamentals/engage-and-retain/push-notifications/how-push-works
 
+If someone wants to try adding something like grokmirror (which
+describes the state of multiple repositories, amortizing the
+per-request costs) to git, especially if it supports something
+etag-like as Jeff King suggested, then I would be interested.
+
+Thanks and hope that helps,
+Jonathan
