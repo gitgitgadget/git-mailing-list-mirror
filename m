@@ -2,154 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B43020401
-	for <e@80x24.org>; Wed, 21 Jun 2017 23:00:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6279420401
+	for <e@80x24.org>; Wed, 21 Jun 2017 23:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752090AbdFUXAN (ORCPT <rfc822;e@80x24.org>);
+        id S1752092AbdFUXAP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 19:00:15 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:33299 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751963AbdFUXAN (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 21 Jun 2017 19:00:13 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:35632 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750981AbdFUXAN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 19:00:13 -0400
-Received: by mail-pf0-f172.google.com with SMTP id c73so31388552pfk.2
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 16:00:12 -0700 (PDT)
+Received: by mail-pf0-f171.google.com with SMTP id e7so11816069pfk.0
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 16:00:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=X7M+Bg3p7kmPfhKm3oMchDuKJWde0wRGnfiRLiIbxf4=;
-        b=aKCFH/uAIrMEVZbhv10GWqBs7jG+cRbE8eDnQJfAOMyraM//+EXPMKBaiig0qSlDqc
-         7VTYI6FdB1lGZtbhsapVvw4tT1iKcygNhFRYCA53VNQEk4qo7I77ieHi+xhXXAqJZGhp
-         0WvBBoYmXS5AcXvLfN4LeOJn6Ie1X7pli04bkLW7kYSNdkb7wkqyIUwz+GI9T+UIfutl
-         aiq8gFqEzpnSgWHUwXqMP3uDoMFXGfPeubs216jluG/5oOlLGjs8PasTyjHqWai9Mb7j
-         O7uwnsYDQF7xVZZxlZgNPY9NC9KBn/rijBCmRKPUNRiyVoN1I1yhclpF2headuAN1XUz
-         n86w==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Jq5nRv2TBG26+jC6jPOrCRDPrXfj5L1J94cG0JEEAsc=;
+        b=t76d76g8mA6MQn02zUc1TXSqr7pcSJUI3hANX6LlQ2WkR0BY8CecnEB+kmco+kEdSv
+         3w//i4V2hE7YsZybIXXU+hFmP44Trwq5m4FOWALwa9d5p5mCtJNJXIaHcTE2ma3GS1+I
+         h9KO5cuQHYJeWK5DbzhuveNFSpUTusSGtWYnQ/J/0CLR97mDny72zc6xPBzVs9glq/5H
+         yHuS3Sui8yh/t2vcxKSisaMvly9Gfc7g1k76o3l/zjo2EGuZZpYESQ+wgQAkWqOGWCv7
+         vgvpsR6eVkpMGrN0TgvrClmbq0pU7QY7NjdMsP/ckEtU2Zvr452O4Da1Gkd4gITgIFw1
+         PyoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=X7M+Bg3p7kmPfhKm3oMchDuKJWde0wRGnfiRLiIbxf4=;
-        b=oAWW6gip9VRwi70ZFo0z7WLOdj3KEuwcHlgAT72ijpXKNtsxhzSJUAO/XB2BvuSs9e
-         CJwdzU+vkuqIseA9JxQ5TzkmxDu0n1yncFEikR91CwI3jXZtME1k0RTjsy8VxvpD2wOb
-         voUz87qEjq1hu0fIxKXttXg5h4CvQZcn1UcQ/GG3MjsHeLLH7FRY5xm06w2CLqJjBp02
-         W2rQLbIsMdJDqJP+mQT8mbs5x3AQsPNDL9evxC1nQ9ZYT00WknocMhgPZQOIur09y/Kg
-         y7pNzFr1AqCSdXG4AiWm0FNO7gZPb6be7piIcewCAKAKpNCyK+5AWwBoThBcK6gr3o5K
-         G+tA==
-X-Gm-Message-State: AKS2vOwXB7rlaI0AvbjGlE4L8rH+GfF9e5BXSrPWwMSMsiov7UxUwDgS
-        zwNl8FcNAQwgqkcI
-X-Received: by 10.84.231.141 with SMTP id g13mr43603109plk.157.1498086012153;
-        Wed, 21 Jun 2017 16:00:12 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:a12e:c584:e29b:1036])
-        by smtp.gmail.com with ESMTPSA id r85sm37518109pfd.100.2017.06.21.16.00.11
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 21 Jun 2017 16:00:11 -0700 (PDT)
-Date:   Wed, 21 Jun 2017 16:00:07 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com,
-        jacob.keller@gmail.com, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, peartben@gmail.com,
-        pclouds@gmail.com, gitster@pobox.com, peff@peff.net,
-        git@jeffhostetler.com, avarab@gmail.com
-Subject: Re: [PATCH v3 19/20] repository: enable initialization of
- submodules
-Message-ID: <20170621160007.4976187d@twelve2.svl.corp.google.com>
-In-Reply-To: <20170620191951.84791-20-bmwill@google.com>
-References: <20170608234100.188529-1-bmwill@google.com>
-        <20170620191951.84791-1-bmwill@google.com>
-        <20170620191951.84791-20-bmwill@google.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Jq5nRv2TBG26+jC6jPOrCRDPrXfj5L1J94cG0JEEAsc=;
+        b=U5e2Py0/G1R1YukF4rWrQHgOdNhhg0eQQVVvb4QnYnJsTWCUNtUf79mhkMg/++MwjS
+         97djDildmeDBHl9LmHKS0ojVJMoXcNheqOgowTCC8F17UcXR6goep4UE/7aho1ziaeLo
+         cn6FhylFHGoMjW8lOYGH4rkxRVpG01xM6qua3lHEnDIcDVxYjVPoIKHEcC7psEgWOu57
+         sIuENLw6X4ee3x/dCSVRiH9snTPgPdYD/jOaVjCwgislykKNZmuZLojhoQvrHHlHDKxV
+         oPFzfsEE8LoSH4SQWL+Pp68bHM1Gifjjcj8m8IlJ1OlK/5bcuChLIkU0Nstw3GS9m3Fe
+         Qfog==
+X-Gm-Message-State: AKS2vOx7qFDpLN6uv47m4YyCEOJShvBn5yJIEdpRzB4i9/febnOoZMkf
+        eogP2B9u3LRY48zQrYiCUzqf75B8RvrBebUXGw==
+X-Received: by 10.98.205.194 with SMTP id o185mr38469068pfg.105.1498086012377;
+ Wed, 21 Jun 2017 16:00:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Received: by 10.100.161.227 with HTTP; Wed, 21 Jun 2017 16:00:11 -0700 (PDT)
+In-Reply-To: <20170621225403.GH53348@google.com>
+References: <20170608234100.188529-1-bmwill@google.com> <20170620191951.84791-1-bmwill@google.com>
+ <20170620191951.84791-16-bmwill@google.com> <20170621155059.3ae2c601@twelve2.svl.corp.google.com>
+ <20170621225403.GH53348@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 21 Jun 2017 16:00:11 -0700
+Message-ID: <CAGZ79kaCLO=CVZLtc3BF8WHXPtO06oaa8RmsXYB6kUHU8ty1Rg@mail.gmail.com>
+Subject: Re: [PATCH v3 15/20] repository: add index_state to struct repo
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ben Peart <peartben@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 20 Jun 2017 12:19:50 -0700
-Brandon Williams <bmwill@google.com> wrote:
+On Wed, Jun 21, 2017 at 3:54 PM, Brandon Williams <bmwill@google.com> wrote:
+> On 06/21, Jonathan Tan wrote:
+>> On Tue, 20 Jun 2017 12:19:46 -0700
+>> Brandon Williams <bmwill@google.com> wrote:
+>>
+>> > +int repo_read_index(struct repository *repo)
+>> > +{
+>> > +   if (!repo->index)
+>> > +           repo->index = xcalloc(1, sizeof(struct index_state));
+>>
+>> sizeof(*repo->index)?
+>
+> Is there a reason to prefer one versus the other? Either way I can
+> change.
 
-> Introduce 'repo_submodule_init()' which performs initialization of a
-> 'struct repository' as a submodule of another 'struct repository'.
-> 
-> The resulting submodule can be in one of three states:
-> 
->   1. The submodule is initialized and has a worktree.
-> 
->   2. The submodule is initialized but does not have a worktree.  This
->      would occur when the submodule's gitdir is present in the
->      superproject's 'gitdir/modules/' directory yet the submodule has not
->      been checked out in superproject's worktree.
+If repo->index changes its type, then we do not need to fix it here
+strictly. We may fix surrounding code, but not necessarily, e.g.
+when the type change is a cast to a wider type (subclass so to speak),
+so e.g. *repo->index is made to be:
 
-In a recent proposal [1] to update the submodule documentation, an
-"initialized submodule" is one that has a working directory, which seems
-to have a different meaning of "initialized" (to the paragraphs above).
+    struct new_index {
+      struct index_state index;
+      int more_state
+    };
 
-Or did you mean the "struct repository" is initialized etc.? In which
-case, it does not seem strange to me that a repository is initialized
-but does not have a worktree, since bare repositories are like that too.
-
-[1] https://public-inbox.org/git/20170621173756.4444-1-sbeller@google.com/
-
->   3. The submodule remains uninitialized due to an error in the
->      initialization process or there is no matching submodule at the
->      provided path in the superproject.
-> 
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-
-[snip]
-
-> +/*
-> + * Initialize 'submodule' as the submodule given by 'path' in parent repository
-> + * 'superproject'.
-> + * Return 0 upon success and a non-zero value upon failure.
-> + */
-> +int repo_submodule_init(struct repository *submodule,
-> +			struct repository *superproject,
-> +			const char *path)
-> +{
-> +	const struct submodule *sub;
-> +	struct strbuf submodule_path = STRBUF_INIT;
-> +	int ret = 0;
-> +
-> +	sub = submodule_from_cache(superproject, null_sha1, path);
-> +	if (!sub) {
-> +		ret = -1;
-> +		goto out;
-> +	}
-> +
-> +	strbuf_repo_worktree_path(&submodule_path, superproject, "%s", path);
-> +
-> +	if (repo_init(submodule, submodule_path.buf, submodule_path.buf)) {
-
-This works because the 2nd parameter (git_dir) can take in either the
-Git directory itself or its parent, but it does make the call site look
-strange. Would it be a good idea to make it mandatory to specify the Git
-directory? That would make call sites clearer but require more code
-there.
-
-> +		strbuf_reset(&submodule_path);
-> +		strbuf_repo_git_path(&submodule_path, superproject,
-> +				     "modules/%s", sub->name);
-> +
-> +		if (repo_init(submodule, submodule_path.buf, NULL)) {
-> +			ret = -1;
-> +			goto out;
-> +		}
-> +	}
-> +
-> +	submodule->submodule_prefix = xstrfmt("%s%s/",
-> +					      superproject->submodule_prefix ?
-> +					      superproject->submodule_prefix :
-> +					      "", path);
-> +
-> +out:
-> +	strbuf_release(&submodule_path);
-> +	return ret;
-> +}
+then this area of code would just work fine, no maintenance burden.
