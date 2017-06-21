@@ -7,137 +7,120 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9B5020401
-	for <e@80x24.org>; Wed, 21 Jun 2017 14:52:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82AF920401
+	for <e@80x24.org>; Wed, 21 Jun 2017 15:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752589AbdFUOwL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 10:52:11 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:35467 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752528AbdFUOwK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 10:52:10 -0400
-Received: by mail-lf0-f65.google.com with SMTP id n136so10348352lfn.2
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 07:52:09 -0700 (PDT)
+        id S1752108AbdFUPER (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 11:04:17 -0400
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:34029 "EHLO
+        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751124AbdFUPEP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 11:04:15 -0400
+Received: by mail-lf0-f48.google.com with SMTP id l13so38460276lfl.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 08:04:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=es7b+jcsFt+OKAbUPZz/M0GLfWOb8v8gPvrvN2S+UQ8=;
-        b=ig5t3IG+T9OKTdcxUfaagILYKY5GZzzOqJ0/7ObVmZu43GAtCxo1DGr9FwYb251yYd
-         AGPr1pIC1OlazHPvxKILYlbiZUtUZ2oORjuwpqFwRe5HGYgCdlwvcPdAXb5ccf38nfLv
-         klvt5Dq1TLfU8q1cfNt4PQtLsyPOkfJ6bsa8k3JTMXapIPEQN09iabEYT2wK/7UpxtMn
-         BfUvq0JO+WaWG6QeeQr7jCp5QSNEsbUUYWSir/XyyOM8f6uZdDt/khrYGj5PgFUa2olm
-         SRfasZEFNV2ortBYlw2ut+V8yGdTdvxZxfnmUfj4J7ULPRXRLnFcbs/iDNlats7wgMWl
-         98qw==
+         :message-id:mime-version;
+        bh=DsS2vMiVyKj9wN6cvhPCeD04p4Qvu4kzQE0kIzTu+g8=;
+        b=M5J5lI16xvKP/KgCTAunIM8ahnEk7759FrSTNT/c70w9F+DsDWJbyZndJ3iDP03NUV
+         nRyyeyhSSCU3atV4TDSEf8he7raapCLfIIyYMcE3LTm3rqc2pv8N2YfKeGliQyCeC+Dw
+         TI4zc3E9EzRkg4HfNRNUsPsYYntc7pdbLh4KsGsnXqS+EVhiBiPLFuLzKtSeRuHNeDxG
+         TvHEACm0ciNLKzcdKNXeY9BJsiVFt5//gQJnz5y4QeBN7x/868PPh8Mhm+D4WGPFHCeW
+         BdEGgIER4HbwDrm8kFQ86670wcoggDT+3/CzJdADg76EcUh9WGiHBWqwdoz7sGLKnuTU
+         cf3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=es7b+jcsFt+OKAbUPZz/M0GLfWOb8v8gPvrvN2S+UQ8=;
-        b=IyxOkxfj/3VVjfj8W0NF3OZkkMmwU4P8X6VhsTgMH9HyKt2+wl2hOfSMGz/zUEuf8f
-         2Syvv0wOG2sQiQtbJwFOdPvkS7nbGZoZrV5f/uhNtf0rpoyL3CWO+E4+VVeLv3naWSTa
-         sxcT0uk1xGw8eLNyXDVlLgWROxdlW9z7nInB7xklAngCi8Q0rXZynwpyCt2Co0vFX+Es
-         ZHUZPH9WIWKcmOhaeldHS8BzZZJgB0RYU+Qo+8VfedfCtjAzRoyC8ESWNl28cfR6xvHP
-         80taWzEKO6yqjnX/PRAfxzG5ctkU+dZ+mwYKNgSRJ6Z0Yu+pkeODQ9nBwtZA7i/z6RcS
-         /kmA==
-X-Gm-Message-State: AKS2vOwmp2VNlAWcGlTkj3eBsZypdppUwbZTxpVwp7eiqouML+UEBSzQ
-        YyDUSAkGbIVUxg==
-X-Received: by 10.80.169.35 with SMTP id l32mr14585576edc.105.1498056729054;
-        Wed, 21 Jun 2017 07:52:09 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version;
+        bh=DsS2vMiVyKj9wN6cvhPCeD04p4Qvu4kzQE0kIzTu+g8=;
+        b=NUqswpkjhnSD/7Dh5026u96eN/Rv8LeuRih+GC4r1SL4rQAsUgZ+dpVgBKdx0v5cNp
+         2IM4f+xfn3pt69Ksh50xpgwF3E9BijDvbppuUrzvCBXHH8+hg465v2U8zxeq3PBIRhJD
+         KOr9QgeGV2hYzq851OUpuWWD3ileqH482k6cBzt0hTilhbfVAGRCNPpczNV3EiZ/Gq88
+         ApnP97CI6JMMfTFW725gf/gVZiDV3mVfBCKPZB3xKvE93LliW020vW3Z3uXAD+cQus5P
+         41TBO4KVsotiZUf64TMmoEtXWRDe0ve2p7tr0jaZGO0y8aOdyN+pb+nj07yaghb5w8VR
+         tTVQ==
+X-Gm-Message-State: AKS2vOz/6l06z0+WtuK6MZXQqWj5Owqtw0rorRbpGIN+TSyOip4DOE0w
+        WfLWhgEutV3yWxWtNQQ=
+X-Received: by 10.80.148.72 with SMTP id q8mr25563315eda.174.1498057454066;
+        Wed, 21 Jun 2017 08:04:14 -0700 (PDT)
 Received: from snth ([92.109.130.42])
-        by smtp.gmail.com with ESMTPSA id e50sm7357939edb.43.2017.06.21.07.52.07
+        by smtp.gmail.com with ESMTPSA id t27sm8338733edh.1.2017.06.21.08.04.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Jun 2017 07:52:07 -0700 (PDT)
+        Wed, 21 Jun 2017 08:04:12 -0700 (PDT)
 Received: from avar by snth with local (Exim 4.84_2)
         (envelope-from <avarab@gmail.com>)
-        id 1dNgzH-0005Hy-33; Wed, 21 Jun 2017 16:52:07 +0200
+        id 1dNhAy-0005dI-8L; Wed, 21 Jun 2017 17:04:12 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     gitster@pobox.com, peff@peff.net, git@vger.kernel.org
-Subject: Re: [PATCH/FINAL] status: contextually notify user about an initial commit
-References: <1498012463.1487.2.camel@gmail.com> <20170621023729.3200-1-kaarticsivaraam91196@gmail.com> <1498055714.20886.1.camel@gmail.com>
+To:     Tim Hutt <tdhutt@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Monitoring a repository for changes
+References: <CAKuVd4Bdhreu6wrwDp1Bia56Db=TXYMQcitsznaRM+QcYVzJnQ@mail.gmail.com>
 User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <1498055714.20886.1.camel@gmail.com>
-Date:   Wed, 21 Jun 2017 16:52:07 +0200
-Message-ID: <87fuet8kbs.fsf@gmail.com>
+In-reply-to: <CAKuVd4Bdhreu6wrwDp1Bia56Db=TXYMQcitsznaRM+QcYVzJnQ@mail.gmail.com>
+Date:   Wed, 21 Jun 2017 17:04:12 +0200
+Message-ID: <87efud8jrn.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Jun 21 2017, Kaartic Sivaraam jotted:
+On Wed, Jun 21 2017, Tim Hutt jotted:
 
-> On Wed, 2017-06-21 at 08:07 +0530, Kaartic Sivaraam wrote:
->> The existing message, "Initial commit", makes sense for the commit
->> template
->> notifying users that it's their initial commit, but is confusing when
->> merely checking the status of a fresh repository (or orphan branch)
->> without having any commits yet.
->>
->> Change the output of "status" to say "No commits yet" when "git
->> status" is run on a fresh repo (or orphan branch), while retaining
->> the
->> current "Initial commit" message displayed in the template that's
->> displayed in the editor when the initial commit is being authored.
->>
->> A few alternatives considered were,
->>
->> * Waiting for initial commit
->> * Your current branch does not have any commits
->> * Current branch waiting for initial commit
->>
->> The most succint one among the alternatives was chosen.
->>
->> Helped-by: Junio C Hamano <gitster@pobox.com>
->> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
->> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> ---
->>
->> The 'FINAL' part in the subject is just my opinion about
->> this patch
->>
-> Just for the note, the tests passed locally and all travis-ci builds
-> jobs succeeded except for the one in which the 'GITTEXT_POISON'
-> environment variable is enabled. I guess that isn't an issue, from what
-> I came to know while digging about it.
+> Hi,
+>
+> Currently if you want to monitor a repository for changes there are
+> three options:
+>
+> * Polling - run a script to check for updates every 60 seconds.
+> * Server side hooks
+> * Web hooks (on Github, Bitbucket etc.)
+>
+> Unfortunately for many (most?) cases server-side hooks and web hooks
+> are not suitable. They require you to both have admin access to the
+> repo and have a public server available to push updates to. That is a
+> huge faff when all I want to do is run some local code when a repo is
+> updated (e.g. play a sound).
+>
+> Currently people resort to polling
+> (https://stackoverflow.com/a/5199111/265521) which is just ugly. I
+> would like to propose that there should be a forth option that uses a
+> persistent connection to monitor the repo. It would be used something
+> like this:
+>
+>     git watch https://github.com/git/git.git
+>
+> or
+>
+>     git watch git@github.com:git/git.git
+>
+> It would then print simple messages to stdout. The complexity of what
+> it prints is up for debate, - it could be something as simple as
+> "PUSH\n", or it could include more information, e.g. JSON-encoded
+> information about the commits. I'd be happy with just "PUSH\n" though.
 
-No, this is a bug in your patch, the test suite should pass under
-poison.
+Insofar as this could be implemented in some standard way in Git it's
+likely to have a large overlap with the "protocol v2" that keeps coming
+up here on-list. You might want to search for past threads discussing
+that.
 
-The issue is that you changed the test code I gave you (to also add more
-tests, yay) along the way to do:
+> In terms of implementation, the HTTP transport could use Server-Sent
+> Events, and the SSH transport can pretty much do whatever so that
+> should be easy.
 
-    test_must_fail test_i18ngrep ...
+In case you didn't know, any of the non-trivially sized git hosting
+providers (e.g. github, gitlab) provide you access over ssh, but you
+can't just run any arbitrary command, it's a tiny set of whitelisted
+commands. See the "git-shell" manual page (github doesn't use that exact
+software, but something similar).
 
-Instead of the correct form:
-
-    test_i18ngrep ! ...
-
-This fixup for your patch makes it work again:
-    
-    diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-    index e0d2c9e581..b3743ff0a8 100755
-    --- a/t/t7508-status.sh
-    +++ b/t/t7508-status.sh
-    @@ -1618,7 +1618,7 @@ test_expect_success '"No commits yet" should not be noted in status output' '
-            git checkout --orphan empty-branch-2 &&
-            test_commit test-commit-1 &&
-            git status >output &&
-    -       test_must_fail test_i18ngrep "No commits yet" output
-    +       test_i18ngrep ! "No commits yet" output
-     '
-     
-     test_expect_success '"Initial commit" should be noted in commit template' '
-    @@ -1635,7 +1635,7 @@ test_expect_success '"Initial commit" should not be noted in commit template' '
-            touch to_be_committed_2 &&
-            git add to_be_committed_2 &&
-            git commit --dry-run >output &&
-    -       test_must_fail test_i18ngrep "Initial commit" output
-    +       test_i18ngrep ! "Initial commit" output
-     '
-     
-     test_done
+But overall, it would be nice to have some rationale for this approach
+other than that you think polling is ugly. There's a lot of advantages
+to polling for something you don't need near-instantly, e.g. imagine how
+many active connections a site like GitHub would need to handle if
+something like this became widely used, that's in a lot of ways harder
+to scale and load balance than just having clients that poll something
+that's trivially cached as static content.
