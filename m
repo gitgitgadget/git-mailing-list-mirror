@@ -2,97 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F89820401
-	for <e@80x24.org>; Wed, 21 Jun 2017 21:55:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6E0620401
+	for <e@80x24.org>; Wed, 21 Jun 2017 21:55:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752467AbdFUVzM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 17:55:12 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:34708 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752105AbdFUVzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 17:55:09 -0400
-Received: by mail-pg0-f52.google.com with SMTP id e187so30103435pgc.1
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 14:55:09 -0700 (PDT)
+        id S1752020AbdFUVzl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 17:55:41 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35380 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751963AbdFUVzk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 17:55:40 -0400
+Received: by mail-pg0-f65.google.com with SMTP id f127so30146318pgc.2
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 14:55:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9OsoP+n45SnHlyQQsrxktRhtuK5tQq3KXIwqG7wVEnU=;
-        b=efQpVG7WyBDsFfZgTY3E5Y+tIZDXnNDMn5t5HAL81y4zmxeEEw7+AKzF/dsOi757dv
-         c8tI9kwpijP7J0xSuD379vMEKAMhywUAHhgZGZUAh3MwVjQMhEciQAZ3WhFn/c6EAnAZ
-         rmHlu9zmH1KjDbu7DGgAeCC8aCLqAwBKAnz+BN7WYcf6E7zg5pK6yIvLeI1cl1G0I6vs
-         wracNBc3pzB6xh1/pW+3lHmKDXNzLRrEhN69GTFi77QIUmkbSqG7nOVuSe2CQ0tbj5n5
-         8O1gHBVOIOMyXN1knUT0Fqs9tZBciiylSWJiUdRJ18JACNV86KQsn//eaKpuxf2pDlzL
-         hjlQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Tli10KTUJdLUokKLI4/fVQUlGu0xyV1V8Yyb/q8yvNI=;
+        b=hHLp+uY5lQWt2p52vSCub0aud4yb936nHc6aru2QzK3SS5j5FdVyc111gd0nqcydse
+         D10v344TsK2iuoiY6cgYwiFWqpzzxYYMSJ+tpajUQ9aeaiZXNPoECdwYq3NUIHxxJxKo
+         FOu+rD5NVp3ts4zys4rc2k7qJIxyT5C/fxQWZtZ6qcQI+YGudQ3gCmo+AmLsM5gTZMO/
+         xjNLAekjkbh+ShWIg4ETSVTSPKgo5nSNPrTnfQRHP/+GfJb1dSoZETwEzhEosGKlersW
+         An/vtG6PLzGGDm6LQ38yE3mr3SK73/yuB2UiFACTKPF6yBD+f2R5bLhGnl0LNYhvLr9d
+         Nd6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9OsoP+n45SnHlyQQsrxktRhtuK5tQq3KXIwqG7wVEnU=;
-        b=gixdVs35/9/vBtDH6ETdd26pR1cQavHmAP4lb6GReQ3at/65p/8b8HRfZvi1OJOnmu
-         bvp+RAXOLp/iekDLE6w1Q0sbI5x02FqkKtmC0DuZkB6s27rKHsLbkDmnoSzSxT1Y6CRg
-         rebDSvlTeoWPszotmDkTEpwp5JUxMPUOha6g09iTK/eIHSoyZD+Ey7oRdZHarIgHI2R4
-         IVFUphQV4OTlzu6DHHef8y4b6nngfeH4NPrDWC1OA3HnVVrQBWuoW/cOvc8RYWdRNVPJ
-         FY83LXbzJA2uxMTk4e1Te7oFMsYLvbPyndYRTcV4rpgLJ3gB6VMzLWU/mfBPhANdhlET
-         Vi9A==
-X-Gm-Message-State: AKS2vOw3QekoSXWzl8ToRxtS7A4MyR1kOObwbZPEk31oWYyPrswmSoGP
-        oF6e8VzZC2pd1VRvGIOgag==
-X-Received: by 10.84.174.1 with SMTP id q1mr43829477plb.8.1498082102938;
-        Wed, 21 Jun 2017 14:55:02 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:d052:1af5:b2b3:bc81])
-        by smtp.gmail.com with ESMTPSA id 66sm35116732pfm.82.2017.06.21.14.55.01
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=Tli10KTUJdLUokKLI4/fVQUlGu0xyV1V8Yyb/q8yvNI=;
+        b=nvP4T81eTaGLKSZRh8Ddv2jzRHeDGiRDM1iqNDzIzguNZPBlCMk6TdRd3YwNwO11xJ
+         aaB1d1Uyl/T3ux8druKlk5oFf/m5Po/x/mE7Y3TwQlALcsjrD+6Wth8u0v/Jp+V7r5RU
+         wsAZILPHCfeTMZGNUW8rvj+s85aNhqcINY4vMuS+7gdh9DPXWLg4vlYcVOYaMN01xfVh
+         jtEhNWLpQd/egVdRmYWQ4/kLs/VYfjYQoL0tcdp/Lb0ODxGq5HegHgyE2kiow4Tsg/Zq
+         ja6qhTiWaVLHfKm09/U4kuiY1TWOhrgENiyDGZxC+q2/9kPbWsW5irUzE12cKumz/++/
+         hp9w==
+X-Gm-Message-State: AKS2vOzMAT0pXNK7rmbl1V2J2UEwm/sCbW/wOjXCtYGCa2GOOWdVk5H+
+        FTXcKV9DJ0a8Vw==
+X-Received: by 10.99.96.85 with SMTP id u82mr39356248pgb.214.1498082139493;
+        Wed, 21 Jun 2017 14:55:39 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b0bd:d7d3:4f2e:5016])
+        by smtp.gmail.com with ESMTPSA id 25sm15110979pfj.59.2017.06.21.14.55.38
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 21 Jun 2017 14:55:01 -0700 (PDT)
-Date:   Wed, 21 Jun 2017 14:55:00 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH 04/26] diff.c: introduce emit_diff_symbol
-Message-ID: <20170621215500.GG53348@google.com>
+        Wed, 21 Jun 2017 14:55:38 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        jonathantanmy@google.com, jrnieder@gmail.com, mhagger@alum.mit.edu,
+        peff@peff.net, philipoakley@iee.org
+Subject: Re: [showing-off RFC/PATCH 26/26] diff.c: have a "machine parseable" move coloring
 References: <CAGZ79kaqjQYmkt77kk5m=fdBfbZAvwd0YhhT7=O5b-FkQmDfHg@mail.gmail.com>
- <20170620024816.20021-1-sbeller@google.com>
- <20170620024816.20021-5-sbeller@google.com>
- <xmqq7f05p1z7.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYUpJxX-wBU=ALPgJwVaA8h_iJRtAu3T7p4J7qmy=U4dg@mail.gmail.com>
- <20170621214551.GE53348@google.com>
- <xmqqlgolm2jk.fsf@gitster.mtv.corp.google.com>
+        <20170620024816.20021-1-sbeller@google.com>
+        <20170620024816.20021-27-sbeller@google.com>
+        <20170621215104.GF53348@google.com>
+Date:   Wed, 21 Jun 2017 14:55:38 -0700
+In-Reply-To: <20170621215104.GF53348@google.com> (Brandon Williams's message
+        of "Wed, 21 Jun 2017 14:51:04 -0700")
+Message-ID: <xmqqh8z9m2ed.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqlgolm2jk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/21, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > I don't think this is strictly enforced.  If you look at grep.h:197 the
-> > enum 'grep_source_type' has a trailing comma.
-> 
-> OK, so we now know that at least since e1327023 ("grep: refactor the
-> concept of "grep source" into an object", 2012-02-02) we haven't
-> heard from anybody whose compiler fails to grok this.
-> 
-> Perhaps we should start pushing for C99 features?
+Brandon Williams <bmwill@google.com> writes:
 
-Yeah for a second I thought I introduced the trailing comma when i added
-recursion to grep...but you're right, looking at blame shows that the
-trailing comma has been there for much longer.
+> On 06/19, Stefan Beller wrote:
+>> Ævar asked for it, this is how you would do it.
+>> (plus documentation, tests, CLI knobs, options)
+>> 
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  diff.c | 15 +++++++++++----
+>>  diff.h |  2 ++
+>>  2 files changed, 13 insertions(+), 4 deletions(-)
+>> 
+>> diff --git a/diff.c b/diff.c
+>> index 7756f7610c..61caa057ff 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -997,6 +997,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>>  	static const char *nneof = " No newline at end of file\n";
+>>  	const char *context, *reset, *set, *meta, *fraginfo;
+>>  	struct strbuf sb = STRBUF_INIT;
+>> +	int sign;
+>
+> should this be a char instead of an int?
 
-And I'm all for moving to C99 :)
+Perhaps.  Once we start adding things other than + and -, I think
+they should no longer be called "sign", though.
 
--- 
-Brandon Williams
+If Stefan chose '*' as a replacement for '+' because both makes
+things larger (yes, I am a positive person and my numbers are all
+positive), probably the replacement for '-' should be '/' (or '%'),
+not '_'.  But that is just bikeshedding.
+
