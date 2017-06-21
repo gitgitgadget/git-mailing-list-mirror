@@ -2,95 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBE5720401
-	for <e@80x24.org>; Wed, 21 Jun 2017 17:57:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A33320401
+	for <e@80x24.org>; Wed, 21 Jun 2017 17:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751174AbdFUR5p (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 13:57:45 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36326 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751052AbdFUR5o (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 13:57:44 -0400
-Received: by mail-pg0-f67.google.com with SMTP id e187so20576715pgc.3
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 10:57:44 -0700 (PDT)
+        id S1751152AbdFUR6Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 13:58:25 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:33363 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751052AbdFUR6Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 13:58:24 -0400
+Received: by mail-pf0-f193.google.com with SMTP id w12so32105930pfk.0
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 10:58:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ts+lEkc9MrzHED4eHE5jt9BHkyBE1xyWJ8Y/UPKIJlw=;
-        b=sTs4F0i81ceLS5Eoeqk/UtneS1l0k1kOhWn9QOOHfsIhgjkbXBJslvQqwT1J9Vyh5S
-         H6WnMJtZg2SPqNxQ4jZ+Sce37JgYQWGDmvtml/equA9r6D/aqaOMn7LM37cIZr4na/ga
-         mrDSGaa0TzC/f5uyCWszxHXvDOGOHcmVMi3TG9/3gQOVCdaFHV7RmC0c4AmDgd+Jwwfs
-         tm0+Dq3G1rhargzZbdIaf5sd2Dvd/oEGYsTtKQ/WdjYqKEYwNzxN9BVM57DNo1mnZ/s8
-         wM6NKom3AgJMvjXLuX5vZR+MR2eZkRJ99s220QkpuChXfsdP69uSCEfeMvtQanfkJlJr
-         Izfg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=B+koMolvxiC0jqFFecyQuDafzKwatiruMEs+RFfzT6M=;
+        b=Fdnu06WhUohl2g3YlY/3636bpiJMx1flHt/ytDu90Q/2m2eRLqTi73O2SVI2qJWQgu
+         8o+X8TMm1f1nLB7H5BKBtYT/wVmVipD2m0KNOLF6qezFeU7uhowIudNO5ytYUhePZFs5
+         KkD66At2rex2VLr5WW2Oa7soto3bjOzBrN6XzFZRx7AiGbgofSMR5bLf1CKlEGlqdmXS
+         AWzMcH9gIkr9/S6CylAZPcd/k4iGwBLWaa3sGNR/XlfnybE2DOSXcnWyzscMlgL3ZM1b
+         cpd/yrEMJR6SqGyap62hgGaO2ALg8zo91Fj6FLUBzJwpGlhITqjV4h1jK54plzHNtGOK
+         B/lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ts+lEkc9MrzHED4eHE5jt9BHkyBE1xyWJ8Y/UPKIJlw=;
-        b=IT3629QQxaQL/dC62OCc5+KMjF5jyGafhEn6WOpE6An4E46aTispMIxwVWxbTZb/NT
-         bHTxEbG0jvp5CIidpXEGdX3+WhvruV7ypyuMiOEXzwmkvvauuf7PYi6xtHu3k8udKCWr
-         U8zQKbQqs2Z1amXGRBqLtxE53pGef2HlOvb5w012DdyhxXdWn9ruQKzGAkPgqKC5/HvQ
-         x7JXemyocwMOYa1RaNe/OOEHhavomc6k20wJyiJPYNsIsXLM2r3SyLHKNgoj+X8pvWoD
-         yHDtfFkspmX/+L5Am+iRKVH43zCvILcbFrs5YyQIRZ0goGaTebVUuJTzU9+HePamTFKb
-         wO+A==
-X-Gm-Message-State: AKS2vOwXes0MdeolqbnvLnOkq32uW6Ts0hYlVkk7GewJ4034pk3iPmdy
-        OrYXnMeZTKnM8Q==
-X-Received: by 10.84.217.156 with SMTP id p28mr20128361pli.206.1498067863763;
-        Wed, 21 Jun 2017 10:57:43 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:14d3:6dca:1831:2943])
-        by smtp.gmail.com with ESMTPSA id j27sm22461310pgn.63.2017.06.21.10.57.41
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=B+koMolvxiC0jqFFecyQuDafzKwatiruMEs+RFfzT6M=;
+        b=qYEZfseaUqSbYapSPpjp4bjLFJcT1TTDDt2IOY0kjx8txkViD9A8W4bvZfInPE+lpE
+         MDmTtwDhwhvD/w6hOow62e0U2YmGjUndtha19h8wdaF8He8Od+9b35u/WJmL9DnoLn6D
+         XqSyni0D4m5IRyssppL54iWUIX5JEvYg1do1dlSO18r574ek4aG/xoQ8aqMOKTGKnaXd
+         Vp1Gs07BcYwSi1JqNDkWHtQZmLEK76qLXIpSEzpTN/SuTqDKgzoBgcJUw1fRPn+BCXWn
+         SNFjvrLeC+x6v4HgLatjXT5yEr+U0iZNkqrAv8czzeA3lfsqlCn34ecxqUZ+E/vqoVC0
+         mwfQ==
+X-Gm-Message-State: AKS2vOxiCsHxa8nlc2wigFl/msL0aH4GK+rX4w0wRmZMYGZZCbUQ1rJn
+        rVAHG0ysmElwrA==
+X-Received: by 10.84.174.1 with SMTP id q1mr42938518plb.8.1498067902264;
+        Wed, 21 Jun 2017 10:58:22 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b0bd:d7d3:4f2e:5016])
+        by smtp.gmail.com with ESMTPSA id s88sm35814707pfk.16.2017.06.21.10.58.21
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 21 Jun 2017 10:57:42 -0700 (PDT)
-Date:   Wed, 21 Jun 2017 10:57:40 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, jacob.keller@gmail.com,
-        Johannes.Schindelin@gmx.de, sandals@crustytoothpaste.net,
-        peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
-        peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v3 11/20] path: construct correct path to a worktree's
- index
-Message-ID: <20170621175740.GE60603@aiede.mtv.corp.google.com>
-References: <20170608234100.188529-1-bmwill@google.com>
- <20170620191951.84791-1-bmwill@google.com>
- <20170620191951.84791-12-bmwill@google.com>
- <20170621021024.GC60603@aiede.mtv.corp.google.com>
- <20170621154330.GA53348@google.com>
+        Wed, 21 Jun 2017 10:58:21 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v4 5/8] sha1_file: refactor read_object
+References: <cover.1497920092.git.jonathantanmy@google.com>
+        <cover.1497035376.git.jonathantanmy@google.com>
+        <cover.1497920092.git.jonathantanmy@google.com>
+        <73d085b6fad9316c5a500341db2dd6451700656e.1497920092.git.jonathantanmy@google.com>
+Date:   Wed, 21 Jun 2017 10:58:20 -0700
+In-Reply-To: <73d085b6fad9316c5a500341db2dd6451700656e.1497920092.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Mon, 19 Jun 2017 18:03:12 -0700")
+Message-ID: <xmqqefudql37.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170621154330.GA53348@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> So your suggestion is to completely avoid doing any location when asking
-> for a worktree_git_path, I guess those code paths which request those
-> paths should be aware enough that if they need something in commondir to
-> use git_common_path instead.  My only worry is that it may be difficult
-> to catch misuse of worktree_git_path during code review, at least that
-> was one of the motivating factors for originally respecting
-> GIT_INDEX_FILE and the like.
+> @@ -2914,6 +2912,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+>  	git_zstream stream;
+>  	char hdr[32];
+>  	struct strbuf hdrbuf = STRBUF_INIT;
+> +	unsigned long size_scratch;
+>  
+>  	if (oi->delta_base_sha1)
+>  		hashclr(oi->delta_base_sha1);
+> @@ -2939,6 +2938,10 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+>  	map = map_sha1_file(sha1, &mapsize);
+>  	if (!map)
+>  		return -1;
+> +
+> +	if (!oi->sizep)
+> +		oi->sizep = &size_scratch;
+> +
+>  	if (oi->disk_sizep)
+>  		*oi->disk_sizep = mapsize;
+>  	if ((flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE)) {
+>  	if (status && oi->typep)
+>  		*oi->typep = status;
+> +	if (oi->sizep == &size_scratch)
+> +		oi->sizep = NULL;
 
-Correct: I'm saying that when someone calls worktree_git_path, the
-intent is to resolve a path within the worktree git directory.  File
-relocation just gets in the way of that.
+This looked somewhat unusual but nevertheless is correct.  Because
+of the way parse_sha1_header_extended() interacts with its callers,
+the usual fn(oi->sizep ? oi->sizep : &dummy) pattern does not apply
+to this codepath.
 
-I am not too worried about misuse because the only reason to call
-worktree_git_path is to access a worktree-specific file like HEAD or
-index.
+> @@ -3077,28 +3090,15 @@ int pretend_sha1_file(void *buf, unsigned long len, enum object_type type,
+>  static void *read_object(const unsigned char *sha1, enum object_type *type,
+>  			 unsigned long *size)
+>  {
+> -	unsigned long mapsize;
+> -	void *map, *buf;
+> -	struct cached_object *co;
+> -
+> -	co = find_cached_object(sha1);
+> -	if (co) {
+> -		*type = co->type;
+> -		*size = co->size;
+> -		return xmemdupz(co->buf, co->size);
+> -	}
+> +	struct object_info oi = OBJECT_INFO_INIT;
+> +	void *content;
+> +	oi.typep = type;
+> +	oi.sizep = size;
+> +	oi.contentp = &content;
+>  
+> -	buf = read_packed_sha1(sha1, type, size);
+> -	if (buf)
+> -		return buf;
+> -	map = map_sha1_file(sha1, &mapsize);
+> -	if (map) {
+> -		buf = unpack_sha1_file(map, mapsize, type, size, sha1);
+> -		munmap(map, mapsize);
+> -		return buf;
+> -	}
+> -	reprepare_packed_git();
+> -	return read_packed_sha1(sha1, type, size);
+> +	if (sha1_object_info_extended(sha1, &oi, 0))
+> +		return NULL;
+> +	return content;
+>  }
 
-Thanks,
-Jonathan
+Nice code reduction; it is somewhat funny to think that a function
+meant to gather 'object info' does so much, but we can always say
+the contents is part of the information about the object ;-).
+
+Same comment as the other one applies here; the definition of how an
+error is reported by sha1_object_info_extended() should be kept
+consistent with existing callers.
+
+Thanks.
+
