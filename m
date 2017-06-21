@@ -2,68 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14ECB20401
-	for <e@80x24.org>; Wed, 21 Jun 2017 17:41:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27F0920401
+	for <e@80x24.org>; Wed, 21 Jun 2017 17:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752265AbdFURlp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 13:41:45 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33600 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751116AbdFURln (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 13:41:43 -0400
-Received: by mail-pg0-f68.google.com with SMTP id u62so23627563pgb.0
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 10:41:43 -0700 (PDT)
+        id S1753271AbdFURpt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 13:45:49 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35207 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753081AbdFURpr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 13:45:47 -0400
+Received: by mail-pf0-f180.google.com with SMTP id c73so27989446pfk.2
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 10:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:subject:from:to:cc:date:in-reply-to:references
          :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=ZedipzDpcJyf2wDZ+oo4xMBhnoqjHx3PLw1QhZthOJ8=;
-        b=o8cM2sJyVHt43brlhHVP9I+pevycPMQXB/rcNbX2JL2psy5EWVejHnYM3tI2uFUILR
-         /LpeAK2XZkL0W1YhMzFsFG9Y0lAG8F5v3Ec003FH/AQDaUiOdwIT8Zh4lsyb2Rdds2vI
-         lQPdcWLsXHLlZVqExDED8DecKcNtTlp8yAmPvWj3WtijA4FeIvXqygPuarPl47L6k8UC
-         Js0/BZzVuGudc6sWADF36/5yngaZ+zSwLEyvKzbQ8Tmuhp4B+rhxJ3AisWseKdt7rWaS
-         WL9lWq+QTJEHPM7YsegxvkzpuW/KkYFqdgcJ0Xz582qdV4e6dqGIS5hBo7ahiuU9PIhj
-         x27w==
+        bh=FMAIzuPmlRIjKv3ZlFba4qiSwK8cyM0QVdqDdjfuqwY=;
+        b=X7PRQxq33zfNhIxgOL69zcg/pfnuhb45NbFQ+UyJhUoi8HJZRx3sfSicFlwCNbiUYU
+         4BzVViCVRvtCI6KIvet5ys6RB9shnpHbhuw8+he6xvjDyUX+kdXJR1G+OI1fXm06IV2F
+         fWt0PdVWy/xMHiedZnNFbH8dDkENbF5lP1amZrIOtGp0W4eV8MpdWx4DTgmfT0Jmlkfc
+         ad402V7pojUVJh2ZmvrNJ/4vQlRDXbX7j+l0uLGJbLPtzUpdf1yfu4DkCxIVbwJZVdxJ
+         aKhImCNsOtHe3BJrFpiu++SDzz26Io55hLERlMmuEnXgjDHVadmz6K4Wp8EAgBnCQMlc
+         mjOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
          :references:disposition-notification-to:mime-version
          :content-transfer-encoding;
-        bh=ZedipzDpcJyf2wDZ+oo4xMBhnoqjHx3PLw1QhZthOJ8=;
-        b=IlEA8PYfxseoeEJhWRc2VfEKVITqVF/yhE8FZubvxgtrTp9f0FHIYaKXADDGT1k0mz
-         IOTzSumbVAymESm5zEIiT5Um+5DPTbftcK1z1d/c04O4degpkHil9jFcY2Rlu411y78q
-         GSLWCs3QYOizRyOozKvVHQkDImsL9RvWCAiv9M+t9P4Bx5/7SwgAiSo9DwQ7+mSaiIf0
-         PlVY1hZeqMHr9AR0FGMSGyakva0X3BiZTCdZ18El5PsNHybQBDJOnLrvulnFjqaDSU4c
-         8pIzxRFuXE3hsd0HbasCG28YL3VxHURbc6JjzZOF1gJFDmAr9TVin8PDSSX8q1pDULp5
-         BfkQ==
-X-Gm-Message-State: AKS2vOxBg5IsbywefFmjZxCTaXMMgolpQ2+vmStxEh3GS0dxzWu3R6ux
-        wlI4Gb4IGpQrq9uwCQWU9A==
-X-Received: by 10.84.217.137 with SMTP id p9mr38334579pli.80.1498066903139;
-        Wed, 21 Jun 2017 10:41:43 -0700 (PDT)
-Received: from unique-pc ([218.248.21.162])
-        by smtp.googlemail.com with ESMTPSA id d62sm697112pga.2.2017.06.21.10.41.40
+        bh=FMAIzuPmlRIjKv3ZlFba4qiSwK8cyM0QVdqDdjfuqwY=;
+        b=kcoga48kkO+dt2y0J/VX7CO/D+XxNzkE2eq7jbPm3Y94ECLOZ7Dcq65ICUe+KD4qib
+         9w1ysdocwZRqISQPx6q7op2xluBpaM4QzXdofOhwFwAxMxmBYZlkCq/6yR+aL6hrglDa
+         J8w45F1m1gsgb1KH+pBCYn3FEKbyUYLiAKydRwqvMXxvPPNQn2XYT1RK2PRS5p6oF5UM
+         fakajawf048j1LwWShrhqN08NAD0pxpS+NfnHFga9y4v4ZOsciP9YpIwIIR+Y7UH9okm
+         4bn7YEsGcFKu+UteNK1MTaD2Daj6QTNome79/XfDjNxV+t6MsqwQW6ilSOqh8ZufOrYr
+         6Rug==
+X-Gm-Message-State: AKS2vOy4KGaMVrjqFbI8qlZY3kKYc1j0bt+rTsCEEfxL+oFhhLnhGZye
+        cG1jUoanKLs9lA==
+X-Received: by 10.98.101.6 with SMTP id z6mr37822063pfb.221.1498067147190;
+        Wed, 21 Jun 2017 10:45:47 -0700 (PDT)
+Received: from unique-pc ([182.73.79.179])
+        by smtp.googlemail.com with ESMTPSA id 70sm636741pft.104.2017.06.21.10.45.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 21 Jun 2017 10:41:42 -0700 (PDT)
-Message-ID: <1498066891.32360.1.camel@gmail.com>
-Subject: Re: [PATCH/FINALRFC] Documentation/git-submodule: cleanup
+        Wed, 21 Jun 2017 10:45:46 -0700 (PDT)
+Message-ID: <1498067135.32360.3.camel@gmail.com>
+Subject: Re: [PATCH/FINAL] status: contextually notify user about an initial
+ commit
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Date:   Wed, 21 Jun 2017 23:11:31 +0530
-In-Reply-To: <xmqq4lv9s4lr.fsf@gitster.mtv.corp.google.com>
-References: <CAGZ79kbMhQpxUa5TXK=WCzzKUCZ5vx3oC+fFTTozpgQihsUjTA@mail.gmail.com>
-         <20170620031214.7616-1-kaarticsivaraam91196@gmail.com>
-         <CAGZ79kbJx4p2y6Vjp3dVBP2pd=MYa_j3Mxfv=zUygHY-bHj0wQ@mail.gmail.com>
-         <CAGZ79kbJB8dFUYu_70TAYbFWxLQiACEWMrE8M71GSEpnXqqzQQ@mail.gmail.com>
-         <1498014140.5419.3.camel@gmail.com>
-         <xmqq4lv9s4lr.fsf@gitster.mtv.corp.google.com>
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     gitster@pobox.com, peff@peff.net, git@vger.kernel.org
+Date:   Wed, 21 Jun 2017 23:15:35 +0530
+In-Reply-To: <87fuet8kbs.fsf@gmail.com>
+References: <1498012463.1487.2.camel@gmail.com>
+         <20170621023729.3200-1-kaarticsivaraam91196@gmail.com>
+         <1498055714.20886.1.camel@gmail.com> <87fuet8kbs.fsf@gmail.com>
 Content-Type: text/plain; charset="ISO-8859-15"
 X-Mailer: Evolution 3.22.6-1 
 Mime-Version: 1.0
@@ -76,39 +73,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2017-06-21 at 09:11 -0700, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+On Wed, 2017-06-21 at 16:52 +0200, Ævar Arnfjörð Bjarmason wrote:
+> No, this is a bug in your patch, the test suite should pass under
+> poison.
 > 
-> > Helped-by: Stefan Beller <sbeller@google.com>
-> > Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> > ---
-> >  In case no other changes are required then this is the final
-> > version
-> >  of the patch.
-> > 
-> > 
-> >  Documentation/git-submodule.txt | 49 ++++++++++++++++++-----------
-> > ----
-> > --------
-> >  1 file changed, 21 insertions(+), 28 deletions(-)
-> > 
-> > diff --git a/Documentation/git-submodule.txt b/Documentation/git-
-> > submodule.txt
-> > index 74bc6200d..6e07bade3 100644
-> > --- a/Documentation/git-submodule.txt
-> > +++ b/Documentation/git-submodule.txt
-> > @@ -63,14 +63,6 @@ add [-b <branch>] [-f|--force] [--name <name>] [
-> > --reference <repository>] [--dep
+> The issue is that you changed the test code I gave you (to also add
+> more
+> tests, yay) along the way to do:
 > 
-> The patch is heavily line-wrapped and whitespace broken, unlike
-> previous patch messages you sent to the list.  
+>     test_must_fail test_i18ngrep ...
 > 
-> Did you do something differently?
-Yes. Sorry about that. Due to some issue with the firewall in the
-network I use, I couldn't send patches using 'send-email' so I used the
-email-client (evolution) to send the patch believing it wouldn't damage
-it. It crapped with the formatting. Sorry again, will be careful in
-future (for which I have to find a work-around).
+> Instead of the correct form:
+> 
+>     test_i18ngrep ! ...
+> 
+Yeah, I did it after reading info about 'test_must_fail' in 't/README'.
+I thought it should be used for tests that fail which seemed to be a
+misinterpretation. Thanks for pointing it out. Fixed it!
 
 -- 
 Regards,
