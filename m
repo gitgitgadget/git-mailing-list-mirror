@@ -2,183 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	SORTED_RECIPS,T_RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DDCD20D0C
-	for <e@80x24.org>; Wed, 21 Jun 2017 21:56:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34B6F20401
+	for <e@80x24.org>; Wed, 21 Jun 2017 22:16:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751963AbdFUV43 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 17:56:29 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:33457 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751835AbdFUV42 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 17:56:28 -0400
-Received: by mail-wr0-f177.google.com with SMTP id r103so152807593wrb.0
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 14:56:27 -0700 (PDT)
+        id S1752105AbdFUWQG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 18:16:06 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:34659 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751755AbdFUWQF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 18:16:05 -0400
+Received: by mail-pg0-f43.google.com with SMTP id e187so30296220pgc.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 15:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=S2SBA9YRT1w9T9HAO0m4mY/bNag8R/sb4j3bvliTVrM=;
-        b=EA7fpW+fgzCpxHVM8FvaBkNe1NtMzGrO97RvEZq2Ar79KG2VfmvDcRneVxPuRvmMW/
-         87rqufgKQ3FC5pKcTk2s9+UfmhpDWth+OmXIfEUK9oAQuOFdaNRIw6yLfBDmJcukl0+R
-         lUInXEnr5emtqBqkv6IXEpRb4gUE0VHqstzlD9LswXYgxDgQZ5dcTfOUNlJf4eL8OUAp
-         jqooxR6af4qSlouA5d0MMC0RVZ3gooEMFG9Xtu/E9VHrFFbYZRNYpN/Kefysc8up/V6E
-         TzgKFsoe1MqbcSMUVwbIKbhJF1KlWOMr9bmP4542XHjtTYOyM3GmWE8b9YiwuRTQaBlr
-         6Cnw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Yn2Yx24y/JQIvCC9DJAh66QFr5aNzIWPc76nV0fUVZY=;
+        b=DSDYXjBiHDEPKi6KdgOILJBbPe1vWXbSe9igJlKtapZumWAYxd0TVLmBhYqEi11Cg8
+         cb3sWtlBCaeL+3dzS6TOP4TAQVXdQO3uCg3ejH7BGVX/PdccfRe/pom4OfHt3hXU7Vnh
+         JzZS8NXvZtw1k2axO0Bhb2VlTvhMwfegQMK/2pVB4+Q1oRPgzKgMOLWpeVFeRQokiQi6
+         HbkrvebprB9CYw2yu2dVsS4B5Xuettz3hpopTbL/wGe3tuXpH200zoETz1qaLUibbEw+
+         Eu4PDlvnz8SlDYfrHxuLFq1sddflHfhvN2L6+yY31fJWv8Em3+L4MjH9FNEkzw9zhO/5
+         8Usw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=S2SBA9YRT1w9T9HAO0m4mY/bNag8R/sb4j3bvliTVrM=;
-        b=K1pSN0krF2MKsAoY9jsoJkn+MBfIFp4yyFs5XAnEOwXq7C60qSzw4cW4qq/oA2GO9H
-         IMoCXw06eXN6OEwCDjlVIyhzzZV+RGcd7StTvfNZ9XXvqUOXbVAENqouz/v30pcDhotC
-         dCO7ZmO0nvIsoZYpnteEWhjYvwUNSr7iqb3cvKvTEx3DFJYR1QjoJLuvqtZfFlWp5tPV
-         B1X7Ti9kHspfFNveB2+kncbB82az09HaLq/k58urGlcfyRmn1yx9cntQza8Jp4g9xbMC
-         c/kZeL6xeiVMoQZeEPBwFD1hxuG3sYrsbKoDxbA1Sesaji7oAvk/s6RPt8NYdsdJRBAs
-         tK1Q==
-X-Gm-Message-State: AKS2vOzAyZ3QJEFwzTsT/b9EU/P+hPT6lOcp88Jcn6Cb2XSPBQCZO06R
-        kd0bFi81lA8vSg==
-X-Received: by 10.80.186.37 with SMTP id g34mr3808430edc.162.1498082187044;
-        Wed, 21 Jun 2017 14:56:27 -0700 (PDT)
-Received: from snth ([92.109.130.42])
-        by smtp.gmail.com with ESMTPSA id l4sm9520283edb.35.2017.06.21.14.56.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Jun 2017 14:56:26 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dNnbt-0000Kc-EH; Wed, 21 Jun 2017 23:56:25 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Tim Hutt <tdhutt@gmail.com>, git@vger.kernel.org
-Subject: Re: Monitoring a repository for changes
-References: <CAKuVd4Bdhreu6wrwDp1Bia56Db=TXYMQcitsznaRM+QcYVzJnQ@mail.gmail.com> <87efud8jrn.fsf@gmail.com> <20170621195252.GA31582@starla>
-User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20170621195252.GA31582@starla>
-Date:   Wed, 21 Jun 2017 23:56:25 +0200
-Message-ID: <87a85180om.fsf@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Yn2Yx24y/JQIvCC9DJAh66QFr5aNzIWPc76nV0fUVZY=;
+        b=iXgDvMD+S88TT7oLEd1ujIaMgAa9P4A19USj8RlApYNjSf1Klj+fVniTU0Rjvb/u3p
+         FFMfEGeYZmtq86DlT/CEgIhmsT2RwA20R/jY/HruljAQXxbWmbjKz/09R84KjLKyAB6i
+         /XbcatgUH1sOyHthDDnO72GvdIcyzB7YUazOb7duRHv/UrbltDy0k4LVeFCRmcAAii7K
+         B2+WmAegPrTUk/u8JdYHxit6l94xm4E5KbnhLnKaub8/8xb/kaY9hkXYJGJpGBm+QNz+
+         0dHob2BGJwWyGPuvVohR/qL/MwR/J0h5JLoVgkFgyCxY5/6t2rExYqWWP0JTS76ciVO6
+         mq5A==
+X-Gm-Message-State: AKS2vOxOQVQuonX5XTkzOZdn3a44JHLbIQ7V5e/VzXJbH+NYd5UdgaDE
+        19fD0NFZVBxTJMW0VPb5vs01ckpoBF/7M4o=
+X-Received: by 10.84.232.205 with SMTP id x13mr19761142plm.245.1498083364512;
+ Wed, 21 Jun 2017 15:16:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.100.161.227 with HTTP; Wed, 21 Jun 2017 15:16:04 -0700 (PDT)
+In-Reply-To: <20170621213949.GD53348@google.com>
+References: <CAGZ79kaqjQYmkt77kk5m=fdBfbZAvwd0YhhT7=O5b-FkQmDfHg@mail.gmail.com>
+ <20170620024816.20021-1-sbeller@google.com> <20170620024816.20021-18-sbeller@google.com>
+ <20170621213949.GD53348@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 21 Jun 2017 15:16:04 -0700
+Message-ID: <CAGZ79kbQRy_gv7ZYiFM6CbF-sDnBVpP=dP+qa7aqxPH+MiQNig@mail.gmail.com>
+Subject: Re: [PATCH 17/26] diff.c: convert show_stats to use emit_diff_symbol
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+>>       case DIFF_SYMBOL_SUBMODULE_PIPETHROUGH:
+>>               emit_line(o, "", "", line, len);
+>>               break;
+>> +     case DIFF_SYMBOL_STATS_SUMMARY_NO_FILES:
+>> +             fprintf(o->file, " 0 files changed\n");
+>
+> Why is this one a fprintf call instead of an emit_line call?  I'm sure
+> this is intended It just stands out to me.
 
-On Wed, Jun 21 2017, Eric Wong jotted:
-
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
->> On Wed, Jun 21 2017, Tim Hutt jotted:
->>
->> > Hi,
->> >
->> > Currently if you want to monitor a repository for changes there are
->> > three options:
->> >
->> > * Polling - run a script to check for updates every 60 seconds.
->> > * Server side hooks
->> > * Web hooks (on Github, Bitbucket etc.)
->> >
->> > Unfortunately for many (most?) cases server-side hooks and web hooks
->> > are not suitable. They require you to both have admin access to the
->> > repo and have a public server available to push updates to. That is a
->> > huge faff when all I want to do is run some local code when a repo is
->> > updated (e.g. play a sound).
->
-> Yeah, it kinda sucks that way.
->
-> Currently, for one of my public-inbox mirrors which has ssh
-> access to the primary server on public-inbox.org, I have:
->
-> 	#!/bin/sh
-> 	while true
-> 	do
-> 		# GNU tail(1) uses inotify to avoid polling on Linux
-> 		ssh public-inbox.org tail -F /path/to/git-vger.git/info/refs | \
-> 				while read sha1 ref
-> 		do
-> 			for GIT_DIR in git-vger.git
-> 			do
-> 				export GIT_DIR
-> 				git fetch || continue
-> 				git update-server-info
-> 				public-inbox-index # update Xapian index
-> 			done
-> 		done
-> 	done
->
-> It's not perfect as it requires multiple processes on the
-> server, but it's better than polling for my limited use.
->
->> > Currently people resort to polling
->> > (https://stackoverflow.com/a/5199111/265521) which is just ugly. I
->> > would like to propose that there should be a forth option that uses a
->> > persistent connection to monitor the repo. It would be used something
->> > like this:
->> >
->> >     git watch https://github.com/git/git.git
->> >
->> > or
->> >
->> >     git watch git@github.com:git/git.git
->> >
->> > It would then print simple messages to stdout. The complexity of what
->> > it prints is up for debate, - it could be something as simple as
->> > "PUSH\n", or it could include more information, e.g. JSON-encoded
->> > information about the commits. I'd be happy with just "PUSH\n" though.
->>
->> Insofar as this could be implemented in some standard way in Git it's
->> likely to have a large overlap with the "protocol v2" that keeps coming
->> up here on-list. You might want to search for past threads discussing
->> that.
->
-> Yeah, it hasn't been a priority for me, either...
->
->> > In terms of implementation, the HTTP transport could use Server-Sent
->> > Events, and the SSH transport can pretty much do whatever so that
->> > should be easy.
->>
->> In case you didn't know, any of the non-trivially sized git hosting
->> providers (e.g. github, gitlab) provide you access over ssh, but you
->> can't just run any arbitrary command, it's a tiny set of whitelisted
->> commands. See the "git-shell" manual page (github doesn't use that exact
->> software, but something similar).
->>
->> But overall, it would be nice to have some rationale for this approach
->> other than that you think polling is ugly. There's a lot of advantages
->> to polling for something you don't need near-instantly, e.g. imagine how
->> many active connections a site like GitHub would need to handle if
->> something like this became widely used, that's in a lot of ways harder
->> to scale and load balance than just having clients that poll something
->> that's trivially cached as static content.
->
-> Polling becomes more expensive with TLS and high-latency
-> connections, and also increases power consumption if done
-> frequently for redundancy purposes.
->
-> I've long wanted to do something better to allow others to keep
-> public-inbox mirrors up-to-date.  Having only 64-128 bytes of
-> overhead per userspace per-connection should be totally doable
-> based on my experience working on cmogstored; at which point
-> port exhaustion will become the limiting factor (or TLS overhead
-> for HTTPS).
-
-Come to think of it I should probably have asked you about this, but I
-have a one-liner running that polls every 5 minutes, but will stop if I
-haven't changed my git.git in a day:
-
-    while true; do if test $(find ~/g/git -type f -mmin -1440 | wc -l) -gt 0; then git pull; else echo too old; fi ; date ; sleep 300; done
-
-> But perhaps a cheaper option might be the traditional email/IRC
-> notification and having a client-side process watch for that
-> before fetching.
-
-If there was a IRC channel with this info I could/would use that,
-getting it via E-Mail would just get me into the same problem
-public-inbox is currently solving for me, i.e. I might as well keep the
-git ML up-to-date on that machine if I'm going to otherwise need to
-subscribe to a "hey there's a new message on the git ML" list :)
+I am sure it is unintended to stand out in such a way.
+Originally I wanted to make it as close 1:1 conversion,
+and as we did not emit the line prefix at the time but relied on
+the line prefix being emitted prior to when this was printed.
+Will convert to emit_line as that seems to be a bug in this patch.
