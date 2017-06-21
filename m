@@ -2,194 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0A5620282
-	for <e@80x24.org>; Wed, 21 Jun 2017 02:37:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C74AF20282
+	for <e@80x24.org>; Wed, 21 Jun 2017 02:55:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753117AbdFUCh4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 22:37:56 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:35436 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753036AbdFUChz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 22:37:55 -0400
-Received: by mail-pg0-f67.google.com with SMTP id f127so24936861pgc.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 19:37:55 -0700 (PDT)
+        id S1753174AbdFUCzj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 22:55:39 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:36559 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753128AbdFUCzi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 22:55:38 -0400
+Received: by mail-pf0-f179.google.com with SMTP id x63so78347929pff.3
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 19:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=2/wLmBWuFPkNFHKfb0+addDO3wNsfFlsdE+9zgSSnJc=;
-        b=rXnwrYl5OAzGxmn7l6TJYaNGhHVkh0TOj2A1tbCg7KjU30xKrt5JDppypv//OmoK9G
-         aIcqZY3VaUnM1M23fFPHRxVvlsjv0p/PIukj4FtfDlAYA/hwprqI51Co4sJ5KmbFcDtg
-         rBXreVDUKcVBmu0WLaHrf4I7XCCjQtOQn3oORUYtY0FKuJX1RvNdknVCxyQ9DGRbDjpx
-         nSHZCnBdUdiOFIzStlSBIu9qTrcwbQueFNQLllU41IQiSrXJ5Gv3hhKNV7hi3HkeFtYI
-         9TNETNGpWv+emP4TcXmnZ91LEmLsaks/8MhbFvbPVkJ+Ks2RcKQedqc1hpt40N6SRYJi
-         riEg==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=iFaW4kaBOIR4OHctffanlmVp1FYyo7pDJExIHvNgUpU=;
+        b=fbaWM+8zrPGR/QklSXsQ3++T/cCQOspL4jYI/fNMa5Lf7aN0bKIQw3ZFmmKRb9nAU9
+         eyjs0vHc0pKUblS8r31E4wiE0nkk2+GFfFBUNzy39OxuzSALx++ETFXMBC/UBOra6ZpX
+         hN95khgiiZSYIsH/N+yFzMnNgd8JvOgUFt/mO8kt+UP6TArMhYPE0Hx6GaV61FMLP/DT
+         IkMYNINbSMOgYv739tr3fdt/ObjGx2OX2r6wDBm6T/gK0qCo8WMrUC3k7VOvNXyc9UeR
+         Y3a51IfA2RRMAB09o3GfPHqF3+IM3J6adpVMszzTRt5pE2n+LAdB9j+v24+uZJc1n7lP
+         d3zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2/wLmBWuFPkNFHKfb0+addDO3wNsfFlsdE+9zgSSnJc=;
-        b=W9Pizxkc9x+9+Ml/+BIb4d2pRlVm3bzOYgglfgbnUEGdmM3qcL2qUz5QQDRHtnMRMU
-         hh3laXX6yXhvE/mELwIzjYIweL+xmiYNmaRgtfjey85RGlGi0z8JnTDuj37s1sLiomps
-         XX4oF80r5pskat6l0o/Yny+Z8cYA8izdGUSweX/lsxL+KwKS9xzRUNb3S2G76vvdLLMq
-         YQbXeU1mzXnVipmtEbtlWQAEt7WH1qc1WnwKUsebnB1rWUtliOQ3L80Va1c2hRNIsgrg
-         4JIn8SYAdGUeAws9wcTzCVLtab8FFxOMhSA4glqvzWUTyt3rFJg0tdTorRm6XOlHULgR
-         fNhQ==
-X-Gm-Message-State: AKS2vOxUbndF96FquPMJDUDEz0JBGdtS6GZg/XBGI78FMDuUyBlHFbYj
-        SlMue1bXYeB9kw==
-X-Received: by 10.99.106.66 with SMTP id f63mr34602561pgc.150.1498012675104;
-        Tue, 20 Jun 2017 19:37:55 -0700 (PDT)
-Received: from localhost.localdomain ([2405:205:850b:870a:56ff:b236:2b2d:3a08])
-        by smtp.gmail.com with ESMTPSA id z4sm26580899pgc.22.2017.06.20.19.37.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Jun 2017 19:37:54 -0700 (PDT)
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=iFaW4kaBOIR4OHctffanlmVp1FYyo7pDJExIHvNgUpU=;
+        b=MDkhk1NiAp0LLITkrybj4ssil7kRvunziiJAg3SyV4BahfLYOFJ5XGwI096OrgKxOn
+         Ykh/NPbyUcfZZo5WaLhVCDim4IzdGtR/F17eSjEsrYPhTueVTcb4XWuuKE5mKXN3t0CH
+         7RGz46rCHyX4pQOuGKSDnmTdyuBL6TknIiRR753gX6YlaDJiw0v3Cdef8N/4RW/Aah4r
+         p1pRJvJ1mC0ae+pk4NHcoF2/Gft7jOPYntNpmgNeryKa5llto8+42jB/NxpuPWO1mat9
+         4ouzIzuIVXOwxC9HhmP+3ZQHbwqyxTVFP9mxh7pPRB+0GjfW1fiCIFf64kG90cLR18e4
+         HWXg==
+X-Gm-Message-State: AKS2vOwcao1MnlSSepjA9bcBfuqnC/vVdbl1NXbn+R/SLsfYIqsApMJj
+        zETgCKJcFBobOHVIM+c=
+X-Received: by 10.84.136.135 with SMTP id 7mr39152336pll.98.1498013737898;
+        Tue, 20 Jun 2017 19:55:37 -0700 (PDT)
+Received: from unique-pc ([182.73.79.179])
+        by smtp.googlemail.com with ESMTPSA id o66sm31169614pga.64.2017.06.20.19.55.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 20 Jun 2017 19:55:37 -0700 (PDT)
+Message-ID: <1498013726.5419.1.camel@gmail.com>
+Subject: Re: Small issue with "add untracked" option of 'git add -i'
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, peff@peff.net, git@vger.kernel.org,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Subject: [PATCH/FINAL] status: contextually notify user about an initial commit
-Date:   Wed, 21 Jun 2017 08:07:29 +0530
-Message-Id: <20170621023729.3200-1-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <1498012463.1487.2.camel@gmail.com>
-References: <1498012463.1487.2.camel@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit 
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Date:   Wed, 21 Jun 2017 08:25:26 +0530
+In-Reply-To: <xmqqshj5nl3o.fsf@gitster.mtv.corp.google.com>
+References: <1497278015.7302.13.camel@gmail.com>
+         <xmqqwp8hnm1v.fsf@gitster.mtv.corp.google.com>
+         <xmqqshj5nl3o.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The existing message, "Initial commit", makes sense for the commit template
-notifying users that it's their initial commit, but is confusing when
-merely checking the status of a fresh repository (or orphan branch)
-without having any commits yet.
+On Mon, 2017-06-12 at 10:59 -0700, Junio C Hamano wrote:
+> Together with your other wishes, perhaps something like this is what
+> you have in mind.††The original tried to throw in a blank line as a
+> separator to help interactive users to more easily tell the boundary
+> of blocks of text, but it wasn't consistently doing so (e.g. "update"
+> when nothing is dirty was very silent, while "status" gave one blank
+> line that is supposed to be shown after the list of changed ones even
+> when the list is empty).
+> 
+> †git-add--interactive.perl | 8 ++------
+> †1 file changed, 2 insertions(+), 6 deletions(-)
+> 
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index 709a5f6ce6..0ec09361b4 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -537,7 +537,7 @@ sub list_and_choose {
+> †				$last_lf = 1;
+> †			}
+> †		}
+> -		if (!$last_lf) {
+> +		if (@stuff && !$last_lf) {
+> †			print "\n";
+> †		}
+> †
+> @@ -634,7 +634,6 @@ sub prompt_help_cmd {
+> †sub status_cmd {
+> †	list_and_choose({ LIST_ONLY => 1, HEADER => $status_head },
+> †			list_modified());
+> -	print "\n";
+> †}
+> †
+> †sub say_n_paths {
+> @@ -667,7 +666,6 @@ sub update_cmd {
+> †		†††††††map { $_->{VALUE} } @update);
+> †		say_n_paths('updated', @update);
+> †	}
+> -	print "\n";
+> †}
+> †
+> †sub revert_cmd {
+> @@ -701,7 +699,6 @@ sub revert_cmd {
+> †		refresh();
+> †		say_n_paths('reverted', @update);
+> †	}
+> -	print "\n";
+> †}
+> †
+> †sub add_untracked_cmd {
+> @@ -711,9 +708,8 @@ sub add_untracked_cmd {
+> †		system(qw(git update-index --add --), @add);
+> †		say_n_paths('added', @add);
+> †	} else {
+> -		print __("No untracked files.\n");
+> +		print __("No untracked file chosen.\n");
+> †	}
+> -	print "\n";
+> †}
+> †
+> †sub run_git_apply {
 
-Change the output of "status" to say "No commits yet" when "git
-status" is run on a fresh repo (or orphan branch), while retaining the
-current "Initial commit" message displayed in the template that's
-displayed in the editor when the initial commit is being authored.
+I tried applying the patch and building it locally. For some reason I
+couldn't see the change in effect. What could I be missing?
 
-A few alternatives considered were,
-
- * Waiting for initial commit
- * Your current branch does not have any commits
- * Current branch waiting for initial commit
-
-The most succint one among the alternatives was chosen.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Signed-off-by: √Üvar Arnfj√∂r√∞ Bjarmason <avarab@gmail.com>
----
-
- The 'FINAL' part in the subject is just my opinion about 
- this patch
-
- builtin/commit.c  |  1 +
- t/t7501-commit.sh |  2 +-
- t/t7508-status.sh | 30 ++++++++++++++++++++++++++++++
- wt-status.c       |  5 ++++-
- wt-status.h       |  1 +
- 5 files changed, 37 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 8d1cac062..3d614a2ac 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1648,6 +1648,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_commit_usage, builtin_commit_options);
- 
- 	status_init_config(&s, git_commit_config);
-+	s.commit_template = 1;
- 	status_format = STATUS_FORMAT_NONE; /* Ignore status.short */
- 	s.colopts = 0;
- 
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 0b6da7ae1..fa61b1a4e 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -18,7 +18,7 @@ test_expect_success 'initial status' '
- 	echo bongo bongo >file &&
- 	git add file &&
- 	git status >actual &&
--	test_i18ngrep "Initial commit" actual
-+	test_i18ngrep "No commits yet" actual
- '
- 
- test_expect_success 'fail initial amend' '
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 5edcc6edf..0ffa585e2 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1499,4 +1499,34 @@ test_expect_success 'git commit -m will commit a staged but ignored submodule' '
- 	git config -f .gitmodules  --remove-section submodule.subname
- '
- 
-+test_expect_success '"No commits yet" should be noted in status output' '
-+	git checkout --orphan empty-branch-1 &&
-+	git status >output &&
-+	test_i18ngrep "No commits yet" output
-+'
-+
-+test_expect_success '"No commits yet" should not be noted in status output' '
-+	git checkout --orphan empty-branch-2 &&
-+	test_commit test-commit-1 &&
-+	git status >output &&
-+	test_must_fail test_i18ngrep "No commits yet" output
-+'
-+
-+test_expect_success '"Initial commit" should be noted in commit template' '
-+	git checkout --orphan empty-branch-3 &&
-+	touch to_be_committed_1 &&
-+	git add to_be_committed_1 &&
-+	git commit --dry-run >output &&
-+	test_i18ngrep "Initial commit" output
-+'
-+
-+test_expect_success '"Initial commit" should not be noted in commit template' '
-+	git checkout --orphan empty-branch-4 &&
-+	test_commit test-commit-2 &&
-+	touch to_be_committed_2 &&
-+	git add to_be_committed_2 &&
-+	git commit --dry-run >output &&
-+	test_must_fail test_i18ngrep "Initial commit" output
-+'
-+
- test_done
-diff --git a/wt-status.c b/wt-status.c
-index 068de38b5..a2e294bb2 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1578,7 +1578,10 @@ static void wt_longstatus_print(struct wt_status *s)
- 
- 	if (s->is_initial) {
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
--		status_printf_ln(s, color(WT_STATUS_HEADER, s), _("Initial commit"));
-+		status_printf_ln(s, color(WT_STATUS_HEADER, s),
-+				 s->commit_template
-+				 ? _("Initial commit")
-+				 : _("No commits yet"));
- 		status_printf_ln(s, color(WT_STATUS_HEADER, s), "%s", "");
- 	}
- 
-diff --git a/wt-status.h b/wt-status.h
-index 8a3864783..2389f0839 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -76,6 +76,7 @@ struct wt_status {
- 	char color_palette[WT_STATUS_MAXSLOT][COLOR_MAXLEN];
- 	unsigned colopts;
- 	int null_termination;
-+	int commit_template;
- 	int show_branch;
- 	int hints;
- 
 -- 
-2.11.0
-
+Regards,
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
