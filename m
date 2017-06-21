@@ -2,52 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E9FD20282
-	for <e@80x24.org>; Wed, 21 Jun 2017 04:52:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 653B81FA7B
+	for <e@80x24.org>; Wed, 21 Jun 2017 08:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750991AbdFUEwN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 00:52:13 -0400
-Received: from ikke.info ([178.21.113.177]:49334 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750836AbdFUEwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 00:52:13 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 318FC4400AB; Wed, 21 Jun 2017 06:52:11 +0200 (CEST)
-Date:   Wed, 21 Jun 2017 06:52:11 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Small issue with "add untracked" option of 'git add -i'
-Message-ID: <20170621045211.GA30634@alpha.vpn.ikke.info>
-References: <1497278015.7302.13.camel@gmail.com>
- <xmqqwp8hnm1v.fsf@gitster.mtv.corp.google.com>
- <xmqqshj5nl3o.fsf@gitster.mtv.corp.google.com>
- <1498013726.5419.1.camel@gmail.com>
+        id S1752827AbdFUIMU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 04:12:20 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:32961 "EHLO
+        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752681AbdFUIMS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 04:12:18 -0400
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Wed, 21 Jun 2017 10:12:11 +0200
+  id 0000000000000065.00000000594A2A5B.0000799A
+Date:   Wed, 21 Jun 2017 10:12:09 +0200
+From:   Simon Ruderich <simon@ruderich.org>
+To:     "=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason" <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH] die routine: change recursion limit from 1 to 1024
+Message-ID: <20170621081209.gfqqkselek4bqdjl@ruderich.org>
+References: <20170619220036.22656-1-avarab@gmail.com>
+ <20170620155459.a6e7pypxx6vpdbvs@sigill.intra.peff.net>
+ <87lgom8pew.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <1498013726.5419.1.camel@gmail.com>
-User-Agent: Mutt/1.8.3 (2017-05-23)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87lgom8pew.fsf@gmail.com>
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 21, 2017 at 08:25:26AM +0530, Kaartic Sivaraam wrote:
-> 
-> I tried applying the patch and building it locally. For some reason I
-> couldn't see the change in effect. What could I be missing?
-> 
+On Tue, Jun 20, 2017 at 08:49:59PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> If I understand you correctly this on top:
+>
+>     diff --git a/usage.c b/usage.c
+>     index 1c198d4882..f6d5af2bb4 100644
+>     --- a/usage.c
+>     +++ b/usage.c
+>     @@ -46,7 +46,19 @@ static int die_is_recursing_builtin(void)
+>      	static int dying;
+>      	static int recursion_limit = 1024;
+>
+>     -	return dying++ > recursion_limit;
+>     +	dying++;
+>     +
+>     +	if (!dying) {
 
-Did you make sure you used the git you built, and also the relevant
-subcommands?
+This will never trigger as dying was incremented two lines
+before. But I think it's already handled by the dying <
+recursion_limit case so we can just omit it.
 
-What does `which git` and git --exec-path return?
+>     +		/* ok, normal */
+>     +		return 0;
+>     +	} else if (dying < recursion_limit) {
+>     +		/* only show the warning once */
+>     +		if (dying == 1)
+>     +			warning("die() called many times. Recursion error or racy threaded death!");
+>     +		return 0; /* don't bail yet */
+>     +	} else {
+>     +		return 1;
+>     +	}
+>      }
 
-If you did not install git, but try to run it in the compiled dir, you
-can better run bin-wrappers/git, which will make sure the correct sub
-commands are run.
+Maybe restructure it like this:
+
+    dying++
+    if (dying > recursion_limit)
+        return 1;
+    if (dying == 1)
+        warning();
+    return 0;
+
+Btw. is there a reason why recursion_limit is a static variable
+and not a constant/define?
+
+Regards
+Simon
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
