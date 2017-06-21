@@ -2,264 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F183820401
-	for <e@80x24.org>; Wed, 21 Jun 2017 21:40:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C23EE20401
+	for <e@80x24.org>; Wed, 21 Jun 2017 21:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752002AbdFUVka (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 17:40:30 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:34947 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751985AbdFUVk2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 17:40:28 -0400
-Received: by mail-wr0-f194.google.com with SMTP id z45so30132699wrb.2
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 14:40:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=gV2Qs2zTkmzeQVHotrN2FXOxGQbS4kZec+oITIl35hg=;
-        b=CCkpj6Rz2IuyqaMb095bQVbunCs8vSaLF67X74ZYeZV0uIZKcdgiicwu1hHHEBLZec
-         Z2bZW+k6Fk5FRuPLtwLvsJKhiTdcodjqLVYzVx2hYfqPxXosCbWI1dHvLgcY3rpUDrmK
-         UvVsWL5fMVN8qdH3IOuzfFDMbgj1VAvSKYh8+nvQbpe8Bcx/YknnFVjZElCYOuYXryNk
-         KixnURkHBeC9OXpkEIDZvizEvyCBrnt2dqWRYdPNI4TMue4+/nMdsXC0skm13RDqF6jR
-         OhYbFw5zbu6rhzn4e89p2Hk6YAXMk897+lrxLVvilVGZu6WfTu8Gte8aJ+AYlka8gv6X
-         8POQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=gV2Qs2zTkmzeQVHotrN2FXOxGQbS4kZec+oITIl35hg=;
-        b=UiS2NJTuWuRZn/p+a+Vwt7gNNPHmlEvCJYCfmFMqgWI71oYOqw0z2ce99P/tDCfG6C
-         ZjodEUXImX0NTF7uJYWyMLY5ZooHCX7OT6tswT13fAqP1ksIumWAVlPnLufyDADTYcmd
-         gGQhyWqaFvp2cuZAa8fCIilxHyddgqCsH9NQNf5w9uGuOK2AbYn0uWICjjEp6VZnvJpt
-         orqXYYv1Mghrgzo19EyVY9eY2SqFO8RAJ5LAj8XqHPIVz9Zz0G5jziUA091V07TpLyVK
-         W+mDPuUsIUd8Ne0Obm0cH7Yo/CQtho/BAFTIUApBXAYEch1vS5xq4XoOyhrlWS93WML3
-         /TKQ==
-X-Gm-Message-State: AKS2vOxK/w2yI4wAOKot8ELqUYqr2S8y9ooZj0CNw1w2zVpSU9OIpK/O
-        Rz448eI3MjdPQg==
-X-Received: by 10.80.135.183 with SMTP id a52mr27097482eda.90.1498081227153;
-        Wed, 21 Jun 2017 14:40:27 -0700 (PDT)
-Received: from snth ([92.109.130.42])
-        by smtp.gmail.com with ESMTPSA id 4sm9528404eds.48.2017.06.21.14.40.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Jun 2017 14:40:26 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dNnMP-0000Bg-Hw; Wed, 21 Jun 2017 23:40:25 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Morten Welinder <mwelinder@gmail.com>
-Cc:     GIT Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Simon Ruderich <simon@ruderich.org>
-Subject: Re: [PATCH v2] die(): stop hiding errors due to overzealous recursion guard
-References: <87podz8v6v.fsf@gmail.com> <20170621204742.15722-1-avarab@gmail.com> <CANv4PNmprzn+SkWERbYYzyB_qX62ohrhoOkxMxztzxnTq2+saQ@mail.gmail.com>
-User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <CANv4PNmprzn+SkWERbYYzyB_qX62ohrhoOkxMxztzxnTq2+saQ@mail.gmail.com>
-Date:   Wed, 21 Jun 2017 23:40:25 +0200
-Message-ID: <87bmph81fa.fsf@gmail.com>
+        id S1751997AbdFUVk6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 17:40:58 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:60472 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751108AbdFUVk5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 21 Jun 2017 17:40:57 -0400
+Received: from genre.crustytoothpaste.net (unknown [208.73.141.66])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D74F1280AD;
+        Wed, 21 Jun 2017 21:40:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1498081256;
+        bh=AUumw23KhmWx3f83M5O49UnC2aGDMiKZf0op6sptMg8=;
+        h=Date:From:To:Cc:Subject:From;
+        b=Ocv1HntaERViP2FOUO2Q4fOtGgsyLdEdNUxoRRekF5cydJkpFz1NIl8ftS1wMyXEw
+         7E4LIkv5a9Rk0vyNPQuxOTz3DVP+mBbtct14NPpNcEe2amH47/k/pSOEQxnuK7iMbr
+         YrcEFTrGmPVHiL0o7/WeSvjuKN0s5W3sWVJM/aQw1BfANQZ7Nso1QcAuXKXpoiiYkm
+         TQNZEehJg7/TkwHh8WcgC+PIOSy7AKNDzFXyTAob2bbALoPYDbvqLrJxnZpzch1wjl
+         rSn5/1TXKJOc2wjQP1LfQvAe+O8advZqy+JiX9dssYIj8ifeYUYu3bmPzjW5ioXOqV
+         i6MtYwt/dFYGn9/G6a1Mv3zcjxKl9zGqepLL79epJggpnJItEVdj1qeHTzaVwNqEhw
+         OhA6zFJrKrif8oXZmZ2WTkk+YpkECXkRqi2Z3PSM3DwrXiXvMmHzh80o8j4HrkgAgB
+         qRqvHDuH4Hq75/NNbv2Xj1a/DdprVU6OjVYSbj9g2p4AaKnZslC
+Date:   Wed, 21 Jun 2017 21:40:51 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Sahil Dua <sahildua2305@gmail.com>, Kyle Meyer <kyle@kyleam.com>
+Subject: Truncating HEAD reflog on branch move
+Message-ID: <20170621213924.wh43i2h7v2zwihq3@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>,
+        Kyle Meyer <kyle@kyleam.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="gy2od5lpd2ru7ysh"
+Content-Disposition: inline
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-3-amd64)
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Jun 21 2017, Morten Welinder jotted:
+--gy2od5lpd2ru7ysh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> If threading is the issue, how do you get meaningful results from
-> reading and updating
-> "dying" with no use of atomic types or locks?  Other than winning the
-> implied race, of
-> course.
+In Git 2.11.0, using git branch -m caused an empty entry to be logged to
+the reflog, but it preserved the previous history of the default (HEAD)
+reflog.  In Git 2.13.1 (and in next and pu), we write a valid entry into
+the reflog, but truncate it.
 
-Threading isn't the issue. The issue is that we have an overzelous
-recursion guard that will demonstrably cause us to lose errors in the
-face of threading.
+So for the following commands:
 
-By amending the guard so that we won't run into it in practice so soon
-that we'll hide errors (see the empirical results in the commit message)
-we solve *that* issue in practice.
+  git clone https://git.crustytoothpaste.net/git/bmc/homedir.git
+  cd homedir
+  git checkout cPanel
+  git checkout master
+  git branch -m master new
 
-The current code & the code I'm adding here suffers from race conditions
-& non-atomic updates, but for the reasons explained at the bottom of the
-the commit message that's OK.
+I get the following on 2.11.0:
 
-We're not relying on being able to do x++ and have x be 1, 2, 3 etc. in
-the face of threading, we're just currently relying on it being larger
-than 1, or with my patch eventually larger than 1024.
+2cbfbd5 HEAD@{0}:
+2cbfbd5 HEAD@{1}: checkout: moving from cPanel to master
+eaf8db2 HEAD@{2}: checkout: moving from master to cPanel
+2cbfbd5 HEAD@{3}: clone: from https://bmc@git.crustytoothpaste.net/git/bmc/=
+homedir.git
 
-It is possible with my patch that we'll never take the "dying == 2" ->
-"warning(..)" branch (and empirical results show that happens), but it's
-enough for the purposes of the default die handler (which we really
-should be overriding if we're doing threading, but sometimes we're lazy)
-that it works most of the time, and that we at least don't hide real
-errors, which is the issue with it right now.
+and this on a recent next:
 
-> On Wed, Jun 21, 2017 at 4:47 PM, Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->> Change the recursion limit for the default die routine from a *very*
->> low 1 to 1024. This ensures that infinite recursions are broken, but
->> doesn't lose the meaningful error messages under threaded execution
->> where threads concurrently start to die.
->>
->> The intent of the existing code, as explained in commit
->> cd163d4b4e ("usage.c: detect recursion in die routines and bail out
->> immediately", 2012-11-14), is to break infinite recursion in cases
->> where the die routine itself calls die(), and would thus infinitely
->> recurse.
->>
->> However, doing that very aggressively by immediately printing out
->> "recursion detected in die handler" if we've already called die() once
->> means that threaded invocations of git can end up only printing out
->> the "recursion detected" error, while hiding the meaningful error.
->>
->> An example of this is running a threaded grep which dies on execution
->> against pretty much any repo, git.git will do:
->>
->>     git grep -P --threads=8 '(*LIMIT_MATCH=1)-?-?-?---$'
->>
->> With the current version of git this will print some combination of
->> multiple PCRE failures that caused the abort and multiple "recursion
->> detected", some invocations will print out multiple "recursion
->> detected" errors with no PCRE error at all!
->>
->> Before this change, running the above grep command 1000 times against
->> git.git[1] and taking the top 20 results will on my system yield the
->> following distribution of actual errors ("E") and recursion
->> errors ("R"):
->>
->>     322 E R
->>     306 E
->>     116 E R R
->>      65 R R
->>      54 R E
->>      49 E E
->>      44 R
->>      15 E R R R
->>       9 R R R
->>       7 R E R
->>       5 R R E
->>       3 E R R R R
->>       2 E E R
->>       1 R R R R
->>       1 R R R E
->>       1 R E R R
->>
->> The exact results are obviously random and system-dependent, but this
->> shows the race condition in this code. Some small part of the time
->> we're about to print out the actual error ("E") but another thread's
->> recursion error beats us to it, and sometimes we print out nothing but
->> the recursion error.
->>
->> With this change we get, now with "W" to mean the new warning being
->> emitted indicating that we've called die() many times:
->>
->>     502 E
->>     160 E W E
->>     120 E E
->>      53 E W
->>      35 E W E E
->>      34 W E E
->>      29 W E E E
->>      16 E E W
->>      16 E E E
->>      11 W E E E E
->>       7 E E W E
->>       4 W E
->>       3 W W E E
->>       2 E W E E E
->>       1 W W E
->>       1 W E W E
->>       1 E W W E E E
->>       1 E W W E E
->>       1 E W W E
->>       1 E W E E W
->>
->> Which still sucks a bit, due to a still present race-condition in this
->> code we're sometimes going to print out several errors still, or
->> several warnings, or two duplicate errors without the warning.
->>
->> But we will never have a case where we completely hide the actual
->> error as we do now.
->>
->> Now, git-grep could make use of the pluggable error facility added in
->> commit c19a490e37 ("usage: allow pluggable die-recursion checks",
->> 2013-04-16). There's other threaded code that calls set_die_routine()
->> or set_die_is_recursing_routine().
->>
->> But this is about fixing the general die() behavior with threading
->> when we don't have such a custom routine yet. Right now the common
->> case is not an infinite recursion in the handler, but us losing error
->> messages by default because we're overly paranoid about our recursion
->> check.
->>
->> So let's just set the recursion limit to a number higher than the
->> number of threads we're ever likely to spawn. Now we won't lose
->> errors, and if we have a recursing die handler we'll still die within
->> microseconds.
->>
->> There are race conditions in this code itself, in particular the
->> "dying" variable is not thread mutexed, so we e.g. won't be dying at
->> exactly 1024, or for that matter even be able to accurately test
->> "dying == 2", see the cases where we print out more than one "W"
->> above.
->>
->> But that doesn't really matter, for the recursion guard we just need
->> to die "soon", not at exactly 1024 calls, and for printing the correct
->> error and only one warning most of the time in the face of threaded
->> death this is good enough and a net improvement on the current code.
->>
->> 1. for i in {1..1000}; do git grep -P --threads=8 '(*LIMIT_MATCH=1)-?-?-?---$' 2>&1|perl -pe 's/^fatal: r.*/R/; s/^fatal: p.*/E/; s/^warning.*/W/' | tr '\n' ' '; echo; done | sort | uniq -c | sort -nr | head -n 20
->>
->> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> ---
->>
->> This replaces v1 and takes into account the feedback in this thread
->> (thanks everyone!).
->>
->> The commit message is also much improved and includes more rationale
->> originally in my reply to Stefan in 87podz8v6v.fsf@gmail.com
->>
->>  usage.c | 18 +++++++++++++++++-
->>  1 file changed, 17 insertions(+), 1 deletion(-)
->>
->> diff --git a/usage.c b/usage.c
->> index 2f87ca69a8..1ea7df9a20 100644
->> --- a/usage.c
->> +++ b/usage.c
->> @@ -44,7 +44,23 @@ static void warn_builtin(const char *warn, va_list params)
->>  static int die_is_recursing_builtin(void)
->>  {
->>         static int dying;
->> -       return dying++;
->> +       /*
->> +        * Just an arbitrary number X where "a < x < b" where "a" is
->> +        * "maximum number of pthreads we'll ever plausibly spawn" and
->> +        * "b" is "something less than Inf", since the point is to
->> +        * prevent infinite recursion.
->> +        */
->> +       static const int recursion_limit = 1024;
->> +
->> +       dying++;
->> +       if (dying > recursion_limit) {
->> +               return 1;
->> +       } else if (dying == 2) {
->> +               warning("die() called many times. Recursion error or racy threaded death!");
->> +               return 0;
->> +       } else {
->> +               return 0;
->> +       }
->>  }
->>
->>  /* If we are in a dlopen()ed .so write to a global variable would segfault
->> --
->> 2.13.1.611.g7e3b11ae1
->>
+2cbfbd5 HEAD@{0}: Branch: renamed refs/heads/master to refs/heads/new
+
+For this test, any repo will work; I just picked this one because it had
+two branches I could use to generate dummy reflog entries.
+
+A colleague reported this to me as a bug.  I don't see anything in the
+release notes about this as a desired behavior change, and it does seem
+undesirable to truncate the reflog this way.  If this isn't intentional,
+I'm happy to work up a patch.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--gy2od5lpd2ru7ysh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.21 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAllK5+IACgkQv1NdgR9S
+9ouWuBAAtC8p9cfiLLgYXZEIjYvIoDziaCF+8sreTxjRhV0EZe2x4ikY3jIgTj0v
+6Pm2q6T51VkgB7V3ogIaPQYtpzGjRWsb3i0IzUZ5sD7VJUn1ZosJnwhLKtNwfebf
+mBqhaN9oc9l91hN5991SsWBObko9WqIyC6uC6dcWZvGpifj3frj3bNoYxg9vdGwT
+inIY7ClrAH08cA9qVeGVeQtIUZ9mS9d22/dEOHD+Z0/oylcedBB9E42vB4uBv1X1
+oPcxqPjWc+lIcgggv+wcFzeGrutjP+qUcGEaQJTc8RVXArtdqCKbpPGdMUh1DWoj
+EmZtwjF2InjTg2sRbCbOjJat7hL+yACuKnW9iuNEqe3yXOwSLDM2zCVuYVa5fHU+
+1Ux2caNMdgYrwnnLWEw3lfBDXTMFVHX/YHvxgWPcMVMfgZsJCzKq1GSy5WKQmj1g
+u9IBV9TTiXvq+L+sktKmYxJ3wB25hHkuJi5yeJIUPByMXkzaTU6qjLprDv3/PkTs
+WWAhGQBvpkSHzz1UYvjQyZDcCS722fn9Vj17oQsn616tgrMLFeKhH0q6e3AfF1GN
+BLjolB1RPOPMAeEvomtIRE+TV9HfM6LfaLfCGL6eGokBSFQXBNRwytcRYM0WLVqt
+UTpVWQB3rSjEVsTfZoSgsDYbpUkgb5ycSUIf36/a0DEMdA1TbEA=
+=PK++
+-----END PGP SIGNATURE-----
+
+--gy2od5lpd2ru7ysh--
