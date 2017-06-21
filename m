@@ -2,149 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21A6620282
-	for <e@80x24.org>; Wed, 21 Jun 2017 02:30:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E99920282
+	for <e@80x24.org>; Wed, 21 Jun 2017 02:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753150AbdFUCaK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Jun 2017 22:30:10 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35287 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753055AbdFUCaI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Jun 2017 22:30:08 -0400
-Received: by mail-pg0-f68.google.com with SMTP id f127so24911680pgc.2
-        for <git@vger.kernel.org>; Tue, 20 Jun 2017 19:30:08 -0700 (PDT)
+        id S1753107AbdFUCeh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Jun 2017 22:34:37 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34132 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753036AbdFUCeg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Jun 2017 22:34:36 -0400
+Received: by mail-pg0-f67.google.com with SMTP id j186so24917275pge.1
+        for <git@vger.kernel.org>; Tue, 20 Jun 2017 19:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=twqWAfSwqmuBSmQDbEuv5prcuN1/mV9GumrmvzDaX/c=;
-        b=frjEymH6wIAcW1DEHDeY2vTDeKlXTplvsV7NYDkPeL37d/GWAnyKJaXno7bzeY/erH
-         fNClYJenL5clm/ptsF2d6ntXpYmecqxkuKJUO5G60MDehP+R3Z0s0n6+ICiysMDx3qfG
-         VTlxHo7DqyBG24IvjCKd+od308ikZU11cynB6eF8WpXKA2V0PBX3ZvcghDPScUfkM8VQ
-         ce67zamM+Z79jBfiJbGdGSFv+foIPDSv2f31Zup5Ljf+OrOfctbsoX48uXn+zfQVJrW+
-         gXykStIxQF8FWw+pWQklrr0+qATchhj11vOhZM7oB3RXcGU18OPOMpA5t2o88tFaZrTx
-         0Uqw==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=w5IpHsoVHQyinBG7V8r3lh6Bk8PRiUU0hiynybeY3QM=;
+        b=XPbKHIEEXUjvMGYn8VBP/FVu6Lj8yo+8Y5mXAlLamvqqVi9O1F41iDFkq7uMGUX7hi
+         T0adOGiY6P7B3vbGGKyMEaNteW5AdPRrtMA7AZihqQqyRIylE5kbedWLJqgT3xVVvuee
+         YWKrAd8eNi+j0Qp1jPiU3HhudDoK8eyEg7pGCQF3hjKaRUDDkj2Mqiz3I7DUOOZdb4mg
+         7lxZVfee+qYNlNXkHOtGyVT1Lyx5MEAh8+zdq+8WLz0CiJdIgxu1ioR/BcjlXwN2CGig
+         XFwXr4viNfac4sS6TjNhBX7qW5cI0e6E/KE1NlbLPYWi3HeMFl8EIDMS7+YI//wCzQlI
+         Oy0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=twqWAfSwqmuBSmQDbEuv5prcuN1/mV9GumrmvzDaX/c=;
-        b=tHBR9nZRX4iryEGBxd7M6IabOjeFmyCZtJ+IjStU43b/GSGmf5oUHyQpZpyZrr6CDY
-         gol20NFFQ2BobOyraLrSc1UEF68fa8t01aMWyzNPmJqgMB+UG0K6IQHcr9nCQSFivtDb
-         fMMas6fjVgd2AAlmM6JN8tgK5f9aa4dhCnb3K6p9yn/T2H2Rto9OA0Q77i9ZVoldcphw
-         NvEwz+f//zmGjiyMxNgwoQH99zJeExEuDwrh6KhSKZaVTo38JkaxY/mVS4TiTsPD/HBN
-         veOaAZTmCd+SHH3Q7epz0Y73AneU0p0967pjXbjGvvQEVmzUgNVFra0DJU0xPi0xUO0c
-         fxQA==
-X-Gm-Message-State: AKS2vOx8RaV8VpUZRtrv+B3k8WUeleNMPqOFdu2Hep7p50CW/XIA4TJz
-        YWqe+NpIN8vjfQ==
-X-Received: by 10.84.213.129 with SMTP id g1mr39249262pli.202.1498012207901;
-        Tue, 20 Jun 2017 19:30:07 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:14d3:6dca:1831:2943])
-        by smtp.gmail.com with ESMTPSA id 66sm29438788pfm.82.2017.06.20.19.30.06
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 20 Jun 2017 19:30:06 -0700 (PDT)
-Date:   Tue, 20 Jun 2017 19:30:04 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, jacob.keller@gmail.com,
-        Johannes.Schindelin@gmx.de, sandals@crustytoothpaste.net,
-        peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
-        peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
-        jonathantanmy@google.com
-Subject: Re: [PATCH v3 11/20] path: construct correct path to a worktree's
- index
-Message-ID: <20170621023004.GD60603@aiede.mtv.corp.google.com>
-References: <20170608234100.188529-1-bmwill@google.com>
- <20170620191951.84791-1-bmwill@google.com>
- <20170620191951.84791-12-bmwill@google.com>
- <20170621021024.GC60603@aiede.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170621021024.GC60603@aiede.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=w5IpHsoVHQyinBG7V8r3lh6Bk8PRiUU0hiynybeY3QM=;
+        b=X7hUN2NNysAXjXAnr4aEeNiAxDTsClVtQGRx2k8SHwvV3RmO0cUfILNXk9xoubjEUI
+         BKv27wk3xQYLF83N4OCRQn9+GetHusGWaNdLI2vw+XDsyr1+VVuKY+NwjlKF67LjrJEq
+         KTYwMbS9rGlRivqseqJHhZEWzkrdTShnm4x3KYvCvCskVGlB2afkJPPvx4lTV4t5oOsh
+         aiSBnm4+L2R9gu5uuMW2LWlnZGrHOEvXE6wPPeTcKGnUN4yqxBRBEMJ2vnMhWUrwd9kG
+         8oextqsC3Y69/O7blNiHnQKs/Os/Ejf/ZA5CyWkaw0vvZi83JiqeN/B8B/Uf/Ufr5hRq
+         VHyw==
+X-Gm-Message-State: AKS2vOzn+Ju6ojxlv70BuQeLNFHDgthtGY9YC6YzztED0tep1ZTsgg14
+        qA9VWkSBGtauTTvGtjt9ig==
+X-Received: by 10.84.239.23 with SMTP id w23mr38935067plk.73.1498012475828;
+        Tue, 20 Jun 2017 19:34:35 -0700 (PDT)
+Received: from unique-pc ([2405:205:850b:870a:56ff:b236:2b2d:3a08])
+        by smtp.googlemail.com with ESMTPSA id 79sm32030741pgg.46.2017.06.20.19.34.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Jun 2017 19:34:35 -0700 (PDT)
+Message-ID: <1498012463.1487.2.camel@gmail.com>
+Subject: Re: [PATCH 1/3] Contextually notify user about an initial commit
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     gitster@pobox.com, peff@peff.net, git@vger.kernel.org
+Date:   Wed, 21 Jun 2017 08:04:23 +0530
+In-Reply-To: <87mv9290wl.fsf@gmail.com>
+References: <xmqqshiwt1w6.fsf@gitster.mtv.corp.google.com>
+         <20170620030220.7323-1-kaarticsivaraam91196@gmail.com>
+         <87o9tj86hs.fsf@gmail.com> <1497965839.2792.2.camel@gmail.com>
+         <87mv9290wl.fsf@gmail.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Subject: worktree_git_path() should not use file relocation
+On Tue, 2017-06-20 at 16:41 +0200, Ævar Arnfjörð Bjarmason wrote:
+> Right now 1/3 breaks the test suite. That's a big no-no, any given
+> commit should not break the test suite to not break bisecting.
+> 
+> But aside from that the general pattern we follow is that if code
+> behavior changes, tests for that new behavior go in the same commit.
+> 
+I did think of squashing the first two patches, anyway. Now the three
+of them (except for that spacing fix) must be squashhed. Not a big
+issue, anyway. I tweaked the suggested commit message a bit for the
+following reason,
 
-git_path is a convenience function that usually produces a string
-$GIT_DIR/<path>.  Since v2.5.0-rc0~143^2~35 (git_path(): be aware of
-file relocation in $GIT_DIR, 2014-11-30), as a side benefit callers
-get support for path relocation variables like $GIT_OBJECT_DIRECTORY:
+Ensure it follows the "describe problem, justify solution, mention
+alternatives" pattern as it sounds good and natural. I wanted to keep
+the alternatives as I found it to the commit message to be a more
+appropriate place than the mailing list archives. This could induce
+others who see it to do the same ;)
 
-- git_path("index") is $GIT_INDEX_FILE when set
-- git_path("info/grafts") is $GIT_GRAFTS_FILE when set
-- git_path("objects/<foo>") is $GIT_OBJECT_DIRECTORY/<foo> when set
-- git_path("hooks/<foo>") is <foo> under core.hookspath when set
-- git_path("refs/<foo>") etc (see path.c::common_list) is relative
-  to $GIT_COMMON_DIR instead of $GIT_DIR
+> 
+> Regarding the format: I was referring to the 'prefix the first line
+> with
+> "area: "' part of SubmittingPatches, sorry for the brevity. I.e. your
+> --oneline output just yields "Contextually notify user about an
+> initial
+> commit" but should be "status: <short summary>".
+> 
+That's a good one. I initially thought it was optional.
 
-worktree_git_path, by comparison, is designed to resolve files in a
-specific worktree's git dir.  Unfortunately, it shares code with
-git_path and performs the same relocation.  The result is that paths
-that are meant to be relative to the specified worktree's git dir end
-up replaced by paths from environment variables within the current git
-dir.
-
-Luckily, no current callers pass such arguments.  The relocation was
-noticed when testing the result of merging two patches under review,
-one of which introduces a caller:
-
-* The first patch made git prune check the index file in each
-  worktree's git dir (using worktree_git_path(wt, "index")) for
-  objects not to prune.  This would trigger the unwanted relocation
-  when GIT_INDEX_FILE is set, causing objects reachable from the
-  index to be pruned.
-
-* The second patch simplified the relocation logic for index,
-  info/grafts, objects, and hooks to happen unconditionally instead of
-  based on whether environment or configuration variables are set.
-  This caused the relocation to trigger even when GIT_INDEX_FILE is
-  not set.
-
-[jn: rewrote commit message; skipping all relocation instead of just
- GIT_INDEX_FILE]
-
-Signed-off-by: Brandon Williams <bmwill@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Jonathan Nieder wrote:
-
-> How about the following?  I found it a little easier to understand.
->
-> -- >8 --
-> From: Brandon Williams <bmwill@google.com>
-> Subject: worktree_git_path: do not let GIT_INDEX_FILE override path to index
-[...]
-> Change-Id: I2ba0a48a48b7e9a9c2e3ef97648cf53cb913bdd9
-
-Gah, sorry about the stray Change-Id line.  While we're fixing that,
-here's a version with a slightly clearer commit message.
-
- path.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/path.c b/path.c
-index c1cb1cf62..4c3a27a8e 100644
---- a/path.c
-+++ b/path.c
-@@ -397,7 +397,8 @@ static void do_git_path(const struct worktree *wt, struct strbuf *buf,
- 		strbuf_addch(buf, '/');
- 	gitdir_len = buf->len;
- 	strbuf_vaddf(buf, fmt, args);
--	adjust_git_path(buf, gitdir_len);
-+	if (!wt)
-+		adjust_git_path(buf, gitdir_len);
- 	strbuf_cleanup_path(buf);
- }
- 
 -- 
-2.13.1.611.g7e3b11ae1-goog
-
+Regards,
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
