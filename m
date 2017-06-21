@@ -2,91 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 534D320401
-	for <e@80x24.org>; Wed, 21 Jun 2017 18:20:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5927B20401
+	for <e@80x24.org>; Wed, 21 Jun 2017 18:34:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752583AbdFUSUx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 14:20:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47766 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752002AbdFUSUj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 14:20:39 -0400
-Received: (qmail 2303 invoked by uid 109); 21 Jun 2017 18:20:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Jun 2017 18:20:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26176 invoked by uid 111); 21 Jun 2017 18:20:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 21 Jun 2017 14:20:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Jun 2017 14:20:21 -0400
-Date:   Wed, 21 Jun 2017 14:20:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     Christian =?utf-8?B?UsO2c2No?= <christian@croesch.de>
+        id S1751922AbdFUSez (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 14:34:55 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36611 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750992AbdFUSez (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 14:34:55 -0400
+Received: by mail-pf0-f193.google.com with SMTP id y7so32298935pfd.3
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 11:34:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Wm+f/xR007Qe1hy159R07te63h634YAG7A63L7wKebo=;
+        b=ILPQoBzKa88y/5KuKAz2XkQQahc3gPsDNXcB0HpvRa+45+ixaOYMa5c4uPSJMp+tDu
+         d5BuLJgW8BYaR/eQCgkcunCQv/HTNIWuhtMb9bk7SMQFLxN5WsFT/1zyhjVIOgxCow31
+         Cfe3Vuu382/feRiT5B6hg+ABJ84icLd1pmjuyo1vP0ljz9NCzdMZWgZtq+6g8Ew+Wvvg
+         0M++6pwnU/UEAZOABdvUrKrTQYWUcS2km3GjZbDfG2Tf50WziOl5vNxSFAUsYY/AFJHO
+         ok6i4IJf947JpwlqbD5ulkDYEkx3PXGoE0wq26MePKFHhyS1ONmw5I25hPCCidP4lazP
+         rF3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Wm+f/xR007Qe1hy159R07te63h634YAG7A63L7wKebo=;
+        b=XKtgbx56Oq0yfyfOOXkKsOhytMkhfVMnMMjaDp8TQWwuboPttRpK7QPr7Wzz+Adtwg
+         8ImT+u5jnu7exFtahQir/2Ec2lVB4pL/5UFCQEM1QwVaByFCJGjXv4OncekDlALKBouw
+         4NeQdN12/6ktwdFyHk0jqjBdXWRDlAv8DE6FMxbI3DVNecXSB3XkKhOKQAI1kl3InKT3
+         4bgibQZW1fVe94rMfBNPUv47zoAjg3+R+hegc1lRw7qv815PhhLJVNDsq1tTZjgy79Qa
+         Xx+eRqTM0el4x+DKUhHTnMwgpRPHFbKwKkUzWNDK91G1e1eTul6av8db6Pe7KUl1nFZJ
+         TxSw==
+X-Gm-Message-State: AKS2vOx2Pq7t4yCXzfwVr9GaxbXagh2pjERE+E0olK0HLIGMpcJH+r7N
+        jmksI9//QJo9fg==
+X-Received: by 10.99.97.76 with SMTP id v73mr33513445pgb.188.1498070094382;
+        Wed, 21 Jun 2017 11:34:54 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b0bd:d7d3:4f2e:5016])
+        by smtp.gmail.com with ESMTPSA id i14sm34629078pgn.14.2017.06.21.11.34.51
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 21 Jun 2017 11:34:52 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: git add -p does not work with custom comment char currently
-Message-ID: <20170621182020.ywopkykzdfhlxi5o@sigill.intra.peff.net>
-References: <89d4e348-167e-b201-d243-63b1156b9ed0@croesch.de>
+Subject: Re: Does 'git config' accept the '--remove' option?
+References: <1498068738.32360.7.camel@gmail.com>
+Date:   Wed, 21 Jun 2017 11:34:51 -0700
+In-Reply-To: <1498068738.32360.7.camel@gmail.com> (Kaartic Sivaraam's message
+        of "Wed, 21 Jun 2017 23:42:18 +0530")
+Message-ID: <xmqqzid1p4tw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <89d4e348-167e-b201-d243-63b1156b9ed0@croesch.de>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 21, 2017 at 06:31:34PM +0200, Christian Rösch wrote:
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
-> [core]
->     commentchar = $
-> 
-> as far as I can see with 2.13.0 and 2.13.1.516.g05ec6e1 (built from
-> source) if I do
-> 
-> $ git add -p
-> 
-> and edit the hunk manually the comment char is not parsed correctly:
-> 
-> Stage this hunk [y,n,q,a,d,/,s,e,?]? e
-> warning: recount: unexpected line: $ Manual hunk edit mode -- see bottom
-> for a quick guide.
-> 
-> error: corrupt patch at line 6
-> Your edited hunk does not apply. Edit again (saying "no" discards!) [y/n]? n
-> 
-> 
-> As far as I can tell this is a bug but it would be nice if you could let
-> me know if it works for you with a custom comment char.
+> I recently noticed that when I run 'git config' with the '--remove
+> <non_existing_section>' I get a warning that section doesn't exist.
+> When I scrolled through the man page of git-config I could see any
+> mention about the '--remove' option. I only see that there is a '
+> --remove-section' option. Sample output,
+>
+>> $ git config --remove test
+>> fatal: No such section!
+>> $ git config --remove-section test
+>> fatal: No such section!
+>
+> Is this a bug (or) is the documentation stale ?
 
-I can reproduce easily here with the script below. It looks like a
-regression in c9d961647 (i18n: add--interactive: mark edit_hunk_manually
-message for translation, 2016-12-14), which is in v2.12.0. It taught the
-script to write out with the comment char, but reading it back does not
-seem to work.
+Neither, I would say.  I think that you would get exactly the same
+behaviour from 
 
-Here's my reproduction script:
+    $ git config --remo test
+    $ git config --remove-sec test
 
--- >8 --
-rm -rf repo
+These are merely "unique prefix can be abbreviated in option names"
+kicking in, I think.
 
-git init repo
-cd repo
-git config core.commentchar '$'
 
-seq 10 >file
-git add file
-git commit -m base
-perl -pi -e 'print "new\n" if $. == 5' file
-(echo e; echo n) | GIT_EDITOR=true git.compile add -p
-# look for "corrupt patch" in the output
--- 8< --
-
-I think there's another bug, too, where the "patch did not apply
-cleanly" prompt goes into an infinite loop if it gets EOF.
-
--Peff
+    
