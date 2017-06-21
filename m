@@ -2,140 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E98B20401
-	for <e@80x24.org>; Wed, 21 Jun 2017 21:45:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A749120401
+	for <e@80x24.org>; Wed, 21 Jun 2017 21:46:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751755AbdFUVpz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 17:45:55 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:33518 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751108AbdFUVpy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 17:45:54 -0400
-Received: by mail-pf0-f180.google.com with SMTP id e7so11089809pfk.0
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 14:45:54 -0700 (PDT)
+        id S1751997AbdFUVqq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 17:46:46 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35502 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751798AbdFUVqp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 17:46:45 -0400
+Received: by mail-pg0-f65.google.com with SMTP id f127so30119558pgc.2
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 14:46:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=T/4AIMegv65MBTvCDXkyXcIU809aRevx/V3/6BfNg3I=;
-        b=QqevtI1Z+AJmtbrvBiWLltGUsssR7NMO5uqDt5XXx4dPC7C+lmrUFriQJOX/Zq1fI9
-         8t1q6DrD9viWi0f5XC9zxuAdqN0fCIEEvqmfWXvMbVX6iuzCwNQWcIg2kTGUOC54dkpj
-         oYcDcELfxTWX/2uEPLv+z3RlI6/1X+qqRlmZaGISbPXXBVY/B97fxc2bs5qF+mmwz2J9
-         l7pTNfeaVWe+aXgZwNBloQVNdGn9hSYVkwrG+HJH+yOMmZo87Em1uFHFLlJg0UBNsnMg
-         ywTy9PojUi7mEDDeA++HorZ4c0THElUIqfDjbKo4D0icQTekCYldGLc/Z0bUMUPMQUr3
-         gMlw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ju0uIylD28a9WCaZpVXuhDTr03erK3XswDfVfxz2l1E=;
+        b=I/fURhKWdaWGSosoN9EZ/kFsx8ezJsly2otPAihrZjTVp3xbOOdVLS0D2u7M0uWKYn
+         58XShXslMqS8tYpVej427HXokA0gc6bJdnlH4K3A+XmdoPhPt4LoL/TGEwNP/t//p6Ko
+         4dPBRNUz8IvH2kz76j3Gq7U/CE1TuV4nA4/mGbL776yBO3zerFqwMcmmOnVf1G3IPCF3
+         /YU36ehr/BkQiLZYJiBR0TDt1QhxAU7wPRgGzooo/LPsFIVNvsl+JJt5XjEbE9CnXMjW
+         viyPlCSY75sQrlDNhgg0aDK/j6RLUIlN+cTgvFK6Ke8BHY1qh8y3ji8tOAs+qPMYL8dK
+         cpCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=T/4AIMegv65MBTvCDXkyXcIU809aRevx/V3/6BfNg3I=;
-        b=eRrtkZxDqIufpIyioP1iMsvFXecz6T7tVW25Y5ZfwDphSTbDMmeatj/Nfqqf0vVfrt
-         InfUxPgpOsj17gKx8HbdYqVM5x4i6R5bg4kpT7/RXs4/rMMKg+PO61sXI+nVihVajJEO
-         KTV6Z8FmTYfPZuCeA8oYLcVDejphn32ceqFfa2zPiVCyVlnoX00gtNoIXlTKkH70efmn
-         sSADpJ3zxVQOPg02sgFjRXvYVaFiCawdF+dxvSCfv0PKmDt0ZZUAQEF9rcDm20yZzHOd
-         VAep1BHrnSDFK1EAHEO+Svjvl+Z+zl9GF7+Zyk6ztTaUaxFReZpynSJKLl0l/ittvc9M
-         K+Og==
-X-Gm-Message-State: AKS2vOwiaWkYa7+VbwtER5nLFkkkP2vN0UAOV5fMJXCkJs3yEX18jQlT
-        fURmE05TjYJQWETb
-X-Received: by 10.99.123.18 with SMTP id w18mr27971548pgc.122.1498081553389;
-        Wed, 21 Jun 2017 14:45:53 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:d052:1af5:b2b3:bc81])
-        by smtp.gmail.com with ESMTPSA id 3sm35219134pfp.11.2017.06.21.14.45.52
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ju0uIylD28a9WCaZpVXuhDTr03erK3XswDfVfxz2l1E=;
+        b=syPFb7ANnZ6yFzfIPKko82k4Qppnwgj76Zv0ckJM1h4xnJzXwj5kvi0y0cv+4qseTP
+         EFZdGbY8NOFumnpzTsbldcaeTg2jPn5oUToRCPEYWk7IGZRQ78bzCn7v1SnOaY0DV+oq
+         7teqLgwzrqSSlmzh0PdiujNbaNRr34gdFC7TkuQ6PYivaGKZ9ajMDRWtJQRsT6/sb2uw
+         tLmftmrHP0HNoZYt2X2rudseLGoCo+bvPpu6oE6aQc17IXS5o/hzIP/6bLqRsLmrEYOm
+         zg0pmaHmSVQ/KUwywnliFzktekB8sQvoBhbNPkhaE4ffPXkWNS7ZEOZZvUKYKPHJRs5j
+         6LZw==
+X-Gm-Message-State: AKS2vOzGEFg8ZamhJxtxFlvSFeV8ugUIilzdhyMrLk9IaNob0jIdLVT3
+        gfMpWotwXFqeMg==
+X-Received: by 10.84.212.137 with SMTP id e9mr44746856pli.115.1498081604396;
+        Wed, 21 Jun 2017 14:46:44 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:b0bd:d7d3:4f2e:5016])
+        by smtp.gmail.com with ESMTPSA id q6sm35674512pfi.129.2017.06.21.14.46.43
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 21 Jun 2017 14:45:52 -0700 (PDT)
-Date:   Wed, 21 Jun 2017 14:45:51 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-Subject: Re: [PATCH 04/26] diff.c: introduce emit_diff_symbol
-Message-ID: <20170621214551.GE53348@google.com>
-References: <CAGZ79kaqjQYmkt77kk5m=fdBfbZAvwd0YhhT7=O5b-FkQmDfHg@mail.gmail.com>
- <20170620024816.20021-1-sbeller@google.com>
- <20170620024816.20021-5-sbeller@google.com>
- <xmqq7f05p1z7.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYUpJxX-wBU=ALPgJwVaA8h_iJRtAu3T7p4J7qmy=U4dg@mail.gmail.com>
+        Wed, 21 Jun 2017 14:46:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>,
+        Kyle Meyer <kyle@kyleam.com>
+Subject: Re: Truncating HEAD reflog on branch move
+References: <20170621213924.wh43i2h7v2zwihq3@genre.crustytoothpaste.net>
+Date:   Wed, 21 Jun 2017 14:46:43 -0700
+In-Reply-To: <20170621213924.wh43i2h7v2zwihq3@genre.crustytoothpaste.net>
+        (brian m. carlson's message of "Wed, 21 Jun 2017 21:40:51 +0000")
+Message-ID: <xmqqpodxm2t8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYUpJxX-wBU=ALPgJwVaA8h_iJRtAu3T7p4J7qmy=U4dg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/21, Stefan Beller wrote:
-> On Wed, Jun 21, 2017 at 12:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Stefan Beller <sbeller@google.com> writes:
-> >
-> >> Signed-off-by: Stefan Beller <sbeller@google.com>
-> >> ---
-> >>  diff.c | 22 +++++++++++++++++++---
-> >>  1 file changed, 19 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/diff.c b/diff.c
-> >> index 2f9722b382..89466018e5 100644
-> >> --- a/diff.c
-> >> +++ b/diff.c
-> >> @@ -559,6 +559,24 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
-> >>       emit_line_0(o, set, reset, line[0], line+1, len-1);
-> >>  }
-> >>
-> >> +enum diff_symbol {
-> >> +     DIFF_SYMBOL_SEPARATOR,
-> >
-> > Drop the last comma from enum?
-> 
-> I looked through out code base and for enums this is
-> actually strictly enforced, so I guess I have to play
-> by the rules here as I do not want to be the first
-> to deviate from an upheld standard.
-> 
-> This will be painful though as the next ~20 patches
-> add more symbols mostly at the end, maybe I need
-> to restructure that such that the last symbol stays the same
-> throughout the series. Thanks for that thought.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I don't think this is strictly enforced.  If you look at grep.h:197 the
-enum 'grep_source_type' has a trailing comma.
+> I get the following on 2.11.0:
+>
+> 2cbfbd5 HEAD@{0}:
+> 2cbfbd5 HEAD@{1}: checkout: moving from cPanel to master
+> eaf8db2 HEAD@{2}: checkout: moving from master to cPanel
+> 2cbfbd5 HEAD@{3}: clone: from https://bmc@git.crustytoothpaste.net/git/bmc/homedir.git
+>
+> and this on a recent next:
+>
+> 2cbfbd5 HEAD@{0}: Branch: renamed refs/heads/master to refs/heads/new
+>
+> For this test, any repo will work; I just picked this one because it had
+> two branches I could use to generate dummy reflog entries.
+>
+> A colleague reported this to me as a bug.  I don't see anything in the
+> release notes about this as a desired behavior change, and it does seem
+> undesirable to truncate the reflog this way.  If this isn't intentional,
+> I'm happy to work up a patch.
 
-> 
-> >
-> >> +static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
-> >> +                          const char *line, int len)
-> >> +{
-> >> +     switch (s) {
-> >> +     case DIFF_SYMBOL_SEPARATOR:
-> >> +             fprintf(o->file, "%s%c",
-> >> +                     diff_line_prefix(o),
-> >> +                     o->line_termination);
-> >> +             break;
-> >
-> > As the first patch in the "diff-symbol" subseries of this topic,
-> > this change must seriously be justified.  Why is it so important
-> > that a printing of an empty line must be moved to a helper function,
-> > which later will gain ability to show other kind of lines?
-> 
-> Ah yes. This got lost in comparison to the currently queued series with
-> diff_lines. The justification for the change was in the buffer patch,
-> but now we need to have the justification here.
-> 
-> In the old series, I had copied the same text in all these
-> refactoring patches, but thought to delete them in this series. The first
-> refactoring patch makes sense though.
-> 
-> Thanks,
-> Stefan
+I do not think either behaviour is intentional (old one that gives a
+meaningless empty entry probably is probably not what we want, the
+new one that truncates is not what we want, either).
 
--- 
-Brandon Williams
