@@ -2,141 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4EA920802
-	for <e@80x24.org>; Thu, 22 Jun 2017 20:32:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8752A20802
+	for <e@80x24.org>; Thu, 22 Jun 2017 20:35:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751927AbdFVUcs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 16:32:48 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34862 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751202AbdFVUcr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 16:32:47 -0400
-Received: by mail-pg0-f68.google.com with SMTP id f127so3770350pgc.2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 13:32:46 -0700 (PDT)
+        id S1752714AbdFVUfP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 16:35:15 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:33200 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751149AbdFVUfO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 16:35:14 -0400
+Received: by mail-pg0-f48.google.com with SMTP id f127so12453609pgc.0
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 13:35:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/At0PDC4e1LJFWhttjroFeO3I3aqlvAxDuJdo6RB1b0=;
-        b=FBVq2wXLnlqNSjbonf+ucL0fOvw/yEop09eLMp1FvpA/6T/L3f2LW/XDAO1BFCmnS6
-         isc2BuR0eTMXPQXjKR3clm/SM1Nyw8+JETxikvOq/sSCsBaaR5dXVH6/4CBiX/F0HipS
-         9TU0xfp0jRLxfF+gS6GUrNpkNN5yDiiMYaK8cCyYQbuSgVM8vkLNbqcjBAJJCaXg1u5s
-         PKH7tJr4ia1Eh6z8qaEcNA70JDh1QY/KYecYTFydYbrH1P2Lzj/69J9ZSK0KAr7YkQYp
-         p5iATdcGLR3wYWah/e/MNBy8bm/MiYoy7Kw224qzr95LBxT4YX2WJTmMNWjNlcR9pY6b
-         s6+A==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MHGwKOs7GCWiZIj5gVRsgHo++syfjkBJSlIjngo/Lkc=;
+        b=LP9fOJ9Zn5ocz0u1vN40NYxdu8VEBAsEN3c4n/ziLwqVvwFIB8pBvslbIOKcONIN4j
+         eoJC0lEV0pmqaS5+NlCoGYMA+fys7pNOcBygQVUwKnmF9kj8Xtlt0miwL1vREPhVRh73
+         wm3mOKITMX3aXFqGyaSv8YwnIxNuVoh8+Lom2/rKv50B5vsADyydWBUmcYZNJDmP7CSr
+         5yNDHDF8r665iA1kyZqksfs9yj40F6NQ9gE4AmHaHwOIzGarP77zsZv2oUtMJlmuNIqd
+         0DQ1cQ5AFa0sq64FYVFTGR9z6OtGw+rWfTG9W7aha9zSJjA1mv3tSx27qBltOX6m38H5
+         uIOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/At0PDC4e1LJFWhttjroFeO3I3aqlvAxDuJdo6RB1b0=;
-        b=X2hkL9B96G3ZpyQQVX91BEa83GcaXgxl3NrPCa2ji6RH0GX+cCc/W2qXkxdaQNBFm7
-         Vx9ujOd2y7mWBj86COlipV1OAoggp6SsSn7Iq0cyfATOB5bCbB5HYHB7bq0yq7utveQn
-         ikUnoXSwk7N2myTfNzuP6Rtn+LoaFIuJEXwKoMDTr+Qf9NTvgA+eOCAutHBqghMMdT5T
-         DVlEsGBm0mPyzhyX7/lvaXniM/t3sC3fFoWSR5c6kIz5o96UBLVo34VJWLAJQyCz+oyW
-         TleV6hHD2oZ5otMtCocFOExRRQii2RwB0BDoXMMWLFb7jZk64rlk/IEHWIVab6jv0EXe
-         X38w==
-X-Gm-Message-State: AKS2vOzi+vq1sBV7xlDPfTT2AU56lMI8oqP2HxE8odiylp6c1AzDgcAV
-        CmCfv7dlPCZffw==
-X-Received: by 10.84.134.34 with SMTP id 31mr4973164plg.51.1498163566293;
-        Thu, 22 Jun 2017 13:32:46 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
-        by smtp.gmail.com with ESMTPSA id k129sm5794204pfc.87.2017.06.22.13.32.45
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MHGwKOs7GCWiZIj5gVRsgHo++syfjkBJSlIjngo/Lkc=;
+        b=HbK8CHWkBK7Okg92p9pPJab6kumHX2TS7GMCB59tR/ucbZvbFMLCCNIGwBsIbCGV6i
+         ng2pCQeo1GP1/E1BegQmo6lVJpxVowB1fFy9hKlll1p9K/4GveuQXZRV/YD0zRdpkmSa
+         y7B5hVd3BJM15cCyj0UgHOxkJR/yewi2+eswHyIdlrMXLXhxDGPLo03xneNiMwVm9+j/
+         PX9WEVw4lwwqzTaDBnJ3tAnBxQvzjhnMtPmaQK5idvt71dl/fNh2RjygFAcVq/Jhb+kC
+         auw3QrUIh9LvU3wyrC48tRbqrC7lQnWXrUHQslJg2Ak6bQs2LBeuIsTDwOfJgDHzzJKV
+         ZyZQ==
+X-Gm-Message-State: AKS2vOzMDc9ZRUjQzK2zx1fUQ5FjNE/GdDzn94XnaQ6FVnKMAYNqaXrL
+        7+HokXWStPZgjp+z
+X-Received: by 10.84.132.2 with SMTP id 2mr4859983ple.46.1498163714053;
+        Thu, 22 Jun 2017 13:35:14 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:9474:9438:25ba:a969])
+        by smtp.gmail.com with ESMTPSA id 63sm6194195pgd.57.2017.06.22.13.35.12
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 13:32:45 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Kyle Meyer <kyle@kyleam.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
-Subject: Re: Truncating HEAD reflog on branch move
-References: <20170621213924.wh43i2h7v2zwihq3@genre.crustytoothpaste.net>
-        <xmqqpodxm2t8.fsf@gitster.mtv.corp.google.com>
-        <87efud7xjd.fsf@kyleam.com>
-        <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net>
-        <xmqqziczkh4k.fsf@gitster.mtv.corp.google.com>
-        <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
-        <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
-        <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
-Date:   Thu, 22 Jun 2017 13:32:44 -0700
-In-Reply-To: <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 22 Jun 2017 16:21:46 -0400")
-Message-ID: <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        Thu, 22 Jun 2017 13:35:13 -0700 (PDT)
+Date:   Thu, 22 Jun 2017 13:35:11 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com,
+        jacob.keller@gmail.com, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, peartben@gmail.com,
+        pclouds@gmail.com, peff@peff.net, git@jeffhostetler.com,
+        avarab@gmail.com, jonathantanmy@google.com
+Subject: Re: [PATCH v4 15/20] repository: add index_state to struct repo
+Message-ID: <20170622203511.GB124061@google.com>
+References: <20170620191951.84791-1-bmwill@google.com>
+ <20170622184348.56497-1-bmwill@google.com>
+ <20170622184348.56497-16-bmwill@google.com>
+ <xmqqshirixrt.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqshirixrt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 06/22, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> >  struct repository {
+> >  	/* Environment */
+> > @@ -49,6 +50,12 @@ struct repository {
+> >  	 */
+> >  	struct config_set *config;
+> >  
+> > +	/*
+> > +	 * Repository's in-memory index.
+> > +	 * 'repo_read_index()' can be used to populate 'index'.
+> > +	 */
+> > +	struct index_state *index;
+> > +
+> >  	/* Configurations */
+> >  	/*
+> >  	 * Bit used during initialization to indicate if repository state (like
+> > @@ -71,4 +78,6 @@ extern void repo_set_worktree(struct repository *repo, const char *path);
+> >  extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
+> >  extern void repo_clear(struct repository *repo);
+> >  
+> > +extern int repo_read_index(struct repository *repo);
+> > +
+> >  #endif /* REPOSITORY_H */
+> 
+> While you are working on a simple read-only operation like
+> "ls-files", you can get away with just a singleton (the equivalent
+> to "the_index" in the repository object world) in-core index
+> instance, and having a way to tell the system to read things into
+> the default thing without having to name what that default thing is
+> is a very useful thing to have.  It is a good thing that this only
+> needs "struct repository *" and no "struct index_state *" parameter.
+> 
+> But you will need a way to read, update, write it out as a tree,
+> etc. to a non-default in-core index, once you start doing more
+> complex things.  The function signature of the lowest level
+> primitive helper for them will be:
+> 
+>     extern int (*)(struct repository *, struct index_state *);
+> 
+> And you would want to reserve "index" suffix for such a function,
+> following the "if you use the default in-core thing, you do not have
+> to pass it as a parameter---just call _cache() convenience macro;
+> but you can explicitly pass it to the underlying _index() function"
+> convention we established long time ago.
+> 
+> So I'd suggest renaming the above one that uses the default in-core
+> index instance to
+> 
+> 	extern int repo_read_cache(struct repository *);
+> 
+> or you will regret later.
+> 
 
-> So I'd be tempted to just ditch the whole thing and teach
-> get_revision_1() to just walk through the list of logs, rather than this
-> weird "add a pending commit and then try to figure out which reflog it
-> referred to". For instance, right now:
->
->   git log -g HEAD $(git symbolic-ref HEAD)
->
-> only shows _one_ reflog. The patch below is the direction I'm thinking.
-> It fails two tests, but haven't dug yet.
->
-> ---
->  reflog-walk.c | 112 +++++++++--------------------------
->  reflog-walk.h |   4 +-
->  revision.c    |  24 ++++----
->  3 files changed, 43 insertions(+), 97 deletions(-)
+That makes sense.  While at it, would it make sense to ensure that the
+'struct index_state *' which is stored in 'the_repository.index' be
+'&the_index'?
 
-Yeah, I agree with the "we now show diffs with true parents"
-reasoning, and I like the above code reduction, obviously ;-)
-
-> @@ -3114,18 +3112,20 @@ static void track_linear(struct rev_info *revs, struct commit *commit)
->  
->  static struct commit *get_revision_1(struct rev_info *revs)
->  {
-> +	if (revs->reflog_info) {
-> +		struct commit *commit = next_reflog_entry(revs->reflog_info);
-> +		if (commit) {
-> +			commit->object.flags &= ~(ADDED | SEEN | SHOWN);
-> +			return commit;
-> +		}
-> +	}
-> +
->  	if (!revs->commits)
->  		return NULL;
->  
->  	do {
->  		struct commit *commit = pop_commit(&revs->commits);
->  
-> -		if (revs->reflog_info) {
-> -			save_parents(revs, commit);
-> -			fake_reflog_parent(revs->reflog_info, commit);
-> -			commit->object.flags &= ~(ADDED | SEEN | SHOWN);
-> -		}
-> -
->  		/*
->  		 * If we haven't done the list limiting, we need to look at
->  		 * the parents here. We also need to do the date-based limiting
-
-This part of the patch I can 100% agree with ;-)  
-
-I do not think command line parser does not allow "log -g
-maint..master" so all the "limited" processing the remainder of
-get_revision_1() does shouldn't matter.
-
-I however think pathspec will affect simplify_commit() and suspect
-that "git log -g -20 HEAD path" will behave differently.  Perhaps
-the difference is "it used to use path in an unexplainable way, now
-it ignores", in which case this is an improvement.
-
-Thanks.
-
-
-
-
-
+-- 
+Brandon Williams
