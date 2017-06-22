@@ -7,56 +7,64 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EF9720802
-	for <e@80x24.org>; Thu, 22 Jun 2017 22:03:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E42720802
+	for <e@80x24.org>; Thu, 22 Jun 2017 22:10:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753740AbdFVWDu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 18:03:50 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:33187 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753701AbdFVWDt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 18:03:49 -0400
-Received: by mail-pg0-f53.google.com with SMTP id f127so13270469pgc.0
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 15:03:48 -0700 (PDT)
+        id S1753397AbdFVWKM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 18:10:12 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34853 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752429AbdFVWKL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 18:10:11 -0400
+Received: by mail-pf0-f196.google.com with SMTP id s66so4796371pfs.2
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 15:10:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=e7YmhV3yqpPvikvoVV5AzXaV6uglTOZQxHcAKS4a/04=;
-        b=Ib/GfZ3NQXigxND8beegTYV1SpPii5Obfs3Ul7puDdhcTiy1DO2r5m8dddBTOjpHSz
-         KraRHrfdSB9Y9dfuEAzN7DksLd2Vy+yI8FXi3JnFzcUI1AO7id/juIUTRzJCV9uPtHbP
-         e9dtdqW9d6GwEUtXszrFFcK1XtUZZi0dYanehPLNKVJ+hBu2kbYfAH+HuYSCdfkQYfg8
-         pUa3Mwal2wrKKPua753lVdrASzfV6Q51UEeTEq25uJfumwV6XRBAzStf69h4iqOJ+dl3
-         yPzHgjSez/8wnq2gvwNCxa9BovpceyNgl7HxxLQCOAhef4sH1IIwylbC/o6Pi4ofEirn
-         X5Vw==
+        bh=pDeRoyRN6mvIMlF5tqWe2vamh8xrR2A/Yg46wL8r1nM=;
+        b=qvscXFqeRfTwyOlLNe4IvQoxm+vbUkWmm+xQMXifhVyzZLgRssC9GJsopPfRNtIUnD
+         RlKZbs5b0b0YtMOe7CQpecuszyHAvhwcR5l7wxGoBw5Petc3UfgJAStqehEDu5/RovGD
+         G1chjiWHGFU3cw/RzRz0XbEugyGr2X0PyIcf5EntCv/5DC8OQ2DIG7k+1UkDrBKFmH2+
+         mJhFslty2fSHsm5tWN6CH1ipUROwW9GSJZF5iZ0QrY5tabyLUH571Kj+hBBJMAnleJ2T
+         elcFavOVhEE/fBjT1FpIL0gC2FwywSRj5wEMtgguYVbbdy3gf8EBthAfoMdKYqBclN2q
+         4Sng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=e7YmhV3yqpPvikvoVV5AzXaV6uglTOZQxHcAKS4a/04=;
-        b=Vx2vRyKxYYoNGXHmtcIOi/XyKQmmdgmLFXwgyYOdW9P5q+OU1VXV1XVTBIwuWYWFsL
-         r9HYboJh2UlHrYrBzZtCxU46k5fRvdYc03pS657kdsH0hBE0YdAFTmpduGJp8dmaKywd
-         VOHveLAtVcQnzO+4yIyKYJLZqAA33FJKYlew4Tu8gFauRM7iRYdJlM76rpQTkkgevpzY
-         O9+npV1yQ1KL3Hcsk93KZnjXtP3JoOnrzGS9Zfqa3JfmNkQU7YawG4TEUv5SlIl56ZRZ
-         mBbDvOkBQFu6Ms1d2WxV1thO8Q6jh/dQKTeC3WtUtE1hMrYYOvBW/H6sCY6J38APlQVm
-         o9qQ==
-X-Gm-Message-State: AKS2vOxv5o49r9JDZxjt3JVYfGI6C/rxQuKO8ggE9fTng2dwmyYLppS9
-        b59HZAs3NKCDRg==
-X-Received: by 10.84.128.78 with SMTP id 72mr5264087pla.161.1498169028231;
-        Thu, 22 Jun 2017 15:03:48 -0700 (PDT)
+        bh=pDeRoyRN6mvIMlF5tqWe2vamh8xrR2A/Yg46wL8r1nM=;
+        b=qkQcoENiu7/akSt3snG1E7lRPXhcuwoDtP7jt7el1KoVB7minKCdpy9LXbbO7PjPX4
+         MN8lQXPzPT8XhqvYnibEAsFP9rd0rePu1+KYeQqFuZ95RHyylsDM05+fOp3daBBiubx0
+         kqO5r9M4omKObeHRrt9MGLauFJaFmga1uVyp5aRp5jWQk9J8avLGhzgNXT/ZyWgCZMyX
+         xMjf+0emV5//B4TETYhADDtADnGVW0f3vpONg9ROvhcCzTtzxAEOehs51OsGbRS6ef46
+         33B7Li6MBM5QD4WX0+I9FzRONJe8PX5bwly3++BD0cPmYD+W0HnwfIy6ZA3MXyMiByK4
+         EZhQ==
+X-Gm-Message-State: AKS2vOwYz3aUEeJDgPL+QgXOSlQCn1TukyR9FuvBG507Oe+4UYSSZK70
+        mF5EB/3gj1e6/xTpG3g=
+X-Received: by 10.99.125.8 with SMTP id y8mr4639643pgc.267.1498169410348;
+        Thu, 22 Jun 2017 15:10:10 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
-        by smtp.gmail.com with ESMTPSA id t128sm5314544pfd.64.2017.06.22.15.03.47
+        by smtp.gmail.com with ESMTPSA id r12sm398302pfi.61.2017.06.22.15.10.09
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 15:03:47 -0700 (PDT)
+        Thu, 22 Jun 2017 15:10:09 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Orgad Shaneh <orgads@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH] name-rev: Fix tag lookup on repository with mixed types of tags
-References: <CAGHpTBLXrrt0DykbCQHqp2up_BqOVftc8_8Towi3sDbh3M12LQ@mail.gmail.com>
-Date:   Thu, 22 Jun 2017 15:03:46 -0700
-In-Reply-To: <CAGHpTBLXrrt0DykbCQHqp2up_BqOVftc8_8Towi3sDbh3M12LQ@mail.gmail.com>
-        (Orgad Shaneh's message of "Thu, 22 Jun 2017 22:42:16 +0300")
-Message-ID: <xmqq4lv7issd.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com,
+        jacob.keller@gmail.com, Johannes.Schindelin@gmx.de,
+        sandals@crustytoothpaste.net, peartben@gmail.com,
+        pclouds@gmail.com, peff@peff.net, git@jeffhostetler.com,
+        avarab@gmail.com, jonathantanmy@google.com
+Subject: Re: [PATCH v4 15/20] repository: add index_state to struct repo
+References: <20170620191951.84791-1-bmwill@google.com>
+        <20170622184348.56497-1-bmwill@google.com>
+        <20170622184348.56497-16-bmwill@google.com>
+        <xmqqshirixrt.fsf@gitster.mtv.corp.google.com>
+        <20170622203511.GB124061@google.com>
+Date:   Thu, 22 Jun 2017 15:10:08 -0700
+In-Reply-To: <20170622203511.GB124061@google.com> (Brandon Williams's message
+        of "Thu, 22 Jun 2017 13:35:11 -0700")
+Message-ID: <xmqqziczhdxb.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,25 +73,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Orgad Shaneh <orgads@gmail.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> Commit 7550424804 (name-rev: include taggerdate in considering the best
-> name) introduced a bug in name-rev.
->
-> If a repository has both annotated and non-annotated tags, annotated
-> tag will always win, even if it was created decades after the commit.
+> That makes sense.  While at it, would it make sense to ensure that the
+> 'struct index_state *' which is stored in 'the_repository.index' be
+> '&the_index'?
 
-Thanks.  It is a problem that light-weight tags are unduly
-penalized, and we attempted to address it a few months ago in a
-slightly different way.  The necessary changes are already in
-'master' but not yet in any released branch.
+I was imagining (read: speculating one possible future, without
+thinking things through to judge if it makes sense at all) that
+conceptually most of the current API that works on things in the
+current repository to be implicitly working on the_repository
+singleton instance in the "repository object" world.
 
-Here is an entry in the Release Notes for the next release that will
-come out of the current 'master'.
-
- * "git describe --contains" penalized light-weight tags so much that
-   they were almost never considered.  Instead, give them about the
-   same chance to be considered as an annotated tag that is the same
-   age as the underlying commit would.
-   (merge ef1e74065c jc/name-rev-lw-tag later to maint).
+When that happens, the_index can become a CPP macro that translates
+to "the_repository.index", I would think.
 
