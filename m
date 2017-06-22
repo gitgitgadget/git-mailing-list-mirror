@@ -3,94 +3,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EBF820D0C
-	for <e@80x24.org>; Thu, 22 Jun 2017 19:42:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F8AD1FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 19:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753373AbdFVTmT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 15:42:19 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:34393 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752392AbdFVTmS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 15:42:18 -0400
-Received: by mail-wr0-f194.google.com with SMTP id k67so7073249wrc.1
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 12:42:18 -0700 (PDT)
+        id S1752493AbdFVTmi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 15:42:38 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:33458 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751147AbdFVTmh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 15:42:37 -0400
+Received: by mail-pf0-f179.google.com with SMTP id e7so13215231pfk.0
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 12:42:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=TEz8e3ObxCNBXOAjeshRqgYZLT0ehKnfCh79gxA9Co4=;
-        b=UdYnTaVW3slby4ivv2Efee1WlSwIulgvjpYZiKIeKiZt8dMgT8epwa9AF5g1YNhAoB
-         5WCy/wGZV3T1xEbn0RyGEYFp78H4/1et+hnAa7yWdz2kx9K40sDjjwht4tr4aXyG0fcP
-         kucvPZ+TiyelJrKyWHOd2ndZFEFZdImMfng2+aiIgfdRy4H0OWk2XWZeJHMS14+O3tmp
-         513RYJ+Qri7mvrC9aFfovmRoRrPlfwF7XqI7ey3mK5v/BWm3X1d2QoQXyy95aBTqRkZl
-         nfhHZV/aqRIQnkzUGCYFCwx+5F6Ud7EtS1vjcSttZ4IhX3YTz8WbvZsaCRjwec/CBvvA
-         gQPA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Dnhxc6r0XsRZvDNfWGHaefz3Q7QsqS+6nogkrla2t50=;
+        b=qtVeqDYx5KYPQ41uXK62XoYlFo48cnZz9mDEswrNbyIcQm7fbMpM/3uxQ/ZKCLQo/S
+         e7sRVJsGBw42cySk5NB9PEmrvfSb3461/YBl9xb0vOnMk3y//vsVlQHsn3XAAs7OPQlc
+         fAg9vMTFldwKg22h3d0Q+SAyBupeztYmwE83U37t/DqTQQjdhhUoZ2YOVDgj2GZIaotG
+         C3QkqH+ofv/vlJabwCCiHab1YaNIWTcD1OsFbPVJbbBV8ndM0z9/AYGpjzvCDHDRRMjb
+         waYuHzrtqCu75PFPBj7FWxiz/tZf39lCWYyllF8u96fPMLmRfOB5Cl3sAMF7nwPXJ9dz
+         f44g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=TEz8e3ObxCNBXOAjeshRqgYZLT0ehKnfCh79gxA9Co4=;
-        b=KjLHpJY7qDgEJa5oH3ZLh0EAkrX2XQPIb9YsuZM/fWMx6SgmZernd7M6l8g+s2nrZd
-         vrpE6rBiWH9juQ/dWz3oSyVFKi63/JlF97YCcSk+wP6haE1Jvqo3A7TaAn8/VJlMpdf0
-         d0wqRglwS1z3z45KDoOYHkXfQD9SlGuehwm1tuvO6m9r/4rfi/gAKYmq6c9qK2r5nTya
-         Um7sB2sYrJ14BEV3O1BU13DILw1qfsgRnMmYm5HyBlqYNylNIgzzr5MCWOfkP9GbQLV+
-         KdChw0L6ypXbRO/WhAB2jeWQdzovkvev8uJ79dx5ANxUfXs1mXi55AzRS+kdOcG8l4qY
-         KYiA==
-X-Gm-Message-State: AKS2vOxX/StxtqzvOKJ60EIYyUNqicMPBWekzkcZJzWSCrlzmk51+wYP
-        DgGZsrLzrqB9Xp5umHgW50HgBJEOzTQ9PQg=
-X-Received: by 10.80.164.185 with SMTP id w54mr3793654edb.76.1498160537040;
- Thu, 22 Jun 2017 12:42:17 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Dnhxc6r0XsRZvDNfWGHaefz3Q7QsqS+6nogkrla2t50=;
+        b=PaBCdXqeYUmJIfiQ+RNjt6h90JhVeMQFcGvPDphqS/8UlRotp3KNATSOqDJxeSHEef
+         PmTk/kC6Fqkb8CGFLbpxSOb+0ChAyFeRRUv+yRxjYsLYArmzjfSIQ4Kq/+DidIBkkgaO
+         c8xQ7LTVGgTYBDHfaZK5RkQ6xSHOfcmhtnAm4DGdNkhYrsEIQSgHNziHM2328xcXDEYp
+         ri7wxbxVa+wbW2mJ/kTbz51d/1xMBehAP/ffrzExzt6pEDv7b1Vy7t6x1oTyMnXvc/LD
+         tobykcPar8r1YmVOgDX0dwEZTKZl3Tjmy7IHXdtmfq2WEaERe99gMJfvJYin/0k5ItQ2
+         4bYQ==
+X-Gm-Message-State: AKS2vOyKHCFh75JUm+0+aViuoh5ezEnHvHnZFuMYdfEH7pJLgrg+QFiv
+        icWXfmyhwalEXssCniN5A5bhgPapIOVc
+X-Received: by 10.98.69.76 with SMTP id s73mr4272883pfa.94.1498160556552; Thu,
+ 22 Jun 2017 12:42:36 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.80.137.173 with HTTP; Thu, 22 Jun 2017 12:42:16 -0700 (PDT)
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Thu, 22 Jun 2017 22:42:16 +0300
-Message-ID: <CAGHpTBLXrrt0DykbCQHqp2up_BqOVftc8_8Towi3sDbh3M12LQ@mail.gmail.com>
-Subject: [PATCH] name-rev: Fix tag lookup on repository with mixed types of tags
-To:     git <git@vger.kernel.org>
+Received: by 10.100.161.227 with HTTP; Thu, 22 Jun 2017 12:42:36 -0700 (PDT)
+In-Reply-To: <20170622184348.56497-1-bmwill@google.com>
+References: <20170620191951.84791-1-bmwill@google.com> <20170622184348.56497-1-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 22 Jun 2017 12:42:36 -0700
+Message-ID: <CAGZ79kbrnCx2xxZHyZN+pwgUDY+sEuXAaYKDjKYLcbemsfM5Tg@mail.gmail.com>
+Subject: Re: [PATCH v4 00/20] repository object
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Ben Peart <peartben@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 7550424804 (name-rev: include taggerdate in considering the best
-name) introduced a bug in name-rev.
+On Thu, Jun 22, 2017 at 11:43 AM, Brandon Williams <bmwill@google.com> wrote:
+> As before you can find this series at:
+> https://github.com/bmwill/git/tree/repository-object
+>
+> Changes in v4:
+>
+> * Patch 11 is slightly different and turns off all path relocation when a
+>   worktree is provided instead of just for the index file (Thanks for the help
+>   Jonathan Nieder).
+> * 'repo_init()' has a tighter API and now requires that the provided gitdir is
+>   a path to the gitdir instead of either a path to the gitdir or path to the
+>   worktree (which has a .git file or directory) (Thanks Jonathan Tan).
+> * Minor comment and commit message chagnes
+>
+> Note: Like v3 this series is dependent on on 'bw/config-h' and
+>       'bw/ls-files-sans-the-index'
 
-If a repository has both annotated and non-annotated tags, annotated
-tag will always win, even if it was created decades after the commit.
+I read the whole series and I consider it
+Reviewed-by: Stefan Beller <sbeller@google.com>
 
-Consider a repository that always used non-annotated tags, and at some
-point started using annotated tags - name-rev --tags will return the
-first annotated tags for all the old commits (in our repository it is
-followed by ~5067 for one commit, or by ~120^2~21^2~88^2~87 for
-another...). This is obviously not what the user expects.
-
-The taggerdate should only be matched if *both tags* have it.
----
- builtin/name-rev.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 92a5d8a5d2..8f77023482 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -46,11 +46,13 @@ static void name_rev(struct commit *commit,
-  commit->util = name;
-  goto copy_data;
-  } else if (name->taggerdate > taggerdate ||
-- (name->taggerdate == taggerdate &&
-+ ((taggerdate == ULONG_MAX || name->taggerdate == taggerdate) &&
-  name->distance > distance)) {
- copy_data:
-  name->tip_name = tip_name;
-- name->taggerdate = taggerdate;
-+ if (taggerdate != ULONG_MAX) {
-+ name->taggerdate = taggerdate;
-+ }
-  name->generation = generation;
-  name->distance = distance;
-  } else
--- 
-2.13.1.windows.1.1.ga36e14b3aa
+Thanks,
+Stefan
