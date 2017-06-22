@@ -2,51 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E275B1FA7B
-	for <e@80x24.org>; Thu, 22 Jun 2017 18:44:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D308D1FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 18:44:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753564AbdFVSoK (ORCPT <rfc822;e@80x24.org>);
+        id S1753598AbdFVSoP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 14:44:15 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:35921 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753529AbdFVSoK (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 22 Jun 2017 14:44:10 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:35724 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752493AbdFVSoJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 14:44:09 -0400
-Received: by mail-pg0-f46.google.com with SMTP id 132so11348815pgb.2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:44:08 -0700 (PDT)
+Received: by mail-pf0-f177.google.com with SMTP id q86so12531965pfl.3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5viClup0j+33slrGNUc5PrUokfLcYtwmm/yxZUT7h+E=;
-        b=Fgj9D9EQ50OIGPtGx08HiyzlV1VKPW2jrFwvzn8QhmY+wNdMTxi9ozGi6gL73jgpkP
-         yjRjubFN6Z1J/IgUzU3a2KYoUP2i08DgtfBB6ybHiRhloPMGArHHp7OS1z26qxMqMeOL
-         25NNUf+1nOVRRQ/4kai+wfS24rnaBZa77q4K6WZcVY5Ut1rs0LcH5HOb3SG0q+VJ7+IB
-         8dRpvN3z1ttEPwar/yXiOxMjSugV9m92WFCp66C8BNU8Tz0JSLdOJlz15L87cn5y0mzV
-         b9AtRV0iw3WZc2Yvl4XyaeCgFm7btF/qgAQ6fA9G5eFQiUxUdok9/6bT/Gq2lDxvbkJe
-         GxhQ==
+        bh=5JFPvVX43K2MGOX84TWAEAC7RGaeMzNXOyDwrkZYABE=;
+        b=BwRXgk2B5E6pHqJlihSYLG7R4oI5lh81cEmQt9EZpf1WbYN1b156Fi40ACSXtutWRu
+         xMxiCsWSsLue8paJwx3Hzxm2RNJ0diriYfnwGBmrm/bvFiGR3nRDJGOiagORl4dzOuRQ
+         5ZASEm20a+vx9sze7F3EBiw2Bugq6BaeXY9uCmE3Qk5oIVCuirqhZ1i5OEkCk2s1piu4
+         UhjkQM0gPDYjfZ6Ah2V1BZa5LqLU3rgtARu9rj/xJqSHiaMzwrdi0/ndbXAgTK9d/owF
+         bzVJXNQx+j7TyrOdh0LFG5PPSNyGjRvVIlzU+VIZlDCRVwCzwMSIqVpKLW7NkDula/9I
+         00QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=5viClup0j+33slrGNUc5PrUokfLcYtwmm/yxZUT7h+E=;
-        b=dkHW50UH9SBjP4EKAN/zpOXIX4rU1tComCI1OPsPmHhAjUn2LvYqePFrmK1RCVYuDA
-         wwMnsYfCwduUmf71FEbWpWx4TIHRv2syWwkIpyLQn5KsXCVPWpldDrADXrxtPOU0tlDp
-         DzWr4Q5uUtM7W5LBZwd2Hlb0u1qklA4sN6z6jt8h12NJRvORMlw0eor5G/T8XQnd6FJB
-         LEe7ZscW0hssMIC8PwarA0n1Wzr8epx+78v/rsLMXsIn9IZK17ICHvl2mnO0fMW33D7S
-         5hhre2qswcPN0FMOu7yuSXdtOqKGWzHST6h/GRKCN1PhqZ+wgkgBBVlj5bk0rDTRFwN1
-         +YMA==
-X-Gm-Message-State: AKS2vOxI/zGxpVntCkPdKbnmhFYiatuwkvoS/hHdK91DDvX4ZHxXjPtC
-        09sTVcyJ5PeQgZrj9cnOXA==
-X-Received: by 10.84.129.97 with SMTP id 88mr4589401plb.111.1498157047776;
-        Thu, 22 Jun 2017 11:44:07 -0700 (PDT)
+        bh=5JFPvVX43K2MGOX84TWAEAC7RGaeMzNXOyDwrkZYABE=;
+        b=L8CwhPG1rzC1KEAgr7AF4bcZboxEH/ftwmBer5I/Se0zEo1W9v/bg/DBJukxpD+/7P
+         P3yPQY1c76TwwhqgEKTiqqpkzOavIfqsWqvmFVpxNeI36w078juhVpTQrcUT0j01fJ2B
+         SyaNF2Aj1J6GBMgJxjxBLpHUo07YG3Z6+1/AVzfgd0/8GolLO64hQNoSUk7pHobdRdEH
+         FLcRz9ppMnsyKowNW/kbvGHNsZ9lND8K6k4wLytadxPjzHEpwW35MYYefntF1m0/3E6+
+         227hvKWSoO4Tuw6fCi++4o+tqqAjd9EidDQ3vZ+oZbxy8XYw2n8PFoSKG13CVt0ft63b
+         e5LA==
+X-Gm-Message-State: AKS2vOzV+pllxZ68USqxpVc+wfdnb1X6GE+r222pF0LfdaJfy2DIBMup
+        YgylU1R9jPtsdQe6IxP5zA==
+X-Received: by 10.99.181.13 with SMTP id y13mr4021759pge.83.1498157049491;
+        Thu, 22 Jun 2017 11:44:09 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id g78sm5222211pfb.122.2017.06.22.11.44.06
+        by smtp.gmail.com with ESMTPSA id g78sm5222211pfb.122.2017.06.22.11.44.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 11:44:06 -0700 (PDT)
+        Thu, 22 Jun 2017 11:44:08 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v4 04/20] repository: introduce the repository object
-Date:   Thu, 22 Jun 2017 11:43:32 -0700
-Message-Id: <20170622184348.56497-5-bmwill@google.com>
+Subject: [PATCH v4 05/20] environment: place key repository state in the_repository
+Date:   Thu, 22 Jun 2017 11:43:33 -0700
+Message-Id: <20170622184348.56497-6-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.704.gde00cce3c-goog
 In-Reply-To: <20170622184348.56497-1-bmwill@google.com>
 References: <20170620191951.84791-1-bmwill@google.com>
@@ -66,281 +66,244 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce the repository object 'struct repository' which can be used to
-hold all state pertaining to a git repository.
-
-Some of the benefits of object-ifying a repository are:
-
-  1. Make the code base more readable and easier to reason about.
-
-  2. Allow for working on multiple repositories, specifically
-     submodules, within the same process.  Currently the process for
-     working on a submodule involves setting up an argv_array of options
-     for a particular command and then launching a child process to
-     execute the command in the context of the submodule.  This is
-     clunky and can require lots of little hacks in order to ensure
-     correctness.  Ideally it would be nice to simply pass a repository
-     and an options struct to a command.
-
-  3. Eliminating reliance on global state will make it easier to
-     enable the use of threading to improve performance.
+Migrate 'git_dir', 'git_common_dir', 'git_object_dir', 'git_index_file',
+'git_graft_file', and 'namespace' to be stored in 'the_repository'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Makefile     |   1 +
- repository.c | 159 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- repository.h |  64 ++++++++++++++++++++++++
- 3 files changed, 224 insertions(+)
- create mode 100644 repository.c
- create mode 100644 repository.h
+ cache.h       |  1 -
+ environment.c | 58 +++++++++++++---------------------------------------------
+ path.c        | 11 ++++++-----
+ setup.c       | 17 +++++++++++++++--
+ 4 files changed, 34 insertions(+), 53 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index f48480163..32e4efc71 100644
---- a/Makefile
-+++ b/Makefile
-@@ -839,6 +839,7 @@ LIB_OBJS += refs/ref-cache.o
- LIB_OBJS += ref-filter.o
- LIB_OBJS += remote.o
- LIB_OBJS += replace_object.o
-+LIB_OBJS += repository.o
- LIB_OBJS += rerere.o
- LIB_OBJS += resolve-undo.o
- LIB_OBJS += revision.o
-diff --git a/repository.c b/repository.c
-new file mode 100644
-index 000000000..cf440405a
---- /dev/null
-+++ b/repository.c
-@@ -0,0 +1,159 @@
-+#include "cache.h"
+diff --git a/cache.h b/cache.h
+index 7c81749a9..cd64cbc81 100644
+--- a/cache.h
++++ b/cache.h
+@@ -771,7 +771,6 @@ extern int core_apply_sparse_checkout;
+ extern int precomposed_unicode;
+ extern int protect_hfs;
+ extern int protect_ntfs;
+-extern int git_db_env, git_index_env, git_graft_env, git_common_dir_env;
+ 
+ /*
+  * Include broken refs in all ref iterations, which will
+diff --git a/environment.c b/environment.c
+index e035f6372..aa79ef83e 100644
+--- a/environment.c
++++ b/environment.c
+@@ -8,6 +8,7 @@
+  * are.
+  */
+ #include "cache.h"
 +#include "repository.h"
-+
-+/* The main repository */
-+static struct repository the_repo;
-+struct repository *the_repository = &the_repo;
-+
-+static char *git_path_from_env(const char *envvar, const char *git_dir,
-+			       const char *path, int fromenv)
-+{
-+	if (fromenv) {
-+		const char *value = getenv(envvar);
-+		if (value)
-+			return xstrdup(value);
-+	}
-+
-+	return xstrfmt("%s/%s", git_dir, path);
-+}
-+
-+static int find_common_dir(struct strbuf *sb, const char *gitdir, int fromenv)
-+{
-+	if (fromenv) {
-+		const char *value = getenv(GIT_COMMON_DIR_ENVIRONMENT);
-+		if (value) {
-+			strbuf_addstr(sb, value);
-+			return 1;
+ #include "config.h"
+ #include "refs.h"
+ #include "fmt-merge-msg.h"
+@@ -101,10 +102,6 @@ static const char *namespace;
+ 
+ static const char *super_prefix;
+ 
+-static const char *git_dir, *git_common_dir;
+-static char *git_object_dir, *git_index_file, *git_graft_file;
+-int git_db_env, git_index_env, git_graft_env, git_common_dir_env;
+-
+ /*
+  * Repository-local GIT_* environment variables; see cache.h for details.
+  */
+@@ -148,41 +145,11 @@ static char *expand_namespace(const char *raw_namespace)
+ 	return strbuf_detach(&buf, NULL);
+ }
+ 
+-static char *git_path_from_env(const char *envvar, const char *git_dir,
+-			       const char *path, int *fromenv)
+-{
+-	const char *value = getenv(envvar);
+-	if (!value)
+-		return xstrfmt("%s/%s", git_dir, path);
+-	if (fromenv)
+-		*fromenv = 1;
+-	return xstrdup(value);
+-}
+-
+ void setup_git_env(void)
+ {
+-	struct strbuf sb = STRBUF_INIT;
+-	const char *gitfile;
+ 	const char *shallow_file;
+ 	const char *replace_ref_base;
+ 
+-	git_dir = getenv(GIT_DIR_ENVIRONMENT);
+-	if (!git_dir) {
+-		if (!startup_info->have_repository)
+-			BUG("setup_git_env called without repository");
+-		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
+-	}
+-	gitfile = read_gitfile(git_dir);
+-	git_dir = xstrdup(gitfile ? gitfile : git_dir);
+-	if (get_common_dir(&sb, git_dir))
+-		git_common_dir_env = 1;
+-	git_common_dir = strbuf_detach(&sb, NULL);
+-	git_object_dir = git_path_from_env(DB_ENVIRONMENT, git_common_dir,
+-					   "objects", &git_db_env);
+-	git_index_file = git_path_from_env(INDEX_ENVIRONMENT, git_dir,
+-					   "index", &git_index_env);
+-	git_graft_file = git_path_from_env(GRAFT_ENVIRONMENT, git_common_dir,
+-					   "info/grafts", &git_graft_env);
+ 	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
+ 		check_replace_refs = 0;
+ 	replace_ref_base = getenv(GIT_REPLACE_REF_BASE_ENVIRONMENT);
+@@ -203,21 +170,21 @@ int is_bare_repository(void)
+ int have_git_dir(void)
+ {
+ 	return startup_info->have_repository
+-		|| git_dir;
++		|| the_repository->gitdir;
+ }
+ 
+ const char *get_git_dir(void)
+ {
+-	if (!git_dir)
++	if (!the_repository->gitdir)
+ 		BUG("git environment hasn't been setup");
+-	return git_dir;
++	return the_repository->gitdir;
+ }
+ 
+ const char *get_git_common_dir(void)
+ {
+-	if (!git_dir)
++	if (!the_repository->commondir)
+ 		BUG("git environment hasn't been setup");
+-	return git_common_dir;
++	return the_repository->commondir;
+ }
+ 
+ const char *get_git_namespace(void)
+@@ -273,9 +240,9 @@ const char *get_git_work_tree(void)
+ 
+ char *get_object_directory(void)
+ {
+-	if (!git_object_dir)
++	if (!the_repository->objectdir)
+ 		BUG("git environment hasn't been setup");
+-	return git_object_dir;
++	return the_repository->objectdir;
+ }
+ 
+ int odb_mkstemp(struct strbuf *template, const char *pattern)
+@@ -313,22 +280,23 @@ int odb_pack_keep(const char *name)
+ 
+ char *get_index_file(void)
+ {
+-	if (!git_index_file)
++	if (!the_repository->index_file)
+ 		BUG("git environment hasn't been setup");
+-	return git_index_file;
++	return the_repository->index_file;
+ }
+ 
+ char *get_graft_file(void)
+ {
+-	if (!git_graft_file)
++	if (!the_repository->graft_file)
+ 		BUG("git environment hasn't been setup");
+-	return git_graft_file;
++	return the_repository->graft_file;
+ }
+ 
+ int set_git_dir(const char *path)
+ {
+ 	if (setenv(GIT_DIR_ENVIRONMENT, path, 1))
+ 		return error("Could not set GIT_DIR to '%s'", path);
++	repo_set_gitdir(the_repository, path);
+ 	setup_git_env();
+ 	return 0;
+ }
+diff --git a/path.c b/path.c
+index c1cb1cf62..e4abea083 100644
+--- a/path.c
++++ b/path.c
+@@ -2,6 +2,7 @@
+  * Utilities for paths and pathnames
+  */
+ #include "cache.h"
++#include "repository.h"
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "dir.h"
+@@ -355,7 +356,7 @@ void report_linked_checkout_garbage(void)
+ 	const struct common_dir *p;
+ 	int len;
+ 
+-	if (!git_common_dir_env)
++	if (!the_repository->different_commondir)
+ 		return;
+ 	strbuf_addf(&sb, "%s/", get_git_dir());
+ 	len = sb.len;
+@@ -374,17 +375,17 @@ void report_linked_checkout_garbage(void)
+ static void adjust_git_path(struct strbuf *buf, int git_dir_len)
+ {
+ 	const char *base = buf->buf + git_dir_len;
+-	if (git_graft_env && is_dir_file(base, "info", "grafts"))
++	if (is_dir_file(base, "info", "grafts"))
+ 		strbuf_splice(buf, 0, buf->len,
+ 			      get_graft_file(), strlen(get_graft_file()));
+-	else if (git_index_env && !strcmp(base, "index"))
++	else if (!strcmp(base, "index"))
+ 		strbuf_splice(buf, 0, buf->len,
+ 			      get_index_file(), strlen(get_index_file()));
+-	else if (git_db_env && dir_prefix(base, "objects"))
++	else if (dir_prefix(base, "objects"))
+ 		replace_dir(buf, git_dir_len + 7, get_object_directory());
+ 	else if (git_hooks_path && dir_prefix(base, "hooks"))
+ 		replace_dir(buf, git_dir_len + 5, git_hooks_path);
+-	else if (git_common_dir_env)
++	else if (the_repository->different_commondir)
+ 		update_common_dir(buf, git_dir_len, NULL);
+ }
+ 
+diff --git a/setup.c b/setup.c
+index b477faa44..860507e1f 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "repository.h"
+ #include "config.h"
+ #include "dir.h"
+ #include "string-list.h"
+@@ -398,6 +399,11 @@ void setup_work_tree(void)
+ 	if (getenv(GIT_WORK_TREE_ENVIRONMENT))
+ 		setenv(GIT_WORK_TREE_ENVIRONMENT, ".", 1);
+ 
++	/*
++	 * NEEDSWORK: this call can essentially be set_git_dir(get_git_dir())
++	 * which can cause some problems when trying to free the old value of
++	 * gitdir.
++	 */
+ 	set_git_dir(remove_leading_path(git_dir, work_tree));
+ 	initialized = 1;
+ }
+@@ -1108,8 +1114,15 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	 * the user has set GIT_DIR.  It may be beneficial to disallow bogus
+ 	 * GIT_DIR values at some point in the future.
+ 	 */
+-	if (startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT))
+-		setup_git_env();
++	if (startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT)) {
++		if (!the_repository->gitdir) {
++			const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
++			if (!gitdir)
++				gitdir = DEFAULT_GIT_DIR_ENVIRONMENT;
++			repo_set_gitdir(the_repository, gitdir);
++			setup_git_env();
 +		}
 +	}
-+
-+	return get_common_dir_noenv(sb, gitdir);
-+}
-+
-+static void repo_setup_env(struct repository *repo)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	repo->different_commondir = find_common_dir(&sb, repo->gitdir,
-+						    !repo->ignore_env);
-+	repo->commondir = strbuf_detach(&sb, NULL);
-+	repo->objectdir = git_path_from_env(DB_ENVIRONMENT, repo->commondir,
-+					    "objects", !repo->ignore_env);
-+	repo->graft_file = git_path_from_env(GRAFT_ENVIRONMENT, repo->commondir,
-+					     "info/grafts", !repo->ignore_env);
-+	repo->index_file = git_path_from_env(INDEX_ENVIRONMENT, repo->gitdir,
-+					     "index", !repo->ignore_env);
-+}
-+
-+void repo_set_gitdir(struct repository *repo, const char *path)
-+{
-+	const char *gitfile = read_gitfile(path);
-+
-+	/*
-+	 * NEEDSWORK: Eventually we want to be able to free gitdir and the rest
-+	 * of the environment before reinitializing it again, but we have some
-+	 * crazy code paths where we try to set gitdir with the current gitdir
-+	 * and we don't want to free gitdir before copying the passed in value.
-+	 */
-+	repo->gitdir = xstrdup(gitfile ? gitfile : path);
-+
-+	repo_setup_env(repo);
-+}
-+
-+/*
-+ * Attempt to resolve and set the provided 'gitdir' for repository 'repo'.
-+ * Return 0 upon success and a non-zero value upon failure.
-+ */
-+static int repo_init_gitdir(struct repository *repo, const char *gitdir)
-+{
-+	int ret = 0;
-+	int error = 0;
-+	char *abspath = NULL;
-+	const char *resolved_gitdir;
-+
-+	abspath = real_pathdup(gitdir, 0);
-+	if (!abspath) {
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	/* 'gitdir' must reference the gitdir directly */
-+	resolved_gitdir = resolve_gitdir_gently(abspath, &error);
-+	if (!resolved_gitdir) {
-+		ret = -1;
-+		goto out;
-+	}
-+
-+	repo_set_gitdir(repo, resolved_gitdir);
-+
-+out:
-+	free(abspath);
-+	return ret;
-+}
-+
-+void repo_set_worktree(struct repository *repo, const char *path)
-+{
-+	repo->worktree = real_pathdup(path, 1);
-+}
-+
-+static int read_and_verify_repository_format(struct repository_format *format,
-+					     const char *commondir)
-+{
-+	int ret = 0;
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	strbuf_addf(&sb, "%s/config", commondir);
-+	read_repository_format(format, sb.buf);
-+	strbuf_reset(&sb);
-+
-+	if (verify_repository_format(format, &sb) < 0) {
-+		warning("%s", sb.buf);
-+		ret = -1;
-+	}
-+
-+	strbuf_release(&sb);
-+	return ret;
-+}
-+
-+/*
-+ * Initialize 'repo' based on the provided 'gitdir'.
-+ * Return 0 upon success and a non-zero value upon failure.
-+ */
-+int repo_init(struct repository *repo, const char *gitdir, const char *worktree)
-+{
-+	struct repository_format format;
-+	memset(repo, 0, sizeof(*repo));
-+
-+	repo->ignore_env = 1;
-+
-+	if (repo_init_gitdir(repo, gitdir))
-+		goto error;
-+
-+	if (read_and_verify_repository_format(&format, repo->commondir))
-+		goto error;
-+
-+	if (worktree)
-+		repo_set_worktree(repo, worktree);
-+
-+	return 0;
-+
-+error:
-+	repo_clear(repo);
-+	return -1;
-+}
-+
-+void repo_clear(struct repository *repo)
-+{
-+	free(repo->gitdir);
-+	repo->gitdir = NULL;
-+	free(repo->commondir);
-+	repo->commondir = NULL;
-+	free(repo->objectdir);
-+	repo->objectdir = NULL;
-+	free(repo->graft_file);
-+	repo->graft_file = NULL;
-+	free(repo->index_file);
-+	repo->index_file = NULL;
-+	free(repo->worktree);
-+	repo->worktree = NULL;
-+}
-diff --git a/repository.h b/repository.h
-new file mode 100644
-index 000000000..0a1db9633
---- /dev/null
-+++ b/repository.h
-@@ -0,0 +1,64 @@
-+#ifndef REPOSITORY_H
-+#define REPOSITORY_H
-+
-+struct repository {
-+	/* Environment */
-+	/*
-+	 * Path to the git directory.
-+	 * Cannot be NULL after initialization.
-+	 */
-+	char *gitdir;
-+
-+	/*
-+	 * Path to the common git directory.
-+	 * Cannot be NULL after initialization.
-+	 */
-+	char *commondir;
-+
-+	/*
-+	 * Path to the repository's object store.
-+	 * Cannot be NULL after initialization.
-+	 */
-+	char *objectdir;
-+
-+	/*
-+	 * Path to the repository's graft file.
-+	 * Cannot be NULL after initialization.
-+	 */
-+	char *graft_file;
-+
-+	/*
-+	 * Path to the current worktree's index file.
-+	 * Cannot be NULL after initialization.
-+	 */
-+	char *index_file;
-+
-+	/*
-+	 * Path to the working directory.
-+	 * A NULL value indicates that there is no working directory.
-+	 */
-+	char *worktree;
-+
-+	/* Configurations */
-+	/*
-+	 * Bit used during initialization to indicate if repository state (like
-+	 * the location of the 'objectdir') should be read from the
-+	 * environment.  By default this bit will be set at the begining of
-+	 * 'repo_init()' so that all repositories will ignore the environment.
-+	 * The exception to this is 'the_repository', which doesn't go through
-+	 * the normal 'repo_init()' process.
-+	 */
-+	unsigned ignore_env:1;
-+
-+	/* Indicate if a repository has a different 'commondir' from 'gitdir' */
-+	unsigned different_commondir:1;
-+};
-+
-+extern struct repository *the_repository;
-+
-+extern void repo_set_gitdir(struct repository *repo, const char *path);
-+extern void repo_set_worktree(struct repository *repo, const char *path);
-+extern int repo_init(struct repository *repo, const char *gitdir, const char *worktree);
-+extern void repo_clear(struct repository *repo);
-+
-+#endif /* REPOSITORY_H */
+ 
+ 	strbuf_release(&dir);
+ 	strbuf_release(&gitdir);
 -- 
 2.13.1.704.gde00cce3c-goog
 
