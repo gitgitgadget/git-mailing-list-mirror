@@ -2,97 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6610020802
-	for <e@80x24.org>; Thu, 22 Jun 2017 22:23:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4AE320802
+	for <e@80x24.org>; Thu, 22 Jun 2017 22:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753461AbdFVWXq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 18:23:46 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34431 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752714AbdFVWXp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 18:23:45 -0400
-Received: by mail-pf0-f193.google.com with SMTP id d5so4845874pfe.1
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 15:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PZpOWc4X4RCIJJX4zDtSmC5VT47FwcUq67UW7nK79IY=;
-        b=IkS85gZoWwIcEwnIPUk4ttdXSy9QRUcVey0ReCpb1Bae//5br9nimkPUXV0gY11A0d
-         2l8kAqaEPp3qzElcBYieR4vBUEM1HpCxwBwzhUOJMH22yA9hkvyBW60uXBE2tFxerbDV
-         QHa8Hy4c4bb+sN8ciXy48OkwRzqWet5rP/FCwtMsokD9ILSCun5WirIdsJUg9oavMV4g
-         IBXHDBrtD2KJDbyJAT2oARSII8DIMdhQOOR2wZo0wGSQ4guiM0UGWeVvEteRNwRJWtU9
-         r/VEkOx2k3X93UeiiwCefetWiQ1nIyD0FaYP8dIx2i/jnLzoNISzd/tfPbAWO0Lw7nqc
-         zwnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PZpOWc4X4RCIJJX4zDtSmC5VT47FwcUq67UW7nK79IY=;
-        b=jn1YVUwd12RxII7cXwBPwa4ggf7KQeTtwtBVqmWg2kDgLx2IdlKaKaBrwRe7qzdMbP
-         hLq5gU1TKp3H2rC4+oGB/ajrbI6J81x2NdUCWimeMp5sE0+cST+iG06/ogx2vEbO5gIZ
-         L3ovjJNS8D3UjcWtVmLDe72q5ExJjZLb9ndtKdBOeVmtWWrbF86WDWeAMiszUTP9YXEk
-         FmGF8lcJLp1CITajEjCepbq/mmZ0sCl5O1nTgldDI96nTightC+mzVGxAdcwLVjbBDue
-         YOu+J19N4scq4EIp9U0+mDV0ee2KMhigvX0T5ewxSfCVbopDqs/1uCLMp3pSQ80n992H
-         hyWg==
-X-Gm-Message-State: AKS2vOz3A92hPuo+rnokeuRiqR8/nV60OmSUlrybqcwAQJDBYF150quz
-        NilIpoz0ZYCiNJReqvc=
-X-Received: by 10.99.99.195 with SMTP id x186mr4755661pgb.200.1498170224396;
-        Thu, 22 Jun 2017 15:23:44 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
-        by smtp.gmail.com with ESMTPSA id p23sm6303102pfk.67.2017.06.22.15.23.43
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 15:23:43 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCHv5 1/2] clone: respect additional configured fetch refspecs during initial fetch
-References: <CAM0VKjmxtqB2zrWOW8T9O1ReWNPTZA7V3-Dei7GecB3nxVh2Dg@mail.gmail.com>
-        <20170616173849.8071-1-szeder.dev@gmail.com>
-        <20170616173849.8071-2-szeder.dev@gmail.com>
-        <20170617112228.vugswym4o4owf6wj@sigill.intra.peff.net>
-Date:   Thu, 22 Jun 2017 15:23:42 -0700
-In-Reply-To: <20170617112228.vugswym4o4owf6wj@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 17 Jun 2017 07:22:28 -0400")
-Message-ID: <xmqqmv8zhdap.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1753374AbdFVWZs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 18:25:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49532 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752429AbdFVWZs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 18:25:48 -0400
+Received: (qmail 27908 invoked by uid 109); 22 Jun 2017 22:25:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Jun 2017 22:25:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6662 invoked by uid 111); 22 Jun 2017 22:25:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jun 2017 18:25:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Jun 2017 18:25:46 -0400
+Date:   Thu, 22 Jun 2017 18:25:46 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kyle Meyer <kyle@kyleam.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
+Subject: Re: Truncating HEAD reflog on branch move
+Message-ID: <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
+References: <20170621213924.wh43i2h7v2zwihq3@genre.crustytoothpaste.net>
+ <xmqqpodxm2t8.fsf@gitster.mtv.corp.google.com>
+ <87efud7xjd.fsf@kyleam.com>
+ <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net>
+ <xmqqziczkh4k.fsf@gitster.mtv.corp.google.com>
+ <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
+ <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
+ <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
+ <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
+ <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Jun 22, 2017 at 05:52:35PM -0400, Jeff King wrote:
 
-> I'd still prefer this to have:
->
->   if (!remote->fetch && remote->fetch_refspec_nr)
-> 	BUG("attempt to add refspec to uninitialized list");
->
-> at the top, as otherwise this case writes garbage into remote->fetch[0].
->
-> I see you have another series dealing with the lazy parsing, but I
-> haven't looked at it yet (hopefully this danger would just go away after
-> that).
->
-> Other than that, the patch looks fine to me.
+> Which really makes me feel like this patch is going in the right
+> direction, as it makes all of this behave conceptually like:
+> 
+>   while read old new etc ...
+>   do
+>     git show $new
+>   done <.git/logs/$ref
+> 
+> which is simple to explain and is what I'd expect (and is certainly the
+> direction we went with the "diff uses real parents" commit).
+> 
+> We just need to hit the simplify_commit() code path here.
 
-SZEDER?  As long as the end result together with two series are
-safe, I do not have a strong preference, but given that the other
-one is a lot more invasive change [*1*], I think it is nicer to have
-this two-patch series already safe without the other one.
+So here's a patch on top of what I posted before that pushes the reflog
+check into the loop (it just decides whether to pull from the reflogs or
+from the commit queue at the top of the loop).
 
-What's your take on Peff's point?
+I was surprised to find, though, that simplify_commit() does not
+actually do the pathspec limiting! It's done by
+try_to_simplify_commit(), which is part of add_parents_to_list(). I
+hacked around it in the later part of the loop by calling
+try_to_simplify myself and checking the TREESAME flag. But I have a
+feeling I'm missing something about how the traversal is supposed to
+work.
 
+This does behave sensibly with "--no-merges" and "--merges", as well as
+pathspec limiting.
 
-[Footnote]
-
-*1* Especially the other branch does not merge cleanly into 'pu' and
-    I haven't managed to include it in my tree yet.
+diff --git a/revision.c b/revision.c
+index 675247cd9..203468ddf 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3112,19 +3112,19 @@ static void track_linear(struct rev_info *revs, struct commit *commit)
+ 
+ static struct commit *get_revision_1(struct rev_info *revs)
+ {
+-	if (revs->reflog_info) {
+-		struct commit *commit = next_reflog_entry(revs->reflog_info);
+-		if (commit) {
+-			commit->object.flags &= ~(ADDED | SEEN | SHOWN);
+-			return commit;
+-		}
+-	}
++	while (1) {
++		struct commit *commit;
+ 
+-	if (!revs->commits)
+-		return NULL;
++		if (revs->reflog_info)
++			commit = next_reflog_entry(revs->reflog_info);
++		else
++			commit = pop_commit(&revs->commits);
+ 
+-	do {
+-		struct commit *commit = pop_commit(&revs->commits);
++		if (!commit)
++			return NULL;
++
++		if (revs->reflog_info)
++			commit->object.flags &= ~(ADDED | SEEN | SHOWN);
+ 
+ 		/*
+ 		 * If we haven't done the list limiting, we need to look at
+@@ -3135,7 +3135,8 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 			if (revs->max_age != -1 &&
+ 			    (commit->date < revs->max_age))
+ 				continue;
+-			if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
++			if (!revs->reflog_info &&
++			    add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
+ 				if (!revs->ignore_missing_links)
+ 					die("Failed to traverse parents of commit %s",
+ 						oid_to_hex(&commit->object.oid));
+@@ -3151,10 +3152,14 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 		default:
+ 			if (revs->track_linear)
+ 				track_linear(revs, commit);
++			if (revs->reflog_info) {
++				try_to_simplify_commit(revs, commit);
++				if (commit->object.flags & TREESAME)
++					continue;
++			}
+ 			return commit;
+ 		}
+-	} while (revs->commits);
+-	return NULL;
++	}
+ }
+ 
+ /*
