@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B705120401
+	by dcvr.yhbt.net (Postfix) with ESMTP id D37EB20D0C
 	for <e@80x24.org>; Thu, 22 Jun 2017 00:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752204AbdFVAkq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 20:40:46 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:35353 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751689AbdFVAkp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 20:40:45 -0400
-Received: by mail-pg0-f53.google.com with SMTP id 132so791558pgb.2
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 17:40:44 -0700 (PDT)
+        id S1752249AbdFVAks (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 20:40:48 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:33851 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751641AbdFVAkr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 20:40:47 -0400
+Received: by mail-pg0-f46.google.com with SMTP id e187so806224pgc.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 17:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=O6hs6Khjm3VUwZ4CfE6z6+MhQziuSlRi+/sFoy5gBmI=;
-        b=dKfQt7c6DaxTenRGF4rwNUyQQHS7oLaldpsi5MdkZFlE2AvpLkoirIkx6DvYRg0cCs
-         tpdYB1VJ7Zlpm6m5+S68QeVh3TFXuxCVr8tJSL+IG9Kt4KLNS3/uSyTw9yUmRV96dZCV
-         MU1ImWe08VrgkRizWb97Hnzua880aosue/caLr80+rPNqGJoMr54+tAka6ITBlqR0GFE
-         /UsiQVUaD0YDNK7ANJMzL3xVatkxhmUDvsyPyFk83igt1NmfLoPt2cQmNh+tuq3IyPvh
-         TVNQspe7l5rrsR/8XXWEkpSWcQttK2lidiRSTAI6nJpH7JQXfu6ja6lnm1ISldY6sV89
-         262g==
+        bh=lVhpogfqK/YKOgU6jUBaS78q7K4vozS18Hz93oeS6sM=;
+        b=jH4jyCuE0je2dwQabW1pMOAbYRu8e2ZKSxNctVhdt7wuj9NxpDPyp1xSW0qIEMG8Eu
+         m9Iw5llmTyaQHsUQAsbqmUOuUu5j6FlRCueF22yms29hGxA69JsCNQ9xk517bsct9i6v
+         NkdL+WjJOqc+b5qQNVSOu/HRsXy9ujjoqi9dJk11cPO591ajch509Sga7Q58REsVi2st
+         06/pOICWIErzEUZOpX1lemul+diSnjwRDUAFK/HNBPFiKJy7ehWuGowUr6mGxkK6fOyO
+         z8iqge8P0bzOXs8rrIjuloKtPvMmtBb2nmtzLOOsO529rsL3cDTlIS00SsflcOPD2QjJ
+         KkuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=O6hs6Khjm3VUwZ4CfE6z6+MhQziuSlRi+/sFoy5gBmI=;
-        b=ZICQc40elMRVkKBSVR9Q728vLuJZY+NuNl0QdueNz6YXXdKNkLSvxSKoZJ//ONHR9g
-         kWCic3H4OsKY1icgEmkf34iK8w+ur1g3l/v37ux1hnXbpFR43uSmS4bSoCd6gI+xd2J3
-         ig8DwTN0vknWtFmS5WugMzyQ7R7THc1A7+JmgD6v9Qo1amiahV8ZV00LcRI03gaN1vr6
-         mDY1gfqub3Vo39UbYwNxrxYmjxYxIwn1tGpbLqag0/NA68nOX+CvOGDNfnWrrbjVCaJe
-         gO1D1/F4KsOG4dJcbb5Tjprkfyap+UlnAN4Zho7EzWVG6SZO8slcH4PFFIF4OwqWvB38
-         7r6w==
-X-Gm-Message-State: AKS2vOzd6M7ZrWdpJ88uEH3icwU12ayjr+dnnxYauU+BjZ+fVgWREQmc
-        muZyxaZR1emCQxtvOsY+OQ==
-X-Received: by 10.98.196.155 with SMTP id h27mr38657430pfk.226.1498092043799;
-        Wed, 21 Jun 2017 17:40:43 -0700 (PDT)
+        bh=lVhpogfqK/YKOgU6jUBaS78q7K4vozS18Hz93oeS6sM=;
+        b=GH32B3EuBov/GgO4YPFZt7/tb7ntrLRDx3bxm3a8EJXwd8KT9rg+wR1Orw39VKhj32
+         qAg9TQPQfMp8BFB30guokUJ7dRywZoTpet+ZeywIWmIQ1yjYSIJqoHHvdND3adwRA2mS
+         mmy6OjcdgAJ+MdfAWAhPGW8uP/Muz8bd3gYlPOb/kwX/kunxsylik2B3TcWwiDv811IG
+         IvEP7AVmx9YBxPAAcVunanoXZf3z59bbgOnssuN87Vsq2wMdZ1uqxVj1B6u5qBhV0on+
+         dYODBCAuMRqQmR6xzNYuLJgYZc8gPy8m+Q6MT8ZT54yopH+ukftxKKb3wDYr4PbTo9Kc
+         sahA==
+X-Gm-Message-State: AKS2vOyDJoIaaI8xtABQCvM3seLkRr/nQNrWQnVkWfs5djejEt1Z0dZK
+        VEx6RqkghjuEDnhGa1xnFg==
+X-Received: by 10.98.75.79 with SMTP id y76mr38578389pfa.39.1498092040591;
+        Wed, 21 Jun 2017 17:40:40 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id c205sm34658213pfb.74.2017.06.21.17.40.42
+        by smtp.gmail.com with ESMTPSA id c205sm34658213pfb.74.2017.06.21.17.40.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 21 Jun 2017 17:40:42 -0700 (PDT)
+        Wed, 21 Jun 2017 17:40:39 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Subject: [PATCH v5 8/8] sha1_file: refactor has_sha1_file_with_flags
-Date:   Wed, 21 Jun 2017 17:40:24 -0700
-Message-Id: <a4f04b3ec9cc1ba08a5dd7f459dce95411fb03e2.1498091579.git.jonathantanmy@google.com>
+Subject: [PATCH v5 6/8] sha1_file: improve sha1_object_info_extended
+Date:   Wed, 21 Jun 2017 17:40:22 -0700
+Message-Id: <a736148af2689676cb5a7e64a35bcbc9ad060fd5.1498091579.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1-goog
 In-Reply-To: <cover.1498091579.git.jonathantanmy@google.com>
 References: <cover.1498091579.git.jonathantanmy@google.com>
@@ -64,116 +64,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-has_sha1_file_with_flags() implements many mechanisms in common with
-sha1_object_info_extended(). Make has_sha1_file_with_flags() a
-convenience function for sha1_object_info_extended() instead.
+Improve sha1_object_info_extended() by supporting additional flags. This
+allows has_sha1_file_with_flags() to be modified to use
+sha1_object_info_extended() in a subsequent patch.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/fetch.c      | 10 ++++++----
- builtin/index-pack.c |  3 ++-
- cache.h              | 11 +++--------
- sha1_file.c          | 12 ++----------
- 4 files changed, 13 insertions(+), 23 deletions(-)
+ cache.h     |  4 ++++
+ sha1_file.c | 43 ++++++++++++++++++++++++-------------------
+ 2 files changed, 28 insertions(+), 19 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 47708451b..96d5146c4 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -242,9 +242,11 @@ static void find_non_local_tags(struct transport *transport,
- 		 */
- 		if (ends_with(ref->name, "^{}")) {
- 			if (item &&
--			    !has_object_file_with_flags(&ref->old_oid, HAS_SHA1_QUICK) &&
-+			    !has_object_file_with_flags(&ref->old_oid,
-+							OBJECT_INFO_QUICK) &&
- 			    !will_fetch(head, ref->old_oid.hash) &&
--			    !has_sha1_file_with_flags(item->util, HAS_SHA1_QUICK) &&
-+			    !has_sha1_file_with_flags(item->util,
-+						      OBJECT_INFO_QUICK) &&
- 			    !will_fetch(head, item->util))
- 				item->util = NULL;
- 			item = NULL;
-@@ -258,7 +260,7 @@ static void find_non_local_tags(struct transport *transport,
- 		 * fetch.
- 		 */
- 		if (item &&
--		    !has_sha1_file_with_flags(item->util, HAS_SHA1_QUICK) &&
-+		    !has_sha1_file_with_flags(item->util, OBJECT_INFO_QUICK) &&
- 		    !will_fetch(head, item->util))
- 			item->util = NULL;
- 
-@@ -279,7 +281,7 @@ static void find_non_local_tags(struct transport *transport,
- 	 * checked to see if it needs fetching.
- 	 */
- 	if (item &&
--	    !has_sha1_file_with_flags(item->util, HAS_SHA1_QUICK) &&
-+	    !has_sha1_file_with_flags(item->util, OBJECT_INFO_QUICK) &&
- 	    !will_fetch(head, item->util))
- 		item->util = NULL;
- 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 04b9dcaf0..587bc80c9 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -794,7 +794,8 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 
- 	if (startup_info->have_repository) {
- 		read_lock();
--		collision_test_needed = has_sha1_file_with_flags(oid->hash, HAS_SHA1_QUICK);
-+		collision_test_needed =
-+			has_sha1_file_with_flags(oid->hash, OBJECT_INFO_QUICK);
- 		read_unlock();
- 	}
- 
 diff --git a/cache.h b/cache.h
-index 7cf2ca466..3ae9769aa 100644
+index 48aea923b..7cf2ca466 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1268,15 +1268,10 @@ int read_loose_object(const char *path,
- 		      void **contents);
+@@ -1863,6 +1863,10 @@ struct object_info {
+ #define OBJECT_INFO_LOOKUP_REPLACE 1
+ /* Allow reading from a loose object file of unknown/bogus type */
+ #define OBJECT_INFO_ALLOW_UNKNOWN_TYPE 2
++/* Do not check cached storage */
++#define OBJECT_INFO_SKIP_CACHED 4
++/* Do not retry packed storage after checking packed and loose storage */
++#define OBJECT_INFO_QUICK 8
+ extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
+ extern int packed_object_info(struct packed_git *pack, off_t offset, struct object_info *);
  
- /*
-- * Return true iff we have an object named sha1, whether local or in
-- * an alternate object database, and whether packed or loose.  This
-- * function does not respect replace references.
-- *
-- * If the QUICK flag is set, do not re-check the pack directory
-- * when we cannot find the object (this means we may give a false
-- * negative answer if another process is simultaneously repacking).
-+ * Convenience for sha1_object_info_extended() with a NULL struct
-+ * object_info. OBJECT_INFO_SKIP_CACHED is automatically set; pass
-+ * nonzero flags to also set other flags.
-  */
--#define HAS_SHA1_QUICK 0x1
- extern int has_sha1_file_with_flags(const unsigned char *sha1, int flags);
- static inline int has_sha1_file(const unsigned char *sha1)
- {
 diff --git a/sha1_file.c b/sha1_file.c
-index bf6b64ec8..778f01d92 100644
+index 615a27dac..b6bc02f09 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -3494,18 +3494,10 @@ int has_sha1_pack(const unsigned char *sha1)
+@@ -2977,29 +2977,30 @@ static int sha1_loose_object_info(const unsigned char *sha1,
  
- int has_sha1_file_with_flags(const unsigned char *sha1, int flags)
+ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi, unsigned flags)
  {
--	struct pack_entry e;
--
- 	if (!startup_info->have_repository)
- 		return 0;
--	if (find_pack_entry(sha1, &e))
--		return 1;
--	if (has_loose_object(sha1))
--		return 1;
--	if (flags & HAS_SHA1_QUICK)
--		return 0;
--	reprepare_packed_git();
--	return find_pack_entry(sha1, &e);
-+	return sha1_object_info_extended(sha1, NULL,
-+					 flags | OBJECT_INFO_SKIP_CACHED) >= 0;
- }
+-	struct cached_object *co;
+ 	struct pack_entry e;
+ 	int rtype;
+ 	const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
+ 				    lookup_replace_object(sha1) :
+ 				    sha1;
  
- int has_object_file(const struct object_id *oid)
+-	co = find_cached_object(real);
+-	if (co) {
+-		if (oi->typep)
+-			*(oi->typep) = co->type;
+-		if (oi->sizep)
+-			*(oi->sizep) = co->size;
+-		if (oi->disk_sizep)
+-			*(oi->disk_sizep) = 0;
+-		if (oi->delta_base_sha1)
+-			hashclr(oi->delta_base_sha1);
+-		if (oi->typename)
+-			strbuf_addstr(oi->typename, typename(co->type));
+-		if (oi->contentp)
+-			*oi->contentp = xmemdupz(co->buf, co->size);
+-		oi->whence = OI_CACHED;
+-		return 0;
++	if (!(flags & OBJECT_INFO_SKIP_CACHED)) {
++		struct cached_object *co = find_cached_object(real);
++		if (co) {
++			if (oi->typep)
++				*(oi->typep) = co->type;
++			if (oi->sizep)
++				*(oi->sizep) = co->size;
++			if (oi->disk_sizep)
++				*(oi->disk_sizep) = 0;
++			if (oi->delta_base_sha1)
++				hashclr(oi->delta_base_sha1);
++			if (oi->typename)
++				strbuf_addstr(oi->typename, typename(co->type));
++			if (oi->contentp)
++				*oi->contentp = xmemdupz(co->buf, co->size);
++			oi->whence = OI_CACHED;
++			return 0;
++		}
+ 	}
+ 
+ 	if (!find_pack_entry(real, &e)) {
+@@ -3010,9 +3011,13 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 		}
+ 
+ 		/* Not a loose object; someone else may have just packed it. */
+-		reprepare_packed_git();
+-		if (!find_pack_entry(real, &e))
++		if (flags & OBJECT_INFO_QUICK) {
+ 			return -1;
++		} else {
++			reprepare_packed_git();
++			if (!find_pack_entry(real, &e))
++				return -1;
++		}
+ 	}
+ 
+ 	rtype = packed_object_info(e.p, e.offset, oi);
 -- 
 2.13.1.611.g7e3b11ae1-goog
 
