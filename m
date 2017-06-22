@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFD3A1FA7B
-	for <e@80x24.org>; Thu, 22 Jun 2017 18:44:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5DE21FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 18:44:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753689AbdFVSo3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 14:44:29 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:34523 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753649AbdFVSo0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 14:44:26 -0400
-Received: by mail-pf0-f173.google.com with SMTP id s66so12519008pfs.1
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:44:26 -0700 (PDT)
+        id S1753696AbdFVSoc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 14:44:32 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35575 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753649AbdFVSoa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 14:44:30 -0400
+Received: by mail-pf0-f180.google.com with SMTP id c73so12563603pfk.2
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:44:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XI2EPrNt8vCjeXOeVgWvYNwcHEU+mUn7GIRLI6/LgBs=;
-        b=lgukg3T2hdWQ5Do3L5nMNE3IJs2ZRRQhBkuPTWJjTyPS1/VltbvbbCimWdCeVNHKjl
-         KYF0NrxvcNTYBLS4+YmbntlQpzZe47knWwyPdjmHElIsjZUzHXgUsra/2mvIUGfllPN1
-         ecRNkuaUVZIkL7Zu06oEyGt4D+BKIqTx3Ssmt0VKNBG3i/j+6lvVua5mKMdLUyBhCXkI
-         sJEvoCCIGGNrR3Re6zG3d0wgN5ZrYI8tMK9yFdqdEl9MkLYaCKGlJ7DumnTTZ28UuBEP
-         Y53VRHeuIbe/6L3REZRl4ZCZo1vPZqspqumwbvBioLz+yfndBetOrWwnizLT/3ETn9AD
-         3NhQ==
+        bh=eTOiXeyrj/sL+9Z85EuKOmCL9NJ1+7QYfQc/cg72Vt8=;
+        b=XZCwBF3kyiaX5N2rTLUvDnLbVhpVYZ4oN9fxH/yCTKpzc6WrX+b6jgYxKKpyC/KsKk
+         BFsEfYNF9tRTLfReY5QePeKRHmHx2dERsuxvv1ihnRlV1iqn2IyDDAykT2npQppHLjDu
+         jJy5Bu7SFnEI1UYxd6t8UZpsHD3sJlPi+HcgtMSB0XXzq6+MeMuC1Z17Pn07G+tCkG5z
+         7q/bUAXO1hfyOKcagQVLQ7n64Ellyq2Tam1hJuL81dvBBOVdul+m+Ug7FcZXqKMAgVvi
+         h3F/fJxO8RypmyYRtBAXb3aan2EytruMScZWIhLF1Q+wu/tRiWyeKlr4g7vqtdkSH5MS
+         QEsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=XI2EPrNt8vCjeXOeVgWvYNwcHEU+mUn7GIRLI6/LgBs=;
-        b=p780Wxy/ZzLEELS0qm/DK8CGwQ0iZc2HkdMbNrgfOD1wEjgr7QFfJvT5pkhGqW5Q1U
-         TuCo+JYBdoEcSeUea4U2+uLN0WkUm43p+g7dfJFlRQAH+x4yl1hk0iCnQ4/FsCrwcEJU
-         pVQvJVxbKPvK+fiP3zqu3R+DqsTyr/2MkdrzM1iuxVolP/gF4whwoQxM0DL/A3O84cNu
-         MIr85CZUI4dZ8TQjS4Jm9m1RSTg62fckJKHUgtLAN/NrSxkI1Atl7hy9o/GYwVNm8fjs
-         Lon/mfcSMbHkOXpi/TdSu7/3pnUjc9uoeIXcEoDcg5ZjriuMt5iHusPMbct9IEjEKCXz
-         SOqw==
-X-Gm-Message-State: AKS2vOyaedvuR5nCjQ57ecrnI9bWgkRdktm1sRPY1Reyr3TNuoW9ZGIk
-        tos/X6YWs+WUqMLSbQ7k4g==
-X-Received: by 10.98.252.77 with SMTP id e74mr4097727pfh.42.1498157059960;
-        Thu, 22 Jun 2017 11:44:19 -0700 (PDT)
+        bh=eTOiXeyrj/sL+9Z85EuKOmCL9NJ1+7QYfQc/cg72Vt8=;
+        b=az5Eklsjx4MhZSVQ95uw4pqf3tGMfolDMRP/Pp+F41NHnru8BOxsjYquGnFxWHC2hI
+         dOzkvmlmWxmSbnDnFs/tHMRFFDUFOafuPPaX4A84dLeZpl01v/F1SJ4vbr1KkXBgOA6u
+         FHGGUiUvIscvIcxdgqXvWFv8s6P3PZ3311BgVnNPYB/iIzkWF+/okWLdYvB/AYP2VUd3
+         k5g6UljNgM/0x9sDlaJjZDc6lTPvkVIpyrnZCMLe35cxfUL+dumx1SeB6cga+sY1SqWd
+         xdQSPVnY4OJJZ4Q7fd1mwJQJJs//7Kvo3ArE+L2bFolfVagZ6GdzLcWf/niAUD+ORUfL
+         B9KA==
+X-Gm-Message-State: AKS2vOzN3CICxMSzRHoDxjZRPMn2V9zmD6FDx+cMTd7fhtP6DCB3h7eF
+        jMFpyBb7YTI1fHKtXFHMVA==
+X-Received: by 10.84.179.193 with SMTP id b59mr4418999plc.3.1498157068422;
+        Thu, 22 Jun 2017 11:44:28 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id g78sm5222211pfb.122.2017.06.22.11.44.18
+        by smtp.gmail.com with ESMTPSA id g78sm5222211pfb.122.2017.06.22.11.44.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 11:44:18 -0700 (PDT)
+        Thu, 22 Jun 2017 11:44:27 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v4 11/20] path: worktree_git_path() should not use file relocation
-Date:   Thu, 22 Jun 2017 11:43:39 -0700
-Message-Id: <20170622184348.56497-12-bmwill@google.com>
+Subject: [PATCH v4 16/20] submodule-config: store the_submodule_cache in the_repository
+Date:   Thu, 22 Jun 2017 11:43:44 -0700
+Message-Id: <20170622184348.56497-17-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.704.gde00cce3c-goog
 In-Reply-To: <20170622184348.56497-1-bmwill@google.com>
 References: <20170620191951.84791-1-bmwill@google.com>
@@ -66,64 +66,245 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git_path is a convenience function that usually produces a string
-$GIT_DIR/<path>.  Since v2.5.0-rc0~143^2~35 (git_path(): be aware of
-file relocation in $GIT_DIR, 2014-11-30), as a side benefit callers
-get support for path relocation variables like $GIT_OBJECT_DIRECTORY:
-
-- git_path("index") is $GIT_INDEX_FILE when set
-- git_path("info/grafts") is $GIT_GRAFTS_FILE when set
-- git_path("objects/<foo>") is $GIT_OBJECT_DIRECTORY/<foo> when set
-- git_path("hooks/<foo>") is <foo> under core.hookspath when set
-- git_path("refs/<foo>") etc (see path.c::common_list) is relative
-  to $GIT_COMMON_DIR instead of $GIT_DIR
-
-worktree_git_path, by comparison, is designed to resolve files in a
-specific worktree's git dir.  Unfortunately, it shares code with
-git_path and performs the same relocation.  The result is that paths
-that are meant to be relative to the specified worktree's git dir end
-up replaced by paths from environment variables within the current git
-dir.
-
-Luckily, no current callers pass such arguments.  The relocation was
-noticed when testing the result of merging two patches under review,
-one of which introduces a caller:
-
-* The first patch made git prune check the index file in each
-  worktree's git dir (using worktree_git_path(wt, "index")) for
-  objects not to prune.  This would trigger the unwanted relocation
-  when GIT_INDEX_FILE is set, causing objects reachable from the
-  index to be pruned.
-
-* The second patch simplified the relocation logic for index,
-  info/grafts, objects, and hooks to happen unconditionally instead of
-  based on whether environment or configuration variables are set.
-  This caused the relocation to trigger even when GIT_INDEX_FILE is
-  not set.
-
-[jn: rewrote commit message; skipping all relocation instead of just
- GIT_INDEX_FILE]
+Refactor how 'the_submodule_cache' is handled so that it can be stored
+inside of a repository object.  Also migrate 'the_submodule_cache' to be
+stored in 'the_repository'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- path.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ repository.c       |  6 +++++
+ repository.h       |  4 ++++
+ submodule-config.c | 70 ++++++++++++++++++++++++++++++++++++++++--------------
+ submodule-config.h | 10 ++++++++
+ 4 files changed, 72 insertions(+), 18 deletions(-)
 
-diff --git a/path.c b/path.c
-index 76a872297..2bdd0044f 100644
---- a/path.c
-+++ b/path.c
-@@ -411,7 +411,8 @@ static void do_git_path(const struct repository *repo,
- 		strbuf_addch(buf, '/');
- 	gitdir_len = buf->len;
- 	strbuf_vaddf(buf, fmt, args);
--	adjust_git_path(repo, buf, gitdir_len);
-+	if (!wt)
-+		adjust_git_path(repo, buf, gitdir_len);
- 	strbuf_cleanup_path(buf);
+diff --git a/repository.c b/repository.c
+index 6f6f4d91e..358c17517 100644
+--- a/repository.c
++++ b/repository.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "repository.h"
+ #include "config.h"
++#include "submodule-config.h"
+ 
+ /* The main repository */
+ static struct repository the_repo;
+@@ -164,6 +165,11 @@ void repo_clear(struct repository *repo)
+ 		repo->config = NULL;
+ 	}
+ 
++	if (repo->submodule_cache) {
++		submodule_cache_free(repo->submodule_cache);
++		repo->submodule_cache = NULL;
++	}
++
+ 	if (repo->index) {
+ 		discard_index(repo->index);
+ 		free(repo->index);
+diff --git a/repository.h b/repository.h
+index 3a41568aa..c40738ceb 100644
+--- a/repository.h
++++ b/repository.h
+@@ -3,6 +3,7 @@
+ 
+ struct config_set;
+ struct index_state;
++struct submodule_cache;
+ 
+ struct repository {
+ 	/* Environment */
+@@ -50,6 +51,9 @@ struct repository {
+ 	 */
+ 	struct config_set *config;
+ 
++	/* Repository's submodule config as defined by '.gitmodules' */
++	struct submodule_cache *submodule_cache;
++
+ 	/*
+ 	 * Repository's in-memory index.
+ 	 * 'repo_read_index()' can be used to populate 'index'.
+diff --git a/submodule-config.c b/submodule-config.c
+index d8f8d5ea3..37cfcceb9 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "repository.h"
+ #include "config.h"
+ #include "submodule-config.h"
+ #include "submodule.h"
+@@ -15,6 +16,7 @@
+ struct submodule_cache {
+ 	struct hashmap for_path;
+ 	struct hashmap for_name;
++	unsigned initialized:1;
+ };
+ 
+ /*
+@@ -31,9 +33,6 @@ enum lookup_type {
+ 	lookup_path
+ };
+ 
+-static struct submodule_cache the_submodule_cache;
+-static int is_cache_init;
+-
+ static int config_path_cmp(const struct submodule_entry *a,
+ 			   const struct submodule_entry *b,
+ 			   const void *unused)
+@@ -50,10 +49,16 @@ static int config_name_cmp(const struct submodule_entry *a,
+ 	       hashcmp(a->config->gitmodules_sha1, b->config->gitmodules_sha1);
  }
  
+-static void cache_init(struct submodule_cache *cache)
++static struct submodule_cache *submodule_cache_alloc(void)
++{
++	return xcalloc(1, sizeof(struct submodule_cache));
++}
++
++static void submodule_cache_init(struct submodule_cache *cache)
+ {
+ 	hashmap_init(&cache->for_path, (hashmap_cmp_fn) config_path_cmp, 0);
+ 	hashmap_init(&cache->for_name, (hashmap_cmp_fn) config_name_cmp, 0);
++	cache->initialized = 1;
+ }
+ 
+ static void free_one_config(struct submodule_entry *entry)
+@@ -65,11 +70,14 @@ static void free_one_config(struct submodule_entry *entry)
+ 	free(entry->config);
+ }
+ 
+-static void cache_free(struct submodule_cache *cache)
++static void submodule_cache_clear(struct submodule_cache *cache)
+ {
+ 	struct hashmap_iter iter;
+ 	struct submodule_entry *entry;
+ 
++	if (!cache->initialized)
++		return;
++
+ 	/*
+ 	 * We iterate over the name hash here to be symmetric with the
+ 	 * allocation of struct submodule entries. Each is allocated by
+@@ -81,6 +89,13 @@ static void cache_free(struct submodule_cache *cache)
+ 
+ 	hashmap_free(&cache->for_path, 1);
+ 	hashmap_free(&cache->for_name, 1);
++	cache->initialized = 0;
++}
++
++void submodule_cache_free(struct submodule_cache *cache)
++{
++	submodule_cache_clear(cache);
++	free(cache);
+ }
+ 
+ static unsigned int hash_sha1_string(const unsigned char *sha1,
+@@ -494,43 +509,62 @@ static const struct submodule *config_from(struct submodule_cache *cache,
+ 	return submodule;
+ }
+ 
+-static void ensure_cache_init(void)
++static void submodule_cache_check_init(struct repository *repo)
+ {
+-	if (is_cache_init)
++	if (repo->submodule_cache && repo->submodule_cache->initialized)
+ 		return;
+ 
+-	cache_init(&the_submodule_cache);
+-	is_cache_init = 1;
++	if (!repo->submodule_cache)
++		repo->submodule_cache = submodule_cache_alloc();
++
++	submodule_cache_init(repo->submodule_cache);
+ }
+ 
+-int parse_submodule_config_option(const char *var, const char *value)
++int submodule_config_option(struct repository *repo,
++			    const char *var, const char *value)
+ {
+ 	struct parse_config_parameter parameter;
+-	parameter.cache = &the_submodule_cache;
++
++	submodule_cache_check_init(repo);
++
++	parameter.cache = repo->submodule_cache;
+ 	parameter.treeish_name = NULL;
+ 	parameter.gitmodules_sha1 = null_sha1;
+ 	parameter.overwrite = 1;
+ 
+-	ensure_cache_init();
+ 	return parse_config(var, value, &parameter);
+ }
+ 
++int parse_submodule_config_option(const char *var, const char *value)
++{
++	return submodule_config_option(the_repository, var, value);
++}
++
+ const struct submodule *submodule_from_name(const unsigned char *treeish_name,
+ 		const char *name)
+ {
+-	ensure_cache_init();
+-	return config_from(&the_submodule_cache, treeish_name, name, lookup_name);
++	submodule_cache_check_init(the_repository);
++	return config_from(the_repository->submodule_cache, treeish_name, name, lookup_name);
+ }
+ 
+ const struct submodule *submodule_from_path(const unsigned char *treeish_name,
+ 		const char *path)
+ {
+-	ensure_cache_init();
+-	return config_from(&the_submodule_cache, treeish_name, path, lookup_path);
++	submodule_cache_check_init(the_repository);
++	return config_from(the_repository->submodule_cache, treeish_name, path, lookup_path);
++}
++
++const struct submodule *submodule_from_cache(struct repository *repo,
++					     const unsigned char *treeish_name,
++					     const char *key)
++{
++	submodule_cache_check_init(repo);
++	return config_from(repo->submodule_cache, treeish_name,
++			   key, lookup_path);
+ }
+ 
+ void submodule_free(void)
+ {
+-	cache_free(&the_submodule_cache);
+-	is_cache_init = 0;
++	if (the_repository->submodule_cache)
++		submodule_cache_clear(the_repository->submodule_cache);
+ }
+diff --git a/submodule-config.h b/submodule-config.h
+index d434ecdb4..bc45a25e8 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -22,14 +22,24 @@ struct submodule {
+ 	int recommend_shallow;
+ };
+ 
++struct submodule_cache;
++struct repository;
++
++extern void submodule_cache_free(struct submodule_cache *cache);
++
+ extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
+ extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
+ extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
+ extern int parse_submodule_config_option(const char *var, const char *value);
++extern int submodule_config_option(struct repository *repo,
++				   const char *var, const char *value);
+ extern const struct submodule *submodule_from_name(
+ 		const unsigned char *commit_or_tree, const char *name);
+ extern const struct submodule *submodule_from_path(
+ 		const unsigned char *commit_or_tree, const char *path);
++extern const struct submodule *submodule_from_cache(struct repository *repo,
++						    const unsigned char *treeish_name,
++						    const char *key);
+ extern int gitmodule_sha1_from_commit(const unsigned char *commit_sha1,
+ 				      unsigned char *gitmodules_sha1,
+ 				      struct strbuf *rev);
 -- 
 2.13.1.704.gde00cce3c-goog
 
