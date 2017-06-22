@@ -2,64 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,TVD_SPACE_RATIO,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A39CB20282
-	for <e@80x24.org>; Thu, 22 Jun 2017 10:08:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3252820282
+	for <e@80x24.org>; Thu, 22 Jun 2017 10:27:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753179AbdFVKIS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 06:08:18 -0400
-Received: from smtpq5.tb.mail.iss.as9143.net ([212.54.42.168]:60574 "EHLO
-        smtpq5.tb.mail.iss.as9143.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753119AbdFVKIP (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 22 Jun 2017 06:08:15 -0400
-X-Greylist: delayed 1090 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Jun 2017 06:08:15 EDT
-Received: from [212.54.42.136] (helo=smtp12.tb.mail.iss.as9143.net)
-        by smtpq5.tb.mail.iss.as9143.net with esmtp (Exim 4.86_2)
-        (envelope-from <git@jessiehernandez.com>)
-        id 1dNykW-0008DT-96
-        for git@vger.kernel.org; Thu, 22 Jun 2017 11:50:04 +0200
-Received: from 535464ab.cm-6-5b.dynamic.ziggo.nl ([83.84.100.171] helo=jessiehernandez.com)
-        by smtp12.tb.mail.iss.as9143.net with esmtp (Exim 4.86_2)
-        (envelope-from <git@jessiehernandez.com>)
-        id 1dNykW-0004w5-7F
-        for git@vger.kernel.org; Thu, 22 Jun 2017 11:50:04 +0200
-Received: by jessiehernandez.com (Postfix, from userid 112)
-        id 1CA13223B5; Thu, 22 Jun 2017 11:50:02 +0200 (CEST)
-Received: from mail.jessiehernandez.com (localhost [127.0.0.1])
-        by jessiehernandez.com (Postfix) with ESMTP id 29C1C222E7
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:50:01 +0200 (CEST)
-Received: from 217.150.190.17
-        (SquirrelMail authenticated user jessie)
-        by mail.jessiehernandez.com with HTTP;
-        Thu, 22 Jun 2017 11:50:01 +0200
-Message-ID: <7c277ac1cfb40b9b362d468a94dfb4fe.squirrel@mail.jessiehernandez.com>
-Date:   Thu, 22 Jun 2017 11:50:01 +0200
-Subject: 
-From:   "Jessie Hernandez" <git@jessiehernandez.com>
-To:     git@vger.kernel.org
-Reply-To: git@jessiehernandez.com
-User-Agent: SquirrelMail/1.4.23 [SVN]
-MIME-Version: 1.0
-Content-Type:   text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-Priority: 3 (Normal)
-Importance: Normal
-X-SourceIP: 83.84.100.171
-X-Ziggo-spambar: /
-X-Ziggo-spamscore: 0.0
-X-Ziggo-spamreport: CMAE Analysis: v=2.2 cv=U7TiNaju c=1 sm=1 tr=0 a=eF+bieWKcg1lgGMc7s/D7A==:17 a=8nJEP1OIZ-IA:10 a=LWSFodeU3zMA:10 a=HJPDXzXm65z8m67i2L0A:9 a=wPNLvfGTeEIA:10
- none
-X-Ziggo-Spam-Status: No
+        id S1753177AbdFVK1B (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 06:27:01 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:53127 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752960AbdFVK07 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 06:26:59 -0400
+Received: from lindisfarne.localdomain ([92.22.42.39])
+        by smtp.talktalk.net with SMTP
+        id NzK5dhmIPxR4bNzKEdWEVN; Thu, 22 Jun 2017 11:26:58 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1498127218; bh=VNjSRKSCazG1jWg34F4ClTtLbwE4GkkCSt/sF5z6BNk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=s3oFh0i/qhp7KBUu2hkS7LEq7W6UhKboy8v5bChWPAw60k0CT3R/0AifbBxCgOQ+N
+         6OjQN8de0rCEOgnXjkJAKJBydMod8/WIbkHAycJhaVCGArC3kNZ6o9zpLdzVJFbcGD
+         5uRCNL+ZaSQlNkhrlLUSDT3xXNGn1D1X4U2FLueg=
+X-Originating-IP: [92.22.42.39]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
+ a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=evINK-nbAAAA:8 a=TKfsREZqI9Y0XWvoPdYA:9
+ a=LsMHBw6SYadqt1jD:21 a=81HVJKmb7TdT7A2E:21 a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 2/5] Git::unquote_path() Handle '\a'
+Date:   Thu, 22 Jun 2017 11:26:19 +0100
+Message-Id: <20170622102622.26147-3-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170622102622.26147-1-phillip.wood@talktalk.net>
+References: <20170622102622.26147-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfKNYu7KyeyZLH+iB14yhrlwTll0RXVMyy2NM6YQF5MJLQ9Dez2qXsDjY70c9FtTJs/2scuoW01vjpBeCqlN4bCqpJCPChyrQOJmIP5M8qoY/XYoSsgyP
+ GODX6g3IYloPime6EBH3XC5yU41Ntazgwp5YA+IpmEg1f2IWtNiVKJBr6je7EYo9YdTEFyWnbFxuX9MwS1qOKx+h1WR/g0Me2RfDE1IRY5WkH8ttgr7YG8bC
+ 5SoT3+GldwqiGlE6VxR9Pg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-subscribe git
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
+The version copied from git-add--interactive did not handle quoted
+paths containing '\a'.
 
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ perl/Git.pm | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 8afde87fc8162271ba178e0fff3e921f070ac621..889bf88cfcd34136e24e166fb3b72cced6debf9d 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -1461,6 +1461,7 @@ when not using -z
+ 
+ {
+ 	my %unquote_map = (
++		"a" => chr(7),
+ 		"b" => chr(8),
+ 		"t" => chr(9),
+ 		"n" => chr(10),
+@@ -1487,7 +1488,7 @@ when not using -z
+ 					$_ = $2;
+ 					last;
+ 				}
+-				if (/^([\\\042btnvfr])(.*)$/) {
++				if (/^([\\\042abtnvfr])(.*)$/) {
+ 					$retval .= $unquote_map{$1};
+ 					$_ = $2;
+ 					last;
+-- 
+2.13.0
 
