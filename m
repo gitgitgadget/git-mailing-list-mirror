@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C18F20401
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51AB420401
 	for <e@80x24.org>; Thu, 22 Jun 2017 00:40:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752128AbdFVAkg (ORCPT <rfc822;e@80x24.org>);
+        id S1752142AbdFVAkj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 20:40:39 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33799 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751641AbdFVAkg (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 21 Jun 2017 20:40:36 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:36619 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751689AbdFVAkf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 20:40:35 -0400
-Received: by mail-pf0-f180.google.com with SMTP id q86so866826pfl.3
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 17:40:34 -0700 (PDT)
+Received: by mail-pf0-f181.google.com with SMTP id s66so897098pfs.1
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 17:40:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=ZusLP1A+keG87RxOlHuSpJt65Tw4DQQPwYDkY7v3JeU=;
-        b=WiYfgZerYfMJOsTQvfO5zmYrNCoq5uuBG1rqrXAzizNnwtbSoWc4+JIVfrKbRjCWX2
-         8hXrgcwry6ZDhzG7CUSgw3TIJ5MiaPDbX80YMZ6c2aQ/IyylmPDESUa4L5r5LImBrgxv
-         LBn3EbJAJwsdfIlUrm6PFOqJYmyUIZfsGZA5hJ/arBFBHEpdB0VCBFZMrk75feObhggo
-         pWdyc+0F0DXXDWnrVw4qat7c+NpdJwM1TNKQeYe2pPHDlL109KF4j/cGgF+7m7p3/1ed
-         v6vsqpUfYNMS49Lk7kKmpjkaJXvX/O6i3XgoBh8SSu2I5thOz/S5DmcNoyOFEjITW5kN
-         0wXg==
+        bh=IZOH5Y911mJ1FPa/hMFulkj8plY4E23FMCMKH44A8lI=;
+        b=UrIPrb1DrP/VHtDm3R3DTHqQfQkKD3ITR7QTnLFlpJVjB/8YZ2cCKiYLFkov+tRjIY
+         nbDHE4lYXUvY/+RfqGekjY8KJMJLsDrmY0UJ2OSfTPqbLjSXoTscpRtMzPxSK/FmGm5g
+         FKQ9iG8V0PmSWBmL1qItMhwVEgNaH7fpzUs5rB6XlRteXumJWVN4tAYWRtgG9edGyJgD
+         RXtk5Yl0j4j1164qe2Ix/pby8l3krY9SmLv0zlAwaRSo0YLjb4H2KGJNxUkCha03arFv
+         GT3KPTlbQ8F6+n3kJpSufgQA3WsPsJ8HLSecsm65YOhnCBbCCAEmVtDItWVOfanRNRCV
+         qCwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=ZusLP1A+keG87RxOlHuSpJt65Tw4DQQPwYDkY7v3JeU=;
-        b=hsCVZ6jdne0AIQSVnp83bLT/vBsS5SQAr8LINuhfJa+xxHmPtHggtA+fnCxw+32Zoi
-         QSE8+tdlWxp/GVW7ze8cTPkkuG2D6Xe8+JgP2945eWRiCPvRh61wSINSwMW4Z75t1hUN
-         mRoGBrDnXwuXdFYppSuDNAf6ThMIuYu49WhmexpUXDQwnvt3rGWobP3aHyHjK2Hxx18Q
-         jt5KAIDhJC+g1VP59qwOdoLbk9hbxMgpkKkdgXe8eytuCErjEYeZmQrncNetGQItta3m
-         ufaW7deNLfVSqM2LRofCNOMKKVuS0tdV1YmqzLEGNjflhbLwUh9djaikwlj7V+g5HtOY
-         XINg==
-X-Gm-Message-State: AKS2vOwlmBVuRvMvqzZWl0IcLVK1qG7UI3xCRMqf9iSjMb8pVeF9dMl4
-        tfUI55zptVPqqGU5TKG4+Q==
-X-Received: by 10.84.236.6 with SMTP id q6mr45998615plk.146.1498092033868;
-        Wed, 21 Jun 2017 17:40:33 -0700 (PDT)
+        bh=IZOH5Y911mJ1FPa/hMFulkj8plY4E23FMCMKH44A8lI=;
+        b=D3NP5kIUd+xrY5OyUL2k6T7YWfElSVtsR+Qr8mxC03T5x6f9geCLwVrLxNiiHTfZ0k
+         NY5fXCFcUobdc4uqnX6bbcMxlNmAZwTSG1AMoE4SMQ+k2IRGVRzajJm5slNCfugH1t6W
+         sRlvTqFU/lcVrLZInQFtr2+Ta7PH1hCFD3+FeUFWUeuG4r67+mohdqKEiv6XTOjgArBf
+         jilceTLfR1cKuoSYzvGkPws3Tp6PrqNpJzDl41qNQUGaK7Mni3chCYhtkAfc8kS+Xi9u
+         WJiRtU3BW3CvroMzibLcUOpOEfFITmtRyZkI1HalSxDb2AzMzuxF4PVfTZ6usdYSPcGx
+         NHdA==
+X-Gm-Message-State: AKS2vOwkkeKo1Gt1LVj0ZqCqOgzcOBq1+f/6HVsdeyu/mI6F2oaGovvV
+        32Vtlz0nY0TFB8gK9MKcqw==
+X-Received: by 10.84.143.70 with SMTP id 64mr44587708ply.36.1498092035585;
+        Wed, 21 Jun 2017 17:40:35 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id c205sm34658213pfb.74.2017.06.21.17.40.31
+        by smtp.gmail.com with ESMTPSA id c205sm34658213pfb.74.2017.06.21.17.40.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 21 Jun 2017 17:40:31 -0700 (PDT)
+        Wed, 21 Jun 2017 17:40:34 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Subject: [PATCH v5 2/8] sha1_file: rename LOOKUP_UNKNOWN_OBJECT
-Date:   Wed, 21 Jun 2017 17:40:18 -0700
-Message-Id: <87f05a9575974b091922b1bc234b177e862ea222.1498091579.git.jonathantanmy@google.com>
+Subject: [PATCH v5 3/8] sha1_file: rename LOOKUP_REPLACE_OBJECT
+Date:   Wed, 21 Jun 2017 17:40:19 -0700
+Message-Id: <243b73b743c3b9c38570063b72daf0db117c5f13.1498091579.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1-goog
 In-Reply-To: <cover.1498091579.git.jonathantanmy@google.com>
 References: <cover.1498091579.git.jonathantanmy@google.com>
@@ -64,87 +64,148 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The LOOKUP_UNKNOWN_OBJECT flag was introduced in commit 46f0344
-("sha1_file: support reading from a loose object of unknown type",
-2015-05-03) in order to support a feature in cat-file subsequently
-introduced in commit 39e4ae3 ("cat-file: teach cat-file a
-'--allow-unknown-type' option", 2015-05-03). Despite its name and
-location in cache.h, this flag is used neither in
-read_sha1_file_extended() nor in any of the lookup functions, but used
-only in sha1_object_info_extended().
+The LOOKUP_REPLACE_OBJECT flag controls whether the
+lookup_replace_object() function is invoked by
+sha1_object_info_extended(), read_sha1_file_extended(), and
+lookup_replace_object_extended(), but it is not immediately clear which
+functions accept that flag.
 
-Therefore rename this flag to OBJECT_INFO_ALLOW_UNKNOWN_TYPE, taking the
-name of the cat-file flag that invokes this feature, and move it closer
-to the declaration of sha1_object_info_extended(). Also add
-documentation for this flag.
+Therefore restrict this flag to only sha1_object_info_extended(),
+renaming it appropriately to OBJECT_INFO_LOOKUP_REPLACE and adding some
+documentation. Update read_sha1_file_extended() to have a boolean
+parameter instead, and delete lookup_replace_object_extended().
 
-OBJECT_INFO_ALLOW_UNKNOWN_TYPE is defined to 2, not 1, to avoid
-conflicting with LOOKUP_REPLACE_OBJECT. Avoidance of this conflict is
-necessary because sha1_object_info_extended() supports both flags.
+parse_sha1_header() also passes this flag to
+parse_sha1_header_extended() since commit 46f0344 ("sha1_file: support
+reading from a loose object of unknown type", 2015-05-03), but that has
+had no effect since that commit. Therefore this patch also removes this
+flag from that invocation.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/cat-file.c | 2 +-
- cache.h            | 3 ++-
- sha1_file.c        | 4 ++--
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ builtin/cat-file.c |  5 +++--
+ cache.h            | 17 ++++++-----------
+ sha1_file.c        | 14 +++++++++-----
+ 3 files changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 4bffd7a2d..209374b3c 100644
+index 209374b3c..a58b8c820 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -60,7 +60,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+@@ -56,7 +56,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 	struct object_context obj_context;
+ 	struct object_info oi = OBJECT_INFO_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+-	unsigned flags = LOOKUP_REPLACE_OBJECT;
++	unsigned flags = OBJECT_INFO_LOOKUP_REPLACE;
  	const char *path = force_path;
  
  	if (unknown_type)
--		flags |= LOOKUP_UNKNOWN_OBJECT;
-+		flags |= OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
+@@ -337,7 +337,8 @@ static void batch_object_write(const char *obj_name, struct batch_options *opt,
+ 	struct strbuf buf = STRBUF_INIT;
  
- 	if (get_sha1_with_context(obj_name, GET_SHA1_RECORD_PATH,
- 				  oid.hash, &obj_context))
+ 	if (!data->skip_object_info &&
+-	    sha1_object_info_extended(data->oid.hash, &data->info, LOOKUP_REPLACE_OBJECT) < 0) {
++	    sha1_object_info_extended(data->oid.hash, &data->info,
++				      OBJECT_INFO_LOOKUP_REPLACE) < 0) {
+ 		printf("%s missing\n",
+ 		       obj_name ? obj_name : oid_to_hex(&data->oid));
+ 		fflush(stdout);
 diff --git a/cache.h b/cache.h
-index 4d92aae0e..e2ec45dfe 100644
+index e2ec45dfe..a3631b237 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1207,7 +1207,6 @@ extern char *xdg_cache_home(const char *filename);
+@@ -1205,12 +1205,12 @@ extern char *xdg_config_home(const char *filename);
+  */
+ extern char *xdg_cache_home(const char *filename);
  
- /* object replacement */
- #define LOOKUP_REPLACE_OBJECT 1
--#define LOOKUP_UNKNOWN_OBJECT 2
- extern void *read_sha1_file_extended(const unsigned char *sha1, enum object_type *type, unsigned long *size, unsigned flag);
+-/* object replacement */
+-#define LOOKUP_REPLACE_OBJECT 1
+-extern void *read_sha1_file_extended(const unsigned char *sha1, enum object_type *type, unsigned long *size, unsigned flag);
++extern void *read_sha1_file_extended(const unsigned char *sha1,
++				     enum object_type *type,
++				     unsigned long *size, int lookup_replace);
  static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size)
  {
-@@ -1866,6 +1865,8 @@ struct object_info {
+-	return read_sha1_file_extended(sha1, type, size, LOOKUP_REPLACE_OBJECT);
++	return read_sha1_file_extended(sha1, type, size, 1);
+ }
+ 
+ /*
+@@ -1232,13 +1232,6 @@ static inline const unsigned char *lookup_replace_object(const unsigned char *sh
+ 	return do_lookup_replace_object(sha1);
+ }
+ 
+-static inline const unsigned char *lookup_replace_object_extended(const unsigned char *sha1, unsigned flag)
+-{
+-	if (!(flag & LOOKUP_REPLACE_OBJECT))
+-		return sha1;
+-	return lookup_replace_object(sha1);
+-}
+-
+ /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
+ extern int sha1_object_info(const unsigned char *, unsigned long *);
+ extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
+@@ -1865,6 +1858,8 @@ struct object_info {
   */
  #define OBJECT_INFO_INIT {NULL}
  
-+/* Allow reading from a loose object file of unknown/bogus type */
-+#define OBJECT_INFO_ALLOW_UNKNOWN_TYPE 2
++/* Invoke lookup_replace_object() on the given hash */
++#define OBJECT_INFO_LOOKUP_REPLACE 1
+ /* Allow reading from a loose object file of unknown/bogus type */
+ #define OBJECT_INFO_ALLOW_UNKNOWN_TYPE 2
  extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
- extern int packed_object_info(struct packed_git *pack, off_t offset, struct object_info *);
- 
 diff --git a/sha1_file.c b/sha1_file.c
-index a52b27541..ad04ea8e0 100644
+index ad04ea8e0..71296e6cd 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -1964,7 +1964,7 @@ static int parse_sha1_header_extended(const char *hdr, struct object_info *oi,
- 	 * we're obtaining the type using '--allow-unknown-type'
- 	 * option.
- 	 */
--	if ((flags & LOOKUP_UNKNOWN_OBJECT) && (type < 0))
-+	if ((flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE) && (type < 0))
- 		type = 0;
- 	else if (type < 0)
- 		die("invalid object type");
-@@ -2941,7 +2941,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+@@ -2002,7 +2002,7 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
+ 	struct object_info oi = OBJECT_INFO_INIT;
+ 
+ 	oi.sizep = sizep;
+-	return parse_sha1_header_extended(hdr, &oi, LOOKUP_REPLACE_OBJECT);
++	return parse_sha1_header_extended(hdr, &oi, 0);
+ }
+ 
+ static void *unpack_sha1_file(void *map, unsigned long mapsize, enum object_type *type, unsigned long *size, const unsigned char *sha1)
+@@ -2969,7 +2969,9 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 	struct cached_object *co;
+ 	struct pack_entry e;
+ 	int rtype;
+-	const unsigned char *real = lookup_replace_object_extended(sha1, flags);
++	const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
++				    lookup_replace_object(sha1) :
++				    sha1;
+ 
+ 	co = find_cached_object(real);
+ 	if (co) {
+@@ -3025,7 +3027,8 @@ int sha1_object_info(const unsigned char *sha1, unsigned long *sizep)
+ 
+ 	oi.typep = &type;
+ 	oi.sizep = sizep;
+-	if (sha1_object_info_extended(sha1, &oi, LOOKUP_REPLACE_OBJECT) < 0)
++	if (sha1_object_info_extended(sha1, &oi,
++				      OBJECT_INFO_LOOKUP_REPLACE) < 0)
  		return -1;
- 	if (oi->disk_sizep)
- 		*oi->disk_sizep = mapsize;
--	if ((flags & LOOKUP_UNKNOWN_OBJECT)) {
-+	if ((flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE)) {
- 		if (unpack_sha1_header_to_strbuf(&stream, map, mapsize, hdr, sizeof(hdr), &hdrbuf) < 0)
- 			status = error("unable to unpack %s header with --allow-unknown-type",
- 				       sha1_to_hex(sha1));
+ 	return type;
+ }
+@@ -3107,13 +3110,14 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
+ void *read_sha1_file_extended(const unsigned char *sha1,
+ 			      enum object_type *type,
+ 			      unsigned long *size,
+-			      unsigned flag)
++			      int lookup_replace)
+ {
+ 	void *data;
+ 	const struct packed_git *p;
+ 	const char *path;
+ 	struct stat st;
+-	const unsigned char *repl = lookup_replace_object_extended(sha1, flag);
++	const unsigned char *repl = lookup_replace ? lookup_replace_object(sha1)
++						   : sha1;
+ 
+ 	errno = 0;
+ 	data = read_object(repl, type, size);
 -- 
 2.13.1.611.g7e3b11ae1-goog
 
