@@ -2,176 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2392C20802
-	for <e@80x24.org>; Thu, 22 Jun 2017 21:45:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A0D620802
+	for <e@80x24.org>; Thu, 22 Jun 2017 21:52:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753708AbdFVVpd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 17:45:33 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35514 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753379AbdFVVpc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 17:45:32 -0400
-Received: by mail-pf0-f176.google.com with SMTP id c73so14478991pfk.2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 14:45:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=cdH7MrzoGW1w6J8yfMhY8HknizzMIuCJXyoPqZsMSgQ=;
-        b=HarGzhmRE8bqi5q5qI4FRui5B0m91u7paqAWC5bwkN0NAOof0VATZAY2EknX4n0zRj
-         onYSHtsCok8+yzOoegI8ofXos3j5BjqdA0ETrmFDvEmAkMbK+/KwO2gHXZfnzFoasy+R
-         bzdcQmnrrgR0NkLS18PTCHO461K8EetrWKc9fxxxabxSM2EGEfHED/ElG3chcNXA/VMQ
-         Vf1sLf+cEWO7362VfPv2VrHd84ccwb7JWuddWL3GCyXCrXTc/BuPYwx7o25uDHSmExEz
-         U/zBHP4+sEd2e6aUvLhmuZWTs18kF8l3OyWNgm0+6XjKjIkEW8rsUkpAxhFgqxaNh6AR
-         u++w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=cdH7MrzoGW1w6J8yfMhY8HknizzMIuCJXyoPqZsMSgQ=;
-        b=Yfi464rIPbk4I5S4yYWI1xE8NHm6n/QrQ13bolDS3HRPf64Tx7PNiPJHDDF3YMqMyF
-         KCY1H7oPyMI0/lRITWpz90pNk/X7tkfGluO2lhUVDYMumw1KVmYxWo4Ls66oMZzLIswe
-         vZaxMov7OSyVB1Pq6hWipm0+z8JRNoUhk2ZI871JARj/2N6vvgVEjpFDTfgpwciubRvT
-         xtBPV64Xzp4kVOkyn5wU1wWl5V4in7IlxlUwQ7Ns9Iy25kHCP0rgp7Gx5tmLLE8x40/r
-         oINgMfLCRAeVp598ovVUR5MpMwOUvvjW/ckbsFgf7b5LmnqOfepEAz6C0YCM65tF/Ol0
-         MKTw==
-X-Gm-Message-State: AKS2vOyeUXZBeZhy8l51pyvJ88i3quP0NLQg9eofcGZGUOKsAdE16qlO
-        SKhPfQ4li+zS916x
-X-Received: by 10.84.225.5 with SMTP id t5mr5235247plj.108.1498167931473;
-        Thu, 22 Jun 2017 14:45:31 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:3100:42b2:b45a:528c])
-        by smtp.gmail.com with ESMTPSA id l85sm5731809pfj.130.2017.06.22.14.45.30
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 14:45:31 -0700 (PDT)
-Date:   Thu, 22 Jun 2017 14:45:26 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        jrnieder@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 1/3] list-objects: add filter_blob to
- traverse_commit_list
-Message-ID: <20170622144526.3f5813f5@twelve2.svl.corp.google.com>
-In-Reply-To: <20170622203615.34135-2-git@jeffhostetler.com>
-References: <20170622203615.34135-1-git@jeffhostetler.com>
-        <20170622203615.34135-2-git@jeffhostetler.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        id S1753794AbdFVVwl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 17:52:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49462 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753812AbdFVVwi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 17:52:38 -0400
+Received: (qmail 25907 invoked by uid 109); 22 Jun 2017 21:52:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Jun 2017 21:52:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6254 invoked by uid 111); 22 Jun 2017 21:52:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jun 2017 17:52:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Jun 2017 17:52:36 -0400
+Date:   Thu, 22 Jun 2017 17:52:36 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Kyle Meyer <kyle@kyleam.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
+Subject: Re: Truncating HEAD reflog on branch move
+Message-ID: <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
+References: <20170621213924.wh43i2h7v2zwihq3@genre.crustytoothpaste.net>
+ <xmqqpodxm2t8.fsf@gitster.mtv.corp.google.com>
+ <87efud7xjd.fsf@kyleam.com>
+ <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net>
+ <xmqqziczkh4k.fsf@gitster.mtv.corp.google.com>
+ <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
+ <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
+ <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
+ <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 22 Jun 2017 20:36:13 +0000
-Jeff Hostetler <git@jeffhostetler.com> wrote:
+On Thu, Jun 22, 2017 at 01:32:44PM -0700, Junio C Hamano wrote:
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
-> 
-> In preparation for partial/sparse clone/fetch where the
-> server is allowed to omit large/all blobs from the packfile,
-> teach traverse_commit_list() to take a blob filter-proc that
-> controls when blobs are shown and marked as SEEN.
-> 
-> Normally, traverse_commit_list() always marks visited blobs
-> as SEEN, so that the show_object() callback will never see
-> duplicates.  Since a single blob OID may be referenced by
-> multiple pathnames, we may not be able to decide if a blob
-> should be excluded until later pathnames have been traversed.
-> With the filter-proc, the automatic deduping is disabled.
+> I do not think command line parser does not allow "log -g
+> maint..master" so all the "limited" processing the remainder of
+> get_revision_1() does shouldn't matter.
 
-Comparing this approach (this patch and the next one) against mine [1],
-I see that this has the advantage of (in pack-objects) avoiding the
-invocation of add_preferred_base_object() on blobs that are filtered
-out, avoiding polluting the "to_pack" data structure with information
-that we do not need.
+Yeah, I don't think negative endpoints work at all, and "foo...bar"
+seems to also break (though with a confusing message). It seems clear to
+me that multiple positive endpoints don't work well either, if they have
+overlapping commits.
 
-But it does add an extra place where blobs are filtered out (besides
-add_object_entry()), which makes it harder for the reader to keep track
-of what's going on. I took a brief look to see if filtering could be
-eliminated from add_object_entry(), but that function is called from
-many places, so I couldn't tell.
+> I however think pathspec will affect simplify_commit() and suspect
+> that "git log -g -20 HEAD path" will behave differently.  Perhaps
+> the difference is "it used to use path in an unexplainable way, now
+> it ignores", in which case this is an improvement.
 
-Anyway, I think both approaches will work (this patch's and mine [1]).
+The current behavior there does seem like nonsense, because it's based
+on the fake parents. For instance, if I set up a simple two-branch case:
 
-[1] https://public-inbox.org/git/6f7934621717141ce3bb6bc05cf1d59c7900ccc5.1496432147.git.jonathantanmy@google.com/
+  commit() {
+	echo "$1" >"$1" && git add "$1" && git commit -m "$1"
+  }
 
-[snip]
+  git init repo
+  cd repo
+  commit base
+  commit master
+  git checkout -b side HEAD^
+  commit side
+  git merge --no-edit master
+  commit combined
 
->  static void process_blob(struct rev_info *revs,
->  			 struct blob *blob,
->  			 show_object_fn show,
-> +			 filter_blob_fn filter_blob,
->  			 struct strbuf *path,
->  			 const char *name,
->  			 void *cb_data)
-> @@ -24,11 +25,28 @@ static void process_blob(struct rev_info *revs,
->  		die("bad blob object");
->  	if (obj->flags & (UNINTERESTING | SEEN))
->  		return;
-> -	obj->flags |= SEEN;
->  
->  	pathlen = path->len;
->  	strbuf_addstr(path, name);
-> -	show(obj, path->buf, cb_data);
-> +	if (!filter_blob) {
-> +		/*
-> +		 * Normal processing is to imediately dedup blobs
-> +		 * during commit traversal, regardless of how many
-> +		 * times it appears in a single or multiple commits,
-> +		 * so we always set SEEN.
-> +		 */
-> +		obj->flags |= SEEN;
-> +		show(obj, path->buf, cb_data);
-> +	} else {
-> +		/*
-> +		 * Use the filter-proc to decide whether to show
-> +		 * the blob.  We only set SEEN if requested.  For
-> +		 * example, this could be used to omit a specific
-> +		 * blob until it appears with a ".git*" entryname.
-> +		 */
-> +		if (filter_blob(obj, path->buf, &path->buf[pathlen], cb_data))
-> +			obj->flags |= SEEN;
-> +	}
->  	strbuf_setlen(path, pathlen);
->  }
+Then I get:
 
-After looking at this code again, I wonder if we should explicitly
-document that SEEN will be set on the object before show(), and that
-show() is allowed to unset SEEN if it wants traversal to process that
-object again. That seems to accomplish what we want to accomplish
-without this expansion of the API.
+  $ git log -g --oneline --name-status -- master
+  f06c3cd HEAD@{1}: merge master: Merge made by the 'recursive' strategy.
+  5bf12c4 HEAD@{3}: checkout: moving from master to side
+  dfa408b HEAD@{4}: commit: master
+  A       master
 
-(This does mean that the next patch will need to call strrchr() itself,
-since show() does not provide the basename of the file name.)
+Even though only one of those commits touched master. But with my patch,
+it's also somewhat confusing. We ignore the pathspec when picking which
+commits to show, but still apply it for diffing. So:
 
-Having said that, if we keep with the current approach, I think there
-should be a show() call after the invocation to filter_blob(). That is
-much less surprising to me, and also allows us to remove some
-show_object() invocations in the next patch.
+  03cf1ad HEAD@{0}: commit: combined
+  f06c3cd HEAD@{1}: merge master: Merge made by the 'recursive' strategy.
+  277042b HEAD@{2}: commit: side
+  5bf12c4 HEAD@{3}: checkout: moving from master to side
+  dfa408b HEAD@{4}: commit: master
+  A       master
+  5bf12c4 HEAD@{5}: commit (initial): base
 
-> +void traverse_commit_list_filtered(
-> +	struct rev_info *revs,
-> +	show_commit_fn show_commit,
-> +	show_object_fn show_object,
-> +	filter_blob_fn filter_blob,
-> +	void *data)
-> +{
->  	int i;
->  	struct commit *commit;
->  	struct strbuf base;
+I think we'd want to just omit any entries that are TREESAME to their
+parents. We don't actually care about true parent rewriting (since we're
+not walking the parents), but if it happened as a side effect that would
+probably be OK.
 
-Git style is to indent to the location after the first "(", I believe.
-Likewise in the header file below.
+It looks like simplify_commit() is also where we apply bits like
+--no-merges, which doesn't work with my patch. It _also_ behaves
+nonsensically in the current code, because of course the fake reflog
+parents are never merges.
 
->  typedef void (*show_commit_fn)(struct commit *, void *);
->  typedef void (*show_object_fn)(struct object *, const char *, void *);
-> +typedef int  (*filter_blob_fn)(struct object *, const char *, const char *, void *);
+Which really makes me feel like this patch is going in the right
+direction, as it makes all of this behave conceptually like:
 
-Can this have parameter names added (especially both the const char *
-ones, otherwise indistinguishable) and, if necessary, documented?
+  while read old new etc ...
+  do
+    git show $new
+  done <.git/logs/$ref
+
+which is simple to explain and is what I'd expect (and is certainly the
+direction we went with the "diff uses real parents" commit).
+
+We just need to hit the simplify_commit() code path here.
+
+-Peff
