@@ -2,89 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E42720802
-	for <e@80x24.org>; Thu, 22 Jun 2017 22:10:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 035B020802
+	for <e@80x24.org>; Thu, 22 Jun 2017 22:10:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753397AbdFVWKM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 18:10:12 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34853 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752429AbdFVWKL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 18:10:11 -0400
-Received: by mail-pf0-f196.google.com with SMTP id s66so4796371pfs.2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 15:10:10 -0700 (PDT)
+        id S1753474AbdFVWKf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 18:10:35 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:34421 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752429AbdFVWKe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 18:10:34 -0400
+Received: by mail-pf0-f173.google.com with SMTP id s66so14682224pfs.1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 15:10:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pDeRoyRN6mvIMlF5tqWe2vamh8xrR2A/Yg46wL8r1nM=;
-        b=qvscXFqeRfTwyOlLNe4IvQoxm+vbUkWmm+xQMXifhVyzZLgRssC9GJsopPfRNtIUnD
-         RlKZbs5b0b0YtMOe7CQpecuszyHAvhwcR5l7wxGoBw5Petc3UfgJAStqehEDu5/RovGD
-         G1chjiWHGFU3cw/RzRz0XbEugyGr2X0PyIcf5EntCv/5DC8OQ2DIG7k+1UkDrBKFmH2+
-         mJhFslty2fSHsm5tWN6CH1ipUROwW9GSJZF5iZ0QrY5tabyLUH571Kj+hBBJMAnleJ2T
-         elcFavOVhEE/fBjT1FpIL0gC2FwywSRj5wEMtgguYVbbdy3gf8EBthAfoMdKYqBclN2q
-         4Sng==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=JgWHCsQ6nB+vg4eLFKJ7tY0G3EJwsWxk1CExD1Zhhrw=;
+        b=jXfx5psmYnuvq4zkhcb4JOswKHe5GVPePdXSIE+48pLs2wGieEZj9Ti+Yum1da9w/x
+         7M3bj/JRCmDLGdE0Q1Dt83k5A095oP+pF21wjFhF98xBViDbkB62dPGv6WWUCg5xRlCS
+         Q3Gw1evN/moPkICfOhzAI7I4QQaxXVQzajV6Xx8jGqXFh6rqJeHfHIwE9kqU1xTio+iS
+         CeY1dPqYuZEeBRhNZ8xMBF7eu/oEKZbXRuYhl6eMP245W1Ut2uG9vSLi67vTYWs0NVuY
+         88SjSZmq6QgqTcL+tmOqyJlLdBaaiSjU2M3NEOhdkcyqhoKSgsBcKadiHbQQ4IzlMmLF
+         oaTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pDeRoyRN6mvIMlF5tqWe2vamh8xrR2A/Yg46wL8r1nM=;
-        b=qkQcoENiu7/akSt3snG1E7lRPXhcuwoDtP7jt7el1KoVB7minKCdpy9LXbbO7PjPX4
-         MN8lQXPzPT8XhqvYnibEAsFP9rd0rePu1+KYeQqFuZ95RHyylsDM05+fOp3daBBiubx0
-         kqO5r9M4omKObeHRrt9MGLauFJaFmga1uVyp5aRp5jWQk9J8avLGhzgNXT/ZyWgCZMyX
-         xMjf+0emV5//B4TETYhADDtADnGVW0f3vpONg9ROvhcCzTtzxAEOehs51OsGbRS6ef46
-         33B7Li6MBM5QD4WX0+I9FzRONJe8PX5bwly3++BD0cPmYD+W0HnwfIy6ZA3MXyMiByK4
-         EZhQ==
-X-Gm-Message-State: AKS2vOwYz3aUEeJDgPL+QgXOSlQCn1TukyR9FuvBG507Oe+4UYSSZK70
-        mF5EB/3gj1e6/xTpG3g=
-X-Received: by 10.99.125.8 with SMTP id y8mr4639643pgc.267.1498169410348;
-        Thu, 22 Jun 2017 15:10:10 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
-        by smtp.gmail.com with ESMTPSA id r12sm398302pfi.61.2017.06.22.15.10.09
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=JgWHCsQ6nB+vg4eLFKJ7tY0G3EJwsWxk1CExD1Zhhrw=;
+        b=codtVuil/kIIUcNigcg/5q/wgAzfPU1VYqmK/HtEodW4F74IbUVYgYz3+gOjLlw2Sf
+         KynfEqjZs0b2q1Q6Q+9ByWXmXh1Gv26A2uRsRsl4amPyeVTlfRdmvHOy27uSgDa+EtUK
+         g/AmQZ93v/XMsCHQSGU/N456wAl9oEKIVshfVVD5LxYRWs5m1wedw3fw3rYmN3LXxVRs
+         CFjuld46Lbig+IZBSBULw2YdbjGH5/CxBVKglj2ayJwv/iWy2h8MRtklX2Y8A1I4mIoD
+         UTWxxeGH+tIr7XJbpTP+szQOuCLgeUekLddh/PqslCHZ8RUaZIKl2elxywVqdleFQD5y
+         aunQ==
+X-Gm-Message-State: AKS2vOwvfMmz5TMTXbl+IfIpI4EBuqfgkWdLKR80XpM4/9734kXk5+FC
+        WOOjQlv4Dr2HU/Y9DcBLLA==
+X-Received: by 10.84.216.26 with SMTP id m26mr989159pli.112.1498169433350;
+        Thu, 22 Jun 2017 15:10:33 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:3100:42b2:b45a:528c])
+        by smtp.gmail.com with ESMTPSA id r90sm5716026pfj.37.2017.06.22.15.10.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 15:10:09 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com,
-        jacob.keller@gmail.com, Johannes.Schindelin@gmx.de,
-        sandals@crustytoothpaste.net, peartben@gmail.com,
-        pclouds@gmail.com, peff@peff.net, git@jeffhostetler.com,
-        avarab@gmail.com, jonathantanmy@google.com
-Subject: Re: [PATCH v4 15/20] repository: add index_state to struct repo
-References: <20170620191951.84791-1-bmwill@google.com>
-        <20170622184348.56497-1-bmwill@google.com>
-        <20170622184348.56497-16-bmwill@google.com>
-        <xmqqshirixrt.fsf@gitster.mtv.corp.google.com>
-        <20170622203511.GB124061@google.com>
-Date:   Thu, 22 Jun 2017 15:10:08 -0700
-In-Reply-To: <20170622203511.GB124061@google.com> (Brandon Williams's message
-        of "Thu, 22 Jun 2017 13:35:11 -0700")
-Message-ID: <xmqqziczhdxb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        Thu, 22 Jun 2017 15:10:32 -0700 (PDT)
+Date:   Thu, 22 Jun 2017 15:10:28 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        gitster@pobox.com, peff@peff.net, jrnieder@gmail.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 1/3] list-objects: add filter_blob to
+ traverse_commit_list
+Message-ID: <20170622151028.07827b50@twelve2.svl.corp.google.com>
+In-Reply-To: <20170622144526.3f5813f5@twelve2.svl.corp.google.com>
+References: <20170622203615.34135-1-git@jeffhostetler.com>
+        <20170622203615.34135-2-git@jeffhostetler.com>
+        <20170622144526.3f5813f5@twelve2.svl.corp.google.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On Thu, 22 Jun 2017 14:45:26 -0700
+Jonathan Tan <jonathantanmy@google.com> wrote:
 
-> That makes sense.  While at it, would it make sense to ensure that the
-> 'struct index_state *' which is stored in 'the_repository.index' be
-> '&the_index'?
+> On Thu, 22 Jun 2017 20:36:13 +0000
+> Jeff Hostetler <git@jeffhostetler.com> wrote:
+> 
+> > From: Jeff Hostetler <jeffhost@microsoft.com>
+> > 
+> > In preparation for partial/sparse clone/fetch where the
+> > server is allowed to omit large/all blobs from the packfile,
+> > teach traverse_commit_list() to take a blob filter-proc that
+> > controls when blobs are shown and marked as SEEN.
+> > 
+> > Normally, traverse_commit_list() always marks visited blobs
+> > as SEEN, so that the show_object() callback will never see
+> > duplicates.  Since a single blob OID may be referenced by
+> > multiple pathnames, we may not be able to decide if a blob
+> > should be excluded until later pathnames have been traversed.
+> > With the filter-proc, the automatic deduping is disabled.
+> 
+> Comparing this approach (this patch and the next one) against mine [1],
+> I see that this has the advantage of (in pack-objects) avoiding the
+> invocation of add_preferred_base_object() on blobs that are filtered
+> out, avoiding polluting the "to_pack" data structure with information
+> that we do not need.
+> 
+> But it does add an extra place where blobs are filtered out (besides
+> add_object_entry()), which makes it harder for the reader to keep track
+> of what's going on. I took a brief look to see if filtering could be
+> eliminated from add_object_entry(), but that function is called from
+> many places, so I couldn't tell.
+> 
+> Anyway, I think both approaches will work (this patch's and mine [1]).
+> 
+> [1] https://public-inbox.org/git/6f7934621717141ce3bb6bc05cf1d59c7900ccc5.1496432147.git.jonathantanmy@google.com/
 
-I was imagining (read: speculating one possible future, without
-thinking things through to judge if it makes sense at all) that
-conceptually most of the current API that works on things in the
-current repository to be implicitly working on the_repository
-singleton instance in the "repository object" world.
+Also it should be mentioned somewhere that this does not cover the
+bitmap case - a similar discussion should be included in one of the
+patches, like I did in [1].
 
-When that happens, the_index can become a CPP macro that translates
-to "the_repository.index", I would think.
+And looking back at my original cover letter [2], I wrote:
 
+> This is similar to [1] except that this
+[...]
+> is slightly more comprehensive in
+> that the read_object_list_from_stdin() codepath is also covered in
+> addition to the get_object_list() codepath. (Although, to be clear,
+> upload-pack always passes "--revs" and thus only needs the
+> get_object_list() codepath).
+
+(The [1] in the quote above refers to one of Jeff Hostetler's patches,
+[QUOTE 1].)
+
+The same issue applies to this patch (since
+read_object_list_from_stdin() invokes add_object_entry() directly
+without going through the traversal mechanism) and probably warrants at
+least some description in one of the commit messages.
+
+[1] https://public-inbox.org/git/6f7934621717141ce3bb6bc05cf1d59c7900ccc5.1496432147.git.jonathantanmy@google.com/
+[2] https://public-inbox.org/git/cover.1496361873.git.jonathantanmy@google.com/
+
+[QUOTE 1] https://public-inbox.org/git/1488994685-37403-3-git-send-email-jeffhost@microsoft.com/
