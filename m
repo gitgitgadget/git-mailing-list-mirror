@@ -2,104 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A64E20802
-	for <e@80x24.org>; Thu, 22 Jun 2017 20:19:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2B3C20802
+	for <e@80x24.org>; Thu, 22 Jun 2017 20:21:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752128AbdFVUTs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 16:19:48 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:33464 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751147AbdFVUTr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 16:19:47 -0400
-Received: by mail-it0-f65.google.com with SMTP id x12so4483717itb.0
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 13:19:47 -0700 (PDT)
+        id S1753298AbdFVUVC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 16:21:02 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35658 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753270AbdFVUVC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 16:21:02 -0400
+Received: by mail-pf0-f193.google.com with SMTP id s66so4493326pfs.2
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 13:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/0zsmuINMuBbfJmi9ulNjseZECqqM4Rb3Cq3hy6SD+Y=;
-        b=LtteJo2xcaujQsDIFlIPbMlFjdBFTG+dC+WlsBhe2a6aL7KlxTk9RiZplk0wYB+0LB
-         WkNIqpqssszbTuoeAUrAx55jiBjK+2KO0x+860dltsy09IN0yXhD2z1nt1eQ4+Yxov48
-         SDZ1UGtitaR2uFkadz9tcZXBBn1KK7qlBneP1keafKEa72XlDLZaeyRs1xIzfF3A/P5P
-         xwZsemxOyu24rPd2nGf1f7Kb4APyKR5hBLN/MNbvjyb9bfrABHIbBMxQFPzDNQOvT45s
-         Jx4yn5deBjnpx1cJ43phKGM9Sr32mmBrfmkXiYraOHeFf7F/F8qZj/tiZkIUD7W/DBs4
-         UL6g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=j6E8chvu49muB+z/5N8DIVV1/sWdtRPO2LhSkAmLGmI=;
+        b=oY/7BejL+cOk3OeQYEQX6aNb5JzT7nQPsbzRS13u/ul/PuoFU9pJp79X68Z8o/1uYx
+         u8sNtHK/RY+BG/TR/PfdKS2ExAlpWc9Qmz88uHQhX9abkVd0UGGemYGvTjiN+vV2wOv7
+         nSMxqqF3m0KTgjv9eKoySIfeRBLgHjGMkuo+dAI6ws5hktSzLnEXMPjmXRYN1rSIGm3l
+         2jkFnAMkT2gVwvKw/ga+z3x3+ixOy1gQ7tA/wsa3S4rhs77u9ZxMVzbmqO8C1drA8OR3
+         yFh7IPqtvtWHR9KIwrKrydMpkb7Iuoel478593GkpHfYseWadOmF4IJP1ldCXT4ZGZwJ
+         I7rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/0zsmuINMuBbfJmi9ulNjseZECqqM4Rb3Cq3hy6SD+Y=;
-        b=UVtTCo0IeJB9Grfcd6piq2X6vddbTYsERawpNvLrscsIkSCj9XYhWzJ1gUKhASjYnS
-         qOQnJO+PrsRFycOe7AARaWdkMeE+ZD+gzBktzG5323UdPn40LV+0ZT4+RwSMXBbqeTKH
-         7tNnSk/y+cyRe1N4otO4wJNondBu6ppM5K+jqhyiQm+sjGp6AfQizl29T/1uee6R5PeZ
-         A0/b8ClrrBMgb6hz7peamnu5lUnBggQ6MBbOE5vLp2+rjXdzCVBa6FO0ZK2CZaJeSA6F
-         7cCAR0NLgy6n2yfkq1yQpusqolFAMgnWAfXUxoecgW4Cutu9zx5Lwy7Rmp+k/v70vII1
-         ABZQ==
-X-Gm-Message-State: AKS2vOyHb0ZqjvAyl/W3N2al+C0hs0+27UuWF95gnI4zFNRz4GUb60Xc
-        9q/1AWBiynoUUJ3/GqfbBMm/NI3DiQ==
-X-Received: by 10.36.84.144 with SMTP id t138mr3773468ita.76.1498162786522;
- Thu, 22 Jun 2017 13:19:46 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=j6E8chvu49muB+z/5N8DIVV1/sWdtRPO2LhSkAmLGmI=;
+        b=ljeyVqQfXnn0gHWVCjQcs63oEXul6/jpU0+/kUnts5h5+avXyl6YEgsW08mdddj8xX
+         PkQufeC2BG9I/HzQifFv+giNy/z3TEZzGUW53vi20xn87BeHu25dFBfiRPp9Afz3jMdh
+         hR8verMie7IkzIbbVBWhH1IzyYxw5tTzcl1EdwdjW3dU0A9WFri1BxqAxyJBwLwkURGC
+         O+GEvSJgw5gJkDiM7c8Lpy4yftUlf+NmBdcXKmllw70shTrXOgR5S5d2firMaY71zWF0
+         wRThwcSAQF6ghI2/5fS9MbAfMZqUgJP1abcMSCusoxXwfEq2xYgEQPkC07AFA4LKXPoU
+         6pGg==
+X-Gm-Message-State: AKS2vOzjXunsc32T1Dr83fkZuyA/bkXy0dykRfhvLfixb5JUGAAJMjs2
+        wcZncs3Ks60qLA==
+X-Received: by 10.99.122.3 with SMTP id v3mr4353396pgc.98.1498162861296;
+        Thu, 22 Jun 2017 13:21:01 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
+        by smtp.gmail.com with ESMTPSA id 189sm4875856pfd.50.2017.06.22.13.21.00
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 22 Jun 2017 13:21:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        jrnieder@gmail.com, jonathantanmy@google.com
+Subject: Re: [PATCHv2] submodules: overhaul documentation
+References: <20170607185354.10050-1-sbeller@google.com>
+        <20170620225650.7573-1-sbeller@google.com>
+        <20170622174659.GA124061@google.com>
+Date:   Thu, 22 Jun 2017 13:20:59 -0700
+In-Reply-To: <20170622174659.GA124061@google.com> (Brandon Williams's message
+        of "Thu, 22 Jun 2017 10:46:59 -0700")
+Message-ID: <xmqqlgojixjo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.40.70 with HTTP; Thu, 22 Jun 2017 13:19:46 -0700 (PDT)
-In-Reply-To: <xmqqzicziyss.fsf@gitster.mtv.corp.google.com>
-References: <20170622190158.13265-1-chriscool@tuxfamily.org>
- <20170622190158.13265-3-chriscool@tuxfamily.org> <xmqqzicziyss.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 22 Jun 2017 22:19:46 +0200
-Message-ID: <CAP8UFD2QwN_8Mn3eFT_FRRbXNfnQFwt53nofh8AUzR0Zhx5EgA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] t1700: make sure split-index respects core.sharedrepository
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 22, 2017 at 9:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> Add a test to check that both the split-index file and the
->> shared-index file are created using the right permissions
->> when core.sharedrepository is set.
->>
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>  t/t1700-split-index.sh | 12 ++++++++++++
->>  1 file changed, 12 insertions(+)
->>
->> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
->> index af3ec0da5a..a52b92e82b 100755
->> --- a/t/t1700-split-index.sh
->> +++ b/t/t1700-split-index.sh
->> @@ -370,4 +370,16 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"
->>       test $(ls .git/sharedindex.* | wc -l) -le 2
->>  '
->>
->> +test_expect_success POSIXPERM 'split index respects core.sharedrepository' '
->> +     git config core.sharedrepository 0666 &&
->> +     : >seventeen &&
->> +     git update-index --add seventeen &&
->> +     echo "-rw-rw-rw-" >expect &&
->> +     test_modebits .git/index >actual &&
->> +     test_cmp expect actual &&
->> +     newest_shared_index=$(ls -t .git/sharedindex.* | head -1) &&
->
-> Hmph.  Don't you want to make sure all of them, not just the latest
-> one, have the expected mode bits?
+Brandon Williams <bmwill@google.com> writes:
 
-We use "git config core.sharedrepository 0666" at the beginning of
-this test, so it will only apply to the shared index files that are
-created after that.
+> On 06/20, Stefan Beller wrote:
+> ...
+>> +The configuration of submodules
+>> +-------------------------------
+>> +
+>> +Submodule operations can be configured using the following mechanisms
+>> +(from highest to lowest precedence):
+>> +
+>> + * the command line for those commands that support taking submodule specs.
+>> +
+>> + * the configuration file `$GIT_DIR/config` in the superproject.
+>> +
+>> + * the `.gitmodules` file inside the superproject. A project usually
+>> +   includes this file to suggest defaults for the upstream collection
+>> +   of repositories.
+>
+> I dislike this last point.  Realistically we don't want this right?  So
+> perhaps we shouldn't include it?
 
-Do you suggest that we test before setting core.sharedrepository that
-the existing shared index files all have the default permissions?
+I am not sure if I follow.  Without .gitmodules, how would you, as a
+downstream developer, bootstrap the whole thing?
+
