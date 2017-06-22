@@ -2,118 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5627720802
-	for <e@80x24.org>; Thu, 22 Jun 2017 21:09:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 161FB20802
+	for <e@80x24.org>; Thu, 22 Jun 2017 21:35:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753607AbdFVVJm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 17:09:42 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33997 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753598AbdFVVJk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 17:09:40 -0400
-Received: by mail-pf0-f173.google.com with SMTP id s66so14081206pfs.1
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 14:09:40 -0700 (PDT)
+        id S1753512AbdFVVfi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 17:35:38 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:36446 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752424AbdFVVfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 17:35:37 -0400
+Received: by mail-pg0-f52.google.com with SMTP id u62so12987548pgb.3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 14:35:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nRU7BcuZfKwMm+PWYJ2NZDbv6snS2+B5FZPwM7/mn4E=;
-        b=ShMGcto97gv1ZTsaXFoGW3v7RM3KgxOlKmhYMEcNYB4akCbJKeX9D/TNwbQ2OIHGhg
-         joSEkFdu4FheHfQIMyfk8kfshT9com8JhwnYClkL5wCELmUiWBgrIOMkrLrPr7qVitVh
-         EqKKbCd5x/2gRNRt4KAUyUhWAWDcaytK+RSAvVqurZ8RD3ZHC7T5ozcTKHGCifz2VQbs
-         D0OpD058il7MPqw7aQkiqhC9NyR9I3kYZYDSQRjUuCzreoUDRCspflzlT5xKCaELQeBD
-         2eRmZUYLSIh4ETmEX4N+xh6hupmNOWTVhhHQFrKahBLGu8nJcq0lWrBZe+QV6caHn1s1
-         QzcA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9wywWJ0Oon3JGGYY6TjEPEBwUDrnlyUtn0/NvpdCWhs=;
+        b=YDm47wxiLdyinSZoYLNsT30AGymAUN1dQlWg1q24srSuxUuykzP026ABX8JOouE/5l
+         bpHmXu+oNUnrYNnKf11o2Tu+qO/Br4xVI256yzno+6TbSm5NLMaq5xqvghpzETI/uIBd
+         Iiy77TENQc1lMT2TSGfXBR2jR5h9mqOeL/+u4jU4w1vSdTaMbhNwYTbJsMR9zoMJKEYC
+         p7W2gBhDjnf9dl9UWtu4vGyfgVkhcUduAW0osYJwFt69ao933WQIjGA4XZBSKU0wxr97
+         D9QCLQaaASyr+fe7fu5ioQuIpHO24Zb+IpF+i90BLXW60RddmQvhUygFMN3CSKSjIPQ4
+         sxaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nRU7BcuZfKwMm+PWYJ2NZDbv6snS2+B5FZPwM7/mn4E=;
-        b=sWXxbYDYYyPnbcyeOh/b6kWxNkg7/Iww3qqZeWQYR+prJZIIKiRzullrH+DxsUZtHE
-         kqZ3IxK/ri1kC1Kq1YfssFyB7v8HJsQToYFj4RNr2fjOqdSoODDiQWsM1DfCUOzMdSwQ
-         8AlFNgk8k4xM18bOrbzVWhuA1wtw1b+Pka5M7Rz80eI8u4QE2S5CNu2h03g7CpiRWGiu
-         1STM1+c8VSJ9cpa1aETC4fiCda/KmJEXdiq+4JXgJavA+cVNjnGX2ABDWs1piGqnx5AV
-         YTzgdD3RUzVEzINTm2pt7DQBCetO7ap2UXVtQmBUDI9c3Hg9etv7GCw7ia+juo+HcQjG
-         x1Mg==
-X-Gm-Message-State: AKS2vOwxM4lxywOKzVbY/KkTsgfnZAF5amA0KqMeZghKuvcYBuWBSnrm
-        eduDb2cqAulbWFr+QjesZs+KEjxfCTeFUT4=
-X-Received: by 10.84.232.205 with SMTP id x13mr5148387plm.245.1498165779605;
- Thu, 22 Jun 2017 14:09:39 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9wywWJ0Oon3JGGYY6TjEPEBwUDrnlyUtn0/NvpdCWhs=;
+        b=D0kxxOBLa8yuWAEow18mm5zL82v+MSZ6EgcfXAx8n/bPvIT97jJO+iHTTSnH/TW/LL
+         QACsDmkY+N1cOJLtidv1k1gsPvy/PW8wo0H7QzMzfVGYBderYPQv0GCiyBLX19042/si
+         InMLYTp2LVfeJQ00nl7PeXasY03EwkyT0A7vEJWsNlGvoE9dtjHMlaWMeTxDpCxNIgVp
+         oB2ILTmlLpUNWXTflxCQQfYniz99PIyrIVwPnPznZmV0jMFo4NxJYqHo034K1GUUiB3e
+         inRDsPJiCBRx5rRWIq5HZQEVo8XSKoNDm3naFnGfByLU5e8haj7kJ128Hd8/nShf/tvC
+         9m8w==
+X-Gm-Message-State: AKS2vOwd6i8i7VnCrhzbTN/OlsBWODclQVVqvKeVP7PN3iUc0mn4l4Uc
+        w7suNm4drbP4Wg==
+X-Received: by 10.99.127.76 with SMTP id p12mr4741994pgn.258.1498167336357;
+        Thu, 22 Jun 2017 14:35:36 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
+        by smtp.gmail.com with ESMTPSA id l63sm5849529pfc.132.2017.06.22.14.35.35
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 22 Jun 2017 14:35:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Simon Ruderich <simon@ruderich.org>
+Cc:     Patrick Lehmann <Patrick.Lehmann@plc2.de>,
+        Jessie Hernandez <git@jessiehernandez.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: your mail
+References: <7c277ac1cfb40b9b362d468a94dfb4fe.squirrel@mail.jessiehernandez.com>
+        <20170622124803.45sduodpfbwuuq52@ruderich.org>
+        <0092CDD27C5F9D418B0F3E9B5D05BE080102A3D5@SBS2011.opfingen.plc2.de>
+        <20170622134708.fcc4zxakga6p255x@ruderich.org>
+        <0092CDD27C5F9D418B0F3E9B5D05BE080102A423@SBS2011.opfingen.plc2.de>
+        <20170622204628.eintlap4uchlncub@ruderich.org>
+Date:   Thu, 22 Jun 2017 14:35:34 -0700
+In-Reply-To: <20170622204628.eintlap4uchlncub@ruderich.org> (Simon Ruderich's
+        message of "Thu, 22 Jun 2017 22:46:29 +0200")
+Message-ID: <xmqq8tkjiu3d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.161.227 with HTTP; Thu, 22 Jun 2017 14:09:39 -0700 (PDT)
-In-Reply-To: <20170622210323.GC124061@google.com>
-References: <20170607185354.10050-1-sbeller@google.com> <20170620225650.7573-1-sbeller@google.com>
- <20170622174659.GA124061@google.com> <xmqqlgojixjo.fsf@gitster.mtv.corp.google.com>
- <CAGZ79ka5MkpPSxR23Kz9DcxFkHNB-hz=n-teDXc6=eX4p473FQ@mail.gmail.com> <20170622210323.GC124061@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 22 Jun 2017 14:09:39 -0700
-Message-ID: <CAGZ79kbBO2NamPcO_G=AVFV5VRwVz9h_9h-cvOqw5UeMwiXTQg@mail.gmail.com>
-Subject: Re: [PATCHv2] submodules: overhaul documentation
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 22, 2017 at 2:03 PM, Brandon Williams <bmwill@google.com> wrote:
-> On 06/22, Stefan Beller wrote:
->> On Thu, Jun 22, 2017 at 1:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> > Brandon Williams <bmwill@google.com> writes:
->> >
->> >> On 06/20, Stefan Beller wrote:
->> >> ...
->> >>> +The configuration of submodules
->> >>> +-------------------------------
->> >>> +
->> >>> +Submodule operations can be configured using the following mechanisms
->> >>> +(from highest to lowest precedence):
->> >>> +
->> >>> + * the command line for those commands that support taking submodule specs.
->> >>> +
->> >>> + * the configuration file `$GIT_DIR/config` in the superproject.
->> >>> +
->> >>> + * the `.gitmodules` file inside the superproject. A project usually
->> >>> +   includes this file to suggest defaults for the upstream collection
->> >>> +   of repositories.
->> >>
->> >> I dislike this last point.  Realistically we don't want this right?  So
->> >> perhaps we shouldn't include it?
->> >
->> > I am not sure if I follow.  Without .gitmodules, how would you, as a
->> > downstream developer, bootstrap the whole thing?
->> >
+Simon Ruderich <simon@ruderich.org> writes:
+
+> On Thu, Jun 22, 2017 at 01:55:27PM +0000, Patrick Lehmann wrote:
+>> The description on https://github.com/git/git doesn't reflect that policy.
 >>
->> I think Brandon eludes to our long term vision of having a separate
->> magic ref containing these informations instead of carrying it in tree.
->>
->> As urls change over time, it is better to keep the urls out of the
->> actual history, but still versioned so maybe we'll want to have
->> a ref/submodule-config/master ref that contains all the bootstrapping
->> information. The .gitmodules file would degenerate to a pure
->> name<->path mapping.
+>> a)
+>> It explains that discussions take place in the mentioned mailing list.
+>> b)
+>> It describes how to subscribe.
 >
-> I was more eluding to having fetch.recurse and the other similar bits
-> stored in the gitmodules file.
+> However it doesn't say that you have to subscribe to send, only
+> how to subscribe.
 
-Well yes, but these configurations would also go onto the new magic ref
-once implemented.
+For that matter, we also say "everyone is welcome to post", which
+makes it clear that no subscription is required.
 
-And to answer your question:
-Yes we (you and me) dislike it, but it is the best we can do given
-the current implementation. Once the implementation changes,
-we may want to adapt this man page.
+But I view these merely being technically correct.  And making it
+absolutely obvious does not cost too much.
 
-
+>> With knowledge of other mailing lists (mostly managed by mailman),
+>> subscription is required for participation.
 >
-> --
-> Brandon Williams
+> That depends on the mailing list, some require subscription to
+> prevent spams but not all do.
+
+Yes.  But not many people realize that the world they know is the
+only world.  We are used to an open list and are shocked when we
+encouter a closed one; let's not forget that shock.
+
+How about doing it like this?
+
+ README.md | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/README.md b/README.md
+index f17af66a97..bbaf54bffb 100644
+--- a/README.md
++++ b/README.md
+@@ -31,6 +31,10 @@ The user discussion and development of Git take place on the Git
+ mailing list -- everyone is welcome to post bug reports, feature
+ requests, comments and patches to git@vger.kernel.org (read
+ [Documentation/SubmittingPatches][] for instructions on patch submission).
++
++You can send messages without subscribing to the list, but it is 
++recommended to read what other people are saying on the list before
++you speak.
+ To subscribe to the list, send an email with just "subscribe git" in
+ the body to majordomo@vger.kernel.org. The mailing list archives are
+ available at <https://public-inbox.org/git/>,
