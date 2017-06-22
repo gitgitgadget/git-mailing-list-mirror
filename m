@@ -2,93 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F8AD1FA7B
-	for <e@80x24.org>; Thu, 22 Jun 2017 19:42:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFFED1FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 19:51:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752493AbdFVTmi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 15:42:38 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:33458 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751147AbdFVTmh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 15:42:37 -0400
-Received: by mail-pf0-f179.google.com with SMTP id e7so13215231pfk.0
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 12:42:37 -0700 (PDT)
+        id S1753623AbdFVTv5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 15:51:57 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34714 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751147AbdFVTv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 15:51:56 -0400
+Received: by mail-pf0-f193.google.com with SMTP id d5so4415941pfe.1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 12:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Dnhxc6r0XsRZvDNfWGHaefz3Q7QsqS+6nogkrla2t50=;
-        b=qtVeqDYx5KYPQ41uXK62XoYlFo48cnZz9mDEswrNbyIcQm7fbMpM/3uxQ/ZKCLQo/S
-         e7sRVJsGBw42cySk5NB9PEmrvfSb3461/YBl9xb0vOnMk3y//vsVlQHsn3XAAs7OPQlc
-         fAg9vMTFldwKg22h3d0Q+SAyBupeztYmwE83U37t/DqTQQjdhhUoZ2YOVDgj2GZIaotG
-         C3QkqH+ofv/vlJabwCCiHab1YaNIWTcD1OsFbPVJbbBV8ndM0z9/AYGpjzvCDHDRRMjb
-         waYuHzrtqCu75PFPBj7FWxiz/tZf39lCWYyllF8u96fPMLmRfOB5Cl3sAMF7nwPXJ9dz
-         f44g==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=N64dKzcFZ5m8NlQhAR4pga4BUTv2VNElatri4YIjn00=;
+        b=P/DVgNiFzP43p1HngAGqr/8s7oZnILONd7dlSUlm3cLXw2juzDe351fIdGSKAf2Tep
+         QAc15sXQ4fjlMNUG4T2j8dgC3+THxPOWatj2fErxSXQgB/ZJVIE4jo9mGNrrPAGVfGO2
+         KG/LR61AdQYRsoHnRrmTc43J/rnmHsNY7o4QlLbP/zhuQ7lNYHxkbR41ucyM59t1mGba
+         O9F5I13d+Sf7JbOCwoaGTtC+c7awxbm8fMmFWSPzk18JKzb7D224cw8KepZmIla+B3uG
+         fCq9Nr7mvtKn/uKi9HEI4ifIV0Vd+NtkOTP2tAp8/Vc6PLJj+fnDsr3NZplf6eOdQD8e
+         9OHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Dnhxc6r0XsRZvDNfWGHaefz3Q7QsqS+6nogkrla2t50=;
-        b=PaBCdXqeYUmJIfiQ+RNjt6h90JhVeMQFcGvPDphqS/8UlRotp3KNATSOqDJxeSHEef
-         PmTk/kC6Fqkb8CGFLbpxSOb+0ChAyFeRRUv+yRxjYsLYArmzjfSIQ4Kq/+DidIBkkgaO
-         c8xQ7LTVGgTYBDHfaZK5RkQ6xSHOfcmhtnAm4DGdNkhYrsEIQSgHNziHM2328xcXDEYp
-         ri7wxbxVa+wbW2mJ/kTbz51d/1xMBehAP/ffrzExzt6pEDv7b1Vy7t6x1oTyMnXvc/LD
-         tobykcPar8r1YmVOgDX0dwEZTKZl3Tjmy7IHXdtmfq2WEaERe99gMJfvJYin/0k5ItQ2
-         4bYQ==
-X-Gm-Message-State: AKS2vOyKHCFh75JUm+0+aViuoh5ezEnHvHnZFuMYdfEH7pJLgrg+QFiv
-        icWXfmyhwalEXssCniN5A5bhgPapIOVc
-X-Received: by 10.98.69.76 with SMTP id s73mr4272883pfa.94.1498160556552; Thu,
- 22 Jun 2017 12:42:36 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=N64dKzcFZ5m8NlQhAR4pga4BUTv2VNElatri4YIjn00=;
+        b=VNlKO02f5DR8+LnS0hRwAXg0KeOOn7nc2qPFmnuqK58eFTrB9l0IFzIBI11VS7I5M/
+         RqUZ/gfrOtb0x3rhu+InWplpX8CezelHrvGZwpbRzQawj12oDk4cwt1bikvwNmGhXDa4
+         NvpcyCHLIWTlsonF9WGL4PUtvnkrqQl2k+1DVFkahFCPRjI8vaCCYRNm1ro0C9qUYl4R
+         UiL6yMFYQEBIkwHkmiaP3fxgRbfQkh/pBKJJd5Vf+jXYD/BNYGB0QLf6z1Ud4a8lkgnX
+         GbIZYDmyoFKzLmx/xL2aH7B6PAdHFLfg+rJxCXuIUmr4lri+sSR0FzcuZaAym5Kk0dL6
+         mEpQ==
+X-Gm-Message-State: AKS2vOxfVqWInuFM/0sHAyu5D1xc9PPi6vrMtte5YNhkLfiZBWOl5xfn
+        AAZwmRhYBQLpnw==
+X-Received: by 10.99.3.202 with SMTP id 193mr4207445pgd.222.1498161115770;
+        Thu, 22 Jun 2017 12:51:55 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
+        by smtp.gmail.com with ESMTPSA id g13sm5252045pgu.54.2017.06.22.12.51.54
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 22 Jun 2017 12:51:54 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/3] read-cache: use shared perms when writing shared index
+References: <20170622190158.13265-1-chriscool@tuxfamily.org>
+Date:   Thu, 22 Jun 2017 12:51:54 -0700
+In-Reply-To: <20170622190158.13265-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Thu, 22 Jun 2017 21:01:56 +0200")
+Message-ID: <xmqq8tkjkdgl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.161.227 with HTTP; Thu, 22 Jun 2017 12:42:36 -0700 (PDT)
-In-Reply-To: <20170622184348.56497-1-bmwill@google.com>
-References: <20170620191951.84791-1-bmwill@google.com> <20170622184348.56497-1-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 22 Jun 2017 12:42:36 -0700
-Message-ID: <CAGZ79kbrnCx2xxZHyZN+pwgUDY+sEuXAaYKDjKYLcbemsfM5Tg@mail.gmail.com>
-Subject: Re: [PATCH v4 00/20] repository object
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ben Peart <peartben@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 22, 2017 at 11:43 AM, Brandon Williams <bmwill@google.com> wrote:
-> As before you can find this series at:
-> https://github.com/bmwill/git/tree/repository-object
->
-> Changes in v4:
->
-> * Patch 11 is slightly different and turns off all path relocation when a
->   worktree is provided instead of just for the index file (Thanks for the help
->   Jonathan Nieder).
-> * 'repo_init()' has a tighter API and now requires that the provided gitdir is
->   a path to the gitdir instead of either a path to the gitdir or path to the
->   worktree (which has a .git file or directory) (Thanks Jonathan Tan).
-> * Minor comment and commit message chagnes
->
-> Note: Like v3 this series is dependent on on 'bw/config-h' and
->       'bw/ls-files-sans-the-index'
+Christian Couder <christian.couder@gmail.com> writes:
 
-I read the whole series and I consider it
-Reviewed-by: Stefan Beller <sbeller@google.com>
+> Since f6ecc62dbf (write_shared_index(): use tempfile module, 2015-08-10)
+> write_shared_index() has been using mks_tempfile() to create the
+> temporary file that will become the shared index.
+>
+> But even before that, it looks like the functions used to create this
+> file didn't call adjust_shared_perm(), which means that the shared
+> index file has always been created with 600 permissions regardless
+> of the shared permission settings.
+>
+> This means that on repositories created with `git init --shared=all`
+> and using the split index feature one gets an error like:
+>
+> fatal: .git/sharedindex.a52f910b489bc462f187ab572ba0086f7b5157de: index file open failed: Permission denied
+>
+> when another user performs any operation that reads the shared index.
 
-Thanks,
-Stefan
+Assuming that a "shared" repository setting should allow uses by
+different users, the above analysis makes sense to me.
+
+But the conclusion does not.
+
+> Let's fix that by using create_tempfile() instead of mks_tempfile()
+> to create the shared index file.
+>
+> ...
+> -	fd = mks_tempfile(&temporary_sharedindex, git_path("sharedindex_XXXXXX"));
+> +	fd = create_tempfile(&temporary_sharedindex, git_path("sharedindex_XXXXXX"));
+
+So we used to create a temporary file that made sure its name is
+unique but now we create sharedindex_XXXXXX with 6 X's literally 
+at the end?
+
+Doesn't mks_tempfile() family include a variant where you can give
+custom mode?  Better yet, perhaps you can call adjust_shared_perm()
+on the path _after_ seeing that mks_tempfile() succeeds (you can ask
+get_tempfile_path() which path to adjust, I presume)?
+
+>  	if (fd < 0) {
+>  		hashclr(si->base_sha1);
+>  		return do_write_locked_index(istate, lock, flags);
