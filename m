@@ -2,136 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C46DB20D0C
-	for <e@80x24.org>; Thu, 22 Jun 2017 18:20:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D93D1FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 18:32:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753566AbdFVSUI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 14:20:08 -0400
-Received: from mout.web.de ([212.227.17.12]:49638 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753397AbdFVSUH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 14:20:07 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M1G68-1ddhkD28Nc-00tCeM; Thu, 22
- Jun 2017 20:19:41 +0200
-Subject: Re: [BUG] add_again() off-by-one error in custom format
+        id S1752071AbdFVScq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 14:32:46 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35620 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751193AbdFVScp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 14:32:45 -0400
+Received: by mail-pf0-f193.google.com with SMTP id s66so4150558pfs.2
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:32:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=RwyjHzfV9pk2BRVVBBH9e0drDe2TW9sHgjWAG0bMa4U=;
+        b=nfqZyS7m9My5fkLqYyGNlIhlBp0WojM/X8KiVmi131RmV4LxXhzHzCDlZ1bfr4h/bp
+         S6hoNwsXFIQlLZWLBjD0gNGjqlLajFQDpnp9pXnuNtaNnZoY9S8A4pHuODsFWaDb3zGC
+         iBw09XfgJWyNbeYjLTCUfiWxIKV3irat8UkwrDs7SKX56T+D8YXiswDGUYe3rPJnJLq7
+         cWGEVQlTTiNdg40ApaXeoyE6J13BYQX+jbb7VVSDLOMMKu58vrP3rEJ0sdUE3CvHlU+p
+         UZNcRAo9m1ujOT+sVw9pqQR/rjZOZxL7sj24d+AbA4149GIGbHWCvlhxAGkCO5RuWddM
+         J17w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=RwyjHzfV9pk2BRVVBBH9e0drDe2TW9sHgjWAG0bMa4U=;
+        b=eqE1MpTymbacZK3xCMvHyckKxBemxq2ACohKu2MkM3EGfhQzPsbQoyhB9++0EkwSk5
+         96g/fQfaWMQGv39F8wOwLMJWnE/Ny3cIY0gjtDDrXNiZedYkPEH88g3PxbyBWj9tMu8E
+         bta5QBRUpiSGPHATopr8BMFN6AELWnkZgnlHLzIZuy8oToEmINRZojrMDeZqaDALsNZQ
+         70+WqvRev/12QTAsrM7hD6zHrZIej1XAguna8/IW11AXS8LJQ7YEYkrtxtyKwglI6wzr
+         3W4z/YdRkDdnq7C4d8KMrFfEWhL5v+453Nkta2mVU2orSvPNMvLzDq03hpFiDfMDtGXS
+         aStw==
+X-Gm-Message-State: AKS2vOwRUe557DEGiS6Z3Ld09mZnGerBhCYqKF9vwh4ESjiYIUZlp7NQ
+        9rzZVDZBRcJ6zg==
+X-Received: by 10.101.89.69 with SMTP id g5mr4038897pgu.69.1498156365009;
+        Thu, 22 Jun 2017 11:32:45 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
+        by smtp.gmail.com with ESMTPSA id b82sm5100714pfd.111.2017.06.22.11.32.44
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 22 Jun 2017 11:32:44 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Giuffrida <michaelpg@chromium.org>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
- <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
- <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
- <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
- <20170615055654.efvsouhr3leszz3i@sigill.intra.peff.net>
- <ec36f9fa-5f3e-b511-3985-3d0301b4847f@web.de>
- <20170615132532.nivmj22dctowxssm@sigill.intra.peff.net>
- <b0bc9dab-bd93-c321-9f2e-f1621f857708@web.de>
- <20170618114923.bffmbr5dqe4oivyw@sigill.intra.peff.net>
- <96c26ba2-8548-1693-e803-3a3434ae3a62@web.de>
- <20170618135623.3b27zhzdxur6gpg3@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <87848e2d-9766-7dad-62cf-ded0c18f6dc3@web.de>
-Date:   Thu, 22 Jun 2017 20:19:40 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+Cc:     Kyle Meyer <kyle@kyleam.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
+Subject: Re: Truncating HEAD reflog on branch move
+References: <20170621213924.wh43i2h7v2zwihq3@genre.crustytoothpaste.net>
+        <xmqqpodxm2t8.fsf@gitster.mtv.corp.google.com>
+        <87efud7xjd.fsf@kyleam.com>
+        <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net>
+Date:   Thu, 22 Jun 2017 11:32:43 -0700
+In-Reply-To: <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 22 Jun 2017 11:16:03 -0400")
+Message-ID: <xmqqziczkh4k.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170618135623.3b27zhzdxur6gpg3@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:vBhMvKTV/5U5nUVettP5ByJiusNu2sas0R/AyJmG1hJoOk0YfUY
- 5Q1mHT6CgUKlzkPe0tYMxxKhisGbMat6wzEYZ4WUa62lvkrS8l6Ryk1um8nVFLWq8LGKU/v
- D+JQIaRZhBL/vzMFOLhZiFd5ZYH2rEH+mXVoOMnQZ/Z6cY7aL1Vxk52KQH/CGauaLZ/B1z6
- hN5/CtLcvgsNC7ko9umvA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DA/Wb5jtBEE=:jqmPHL3Qj4J9630QWzdEZJ
- bGOWrx/VQzYVTgR81BQR1AtwC8DsbiI3gPb5DJpvU/uML5Qkuwy49Om/2d6rilw8W99v8HnbA
- jowtdodU7j+uVFyqejNmLFGLg22CnkoTL6x9ZTQlvECuHmbnIDj2EhFLj+6vACYfpGZjP2FDw
- U7oHlUMmgU6QvtEwFP0rNP6mvQCcDXKJNN3HHvXx0qW63eoLGDC7hzmqmK4qYfoBfnweSmujG
- YIikYZKEyplPrYecdpQB5UMR2xAK85JgmPygBIw18vIioWZRotSBeOgk+Wteskn+hD5SRKbxy
- Nq9/8CUki+ynzh2HNxejk7uSjlNqAhC8P8nv3xYaFyNdb3wt7jbGNuOAlg+sXXlZz8cxJ7tko
- SMhG/hI8V6sgBSyzOZIXF67lnScnfDFsb+aIokU5BLQCg1foN8OotItHfGJ5CzcGTndF+yBL1
- PTlgFStjg5Zhf8Uz9Nz8zeWWSWkVA0LM7G5LDXUKbJ20uM1wwaMaDJXoUjldT8HpiY/W7k2Gp
- XMrWbjc1hzLIRzEI2nRqA1miaNl9Nk66Kx7tM4Irm2vQNS/OC6+kjmEMAkhI1PUKInPj45W9M
- PS/sq4m2e08Y2LSZx5ytAX02rwRqeZwz0PPptgjYRDIalE71gcgaDjIaHbE64+gmVmpZ06KLJ
- TGtT/O6We0ixapfOB/XZmOnUSM5S/oaSmarWh1hFBvB+9NiBY5dIkRAmZOL0I74pX60DMUJAq
- dnsknwnjborGPbfBgjgNv/FRzYpnx2l8SeZgLxFDu9OdLZ7k+OiHEruNGkrbbucGnG9WU7DVs
- uGnp/ka
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.06.2017 um 15:56 schrieb Jeff King:
-> On Sun, Jun 18, 2017 at 02:59:04PM +0200, René Scharfe wrote:
-> 
->>>> @@ -1586,6 +1587,9 @@ extern struct alternate_object_database {
->>>>    	struct strbuf scratch;
->>>>    	size_t base_len;
->>>> +	uint32_t loose_objects_subdir_bitmap[8];
->>>
->>> Is it worth the complexity of having an actual bitmap and not just an
->>> array of char? I guess it's not _that_ complex to access the bits, but
->>> there are a lot of magic numbers involved.
->>
->> That would be 224 bytes more per alternate_object_database, and we'd
->> gain simpler code.  Hmm.  We could add some bitmap helper macros, but
->> you're probably right that the first version should use the simplest
->> form for representing small bitmaps that we currently have.
-> 
-> I'd be OK with keeping it if we could reduce the number of magic
-> numbers. E.g,. rather than 32 elsewhere use:
-> 
->    (sizeof(*loose_objects_subdir_bitmap) * CHAR_BIT)
+Jeff King <peff@peff.net> writes:
 
-We have a bitsizeof macro for that.
+> There's some magic in fake_reflog_parent() when we hit an entry with a
+> ...
+> This whole fake-parents things does just feel like a gigantic hack,
+> though.
+> ...
+> It seems like we should be able to just walk backwards down the
+> reflog list and show the entries. The revision machinery already
+> special-cases a bunch of reflog-walk bits; I don't know that adding one
+> or two more would be the end of the world.
 
-> and similarly rather than 8 here use
-> 
->    256 / sizeof(*loose_objects_subdir_bitmap) / CHAR_BIT
+Unfortunate but I tend to agree that at least such an addition would
+make the "gigantic hack" a bit more complete one ;-)
 
-If we're pretending not to know the number of bits in a byte then we
-need to round up, and we have DIV_ROUND_UP for that. :)
+> diff --git a/reflog-walk.c b/reflog-walk.c
+> index ed99437ad..b7e489ad3 100644
+> --- a/reflog-walk.c
+> +++ b/reflog-walk.c
+> @@ -259,6 +259,8 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
+>  		/* a root commit, but there are still more entries to show */
+>  		reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
+>  		logobj = parse_object(&reflog->noid);
+> +		if (!logobj)
+> +			logobj = parse_object(&reflog->ooid);
+>  	}
+>  
+>  	if (!logobj || logobj->type != OBJ_COMMIT) {
 
-> There's also already a bitmap data structure in ewah/bitmap.c. It's a
-> little bit overkill, though, because it mallocs and will grow the bitmap
-> as needed.
+We already have a loop to find an entry that is a commit that
+discards any non-commit object before the pre-context of this hunk.
+This "oops, old side is NULL so let's cover it up by using the new
+side" kicks in after that.  I wonder if we can roll that cover-up
+logic into the loop, perhaps like
 
-Yes, I feel that's too big a hammer for this purpose.
+	do {
+		reflog = &commit_reflog->...[recno];
+		commit_reflog->recno--;
+-		logobj = parse_object(&reflog->ooid);
++		logobj = parse_object(is_null_oid(&reflog->ooid) 
++				? &reflog->noid : &reflog->ooid);
+-	} while (commit_reflog->recno && (logobj && logobj->type != OBJ_COMMIT));
++	} while (commit_reflog->recno && (!logobj || logobj->type != OBJ_COMMIT));
+-
+-	if (!logobj && commit_reflog->recno >= 0 && is_null_oid(&reflog->ooid)) {
+-		/* a root commit ... */
+-		reflog = &commit_reflog->...[recno];
+-		logobj = parse_object(&reflog->noid);
+-	}
 
-There is another example of a bitmap in shallow_c (just search for
-"32").  It would benefit from the macros mentioned above.  That
-might make it easier to switch to the native word size (unsigned int)
-instead of using uint32_t everywhere.
+which may deal with your "both old and new sides were  NULL" case
+better.
 
-But perhaps this one is actually a candidate for using EWAH, depending
-on the number of refs the code is supposed to handle.
 
->>>> +static void read_loose_object_subdir(struct alternate_object_database *alt,
->>>> +				     int subdir_nr)
->>>
->>> I think it's nice to pull this out into a helper function. I do wonder
->>> if it should just be reusing for_each_loose_file_in_objdir(). You'd just
->>> need to expose the in_obj_subdir() variant publicly.
->>>
->>> It does do slightly more than we need (for the callbacks it actually
->>> builds the filename), but I doubt memcpy()ing a few bytes would be
->>> measurable.
->>
->> Good point.  The function also copies the common first two hex digits
->> for each entry.  But all that extra work is certainly dwarfed by the
->> readdir calls.
-> 
-> Yes. You're welcome to micro-optimize that implementation if you want. ;)
-
-My knee-jerk reaction was that this would lead to ugliness, but on
-second look it might actually be doable.  Will check, but I don't
-expect much of a speedup.
-
-René
