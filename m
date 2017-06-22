@@ -7,233 +7,131 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EF9920D0C
-	for <e@80x24.org>; Thu, 22 Jun 2017 18:20:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C46DB20D0C
+	for <e@80x24.org>; Thu, 22 Jun 2017 18:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753560AbdFVSUG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 14:20:06 -0400
-Received: from mout.web.de ([212.227.17.11]:52292 "EHLO mout.web.de"
+        id S1753566AbdFVSUI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 14:20:08 -0400
+Received: from mout.web.de ([212.227.17.12]:49638 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753397AbdFVSUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 14:20:05 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LilAv-1duPmt05hF-00czOD; Thu, 22
- Jun 2017 20:19:50 +0200
-Subject: [PATCH] sha1_name: cache readdir(3) results in
- find_short_object_filename()
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     Michael Giuffrida <michaelpg@chromium.org>, git@vger.kernel.org,
+        id S1753397AbdFVSUH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 14:20:07 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M1G68-1ddhkD28Nc-00tCeM; Thu, 22
+ Jun 2017 20:19:41 +0200
+Subject: Re: [BUG] add_again() off-by-one error in custom format
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Giuffrida <michaelpg@chromium.org>,
+        git@vger.kernel.org,
         =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <xmqqd1a8n7o8.fsf@gitster.mtv.corp.google.com>
- <d229403a-d078-87b4-f3e8-89058fa4b548@web.de>
- <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
+References: <xmqqtw3j68rc.fsf@gitster.mtv.corp.google.com>
  <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
  <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
  <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
  <20170615055654.efvsouhr3leszz3i@sigill.intra.peff.net>
  <ec36f9fa-5f3e-b511-3985-3d0301b4847f@web.de>
  <20170615132532.nivmj22dctowxssm@sigill.intra.peff.net>
- <b728352d-7fa5-2adb-af00-5f232b85b2bf@web.de>
- <20170618115017.wyroncb3jka6lrdt@sigill.intra.peff.net>
- <xmqqd1a0vb2t.fsf@gitster.mtv.corp.google.com>
+ <b0bc9dab-bd93-c321-9f2e-f1621f857708@web.de>
+ <20170618114923.bffmbr5dqe4oivyw@sigill.intra.peff.net>
+ <96c26ba2-8548-1693-e803-3a3434ae3a62@web.de>
+ <20170618135623.3b27zhzdxur6gpg3@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <d06fb033-294e-f364-3dde-394624e83cd6@web.de>
-Date:   Thu, 22 Jun 2017 20:19:48 +0200
+Message-ID: <87848e2d-9766-7dad-62cf-ded0c18f6dc3@web.de>
+Date:   Thu, 22 Jun 2017 20:19:40 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqd1a0vb2t.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <20170618135623.3b27zhzdxur6gpg3@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:w+XfMC9PL8lGGzVMnnLT0ABTZCj9f4/sEgVMICn92YTkTzEATCB
- tOa+EPYO5LG5bwIATlJ8hSmxhe0yFpLnZgCi1hJjCK8JQwxT8JKhrohECu4ARRxuPnkdYcP
- 0Tt8Re4+yP/dw1Eukh95dd/4TUnbsfdO1gAbwxeVi8NNgi+B1SWYB/B5G6qqBDtUMUYGpa2
- LVnCLPRQIdqsYebTNQ0bg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DOPaELXhOQI=:Yb2i0fu18UEujAwMcwTPMn
- 9WIqukekTEoIEbSg65opYcCUPRFNGzvn8+9NOV/3m6DnyYYP7qIMzxzVUF41xaiEdMMXU5ftf
- FNnw0y33wl/Ot+3JtFjxzfHLQPLl4iJU2JKxb/7MCu292pyMtWSKvzDI30b0wlC1/6WMDFNqQ
- mz9wCgNTBiHYDuYQ5KTxf/2Vvvm6G141KnfPA8qrL7k7zttlV4oJyNqQScLGhHXojE120h5Ml
- cQMH3d8zDGHMUf2gCpZClMv0bKGNRrOZP4MHxBCOZ7A+owxJPEnbE+/x8ARZpB6qMqpn9ZKzu
- q7PtCKR8KtUXtBO7fZd1dHNqyvPC4aXVmOIxh4KeTfvVHMEd6YIkqpSI+QBWIVLL40HvgCTed
- u9OQKi1AlWc9fC0W5LY5l79Uvx2cLROUOURXoq3BkMUmUj1Syem3UG+8wkARtSj2Z0Ah/8DT8
- HLK8HY/jDY+Nv9FLLh1cZi331dAS+UjBFeYGk4S7QvDugTtfMGyHM1KyKIKRyzCGRF3DuBGtC
- Ja2t+NCmIFaheT2cTtSCEdtt3Td5Y/AY8dZs61WEHDzUBTMsE65atFBRi5ZpskdPGDz2ku/yy
- +n45sIXOos/Kgg9QPNBiIaxZCO249xd7UP7UwNQiY8cc+YAxoj6XQhykFsiQyy6ZhDANfbnol
- bSi1C3E3WgHWURNghjPbbdxO2BtLUInOaAawflMQkEUxuAKfY5s6uDEujvWdlLva6tx3njnG4
- UCjdAnkOt4ugpULiU1urDg9T3WKtRPRGdhCWSqa2vbKFQhGw0ALBlcs9SKl6zaPgD0lun/KIX
- E84uxj8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:vBhMvKTV/5U5nUVettP5ByJiusNu2sas0R/AyJmG1hJoOk0YfUY
+ 5Q1mHT6CgUKlzkPe0tYMxxKhisGbMat6wzEYZ4WUa62lvkrS8l6Ryk1um8nVFLWq8LGKU/v
+ D+JQIaRZhBL/vzMFOLhZiFd5ZYH2rEH+mXVoOMnQZ/Z6cY7aL1Vxk52KQH/CGauaLZ/B1z6
+ hN5/CtLcvgsNC7ko9umvA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DA/Wb5jtBEE=:jqmPHL3Qj4J9630QWzdEZJ
+ bGOWrx/VQzYVTgR81BQR1AtwC8DsbiI3gPb5DJpvU/uML5Qkuwy49Om/2d6rilw8W99v8HnbA
+ jowtdodU7j+uVFyqejNmLFGLg22CnkoTL6x9ZTQlvECuHmbnIDj2EhFLj+6vACYfpGZjP2FDw
+ U7oHlUMmgU6QvtEwFP0rNP6mvQCcDXKJNN3HHvXx0qW63eoLGDC7hzmqmK4qYfoBfnweSmujG
+ YIikYZKEyplPrYecdpQB5UMR2xAK85JgmPygBIw18vIioWZRotSBeOgk+Wteskn+hD5SRKbxy
+ Nq9/8CUki+ynzh2HNxejk7uSjlNqAhC8P8nv3xYaFyNdb3wt7jbGNuOAlg+sXXlZz8cxJ7tko
+ SMhG/hI8V6sgBSyzOZIXF67lnScnfDFsb+aIokU5BLQCg1foN8OotItHfGJ5CzcGTndF+yBL1
+ PTlgFStjg5Zhf8Uz9Nz8zeWWSWkVA0LM7G5LDXUKbJ20uM1wwaMaDJXoUjldT8HpiY/W7k2Gp
+ XMrWbjc1hzLIRzEI2nRqA1miaNl9Nk66Kx7tM4Irm2vQNS/OC6+kjmEMAkhI1PUKInPj45W9M
+ PS/sq4m2e08Y2LSZx5ytAX02rwRqeZwz0PPptgjYRDIalE71gcgaDjIaHbE64+gmVmpZ06KLJ
+ TGtT/O6We0ixapfOB/XZmOnUSM5S/oaSmarWh1hFBvB+9NiBY5dIkRAmZOL0I74pX60DMUJAq
+ dnsknwnjborGPbfBgjgNv/FRzYpnx2l8SeZgLxFDu9OdLZ7k+OiHEruNGkrbbucGnG9WU7DVs
+ uGnp/ka
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Read each loose object subdirectory at most once when looking for unique
-abbreviated hashes.  This speeds up commands like "git log --pretty=%h"
-considerably, which previously caused one readdir(3) call for each
-candidate, even for subdirectories that were visited before.
+Am 18.06.2017 um 15:56 schrieb Jeff King:
+> On Sun, Jun 18, 2017 at 02:59:04PM +0200, René Scharfe wrote:
+> 
+>>>> @@ -1586,6 +1587,9 @@ extern struct alternate_object_database {
+>>>>    	struct strbuf scratch;
+>>>>    	size_t base_len;
+>>>> +	uint32_t loose_objects_subdir_bitmap[8];
+>>>
+>>> Is it worth the complexity of having an actual bitmap and not just an
+>>> array of char? I guess it's not _that_ complex to access the bits, but
+>>> there are a lot of magic numbers involved.
+>>
+>> That would be 224 bytes more per alternate_object_database, and we'd
+>> gain simpler code.  Hmm.  We could add some bitmap helper macros, but
+>> you're probably right that the first version should use the simplest
+>> form for representing small bitmaps that we currently have.
+> 
+> I'd be OK with keeping it if we could reduce the number of magic
+> numbers. E.g,. rather than 32 elsewhere use:
+> 
+>    (sizeof(*loose_objects_subdir_bitmap) * CHAR_BIT)
 
-The new cache is kept until the program ends and never invalidated.  The
-same is already true for pack indexes.  The inherent racy nature of
-finding unique short hashes makes it still fit for this purpose -- a
-conflicting new object may be added at any time.  Tasks with higher
-consistency requirements should not use it, though.
+We have a bitsizeof macro for that.
 
-The cached object names are stored in an oid_array, which is quite
-compact.  The bitmap for remembering which subdir was already read is
-stored as a char array, with one char per directory -- that's not quite
-as compact, but really simple and incurs only an overhead equivalent to
-11 hashes after all.
+> and similarly rather than 8 here use
+> 
+>    256 / sizeof(*loose_objects_subdir_bitmap) / CHAR_BIT
 
-Suggested-by: Jeff King <peff@peff.net>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- cache.h     | 17 +++++++++++++++++
- sha1_file.c | 12 ++++++------
- sha1_name.c | 50 ++++++++++++++++++++++++++++++--------------------
- 3 files changed, 53 insertions(+), 26 deletions(-)
+If we're pretending not to know the number of bits in a byte then we
+need to round up, and we have DIV_ROUND_UP for that. :)
 
-diff --git a/cache.h b/cache.h
-index d6ba8a2f11..00a017dfcb 100644
---- a/cache.h
-+++ b/cache.h
-@@ -11,6 +11,7 @@
- #include "string-list.h"
- #include "pack-revindex.h"
- #include "hash.h"
-+#include "sha1-array.h"
- 
- #ifndef platform_SHA_CTX
- /*
-@@ -1593,6 +1594,16 @@ extern struct alternate_object_database {
- 	struct strbuf scratch;
- 	size_t base_len;
- 
-+	/*
-+	 * Used to store the results of readdir(3) calls when searching
-+	 * for unique abbreviated hashes.  This cache is never
-+	 * invalidated, thus it's racy and not necessarily accurate.
-+	 * That's fine for its purpose; don't use it for tasks requiring
-+	 * greater accuracy!
-+	 */
-+	char loose_objects_subdir_seen[256];
-+	struct oid_array loose_objects_cache;
-+
- 	char path[FLEX_ARRAY];
- } *alt_odb_list;
- extern void prepare_alt_odb(void);
-@@ -1811,6 +1822,12 @@ typedef int each_loose_cruft_fn(const char *basename,
- typedef int each_loose_subdir_fn(int nr,
- 				 const char *path,
- 				 void *data);
-+int for_each_file_in_obj_subdir(int subdir_nr,
-+				struct strbuf *path,
-+				each_loose_object_fn obj_cb,
-+				each_loose_cruft_fn cruft_cb,
-+				each_loose_subdir_fn subdir_cb,
-+				void *data);
- int for_each_loose_file_in_objdir(const char *path,
- 				  each_loose_object_fn obj_cb,
- 				  each_loose_cruft_fn cruft_cb,
-diff --git a/sha1_file.c b/sha1_file.c
-index 59a4ed2ed3..5e0ee2b68b 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3735,12 +3735,12 @@ void assert_sha1_type(const unsigned char *sha1, enum object_type expect)
- 		    typename(expect));
- }
- 
--static int for_each_file_in_obj_subdir(int subdir_nr,
--				       struct strbuf *path,
--				       each_loose_object_fn obj_cb,
--				       each_loose_cruft_fn cruft_cb,
--				       each_loose_subdir_fn subdir_cb,
--				       void *data)
-+int for_each_file_in_obj_subdir(int subdir_nr,
-+				struct strbuf *path,
-+				each_loose_object_fn obj_cb,
-+				each_loose_cruft_fn cruft_cb,
-+				each_loose_subdir_fn subdir_cb,
-+				void *data)
- {
- 	size_t baselen = path->len;
- 	DIR *dir = opendir(path->buf);
-diff --git a/sha1_name.c b/sha1_name.c
-index 5126853bb5..ccb5144d0d 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -77,10 +77,19 @@ static void update_candidates(struct disambiguate_state *ds, const struct object
- 	/* otherwise, current can be discarded and candidate is still good */
- }
- 
-+static int append_loose_object(const struct object_id *oid, const char *path,
-+			       void *data)
-+{
-+	oid_array_append(data, oid);
-+	return 0;
-+}
-+
-+static int match_sha(unsigned, const unsigned char *, const unsigned char *);
-+
- static void find_short_object_filename(struct disambiguate_state *ds)
- {
-+	int subdir_nr = ds->bin_pfx.hash[0];
- 	struct alternate_object_database *alt;
--	char hex[GIT_MAX_HEXSZ];
- 	static struct alternate_object_database *fakeent;
- 
- 	if (!fakeent) {
-@@ -95,29 +104,30 @@ static void find_short_object_filename(struct disambiguate_state *ds)
- 	}
- 	fakeent->next = alt_odb_list;
- 
--	xsnprintf(hex, sizeof(hex), "%.2s", ds->hex_pfx);
- 	for (alt = fakeent; alt && !ds->ambiguous; alt = alt->next) {
--		struct strbuf *buf = alt_scratch_buf(alt);
--		struct dirent *de;
--		DIR *dir;
--
--		strbuf_addf(buf, "%.2s/", ds->hex_pfx);
--		dir = opendir(buf->buf);
--		if (!dir)
--			continue;
-+		int pos;
- 
--		while (!ds->ambiguous && (de = readdir(dir)) != NULL) {
--			struct object_id oid;
-+		if (!alt->loose_objects_subdir_seen[subdir_nr]) {
-+			struct strbuf *buf = alt_scratch_buf(alt);
-+			strbuf_addf(buf, "%02x/", subdir_nr);
-+			for_each_file_in_obj_subdir(subdir_nr, buf,
-+						    append_loose_object,
-+						    NULL, NULL,
-+						    &alt->loose_objects_cache);
-+			alt->loose_objects_subdir_seen[subdir_nr] = 1;
-+		}
- 
--			if (strlen(de->d_name) != GIT_SHA1_HEXSZ - 2)
--				continue;
--			if (memcmp(de->d_name, ds->hex_pfx + 2, ds->len - 2))
--				continue;
--			memcpy(hex + 2, de->d_name, GIT_SHA1_HEXSZ - 2);
--			if (!get_oid_hex(hex, &oid))
--				update_candidates(ds, &oid);
-+		pos = oid_array_lookup(&alt->loose_objects_cache, &ds->bin_pfx);
-+		if (pos < 0)
-+			pos = -1 - pos;
-+		while (!ds->ambiguous && pos < alt->loose_objects_cache.nr) {
-+			const struct object_id *oid;
-+			oid = alt->loose_objects_cache.oid + pos;
-+			if (!match_sha(ds->len, ds->bin_pfx.hash, oid->hash))
-+				break;
-+			update_candidates(ds, oid);
-+			pos++;
- 		}
--		closedir(dir);
- 	}
- }
- 
--- 
-2.13.1
+> There's also already a bitmap data structure in ewah/bitmap.c. It's a
+> little bit overkill, though, because it mallocs and will grow the bitmap
+> as needed.
 
+Yes, I feel that's too big a hammer for this purpose.
+
+There is another example of a bitmap in shallow_c (just search for
+"32").  It would benefit from the macros mentioned above.  That
+might make it easier to switch to the native word size (unsigned int)
+instead of using uint32_t everywhere.
+
+But perhaps this one is actually a candidate for using EWAH, depending
+on the number of refs the code is supposed to handle.
+
+>>>> +static void read_loose_object_subdir(struct alternate_object_database *alt,
+>>>> +				     int subdir_nr)
+>>>
+>>> I think it's nice to pull this out into a helper function. I do wonder
+>>> if it should just be reusing for_each_loose_file_in_objdir(). You'd just
+>>> need to expose the in_obj_subdir() variant publicly.
+>>>
+>>> It does do slightly more than we need (for the callbacks it actually
+>>> builds the filename), but I doubt memcpy()ing a few bytes would be
+>>> measurable.
+>>
+>> Good point.  The function also copies the common first two hex digits
+>> for each entry.  But all that extra work is certainly dwarfed by the
+>> readdir calls.
+> 
+> Yes. You're welcome to micro-optimize that implementation if you want. ;)
+
+My knee-jerk reaction was that this would lead to ugliness, but on
+second look it might actually be doable.  Will check, but I don't
+expect much of a speedup.
+
+René
