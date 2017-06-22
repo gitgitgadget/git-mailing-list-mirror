@@ -2,182 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E686520802
-	for <e@80x24.org>; Thu, 22 Jun 2017 20:36:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 158F820802
+	for <e@80x24.org>; Thu, 22 Jun 2017 20:38:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752563AbdFVUg0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 16:36:26 -0400
-Received: from siwi.pair.com ([209.68.5.199]:48166 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751221AbdFVUgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 16:36:22 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id B044A84593;
-        Thu, 22 Jun 2017 16:36:21 -0400 (EDT)
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 1FE168458F;
-        Thu, 22 Jun 2017 16:36:21 -0400 (EDT)
-From:   Jeff Hostetler <git@jeffhostetler.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, jonathantanmy@google.com,
-        jrnieder@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH 1/3] list-objects: add filter_blob to traverse_commit_list
-Date:   Thu, 22 Jun 2017 20:36:13 +0000
-Message-Id: <20170622203615.34135-2-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170622203615.34135-1-git@jeffhostetler.com>
-References: <20170622203615.34135-1-git@jeffhostetler.com>
+        id S1753465AbdFVUid (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 16:38:33 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:35383 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751149AbdFVUic (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 16:38:32 -0400
+Received: by mail-pf0-f178.google.com with SMTP id c73so13801575pfk.2
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 13:38:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=H1dByqk1D0SK5c6ieLSlqqguLzcNXZ92ZdaiagmWqqs=;
+        b=oSK2mGCeodQQEZL32ZRLBAWzX3pQO56R+5Dfuq/qsy641YHYbSDfApB4XcaarJvM2z
+         uMcOHBf3YFOvlFxAITwm80Ckkg4647gJm9NDD9YH4q1cEzPDhT8AT6jNJzEQr1wCCe5g
+         dA04EqH23HVnSy7nIsit4I1XiqWM9rSoZ7FzT2mwEhS4ubNvJ7KWuL476j0d8iXhzEvt
+         0ZrbtymLcy4eZYzaT0qTgqvk/izcJ0vaAUnMaKEVrM2Dp3E7UO1iabpWVRNSuEOZomHz
+         yXm9VDeeHoI83xC8dGFg8j8OUa/BYWweoVnI4Ju7osxgCAyiZiPf8n4ftrpSTrceIXvC
+         zl1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=H1dByqk1D0SK5c6ieLSlqqguLzcNXZ92ZdaiagmWqqs=;
+        b=OVMgFtOOOjaQ0LBMlKdQ0GsQ/3u3w2VmL1xuroYyGMqdHoS58XhZnfHMWgP2NWmzP/
+         MiCDNezQpyN0IIfxos62I/u1xp68wnQaZZzIPW4S9WKeZW28+JtIH3TpmKWruWO30uwF
+         2ENkm7MTiBji52WhWdcXUPdT02Q61CrqA1iTaUtxg3HuWNIsfiLOer/5xsKUGH553ueY
+         OHjjrIDyf8NTZ8Uj2GExdK+LKZD6LIcbllMR3Jxr98p5jlGEXcORil+40lRhP2AYQVZN
+         8Kax3kPcnkZQNtp8yjCy0vDOF+tOJwe0LtrqEj119tfT55D/PrcXSbCtUz8zDds3pbQH
+         Awsw==
+X-Gm-Message-State: AKS2vOxde2uEZrEUFsprLrJDLW0kN+GxeankHAeUTKKtqfYgjqxTcKey
+        OFd0yZp7WgphNP7trnKxgGh+J9YNviVa
+X-Received: by 10.98.85.196 with SMTP id j187mr4444631pfb.19.1498163911296;
+ Thu, 22 Jun 2017 13:38:31 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.161.227 with HTTP; Thu, 22 Jun 2017 13:38:30 -0700 (PDT)
+In-Reply-To: <20170622195245.11252-1-orgads@gmail.com>
+References: <20170622195245.11252-1-orgads@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 22 Jun 2017 13:38:30 -0700
+Message-ID: <CAGZ79kYFcZ_wMQ5grH-keFpnf=V7Y=3KkAJEH3AuoZYMDvqTTQ@mail.gmail.com>
+Subject: Re: [PATCH] name-rev: Fix tag lookup on repository with mixed types
+ of tags
+To:     Orgad Shaneh <orgads@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+On Thu, Jun 22, 2017 at 12:52 PM,  <orgads@gmail.com> wrote:
+> From: Orgad Shaneh <orgads@gmail.com>
+>
+> Commit 7550424804 (name-rev: include taggerdate in considering the best
+> name) introduced a bug in name-rev.
+>
+> If a repository has both annotated and non-annotated tags, annotated
+> tag will always win, even if it was created decades after the commit.
+>
+> Consider a repository that always used non-annotated tags, and at some
+> point started using annotated tags - name-rev --tags will return the
+> first annotated tags for all the old commits (in our repository it is
+> followed by ~5067 for one commit, or by ~120^2~21^2~88^2~87 for
+> another...). This is obviously not what the user expects.
+>
+> The taggerdate should only be matched if *both tags* have it.
 
-In preparation for partial/sparse clone/fetch where the
-server is allowed to omit large/all blobs from the packfile,
-teach traverse_commit_list() to take a blob filter-proc that
-controls when blobs are shown and marked as SEEN.
+Please sign off the patch. See https://developercertificate.org/
+or Documentation/SubmittingPatches
 
-Normally, traverse_commit_list() always marks visited blobs
-as SEEN, so that the show_object() callback will never see
-duplicates.  Since a single blob OID may be referenced by
-multiple pathnames, we may not be able to decide if a blob
-should be excluded until later pathnames have been traversed.
-With the filter-proc, the automatic deduping is disabled.
+> ---
+>  builtin/name-rev.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+> index 92a5d8a5d2..8f77023482 100644
+> --- a/builtin/name-rev.c
+> +++ b/builtin/name-rev.c
+> @@ -46,11 +46,13 @@ static void name_rev(struct commit *commit,
+>                 commit->util = name;
+>                 goto copy_data;
+>         } else if (name->taggerdate > taggerdate ||
+> -                       (name->taggerdate == taggerdate &&
+> +                       ((taggerdate == ULONG_MAX || name->taggerdate == taggerdate) &&
+>                          name->distance > distance)) {
+>  copy_data:
+>                 name->tip_name = tip_name;
+> -               name->taggerdate = taggerdate;
+> +               if (taggerdate != ULONG_MAX) {
+> +                       name->taggerdate = taggerdate;
+> +               }
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- list-objects.c | 39 +++++++++++++++++++++++++++++++++++----
- list-objects.h |  8 ++++++++
- 2 files changed, 43 insertions(+), 4 deletions(-)
+style: you may omit the braces for a single statement
+after if.
 
-diff --git a/list-objects.c b/list-objects.c
-index f3ca6aa..c9ca81c 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -11,6 +11,7 @@
- static void process_blob(struct rev_info *revs,
- 			 struct blob *blob,
- 			 show_object_fn show,
-+			 filter_blob_fn filter_blob,
- 			 struct strbuf *path,
- 			 const char *name,
- 			 void *cb_data)
-@@ -24,11 +25,28 @@ static void process_blob(struct rev_info *revs,
- 		die("bad blob object");
- 	if (obj->flags & (UNINTERESTING | SEEN))
- 		return;
--	obj->flags |= SEEN;
- 
- 	pathlen = path->len;
- 	strbuf_addstr(path, name);
--	show(obj, path->buf, cb_data);
-+	if (!filter_blob) {
-+		/*
-+		 * Normal processing is to imediately dedup blobs
-+		 * during commit traversal, regardless of how many
-+		 * times it appears in a single or multiple commits,
-+		 * so we always set SEEN.
-+		 */
-+		obj->flags |= SEEN;
-+		show(obj, path->buf, cb_data);
-+	} else {
-+		/*
-+		 * Use the filter-proc to decide whether to show
-+		 * the blob.  We only set SEEN if requested.  For
-+		 * example, this could be used to omit a specific
-+		 * blob until it appears with a ".git*" entryname.
-+		 */
-+		if (filter_blob(obj, path->buf, &path->buf[pathlen], cb_data))
-+			obj->flags |= SEEN;
-+	}
- 	strbuf_setlen(path, pathlen);
- }
- 
-@@ -67,6 +85,7 @@ static void process_gitlink(struct rev_info *revs,
- static void process_tree(struct rev_info *revs,
- 			 struct tree *tree,
- 			 show_object_fn show,
-+			 filter_blob_fn filter_blob,
- 			 struct strbuf *base,
- 			 const char *name,
- 			 void *cb_data)
-@@ -111,7 +130,7 @@ static void process_tree(struct rev_info *revs,
- 		if (S_ISDIR(entry.mode))
- 			process_tree(revs,
- 				     lookup_tree(entry.oid->hash),
--				     show, base, entry.path,
-+				     show, filter_blob, base, entry.path,
- 				     cb_data);
- 		else if (S_ISGITLINK(entry.mode))
- 			process_gitlink(revs, entry.oid->hash,
-@@ -120,7 +139,7 @@ static void process_tree(struct rev_info *revs,
- 		else
- 			process_blob(revs,
- 				     lookup_blob(entry.oid->hash),
--				     show, base, entry.path,
-+				     show, filter_blob, base, entry.path,
- 				     cb_data);
- 	}
- 	strbuf_setlen(base, baselen);
-@@ -188,6 +207,16 @@ void traverse_commit_list(struct rev_info *revs,
- 			  show_object_fn show_object,
- 			  void *data)
- {
-+	traverse_commit_list_filtered(revs, show_commit, show_object, NULL, data);
-+}
-+
-+void traverse_commit_list_filtered(
-+	struct rev_info *revs,
-+	show_commit_fn show_commit,
-+	show_object_fn show_object,
-+	filter_blob_fn filter_blob,
-+	void *data)
-+{
- 	int i;
- 	struct commit *commit;
- 	struct strbuf base;
-@@ -218,11 +247,13 @@ void traverse_commit_list(struct rev_info *revs,
- 			path = "";
- 		if (obj->type == OBJ_TREE) {
- 			process_tree(revs, (struct tree *)obj, show_object,
-+				     filter_blob,
- 				     &base, path, data);
- 			continue;
- 		}
- 		if (obj->type == OBJ_BLOB) {
- 			process_blob(revs, (struct blob *)obj, show_object,
-+				     filter_blob,
- 				     &base, path, data);
- 			continue;
- 		}
-diff --git a/list-objects.h b/list-objects.h
-index 0cebf85..7f823aa 100644
---- a/list-objects.h
-+++ b/list-objects.h
-@@ -3,7 +3,15 @@
- 
- typedef void (*show_commit_fn)(struct commit *, void *);
- typedef void (*show_object_fn)(struct object *, const char *, void *);
-+typedef int  (*filter_blob_fn)(struct object *, const char *, const char *, void *);
-+
- void traverse_commit_list(struct rev_info *, show_commit_fn, show_object_fn, void *);
-+void traverse_commit_list_filtered(
-+    struct rev_info *revs,
-+    show_commit_fn show_commit,
-+    show_object_fn show_object,
-+    filter_blob_fn filter_blob,
-+    void *data);
- 
- typedef void (*show_edge_fn)(struct commit *);
- void mark_edges_uninteresting(struct rev_info *, show_edge_fn);
--- 
-2.9.3
-
+>                 name->generation = generation;
+>                 name->distance = distance;
+>         } else
+> --
+> 2.13.1.windows.1.1.ga36e14b3aa
+>
