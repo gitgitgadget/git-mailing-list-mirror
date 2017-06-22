@@ -2,78 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3094C1FA7B
-	for <e@80x24.org>; Thu, 22 Jun 2017 19:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28E0F1FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 19:52:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753223AbdFVTwo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 15:52:44 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36102 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753361AbdFVTwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 15:52:43 -0400
-Received: by mail-pf0-f194.google.com with SMTP id y7so4405332pfd.3
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 12:52:43 -0700 (PDT)
+        id S1753778AbdFVTwv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 15:52:51 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:33211 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753361AbdFVTwu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 15:52:50 -0400
+Received: by mail-wr0-f193.google.com with SMTP id x23so7184105wrb.0
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 12:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=iNBv8VB3tgfYY0aTW7HKJ+4FMivfMXIp1Tfho+sbLg4=;
-        b=AkihjGCiaAapQluXZAbaquVjz7E1ZN3vbcmFU+G0WWrpvMy31P6VutOfdu/+kn6D3I
-         knClvLc4JcH99fsNphMUiozkEhtF7NyK4/morNVgPI8U0O9y8UeZAXSqzRmxOB0/3nW+
-         fgg3UseQCZJXSl6VEzT41MQT30pXgA8aP/7mRTfoHiZpaECirtmVnzvCXgZVVI/QyUAh
-         g0CeNGu2NcuwR1Xu8XVzxRDrq550+zaPFaZXEViW318olMI83666lG7IcbRudYfxmztZ
-         8ZtazwFXV6KNdgHCCJsSxPHkl2pT47mBuV3zVs3hulIEkUjM4i++AzbNokK6POj1Fryd
-         9wgQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=NrNIZYoQhKWahsZEsh5CQfaLzMhGOfdbg3F/qaQMotE=;
+        b=cTJ6X/euunZMkbqTyf5Erdm776/NjyDwNgtgQBG4intV3aGKYLIaNlcOPdkapB4p9I
+         9KRTPePUJ4hBNfSDvAQCN2mXeA3gC7bXIFZPtjM6taO84WbZCOPE2myLeFCKbRSEUB3i
+         IzQF0Misf6FflHiSQWKI+VPaX9cMejC7CxDOlldGSj3JIUNLphuZ/UDU+2Zp3pY3WhQ2
+         T9Mx+5+0MhKzm9mv7vtiI9rvSRM15f7sE2DnErHooeVcX5GndfPsQQYYpQMLMiUxJh6m
+         DmvQq8zashxRWP3UvVE0s4AB2ct5f6n9+kRtwExowA6VxAaqMbbVRzc85wu52XNLasqZ
+         qWDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=iNBv8VB3tgfYY0aTW7HKJ+4FMivfMXIp1Tfho+sbLg4=;
-        b=nvDNLcvYclZnLNhdW2SXZusX3B/iTzRnWfvdEcyM+rsaVi3xjth+P13ncNH66h+1UX
-         ss0g/KTS8aXZK1s3S8vga6Tf2kYwEVNrAOt8i93AYgDF6F0wF/FSTixdExeUPqpH656T
-         MWVJ+70RWed0aC748N12Pc0N3mxwOrG4J+Dx+GBuWIqD2MPO4roAoRCleC9YvHzj/vWK
-         ZqZXz9U2WcbfbviBElARqyMSPa1/tQ1CiwBPISAAbKvJm1uaii5tinw1YHZghbjzugul
-         fVp9Fn0zv+AdpCliHG2z3029zHqB+oqhgxRaZUSv5dcigkq5f7JgOZEVuj+T3uVCoECw
-         /Jow==
-X-Gm-Message-State: AKS2vOwGkZ4qNzoP//0OGo8KnDRoQY1XFABGqD8Y7F+YrsF9T6zibnYO
-        Ck+4QqPluy02hA==
-X-Received: by 10.84.174.67 with SMTP id q61mr4739476plb.60.1498161162700;
-        Thu, 22 Jun 2017 12:52:42 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
-        by smtp.gmail.com with ESMTPSA id x12sm4864298pgc.47.2017.06.22.12.52.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 12:52:41 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/3] t1301: move movebits() to test-lib-functions.sh
-References: <20170622190158.13265-1-chriscool@tuxfamily.org>
-        <20170622190158.13265-2-chriscool@tuxfamily.org>
-Date:   Thu, 22 Jun 2017 12:52:41 -0700
-In-Reply-To: <20170622190158.13265-2-chriscool@tuxfamily.org> (Christian
-        Couder's message of "Thu, 22 Jun 2017 21:01:57 +0200")
-Message-ID: <xmqq4lv7kdfa.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=NrNIZYoQhKWahsZEsh5CQfaLzMhGOfdbg3F/qaQMotE=;
+        b=Dhd2PcnNRxyPrlN5DOEUq1LPnQjp5F+PTNTOPNnHk0hrk1SJE8mnOktVZnlbwoVZi8
+         nLag70ExL/SeOVYKVg+3KBEn4KtEqKw99YBA0gDKw0UH+B+UtXnx1rO5xRjV8Cbx9MhU
+         cd7SDlFW9QquMdiVEc9z0fmq+sLenVNMa5yWM3fbWCMa96QfyhgZwpjOoiRzJVpumZlr
+         kbEQlZUb23itpN2uU8nu8Um5RZd+oaL8U2h5zQh2CqrfrBdhUxFYWoAoW+1Y7EYoXBMF
+         ndtPFL773I/XAs3qCBLb9CteQgbZTXq2DdZ4csYrV2OjJ54LsCZwWjStV5jlVzf/nNE3
+         z0Qg==
+X-Gm-Message-State: AKS2vOzxMonGaLA6HQCNXZslUUBe8KYHOBKO5fOs7BAcfZc6sDCzCOhv
+        xUjO/vyXwSWcbhveaQo=
+X-Received: by 10.80.149.132 with SMTP id w4mr3840224eda.82.1498161169081;
+        Thu, 22 Jun 2017 12:52:49 -0700 (PDT)
+Received: from junior.corp.audiocodes.com ([95.86.125.251])
+        by smtp.gmail.com with ESMTPSA id x13sm2242358eda.67.2017.06.22.12.52.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Jun 2017 12:52:47 -0700 (PDT)
+From:   orgads@gmail.com
+To:     git@vger.kernel.org
+Cc:     Orgad Shaneh <orgads@gmail.com>
+Subject: [PATCH] name-rev: Fix tag lookup on repository with mixed types of tags
+Date:   Thu, 22 Jun 2017 22:52:45 +0300
+Message-Id: <20170622195245.11252-1-orgads@gmail.com>
+X-Mailer: git-send-email 2.13.1.508.gb3defc5cc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+From: Orgad Shaneh <orgads@gmail.com>
 
-> As the movebits() function can be useful outside t1301,
-> let's move it into test-lib-functions.sh, and while at
-> it let's rename it test_movebits().
+Commit 7550424804 (name-rev: include taggerdate in considering the best
+name) introduced a bug in name-rev.
 
-Good thinking, especially on the renaming.
+If a repository has both annotated and non-annotated tags, annotated
+tag will always win, even if it was created decades after the commit.
+
+Consider a repository that always used non-annotated tags, and at some
+point started using annotated tags - name-rev --tags will return the
+first annotated tags for all the old commits (in our repository it is
+followed by ~5067 for one commit, or by ~120^2~21^2~88^2~87 for
+another...). This is obviously not what the user expects.
+
+The taggerdate should only be matched if *both tags* have it.
+---
+ builtin/name-rev.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 92a5d8a5d2..8f77023482 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -46,11 +46,13 @@ static void name_rev(struct commit *commit,
+ 		commit->util = name;
+ 		goto copy_data;
+ 	} else if (name->taggerdate > taggerdate ||
+-			(name->taggerdate == taggerdate &&
++			((taggerdate == ULONG_MAX || name->taggerdate == taggerdate) &&
+ 			 name->distance > distance)) {
+ copy_data:
+ 		name->tip_name = tip_name;
+-		name->taggerdate = taggerdate;
++		if (taggerdate != ULONG_MAX) {
++			name->taggerdate = taggerdate;
++		}
+ 		name->generation = generation;
+ 		name->distance = distance;
+ 	} else
+-- 
+2.13.1.windows.1.1.ga36e14b3aa
+
