@@ -2,80 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68C9D20282
-	for <e@80x24.org>; Thu, 22 Jun 2017 10:27:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE1041FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 12:47:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753211AbdFVK1G (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 06:27:06 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:40166 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753160AbdFVK1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 06:27:00 -0400
-Received: from lindisfarne.localdomain ([92.22.42.39])
-        by smtp.talktalk.net with SMTP
-        id NzK5dhmIPxR4bNzKFdWEVV; Thu, 22 Jun 2017 11:26:59 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1498127219; bh=7+gy2wIRhsppVxX4a04Oc7ee7ZX1y9QZVYws1oCPIBI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=GPdIPXIu9lnLCihZ2bnl7UFclnVS7Tluqqo1J1WlLova+N7jKwR6DZSmkrnnKRQIY
-         +tuA70Bcg8nQlvfQSBZvV2Toql/KnaJ0kk+LmNBx+0xw9HswAJT4gCkFDVcUcd+M5X
-         9sL1HI5mqrNFvWt+UVDxJ6EcJkFGbvWoK+KGM+E4=
-X-Originating-IP: [92.22.42.39]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
- a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=evINK-nbAAAA:8 a=cYJeAYfeg3XIO7qQxPMA:9
- a=QeQOb_eONj4mqK3g:21 a=8Zxs_WvQP2foteCg:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 4/5] Add tests for Git::unquote_path()
-Date:   Thu, 22 Jun 2017 11:26:21 +0100
-Message-Id: <20170622102622.26147-5-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.13.0
-In-Reply-To: <20170622102622.26147-1-phillip.wood@talktalk.net>
-References: <20170622102622.26147-1-phillip.wood@talktalk.net>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfCW2A9KhDL6F1M1H/ziWIMMl7sCGTyJX283X9kmmG3E7WI++Tsd9sSocU8DeDnNz0riR/pjGJZcAVuE1kwkA7HdK2EYmpv283vCfwCYMc88TB5a4Vgp+
- 12x2wUrePhzw/as1ZS4WlQ4sEHON3LdbjDDKMRtyXQWcHbcrn0UjOv71P+CqQB06wVCC9oGIZKT08CCstS85VJYo+4l8zdgrFS6LNsj8LB1Pk94zMinx30vg
- vx6HoSD0+VIbHPHJIdRj+Q==
+        id S1753219AbdFVMq6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 08:46:58 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:33981 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753211AbdFVMq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 08:46:57 -0400
+Received: by mail-io0-f171.google.com with SMTP id c201so22272284ioe.1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 05:46:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:date:disposition-notification-to
+         :mime-version:content-transfer-encoding;
+        bh=UJGgV16YmtyulBikkpxqHy9U5m8GXHGd0IfxEocOUbc=;
+        b=uC9UarPZSzfiD/WYNGP1fd5sCDQ9684Nux9rEm6b5HD90HQ/FGFI6rRtuMQVWrUfi5
+         eNeXYBowpPeTLXZlEteVKnGUbMPWhviaYift3grcaL92Ruh7KdDbw4sfIb4FYq/HbqvD
+         TLnUs4ZgM6EkKKfgupeqcsuoAMF1j9W1u++DF1/HsT66JiABKHvI+FhqVkOAZM1SCgvT
+         XDZMwsVjS26KPMk93lIcPFWta+VaVnoYAdJIAbAf3AgJ1qtz/Wmm5pZH2APHMGdK/81e
+         zIdtC1Ia2O5rbz/h9qQ4c4PWRPXqLECalpdZTXWUdDiAqNaQj49KbbSirrgMCEIJ1XMR
+         SnMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:date
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=UJGgV16YmtyulBikkpxqHy9U5m8GXHGd0IfxEocOUbc=;
+        b=K5rf6wvWBkfN1po7yGw4xY15dY4DTd1HgI1EXhdPMccae6+QEowOvHe/JV365o/e3N
+         +2P5ZIt5ZYrjnhF7UcuglWy8RwZq8ZXWi7uqmnDnxz/+GtzPxrT3gWVTY3cQvc+ich0M
+         xqw+/9nz2zZcPct8cNBXkDPHSC8QurmIkYtQBo1jBTPa8o4Pd2xiPsWKhZbs7MRUDPEy
+         cmXlhBCqseWrN4ilhajGAbPUJtt+JmALjJBFQpFhroQw5MnXAkkV16Dv7ObY9W5tUQGf
+         cF+RcctW08Cn6BHZjwJZ2zNbYJakpD/Dfaor3lWAeam/fsALLD68Ba+zDmJFDGnOuvZS
+         cA8Q==
+X-Gm-Message-State: AKS2vOzgYApjoWRzwQbVYpWyltAD528ed043+o74yKkmBGm4LfNzwrkz
+        Uv+39imbk2B9IKETUws=
+X-Received: by 10.107.191.71 with SMTP id p68mr2022776iof.100.1498135606796;
+        Thu, 22 Jun 2017 05:46:46 -0700 (PDT)
+Received: from unique-pc ([218.248.21.162])
+        by smtp.googlemail.com with ESMTPSA id g198sm934174itb.29.2017.06.22.05.46.29
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 22 Jun 2017 05:46:31 -0700 (PDT)
+Message-ID: <1498135581.2089.1.camel@gmail.com>
+Subject: Ambiguity warning printed twice ?
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     git@vger.kernel.org
+Date:   Thu, 22 Jun 2017 18:16:21 +0530
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Happy day everyone,
 
-Check that unquote_path() handles spaces and escape sequences properly
+I accidentally noticed a weird behaviour of 'git status'. In a
+repository I created a branch with the name 'HEAD' by chance. When I
+run 'git status' in the repository it prints a warning about an
+ambiguous reference about 'HEAD' which is expected but it prints it
+twice which seems suspicious.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/t9700/test.pl | 7 +++++++
- 1 file changed, 7 insertions(+)
+    $ git branch
+      HEAD
+      master
+    * test
 
-diff --git a/t/t9700/test.pl b/t/t9700/test.pl
-index 1b75c919651a8126e2a327f3d9645d4377823726..34cd01366f92164ffcd712cb86dac4eb1cffa3f5 100755
---- a/t/t9700/test.pl
-+++ b/t/t9700/test.pl
-@@ -133,6 +133,13 @@ close TEMPFILE3;
- unlink $tmpfile3;
- chdir($abs_repo_dir);
- 
-+# unquoting paths
-+is(Git::unquote_path('abc'), 'abc', 'unquote unquoted path');
-+is(Git::unquote_path('"abc def"'), 'abc def', 'unquote simple quoted path');
-+is(Git::unquote_path('"abc\"\\\\ \a\b\t\n\v\f\r\001\040"'),
-+		     "abc\"\\ \x07\x08\x09\x0a\x0b\x0c\x0d\x01 ",
-+		     'unquote escape sequences');
-+
- printf "1..%d\n", Test::More->builder->current_test;
- 
- my $is_passing = eval { Test::More->is_passing };
+    $ git status
+    warning: refname 'HEAD' is ambiguous.
+    warning: refname 'HEAD' is ambiguous.
+    On branch test
+    ....
+
+Any reasons behind this behaviour or is this a bug?
+
+
 -- 
-2.13.0
-
+Regards,
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
