@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 880491FA7B
-	for <e@80x24.org>; Thu, 22 Jun 2017 18:44:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E246A1FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 18:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753728AbdFVSon (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 14:44:43 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35581 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753718AbdFVSol (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 14:44:41 -0400
-Received: by mail-pf0-f173.google.com with SMTP id c73so12563888pfk.2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:44:36 -0700 (PDT)
+        id S1753740AbdFVSou (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 14:44:50 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:36026 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753733AbdFVSor (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 14:44:47 -0400
+Received: by mail-pf0-f171.google.com with SMTP id q86so12536817pfl.3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Qhs4lrU3JgQg/fo29ikV+C7dncC+QyYbXs6OEzVF5rk=;
-        b=JUPirVApqWBRPwL6S5XRjPN8rN7kip16zk0dOy6i3jmPAT6n/QVMbO83xukoBb4tR5
-         JsMbBdDIvUF5wMUztwiGCr5wGSXsMajDiOX41eKXLZaVHbXhm+VU9WDfc65yoWGaUlgz
-         PBziN7HBEPaazpzS/qnaQTPsw5VJUeZ0IHHY0/xcTXKGGQBDU0XTQ/Dw3MRcx9t6sRbM
-         0HZBZSGWHGCLM5OhkW0tzqmgKU58clXoYvlgyikOyf6RA2UV9LyvCgx5ubfVrbwvILOJ
-         NZItYRGctO/hi2RyV+q9vX1C08BZrdHDxYFucP4jonVJMza+yDpSMBemLtenyBUidP77
-         N8/Q==
+        bh=X7LDE8f55v5poutLSY5mUbFhZ1HNup3y6cQyU5ekGeM=;
+        b=CuuNTdet0k/MNIeEJ7yzQ3AchOy57ky7Ri5LAqTZXwG0VrzcZw2TZSBhLFLHPtAZnu
+         525UYWtBH0uHzUmVhAytoCbG8YWhdIy+/hATMxBVqoeK4HKWjKOtszVoFU7bC8QSBvEG
+         QbYr4TPYwPWpCr8iq9iy6A4fiJClWfJ7iLVSoaWnMO1o3KArfekskHTKXn50LXFtmik+
+         /4+fbkgic3y4Y+cTGmnwtYHXDXUbclXgjkzat2GVO+lsa9Hr3e422kc3Qy/c3l0gerTa
+         L3mB01zxm/FrQDS8+dnyP4dneFkDRypzsUkDFIMNdvTc+gL2H2htWapFZkxd5uwi3GrM
+         JTAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Qhs4lrU3JgQg/fo29ikV+C7dncC+QyYbXs6OEzVF5rk=;
-        b=pAhUsgXOdQ5H2N4iIZaLGmwtnraQePgr6FdtERbfBiK1s1DY+x27xkHsBfx7N5MKbB
-         0J2k1UsUOeaQdkN73KQVrD0cCkAhgKDFoNBNJeJNhEGCandhC+EFuINHfZbF2SC5NXwB
-         ozkNtQnT+c5ULPZcNC95YMw9vFYZnkq6hxrg5KInGJAJsH3iQBBEFH4QQ5qxJcTSxjik
-         rEnKu9WWPmliDYqcotogJLbJjqxlMCQwZymxpDMPqrq8+AHPW2Qm9Odplxiyr/Geisxf
-         c/PsX1jxTZjYTOb59KXJcsiM+GukhlPYlqIBTRIylC7lmKOKjI0aYQy5eMTlPqVvnYEA
-         JDbg==
-X-Gm-Message-State: AKS2vOx/hMdPWgpVZZyxRqXkI99m4kG3H8OUiIEE1syI1ZnpiudiBqgN
-        ar/S7K1j1BInZ0y6w/6Frg==
-X-Received: by 10.84.164.193 with SMTP id l1mr4357072plg.243.1498157070478;
-        Thu, 22 Jun 2017 11:44:30 -0700 (PDT)
+        bh=X7LDE8f55v5poutLSY5mUbFhZ1HNup3y6cQyU5ekGeM=;
+        b=CT/n6jdIf7JLZQkNgMvnxI4o3kMhxgO+Ft6yH9W11F9aeZYAZncxdNltXj2iZF1yI6
+         SDiO47Br8gRHBOVGPjdJ9qT+YQ+t2drwOUzlbBmhHkBdCYCZ51PpuuuwI0oHYkEaYA1H
+         S1hRDISinkC/EsXStsI7BYwKD8hQpo5wu4/FPfEkNXCdlyv0LgR8qQMCgIA9zLr5GVPy
+         yVjCr4FaGp3yzdBkfKQfAcx2uRJa0pbhruCUsxpJHzLEk67fiNF0N1rf33Lb+e6a2Nek
+         wn/JaeYZDeGsbiWJvzkrOQ4jAOz6RzoeBWKnoNj4eNWUXZCuCDiGvOCOU5c6frrOL7y1
+         ChVw==
+X-Gm-Message-State: AKS2vOwXkFCvePozyTJv48K0Lm9Vjl5rWu8Rl/+kNgkahm/SkcbHItaF
+        GwNF+2rHzWw9qB3eDzQ+aw==
+X-Received: by 10.101.87.132 with SMTP id b4mr4123242pgr.173.1498157075753;
+        Thu, 22 Jun 2017 11:44:35 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id g78sm5222211pfb.122.2017.06.22.11.44.28
+        by smtp.gmail.com with ESMTPSA id g78sm5222211pfb.122.2017.06.22.11.44.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 11:44:29 -0700 (PDT)
+        Thu, 22 Jun 2017 11:44:34 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v4 17/20] submodule: add repo_read_gitmodules
-Date:   Thu, 22 Jun 2017 11:43:45 -0700
-Message-Id: <20170622184348.56497-18-bmwill@google.com>
+Subject: [PATCH v4 20/20] ls-files: use repository object
+Date:   Thu, 22 Jun 2017 11:43:48 -0700
+Message-Id: <20170622184348.56497-21-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.704.gde00cce3c-goog
 In-Reply-To: <20170622184348.56497-1-bmwill@google.com>
 References: <20170620191951.84791-1-bmwill@google.com>
@@ -66,66 +66,410 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach the repo object to be able to populate the submodule_cache by
-reading the repository's gitmodules file.
+Convert ls-files to use a repository struct and recurse submodules
+inprocess.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- submodule.c | 15 +++++++++++++++
- submodule.h |  2 ++
- 2 files changed, 17 insertions(+)
+ builtin/ls-files.c                     | 192 ++++++++++++++-------------------
+ git.c                                  |   2 +-
+ t/t3007-ls-files-recurse-submodules.sh |  39 +++++++
+ 3 files changed, 118 insertions(+), 115 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index da0b80549..d0b894772 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1,4 +1,5 @@
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index b12d0bb61..b8514a002 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -5,7 +5,9 @@
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
++#define NO_THE_INDEX_COMPATIBILITY_MACROS
  #include "cache.h"
 +#include "repository.h"
  #include "config.h"
- #include "submodule-config.h"
- #include "submodule.h"
-@@ -255,6 +256,20 @@ void gitmodules_config(void)
+ #include "quote.h"
+ #include "dir.h"
+@@ -32,10 +34,8 @@ static int line_terminator = '\n';
+ static int debug_mode;
+ static int show_eol;
+ static int recurse_submodules;
+-static struct argv_array submodule_options = ARGV_ARRAY_INIT;
+ 
+ static const char *prefix;
+-static const char *super_prefix;
+ static int max_prefix_len;
+ static int prefix_len;
+ static struct pathspec pathspec;
+@@ -73,25 +73,12 @@ static void write_eolinfo(const struct index_state *istate,
+ 
+ static void write_name(const char *name)
+ {
+-	/*
+-	 * Prepend the super_prefix to name to construct the full_name to be
+-	 * written.
+-	 */
+-	struct strbuf full_name = STRBUF_INIT;
+-	if (super_prefix) {
+-		strbuf_addstr(&full_name, super_prefix);
+-		strbuf_addstr(&full_name, name);
+-		name = full_name.buf;
+-	}
+-
+ 	/*
+ 	 * With "--full-name", prefix_len=0; this caller needs to pass
+ 	 * an empty string in that case (a NULL is good for "").
+ 	 */
+ 	write_name_quoted_relative(name, prefix_len ? prefix : NULL,
+ 				   stdout, line_terminator);
+-
+-	strbuf_release(&full_name);
+ }
+ 
+ static const char *get_tag(const struct cache_entry *ce, const char *tag)
+@@ -210,83 +197,38 @@ static void show_killed_files(const struct index_state *istate,
  	}
  }
  
-+static int gitmodules_cb(const char *var, const char *value, void *data)
-+{
-+	struct repository *repo = data;
-+	return submodule_config_option(repo, var, value);
-+}
-+
-+void repo_read_gitmodules(struct repository *repo)
-+{
-+	char *gitmodules_path = repo_worktree_path(repo, ".gitmodules");
-+
-+	git_config_from_file(gitmodules_cb, gitmodules_path, repo);
-+	free(gitmodules_path);
-+}
-+
- void gitmodules_config_sha1(const unsigned char *commit_sha1)
- {
- 	struct strbuf rev = STRBUF_INIT;
-diff --git a/submodule.h b/submodule.h
-index cbe5c1726..8a3771ec6 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -1,6 +1,7 @@
- #ifndef SUBMODULE_H
- #define SUBMODULE_H
+-/*
+- * Compile an argv_array with all of the options supported by --recurse_submodules
+- */
+-static void compile_submodule_options(const char **argv,
+-				      const struct dir_struct *dir,
+-				      int show_tag)
+-{
+-	if (line_terminator == '\0')
+-		argv_array_push(&submodule_options, "-z");
+-	if (show_tag)
+-		argv_array_push(&submodule_options, "-t");
+-	if (show_valid_bit)
+-		argv_array_push(&submodule_options, "-v");
+-	if (show_cached)
+-		argv_array_push(&submodule_options, "--cached");
+-	if (show_eol)
+-		argv_array_push(&submodule_options, "--eol");
+-	if (debug_mode)
+-		argv_array_push(&submodule_options, "--debug");
+-
+-	/* Add Pathspecs */
+-	argv_array_push(&submodule_options, "--");
+-	for (; *argv; argv++)
+-		argv_array_push(&submodule_options, *argv);
+-}
++static void show_files(struct repository *repo, struct dir_struct *dir);
  
-+struct repository;
- struct diff_options;
- struct argv_array;
- struct oid_array;
-@@ -46,6 +47,7 @@ int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
- 						     const char *arg, int unset);
- void load_submodule_cache(void);
- extern void gitmodules_config(void);
-+extern void repo_read_gitmodules(struct repository *repo);
- extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
- extern int is_submodule_initialized(const char *path);
+-/**
+- * Recursively call ls-files on a submodule
+- */
+-static void show_gitlink(const struct cache_entry *ce)
++static void show_submodule(struct repository *superproject,
++			   struct dir_struct *dir, const char *path)
+ {
+-	struct child_process cp = CHILD_PROCESS_INIT;
+-	int status;
+-	char *dir;
+-
+-	prepare_submodule_repo_env(&cp.env_array);
+-	argv_array_push(&cp.env_array, GIT_DIR_ENVIRONMENT);
+-
+-	if (prefix_len)
+-		argv_array_pushf(&cp.env_array, "%s=%s",
+-				 GIT_TOPLEVEL_PREFIX_ENVIRONMENT,
+-				 prefix);
+-	argv_array_pushf(&cp.args, "--super-prefix=%s%s/",
+-			 super_prefix ? super_prefix : "",
+-			 ce->name);
+-	argv_array_push(&cp.args, "ls-files");
+-	argv_array_push(&cp.args, "--recurse-submodules");
+-
+-	/* add supported options */
+-	argv_array_pushv(&cp.args, submodule_options.argv);
+-
+-	cp.git_cmd = 1;
+-	dir = mkpathdup("%s/%s", get_git_work_tree(), ce->name);
+-	cp.dir = dir;
+-	status = run_command(&cp);
+-	free(dir);
+-	if (status)
+-		exit(status);
++	struct repository submodule;
++
++	if (repo_submodule_init(&submodule, superproject, path))
++		return;
++
++	if (repo_read_index(&submodule) < 0)
++		die("index file corrupt");
++
++	repo_read_gitmodules(&submodule);
++
++	show_files(&submodule, dir);
++
++	repo_clear(&submodule);
+ }
+ 
+-static void show_ce_entry(const struct index_state *istate,
+-			  const char *tag, const struct cache_entry *ce)
++static void show_ce(struct repository *repo, struct dir_struct *dir,
++		    const struct cache_entry *ce, const char *fullname,
++		    const char *tag)
+ {
+-	struct strbuf name = STRBUF_INIT;
+-	int len = max_prefix_len;
+-	if (super_prefix)
+-		strbuf_addstr(&name, super_prefix);
+-	strbuf_addstr(&name, ce->name);
+-
+-	if (len > ce_namelen(ce))
++	if (max_prefix_len > strlen(fullname))
+ 		die("git ls-files: internal error - cache entry not superset of prefix");
+ 
+ 	if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
+-	    submodule_path_match(&pathspec, name.buf, ps_matched)) {
+-		show_gitlink(ce);
+-	} else if (match_pathspec(&pathspec, name.buf, name.len,
+-				  len, ps_matched,
++	    is_submodule_active(repo, ce->name)) {
++		show_submodule(repo, dir, ce->name);
++	} else if (match_pathspec(&pathspec, fullname, strlen(fullname),
++				  max_prefix_len, ps_matched,
+ 				  S_ISDIR(ce->ce_mode) ||
+ 				  S_ISGITLINK(ce->ce_mode))) {
+ 		tag = get_tag(ce, tag);
+@@ -300,12 +242,10 @@ static void show_ce_entry(const struct index_state *istate,
+ 			       find_unique_abbrev(ce->oid.hash, abbrev),
+ 			       ce_stage(ce));
+ 		}
+-		write_eolinfo(istate, ce, ce->name);
+-		write_name(ce->name);
++		write_eolinfo(repo->index, ce, fullname);
++		write_name(fullname);
+ 		print_debug(ce);
+ 	}
+-
+-	strbuf_release(&name);
+ }
+ 
+ static void show_ru_info(const struct index_state *istate)
+@@ -338,59 +278,79 @@ static void show_ru_info(const struct index_state *istate)
+ }
+ 
+ static int ce_excluded(struct dir_struct *dir, struct index_state *istate,
+-		       const struct cache_entry *ce)
++		       const char *fullname, const struct cache_entry *ce)
+ {
+ 	int dtype = ce_to_dtype(ce);
+-	return is_excluded(dir, istate, ce->name, &dtype);
++	return is_excluded(dir, istate, fullname, &dtype);
++}
++
++static void construct_fullname(struct strbuf *out, const struct repository *repo,
++			       const struct cache_entry *ce)
++{
++	strbuf_reset(out);
++	if (repo->submodule_prefix)
++		strbuf_addstr(out, repo->submodule_prefix);
++	strbuf_addstr(out, ce->name);
+ }
+ 
+-static void show_files(struct index_state *istate, struct dir_struct *dir)
++static void show_files(struct repository *repo, struct dir_struct *dir)
+ {
+ 	int i;
++	struct strbuf fullname = STRBUF_INIT;
+ 
+ 	/* For cached/deleted files we don't need to even do the readdir */
+ 	if (show_others || show_killed) {
+ 		if (!show_others)
+ 			dir->flags |= DIR_COLLECT_KILLED_ONLY;
+-		fill_directory(dir, istate, &pathspec);
++		fill_directory(dir, repo->index, &pathspec);
+ 		if (show_others)
+-			show_other_files(istate, dir);
++			show_other_files(repo->index, dir);
+ 		if (show_killed)
+-			show_killed_files(istate, dir);
++			show_killed_files(repo->index, dir);
+ 	}
+ 	if (show_cached || show_stage) {
+-		for (i = 0; i < istate->cache_nr; i++) {
+-			const struct cache_entry *ce = istate->cache[i];
++		for (i = 0; i < repo->index->cache_nr; i++) {
++			const struct cache_entry *ce = repo->index->cache[i];
++
++			construct_fullname(&fullname, repo, ce);
++
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+-			    !ce_excluded(dir, istate, ce))
++			    !ce_excluded(dir, repo->index, fullname.buf, ce))
+ 				continue;
+ 			if (show_unmerged && !ce_stage(ce))
+ 				continue;
+ 			if (ce->ce_flags & CE_UPDATE)
+ 				continue;
+-			show_ce_entry(istate, ce_stage(ce) ? tag_unmerged :
+-				(ce_skip_worktree(ce) ? tag_skip_worktree : tag_cached), ce);
++			show_ce(repo, dir, ce, fullname.buf,
++				ce_stage(ce) ? tag_unmerged :
++				(ce_skip_worktree(ce) ? tag_skip_worktree :
++				 tag_cached));
+ 		}
+ 	}
+ 	if (show_deleted || show_modified) {
+-		for (i = 0; i < istate->cache_nr; i++) {
+-			const struct cache_entry *ce = istate->cache[i];
++		for (i = 0; i < repo->index->cache_nr; i++) {
++			const struct cache_entry *ce = repo->index->cache[i];
+ 			struct stat st;
+ 			int err;
++
++			construct_fullname(&fullname, repo, ce);
++
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+-			    !ce_excluded(dir, istate, ce))
++			    !ce_excluded(dir, repo->index, fullname.buf, ce))
+ 				continue;
+ 			if (ce->ce_flags & CE_UPDATE)
+ 				continue;
+ 			if (ce_skip_worktree(ce))
+ 				continue;
+-			err = lstat(ce->name, &st);
++			err = lstat(fullname.buf, &st);
+ 			if (show_deleted && err)
+-				show_ce_entry(istate, tag_removed, ce);
+-			if (show_modified && ie_modified(istate, ce, &st, 0))
+-				show_ce_entry(istate, tag_modified, ce);
++				show_ce(repo, dir, ce, fullname.buf, tag_removed);
++			if (show_modified && ie_modified(repo->index, ce, &st, 0))
++				show_ce(repo, dir, ce, fullname.buf, tag_modified);
+ 		}
+ 	}
++
++	strbuf_release(&fullname);
+ }
+ 
  /*
+@@ -615,10 +575,9 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	prefix = cmd_prefix;
+ 	if (prefix)
+ 		prefix_len = strlen(prefix);
+-	super_prefix = get_super_prefix();
+ 	git_config(git_default_config, NULL);
+ 
+-	if (read_cache() < 0)
++	if (repo_read_index(the_repository) < 0)
+ 		die("index file corrupt");
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
+@@ -652,7 +611,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		setup_work_tree();
+ 
+ 	if (recurse_submodules)
+-		compile_submodule_options(argv, &dir, show_tag);
++		repo_read_gitmodules(the_repository);
+ 
+ 	if (recurse_submodules &&
+ 	    (show_stage || show_deleted || show_others || show_unmerged ||
+@@ -670,7 +629,10 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 	/*
+ 	 * Find common prefix for all pathspec's
+ 	 * This is used as a performance optimization which unfortunately cannot
+-	 * be done when recursing into submodules
++	 * be done when recursing into submodules because when a pathspec is
++	 * given which spans repository boundaries you can't simply remove the
++	 * submodule entry because the pathspec may match something inside the
++	 * submodule.
+ 	 */
+ 	if (recurse_submodules)
+ 		max_prefix = NULL;
+@@ -678,7 +640,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		max_prefix = common_prefix(&pathspec);
+ 	max_prefix_len = get_common_prefix_len(max_prefix);
+ 
+-	prune_index(&the_index, max_prefix, max_prefix_len);
++	prune_index(the_repository->index, max_prefix, max_prefix_len);
+ 
+ 	/* Treat unmatching pathspec elements as errors */
+ 	if (pathspec.nr && error_unmatch)
+@@ -699,11 +661,13 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		 */
+ 		if (show_stage || show_unmerged)
+ 			die("ls-files --with-tree is incompatible with -s or -u");
+-		overlay_tree_on_index(&the_index, with_tree, max_prefix);
++		overlay_tree_on_index(the_repository->index, with_tree, max_prefix);
+ 	}
+-	show_files(&the_index, &dir);
++
++	show_files(the_repository, &dir);
++
+ 	if (show_resolve_undo)
+-		show_ru_info(&the_index);
++		show_ru_info(the_repository->index);
+ 
+ 	if (ps_matched) {
+ 		int bad;
+diff --git a/git.c b/git.c
+index 5be27b07e..489aab4d8 100644
+--- a/git.c
++++ b/git.c
+@@ -400,7 +400,7 @@ static struct cmd_struct commands[] = {
+ 	{ "init-db", cmd_init_db },
+ 	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
+ 	{ "log", cmd_log, RUN_SETUP },
+-	{ "ls-files", cmd_ls_files, RUN_SETUP | SUPPORT_SUPER_PREFIX },
++	{ "ls-files", cmd_ls_files, RUN_SETUP },
+ 	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
+ 	{ "ls-tree", cmd_ls_tree, RUN_SETUP },
+ 	{ "mailinfo", cmd_mailinfo, RUN_SETUP_GENTLY },
+diff --git a/t/t3007-ls-files-recurse-submodules.sh b/t/t3007-ls-files-recurse-submodules.sh
+index ebb956fd1..318b5bce7 100755
+--- a/t/t3007-ls-files-recurse-submodules.sh
++++ b/t/t3007-ls-files-recurse-submodules.sh
+@@ -135,6 +135,45 @@ test_expect_success '--recurse-submodules and pathspecs setup' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'inactive submodule' '
++	test_when_finished "git config --bool submodule.submodule.active true" &&
++	test_when_finished "git -C submodule config --bool submodule.subsub.active true" &&
++	git config --bool submodule.submodule.active "false" &&
++
++	cat >expect <<-\EOF &&
++	.gitmodules
++	a
++	b/b
++	h.txt
++	sib/file
++	sub/file
++	submodule
++	EOF
++
++	git ls-files --recurse-submodules >actual &&
++	test_cmp expect actual &&
++
++	git config --bool submodule.submodule.active "true" &&
++	git -C submodule config --bool submodule.subsub.active "false" &&
++
++	cat >expect <<-\EOF &&
++	.gitmodules
++	a
++	b/b
++	h.txt
++	sib/file
++	sub/file
++	submodule/.gitmodules
++	submodule/c
++	submodule/f.TXT
++	submodule/g.txt
++	submodule/subsub
++	EOF
++
++	git ls-files --recurse-submodules >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success '--recurse-submodules and pathspecs' '
+ 	cat >expect <<-\EOF &&
+ 	h.txt
 -- 
 2.13.1.704.gde00cce3c-goog
 
