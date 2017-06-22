@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D37EB20D0C
-	for <e@80x24.org>; Thu, 22 Jun 2017 00:40:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F04FB20401
+	for <e@80x24.org>; Thu, 22 Jun 2017 00:40:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752249AbdFVAks (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Jun 2017 20:40:48 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:33851 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751641AbdFVAkr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Jun 2017 20:40:47 -0400
-Received: by mail-pg0-f46.google.com with SMTP id e187so806224pgc.1
-        for <git@vger.kernel.org>; Wed, 21 Jun 2017 17:40:46 -0700 (PDT)
+        id S1752175AbdFVAkl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Jun 2017 20:40:41 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:32976 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751641AbdFVAkk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Jun 2017 20:40:40 -0400
+Received: by mail-pf0-f169.google.com with SMTP id e7so916054pfk.0
+        for <git@vger.kernel.org>; Wed, 21 Jun 2017 17:40:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=lVhpogfqK/YKOgU6jUBaS78q7K4vozS18Hz93oeS6sM=;
-        b=jH4jyCuE0je2dwQabW1pMOAbYRu8e2ZKSxNctVhdt7wuj9NxpDPyp1xSW0qIEMG8Eu
-         m9Iw5llmTyaQHsUQAsbqmUOuUu5j6FlRCueF22yms29hGxA69JsCNQ9xk517bsct9i6v
-         NkdL+WjJOqc+b5qQNVSOu/HRsXy9ujjoqi9dJk11cPO591ajch509Sga7Q58REsVi2st
-         06/pOICWIErzEUZOpX1lemul+diSnjwRDUAFK/HNBPFiKJy7ehWuGowUr6mGxkK6fOyO
-         z8iqge8P0bzOXs8rrIjuloKtPvMmtBb2nmtzLOOsO529rsL3cDTlIS00SsflcOPD2QjJ
-         KkuA==
+        bh=WkXXOCFyf69EmsCuZe/pPKYBylLMTj+FVpfI4q/6/04=;
+        b=cTa7eAQDaa8uf9AgbfUR9sLcjYs+bBI2tdaGxdELXg6l03lpLVkhm5qxZkxlpvrXVs
+         kEg3FF+4buMcqX4yLAbycfNkWlSbj+ZKomH6NQg3DSem1tRwTKX/FRjT/Epd46fXniEL
+         7RiFVy/ty/KkjL4W1sQdXwYntqzxXvonqCBgRT0651ZuBx77pzlSR//YDFrvDEJQSQMP
+         Z5YejOV++gfBx0iIWfqk8ej1bAUYt5unxskKPwRY25vdQNpPlX3Wq/VKIlCA9j8WGbSC
+         C7RJWNKGoUL0RZrTBTyWbC6+B07iysuF/GYB+WD+1qgpWJcZ9vl3Tg9Juefucblq7YMB
+         iN1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references;
-        bh=lVhpogfqK/YKOgU6jUBaS78q7K4vozS18Hz93oeS6sM=;
-        b=GH32B3EuBov/GgO4YPFZt7/tb7ntrLRDx3bxm3a8EJXwd8KT9rg+wR1Orw39VKhj32
-         qAg9TQPQfMp8BFB30guokUJ7dRywZoTpet+ZeywIWmIQ1yjYSIJqoHHvdND3adwRA2mS
-         mmy6OjcdgAJ+MdfAWAhPGW8uP/Muz8bd3gYlPOb/kwX/kunxsylik2B3TcWwiDv811IG
-         IvEP7AVmx9YBxPAAcVunanoXZf3z59bbgOnssuN87Vsq2wMdZ1uqxVj1B6u5qBhV0on+
-         dYODBCAuMRqQmR6xzNYuLJgYZc8gPy8m+Q6MT8ZT54yopH+ukftxKKb3wDYr4PbTo9Kc
-         sahA==
-X-Gm-Message-State: AKS2vOyDJoIaaI8xtABQCvM3seLkRr/nQNrWQnVkWfs5djejEt1Z0dZK
-        VEx6RqkghjuEDnhGa1xnFg==
-X-Received: by 10.98.75.79 with SMTP id y76mr38578389pfa.39.1498092040591;
-        Wed, 21 Jun 2017 17:40:40 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id c205sm34658213pfb.74.2017.06.21.17.40.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        bh=WkXXOCFyf69EmsCuZe/pPKYBylLMTj+FVpfI4q/6/04=;
+        b=RDbqxwrJTRGbHpDrdc9QjMlvwHdHSu1yf8nJMSpg01ooFmRwUuNtjgggCD/Tbr5YDP
+         jM5Ie3fe2nUQouil19EHHr2CIwlaHAEbfpMPZNWvaor8Oo9rBzpxSf8/fCOL78xMBVNw
+         TtSMndusg5970rtAm50FfYIqLBpvYp+sYedCcDVj/vIkXHzBfTPT/nk39YzPi5fleCMI
+         lZaMMDFqtqkfRL++kEPqnawrUlIIL45j1I9247RMY4sSrAvd4WloIVGX33sc2oAy3uSU
+         /grMeuCPAjv4qGkq1zrWSyS4IDmE6nZGmbjOsTAhtmho+fFaTTATykKdJq11AHWTKjv/
+         uPKA==
+X-Gm-Message-State: AKS2vOxPNhrQAfYXdkK/P+FwPGnIPqkYHaNpvGMSC5jvMG5rjATonTPz
+        s6Zag9+DGsG2ziqxw9OLew==
+X-Received: by 10.84.143.162 with SMTP id 31mr44398553plz.277.1498092039127;
         Wed, 21 Jun 2017 17:40:39 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id c205sm34658213pfb.74.2017.06.21.17.40.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 21 Jun 2017 17:40:37 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
-Subject: [PATCH v5 6/8] sha1_file: improve sha1_object_info_extended
-Date:   Wed, 21 Jun 2017 17:40:22 -0700
-Message-Id: <a736148af2689676cb5a7e64a35bcbc9ad060fd5.1498091579.git.jonathantanmy@google.com>
+Subject: [PATCH v5 5/8] sha1_file: refactor read_object
+Date:   Wed, 21 Jun 2017 17:40:21 -0700
+Message-Id: <6a890e886ec1d37ce19487144f56f9353059af70.1498091579.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1-goog
 In-Reply-To: <cover.1498091579.git.jonathantanmy@google.com>
 References: <cover.1498091579.git.jonathantanmy@google.com>
@@ -64,99 +64,197 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve sha1_object_info_extended() by supporting additional flags. This
-allows has_sha1_file_with_flags() to be modified to use
-sha1_object_info_extended() in a subsequent patch.
+read_object() and sha1_object_info_extended() both implement mechanisms
+such as object replacement, retrying the packed store after failing to
+find the object in the packed store then the loose store, and being able
+to mark a packed object as bad and then retrying the whole process.
+Consolidating these mechanisms would be a great help to maintainability.
+
+Therefore, consolidate them by extending sha1_object_info_extended() to
+support the functionality needed, and then modifying read_object() to
+use sha1_object_info_extended().
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- cache.h     |  4 ++++
- sha1_file.c | 43 ++++++++++++++++++++++++-------------------
- 2 files changed, 28 insertions(+), 19 deletions(-)
+ cache.h     |  1 +
+ sha1_file.c | 84 ++++++++++++++++++++++++++++++-------------------------------
+ 2 files changed, 43 insertions(+), 42 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 48aea923b..7cf2ca466 100644
+index a3631b237..48aea923b 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1863,6 +1863,10 @@ struct object_info {
- #define OBJECT_INFO_LOOKUP_REPLACE 1
- /* Allow reading from a loose object file of unknown/bogus type */
- #define OBJECT_INFO_ALLOW_UNKNOWN_TYPE 2
-+/* Do not check cached storage */
-+#define OBJECT_INFO_SKIP_CACHED 4
-+/* Do not retry packed storage after checking packed and loose storage */
-+#define OBJECT_INFO_QUICK 8
- extern int sha1_object_info_extended(const unsigned char *, struct object_info *, unsigned flags);
- extern int packed_object_info(struct packed_git *pack, off_t offset, struct object_info *);
+@@ -1827,6 +1827,7 @@ struct object_info {
+ 	off_t *disk_sizep;
+ 	unsigned char *delta_base_sha1;
+ 	struct strbuf *typename;
++	void **contentp;
  
+ 	/* Response */
+ 	enum {
 diff --git a/sha1_file.c b/sha1_file.c
-index 615a27dac..b6bc02f09 100644
+index 0c996370d..615a27dac 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -2977,29 +2977,30 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+@@ -2005,19 +2005,6 @@ int parse_sha1_header(const char *hdr, unsigned long *sizep)
+ 	return parse_sha1_header_extended(hdr, &oi, 0);
+ }
  
- int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi, unsigned flags)
+-static void *unpack_sha1_file(void *map, unsigned long mapsize, enum object_type *type, unsigned long *size, const unsigned char *sha1)
+-{
+-	int ret;
+-	git_zstream stream;
+-	char hdr[8192];
+-
+-	ret = unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr));
+-	if (ret < Z_OK || (*type = parse_sha1_header(hdr, size)) < 0)
+-		return NULL;
+-
+-	return unpack_sha1_rest(&stream, hdr, *size, sha1);
+-}
+-
+ unsigned long get_size_from_delta(struct packed_git *p,
+ 				  struct pack_window **w_curs,
+ 			          off_t curpos)
+@@ -2326,8 +2313,10 @@ static void *cache_or_unpack_entry(struct packed_git *p, off_t base_offset,
+ 	if (!ent)
+ 		return unpack_entry(p, base_offset, type, base_size);
+ 
+-	*type = ent->type;
+-	*base_size = ent->size;
++	if (type)
++		*type = ent->type;
++	if (base_size)
++		*base_size = ent->size;
+ 	return xmemdupz(ent->data, ent->size);
+ }
+ 
+@@ -2388,9 +2377,16 @@ int packed_object_info(struct packed_git *p, off_t obj_offset,
+ 	 * We always get the representation type, but only convert it to
+ 	 * a "real" type later if the caller is interested.
+ 	 */
+-	type = unpack_object_header(p, &w_curs, &curpos, &size);
++	if (oi->contentp) {
++		*oi->contentp = cache_or_unpack_entry(p, obj_offset, oi->sizep,
++						      &type);
++		if (!*oi->contentp)
++			type = OBJ_BAD;
++	} else {
++		type = unpack_object_header(p, &w_curs, &curpos, &size);
++	}
+ 
+-	if (oi->sizep) {
++	if (!oi->contentp && oi->sizep) {
+ 		if (type == OBJ_OFS_DELTA || type == OBJ_REF_DELTA) {
+ 			off_t tmp_pos = curpos;
+ 			off_t base_offset = get_delta_base(p, &w_curs, &tmp_pos,
+@@ -2679,8 +2675,10 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
+ 		free(external_base);
+ 	}
+ 
+-	*final_type = type;
+-	*final_size = size;
++	if (final_type)
++		*final_type = type;
++	if (final_size)
++		*final_size = size;
+ 
+ 	unuse_pack(&w_curs);
+ 
+@@ -2914,6 +2912,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	git_zstream stream;
+ 	char hdr[32];
+ 	struct strbuf hdrbuf = STRBUF_INIT;
++	unsigned long size_scratch;
+ 
+ 	if (oi->delta_base_sha1)
+ 		hashclr(oi->delta_base_sha1);
+@@ -2926,7 +2925,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	 * return value implicitly indicates whether the
+ 	 * object even exists.
+ 	 */
+-	if (!oi->typep && !oi->typename && !oi->sizep) {
++	if (!oi->typep && !oi->typename && !oi->sizep && !oi->contentp) {
+ 		const char *path;
+ 		struct stat st;
+ 		if (stat_sha1_file(sha1, &st, &path) < 0)
+@@ -2939,6 +2938,10 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	map = map_sha1_file(sha1, &mapsize);
+ 	if (!map)
+ 		return -1;
++
++	if (!oi->sizep)
++		oi->sizep = &size_scratch;
++
+ 	if (oi->disk_sizep)
+ 		*oi->disk_sizep = mapsize;
+ 	if ((flags & OBJECT_INFO_ALLOW_UNKNOWN_TYPE)) {
+@@ -2956,10 +2959,18 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 				       sha1_to_hex(sha1));
+ 	} else if ((status = parse_sha1_header_extended(hdr, oi, flags)) < 0)
+ 		status = error("unable to parse %s header", sha1_to_hex(sha1));
+-	git_inflate_end(&stream);
++
++	if (status >= 0 && oi->contentp)
++		*oi->contentp = unpack_sha1_rest(&stream, hdr,
++						 *oi->sizep, sha1);
++	else
++		git_inflate_end(&stream);
++
+ 	munmap(map, mapsize);
+ 	if (status && oi->typep)
+ 		*oi->typep = status;
++	if (oi->sizep == &size_scratch)
++		oi->sizep = NULL;
+ 	strbuf_release(&hdrbuf);
+ 	return (status < 0) ? status : 0;
+ }
+@@ -2985,6 +2996,8 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 			hashclr(oi->delta_base_sha1);
+ 		if (oi->typename)
+ 			strbuf_addstr(oi->typename, typename(co->type));
++		if (oi->contentp)
++			*oi->contentp = xmemdupz(co->buf, co->size);
+ 		oi->whence = OI_CACHED;
+ 		return 0;
+ 	}
+@@ -3078,28 +3091,15 @@ int pretend_sha1_file(void *buf, unsigned long len, enum object_type type,
+ static void *read_object(const unsigned char *sha1, enum object_type *type,
+ 			 unsigned long *size)
  {
+-	unsigned long mapsize;
+-	void *map, *buf;
 -	struct cached_object *co;
- 	struct pack_entry e;
- 	int rtype;
- 	const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
- 				    lookup_replace_object(sha1) :
- 				    sha1;
- 
--	co = find_cached_object(real);
+-
+-	co = find_cached_object(sha1);
 -	if (co) {
--		if (oi->typep)
--			*(oi->typep) = co->type;
--		if (oi->sizep)
--			*(oi->sizep) = co->size;
--		if (oi->disk_sizep)
--			*(oi->disk_sizep) = 0;
--		if (oi->delta_base_sha1)
--			hashclr(oi->delta_base_sha1);
--		if (oi->typename)
--			strbuf_addstr(oi->typename, typename(co->type));
--		if (oi->contentp)
--			*oi->contentp = xmemdupz(co->buf, co->size);
--		oi->whence = OI_CACHED;
--		return 0;
-+	if (!(flags & OBJECT_INFO_SKIP_CACHED)) {
-+		struct cached_object *co = find_cached_object(real);
-+		if (co) {
-+			if (oi->typep)
-+				*(oi->typep) = co->type;
-+			if (oi->sizep)
-+				*(oi->sizep) = co->size;
-+			if (oi->disk_sizep)
-+				*(oi->disk_sizep) = 0;
-+			if (oi->delta_base_sha1)
-+				hashclr(oi->delta_base_sha1);
-+			if (oi->typename)
-+				strbuf_addstr(oi->typename, typename(co->type));
-+			if (oi->contentp)
-+				*oi->contentp = xmemdupz(co->buf, co->size);
-+			oi->whence = OI_CACHED;
-+			return 0;
-+		}
- 	}
+-		*type = co->type;
+-		*size = co->size;
+-		return xmemdupz(co->buf, co->size);
+-	}
++	struct object_info oi = OBJECT_INFO_INIT;
++	void *content;
++	oi.typep = type;
++	oi.sizep = size;
++	oi.contentp = &content;
  
- 	if (!find_pack_entry(real, &e)) {
-@@ -3010,9 +3011,13 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
- 		}
+-	buf = read_packed_sha1(sha1, type, size);
+-	if (buf)
+-		return buf;
+-	map = map_sha1_file(sha1, &mapsize);
+-	if (map) {
+-		buf = unpack_sha1_file(map, mapsize, type, size, sha1);
+-		munmap(map, mapsize);
+-		return buf;
+-	}
+-	reprepare_packed_git();
+-	return read_packed_sha1(sha1, type, size);
++	if (sha1_object_info_extended(sha1, &oi, 0) < 0)
++		return NULL;
++	return content;
+ }
  
- 		/* Not a loose object; someone else may have just packed it. */
--		reprepare_packed_git();
--		if (!find_pack_entry(real, &e))
-+		if (flags & OBJECT_INFO_QUICK) {
- 			return -1;
-+		} else {
-+			reprepare_packed_git();
-+			if (!find_pack_entry(real, &e))
-+				return -1;
-+		}
- 	}
- 
- 	rtype = packed_object_info(e.p, e.offset, oi);
+ /*
 -- 
 2.13.1.611.g7e3b11ae1-goog
 
