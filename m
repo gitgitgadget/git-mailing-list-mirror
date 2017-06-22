@@ -7,41 +7,43 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEF7C20282
-	for <e@80x24.org>; Thu, 22 Jun 2017 10:27:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C52820282
+	for <e@80x24.org>; Thu, 22 Jun 2017 10:27:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753148AbdFVK1A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 06:27:00 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:11543 "EHLO
+        id S1753215AbdFVK1H (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 06:27:07 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:37962 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752916AbdFVK07 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 06:26:59 -0400
+        with ESMTP id S1752988AbdFVK1A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 06:27:00 -0400
 Received: from lindisfarne.localdomain ([92.22.42.39])
         by smtp.talktalk.net with SMTP
-        id NzK5dhmIPxR4bNzKDdWEVE; Thu, 22 Jun 2017 11:26:57 +0100
+        id NzK5dhmIPxR4bNzKEdWEVR; Thu, 22 Jun 2017 11:26:59 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1498127217; bh=Bz8bkeJeFWEedlhBicS/diI1Y+ZkMbRt5KOX+/hNYBw=;
-        h=From:To:Cc:Subject:Date:Reply-To;
-        b=XeOfbpFIw6mvw+RICQL+tt/oNYxDd9JnioBimft4EqPSiXk4vQ3VvLObpldG20ASI
-         S9lpCV4r9ME3UnfJ80yKc4PrnpA7UGbNRWo9mgmoKzGH5jBhJxKlfcx8d09PTZH0D1
-         LJp8+LAcuExoa1n0v6gD0JBuEQdMS/DxSKZsD7cM=
+        t=1498127219; bh=02r9YWYD+M2etYNHrpasjUmHj991Zo5Whvt74znrItQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=rH2+lbdYvvjwcr5XSFWPDaFhrmdG3xX/ht5QKVpyZAGMacKCxP890KItPHfuSOvPR
+         MFFW1Oj2fv3qN7cwbBMNoXl3710RspXfGwcocmpmyQo40nTxZyA/RsHXy9qzdXJLPv
+         QRzY/2hyZNF6JlocY9rcdkCnqT5RofZAONnr7ANs=
 X-Originating-IP: [92.22.42.39]
 X-Spam: 0
 X-OAuthority: v=2.2 cv=JNN5iICb c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
- a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=evINK-nbAAAA:8 a=hykUG8VhdtKBKJxG7PsA:9
- a=RfR_gqz1fSpA9VikTjo0:22
+ a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=evINK-nbAAAA:8 a=HhPA1Zu1Id1Cj8__UdYA:9
+ a=xWT67Tv2KBUqqxcK:21 a=vCd91sBY12AHedfm:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 0/5] Move unquote_path() from git-add--interactive.perl to Git.pm
-Date:   Thu, 22 Jun 2017 11:26:17 +0100
-Message-Id: <20170622102622.26147-1-phillip.wood@talktalk.net>
+Subject: [PATCH 3/5] Git::unquote_path() throw an exception on bad path
+Date:   Thu, 22 Jun 2017 11:26:20 +0100
+Message-Id: <20170622102622.26147-4-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170622102622.26147-1-phillip.wood@talktalk.net>
+References: <20170622102622.26147-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfA6j/+2/PLenFsa9udF0sdgVZuvFO8SbhSxyqi77LZ7IanJWlwvQ+yzeSQszh//bji1738BQJgZ84ZxVLmYRfhEm/BxUwg30eWP377s9qgVtGICh+FEL
- /xaBsntlKEI2967TiOx1HITVfkul+qheP42u606llbq+lzXjH5V3gA7MHc7HBt5G+H9QbVslX3Sgw/tnbllRG9Fl9iwcFpkHv15pIy3SwLwqpAoBP1nPyo2u
- mDomPdUSwQI6c+hM/FTt3Q==
+X-CMAE-Envelope: MS4wfCW2A9KhDL6F1M1H/ziWIMMl7sCGTyJX283X9kmmG3E7WI++Tsd9sSocU8DeDnNz0riR/pjGJZcAVuE1kwkA7HdK2EYmpv283vCfwCYMc88TB5a4Vgp+
+ 12x2wUrePhzw/as1ZS4WlQ4sEHON3LdbjDDKMRtyXQWcHbcrn0UjOv71P+CqQB06wVCC9oGIZKT08CCstS85VJYo+4l8zdgrFS6LNsj8LB1Pk94zMinx30vg
+ vx6HoSD0+VIbHPHJIdRj+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -49,26 +51,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-I'm using this in some scripts and it would be more convenient to have
-it available from Git.pm rather than copying and pasting it each time
-I need it. I think it should be useful to other people using Git.pm as
-well. It is not uncommon to get a quoted path back from a command that
-needs to be passed on the commandline of another command. While one
-can use -z in many cases, that leaves the problem of having to quote
-the path when printing it in error messages etc.
+This is what the other routines in Git.pm do if there's an error.
 
-Phillip Wood (5):
-  Git.pm Add unquote_path()
-  Git::unquote_path() Handle '\a'
-  Git::unquote_path() throw an exception on bad path
-  Add tests for Git::unquote_path()
-  git-add--interactive.perl: Use unquote_path() from Git.pm
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ perl/Git.pm | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- git-add--interactive.perl | 43 +------------------------------------
- perl/Git.pm               | 54 ++++++++++++++++++++++++++++++++++++++++++++++-
- t/t9700/test.pl           |  7 ++++++
- 3 files changed, 61 insertions(+), 43 deletions(-)
-
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 889bf88cfcd34136e24e166fb3b72cced6debf9d..51cb3446088dd12e8fd93d47b95e29fab22a8466 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -1493,8 +1493,8 @@ when not using -z
+ 					$_ = $2;
+ 					last;
+ 				}
+-				# This is malformed -- just return it as-is for now.
+-				return $_[0];
++				# This is malformed
++				throw Error::Simple("Invalid quoted path $_[0]");
+ 			}
+ 			$_ = $remainder;
+ 		}
 -- 
 2.13.0
 
