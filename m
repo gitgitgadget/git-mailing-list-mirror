@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97C7C1FA7B
-	for <e@80x24.org>; Thu, 22 Jun 2017 18:44:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02CFC1FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 18:44:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753714AbdFVSoh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 14:44:37 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:35588 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753701AbdFVSod (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 14:44:33 -0400
-Received: by mail-pf0-f177.google.com with SMTP id c73so12564243pfk.2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:44:33 -0700 (PDT)
+        id S1753716AbdFVSoi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 14:44:38 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:33093 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753693AbdFVSob (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 14:44:31 -0400
+Received: by mail-pf0-f175.google.com with SMTP id e7so12571363pfk.0
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 11:44:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4iHxdmwb1DfAA8XckrokX8t1hB57ycv4o32p74FzjAA=;
-        b=nYPNdxGC8eYo+KhNnA9rTnYcJUTKSV8PIigE8TfZWcu5H7qNlJr1ImnZNpjPZEXGh1
-         hUxOu1m/JHlzg7QTkXIKhigZrmR+o/+LkjBk8Yxk4eTmRjbeJYlF2RKFcpGD4bNWvyUA
-         OJEHtGQBWzPSKfx33Ky69qnuaA9MAV8V3yPGfnC5bvrjwjB7VdqIq6NAVlrt4axX7gWL
-         MYYFM72/QUu1jupjUf0YidwXBhRa6yJccLEcxX3qfSMMkDTPaU50j+jysj6ah2IeA5VB
-         aGRPZNHoYquNhkI92ozR80BbQ4uTYDe70NhcZNBdh62RslLbVjvR5KF4cMr3iysvdvfw
-         hmwQ==
+        bh=pfFrO5IOx4sBBbakPUi6pa5bto+TXzEgzxeM24Wmm+4=;
+        b=QkhL8CvyOWT++5zwqYLvCjHxvhv9gsyQwT4kP2hdopmlLI3NU8T8Uo1uIGxhpf+3Bc
+         Zfht7z0z131hxGHKkdG/ocBBGhU+aMx8H7SDySpp1ifPKxoaLdL/o087M/vzyKVkmMiP
+         IJ8nAvz9F+b42QC0e7hprGvg5gFtGoaQJ6Eb/Yiz9erzDSaP1U5StIbpnlGYcT1Lyoua
+         pVJL/UZBMK6fP7rZLZyBlgmI1vTuxOrpR+r9I8cHyt/1GORN8tuQcPnDbQV3uMe0kTYp
+         /P1p25L5UWtRx74gid44KhsvwF0E0BbT201TqVxitKwP0YighyipRckWDiglQPlGu9sq
+         FHeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4iHxdmwb1DfAA8XckrokX8t1hB57ycv4o32p74FzjAA=;
-        b=I2lwT8o5VPVLFCNHhc1rPXNr2yl9BN0WWLuETIbGQaTfizKzhz1cDgJF+8fSdXkvhL
-         mlgkYRUFkkPVUwICzLEUyjYFRm5q/6o5oiJYvIrgX+W4Yplks6qWrjmBQjgWCZCWYlSP
-         hZwcKWBBqa+geZ6RgmG2IM5EhMkLmFiOYt9Ybo5sTDO6RMTjzcE2TIa9ViVoKLFjPDtx
-         LXjzWZkJ7B4yb+ZLgkfe7qI5F4wHLsukiQBd4T0N/9Uq0zAy297ybWhn4B7G21NIQBPp
-         lsgPgmoh0XkB2rVBXQJR9ll1oJ8+MUHy3BCQIw2svrcfVtg6VWtbtS18z1+U3CBEg1hu
-         s7OQ==
-X-Gm-Message-State: AKS2vOylZ8vY9K8enTDs6qsuLqkfO+BkrElQwOOdKIEkYILr7LKWYJJ/
-        U8FJxWnXABWMbQ3+VaxcQw==
-X-Received: by 10.84.209.236 with SMTP id y99mr4532237plh.198.1498157072291;
-        Thu, 22 Jun 2017 11:44:32 -0700 (PDT)
+        bh=pfFrO5IOx4sBBbakPUi6pa5bto+TXzEgzxeM24Wmm+4=;
+        b=VbTMilcIoFLLsmsHzXOtpT8FfS1G8yDK2mSRP7+Q7ZOT/1kJsDsyQ9RCkmEz8ZnCPJ
+         m2o2p4JwYXV8m/L+gMvQoBRSHmNM3Lluly6ILJsERbaButvPLw1joxNCTPbwTAbU6WAD
+         ZY9HWPUGPgKa1mWM12nAMBnFBCTazyYSi80qEHDxGsKCHtDIiMthJirQoagmQGqfhQh7
+         ve/0PB+i9JtvkFNcptXybMijh9AS0Gcr4RccckE5ygMewaGeJYcI0DK9Y2582wOn5/tS
+         DLr2Mp/aQPP+Sso/QSIKaJEc+K6G1J2rmV3xWfAVPhpvQ2Uge+Lq8HTh5TVEQlF/oZjA
+         GcqQ==
+X-Gm-Message-State: AKS2vOw76gEdP48rmVjV6OpHSnHend4c2EOrAX7S4Ibxh+nt/Ex3pOP/
+        TLvCzlzFOixYyKH6uTQKBg==
+X-Received: by 10.98.53.134 with SMTP id c128mr4086507pfa.55.1498157065062;
+        Thu, 22 Jun 2017 11:44:25 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id g78sm5222211pfb.122.2017.06.22.11.44.30
+        by smtp.gmail.com with ESMTPSA id g78sm5222211pfb.122.2017.06.22.11.44.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 11:44:31 -0700 (PDT)
+        Thu, 22 Jun 2017 11:44:24 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
@@ -54,9 +54,9 @@ Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
         peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
         peff@peff.net, git@jeffhostetler.com, avarab@gmail.com,
         jonathantanmy@google.com, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v4 18/20] submodule: convert is_submodule_initialized to work on a repository
-Date:   Thu, 22 Jun 2017 11:43:46 -0700
-Message-Id: <20170622184348.56497-19-bmwill@google.com>
+Subject: [PATCH v4 14/20] config: read config from a repository object
+Date:   Thu, 22 Jun 2017 11:43:42 -0700
+Message-Id: <20170622184348.56497-15-bmwill@google.com>
 X-Mailer: git-send-email 2.13.1.704.gde00cce3c-goog
 In-Reply-To: <20170622184348.56497-1-bmwill@google.com>
 References: <20170620191951.84791-1-bmwill@google.com>
@@ -66,163 +66,419 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert 'is_submodule_initialized()' to take a repository object and
-while we're at it, lets rename the function to 'is_submodule_active()'
-and remove the NEEDSWORK comment.
+Teach the config machinery to read config information from a repository
+object.  This involves storing a 'struct config_set' inside the
+repository object and adding a number of functions (repo_config*) to be
+able to query a repository's config.
+
+The current config API enables lazy-loading of the config.  This means
+that when 'git_config_get_int()' is called, if the_config_set hasn't
+been populated yet, then it will be populated and properly initialized by
+reading the necessary config files (system wide .gitconfig, user's home
+.gitconfig, and the repository's config).  To maintain this paradigm,
+the new API to read from a repository object's config will also perform
+this lazy-initialization.
+
+Since both APIs (git_config_get* and repo_config_get*) have the same
+semantics we can migrate the default config to be stored within
+'the_repository' and just have the 'git_config_get*' family of functions
+redirect to the 'repo_config_get*' functions.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/grep.c              |  3 ++-
- builtin/submodule--helper.c |  9 +++++----
- submodule.c                 | 20 ++++++++------------
- submodule.h                 |  2 +-
- 4 files changed, 16 insertions(+), 18 deletions(-)
+ config.c     | 216 +++++++++++++++++++++++++++++++++++++++--------------------
+ config.h     |  24 +++++++
+ repository.c |   7 ++
+ repository.h |  10 +++
+ 4 files changed, 183 insertions(+), 74 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index f61a9d938..e3ba1d98e 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2006 Junio C Hamano
+diff --git a/config.c b/config.c
+index 6f0f8b30f..be1c640a4 100644
+--- a/config.c
++++ b/config.c
+@@ -7,6 +7,7 @@
   */
  #include "cache.h"
-+#include "repository.h"
  #include "config.h"
- #include "blob.h"
- #include "tree.h"
-@@ -643,7 +644,7 @@ static int grep_submodule_launch(struct grep_opt *opt,
- static int grep_submodule(struct grep_opt *opt, const struct object_id *oid,
- 			  const char *filename, const char *path)
++#include "repository.h"
+ #include "lockfile.h"
+ #include "exec_cmd.h"
+ #include "strbuf.h"
+@@ -72,13 +73,6 @@ static int core_compression_seen;
+ static int pack_compression_seen;
+ static int zlib_compression_seen;
+ 
+-/*
+- * Default config_set that contains key-value pairs from the usual set of config
+- * config files (i.e repo specific .git/config, user wide ~/.gitconfig, XDG
+- * config file and the global /etc/gitconfig)
+- */
+-static struct config_set the_config_set;
+-
+ static int config_file_fgetc(struct config_source *conf)
  {
--	if (!is_submodule_initialized(path))
-+	if (!is_submodule_active(the_repository, path))
- 		return 0;
- 	if (!is_submodule_populated_gently(path, NULL)) {
- 		/*
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 8517032b3..e1b06c41d 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1,4 +1,5 @@
- #include "builtin.h"
-+#include "repository.h"
- #include "cache.h"
- #include "config.h"
- #include "parse-options.h"
-@@ -280,7 +281,7 @@ static void module_list_active(struct module_list *list)
- 	for (i = 0; i < list->nr; i++) {
- 		const struct cache_entry *ce = list->entries[i];
- 
--		if (!is_submodule_initialized(ce->name))
-+		if (!is_submodule_active(the_repository, ce->name))
- 			continue;
- 
- 		ALLOC_GROW(active_modules.entries,
-@@ -362,7 +363,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
- 	 *
- 	 * Set active flag for the submodule being initialized
- 	 */
--	if (!is_submodule_initialized(path)) {
-+	if (!is_submodule_active(the_repository, path)) {
- 		strbuf_reset(&sb);
- 		strbuf_addf(&sb, "submodule.%s.active", sub->name);
- 		git_config_set_gently(sb.buf, "true");
-@@ -817,7 +818,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 	}
- 
- 	/* Check if the submodule has been initialized. */
--	if (!is_submodule_initialized(ce->name)) {
-+	if (!is_submodule_active(the_repository, ce->name)) {
- 		next_submodule_warn_missing(suc, out, displaypath);
- 		goto cleanup;
- 	}
-@@ -1193,7 +1194,7 @@ static int is_active(int argc, const char **argv, const char *prefix)
- 
- 	gitmodules_config();
- 
--	return !is_submodule_initialized(argv[1]);
-+	return !is_submodule_active(the_repository, argv[1]);
+ 	return getc_unlocked(conf->u.file);
+@@ -1605,31 +1599,6 @@ int config_with_options(config_fn_t fn, void *data,
+ 	return do_git_config_sequence(opts, fn, data);
  }
  
- #define SUPPORT_SUPER_PREFIX (1<<0)
-diff --git a/submodule.c b/submodule.c
-index d0b894772..b23c25311 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -283,21 +283,17 @@ void gitmodules_config_sha1(const unsigned char *commit_sha1)
+-static void git_config_raw(config_fn_t fn, void *data)
+-{
+-	struct config_options opts = {0};
+-
+-	opts.respect_includes = 1;
+-	if (have_git_dir()) {
+-		opts.commondir = get_git_common_dir();
+-		opts.git_dir = get_git_dir();
+-	}
+-
+-	if (config_with_options(fn, data, NULL, &opts) < 0)
+-		/*
+-		 * config_with_options() normally returns only
+-		 * zero, as most errors are fatal, and
+-		 * non-fatal potential errors are guarded by "if"
+-		 * statements that are entered only when no error is
+-		 * possible.
+-		 *
+-		 * If we ever encounter a non-fatal error, it means
+-		 * something went really wrong and we should stop
+-		 * immediately.
+-		 */
+-		die(_("unknown error occurred while reading the configuration files"));
+-}
+-
+ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
+ {
+ 	int i, value_index;
+@@ -1683,14 +1652,6 @@ void read_early_config(config_fn_t cb, void *data)
+ 	strbuf_release(&gitdir);
  }
  
- /*
-- * NEEDSWORK: With the addition of different configuration options to determine
-- * if a submodule is of interests, the validity of this function's name comes
-- * into question.  Once the dust has settled and more concrete terminology is
-- * decided upon, come up with a more proper name for this function.  One
-- * potential candidate could be 'is_submodule_active()'.
-- *
-  * Determine if a submodule has been initialized at a given 'path'
-  */
--int is_submodule_initialized(const char *path)
-+int is_submodule_active(struct repository *repo, const char *path)
+-static void git_config_check_init(void);
+-
+-void git_config(config_fn_t fn, void *data)
+-{
+-	git_config_check_init();
+-	configset_iter(&the_config_set, fn, data);
+-}
+-
+ static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
  {
- 	int ret = 0;
- 	char *key = NULL;
- 	char *value = NULL;
- 	const struct string_list *sl;
--	const struct submodule *module = submodule_from_path(null_sha1, path);
-+	const struct submodule *module;
+ 	struct config_set_element k;
+@@ -1900,87 +1861,194 @@ int git_configset_get_pathname(struct config_set *cs, const char *key, const cha
+ 		return 1;
+ }
+ 
+-static void git_config_check_init(void)
++/* Functions use to read configuration from a repository */
++static void repo_read_config(struct repository *repo)
+ {
+-	if (the_config_set.hash_initialized)
++	struct config_options opts;
 +
-+	module = submodule_from_cache(repo, null_sha1, path);
++	opts.respect_includes = 1;
++	opts.commondir = repo->commondir;
++	opts.git_dir = repo->gitdir;
++
++	if (!repo->config)
++		repo->config = xcalloc(1, sizeof(struct config_set));
++	else
++		git_configset_clear(repo->config);
++
++	git_configset_init(repo->config);
++
++	if (config_with_options(config_set_callback, repo->config, NULL, &opts) < 0)
++		/*
++		 * config_with_options() normally returns only
++		 * zero, as most errors are fatal, and
++		 * non-fatal potential errors are guarded by "if"
++		 * statements that are entered only when no error is
++		 * possible.
++		 *
++		 * If we ever encounter a non-fatal error, it means
++		 * something went really wrong and we should stop
++		 * immediately.
++		 */
++		die(_("unknown error occurred while reading the configuration files"));
++}
++
++static void git_config_check_init(struct repository *repo)
++{
++	if (repo->config && repo->config->hash_initialized)
+ 		return;
+-	git_configset_init(&the_config_set);
+-	git_config_raw(config_set_callback, &the_config_set);
++	repo_read_config(repo);
+ }
  
- 	/* early return if there isn't a path->module mapping */
- 	if (!module)
-@@ -305,14 +301,14 @@ int is_submodule_initialized(const char *path)
+-void git_config_clear(void)
++static void repo_config_clear(struct repository *repo)
+ {
+-	if (!the_config_set.hash_initialized)
++	if (!repo->config || !repo->config->hash_initialized)
+ 		return;
+-	git_configset_clear(&the_config_set);
++	git_configset_clear(repo->config);
+ }
  
- 	/* submodule.<name>.active is set */
- 	key = xstrfmt("submodule.%s.active", module->name);
--	if (!git_config_get_bool(key, &ret)) {
-+	if (!repo_config_get_bool(repo, key, &ret)) {
- 		free(key);
- 		return ret;
- 	}
- 	free(key);
+-int git_config_get_value(const char *key, const char **value)
++void repo_config(struct repository *repo, config_fn_t fn, void *data)
+ {
+-	git_config_check_init();
+-	return git_configset_get_value(&the_config_set, key, value);
++	git_config_check_init(repo);
++	configset_iter(repo->config, fn, data);
+ }
  
- 	/* submodule.active is set */
--	sl = git_config_get_value_multi("submodule.active");
-+	sl = repo_config_get_value_multi(repo, "submodule.active");
- 	if (sl) {
- 		struct pathspec ps;
- 		struct argv_array args = ARGV_ARRAY_INIT;
-@@ -332,7 +328,7 @@ int is_submodule_initialized(const char *path)
+-const struct string_list *git_config_get_value_multi(const char *key)
++int repo_config_get_value(struct repository *repo,
++			  const char *key, const char **value)
+ {
+-	git_config_check_init();
+-	return git_configset_get_value_multi(&the_config_set, key);
++	git_config_check_init(repo);
++	return git_configset_get_value(repo->config, key, value);
+ }
  
- 	/* fallback to checking if the URL is set */
- 	key = xstrfmt("submodule.%s.url", module->name);
--	ret = !git_config_get_string(key, &value);
-+	ret = !repo_config_get_string(repo, key, &value);
+-int git_config_get_string_const(const char *key, const char **dest)
++const struct string_list *repo_config_get_value_multi(struct repository *repo,
++						      const char *key)
++{
++	git_config_check_init(repo);
++	return git_configset_get_value_multi(repo->config, key);
++}
++
++int repo_config_get_string_const(struct repository *repo,
++				 const char *key, const char **dest)
++{
++	int ret;
++	git_config_check_init(repo);
++	ret = git_configset_get_string_const(repo->config, key, dest);
++	if (ret < 0)
++		git_die_config(key, NULL);
++	return ret;
++}
++
++int repo_config_get_string(struct repository *repo,
++			   const char *key, char **dest)
++{
++	git_config_check_init(repo);
++	return repo_config_get_string_const(repo, key, (const char **)dest);
++}
++
++int repo_config_get_int(struct repository *repo,
++			const char *key, int *dest)
++{
++	git_config_check_init(repo);
++	return git_configset_get_int(repo->config, key, dest);
++}
++
++int repo_config_get_ulong(struct repository *repo,
++			  const char *key, unsigned long *dest)
++{
++	git_config_check_init(repo);
++	return git_configset_get_ulong(repo->config, key, dest);
++}
++
++int repo_config_get_bool(struct repository *repo,
++			 const char *key, int *dest)
++{
++	git_config_check_init(repo);
++	return git_configset_get_bool(repo->config, key, dest);
++}
++
++int repo_config_get_bool_or_int(struct repository *repo,
++				const char *key, int *is_bool, int *dest)
++{
++	git_config_check_init(repo);
++	return git_configset_get_bool_or_int(repo->config, key, is_bool, dest);
++}
++
++int repo_config_get_maybe_bool(struct repository *repo,
++			       const char *key, int *dest)
++{
++	git_config_check_init(repo);
++	return git_configset_get_maybe_bool(repo->config, key, dest);
++}
++
++int repo_config_get_pathname(struct repository *repo,
++			     const char *key, const char **dest)
+ {
+ 	int ret;
+-	git_config_check_init();
+-	ret = git_configset_get_string_const(&the_config_set, key, dest);
++	git_config_check_init(repo);
++	ret = git_configset_get_pathname(repo->config, key, dest);
+ 	if (ret < 0)
+ 		git_die_config(key, NULL);
+ 	return ret;
+ }
  
- 	free(value);
- 	free(key);
-@@ -1532,7 +1528,7 @@ int submodule_move_head(const char *path,
- 	const struct submodule *sub;
- 	int *error_code_ptr, error_code;
++/* Functions used historically to read configuration from 'the_repository' */
++void git_config(config_fn_t fn, void *data)
++{
++	repo_config(the_repository, fn, data);
++}
++
++void git_config_clear(void)
++{
++	repo_config_clear(the_repository);
++}
++
++int git_config_get_value(const char *key, const char **value)
++{
++	return repo_config_get_value(the_repository, key, value);
++}
++
++const struct string_list *git_config_get_value_multi(const char *key)
++{
++	return repo_config_get_value_multi(the_repository, key);
++}
++
++int git_config_get_string_const(const char *key, const char **dest)
++{
++	return repo_config_get_string_const(the_repository, key, dest);
++}
++
+ int git_config_get_string(const char *key, char **dest)
+ {
+-	git_config_check_init();
+-	return git_config_get_string_const(key, (const char **)dest);
++	return repo_config_get_string(the_repository, key, dest);
+ }
  
--	if (!is_submodule_initialized(path))
-+	if (!is_submodule_active(the_repository, path))
- 		return 0;
+ int git_config_get_int(const char *key, int *dest)
+ {
+-	git_config_check_init();
+-	return git_configset_get_int(&the_config_set, key, dest);
++	return repo_config_get_int(the_repository, key, dest);
+ }
  
- 	if (flags & SUBMODULE_MOVE_HEAD_FORCE)
-diff --git a/submodule.h b/submodule.h
-index 8a3771ec6..623ce6ad7 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -49,7 +49,7 @@ void load_submodule_cache(void);
- extern void gitmodules_config(void);
- extern void repo_read_gitmodules(struct repository *repo);
- extern void gitmodules_config_sha1(const unsigned char *commit_sha1);
--extern int is_submodule_initialized(const char *path);
-+extern int is_submodule_active(struct repository *repo, const char *path);
- /*
-  * Determine if a submodule has been populated at a given 'path' by checking if
-  * the <path>/.git resolves to a valid git repository.
+ int git_config_get_ulong(const char *key, unsigned long *dest)
+ {
+-	git_config_check_init();
+-	return git_configset_get_ulong(&the_config_set, key, dest);
++	return repo_config_get_ulong(the_repository, key, dest);
+ }
+ 
+ int git_config_get_bool(const char *key, int *dest)
+ {
+-	git_config_check_init();
+-	return git_configset_get_bool(&the_config_set, key, dest);
++	return repo_config_get_bool(the_repository, key, dest);
+ }
+ 
+ int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest)
+ {
+-	git_config_check_init();
+-	return git_configset_get_bool_or_int(&the_config_set, key, is_bool, dest);
++	return repo_config_get_bool_or_int(the_repository, key, is_bool, dest);
+ }
+ 
+ int git_config_get_maybe_bool(const char *key, int *dest)
+ {
+-	git_config_check_init();
+-	return git_configset_get_maybe_bool(&the_config_set, key, dest);
++	return repo_config_get_maybe_bool(the_repository, key, dest);
+ }
+ 
+ int git_config_get_pathname(const char *key, const char **dest)
+ {
+-	int ret;
+-	git_config_check_init();
+-	ret = git_configset_get_pathname(&the_config_set, key, dest);
+-	if (ret < 0)
+-		git_die_config(key, NULL);
+-	return ret;
++	return repo_config_get_pathname(the_repository, key, dest);
+ }
+ 
+ int git_config_get_expiry(const char *key, const char **output)
+diff --git a/config.h b/config.h
+index 9e038cce2..0352da117 100644
+--- a/config.h
++++ b/config.h
+@@ -163,6 +163,30 @@ extern int git_configset_get_bool_or_int(struct config_set *cs, const char *key,
+ extern int git_configset_get_maybe_bool(struct config_set *cs, const char *key, int *dest);
+ extern int git_configset_get_pathname(struct config_set *cs, const char *key, const char **dest);
+ 
++/* Functions for reading a repository's config */
++struct repository;
++extern void repo_config(struct repository *repo, config_fn_t fn, void *data);
++extern int repo_config_get_value(struct repository *repo,
++				 const char *key, const char **value);
++extern const struct string_list *repo_config_get_value_multi(struct repository *repo,
++							     const char *key);
++extern int repo_config_get_string_const(struct repository *repo,
++					const char *key, const char **dest);
++extern int repo_config_get_string(struct repository *repo,
++				  const char *key, char **dest);
++extern int repo_config_get_int(struct repository *repo,
++			       const char *key, int *dest);
++extern int repo_config_get_ulong(struct repository *repo,
++				 const char *key, unsigned long *dest);
++extern int repo_config_get_bool(struct repository *repo,
++				const char *key, int *dest);
++extern int repo_config_get_bool_or_int(struct repository *repo,
++				       const char *key, int *is_bool, int *dest);
++extern int repo_config_get_maybe_bool(struct repository *repo,
++				      const char *key, int *dest);
++extern int repo_config_get_pathname(struct repository *repo,
++				    const char *key, const char **dest);
++
+ extern int git_config_get_value(const char *key, const char **value);
+ extern const struct string_list *git_config_get_value_multi(const char *key);
+ extern void git_config_clear(void);
+diff --git a/repository.c b/repository.c
+index cf440405a..686a964ad 100644
+--- a/repository.c
++++ b/repository.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "repository.h"
++#include "config.h"
+ 
+ /* The main repository */
+ static struct repository the_repo;
+@@ -156,4 +157,10 @@ void repo_clear(struct repository *repo)
+ 	repo->index_file = NULL;
+ 	free(repo->worktree);
+ 	repo->worktree = NULL;
++
++	if (repo->config) {
++		git_configset_clear(repo->config);
++		free(repo->config);
++		repo->config = NULL;
++	}
+ }
+diff --git a/repository.h b/repository.h
+index 0a1db9633..8ae5e8653 100644
+--- a/repository.h
++++ b/repository.h
+@@ -1,6 +1,8 @@
+ #ifndef REPOSITORY_H
+ #define REPOSITORY_H
+ 
++struct config_set;
++
+ struct repository {
+ 	/* Environment */
+ 	/*
+@@ -39,6 +41,14 @@ struct repository {
+ 	 */
+ 	char *worktree;
+ 
++	/* Subsystems */
++	/*
++	 * Repository's config which contains key-value pairs from the usual
++	 * set of config files (i.e. repo specific .git/config, user wide
++	 * ~/.gitconfig, XDG config file and the global /etc/gitconfig)
++	 */
++	struct config_set *config;
++
+ 	/* Configurations */
+ 	/*
+ 	 * Bit used during initialization to indicate if repository state (like
 -- 
 2.13.1.704.gde00cce3c-goog
 
