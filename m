@@ -2,87 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87B6120803
-	for <e@80x24.org>; Thu, 22 Jun 2017 20:25:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F12AF20802
+	for <e@80x24.org>; Thu, 22 Jun 2017 20:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753492AbdFVUZ0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 16:25:26 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36786 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751147AbdFVUZZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 16:25:25 -0400
-Received: by mail-pf0-f193.google.com with SMTP id y7so4506673pfd.3
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 13:25:24 -0700 (PDT)
+        id S1753432AbdFVU1f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 16:27:35 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:33674 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753287AbdFVU1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 16:27:34 -0400
+Received: by mail-pg0-f42.google.com with SMTP id f127so12379405pgc.0
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 13:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HTc3NguK4Z5KtjNAMuKPdJ4GZR8g3cy7vgC+KwAhl48=;
-        b=dsujU+TrY6bnvtbwda847ZohuQGmXjmOlWgY176zETLbxcs8v8tgN0u5tPz/cJk9yF
-         LOLic4kSmmrtFDla2l0loB7VZ7Xf34HObfYSQnJyepBVI/+oGfPnarxcWAv7rZm/U+Xu
-         QS7Fwts2CNpvEycEmBMIa5p6T6IFbtJ+x/VEMWfSSvdFaqfV0pIWDNqEUTr6W5ditDsr
-         Q8tkz6r0cxYXQnRn8+jE8xQEIutXQ3NBHsfiXShKMOMBWE7PlJAou5qBgF2BsDq85jKA
-         IEQYagF9Dbjz7qjeNCvqfn3p1ztMXRP8vwYyeub4QooZbFE8UgedrdogPLVU4iX5MZhP
-         Lepg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=uOcCiDxHF22NzOVlPjQDmW6CT00P0+61NXQ9aQ84k3g=;
+        b=Ot04R8OLtq1olPADu8e+7Oj+vIK7hmUavkmL2pU56wOvzt99Fko+0rpei79RZqz9th
+         FF3Eflz/C1MViK0FRic6UBo4JzQ6bk6QEvMbMx3o/orqvR6fwqrK4NENWWU9g1lKkpxt
+         TCEvLmonwI1D5hu9Jk3soR5t40M+z2hgkuI+ZsRVOLtTR0LwNUaGOwq7hfSAEdGaRJDE
+         rDs7c0l8Ak98J0876KTyV0UhBDJg+ngZBAt2gc7CKMP3ak81vjw9RNSVlhG3U5sbhKIB
+         +kpjIpKm71rIJvMUhA2UPcGfrz3rarCrLGet9NRDRBlAepQpdejdoYO8k3+YU1s1Fr7k
+         OWfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HTc3NguK4Z5KtjNAMuKPdJ4GZR8g3cy7vgC+KwAhl48=;
-        b=qcA0IJNFuTIts2uAzO92FdJtGyVjm0LnP7EipWsSLYCjPxELFL3l2bxrbJMXay9//4
-         mgvRFoQf24QMcO7ruhD9zKjBLOehASvDswI7nkFL25wdt2jbnRUafMn45wPAdaUAH+DF
-         cP140zLEIGBQlPspguQ2ix7bubalIqbWhJSfoTjBe9vKEb8LSMBKV9VQuv6IDAomv76z
-         1Ax9CWfViRBQlcIQuhQvk1yRmPZKv7OXBSjh12pzf6CbTyYM/7BAoDu+VhG68eJPv2Lr
-         b94/cNTvT8YsfaXGN2dJKmX0nUnuh53qQsHTA/mvLlhwPDrFX98PEIuf3b4FDO0uoaqK
-         RW6w==
-X-Gm-Message-State: AKS2vOxPr+Ks/lr+sJLio4JQYgzBX1nTcwHyAUC+I6ox0vm5LpievOpM
-        VxEPmp3I7uUxgQ==
-X-Received: by 10.99.23.100 with SMTP id 36mr4524705pgx.118.1498163124357;
-        Thu, 22 Jun 2017 13:25:24 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
-        by smtp.gmail.com with ESMTPSA id u78sm5613954pfd.109.2017.06.22.13.25.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 13:25:23 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/3] t1700: make sure split-index respects core.sharedrepository
-References: <20170622190158.13265-1-chriscool@tuxfamily.org>
-        <20170622190158.13265-3-chriscool@tuxfamily.org>
-        <xmqqzicziyss.fsf@gitster.mtv.corp.google.com>
-        <CAP8UFD2QwN_8Mn3eFT_FRRbXNfnQFwt53nofh8AUzR0Zhx5EgA@mail.gmail.com>
-Date:   Thu, 22 Jun 2017 13:25:23 -0700
-In-Reply-To: <CAP8UFD2QwN_8Mn3eFT_FRRbXNfnQFwt53nofh8AUzR0Zhx5EgA@mail.gmail.com>
-        (Christian Couder's message of "Thu, 22 Jun 2017 22:19:46 +0200")
-Message-ID: <xmqqh8z7ixcc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=uOcCiDxHF22NzOVlPjQDmW6CT00P0+61NXQ9aQ84k3g=;
+        b=uf6Qd+tWLd4zFnk0uC/77+IOAZKmIXu5xUysTe7kej9tLGUPJU7Z+TTDPpD9gREfIr
+         WcEFIuU0ju9KIketseK5kgIsl16H31XMX4ail/0LBGRKQ3kNoW9kGh4uAiI4o9KcEl3b
+         bD8zDAbxzoCcdlyKXoT+UsYWZIvsRZjj/AQsar2xz0uFsk6znmsr+RRURmnu7+mjZJeB
+         bChuAXrEW2qMNn58goyjrLj9GSSLJOyfwVT/9OX4iGwjPBeWlpt3q0rpvf9s7MLRmL1o
+         KM250UH4I6saip4XP5MKyFB4kVrdglrjVP7Rk+pc51BgAxgBpHYXBcmWueyupf3yq0e/
+         SuEw==
+X-Gm-Message-State: AKS2vOzXwZ3YTDVRaLVzxqGvGnRc/IgKJhT4zhAsSDvvnWLFobNaVVUa
+        +bU367mHvSqvG8I+DAZoEfH6zyjJNiqr
+X-Received: by 10.98.34.8 with SMTP id i8mr4470610pfi.194.1498163253363; Thu,
+ 22 Jun 2017 13:27:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.161.227 with HTTP; Thu, 22 Jun 2017 13:27:32 -0700 (PDT)
+In-Reply-To: <xmqqlgojixjo.fsf@gitster.mtv.corp.google.com>
+References: <20170607185354.10050-1-sbeller@google.com> <20170620225650.7573-1-sbeller@google.com>
+ <20170622174659.GA124061@google.com> <xmqqlgojixjo.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 22 Jun 2017 13:27:32 -0700
+Message-ID: <CAGZ79ka5MkpPSxR23Kz9DcxFkHNB-hz=n-teDXc6=eX4p473FQ@mail.gmail.com>
+Subject: Re: [PATCHv2] submodules: overhaul documentation
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
-
-> We use "git config core.sharedrepository 0666" at the beginning of
-> this test, so it will only apply to the shared index files that are
-> created after that.
+On Thu, Jun 22, 2017 at 1:20 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brandon Williams <bmwill@google.com> writes:
 >
-> Do you suggest that we test before setting core.sharedrepository that
-> the existing shared index files all have the default permissions?
+>> On 06/20, Stefan Beller wrote:
+>> ...
+>>> +The configuration of submodules
+>>> +-------------------------------
+>>> +
+>>> +Submodule operations can be configured using the following mechanisms
+>>> +(from highest to lowest precedence):
+>>> +
+>>> + * the command line for those commands that support taking submodule specs.
+>>> +
+>>> + * the configuration file `$GIT_DIR/config` in the superproject.
+>>> +
+>>> + * the `.gitmodules` file inside the superproject. A project usually
+>>> +   includes this file to suggest defaults for the upstream collection
+>>> +   of repositories.
+>>
+>> I dislike this last point.  Realistically we don't want this right?  So
+>> perhaps we shouldn't include it?
+>
+> I am not sure if I follow.  Without .gitmodules, how would you, as a
+> downstream developer, bootstrap the whole thing?
+>
 
-I think it would be sensible to see at least two values appear.
-Otherwise we cannot tell if the right value is coming by accident
-(because it was the default) or by design (because the configuration
-is correctly read).
+I think Brandon eludes to our long term vision of having a separate
+magic ref containing these informations instead of carrying it in tree.
 
+As urls change over time, it is better to keep the urls out of the
+actual history, but still versioned so maybe we'll want to have
+a ref/submodule-config/master ref that contains all the bootstrapping
+information. The .gitmodules file would degenerate to a pure
+name<->path mapping.
