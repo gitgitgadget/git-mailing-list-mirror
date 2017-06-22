@@ -2,136 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BCC51FA7B
-	for <e@80x24.org>; Thu, 22 Jun 2017 15:16:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 929031FA7B
+	for <e@80x24.org>; Thu, 22 Jun 2017 15:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752447AbdFVPQL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 11:16:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48734 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752081AbdFVPQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 11:16:10 -0400
-Received: (qmail 3500 invoked by uid 109); 22 Jun 2017 15:16:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Jun 2017 15:16:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1504 invoked by uid 111); 22 Jun 2017 15:16:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jun 2017 11:16:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Jun 2017 11:16:03 -0400
-Date:   Thu, 22 Jun 2017 11:16:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
-Subject: Re: Truncating HEAD reflog on branch move
-Message-ID: <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net>
-References: <20170621213924.wh43i2h7v2zwihq3@genre.crustytoothpaste.net>
- <xmqqpodxm2t8.fsf@gitster.mtv.corp.google.com>
- <87efud7xjd.fsf@kyleam.com>
+        id S1752090AbdFVPdT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 11:33:19 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34471 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751185AbdFVPdS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 11:33:18 -0400
+Received: by mail-pf0-f194.google.com with SMTP id d5so3490872pfe.1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 08:33:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=SosCmzMOAzq3sQNqHaBOKPaBBSb5+KEm9//w5DzZuIM=;
+        b=OurBdzs9X4cjB7XeS+PMSLWQt1ZjkDSaB3DDWuM1gnzMB+Pnmnm7ihJfnYPSuoeawU
+         3I8nJ2eemM69ITM2kSx8oKP0tbQ/aHHI/rzR6IRWhDw2NV0WZnNGzBJ8fHHXPqt88V2T
+         m04U9nXgyAezqH0WDZWpEz+NAbpDjOd9DdUdtdeLULMaxCQYt8ALoU65+86smJJVDZyx
+         6IJGP2mSpfsbEcR6isJ9p6J7COqMl8xg+/cgvJK97goAskIR9BtEsuGM1aXOqO6r1dzl
+         LyvTMSoBx4F7rW5CxZ6c7cvxYlWTGnjzsH5JMfCoWYUJjgiQDIZzIJXcVwIdy/avzF/h
+         Upsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=SosCmzMOAzq3sQNqHaBOKPaBBSb5+KEm9//w5DzZuIM=;
+        b=os8BxJabWRxKuoHGieooLHMEl/UG2adLuDUj+lmBveDAgyx+PayZUWN3Dsr1qYq3sF
+         RL2wFIq1USPpTZmOD3Lk7SnVGYRFSH01TQ10KiMjksK5iwGAqe88n2e01QFBrOeadQVL
+         +J4JUBIvuNRavvPIoOYmOOZqkMfqH1k2VfWgciU8VefJPUeTO1Yo3vtbihqxL0kvZfMF
+         qFBDDBCsnKZrtkrY7girBpAX3Ht0eDNCU1Vkz2InjyqHxQbaL2kZJ3vQQWWVYSCa7cX/
+         nmawJiYMwEJqwNJenNRt5YkApI3OCWSZQWAhknOqJ07Ol6gUfb+Zu2GOZ4ZuuwhC8TQT
+         gyWg==
+X-Gm-Message-State: AKS2vOw1Z50C6NP+tVuw6W2QKjEgjwasuv/37HbQK+P0swm8SfBrFjF+
+        ldUOYrdtWjOo2g==
+X-Received: by 10.84.216.71 with SMTP id f7mr3601025plj.266.1498145597846;
+        Thu, 22 Jun 2017 08:33:17 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
+        by smtp.gmail.com with ESMTPSA id q68sm5263398pfj.40.2017.06.22.08.33.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 22 Jun 2017 08:33:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 00/28] Create a reference backend for packed refs
+References: <cover.1497534157.git.mhagger@alum.mit.edu>
+        <xmqqzid3stdw.fsf@gitster.mtv.corp.google.com>
+        <xmqqvanrsru4.fsf@gitster.mtv.corp.google.com>
+        <20170619194315.tzdmo7xel2dztoju@sigill.intra.peff.net>
+        <20170619195330.fhjlfiqmcwhgttaa@sigill.intra.peff.net>
+        <05ea33a0-adde-54df-07e8-bdfba9c7d503@alum.mit.edu>
+Date:   Thu, 22 Jun 2017 08:33:15 -0700
+In-Reply-To: <05ea33a0-adde-54df-07e8-bdfba9c7d503@alum.mit.edu> (Michael
+        Haggerty's message of "Thu, 22 Jun 2017 09:36:20 +0200")
+Message-ID: <xmqqwp84kpfo.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87efud7xjd.fsf@kyleam.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 21, 2017 at 07:04:22PM -0400, Kyle Meyer wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> >
-> >> I get the following on 2.11.0:
-> >>
-> >> 2cbfbd5 HEAD@{0}:
-> >> 2cbfbd5 HEAD@{1}: checkout: moving from cPanel to master
-> >> eaf8db2 HEAD@{2}: checkout: moving from master to cPanel
-> >> 2cbfbd5 HEAD@{3}: clone: from https://bmc@git.crustytoothpaste.net/git/bmc/homedir.git
-> >>
-> >> and this on a recent next:
-> >>
-> >> 2cbfbd5 HEAD@{0}: Branch: renamed refs/heads/master to refs/heads/new
-> >>
-> >> For this test, any repo will work; I just picked this one because it had
-> >> two branches I could use to generate dummy reflog entries.
-> >>
-> >> A colleague reported this to me as a bug.  I don't see anything in the
-> >> release notes about this as a desired behavior change, and it does seem
-> >> undesirable to truncate the reflog this way.  If this isn't intentional,
-> >> I'm happy to work up a patch.
-> >
-> > I do not think either behaviour is intentional (old one that gives a
-> > meaningless empty entry probably is probably not what we want, the
-> > new one that truncates is not what we want, either).
-> 
-> Eh, sorry about that.  I haven't dug very deeply, but it seems like the
-> entry is still in .git/logs/HEAD, while "git reflog" is only showing
-> they latest entry.  (Maybe because we stop consuming the entries when we
-> hit a null sha1 in the old id field?)
+> I have prepared a re-roll of the patch series, but I can't submit it
+> until I have Junio's signoff on the test that he suggested [1]. Junio?
 
-Yeah, I think that's it.
-
-I had trouble digging to find the place where this happens, but I
-_think_ it's unintentional, and is an artifact of the way the reflog
-iteration is bolted onto the regular revision machinery. In
-get_revision_1(), we fake the commit parents as if the earlier reflog
-entries formed an actual commit history.
-
-There's some magic in fake_reflog_parent() when we hit an entry with a
-null sha1 in the old-oid field. But it depends on looking at the new-oid
-field of the entry before. And because our entries look like this:
-
-  real_sha1 null_sha1 ...
-  null_sha1 real_sha1 ...
-
-Looking at the prior entry's new-oid field doesn't help at all. And we
-end up claiming that there are no parents, and this is the end of the
-traversal. The patch below makes it work for me by falling back further
-to the previous entry's old oid. This feels like a terrible hack to make
-this case work. I'd think we'd actually want some kind of loop to keep
-looking. After all, what should:
-
-  real_sha1 real_sha1 ...
-  null_sha1 null_sha1 ...
-  null_sha1 real_sha1 ...
-
-show? Surely we should not stop traversing when we hit the double
-null_sha1. We should either display it in some form, or skip it and
-issue a warning that there's a funky entry in your reflog.
-
-This whole fake-parents things does just feel like a gigantic hack,
-though. It seems like we should be able to just walk backwards down the
-reflog list and show the entries. The revision machinery already
-special-cases a bunch of reflog-walk bits; I don't know that adding one
-or two more would be the end of the world.
-
-Another approach entirely would be to stop generating two entries in the
-reflog, and generate a single one:
-
-  real_sha1 real_sha1 ... Rename from "foo" to "bar"
-
-I think we talked about that earlier, but I think the resolution was
-just that doing so was hard with the existing ref-update calls.
-
-diff --git a/reflog-walk.c b/reflog-walk.c
-index ed99437ad..b7e489ad3 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -259,6 +259,8 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
- 		/* a root commit, but there are still more entries to show */
- 		reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
- 		logobj = parse_object(&reflog->noid);
-+		if (!logobj)
-+			logobj = parse_object(&reflog->ooid);
- 	}
- 
- 	if (!logobj || logobj->type != OBJ_COMMIT) {
-
+Sure, and thanks.
