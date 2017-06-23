@@ -2,114 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEA64207D2
-	for <e@80x24.org>; Fri, 23 Jun 2017 22:49:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6950F207D2
+	for <e@80x24.org>; Fri, 23 Jun 2017 22:51:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754058AbdFWWt5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 18:49:57 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:35636 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753306AbdFWWt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 18:49:56 -0400
-Received: by mail-pg0-f47.google.com with SMTP id 132so26474711pgb.2
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 15:49:56 -0700 (PDT)
+        id S1754109AbdFWWvT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 18:51:19 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33662 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753942AbdFWWvS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 18:51:18 -0400
+Received: by mail-pg0-f67.google.com with SMTP id u62so7728804pgb.0
+        for <git@vger.kernel.org>; Fri, 23 Jun 2017 15:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Nb8+fG5aDnDqob2fPj5abvScrBtAUsmz3VeK2YsK+eY=;
-        b=WvCjdRhiSTxZQFW0JLBL3MzVHxktpcI2Jd5JdBIXTNImeWiURxpDpvsluSXQCxsoMz
-         IN+BgioTYaLnhc39RUaOm4/OPNr/wiqf9d9ecrRGWlIv59g3dSdHG/bfHhKMWGOHaT4w
-         qvj1phdp+xs6DZEGfahm0st92scWBSlItAIOvnLE00HAgyGixIQFa2HRCF+I8JcPf+S2
-         QETYiml6evmGbvomKABrP6+Ex4sZorGKBEf8wr27bfTZUKqAPIKcVcHwwTEwPER2dqA9
-         v7J8a68UbwQkALi7pOjQXQxSv6RvkShUqKg6PFnAuM60zVh2DGrTELUuWBHlcGh89TVX
-         iHyw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=/pDAIZ1TgGuFqzWm8qdYGsDELK4vIMh1CuxeSBrZkdE=;
+        b=e1qWCu5+FEzK/NEk1Qo/+pcxo3W6xzf9UdMyHForXFW0tkzvNLsSWhkJjS2nWRFLwV
+         1KMYDxr9OVvVSpmZMbwIQTwYDlCY2KH1W2PQD7G6hFbJqCtuoCtE7cB3jiMUS/VyQrKH
+         J+9BxM7XkCzIQ7xbluGP5CDFQFcKdfQjRgLzCbMVcC37MKG4ZjRHq1ydNbOYO93ax6qs
+         A4HqG5HqLQkEo6Z8WiUIP1YWBF+sl5MgQIYqbQckBrVFFt8Ac+XrUoIXnWG6FtFk4rSZ
+         aGaI/BcjywylU+Pqf2kRN5oLH8YybEpQYGo7DAufYsn61qyQWNVPnavt3IA+ZExmsgVf
+         3DmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Nb8+fG5aDnDqob2fPj5abvScrBtAUsmz3VeK2YsK+eY=;
-        b=tTR/2Al5HvgQawKOBNSQ7HDreY3HPvfea+DAsuRpc9AcnaGvED0w1AMnVBFrNEEmXZ
-         F5NenLgC8V4Pk7AhKc0mTEVb82lU49mX/oTuwAQuntJzysSAWTsD6S3eNmHPTRrJixs9
-         pDH/4CKnevkOh89HW6qiachAFdo6slCBpoaSze56dZDM82Uwl+96d7IialnmnaIdbVoN
-         dBuAdYHgSIpC291H9jqAKllPQSHEih+Xx2wt9La6MelMRQ19diJyc3CrtBSJt+KTUYaR
-         ysggs3NdpEeaea3Vkfm7AxOAN9szwanoCsPqYM+3fJS2yHncHHpNsUeBCMJXk9+sj6fg
-         2e7g==
-X-Gm-Message-State: AKS2vOxX/qYTRNpAYrmnj30ynTFE3C1DskWYgGYexH+TMjJlr4TzS2mn
-        NhJptV/UFkucjN1Zr9z9VUWndCH1CpzvtD2ktA==
-X-Received: by 10.98.49.2 with SMTP id x2mr10406660pfx.48.1498258195395; Fri,
- 23 Jun 2017 15:49:55 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=/pDAIZ1TgGuFqzWm8qdYGsDELK4vIMh1CuxeSBrZkdE=;
+        b=j9SOu5bUrTIpvg4eas8tGtrSWwfmPuPQCBdRvKHLVuSBG0i5EO0nDJuLDJlusL7301
+         4Rvt1mjPhN9uvc69+8tQyvY7aoaqWJuJcovJnFNSjb2S1jzWe5kbDukCjaW728pY9rGx
+         q3evtMbWj0oWV9PfN0zlSiY+leW2ybz+fIJOPqN5CXHARyl9eIZCqorJliZyi1MWTDdA
+         R3JoXejMtNXGbtSeDLzJOW4xoEmX+QGBZ7spLMcdXAdS2tsvfUSV9XPWDNDUdBcjEaRG
+         2/bt1XVM6U4FFV8xaIJtvcpkD1NWpRSJr1fIOKmbdnu1Akwo+p3KyIlBK6LvMDf6WtH1
+         Xvjw==
+X-Gm-Message-State: AKS2vOwBxNwRZcOllkTwlTPKTliRR9rTCB0dDyOWB2cZ+aS1NgOau2Ez
+        wGYzIcHtoDcTmg==
+X-Received: by 10.84.224.134 with SMTP id s6mr11407278plj.263.1498258278013;
+        Fri, 23 Jun 2017 15:51:18 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:4cd0:d6d2:1e09:4052])
+        by smtp.gmail.com with ESMTPSA id c75sm13906120pga.38.2017.06.23.15.51.17
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 23 Jun 2017 15:51:17 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, sbeller@google.com
+Subject: Re: [PATCH] submodule--helper: teach push-check to handle HEAD
+References: <20170623200427.26803-1-bmwill@google.com>
+Date:   Fri, 23 Jun 2017 15:51:16 -0700
+In-Reply-To: <20170623200427.26803-1-bmwill@google.com> (Brandon Williams's
+        message of "Fri, 23 Jun 2017 13:04:27 -0700")
+Message-ID: <xmqqk242b9nf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.161.227 with HTTP; Fri, 23 Jun 2017 15:49:54 -0700 (PDT)
-In-Reply-To: <xmqqo9tebaco.fsf@gitster.mtv.corp.google.com>
-References: <20170623191302.16053-1-sbeller@google.com> <20170623191302.16053-3-sbeller@google.com>
- <xmqqo9tebaco.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 23 Jun 2017 15:49:54 -0700
-Message-ID: <CAGZ79ka+va5bRNQL3x3fvn+738iAfJXJfD2PKpt2hmGEg09mTQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] builtin/fetch: parse recurse-submodules-default at
- default options parsing
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Philip Oakley <philipoakley@iee.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 23, 2017 at 3:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Brandon Williams <bmwill@google.com> writes:
+
+> In 06bf4ad1d (push: propagate remote and refspec with
+> --recurse-submodules) push was taught how to propagate a refspec down to
+> submodules when the '--recurse-submodules' flag is given.  The only refspecs
+> that are allowed to be propagated are ones which name a ref which exists
+> in both the superproject and the submodule, with the caveat that 'HEAD'
+> was disallowed.
 >
->> @@ -1333,10 +1336,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
->>               deepen = 1;
->>
->>       if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
->> -             if (recurse_submodules_default) {
->> -                     int arg = parse_fetch_recurse_submodules_arg("--recurse-submodules-default", recurse_submodules_default);
->> -                     set_config_fetch_recurse_submodules(arg);
->> -             }
->> +             if (recurse_submodules_default != RECURSE_SUBMODULES_DEFAULT)
->> +                     set_config_fetch_recurse_submodules(recurse_submodules_default);
+> This patch teaches push-check (the submodule helper which determines if
+> a refspec can be propagated to a submodule) to permit propagating 'HEAD'
+> if and only if the superproject and the submodule both have the same
+> named branch checked out and the submodule is not in a detached head
+> state.
 >
-> This is not a new thing, and it may not even be a problem, but I
-> have to wonder why this needs to be done conditionally.  "The
-> command line did not explicitly say --no-recurse-submodules, so we
-> would set what came from --recurse-submodule-default if and only if
-> that is given---otherwise we leave it as a compiled-in default" is
-> what the code before or after this patch tells me.  But if we drop
-> the "if (default is not DEFAULT)", the resulting code becomes "The
-> command line did not explicitly say --no-recurse-submodules, so we
-> would set whatever is the default (which may not have been given
-> from the command line, but came built-in to the binary)".  Aren't
-> they saying the same thing?
-
-I assumed so as well, yes. But the test suite pointed out there
-is another subtlety going on, which I have not dug into, yet.
-
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  builtin/submodule--helper.c    | 57 +++++++++++++++++++++++++++++++-----------
+>  submodule.c                    | 18 ++++++++++---
+>  t/t5531-deep-submodule-push.sh | 25 +++++++++++++++++-
+>  3 files changed, 82 insertions(+), 18 deletions(-)
 >
-> It's not like there is a configuration knob that further interferes
-> the interaction between these two.  I am puzzled.
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 1b4d2b346..fd5020036 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1107,24 +1107,41 @@ static int resolve_remote_submodule_branch(int argc, const char **argv,
+>  static int push_check(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct remote *remote;
+> +	const char *superproject_head;
+> +	char *head;
+> +	int detached_head = 0;
+> +	struct object_id head_oid;
+>  
+> -	if (argc < 2)
+> -		die("submodule--helper push-check requires at least 1 argument");
+> +	if (argc < 3)
+> +		die("submodule--helper push-check requires at least 2 argument");
 
-As far as I suspect, the original author considered
-evaluating the additional config too expensive.
+"arguments"?
 
-    gitmodules_config(); // <- this specifically?
-    git_config(submodule_config, NULL);
+> +
+> +	/*
+> +	 * superproject's resolved head ref.
+> +	 * if HEAD then the superproject is in a detached head state, otherwise
+> +	 * it will be the resolved head ref.
+> +	 */
+> +	superproject_head = argv[1];
 
-And that is why we only react if any switch is
-given to recurse. Before be254a0ea9 (Add the
-'fetch.recurseSubmodules' config setting, 2010-11-11)
-we would not load the config unless the user
-asked for submodule action.
+The above makes it sound like the caller gives either "HEAD" (when
+detached) or "refs/heads/branch" (when on 'branch') in argv[1] and
+you are stashing it away, but ...
 
-Then with the config switch we *had* to load the config
-(both .gitmodules as well as .git/config), so at that commit
-it would have made sense to inline this into the regular config
-and command line argument parsing.
+> +	/* Get the submodule's head ref and determine if it is detached */
+> +	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
+> +	if (!head)
+> +		die(_("Failed to resolve HEAD as a valid ref."));
+> +	if (!strcmp(head, "HEAD"))
+> +		detached_head = 1;
+
+... the work to see which branch we are on and if we are detached is
+done by this code without consulting argv[1].  I cannot tell what is
+going on.  Is argv[1] assigned to superproject_head a red herring?
+
+>  	/*
+>  	 * The remote must be configured.
+>  	 * This is to avoid pushing to the exact same URL as the parent.
+>  	 */
+> -	remote = pushremote_get(argv[1]);
+> +	remote = pushremote_get(argv[2]);
+>  	if (!remote || remote->origin == REMOTE_UNCONFIGURED)
+> -		die("remote '%s' not configured", argv[1]);
+> +		die("remote '%s' not configured", argv[2]);
+>  
+>  	/* Check the refspec */
+> -	if (argc > 2) {
+> -		int i, refspec_nr = argc - 2;
+> +	if (argc > 3) {
+> +		int i, refspec_nr = argc - 3;
+>  		struct ref *local_refs = get_local_heads();
+>  		struct refspec *refspec = parse_push_refspec(refspec_nr,
+> -							     argv + 2);
+> +							     argv + 3);
+
+If you have no need for argv[1] (and you don't, as you have stashed
+it away in superproject_head), it may be less damage to the code if
+you shifted argv upfront after grabbing superproject_head.
+
+>  		for (i = 0; i < refspec_nr; i++) {
+>  			struct refspec *rs = refspec + i;
+> @@ -1132,18 +1149,30 @@ static int push_check(int argc, const char **argv, const char *prefix)
+>  			if (rs->pattern || rs->matching)
+>  				continue;
+>  
+> -			/*
+> -			 * LHS must match a single ref
+> -			 * NEEDSWORK: add logic to special case 'HEAD' once
+> -			 * working with submodules in a detached head state
+> -			 * ceases to be the norm.
+> -			 */
+> -			if (count_refspec_match(rs->src, local_refs, NULL) != 1)
+> +			/* LHS must match a single ref */
+> +			switch(count_refspec_match(rs->src, local_refs, NULL)) {
+
+"switch (count..."
+
+> +			case 1:
+> +				break;
+> +			case 0:
+> +				/*
+> +				 * If LHS matches 'HEAD' then we need to ensure
+> +				 * that it matches the same named branch
+> +				 * checked out in the superproject.
+> +				 */
+> +				if (!strcmp(rs->src, "HEAD")) {
+> +					if (!detached_head &&
+> +					    !strcmp(head, superproject_head))
+> +						break;
+> +					die("HEAD does not match the named branch in the superproject");
+> +				}
+
+Hmph, so earlier people can "push --recurse-submodules HEAD:$dest"
+and $dest can be anything, but now we are tightening the rule?
+
+> +			default:
+>  				die("src refspec '%s' must name a ref",
+>  				    rs->src);
+> +			}
+>  		}
+>  		free_refspec(refspec_nr, refspec);
+>  	}
+> +	free(head);
+>  
+>  	return 0;
+>  }
