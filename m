@@ -2,92 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,T_DKIM_INVALID,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20A1A2082E
-	for <e@80x24.org>; Fri, 23 Jun 2017 03:13:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5495E2082E
+	for <e@80x24.org>; Fri, 23 Jun 2017 04:09:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754091AbdFWDNS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 23:13:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49942 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753925AbdFWDNR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 23:13:17 -0400
-Received: (qmail 13476 invoked by uid 109); 23 Jun 2017 03:13:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 23 Jun 2017 03:13:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9660 invoked by uid 111); 23 Jun 2017 03:13:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 22 Jun 2017 23:13:22 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Jun 2017 23:13:15 -0400
-Date:   Thu, 22 Jun 2017 23:13:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kyle Meyer <kyle@kyleam.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
-Subject: Re: Truncating HEAD reflog on branch move
-Message-ID: <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
-References: <xmqqpodxm2t8.fsf@gitster.mtv.corp.google.com>
- <87efud7xjd.fsf@kyleam.com>
- <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net>
- <xmqqziczkh4k.fsf@gitster.mtv.corp.google.com>
- <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
- <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
- <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
- <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
- <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
- <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
+        id S1751231AbdFWEJo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 00:09:44 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:36153 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751077AbdFWEJn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 00:09:43 -0400
+Received: by mail-pf0-f177.google.com with SMTP id q86so18183467pfl.3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 21:09:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=EjHl6AbmJMdVRTLIHliF0s2ZQKgfujDS2CyCRmptt7U=;
+        b=EATibcYPHdxTAe0lbMrz4NWnpOXaSouU1Y24fr+8LqaZ4tEoW76qYVQTpTp5lp6EgK
+         DWnHwY8HCTVqrucYIBTRdh6EOLPWnuSlwA9spgTmin+40nNKPcdvwarMpqQOxOFxsHpA
+         eZBXBwsfzwFYbAK9alj4tqQCx2joMqM3cUgf09l0uFcJtKq8r3fMo9zCITKeYoRnkxc3
+         j6R4lPbeqA0koHbR8zGq9ACV9EuI024BPDYbYb7Vl60rMa24NRyTmaau06PDaU78K7c/
+         l1SLiqtO5JdKABK/aPaKCJd++XkYqJvHZ//fhd3eURMaKado/WWZb8AzISE1vWQFaJ74
+         IZ8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=EjHl6AbmJMdVRTLIHliF0s2ZQKgfujDS2CyCRmptt7U=;
+        b=OAGVNDAYatGzaAl2NYBC8muxHdqjDmDDQdUO+G5ciYLploEj2LpS27hKlXzlWN99ej
+         aDbrQ2j7XHF6jDldd1WQOk/DctA+qgklFc5T5YFLf2eW4hhxTd0bCaQFG4LRPZeJPXd5
+         fFfBR5ZWLtaiHlpiNWGB4rlWDCQm5gKFT3oK/C1Q6C1OpYG07+iS9pxUDlvZ2T6hXB94
+         C3qULW11wmYcp+XgYZbCT3+/BNfmwnD7AC2Bd6D34Wgf6F93TTeXIBs7EXN3oVyipqmh
+         WoMQEMGNR4oMo2Y3Bn40fobxeKGnKHGpNBgk4Ow1Pd80kev5NdNovBXr3BZ3gNcgnfFf
+         XVTQ==
+X-Gm-Message-State: AKS2vOwORWoBAmjVDluPAMNmZ/sg1XsqdAdq9tr/mXWDQRl5lVEUJwkU
+        BEJLwlXOpWrOQA==
+X-Received: by 10.99.104.136 with SMTP id d130mr6011822pgc.236.1498190982391;
+        Thu, 22 Jun 2017 21:09:42 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
+        by smtp.gmail.com with ESMTPSA id s64sm7766655pfd.77.2017.06.22.21.09.40
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 22 Jun 2017 21:09:41 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Xie <emilyxxie@gmail.com>
+Cc:     git@vger.kernel.org, David Turner <novalis@novalis.org>
+Subject: Re: [PATCH] pathspec: die on empty strings as pathspec
+References: <20170607033308.33550-1-emilyxxie@gmail.com>
+        <xmqqfuf82xr5.fsf@gitster.mtv.corp.google.com>
+        <CAAin2ARfUCYM95L_k3fSQ--reQD3uMG72ah=Xg1xvvgKcU+QkQ@mail.gmail.com>
+Date:   Thu, 22 Jun 2017 21:09:40 -0700
+In-Reply-To: <CAAin2ARfUCYM95L_k3fSQ--reQD3uMG72ah=Xg1xvvgKcU+QkQ@mail.gmail.com>
+        (Emily Xie's message of "Thu, 22 Jun 2017 22:34:31 -0400")
+Message-ID: <xmqqefubgxa3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 22, 2017 at 06:25:46PM -0400, Jeff King wrote:
+Emily Xie <emilyxxie@gmail.com> writes:
 
-> So here's a patch on top of what I posted before that pushes the reflog
-> check into the loop (it just decides whether to pull from the reflogs or
-> from the commit queue at the top of the loop).
-> 
-> I was surprised to find, though, that simplify_commit() does not
-> actually do the pathspec limiting! It's done by
-> try_to_simplify_commit(), which is part of add_parents_to_list(). I
-> hacked around it in the later part of the loop by calling
-> try_to_simplify myself and checking the TREESAME flag. But I have a
-> feeling I'm missing something about how the traversal is supposed to
-> work.
-> 
-> This does behave sensibly with "--no-merges" and "--merges", as well as
-> pathspec limiting.
+> I ran the tests and none of them failed. 
 
-And here's one more patch on top of those that's necessary to get the
-tests to pass (I don't expect anybody to necessarily be applying this
-slow string of patches; it's just to show the direction I'm looking in).
+This is not about a test you touched, but applied to or merged to
+any of the recent integration branches (like 'master' or 'maint')
 
----
- builtin/log.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+    $ make
+    $ cd t
+    $ GIT_TEST_LONG=YesPlease sh ./t0027-*.sh
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 998437b23..512538479 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -373,9 +373,9 @@ static int cmd_log_walk(struct rev_info *rev)
- 		if (!rev->reflog_info) {
- 			/* we allow cycles in reflog ancestry */
- 			free_commit_buffer(commit);
-+			free_commit_list(commit->parents);
-+			commit->parents = NULL;
- 		}
--		free_commit_list(commit->parents);
--		commit->parents = NULL;
- 		if (saved_nrl < rev->diffopt.needed_rename_limit)
- 			saved_nrl = rev->diffopt.needed_rename_limit;
- 		if (rev->diffopt.degraded_cc_to_c)
+fails at the very beginning.  I do not know if 0027 is the only one
+that triggers this failure, though.
+
+THanks.
+
