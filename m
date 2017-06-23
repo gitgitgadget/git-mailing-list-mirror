@@ -2,169 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1B51207D2
-	for <e@80x24.org>; Fri, 23 Jun 2017 21:43:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C38BC207D2
+	for <e@80x24.org>; Fri, 23 Jun 2017 21:47:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753942AbdFWVnq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 17:43:46 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:35249 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752170AbdFWVnp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 17:43:45 -0400
-Received: by mail-wr0-f193.google.com with SMTP id z45so15563388wrb.2
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 14:43:45 -0700 (PDT)
+        id S1754723AbdFWVrP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 17:47:15 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34328 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754600AbdFWVrO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 17:47:14 -0400
+Received: by mail-pg0-f67.google.com with SMTP id j186so7585080pge.1
+        for <git@vger.kernel.org>; Fri, 23 Jun 2017 14:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=+YB2oDM3tPZ6vVYMOmqnLOI7tiy/aH87L+8Hl5W8/C8=;
-        b=pd2NnYGUSOnvoySxvYYTwjC8lrymTGhmYH/TGYdAW/gyrDBfXXRZm34eq3tO8fC7wX
-         nWCayB7PpN766U6pBb4NPkTbDL4MMBz40QlzFXEu59Juz94aDvNDN+w/v0pYhBTctxUF
-         Y/o6rCobZJo3pXuzDe4KaRF6tdczv6IHZHiVZCMdS1CA0cdTXTpHMKGWgHie0w2jf0Yh
-         UqkrFHOAeVtJsE0oGIz9dkp7Lpkv7Pes6iLYeJKiVTNyYUbdLceZ7rVJiYKl+oaUTIFN
-         FOWsupgEWSJbs3um1nlHDuvrvYnvpkLz1CiX4S7aSHWPqj00BFcuhzBXVZbdAxL7hIgH
-         Je1A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ckD7BJ5kZDn5HfzHBvVF8gH6CA2yBWES7EuAKfEhlCA=;
+        b=JELgI5YJy5bcg1WQAvsQLLKMK4g7j4iR+8ZmP/pCJpzRG7A+N8ANEQhDfPgU4Ih7hM
+         nuFaYf+g5nOgM3pbRBgbtxSmwnu3P01EJgNuIyHBzvMrr5+i/az3zUlrcnO+nL9XePJf
+         htsftZuhcIh/vf09vk7TdOmiUsJgdO4BLBbg+jonu6or1sZSvu3hsSeGJj+FvcFSUTv+
+         9NnFBRybT3RHfhwy5bNa+3N3uzHizTknyALxsRaudxEK3sA/HkdY2TJtdQq1qDc5p4h7
+         cwuhLJ0kZefAKyA5rFs73NdpaI0Aoqo64fGp0Qk4iFQU56tpf7xH55J/WItwXq2Oy/BT
+         tCPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=+YB2oDM3tPZ6vVYMOmqnLOI7tiy/aH87L+8Hl5W8/C8=;
-        b=TbAtY0ImIQMgOLCCO7UMYzc1t8DRjMs8YFtJXh9Ddg01HJOnfH29lxr5B83EnkFo8M
-         ZBF3TLOsLXwr9T4GIcnewWHRpq79wl9sGninFXMjgTXfPEgnRMjSdjqh1sg4ZxguYUeT
-         4DiUh4AE+KbooJuu6NWv972+6AUxCRe4UI5CP/xSve33GumNSKPq+shiy2hxpap1ACaA
-         Wa+o2qvOkn1V8FynbB+mr5uXOs5ERGQ872DTOFhacbbzFv2N7I6XQ/UFevBcPnLQxlNq
-         QV6z/Kb4uCt8w9OwNLuEDhyAnnefyMIRBNyFVtfZfHHigU0p6skqiBIZF+Tj3OMREPgm
-         Z9+w==
-X-Gm-Message-State: AKS2vOzIJH/cd0ezS6wUnbzBooL1LWn9JKBWtY8Y07MJpFv9qeTGDSt4
-        9b/iKJKwf/kP8nJT0j0=
-X-Received: by 10.80.131.133 with SMTP id 5mr7296000edi.14.1498254223833;
-        Fri, 23 Jun 2017 14:43:43 -0700 (PDT)
-Received: from snth (g74110.upc-g.chello.nl. [80.57.74.110])
-        by smtp.gmail.com with ESMTPSA id d56sm3073289ede.42.2017.06.23.14.43.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 Jun 2017 14:43:42 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dOWMf-0004nt-J8; Fri, 23 Jun 2017 23:43:41 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-Subject: Re: [showing-off RFC/PATCH 26/26] diff.c: have a "machine parseable" move coloring
-References: <CAGZ79kaqjQYmkt77kk5m=fdBfbZAvwd0YhhT7=O5b-FkQmDfHg@mail.gmail.com> <20170620024816.20021-1-sbeller@google.com> <20170620024816.20021-27-sbeller@google.com> <CAGZ79kYLdpaXzn0T5547fRr=EPR691n2bPfS+mzaZuS-k39ayw@mail.gmail.com>
-User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <CAGZ79kYLdpaXzn0T5547fRr=EPR691n2bPfS+mzaZuS-k39ayw@mail.gmail.com>
-Date:   Fri, 23 Jun 2017 23:43:41 +0200
-Message-ID: <8737aqjs6q.fsf@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ckD7BJ5kZDn5HfzHBvVF8gH6CA2yBWES7EuAKfEhlCA=;
+        b=h8nSvHbR5aqwY7dr5vgIANuRfzdBAQn/qbCpdrWgK4HOSmHHGWd8sB2DwebrelXxzV
+         6hspSpy2bvJtJWAVVyrZ6g7gJBOZUDWQffcIwCps5RzOsf2NcO2O6jGlf/KjMKEcpK5X
+         eiyCNUUh+kHwW2gSHHz/qJSnCWNHh8aIPMiu4vKg3y6ioN7vE7A35HxMjRQ+hbSE/mX8
+         IdEghKEs6gA0PU9CuXIianWzKG1nt2LS/gknv2UDy/6GSeViECNq7cySj+PLXOrdCapO
+         ATBOyR0G+yjk3g3bszRdo/OBX0wlDJ6AejUeuA7UgNJyGVO5KDnhMw//xvGCUvmuu2Gj
+         0wCQ==
+X-Gm-Message-State: AKS2vOzudEUq63vE6TwnPD0rDLkDF/B4n43zpsL7YpgeE2Z5y/b3jtvw
+        Zo66F+PTRAf9EA==
+X-Received: by 10.84.218.198 with SMTP id g6mr11121997plm.132.1498254428357;
+        Fri, 23 Jun 2017 14:47:08 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:4cd0:d6d2:1e09:4052])
+        by smtp.gmail.com with ESMTPSA id x3sm13101463pgx.29.2017.06.23.14.47.02
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 23 Jun 2017 14:47:02 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        =?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 00/29] Create a reference backend for packed refs
+References: <cover.1498200513.git.mhagger@alum.mit.edu>
+        <20170623190159.5ct2mgjcm6vuulz6@sigill.intra.peff.net>
+        <20170623200024.amgced62hue2iffj@sigill.intra.peff.net>
+Date:   Fri, 23 Jun 2017 14:47:01 -0700
+In-Reply-To: <20170623200024.amgced62hue2iffj@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 23 Jun 2017 16:00:24 -0400")
+Message-ID: <xmqqefuacr6y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-On Tue, Jun 20 2017, Stefan Beller jotted:
+> On Fri, Jun 23, 2017 at 03:01:59PM -0400, Jeff King wrote:
+>
+>> On Fri, Jun 23, 2017 at 09:01:18AM +0200, Michael Haggerty wrote:
+>> 
+>> > * Change patch 17 "packed_ref_store: support iteration" to always
+>> >   iterate over the packed refs using `DO_FOR_EACH_INCLUDE_BROKEN`.
+>> >   This switches off the check in the packed-ref iterator of whether a
+>> >   reference is broken. This is now checked only in
+>> >   `files_ref_iterator_advance()`, after the packed and loose
+>> >   references have been merged together. It also saves some work.
+>> 
+>> I'm curious why you prefer this solution to just removing the code
+>> entirely. Wouldn't it be an error to call the packed ref iterator
+>> without INCLUDE_BROKEN? The "entries may not be valid" thing is a
+>> property of the packed-refs concept itself, not a particular caller's
+>> view of it.
+>
+> Speculating on my own question. I guess it would prepare us for a day
+> when a possible ref store is to use a packed-refs _without_ loose refs.
+> IOW, the property is defined on packed-refs today, but a possible future
+> direction would be to use it by itself. But maybe I'm just making things
+> up.
 
-> + Ævar, who was not part of the email where I copied all recipients
-> from for this series.
+OK.  In other words, it's not a packed-refs's characteristics that
+cruft are allowed.  It's that a ref storage that is implemented as
+an overlay of one storage (which happens to be the loose one) on top
+of another (which happens to be the packed refs file) allows the
+latter one to have cruft if (and only if) that broken one is covered
+by the former one.
 
-I played around with this a bit, it would be great to have something
-like this on top of --color-moved eventually. It's a lot easier to /^_
-in a pager than looking for color codes.
+> At any rate, I've read through the whole series and dropped a few
+> comments in there. Overall it looks good. If I had one complaint, it's
+> that the individual commits all look obviously correct but it is hard to
+> judge whether the bigger steps they are taking are the right thing. I
+> mostly have faith in you, as I know that your end goal is a good one,
+> and that you're very familiar with this code.  But just something I
+> noticed while reviewing.
 
-Of course it's diff-incompatible output, but it's fair enough to have
-that hidden behind some option IMO.
-
-> On Mon, Jun 19, 2017 at 7:48 PM, Stefan Beller <sbeller@google.com> wrote:
->> Ævar asked for it, this is how you would do it.
->> (plus documentation, tests, CLI knobs, options)
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  diff.c | 15 +++++++++++----
->>  diff.h |  2 ++
->>  2 files changed, 13 insertions(+), 4 deletions(-)
->>
->> diff --git a/diff.c b/diff.c
->> index 7756f7610c..61caa057ff 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -997,6 +997,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->>         static const char *nneof = " No newline at end of file\n";
->>         const char *context, *reset, *set, *meta, *fraginfo;
->>         struct strbuf sb = STRBUF_INIT;
->> +       int sign;
->>
->>         enum diff_symbol s = eds->s;
->>         const char *line = eds->line;
->> @@ -1058,8 +1059,11 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->>                 default:
->>                         set = diff_get_color_opt(o, DIFF_FILE_NEW);
->>                 }
->> +               sign = '+';
->> +               if (flags & DIFF_SYMBOL_MOVED_LINE && o->machine_readable_moves)
->> +                       sign = '*';
->>                 reset = diff_get_color_opt(o, DIFF_RESET);
->> -               emit_line_ws_markup(o, set, reset, line, len, '+',
->> +               emit_line_ws_markup(o, set, reset, line, len, sign,
->>                                     flags & DIFF_SYMBOL_CONTENT_WS_MASK,
->>                                     flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
->>                 break;
->> @@ -1086,8 +1090,11 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->>                 default:
->>                         set = diff_get_color_opt(o, DIFF_FILE_OLD);
->>                 }
->> +               sign = '-';
->> +               if (flags & DIFF_SYMBOL_MOVED_LINE && o->machine_readable_moves)
->> +                       sign = '_';
->>                 reset = diff_get_color_opt(o, DIFF_RESET);
->> -               emit_line_ws_markup(o, set, reset, line, len, '-',
->> +               emit_line_ws_markup(o, set, reset, line, len, sign,
->>                                     flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
->>                 break;
->>         case DIFF_SYMBOL_WORDS_PORCELAIN:
->> @@ -5475,7 +5482,7 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
->>         static struct emitted_diff_symbols esm = EMITTED_DIFF_SYMBOLS_INIT;
->>         struct diff_queue_struct *q = &diff_queued_diff;
->>
->> -       if (o->color_moved)
->> +       if (o->color_moved || o->machine_readable_moves)
->>                 o->emitted_symbols = &esm;
->>
->>         for (i = 0; i < q->nr; i++) {
->> @@ -5485,7 +5492,7 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
->>         }
->>
->>         if (o->emitted_symbols) {
->> -               if (o->color_moved) {
->> +               if (o->color_moved || o->machine_readable_moves) {
->>                         struct hashmap add_lines, del_lines;
->>                         unsigned ignore_ws = DIFF_XDL_TST(o, IGNORE_WHITESPACE);
->>
->> diff --git a/diff.h b/diff.h
->> index 98abd75521..b6c4d7ab0f 100644
->> --- a/diff.h
->> +++ b/diff.h
->> @@ -194,6 +194,8 @@ struct diff_options {
->>                 COLOR_MOVED_ZEBRA = 2,
->>                 COLOR_MOVED_ZEBRA_DIM = 3,
->>         } color_moved;
->> +
->> +       int machine_readable_moves;
->>  };
->>
->>  void diff_emit_submodule_del(struct diff_options *o, const char *line);
->> --
->> 2.12.2.575.gb14f27f917
->>
+Thanks.
