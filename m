@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7581D20831
-	for <e@80x24.org>; Fri, 23 Jun 2017 19:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B90F620831
+	for <e@80x24.org>; Fri, 23 Jun 2017 19:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754796AbdFWTNP (ORCPT <rfc822;e@80x24.org>);
+        id S1754804AbdFWTNQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 15:13:16 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:36838 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754777AbdFWTNP (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 23 Jun 2017 15:13:15 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:36835 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754327AbdFWTNN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 15:13:13 -0400
-Received: by mail-pf0-f169.google.com with SMTP id q86so27401769pfl.3
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 12:13:13 -0700 (PDT)
+Received: by mail-pf0-f182.google.com with SMTP id q86so27401956pfl.3
+        for <git@vger.kernel.org>; Fri, 23 Jun 2017 12:13:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LhSiepeUHOfSoghtXMW/KUB4m1vUAw6Ju/gNeLTP7l4=;
-        b=tQHB1K/5Sr6bWCBojjFYp7ZWXICEINlk85qOfjd9lxC+NkBRQAHvI6dWyXL5KQyUsd
-         CaoQQXSxTGZ9T4vVYkSn7zjohXDxJd99zF15TPEMAVTG+cE/5cZU+XchNzHQQvVgdVxB
-         Er/KyCW/Si/CMes0s4+HeRQeQ1yZFxhvNiqkHolABmtMdM++aPktm+gg3UyrNyjFKxQi
-         bOhTXIuYW9bv06032tBVHzLgjahc+JgYZ5uPjxgMpdihwas1BT+AbgfHth/qs4aDi+hi
-         cFcMkXpNsDWo9LGTrEAAtmuvd4jJgc5eR4DLErSUuTYhki+CoEQwOtFZK79gfKVisc2U
-         ihiQ==
+        bh=VTcwQ/rzMMq4sWRHB4O3wWw646XifFlY/NDRvrL4/Yk=;
+        b=h9q6bw3x8KSz9nn6Cd9a+WSCSO5XKriO0xbmIAn1u71kNOf84Adq0EH5QkT3zX85LB
+         +awNVXVNbs5eeOiPcQ1AkLfAqB4vfDB8iz7/0HAK3cqojFKY9Nz0SDL4bGZZz3+rpYa9
+         4KHcTNrkJ81fJKsftR5ukHh3clW6yOzShp1HfJcMpbqj1SyfOwhakY+cwXwo5NqTTqLm
+         lUICRaUeS+X0p1LexEKTHHTu2VnXO9usvSVqA/QHkj7vF0W7Eo0Hg1Xz8iSrQY99ubIr
+         soeTIXl0eeA/w9AWw4RFOTwj396z0NfzL0MSQJeF7m9/96/JW0PqjFRrRbnJa/HSasbG
+         0Srw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LhSiepeUHOfSoghtXMW/KUB4m1vUAw6Ju/gNeLTP7l4=;
-        b=rHhYlNWEhDIvQ4GeVovmgabm0YMykTef2v1ERI4V1xSaRn67/NP7CFFH+Ja5YiRha+
-         DTLPmxRk+V6iJE8HXd1WtoXsqOFMQb95c8eXHoiC9M9vaXLLdJnR8dYJHcW/cfe0PNnx
-         s4P/Vh75mvQP5I/QnmHmAKP9Jue+4Z7gbObZq1OKyobAnmR8Wwx3HabHAFxPI6miLLWz
-         4F8GfJmMG4PqWA1WrDQ/NmfPfA1/tKLgfAqEzqBuytofnpHqA2UmEkPJ/m+B/MHo2LhJ
-         iFjmkcw69MLhEy3vTUCH/p0kkVnbv+9QTzs7O4zRngklAsIDc39tdM+DVwBOrJ505Vh7
-         eD7w==
-X-Gm-Message-State: AKS2vOyAKatp/i8nz42hJdBmR9ogO56HebJFAYe2sOpk3kuVwqwMmaGM
-        p5bBE8ov/JgSRAiB
-X-Received: by 10.101.88.130 with SMTP id d2mr9735137pgu.58.1498245193054;
-        Fri, 23 Jun 2017 12:13:13 -0700 (PDT)
+        bh=VTcwQ/rzMMq4sWRHB4O3wWw646XifFlY/NDRvrL4/Yk=;
+        b=Ke3SXPpWH6q8oiRuagboOv5aB8C2n7vrShpnQhCPgYjwuGYJZdVE/eTIbTY8s2jDQe
+         9rSBDuf2MDNZ5s2vMKCxieo0j+uYkVT6Vf8ONViFujaNNFTy3VhghhPm9m2MxVv+sHe9
+         Z0ZeaaXsTebyiWojqTtZ80Us7dUD0/de1Xx9AlXvwK67NuVTY7bBJvwENo5y9U+JTlHQ
+         uzqCp7L6vAnEprfcQzmOU/3JMEC8cDMjcoFCMMxmQqOEDdUk2E+yXpbCqe4k9uWaCFeN
+         8HrjpfbpMxhw0/jbm0ydjguqMxcm1hIMUo3N9HLC1k9JYohQRowfh5xZPKGTZW195v96
+         0lvw==
+X-Gm-Message-State: AKS2vOzn6ONPZPkIeYciCHXHZWUSUBF947wGvTlBd2AxJbu9A5lT6d2e
+        wraz7lI1Cc4UMFj+
+X-Received: by 10.84.229.6 with SMTP id b6mr10511377plk.247.1498245194281;
+        Fri, 23 Jun 2017 12:13:14 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:1530:f035:a8be:c887])
-        by smtp.gmail.com with ESMTPSA id n71sm12230691pfg.46.2017.06.23.12.13.12
+        by smtp.gmail.com with ESMTPSA id x3sm12759094pgx.29.2017.06.23.12.13.13
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 23 Jun 2017 12:13:12 -0700 (PDT)
+        Fri, 23 Jun 2017 12:13:13 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     bmwill@google.com
 Cc:     git@vger.kernel.org, jrnieder@gmail.com, gitster@pobox.com,
         philipoakley@iee.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/3] builtin/fetch: factor submodule recurse parsing out to submodule config
-Date:   Fri, 23 Jun 2017 12:13:00 -0700
-Message-Id: <20170623191302.16053-2-sbeller@google.com>
+Subject: [PATCH 2/3] builtin/fetch: parse recurse-submodules-default at default options parsing
+Date:   Fri, 23 Jun 2017 12:13:01 -0700
+Message-Id: <20170623191302.16053-3-sbeller@google.com>
 X-Mailer: git-send-email 2.12.2.575.gb14f27f917
 In-Reply-To: <20170623191302.16053-1-sbeller@google.com>
 References: <20170623191302.16053-1-sbeller@google.com>
@@ -61,106 +61,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Later we want to access this parsing in builtin/pull as well.
+Instead of just storing the string and then later calling our own
+parsing function 'parse_fetch_recurse_submodules_arg', make use of the
+function callback 'option_fetch_parse_recurse_submodules' that was
+introduced in the last patch. Also move all submodule recursing variables
+in one spot at the top of the file.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/fetch.c    | 18 ++----------------
- submodule-config.c | 22 ++++++++++++++++++++++
- submodule-config.h |  3 +++
- 3 files changed, 27 insertions(+), 16 deletions(-)
+ builtin/fetch.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 100248c5af..9d58dc0a8a 100644
+index 9d58dc0a8a..3cca568173 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -53,20 +53,6 @@ static int shown_url = 0;
+@@ -36,7 +36,7 @@ static int prune = -1; /* unspecified */
+ #define PRUNE_BY_DEFAULT 0 /* do we prune by default? */
+ 
+ static int all, append, dry_run, force, keep, multiple, update_head_ok, verbosity, deepen_relative;
+-static int progress = -1, recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
++static int progress = -1;
+ static int tags = TAGS_DEFAULT, unshallow, update_shallow, deepen;
+ static int max_children = -1;
+ static enum transport_family family;
+@@ -48,7 +48,8 @@ static struct strbuf default_rla = STRBUF_INIT;
+ static struct transport *gtransport;
+ static struct transport *gsecondary;
+ static const char *submodule_prefix = "";
+-static const char *recurse_submodules_default;
++static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
++static int recurse_submodules_default = RECURSE_SUBMODULES_DEFAULT;
+ static int shown_url = 0;
  static int refmap_alloc, refmap_nr;
  static const char **refmap_array;
+@@ -123,9 +124,11 @@ static struct option builtin_fetch_options[] = {
+ 		   PARSE_OPT_NONEG | PARSE_OPT_NOARG, NULL, 1 },
+ 	{ OPTION_STRING, 0, "submodule-prefix", &submodule_prefix, N_("dir"),
+ 		   N_("prepend this to submodule path output"), PARSE_OPT_HIDDEN },
+-	{ OPTION_STRING, 0, "recurse-submodules-default",
+-		   &recurse_submodules_default, NULL,
+-		   N_("default mode for recursion"), PARSE_OPT_HIDDEN },
++	{ OPTION_CALLBACK, 0, "recurse-submodules-default",
++		   &recurse_submodules_default, N_("on-demand"),
++		   N_("default for recursive fetching of submodules "
++		      "(lower priority than config files)"),
++		   PARSE_OPT_HIDDEN, option_fetch_parse_recurse_submodules },
+ 	OPT_BOOL(0, "update-shallow", &update_shallow,
+ 		 N_("accept refs that update .git/shallow")),
+ 	{ OPTION_CALLBACK, 0, "refmap", NULL, N_("refmap"),
+@@ -1333,10 +1336,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		deepen = 1;
  
--static int option_parse_recurse_submodules(const struct option *opt,
--				   const char *arg, int unset)
--{
--	if (unset) {
--		recurse_submodules = RECURSE_SUBMODULES_OFF;
--	} else {
--		if (arg)
--			recurse_submodules = parse_fetch_recurse_submodules_arg(opt->long_name, arg);
--		else
--			recurse_submodules = RECURSE_SUBMODULES_ON;
--	}
--	return 0;
--}
--
- static int git_fetch_config(const char *k, const char *v, void *cb)
- {
- 	if (!strcmp(k, "fetch.prune")) {
-@@ -115,9 +101,9 @@ static struct option builtin_fetch_options[] = {
- 		    N_("number of submodules fetched in parallel")),
- 	OPT_BOOL('p', "prune", &prune,
- 		 N_("prune remote-tracking branches no longer on remote")),
--	{ OPTION_CALLBACK, 0, "recurse-submodules", NULL, N_("on-demand"),
-+	{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, N_("on-demand"),
- 		    N_("control recursive fetching of submodules"),
--		    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
-+		    PARSE_OPT_OPTARG, option_fetch_parse_recurse_submodules },
- 	OPT_BOOL(0, "dry-run", &dry_run,
- 		 N_("dry run")),
- 	OPT_BOOL('k', "keep", &keep, N_("keep downloaded pack")),
-diff --git a/submodule-config.c b/submodule-config.c
-index 4f58491ddb..265d036095 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -2,6 +2,7 @@
- #include "submodule-config.h"
- #include "submodule.h"
- #include "strbuf.h"
-+#include "parse-options.h"
- 
- /*
-  * submodule cache lookup structure
-@@ -234,6 +235,27 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
- 	return parse_fetch_recurse(opt, arg, 1);
- }
- 
-+int option_fetch_parse_recurse_submodules(const struct option *opt,
-+					  const char *arg, int unset)
-+{
-+	int *v;
-+
-+	if (!opt->value)
-+		return -1;
-+
-+	v = opt->value;
-+
-+	if (unset) {
-+		*v = RECURSE_SUBMODULES_OFF;
-+	} else {
-+		if (arg)
-+			*v = parse_fetch_recurse_submodules_arg(opt->long_name, arg);
-+		else
-+			*v = RECURSE_SUBMODULES_ON;
-+	}
-+	return 0;
-+}
-+
- static int parse_update_recurse(const char *opt, const char *arg,
- 				int die_on_error)
- {
-diff --git a/submodule-config.h b/submodule-config.h
-index d434ecdb45..1076a68653 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -23,6 +23,9 @@ struct submodule {
- };
- 
- extern int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
-+struct option;
-+extern int option_fetch_parse_recurse_submodules(const struct option *opt,
-+						 const char *arg, int unset);
- extern int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
- extern int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
- extern int parse_submodule_config_option(const char *var, const char *value);
+ 	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
+-		if (recurse_submodules_default) {
+-			int arg = parse_fetch_recurse_submodules_arg("--recurse-submodules-default", recurse_submodules_default);
+-			set_config_fetch_recurse_submodules(arg);
+-		}
++		if (recurse_submodules_default != RECURSE_SUBMODULES_DEFAULT)
++			set_config_fetch_recurse_submodules(recurse_submodules_default);
+ 		gitmodules_config();
+ 		git_config(submodule_config, NULL);
+ 	}
 -- 
 2.12.2.575.gb14f27f917
 
