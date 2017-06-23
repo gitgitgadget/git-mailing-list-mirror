@@ -2,201 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6950F207D2
-	for <e@80x24.org>; Fri, 23 Jun 2017 22:51:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0C3B207D2
+	for <e@80x24.org>; Fri, 23 Jun 2017 23:04:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754109AbdFWWvT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 18:51:19 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33662 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753942AbdFWWvS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 18:51:18 -0400
-Received: by mail-pg0-f67.google.com with SMTP id u62so7728804pgb.0
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 15:51:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/pDAIZ1TgGuFqzWm8qdYGsDELK4vIMh1CuxeSBrZkdE=;
-        b=e1qWCu5+FEzK/NEk1Qo/+pcxo3W6xzf9UdMyHForXFW0tkzvNLsSWhkJjS2nWRFLwV
-         1KMYDxr9OVvVSpmZMbwIQTwYDlCY2KH1W2PQD7G6hFbJqCtuoCtE7cB3jiMUS/VyQrKH
-         J+9BxM7XkCzIQ7xbluGP5CDFQFcKdfQjRgLzCbMVcC37MKG4ZjRHq1ydNbOYO93ax6qs
-         A4HqG5HqLQkEo6Z8WiUIP1YWBF+sl5MgQIYqbQckBrVFFt8Ac+XrUoIXnWG6FtFk4rSZ
-         aGaI/BcjywylU+Pqf2kRN5oLH8YybEpQYGo7DAufYsn61qyQWNVPnavt3IA+ZExmsgVf
-         3DmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/pDAIZ1TgGuFqzWm8qdYGsDELK4vIMh1CuxeSBrZkdE=;
-        b=j9SOu5bUrTIpvg4eas8tGtrSWwfmPuPQCBdRvKHLVuSBG0i5EO0nDJuLDJlusL7301
-         4Rvt1mjPhN9uvc69+8tQyvY7aoaqWJuJcovJnFNSjb2S1jzWe5kbDukCjaW728pY9rGx
-         q3evtMbWj0oWV9PfN0zlSiY+leW2ybz+fIJOPqN5CXHARyl9eIZCqorJliZyi1MWTDdA
-         R3JoXejMtNXGbtSeDLzJOW4xoEmX+QGBZ7spLMcdXAdS2tsvfUSV9XPWDNDUdBcjEaRG
-         2/bt1XVM6U4FFV8xaIJtvcpkD1NWpRSJr1fIOKmbdnu1Akwo+p3KyIlBK6LvMDf6WtH1
-         Xvjw==
-X-Gm-Message-State: AKS2vOwBxNwRZcOllkTwlTPKTliRR9rTCB0dDyOWB2cZ+aS1NgOau2Ez
-        wGYzIcHtoDcTmg==
-X-Received: by 10.84.224.134 with SMTP id s6mr11407278plj.263.1498258278013;
-        Fri, 23 Jun 2017 15:51:18 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:4cd0:d6d2:1e09:4052])
-        by smtp.gmail.com with ESMTPSA id c75sm13906120pga.38.2017.06.23.15.51.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 23 Jun 2017 15:51:17 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, sbeller@google.com
-Subject: Re: [PATCH] submodule--helper: teach push-check to handle HEAD
-References: <20170623200427.26803-1-bmwill@google.com>
-Date:   Fri, 23 Jun 2017 15:51:16 -0700
-In-Reply-To: <20170623200427.26803-1-bmwill@google.com> (Brandon Williams's
-        message of "Fri, 23 Jun 2017 13:04:27 -0700")
-Message-ID: <xmqqk242b9nf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1754679AbdFWXEh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 19:04:37 -0400
+Received: from hahler.de ([188.40.33.212]:53085 "EHLO elfe.thequod.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754621AbdFWXEg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 19:04:36 -0400
+X-Greylist: delayed 396 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Jun 2017 19:04:36 EDT
+Received: from localhost (amavis [10.122.1.24])
+        by elfe.thequod.de (Postfix) with ESMTP id 373366212E;
+        Sat, 24 Jun 2017 00:57:59 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thequod.de; h=
+        content-type:content-type:in-reply-to:mime-version:user-agent
+        :date:date:message-id:references:subject:subject:from:from
+        :received:received; s=postfix2; t=1498258678; bh=Clu+ebXHej43Lig
+        HsxPaJvSq1ROT8S0mKz7p+yua6WE=; b=r6UaS45blSgCSZef24qiCiL3Aowg5Hl
+        wnJvVi8UdPqiMwkqDXY9etxRvYiXV2h3cN+nLrJQcI8LHE7i0Cjj7pnAN1LjzFVC
+        822PzAwdOApr7/80QRxlKjhcA9jlMTaXo5hPjoKBl2mF5kS2VAdSJeaoNfxuqN/h
+        miYjkj3IzZv8=
+Received: from elfe.thequod.de ([10.122.1.25])
+        by localhost (amavis.thequod.de [10.122.1.24]) (amavisd-new, port 10026)
+        with ESMTP id QH1_DNzym-Ng; Sat, 24 Jun 2017 00:57:58 +0200 (CEST)
+From:   Daniel Hahler <git@thequod.de>
+Subject: Re: [PATCH] xdiff: trim common tail with -U0 after diff
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+References: <20170623103612.4694-1-git@thequod.de>
+ <fa350688-1831-f979-b984-3b6d54e32b8c@web.de>
+Message-ID: <436f31fb-3a06-e6ca-094e-8e92aa1ee1d1@thequod.de>
+Date:   Sat, 24 Jun 2017 00:57:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <fa350688-1831-f979-b984-3b6d54e32b8c@web.de>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="nBRpFaNgrMrIQu5Qcuo6IaeHcQ1Utc9FW"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--nBRpFaNgrMrIQu5Qcuo6IaeHcQ1Utc9FW
+Content-Type: multipart/mixed; boundary="9aQxDKvC0wpAxvaRKQsgjgXOUG5DciRVs";
+ protected-headers="v1"
+From: Daniel Hahler <git@thequod.de>
+To: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+ Stefan Beller <sbeller@google.com>
+Message-ID: <436f31fb-3a06-e6ca-094e-8e92aa1ee1d1@thequod.de>
+Subject: Re: [PATCH] xdiff: trim common tail with -U0 after diff
+References: <20170623103612.4694-1-git@thequod.de>
+ <fa350688-1831-f979-b984-3b6d54e32b8c@web.de>
+In-Reply-To: <fa350688-1831-f979-b984-3b6d54e32b8c@web.de>
 
-> In 06bf4ad1d (push: propagate remote and refspec with
-> --recurse-submodules) push was taught how to propagate a refspec down to
-> submodules when the '--recurse-submodules' flag is given.  The only refspecs
-> that are allowed to be propagated are ones which name a ref which exists
-> in both the superproject and the submodule, with the caveat that 'HEAD'
-> was disallowed.
->
-> This patch teaches push-check (the submodule helper which determines if
-> a refspec can be propagated to a submodule) to permit propagating 'HEAD'
-> if and only if the superproject and the submodule both have the same
-> named branch checked out and the submodule is not in a detached head
-> state.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  builtin/submodule--helper.c    | 57 +++++++++++++++++++++++++++++++-----------
->  submodule.c                    | 18 ++++++++++---
->  t/t5531-deep-submodule-push.sh | 25 +++++++++++++++++-
->  3 files changed, 82 insertions(+), 18 deletions(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 1b4d2b346..fd5020036 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1107,24 +1107,41 @@ static int resolve_remote_submodule_branch(int argc, const char **argv,
->  static int push_check(int argc, const char **argv, const char *prefix)
->  {
->  	struct remote *remote;
-> +	const char *superproject_head;
-> +	char *head;
-> +	int detached_head = 0;
-> +	struct object_id head_oid;
->  
-> -	if (argc < 2)
-> -		die("submodule--helper push-check requires at least 1 argument");
-> +	if (argc < 3)
-> +		die("submodule--helper push-check requires at least 2 argument");
+--9aQxDKvC0wpAxvaRKQsgjgXOUG5DciRVs
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-"arguments"?
+On 23.06.2017 22:39, Ren=C3=A9 Scharfe wrote:
 
-> +
-> +	/*
-> +	 * superproject's resolved head ref.
-> +	 * if HEAD then the superproject is in a detached head state, otherwise
-> +	 * it will be the resolved head ref.
-> +	 */
-> +	superproject_head = argv[1];
+> The changed test script passes just fine for me even without your chang=
+e
+> to xdiff-interface.c, which is odd.
 
-The above makes it sound like the caller gives either "HEAD" (when
-detached) or "refs/heads/branch" (when on 'branch') in argv[1] and
-you are stashing it away, but ...
+Sorry, I've apparently messed this up - it seems to be the case for me, t=
+oo.
 
-> +	/* Get the submodule's head ref and determine if it is detached */
-> +	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
-> +	if (!head)
-> +		die(_("Failed to resolve HEAD as a valid ref."));
-> +	if (!strcmp(head, "HEAD"))
-> +		detached_head = 1;
+I would assume that using the functions.c context/diff in this test file =
+might prove it, but when I wrote this test I was already unsure to base i=
+t on an experimental feature, that might just get removed again (with its=
+ tests).
 
-... the work to see which branch we are on and if we are detached is
-done by this code without consulting argv[1].  I cannot tell what is
-going on.  Is argv[1] assigned to superproject_head a red herring?
+> Do you have another way to demonstrate the unexpected behavior?
 
->  	/*
->  	 * The remote must be configured.
->  	 * This is to avoid pushing to the exact same URL as the parent.
->  	 */
-> -	remote = pushremote_get(argv[1]);
-> +	remote = pushremote_get(argv[2]);
->  	if (!remote || remote->origin == REMOTE_UNCONFIGURED)
-> -		die("remote '%s' not configured", argv[1]);
-> +		die("remote '%s' not configured", argv[2]);
->  
->  	/* Check the refspec */
-> -	if (argc > 2) {
-> -		int i, refspec_nr = argc - 2;
-> +	if (argc > 3) {
-> +		int i, refspec_nr = argc - 3;
->  		struct ref *local_refs = get_local_heads();
->  		struct refspec *refspec = parse_push_refspec(refspec_nr,
-> -							     argv + 2);
-> +							     argv + 3);
+It was clearly reproducible with a local test case, based on "copying an =
+existing test case, and modifying the header for it only".
 
-If you have no need for argv[1] (and you don't, as you have stashed
-it away in superproject_head), it may be less damage to the code if
-you shifted argv upfront after grabbing superproject_head.
+Given the other replies, it seems like it is more a question now if the t=
+rimming should get moved down, or removed completely it seems.
+So I will not update the patch/test for now.
 
->  		for (i = 0; i < refspec_nr; i++) {
->  			struct refspec *rs = refspec + i;
-> @@ -1132,18 +1149,30 @@ static int push_check(int argc, const char **argv, const char *prefix)
->  			if (rs->pattern || rs->matching)
->  				continue;
->  
-> -			/*
-> -			 * LHS must match a single ref
-> -			 * NEEDSWORK: add logic to special case 'HEAD' once
-> -			 * working with submodules in a detached head state
-> -			 * ceases to be the norm.
-> -			 */
-> -			if (count_refspec_match(rs->src, local_refs, NULL) != 1)
-> +			/* LHS must match a single ref */
-> +			switch(count_refspec_match(rs->src, local_refs, NULL)) {
 
-"switch (count..."
+--=20
+http://daniel.hahler.de/
 
-> +			case 1:
-> +				break;
-> +			case 0:
-> +				/*
-> +				 * If LHS matches 'HEAD' then we need to ensure
-> +				 * that it matches the same named branch
-> +				 * checked out in the superproject.
-> +				 */
-> +				if (!strcmp(rs->src, "HEAD")) {
-> +					if (!detached_head &&
-> +					    !strcmp(head, superproject_head))
-> +						break;
-> +					die("HEAD does not match the named branch in the superproject");
-> +				}
 
-Hmph, so earlier people can "push --recurse-submodules HEAD:$dest"
-and $dest can be anything, but now we are tightening the rule?
+--9aQxDKvC0wpAxvaRKQsgjgXOUG5DciRVs--
 
-> +			default:
->  				die("src refspec '%s' must name a ref",
->  				    rs->src);
-> +			}
->  		}
->  		free_refspec(refspec_nr, refspec);
->  	}
-> +	free(head);
->  
->  	return 0;
->  }
+--nBRpFaNgrMrIQu5Qcuo6IaeHcQ1Utc9FW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EARECAB0WIQS1psIggp+uXWnrnKN8Ar+FP+Y+AAUCWU2c9QAKCRB8Ar+FP+Y+
+ANs+AJwM0pwHmXVLGQgqCswSHvtT4+T1zACgyLFY4I4LsoLa/DOZxm1N7hNefhM=
+=SJdR
+-----END PGP SIGNATURE-----
+
+--nBRpFaNgrMrIQu5Qcuo6IaeHcQ1Utc9FW--
