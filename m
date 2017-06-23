@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+	T_RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5947F2083B
-	for <e@80x24.org>; Fri, 23 Jun 2017 01:30:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E5A82084A
+	for <e@80x24.org>; Fri, 23 Jun 2017 01:30:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754138AbdFWBaI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 21:30:08 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:34094 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753557AbdFWBaG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 21:30:06 -0400
-Received: by mail-pg0-f42.google.com with SMTP id e187so15009384pgc.1
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 18:30:06 -0700 (PDT)
+        id S1754152AbdFWBaa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 21:30:30 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:36480 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753833AbdFWB3s (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 21:29:48 -0400
+Received: by mail-pg0-f54.google.com with SMTP id u62so14978042pgb.3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 18:29:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7WSkAiDJOmUoMX3pH/ElahVx/H1ulcdCKtsc22fYfB8=;
-        b=GKDeHAadH1qoZgwzwA0cWzaYP26XWumD87mteUwgQoiA6hVsRUYU6Xx3IxQZjwc8FI
-         h6OvSqpGzjbaq8p1FriDGgibZnbJiv4zGwoimdpkKqfci+mYQ21fuUKYBmtZ+2fxjo4C
-         kSPj+/cqgVj1Kvw9qxUhsr5UQepg5LPCnJKyctfg5ktgZS+P/Zbfl3Xor7/UKoIRQYif
-         Nw1Fd3JCrCXaPdNFjhFEAYdBu+RMc67RZmd8nIkA70Bgea0O33ezomqq2kjHi7ve9csC
-         GHWcWYWHvgbvmiM9MrjPISW9ti7Z/QIF3TsUItdHPywI+GyoRgzk64qSDL+A5AFvgf7p
-         KnOA==
+        bh=EP/wCw0lWjhNZhRebAF7cOk0H8fhahtS9NYrR7Ckdes=;
+        b=BFJdrsN0/pHMqElvs2TRKLXZgS7JOLBkOAw7vV9kvRYONsIF5pLeIZjlI307IGG648
+         9JGG1NYoP3YgEMMIfPSuf7FQyCiCYSixaN93UENRVRuli6ekd1l/u855fCRlRz30E3DX
+         CixcmIfMTYlgoZMjZLPLTdkqU5iFXzxID1VRPiCCgiGAe9c1ghXgXYjTHJGZU3DjJrlj
+         HGmuI7Q436he1b85gYqoBg9yFoeZcWamAV3wxo171vrt1WCnz8HW6/N5TU6ZBhpofmt/
+         xHfZ1KxqO9dlqb0ToClZNiXSJO4kpamSgmZyiBEG7mo653f6ZH3seoh+DAAk6qnXRxeO
+         fvSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=7WSkAiDJOmUoMX3pH/ElahVx/H1ulcdCKtsc22fYfB8=;
-        b=eNfQrbirJ1umzRmk0jz9/0UFuYL0C1g6sI1F3awslsNYdhCuncGrPwOvJPQk8ze+W8
-         Yj+FxRW8pAacX3oHCbw4DUsLuOcg0yW2sj2L2ZHw4eGF/w/HteTroHjq36LvsJsYARWw
-         ocRIzwcs3Y7Uqr3MF60ukLyEAR9L+Q6Z3+tGtt6VGX2/hTUVr+E1JEn50FPxUdBGxdqa
-         mLXLmPKX8LkVAb4zt3q3s35B9xCVvCy4HMKkPSl4upw2bQFCg/f08c2Fru3Nkx1fzKTy
-         u4KogHNisMDKbsK6IWGq0lxY7TZKofIbu8AsS8I+PgtbKJL91IhZBmqBo8baLgp1wL3z
-         drtg==
-X-Gm-Message-State: AKS2vOys5pGI9/I4Ky9DHpE28bKW7A65o5ziX8tjFEhL4+TlDjXVqaon
-        BRK9v9/0p5H2mKhr
-X-Received: by 10.99.2.78 with SMTP id 75mr5692229pgc.120.1498181400933;
-        Thu, 22 Jun 2017 18:30:00 -0700 (PDT)
+        bh=EP/wCw0lWjhNZhRebAF7cOk0H8fhahtS9NYrR7Ckdes=;
+        b=g4kDA/ylQ9onwswl0Gms4PPRbBAnXo8V7bhG3ItMxzHm6rn9kMPa2qf97E+zRAF+H9
+         k+Mvsr1on9Pje8xWq7HJMuQ38gMXbQqATWSvFtUHvpKlJTHRfH/LtQCjCmI5fkTEj/yU
+         2KkQks+RsiiNeqYWo2S5IlVFNKdV7NZhDHSJD/x7uBsZ6XTGsnahCrgl+xrIIwJsTnMx
+         XT+g4435Hr6aXE45fzcZ1IV7LQ8wR86m0OqL53y2txvGD6TfTPYdOssnj/DxhJqlxrfI
+         rcyG32pwyH3JijZxK5X0Zz0LetOOHQUSJkQsrQLpjThsgE6HfY4W8sCdECo4GzNOZ1JL
+         C8Cg==
+X-Gm-Message-State: AKS2vOxdAJLh12nUB9aTd5w8Oa0xwfB5Ucj60uEovgK9387cMMRbj5w3
+        GnuGVFyDKtMM8d+zsgHyew==
+X-Received: by 10.101.86.4 with SMTP id l4mr5574565pgs.29.1498181382137;
+        Thu, 22 Jun 2017 18:29:42 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:54b:7db6:84cb:995a])
-        by smtp.gmail.com with ESMTPSA id j6sm6920275pgc.1.2017.06.22.18.30.00
+        by smtp.gmail.com with ESMTPSA id a71sm1748806pfl.129.2017.06.22.18.29.41
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 18:30:00 -0700 (PDT)
+        Thu, 22 Jun 2017 18:29:41 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, mhagger@alum.mit.edu,
         peff@peff.net, philipoakley@iee.org
-Subject: [PATCHv2 25/25] diff: document the new --color-moved setting
-Date:   Thu, 22 Jun 2017 18:29:19 -0700
-Message-Id: <20170623012919.28693-26-sbeller@google.com>
+Subject: [PATCHv2 11/25] diff.c: emit_diff_symbol learns DIFF_SYMBOL_FILEPAIR_{PLUS, MINUS}
+Date:   Thu, 22 Jun 2017 18:29:05 -0700
+Message-Id: <20170623012919.28693-12-sbeller@google.com>
 X-Mailer: git-send-email 2.12.2.575.gb14f27f917
 In-Reply-To: <20170623012919.28693-1-sbeller@google.com>
 References: <20170620024816.20021-1-sbeller@google.com>
@@ -64,80 +64,130 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config.txt       | 12 ++++++++++--
- Documentation/diff-options.txt | 27 +++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+), 2 deletions(-)
+We have to use fprintf instead of emit_line, because we want to emit the
+tab after the color. This is important for ancient versions of gnu patch
+AFAICT, although we probably do not want to feed colored output to the
+patch utility, such that it would not matter if the trailing tab is
+colored. Keep the corner case as-is though.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 475e874d51..29e0b9fa69 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1051,14 +1051,22 @@ This does not affect linkgit:git-format-patch[1] or the
- 'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
- command line with the `--color[=<when>]` option.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ diff.c | 51 ++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 30 insertions(+), 21 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index f3d0918810..761ee581ad 100644
+--- a/diff.c
++++ b/diff.c
+@@ -560,6 +560,8 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
+ }
  
-+diff.colorMoved::
-+	If set moved lines in a diff are colored differently,
-+	for details see '--color-moved' in linkgit:git-diff[1].
+ enum diff_symbol {
++	DIFF_SYMBOL_FILEPAIR_PLUS,
++	DIFF_SYMBOL_FILEPAIR_MINUS,
+ 	DIFF_SYMBOL_WORDS_PORCELAIN,
+ 	DIFF_SYMBOL_WORDS,
+ 	DIFF_SYMBOL_CONTEXT,
+@@ -610,7 +612,7 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
+ 			     const char *line, int len, unsigned flags)
+ {
+ 	static const char *nneof = " No newline at end of file\n";
+-	const char *context, *reset, *set;
++	const char *context, *reset, *set, *meta;
+ 	switch (s) {
+ 	case DIFF_SYMBOL_NO_LF_EOF:
+ 		context = diff_get_color_opt(o, DIFF_CONTEXT);
+@@ -672,6 +674,20 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
+ 		}
+ 		emit_line(o, context, reset, line, len);
+ 		break;
++	case DIFF_SYMBOL_FILEPAIR_PLUS:
++		meta = diff_get_color_opt(o, DIFF_METAINFO);
++		reset = diff_get_color_opt(o, DIFF_RESET);
++		fprintf(o->file, "%s%s+++ %s%s%s\n", diff_line_prefix(o), meta,
++			line, reset,
++			strchr(line, ' ') ? "\t" : "");
++		break;
++	case DIFF_SYMBOL_FILEPAIR_MINUS:
++		meta = diff_get_color_opt(o, DIFF_METAINFO);
++		reset = diff_get_color_opt(o, DIFF_RESET);
++		fprintf(o->file, "%s%s--- %s%s%s\n", diff_line_prefix(o), meta,
++			line, reset,
++			strchr(line, ' ') ? "\t" : "");
++		break;
+ 	default:
+ 		die("BUG: unknown diff symbol");
+ 	}
+@@ -843,8 +859,6 @@ static void emit_rewrite_diff(const char *name_a,
+ 			      struct diff_options *o)
+ {
+ 	int lc_a, lc_b;
+-	const char *name_a_tab, *name_b_tab;
+-	const char *metainfo = diff_get_color(o->use_color, DIFF_METAINFO);
+ 	const char *fraginfo = diff_get_color(o->use_color, DIFF_FRAGINFO);
+ 	const char *reset = diff_get_color(o->use_color, DIFF_RESET);
+ 	static struct strbuf a_name = STRBUF_INIT, b_name = STRBUF_INIT;
+@@ -864,8 +878,6 @@ static void emit_rewrite_diff(const char *name_a,
+ 
+ 	name_a += (*name_a == '/');
+ 	name_b += (*name_b == '/');
+-	name_a_tab = strchr(name_a, ' ') ? "\t" : "";
+-	name_b_tab = strchr(name_b, ' ') ? "\t" : "";
+ 
+ 	strbuf_reset(&a_name);
+ 	strbuf_reset(&b_name);
+@@ -892,11 +904,13 @@ static void emit_rewrite_diff(const char *name_a,
+ 
+ 	lc_a = count_lines(data_one, size_one);
+ 	lc_b = count_lines(data_two, size_two);
+-	fprintf(o->file,
+-		"%s%s--- %s%s%s\n%s%s+++ %s%s%s\n%s%s@@ -",
+-		line_prefix, metainfo, a_name.buf, name_a_tab, reset,
+-		line_prefix, metainfo, b_name.buf, name_b_tab, reset,
+-		line_prefix, fraginfo);
 +
- color.diff.<slot>::
- 	Use customized color for diff colorization.  `<slot>` specifies
- 	which part of the patch to use the specified color, and is one
- 	of `context` (context text - `plain` is a historical synonym),
- 	`meta` (metainformation), `frag`
- 	(hunk header), 'func' (function in hunk header), `old` (removed lines),
--	`new` (added lines), `commit` (commit headers), or `whitespace`
--	(highlighting whitespace errors).
-+	`new` (added lines), `commit` (commit headers), `whitespace`
-+	(highlighting whitespace errors), `oldMoved` (deleted lines),
-+	`newMoved` (added lines), `oldMovedDimmed`, `oldMovedAlternative`,
-+	`oldMovedAlternativeDimmed`, `newMovedDimmed`, `newMovedAlternative`
-+	and `newMovedAlternativeDimmed` (See the '<mode>'
-+	setting of '--color-moved' in linkgit:git-diff[1] for details).
- 
- color.decorate.<slot>::
- 	Use customized color for 'git log --decorate' output.  `<slot>` is one
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 89cc0f48de..058c8014ed 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -231,6 +231,33 @@ ifdef::git-diff[]
- endif::git-diff[]
- 	It is the same as `--color=never`.
- 
-+--color-moved[=<mode>]::
-+	Moved lines of code are colored differently.
-+ifdef::git-diff[]
-+	It can be changed by the `diff.colorMoved` configuration setting.
-+endif::git-diff[]
-+	The <mode> defaults to 'no' if the option is not given
-+	and to 'dimmed_zebra' if the option with no mode is given.
-+	The mode must be one of:
-++
-+--
-+no::
-+	Moved lines are not highlighted.
-+plain::
-+	Any line that is added in one location and was removed
-+	in another location will be colored with 'color.diff.newMoved'.
-+	Similarly 'color.diff.oldMoved' will be used for removed lines
-+	that are added somewhere else in the diff.
-+zebra::
-+	Blocks of moved code are detected. The detected blocks are
-+	painted using the 'color.diff.{old,new}Moved' alternating with
-+	'color.diff.{old,new}MovedAlternative'.
-+dimmed_zebra::
-+	Similar to 'zebra', but additional dimming of uninteresting parts
-+	of moved code is performed. The bordering lines of two adjacent
-+	blocks are considered interesting, the rest is uninteresting.
-+--
++	emit_diff_symbol(o, DIFF_SYMBOL_FILEPAIR_MINUS,
++			 a_name.buf, a_name.len, 0);
++	emit_diff_symbol(o, DIFF_SYMBOL_FILEPAIR_PLUS,
++			 b_name.buf, b_name.len, 0);
 +
- --word-diff[=<mode>]::
- 	Show a word diff, using the <mode> to delimit changed words.
- 	By default, words are delimited by whitespace; see
++	fprintf(o->file, "%s%s@@ -", line_prefix, fraginfo);
+ 	if (!o->irreversible_delete)
+ 		print_line_count(o->file, lc_a);
+ 	else
+@@ -1365,10 +1379,8 @@ static void find_lno(const char *line, struct emit_callback *ecbdata)
+ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ {
+ 	struct emit_callback *ecbdata = priv;
+-	const char *meta = diff_get_color(ecbdata->color_diff, DIFF_METAINFO);
+ 	const char *reset = diff_get_color(ecbdata->color_diff, DIFF_RESET);
+ 	struct diff_options *o = ecbdata->opt;
+-	const char *line_prefix = diff_line_prefix(o);
+ 
+ 	o->found_changes = 1;
+ 
+@@ -1379,15 +1391,12 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 	}
+ 
+ 	if (ecbdata->label_path[0]) {
+-		const char *name_a_tab, *name_b_tab;
+-
+-		name_a_tab = strchr(ecbdata->label_path[0], ' ') ? "\t" : "";
+-		name_b_tab = strchr(ecbdata->label_path[1], ' ') ? "\t" : "";
+-
+-		fprintf(o->file, "%s%s--- %s%s%s\n",
+-			line_prefix, meta, ecbdata->label_path[0], reset, name_a_tab);
+-		fprintf(o->file, "%s%s+++ %s%s%s\n",
+-			line_prefix, meta, ecbdata->label_path[1], reset, name_b_tab);
++		emit_diff_symbol(o, DIFF_SYMBOL_FILEPAIR_MINUS,
++				 ecbdata->label_path[0],
++				 strlen(ecbdata->label_path[0]), 0);
++		emit_diff_symbol(o, DIFF_SYMBOL_FILEPAIR_PLUS,
++				 ecbdata->label_path[1],
++				 strlen(ecbdata->label_path[1]), 0);
+ 		ecbdata->label_path[0] = ecbdata->label_path[1] = NULL;
+ 	}
+ 
 -- 
 2.12.2.575.gb14f27f917
 
