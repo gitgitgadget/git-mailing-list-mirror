@@ -2,77 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0A6020282
-	for <e@80x24.org>; Fri, 23 Jun 2017 16:44:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 395A620282
+	for <e@80x24.org>; Fri, 23 Jun 2017 16:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753942AbdFWQo5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 12:44:57 -0400
-Received: from siwi.pair.com ([209.68.5.199]:50826 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753368AbdFWQo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 12:44:56 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 2E6E184555;
-        Fri, 23 Jun 2017 12:44:55 -0400 (EDT)
-Received: from [10.160.98.126] (unknown [167.220.148.10])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 89A6884520;
-        Fri, 23 Jun 2017 12:44:54 -0400 (EDT)
-Subject: Re: [PATCH v4 00/20] repository object
-To:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Cc:     sbeller@google.com, jrnieder@gmail.com, jacob.keller@gmail.com,
-        Johannes.Schindelin@gmx.de, sandals@crustytoothpaste.net,
-        peartben@gmail.com, pclouds@gmail.com, gitster@pobox.com,
-        peff@peff.net, avarab@gmail.com, jonathantanmy@google.com
-References: <20170620191951.84791-1-bmwill@google.com>
- <20170622184348.56497-1-bmwill@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <dadf3fe7-180b-df3a-f5f5-932905f08335@jeffhostetler.com>
-Date:   Fri, 23 Jun 2017 12:44:53 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+        id S1754200AbdFWQxv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 12:53:51 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50662 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753926AbdFWQxu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 12:53:50 -0400
+Received: (qmail 1508 invoked by uid 109); 23 Jun 2017 16:53:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 23 Jun 2017 16:53:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16046 invoked by uid 111); 23 Jun 2017 16:53:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jun 2017 12:53:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jun 2017 12:53:48 -0400
+Date:   Fri, 23 Jun 2017 12:53:48 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Simon Ruderich <simon@ruderich.org>,
+        Patrick Lehmann <Patrick.Lehmann@plc2.de>,
+        Jessie Hernandez <git@jessiehernandez.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: your mail
+Message-ID: <20170623165347.s6byszwdps34ntzv@sigill.intra.peff.net>
+References: <7c277ac1cfb40b9b362d468a94dfb4fe.squirrel@mail.jessiehernandez.com>
+ <20170622124803.45sduodpfbwuuq52@ruderich.org>
+ <0092CDD27C5F9D418B0F3E9B5D05BE080102A3D5@SBS2011.opfingen.plc2.de>
+ <20170622134708.fcc4zxakga6p255x@ruderich.org>
+ <0092CDD27C5F9D418B0F3E9B5D05BE080102A423@SBS2011.opfingen.plc2.de>
+ <20170622204628.eintlap4uchlncub@ruderich.org>
+ <xmqq8tkjiu3d.fsf@gitster.mtv.corp.google.com>
+ <878tkjk7m7.fsf@gmail.com>
+ <20170622232156.vptuoafdtglokujw@sigill.intra.peff.net>
+ <xmqqshirffay.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <20170622184348.56497-1-bmwill@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqshirffay.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jun 22, 2017 at 10:23:17PM -0700, Junio C Hamano wrote:
 
-
-On 6/22/2017 2:43 PM, Brandon Williams wrote:
-> As before you can find this series at:
-> https://github.com/bmwill/git/tree/repository-object
+> Otoh, "community" page does not encourage subscription as a way to
+> ensure you'll see follow-up discussion, which may be a good thing to
+> add.
 > 
-> Changes in v4:
+> A tangent I just found funny is this paragraph on the "community"
+> page:
 > 
-> * Patch 11 is slightly different and turns off all path relocation when a
->    worktree is provided instead of just for the index file (Thanks for the help
->    Jonathan Nieder).
-> * 'repo_init()' has a tighter API and now requires that the provided gitdir is
->    a path to the gitdir instead of either a path to the gitdir or path to the
->    worktree (which has a .git file or directory) (Thanks Jonathan Tan).
-> * Minor comment and commit message chagnes
+>     The archive can be found on public-inbox. Click here to
+>     subscribe.
 > 
-> Note: Like v3 this series is dependent on on 'bw/config-h' and
->        'bw/ls-files-sans-the-index'
+> Of course clicking does not take you to a subscription page for
+> public-inbox, even though the two sentences appear to be related.
 > 
-> Brandon Williams (20):
+> Perhaps swap the order of the two, like so, with a bit richer
+> explanation taken from Ævar's version:
+> 
+> 	... disable HTML in your outgoing messages.
+> 
+> 	By subscribing (click here), you can make sure you're not
+> 	missing follow-up discussion and also learn from other
+> 	development in the community.  The list archive can be found
+> 	on public-inbox.
 
-I read thru the v1 and v4 versions.  Very nice.
-And thanks for splitting the earlier parts out
-into independent patches.
+Yeah, I think that's a good suggestion. Do you want to phrase it in the
+form of a patch? :)
 
-I didn't have any complaints, but did want to ACK
-that I had looked at it.
-
-Jeff
-
+-Peff
