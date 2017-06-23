@@ -2,87 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE68520282
-	for <e@80x24.org>; Fri, 23 Jun 2017 20:26:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 288801FA14
+	for <e@80x24.org>; Fri, 23 Jun 2017 20:40:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755141AbdFWU0d (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 16:26:33 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33788 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754945AbdFWU0b (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 16:26:31 -0400
-Received: by mail-pf0-f172.google.com with SMTP id e7so28163328pfk.0
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 13:26:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=SyZJf4+PGHQeH8PXvWQEN4vjl1pwaPJkrGANooRVEZk=;
-        b=YDQU5lwGGbsMdSrNdl00/20KfRKCVD5hjRtXPICbN9Ex5oY+Xzat5TtWUBB27H/5Pi
-         BwWBQ7MautegQXZbQbxyW/R8Fprn5wIGwkBn238FCAFM4z1nNZXhK6aaWd0OF1N2Qw6H
-         +bZoflTd482mKwaIorZ7d3PlZNjpKG8k5xnAMOwDZDqulnliWDN4XrbmvOXF144JaL7f
-         h/E4mV8Gkk7ECI2KMO/i4ezV303zbkzh49dbTQ97yh1HlbkfcHzZzWEX2FSB7BzmaKMP
-         ONonfNSP3PtHQiTnvp3sV6FNkSy7CJyWpgBJNadnBLrZIDcE0oIuVpXqOWi9V9LzTR/E
-         f/wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=SyZJf4+PGHQeH8PXvWQEN4vjl1pwaPJkrGANooRVEZk=;
-        b=nSY0fRlv+97xmDTMyLEV/gk9cWr/IAAjfArvtKhLH1EaFE4brtkbOEw6Agk9zufmpT
-         dNd6hhQVwnIxB0Dx9dXu84DD8ADxM2f9UPYFYtFxGo8PshUjFywqIiRCgENWa5gqZoBW
-         Oy8/ddovXpv5hSsx/QU8ahpYly9B56TWfj7/iL3t0sakttRhRCPyE7zr4xD7i5odah8u
-         lC17/NJuaRkpkhPQS/0gky2UoK44sl9HvPW57HUehm+Xp/NadLNNeeisseeOsmTp62Ph
-         dA270TrOiyD/UFC0nv7xcTz21KtXKj6pRzpLCT7ylBZ0JK/9fePDsywItAhy503XGXWC
-         e9kA==
-X-Gm-Message-State: AKS2vOzgzyW00FQzLb/vOS58YniVIGJ26fMiQ7mfghaOlXYj0GHxC24f
-        kq1i20koTUgi1DtMcQtLsYD+YubJhWbo
-X-Received: by 10.84.232.205 with SMTP id x13mr11114294plm.245.1498249590687;
- Fri, 23 Jun 2017 13:26:30 -0700 (PDT)
+        id S1755155AbdFWUj6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 16:39:58 -0400
+Received: from mout.web.de ([212.227.15.14]:63852 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755002AbdFWUj6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 16:39:58 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lzrwh-1dtb9U3uHD-01534U; Fri, 23
+ Jun 2017 22:39:40 +0200
+Subject: Re: [PATCH] xdiff: trim common tail with -U0 after diff
+To:     Daniel Hahler <git@thequod.de>, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+References: <20170623103612.4694-1-git@thequod.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <fa350688-1831-f979-b984-3b6d54e32b8c@web.de>
+Date:   Fri, 23 Jun 2017 22:39:36 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Received: by 10.100.161.227 with HTTP; Fri, 23 Jun 2017 13:26:30 -0700 (PDT)
-In-Reply-To: <20170623200427.26803-1-bmwill@google.com>
-References: <20170623200427.26803-1-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 23 Jun 2017 13:26:30 -0700
-Message-ID: <CAGZ79kZqjaXSrqawgDnxu58sSPWVm8kAhRxn69Sbo8_aP4rr6w@mail.gmail.com>
-Subject: Re: [PATCH] submodule--helper: teach push-check to handle HEAD
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20170623103612.4694-1-git@thequod.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:PAux/f8Os1M6RaPsnOWwWuHdOKvj43kJK36AoWVB+WmbsI8SlAJ
+ e4RTPwS8AFWRt01IGULnvtz/Fqalju2XQCWtdWwU/yzMZvwFv64S6W6C+pQl06/ME1/Kr6u
+ BkO2fj9rnvwmtsostVTXs9O0rVoPsjA25nTfb8CU2lpLnr2jFP92zrIcbNuISJkZbkzyln2
+ nvxWAslWZgb7smKVz+9fA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jrDvEGiW+zk=:alfds58RYJXNv4PbHpizkr
+ tn0rcAjgdUx3xNNs7VIsSBd0vzwywcOrmCo/nrsdfQLKfGzyUBSVGmyzcTpeI9YQvgywtyvxl
+ cxfqFmASNnjOlEErApNA+As6W1nbanAgjx9STV37i4kohsE1xk0L0uAHhmS2qmWwMx0m96u95
+ pgziWMnB8tTDICNU0jvmuhhRuiUv51uXXOfBPzivp3+8S0mxIg7VRtIUx7K7VExCwi+Cze83Y
+ V4uVIgaDAzSrNC/y+wEhK7wYGRY+fruoajCOW7xAkn9UBdXpuE3XHzO10CuKhoAaM+IK7OWUs
+ 8r7a2Iu9lylxyi4QeA4bC34il8yF/ow9drXjSoUob83BBs1j6gaOldl0Dd/WQhjg7nQAWp3OH
+ EVP6kBTCAcRnF8L/rs1/3gG9eu18kC7aMpBgl46x1UU96Z0bDWCfSnNsyZvIqmUxDU11ubSsD
+ snmH+601WRQYupo73wagGJWE+RCf6HTzgV0bXM7w+CmCEgF6qnAloRBZsIuH/ln9JtbzecF3w
+ yK4lMwQdC8xXkrnC7RhMq+1xxQWeZ+nL0FTuIaEIZ2hFvDJmiBsVNd+2eHvvjcmth82Ikrn4l
+ dB2zvSubYdQSPYbBIlqnSQz/BcPnT/SbstWTdU0JxsW3HoPpsrFlXWcYa3XlZ2vNsiLZvxxoa
+ U7vBDWo32FvUWrbPH45tvhu99Q12gGSPEkZlyJddp8PUPCkGwKzmqIidb/soGTfdgqAmmqIJf
+ wMxLH4unUlHzoUBezQrRUMOP4hp3XpfJs1X9jBeSyaKUfFiL51kBKQkr5NLTAMwqA59IjMUDu
+ 65nTvPq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 23, 2017 at 1:04 PM, Brandon Williams <bmwill@google.com> wrote:
-> In 06bf4ad1d (push: propagate remote and refspec with
-> --recurse-submodules) push was taught how to propagate a refspec down to
-> submodules when the '--recurse-submodules' flag is given.  The only refspecs
-> that are allowed to be propagated are ones which name a ref which exists
-> in both the superproject and the submodule, with the caveat that 'HEAD'
-> was disallowed.
->
-> This patch teaches push-check (the submodule helper which determines if
-> a refspec can be propagated to a submodule) to permit propagating 'HEAD'
-> if and only if the superproject and the submodule both have the same
-> named branch checked out and the submodule is not in a detached head
-> state.
+Am 23.06.2017 um 12:36 schrieb Daniel Hahler:
+> When -U0 is used, trim_common_tail should be called after `xdl_diff`, so
+> that `--indent-heuristic` (and other diff processing) works as expected.
+> 
+> It also removes the check for `!(xecfg->flags & XDL_EMIT_FUNCCONTEXT)`
+> added in e0876bca4, which does not appear to be necessary anymore after
+> moving the trimming down.
+> 
+> This only adds a test to t4061-diff-indent.sh, but should also have one for
+> normal (i.e. non-experimental) diff mode probably?!
+> 
+> Ref: https://github.com/tomtom/quickfixsigns_vim/issues/74#issue-237900460
+> ---
+>   t/t4061-diff-indent.sh | 15 +++++++++++++++
+>   xdiff-interface.c      |  7 ++++---
+>   2 files changed, 19 insertions(+), 3 deletions(-)
+> 
+> diff --git a/t/t4061-diff-indent.sh b/t/t4061-diff-indent.sh
+> index 2affd7a10..df3151393 100755
+> --- a/t/t4061-diff-indent.sh
+> +++ b/t/t4061-diff-indent.sh
+> @@ -116,6 +116,16 @@ test_expect_success 'prepare' '
+>   	 4
+>   	EOF
+>   
+> +	cat <<-\EOF >spaces-compacted-U0-expect &&
+> +	diff --git a/spaces.txt b/spaces.txt
+> +	--- a/spaces.txt
+> +	+++ b/spaces.txt
+> +	@@ -4,0 +5,3 @@ a
+> +	+b
+> +	+a
+> +	+
+> +	EOF
+> +
+>   	tr "_" " " <<-\EOF >functions-expect &&
+>   	diff --git a/functions.c b/functions.c
+>   	--- a/functions.c
+> @@ -184,6 +194,11 @@ test_expect_success 'diff: --indent-heuristic with --histogram' '
+>   	compare_diff spaces-compacted-expect out-compacted4
+>   '
+>   
+> +test_expect_success 'diff: --indent-heuristic with -U0' '
+> +	git diff -U0 --indent-heuristic old new -- spaces.txt >out-compacted5 &&
+> +	compare_diff spaces-compacted-U0-expect out-compacted5
+> +'
+> +
+>   test_expect_success 'diff: ugly functions' '
+>   	git diff --no-indent-heuristic old new -- functions.c >out &&
+>   	compare_diff functions-expect out
 
-cont'd:
+The changed test script passes just fine for me even without your change
+to xdiff-interface.c, which is odd.  Do you have another way to
+demonstrate the unexpected behavior?  And can someone replicate the
+failure?
 
-We need this use case because Gerrit's documentation ingrains
-this workflow in its users to use
-
-    git push <remote> HEAD:refs/for/<target-branch>
-
-And when both the submodule as well as the superproject
-are still on a branch with the same name (and not detached) we'd
-not be misunderstood by the user on the syntax.
-
-More on the code later.
+René
