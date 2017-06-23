@@ -2,82 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
-	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D125B20282
-	for <e@80x24.org>; Fri, 23 Jun 2017 14:51:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB2B2082E
+	for <e@80x24.org>; Fri, 23 Jun 2017 15:12:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753946AbdFWOvF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 10:51:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50458 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750932AbdFWOvF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 10:51:05 -0400
-Received: (qmail 26005 invoked by uid 109); 23 Jun 2017 14:51:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 23 Jun 2017 14:51:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14115 invoked by uid 111); 23 Jun 2017 14:51:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jun 2017 10:51:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jun 2017 10:51:03 -0400
-Date:   Fri, 23 Jun 2017 10:51:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] strbuf: change an always NULL/"" strbuf_addftime() param
- to bool
-Message-ID: <20170623145102.h7rt6zaqajfzuhsk@sigill.intra.peff.net>
-References: <20170623144603.11774-1-avarab@gmail.com>
+        id S1754172AbdFWPMe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 11:12:34 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:35371 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751999AbdFWPMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 11:12:33 -0400
+Received: by mail-it0-f67.google.com with SMTP id f20so7518823itb.2
+        for <git@vger.kernel.org>; Fri, 23 Jun 2017 08:12:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=PN9mwZ17TwiuOC4xeGy2MpkcERBNqgddnlTMYGOXVYs=;
+        b=EqK5lMKvtmK9O/88aq5KDtqef8PUvvEQkEe9ejjQW7QV6qtFgg6W4NVR2p6BMpXwyV
+         x6fexmWwDlDSCiYCXxm2iDldpVuoWkHofQuImF54Ayl9ov1aG7UTWSm7o6iLsrTVhITw
+         yLfyT1GswWAFsRIln7v/AP/63d2Yy+DUUP8YT3eGD9sTkF7vbI0QX4Cp37UDbSlmDWpl
+         1YsdEzLgSYhWBCxtPCXUSwOObNcRblRE3SREzoNG/a7nOM+boDgU5KwSTx/j8K/TzUJu
+         3y0WPQigyZw1/XqfOJMdiYL3dGdaVmwLVyGOSA98+0OH2bONGpl903m2FGGPs/Z3e5lO
+         kHgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=PN9mwZ17TwiuOC4xeGy2MpkcERBNqgddnlTMYGOXVYs=;
+        b=REFOHhwbPEsDVQm71HzKht5iJIUvoMcK/P5siqK8c3kMxQS0YQPmn6eh0GPS9En3KW
+         xMq3mFqDMjC7con2q8SEepKj1VNwk2lfATpJX2Seb9SL+HX/WTSMUwBve4dAIC+F+KZD
+         YWogcDezgOfTka4BWEhyB69SmzkURQkYxRt71UGDxFM4N++/Cq9MwGWtAi5zdIZ5wlzU
+         6yN6xxqU5EJs8qNthLBvnC37rZzFvD72kH4lkrKS+vJkkpal8F6KKg0cZln95Vjh4zwC
+         +C7wvPWgMZ1X1YTVD5ei/iKjgEh2psXn6+7QLkxzWkOvBUiWHUVtKA5tjDCrigWW9KEp
+         kT5w==
+X-Gm-Message-State: AKS2vOz+JZLL7aVogLSoekCw6N8/Drh4OtzFaLKgiukk5YT4ROijGrWJ
+        KEsquDIFp6VlmrVpbmtRNEQf4+/FHA==
+X-Received: by 10.36.210.194 with SMTP id z185mr7520379itf.112.1498230752803;
+ Fri, 23 Jun 2017 08:12:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170623144603.11774-1-avarab@gmail.com>
+Received: by 10.107.40.70 with HTTP; Fri, 23 Jun 2017 08:12:32 -0700 (PDT)
+In-Reply-To: <455cbce5-97eb-2fdc-6e38-b4feb4daaa6e@ramsayjones.plus.com>
+References: <20170622190158.13265-1-chriscool@tuxfamily.org>
+ <20170622190158.13265-2-chriscool@tuxfamily.org> <xmqq4lv7kdfa.fsf@gitster.mtv.corp.google.com>
+ <455cbce5-97eb-2fdc-6e38-b4feb4daaa6e@ramsayjones.plus.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 23 Jun 2017 17:12:32 +0200
+Message-ID: <CAP8UFD0HTpAN04YU=zqUYudXdNWEq19grVgO1WLAN9SxpN0xug@mail.gmail.com>
+Subject: Re: [PATCH 2/3] t1301: move movebits() to test-lib-functions.sh
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 23, 2017 at 02:46:03PM +0000, Ævar Arnfjörð Bjarmason wrote:
+On Fri, Jun 23, 2017 at 1:09 AM, Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+>
+> On 22/06/17 20:52, Junio C Hamano wrote:
+>> Christian Couder <christian.couder@gmail.com> writes:
+>>
+>>> As the movebits() function can be useful outside t1301,
+>>> let's move it into test-lib-functions.sh, and while at
+>>> it let's rename it test_movebits().
+>>
+>> Good thinking, especially on the renaming.
+>
+> Err, except for the commit message! :-D
+>
+> Both the commit message subject and the commit message body
+> refer to _move_bits() rather than _mode_bits() etc.
+> (So, three instances of s/move/mode/).
 
-> Change the code for deciding what's to be done about %Z to stop
-> passing always either a NULL or "" char * to
-> strbuf_addftime(). Instead pass a boolean int to indicate whether the
-> strftime() %Z format should be omitted, which is what this code is
-> actually doing.
-> 
-> This code grew organically between the changes in 9eafe86d58 ("Merge
-> branch 'rs/strbuf-addftime-zZ'", 2017-06-22) yielding an end result
-> that wasn't very readable. Out of context it looked as though the call
-> to strbuf_addstr() might be adding a custom tz_name to the string, but
-> actually tz_name would always be "", so the call to strbuf_addstr()
-> just to add an empty string to the format was pointless.
-
-The idea was that eventually the caller might be able to come up with a
-TZ that is not blank, but is also not what strftime("%Z") would produce.
-Conceivably that could be done if Git commits carried the "%Z"
-information (not likely), or if we used a reverse-lookup table (also not
-likely).
-
-This closes the door on that.  Since we don't have immediate plans to go
-that route, I'm OK with this patch. It would be easy enough to re-open
-the door if we change our minds later.
-
->  /**
->   * Add the time specified by `tm`, as formatted by `strftime`.
-> - * `tz_name` is used to expand %Z internally unless it's NULL.
->   * `tz_offset` is in decimal hhmm format, e.g. -600 means six hours west
->   * of Greenwich, and it's used to expand %z internally.  However, tokens
->   * with modifiers (e.g. %Ez) are passed to `strftime`.
-> + * `omit_strftime_tz_name` when set, means don't let `strftime` format
-> + * %Z, instead do our own formatting.
-
-Since we now always turn it into a blank string, perhaps "do our own
-formatting" could be more descriptive: we convert it into the empty
-string.
-
--Peff
+Yeah, sorry about that. This is fixed in the version I will send
+really soon now.
