@@ -7,58 +7,60 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5495E2082E
-	for <e@80x24.org>; Fri, 23 Jun 2017 04:09:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CC6A2082E
+	for <e@80x24.org>; Fri, 23 Jun 2017 04:17:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751231AbdFWEJo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 00:09:44 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36153 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751077AbdFWEJn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 00:09:43 -0400
-Received: by mail-pf0-f177.google.com with SMTP id q86so18183467pfl.3
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 21:09:43 -0700 (PDT)
+        id S1751173AbdFWERZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 00:17:25 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36016 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750821AbdFWERY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 00:17:24 -0400
+Received: by mail-pf0-f169.google.com with SMTP id q86so18269534pfl.3
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 21:17:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=EjHl6AbmJMdVRTLIHliF0s2ZQKgfujDS2CyCRmptt7U=;
-        b=EATibcYPHdxTAe0lbMrz4NWnpOXaSouU1Y24fr+8LqaZ4tEoW76qYVQTpTp5lp6EgK
-         DWnHwY8HCTVqrucYIBTRdh6EOLPWnuSlwA9spgTmin+40nNKPcdvwarMpqQOxOFxsHpA
-         eZBXBwsfzwFYbAK9alj4tqQCx2joMqM3cUgf09l0uFcJtKq8r3fMo9zCITKeYoRnkxc3
-         j6R4lPbeqA0koHbR8zGq9ACV9EuI024BPDYbYb7Vl60rMa24NRyTmaau06PDaU78K7c/
-         l1SLiqtO5JdKABK/aPaKCJd++XkYqJvHZ//fhd3eURMaKado/WWZb8AzISE1vWQFaJ74
-         IZ8w==
+        bh=a870aKq8nxI36VSkQw2VGigT9r+EhUkTVUdZEdhGOOY=;
+        b=u0YHgbShsC5AjYQdhhP6Pjc9j+qdtNXMXi6oznbI5o+kNguv/ft6NoNnMd8HiezZZ0
+         YTE19HRM69ZWdwER42wCQj2PygJf1urEpRhsCwE+qjf0lXUWDGZQxkxzGQW2gziFDuxu
+         jgUG8xHgtnnKndOJrzC9ZZmV4Ps3skPrTacuH9EFQ2ZDqVOksEqRO2KlKrLWVNDozXxq
+         Lgw9GwQuqvHp60g6+gf/iguOVY8YGfKlTvVsjpvNd0PMddS+JUyieIJ/D0IRM5NNN03g
+         wKwxpvh6TdRTZ+Dy7HH5WNXQ7d6nkUVqEYB0m5a1X0YmR5hWCR6NMn85o9CJSrNyoIdy
+         fl+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=EjHl6AbmJMdVRTLIHliF0s2ZQKgfujDS2CyCRmptt7U=;
-        b=OAGVNDAYatGzaAl2NYBC8muxHdqjDmDDQdUO+G5ciYLploEj2LpS27hKlXzlWN99ej
-         aDbrQ2j7XHF6jDldd1WQOk/DctA+qgklFc5T5YFLf2eW4hhxTd0bCaQFG4LRPZeJPXd5
-         fFfBR5ZWLtaiHlpiNWGB4rlWDCQm5gKFT3oK/C1Q6C1OpYG07+iS9pxUDlvZ2T6hXB94
-         C3qULW11wmYcp+XgYZbCT3+/BNfmwnD7AC2Bd6D34Wgf6F93TTeXIBs7EXN3oVyipqmh
-         WoMQEMGNR4oMo2Y3Bn40fobxeKGnKHGpNBgk4Ow1Pd80kev5NdNovBXr3BZ3gNcgnfFf
-         XVTQ==
-X-Gm-Message-State: AKS2vOwORWoBAmjVDluPAMNmZ/sg1XsqdAdq9tr/mXWDQRl5lVEUJwkU
-        BEJLwlXOpWrOQA==
-X-Received: by 10.99.104.136 with SMTP id d130mr6011822pgc.236.1498190982391;
-        Thu, 22 Jun 2017 21:09:42 -0700 (PDT)
+        bh=a870aKq8nxI36VSkQw2VGigT9r+EhUkTVUdZEdhGOOY=;
+        b=TG1dgbEBTHclCCKcFS3OFUqJxJpKXCU41+2sgHoQsPhxGR8Gqj1eG1IgJXSLP6yDEI
+         DGzadw8Ni4bRuqgKbqx5d7VE+B6Luvbm/j9yg47Y984tEYi0d7ErKT5o7zYMREEOgoyO
+         z48VwhMbk6wQOeDI3h/YDt9YaKVRTOYIP75idigt8y/vTNNVBDiWmoIIqVrsR5jviN3G
+         f+z8n4FAIBOk7vmHoyDYcLw9pE0nuiZBztfEVzXTti3EbonxDtRdsbegdSfEMBXqyqL/
+         09f+cVK5upRDxLIEBPk1hJiY3rcP8D/0Lrmbpxcp7uNZRik8kZqaUQNNQu4drVP5oCfs
+         PypA==
+X-Gm-Message-State: AKS2vOxLYL1abHZkYpwlE23CCOLAfAKIJpL4ngMMYP790h/qevOynv/4
+        ShfvH/847o0RzQ==
+X-Received: by 10.99.176.1 with SMTP id h1mr6050945pgf.152.1498191443475;
+        Thu, 22 Jun 2017 21:17:23 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:20f6:6e44:6707:50bd])
-        by smtp.gmail.com with ESMTPSA id s64sm7766655pfd.77.2017.06.22.21.09.40
+        by smtp.gmail.com with ESMTPSA id d2sm3571636pfb.49.2017.06.22.21.17.22
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 21:09:41 -0700 (PDT)
+        Thu, 22 Jun 2017 21:17:22 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Xie <emilyxxie@gmail.com>
-Cc:     git@vger.kernel.org, David Turner <novalis@novalis.org>
-Subject: Re: [PATCH] pathspec: die on empty strings as pathspec
-References: <20170607033308.33550-1-emilyxxie@gmail.com>
-        <xmqqfuf82xr5.fsf@gitster.mtv.corp.google.com>
-        <CAAin2ARfUCYM95L_k3fSQ--reQD3uMG72ah=Xg1xvvgKcU+QkQ@mail.gmail.com>
-Date:   Thu, 22 Jun 2017 21:09:40 -0700
-In-Reply-To: <CAAin2ARfUCYM95L_k3fSQ--reQD3uMG72ah=Xg1xvvgKcU+QkQ@mail.gmail.com>
-        (Emily Xie's message of "Thu, 22 Jun 2017 22:34:31 -0400")
-Message-ID: <xmqqefubgxa3.fsf@gitster.mtv.corp.google.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v3 0/4] Add regression tests for recent rebase -i fixes
+References: <20170531104213.16944-1-phillip.wood@talktalk.net>
+        <20170619175605.27864-1-phillip.wood@talktalk.net>
+Date:   Thu, 22 Jun 2017 21:17:22 -0700
+In-Reply-To: <20170619175605.27864-1-phillip.wood@talktalk.net> (Phillip
+        Wood's message of "Mon, 19 Jun 2017 18:56:01 +0100")
+Message-ID: <xmqqa84zgwx9.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,19 +69,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Xie <emilyxxie@gmail.com> writes:
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-> I ran the tests and none of them failed. 
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> I've updated the second two tests to be portable using q_to_cr() as
+> Johannes suggested and added his patch to fix the autostash messages
+> going to stdout rather than stderr. The reflog message test is
+> unchanged. Thanks to Johannes for his help and to Junio for picking up
+> the bashism in the last iteration.
+>
+> Johannes Schindelin (1):
+>   sequencer: print autostash messages to stderr
+>
+> Phillip Wood (3):
+>   rebase -i: Add test for reflog message
+>   rebase: Add regression tests for console output
+>   rebase: Add more regression tests for console output
+>
+>  git-rebase.sh                 |   4 +-
+>  sequencer.c                   |  11 ++--
+>  t/t3404-rebase-interactive.sh |   7 +++
+>  t/t3420-rebase-autostash.sh   | 136 ++++++++++++++++++++++++++++++++++++++++--
+>  4 files changed, 147 insertions(+), 11 deletions(-)
 
-This is not about a test you touched, but applied to or merged to
-any of the recent integration branches (like 'master' or 'maint')
+I've merged this to 'next' but I probably shouldn't have before
+making sure that Travis tests passes 'pu' while this was still in
+there.  
 
-    $ make
-    $ cd t
-    $ GIT_TEST_LONG=YesPlease sh ./t0027-*.sh
+At least t3420 seems to fail under GETTEXT_POISON build.
 
-fails at the very beginning.  I do not know if 0027 is the only one
-that triggers this failure, though.
-
-THanks.
+  https://travis-ci.org/git/git/jobs/245990993
 
