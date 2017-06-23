@@ -2,104 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52C5020282
-	for <e@80x24.org>; Fri, 23 Jun 2017 20:22:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9119920282
+	for <e@80x24.org>; Fri, 23 Jun 2017 20:23:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754903AbdFWUWQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 16:22:16 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35745 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754880AbdFWUWP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 16:22:15 -0400
-Received: by mail-pg0-f66.google.com with SMTP id f127so7385969pgc.2
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 13:22:15 -0700 (PDT)
+        id S1754949AbdFWUXy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 16:23:54 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:35143 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754872AbdFWUXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 16:23:53 -0400
+Received: by mail-pg0-f49.google.com with SMTP id 132so25351590pgb.2
+        for <git@vger.kernel.org>; Fri, 23 Jun 2017 13:23:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Twej0i76m+3H2fk0AbnY3AQ9/qZavdE2xvbXEXlwB4w=;
-        b=NKEhwDPQsOC0d1hrEWFqKon412vHlcSIShWiy3D+wOKLeExZX4w38230DqKMydWDXG
-         /3h3M5fvMb1DUQXmhR0Bu0MfcywmPZoPNaBgaJjXnQdet4/CRtRS4I5cz6M/ja8Pv/+G
-         XvDERbTAGKyJFmb2SNRkKrEDIylkSQihyyYyEy/sookyoXi7lIM6AGGmYCG4hUSOuSUt
-         BQk7jkqU08lMYFLMcKw5bOEiiXNsTFAahxhzF6pH2uAezwA/cpfQ7HnGnWqdwfuB22ZP
-         motZp9l5h2CZsu373qRLaz/EQ+gIi9VfMcETDJfydvHn21S0IfquFU/9lqkJ4DVJzCvF
-         blLQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LBA8M+jNxpzmC135AvP24dHFW5vVU58pnnm3n8K1CYA=;
+        b=d5O2zAaTbYfduY+8o1ILmh5WA9Z9jpz1S/QCZbmDJ470y7/tB6Ci/YAxN7n9r0WxYm
+         b2hdY7njHG3H0tIHXL6yjWUaMh7/Tk2XQYiJd8oUgKT+oLoTEWkl2ykn9PDs+btcrybD
+         wp+eHwXcbOpV5a7LWnpB77Fl796PN41dwVz+AYQWsK9NlHLQAqP4xB9vN5C+CLO4R9Ua
+         7OJBh2ABh8tHIevNAgqyMIbhcdAF80AV0e8bAGxCwXVFppF9GJk8Pc0iFCN0LcMjm5hd
+         SYLDVg1OCB50diCH1M5fTn59RXSjNlqx8lCVZhZGQgjQkTEVthFD5Op42K4kGNacxEaG
+         nM9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Twej0i76m+3H2fk0AbnY3AQ9/qZavdE2xvbXEXlwB4w=;
-        b=IG+Uanr+UZKwN6SxzlFB40cma5ZOZwe4ygkBDhJNOzC8zfwhcK7DmRx5xnCliagIQw
-         nzvMWyFDd7vDEwCahpbIfMu3poaOE8dy9xo7DyrnNcIu0ubMcUfqzd9+qlgYmiwajmi0
-         rwixVkrpIARNsN7phYXCBahrRs45F5VsCGD4L0+RU44FsOc2FLJeaozYTfY3e6SxfIvp
-         oW3+7XiT6ExDzYgQaOnIriFTwPFQlWT9107DaPT9oUlYksbwVmOoe3jNIFnq8aDcEZHU
-         YAY49PVpVjE1v2QsIwHQdWMt7yFmLg8vSBj+ljrSzQ84EuIVR916XJr4nhPYudAdzsE5
-         UoHA==
-X-Gm-Message-State: AKS2vOw8KEXs7y5t66vOQy5sGKZerwjmZ0ercBSLwhBqFAYYz5Btp3jc
-        qbiTJJ2jIotU5g==
-X-Received: by 10.84.195.131 with SMTP id j3mr10841991pld.147.1498249334690;
-        Fri, 23 Jun 2017 13:22:14 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:4cd0:d6d2:1e09:4052])
-        by smtp.gmail.com with ESMTPSA id b28sm13397654pfm.9.2017.06.23.13.22.13
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 23 Jun 2017 13:22:13 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        =?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        David Turner <novalis@novalis.org>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 01/29] t1408: add a test of stale packed refs covered by loose refs
-References: <cover.1498200513.git.mhagger@alum.mit.edu>
-        <4eca5010979e86fa25d95b68d3f266d7f74d168b.1498200513.git.mhagger@alum.mit.edu>
-        <20170623185943.noczrssjjigomezx@sigill.intra.peff.net>
-Date:   Fri, 23 Jun 2017 13:22:13 -0700
-In-Reply-To: <20170623185943.noczrssjjigomezx@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 23 Jun 2017 14:59:43 -0400")
-Message-ID: <xmqq60fme9oq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LBA8M+jNxpzmC135AvP24dHFW5vVU58pnnm3n8K1CYA=;
+        b=g3xLb0NxTb36epoQI0Fin/cm1v5ewEkzkbXIjjSSsde84MGne6YhoC5nfIGg7RO/g4
+         /bHnDSsAdRfSoP4MGmug4W3wyry9HRzgZBXZtCzLtwIrKGVmDB/KaKWw+NUMR2dPF9rC
+         7zjxEgvyTTHMOm//G4EItWf0RTW+y/0KFa6Od5l/19FtvJEyUngqAHUCq2CuR0sxCPOJ
+         Mp7qAtPJjGYBbKygNUfbjtkyE68ezDK0MkbcATrDQlTkPz98QnjEX3aWc+Kl2ocOlKyJ
+         ake5302khXnAtzYxKUrA2x9hqsjtdsQ1mi8zqavflb13SNkKFeJKue6yc1cgATh+6Ili
+         ne5Q==
+X-Gm-Message-State: AKS2vOz0S6wujCzJ/GcrPzwfrjh8XtMeFrxJLst33l4I2qGUkTZAQVNX
+        dfSZvXpv6w+osUbfLj2buCCsq2aBU46D
+X-Received: by 10.99.55.83 with SMTP id g19mr9623640pgn.243.1498249432722;
+ Fri, 23 Jun 2017 13:23:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.161.227 with HTTP; Fri, 23 Jun 2017 13:23:52 -0700 (PDT)
+In-Reply-To: <20170623201020.24zus6tsnf2i62d3@sigill.intra.peff.net>
+References: <20170623201020.24zus6tsnf2i62d3@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 23 Jun 2017 13:23:52 -0700
+Message-ID: <CAGZ79kbKB0hWOHCWsa0k1z=QXeRC2Ab1sSOeQ7pApB7+o6mdFw@mail.gmail.com>
+Subject: Re: --color-moved feedback, was Re: [PATCH v2 19/29] packed-backend:
+ new module for handling packed references
+To:     Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jun 23, 2017 at 1:10 PM, Jeff King <peff@peff.net> wrote:
+> [I culled the cc list, as it was big and they don't all necessarily care
+> about this feature]
 
-> On Fri, Jun 23, 2017 at 09:01:19AM +0200, Michael Haggerty wrote:
+Yeah I was on the verge to do that, but did not pull through.
+
+
 >
->> +test_expect_success setup '
->> +	test_tick &&
->> +	git commit --allow-empty -m one &&
->> +	one=$(git rev-parse HEAD) &&
->> +	git for-each-ref >actual &&
->> +	echo "$one commit	refs/heads/master" >expect &&
->> +	test_cmp expect actual &&
->> +
->> +	git pack-refs --all &&
->> +	git for-each-ref >actual &&
->> +	echo "$one commit	refs/heads/master" >expect &&
->> +	test_cmp expect actual &&
->> +
->> +	cat .git/packed-refs &&
+> In the end, I just did --color-moved=plain,  ...
+> "yep, this is all a giant moved chunk, so I don't have to look carefully
+> at it".
+
+This is dangerous, as "plain" does not care about permutations.
+See the 7f5af90798 (diff.c: color moved lines differently, 2017-06-19)
+for details. You would want at least "zebra", which would show you
+permutations.
+
+> I'm not sure what the default mode is. When I first used it it seemed to
+> italicize a bunch of text. Which I didn't even notice at first, so I
+> thought it was broken.
+
+ok, italics does not seem to be popular.
+I liked it as I could take the same color for these uninteresting lines.
+
+> I didn't try the "dim" feature; I don't think urxvt supports that
+> attribute (though maybe it was what was doing the italics?).
+
+That is on by default (with italics), maybe the default should rather
+be "zebra" as that has fewer colors but still contains all the information
+needed to be sure about
+    "yep, this is all a giant moved chunk, so I don't have to look
+    carefully at it".
+
 >
-> I think we'd usually drop debugging "cat"s like these in the name of
-> keeping the process count down. Unless they really are intended to
-> confirm that .git/packed-refs exists (although test_path_is_file is a
-> less expensive way of checking that).
+> One minor quibble is that I used with "git log", so I was looking at all
+> the commits with that coloring. But the ones that didn't have movement
+> had a lot of noisy "moved" sections. E.g., one line moving here or
+> there, or even blank lines. It might be worth having some heuristics to
+> identify a chunk (I think I saw some discussion on that earlier, and
+> maybe it's even there and I didn't see it).
+
+It is not there, yet. It was Michaels suggestions.
+I'll give that a try, too.
+
+>> Let's take this patch as an example, if someone were to find a bug
+>> in one of the moved functions, they would send a fix based on the
+>> function in refs/files-backend.c, such that it can easily be merged down
+>> to maint, but when merging it forward with this, it may clash.
 >
-> That's a minor nit, though.
+> That feels more dangerous to me, just because the heuristics seem to
+> find a lot of "moves" of repeated code. Imagine a simple patch like
+> "switch return 0 to return -1". If the code you're touching went away,
+> there's a very good chance that another "return 0" popped up somewhere
+> else in the code base. A conflict is what you want there; silently
+> changing some other site would be not only wrong, but quite subtle and
+> hard to find.
 
-Sorry, these two cat's were what I used while debugging the test and
-should be dropped.
+I agree, that is the danger, but the scale of danger is the size of the moved
+chunk. A file is usually a very large chunk, such that it is obviously a good
+idea to fix that. Maybe we'd introduce a threshold, that the fix must not be in
+range of the block boundaries of say 3 lines.
+(Then the moved block must be at least 7 lines of code such that a one liner
+fix in the middle would kick in)
 
-Will remove while queuing.
-
-Thanks for spotting.
+Thanks,
+Stefan
