@@ -2,114 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0C3B207D2
-	for <e@80x24.org>; Fri, 23 Jun 2017 23:04:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A10C207D2
+	for <e@80x24.org>; Fri, 23 Jun 2017 23:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754679AbdFWXEh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 19:04:37 -0400
-Received: from hahler.de ([188.40.33.212]:53085 "EHLO elfe.thequod.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754621AbdFWXEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 19:04:36 -0400
-X-Greylist: delayed 396 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Jun 2017 19:04:36 EDT
-Received: from localhost (amavis [10.122.1.24])
-        by elfe.thequod.de (Postfix) with ESMTP id 373366212E;
-        Sat, 24 Jun 2017 00:57:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thequod.de; h=
-        content-type:content-type:in-reply-to:mime-version:user-agent
-        :date:date:message-id:references:subject:subject:from:from
-        :received:received; s=postfix2; t=1498258678; bh=Clu+ebXHej43Lig
-        HsxPaJvSq1ROT8S0mKz7p+yua6WE=; b=r6UaS45blSgCSZef24qiCiL3Aowg5Hl
-        wnJvVi8UdPqiMwkqDXY9etxRvYiXV2h3cN+nLrJQcI8LHE7i0Cjj7pnAN1LjzFVC
-        822PzAwdOApr7/80QRxlKjhcA9jlMTaXo5hPjoKBl2mF5kS2VAdSJeaoNfxuqN/h
-        miYjkj3IzZv8=
-Received: from elfe.thequod.de ([10.122.1.25])
-        by localhost (amavis.thequod.de [10.122.1.24]) (amavisd-new, port 10026)
-        with ESMTP id QH1_DNzym-Ng; Sat, 24 Jun 2017 00:57:58 +0200 (CEST)
-From:   Daniel Hahler <git@thequod.de>
-Subject: Re: [PATCH] xdiff: trim common tail with -U0 after diff
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-References: <20170623103612.4694-1-git@thequod.de>
- <fa350688-1831-f979-b984-3b6d54e32b8c@web.de>
-Message-ID: <436f31fb-3a06-e6ca-094e-8e92aa1ee1d1@thequod.de>
-Date:   Sat, 24 Jun 2017 00:57:57 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+        id S1754109AbdFWXj6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 19:39:58 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:35097 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753946AbdFWXj5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 19:39:57 -0400
+Received: by mail-pg0-f43.google.com with SMTP id 132so26813539pgb.2
+        for <git@vger.kernel.org>; Fri, 23 Jun 2017 16:39:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RbORx0vLnK3wmor4Nkzkh7WDs/SNc2DqVdpW1H3pQxM=;
+        b=aK/NDDdO2hONKOCZaNkiyCgfNPHEdEFbPTsJIZZ6YI6AUrvlMzFfbTt1+CaKQsBKHK
+         01DSxo9Ptqw7oO5ooZ5scgYsvyEdTb4bpWB+DwDxOQxs/sIxbt7Tp8NJ1Y0/cbJA0Ba5
+         PJwGUuE7kukwv8J3ccts/Q1g+AJC4E4k6bwa9fdHM1A5ohr4BGOb6D0hJY5cx8Ajfx3A
+         gh084tiuHRA2T34FWKJDexn5K1s8rNddpBcLzkQlUyGgDd9yJ5sL0VHuVgYuRY/xnFf1
+         B/+6ouc3kCjqafC9kG+pbjQ0TTY3zAehAGzuG6wE0oQAVPQxInG9sd7TkwPwR11BjILu
+         nd4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RbORx0vLnK3wmor4Nkzkh7WDs/SNc2DqVdpW1H3pQxM=;
+        b=gbcsldqrSTxV/nBDxeENoDPt+Xb8NjGX5U4b3vIfJXi+kwjcUQbSdRzGNIGCU1ji1e
+         JDCOO9EnzA7uSWnafHS0TqvDL+ZBhbTBLilYtC8D8HlSPzGB+hiCnCWumu0TH6KrMquV
+         GgTBCrMQSOdld40Hk4u9ROFvKohaKyAjIB7F9Ore05xuhRHO0TArtJm9cdiZFb6zj3Sq
+         yREP4X5jsxvtMWoRoDh1u7RrM2uiKV6cUeJwMQ8AoNuYZz9Qz0uo1sFSYrix7izKgocP
+         xOvtR589wG8cekyV9djtTmmkOeByyHkJJRclSIkuoCBnWUMpUcHQm5Yt8+BvBCMH484h
+         E6Ig==
+X-Gm-Message-State: AKS2vOwnINhj0Btrojx/Cu21EjrYfWcPSriA/A4p1xs0VQHlhRlfyy6/
+        70Plz7DdEWchpRjc548ltUXBlCLM3NSE
+X-Received: by 10.84.191.131 with SMTP id a3mr924866pld.279.1498261196097;
+ Fri, 23 Jun 2017 16:39:56 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <fa350688-1831-f979-b984-3b6d54e32b8c@web.de>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="nBRpFaNgrMrIQu5Qcuo6IaeHcQ1Utc9FW"
+Received: by 10.100.161.227 with HTTP; Fri, 23 Jun 2017 16:39:55 -0700 (PDT)
+In-Reply-To: <871sqajrgi.fsf@gmail.com>
+References: <xmqqinjnhcr8.fsf@gitster.mtv.corp.google.com> <871sqajrgi.fsf@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 23 Jun 2017 16:39:55 -0700
+Message-ID: <CAGZ79kZyMUKPahTXOF7ds6zSvFKLrM2N78JKG-2+GRL5nnmuvA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2017, #06; Thu, 22)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---nBRpFaNgrMrIQu5Qcuo6IaeHcQ1Utc9FW
-Content-Type: multipart/mixed; boundary="9aQxDKvC0wpAxvaRKQsgjgXOUG5DciRVs";
- protected-headers="v1"
-From: Daniel Hahler <git@thequod.de>
-To: =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
- Stefan Beller <sbeller@google.com>
-Message-ID: <436f31fb-3a06-e6ca-094e-8e92aa1ee1d1@thequod.de>
-Subject: Re: [PATCH] xdiff: trim common tail with -U0 after diff
-References: <20170623103612.4694-1-git@thequod.de>
- <fa350688-1831-f979-b984-3b6d54e32b8c@web.de>
-In-Reply-To: <fa350688-1831-f979-b984-3b6d54e32b8c@web.de>
+On Fri, Jun 23, 2017 at 2:59 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Thu, Jun 22 2017, Junio C. Hamano jotted:
+>
+>> * sb/diff-color-move (2017-06-21) 25 commits
+>>  - diff: document the new --color-moved setting
+>>  - diff.c: add dimming to moved line detection
+>>  - diff.c: color moved lines differently, plain mode
+>>  - diff.c: color moved lines differently
+>>  - diff.c: buffer all output if asked to
+>>  - diff.c: emit_diff_symbol learns about DIFF_SYMBOL_SUMMARY
+>>  - diff.c: emit_diff_symbol learns about DIFF_SYMBOL_STAT_SEP
+>>  - diff.c: convert word diffing to use emit_diff_symbol
+>>  - diff.c: convert show_stats to use emit_diff_symbol
+>>  - diff.c: convert emit_binary_diff_body to use emit_diff_symbol
+>>  - submodule.c: migrate diff output to use emit_diff_symbol
+>>  - diff.c: emit_diff_symbol learns DIFF_SYMBOL_REWRITE_DIFF
+>>  - diff.c: emit_diff_symbol learns about DIFF_SYMBOL_BINARY_FILES
+>>  - diff.c: emit_diff_symbol learns DIFF_SYMBOL_HEADER
+>>  - diff.c: emit_diff_symbol learns DIFF_SYMBOL_FILEPAIR
+>>  - diff.c: emit_diff_symbol learns DIFF_SYMBOL_CONTEXT_INCOMPLETE
+>>  - diff.c: emit_diff_symbol learns DIFF_SYMBOL_WORDS{_PORCELAIN}
+>>  - diff.c: migrate emit_line_checked to use emit_diff_symbol
+>>  - diff.c: emit_diff_symbol learns DIFF_SYMBOL_NO_LF_EOF
+>>  - diff.c: emit_diff_symbol learns DIFF_SYMBOL_CONTEXT_FRAGINFO
+>>  - diff.c: emit_diff_symbol learns DIFF_SYMBOL_CONTEXT_MARKER
+>>  - diff.c: introduce emit_diff_symbol
+>>  - diff.c: factor out diff_flush_patch_all_file_pairs
+>>  - diff.c: move line ending check into emit_hunk_header
+>>  - diff.c: readability fix
+>>
+>>  "git diff" has been taught to optionally paint new lines that are
+>>  the same as deleted lines elsewhere differently from genuinely new
+>>  lines.
+>>
+>>  Is any more update coming?
+>
+> I guess here's as good a place for feedback is any, this feature's
+> great, but I discovered some minor warts in it:
 
---9aQxDKvC0wpAxvaRKQsgjgXOUG5DciRVs
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Thanks for reporting these. :)
 
-On 23.06.2017 22:39, Ren=C3=A9 Scharfe wrote:
+So:
+* have the boolean option as below
+* fix error modes in config
+* rewrite documentation for lazy skimming readers :)
 
-> The changed test script passes just fine for me even without your chang=
-e
-> to xdiff-interface.c, which is odd.
+I also consider
+* changing the default to zebra (instead of dimmed_zebra)
 
-Sorry, I've apparently messed this up - it seems to be the case for me, t=
-oo.
+Junio wrote (when reviewing Michaels series)
+> This patch shows OK, but when applied to other changes in the
+> series, e.g. "packed_ref_store: make class into a subclass of
+> `ref_store`", it was somewhat irritating that all new blank lines
+> are shown as a copy-move of a single deleted blank line (also a
+> single "return refs" in an entirely new function being a copy/move
+> looked confusing).
 
-I would assume that using the functions.c context/diff in this test file =
-might prove it, but when I wrote this test I was already unsure to base i=
-t on an experimental feature, that might just get removed again (with its=
- tests).
-
-> Do you have another way to demonstrate the unexpected behavior?
-
-It was clearly reproducible with a local test case, based on "copying an =
-existing test case, and modifying the header for it only".
-
-Given the other replies, it seems like it is more a question now if the t=
-rimming should get moved down, or removed completely it seems.
-So I will not update the patch/test for now.
-
-
---=20
-http://daniel.hahler.de/
-
-
---9aQxDKvC0wpAxvaRKQsgjgXOUG5DciRVs--
-
---nBRpFaNgrMrIQu5Qcuo6IaeHcQ1Utc9FW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EARECAB0WIQS1psIggp+uXWnrnKN8Ar+FP+Y+AAUCWU2c9QAKCRB8Ar+FP+Y+
-ANs+AJwM0pwHmXVLGQgqCswSHvtT4+T1zACgyLFY4I4LsoLa/DOZxm1N7hNefhM=
-=SJdR
------END PGP SIGNATURE-----
-
---nBRpFaNgrMrIQu5Qcuo6IaeHcQ1Utc9FW--
+* add some heuristic to omit small blobs, (empty lines, closing braces)
+  Maybe this is can be solved by not considering anything
+  that occurs multiple times?
