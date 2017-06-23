@@ -2,120 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A677A20401
-	for <e@80x24.org>; Fri, 23 Jun 2017 09:43:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1465620401
+	for <e@80x24.org>; Fri, 23 Jun 2017 09:53:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754610AbdFWJnr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 05:43:47 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:35421 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754586AbdFWJnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 05:43:46 -0400
-Received: by mail-wr0-f173.google.com with SMTP id k67so57659511wrc.2
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 02:43:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=t6fQYcAGT2IFbGJrWKGaIJWNq5edzZTnZrH91jQIWiM=;
-        b=WT4vgqbZxAWpbfAV4qKKdLl/ZBp9fDXIkCoki6Z91tVxTDcaydRdHWuOXSXhhN6Zw0
-         sMgAkVOCZ1va+860AGK6D1dAHtWLMaFLHUzwtltobPEpszY6wNNF3q7fpzQhvCFZwbdN
-         rDK5yK4ANtMuYWj520oNDPaaAxCjD+hURnhXBsmWk8h3LfpzfRUR7lmcLA4ouImCEoJ/
-         0BHMPZvJlK5JsJAwMaR8S69HEr6ry+vdYG/CvjCnQaUc5Q+4h/iCdJyIs+UJ+l8PPJb1
-         N3wLdifSMBpKWQzmbbBJzmyfsxFzM5G5px+Yn7hEhM8aMMo5Eopetihz6NsdMCM22vUX
-         Eemg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=t6fQYcAGT2IFbGJrWKGaIJWNq5edzZTnZrH91jQIWiM=;
-        b=Cnnr1e6Yc6HcURjc0xgNSp0P8dfeetxzpyDXSbRyu8VM1XotFfSAUajhCxoLfJziFk
-         pfG8nl4GHVX5aeej2YyUlmdUusmLrQlIEERkuzdUv5jX/7ruQNzvXt0AcbSLa64uxoTu
-         2blsOI01E+wLvIXzkKYvySeHC4BZ+pwY2tliy+dTfcsVX4lSV0Jd8ZVhvGXXt0FakM6p
-         6SVrfBrYbHMAjCAIqwHqztR1jKXKmv1HZcxJa73EQDWvvGTkHqHDu4KdfgNKXUeSVALQ
-         ufKIbzYz8XfJiemAnFwtY6ZeUFw8V/+ryNpdcDpiyF+6zYxwnRplVgfCKNYbXDftE80t
-         g+dA==
-X-Gm-Message-State: AKS2vOyEQUWndIN9IRWu/sNdb6uilV0TCQNesY39jMXmszK0Z2RsipXf
-        VGxgj5kVQMHkRR2SoD8=
-X-Received: by 10.28.140.212 with SMTP id o203mr120154wmd.66.1498211024651;
-        Fri, 23 Jun 2017 02:43:44 -0700 (PDT)
-Received: from birpc0l19ww.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id r40sm5007436wrb.37.2017.06.23.02.43.42
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 23 Jun 2017 02:43:43 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Jun 2017, #06; Thu, 22)
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqinjnhcr8.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 23 Jun 2017 11:43:41 +0200
-Cc:     Git Mailinglist <git@vger.kernel.org>, phillip.wood@dunelm.org.uk
-Content-Transfer-Encoding: 7bit
-Message-Id: <AEBB93E7-7D91-4D0D-96C9-F2AB1AE079FD@gmail.com>
-References: <xmqqinjnhcr8.fsf@gitster.mtv.corp.google.com>
+        id S1754655AbdFWJxl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 05:53:41 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:6518 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754606AbdFWJxk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 05:53:40 -0400
+Received: from [192.168.2.201] ([92.22.42.39])
+        by smtp.talktalk.net with SMTP
+        id OLHVdme3McpskOLHVdGwvX; Fri, 23 Jun 2017 10:53:38 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1498211618; bh=2KDYH3fjXXfz7TkOxJ1MIp3Bzt037wjq3ymNGRKUJro=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=rdHNb9HtmuS1xpj43WWyQaR46tcJket0tpBLg402hPcoCf0yGKnn1cSb9heP6S0Vm
+         RKoagtd2NsMPbHa2dYk8sXuoix+BEipzkkT4j7AsQ94vwxxsoRWGnpHjJDYzgf91iI
+         TVB3fsvFEo8b0JQmc2R+IFhd42B0dkFMRRGPDqj0=
+X-Originating-IP: [92.22.42.39]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
+ a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
+ a=extA4yZ_AAAA:8 a=YwgSsaPVgTRxjFwEDlIA:9 a=QEXdDO2ut3YA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=hVSmkA6k2N-FF26V3nNA:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 0/4] Add regression tests for recent rebase -i fixes
 To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170531104213.16944-1-phillip.wood@talktalk.net>
+ <20170619175605.27864-1-phillip.wood@talktalk.net>
+ <xmqqa84zgwx9.fsf@gitster.mtv.corp.google.com>
+ <xmqqwp83fg0h.fsf@gitster.mtv.corp.google.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <bc0c32fa-2df6-a4a3-5966-8efabfa349cd@talktalk.net>
+Date:   Fri, 23 Jun 2017 10:53:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
+MIME-Version: 1.0
+In-Reply-To: <xmqqwp83fg0h.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfJztU6J51YlMV/Xpw/bZp1LmLCikFmrKCiWv9EMtlxdxGMr2wFlkJOalwWPIGabcGzF68dEJH/Igjit7VUTeoJBgSn8CcZ+JJ6f4lzwUoEBVELaxKk8p
+ B5IA2O3LKmy+Fkm+y5z5duvYz5cQO5aNYtPFvQVNZoUQrLzXhrU4MqgMuu/Mwb2qZeT0dSDuMJS/sIiJPJiIQU+iwyDOK3z8SpKKIdi5x3AqrsXsfUvmGoIQ
+ ZlajpW2yTMBkNOlQB8byZuHZ9YCsLORlRm3Pk+rnEJLSElR6af9Cz5z01FcTcVJ2IPLEaNKDTenfkPPVIiaf0w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 23/06/17 06:07, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>>>  git-rebase.sh                 |   4 +-
+>>>  sequencer.c                   |  11 ++--
+>>>  t/t3404-rebase-interactive.sh |   7 +++
+>>>  t/t3420-rebase-autostash.sh   | 136 ++++++++++++++++++++++++++++++++++++++++--
+>>>  4 files changed, 147 insertions(+), 11 deletions(-)
+>>
+>> I've merged this to 'next' but I probably shouldn't have before
+>> making sure that Travis tests passes 'pu' while this was still in
+>> there.  
+>>
+>> At least t3420 seems to fail under GETTEXT_POISON build.
+>>
+>>   https://travis-ci.org/git/git/jobs/245990993
+> 
+> This should be sufficient to make t3420 pass.  It seems that t3404
+> is also broken under GETTEXT_POISON build, but I won't have time to
+> look at it, at least tonight.
+> 
+>     $ make GETTEXT_POISON=YesPlease
+>     $ cd t && sh ./t3404-*.sh -i -v
+> 
+> to see how it breaks.
 
-> On 23 Jun 2017, at 00:35, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
-> 
-> You can find the changes described here in the integration branches
-> of the repositories listed at
-> 
->    http://git-blame.blogspot.com/p/git-public-repositories.html
-> 
-> --------------------------------------------------
-> 
+t3404 passes for me,
+$ make GETTEXT_POISON=YesPlease
+$ cd t &&sh t3404-rebase-interactive.sh -i -v
 ...
+# still have 1 known breakage(s)
+# passed all remaining 95 test(s)
+1..96
 
+Also as far as I can see it passes on travis -
+https://travis-ci.org/git/git/jobs/245990993#L910 have I missed
+something? Do you want me to submit a fixup patch for t3420 or have you
+got one already?
+
+Thanks
+
+Phillip
+
+> Thanks.
 > 
-> * ls/filter-process-delayed (2017-06-01) 5 commits
-> - convert: add "status=delayed" to filter process protocol
-> - convert: move multiple file filter error handling to separate function
-> - t0021: write "OUT" only on success
-> - t0021: make debug log file name configurable
-> - t0021: keep filter log files on comparison
+>  t/t3420-rebase-autostash.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> The filter-process interface learned to allow a process with long
-> latency give a "delayed" response.
+> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+> index 6826c38cbd..e243700660 100755
+> --- a/t/t3420-rebase-autostash.sh
+> +++ b/t/t3420-rebase-autostash.sh
+> @@ -178,7 +178,7 @@ testrebase () {
+>  		test_when_finished git branch -D rebased-feature-branch &&
+>  		suffix=${type#\ --} && suffix=${suffix:-am} &&
+>  		create_expected_success_$suffix &&
+> -		test_cmp expected actual
+> +		test_i18ncmp expected actual
+>  	'
+>  
+>  	test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
+> @@ -275,7 +275,7 @@ testrebase () {
+>  		test_when_finished git branch -D rebased-feature-branch &&
+>  		suffix=${type#\ --} && suffix=${suffix:-am} &&
+>  		create_expected_failure_$suffix &&
+> -		test_cmp expected actual
+> +		test_i18ncmp expected actual
+>  	'
+>  }
+>  
 > 
-> Needs review.
-
-I am still desperately looking for reviewers!
-It would be awesome if this feature would have a chance 
-to go into 2.14 :-)
-
-
-> * pw/rebase-i-regression-fix-tests (2017-06-19) 4 commits
->  (merged to 'next' on 2017-06-22 at d1dde1672a)
-> + rebase: add more regression tests for console output
-> + rebase: add regression tests for console output
-> + rebase -i: add test for reflog message
-> + sequencer: print autostash messages to stderr
-> 
-> Fix a recent regression to "git rebase -i" and add tests that would
-> have caught it and others.
-> 
-> Will merge to 'master'.
-
-I think this series breaks t3420-rebase-autostash.sh 
-with GETTEXT_POISON=YesPlease
-
-See: https://travis-ci.org/git/git/jobs/245990993
-
-
-- Lars
 
