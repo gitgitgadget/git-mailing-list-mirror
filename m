@@ -2,116 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B112A20282
-	for <e@80x24.org>; Fri, 23 Jun 2017 17:13:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0252320282
+	for <e@80x24.org>; Fri, 23 Jun 2017 17:16:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754264AbdFWRN3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 13:13:29 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:33235 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753870AbdFWRN2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 13:13:28 -0400
-Received: by mail-pg0-f43.google.com with SMTP id f127so23582062pgc.0
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 10:13:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=VW/bGsOt/CsA79kPnCW+uwbVS363zud8Cm7x9Wg0KFU=;
-        b=VOxLMPWbA1FnBLBdmd/04K2BMGPWdJyjsCCe7DaGmna97U4AVgCzNCV8wLYSjgPao3
-         RyCtKsqBlwF4KCXSCHqeD4sLkQaiKDjQXgdiJD/28tb3cg9wwa+h/QDmm6qPkbPjyRxs
-         Qz768FLiLgew9VY8rrOddZ3/Zi475Ke8Qu8xDOSb9+BiAp1tPh3gu5ELnWJqfgWSSkcz
-         eHyxBitLyl063DFmbCa7HLIzoOdj2VuTF4yT6RahpglPwhnkcvocj89AcSBAS5zaaqAw
-         pf8fM7GlnEPe4j4TJ27dcxbQvgE1J1hEZd1XBZRI4KVX8d3kXcXJwRmWZbA5PjV9FlVv
-         AP+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=VW/bGsOt/CsA79kPnCW+uwbVS363zud8Cm7x9Wg0KFU=;
-        b=QfpaPYptgAUFBq5KX1WIC99iAKfBfa5UjPVWda4qQFx+CzROf8m/2O6bt8+9IzP4lC
-         rFsmVFSieSiQTE7fzqZ1WL6IV9Qz0H2yCC3rmDMlqe/S1sohl2Sqg8NMHLkgb9Rfkfso
-         7G3696ufJR25iW+J0cKWuxdrRDySD2tRBMmQ+Vzenr1ivYUyiCuyUSZGgJ5COy5xiUI8
-         GDSlbLlUMzkwRXWKCp8ObD6HmdwqANCmZuz9lkCsw9aLrj9+AhKym+nrpFlc6xIyvsqm
-         4RQLVDxHULPGYmo6rlvgYq3mFtG5QsB6frOQrYfI48Wbvn7Ju8LroXxCLMqHL1NgnA6d
-         G6JA==
-X-Gm-Message-State: AKS2vOy13TUNGO+z+GGv77qPJ7eBnNVlGv4U9K4boE4w+Oi7ZscjXMSN
-        AoHQ5q+X/oqzQA==
-X-Received: by 10.98.31.10 with SMTP id f10mr9307172pff.164.1498238007836;
-        Fri, 23 Jun 2017 10:13:27 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:4cd0:d6d2:1e09:4052])
-        by smtp.gmail.com with ESMTPSA id z70sm10211489pgz.3.2017.06.23.10.13.27
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 23 Jun 2017 10:13:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] strbuf: change an always NULL/"" strbuf_addftime() param to bool
-References: <20170623144603.11774-1-avarab@gmail.com>
-        <20170623145102.h7rt6zaqajfzuhsk@sigill.intra.peff.net>
-Date:   Fri, 23 Jun 2017 10:13:26 -0700
-In-Reply-To: <20170623145102.h7rt6zaqajfzuhsk@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 23 Jun 2017 10:51:03 -0400")
-Message-ID: <xmqqa84yfwzt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1754615AbdFWRQe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 13:16:34 -0400
+Received: from siwi.pair.com ([209.68.5.199]:41850 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754141AbdFWRQe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 13:16:34 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 3868084597;
+        Fri, 23 Jun 2017 13:16:33 -0400 (EDT)
+Received: from [10.160.98.126] (unknown [167.220.148.10])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id AC88484592;
+        Fri, 23 Jun 2017 13:16:31 -0400 (EDT)
+Subject: Re: [PATCH 1/3] list-objects: add filter_blob to traverse_commit_list
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        jrnieder@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
+References: <20170622203615.34135-1-git@jeffhostetler.com>
+ <20170622203615.34135-2-git@jeffhostetler.com>
+ <20170622144526.3f5813f5@twelve2.svl.corp.google.com>
+ <20170622151028.07827b50@twelve2.svl.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <72257781-5a2c-cdd6-3fb3-7c5e6d883653@jeffhostetler.com>
+Date:   Fri, 23 Jun 2017 13:16:30 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170622151028.07827b50@twelve2.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> The idea was that eventually the caller might be able to come up with a
-> TZ that is not blank, but is also not what strftime("%Z") would produce.
-> Conceivably that could be done if Git commits carried the "%Z"
-> information (not likely), or if we used a reverse-lookup table (also not
-> likely).
 
-The former might be conceivable, but I do not think the latter is
-workable.  Knowing that a location happened to be using a particular
-GMT offset at a specific point in time simply is not sufficient to
-give us a zone name; the whole idea of a zone name being that it
-will give us rules that would apply to other timestamps, not just
-the one we are paring with GMT offset in our committer and author
-timestamp fields.
+On 6/22/2017 6:10 PM, Jonathan Tan wrote:
+> On Thu, 22 Jun 2017 14:45:26 -0700
+> Jonathan Tan <jonathantanmy@google.com> wrote:
+> 
+>> On Thu, 22 Jun 2017 20:36:13 +0000
+>> Jeff Hostetler <git@jeffhostetler.com> wrote:
+>>
+>>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>>
+>>> In preparation for partial/sparse clone/fetch where the
+>>> server is allowed to omit large/all blobs from the packfile,
+>>> teach traverse_commit_list() to take a blob filter-proc that
+>>> controls when blobs are shown and marked as SEEN.
+>>>
+>>> Normally, traverse_commit_list() always marks visited blobs
+>>> as SEEN, so that the show_object() callback will never see
+>>> duplicates.  Since a single blob OID may be referenced by
+>>> multiple pathnames, we may not be able to decide if a blob
+>>> should be excluded until later pathnames have been traversed.
+>>> With the filter-proc, the automatic deduping is disabled.
+>>
+>> Comparing this approach (this patch and the next one) against mine [1],
+>> I see that this has the advantage of (in pack-objects) avoiding the
+>> invocation of add_preferred_base_object() on blobs that are filtered
+>> out, avoiding polluting the "to_pack" data structure with information
+>> that we do not need.
+>>
+>> But it does add an extra place where blobs are filtered out (besides
+>> add_object_entry()), which makes it harder for the reader to keep track
+>> of what's going on. I took a brief look to see if filtering could be
+>> eliminated from add_object_entry(), but that function is called from
+>> many places, so I couldn't tell.
+>>
+>> Anyway, I think both approaches will work (this patch's and mine [1]).
+>>
+>> [1] https://public-inbox.org/git/6f7934621717141ce3bb6bc05cf1d59c7900ccc5.1496432147.git.jonathantanmy@google.com/
+> 
+> Also it should be mentioned somewhere that this does not cover the
+> bitmap case - a similar discussion should be included in one of the
+> patches, like I did in [1].
+> 
+> And looking back at my original cover letter [2], I wrote:
+> 
+>> This is similar to [1] except that this
+> [...]
+>> is slightly more comprehensive in
+>> that the read_object_list_from_stdin() codepath is also covered in
+>> addition to the get_object_list() codepath. (Although, to be clear,
+>> upload-pack always passes "--revs" and thus only needs the
+>> get_object_list() codepath).
+> 
+> (The [1] in the quote above refers to one of Jeff Hostetler's patches,
+> [QUOTE 1].)
+> 
+> The same issue applies to this patch (since
+> read_object_list_from_stdin() invokes add_object_entry() directly
+> without going through the traversal mechanism) and probably warrants at
+> least some description in one of the commit messages.
+> 
+> [1] https://public-inbox.org/git/6f7934621717141ce3bb6bc05cf1d59c7900ccc5.1496432147.git.jonathantanmy@google.com/
+> [2] https://public-inbox.org/git/cover.1496361873.git.jonathantanmy@google.com/
+> 
+> [QUOTE 1] https://public-inbox.org/git/1488994685-37403-3-git-send-email-jeffhost@microsoft.com/
+> 
 
-A third possibility is the information may come out of band.
-Something like "When gitster is in +0900 he is in JST" can be
-maintained per project and supplied by the caller.
 
-> This closes the door on that.  Since we don't have immediate plans to go
-> that route, I'm OK with this patch. It would be easy enough to re-open
-> the door if we change our minds later.
+Thanks for the quick feedback.  I'll dig into each of these comments
+as I work on my next draft.
 
-I agree that it is not too much hassle to revert this change.  I
-actually would not have minded if René's original were written with
-a boolean flag.  But I do not see the value in flipping ("" vs NULL)
-with a bool now.  The benefit we are gaining (other than closing the
-door) is unclear to me.
-
->>  /**
->>   * Add the time specified by `tm`, as formatted by `strftime`.
->> - * `tz_name` is used to expand %Z internally unless it's NULL.
->>   * `tz_offset` is in decimal hhmm format, e.g. -600 means six hours west
->>   * of Greenwich, and it's used to expand %z internally.  However, tokens
->>   * with modifiers (e.g. %Ez) are passed to `strftime`.
->> + * `omit_strftime_tz_name` when set, means don't let `strftime` format
->> + * %Z, instead do our own formatting.
->
-> Since we now always turn it into a blank string, perhaps "do our own
-> formatting" could be more descriptive: we convert it into the empty
-> string.
-
-Yeah, that reads better.  I am also OK if this said that an empty
-string is an accepted POSIX way to fallback when the information is
-unavailable---and we really are in that "information is unavailable"
-situation in this code.
+Jeff
