@@ -2,87 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 226DF20282
-	for <e@80x24.org>; Fri, 23 Jun 2017 20:13:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52C5020282
+	for <e@80x24.org>; Fri, 23 Jun 2017 20:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755108AbdFWUNK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 16:13:10 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:36811 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755015AbdFWUNJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 16:13:09 -0400
-Received: by mail-pf0-f170.google.com with SMTP id q86so27990229pfl.3
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 13:13:09 -0700 (PDT)
+        id S1754903AbdFWUWQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 16:22:16 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35745 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754880AbdFWUWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 16:22:15 -0400
+Received: by mail-pg0-f66.google.com with SMTP id f127so7385969pgc.2
+        for <git@vger.kernel.org>; Fri, 23 Jun 2017 13:22:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=O2h+IyNgv+EA9ou9EE8hIoGOBdswGwTKC2f0DZNyQrI=;
-        b=pT+/BIOwzZ8Yxw9q/DXl3HdX42mmYwIj0EypGbhMxtmNNoY/SXHME6edYnsIwJuiZb
-         fbv6J+I4owJdwL9kTE3BAN9ou8pL3WDYgey20XHmwVxcrj67ieMSyM0v7R3EAYkiJgzd
-         VQpYdUeciBlkM8ymjYXAS9wd1mXnKaCZIUfT9x9DWh+m6oWQqlOP49CvXBTxosMlrLRT
-         d9FnIB9rwhbutoZQqeLo+gNB78aDtIYNzz990TnsLkFQHamjeUzb86AKqIHdjixt1Q9h
-         JoYYZYCl8r3rB/GT7j5vRJumtiUx6whZRWS5f2DY2sJ8sxlmA4svCr/0PczgeNJI8q52
-         uKbw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Twej0i76m+3H2fk0AbnY3AQ9/qZavdE2xvbXEXlwB4w=;
+        b=NKEhwDPQsOC0d1hrEWFqKon412vHlcSIShWiy3D+wOKLeExZX4w38230DqKMydWDXG
+         /3h3M5fvMb1DUQXmhR0Bu0MfcywmPZoPNaBgaJjXnQdet4/CRtRS4I5cz6M/ja8Pv/+G
+         XvDERbTAGKyJFmb2SNRkKrEDIylkSQihyyYyEy/sookyoXi7lIM6AGGmYCG4hUSOuSUt
+         BQk7jkqU08lMYFLMcKw5bOEiiXNsTFAahxhzF6pH2uAezwA/cpfQ7HnGnWqdwfuB22ZP
+         motZp9l5h2CZsu373qRLaz/EQ+gIi9VfMcETDJfydvHn21S0IfquFU/9lqkJ4DVJzCvF
+         blLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=O2h+IyNgv+EA9ou9EE8hIoGOBdswGwTKC2f0DZNyQrI=;
-        b=qfHrD+DLt2b5lx4+RoOK5qPgaO+gIT1du+sq6Zxk6Bjw58Z6CI/eLowz7O/rWqEbwm
-         Uil6XI+/xHnGf0L6XszH/00QPSI8LTPIItLzeq0ALEeWCzUHrbh254HJtKDMAul5VY8e
-         dyfzw5cd7FjhPv4CtU4O3mcIlJMSph9tZPqyrutN1G7qQvkCOcw+7n6Xs15nCeCTLjJf
-         lO7FYFZfsYr9ReKW+3ESL3ERT1TVVndOI2ZGxhH05zP43+h3KBkm3ArlKZMkElym65YM
-         B8cCNNgdr/OLKHmt1sqcxGgJuM+YLl0aTYk/JTSdq3Tx0ePH0lQDqOwN6dOeykTdm4F/
-         qUcQ==
-X-Gm-Message-State: AKS2vOxqhVwwkX244BZ6zrH55Dup28nN3xrFmx3NsazN2uC6hQwR+SNZ
-        4wz0Oyu5R357s62eXhIPo4q8h5PXC9uK
-X-Received: by 10.99.186.81 with SMTP id l17mr9942760pgu.87.1498248783533;
- Fri, 23 Jun 2017 13:13:03 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Twej0i76m+3H2fk0AbnY3AQ9/qZavdE2xvbXEXlwB4w=;
+        b=IG+Uanr+UZKwN6SxzlFB40cma5ZOZwe4ygkBDhJNOzC8zfwhcK7DmRx5xnCliagIQw
+         nzvMWyFDd7vDEwCahpbIfMu3poaOE8dy9xo7DyrnNcIu0ubMcUfqzd9+qlgYmiwajmi0
+         rwixVkrpIARNsN7phYXCBahrRs45F5VsCGD4L0+RU44FsOc2FLJeaozYTfY3e6SxfIvp
+         oW3+7XiT6ExDzYgQaOnIriFTwPFQlWT9107DaPT9oUlYksbwVmOoe3jNIFnq8aDcEZHU
+         YAY49PVpVjE1v2QsIwHQdWMt7yFmLg8vSBj+ljrSzQ84EuIVR916XJr4nhPYudAdzsE5
+         UoHA==
+X-Gm-Message-State: AKS2vOw8KEXs7y5t66vOQy5sGKZerwjmZ0ercBSLwhBqFAYYz5Btp3jc
+        qbiTJJ2jIotU5g==
+X-Received: by 10.84.195.131 with SMTP id j3mr10841991pld.147.1498249334690;
+        Fri, 23 Jun 2017 13:22:14 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:4cd0:d6d2:1e09:4052])
+        by smtp.gmail.com with ESMTPSA id b28sm13397654pfm.9.2017.06.23.13.22.13
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 23 Jun 2017 13:22:13 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        =?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 01/29] t1408: add a test of stale packed refs covered by loose refs
+References: <cover.1498200513.git.mhagger@alum.mit.edu>
+        <4eca5010979e86fa25d95b68d3f266d7f74d168b.1498200513.git.mhagger@alum.mit.edu>
+        <20170623185943.noczrssjjigomezx@sigill.intra.peff.net>
+Date:   Fri, 23 Jun 2017 13:22:13 -0700
+In-Reply-To: <20170623185943.noczrssjjigomezx@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 23 Jun 2017 14:59:43 -0400")
+Message-ID: <xmqq60fme9oq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.161.227 with HTTP; Fri, 23 Jun 2017 13:13:03 -0700 (PDT)
-In-Reply-To: <xmqqa84yeads.fsf@gitster.mtv.corp.google.com>
-References: <20170620024816.20021-1-sbeller@google.com> <20170623012919.28693-1-sbeller@google.com>
- <20170623012919.28693-5-sbeller@google.com> <xmqqa84yeads.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 23 Jun 2017 13:13:03 -0700
-Message-ID: <CAGZ79kZhtS7HOPARLc+MGTkjRZ2+NK-SRDznEJJmVPJBDXkCkA@mail.gmail.com>
-Subject: Re: [PATCHv2 04/25] diff.c: introduce emit_diff_symbol
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 23, 2017 at 1:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->>     diff --git a/new.txt b/new.txt
->>     index fa69b07..412428c 100644
->>     Binary files a/new.txt and b/new.txt differ
->>
->>   could be buffered as
->>      DIFF_SYMBOL_DIFF_START + new.txt
->>      DIFF_SYMBOL_INDEX_MODE + fa69b07 412428c "non-executable" flag
->>      DIFF_SYMBOL_BINARY_FILES + new.txt
->
-> Hopefully this is an oversimplified example and I'd assume that you
-> will do the right thing when showing a renamed filepair by allowing
-> both old and new paths that could be different?
+Jeff King <peff@peff.net> writes:
 
-Yes, this is simplified to drive the point of having as little data as possible,
-so I thought we might have a flag that says "same file name" instead of giving
-the file name twice.
+> On Fri, Jun 23, 2017 at 09:01:19AM +0200, Michael Haggerty wrote:
+>
+>> +test_expect_success setup '
+>> +	test_tick &&
+>> +	git commit --allow-empty -m one &&
+>> +	one=$(git rev-parse HEAD) &&
+>> +	git for-each-ref >actual &&
+>> +	echo "$one commit	refs/heads/master" >expect &&
+>> +	test_cmp expect actual &&
+>> +
+>> +	git pack-refs --all &&
+>> +	git for-each-ref >actual &&
+>> +	echo "$one commit	refs/heads/master" >expect &&
+>> +	test_cmp expect actual &&
+>> +
+>> +	cat .git/packed-refs &&
+>
+> I think we'd usually drop debugging "cat"s like these in the name of
+> keeping the process count down. Unless they really are intended to
+> confirm that .git/packed-refs exists (although test_path_is_file is a
+> less expensive way of checking that).
+>
+> That's a minor nit, though.
 
-We do not do such an optimization yet.
+Sorry, these two cat's were what I used while debugging the test and
+should be dropped.
+
+Will remove while queuing.
+
+Thanks for spotting.
