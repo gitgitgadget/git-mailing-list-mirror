@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A910420840
-	for <e@80x24.org>; Fri, 23 Jun 2017 01:30:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5947F2083B
+	for <e@80x24.org>; Fri, 23 Jun 2017 01:30:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754146AbdFWBaX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 21:30:23 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34625 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754105AbdFWB3x (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 21:29:53 -0400
-Received: by mail-pf0-f169.google.com with SMTP id s66so16553188pfs.1
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 18:29:47 -0700 (PDT)
+        id S1754138AbdFWBaI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 21:30:08 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:34094 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753557AbdFWBaG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 21:30:06 -0400
+Received: by mail-pg0-f42.google.com with SMTP id e187so15009384pgc.1
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 18:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gnuN3YIyngG5USw/I1XnfqUA+c3bJc9M41GjmUwirQc=;
-        b=QluYMsMlBEgz4f/dPJ7IqckFPcNMWBoJ1D6A6XBn/uLYQNJMqaSeXPHRbLbXdskSui
-         bZgxwLQ5i1TaDVk+8k5G/6Iq3BL5aGkonzqTx7JkfWfVOY4kRuxK7KOEwIRAV/AYdeyl
-         qHpJHJ77QKX43ga26zFtmKGnNoceNzue18jzEjGV/UffP0MXK4XqryfYWStp7riJsykt
-         m4Z5ttZJZndexKtYpR86lmUbOtZXEvofAvpjBRdrJqQTeOTXJ+hYY5xLQrEm/ki+BHLJ
-         Xu9Sl1osjl3CjDMgtgB1JubtbWctws96JCXEU0XIup4eUaIbeHQAzIGVH8BKq73DcJLK
-         icmQ==
+        bh=7WSkAiDJOmUoMX3pH/ElahVx/H1ulcdCKtsc22fYfB8=;
+        b=GKDeHAadH1qoZgwzwA0cWzaYP26XWumD87mteUwgQoiA6hVsRUYU6Xx3IxQZjwc8FI
+         h6OvSqpGzjbaq8p1FriDGgibZnbJiv4zGwoimdpkKqfci+mYQ21fuUKYBmtZ+2fxjo4C
+         kSPj+/cqgVj1Kvw9qxUhsr5UQepg5LPCnJKyctfg5ktgZS+P/Zbfl3Xor7/UKoIRQYif
+         Nw1Fd3JCrCXaPdNFjhFEAYdBu+RMc67RZmd8nIkA70Bgea0O33ezomqq2kjHi7ve9csC
+         GHWcWYWHvgbvmiM9MrjPISW9ti7Z/QIF3TsUItdHPywI+GyoRgzk64qSDL+A5AFvgf7p
+         KnOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gnuN3YIyngG5USw/I1XnfqUA+c3bJc9M41GjmUwirQc=;
-        b=KlZ5Qba5HGKbvBv4a4ontAx0uW62oVhqbVeo/E5YrLGS+cbjw5hXStvoieDV94LzT6
-         iNgB6kf/bs5KB5O7IIp6vg7mJ+aWrDKNs38sT2Hx2h6Ohh1uQNk4yLkwwBZqO8g3Xqfy
-         up/hJPiY1F/Z9xEFp/HaG4jECHgI4OeQ7GIzDHp3aPTAvluLnueZIq8Lwgj5vQej5x/E
-         XCI6gDrS9zq0PUSTygQGWaFccobMGPLFvLaWDy/gRGVq+qN14EhzjI4/X9lfcGndxGvU
-         gtOMwxScrnc0D0fT4dZRCmQi/tFpAmx4rILoXZVFp6rdIyNZEyHWW6P8wqPq6DdgxAAf
-         0bpg==
-X-Gm-Message-State: AKS2vOyLYBfeHglDL5CrBnwgm09HsjD6L8qOFVBOc/y0Qnbm7n9VdRYk
-        D9qxdVeM9hq0POod
-X-Received: by 10.98.1.72 with SMTP id 69mr5544329pfb.124.1498181386990;
-        Thu, 22 Jun 2017 18:29:46 -0700 (PDT)
+        bh=7WSkAiDJOmUoMX3pH/ElahVx/H1ulcdCKtsc22fYfB8=;
+        b=eNfQrbirJ1umzRmk0jz9/0UFuYL0C1g6sI1F3awslsNYdhCuncGrPwOvJPQk8ze+W8
+         Yj+FxRW8pAacX3oHCbw4DUsLuOcg0yW2sj2L2ZHw4eGF/w/HteTroHjq36LvsJsYARWw
+         ocRIzwcs3Y7Uqr3MF60ukLyEAR9L+Q6Z3+tGtt6VGX2/hTUVr+E1JEn50FPxUdBGxdqa
+         mLXLmPKX8LkVAb4zt3q3s35B9xCVvCy4HMKkPSl4upw2bQFCg/f08c2Fru3Nkx1fzKTy
+         u4KogHNisMDKbsK6IWGq0lxY7TZKofIbu8AsS8I+PgtbKJL91IhZBmqBo8baLgp1wL3z
+         drtg==
+X-Gm-Message-State: AKS2vOys5pGI9/I4Ky9DHpE28bKW7A65o5ziX8tjFEhL4+TlDjXVqaon
+        BRK9v9/0p5H2mKhr
+X-Received: by 10.99.2.78 with SMTP id 75mr5692229pgc.120.1498181400933;
+        Thu, 22 Jun 2017 18:30:00 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:54b:7db6:84cb:995a])
-        by smtp.gmail.com with ESMTPSA id i14sm6311452pgn.14.2017.06.22.18.29.46
+        by smtp.gmail.com with ESMTPSA id j6sm6920275pgc.1.2017.06.22.18.30.00
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 18:29:46 -0700 (PDT)
+        Thu, 22 Jun 2017 18:30:00 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, mhagger@alum.mit.edu,
         peff@peff.net, philipoakley@iee.org
-Subject: [PATCHv2 15/25] submodule.c: migrate diff output to use emit_diff_symbol
-Date:   Thu, 22 Jun 2017 18:29:09 -0700
-Message-Id: <20170623012919.28693-16-sbeller@google.com>
+Subject: [PATCHv2 25/25] diff: document the new --color-moved setting
+Date:   Thu, 22 Jun 2017 18:29:19 -0700
+Message-Id: <20170623012919.28693-26-sbeller@google.com>
 X-Mailer: git-send-email 2.12.2.575.gb14f27f917
 In-Reply-To: <20170623012919.28693-1-sbeller@google.com>
 References: <20170620024816.20021-1-sbeller@google.com>
@@ -64,387 +64,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As the submodule process is no longer attached to the same file pointer
-'o->file' as the superprojects process, there is a different result in
-color.c::check_auto_color. That is why we need to pass coloring explicitly,
-such that the submodule coloring decision will be made by the child process
-processing the submodule. Only DIFF_SYMBOL_SUBMODULE_PIPETHROUGH contains
-color, the other symbols are for embedding the submodule output into the
-superprojects output.
-
-Remove the colors from the function signatures, as all the coloring
-decisions will be made either inside the child process or the final
-emit_diff_symbol, but not in the functions driving the submodule diff.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c      | 83 ++++++++++++++++++++++++++++++++++++++++++++++++++---------
- diff.h      |  9 +++++++
- submodule.c | 85 +++++++++++++++++++++++++++----------------------------------
- submodule.h | 13 +++-------
- 4 files changed, 122 insertions(+), 68 deletions(-)
+ Documentation/config.txt       | 12 ++++++++++--
+ Documentation/diff-options.txt | 27 +++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 0314d57647..bc78a216ab 100644
---- a/diff.c
-+++ b/diff.c
-@@ -560,6 +560,13 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
- }
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 475e874d51..29e0b9fa69 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1051,14 +1051,22 @@ This does not affect linkgit:git-format-patch[1] or the
+ 'git-diff-{asterisk}' plumbing commands.  Can be overridden on the
+ command line with the `--color[=<when>]` option.
  
- enum diff_symbol {
-+	DIFF_SYMBOL_SUBMODULE_ADD,
-+	DIFF_SYMBOL_SUBMODULE_DEL,
-+	DIFF_SYMBOL_SUBMODULE_UNTRACKED,
-+	DIFF_SYMBOL_SUBMODULE_MODIFIED,
-+	DIFF_SYMBOL_SUBMODULE_HEADER,
-+	DIFF_SYMBOL_SUBMODULE_ERROR,
-+	DIFF_SYMBOL_SUBMODULE_PIPETHROUGH,
- 	DIFF_SYMBOL_REWRITE_DIFF,
- 	DIFF_SYMBOL_BINARY_FILES,
- 	DIFF_SYMBOL_HEADER,
-@@ -624,6 +631,9 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
- 		emit_line_0(o, context, reset, '\\',
- 			    nneof, strlen(nneof));
- 		break;
-+	case DIFF_SYMBOL_SUBMODULE_HEADER:
-+	case DIFF_SYMBOL_SUBMODULE_ERROR:
-+	case DIFF_SYMBOL_SUBMODULE_PIPETHROUGH:
- 	case DIFF_SYMBOL_CONTEXT_FRAGINFO:
- 		emit_line(o, "", "", line, len);
- 		break;
-@@ -700,11 +710,68 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
- 		reset = diff_get_color_opt(o, DIFF_RESET);
- 		emit_line(o, fraginfo, reset, line, len);
- 		break;
-+	case DIFF_SYMBOL_SUBMODULE_ADD:
-+		set = diff_get_color_opt(o, DIFF_FILE_NEW);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line(o, set, reset, line, len);
-+		break;
-+	case DIFF_SYMBOL_SUBMODULE_DEL:
-+		set = diff_get_color_opt(o, DIFF_FILE_OLD);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line(o, set, reset, line, len);
-+		break;
-+	case DIFF_SYMBOL_SUBMODULE_UNTRACKED:
-+		fprintf(o->file, "%sSubmodule %s contains untracked content\n",
-+			diff_line_prefix(o), line);
-+		break;
-+	case DIFF_SYMBOL_SUBMODULE_MODIFIED:
-+		fprintf(o->file, "%sSubmodule %s contains modified content\n",
-+			diff_line_prefix(o), line);
-+		break;
- 	default:
- 		die("BUG: unknown diff symbol");
- 	}
- }
- 
-+void diff_emit_submodule_del(struct diff_options *o, const char *line)
-+{
-+	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_DEL, line, strlen(line), 0);
-+}
++diff.colorMoved::
++	If set moved lines in a diff are colored differently,
++	for details see '--color-moved' in linkgit:git-diff[1].
 +
-+void diff_emit_submodule_add(struct diff_options *o, const char *line)
-+{
-+	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_ADD, line, strlen(line), 0);
-+}
+ color.diff.<slot>::
+ 	Use customized color for diff colorization.  `<slot>` specifies
+ 	which part of the patch to use the specified color, and is one
+ 	of `context` (context text - `plain` is a historical synonym),
+ 	`meta` (metainformation), `frag`
+ 	(hunk header), 'func' (function in hunk header), `old` (removed lines),
+-	`new` (added lines), `commit` (commit headers), or `whitespace`
+-	(highlighting whitespace errors).
++	`new` (added lines), `commit` (commit headers), `whitespace`
++	(highlighting whitespace errors), `oldMoved` (deleted lines),
++	`newMoved` (added lines), `oldMovedDimmed`, `oldMovedAlternative`,
++	`oldMovedAlternativeDimmed`, `newMovedDimmed`, `newMovedAlternative`
++	and `newMovedAlternativeDimmed` (See the '<mode>'
++	setting of '--color-moved' in linkgit:git-diff[1] for details).
+ 
+ color.decorate.<slot>::
+ 	Use customized color for 'git log --decorate' output.  `<slot>` is one
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 89cc0f48de..058c8014ed 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -231,6 +231,33 @@ ifdef::git-diff[]
+ endif::git-diff[]
+ 	It is the same as `--color=never`.
+ 
++--color-moved[=<mode>]::
++	Moved lines of code are colored differently.
++ifdef::git-diff[]
++	It can be changed by the `diff.colorMoved` configuration setting.
++endif::git-diff[]
++	The <mode> defaults to 'no' if the option is not given
++	and to 'dimmed_zebra' if the option with no mode is given.
++	The mode must be one of:
+++
++--
++no::
++	Moved lines are not highlighted.
++plain::
++	Any line that is added in one location and was removed
++	in another location will be colored with 'color.diff.newMoved'.
++	Similarly 'color.diff.oldMoved' will be used for removed lines
++	that are added somewhere else in the diff.
++zebra::
++	Blocks of moved code are detected. The detected blocks are
++	painted using the 'color.diff.{old,new}Moved' alternating with
++	'color.diff.{old,new}MovedAlternative'.
++dimmed_zebra::
++	Similar to 'zebra', but additional dimming of uninteresting parts
++	of moved code is performed. The bordering lines of two adjacent
++	blocks are considered interesting, the rest is uninteresting.
++--
 +
-+void diff_emit_submodule_untracked(struct diff_options *o, const char *path)
-+{
-+	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_UNTRACKED,
-+			 path, strlen(path), 0);
-+}
-+
-+void diff_emit_submodule_modified(struct diff_options *o, const char *path)
-+{
-+	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_MODIFIED,
-+			 path, strlen(path), 0);
-+}
-+
-+void diff_emit_submodule_header(struct diff_options *o, const char *header)
-+{
-+	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_HEADER,
-+			 header, strlen(header), 0);
-+}
-+
-+void diff_emit_submodule_error(struct diff_options *o, const char *err)
-+{
-+	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_ERROR, err, strlen(err), 0);
-+}
-+
-+void diff_emit_submodule_pipethrough(struct diff_options *o,
-+				     const char *line, int len)
-+{
-+	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_PIPETHROUGH, line, len, 0);
-+}
-+
- static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
- {
- 	if (!((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
-@@ -2467,24 +2534,16 @@ static void builtin_diff(const char *name_a,
- 	if (o->submodule_format == DIFF_SUBMODULE_LOG &&
- 	    (!one->mode || S_ISGITLINK(one->mode)) &&
- 	    (!two->mode || S_ISGITLINK(two->mode))) {
--		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
--		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
--		show_submodule_summary(o->file, one->path ? one->path : two->path,
--				line_prefix,
-+		show_submodule_summary(o, one->path ? one->path : two->path,
- 				&one->oid, &two->oid,
--				two->dirty_submodule,
--				meta, del, add, reset);
-+				two->dirty_submodule);
- 		return;
- 	} else if (o->submodule_format == DIFF_SUBMODULE_INLINE_DIFF &&
- 		   (!one->mode || S_ISGITLINK(one->mode)) &&
- 		   (!two->mode || S_ISGITLINK(two->mode))) {
--		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
--		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
--		show_submodule_inline_diff(o->file, one->path ? one->path : two->path,
--				line_prefix,
-+		show_submodule_inline_diff(o, one->path ? one->path : two->path,
- 				&one->oid, &two->oid,
--				two->dirty_submodule,
--				meta, del, add, reset, o);
-+				two->dirty_submodule);
- 		return;
- 	}
- 
-diff --git a/diff.h b/diff.h
-index 8483ca0991..2ee0ef3908 100644
---- a/diff.h
-+++ b/diff.h
-@@ -188,6 +188,15 @@ struct diff_options {
- 	int diff_path_counter;
- };
- 
-+void diff_emit_submodule_del(struct diff_options *o, const char *line);
-+void diff_emit_submodule_add(struct diff_options *o, const char *line);
-+void diff_emit_submodule_untracked(struct diff_options *o, const char *path);
-+void diff_emit_submodule_modified(struct diff_options *o, const char *path);
-+void diff_emit_submodule_header(struct diff_options *o, const char *header);
-+void diff_emit_submodule_error(struct diff_options *o, const char *err);
-+void diff_emit_submodule_pipethrough(struct diff_options *o,
-+				     const char *line, int len);
-+
- enum color_diff {
- 	DIFF_RESET = 0,
- 	DIFF_CONTEXT = 1,
-diff --git a/submodule.c b/submodule.c
-index d3299e29c0..71471f3241 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -362,9 +362,7 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
- 	return prepare_revision_walk(rev);
- }
- 
--static void print_submodule_summary(struct rev_info *rev, FILE *f,
--		const char *line_prefix,
--		const char *del, const char *add, const char *reset)
-+static void print_submodule_summary(struct rev_info *rev, struct diff_options *o)
- {
- 	static const char format[] = "  %m %s";
- 	struct strbuf sb = STRBUF_INIT;
-@@ -375,18 +373,12 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 		ctx.date_mode = rev->date_mode;
- 		ctx.output_encoding = get_log_output_encoding();
- 		strbuf_setlen(&sb, 0);
--		strbuf_addstr(&sb, line_prefix);
--		if (commit->object.flags & SYMMETRIC_LEFT) {
--			if (del)
--				strbuf_addstr(&sb, del);
--		}
--		else if (add)
--			strbuf_addstr(&sb, add);
- 		format_commit_message(commit, format, &sb, &ctx);
--		if (reset)
--			strbuf_addstr(&sb, reset);
- 		strbuf_addch(&sb, '\n');
--		fprintf(f, "%s", sb.buf);
-+		if (commit->object.flags & SYMMETRIC_LEFT)
-+			diff_emit_submodule_del(o, sb.buf);
-+		else
-+			diff_emit_submodule_add(o, sb.buf);
- 	}
- 	strbuf_release(&sb);
- }
-@@ -413,11 +405,9 @@ void prepare_submodule_repo_env(struct argv_array *out)
-  * attempt to lookup both the left and right commits and put them into the
-  * left and right pointers.
-  */
--static void show_submodule_header(FILE *f, const char *path,
--		const char *line_prefix,
-+static void show_submodule_header(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
--		unsigned dirty_submodule, const char *meta,
--		const char *reset,
-+		unsigned dirty_submodule,
- 		struct commit **left, struct commit **right,
- 		struct commit_list **merge_bases)
- {
-@@ -426,11 +416,10 @@ static void show_submodule_header(FILE *f, const char *path,
- 	int fast_forward = 0, fast_backward = 0;
- 
- 	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
--		fprintf(f, "%sSubmodule %s contains untracked content\n",
--			line_prefix, path);
-+		diff_emit_submodule_untracked(o, path);
-+
- 	if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
--		fprintf(f, "%sSubmodule %s contains modified content\n",
--			line_prefix, path);
-+		diff_emit_submodule_modified(o, path);
- 
- 	if (is_null_oid(one))
- 		message = "(new submodule)";
-@@ -472,31 +461,29 @@ static void show_submodule_header(FILE *f, const char *path,
- 	}
- 
- output_header:
--	strbuf_addf(&sb, "%s%sSubmodule %s ", line_prefix, meta, path);
-+	strbuf_addf(&sb, "Submodule %s ", path);
- 	strbuf_add_unique_abbrev(&sb, one->hash, DEFAULT_ABBREV);
- 	strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "...");
- 	strbuf_add_unique_abbrev(&sb, two->hash, DEFAULT_ABBREV);
- 	if (message)
--		strbuf_addf(&sb, " %s%s\n", message, reset);
-+		strbuf_addf(&sb, " %s\n", message);
- 	else
--		strbuf_addf(&sb, "%s:%s\n", fast_backward ? " (rewind)" : "", reset);
--	fwrite(sb.buf, sb.len, 1, f);
-+		strbuf_addf(&sb, "%s:\n", fast_backward ? " (rewind)" : "");
-+	diff_emit_submodule_header(o, sb.buf);
- 
- 	strbuf_release(&sb);
- }
- 
--void show_submodule_summary(FILE *f, const char *path,
--		const char *line_prefix,
-+void show_submodule_summary(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
--		unsigned dirty_submodule, const char *meta,
--		const char *del, const char *add, const char *reset)
-+		unsigned dirty_submodule)
- {
- 	struct rev_info rev;
- 	struct commit *left = NULL, *right = NULL;
- 	struct commit_list *merge_bases = NULL;
- 
--	show_submodule_header(f, path, line_prefix, one, two, dirty_submodule,
--			      meta, reset, &left, &right, &merge_bases);
-+	show_submodule_header(o, path, one, two, dirty_submodule,
-+			      &left, &right, &merge_bases);
- 
- 	/*
- 	 * If we don't have both a left and a right pointer, there is no
-@@ -508,11 +495,11 @@ void show_submodule_summary(FILE *f, const char *path,
- 
- 	/* Treat revision walker failure the same as missing commits */
- 	if (prepare_submodule_summary(&rev, path, left, right, merge_bases)) {
--		fprintf(f, "%s(revision walker failed)\n", line_prefix);
-+		diff_emit_submodule_error(o, "(revision walker failed)\n");
- 		goto out;
- 	}
- 
--	print_submodule_summary(&rev, f, line_prefix, del, add, reset);
-+	print_submodule_summary(&rev, o);
- 
- out:
- 	if (merge_bases)
-@@ -521,21 +508,18 @@ void show_submodule_summary(FILE *f, const char *path,
- 	clear_commit_marks(right, ~0);
- }
- 
--void show_submodule_inline_diff(FILE *f, const char *path,
--		const char *line_prefix,
-+void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
--		unsigned dirty_submodule, const char *meta,
--		const char *del, const char *add, const char *reset,
--		const struct diff_options *o)
-+		unsigned dirty_submodule)
- {
- 	const struct object_id *old = &empty_tree_oid, *new = &empty_tree_oid;
- 	struct commit *left = NULL, *right = NULL;
- 	struct commit_list *merge_bases = NULL;
--	struct strbuf submodule_dir = STRBUF_INIT;
- 	struct child_process cp = CHILD_PROCESS_INIT;
-+	struct strbuf sb = STRBUF_INIT;
- 
--	show_submodule_header(f, path, line_prefix, one, two, dirty_submodule,
--			      meta, reset, &left, &right, &merge_bases);
-+	show_submodule_header(o, path, one, two, dirty_submodule,
-+			      &left, &right, &merge_bases);
- 
- 	/* We need a valid left and right commit to display a difference */
- 	if (!(left || is_null_oid(one)) ||
-@@ -547,15 +531,16 @@ void show_submodule_inline_diff(FILE *f, const char *path,
- 	if (right)
- 		new = two;
- 
--	fflush(f);
- 	cp.git_cmd = 1;
- 	cp.dir = path;
--	cp.out = dup(fileno(f));
-+	cp.out = -1;
- 	cp.no_stdin = 1;
- 
- 	/* TODO: other options may need to be passed here. */
- 	argv_array_push(&cp.args, "diff");
--	argv_array_pushf(&cp.args, "--line-prefix=%s", line_prefix);
-+	argv_array_pushf(&cp.args, "--color=%s", want_color(o->use_color) ?
-+			 "always" : "never");
-+
- 	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
- 		argv_array_pushf(&cp.args, "--src-prefix=%s%s/",
- 				 o->b_prefix, path);
-@@ -578,11 +563,17 @@ void show_submodule_inline_diff(FILE *f, const char *path,
- 		argv_array_push(&cp.args, oid_to_hex(new));
- 
- 	prepare_submodule_repo_env(&cp.env_array);
--	if (run_command(&cp))
--		fprintf(f, "(diff failed)\n");
-+	if (start_command(&cp))
-+		diff_emit_submodule_error(o, "(diff failed)\n");
-+
-+	while (strbuf_getwholeline_fd(&sb, cp.out, '\n') != EOF)
-+		diff_emit_submodule_pipethrough(o, sb.buf, sb.len);
-+
-+	if (finish_command(&cp))
-+		diff_emit_submodule_error(o, "(diff failed)\n");
- 
- done:
--	strbuf_release(&submodule_dir);
-+	strbuf_release(&sb);
- 	if (merge_bases)
- 		free_commit_list(merge_bases);
- 	if (left)
-diff --git a/submodule.h b/submodule.h
-index 1277480add..e7358863e9 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -53,17 +53,12 @@ extern int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst);
- extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
- extern void handle_ignore_submodules_arg(struct diff_options *, const char *);
--extern void show_submodule_summary(FILE *f, const char *path,
--		const char *line_prefix,
-+extern void show_submodule_summary(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
--		unsigned dirty_submodule, const char *meta,
--		const char *del, const char *add, const char *reset);
--extern void show_submodule_inline_diff(FILE *f, const char *path,
--		const char *line_prefix,
-+		unsigned dirty_submodule);
-+extern void show_submodule_inline_diff(struct diff_options *o, const char *path,
- 		struct object_id *one, struct object_id *two,
--		unsigned dirty_submodule, const char *meta,
--		const char *del, const char *add, const char *reset,
--		const struct diff_options *opt);
-+		unsigned dirty_submodule);
- extern void set_config_fetch_recurse_submodules(int value);
- extern void set_config_update_recurse_submodules(int value);
- /* Check if we want to update any submodule.*/
+ --word-diff[=<mode>]::
+ 	Show a word diff, using the <mode> to delimit changed words.
+ 	By default, words are delimited by whitespace; see
 -- 
 2.12.2.575.gb14f27f917
 
