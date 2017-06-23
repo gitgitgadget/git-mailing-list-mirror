@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86BA320831
-	for <e@80x24.org>; Fri, 23 Jun 2017 01:30:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49E5A20834
+	for <e@80x24.org>; Fri, 23 Jun 2017 01:30:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754111AbdFWB3z (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Jun 2017 21:29:55 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:35688 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754094AbdFWB3t (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Jun 2017 21:29:49 -0400
-Received: by mail-pf0-f177.google.com with SMTP id c73so16588011pfk.2
-        for <git@vger.kernel.org>; Thu, 22 Jun 2017 18:29:49 -0700 (PDT)
+        id S1754135AbdFWBaG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Jun 2017 21:30:06 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:35584 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754130AbdFWBaB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Jun 2017 21:30:01 -0400
+Received: by mail-pg0-f44.google.com with SMTP id 132so15007999pgb.2
+        for <git@vger.kernel.org>; Thu, 22 Jun 2017 18:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kggcXNwi2az9L1R81g+S7EjyR5ubPxfO/KHVFgcD/+Y=;
-        b=Y5NOfll9wD/p08xZ5Ao/T1GiYTScsDSY8RZ65fPObZWv270Ir2jjn95yaapFtnaf/m
-         CjzP2smeJ6Y1x3mbhrwoy3uSHWbZ4qm/ukUC0Zq9fMXyO0+Ax02+yTTP+jmpJhWxBn5E
-         V3UVUM18tUViu1VyavGfznMlNXVyxYNfodpz4Lk51lvmptLVEzp1uZPTlZmM8omrOIVm
-         pIFodVrFe6SXO7h0XIyzoUdbusiKA4v2DfKO7Rx8CqmuCWwWuzuTuxqP9lEnQLcBxHDJ
-         Q1e2oyzfhX5MeYT6LYQc0Fs0dK+XCi7TnKkayenGLO0tzkarqJequGS+hr8vP9u2FXb5
-         rk7g==
+        bh=Q3cvegPXjqwDeHtUYP6kNfXg7s+cVosS9khBbLdYzTs=;
+        b=lLFMl27ih3heUrf1J0lQvnKwa6r3es8gmICARe6+nkinHLB7e9BhmZ/p1m72YETLf3
+         5NeX9IQQ4oLO0K458iBg1P9rx48+ARX9x09xuAt3S26WQRwL6D3cTwbd8noIVu3Vuwsc
+         kM50GilMLsmKcHsxwrMYe73JlOEUhiZwtUuvfQit9R3WKLL72Q0tjrO5IY6pbxj79mtX
+         8Kz+gKzzl4yDZUCEWGr8lZYcg+xxCe7kl3tqjGy5jabMSBXDKNoVLXSwH2wxxPHvE+4v
+         L5sVKLSTqlwjEdxarB3FsBVt/6/LHMZf8wA2mOJ5hTb061zNOSPuytzUXyIplHBZfYnY
+         cJdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=kggcXNwi2az9L1R81g+S7EjyR5ubPxfO/KHVFgcD/+Y=;
-        b=hnIM8pfDeqF/JVoO99XaBju5oOMIrM5bq4VJqf6nYe3Mz4Iq9akPvt2X6t8b3puSVX
-         xZ4869jnG72KLrnl2GhRyuKkL1LyswKEWfyyH8n6z0dlZYoZ7wlQeuUGFnKYqeWxaU2i
-         PtcyDIYKrFMdzAVphS7w/6zBppv6orSvjiiKAvt22BNDCGhizKQm2tF+JBopD2AnT9MY
-         CSEPSs2msYJVQOg4SnwVN/WlWxnhmP/CDgSbP9bolb5s/yXcGUtsSUdyGz9JlVyONy9n
-         FxbPgU/6aO2tHcIRC9aJ9Uay6AKY5ZLXovcWhliDsS3Ub7wq1DqqxTCMtHsnfyFsPtzp
-         FTyw==
-X-Gm-Message-State: AKS2vOzbZONv+ZLrprA6EIiymwmGd2hTeJgsgbx0kHK+so/Zj3Nkviul
-        mLB2vAX1cJNYP4JIQG9fhA==
-X-Received: by 10.98.155.148 with SMTP id e20mr2779070pfk.149.1498181378335;
-        Thu, 22 Jun 2017 18:29:38 -0700 (PDT)
+        bh=Q3cvegPXjqwDeHtUYP6kNfXg7s+cVosS9khBbLdYzTs=;
+        b=DnFoNC8z7S0eiuof0pmwfhs+zzooTwWV4Dju4jMjPJddPwgrcDSCBpKSdLavhZLoyB
+         Fj96f9Cpll21D1+u+6VtA+szVAa/11rLYX+6BPdAIJ0/SoFg8mvcRT0eZ3tG84l4lMVm
+         gvcVo7G/BkX2H3fxYXtkzyCId/YCi0lLl9NaaZvRCe/PAQ4KeOHGyRHkQJ/iGyQJ0rIo
+         Bl+N1Bq20htGd7mHRv4UACnKLGQwtL1wv9aeSujhQc5n+qd9WQHkn1RUycTmYIUL+WZH
+         7sjyIX3qs9MiS9MvE/ZygctPXJ0MlMUw81S/68WfN8CLbax6uO+VSEfTHkBfDUkvdVfy
+         L0HQ==
+X-Gm-Message-State: AKS2vOyMMzcvEf6vpxHX4rAy+VyU3ZI7XyCzZTydM1tNpXHcLLCrxAN/
+        ZZad12EOZidN78gN
+X-Received: by 10.98.209.80 with SMTP id t16mr5493837pfl.77.1498181391036;
+        Thu, 22 Jun 2017 18:29:51 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:54b:7db6:84cb:995a])
-        by smtp.gmail.com with ESMTPSA id z69sm6238789pff.0.2017.06.22.18.29.37
+        by smtp.gmail.com with ESMTPSA id z66sm6779141pfl.13.2017.06.22.18.29.50
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 22 Jun 2017 18:29:37 -0700 (PDT)
+        Thu, 22 Jun 2017 18:29:50 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
         jonathantanmy@google.com, jrnieder@gmail.com, mhagger@alum.mit.edu,
         peff@peff.net, philipoakley@iee.org
-Subject: [PATCHv2 08/25] diff.c: migrate emit_line_checked to use emit_diff_symbol
-Date:   Thu, 22 Jun 2017 18:29:02 -0700
-Message-Id: <20170623012919.28693-9-sbeller@google.com>
+Subject: [PATCHv2 18/25] diff.c: convert word diffing to use emit_diff_symbol
+Date:   Thu, 22 Jun 2017 18:29:12 -0700
+Message-Id: <20170623012919.28693-19-sbeller@google.com>
 X-Mailer: git-send-email 2.12.2.575.gb14f27f917
 In-Reply-To: <20170623012919.28693-1-sbeller@google.com>
 References: <20170620024816.20021-1-sbeller@google.com>
@@ -64,257 +64,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new flags field to emit_diff_symbol, that will be used by
-context lines for:
-* white space rules that are applicable (The first 12 bits)
-  Take a note in cahe.c as well, when this ws rules are extended we have
-  to fix the bits in the flags field.
-* how the rules are evaluated (actually this double encodes the sign
-  of the line, but the code is easier to keep this way, bits 13,14,15)
-* if the line a blank line at EOF (bit 16)
-
-The check if new lines need to be marked up as extra lines at the end of
-file, is now done unconditionally. That should be ok, as
-'new_blank_line_at_eof' has a quick early return.
+The word diffing is not line oriented and would need some serious
+effort to be transformed into a line oriented approach, so
+just go with a symbol DIFF_SYMBOL_WORD_DIFF that is a partial line.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- cache.h |   2 ++
- diff.c  | 116 +++++++++++++++++++++++++++++++++++++++++-----------------------
- diff.h  |   6 ++--
- 3 files changed, 80 insertions(+), 44 deletions(-)
+ diff.c | 79 ++++++++++++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 46 insertions(+), 33 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index e1f0e182ad..d2204bf6d1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -2168,6 +2168,8 @@ void shift_tree_by(const struct object_id *, const struct object_id *, struct ob
- #define WS_TRAILING_SPACE      (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
- #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
- #define WS_TAB_WIDTH_MASK        077
-+/* All WS_* -- when extended, adapt diff.c emit_symbol */
-+#define WS_RULE_MASK           07777
- extern unsigned whitespace_rule_cfg;
- extern unsigned whitespace_rule(const char *);
- extern unsigned parse_whitespace_rule(const char *);
 diff --git a/diff.c b/diff.c
-index b78f698cad..e7583efca3 100644
+index 2108c191a3..60630d2c3f 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -560,17 +560,54 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
- }
- 
- enum diff_symbol {
-+	DIFF_SYMBOL_CONTEXT,
-+	DIFF_SYMBOL_PLUS,
-+	DIFF_SYMBOL_MINUS,
- 	DIFF_SYMBOL_NO_LF_EOF,
- 	DIFF_SYMBOL_CONTEXT_FRAGINFO,
- 	DIFF_SYMBOL_CONTEXT_MARKER,
- 	DIFF_SYMBOL_SEPARATOR
- };
-+/*
-+ * Flags for content lines:
-+ * 0..12 are whitespace rules
-+ * 13-15 are WSEH_NEW | WSEH_OLD | WSEH_CONTEXT
-+ * 16 is marking if the line is blank at EOF
-+ */
-+#define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF (1<<16)
-+#define DIFF_SYMBOL_CONTENT_WS_MASK (WSEH_NEW | WSEH_OLD | WSEH_CONTEXT | WS_RULE_MASK)
-+
-+static void emit_line_ws_markup(struct diff_options *o,
-+				const char *set, const char *reset,
-+				const char *line, int len, char sign,
-+				unsigned ws_rule, int blank_at_eof)
-+{
-+	const char *ws = NULL;
-+
-+	if (o->ws_error_highlight & ws_rule) {
-+		ws = diff_get_color_opt(o, DIFF_WHITESPACE);
-+		if (!*ws)
-+			ws = NULL;
-+	}
-+
-+	if (!ws)
-+		emit_line_0(o, set, reset, sign, line, len);
-+	else if (blank_at_eof)
-+		/* Blank line at EOF - paint '+' as well */
-+		emit_line_0(o, ws, reset, sign, line, len);
-+	else {
-+		/* Emit just the prefix, then the rest. */
-+		emit_line_0(o, set, reset, sign, "", 0);
-+		ws_check_emit(line, len, ws_rule,
-+			      o->file, set, reset, ws);
-+	}
-+}
- 
- static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
--			     const char *line, int len)
-+			     const char *line, int len, unsigned flags)
- {
- 	static const char *nneof = " No newline at end of file\n";
--	const char *context, *reset;
-+	const char *context, *reset, *set;
- 	switch (s) {
- 	case DIFF_SYMBOL_NO_LF_EOF:
- 		context = diff_get_color_opt(o, DIFF_CONTEXT);
-@@ -592,6 +629,25 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
- 			diff_line_prefix(o),
- 			o->line_termination);
+@@ -569,6 +569,7 @@ enum diff_symbol {
+ 	DIFF_SYMBOL_STATS_SUMMARY_ABBREV,
+ 	DIFF_SYMBOL_STATS_SUMMARY_INSERTS_DELETES,
+ 	DIFF_SYMBOL_STATS_LINE,
++	DIFF_SYMBOL_WORD_DIFF,
+ 	DIFF_SYMBOL_SUBMODULE_ADD,
+ 	DIFF_SYMBOL_SUBMODULE_DEL,
+ 	DIFF_SYMBOL_SUBMODULE_UNTRACKED,
+@@ -761,6 +762,9 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
+ 	case DIFF_SYMBOL_STATS_SUMMARY_ABBREV:
+ 		emit_line(o, "", "", " ...\n", strlen(" ...\n"));
  		break;
-+	case DIFF_SYMBOL_CONTEXT:
-+		set = diff_get_color_opt(o, DIFF_CONTEXT);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line_ws_markup(o, set, reset, line, len, ' ',
-+				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
-+		break;
-+	case DIFF_SYMBOL_PLUS:
-+		set = diff_get_color_opt(o, DIFF_FILE_NEW);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line_ws_markup(o, set, reset, line, len, '+',
-+				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
-+				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
-+		break;
-+	case DIFF_SYMBOL_MINUS:
-+		set = diff_get_color_opt(o, DIFF_FILE_OLD);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line_ws_markup(o, set, reset, line, len, '-',
-+				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
++	case DIFF_SYMBOL_WORD_DIFF:
++		fprintf(o->file, "%.*s", len, line);
 +		break;
  	default:
  		die("BUG: unknown diff symbol");
  	}
-@@ -608,57 +664,31 @@ static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line
- 	return ws_blank_line(line, len, ecbdata->ws_rule);
- }
+@@ -1091,37 +1095,49 @@ struct diff_words_data {
+ 	struct diff_words_style *style;
+ };
  
--static void emit_line_checked(const char *reset,
--			      struct emit_callback *ecbdata,
--			      const char *line, int len,
--			      enum color_diff color,
--			      unsigned ws_error_highlight,
--			      char sign)
--{
--	const char *set = diff_get_color(ecbdata->color_diff, color);
--	const char *ws = NULL;
--
--	if (ecbdata->opt->ws_error_highlight & ws_error_highlight) {
--		ws = diff_get_color(ecbdata->color_diff, DIFF_WHITESPACE);
--		if (!*ws)
--			ws = NULL;
--	}
--
--	if (!ws)
--		emit_line_0(ecbdata->opt, set, reset, sign, line, len);
--	else if (sign == '+' && new_blank_line_at_eof(ecbdata, line, len))
--		/* Blank line at EOF - paint '+' as well */
--		emit_line_0(ecbdata->opt, ws, reset, sign, line, len);
--	else {
--		/* Emit just the prefix, then the rest. */
--		emit_line_0(ecbdata->opt, set, reset, sign, "", 0);
--		ws_check_emit(line, len, ecbdata->ws_rule,
--			      ecbdata->opt->file, set, reset, ws);
--	}
--}
--
- static void emit_add_line(const char *reset,
- 			  struct emit_callback *ecbdata,
- 			  const char *line, int len)
+-static int fn_out_diff_words_write_helper(FILE *fp,
++static int fn_out_diff_words_write_helper(struct diff_options *o,
+ 					  struct diff_words_style_elem *st_el,
+ 					  const char *newline,
+-					  size_t count, const char *buf,
+-					  const char *line_prefix)
++					  size_t count, const char *buf)
  {
--	emit_line_checked(reset, ecbdata, line, len,
--			  DIFF_FILE_NEW, WSEH_NEW, '+');
-+	unsigned flags = WSEH_NEW | ecbdata->ws_rule;
-+	if (new_blank_line_at_eof(ecbdata, line, len))
-+		flags |= DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF;
+ 	int print = 0;
++	struct strbuf sb = STRBUF_INIT;
+ 
+ 	while (count) {
+ 		char *p = memchr(buf, '\n', count);
+ 		if (print)
+-			fputs(line_prefix, fp);
++			strbuf_addstr(&sb, diff_line_prefix(o));
 +
-+	emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_PLUS, line, len, flags);
+ 		if (p != buf) {
+-			if (st_el->color && fputs(st_el->color, fp) < 0)
+-				return -1;
+-			if (fputs(st_el->prefix, fp) < 0 ||
+-			    fwrite(buf, p ? p - buf : count, 1, fp) != 1 ||
+-			    fputs(st_el->suffix, fp) < 0)
+-				return -1;
+-			if (st_el->color && *st_el->color
+-			    && fputs(GIT_COLOR_RESET, fp) < 0)
+-				return -1;
++			const char *reset = st_el->color && *st_el->color ?
++					    GIT_COLOR_RESET : NULL;
++			if (st_el->color && *st_el->color)
++				strbuf_addstr(&sb, st_el->color);
++			strbuf_addstr(&sb, st_el->prefix);
++			strbuf_add(&sb, buf, p ? p - buf : count);
++			strbuf_addstr(&sb, st_el->suffix);
++			if (reset)
++				strbuf_addstr(&sb, reset);
+ 		}
+ 		if (!p)
+-			return 0;
+-		if (fputs(newline, fp) < 0)
+-			return -1;
++			goto out;
++
++		strbuf_addstr(&sb, newline);
+ 		count -= p + 1 - buf;
+ 		buf = p + 1;
+ 		print = 1;
++		if (count) {
++			emit_diff_symbol(o, DIFF_SYMBOL_WORD_DIFF,
++					 sb.buf, sb.len, 0);
++			strbuf_reset(&sb);
++		}
+ 	}
++
++out:
++	if (sb.len)
++		emit_diff_symbol(o, DIFF_SYMBOL_WORD_DIFF,
++				 sb.buf, sb.len, 0);
++	strbuf_release(&sb);
+ 	return 0;
  }
  
- static void emit_del_line(const char *reset,
- 			  struct emit_callback *ecbdata,
- 			  const char *line, int len)
- {
--	emit_line_checked(reset, ecbdata, line, len,
--			  DIFF_FILE_OLD, WSEH_OLD, '-');
-+	unsigned flags = WSEH_OLD | ecbdata->ws_rule;
-+	emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_MINUS, line, len, flags);
- }
+@@ -1203,24 +1219,20 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
+ 		fputs(line_prefix, diff_words->opt->file);
+ 	}
+ 	if (diff_words->current_plus != plus_begin) {
+-		fn_out_diff_words_write_helper(diff_words->opt->file,
++		fn_out_diff_words_write_helper(diff_words->opt,
+ 				&style->ctx, style->newline,
+ 				plus_begin - diff_words->current_plus,
+-				diff_words->current_plus, line_prefix);
+-		if (*(plus_begin - 1) == '\n')
+-			fputs(line_prefix, diff_words->opt->file);
++				diff_words->current_plus);
+ 	}
+ 	if (minus_begin != minus_end) {
+-		fn_out_diff_words_write_helper(diff_words->opt->file,
++		fn_out_diff_words_write_helper(diff_words->opt,
+ 				&style->old, style->newline,
+-				minus_end - minus_begin, minus_begin,
+-				line_prefix);
++				minus_end - minus_begin, minus_begin);
+ 	}
+ 	if (plus_begin != plus_end) {
+-		fn_out_diff_words_write_helper(diff_words->opt->file,
++		fn_out_diff_words_write_helper(diff_words->opt,
+ 				&style->new, style->newline,
+-				plus_end - plus_begin, plus_begin,
+-				line_prefix);
++				plus_end - plus_begin, plus_begin);
+ 	}
  
- static void emit_context_line(const char *reset,
- 			      struct emit_callback *ecbdata,
- 			      const char *line, int len)
- {
--	emit_line_checked(reset, ecbdata, line, len,
--			  DIFF_CONTEXT, WSEH_CONTEXT, ' ');
-+	unsigned flags = WSEH_CONTEXT | ecbdata->ws_rule;
-+	emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_CONTEXT, line, len, flags);
- }
+ 	diff_words->current_plus = plus_end;
+@@ -1314,11 +1326,12 @@ static void diff_words_show(struct diff_words_data *diff_words)
  
- static void emit_hunk_header(struct emit_callback *ecbdata,
-@@ -682,7 +712,7 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
- 	    memcmp(line, atat, 2) ||
- 	    !(ep = memmem(line + 2, len - 2, atat, 2))) {
- 		emit_diff_symbol(ecbdata->opt,
--				 DIFF_SYMBOL_CONTEXT_MARKER, line, len);
-+				 DIFF_SYMBOL_CONTEXT_MARKER, line, len, 0);
+ 	/* special case: only removal */
+ 	if (!diff_words->plus.text.size) {
+-		fputs(line_prefix, diff_words->opt->file);
+-		fn_out_diff_words_write_helper(diff_words->opt->file,
++		emit_diff_symbol(diff_words->opt, DIFF_SYMBOL_WORD_DIFF,
++				 line_prefix, strlen(line_prefix), 0);
++		fn_out_diff_words_write_helper(diff_words->opt,
+ 			&style->old, style->newline,
+ 			diff_words->minus.text.size,
+-			diff_words->minus.text.ptr, line_prefix);
++			diff_words->minus.text.ptr);
+ 		diff_words->minus.text.size = 0;
  		return;
  	}
- 	ep += 2; /* skip over @@ */
-@@ -718,7 +748,7 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
- 	strbuf_add(&msgbuf, line + len, org_len - len);
- 	strbuf_complete_line(&msgbuf);
- 	emit_diff_symbol(ecbdata->opt,
--			 DIFF_SYMBOL_CONTEXT_FRAGINFO, msgbuf.buf, msgbuf.len);
-+			 DIFF_SYMBOL_CONTEXT_FRAGINFO, msgbuf.buf, msgbuf.len, 0);
- 	strbuf_release(&msgbuf);
- }
- 
-@@ -777,7 +807,7 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
- 		data += len;
+@@ -1341,12 +1354,12 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 	if (diff_words->current_plus != diff_words->plus.text.ptr +
+ 			diff_words->plus.text.size) {
+ 		if (color_words_output_graph_prefix(diff_words))
+-			fputs(line_prefix, diff_words->opt->file);
+-		fn_out_diff_words_write_helper(diff_words->opt->file,
++			emit_diff_symbol(diff_words->opt, DIFF_SYMBOL_WORD_DIFF,
++					 line_prefix, strlen(line_prefix), 0);
++		fn_out_diff_words_write_helper(diff_words->opt,
+ 			&style->ctx, style->newline,
+ 			diff_words->plus.text.ptr + diff_words->plus.text.size
+-			- diff_words->current_plus, diff_words->current_plus,
+-			line_prefix);
++			- diff_words->current_plus, diff_words->current_plus);
  	}
- 	if (!endp)
--		emit_diff_symbol(ecb->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0);
-+		emit_diff_symbol(ecb->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0, 0);
+ 	diff_words->minus.text.size = diff_words->plus.text.size = 0;
  }
- 
- static void emit_rewrite_diff(const char *name_a,
-@@ -4774,6 +4804,10 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- {
- 	int i;
- 	struct diff_queue_struct *q = &diff_queued_diff;
-+
-+	if (WSEH_NEW & WS_RULE_MASK)
-+		die("BUG: WS rules bit mask overlaps with diff symbol flags");
-+
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
- 		if (check_pair_status(p))
-@@ -4866,7 +4900,7 @@ void diff_flush(struct diff_options *options)
- 
- 	if (output_format & DIFF_FORMAT_PATCH) {
- 		if (separator) {
--			emit_diff_symbol(options, DIFF_SYMBOL_SEPARATOR, NULL, 0);
-+			emit_diff_symbol(options, DIFF_SYMBOL_SEPARATOR, NULL, 0, 0);
- 			if (options->stat_sep) {
- 				/* attach patch instead of inline */
- 				fputs(options->stat_sep, options->file);
-diff --git a/diff.h b/diff.h
-index 5be1ee77a7..8483ca0991 100644
---- a/diff.h
-+++ b/diff.h
-@@ -148,9 +148,9 @@ struct diff_options {
- 	int abbrev;
- 	int ita_invisible_in_index;
- /* white-space error highlighting */
--#define WSEH_NEW 1
--#define WSEH_CONTEXT 2
--#define WSEH_OLD 4
-+#define WSEH_NEW (1<<12)
-+#define WSEH_CONTEXT (1<<13)
-+#define WSEH_OLD (1<<14)
- 	unsigned ws_error_highlight;
- 	const char *prefix;
- 	int prefix_length;
 -- 
 2.12.2.575.gb14f27f917
 
