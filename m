@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
 	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C76520401
-	for <e@80x24.org>; Fri, 23 Jun 2017 07:03:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED78320401
+	for <e@80x24.org>; Fri, 23 Jun 2017 07:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754124AbdFWHDS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 03:03:18 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50055 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754662AbdFWHCf (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 23 Jun 2017 03:02:35 -0400
-X-AuditID: 1207440d-3d1ff70000001be7-48-594cbd0bfce1
+        id S1751282AbdFWHDa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 03:03:30 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:62601 "EHLO
+        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754638AbdFWHCV (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 23 Jun 2017 03:02:21 -0400
+X-AuditID: 1207440e-8bfff70000006f9a-ca-594cbcf593b1
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 0D.51.07143.B0DBC495; Fri, 23 Jun 2017 03:02:35 -0400 (EDT)
+        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 15.F0.28570.5FCBC495; Fri, 23 Jun 2017 03:02:14 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCC5B4.dip0.t-ipconnect.de [87.188.197.180])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5N71o63001300
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5N71o5r001300
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 23 Jun 2017 03:02:33 -0400
+        Fri, 23 Jun 2017 03:02:11 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -35,103 +35,118 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         <avarab@gmail.com>, David Turner <novalis@novalis.org>,
         Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 18/29] packed_read_raw_ref(): new function, replacing `resolve_packed_ref()`
-Date:   Fri, 23 Jun 2017 09:01:36 +0200
-Message-Id: <cacc4d404f8964765acbd19c2f7191046a6d2005.1498200513.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 08/29] get_packed_ref_cache(): take a `packed_ref_store *` parameter
+Date:   Fri, 23 Jun 2017 09:01:26 +0200
+Message-Id: <9818ba3c290cafb21818a8fa2faee3aca08242c4.1498200513.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1498200513.git.mhagger@alum.mit.edu>
 References: <cover.1498200513.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrIIsWRmVeSWpSXmKPExsUixO6iqMu91yfSYGKPoMXaZ3eYLJ6vP8Fu
-        0XWlm8miofcKs8XtFfOZLZY8fM1s0T3lLaPFj5YeZovNm9tZHDg9/r7/wOSxc9Zddo8Fm0o9
-        utqPsHk8693D6HHxkrLH501yAexRXDYpqTmZZalF+nYJXBnrN81mKVgmVNG7fj9bA+M+vi5G
-        Tg4JAROJi/NOsXUxcnEICexgkvh1/ycrSEJI4BSTxMN7AiA2m4CuxKKeZiYQW0RATWJi2yEW
-        kAZmgUnMEm+vLQRLCAvES1x79oq5i5GDg0VAVWJXXyVImFcgSqKxq5EdYpm8xK62i2DzOQUs
-        JHomLmeH2GUuser3atYJjDwLGBlWMcol5pTm6uYmZuYUpybrFicn5uWlFuka6eVmluilppRu
-        YoSEHO8Oxv/rZA4xCnAwKvHwJpz1jhRiTSwrrsw9xCjJwaQkyqsZ6RMpxJeUn1KZkVicEV9U
-        mpNafIhRgoNZSYRXZxVQjjclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEk
-        wduyG6hRsCg1PbUiLTOnBCHNxMEJMpwHaLjHZpDhxQWJucWZ6RD5U4yKUuK8G0CaBUASGaV5
-        cL2wlPCKURzoFWHeRJAqHmA6get+BTSYCWjwjDVgg0sSEVJSDYwqn5zjNmia1cSUGOrru8c8
-        4fbX8995xnxN7so1J1VEyyft3lJefK6Po21SaFn9/mL/yfnda2fq51zU9bdz/qDg2KV9X0L2
-        ade8yk2O9nLLjt2fkySY/rPl3m7bBfdWsPwKVjcJPXwisnhqIYvtvFW/9L5/duqriou0XvFV
-        4WJWZm2KDtO7fUosxRmJhlrMRcWJAF0QhVPkAgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrMIsWRmVeSWpSXmKPExsUixO6iqPttj0+kQfMOI4u1z+4wWTxff4Ld
+        outKN5NFQ+8VZovbK+YzWyx5+JrZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4LNpV6
+        dLUfYfN41ruH0ePiJWWPz5vkAtijuGxSUnMyy1KL9O0SuDJenTvNXrBPpmLRoktsDYwLJboY
+        OTkkBEwkWj81MXcxcnEICexgkvh+qYcFwjnFJHH+Yy8zSBWbgK7Eop5mJhBbREBNYmLbIbAi
+        ZoFJzBJvry0ESwgLhEvsOL4SrIFFQFWib8sCMJtXIEqie+8ddoh18hK72i6ygticAhYSPROX
+        g8WFBMwlVv1ezTqBkWcBI8MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl1jvdzMEr3UlNJNjJCw
+        49vB2L5e5hCjAAejEg/vjvPekUKsiWXFlbmHGCU5mJREeTUjfSKF+JLyUyozEosz4otKc1KL
+        DzFKcDArifDqrALK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YWpBbBZGU4OJQkeFt2
+        AzUKFqWmp1akZeaUIKSZODhBhvMADffYDDK8uCAxtzgzHSJ/ilFRSpx3A0izAEgiozQPrheW
+        Fl4xigO9IsybCFLFA0wpcN2vgAYzAQ2esQZscEkiQkqqgZHnHjevbZZq5E2ZJzqxrJ/kki7a
+        xl2c6X2x0LTMz++VypzE650/J54ukSoKu7vVRI+zfIHMnYpLZ3Zq8b7YfEVnTYL8vOX285LY
+        21W4RRcq3bYPKHB2F/UxOzmXY7WzUcXP8NhjK+cZBCXu6d0qNWvvGbmPRr0BlfqXcmPNehds
+        rGS/cuhyuhJLcUaioRZzUXEiAF0LtrDmAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new function, `packed_read_raw_ref()`, which is nearly a
-`read_raw_ref_fn`. Use it in place of `resolve_packed_ref()`.
+It only cares about the packed-refs part of the reference store.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 36 +++++++++++++++++-------------------
- 1 file changed, 17 insertions(+), 19 deletions(-)
+ refs/files-backend.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0490cc087e..346794cf7c 100644
+index f061506bf0..b2ef7b3bb9 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -608,27 +608,23 @@ static struct ref_entry *get_packed_ref(struct packed_ref_store *refs,
- 	return find_ref_entry(get_packed_refs(refs), refname);
+@@ -404,24 +404,22 @@ static void validate_packed_ref_cache(struct packed_ref_store *refs)
  }
  
--/*
-- * A loose ref file doesn't exist; check for a packed ref.
-- */
--static int resolve_packed_ref(struct files_ref_store *refs,
--			      const char *refname,
--			      unsigned char *sha1, unsigned int *flags)
-+static int packed_read_raw_ref(struct packed_ref_store *refs,
-+			       const char *refname, unsigned char *sha1,
-+			       struct strbuf *referent, unsigned int *type)
+ /*
+- * Get the packed_ref_cache for the specified files_ref_store,
++ * Get the packed_ref_cache for the specified packed_ref_store,
+  * creating and populating it if it hasn't been read before or if the
+  * file has been changed (according to its `validity` field) since it
+  * was last read. On the other hand, if we hold the lock, then assume
+  * that the file hasn't been changed out from under us, so skip the
+  * extra `stat()` call in `stat_validity_check()`.
+  */
+-static struct packed_ref_cache *get_packed_ref_cache(struct files_ref_store *refs)
++static struct packed_ref_cache *get_packed_ref_cache(struct packed_ref_store *refs)
  {
- 	struct ref_entry *entry;
+-	const char *packed_refs_file = refs->packed_ref_store->path;
++	if (!is_lock_file_locked(&refs->lock))
++		validate_packed_ref_cache(refs);
  
--	/*
--	 * The loose reference file does not exist; check for a packed
--	 * reference.
--	 */
--	entry = get_packed_ref(refs->packed_ref_store, refname);
--	if (entry) {
--		hashcpy(sha1, entry->u.value.oid.hash);
--		*flags |= REF_ISPACKED;
--		return 0;
-+	*type = 0;
-+
-+	entry = get_packed_ref(refs, refname);
-+	if (!entry) {
-+		errno = ENOENT;
-+		return -1;
- 	}
--	/* refname is not a packed reference. */
--	return -1;
-+
-+	hashcpy(sha1, entry->u.value.oid.hash);
-+	*type = REF_ISPACKED;
-+	return 0;
+-	if (!is_lock_file_locked(&refs->packed_ref_store->lock))
+-		validate_packed_ref_cache(refs->packed_ref_store);
+-
+-	if (!refs->packed_ref_store->cache)
+-		refs->packed_ref_store->cache = read_packed_refs(packed_refs_file);
++	if (!refs->cache)
++		refs->cache = read_packed_refs(refs->path);
+ 
+-	return refs->packed_ref_store->cache;
++	return refs->cache;
  }
  
- static int files_read_raw_ref(struct ref_store *ref_store,
-@@ -674,7 +670,8 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 	if (lstat(path, &st) < 0) {
- 		if (errno != ENOENT)
- 			goto out;
--		if (resolve_packed_ref(refs, refname, sha1, type)) {
-+		if (packed_read_raw_ref(refs->packed_ref_store, refname,
-+					sha1, referent, type)) {
- 			errno = ENOENT;
- 			goto out;
- 		}
-@@ -713,7 +710,8 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 		 * ref is supposed to be, there could still be a
- 		 * packed ref:
- 		 */
--		if (resolve_packed_ref(refs, refname, sha1, type)) {
-+		if (packed_read_raw_ref(refs->packed_ref_store, refname,
-+					sha1, referent, type)) {
- 			errno = EISDIR;
- 			goto out;
- 		}
+ static struct ref_dir *get_packed_ref_dir(struct packed_ref_cache *packed_ref_cache)
+@@ -431,7 +429,7 @@ static struct ref_dir *get_packed_ref_dir(struct packed_ref_cache *packed_ref_ca
+ 
+ static struct ref_dir *get_packed_refs(struct files_ref_store *refs)
+ {
+-	return get_packed_ref_dir(get_packed_ref_cache(refs));
++	return get_packed_ref_dir(get_packed_ref_cache(refs->packed_ref_store));
+ }
+ 
+ /*
+@@ -1151,7 +1149,7 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 	loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs),
+ 					      prefix, 1);
+ 
+-	iter->packed_ref_cache = get_packed_ref_cache(refs);
++	iter->packed_ref_cache = get_packed_ref_cache(refs->packed_ref_store);
+ 	acquire_packed_ref_cache(iter->packed_ref_cache);
+ 	packed_iter = cache_ref_iterator_begin(iter->packed_ref_cache->cache,
+ 					       prefix, 0);
+@@ -1365,7 +1363,7 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
+ 	 */
+ 	validate_packed_ref_cache(refs->packed_ref_store);
+ 
+-	packed_ref_cache = get_packed_ref_cache(refs);
++	packed_ref_cache = get_packed_ref_cache(refs->packed_ref_store);
+ 	/* Increment the reference count to prevent it from being freed: */
+ 	acquire_packed_ref_cache(packed_ref_cache);
+ 	return 0;
+@@ -1380,7 +1378,7 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
+ static int commit_packed_refs(struct files_ref_store *refs)
+ {
+ 	struct packed_ref_cache *packed_ref_cache =
+-		get_packed_ref_cache(refs);
++		get_packed_ref_cache(refs->packed_ref_store);
+ 	int ok, error = 0;
+ 	int save_errno = 0;
+ 	FILE *out;
+@@ -1426,7 +1424,7 @@ static int commit_packed_refs(struct files_ref_store *refs)
+ static void rollback_packed_refs(struct files_ref_store *refs)
+ {
+ 	struct packed_ref_cache *packed_ref_cache =
+-		get_packed_ref_cache(refs);
++		get_packed_ref_cache(refs->packed_ref_store);
+ 
+ 	files_assert_main_repository(refs, "rollback_packed_refs");
+ 
 -- 
 2.11.0
 
