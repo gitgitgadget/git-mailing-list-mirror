@@ -2,132 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,RCVD_IN_DNSWL_HI,T_RP_MATCHES_RCVD shortcircuit=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1465620401
-	for <e@80x24.org>; Fri, 23 Jun 2017 09:53:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C3F820401
+	for <e@80x24.org>; Fri, 23 Jun 2017 10:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754655AbdFWJxl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 05:53:41 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:6518 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754606AbdFWJxk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 05:53:40 -0400
-Received: from [192.168.2.201] ([92.22.42.39])
-        by smtp.talktalk.net with SMTP
-        id OLHVdme3McpskOLHVdGwvX; Fri, 23 Jun 2017 10:53:38 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1498211618; bh=2KDYH3fjXXfz7TkOxJ1MIp3Bzt037wjq3ymNGRKUJro=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=rdHNb9HtmuS1xpj43WWyQaR46tcJket0tpBLg402hPcoCf0yGKnn1cSb9heP6S0Vm
-         RKoagtd2NsMPbHa2dYk8sXuoix+BEipzkkT4j7AsQ94vwxxsoRWGnpHjJDYzgf91iI
-         TVB3fsvFEo8b0JQmc2R+IFhd42B0dkFMRRGPDqj0=
-X-Originating-IP: [92.22.42.39]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
- a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
- a=extA4yZ_AAAA:8 a=YwgSsaPVgTRxjFwEDlIA:9 a=QEXdDO2ut3YA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=hVSmkA6k2N-FF26V3nNA:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/4] Add regression tests for recent rebase -i fixes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
- <20170619175605.27864-1-phillip.wood@talktalk.net>
- <xmqqa84zgwx9.fsf@gitster.mtv.corp.google.com>
- <xmqqwp83fg0h.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <bc0c32fa-2df6-a4a3-5966-8efabfa349cd@talktalk.net>
-Date:   Fri, 23 Jun 2017 10:53:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqwp83fg0h.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfJztU6J51YlMV/Xpw/bZp1LmLCikFmrKCiWv9EMtlxdxGMr2wFlkJOalwWPIGabcGzF68dEJH/Igjit7VUTeoJBgSn8CcZ+JJ6f4lzwUoEBVELaxKk8p
- B5IA2O3LKmy+Fkm+y5z5duvYz5cQO5aNYtPFvQVNZoUQrLzXhrU4MqgMuu/Mwb2qZeT0dSDuMJS/sIiJPJiIQU+iwyDOK3z8SpKKIdi5x3AqrsXsfUvmGoIQ
- ZlajpW2yTMBkNOlQB8byZuHZ9YCsLORlRm3Pk+rnEJLSElR6af9Cz5z01FcTcVJ2IPLEaNKDTenfkPPVIiaf0w==
+        id S1754698AbdFWKoc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 06:44:32 -0400
+Received: from hahler.de ([188.40.33.212]:41161 "EHLO elfe.thequod.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754354AbdFWKoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 06:44:32 -0400
+X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Jun 2017 06:44:31 EDT
+Received: from localhost (amavis [10.122.1.24])
+        by elfe.thequod.de (Postfix) with ESMTP id B845E62149
+        for <git@vger.kernel.org>; Fri, 23 Jun 2017 12:36:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thequod.de; h=
+        x-mailer:message-id:date:date:subject:subject:from:from:received
+        :received:received; s=postfix2; t=1498214188; bh=wDK5KmwZBEy7RWe
+        JF4+eaK+WKRAxwWoh4nJ+BDwS118=; b=eDCgGU5EuqrQ7b8lGW4s65eCV16dksm
+        qV2UGVgiJC0aIunc0YFfO+1dD/w6CARIaFudTM+TE9wBHWufVjTaWk1U8PbqPp2D
+        5Eod/DEkrTXoewDpUBLdXr70SHkqpgNLAEBncDSlOsDlzlJaKN3Gp5oOpjB1yYuj
+        7cg/UZF9mkcE=
+Received: from elfe.thequod.de ([10.122.1.25])
+        by localhost (amavis.thequod.de [10.122.1.24]) (amavisd-new, port 10026)
+        with ESMTP id 0tkjs5tQVWuq for <git@vger.kernel.org>;
+        Fri, 23 Jun 2017 12:36:28 +0200 (CEST)
+From:   Daniel Hahler <git@thequod.de>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Jeff King <peff@peff.net>, Daniel Hahler <git@thequod.de>
+Subject: [PATCH] xdiff: trim common tail with -U0 after diff
+Date:   Fri, 23 Jun 2017 12:36:12 +0200
+Message-Id: <20170623103612.4694-1-git@thequod.de>
+X-Mailer: git-send-email 2.13.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/06/17 06:07, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->>>  git-rebase.sh                 |   4 +-
->>>  sequencer.c                   |  11 ++--
->>>  t/t3404-rebase-interactive.sh |   7 +++
->>>  t/t3420-rebase-autostash.sh   | 136 ++++++++++++++++++++++++++++++++++++++++--
->>>  4 files changed, 147 insertions(+), 11 deletions(-)
->>
->> I've merged this to 'next' but I probably shouldn't have before
->> making sure that Travis tests passes 'pu' while this was still in
->> there.  
->>
->> At least t3420 seems to fail under GETTEXT_POISON build.
->>
->>   https://travis-ci.org/git/git/jobs/245990993
-> 
-> This should be sufficient to make t3420 pass.  It seems that t3404
-> is also broken under GETTEXT_POISON build, but I won't have time to
-> look at it, at least tonight.
-> 
->     $ make GETTEXT_POISON=YesPlease
->     $ cd t && sh ./t3404-*.sh -i -v
-> 
-> to see how it breaks.
+When -U0 is used, trim_common_tail should be called after `xdl_diff`, so
+that `--indent-heuristic` (and other diff processing) works as expected.
 
-t3404 passes for me,
-$ make GETTEXT_POISON=YesPlease
-$ cd t &&sh t3404-rebase-interactive.sh -i -v
-...
-# still have 1 known breakage(s)
-# passed all remaining 95 test(s)
-1..96
+It also removes the check for `!(xecfg->flags & XDL_EMIT_FUNCCONTEXT)`
+added in e0876bca4, which does not appear to be necessary anymore after
+moving the trimming down.
 
-Also as far as I can see it passes on travis -
-https://travis-ci.org/git/git/jobs/245990993#L910 have I missed
-something? Do you want me to submit a fixup patch for t3420 or have you
-got one already?
+This only adds a test to t4061-diff-indent.sh, but should also have one for
+normal (i.e. non-experimental) diff mode probably?!
 
-Thanks
+Ref: https://github.com/tomtom/quickfixsigns_vim/issues/74#issue-237900460
+---
+ t/t4061-diff-indent.sh | 15 +++++++++++++++
+ xdiff-interface.c      |  7 ++++---
+ 2 files changed, 19 insertions(+), 3 deletions(-)
 
-Phillip
-
-> Thanks.
-> 
->  t/t3420-rebase-autostash.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-> index 6826c38cbd..e243700660 100755
-> --- a/t/t3420-rebase-autostash.sh
-> +++ b/t/t3420-rebase-autostash.sh
-> @@ -178,7 +178,7 @@ testrebase () {
->  		test_when_finished git branch -D rebased-feature-branch &&
->  		suffix=${type#\ --} && suffix=${suffix:-am} &&
->  		create_expected_success_$suffix &&
-> -		test_cmp expected actual
-> +		test_i18ncmp expected actual
->  	'
->  
->  	test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
-> @@ -275,7 +275,7 @@ testrebase () {
->  		test_when_finished git branch -D rebased-feature-branch &&
->  		suffix=${type#\ --} && suffix=${suffix:-am} &&
->  		create_expected_failure_$suffix &&
-> -		test_cmp expected actual
-> +		test_i18ncmp expected actual
->  	'
->  }
->  
-> 
+diff --git a/t/t4061-diff-indent.sh b/t/t4061-diff-indent.sh
+index 2affd7a10..df3151393 100755
+--- a/t/t4061-diff-indent.sh
++++ b/t/t4061-diff-indent.sh
+@@ -116,6 +116,16 @@ test_expect_success 'prepare' '
+ 	 4
+ 	EOF
+ 
++	cat <<-\EOF >spaces-compacted-U0-expect &&
++	diff --git a/spaces.txt b/spaces.txt
++	--- a/spaces.txt
++	+++ b/spaces.txt
++	@@ -4,0 +5,3 @@ a
++	+b
++	+a
++	+
++	EOF
++
+ 	tr "_" " " <<-\EOF >functions-expect &&
+ 	diff --git a/functions.c b/functions.c
+ 	--- a/functions.c
+@@ -184,6 +194,11 @@ test_expect_success 'diff: --indent-heuristic with --histogram' '
+ 	compare_diff spaces-compacted-expect out-compacted4
+ '
+ 
++test_expect_success 'diff: --indent-heuristic with -U0' '
++	git diff -U0 --indent-heuristic old new -- spaces.txt >out-compacted5 &&
++	compare_diff spaces-compacted-U0-expect out-compacted5
++'
++
+ test_expect_success 'diff: ugly functions' '
+ 	git diff --no-indent-heuristic old new -- functions.c >out &&
+ 	compare_diff functions-expect out
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index d3f78ca2a..a7e0e3583 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -125,16 +125,17 @@ static void trim_common_tail(mmfile_t *a, mmfile_t *b)
+ 
+ int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *xecb)
+ {
++	int ret;
+ 	mmfile_t a = *mf1;
+ 	mmfile_t b = *mf2;
+ 
+ 	if (mf1->size > MAX_XDIFF_SIZE || mf2->size > MAX_XDIFF_SIZE)
+ 		return -1;
+ 
+-	if (!xecfg->ctxlen && !(xecfg->flags & XDL_EMIT_FUNCCONTEXT))
++	ret = xdl_diff(&a, &b, xpp, xecfg, xecb);
++	if (ret && !xecfg->ctxlen)
+ 		trim_common_tail(&a, &b);
+-
+-	return xdl_diff(&a, &b, xpp, xecfg, xecb);
++	return ret;
+ }
+ 
+ int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
+-- 
+2.13.1
 
