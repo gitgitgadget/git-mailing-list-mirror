@@ -2,121 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C3F820401
-	for <e@80x24.org>; Fri, 23 Jun 2017 10:44:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 438CC20282
+	for <e@80x24.org>; Fri, 23 Jun 2017 13:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754698AbdFWKoc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 06:44:32 -0400
-Received: from hahler.de ([188.40.33.212]:41161 "EHLO elfe.thequod.de"
+        id S1753870AbdFWNwe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 09:52:34 -0400
+Received: from mga02.intel.com ([134.134.136.20]:25977 "EHLO mga02.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754354AbdFWKoc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 06:44:32 -0400
-X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Jun 2017 06:44:31 EDT
-Received: from localhost (amavis [10.122.1.24])
-        by elfe.thequod.de (Postfix) with ESMTP id B845E62149
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 12:36:28 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=thequod.de; h=
-        x-mailer:message-id:date:date:subject:subject:from:from:received
-        :received:received; s=postfix2; t=1498214188; bh=wDK5KmwZBEy7RWe
-        JF4+eaK+WKRAxwWoh4nJ+BDwS118=; b=eDCgGU5EuqrQ7b8lGW4s65eCV16dksm
-        qV2UGVgiJC0aIunc0YFfO+1dD/w6CARIaFudTM+TE9wBHWufVjTaWk1U8PbqPp2D
-        5Eod/DEkrTXoewDpUBLdXr70SHkqpgNLAEBncDSlOsDlzlJaKN3Gp5oOpjB1yYuj
-        7cg/UZF9mkcE=
-Received: from elfe.thequod.de ([10.122.1.25])
-        by localhost (amavis.thequod.de [10.122.1.24]) (amavisd-new, port 10026)
-        with ESMTP id 0tkjs5tQVWuq for <git@vger.kernel.org>;
-        Fri, 23 Jun 2017 12:36:28 +0200 (CEST)
-From:   Daniel Hahler <git@thequod.de>
+        id S1751287AbdFWNwd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 09:52:33 -0400
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 23 Jun 2017 06:52:32 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.39,378,1493708400"; 
+   d="scan'208";a="984432211"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([134.134.177.230])
+  by orsmga003.jf.intel.com with ESMTP; 23 Jun 2017 06:52:32 -0700
+From:   Jacob Keller <jacob.e.keller@intel.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>, Daniel Hahler <git@thequod.de>
-Subject: [PATCH] xdiff: trim common tail with -U0 after diff
-Date:   Fri, 23 Jun 2017 12:36:12 +0200
-Message-Id: <20170623103612.4694-1-git@thequod.de>
-X-Mailer: git-send-email 2.13.1
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+Subject: [RFC PATCH] proposal for refs/tracking/* hierarchy
+Date:   Fri, 23 Jun 2017 06:52:30 -0700
+Message-Id: <20170623135230.10534-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.13.0.615.gb09ed6e59a40
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When -U0 is used, trim_common_tail should be called after `xdl_diff`, so
-that `--indent-heuristic` (and other diff processing) works as expected.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-It also removes the check for `!(xecfg->flags & XDL_EMIT_FUNCCONTEXT)`
-added in e0876bca4, which does not appear to be necessary anymore after
-moving the trimming down.
+Historically, git has tracked the status of remote branches (heads) in
+refs/remotes/<name>/*. This is necessary and useful as it allows users
+to track the difference between their local work and the last known
+status of the remote work.
 
-This only adds a test to t4061-diff-indent.sh, but should also have one for
-normal (i.e. non-experimental) diff mode probably?!
+Unfortunately this hierarchy is limited in that it only tracks branches.
+Additionally, it is not feasible to extend it directly, because the
+layout would become ambiguous. For example, if a user happened to have
+a local branch named "notes" it could be confusing if you tried to add
+"refs/remotes/origin/notes/<remote notes refs" as this would collide
+with the already existing refs/remotes/origin/notes branch that existed.
 
-Ref: https://github.com/tomtom/quickfixsigns_vim/issues/74#issue-237900460
+Instead, lets add support for a new refs/tracking/* hierarchy which is
+laid out in such a way to avoid this inconsistency. All refs in
+"refs/tracking/<remote>/*" will include the complete ref, such that
+dropping the "tracking/<remote>" part will give the exact ref name as it
+is found in the upstream. Thus, we can track any ref here by simply
+fetching it into refs/tracking/<remote>/*.
+
+Add support to tell a new remote to start tracking remote hierarchies
+via "--follow" which will track all refs under that section, ie:
+
+git remote add --follow notes origin <url> will cause
+
++refs/notes/*:refs/tracking/origin/notes/* to be added as a fetch
+refspec for this remote.
+
+This ensures that any future refs which want a method of sharing the
+current remote status separate from local status could use
+refs/tracking
+
+A long term goal might be to deprecate refs/remotes/ in favor of
+refs/tracking (possibly adding in magic to convert refs/remotes directly
+into refs/tracking so that old stuff still works?).
+
+Things not yet thought through:
+
+1) maybe we should create a configurable default so that some known set
+   of default refs get pulled (ie: notes, grafts, replace, etc?)
+   Possibly with some sort of easy way to add or subtract from the list
+   in config...
+
+2) so far, there's no work done to figure out how to remove
+   refs/tracking when a remote is dropped. I *think* we can just delete
+   all refs under refs/tracking/<name> but I'm not completely certain
+
+3) adding magic to complete refs under tracking, such as for git-notes
+   or similar may wish to understand shorthand for referencing the
+   remote version of notes
+
+4) adding support for clone.. (this is weird because git-clone and
+   git-remote don't both use the same flow for setup.. oops??)
+
+5) tests, documentation etc. (This is primarily an RFC, with the goal of
+   providing a known location for remote references such as notes to
+   reside)
+
+6) we probably want to enable notes and grafts and other similar things
+   to use the remote tracking data if its available.
+
+7) what about tags? Currently we fetch all tags into refs/tags directly,
+   which is a bit awkward, if for example you create a local tag and
+   a remote creates a tag with the same name, you simply don't get that
+   new version. This is good, but now you have no idea how to tell if
+   your tags are out of date or not. refs/tracking can partially resolve
+   this since remote tags will always be "exactly" what the remote has.
+   Unfortunately, I don't know how we'd resolve them into local tags...
+
+Probably other things missing too...
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- t/t4061-diff-indent.sh | 15 +++++++++++++++
- xdiff-interface.c      |  7 ++++---
- 2 files changed, 19 insertions(+), 3 deletions(-)
+ builtin/remote.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/t/t4061-diff-indent.sh b/t/t4061-diff-indent.sh
-index 2affd7a10..df3151393 100755
---- a/t/t4061-diff-indent.sh
-+++ b/t/t4061-diff-indent.sh
-@@ -116,6 +116,16 @@ test_expect_success 'prepare' '
- 	 4
- 	EOF
- 
-+	cat <<-\EOF >spaces-compacted-U0-expect &&
-+	diff --git a/spaces.txt b/spaces.txt
-+	--- a/spaces.txt
-+	+++ b/spaces.txt
-+	@@ -4,0 +5,3 @@ a
-+	+b
-+	+a
-+	+
-+	EOF
-+
- 	tr "_" " " <<-\EOF >functions-expect &&
- 	diff --git a/functions.c b/functions.c
- 	--- a/functions.c
-@@ -184,6 +194,11 @@ test_expect_success 'diff: --indent-heuristic with --histogram' '
- 	compare_diff spaces-compacted-expect out-compacted4
- '
- 
-+test_expect_success 'diff: --indent-heuristic with -U0' '
-+	git diff -U0 --indent-heuristic old new -- spaces.txt >out-compacted5 &&
-+	compare_diff spaces-compacted-U0-expect out-compacted5
-+'
-+
- test_expect_success 'diff: ugly functions' '
- 	git diff --no-indent-heuristic old new -- functions.c >out &&
- 	compare_diff functions-expect out
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index d3f78ca2a..a7e0e3583 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -125,16 +125,17 @@ static void trim_common_tail(mmfile_t *a, mmfile_t *b)
- 
- int xdi_diff(mmfile_t *mf1, mmfile_t *mf2, xpparam_t const *xpp, xdemitconf_t const *xecfg, xdemitcb_t *xecb)
- {
-+	int ret;
- 	mmfile_t a = *mf1;
- 	mmfile_t b = *mf2;
- 
- 	if (mf1->size > MAX_XDIFF_SIZE || mf2->size > MAX_XDIFF_SIZE)
- 		return -1;
- 
--	if (!xecfg->ctxlen && !(xecfg->flags & XDL_EMIT_FUNCCONTEXT))
-+	ret = xdl_diff(&a, &b, xpp, xecfg, xecb);
-+	if (ret && !xecfg->ctxlen)
- 		trim_common_tail(&a, &b);
--
--	return xdl_diff(&a, &b, xpp, xecfg, xecb);
-+	return ret;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index f1a88fe26589..dffe3892be11 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -122,6 +122,16 @@ static void add_branch(const char *key, const char *branchname,
+ 	git_config_set_multivar(key, tmp->buf, "^$", 0);
  }
  
- int xdi_diff_outf(mmfile_t *mf1, mmfile_t *mf2,
++static void add_tracking(const char *key, const char *namespace,
++			 const char *remotename, struct strbuf *tmp)
++{
++	strbuf_reset(tmp);
++	strbuf_addch(tmp, '+');
++	strbuf_addf(tmp, "refs/%s/*:refs/tracking/%s/%s/*",
++		    namespace, remotename, namespace);
++	git_config_set_multivar(key, tmp->buf, "^$", 0);
++}
++
+ static const char mirror_advice[] =
+ N_("--mirror is dangerous and deprecated; please\n"
+    "\t use --mirror=fetch or --mirror=push instead");
+@@ -149,6 +159,7 @@ static int add(int argc, const char **argv)
+ 	int fetch = 0, fetch_tags = TAGS_DEFAULT;
+ 	unsigned mirror = MIRROR_NONE;
+ 	struct string_list track = STRING_LIST_INIT_NODUP;
++	struct string_list follow = STRING_LIST_INIT_NODUP;
+ 	const char *master = NULL;
+ 	struct remote *remote;
+ 	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
+@@ -164,6 +175,8 @@ static int add(int argc, const char **argv)
+ 			    N_("or do not fetch any tag at all (--no-tags)"), TAGS_UNSET),
+ 		OPT_STRING_LIST('t', "track", &track, N_("branch"),
+ 				N_("branch(es) to track")),
++		OPT_STRING_LIST(0, "follow", &follow, N_("namespace"),
++				N_("refs namespaces to follow in refs/tracking")),
+ 		OPT_STRING('m', "master", &master, N_("branch"), N_("master branch")),
+ 		{ OPTION_CALLBACK, 0, "mirror", &mirror, N_("push|fetch"),
+ 			N_("set up remote as a mirror to push to or fetch from"),
+@@ -207,6 +220,11 @@ static int add(int argc, const char **argv)
+ 		}
+ 	}
+ 
++	for (i = 0; i < follow.nr; i++) {
++		add_tracking(buf.buf, follow.items[i].string,
++			     name, &buf2);
++	}
++
+ 	if (mirror & MIRROR_PUSH) {
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "remote.%s.mirror", name);
 -- 
-2.13.1
+2.13.0.615.gb09ed6e59a40
 
