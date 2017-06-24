@@ -2,83 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	RCVD_IN_DNSWL_HI,T_DKIM_INVALID,T_RP_MATCHES_RCVD shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,RCVD_IN_DNSWL_HI,
+	T_RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 095BA207D2
-	for <e@80x24.org>; Sat, 24 Jun 2017 01:02:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CE34207D2
+	for <e@80x24.org>; Sat, 24 Jun 2017 01:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754209AbdFXBB6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Jun 2017 21:01:58 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:36258 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754075AbdFXBB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Jun 2017 21:01:57 -0400
-Received: by mail-pg0-f51.google.com with SMTP id u62so27292449pgb.3
-        for <git@vger.kernel.org>; Fri, 23 Jun 2017 18:01:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=NRF1donuyFbpUs7tTVleeGHZPK+MBdiJ4M+pBOWZH5E=;
-        b=jmsXO5dqN5fNdSMDXwmV/4LElYX6Si7DqHzHLL46UXAdvtILvLOutcrKHVcOYLIDLy
-         7w6x4GHdz48/EyLLUa4RYdTlLn6TTPqEdOeK7XsotEAj1T7hDHhQrmeGJqGV/Fu+kCWM
-         qaiUI/mLHpxfypYWQEAUhdId5o+t+0d6m71jF+my2VIxsaF9V8C2NNl50jzaXvE1L1px
-         1L/V3pHP2l7xQexE/g0yqi0OypgAnSHsAr0pTOrcGfloptzBk4tQbfWVdAn++/dOU8KH
-         i79uK+VB0sZwauLeWY/Fz8D9ZtOqHJeichfsZPAJOp3UsuihJVAZEJYrbKvQvVs/Cz1i
-         ICQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=NRF1donuyFbpUs7tTVleeGHZPK+MBdiJ4M+pBOWZH5E=;
-        b=Tcb3JNL4R3ITKQAI7Gar1wysSNXUETX0ElpplITvQMeaX2feOa+qUShYgfnWo4Y3CQ
-         zxOnatoyNCfoRhkLWhj3UpFP0L+hL2TvKQxrbhYT1DMnyuNIsvPdqmV9wRAbWtDsoCI5
-         wlmq2JKzzo2+sbe7RKfACXDXzGvamTKyZWGhipC5GKVdzrJiTH4jVEPbdXq+WNAE0CoW
-         YFEHBT9l0aIrDpyhkdXO7C2Dg8Npb7kDWRpr/WA1whwYL4WrGUaL+71LAS2pjLF4z6C3
-         IF2GXKTW/0Hp+PEmeoPLorHiSMrCvPHkgFOnqKFsm8S5Su6kuGoVbMW2foBi2yMxep8u
-         9J9Q==
-X-Gm-Message-State: AKS2vOw7BlR+QSLBKrvCujkcRZB50eaKtyoaC9+9KDuEUjG0GHKYOev1
-        9bfnajlqsnbBk8TNt7s=
-X-Received: by 10.98.101.6 with SMTP id z6mr11007390pfb.221.1498266116958;
-        Fri, 23 Jun 2017 18:01:56 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:4cd0:d6d2:1e09:4052])
-        by smtp.gmail.com with ESMTPSA id 67sm12005835pfa.83.2017.06.23.18.01.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 23 Jun 2017 18:01:56 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1754336AbdFXBKV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Jun 2017 21:10:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51466 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754126AbdFXBKV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Jun 2017 21:10:21 -0400
+Received: (qmail 32597 invoked by uid 109); 24 Jun 2017 01:10:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 24 Jun 2017 01:10:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20480 invoked by uid 111); 24 Jun 2017 01:10:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 23 Jun 2017 21:10:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Jun 2017 21:10:18 -0400
+Date:   Fri, 23 Jun 2017 21:10:18 -0400
+From:   Jeff King <peff@peff.net>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jun 2017, #06; Thu, 22)
-References: <xmqqinjnhcr8.fsf@gitster.mtv.corp.google.com>
-        <871sqajrgi.fsf@gmail.com>
-        <CAGZ79kZyMUKPahTXOF7ds6zSvFKLrM2N78JKG-2+GRL5nnmuvA@mail.gmail.com>
-        <xmqq60fmb4q8.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 23 Jun 2017 18:01:55 -0700
-In-Reply-To: <xmqq60fmb4q8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 23 Jun 2017 17:37:35 -0700")
-Message-ID: <xmqqwp829p18.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: --color-moved feedback, was Re: [PATCH v2 19/29] packed-backend:
+ new module for handling packed references
+Message-ID: <20170624011018.lvw3rm6x6or7wt4s@sigill.intra.peff.net>
+References: <20170623201020.24zus6tsnf2i62d3@sigill.intra.peff.net>
+ <CAGZ79kbKB0hWOHCWsa0k1z=QXeRC2Ab1sSOeQ7pApB7+o6mdFw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbKB0hWOHCWsa0k1z=QXeRC2Ab1sSOeQ7pApB7+o6mdFw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jun 23, 2017 at 01:23:52PM -0700, Stefan Beller wrote:
 
-> But for the purpose of this "moved line coloring",
-> excluding multiple copy destinations of the same thing may be a
-> simpler and more robust solution.  It will not catch "somebody
-> stupidly removed one function and made two private copies", though.
+> > In the end, I just did --color-moved=plain,  ...
+> > "yep, this is all a giant moved chunk, so I don't have to look carefully
+> > at it".
+> 
+> This is dangerous, as "plain" does not care about permutations.
+> See the 7f5af90798 (diff.c: color moved lines differently, 2017-06-19)
+> for details. You would want at least "zebra", which would show you
+> permutations.
 
-Let me take this one back.  Treating multiple copy destinations and
-multiple copy sources differently is a bad idea.  It is easy for a
-user to give "-R" option to "diff" to turn such a stupid patch into
-"somebody brilliantly consolidated two copies of the same thing into
-a single function", and we want to keep "diff" and "diff -R" output
-symmetric.
+Ah, I see. I think what I'd really want is some way of correlating two
+particular hunks. That's hard to do with color, though. I guess that's
+the "you would need a ton of colors" discussion I saw going on before?
 
+It would depend on how many hunks there are, and how close together they
+are. For instance, your 6cd5757c8 seems like a good candidate, but I
+have to admit with --color-moved=zebra I have no idea what's going on.
+Some things are definitely colored, but I'm not sure what corresponds to
+what.
+
+> > That feels more dangerous to me, just because the heuristics seem to
+> > find a lot of "moves" of repeated code. Imagine a simple patch like
+> > "switch return 0 to return -1". If the code you're touching went away,
+> > there's a very good chance that another "return 0" popped up somewhere
+> > else in the code base. A conflict is what you want there; silently
+> > changing some other site would be not only wrong, but quite subtle and
+> > hard to find.
+> 
+> I agree, that is the danger, but the scale of danger is the size of the moved
+> chunk. A file is usually a very large chunk, such that it is obviously a good
+> idea to fix that. Maybe we'd introduce a threshold, that the fix must not be in
+> range of the block boundaries of say 3 lines.
+> (Then the moved block must be at least 7 lines of code such that a one liner
+> fix in the middle would kick in)
+
+Yes, I'd agree it's really a continuum from "one line" to "whole file".
+I think right now the --color-moved stuff is too close to the former to
+be safe, but pushing it farther towards the middle would remedy that.
+
+-Peff
