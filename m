@@ -2,197 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA20D20401
-	for <e@80x24.org>; Sat, 24 Jun 2017 12:10:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03B0B20401
+	for <e@80x24.org>; Sat, 24 Jun 2017 12:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751350AbdFXMKk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Jun 2017 08:10:40 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:35645 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751281AbdFXMKi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Jun 2017 08:10:38 -0400
-Received: by mail-wr0-f194.google.com with SMTP id z45so18981785wrb.2
-        for <git@vger.kernel.org>; Sat, 24 Jun 2017 05:10:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=mGGtuClS7P81Lz55eumbGSplNmTiED0xrcltrxPRlL0=;
-        b=ebVdrO1UAQ2xUhhvRY4MAY77ogBDeKzLHF6EoIHsXec06xUfKhWl5ujLPN1BwR+XwN
-         YcM/6AAsHj0XUX8zvJsk09OiClm/X8SYIxvyd02YqRCg0mNTcaNaN9NGSzBcGLvYFp2v
-         xukbnHPQ6kUi9lJFHogx0guiz3Ygxlr8Av/c5M33Y1yIOojQmTmGlcQCsXGrR1u7Avvw
-         COdPrSSy+Q+Gwg6tsO/DrtFXpS+jsuGsjRm9JPU8XEze8xClKchMiSKMAnMqdMVhi3cA
-         gvT+hX0WJxikS0SDKMHHnxMRFCG9jVKWb/m8XjlWYmSILANS/sg2iLKA0Wcfo9PPVSBq
-         StjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=mGGtuClS7P81Lz55eumbGSplNmTiED0xrcltrxPRlL0=;
-        b=TlvfCQhc59Yq8AeZerznOGZfbYQrZb+FLTYB6OwUIV8AkFjZMqqwCFNp2VQyeyXGyQ
-         tS71jgtCMEvImSvwYKSamXHu5dERO5e4/YMYlr+AHz+UmMZablBEleFO4U+ZsFepUM7O
-         QShTD80oKmgWZImDzfrO99PL55pbHXgRw81sPaKH0m7KtbveGCzvYII7mMh5rc7csps6
-         GR2PZT+lxkdZox60QN5QH2w9HqoiV5G2Pkrj1lWyi4Lz8MPWhbW/LX8Lfu6+xiYUMkIN
-         vYvvjkkJVBFd7snDjyGp0bmMjYYx8Y2wOhUEGTkQmZwVeQDEyqvkKY3CeRtqrBRBPYh9
-         lHJw==
-X-Gm-Message-State: AKS2vOyaWhbihcfx2Tf48rpzdvPygXSYnfvQlShd7hBpBEsgx8EvjWup
-        3jF3muSKdRtvvP5CiPI=
-X-Received: by 10.80.169.35 with SMTP id l32mr9867314edc.105.1498306236664;
-        Sat, 24 Jun 2017 05:10:36 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b30sm4324043edd.6.2017.06.24.05.10.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Jun 2017 05:10:35 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 2/2] strbuf: change an always NULL/"" strbuf_addftime() param to bool
-Date:   Sat, 24 Jun 2017 12:10:23 +0000
-Message-Id: <20170624121023.2636-2-avarab@gmail.com>
-X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1
-In-Reply-To: <20170624121023.2636-1-avarab@gmail.com>
-References: <20170624121023.2636-1-avarab@gmail.com>
-In-Reply-To: <20170624120259.5kbmkww66tymxb5i@sigill.intra.peff.net>
-References: <20170624120259.5kbmkww66tymxb5i@sigill.intra.peff.net>
+        id S1751356AbdFXMMU (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Jun 2017 08:12:20 -0400
+Received: from mout.web.de ([217.72.192.78]:56434 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751281AbdFXMMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Jun 2017 08:12:19 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LopiJ-1dzzLG2as7-00gqZ8; Sat, 24
+ Jun 2017 14:12:09 +0200
+Subject: Re: [PATCH] sha1_name: cache readdir(3) results in
+ find_short_object_filename()
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Giuffrida <michaelpg@chromium.org>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
+ <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
+ <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
+ <20170615055654.efvsouhr3leszz3i@sigill.intra.peff.net>
+ <ec36f9fa-5f3e-b511-3985-3d0301b4847f@web.de>
+ <20170615132532.nivmj22dctowxssm@sigill.intra.peff.net>
+ <b728352d-7fa5-2adb-af00-5f232b85b2bf@web.de>
+ <20170618115017.wyroncb3jka6lrdt@sigill.intra.peff.net>
+ <xmqqd1a0vb2t.fsf@gitster.mtv.corp.google.com>
+ <d06fb033-294e-f364-3dde-394624e83cd6@web.de>
+ <20170622231041.2zdjypviwmndjnsb@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <2cd8a407-f9a2-687a-3c78-6b502da2ad94@web.de>
+Date:   Sat, 24 Jun 2017 14:12:07 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170622231041.2zdjypviwmndjnsb@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:6WtGhzUNkKvDdKRX/OgM5L0wiWXzBOX7RIki7xRMOuUzBEeDQqT
+ oWf24gPlq055hNB0OGs4fWPgvaHqpvwqbKq1tBvB/Zjx8pu2SFUn9kibQ7hHFVJb2mmys2V
+ EsrwI7JNz28aeMxoJ/vvLMkSBXa8bVPx/Pi/aOJxtPNtcgZO2iE8sL07G4liOj79jExJzY4
+ cxZK3KTplgUucgqYz7sjw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mvj/IGLHWCY=:H1jbwB6XUaa01Vtmcz3IzD
+ 8X9y7GE3WGDKUnqa+Bzvww8yPF3GtqBFMuS5UVXbwgKGNRtlgrxbVjzOJqEQuQS+on05TRbtM
+ dKDu5GQpnRbBQ77Kyqq9OOAJNb7Aad7wo+6vGLv7p23vPndR25oKqEt+YDxdmmU2qukBL//MM
+ G4am9akWbFmOuxrssOqa7WQaCp5RQwsTVqhTFG/Ag7vaZsa0lG9tlQzq5POr4Zl3KtR9NGEna
+ 5V/5oe2k0WPeCG986MWvX37vMGJ1uEgMQRQYjLIvepkK1xwI+jcsBW3T3aJI28TpWjSrMIRSe
+ 1PRXSsqThtBdXfK8+AF6BJhxJgCrfqIET3p25B++qLo0xfPKk7xUq9VhH1EzJpD3db8anrCAm
+ YKbQYk++u41UHI5BOALHsSy0c0gYe7QJNhwcFYDW8/RU+JWNK2EX2q9EaCOuWHzWvgJUoo7Xs
+ xq6EZzNAMtlELweKSZfsKRKCVzh+KcExu5GoxtkWfm86kDQCrhTaIWnnGYD70SxG8dS1XwLCx
+ kJ44N5FWaF3aq7thhw3JMCtP34jw/cjIlL+oUCoqkLfrAlMfNUb6aVHo1FdCSAuknK36CNtPI
+ QXOntqNLR13wXxsNYpXhBI5nHM3FyNc1rxzSA1pR+GS9HI9eyV9nz3G2yZ4Ez8tDXrpLnSyHF
+ svOh2+zfVcPi3aIbJmy/US/1Z5udw7plrXkBMWGPWn91zKPHkmW1F+wT1MoRhNw1yWjpj3ze6
+ EkWnCVTelD6ZxkQ+f3Gxa7ODM3qeCgjKcNJxhrW6RKheHlmqShIwlihYccWwNv3bKtP8zoCQo
+ FRDsbFL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the code for deciding what's to be done about %Z to stop
-passing always either a NULL or "" char * to
-strbuf_addftime(). Instead pass a boolean int to indicate whether the
-strftime() %Z format should be suppressed by converting it to an empty
-string, which is what this code is actually doing.
+Am 23.06.2017 um 01:10 schrieb Jeff King:
+> On Thu, Jun 22, 2017 at 08:19:48PM +0200, René Scharfe wrote:
+> 
+>> Read each loose object subdirectory at most once when looking for unique
+>> abbreviated hashes.  This speeds up commands like "git log --pretty=%h"
+>> considerably, which previously caused one readdir(3) call for each
+>> candidate, even for subdirectories that were visited before.
+> 
+> Is it worth adding a perf test that's heavy on abbreviations?
 
-This code grew organically between the changes in 9eafe86d58 ("Merge
-branch 'rs/strbuf-addftime-zZ'", 2017-06-22). The intent was to use
-this API in the future to pass a custom leave the door open to pass a
-custom timezone name to the function (see my [1] and related
-messages).
+Sure.  Here's a simple one.  It currently reports for me:
 
-But that's not what this code does now, and this strbuf_addstr() call
-always being redundant makes it hard to understand the current
-functionality. So simplify this internal API to match its use, we can
-always change it in the future if it gets a different use-case.
+Test                        origin/master     origin/next              origin/pu
+---------------------------------------------------------------------------------------------
+4205.1: log with %H         0.44(0.41+0.02)   0.43(0.42+0.01) -2.3%    0.43(0.43+0.00) -2.3%
+4205.2: log with %h         1.03(0.60+0.42)   1.04(0.64+0.39) +1.0%    0.57(0.55+0.01) -44.7%
+4205.3: log with %T         0.43(0.42+0.00)   0.43(0.42+0.01) +0.0%    0.43(0.40+0.02) +0.0%
+4205.4: log with %t         1.05(0.64+0.38)   1.05(0.61+0.42) +0.0%    0.59(0.58+0.00) -43.8%
+4205.5: log with %P         0.45(0.42+0.02)   0.43(0.42+0.00) -4.4%    0.43(0.42+0.01) -4.4%
+4205.6: log with %p         1.21(0.63+0.57)   1.17(0.68+0.47) -3.3%    0.59(0.58+0.00) -51.2%
+4205.7: log with %h-%h-%h   1.05(0.64+0.39)   2.00(0.83+1.15) +90.5%   0.69(0.66+0.02) -34.3%
 
-1. CACBZZX5OQc45fUyDVayE89rkT=+8m5S4efSXCAbCy7Upme5zLA@mail.gmail.com
-   (https://public-inbox.org/git/CACBZZX5OQc45fUyDVayE89rkT=+8m5S4efSXCAbCy7Upme5zLA@mail.gmail.com/)
+origin/next has fe9e2aefd4 (pretty: recalculate duplicate short hashes),
+while origin/pu has cc817ca3ef (sha1_name: cache readdir(3) results in
+find_short_object_filename()).
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+-- >8 --
+Subject: [PATCH] p4205: add perf test script for pretty log formats
+
+Add simple performance tests for expanded log format placeholders.
+
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
+ t/perf/p4205-log-pretty-formats.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+ create mode 100755 t/perf/p4205-log-pretty-formats.sh
 
-On Sat, Jun 24, 2017 at 2:02 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Jun 24, 2017 at 11:36:35AM +0000, Ævar Arnfjörð Bjarmason wrote:
->
->> >>  extern void strbuf_addftime(struct strbuf *sb, const char *fmt,
->> >>                        const struct tm *tm, int tz_offset,
->> >> -                      const char *tz_name);
->> >> +                      const int omit_strftime_tz_name);
->> >
->> > This would need the new name, too (whatever it is).
->>
->> *Nod*. Now the parameter is called suppress_tz_name.
->
-> Thanks. That sounds good (and your initial re-ordering patch looks fine,
-> too). One minor typo:
->
->> diff --git a/strbuf.h b/strbuf.h
->> index 6708cef0f9..d3e6e65123 100644
->> --- a/strbuf.h
->> +++ b/strbuf.h
->> @@ -343,11 +343,12 @@ extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
->>   * `tz_offset` is in decimal hhmm format, e.g. -600 means six hours west
->>   * of Greenwich, and it's used to expand %z internally.  However, tokens
->>   * with modifiers (e.g. %Ez) are passed to `strftime`.
->> - * `tz_name` is used to expand %Z internally unless it's NULL.
->> + * `suppress_tz_name` when set, means let suppress the `strftime` %Z
->> + * format and replace it with an empty string.
->
-> I couldn't quite parse "let suppress". I'm not sure if it was supposed
-> to be "let's". Probably "means to suppress the strftime..." would be
-> more clear. I'd probably have written it more like:
->
->   `suppress_tz_name`, when set, expands %Z internally to the empty
->   string rather than passing it to `strftime`.
-
-Thanks. Docs fixed per your suggestion. I sent a v4 of 1/2 too, but
-that's unchanged, just thought it was simpler than having just one
-patch have a v4...
-
- date.c   | 2 +-
- strbuf.c | 5 ++---
- strbuf.h | 5 +++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/date.c b/date.c
-index 1fd6d66375..c3e673fd04 100644
---- a/date.c
-+++ b/date.c
-@@ -256,7 +256,7 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
- 			tm->tm_hour, tm->tm_min, tm->tm_sec, tz);
- 	else if (mode->type == DATE_STRFTIME)
- 		strbuf_addftime(&timebuf, mode->strftime_fmt, tm, tz,
--				mode->local ? NULL : "");
-+				!mode->local);
- 	else
- 		strbuf_addf(&timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
- 				weekday_names[tm->tm_wday],
-diff --git a/strbuf.c b/strbuf.c
-index be3b9e37b1..89e40bb496 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -786,7 +786,7 @@ char *xstrfmt(const char *fmt, ...)
- }
- 
- void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
--		     int tz_offset, const char *tz_name)
-+		     int tz_offset, int suppress_tz_name)
- {
- 	struct strbuf munged_fmt = STRBUF_INIT;
- 	size_t hint = 128;
-@@ -815,8 +815,7 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
- 			fmt++;
- 			break;
- 		case 'Z':
--			if (tz_name) {
--				strbuf_addstr(&munged_fmt, tz_name);
-+			if (suppress_tz_name) {
- 				fmt++;
- 				break;
- 			}
-diff --git a/strbuf.h b/strbuf.h
-index 6708cef0f9..d3e6e65123 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -343,11 +343,12 @@ extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
-  * `tz_offset` is in decimal hhmm format, e.g. -600 means six hours west
-  * of Greenwich, and it's used to expand %z internally.  However, tokens
-  * with modifiers (e.g. %Ez) are passed to `strftime`.
-- * `tz_name` is used to expand %Z internally unless it's NULL.
-+ * `suppress_tz_name` when set, means let suppress the `strftime` %Z
-+ * format and replace it with an empty string.
-  */
- extern void strbuf_addftime(struct strbuf *sb, const char *fmt,
- 			    const struct tm *tm, int tz_offset,
--			    const char *tz_name);
-+			    int suppress_tz_name);
- 
- /**
-  * Read a given size of data from a FILE* pointer to the buffer.
+diff --git a/t/perf/p4205-log-pretty-formats.sh b/t/perf/p4205-log-pretty-formats.sh
+new file mode 100755
+index 0000000000..7c26f4f337
+--- /dev/null
++++ b/t/perf/p4205-log-pretty-formats.sh
+@@ -0,0 +1,16 @@
++#!/bin/sh
++
++test_description='Tests the performance of various pretty format placeholders'
++
++. ./perf-lib.sh
++
++test_perf_default_repo
++
++for format in %H %h %T %t %P %p %h-%h-%h
++do
++	test_perf "log with $format" "
++		git log --format=\"$format\" >/dev/null
++	"
++done
++
++test_done
 -- 
-2.13.1.611.g7e3b11ae1
+2.13.1
 
