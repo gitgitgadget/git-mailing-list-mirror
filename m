@@ -2,114 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8EFE2082E
-	for <e@80x24.org>; Sat, 24 Jun 2017 11:11:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCE4D2082E
+	for <e@80x24.org>; Sat, 24 Jun 2017 11:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751305AbdFXLLi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Jun 2017 07:11:38 -0400
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:32850 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751272AbdFXLLh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Jun 2017 07:11:37 -0400
-Received: by mail-wr0-f181.google.com with SMTP id r103so95621593wrb.0
-        for <git@vger.kernel.org>; Sat, 24 Jun 2017 04:11:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=TC7YmWFWTBS/5CnmVaond7B87GfD9AFB7FoyQeHoyfE=;
-        b=G1JJFyLBywaWcPkOlEQCIOTOponJKxPMnrl2iQOV9txeL2VZra39g8GeXeg/JwkGqp
-         pdPyHzzZcxDWyrFHc8ebMURz3H0hpWorLLvMwGHgmG8W52tlkdal+3yGaTxCPVhtEi09
-         WJ87zCxA/3rl9S1j9tkZApwxPq86Jbyrp36EbFDK+UDddMDPTccVtVlPnS8z+mVpHYE6
-         VNKQt0WTxjjbywtTh5TioM0xkifMZ5cP5j1K/hjVegok0eXZNCTLFpw+oNHo7bfboIuy
-         GefW10jVJd2ZUru6nDI9M1DgDC4Hgs1CUN81CX10Mneyf1WgonePX80aDOCBGHD4w5s7
-         M2dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=TC7YmWFWTBS/5CnmVaond7B87GfD9AFB7FoyQeHoyfE=;
-        b=Ux50fvZMvSae3QfyjjiAbQEQJEm4vuzV9sEws9aq6StmImKorod/IXf6PIesAWrM62
-         xcjgFqpPl6s9G0CcP18eF9uxNofXN47KvFTBbLV6mmrEG0ioALMItBTVkFhpP8QYlqdd
-         fNp4oCe6LNQ1sdu1izstrRSSLIC290/fY8IVN+Lt67qkc/8geTqZH0RsHLeklPEdRCXo
-         c3OcopBDKdEUbqdQN+pn418pSxoE7bjLuJzsi+4Spf/JWaw3/M1O/3UjSbfs06+DMqeE
-         2Wljls4vRF2PJGhSKkyEg8biWmm2Z/LY/d6RxkILY4o/A5weAcBNiHXcEacBbvdmX6uQ
-         qy9w==
-X-Gm-Message-State: AKS2vOwkBBrVRYPgICeunYAam2jHevFnm6Jg9KeFvZuPyeggxeyEaXlx
-        tETvkGlZorweuw==
-X-Received: by 10.80.145.118 with SMTP id f51mr9493491eda.170.1498302695986;
-        Sat, 24 Jun 2017 04:11:35 -0700 (PDT)
-Received: from snth (g74110.upc-g.chello.nl. [80.57.74.110])
-        by smtp.gmail.com with ESMTPSA id w26sm2193452edw.24.2017.06.24.04.11.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Jun 2017 04:11:34 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dOiyT-0002Gn-T4; Sat, 24 Jun 2017 13:11:33 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] strbuf: change an always NULL/"" strbuf_addftime() param to bool
-References: <20170623144603.11774-1-avarab@gmail.com> <20170623145102.h7rt6zaqajfzuhsk@sigill.intra.peff.net> <8760fmka8t.fsf@gmail.com> <20170623152344.gdk4haizpziwryrd@sigill.intra.peff.net> <2e0773c3-b742-a211-d9cb-64da58cf9e0d@web.de>
-User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <2e0773c3-b742-a211-d9cb-64da58cf9e0d@web.de>
-Date:   Sat, 24 Jun 2017 13:11:33 +0200
-Message-ID: <87y3sh1vyy.fsf@gmail.com>
+        id S1751296AbdFXLOs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Jun 2017 07:14:48 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:59974 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751272AbdFXLOr (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 24 Jun 2017 07:14:47 -0400
+X-AuditID: 12074411-cebff700000033ea-50-594e49a5a4fa
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 3D.32.13290.5A94E495; Sat, 24 Jun 2017 07:14:46 -0400 (EDT)
+Received: from [192.168.69.190] (p54AAE63F.dip0.t-ipconnect.de [84.170.230.63])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5OBEhV0019860
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sat, 24 Jun 2017 07:14:44 -0400
+Subject: Re: [PATCH v2 00/29] Create a reference backend for packed refs
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+References: <cover.1498200513.git.mhagger@alum.mit.edu>
+ <20170623190159.5ct2mgjcm6vuulz6@sigill.intra.peff.net>
+ <20170623200024.amgced62hue2iffj@sigill.intra.peff.net>
+ <xmqqefuacr6y.fsf@gitster.mtv.corp.google.com>
+ <20170624011131.5kgmzgpb4vtwikk5@sigill.intra.peff.net>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <57a15496-ab0b-97fc-b6a2-8c2526f2c5d3@alum.mit.edu>
+Date:   Sat, 24 Jun 2017 13:14:42 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
+In-Reply-To: <20170624011131.5kgmzgpb4vtwikk5@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqLvM0y/S4MwScYu1z+4wWTxff4Ld
+        outKN5NFQ+8VZoslD18zW3RPecto8aOlh9li8+Z2FgcOj52z7rJ7LNhU6tHVfoTN41nvHkaP
+        i5eUPT5vkgtgi+KySUnNySxLLdK3S+DKmDztC3vBBJ6KfR37GRsYL3J2MXJySAiYSMw7fo8d
+        xBYS2MEk8WyhUxcjF5B9nkniz40FLCAJYQEPieM7HzOD2CICjhIXthxhgSiaxiQxaXIzI4jD
+        LLCFSeLR1IOsIFVsAroSi3qamUBsXgF7iTk/NjOC2CwCqhL/994DmyoqECHxsHMXO0SNoMTJ
+        mU/A4pwCLhJH+6+A2cwC6hJ/5l1ihrDlJba/ncM8gZF/FpKWWUjKZiEpW8DIvIpRLjGnNFc3
+        NzEzpzg1Wbc4OTEvL7VI11QvN7NELzWldBMjJOQFdzDOOCl3iFGAg1GJh1fA0zdSiDWxrLgy
+        9xCjJAeTkihv7BmfSCG+pPyUyozE4oz4otKc1OJDjBIczEoivJxmfpFCvCmJlVWpRfkwKWkO
+        FiVxXr4l6n5CAumJJanZqakFqUUwWRkODiUJ3lMeQI2CRanpqRVpmTklCGkmDk6Q4TxAw687
+        gwwvLkjMLc5Mh8ifYlSUEud9BtIsAJLIKM2D64WlpFeM4kCvCPOqgFTxANMZXPcroMFMQINn
+        rPEBGVySiJCSamBsOr9g1mwls1st35LEQq3YbphN15qq9/bqodbT95b/1XA68XTDxWe722X/
+        LGprU+p9tH8a2412w3zTmc7buYv96rJ6LULbb53N0HWriXbxcz+v3Pgs7FqElGLbVoaXPyVW
+        5u11jlfz/dG55O69L6eO8CmEaCTtrIy+6dja8sKeO1p5pbrexQ4lluKMREMt5qLiRAD3/7is
+        JAMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Jun 23 2017, René Scharfe jotted:
-
-> Am 23.06.2017 um 17:23 schrieb Jeff King:
->> On Fri, Jun 23, 2017 at 05:13:38PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On 06/24/2017 03:11 AM, Jeff King wrote:
+> On Fri, Jun 23, 2017 at 02:47:01PM -0700, Junio C Hamano wrote:
+> 
+>>> Speculating on my own question. I guess it would prepare us for a day
+>>> when a possible ref store is to use a packed-refs _without_ loose refs.
+>>> IOW, the property is defined on packed-refs today, but a possible future
+>>> direction would be to use it by itself. But maybe I'm just making things
+>>> up.
 >>
->>>> The idea was that eventually the caller might be able to come up with a
->>>> TZ that is not blank, but is also not what strftime("%Z") would produce.
->>>> Conceivably that could be done if Git commits carried the "%Z"
->>>> information (not likely), or if we used a reverse-lookup table (also not
->>>> likely).
->>>>
->>>> This closes the door on that.  Since we don't have immediate plans to go
->>>> that route, I'm OK with this patch. It would be easy enough to re-open
->>>> the door if we change our minds later.
->>>
->>> Closes the door on doing that via passing the char * of the prepared
->>> custom tz_name to strbuf_addftime().
->>>
->>> I have a WIP patch (which may not make it on-list, depending) playing
->>> with the idea I proposed in
->>> CACBZZX5OQc45fUyDVayE89rkT=+8m5S4efSXCAbCy7Upme5zLA@mail.gmail.com which
->>> just inserts the custom TZ name based on the offset inside that `if
->>> (omit_strftime_tz_name)` branch.
->>
->> OK. I'd assumed that would all happen outside of strbuf_addftime(). But
->> if it happens inside, then I agree a flag is better.
->
-> Oh, so the interface that was meant to allow better time zone names
-> without having to make strbuf_addftime() even bigger than it already is
-> turns out to be too ugly for its purpose?  I'm sorry. :(
+>> OK.  In other words, it's not a packed-refs's characteristics that
+>> cruft are allowed.  It's that a ref storage that is implemented as
+>> an overlay of one storage (which happens to be the loose one) on top
+>> of another (which happens to be the packed refs file) allows the
+>> latter one to have cruft if (and only if) that broken one is covered
+>> by the former one.
+> 
+> Thanks, that's a much better way of saying what I was trying to get at.
+> I don't know if that's Michael's argument or not, but it's certainly one
+> I find reasonable. :)
 
-I don't think it's ugly. My motivation for sending this patch is that I
-started playing with this code and was confused because I thought that
-strbuf_addstr(...) actually did something to the string, but it never
-did.
+That was exactly my thinking. A packed-without-loose storage scheme
+might, for example, be interesting for people with case-insensitive or
+strangely-Unicode-normalized filesystems but have colleagues who like to
+use case or Unicode in their reference names. (Of course that would
+still require a way to store symbolic refs and reflogs, so I'm not
+saying that we're there yet.)
 
-Since it's a purely internal API used in just one place I thought it
-made sense to adjust the prototype / code to its current usage for ease
-of readability, if we want to do something else with it in the future
-it'll be trivial to adjust it then.
+I also think it is a good idea to keep the backends' interfaces as
+similar as possible to reduce the number of quirks that the reader has
+to keep in mind.
 
-But I don't feel strongly about this patch at all, it's just a minor
-fixup I submitted while reading / playing with the code.
+Michael
+
