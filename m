@@ -2,123 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0756520401
-	for <e@80x24.org>; Sat, 24 Jun 2017 18:21:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 249FD20401
+	for <e@80x24.org>; Sat, 24 Jun 2017 18:23:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751436AbdFXSVT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Jun 2017 14:21:19 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35299 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750988AbdFXSVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Jun 2017 14:21:18 -0400
-Received: by mail-pf0-f173.google.com with SMTP id c73so37086185pfk.2
-        for <git@vger.kernel.org>; Sat, 24 Jun 2017 11:21:18 -0700 (PDT)
+        id S1751482AbdFXSXn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Jun 2017 14:23:43 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34738 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750988AbdFXSXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Jun 2017 14:23:43 -0400
+Received: by mail-pf0-f194.google.com with SMTP id d5so12208940pfe.1
+        for <git@vger.kernel.org>; Sat, 24 Jun 2017 11:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=HXOwCg9Xw256doFpZHem8XEhXNKIiGXPVZHCXsaysPQ=;
-        b=nR3C+owEfnTkPOKpH/ckbXG2YQsYsJyNBTilViuK3MZUxV4aC6hWkDloJ8pGspDL8P
-         AmyBI02hNFKoejqb75pEZmkP3iBOPT7r0jbvGplurHxGC5HLSlpQjnH7H7WdyCQO6Y81
-         ZI/4ASMSrbgsODzoeDm4HopDQRffp7GpF5HmY7U6r/KW4Or/gdM+Hzfe2lEyHzIJpjA1
-         87uHO5ruIY8l3ZvzEVzi1l2rwteRaDaLXB2l4e6qkiCuMrx4P+BW+hGvgY2Lr7wna00Q
-         JjwuW4cCW7pENexf1hsYjqVbtZhgeKQ9BYLeG32/6jZz9zrbkET3hUQ38BLPrLain/Le
-         UU1A==
+         :user-agent:mime-version;
+        bh=q4FBcbYdd3B4g0QzypM22ENDgZsJTr0Ijskb1WJUF7o=;
+        b=o3ujOCqUdHH13q3wByRf9ZCbgWJKAnjNNJdNNrnDj5zgs1gO4oviXdrDu3I3yzzhZf
+         KMVabeuqxVPOGaNWB8RQl1v7Tld+HImcusEoN/ALPGckDBijxl3bXoodlsG+KZMOa5zO
+         c7xbA1daOL1L3Wc65khZTXhj2KXYXVBVXtZ3YwcKrDE5cWcn2gDV06cMtAqQwuItp6Io
+         6LZqF2w2dWX8w1VIHSEcq5fFi1c/9OO6RC5wHMcRL2LdBGP5+QSVaAQdE3icunENCJht
+         ZP6RPIubcQlr+EBJhDqdOIPvGcw3P75Xt9yFSmswVrqx3AT4F/gwfsO15FzVSqdG/8Qe
+         WogQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=HXOwCg9Xw256doFpZHem8XEhXNKIiGXPVZHCXsaysPQ=;
-        b=Rt9ZRpp2qNYkoyeLvW1ZNCzLJHJmYTcW7E1/gC8zyeYwainYWBaqlLOA8iWSV65wk+
-         3vDrpD9yof4K1dMbHiVk8aTLTmWRuFnVevqcyP7ZBlH2x78qGcz7c7RNw/dLOiHP/eGz
-         xqqJEe9N6v88AnbM6vY/rdYRgkFKqDowOnt37fD1YzP6UuZM00ocuCpAllyRmSmVdSxf
-         sTkq2NkhsILt/DQbw/pNGNoc32M3ttc2bEjjGHMLpITWRKHlFxunis18vx2MNOoi2suR
-         /ZoU24n74u5ncxGKAVWXuCQnY1Z7CujV54KWbGSSm4IUYHIsw9KXYJzD7nHCDPdiKFv/
-         WrTQ==
-X-Gm-Message-State: AKS2vOxZcXrK21ZhOjs6+Sbgsmbigk3iOj66VsZWbKHuIwWvC2G2rmul
-        10yNZPYUHCkBXA==
-X-Received: by 10.98.9.205 with SMTP id 74mr3494092pfj.77.1498328477478;
-        Sat, 24 Jun 2017 11:21:17 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=q4FBcbYdd3B4g0QzypM22ENDgZsJTr0Ijskb1WJUF7o=;
+        b=LBh7oEjUQU4WjUxE9OHixfTYG1oK75BCtX1vtlTmGrhEsxD1Vapid412iOgvcnZmZO
+         t1DL3Mpy+hUHgzyOAj/v4ralk/Pfhqd/AlLStMnSrvpEKcT+ZAEbfKcnfQ3Tv+c8LkuJ
+         N7fQOTao8QrXKVUfSUMOVBR8inDP1r1INcYp4iGJnelJ8QaLva+Daqsuf87QeCtFqBal
+         P9p8b4qoH2DdqMUF8GNYcEHwSeAKBtfOpHZgz2HAZ0smA+t85MYrWN6dfVNbGBjCYPz0
+         Ts9BXKMGlGgBPUhIJEPejN44h5i3u1KmrYcQPBU+qcdscJJQa0x/5Pf4pbvEdXIEG44X
+         OD6A==
+X-Gm-Message-State: AKS2vOwPNZY2s/dVglUwQSGCTuvQHA26xgn6wEfdPyG9B+VK3ahJrWMR
+        ZcNLXHULFPodww==
+X-Received: by 10.101.88.133 with SMTP id d5mr2564765pgu.255.1498328622345;
+        Sat, 24 Jun 2017 11:23:42 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:c3f:f54c:5646:5c2e])
-        by smtp.gmail.com with ESMTPSA id u78sm17231734pfd.109.2017.06.24.11.21.16
+        by smtp.gmail.com with ESMTPSA id d15sm2778569pgt.44.2017.06.24.11.23.41
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 24 Jun 2017 11:21:16 -0700 (PDT)
+        Sat, 24 Jun 2017 11:23:41 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 2/2] strbuf: change an always NULL/"" strbuf_addftime() param to bool
-References: <20170624121452.7952-1-avarab@gmail.com>
-        <20170624121452.7952-2-avarab@gmail.com>
-        <9f3720e5-b8be-978d-4f6c-8c082aef3680@web.de>
-Date:   Sat, 24 Jun 2017 11:21:15 -0700
-In-Reply-To: <9f3720e5-b8be-978d-4f6c-8c082aef3680@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 24 Jun 2017 15:17:20 +0200")
-Message-ID: <xmqqk2419rhg.fsf@gitster.mtv.corp.google.com>
+To:     Andreas Heiduk <asheiduk@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: clarify syntax for %C(auto,...) in pretty formats
+References: <20170624072258.6832-1-asheiduk@gmail.com>
+Date:   Sat, 24 Jun 2017 11:23:40 -0700
+In-Reply-To: <20170624072258.6832-1-asheiduk@gmail.com> (Andreas Heiduk's
+        message of "Sat, 24 Jun 2017 09:22:58 +0200")
+Message-ID: <xmqqfuep9rdf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Andreas Heiduk <asheiduk@gmail.com> writes:
 
-> Am 24.06.2017 um 14:14 schrieb Ævar Arnfjörð Bjarmason:
->> Change the code for deciding what's to be done about %Z to stop
->> passing always either a NULL or "" char * to
->> strbuf_addftime(). Instead pass a boolean int to indicate whether the
->> strftime() %Z format should be suppressed by converting it to an empty
->> string, which is what this code is actually doing.
->>
->> This code grew organically between the changes in 9eafe86d58 ("Merge
->> branch 'rs/strbuf-addftime-zZ'", 2017-06-22). The intent was to use
->> this API in the future to pass a custom leave the door open to pass a
->> custom timezone name to the function (see my [1] and related
->> messages).
+> The change actually adds only 
 >
-> "leave the door open to pass a" seems redundant.
-
-    The intent was to use this API in the future to leave the door open
-    to pass a custom timezone name to the function (see my [1] and
-    related messages).
-
-perhaps?
-
->> But that's not what this code does now, and this strbuf_addstr() call
->> always being redundant makes it hard to understand the current
->> functionality. So simplify this internal API to match its use, we can
->> always change it in the future if it gets a different use-case.
+> 	(e.g. `%C(auto,red)`)
 >
-> I don't understand the confusion, but of course I'm biased. And I don't
-> like binary parameters in general and would use named flags or two
-> function names in most cases.  But that aside I find the description
-> hard to follow (perhaps I should do something about my attention span).
+> but reflowing the paragraph blows it up a little.
 
-I share this feeling.
+In such a case, you can avoid re-flowing and make the resulting
+lines of a-bit uneven lengths.
 
-> Here's an attempt at a commit message that would have be easier to
-> understand for me:
+The end result can be checked with "git diff --word-diff", so do not
+worry too much about this either way, as long as the real change is
+small.
+
+Thanks.
+
 >
->   strbuf_addstr() allows callers to pass a time zone name for expanding
->   %Z.  The only current caller either passes the empty string or NULL,
->   in which case %Z is handed over verbatim to strftime(3).  Replace that
->   string parameter with a flag controlling whether to remove %Z from the
->   format specification.  This simplifies the code.
-
-I think the first one is strbuf_addftime(); other than that, I think
-this version explains what is going on in this patch than the
-original.
-
-I'll wait for Ævar to respond, but my inclination is to take the
-patch with the above tweaks to the log message, as the change is
-easy to revert if we find it necessary.
-
+> -------- 8< --------
+> The manual correctly describes the syntax with `auto,` but the
+> trailing `,` is hard to spot in a terminal.  The HTML format does not
+> have this problem.  Adding an example helps both worlds.
+>
+> Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+> ---
+>  Documentation/pretty-formats.txt | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+> index 38040e95b..b03985101 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -174,11 +174,12 @@ endif::git-rev-list[]
+>  - '%Creset': reset color
+>  - '%C(...)': color specification, as described under Values in the
+>    "CONFIGURATION FILE" section of linkgit:git-config[1];
+> -  adding `auto,` at the beginning will emit color only when colors are
+> -  enabled for log output (by `color.diff`, `color.ui`, or `--color`, and
+> -  respecting the `auto` settings of the former if we are going to a
+> -  terminal). `auto` alone (i.e. `%C(auto)`) will turn on auto coloring
+> -  on the next placeholders until the color is switched again.
+> +  adding `auto,` at the beginning (e.g. `%C(auto,red)`) will emit
+> +  color only when colors are enabled for log output (by `color.diff`,
+> +  `color.ui`, or `--color`, and respecting the `auto` settings of the
+> +  former if we are going to a terminal). `auto` alone (i.e.
+> +  `%C(auto)`) will turn on auto coloring on the next placeholders
+> +  until the color is switched again.
+>  - '%m': left (`<`), right (`>`) or boundary (`-`) mark
+>  - '%n': newline
+>  - '%%': a raw '%'
