@@ -2,113 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 737B920401
-	for <e@80x24.org>; Sat, 24 Jun 2017 18:41:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FE3220401
+	for <e@80x24.org>; Sat, 24 Jun 2017 18:51:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754959AbdFXSlm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Jun 2017 14:41:42 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35984 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754814AbdFXSll (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Jun 2017 14:41:41 -0400
-Received: by mail-pf0-f193.google.com with SMTP id z6so3494557pfk.3
-        for <git@vger.kernel.org>; Sat, 24 Jun 2017 11:41:41 -0700 (PDT)
+        id S1755245AbdFXSvZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Jun 2017 14:51:25 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:35189 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751568AbdFXSvX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Jun 2017 14:51:23 -0400
+Received: by mail-it0-f46.google.com with SMTP id v202so7055417itb.0
+        for <git@vger.kernel.org>; Sat, 24 Jun 2017 11:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=cjDx7bn6TdwoZibOxZJcJio7OLhDtzLd+CXiRyar4f0=;
-        b=Bfi5zrO6NmV+5QKCoUFtYyz/eMhdol6PAK2csXPCwwYVPxADYO0ngOuO3iOp0hyPt4
-         kM/grH4tMBqi9nh8DJ7MbAY2dMnJ6dhCqDfQcfOBTcofscZpByEec03GR23ABEpEz6D8
-         Mjyx4Wg9AW375RInCORsHo2ovZQxZ+T9MzrMwYbnUxYd69WXDXk2N2/poyneowP1kf+W
-         CdSmoyTEgD/oMcCSAH9QQsFCSN81lZ022Kyy2raCLt1GAdyhGFu8BUM+q7Vymrj9fOT/
-         Ca4jDOpKYF3/rOohxXwnCiLa7RUv7uIQ42j3CuK6X/MVX91VA4NtQ3Ch2XrvIxD+rWE5
-         zWTA==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=Mzpt7RumZEyYRGNjxPv5vboPttQMwT89xRHf0J9m1AU=;
+        b=JTrCZD/2WCQ+uF5e4NNDOpQSPU69W2rLfsehY/ubpM2Zw1PjeSIwbHY6j8u3uZDsKi
+         5db5u1dBOcrwc0Rdln3JazGi2BqEmA+BSUaaMCAdwMBlxufAEwRP4+szClhW5zNZjSHx
+         iBgxnNP3tUukmVv2sOPnI2tlJ60wzvWq6rNYXMQELViukAP6AuPdIpKOAoudGl7/21D/
+         q+4OYlXOgsSLzjNeyBQxzuYCIT4jxyBMOpXKsENAYybfNuJwk5ALgSDeKnwGJGAeeY59
+         mr3vNlzUByLwSCEXVn+0ey/0UhYcHFjabcniSx+15s4wqDBhR16UQEPjAn78OyaC84gS
+         QV0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=cjDx7bn6TdwoZibOxZJcJio7OLhDtzLd+CXiRyar4f0=;
-        b=decMcQgbQjeNFK6E6biaA2bphwlNCsOScgG/grE0uzG6hCJWQlPpQ6CMIc3krJE959
-         p48GuZivE+kvxgQuJqBNGie5MNB4iVafLy8WOHVex7x/3Ak3pFf1fxFIzhRDQPLaUGkd
-         N5mG5hAzfjvTjEhKx+UWqe+Umzg3IZ/bQRzpyQOpcEhz1uPzuug1l+8H2DKpL20XZF/J
-         3WxKoPAbvlf0vpNHhiQbZrJ6KB9qtu/W1eBzZnXuHRiE8fNeSR7Yx96JR69LNBE8fvlQ
-         keMW6BdaXvlCTQ6TGoQVWTEs9trt8QiLFqDrJI0y/3Vc6TgM25RflsDK2yi4XKGym9q1
-         7qIQ==
-X-Gm-Message-State: AKS2vOxVCpzvQsw96Q2jqdhTgO6mnadPqdCpL6Xz41Rh2wBGxdzfq5ZT
-        nlG/iRIhblXrs2Umvr8=
-X-Received: by 10.84.175.67 with SMTP id s61mr15916407plb.151.1498329701007;
-        Sat, 24 Jun 2017 11:41:41 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:c3f:f54c:5646:5c2e])
-        by smtp.gmail.com with ESMTPSA id 66sm18029923pgh.59.2017.06.24.11.41.40
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 24 Jun 2017 11:41:40 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v4 7/8] sha1_file: do not access pack if unneeded
-References: <cover.1497920092.git.jonathantanmy@google.com>
-        <cover.1497035376.git.jonathantanmy@google.com>
-        <cover.1497920092.git.jonathantanmy@google.com>
-        <fb656dfeb96e3c69f612fed924d0d9dec592c772.1497920092.git.jonathantanmy@google.com>
-        <xmqq8tklqkbe.fsf@gitster.mtv.corp.google.com>
-        <20170624124813.wajhxkrqhw4xoee4@sigill.intra.peff.net>
-Date:   Sat, 24 Jun 2017 11:41:39 -0700
-In-Reply-To: <20170624124813.wajhxkrqhw4xoee4@sigill.intra.peff.net> (Jeff
-        King's message of "Sat, 24 Jun 2017 08:48:14 -0400")
-Message-ID: <xmqq7f019qjg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=Mzpt7RumZEyYRGNjxPv5vboPttQMwT89xRHf0J9m1AU=;
+        b=hcKZkZdCHB3YsJinaZsSQKEmSP4COMSvQXGl8rqADjsMliwMp6GrN1WaPWUiPKo81S
+         qFdideEielGOANvfAIboYIPGRqFBEGEABNAcWncNzColcmhAksJhgAo8hPm7xDTG6h12
+         ynQ5rrSp1RtPbzkb9N2lNoG2XlbFLgmFHdRyAsZ12NNl3XIrfqPrgiT1mDQr/sEUZLIb
+         x+jxLfWuxcz30fXnDu2FZPBU+WEOMsQ4WtjfP4xwAvCPKo9neusAc8LtYHWTQX1l0FnE
+         Y7WttzbhfijI5ruLa3WwQDhieSaQaUhXgzSmRdMrUIlxNtxDMy2DJbnbZcQC3fRNuLTF
+         pV5g==
+X-Gm-Message-State: AKS2vOyydXw1bypKb0H3Jaf7yYFW5rwthUjPOHtPOcuF+ACigwG07jbF
+        /tRKjja4Eji7nd0RxY9DLcBCZbGD8P9T
+X-Received: by 10.36.216.7 with SMTP id b7mr14206138itg.30.1498330272381; Sat,
+ 24 Jun 2017 11:51:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.40.70 with HTTP; Sat, 24 Jun 2017 11:51:11 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 24 Jun 2017 20:51:11 +0200
+Message-ID: <CAP8UFD0bOfzY-_hBDKddOcJdPUpP2KEVaX_SrCgvAMYAHtseiQ@mail.gmail.com>
+Subject: Crash in t3507-cherry-pick-conflict.sh with GIT_TEST_SPLIT_INDEX set
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Git from the master branch currently segfaults when running
+t3507-cherry-pick-conflict.sh with GIT_TEST_SPLIT_INDEX set:
 
-> On Wed, Jun 21, 2017 at 11:15:01AM -0700, Junio C Hamano wrote:
->
->> > +	if (!oi->typep && !oi->sizep && !oi->disk_sizep &&
->> > +	    !oi->delta_base_sha1 && !oi->typename && !oi->contentp &&
->> > +	    !oi->populate_u) {
->> > +		oi->whence = OI_PACKED;
->> > +		return 0;
->> > +	}
->> > +
->> 
->> ... this "if" statement feels like a maintenance nightmare.  The
->> intent of the guard, I think, is "when the call wants absolutely
->> nothing but whence", but the implementation of the guard will not
->> stay true to the intent whenever somebody adds a new field to oi.
->> 
->> I wonder if it makes more sense to have a new field "whence_only",
->> which is set only by such a specialized caller, which this guard
->> checks (and no other fields).
->
-> The other nice thing about whence_only is that it flips the logic. So
-> any existing callers which depend on filling the union automatically
-> will not be affected (though I would be surprised if there are any such
-> callers; most of that information isn't actually that interesting).
+expecting success:
+        pristine_detach initial &&
+        test_must_fail git cherry-pick -s picked-signed &&
+        git commit -a -s &&
+        test $(git show -s |grep -c "Signed-off-by") = 1
 
-Hmph, but the solution does not scale.  When a caller wants whence
-and something else that cannot be asked for or ignored by being a
-"pointer to a result" field, such a request cannot be expressed.  We
-either need to make all fields in oi request to "pointer to a
-result, if the result is needed, or NULL when the result is not of
-interest", or give a bit for each non-pointer field to allow the
-caller to express "I am not interested in the value of this field".
+HEAD is now at df2a63d... initial
+Auto-merging foo
+CONFLICT (content): Merge conflict in foo
+error: could not apply e4ca149... picked-signed
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
+Segmentation fault
+not ok 29 - commit after failed cherry-pick does not add duplicated -s
+#
+#               pristine_detach initial &&
+#               test_must_fail git cherry-pick -s picked-signed &&
+#               git commit -a -s &&
+#               test $(git show -s |grep -c "Signed-off-by") = 1
+#
 
-In the usecase Jonathan has, the caller's wish is a very narrow "I
-am interested in nothing; just checking if the object is there", and
-passing NULL for oi works fine.  So I'm inclined to suggest that we
-take that approach now and worry about a more generic and scalable
-"how would one tell the machinery that the value for a field is
-uninteresting when the field is not a pointer to result?" mechanism
-until a real need arises.
+The crash happens during the `git commit -a -s` with a backtrace like this:
 
-Thanks.
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000050bcf1 in entry_equals (map=0x8cef80 <the_index+64>,
+e1=0xa2d2d2d2d2d2d00, e2=0x7fffffffce10,
+    keydata=0x0) at hashmap.c:98
+98              return (e1 == e2) || (e1->hash == e2->hash &&
+!map->cmpfn(e1, e2, keydata));
+(gdb) bt
+#0  0x000000000050bcf1 in entry_equals (map=0x8cef80 <the_index+64>,
+e1=0xa2d2d2d2d2d2d00, e2=0x7fffffffce10,
+    keydata=0x0) at hashmap.c:98
+#1  0x000000000050bec6 in find_entry_ptr (map=0x8cef80 <the_index+64>,
+key=0x7fffffffce10, keydata=0x0)
+    at hashmap.c:138
+#2  0x000000000050c044 in hashmap_get (map=0x8cef80 <the_index+64>,
+key=0x7fffffffce10, keydata=0x0)
+    at hashmap.c:182
+#3  0x0000000000525a1d in hashmap_get_from_hash (map=0x8cef80
+<the_index+64>, hash=1625022057, keydata=0x0)
+    at hashmap.h:78
+#4  0x0000000000526edd in index_file_exists (istate=0x8cef40
+<the_index>, name=0x8f19d0 "unrelated",
+    namelen=9, icase=0) at name-hash.c:701
+#5  0x00000000004f55ba in treat_one_path (dir=0x7fffffffd0b0,
+untracked=0x0, istate=0x8cef40 <the_index>,
+    path=0x7fffffffcf80, baselen=0, pathspec=0x88c2b8 <s+24>, dtype=8,
+de=0x8f8a00) at dir.c:1550
+#6  0x00000000004f5914 in treat_path (dir=0x7fffffffd0b0,
+untracked=0x0, cdir=0x7fffffffcfa0,
+    istate=0x8cef40 <the_index>, path=0x7fffffffcf80, baselen=0,
+pathspec=0x88c2b8 <s+24>) at dir.c:1660
+#7  0x00000000004f6006 in read_directory_recursive
+(dir=0x7fffffffd0b0, istate=0x8cef40 <the_index>,
+    base=0x61561b "", baselen=0, untracked=0x0, check_only=0,
+pathspec=0x88c2b8 <s+24>) at dir.c:1809
+
+It bisects to f9d7abec2a (split-index: add and use
+unshare_split_index(), 2017-05-05) that is fixing memory leaks when
+discarding the index.
+It looks like we are freeing some cache entries that we shouldn't free.
