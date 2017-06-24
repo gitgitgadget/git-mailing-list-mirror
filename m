@@ -2,251 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3F102082E
-	for <e@80x24.org>; Sat, 24 Jun 2017 11:36:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA1362082E
+	for <e@80x24.org>; Sat, 24 Jun 2017 11:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751455AbdFXLgz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Jun 2017 07:36:55 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:35826 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751276AbdFXLgy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Jun 2017 07:36:54 -0400
-Received: by mail-wr0-f194.google.com with SMTP id z45so18826530wrb.2
-        for <git@vger.kernel.org>; Sat, 24 Jun 2017 04:36:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=rMmaK4f5flBprgEGuONU8LmAPB3PFPhr0OukO0XJm08=;
-        b=iNhGPjpLkK1neyFJOKBZcX0kTgqxVE/sKcMEcxN/NGqS2gQvWzhGBjqspTH201eqFR
-         9ihIAuG0tqUqHO+mg1zzBRDwLZD0c8Pq6urWLG3hM9hA3nCerAniq0HMKmwX10XnZBhL
-         Y/3O8Z3ugnMGm1k72+/Ja4H94UkivBrRp0G5y6dHok6RpCt4wUoSbSF3qNsLkjWREVR/
-         1TwGH3jzWL1T3l7FSybQxzovtfOHF//I7YJKwdDOPX/W07nTVKFWjffGFcEYzQcban9A
-         ty3YHCaAbjUZbRY3hXhBDuK7vz8199Qz61rCVMKB7zvC9H+xIaKOoIBSDiG8YP5JD5cX
-         oTvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=rMmaK4f5flBprgEGuONU8LmAPB3PFPhr0OukO0XJm08=;
-        b=KcK8W7KMbF+TPYmiRPbjZetQUWtZ7G8YAoKvddg/vxtQU/9QRMtpP/F0NB8px7rUPU
-         ltgebk9x8xtpPt4QR3pTXeURbixr6sdFOCOGp7/VvlAGz34JEWewjZVqSmApcZ45F4hV
-         GlT/Keb4FFAz+mivewWIspuz3oMN1kpPO4nXwE3xlxQnWlXQ8C2Z19ccpHduZdl/2LyD
-         Gd5v7nn69y3npeLr71kjmdgsokHn0D6zdvW/LNGf72aT7Zv6jBIL6KU1k+LbKoN1IGse
-         jw8xFDFfkrXvt/kbyOZ8KiOl3GBxi4kabyl4Ewr6HF9XwOxHTTJELZWwO/S/zIPFzi8Z
-         qN0g==
-X-Gm-Message-State: AKS2vOwF61Rqg3p7Ootytm77Y8NkWhhfZjGmiANi5V4ccHSyvMaNxddr
-        9hqMiHTdwAnTD1wgYeE=
-X-Received: by 10.80.194.66 with SMTP id t2mr9796433edf.86.1498304211952;
-        Sat, 24 Jun 2017 04:36:51 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id n26sm1284651edd.51.2017.06.24.04.36.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Jun 2017 04:36:50 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 2/2] strbuf: change an always NULL/"" strbuf_addftime() param to bool
-Date:   Sat, 24 Jun 2017 11:36:35 +0000
-Message-Id: <20170624113635.16360-2-avarab@gmail.com>
-X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1
-In-Reply-To: <20170624113635.16360-1-avarab@gmail.com>
-References: <20170624113635.16360-1-avarab@gmail.com>
-In-Reply-To: <20170623164403.bxilz7k5ny7hs466@sigill.intra.peff.net>
-References: <20170623164403.bxilz7k5ny7hs466@sigill.intra.peff.net>
+        id S1751316AbdFXLnP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Jun 2017 07:43:15 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:47214 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751305AbdFXLnO (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 24 Jun 2017 07:43:14 -0400
+X-AuditID: 12074412-b97ff70000000fed-3f-594e50502191
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id D8.FA.04077.0505E495; Sat, 24 Jun 2017 07:43:13 -0400 (EDT)
+Received: from [192.168.69.190] (p54AAE63F.dip0.t-ipconnect.de [84.170.230.63])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v5OBh98H020995
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sat, 24 Jun 2017 07:43:10 -0400
+Subject: Re: [PATCH v2 22/29] commit_packed_refs(): use a staging file
+ separate from the lockfile
+To:     Jeff King <peff@peff.net>
+References: <cover.1498200513.git.mhagger@alum.mit.edu>
+ <d8fa8dec13eb095c0c39ef0de2ee8987d6bf9d77.1498200513.git.mhagger@alum.mit.edu>
+ <20170623194610.o2eyte4xmlsscrlz@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <8156514c-f255-5bda-2011-db8f512d6fb9@alum.mit.edu>
+Date:   Sat, 24 Jun 2017 13:43:09 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170623194610.o2eyte4xmlsscrlz@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqBsY4Bdp8PGiqMXaZ3eYLJ6vP8Fu
+        0XWlm8miofcKs8WSh6+ZLbqnvGW0+NHSw2yxeXM7iwOHx85Zd9k9Fmwq9ehqP8Lm8ax3D6PH
+        xUvKHp83yQWwRXHZpKTmZJalFunbJXBltPzrZC2YLFhx9+5ntgbG3bxdjJwcEgImEnP3XmHu
+        YuTiEBLYwSSx/+MvZpCEkMB5JonVPUogtrBAssSz3fsYQWwRAVmJ74c3MkI0HGKUmPxyJlg3
+        s8BDJomrd1+zglSxCehKLOppZgKxeQXsJfafeMsGYrMIqEqcProPrEZUIELiYecudogaQYmT
+        M5+wgNicAi4SF98cA6tnFlCX+DPvEjOELS+x/e0c5gmM/LOQtMxCUjYLSdkCRuZVjHKJOaW5
+        urmJmTnFqcm6xcmJeXmpRbpmermZJXqpKaWbGCEhL7SDcf1JuUOMAhyMSjy8Gd6+kUKsiWXF
+        lbmHGCU5mJREeWPP+EQK8SXlp1RmJBZnxBeV5qQWA/3OwawkwrvH1y9SiDclsbIqtSgfJiXN
+        waIkzvtzsbqfkEB6YklqdmpqQWoRTFaGg0NJgrfcH6hRsCg1PbUiLTOnBCHNxMEJMpwHaLg/
+        2PDigsTc4sx0iPwpRkUpcd5GP6CEAEgiozQPrheWkl4xigO9Isy7FWQFDzCdwXW/AhrMBDR4
+        xhofkMEliQgpqQZGddu3njZrdvzXkrD9WGM1U4o1puXppFmnrdVyoq76fLF+Hb778XaBL1xS
+        1vluK740LH9s6eAXzfsgdtIileMipQxTOgt4nDZ46q++7HwteH668m9rIUaeirf6973exmts
+        Prt2jYoYz86XHe8E388JXPif2+7rvQ0dYctYFuXK39o9iSGsMMNdiaU4I9FQi7moOBEAiGxK
+        1SQDAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the code for deciding what's to be done about %Z to stop
-passing always either a NULL or "" char * to
-strbuf_addftime(). Instead pass a boolean int to indicate whether the
-strftime() %Z format should be suppressed by converting it to an empty
-string, which is what this code is actually doing.
-
-This code grew organically between the changes in 9eafe86d58 ("Merge
-branch 'rs/strbuf-addftime-zZ'", 2017-06-22). The intent was to use
-this API in the future to pass a custom leave the door open to pass a
-custom timezone name to the function (see my [1] and related
-messages).
-
-But that's not what this code does now, and this strbuf_addstr() call
-always being redundant makes it hard to understand the current
-functionality. So simplify this internal API to match its use, we can
-always change it in the future if it gets a different use-case.
-
-1. CACBZZX5OQc45fUyDVayE89rkT=+8m5S4efSXCAbCy7Upme5zLA@mail.gmail.com
-   (https://public-inbox.org/git/CACBZZX5OQc45fUyDVayE89rkT=+8m5S4efSXCAbCy7Upme5zLA@mail.gmail.com/)
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-On Fri, Jun 23 2017, Jeff King jotted:
-
-> On Fri, Jun 23, 2017 at 04:36:06PM +0000, Ævar Arnfjörð Bjarmason wrote:
->
->> I believe this addresses the comments in the thread so far. Also Re:
->> René's "why const?" in a2673ce4-5cf8-6b40-d4db-8e2a49518138@web.de:
->> Because tzname_from_tz isn't changed in the body of the function, only
->> read.
->
-> Sure, it's not wrong. But that property is also held by 99% of the
-> parameters that are passed by value. It's the normal style in our code
-> base (and in most C code bases I know of) to never declare pass-by-value
-> as const. It pollutes the interface and isn't something the caller cares
-> about.
->
-> Without passing judgement on whether that style is good or not (though
-> IMHO it is), making this one case different than all the others is a bad
-> idea. It makes the reader wonder why it's different.
-
-Makes sense. I wasn't trying to be snary or curt or whatever. I'd just
-never noticed this pattern in the codebase.
-
-Seems a bit odd to me to not make use of the compiler guarding against
-accidental assignments and giving it a strong hint to inline the value
-where possible, but whatever, makes sense to have it stylistically be
-consistent. So this version does that.
-
->> diff --git a/date.c b/date.c
->> index 1fd6d66375..17db07d905 100644
->> --- a/date.c
->> +++ b/date.c
->> @@ -256,7 +256,7 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
->>  			tm->tm_hour, tm->tm_min, tm->tm_sec, tz);
->>  	else if (mode->type == DATE_STRFTIME)
->>  		strbuf_addftime(&timebuf, mode->strftime_fmt, tm, tz,
->> -				mode->local ? NULL : "");
->> +				mode->local);
->
-> You flipped the boolean here. That's OK by me. But in the definition...
->
->>  void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
->> -		     int tz_offset, const char *tz_name)
->> +		     int tz_offset, const int tzname_from_tz)
->
-> Wouldn't tzname_from_tz only happen when we're _not_ in local mode? I
-> suggested that name anticipating your second patch to actually compute
-> it based on "tz". In local-mode it's not coming from tz, it's coming
-> from secret unportable magic (the combination of localtime() and
-> strftime()).
-
-I misread (I think) an earlier E-Mail of yours and thought this was
-what you were suggesting. This version hopefully looks OK.
-
->> @@ -815,8 +815,7 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
->>  			fmt++;
->>  			break;
->>  		case 'Z':
->> -			if (tz_name) {
->> -				strbuf_addstr(&munged_fmt, tz_name);
->> +			if (!tzname_from_tz) {
->>  				fmt++;
->>  				break;
->>  			}
->
-> This logic matches your inversion in the caller, so it does the right
-> thing. But I think the name is wrong, as above.
-
-Fixed.
-
->> index 4559035c47..eba5d59a77 100644
->> --- a/strbuf.h
->> +++ b/strbuf.h
->> @@ -340,14 +340,15 @@ extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
+On 06/23/2017 09:46 PM, Jeff King wrote:
+> On Fri, Jun 23, 2017 at 09:01:40AM +0200, Michael Haggerty wrote:
+> 
+>> @@ -522,10 +529,16 @@ int lock_packed_refs(struct ref_store *ref_store, int flags)
+>>  		timeout_configured = 1;
+>>  	}
 >>  
->>  /**
->>   * Add the time specified by `tm`, as formatted by `strftime`.
->> - * `tz_name` is used to expand %Z internally unless it's NULL.
->>   * `tz_offset` is in decimal hhmm format, e.g. -600 means six hours west
->>   * of Greenwich, and it's used to expand %z internally.  However, tokens
->>   * with modifiers (e.g. %Ez) are passed to `strftime`.
->> + * `tzname_from_tz` when set, means let `strftime` format %Z, instead
->> + * of intercepting it and doing our own formatting.
->>   */
->>  extern void strbuf_addftime(struct strbuf *sb, const char *fmt,
->>  			    const struct tm *tm, int tz_offset,
->> -			    const char *tz_name);
->> +			    const int omit_strftime_tz_name);
->
-> This would need the new name, too (whatever it is).
+>> +	/*
+>> +	 * Note that we close the lockfile immediately because we
+>> +	 * don't write new content to it, but rather to a separate
+>> +	 * tempfile.
+>> +	 */
+>>  	if (hold_lock_file_for_update_timeout(
+>>  			    &refs->lock,
+>>  			    refs->path,
+>> -			    flags, timeout_value) < 0)
+>> +			    flags, timeout_value) < 0 ||
+>> +	    close_lock_file(&refs->lock))
+>>  		return -1;
+> 
+> I was wondering whether we'd catch a case which accidentally wrote to
+> the lockfile (instead of the new tempfile, but this close() is a good
+> safety check).
+> 
+>> -	if (commit_lock_file(&refs->lock)) {
+>> -		strbuf_addf(err, "error overwriting %s: %s",
+>> +	if (rename_tempfile(&refs->tempfile, refs->path)) {
+>> +		strbuf_addf(err, "error replacing %s: %s",
+>>  			    refs->path, strerror(errno));
+>>  		goto out;
+>>  	}
+> 
+> So our idea of committing now is the tempfile rename, and then...
+> 
+>> @@ -617,9 +640,10 @@ int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err)
+>>  	goto out;
+>>  
+>>  error:
+>> -	rollback_lock_file(&refs->lock);
+>> +	delete_tempfile(&refs->tempfile);
+>>  
+>>  out:
+>> +	rollback_lock_file(&refs->lock);
+> 
+> We always rollback the lockfile regardless, because committing it would
+> overwrite our new content with an empty file. There's no real safety
+> against somebody calling commit_lock_file() on it, but it also seems
+> like an uncommon error to make.
 
-*Nod*. Now the parameter is called suppress_tz_name.
+If this seems too dangerous, we could add a `LOCK_NO_COMMIT` flag for
+`hold_lock_file_for_update()` and `hold_lock_file_for_update_timeout()`,
+which would die() if somebody tries to commit the associated lockfile. I
+think we can live without it. I hope that any such bugs would be caught
+immediately by CI. But I admit that the prospect of renaming an empty
+file on top of a `packed-refs` file is quite sobering, so if anybody is
+worried about this, let me know and I'll implement it.
 
- date.c   | 2 +-
- strbuf.c | 5 ++---
- strbuf.h | 5 +++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/date.c b/date.c
-index 1fd6d66375..c3e673fd04 100644
---- a/date.c
-+++ b/date.c
-@@ -256,7 +256,7 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
- 			tm->tm_hour, tm->tm_min, tm->tm_sec, tz);
- 	else if (mode->type == DATE_STRFTIME)
- 		strbuf_addftime(&timebuf, mode->strftime_fmt, tm, tz,
--				mode->local ? NULL : "");
-+				!mode->local);
- 	else
- 		strbuf_addf(&timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
- 				weekday_names[tm->tm_wday],
-diff --git a/strbuf.c b/strbuf.c
-index be3b9e37b1..89e40bb496 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -786,7 +786,7 @@ char *xstrfmt(const char *fmt, ...)
- }
- 
- void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
--		     int tz_offset, const char *tz_name)
-+		     int tz_offset, int suppress_tz_name)
- {
- 	struct strbuf munged_fmt = STRBUF_INIT;
- 	size_t hint = 128;
-@@ -815,8 +815,7 @@ void strbuf_addftime(struct strbuf *sb, const char *fmt, const struct tm *tm,
- 			fmt++;
- 			break;
- 		case 'Z':
--			if (tz_name) {
--				strbuf_addstr(&munged_fmt, tz_name);
-+			if (suppress_tz_name) {
- 				fmt++;
- 				break;
- 			}
-diff --git a/strbuf.h b/strbuf.h
-index 6708cef0f9..d3e6e65123 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -343,11 +343,12 @@ extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
-  * `tz_offset` is in decimal hhmm format, e.g. -600 means six hours west
-  * of Greenwich, and it's used to expand %z internally.  However, tokens
-  * with modifiers (e.g. %Ez) are passed to `strftime`.
-- * `tz_name` is used to expand %Z internally unless it's NULL.
-+ * `suppress_tz_name` when set, means let suppress the `strftime` %Z
-+ * format and replace it with an empty string.
-  */
- extern void strbuf_addftime(struct strbuf *sb, const char *fmt,
- 			    const struct tm *tm, int tz_offset,
--			    const char *tz_name);
-+			    int suppress_tz_name);
- 
- /**
-  * Read a given size of data from a FILE* pointer to the buffer.
--- 
-2.13.1.611.g7e3b11ae1
+Michael
 
