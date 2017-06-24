@@ -2,33 +2,38 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A93CD20401
-	for <e@80x24.org>; Sat, 24 Jun 2017 12:12:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BD6E20401
+	for <e@80x24.org>; Sat, 24 Jun 2017 12:14:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751378AbdFXMMl (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Jun 2017 08:12:41 -0400
-Received: from mout.web.de ([212.227.17.11]:60761 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751313AbdFXMMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Jun 2017 08:12:40 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MUWBb-1dFczT2pyV-00RKnO; Sat, 24
- Jun 2017 14:12:32 +0200
-Subject: Re: [PATCH] sha1_name: cache readdir(3) results in
- find_short_object_filename()
-To:     Jeff King <peff@peff.net>
+        id S1751360AbdFXMOg (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Jun 2017 08:14:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51748 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751281AbdFXMOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Jun 2017 08:14:35 -0400
+Received: (qmail 906 invoked by uid 109); 24 Jun 2017 12:14:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 24 Jun 2017 12:14:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23361 invoked by uid 111); 24 Jun 2017 12:14:40 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 24 Jun 2017 08:14:40 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 24 Jun 2017 08:14:33 -0400
+Date:   Sat, 24 Jun 2017 08:14:33 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Michael Giuffrida <michaelpg@chromium.org>,
         git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
- <xmqqwp8f4mb2.fsf@gitster.mtv.corp.google.com>
- <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] sha1_name: cache readdir(3) results in
+ find_short_object_filename()
+Message-ID: <20170624121433.bnrn56njycnksf3g@sigill.intra.peff.net>
+References: <dae96f72-761c-3ed1-4567-0933acc7618a@web.de>
  <20170615055654.efvsouhr3leszz3i@sigill.intra.peff.net>
  <ec36f9fa-5f3e-b511-3985-3d0301b4847f@web.de>
  <20170615132532.nivmj22dctowxssm@sigill.intra.peff.net>
@@ -37,182 +42,46 @@ References: <99d19e5a-9f79-9c1e-3a23-7b2437b04ce9@web.de>
  <xmqqd1a0vb2t.fsf@gitster.mtv.corp.google.com>
  <d06fb033-294e-f364-3dde-394624e83cd6@web.de>
  <20170622231041.2zdjypviwmndjnsb@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <97a8def3-d2ed-9212-4d87-8767de6f2695@web.de>
-Date:   Sat, 24 Jun 2017 14:12:30 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+ <2cd8a407-f9a2-687a-3c78-6b502da2ad94@web.de>
 MIME-Version: 1.0
-In-Reply-To: <20170622231041.2zdjypviwmndjnsb@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:11TaO3fHvR54F5WsPQA6sAvferwe/VR6E6KekuGoefTJj544LYk
- vWJqjirO/pWoxOAFjKuJ1X+dgRra/lgeCFA67fBVzzYiMIr+XnV0gMLiUTvIj7VzDQ8Ov3n
- ScmH1s34NDAAnbeN2ygOcYs95Jv3vzL4RDW04Hulgp0JF/dGY5pB2xRsXuJacZf4Xl4FIoc
- V6tjFXwynN8pen1CTLRHQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zWvDfQltdac=:fH3l7GBRz3aKLKQ07Ju3Li
- iRC4RgnoQKT+BUHM5jpYjYi/BcilVy7ja/D+NEDelbDC2fl51MWzBRJCZ6Bzry/UNxWRyp13J
- 9XrcAWSBMhHaKN0G+L/MiPNdub6nXmHUnmp+hUuFfEjpaJ+anBH1WiU1FD7jpD1Vgf88m4UEM
- zCaw2R6ZZjyromtDejA1sq+QBrs0yZ0L6E1BLl/2jpUq/lXzzLIafay9gaJsQ0+xOZBOYCJkC
- 27OewO4dJLavQsVXUvo7A843cb3C5yOi3IhZniyhSztlh6EJz255+AaFF3HTB1El5K/8pPgS4
- 2hKtxIXiR33qZa0eIrgx9hpz5tUnl/piy9Saiiz2pUaeNQtM7eoZ4DKXpuRTq56+ix7sH4zDk
- 7MK+bk4UdhNNQqNXI41Xry80TyJmAjLroHweMpvB+PtTFsHjxSdyHgSawskq62vKCpqifOr5W
- rw7G3AxkeRs/AoehY+0q3Rwfg60XgA7VPowIIj5+Vu1MrfYgwrEy/pkiL1EIdHOrXJhZ5xkwM
- 8gL2xKQst04mx0QAD1s9XdxcXV5l70fO/QMbtC40pbzvC9vuGMlfbGxZGOUNpXGqjtxRO1rjw
- moBIVapePb4gklY7tgTfoMjFCimI5Q3H5bMxqzRWnZnQeF4Neu3KlcKSMMy1xTRGmu/+bP0Ea
- c/4ZhhZLiunhY+mBBETAbYmt81XWPIU693b67o2sSmR/EciwG9O/JHYnlATjFr5+GW8JA1ja0
- vANlpREjIjA62zIOVWdjViovhxe9LXvN//F+B/+e2B9LHPJWCTFVn9CaO5c6pGy1kfMtXqD1c
- UMn4tuR
+In-Reply-To: <2cd8a407-f9a2-687a-3c78-6b502da2ad94@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.06.2017 um 01:10 schrieb Jeff King:
-> On Thu, Jun 22, 2017 at 08:19:48PM +0200, René Scharfe wrote:
->> @@ -1811,6 +1822,12 @@ typedef int each_loose_cruft_fn(const char *basename,
->>   typedef int each_loose_subdir_fn(int nr,
->>   				 const char *path,
->>   				 void *data);
->> +int for_each_file_in_obj_subdir(int subdir_nr,
->> +				struct strbuf *path,
->> +				each_loose_object_fn obj_cb,
->> +				each_loose_cruft_fn cruft_cb,
->> +				each_loose_subdir_fn subdir_cb,
->> +				void *data);
-> 
-> Now that this is becoming public, I think we need to document what
-> should be in "path" here. It is the complete path, including the 2-hex
-> subdir.
-> 
-> That's redundant with "subdir_nr". Should we push that logic down into
-> the function, and basically do:
-> 
->    if (subdir_nr < 0 || subdir_nr > 256)
-> 	BUG("object subdir number out of range");
+On Sat, Jun 24, 2017 at 02:12:07PM +0200, René Scharfe wrote:
 
-Hmm.  I don't expect many more callers, so do we really need this safety
-check?  It's cheap compared to the readdir(3) call, of course.
-
-But wouldn't it make more sense to use an unsigned data type to avoid
-the first half?  And an unsigned char specifically to only accept valid
-values, leaving the overflow concern to the caller?  It warrants a
-separate patch in any case IMHO.
-
->    orig_len = path->len;
->    strbuf_addf(path, "/%02x", subdir_nr);
->    baselen = path->len;
+> Am 23.06.2017 um 01:10 schrieb Jeff King:
+> > On Thu, Jun 22, 2017 at 08:19:48PM +0200, René Scharfe wrote:
+> > 
+> >> Read each loose object subdirectory at most once when looking for unique
+> >> abbreviated hashes.  This speeds up commands like "git log --pretty=%h"
+> >> considerably, which previously caused one readdir(3) call for each
+> >> candidate, even for subdirectories that were visited before.
+> > 
+> > Is it worth adding a perf test that's heavy on abbreviations?
 > 
->    ...
+> Sure.  Here's a simple one.  It currently reports for me:
 > 
->    strbuf_setlen(path, orig_len);
+> Test                        origin/master     origin/next              origin/pu
+> ---------------------------------------------------------------------------------------------
+> 4205.1: log with %H         0.44(0.41+0.02)   0.43(0.42+0.01) -2.3%    0.43(0.43+0.00) -2.3%
+> 4205.2: log with %h         1.03(0.60+0.42)   1.04(0.64+0.39) +1.0%    0.57(0.55+0.01) -44.7%
+> 4205.3: log with %T         0.43(0.42+0.00)   0.43(0.42+0.01) +0.0%    0.43(0.40+0.02) +0.0%
+> 4205.4: log with %t         1.05(0.64+0.38)   1.05(0.61+0.42) +0.0%    0.59(0.58+0.00) -43.8%
+> 4205.5: log with %P         0.45(0.42+0.02)   0.43(0.42+0.00) -4.4%    0.43(0.42+0.01) -4.4%
+> 4205.6: log with %p         1.21(0.63+0.57)   1.17(0.68+0.47) -3.3%    0.59(0.58+0.00) -51.2%
+> 4205.7: log with %h-%h-%h   1.05(0.64+0.39)   2.00(0.83+1.15) +90.5%   0.69(0.66+0.02) -34.3%
 > 
-> That's one less thing for the caller to worry about, and it's easy to
-> explain the argument as "the path to the object directory root".
-> 
->> +		if (!alt->loose_objects_subdir_seen[subdir_nr]) {
->> +			struct strbuf *buf = alt_scratch_buf(alt);
->> +			strbuf_addf(buf, "%02x/", subdir_nr);
->> +			for_each_file_in_obj_subdir(subdir_nr, buf,
->> +						    append_loose_object,
->> +						    NULL, NULL,
->> +						    &alt->loose_objects_cache);
-> 
-> I think the trailing slash here is superfluous. If you take my
-> suggestion above, that line goes away. But then the front slash it adds
-> becomes superfluous. It should probably just do:
-> 
->    strbuf_complete(path, '/');
->    strbuf_addf(path, "%02x", subdir_nr);
+> origin/next has fe9e2aefd4 (pretty: recalculate duplicate short hashes),
+> while origin/pu has cc817ca3ef (sha1_name: cache readdir(3) results in
+> find_short_object_filename()).
 
-So how about this then as a follow-up patch?
+Perfect. That last one says everything we need to know about which
+approach to take. :)
 
--- >8 --
-Subject: [PATCH] sha1_file: let for_each_file_in_obj_subdir() handle subdir names
-
-The function for_each_file_in_obj_subdir() takes a object subdirectory
-number and expects the name of the same subdirectory to be included in
-the path strbuf.  Avoid this redundancy by letting the function append
-the hexadecimal subdirectory name itself.  This makes it a bit easier
-and safer to use the function -- it becomes impossible to specify
-different subdirectories in subdir_nr and path.
-
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- sha1_file.c | 22 ++++++++++++++--------
- sha1_name.c |  1 -
- 2 files changed, 14 insertions(+), 9 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 5e0ee2b68b..98ce85acf9 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3742,15 +3742,22 @@ int for_each_file_in_obj_subdir(int subdir_nr,
- 				each_loose_subdir_fn subdir_cb,
- 				void *data)
- {
--	size_t baselen = path->len;
--	DIR *dir = opendir(path->buf);
-+	size_t origlen, baselen;
-+	DIR *dir;
- 	struct dirent *de;
- 	int r = 0;
- 
-+	origlen = path->len;
-+	strbuf_complete(path, '/');
-+	strbuf_addf(path, "%02x", subdir_nr);
-+	baselen = path->len;
-+
-+	dir = opendir(path->buf);
- 	if (!dir) {
--		if (errno == ENOENT)
--			return 0;
--		return error_errno("unable to open %s", path->buf);
-+		if (errno != ENOENT)
-+			r = error_errno("unable to open %s", path->buf);
-+		strbuf_setlen(path, origlen);
-+		return r;
- 	}
- 
- 	while ((de = readdir(dir))) {
-@@ -3788,6 +3795,8 @@ int for_each_file_in_obj_subdir(int subdir_nr,
- 	if (!r && subdir_cb)
- 		r = subdir_cb(subdir_nr, path->buf, data);
- 
-+	strbuf_setlen(path, origlen);
-+
- 	return r;
- }
- 
-@@ -3797,15 +3806,12 @@ int for_each_loose_file_in_objdir_buf(struct strbuf *path,
- 			    each_loose_subdir_fn subdir_cb,
- 			    void *data)
- {
--	size_t baselen = path->len;
- 	int r = 0;
- 	int i;
- 
- 	for (i = 0; i < 256; i++) {
--		strbuf_addf(path, "/%02x", i);
- 		r = for_each_file_in_obj_subdir(i, path, obj_cb, cruft_cb,
- 						subdir_cb, data);
--		strbuf_setlen(path, baselen);
- 		if (r)
- 			break;
- 	}
-diff --git a/sha1_name.c b/sha1_name.c
-index ccb5144d0d..5670e2540f 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -109,7 +109,6 @@ static void find_short_object_filename(struct disambiguate_state *ds)
- 
- 		if (!alt->loose_objects_subdir_seen[subdir_nr]) {
- 			struct strbuf *buf = alt_scratch_buf(alt);
--			strbuf_addf(buf, "%02x/", subdir_nr);
- 			for_each_file_in_obj_subdir(subdir_nr, buf,
- 						    append_loose_object,
- 						    NULL, NULL,
--- 
-2.13.1
+-Peff
