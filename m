@@ -2,106 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7DAA207D2
-	for <e@80x24.org>; Sun, 25 Jun 2017 07:20:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6BB7207D2
+	for <e@80x24.org>; Sun, 25 Jun 2017 08:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751256AbdFYHUk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Jun 2017 03:20:40 -0400
-Received: from oker.escape.de ([194.120.234.254]:36622 "EHLO oker.escape.de"
+        id S1751326AbdFYIBP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Jun 2017 04:01:15 -0400
+Received: from mout.web.de ([212.227.17.12]:56870 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751200AbdFYHUj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Jun 2017 03:20:39 -0400
-X-Greylist: delayed 334 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Jun 2017 03:20:39 EDT
-Received: from oker.escape.de (localhost [127.0.0.1])
-        (envelope-sender: urs@isnogud.escape.de)
-        by oker.escape.de (8.14.4/8.14.4/$Revision: 1.86 $) with ESMTP id v5P7F3hq017711
-        for <git@vger.kernel.org>; Sun, 25 Jun 2017 09:15:03 +0200
-Received: (from uucp@localhost)
-        by oker.escape.de (8.14.4/8.14.4/Submit) with UUCP id v5P7F3Rc017681
-        for git@vger.kernel.org; Sun, 25 Jun 2017 09:15:03 +0200
-Received: from tehran.isnogud.escape.de (localhost [127.0.0.1])
-        by tehran.isnogud.escape.de (8.14.9/8.14.9) with ESMTP id v5P7Crak017403
-        for <git@vger.kernel.org>; Sun, 25 Jun 2017 09:12:53 +0200
-Received: (from urs@localhost)
-        by tehran.isnogud.escape.de (8.14.9/8.14.9/Submit) id v5P7Cqog017400;
-        Sun, 25 Jun 2017 09:12:52 +0200
-X-Authentication-Warning: tehran.isnogud.escape.de: urs set sender to urs@isnogud.escape.de using -f
-To:     git@vger.kernel.org
-Subject: Migration from CVS to Git looses merges
-From:   Urs Thuermann <urs@isnogud.escape.de>
-Date:   25 Jun 2017 09:12:52 +0200
-Message-ID: <ygfd19stua3.fsf@tehran.isnogud.escape.de>
-User-Agent: Gnus/5.0808 (Gnus v5.8.8) Emacs/20.7
+        id S1751236AbdFYIBO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Jun 2017 04:01:14 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LxOHm-1dr8ED0FRq-016wIx; Sun, 25
+ Jun 2017 10:01:07 +0200
+Subject: Re: [PATCH v4 4/6] coccinelle: add a rule to make "expression" code
+ use FREE_AND_NULL()
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+References: <20170615231549.20085-1-avarab@gmail.com>
+ <xmqqa858zzb3.fsf@gitster.mtv.corp.google.com>
+ <20170615231549.20085-5-avarab@gmail.com>
+ <xmqq7f0byayu.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <2122b01f-7627-cd1b-c7df-751c076f90ff@web.de>
+Date:   Sun, 25 Jun 2017 10:01:04 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+In-Reply-To: <xmqq7f0byayu.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:SivcadeZHs3rYOWGvJLdAhtibqMPujFHwgw0bo2+NsbxMkRyprC
+ dbQ8G8zB/btj9YrwiyXRK4N/0Afkq5FfaiibHfWSpWqEFPwGCVekkCavNd6FWxZGLbe+hI9
+ GFeKaY+2Dr3DBRQh5FgYAdzHI1R5HPD5YV0r1IbMaZhFjRNGKolaIqjoJEjD1K2HgEQkzJ7
+ ULnZGvk2etFdo5MmFN/3Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:p5XGwzpadsg=:midn7LtPUXN6JTFiFOQHO/
+ yrvaXLqVUMbaXH3aiE/8EBUs2yLqxBpXR1Oy256Rlt/0qi0VviphB15FBmD74ue2bbbm1N19I
+ R7weDwZJ201AN5k/T+R4HoFYVb1tqKfvrASwSj8avPS7g4YH4Q+4vvyczgxwn/8Qb0s51VDlQ
+ XuJW0Fe6xalzCbAJ/UiVB3221tshOCNXapd4UcWwVtgfWLhYhysOUhZ1oQuQDr2ZrLkT5vPn2
+ Ord2GFWpwQYlwV5OCM9UFj9A+HCwC9UAPzYZQmPP7CzcPX7TLW7NhPwOmriWLhextXpRo7MaO
+ ke9MH/dHIZjHRpXOtsPx8ijdQEdc0n1TeCz/S6QtYSmTL+11PtsBUdLe7VKLp5WhtssFaIVZR
+ X9JmRskkt8sa5hV2cAl2vFsheUFVS6AvJYL6wgnGMhZ/uQ6b5snwdHlJwd95wjbP0PujLrFnd
+ WSxk/Li17Hxd1oYTsSW5Knzq5yUWxn+wUdmWCOfJx2W3HpiUKRmPA/7YubadEiIVWv/MLovCF
+ +xKy+4CVpGhuHQ+MloheN+WwQB6+jXP7QdysZw4pFtvgR5DsbOpHB5vL6k5ve9va8GYHL1nXQ
+ 8W19eQ1pD93DQ239Kdk8Dq+5Bb0/JZ0EsgMtyQ3LZwxYTAv7E72ksLZ3Cnmjkdtb+GYo3tmWF
+ bqZ3SJLnMdDeuiPAO2oCq6tj12QMyVGxf0iTUoVxzZEJGuqz9jkjV/B7icRrNGf3Ng9smlz+I
+ yH9mcllUNj7jV4uTLSn3VhtP7O9ORWGXVT5N0OzI50bw98Bmaj38P43jwlifcQdO1Oxr3HH80
+ Hlhvz2U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I want to convert several old CVS repositories to Git.  Some of these
-CVS repositories contain branches, which have later been merged to the
-main trunk.  When I try to convert using cvs2git or git cvsimport the
-branches appear in the new git repository but they are not merged to
-the master branch.
+Am 16.06.2017 um 21:43 schrieb Junio C Hamano:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+> 
+>> A follow-up to the existing "type" rule added in an earlier
+>> change. This catches some occurrences that are missed by the previous
+>> rule.
+>>
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> ---
+> 
+> Hmph, I wonder if the "type" thing is really needed.  Over there,
+> "ptr" is an expression and we can find "free(ptr); ptr = NULL" with
+> the rule in this patch already, no?
 
-Here is an example of how the branches in the CVS repository were
-created and merged:
+Indeed.  How about this on top of master?
 
-    cd /tmp
-    export CVSROOT=$PWD/CVS
+-- >8 --
+Subject: [PATCH] coccinelle: polish FREE_AND_NULL rules
 
-    cvs init
-    mkdir CVS/foo
-    cvs co foo
+There are two rules for using FREE_AND_NULL in free.cocci, one for
+pointer types and one for expressions.  Both cause coccinelle to remove
+empty lines and even newline characters between replacements for some
+reason; consecutive "free(x);/x=NULL;" sequences end up as multiple
+FREE_AND_NULL calls on the same time.
 
-    cd foo
-    (date; seq 10; date) > bar
-    cvs add bar
-    cvs ci -m msg1                              # rev 1.1
+Remove the type rule, as the expression rule already covers it, and
+rearrange the lines of the latter to place the addition of FREE_AND_NULL
+between the removals, which causes coccinelle to leave surrounding
+whitespace untouched.
 
-    sleep 1
-    printf "1c\n%s\n.\nwq\n" "`date`" | ed bar
-    cvs ci -m msg2                              # rev 1.2
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ contrib/coccinelle/free.cocci | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-    sleep 1
-    cvs tag -b a-branch
+diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
+index f2d97e755b..4490069df9 100644
+--- a/contrib/coccinelle/free.cocci
++++ b/contrib/coccinelle/free.cocci
+@@ -11,16 +11,8 @@ expression E;
+   free(E);
+ 
+ @@
+-type T;
+-T *ptr;
+-@@
+-- free(ptr);
+-- ptr = NULL;
+-+ FREE_AND_NULL(ptr);
+-
+-@@
+ expression E;
+ @@
+ - free(E);
+-- E = NULL;
+ + FREE_AND_NULL(E);
++- E = NULL;
+-- 
+2.13.2
 
-    sleep 1
-    printf "1c\n%s\n.\nwq\n" "`date`" | ed bar
-    cvs ci -m msg3                              # rev 1.3
-
-    sleep 1
-    cvs up -r a-branch
-    printf "12c\n%s\n.\nwq\n" "`date`" | ed bar
-    cvs ci -m msg-b1                            # rev 1.2.2.1
-
-    sleep 1
-    printf "12c\n%s\n.\nwq\n" "`date`" | ed bar
-    cvs ci -m msg-b2                            # rev 1.2.2.2
-
-    sleep 1
-    cvs up -A
-    cvs up -j a-branch
-    cvs ci -m "Merge branch a-branch"           # rev 1.4
-
-Now I have tried 2 ways to convert this to git:
-
-1. mkdir g; cd g; git cvsimport -A <file> -m foo
-2. mkdir g; cd g; git init;
-   cvs2git --blobfile=foo.blob --dumpfile=foo.dump --username=urs ../CVS/foo
-   cat foo.blob foo.dump | git fast-import
-
-In both cases, the branch "a-branch" is in the git repository but is
-not merged with the master branch, i.e. rev 1.4 has only parent 1.3
-but not 1.2.2.2.  I also tried cvsimport with several regexes passed
-using -M to match "Merge branch a-branch", but still the same result.
-
-How should the CVS repository be converted to git, so that the commit
-corresponding to rev 1.4 has two parents, 1.3 and 1.2.2.2?
-
-urs
