@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B55A20401
-	for <e@80x24.org>; Sun, 25 Jun 2017 04:34:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3191D20401
+	for <e@80x24.org>; Sun, 25 Jun 2017 04:34:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751164AbdFYEes (ORCPT <rfc822;e@80x24.org>);
+        id S1751177AbdFYEeu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Jun 2017 00:34:50 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:33219 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750944AbdFYEes (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 25 Jun 2017 00:34:48 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34586 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751094AbdFYEer (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Jun 2017 00:34:47 -0400
-Received: by mail-wr0-f193.google.com with SMTP id k67so22508469wrc.1
-        for <git@vger.kernel.org>; Sat, 24 Jun 2017 21:34:46 -0700 (PDT)
+Received: by mail-wr0-f195.google.com with SMTP id x23so22607907wrb.0
+        for <git@vger.kernel.org>; Sat, 24 Jun 2017 21:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MEgZzDlUVXDQ1z+evpml6JHshm2R/MPODzyN/1S682o=;
-        b=RoKnDnCEa+UyJqgY1u1ZOGofexghUE4NxXcy2ngm9209r6SOPwo4lhS6BA+gxwiIQU
-         l25Vxfzilhjy+9GgWuiaapt+jydb7zDy5NMH2JYC709bHWkWasxky9LO8zl6YWpC+CCf
-         6CayVW2FVQGuVJXMSjPRB0REESInpqyq91/IYWXv1g12X5+vrkVRlO0Hpbib0830d8rV
-         UMYbHNUKrHZ9SIP3Tx++W4sJKn3bABuLXYIbwDoXjFdWjREhKlEKGj14Alc/LaLdajlP
-         D5gCRVw6hzDVHCi7vx94zxJvC2NOlgHaEIaRQozBptOPidMufq9IuoSyzfDNNw2yuvw3
-         lNJw==
+        bh=Fe7qVVgMq9semfve0G2oqRr2ENrr0JBrxfVodFLCxYY=;
+        b=jJwiJiKk5Etgjh3dUFGpDg6LbGm5c5O1kXcFoHg0vaewUrdmN9Ptuyi5ARYYKdn69X
+         pOOBgIYjdQja+/ZoVHmkkAlHsxYC0+hKPnHrPv24j0btkwkeHFAHpPSGmDaCL0BKQyQ5
+         NH+87MMUQ85eWTwXVooQ8596xrMj5o17WGsFv/GVlHwz1J8ysXoHtlussPNiPt1ICrOh
+         hbZOQK1MiwhEzIO7q9i0X7Br+bGWYfeenMUMJ9I9WVSEBNetoe25e3oVe3J1vZJRtKi/
+         CHGjCCZD/hDGFmMjPFJ400guZSfnmplk05Ptah3j5xLRQm4PdAykcVgjMbLXUs1z9h2t
+         vLiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=MEgZzDlUVXDQ1z+evpml6JHshm2R/MPODzyN/1S682o=;
-        b=o3JLkF43Su8jaDLFv/JyWzdII8QtulPlHuRF4WR18DgshNbtR1OhA/bdvnBdAiv88p
-         1yzU6lqddv9xR9EKhlvXWTYHWHucpPNdwLRHkbHRbA++ocDrVQ6idfENN/pnZdYMcVu1
-         YYaP09/aXZVjrd7+Uq/MsojKm02Sj7U7zdLNIZOUwVKeVt6MBz99UCLychdiyke0b9RD
-         sCFOJ6SGE+TMU69/vGoqiIjFwIpeJYgmG6zigIbBrRF+hid2WF4nImZrsuceUna1Lp/j
-         W1jHGPsUCDizoy+DlKvZYNfbLhjXYr208Cbaw+mb8taLzKm+z31dAch4I9Y6dv/PvZgg
-         2BmA==
-X-Gm-Message-State: AKS2vOyW7feSQQxQV3zdM2bGd7oYk0r6f/mZR2YCdHTNgBskIEjLdD7t
-        6Z9QACxag2s9DPxe
-X-Received: by 10.28.29.21 with SMTP id d21mr9314279wmd.37.1498365285561;
-        Sat, 24 Jun 2017 21:34:45 -0700 (PDT)
+        bh=Fe7qVVgMq9semfve0G2oqRr2ENrr0JBrxfVodFLCxYY=;
+        b=ezYpM7mkwHWEU2yp5TJ52vy++yRifoVel+EK+JSjo1Z+nEdX/NsakhBQPBsUfJ3ynj
+         kEc+7ubJ/h/GiZbuVr1wvwzLAAioIhbGk8XNKlsOQOrfB/8uqyFzJnOAdBgmiVJehD/2
+         LIgj1Lnbm/NHNirs+ZAzh16tjq19ZIpesyEbLIgN/Vqoyyb5X/TA6jgIGh2hayawPdk3
+         6zpxBTa6lQqXJAaASDNYa6IyH+Iyqc1Gtz7dBeaAT0bM0+5zw+mca0acvVjFLXtc2T+G
+         UQDzhs48y+L+9ZzcM2lRh+IE/TEq7EnNcN9tn2OMQgFsFaZkFfJLfQ5Ga2RhhTKFPFzb
+         /bzA==
+X-Gm-Message-State: AKS2vOy03+0ZicPh+mtkuYtpZHrNS6hDtm2aVp+VvNDFAXGwA8jAqd6n
+        epkqVgM0HyJGlzMk
+X-Received: by 10.28.166.137 with SMTP id p131mr645004wme.5.1498365286593;
+        Sat, 24 Jun 2017 21:34:46 -0700 (PDT)
 Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
-        by smtp.gmail.com with ESMTPSA id a99sm4977943wrc.64.2017.06.24.21.34.44
+        by smtp.gmail.com with ESMTPSA id a99sm4977943wrc.64.2017.06.24.21.34.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 24 Jun 2017 21:34:44 -0700 (PDT)
+        Sat, 24 Jun 2017 21:34:46 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 2/3] t1301: move modebits() to test-lib-functions.sh
-Date:   Sun, 25 Jun 2017 06:34:28 +0200
-Message-Id: <20170625043429.23337-2-chriscool@tuxfamily.org>
+Subject: [PATCH v3 3/3] t1700: make sure split-index respects core.sharedrepository
+Date:   Sun, 25 Jun 2017 06:34:29 +0200
+Message-Id: <20170625043429.23337-3-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.13.1.517.gf6399a5ea5
 In-Reply-To: <20170625043429.23337-1-chriscool@tuxfamily.org>
 References: <20170625043429.23337-1-chriscool@tuxfamily.org>
@@ -67,110 +67,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As the modebits() function can be useful outside t1301,
-let's move it into test-lib-functions.sh, and while at
-it let's rename it test_modebits().
+Add a few tests to check that both the split-index file and the
+shared-index file are created using the right permissions when
+core.sharedrepository is set.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t1301-shared-repo.sh  | 18 +++++++-----------
- t/test-lib-functions.sh |  5 +++++
- 2 files changed, 12 insertions(+), 11 deletions(-)
+ t/t1700-split-index.sh | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-index 1312004f8c..dfece751b5 100755
---- a/t/t1301-shared-repo.sh
-+++ b/t/t1301-shared-repo.sh
-@@ -19,10 +19,6 @@ test_expect_success 'shared = 0400 (faulty permission u-w)' '
- 	)
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index af3ec0da5a..22f69a410b 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -370,4 +370,34 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"
+ 	test $(ls .git/sharedindex.* | wc -l) -le 2
  '
  
--modebits () {
--	ls -l "$1" | sed -e 's|^\(..........\).*|\1|'
--}
--
- for u in 002 022
- do
- 	test_expect_success POSIXPERM "shared=1 does not clear bits preset by umask $u" '
-@@ -88,7 +84,7 @@ do
- 
- 		rm -f .git/info/refs &&
- 		git update-server-info &&
--		actual="$(modebits .git/info/refs)" &&
-+		actual="$(test_modebits .git/info/refs)" &&
- 		verbose test "x$actual" = "x-$y"
- 
- 	'
-@@ -98,7 +94,7 @@ do
- 
- 		rm -f .git/info/refs &&
- 		git update-server-info &&
--		actual="$(modebits .git/info/refs)" &&
-+		actual="$(test_modebits .git/info/refs)" &&
- 		verbose test "x$actual" = "x-$x"
- 
- 	'
-@@ -111,7 +107,7 @@ test_expect_success POSIXPERM 'info/refs respects umask in unshared repo' '
- 	umask 002 &&
- 	git update-server-info &&
- 	echo "-rw-rw-r--" >expect &&
--	modebits .git/info/refs >actual &&
-+	test_modebits .git/info/refs >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -177,7 +173,7 @@ test_expect_success POSIXPERM 'remote init does not use config from cwd' '
- 	umask 0022 &&
- 	git init --bare child.git &&
- 	echo "-rw-r--r--" >expect &&
--	modebits child.git/config >actual &&
-+	test_modebits child.git/config >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -187,7 +183,7 @@ test_expect_success POSIXPERM 're-init respects core.sharedrepository (local)' '
- 	echo whatever >templates/foo &&
- 	git init --template=templates &&
- 	echo "-rw-rw-rw-" >expect &&
--	modebits .git/foo >actual &&
-+	test_modebits .git/foo >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -198,7 +194,7 @@ test_expect_success POSIXPERM 're-init respects core.sharedrepository (remote)'
- 	test_path_is_missing child.git/foo &&
- 	git init --bare --template=../templates child.git &&
- 	echo "-rw-rw-rw-" >expect &&
--	modebits child.git/foo >actual &&
-+	test_modebits child.git/foo >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -209,7 +205,7 @@ test_expect_success POSIXPERM 'template can set core.sharedrepository' '
- 	cp .git/config templates/config &&
- 	git init --bare --template=../templates child.git &&
- 	echo "-rw-rw-rw-" >expect &&
--	modebits child.git/HEAD >actual &&
-+	test_modebits child.git/HEAD >actual &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 5ee124332a..db622c3555 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -216,6 +216,11 @@ test_chmod () {
- 	git update-index --add "--chmod=$@"
- }
- 
-+# Get the modebits from a file.
-+test_modebits () {
-+	ls -l "$1" | sed -e 's|^\(..........\).*|\1|'
-+}
++while read -r mode modebits
++do
++	test_expect_success POSIXPERM "split index respects core.sharedrepository $mode" '
++		# Remove existing shared index files
++		git config core.splitIndex false &&
++		git update-index --force-remove one &&
++		rm -f .git/sharedindex.* &&
++		# Create one new shared index file
++		git config core.sharedrepository "$mode" &&
++		git config core.splitIndex true &&
++		: >one &&
++		git update-index --add one &&
++		echo "$modebits" >expect &&
++		test_modebits .git/index >actual &&
++		test_cmp expect actual &&
++		shared=$(ls .git/sharedindex.*) &&
++		case "$shared" in
++		*" "*)
++			# we have more than one???
++			false ;;
++		*)
++			test_modebits "$shared" >actual &&
++			test_cmp expect actual ;;
++		esac
++	'
++done <<\EOF
++0666 -rw-rw-rw-
++0642 -rw-r---w-
++EOF
 +
- # Unset a configuration variable, but don't fail if it doesn't exist.
- test_unconfig () {
- 	config_dir=
+ test_done
 -- 
 2.13.1.517.gf6399a5ea5
 
