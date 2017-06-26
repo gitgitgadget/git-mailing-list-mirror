@@ -2,82 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63594207D2
-	for <e@80x24.org>; Mon, 26 Jun 2017 14:01:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8C5C207D2
+	for <e@80x24.org>; Mon, 26 Jun 2017 15:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751839AbdFZOB4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Jun 2017 10:01:56 -0400
-Received: from mout.gmx.net ([212.227.17.22]:65135 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751308AbdFZOBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2017 10:01:54 -0400
-Received: from localhost.localdomain ([37.201.192.198]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MXVr0-1dE1zF3aGU-00WX2Q; Mon, 26 Jun 2017 16:01:51 +0200
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.13.2
-Date:   Mon, 26 Jun 2017 16:01:22 +0200
-Message-Id: <20170626140123.5720-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.12.1.windows.1
-Content-Type: text/plain; charset=UTF-8
-MIME-Version: 1.0
-Fcc:    Sent
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:fvswElyD+uBsoH2lXRu8oDkFK1maU87sMeBfGsHbibPEN/Il98D
- 9xs0zm7ZDpTcgpsRiVvuQGJBsAp8fW9GrSDEDU3Xh2+lEwdawk7PInVCVaG+VPRzm821Hhf
- BlJMjG/3tG0wtZeH52985zSZdNfsKOqq+UbLeJodTMYIqERETpQX7TYpNJfIR7pvRWwjh1A
- h1Q0ZmKzc4nbuWUwG3UYg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Nqy8FHTxNd0=:R+M0JhnQ7MNzS00bchKLUP
- /A1NuQRoa7ypZgocHEcnpGkK7bNh+V702jl8sXkm0vOPbmko2nVc1yYNHdmOwhmaDt8M6ukkW
- 87DV7rmRP4t49evFOllVcbAl1BIXQP5agUMubwH7VtdeEI2o2Kur2V2H3nL2btD0inr78mW8o
- In34oQlWqLkMU4Vzoi88JziECCkGOkYo8ZpK48HrgRxafofv8Bu5c+VoLLLUiT6A90AsypRjt
- cojoW7OIngmWoNsSrwCwiahkXA5OhnFc8frhw6wGd/5MonwUADxkNG3E4Ssjb68qaeVoaMfVe
- q7EYKaF5lHV4sp3spn6nVqYTPhbtTIUUX1c7ZtYdwfRko1KJPCMzf9qQ+Q/FySb3KWF1bsr7h
- lfKJvzcuGQPDmsC3cMez1Kh2Tg3OYm/etQ/qQUCxbqNOmVfEZ+1AfNnrpZy69Ywj91lyqaGic
- AgxYo3KUTQgDcAU/oAusEXuqqRCJLiHV/VgzlMymb0IFT5IHOz2LXZM4oI0HGlYRibM7cX3Di
- ED4MFQfGuZW09A9OAhsFkNYche80Wl+jd6Wggprte3I6mBixPS1qs7j+jR9sitX1dgGk7recK
- gfJIQUgtv3OCTqa8zVK+aof/fyHnt0wCQkwnwJmJntOatyjcTPOt9DQNLOnBp7wjYIKr4aSLs
- a3k1MgnplM/BCe9Cc1i/s/1UJf59xeC4y7qvkofYJRR2qNJiQCocYjgQwHAbGZgkMMzju+O//
- Aqj9jhTdaxBpNbshTstBgXX6tKc9x1VwxfZTYlLfNHX1MXOyj1z38Emn8fQS6IAt4vylKwbvx
- tsszuOn
+        id S1751422AbdFZPQa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Jun 2017 11:16:30 -0400
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:33425 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750852AbdFZPQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2017 11:16:28 -0400
+Received: by mail-wr0-f171.google.com with SMTP id r103so146387509wrb.0
+        for <git@vger.kernel.org>; Mon, 26 Jun 2017 08:16:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jrtc27.com; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=kVvkcDjQoqgGMrb6h5ke1EUe/K7jmBRjQkPZkrN77xU=;
+        b=mLuHXnKQWJT0sPOZ9G7GZPPZnw9E2/2eNAnnDx90f3XVT2SRfZEff2+/iA/INQv0w/
+         TsyUas1D0R21Pz4qPq0es6te/O4bPJdCjrHL5jy29z5M0ht9E+phZ/xycGUABnUyKa5p
+         ONetmCzNrR7t8a/9qe0Y4gl5vhsX/KGpXJt8c=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=kVvkcDjQoqgGMrb6h5ke1EUe/K7jmBRjQkPZkrN77xU=;
+        b=TZfcIyuM+/TPHf+x0yVt21azaz7jJ8JGX/CITc8u1m6ABjf/o+zOL9g6SVpfmsd6lv
+         Zn8OI51oio5G/IOGHcxY5VsnX6u3fl55PHqRDWgPhVp1tlPaC4uLnf8/7RyqAqNOaCSl
+         O15MVUabVQ6mKw+FtjIYuGVhS2u9VbuZqyWEKhbmr6BVepi4GM04ACwlwcpmv9nTYeHN
+         p1+FbcPq6Zf7qObZgatdq+iLi8dB0A90Vnc9d/W1DeBF2NqreGDmrb6lUpm0Fd6Pe6QT
+         iCvcwgZhQFrp0k4cC09OyfLy8u6YOgC/sb8Bs3izKaORofqK0dREn8dee0rXBuCXhKmh
+         nmZg==
+X-Gm-Message-State: AKS2vOzz42kIIbfTVBhjHs8ztwzUK5FMDCA6FQbvb6CyMtnE1u2rhVeo
+        NsHv9Pc2HdLRHEAYE0Xbvg==
+X-Received: by 10.223.139.158 with SMTP id o30mr14785326wra.132.1498490186966;
+        Mon, 26 Jun 2017 08:16:26 -0700 (PDT)
+Received: from Jamess-MacBook.local (global-184-8.nat-1.net.cam.ac.uk. [131.111.184.8])
+        by smtp.gmail.com with ESMTPSA id v96sm12073160wrc.53.2017.06.26.08.16.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Jun 2017 08:16:26 -0700 (PDT)
+Received: by Jamess-MacBook.local (Postfix, from userid 501)
+        id 3B0B11F5445D; Mon, 26 Jun 2017 16:16:24 +0100 (BST)
+From:   James Clarke <jrtc27@jrtc27.com>
+To:     gitster@pobox.com
+Cc:     James Clarke <jrtc27@jrtc27.com>, git@vger.kernel.org
+Subject: [PATCH] pack-bitmap: Don't perform unaligned memory access
+Date:   Mon, 26 Jun 2017 16:16:12 +0100
+Message-Id: <20170626151612.64019-1-jrtc27@jrtc27.com>
+X-Mailer: git-send-email 2.13.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+The preceding bitmap entries have a 1-byte XOR-offset and 1-byte flags,
+so their size is not a multiple of 4. Thus the name-hash cache is only
+guaranteed to be 2-byte aligned and so we must use get_be32 rather than
+indexing the array directly.
 
-It is my pleasure to announce that Git for Windows 2.13.2 is available from:
+Signed-off-by: James Clarke <jrtc27@jrtc27.com>
+---
 
-	https://git-for-windows.github.io/
+This was noticed thanks to the recent tests added to t5310-pack-bitmaps.sh,
+which were crashing with SIGBUS on Debian sparc64. All tests (excluding those
+marked with known breakage) now pass again.
 
-Changes since Git for Windows v2.13.1(2) (June 15th 2017)
+ pack-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-New Features
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index a3ac3dccd..327634cd7 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -627,7 +627,7 @@ static void show_objects_for_type(
+ 			sha1 = nth_packed_object_sha1(bitmap_git.pack, entry->nr);
 
-  * Comes with Git v2.13.2.
-  * Comes with Git Credential Manager v1.10.1.
-  * The Git Bash prompt can now be overridden by creating the file
-    .config\git\git-prompt.sh.
-  * Comes with cURL v7.54.1.
+ 			if (bitmap_git.hashes)
+-				hash = ntohl(bitmap_git.hashes[entry->nr]);
++				hash = get_be32(bitmap_git.hashes + entry->nr);
 
-Filename | SHA-256
--------- | -------
-Git-2.13.2-64-bit.exe | 7ac1e1c3b8ed1ee557055047ca03b1562de70c66f8fd1a90393a5405e1f1967b
-Git-2.13.2-32-bit.exe | a6f828b701a65e436181e8017e4ae55129b4f680d7e95f445d1e43f26c061cb7
-PortableGit-2.13.2-64-bit.7z.exe | 7cdb0234bffdd6dd0cd441da97e87b233d344790e4d957059ff09217fe48765d
-PortableGit-2.13.2-32-bit.7z.exe | 125c3402971849f478bcdc6904babfc235fdea4e731e31f9a5339cf0e422685a
-MinGit-2.13.2-64-bit.zip | 302a72d72c5c881f8d34183485f0e86721b7a89f2090977f3795ab89670d9c1d
-MinGit-2.13.2-32-bit.zip | e7e12f2dec9361cdf496fc0378a891fcc9f6f4ffac60b1b06675e64e0bdbcdac
-Git-2.13.2-64-bit.tar.bz2 | cb77390c523d466a01ef72c9678e56429fa8c112a4b75990368f7a6ff6038e9d
-Git-2.13.2-32-bit.tar.bz2 | 6682457881341ac2fc581d5bad169beb5c9245c4957fc76254ef2e14806691c6
+ 			show_reach(sha1, object_type, 0, hash, bitmap_git.pack, entry->offset);
+ 		}
+--
+2.13.2
 
-Ciao,
-Johannes
