@@ -2,112 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A1EC20401
-	for <e@80x24.org>; Mon, 26 Jun 2017 09:23:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B67020401
+	for <e@80x24.org>; Mon, 26 Jun 2017 09:26:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751391AbdFZJXQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Jun 2017 05:23:16 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:25184 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751382AbdFZJXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2017 05:23:14 -0400
-Received: from [192.168.2.201] ([92.22.42.39])
-        by smtp.talktalk.net with SMTP
-        id PQEidsW7ocpskPQEidIR8C; Mon, 26 Jun 2017 10:23:13 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1498468993; bh=c2heCNRj0jb3Gqd+OAa8aWFK0UFI8TyNjv59wJHKt0U=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=DnlkNoEk//0jOVmxNaAGgnfXg+7PntWO/RMdfuX7cq6wlgT0+SMkR93uuzP2llM0+
-         0Qcr9/N3sYPWtLgwkKYwB/sUnPnQomFkU/ACCQ/BiCkIDfhEO8pJtgLZc4Oudq3ix1
-         UPjzkiaVJjWk3Iyw5hIMlbPQPBWhBo7MVE4oDuPA=
-X-Originating-IP: [92.22.42.39]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
- a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
- a=Q3GZtBvRWziqsa1gdyUA:9 a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/4] Add regression tests for recent rebase -i fixes
+        id S1751397AbdFZJ0f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Jun 2017 05:26:35 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33710 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751391AbdFZJ0d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2017 05:26:33 -0400
+Received: by mail-wr0-f196.google.com with SMTP id x23so28800415wrb.0
+        for <git@vger.kernel.org>; Mon, 26 Jun 2017 02:26:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=V3gIhnWGQXIXJmF+OdD4VDZm4gxXLpY4SXr49HyFKu8=;
+        b=t8Q8FfHBt81TT0Ug/J8Kvr/0VbOMrM6KB7CpzMKPD9DWJc137hfW8FxxKnjHuNz0ni
+         Zo1nNOUm6AMd/C9i3msnhzOm4hS6wUrsn3EGQ/9e+lCTJ40A0zf++d0Y6fNKYfs6quoT
+         b9JPwTZlwqVgfQ5cZz/hZg49qOzzVc9Sp2CPFhD8qOmG9csOLbYw2PXW6leLjGpOrsE+
+         18OX6iObifAcrvzfbG0dhfMkDry6G9AHs6Ii1VCwZMfTVgOAZvN76oBsBlyBuFqzJs/Z
+         qU26RtkxgVKoMDnuAZwuRW59ICeOgfCld9S71miyp0tInW+j4ZVEUx8NR67u1VDn97Bt
+         OIDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=V3gIhnWGQXIXJmF+OdD4VDZm4gxXLpY4SXr49HyFKu8=;
+        b=G8z8JDFPMDGO7d9AonSpZM2OL364XwtHcmbp7lH/Qn/FB1yDqlPg4UcVlPkkdLTSeu
+         /w8H9v0055/tpW/Re+Pchtj8pq6DdE/VYex+wk61jfo+EqCzS7CIrOLtp8UUqVH0MGrs
+         WxiJ0t9IG6iGDGbcbH7BhyVkIExqU+KC1BBGp2/MW/nTMY5bc2wStpNFFAqS1TFwN1ig
+         Lo75OBtLsGwnPU6uNDsUjplJvFULxMSri6r9BEAU3vUPbxmC4qeroUYE4MYvC2AxwfJx
+         vNixMaVhTDy3GQXIV+KtsmhosKMJp90F5w9eo7+IEowU08ZHvdM8tz33oaSCUqbPrRHk
+         cTUA==
+X-Gm-Message-State: AKS2vOxKxrxpb5GlKoD2Qj36iq95EA2XZqwz3mpeIl/tqjiHgLN5Ka90
+        cun1tXYmQ3Oblw==
+X-Received: by 10.223.170.75 with SMTP id q11mr13939230wrd.72.1498469192457;
+        Mon, 26 Jun 2017 02:26:32 -0700 (PDT)
+Received: from [10.32.249.40] (adsknateur.autodesk.com. [132.188.32.100])
+        by smtp.gmail.com with ESMTPSA id m187sm9573260wmb.10.2017.06.26.02.26.31
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 26 Jun 2017 02:26:31 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v6 3/6] t0021: write "OUT" only on success
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqlgof7lw7.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 26 Jun 2017 11:26:30 +0200
+Cc:     git@vger.kernel.org, peff@peff.net, tboegi@web.de, e@80x24.org,
+        ttaylorr@github.com, peartben@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <0FC46284-650F-411D-845F-0DF4F32071FF@gmail.com>
+References: <20170625182125.6741-1-larsxschneider@gmail.com> <20170625182125.6741-4-larsxschneider@gmail.com> <xmqqlgof7lw7.fsf@gitster.mtv.corp.google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20170531104213.16944-1-phillip.wood@talktalk.net>
- <20170619175605.27864-1-phillip.wood@talktalk.net>
- <xmqqa84zgwx9.fsf@gitster.mtv.corp.google.com>
- <xmqqwp83fg0h.fsf@gitster.mtv.corp.google.com>
- <bc0c32fa-2df6-a4a3-5966-8efabfa349cd@talktalk.net>
- <xmqqfueqfxfv.fsf@gitster.mtv.corp.google.com>
- <xmqqmv8yedg0.fsf@gitster.mtv.corp.google.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <5858ba2d-b88d-c2f1-2877-df0d1e8abc64@talktalk.net>
-Date:   Mon, 26 Jun 2017 10:23:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqmv8yedg0.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNOjyhy+aGVAn1MhKX3bnltk4046DIrIB7Zb7THiHGpC9iEdHZzMVBaCv52frNX9tQLA1Vc0IAH2zXtlApXcIeYsQZfGGSO8UFJGgFq2YkgZSRneUSyZ
- Vh5FOXhLvVmwek0L/DD5iV2PmPfpRQwkFjd8KmOYvgInZilL3JLaCwRtzP95fE7KJdPqUVnS6DPN8748TjomHacxa6jfl6I4jh6iows1/DGV0oo8A9PYV4Wa
- g6uKjUBAWvc6LHTm03OJyRD0gyf2RMGjsqvj9nOpQnYTCbYfEr9niFKCw+qfvPVQr+T/1nD5ADm8KEtT6GbEqA==
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/06/17 20:01, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> For 3420, I can wrap the two-liner patch I showed here earlier into
->> a commit on top of the series.  
-> 
-> So, here is what I'll queue on top before merging the topic down to
-> 'master'.
 
-Thanks for creating this fixup, I'll remember to think about
-GETTEXT_POISON when I'm writing tests in the future.
+> On 26 Jun 2017, at 00:17, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Lars Schneider <larsxschneider@gmail.com> writes:
+>=20
+>> "rot13-filter.pl" used to write "OUT <size>" to the debug log even in =
+case of
+>> an abort or error. Fix this by writing "OUT <size>" to the debug log =
+only in
+>> the successful case if output is actually written.
+>=20
+> Again, use of "Fix this" without clarifying what the problem is.  Is
+> this change needed because the size may not be known when the new
+> filter protocol is in use, or something?
 
-> -- >8 --
-> Subject: [PATCH] t3420: fix under GETTEXT_POISON build
-> 
-> Newly added tests to t3420 in this series prepare expected
-> human-readable output from "git rebase -i" and then compare the
-> actual output with it.  As the output from the command is designed
-> to go through i18n/l10n, we need to use test_i18ncmp to tell
-> GETTEXT_POISON build that it is OK the output does not match.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  t/t3420-rebase-autostash.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-> index 6826c38cbd..e243700660 100755
-> --- a/t/t3420-rebase-autostash.sh
-> +++ b/t/t3420-rebase-autostash.sh
-> @@ -178,7 +178,7 @@ testrebase () {
->  		test_when_finished git branch -D rebased-feature-branch &&
->  		suffix=${type#\ --} && suffix=${suffix:-am} &&
->  		create_expected_success_$suffix &&
-> -		test_cmp expected actual
-> +		test_i18ncmp expected actual
->  	'
->  
->  	test_expect_success "rebase$type: dirty index, non-conflicting rebase" '
-> @@ -275,7 +275,7 @@ testrebase () {
->  		test_when_finished git branch -D rebased-feature-branch &&
->  		suffix=${type#\ --} && suffix=${suffix:-am} &&
->  		create_expected_failure_$suffix &&
-> -		test_cmp expected actual
-> +		test_i18ncmp expected actual
->  	'
->  }
->  
-> 
+How about this?
 
+    "rot13-filter.pl" always writes "OUT <size>" to the debug log at the =
+end
+    of an interaction.
+
+    This works without issues for the existing cases "abort", "error", =
+and=20
+    "success". In a subsequent patch 'convert: add "status=3Ddelayed" to=20=
+
+    filter process protocol' we will add a new case "delayed". In that =
+case=20
+    we do not send the data right away and it would be wrong/misleading =
+to
+    the reader if we would write "OUT <size>" to the debug log.
+
+    Address this issue by writing "OUT <size>" to the debug log only if=20=
+
+    output is actually written in the successful case.
+
+- Lars=
