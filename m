@@ -2,131 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9062207D2
-	for <e@80x24.org>; Mon, 26 Jun 2017 23:09:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55D5B207D2
+	for <e@80x24.org>; Mon, 26 Jun 2017 23:11:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751453AbdFZXJQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Jun 2017 19:09:16 -0400
-Received: from mail-vk0-f49.google.com ([209.85.213.49]:34761 "EHLO
-        mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751424AbdFZXJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2017 19:09:14 -0400
-Received: by mail-vk0-f49.google.com with SMTP id r125so8277598vkf.1
-        for <git@vger.kernel.org>; Mon, 26 Jun 2017 16:09:14 -0700 (PDT)
+        id S1751445AbdFZXLZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Jun 2017 19:11:25 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33201 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751424AbdFZXLX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2017 19:11:23 -0400
+Received: by mail-pf0-f196.google.com with SMTP id e199so2149300pfh.0
+        for <git@vger.kernel.org>; Mon, 26 Jun 2017 16:11:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=b8gxqtv6ZY+1uhYNZ9T8u9gUkolLaUfGy2iUqvGGABI=;
-        b=Vh4MzWGu9LE8nvjn2zI1WawOmzgnZEXfSUDdM4EN4UVZl2QogcCMEXUnwR7oBMf+4k
-         X8Ypg7lwP+N0VdHWMU4vK8gdl7KIFmkaas/452VwvUKk0IuBiRAU54tuRplRCuTZwSRM
-         hcOxgQeTad7YHzlCppPIAyQ9eDwQd3C5scmbzM+qNX/wEBBDq2tWAWxxXMcG9LwjM4wq
-         iG7gssxg6+/1llMT+B72BlGClgIMhuRBIzjrtvkREDBAmdp+iuRxdFdyZWyb+ijWc+8R
-         iCdPpiQDEoJx43cFOB9NRMEOp+7G6E6ezmqMzGxWNna5dcBIDt/IRXmLEJubXxPPHK3y
-         Ve6A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=MYBCCwt/7f2Tk2VQ/lRoczqVn1IbERQXywsCzlH/958=;
+        b=LA44vSiThecUxCxc8Qwc/55WRL4at+xobfhY0ULR6dS/eiFMKVljcE+CPj6Hspt9D9
+         a7GDuZgHQkp9E3vqLuIRvg6VOpB+CUa8rt4ItE5iPkpSj7McJYN8H/dOib9vstYG5Xwu
+         AZwXnpCebp1EdwI5Ci5xqbn8x1eXZiIdayN6SWCKRxVEqGjoWaQ/8m3rXy+zrugtsX3z
+         8F7qYvpqiaqtnaQj02MGPPIoitSElLS3Sx0rKJSy1iIquyVLDQhYTmD0a2MeeXmRLzxK
+         Cq8bE0oHvlcB+aCElaE3cyKXCYar2ipWYll2Y4RUTX8oxoUHvkAhT9nGDzrIORnhANev
+         ufLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=b8gxqtv6ZY+1uhYNZ9T8u9gUkolLaUfGy2iUqvGGABI=;
-        b=pQt1E4dRrR4sLAOVtre2B2yzrK1a9H9skvbvEB8YWZmT1erwqOu/tdHYnZqeonni2d
-         v4m51KOgJNYmXEGYXFVbfMnq44EKa0hlZzJiA7GIRRQuLc4mrERVwOzVQ0rzR6D4ZvaR
-         N0R0XXzxqIVdKGc4muOJHZ7Qi/EGkHV62jpiRkI/FA00KUd3uqS1RtF1fe5I2pdYy80u
-         EakNQfIssszA9m0VvYdm2gEdE0j7AIuWGhfToVNQKUWa3DI64lXRB4YYe4RRXzGR6bIZ
-         HkFA7ZzNv2nZVt90INrSdo9d3BS/mpOGy0xgxSxrsCIT128cVoSh7cvUVV3venKymTWC
-         LcWg==
-X-Gm-Message-State: AKS2vOyTw0EwBChkAjQLS1B4eUHNkvNkv47BRPVy0fYrveVCxcT5j9u3
-        sn0j30ZDQjiVXW+dqVPmvAkh6mLEHdU5
-X-Received: by 10.31.178.215 with SMTP id b206mr1313039vkf.79.1498518553630;
- Mon, 26 Jun 2017 16:09:13 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.77.139 with HTTP; Mon, 26 Jun 2017 16:09:13 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=MYBCCwt/7f2Tk2VQ/lRoczqVn1IbERQXywsCzlH/958=;
+        b=mCajytw6CO1XHM3H3fyE5cz9xehi/1vCP/luqOvLZP1tlMGzCdH+3x6I1f7Q+eOOG3
+         K+hbQNq6g3rbGiIbP93wt5g0jfQhm6PXRrQ/FuoDcNCAPN6Ly5TDcCnhVmrw7Eh4RCzk
+         UEf1vCp2q2Ir8CvDVVCdsmiIJlA4+qiHpQizDOfqc30/hhSugiToh4GRgL3yFpWRhP7E
+         SPiVythUkXR3Q78oYRRdl0XAGV2zn9/2zXeQGca4CHS6r4ptqagS/BlvDkm82PgYwGBz
+         fezhUkoTH+wR+VPb1TFZK+frbhV21o/GYthNRWLpDplYWRs3eUpw3frEcnwptZu3eo2k
+         lcDQ==
+X-Gm-Message-State: AKS2vOzL/y9lIw7Q1iCH6P8gkb6naew3oZXR0+GZKzB+npzOJUirYPQa
+        1UdPzMEXt3YcWw==
+X-Received: by 10.84.231.134 with SMTP id g6mr2609921plk.86.1498518682754;
+        Mon, 26 Jun 2017 16:11:22 -0700 (PDT)
+Received: from prathampc-X550JX.domain.name ([116.73.72.60])
+        by smtp.gmail.com with ESMTPSA id p5sm1701339pgf.50.2017.06.26.16.11.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 26 Jun 2017 16:11:22 -0700 (PDT)
 From:   Prathamesh Chavan <pc44800@gmail.com>
-Date:   Tue, 27 Jun 2017 04:39:13 +0530
-Message-ID: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
-Subject: [GSoC] Update: Week 6
-To:     git <git@vger.kernel.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     pc44800@gmail.com
+Cc:     christian.couder@gmail.com, git@vger.kernel.org, sbeller@google.com
+Subject: [GSoC][PATCH 1/6 v2] submodule--helper: introduce for_each_submodule_list
+Date:   Tue, 27 Jun 2017 04:41:03 +0530
+Message-Id: <20170626231108.23640-1-pc44800@gmail.com>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
+References: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SUMMARY OF MY PROJECT:
+Introduce function for_each_submodule_list for using it
+in the later patches, related to porting submodule
+subcommands from shell to C.
+This new function is also used in ported submodule subcommand
+init.
 
-Git submodule subcommands are currently implemented by using shell script
-'git-submodule.sh'. There are several reasons why we'll prefer not to
-use the shell script. My project intends to convert the subcommands into
-C code, thus making them builtins. This will increase Git's portability
-and hence the efficiency of working with the git-submodule commands.
-Link to the complete proposal: [1]
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+---
+This series of patches is based on the 'next' branch. 
 
-Mentors:
-Stefan Beller <sbeller@google.com>
-Christian Couder <christian.couder@gmail.com>
+Complete build report of this patch series is available at:
+https://travis-ci.org/pratham-pc/git/builds/
+Branch: patch-series
+Build #113
 
-UPDATES:
+ builtin/submodule--helper.c | 39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
-Following are the updates about my ongoing project:
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 1bfc91bca..c4286aac5 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -14,6 +14,9 @@
+ #include "refs.h"
+ #include "connect.h"
+ 
++typedef void (*submodule_list_func_t)(const struct cache_entry *list_item,
++				      void *cb_data);
++
+ static char *get_default_remote(void)
+ {
+ 	char *dest = NULL, *ret;
+@@ -352,17 +355,30 @@ static int module_list(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
+-static void init_submodule(const char *path, const char *prefix, int quiet)
++static void for_each_submodule_list(const struct module_list list,
++				    submodule_list_func_t fn, void *cb_data)
+ {
++	int i;
++	for (i = 0; i < list.nr; i++)
++		fn(list.entries[i], cb_data);
++}
++
++struct init_cb {
++	const char *prefix;
++	unsigned int quiet: 1;
++};
++#define INIT_CB_INIT { NULL, 0 }
++
++static void init_submodule(const struct cache_entry *list_item, void *cb_data)
++{
++	struct init_cb *info = cb_data;
+ 	const struct submodule *sub;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	char *upd = NULL, *url = NULL, *displaypath;
+ 
+-	/* Only loads from .gitmodules, no overlay with .git/config */
+-	gitmodules_config();
+-	displaypath = get_submodule_displaypath(path, prefix);
++	displaypath = get_submodule_displaypath(list_item->name, info->prefix);
+ 
+-	sub = submodule_from_path(null_sha1, path);
++	sub = submodule_from_path(null_sha1, list_item->name);
+ 
+ 	if (!sub)
+ 		die(_("No url found for submodule path '%s' in .gitmodules"),
+@@ -374,7 +390,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 	 *
+ 	 * Set active flag for the submodule being initialized
+ 	 */
+-	if (!is_submodule_initialized(path)) {
++	if (!is_submodule_initialized(list_item->name)) {
+ 		strbuf_addf(&sb, "submodule.%s.active", sub->name);
+ 		git_config_set_gently(sb.buf, "true");
+ 	}
+@@ -416,7 +432,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 		if (git_config_set_gently(sb.buf, url))
+ 			die(_("Failed to register url for submodule path '%s'"),
+ 			    displaypath);
+-		if (!quiet)
++		if (!info->quiet)
+ 			fprintf(stderr,
+ 				_("Submodule '%s' (%s) registered for path '%s'\n"),
+ 				sub->name, url, displaypath);
+@@ -445,10 +461,10 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 
+ static int module_init(int argc, const char **argv, const char *prefix)
+ {
++	struct init_cb info = INIT_CB_INIT;
+ 	struct pathspec pathspec;
+ 	struct module_list list = MODULE_LIST_INIT;
+ 	int quiet = 0;
+-	int i;
+ 
+ 	struct option module_init_options[] = {
+ 		OPT__QUIET(&quiet, N_("Suppress output for initializing a submodule")),
+@@ -473,8 +489,11 @@ static int module_init(int argc, const char **argv, const char *prefix)
+ 	if (!argc && git_config_get_value_multi("submodule.active"))
+ 		module_list_active(&list);
+ 
+-	for (i = 0; i < list.nr; i++)
+-		init_submodule(list.entries[i]->name, prefix, quiet);
++	info.prefix = prefix;
++	info.quiet = !!quiet;
++
++	gitmodules_config();
++	for_each_submodule_list(list, init_submodule, &info);
+ 
+ 	return 0;
+ }
+-- 
+2.13.0
 
-1. sync and status: The patches were discussed with the mentors
-   and after that, are being posted with this patch.
-
-2. deinit: The patch is debugged, and is ready to be
-   discussed. Not much discussion occurred over this patch
-   and hence the patch is same as its previous version.
-   It is also attached with this update.
-
-3. summary: The porting of this submodule subcommand is
-   almost completed. Things like improving the function
-   names, checking for memory leakage, etc are still
-   left to be taken care of. I'm updating the patch's status
-   by sending the patch to the mentors off-list, so that
-   an appropriate version is posted here on the list.
-   Hence, it wasn't attached to the update.
-
-4. foreach: Not much progress was done with this patch
-   in particular as most of the time was used for completing
-   the porting of submodule subcommand 'summary'.
-   Hence its status remains same as mentioned in the
-   previous update, which is reposted below:
-   'As stated in the previous update, the subcommand was
-   ported without resolving the bug, and simply translating the
-   present code, and adding a NEEDSWORK tag to the comment for
-   mentioning the reported bug as well.
-   But as communicating between child_process is still an issue
-   and so there was no simple was to current carry out the
-   porting. And hence, a hack was used instead. But after
-   discussing it, instead using the repository-object patch
-   series will help to resolve these issues in this situation.'
-
-PLAN FOR WEEK-7 (27 June 2017 to 3 July 2017):
-
-1. foreach: Since the required changes weren't made in the last
-   week in regards with this patch, in the next week I aim for
-   fulfilling them first. I'll like to again mention it here:
-   As it was decided that unblock the conversion of
-   this submodule subcommand, the original cmd_foreach was
-   ported without including the BUG-FIX patch here.
-   Hence, for this week I will try to utilize the
-   'repository-object' series by Brandon Williams.
-   Additionally, I'll like to mention that this update
-   still, doesn't depend on the 'repository-object' series,
-   which I'll be trying to change in the next update.
-
-2. summary: As mentioned earlier, since there is still a little
-   work with its porting left, I'll try to finish it and debug
-   the ported code as well.
-
-3. deinit: As there is still scope of improvision and discussion
-   I'll also be focussing on improving this patch.
-
-[1]: https://docs.google.com/document/d/1krxVLooWl--75Pot3dazhfygR3wCUUWZWzTXtK1L-xU/
-
-Thanks,
-Prathamesh Chavan
