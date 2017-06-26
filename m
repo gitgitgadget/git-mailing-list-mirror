@@ -3,110 +3,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66C6420834
-	for <e@80x24.org>; Mon, 26 Jun 2017 09:02:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A07A20401
+	for <e@80x24.org>; Mon, 26 Jun 2017 09:17:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751418AbdFZJCK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Jun 2017 05:02:10 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33863 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751344AbdFZJCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2017 05:02:09 -0400
-Received: by mail-wm0-f65.google.com with SMTP id f134so338310wme.1
-        for <git@vger.kernel.org>; Mon, 26 Jun 2017 02:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=laG3u5FMrmTh1aE/6M56bp3CKOZl+Q9raoEpQaY9zf4=;
-        b=Z3Rr1SPujGF1USRGlj9yjXAmXzMjHapmaIogdnvkXFQov31gge2yMEhykMiJTHbvmW
-         4NT1r46h9qRFs4yPte39551Yia0PjAhxq0B4EEUm5ArC74bpQMX/pMhAc7aJ/IRxxnU+
-         mjpM51GO/fRMo2UTeuaN7y6SKR/1n3GCjm0GeeJEko+dWzgWA5+obd4QhJe5lDAc84AZ
-         wmkmjOB4gEfQxW+cCnIUvn720FnVa85uuU/3fhJd7pzzUAyltYXzHxpqjvWadKxJvRm0
-         L7q2lrMCMQ63e5yhZSjVF7tnEGBnnn5M+P7slBXSD79aLxF/t1BlFQVJS+BypfKdyxYZ
-         W7xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=laG3u5FMrmTh1aE/6M56bp3CKOZl+Q9raoEpQaY9zf4=;
-        b=t6p8K1nS5kv9thc+nFgfyJfle2q6kBDegoV3PUvt1g99YF2u+6eI8goOKiejH7I+CQ
-         4ibVF+CJ2L7L9E/LeyTgEmo1YrB8mKcBJbhn++qZyJ0h1wS5KW8YBSXO8sUaT8eb7cuO
-         CAYnjFZur3Q2hGVrlbNTIFwiqdCgOM40t/IxxcECHO783MIhyIhCYVbtPGgDFQUholOF
-         MHxODMtXhTZuSDTqdtwe8wIVrXVpTDLZSUJr+8CzxHB121VYGtaHPJCJogN5DQT5pK4o
-         vfCCd99a9kmA6XDd+ntU6IanZE1HIKXzB+PCSRZrn6rz14WZL/19MFgT8yTeFjz8Ko7X
-         v1QQ==
-X-Gm-Message-State: AKS2vOwZInX2Un1YrOLTBHeLD7jVgtTyuf8bQm228mNQjON/Ww+2XJOE
-        rsI9EGw1bL0EZw==
-X-Received: by 10.28.156.208 with SMTP id f199mr11286054wme.22.1498467727941;
-        Mon, 26 Jun 2017 02:02:07 -0700 (PDT)
-Received: from [10.32.249.40] (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id 74sm11456161wmu.5.2017.06.26.02.02.06
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 26 Jun 2017 02:02:07 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v6 1/6] t0021: keep filter log files on comparison
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqtw337m4b.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 26 Jun 2017 11:02:06 +0200
-Cc:     Git Users <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Eric Wong <e@80x24.org>, Taylor Blau <ttaylorr@github.com>,
-        peartben@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <79C07E47-251D-4869-8EEA-11A9E336ABF3@gmail.com>
-References: <20170625182125.6741-1-larsxschneider@gmail.com> <20170625182125.6741-2-larsxschneider@gmail.com> <xmqqtw337m4b.fsf@gitster.mtv.corp.google.com>
+        id S1751390AbdFZJRr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Jun 2017 05:17:47 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:4688 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751353AbdFZJRp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2017 05:17:45 -0400
+Received: from [192.168.2.201] ([92.22.42.39])
+        by smtp.talktalk.net with SMTP
+        id PQ9OdsVXscpskPQ9PdIQuG; Mon, 26 Jun 2017 10:17:43 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1498468663; bh=uooIfFDEoMtZ6rwDCOUM89kocZiqpajuO/OoV3YCu9M=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=OybGonUKrLwYgXkTmu5jXiE2v0gyn/wtLKLEQxDECOSzSJqDHMlVUalDDK0NFuXoV
+         CXVRNJuDg2+SILPbDmyCB74lXOefX1yKHMRS2qVCsT2T1le7vIC7GK1c1+qxjuuD8m
+         /5ROUCNgKmG+CxcXV+TLgFIGpKaZ40O7Ux/NI6Wk=
+X-Originating-IP: [92.22.42.39]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
+ a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8
+ a=8BrscKeRk7yehTjArlIA:9 a=QEXdDO2ut3YA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 0/4] Add regression tests for recent rebase -i fixes
 To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20170531104213.16944-1-phillip.wood@talktalk.net>
+ <20170619175605.27864-1-phillip.wood@talktalk.net>
+ <xmqqa84zgwx9.fsf@gitster.mtv.corp.google.com>
+ <xmqqwp83fg0h.fsf@gitster.mtv.corp.google.com>
+ <bc0c32fa-2df6-a4a3-5966-8efabfa349cd@talktalk.net>
+ <xmqqfueqfxfv.fsf@gitster.mtv.corp.google.com>
+ <xmqqr2yaedsv.fsf@gitster.mtv.corp.google.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <955e36fb-a6e9-51d4-84b7-b33859c3fe36@talktalk.net>
+Date:   Mon, 26 Jun 2017 10:17:42 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.1
+MIME-Version: 1.0
+In-Reply-To: <xmqqr2yaedsv.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfMWDbQuNS/mGq5O/QVD071dTJnA3Nvj4Dwt3rdcloBXwbYTsWCTmtrI6SpieMbPIFiEWmUy/CJ5dMRY9ozDO1oCacIK/M+aAmwSDf7ACxdws14no0Mkn
+ u5sBANvrEZgUuB5fq1apcEwRQSF4DhQbTbs5XKqz6PqWIIBwo1BJA16eQldovtblJivI2jE5L+JyvZsCDfyjg0518vUaZhbJWEmiOtIB/YIsoqj6nFYWoo3U
+ EopdEGsTkqXtrxxit6Xz4NBTKL2tpTcx7NrHaIAGTcM3k6ceq++gIC183Xnptt9qDE3ep+GY1O6y9AooLT9Ptg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 23/06/17 19:53, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> 3404 needs a similar fix-up for the series to be able to stand on
+>> its own.  Alternatively, at least we need to understand what in 'pu'
+>> makes the result of the merge pass---the symptom indicates that this
+>> topic cannot be merged to a released version without that unknown
+>> other topic in 'pu' merged if we want to keep POISON build passing
+>> the tests.
+> 
+> Ah, no worries.  I think I figured it out.  
+> 
+> The topic "rebase -i regression fix", which this "regression fix
+> tests" builds on, is queued on an older codebase than 0d75bfe6
+> ("tests: fix tests broken under GETTEXT_POISON=YesPlease",
+> 2017-05-05); it is natural these old test breakages can be seen when
+> the topic is tested alone.
 
-> On 26 Jun 2017, at 00:12, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Lars Schneider <larsxschneider@gmail.com> writes:
->=20
->> The filter log files are modified on comparison. Write the modified =
-log files
->> to temp files for comparison to fix this.
->=20
-> The phrase "to fix this" implies that it is _wrong_ to modify after
-> comparing it, but it is unclear _why_ you think is wrong.  After
-> all, the purpose of this comparison helper is to see if these two
-> are the same with cruft removed, and once the helper finds the
-> answer to that question, the current users of the comparison helper
-> do not reuse these files, so from _their_ point of view, there is
-> nothing to "fix", is there?
->=20
-> It would become a problem _if_ we want future users of this helper
-> to reuse the same expect (or actual) multiple times and start from
-> an unmodified one.  There may be some other reason why you do not
-> want the comparison to smudge these files.  Please state what that
-> reason is before saying "fix this".
+Oh, that explains it, I was pretty sure the reflog messages were not
+translated so couldn't understand why it would fail under
+GETTEXT_POISON=YesPlease
 
-Understood. How about this?
+> So we can safely merge this topic down.
 
-    The filter log files are modified on comparison. That might be=20
-    unexpected by the caller. It would be even undesirable if the caller=20=
+That's great, thanks for taking the time to track down the reason for
+the test failure
 
-    wants to reuse the original log files.
+Best Wishes
 
-    Address these issues by using temp files for modifications. This is=20=
+Phillip
 
-    useful for the subsequent patch 'convert: add "status=3Ddelayed" to=20=
 
-    filter process protocol'.
-
-If this is OK, then do you want me to resend the series or can you fix =
-it
-in place?
-
-Thanks,
-Lars=
