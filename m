@@ -7,56 +7,60 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 102BA207D2
-	for <e@80x24.org>; Mon, 26 Jun 2017 21:59:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84EF0207D2
+	for <e@80x24.org>; Mon, 26 Jun 2017 22:13:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751551AbdFZV7p (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Jun 2017 17:59:45 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:36537 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751439AbdFZV7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2017 17:59:43 -0400
-Received: by mail-pg0-f65.google.com with SMTP id u36so1752584pgn.3
-        for <git@vger.kernel.org>; Mon, 26 Jun 2017 14:59:43 -0700 (PDT)
+        id S1751381AbdFZWNM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Jun 2017 18:13:12 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33116 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751439AbdFZWNK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2017 18:13:10 -0400
+Received: by mail-pg0-f68.google.com with SMTP id u62so1805653pgb.0
+        for <git@vger.kernel.org>; Mon, 26 Jun 2017 15:13:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=an4mWADNw+FxzuTn7iV5iRSWuHfbKtSY48C6RAYAoaU=;
-        b=WrTp9SN2nnr1FA1rHoxSTJ431VIpHV7XNR4Pa9f/ZEtjVKNsyQNxlmfFyLn9hO76jU
-         qyZ5/BURv1ROcHcG1vX56OtP2IlKjpP/F7SdO0OA8gplkInbHSRCz7Gnu+wqCBqQun+Z
-         FSkXvaYgqYzMkGdnCvc5uNkdMUiGc9wEGInyBS/5A+nQZD9AWEVCiWGUQOdjB7NKWEKf
-         8c4uR3GpNWW2pEKPiGwBN/5K6zMDuuBDSMSWuqGaPZGFkKs6o13OuQ1P/GVUdgdQlsQl
-         nJvu3VACbGlOvzm6SmChhO/bEDr1Ds8JtnuC3PIQZ1DN0hqnXWRANdDYpcV7boQMdUaT
-         5QHQ==
+        bh=pk9GxdfQVFB9/vRxJ4/SQ5QGeI+mRyBpqfZXQsFyjyw=;
+        b=R7JOzjacBgEzE6nKH5ujSvXYJ4lP+p9aUiZnZWT1U/mhdQ6chDSP84JLtvyNn+9u/L
+         lYvrUx5NpEGO6/9mxGHcaadWb8xaFQlYdZH8cGSjdreU/vVfst5ZrmpbI5Vke174l8Wx
+         gDvvw9vA9+PvzY8gG54Fl65yAf8l7TKSjtHpLwkQRKyAHXdgNTPrBfi10QogyVx+pGVI
+         OmamjosVeX75CZLyYoAPa4nOXlnsgSCLWNaVc4UOhSNH/2sSSnwseBsOCZAi5gXn9JLZ
+         2lYsfxsn6qYbphiAqF+aQJhkpxxj8EbKFjRuQcS1SVn4rJGN8NsAt6/cTLVua7y1Yo4f
+         exlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=an4mWADNw+FxzuTn7iV5iRSWuHfbKtSY48C6RAYAoaU=;
-        b=DKEb4SWC0z3lgif7hNj6K71ochRc8M/R4N3uMfgGO3i+t2JH1lwDhwJiNT7KioJwaQ
-         zgcdVYsvl8fqq1I5fIeMKV1XvG8x9OOdH4TITEYdG3VmndGpC8/NFdDNZPeDBIYQqFqh
-         Y06fDmCikJXgKYYatABjOYbiE4IcFT5G4imigPEN8tflQUnBTwM+JiPwx9gsZ0PGRmxk
-         Yy+BM9mqRhTkYaUYUIIpISUgIeEgzDBt2/5jC+hHV86HiRLyf18Wq9/Bp9TwuprTtJDL
-         QoPhXHD/NCQ+ca7/d0KoOIWqRD/F+Dm4I29ICxA+bG4dZHQ2k/JSMQEsNAn9qK0XIsNV
-         uylg==
-X-Gm-Message-State: AKS2vOzXok9LjTWZw0iaWoL9c1N68m7arZBdaCvC7/j9hveeQlqZEzqP
-        KFtTDm9bOz/KNQ==
-X-Received: by 10.84.231.130 with SMTP id g2mr2425026plk.2.1498514382658;
-        Mon, 26 Jun 2017 14:59:42 -0700 (PDT)
+        bh=pk9GxdfQVFB9/vRxJ4/SQ5QGeI+mRyBpqfZXQsFyjyw=;
+        b=cPUK1Edw/lbwXuS0qvAi9ASpY4Gt8iWSTLX/U/Sb5uCSn6ukkjCdXTKDjk0gnMEwDR
+         tIAB8CjvCkp7BLXnvctk694ZGVrHDZbHs4bkwtB9SjprCcUJBHWgw0T0OIDJn2dHy/qr
+         qSpz4UgHx7Tp5cQR8PlK7vEfOIdrxgveSMTmDDuC3bre22OIB3yrrObn8zdQLIREnsm7
+         soAWHmslW/OJO7809ptAy6ErDqKZPEKe3xVuU4Ijz14mWoIxsMhlj3NjCzVYxw2ORes/
+         2xuuJ34r1sTX5WQYakY7h9IQhUTZbvXsY27rwDoUp6subXcHm7labWzULSnFNfyZclP4
+         g/vA==
+X-Gm-Message-State: AKS2vOyY/wYIle6VETIDZt5mIbDHM9IYX6eJ8mSRHwXYvdlz7VgHt26n
+        UBYQtsyBOAlBVQ==
+X-Received: by 10.84.129.67 with SMTP id 61mr2356447plb.229.1498515189266;
+        Mon, 26 Jun 2017 15:13:09 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:b537:cc1a:8e81:b9ca])
-        by smtp.gmail.com with ESMTPSA id f10sm1851574pfd.69.2017.06.26.14.59.41
+        by smtp.gmail.com with ESMTPSA id 75sm1809453pfc.52.2017.06.26.15.13.08
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 26 Jun 2017 14:59:41 -0700 (PDT)
+        Mon, 26 Jun 2017 15:13:08 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] commit-template: improve readability of commit template
-References: <20170626172433.19785-1-kaarticsivaraam91196@gmail.com>
-Date:   Mon, 26 Jun 2017 14:59:40 -0700
-In-Reply-To: <20170626172433.19785-1-kaarticsivaraam91196@gmail.com> (Kaartic
-        Sivaraam's message of "Mon, 26 Jun 2017 22:54:33 +0530")
-Message-ID: <xmqqefu64dgz.fsf@gitster.mtv.corp.google.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, tboegi@web.de, e@80x24.org,
+        ttaylorr@github.com, peartben@gmail.com
+Subject: Re: [PATCH v6 6/6] convert: add "status=delayed" to filter process protocol
+References: <20170625182125.6741-1-larsxschneider@gmail.com>
+        <20170625182125.6741-7-larsxschneider@gmail.com>
+        <xmqqzicu4lnq.fsf@gitster.mtv.corp.google.com>
+        <F72755BA-6296-4C37-9EFA-4D7BCE9F1082@gmail.com>
+Date:   Mon, 26 Jun 2017 15:13:07 -0700
+In-Reply-To: <F72755BA-6296-4C37-9EFA-4D7BCE9F1082@gmail.com> (Lars
+        Schneider's message of "Mon, 26 Jun 2017 23:28:21 +0200")
+Message-ID: <xmqqa84u4cuk.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,130 +69,143 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> * Previously the commit template didn't separate the
->   distinct messages shown. This resulted in difficulty
->   in interpreting it's content. Add new lines to separate
->   the distinct parts of the template.
+> Maybe this?
+>     [...] If Git sends this command, then the
+>     filter is expected to return a list of pathnames representing blobs 
+>     that have been delayed earlier and are now available. [...]
+
+OK.
+
+>>> +by a "success" status that is also terminated with a flush packet. If
+>>> +no blobs for the delayed paths are available, yet, then the filter is
+>>> +expected to block the response until at least one blob becomes
+>>> +available.
+>> 
+>> Ahh, this is better, at least you use "the delayed paths".
+>> 
+>> What if the result never gets available (e.g. resulted in an error)?
 >
-> * Previously the warning about usage of explicit paths
->   without any options wasn't clear. Make it more clear
->   so user gets what it's trying to say.
+> As soon as the filter responds with an empty list, Git stops asking.
+> All blobs that Git has not received at this point are considered an
+> error.
 >
+> Should I mention that explicitly?
 
-We don't usually make a bullet list in log message.  Please stick to
-a plain prose.  
+Otherwise I wouldn't have wondered "what if".
 
-"Previously" is superflous.  Say what it does (e.g. "The commit
-template adds optional parts without extra blank lines to its normal
-output") in present tense and explain the ramifications of it
-(e.g. "I personally find that this makes it harder to find the
-optional bit").
-
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> ---
->  I've tried to improve the message specified in the commit. Hope
->  it works correctly.
+>> I am wondering whose responsibility it will be to deal with a path
+>> "list-available" reports that are *not* asked by Git or Git got no
+>> "delayed" response.  The list subtraction done by the caller is
+>> probably the logical place to do so.
 >
->  Local test passed.
+> Correct. Git (the caller) will notice that not all "delayed" paths
+> are listed by the filter and throw an error at the end.
 
-Perhaps you would want to ensure that this change (if you find it
-valuable) will not get broken by other people in the future by
-writing a new test that ensures that these extra blank lines are
-always there when you think they are needed?
+I am wondering about the other case.  Git didn't ask for a path to
+be filtered at all, but the filter sneaked in a path that happens to
+in the index in its response---Git should at least ignore it, and
+better yet, diagnose it as an error in the filter process.
 
-I personally do not find these new blank lines are necessary, and
-this change wastes vertical screen real estate which is a limited
-resource, but that may be just me.  I on the other hand do not think
-the result of this patch is overly worse than the status quo, either.
-
-
-
->  builtin/commit.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+>>> +				filter->string = "";
+>>> +				continue;
+>>> +			}
+>>> +
+>>> +			/* In dco->paths we store a list of all delayed paths.
+>>> +			   The filter just send us a list of available paths.
+>>> +			   Remove them from the list.
+>>> +			*/
+>>> +			filter_string_list(&dco->paths, 0,
+>>> +				&remove_available_paths, &available_paths);
+>> 
+>> We first remove from the outstanding request list (dco->paths) what
+>> are now ready...
+>> 
+>>> +			for_each_string_list_item(path, &available_paths) {
+>> 
+>> ...and go over those paths that are now ready.
+>> 
+>>> +				struct cache_entry* ce = index_file_exists(
+>>> +					state->istate, path->string,
+>>> +					strlen(path->string), 0);
+>>> +				assert(dco->state == CE_RETRY);
+>>> +				errs |= (ce ? checkout_entry(ce, state, NULL) : 1);
+>>> +			}
+>> 
+>> But we never checked if the contents of this available_paths list is
+>> a subset of the set of paths we originally asked the external
+>> process to filter.
 >
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 8d1cac062..0a5676b76 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -841,9 +841,11 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  				  "with '%c' will be kept; you may remove them"
->  				  " yourself if you want to.\n"
->  				  "An empty message aborts the commit.\n"), comment_line_char);
-> -		if (only_include_assumed)
-> +		if (only_include_assumed) {
-> +			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", ""); // Add new line for clarity
->  			status_printf_ln(s, GIT_COLOR_NORMAL,
->  					"%s", only_include_assumed);
-> +		}
+> Correct.
+>
+>>  This will allow the process to overwrite any
+>> random path that is not even involved in the checkout.
+>
+> No, not "any random path". Only paths that are part of the checkout.
 
-We do not use // comment in most parts of our codebase that are
-supposed to be platform neutral (iow, compat/ is exempt).
+Isn't it "any path that index_file_exists() returns a CE for".  Did
+you filter out elements in available_paths that weren't part of
+dco->paths?  I thought the filter-string-list you have are for the
+other way around (which is necessary to keep track of work to be
+done, but that filtering does not help rejecting rogue responses at
+all).
 
-But more importantly, wouldn't
+> There are three cases:
+>
+> (1) available_path is a path that was delayed before (= happy case!)
+> (2) available_path is a path that was not delayed before, 
+>     but filtered (= no problem, as filtering is a idempotent operation)
+> (3) available_path is a path that was neither delayed nor filtered
+>     before (= if the filter returns the blob as-is then this would
+>     be no problem. otherwise we would indeed have a screwed checkout)
+>
+> Case 3 might introduce a problem if the filter is buggy.  
 
-		if (only_include_assumed)
-			status_printf_ln(s, GIT_COLOR_NORMAL,
--					"%s", only_include_asssumed);
-+					"\n%s", only_include_asssumed);
+> Would you be OK with this check to catch case 3?
 
-be sufficient?
+I'd be very suspicious about anything you would do only with .nr
+field, without filtering the other way around.  After all, we may
+have asked it for 3 paths to be filtered, and it may have answered
+with its own 3 different paths.
 
-> @@ -877,8 +879,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  				(int)(ci.name_end - ci.name_begin), ci.name_begin,
->  				(int)(ci.mail_end - ci.mail_begin), ci.mail_begin);
->  
-> -		if (ident_shown)
-> -			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
-> +		status_printf_ln(s, GIT_COLOR_NORMAL, "%s", ""); // Add new line for clarity
-
-This does ensure that an extra blank line appears after the optional
-section (either after the "only/include assumed" message, or "writing
-for somebody else" message).
-
-If we were to go with this sparser output, I think we also should
-give an extra blank line before and after the "HEAD detached from
-cafebabe" message you would see:
-
-	$ git checkout HEAD^0
-	$ git commit --allow-empty -o
-
-or "On branch blah" if you are on a branch.  I think your change
-adds a blank before, but it does not have a separation before
-"Changes not staged for commit" line.
-
->  		saved_color_setting = s->use_color;
->  		s->use_color = 0;
-> @@ -1209,7 +1210,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
->  	if (argc == 0 && (also || (only && !amend && !allow_empty)))
->  		die(_("No paths with --include/--only does not make sense."));
->  	if (argc > 0 && !also && !only)
-> -		only_include_assumed = _("Explicit paths specified without -i or -o; assuming --only paths...");
-> +		only_include_assumed = _("Explicit paths (<paths>) specified without -i or -o; assuming --only <paths>");
-
-I think "paths (<paths>)" is excessive.  If you are using <token> to
-hint that they refer to "commit -h" or "commit --help" output, then
-
-    Explicit <paths> specified without -i or -o; assumign --only <paths>
-
-should be sufficient.
-
-Having said that, to be quite honest, I think this "assuming --only"
-message outlived its usefulness.  This was necessary in very early
-days of Git because originally "git commit foo" did "git add foo &&
-git commit" (i.e. "-i" was the default) and then later when we made
-"--only" the new default in order to match everybody else's SCM, we
-needed to remind users of older versions of Git that "git commit foo"
-now means "git commit --only foo", not "git commit -i foo" which they
-may have been used to.  These days, hopefully nobody expects the "-i"
-semantics when they do "git commit foo", so perhaps it may be a better
-change to _remove_ the message altogether.
-
-And with that done, I wouldn't have reservations on this change
-(i.e. "is it worth wasting extra screen real estate, especially in
-the vertical direction?"), as instead of wasting 2 lines to give a
-message that is no longer useful in today's world, it will be
-removing one line ;-)
-
-Thanks.
+>     dco_path_count = dco->paths.nr;
+>     filter_string_list(&dco->paths, 0,
+>         &remove_available_paths, &available_paths);
+>
+>     if (dco_path_count - dco->paths.nr != available_paths.nr) {
+>         /* The filter responded with entries that have not
+>          * been delay earlier. Do not ask the filter
+>          * for available blobs, again, as the filter is
+>          * likely buggy. This will generate an error at 
+>          * the end as some files are not filtered properly.
+>          */
+>         filter->string = "";
+>         error(_("The external filter '%s' responded with "
+>             "available blobs which have not been delayed "
+>             "earlier."), filter->string);
+>         continue;
+>     }
+>
+>
+>>> +		}
+>>> +		string_list_remove_empty_items(&dco->filters, 0);
+>>> +	}
+>>> +	string_list_clear(&dco->filters, 0);
+>>> +
+>>> +	/* At this point we should not have any delayed paths anymore. */
+>>> +	errs |= dco->paths.nr;
+>>> +	for_each_string_list_item(path, &dco->paths) {
+>>> +		warning(_("%s was not filtered properly."), path->string);
+>>> +	}
+>>> +	string_list_clear(&dco->paths, 0);
+>> 
+>> And "list-available" that says "path X is ready" when we never asked
+>> for X gets away free without detected as a bug, either.
+>
+> With the addition above it would!
+>
+>
+> Thanks for the review :-)
+>
+> - Lars
