@@ -2,229 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4EE0207D2
-	for <e@80x24.org>; Mon, 26 Jun 2017 18:13:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B943207D2
+	for <e@80x24.org>; Mon, 26 Jun 2017 18:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751480AbdFZSNN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Jun 2017 14:13:13 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:35443 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751435AbdFZSNM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2017 14:13:12 -0400
-Received: by mail-pf0-f179.google.com with SMTP id c73so3958706pfk.2
-        for <git@vger.kernel.org>; Mon, 26 Jun 2017 11:13:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=U3oKec6nzIKCsS+7mHmQRIuXdvRxgdtqjDSc+fE4Rhg=;
-        b=NgrYoAAs9+wF+5xudwa8U7QbeiW/AsR/hqtEMgQOMWStAq558OFerVmbjTrJcMEVgj
-         l+wXmXYO9o52N9xTtY/lTEHDEv+kVw7ZMfcWWlt4aKe2P5nmRmWiiY7aA6jUHhd4H6TY
-         6JD0E5dATC4QcqzVIybo77nKhfpzNyA3+uBkYrgMlRBbO1lYYHctAXgHtItjVUX/uwvE
-         Fs5Kg4GNcRcWAS0Puu/IPflAgv4l2JSqgSjCfvVkPjZv0lD3fGd3kyZVGhrB8EVl0iT+
-         pqLS+UxkdeVIA4RMP+8/NOTnj3saQLjOXWZThvHSqAJVNgTaivlVS+jbCPW2ircM3OSh
-         df7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=U3oKec6nzIKCsS+7mHmQRIuXdvRxgdtqjDSc+fE4Rhg=;
-        b=Ai1y9jCbnRHSJTxRv+BQt5HJRYwmxWujJCDOqCH8PDorxLf7WmaZxL3hULbDqh5p29
-         PwZ3yEn+ykdzpLrzQMKrGoNWEXub0yVWNwH/bEZwe1WXQEuKgTXXeNk5FuxSbLXF5rT2
-         6o0L3xIAjEN7a5OAev2eV5EYcSWCBnEyksYbmg2laSGNe5CxU38BWCDtDlfAKSNOq9xP
-         en/Hf6HBmJDjnlgVAyl3Kyxb7IZry3fLRNd4zNd5cdTUDsfryPSypleX5HkkTRgjcbic
-         CmJHbQJ+e0UMWeRYpIw8CZXVEVFPB/Jigqlxw/fY/ktOi2Xjx9HDZZ+yR4JJwMtw1Wt1
-         vKKA==
-X-Gm-Message-State: AKS2vOzwUPKW3888sqPwTdTr447xDwybdm52wJiMAYFYk3mThwLa8tTm
-        nPZcf8mbHmmJmpw5
-X-Received: by 10.84.216.70 with SMTP id f6mr1440745plj.79.1498500781333;
-        Mon, 26 Jun 2017 11:13:01 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:f083:620a:56f6:d4d1])
-        by smtp.gmail.com with ESMTPSA id r62sm1381805pfb.39.2017.06.26.11.12.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 26 Jun 2017 11:13:00 -0700 (PDT)
-Date:   Mon, 26 Jun 2017 11:12:58 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, sbeller@google.com
-Subject: Re: [PATCH] submodule--helper: teach push-check to handle HEAD
-Message-ID: <20170626181258.GA177061@google.com>
-References: <20170623200427.26803-1-bmwill@google.com>
- <xmqqk242b9nf.fsf@gitster.mtv.corp.google.com>
+        id S1751403AbdFZS3K convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 26 Jun 2017 14:29:10 -0400
+Received: from userp1040.oracle.com ([156.151.31.81]:50817 "EHLO
+        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751335AbdFZS3I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2017 14:29:08 -0400
+Received: from aserv0021.oracle.com (aserv0021.oracle.com [141.146.126.233])
+        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v5QIT6Zx013731
+        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+        Mon, 26 Jun 2017 18:29:06 GMT
+Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
+        by aserv0021.oracle.com (8.13.8/8.14.4) with ESMTP id v5QIT5QE019130
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+        Mon, 26 Jun 2017 18:29:06 GMT
+Received: from abhmp0004.oracle.com (abhmp0004.oracle.com [141.146.116.10])
+        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id v5QIT5SP025151;
+        Mon, 26 Jun 2017 18:29:05 GMT
+Received: from oracle.com (/24.246.5.213)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Mon, 26 Jun 2017 11:29:05 -0700
+Date:   Mon, 26 Jun 2017 14:29:03 -0400
+From:   "Liam R. Howlett" <Liam.Howlett@Oracle.com>
+To:     ?var Arnfj?r? Bjarmason <avarab@gmail.com>
+Cc:     Michael Kebe <michael.kebe@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Compile Error v2.13.2 on Solaris SPARC
+Message-ID: <20170626182903.ysdhwiuvqqqtisgq@oracle.com>
+References: <CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com>
+ <87lgofcf7r.fsf@gmail.com>
+ <CAKKM46syoE90y-+5okxtk7A982ztaDFem8aL6GrxWhS4gGSGqg@mail.gmail.com>
+ <87h8z2dig8.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <xmqqk242b9nf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <87h8z2dig8.fsf@gmail.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
+X-Source-IP: aserv0021.oracle.com [141.146.126.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/23, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
+* ?var Arnfj?r? Bjarmason <avarab@gmail.com> [170626 08:47]:
 > 
-> > In 06bf4ad1d (push: propagate remote and refspec with
-> > --recurse-submodules) push was taught how to propagate a refspec down to
-> > submodules when the '--recurse-submodules' flag is given.  The only refspecs
-> > that are allowed to be propagated are ones which name a ref which exists
-> > in both the superproject and the submodule, with the caveat that 'HEAD'
-> > was disallowed.
-> >
-> > This patch teaches push-check (the submodule helper which determines if
-> > a refspec can be propagated to a submodule) to permit propagating 'HEAD'
-> > if and only if the superproject and the submodule both have the same
-> > named branch checked out and the submodule is not in a detached head
-> > state.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  builtin/submodule--helper.c    | 57 +++++++++++++++++++++++++++++++-----------
-> >  submodule.c                    | 18 ++++++++++---
-> >  t/t5531-deep-submodule-push.sh | 25 +++++++++++++++++-
-> >  3 files changed, 82 insertions(+), 18 deletions(-)
-> >
-> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> > index 1b4d2b346..fd5020036 100644
-> > --- a/builtin/submodule--helper.c
-> > +++ b/builtin/submodule--helper.c
-> > @@ -1107,24 +1107,41 @@ static int resolve_remote_submodule_branch(int argc, const char **argv,
-> >  static int push_check(int argc, const char **argv, const char *prefix)
-> >  {
-> >  	struct remote *remote;
-> > +	const char *superproject_head;
-> > +	char *head;
-> > +	int detached_head = 0;
-> > +	struct object_id head_oid;
-> >  
-> > -	if (argc < 2)
-> > -		die("submodule--helper push-check requires at least 1 argument");
-> > +	if (argc < 3)
-> > +		die("submodule--helper push-check requires at least 2 argument");
+> On Mon, Jun 26 2017, Michael Kebe jotted:
 > 
-> "arguments"?
+> > No luck with the patch.
+> >
+> > Still got:
+> >
+> >     CC sha1dc/sha1.o
+> > sha1dc/sha1.c:43:58: error: operator '==' has no right operand
+> >       (defined(_BYTE_ORDER) && (_BYTE_ORDER == _BIG_ENDIAN)) ||   \
+> >                                                           ^
+> > gmake: *** [sha1dc/sha1.o] Error 1
+> 
+> Does this patch change anything, with or without the previous patch:
+> 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 047172d173..1327aea229 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -131,6 +131,14 @@
+>  # else
+>  # define _XOPEN_SOURCE 500
+>  # endif
+> +
+> +/*
+> + * Bring in macros defining _BIG_ENDIAN etc. Should be brought in by
+> + * the likes of stdio.h, but include it here in case it hasn't been
+> + * included already.
+> + */
+> +#include <sys/isa_defs.h>
+> +
+>  #elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC__) && \
+>        !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__) && \
+>        !defined(__TANDEM) && !defined(__QNX__) && !defined(__MirBSD__) && \
+> 
+
+This addition still fails on Solaris for me.  It appears that _BIG_ENDIAN is
+defined but with no value on this platform.
+
+
+> >
+> > Greetings
+> > Michael
+> >
+> > 2017-06-26 10:42 GMT+02:00 Ævar Arnfjörð Bjarmason <avarab@gmail.com>:
+> >>
+> >> On Mon, Jun 26 2017, Michael Kebe jotted:
+> >>
+> >>> When compiling 2.13.2 on Solaris SPARC I get this error:
+> >>>
+> >>>     CC sha1dc/sha1.o
+> >>> sha1dc/sha1.c:41:58: error: operator '==' has no right operand
+> >>>  #if ((defined(_BYTE_ORDER) && (_BYTE_ORDER == _BIG_ENDIAN)) || \
+> >>>                                                           ^
+> >>> gmake: *** [sha1dc/sha1.o] Error 1
+> >>>
+> >>> The define _BIG_ENDIAN is set by Solaris on SPARC systems. So the
+> >>> check in line 41 gives this error.
+> >>>
+> >>> The _BIG_ENDIAN define is used few line below for defining
+> >>> SHA1DC_BIGENDIAN. This is needed for Solaris SPARC systems.
+> >>> See
+> >>> https://github.com/cr-marcstevens/sha1collisiondetection/commit/33a694a9ee1b79c24be45f9eab5ac0e1aeeaf271
+> >>
+> >> I can see why this would error out. In sys/isa_defs.h on SPARC there's
+> >> just `#define _BIG_ENDIAN`
+> >> (http://src.illumos.org/source/xref/illumos-gate/usr/src/uts/common/sys/isa_defs.h),
+> >> and (on Linux):
+> >>
+> >>     $ cat /tmp/test.c
+> >>     #define _FOO
+> >>     #define _BAR 1
+> >>     #if (_BAR == _FOO)
+> >>     #endif
+> >>     $ gcc -E /tmp/test.c
+> >>     # 1 "/tmp/test.c"
+> >>     # 1 "<built-in>"
+> >>     # 1 "<command-line>"
+> >>     # 31 "<command-line>"
+> >>     # 1 "/usr/include/stdc-predef.h" 1 3 4
+> >>     # 32 "<command-line>" 2
+> >>     # 1 "/tmp/test.c"
+> >>     /tmp/test.c:3:18: error: operator '==' has no right operand
+> >>      #if (_BAR == _FOO)
+> >>
+> >> What I don't get is how this would have worked for Liam then (see
+> >> 20170613020939.gemh3m5z6czgwmzp@oracle.com). Differences in Solaris
+> >> versions and how their headers look like?
+
+I am running Linux and 2.13.2 compiles and works fine for me on SPARC.
+
+
+If you want to keep the compact layout you have in the #if defined()
+portion, you can get away with reversing the logic as follows:
+
+--------- >8 -------------
+diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+index facea1bb5..808b520cd 100644
+--- a/sha1dc/sha1.c
++++ b/sha1dc/sha1.c
+@@ -36,20 +36,20 @@
+ #undef SHA1DC_BIGENDIAN
+ #endif
+
+-#if (defined(_BYTE_ORDER) || defined(__BYTE_ORDER) || defined(__BYTE_ORDER__))
++#if !(defined(_BYTE_ORDER) || defined(__BYTE_ORDER) || defined(__BYTE_ORDER__))
+
+-#if ((defined(_BYTE_ORDER) && (_BYTE_ORDER == _BIG_ENDIAN)) || \
+-     (defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
+-     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) )
++#if (defined(_BIG_ENDIAN) || defined(__BIG_ENDIAN) || defined(__BIG_ENDIAN__) || \
++     defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
++     defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
++     defined(__sparc))
+ #define SHA1DC_BIGENDIAN
+ #endif
  
-You're right, I'll fix the typo.
+ #else
++#if ((defined(_BYTE_ORDER) && defined(_BIG_ENDIAN)) || \
++     (defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
++     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) )
 
-> > +
-> > +	/*
-> > +	 * superproject's resolved head ref.
-> > +	 * if HEAD then the superproject is in a detached head state, otherwise
-> > +	 * it will be the resolved head ref.
-> > +	 */
-> > +	superproject_head = argv[1];
-> 
-> The above makes it sound like the caller gives either "HEAD" (when
-> detached) or "refs/heads/branch" (when on 'branch') in argv[1] and
-> you are stashing it away, but ...
-> 
-> > +	/* Get the submodule's head ref and determine if it is detached */
-> > +	head = resolve_refdup("HEAD", 0, head_oid.hash, NULL);
-> > +	if (!head)
-> > +		die(_("Failed to resolve HEAD as a valid ref."));
-> > +	if (!strcmp(head, "HEAD"))
-> > +		detached_head = 1;
-> 
-> ... the work to see which branch we are on and if we are detached is
-> done by this code without consulting argv[1].  I cannot tell what is
-> going on.  Is argv[1] assigned to superproject_head a red herring?
+-#if (defined(_BIG_ENDIAN) || defined(__BIG_ENDIAN) || defined(__BIG_ENDIAN__) || \
+-     defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
+-     defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
+-     defined(__sparc))
+ #define SHA1DC_BIGENDIAN
+ #endif
 
-The idea is that 'git submodule--helper push-check' is called by a
-superproject on every submodule that may be pushed.  So this command is
-invoked on the submodule itself.  This change requires knowing what
-'HEAD' refers to in the superproject (either detached or a named branch)
-so the superproject passes that information to the submodule via
-argv[1].  This snippet of code is responsible for finding what 'HEAD'
-refers to in the submodule so that later we can compare the
-superproject's and submodule's 'HEAD' ref to see if they match the same
-named branch.
-
-> 
-> >  	/*
-> >  	 * The remote must be configured.
-> >  	 * This is to avoid pushing to the exact same URL as the parent.
-> >  	 */
-> > -	remote = pushremote_get(argv[1]);
-> > +	remote = pushremote_get(argv[2]);
-> >  	if (!remote || remote->origin == REMOTE_UNCONFIGURED)
-> > -		die("remote '%s' not configured", argv[1]);
-> > +		die("remote '%s' not configured", argv[2]);
-> >  
-> >  	/* Check the refspec */
-> > -	if (argc > 2) {
-> > -		int i, refspec_nr = argc - 2;
-> > +	if (argc > 3) {
-> > +		int i, refspec_nr = argc - 3;
-> >  		struct ref *local_refs = get_local_heads();
-> >  		struct refspec *refspec = parse_push_refspec(refspec_nr,
-> > -							     argv + 2);
-> > +							     argv + 3);
-> 
-> If you have no need for argv[1] (and you don't, as you have stashed
-> it away in superproject_head), it may be less damage to the code if
-> you shifted argv upfront after grabbing superproject_head.
-> 
-> >  		for (i = 0; i < refspec_nr; i++) {
-> >  			struct refspec *rs = refspec + i;
-> > @@ -1132,18 +1149,30 @@ static int push_check(int argc, const char **argv, const char *prefix)
-> >  			if (rs->pattern || rs->matching)
-> >  				continue;
-> >  
-> > -			/*
-> > -			 * LHS must match a single ref
-> > -			 * NEEDSWORK: add logic to special case 'HEAD' once
-> > -			 * working with submodules in a detached head state
-> > -			 * ceases to be the norm.
-> > -			 */
-> > -			if (count_refspec_match(rs->src, local_refs, NULL) != 1)
-> > +			/* LHS must match a single ref */
-> > +			switch(count_refspec_match(rs->src, local_refs, NULL)) {
-> 
-> "switch (count..."
-> 
-> > +			case 1:
-> > +				break;
-> > +			case 0:
-> > +				/*
-> > +				 * If LHS matches 'HEAD' then we need to ensure
-> > +				 * that it matches the same named branch
-> > +				 * checked out in the superproject.
-> > +				 */
-> > +				if (!strcmp(rs->src, "HEAD")) {
-> > +					if (!detached_head &&
-> > +					    !strcmp(head, superproject_head))
-> > +						break;
-> > +					die("HEAD does not match the named branch in the superproject");
-> > +				}
-> 
-> Hmph, so earlier people can "push --recurse-submodules HEAD:$dest"
-> and $dest can be anything, but now we are tightening the rule?
-
-I don't believe that anything is changing w.r.t. what $dest can be
-(unless I'm missing something).  This is more about enabling 'HEAD' to
-be used on the LHS of a refspec as before it wasn't permitted.  With
-this change a user can use 'push --recurse-submodules HEAD:$dest' and
-the refspec which includes 'HEAD' on the LHS will be propagated to the
-submodules if and only if 'HEAD' is not detached in the superproject or
-submodule and 'HEAD' refers to the same named branch.
-
-> 
-> > +			default:
-> >  				die("src refspec '%s' must name a ref",
-> >  				    rs->src);
-> > +			}
-> >  		}
-> >  		free_refspec(refspec_nr, refspec);
-> >  	}
-> > +	free(head);
-> >  
-> >  	return 0;
-> >  }
-
--- 
-Brandon Williams
