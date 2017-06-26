@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1425D207D2
-	for <e@80x24.org>; Mon, 26 Jun 2017 23:11:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74082207D2
+	for <e@80x24.org>; Mon, 26 Jun 2017 23:11:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751742AbdFZXLn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Jun 2017 19:11:43 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34653 "EHLO
+        id S1751503AbdFZXLe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Jun 2017 19:11:34 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34618 "EHLO
         mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751549AbdFZXLg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2017 19:11:36 -0400
-Received: by mail-pf0-f196.google.com with SMTP id d5so2147132pfe.1
-        for <git@vger.kernel.org>; Mon, 26 Jun 2017 16:11:36 -0700 (PDT)
+        with ESMTP id S1751470AbdFZXLa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2017 19:11:30 -0400
+Received: by mail-pf0-f196.google.com with SMTP id d5so2146845pfe.1
+        for <git@vger.kernel.org>; Mon, 26 Jun 2017 16:11:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JAirn4LHnZyU4cEvCvXM1PNFlAi2Rcdkl86zxyAhTDc=;
-        b=LcMFSdX4EGDG1h8RvaKvp1zHLOGSAti77FLh4qGHA3s96hxmTCwNktdTuEvMfcGl3r
-         q37yFk2jRuQ1HHYGEf0XnWDjdvqWxGyvdNonv1EDbldbdbNVx42/IJU/vSbAeLZN6BYB
-         L+/NJx8bQZUb11evaA/KL+6BecQplAzZ0Ol/Sgm2/9KHnZ0FnJM8n0aUqjfmIj1E+Iuq
-         y98wDeCYFQO7C4fv2bOddjBAaxknE/GNE8Ypopo9N0Dkrw6KBNnHopbRzOFZIU1Dy4bC
-         g39nuZ4h7rsUmehrMsbMpoYAwUFLo6dSIZR90Z7SUBZ8mtLqn7bt1KseiKTUGdOqnCxN
-         ZwLQ==
+        bh=BArB0LQ6N99aGXwyRJWWv8G0epeZW7ZD/ZAJJn/NoZ0=;
+        b=oz4gQHJZcNoAaJIVeuPlCRK3mXKErP0TdUAoimEPS7Kvw4Hk4WNH7z/mHreLVK7l78
+         8ibykKkLIKcov7rJohUrLH5CQg/Fa/sp5z/yYrxu8s6Yg+wGILqAwzT1DwginrLgjcrO
+         gHYYBZnKYLqtk5b6am9ZJLEjWsEqljVzQI7gEpEas+ju3icF+pAhqyjpRP+6SQeHbJA1
+         M2YFnlehO54tl7DIYy9r0pJAdRK1zv/vZnFfQYemoHkVjtLJ1lR0qlS14nXcZ0Ap/3KU
+         WjpylQa2w++Z2bu6Hlttvl+KQGZd6gh402falIZ/nw6PVkncF1FH0MnM5O2bPqUO1i88
+         0Lkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JAirn4LHnZyU4cEvCvXM1PNFlAi2Rcdkl86zxyAhTDc=;
-        b=shUkrutVJkGp2zMxtzn13rALgiqFcsV2bfINhSx76ojKeiRrbOgt2Edc9oxxRFHW+z
-         me39LgF/ltefJcGAcZ5MRMok+2fQZT8kwRAHa1EbbTgYRV3IF39msFPxhEwC5bzlYNhu
-         g1qLEs76BLi3R88BlR/zsjYJprQ0WxpXJXSntU+YdcO7bFeDU4fuGXPlh+Z88mKFQGKC
-         bAnkuKbmBu6naMsRL4lFF3S03Or7PA5uXCZDSOZEonCP9Jlhc2udtFU0btffP2+FHGNL
-         gob6Oi/g25xT8em1c4yf5RFiSAAeuy2fHClFT8C2uQyl7x4/AacOlgPm/Dx0X+D8wDF/
-         ZAfg==
-X-Gm-Message-State: AKS2vOx00NNH5IeprHC3D72u56apzvlS3d7zKgwh/1SjNpd0dtqRY+V1
-        fsA77QyIuZyyIA==
-X-Received: by 10.99.160.17 with SMTP id r17mr2334648pge.95.1498518694539;
-        Mon, 26 Jun 2017 16:11:34 -0700 (PDT)
+        bh=BArB0LQ6N99aGXwyRJWWv8G0epeZW7ZD/ZAJJn/NoZ0=;
+        b=cXuOryWWwHx2UOP9L8QgU8lctiFYMZMTz54Te5rUpbJN3yRKyDpHr3Y5xS0uIu0Bz8
+         0qCFBdl3orAAhK9GbhJ3BHPqlV1Lu9ZC6UrqRG6oE6MPVjm7lWB/2gQpRQikvv9uT5Ph
+         /sIV6A9sbyQDyYiAfkPb3bt5r25s6y04zZK7cgarZhKxh/glA4clzPVZdmqrdnPcwWnv
+         kECErKuycLp0BRyMtDbtjNt/KBLvYWSXwA6BLnRC+7zxgb7S9OF6lOXjiLcFoET6XIzd
+         MAaZTqarPFwrvJzsCwSVvzDHyMtdSzSQ8j9laz1mjJ8EbYkZ9dScSY4uVQwbUjF9moRN
+         8cjw==
+X-Gm-Message-State: AKS2vOwzAos4cO8Gt6yWUbN+V3Kkxkz6w6fzLksocQbbcCOmfWrnuf4t
+        stWal93RXQbm5Q==
+X-Received: by 10.99.168.5 with SMTP id o5mr2359937pgf.33.1498518689780;
+        Mon, 26 Jun 2017 16:11:29 -0700 (PDT)
 Received: from prathampc-X550JX.domain.name ([116.73.72.60])
-        by smtp.gmail.com with ESMTPSA id p5sm1701339pgf.50.2017.06.26.16.11.32
+        by smtp.gmail.com with ESMTPSA id p5sm1701339pgf.50.2017.06.26.16.11.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 26 Jun 2017 16:11:34 -0700 (PDT)
+        Mon, 26 Jun 2017 16:11:29 -0700 (PDT)
 From:   Prathamesh Chavan <pc44800@gmail.com>
 To:     pc44800@gmail.com
 Cc:     christian.couder@gmail.com, git@vger.kernel.org, sbeller@google.com
-Subject: [GSoC][PATCH 6/6 v2] submodule: port submodule subcommand 'deinit' from shell to C
-Date:   Tue, 27 Jun 2017 04:41:08 +0530
-Message-Id: <20170626231108.23640-6-pc44800@gmail.com>
+Subject: [GSoC][PATCH 4/6 v2] submodule: port submodule subcommand status
+Date:   Tue, 27 Jun 2017 04:41:06 +0530
+Message-Id: <20170626231108.23640-4-pc44800@gmail.com>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170626231108.23640-1-pc44800@gmail.com>
 References: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
@@ -62,163 +62,178 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The same mechanism is used even for porting this submodule
-subcommand, as used in the ported subcommands till now.
-The function cmd_deinit in split up after porting into three
-functions: module_deinit, for_each_submodule_list and
-deinit_submodule.
+The mechanism used for porting submodule subcommand 'status'
+is similar to that used for subcommand 'foreach'.
+The function cmd_status from git-submodule is ported to three
+functions in the builtin submodule--helper namely: module_status,
+for_each_submodule_list and status_submodule.
+
+print_status is also introduced for handling the output of
+the subcommand and also to reduce the code size.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 ---
- builtin/submodule--helper.c | 140 ++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            |  55 +----------------
- 2 files changed, 141 insertions(+), 54 deletions(-)
+ builtin/submodule--helper.c | 152 ++++++++++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            |  49 +-------------
+ 2 files changed, 153 insertions(+), 48 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4e3322846..17942529b 100644
+index 86112ac92..a5de7a0fe 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -751,6 +751,145 @@ static int module_status(int argc, const char **argv, const char *prefix)
+@@ -566,6 +566,157 @@ static int module_init(int argc, const char **argv, const char *prefix)
  	return 0;
  }
  
-+struct deinit_cb {
++struct status_cb {
 +	const char *prefix;
 +	unsigned int quiet: 1;
-+	unsigned int force: 1;
-+	unsigned int all: 1;
++	unsigned int recursive: 1;
++	unsigned int cached: 1;
 +};
-+#define DEINIT_CB_INIT { NULL, 0, 0, 0 }
++#define STATUS_CB_INIT { NULL, 0, 0, 0 }
 +
-+static void deinit_submodule(const struct cache_entry *list_item,
-+			     void *cb_data)
++static void print_status(struct status_cb *info, char state, const char *path,
++			 char *sub_sha1, char *displaypath)
 +{
-+	struct deinit_cb *info = cb_data;
-+	const struct submodule *sub;
-+	char *displaypath = NULL;
-+	struct child_process cp_config = CHILD_PROCESS_INIT;
-+	struct strbuf sb_config = STRBUF_INIT;
-+	char *sm_path = xstrdup(list_item->name);
-+	char *sub_git_dir = xstrfmt("%s/.git", sm_path);
++	if (info->quiet)
++		return;
 +
-+	sub = submodule_from_path(null_sha1, sm_path);
++	printf("%c%s %s", state, sub_sha1, displaypath);
 +
-+	if (!sub->name)
++	if (state == ' ' || state == '+') {
++		struct argv_array name_rev_args = ARGV_ARRAY_INIT;
++
++		argv_array_pushl(&name_rev_args, "print-name-rev",
++				 path, sub_sha1, NULL);
++		print_name_rev(name_rev_args.argc, name_rev_args.argv,
++			       info->prefix);
++	} else {
++		printf("\n");
++	}
++}
++
++static void status_submodule(const struct cache_entry *list_item, void *cb_data)
++{
++	struct status_cb *info = cb_data;
++	char *sub_sha1 = xstrdup(oid_to_hex(&list_item->oid));
++	char *displaypath;
++	struct argv_array diff_files_args = ARGV_ARRAY_INIT;
++
++	if (!submodule_from_path(null_sha1, list_item->name))
++		die(_("no submodule mapping found in .gitmodules for path '%s'"),
++		      list_item->name);
++
++	displaypath = get_submodule_displaypath(list_item->name, info->prefix);
++
++	if (list_item->ce_flags) {
++		print_status(info, 'U', list_item->name,
++			     sha1_to_hex(null_sha1), displaypath);
 +		goto cleanup;
++	}
 +
-+	displaypath = get_submodule_displaypath(sm_path, info->prefix);
++	if (!is_submodule_initialized(list_item->name)) {
++		print_status(info, '-', list_item->name, sub_sha1, displaypath);
++		goto cleanup;
++	}
 +
-+	/* remove the submodule work tree (unless the user already did it) */
-+	if (is_directory(sm_path)) {
-+		struct child_process cp = CHILD_PROCESS_INIT;
++	argv_array_pushl(&diff_files_args, "diff-files",
++			 "--ignore-submodules=dirty", "--quiet", "--",
++			 list_item->name, NULL);
 +
-+		/* protect submodules containing a .git directory */
-+		if (is_git_directory(sub_git_dir))
-+			die(_("Submodule work tree '%s' contains a .git "
-+			      "directory use 'rm -rf' if you really want "
-+			      "to remove it including all of its history"),
-+			      displaypath);
++	if (!cmd_diff_files(diff_files_args.argc, diff_files_args.argv,
++			    info->prefix)) {
++		print_status(info, ' ', list_item->name, sub_sha1, displaypath);
++	} else {
++		if (!info->cached) {
++			struct child_process cp = CHILD_PROCESS_INIT;
++			struct strbuf sb = STRBUF_INIT;
 +
-+		if (!info->force) {
-+			struct child_process cp_rm = CHILD_PROCESS_INIT;
-+			cp_rm.git_cmd = 1;
-+			argv_array_pushl(&cp_rm.args, "rm", "-qn", sm_path,
-+					 NULL);
++			prepare_submodule_repo_env(&cp.env_array);
++			cp.git_cmd = 1;
++			cp.dir = list_item->name;
 +
-+			/* list_item->name is changed by cmd_rm() below */
-+			if (run_command(&cp_rm))
-+				die(_("Submodule work tree '%s' contains local "
-+				      "modifications; use '-f' to discard them"),
-+				      displaypath);
-+		}
++			argv_array_pushl(&cp.args, "rev-parse",
++					 "--verify", "HEAD", NULL);
 +
-+		cp.use_shell = 1;
-+		argv_array_pushl(&cp.args, "rm", "-rf", sm_path, NULL);
-+		if (!run_command(&cp)) {
-+			if (!info->quiet)
-+				printf(_("Cleared directory '%s'\n"),
-+					 displaypath);
++			if (capture_command(&cp, &sb, 0))
++				die(_("could not run 'git rev-parse --verify"
++				      "HEAD' in submodule %s"),
++				      list_item->name);
++
++			strbuf_strip_suffix(&sb, "\n");
++			print_status(info, '+', list_item->name, sb.buf,
++				     displaypath);
++			strbuf_release(&sb);
 +		} else {
-+			if (!info->quiet)
-+				printf(_("Could not remove submodule work tree '%s'\n"),
-+					 displaypath);
++			print_status(info, '+', list_item->name, sub_sha1,
++				     displaypath);
 +		}
 +	}
 +
-+	if (mkdir(sm_path, 0700))
-+		die(_("could not create empty submodule directory %s"),
-+		      displaypath);
++	if (info->recursive) {
++		struct child_process cpr = CHILD_PROCESS_INIT;
 +
-+	cp_config.git_cmd = 1;
-+	argv_array_pushl(&cp_config.args, "config", "--get-regexp", NULL);
-+	argv_array_pushf(&cp_config.args, "submodule.%s\\.", sub->name);
++		cpr.git_cmd = 1;
++		cpr.dir = list_item->name;
++		prepare_submodule_repo_env(&cpr.env_array);
 +
-+	/* remove the .git/config entries (unless the user already did it) */
-+	if (!capture_command(&cp_config, &sb_config, 0) && sb_config.len) {
-+		char *sub_key = xstrfmt("submodule.%s", sub->name);
-+		/*
-+		 * remove the whole section so we have a clean state when
-+		 * the user later decides to init this submodule again
-+		 */
-+		git_config_rename_section_in_file(NULL, sub_key, NULL);
-+		if (!info->quiet)
-+			printf(_("Submodule '%s' (%s) unregistered for path '%s'\n"),
-+				 sub->name, sub->url, displaypath);
-+		free(sub_key);
++		argv_array_pushl(&cpr.args, "--super-prefix", displaypath,
++				 "submodule--helper", "status", "--recursive",
++				 NULL);
++
++		if (info->cached)
++			argv_array_push(&cpr.args, "--cached");
++
++		if (info->quiet)
++			argv_array_push(&cpr.args, "--quiet");
++
++		if (run_command(&cpr))
++			die(_("failed to recurse into submodule '%s'"),
++			      list_item->name);
 +	}
 +
 +cleanup:
 +	free(displaypath);
-+	free(sub_git_dir);
-+	free(sm_path);
-+	strbuf_release(&sb_config);
++	free(sub_sha1);
 +}
 +
-+static int module_deinit(int argc, const char **argv, const char *prefix)
++static int module_status(int argc, const char **argv, const char *prefix)
 +{
-+	struct deinit_cb info = DEINIT_CB_INIT;
++	struct status_cb info = STATUS_CB_INIT;
 +	struct pathspec pathspec;
 +	struct module_list list = MODULE_LIST_INIT;
 +	int quiet = 0;
-+	int force = 0;
-+	int all = 0;
++	int cached = 0;
++	int recursive = 0;
 +
-+	struct option module_deinit_options[] = {
++	struct option module_status_options[] = {
 +		OPT__QUIET(&quiet, N_("Suppress submodule status output")),
-+		OPT__FORCE(&force, N_("Remove submodule working trees even if they contain local changes")),
-+		OPT_BOOL(0, "all", &all, N_("Unregister all submodules")),
++		OPT_BOOL(0, "cached", &cached, N_("Use commit stored in the index instead of the one stored in the submodule HEAD")),
++		OPT_BOOL(0, "recursive", &recursive, N_("Recurse into nested submodules")),
 +		OPT_END()
 +	};
 +
 +	const char *const git_submodule_helper_usage[] = {
-+		N_("git submodule deinit [--quiet] [-f | --force] [--all | [--] [<path>...]]"),
++		N_("git submodule status [--quiet] [--cached] [--recursive] [<path>]"),
 +		NULL
 +	};
 +
-+	argc = parse_options(argc, argv, prefix, module_deinit_options,
++	argc = parse_options(argc, argv, prefix, module_status_options,
 +			     git_submodule_helper_usage, 0);
 +
 +	if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
-+		BUG("module_list_compute should not choke on empty pathspec");
++		return 1;
 +
 +	info.prefix = prefix;
 +	info.quiet = !!quiet;
-+	info.all = !!all;
-+	info.force = !!force;
-+
-+	if (all && argc) {
-+		error("pathspec and --all are incompatible");
-+		usage_with_options(git_submodule_helper_usage,
-+				   module_deinit_options);
-+	}
-+
-+	if (!argc && !all)
-+		die(_("Use '--all' if you really want to deinitialize all submodules"));
++	info.recursive = !!recursive;
++	info.cached = !!cached;
 +
 +	gitmodules_config();
-+	for_each_submodule_list(list, deinit_submodule, &info);
++	for_each_submodule_list(list, status_submodule, &info);
 +
 +	return 0;
 +}
@@ -226,32 +241,22 @@ index 4e3322846..17942529b 100644
  static int module_name(int argc, const char **argv, const char *prefix)
  {
  	const struct submodule *sub;
-@@ -1805,6 +1944,7 @@ static struct cmd_struct commands[] = {
- 	{"status", module_status, SUPPORT_SUPER_PREFIX},
- 	{"print-default-remote", print_default_remote, 0},
- 	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
-+	{"deinit", module_deinit, SUPPORT_SUPER_PREFIX},
+@@ -1475,6 +1626,7 @@ static struct cmd_struct commands[] = {
+ 	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
+ 	{"print-name-rev", print_name_rev, 0},
+ 	{"init", module_init, SUPPORT_SUPER_PREFIX},
++	{"status", module_status, SUPPORT_SUPER_PREFIX},
  	{"remote-branch", resolve_remote_submodule_branch, 0},
  	{"push-check", push_check, 0},
  	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 6257d50e9..0d3308d7b 100755
+index b28a6ba8e..b19d5fa7b 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -391,60 +391,7 @@ cmd_deinit()
+@@ -968,54 +968,7 @@ cmd_status()
  		shift
  	done
  
--	if test -n "$deinit_all" && test "$#" -ne 0
--	then
--		echo >&2 "$(eval_gettext "pathspec and --all are incompatible")"
--		usage
--	fi
--	if test $# = 0 && test -z "$deinit_all"
--	then
--		die "$(eval_gettext "Use '--all' if you really want to deinitialize all submodules")"
--	fi
--
 -	{
 -		git submodule--helper list --prefix "$wt_prefix" "$@" ||
 -		echo "#unmatched" $?
@@ -260,46 +265,50 @@ index 6257d50e9..0d3308d7b 100755
 -	do
 -		die_if_unmatched "$mode" "$sha1"
 -		name=$(git submodule--helper name "$sm_path") || exit
--
--		displaypath=$(git submodule--helper relative-path "$sm_path" "$wt_prefix")
--
--		# Remove the submodule work tree (unless the user already did it)
--		if test -d "$sm_path"
+-		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+-		if test "$stage" = U
 -		then
--			# Protect submodules containing a .git directory
--			if test -d "$sm_path/.git"
+-			say "U$sha1 $displaypath"
+-			continue
+-		fi
+-		if ! git submodule--helper is-active "$sm_path" ||
+-		{
+-			! test -d "$sm_path"/.git &&
+-			! test -f "$sm_path"/.git
+-		}
+-		then
+-			say "-$sha1 $displaypath"
+-			continue;
+-		fi
+-		if git diff-files --ignore-submodules=dirty --quiet -- "$sm_path"
+-		then
+-			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
+-			say " $sha1 $displaypath$revname"
+-		else
+-			if test -z "$cached"
 -			then
--				die "$(eval_gettext "\
--Submodule work tree '\$displaypath' contains a .git directory
--(use 'rm -rf' if you really want to remove it including all of its history)")"
+-				sha1=$(sanitize_submodule_env; cd "$sm_path" && git rev-parse --verify HEAD)
 -			fi
--
--			if test -z "$force"
--			then
--				git rm -qn "$sm_path" ||
--				die "$(eval_gettext "Submodule work tree '\$displaypath' contains local modifications; use '-f' to discard them")"
--			fi
--			rm -rf "$sm_path" &&
--			say "$(eval_gettext "Cleared directory '\$displaypath'")" ||
--			say "$(eval_gettext "Could not remove submodule work tree '\$displaypath'")"
+-			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
+-			say "+$sha1 $displaypath$revname"
 -		fi
 -
--		mkdir "$sm_path" || say "$(eval_gettext "Could not create empty submodule directory '\$displaypath'")"
--
--		# Remove the .git/config entries (unless the user already did it)
--		if test -n "$(git config --get-regexp submodule."$name\.")"
+-		if test -n "$recursive"
 -		then
--			# Remove the whole section so we have a clean state when
--			# the user later decides to init this submodule again
--			url=$(git config submodule."$name".url)
--			git config --remove-section submodule."$name" 2>/dev/null &&
--			say "$(eval_gettext "Submodule '\$name' (\$url) unregistered for path '\$displaypath'")"
+-			(
+-				prefix="$displaypath/"
+-				sanitize_submodule_env
+-				wt_prefix=
+-				cd "$sm_path" &&
+-				eval cmd_status
+-			) ||
+-			die "$(eval_gettext "Failed to recurse into submodule path '\$sm_path'")"
 -		fi
 -	done
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit ${GIT_QUIET:+--quiet} ${prefix:+--prefix "$prefix"} ${force:+--force} ${deinit_all:+--all} "$@"
++	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper status ${GIT_QUIET:+--quiet} ${cached:+--cached} ${recursive:+--recursive} "$@"
  }
- 
- is_tip_reachable () (
+ #
+ # Sync remote urls for submodules
 -- 
 2.13.0
 
