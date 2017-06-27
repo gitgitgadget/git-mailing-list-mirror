@@ -3,101 +3,302 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EDB620401
-	for <e@80x24.org>; Tue, 27 Jun 2017 18:57:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFC8820401
+	for <e@80x24.org>; Tue, 27 Jun 2017 19:00:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753157AbdF0S5H (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 14:57:07 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:35205 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752311AbdF0S5F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 14:57:05 -0400
-Received: by mail-it0-f44.google.com with SMTP id v202so18605943itb.0
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 11:57:05 -0700 (PDT)
+        id S1753426AbdF0TA0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 15:00:26 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35910 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752311AbdF0TAY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 15:00:24 -0400
+Received: by mail-pf0-f193.google.com with SMTP id z6so5847695pfk.3
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 12:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=aghVpBgIH4U/ycN22f0TsjxAfmeWmm3iS2i5OPOtdS4=;
-        b=o5zYJ6XnWLpB6xSXE/c9A2YbE+wLlsOhH35DavWEZYFZj8elgm0YKr6riV7sO11Nr3
-         311F8JqttlOIOuLe8grwBADShRNR46IFEyS0bhfuY6ki4iHgNctgboTSeumr+6opnAp0
-         zTYL8czlJ2PjBJWAnckl2zpbQFXkA373d1XH7Iuu/k+0wWXtx+VJqPjyGWUAuv82ZHqK
-         wqXuQMFTHtbhWF+mJnr3UcxeHLbDWgf1Wqbo65wEU110jlYQk+0G3bVdK+iI34Isr2+3
-         qN9JtZ1spvLFoQtnMdsMKJ1/7EdCEVv8zUKe8HUmLpR//KlPh5VdLj5laD94opbkUY6u
-         AwSg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=IkAzDLXkhA5CUzPE0jKTFJ9SUFX2pcXe5BNWl58+qfs=;
+        b=eWVvFYYGQ4KfwSsrUwOn1t14h3ZYqkmDUROGGnfo469aJTuSdNI/yAWN9U/1Mr8cpI
+         QOTFeV4aKr7fB+/2avwxiaBXkLhKz6EErRTD0nz3sg8hwk4JlKCnp6I3qYfCehrEdL+F
+         rRjFxLqCF25ndv0nnuPmNctSJwiGil0ixiqL/jhAg6owrhWl+0zxksaab+unDxnC8ztX
+         w/d8eCFxDMa//UpwqJwzqTd+kHgiO/xmuVM4OAvRe2UF1rM/2tIQWGJ9VAkw56xJ1iBv
+         hVCITdxT76NyFZwJiGnMrXTq0wc0pE8KV/tPjlm3mZGSjueq8pvSXwDvChc1+Ax8u+yo
+         BjhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=aghVpBgIH4U/ycN22f0TsjxAfmeWmm3iS2i5OPOtdS4=;
-        b=p8tlR8XlWo0tp/6qGazNF/bz74iHT/Pl4VigDb7BUEeYI5VQoW3fk9RBaSuBvbBmkU
-         vwD/KuStnFFCyCu2Jmaahcw7ldtyK/onGNkLbg+EKGHNaRY0U1tUddbduH3Ek3rNEJ9F
-         qK9a3MIhiHR3DkVaS1tBsuTKAfB/vS5tBHsbYaXWstzIzsuHuIrY8e78Tg1386QJEDqD
-         QrTGLpNPtkKPMUZ1wAtAUhVcCRDRrr+ehv9QRw1NlykXOu+phftZczkDGURMa9WGdbar
-         CIJpw2m+ZW/QezSbZrlk7VptE6HVpsqsRTg2QLhvsMJTmrsfXdmmV8iB9b8mIYAXdyRy
-         KiEw==
-X-Gm-Message-State: AKS2vOyBHZ6b1UQcf1PxCsGrjE6pc1Z5/TLPn7kuw0ECbCQQB8K5yKpU
-        VIlNwB8FKSfRhEa7HqpryPNtDXpmwY+N
-X-Received: by 10.36.127.208 with SMTP id r199mr3973854itc.66.1498589824924;
- Tue, 27 Jun 2017 11:57:04 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=IkAzDLXkhA5CUzPE0jKTFJ9SUFX2pcXe5BNWl58+qfs=;
+        b=udymrlZ63GkoldAP0fPuMd1PM9rXLzGdP8x49Gof1jDI/HDDOwQSsRs6FogM4+Ianc
+         oAzQyTdrUgemurmCBZuC4PKM+cGISkD4KM7OFeQxE+HBdwW3/NdVUk1WH6QSL8F2yL7P
+         vVJf+PpXr/8c0r+zJFGK3ehjhRrRtyPFwSIdD0xWDiz7W40tkNSQ7qNQHPjDkA7WmazY
+         xdb0dLgaply78RrASs9EXftqDiLiLWsykwKEPJduKNryrRYGp95esCct4Vd60zrXdMQe
+         dc8f6HWom3+eqFqulSf1sAbAI2jBz4t0D0kln58ij+4Ru5zQ5MNuRyqTGjKmWogwsT71
+         NaVw==
+X-Gm-Message-State: AKS2vOxPXLSXtgjbYrrUdZODqTfU19octhEbv9Cws2TkHbLzIRKyvQIj
+        VgVXEdM2iKckKQ==
+X-Received: by 10.98.204.194 with SMTP id j63mr6623809pfk.137.1498590017911;
+        Tue, 27 Jun 2017 12:00:17 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
+        by smtp.gmail.com with ESMTPSA id 73sm11239pgf.41.2017.06.27.12.00.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 27 Jun 2017 12:00:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, tboegi@web.de, e@80x24.org,
+        ttaylorr@github.com, peartben@gmail.com
+Subject: Re: [PATCH v7 6/6] convert: add "status=delayed" to filter process protocol
+References: <20170627121027.99209-1-larsxschneider@gmail.com>
+        <20170627121027.99209-7-larsxschneider@gmail.com>
+Date:   Tue, 27 Jun 2017 12:00:15 -0700
+In-Reply-To: <20170627121027.99209-7-larsxschneider@gmail.com> (Lars
+        Schneider's message of "Tue, 27 Jun 2017 14:10:27 +0200")
+Message-ID: <xmqqbmp91cjk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.31.10 with HTTP; Tue, 27 Jun 2017 11:56:44 -0700 (PDT)
-In-Reply-To: <CAGZ79kYzZqAm9AgiXAanBTzJfHStebCy9Z6MvhniRjS3s1wG-Q@mail.gmail.com>
-References: <CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com>
- <20170627121718.12078-1-avarab@gmail.com> <20170627121718.12078-3-avarab@gmail.com>
- <CAGZ79kYzZqAm9AgiXAanBTzJfHStebCy9Z6MvhniRjS3s1wG-Q@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 27 Jun 2017 20:56:44 +0200
-Message-ID: <CACBZZX7nP8ZRg_VC_z14BsYKWzAws-dsRosaKRB+3T=unTyHzA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] sha1dc: optionally use sha1collisiondetection as a submodule
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        "Liam R . Howlett" <Liam.Howlett@oracle.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 27, 2017 at 8:46 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Tue, Jun 27, 2017 at 5:17 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> Add an option to use the sha1collisiondetection library from the
->> submodule in sha1collisiondetection/ instead of in the copy in the
->> sha1dc/ directory.
->>
->> This allows us to try out the submodule in sha1collisiondetection
->> without breaking the build for anyone who's not expecting them as we
->> work out any kinks.
->>
->> This uses my own fork which integrates PR #36. See the preceding
->> commit ("sha1dc: update from my PR #36", 2017-06-27) for details.
->>
->
->> +++ b/.gitmodules
->> @@ -0,0 +1,4 @@
->> +[submodule "sha1collisiondetection"]
->> +       path =3D sha1collisiondetection
->> +       url =3D https://github.com/avar/sha1collisiondetection.git
->> +       branch =3D bigend-detect-solaris-again
->
-> What is the motivation for the branch field here?
-> While this series fixes a hot issue, in the long run we'd rather
-> want to plug in the original upstream with the master branch?
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-Just so we can cook this in pu (including for those cloning with
---recursive) until upstream merges my patches.
+> @@ -533,7 +534,8 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
+>  	if (err)
+>  		goto done;
+>  
+> -	err = packet_writel(process->in, "capability=clean", "capability=smudge", NULL);
+> +	err = packet_writel(process->in,
+> +		"capability=clean", "capability=smudge", "capability=delay", NULL);
+>  
+>  	for (;;) {
+>  		cap_buf = packet_read_line(process->out, NULL);
+> @@ -549,6 +551,8 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
+>  			entry->supported_capabilities |= CAP_CLEAN;
+>  		} else if (!strcmp(cap_name, "smudge")) {
+>  			entry->supported_capabilities |= CAP_SMUDGE;
+> +		} else if (!strcmp(cap_name, "delay")) {
+> +			entry->supported_capabilities |= CAP_DELAY;
+>  		} else {
+>  			warning(
+>  				"external filter '%s' requested unsupported filter capability '%s'",
 
-We're now in a chicken & egg scenario where the patch I have (minus
-nits mentioned on list, will fix) should work, but needs testing, and
-once it has testing upstream is willing to merge it, and getting it
-into pu (with my clone/branch) will give it more testing).
+I thought you said something about attempting to make this more
+table-driven; did the attempt produce a better result?  Just being
+curious.
+
+> @@ -590,9 +594,11 @@ static void handle_filter_error(const struct strbuf *filter_status,
+>  
+>  static int apply_multi_file_filter(const char *path, const char *src, size_t len,
+>  				   int fd, struct strbuf *dst, const char *cmd,
+> -				   const unsigned int wanted_capability)
+> +				   const unsigned int wanted_capability,
+> +				   struct delayed_checkout *dco)
+>  {
+>  	int err;
+> +	int can_delay = 0;
+>  	struct cmd2process *entry;
+>  	struct child_process *process;
+>  	struct strbuf nbuf = STRBUF_INIT;
+> @@ -647,6 +653,14 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+>  	if (err)
+>  		goto done;
+>  
+> +	if ((entry->supported_capabilities & CAP_DELAY) &&
+> +	    dco && dco->state == CE_CAN_DELAY) {
+> +		can_delay = 1;
+> +		err = packet_write_fmt_gently(process->in, "can-delay=1\n");
+> +		if (err)
+> +			goto done;
+> +	}
+> +
+>  	err = packet_flush_gently(process->in);
+>  	if (err)
+>  		goto done;
+> @@ -662,14 +676,74 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+>  	if (err)
+>  		goto done;
+>  
+> -	err = strcmp(filter_status.buf, "success");
+> +	if (can_delay && !strcmp(filter_status.buf, "delayed")) {
+> +		dco->is_delayed = 1;
+> +		string_list_insert(&dco->filters, cmd);
+> +		string_list_insert(&dco->paths, path);
+> +	} else {
+> +		/* The filter got the blob and wants to send us a response. */
+> +		err = strcmp(filter_status.buf, "success");
+> +		if (err)
+> +			goto done;
+> +
+> +		err = read_packetized_to_strbuf(process->out, &nbuf) < 0;
+> +		if (err)
+> +			goto done;
+> +
+> +		err = subprocess_read_status(process->out, &filter_status);
+> +		if (err)
+> +			goto done;
+> +
+> +		err = strcmp(filter_status.buf, "success");
+> +	}
+> +
+> +done:
+> +	sigchain_pop(SIGPIPE);
+> +
+> +	if (err)
+> +		handle_filter_error(&filter_status, entry, wanted_capability);
+> +	else
+> +		strbuf_swap(dst, &nbuf);
+> +	strbuf_release(&nbuf);
+> +	return !err;
+> +}
+
+This I can understand better than the previous round ;-)
+
+> diff --git a/convert.h b/convert.h
+> index 82871a11d5..cdb91ab99a 100644
+> --- a/convert.h
+> +++ b/convert.h
+> @@ -4,6 +4,8 @@
+>  #ifndef CONVERT_H
+>  #define CONVERT_H
+>  
+> +#include "string-list.h"
+> +
+>  enum safe_crlf {
+>  	SAFE_CRLF_FALSE = 0,
+>  	SAFE_CRLF_FAIL = 1,
+> @@ -32,6 +34,27 @@ enum eol {
+>  #endif
+>  };
+>  
+> +enum ce_delay_state {
+> +	CE_NO_DELAY = 0,
+> +	CE_CAN_DELAY = 1,
+> +	CE_RETRY = 2
+> +};
+
+This feels more natural and makes it easy to imagine the state
+transition diagram.  enable-delay will take us from no-delay to
+can-delay, and we tell the filter that it is OK to delay while
+making the initial pass of the requests, and then after that we go
+into retry state to collect the delayed reponses.
+
+> +struct delayed_checkout {
+> +	/* State of the currently processed cache entry. If the state is
+> +	 * CE_CAN_DELAY, then the filter can change the 'is_delayed' flag
+> +	 * to signal that the current cache entry was delayed. If the state is
+> +	 * CE_RETRY, then this signals the filter that the cache entry was
+> +	 * requested before.
+> +	 */
+
+        /*
+         * Our multi-line comment look like this; slash-aster 
+         * and aster-slash that opens and closes the block are
+         * on their own lines.
+         */
+
+> +	enum ce_delay_state state;
+> +	int is_delayed;
+
+Hmph, I do not terribly mind but is this thing really needed?
+
+Wouldn't filters and paths being non-empty be a good enough sign
+that the backend said "ok, I am allowed to give a delayed response
+so I acknowledge this path but would not give a result right away"?
+
+> +int finish_delayed_checkout(struct checkout *state)
+> +{
+> +	int errs = 0;
+> +	struct string_list_item *filter, *path;
+> +	struct delayed_checkout *dco = state->delayed_checkout;
+> +
+> +	if (!state->delayed_checkout)
+> +		return errs;
+> +
+> +	dco->state = CE_RETRY;
+> +	while (dco->filters.nr > 0) {
+> +		for_each_string_list_item(filter, &dco->filters) {
+> +			struct string_list available_paths = STRING_LIST_INIT_NODUP;
+> +
+> +			if (!async_query_available_blobs(filter->string, &available_paths)) {
+> +				/* Filter reported an error */
+> +				errs = 1;
+> +				filter->string = "";
+> +				continue;
+> +			}
+> +			if (available_paths.nr <= 0) {
+> +				/* Filter responded with no entries. That means
+> +				 * the filter is done and we can remove the
+> +				 * filter from the list (see
+> +				 * "string_list_remove_empty_items" call below).
+> +				 */
+> +				filter->string = "";
+> +				continue;
+> +			}
+> +
+> +			/* In dco->paths we store a list of all delayed paths.
+> +			 * The filter just send us a list of available paths.
+> +			 * Remove them from the list.
+> +			 */
+> +			filter_string_list(&dco->paths, 0,
+> +				&remove_available_paths, &available_paths);
+> +
+> +			for_each_string_list_item(path, &available_paths) {
+> +				struct cache_entry* ce;
+> +
+> +				if (!path->util) {
+> +					error("external filter '%s' signaled that '%s' "
+> +					      "is now available although it has not been "
+> +					      "delayed earlier",
+> +					      filter->string, path->string);
+> +					errs |= 1;
+> +
+> +					/* Do not ask the filter for available blobs,
+> +					 * again, as the filter is likely buggy.
+> +					 */
+> +					filter->string = "";
+> +					continue;
+> +				}
+> +				ce = index_file_exists(state->istate, path->string,
+> +						       strlen(path->string), 0);
+> +				assert(dco->state == CE_RETRY);
+
+Can anything futz with dco->state at this late in the game?  You
+entered into CE_RETRY state at the beginning of this function, and
+this loop is going through each delayed ones. At this point, you are
+going to make , but not yet have made, a request to the backend via
+another call to checkout_entry() again.
+
+Just wondering what kind of programming errors you are protecting
+yourself against.  I briefly wondered perhaps you are afraid of a
+bug in checkout_entry() that may flip the state back, but it that
+is the case then the assert() would be after checkout_entry().
+
+> +				errs |= (ce ? checkout_entry(ce, state, NULL) : 1);
+
+> +			}
+> +		}
+> +		string_list_remove_empty_items(&dco->filters, 0);
+> +	}
+> +	string_list_clear(&dco->filters, 0);
+> +
+> +	/* At this point we should not have any delayed paths anymore. */
+> +	errs |= dco->paths.nr;
+> +	for_each_string_list_item(path, &dco->paths) {
+> +		error("'%s' was not filtered properly", path->string);
+> +	}
+> +	string_list_clear(&dco->paths, 0);
+> +
+> +	free(dco);
+> +	state->delayed_checkout = NULL;
+> +
+> +	return errs;
+> +}
+
+Thanks.
