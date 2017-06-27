@@ -2,138 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D15C20401
-	for <e@80x24.org>; Tue, 27 Jun 2017 21:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CC4C20401
+	for <e@80x24.org>; Tue, 27 Jun 2017 22:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753877AbdF0V66 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 17:58:58 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:36379 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753827AbdF0V65 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 17:58:57 -0400
-Received: by mail-wr0-f194.google.com with SMTP id 77so32916124wrb.3
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 14:58:57 -0700 (PDT)
+        id S1753962AbdF0WYe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 18:24:34 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:38232 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753943AbdF0WY1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 18:24:27 -0400
+Received: by mail-wm0-f48.google.com with SMTP id b184so40739813wme.1
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 15:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=0ZQ30N6HbbGGNZw2MTMw5TJTgL4mBSNPgEVMNanntdw=;
-        b=C0po3Md69tA2Okfflya6BZuRc+24/42kvKbKNOUFxg6l3wlfynJsTG0sC10y1S8VGi
-         tgr2nyUVk6/1xg2clZsoLWhJBO3UrXhNfcMoFGHQU/YGkyJkWhwAHJ4PrbBIzNWYTIiz
-         ek48d4Xy0kHZFgXCJvgqu6giFri0+VkMHUWmk/uyhY/f1ZMTHomNL+bn0DG8pWTlWgWc
-         YNN8+1srTBIzuxz09F/EJlu07yzbZhKCqmtje93gkXq5YEHmhCAOSxbQppIDjCWY8BTA
-         zKylqGjbhMETNJl0NypOBGebdHHki2RSpdLpr34AwJxo/UUgauSLK0tdShoG0j6Mmp1j
-         dRkw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=pm2+7vu7n5gZdCIhO6FKn87Rw2rM5VUsW2zeWrIjUVI=;
+        b=qUZZkvDL8Xxl1o1a6Dr3z991eJa2Dzl/TXknv5VV/ZjhTju2lw21K9NczByGSZ7WKQ
+         IhllJ1XAdxm6YEcO3SOjOYyC3didYb2u6wCA02bqfGuErFuJefz9szs+lXY6e2lZNpXz
+         /LMgw+ZpJo6B+QNWmZodLv8A6c97ytxRvAv4EQP+HYIjLKBHCh0jOyJ5iwwNf0juEQ7N
+         36qJgiJuLL6Y/y8ehikMha9r7miGF4P1J8ixFjYoUUuPScgSnDnmVapRh0eevUMVfDrT
+         hLU5eI5k9uY0alR/NYL5Fhol285RiP60/Ntj9BMVyXfS0qJppKDAKD+pGZzHBwWrao82
+         THww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=0ZQ30N6HbbGGNZw2MTMw5TJTgL4mBSNPgEVMNanntdw=;
-        b=FNgtWgzN+lmSIeujBEFeCMqp5GlpyAMGEimughWOJtMVjDl4t0WIJkw7q/9Zz+A8St
-         ReaT2FG0Yc4d/tEodcJmLGit/gHE7T28pRF+I0/TTrAmricqszE0rT/nD35OXOKKkD+s
-         MGwEJFtTl5aXqFC877Be0muggRBvGp0HmYurIqGsUkSS4pc5P9Fyl7/zqjUaWYk9ZuBo
-         Hv31osGWbAWMdb6bgjKg23hvrXii3f8CiLjXPxaG2gqkMLsnhJ9WsYFvjCo4ONOTR1pS
-         QtkoHbSylVw8MPiyC0i9BbEseShcDV6vqBYe/WMn/BzOJcuItRrV8VVg6qetLFU1c0lQ
-         oSzw==
-X-Gm-Message-State: AKS2vOx0FXnU8Q5fvtUk/uIQwPSD+Jgm4FwFgkTtY6zr4g56jkY0jAbh
-        dAi1cgVJXL+3pA==
-X-Received: by 10.223.154.141 with SMTP id a13mr17303498wrc.139.1498600736432;
-        Tue, 27 Jun 2017 14:58:56 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB4DFA.dip0.t-ipconnect.de. [93.219.77.250])
-        by smtp.gmail.com with ESMTPSA id n31sm320499wrn.59.2017.06.27.14.58.55
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 14:58:55 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v7 6/6] convert: add "status=delayed" to filter process protocol
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqlgodyv7k.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 27 Jun 2017 23:58:54 +0200
-Cc:     git@vger.kernel.org, peff@peff.net, tboegi@web.de, e@80x24.org,
-        ttaylorr@github.com, peartben@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0AC7FBAA-59AE-4CC3-A9CD-725B53FD1ED4@gmail.com>
-References: <20170627121027.99209-1-larsxschneider@gmail.com> <20170627121027.99209-7-larsxschneider@gmail.com> <xmqqbmp91cjk.fsf@gitster.mtv.corp.google.com> <77DBCB49-2A44-42BB-9060-23FA79C1CF57@gmail.com> <xmqqlgodyv7k.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=pm2+7vu7n5gZdCIhO6FKn87Rw2rM5VUsW2zeWrIjUVI=;
+        b=iOt5N4xQAdC1FbFNm7E5BbwCs327HaMqi8OGbdCVuy7ShfZNDYWMGeE+3T4N/9R0bh
+         0Pbo4mLVhTg0L2PZeOXg5xPr1fO6x3FEmxCkSJVKCY5zoJBcBHukmxnunrUPydHGlopB
+         vVNjeuaN2g5xJk4Dg3P9miZ5Qm/hqwEL3kQhPmGg99wmb1p1XLDAMOlnX42e/rBC+E6U
+         HoCfcEw6DvrLZo9ra3biF8pljqjT3qiGIsD3aqrSmF7WnpKcy/mhwl97djwg22GkOD6+
+         DvjHk3STcn2BmnfS/sQuG7qeNEOeShHwihFhE+COXQRMuvFx/crvHr32uhWGFfia7HB+
+         IzAQ==
+X-Gm-Message-State: AKS2vOwXb12ZAeEFfIFs8hhJvHHhH+Cvk0u4j1dIblyciXFH46CDo5p7
+        Yq6BiYXruh4fkA==
+X-Received: by 10.80.176.102 with SMTP id i93mr5556870edd.116.1498602252089;
+        Tue, 27 Jun 2017 15:24:12 -0700 (PDT)
+Received: from snth (g74110.upc-g.chello.nl. [80.57.74.110])
+        by smtp.gmail.com with ESMTPSA id i42sm213366ede.5.2017.06.27.15.24.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Jun 2017 15:24:10 -0700 (PDT)
+Received: from avar by snth with local (Exim 4.84_2)
+        (envelope-from <avarab@gmail.com>)
+        id 1dPyu1-0000jM-JG; Wed, 28 Jun 2017 00:24:09 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Michael Kebe <michael.kebe@gmail.com>,
+        "Liam R . Howlett" <Liam.Howlett@Oracle.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 0/3] update sha1dc from PR #36
+References: <20170627121718.12078-1-avarab@gmail.com> <20170627203348.19827-1-avarab@gmail.com> <xmqqfuelyuuu.fsf@gitster.mtv.corp.google.com>
+User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <xmqqfuelyuuu.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 28 Jun 2017 00:24:09 +0200
+Message-ID: <87mv8tjchi.fsf@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-> On 27 Jun 2017, at 23:30, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Lars Schneider <larsxschneider@gmail.com> writes:
->=20
->> I treated that as low-prio as I got the impression that you are =
-generally OK with
->> the current implementation. I promise to send a patch with this =
-change.=20
->> Either as part of this series or as a follow up patch.
->=20
-> Sure. I was just being curious what happened; I agree that it is a
-> good idea to treat this as a lower priority clean-up item and leave
-> it to later.
+On Tue, Jun 27 2017, Junio C. Hamano jotted:
 
-I posted it here:
-=
-http://public-inbox.org/git/7FF53F59-1240-4BED-999F-FE9C9AD7E6AC@gmail.com=
-/
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+>
+>> A v2 addressing comments to the v1, tbdiff below. Just fixes the
+>> subject line on 1/3 & gets rid of the redundant _BIG_ENDIAN detection
+>> for Solaris, we can just use __sparc (and indeed we did before this).
+>
+> Thanks.  Let's have this tested by minority platform folks to help
+> the upstream digest your pull request.  The change since the last
+> round makes perfect sense to me.
 
-If you are OK with it, then I will post a v8 with all changes combined.
+I got someone on #cygwin on Freenode to test this for me (compile git +
+t0013-sha1dc.sh), it passed, ditto for 2x people testing on Solaris
+SPARC.
 
+Updated a comment on the PR with that:
+https://github.com/cr-marcstevens/sha1collisiondetection/pull/36#issuecomment-311502713
 
->> Yes. I guess that was a premature optimization on my end.
->> This is how "write_entry()" in entry.c would change:
->>=20
->> -                               dco->is_delayed =3D 0;
->>                                ret =3D async_convert_to_working_tree(
->>                                        ce->name, new, size, &buf, =
-dco);
->> -                               if (ret && dco->is_delayed) {
->> +                               if (ret && =
-string_list_has_string(&dco->paths, ce->name)) {
->>                                        free(new);
->>                                        goto finish;
->>                                }
->>=20
->> OK?
->=20
-> Actually I should be asking the "OK?" question---the above was what
-> I had in mind when I commented, but you are a lot more familiar with
-> the way how this code is supposed to work, and I didn't know if the
-> emptyness of the list can be a 100% substitute for that bit.  If you
-> think they are equivalent, that is a great news.
-
-Yes, I think this should be equivalent.
-
-
->> At this point I want to ensure that checkout_entry() is called
->> with the CE_RETRY state. Because checkout_entry() needs to pass=20
->> that flag to the convert machinery.
->>=20
->> This assert was useful when checkout_entry() changed dco->state
->> between CAN_DELAY and DELAYED. In the current implementation the
->> state should not be changed anymore.
->>=20
->> Would you prefer if I remove it? (with or without is both fine with =
-me)
->=20
-> If that is the reason behind the assert, I am OK with either (1)
-> moving it _after_ checkout_entry() returns (to ensure that the
-> function no longer mucks with the state, or (2) removing it.
->=20
-> Leaving it at the current position does not make much sense to me.
-
-I'll remove it.
-
-
-Thanks,
-Lars
-
+I'm pretty sure this un-breaks everything & doesn't regress on cases
+where we fixed things earlier.
