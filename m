@@ -7,215 +7,168 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F0F020401
-	for <e@80x24.org>; Tue, 27 Jun 2017 17:03:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A45F20401
+	for <e@80x24.org>; Tue, 27 Jun 2017 17:04:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752626AbdF0RDx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 13:03:53 -0400
-Received: from mout.web.de ([212.227.15.3]:56331 "EHLO mout.web.de"
+        id S1752526AbdF0REK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 13:04:10 -0400
+Received: from mout.web.de ([212.227.15.14]:53313 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752103AbdF0RDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 13:03:51 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MQ6KJ-1dLEwI3ZuF-005Jj5; Tue, 27
- Jun 2017 19:03:41 +0200
+        id S1752795AbdF0REH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 13:04:07 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M3Spk-1dhQij2tzk-00r2jn; Tue, 27
+ Jun 2017 19:03:49 +0200
 Subject: Re: [PATCH 2/2] apply: handle assertion failure gracefully
-To:     Junio C Hamano <gitster@pobox.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+To:     Vegard Nossum <vegard.nossum@oracle.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
         Michal Zalewski <lcamtuf@google.com>
 References: <20170225101307.24067-1-vegard.nossum@oracle.com>
  <20170225101307.24067-2-vegard.nossum@oracle.com>
- <a5626d97-e644-65b5-2fd3-41ce870f85a6@web.de>
- <xmqqmvd7wgc7.fsf@gitster.mtv.corp.google.com>
- <f191e3a8-a55b-7030-ebbb-3f46c74fdc94@web.de>
- <xmqq1sujnu1g.fsf@gitster.mtv.corp.google.com>
- <05fe5800-ebc0-76d7-579d-77f64a851fc1@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <5128cdf1-39fc-59ca-5640-801777bac2fa@web.de>
-Date:   Tue, 27 Jun 2017 19:03:39 +0200
+Message-ID: <ef6886c0-d567-ced1-3caf-98bd5557c580@web.de>
+Date:   Tue, 27 Jun 2017 19:03:47 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <05fe5800-ebc0-76d7-579d-77f64a851fc1@web.de>
+In-Reply-To: <20170225101307.24067-2-vegard.nossum@oracle.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:YE6ApoliQsZc2XJ1Ys6aYh81mSAJAd3FBvsiCgeLenX8SsGCq/P
- TutL4lkV9FkCOY+zzt0szT6abCl1vKWvIt1v/9cBCgEVT18EYxjZ0jKksTqj1ukd/A9mVfl
- XOEIT5dZeXq13O5QHNMXaVOOijr53pKMMABEtJZkKN3Mph07v1MAFdy4dZGenIrK7SSLiWU
- h/Pxi88nHBFx08kfsNnvg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZSW4ZFv6UfY=:4ZFTEGPldxwM8QKK8SwhuM
- QPuQluMF2+ojsD6kOuNBeBgt1uT8bpzUqCkr/PGO3fIQrDdAKmgknFww/CKnttxB0lwqf/dqd
- 1QrsaqyujqVsqhP3alLQuyzCG6zTsRqEQTecAxqoFA5R9DfH3peegbnDb1xJUMCnRR3FTIys8
- dppVrw+C82HtXQnk87XebykRPpyzPBnHDllHt6D6FHoui5I5Siqc56FufwFXWfKJRoQi8cLSV
- k5NkyLrYNgMypYPaF+NRhyQhXi42UHQu2QN/pen2gEDDVxyMBeYfKSuxCz54VyTg3n06CEIZN
- 2h6GvxcgREoV+845XZl20LIuynSu+E0u9Rd5IW/LLD2dWjWKmtGT8YC8mvt1674oVejZDVttj
- TMtyjHD8ZZHN3ADev2DTWRVuuNiflBLY/YShfdDRa5TH8o3gIS/PSA//qn6zcP7oLDMEU8mJt
- ni4Jv/dkIh51oFeDAo/BmSKk0EnRR3tAkDit5wTPtY01egPiMkD/qZOIQJoGb1DT4T2GmbsfU
- tB2scnlFYwk6odL9F98hqFatSEYdDILN8pjWhReLtAJGTOwxqUY9ugWa3kxsANZg7y3wEt2/N
- DBhfU/+ONZpbAdIz6LcCLY3bmIlxaGmk7dn/WzmMeMHQX5D+/obtoa2u8EumxJ4BHiUU0o7YG
- 33V5oFiXVneeOeAFGmCjRjQBBS8CPX6+oc/OeyV3J9qvIeh+qjzk0UUNJrzFwY8hjwti2Qg42
- 7ihzL7wrrAZtbTdubYn0MkiUcPVJUNqBj+6rdHpDzTbf+kojWdtB0SQyOdO1bKmX5egOI7vUV
- ZYLWcOd
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:pcgHkN9m9mG7ITACO9DGv3Uzym/vOIN0w3W4+vTVeHzsYjneHhS
+ yIPbuirEj6UVSa9z8/VIGkXWzGo4i3kUr5tJZHZcpXeSja+PztiBeulb9ENpdGXzZ5s3+zY
+ R5rxP6kdI8VD/fmT4VR9Ba0wvX/rEYqi5xBe5jDSDua41teBsXsm/5MUKW1istDZuPpy0r3
+ 3DYQFalxsRmf5jso8c3AQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SxQ640hFZWU=:DszTMeG/3/OwExvx3q3yPf
+ rZ5XuM2uodH8DS7cIAttAP/a8Z36hBLgvP1/XpR/KgceWkxsel9r6MgOIWD6Bp+Rh7u1AykK2
+ XxXV6dbU2sS2qrXGwiwHuChTgI+q9BOL5qB8jjmYP6FmI1l6aagel1651EN1eMD3XG4PtltVn
+ uk8Md2y69JSrKiRHfFNjIUkJ1ZXRU+rkPNnrsYXxMUjp5AVfwCnhysaeonXcg/qvOkjyGte4J
+ Z0yuqD0PhkPO6JBzPMimJ2bBmgsK3131nsvdyoSI1N0veGwbKQmIfLDRevKv4bT0BHpggIpyy
+ 1+jbckRwGqgfSInbup26DOzk5gqqRl3hi2krKJMPtXoLyFG+9zCaMFz+U9+g6tuB3rEkYoJox
+ /stch83H0CKymXfW4nHjXQUodikIpD9Yh7zdM1hwIztUyCUsQmxhGMx/Fjj6iTXqP8V+d3ciz
+ wsPULzzB6asaULxvYt3HRDnPNAF3O6T5aU8apxJoKCS5UZLCD5qbrWejQrffVMCwzh17yRFI5
+ DeS6bE1LKZjpBtJtznlisLe5tsgVCKvRQfTvi9B2W9N2rVHR3vVOBefPNHRv5mATN/0pKng12
+ TbMsJgvuPZ32VQDNnYfEmIR9+oJUbCjGhV2eDYVf7VlBZ6yzL3mzlozbU5bubL3+HXpYd4bUY
+ K92kafRBG1qg9ntGAxgFZbt6Sr2RbFRtkjwnnSDLIq46C2xuXnr8YxrNklSYT/915+H5Uy0UD
+ MTc2k4Vj5/ZRlrmJ0VO+2u6Uu4Fjjn1SDwNAZWsXo3B2HzeUZAkJacK17oQKJRM+DbyUTrCkR
+ M4/5Axl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.02.2017 um 11:50 schrieb René Scharfe:
-> Am 27.02.2017 um 23:33 schrieb Junio C Hamano:
->> René Scharfe <l.s.r@web.de> writes:
->>
->>> Am 27.02.2017 um 21:04 schrieb Junio C Hamano:
->>>> René Scharfe <l.s.r@web.de> writes:
->>>>
->>>>>> diff --git a/apply.c b/apply.c
->>>>>> index cbf7cc7f2..9219d2737 100644
->>>>>> --- a/apply.c
->>>>>> +++ b/apply.c
->>>>>> @@ -3652,7 +3652,6 @@ static int check_preimage(struct apply_state *state,
->>>>>>   	if (!old_name)
->>>>>>   		return 0;
->>>>>>
->>>>>> -	assert(patch->is_new <= 0);
->>>>>
->>>>> 5c47f4c6 (builtin-apply: accept patch to an empty file) added that
->>>>> line. Its intent was to handle diffs that contain an old name even for
->>>>> a file that's created.  Citing from its commit message: "When we
->>>>> cannot be sure by parsing the patch that it is not a creation patch,
->>>>> we shouldn't complain when if there is no such a file."  Why not stop
->>>>> complaining also in case we happen to know for sure that it's a
->>>>> creation patch? I.e., why not replace the assert() with:
->>>>>
->>>>> 	if (patch->is_new == 1)
->>>>> 		goto is_new;
->>>>>
->>>>>>   	previous = previous_patch(state, patch, &status);
->>>>
->>>> When the caller does know is_new is true, old_name must be made/left
->>>> NULL.  That is the invariant this assert is checking to catch an
->>>> error in the calling code.
->>>
->>> There are some places in apply.c that set ->is_new to 1, but none of
->>> them set ->old_name to NULL at the same time.
->>
->> I thought all of these are flipping ->is_new that used to be -1
->> (unknown) to (now we know it is new), and sets only new_name without
->> doing anything to old_name, because they know originally both names
->> are set to NULL.
->>
->>> Having to keep these two members in sync sounds iffy anyway.  Perhaps
->>> accessors can help, e.g. a setter which frees old_name when is_new is
->>> set to 1, or a getter which returns NULL for old_name if is_new is 1.
->>
->> Definitely, the setter would make it harder to make the mistake.
+Am 25.02.2017 um 11:13 schrieb Vegard Nossum:
+> For the patches in the added testcases, we were crashing with:
 > 
-> When I added setters, apply started to passed NULL to unlink(2) and
-> rmdir(2) in some of the new tests, which still failed.
-> 
-> That's because three of the diffs trigger both gitdiff_delete(), which
-> sets is_delete and old_name, and gitdiff_newfile(), which sets is_new
-> and new_name.  Create and delete equals move, right?  Or should we
-> error out at this point already?
-> 
-> The last new diff adds a new file that is copied.  Sounds impossible.
-> How about something like this, which forbids combinations that make no
-> sense.  Hope it's not too strict; at least all tests succeed.
-> 
-> ---
->   apply.c | 79 ++++++++++++++++++++++++++++++++++++++++++++++++++---------------
->   1 file changed, 61 insertions(+), 18 deletions(-)
+>      git-apply: apply.c:3665: check_preimage: Assertion `patch->is_new <= 0' failed.
 
-Thought a bit more about it, and as a result here's a simpler approach:
+
+> diff --git a/t/t4154-apply-git-header.sh b/t/t4154-apply-git-header.sh
+> index d651af4a2..c440c48ad 100755
+> --- a/t/t4154-apply-git-header.sh
+> +++ b/t/t4154-apply-git-header.sh
+> @@ -12,4 +12,40 @@ rename new 0
+>   EOF
+>   '
+>   
+> +test_expect_success 'apply deleted file mode / new file mode / wrong mode' '
+> +	test_must_fail git apply << EOF
+> +diff --git a/. b/.
+> +deleted file mode
+> +new file mode
+> +EOF
+> +'
 
 -- >8 --
-Subject: [PATCH] apply: check git diffs for mutually exclusive header lines
+Subject: [PATCH] apply: check git diffs for invalid file modes
 
-A file can either be added, removed, copied, or renamed, but no two of
-these actions can be done by the same patch.  Some of these combinations
-provoke error messages due to missing file names, and some are only
-caught by an assertion.  Check git patches already as they are parsed
-and report conflicting lines on sight.
-
-Found by Vegard Nossum using AFL.
+An empty string as mode specification is accepted silently by git apply,
+as Vegard Nossum found out using AFL.  It's interpreted as zero.  Reject
+such bogus file modes, and only accept ones consisting exclusively of
+octal digits.
 
 Reported-by: Vegard Nossum <vegard.nossum@oracle.com>
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- apply.c                | 14 ++++++++++++++
- apply.h                |  1 +
- t/t4136-apply-check.sh | 18 ++++++++++++++++++
- 3 files changed, 33 insertions(+)
+ apply.c                   | 17 ++++++++++++-----
+ t/t4129-apply-samemode.sh | 16 +++++++++++++++-
+ 2 files changed, 27 insertions(+), 6 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index 8cd6435c74..8a5e44c474 100644
+index 8a5e44c474..db38bc3cdd 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -1312,6 +1312,18 @@ static char *git_header_name(struct apply_state *state,
- 	}
+@@ -1001,20 +1001,27 @@ static int gitdiff_newname(struct apply_state *state,
+ 				   DIFF_NEW_NAME);
  }
  
-+static int check_header_line(struct apply_state *state, struct patch *patch)
++static int parse_mode_line(const char *line, int linenr, unsigned int *mode)
 +{
-+	int extensions = (patch->is_delete == 1) + (patch->is_new == 1) +
-+			 (patch->is_rename == 1) + (patch->is_copy == 1);
-+	if (extensions > 1)
-+		return error(_("inconsistent header lines %d and %d"),
-+			     state->extension_linenr, state->linenr);
-+	if (extensions && !state->extension_linenr)
-+		state->extension_linenr = state->linenr;
++	char *end;
++	*mode = strtoul(line, &end, 8);
++	if (end == line || !isspace(*end))
++		return error(_("invalid mode on line %d: %s"), linenr, line);
 +	return 0;
 +}
 +
- /* Verify that we recognize the lines following a git header */
- static int parse_git_header(struct apply_state *state,
- 			    const char *line,
-@@ -1378,6 +1390,8 @@ static int parse_git_header(struct apply_state *state,
- 			res = p->fn(state, line + oplen, patch);
- 			if (res < 0)
- 				return -1;
-+			if (check_header_line(state, patch))
-+				return -1;
- 			if (res > 0)
- 				return offset;
- 			break;
-diff --git a/apply.h b/apply.h
-index b3d6783d55..b52078b486 100644
---- a/apply.h
-+++ b/apply.h
-@@ -79,6 +79,7 @@ struct apply_state {
+ static int gitdiff_oldmode(struct apply_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+-	patch->old_mode = strtoul(line, NULL, 8);
+-	return 0;
++	return parse_mode_line(line, state->linenr, &patch->old_mode);
+ }
  
- 	/* Various "current state" */
- 	int linenr; /* current line number */
-+	int extension_linenr; /* first line specifying delete/new/rename/copy */
- 	struct string_list symlink_changes; /* we have to track symlinks */
+ static int gitdiff_newmode(struct apply_state *state,
+ 			   const char *line,
+ 			   struct patch *patch)
+ {
+-	patch->new_mode = strtoul(line, NULL, 8);
+-	return 0;
++	return parse_mode_line(line, state->linenr, &patch->new_mode);
+ }
  
- 	/*
-diff --git a/t/t4136-apply-check.sh b/t/t4136-apply-check.sh
-index 4b0a374b63..6d92872318 100755
---- a/t/t4136-apply-check.sh
-+++ b/t/t4136-apply-check.sh
-@@ -29,4 +29,22 @@ test_expect_success 'apply exits non-zero with no-op patch' '
- 	test_must_fail git apply --check input
+ static int gitdiff_delete(struct apply_state *state,
+@@ -1128,7 +1135,7 @@ static int gitdiff_index(struct apply_state *state,
+ 	memcpy(patch->new_sha1_prefix, line, len);
+ 	patch->new_sha1_prefix[len] = 0;
+ 	if (*ptr == ' ')
+-		patch->old_mode = strtoul(ptr+1, NULL, 8);
++		return gitdiff_oldmode(state, ptr + 1, patch);
+ 	return 0;
+ }
+ 
+diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
+index c268298eaf..5cdd76dfa7 100755
+--- a/t/t4129-apply-samemode.sh
++++ b/t/t4129-apply-samemode.sh
+@@ -13,7 +13,9 @@ test_expect_success setup '
+ 	echo modified >file &&
+ 	git diff --stat -p >patch-0.txt &&
+ 	chmod +x file &&
+-	git diff --stat -p >patch-1.txt
++	git diff --stat -p >patch-1.txt &&
++	sed "s/^\(new mode \).*/\1/" <patch-1.txt >patch-empty-mode.txt &&
++	sed "s/^\(new mode \).*/\1garbage/" <patch-1.txt >patch-bogus-mode.txt
  '
  
-+test_expect_success 'invalid combination: create and copy' '
-+	test_must_fail git apply --check - <<-\EOF
-+	diff --git a/1 b/2
-+	new file mode 100644
-+	copy from 1
-+	copy to 2
-+	EOF
+ test_expect_success FILEMODE 'same mode (no index)' '
+@@ -59,4 +61,16 @@ test_expect_success FILEMODE 'mode update (index only)' '
+ 	git ls-files -s file | grep "^100755"
+ '
+ 
++test_expect_success FILEMODE 'empty mode is rejected' '
++	git reset --hard &&
++	test_must_fail git apply patch-empty-mode.txt 2>err &&
++	test_i18ngrep "invalid mode" err
 +'
 +
-+test_expect_success 'invalid combination: create and rename' '
-+	test_must_fail git apply --check - <<-\EOF
-+	diff --git a/1 b/2
-+	new file mode 100644
-+	rename from 1
-+	rename to 2
-+	EOF
++test_expect_success FILEMODE 'bogus mode is rejected' '
++	git reset --hard &&
++	test_must_fail git apply patch-bogus-mode.txt 2>err &&
++	test_i18ngrep "invalid mode" err
 +'
 +
  test_done
