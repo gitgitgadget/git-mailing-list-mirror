@@ -2,127 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DC9620401
-	for <e@80x24.org>; Tue, 27 Jun 2017 18:09:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B21620401
+	for <e@80x24.org>; Tue, 27 Jun 2017 18:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752768AbdF0SJD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 14:09:03 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36221 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752542AbdF0SJA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 14:09:00 -0400
-Received: by mail-pg0-f67.google.com with SMTP id u36so5170459pgn.3
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 11:09:00 -0700 (PDT)
+        id S1753230AbdF0SL6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 14:11:58 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:36173 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752542AbdF0SL5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 14:11:57 -0400
+Received: by mail-wm0-f53.google.com with SMTP id 62so32141724wmw.1
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 11:11:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=qE0vUorlui9Rz4nEZi0jXFpom4xJBnqDHjAj8Tp16h0=;
-        b=bC3/P5q1QD/iC6lG4/wjA5SYQMUJmCaSAQ/KoteQ6wuWdhwwdBwlOF7CqVTX4iXdvo
-         bOwmasldJwGnfKvkwFb8UuFz31X6O/bpUAjpl/AI6w7CMRrFUf6tgoBbRO2UwxMfDki6
-         MlJQVp0WWkmSpNhVVP1cHO4aYtwyX0D2N0CXpIRYe3HY2IStx+h1GVfWevO7O4hXXeho
-         hx2HPGgxBzjSLXDY1iG5PxtnLehnBrxfysk+l/NlEpowBpEXvHPhOtEdqQ71ORbremeW
-         AodnURUrjB1NiZKh1gp/NEuj88lbGKmStFBaLCgyagllpM1kYE/KGSOFpKeYyK7lF5vT
-         frIw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=/RmybFj0YL7hEjr2mLfrfxkqwN+jT4FhPPe7taldE3U=;
+        b=nhN77S5Nn0mrF3PcAMm71skwVrkabvXGh/T44NNWTtgsGzKIWYK7l1UYyK3D2Q3bKx
+         iZKmLcKY6Oc5nVI7TF9jPy3RtVbTl7e5FOzBcGh7VJHOLm/aWv7lFlaFsP6PjeHU2soG
+         6Dm/EjsAikW56BsZ5XCWxtc6lbG3kQmmAuB+FOsHdfqrSA3lLBNPC4WV48cNDvqhNlO8
+         cm/hgMLbDOrAu6k3bt+jWB8RCOhVJeABWafUf7pFZy1RRH57EVlBIrLu4Dze73Gt5Al7
+         pe5m1nJm9UZ+FPk4mVD3G/IRrFtCGx/oLhRcDi185oZpQYQgUmi0VkKFa4qbg9bPM1Qp
+         vS7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=qE0vUorlui9Rz4nEZi0jXFpom4xJBnqDHjAj8Tp16h0=;
-        b=sNrV1nfZ78kqmVcCi/sbcSr/YboiSjYjTePSYs3Ryz7JldvxmJVdsEs+xtGnRmCvpZ
-         nIGihn9w2PtKrcjDZDSgpqwBgdW5VFlcJdtVUaN+wAUOtnn0XxKLo76tPpgF/5xBpo8U
-         BavlA1JICST49+PLQPRWMvKwkZwPsbEAXoHWdw7NOrrqYl7KJLbGrT4LW5IQ8h0blfCR
-         KhFc4G0VHQ2QgMB2WsmPcaNbMm9I4MHnucw0Qie1/tXMlbUGfwgtcPh7d7Yw+vipsm75
-         ZkoWPzCBbH07uHtI663b90Lmh0smjsuHvxrdO0UiL/JsqvgD3C3lWULeH8eDgBTeZDr6
-         qbfg==
-X-Gm-Message-State: AKS2vOzRpw4Hdx5OGL6KoJKjoyumSHBJTfGs1q7EkbuLWN4Vdyuz/7gv
-        omhTLuOc1aQ/w0J7jaU=
-X-Received: by 10.99.9.131 with SMTP id 125mr6454762pgj.178.1498586939954;
-        Tue, 27 Jun 2017 11:08:59 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
-        by smtp.gmail.com with ESMTPSA id o6sm6373214pfb.110.2017.06.27.11.08.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 11:08:59 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>,
-        Michal Zalewski <lcamtuf@google.com>
-Subject: Re: [PATCH 2/2] apply: handle assertion failure gracefully
-References: <20170225101307.24067-1-vegard.nossum@oracle.com>
-        <20170225101307.24067-2-vegard.nossum@oracle.com>
-        <a5626d97-e644-65b5-2fd3-41ce870f85a6@web.de>
-        <xmqqmvd7wgc7.fsf@gitster.mtv.corp.google.com>
-        <f191e3a8-a55b-7030-ebbb-3f46c74fdc94@web.de>
-        <xmqq1sujnu1g.fsf@gitster.mtv.corp.google.com>
-        <05fe5800-ebc0-76d7-579d-77f64a851fc1@web.de>
-        <5128cdf1-39fc-59ca-5640-801777bac2fa@web.de>
-Date:   Tue, 27 Jun 2017 11:08:58 -0700
-In-Reply-To: <5128cdf1-39fc-59ca-5640-801777bac2fa@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 27 Jun 2017 19:03:39 +0200")
-Message-ID: <xmqqshil1ex1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=/RmybFj0YL7hEjr2mLfrfxkqwN+jT4FhPPe7taldE3U=;
+        b=m67eFZC8I9Ujm/O8dwlK0CSxI4nAbfxo//4582/OYj6WAxU44qqndia+LAd4aEB6j6
+         +waB4lmR2N0gCxH1TH7GOC3/cOht5x0WGf5sC4RMbB324kxG8IjiSFtRoswFmU77yrIf
+         RWY+XxZvk3t/NW3DOG8CZVSOVlqN8iyKRhxfGNJbGYeXOZOAPFKSs1Zbh4M3xX8WToO/
+         z8UvzD1Zx0/RNeVG4mlIhmvYLKGHrQ16ZF6fcXMEDbRyQJjK64rxBosPb2vGcL8IxSsX
+         fwrQM1LQyVZq2Ji6lUbHd/oGqb7NfEM75sra+SEx64vK7b3b27tDxLh4xHNMzqcsCdB+
+         MwNQ==
+X-Gm-Message-State: AKS2vOw829FfO+bvs74i/W7VaguRRO/WUl2EfczemvsVynfqXsEyHkfF
+        JY/PsCvWp0WrOvkk+Wo=
+X-Received: by 10.80.163.210 with SMTP id t18mr4925488edb.158.1498587116102;
+        Tue, 27 Jun 2017 11:11:56 -0700 (PDT)
+Received: from snth (g74110.upc-g.chello.nl. [80.57.74.110])
+        by smtp.gmail.com with ESMTPSA id x13sm1933004eda.67.2017.06.27.11.11.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 27 Jun 2017 11:11:54 -0700 (PDT)
+Received: from avar by snth with local (Exim 4.84_2)
+        (envelope-from <avarab@gmail.com>)
+        id 1dPuxu-0005xF-1W; Tue, 27 Jun 2017 20:11:54 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Michael Kebe <michael.kebe@gmail.com>,
+        "Liam R . Howlett" <Liam.Howlett@Oracle.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH 1/3] sha1dc: update from my PR #36
+References: <20170627121718.12078-1-avarab@gmail.com> <CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com> <20170627121718.12078-2-avarab@gmail.com> <xmqqmv8t317c.fsf@gitster.mtv.corp.google.com> <xmqqefu52znl.fsf@gitster.mtv.corp.google.com>
+User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <xmqqefu52znl.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 27 Jun 2017 20:11:54 +0200
+Message-ID: <87wp7xjo5x.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
 
-> Thought a bit more about it, and as a result here's a simpler approach:
->
-> -- >8 --
-> Subject: [PATCH] apply: check git diffs for mutually exclusive header lines
->
-> A file can either be added, removed, copied, or renamed, but no two of
-> these actions can be done by the same patch.  Some of these combinations
-> provoke error messages due to missing file names, and some are only
-> caught by an assertion.  Check git patches already as they are parsed
-> and report conflicting lines on sight.
->
-> Found by Vegard Nossum using AFL.
->
-> Reported-by: Vegard Nossum <vegard.nossum@oracle.com>
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  apply.c                | 14 ++++++++++++++
->  apply.h                |  1 +
->  t/t4136-apply-check.sh | 18 ++++++++++++++++++
->  3 files changed, 33 insertions(+)
->
-> diff --git a/apply.c b/apply.c
-> index 8cd6435c74..8a5e44c474 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -1312,6 +1312,18 @@ static char *git_header_name(struct apply_state *state,
->  	}
->  }
->  
-> +static int check_header_line(struct apply_state *state, struct patch *patch)
-> +{
-> +	int extensions = (patch->is_delete == 1) + (patch->is_new == 1) +
-> +			 (patch->is_rename == 1) + (patch->is_copy == 1);
-> +	if (extensions > 1)
-> +		return error(_("inconsistent header lines %d and %d"),
-> +			     state->extension_linenr, state->linenr);
-> +	if (extensions && !state->extension_linenr)
-> +		state->extension_linenr = state->linenr;
+On Tue, Jun 27 2017, Junio C. Hamano jotted:
 
-OK.  I wondered briefly what happens if the first git_header that
-sets one of the extensions can be at line 0 (calusng
-state->extension_linenr to be set to 0), but even in that case, the
-second problematic one will correctly report the 0th and its own
-line as culprit, so this is OK.  It makes me question if there is
-any point checking !state->extension_linenr in the if() statement,
-though.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>> +#if (defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
+>>>       defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
+>>>       defined(__sparc))
+>>> +/*
+>>> + * Should define Big Endian for a whitelist of known processors. See
+>>> + * https://sourceforge.net/p/predef/wiki/Endianness/ and
+>>> + * http://www.oracle.com/technetwork/server-storage/solaris/portingtosolaris-138514.html
+>>> + */
+>>>  #define SHA1DC_BIGENDIAN
+>>
+>> These look sensible.
+>
+> By the way, I wonder why this didn't catch the sparc running
+> Solaris.  What does Michael's system use to let the software know
+> that it is targetted for a Sparc, if not __sparc?
 
+Because in the current code is, abbreviated:
+
+    #if (defined(_BYTE_ORDER) || defined(__BYTE_ORDER) || defined(__BYTE_ORDER__))
+    #if /* byte order is bendian */
+    #define SHA1DC_BIGENDIAN
+    #endif
+    #else
+    #if /*some processor tests/* || defined(__sparc))
+    #define SHA1DC_BIGENDIAN
+    #endif
+
+And since Solaris defines _BYTE_ORDER we never get to checking __sparc,
+and in fact the "/* byte order is bendian */" test errors out.
+
+This is fixed by my patch, where we first check gcc settings, then
+glibc, then processors, and finally _BYTE_ORDER (but as discussed that
+last bit could be adjusted to sun && _BYTE_ORDER, if we can find what
+"sun" is.
