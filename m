@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF86220401
-	for <e@80x24.org>; Tue, 27 Jun 2017 12:17:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65CD020401
+	for <e@80x24.org>; Tue, 27 Jun 2017 12:17:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752868AbdF0MRf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 08:17:35 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34705 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752605AbdF0MRc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 08:17:32 -0400
-Received: by mail-wm0-f68.google.com with SMTP id p204so622979wmg.1
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 05:17:32 -0700 (PDT)
+        id S1752920AbdF0MRr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 08:17:47 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34724 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752191AbdF0MRo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 08:17:44 -0400
+Received: by mail-wm0-f67.google.com with SMTP id p204so623150wmg.1
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 05:17:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=UIEMwKrGzgvZn0OnlMhWOACn26Ezb/0A9EkBi7TNn7s=;
-        b=tQoKwSEE75ymmO0gqcUojEZOUJ3pDITlddCIWsHDEwwKkHsVc/Zps4vichAO9vzNeC
-         BPNTTRHDYtXNSI9bi0iNno1cIVobC/ONuRODW314MK4/uklq4G5YuLvNkJd2F6uzDIuN
-         PnnmdfDF8zs4OD9HpELEljPxESu4tCLARDbdFos5uGfyxbfTZC3ZFIKBx+Pea0GguuHO
-         V+/g4q3mx5Jzt8Ed1oHkohhDpA9vNEuJDn6q6qBXTWy1Ku9moF+M2RGu+AtbCOIGdJ/r
-         8NEV6or6nUosM5yKCdqJfjQqKRugCTgzEIsdR7F0wGKjCfQ8o/1Dq9iMmHxaQ8K2fhwe
-         W7ow==
+        bh=Br+593ULnr9gfGnbSW6jnC4ilv0Quy7gYNE1bL+vCTU=;
+        b=RDyJZR+OwZWdw8HHxeHdSZiZrqqx41mtPBjnC9FDq72oT7H741C66d8mLMZ2hc2KPP
+         AoKKWxglvukYsHuIVdfL6tIB8knXcrwv7upT21hnB7bbxuKA5Ms3ZHIJw4ANKeaV21rP
+         X3sBo0R94mbxqB53abBPyjzzsK/8wd/ZeEZJiE9mrCC1+NzXO0eMHH03VKlSBLmJnOFk
+         8M2lCFlr+HAgqYKKNjeujYAGY02Y/aM/M+ZGhLn+78kqh2RUcR2FZTHzs06WCRivjCX6
+         vhwtUt5XgQWRYhaH3SYcqqw9/K/5rudFBBIMnqhCx36rBlqFMIX989PKQjXgXoFRmw+u
+         B1tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=UIEMwKrGzgvZn0OnlMhWOACn26Ezb/0A9EkBi7TNn7s=;
-        b=rqgWTj3QRvSg2tqijDGDwJfRvYgDUiJGxWLmdsoRfF1dhWTIhq40/IkYtXooHf4Wu/
-         7m+OuwwUw+/E74FmvasJNDB0ToQ8y3h8U9ldYARYqWHA/NuCFVNRvOVq+RxeOK+fesXx
-         l+T5NS6A59o7gUVQE9VQViRr9H7bPG2kcLPNT7T/Fv6s4QI+qOW/v/yK7KA0lWZiJ5Ax
-         in/XySwWDta3Fxyap37SVAGNo5zOTsZhpg4Zk0jN3yfX5//T+TF6rzLEQNL0VaHH6mmP
-         RY1klmzY0qoPDgfDnZZsPfnltBR8ozi/8X7AQJmtAGuPHZUNb78bqfP35Dza0KKCX2nf
-         l9gg==
-X-Gm-Message-State: AKS2vOzdYcwGewOnznZhEZWDKPZYGqa8SIxFIKV+cZJq7Kuw70Wxx9ET
-        bPGqI7SAnySs9rdHGbM=
-X-Received: by 10.80.185.3 with SMTP id m3mr3657692ede.41.1498565850879;
-        Tue, 27 Jun 2017 05:17:30 -0700 (PDT)
+        bh=Br+593ULnr9gfGnbSW6jnC4ilv0Quy7gYNE1bL+vCTU=;
+        b=dkhhJuuDfYRrcfaNnqa2L41WPsLU/pTujivkZ5/seDfNtKTwNX0yAhLVm2TI8rojec
+         v5W2l15zi0hRsZ4St8WG0fP9J3YNQjKJZuuJkGzm6ayUCGWTRU8KOCxV/Ue2KEQzwOMn
+         C4kcdYAJdnCm699DrFCD2LX7dZIikBpuOT68fuAmtyN/Q4XgRFX3lbmsvX4G2g8eiyjB
+         HxBGIignOGVuWzD35qyH1rjBA2VX5HNtmzDmVAMJdfEz3334LJo5CSUZ29Qt/40nx6u1
+         ZjIYFrkcugatTId06e/kpng9KSi+AA65DEJjGoT90q89MVP9Eiem2Nc2dB9HVTNGwSIt
+         nMvw==
+X-Gm-Message-State: AKS2vOyq/LQw6K5CSCALe2XkeFZcobQWAIj91fXwfucSbW2HmKhZRXoM
+        mYQ+2ZFFVqQsByzuNcQ=
+X-Received: by 10.80.173.235 with SMTP id b40mr3803361edd.110.1498565852768;
+        Tue, 27 Jun 2017 05:17:32 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l17sm1510926edc.39.2017.06.27.05.17.29
+        by smtp.gmail.com with ESMTPSA id l17sm1510926edc.39.2017.06.27.05.17.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Jun 2017 05:17:30 -0700 (PDT)
+        Tue, 27 Jun 2017 05:17:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/3] sha1dc: update from my PR #36
-Date:   Tue, 27 Jun 2017 12:17:16 +0000
-Message-Id: <20170627121718.12078-2-avarab@gmail.com>
+Subject: [PATCH 2/3] sha1dc: optionally use sha1collisiondetection as a submodule
+Date:   Tue, 27 Jun 2017 12:17:17 +0000
+Message-Id: <20170627121718.12078-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1
 In-Reply-To: <20170627121718.12078-1-avarab@gmail.com>
 References: <20170627121718.12078-1-avarab@gmail.com>
@@ -75,144 +75,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update sha1dc from my PR #36[1] which'll hopefully be integrated by
-upstream soon.
+Add an option to use the sha1collisiondetection library from the
+submodule in sha1collisiondetection/ instead of in the copy in the
+sha1dc/ directory.
 
-This solves the Big Endian detection on Solaris reported against
-v2.13.2[2], hopefully without any regressions.
+This allows us to try out the submodule in sha1collisiondetection
+without breaking the build for anyone who's not expecting them as we
+work out any kinks.
 
-See commit a0103914c2 ("sha1dc: update from upstream", 2017-05-20) and
-6b851e536b ("sha1dc: update from upstream", 2017-06-06) for previous
-attempts in the 2.13 series to address various compile-time feature
-detection in this library.
-
-1. https://github.com/cr-marcstevens/sha1collisiondetection/pull/36
-   https://github.com/avar/sha1collisiondetection/commit/56ab30c4c998e1e7f3075705087a2f0c4c4202d7
-2. <CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com>
-   (https://public-inbox.org/git/CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com/)
+This uses my own fork which integrates PR #36. See the preceding
+commit ("sha1dc: update from my PR #36", 2017-06-27) for details.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- sha1dc/sha1.c | 80 +++++++++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 61 insertions(+), 19 deletions(-)
+ .gitmodules            |  4 ++++
+ Makefile               | 12 ++++++++++++
+ hash.h                 |  4 ++++
+ sha1collisiondetection |  1 +
+ 4 files changed, 21 insertions(+)
+ create mode 100644 .gitmodules
+ create mode 160000 sha1collisiondetection
 
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index facea1bb56..1ff325b37a 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -23,6 +23,13 @@
- #include "sha1.h"
- #include "ubc_check.h"
- 
-+#if (defined(__amd64__) || defined(__amd64) || defined(__x86_64__) || defined(__x86_64) || \
-+     defined(i386) || defined(__i386) || defined(__i386__) || defined(__i486__)  || \
-+     defined(__i586__) || defined(__i686__) || defined(_M_IX86) || defined(__X86__) || \
-+     defined(_X86_) || defined(__THW_INTEL__) || defined(__I86__) || defined(__INTEL__) || \
-+     defined(__386) || defined(_M_X64) || defined(_M_AMD64))
-+#define SHA1DC_ON_INTEL_LIKE_PROCESSOR
-+#endif
- 
- /*
-    Because Little-Endian architectures are most common,
-@@ -32,28 +39,70 @@
-    If you are compiling on a big endian platform and your compiler does not define one of these,
-    you will have to add whatever macros your tool chain defines to indicate Big-Endianness.
-  */
--#ifdef SHA1DC_BIGENDIAN
--#undef SHA1DC_BIGENDIAN
-+
-+#if defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__)
-+/*
-+ * Should detect Big Endian under GCC since at least 4.6.0 (gcc svn
-+ * rev #165881). See
-+ * https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
-+ *
-+ * This also works under clang since 3.2, it copied the GCC-ism. See
-+ * clang.git's 3b198a97d2 ("Preprocessor: add __BYTE_ORDER__
-+ * predefined macro", 2012-07-27)
-+ */
-+#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-+#define SHA1DC_BIGENDIAN
- #endif
- 
--#if (defined(_BYTE_ORDER) || defined(__BYTE_ORDER) || defined(__BYTE_ORDER__))
-+#else /* Not under GCC-alike */
- 
--#if ((defined(_BYTE_ORDER) && (_BYTE_ORDER == _BIG_ENDIAN)) || \
--     (defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
--     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) )
-+#if defined(__BYTE_ORDER) && defined(__BIG_ENDIAN)
-+/*
-+ * Should detect Big Endian under glibc.git since 14245eb70e ("entered
-+ * into RCS", 1992-11-25). Defined in <endian.h> which will have been
-+ * brought in by standard headers. See glibc.git and
-+ * https://sourceforge.net/p/predef/wiki/Endianness/
-+ */
-+#if __BYTE_ORDER == __BIG_ENDIAN
- #define SHA1DC_BIGENDIAN
- #endif
- 
--#else
-+#else /* Not under GCC-alike or glibc */
- 
--#if (defined(_BIG_ENDIAN) || defined(__BIG_ENDIAN) || defined(__BIG_ENDIAN__) || \
--     defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
-+#if (defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
-      defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
-      defined(__sparc))
-+/*
-+ * Should define Big Endian for a whitelist of known processors. See
-+ * https://sourceforge.net/p/predef/wiki/Endianness/ and
-+ * http://www.oracle.com/technetwork/server-storage/solaris/portingtosolaris-138514.html
-+ */
- #define SHA1DC_BIGENDIAN
--#endif
- 
--#endif
-+#else /* Not under GCC-alike or glibc or <processor whitelist> */
-+
-+#if defined(SHA1DC_ON_INTEL_LIKE_PROCESSOR)
-+/*
-+ * As a last resort before we fall back on _BIG_ENDIAN or whatever
-+ * else we're not 100% sure about below, we blacklist specific
-+ * processors here. We could add more, see
-+ * e.g. https://wiki.debian.org/ArchitectureSpecificsMemo
-+ */
-+#else /* Not under GCC-alike or glibc or <processor whitelist>  or <processor blacklist> */
-+
-+#ifdef _BIG_ENDIAN
-+/*
-+ * Solaris / illumos defines either _LITTLE_ENDIAN or _BIG_ENDIAN in
-+ * <sys/isa_defs.h>.
-+ */
-+#define SHA1DC_BIGENDIAN
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000000..2fea9996e9
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,4 @@
++[submodule "sha1collisiondetection"]
++	path = sha1collisiondetection
++	url = https://github.com/avar/sha1collisiondetection.git
++	branch = bigend-detect-solaris-again
+diff --git a/Makefile b/Makefile
+index b94cd5633c..f0cac1f246 100644
+--- a/Makefile
++++ b/Makefile
+@@ -162,6 +162,12 @@ all::
+ # algorithm. This is slower, but may detect attempted collision attacks.
+ # Takes priority over other *_SHA1 knobs.
+ #
++# Define DC_SHA1_SUBMODULE in addition to DC_SHA1 to use the
++# sha1collisiondetection shipped as a submodule instead of the
++# non-submodule copy in sha1dc/. This is an experimental option used
++# by the git project to migrate to using sha1collisiondetection as a
++# submodule.
++#
+ # Define OPENSSL_SHA1 environment variable when running make to link
+ # with the SHA1 routine from openssl library.
+ #
+@@ -1448,8 +1454,14 @@ ifdef APPLE_COMMON_CRYPTO
+ 	BASIC_CFLAGS += -DSHA1_APPLE
+ else
+ 	DC_SHA1 := YesPlease
++ifdef DC_SHA1_SUBMODULE
++	LIB_OBJS += sha1collisiondetection/lib/sha1.o
++	LIB_OBJS += sha1collisiondetection/lib/ubc_check.o
++	BASIC_CFLAGS += -DDC_SHA1_SUBMODULE
++else
+ 	LIB_OBJS += sha1dc/sha1.o
+ 	LIB_OBJS += sha1dc/ubc_check.o
++endif
+ 	BASIC_CFLAGS += \
+ 		-DSHA1_DC \
+ 		-DSHA1DC_NO_STANDARD_INCLUDES \
+diff --git a/hash.h b/hash.h
+index a11fc9233f..bef3e630a0 100644
+--- a/hash.h
++++ b/hash.h
+@@ -8,7 +8,11 @@
+ #elif defined(SHA1_OPENSSL)
+ #include <openssl/sha.h>
+ #elif defined(SHA1_DC)
++#ifdef DC_SHA1_SUBMODULE
++#include "sha1collisiondetection/lib/sha1.h"
 +#else
-+/*#error "Uncomment this to see if you fall through all the detection"*/
-+#endif /* Big Endian because of _BIG_ENDIAN (Solaris)*/
-+#endif /* !SHA1DC_ON_INTEL_LIKE_PROCESSOR */
-+#endif /* Big Endian under whitelist of processors */
-+#endif /* Big Endian under glibc */
-+#endif /* Big Endian under GCC-alike */
- 
- #if (defined(SHA1DC_FORCE_LITTLEENDIAN) && defined(SHA1DC_BIGENDIAN))
- #undef SHA1DC_BIGENDIAN
-@@ -63,15 +112,8 @@
+ #include "sha1dc/sha1.h"
++#endif
+ #else /* SHA1_BLK */
+ #include "block-sha1/sha1.h"
  #endif
- /*ENDIANNESS SELECTION*/
- 
--#if (defined SHA1DC_FORCE_UNALIGNED_ACCESS || \
--     defined(__amd64__) || defined(__amd64) || defined(__x86_64__) || defined(__x86_64) || \
--     defined(i386) || defined(__i386) || defined(__i386__) || defined(__i486__)  || \
--     defined(__i586__) || defined(__i686__) || defined(_M_IX86) || defined(__X86__) || \
--     defined(_X86_) || defined(__THW_INTEL__) || defined(__I86__) || defined(__INTEL__) || \
--     defined(__386) || defined(_M_X64) || defined(_M_AMD64))
--
-+#if defined(SHA1DC_FORCE_UNALIGNED_ACCESS) || defined(SHA1DC_ON_INTEL_LIKE_PROCESSOR)
- #define SHA1DC_ALLOW_UNALIGNED_ACCESS
--
- #endif /*UNALIGNMENT DETECTION*/
- 
- 
+diff --git a/sha1collisiondetection b/sha1collisiondetection
+new file mode 160000
+index 0000000000..56ab30c4c9
+--- /dev/null
++++ b/sha1collisiondetection
+@@ -0,0 +1 @@
++Subproject commit 56ab30c4c998e1e7f3075705087a2f0c4c4202d7
 -- 
 2.13.1.611.g7e3b11ae1
 
