@@ -7,48 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81EA520401
-	for <e@80x24.org>; Tue, 27 Jun 2017 15:53:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99FAA20401
+	for <e@80x24.org>; Tue, 27 Jun 2017 15:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752108AbdF0Pxs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 11:53:48 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34716 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751499AbdF0Pxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 11:53:47 -0400
-Received: by mail-pf0-f195.google.com with SMTP id d5so5289897pfe.1
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 08:53:47 -0700 (PDT)
+        id S1751747AbdF0Pzq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 11:55:46 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35975 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751535AbdF0Pzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 11:55:44 -0400
+Received: by mail-pg0-f67.google.com with SMTP id u36so4780718pgn.3
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 08:55:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=1r1x8rENZE/DnBDhJdbsSRwr/c6IVVlKENn0hlcEYIE=;
-        b=lfLI4cYqOAhPTgmie9M6SAL24pU/pNpXyYrltBDM5sbFCTHIvv424dm1EcGX29wYbY
-         FAJaECq7mgufBxHRhqUjb15Lp3u0NBlsmauv8DjfC4JKqizPjVFvF2Fx7vc4F8DHk0X/
-         VPwajrBMZz4mX/xgXsgtyvd8tlhMU4TGWF1ZRyGKCtq66Xa24+C9QKX9+BHqBr5yPkT8
-         ld8A8ExpvYOv/y9eA7D0zmbFHU1KztvjDlvmjff5oSLpOY8Qets2q/ROmxeivb4toAwR
-         T+RqymrHvYKOpkAYf4i53lvb+w0HoXrvzfjQENDoB1oyjOQNjHVZ15CKpEfTWFjyIcU4
-         WSyQ==
+         :user-agent:mime-version;
+        bh=duPjbwHSPichbkuEj2F6zYSvvar5KjRCowiaVXJTfiw=;
+        b=D8q1JyrMNkG5gsqRr5lputEYPqrBLbdhxbXbd0pRDejK57R5+0HVQceIBezd7crw7V
+         Kbf1aXeyCfC6QqSu3ED1TWMLmBeTGuC+M7Pb9lkM8ut4nqqeoUYvNw8o1Q2N51DcgD8N
+         iCJV/42s0WSwLnY85QBLoN973rauYa/cMomfCNVHx9hMMhlVGIMvu3s8srQzrupaDZy/
+         WXoixrwtrYXQ5N3mBpSQbA9hKwft5ltETgbjcLzw3IdIY36t0HhNl1XvHREKk+temNYG
+         LT5CHNiNIIZ0WQPsCMsQdFkajVui+9CiPA0RzgRDs9MTBSvkWgQjpkahAaJd0kwrrs5Q
+         zBlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=1r1x8rENZE/DnBDhJdbsSRwr/c6IVVlKENn0hlcEYIE=;
-        b=J+j6DheqPoxk2NcfRtZ0lFn/Gz+aV3UVh68p5XQ1Bp6hLEaW8RnA8wc5u69egwxwzU
-         tR95ZOjDTgbjYER4FfNnnOSdQ1GEoBv0Z1I5pIQNL3FMfrQoYQS/p5k6wBhHRoEYNfT+
-         PGrx/BK7CyXUozCDtlKkzqzg2IV6puj0YWSAgyxU9+zbTLuCgi64/52nfJYBLxU8PT+5
-         2dwL/0j+rE8eOk31p54DKCBb6+oXPKXG1ooOd8cZv355JtG5uWrRg2SkUCraNYwXxRAB
-         ASWlTt2hDEpva8nkGlL/ec7XF2+MmQYP/L3dSfJfXjLSVFwBueTT7MwDHfVByZPAsznP
-         Lbmw==
-X-Gm-Message-State: AKS2vOygQcCNd7S85Z+TkJS7Gm1cWG7JaSXL9vVCiQo4Ld38alUJOC19
-        cWdYY6T0F9qmwV5aDfs=
-X-Received: by 10.101.83.197 with SMTP id z5mr6019068pgr.256.1498578826600;
-        Tue, 27 Jun 2017 08:53:46 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=duPjbwHSPichbkuEj2F6zYSvvar5KjRCowiaVXJTfiw=;
+        b=r0qJr/2hrpNM2uDEPRC6WOyUlmhr9gEojxveLCkMaZyIjhd5FujNH2EFikoF9QrY4F
+         UQTBmt9k+nmA7z6zMiPJcPhTaZi8+jBS28bwNNaa4BlkPfyecnbT7a63F7X/O1+5/6Rr
+         dfudYfTNLITfk/b+Lvkt3uG/VesnrACwsmNMcWK8VtH49UMUMlBtNRKf86SCPctFD2lm
+         MtRDF3ot+b7/VV1OHfsjC8BXGTsckPDRfERytCYKL4DfoYyS8msEKCozvqZ4jl02iFbb
+         SpDaKL/J1f1M7WzuUhr+YPdlRxFTAL3HgnOhgyd9qD3vdoln7TUjS9+edvKmhG+4MaSA
+         EiAg==
+X-Gm-Message-State: AKS2vOy5RYryWvYWrTMfLx9amjgyQcXRpaRLY4DJOBcv34TvctyAHLdK
+        3RNbjWwGEw+4Aw==
+X-Received: by 10.99.177.78 with SMTP id g14mr6101960pgp.131.1498578944058;
+        Tue, 27 Jun 2017 08:55:44 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
-        by smtp.gmail.com with ESMTPSA id z82sm5517092pfk.1.2017.06.27.08.53.45
+        by smtp.gmail.com with ESMTPSA id f70sm7865416pfk.27.2017.06.27.08.55.42
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 08:53:45 -0700 (PDT)
+        Tue, 27 Jun 2017 08:55:43 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
@@ -61,14 +60,13 @@ References: <20170627121718.12078-1-avarab@gmail.com>
         <CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com>
         <20170627121718.12078-2-avarab@gmail.com>
         <xmqqmv8t317c.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 27 Jun 2017 08:53:45 -0700
+Date:   Tue, 27 Jun 2017 08:55:42 -0700
 In-Reply-To: <xmqqmv8t317c.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
         message of "Tue, 27 Jun 2017 08:22:15 -0700")
-Message-ID: <xmqqinjh2zqu.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqefu52znl.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -76,33 +74,19 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> +#else /* Not under GCC-alike or glibc or <processor whitelist>  or <processor blacklist> */
->> +
->> +#ifdef _BIG_ENDIAN
+>> +#if (defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
+>>       defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
+>>       defined(__sparc))
 >> +/*
->> + * Solaris / illumos defines either _LITTLE_ENDIAN or _BIG_ENDIAN in
->> + * <sys/isa_defs.h>.
+>> + * Should define Big Endian for a whitelist of known processors. See
+>> + * https://sourceforge.net/p/predef/wiki/Endianness/ and
+>> + * http://www.oracle.com/technetwork/server-storage/solaris/portingtosolaris-138514.html
 >> + */
->> +#define SHA1DC_BIGENDIAN
+>>  #define SHA1DC_BIGENDIAN
 >
-> This makes readers of this patch wonder why we assume platforms
-> won't define _LITTLE_ENDIAN and _BIG_ENDIAN at the same time, just
-> like we saw in the section with __BIG_ENDIAN above.
+> These look sensible.
 
-To be a bit more constructive, I'd feel it MUCH safer, if this "If
-_BIG_ENDIAN is defined, set SHA1DC_BIGENDIAN" is done _ONLY_ when
-we definitively KNOW that we are on Solaris, something like:
+By the way, I wonder why this didn't catch the sparc running
+Solaris.  What does Michael's system use to let the software know
+that it is targetted for a Sparc, if not __sparc?
 
-	#if defined(__sun) && defined(_BIG_ENDIAN)
-	/*
-	 * Solaris ...
-	 */
-	#define SHA1DC_BIGENDIAN
-	#endif
-
-> Thanks, but this is starting to feel like watching a whack-a-mole
-> played while blindfolded.  At some point, somebody upstream should
-> declare that enough is enough and introduce the "SHA1DC_FORCE_ENDIAN" 
-> macro.
