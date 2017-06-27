@@ -2,91 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99FAA20401
-	for <e@80x24.org>; Tue, 27 Jun 2017 15:55:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2C8820401
+	for <e@80x24.org>; Tue, 27 Jun 2017 16:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751747AbdF0Pzq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 11:55:46 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:35975 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751535AbdF0Pzo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 11:55:44 -0400
-Received: by mail-pg0-f67.google.com with SMTP id u36so4780718pgn.3
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 08:55:44 -0700 (PDT)
+        id S1752136AbdF0QUW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 12:20:22 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:35221 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751541AbdF0QUU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 12:20:20 -0400
+Received: by mail-it0-f53.google.com with SMTP id v202so16339369itb.0
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 09:20:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=duPjbwHSPichbkuEj2F6zYSvvar5KjRCowiaVXJTfiw=;
-        b=D8q1JyrMNkG5gsqRr5lputEYPqrBLbdhxbXbd0pRDejK57R5+0HVQceIBezd7crw7V
-         Kbf1aXeyCfC6QqSu3ED1TWMLmBeTGuC+M7Pb9lkM8ut4nqqeoUYvNw8o1Q2N51DcgD8N
-         iCJV/42s0WSwLnY85QBLoN973rauYa/cMomfCNVHx9hMMhlVGIMvu3s8srQzrupaDZy/
-         WXoixrwtrYXQ5N3mBpSQbA9hKwft5ltETgbjcLzw3IdIY36t0HhNl1XvHREKk+temNYG
-         LT5CHNiNIIZ0WQPsCMsQdFkajVui+9CiPA0RzgRDs9MTBSvkWgQjpkahAaJd0kwrrs5Q
-         zBlg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=zbifbeAHiICuSVknoD5IC1pdEd0ZVDGvrCnTKhNB1oM=;
+        b=cqQT/c+eBAdOpGKnXC9trwW9qVC46SWh0CcoWFnxSDv1wT3GDU66QTYB4pNd7gdvey
+         ymS7q42MFf021H1qBlOH1JqV55bRRSPcI0dFiWb/EYm2df9y9Ix7Dz+suhEbOBai2dtO
+         KvMTioTLjgUJdtb9GA+9r3H64b+j23KQ7I7fiFTrNBBeRylbxo7HuIwrFX3C4s3ccoys
+         OTTo4pWSM3xabiktzJE4993z8Ls6nlJiRGRq+K3puAyOyXboraObtzlOqvVsTAySklhj
+         //TPAnd+ZiPS8Tq1AUnGXrNxe/rVVY8Xz/44ZgLK+tB5WZVRxUL4uEHGDdcD7g93qtxx
+         8sdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=duPjbwHSPichbkuEj2F6zYSvvar5KjRCowiaVXJTfiw=;
-        b=r0qJr/2hrpNM2uDEPRC6WOyUlmhr9gEojxveLCkMaZyIjhd5FujNH2EFikoF9QrY4F
-         UQTBmt9k+nmA7z6zMiPJcPhTaZi8+jBS28bwNNaa4BlkPfyecnbT7a63F7X/O1+5/6Rr
-         dfudYfTNLITfk/b+Lvkt3uG/VesnrACwsmNMcWK8VtH49UMUMlBtNRKf86SCPctFD2lm
-         MtRDF3ot+b7/VV1OHfsjC8BXGTsckPDRfERytCYKL4DfoYyS8msEKCozvqZ4jl02iFbb
-         SpDaKL/J1f1M7WzuUhr+YPdlRxFTAL3HgnOhgyd9qD3vdoln7TUjS9+edvKmhG+4MaSA
-         EiAg==
-X-Gm-Message-State: AKS2vOy5RYryWvYWrTMfLx9amjgyQcXRpaRLY4DJOBcv34TvctyAHLdK
-        3RNbjWwGEw+4Aw==
-X-Received: by 10.99.177.78 with SMTP id g14mr6101960pgp.131.1498578944058;
-        Tue, 27 Jun 2017 08:55:44 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
-        by smtp.gmail.com with ESMTPSA id f70sm7865416pfk.27.2017.06.27.08.55.42
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 08:55:43 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        "Liam R . Howlett" <Liam.Howlett@Oracle.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 1/3] sha1dc: update from my PR #36
-References: <20170627121718.12078-1-avarab@gmail.com>
-        <CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com>
-        <20170627121718.12078-2-avarab@gmail.com>
-        <xmqqmv8t317c.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 27 Jun 2017 08:55:42 -0700
-In-Reply-To: <xmqqmv8t317c.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 27 Jun 2017 08:22:15 -0700")
-Message-ID: <xmqqefu52znl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=zbifbeAHiICuSVknoD5IC1pdEd0ZVDGvrCnTKhNB1oM=;
+        b=axgak9RSe1nF0Rk7ARB04WAirQCeMqUPe1tjo6DM25ZNDPJQSRDg9alGbuqJHAKLqx
+         3SMMCOLmN87XaKCwZpjcJkDSjRgxKYj2LAMfWD5of5J1GZvVtSewjnhHwM5Wye2umLBj
+         XPgMmSV3gJepuodOuW0GebEiWeLSCLYD+L5+P1fLPoF/1tHNa1YSpQBM+w1kJbirg7t3
+         HsNmHrRbX87oeVtjjlvV35TwGDiJ7XR2y0tZ9mJjmYk+RUyvmUHOx2Zyl3fgTFUEUjlq
+         tRRmU32gdln+h6QLtQv2c4Co+gYJW3lAD3L0q230VSP92qwuvTpKmn0LaObG3R/PsKZl
+         wcVw==
+X-Gm-Message-State: AKS2vOwx/LKn0LOOrbHlOvJvLkHxlgA3KctiI/8AfDvWAgK7/k6e1ha+
+        TXahJnmgr1RbGVjcRZlug3dR8pomOQ==
+X-Received: by 10.36.8.195 with SMTP id 186mr3255569itc.76.1498580419820; Tue,
+ 27 Jun 2017 09:20:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.40.70 with HTTP; Tue, 27 Jun 2017 09:20:19 -0700 (PDT)
+In-Reply-To: <20170610134026.104552-5-benpeart@microsoft.com>
+References: <20170610134026.104552-1-benpeart@microsoft.com> <20170610134026.104552-5-benpeart@microsoft.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 27 Jun 2017 18:20:19 +0200
+Message-ID: <CAP8UFD3FtddFuaVY9qEyxbm6hiYhFR2TrZ32Cubp4GAEf9+vaQ@mail.gmail.com>
+Subject: Re: [PATCH v5 4/7] fsmonitor: add test cases for fsmonitor extension
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        David Turner <David.Turner@twosigma.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Jun 10, 2017 at 3:40 PM, Ben Peart <peartben@gmail.com> wrote:
 
->> +#if (defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || \
->>       defined(__MIPSEB__) || defined(__MIPSEB) || defined(_MIPSEB) || \
->>       defined(__sparc))
->> +/*
->> + * Should define Big Endian for a whitelist of known processors. See
->> + * https://sourceforge.net/p/predef/wiki/Endianness/ and
->> + * http://www.oracle.com/technetwork/server-storage/solaris/portingtosolaris-138514.html
->> + */
->>  #define SHA1DC_BIGENDIAN
->
-> These look sensible.
+> +# fsmonitor works correctly with or without the untracked cache
+> +# but if it is available, we'll turn it on to ensure we test that
+> +# codepath as well.
+> +
+> +test_lazy_prereq UNTRACKED_CACHE '
+> +       { git update-index --test-untracked-cache; ret=$?; } &&
+> +       test $ret -ne 1
+> +'
+> +
+> +if test_have_prereq UNTRACKED_CACHE; then
+> +       git config core.untrackedcache true
+> +else
+> +       git config core.untrackedcache false
+> +fi
 
-By the way, I wonder why this didn't catch the sparc running
-Solaris.  What does Michael's system use to let the software know
-that it is targetted for a Sparc, if not __sparc?
+I wonder if it would be better to just do something like:
 
+=====================
+
+test_expect_success 'setup' '
+        ....
+'
+
+uc_values="false"
+test_have_prereq UNTRACKED_CACHE && uc_values="false true"
+
+for uc_val in $uc_values
+do
+
+    test_expect_success "setup untracked cache to $uc_val" '
+         git config core.untrackedcache $uc_val
+    '
+
+    test_expect_success 'refresh_index() invalidates fsmonitor cache' '
+          ...
+    '
+
+    test_expect_success "status doesn't detect unreported modifications" '
+          ...
+    '
+
+...
+
+done
+
+=====================
