@@ -2,97 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4113920401
-	for <e@80x24.org>; Tue, 27 Jun 2017 16:25:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8AE20401
+	for <e@80x24.org>; Tue, 27 Jun 2017 16:28:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752871AbdF0QZV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 12:25:21 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34869 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752059AbdF0QZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 12:25:19 -0400
-Received: by mail-pf0-f171.google.com with SMTP id c73so19035943pfk.2
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 09:25:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Cz82d/LKvuWnM9zeoDn0RVztaVWoQZj4x4MZf+KxnAA=;
-        b=oxSdpIKdcpgzLzBBJbGwUIFrWCNwyHkLgrw9PviVRu8qu9TJCyMDqJX4K+flVt4S/N
-         Fb5g8ojKR2LmVoGzo02e+aYBByVxRMozLev+lLZmXX1PKO4kBnjk6URViS8KP3tXlwuG
-         DlJsIs46rX0Y74uq+AMqYvIY1URIz6jP2n6aIE9fN4mDLJYFGuUR8VMCwBUfnl+bgPVr
-         2x4Q0TpCOhsbVIZ72akLJgubUteYC35bNXm+f8SCxMs5iCUPT7Jq9SjkytQrqUh2HmKG
-         r3++DMl9t/ibNlhVeJWBWM4DfwNB4qh1pSBoZNlclVtUFL5brkiaaPGceCG3QRRi9Iok
-         aM/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Cz82d/LKvuWnM9zeoDn0RVztaVWoQZj4x4MZf+KxnAA=;
-        b=U4c5CNOdUS3W0UzhPVgybN10QuKlI+aGq/10ObOa12Qrae+AWYvDpZBQena6EUeFiX
-         grChFUHnMMfgxKweagbSVhqdI/vs+7y5AgBZMBXFENj1hZJA5bjZO+SAVFH+v9Lpyvu+
-         Tc96RvkyQN4ubrUXR7vUYFdziIiiVTyIAkwY31ZRJgAEH4R+V82QiapiXKA+ycXmP44U
-         F7n39CM3bjZjEkZu5xLQ3eXAcA97il7VAO96vZHI116aHpSxdYZCFpPW7p28NoVNIfnY
-         j29eiwXGCqsGErrkkBsVn0cewYbTqgLpVjlWlK13KzF9eGqq3ferFYlNWmSxTUAjOBrQ
-         lfZw==
-X-Gm-Message-State: AKS2vOylLOE0Y+7oUP/ATloQitlaIN1X6ENyiq+UWuZtm+yFEm4ep5ag
-        QqMv/JABuT6Omw==
-X-Received: by 10.101.83.135 with SMTP id x7mr6216515pgq.63.1498580719138;
-        Tue, 27 Jun 2017 09:25:19 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
-        by smtp.gmail.com with ESMTPSA id g15sm6617308pfe.70.2017.06.27.09.25.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 09:25:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1752662AbdF0Q2Q convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 27 Jun 2017 12:28:16 -0400
+Received: from userp1040.oracle.com ([156.151.31.81]:50489 "EHLO
+        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752498AbdF0Q2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 12:28:15 -0400
+Received: from userv0021.oracle.com (userv0021.oracle.com [156.151.31.71])
+        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v5RGSCZB027937
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 27 Jun 2017 16:28:12 GMT
+Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
+        by userv0021.oracle.com (8.14.4/8.14.4) with ESMTP id v5RGSCFp020584
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Tue, 27 Jun 2017 16:28:12 GMT
+Received: from abhmp0007.oracle.com (abhmp0007.oracle.com [141.146.116.13])
+        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id v5RGSBUP016758;
+        Tue, 27 Jun 2017 16:28:11 GMT
+Received: from oracle.com (/24.246.5.213)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Tue, 27 Jun 2017 09:28:11 -0700
+Date:   Tue, 27 Jun 2017 12:28:09 -0400
+From:   "Liam R. Howlett" <Liam.Howlett@Oracle.com>
 To:     Michael Kebe <michael.kebe@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Solaris 11.3 SPARC grep problem with t1450-fsck.sh
-References: <CAKKM46uJLu+w-UUFZc1HRar3apAD6Db2KD+GjiNL5v+Q2Ni7hA@mail.gmail.com>
-Date:   Tue, 27 Jun 2017 09:25:17 -0700
-In-Reply-To: <CAKKM46uJLu+w-UUFZc1HRar3apAD6Db2KD+GjiNL5v+Q2Ni7hA@mail.gmail.com>
-        (Michael Kebe's message of "Tue, 27 Jun 2017 14:15:43 +0200")
-Message-ID: <xmqqa84t2yaa.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+Cc:     ?var Arnfj?r? Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Marc Stevens <marc@marc-stevens.nl>
+Subject: Re: Compile Error v2.13.2 on Solaris SPARC
+Message-ID: <20170627162808.p7sj3jpwum7n3hq2@oracle.com>
+References: <CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com>
+ <87fuem7aw2.fsf@gmail.com>
+ <CAKKM46vr2Y_Zs+EJX-nxw7XH0nbpmTyubR1jibYoiieNCDns4Q@mail.gmail.com>
+ <CAKKM46sBVyTMGNwU6E9s7gq8wiBfAxrKzBFVgU=zfwj+YdAjcQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <CAKKM46sBVyTMGNwU6E9s7gq8wiBfAxrKzBFVgU=zfwj+YdAjcQ@mail.gmail.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
+X-Source-IP: userv0021.oracle.com [156.151.31.71]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Kebe <michael.kebe@gmail.com> writes:
 
-> Running the test suite on Solaris 11.3 SPARC fails on a test in t1450-fsck.sh.
->
-> not ok 60 - fsck --name-objects
-> #
-> #               rm -rf name-objects &&
-> #               git init name-objects &&
-> #               (
-> #                       cd name-objects &&
-> #                       test_commit julius caesar.t &&
-> #                       test_commit augustus &&
-> #                       test_commit caesar &&
-> #                       remove_object $(git rev-parse julius:caesar.t) &&
-> #                       test_must_fail git fsck --name-objects >out &&
-> #                       tree=$(git rev-parse --verify julius:) &&
-> #                       grep "$tree (\(refs/heads/master\|HEAD\)@{[0-9]*}:" out
-> #               )
->
-> Solaris has /usr/bin/grep and /usr/bin/ggrep. grep is a solaris
-> version and ggrep is the GNU grep.
+How about:
 
-We do not need GNUism, but many tools that come in /usr/bin have
-been found unfit.  I thought that Solaris users were expected to set
-SANE_TOOL_PATH to point at /usr/xpg[46]/bin to avoid this problem.
+---- 8< ----
+diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+index facea1bb5..ed8c63f2d 100644
+--- a/sha1dc/sha1.c
++++ b/sha1dc/sha1.c
+@@ -38,9 +38,18 @@
+ 
+ #if (defined(_BYTE_ORDER) || defined(__BYTE_ORDER) || defined(__BYTE_ORDER__))
+ 
++#define EMPTY_VAL(x) x ## 1
++#define EMPTY(x) EMPTY_VAL(x)
++
++#if (defined(_BIG_ENDIAN) && (EMPTY(_BIG_ENDIAN) == 1))
++#undef _BIG_ENDIAN
++#define _BIG_ENDIAN 4321
++#endif
++
+ #if ((defined(_BYTE_ORDER) && (_BYTE_ORDER == _BIG_ENDIAN)) || \
+      (defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
+-     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) )
++     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) || \
++     (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == _BIG_ENDIAN)) )
+ #define SHA1DC_BIGENDIAN
+ #endif
 
-Ah, wait, that particular grep may have GNUism.  If you changed it
-to
 
-    egrep "$tree \((refs/heads/master|HEAD)@{[0-9]*}:" out
-
-does it make it pass for you?
+* Michael Kebe <michael.kebe@gmail.com> [170627 02:28]:
+> On the Solaris system here __BYTE_ORDER__ set to 4321 and _BIG_ENDIAN
+> is defined, but has no value.
+> 
+> The problem is the not short circuiting macro...
+> 
+> -------------------------8<------------------------------
+> #undef _FOO1
+> #undef _FOO2
+> #undef _FOO2
+> 
+> #undef _BAR1
+> #undef _BAR2
+> #undef _BAR3
+> 
+> #define _FOO3 42
+> 
+> //comment out this line or give it a value to make the preprocesser happy
+> #define _BAR1
+> 
+> #if (defined(_FOO1) || defined(_FOO2) || defined(_FOO3))
+> 
+> // not short circuiting... preprocesser tries to evaluate (_FOO1 &&
+> _BAR1) but _BAR1 has no value...
+> #if ((defined(_FOO1) && (_FOO1 == _BAR1)) || \
+>           (defined(_FOO2) && (_FOO2 == _BAR2)) || \
+>           (defined(_FOO3) && (_FOO3 == BAR3)) )
+> #define SHA1DC_BIGENDIAN
+> #endif
+> 
+> #endif
+> -------------------------8<------------------------------
+> https://gist.github.com/michaelkebe/c963c7478b7b55ad197f0665986870d4
+> 
+> What do you think?
+> 
+> 2017-06-27 7:41 GMT+02:00 Michael Kebe <michael.kebe@gmail.com>:
+> > 2017-06-26 22:27 GMT+02:00 Ævar Arnfjörð Bjarmason <avarab@gmail.com>:
+> >> Could you (or anyone else for that matter) please test it with:
+> >>
+> >>     git clone --branch bigend-detect-solaris-again https://github.com/avar/sha1collisiondetection.git &&
+> >>     cd sha1collisiondetection &&
+> >>     make test
+> >
+> > Still no luck.
+> >
+> > ~/sha1collisiondetection (bigend-detect-solaris-again *)$ CC=gcc gmake test
+> > mkdir -p dep_lib && gcc -O2 -Wall -Werror -Wextra -pedantic -std=c90
+> > -Ilib  -M -MF dep_lib/sha1.d lib/sha1.c
+> > lib/sha1.c:63:58: error: operator '==' has no right operand
+> >  #if ((defined(_BYTE_ORDER) && (_BYTE_ORDER == _BIG_ENDIAN)) || \
+> >                                                           ^
+> >
+> > Running Solaris on sparc:
+> > $ uname -a
+> > SunOS er202 5.11 11.3 sun4v sparc sun4v
+> >
+> >
+> > The isa_defs.h is available here:
+> > https://gist.github.com/michaelkebe/472720cd684b5b2a504b8eeb24049870
+> >
+> >
+> > Greetings
+> > Michael
