@@ -2,132 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FF8120401
-	for <e@80x24.org>; Tue, 27 Jun 2017 21:39:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F66620401
+	for <e@80x24.org>; Tue, 27 Jun 2017 21:49:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753777AbdF0VjF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 17:39:05 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35452 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753671AbdF0VjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 17:39:04 -0400
-Received: by mail-pf0-f193.google.com with SMTP id s66so6266791pfs.2
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 14:39:03 -0700 (PDT)
+        id S1753918AbdF0Vtd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 17:49:33 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:36705 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753809AbdF0Vtc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 17:49:32 -0400
+Received: by mail-wr0-f193.google.com with SMTP id 77so32903370wrb.3
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 14:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=NjXJFbMJHgy9KvB7Jj8sW7Oyi6DHHpTb+0Ncbd0rxcg=;
-        b=NWadhIaKFM7I2N9JJGOPzTxx6bG0k0R6kBBjTiMjdrbOoTwQ4fuJwh1GmzLCFXOc27
-         5px0A09GPBbx6v/qPGjZmu+EIYFuC4AQp2FZswnmJTCfkvS0N3g7yLe8k/CTJuxvuSD9
-         rPljLw0yxvBa031xdfILnECA4atDVE9pzDten1vNL5urGduPFK9poIVrI4Qtl53k9Vus
-         xmABwYI2fbgzRG52maWrHE4XNh8/GzjaMVEFI8rTYwvPjdWyyxwGAplrST+xRGGb3rXZ
-         iY17qSb65PbAYapt/1TduikpQOGYXboMl5+wLTUZd1CIozTP9qsSmYCOGrufUaTInQWB
-         RZwA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=iJIGahgiwa3seNMtjRi/m5pa9tW2lmgytiFL+8TBQFI=;
+        b=XlFMawmZP9NaXPw368YASRH7Jh02VhZ5Uf1K1c3R23CX4nQMmuB5S0DzWiyfKC7a4F
+         Wrq6fdiEw18rYsvreVgfBwn7Tw9zX2QBelGA3I5zLDquLOZrkryMWpIoPNG6VcnijDyV
+         /MyLW9GpFm4/NM9VGZkIg1V8VrzTf3DXp65Z5wkOUL1fQMGpmvIYpCdneSpvwqO87NWm
+         fTjfvUkDKeIj0vx83hqMgHhTsOtYcK+tIcAu+vJ3bzD/psk7c0AGYZWQqJqNcJYRPv+J
+         6OuBrCuv80ed9t1iwqC1EJCFuO0ZdR9LoSXB89DKH+W8UGQ054+ov+tg2JMFEZgpYpey
+         D6RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=NjXJFbMJHgy9KvB7Jj8sW7Oyi6DHHpTb+0Ncbd0rxcg=;
-        b=I7YLMLy66Abk0BUx0iUA4JuNKllIzonT+JtbrRhqydhCMxVNCFuqhmLCIE21dLQ3y8
-         lv11LcmqkP1dYktqkHsJ14hsggPsW06lIW2N7YrEM/KPYrqS5hDJ3upPVpC8acQqf5VB
-         FFromrwNslULq2a0pYaYZiX0j1y7ieDBRq4MGGspjTqTEeFXHFbowdM40xR3BMvnl5I3
-         YnlsdAoPe0ApHSssjvV3izVtagQGOJ2nQ27OVJKvYR2HGpLgHiUENabyO/LQnWnMGSwK
-         XHMdpEd98CVMfpqTR068gdiZEewKh8FY1S8tIO2oDtwHKPj3QYSnDaN4kIwytg2RYj3h
-         iRVw==
-X-Gm-Message-State: AKS2vOwlMAwOW0JFot+F67PRH3UOUt3WTQwBiIKQvUgvT8Wl3tmoqqv1
-        GqvOV7vQ+PUajg==
-X-Received: by 10.84.228.207 with SMTP id y15mr7974195pli.13.1498599543249;
-        Tue, 27 Jun 2017 14:39:03 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
-        by smtp.gmail.com with ESMTPSA id b7sm353016pgr.11.2017.06.27.14.39.02
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 14:39:02 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Vegard Nossum <vegard.nossum@oracle.com>, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>,
-        Michal Zalewski <lcamtuf@google.com>
-Subject: Re: [PATCH 2/2] apply: handle assertion failure gracefully
-References: <20170225101307.24067-1-vegard.nossum@oracle.com>
-        <20170225101307.24067-2-vegard.nossum@oracle.com>
-        <a5626d97-e644-65b5-2fd3-41ce870f85a6@web.de>
-        <xmqqmvd7wgc7.fsf@gitster.mtv.corp.google.com>
-        <f191e3a8-a55b-7030-ebbb-3f46c74fdc94@web.de>
-        <xmqq1sujnu1g.fsf@gitster.mtv.corp.google.com>
-        <05fe5800-ebc0-76d7-579d-77f64a851fc1@web.de>
-        <5128cdf1-39fc-59ca-5640-801777bac2fa@web.de>
-        <xmqqshil1ex1.fsf@gitster.mtv.corp.google.com>
-        <1374711c-2cf5-ae8e-16e0-7c10be253a08@web.de>
-Date:   Tue, 27 Jun 2017 14:39:01 -0700
-In-Reply-To: <1374711c-2cf5-ae8e-16e0-7c10be253a08@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 27 Jun 2017 22:20:37 +0200")
-Message-ID: <xmqqbmp9yutm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=iJIGahgiwa3seNMtjRi/m5pa9tW2lmgytiFL+8TBQFI=;
+        b=Gcr4yWqe26yNH7PHOzOHRRGl3PADru1lZzn6l6GNnDKHagx3dhp0Duf/D5JCPiHz7Z
+         aprq2BmxVRnxmRlXIfhAEXQ8bTdqynGr1JEPk5jTGW7qB9xg8dtDbawoTIIBPMY8W+hv
+         utAecHrNKzNSCa1xFhaXk+qfpO47vV2A/lSjMwHzvwosKLyNu1VrSR/ATIpiy7+ta4NA
+         so/uyrskkAMp+xxtIm9v+sq0h2rlqHtxJqi8os2xOX+fCWGYtgs8pdRT9VEUYHzHYO6n
+         e5E96iF9Zhf3/VsNHqnp7UMILWASaMYue89J+mMiHLiJhjfkHtplfVIN8Fdy3tJDXaZW
+         JTsA==
+X-Gm-Message-State: AKS2vOx48p20cvkotaG/ViGGotxEWONmEElqJXXfEVOFvAUj3fuN2rs1
+        lV8MaHeJLtex4g==
+X-Received: by 10.223.153.65 with SMTP id x59mr18893646wrb.32.1498600170432;
+        Tue, 27 Jun 2017 14:49:30 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB4DFA.dip0.t-ipconnect.de. [93.219.77.250])
+        by smtp.gmail.com with ESMTPSA id k86sm3814976wmi.16.2017.06.27.14.49.29
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 27 Jun 2017 14:49:29 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v7 6/6] convert: add "status=delayed" to filter process protocol
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <77DBCB49-2A44-42BB-9060-23FA79C1CF57@gmail.com>
+Date:   Tue, 27 Jun 2017 23:49:28 +0200
+Cc:     git@vger.kernel.org, peff@peff.net, tboegi@web.de, e@80x24.org,
+        ttaylorr@github.com, peartben@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <7FF53F59-1240-4BED-999F-FE9C9AD7E6AC@gmail.com>
+References: <20170627121027.99209-1-larsxschneider@gmail.com> <20170627121027.99209-7-larsxschneider@gmail.com> <xmqqbmp91cjk.fsf@gitster.mtv.corp.google.com> <77DBCB49-2A44-42BB-9060-23FA79C1CF57@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
 
-> Hmm, pondering that, it seems I forgot to reset its value after each
-> patch.  Or better just move it into struct patch, next to the extension
-> bits:
+> On 27 Jun 2017, at 22:34, Lars Schneider <larsxschneider@gmail.com> =
+wrote:
+>=20
+>=20
+>> On 27 Jun 2017, at 21:00, Junio C Hamano <gitster@pobox.com> wrote:
+>>=20
+>> Lars Schneider <larsxschneider@gmail.com> writes:
+>>=20
+>>> @@ -533,7 +534,8 @@ static int start_multi_file_filter_fn(struct =
+subprocess_entry *subprocess)
+>>> 	if (err)
+>>> 		goto done;
+>>>=20
+>>> -	err =3D packet_writel(process->in, "capability=3Dclean", =
+"capability=3Dsmudge", NULL);
+>>> +	err =3D packet_writel(process->in,
+>>> +		"capability=3Dclean", "capability=3Dsmudge", =
+"capability=3Ddelay", NULL);
+>>>=20
+>>> 	for (;;) {
+>>> 		cap_buf =3D packet_read_line(process->out, NULL);
+>>> @@ -549,6 +551,8 @@ static int start_multi_file_filter_fn(struct =
+subprocess_entry *subprocess)
+>>> 			entry->supported_capabilities |=3D CAP_CLEAN;
+>>> 		} else if (!strcmp(cap_name, "smudge")) {
+>>> 			entry->supported_capabilities |=3D CAP_SMUDGE;
+>>> +		} else if (!strcmp(cap_name, "delay")) {
+>>> +			entry->supported_capabilities |=3D CAP_DELAY;
+>>> 		} else {
+>>> 			warning(
+>>> 				"external filter '%s' requested =
+unsupported filter capability '%s'",
+>>=20
+>> I thought you said something about attempting to make this more
+>> table-driven; did the attempt produce a better result?  Just being
+>> curious.
+>=20
+> I treated that as low-prio as I got the impression that you are =
+generally OK with
+> the current implementation. I promise to send a patch with this =
+change.=20
+> Either as part of this series or as a follow up patch.
 
-Good catch.
+How about this?
 
-> -- >8 --
-> Subject: fixup! apply: check git diffs for mutually exclusive header lines
-> ---
->  apply.c | 7 ++++---
->  apply.h | 1 -
->  2 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/apply.c b/apply.c
-> index db38bc3cdd..c442b89328 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -211,6 +211,7 @@ struct patch {
->  	unsigned ws_rule;
->  	int lines_added, lines_deleted;
->  	int score;
-> +	int extension_linenr; /* first line specifying delete/new/rename/copy */
->  	unsigned int is_toplevel_relative:1;
->  	unsigned int inaccurate_eof:1;
->  	unsigned int is_binary:1;
-> @@ -1325,9 +1326,9 @@ static int check_header_line(struct apply_state *state, struct patch *patch)
->  			 (patch->is_rename == 1) + (patch->is_copy == 1);
->  	if (extensions > 1)
->  		return error(_("inconsistent header lines %d and %d"),
-> -			     state->extension_linenr, state->linenr);
-> -	if (extensions && !state->extension_linenr)
-> -		state->extension_linenr = state->linenr;
-> +			     patch->extension_linenr, state->linenr);
-> +	if (extensions && !patch->extension_linenr)
-> +		patch->extension_linenr = state->linenr;
->  	return 0;
->  }
->  
-> diff --git a/apply.h b/apply.h
-> index b52078b486..b3d6783d55 100644
-> --- a/apply.h
-> +++ b/apply.h
-> @@ -79,7 +79,6 @@ struct apply_state {
->  
->  	/* Various "current state" */
->  	int linenr; /* current line number */
-> -	int extension_linenr; /* first line specifying delete/new/rename/copy */
->  	struct string_list symlink_changes; /* we have to track symlinks */
->  
->  	/*
+
+ static int start_multi_file_filter_fn(struct subprocess_entry =
+*subprocess)
+ {
+-       int err;
++       int err, i;
+        struct cmd2process *entry =3D (struct cmd2process *)subprocess;
+        struct string_list cap_list =3D STRING_LIST_INIT_NODUP;
+        char *cap_buf;
+@@ -516,6 +516,15 @@ static int start_multi_file_filter_fn(struct =
+subprocess_entry *subprocess)
+        struct child_process *process =3D &subprocess->process;
+        const char *cmd =3D subprocess->cmd;
+
++       static const struct {
++               const char *name;
++               unsigned int cap;
++       } known_caps[] =3D {
++               { "clean",  CAP_CLEAN  },
++               { "smudge", CAP_SMUDGE },
++               { "delay",  CAP_DELAY  },
++       };
++
+        sigchain_push(SIGPIPE, SIG_IGN);
+
+        err =3D packet_writel(process->in, "git-filter-client", =
+"version=3D2", NULL);
+@@ -534,8 +543,15 @@ static int start_multi_file_filter_fn(struct =
+subprocess_entry *subprocess)
+        if (err)
+                goto done;
+
+-       err =3D packet_writel(process->in,
+-               "capability=3Dclean", "capability=3Dsmudge", =
+"capability=3Ddelay", NULL);
++       for (i =3D 0; i < ARRAY_SIZE(known_caps); ++i) {
++               err =3D packet_write_fmt_gently(
++                       process->in, "capability=3D%s\n", =
+known_caps[i].name);
++               if (err)
++                       goto done;
++       }
++       err =3D packet_flush_gently(process->in);
++       if (err)
++               goto done;
+
+        for (;;) {
+                cap_buf =3D packet_read_line(process->out, NULL);
+@@ -547,18 +563,15 @@ static int start_multi_file_filter_fn(struct =
+subprocess_entry *subprocess)
+                        continue;
+
+                cap_name =3D cap_list.items[1].string;
+-               if (!strcmp(cap_name, "clean")) {
+-                       entry->supported_capabilities |=3D CAP_CLEAN;
+-               } else if (!strcmp(cap_name, "smudge")) {
+-                       entry->supported_capabilities |=3D CAP_SMUDGE;
+-               } else if (!strcmp(cap_name, "delay")) {
+-                       entry->supported_capabilities |=3D CAP_DELAY;
+-               } else {
+-                       warning(
+-                               "external filter '%s' requested =
+unsupported filter capability '%s'",
+-                               cmd, cap_name
+-                       );
+-               }
++               i =3D ARRAY_SIZE(known_caps) - 1;
++               while (i >=3D 0 && strcmp(cap_name, known_caps[i].name))
++                       i--;
++
++               if (i >=3D 0)
++                       entry->supported_capabilities |=3D =
+known_caps[i].cap;
++               else
++                       warning("external filter '%s' requested =
+unsupported filter capability '%s'",
++                       cmd, cap_name);
+
+                string_list_clear(&cap_list, 0);
+
+
+
+
+
