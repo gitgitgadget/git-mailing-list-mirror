@@ -2,104 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDADF20401
-	for <e@80x24.org>; Tue, 27 Jun 2017 12:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52DAB20401
+	for <e@80x24.org>; Tue, 27 Jun 2017 12:16:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753101AbdF0MLG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 08:11:06 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34062 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752883AbdF0MLA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 08:11:00 -0400
-Received: by mail-wm0-f66.google.com with SMTP id p204so588729wmg.1
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 05:10:54 -0700 (PDT)
+        id S1752829AbdF0MQF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 08:16:05 -0400
+Received: from mail-vk0-f41.google.com ([209.85.213.41]:36781 "EHLO
+        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752138AbdF0MQF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 08:16:05 -0400
+Received: by mail-vk0-f41.google.com with SMTP id y70so14783277vky.3
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 05:16:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=st5NqMzIbPEm/mC7w3+pAWFoUkNOWrtB7P45P/R580E=;
-        b=ZRNy16IeeKIGI7l9+NNIpTTorAFBF/3wLEG7g3HwSdl7N6cyEKUYD59XD7kXTbYmrn
-         AmxkHR6ZnL6SvsGWE7eSqxWZiazagVqq9CC8fNF1+ptEJvTXdSSAFQZnWmKUxW5pmpXe
-         r1mzj7BzuHtbTCs0RCu6h46H8TcJzDLHu/P96iQp8Znk2AFfaurnZ/yz/Yj/w1Y/mjlN
-         DccQ8Zb75bg0ESmlhs/vpaLj43GSU8OMu6094HUq60suYD2O3Cj1tsFW0csJT0YoRai9
-         WpN9azBANI3xkmfni7MQTBJqmX9q1eD1Vf9qoh+4ClYuB47XSR08fKTMFAEKdUFAtOwn
-         a+6Q==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=U8B2CZIuGjwgNa6g2QM4BbQ5cQlU9yra+PGNTbXbtKw=;
+        b=skxBpI55AON9dXLCjJD9yHqBJHbrujZ7P7gcpXdG3NvXQjvLJmIvB5Yv89RtG+7hcQ
+         T2UMm8o0bDF4W2CJKE31Z2/lIsC+B2GJMEs5QqgZgE8sLSLiopJqkug3p6wUjREj/DPH
+         iql6muBRemJTy9zaFBuCWW6cXbkKjuCbjU8dg18SErxcOrELnMvEI7aJH4XvMbdlkWue
+         AgKmLmcRCKOBRi0qbYoA9PJJ7hIQYaCtNlOis34R5IFdLENs8i8ahCsWMdMrzWkkyiCe
+         ArAJWpVkgiaoQx6zUW+cMB/LzmjKoVNIJUoPWd90kaQXIV1fz67A7U5Fwaq02ixQzJqi
+         etCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=st5NqMzIbPEm/mC7w3+pAWFoUkNOWrtB7P45P/R580E=;
-        b=C+p/X1dBtwvZW5XDJKSnKDPKOPgWaIgjU50MYcp6x0uZPsrA9AlUgx+nphUntPKUX3
-         vN6XJjaa6p1SvPHrR5QhL8A3lEUGGfbtdLp044I000IfmlxY3pK4Fr7iYlpdpZ03m80S
-         xjfGtqOYmTUZgb7pejULTlCNL/8AUY3em11FPwv/2y7JMyeoJiaCn/AvvwNksLjcZxKz
-         2EUiGbrzsmP8LUk2C5eZlSPABuDSvlyLbMfhQgAzU8bC7J5szu5I7ON8knebCNUj51Bn
-         s9r4ZJ096o2HsJwaqMfLG2u3exkWXwLSK15CTbk8AnJC5uttTIozBxpDdatM0E/N2D5A
-         D2dQ==
-X-Gm-Message-State: AKS2vOxT7YqbZaUID2Z2zJSIXJGJh5V23QBmOnAfbTDH/SG8WM2v6vko
-        ZZ48rcrQ5zGk8G1z
-X-Received: by 10.28.17.4 with SMTP id 4mr3244541wmr.63.1498565448271;
-        Tue, 27 Jun 2017 05:10:48 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id 32sm17873976wry.31.2017.06.27.05.10.45
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 05:10:47 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, tboegi@web.de, e@80x24.org,
-        ttaylorr@github.com, peartben@gmail.com
-Subject: [PATCH v7 4/6] convert: put the flags field before the flag itself for consistent style
-Date:   Tue, 27 Jun 2017 14:10:25 +0200
-Message-Id: <20170627121027.99209-5-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.13.2
-In-Reply-To: <20170627121027.99209-1-larsxschneider@gmail.com>
-References: <20170627121027.99209-1-larsxschneider@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=U8B2CZIuGjwgNa6g2QM4BbQ5cQlU9yra+PGNTbXbtKw=;
+        b=PzVUWHqQallH7xpKA4GEsHc+JOU893LHQXledCA1BA8fQ4iYQuFyWSi0FBYfI9A4/a
+         JsqogXfWQmY/1xS//X7b4RB3S14jhwEIaDVB9ExH9sEkGa5DR2E0eLxgf3lLUc805Bjd
+         0OqlvEhyMKwNjhEGqK+ufiVNcHCKXqtpggeP9fjmskhNQrTXK2sP6t6pHp8jBtpyYE/P
+         IcmAutntMLdefzaZP7p7OfP6NaeVmlN1eTyuLJHPjrZ8BMOvhXdQzPuHlmDtjF+XGMR6
+         WrL30UWo2kaKV9wm/Dyz9Vod/LUk08QOmXuvETyrDyeDKiHSos+mvty2KaSHYu3hwN/B
+         uxfw==
+X-Gm-Message-State: AKS2vOw1wGDoj7U/ZLpsjTXjsZ3YowdZzeWB67m8s+xPV3PhVoV803xr
+        UiJTjfsEDxMhgO2PUdFwdmm2Az3Faa51Ank=
+X-Received: by 10.31.2.209 with SMTP id 200mr2330472vkc.65.1498565763648; Tue,
+ 27 Jun 2017 05:16:03 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.176.23.13 with HTTP; Tue, 27 Jun 2017 05:15:43 -0700 (PDT)
+From:   Michael Kebe <michael.kebe@gmail.com>
+Date:   Tue, 27 Jun 2017 14:15:43 +0200
+Message-ID: <CAKKM46uJLu+w-UUFZc1HRar3apAD6Db2KD+GjiNL5v+Q2Ni7hA@mail.gmail.com>
+Subject: Solaris 11.3 SPARC grep problem with t1450-fsck.sh
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
- convert.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+Running the test suite on Solaris 11.3 SPARC fails on a test in t1450-fsck.=
+sh.
 
-diff --git a/convert.c b/convert.c
-index f1e168bc30..9907e3b9ba 100644
---- a/convert.c
-+++ b/convert.c
-@@ -597,12 +597,12 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 	}
- 	process = &entry->subprocess.process;
- 
--	if (!(wanted_capability & entry->supported_capabilities))
-+	if (!(entry->supported_capabilities & wanted_capability))
- 		return 0;
- 
--	if (CAP_CLEAN & wanted_capability)
-+	if (wanted_capability & CAP_CLEAN)
- 		filter_type = "clean";
--	else if (CAP_SMUDGE & wanted_capability)
-+	else if (wanted_capability & CAP_SMUDGE)
- 		filter_type = "smudge";
- 	else
- 		die("unexpected filter type");
-@@ -703,9 +703,9 @@ static int apply_filter(const char *path, const char *src, size_t len,
- 	if (!dst)
- 		return 1;
- 
--	if ((CAP_CLEAN & wanted_capability) && !drv->process && drv->clean)
-+	if ((wanted_capability & CAP_CLEAN) && !drv->process && drv->clean)
- 		cmd = drv->clean;
--	else if ((CAP_SMUDGE & wanted_capability) && !drv->process && drv->smudge)
-+	else if ((wanted_capability & CAP_SMUDGE) && !drv->process && drv->smudge)
- 		cmd = drv->smudge;
- 
- 	if (cmd && *cmd)
--- 
-2.13.2
+not ok 60 - fsck --name-objects
+#
+#               rm -rf name-objects &&
+#               git init name-objects &&
+#               (
+#                       cd name-objects &&
+#                       test_commit julius caesar.t &&
+#                       test_commit augustus &&
+#                       test_commit caesar &&
+#                       remove_object $(git rev-parse julius:caesar.t) &&
+#                       test_must_fail git fsck --name-objects >out &&
+#                       tree=3D$(git rev-parse --verify julius:) &&
+#                       grep "$tree (\(refs/heads/master\|HEAD\)@{[0-9]*}:"=
+ out
+#               )
 
+Solaris has /usr/bin/grep and /usr/bin/ggrep. grep is a solaris
+version and ggrep is the GNU grep.
+
+Replacing grep with ggrep in t1450-fsck.sh script the fixes the problem.
+
+I chatted with =C3=86var and he thinks that the problem is that configure
+finds the right grep but it is not properly passed to the tests.
+
+
+Furthermore I discovered that some tests in t3900-i18n-commit.sh are failin=
+g.
+
+e.g.: not ok 17 - ISO-2022-JP should be shown in UTF-8 now
+
+But that's another topic, which I will open once this is fixed.
+
+Greetings
+Michael
