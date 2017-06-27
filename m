@@ -2,109 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCC0820401
-	for <e@80x24.org>; Tue, 27 Jun 2017 14:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C23F2082F
+	for <e@80x24.org>; Tue, 27 Jun 2017 15:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751989AbdF0OxI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 10:53:08 -0400
-Received: from mail-qk0-f179.google.com ([209.85.220.179]:36716 "EHLO
-        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751690AbdF0OxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 10:53:04 -0400
-Received: by mail-qk0-f179.google.com with SMTP id p21so27075649qke.3
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 07:53:03 -0700 (PDT)
+        id S1751998AbdF0PG4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 11:06:56 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:36477 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751510AbdF0PGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 11:06:47 -0400
+Received: by mail-pg0-f42.google.com with SMTP id u62so17032521pgb.3
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 08:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=MUzxzfTSOPcOfF29hBvAoSSQ7zgMhHFBBsW3EUCQTvs=;
-        b=aeUqlw87GE58vuOh3ap0jcz9X+gYne8cT7ahifa6t9dKdKyfuY64MId6JEnXf23HlQ
-         eYOG+d4L4A89MzJolEYoFmfSDPRLsuBH2VZONRQ7uhRD0IHU7Jw4Fznxd5YrkrjVZ8sC
-         2gK9hE8g/B1+eeM8Uuy0wxmymdfll5X8gHRkoSlQlOlcfSvsmziM/IdWdIk9d2o3oNld
-         cGWJXURsqxhwhFvT7WkiJVUMsW5hi4lblDNPxbuGA0PIHPueT5v4QrRzG/syZiU7/wuo
-         vNyAoCpHrLdtIAdJCU/AldsoqMQ2FFgiHvlnIW1JHIh1Xy09b0Vsl68CDmz2F+LqLpsD
-         /W2Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=rHvxGyserXYi29iVCpyTXravZf0SP8fMTXWldw8a4sY=;
+        b=hHe2uCJ8JKyqbGfjROXjKjqdyOrknVnqlfHgJIovNm3Kr5/UdmxTuvlLRUs1UTcYKk
+         S+hI4ziPSyKQpO1sr1lNlAd+7QOFWZh6bVBMZn9DXqR/dYlnGt8NKuVlr6WdKm50j65V
+         pi+L0jx824K9oB+nS6OdoktW7l9Qj+egJui8tqDe0gkrdRwal6er3djiEHvYa4/lesK7
+         OCg3wpBp2zrpUULrHYOXDX4VcVE4FGktdbBYT6Nr4OFB80XGUks67rZUYdKwK4DgqZZr
+         BFqAfBqyrzJppUb8pe6EF5e2EluCqiyjQrUIXXbeBmSPgRHA4epTeI+kHiY+XKgZBysq
+         7exA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=MUzxzfTSOPcOfF29hBvAoSSQ7zgMhHFBBsW3EUCQTvs=;
-        b=NIV6NRqwE+V56Lq5iXocQeJbAC0kQY/ON5QxaFc1x46m3csSAbPSKWb/JnSInjSUtH
-         pHZiRIFDnzWEoRsKtQ8ui+CR4bZB1nUKmXAMIETz4bNh3FyZBfZQ8s0fclBLXd/Z7uZR
-         5MPUfT0fT9RTtyOghoAsiVtdj+zLOe3OVXORg0UKmaQfJzPzvUGHpk061DqdoWBWu9pk
-         l9AyeTAtWT6osI0z/XEFLncT6t/0EeRWj2nkYlBYurmQW+gZRkg2hPyVroolsKVIV3NG
-         W1xa1+DnJvTiM1TvKNeDomUXGmY5xMiEa5TCV0OhO4i6ONGrvAapTLG51E7xGhize4SB
-         Ih2w==
-X-Gm-Message-State: AKS2vOwnstR+rjvTX3Jq9rmTbfcetD5THhStHlzqvasxCPhlS0fFLydH
-        djhEhHSpHrbDPywr/vsig2EbYdmZyQ==
-X-Received: by 10.55.106.7 with SMTP id f7mr6990002qkc.189.1498575182369; Tue,
- 27 Jun 2017 07:53:02 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=rHvxGyserXYi29iVCpyTXravZf0SP8fMTXWldw8a4sY=;
+        b=cnAFXoSsUd5a8bkyyohOh8bD8Stf/8FtjAJfRoq9dFKTOpxSz4TwSeRB5j9RVpBeDM
+         mnOkLyBncW5vzO6c1l74bV6kvD8TIVcIY+icR/PdzAnuTdI8jcRPtfAsqf4TjovwV01k
+         7yti6P2y/UbRPz7RQ0A7Tpy2pyAA4EmBZ048QKNZTrgcgFZ1litsorlO0EIIgiWlZtqO
+         n6hHrUQ7/BxAH4lGCaBpgLaBQwDaFG7bt1cOdzCY+uQRCq8bT68s4cYaNjWog4BEofpu
+         5ay7GBTjzrPjWvPjmVUtvn/K7FvGoBGOj1AzCx0kG1LZ0Q3uH59qDJQK1LVL/0rvC/vm
+         TNjQ==
+X-Gm-Message-State: AKS2vOyEupVyicba5wSP2RKQQ5d0EdsGOirePW2S3qOtBBC7FUBRfo3G
+        belTZgIcnLsH4w6iRcc=
+X-Received: by 10.98.111.194 with SMTP id k185mr5803544pfc.235.1498575982055;
+        Tue, 27 Jun 2017 08:06:22 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
+        by smtp.gmail.com with ESMTPSA id u17sm7436649pfa.133.2017.06.27.08.06.21
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 27 Jun 2017 08:06:21 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Robert Siemer <Robert.Siemer@rohde-schwarz.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug: submodules of submodules use absolute gitdir in .git file (instead of relative)
+References: <0d924a0671b642d2b8ba79af8d4fa0d7@rohde-schwarz.com>
+Date:   Tue, 27 Jun 2017 08:06:20 -0700
+In-Reply-To: <0d924a0671b642d2b8ba79af8d4fa0d7@rohde-schwarz.com> (Robert
+        Siemer's message of "Tue, 27 Jun 2017 13:16:01 +0000")
+Message-ID: <xmqqr2y531xv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.200.35.253 with HTTP; Tue, 27 Jun 2017 07:53:01 -0700 (PDT)
-In-Reply-To: <vpqshini3r6.fsf@anie.imag.fr>
-References: <20170608005535.13080-1-joel@teichroeb.net> <20170608005535.13080-6-joel@teichroeb.net>
- <20170611212739.GA7737@hank> <CA+CzEk9i8H2BAUrL854WJELCTa-O1ONMWa0uOcTsW=WxnB_22Q@mail.gmail.com>
- <20170625210909.GB7737@hank> <vpqshini3r6.fsf@anie.imag.fr>
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-Date:   Tue, 27 Jun 2017 15:53:01 +0100
-Message-ID: <CALgYhfPQXNZYv758+8ZB32aFLpNXNerfOeYt0QLHDWFZ-FQwDA@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] stash: implement builtin stash
-To:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc:     Joel Teichroeb <joel@teichroeb.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 26, 2017 at 8:53 AM Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
->
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
->
-> > After the line
-> >
-> > test -n "$seen_non_option" || set "push" "$@"
-> >
-> > it's not possible that $# is 0 anymore, so this will never be
-> > printed.  From a quick look at the history it seems like it wasn't
-> > possible to trigger that codepath for a while.  If I'm reading things
-> > correctly 3c2eb80fe3 ("stash: simplify defaulting to "save" and reject
-> > unknown options", 2009-08-18) seems to have introduced the small
-> > change in behaviour.
->
-> Indeed. That wasn't on purpose, but I seem to have turned this
->
->         case $# in
->         0)
->                 push_stash &&
->                 say "$(gettext "(To restore them type \"git stash apply\")")"
->                 ;;
->
-> into dead code.
->
-> > As I don't think anyone has complained since then, I'd just leave it
-> > as is, which makes git stash with no options a little less verbose.
->
-> I agree it's OK to keep is as-is, but the original logic (give a bit
-> more advice when "stash push" was DWIM-ed) made sense too, so it can
-> make sense to re-activate it while porting to C.
+Robert Siemer <Robert.Siemer@rohde-schwarz.com> writes:
 
-I'd be happy either way.  If we decide to restore the original behaviour, I
-think it should be done in a separate patch, as the test case will need
-some adjustments.  That way we can keep this patch purely as the
-conversion step, which makes it a bit easier to review.
+> Hello everyone,
+>
+> $ git submodule foreach cat .git
+>
+> ...shows that the gitdir registered in the .git file of submodules is relative. But if you run 
+>
+> $ git submodule foreach --recursive cat .git
+>
+> ...shows that submodules of submodules (if you have any) have an absolute gitdir starting with a slash.
+>
+> 1) Can you confirm that behavior?
 
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
+Nobody can without knowing which version of Git you are using.  I
+suspect that we had discussed and addressed something related to
+nested submodule's "gitdir" pointer in not-so-distant past.
+
+> 2) Am I right that this is a bug (at least because of inconsistency)?
+
