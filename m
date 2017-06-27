@@ -2,84 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BDCC8207D2
-	for <e@80x24.org>; Tue, 27 Jun 2017 00:06:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4B70207D2
+	for <e@80x24.org>; Tue, 27 Jun 2017 02:51:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751460AbdF0AGF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Jun 2017 20:06:05 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:34974 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751449AbdF0AGE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Jun 2017 20:06:04 -0400
-Received: by mail-pf0-f195.google.com with SMTP id s66so2284850pfs.2
-        for <git@vger.kernel.org>; Mon, 26 Jun 2017 17:06:04 -0700 (PDT)
+        id S1751460AbdF0CvP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Jun 2017 22:51:15 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36145 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751445AbdF0CvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Jun 2017 22:51:13 -0400
+Received: by mail-pf0-f169.google.com with SMTP id q86so9191710pfl.3
+        for <git@vger.kernel.org>; Mon, 26 Jun 2017 19:51:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Xb46AUaiXWdpbA3/EyGOrCbeDtpvUC2iGspNm2RI1SU=;
-        b=jjNiqxYumaS65A1u6aezcx9iNeZpHEaW5u6kLICOJorbiDcTK8/WUs+qzgxJAIRwG/
-         ogj/fJrmVhxWug0rWNjICdmLxItVkaUjWJ12rZ91eCyWvzTZfTba/6+WV8UjaH60jWfS
-         R8+aVHa6sCfXfyJ65vYqGJqNg2Cuwaf+M9iBNh/RdFaBiQd+ZuWqwBFjknGkVAEy2fhP
-         fXDoURzQy8cH5M5iOpC1YnI1dkMW8z4zeeF2z9ZQyMUhMJlcpYel+Bkr+Oo12mQ0PWxO
-         t4iJBtzWmCwLIT1pEQWGNLXtGIntwe2mbkBmNqxKcDFZzv/UOdIYPFOugnz97nQ10isI
-         PJbg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=luwb5EA1dI1K6DykW0auJ6PCs0rFG8DcsgzkBp9tNKs=;
+        b=WZzJm07fE1sQH3prOZgriKg0Uu5s9snru8QkH8vW2xVLSIFcFtGGiu0p8ZV52tIQs3
+         +7fX1fbLb8bqjtAsaQvNi5JlLHO8K26+ShiijMuWuOFiC3opiyx/LVHEzlwRGEKszNml
+         DUonyHy5vcBhnvmi/lo7TL3KwpZT8eGwwjRiV/OuFuZhn0kfX3Cpg9fzV+v3ZOxjQlKT
+         UpbjGm7i8dQ1Y9MJ+x0utDWQFty9NvwVafKtCMta/SHM0rTJszG6vn84EhggjcZ8pfQA
+         Ffn4LgkzgdfQH4WRu78JkWyJ0NOJ/k0WzcYWIp+8PwsNaziKhf5DGIwJDfcajE6CggH+
+         qzIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Xb46AUaiXWdpbA3/EyGOrCbeDtpvUC2iGspNm2RI1SU=;
-        b=Coh+y6986M1AqpKI/DoV5C0qGVGSSpJ5X9W4N0qZ5/RBJ3QPW1VLRrPK/MFfjEF8yD
-         Ft2fBhnXb+9r450866jA5qcQfCZOzN6hU84zWR3J6jj//C6cPuVGNdqV8jp9WsqBkcq1
-         WghTHugbdRjw64ITV+nT/ZRoXSiZD+tf7Bhp5kRUX7dcMrOwTm2K+yVMU8soqgx2eGHB
-         7Mh/pnahw5FqB3SkK53XG98GP9AhLiejjZ+yCp0ZjCkd2K6urO4ocHBGN40qpEh/U9a9
-         k0ZegHdR6lbW+/uL0ciWMQtHAN/dHhLiBzmOqbpv6A37BFgwaBS8RqCSSgqm69FsF0mI
-         QlzQ==
-X-Gm-Message-State: AKS2vOyddYYNxq/s1rRZu/mJsygAEsovYirGMLFcWXf/NTJ7cOF1TDq3
-        eVp1bPQw1h0MRw==
-X-Received: by 10.84.192.3 with SMTP id b3mr2816518pld.76.1498521963594;
-        Mon, 26 Jun 2017 17:06:03 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:5069:b7fd:dcb0:fd8c])
-        by smtp.gmail.com with ESMTPSA id l85sm1971366pfj.130.2017.06.26.17.06.01
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 26 Jun 2017 17:06:02 -0700 (PDT)
-Date:   Mon, 26 Jun 2017 17:06:00 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     James Clarke <jrtc27@jrtc27.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH] pack-bitmap: Don't perform unaligned memory access
-Message-ID: <20170627000600.GD161648@aiede.mtv.corp.google.com>
-References: <20170626151612.64019-1-jrtc27@jrtc27.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=luwb5EA1dI1K6DykW0auJ6PCs0rFG8DcsgzkBp9tNKs=;
+        b=UEm5afgTP5NUGnaBfcSxuXBJnzvKnJ2FrRUo8ufoC+9uI25jZ21dCuQV0L80xE/GN8
+         gs7PJe6pMkXk3pPgP5Zpj9Gr0M1U9pB4ROsMD0pSC9rH+90YvRBM7o2z9PIoKLdhbdBh
+         nW+nXU4g0Gvg8fZCcrdWHl0ZQeunTiwHOmcAlFMrLUXMyDhXkBLljP+WEYJgmpAXEm67
+         V2/h+PWzAmx//OFXhDO2/q1NrkHeH6fKEMgas2hpuXQ9XJgruMENHIHEqGC+O74z9zrW
+         N/eo9GFtlNEacEGIqLteRq8U1U4EYT+LSH9sBZ7cQGafF3BbK10PwgroOuGq3+9hLOZL
+         U8RA==
+X-Gm-Message-State: AKS2vOy6EexF42kn7l6sw80T3cmDBz6FRqYhLsVpBCRu4JTvAzmhCJvB
+        2HG0mRTwsWhtLbOhZmbaTEayGU+vejR9
+X-Received: by 10.98.69.76 with SMTP id s73mr3042972pfa.94.1498531873136; Mon,
+ 26 Jun 2017 19:51:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170626151612.64019-1-jrtc27@jrtc27.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.183.170 with HTTP; Mon, 26 Jun 2017 19:51:12 -0700 (PDT)
+In-Reply-To: <xmqqmv8u63aj.fsf@gitster.mtv.corp.google.com>
+References: <20170625182125.6741-1-larsxschneider@gmail.com>
+ <20170625182125.6741-6-larsxschneider@gmail.com> <xmqqmv8u63aj.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 26 Jun 2017 19:51:12 -0700
+Message-ID: <CAGZ79kZEff1WUmgmzWKt=K8j45tOn6xy6ik8_CUp0awRep8jSw@mail.gmail.com>
+Subject: Re: [PATCH v6 5/6] convert: move multiple file filter error handling
+ to separate function
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-James Clarke wrote:
-
-> The preceding bitmap entries have a 1-byte XOR-offset and 1-byte flags,
-> so their size is not a multiple of 4. Thus the name-hash cache is only
-> guaranteed to be 2-byte aligned and so we must use get_be32 rather than
-> indexing the array directly.
+On Mon, Jun 26, 2017 at 10:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Not about this patch, but viewing this with
 >
-> Signed-off-by: James Clarke <jrtc27@jrtc27.com>
-> ---
->  pack-bitmap.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>         git show -w --color-moved=zebra
+>
+> gives an interesting result.  The bulk of the part moved are
+> re-indented, and the comment string gets zebra stripes, as if the
+> line movement detection code does not realize that these came from
+> the same place.
+>
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Thanks for the pointer, I'll include the whitespace-less comparison in tests.
 
-Failing build log:
-https://buildd.debian.org/status/fetch.php?pkg=git&arch=sparc64&ver=1%3A2.13.2-2&stamp=1498520310&raw=0
-
-Thanks for tracking down and fixing it.
+Thanks,
+Stefan
