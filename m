@@ -2,101 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FAE820401
-	for <e@80x24.org>; Tue, 27 Jun 2017 19:38:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BB8E20401
+	for <e@80x24.org>; Tue, 27 Jun 2017 19:38:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753338AbdF0TiJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 15:38:09 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36745 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753247AbdF0TiH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 15:38:07 -0400
-Received: by mail-pg0-f66.google.com with SMTP id u36so5407715pgn.3
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 12:38:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=GlSLm9khiaQSa9NTD1SkE4I+BGqvxEHPw7GFMKnQJFI=;
-        b=k/rMu1nujpZiAK0ICXEnu9+Fv7aKV1yXiu4LtcVuYGT3o5o03zRgLqxN8X2pBR3ZsB
-         NPMdHq4SGFA3IWiOGN6iXH92o2Nw2/mFitRelGagz28TEoQlyn3MUDi+e0+U0BUK1umt
-         WVQf5I2sNiBbiccO2cWvkANMRZL5cSngQUiUiaWi1Si/FhzkKRxzYhETNS9LOzK1XU7W
-         cZFp+S9pwnmUv+jWgE/JQTF60aKwJpoMxCmXF3QeiQ/M+FfJQDWmL0h3ln3MM/YAWIGS
-         g0muNPKBvlcrlDkG5aDnPK2k5fL+3IV4zOovEhSUvZxTQu5ApeY2coQQpULci0EyhV/W
-         lcdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=GlSLm9khiaQSa9NTD1SkE4I+BGqvxEHPw7GFMKnQJFI=;
-        b=J6+7PeqpaH5hIoUIqjYLHP0dB3vb1q5Pt9+cqcS2C2UrPxuU1Dt10jBzTDMiTHQ2y2
-         /C09wT6El4OtsDeR1cbpu1Kp+CV4M1VpB/6Io8wx/F2+oyhx6OXR2Fl7cuQKMdB0zwa7
-         oTBI2+WiuQpfQTqH0lbSZPsqto79L9nU8DKxY+2ZlNoHzwHVWk2YPyWTk7+Pp82YvZQU
-         wQ7KExBQCQGDxVqghOSPrHFQ0jQx6uT9svaXsZj/SpbFH7FCk1UM8u6kJubK88vWLSNJ
-         19GScNZT/+2Ud3zLw4g3LEdsmO+L1pjl5aQ+n3uuJYzWzc2eXOmnB5N7xzgGxlvIeN0s
-         Kelg==
-X-Gm-Message-State: AKS2vOxCXIKp4VD6SLKvYKroLkW740orrTmyeuuivZXNXYc+KbIasYE7
-        Mk31d5YyztoNVg==
-X-Received: by 10.98.196.155 with SMTP id h27mr6950350pfk.130.1498592286549;
-        Tue, 27 Jun 2017 12:38:06 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
-        by smtp.gmail.com with ESMTPSA id t5sm106410pgt.19.2017.06.27.12.38.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 12:38:05 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        id S1753415AbdF0Tiv convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 27 Jun 2017 15:38:51 -0400
+Received: from userp1040.oracle.com ([156.151.31.81]:26934 "EHLO
+        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753303AbdF0Tit (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 15:38:49 -0400
+Received: from aserv0021.oracle.com (aserv0021.oracle.com [141.146.126.233])
+        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v5RJceuq010934
+        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+        Tue, 27 Jun 2017 19:38:41 GMT
+Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
+        by aserv0021.oracle.com (8.13.8/8.14.4) with ESMTP id v5RJcePu025246
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+        Tue, 27 Jun 2017 19:38:40 GMT
+Received: from abhmp0011.oracle.com (abhmp0011.oracle.com [141.146.116.17])
+        by aserv0121.oracle.com (8.13.8/8.13.8) with ESMTP id v5RJcbgg031103;
+        Tue, 27 Jun 2017 19:38:38 GMT
+Received: from oracle.com (/24.246.5.213)
+        by default (Oracle Beehive Gateway v4.0)
+        with ESMTP ; Tue, 27 Jun 2017 12:38:37 -0700
+Date:   Tue, 27 Jun 2017 15:38:36 -0400
+From:   "Liam R. Howlett" <Liam.Howlett@Oracle.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     ?var Arnfj?r? Bjarmason <avarab@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
         Michael Kebe <michael.kebe@gmail.com>,
-        "Liam R . Howlett" <Liam.Howlett@Oracle.com>,
         Adam Dinwoodie <adam@dinwoodie.org>,
         Stefan Beller <sbeller@google.com>
 Subject: Re: [PATCH 1/3] sha1dc: update from my PR #36
+Message-ID: <20170627193835.goix6woeil3hfkhe@oracle.com>
 References: <20170627121718.12078-1-avarab@gmail.com>
-        <CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com>
-        <20170627121718.12078-2-avarab@gmail.com>
-        <xmqqmv8t317c.fsf@gitster.mtv.corp.google.com>
-        <xmqqefu52znl.fsf@gitster.mtv.corp.google.com>
-        <87wp7xjo5x.fsf@gmail.com>
-        <xmqq7ezx1c31.fsf@gitster.mtv.corp.google.com>
-        <87r2y5jkb6.fsf@gmail.com>
-Date:   Tue, 27 Jun 2017 12:38:05 -0700
-In-Reply-To: <87r2y5jkb6.fsf@gmail.com> (=?utf-8?B?IsOGdmFyIEFybmZqw7Zy?=
- =?utf-8?B?w7A=?= Bjarmason"'s message
-        of "Tue, 27 Jun 2017 21:35:09 +0200")
-Message-ID: <xmqqy3sdz0f6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+ <CAKKM46tHq13XiW5C8sux3=PZ1VHSu_npG8ExfWwcPD7rkZkyRQ@mail.gmail.com>
+ <20170627121718.12078-2-avarab@gmail.com>
+ <xmqqmv8t317c.fsf@gitster.mtv.corp.google.com>
+ <xmqqefu52znl.fsf@gitster.mtv.corp.google.com>
+ <87wp7xjo5x.fsf@gmail.com>
+ <xmqq7ezx1c31.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <xmqq7ezx1c31.fsf@gitster.mtv.corp.google.com>
+User-Agent: NeoMutt/20161126 (1.7.1)
+X-Source-IP: aserv0021.oracle.com [141.146.126.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ã†var ArnfjÃ¶rÃ° Bjarmason <avarab@gmail.com> writes:
+* Junio C Hamano <gitster@pobox.com> [170627 15:10]:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> 
+> > Because in the current code is, abbreviated:
+> >
+> >     #if (defined(_BYTE_ORDER) || defined(__BYTE_ORDER) || defined(__BYTE_ORDER__))
+> >     #if /* byte order is bendian */
+> >     #define SHA1DC_BIGENDIAN
+> >     #endif
+> >     #else
+> >     #if /*some processor tests/* || defined(__sparc))
+> >     #define SHA1DC_BIGENDIAN
+> >     #endif
+> >
+> > And since Solaris defines _BYTE_ORDER we never get to checking __sparc,
+> > and in fact the "/* byte order is bendian */" test errors out.
+> >
+> > This is fixed by my patch, where we first check gcc settings, then
+> > glibc, then processors, and finally _BYTE_ORDER (but as discussed that
+> > last bit could be adjusted to sun && _BYTE_ORDER, if we can find what
+> > "sun" is.
+> 
+> Well, if Solaris defines _BYTE_ORDER, doesn't that mean they define
+> two constants _BIG_ENDIAN and _LITTLE_ENDIAN to compare it with?  If
+> that is the case, I suspect that the change to make "comparison
+> between __BYTE_ORDER and __BIG_ENDIAN for GCC only" is going in a
+> wrong direction, as it wants to take the same approach as GCC, but
+> just uses a slightly different symbol.
 
->>> And since Solaris defines _BYTE_ORDER we never get to checking __sparc,
->>> and in fact the "/* byte order is bendian */" test errors out.
->>> ...
->> Well, if Solaris defines _BYTE_ORDER, doesn't that mean they define
->> two constants _BIG_ENDIAN and _LITTLE_ENDIAN to compare it with?
->
-> No, under gcc/clang & glibc you're expected to compare them. Under
-> Solaris it's just defined(_BIG_ENDIAN), but as explained in another
-> comment this whole thing actually turns out to be not needed, on Solaris
-> it's sufficient that we fall through and check __sparc.
+That's not the case.  _BIG_ENDIAN is defined but not to a value.  I
+believe _BYTE_ORDER is defined as 4321, but _BIG_ENDIAN is just defined.
+This is why I proposed detecting the empty state of _BIG_ENDIAN.  If
+_BIG_ENDIAN is defined but not to a value, then we already know it's big
+endian.  I believe your approach below can be altered slightly to
+account for this issue.
 
-Huh.  It makes me wonder what we are expected to use _BYTE_ORDER on
-Solaris for, then, if it defines _BIG_ENDIAN and _BYTE_ORDER, and
-still wants us to use the definedness of _BIG_ENDIAN.  It does not
-make any sense.
-
-But if we can use __sparc and fold it into various arm/mipts bits,
-that is much simpler ;-)
-
+> 
+> I wonder if the approach like the following might be cleaner to
+> extend as we find other oddball platforms.
+> 
+>     #undef __SHA1DC_BYTE_ORDER
+>     #if defined(_BYTE_ORDER)
+>     #define __SHA1DC_BYTE_ORDER _BYTE_ORDER
+>     #elif defined(__BYTE_ORDER)
+>     #define __SHA1DC_BYTE_ORDER __BYTE_ORDER
+>     #elif defined(__BYTE_ORDER__))
+>     #define __SHA1DC_BYTE_ORDER __BYTE_ORDER__
+>     #endif
+> 
+>     #ifdef __SHA1DC_BYTE_ORDER
+>      #undef __SHA1DC_BIG_ENDIAN
+>      /* do the same for variations of BIG_ENDIAN constant */
+>      #if defined(_BIG_ENDIAN)
+> 	...
+>      #endif
+> 
+>      #if __SHA1DC_BYTE_ORDER == __SHA1DC_BIG_ENDIAN
+>      #define SHA1DC_BIGENDIAN
+>      #endif
+>     #else
+>      /* 
+>       * as the platform does not use "compare BYTE-ORDER with
+>       * BIG_ENDIAN macro" strategy, defined-ness of BIG_ENDIAN
+>       * may be usable as a sign that it is a big-endian box.
+>       */
+>     #endif
+> 
