@@ -2,115 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D49FB20401
-	for <e@80x24.org>; Tue, 27 Jun 2017 21:30:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C63C820401
+	for <e@80x24.org>; Tue, 27 Jun 2017 21:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753589AbdF0Van (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 17:30:43 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36297 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753437AbdF0Val (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 17:30:41 -0400
-Received: by mail-pf0-f195.google.com with SMTP id z6so6249055pfk.3
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 14:30:41 -0700 (PDT)
+        id S1753794AbdF0VcI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Jun 2017 17:32:08 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34604 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753583AbdF0VcH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Jun 2017 17:32:07 -0400
+Received: by mail-pf0-f177.google.com with SMTP id s66so22612607pfs.1
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 14:32:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=URi0lOOb5pPAdW955zp/thhb9TjW3Gr0g1v/3XfU+V0=;
-        b=iFzbe5eD6WEYzib7fQglr7afY3f1z1Zg+0PkffontJeoxvXHY9LW8Hlf3Uvd3yqBnf
-         nOvgeqzcS4NZWHwVEm9lp3F/fftseXezoTnUTjtAfCcAYhotqkSnxLZnvMFKf+2MawOA
-         1RBjPIohPuxISJhGjh4plaVGGh4EbYY+2/T+CWl5qUNeJpvJqe9+Hx8NuFfUKjE4PAUx
-         MJdzqcd8jwGhyB4A023vwU3xRwoe4FD+nIxMzpFXU5vupWhuh2S1wlEHw8v7/Ic8BZl1
-         jOqZZIuKeDzjRMr9IHq1eFHVxJ8jh8M0+hOpgLCK1fFCZSsvK1LuSjSUrMJUO6j4uC4H
-         bFkg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=6JyF1o46DW7J2Gcu0RltmTSiEhnavFi0JkzBXFz/7/o=;
+        b=F4Zx1VtfiEXHcMiL3gkt96YTD1CklwVQkna2d2k35PPeakWkKeaeSAkbzk25PN+OS5
+         iia5xAllS/tZid4kRFGIjV0JwcwlHV3gluWrsb4lcOPBU3dPHumZSgdQvqWWbMT4IgLa
+         Ouq3SFPwCl6LH5yXhJSJa/oQv+/wwgFjOETG93RhYpvrdR/4OGAROSnk5xy9319F8BY6
+         n2sYdYXQCcEUwgwTiN1kcHx1wgJY48RGrFm6lQlOEflNp61M8ix9M2MVYtWKGoIb5JTo
+         FGyWt/zeGq0w2rTdj9WjW7Gea0ZlkdREEU4F/N1PBRVANtKYSS2BtRzZrCTHVjC9AG3Q
+         9bAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=URi0lOOb5pPAdW955zp/thhb9TjW3Gr0g1v/3XfU+V0=;
-        b=W+j40KNOSsrWIY6mkTZknKFlX5fCIjTWZXe3K8iYk7xCF9qgyEKwJPf7kdSUjPWLW7
-         e4/3zCSZq1Nh5hJLFvjK36heZVV/jj8UqQqF3y9hwGhEYTQtzmWdhTuGLojNK+4qufcx
-         MNYqRTDDg2FDudw2GlJXESLegaDr3OjTOtGx+3aTFsAn/7uNWkkU5aC+t+ReTRLfdOCT
-         Qcf3H7l6ymytR0MbEFnPCPchrTOO7rg2hf/xCmUum7i1za89JZF/dfV/ng34hJ+PLf/y
-         Z1bUgnCNTVrE60z/tTUJD0YqqYcuf6bYEeUKT66qZxOIqZSKk2++pIS/iaQXfDBeHB3w
-         tuZA==
-X-Gm-Message-State: AKS2vOwWoEfxkvhIEz2oTUj82Q2o9c7TXjL3KN7JLERcDhSMSw927mId
-        RMzZfyZprieTyNfn2Iw=
-X-Received: by 10.98.212.91 with SMTP id u27mr7404653pfl.157.1498599040737;
-        Tue, 27 Jun 2017 14:30:40 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
-        by smtp.gmail.com with ESMTPSA id p15sm362855pfi.99.2017.06.27.14.30.39
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=6JyF1o46DW7J2Gcu0RltmTSiEhnavFi0JkzBXFz/7/o=;
+        b=MRJ/s1LFqO1EGuwqL/t33jpYFtgID0QVllCMjyirhAvH5JWGywzPXqHiWmp8DYFxBV
+         vQf7M3uQVBU3b24QFPOgFxGF0Ak/qb5tYNmoY9dJ9fQgjMW2DOyuoy5LBbSjDFHNq+XG
+         7vK9J3gXsCzkTUvNBOqzVp9yhgL4zv5ifrx+rFIe7fMrbj4BM1RE9AMWYCSPdENXgKtr
+         LJ2z+YovqeUpOVWaymDK24zvnW9NDWdfeEg0k32wa9q872ndnhJBEbhE1SdpdaFGqg4L
+         7BLrnrLv5pg9kzk5QQKk1GBiz9Bn0gPdO7PBOrEmMf+7gLW3wtD3COH4NaVNrUzFXJjz
+         RfWg==
+X-Gm-Message-State: AKS2vOzAGm4Z1iuWktWSw3dyx5Rw4HuRguCCnbZNbq7YH+1JgJdCxebA
+        KH61XTZrCjHdrKHq
+X-Received: by 10.98.15.220 with SMTP id 89mr7322684pfp.203.1498599122048;
+        Tue, 27 Jun 2017 14:32:02 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:ac62:ae13:b066:f242])
+        by smtp.gmail.com with ESMTPSA id w190sm360078pgb.30.2017.06.27.14.32.01
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 14:30:40 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, tboegi@web.de, e@80x24.org,
-        ttaylorr@github.com, peartben@gmail.com
-Subject: Re: [PATCH v7 6/6] convert: add "status=delayed" to filter process protocol
-References: <20170627121027.99209-1-larsxschneider@gmail.com>
-        <20170627121027.99209-7-larsxschneider@gmail.com>
-        <xmqqbmp91cjk.fsf@gitster.mtv.corp.google.com>
-        <77DBCB49-2A44-42BB-9060-23FA79C1CF57@gmail.com>
-Date:   Tue, 27 Jun 2017 14:30:39 -0700
-In-Reply-To: <77DBCB49-2A44-42BB-9060-23FA79C1CF57@gmail.com> (Lars
-        Schneider's message of "Tue, 27 Jun 2017 22:34:50 +0200")
-Message-ID: <xmqqlgodyv7k.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Tue, 27 Jun 2017 14:32:01 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
+        jrnieder@gmail.com, philipoakley@iee.org
+Subject: [PATCH] builtin/fetch cleanup: always set default value for submodule recursing
+Date:   Tue, 27 Jun 2017 14:31:59 -0700
+Message-Id: <20170627213159.3717-1-sbeller@google.com>
+X-Mailer: git-send-email 2.13.1.519.gc4803e3bc3
+In-Reply-To: <CAGZ79kZUkQCEEcLUcg8tSr33Wng1Fq4_i4n80+Xr45y0mcvB6A@mail.gmail.com>
+References: <CAGZ79kZUkQCEEcLUcg8tSr33Wng1Fq4_i4n80+Xr45y0mcvB6A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+The check for the default was introduced with 88a21979c5 (fetch/pull:
+recurse into submodules when necessary, 2011-03-06), which replaced an
+older construct (builtin/fetchs own implementation of the super-prefix)
+introduced in be254a0ea9 (Add the 'fetch.recurseSubmodules' config setting,
+2010-11-11) which made sense at the time as there was no default fetch
+option for submodules at the time.
 
-> I treated that as low-prio as I got the impression that you are generally OK with
-> the current implementation. I promise to send a patch with this change. 
-> Either as part of this series or as a follow up patch.
+Set builtin/fetch.c#recurse_submodules_default to the same value as
+submodule.c#config_fetch_recurse_submodules which is set via
+set_config_fetch_recurse_submodules, such that the condition for checking
+whether we have to set the default value becomes unnecessary.
 
-Sure. I was just being curious what happened; I agree that it is a
-good idea to treat this as a lower priority clean-up item and leave
-it to later.
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-> Yes. I guess that was a premature optimization on my end.
-> This is how "write_entry()" in entry.c would change:
->
-> -                               dco->is_delayed = 0;
->                                 ret = async_convert_to_working_tree(
->                                         ce->name, new, size, &buf, dco);
-> -                               if (ret && dco->is_delayed) {
-> +                               if (ret && string_list_has_string(&dco->paths, ce->name)) {
->                                         free(new);
->                                         goto finish;
->                                 }
->
-> OK?
+This queues on top of origin/sb/pull-rebase-submodule,
+and answers questions raised in the review of origin/sb/pull-rebase-submodule^.
 
-Actually I should be asking the "OK?" question---the above was what
-I had in mind when I commented, but you are a lot more familiar with
-the way how this code is supposed to work, and I didn't know if the
-emptyness of the list can be a 100% substitute for that bit.  If you
-think they are equivalent, that is a great news.
+I thought about just squashing these two patches, but they do different cleanups
+so I am personally fine with having them both.
 
-> At this point I want to ensure that checkout_entry() is called
-> with the CE_RETRY state. Because checkout_entry() needs to pass 
-> that flag to the convert machinery.
->
-> This assert was useful when checkout_entry() changed dco->state
-> between CAN_DELAY and DELAYED. In the current implementation the
-> state should not be changed anymore.
->
-> Would you prefer if I remove it? (with or without is both fine with me)
+I may squash them if further review of that series
+requires a resend of the whole series.
 
-If that is the reason behind the assert, I am OK with either (1)
-moving it _after_ checkout_entry() returns (to ensure that the
-function no longer mucks with the state, or (2) removing it.
+Thanks,
+Stefan
 
-Leaving it at the current position does not make much sense to me.
+ builtin/fetch.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 3cca568173..7ea52b8b07 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -49,7 +49,7 @@ static struct transport *gtransport;
+ static struct transport *gsecondary;
+ static const char *submodule_prefix = "";
+ static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+-static int recurse_submodules_default = RECURSE_SUBMODULES_DEFAULT;
++static int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
+ static int shown_url = 0;
+ static int refmap_alloc, refmap_nr;
+ static const char **refmap_array;
+@@ -1336,8 +1336,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		deepen = 1;
+ 
+ 	if (recurse_submodules != RECURSE_SUBMODULES_OFF) {
+-		if (recurse_submodules_default != RECURSE_SUBMODULES_DEFAULT)
+-			set_config_fetch_recurse_submodules(recurse_submodules_default);
++		set_config_fetch_recurse_submodules(recurse_submodules_default);
+ 		gitmodules_config();
+ 		git_config(submodule_config, NULL);
+ 	}
+-- 
+2.13.1.519.gc4803e3bc3
+
