@@ -2,65 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37B291FCCA
-	for <e@80x24.org>; Wed, 28 Jun 2017 17:55:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 773D91FCCA
+	for <e@80x24.org>; Wed, 28 Jun 2017 19:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751521AbdF1Ry6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 13:54:58 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:32796 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752498AbdF1Ryy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 13:54:54 -0400
-Received: by mail-pg0-f67.google.com with SMTP id u62so9016044pgb.0
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 10:54:48 -0700 (PDT)
+        id S1751819AbdF1Txw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 15:53:52 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:35841 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751813AbdF1Txn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 15:53:43 -0400
+Received: by mail-pg0-f52.google.com with SMTP id u62so36575052pgb.3
+        for <git@vger.kernel.org>; Wed, 28 Jun 2017 12:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=BN4PSPguoWbpuhKtI7PiD446a+L6wTji37jwHuRCeKc=;
-        b=Umw1AllTtoGqQXQBZ1DNF6rHqI6oEQgQdPUnye2es+42FEamBCbIZCYggu6ro5bQRZ
-         N2Rklyu9GAhaXE4WiN002YS8SYaLc0PqrRxhD8UzMtM3evxj8iz5ybnvzInb/7oso/6w
-         YOnsVJSf6F12UPxi5sOHeqRlzi+gpLDs+8Z1K4rJS8tVJjV1AWU6Y1FZ6m1o9GLJxjq8
-         zLVvR/Nq5qniZSr+bmTXVI5Ogsm0ZRvkXEgBMZHXyoteNWnTjNsj15QSkzNi25lDxnjH
-         CSqcs4s13puOAzF1DoEo6j6bo3dExYdcdehMO5F6CzHucS+1WuBtM58ZN6p23d21g3/b
-         6sag==
+        bh=SHGUvp6Af0CYCOh3i/AoG4AqISMF0wORR5ytghAGgsQ=;
+        b=P3U91wKiDiGfCT41qahf+P20O+oLLS9eR44xNQw2g91F+xuNKW843AlVZ3Il+W/t1l
+         h35vvw6BWOEF5LqCS1bSQDE5SR0EM5pwfRbYecTUfldXoWosjus33iLnSqtQHmj17quA
+         j4b2WzJ/L9/K8GNZ5x/FHMn/v6/H6vfwBpmPZYVqNL5joTc7tgIZiFK9ji48MAKF3IYd
+         Zegn4hAgIXcHwR4YinG0lgqJxlAq4bXwZ9TzpvN0W9M8UqnAR1Prsavb9SA23NlWk/ex
+         wt/0Ig74NazzjAGFj7j0rTpJOQ0PAS43lJQsBaWFRQiHBDraXBweRPW2Wf/MC0Tw1nXk
+         mzoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=BN4PSPguoWbpuhKtI7PiD446a+L6wTji37jwHuRCeKc=;
-        b=R1S2b/qgigiFX52wLAhz9stTuceB/W9x/SmiYSugaHuobIKqZp4cdmGsHAXoL0g/Vd
-         y8zkAJFxcApNW0FWBGjEXseI64XYx3kEqM+m2ex7yhQWWicV82SrP1P1U5tTWxCAGxFr
-         j7wBuzHLNR9s0gKa+IBJ6NjyTIjUar0i2qKidiXub+PK8OuC2iv6Cr/ZNYpufkjooBEq
-         fgYgAqFiNBKyIRMJdmJ5lhnkK1GXNxCSMw8bSCedP01NKk+8kcuDaUoe2u+ismmgxWzd
-         QpPCRfuF/ar0XYJVNaR10ukED50CtwR6W6lSogTmkABlBHB6k7Sb/aTMMSen8eKay+de
-         Bttw==
-X-Gm-Message-State: AKS2vOwMLQ+0v2uS87FVIkukxXqxGuHIqxaNuotwq1DaBEBjaZMjH/ol
-        L/GKE47ciVUMGhGFqPw=
-X-Received: by 10.84.224.75 with SMTP id a11mr13199314plt.286.1498672487394;
-        Wed, 28 Jun 2017 10:54:47 -0700 (PDT)
+        bh=SHGUvp6Af0CYCOh3i/AoG4AqISMF0wORR5ytghAGgsQ=;
+        b=imVl3BC5H2ydpPiRUomjgXnNaNlcxgqn/W+/1iQZCedNx+aX/T2YRKScG4mVF9kInN
+         gFfGIlbqjGUr+FrTJ0vyKLz9zotJLN+BZUaQ1TX91vTl5VmYUgVPu5K1DqJ78t+hIjp9
+         SnFltwKrdIVKaAnLoKm2pi0pBXMsCBt7uzqsi5fPrGrbsxO4B4H9orzwulr6AgGxG3mU
+         UiFcGsC5MRQ4itlHrvxpbp+q9Ky5D3H03ERAjfta+USJWVAc7gKfgqf6kV/PHCh4ST1A
+         xoKEaHlEeQ68XS2fUFvJEr4QzRJHF/sSmtXWoNb5l4/n+n0YjpSSCjGK2eiktWP+SFse
+         99bg==
+X-Gm-Message-State: AKS2vOxNjdY9j0dMSzFVf9E2uIEGWSUOZgw8RRX8x6V9uCDu2hTCvg4w
+        dzAODOGpdkJVxw==
+X-Received: by 10.84.176.3 with SMTP id u3mr13735857plb.134.1498679617454;
+        Wed, 28 Jun 2017 12:53:37 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:88a2:2d61:9b86:f64d])
-        by smtp.gmail.com with ESMTPSA id i27sm6248462pfi.128.2017.06.28.10.54.46
+        by smtp.gmail.com with ESMTPSA id u9sm5978617pfd.56.2017.06.28.12.53.34
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 28 Jun 2017 10:54:46 -0700 (PDT)
+        Wed, 28 Jun 2017 12:53:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
-        jrnieder@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 1/3] list-objects: add filter_blob to traverse_commit_list
-References: <20170622203615.34135-1-git@jeffhostetler.com>
-        <20170622203615.34135-2-git@jeffhostetler.com>
-        <xmqqy3scw06y.fsf@gitster.mtv.corp.google.com>
-        <e2216ab8-5af7-4edd-16aa-f84a45e0cbd7@jeffhostetler.com>
-Date:   Wed, 28 Jun 2017 10:54:45 -0700
-In-Reply-To: <e2216ab8-5af7-4edd-16aa-f84a45e0cbd7@jeffhostetler.com> (Jeff
-        Hostetler's message of "Wed, 28 Jun 2017 13:13:22 -0400")
-Message-ID: <xmqqa84svvyy.fsf@gitster.mtv.corp.google.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     christian.couder@gmail.com, git@vger.kernel.org, sbeller@google.com
+Subject: Re: [GSoC][PATCH 1/6 v2] submodule--helper: introduce for_each_submodule_list
+References: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
+        <20170626231108.23640-1-pc44800@gmail.com>
+Date:   Wed, 28 Jun 2017 12:53:34 -0700
+In-Reply-To: <20170626231108.23640-1-pc44800@gmail.com> (Prathamesh Chavan's
+        message of "Tue, 27 Jun 2017 04:41:03 +0530")
+Message-ID: <xmqq60ffx51d.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,40 +65,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Prathamesh Chavan <pc44800@gmail.com> writes:
 
-> Yes, my logic was a little confusing there.  Jonathan Tan said
-> something similar the other day.  I have a new version that I'm
-> working on now that looks like this:
->
-> 	list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_SHOW;
-> 	...
-> 	if (filter)
-> 		r = filter(obj, path->buf, ...
-> 	if (r & LOFR_MARK_SEEN)
-> 		obj->flags |= SEEN;
-> 	if (r & LOFR_SHOW)
-> 		show(obj, path->buf, cb_data);
->
-> I'm generalizing it a little to let the filter return 2 flags:
-> () SEEN to indicate that the filter doesn't want to see it again
-> () SHOW to include the object in the result.
-> These let filters do "hard" and "provisional" omits.  (This will
-> make more sense later when I get my patch cleaned up.)
+> Introduce function for_each_submodule_list for using it
+> in the later patches, related to porting submodule
+> subcommands from shell to C.
+> This new function is also used in ported submodule subcommand
+> init.
 
-It is not immediately obvious to me, especially without seeing the
-actual patch, why MARK_SEEN is needed.  Especially given that I
-think a call to show() must set obj->flags |= SEEN anyway to avoid
-duplicate output, with or without the objects-filter mechanism.
+The patch text looks sensible.  It would be easier for "git log"
+readers to understand, if the change is explained like so:
 
-But that question can and should wait.
+	Introduce function for_each_submodule_list() and
+	replace a loop in module_init() with a call to it.
 
-> Yes, I'm including similar logic inside process_tree() to allow that
-> and let the filter know about entering and leaving each tree.  So we
-> only need one filter-proc to handle a particular strategy and it will
-> handle both tree and blob objects.
->
-> I want to be able to use this mechanism to do narrow clone/fetch
-> using such a filter-proc and a sparse-checkout-like spec.
+	The new function will also be used in other parts of the
+	system in later patches.
 
-Good to know ;-).
+That way, readers do not have to judge the merit of this change
+based on a vague promise "it will help world better with future
+patches", but can instead judge on its immediate benefit that it
+refactors a useful bit out of an existing code.
+
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+> ---
+> This series of patches is based on the 'next' branch. 
+
+The reason not to base on 'master' is...?
+
+The thing is that a topic built on 'next' cannot be merged down to
+'master' until _all_ other topics in 'next' graduate to 'master',
+which may never happen.  If you are depending on one or more topics,
+please make sure to name them.  Then we can
+
+ (1) create a branch from the tip of 'master';
+ (2) merge these topics you depend on into that branch; and then
+ (3) apply these patches.
+
+The topic still needs to wait until these other topis graduate, but
+at least you would not be blocked by unrelated topics that way.
+
+You _might_ be building on 'next' because you want to make sure that
+your topic works not just with master but also want to make sure
+that there won't be any unexpected breakage when used with topics in
+'next', even though your topic does not depend on anything in 'next'
+in particular.  It is a good development discipline to pay attention
+to other topics in flight and I applaud you for it if that is why
+you based it on 'next'.  But the right way to do it would be to
+build your topic on 'master', and then in addition to testing the
+topic by itself, also make a trial merge of your topic into 'next'
+and test the result as well.
+
+Thanks.
