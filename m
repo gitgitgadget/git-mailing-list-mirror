@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CCB820285
-	for <e@80x24.org>; Wed, 28 Jun 2017 21:58:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B602C20285
+	for <e@80x24.org>; Wed, 28 Jun 2017 21:58:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751689AbdF1V6f (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 17:58:35 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:32814 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751666AbdF1V6d (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751698AbdF1V6j (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 17:58:39 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34446 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751654AbdF1V6d (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 28 Jun 2017 17:58:33 -0400
-Received: by mail-wm0-f68.google.com with SMTP id j85so13885762wmj.0
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 14:58:28 -0700 (PDT)
+Received: by mail-wm0-f66.google.com with SMTP id p204so9047171wmg.1
+        for <git@vger.kernel.org>; Wed, 28 Jun 2017 14:58:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=3iF9AnMfQViKMClTe6Zr3vk9TNJgfu+27sdC3ZkJfC4=;
-        b=AEcWKSQmz2HsnWOd1/dGtADJ0FIrI5oLGlMTue9N+NhTGeFJOISDnAvIu3rsC37hb2
-         1zYGbsNCTxpOqqk9jJ8oIqjDdK7++P5W1QJXzIVmsuNzdhl10Fp0RYKuc6xYVZSwBA+a
-         euiOrre8nhSUJeWfXHETJA+z34TIn2OLIZuCeywe22ayEn1Bozx+eTa5nxPV+eQpiU7m
-         4iOVcar7ccHc0sByI8muog4cutAlopROcG/dZW5/VMq14KI1VrYuVvoHynn3gQOFgrNc
-         wG3cP1UY/AAPgf75xjHgH1sh0Ia7ijB3igSJeGjmMaKmwXieRZyczzgIJvy9g1Vfh2JF
-         bPtg==
+        bh=X0XYPC2tpV0kINz3bSXE3bb/aGKvNSqay5QsEjsNc30=;
+        b=RiLr40Hf0O0RjatF9FtSpSJJ0YZDm7jAXeXjCL1DahK0SjMHY6SEcZW0DjZW1SCThX
+         35yT90SiJL2SbRuLOceOE9cXSlir3OGQlEPTIiTCLRgewtCVQ9ZDaD7gUyvvXmadRy8U
+         ueOP5Qelf/Yskh5T8HCFVBj9iSGNVu+KJLZaVGNuOZ2lAgwq1mX6li3j13MlpnRW66zF
+         Wh015aWqQp4AlUzTRat1FB31HOygl8jVjNOWh10f+4iFqmv84MKeKt9xJ4eV3g2HZyMF
+         AdaRq3Uqk8Upj2HXYsXC5t3+4UnmoZZn5zN+IvuaTHJIdhljso6RX9engterNRZO2WB9
+         Q+8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=3iF9AnMfQViKMClTe6Zr3vk9TNJgfu+27sdC3ZkJfC4=;
-        b=hT0Uj8B8MYplskvJfvTe384HP7+zgS0pWaZWy6RsqDLZdyaAZRIWuvmeFbEftiHQtp
-         HIWl27QuPYqxbZDAHSMyKMy8kZsYaD4Ki4thmFt5f6DpK3fMn2IUxVAVoCS5rg6efX7t
-         b26c0TFNNiIhZj5iE05VRAnqdmarOuJDHRhhpZ+JaU8fI+wJZrZqgXaVcW/Jwl+FVku+
-         NTuyN4oUy6o2+MhajJDNfkAUgdF8J3e5IUHl7fr76nCXYgTvztcbMw73Ea85Mfmwvx5k
-         0LkdTwxCfvD/xzYEMH2lFBdRd7F64d73NddckAUgU+2CxNkYQf21MTfx/0/HssYZnJ2f
-         CkBQ==
-X-Gm-Message-State: AKS2vOyvAah/UQGdq8le+P6WPE00J+b+5Ktai3E7Qvu6p9PxDL0XwE70
-        qVaMtFMDCBD/TIuAHiM=
-X-Received: by 10.80.163.70 with SMTP id 64mr9371071edn.78.1498687106921;
-        Wed, 28 Jun 2017 14:58:26 -0700 (PDT)
+        bh=X0XYPC2tpV0kINz3bSXE3bb/aGKvNSqay5QsEjsNc30=;
+        b=ZVFWf8GGkhpMem2yJBu2+tM3oNvNbpaPejUqDaXFcmp8dyHc7NksjG+xjHytdUOxeJ
+         Koz1DLyCypliX0QxVm8LmAdRlOUEigtENSurjIjNviw4Q2uaoBkKZqwv/Yfb8dAS5ncd
+         gqBCPbez7ZyWxo6tZaD/s8BGn7sNNy3oekFMdqYmvhIvuWrh5YMnBtbCcYYfRu9Km3+u
+         GWxGDeiWEn2lceJJ32BMFcGU2sGpf0x0s/hCBvZhBhdxGu5DdQEW367WFhB1XIQdV/lp
+         RsldSblcn9pcJJebasjs1WRHocg3w1iIwJ4P35DaNbisvXWmTxz/uNc5oWrFhqYk2yMB
+         RbHg==
+X-Gm-Message-State: AKS2vOx16qCTzt8FVuFIBfZhJpDEcQ+EFVnvoBxtc+ehbLUBaut2O8Pp
+        wJlhipDNgQ4dAz6dcWI=
+X-Received: by 10.80.152.112 with SMTP id h45mr9403846edb.51.1498687110849;
+        Wed, 28 Jun 2017 14:58:30 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id g25sm1926975eda.59.2017.06.28.14.58.25
+        by smtp.gmail.com with ESMTPSA id g25sm1926975eda.59.2017.06.28.14.58.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Jun 2017 14:58:25 -0700 (PDT)
+        Wed, 28 Jun 2017 14:58:30 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Fredrik Kuivinen <frekui@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/5] grep: remove redundant grep pattern type assignment
-Date:   Wed, 28 Jun 2017 21:58:06 +0000
-Message-Id: <20170628215809.23060-3-avarab@gmail.com>
+Subject: [PATCH 4/5] grep: remove redundant and verbose re-assignments to 0
+Date:   Wed, 28 Jun 2017 21:58:08 +0000
+Message-Id: <20170628215809.23060-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1
 In-Reply-To: <20170628215809.23060-1-avarab@gmail.com>
 References: <20170628215809.23060-1-avarab@gmail.com>
@@ -74,39 +74,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove a redundant assignment to extended_regexp_option to make it
-zero if grep.extendedRegexp is not set. This is always called right
-after init_grep_defaults() which memsets the entire structure to 0.
+Remove the redundant re-assignments of the fixed/pcre1/pcre2 fields to
+zero right after the entire struct has been set to zero via
+memset(...).
 
-This is a logical follow-up to my commit to remove redundant regflags
-assignments[1]. This logic was originally introduced in [2], but as
-explained in the former commit it's working around a pattern in our
-code that no longer exists, and is now confusing as it leads the
-reader to think that this needs to be flipped back & forth.
-
-1. e0b9f8ae09 ("grep: remove redundant regflags assignments",
-   2017-05-25)
-2. b22520a37c ("grep: allow -E and -n to be turned on by default via
-   configuration", 2011-03-30)
+See an earlier related cleanup commit e0b9f8ae09 ("grep: remove
+redundant regflags assignments", 2017-05-25) for an explanation of why
+the code was structured like this to begin with.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 2 --
- 1 file changed, 2 deletions(-)
+ grep.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index 29439886e7..6614042fdc 100644
+index 7cd8a6512f..736e1e00d6 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -80,8 +80,6 @@ int grep_config(const char *var, const char *value, void *cb)
- 	if (!strcmp(var, "grep.extendedregexp")) {
- 		if (git_config_bool(var, value))
- 			opt->extended_regexp_option = 1;
--		else
--			opt->extended_regexp_option = 0;
- 		return 0;
- 	}
+@@ -175,28 +175,18 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 		/* fall through */
  
+ 	case GREP_PATTERN_TYPE_BRE:
+-		opt->fixed = 0;
+-		opt->pcre1 = 0;
+-		opt->pcre2 = 0;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_ERE:
+-		opt->fixed = 0;
+-		opt->pcre1 = 0;
+-		opt->pcre2 = 0;
+ 		opt->regflags |= REG_EXTENDED;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_FIXED:
+ 		opt->fixed = 1;
+-		opt->pcre1 = 0;
+-		opt->pcre2 = 0;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_PCRE:
+-		opt->fixed = 0;
+ #ifdef USE_LIBPCRE2
+-		opt->pcre1 = 0;
+ 		opt->pcre2 = 1;
+ #else
+ 		/*
+@@ -206,7 +196,6 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 		 * "cannot use Perl-compatible regexes[...]".
+ 		 */
+ 		opt->pcre1 = 1;
+-		opt->pcre2 = 0;
+ #endif
+ 		break;
+ 	}
 -- 
 2.13.1.611.g7e3b11ae1
 
