@@ -2,154 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50DCB1FCCA
-	for <e@80x24.org>; Wed, 28 Jun 2017 17:13:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AF371FCCA
+	for <e@80x24.org>; Wed, 28 Jun 2017 17:15:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751583AbdF1RNZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 13:13:25 -0400
-Received: from siwi.pair.com ([209.68.5.199]:14116 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751492AbdF1RNZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 13:13:25 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id CD9AA84564;
-        Wed, 28 Jun 2017 13:13:23 -0400 (EDT)
-Received: from [10.160.98.126] (unknown [167.220.148.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 7C83C84562;
-        Wed, 28 Jun 2017 13:13:23 -0400 (EDT)
-Subject: Re: [PATCH 1/3] list-objects: add filter_blob to traverse_commit_list
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
-        jrnieder@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
-References: <20170622203615.34135-1-git@jeffhostetler.com>
- <20170622203615.34135-2-git@jeffhostetler.com>
- <xmqqy3scw06y.fsf@gitster.mtv.corp.google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <e2216ab8-5af7-4edd-16aa-f84a45e0cbd7@jeffhostetler.com>
-Date:   Wed, 28 Jun 2017 13:13:22 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751544AbdF1RPZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 13:15:25 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33290 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751515AbdF1RPY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 13:15:24 -0400
+Received: by mail-pf0-f194.google.com with SMTP id e199so9803618pfh.0
+        for <git@vger.kernel.org>; Wed, 28 Jun 2017 10:15:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9Pgo1lm7kARFhC/OtnNpS+E2JBfEhCDxL3jM98xlruo=;
+        b=XziK3M/bExvCla9JExgIVNOU35tJ2bLM19OQbOCslB6t3PXmLyJn6Hscr2XvLDFa4d
+         45f3ClbnakJFl13QBiKemvzM1UXMx41ZlJCitzaklQWsOcC1chZe00rMkL8BuorpxrEK
+         IDGbTm4oswi8F5ds3BfCZgpGSozgVeEFEu9jxBA0jkJeQMRnw2QxMzqvm5g8vJp5VQXX
+         B6TyNcGLRwjhTQU0YtB4qZWIZ8EY0W2GyHiUC19Bz8T4EIvNu/hXK8m0BG1PFdIqwaxO
+         6ipu9oVPMIQvS/xmARw7D/KRbxs//LfXVcfI7O+VWd1JLH10EbHxY4Al6UdWRRNzgQ/Y
+         3t3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9Pgo1lm7kARFhC/OtnNpS+E2JBfEhCDxL3jM98xlruo=;
+        b=QftfGKXtCGAPXPV5Emx1jJcQm+g4hr9jkZUAAIWXLqG4+bXqXFJWq7+Dc6YwjF8a3z
+         w8Rj02GoD9Y8/GDRXFZ96wmBHpfsBiBb5RYjT6d7bVC87VHARfxZbbW2Ugpcvke51y2V
+         sRQy6lVmKhPlrqwYIHt3kERbT7H4RGx696mN2TBcMj8X/JwFrmrMh30WvDpI5RraAfC9
+         RVlnivRDGgPvzXa6X9Mg0EOq540oNHihVmRUsDc3vh9ZIzc3+P8P4zyJzAwUj4uDuY/g
+         To28/mu7JLdCKYIcCY0l3XXSn3aDlqWxg35Xxu/+QPrswAlJOAYXo8W9wR/UQ5Juf1vE
+         Hw1Q==
+X-Gm-Message-State: AKS2vOzzXxMiAyuE+5xKfPOe/NGf6NIyR7xSIvHbVUIgXmqXF4bpks+R
+        kyix0A8mkq9FsA==
+X-Received: by 10.99.39.194 with SMTP id n185mr11571722pgn.94.1498670123365;
+        Wed, 28 Jun 2017 10:15:23 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:88a2:2d61:9b86:f64d])
+        by smtp.gmail.com with ESMTPSA id g10sm6535566pfc.38.2017.06.28.10.15.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 28 Jun 2017 10:15:22 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Kebe <michael.kebe@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Solaris 11.3 SPARC grep problem with t1450-fsck.sh
+References: <CAKKM46uJLu+w-UUFZc1HRar3apAD6Db2KD+GjiNL5v+Q2Ni7hA@mail.gmail.com>
+        <xmqqa84t2yaa.fsf@gitster.mtv.corp.google.com>
+        <CAKKM46ureAZNB-YjOrmi+H-_tf3hXGS7dA7o=dj8bnHc+8ABng@mail.gmail.com>
+Date:   Wed, 28 Jun 2017 10:15:21 -0700
+In-Reply-To: <CAKKM46ureAZNB-YjOrmi+H-_tf3hXGS7dA7o=dj8bnHc+8ABng@mail.gmail.com>
+        (Michael Kebe's message of "Wed, 28 Jun 2017 08:00:24 +0200")
+Message-ID: <xmqqo9t8vxsm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy3scw06y.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Michael Kebe <michael.kebe@gmail.com> writes:
 
+> 2017-06-27 18:25 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
+>> Ah, wait, that particular grep may have GNUism.  If you changed it
+>> to
+>>
+>>     egrep "$tree \((refs/heads/master|HEAD)@{[0-9]*}:" out
+>>
+>> does it make it pass for you?
+>
+> Yes, this is working.
 
-On 6/28/2017 12:23 PM, Junio C Hamano wrote:
-> Jeff Hostetler <git@jeffhostetler.com> writes:
-> 
->> diff --git a/list-objects.c b/list-objects.c
->> index f3ca6aa..c9ca81c 100644
->> --- a/list-objects.c
->> +++ b/list-objects.c
->> @@ -24,11 +25,28 @@ static void process_blob(struct rev_info *revs,
->>   		die("bad blob object");
->>   	if (obj->flags & (UNINTERESTING | SEEN))
->>   		return;
->> -	obj->flags |= SEEN;
->>   
->>   	pathlen = path->len;
->>   	strbuf_addstr(path, name);
->> -	show(obj, path->buf, cb_data);
->> +	if (!filter_blob) {
->> +		/*
->> +		 * Normal processing is to imediately dedup blobs
->> +		 * during commit traversal, regardless of how many
->> +		 * times it appears in a single or multiple commits,
->> +		 * so we always set SEEN.
->> +		 */
->> +		obj->flags |= SEEN;
->> +		show(obj, path->buf, cb_data);
->> +	} else {
->> +		/*
->> +		 * Use the filter-proc to decide whether to show
->> +		 * the blob.  We only set SEEN if requested.  For
->> +		 * example, this could be used to omit a specific
->> +		 * blob until it appears with a ".git*" entryname.
->> +		 */
->> +		if (filter_blob(obj, path->buf, &path->buf[pathlen], cb_data))
->> +			obj->flags |= SEEN;
->> +	}
-> 
-> This somehow looks a bit surprising organization and division of
-> responsibility.  I would have expected
-> 
-> 	if (!filter_blob ||
-> 	    filter_blob(obj, path->buf, &path->buf[pathlen], cb_data) {
-> 		obj->flags |= SEEN;
-> 		show(obj, path->buf, cb_data);
-> 	}
-> 
-> i.e. making the filter function responsible for only making a
-> decision to include or exclude, not giving it a chance to decide to
-> "show" anything different.
-
-Yes, my logic was a little confusing there.  Jonathan Tan said
-something similar the other day.  I have a new version that I'm
-working on now that looks like this:
-
-	list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_SHOW;
-	...
-	if (filter)
-		r = filter(obj, path->buf, ...
-	if (r & LOFR_MARK_SEEN)
-		obj->flags |= SEEN;
-	if (r & LOFR_SHOW)
-		show(obj, path->buf, cb_data);
-
-I'm generalizing it a little to let the filter return 2 flags:
-() SEEN to indicate that the filter doesn't want to see it again
-() SHOW to include the object in the result.
-These let filters do "hard" and "provisional" omits.  (This will
-make more sense later when I get my patch cleaned up.)
-
-
->> @@ -67,6 +85,7 @@ static void process_gitlink(struct rev_info *revs,
->>   static void process_tree(struct rev_info *revs,
->>   			 struct tree *tree,
->>   			 show_object_fn show,
->> +			 filter_blob_fn filter_blob,
->>   			 struct strbuf *base,
->>   			 const char *name,
->>   			 void *cb_data)
->> @@ -111,7 +130,7 @@ static void process_tree(struct rev_info *revs,
->>   		if (S_ISDIR(entry.mode))
->>   			process_tree(revs,
->>   				     lookup_tree(entry.oid->hash),
->> -				     show, base, entry.path,
->> +				     show, filter_blob, base, entry.path,
->>   				     cb_data);
->>   		else if (S_ISGITLINK(entry.mode))
->>   			process_gitlink(revs, entry.oid->hash,
-> 
-> I wonder if we'll need filter_tree_fn in the future in this
-> codepath.  When somebody wants to do a "narrow fetch/clone", would
-> the approach taken by this series, i.e. decide not to show certain
-> objects during the "rev-list --objects" traversal, a good precedent
-> to follow?  Would this approach be a good foundation to build on
-> such a future?
-
-Yes, I'm including similar logic inside process_tree() to allow that
-and let the filter know about entering and leaving each tree.  So we
-only need one filter-proc to handle a particular strategy and it will
-handle both tree and blob objects.
-
-I want to be able to use this mechanism to do narrow clone/fetch
-using such a filter-proc and a sparse-checkout-like spec.
-
-Thanks,
-Jeff
-
-
+Thanks.
