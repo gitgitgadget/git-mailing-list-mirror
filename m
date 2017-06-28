@@ -2,109 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BF8F2023D
-	for <e@80x24.org>; Wed, 28 Jun 2017 09:54:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70E5D1FCCA
+	for <e@80x24.org>; Wed, 28 Jun 2017 12:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751611AbdF1Jyr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 05:54:47 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:33129 "EHLO
-        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751492AbdF1Jyp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 05:54:45 -0400
-Received: by mail-lf0-f51.google.com with SMTP id m77so31749025lfe.0
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 02:54:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ttQXvo2J6GHDYHPHoBeCBVKYiWj9zErUcond/U0fxeA=;
-        b=UMRgX0FOJLfoO3y+hI/3Z9jck74jNxVVkJN+o8fLYnJNFKpXZ8/DDhE6ROk3iREuIi
-         b5s5N/yVkmpM0B2gfTkn15BWCehWYidnDhHuuLcca9jTwPV+mQotGalKPAEAMeAWdCeO
-         Lfkr0yW8P5d4TDyxlwkGz6IVK634Fr+52Ct/c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ttQXvo2J6GHDYHPHoBeCBVKYiWj9zErUcond/U0fxeA=;
-        b=au6W6osG7vKlNFYwaLZaORwx5ATlzvYtq05sTDBBNUBh6BWkr0o52ijL7qnLMA1w96
-         BVxYr6uvKK7PJ2IySLZIGHso6cCU7T1G9nqy8VJJGA7bGVCSgZKmxQxAeqfsEAiHmaBz
-         rjzCY0EFA4AwYgiBRJTZHt+NdmpTCa3WuwOBV1tXyhtGWI66y/CfbsXKtR8iBi1ezFAk
-         Yy0ZppG45BeZfzm16eGYc0AA5ztDS1KY37vgYJqGRvtFHTGxs9Mo7KuHnGWF08Zi0OMg
-         7pHkU1rco7EeTVuH8l96qH2zfomFbTJeQAYrk/BO0P69IMLuQJ6+RGkzlm+QmtVefeJU
-         xGgQ==
-X-Gm-Message-State: AKS2vOzHckrpU618mdaRe3737cStxTkd/KyCsq1cA/IUNbCEQSYShSei
-        Z7BxskvyC0vRzezoRQfPgVReIlinDehJ
-X-Received: by 10.25.201.18 with SMTP id z18mr3274817lff.153.1498643683848;
- Wed, 28 Jun 2017 02:54:43 -0700 (PDT)
+        id S1751554AbdF1MbK convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 28 Jun 2017 08:31:10 -0400
+Received: from mail02.rohde-schwarz.com ([80.246.32.97]:64328 "EHLO
+        mail02.rohde-schwarz.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751522AbdF1MbI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 08:31:08 -0400
+Received: from amu316.rsint.net ([10.0.26.65])
+          by mail02.rohde-schwarz.com
+          with ESMTP id 2017062814311655-217012 ;
+          Wed, 28 Jun 2017 14:31:16 +0200 
+Received: from rus18.rsint.net ([10.0.33.18])
+          by amu316.rsint.net (Totemo SMTP Server) with SMTP ID 371;
+          Wed, 28 Jun 2017 14:31:04 +0200 (CEST)
+Received: from GMU02.rsint.net ([10.0.32.24])
+          by RUS14.rsint.net (IBM Domino Release 9.0.1FP8)
+          with ESMTP id 2017062814302035-3308 ;
+          Wed, 28 Jun 2017 14:30:20 +0200 
+Received: from GMU01.rsint.net (10.0.32.21) by GMU02.rsint.net (10.0.32.24)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 28
+ Jun 2017 14:30:19 +0200
+Received: from GMU01.rsint.net ([fe80::9832:f3b2:8965:c618]) by
+ GMU01.rsint.net ([fe80::9832:f3b2:8965:c618%12]) with mapi id 15.01.0669.032;
+ Wed, 28 Jun 2017 14:30:20 +0200
+From:   Robert Siemer <Robert.Siemer@rohde-schwarz.com>
+To:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug: submodules of submodules use absolute gitdir in .git file
+ (instead of relative)
+Thread-Topic: Bug: submodules of submodules use absolute gitdir in .git file
+ (instead of relative) /ur/
+Thread-Index: AQHS8ApOY7zvDV9YE0aHVVGFhVxBbg==
+References: <0d924a0671b642d2b8ba79af8d4fa0d7@rohde-schwarz.com>
+ <xmqqr2y531xv.fsf@gitster.mtv.corp.google.com>,<CAGZ79kZmV9Aufrsmf1iohhP5qHzA4AZ3DDv8sn1GMaCZ+SbV5Q@mail.gmail.com>,<a882773a8f0f4632a204090baa0f182b@rohde-schwarz.com>
+In-Reply-To: <a882773a8f0f4632a204090baa0f182b@rohde-schwarz.com>
+Accept-Language: en-US, de-DE
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.0.9.40]
 MIME-Version: 1.0
-Received: by 10.25.24.25 with HTTP; Wed, 28 Jun 2017 02:54:43 -0700 (PDT)
-In-Reply-To: <xmqqk23wycso.fsf@gitster.mtv.corp.google.com>
-References: <CAKYtbVY_=aMjcS=r2YyhcxKiUAaJUJA=OELTvXfau4GGz7Lz4Q@mail.gmail.com>
- <20170627191704.4446-1-miguel.torroja@gmail.com> <xmqqk23wycso.fsf@gitster.mtv.corp.google.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Wed, 28 Jun 2017 10:54:43 +0100
-Message-ID: <CAE5ih78VwBVT+XHnwgnt-JcLB-c4d_Gf+9Wfb_bL=LcgkjDrUQ@mail.gmail.com>
-Subject: Re: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Miguel Torroja <miguel.torroja@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-GBS-PROC: OUwKE2gkgrAOj7T8KnJFp7w8jcRxhWLKaEes+PpmNMA=
+X-TNEFEvaluated: 1
+X-RUS_SENSITIVITY: 10
+Message-ID: <a8e69eac41e747f79f8aba335f995d69@rohde-schwarz.com>
+Date:   Wed, 28 Jun 2017 12:30:20 +0000
+X-MIMETrack: Itemize by SMTP Server on RSSMTP02/RSSMTP at 28.06.2017 14:31:16,
+        Serialize by Router on RSSMTP02/RSSMTP at 28.06.2017 14:31:19,
+        Serialize complete at 28.06.2017 14:31:19
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 28 June 2017 at 05:08, Junio C Hamano <gitster@pobox.com> wrote:
-> Miguel Torroja <miguel.torroja@gmail.com> writes:
+
+I had the problem with version 2.7.4.
+
+The problem is fixed in self-compiled v2.13.2.533.ge0aaa1bed, v2.12.0, v2.11.0 and v2.9.3! Even the older version 2.1.4 does not have that problem.
+
+Thank you for the input!
+
+Robert
+
+
+
+________________________________________
+From: Siemer Robert CSNPE
+Sent: Wednesday, June 28, 2017 14:09
+To: Stefan Beller; Junio C Hamano
+Cc: git@vger.kernel.org
+Subject: Re: Bug: submodules of submodules use absolute gitdir in .git file (instead of relative)
+
+________________________________________
+From: Stefan Beller <sbeller@google.com>
+Sent: Tuesday, June 27, 2017 19:35
+To: Junio C Hamano
+Cc: Siemer Robert CSNPE; git@vger.kernel.org
+Subject: Re: Bug: submodules of submodules use absolute gitdir in .git file (instead of relative)
+
+On Tue, Jun 27, 2017 at 8:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Robert Siemer <Robert.Siemer@rohde-schwarz.com> writes:
 >
->> The option -G of p4 (python marshal output) gives more context about the
->> data being output. That's useful when using the command "change -o" as
->> we can distinguish between warning/error line and real change description.
+>> Hello everyone,
 >>
->> Some p4 triggers in the server side generate some warnings when
->> executed. Unfortunately those messages are mixed with the output of
->> "p4 change -o". Those extra warning lines are reported as {'code':'info'}
->> in python marshal output (-G). The real change output is reported as
->> {'code':'stat'}
+>> $ git submodule foreach cat .git
 >>
->> A new test has been created to t9807-git-p4-submit.sh adding a p4 trigger
->> that outputs extra lines with "p4 change -o" and "p4 changes"
+>> ...shows that the gitdir registered in the .git file of submodules is relative. But if you run
 >>
->> Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
->> ---
+>> $ git submodule foreach --recursive cat .git
+>>
+>> ...shows that submodules of submodules (if you have any) have an absolute gitdir starting with a slash.
+>>
+>> 1) Can you confirm that behavior?
 >
-> It appears that https://travis-ci.org/git/git/builds/247724639
-> does not like this change.  For example:
->
->     https://travis-ci.org/git/git/jobs/247724642#L1848
->
-> indicates that not just 9807 (new tests added by this patch) but
-> also 9800 starts to fail.
->
-> I'd wait for git-p4 experts to comment and help guiding this change
-> forward.
+> Nobody can without knowing which version of Git you are using.  I
+> suspect that we had discussed and addressed something related to
+> nested submodule's "gitdir" pointer in not-so-distant past.
 
-I only see a (very weird) failure in t9800. I wonder if there are some
-P4 version differences.
+Yeah there was a period in time where we had this bug.
+(Or is it a different bug?)
+See 90c0011619 (submodule: use absolute path for computing
+relative path connecting, 2016-12-08), which is included in 2.12.
 
-Client: Rev. P4/LINUX26X86_64/2015.1/1024208 (2015/03/16).
-Server: P4D/LINUX26X86_64/2015.1/1028542 (2015/03/20)
-
-There's also a whitespace error according to "git diff --check".
-:
-Sadly I don't think there's any way to do this and yet keep the "#
-edit" comments. It looks like "p4 change -o" outputs lines with "'#
-edit" on the end, but the (supposedly semantically equivalent) "p4 -G
-change -o" command does not. I think that's a P4 bug.
-
-So we have a choice of fixing a garbled message in the face of scripts
-in the backend, or keeping the comments, or writing some extra Python
-to infer them. I vote for fixing the garbled message.
-
-Luke
