@@ -7,284 +7,106 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9783A20287
-	for <e@80x24.org>; Wed, 28 Jun 2017 21:30:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DD9520287
+	for <e@80x24.org>; Wed, 28 Jun 2017 21:30:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751704AbdF1V37 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 17:29:59 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34967 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751559AbdF1V35 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751813AbdF1VaA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 17:30:00 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36215 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751560AbdF1V35 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 28 Jun 2017 17:29:57 -0400
-Received: by mail-wm0-f66.google.com with SMTP id 131so13755933wmq.2
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 14:29:56 -0700 (PDT)
+Received: by mail-wr0-f196.google.com with SMTP id 77so35305444wrb.3
+        for <git@vger.kernel.org>; Wed, 28 Jun 2017 14:29:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=zqqhAtgZ2DS/yh0XL7kNBogM9h6pSMRiZVmuZUdq0lA=;
-        b=nEiZ+pggsUlI9m8iQuc9dFeyL2+oQ8ikI7FYr+YP9iKkPqOVLXeWi/JlXOzwCv2E0S
-         29c5UFBrc3O83M6bEBjFNn90s9sj7OAeocyRKSPMNe4l7tJkU0KhsFzSfIRUX/8WSTW5
-         o1Uh+vDRBZ/lJ+4H9nYDyn/ubG6kIW12v0zxKKYp9HSm4wtFOQNIZ7U00oMGg0KDGpnE
-         M3VEsKowoJYBd3i72M2U4VakUdCwATgzMQzQpT2lp5aOzn6dwUUJSMPrwGnxuBza0H7P
-         gfGuu1RtdLfShFwl5+EUV5c7zI4VcX35p0DYfZxA5+G38jhIaOb0Ou77p4LtwSga7S7F
-         tghg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=HM9h69V673Y5tI12FD3Y/ARFsYMjRHhyrisuK7S+qYI=;
+        b=No1OhheQmabmxjke0Z+KVcIJN+pl2gciRO8QKUUwEsIIAxKxo/Xbh2FgbmGiURiiya
+         Ea3Oj6+3N0ynnxiL4IfoxYCvUflZPj1EH+jm47ZoqtNuTSyul1A5jKZB5sJ+YSJqkHHr
+         3xzrOv1ubxu35mmy0Ze9qR5EfSL6x8zywPwN5C9+50bjgl5laS0jco66N5xVxL3WKkh0
+         y8SbXE7MrzHGlPWcVmQecZ2kXu7wne+rNPtDdIVeDrP70ONde6Jbbsd7W4rqfTQJPpFO
+         P746V6C5YDkx0uQDSYdfRUpJEAW4xvqgK9OA7nAzBdtz4FqXStMMNmQWrV8vJWKbhsM/
+         dyfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=zqqhAtgZ2DS/yh0XL7kNBogM9h6pSMRiZVmuZUdq0lA=;
-        b=BUn5nVkWRzIClrk3j4LOgclo1toISRpDhxhIzjgmEbGkVAxBhWfZyGLq2MHG6zVeHt
-         HbgRsN7dcTX4xgz/7D3HHcpaQV/CsBbeHiVCJiVHb1oxNekL3JkhXxn7FkpISOobfiZe
-         rcvbU89O8g5v2te5uJkQvtNHQbzWwVr5927+U1f2vIvC7ukBR9G+jT3dQMoxcxnpkdr6
-         /uR6oLCe0UOa637+p3bMRCuvA/BfmYlhLXyEh/KRM43cpV4J5z9VdC9Xa8g4TjNeLlz5
-         JwArr1GgfJkVuE6z6SPCjSRZU5QXq9VwwH+4lam4PD1TKOy/XuqIIISUgsDuU8gTTfMm
-         46PQ==
-X-Gm-Message-State: AKS2vOx2S8C97hW798BdJVtVEV9M6JljEEw7HCzEx0QT0TgJozzzczzh
-        W4z2508284Ab0Ucm
-X-Received: by 10.28.111.5 with SMTP id k5mr2918660wmc.19.1498685394810;
-        Wed, 28 Jun 2017 14:29:54 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=HM9h69V673Y5tI12FD3Y/ARFsYMjRHhyrisuK7S+qYI=;
+        b=sXju2xD6FPM7jgmxN+1KYDgXKeENn+8ooqWhuBpjZqY2kKYo7l+k5cnZIX2uewgeMF
+         hdZFKkMaBTPkjTm/wh9OSKG0Sfxqg56PLw8j7KqNF3bwXprFO+yfuSPwOYGPD/yu6XU/
+         /g8XKAkVspvS5tHstKjcmF5h9Q0LGa5Fn3V6CS0qwHUGMymWBH+IAWlyehYjHupaIzfu
+         Vpbd9ti3TGYFwuwFBDEY1XNfgE196iy4pOS45CNRzbp3VvisuA5wfRg+ds4l5s5D5ZEU
+         tNTsqyQlX4IGrMXc/sGuNQSCdBy6tq+Yx+WqPtABmq6Z86xKUhX4ZN7eKiILnrajRdBm
+         ueSg==
+X-Gm-Message-State: AKS2vOy0mOh7tABgVBjoE4ND8M7R6Y79TVGnRq2XbZg47TquGhV5XT7E
+        Zz00ZVRdfwL+wJVH
+X-Received: by 10.223.133.211 with SMTP id 19mr23255125wru.27.1498685396105;
+        Wed, 28 Jun 2017 14:29:56 -0700 (PDT)
 Received: from ccsh0hfn32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id l20sm2581036wre.25.2017.06.28.14.29.53
+        by smtp.gmail.com with ESMTPSA id l20sm2581036wre.25.2017.06.28.14.29.54
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 28 Jun 2017 14:29:54 -0700 (PDT)
+        Wed, 28 Jun 2017 14:29:55 -0700 (PDT)
 From:   Lars Schneider <larsxschneider@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, tboegi@web.de, e@80x24.org,
         ttaylorr@github.com, peartben@gmail.com
-Subject: [PATCH v8 0/6] convert: add "status=delayed" to filter process protocol
-Date:   Wed, 28 Jun 2017 23:29:46 +0200
-Message-Id: <20170628212952.60781-1-larsxschneider@gmail.com>
+Subject: [PATCH v8 1/6] t0021: keep filter log files on comparison
+Date:   Wed, 28 Jun 2017 23:29:47 +0200
+Message-Id: <20170628212952.60781-2-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.13.2
+In-Reply-To: <20170628212952.60781-1-larsxschneider@gmail.com>
+References: <20170628212952.60781-1-larsxschneider@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The filter log files are modified on comparison. That might be
+unexpected by the caller. It would be even undesirable if the caller
+wants to reuse the original log files.
 
-here is the 8th iteration of my "status delayed" topic. Patch 1 to 3 are
-minor t0021 test adjustments. Patch 4 is a minor convert.c style adjustment.
-Patch 5 is a minor "extract method" refactoring in convert.c with an
-additional minor style adjustment. Patch 6 is the new feature.
+Address these issues by using temp files for modifications. This is
+useful for the subsequent patch 'convert: add "status=delayed" to
+filter process protocol'.
 
-### Changes since v7 (full inter diff below!):
-* remove 'is_delayed' member from delayed_checkout struct as the
-  information can be derived from the 'paths' member (Junio)
-* use table-driven approach for capability negotiation (Junio)
-* remove unnecessary assert (Junio)
-* fix comment style (Junio)
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
+ t/t0021-conversion.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-If you review this series then please read the "Delay" section in
-"Documentation/gitattributes.txt" first for an overview of the delay mechanism.
-The changes in "t/t0021/rot13-filter.pl" are easier to review if you ignore
-whitespace changes.
-
-Thanks,
-Lars
-
-
-RFC: http://public-inbox.org/git/D10F7C47-14E8-465B-8B7A-A09A1B28A39F@gmail.com/
-v1: http://public-inbox.org/git/20170108191736.47359-1-larsxschneider@gmail.com/
-v2: http://public-inbox.org/git/20170226184816.30010-1-larsxschneider@gmail.com/
-v3: http://public-inbox.org/git/20170409191107.20547-1-larsxschneider@gmail.com/
-v4: http://public-inbox.org/git/20170522135001.54506-1-larsxschneider@gmail.com/
-v5: http://public-inbox.org/git/20170601082203.50397-1-larsxschneider@gmail.com/
-v6: http://public-inbox.org/git/20170625182125.6741-1-larsxschneider@gmail.com/
-v7: http://public-inbox.org/git/20170627121027.99209-1-larsxschneider@gmail.com/
-
-Base Ref: master
-Web-Diff: https://github.com/larsxschneider/git/commit/9877046063
-Checkout: git fetch https://github.com/larsxschneider/git filter-process/delay-v8 && git checkout 9877046063
-
-
-### Interdiff (v7..v8):
-
-diff --git a/convert.c b/convert.c
-index f17d822ac8..12a0b3eafb 100644
---- a/convert.c
-+++ b/convert.c
-@@ -508,7 +508,7 @@ static struct hashmap subprocess_map;
-
- static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
- {
--	int err;
-+	int err, i;
- 	struct cmd2process *entry = (struct cmd2process *)subprocess;
- 	struct string_list cap_list = STRING_LIST_INIT_NODUP;
- 	char *cap_buf;
-@@ -516,6 +516,15 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
- 	struct child_process *process = &subprocess->process;
- 	const char *cmd = subprocess->cmd;
-
-+	static const struct {
-+		const char *name;
-+		unsigned int cap;
-+	} known_caps[] = {
-+		{ "clean",  CAP_CLEAN  },
-+		{ "smudge", CAP_SMUDGE },
-+		{ "delay",  CAP_DELAY  },
-+	};
-+
- 	sigchain_push(SIGPIPE, SIG_IGN);
-
- 	err = packet_writel(process->in, "git-filter-client", "version=2", NULL);
-@@ -534,8 +543,15 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
- 	if (err)
- 		goto done;
-
--	err = packet_writel(process->in,
--		"capability=clean", "capability=smudge", "capability=delay", NULL);
-+	for (i = 0; i < ARRAY_SIZE(known_caps); ++i) {
-+		err = packet_write_fmt_gently(
-+			process->in, "capability=%s\n", known_caps[i].name);
-+		if (err)
-+			goto done;
-+	}
-+	err = packet_flush_gently(process->in);
-+	if (err)
-+		goto done;
-
- 	for (;;) {
- 		cap_buf = packet_read_line(process->out, NULL);
-@@ -547,18 +563,15 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
- 			continue;
-
- 		cap_name = cap_list.items[1].string;
--		if (!strcmp(cap_name, "clean")) {
--			entry->supported_capabilities |= CAP_CLEAN;
--		} else if (!strcmp(cap_name, "smudge")) {
--			entry->supported_capabilities |= CAP_SMUDGE;
--		} else if (!strcmp(cap_name, "delay")) {
--			entry->supported_capabilities |= CAP_DELAY;
--		} else {
--			warning(
--				"external filter '%s' requested unsupported filter capability '%s'",
--				cmd, cap_name
--			);
--		}
-+		i = ARRAY_SIZE(known_caps) - 1;
-+		while (i >= 0 && strcmp(cap_name, known_caps[i].name))
-+			i--;
-+
-+		if (i >= 0)
-+			entry->supported_capabilities |= known_caps[i].cap;
-+		else
-+			warning("external filter '%s' requested unsupported filter capability '%s'",
-+			cmd, cap_name);
-
- 		string_list_clear(&cap_list, 0);
- 	}
-@@ -677,7 +690,6 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 		goto done;
-
- 	if (can_delay && !strcmp(filter_status.buf, "delayed")) {
--		dco->is_delayed = 1;
- 		string_list_insert(&dco->filters, cmd);
- 		string_list_insert(&dco->paths, path);
- 	} else {
-diff --git a/convert.h b/convert.h
-index cdb91ab99a..643a5be6cc 100644
---- a/convert.h
-+++ b/convert.h
-@@ -41,14 +41,13 @@ enum ce_delay_state {
- };
-
- struct delayed_checkout {
--	/* State of the currently processed cache entry. If the state is
--	 * CE_CAN_DELAY, then the filter can change the 'is_delayed' flag
--	 * to signal that the current cache entry was delayed. If the state is
--	 * CE_RETRY, then this signals the filter that the cache entry was
--	 * requested before.
-+	/*
-+	 * State of the currently processed cache entry. If the state is
-+	 * CE_CAN_DELAY, then the filter can delay the current cache entry.
-+	 * If the state is CE_RETRY, then this signals the filter that the
-+	 * cache entry was requested before.
- 	 */
- 	enum ce_delay_state state;
--	int is_delayed;
- 	/* List of filter drivers that signaled delayed blobs. */
- 	struct string_list filters;
- 	/* List of delayed blobs identified by their path. */
-diff --git a/entry.c b/entry.c
-index 8406060e33..65458f07a4 100644
---- a/entry.c
-+++ b/entry.c
-@@ -179,7 +179,8 @@ int finish_delayed_checkout(struct checkout *state)
- 				continue;
- 			}
- 			if (available_paths.nr <= 0) {
--				/* Filter responded with no entries. That means
-+				/*
-+				 * Filter responded with no entries. That means
- 				 * the filter is done and we can remove the
- 				 * filter from the list (see
- 				 * "string_list_remove_empty_items" call below).
-@@ -188,7 +189,8 @@ int finish_delayed_checkout(struct checkout *state)
- 				continue;
- 			}
-
--			/* In dco->paths we store a list of all delayed paths.
-+			/*
-+			 * In dco->paths we store a list of all delayed paths.
- 			 * The filter just send us a list of available paths.
- 			 * Remove them from the list.
- 			 */
-@@ -205,7 +207,8 @@ int finish_delayed_checkout(struct checkout *state)
- 					      filter->string, path->string);
- 					errs |= 1;
-
--					/* Do not ask the filter for available blobs,
-+					/*
-+					 * Do not ask the filter for available blobs,
- 					 * again, as the filter is likely buggy.
- 					 */
- 					filter->string = "";
-@@ -213,7 +216,6 @@ int finish_delayed_checkout(struct checkout *state)
- 				}
- 				ce = index_file_exists(state->istate, path->string,
- 						       strlen(path->string), 0);
--				assert(dco->state == CE_RETRY);
- 				errs |= (ce ? checkout_entry(ce, state, NULL) : 1);
- 			}
- 		}
-@@ -284,10 +286,9 @@ static int write_entry(struct cache_entry *ce,
- 					new = NULL;
- 					size = 0;
- 				}
--				dco->is_delayed = 0;
- 				ret = async_convert_to_working_tree(
- 					ce->name, new, size, &buf, dco);
--				if (ret && dco->is_delayed) {
-+				if (ret && string_list_has_string(&dco->paths, ce->name)) {
- 					free(new);
- 					goto finish;
- 				}
-
-
-### Patches
-
-Lars Schneider (6):
-  t0021: keep filter log files on comparison
-  t0021: make debug log file name configurable
-  t0021: write "OUT <size>" only on success
-  convert: put the flags field before the flag itself for consistent
-    style
-  convert: move multiple file filter error handling to separate function
-  convert: add "status=delayed" to filter process protocol
-
- Documentation/gitattributes.txt |  69 ++++++++++++-
- builtin/checkout.c              |   3 +
- cache.h                         |   3 +
- convert.c                       | 202 +++++++++++++++++++++++++++----------
- convert.h                       |  26 +++++
- entry.c                         | 132 ++++++++++++++++++++++++-
- t/t0021-conversion.sh           | 178 +++++++++++++++++++++++++++------
- t/t0021/rot13-filter.pl         | 214 +++++++++++++++++++++++++++-------------
- unpack-trees.c                  |   2 +
- 9 files changed, 668 insertions(+), 161 deletions(-)
-
-
-base-commit: 0339965c70d68fd3831c9a5306443c869de3f6a8
---
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 161f560446..ff2424225b 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -42,10 +42,10 @@ test_cmp_count () {
+ 	for FILE in "$expect" "$actual"
+ 	do
+ 		sort "$FILE" | uniq -c |
+-		sed -e "s/^ *[0-9][0-9]*[ 	]*IN: /x IN: /" >"$FILE.tmp" &&
+-		mv "$FILE.tmp" "$FILE" || return
++		sed -e "s/^ *[0-9][0-9]*[ 	]*IN: /x IN: /" >"$FILE.tmp"
+ 	done &&
+-	test_cmp "$expect" "$actual"
++	test_cmp "$expect.tmp" "$actual.tmp" &&
++	rm "$expect.tmp" "$actual.tmp"
+ }
+ 
+ # Compare two files but exclude all `clean` invocations because Git can
+@@ -56,10 +56,10 @@ test_cmp_exclude_clean () {
+ 	actual=$2
+ 	for FILE in "$expect" "$actual"
+ 	do
+-		grep -v "IN: clean" "$FILE" >"$FILE.tmp" &&
+-		mv "$FILE.tmp" "$FILE"
++		grep -v "IN: clean" "$FILE" >"$FILE.tmp"
+ 	done &&
+-	test_cmp "$expect" "$actual"
++	test_cmp "$expect.tmp" "$actual.tmp" &&
++	rm "$expect.tmp" "$actual.tmp"
+ }
+ 
+ # Check that the contents of two files are equal and that their rot13 version
+-- 
 2.13.2
 
