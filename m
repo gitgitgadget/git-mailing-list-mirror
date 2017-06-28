@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE22F2023D
-	for <e@80x24.org>; Wed, 28 Jun 2017 20:00:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98C742023D
+	for <e@80x24.org>; Wed, 28 Jun 2017 20:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751551AbdF1UAM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 16:00:12 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:35832 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751526AbdF1UAK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 16:00:10 -0400
-Received: by mail-pg0-f50.google.com with SMTP id j186so36639448pge.2
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 13:00:10 -0700 (PDT)
+        id S1751629AbdF1Ug7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 16:36:59 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:33008 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751552AbdF1Ug5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 16:36:57 -0400
+Received: by mail-pf0-f177.google.com with SMTP id e7so39018509pfk.0
+        for <git@vger.kernel.org>; Wed, 28 Jun 2017 13:36:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=5jNP/05RdrmJbE4R7aVTzpz3uWG8MzPldXmEUytxl9E=;
-        b=bsE+ovU9jQcssqInHcoqUCetHHGu+HPIkz5MOmHXNUTSMeke/ubFmRPgqzsloalUt3
-         lLEF6pCKVcwPXyuXGr1e6EecGE1+pdM/M+d4Xie1zBEO13PbRga+ftNTOoGGhrbjpwoj
-         6/M1/1nEt2JLFVtdwG4f6hshlNdEY7bRkZZKI4jloNJNqVpMk1TfLYmbFFCJwnABAt2N
-         C6ZLd5a+VJy8nbjHLy//ew7vO1dcwEOXiY8fpXLXDe0Qr4m99zKo+oBqQndnaeFfp2J+
-         p4SPc2C+uPQoY+QnfU3RBA5IzQI1IPpZBBLx087srFO51TwmqRyN4c+wnaBb1mexTipL
-         gTuA==
+        bh=U9gNl6uwkvXrI2pIRPZiyHCL3T/HSbpMaHq3EnmISjk=;
+        b=JifWsWWWr9FSGAaL7Ru7mkbrrDJwVvU8vZnbQnlHaVvqhT+34R38o6//ihA0RVQ2Hc
+         L6YfLNSbZkbMxQcIBtUiNv1GhN2HzO4VYnHknQMOlhT4/mLeSZWgvRX/lDlUJBl812A1
+         jpg6riVZD4Ue/6AwEwltPMVOLgmNa4wgxqS/v2f3nYfxVQ+IGBM0LHuXWitKotMg6D/C
+         n5T25f+8fC2GJR6iwoz9hu9Gud4m3TlIeM1lXi9SfBkwvuTrp77FNfe/8MBjz/XVd9Do
+         pk276XVN8osgA0dRDNKlcfIa72nkXW6RHxF1OB8fNFlaB0FxdXSs1bGMK9mBzRmliIUS
+         86IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=5jNP/05RdrmJbE4R7aVTzpz3uWG8MzPldXmEUytxl9E=;
-        b=WZq4eAX7Vyvro+qQUEqNOGVsC6jOBpfU+MAtStqtHh0kTjU8dL7743FTvC71Y9LNbt
-         hlZAYH7ngrWa3pEhup0P1ms1/+YazRqQFY+SP4zUXTaifkw83a06GU9kJXKzFfwpG2FI
-         bchMFw6Rmx0ubMBd2dck/9fQ4WTP7cKoLI1852aRtgPCbuM+gOFiXDPUyN90WHXjbh/6
-         LuV7Zz4wPjj6krhdRuS+v/rP62vwzpQprBabBR6TeEeXbXGvQHl9/Mg27mYXEuumy2rY
-         Cb+lpQVY8Vv0kSHeLlm6Re9H62CmNvNBA/N6sstMlLcw2VF2CdyKTrs7M961yeI5vbBL
-         K69w==
-X-Gm-Message-State: AKS2vOx/GeUq6mueiu4rZItXI9X3yJkR7Pz8TuLjOc2f0y86FdwqnfWi
-        5hJzZHCAtdA/RSx1/lO/+Qw8seOVTsY/
-X-Received: by 10.98.19.136 with SMTP id 8mr12509091pft.105.1498680009896;
- Wed, 28 Jun 2017 13:00:09 -0700 (PDT)
+        bh=U9gNl6uwkvXrI2pIRPZiyHCL3T/HSbpMaHq3EnmISjk=;
+        b=VOWj1h4UxcsIxgJBkOkyzk5RWvYNsI4fNwUYmFNalcV6YOsA109BwA062zTq6gGd7b
+         e0ckVWsQpCHMs/lXjeX3C0oZkbYYKCD2GB0qHkm6azKxNzHvhh4e5MCmVh1oN+4Z3NLa
+         n0L6J58rLNHoZC7mPYpImj+5dTTesd9xWJ+M1EXidkof5zQDATHsuy7d+Z53h5hEUeCL
+         RJiu3g0617OKEk2yKGtGg4l/RmpoJNPI9WIH9DRlcuc3/SgUiWjjIHXlEeMQ69vV0jQx
+         yFhUL243ISV7XnlYV/MznhkL1xzWkI2PIVPk5Ybk/dtmHamMm4N5PEMQin2YYIFbbjkc
+         vTmw==
+X-Gm-Message-State: AKS2vOzy7DjKDjMRAJkMDLgNPTPByBNHfAJbaFAeiXti90vSEhtcrE9+
+        kVPhREiZFq687L0wKSCFRNAM/DnN9WwqGk9T7g==
+X-Received: by 10.99.141.76 with SMTP id z73mr12256088pgd.40.1498682216788;
+ Wed, 28 Jun 2017 13:36:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.183.170 with HTTP; Wed, 28 Jun 2017 13:00:09 -0700 (PDT)
-In-Reply-To: <xmqqwp7wyei3.fsf@gitster.mtv.corp.google.com>
-References: <20170628005651.8110-1-sbeller@google.com> <20170628005651.8110-6-sbeller@google.com>
- <xmqqwp7wyei3.fsf@gitster.mtv.corp.google.com>
+Received: by 10.100.183.170 with HTTP; Wed, 28 Jun 2017 13:36:56 -0700 (PDT)
+In-Reply-To: <xmqq37akya3j.fsf@gitster.mtv.corp.google.com>
+References: <20170628005651.8110-1-sbeller@google.com> <20170628005651.8110-7-sbeller@google.com>
+ <xmqqshikye0o.fsf@gitster.mtv.corp.google.com> <xmqq37akya3j.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 28 Jun 2017 13:00:09 -0700
-Message-ID: <CAGZ79kYXzMkO0jtAbCS3f57NtXFHqxVtFUVgq=wNC8PDrfa1dA@mail.gmail.com>
-Subject: Re: [PATCH 5/6] diff.c: omit uninteresting moved lines
+Date:   Wed, 28 Jun 2017 13:36:56 -0700
+Message-ID: <CAGZ79kbsAi95+ZgjMem+MViKiXby7gZnGyg4Hbua5xw6TaPz_w@mail.gmail.com>
+Subject: Re: [PATCH 6/6] diff.c: detect blocks despite whitespace changes
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
@@ -62,52 +62,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 27, 2017 at 8:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Tue, Jun 27, 2017 at 10:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> It is useful to have moved lines colored, but there are annoying corner
->> cases, such as a single line moved, that is very common. For example
->> in a typical patch of C code, we have closing braces that end statement
->> blocks or functions.
->>
->> While it is technically true that these lines are moved as they show up
->> elsewhere, it is harmful for the review as the reviewers attention is
->> drawn to such a minor side annoyance.
->>
->> One of the first solutions considered, started off by these hypothesis':
+>> Looking at the implementation of get_ws_cleaned_string() that is the
+>> workhorse of emitted_symbol_cmp_no_ws(), it seems to be doing wrong
+>> things for various "ignore whitespace" options (i.e. there is only
+>> one implementation, while "git diff" family takes things like
+>> "ignore space change", "ignore all whitespace", etc.), though.
 >
-> Hypotheses is the plural form of that word, I think.
+> This probably deserves a bit more illustration of how I envision the
+> code should evolve.
 >
->>   (a) The more blocks of the same code we have, the less interesting it is.
->>   (b) The shorter a block of moved code is the less need of markup there
->>       is for review.
->>
->>       Introduce a heuristic which drops any potential moved blocks if their
->>       length is shorter than the number of potential moved blocks.
->>
->>       This heuristic was chosen as it is agnostic of the content (in other
->>       languages or contents to manage, we may have longer lines, e.g. in
->>       shell the closing of a condition is already 2 characters. Thinking
->>       about Latex documents tracked in Git, there can also be some
->>       boilerplate code with lots of characters) while taking both
->>       hypothesis' into account. An alternative considered was the number
->>       of non-whitespace characters in a line for example.
->
-> It was puzzling what the above two paragraphs were.  I took (a) and
-> (b) were the hypotheses, and the two above, and also the next
-> paragraphs, were the design that fell out of them.  But that is not
-> what is happening.  You changed your mind and settled on the design
-> in the next paragraph.
+> In the longer term, I would prefer to see emitted_symbol_cmp_no_ws()
+> to go and instead emitted_symbol_cmp() to take the diff options
+> so
+> that it can change the behaviour of the comparison function based on
+> the -w/-b/--ignore-space-at-eol/etc. settings.  And compare two strings
+> in place.
 
-Yes, I somehow want to say:
+ok, in-place is no problem. But passing down the diff options into the
+compare function is a bit hard.
 
-  "What is implemented in this patch is stupid. And I know it, but I
-   know no smarter idea. This is what I thought was smarter, maybe
-   someone in the future can be inspired by this, at least."
+Originally I wanted to do that, see prep work in [1], but Jeff explained that
+the additional pointer in the compare function is **not** supposed to be
+a additional payload (such as the diff options specifying the white space
+options.)
 
-> Perhaps we can do without all of the "I thought about this but it
-> didn't make sense" that is longer than the solution in the patch?
+[1] https://public-inbox.org/git/20170512200244.25245-1-sbeller@google.com/
 
-As I do changes based on your responses, I want to squash
-these patches sent out last night into the original patch, so I'll butcher
-the commit message to be way smaller
+However as we no settled on the struct emitted_diff_symbol,
+that has a 'flags' field in there, which ought to contain everything we
+know about whitespace settings, we should be able to do that from there.
+
+>         emitted_symbol_eqv(struct emitted_diff_symbol *a,
+>                            struct emitted_diff_symbol *b,
+>                            const void *keydata) {
+>                 struct diff_options *diffopt = keydata;
+
+The prep work mentioned, would allow for this, as keydata
+would be passed through as-is in all calls of the hashmap API,
+such that the user can decide if they use it as the actual 'keydata'
+or rather as an additional payload.
+
+Thanks for outlining the idea in code, but maybe we need to
+reconsider the hashmap API before that.
+
+By not considering the change in the hashmap API, the current
+implementation tried to get away by having different compare functions.
+
+Thanks,
+Stefan
