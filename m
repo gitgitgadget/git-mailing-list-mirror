@@ -2,92 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDDC62023D
-	for <e@80x24.org>; Wed, 28 Jun 2017 21:16:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 322A32023D
+	for <e@80x24.org>; Wed, 28 Jun 2017 21:18:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751574AbdF1VQ1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 17:16:27 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:36499 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751515AbdF1VQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 17:16:26 -0400
-Received: by mail-pf0-f173.google.com with SMTP id q86so39365827pfl.3
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 14:16:26 -0700 (PDT)
+        id S1751541AbdF1VS1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 17:18:27 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:33328 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751501AbdF1VSZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 17:18:25 -0400
+Received: by mail-pg0-f41.google.com with SMTP id f127so37509930pgc.0
+        for <git@vger.kernel.org>; Wed, 28 Jun 2017 14:18:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Z3PX3jxGjUb9BGN/HxJydXb+BBNpvJvfFznGP5+SAFc=;
-        b=QnzBHodzgfi1R5Oc9NjPYO6qf0xQOupvckIBUcDMaV5PR0Ragk8Q6VQr9uNRFW1dyW
-         vGlL6ARZKgVJdjSX66hDc6fd1vMMLwz6Ms7ZicTm9gqtdT8sDtC6w9k2tP1iD8YL+jHv
-         ooRzdEqkt4MCDlN4l5KswCMQrqbxa2Kk/gxyzRag/p0TY7Bo3CLMa9Gfg0FdneukZ60s
-         l4UtgRKdlWCauVld1RxMBqXrgaARpPomxKLO2EFCLLnbLSKEKXCc6czWrECkRHDq0ISQ
-         t9C8ysLel0KGt0pKm3D/TGfBEOkOZIJhjPYblgOn5zYFvw61FQ+VIQxZGObud0RJhf+F
-         /mfQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=EN8K809/tdll+J2KM95IJG6MU4hwzbA1MLY0Tx3psDA=;
+        b=blGqxpnXLgtLgnr+b7KTI9PdZWLrswtS1HqZ666D8/1Zs7YzsPXDd+CCZiPYl8RxV1
+         27T1TZbdd4MHKo9LJcDFcT2MmYjcrn6OsEJiYLPEyQLaFSYN71nALo/n7eelwHybTSTR
+         9OU241BEOD2u0Bnxe/MO6KFz/9IeW/K3x8L4r9kLNM++Y2kRBuCeOLb96evT2SlsJxmj
+         ym+yM8sXFPfPMQc0mJsoHDMqGJC8RmBEXzHJq/7sUvu+U6eTMuYBkA5tcqegXY/jWSGx
+         teSjvBiHR7F1+ReYwfV70yIglseQh8hGEH+ckFmxpONhwVlI/ZIou/gRosYRmkkO1YYk
+         kPdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Z3PX3jxGjUb9BGN/HxJydXb+BBNpvJvfFznGP5+SAFc=;
-        b=bsGW1wGfvZDlvp2Z3wQiXpC2doU9l8zYluNXz8BIGaX0IdmB20781kvqV3TUkESv2n
-         SUpnw7uJXbb7hhEmKNKEtS6VMQII2NSPJC0h5lhT4MFvpp3xtjaw5+2B4Smgkbh7VX3S
-         53uVkQhxMN/M88nUDDJaB6O2+6bgrYP3ao0Lwi4Og1bu7na7GxZ8MtVPgJVtKV/+zjn8
-         eC3oJroc9kSiZKAWGFcPxZRjkpOVylMsrWK+M+OT1gov0l5o5ZOKm9HDboaN0LgljrCa
-         H3BdBe+VbLOI7Tc3uTxNFNnLJxohq8HdIiZJbiTEO2xQgmxHCYEi0eu0li1c3WACHdHX
-         ok6g==
-X-Gm-Message-State: AKS2vOxBYQWhq6fewcWZ5Cny3yNvp481M2KxxHN3M0e+NGQTOz+foV1d
-        DGhDiFLQnGb7Ng==
-X-Received: by 10.98.207.2 with SMTP id b2mr9031276pfg.16.1498684585416;
-        Wed, 28 Jun 2017 14:16:25 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:88a2:2d61:9b86:f64d])
-        by smtp.gmail.com with ESMTPSA id c22sm8067381pfl.97.2017.06.28.14.16.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 28 Jun 2017 14:16:24 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 6/6] diff.c: detect blocks despite whitespace changes
-References: <20170628005651.8110-1-sbeller@google.com>
-        <20170628005651.8110-7-sbeller@google.com>
-        <xmqqshikye0o.fsf@gitster.mtv.corp.google.com>
-        <xmqq37akya3j.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kbsAi95+ZgjMem+MViKiXby7gZnGyg4Hbua5xw6TaPz_w@mail.gmail.com>
-Date:   Wed, 28 Jun 2017 14:16:23 -0700
-In-Reply-To: <CAGZ79kbsAi95+ZgjMem+MViKiXby7gZnGyg4Hbua5xw6TaPz_w@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 28 Jun 2017 13:36:56 -0700")
-Message-ID: <xmqqpodnvmmw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=EN8K809/tdll+J2KM95IJG6MU4hwzbA1MLY0Tx3psDA=;
+        b=gSzHMCz6Q8RSmS3pZ3KHzuvRKzCUtRN/uKEyHPqAXko+gWoRUU6/uWiMxaquaS+tdt
+         d5dTwLoubPYs/UQhtgzqokqvWmKXgNiuWzqbomOR9EoQ+dOkG1zYYEYDXRQknuZz7rOh
+         iwNS1wbeLndwC1FF8YBQaXfJiAUdnF/kFPuAIxH9IWq8E4oGn+X3FbMw13AAg0om2WnN
+         LNOyKejgKOLD++I0iAelHzoCbz89TBBkAqyPuY2eLG0dcUGymC/tb1ASjBeZ8zjtpgqE
+         jsidEUrSiS4WLEyQ/U47J7lu6TxDDnRLiozK93oJy//34PuZuPxsVcHaOoQS2WIGc4oX
+         32bQ==
+X-Gm-Message-State: AKS2vOxvwdBWDZl1bgcI9PQ6OAjIigNmgJnAKdOBf/DR9NlPCRA4Pf6D
+        jmK8OIPPM6RIrJjLfnIJlZ0+yu5T6EFYWPpNng==
+X-Received: by 10.99.55.83 with SMTP id g19mr12061411pgn.243.1498684704900;
+ Wed, 28 Jun 2017 14:18:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.183.170 with HTTP; Wed, 28 Jun 2017 14:18:24 -0700 (PDT)
+In-Reply-To: <xmqqwp7vvngg.fsf@gitster.mtv.corp.google.com>
+References: <xmqq1sq3x2xz.fsf@gitster.mtv.corp.google.com> <CAGZ79kbvncDoSuj8AF_rdDoEzavdzEaLxqr7NXi1_eCLNt01Kg@mail.gmail.com>
+ <xmqqwp7vvngg.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 28 Jun 2017 14:18:24 -0700
+Message-ID: <CAGZ79kY++zFEGDZhPMQebbGBw7UXjUf6f+bOzZ58_5NLQpCcjg@mail.gmail.com>
+Subject: Re: [PATCH] submodule--helper: do not call utf8_fprintf() unnecessarily
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Originally I wanted to do that, see prep work in [1], but Jeff explained that
-> the additional pointer in the compare function is **not** supposed to be
-> a additional payload (such as the diff options specifying the white space
-> options.)
+On Wed, Jun 28, 2017 at 1:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> [1] https://public-inbox.org/git/20170512200244.25245-1-sbeller@google.com/
+>> On Wed, Jun 28, 2017 at 1:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> The helper function utf8_fprintf(fp, ...) has exactly the same
+>>> effect to the output stream fp as fprintf(fp, ...) does, and the
+>>> only difference is that its return value counts in display columns
+>>> consumed (assuming that the payload is encoded in UTF-8), as opposed
+>>> to number of bytes.
+>>>
+>>> There is no reason to call it unless the caller cares about its
+>>> return value.
+>>>
+>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>> ---
+>>>
+>>>  * The helper was introduced at c0821965 ("Add utf8_fprintf helper
+>>>    that returns correct number of columns", 2013-02-09), which also
+>>>    taught the help text output from the parse_options API to use it
+>>>    to align columns.  These original callers naturally do use the
+>>>    returned value and left alone by this fix, which corrects all the
+>>>    later callers that misuses it.
+>>>
+>>
+>> The patch looks correct.
 
-Ah, yes, keydata is a wrong thing to use to give additional hint to
-the eqv function.  We do need to fix the function signature of
-hashmap_cmp_fn.  It is common for us to want to use a single
-implementation of an eqv function that can be configured to behave
-slightly differently but the customization will stay the same
-throughout the lifetime of a hashmap.  IOW, hashmap_init() needs to
-be able to take a pointer to such a configuration data
-(e.g. diff_options), and then the comparison made between two
-elements that hash to the same bucket needs to be given not just the
-two elements but also that configuration data to tweak the function.
+I said this because I had a similar implementation a couple weeks back
+when Peff tried to poke (security) holes into submodule usage.
 
+I tried finding the reason why it was originally introduced, but to no avail.
+It seems to be randomly introduced.
+
+> Thanks.  I had a small voice back in my head telling me that I may
+> have misread the code and this patch breaks things, which you
+> cleared up for me ;-)
+
+That said, #include "utf8.h" could also go from the file with this
+or after this patch, I believe.
