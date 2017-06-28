@@ -2,166 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFC5A2023D
-	for <e@80x24.org>; Wed, 28 Jun 2017 13:04:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4F541FCCA
+	for <e@80x24.org>; Wed, 28 Jun 2017 13:14:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751528AbdF1NE2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 09:04:28 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36005 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751312AbdF1NE1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 09:04:27 -0400
-Received: by mail-pg0-f66.google.com with SMTP id u36so8187505pgn.3
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 06:04:27 -0700 (PDT)
+        id S1751690AbdF1NOd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 09:14:33 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:34730 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751678AbdF1NOb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 09:14:31 -0400
+Received: by mail-qk0-f174.google.com with SMTP id d78so49934934qkb.1
+        for <git@vger.kernel.org>; Wed, 28 Jun 2017 06:14:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=DbRiL6MANeQX3XOHFQVcERIoMs87KztUW3qkim1nJMU=;
-        b=RTifvNpgQTZXLa4j5lDCuLmkPLK+XjkdIvmtkuDhsKfqTQYMqcBFJSqgZY0UZGWfje
-         E7AnOMAvxdlnEb1uVxfQ4QT5UyO0TjLw9uI0DUK/RWviSGHU6yjp0Z7RJ2cwFw6X8luw
-         RHS7jKM6z2qAQOiKdIpO+/eIkcoRt/sgOUP1zisa4A+eSnFBuvXwOHuTLBUZhRtVi7Zq
-         o+Fw7yvMd30deuJ1NSyNVrlqLAIKg3eGmSsP1CBjaU8hV03jSDik5t66QKSt6nKfjpLI
-         SrcqVjG8pEBy1kzC0TogXSwKV1PEX782dFJPohyyRJaRTIAKko+zi7+zLUoDLWZPmiDS
-         1Syg==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=ivg4RTu9US8N2iEaxtUzTc6Xfi4vpR8/QxgqPY21bus=;
+        b=An5ifKew/OFObxmzfSg1ywgfZQ9fZTGJR0Ngi6CaUwJSR2RrdEuDKsiuK4DI8EgHMe
+         95ghUIo4qz9DyCqx9Y0A2qLQWpBC/09g+YCev5Ko+ITEUZiyVBDxG91Gog5Ctlb2tOak
+         w6dNuWA1ONxkEG7ZUK23xl+CnSSL8IFL7WuAkhriqzPwowcqksNpr9Ts5X0STU/susMq
+         PZVNx+pad07WtU2ZFvdVETqJOa1mbfNiJh5Anh+IXhfbPs00Ax84a/2AInaoQ+49qWwA
+         LpVhL9ACqMDHrVlyt4a/wDzSRJ+aEd1EDw7iOeiTbTa+GP+j0WhdzhKVi82YwrcfWWzO
+         lC9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=DbRiL6MANeQX3XOHFQVcERIoMs87KztUW3qkim1nJMU=;
-        b=pOdqgScIM9qO03gz2YBh4wQI16lzgU9tkGwVZAOWoa6rlU6NqXIBuAW1YOPxH6WBGt
-         sefuLIcE8jpla1ljCghTJx8jTZIY4zGRBQeZUVUxEyCsD78TG6NkzJ6hTrGU3c7OAimZ
-         N5V3FEklRNEiOuJhFUGmhE45kgF8+h+j9gHuUkGAw1wW28un/ElWW1F14ylWjLQj06r+
-         1F63/3G4OH19p/4AGkukjn91UyzT30QyxVErEawQ6oFJngm9vOPKWBMNowXRGbSO3+Qv
-         fr+0ORsO8305X42D4GkVUgdIsjdmxKznNychVAnrDvzkNKD3A1pUJ0LmGg7YCe3jmEwi
-         I6NQ==
-X-Gm-Message-State: AKS2vOyroE1LUovsxSnMAp/RSgXUg+mNSyuzq0nf19m8Xb+pfKUlzUQu
-        8cX3R84Rq3r3gg==
-X-Received: by 10.98.215.73 with SMTP id v9mr10787077pfl.103.1498655067060;
-        Wed, 28 Jun 2017 06:04:27 -0700 (PDT)
-Received: from unique-pc ([182.73.79.179])
-        by smtp.googlemail.com with ESMTPSA id b8sm5393404pfd.65.2017.06.28.06.04.24
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 28 Jun 2017 06:04:26 -0700 (PDT)
-Message-ID: <1498655062.1935.2.camel@gmail.com>
-Subject: Re: [PATCH/RFC] commit-template: improve readability of commit
- template
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Wed, 28 Jun 2017 18:34:22 +0530
-In-Reply-To: <xmqqwp7x1fie.fsf@gitster.mtv.corp.google.com>
-References: <20170626172433.19785-1-kaarticsivaraam91196@gmail.com>
-         <xmqqefu64dgz.fsf@gitster.mtv.corp.google.com>
-         <1498584144.2737.7.camel@gmail.com>
-         <xmqqwp7x1fie.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=ivg4RTu9US8N2iEaxtUzTc6Xfi4vpR8/QxgqPY21bus=;
+        b=I7c674N5vaEce3dVovUFJHkKAQCZH01n+DPE+rUVB5LBR/wMv8SQ10DN+KDRRT5hM2
+         c/nF6nNIWPQ6GfqH58D92eaXHeyFgqvTN6P5rWRVZ5YjZV9qW4K9IX0yuJZAKkHW1ezz
+         9S6oKRXG4CRXvuqLjjIthF0MoQSfkQ3kgIAp8ZgkfnRleDRn47H8ZTTUdnShqSkhZneh
+         /G3TZCzQ1/fbPDOiScaCalyP5pDk2YZGqRZ8ZXKG+EyCcU5/2UQa+B0xO0jtIwMSaa44
+         pe0wGvZ8j91uKgHuJDT457GMyqo8rn7WwHJap2+mi8Ug9Hf1mN0IEqWfYwjdzKaTcYco
+         Uyqg==
+X-Gm-Message-State: AKS2vOwm/KI6GhprRhtkQqa49qWHsLYdHdMA6scRY2/NEDvEkGJcYbii
+        mlqS5ac/sr6FsulyQDW8OrxmkqO/rA==
+X-Received: by 10.55.19.142 with SMTP id 14mr12409079qkt.78.1498655670398;
+ Wed, 28 Jun 2017 06:14:30 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.237.63.198 with HTTP; Wed, 28 Jun 2017 06:14:29 -0700 (PDT)
+In-Reply-To: <CAE5ih78VwBVT+XHnwgnt-JcLB-c4d_Gf+9Wfb_bL=LcgkjDrUQ@mail.gmail.com>
+References: <CAKYtbVY_=aMjcS=r2YyhcxKiUAaJUJA=OELTvXfau4GGz7Lz4Q@mail.gmail.com>
+ <20170627191704.4446-1-miguel.torroja@gmail.com> <xmqqk23wycso.fsf@gitster.mtv.corp.google.com>
+ <CAE5ih78VwBVT+XHnwgnt-JcLB-c4d_Gf+9Wfb_bL=LcgkjDrUQ@mail.gmail.com>
+From:   miguel torroja <miguel.torroja@gmail.com>
+Date:   Wed, 28 Jun 2017 15:14:29 +0200
+X-Google-Sender-Auth: XdsJiovkN7G55MvparvLdZ_n6_M
+Message-ID: <CAKYtbVaLkt6_rFgehgSsrLzo-oO3sEVoMLBtS5XX59ymYYS7=w@mail.gmail.com>
+Subject: Re: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-06-27 at 10:56 -0700, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
-> > I thought it's not good to trade-off readability for vertical space
-> > as
-> > the ultimate aim of the commit template (at least to me) is to
-> > convey
-> > information to the user about the commit that he's going to make.
-> > For
-> > which, I thought it made more sense to improve it's readability by
-> > adding new lines between different sections rather than constrain
-> > the
-> > output within a few lines.
-> 
-> You have to be careful when making a trade-off argument.  It depends
-> on how familiar you already are with the presentation.  Those who
-> are/got used to the order of things that come, they will know there
-> is extra information when the block of lines are longer than usual
-> without reading every character and then their eyes are guided to
-> read what is extra, without having to waste precious screen real
-> estate.  Nobody will _stay_ a new user who is not yet familiar with
-> the everyday output.
-> 
-You're right. I didn't consider the fact that experienced users would
-be affected as a result of this change, sorry about that. I thought,
-making this change would help the new users who would possibly find the
-commit template to be congested and let experienced users to get
-accustomed to this new output format. I thought this change would be a
-win-win (at least after people get accustomed to the new formatting). 
+Thanks Luke,
 
-In case screen real estate is considered more important here, no
-issues. I'll drop that part of the change, happily.
+regarding the error in t9800 (not ok 18 - unresolvable host in P4PORT
+should display error), for me it's very weird too as it doesn't seem
+to be related to this particular change, as the patch changes are not
+exercised with that test.
 
-> > I actually didn't think of modifying that in order to keep it in
-> > line
-> > with the output of `git status`.
-> 
-> I was (and still am) assuming that if we make this change to "git
-> commit", we should make matching change to "git status" as a given.
-I get it now. In that case, I don't think making the change would be a
-good choice for the following reasons,
+The test 21 in t9807 was precisely the new test added to test the
+change (it was passing with local setup), the test log is truncated
+before the output of test 21 in t9807 but I'm afraid I'm not very
+familiar with Travis, so maybe I'm missing something. Is there a way
+to have the full logs or they are always truncated after some number
+of lines?
 
-    * I think vertical spacing matters more in the output printed to a
-    console.
-    * I myself find it odd to add a new line below the branch
-    information possibly because I'm too accustomed to it's current
-    output.
+I think you get an error with git diff --check because I added spaces
+after a tab, but those spaces are intentional, the tabs are for the
+"<<-EOF" and spaces are for the "p4 triggers" specificiation.
 
-I tried adding the new line, it seemed to be too spacious. It might be
-just me in this case.
+Thanks,
 
-> > Further, to me, adding *this* new line
-> > before the "Changes not staged for commit" (or something in it's
-> > place)
-> > seems to be wasting some vertical space ...
-> 
-> I think it is in line with your original reasoning why you wanted
-> these extra blank lines to separate blocks of different kinds of
-> information:
-> 
->  - "Please do this" instruction at the beginning
->  - Make sure you know the default is --only, not --include
->  - By the way you are committing for that person, not you
->  - This change is being committed on that branch
->  - Here are the changes that are already in the index
->  - Here are the changes that are not in the index
->  - Here are untracked files
-> 
-> Lack of a blank between the fourth block and the fifth block [*1*]
-> makes it somewhat inconsistent, doesn't it?
-> 
-It does, for the given set of blocks. I didn't find it inconsistent as
-I thought the separate blocks as follows,
 
- - "Please do this" instruction at the beginning
- - Make sure you know the default is --only, not --include
- - By the way you are committing for that person, not you
- - Status of repository (git status)
-
-> [Footnote]
-> 
-> *1* Yes, we should think about removing the optional second block,
->     as I think that it outlived its usefulness; if we are to do so,
->     these become the third and the fourth blocks.
-If I interpreted your previous email correctly, I thought we were doing
-it!
-
-I'll send a "typical" patch as a follow-up of this mail.
-
--- 
-Regards,
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+On Wed, Jun 28, 2017 at 11:54 AM, Luke Diamand <luke@diamand.org> wrote:
+> On 28 June 2017 at 05:08, Junio C Hamano <gitster@pobox.com> wrote:
+>> Miguel Torroja <miguel.torroja@gmail.com> writes:
+>>
+>>> The option -G of p4 (python marshal output) gives more context about the
+>>> data being output. That's useful when using the command "change -o" as
+>>> we can distinguish between warning/error line and real change description.
+>>>
+>>> Some p4 triggers in the server side generate some warnings when
+>>> executed. Unfortunately those messages are mixed with the output of
+>>> "p4 change -o". Those extra warning lines are reported as {'code':'info'}
+>>> in python marshal output (-G). The real change output is reported as
+>>> {'code':'stat'}
+>>>
+>>> A new test has been created to t9807-git-p4-submit.sh adding a p4 trigger
+>>> that outputs extra lines with "p4 change -o" and "p4 changes"
+>>>
+>>> Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
+>>> ---
+>>
+>> It appears that https://travis-ci.org/git/git/builds/247724639
+>> does not like this change.  For example:
+>>
+>>     https://travis-ci.org/git/git/jobs/247724642#L1848
+>>
+>> indicates that not just 9807 (new tests added by this patch) but
+>> also 9800 starts to fail.
+>>
+>> I'd wait for git-p4 experts to comment and help guiding this change
+>> forward.
+>
+> I only see a (very weird) failure in t9800. I wonder if there are some
+> P4 version differences.
+>
+> Client: Rev. P4/LINUX26X86_64/2015.1/1024208 (2015/03/16).
+> Server: P4D/LINUX26X86_64/2015.1/1028542 (2015/03/20)
+>
+> There's also a whitespace error according to "git diff --check".
+> :
+> Sadly I don't think there's any way to do this and yet keep the "#
+> edit" comments. It looks like "p4 change -o" outputs lines with "'#
+> edit" on the end, but the (supposedly semantically equivalent) "p4 -G
+> change -o" command does not. I think that's a P4 bug.
+>
+> So we have a choice of fixing a garbled message in the face of scripts
+> in the backend, or keeping the comments, or writing some extra Python
+> to infer them. I vote for fixing the garbled message.
+>
+> Luke
