@@ -2,153 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7105B1FCCA
-	for <e@80x24.org>; Wed, 28 Jun 2017 16:48:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50DCB1FCCA
+	for <e@80x24.org>; Wed, 28 Jun 2017 17:13:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751579AbdF1QsU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 12:48:20 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35295 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751540AbdF1QsS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 12:48:18 -0400
-Received: by mail-pf0-f176.google.com with SMTP id c73so36293971pfk.2
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 09:48:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XW1CIMlPr4/PhK0UVF5tlAMuif4HqWTc0cqOwjzcFEg=;
-        b=Zzi7qGuLgbQ+0zphyw7EjP8bUR3ZVhpU1O4wRtGURdo9TKSuH1eJ0lMl+fVH/IuDyU
-         FcXx/9ZJ7LqwDGWbZzcKXHrkiiBfSrXh3/XtSjob2NrTuWBLi5lmCq/yTkqykyrYipQ8
-         HnQy0PA7vYksj9iOWqRmSRUDYbpFVzAI6L4/Wj8VTFdUyblEAUwcXOay+QHemy12HXdV
-         2b4RJXCgvljS0ax0PszNqjvft3LvfYDuhnb09S6XjYS4qpsv4UkGySv5+mExW3VlhbfV
-         /cCA7i7w1JpTv+bw0LFUoslMNPf6uFDNjPT3nZ3mEGnxD842GytwDADruMrAnrWNn51O
-         G1yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XW1CIMlPr4/PhK0UVF5tlAMuif4HqWTc0cqOwjzcFEg=;
-        b=RVEqn2CNXiz/t9zy3l1wfDrR5gUcfDAlKEKfkZrva5lB85F5iMMG1X2UOB285OB43u
-         cpwlTtupfShEshNWcoO1Z0zXYPK7OgP0i4U/Dbt9hzmYeoouzyGYpnhk1xY1rvKKMMGc
-         1m4aBpUkhqP2wW0Xd+YTxrnHgGQla/5UkGwsSX+ftAPD4VTYQ2KquXLss/w61/2Ufx+1
-         HWC2kr3ImmA5r2FxncVto1VEHOACwkQM1TMiN0BcuTVYn5pyGckZY1/y95cqE65lcRnY
-         QF1HK1wNQECemYqgNsNVNAp7sIZvM/OqRKDQtvs8w7GJCEHiG3ET/RLwRoLTHSLQngB4
-         RPvg==
-X-Gm-Message-State: AKS2vOw/eH2/nwD+t5PnroYVP7wFAhLs0j6o1pfnucuz0gbFTzgqQSXI
-        4OxesKb9YWpZOsC5s1A=
-X-Received: by 10.98.81.129 with SMTP id f123mr11897927pfb.195.1498668497283;
-        Wed, 28 Jun 2017 09:48:17 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:88a2:2d61:9b86:f64d])
-        by smtp.gmail.com with ESMTPSA id c19sm5990320pfj.15.2017.06.28.09.48.16
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 28 Jun 2017 09:48:16 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] commit-template: improve readability of commit template
-References: <xmqqwp7x1fie.fsf@gitster.mtv.corp.google.com>
-        <20170628132910.7940-1-kaarticsivaraam91196@gmail.com>
-Date:   Wed, 28 Jun 2017 09:48:15 -0700
-In-Reply-To: <20170628132910.7940-1-kaarticsivaraam91196@gmail.com> (Kaartic
-        Sivaraam's message of "Wed, 28 Jun 2017 18:59:10 +0530")
-Message-ID: <xmqqshikvz1s.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751583AbdF1RNZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 13:13:25 -0400
+Received: from siwi.pair.com ([209.68.5.199]:14116 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751492AbdF1RNZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 13:13:25 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id CD9AA84564;
+        Wed, 28 Jun 2017 13:13:23 -0400 (EDT)
+Received: from [10.160.98.126] (unknown [167.220.148.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 7C83C84562;
+        Wed, 28 Jun 2017 13:13:23 -0400 (EDT)
+Subject: Re: [PATCH 1/3] list-objects: add filter_blob to traverse_commit_list
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
+        jrnieder@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
+References: <20170622203615.34135-1-git@jeffhostetler.com>
+ <20170622203615.34135-2-git@jeffhostetler.com>
+ <xmqqy3scw06y.fsf@gitster.mtv.corp.google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <e2216ab8-5af7-4edd-16aa-f84a45e0cbd7@jeffhostetler.com>
+Date:   Wed, 28 Jun 2017 13:13:22 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqy3scw06y.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
-
-> The commit template adds the optional parts without
-> a new line to distinguish them. This results in
-> difficulty in interpreting it's content. Add new
-> lines to separate the distinct parts of the template.
->
-> The warning about usage of 'explicit paths without
-> any corresponding options' has outlived it's purpose of
-> warning users about the usage '--only' as default rather
-> than '--include'. Remove it.
->
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> ---
->  builtin/commit.c | 9 +--------
->  1 file changed, 1 insertion(+), 8 deletions(-)
-
-I think I can agree with both of the changes, but this commit does
-two things that may be better done in two separate commits.  If I
-were doing this patch, I probably would make [PATCH 1/2] about
-removing the only_include_assumed (which is all except for the hunk
-at -877,8) and then [PATCH 2/2] about giving a separating blank line
-before the "git status" output.
 
 
-> The warning about usage of 'explicit paths without
-> any corresponding options' has outlived it's purpose of
-> warning users about the usage '--only' as default rather
-> than '--include'. Remove it.
+On 6/28/2017 12:23 PM, Junio C Hamano wrote:
+> Jeff Hostetler <git@jeffhostetler.com> writes:
+> 
+>> diff --git a/list-objects.c b/list-objects.c
+>> index f3ca6aa..c9ca81c 100644
+>> --- a/list-objects.c
+>> +++ b/list-objects.c
+>> @@ -24,11 +25,28 @@ static void process_blob(struct rev_info *revs,
+>>   		die("bad blob object");
+>>   	if (obj->flags & (UNINTERESTING | SEEN))
+>>   		return;
+>> -	obj->flags |= SEEN;
+>>   
+>>   	pathlen = path->len;
+>>   	strbuf_addstr(path, name);
+>> -	show(obj, path->buf, cb_data);
+>> +	if (!filter_blob) {
+>> +		/*
+>> +		 * Normal processing is to imediately dedup blobs
+>> +		 * during commit traversal, regardless of how many
+>> +		 * times it appears in a single or multiple commits,
+>> +		 * so we always set SEEN.
+>> +		 */
+>> +		obj->flags |= SEEN;
+>> +		show(obj, path->buf, cb_data);
+>> +	} else {
+>> +		/*
+>> +		 * Use the filter-proc to decide whether to show
+>> +		 * the blob.  We only set SEEN if requested.  For
+>> +		 * example, this could be used to omit a specific
+>> +		 * blob until it appears with a ".git*" entryname.
+>> +		 */
+>> +		if (filter_blob(obj, path->buf, &path->buf[pathlen], cb_data))
+>> +			obj->flags |= SEEN;
+>> +	}
+> 
+> This somehow looks a bit surprising organization and division of
+> responsibility.  I would have expected
+> 
+> 	if (!filter_blob ||
+> 	    filter_blob(obj, path->buf, &path->buf[pathlen], cb_data) {
+> 		obj->flags |= SEEN;
+> 		show(obj, path->buf, cb_data);
+> 	}
+> 
+> i.e. making the filter function responsible for only making a
+> decision to include or exclude, not giving it a chance to decide to
+> "show" anything different.
 
-With a bit more digging of the history:
+Yes, my logic was a little confusing there.  Jonathan Tan said
+something similar the other day.  I have a new version that I'm
+working on now that looks like this:
 
-    The notice that "git commit <paths>" default to "git commit
-    --only <paths>" was there since 756e3ee0 ("Merge branch
-    'jc/commit'", 2006-02-14).  Back then, existing users of Git
-    expected the command doing "git commit --include <paths>", and
-    after we changed the behaviour of the command to align with
-    other people's "$scm commit <paths>", we added the text to help
-    them transition their expectations.  Remove the message that now
-    has outlived its usefulness.
+	list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_SHOW;
+	...
+	if (filter)
+		r = filter(obj, path->buf, ...
+	if (r & LOFR_MARK_SEEN)
+		obj->flags |= SEEN;
+	if (r & LOFR_SHOW)
+		show(obj, path->buf, cb_data);
 
-perhaps.
+I'm generalizing it a little to let the filter return 2 flags:
+() SEEN to indicate that the filter doesn't want to see it again
+() SHOW to include the object in the result.
+These let filters do "hard" and "provisional" omits.  (This will
+make more sense later when I get my patch cleaned up.)
 
-Thanks.
+
+>> @@ -67,6 +85,7 @@ static void process_gitlink(struct rev_info *revs,
+>>   static void process_tree(struct rev_info *revs,
+>>   			 struct tree *tree,
+>>   			 show_object_fn show,
+>> +			 filter_blob_fn filter_blob,
+>>   			 struct strbuf *base,
+>>   			 const char *name,
+>>   			 void *cb_data)
+>> @@ -111,7 +130,7 @@ static void process_tree(struct rev_info *revs,
+>>   		if (S_ISDIR(entry.mode))
+>>   			process_tree(revs,
+>>   				     lookup_tree(entry.oid->hash),
+>> -				     show, base, entry.path,
+>> +				     show, filter_blob, base, entry.path,
+>>   				     cb_data);
+>>   		else if (S_ISGITLINK(entry.mode))
+>>   			process_gitlink(revs, entry.oid->hash,
+> 
+> I wonder if we'll need filter_tree_fn in the future in this
+> codepath.  When somebody wants to do a "narrow fetch/clone", would
+> the approach taken by this series, i.e. decide not to show certain
+> objects during the "rev-list --objects" traversal, a good precedent
+> to follow?  Would this approach be a good foundation to build on
+> such a future?
+
+Yes, I'm including similar logic inside process_tree() to allow that
+and let the filter know about entering and leaving each tree.  So we
+only need one filter-proc to handle a particular strategy and it will
+handle both tree and blob objects.
+
+I want to be able to use this mechanism to do narrow clone/fetch
+using such a filter-proc and a sparse-checkout-like spec.
+
+Thanks,
+Jeff
 
 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 8d1cac062..22d17e6f2 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -139,7 +139,6 @@ static enum commit_whence whence;
->  static int sequencer_in_use;
->  static int use_editor = 1, include_status = 1;
->  static int show_ignored_in_status, have_option_m;
-> -static const char *only_include_assumed;
->  static struct strbuf message = STRBUF_INIT;
->  
->  static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
-> @@ -841,9 +840,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  				  "with '%c' will be kept; you may remove them"
->  				  " yourself if you want to.\n"
->  				  "An empty message aborts the commit.\n"), comment_line_char);
-> -		if (only_include_assumed)
-> -			status_printf_ln(s, GIT_COLOR_NORMAL,
-> -					"%s", only_include_assumed);
->  
->  		/*
->  		 * These should never fail because they come from our own
-> @@ -877,8 +873,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  				(int)(ci.name_end - ci.name_begin), ci.name_begin,
->  				(int)(ci.mail_end - ci.mail_begin), ci.mail_begin);
->  
-> -		if (ident_shown)
-> -			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
-> +		status_printf_ln(s, GIT_COLOR_NORMAL, "%s", ""); /* Add new line for clarity */
->  
->  		saved_color_setting = s->use_color;
->  		s->use_color = 0;
-> @@ -1208,8 +1203,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
->  		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
->  	if (argc == 0 && (also || (only && !amend && !allow_empty)))
->  		die(_("No paths with --include/--only does not make sense."));
-> -	if (argc > 0 && !also && !only)
-> -		only_include_assumed = _("Explicit paths specified without -i or -o; assuming --only paths...");
->  	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
->  		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
->  	else if (!strcmp(cleanup_arg, "verbatim"))
