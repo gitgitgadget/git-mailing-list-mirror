@@ -2,74 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B26C720209
-	for <e@80x24.org>; Wed, 28 Jun 2017 06:00:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71BA92023D
+	for <e@80x24.org>; Wed, 28 Jun 2017 08:23:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751527AbdF1GAr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 02:00:47 -0400
-Received: from mail-vk0-f42.google.com ([209.85.213.42]:33701 "EHLO
-        mail-vk0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750842AbdF1GAq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 02:00:46 -0400
-Received: by mail-vk0-f42.google.com with SMTP id r126so27606020vkg.0
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 23:00:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Gz4oOAapssPyWlVcgj6XoBH/Ly75t/nV7nuSzz/Yx5Q=;
-        b=hvOKGlWtdb7svydX3/RsEZmHc4Rhmo9nk/A9Ql5xUChgiMZPHZJeHw+sLXxKUySnh6
-         p1TZbuMro1ipSZ1nR/mfwVHURiDhBSzyE3Ol2KNR0Fd1hoPdsxcKaHYWz82zrcxTYm/e
-         jW4iDbzrZj/AA/PvKkR1VD+z1kE4zFdAhmftv2x+CkEEPUM1wt81ggyx//GqeA5zMCW/
-         gVHqYiWdG6bcPcPZAGpZmRY5MQToQXL3BYsqqcOxIQ4KIU0ZPPuvSzpROS1BQeqq+zy5
-         eXWKUMSfwbmuLDny1ZhAZMfLORFpcsc6Xq70DWAAg8qdRVdNw7pYErgci38G+y3MTQlQ
-         Ms+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Gz4oOAapssPyWlVcgj6XoBH/Ly75t/nV7nuSzz/Yx5Q=;
-        b=m05yKgZqDlL4VayD7KrOVS3ywb9A+F3s9VCfXabH0yAmF2ZNn6ZPZro2yZOftXqN80
-         6kG1OszTdxmiFaYfZYM2VBrTxXsfeA8x0HBRfBUSW1JYsBVGFS56j4kll2kID9QEJAJN
-         zvhwwMChCiHIO41aosfxLxJ48PSjHa3xV/MlwKY/hBK8XJq3mz6qGo0vzisyPezUYyO9
-         f/DPeHF7bsDiCiOPfDenVH34kzSRJX9kJzlN+CDybdRkDAp75MgtMdRhoT0EtWQCt1TR
-         0mYIlqoEHYdkRCUJJYuu/3TI6KDBxTWOSGkJwkmnm7+oAPrgkOxQyWmRUofH6+j4v6Of
-         eI3Q==
-X-Gm-Message-State: AKS2vOyLaxgZdjF4Cp9whzj9Z6oxl1psfszS0PxfMJSzwYlsYFiJKCPa
-        ORpPHAxUGNadumBUMcDREP+sUfqsyobt
-X-Received: by 10.31.3.17 with SMTP id 17mr5115698vkd.51.1498629645162; Tue,
- 27 Jun 2017 23:00:45 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.23.13 with HTTP; Tue, 27 Jun 2017 23:00:24 -0700 (PDT)
-In-Reply-To: <xmqqa84t2yaa.fsf@gitster.mtv.corp.google.com>
-References: <CAKKM46uJLu+w-UUFZc1HRar3apAD6Db2KD+GjiNL5v+Q2Ni7hA@mail.gmail.com>
- <xmqqa84t2yaa.fsf@gitster.mtv.corp.google.com>
-From:   Michael Kebe <michael.kebe@gmail.com>
-Date:   Wed, 28 Jun 2017 08:00:24 +0200
-Message-ID: <CAKKM46ureAZNB-YjOrmi+H-_tf3hXGS7dA7o=dj8bnHc+8ABng@mail.gmail.com>
-Subject: Re: Solaris 11.3 SPARC grep problem with t1450-fsck.sh
+        id S1751475AbdF1IXG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 04:23:06 -0400
+Received: from ser-smtp-vm-1.dakosy.de ([195.244.0.87]:46591 "EHLO
+        ser-smtp-vm-1.dakosy.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750829AbdF1IXE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 04:23:04 -0400
+Received: from [10.7.2.114] (helo=ser-smtpdak-vm-1.dakosy.de)
+        by ser-smtp-vm-1.dakosy.de with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+        (Exim 4.76)
+        (envelope-from <neuling@dakosy.de>)
+        id 1dQ8FV-00014z-Ko; Wed, 28 Jun 2017 10:22:57 +0200
+Received: from daktales1.dakosy.de ([10.7.2.20])
+        by ser-smtpdak-vm-1.dakosy.de with esmtp (Exim 4.82)
+        (envelope-from <neuling@dakosy.de>)
+        id 1dQ8FV-0006s5-Dj; Wed, 28 Jun 2017 10:22:57 +0200
+In-Reply-To: <xmqqvanh324p.fsf@gitster.mtv.corp.google.com>
+References: <OF6AC13578.F02B79FA-ONC125814C.004DD247-C125814C.00500A93@dakosy.de> <xmqqvanh324p.fsf@gitster.mtv.corp.google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org
+MIME-Version: 1.0
+Subject: Re: Bug: Since Git 2.13.2 git rebase autostash doesn't use fast-forward (poor
+ performance)
+X-KeepSent: 99731898:CA1C41BB-C125814D:002E02EC;
+ type=4; name=$KeepSent
+Message-ID: <OF99731898.CA1C41BB-ONC125814D.002E02EC-C125814D.002E0B32@dakosy.de>
+From:   neuling@dakosy.de
+Date:   Wed, 28 Jun 2017 10:22:55 +0200
+Content-Type: text/plain; charset="US-ASCII"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-06-27 18:25 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
-> Ah, wait, that particular grep may have GNUism.  If you changed it
-> to
->
->     egrep "$tree \((refs/heads/master|HEAD)@{[0-9]*}:" out
->
-> does it make it pass for you?
+Could you see this as suggestion for performance improvement or should I 
+send another e-mail for a new task?
 
-Yes, this is working.
+Regards,
+Mattias
 
-Greetings
-Michael
+
+Junio C Hamano <jch2355@gmail.com> schrieb am 27.06.2017 17:02:14:
+
+> Von: Junio C Hamano <gitster@pobox.com>
+> An: neuling@dakosy.de
+> Kopie: git@vger.kernel.org
+> Datum: 27.06.2017 17:02
+> Betreff: Re: Bug: Since Git 2.13.2 git rebase autostash doesn't use 
+> fast-forward (poor performance)
+> Gesendet von: Junio C Hamano <jch2355@gmail.com>
+> 
+> neuling@dakosy.de writes:
+> 
+> > since the latest version 2.13.2 "git pull --rebase --autostash" 
+doesn't 
+> > use a fast forward if possible. 
+> 
+> This may not be a bug but instead a fix made deliberately.
+> 
+> cf. http://public-inbox.org/git/
+> CAAZatrCaoB7EXVrCvC9RKmO02G5xcp8GPBaJefHfv7zAXVpL3Q@mail.gmail.com/
+> 
+> A deciding excerpt from the thread was:
+> 
+> > Correctness must trump optimizations
+> 
+> Patches to further update and resurrect the optimization without
+> breaking correctness of course are of course very much welcomed.
+> 
+> Thanks.
+
