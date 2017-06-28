@@ -2,143 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 699F120209
-	for <e@80x24.org>; Wed, 28 Jun 2017 05:06:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DE7E20209
+	for <e@80x24.org>; Wed, 28 Jun 2017 05:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751785AbdF1FGp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 01:06:45 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:35562 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751611AbdF1FGo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 01:06:44 -0400
-Received: by mail-pg0-f49.google.com with SMTP id j186so25928431pge.2
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 22:06:43 -0700 (PDT)
+        id S1752039AbdF1FL0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 01:11:26 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36561 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751634AbdF1FLZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 01:11:25 -0400
+Received: by mail-it0-f68.google.com with SMTP id 185so4507232itv.3
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 22:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=xxky0TZMGW8Oeo6CCRvy2uJyA/SUe5AQZ93+pwXYhng=;
-        b=ZCYMFLe3arHb7Fbc0RywT7Vhwd7BlV1Z0awgYck6FisXx3awtcmUq5yPUx6MyCnQ2U
-         YbTuHgNrEo0ojo1aZC9um0IZw1l3OcnLpLGd+7KUoRlJBvS9XJ1JMn7zk3/skC2cSWwo
-         vUBlQ+2Es/Ny5vpiqDXBTyN6ME1yGBsPHwHsDCPhhvb08Aem2PoC7YG/TvNL77IRZVIj
-         GmcYUX94x03/5IPnGmrZGfKhp2zQ+aDCB27fUbygzOmiHRaEhF3DkoV+qbwtYwPhDoBS
-         VINWi5yG3pUxIxhhCggOOBKrmAib8yydRonSqpj3s3XwVFfoA2zhaW3G6nk8ku9dZGdO
-         bzzg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=G5duDwCM9PjRa8DPNcuXBBVzQ5exNo/h0zWVuVd02QI=;
+        b=axNjxsET8C8qs9DDvc6lmBFWNd6TRpfSw9/FamCpl/LFi8oPvJfNwpEPewLTuJ25wZ
+         4DrqE7Hw6CD2+M4gUbUOzgTwix9xYy1YRX84gKjXxAQeys6Yejz6qfjgY0XdYe/JGswv
+         uF3TRVQuU1uyWsgbzrl7roqaSPEtbZiZsjDzcYLNr4F8aTdamMqZRf3ZGbWJ/3l+adIy
+         d7qVRZLhochWxwBYAiQ+PrfBEPJ8JIDiZW1lx8g/DEHx5FK4CI+Y+pqUbbjvPOAvuW1G
+         WSvLtD2Qdae8vLlICur+iXH3renS5BANfPoKxoUL3BKAOK/zZ2AxQdgMqJKZAl23/0Q7
+         ybSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=xxky0TZMGW8Oeo6CCRvy2uJyA/SUe5AQZ93+pwXYhng=;
-        b=tup+ya7SkSGcvtd6JbB1c24sHqEpvQy49jDW7Su2glcEa9c2ZQ3jaahKwyZlnxCPkT
-         pdbSFOe1inkg7TiCqod9C90aH11rMFtfG2ja3ZGZLHdbbiXhSQJPZbpfBt8d1IiQXjYP
-         UkH7XMiL/h+SXdOj+8qibYG8M1U5m7rwfL+dn+eROqLSpC9IWu1BKiBjNpORXWcCQbz6
-         DxTVxfIdshL4VutfTJrC0XKczFQiSegGlMxZPd1efEhlDjR6JWoJqYzlzj5haeyxn3GP
-         HlYrDbMuNJsL3h8xhfDgF2TC9QOVB9ZHnjN7KV3bWgsSgWqvBTNnKuyspeE3MKnVTn4F
-         eaug==
-X-Gm-Message-State: AKS2vOzFPo7q98M08xHmx7xkiAzoPx+Y9j+iz/F2I8n02K/7qkLDSZ7d
-        utHn1TldxbM63g==
-X-Received: by 10.84.229.7 with SMTP id b7mr9732814plk.216.1498626403101;
-        Tue, 27 Jun 2017 22:06:43 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
-        by smtp.gmail.com with ESMTPSA id r27sm1744133pfe.0.2017.06.27.22.06.40
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 22:06:41 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net
-Subject: Re: [PATCH 6/6] diff.c: detect blocks despite whitespace changes
-References: <20170628005651.8110-1-sbeller@google.com>
-        <20170628005651.8110-7-sbeller@google.com>
-        <xmqqshikye0o.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 27 Jun 2017 22:06:40 -0700
-In-Reply-To: <xmqqshikye0o.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Tue, 27 Jun 2017 20:41:59 -0700")
-Message-ID: <xmqq37akya3j.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=G5duDwCM9PjRa8DPNcuXBBVzQ5exNo/h0zWVuVd02QI=;
+        b=MQJJvHKEVlODWQyFfBFVo0g0iyFKxTIQEKUILZhqKf+P66TzuJ8bHGvDhohOZ53q4l
+         ccZ+TL4uxZxiiuYTheh9qF3RjZvwL0n36nJ9IjoPSip6wQNnxdaaeGxCSqQcJXvxb/A4
+         TCwCK8aRi5M/SErXEDu0rA2/rzGhqNPAfP9voPEeTqxaNk8IUgM61fNQXOBCBsstIBOh
+         7TE4obC/gt2cTWMbsHOYrIVpof+GE/Jwr3+rQH8sGqF136zDIBEh/Dh5aprKUK/nQJwr
+         EYlEjigRbqQKYv6LXC/PnjtsQ1Os/LvaANnPXFhBGkNB0vV/W7G4HuEbuhQuzJ+xHJ3i
+         +JgQ==
+X-Gm-Message-State: AKS2vOwoXq7GKDQj6/Jmrewl/IjWAUlQmRgWgiAEiOdzrKwaJnla3t4s
+        pBzSFXEhe/HGsjqX8nRLGUOe+i/FJA==
+X-Received: by 10.36.84.144 with SMTP id t138mr6404466ita.76.1498626684995;
+ Tue, 27 Jun 2017 22:11:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.40.70 with HTTP; Tue, 27 Jun 2017 22:11:24 -0700 (PDT)
+In-Reply-To: <20170610134026.104552-1-benpeart@microsoft.com>
+References: <20170610134026.104552-1-benpeart@microsoft.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 28 Jun 2017 07:11:24 +0200
+Message-ID: <CAP8UFD3LA1WvjOZN9WgzMQhuTTXNX7yKgChgAJsLFHX0Ag17JA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/7] Fast git status via a file system watcher
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        David Turner <David.Turner@twosigma.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Jun 10, 2017 at 3:40 PM, Ben Peart <peartben@gmail.com> wrote:
+> Changes from V4 include:
+...
 
-> Looking at the implementation of get_ws_cleaned_string() that is the
-> workhorse of emitted_symbol_cmp_no_ws(), it seems to be doing wrong
-> things for various "ignore whitespace" options (i.e. there is only
-> one implementation, while "git diff" family takes things like
-> "ignore space change", "ignore all whitespace", etc.), though.
+I took a look at this patch series except the last patch ([PATCH v5
+7/7] fsmonitor: add a performance test) as Junio reviewed it already,
+and had only a few comments on patches 3/7 and 4/7.
 
-This probably deserves a bit more illustration of how I envision the
-code should evolve.
+I am still not convinced by the discussions following v2
+(http://public-inbox.org/git/20170518201333.13088-1-benpeart@microsoft.com/)
+about using a hook instead of for example a "core.fsmonitorcommand".
 
-In the longer term, I would prefer to see emitted_symbol_cmp_no_ws()
-to go and instead emitted_symbol_cmp() to take the diff options so
-that it can change the behaviour of the comparison function based on
-the -w/-b/--ignore-space-at-eol/etc. settings.  And compare two strings
-in place.
+I think using a hook is not necessary and might not be a good match
+for later optimizations. For example people might want to use a
+library or some OS specific system calls to do what the hook does.
 
-For that, you may need a helper function that takes a pointer to a
-character pointer, picks the next byte that matters while advancing
-the pointer, and returns that byte.  The emitted_symbol_cmp(a, b)
-which is not used for real comparison (i.e. ordering to see if a
-sorts earlier than b) but for equivalence (i.e. considering various
-whitespace-ignoring settings, does a and b matfch?) may become
-something like:
-
-        int
-        emitted_symbol_eqv(struct emitted_diff_symbol *a,
-                           struct emitted_diff_symbol *b,
-                           const void *keydata) {
-                struct diff_options *diffopt = keydata;
-                const char *ap = a->line;
-                const char *bp = b->line;
-
-                while (1) {
-                        int ca, cb;
-                        ca = next_byte(&ap, diffopt);
-                        cb = next_byte(&bp, diffopt);
-                        if (ca != cb)
-                                return 1; /* differs */
-                        if (!ca)
-                                return 0;
-                };
-        }                           
-
-where next_byte() may look like:
-
-        static int
-        next_byte(const char **cp, struct diff_options *diffopt)
-        {                  
-                int retval;
-
-        again:
-                retval = **cp;
-                if (!retval)
-                        return retval; /* end of string */
-                if (!isspace(retval)) {
-                        (*cp)++; /* advance */
-                        return retval;
-                }
-
-                switch (ignore_space_type(diffopt)) {
-                case NOT_IGNORING:
-                        (*cp)++; /* advance */
-                        return retval;
-                case IGNORE_SPACE_CHANGE:
-                        while (**cp && isspace(**cp))
-                                (*cp)++; /* squash consecutive spaces */
-                        return ' '; /* normalize spaces with a SP */
-                case IGNORE_ALL_SPACE:
-                        (*cp)++; /* advance */
-                        goto again;
-                ... other cases here ...
-                }
-        }
-
-
+AEvar previously reported some not so great performance numbers on
+some big Booking.com boxes with a big monorepo and it seems that using
+taskset for example to make sure that the hook is run on the same CPU
+improves these numbers significantly. So avoiding to run a separate
+process can be important in some cases.
