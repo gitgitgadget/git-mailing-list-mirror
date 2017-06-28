@@ -2,141 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05C9C1FCCA
-	for <e@80x24.org>; Wed, 28 Jun 2017 16:23:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D75351FCCA
+	for <e@80x24.org>; Wed, 28 Jun 2017 16:30:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751560AbdF1QXj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 12:23:39 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33715 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751548AbdF1QXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 12:23:37 -0400
-Received: by mail-pf0-f195.google.com with SMTP id e199so9646671pfh.0
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 09:23:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=nJJdfUKRFsPtNnuKWU2FX5iZfTpPNlRzIpMQ1Gj+tNI=;
-        b=LpVaCj3tZXn4Qgt9+ayHxYUW/ZLmrFR10v1WtJldPjIGIoztMuCo97LcYdVbiyzfJB
-         h8w1dWwn356WaH5v6trLTTT6EFdos113EMj1WHgu8iqjAsB+zVXO3iqfvvD/61Trde4f
-         4+IgBrglsFGncX51zMqRVU8tMgiPh3dTI+AL6E3IHSa/NsimnOCfKQEainbwWiGyRTDG
-         DkXojfS9SLftzoP4ohtPE8WbDM3dZUEvVroOjGn0MfAXk2X0ZxoKB5VZAFiQJ7P0YFzZ
-         kK7udiZcVHDNrtl6uKXbiuEbegJLcFu9LOrC1hkCKaTnBS8FQev8JwupqOVZaKzXsAjI
-         iErA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=nJJdfUKRFsPtNnuKWU2FX5iZfTpPNlRzIpMQ1Gj+tNI=;
-        b=SVqEhRX8p0gTDXj8lxSLTcO/LVAdSlPAasN4HZx8DJTEf562oLUXFfMs9DU/vKXLSh
-         T2QhIEJJEJU2LWolwVCVQPO2eh+9hfGxHIrEKSFdU98orCWaNgV8Nfs/Vvf72eCuI/8x
-         cGCXEaykR10YVWtZZzlUn5ry9eM5PxqveIHzlf9SkFBiZCv3YaCY3KPSuySK+xQVpjvp
-         +OFEWnxalwvvYwDyp5ZPP/TMG873YZsoyHEE+e32LF+DLkAScjx6M0CyPGKTp+tJnxq2
-         84VmHmvHjqvA4Epphg5MM7XCF+pGZ+mfhI/T0IJ3oemfn/Sf5zl5MI4dHVtiYbyJKCeX
-         /JmA==
-X-Gm-Message-State: AKS2vOyeGH68X2P/uOgAvhIwYLMz0wYHpY4fJbuUka6kExAsK3PxCpaD
-        rQhysPoXna61TQ==
-X-Received: by 10.84.217.26 with SMTP id o26mr12889923pli.223.1498667017089;
-        Wed, 28 Jun 2017 09:23:37 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:88a2:2d61:9b86:f64d])
-        by smtp.gmail.com with ESMTPSA id a4sm6823117pfc.22.2017.06.28.09.23.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 28 Jun 2017 09:23:34 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com,
-        jrnieder@gmail.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 1/3] list-objects: add filter_blob to traverse_commit_list
-References: <20170622203615.34135-1-git@jeffhostetler.com>
-        <20170622203615.34135-2-git@jeffhostetler.com>
-Date:   Wed, 28 Jun 2017 09:23:33 -0700
-In-Reply-To: <20170622203615.34135-2-git@jeffhostetler.com> (Jeff Hostetler's
-        message of "Thu, 22 Jun 2017 20:36:13 +0000")
-Message-ID: <xmqqy3scw06y.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751626AbdF1QaE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 12:30:04 -0400
+Received: from mout.web.de ([212.227.17.12]:63118 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751518AbdF1QaD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 12:30:03 -0400
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MRlIL-1dJKvB0pEv-00SyYz; Wed, 28
+ Jun 2017 18:30:00 +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH/RFC v1 1/1] cygwin: Allow pushing to UNC paths
+Date:   Wed, 28 Jun 2017 18:29:58 +0200
+Message-Id: <20170628162958.519-1-tboegi@web.de>
+X-Mailer: git-send-email 2.10.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:5LohYo627JFCRmBcFj/tFn84rhlZ/m3+IIW6p/lHVe0JpEbC3a4
+ b6hMbly6LKo6UU54V5V0I9eYO/JofduDnxYwkPD0ICw9LDHFYbDKBqINMWlhYbTxFbXH/K1
+ cfLVHe267/KOSkXEFLcsVS521j0czEtU8FZCgvk3AQxHCpAIyclKH7urRQEfw2JsjFPxbHr
+ 2cCNYnUbPPxD4to6MEP6Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Wtm1gNKS+u4=:rue1mzJZKowgXCHMzvmuvx
+ sqLxcYGsyl58L5kvqZKDh6v1IyOPzBMcPM2GuPuajqzVI0SxdqPs2Y97rn+Ka4rX6fpgKwEhm
+ ry4Jh+5KNUctT7G6MPL28mIm+wrVMlnVoVt8B8Y4z5kk72beNxHBFQOgfEEVkUtML7ykQWkEi
+ chN6fRVPCc277CfoXo9Ot3Gok/H35+aOnidINn0VCnlz94OhSf59JWGKPDA0SCnirEH0OKKws
+ JJ8HtC2XTOKyD6i6jSCLcjFzQMTn7XsJ3fHvX2gTxSmErBNrBeGxl7VeCvv1eHmnHLyakxKXS
+ HRvs8I5/HjqSveGu8xHF68NBDNPbROvshS147LkJZE4kARILflcuOiFSGqhQ9Uq72iH0sk3TU
+ 4EjLAhjjum+JLYsCoY29WrJNAYLB/n9UBNAOn/loOos3ldmp3S9NQzXXXmgVP5+jP8fcOrVuk
+ GPxg/t674nfwA5r6p0Jti7os7DqUme2NdoXbofEvwwVwPiX1mjFor4vHKP86XL9HoqfmHHOnS
+ 7k2mtEtlHyXpuOs7zhj+KconA+Lxt6uCVDi9opElj/UrtfkRTsBGkn7DzXaLq413mNcLk64I+
+ kqN5JIWcGl+h/28bEI/1VtgRloFGD9YHlW6HYB9SAsf9aRM1v6Wg5z9e3u+auTE5aSUG3mw79
+ 3RGkYeJ3J/Rg0kTvJh87H1riAk4e9MgP6iOV6zjp8K6mY4UkgP6pMYg0dPmBZBD+SLRMTenyp
+ Q+tr167vT982eFRuQBIRtYm16pO8zw2S1mS79ZYwyzwvnyrRrKEJkc5PD56tEzK4s/sPQsSw0
+ zx5kzgH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+From: Torsten Bögershausen <tboegi@web.de>
 
-> diff --git a/list-objects.c b/list-objects.c
-> index f3ca6aa..c9ca81c 100644
-> --- a/list-objects.c
-> +++ b/list-objects.c
-> @@ -24,11 +25,28 @@ static void process_blob(struct rev_info *revs,
->  		die("bad blob object");
->  	if (obj->flags & (UNINTERESTING | SEEN))
->  		return;
-> -	obj->flags |= SEEN;
->  
->  	pathlen = path->len;
->  	strbuf_addstr(path, name);
-> -	show(obj, path->buf, cb_data);
-> +	if (!filter_blob) {
-> +		/*
-> +		 * Normal processing is to imediately dedup blobs
-> +		 * during commit traversal, regardless of how many
-> +		 * times it appears in a single or multiple commits,
-> +		 * so we always set SEEN.
-> +		 */
-> +		obj->flags |= SEEN;
-> +		show(obj, path->buf, cb_data);
-> +	} else {
-> +		/*
-> +		 * Use the filter-proc to decide whether to show
-> +		 * the blob.  We only set SEEN if requested.  For
-> +		 * example, this could be used to omit a specific
-> +		 * blob until it appears with a ".git*" entryname.
-> +		 */
-> +		if (filter_blob(obj, path->buf, &path->buf[pathlen], cb_data))
-> +			obj->flags |= SEEN;
-> +	}
+cygwin can use an UNC path like //server/share/repo
+$ cd //server/share/dir
+$ mkdir test
+$ cd test
+$ git init --bare
 
-This somehow looks a bit surprising organization and division of
-responsibility.  I would have expected
+However, when we try to push from a local Git repository to this repo,
+there are 2 problems:
+- Git converts the leading "//" into a single "/".
+- The remote repo is not accepted because setup.c calls
+  access(getenv(DB_ENVIRONMENT), X_OK)
+  and this call fails. In other words, checking the executable bit
+  of a directory mounted on a SAMBA share is not reliable (and not needed).
 
-	if (!filter_blob || 
-	    filter_blob(obj, path->buf, &path->buf[pathlen], cb_data) {
-		obj->flags |= SEEN;
-		show(obj, path->buf, cb_data);
-	}
+As cygwin handles an UNC path so well, Git can support them better.
+- Introduce cygwin_offset_1st_component() which keeps the leading "//",
+  similar to what Git for Windows does.
+- Move CYGWIN out of the POSIX in the tests for path normalization in t0060.
+- Use cygwin_access() with a relaxed test for the executable bit on
+  a directory pointed out by an UNC path.
 
-i.e. making the filter function responsible for only making a
-decision to include or exclude, not giving it a chance to decide to
-"show" anything different.
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+---
+ compat/cygwin.c       | 29 +++++++++++++++++++++++++++++
+ compat/cygwin.h       |  7 +++++++
+ config.mak.uname      |  1 +
+ git-compat-util.h     |  3 +++
+ t/t0060-path-utils.sh |  2 ++
+ 5 files changed, 42 insertions(+)
+ create mode 100644 compat/cygwin.c
+ create mode 100644 compat/cygwin.h
 
-> @@ -67,6 +85,7 @@ static void process_gitlink(struct rev_info *revs,
->  static void process_tree(struct rev_info *revs,
->  			 struct tree *tree,
->  			 show_object_fn show,
-> +			 filter_blob_fn filter_blob,
->  			 struct strbuf *base,
->  			 const char *name,
->  			 void *cb_data)
-> @@ -111,7 +130,7 @@ static void process_tree(struct rev_info *revs,
->  		if (S_ISDIR(entry.mode))
->  			process_tree(revs,
->  				     lookup_tree(entry.oid->hash),
-> -				     show, base, entry.path,
-> +				     show, filter_blob, base, entry.path,
->  				     cb_data);
->  		else if (S_ISGITLINK(entry.mode))
->  			process_gitlink(revs, entry.oid->hash,
+diff --git a/compat/cygwin.c b/compat/cygwin.c
+new file mode 100644
+index 0000000..d98e877
+--- /dev/null
++++ b/compat/cygwin.c
+@@ -0,0 +1,29 @@
++#include "../git-compat-util.h"
++#include "../cache.h"
++
++int cygwin_offset_1st_component(const char *path)
++{
++	const char *pos = path;
++	/* unc paths */
++	if (is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
++		/* skip server name */
++		pos = strchr(pos + 2, '/');
++		if (!pos)
++			return 0; /* Error: malformed unc path */
++
++		do {
++			pos++;
++		} while (*pos && pos[0] != '/');
++	}
++	return pos + is_dir_sep(*pos) - path;
++}
++
++#undef access
++int cygwin_access(const char *filename, int mode)
++{
++	/* the execute bit does not work on SAMBA drives */
++	if (filename[0] == '/' && filename[1] == '/' )
++		return access(filename, mode & ~X_OK);
++	else
++		return access(filename, mode);
++}
+diff --git a/compat/cygwin.h b/compat/cygwin.h
+new file mode 100644
+index 0000000..efa12ad
+--- /dev/null
++++ b/compat/cygwin.h
+@@ -0,0 +1,7 @@
++int cygwin_access(const char *filename, int mode);
++#undef access
++#define access cygwin_access
++
++
++int cygwin_offset_1st_component(const char *path);
++#define offset_1st_component cygwin_offset_1st_component
+diff --git a/config.mak.uname b/config.mak.uname
+index adfb90b..551e465 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -184,6 +184,7 @@ ifeq ($(uname_O),Cygwin)
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
+ 	SPARSE_FLAGS = -isystem /usr/include/w32api -Wno-one-bit-signed-bitfield
+ 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
++	COMPAT_OBJS += compat/cygwin.o
+ endif
+ ifeq ($(uname_S),FreeBSD)
+ 	NEEDS_LIBICONV = YesPlease
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 047172d..db9c22d 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -189,6 +189,9 @@
+ #include <sys/sysctl.h>
+ #endif
+ 
++#if defined(__CYGWIN__)
++#include "compat/cygwin.h"
++#endif
+ #if defined(__MINGW32__)
+ /* pull in Windows compatibility stuff */
+ #include "compat/mingw.h"
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 444b5a4..7ea2bb5 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -70,6 +70,8 @@ ancestor() {
+ case $(uname -s) in
+ *MINGW*)
+ 	;;
++*CYGWIN*)
++	;;
+ *)
+ 	test_set_prereq POSIX
+ 	;;
+-- 
+2.10.0
 
-I wonder if we'll need filter_tree_fn in the future in this
-codepath.  When somebody wants to do a "narrow fetch/clone", would
-the approach taken by this series, i.e. decide not to show certain
-objects during the "rev-list --objects" traversal, a good precedent
-to follow?  Would this approach be a good foundation to build on
-such a future?
-
-Thanks.
