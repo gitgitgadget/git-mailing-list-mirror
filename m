@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B91A20209
-	for <e@80x24.org>; Wed, 28 Jun 2017 03:57:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD73E20209
+	for <e@80x24.org>; Wed, 28 Jun 2017 04:08:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753788AbdF1D50 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Jun 2017 23:57:26 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35686 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753610AbdF1D5Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Jun 2017 23:57:25 -0400
-Received: by mail-pg0-f68.google.com with SMTP id f127so6600391pgc.2
-        for <git@vger.kernel.org>; Tue, 27 Jun 2017 20:57:24 -0700 (PDT)
+        id S1751584AbdF1EI0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 00:08:26 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35713 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751300AbdF1EIZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 00:08:25 -0400
+Received: by mail-pg0-f67.google.com with SMTP id f127so6631029pgc.2
+        for <git@vger.kernel.org>; Tue, 27 Jun 2017 21:08:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=TsAzrMJOkzvg7UsZZIT7+jIs4uuspn5poVi08FucJCM=;
-        b=hdqKdqRQFxWD5drUdnhRaOEFqQUxLz921itkQtaw+dpOhJuHNH+M1gs1N9WnzLKcTv
-         +v9YgVX3mUx+H2pl+uflCLsFIqFgG4aEB95mg22ZyK+GdCRKccGUk3VCzdoPj1cJIYNb
-         uJPXb2ZKUOGaNaND6PCABQd5tsCim3/e34VnFxTibSA4WagQ4imMna4IGq5I5WpAS1ig
-         4kZ2LHRgWk3GRxLa8wKtumGcXvMx/XHJWoN/gWw3tJeVAEB7eRoKovWwb+8qF2OcePxZ
-         4WvY+jmzGn3RGwJgFgzRl1K5U0KMjDQ8SrMYmP4U4ExO3ST9Fwra+zbkZBFOdpZUNBYl
-         b4dA==
+        bh=7+fUwminjCKAVFDGsu50e7dH2Sr6dQ6e21olGggI47c=;
+        b=EDg9PsBxVa7NTlHkTfh6R/gvxIyiTbAU6VPcqxTqQc1PfJckAtlHWpwDfjU0DlHwYa
+         2CipA1vyf94u6p3c3rp2PdlUcggXyhq4fk0OYildJN9DjfcGZeafSVJOfIi/dH0gNLtQ
+         kfZhJjHORFoJ1MDvLkBkRQeklI9My8pvnQFzI2xJrt4e4MQo0SETrGwjQR6Kvuw0OGz2
+         2U+J8Ca5rjJqmUABDXmyq9bV3vodtwLgh1iWEFpZArZtOCh7zJlphOgEikYpkQAz2v1q
+         7z82fBnWBIekDuWo1k3sLkwNVQ1K6j4R36FV0Pa66cUdRFrSIr6ax/cPd0ZaIskXItqS
+         U34Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=TsAzrMJOkzvg7UsZZIT7+jIs4uuspn5poVi08FucJCM=;
-        b=uUJ2hYzreEhXTimbzVMre4llBhAjODh9X8PG1TFH8/hcmvOUScnaCFq1nuZ9w1ydj2
-         WpCP1+Ft01Ncv/tnosGdhNmsc8SMZJTs8kbHbaWcyXyQj1DlRgcOopOW5C+YK1y4/szF
-         llKXz0VZY0ohSyClRAKBFhX39djvWrbQxiLBhm8okfotOsEStemj9Ubt/OOOz3qM0VjH
-         vKjfJ1td/e1hL7o6KSEZtyGfvDiFq1t+nA6Z5iE54PF+W0Ou2BiFqi0mv9LSimRDWf6N
-         P/I0yhhg6qayfVMfQvSuqbh+Xd+Zz9oTuXUtDU4QPq4pHv1Nbl8cJHnmP8OGpbyg12Zw
-         v+sw==
-X-Gm-Message-State: AKS2vOxn2b9FLvh9ENWOr7LDVjzvutdhLwsuX6K4Pn407lZAZkYua3u1
-        s/xycnEuGcX7CNyv6Q0=
-X-Received: by 10.99.246.69 with SMTP id u5mr8579413pgj.173.1498622244170;
-        Tue, 27 Jun 2017 20:57:24 -0700 (PDT)
+        bh=7+fUwminjCKAVFDGsu50e7dH2Sr6dQ6e21olGggI47c=;
+        b=YKZ9xwVpe5NNh+m++luidPRHZX1HRFpoWu09Z0wml57hq6r0nO7CCulmkrA4+Yw9SL
+         +R+ldWAn5zrZPMgHYZgLww8tsSIWFbtzelYXG70h47UVSRI1dEA249LTm1grBhjKoj3H
+         ToPMyiEsDpRpq+dBDJYLs0l/3mkwEfI2jaLF2KDb4VdfiQx7PWvI1VAWpru6woamABOq
+         2eYEuY7ZfesfGvYjaCjV4xsXYvnsrTFRv+aJGmqKdAXvHr2Tk0kP7uTlXQYvkBjdT04m
+         m8MkSPAwLoV1TfOXOqZAJdKzFbMVYB4oVszE56qe+XT2pLArDWgsGBMXT1jqPEOcAgKS
+         oXUQ==
+X-Gm-Message-State: AKS2vOxJAj5YmT9dbNWdqtE6YL4j7a551PflAmLB9a4VZdjYmflBcr50
+        N0fPRMcdDDtzFoJpAV0=
+X-Received: by 10.98.9.19 with SMTP id e19mr8725465pfd.177.1498622905050;
+        Tue, 27 Jun 2017 21:08:25 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3095:bb54:d256:9ca9])
-        by smtp.gmail.com with ESMTPSA id d185sm1134078pgc.39.2017.06.27.20.57.23
+        by smtp.gmail.com with ESMTPSA id y192sm733434pgd.38.2017.06.27.21.08.23
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 27 Jun 2017 20:57:23 -0700 (PDT)
+        Tue, 27 Jun 2017 21:08:24 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "A. Wilcox" <AWilcox@Wilcox-Tech.com>
-Cc:     git@vger.kernel.org, apenwarr@gmail.com
-Subject: Re: [PATCH] subtree: Obey USE_ASCIIDOCTOR when present
-References: <20170628024916.32235-1-AWilcox@Wilcox-Tech.com>
-Date:   Tue, 27 Jun 2017 20:57:22 -0700
-In-Reply-To: <20170628024916.32235-1-AWilcox@Wilcox-Tech.com> (A. Wilcox's
-        message of "Tue, 27 Jun 2017 21:49:16 -0500")
-Message-ID: <xmqqo9t8ydb1.fsf@gitster.mtv.corp.google.com>
+To:     Miguel Torroja <miguel.torroja@gmail.com>
+Cc:     larsxschneider@gmail.com, luke@diamand.org, git@vger.kernel.org
+Subject: Re: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
+References: <CAKYtbVY_=aMjcS=r2YyhcxKiUAaJUJA=OELTvXfau4GGz7Lz4Q@mail.gmail.com>
+        <20170627191704.4446-1-miguel.torroja@gmail.com>
+Date:   Tue, 27 Jun 2017 21:08:23 -0700
+In-Reply-To: <20170627191704.4446-1-miguel.torroja@gmail.com> (Miguel
+        Torroja's message of "Tue, 27 Jun 2017 21:17:04 +0200")
+Message-ID: <xmqqk23wycso.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,73 +66,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"A. Wilcox" <AWilcox@Wilcox-Tech.com> writes:
+Miguel Torroja <miguel.torroja@gmail.com> writes:
 
-> Defining USE_ASCIIDOCTOR=1 when building Git uses asciidoctor over
-> asciidoc when generating DocBook and man page documentation.  However,
-> the contrib/subtree module does not presently honour that flag.
+> The option -G of p4 (python marshal output) gives more context about the
+> data being output. That's useful when using the command "change -o" as
+> we can distinguish between warning/error line and real change description.
 >
-> This causes a build failure when asciidoc is not present on the build
-> system.  Instead, adapt the main Documentation/Makefile logic to use
-> asciidoctor when requested.
+> Some p4 triggers in the server side generate some warnings when
+> executed. Unfortunately those messages are mixed with the output of
+> "p4 change -o". Those extra warning lines are reported as {'code':'info'}
+> in python marshal output (-G). The real change output is reported as
+> {'code':'stat'}
 >
-> Signed-off-by: A. Wilcox <AWilcox@Wilcox-Tech.com>
+> A new test has been created to t9807-git-p4-submit.sh adding a p4 trigger
+> that outputs extra lines with "p4 change -o" and "p4 changes"
+>
+> Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
 > ---
 
-Makes sense.  Thanks.  Will queue.
+It appears that https://travis-ci.org/git/git/builds/247724639
+does not like this change.  For example:
 
->  contrib/subtree/Makefile | 26 +++++++++++++++++++-------
->  1 file changed, 19 insertions(+), 7 deletions(-)
->
-> diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-> index 6afa9aa..1b8fcd1 100644
-> --- a/contrib/subtree/Makefile
-> +++ b/contrib/subtree/Makefile
-> @@ -19,15 +19,27 @@ htmldir ?= $(prefix)/share/doc/git-doc
->  INSTALL  ?= install
->  RM       ?= rm -f
->  
-> -ASCIIDOC = asciidoc
-> -XMLTO    = xmlto
-> +ASCIIDOC         = asciidoc
-> +ASCIIDOC_CONF    = -f ../../Documentation/asciidoc.conf
-> +ASCIIDOC_HTML    = xhtml11
-> +ASCIIDOC_DOCBOOK = docbook
-> +ASCIIDOC_EXTRA   = 
-> +XMLTO            = xmlto
-> +
-> +ifdef USE_ASCIIDOCTOR
-> +ASCIIDOC         = asciidoctor
-> +ASCIIDOC_CONF    =
-> +ASCIIDOC_HTML    = xhtml5
-> +ASCIIDOC_DOCBOOK = docbook45
-> +ASCIIDOC_EXTRA  += -I../../Documentation -rasciidoctor-extensions
-> +ASCIIDOC_EXTRA  += -alitdd='&\#x2d;&\#x2d;'
-> +endif
->  
->  ifndef SHELL_PATH
->  	SHELL_PATH = /bin/sh
->  endif
->  SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
->  
-> -ASCIIDOC_CONF = ../../Documentation/asciidoc.conf
->  MANPAGE_XSL   = ../../Documentation/manpage-normal.xsl
->  
->  GIT_SUBTREE_SH := git-subtree.sh
-> @@ -65,12 +77,12 @@ $(GIT_SUBTREE_DOC): $(GIT_SUBTREE_XML)
->  	$(XMLTO) -m $(MANPAGE_XSL) man $^
->  
->  $(GIT_SUBTREE_XML): $(GIT_SUBTREE_TXT)
-> -	$(ASCIIDOC) -b docbook -d manpage -f $(ASCIIDOC_CONF) \
-> -		-agit_version=$(GIT_VERSION) $^
-> +	$(ASCIIDOC) -b $(ASCIIDOC_DOCBOOK) -d manpage $(ASCIIDOC_CONF) \
-> +		-agit_version=$(GIT_VERSION) $(ASCIIDOC_EXTRA) $^
->  
->  $(GIT_SUBTREE_HTML): $(GIT_SUBTREE_TXT)
-> -	$(ASCIIDOC) -b xhtml11 -d manpage -f $(ASCIIDOC_CONF) \
-> -		-agit_version=$(GIT_VERSION) $^
-> +	$(ASCIIDOC) -b $(ASCIIDOC_HTML) -d manpage $(ASCIIDOC_CONF) \
-> +		-agit_version=$(GIT_VERSION) $(ASCIIDOC_EXTRA) $^
->  
->  $(GIT_SUBTREE_TEST): $(GIT_SUBTREE)
->  	cp $< $@
+    https://travis-ci.org/git/git/jobs/247724642#L1848
+
+indicates that not just 9807 (new tests added by this patch) but
+also 9800 starts to fail.
+
+I'd wait for git-p4 experts to comment and help guiding this change
+forward.
+
+Thanks.
