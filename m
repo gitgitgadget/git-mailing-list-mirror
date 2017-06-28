@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C56852023D
-	for <e@80x24.org>; Wed, 28 Jun 2017 21:30:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 748042023D
+	for <e@80x24.org>; Wed, 28 Jun 2017 21:30:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751629AbdF1VaF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 17:30:05 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:34390 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751817AbdF1VaC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 17:30:02 -0400
-Received: by mail-wr0-f194.google.com with SMTP id k67so35232498wrc.1
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 14:30:01 -0700 (PDT)
+        id S1751945AbdF1VaL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 17:30:11 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35013 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751559AbdF1VaI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 17:30:08 -0400
+Received: by mail-wm0-f66.google.com with SMTP id 131so13756383wmq.2
+        for <git@vger.kernel.org>; Wed, 28 Jun 2017 14:30:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=st5NqMzIbPEm/mC7w3+pAWFoUkNOWrtB7P45P/R580E=;
-        b=suOrzEnoKgfnW0FRXjrs6Ucj5vc61fvTynkpHAO4cupdi/GRSv5lOblQeCZxaMVmnZ
-         7T8Eh1zK3TyGCCBER5d/PQktkagbAuOFDyDjTcO62GomM/tNvc8f0JGps0OPTumMThzW
-         K+9/K0QAoNHCXveFtBP5kDLVN256kMhRFY5pbC5dEDkRX8HtzEwz2+54RAGYOCwiVFRu
-         3gpOOJmdTKQ/9HLmM4eaAl45EsEeTtZfwTKkOEIhcbt0fOLw3SKBEZnR7Ae54wk6tX6t
-         4MlbkVxlMsArCL/6AuOU87fQ3cxyGICm8Db7/cgVzGu2DBKPfPyQ3GFjmichUG79u/6r
-         3hpQ==
+        bh=eVoG8bat0IXNG/PXiGhVyTf19MbcLYxpEfxhDvCZAZg=;
+        b=CvDGL1e7w3wxJf/BR6DRV95hcdN9+0zhcXOw8L7r7tP/S2HQUKX09WdTDkabgDQfbM
+         WfXJtdt9Dh0QpGz+VotaF15VJrTKwvkMVrtRF5YGvR3MPGPFle7Nzw6aRzCQNnw494sV
+         n2dPnLuIkU1pv3PzbeekJgA5ocrqXWSz+lGId6dJQxEsUTs3FJnaVsC/KHvIIlb3lNux
+         36/KCeENApzMCaNLiLcZEfkr2NOcAfsfU1QmpkcT5R5KrQv2P59tNKrudfNjBa7Mf+je
+         muk3zwkrm/faUXscAPzwB0V10o/svKVe2B+b5qY/yWrw6P96x+QDRYnt+jU4qEhApREf
+         osVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=st5NqMzIbPEm/mC7w3+pAWFoUkNOWrtB7P45P/R580E=;
-        b=Hj1OpyvEIilidGGcLHUCuuRspMib3U7csvKCt8RqH+N8oqakLYgYZB57WrtdxSdzCJ
-         dTu56K0vyoM0+T2QbEux+2O1wN3Ua1VQ0Sy2pz/KJgCSp8QQfHwdkjowhNRZKyvddyJx
-         Vyglt27CQVfQDstANKvPSaNwRLzP+NafYchc8nP1YmbasDaWojLbbFkbNag0yRHhmOXg
-         w/XCsAp6UQJVaxAk+ldC+3q3oZ2RlQn1F46na6c6EGXLbUU3dIEloM2V1hIExz20YBKL
-         M/+Xk3yjGvA5LwAue63Av1CKTYuZ3BKlQ/okdUKDJD+6K6/f6XotuwSFWarwvj6U3XBX
-         qneg==
-X-Gm-Message-State: AKS2vOwOeyGEBp2XdhPVB3NOYwcMX7sh9ZDBaVjLQdeh6Ujh0VDxFD99
-        4CQZH/EdlCwLh8kk
-X-Received: by 10.223.179.67 with SMTP id k3mr22678321wrd.198.1498685400213;
-        Wed, 28 Jun 2017 14:30:00 -0700 (PDT)
+        bh=eVoG8bat0IXNG/PXiGhVyTf19MbcLYxpEfxhDvCZAZg=;
+        b=SXMDgIUuRNzRGsfutdQYzSPgCnvM2YihSid3J2PwB5FZ4wxvkyyeLBx/odA7CUd3R8
+         M9ui+GlqsrAexDUzMmZ+DBCnAAO1gV+cE0JmzOwMmUaP2MS/+KbW/7kYL8KlZorhsO1/
+         OEy6kB314fjVneEyl61Rkjt20xeEw5kAeQ0jbkuuijy/EkhrSzHCPhRcqCw+XJgEbHCL
+         bS4zkIC/MQok/e+FyUpIjRbQcZ4Tyzt8zIe10S5Vk2ky2yh0NnAeNTU8wNTk47J0yM7U
+         f7IjISDuZo4GEgnb0vbicu1oXi26ZSclfAoHgnB4uO9LH1eT3KuxWYuTZswE4ssdBYzg
+         vf3g==
+X-Gm-Message-State: AKS2vOwrNXIsHMLrlJroPdPOJNigxqNg2ZmVC55dixxBx8w4gIQhFnpS
+        SOD8lTf/3Zc0EkYl
+X-Received: by 10.28.191.134 with SMTP id o6mr9344637wmi.11.1498685401640;
+        Wed, 28 Jun 2017 14:30:01 -0700 (PDT)
 Received: from ccsh0hfn32.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id l20sm2581036wre.25.2017.06.28.14.29.59
+        by smtp.gmail.com with ESMTPSA id l20sm2581036wre.25.2017.06.28.14.30.00
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 28 Jun 2017 14:29:59 -0700 (PDT)
+        Wed, 28 Jun 2017 14:30:01 -0700 (PDT)
 From:   Lars Schneider <larsxschneider@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, tboegi@web.de, e@80x24.org,
         ttaylorr@github.com, peartben@gmail.com
-Subject: [PATCH v8 4/6] convert: put the flags field before the flag itself for consistent style
-Date:   Wed, 28 Jun 2017 23:29:50 +0200
-Message-Id: <20170628212952.60781-5-larsxschneider@gmail.com>
+Subject: [PATCH v8 5/6] convert: move multiple file filter error handling to separate function
+Date:   Wed, 28 Jun 2017 23:29:51 +0200
+Message-Id: <20170628212952.60781-6-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.13.2
 In-Reply-To: <20170628212952.60781-1-larsxschneider@gmail.com>
 References: <20170628212952.60781-1-larsxschneider@gmail.com>
@@ -62,44 +62,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Suggested-by: Jeff King <peff@peff.net>
+Refactoring the filter error handling is useful for the subsequent patch
+'convert: add "status=delayed" to filter process protocol'.
+
+In addition, replace the parentheses around the empty "if" block with a
+single semicolon to adhere to the Git style guide.
+
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- convert.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ convert.c | 47 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 21 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index f1e168bc30..9907e3b9ba 100644
+index 9907e3b9ba..e55c034d86 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -597,12 +597,12 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 	}
- 	process = &entry->subprocess.process;
+@@ -565,6 +565,29 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
+ 	return err;
+ }
  
--	if (!(wanted_capability & entry->supported_capabilities))
-+	if (!(entry->supported_capabilities & wanted_capability))
- 		return 0;
++static void handle_filter_error(const struct strbuf *filter_status,
++				struct cmd2process *entry,
++				const unsigned int wanted_capability) {
++	if (!strcmp(filter_status->buf, "error"))
++		; /* The filter signaled a problem with the file. */
++	else if (!strcmp(filter_status->buf, "abort") && wanted_capability) {
++		/*
++		 * The filter signaled a permanent problem. Don't try to filter
++		 * files with the same command for the lifetime of the current
++		 * Git process.
++		 */
++		 entry->supported_capabilities &= ~wanted_capability;
++	} else {
++		/*
++		 * Something went wrong with the protocol filter.
++		 * Force shutdown and restart if another blob requires filtering.
++		 */
++		error("external filter '%s' failed", entry->subprocess.cmd);
++		subprocess_stop(&subprocess_map, &entry->subprocess);
++		free(entry);
++	}
++}
++
+ static int apply_multi_file_filter(const char *path, const char *src, size_t len,
+ 				   int fd, struct strbuf *dst, const char *cmd,
+ 				   const unsigned int wanted_capability)
+@@ -656,28 +679,10 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ done:
+ 	sigchain_pop(SIGPIPE);
  
--	if (CAP_CLEAN & wanted_capability)
-+	if (wanted_capability & CAP_CLEAN)
- 		filter_type = "clean";
--	else if (CAP_SMUDGE & wanted_capability)
-+	else if (wanted_capability & CAP_SMUDGE)
- 		filter_type = "smudge";
- 	else
- 		die("unexpected filter type");
-@@ -703,9 +703,9 @@ static int apply_filter(const char *path, const char *src, size_t len,
- 	if (!dst)
- 		return 1;
- 
--	if ((CAP_CLEAN & wanted_capability) && !drv->process && drv->clean)
-+	if ((wanted_capability & CAP_CLEAN) && !drv->process && drv->clean)
- 		cmd = drv->clean;
--	else if ((CAP_SMUDGE & wanted_capability) && !drv->process && drv->smudge)
-+	else if ((wanted_capability & CAP_SMUDGE) && !drv->process && drv->smudge)
- 		cmd = drv->smudge;
- 
- 	if (cmd && *cmd)
+-	if (err) {
+-		if (!strcmp(filter_status.buf, "error")) {
+-			/* The filter signaled a problem with the file. */
+-		} else if (!strcmp(filter_status.buf, "abort")) {
+-			/*
+-			 * The filter signaled a permanent problem. Don't try to filter
+-			 * files with the same command for the lifetime of the current
+-			 * Git process.
+-			 */
+-			 entry->supported_capabilities &= ~wanted_capability;
+-		} else {
+-			/*
+-			 * Something went wrong with the protocol filter.
+-			 * Force shutdown and restart if another blob requires filtering.
+-			 */
+-			error("external filter '%s' failed", cmd);
+-			subprocess_stop(&subprocess_map, &entry->subprocess);
+-			free(entry);
+-		}
+-	} else {
++	if (err)
++		handle_filter_error(&filter_status, entry, wanted_capability);
++	else
+ 		strbuf_swap(dst, &nbuf);
+-	}
+ 	strbuf_release(&nbuf);
+ 	return !err;
+ }
 -- 
 2.13.2
 
