@@ -2,120 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 773D91FCCA
-	for <e@80x24.org>; Wed, 28 Jun 2017 19:53:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B09EB1FCCA
+	for <e@80x24.org>; Wed, 28 Jun 2017 19:54:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751819AbdF1Txw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Jun 2017 15:53:52 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:35841 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751813AbdF1Txn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Jun 2017 15:53:43 -0400
-Received: by mail-pg0-f52.google.com with SMTP id u62so36575052pgb.3
-        for <git@vger.kernel.org>; Wed, 28 Jun 2017 12:53:43 -0700 (PDT)
+        id S1751927AbdF1Tyl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Jun 2017 15:54:41 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:36359 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751899AbdF1Tyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Jun 2017 15:54:35 -0400
+Received: by mail-pf0-f177.google.com with SMTP id q86so38455909pfl.3
+        for <git@vger.kernel.org>; Wed, 28 Jun 2017 12:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=SHGUvp6Af0CYCOh3i/AoG4AqISMF0wORR5ytghAGgsQ=;
-        b=P3U91wKiDiGfCT41qahf+P20O+oLLS9eR44xNQw2g91F+xuNKW843AlVZ3Il+W/t1l
-         h35vvw6BWOEF5LqCS1bSQDE5SR0EM5pwfRbYecTUfldXoWosjus33iLnSqtQHmj17quA
-         j4b2WzJ/L9/K8GNZ5x/FHMn/v6/H6vfwBpmPZYVqNL5joTc7tgIZiFK9ji48MAKF3IYd
-         Zegn4hAgIXcHwR4YinG0lgqJxlAq4bXwZ9TzpvN0W9M8UqnAR1Prsavb9SA23NlWk/ex
-         wt/0Ig74NazzjAGFj7j0rTpJOQ0PAS43lJQsBaWFRQiHBDraXBweRPW2Wf/MC0Tw1nXk
-         mzoQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TL0vsraEUZ1tFVvtoMvyBf7qWdE2Ebkx+FDBKdkYPXA=;
+        b=v1DhY81COZyDXYBhX3zNlQB1ZYnU7JzsbRv+74/9Jx+h5ypHUMbDqoq+WTIM09Xf6w
+         v2C3rdVtn/HE/PYHwg142y7Y8OqBQg47/CUB8IPnyp/JfaFwWvtmT42AIxOKnFYhbk+X
+         q2u4mKv1FriBEKAE27WVMSFjFsbdW3HgeQiVbBjOQKm2VejW1uUm17nY55QQTmXwQeX5
+         5lnPZ4V61C6IVe7/DF+pVsVrnUVwOkqTBLef/dw7v0PTRIdkexygiOZ5IAHDPCnBKKju
+         ViWV1uF1epSBf6JmBkCXyEjm0rk00iJpPJ3SWKq2Hn6yIs1S+pnU0bJr3u47xH3Dj6cr
+         BK/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=SHGUvp6Af0CYCOh3i/AoG4AqISMF0wORR5ytghAGgsQ=;
-        b=imVl3BC5H2ydpPiRUomjgXnNaNlcxgqn/W+/1iQZCedNx+aX/T2YRKScG4mVF9kInN
-         gFfGIlbqjGUr+FrTJ0vyKLz9zotJLN+BZUaQ1TX91vTl5VmYUgVPu5K1DqJ78t+hIjp9
-         SnFltwKrdIVKaAnLoKm2pi0pBXMsCBt7uzqsi5fPrGrbsxO4B4H9orzwulr6AgGxG3mU
-         UiFcGsC5MRQ4itlHrvxpbp+q9Ky5D3H03ERAjfta+USJWVAc7gKfgqf6kV/PHCh4ST1A
-         xoKEaHlEeQ68XS2fUFvJEr4QzRJHF/sSmtXWoNb5l4/n+n0YjpSSCjGK2eiktWP+SFse
-         99bg==
-X-Gm-Message-State: AKS2vOxNjdY9j0dMSzFVf9E2uIEGWSUOZgw8RRX8x6V9uCDu2hTCvg4w
-        dzAODOGpdkJVxw==
-X-Received: by 10.84.176.3 with SMTP id u3mr13735857plb.134.1498679617454;
-        Wed, 28 Jun 2017 12:53:37 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:88a2:2d61:9b86:f64d])
-        by smtp.gmail.com with ESMTPSA id u9sm5978617pfd.56.2017.06.28.12.53.34
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 28 Jun 2017 12:53:34 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     christian.couder@gmail.com, git@vger.kernel.org, sbeller@google.com
-Subject: Re: [GSoC][PATCH 1/6 v2] submodule--helper: introduce for_each_submodule_list
-References: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
-        <20170626231108.23640-1-pc44800@gmail.com>
-Date:   Wed, 28 Jun 2017 12:53:34 -0700
-In-Reply-To: <20170626231108.23640-1-pc44800@gmail.com> (Prathamesh Chavan's
-        message of "Tue, 27 Jun 2017 04:41:03 +0530")
-Message-ID: <xmqq60ffx51d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TL0vsraEUZ1tFVvtoMvyBf7qWdE2Ebkx+FDBKdkYPXA=;
+        b=hNypByuuj2fX6/6RJ5wVCKvP5HTstA60gz2YMZX1N2AwhTjuElUKI/DZ0nNOzdPvDU
+         oJQb42+QdjNztxZXz/jELrsWV+iT28zj98iBF0hNYw9MnDXti/AcWUX/gqkPtiBV2adu
+         yH4hHnUOAJkyh2ib0xrrFgAktOVker1JZlFq0m/aQEVFGCahyASPlxkTWVoR8T0XotoM
+         5vrwb16EH9WacS+8ZZsrnied5PhwIn+kyYWnCOWrzXx0yoPSWa5o9oH/eGX0aZ/OEf81
+         xCB5isU5IYkT3MEOJT/UehARkqlrH07BFaNC0hzHy+fWfODUVV4gq3piri+E9p2RVDv+
+         RKFg==
+X-Gm-Message-State: AKS2vOxaFsnTZiXo6tcs8r2n/ea8h9K4hyak0+UXb5XzPtUrFbWyTK53
+        YSXZP40nK6OT/Sw/r3p8z7v+hnT3qGNqQ2I=
+X-Received: by 10.84.232.205 with SMTP id x13mr13922474plm.245.1498679674404;
+ Wed, 28 Jun 2017 12:54:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.183.170 with HTTP; Wed, 28 Jun 2017 12:54:33 -0700 (PDT)
+In-Reply-To: <xmqq60fgztud.fsf@gitster.mtv.corp.google.com>
+References: <20170628005651.8110-1-sbeller@google.com> <20170628005651.8110-3-sbeller@google.com>
+ <xmqq60fgztud.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 28 Jun 2017 12:54:33 -0700
+Message-ID: <CAGZ79kY2qhaefcjFJLDAuhFB_ZngGw7bKnzv-hA-5hmCfH3KOA@mail.gmail.com>
+Subject: Re: [PATCH 2/6] diff.c: change the default for move coloring to zebra
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prathamesh Chavan <pc44800@gmail.com> writes:
+On Tue, Jun 27, 2017 at 8:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> diff --git a/diff.h b/diff.h
+>> index 98abd75521..9298d211d7 100644
+>> --- a/diff.h
+>> +++ b/diff.h
+>> @@ -192,6 +192,7 @@ struct diff_options {
+>>               COLOR_MOVED_NO = 0,
+>>               COLOR_MOVED_PLAIN = 1,
+>>               COLOR_MOVED_ZEBRA = 2,
+>> +             COLOR_MOVED_DEFAULT = 2,
+>>               COLOR_MOVED_ZEBRA_DIM = 3,
+>>       } color_moved;
+>>  };
+>
+> Hmph.  I would have expected that COLOR_MOVED_DEFAULT would not be
+> part of the enum, but a
+>
+>     #define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
+>
+> I do not have a strong preference either way; it was just a bit
+> unexpected.
 
-> Introduce function for_each_submodule_list for using it
-> in the later patches, related to porting submodule
-> subcommands from shell to C.
-> This new function is also used in ported submodule subcommand
-> init.
-
-The patch text looks sensible.  It would be easier for "git log"
-readers to understand, if the change is explained like so:
-
-	Introduce function for_each_submodule_list() and
-	replace a loop in module_init() with a call to it.
-
-	The new function will also be used in other parts of the
-	system in later patches.
-
-That way, readers do not have to judge the merit of this change
-based on a vague promise "it will help world better with future
-patches", but can instead judge on its immediate benefit that it
-refactors a useful bit out of an existing code.
-
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
-> ---
-> This series of patches is based on the 'next' branch. 
-
-The reason not to base on 'master' is...?
-
-The thing is that a topic built on 'next' cannot be merged down to
-'master' until _all_ other topics in 'next' graduate to 'master',
-which may never happen.  If you are depending on one or more topics,
-please make sure to name them.  Then we can
-
- (1) create a branch from the tip of 'master';
- (2) merge these topics you depend on into that branch; and then
- (3) apply these patches.
-
-The topic still needs to wait until these other topis graduate, but
-at least you would not be blocked by unrelated topics that way.
-
-You _might_ be building on 'next' because you want to make sure that
-your topic works not just with master but also want to make sure
-that there won't be any unexpected breakage when used with topics in
-'next', even though your topic does not depend on anything in 'next'
-in particular.  It is a good development discipline to pay attention
-to other topics in flight and I applaud you for it if that is why
-you based it on 'next'.  But the right way to do it would be to
-build your topic on 'master', and then in addition to testing the
-topic by itself, also make a trial merge of your topic into 'next'
-and test the result as well.
+Yes it is not as one would expect.
+Originally I thought it could buy us some more protection via
+smart static analysis (to be invented yet), but now I am not so
+sure any more. Changed it to the #define.
 
 Thanks.
