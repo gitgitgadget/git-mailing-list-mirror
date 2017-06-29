@@ -2,85 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 301FC1F623
-	for <e@80x24.org>; Thu, 29 Jun 2017 20:03:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55F0F1F623
+	for <e@80x24.org>; Thu, 29 Jun 2017 20:12:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752929AbdF2UDf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 16:03:35 -0400
-Received: from mail-ua0-f179.google.com ([209.85.217.179]:36423 "EHLO
-        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751675AbdF2UDe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2017 16:03:34 -0400
-Received: by mail-ua0-f179.google.com with SMTP id g40so63754896uaa.3
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 13:03:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=x2Ytj9FiG1b8e+f3iGpmBXRau2EoOtoGRiRx8W3+pQk=;
-        b=jfw8aiZJheye5yJj7IdDrmBQ7T2Kf27nJJwGVAuld1v6U90ZGP/3U6jywJ2HGGUws5
-         x17BFZBPNtlXUHpFM9rV1x4SYv2GTJZyEqQtJROoD+X8JbyYMt4K9MbjpgyiDlMepqCy
-         1xnX+OmOGObOhnJyYDHkW6j7I7PZLgryauMnivXQlUZkwIQLeEuuZmMDsskrkYzxTXPL
-         bjr3JpVzUS3phlqzkG0ov9TQtEF6nKj8gB3w2ZSByG3e9cLCdn1hoUHMOFc0AelOfLzc
-         rdbomq/KTt3FY6yxzzRluzFzUruVpK25daf3uK9sII6sBYnbbaw564UeTQs2t4pVlzs9
-         Bdiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=x2Ytj9FiG1b8e+f3iGpmBXRau2EoOtoGRiRx8W3+pQk=;
-        b=izy6fWaUTN3RFiygebXoAAclXi92B9Gvl6vmYZNUD62vHPkJXLIuaKO9lpSfQslKeC
-         tE04U/o53CSqoD2icjSmYZpk7qSGTNJIAny3Dgbc8IIUHh7luLMu5ZlGHrKaPOb7h9Za
-         LX7ykWaaPuB5boCEbvm+YmL3BnyRMaGLjbRf/6zN2hXYk3HpyEVPP7JAGhnzCRufcPyJ
-         6SLUtKR+hkGIdbWnwsYetEXD4ZFts5mEq9DBjBz7bF3QDja6xmHvMBtWqqxVk8IPPpKT
-         pslJDfIt4Hn+8kOsjQ2DIpdbCejb2si5kUSHUqoao3DRUgjCniL3qjewiNigLOP9V/cA
-         fFng==
-X-Gm-Message-State: AKS2vOxTFySKImaHQmCF4VqCSegiETAG+nMz4diICzMjjW4iJn6F1xAo
-        Jv5BGC8ppv47aiNWhitieoFsR/ypKgBCOaA=
-X-Received: by 10.176.95.220 with SMTP id g28mr8876790uaj.71.1498766613611;
- Thu, 29 Jun 2017 13:03:33 -0700 (PDT)
+        id S1752454AbdF2UMT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 16:12:19 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60260 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751612AbdF2UMS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 16:12:18 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MC7em-1dZVV92VVo-008pAF; Thu, 29
+ Jun 2017 22:12:15 +0200
+Date:   Thu, 29 Jun 2017 22:12:14 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Gyandeep Singh <gyandeeps@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: Bug: Cannot kill Nodejs process using ctrl + c
+In-Reply-To: <alpine.DEB.2.21.1.1706281527120.84669@virtualbox>
+Message-ID: <alpine.DEB.2.21.1.1706292210230.84669@virtualbox>
+References: <CAHaNChewK_4a7sPgZqWTNSmchiSbKOJUrpCrGLmcnR+cw6J5qw@mail.gmail.com> <CAHaNChecHzZqzafe4P85Kz4BtJuisO+krCvm=yPW9wGMXWJK_A@mail.gmail.com> <alpine.DEB.2.21.1.1706281527120.84669@virtualbox>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.103.133.7 with HTTP; Thu, 29 Jun 2017 13:03:13 -0700 (PDT)
-From:   Jason Karns <jason.karns@gmail.com>
-Date:   Thu, 29 Jun 2017 16:03:13 -0400
-Message-ID: <CAKNmmv16WG=8=66B8+paiRsjqFKjRKCLPyjEaHkNPsXaOhBCYQ@mail.gmail.com>
-Subject: Re: [PATCH] completion: optionally disable checkout DWIM
-To:     szeder.dev@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Gt0ekmQrJJBuWNx0xKkmWc4Ngw8w4YqXR8l8tpKkSzIUruOWA5O
+ /GafKOs/SPJqkOgnJ/CekIMs5/CtFWTCFbSYg/0V6UWfxnRX2IGVVOuUfIft/ieZL5WnIH2
+ wF8DnSlvp+Lu1HLhsri1Sri7s/Vwx4yKGbKpZCgI13G640zVRGX/PivVmla3OrZ9UtYXKC6
+ Jrsxwl7QFmj6zIokR0wuQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dIk1NSZ72I4=:Kt57Rp9cA2n2WOAsqF5fVM
+ 9w+TengVVKAGlN7hS6nXg1m7xJT5fQbe5N+jKFz+1ukPKtGlKyIzRddxmKLstXc1+Fsj2/fJW
+ ISKLFm3O2nz7XYLsGsWRGx+pC3fCZLxAhdakep8mEf2uSmEW2Yx8tfqxSH4CgJAe6qDufkQPt
+ oX7i1kuTvj/esGqoOR1eXPZR6igMOhm0pVd52igunQaQ0HOFygf9L8pPnNxcZXoZ6PLXo6Q1J
+ FcTS7z7RP2lq+kLI78dDjO4b1p3c8KMU4sqwxUn1xE5LIKqf7SSg24mi/9xcBr2qeug4tTKlc
+ BENoQWOulQ2qlc9JEEdWpqM/UQgm0btrd9aBxjY+8DreZCpwxrCM8y4+UedbokbKWP15VbNh5
+ pp1+iKDTjK62M1ErwuSemuJ1VcZjIf4W/o8ROcgL2+r2I8Zf+vQeEUNefkq8ULR9+r69VGbnr
+ 8SE1icz/YgXPpIBS4n94q+6Pa8WOeMwmh4l4aElGt3oGUvFjGpoWUdJLhslHdZQ6pWf0zX234
+ Ri4UAdmmzAbrxaX7npq2bo1ZB+7nbo4N8MK0/3kf6nJqgv1S6WA4W3Bi4qXQ7etFRWtd/iyUD
+ OoW+LYvKBTia3k8lbzLPElKk80pHjLZrniA2CS4bCkYVYsZPYL+KBoPIuRvwFln1Qe5jQQoFd
+ KQJ7/+Mxs7NM3KE0Psy7unjC+qMLERT5pD7maT7jRQAaJnTiuSSpB9kvzzlYJ7Am7JHJyl6Wr
+ 4Hj+ycELk9tYUoqxCibJDkut3uHU1c/qDmct8lkjyXfpFpL/aF1f1g9MGKF2r+KCqikJyWgyM
+ x7xMs9P
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> We could discern between more than just empty vs. non-empty state of
-> the environment variable, e.g.:
->
->  - if empty/unset, then include "DWIM" suggestions.
->  - if set to 'config', then query the 'completion.checkoutNoGuess'
->    configuration variable, and omit "DWIM" suggestions if its true.
->  - if set to something else, then omit "DWIM" suggestions.
+Hi,
 
-> Then users can themselves decide, whether the per-repo configurability
-> is worth the overhead of running 'git config'.
+On Wed, 28 Jun 2017, Johannes Schindelin wrote:
 
-I would _definitely_ appreciate this feature. Firstly, thank you for
-the addition of the environment variable. It is indeed much better
-than the --no-guess flag.
+> On Mon, 26 Jun 2017, Gyandeep Singh wrote:
+> 
+> [... a bug report ...]
 
-However, I'm in a situation where I very much prefer the DWIM behavior
-for nearly all of my repos. However, a very few repos have LOTS of
-branches. And I only wish to disable DWIM in those few repos.
+This bug report was reposted as
 
-I attempted to create an alias (`git config alias.co 'checkout
---no-guess'`) in those specific repos. However, that turned out to be
-foolish since I believe the alias parsing doesn't occur until _after_
-the shell completion script runs (thus the --no-guess is not actually
-present in the command parsed by the completion script).
+	https://github.com/git-for-windows/git/issues/1219
 
-So I'm back to very much wanting the ability to disable DWIM
-repo-specific via git-config; and am willing to pay the git-config tax
-as necessary.
+In my opinion, it is too Windows-specific for the discussion to continue
+anywhere but in that ticket.
+
+Ciao,
+Johannes
