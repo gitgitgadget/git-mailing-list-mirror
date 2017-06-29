@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB5EA20281
-	for <e@80x24.org>; Thu, 29 Jun 2017 17:56:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 345C120281
+	for <e@80x24.org>; Thu, 29 Jun 2017 18:06:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752454AbdF2R4g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 13:56:36 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33356 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751941AbdF2R4f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2017 13:56:35 -0400
-Received: by mail-pg0-f68.google.com with SMTP id u62so12741988pgb.0
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 10:56:34 -0700 (PDT)
+        id S1752638AbdF2SGt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 14:06:49 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33647 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752454AbdF2SGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 14:06:47 -0400
+Received: by mail-pg0-f67.google.com with SMTP id u62so12769727pgb.0
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 11:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=6KWl7TnRHuk1AUH1EdukxglDJDp6T9tGiY2++dNqnUQ=;
-        b=mxG87+KhrOv4pUKpqLjmou4TwY3bj7rtdH2c4Ot5VLi0ZCkQQQXljfVNpmyziVIxmh
-         4LaNqxOeum7GCGvJAqbGfzcEYiu4kty08iMcNCtgzz7/6zd4SAC4+Qr8KiQp0HD3X/Ri
-         v3bSXzOrliGnukhkb+7k+1TTpHXZLByWKm+F+D/jpuGVuuJeO3Scl0qNtnpKpOFj8/Nb
-         U65/nBbxguGwzWBSKsekw/0reIHFUEGTGsvNRoVUMbCQ5w5yfL4Rjfp79bLh4m4U6qSX
-         K0WBRxlPE4JiRZQR4zLU1pEa2khRBX8o2Vbkc+009fmVxMtAauhZFP5kYo0OM+w46tde
-         Glgw==
+        bh=MPRavnaOJGEsru3rEL4vCcsPNftTZ3OD3cKjNPakaxY=;
+        b=bYzFI357okCz1OWsRFkDEwW3NAGfMAHe+2oWfLVJsMZFzgXXn7tveBacjF8d/RpvES
+         xiH5Dfm3Oesv8wbFymuCCTviix1kPpZFQYyFsZpdI0O6huhfX0Cat/5rEqjCrznm7NGg
+         +knroQk/J4tXbci0EuD8y1S+o0dlnx8iiSuMGs8A2jqaiW/3P/lrYjGr/J3WmE8fpNzr
+         X2c3dXIwtDSLEFGLHIROj5oi/KcNIKoZxNLNx+nqZsAOG5oiSPNWfhmNe9akDI6bZTs2
+         IsD2dj0/r4Uyp9N2qcda2uZr418sJiPFtQIyj0+6T7CBAZltZOZha5cN7Bnf4mupvso8
+         LGfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=6KWl7TnRHuk1AUH1EdukxglDJDp6T9tGiY2++dNqnUQ=;
-        b=lrPKEwyBC3tKCZmY0n3bqYtfhRSqjVETzZsNuf1KLOwna3fzhy7DxDhUm/cutlqEwy
-         wcPpQJhKFhZPag9lEjcQPESt8jYstzofcuRzH9vGX/si39bUTDPbOYYbmbeLi5hH0AfX
-         MwWst313eENvjfuusNxS+yZBY371WmjtYBxD35xY0X9GUnhP8zlH+bJZdYMe3Xwa6zJt
-         GrOEl0NYPeTTWp+8TyuTj5Ak7XGx2n4KcCV2rhuiB+eafveqTZIu1XDcilLH8RLnZrdd
-         okTV8xfZ5TM7h4W9GQZvmJXVgKhRizi1gtmrEssB0jVNL2ta/E6loxS1mNhIsNlrtwQQ
-         TMqw==
-X-Gm-Message-State: AKS2vOzdHfyz+aW3Jy8XmXBjRzTieqE+JnZHgQdYro8jbxve+cigdiqz
-        nKTVYrDVReX5Lg==
-X-Received: by 10.84.198.129 with SMTP id p1mr19360099pld.120.1498758994010;
-        Thu, 29 Jun 2017 10:56:34 -0700 (PDT)
+        bh=MPRavnaOJGEsru3rEL4vCcsPNftTZ3OD3cKjNPakaxY=;
+        b=YPTuyWI8hJgybBcSgd720s2rmGGN6DmHfRFCyDYuquiQplRzG7xUkZceJ+CnUDG8aq
+         cjawQ18yY0CyAMZ4f5dUBWeVGNtneUZawcYt8kOvhw8Gr2oShzLlA6eawg+zwdh5g2Z3
+         k3K/RREMt48ZBijx4hkST1k7l/slq1IRgD6izNaWmeEiibDsTpjXePFnra3lxNpHd3WM
+         cQYIDxF6i5Zs/QQnrG9LxRyS4J75FbZGaKGSAhJugwL6E1QMiFGhckppn7J55IbAkHCD
+         w+CobJ7Uq9ZRbfvAC11DOMgVWW/KXguAP1uSKypY/Sfu+j3ZbyO71yM2fH0a6dWc+ORx
+         ozmA==
+X-Gm-Message-State: AKS2vOwQxMnWnYPPP5iUlHQJzSSDa78zXiEey+j0a/oeTZwHE41pI6XF
+        F5o268SMYEzIVg==
+X-Received: by 10.101.88.8 with SMTP id g8mr10516086pgr.137.1498759606679;
+        Thu, 29 Jun 2017 11:06:46 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:9846:b2e3:b31e:8976])
-        by smtp.gmail.com with ESMTPSA id r62sm14684181pfb.39.2017.06.29.10.56.33
+        by smtp.gmail.com with ESMTPSA id d11sm80307pgu.64.2017.06.29.11.06.45
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 29 Jun 2017 10:56:33 -0700 (PDT)
+        Thu, 29 Jun 2017 11:06:45 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] commit-template: remove outdated notice about explicit paths
-References: <xmqqshikvz1s.fsf@gitster.mtv.corp.google.com>
-        <20170629170120.11479-1-kaarticsivaraam91196@gmail.com>
-Date:   Thu, 29 Jun 2017 10:56:32 -0700
-In-Reply-To: <20170629170120.11479-1-kaarticsivaraam91196@gmail.com> (Kaartic
-        Sivaraam's message of "Thu, 29 Jun 2017 22:31:19 +0530")
-Message-ID: <xmqqzicqu17z.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 1/2] hashmap.h: compare function has access to a data field
+References: <20170629011334.11173-1-sbeller@google.com>
+        <20170629011334.11173-2-sbeller@google.com>
+Date:   Thu, 29 Jun 2017 11:06:45 -0700
+In-Reply-To: <20170629011334.11173-2-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 28 Jun 2017 18:13:33 -0700")
+Message-ID: <xmqqvaneu0qy.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,56 +66,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> The notice that "git commit <paths>" default to "git commit
-> --only <paths>" was there since 756e3ee0 ("Merge branch
-> 'jc/commit'", 2006-02-14).  Back then, existing users of Git
-> expected the command doing "git commit --include <paths>", and
-> after we changed the behaviour of the command to align with
-> other people's "$scm commit <paths>", we added the text to help
-> them transition their expectations.  Remove the message that now
-> has outlived its usefulness.
+> When using the hashmap a common need is to have access to arbitrary data
+> in the compare function. A couple of times we abuse the keydata field
+> to pass in the data needed. This happens for example in patch-ids.c.
+
+It is not "arbitrary data"; it is very important to streess that we
+are not just passing random crud, but adding a mechansim to
+tailor/curry the function in a way that is fixed throughout the
+lifetime of a hashmap.
+
+I haven't looked at the use of keydata in patch-ids.c and friends to
+decide if that "abuse" claim is correct; if it were the case, should
+we expect that a follow-up patch to clean up the existing mess by
+using the new mechanism?  Or does fixing the "abuse" take another
+mechanism that is different from this one?
+
+> While at it improve the naming of the fields of all compare functions used
+> by hashmaps by ensuring unused parameters are prefixed with 'unused_' and
+> naming the parameters what they are (instead of 'unused' make it
+> 'unused_keydata').
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->  builtin/commit.c | 6 ------
->  1 file changed, 6 deletions(-)
 
-When I said "I would have ... if I were doing this", I merely meant
-exactly that---as I weren't doing it, I left it up to you.  But you
-did it the way anyways, which is very nice of you ;-).
-
-Looks good.  Should we consider this signed-off by you?
-
-Thanks.
-
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 8d1cac062..64701c8f4 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -139,7 +139,6 @@ static enum commit_whence whence;
->  static int sequencer_in_use;
->  static int use_editor = 1, include_status = 1;
->  static int show_ignored_in_status, have_option_m;
-> -static const char *only_include_assumed;
->  static struct strbuf message = STRBUF_INIT;
+> diff --git a/hashmap.h b/hashmap.h
+> index de6022a3a9..1c26bbad5b 100644
+> --- a/hashmap.h
+> +++ b/hashmap.h
+> @@ -33,11 +33,12 @@ struct hashmap_entry {
+>  };
 >  
->  static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
-> @@ -841,9 +840,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  				  "with '%c' will be kept; you may remove them"
->  				  " yourself if you want to.\n"
->  				  "An empty message aborts the commit.\n"), comment_line_char);
-> -		if (only_include_assumed)
-> -			status_printf_ln(s, GIT_COLOR_NORMAL,
-> -					"%s", only_include_assumed);
->  
->  		/*
->  		 * These should never fail because they come from our own
-> @@ -1208,8 +1204,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
->  		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
->  	if (argc == 0 && (also || (only && !amend && !allow_empty)))
->  		die(_("No paths with --include/--only does not make sense."));
-> -	if (argc > 0 && !also && !only)
-> -		only_include_assumed = _("Explicit paths specified without -i or -o; assuming --only paths...");
->  	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
->  		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
->  	else if (!strcmp(cleanup_arg, "verbatim"))
+>  typedef int (*hashmap_cmp_fn)(const void *entry, const void *entry_or_key,
+> -		const void *keydata);
+> +		const void *keydata, const void *cbdata);
+
+As I view the new "data" thing the C's (read: poor-man's) way to
+cutomize the function, I would have tweaked the function signature
+by giving the customization data at the front, i.e.
+
+	fn(fndata, entry, entry_or_key, keydata);
+
+as I think the way we wish to be able to express it in
+a better language would have been something like:
+
+	(partial_apply(fn, fndata))(entry, entry_or_key, keydata)
+
+But what you did is OK, too.
+
+> +extern void hashmap_init(struct hashmap *map,
+> +			 hashmap_cmp_fn equals_function,
+> +			 const void *data,
+> +			 size_t initial_size);
+
+And this does match my expectation ;-).
