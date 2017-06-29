@@ -2,104 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F368E20281
-	for <e@80x24.org>; Thu, 29 Jun 2017 17:02:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CA2620281
+	for <e@80x24.org>; Thu, 29 Jun 2017 17:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752836AbdF2RCF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 13:02:05 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34818 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751797AbdF2RCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2017 13:02:03 -0400
-Received: by mail-pg0-f65.google.com with SMTP id f127so12567495pgc.2
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 10:02:03 -0700 (PDT)
+        id S1753041AbdF2RDa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 13:03:30 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:33077 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752713AbdF2RD3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 13:03:29 -0400
+Received: by mail-pg0-f54.google.com with SMTP id f127so50800453pgc.0
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 10:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IIi7RKRnzHib6UGGalq972PtBpHzB3jXrEGIx37HwSI=;
-        b=E0/tDPzLKN5mWQAiEh6yuFMzUVU1iiSTBAL7TFYRUkT9yRIH4sQTQmmoG8FmfYuOE8
-         GiEnRkto62IHqxEe3F95OInl2ojhiN+wGFlybkvr4ncl7N5r3cCS2B4Qpcq3TSsKGaGh
-         QfUgrIaxO6gdtVeuY981eblr8qnhMFV4Op1o0SmzdvezchUNRFUja6O4IdcrdnXm+esl
-         bFN2+23LIn0i32FR0bDYyXIadi1H26Lmq8R9oumsgW6xouyAT2N5mytY5tQ7YG9LaGjy
-         TQFaKROcu1wttDomjPcW7bU0ee4HQcLqbIf8x182NwySo3PRug/frdC+RcxNvchao5gf
-         WuNQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bnmUX+jM7wg7cX1QUVw3WDpWvaPcSLympr7xIiDNEDI=;
+        b=I36IbdNjEyXlTAwMDZMnTuq+agcDSKDWwZiojbbxAf7uWLGkdHCsXgQoTeUcT/Hr8c
+         dct30xIK2UHOjA6PolTpFVmA1kGD91yEKZG6EU/nrThNiN6YwZCXFM+EtXh9bpv+jcS8
+         B//WIqBXqLvQa/7Adpl90OMoHku5ctyHH9u1N5kmcvRJqks4LrGR5YMuWJhgybg6RebD
+         oIcR2mmuiai6rBhxPrZ/anFtTGn6KEekjW+e0YbbCR6t/4gvRJ3GF2Y+/M9qJE4lyA5J
+         MY8kU04Eq7EIsgBI2L2j2QR5dL39ltDjhKZtg9CigUYX2NZpW4Ijm9oRU/H6iFp4KZLA
+         DyqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=IIi7RKRnzHib6UGGalq972PtBpHzB3jXrEGIx37HwSI=;
-        b=KMWxg5iEJhxZ79DMtqg099UI4/BfDfP1df4eszsIENL3p9h66nyOJRU3uqLLMDAG/g
-         WjiKnYI0TI9HztGwQBPFVv+Z71r0vXen7AhF9cDu2OuG+b/hM3mMGudFR8OZ5pbU1TB/
-         uEM1BuQYYXY+8pRWJbjkfc1bLxPSRFhM4dIoIRrd0oQ+PVUt5N4iFbVgkXpczC+8bz1n
-         mXJoyzlVZkWhL8OZPsoA88SFpHqMvL4B+yvq84Q8t8v4vuwa52gDhidzbvqSVKYGANZl
-         6RPh/zSGUT0AeLiMfi7tyIiEx5JX+irrhh8ddJyYajKMHDU9xjP48V/15fCAzuYr6Ae+
-         R+eA==
-X-Gm-Message-State: AKS2vOwMYQpCh9TDMJZ0Dt7dkxElkAbTGhPIFJ/qJ3I/6f0oh1cEokdz
-        IaKs6dp+lDxbWog8B9LooQ==
-X-Received: by 10.84.224.207 with SMTP id k15mr19084290pln.15.1498755722202;
-        Thu, 29 Jun 2017 10:02:02 -0700 (PDT)
-Received: from localhost.localdomain ([42.111.134.170])
-        by smtp.gmail.com with ESMTPSA id p28sm12962577pfl.102.2017.06.29.10.01.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 29 Jun 2017 10:02:01 -0700 (PDT)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org
-Subject: [PATCH 2/2] commit-template: add new line before status information
-Date:   Thu, 29 Jun 2017 22:31:20 +0530
-Message-Id: <20170629170120.11479-2-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170629170120.11479-1-kaarticsivaraam91196@gmail.com>
-References: <xmqqshikvz1s.fsf@gitster.mtv.corp.google.com>
- <20170629170120.11479-1-kaarticsivaraam91196@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bnmUX+jM7wg7cX1QUVw3WDpWvaPcSLympr7xIiDNEDI=;
+        b=bCKUUWWn9XV03LJKHaBzRyzIoXgjMvSZOWO5TEVYiZwhIHGMnk3HCstMxtkcTJ2zg2
+         mC5KbvojRUoGjvP+8MSQyEVFvSp7tuYdl/dItyDbV5lpIhShwRwd6Y+uuYoW+W4byo7O
+         JfXhVGEZ7dHGEMb8s/z4jRaR2/F8Ixs0ARQKGZ+Ym3Ny8ZKJAjwyXun9v3SP4ukmtc6/
+         i8eZ8I3Tr+c+djWQwU5P2qYVUeQwfb8oA4GVwTLVEHqUxS+CUrOofHcQ7TguHGTzKiYd
+         ZkdSHop8XMzmQk3qevyC45YRJCSaFotmu3OHn+RXC7Nu9WCkSR11kc2nixN/OfPzDHB6
+         Oc4Q==
+X-Gm-Message-State: AKS2vOy9/VQO30stQuMvS9DQ0YHCo31zG3AcZ6eOo4VOHD7DwbroWixZ
+        cRDE4AdE02S2mxEu2kZw5OKU17WlogWB
+X-Received: by 10.98.19.136 with SMTP id 8mr17513072pft.105.1498755808178;
+ Thu, 29 Jun 2017 10:03:28 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.183.170 with HTTP; Thu, 29 Jun 2017 10:03:27 -0700 (PDT)
+In-Reply-To: <20170628215809.23060-3-avarab@gmail.com>
+References: <CACBZZX6Hp4Q4TOj_X1fbdCA4twoXF5JemZ5ZbEn7wmkA=1KO2g@mail.gmail.com>
+ <20170628215809.23060-1-avarab@gmail.com> <20170628215809.23060-3-avarab@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 29 Jun 2017 10:03:27 -0700
+Message-ID: <CAGZ79kb0a2EEALj3eEAMUwQSWamhGuOFOYPrWbv6uCtC7EXgAw@mail.gmail.com>
+Subject: Re: [PATCH 2/5] grep: remove redundant grep pattern type assignment
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, J Smith <dark.panda@gmail.com>,
+        Joe Ratterman <jratt0@gmail.com>,
+        Fredrik Kuivinen <frekui@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The commit template adds the optional parts without
-a new line to distinguish them. This results in
-difficulty in interpreting it's content, specifically
-for inexperienced users.
+On Wed, Jun 28, 2017 at 2:58 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> Remove a redundant assignment to extended_regexp_option to make it
+> zero if grep.extendedRegexp is not set. This is always called right
+> after init_grep_defaults() which memsets the entire structure to 0.
+>
+> This is a logical follow-up to my commit to remove redundant regflags
+> assignments[1]. This logic was originally introduced in [2], but as
+> explained in the former commit it's working around a pattern in our
+> code that no longer exists, and is now confusing as it leads the
+> reader to think that this needs to be flipped back & forth.
+>
+> 1. e0b9f8ae09 ("grep: remove redundant regflags assignments",
+>    2017-05-25)
+> 2. b22520a37c ("grep: allow -E and -n to be turned on by default via
+>    configuration", 2011-03-30)
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  grep.c | 2 --
+>  1 file changed, 2 deletions(-)
+>
+> diff --git a/grep.c b/grep.c
+> index 29439886e7..6614042fdc 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -80,8 +80,6 @@ int grep_config(const char *var, const char *value, voi=
+d *cb)
+>         if (!strcmp(var, "grep.extendedregexp")) {
+>                 if (git_config_bool(var, value))
+>                         opt->extended_regexp_option =3D 1;
+> -               else
+> -                       opt->extended_regexp_option =3D 0;
+>                 return 0;
 
-Add new lines to separate the distinct parts of the
-template.
----
- I tried writing tests to ensure that the new line is added
- but as it seems to require checking multi-line, special 
- options of grep were required to check. I tried the following,
+Instead of having a condition here, have you considered to remove the
+condition alltogether?
 
-   test_expect_success 'new line found before status message' '
-    ! (GIT_EDITOR="cat >editor-input" git commit) &&
-    grep -Pz "#\n# On branch" editor-input
-   '
+    if (!strcmp(var, "grep.extendedregexp")) {
+        opt->extended_regexp_option =3D git_config_bool(var, value);
+        return 0;
+    }
 
- It worked well locally but seems to make the build with 
- GETTEXT_POISON=YesPlease to fail. So, I removed it.
- Not sure how to write a good test for this change, sorry :(
+This does not have the effect of not assigning the value in case of 0,
+but it may be easier to reason about when reading the code.
 
- builtin/commit.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+This would also conform to the code below in that function, that parses
+grep.linenumber or grep.fullname
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 64701c8f4..22d17e6f2 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -873,8 +873,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 				(int)(ci.name_end - ci.name_begin), ci.name_begin,
- 				(int)(ci.mail_end - ci.mail_begin), ci.mail_begin);
- 
--		if (ident_shown)
--			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
-+		status_printf_ln(s, GIT_COLOR_NORMAL, "%s", ""); /* Add new line for clarity */
- 
- 		saved_color_setting = s->use_color;
- 		s->use_color = 0;
--- 
-2.11.0
-
+Thanks,
+Stefan
