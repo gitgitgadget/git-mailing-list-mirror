@@ -2,73 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41DE5202A7
-	for <e@80x24.org>; Thu, 29 Jun 2017 23:41:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF198202AB
+	for <e@80x24.org>; Thu, 29 Jun 2017 23:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751625AbdF2XlW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 19:41:22 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:34414 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751532AbdF2XlW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2017 19:41:22 -0400
-Received: by mail-pf0-f174.google.com with SMTP id s66so57756456pfs.1
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 16:41:21 -0700 (PDT)
+        id S1751668AbdF2Xvl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 19:51:41 -0400
+Received: from mail-it0-f45.google.com ([209.85.214.45]:35332 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751333AbdF2Xvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 19:51:39 -0400
+Received: by mail-it0-f45.google.com with SMTP id v202so53485774itb.0
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 16:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZgBaBQH0ivDg1ot/TWHCPW3pQ9ocvCDfqU/KFr74ClY=;
-        b=usV/berhjcAcEb32wTz91mFZ1eIDk7P718XDY7k/UgYh+6v415leHZzs+jXFk8FZEX
-         76xtyV5yCrDFACE0S66fGhUkzJHKOABF14J1kyax/4kO5e6/0TpZBC/zUg4EsDNADZ+1
-         lVDTihzOEae3+z+tC/BA8vGoqC8ZjrD2OOoERwaqAG2zN86SVGJ2bQCE3owyUyQYipLW
-         fkblxqXY3pXIlDL3cbsgGH4VibUbNxUh1fOXlYX6vIs4LZbcZPDwJDpFAYEb2Qd4U16U
-         ++Z1PvdJl5Qiae4XDIIgZcsZTbSkv5ktY20lLzHIZXncpHMXb4uYG/lIA7ei5/Ncw9Ld
-         +gVA==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=btGOzDq4NX4gYN4PTq1Zu5qJZNYsZBezYUBHIa9UV8U=;
+        b=HBHR+TwLjfmeD/Q5iXgF8OCaGmSszuzJ3/4HmXMXItMvFupwPzB765/e0iwrwSwdiN
+         ZhH6JGTFR0d5Oswlvp+WuW/jd6sbaMV4Jqmq+cacCfKYpczo5/0+qtaqCT34Dwv+/b3r
+         cZ71MRzJlUWVW4rOhVrOsdM1pQWx2c6IP9juwTwSK0KJ3WaU1AV8mpw7+LuGfhC2R2Wu
+         AEGuHDGKJEOY85YAcCzItDvBx6bGXeaUkf9rV4knXgxBtJqaLzPL6x4oCQOgcRjD83lA
+         vPZ/S2A/IpUHxhks/YmTos2JiY/aA0N7sYUPybaVXZsLLLbgd8pEiuQWxTbUN5KXxeTb
+         sZJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZgBaBQH0ivDg1ot/TWHCPW3pQ9ocvCDfqU/KFr74ClY=;
-        b=Dy08cEBJ2s/OKr/InrfFgNJgm1NIs0e2jTEmLrJb3Bekz3xtKHJLoufjAmmHkojJfS
-         wjMQ9Uqd2U4kMv9lOIoqEX4AguMDBpx640N/aeKuJiWgZMarohdT81Ub0dhi3vAuQ3/X
-         xtlu1HsqWZQGzvRNChLVZjRX/7fARcnkkgll+AqO1CsZ5G6m7/z7mBScQ90+buCIw0AE
-         Hfuz4WoDEV+TJm9hKR5pcJYMXP57e5E6kfXM8xLhpk5lCclXoM2pbolwAUJ5LJ6tRZh0
-         w7xt99ISJRGkOCmEUcSOczUEWpSDJ71zE10Hy1iqzT64wNg7YZUq9PBPqoxn+6e6p9rV
-         CxyA==
-X-Gm-Message-State: AKS2vOwrCvScPjPE7useVUX6et68DSrwH6AeL7YhWeaKtdXLMxyE3R3m
-        4n4LgGCJhEIq80hQEpK4XQGfq+ibGC5Zfeg=
-X-Received: by 10.98.69.76 with SMTP id s73mr18802200pfa.94.1498779681191;
- Thu, 29 Jun 2017 16:41:21 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=btGOzDq4NX4gYN4PTq1Zu5qJZNYsZBezYUBHIa9UV8U=;
+        b=f/ooYnJvnXFWg+WBsSNwfFyPRNT6yVfovQzJ+zsMLNvEz7JDLAsCecZyhW+E4F7+3H
+         vscRCAhGzyBumBsd2DEWQ08GMxpIglusXSv7hsrohEU97/4GhTnSZ62QjvP5BXMTlzXI
+         lglxp8UtxgY0RCRyTOlHQTzYKWPf225c4ZOvYQ9YJRnbaRVxIe/Ho7LsBpyrnXeW2bTA
+         2dXD3PKzH+bHV9jmg0tdjCT5GAqI0xDuVjve24RO9OJiWokOY8EHWpMCRuaoff2NTw4I
+         Pti2/03cjK3aH+5rnzxoTkOClBNEw+nXfQvyOCuAZzuM5miwZCaLa2LT5fF6wNRFgf98
+         YNDA==
+X-Gm-Message-State: AKS2vOwEfbeaYlJ/8ixGde4sgw0umcRGirJLd0jJjE39qAqoBSS+HHqs
+        iWHW3Uq5QQATwkUbQfMzGQOUXoks/23x
+X-Received: by 10.36.92.143 with SMTP id q137mr17235937itb.23.1498780298957;
+ Thu, 29 Jun 2017 16:51:38 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.183.170 with HTTP; Thu, 29 Jun 2017 16:41:20 -0700 (PDT)
-In-Reply-To: <20170629211832.GB68015@aiede.mtv.corp.google.com>
-References: <20170629011334.11173-1-sbeller@google.com> <20170629011334.11173-3-sbeller@google.com>
- <20170629211832.GB68015@aiede.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 29 Jun 2017 16:41:20 -0700
-Message-ID: <CAGZ79kb8PJpEu+Wq_+JG208xXcJpoPMJe26xXN-Gck3L0G2yrw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hashmap: migrate documentation from
- Documentation/technical into header
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.107.20.136 with HTTP; Thu, 29 Jun 2017 16:51:18 -0700 (PDT)
+In-Reply-To: <CAGZ79kaq2ym9aSAcHXRSd=onkqjoO-2_0B8PHed2j4q_9gwvCA@mail.gmail.com>
+References: <20170628005651.8110-1-sbeller@google.com> <20170628005651.8110-7-sbeller@google.com>
+ <xmqqshikye0o.fsf@gitster.mtv.corp.google.com> <xmqq37akya3j.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kaq2ym9aSAcHXRSd=onkqjoO-2_0B8PHed2j4q_9gwvCA@mail.gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Thu, 29 Jun 2017 16:51:18 -0700
+X-Google-Sender-Auth: CQnBSD_q9udOjTHP5Qm-qTyRq_A
+Message-ID: <CAPc5daXBprMyWeQmcUem_Yw9bsyTD8-C818+t94cy5K3onw8Og@mail.gmail.com>
+Subject: Re: [PATCH 6/6] diff.c: detect blocks despite whitespace changes
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Took all suggestions so far, but the last one:
+On Thu, Jun 29, 2017 at 2:01 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, Jun 27, 2017 at 10:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> This probably deserves a bit more illustration of how I envision the
+>> code should evolve.
+>> ...
+> It turns out that the code here is rather a very loose proposal,
+> not to be copied literally,
 
->
-> Probably worth mentioning this is a convenience wrapper for iter_init
-> + iter_next, like the Documentation/technical/ text did.
+Yeah, whenever I say "illustration", do not take it as anything more than
+scribbling on the back of an envelope, whose primary purpose is to show
+some idea (in this case, the central idea is that a helper function that lets
+you ask "what's the next byte that matters? tell me also when you run out"
+is all you need to do an in-place comparison with various "ignore" modes;
+by the way, that applies also to ignore-case comparison if there is a need
+to support it).
 
-No. The code to observe that this is a convenience wrapper
-IS RIGHT THERE (it's a header file), and I find this header a
-bit bloated already. So I'll keep it as a one liner.
+The implementation detail to support that central idea is left
+to the readers. ;-)
+
+Thanks.
