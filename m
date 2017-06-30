@@ -2,100 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C700201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 17:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACC27201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 17:34:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751797AbdF3R3i (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 13:29:38 -0400
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:32786 "EHLO
-        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751710AbdF3R3i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 13:29:38 -0400
-Received: by mail-oi0-f52.google.com with SMTP id p188so41403138oia.0
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 10:29:37 -0700 (PDT)
+        id S1752016AbdF3ReF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 13:34:05 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36637 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751657AbdF3ReE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 13:34:04 -0400
+Received: by mail-pf0-f193.google.com with SMTP id z6so17771115pfk.3
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 10:34:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=BsR9DUZJv7+yjvjI1flKwJJukwaEdUMvFnEFMQX26CU=;
-        b=C7XZFv4jc2CTS9puNVMLLY4uTZuaA3mczuKFjpvcKeI7dw7V6wORhCEZ4arF+EMWba
-         gDv1R8sItNkBVy0xEyBjV9NBI9teVRtB06JoQ1T6WrOGiAuUTkuDeMl2cHfJHSMm9hRN
-         DA44MVrmN+tPKXukuJy3laOBCYMH14wCem3fIoKOcQT17xDh8sdwFcRcjo/gfNsB5eet
-         sRtP7D7JrmilySJEm5JG7Ze8Q+SLsNmmR7zClFpxHMIh5yZdvD1mopxUKk7s5NgHROWi
-         cy0HMuTp9VfG0RPePP0M+PzIxIuCij/4ZfJ6FR8UtDVURzxQd5A3K/2qXYilcu+FIKU5
-         QNAw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=bpV0TZU69404vUGhOa/wwIQDCFMp0x+N/XHG4uKEw6E=;
+        b=GBgsBAwbQtxC8LjYH89vXsKRZzQWeUZ/YlbWuaCOBq8Be9XvAQEKK/k3LcqmIrYcEf
+         d53iBxDEZJOHQq5rgaEjhuPsvv8bX52k62KJfNPHzlZsBSH09uRoD5rMJLabDfrVc3/C
+         qqTG6tHIusUMWVZmvTk8jEq6zxFyMOxCArhLLg/QCEvhFLqejljH/5jRMwc0K1kTyVs6
+         CfDkAoXLDYPhhhOUFLZHKTltdyCA9/CpumBZhYt6xC3DWX3kYiYhPmn3TxtBkWehWMA/
+         zF9DH4Va1PPb/PndMCPbDli30IN3HnpuWKZLfbo1i/gfpqR/+u++mt1EL9elyIiTnGRE
+         ANRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=BsR9DUZJv7+yjvjI1flKwJJukwaEdUMvFnEFMQX26CU=;
-        b=YvcIBjBSbhI9WPga9zGD7Jpw35jYG+RWUh/ioY5jPKgA9cwY+kEiGggv5Mcc6Ys2iH
-         5s3iuaD1KAiQr/lLJHuN1AQFx/Y0ytjeWGBeOGOIIwy0C8fbbvjX0Drf4gGwCBgwHcbh
-         F86nUzUF7oXJfQjNfL0uxq4PzvyqcYlQ2cFv3hibtvMLHsgDRxkDZb0kyGDtMcDPD7uN
-         vypPDDYLRJfrKZIpeenZwf3MC4BRuPg52Wk9ROpUS9bmtGXOUx2QI3MH9TcxWVxC8jiL
-         R4s5xnqyFxf0sTzHwqwDN3paiZXWtbIL+o972PLx3ER7OS9zT9A6OEWIqftzouPZPfDm
-         ua1g==
-X-Gm-Message-State: AKS2vOyMvBTuNPSRVo+sUCTDZyQZoGusoJtJwN2xZYphCvbKu1Y4TiRU
-        GX95FKaxKSG2eX7fdiZXHR4m2tuDKg==
-X-Received: by 10.202.186.3 with SMTP id k3mr5663493oif.59.1498843777259; Fri,
- 30 Jun 2017 10:29:37 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.74.104.26 with HTTP; Fri, 30 Jun 2017 10:29:36 -0700 (PDT)
-In-Reply-To: <CAGZ79kZxde9j+O4JDofYLbC2CRk_X0tiwOftEgKQcJLyN409xQ@mail.gmail.com>
-References: <CADHEqX_fiUhnpn6WAFrbDaNJTb1Vbom7Ndn-n6WmQ0gkQ69ZeA@mail.gmail.com>
- <CAGZ79kZxde9j+O4JDofYLbC2CRk_X0tiwOftEgKQcJLyN409xQ@mail.gmail.com>
-From:   Shaun Uldrikis <stuldrikis@gmail.com>
-Date:   Fri, 30 Jun 2017 13:29:36 -0400
-Message-ID: <CADHEqX9-w5uZpS1RiP9EjCpWB0V1SVYZ5Ddsv3etCvBteOv4qg@mail.gmail.com>
-Subject: Re: git log use of date format differs between Command Line and
- script usage.
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=bpV0TZU69404vUGhOa/wwIQDCFMp0x+N/XHG4uKEw6E=;
+        b=mAwa9wKAnINpauaLdf/HKOw59y8nXAfvzj+PP2tpYyVk+2zKltx/wEhNHrGjawc6DC
+         Sqqulv3LlY6HlsAxnRd5eAAyzW/8sM7YCb7dzuaQmStaki+NBUIGk4gFldrkXbf6KwrH
+         PzXH27lZXo2HrH/vH7Q6o84CkBsRZJWgOeBqPGKp74fYE8jn1zdzOdOCWzvvb0sBQATF
+         J3XZYfxl3E5Siuy1p0H0lyXTszWshAJFT49iio4JgW1lHEdDZTx0jQ3gMIfLxBDBrJmu
+         J01C+ixtp8o4eOWeujRQ1moYihZuRjMb3SbrJ4JSENOGpo819Nc6ZGNSTGOSN80B29qF
+         u/xg==
+X-Gm-Message-State: AKS2vOyJkD8XIjKVw4Xb0tuI4GrcH0brPbepFiEHjyGykHAO1axXoF6C
+        ZnIlG4K8rVBn0A==
+X-Received: by 10.98.65.198 with SMTP id g67mr23263354pfd.196.1498844043664;
+        Fri, 30 Jun 2017 10:34:03 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:54f:b41d:dd9d:3de0])
+        by smtp.gmail.com with ESMTPSA id d89sm19813065pfl.7.2017.06.30.10.34.02
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 30 Jun 2017 10:34:02 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, git@jeffhostetler.com
+Subject: Re: [PATCHv2 1/2] hashmap.h: compare function has access to a data field
+References: <20170629011334.11173-1-sbeller@google.com>
+        <20170629235336.28460-1-sbeller@google.com>
+        <20170629235336.28460-2-sbeller@google.com>
+Date:   Fri, 30 Jun 2017 10:34:01 -0700
+In-Reply-To: <20170629235336.28460-2-sbeller@google.com> (Stefan Beller's
+        message of "Thu, 29 Jun 2017 16:53:35 -0700")
+Message-ID: <xmqqlgo9s7li.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yes. That is the case. Just confirmed it. I'll remove the old version.
-Sorry to have bothered the mailing list.
+Stefan Beller <sbeller@google.com> writes:
 
-Thank you.
+> When using the hashmap a common need is to have access to arbitrary data
+> in the compare function. A couple of times we abuse the keydata field
+> to pass in the data needed. This happens for example in patch-ids.c.
 
--Shaun
+It is not "arbitrary data"; it is very important to streess that we
+are not just passing random crud, but adding a mechanism to
+tailor/curry the function in a way that is fixed throughout the
+lifetime of a hashmap.
 
-On Fri, Jun 30, 2017 at 12:43 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Fri, Jun 30, 2017 at 9:06 AM, Shaun Uldrikis <stuldrikis@gmail.com> wrote:
->> If you supply a non-standard format to the date configuration for git
->> log, something like:
->> [log]
->>         date = format:%Y-%m-%d %H:%M
->
-> So I ran
->
->     $ git config log.date  "format:%Y-%m-%d %H:%M"
->     $ git config --list |grep log.date
->     log.date=format:%Y-%m-%d %H:%M
->
-> Then I have a script as
->   $ cat script.sh
->   #!/bin/sh
->
->   git log >out
->
-> after executing I get:
->
->   $ head out
->   commit 7930db48ca31b41ac335ae8cd25cb29094d1de5e
->   Author: Stefan Beller <sbeller@google.com>
->   Date:   2017-06-30 09:26
->
-> Also gitk seems to work here.
->
-> Rene's answer sounds reasonable,
-> check the version(s) of Git on your system?
+> diff --git a/hashmap.h b/hashmap.h
+> index de6022a3a9..1c26bbad5b 100644
+> --- a/hashmap.h
+> +++ b/hashmap.h
+> @@ -33,11 +33,12 @@ struct hashmap_entry {
+>  };
+>  
+>  typedef int (*hashmap_cmp_fn)(const void *entry, const void *entry_or_key,
+> -		const void *keydata);
+> +		const void *keydata, const void *cbdata);
+
+As I view the new "data" thing the C's (read: poor-man's) way to
+cutomize the function, I would have tweaked the function signature
+by giving the customization data at the front, i.e.
+
+	fn(fndata, entry, entry_or_key, keydata);
+
+That would hopefully make it more obvious that the new thing is
+pairs with fn, not with other arguments (and entry-or-key and
+keydata pairs, instead of three old arguments standing as equals).
+
+As I think the way we wish to be able to express it in a better
+language would have been something like:
+
+	(partial_apply(fn, fndata))(entry, entry_or_key, keydata)
+
+that order would match what is going on better.
