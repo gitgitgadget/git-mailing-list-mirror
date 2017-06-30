@@ -2,170 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 788F720209
-	for <e@80x24.org>; Fri, 30 Jun 2017 10:13:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72F3B201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 12:14:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752657AbdF3KNN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 06:13:13 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33984 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751978AbdF3KNL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 06:13:11 -0400
-Received: by mail-wr0-f194.google.com with SMTP id k67so38663281wrc.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 03:13:05 -0700 (PDT)
+        id S1752396AbdF3MOA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 08:14:00 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35068 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751581AbdF3MMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 08:12:33 -0400
+Received: by mail-pg0-f66.google.com with SMTP id f127so15229714pgc.2
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 05:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=6JC9VA7ZRT4kke1C4oFwwYgAqyj8j2N273owZPg9O0g=;
-        b=vKE9Jiz3YoNJXt8Nivj4WpFHbst89qA0xGwshjg0pPnpbxSsaCc4p34EkOevWxNhtC
-         SovEmHlgb4nc6TU8aQ62gNhXwvocCx/ZOZ4iXI472WhdJfbQLHqgxfyRElsNxES0iOnR
-         XXtbyffyW7gThA5cV3yo+9anG9rjwoUcr3fqIWXpxzTfWmPO2DFShLWoYDbsELl5VCBU
-         xs5yc1W3tI5EMCgg2p7pr9tc3byIacCTzVLHBQU6ermt4A6hq+8Ud1p3meRbbkSz6x7V
-         D84OoVD/6ttyMHS27NsxG1vxeCzdcA8Bxyj9ftd20myw7/LVEfSYl416DEJbtAkAQAg9
-         Ph3Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Isp04ytecLzB0m3gwpMHCAvIOt79h98NoktSolJD9Zo=;
+        b=PpEozNrZhczplfp5fotX3IVItXuwnA/fTzweACSx88xyjI8rMrmc4CcjIIgVuuUrf1
+         TjOteWNHjilGtmnaW5Fsd9PtHqX0D0kvCZOhJbsbV7xMn/RBTblnLI41jMAwyYBmeVQR
+         02LfNY92YiryLvKDmCsxI22Px2sbdoMXFFFpMmOIccobmo/IUK8fkwl33AKkPiOdnAE+
+         qKLtQil63MNhFTYUptbp1befZH4ztYK1TnccBIjOA5VIicRvL6gUR3j4sq+Y7r9mys++
+         5OAaLvdP9mzmM5hg/K89gAUKDKYAgo79IhTmurqJ2ytuIi5+msYleltsRBXSvITDdRGI
+         yetg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=6JC9VA7ZRT4kke1C4oFwwYgAqyj8j2N273owZPg9O0g=;
-        b=OuaLwcdY3nfNVFE0XlwjOkhxuAjddSUAWGwTa7BmjK1kzifJXY76HN/KCBCV5zTXTF
-         d0zXWL5d+fa2a+KRuaTQafBz8fTpv7EmTnoeJyjj+x7QnlhUvaZlQaR6XJjmq0kBB6xz
-         zorqeaAFmoucmZQjBqGXO/T+Yc3F2ZrbxsgLPoTk628NZuEyvz14GfeYxb6/htHTzFyQ
-         IX8kjVqemdawWbt5thZLoDCBzZ2Y8JjX9ZR3li78Jd7yURViEBi6h4GU8CGG3nfLwhof
-         Rn2OdGoq3/HI0pcleUbi6j4laEUXcHRSDDWy3nmYrbwUk8yDbkXWdz5SqXtFTt9ZDvEw
-         TFgg==
-X-Gm-Message-State: AKS2vOybzv/s/e+ROi2nUEjrrrvUX4OpJ7ftTwzV+SjOjiUopbk8BIA2
-        veoH+/xg+0c3ig==
-X-Received: by 10.223.173.140 with SMTP id w12mr29019541wrc.4.1498817584769;
-        Fri, 30 Jun 2017 03:13:04 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id b30sm4632459wra.42.2017.06.30.03.13.02
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 03:13:04 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <CAKYtbVbOXZiZrsFGOKu=sFroSL-FBQo2wMaA9GmJvc-Uh7QZEA@mail.gmail.com>
-Date:   Fri, 30 Jun 2017 12:13:02 +0200
-Cc:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <94F87EDC-4F34-455E-88D5-F99C606EF628@gmail.com>
-References: <CAE5ih7-x45MD1H6Ahr5oCVtTjgbBkeP4GbKCGB-Cwk6BSQwTcw@mail.gmail.com> <20170629224659.25677-1-miguel.torroja@gmail.com> <41BF267D-5F4D-4031-B9D4-15DB263D35D9@gmail.com> <CAKYtbVbOXZiZrsFGOKu=sFroSL-FBQo2wMaA9GmJvc-Uh7QZEA@mail.gmail.com>
-To:     Miguel Torroja <miguel.torroja@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Isp04ytecLzB0m3gwpMHCAvIOt79h98NoktSolJD9Zo=;
+        b=fl6hE+lSPc7uABvLqMIUGj7tHRgCzGx2UV7CtkoLMDgDVK3J+oavaGRcyWDFqohCdg
+         OlcOBS7dBP0z5qGpyJX4KoxGnrJEVcD6Q97c+bVjuzIfjehk2AYCghNH/k4LmvhPjmXM
+         ia0fJj98rKak3piGmBVHrkLgeVMTKfS2bVeJpopGXSqiKwYctI0u8osDrUPTGjpQnqlB
+         juTtfRpHDcF9cpGZnJJqDfKNwmlp+3b1fAESX83nT2jNAePG6gpUv5F6XYb7dYYQjFLp
+         sXKun5JmwnWuPcn6P6rgMTX2kf1/bxZtDNht2PZWGUnplTDalKGBZ6S7VS1uWhHkteSy
+         Fr2Q==
+X-Gm-Message-State: AKS2vOzwCdfjjFPJQpeeZhtGZXkDAaYdtjUgC4/WAagiVz8iojd2TZwa
+        J6djTS6iGuVTKw==
+X-Received: by 10.99.117.89 with SMTP id f25mr21186800pgn.5.1498824752646;
+        Fri, 30 Jun 2017 05:12:32 -0700 (PDT)
+Received: from localhost.localdomain ([42.111.140.60])
+        by smtp.gmail.com with ESMTPSA id q29sm8046453pfg.11.2017.06.30.05.12.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 30 Jun 2017 05:12:31 -0700 (PDT)
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org
+Subject: [PATCH 1/2] commit-template: remove outdated notice about explicit paths
+Date:   Fri, 30 Jun 2017 17:42:20 +0530
+Message-Id: <20170630121221.3327-1-kaarticsivaraam91196@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <1498792731.2063.5.camel@gmail.com>
+References: <1498792731.2063.5.camel@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The notice that "git commit <paths>" default to "git commit
+--only <paths>" was there since 756e3ee0 ("Merge branch
+'jc/commit'", 2006-02-14).  Back then, existing users of Git
+expected the command doing "git commit --include <paths>", and
+after the behaviour of the command was changed to align with
+other people's "$scm commit <paths>", the text was added to help
+them transition their expectations.
 
-> On 30 Jun 2017, at 11:41, Miguel Torroja <miguel.torroja@gmail.com> =
-wrote:
->=20
-> On Fri, Jun 30, 2017 at 10:26 AM, Lars Schneider
-> <larsxschneider@gmail.com> wrote:
->>=20
->>> On 30 Jun 2017, at 00:46, miguel torroja <miguel.torroja@gmail.com> =
-wrote:
->>>=20
->>> The option -G of p4 (python marshal output) gives more context about =
-the
->>> data being output. That's useful when using the command "change -o" =
-as
->>> we can distinguish between warning/error line and real change =
-description.
->>>=20
->>> Some p4 triggers in the server side generate some warnings when
->>> executed. Unfortunately those messages are mixed with the output of
->>> "p4 change -o". Those extra warning lines are reported as =
-{'code':'info'}
->>> in python marshal output (-G). The real change output is reported as
->>> {'code':'stat'}
->>>=20
->>> A new test has been created to t9807-git-p4-submit.sh adding a p4 =
-trigger
->>> that outputs extra lines with "p4 change -o" and "p4 changes"
->>>=20
->>> Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
->>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->>> ---
->>> ...
->>=20
->> I have never worked with p4 triggers and that might be
->> the reason why I don't understand your test case.
->> Maybe you can help me?
->>=20
->>> +test_expect_success 'description with extra lines from verbose p4 =
-trigger' '
->>> +     test_when_finished cleanup_git &&
->>> +     git p4 clone --dest=3D"$git" //depot &&
->>> +     (
->>> +             p4 triggers -i <<-EOF
->>> +             Triggers: p4triggertest-command command =
-pre-user-change "echo verbose trigger"
->>> +             EOF
->>> +     ) &&
->>=20
->> You clone the test repo and install a trigger.
->>=20
->>> +     (
->>> +             cd "$git" &&
->>> +             git config git-p4.skipSubmitEdit true &&
->>> +             echo file20 >file20 &&
->>> +             git add file20 &&
->>> +             git commit -m file20 &&
->>> +             git p4 submit
->>> +     ) &&
->>=20
->> You make a new commit. This should run the "echo verbose trigger", =
-right?
->=20
-> Yes, that's correct. In this case the trigger is run with p4 change
-> and p4 changes
->=20
->>=20
->>> +     (
->>> +             p4 triggers -i <<-EOF
->>> +             Triggers:
->>> +             EOF
->>> +     ) &&
->>=20
->> You delete the trigger.
->>=20
->>> +     (
->>> +             cd "$cli" &&
->>> +             test_path_is_file file20
->>> +     )
->>=20
->> You check that the file20 is available in P4.
->>=20
->>=20
->> What would happen if I run this test case without your patch?
->> Wouldn't it pass just fine?
->=20
-> If you run it without the patch for git-p4.py, the test doesn't pass
+Remove the message that now has outlived its usefulness.
 
-You are right. I did not run "make" properly before running the test :)
+Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+---
+ Only commit message has been changed. Modified it a little
+ to remove the self referencing words that didn't seem to suit
+ well with the commit's author (that's just me :))
+ 
+ builtin/commit.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 8d1cac062..64701c8f4 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -139,7 +139,6 @@ static enum commit_whence whence;
+ static int sequencer_in_use;
+ static int use_editor = 1, include_status = 1;
+ static int show_ignored_in_status, have_option_m;
+-static const char *only_include_assumed;
+ static struct strbuf message = STRBUF_INIT;
+ 
+ static enum wt_status_format status_format = STATUS_FORMAT_UNSPECIFIED;
+@@ -841,9 +840,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 				  "with '%c' will be kept; you may remove them"
+ 				  " yourself if you want to.\n"
+ 				  "An empty message aborts the commit.\n"), comment_line_char);
+-		if (only_include_assumed)
+-			status_printf_ln(s, GIT_COLOR_NORMAL,
+-					"%s", only_include_assumed);
+ 
+ 		/*
+ 		 * These should never fail because they come from our own
+@@ -1208,8 +1204,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 		die(_("Only one of --include/--only/--all/--interactive/--patch can be used."));
+ 	if (argc == 0 && (also || (only && !amend && !allow_empty)))
+ 		die(_("No paths with --include/--only does not make sense."));
+-	if (argc > 0 && !also && !only)
+-		only_include_assumed = _("Explicit paths specified without -i or -o; assuming --only paths...");
+ 	if (!cleanup_arg || !strcmp(cleanup_arg, "default"))
+ 		cleanup_mode = use_editor ? CLEANUP_ALL : CLEANUP_SPACE;
+ 	else if (!strcmp(cleanup_arg, "verbatim"))
+-- 
+2.11.0
 
->> Wouldn't we need to check that no warning/error is in the
->> real change description?
->>=20
->=20
-> that can also be added, something like this: 'p4 change -o | grep
-> "verbose trigger"' after setting the trigger?
-
-Yeah, maybe. I hope this is no stupid question, but: If you clone the
-repo with git-p4 *again* ... would you see the "verbose trigger" output
-in the Git commit message?
-
-
-- Lars=
