@@ -2,76 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 732D1201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 16:42:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B224F201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 16:43:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751545AbdF3QmI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 12:42:08 -0400
-Received: from mout.web.de ([217.72.192.78]:61984 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750975AbdF3QmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 12:42:07 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MfYrH-1d6oL22m2l-00P62Y; Fri, 30
- Jun 2017 18:42:03 +0200
+        id S1752000AbdF3QnU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 12:43:20 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:35696 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751918AbdF3QnU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 12:43:20 -0400
+Received: by mail-pg0-f53.google.com with SMTP id j186so66135313pge.2
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 09:43:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ZE2X6Xf8dMhRJz3a9Ar9y3g2bGVi2SeXInVJr3M2bWI=;
+        b=UgBF1xYB72MtfHlkwXUrTvgLANjvqF7DbZOp1jAz2M0yPo1y9PyE6iyNsTEVMsfG4b
+         02A6QzD7PMxbB8ldPOhtG6deV6hhHVw/3KL5auAnBHZempul/ZxZmkyNbNJTbsDKvjku
+         ii6gzKkWJhf4+uVLAuRcQKLCtfIJpCSdZODbuN+4nqkwseSkvtgqL+eJEYQ9gd949gWC
+         xmjMWjUW3grIUpTZzok6z2bLfYQ74F/n8maojdGefucpM2WxL449a6JuTY6wK5qUJiyA
+         9Ybdc6wiTjrznkQJ+jJ7i0xqlaAtFJqG7zNdJFqnfOR5N6F9l1bD9MZMm5x40l5dH7Br
+         DGIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ZE2X6Xf8dMhRJz3a9Ar9y3g2bGVi2SeXInVJr3M2bWI=;
+        b=moXslpAdKhD9W6nYEXG2FQsG8TRkaJZ96lAWOnaPZ8WLzq1STMKCaiVt7FEGHDdpiw
+         vByxG7Lb/I58ga5DBnCYJbjL698yGhBaapZnziz2/qc57hAxNBtViWqDYH7jPEg0tYM6
+         AVMM3rhKLumGgarweKUtf01rMRuh62buNjJuhyh32Iwd0BTSOTy1H5X5ecm8iwuejREN
+         s23FGenHM7gHYVdFp6zRNRXXT3WTg0KEqNxXC6LiRWjwkQIlddh+rJ9ap34fPSqMp9MK
+         +Uebg99MAm4HJhaXch/VZmioVLwY+2kjwFYXCzoz/slZjPFUSTwgQnoMx5edqTz9qGGS
+         RUmA==
+X-Gm-Message-State: AKS2vOww5u0K+FZubzrKEq/m5ttyE1GQZSkp9up9rHFopdwdBZh6u9nn
+        1zc7qpteUS4g8IDvDpc66LxluketK32j
+X-Received: by 10.84.232.205 with SMTP id x13mr25870418plm.245.1498840999182;
+ Fri, 30 Jun 2017 09:43:19 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.183.170 with HTTP; Fri, 30 Jun 2017 09:43:18 -0700 (PDT)
+In-Reply-To: <CADHEqX_fiUhnpn6WAFrbDaNJTb1Vbom7Ndn-n6WmQ0gkQ69ZeA@mail.gmail.com>
+References: <CADHEqX_fiUhnpn6WAFrbDaNJTb1Vbom7Ndn-n6WmQ0gkQ69ZeA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 30 Jun 2017 09:43:18 -0700
+Message-ID: <CAGZ79kZxde9j+O4JDofYLbC2CRk_X0tiwOftEgKQcJLyN409xQ@mail.gmail.com>
 Subject: Re: git log use of date format differs between Command Line and
  script usage.
 To:     Shaun Uldrikis <stuldrikis@gmail.com>
-References: <CADHEqX_fiUhnpn6WAFrbDaNJTb1Vbom7Ndn-n6WmQ0gkQ69ZeA@mail.gmail.com>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <7e7c7d22-36e2-20f4-0cfc-8cfe37d9a409@web.de>
-Date:   Fri, 30 Jun 2017 18:41:56 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <CADHEqX_fiUhnpn6WAFrbDaNJTb1Vbom7Ndn-n6WmQ0gkQ69ZeA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:B38dEKFHi6YYyZW4LxJVILi5juOCz4XtlAxKfs22Wuy7K3a9GcG
- AiDDlhCTqSnlzniD4sN2/7EC1bXYHV4u1V5rzL41jGSK0rxRqou5+nbhdXdPxtxLBa3yD4J
- 5acwYKn1xuPr3nA+vY7yA28ThG4NK9eC0ESbH8w0Q9dQioqyieJW1TYXCTn7ilf8gn7qvJN
- uVdei8GPaHLsue2aTHFxw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4W0nDn01NdQ=:qvnpTNMWCX076hq4a5mKkL
- RhBHV/UfYe+KKBihX8nWEJX3FNFoT9mFhiX5DQslaJ1+idPhLDVRQ3pt7SA74yVx3Crze6wwJ
- Ox3K5USSKheY6oeTQeKFX8L+oU6Uqitq9JZMdmW3tLHiH0nASYTE/yhD9AaOx0TsW+kJvy9OR
- w5y6oiGoR23Z8HXilKD7ciWbnY5E0miOL3iyxstNryC5gijv5KVBDf2zWyXflbQ5C1KkhXFwK
- eWB14pgKgB7JXOGVkg3ZX++NzrTIIow6pTRnvvmgvfzNR5g+v0jIAd3ridKCQw4YM/5K3FQgL
- AwcsrZHnQ1adXfnBc0MshrqatdzE2GyiaBUj2ORjUQyDBZXyu+ryCNfvMZ7ubxxqSYNLtE5wW
- Oii7n468A4wHCogqv71el8cqGlITCuj/mXCtNsQBoQlwHaMZnZO4pDVIekUfsgn4j3oT59OaC
- ocymfC1aI745GnOfflVKG6Rz3T8Cjk0POKgwUMsoFn1W2B6rAtjO3pDrcRrxPEuV6zArDlheE
- IWS3UYR/dZHUfw7PlpiuYkyNamdIKezXyVlxps4cug9OeZ7v8OmMsQM7FokCJF8V+GgJjcZ+I
- FZ9/z3Dtd5MRxRoHtlKwOShUKJV0VYnzURY6ZTMhPVAIzG4od4zoZAEAV6goXS9YRQvNA27We
- bImB4mf6la+UHf2mgT/AsQ7pU7KKdBIfo8sEULyTzb22v21tcROTmfaI8nxQJwAbWgT95EWU7
- j1CEva/p6EDLg+q9EvkV2yIOrQwHp247aj2DnarKW8dPjgSXKGWmKpp3Rj52kKtDcNhUHhNgn
- B6Hu+GA
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.06.2017 um 18:06 schrieb Shaun Uldrikis:
+On Fri, Jun 30, 2017 at 9:06 AM, Shaun Uldrikis <stuldrikis@gmail.com> wrote:
 > If you supply a non-standard format to the date configuration for git
 > log, something like:
 > [log]
->          date = format:%Y-%m-%d %H:%M
-> 
-> then, when you run 'git log' inside a script, or when using gitk
-> (anywhere), it fails on decoding the format.
-> 
-> fatal: unknown date format format: %Y-%m-%d %H:%M
-> 
-> 
-> However, that format works correctly on the command line.
-> I do not have a patch to address this issue.
+>         date = format:%Y-%m-%d %H:%M
 
-I guess you have two versions of git on your system, and the one used in
-scripts is older than 2.6.0, which introduced this feature.
+So I ran
 
-René
+    $ git config log.date  "format:%Y-%m-%d %H:%M"
+    $ git config --list |grep log.date
+    log.date=format:%Y-%m-%d %H:%M
+
+Then I have a script as
+  $ cat script.sh
+  #!/bin/sh
+
+  git log >out
+
+after executing I get:
+
+  $ head out
+  commit 7930db48ca31b41ac335ae8cd25cb29094d1de5e
+  Author: Stefan Beller <sbeller@google.com>
+  Date:   2017-06-30 09:26
+
+Also gitk seems to work here.
+
+Rene's answer sounds reasonable,
+check the version(s) of Git on your system?
