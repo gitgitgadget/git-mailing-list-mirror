@@ -3,110 +3,361 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1785201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 19:21:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9874201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 19:48:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752580AbdF3TVx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 15:21:53 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:34869 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752493AbdF3TVw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 15:21:52 -0400
-Received: by mail-pg0-f52.google.com with SMTP id j186so67815922pge.2
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 12:21:52 -0700 (PDT)
+        id S1752750AbdF3TsF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 15:48:05 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35296 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752764AbdF3Tr7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 15:47:59 -0400
+Received: by mail-pf0-f196.google.com with SMTP id s66so18060254pfs.2
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 12:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=mSTJ9JCVGtWSkCLhkCEyijCWx3jdEnWfXCdiF8cZhjM=;
-        b=a35NpWz4Ai9XskX+xMh8Lut7Safa+/SLo5vTz9KR6DHgWi1KwbHCgKpIjJZJEMikSN
-         XY83tz6pdh5m6OGJtNqXJUX2psmrlO0QD8jHwUWalHWAieA2o3oHp03JBfrC6QoXmRdB
-         uOZabEi4l4vhJQRxg8V35AaGvumZdRuf09DAT/B0U4eW1Oa4iY5S+QmrZ+JaadkugpUy
-         QRxEa18efOEFqV9u6sGHIh8qQtQo0TsF1dTgEstcvh+/6ahOgwwEYNPvDNJLTPeu2eJF
-         VpTVNFkyRmvKhBmWj5BGiEbqv5mojS9Gd7+KwSEWb3SuTH9YuTikQe+Zpcr55zOL5Hvh
-         rYRQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=v+IzWD8DAltBc+1YfoU9eRlS5ikLpLNi+6a+4tFefjk=;
+        b=rQ99vShI8siQiK41mrP38pQIicaKaOr4UdWN1WIfN2u1JjhueDhVjkh5e+UC+Nk+zl
+         S51fFMtAXIKD6QPXLgkmkbju55dVPCVZEZqaqzRR0/EKqTuG5u5Htf4M91xqAoIeUxzM
+         xO4Y6vYF+VHH83c8IfdQeHIWQl1GGhAe9/GE5ZKLWOTqpLQw8erNuDOXlqF09+yFsAcy
+         pDVgAVKJ03OrZ9PrRxzA8PFI48kzxpPYnkyqyYD31Ft5MXTzXQFkM+I6YKfKzTDTxKBm
+         kqd/p/MWLoTVBPp5bFtG8Blehuh+UDb01TZApIaB0RtAb8uRmnSAEWgn4qSk93zYpKER
+         nSZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=mSTJ9JCVGtWSkCLhkCEyijCWx3jdEnWfXCdiF8cZhjM=;
-        b=Zs0UuLi8R1ssDr2bkt8OO4G+rgj1rZGtvJ2HrVbfugNrjVa+iyzYo8uNaLJ1b+X7lk
-         hdOrDnw6Nc5uKKh4slknNPVZUb9KqY7r6w5uKoZN+VykECtxlSqwHKofHU3pIxwrl4f6
-         m7Dnd/ImqVsKcTSbrdaMAaKZ9f6+lqooZQabxpVH8NDfTO8/UEZH7Wtlt5fvgKEHwjZX
-         zbJkop4ClfXJ32I9gmvQSHZMvOoq/o+arQV/90HzqDU8rEGZWZ+8TghuHy7BZnQmnpj0
-         r2Bu5QQtFBbCt8PmfWaqxMHYcmovz7q427vE8C//EEVIpIMYOpzNxhzi+ZYO9BlFQGYl
-         B4aQ==
-X-Gm-Message-State: AKS2vOz/es/CelzHLKnoOpK9x8bgk8rQDbY6xHXbx3r7iN8dRSuGJq6g
-        Pspdya7oHJkeAQ==
-X-Received: by 10.84.214.22 with SMTP id h22mr15977735pli.277.1498850506772;
-        Fri, 30 Jun 2017 12:21:46 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:54f:b41d:dd9d:3de0])
-        by smtp.gmail.com with ESMTPSA id 188sm14831503pgc.49.2017.06.30.12.21.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 12:21:45 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Laurent Humblet <laurent.humblet@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Warning suggestion for git stash drop
-References: <CAFirYm_LLCUNdppZ7kKGwijJNNvhCaQtoJzRBVRsvhF+=bqgrw@mail.gmail.com>
-        <xmqqefu2tyzc.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYd+3OoUBcsTS9=S9qEUwKj9ypyHyjXLBW=KjWOVoae4A@mail.gmail.com>
-        <CAFirYm_UzUe=zSefAVpt45OuEwKyn7bAZbumLXYWbPFVRahPew@mail.gmail.com>
-Date:   Fri, 30 Jun 2017 12:21:45 -0700
-In-Reply-To: <CAFirYm_UzUe=zSefAVpt45OuEwKyn7bAZbumLXYWbPFVRahPew@mail.gmail.com>
-        (Laurent Humblet's message of "Fri, 30 Jun 2017 20:33:49 +0200")
-Message-ID: <xmqqinjdqo1i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=v+IzWD8DAltBc+1YfoU9eRlS5ikLpLNi+6a+4tFefjk=;
+        b=E8SojrYjxZJsU45XWRfDDUvEXIcWuUgMzCXIK3rObH0mp/acihocKgFviivCib/1R3
+         25fn5LdXOTYb83hIa6enqwWIpRohE3C/RpafWJM5S4jmUmw9sB5JE8EI3Coe80tDkXN2
+         VB7DxWzXTr2vlM7bRPQ1NjjCcdZ/Dvyt3IYCwTlN1o6aZ2ikQRAVIyyEbDiuQBVjYMWx
+         +z/7SsbQkHTV93BaaLMi+00o3m1MN5e2fT8ri1SdupV8MukH+bvoL14QrKlqJc7ntvX4
+         tyaVQqyutplVL2Q/4Y48TDUI7hjN4+P5QgA+wjqndG2F5MnjE0jxpCx9kKZZc0RI8YPu
+         ESLQ==
+X-Gm-Message-State: AKS2vOyndSLAtvKRLtnIBajHfVqdRUAgJ07wQc9pPbQThD2WVaOsvwSo
+        lhuhQt/cRfCl/Chy
+X-Received: by 10.99.99.193 with SMTP id x184mr22312764pgb.13.1498852078614;
+        Fri, 30 Jun 2017 12:47:58 -0700 (PDT)
+Received: from prathampc-X550JX.domain.name ([116.73.72.60])
+        by smtp.gmail.com with ESMTPSA id g10sm20972131pfc.38.2017.06.30.12.47.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 30 Jun 2017 12:47:58 -0700 (PDT)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, christian.couder@gmail.com, gitster@pobox.com,
+        Prathamesh Chavan <pc44800@gmail.com>
+Subject: [GSoC][PATCH 5/5 v3] submodule: port submodule subcommand 'sync' from shell to C
+Date:   Sat,  1 Jul 2017 01:17:27 +0530
+Message-Id: <20170630194727.29787-5-pc44800@gmail.com>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170630194727.29787-1-pc44800@gmail.com>
+References: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
+ <20170630194727.29787-1-pc44800@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Laurent Humblet <laurent.humblet@gmail.com> writes:
+Port the submodule subcommand 'sync' from shell to C using the same
+mechanism as that used for porting submodule subcommand 'status'.
+Hence, here the function cmd_sync() is ported from shell to C.
+This is done by introducing three functions: module_sync(),
+sync_submodule() and print_default_remote().
 
-> Thank you for your feedback.
->
-> I suppose that turning a hypothetical confirmation option 'on' would
-> impact a stash pop for instance as it automatically drops the stash if
-> it was applied without conflicts.
->
-> What about a --confirm flag?  You could then simply alias 'git stash
-> drop --confirm' locally and it wouldn't impact anything else?
+The function print_default_remote() is introduced for getting
+the default remote as stdout.
 
-I think that is probably trivial to add, but how would you make sure
-you give it?  One way may be to train your fingers to type "git sd"
-with something like this in your ~/.gitconfig:
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+---
+ builtin/submodule--helper.c | 177 ++++++++++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            |  56 +-------------
+ 2 files changed, 178 insertions(+), 55 deletions(-)
 
-	[alias] sd = "stash drop --confirm"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 575ae0218..d933daadd 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -44,6 +44,20 @@ static char *get_default_remote(void)
+ 	return ret;
+ }
+ 
++static int print_default_remote(int argc, const char **argv, const char *prefix)
++{
++	const char *remote;
++
++	if (argc != 1)
++		die(_("submodule--helper print-default-remote takes no arguments"));
++
++	remote = get_default_remote();
++	if (remote)
++		puts(remote);
++
++	return 0;
++}
++
+ static int starts_with_dot_slash(const char *str)
+ {
+ 	return str[0] == '.' && is_dir_sep(str[1]);
+@@ -385,6 +399,25 @@ static void module_list_active(struct module_list *list)
+ 	*list = active_modules;
+ }
+ 
++static char *get_up_path(const char *path)
++{
++	int i;
++	struct strbuf sb = STRBUF_INIT;
++
++	for (i = count_slashes(path); i; i--)
++		strbuf_addstr(&sb, "../");
++
++	/*
++	 * Check if 'path' ends with slash or not
++	 * for having the same output for dir/sub_dir
++	 * and dir/sub_dir/
++	 */
++	if (!is_dir_sep(path[strlen(path) - 1]))
++		strbuf_addstr(&sb, "../");
++
++	return strbuf_detach(&sb, NULL);
++}
++
+ static int module_list(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -736,6 +769,148 @@ static int module_name(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
++struct sync_cb {
++	const char *prefix;
++	unsigned int quiet: 1;
++	unsigned int recursive: 1;
++};
++#define SYNC_CB_INIT { NULL, 0, 0 }
++
++static void sync_submodule(const struct cache_entry *list_item, void *cb_data)
++{
++	struct sync_cb *info = cb_data;
++	const struct submodule *sub;
++	char *sub_key, *remote_key;
++	char *sub_origin_url, *super_config_url, *displaypath;
++	struct strbuf sb = STRBUF_INIT;
++	struct child_process cp = CHILD_PROCESS_INIT;
++
++	if (!is_submodule_initialized(list_item->name))
++		return;
++
++	sub = submodule_from_path(null_sha1, list_item->name);
++
++	if (!sub || !sub->url)
++		die(_("no url found for submodule path '%s' in .gitmodules"),
++		      list_item->name);
++
++	if (starts_with_dot_dot_slash(sub->url) || starts_with_dot_slash(sub->url)) {
++		char *remote_url, *up_path;
++		char *remote = get_default_remote();
++		char *remote_key = xstrfmt("remote.%s.url", remote);
++		free(remote);
++
++		if (git_config_get_string(remote_key, &remote_url))
++			remote_url = xgetcwd();
++		up_path = get_up_path(list_item->name);
++		sub_origin_url = relative_url(remote_url, sub->url, up_path);
++		super_config_url = relative_url(remote_url, sub->url, NULL);
++		free(remote_key);
++		free(up_path);
++		free(remote_url);
++	} else {
++		sub_origin_url = xstrdup(sub->url);
++		super_config_url = xstrdup(sub->url);
++	}
++
++	displaypath = get_submodule_displaypath(list_item->name, info->prefix);
++
++	if (!info->quiet)
++		printf(_("Synchronizing submodule url for '%s'\n"),
++			 displaypath);
++
++	sub_key = xstrfmt("submodule.%s.url", sub->name);
++	if (git_config_set_gently(sub_key, super_config_url))
++		die(_("failed to register url for submodule path '%s'"),
++		      displaypath);
++
++	if (!is_submodule_populated_gently(list_item->name, NULL))
++		goto cleanup;
++
++	prepare_submodule_repo_env(&cp.env_array);
++	cp.git_cmd = 1;
++	cp.dir = list_item->name;
++	argv_array_pushl(&cp.args, "submodule--helper",
++			 "print-default-remote", NULL);
++	if (capture_command(&cp, &sb, 0))
++		die(_("failed to get the default remote for submodule '%s'"),
++		      list_item->name);
++
++	strbuf_strip_suffix(&sb, "\n");
++	remote_key = xstrfmt("remote.%s.url", sb.buf);
++	strbuf_release(&sb);
++
++	child_process_init(&cp);
++	prepare_submodule_repo_env(&cp.env_array);
++	cp.git_cmd = 1;
++	cp.dir = list_item->name;
++	argv_array_pushl(&cp.args, "config", remote_key, sub_origin_url, NULL);
++	if (run_command(&cp))
++		die(_("failed to update remote for submodule '%s'"),
++		      list_item->name);
++
++	if (info->recursive) {
++		struct child_process cpr = CHILD_PROCESS_INIT;
++
++		cpr.git_cmd = 1;
++		cpr.dir = list_item->name;
++		prepare_submodule_repo_env(&cpr.env_array);
++
++		argv_array_pushl(&cpr.args, "--super-prefix", displaypath,
++				 "submodule--helper", "sync", "--recursive",
++				 NULL);
++
++		if (info->quiet)
++			argv_array_push(&cpr.args, "--quiet");
++
++		if (run_command(&cpr))
++			die(_("failed to recurse into submodule '%s'"),
++			      list_item->name);
++	}
++
++cleanup:
++	free(sub_key);
++	free(super_config_url);
++	free(displaypath);
++	free(sub_origin_url);
++}
++
++static int module_sync(int argc, const char **argv, const char *prefix)
++{
++	struct sync_cb info = SYNC_CB_INIT;
++	struct pathspec pathspec;
++	struct module_list list = MODULE_LIST_INIT;
++	int quiet = 0;
++	int recursive = 0;
++
++	struct option module_sync_options[] = {
++		OPT__QUIET(&quiet, N_("Suppress output of synchronizing submodule url")),
++		OPT_BOOL(0, "recursive", &recursive,
++			N_("Recurse into nested submodules")),
++		OPT_END()
++	};
++
++	const char *const git_submodule_helper_usage[] = {
++		N_("git submodule--helper sync [--quiet] [--recursive] [<path>]"),
++		NULL
++	};
++
++	argc = parse_options(argc, argv, prefix, module_sync_options,
++			     git_submodule_helper_usage, 0);
++
++	if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
++		return 1;
++
++	info.prefix = prefix;
++	info.quiet = !!quiet;
++	info.recursive = !!recursive;
++
++	gitmodules_config();
++	for_each_submodule_list(list, sync_submodule, &info);
++
++	return 0;
++}
++
+ static int clone_submodule(const char *path, const char *gitdir, const char *url,
+ 			   const char *depth, struct string_list *reference,
+ 			   int quiet, int progress)
+@@ -1464,6 +1639,8 @@ static struct cmd_struct commands[] = {
+ 	{"print-name-rev", print_name_rev, 0},
+ 	{"init", module_init, SUPPORT_SUPER_PREFIX},
+ 	{"status", module_status, SUPPORT_SUPER_PREFIX},
++	{"print-default-remote", print_default_remote, 0},
++	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
+ 	{"remote-branch", resolve_remote_submodule_branch, 0},
+ 	{"push-check", push_check, 0},
+ 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 51b057d82..6bfc5e17d 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -1037,63 +1037,9 @@ cmd_sync()
+ 			;;
+ 		esac
+ 	done
+-	cd_to_toplevel
+-	{
+-		git submodule--helper list --prefix "$wt_prefix" "$@" ||
+-		echo "#unmatched" $?
+-	} |
+-	while read -r mode sha1 stage sm_path
+-	do
+-		die_if_unmatched "$mode" "$sha1"
+-
+-		# skip inactive submodules
+-		if ! git submodule--helper is-active "$sm_path"
+-		then
+-			continue
+-		fi
+-
+-		name=$(git submodule--helper name "$sm_path")
+-		url=$(git config -f .gitmodules --get submodule."$name".url)
+-
+-		# Possibly a url relative to parent
+-		case "$url" in
+-		./*|../*)
+-			# rewrite foo/bar as ../.. to find path from
+-			# submodule work tree to superproject work tree
+-			up_path="$(printf '%s\n' "$sm_path" | sed "s/[^/][^/]*/../g")" &&
+-			# guarantee a trailing /
+-			up_path=${up_path%/}/ &&
+-			# path from submodule work tree to submodule origin repo
+-			sub_origin_url=$(git submodule--helper resolve-relative-url "$url" "$up_path") &&
+-			# path from superproject work tree to submodule origin repo
+-			super_config_url=$(git submodule--helper resolve-relative-url "$url") || exit
+-			;;
+-		*)
+-			sub_origin_url="$url"
+-			super_config_url="$url"
+-			;;
+-		esac
+ 
+-		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+-		say "$(eval_gettext "Synchronizing submodule url for '\$displaypath'")"
+-		git config submodule."$name".url "$super_config_url"
+-
+-		if test -e "$sm_path"/.git
+-		then
+-		(
+-			sanitize_submodule_env
+-			cd "$sm_path"
+-			remote=$(get_default_remote)
+-			git config remote."$remote".url "$sub_origin_url"
++	git ${wt_prefix:+-C "$wt_prefix"} ${prefix:+--super-prefix "$prefix"} submodule--helper sync ${GIT_QUIET:+--quiet} ${recursive:+--recursive} "$@"
+ 
+-			if test -n "$recursive"
+-			then
+-				prefix="$prefix$sm_path/"
+-				eval cmd_sync
+-			fi
+-		)
+-		fi
+-	done
+ }
+ 
+ cmd_absorbgitdirs()
+-- 
+2.13.0
 
-but at that point, you could instead have something like the
-following in you ~/bin/git-sd and get the same effect:
-
-	#!/bin/sh
-	if tty -s
-	then
-		echo >&2 "are you sure you want to drop all stash entries?"
-		case "$(read)" in
-		[Yy]*) ;;
-		*) echo >&2 "ok, let's not drop 'em"; exit 0 ;;
-                esac
-	fi
-	exec git stash drop
-
-without adding the "--confirm" option at all.
-
-So I am not sure that would get us closer to a satisfactory solution
-to your original problem.  
-
-Retroactively adding an end-user safety is hard.
-
-> Have a great week-end!
-
-You too.
