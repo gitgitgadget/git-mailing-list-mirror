@@ -2,84 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 537FB20209
-	for <e@80x24.org>; Fri, 30 Jun 2017 09:53:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 788F720209
+	for <e@80x24.org>; Fri, 30 Jun 2017 10:13:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751931AbdF3Jxb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 05:53:31 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:46555 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751898AbdF3Jxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 05:53:30 -0400
-Received: from [192.168.2.201] ([92.22.42.39])
-        by smtp.talktalk.net with SMTP
-        id QscCdOuPoQ527QscDdIN0L; Fri, 30 Jun 2017 10:53:29 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1498816409; bh=NnqGGGwCNoun5Hbn/A5cBl+9S2e2ssXPWxxLB2VvVNU=;
-        h=Reply-To:Subject:To:References:Cc:From:Date:In-Reply-To;
-        b=B6wo+IXqeUNwl9ahNKxOWHIhQtXkgU5zNr7y5mXFll8wOzcHOzKtKTUMxEtN+Zq8I
-         QzwRr1nuHO0FvmONJK5M0cdVctOxgGfQQ1NIDLNKihoUd+/rmB+fPJfDrmbhgIe3eh
-         wFCxgi/NrlCnASY24Zzq+0drjzwqqSH6lRqOS1iY=
-X-Originating-IP: [92.22.42.39]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=MI8io4Rl c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
- a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
- a=4r90M7QdFHJA289Wf44A:9 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/5] Move unquote_path() from git-add--interactive.perl to
- Git.pm
-To:     Jeff King <peff@peff.net>
-References: <20170622102622.26147-1-phillip.wood@talktalk.net>
- <20170622231844.d3fdo6c367h3ldve@sigill.intra.peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <73f70ec5-b21f-e237-69a2-d0c4462d8c17@talktalk.net>
-Date:   Fri, 30 Jun 2017 10:53:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <20170622231844.d3fdo6c367h3ldve@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfJb+gfVJ0oKbUbs+v/1aFUH4Jy86fF98g0CR+GJgo0NH+YASdt4z1U/3fIrb8oa2xTPjvdHXuV0YBfvhrfsePO/O6WexVcSSQ9zONxGvvQcDV1H8wjq3
- /HmWTqi/ACBDgviTP+0bMYD17oiMjS+1e9ykuXUqMKdaFaw6C+M9/dHn35kWftO7DGXVaLPgHs7tqHRID3yARsxDQyFcf83Jteg=
+        id S1752657AbdF3KNN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 06:13:13 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33984 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751978AbdF3KNL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 06:13:11 -0400
+Received: by mail-wr0-f194.google.com with SMTP id k67so38663281wrc.1
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 03:13:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=6JC9VA7ZRT4kke1C4oFwwYgAqyj8j2N273owZPg9O0g=;
+        b=vKE9Jiz3YoNJXt8Nivj4WpFHbst89qA0xGwshjg0pPnpbxSsaCc4p34EkOevWxNhtC
+         SovEmHlgb4nc6TU8aQ62gNhXwvocCx/ZOZ4iXI472WhdJfbQLHqgxfyRElsNxES0iOnR
+         XXtbyffyW7gThA5cV3yo+9anG9rjwoUcr3fqIWXpxzTfWmPO2DFShLWoYDbsELl5VCBU
+         xs5yc1W3tI5EMCgg2p7pr9tc3byIacCTzVLHBQU6ermt4A6hq+8Ud1p3meRbbkSz6x7V
+         D84OoVD/6ttyMHS27NsxG1vxeCzdcA8Bxyj9ftd20myw7/LVEfSYl416DEJbtAkAQAg9
+         Ph3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=6JC9VA7ZRT4kke1C4oFwwYgAqyj8j2N273owZPg9O0g=;
+        b=OuaLwcdY3nfNVFE0XlwjOkhxuAjddSUAWGwTa7BmjK1kzifJXY76HN/KCBCV5zTXTF
+         d0zXWL5d+fa2a+KRuaTQafBz8fTpv7EmTnoeJyjj+x7QnlhUvaZlQaR6XJjmq0kBB6xz
+         zorqeaAFmoucmZQjBqGXO/T+Yc3F2ZrbxsgLPoTk628NZuEyvz14GfeYxb6/htHTzFyQ
+         IX8kjVqemdawWbt5thZLoDCBzZ2Y8JjX9ZR3li78Jd7yURViEBi6h4GU8CGG3nfLwhof
+         Rn2OdGoq3/HI0pcleUbi6j4laEUXcHRSDDWy3nmYrbwUk8yDbkXWdz5SqXtFTt9ZDvEw
+         TFgg==
+X-Gm-Message-State: AKS2vOybzv/s/e+ROi2nUEjrrrvUX4OpJ7ftTwzV+SjOjiUopbk8BIA2
+        veoH+/xg+0c3ig==
+X-Received: by 10.223.173.140 with SMTP id w12mr29019541wrc.4.1498817584769;
+        Fri, 30 Jun 2017 03:13:04 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id b30sm4632459wra.42.2017.06.30.03.13.02
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 30 Jun 2017 03:13:04 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CAKYtbVbOXZiZrsFGOKu=sFroSL-FBQo2wMaA9GmJvc-Uh7QZEA@mail.gmail.com>
+Date:   Fri, 30 Jun 2017 12:13:02 +0200
+Cc:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <94F87EDC-4F34-455E-88D5-F99C606EF628@gmail.com>
+References: <CAE5ih7-x45MD1H6Ahr5oCVtTjgbBkeP4GbKCGB-Cwk6BSQwTcw@mail.gmail.com> <20170629224659.25677-1-miguel.torroja@gmail.com> <41BF267D-5F4D-4031-B9D4-15DB263D35D9@gmail.com> <CAKYtbVbOXZiZrsFGOKu=sFroSL-FBQo2wMaA9GmJvc-Uh7QZEA@mail.gmail.com>
+To:     Miguel Torroja <miguel.torroja@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/06/17 00:18, Jeff King wrote:
-> On Thu, Jun 22, 2017 at 11:26:17AM +0100, Phillip Wood wrote:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> I'm using this in some scripts and it would be more convenient to have
->> it available from Git.pm rather than copying and pasting it each time
->> I need it. I think it should be useful to other people using Git.pm as
->> well. It is not uncommon to get a quoted path back from a command that
->> needs to be passed on the commandline of another command. While one
->> can use -z in many cases, that leaves the problem of having to quote
->> the path when printing it in error messages etc.
-> 
-> Grepping around the calls to unquote_path in add--interactive, I
-> definitely think many of them ought to be using "-z". But I don't think
-> that's a reason not to make unquote_path() more widely available. It
-> _is_ generally useful.
->
-> The changes look sane to me. My biggest question is how add--interactive
-> handles the exceptions thrown by the refactored function on error. Since
-> these paths are coming from Git, it should be something never comes up,
-> right? So failing hard is probably the best thing to do.
 
-Yes, my assumption was that the error shouldn't be triggered, and if it
-was then it would be a sign of bigger problems.
+> On 30 Jun 2017, at 11:41, Miguel Torroja <miguel.torroja@gmail.com> =
+wrote:
+>=20
+> On Fri, Jun 30, 2017 at 10:26 AM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
+>>=20
+>>> On 30 Jun 2017, at 00:46, miguel torroja <miguel.torroja@gmail.com> =
+wrote:
+>>>=20
+>>> The option -G of p4 (python marshal output) gives more context about =
+the
+>>> data being output. That's useful when using the command "change -o" =
+as
+>>> we can distinguish between warning/error line and real change =
+description.
+>>>=20
+>>> Some p4 triggers in the server side generate some warnings when
+>>> executed. Unfortunately those messages are mixed with the output of
+>>> "p4 change -o". Those extra warning lines are reported as =
+{'code':'info'}
+>>> in python marshal output (-G). The real change output is reported as
+>>> {'code':'stat'}
+>>>=20
+>>> A new test has been created to t9807-git-p4-submit.sh adding a p4 =
+trigger
+>>> that outputs extra lines with "p4 change -o" and "p4 changes"
+>>>=20
+>>> Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
+>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>> ---
+>>> ...
+>>=20
+>> I have never worked with p4 triggers and that might be
+>> the reason why I don't understand your test case.
+>> Maybe you can help me?
+>>=20
+>>> +test_expect_success 'description with extra lines from verbose p4 =
+trigger' '
+>>> +     test_when_finished cleanup_git &&
+>>> +     git p4 clone --dest=3D"$git" //depot &&
+>>> +     (
+>>> +             p4 triggers -i <<-EOF
+>>> +             Triggers: p4triggertest-command command =
+pre-user-change "echo verbose trigger"
+>>> +             EOF
+>>> +     ) &&
+>>=20
+>> You clone the test repo and install a trigger.
+>>=20
+>>> +     (
+>>> +             cd "$git" &&
+>>> +             git config git-p4.skipSubmitEdit true &&
+>>> +             echo file20 >file20 &&
+>>> +             git add file20 &&
+>>> +             git commit -m file20 &&
+>>> +             git p4 submit
+>>> +     ) &&
+>>=20
+>> You make a new commit. This should run the "echo verbose trigger", =
+right?
+>=20
+> Yes, that's correct. In this case the trigger is run with p4 change
+> and p4 changes
+>=20
+>>=20
+>>> +     (
+>>> +             p4 triggers -i <<-EOF
+>>> +             Triggers:
+>>> +             EOF
+>>> +     ) &&
+>>=20
+>> You delete the trigger.
+>>=20
+>>> +     (
+>>> +             cd "$cli" &&
+>>> +             test_path_is_file file20
+>>> +     )
+>>=20
+>> You check that the file20 is available in P4.
+>>=20
+>>=20
+>> What would happen if I run this test case without your patch?
+>> Wouldn't it pass just fine?
+>=20
+> If you run it without the patch for git-p4.py, the test doesn't pass
 
-Best Wishes
+You are right. I did not run "make" properly before running the test :)
 
-Phillip
 
+>> Wouldn't we need to check that no warning/error is in the
+>> real change description?
+>>=20
+>=20
+> that can also be added, something like this: 'p4 change -o | grep
+> "verbose trigger"' after setting the trigger?
+
+Yeah, maybe. I hope this is no stupid question, but: If you clone the
+repo with git-p4 *again* ... would you see the "verbose trigger" output
+in the Git commit message?
+
+
+- Lars=
