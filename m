@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1E2E202A7
-	for <e@80x24.org>; Fri, 30 Jun 2017 00:08:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F15C4202A7
+	for <e@80x24.org>; Fri, 30 Jun 2017 00:08:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752483AbdF3AIF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 20:08:05 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:34363 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751572AbdF3AH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2017 20:07:57 -0400
-Received: by mail-pg0-f49.google.com with SMTP id t186so55418740pgb.1
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:57 -0700 (PDT)
+        id S1752609AbdF3AIG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 20:08:06 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:34650 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752656AbdF3AH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 20:07:56 -0400
+Received: by mail-pf0-f179.google.com with SMTP id s66so58008862pfs.1
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=85siXSBRz49KXa6OpH1+PQ+OYkIpxwNZQvDxGpj1GRk=;
-        b=ey0OJ2rr08WUHVpx3UhD/EpkC634nC45x46bhTYpe5KJDqfkptrsC3YidVDhBzB7d2
-         SJ97FNAsN0S8MHu27YlFE8IsZiqGGU6zXo05Mtim6YawcaTcNMiPMQfOqGLJRNuMq7N7
-         TM207RtCe5QKyj1FSoub/OZ0apG7xcIiIHNy0FXIxe8IX6eTa2S1yoBVtKHCmLvoUWpB
-         v0TqYsKjDuiKYZorRb+AzDIP8dHGLB2aGsLWB0sWnOpkEHllBjMtdpy+QG8m1c1SH5kr
-         AlCm4WRdjwiQP4cGt3xi/bt2hRpyxt2fjfD2BCVaexvA38Xa1z8ziscjE1y8cBeUnspF
-         +c3A==
+        bh=GRjtMyn7cPVPk6FywMcKBPjkUsm13x5zxsJopHCQL20=;
+        b=amRyPxKTW8KFMel9sMOC9eN1zrYg/X8p1r1n1tttzQqPo0yRpYGPS81kBAnH3RUkgY
+         nvVeNs9B8X9JY2SOp3xF0y9+zQK7KfB9W+WCsjQl1YzBWB2Kdr3VxvEjs9fJfo5LCect
+         7qHDX3ACuyBOhB+ZAK6HUpKRRTRLYVwk5Sb5pa+XiRX8PnweRfi2oxD4Pt+HV/5qWnJe
+         76QyJ8O9X3AxHjSapGGr0yDxISwlwryW+8IjmjCl6LJkRW6u4Xot3E+A8MA1JhaJE/8m
+         CBLJFzVkb3xegnSfqsJlXC2XC+nruAmWIB86vvYQksM6Llxlgs3epzo4ip2baQHagNF5
+         GWEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=85siXSBRz49KXa6OpH1+PQ+OYkIpxwNZQvDxGpj1GRk=;
-        b=TDUGiax633U8eTxfgZhXRQfRnBvXTeGxBPNwfNxM9SL829nXD0qZ9/B3unfzhnUuZI
-         PRVO1EV2Wh1UkJInWaVUzCqGedlbdRPY5VyVpDfllTLB/FL5a/WACdithYXNGkMPhYQD
-         hfna3ZXoqq9HUu+VR7/W/nQjvnwnaGsmyBQ/wPfzY3/y64ln8ZdN7GBqQ0XKF3moY/fo
-         GYYzaUp0IigCn1rVsNwW9/Vsjt6YumBHBCRuuCbbVk1pLf8hTkUjawtGIfnle642taN/
-         rzwj9y+nNH4ACTxBOAQYvvfB8FFlx9WtGkXfkArfk1vEKaxUNRPp5Ie5+tqIG6evqq+9
-         ZqPg==
-X-Gm-Message-State: AKS2vOzt/doFD2CCmcYM+Kb+Qqq/ofb+ZntcikV47v10yHS/wEtDqWXl
-        d8J33vEJFTBVkpkh
-X-Received: by 10.84.191.165 with SMTP id a34mr20969475pld.136.1498781271285;
-        Thu, 29 Jun 2017 17:07:51 -0700 (PDT)
+        bh=GRjtMyn7cPVPk6FywMcKBPjkUsm13x5zxsJopHCQL20=;
+        b=s4VHZpTbIVwEA3PRgT274TS7tw7Q6KHShyhWB7EYl6ZueNkXQJtZAJRWLq3ZCvcGbY
+         VZBlxcvRi6wsOd7gEhE3U/xRlXYdn0R+iEC0cMSsTGr6V3+7uZ9MPQAXgSR99oTcjums
+         TAPsgCFL1nDIq4gILQ6nv/WVllP69oo5+ff6mSIUC0QKxY4eTNyRYCGgO/at/QZfQQAj
+         HddH7iDF2Q8QrGyLReJj6CAzlwYwvbispk6xp40dWqlAk6XRszupieacQjWjnZkqr/Eg
+         nQeL6xKsdK3m3tO8KP9PhpeBRJ/WH+F2JpzNPTNNj+xyGH6bpS3z032AjzMrvP/AIZlG
+         OylA==
+X-Gm-Message-State: AKS2vOwURIsHpSFgnkleyJ9zrHsNkY+4a3/aWMG4dBfpRsgsJtKy42rf
+        Y9q6dtqTjy4WK7HwiDn6Uw==
+X-Received: by 10.99.246.69 with SMTP id u5mr18502866pgj.173.1498781275275;
+        Thu, 29 Jun 2017 17:07:55 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c3c:7a18:f5d8:50e0])
-        by smtp.gmail.com with ESMTPSA id 197sm11399465pga.58.2017.06.29.17.07.50
+        by smtp.gmail.com with ESMTPSA id e124sm10750384pgc.17.2017.06.29.17.07.54
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 29 Jun 2017 17:07:50 -0700 (PDT)
+        Thu, 29 Jun 2017 17:07:54 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 22/25] diff.c: color moved lines differently
-Date:   Thu, 29 Jun 2017 17:07:07 -0700
-Message-Id: <20170630000710.10601-23-sbeller@google.com>
+Subject: [PATCH 24/25] diff.c: add dimming to moved line detection
+Date:   Thu, 29 Jun 2017 17:07:09 -0700
+Message-Id: <20170630000710.10601-25-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
 In-Reply-To: <20170630000710.10601-1-sbeller@google.com>
 References: <20170630000710.10601-1-sbeller@google.com>
@@ -61,870 +61,396 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a patch consists mostly of moving blocks of code around, it can
-be quite tedious to ensure that the blocks are moved verbatim, and not
-undesirably modified in the move. To that end, color blocks that are
-moved within the same patch differently. For example (OM, del, add,
-and NM are different colors):
+Any lines inside a moved block of code are not interesting. Boundaries
+of blocks are only interesting if they are next to another block of moved
+code.
 
-    [OM]  -void sensitive_stuff(void)
-    [OM]  -{
-    [OM]  -        if (!is_authorized_user())
-    [OM]  -                die("unauthorized");
-    [OM]  -        sensitive_stuff(spanning,
-    [OM]  -                        multiple,
-    [OM]  -                        lines);
-    [OM]  -}
-
-           void another_function()
-           {
-    [del] -        printf("foo");
-    [add] +        printf("bar");
-           }
-
-    [NM]  +void sensitive_stuff(void)
-    [NM]  +{
-    [NM]  +        if (!is_authorized_user())
-    [NM]  +                die("unauthorized");
-    [NM]  +        sensitive_stuff(spanning,
-    [NM]  +                        multiple,
-    [NM]  +                        lines);
-    [NM]  +}
-
-However adjacent blocks may be problematic. For example, in this
-potentially malicious patch, the swapping of blocks can be spotted:
-
-    [OM]  -void sensitive_stuff(void)
-    [OM]  -{
-    [OMA] -        if (!is_authorized_user())
-    [OMA] -                die("unauthorized");
-    [OM]  -        sensitive_stuff(spanning,
-    [OM]  -                        multiple,
-    [OM]  -                        lines);
-    [OMA] -}
-
-           void another_function()
-           {
-    [del] -        printf("foo");
-    [add] +        printf("bar");
-           }
-
-    [NM]  +void sensitive_stuff(void)
-    [NM]  +{
-    [NMA] +        sensitive_stuff(spanning,
-    [NMA] +                        multiple,
-    [NMA] +                        lines);
-    [NM]  +        if (!is_authorized_user())
-    [NM]  +                die("unauthorized");
-    [NMA] +}
-
-If the moved code is larger, it is easier to hide some permutation in the
-code, which is why some alternative coloring is needed.
-
-This patch implements the first mode:
-* basic alternating 'Zebra' mode
-  This conveys all information needed to the user.  Defer customization to
-  later patches.
-
-First I implemented an alternative design, which would try to fingerprint
-a line by its neighbors to detect if we are in a block or at the boundary.
-This idea iss error prone as it inspected each line and its neighboring
-lines to determine if the line was (a) moved and (b) if was deep inside
-a hunk by having matching neighboring lines. This is unreliable as the
-we can construct hunks which have equal neighbors that just exceed the
-number of lines inspected. (Think of 'AXYZBXYZCXYZD..' with each letter
-as a line, that is permutated to AXYZCXYZBXYZD..').
-
-Instead this provides a dynamic programming greedy algorithm that finds
-the largest moved hunk and then has several modes on highlighting bounds.
-
-A note on the options '--submodule=diff' and '--color-words/--word-diff':
-In the conversion to use emit_line in the prior patches both submodules
-as well as word diff output carefully chose to call emit_line with sign=0.
-All output with sign=0 is ignored for move detection purposes in this
-patch, such that no weird looking output will be generated for these
-cases. This leads to another thought: We could pass on '--color-moved' to
-submodules such that they color up moved lines for themselves. If we'd do
-so only line moves within a repository boundary are marked up.
-
-It is useful to have moved lines colored, but there are annoying corner
-cases, such as a single line moved, that is very common. For example
-in a typical patch of C code, we have closing braces that end statement
-blocks or functions.
-
-While it is technically true that these lines are moved as they show up
-elsewhere, it is harmful for the review as the reviewers attention is
-drawn to such a minor side annoyance.
-
-For now let's have a simple solution of hardcoding the number of
-moved lines to be at least 3 before coloring them. Note, that the
-length is applied across all blocks to find the 'lonely' blocks
-that pollute new code, but do not interfere with a permutated
-block where each permutation has less lines than 3.
-
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c                     | 341 +++++++++++++++++++++++++++++++++++++++++++--
- diff.h                     |  12 +-
- t/t4015-diff-whitespace.sh | 261 ++++++++++++++++++++++++++++++++++
- 3 files changed, 599 insertions(+), 15 deletions(-)
+ color.h                    |   2 +
+ diff.c                     | 132 +++++++++++++++++++++++++++++++++++++++++----
+ diff.h                     |   9 +++-
+ t/t4015-diff-whitespace.sh | 124 ++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 254 insertions(+), 13 deletions(-)
 
+diff --git a/color.h b/color.h
+index 90627650fc..fd2b688dfb 100644
+--- a/color.h
++++ b/color.h
+@@ -42,6 +42,8 @@ struct strbuf;
+ #define GIT_COLOR_BG_BLUE	"\033[44m"
+ #define GIT_COLOR_BG_MAGENTA	"\033[45m"
+ #define GIT_COLOR_BG_CYAN	"\033[46m"
++#define GIT_COLOR_FAINT		"\033[2m"
++#define GIT_COLOR_FAINT_ITALIC	"\033[2;3m"
+ 
+ /* A special value meaning "no color selected" */
+ #define GIT_COLOR_NIL "NIL"
 diff --git a/diff.c b/diff.c
-index 31720abf8f..322a2bfd72 100644
+index 41ee81d1d8..6b79e6a54f 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -16,6 +16,7 @@
- #include "userdiff.h"
- #include "submodule-config.h"
- #include "submodule.h"
-+#include "hashmap.h"
- #include "ll-merge.h"
- #include "string-list.h"
- #include "argv-array.h"
-@@ -32,6 +33,7 @@ static int diff_indent_heuristic = 1;
- static int diff_rename_limit_default = 400;
- static int diff_suppress_blank_empty;
- static int diff_use_color_default = -1;
-+static int diff_color_moved_default;
- static int diff_context_default = 3;
- static int diff_interhunk_context_default;
- static const char *diff_word_regex_cfg;
-@@ -56,6 +58,10 @@ static char diff_colors[][COLOR_MAXLEN] = {
+@@ -58,10 +58,14 @@ static char diff_colors[][COLOR_MAXLEN] = {
  	GIT_COLOR_YELLOW,	/* COMMIT */
  	GIT_COLOR_BG_RED,	/* WHITESPACE */
  	GIT_COLOR_NORMAL,	/* FUNCINFO */
-+	GIT_COLOR_MAGENTA,	/* OLD_MOVED */
-+	GIT_COLOR_BLUE,		/* OLD_MOVED ALTERNATIVE */
-+	GIT_COLOR_CYAN,		/* NEW_MOVED */
-+	GIT_COLOR_YELLOW,	/* NEW_MOVED ALTERNATIVE */
+-	GIT_COLOR_MAGENTA,	/* OLD_MOVED */
+-	GIT_COLOR_BLUE,		/* OLD_MOVED ALTERNATIVE */
+-	GIT_COLOR_CYAN,		/* NEW_MOVED */
+-	GIT_COLOR_YELLOW,	/* NEW_MOVED ALTERNATIVE */
++	GIT_COLOR_BOLD_MAGENTA,	/* OLD_MOVED */
++	GIT_COLOR_BOLD_BLUE,	/* OLD_MOVED ALTERNATIVE */
++	GIT_COLOR_FAINT,	/* OLD_MOVED_DIM */
++	GIT_COLOR_FAINT_ITALIC,	/* OLD_MOVED_ALTERNATIVE_DIM */
++	GIT_COLOR_BOLD_CYAN,	/* NEW_MOVED */
++	GIT_COLOR_BOLD_YELLOW,	/* NEW_MOVED ALTERNATIVE */
++	GIT_COLOR_FAINT,	/* NEW_MOVED_DIM */
++	GIT_COLOR_FAINT_ITALIC,	/* NEW_MOVED_ALTERNATIVE_DIM */
  };
  
  static NORETURN void die_want_option(const char *option_name)
-@@ -81,6 +87,14 @@ static int parse_diff_color_slot(const char *var)
- 		return DIFF_WHITESPACE;
- 	if (!strcasecmp(var, "func"))
- 		return DIFF_FUNCINFO;
-+	if (!strcasecmp(var, "oldmoved"))
-+		return DIFF_FILE_OLD_MOVED;
-+	if (!strcasecmp(var, "oldmovedalternative"))
-+		return DIFF_FILE_OLD_MOVED_ALT;
-+	if (!strcasecmp(var, "newmoved"))
-+		return DIFF_FILE_NEW_MOVED;
-+	if (!strcasecmp(var, "newmovedalternative"))
-+		return DIFF_FILE_NEW_MOVED_ALT;
+@@ -91,10 +95,18 @@ static int parse_diff_color_slot(const char *var)
+ 		return DIFF_FILE_OLD_MOVED;
+ 	if (!strcasecmp(var, "oldmovedalternative"))
+ 		return DIFF_FILE_OLD_MOVED_ALT;
++	if (!strcasecmp(var, "oldmoveddimmed"))
++		return DIFF_FILE_OLD_MOVED_DIM;
++	if (!strcasecmp(var, "oldmovedalternativedimmed"))
++		return DIFF_FILE_OLD_MOVED_ALT_DIM;
+ 	if (!strcasecmp(var, "newmoved"))
+ 		return DIFF_FILE_NEW_MOVED;
+ 	if (!strcasecmp(var, "newmovedalternative"))
+ 		return DIFF_FILE_NEW_MOVED_ALT;
++	if (!strcasecmp(var, "newmoveddimmed"))
++		return DIFF_FILE_NEW_MOVED_DIM;
++	if (!strcasecmp(var, "newmovedalternativedimmed"))
++		return DIFF_FILE_NEW_MOVED_ALT_DIM;
  	return -1;
  }
  
-@@ -229,12 +243,40 @@ int git_diff_heuristic_config(const char *var, const char *value, void *cb)
- 	return 0;
+@@ -262,8 +274,10 @@ static int parse_color_moved(const char *arg)
+ 		return COLOR_MOVED_ZEBRA;
+ 	else if (!strcmp(arg, "default"))
+ 		return COLOR_MOVED_DEFAULT;
++	else if (!strcmp(arg, "dimmed_zebra"))
++		return COLOR_MOVED_ZEBRA_DIM;
+ 	else
+-		return error(_("color moved setting must be one of 'no', 'default', 'zebra', 'plain'"));
++		return error(_("color moved setting must be one of 'no', 'default', 'zebra', 'dimmed_zebra', 'plain'"));
  }
  
-+static int parse_color_moved(const char *arg)
-+{
-+	switch (git_parse_maybe_bool(arg)) {
-+	case 0:
-+		return COLOR_MOVED_NO;
-+	case 1:
-+		return COLOR_MOVED_DEFAULT;
-+	default:
-+		break;
-+	}
-+
-+	if (!strcmp(arg, "no"))
-+		return COLOR_MOVED_NO;
-+	else if (!strcmp(arg, "zebra"))
-+		return COLOR_MOVED_ZEBRA;
-+	else if (!strcmp(arg, "default"))
-+		return COLOR_MOVED_DEFAULT;
-+	else
-+		return error(_("color moved setting must be one of 'no', 'default', 'zebra'"));
-+}
-+
  int git_diff_ui_config(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
- 		diff_use_color_default = git_config_colorbool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "diff.colormoved")) {
-+		int cm = parse_color_moved(value);
-+		if (cm < 0)
-+			return -1;
-+		diff_color_moved_default = cm;
-+		return 0;
-+	}
- 	if (!strcmp(var, "diff.context")) {
- 		diff_context_default = git_config_int(var, value);
- 		if (diff_context_default < 0)
-@@ -602,7 +644,9 @@ enum diff_symbol {
-  * 13-15 are WSEH_NEW | WSEH_OLD | WSEH_CONTEXT
-  * 16 is marking if the line is blank at EOF
-  */
--#define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF (1<<16)
-+#define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF	(1<<16)
-+#define DIFF_SYMBOL_MOVED_LINE			(1<<17)
-+#define DIFF_SYMBOL_MOVED_LINE_ALT		(1<<18)
+@@ -649,6 +663,7 @@ enum diff_symbol {
+ #define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF	(1<<16)
+ #define DIFF_SYMBOL_MOVED_LINE			(1<<17)
+ #define DIFF_SYMBOL_MOVED_LINE_ALT		(1<<18)
++#define DIFF_SYMBOL_MOVED_LINE_UNINTERESTING	(1<<19)
  #define DIFF_SYMBOL_CONTENT_WS_MASK (WSEH_NEW | WSEH_OLD | WSEH_CONTEXT | WS_RULE_MASK)
  
  /*
-@@ -645,6 +689,240 @@ static void append_emitted_diff_symbol(struct diff_options *o,
- 	f->line = e->line ? xmemdupz(e->line, e->len) : NULL;
+@@ -930,6 +945,67 @@ static void mark_color_as_moved(struct diff_options *o,
+ 	free(pmb);
  }
  
-+struct moved_entry {
-+	struct hashmap_entry ent;
-+	const struct emitted_diff_symbol *es;
-+	struct moved_entry *next_line;
-+};
-+
-+static int next_byte(const char **cp, const char **endp,
-+		     const struct diff_options *diffopt)
++#define DIFF_SYMBOL_MOVED_LINE_ZEBRA_MASK \
++  (DIFF_SYMBOL_MOVED_LINE | DIFF_SYMBOL_MOVED_LINE_ALT)
++static void dim_moved_lines(struct diff_options *o)
 +{
-+	int retval;
-+
-+	if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_AT_EOL)) {
-+		while (*endp > *cp && isspace(**endp))
-+			(*endp)--;
-+	}
-+
-+	if (*cp > *endp)
-+		return -1;
-+
-+	if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_CHANGE)) {
-+		while (*cp < *endp && isspace(**cp))
-+			(*cp)++;
-+		/*
-+		 * After skipping a couple of whitespaces, we still have to
-+		 * account for one space.
-+		 */
-+		return (int)' ';
-+	}
-+
-+	if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE)) {
-+		while (*cp < *endp && isspace(**cp))
-+			(*cp)++;
-+		/* return the first non-ws character via the usual below */
-+	}
-+
-+	retval = **cp;
-+	(*cp)++; /* advance */
-+	return retval;
-+}
-+
-+static int moved_entry_cmp(const struct moved_entry *a,
-+			   const struct moved_entry *b,
-+			   const void *keydata,
-+			   const void *data)
-+{
-+	const struct diff_options *diffopt = data;
-+	const char *ap = a->es->line, *ae = a->es->line + a->es->len;
-+	const char *bp = b->es->line, *be = b->es->line + b->es->len;
-+
-+	if (!(diffopt->xdl_opts & XDF_WHITESPACE_FLAGS))
-+		return a->es->len != b->es->len  || memcmp(ap, bp, a->es->len);
-+
-+	while (1) {
-+		int ca, cb;
-+		ca = next_byte(&ap, &ae, diffopt);
-+		cb = next_byte(&bp, &be, diffopt);
-+		if (ca != cb)
-+			return 1; /* differs */
-+		if (!ca)
-+			return 0;
-+	};
-+}
-+
-+static unsigned get_string_hash(struct emitted_diff_symbol *es, struct diff_options *o)
-+{
-+	if (o->xdl_opts & XDF_WHITESPACE_FLAGS) {
-+		static struct strbuf sb = STRBUF_INIT;
-+		const char *ap = es->line, *ae = es->line + es->len;
-+		int c;
-+
-+		strbuf_reset(&sb);
-+		while ((c = next_byte(&ap, &ae, o)) > 0)
-+			strbuf_addch(&sb, c);
-+
-+		return memhash(sb.buf, sb.len);
-+	} else {
-+		return memhash(es->line, es->len);
-+	}
-+}
-+
-+static struct moved_entry *prepare_entry(struct diff_options *o,
-+					 int line_no)
-+{
-+	struct moved_entry *ret = xmalloc(sizeof(*ret));
-+	struct emitted_diff_symbol *l = &o->emitted_symbols->buf[line_no];
-+
-+	ret->ent.hash = get_string_hash(l, o);
-+	ret->es = l;
-+	ret->next_line = NULL;
-+
-+	return ret;
-+}
-+
-+static void add_lines_to_move_detection(struct diff_options *o,
-+					struct hashmap *add_lines,
-+					struct hashmap *del_lines)
-+{
-+	struct moved_entry *prev_line = NULL;
-+
 +	int n;
 +	for (n = 0; n < o->emitted_symbols->nr; n++) {
-+		struct hashmap *hm;
-+		struct moved_entry *key;
-+
-+		switch (o->emitted_symbols->buf[n].s) {
-+		case DIFF_SYMBOL_PLUS:
-+			hm = add_lines;
-+			break;
-+		case DIFF_SYMBOL_MINUS:
-+			hm = del_lines;
-+			break;
-+		default:
-+			prev_line = NULL;
-+			continue;
-+		}
-+
-+		key = prepare_entry(o, n);
-+		if (prev_line && prev_line->es->s == o->emitted_symbols->buf[n].s)
-+			prev_line->next_line = key;
-+
-+		hashmap_add(hm, key);
-+		prev_line = key;
-+	}
-+}
-+
-+static int shrink_potential_moved_blocks(struct moved_entry **pmb,
-+					 int pmb_nr)
-+{
-+	int lp, rp;
-+
-+	/* Shrink the set of potential block to the remaining running */
-+	for (lp = 0, rp = pmb_nr - 1; lp <= rp;) {
-+		while (lp < pmb_nr && pmb[lp])
-+			lp++;
-+		/* lp points at the first NULL now */
-+
-+		while (rp > -1 && !pmb[rp])
-+			rp--;
-+		/* rp points at the last non-NULL */
-+
-+		if (lp < pmb_nr && rp > -1 && lp < rp) {
-+			pmb[lp] = pmb[rp];
-+			pmb[rp] = NULL;
-+			rp--;
-+			lp++;
-+		}
-+	}
-+
-+	/* Remember the number of running sets */
-+	return rp + 1;
-+}
-+
-+/* Find blocks of moved code, delegate actual coloring decision to helper */
-+static void mark_color_as_moved(struct diff_options *o,
-+				struct hashmap *add_lines,
-+				struct hashmap *del_lines)
-+{
-+	struct moved_entry **pmb = NULL; /* potentially moved blocks */
-+	int pmb_nr = 0, pmb_alloc = 0;
-+	int n, flipped_block = 1, block_length = 0;
-+
-+
-+	for (n = 0; n < o->emitted_symbols->nr; n++) {
-+		struct hashmap *hm = NULL;
-+		struct moved_entry *key;
-+		struct moved_entry *match = NULL;
++		struct emitted_diff_symbol *prev = (n != 0) ?
++				&o->emitted_symbols->buf[n - 1] : NULL;
 +		struct emitted_diff_symbol *l = &o->emitted_symbols->buf[n];
-+		int i;
++		struct emitted_diff_symbol *next =
++				(n < o->emitted_symbols->nr - 1) ?
++				&o->emitted_symbols->buf[n + 1] : NULL;
 +
-+		switch (l->s) {
-+		case DIFF_SYMBOL_PLUS:
-+			hm = del_lines;
-+			key = prepare_entry(o, n);
-+			match = hashmap_get(hm, key, o);
-+			free(key);
-+			break;
-+		case DIFF_SYMBOL_MINUS:
-+			hm = add_lines;
-+			key = prepare_entry(o, n);
-+			match = hashmap_get(hm, key, o);
-+			free(key);
-+			break;
-+		default:
-+			flipped_block = 1;
-+		}
++		/* Not a plus or minus line? */
++		if (l->s != DIFF_SYMBOL_PLUS && l->s != DIFF_SYMBOL_MINUS)
++			continue;
 +
-+		if (!match) {
-+			if (block_length < COLOR_MOVED_MIN_BLOCK_LENGTH) {
-+				for (i = 0; i < block_length + 1; i++) {
-+					l = &o->emitted_symbols->buf[n - i];
-+					l->flags &= ~DIFF_SYMBOL_MOVED_LINE;
-+				}
-+			}
-+			pmb_nr = 0;
-+			block_length = 0;
++		/* Not a moved line? */
++		if (!(l->flags & DIFF_SYMBOL_MOVED_LINE))
++			continue;
++
++		/*
++		 * If prev or next are not a plus or minus line,
++		 * pretend they don't exist
++		 */
++		if (prev && prev->s != DIFF_SYMBOL_PLUS &&
++			    prev->s != DIFF_SYMBOL_MINUS)
++			prev = NULL;
++		if (next && next->s != DIFF_SYMBOL_PLUS &&
++			    next->s != DIFF_SYMBOL_MINUS)
++			next = NULL;
++
++		/* Inside a block? */
++		if ((prev &&
++		    (prev->flags & DIFF_SYMBOL_MOVED_LINE_ZEBRA_MASK) ==
++		    (l->flags & DIFF_SYMBOL_MOVED_LINE_ZEBRA_MASK)) &&
++		    (next &&
++		    (next->flags & DIFF_SYMBOL_MOVED_LINE_ZEBRA_MASK) ==
++		    (l->flags & DIFF_SYMBOL_MOVED_LINE_ZEBRA_MASK))) {
++			l->flags |= DIFF_SYMBOL_MOVED_LINE_UNINTERESTING;
 +			continue;
 +		}
 +
-+		l->flags |= DIFF_SYMBOL_MOVED_LINE;
-+		block_length++;
++		/* Check if we are at an interesting bound: */
++		if (prev && (prev->flags & DIFF_SYMBOL_MOVED_LINE) &&
++		    (prev->flags & DIFF_SYMBOL_MOVED_LINE_ALT) !=
++		       (l->flags & DIFF_SYMBOL_MOVED_LINE_ALT))
++			continue;
++		if (next && (next->flags & DIFF_SYMBOL_MOVED_LINE) &&
++		    (next->flags & DIFF_SYMBOL_MOVED_LINE_ALT) !=
++		       (l->flags & DIFF_SYMBOL_MOVED_LINE_ALT))
++			continue;
 +
-+		/* Check any potential block runs, advance each or nullify */
-+		for (i = 0; i < pmb_nr; i++) {
-+			struct moved_entry *p = pmb[i];
-+			struct moved_entry *pnext = (p && p->next_line) ?
-+					p->next_line : NULL;
-+			if (pnext && !hm->cmpfn(pnext, match, NULL, o)) {
-+				pmb[i] = p->next_line;
-+			} else {
-+				pmb[i] = NULL;
-+			}
-+		}
-+
-+		pmb_nr = shrink_potential_moved_blocks(pmb, pmb_nr);
-+
-+		if (pmb_nr == 0) {
-+			/*
-+			 * The current line is the start of a new block.
-+			 * Setup the set of potential blocks.
-+			 */
-+			for (; match; match = hashmap_get_next(hm, match)) {
-+				ALLOC_GROW(pmb, pmb_nr + 1, pmb_alloc);
-+				pmb[pmb_nr++] = match;
-+			}
-+
-+			flipped_block = (flipped_block + 1) % 2;
-+		}
-+
-+		if (flipped_block)
-+			l->flags |= DIFF_SYMBOL_MOVED_LINE_ALT;
++		/*
++		 * The boundary to prev and next are not interesting,
++		 * so this line is not interesting as a whole
++		 */
++		l->flags |= DIFF_SYMBOL_MOVED_LINE_UNINTERESTING;
 +	}
-+
-+	free(pmb);
 +}
- 
++
  static void emit_line_ws_markup(struct diff_options *o,
  				const char *set, const char *reset,
-@@ -720,14 +998,24 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 				const char *line, int len, char sign,
+@@ -1004,24 +1080,56 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
  				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
  		break;
  	case DIFF_SYMBOL_PLUS:
--		set = diff_get_color_opt(o, DIFF_FILE_NEW);
-+		if (flags & DIFF_SYMBOL_MOVED_LINE_ALT)
-+			set = diff_get_color_opt(o, DIFF_FILE_NEW_MOVED_ALT);
-+		else if (flags & DIFF_SYMBOL_MOVED_LINE)
-+			set = diff_get_color_opt(o, DIFF_FILE_NEW_MOVED);
-+		else
-+			set = diff_get_color_opt(o, DIFF_FILE_NEW);
+-		if (flags & DIFF_SYMBOL_MOVED_LINE_ALT)
++		switch (flags & (DIFF_SYMBOL_MOVED_LINE |
++				 DIFF_SYMBOL_MOVED_LINE_ALT |
++				 DIFF_SYMBOL_MOVED_LINE_UNINTERESTING)) {
++		case DIFF_SYMBOL_MOVED_LINE |
++		     DIFF_SYMBOL_MOVED_LINE_ALT |
++		     DIFF_SYMBOL_MOVED_LINE_UNINTERESTING:
++			set = diff_get_color_opt(o, DIFF_FILE_NEW_MOVED_ALT_DIM);
++			break;
++		case DIFF_SYMBOL_MOVED_LINE |
++		     DIFF_SYMBOL_MOVED_LINE_ALT:
+ 			set = diff_get_color_opt(o, DIFF_FILE_NEW_MOVED_ALT);
+-		else if (flags & DIFF_SYMBOL_MOVED_LINE)
++			break;
++		case DIFF_SYMBOL_MOVED_LINE |
++		     DIFF_SYMBOL_MOVED_LINE_UNINTERESTING:
++			set = diff_get_color_opt(o, DIFF_FILE_NEW_MOVED_DIM);
++			break;
++		case DIFF_SYMBOL_MOVED_LINE:
+ 			set = diff_get_color_opt(o, DIFF_FILE_NEW_MOVED);
+-		else
++			break;
++		default:
+ 			set = diff_get_color_opt(o, DIFF_FILE_NEW);
++		}
  		reset = diff_get_color_opt(o, DIFF_RESET);
  		emit_line_ws_markup(o, set, reset, line, len, '+',
  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
  				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
  		break;
  	case DIFF_SYMBOL_MINUS:
--		set = diff_get_color_opt(o, DIFF_FILE_OLD);
-+		if (flags & DIFF_SYMBOL_MOVED_LINE_ALT)
-+			set = diff_get_color_opt(o, DIFF_FILE_OLD_MOVED_ALT);
-+		else if (flags & DIFF_SYMBOL_MOVED_LINE)
-+			set = diff_get_color_opt(o, DIFF_FILE_OLD_MOVED);
-+		else
-+			set = diff_get_color_opt(o, DIFF_FILE_OLD);
+-		if (flags & DIFF_SYMBOL_MOVED_LINE_ALT)
++		switch (flags & (DIFF_SYMBOL_MOVED_LINE |
++				 DIFF_SYMBOL_MOVED_LINE_ALT |
++				 DIFF_SYMBOL_MOVED_LINE_UNINTERESTING)) {
++		case DIFF_SYMBOL_MOVED_LINE |
++		     DIFF_SYMBOL_MOVED_LINE_ALT |
++		     DIFF_SYMBOL_MOVED_LINE_UNINTERESTING:
++			set = diff_get_color_opt(o, DIFF_FILE_OLD_MOVED_ALT_DIM);
++			break;
++		case DIFF_SYMBOL_MOVED_LINE |
++		     DIFF_SYMBOL_MOVED_LINE_ALT:
+ 			set = diff_get_color_opt(o, DIFF_FILE_OLD_MOVED_ALT);
+-		else if (flags & DIFF_SYMBOL_MOVED_LINE)
++			break;
++		case DIFF_SYMBOL_MOVED_LINE |
++		     DIFF_SYMBOL_MOVED_LINE_UNINTERESTING:
++			set = diff_get_color_opt(o, DIFF_FILE_OLD_MOVED_DIM);
++			break;
++		case DIFF_SYMBOL_MOVED_LINE:
+ 			set = diff_get_color_opt(o, DIFF_FILE_OLD_MOVED);
+-		else
++			break;
++		default:
+ 			set = diff_get_color_opt(o, DIFF_FILE_OLD);
++		}
  		reset = diff_get_color_opt(o, DIFF_RESET);
  		emit_line_ws_markup(o, set, reset, line, len, '-',
  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
-@@ -3740,6 +4028,8 @@ void diff_setup(struct diff_options *options)
- 		options->a_prefix = "a/";
- 		options->b_prefix = "b/";
- 	}
-+
-+	options->color_moved = diff_color_moved_default;
- }
+@@ -5417,6 +5525,8 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
  
- void diff_setup_done(struct diff_options *options)
-@@ -3849,6 +4139,9 @@ void diff_setup_done(struct diff_options *options)
+ 			add_lines_to_move_detection(o, &add_lines, &del_lines);
+ 			mark_color_as_moved(o, &add_lines, &del_lines);
++			if (o->color_moved == COLOR_MOVED_ZEBRA_DIM)
++				dim_moved_lines(o);
  
- 	if (DIFF_OPT_TST(options, FOLLOW_RENAMES) && options->pathspec.nr != 1)
- 		die(_("--follow requires exactly one pathspec"));
-+
-+	if (!options->use_color || external_diff())
-+		options->color_moved = 0;
- }
- 
- static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *val)
-@@ -4273,7 +4566,19 @@ int diff_opt_parse(struct diff_options *options,
- 	}
- 	else if (!strcmp(arg, "--no-color"))
- 		options->use_color = 0;
--	else if (!strcmp(arg, "--color-words")) {
-+	else if (!strcmp(arg, "--color-moved")) {
-+		if (diff_color_moved_default)
-+			options->color_moved = diff_color_moved_default;
-+		if (options->color_moved == COLOR_MOVED_NO)
-+			options->color_moved = COLOR_MOVED_DEFAULT;
-+	} else if (!strcmp(arg, "--no-color-moved"))
-+		options->color_moved = COLOR_MOVED_NO;
-+	else if (skip_prefix(arg, "--color-moved=", &arg)) {
-+		int cm = parse_color_moved(arg);
-+		if (cm < 0)
-+			die("bad --color-moved argument: %s", arg);
-+		options->color_moved = cm;
-+	} else if (!strcmp(arg, "--color-words")) {
- 		options->use_color = 1;
- 		options->word_diff = DIFF_WORDS_COLOR;
- 	}
-@@ -5086,16 +5391,8 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- 	if (WSEH_NEW & WS_RULE_MASK)
- 		die("BUG: WS rules bit mask overlaps with diff symbol flags");
- 
--	/*
--	 * For testing purposes we want to make sure the diff machinery
--	 * works completely with the buffer. If there is anything emitted
--	 * outside the emit_string, then the order is screwed
--	 * up and the tests will fail.
--	 *
--	 * TODO (later in this series):
--	 * We'll unset this pointer in a later patch.
--	 */
--	o->emitted_symbols = &esm;
-+	if (o->color_moved)
-+		o->emitted_symbols = &esm;
- 
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
-@@ -5104,6 +5401,21 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- 	}
- 
- 	if (o->emitted_symbols) {
-+		if (o->color_moved) {
-+			struct hashmap add_lines, del_lines;
-+
-+			hashmap_init(&del_lines,
-+				     (hashmap_cmp_fn)moved_entry_cmp, o, 0);
-+			hashmap_init(&add_lines,
-+				     (hashmap_cmp_fn)moved_entry_cmp, o, 0);
-+
-+			add_lines_to_move_detection(o, &add_lines, &del_lines);
-+			mark_color_as_moved(o, &add_lines, &del_lines);
-+
-+			hashmap_free(&add_lines, 0);
-+			hashmap_free(&del_lines, 0);
-+		}
-+
- 		for (i = 0; i < esm.nr; i++)
- 			emit_diff_symbol_from_struct(o, &esm.buf[i]);
- 
-@@ -5185,6 +5497,7 @@ void diff_flush(struct diff_options *options)
- 			fclose(options->file);
- 		options->file = xfopen("/dev/null", "w");
- 		options->close_file = 1;
-+		options->color_moved = 0;
- 		for (i = 0; i < q->nr; i++) {
- 			struct diff_filepair *p = q->queue[i];
- 			if (check_pair_status(p))
+ 			hashmap_free(&add_lines, 0);
+ 			hashmap_free(&del_lines, 0);
 diff --git a/diff.h b/diff.h
-index 4a3b9bde40..3196802673 100644
+index 4cfd609c54..5755f465de 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -188,6 +188,12 @@ struct diff_options {
- 	int diff_path_counter;
- 
- 	struct emitted_diff_symbols *emitted_symbols;
-+	enum {
-+		COLOR_MOVED_NO = 0,
-+		COLOR_MOVED_ZEBRA = 2,
-+	} color_moved;
-+	#define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
-+	#define COLOR_MOVED_MIN_BLOCK_LENGTH 3
- };
- 
- void diff_emit_submodule_del(struct diff_options *o, const char *line);
-@@ -208,7 +214,11 @@ enum color_diff {
- 	DIFF_FILE_NEW = 5,
- 	DIFF_COMMIT = 6,
- 	DIFF_WHITESPACE = 7,
--	DIFF_FUNCINFO = 8
-+	DIFF_FUNCINFO = 8,
-+	DIFF_FILE_OLD_MOVED = 9,
-+	DIFF_FILE_OLD_MOVED_ALT = 10,
-+	DIFF_FILE_NEW_MOVED = 11,
-+	DIFF_FILE_NEW_MOVED_ALT = 12
+@@ -192,6 +192,7 @@ struct diff_options {
+ 		COLOR_MOVED_NO = 0,
+ 		COLOR_MOVED_PLAIN = 1,
+ 		COLOR_MOVED_ZEBRA = 2,
++		COLOR_MOVED_ZEBRA_DIM = 3,
+ 	} color_moved;
+ 	#define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
+ 	#define COLOR_MOVED_MIN_BLOCK_LENGTH 3
+@@ -218,8 +219,12 @@ enum color_diff {
+ 	DIFF_FUNCINFO = 8,
+ 	DIFF_FILE_OLD_MOVED = 9,
+ 	DIFF_FILE_OLD_MOVED_ALT = 10,
+-	DIFF_FILE_NEW_MOVED = 11,
+-	DIFF_FILE_NEW_MOVED_ALT = 12
++	DIFF_FILE_OLD_MOVED_DIM = 11,
++	DIFF_FILE_OLD_MOVED_ALT_DIM = 12,
++	DIFF_FILE_NEW_MOVED = 13,
++	DIFF_FILE_NEW_MOVED_ALT = 14,
++	DIFF_FILE_NEW_MOVED_DIM = 15,
++	DIFF_FILE_NEW_MOVED_ALT_DIM = 16
  };
  const char *diff_get_color(int diff_use_color, enum color_diff ix);
  #define diff_get_color_opt(o, ix) \
 diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 289806d0c7..29704ae14e 100755
+index d1d7b99990..c3b697411a 100755
 --- a/t/t4015-diff-whitespace.sh
 +++ b/t/t4015-diff-whitespace.sh
-@@ -972,4 +972,265 @@ test_expect_success 'option overrides diff.wsErrorHighlight' '
- 
+@@ -1179,6 +1179,130 @@ test_expect_success 'plain moved code, inside file' '
+ 	test_cmp expected actual
  '
  
-+test_expect_success 'detect moved code, complete file' '
++test_expect_success 'detect permutations inside moved code -- dimmed_zebra' '
 +	git reset --hard &&
-+	cat <<-\EOF >test.c &&
-+	#include<stdio.h>
-+	main()
-+	{
-+	printf("Hello World");
-+	}
++	cat <<-\EOF >lines.txt &&
++		line 1
++		line 2
++		line 3
++		line 4
++		line 5
++		line 6
++		line 7
++		line 8
++		line 9
++		line 10
++		line 11
++		line 12
++		line 13
++		line 14
++		line 15
++		line 16
 +	EOF
-+	git add test.c &&
-+	git commit -m "add main function" &&
-+	git mv test.c main.c &&
-+	test_config color.diff.oldMoved "normal red" &&
-+	test_config color.diff.newMoved "normal green" &&
-+	git diff HEAD --color-moved --no-renames | test_decode_color >actual &&
-+	cat >expected <<-\EOF &&
-+	<BOLD>diff --git a/main.c b/main.c<RESET>
-+	<BOLD>new file mode 100644<RESET>
-+	<BOLD>index 0000000..a986c57<RESET>
-+	<BOLD>--- /dev/null<RESET>
-+	<BOLD>+++ b/main.c<RESET>
-+	<CYAN>@@ -0,0 +1,5 @@<RESET>
-+	<BGREEN>+<RESET><BGREEN>#include<stdio.h><RESET>
-+	<BGREEN>+<RESET><BGREEN>main()<RESET>
-+	<BGREEN>+<RESET><BGREEN>{<RESET>
-+	<BGREEN>+<RESET><BGREEN>printf("Hello World");<RESET>
-+	<BGREEN>+<RESET><BGREEN>}<RESET>
-+	<BOLD>diff --git a/test.c b/test.c<RESET>
-+	<BOLD>deleted file mode 100644<RESET>
-+	<BOLD>index a986c57..0000000<RESET>
-+	<BOLD>--- a/test.c<RESET>
-+	<BOLD>+++ /dev/null<RESET>
-+	<CYAN>@@ -1,5 +0,0 @@<RESET>
-+	<BRED>-#include<stdio.h><RESET>
-+	<BRED>-main()<RESET>
-+	<BRED>-{<RESET>
-+	<BRED>-printf("Hello World");<RESET>
-+	<BRED>-}<RESET>
-+	EOF
-+
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'detect malicious moved code, inside file' '
-+	test_config color.diff.oldMoved "normal red" &&
-+	test_config color.diff.newMoved "normal green" &&
-+	test_config color.diff.oldMovedAlternative "blue" &&
-+	test_config color.diff.newMovedAlternative "yellow" &&
-+	git reset --hard &&
-+	cat <<-\EOF >main.c &&
-+		#include<stdio.h>
-+		int stuff()
-+		{
-+			printf("Hello ");
-+			printf("World\n");
-+		}
-+
-+		int secure_foo(struct user *u)
-+		{
-+			if (!u->is_allowed_foo)
-+				return;
-+			foo(u);
-+		}
-+
-+		int main()
-+		{
-+			foo();
-+		}
-+	EOF
-+	cat <<-\EOF >test.c &&
-+		#include<stdio.h>
-+		int bar()
-+		{
-+			printf("Hello World, but different\n");
-+		}
-+
-+		int another_function()
-+		{
-+			bar();
-+		}
-+	EOF
-+	git add main.c test.c &&
-+	git commit -m "add main and test file" &&
-+	cat <<-\EOF >main.c &&
-+		#include<stdio.h>
-+		int stuff()
-+		{
-+			printf("Hello ");
-+			printf("World\n");
-+		}
-+
-+		int main()
-+		{
-+			foo();
-+		}
-+	EOF
-+	cat <<-\EOF >test.c &&
-+		#include<stdio.h>
-+		int bar()
-+		{
-+			printf("Hello World, but different\n");
-+		}
-+
-+		int secure_foo(struct user *u)
-+		{
-+			foo(u);
-+			if (!u->is_allowed_foo)
-+				return;
-+		}
-+
-+		int another_function()
-+		{
-+			bar();
-+		}
-+	EOF
-+	git diff HEAD --no-renames --color-moved=zebra| test_decode_color >actual &&
-+	cat <<-\EOF >expected &&
-+	<BOLD>diff --git a/main.c b/main.c<RESET>
-+	<BOLD>index 27a619c..7cf9336 100644<RESET>
-+	<BOLD>--- a/main.c<RESET>
-+	<BOLD>+++ b/main.c<RESET>
-+	<CYAN>@@ -5,13 +5,6 @@<RESET> <RESET>printf("Hello ");<RESET>
-+	 printf("World\n");<RESET>
-+	 }<RESET>
-+	 <RESET>
-+	<BRED>-int secure_foo(struct user *u)<RESET>
-+	<BRED>-{<RESET>
-+	<BLUE>-if (!u->is_allowed_foo)<RESET>
-+	<BLUE>-return;<RESET>
-+	<BRED>-foo(u);<RESET>
-+	<BLUE>-}<RESET>
-+	<BLUE>-<RESET>
-+	 int main()<RESET>
-+	 {<RESET>
-+	 foo();<RESET>
-+	<BOLD>diff --git a/test.c b/test.c<RESET>
-+	<BOLD>index 1dc1d85..2bedec9 100644<RESET>
-+	<BOLD>--- a/test.c<RESET>
-+	<BOLD>+++ b/test.c<RESET>
-+	<CYAN>@@ -4,6 +4,13 @@<RESET> <RESET>int bar()<RESET>
-+	 printf("Hello World, but different\n");<RESET>
-+	 }<RESET>
-+	 <RESET>
-+	<BGREEN>+<RESET><BGREEN>int secure_foo(struct user *u)<RESET>
-+	<BGREEN>+<RESET><BGREEN>{<RESET>
-+	<YELLOW>+<RESET><YELLOW>foo(u);<RESET>
-+	<BGREEN>+<RESET><BGREEN>if (!u->is_allowed_foo)<RESET>
-+	<BGREEN>+<RESET><BGREEN>return;<RESET>
-+	<YELLOW>+<RESET><YELLOW>}<RESET>
-+	<YELLOW>+<RESET>
-+	 int another_function()<RESET>
-+	 {<RESET>
-+	 bar();<RESET>
-+	EOF
-+
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'no effect from --color-moved with --word-diff' '
-+	cat <<-\EOF >text.txt &&
-+	Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-+	EOF
-+	git add text.txt &&
-+	git commit -a -m "clean state" &&
-+	cat <<-\EOF >text.txt &&
-+	simply Lorem Ipsum dummy is text of the typesetting and printing industry.
-+	EOF
-+	git diff --color-moved --word-diff >actual &&
-+	git diff --word-diff >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'move detection ignoring whitespace ' '
-+	git reset --hard &&
-+	cat <<\EOF >lines.txt &&
-+line 1
-+line 2
-+line 3
-+line 4
-+line 5
-+line 6
-+line 7
-+EOF
 +	git add lines.txt &&
 +	git commit -m "add poetry" &&
-+	cat <<\EOF >lines.txt &&
-+	line 5
-+	line 6
-+	line 7
-+line 1
-+line 2
-+line 3
-+line 4
-+EOF
++	cat <<-\EOF >lines.txt &&
++		line 4
++		line 5
++		line 6
++		line 7
++		line 8
++		line 9
++		line 1
++		line 2
++		line 3
++		line 14
++		line 15
++		line 16
++		line 10
++		line 11
++		line 12
++		line 13
++	EOF
 +	test_config color.diff.oldMoved "magenta" &&
 +	test_config color.diff.newMoved "cyan" &&
++	test_config color.diff.oldMovedAlternative "blue" &&
++	test_config color.diff.newMovedAlternative "yellow" &&
++	test_config color.diff.oldMovedDimmed "normal magenta" &&
++	test_config color.diff.newMovedDimmed "normal cyan" &&
++	test_config color.diff.oldMovedAlternativeDimmed "normal blue" &&
++	test_config color.diff.newMovedAlternativeDimmed "normal yellow" &&
++	git diff HEAD --no-renames --color-moved=dimmed_zebra| test_decode_color >actual &&
++	cat <<-\EOF >expected &&
++	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
++	<BOLD>index 47ea9c3..ba96a38 100644<RESET>
++	<BOLD>--- a/lines.txt<RESET>
++	<BOLD>+++ b/lines.txt<RESET>
++	<CYAN>@@ -1,16 +1,16 @@<RESET>
++	<BMAGENTA>-line 1<RESET>
++	<BMAGENTA>-line 2<RESET>
++	<BMAGENTA>-line 3<RESET>
++	 line 4<RESET>
++	 line 5<RESET>
++	 line 6<RESET>
++	 line 7<RESET>
++	 line 8<RESET>
++	 line 9<RESET>
++	<BCYAN>+<RESET><BCYAN>line 1<RESET>
++	<BCYAN>+<RESET><BCYAN>line 2<RESET>
++	<CYAN>+<RESET><CYAN>line 3<RESET>
++	<YELLOW>+<RESET><YELLOW>line 14<RESET>
++	<BYELLOW>+<RESET><BYELLOW>line 15<RESET>
++	<BYELLOW>+<RESET><BYELLOW>line 16<RESET>
++	 line 10<RESET>
++	 line 11<RESET>
++	 line 12<RESET>
++	 line 13<RESET>
++	<BMAGENTA>-line 14<RESET>
++	<BMAGENTA>-line 15<RESET>
++	<BMAGENTA>-line 16<RESET>
++	EOF
++	test_cmp expected actual
++'
++
++test_expect_success 'cmd option assumes configured colored-moved' '
++	test_config color.diff.oldMoved "magenta" &&
++	test_config color.diff.newMoved "cyan" &&
++	test_config color.diff.oldMovedAlternative "blue" &&
++	test_config color.diff.newMovedAlternative "yellow" &&
++	test_config color.diff.oldMovedDimmed "normal magenta" &&
++	test_config color.diff.newMovedDimmed "normal cyan" &&
++	test_config color.diff.oldMovedAlternativeDimmed "normal blue" &&
++	test_config color.diff.newMovedAlternativeDimmed "normal yellow" &&
++	test_config diff.colorMoved zebra &&
 +	git diff HEAD --no-renames --color-moved| test_decode_color >actual &&
 +	cat <<-\EOF >expected &&
 +	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
-+	<BOLD>index 734156d..eb89ead 100644<RESET>
++	<BOLD>index 47ea9c3..ba96a38 100644<RESET>
 +	<BOLD>--- a/lines.txt<RESET>
 +	<BOLD>+++ b/lines.txt<RESET>
-+	<CYAN>@@ -1,7 +1,7 @@<RESET>
-+	<GREEN>+<RESET>	<GREEN>line 5<RESET>
-+	<GREEN>+<RESET>	<GREEN>line 6<RESET>
-+	<GREEN>+<RESET>	<GREEN>line 7<RESET>
-+	 line 1<RESET>
-+	 line 2<RESET>
-+	 line 3<RESET>
++	<CYAN>@@ -1,16 +1,16 @@<RESET>
++	<MAGENTA>-line 1<RESET>
++	<MAGENTA>-line 2<RESET>
++	<MAGENTA>-line 3<RESET>
 +	 line 4<RESET>
-+	<RED>-line 5<RESET>
-+	<RED>-line 6<RESET>
-+	<RED>-line 7<RESET>
-+	EOF
-+	test_cmp expected actual &&
-+
-+	git diff HEAD --no-renames -w --color-moved| test_decode_color >actual &&
-+	cat <<-\EOF >expected &&
-+	<BOLD>diff --git a/lines.txt b/lines.txt<RESET>
-+	<BOLD>index 734156d..eb89ead 100644<RESET>
-+	<BOLD>--- a/lines.txt<RESET>
-+	<BOLD>+++ b/lines.txt<RESET>
-+	<CYAN>@@ -1,7 +1,7 @@<RESET>
-+	<CYAN>+<RESET>	<CYAN>line 5<RESET>
-+	<CYAN>+<RESET>	<CYAN>line 6<RESET>
-+	<CYAN>+<RESET>	<CYAN>line 7<RESET>
-+	 line 1<RESET>
-+	 line 2<RESET>
-+	 line 3<RESET>
-+	 line 4<RESET>
-+	<MAGENTA>-line 5<RESET>
-+	<MAGENTA>-line 6<RESET>
-+	<MAGENTA>-line 7<RESET>
++	 line 5<RESET>
++	 line 6<RESET>
++	 line 7<RESET>
++	 line 8<RESET>
++	 line 9<RESET>
++	<CYAN>+<RESET><CYAN>line 1<RESET>
++	<CYAN>+<RESET><CYAN>line 2<RESET>
++	<CYAN>+<RESET><CYAN>line 3<RESET>
++	<YELLOW>+<RESET><YELLOW>line 14<RESET>
++	<YELLOW>+<RESET><YELLOW>line 15<RESET>
++	<YELLOW>+<RESET><YELLOW>line 16<RESET>
++	 line 10<RESET>
++	 line 11<RESET>
++	 line 12<RESET>
++	 line 13<RESET>
++	<MAGENTA>-line 14<RESET>
++	<MAGENTA>-line 15<RESET>
++	<MAGENTA>-line 16<RESET>
 +	EOF
 +	test_cmp expected actual
 +'
 +
-+test_expect_success 'move detection with submodules' '
-+	test_create_repo bananas &&
-+	echo ripe >bananas/recipe &&
-+	git -C bananas add recipe &&
-+	test_commit fruit &&
-+	test_commit -C bananas recipe &&
-+	git submodule add ./bananas &&
-+	git add bananas &&
-+	git commit -a -m "bananas are like a heavy library?" &&
-+	echo foul >bananas/recipe &&
-+	echo ripe >fruit.t &&
-+
-+	git diff --submodule=diff --color-moved >actual &&
-+
-+	# no move detection as the moved line is across repository boundaries.
-+	test_decode_color <actual >decoded_actual &&
-+	! grep BGREEN decoded_actual &&
-+	! grep BRED decoded_actual &&
-+
-+	# nor did we mess with it another way
-+	git diff --submodule=diff | test_decode_color >expect &&
-+	test_cmp expect decoded_actual
-+'
-+
- test_done
+ test_expect_success 'no effect from --color-moved with --word-diff' '
+ 	cat <<-\EOF >text.txt &&
+ 	Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 -- 
 2.13.0.31.g9b732c453e
 
