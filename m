@@ -2,267 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB9CF202AB
-	for <e@80x24.org>; Fri, 30 Jun 2017 09:42:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F23220209
+	for <e@80x24.org>; Fri, 30 Jun 2017 09:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751743AbdF3Jl6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 05:41:58 -0400
-Received: from mail-qt0-f180.google.com ([209.85.216.180]:34531 "EHLO
-        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751545AbdF3Jl5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 05:41:57 -0400
-Received: by mail-qt0-f180.google.com with SMTP id 32so94466063qtv.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 02:41:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=ljFXtQ2oUIhsaW4NwQ93Uu2V600tna9ZxfXT+vb4/Kc=;
-        b=TeFxDm8sAZnru6DZ1cpaRQFLcc3iCtMqw6slmn7ISVlz7x9gBeNDWn/PPf70tIMDql
-         x+xOxCYzrampUuvn9mwm2lp7pKDS6B5j+IUaVJlgIIkZCYjQAGuMcUK+p2otHwH6H6DN
-         EpAJ1ZwWWOCZ50DAiis8sk8xdaH/+7uQVWHf5Nl4Vc3Jwejlr05NdAlVdR1zpbMHOZ84
-         lZ7wTsI4apJHmaW759G4PCBfeFoHlTAy8t3rAfr4FaBjr7TYRlJMCqj3ZoOHNZI12j9M
-         o0kZgvy1pfYaTPSxrpStjf0s7igK65Dy63oYEA7hGbsX9hOR2+Suhi9uMS2ML+tmVubV
-         c7ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=ljFXtQ2oUIhsaW4NwQ93Uu2V600tna9ZxfXT+vb4/Kc=;
-        b=sT/QxZJM5aGOMw3coLabAV/gr6Izp853MhjXcptTrjw8RpWCu7hTpzrVhqBO7PKWSw
-         ZfDN7mYLhUhi35qT4JS6sIEINRgNMWFNaix+gwwwE1bu8O2TGeenPoT9lMe8py5UieAk
-         i8r7oDtn3fko5iz7NVOJUDyfdXflZM2n8Pjo7tGwXOAf34qpVisv4tCvH4L17EGNkQHP
-         ioHIRNg9B1X01RNvzxOWNLKt+9eKJ7Hbltz8EtQ41uxx1fnv3SoNf4zvbRCGr4yvKStA
-         ILUb2KZbbtVO8G+mX2IfrTkrAsZ+eJm7V+P4tsvIz9kus8ppyGBBTeGFQEjKYgWwQOpl
-         kcZg==
-X-Gm-Message-State: AKS2vOxod02lAlf6kcDm0PJlPpnGM0gg0pfVXl5PPUJ1oq3z3SNLNlXq
-        mHCwlS1+uUtOUi0L/eKQR/CAgsyDfuZu
-X-Received: by 10.200.45.182 with SMTP id p51mr24682005qta.208.1498815716621;
- Fri, 30 Jun 2017 02:41:56 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.237.63.198 with HTTP; Fri, 30 Jun 2017 02:41:55 -0700 (PDT)
-In-Reply-To: <41BF267D-5F4D-4031-B9D4-15DB263D35D9@gmail.com>
-References: <CAE5ih7-x45MD1H6Ahr5oCVtTjgbBkeP4GbKCGB-Cwk6BSQwTcw@mail.gmail.com>
- <20170629224659.25677-1-miguel.torroja@gmail.com> <41BF267D-5F4D-4031-B9D4-15DB263D35D9@gmail.com>
-From:   Miguel Torroja <miguel.torroja@gmail.com>
-Date:   Fri, 30 Jun 2017 11:41:55 +0200
-X-Google-Sender-Auth: hGwOQThUSsmNcAH9AxJBqYRlS4g
-Message-ID: <CAKYtbVbOXZiZrsFGOKu=sFroSL-FBQo2wMaA9GmJvc-Uh7QZEA@mail.gmail.com>
-Subject: Re: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1751716AbdF3Jtl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 05:49:41 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:17148 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751605AbdF3Jtj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 05:49:39 -0400
+Received: from lindisfarne.localdomain ([92.22.42.39])
+        by smtp.talktalk.net with SMTP
+        id QsYKdOu0hQ527QsYTdIMsg; Fri, 30 Jun 2017 10:49:38 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1498816178; bh=H2ipcyuoYeqjqzrmO9WI58XO99TLXOHPosAsVHm22Nk=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=XCgunZV6zWSJPvMkecN3pCLyW7bsAjxVv8ccMYp3Sjo6WwAt1vSA8Av3IvYyNv14k
+         cNtUCbQ2+P+DZX1DI0Q8UJd0Mh6vH3zouirnf6LDIbbKUm/5N8hokFJCHWtJKCzvM6
+         O/25JKA0/ZofJaUr/8CbVkcvvg78ag2XtGRs/H6g=
+X-Originating-IP: [92.22.42.39]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=MI8io4Rl c=1 sm=1 tr=0 a=0UCMmuyk8Ln1ykD6Z38Clg==:117
+ a=0UCMmuyk8Ln1ykD6Z38Clg==:17 a=evINK-nbAAAA:8 a=j65Dv8dDcRgtQwonnycA:9
+ a=fL2gd8kDSUsi13WG:21 a=5jaYik_Jwr-OXVr9:21 a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 1/4] add -i move unquote_path() to Git.pm
+Date:   Fri, 30 Jun 2017 10:49:09 +0100
+Message-Id: <20170630094912.8653-2-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.13.1
+In-Reply-To: <20170630094912.8653-1-phillip.wood@talktalk.net>
+References: <20170622102622.26147-1-phillip.wood@talktalk.net>
+ <20170630094912.8653-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfLhEq/Bb6X6SAINUTOJUpshm65L+1VYks6ohScTEfKR8Y8Di4PJZ/5JLC5HV9q2OI+JI4IvZisy4t2qp3CLSdT9VfZ6m9bRRZlRxEbVMRRvvr8Bh/ulj
+ ZTF2oRcQW9faWzYVyxdTv+MYTMQrpsQhs06K5K5fbcHTeMdrnQU6ujp+qjxqPDJAo/iFt0vCpkvGcp+CRBNZkKKoDTv7DwEriTDFhg14eFtQVjLE+ZfLUFhV
+ TGCM0DiINysm8DIg9VDdoVLa5Uu8XrR2y5+N6NONgSE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 30, 2017 at 10:26 AM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
->
->> On 30 Jun 2017, at 00:46, miguel torroja <miguel.torroja@gmail.com> wrote:
->>
->> The option -G of p4 (python marshal output) gives more context about the
->> data being output. That's useful when using the command "change -o" as
->> we can distinguish between warning/error line and real change description.
->>
->> Some p4 triggers in the server side generate some warnings when
->> executed. Unfortunately those messages are mixed with the output of
->> "p4 change -o". Those extra warning lines are reported as {'code':'info'}
->> in python marshal output (-G). The real change output is reported as
->> {'code':'stat'}
->>
->> A new test has been created to t9807-git-p4-submit.sh adding a p4 trigger
->> that outputs extra lines with "p4 change -o" and "p4 changes"
->>
->> Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->> git-p4.py                | 85 ++++++++++++++++++++++++++++++++----------------
->> t/t9807-git-p4-submit.sh | 27 +++++++++++++++
->> 2 files changed, 84 insertions(+), 28 deletions(-)
->>
->> diff --git a/git-p4.py b/git-p4.py
->> index 8d151da91..61dc045f3 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -879,8 +879,12 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
->>             cmd += ["%s...@%s" % (p, revisionRange)]
->>
->>         # Insert changes in chronological order
->> -        for line in reversed(p4_read_pipe_lines(cmd)):
->> -            changes.add(int(line.split(" ")[1]))
->> +        for entry in reversed(p4CmdList(cmd)):
->> +            if entry.has_key('p4ExitCode'):
->> +                die('Error retrieving changes descriptions ({})'.format(entry['p4ExitCode']))
->> +            if not entry.has_key('change'):
->> +                continue
->> +            changes.add(int(entry['change']))
->>
->>         if not block_size:
->>             break
->> @@ -1526,37 +1530,62 @@ class P4Submit(Command, P4UserMap):
->>
->>         [upstream, settings] = findUpstreamBranchPoint()
->>
->> -        template = ""
->> +        template = """\
->> +# A Perforce Change Specification.
->> +#
->> +#  Change:      The change number. 'new' on a new changelist.
->> +#  Date:        The date this specification was last modified.
->> +#  Client:      The client on which the changelist was created.  Read-only.
->> +#  User:        The user who created the changelist.
->> +#  Status:      Either 'pending' or 'submitted'. Read-only.
->> +#  Type:        Either 'public' or 'restricted'. Default is 'public'.
->> +#  Description: Comments about the changelist.  Required.
->> +#  Jobs:        What opened jobs are to be closed by this changelist.
->> +#               You may delete jobs from this list.  (New changelists only.)
->> +#  Files:       What opened files from the default changelist are to be added
->> +#               to this changelist.  You may delete files from this list.
->> +#               (New changelists only.)
->> +"""
->> +        files_list = []
->>         inFilesSection = False
->> +        change_entry = None
->>         args = ['change', '-o']
->>         if changelist:
->>             args.append(str(changelist))
->> -
->> -        for line in p4_read_pipe_lines(args):
->> -            if line.endswith("\r\n"):
->> -                line = line[:-2] + "\n"
->> -            if inFilesSection:
->> -                if line.startswith("\t"):
->> -                    # path starts and ends with a tab
->> -                    path = line[1:]
->> -                    lastTab = path.rfind("\t")
->> -                    if lastTab != -1:
->> -                        path = path[:lastTab]
->> -                        if settings.has_key('depot-paths'):
->> -                            if not [p for p in settings['depot-paths']
->> -                                    if p4PathStartsWith(path, p)]:
->> -                                continue
->> -                        else:
->> -                            if not p4PathStartsWith(path, self.depotPath):
->> -                                continue
->> +        for entry in p4CmdList(args):
->> +            if not entry.has_key('code'):
->> +                continue
->> +            if entry['code'] == 'stat':
->> +                change_entry = entry
->> +                break
->> +        if not change_entry:
->> +            die('Failed to decode output of p4 change -o')
->> +        for key, value in change_entry.iteritems():
->> +            if key.startswith('File'):
->> +                if settings.has_key('depot-paths'):
->> +                    if not [p for p in settings['depot-paths']
->> +                            if p4PathStartsWith(value, p)]:
->> +                        continue
->>                 else:
->> -                    inFilesSection = False
->> -            else:
->> -                if line.startswith("Files:"):
->> -                    inFilesSection = True
->> -
->> -            template += line
->> -
->> +                    if not p4PathStartsWith(value, self.depotPath):
->> +                        continue
->> +                files_list.append(value)
->> +                continue
->> +        # Output in the order expected by prepareLogMessage
->> +        for key in ['Change','Client','User','Status','Description','Jobs']:
->> +            if not change_entry.has_key(key):
->> +                continue
->> +            template += '\n'
->> +            template += key + ':'
->> +            if key == 'Description':
->> +                template += '\n'
->> +            for field_line in change_entry[key].splitlines():
->> +                template += '\t'+field_line+'\n'
->> +        if len(files_list) > 0:
->> +            template += '\n'
->> +            template += 'Files:\n'
->> +        for path in files_list:
->> +            template += '\t'+path+'\n'
->>         return template
->>
->>     def edit_template(self, template_file):
->> diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
->> index 3457d5db6..4962b6862 100755
->> --- a/t/t9807-git-p4-submit.sh
->> +++ b/t/t9807-git-p4-submit.sh
->> @@ -409,6 +409,33 @@ test_expect_success 'description with Jobs section and bogus following text' '
->>       )
->> '
->>
->
-> I have never worked with p4 triggers and that might be
-> the reason why I don't understand your test case.
-> Maybe you can help me?
->
->> +test_expect_success 'description with extra lines from verbose p4 trigger' '
->> +     test_when_finished cleanup_git &&
->> +     git p4 clone --dest="$git" //depot &&
->> +     (
->> +             p4 triggers -i <<-EOF
->> +             Triggers: p4triggertest-command command pre-user-change "echo verbose trigger"
->> +             EOF
->> +     ) &&
->
-> You clone the test repo and install a trigger.
->
->> +     (
->> +             cd "$git" &&
->> +             git config git-p4.skipSubmitEdit true &&
->> +             echo file20 >file20 &&
->> +             git add file20 &&
->> +             git commit -m file20 &&
->> +             git p4 submit
->> +     ) &&
->
-> You make a new commit. This should run the "echo verbose trigger", right?
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Yes, that's correct. In this case the trigger is run with p4 change
-and p4 changes
+Move unquote_path() from git-add--interactive to Git.pm so it can be
+used by other scripts. Note this is a straight copy, it does not
+handle '\a'. That will be fixed in the next commit.
 
->
->> +     (
->> +             p4 triggers -i <<-EOF
->> +             Triggers:
->> +             EOF
->> +     ) &&
->
-> You delete the trigger.
->
->> +     (
->> +             cd "$cli" &&
->> +             test_path_is_file file20
->> +     )
->
-> You check that the file20 is available in P4.
->
->
-> What would happen if I run this test case without your patch?
-> Wouldn't it pass just fine?
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ git-add--interactive.perl | 43 +-------------------------------------
+ perl/Git.pm               | 53 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 53 insertions(+), 43 deletions(-)
 
-If you run it without the patch for git-p4.py, the test doesn't pass
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 709a5f6ce6fbdb2da14084e94ae9df1db1c3d0a6..7ea3591edc056d4405b1f18800ffd2d0b351f93c 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -3,7 +3,7 @@
+ use 5.008;
+ use strict;
+ use warnings;
+-use Git;
++use Git qw(unquote_path);
+ use Git::I18N;
+ 
+ binmode(STDOUT, ":raw");
+@@ -175,47 +175,6 @@ if (!defined $GIT_DIR) {
+ }
+ chomp($GIT_DIR);
+ 
+-my %cquote_map = (
+- "b" => chr(8),
+- "t" => chr(9),
+- "n" => chr(10),
+- "v" => chr(11),
+- "f" => chr(12),
+- "r" => chr(13),
+- "\\" => "\\",
+- "\042" => "\042",
+-);
+-
+-sub unquote_path {
+-	local ($_) = @_;
+-	my ($retval, $remainder);
+-	if (!/^\042(.*)\042$/) {
+-		return $_;
+-	}
+-	($_, $retval) = ($1, "");
+-	while (/^([^\\]*)\\(.*)$/) {
+-		$remainder = $2;
+-		$retval .= $1;
+-		for ($remainder) {
+-			if (/^([0-3][0-7][0-7])(.*)$/) {
+-				$retval .= chr(oct($1));
+-				$_ = $2;
+-				last;
+-			}
+-			if (/^([\\\042btnvfr])(.*)$/) {
+-				$retval .= $cquote_map{$1};
+-				$_ = $2;
+-				last;
+-			}
+-			# This is malformed -- just return it as-is for now.
+-			return $_[0];
+-		}
+-		$_ = $remainder;
+-	}
+-	$retval .= $_;
+-	return $retval;
+-}
+-
+ sub refresh {
+ 	my $fh;
+ 	open $fh, 'git update-index --refresh |'
+diff --git a/perl/Git.pm b/perl/Git.pm
+index bfce1f795dfa5fea05f4f96637a1ae2333038735..35188842ef82c67f83f6d72fd37e38edb895328b 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -61,7 +61,8 @@ require Exporter;
+                 remote_refs prompt
+                 get_tz_offset get_record
+                 credential credential_read credential_write
+-                temp_acquire temp_is_locked temp_release temp_reset temp_path);
++                temp_acquire temp_is_locked temp_release temp_reset temp_path
++                unquote_path);
+ 
+ 
+ =head1 DESCRIPTION
+@@ -1451,6 +1452,56 @@ sub prefix_lines {
+ 	return $string;
+ }
+ 
++=item unquote_path ( PATH )
++
++Unquote a quoted path containing c-escapes as returned by ls-files etc.
++when not using -z or when parsing the output of diff -u.
++
++=cut
++
++{
++	my %cquote_map = (
++		"b" => chr(8),
++		"t" => chr(9),
++		"n" => chr(10),
++		"v" => chr(11),
++		"f" => chr(12),
++		"r" => chr(13),
++		"\\" => "\\",
++		"\"" => "\042"
++	);
++
++	sub unquote_path {
++		local ($_) = @_;
++		my ($retval, $remainder);
++		if (!/^\042(.*)\042$/) {
++			return $_;
++		}
++		($_, $retval) = ($1, "");
++		while (/^([^\\]*)\\(.*)$/) {
++			$remainder = $2;
++			$retval .= $1;
++			for ($remainder) {
++				if (/^([0-3][0-7][0-7])(.*)$/) {
++					$retval .= chr(oct($1));
++					$_ = $2;
++					last;
++				}
++				if (/^([\\\042btnvfr])(.*)$/) {
++					$retval .= $cquote_map{$1};
++					$_ = $2;
++					last;
++				}
++				# This is malformed -- just return it as-is for now.
++				return $_[0];
++			}
++			$_ = $remainder;
++		}
++		$retval .= $_;
++		return $retval;
++	}
++}
++
+ =item get_comment_line_char ( )
+ 
+ Gets the core.commentchar configuration value.
+-- 
+2.13.1
 
-> Wouldn't we need to check that no warning/error is in the
-> real change description?
->
-
-that can also be added, something like this: 'p4 change -o | grep
-"verbose trigger"' after setting the trigger?
-
-> Thanks,
-> Lars
