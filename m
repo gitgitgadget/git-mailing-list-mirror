@@ -2,59 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5587320209
-	for <e@80x24.org>; Fri, 30 Jun 2017 07:12:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FEBC20209
+	for <e@80x24.org>; Fri, 30 Jun 2017 07:26:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751651AbdF3HMW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 03:12:22 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:41572 "EHLO
-        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751565AbdF3HMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 03:12:21 -0400
-Received: from tigra (unknown [192.168.2.102])
-        by hermes.domain007.com (Postfix) with ESMTP id B3362D400C6;
-        Fri, 30 Jun 2017 10:12:19 +0300 (MSK)
-Date:   Fri, 30 Jun 2017 10:12:19 +0300
-From:   Konstantin Khomoutov <kostix+git@007spb.ru>
-To:     =?utf-8?B?0KHQtdGA0LPQtdC5INCo0LXRgdGC0LDQutC+0LI=?= 
-        <s_shestakov@playrix.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Bug with automated processing of git status results
-Message-ID: <20170630071219.m757vvyccrp3afli@tigra>
-References: <CAM1TZMGXiDpzt3uhpDaE41KR8GWyjMq=+Mcvz5Zrj0EffNrGrw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        id S1751841AbdF3H0N (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 03:26:13 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:41951 "EHLO
+        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751818AbdF3H0N (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 03:26:13 -0400
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Fri, 30 Jun 2017 09:26:12 +0200
+  id 000000000000002C.000000005955FD14.00006FE6
+Date:   Fri, 30 Jun 2017 09:26:11 +0200
+From:   Simon Ruderich <simon@ruderich.org>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH 25/25] diff: document the new --color-moved setting
+Message-ID: <20170630072611.q733inuxdvjmhjgw@ruderich.org>
+References: <20170630000710.10601-1-sbeller@google.com>
+ <20170630000710.10601-26-sbeller@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM1TZMGXiDpzt3uhpDaE41KR8GWyjMq=+Mcvz5Zrj0EffNrGrw@mail.gmail.com>
-User-Agent: NeoMutt/20170306 (1.8.0)
+In-Reply-To: <20170630000710.10601-26-sbeller@google.com>
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 30, 2017 at 09:00:14AM +0300, Сергей Шестаков wrote:
+On Thu, Jun 29, 2017 at 05:07:10PM -0700, Stefan Beller wrote:
+> +	Small blocks of 3 moved lines or fewer are skipped.
 
-> I am trying to make an automated processing of "git status" results.
-> I execute the command
-> 
-> git status -z -uno
-> 
-> I expect that it has stable output format. However, it still can print
-> warnings like
-> 
-> warning: CRLF will be replaced by LF in somefile.xml
-> 
-> I understand that we can turn off core.safecrlf, but it's
-> inconvinient. It would be better if "git status" command had an
-> optional parameter that disables any other output besides changed
-> files.
+If I read the commit messages correctly, this "skipping" process
+applies to the move detection in general for those smaller blocks
+and therefore doesn't mean a malicious move can hide smaller
+changes, correct? If so, I find this sentence misleading. Maybe
+something like:
 
-The `git status` command supposedly writes their "regular" data to its
-standard output while warnings go to its standard error stream.
-Is this not the case?
+    Small blocks of 3 moved lines or fewer are excluded from move
+    detection and colored as regular diff.
 
+Regards
+Simon
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
