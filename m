@@ -2,120 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B925A201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 16:04:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 959B3201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 16:06:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751678AbdF3QEw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 12:04:52 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:35362 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751560AbdF3QEv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 12:04:51 -0400
-Received: by mail-pg0-f47.google.com with SMTP id j186so65690325pge.2
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 09:04:51 -0700 (PDT)
+        id S1751927AbdF3QGE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 12:06:04 -0400
+Received: from mail-oi0-f43.google.com ([209.85.218.43]:35225 "EHLO
+        mail-oi0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751675AbdF3QGD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 12:06:03 -0400
+Received: by mail-oi0-f43.google.com with SMTP id 191so13876883oii.2
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 09:06:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=8I35M6iTxjXhDTsLhKt209R0sHHPDtQ5RK3FzALA+Ac=;
-        b=thL0UA/fPggNbOgbqzR6CnJev42B24iFGHGCaBd/XDocCnquZCRTQF1/ZUo2bH9ji5
-         eucLQFUKTyZXTKEbRDh/Tcbcu4uFFFHMWBd9GpaACvcW/PB/4CI0tCUmAD9Q/VJ8B+03
-         LS6lSvET/vDlziASUdessfaSAztQqijHbK81SZ8yuHi33ze7yM75C3a/Cj9UVi1AWomh
-         jZymKOAHmYwDFLN1jNZG4FbYASkWwkwyvoPzENW7GyiEoeSlKXz2HLbkOuB3fDDeepbl
-         +x4OoPGpDVvXZnmzNftEhxcP6pFwC0nK//sjn4dz3LuwHFWEVRyrjIBR53CMeerqMBfD
-         G8Uw==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=JwORBlkOVgLEPL0uJKdqx5zr+MVY5lN2Y/ceMlGZAFM=;
+        b=TPXkmdACk+Rrb6mGCIcs6LNPwWuVKPdLl9ZB+xEJpZk42qqBjb1dgHFvg+UzYAU0If
+         9hxOcMkst7SU6AvShQwJ1W6junf2Hk9p5lnUFjnaMeqTi71Q8+e3/+SQIlnQ90nywNah
+         hAcF0MBew2kGRFRl79qk7v/Jk3RLvhDEDtmwDYemeUHDsj7jsCvrbPblwGM1EHklbQyh
+         lzcQz6BG5ST2SV4XVWt3HwB0M6TLvPOoyuDr/dNZ3VuZZDQr6otf05lzKboDlKmpPIWe
+         b07x+TeLqtMoSzHNXCb9A/8y+5axnfSinvu+V6vk1KozeY8Fx5zIpbxKw9jYMmVqFFz8
+         6rSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=8I35M6iTxjXhDTsLhKt209R0sHHPDtQ5RK3FzALA+Ac=;
-        b=Ds9wIvjEZscjHwKM8CfW9NBqhtqa5puTIKzMyU1zMbBgz0a7u2TkjZBG2MHsa+eXaR
-         I1eBhPF9oOHDV8ujAcR5LGyZBB+rDIydPlF53xcbLKmBc7UwSwy2nClkV3/PaeqnZylw
-         TeYfeeHmnENZB5aFK9gh0TGOkc2tDiCT91KJpDpNGl5+DgKu2NPgojv1qvKGuYSxffFN
-         CH44+tHKgWnJ5ND/ZxPQ3hJBrFy1MWzu0WYS1zrPd6aR4WK1c7oijG64CmkkBGN2W8qh
-         Nrt/Ri06SjTQza5opwaXVbL2y5Uazkak75qtFVZtTVd7nGfXvIVDsbxvRnuni+4RUFNS
-         Ozgg==
-X-Gm-Message-State: AKS2vOzWUKYODCAtU9FZQ4brKWxUP7UdRwb+RjoAz0JLpbv1+nOPSuTw
-        Y8tmVuueBj1r5Yv/LaChm8TCFZSxjg5x
-X-Received: by 10.84.217.138 with SMTP id p10mr24975194pli.66.1498838691133;
- Fri, 30 Jun 2017 09:04:51 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=JwORBlkOVgLEPL0uJKdqx5zr+MVY5lN2Y/ceMlGZAFM=;
+        b=qt3h4xFxaKZy3uiznSR49kb3T8CcNgMwRf53s+RkLSqYYH7yLAI26j1A+mUbol/bIF
+         K5klO0jKHfSDUYSZBdsh0htlLqDF0c33jNOKiYqBqneOHGekoLeDNX5UfOj5xRM4LTWV
+         dsdsEHj6HPD7kZFW3l7WMtM4+f7+dwDiwGOlbzAzssbTUT0DvdLZcoJd4/wJhYz1N2Au
+         +CuEr67hGiI/fwuJ/9u0+FrBQiD5Flpo7x4eLQLk5EjdMiafrDZMX8rBt7wtwxh5WXj5
+         VBmLQtBxZuJN/nBEpYHS1R1onhZraqysrXeFR+W6EiAj5BcJd8Dm0DS59m6m8mVVYiU2
+         KgXQ==
+X-Gm-Message-State: AKS2vOzaEyuwu00yJQUrDQxLV3RpXxME05AX4xrF//R2bA0+XbYCt5b8
+        N5OgD0dfcTSjfiGaPyMIFVxEM8THox0j3OA=
+X-Received: by 10.202.212.9 with SMTP id l9mr14885074oig.120.1498838763088;
+ Fri, 30 Jun 2017 09:06:03 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.183.170 with HTTP; Fri, 30 Jun 2017 09:04:50 -0700 (PDT)
-In-Reply-To: <20170630072611.q733inuxdvjmhjgw@ruderich.org>
-References: <20170630000710.10601-1-sbeller@google.com> <20170630000710.10601-26-sbeller@google.com>
- <20170630072611.q733inuxdvjmhjgw@ruderich.org>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 30 Jun 2017 09:04:50 -0700
-Message-ID: <CAGZ79kYONNMrB7L65WjwZjSuKOf3rAOWPwjb1bH26MU0owTJ4w@mail.gmail.com>
-Subject: Re: [PATCH 25/25] diff: document the new --color-moved setting
-To:     Simon Ruderich <simon@ruderich.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.74.104.26 with HTTP; Fri, 30 Jun 2017 09:06:02 -0700 (PDT)
+From:   Shaun Uldrikis <stuldrikis@gmail.com>
+Date:   Fri, 30 Jun 2017 12:06:02 -0400
+Message-ID: <CADHEqX_fiUhnpn6WAFrbDaNJTb1Vbom7Ndn-n6WmQ0gkQ69ZeA@mail.gmail.com>
+Subject: git log use of date format differs between Command Line and script usage.
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 30, 2017 at 12:26 AM, Simon Ruderich <simon@ruderich.org> wrote:
-> On Thu, Jun 29, 2017 at 05:07:10PM -0700, Stefan Beller wrote:
->> +     Small blocks of 3 moved lines or fewer are skipped.
->
-> If I read the commit messages correctly, this "skipping" process
-> applies to the move detection in general for those smaller blocks
-> and therefore doesn't mean a malicious move can hide smaller
-> changes, correct? If so, I find this sentence misleading. Maybe
-> something like:
->
->     Small blocks of 3 moved lines or fewer are excluded from move
->     detection and colored as regular diff.
+If you supply a non-standard format to the date configuration for git
+log, something like:
+[log]
+        date = format:%Y-%m-%d %H:%M
 
-Well, this reads as if "blocks of 3 lines" are excluded, but what I
-mean is "if all adjacent blocks combined are 3 lines or fewer"
+then, when you run 'git log' inside a script, or when using gitk
+(anywhere), it fails on decoding the format.
 
-Example of how I understand the code:
+fatal: unknown date format format: %Y-%m-%d %H:%M
 
-    context
-  + moved line, block A
-  + moved line, block A
-  + moved line, block B
-  + moved line, block A
-  + moved line, block A
-    context
 
-These five lines are colored, because 5>3, but each
-individual block is smaller than 3 lines. However we
-already want to tell the reviewer that the middle line is not part of
-a contiguous 5 line block, so we have to use alternative color
-in the middle.
+However, that format works correctly on the command line.
+I do not have a patch to address this issue.
 
-However
-
-    context
-  + moved line, block A or B
-  + moved line, block A or B
-    context
-
-is omitted, because the number of lines
-here is fewer than 3 ignoring the block
-type.
-
-Maybe
-
-  If there are fewer than 3 adjacent lines of
-  moved code, they are skipped.
-
-Thanks,
-Stefan
-
->
-> Regards
-> Simon
-> --
-> + privacy is necessary
-> + using gnupg http://gnupg.org
-> + public key id: 0x92FEFDB7E44C32F9
+-Shaun
