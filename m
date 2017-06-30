@@ -2,176 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EECB202AB
-	for <e@80x24.org>; Fri, 30 Jun 2017 16:02:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B925A201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 16:04:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751784AbdF3QCP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 12:02:15 -0400
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:33657 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750975AbdF3QCP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 12:02:15 -0400
-Received: by mail-qt0-f176.google.com with SMTP id r30so102462489qtc.0
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 09:02:14 -0700 (PDT)
+        id S1751678AbdF3QEw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 12:04:52 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:35362 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751560AbdF3QEv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 12:04:51 -0400
+Received: by mail-pg0-f47.google.com with SMTP id j186so65690325pge.2
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 09:04:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=AAvCJ5yE2vi8DMWuSG31hc9KOJbCqYd7+t6gQSZ8sok=;
-        b=W1jD0KH6rfyCW+eVQ4rdXmBlgOWUQg/3hdPAZV0J3dA58JFWz7B5nUwTn8tWR3Gw2E
-         H+don2mrdfBLzi42BVwh2W47gux9dLGVQCeAHLfLroLH+L0pffsEaZFhitsSksEy0vbt
-         PfJUQCXLV7klRzB6ISuSSnIYHVlNhPpIBsdsz4vb613Z3gcp0kSCNv2zzlCIYb5sJBXN
-         uCdz49N7GTV94pr7aw1EvrepO9ZLPQ9P6ucrN1h1U0QkpMVncijkt2CYPA2lV9zG0o6D
-         en1k4JmYEUHbZZQ6++DNcwmHkDQmT6GBA09i8Ha4KSnqTolkzaunAoBn+5FlGH5GOil8
-         eJTw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=8I35M6iTxjXhDTsLhKt209R0sHHPDtQ5RK3FzALA+Ac=;
+        b=thL0UA/fPggNbOgbqzR6CnJev42B24iFGHGCaBd/XDocCnquZCRTQF1/ZUo2bH9ji5
+         eucLQFUKTyZXTKEbRDh/Tcbcu4uFFFHMWBd9GpaACvcW/PB/4CI0tCUmAD9Q/VJ8B+03
+         LS6lSvET/vDlziASUdessfaSAztQqijHbK81SZ8yuHi33ze7yM75C3a/Cj9UVi1AWomh
+         jZymKOAHmYwDFLN1jNZG4FbYASkWwkwyvoPzENW7GyiEoeSlKXz2HLbkOuB3fDDeepbl
+         +x4OoPGpDVvXZnmzNftEhxcP6pFwC0nK//sjn4dz3LuwHFWEVRyrjIBR53CMeerqMBfD
+         G8Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=AAvCJ5yE2vi8DMWuSG31hc9KOJbCqYd7+t6gQSZ8sok=;
-        b=mEvJyFp7Pi/wF3aXlVHIyp1IKdKla69EzwhqUCcmOIzmFD9UVp8r+mtFD8s40c/yF1
-         3vfkvj5Uz3N1YhLqpf/EQPLo6X0APV/J84O1b8TQp4Or4jNcPK7E1BbovTe2UhMGsac2
-         B3T3eqAQQ5FQN1FiB3rtqld6zjWFd7Gdt0rw7+LtSHJ0rK9waNJp+P5JHV5gtE/taonF
-         2QmcWxVkxJPc/sYgWkY6zSI/YDxy6n8Xq60mxmu1ac3SXBkC9vjWzoXEZlU0Ovk3cfqe
-         VO1rVP7/iZqGYSKpAnfCcCSL7OLf5W/1Vcqal09Hmq21jvnPZrAGqQLuFDCxGS7abSD1
-         FLXQ==
-X-Gm-Message-State: AKS2vOzHz4atnoi13SifgSQTc/aMf5XAD1DbO4HHphp3OLwjM3O7RS2i
-        lyVIEerrGquwz0d12c8LDeDDT4VutA==
-X-Received: by 10.237.37.116 with SMTP id w49mr28440728qtc.14.1498838533574;
- Fri, 30 Jun 2017 09:02:13 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=8I35M6iTxjXhDTsLhKt209R0sHHPDtQ5RK3FzALA+Ac=;
+        b=Ds9wIvjEZscjHwKM8CfW9NBqhtqa5puTIKzMyU1zMbBgz0a7u2TkjZBG2MHsa+eXaR
+         I1eBhPF9oOHDV8ujAcR5LGyZBB+rDIydPlF53xcbLKmBc7UwSwy2nClkV3/PaeqnZylw
+         TeYfeeHmnENZB5aFK9gh0TGOkc2tDiCT91KJpDpNGl5+DgKu2NPgojv1qvKGuYSxffFN
+         CH44+tHKgWnJ5ND/ZxPQ3hJBrFy1MWzu0WYS1zrPd6aR4WK1c7oijG64CmkkBGN2W8qh
+         Nrt/Ri06SjTQza5opwaXVbL2y5Uazkak75qtFVZtTVd7nGfXvIVDsbxvRnuni+4RUFNS
+         Ozgg==
+X-Gm-Message-State: AKS2vOzWUKYODCAtU9FZQ4brKWxUP7UdRwb+RjoAz0JLpbv1+nOPSuTw
+        Y8tmVuueBj1r5Yv/LaChm8TCFZSxjg5x
+X-Received: by 10.84.217.138 with SMTP id p10mr24975194pli.66.1498838691133;
+ Fri, 30 Jun 2017 09:04:51 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.237.63.198 with HTTP; Fri, 30 Jun 2017 09:02:12 -0700 (PDT)
-In-Reply-To: <94F87EDC-4F34-455E-88D5-F99C606EF628@gmail.com>
-References: <CAE5ih7-x45MD1H6Ahr5oCVtTjgbBkeP4GbKCGB-Cwk6BSQwTcw@mail.gmail.com>
- <20170629224659.25677-1-miguel.torroja@gmail.com> <41BF267D-5F4D-4031-B9D4-15DB263D35D9@gmail.com>
- <CAKYtbVbOXZiZrsFGOKu=sFroSL-FBQo2wMaA9GmJvc-Uh7QZEA@mail.gmail.com> <94F87EDC-4F34-455E-88D5-F99C606EF628@gmail.com>
-From:   Miguel Torroja <miguel.torroja@gmail.com>
-Date:   Fri, 30 Jun 2017 18:02:12 +0200
-X-Google-Sender-Auth: sInKkKJjXain2YsoYN6oeR2o1jY
-Message-ID: <CAKYtbVYCK_8jjW_B-Mmd3heUabTiTq0Lakf1Znz2ptipQwhEJQ@mail.gmail.com>
-Subject: Re: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 10.100.183.170 with HTTP; Fri, 30 Jun 2017 09:04:50 -0700 (PDT)
+In-Reply-To: <20170630072611.q733inuxdvjmhjgw@ruderich.org>
+References: <20170630000710.10601-1-sbeller@google.com> <20170630000710.10601-26-sbeller@google.com>
+ <20170630072611.q733inuxdvjmhjgw@ruderich.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 30 Jun 2017 09:04:50 -0700
+Message-ID: <CAGZ79kYONNMrB7L65WjwZjSuKOf3rAOWPwjb1bH26MU0owTJ4w@mail.gmail.com>
+Subject: Re: [PATCH 25/25] diff: document the new --color-moved setting
+To:     Simon Ruderich <simon@ruderich.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 30, 2017 at 12:13 PM, Lars Schneider
-<larsxschneider@gmail.com> wrote:
+On Fri, Jun 30, 2017 at 12:26 AM, Simon Ruderich <simon@ruderich.org> wrote:
+> On Thu, Jun 29, 2017 at 05:07:10PM -0700, Stefan Beller wrote:
+>> +     Small blocks of 3 moved lines or fewer are skipped.
 >
->> On 30 Jun 2017, at 11:41, Miguel Torroja <miguel.torroja@gmail.com> wrote:
->>
->> On Fri, Jun 30, 2017 at 10:26 AM, Lars Schneider
->> <larsxschneider@gmail.com> wrote:
->>>
->>>> On 30 Jun 2017, at 00:46, miguel torroja <miguel.torroja@gmail.com> wrote:
->>>>
->>>> The option -G of p4 (python marshal output) gives more context about the
->>>> data being output. That's useful when using the command "change -o" as
->>>> we can distinguish between warning/error line and real change description.
->>>>
->>>> Some p4 triggers in the server side generate some warnings when
->>>> executed. Unfortunately those messages are mixed with the output of
->>>> "p4 change -o". Those extra warning lines are reported as {'code':'info'}
->>>> in python marshal output (-G). The real change output is reported as
->>>> {'code':'stat'}
->>>>
->>>> A new test has been created to t9807-git-p4-submit.sh adding a p4 trigger
->>>> that outputs extra lines with "p4 change -o" and "p4 changes"
->>>>
->>>> Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
->>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->>>> ---
->>>> ...
->>>
->>> I have never worked with p4 triggers and that might be
->>> the reason why I don't understand your test case.
->>> Maybe you can help me?
->>>
->>>> +test_expect_success 'description with extra lines from verbose p4 trigger' '
->>>> +     test_when_finished cleanup_git &&
->>>> +     git p4 clone --dest="$git" //depot &&
->>>> +     (
->>>> +             p4 triggers -i <<-EOF
->>>> +             Triggers: p4triggertest-command command pre-user-change "echo verbose trigger"
->>>> +             EOF
->>>> +     ) &&
->>>
->>> You clone the test repo and install a trigger.
->>>
->>>> +     (
->>>> +             cd "$git" &&
->>>> +             git config git-p4.skipSubmitEdit true &&
->>>> +             echo file20 >file20 &&
->>>> +             git add file20 &&
->>>> +             git commit -m file20 &&
->>>> +             git p4 submit
->>>> +     ) &&
->>>
->>> You make a new commit. This should run the "echo verbose trigger", right?
->>
->> Yes, that's correct. In this case the trigger is run with p4 change
->> and p4 changes
->>
->>>
->>>> +     (
->>>> +             p4 triggers -i <<-EOF
->>>> +             Triggers:
->>>> +             EOF
->>>> +     ) &&
->>>
->>> You delete the trigger.
->>>
->>>> +     (
->>>> +             cd "$cli" &&
->>>> +             test_path_is_file file20
->>>> +     )
->>>
->>> You check that the file20 is available in P4.
->>>
->>>
->>> What would happen if I run this test case without your patch?
->>> Wouldn't it pass just fine?
->>
->> If you run it without the patch for git-p4.py, the test doesn't pass
+> If I read the commit messages correctly, this "skipping" process
+> applies to the move detection in general for those smaller blocks
+> and therefore doesn't mean a malicious move can hide smaller
+> changes, correct? If so, I find this sentence misleading. Maybe
+> something like:
 >
-> You are right. I did not run "make" properly before running the test :)
->
->
->>> Wouldn't we need to check that no warning/error is in the
->>> real change description?
->>>
->>
->> that can also be added, something like this: 'p4 change -o | grep
->> "verbose trigger"' after setting the trigger?
->
-> Yeah, maybe. I hope this is no stupid question, but: If you clone the
-> repo with git-p4 *again* ... would you see the "verbose trigger" output
-> in the Git commit message?
->
+>     Small blocks of 3 moved lines or fewer are excluded from move
+>     detection and colored as regular diff.
 
-The commands that are affected are the ones that don't use the -G
-option, as everything is sent to the standard output without being
-able to filter out what is the real contents or just info messages.
-That's not the case with the python output (-G). Having said that... I
-tried what you just said (just to be sure) and the function
-p4_last_change fails... as it expects the first dictionary returned by
-p4CmdList is the one that contains the change:
-"int(results[0]['change'])" and that's not the case as it's an info
-entry (no 'change' key, that's in the next entry...)  I'll update with
-new patches
+Well, this reads as if "blocks of 3 lines" are excluded, but what I
+mean is "if all adjacent blocks combined are 3 lines or fewer"
 
-I didn't notice that before because the P4 server we have in our
-office only outputs extra info messages with the command "p4 change".
+Example of how I understand the code:
 
+    context
+  + moved line, block A
+  + moved line, block A
+  + moved line, block B
+  + moved line, block A
+  + moved line, block A
+    context
 
-> - Lars
+These five lines are colored, because 5>3, but each
+individual block is smaller than 3 lines. However we
+already want to tell the reviewer that the middle line is not part of
+a contiguous 5 line block, so we have to use alternative color
+in the middle.
+
+However
+
+    context
+  + moved line, block A or B
+  + moved line, block A or B
+    context
+
+is omitted, because the number of lines
+here is fewer than 3 ignoring the block
+type.
+
+Maybe
+
+  If there are fewer than 3 adjacent lines of
+  moved code, they are skipped.
+
+Thanks,
+Stefan
+
+>
+> Regards
+> Simon
+> --
+> + privacy is necessary
+> + using gnupg http://gnupg.org
+> + public key id: 0x92FEFDB7E44C32F9
