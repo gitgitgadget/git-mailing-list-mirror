@@ -2,76 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7372A202A7
-	for <e@80x24.org>; Fri, 30 Jun 2017 06:00:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E31220209
+	for <e@80x24.org>; Fri, 30 Jun 2017 07:09:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751913AbdF3GAR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 02:00:17 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:35457 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751895AbdF3GAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 02:00:17 -0400
-Received: by mail-wm0-f43.google.com with SMTP id w126so100078900wme.0
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 23:00:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=playrix-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=aSNCtH6KNyyP0Zg1CuiDqwFU5nlsnfu7B3OYwe6k8Ig=;
-        b=udWbDILS9bkmAjzfXTmPO+os6a+BHyD2/9iQ/XBU00FYUYWIaIWMhmDygOqNnREWYJ
-         P3WbvZ4TnAudkQIPTlvlwFYLe/B0b9PyGeLKm8fS+54Uu8oIFBcMU8pcczYm5cNRPWxe
-         xCKrAnPfK5x898YOq39i0cM/u4YhlcVaAhVoTD3OL0GgZvI6an4tFsJOeYntpsiedhs1
-         8tKgKhPfzlJEWZ52ey6sbWb+ie3rjdHp/QMJw4h8hTVvsMUqrjS2S2y1zQK0i3y5Qa+t
-         6LJG+JmRhoL8pZfuP5eE8J0zlaLxHOc/9L+pJTtNMwgwdzizOvYxuQsoL7msZJirXj49
-         xsfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=aSNCtH6KNyyP0Zg1CuiDqwFU5nlsnfu7B3OYwe6k8Ig=;
-        b=EE+IKmXdAdcvZMr9f3lxBqLzjTm3gHktXgFo/FYi/S8zsh4KI/7uz5L/fAolAY1enJ
-         DYnNWt+iyqH0mX+TBhf6Kzhf+Qe+xjQFq+bYSl3EJZ2Ps9uKdv+Rx99iyUOu4yrHh14Y
-         dcA5v8mO6uZ5AWSbCvTdSGpLMcWZUK1NEA4O5KAq0Evy6eChNHEBnnzEv6TYmVtjeX1j
-         JZjaHtA+qp8LsjNr+uQ3LIhccBapgSNcheAigQjKInouD0W3EmEgyKINlaG66+kY5nbT
-         q6Vlk5e1gpnhivZNVr17RzafzP4HHMMLpVsVR/ASyBwvcbq8sGifJ/kORN+DAfZr/VWb
-         XSiQ==
-X-Gm-Message-State: AKS2vOyL/8iVhGEQSs3tPOnIp3lvxQcxQyRzHaXQK1ZMNuvz9qDXSBgY
-        iqLlILn8Al3YP+igfpB/nn0kYVwBDU98UffqvA==
-X-Received: by 10.28.180.70 with SMTP id d67mr4555567wmf.121.1498802415416;
- Thu, 29 Jun 2017 23:00:15 -0700 (PDT)
+        id S1751772AbdF3HJE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 03:09:04 -0400
+Received: from mx2.suse.de ([195.135.220.15]:54418 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1751565AbdF3HJD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 03:09:03 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 3339AAC60;
+        Fri, 30 Jun 2017 07:09:02 +0000 (UTC)
+Date:   Fri, 30 Jun 2017 09:08:54 +0200
+From:   Borislav Petkov <bp@suse.de>
+To:     "Luck, Tony" <tony.luck@intel.com>
+Cc:     Dave Hansen <dave.hansen@intel.com>,
+        Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>, x86@kernel.org,
+        linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+        Yazen Ghannam <yazen.ghannam@amd.com>, git@vger.kernel.org
+Subject: Re: git send-email (w/o Cc: stable)
+Message-ID: <20170630070833.rwevr2yvp4wwo3ou@pd.tnic>
+References: <20170616190200.6210-1-tony.luck@intel.com>
+ <20170619180147.qolal6mz2wlrjbxk@pd.tnic>
+ <20170621174740.npbtg2e4o65tyrss@intel.com>
+ <20170622093904.ajzoi43vlkejqgi3@pd.tnic>
+ <20170629221136.xbybfjb7tyloswf3@intel.com>
 MIME-Version: 1.0
-Received: by 10.223.162.213 with HTTP; Thu, 29 Jun 2017 23:00:14 -0700 (PDT)
-From:   =?UTF-8?B?0KHQtdGA0LPQtdC5INCo0LXRgdGC0LDQutC+0LI=?= 
-        <s_shestakov@playrix.com>
-Date:   Fri, 30 Jun 2017 09:00:14 +0300
-Message-ID: <CAM1TZMGXiDpzt3uhpDaE41KR8GWyjMq=+Mcvz5Zrj0EffNrGrw@mail.gmail.com>
-Subject: Bug with automated processing of git status results
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170629221136.xbybfjb7tyloswf3@intel.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+On Thu, Jun 29, 2017 at 03:11:37PM -0700, Luck, Tony wrote:
+> So there is a "--cc-cmd" option that can do the same as those "-cc" arguments.
+> Combine that with --suppress-cc=bodycc and things get a bit more automated.
 
-I am trying to make an automated processing of "git status" results.
-I execute the command
+Yeah, whatever works for you.
 
-git status -z -uno
+I did play with cc-cmd somewhat but can't be bothered to generate the CC
+list per hand each time.
 
-I expect that it has stable output format. However, it still can print
-warnings like
+I'd prefer if that switch:
 
-warning: CRLF will be replaced by LF in somefile.xml
+	--suppress-cc=<category>
 
-I understand that we can turn off core.safecrlf, but it's
-inconvinient. It would be better if "git status" command had an
-optional parameter that disables any other output besides changed
-files.
+had the obvious <category> of single email address too:
 
-Thanks!
-Sergey Shestakov
-Playrix
+	--suppress-cc=stable@vger.kernel.org
+
+so that we can send patches and unconditionally suppress only that
+single recipient from the CC list.
+
+And maybe there is a way...
+
+Let me CC the git ML.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton, HRB 21284 (AG Nürnberg)
+-- 
