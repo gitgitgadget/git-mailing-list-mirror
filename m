@@ -2,124 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71E54201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 19:50:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2523E201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 20:11:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752880AbdF3Tuu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 15:50:50 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33103 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1752875AbdF3Tus (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 15:50:48 -0400
-Received: by mail-pg0-f67.google.com with SMTP id u62so16317165pgb.0
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 12:50:48 -0700 (PDT)
+        id S1752347AbdF3ULV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 16:11:21 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:34078 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751919AbdF3ULU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 16:11:20 -0400
+Received: by mail-pg0-f51.google.com with SMTP id t186so68658120pgb.1
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 13:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=WfdklIuXpIl5bc94kLJIZqO8ks0ayWcE+hCgNHHs00Q=;
-        b=Q2bI7bn0qXHkZ/aV921TtL14Ol/iYlvtjBe9znNd40hzK6cW1pcOxQFPR5T6+xdjek
-         fXcl7SFP1tGKmY/rY+chDuzLtIhC7d/SQhyAtanhqh6ayDnGa5hIB54Pe8dtAglkzjxe
-         1xJ6j9CVduHp9t1lbbcYgdbkIDUvJXc5LOpsXRfGGEb2qxCAGz9lDCwEbKHmGwyNQWH9
-         evyu7Zl4NbBFDPJxZ6ZGjUf2lPuw8qFYF2QjRoOlqa1isZDhS7MIQsk5Z9V7ZhV2jwXX
-         z8ksGOwYs6i28L5+HsGhQ61RIJsdVvlHAoKNWMB1ngD8nGvEgVqd48LrwewMFqfJTy0u
-         4Exg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=KmH/rUgwgrFXS81DWtRJcKDeAzvG5PIxR9ZM2UXIBT4=;
+        b=d73gV2JRH+30c/wuIqkxcL+dYCB4xmluv11HYk8sN29kslbj+62JI7Y4GK2m3PpkBy
+         IKw+/8+CCYq9jWHVcB164qqbca8x6+Dd36+W7LRSYLzHhD1RFl70FzJFkFVy+Na9rR3V
+         /dqKRqpGOJJjFDCuywmqjMYPOsIFFDQ7Y6IpXxUmRh26zQPyNr7D2PW2CZB3hlZ3sfzH
+         m3OCLpcAN1AbD708l8eSM08A73+PhIz+FINLZo98DVaRMd1b/I0LrhB48JRAi8aTLaeW
+         MyQaUoV2KG9EBantAX2ZwIDaAd3sMIuZcfuE/51DC1+5r4VnjVNWQTGDVHDvlAFrP7Bp
+         r0xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=WfdklIuXpIl5bc94kLJIZqO8ks0ayWcE+hCgNHHs00Q=;
-        b=t0rbztybxwQbREMVnMvcTUrXQ5irxkyuD+LT2YGXBk1WfVxy+x7StMDE9VLriMIrBL
-         811Cyw0mzF6vj8sbO0ri+TS72kbu6mDy6Xyfi4KMtx9ocMfxuTIJ2OUrtL2HOgqBvtJ5
-         /1gevU/FsE1e1ZgAM3e8mYz5SVZdbNs+ZGxmiZ/ZIwfAJN1N0F3Lyh0SpAc3Z/edvkpj
-         4CDOBJ9jpeT7jfqjs59mXGPvJDwjWMT4bAc27MdykeZVmsoKfNIIAlF3CXXYB0Q32Moa
-         BEqRxl73Z1uT2vCvtQw51gbPCPSlpUiwOzejDVV1zfIfZMaSiywjYqdzKLy9bvQw3OPx
-         +O3g==
-X-Gm-Message-State: AKS2vOwt05FinV65tE2B7P575JQyQimo9tnKkJVaCD2glc048eqxrJj+
-        crBux/ictsp6fw==
-X-Received: by 10.84.198.129 with SMTP id p1mr26185115pld.120.1498852219598;
-        Fri, 30 Jun 2017 12:50:19 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:54f:b41d:dd9d:3de0])
-        by smtp.gmail.com with ESMTPSA id x85sm19897020pff.92.2017.06.30.12.50.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 12:50:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@jeffhostetler.com, git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCHv3 2/3] patch-ids.c: use hashmap correctly
-References: <20170629235336.28460-1-sbeller@google.com>
-        <20170630191407.5381-1-sbeller@google.com>
-        <20170630191407.5381-3-sbeller@google.com>
-Date:   Fri, 30 Jun 2017 12:50:17 -0700
-In-Reply-To: <20170630191407.5381-3-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 30 Jun 2017 12:14:06 -0700")
-Message-ID: <xmqqefu1qmpy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=KmH/rUgwgrFXS81DWtRJcKDeAzvG5PIxR9ZM2UXIBT4=;
+        b=K6MJC93u8Jde/lMeK9wBhhJeIfKIMa68Ra2sz7FQ+hSxmDi1qACW6WPTtIwVu/3Nys
+         Zb4hf39DhEegZXqpgIjd9jSdfNB10sCTgjl050FtHqX0rRYwv6m6z4XMXEpdW7TI7m5L
+         tkMEzu8K1rzGO1XhhZY4msvdMyidMBUcEXXZ1mnrslMtyHKwyQeuDv9rtJp+tYsfTgNs
+         b+aEWRkz+sOlRls1lPfGKjmvxRUSJDcn6Mnv0KtCqYUhzCDBYYD7Gwe9i5gKZ/5Xsd34
+         qO+Ot73P5vZxfiUVEtVyj9Q788MpRnSsA3HuykP/WomWvCvkxg32ZdPr56gR4NSs3qdg
+         gr9Q==
+X-Gm-Message-State: AKS2vOySStHRNyV/fyN0i90zETS4UnhRGbrIwZifNCH812EwaxJkdZye
+        pHOr+7jFCmlykpqZ6jCeL8XHwyJ6gwb1
+X-Received: by 10.98.49.2 with SMTP id x2mr23866976pfx.48.1498853479643; Fri,
+ 30 Jun 2017 13:11:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.183.170 with HTTP; Fri, 30 Jun 2017 13:11:19 -0700 (PDT)
+In-Reply-To: <20170630194727.29787-5-pc44800@gmail.com>
+References: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
+ <20170630194727.29787-1-pc44800@gmail.com> <20170630194727.29787-5-pc44800@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 30 Jun 2017 13:11:19 -0700
+Message-ID: <CAGZ79kbiKd1GB8Gsyo8ABG1RBzhpXYrsySxcC6XRZv88Xx94Qw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 5/5 v3] submodule: port submodule subcommand 'sync'
+ from shell to C
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> As eluded to in the previous patch, the code in patch-ids.c is using
-> the hashmaps API wrong.
+On Fri, Jun 30, 2017 at 12:47 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+> Port the submodule subcommand 'sync' from shell to C using the same
+> mechanism as that used for porting submodule subcommand 'status'.
+> Hence, here the function cmd_sync() is ported from shell to C.
+> This is done by introducing three functions: module_sync(),
+> sync_submodule() and print_default_remote().
 >
-> Luckily we do not have a bug, as all hashmap functionality that we use
-> here (hashmap_get) passes through the keydata.  If hashmap_get_next were
-> to be used, a bug would occur as that passes NULL for the key_data.
+> The function print_default_remote() is introduced for getting
+> the default remote as stdout.
 >
-> So instead use the hashmap API correctly and provide the caller required
-> data in the compare function via the first argument that always gets
-> passed and was setup via the hashmap_init function.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 > ---
->  patch-ids.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
 
-Nicely explained.  Thanks for polishing the series.
+All these patches are also
+Reviewed-by: Stefan Beller <sbeller@google.com>
 
->
-> diff --git a/patch-ids.c b/patch-ids.c
-> index 815c115811..b4166b0f38 100644
-> --- a/patch-ids.c
-> +++ b/patch-ids.c
-> @@ -35,10 +35,10 @@ int commit_patch_id(struct commit *commit, struct diff_options *options,
->   * the side of safety.  The actual value being negative does not have
->   * any significance; only that it is non-zero matters.
->   */
-> -static int patch_id_cmp(const void *unused_cmp_data,
-> +static int patch_id_cmp(struct diff_options *opt,
->  			struct patch_id *a,
->  			struct patch_id *b,
-> -			struct diff_options *opt)
-> +			const void *unused_keydata)
->  {
->  	if (is_null_oid(&a->patch_id) &&
->  	    commit_patch_id(a->commit, opt, &a->patch_id, 0))
-> @@ -59,7 +59,7 @@ int init_patch_ids(struct patch_ids *ids)
->  	DIFF_OPT_SET(&ids->diffopts, RECURSIVE);
->  	diff_setup_done(&ids->diffopts);
->  	hashmap_init(&ids->patches, (hashmap_cmp_fn)patch_id_cmp,
-> -		     NULL, 256);
-> +		     &ids->diffopts, 256);
->  	return 0;
->  }
->  
-> @@ -95,7 +95,7 @@ struct patch_id *has_commit_patch_id(struct commit *commit,
->  	if (init_patch_id_entry(&patch, commit, ids))
->  		return NULL;
->  
-> -	return hashmap_get(&ids->patches, &patch, &ids->diffopts);
-> +	return hashmap_get(&ids->patches, &patch, NULL);
->  }
->  
->  struct patch_id *add_commit_patch_id(struct commit *commit,
+Thanks for upstreaming the early parts.
+
+Thanks,
+Stefan
