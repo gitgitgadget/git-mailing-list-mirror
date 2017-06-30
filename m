@@ -2,91 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D761201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 17:26:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C700201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 17:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751992AbdF3R0k (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 13:26:40 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35301 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751946AbdF3R0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 13:26:39 -0400
-Received: by mail-pf0-f195.google.com with SMTP id s66so17724002pfs.2
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 10:26:38 -0700 (PDT)
+        id S1751797AbdF3R3i (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 13:29:38 -0400
+Received: from mail-oi0-f52.google.com ([209.85.218.52]:32786 "EHLO
+        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751710AbdF3R3i (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 13:29:38 -0400
+Received: by mail-oi0-f52.google.com with SMTP id p188so41403138oia.0
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 10:29:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=hu7cgkqlrgA4ugCZPTLKynggfVs01a+cxo09dDN/vcM=;
-        b=b3Ik8E7z9q6MoyJDIdctYvRvifagcaqAj77i+ssc70fBMN9PCmMHt4/lreGP0rh4ah
-         etiH/kTklF+2fBHMSLR522hfJVLoNCVWs3qSso2u0q5OOUR31aHa7BBn03slBTiMBbHz
-         8YwIfegfjDu+RByCwKpsM+2IRGcE4LfIML/h+0VOlBNxN5Q7E9TN933vdlUOCd2ZUOMf
-         D4Vl9Q1HRFw7WeMpPHKQVTJokxVc57rCoq2LTa8NWukTWsXGm8oqce9F6J/DemhOMlMV
-         MoY7vx9wLE6plS1n6PDskqNekfd5G7KFBQSYU+mPGVpATs+WV/UH7tWeQJfLcl/9e7OU
-         +jkQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BsR9DUZJv7+yjvjI1flKwJJukwaEdUMvFnEFMQX26CU=;
+        b=C7XZFv4jc2CTS9puNVMLLY4uTZuaA3mczuKFjpvcKeI7dw7V6wORhCEZ4arF+EMWba
+         gDv1R8sItNkBVy0xEyBjV9NBI9teVRtB06JoQ1T6WrOGiAuUTkuDeMl2cHfJHSMm9hRN
+         DA44MVrmN+tPKXukuJy3laOBCYMH14wCem3fIoKOcQT17xDh8sdwFcRcjo/gfNsB5eet
+         sRtP7D7JrmilySJEm5JG7Ze8Q+SLsNmmR7zClFpxHMIh5yZdvD1mopxUKk7s5NgHROWi
+         cy0HMuTp9VfG0RPePP0M+PzIxIuCij/4ZfJ6FR8UtDVURzxQd5A3K/2qXYilcu+FIKU5
+         QNAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=hu7cgkqlrgA4ugCZPTLKynggfVs01a+cxo09dDN/vcM=;
-        b=uZywNhB0lJzzc59KTGYl7rSOocDBaS4nwQzoRbgc1zdmwXffmQXtswN0Iwz6m0YBRn
-         bYCkOn6sFgwMu4AhE8Y4oMfeTFb0Exu2OM8mbHdBzxM/+zDxWlYauwT14e3zRvFlSr0V
-         ftRP4sAeCgTnqQJIvsxRDx2yOULrKq7zTKJaWF6b1OKelrBOwQJ6VEzea+k7FZK7J/80
-         U6SdhjU3XUPoIAFWWchxy5Bow/L5QGIX+MQpNUHjoVCIPNWxCVbCV4zAb9P/Ilhzir4a
-         xgqTU2DOf9MTBKuApSo94/0bNjW4JNl14p16RnnuCtsDoqTUunWUYujpWnlBK/2WJUdP
-         kQLQ==
-X-Gm-Message-State: AKS2vOxoEK1LYtch8dlxiYHII6qqMpo/amtipVe31t2Hb/YNapSIOjfr
-        t5GtFFoMtSZqhg==
-X-Received: by 10.84.218.136 with SMTP id r8mr25518880pli.205.1498843598406;
-        Fri, 30 Jun 2017 10:26:38 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:54f:b41d:dd9d:3de0])
-        by smtp.gmail.com with ESMTPSA id 5sm16457245pfe.60.2017.06.30.10.26.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 10:26:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] hashmap.h: compare function has access to a data field
-References: <20170629011334.11173-1-sbeller@google.com>
-        <20170629011334.11173-2-sbeller@google.com>
-        <xmqqvaneu0qy.fsf@gitster.mtv.corp.google.com>
-        <xmqqr2y2u0jq.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaP3rDRNVQRk3_egZrY54Ra3eaOGCPpufp+y936=6kPQw@mail.gmail.com>
-Date:   Fri, 30 Jun 2017 10:26:36 -0700
-In-Reply-To: <CAGZ79kaP3rDRNVQRk3_egZrY54Ra3eaOGCPpufp+y936=6kPQw@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 29 Jun 2017 11:20:51 -0700")
-Message-ID: <xmqqshihs7xv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BsR9DUZJv7+yjvjI1flKwJJukwaEdUMvFnEFMQX26CU=;
+        b=YvcIBjBSbhI9WPga9zGD7Jpw35jYG+RWUh/ioY5jPKgA9cwY+kEiGggv5Mcc6Ys2iH
+         5s3iuaD1KAiQr/lLJHuN1AQFx/Y0ytjeWGBeOGOIIwy0C8fbbvjX0Drf4gGwCBgwHcbh
+         F86nUzUF7oXJfQjNfL0uxq4PzvyqcYlQ2cFv3hibtvMLHsgDRxkDZb0kyGDtMcDPD7uN
+         vypPDDYLRJfrKZIpeenZwf3MC4BRuPg52Wk9ROpUS9bmtGXOUx2QI3MH9TcxWVxC8jiL
+         R4s5xnqyFxf0sTzHwqwDN3paiZXWtbIL+o972PLx3ER7OS9zT9A6OEWIqftzouPZPfDm
+         ua1g==
+X-Gm-Message-State: AKS2vOyMvBTuNPSRVo+sUCTDZyQZoGusoJtJwN2xZYphCvbKu1Y4TiRU
+        GX95FKaxKSG2eX7fdiZXHR4m2tuDKg==
+X-Received: by 10.202.186.3 with SMTP id k3mr5663493oif.59.1498843777259; Fri,
+ 30 Jun 2017 10:29:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.74.104.26 with HTTP; Fri, 30 Jun 2017 10:29:36 -0700 (PDT)
+In-Reply-To: <CAGZ79kZxde9j+O4JDofYLbC2CRk_X0tiwOftEgKQcJLyN409xQ@mail.gmail.com>
+References: <CADHEqX_fiUhnpn6WAFrbDaNJTb1Vbom7Ndn-n6WmQ0gkQ69ZeA@mail.gmail.com>
+ <CAGZ79kZxde9j+O4JDofYLbC2CRk_X0tiwOftEgKQcJLyN409xQ@mail.gmail.com>
+From:   Shaun Uldrikis <stuldrikis@gmail.com>
+Date:   Fri, 30 Jun 2017 13:29:36 -0400
+Message-ID: <CADHEqX9-w5uZpS1RiP9EjCpWB0V1SVYZ5Ddsv3etCvBteOv4qg@mail.gmail.com>
+Subject: Re: git log use of date format differs between Command Line and
+ script usage.
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Yes. That is the case. Just confirmed it. I'll remove the old version.
+Sorry to have bothered the mailing list.
 
-> Yes it was a last minute squash before sending it out, as the fix was only
-> two lines whereas the conversion is a lot. If it were separated I could have
-> claimed the introduction to be a rather mechanical patch, but I did not
-> make use of coccinelle or such, so the likelihood for errors is just as high.
+Thank you.
+
+-Shaun
+
+On Fri, Jun 30, 2017 at 12:43 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Fri, Jun 30, 2017 at 9:06 AM, Shaun Uldrikis <stuldrikis@gmail.com> wrote:
+>> If you supply a non-standard format to the date configuration for git
+>> log, something like:
+>> [log]
+>>         date = format:%Y-%m-%d %H:%M
 >
-> So I decided to squash them.
-
-I somehow think that logic leads to a suboptimal workflow.  If they
-were separated, somebody else could have done an independent
-mechanical conversion to verify the result matches yours, which
-would give us more confidence.  When such an independent mechanical
-conversion does not match, we need one round-trip to ask you if it
-was a misconversion or a manual tweak.
-
-In any case, I think I've looked at it long enough to be reasonably
-OK with the conversion result myself, so let's move it forward.  Of
-course I welcome independent eyeballing by others.
-
-Thanks.
+> So I ran
+>
+>     $ git config log.date  "format:%Y-%m-%d %H:%M"
+>     $ git config --list |grep log.date
+>     log.date=format:%Y-%m-%d %H:%M
+>
+> Then I have a script as
+>   $ cat script.sh
+>   #!/bin/sh
+>
+>   git log >out
+>
+> after executing I get:
+>
+>   $ head out
+>   commit 7930db48ca31b41ac335ae8cd25cb29094d1de5e
+>   Author: Stefan Beller <sbeller@google.com>
+>   Date:   2017-06-30 09:26
+>
+> Also gitk seems to work here.
+>
+> Rene's answer sounds reasonable,
+> check the version(s) of Git on your system?
