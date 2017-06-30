@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA87F202A7
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F51F202A7
 	for <e@80x24.org>; Fri, 30 Jun 2017 00:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752458AbdF3AHg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 20:07:36 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:32963 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752210AbdF3AHa (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752269AbdF3AHa (ORCPT <rfc822;e@80x24.org>);
         Thu, 29 Jun 2017 20:07:30 -0400
-Received: by mail-pf0-f179.google.com with SMTP id e7so58082196pfk.0
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:30 -0700 (PDT)
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:33769 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751786AbdF3AH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 20:07:27 -0400
+Received: by mail-pg0-f51.google.com with SMTP id f127so55146123pgc.0
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gp2p0rh900T64j6jVmbegwUukokMIIk0hQXTUdGrT2k=;
-        b=PQn+obOfm5oxpZX/QTOm/x7w6/7uUBrP0ylHEuN4QOV9AwINuNBPfkAflYIFk55YNL
-         yerVhAOsvfWnfkce3wkO0mkoLh8DATnxn3aawuhpb4NdypcQps1sxxT1C7dAQPsEl/9u
-         Iu1S8cmp+Fso65I1xtVOwm4Wi8o7jFZtVzqfupJczGDr9qAsCHCAnt6hBQ4TouT4jst0
-         LhiHbvcd+GPewhLkf6lSx8gLwhOkobQREaSnZ7bS/2ahOL3NQgyWFXbPxRSBnD6Qo4Rr
-         Tb4is47vP87mcVd4O0Ulayu/d0owsxWLgh7dQo0Yfy78eTLDa60W+T4fDX3pCV9XJzXg
-         /m9w==
+        bh=mGcmNupeDJrKVnj7/r52Ck2IFtSOzfgdpBoKqmiwkyQ=;
+        b=nyMR1CIUOHHl4EW0R9r5ibmM9Dp5nm/pvx2+wtVP8ZZf7LPoii18G/98wEZNaD34RM
+         nQTxRbHK1Bf4QOKnO83hsT7XBIVGiFgTm1zdSbXQpI3KYN2MfrBkdVfzR90QzBAlCGrt
+         4QdF9OhFtP/ajAFM+YxdlOxEk7n9DTfNFMdE7i7zcWpck89PxRu8eM7mCTerirHb9fZJ
+         3vnyS85DNTj6u3ONbeNGEbgYoi3j+/Lag/oYDbyV/zYjQunjMuYjadJcvYdgxLau7F7w
+         6jIev+jwdEMq2X0mwppLZCMsypjgL9gBciKbbeAYnY6SrUS+D6q2Juo5t35+koZ7/ZY9
+         xYug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gp2p0rh900T64j6jVmbegwUukokMIIk0hQXTUdGrT2k=;
-        b=LJaKW7/CONUPgtiljeeSK1aqyFF12TPlPEP1pIaqvrk3o4yazIHr2zNrfN5nWGzyS8
-         OqK+2xBRVqj4pglOV9SneZq/nCG8JUwPtTe+KAa3dfDLG8JGOZlayMY+EQgiQMUalpHb
-         z2l6YULhjVPOJdpxpYMfdSY4UYt4WdAzm0VyZ4GEZC5hEgqR4BtTCFidK8npnHOvOaBc
-         AQaFe1hNvEQDuFZGQ80WiQetcFo1TKFwrURDhKKw97+bkwEaIv9LGSs+VdY6Y+asAfIa
-         QdyxsXUemjHsTJOQ2F5M49ui5CmeURVdyIPX6nnsxpSn5X8Qjv25K3/gpeLIzzNIc9jQ
-         AwYg==
-X-Gm-Message-State: AKS2vOzkpXAFPjmO6I3qz/XqLyptp0jPZG/h1wsXsIuJEPbjZ+PHcJrS
-        2kV01SsfefSfasZ2
-X-Received: by 10.98.204.23 with SMTP id a23mr19316620pfg.59.1498781250096;
-        Thu, 29 Jun 2017 17:07:30 -0700 (PDT)
+        bh=mGcmNupeDJrKVnj7/r52Ck2IFtSOzfgdpBoKqmiwkyQ=;
+        b=MBIVmSlEKAwTjkJ9fwjwkyddhvsmWy58N+xqZ9GfFlOUsyGT3FWgGmo7+HdT9Mr/5Y
+         MogWGxRX5oXeOSxJb91Zv69saslBxCFntxeWENTmFAUXFqmIbSFtMy1fYK7nP5xNmUSS
+         yn4Fk1KlEqWO/FKExjSovGKVNYIYobIoqoG7ys/P9DmFHw/Q1HimF57AFoSlwUWChKoC
+         zYpDaLl1qhmvX9XFkggUHpDkC9wsNBj+ZRpiwT8P5Y+eXXzyeiovdxKIiUqW8umqS+xt
+         qZm7+MXb53N6fu05/MkUasMNIDAgr2I4azpi3hDZjpJV2qKR5ac9G+h1WlU832RI8lB6
+         Oo3A==
+X-Gm-Message-State: AKS2vOwC9UMP7kmoYM7FFGdnux2nuMfVyql3AX3jhepy8tapY8vjiJ7t
+        4yY655pg+2KHfavv817S4Q==
+X-Received: by 10.84.171.197 with SMTP id l63mr20776211plb.167.1498781247046;
+        Thu, 29 Jun 2017 17:07:27 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c3c:7a18:f5d8:50e0])
-        by smtp.gmail.com with ESMTPSA id d71sm15981975pfe.106.2017.06.29.17.07.28
+        by smtp.gmail.com with ESMTPSA id l85sm12744147pfj.130.2017.06.29.17.07.26
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 29 Jun 2017 17:07:29 -0700 (PDT)
+        Thu, 29 Jun 2017 17:07:26 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 05/25] diff.c: emit_diff_symbol learns DIFF_SYMBOL_CONTEXT_MARKER
-Date:   Thu, 29 Jun 2017 17:06:50 -0700
-Message-Id: <20170630000710.10601-6-sbeller@google.com>
+Subject: [PATCH 03/25] diff.c: factor out diff_flush_patch_all_file_pairs
+Date:   Thu, 29 Jun 2017 17:06:48 -0700
+Message-Id: <20170630000710.10601-4-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
 In-Reply-To: <20170630000710.10601-1-sbeller@google.com>
 References: <20170630000710.10601-1-sbeller@google.com>
@@ -61,47 +61,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+In a later patch we want to do more things before and after all filepairs
+are flushed. So factor flushing out all file pairs into its own function
+that the new code can be plugged in easily.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ diff.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 4637368d59..75b996c4cf 100644
+index 94fdb57927..77ef56a6e4 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -561,13 +561,20 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
+@@ -4734,6 +4734,17 @@ void diff_warn_rename_limit(const char *varname, int needed, int degraded_cc)
+ 		warning(_(rename_limit_advice), varname, needed);
  }
  
- enum diff_symbol {
-+	DIFF_SYMBOL_CONTEXT_MARKER,
- 	DIFF_SYMBOL_SEPARATOR
- };
- 
- static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
- 			     const char *line, int len)
++static void diff_flush_patch_all_file_pairs(struct diff_options *o)
++{
++	int i;
++	struct diff_queue_struct *q = &diff_queued_diff;
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		if (check_pair_status(p))
++			diff_flush_patch(p, o);
++	}
++}
++
+ void diff_flush(struct diff_options *options)
  {
-+	const char *context, *reset;
- 	switch (s) {
-+	case DIFF_SYMBOL_CONTEXT_MARKER:
-+		context = diff_get_color_opt(o, DIFF_CONTEXT);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line(o, context, reset, line, len);
-+		break;
- 	case DIFF_SYMBOL_SEPARATOR:
- 		fprintf(o->file, "%s%c",
- 			diff_line_prefix(o),
-@@ -662,7 +669,8 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
- 	if (len < 10 ||
- 	    memcmp(line, atat, 2) ||
- 	    !(ep = memmem(line + 2, len - 2, atat, 2))) {
--		emit_line(ecbdata->opt, context, reset, line, len);
-+		emit_diff_symbol(ecbdata->opt,
-+				 DIFF_SYMBOL_CONTEXT_MARKER, line, len);
- 		return;
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+@@ -4826,11 +4837,7 @@ void diff_flush(struct diff_options *options)
+ 			}
+ 		}
+ 
+-		for (i = 0; i < q->nr; i++) {
+-			struct diff_filepair *p = q->queue[i];
+-			if (check_pair_status(p))
+-				diff_flush_patch(p, options);
+-		}
++		diff_flush_patch_all_file_pairs(options);
  	}
- 	ep += 2; /* skip over @@ */
+ 
+ 	if (output_format & DIFF_FORMAT_CALLBACK)
 -- 
 2.13.0.31.g9b732c453e
 
