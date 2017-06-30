@@ -2,150 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11191201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 20:54:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A41E6201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 21:11:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753149AbdF3Uy1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 16:54:27 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:34015 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752868AbdF3UxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 16:53:25 -0400
-Received: by mail-pg0-f48.google.com with SMTP id t186so69044152pgb.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 13:53:25 -0700 (PDT)
+        id S1752957AbdF3VLi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 17:11:38 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34777 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752830AbdF3VLi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 17:11:38 -0400
+Received: by mail-pf0-f193.google.com with SMTP id c24so3676545pfe.1
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 14:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LtOa7q4xLBPQlEN1skoBhgc/L5zUz2UJlIyQpzN0cTc=;
-        b=RhXrcUixaLkB1EK9q30YKviqu1Pqy/hREU9CpqBhNwRWtWnhPFpZyjOLCZu2HGjVCp
-         FleCxXPeIBGDslOzqxaX2rrvMYgojMFjv+XEMvsVfsNzSobNgN8eY7K1CthGggSLmUMV
-         tSiZIqXN/gY+Vmk5UioSSd/b0elA+xNiagTP4DeLzyFGe05NT/bA1FRI0jyokeFZOMgx
-         0Yy2IvwFHws/ZvxheboWlmJMN+U8VgpSD439wAvsf5ZXSQo6ns9i6WJwiaBynFVatZHu
-         WwUxtfxkJdUe6ChH8jIWK1vnOn892/xwTE5x9QxqxZcPT33ZD9pKV4LpqELVUe3SAwU3
-         3QCQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HWq0NVPaWIyTC7SVon5/dQsGOdYo5uBd266JFVrRyME=;
+        b=X4wHfIE2O4M6OwmK1SGSqwZobGFeY0rV4K+ssylWhsT+J0FfKMGPu8Thk6LmSHfD+U
+         AXrhT5vWGKA55szODzKPE7yup9E7eKJmD/4YCb77+gOGP2sbPsg4LFGd+J+LyYowd4g2
+         HV7e2q/MXxqWfh+Bn7ebxWqIFGxses6lYjOheHtiUdVOkYbhV4s9Jx9msBKfwHXoYcGb
+         vCLlbVGCUGm74kssKTORIzNSPN9sqgB8mY1JBC6a6o/j/hEBDnmyzosbcfowk6zv+gjw
+         1O1o1hPcIm7rm+5h+yzhlDnllti7bK4rjvb2UVMRoMYt+sopxD+vPzPkuykX0PRiL3NJ
+         XIWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=LtOa7q4xLBPQlEN1skoBhgc/L5zUz2UJlIyQpzN0cTc=;
-        b=MHrOigTGjyG0pnZmT6FMdjhX4FySDZXlve7t0w4kvace2FT1F3aItgbDmNR9vm5QPo
-         FT21/wJkfKJRRI0MMZS41CkBZ4nLWQu0qLBWj71jnho21X7GVKWf9ks2Q28iJM/EYJZ+
-         Pf6I2FKvsXtDKJ/Z2x1MuCQTBlfOTZgjFWL4r9LtO6MbONiaaZIx0t3nI0yG+GhNigz3
-         VaZvkCUBhxEg6gJuUXfBv21FZU7cRTFdzTz0xf7cYxT8p/pmWMpXe5LCltvLOgGm+l6H
-         RyGRLKr0l/AG5aXmzHxB5UfbYx8JI8Ce0D/aqEXYZ23NW3wo9PaPhig1WFUrjdHVBKpa
-         W2BA==
-X-Gm-Message-State: AKS2vOySNkx+lnP/UHT655nEo2IEYR1NITWO4iYF/4DP7TLPLGRaJ6mB
-        S5jhzj75wEuIoZ/O
-X-Received: by 10.98.62.70 with SMTP id l67mr24715722pfa.114.1498855999706;
-        Fri, 30 Jun 2017 13:53:19 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:c3c:7a18:f5d8:50e0])
-        by smtp.gmail.com with ESMTPSA id l4sm17584641pgr.21.2017.06.30.13.53.18
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HWq0NVPaWIyTC7SVon5/dQsGOdYo5uBd266JFVrRyME=;
+        b=KWKhiIYtInkgwqqQvsFe5XEtMUYmxpRFvcT0tMxSgiKb7JmCjZkw9NS3kvLkXLPwL+
+         Ko/wxbmOf9lJALoRU2Dk+9aOpehCDSLh1SImhrcBGTktFEyLw4tLLOmda3RyAfifgHo3
+         p3LY4ptEyGZpU+dnfP0QzWgXi6M0ceHGPmZaYLRwLYTSdmXOIRbul2SsP7n/KauhjFgC
+         p0V/jVtOnXSp1OPAfuxnESk0U3zWIp6qmVqNuhdfd7R+ulCRIHnrgG005zhcNNsNskG0
+         A4Pmr+xVBSsDraLkd7mXA/QGwfKZ5sMBZkqF4rnmUsEB6tbnDnIBUD4xUmspaIUPGx7J
+         PCGA==
+X-Gm-Message-State: AKS2vOys9Qbn9hrfcVpUC+7Kbi3APfsBpuNeEiLXFIDqlxV/Xr0udYFq
+        +gzni2hTPrr7+A==
+X-Received: by 10.98.23.3 with SMTP id 3mr24572903pfx.55.1498857097362;
+        Fri, 30 Jun 2017 14:11:37 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:54f:b41d:dd9d:3de0])
+        by smtp.gmail.com with ESMTPSA id o8sm15044592pgn.52.2017.06.30.14.11.36
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 13:53:19 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, simon@ruderich.org
-Subject: [PATCHv2 04/25] diff.c: introduce emit_diff_symbol
-Date:   Fri, 30 Jun 2017 13:52:49 -0700
-Message-Id: <20170630205310.7380-5-sbeller@google.com>
-X-Mailer: git-send-email 2.13.0.31.g9b732c453e
-In-Reply-To: <20170630205310.7380-1-sbeller@google.com>
+        Fri, 30 Jun 2017 14:11:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, simon@ruderich.org
+Subject: Re: [PATCHv2 22/25] diff.c: color moved lines differently
 References: <20170630000710.10601-1-sbeller@google.com>
- <20170630205310.7380-1-sbeller@google.com>
+        <20170630205310.7380-1-sbeller@google.com>
+        <20170630205310.7380-23-sbeller@google.com>
+Date:   Fri, 30 Jun 2017 14:11:35 -0700
+In-Reply-To: <20170630205310.7380-23-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 30 Jun 2017 13:53:07 -0700")
+Message-ID: <xmqq1sq1qiyg.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch we want to buffer all output before emitting it as a
-new feature ("markup moved lines") conceptually cannot be implemented
-in a single pass over the output.
+Stefan Beller <sbeller@google.com> writes:
 
-There are different approaches to buffer all output such as:
-* Buffering on the char level, i.e. we'd have a char[] which would
-  grow at approximately 80 characters a line. This would keep the
-  output completely unstructured, but might be very easy to implement,
-  such as redirecting all output to a temporary file and working off
-  that. The later passes over the buffer are quite complicated though,
-  because we have to parse back any output and then decide if it should
-  be modified.
+> +static int next_byte(const char **cp, const char **endp,
+> +		     const struct diff_options *diffopt)
+> +{
+> +	int retval;
+> +
+> +	if (*cp > *endp)
+> +		return -1;
+> +
+> +	if (DIFF_XDL_TST(diffopt, IGNORE_WHITESPACE_CHANGE)) {
+> +		while (*cp < *endp && isspace(**cp))
+> +			(*cp)++;
+> +		/*
+> +		 * After skipping a couple of whitespaces, we still have to
+> +		 * account for one space.
+> +		 */
+> +		return (int)' ';
 
-* Buffer on a line level. As the output is mostly line oriented already,
-  this would make sense, but it still is a bit awkward as we'd have to
-  make sense of it again by looking at the first characters of a line
-  to decide what part of a diff a line is.
+Do we need a cast here?
 
-* Buffer semantically. Imagine there is a formal grammar for the diff
-  output and we'd keep the symbols of this grammar around. This keeps
-  the highest level of structure in the buffered data, such that the
-  actual memory requirements are less than say the first option. Instead
-  of buffering the characters of the line, we'll buffer what we intend
-  to do plus additional information for the specifics. An output of
+> +static unsigned get_string_hash(struct emitted_diff_symbol *es, struct diff_options *o)
+> +{
+> +	if (o->xdl_opts & XDF_WHITESPACE_FLAGS) {
+> +		static struct strbuf sb = STRBUF_INIT;
+> +		const char *ap = es->line, *ae = es->line + es->len;
+> +		int c;
+> +
+> +		strbuf_reset(&sb);
+> +		while (ae > ap && isspace(*ae))
+> +			ae--;
 
-    diff --git a/new.txt b/new.txt
-    index fa69b07..412428c 100644
-    Binary files a/new.txt and b/new.txt differ
+Not testing for the AT_EOL option here?  
 
-  could be buffered as
-     DIFF_SYMBOL_DIFF_START + new.txt
-     DIFF_SYMBOL_INDEX_MODE + fa69b07 412428c "non-executable" flag
-     DIFF_SYMBOL_BINARY_FILES + new.txt
+It does not make a difference in correctness; two lines that differ
+only by their trailing whitespaces will be hashed into the same bin
+even when we are not using ignore-whitespace-at-eol, making the 
+hashmap a bit less efficient than necessary.
 
-This and the following patches introduce the third option of buffering
-by first moving any output to emit_diff_symbol, and then introducing the
-buffering in this function.
+By the way, this is an unrelated tangent because I think you
+inherited this pattern by copying and pasting from elsewhere, but I
+think it would be better if we avoid casting the function pointer
+type like this:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+> +		if (o->color_moved) {
+> +			struct hashmap add_lines, del_lines;
+> +
+> +			hashmap_init(&del_lines,
+> +				     (hashmap_cmp_fn)moved_entry_cmp, o, 0);
+> +			hashmap_init(&add_lines,
+> +				     (hashmap_cmp_fn)moved_entry_cmp, o, 0);
 
-diff --git a/diff.c b/diff.c
-index 77ef56a6e4..4637368d59 100644
---- a/diff.c
-+++ b/diff.c
-@@ -560,6 +560,24 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
- 	emit_line_0(o, set, reset, line[0], line+1, len-1);
- }
- 
-+enum diff_symbol {
-+	DIFF_SYMBOL_SEPARATOR
-+};
-+
-+static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
-+			     const char *line, int len)
-+{
-+	switch (s) {
-+	case DIFF_SYMBOL_SEPARATOR:
-+		fprintf(o->file, "%s%c",
-+			diff_line_prefix(o),
-+			o->line_termination);
-+		break;
-+	default:
-+		die("BUG: unknown diff symbol");
-+	}
-+}
-+
- static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
- {
- 	if (!((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
-@@ -4828,9 +4846,7 @@ void diff_flush(struct diff_options *options)
- 
- 	if (output_format & DIFF_FORMAT_PATCH) {
- 		if (separator) {
--			fprintf(options->file, "%s%c",
--				diff_line_prefix(options),
--				options->line_termination);
-+			emit_diff_symbol(options, DIFF_SYMBOL_SEPARATOR, NULL, 0);
- 			if (options->stat_sep) {
- 				/* attach patch instead of inline */
- 				fputs(options->stat_sep, options->file);
--- 
-2.13.0.31.g9b732c453e
+When hashmap_cmp_fn's definition changes, these two calling sites
+won't be caught as passing a incorrectly typed callback function by
+the compiler.
 
+Instead, we can match the actual implementation of the callback
+function, e.g.
+
+> +static int moved_entry_cmp(const struct diff_options *diffopt,
+> +			   const struct moved_entry *a,
+> +			   const struct moved_entry *b,
+> +			   const void *keydata)
+> +{
+
+to the expected function type, i.e.
+
+static int moved_entry_cmp(const void *fndata,
+			   const void *entry, const void *entry_or_key,
+			   const void *keydata)
+{
+	const struct diff_options *diffopt = fndata;
+	const struct moved_entry *a = entry;
+	const struct moved_entry *b = entry_or_key;
+	...
+
+by casting the parameters.
