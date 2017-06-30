@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9125202A7
-	for <e@80x24.org>; Fri, 30 Jun 2017 00:08:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39857202A7
+	for <e@80x24.org>; Fri, 30 Jun 2017 00:08:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752669AbdF3AIS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 20:08:18 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:32831 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752085AbdF3AHy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2017 20:07:54 -0400
-Received: by mail-pg0-f54.google.com with SMTP id f127so55150163pgc.0
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:54 -0700 (PDT)
+        id S1751827AbdF3AIU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 20:08:20 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:34334 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751710AbdF3AHs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 20:07:48 -0400
+Received: by mail-pg0-f48.google.com with SMTP id t186so55417428pgb.1
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oqjA20V+3ePRF7gyhflPaI9cwApE7FtB5c953b8i+dk=;
-        b=e+yCLmCEeUpVkDnFe7E19U9r5vDxw5E+FRPEGgMAJT3kn0FzGosKhLxpqooBYmK0qH
-         NFgzpkKXv1f5mTq5ivu/KVJ4dee9qsIWX/4LTqn9G5sHhza9Wkiw9UH7mn7lNJgFxaaM
-         Oufo2+8PXjCotm5WMABQoiB7rtpm6Znp23iXZcSb4sJcWjbHjn30N3TIu/tv5NttnDFx
-         +xtanpqH4trfoj+OLrE73US5U6xb7xfsfU6lUcnZvnH3viCUTyvrqMOsq3If3C3m8bhs
-         go5BFSaxv5vDfMlPHLW5zz8FoQNmcWAHrIpEW1jVBK1dXnqfppg2EUogJJafIMnyvWwX
-         0c8w==
+        bh=g4FTP9M6haQNe1wpu5tbOL0cb2z1bUCIigmMh0Px7S0=;
+        b=gkvF6x+d+bVfhwlvfHQxNhG4f82KaG5XxZawMecYmtvp7shYfZWyAYKkZBJF93u+nV
+         IGlQxskxU9wL79fqEFxc71wVnfD2PaOXHKXgWt75/Dhxy9/vXs9e1eRjW38xgsBYy5LC
+         Q3R/GvHVLlDzw+FYrWxwQrcVaPZ7SFAg5L6J0DhshmBerr21ApQnK5Y8dYzh0TddSa1Q
+         xvA4OMjaKD1xCzAnhEUpp6cFJSe4stwY8dr87w+7DeuGIWDJe2U3CrQP8YkPz432tuBs
+         jC+J/Sh4sTxoJz8xnDIkMXkDRYudnZm5qYHQHDjXW/YjewECuCacuXt65FHui6MIHI1Q
+         idlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=oqjA20V+3ePRF7gyhflPaI9cwApE7FtB5c953b8i+dk=;
-        b=kGn8HXkEySJfjT7sQZYn2suDan/f6hMvYgxBs/xJH34EmjqiH+PhTd5St/dpGndP+h
-         M8wVEtZP6yuCz6EqJKIj/bve46yamXD8xbgBQ9lglBS/tAWGpqjE5MUJSBZUUMb9DLHF
-         XXn+/nGVcwBsvxBgmK2gfCq/x086LcYFxY3uXrE3rC/vo60TvjUE1lSD50kOx9XUxLql
-         kIfVabWS9vT3YPPMlEYnZrJevPX2ZUjFbqJcAJjGxk7HQLuwYaqrHyX3ETEF72ONsict
-         MtogEeWvk81x+GMjNb+BTIj0rBngbU1+d1tifvVPiIACqtmtsEHqhfmzXZiCI6bfDytb
-         h8bA==
-X-Gm-Message-State: AKS2vOyWLmfyMWolHee6VUSSurcFk2Pg+bQ3E2cSmA6RWckvZJWmZFcU
-        17OshjouQYvy4pGe
-X-Received: by 10.99.160.17 with SMTP id r17mr18093873pge.95.1498781273998;
-        Thu, 29 Jun 2017 17:07:53 -0700 (PDT)
+        bh=g4FTP9M6haQNe1wpu5tbOL0cb2z1bUCIigmMh0Px7S0=;
+        b=W75lM4Q1XtCErSIcwHJ3v9odkFpJd2kRSZtyzUhXnphuWCMK6fo/rjltIpOW29vnnP
+         NUFzzqZ5zpW9Be/HY58Vi3Mzd4sJ9wg/6WmrABYabeiQVzd3SoNRrGTlf7JHCwXqKrVn
+         FzVKJsm2hAF5g/J+VQjKWNKVU06dx/SOWAuLjb7O5yUz35RylCGVIrOLljvQ6aDvFect
+         yItWXtMIquBAJD/mojdF8NhUYqLvxAU0l2EHaeaqeNzSHx8EsqzxKdGj5q+9p9Nj03Uc
+         D5JBN1qstEJelh+2+I+YVy1ecobhV8vSDxDxJCKvm+E9rh6NGUVz6qmnH7y1VIsw7se3
+         kUng==
+X-Gm-Message-State: AKS2vOymgGVgy0fiBObp4u0rIaifOO9/RhfD85jZZ5voK+HVUKNmDbIL
+        WRZcUJgGJTY7aDN1
+X-Received: by 10.98.73.205 with SMTP id r74mr19076302pfi.166.1498781262786;
+        Thu, 29 Jun 2017 17:07:42 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c3c:7a18:f5d8:50e0])
-        by smtp.gmail.com with ESMTPSA id q7sm14789439pfk.108.2017.06.29.17.07.51
+        by smtp.gmail.com with ESMTPSA id c22sm15563776pfl.97.2017.06.29.17.07.41
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 29 Jun 2017 17:07:51 -0700 (PDT)
+        Thu, 29 Jun 2017 17:07:41 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 23/25] diff.c: color moved lines differently, plain mode
-Date:   Thu, 29 Jun 2017 17:07:08 -0700
-Message-Id: <20170630000710.10601-24-sbeller@google.com>
+Subject: [PATCH 15/25] submodule.c: migrate diff output to use emit_diff_symbol
+Date:   Thu, 29 Jun 2017 17:07:00 -0700
+Message-Id: <20170630000710.10601-16-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
 In-Reply-To: <20170630000710.10601-1-sbeller@google.com>
 References: <20170630000710.10601-1-sbeller@google.com>
@@ -61,141 +60,388 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the 'plain' mode for move detection of code. This omits the checking
-for adjacent blocks, so it is not as useful. If you have a lot of the
-same blocks moved in the same patch, the 'Zebra' would end up slow as it
-is O(n^2) (n is number of same blocks). So this may be useful there and
-is generally easy to add. Instead be very literal at the move detection,
-do not skip over short blocks here.
+As the submodule process is no longer attached to the same file pointer
+'o->file' as the superprojects process, there is a different result in
+color.c::check_auto_color. That is why we need to pass coloring explicitly,
+such that the submodule coloring decision will be made by the child process
+processing the submodule. Only DIFF_SYMBOL_SUBMODULE_PIPETHROUGH contains
+color, the other symbols are for embedding the submodule output into the
+superprojects output.
+
+Remove the colors from the function signatures, as all the coloring
+decisions will be made either inside the child process or the final
+emit_diff_symbol, but not in the functions driving the submodule diff.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c                     | 10 +++++++--
- diff.h                     |  1 +
- t/t4015-diff-whitespace.sh | 51 +++++++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 59 insertions(+), 3 deletions(-)
+ diff.c      | 83 +++++++++++++++++++++++++++++++++++++++++++++++++++---------
+ diff.h      |  9 +++++++
+ submodule.c | 84 +++++++++++++++++++++++++++----------------------------------
+ submodule.h | 13 +++-------
+ 4 files changed, 121 insertions(+), 68 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 322a2bfd72..41ee81d1d8 100644
+index 5c428e02b6..48f719fb07 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -256,12 +256,14 @@ static int parse_color_moved(const char *arg)
- 
- 	if (!strcmp(arg, "no"))
- 		return COLOR_MOVED_NO;
-+	else if (!strcmp(arg, "plain"))
-+		return COLOR_MOVED_PLAIN;
- 	else if (!strcmp(arg, "zebra"))
- 		return COLOR_MOVED_ZEBRA;
- 	else if (!strcmp(arg, "default"))
- 		return COLOR_MOVED_DEFAULT;
- 	else
--		return error(_("color moved setting must be one of 'no', 'default', 'zebra'"));
-+		return error(_("color moved setting must be one of 'no', 'default', 'zebra', 'plain'"));
+@@ -561,6 +561,13 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
  }
  
- int git_diff_ui_config(const char *var, const char *value, void *cb)
-@@ -876,7 +878,8 @@ static void mark_color_as_moved(struct diff_options *o,
- 		}
+ enum diff_symbol {
++	DIFF_SYMBOL_SUBMODULE_ADD,
++	DIFF_SYMBOL_SUBMODULE_DEL,
++	DIFF_SYMBOL_SUBMODULE_UNTRACKED,
++	DIFF_SYMBOL_SUBMODULE_MODIFIED,
++	DIFF_SYMBOL_SUBMODULE_HEADER,
++	DIFF_SYMBOL_SUBMODULE_ERROR,
++	DIFF_SYMBOL_SUBMODULE_PIPETHROUGH,
+ 	DIFF_SYMBOL_REWRITE_DIFF,
+ 	DIFF_SYMBOL_BINARY_FILES,
+ 	DIFF_SYMBOL_HEADER,
+@@ -625,6 +632,9 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
+ 		emit_line_0(o, context, reset, '\\',
+ 			    nneof, strlen(nneof));
+ 		break;
++	case DIFF_SYMBOL_SUBMODULE_HEADER:
++	case DIFF_SYMBOL_SUBMODULE_ERROR:
++	case DIFF_SYMBOL_SUBMODULE_PIPETHROUGH:
+ 	case DIFF_SYMBOL_CONTEXT_FRAGINFO:
+ 		emit_line(o, "", "", line, len);
+ 		break;
+@@ -701,11 +711,68 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
+ 		reset = diff_get_color_opt(o, DIFF_RESET);
+ 		emit_line(o, fraginfo, reset, line, len);
+ 		break;
++	case DIFF_SYMBOL_SUBMODULE_ADD:
++		set = diff_get_color_opt(o, DIFF_FILE_NEW);
++		reset = diff_get_color_opt(o, DIFF_RESET);
++		emit_line(o, set, reset, line, len);
++		break;
++	case DIFF_SYMBOL_SUBMODULE_DEL:
++		set = diff_get_color_opt(o, DIFF_FILE_OLD);
++		reset = diff_get_color_opt(o, DIFF_RESET);
++		emit_line(o, set, reset, line, len);
++		break;
++	case DIFF_SYMBOL_SUBMODULE_UNTRACKED:
++		fprintf(o->file, "%sSubmodule %s contains untracked content\n",
++			diff_line_prefix(o), line);
++		break;
++	case DIFF_SYMBOL_SUBMODULE_MODIFIED:
++		fprintf(o->file, "%sSubmodule %s contains modified content\n",
++			diff_line_prefix(o), line);
++		break;
+ 	default:
+ 		die("BUG: unknown diff symbol");
+ 	}
+ }
  
- 		if (!match) {
--			if (block_length < COLOR_MOVED_MIN_BLOCK_LENGTH) {
-+			if (block_length < COLOR_MOVED_MIN_BLOCK_LENGTH &&
-+			    o->color_moved != COLOR_MOVED_PLAIN) {
- 				for (i = 0; i < block_length + 1; i++) {
- 					l = &o->emitted_symbols->buf[n - i];
- 					l->flags &= ~DIFF_SYMBOL_MOVED_LINE;
-@@ -890,6 +893,9 @@ static void mark_color_as_moved(struct diff_options *o,
- 		l->flags |= DIFF_SYMBOL_MOVED_LINE;
- 		block_length++;
- 
-+		if (o->color_moved == COLOR_MOVED_PLAIN)
-+			continue;
++void diff_emit_submodule_del(struct diff_options *o, const char *line)
++{
++	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_DEL, line, strlen(line), 0);
++}
 +
- 		/* Check any potential block runs, advance each or nullify */
- 		for (i = 0; i < pmb_nr; i++) {
- 			struct moved_entry *p = pmb[i];
++void diff_emit_submodule_add(struct diff_options *o, const char *line)
++{
++	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_ADD, line, strlen(line), 0);
++}
++
++void diff_emit_submodule_untracked(struct diff_options *o, const char *path)
++{
++	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_UNTRACKED,
++			 path, strlen(path), 0);
++}
++
++void diff_emit_submodule_modified(struct diff_options *o, const char *path)
++{
++	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_MODIFIED,
++			 path, strlen(path), 0);
++}
++
++void diff_emit_submodule_header(struct diff_options *o, const char *header)
++{
++	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_HEADER,
++			 header, strlen(header), 0);
++}
++
++void diff_emit_submodule_error(struct diff_options *o, const char *err)
++{
++	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_ERROR, err, strlen(err), 0);
++}
++
++void diff_emit_submodule_pipethrough(struct diff_options *o,
++				     const char *line, int len)
++{
++	emit_diff_symbol(o, DIFF_SYMBOL_SUBMODULE_PIPETHROUGH, line, len, 0);
++}
++
+ static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
+ {
+ 	if (!((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
+@@ -2467,24 +2534,16 @@ static void builtin_diff(const char *name_a,
+ 	if (o->submodule_format == DIFF_SUBMODULE_LOG &&
+ 	    (!one->mode || S_ISGITLINK(one->mode)) &&
+ 	    (!two->mode || S_ISGITLINK(two->mode))) {
+-		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
+-		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
+-		show_submodule_summary(o->file, one->path ? one->path : two->path,
+-				line_prefix,
++		show_submodule_summary(o, one->path ? one->path : two->path,
+ 				&one->oid, &two->oid,
+-				two->dirty_submodule,
+-				meta, del, add, reset);
++				two->dirty_submodule);
+ 		return;
+ 	} else if (o->submodule_format == DIFF_SUBMODULE_INLINE_DIFF &&
+ 		   (!one->mode || S_ISGITLINK(one->mode)) &&
+ 		   (!two->mode || S_ISGITLINK(two->mode))) {
+-		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
+-		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
+-		show_submodule_inline_diff(o->file, one->path ? one->path : two->path,
+-				line_prefix,
++		show_submodule_inline_diff(o, one->path ? one->path : two->path,
+ 				&one->oid, &two->oid,
+-				two->dirty_submodule,
+-				meta, del, add, reset, o);
++				two->dirty_submodule);
+ 		return;
+ 	}
+ 
 diff --git a/diff.h b/diff.h
-index 3196802673..4cfd609c54 100644
+index ea66168454..ae40bac7a9 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -190,6 +190,7 @@ struct diff_options {
- 	struct emitted_diff_symbols *emitted_symbols;
- 	enum {
- 		COLOR_MOVED_NO = 0,
-+		COLOR_MOVED_PLAIN = 1,
- 		COLOR_MOVED_ZEBRA = 2,
- 	} color_moved;
- 	#define COLOR_MOVED_DEFAULT COLOR_MOVED_ZEBRA
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 29704ae14e..d1d7b99990 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -986,7 +986,7 @@ test_expect_success 'detect moved code, complete file' '
- 	git mv test.c main.c &&
- 	test_config color.diff.oldMoved "normal red" &&
- 	test_config color.diff.newMoved "normal green" &&
--	git diff HEAD --color-moved --no-renames | test_decode_color >actual &&
-+	git diff HEAD --color-moved=zebra --no-renames | test_decode_color >actual &&
- 	cat >expected <<-\EOF &&
- 	<BOLD>diff --git a/main.c b/main.c<RESET>
- 	<BOLD>new file mode 100644<RESET>
-@@ -1130,6 +1130,55 @@ test_expect_success 'detect malicious moved code, inside file' '
- 	test_cmp expected actual
- '
+@@ -188,6 +188,15 @@ struct diff_options {
+ 	int diff_path_counter;
+ };
  
-+test_expect_success 'plain moved code, inside file' '
-+	test_config color.diff.oldMoved "normal red" &&
-+	test_config color.diff.newMoved "normal green" &&
-+	test_config color.diff.oldMovedAlternative "blue" &&
-+	test_config color.diff.newMovedAlternative "yellow" &&
-+	# needs previous test as setup
-+	git diff HEAD --no-renames --color-moved=plain| test_decode_color >actual &&
-+	cat <<-\EOF >expected &&
-+	<BOLD>diff --git a/main.c b/main.c<RESET>
-+	<BOLD>index 27a619c..7cf9336 100644<RESET>
-+	<BOLD>--- a/main.c<RESET>
-+	<BOLD>+++ b/main.c<RESET>
-+	<CYAN>@@ -5,13 +5,6 @@<RESET> <RESET>printf("Hello ");<RESET>
-+	 printf("World\n");<RESET>
-+	 }<RESET>
-+	 <RESET>
-+	<BRED>-int secure_foo(struct user *u)<RESET>
-+	<BRED>-{<RESET>
-+	<BRED>-if (!u->is_allowed_foo)<RESET>
-+	<BRED>-return;<RESET>
-+	<BRED>-foo(u);<RESET>
-+	<BRED>-}<RESET>
-+	<BRED>-<RESET>
-+	 int main()<RESET>
-+	 {<RESET>
-+	 foo();<RESET>
-+	<BOLD>diff --git a/test.c b/test.c<RESET>
-+	<BOLD>index 1dc1d85..2bedec9 100644<RESET>
-+	<BOLD>--- a/test.c<RESET>
-+	<BOLD>+++ b/test.c<RESET>
-+	<CYAN>@@ -4,6 +4,13 @@<RESET> <RESET>int bar()<RESET>
-+	 printf("Hello World, but different\n");<RESET>
-+	 }<RESET>
-+	 <RESET>
-+	<BGREEN>+<RESET><BGREEN>int secure_foo(struct user *u)<RESET>
-+	<BGREEN>+<RESET><BGREEN>{<RESET>
-+	<BGREEN>+<RESET><BGREEN>foo(u);<RESET>
-+	<BGREEN>+<RESET><BGREEN>if (!u->is_allowed_foo)<RESET>
-+	<BGREEN>+<RESET><BGREEN>return;<RESET>
-+	<BGREEN>+<RESET><BGREEN>}<RESET>
-+	<BGREEN>+<RESET>
-+	 int another_function()<RESET>
-+	 {<RESET>
-+	 bar();<RESET>
-+	EOF
++void diff_emit_submodule_del(struct diff_options *o, const char *line);
++void diff_emit_submodule_add(struct diff_options *o, const char *line);
++void diff_emit_submodule_untracked(struct diff_options *o, const char *path);
++void diff_emit_submodule_modified(struct diff_options *o, const char *path);
++void diff_emit_submodule_header(struct diff_options *o, const char *header);
++void diff_emit_submodule_error(struct diff_options *o, const char *err);
++void diff_emit_submodule_pipethrough(struct diff_options *o,
++				     const char *line, int len);
 +
-+	test_cmp expected actual
-+'
+ enum color_diff {
+ 	DIFF_RESET = 0,
+ 	DIFF_CONTEXT = 1,
+diff --git a/submodule.c b/submodule.c
+index da0b805493..07a3183150 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -479,9 +479,7 @@ static int prepare_submodule_summary(struct rev_info *rev, const char *path,
+ 	return prepare_revision_walk(rev);
+ }
+ 
+-static void print_submodule_summary(struct rev_info *rev, FILE *f,
+-		const char *line_prefix,
+-		const char *del, const char *add, const char *reset)
++static void print_submodule_summary(struct rev_info *rev, struct diff_options *o)
+ {
+ 	static const char format[] = "  %m %s";
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -492,18 +490,12 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
+ 		ctx.date_mode = rev->date_mode;
+ 		ctx.output_encoding = get_log_output_encoding();
+ 		strbuf_setlen(&sb, 0);
+-		strbuf_addstr(&sb, line_prefix);
+-		if (commit->object.flags & SYMMETRIC_LEFT) {
+-			if (del)
+-				strbuf_addstr(&sb, del);
+-		}
+-		else if (add)
+-			strbuf_addstr(&sb, add);
+ 		format_commit_message(commit, format, &sb, &ctx);
+-		if (reset)
+-			strbuf_addstr(&sb, reset);
+ 		strbuf_addch(&sb, '\n');
+-		fprintf(f, "%s", sb.buf);
++		if (commit->object.flags & SYMMETRIC_LEFT)
++			diff_emit_submodule_del(o, sb.buf);
++		else
++			diff_emit_submodule_add(o, sb.buf);
+ 	}
+ 	strbuf_release(&sb);
+ }
+@@ -530,11 +522,9 @@ void prepare_submodule_repo_env(struct argv_array *out)
+  * attempt to lookup both the left and right commits and put them into the
+  * left and right pointers.
+  */
+-static void show_submodule_header(FILE *f, const char *path,
+-		const char *line_prefix,
++static void show_submodule_header(struct diff_options *o, const char *path,
+ 		struct object_id *one, struct object_id *two,
+-		unsigned dirty_submodule, const char *meta,
+-		const char *reset,
++		unsigned dirty_submodule,
+ 		struct commit **left, struct commit **right,
+ 		struct commit_list **merge_bases)
+ {
+@@ -543,11 +533,10 @@ static void show_submodule_header(FILE *f, const char *path,
+ 	int fast_forward = 0, fast_backward = 0;
+ 
+ 	if (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+-		fprintf(f, "%sSubmodule %s contains untracked content\n",
+-			line_prefix, path);
++		diff_emit_submodule_untracked(o, path);
 +
- test_expect_success 'no effect from --color-moved with --word-diff' '
- 	cat <<-\EOF >text.txt &&
- 	Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+ 	if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+-		fprintf(f, "%sSubmodule %s contains modified content\n",
+-			line_prefix, path);
++		diff_emit_submodule_modified(o, path);
+ 
+ 	if (is_null_oid(one))
+ 		message = "(new submodule)";
+@@ -589,31 +578,29 @@ static void show_submodule_header(FILE *f, const char *path,
+ 	}
+ 
+ output_header:
+-	strbuf_addf(&sb, "%s%sSubmodule %s ", line_prefix, meta, path);
++	strbuf_addf(&sb, "Submodule %s ", path);
+ 	strbuf_add_unique_abbrev(&sb, one->hash, DEFAULT_ABBREV);
+ 	strbuf_addstr(&sb, (fast_backward || fast_forward) ? ".." : "...");
+ 	strbuf_add_unique_abbrev(&sb, two->hash, DEFAULT_ABBREV);
+ 	if (message)
+-		strbuf_addf(&sb, " %s%s\n", message, reset);
++		strbuf_addf(&sb, " %s\n", message);
+ 	else
+-		strbuf_addf(&sb, "%s:%s\n", fast_backward ? " (rewind)" : "", reset);
+-	fwrite(sb.buf, sb.len, 1, f);
++		strbuf_addf(&sb, "%s:\n", fast_backward ? " (rewind)" : "");
++	diff_emit_submodule_header(o, sb.buf);
+ 
+ 	strbuf_release(&sb);
+ }
+ 
+-void show_submodule_summary(FILE *f, const char *path,
+-		const char *line_prefix,
++void show_submodule_summary(struct diff_options *o, const char *path,
+ 		struct object_id *one, struct object_id *two,
+-		unsigned dirty_submodule, const char *meta,
+-		const char *del, const char *add, const char *reset)
++		unsigned dirty_submodule)
+ {
+ 	struct rev_info rev;
+ 	struct commit *left = NULL, *right = NULL;
+ 	struct commit_list *merge_bases = NULL;
+ 
+-	show_submodule_header(f, path, line_prefix, one, two, dirty_submodule,
+-			      meta, reset, &left, &right, &merge_bases);
++	show_submodule_header(o, path, one, two, dirty_submodule,
++			      &left, &right, &merge_bases);
+ 
+ 	/*
+ 	 * If we don't have both a left and a right pointer, there is no
+@@ -625,11 +612,11 @@ void show_submodule_summary(FILE *f, const char *path,
+ 
+ 	/* Treat revision walker failure the same as missing commits */
+ 	if (prepare_submodule_summary(&rev, path, left, right, merge_bases)) {
+-		fprintf(f, "%s(revision walker failed)\n", line_prefix);
++		diff_emit_submodule_error(o, "(revision walker failed)\n");
+ 		goto out;
+ 	}
+ 
+-	print_submodule_summary(&rev, f, line_prefix, del, add, reset);
++	print_submodule_summary(&rev, o);
+ 
+ out:
+ 	if (merge_bases)
+@@ -638,21 +625,18 @@ void show_submodule_summary(FILE *f, const char *path,
+ 	clear_commit_marks(right, ~0);
+ }
+ 
+-void show_submodule_inline_diff(FILE *f, const char *path,
+-		const char *line_prefix,
++void show_submodule_inline_diff(struct diff_options *o, const char *path,
+ 		struct object_id *one, struct object_id *two,
+-		unsigned dirty_submodule, const char *meta,
+-		const char *del, const char *add, const char *reset,
+-		const struct diff_options *o)
++		unsigned dirty_submodule)
+ {
+ 	const struct object_id *old = &empty_tree_oid, *new = &empty_tree_oid;
+ 	struct commit *left = NULL, *right = NULL;
+ 	struct commit_list *merge_bases = NULL;
+-	struct strbuf submodule_dir = STRBUF_INIT;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
++	struct strbuf sb = STRBUF_INIT;
+ 
+-	show_submodule_header(f, path, line_prefix, one, two, dirty_submodule,
+-			      meta, reset, &left, &right, &merge_bases);
++	show_submodule_header(o, path, one, two, dirty_submodule,
++			      &left, &right, &merge_bases);
+ 
+ 	/* We need a valid left and right commit to display a difference */
+ 	if (!(left || is_null_oid(one)) ||
+@@ -664,16 +648,16 @@ void show_submodule_inline_diff(FILE *f, const char *path,
+ 	if (right)
+ 		new = two;
+ 
+-	fflush(f);
+ 	cp.git_cmd = 1;
+ 	cp.dir = path;
+-	cp.out = dup(fileno(f));
++	cp.out = -1;
+ 	cp.no_stdin = 1;
+ 
+ 	/* TODO: other options may need to be passed here. */
+ 	argv_array_pushl(&cp.args, "diff", "--submodule=diff", NULL);
++	argv_array_pushf(&cp.args, "--color=%s", want_color(o->use_color) ?
++			 "always" : "never");
+ 
+-	argv_array_pushf(&cp.args, "--line-prefix=%s", line_prefix);
+ 	if (DIFF_OPT_TST(o, REVERSE_DIFF)) {
+ 		argv_array_pushf(&cp.args, "--src-prefix=%s%s/",
+ 				 o->b_prefix, path);
+@@ -696,11 +680,17 @@ void show_submodule_inline_diff(FILE *f, const char *path,
+ 		argv_array_push(&cp.args, oid_to_hex(new));
+ 
+ 	prepare_submodule_repo_env(&cp.env_array);
+-	if (run_command(&cp))
+-		fprintf(f, "(diff failed)\n");
++	if (start_command(&cp))
++		diff_emit_submodule_error(o, "(diff failed)\n");
++
++	while (strbuf_getwholeline_fd(&sb, cp.out, '\n') != EOF)
++		diff_emit_submodule_pipethrough(o, sb.buf, sb.len);
++
++	if (finish_command(&cp))
++		diff_emit_submodule_error(o, "(diff failed)\n");
+ 
+ done:
+-	strbuf_release(&submodule_dir);
++	strbuf_release(&sb);
+ 	if (merge_bases)
+ 		free_commit_list(merge_bases);
+ 	if (left)
+diff --git a/submodule.h b/submodule.h
+index cbe5c1726f..829d975585 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -63,17 +63,12 @@ extern int parse_submodule_update_strategy(const char *value,
+ 		struct submodule_update_strategy *dst);
+ extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
+ extern void handle_ignore_submodules_arg(struct diff_options *, const char *);
+-extern void show_submodule_summary(FILE *f, const char *path,
+-		const char *line_prefix,
++extern void show_submodule_summary(struct diff_options *o, const char *path,
+ 		struct object_id *one, struct object_id *two,
+-		unsigned dirty_submodule, const char *meta,
+-		const char *del, const char *add, const char *reset);
+-extern void show_submodule_inline_diff(FILE *f, const char *path,
+-		const char *line_prefix,
++		unsigned dirty_submodule);
++extern void show_submodule_inline_diff(struct diff_options *o, const char *path,
+ 		struct object_id *one, struct object_id *two,
+-		unsigned dirty_submodule, const char *meta,
+-		const char *del, const char *add, const char *reset,
+-		const struct diff_options *opt);
++		unsigned dirty_submodule);
+ extern void set_config_fetch_recurse_submodules(int value);
+ /* Check if we want to update any submodule.*/
+ extern int should_update_submodules(void);
 -- 
 2.13.0.31.g9b732c453e
 
