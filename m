@@ -6,312 +6,110 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4F38202A7
-	for <e@80x24.org>; Fri, 30 Jun 2017 00:08:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C18F202A7
+	for <e@80x24.org>; Fri, 30 Jun 2017 00:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752347AbdF3AIm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 20:08:42 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35642 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752359AbdF3AHe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2017 20:07:34 -0400
-Received: by mail-pf0-f181.google.com with SMTP id c73so58095131pfk.2
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:34 -0700 (PDT)
+        id S1751601AbdF3Aiz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 20:38:55 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:34822 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751532AbdF3Aiy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 20:38:54 -0400
+Received: by mail-pf0-f172.google.com with SMTP id c73so58396963pfk.2
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:38:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Z1dr9nWMXFJcjZ9TP6Bd2ZzdN1f07PoLdORIimGvt08=;
-        b=AWQAzLHWhisWHMTC9lyZ/tvpSUV4zMSmD1dV16wYcyMo4HSoYf2W6Up9zZzcbWVRvW
-         9FworNWL7baqyr5qT0kbvrdQX5lYXAgviW5xFoA+edFftqg9Rl5/onSe7rrBcea2EfGz
-         otm5jEgs+1s42GV0qdNxHrQgCdy2YVz2hKXz3xE1hyqhHNBvsBz/7WVK7Xsi9p/Y9R6K
-         ToT7EgBrRMnJBdvL9IOEjolD3UiXiUtRKr4LG3wegPtNlhKTPpnA22PRMi7ER+ttPwck
-         iSfnSrLOgRiJGQhRe9oyO4W/m1GWNpTB6VxDceLSrVUhkWr08uCqVx3/hskAoQ7VB82j
-         fKVA==
+        h=from:to:cc:subject:date:message-id;
+        bh=wNZCKlXZ1PiU6f5N2sTs43my6zQxUMTWlel67xckVlU=;
+        b=TI7SaCQRfFn/OalZrIrC1sGprCDumkW2SAzhanZDOd7CkD8I2+LJKzSYWRg232Eig5
+         HFBzieZfd9p8iousYiVLfdY5uMGYgGbwwJ5PfCaU6YfgBxBVaraFU7E8wfDa7NYO0Vh1
+         s4I6hymqfViW2M0ssjulSMXgcYOT/47MYO4D/ZUZhpQrtnZNmYCzaLONPaj1Rk/S9uvT
+         W/Qpeq1pKb3hnjD4eZk4Hg56sKQZOIu0HptDgGg9FuvEYiixqgrJ7a6Mm2p38XBg0BOW
+         +gBU7bDAZRItZ9J2i5LQd78jARfeuEzAYNrDi9ayCkzZ11RVJt5cpbTSEUwixOqGaWVg
+         TGSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Z1dr9nWMXFJcjZ9TP6Bd2ZzdN1f07PoLdORIimGvt08=;
-        b=bOy3ztRlkjsWPetSevNaMOR+MocLcMBMIFi+ChjtU6sDfml9Wx5ydjMNnWAGult/5I
-         qTCAbw13n17a5MuwelrKiTsC7sH+DOgCEIBG1iOSm/z41RrIZpSwPHuHCZ+PD4jFbcnc
-         9ljnDszWFXOVc42UylVPXFREdCZHHfVr7znRpQOr5LCWiMNUdIDDQeLvNG6S0A9mY+q1
-         +QjojAzrfiKbN5BVQo2fSGodvjP+3XywWuROE4Z+07UtW5dhUDNCcaznsH8AoBleqeVG
-         hDLrMkGDuvRK6GMNg93TXSZ1Lb308W+Q7AfX6VLUz4kdqSu7L3GTK+sDbsn1ClV7emLI
-         wfsA==
-X-Gm-Message-State: AKS2vOyU/hdy5++yyDwFxHhFMjcAFDlAlzq3S/m3VoXM76Gii3McXHO8
-        1wLO+jHUfRsk+Iqj
-X-Received: by 10.99.2.17 with SMTP id 17mr17849229pgc.264.1498781253648;
-        Thu, 29 Jun 2017 17:07:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=wNZCKlXZ1PiU6f5N2sTs43my6zQxUMTWlel67xckVlU=;
+        b=JlFnkM9TXkCg2K80QJA4Ipfy02CIOU7D+dL8MMrdnr/WiFP7kgQKCW/2b4RMSwjyIy
+         bhc2t8Dqj2FRGIZHM3gNqGMHWcZc02zf/YmDqq6nJF0j5oJUqyzr/7khQ8x0MqrFMcOi
+         CciPshxGFvMYv3lS8bzrYzQNE9DtGwIXPM+T21cL5urg7B00tPPVEeal7QWMK1ujxA9o
+         c20u3UyCyMfwsJG9rdteGrH+l8EYE1IysdocJxP5Aea10WHEGR7orVTHZUJa4xeA7MCy
+         0/qGJwQPoVKqkrzhpJSDcuZ7JjULMbv5DI4u+RnCvJOhBVpyvUJnUPUzarzhL7TIABv3
+         L6eQ==
+X-Gm-Message-State: AKS2vOxKwW0wqy3wkBcGznJlqBUgkLv7X0Bm5fFyHUaJVnx40reX9qtn
+        6ptw5gpzpulv4XHhR2eNPA==
+X-Received: by 10.84.193.36 with SMTP id e33mr21149066pld.122.1498783133952;
+        Thu, 29 Jun 2017 17:38:53 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c3c:7a18:f5d8:50e0])
-        by smtp.gmail.com with ESMTPSA id 28sm15747306pfq.125.2017.06.29.17.07.32
+        by smtp.gmail.com with ESMTPSA id t189sm12782797pfb.13.2017.06.29.17.38.53
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 29 Jun 2017 17:07:33 -0700 (PDT)
+        Thu, 29 Jun 2017 17:38:53 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com, git@vger.kernel.org
+To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 08/25] diff.c: migrate emit_line_checked to use emit_diff_symbol
-Date:   Thu, 29 Jun 2017 17:06:53 -0700
-Message-Id: <20170630000710.10601-9-sbeller@google.com>
+Subject: [PATCH] recursive submodules: detach HEAD from new state, keeping branches sane
+Date:   Thu, 29 Jun 2017 17:38:51 -0700
+Message-Id: <20170630003851.17288-1-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
-In-Reply-To: <20170630000710.10601-1-sbeller@google.com>
-References: <20170630000710.10601-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new flags field to emit_diff_symbol, that will be used by
-context lines for:
-* white space rules that are applicable (The first 12 bits)
-  Take a note in cahe.c as well, when this ws rules are extended we have
-  to fix the bits in the flags field.
-* how the rules are evaluated (actually this double encodes the sign
-  of the line, but the code is easier to keep this way, bits 13,14,15)
-* if the line a blank line at EOF (bit 16)
-
-The check if new lines need to be marked up as extra lines at the end of
-file, is now done unconditionally. That should be ok, as
-'new_blank_line_at_eof' has a quick early return.
+When a submodule is on a branch and in its superproject you run a recursive
+checkout, the branch of the submodule is updated to what the superproject
+checks out. This is very unexpected. Instead detach the HEAD when updating
+it.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h |   2 ++
- diff.c  | 116 +++++++++++++++++++++++++++++++++++++++++-----------------------
- diff.h  |   6 ++--
- 3 files changed, 80 insertions(+), 44 deletions(-)
+ submodule.c               |  3 ++-
+ t/lib-submodule-update.sh | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index 96055c2229..18aabacba5 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1996,6 +1996,8 @@ void shift_tree_by(const struct object_id *, const struct object_id *, struct ob
- #define WS_TRAILING_SPACE      (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
- #define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|8)
- #define WS_TAB_WIDTH_MASK        077
-+/* All WS_* -- when extended, adapt diff.c emit_symbol */
-+#define WS_RULE_MASK           07777
- extern unsigned whitespace_rule_cfg;
- extern unsigned whitespace_rule(const char *);
- extern unsigned parse_whitespace_rule(const char *);
-diff --git a/diff.c b/diff.c
-index 488096b757..e5430d56da 100644
---- a/diff.c
-+++ b/diff.c
-@@ -561,17 +561,54 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
- }
+diff --git a/submodule.c b/submodule.c
+index da0b805493..719e8bd7a2 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1604,7 +1604,8 @@ int submodule_move_head(const char *path,
+ 			cp.dir = path;
  
- enum diff_symbol {
-+	DIFF_SYMBOL_CONTEXT,
-+	DIFF_SYMBOL_PLUS,
-+	DIFF_SYMBOL_MINUS,
- 	DIFF_SYMBOL_NO_LF_EOF,
- 	DIFF_SYMBOL_CONTEXT_FRAGINFO,
- 	DIFF_SYMBOL_CONTEXT_MARKER,
- 	DIFF_SYMBOL_SEPARATOR
- };
-+/*
-+ * Flags for content lines:
-+ * 0..12 are whitespace rules
-+ * 13-15 are WSEH_NEW | WSEH_OLD | WSEH_CONTEXT
-+ * 16 is marking if the line is blank at EOF
-+ */
-+#define DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF (1<<16)
-+#define DIFF_SYMBOL_CONTENT_WS_MASK (WSEH_NEW | WSEH_OLD | WSEH_CONTEXT | WS_RULE_MASK)
+ 			prepare_submodule_repo_env(&cp.env_array);
+-			argv_array_pushl(&cp.args, "update-ref", "HEAD", new, NULL);
++			argv_array_pushl(&cp.args, "update-ref", "HEAD",
++					 "--no-deref", new, NULL);
+ 
+ 			if (run_command(&cp)) {
+ 				ret = -1;
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 2d26f86800..fc406b95d7 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -848,6 +848,23 @@ test_submodule_switch_recursing_with_args () {
+ 			test_submodule_content sub1 origin/add_sub1
+ 		)
+ 	'
++	test_expect_success "$command: submodule branch is not changed, detach HEAD instead" '
++		prolog &&
++		reset_work_tree_to_interested add_sub1 &&
++		(
++			cd submodule_update &&
++			git -C sub1 checkout -b keep_branch &&
++			git -C sub1 rev-parse HEAD >expect &&
++			git branch -t check-keep origin/modify_sub1 &&
++			$command check-keep &&
++			test_superproject_content origin/modify_sub1 &&
++			test_submodule_content sub1 origin/modify_sub1 &&
++			git -C sub1 rev-parse keep_branch >actual &&
++			test_cmp expect actual &&
++			test_must_fail git -C sub1 symbolic-ref HEAD
++		)
++	'
 +
-+static void emit_line_ws_markup(struct diff_options *o,
-+				const char *set, const char *reset,
-+				const char *line, int len, char sign,
-+				unsigned ws_rule, int blank_at_eof)
-+{
-+	const char *ws = NULL;
-+
-+	if (o->ws_error_highlight & ws_rule) {
-+		ws = diff_get_color_opt(o, DIFF_WHITESPACE);
-+		if (!*ws)
-+			ws = NULL;
-+	}
-+
-+	if (!ws)
-+		emit_line_0(o, set, reset, sign, line, len);
-+	else if (blank_at_eof)
-+		/* Blank line at EOF - paint '+' as well */
-+		emit_line_0(o, ws, reset, sign, line, len);
-+	else {
-+		/* Emit just the prefix, then the rest. */
-+		emit_line_0(o, set, reset, sign, "", 0);
-+		ws_check_emit(line, len, ws_rule,
-+			      o->file, set, reset, ws);
-+	}
-+}
- 
- static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
--			     const char *line, int len)
-+			     const char *line, int len, unsigned flags)
- {
- 	static const char *nneof = " No newline at end of file\n";
--	const char *context, *reset;
-+	const char *context, *reset, *set;
- 	switch (s) {
- 	case DIFF_SYMBOL_NO_LF_EOF:
- 		context = diff_get_color_opt(o, DIFF_CONTEXT);
-@@ -593,6 +630,25 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
- 			diff_line_prefix(o),
- 			o->line_termination);
- 		break;
-+	case DIFF_SYMBOL_CONTEXT:
-+		set = diff_get_color_opt(o, DIFF_CONTEXT);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line_ws_markup(o, set, reset, line, len, ' ',
-+				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
-+		break;
-+	case DIFF_SYMBOL_PLUS:
-+		set = diff_get_color_opt(o, DIFF_FILE_NEW);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line_ws_markup(o, set, reset, line, len, '+',
-+				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
-+				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
-+		break;
-+	case DIFF_SYMBOL_MINUS:
-+		set = diff_get_color_opt(o, DIFF_FILE_OLD);
-+		reset = diff_get_color_opt(o, DIFF_RESET);
-+		emit_line_ws_markup(o, set, reset, line, len, '-',
-+				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
-+		break;
- 	default:
- 		die("BUG: unknown diff symbol");
- 	}
-@@ -609,57 +665,31 @@ static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line
- 	return ws_blank_line(line, len, ecbdata->ws_rule);
- }
- 
--static void emit_line_checked(const char *reset,
--			      struct emit_callback *ecbdata,
--			      const char *line, int len,
--			      enum color_diff color,
--			      unsigned ws_error_highlight,
--			      char sign)
--{
--	const char *set = diff_get_color(ecbdata->color_diff, color);
--	const char *ws = NULL;
--
--	if (ecbdata->opt->ws_error_highlight & ws_error_highlight) {
--		ws = diff_get_color(ecbdata->color_diff, DIFF_WHITESPACE);
--		if (!*ws)
--			ws = NULL;
--	}
--
--	if (!ws)
--		emit_line_0(ecbdata->opt, set, reset, sign, line, len);
--	else if (sign == '+' && new_blank_line_at_eof(ecbdata, line, len))
--		/* Blank line at EOF - paint '+' as well */
--		emit_line_0(ecbdata->opt, ws, reset, sign, line, len);
--	else {
--		/* Emit just the prefix, then the rest. */
--		emit_line_0(ecbdata->opt, set, reset, sign, "", 0);
--		ws_check_emit(line, len, ecbdata->ws_rule,
--			      ecbdata->opt->file, set, reset, ws);
--	}
--}
--
- static void emit_add_line(const char *reset,
- 			  struct emit_callback *ecbdata,
- 			  const char *line, int len)
- {
--	emit_line_checked(reset, ecbdata, line, len,
--			  DIFF_FILE_NEW, WSEH_NEW, '+');
-+	unsigned flags = WSEH_NEW | ecbdata->ws_rule;
-+	if (new_blank_line_at_eof(ecbdata, line, len))
-+		flags |= DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF;
-+
-+	emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_PLUS, line, len, flags);
- }
- 
- static void emit_del_line(const char *reset,
- 			  struct emit_callback *ecbdata,
- 			  const char *line, int len)
- {
--	emit_line_checked(reset, ecbdata, line, len,
--			  DIFF_FILE_OLD, WSEH_OLD, '-');
-+	unsigned flags = WSEH_OLD | ecbdata->ws_rule;
-+	emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_MINUS, line, len, flags);
- }
- 
- static void emit_context_line(const char *reset,
- 			      struct emit_callback *ecbdata,
- 			      const char *line, int len)
- {
--	emit_line_checked(reset, ecbdata, line, len,
--			  DIFF_CONTEXT, WSEH_CONTEXT, ' ');
-+	unsigned flags = WSEH_CONTEXT | ecbdata->ws_rule;
-+	emit_diff_symbol(ecbdata->opt, DIFF_SYMBOL_CONTEXT, line, len, flags);
- }
- 
- static void emit_hunk_header(struct emit_callback *ecbdata,
-@@ -683,7 +713,7 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
- 	    memcmp(line, atat, 2) ||
- 	    !(ep = memmem(line + 2, len - 2, atat, 2))) {
- 		emit_diff_symbol(ecbdata->opt,
--				 DIFF_SYMBOL_CONTEXT_MARKER, line, len);
-+				 DIFF_SYMBOL_CONTEXT_MARKER, line, len, 0);
- 		return;
- 	}
- 	ep += 2; /* skip over @@ */
-@@ -719,7 +749,7 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
- 	strbuf_add(&msgbuf, line + len, org_len - len);
- 	strbuf_complete_line(&msgbuf);
- 	emit_diff_symbol(ecbdata->opt,
--			 DIFF_SYMBOL_CONTEXT_FRAGINFO, msgbuf.buf, msgbuf.len);
-+			 DIFF_SYMBOL_CONTEXT_FRAGINFO, msgbuf.buf, msgbuf.len, 0);
- 	strbuf_release(&msgbuf);
- }
- 
-@@ -778,7 +808,7 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
- 		data += len;
- 	}
- 	if (!endp)
--		emit_diff_symbol(ecb->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0);
-+		emit_diff_symbol(ecb->opt, DIFF_SYMBOL_NO_LF_EOF, NULL, 0, 0);
- }
- 
- static void emit_rewrite_diff(const char *name_a,
-@@ -4771,6 +4801,10 @@ static void diff_flush_patch_all_file_pairs(struct diff_options *o)
- {
- 	int i;
- 	struct diff_queue_struct *q = &diff_queued_diff;
-+
-+	if (WSEH_NEW & WS_RULE_MASK)
-+		die("BUG: WS rules bit mask overlaps with diff symbol flags");
-+
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
- 		if (check_pair_status(p))
-@@ -4861,7 +4895,7 @@ void diff_flush(struct diff_options *options)
- 
- 	if (output_format & DIFF_FORMAT_PATCH) {
- 		if (separator) {
--			emit_diff_symbol(options, DIFF_SYMBOL_SEPARATOR, NULL, 0);
-+			emit_diff_symbol(options, DIFF_SYMBOL_SEPARATOR, NULL, 0, 0);
- 			if (options->stat_sep) {
- 				/* attach patch instead of inline */
- 				fputs(options->stat_sep, options->file);
-diff --git a/diff.h b/diff.h
-index 2d442e296f..ea66168454 100644
---- a/diff.h
-+++ b/diff.h
-@@ -148,9 +148,9 @@ struct diff_options {
- 	int abbrev;
- 	int ita_invisible_in_index;
- /* white-space error highlighting */
--#define WSEH_NEW 1
--#define WSEH_CONTEXT 2
--#define WSEH_OLD 4
-+#define WSEH_NEW (1<<12)
-+#define WSEH_CONTEXT (1<<13)
-+#define WSEH_OLD (1<<14)
- 	unsigned ws_error_highlight;
- 	const char *prefix;
- 	int prefix_length;
+ 	# Replacing a tracked file with a submodule produces a checked out submodule
+ 	test_expect_success "$command: replace tracked file with submodule checks out submodule" '
+ 		prolog &&
 -- 
 2.13.0.31.g9b732c453e
 
