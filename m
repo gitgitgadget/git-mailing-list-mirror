@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9623202A7
-	for <e@80x24.org>; Fri, 30 Jun 2017 00:07:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6903E202A7
+	for <e@80x24.org>; Fri, 30 Jun 2017 00:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752121AbdF3AH3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 20:07:29 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:36566 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751807AbdF3AH0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2017 20:07:26 -0400
-Received: by mail-pg0-f47.google.com with SMTP id u62so55118180pgb.3
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:26 -0700 (PDT)
+        id S1752407AbdF3AHl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 20:07:41 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:32994 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752107AbdF3AHj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 20:07:39 -0400
+Received: by mail-pf0-f175.google.com with SMTP id e7so58083595pfk.0
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Y/p2eOXJYFrtVGFffiEnkqCYeiI6nA6RYmkTOGFu/Uc=;
-        b=RQjrwR+WzZejhyk3fnQXcVD88VPHYbaYAq6lx7xNVWnxXQX2uI6lvyL9kyqqrYbyNj
-         X2oLErU/hHp1t6YCQT04W4r85TFLdaLDhj8GZbpK1DSbrh/3csXgKiLrk+hXzHVr0846
-         fALE5blGikZgGYsEEbJtRGE9mD2PAxLri0AG9QE4uYv/+NTyfu381GceWPMqzParli1h
-         AUVu3ubk4T6K5Yogbik2L+YBPPTYZnYKlDf/8gikkJ+m+hbtvUJq314j2FzyMsenepe1
-         3c2iF8hKHVzeIe1zdAi2gDY8E4QtXYTXLZpD12F6ySVsmPIS7QqOuu6oMBgHTO8RbtCJ
-         tU/Q==
+        bh=5oYmzRp0N3UAnia023EX3p036s2/3bYFn7kVPWQFqe4=;
+        b=RbOJZVx0OOPWpXLW1vXSt9ttK8e9PPd9TaQe+AFB7LbfJVK9HxbX/t7cLaicY9fUIY
+         H6VJ5mNI7TdWcJ9cnzgEMAij1QzjXpP2hBi2Q/fPpiCJd8TCFkYc7QQy6K995Mm6RRwc
+         RktfbEpA8x9rK5t2VsDq85SnVLRnP/0HkfQShyQCx0gSdHeo4q9ssxrHoWJpU78tLA1W
+         aCaQT64ulvpCPStr17QoWpw/hlxO0S+0s+L8lPHJ3kxsLP99N9sQe/57J1vH2O9zKe+Y
+         UNrwFvrQXh3gmADKwjkPgtID6HhxL9au2E3DgI4V+9QCOdyE5QdLMQ4DssB1efyHqsVZ
+         HeMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Y/p2eOXJYFrtVGFffiEnkqCYeiI6nA6RYmkTOGFu/Uc=;
-        b=SUldXurll3D/mXMSe8t4w1RslAlhTqbWt+s9SF1Wk8F/L3hsXP5tQuVN/2AmafyoQO
-         bCYC8KZi1jz6TDXx39WJE8lj6DoB3skcEFdjbgN80BSbXJC6VzSqzudrrYVe2gpl4Vjh
-         HnbFS5vKP/bhHLmbmdyR5nKj0qfAANUh879xyfv3ImrpuNmbBFbWte9wuOOjQUtp2MoE
-         WFRIIbTxS/Gsg/k8cHdFm2Cg9ujIcLwgwKyCBF3y2vBpSMUCFj6IfxA6hhmurkxN82D4
-         6y+hao9+267XOujUClIoBnfTDGcrGdzSGD+rlYzArZD5QGrxTQ89IJAyKHhvHwhNDlwL
-         CFIg==
-X-Gm-Message-State: AKS2vOxfc957MxDa0UsyMc6OgzPUdbqL7ZDPkJTTx27zqPR1pKwehSb3
-        dZJ00adJPaxCDpRO
-X-Received: by 10.98.80.198 with SMTP id g67mr19735497pfj.146.1498781245675;
-        Thu, 29 Jun 2017 17:07:25 -0700 (PDT)
+        bh=5oYmzRp0N3UAnia023EX3p036s2/3bYFn7kVPWQFqe4=;
+        b=P2LHmGOfSJTYpfZdWnRYkaln49LOAoH5IIrIkcZ6lzMcFYy4th7AbmZ2joJWpLmMQk
+         /ljX7xljIM//+RBwQhod/hUnEt8MQUaQJfgLk/LZW/seA2KTowCOMoNGcFTv5Wox8rjh
+         C1b/RXy0dckg+f1f+/LfpDPvfbCtGUExsR+n8lGGGkJvJ117MruyJ5dmb5/yw3ndTEEp
+         gl0OHvtu2KMSnd90cBml1LLFqBxlx4H3l3JGwH2kZImHz8No6Jh+fAUtipjZ/H4dvPo0
+         b8jSqfSM9MD12Ur686tnGcjt2Y7gHDm13nG/8ODDCnffNkSysaLVwfx9KcRF1K3vhSkk
+         exQg==
+X-Gm-Message-State: AKS2vOz6R+7Y2Gki/AcimhDKFYsC7WDbPqXA/VIudQ/EZthbYRordToa
+        0vLEguMP02zG1pqCnHkwiw==
+X-Received: by 10.84.229.6 with SMTP id b6mr20626805plk.247.1498781258904;
+        Thu, 29 Jun 2017 17:07:38 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c3c:7a18:f5d8:50e0])
-        by smtp.gmail.com with ESMTPSA id v3sm14096946pfi.73.2017.06.29.17.07.24
+        by smtp.gmail.com with ESMTPSA id t26sm6913595pfl.41.2017.06.29.17.07.38
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 29 Jun 2017 17:07:25 -0700 (PDT)
+        Thu, 29 Jun 2017 17:07:38 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 02/25] diff.c: move line ending check into emit_hunk_header
-Date:   Thu, 29 Jun 2017 17:06:47 -0700
-Message-Id: <20170630000710.10601-3-sbeller@google.com>
+Subject: [PATCH 12/25] diff.c: emit_diff_symbol learns DIFF_SYMBOL_HEADER
+Date:   Thu, 29 Jun 2017 17:06:57 -0700
+Message-Id: <20170630000710.10601-13-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
 In-Reply-To: <20170630000710.10601-1-sbeller@google.com>
 References: <20170630000710.10601-1-sbeller@google.com>
@@ -60,42 +61,106 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The emit_hunk_header() function is responsible for assembling a
-hunk header and calling emit_line() to send the hunk header
-to the output file.  Its only caller fn_out_consume() needs
-to prepare for a case where the function emits an incomplete
-line and add the terminating LF.
-
-Instead make sure emit_hunk_header() to always send a
-completed line to emit_line().
+The header is constructed lazily including line breaks, so just emit
+the raw string as is.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ diff.c | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 2874dfc6fc..94fdb57927 100644
+index 49b45fef29..78f7c6f82f 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -678,6 +678,8 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+@@ -561,6 +561,7 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
+ }
+ 
+ enum diff_symbol {
++	DIFF_SYMBOL_HEADER,
+ 	DIFF_SYMBOL_FILEPAIR_PLUS,
+ 	DIFF_SYMBOL_FILEPAIR_MINUS,
+ 	DIFF_SYMBOL_WORDS_PORCELAIN,
+@@ -689,6 +690,9 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
+ 			line, reset,
+ 			strchr(line, ' ') ? "\t" : "");
+ 		break;
++	case DIFF_SYMBOL_HEADER:
++		fprintf(o->file, "%s", line);
++		break;
+ 	default:
+ 		die("BUG: unknown diff symbol");
+ 	}
+@@ -1385,7 +1389,8 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 	o->found_changes = 1;
+ 
+ 	if (ecbdata->header) {
+-		fprintf(o->file, "%s", ecbdata->header->buf);
++		emit_diff_symbol(o, DIFF_SYMBOL_HEADER,
++				 ecbdata->header->buf, ecbdata->header->len, 0);
+ 		strbuf_reset(ecbdata->header);
+ 		ecbdata->header = NULL;
+ 	}
+@@ -2519,7 +2524,8 @@ static void builtin_diff(const char *name_a,
+ 		if (complete_rewrite &&
+ 		    (textconv_one || !diff_filespec_is_binary(one)) &&
+ 		    (textconv_two || !diff_filespec_is_binary(two))) {
+-			fprintf(o->file, "%s", header.buf);
++			emit_diff_symbol(o, DIFF_SYMBOL_HEADER,
++					 header.buf, header.len, 0);
+ 			strbuf_reset(&header);
+ 			emit_rewrite_diff(name_a, name_b, one, two,
+ 						textconv_one, textconv_two, o);
+@@ -2529,7 +2535,8 @@ static void builtin_diff(const char *name_a,
  	}
  
- 	strbuf_add(&msgbuf, line + len, org_len - len);
-+	strbuf_complete_line(&msgbuf);
-+
- 	emit_line(ecbdata->opt, "", "", msgbuf.buf, msgbuf.len);
- 	strbuf_release(&msgbuf);
- }
-@@ -1315,8 +1317,6 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 		len = sane_truncate_line(ecbdata, line, len);
- 		find_lno(line, ecbdata);
- 		emit_hunk_header(ecbdata, line, len);
--		if (line[len-1] != '\n')
--			putc('\n', o->file);
- 		return;
- 	}
+ 	if (o->irreversible_delete && lbl[1][0] == '/') {
+-		fprintf(o->file, "%s", header.buf);
++		emit_diff_symbol(o, DIFF_SYMBOL_HEADER, header.buf,
++				 header.len, 0);
+ 		strbuf_reset(&header);
+ 		goto free_ab_and_return;
+ 	} else if (!DIFF_OPT_TST(o, TEXT) &&
+@@ -2540,10 +2547,13 @@ static void builtin_diff(const char *name_a,
+ 		    !DIFF_OPT_TST(o, BINARY)) {
+ 			if (!oidcmp(&one->oid, &two->oid)) {
+ 				if (must_show_header)
+-					fprintf(o->file, "%s", header.buf);
++					emit_diff_symbol(o, DIFF_SYMBOL_HEADER,
++							 header.buf, header.len,
++							 0);
+ 				goto free_ab_and_return;
+ 			}
+-			fprintf(o->file, "%s", header.buf);
++			emit_diff_symbol(o, DIFF_SYMBOL_HEADER,
++					 header.buf, header.len, 0);
+ 			fprintf(o->file, "%sBinary files %s and %s differ\n",
+ 				line_prefix, lbl[0], lbl[1]);
+ 			goto free_ab_and_return;
+@@ -2554,10 +2564,11 @@ static void builtin_diff(const char *name_a,
+ 		if (mf1.size == mf2.size &&
+ 		    !memcmp(mf1.ptr, mf2.ptr, mf1.size)) {
+ 			if (must_show_header)
+-				fprintf(o->file, "%s", header.buf);
++				emit_diff_symbol(o, DIFF_SYMBOL_HEADER,
++						 header.buf, header.len, 0);
+ 			goto free_ab_and_return;
+ 		}
+-		fprintf(o->file, "%s", header.buf);
++		emit_diff_symbol(o, DIFF_SYMBOL_HEADER, header.buf, header.len, 0);
+ 		strbuf_reset(&header);
+ 		if (DIFF_OPT_TST(o, BINARY))
+ 			emit_binary_diff(o->file, &mf1, &mf2, line_prefix);
+@@ -2575,7 +2586,8 @@ static void builtin_diff(const char *name_a,
+ 		const struct userdiff_funcname *pe;
+ 
+ 		if (must_show_header) {
+-			fprintf(o->file, "%s", header.buf);
++			emit_diff_symbol(o, DIFF_SYMBOL_HEADER,
++					 header.buf, header.len, 0);
+ 			strbuf_reset(&header);
+ 		}
  
 -- 
 2.13.0.31.g9b732c453e
