@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 347BE202A7
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA87F202A7
 	for <e@80x24.org>; Fri, 30 Jun 2017 00:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752316AbdF3AHh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 20:07:37 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:34268 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751807AbdF3AHa (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752458AbdF3AHg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 20:07:36 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:32963 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752210AbdF3AHa (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 29 Jun 2017 20:07:30 -0400
-Received: by mail-pg0-f48.google.com with SMTP id t186so55414442pgb.1
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:25 -0700 (PDT)
+Received: by mail-pf0-f179.google.com with SMTP id e7so58082196pfk.0
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pmtV7V2W9b0dcdFM/2i4iMM6gNB2LQA/soS6ZhgafWg=;
-        b=d+xm3BlqHDFEXZwz+6B1srS3y3wb1911sd0/xgCbr1QnP74r2EQdFribzgohqjZ7NY
-         Ql0RmZgi0eyg4q5Bk0zLBn/ohbyP9Wf+vgiBJPofm/QATscQYTgD5Stf1oLs00pGyAj0
-         JEnHlpV+miPA1bgawIpPv+kBFshhyQaJ7Bs0RCmib4klQdPRA13lnYNe0AV0NEGEXJ11
-         haJKZ+Qplt/nOQFqB//WQTF7eUhfRMCuXa4pVZGg5DJeY1UtmSOjW23FmXnIEoivd1OA
-         h8Daeq5uZ19XWW+fmgXI32oiYWtVFVNBtdHSIloLxNxvadyltEww/D2pO4omktymCc0j
-         9JYA==
+        bh=gp2p0rh900T64j6jVmbegwUukokMIIk0hQXTUdGrT2k=;
+        b=PQn+obOfm5oxpZX/QTOm/x7w6/7uUBrP0ylHEuN4QOV9AwINuNBPfkAflYIFk55YNL
+         yerVhAOsvfWnfkce3wkO0mkoLh8DATnxn3aawuhpb4NdypcQps1sxxT1C7dAQPsEl/9u
+         Iu1S8cmp+Fso65I1xtVOwm4Wi8o7jFZtVzqfupJczGDr9qAsCHCAnt6hBQ4TouT4jst0
+         LhiHbvcd+GPewhLkf6lSx8gLwhOkobQREaSnZ7bS/2ahOL3NQgyWFXbPxRSBnD6Qo4Rr
+         Tb4is47vP87mcVd4O0Ulayu/d0owsxWLgh7dQo0Yfy78eTLDa60W+T4fDX3pCV9XJzXg
+         /m9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=pmtV7V2W9b0dcdFM/2i4iMM6gNB2LQA/soS6ZhgafWg=;
-        b=ID/4GIEHMCM8d28nKRKYL7XhZfyL411gCTvKGSYq44BUleD/77Nrv+Bla5CKCK86vc
-         DpKAOLui1u6yLNxVLiMXr0jf/RcSyy6FEBIIwIV3YGsVKEJ8RoKGn5X+qDlam54/QQ4N
-         yuyTt48/6SF4zbuGSVQvmlRuy5RIkW3qFPif8Ccgzr9Z2gIK6nZDBMydT2FPwA+rriIk
-         NdoeX/IvCM8TAmHaUefx8lXZrI/i9uMLPPK12Wj7XdOFB/ramVCy1xk6Q69pTlLXq06A
-         QhI3nI7m06jjN8/KGgYlFMnRZUVGJOt0e3IFCch2VXOsSXO9iZhBg35teWE96YoCeSMp
-         C2yA==
-X-Gm-Message-State: AKS2vOzKFJG0jyTS+1j9CpLcKDDwvNvFn7V9uTQlVmCRBkRU2tTBGqRf
-        ngjffBKc6b0KGwKO
-X-Received: by 10.98.71.84 with SMTP id u81mr19288359pfa.102.1498781244425;
-        Thu, 29 Jun 2017 17:07:24 -0700 (PDT)
+        bh=gp2p0rh900T64j6jVmbegwUukokMIIk0hQXTUdGrT2k=;
+        b=LJaKW7/CONUPgtiljeeSK1aqyFF12TPlPEP1pIaqvrk3o4yazIHr2zNrfN5nWGzyS8
+         OqK+2xBRVqj4pglOV9SneZq/nCG8JUwPtTe+KAa3dfDLG8JGOZlayMY+EQgiQMUalpHb
+         z2l6YULhjVPOJdpxpYMfdSY4UYt4WdAzm0VyZ4GEZC5hEgqR4BtTCFidK8npnHOvOaBc
+         AQaFe1hNvEQDuFZGQ80WiQetcFo1TKFwrURDhKKw97+bkwEaIv9LGSs+VdY6Y+asAfIa
+         QdyxsXUemjHsTJOQ2F5M49ui5CmeURVdyIPX6nnsxpSn5X8Qjv25K3/gpeLIzzNIc9jQ
+         AwYg==
+X-Gm-Message-State: AKS2vOzkpXAFPjmO6I3qz/XqLyptp0jPZG/h1wsXsIuJEPbjZ+PHcJrS
+        2kV01SsfefSfasZ2
+X-Received: by 10.98.204.23 with SMTP id a23mr19316620pfg.59.1498781250096;
+        Thu, 29 Jun 2017 17:07:30 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c3c:7a18:f5d8:50e0])
-        by smtp.gmail.com with ESMTPSA id t26sm15953522pfe.88.2017.06.29.17.07.23
+        by smtp.gmail.com with ESMTPSA id d71sm15981975pfe.106.2017.06.29.17.07.28
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 29 Jun 2017 17:07:23 -0700 (PDT)
+        Thu, 29 Jun 2017 17:07:29 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 01/25] diff.c: readability fix
-Date:   Thu, 29 Jun 2017 17:06:46 -0700
-Message-Id: <20170630000710.10601-2-sbeller@google.com>
+Subject: [PATCH 05/25] diff.c: emit_diff_symbol learns DIFF_SYMBOL_CONTEXT_MARKER
+Date:   Thu, 29 Jun 2017 17:06:50 -0700
+Message-Id: <20170630000710.10601-6-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
 In-Reply-To: <20170630000710.10601-1-sbeller@google.com>
 References: <20170630000710.10601-1-sbeller@google.com>
@@ -60,30 +61,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We already have dereferenced 'p->two' into a local variable 'two'.
-Use that.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ diff.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/diff.c b/diff.c
-index 00b4c86698..2874dfc6fc 100644
+index 4637368d59..75b996c4cf 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -3282,8 +3282,8 @@ static void run_diff(struct diff_filepair *p, struct diff_options *o)
- 	const char *other;
- 	const char *attr_path;
+@@ -561,13 +561,20 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
+ }
  
--	name  = p->one->path;
--	other = (strcmp(name, p->two->path) ? p->two->path : NULL);
-+	name  = one->path;
-+	other = (strcmp(name, two->path) ? two->path : NULL);
- 	attr_path = name;
- 	if (o->prefix_length)
- 		strip_prefix(o->prefix_length, &name, &other);
+ enum diff_symbol {
++	DIFF_SYMBOL_CONTEXT_MARKER,
+ 	DIFF_SYMBOL_SEPARATOR
+ };
+ 
+ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
+ 			     const char *line, int len)
+ {
++	const char *context, *reset;
+ 	switch (s) {
++	case DIFF_SYMBOL_CONTEXT_MARKER:
++		context = diff_get_color_opt(o, DIFF_CONTEXT);
++		reset = diff_get_color_opt(o, DIFF_RESET);
++		emit_line(o, context, reset, line, len);
++		break;
+ 	case DIFF_SYMBOL_SEPARATOR:
+ 		fprintf(o->file, "%s%c",
+ 			diff_line_prefix(o),
+@@ -662,7 +669,8 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 	if (len < 10 ||
+ 	    memcmp(line, atat, 2) ||
+ 	    !(ep = memmem(line + 2, len - 2, atat, 2))) {
+-		emit_line(ecbdata->opt, context, reset, line, len);
++		emit_diff_symbol(ecbdata->opt,
++				 DIFF_SYMBOL_CONTEXT_MARKER, line, len);
+ 		return;
+ 	}
+ 	ep += 2; /* skip over @@ */
 -- 
 2.13.0.31.g9b732c453e
 
