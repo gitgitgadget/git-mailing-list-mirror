@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,UNWANTED_LANGUAGE_BODY shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5F72202A7
-	for <e@80x24.org>; Fri, 30 Jun 2017 00:08:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4483202A7
+	for <e@80x24.org>; Fri, 30 Jun 2017 00:08:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752626AbdF3AIT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Jun 2017 20:08:19 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:33011 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752582AbdF3AHt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Jun 2017 20:07:49 -0400
-Received: by mail-pf0-f174.google.com with SMTP id e7so58084406pfk.0
-        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:44 -0700 (PDT)
+        id S1752648AbdF3AIR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Jun 2017 20:08:17 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:34311 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752625AbdF3AH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Jun 2017 20:07:56 -0400
+Received: by mail-pg0-f46.google.com with SMTP id t186so55416422pgb.1
+        for <git@vger.kernel.org>; Thu, 29 Jun 2017 17:07:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rnZ+w/EfST5yCnLq5DFNQ15/CuLT1yPpTIx3Naj9UbE=;
-        b=rJimqBvafU60F/DpyGUvnWAROBE4JbcpaAuoYrKTSdA9iC080PjSwj/Pi2U6xWpCCM
-         I0kvRNb17eYVqGqdCOGpjJ414LoQXWUqN1WUfGjXQB4OlXyAXMcw8+wOyKcq4wPxcpJo
-         GczDISq+1WzQZMoT2iEhTt1RaG6LRYDWtbZ1OZVhUCDGSiTwRJvovBlLYi3MW+FXDYTb
-         BN6lDXKZSA7c0focFiXVr7W9EUIcdGB/ZvYCpoahDCSA6p0v+nGNOa2zTqlYBDzlLOor
-         wCMf/YJpedwoiRMQ6y+jGLJkqZ5NPa9vF+wxnUA3WRXOyi+ksD3c0Et9CxiAKBinUg4e
-         y7sA==
+        bh=DKCmUm271quFz59evQjwsdKNJ5oQ4hRUvaTdnfdaVW4=;
+        b=h0sN2ntxLHO+9m4b2Z6zOMyWqmMUjKLXIO6V7Irx3CU+ie//8xxShXHqTptpQo7zmv
+         qn2klacD0QdQYvhyYI9WMCsKAqIoXjj7lyor8QRFH3mLUkZb3maxG5OHuk5z210P4ZhQ
+         1Fn201c4hYHvz/cnHshlu91dp5vzPYRi1oO/dRdIiRBc/ueG8mM6X7zq/GDJmUHktDMK
+         8ViZSBsygwbYFS9/IO8nJVm1aXpyXQnkvF+mTizn7xG4NdFNx7o6nO8oVnzFe8N6A74V
+         ukq3RokVmmlwb0JUrQwSsszpynyveJn8AFlR3BAHowN751C412rrzPfKQ400RrozyORA
+         Hyvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=rnZ+w/EfST5yCnLq5DFNQ15/CuLT1yPpTIx3Naj9UbE=;
-        b=Rw+KTfOpBui6rLyRVwlLauYUl3kTcl4I5ebt2w/jEhcdGLiPmmB8mDpqQta11+d0Oz
-         OZ3cjdtB5gPkG1neYA88NJcrCmJGylALSqxLFD9YOoFIeEr4LDCewlRHfaYBYl8CtQFo
-         ZZng/mqqwkVVoPHHf7+98V5jyH+ub3w4G3a5BvickwNdyvNxZjiujBTpsS3cIjfD1Evo
-         YrKGk46WISCyh1d2ZgTBcK68Co8TLWRl8khRtKCqvVrS6Yg2q20uLbYBEk7BmhzwKPPR
-         5pG/YGQzibWTmMT9WEvbsVS0Ye6H64wcRjyLNR5GK+pdTXVdtJumV5bj2sIO5zpJ3P9j
-         8Pmw==
-X-Gm-Message-State: AKS2vOx+jiD5D/WSMmUme+VkDRN7oRCZNB20qYA66RvIRV8BfzIYmb/g
-        kdYHiSl0oDoJotWZXlkUsw==
-X-Received: by 10.84.151.99 with SMTP id i90mr21141430pli.81.1498781264020;
-        Thu, 29 Jun 2017 17:07:44 -0700 (PDT)
+        bh=DKCmUm271quFz59evQjwsdKNJ5oQ4hRUvaTdnfdaVW4=;
+        b=Bg+xk7AEB0zPbhb2rvC0XFDpstaENHPUG0C9iaiIL/mS1APP3oO7OWBtE+GAg/8tec
+         YLBb+MQG8YGJrTeQxNIzAjv/L99Wy0vdTVGwlu/ctZ2xNtgCLm0d3t4+B+/+Y204wR0u
+         IpbdwU36+IsC2PDfkdjxPPCqVng7iUE1gp1CZTH1fxU6ac/RQkTNBpXn5p+GsJcHcB/E
+         jG2tupuaEOedMu4KbTTEX0+QS4/7udvHSD1ZGff3pXMVfaoAvKS8+mbhtrxR400kmzZ6
+         fmV0K1LVk45WKZRQVjcOoBfhxGXNffKnDCh6Yni5Ot5tXqokz7NgP4KSqiDytytc2zXh
+         D2og==
+X-Gm-Message-State: AKS2vOxsrCtJNxosOfLrdq8Mey0LX5eXf4eEvW2c3QIDOh3jbXLsMvIn
+        XddR0AMESBPS5TlEyHMtHQ==
+X-Received: by 10.84.176.131 with SMTP id v3mr11284603plb.142.1498781256183;
+        Thu, 29 Jun 2017 17:07:36 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c3c:7a18:f5d8:50e0])
-        by smtp.gmail.com with ESMTPSA id i186sm10168993pgd.55.2017.06.29.17.07.43
+        by smtp.gmail.com with ESMTPSA id r90sm13391397pfj.37.2017.06.29.17.07.35
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 29 Jun 2017 17:07:43 -0700 (PDT)
+        Thu, 29 Jun 2017 17:07:35 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH 16/25] diff.c: convert emit_binary_diff_body to use emit_diff_symbol
-Date:   Thu, 29 Jun 2017 17:07:01 -0700
-Message-Id: <20170630000710.10601-17-sbeller@google.com>
+Subject: [PATCH 10/25] diff.c: emit_diff_symbol learns DIFF_SYMBOL_CONTEXT_INCOMPLETE
+Date:   Thu, 29 Jun 2017 17:06:55 -0700
+Message-Id: <20170630000710.10601-11-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
 In-Reply-To: <20170630000710.10601-1-sbeller@google.com>
 References: <20170630000710.10601-1-sbeller@google.com>
@@ -61,144 +61,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The context marker use the exact same output pattern, so reuse it.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 46 insertions(+), 17 deletions(-)
+ diff.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 48f719fb07..f5a14359ae 100644
+index 85bfd9310d..b2b2a19fcf 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -561,6 +561,11 @@ static void emit_line(struct diff_options *o, const char *set, const char *reset
- }
- 
- enum diff_symbol {
-+	DIFF_SYMBOL_BINARY_DIFF_HEADER,
-+	DIFF_SYMBOL_BINARY_DIFF_HEADER_DELTA,
-+	DIFF_SYMBOL_BINARY_DIFF_HEADER_LITERAL,
-+	DIFF_SYMBOL_BINARY_DIFF_BODY,
-+	DIFF_SYMBOL_BINARY_DIFF_FOOTER,
- 	DIFF_SYMBOL_SUBMODULE_ADD,
- 	DIFF_SYMBOL_SUBMODULE_DEL,
- 	DIFF_SYMBOL_SUBMODULE_UNTRACKED,
-@@ -635,6 +640,7 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
- 	case DIFF_SYMBOL_SUBMODULE_HEADER:
- 	case DIFF_SYMBOL_SUBMODULE_ERROR:
- 	case DIFF_SYMBOL_SUBMODULE_PIPETHROUGH:
-+	case DIFF_SYMBOL_BINARY_DIFF_BODY:
+@@ -564,6 +564,7 @@ enum diff_symbol {
+ 	DIFF_SYMBOL_WORDS_PORCELAIN,
+ 	DIFF_SYMBOL_WORDS,
+ 	DIFF_SYMBOL_CONTEXT,
++	DIFF_SYMBOL_CONTEXT_INCOMPLETE,
+ 	DIFF_SYMBOL_PLUS,
+ 	DIFF_SYMBOL_MINUS,
+ 	DIFF_SYMBOL_NO_LF_EOF,
+@@ -622,6 +623,7 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
  	case DIFF_SYMBOL_CONTEXT_FRAGINFO:
  		emit_line(o, "", "", line, len);
  		break;
-@@ -706,6 +712,19 @@ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
- 	case DIFF_SYMBOL_HEADER:
- 		fprintf(o->file, "%s", line);
- 		break;
-+	case DIFF_SYMBOL_BINARY_DIFF_HEADER:
-+		fprintf(o->file, "%sGIT binary patch\n", diff_line_prefix(o));
-+		break;
-+	case DIFF_SYMBOL_BINARY_DIFF_HEADER_DELTA:
-+		fprintf(o->file, "%sdelta %s\n", diff_line_prefix(o), line);
-+		break;
-+	case DIFF_SYMBOL_BINARY_DIFF_HEADER_LITERAL:
-+		fprintf(o->file, "%sliteral %s\n", diff_line_prefix(o), line);
-+		break;
-+	case DIFF_SYMBOL_BINARY_DIFF_FOOTER:
-+		fputs(diff_line_prefix(o), o->file);
-+		fputc('\n', o->file);
-+		break;
- 	case DIFF_SYMBOL_REWRITE_DIFF:
- 		fraginfo = diff_get_color(o->use_color, DIFF_FRAGINFO);
++	case DIFF_SYMBOL_CONTEXT_INCOMPLETE:
+ 	case DIFF_SYMBOL_CONTEXT_MARKER:
+ 		context = diff_get_color_opt(o, DIFF_CONTEXT);
  		reset = diff_get_color_opt(o, DIFF_RESET);
-@@ -2390,8 +2409,8 @@ static unsigned char *deflate_it(char *data,
- 	return deflated;
- }
- 
--static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two,
--				  const char *prefix)
-+static void emit_binary_diff_body(struct diff_options *o,
-+				  mmfile_t *one, mmfile_t *two)
- {
- 	void *cp;
- 	void *delta;
-@@ -2420,13 +2439,18 @@ static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two,
- 	}
- 
- 	if (delta && delta_size < deflate_size) {
--		fprintf(file, "%sdelta %lu\n", prefix, orig_size);
-+		char *s = xstrfmt("%lu", orig_size);
-+		emit_diff_symbol(o, DIFF_SYMBOL_BINARY_DIFF_HEADER_DELTA,
-+				 s, strlen(s), 0);
-+		free(s);
- 		free(deflated);
- 		data = delta;
- 		data_size = delta_size;
--	}
--	else {
--		fprintf(file, "%sliteral %lu\n", prefix, two->size);
-+	} else {
-+		char *s = xstrfmt("%lu", two->size);
-+		emit_diff_symbol(o, DIFF_SYMBOL_BINARY_DIFF_HEADER_LITERAL,
-+				 s, strlen(s), 0);
-+		free(s);
- 		free(delta);
- 		data = deflated;
- 		data_size = deflate_size;
-@@ -2435,8 +2459,9 @@ static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two,
- 	/* emit data encoded in base85 */
- 	cp = data;
- 	while (data_size) {
-+		int len;
- 		int bytes = (52 < data_size) ? 52 : data_size;
--		char line[70];
-+		char line[71];
- 		data_size -= bytes;
- 		if (bytes <= 26)
- 			line[0] = bytes + 'A' - 1;
-@@ -2444,20 +2469,24 @@ static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two,
- 			line[0] = bytes - 26 + 'a' - 1;
- 		encode_85(line + 1, cp, bytes);
- 		cp = (char *) cp + bytes;
--		fprintf(file, "%s", prefix);
--		fputs(line, file);
--		fputc('\n', file);
-+
-+		len = strlen(line);
-+		line[len++] = '\n';
-+		line[len] = '\0';
-+
-+		emit_diff_symbol(o, DIFF_SYMBOL_BINARY_DIFF_BODY,
+@@ -1448,8 +1450,8 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 	default:
+ 		/* incomplete line at the end */
+ 		ecbdata->lno_in_preimage++;
+-		emit_line(o, diff_get_color(ecbdata->color_diff, DIFF_CONTEXT),
+-			  reset, line, len);
++		emit_diff_symbol(o, DIFF_SYMBOL_CONTEXT_INCOMPLETE,
 +				 line, len, 0);
+ 		break;
  	}
--	fprintf(file, "%s\n", prefix);
-+	emit_diff_symbol(o, DIFF_SYMBOL_BINARY_DIFF_FOOTER, NULL, 0, 0);
- 	free(data);
  }
- 
--static void emit_binary_diff(FILE *file, mmfile_t *one, mmfile_t *two,
--			     const char *prefix)
-+static void emit_binary_diff(struct diff_options *o,
-+			     mmfile_t *one, mmfile_t *two)
- {
--	fprintf(file, "%sGIT binary patch\n", prefix);
--	emit_binary_diff_body(file, one, two, prefix);
--	emit_binary_diff_body(file, two, one, prefix);
-+	emit_diff_symbol(o, DIFF_SYMBOL_BINARY_DIFF_HEADER, NULL, 0, 0);
-+	emit_binary_diff_body(o, one, two);
-+	emit_binary_diff_body(o, two, one);
- }
- 
- int diff_filespec_is_binary(struct diff_filespec *one)
-@@ -2643,7 +2672,7 @@ static void builtin_diff(const char *name_a,
- 		emit_diff_symbol(o, DIFF_SYMBOL_HEADER, header.buf, header.len, 0);
- 		strbuf_reset(&header);
- 		if (DIFF_OPT_TST(o, BINARY))
--			emit_binary_diff(o->file, &mf1, &mf2, line_prefix);
-+			emit_binary_diff(o, &mf1, &mf2);
- 		else {
- 			strbuf_addf(&sb, "%sBinary files %s and %s differ\n",
- 				    diff_line_prefix(o), lbl[0], lbl[1]);
 -- 
 2.13.0.31.g9b732c453e
 
