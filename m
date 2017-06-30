@@ -2,114 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF465201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 16:44:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66163201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 17:20:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751905AbdF3Qoj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 12:44:39 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34436 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751657AbdF3Qoi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 12:44:38 -0400
-Received: by mail-pf0-f196.google.com with SMTP id c24so3055303pfe.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 09:44:28 -0700 (PDT)
+        id S1751929AbdF3RUP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 13:20:15 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:35895 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751657AbdF3RUO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 13:20:14 -0400
+Received: by mail-pg0-f53.google.com with SMTP id u62so66561973pgb.3
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 10:20:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HKYdhPKtA2PPYhn8ec5M/DgJ0NCXRX4q+GrJHtNn61w=;
-        b=BoF3oy8WPu/I7FCczO7JKTY12gNIIWKp1xIL8Y6Y6ViPGjFa26snED+SUUvGM+xXJp
-         ayfqx9gt8JMs/zengz0qAOW7C8gNuO17l5KXQF9zmPhGOjaXRiTggMoKmx0cAZ8W5re8
-         rFnsjXiSjYnjbBmnIxjAqhO8puDyIPOY98qC+Q575ynKCk/TrTWjwZSNsPSXZ0V6vlHO
-         alNMQeg3jBsg3HW3dmNr9q8/jmzkqbT5My9bSGkyq1YdJwI7q7Q/rzSeH7MOx8fibtAW
-         YsogJcVkeEAzJfC6XNveitqSF7UbKQ2KE9mbbcHTiNr3CNth5YA1wmm8ooL5lx45zB9f
-         qxMQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=hcbLYVBfuuK7ykwtrZHhZUXeKJ2E6YAT3T7rHTcmkvs=;
+        b=lz5eBaiO50nxTapixK5ys4Qb2zjsvllx4M3p1ke9j6jq883VnAcshP6Ckm1rnpxtVs
+         CdkCs51rZTihAPcSlU7DDHAkXWseBP3oIwrmj181xrKuX6BOwuk/FtozQEGTjNQ+sEYU
+         Cc9V4YzZU+geaXlVrc+AKgn8ODQKW4O0zPALTATkT/qYVzoDMRiickxUkpaZCMlbXv4a
+         Dizy2/9oD4YGRJYEBB/5mU2JskuI5WrGxW0/64lRqRVJlYc9VX9uHoTumZVhGn+Wai4A
+         H6YH6kSdur8Hd5DZeIKtmsco4BppsFXJlwkShakAsHYKDvF5ZWwpFK3sa23UQV1ULTVq
+         zzqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HKYdhPKtA2PPYhn8ec5M/DgJ0NCXRX4q+GrJHtNn61w=;
-        b=h/EKbLHLbxmkrI4NzJ4cl8zSwqRK7PGItxLeHK+KDB68xalWAVByCof2s6gJcIXq2l
-         ZYLOb3IQNKpMbpcKKSLLmhQ7mpEZ/sYvhIBSJh/N/oMBzs0ksZvwY0NGlItmrgqXTDX2
-         r0Ge+tVBocZ1ibkIiDAmaunLo5HrSu7gKx4Dy4Fh9QXdCSvAsQ4Wtx8wWdEIvV6fFYoX
-         E22orAV4SMUQdSgpWN0PKysLF5sZr1RDtTNoBc8Xw7bofFraSmCuh4slcHB9F57LeNp7
-         kI6FeCyU2lONX1Py4EPmuTe8t7j6m+DktLzqSR1LSOIzyD1sz3yAjf++784afs1iFS6l
-         bkDQ==
-X-Gm-Message-State: AKS2vOw0KdsqGlARBeqq5BSLrNy6Xp1ZNSIArEtQn5CKBYpJViejGZYG
-        KOJRmHP03WPjfLV2H14=
-X-Received: by 10.101.70.137 with SMTP id h9mr22311241pgr.50.1498841062966;
-        Fri, 30 Jun 2017 09:44:22 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=hcbLYVBfuuK7ykwtrZHhZUXeKJ2E6YAT3T7rHTcmkvs=;
+        b=A2XM4YPe3+5E6bZmDNB9m0uDbIQDewChPfW5MTQEeovP/qZ/YKy/56rQPSV9gC1rCx
+         NIvcPCQB3v6/TSL1hZrFQmfuWLoZHZnCXfEs1oteIh1ELUIs1qTfaY1ufgDbdBcwwoL8
+         O021aeujk46dzgAcGf9QmR2eVmMikBsvAH/UB2ibKR7MEdK/wijFKcMUqOah4VgkGDpM
+         Mg+pdW9zOXWt2PpheQZ1Jf4n4TXOCOj0+tlT/0mN1uJcBjWuWchGmISJSptFiox5AljE
+         s/gVBOOHlHqVK5geT/N2jqmaTIxl50etm+71tPYeNUNW4v6YLg8GKuIHi3LzqjE0+Bk6
+         OpZw==
+X-Gm-Message-State: AKS2vOx10mhG7DwO3FYUEME/EH9Tg1e4AbXjrJrvD2hVfLAF1VlUutGJ
+        ndJMVMRw7eB0QQ==
+X-Received: by 10.99.115.2 with SMTP id o2mr22388233pgc.48.1498843213210;
+        Fri, 30 Jun 2017 10:20:13 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:54f:b41d:dd9d:3de0])
-        by smtp.gmail.com with ESMTPSA id v3sm19171505pfi.73.2017.06.30.09.44.22
+        by smtp.gmail.com with ESMTPSA id z82sm22430058pfk.1.2017.06.30.10.20.12
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 09:44:22 -0700 (PDT)
+        Fri, 30 Jun 2017 10:20:12 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] hooks: add signature to the top of the commit message
-References: <20170630154306.26993-1-kaarticsivaraam91196@gmail.com>
-Date:   Fri, 30 Jun 2017 09:44:21 -0700
-In-Reply-To: <20170630154306.26993-1-kaarticsivaraam91196@gmail.com> (Kaartic
-        Sivaraam's message of "Fri, 30 Jun 2017 21:13:06 +0530")
-Message-ID: <xmqq1sq1togq.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        J Smith <dark.panda@gmail.com>,
+        Joe Ratterman <jratt0@gmail.com>,
+        Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH v2 5/6] grep: remove regflags from the public grep_opt API
+References: <20170629222222.4694-1-avarab@gmail.com>
+        <20170628215809.23060-1-avarab@gmail.com>
+        <20170629222222.4694-6-avarab@gmail.com>
+Date:   Fri, 30 Jun 2017 10:20:11 -0700
+In-Reply-To: <20170629222222.4694-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 29 Jun 2017 22:22:21 +0000")
+Message-ID: <xmqqwp7ts88k.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> The sample hook to prepare the commit message before
-> a commit allows users to opt-in to add the signature
-> to the commit message. The signature is added at a place
-> that isn't consistent with the "-s" option of "git commit".
-> Further, it could go out of view in certain cases.
->
-> Add the signature to the top of the commit message as it's
-> more appropriate and consistent with the "-s" option of git
-> commit.
->
-> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-> ---
->  The change might seem to be bit of an hack, but it seems
->  worth it (at least to me). I hope I haven't used any
->  commands that aren't portable.
-
-It does look like a hack.  I was wondering if "interpret-trailers"
-is mature enough and can be used for this by now.  Also the big
-comment before these examples say that this one you are updating is
-"rarely a good idea", though.
-
-By the way, the one that is still actually enabled is no longer
-needed.  The commit template generated internally was corrected some
-time ago not to add the "Conflicts:" section without commenting it
-out.
-
-Have you tried "merge", "cherry-pick" and "commit --amend" with this
-patch on (meaning, with the "add sob at the top" logic in your actual
-hook that is enabled in your repository)?
-
->  templates/hooks--prepare-commit-msg.sample | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-> index 86b8f227e..3c8f5a53d 100755
-> --- a/templates/hooks--prepare-commit-msg.sample
-> +++ b/templates/hooks--prepare-commit-msg.sample
-> @@ -33,4 +33,7 @@ case "$2,$3" in
->  esac
+> @@ -169,6 +167,24 @@ void grep_init(struct grep_opt *opt, const char *prefix)
 >  
->  # SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
-> -# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
-> +# SOB_TO_ADD='
-> +#
-> +# '$SOB
-> +# grep -qs "^$SOB" "$1" || (echo "$SOB_TO_ADD" | cat - "$1" >temp-template && mv temp-template "$1")
+>  static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, struct grep_opt *opt)
+>  {
+> +	/*
+> +	 * When committing to the pattern type by setting the relevant
+> +	 * fields in grep_opt it's generally not necessary to zero out
+> +	 * the fields we're not choosing, since they won't have been
+> +	 * set by anything. The extended_regexp_option field is the
+> +	 * only exception to this.
+> +	 *
+> +	 * This is because in the process of parsing grep.patternType
+> +	 * & grep.extendedRegexp we set opt->pattern_type_option and
+> +	 * opt->extended_regexp_option, respectively. We then
+> +	 * internally use opt->extended_regexp_option to see if we're
+> +	 * compiling an ERE. It must be unset if that's not actually
+> +	 * the case.
+> +	 */
+> +	if (pattern_type != GREP_PATTERN_TYPE_ERE &&
+> +	    opt->extended_regexp_option)
+> +		opt->extended_regexp_option = 0;
+
+Good to have the reasoning in an in-code comment like the above.
+But after reading these two paragraphs and then before reading the
+three line code, a more natural embodiment in the code of the
+commentary that came to my mind was
+
+	if (pattern_type != GREP_PATTERN_TYPE_ERE)
+		opt->extended_regexp_option = 0;
+
+The end-result is the same as yours, of course, but I somehow found
+it match the reasoning better.
+
+Now, I wonder if this can further be tweaked to
+
+	opt->extended_regexp_option = (pattern_type == GREP_PATTERN_TYPE_ERE);
+
+which might lead us in a direction to really unify the two related
+fields extended_regexp_option and pattern_type_option.
+
+Even if that were a good longer term direction to go in, it is
+outside the scope of this step, of course.  I am merely bringing it
+up as an conversation item ;-).
+
