@@ -7,203 +7,167 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76FB4201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 19:49:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 754D8201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 19:50:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752670AbdF3Tt2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 15:49:28 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35278 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752719AbdF3Try (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 15:47:54 -0400
-Received: by mail-pf0-f193.google.com with SMTP id s66so18060109pfs.2
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 12:47:54 -0700 (PDT)
+        id S1752660AbdF3Trv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 15:47:51 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34189 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752549AbdF3Trs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 15:47:48 -0400
+Received: by mail-pg0-f67.google.com with SMTP id j186so16291594pge.1
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 12:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IEl25AYhpESDF17rG72PTwFBOu0NX/lWkRMifME0lsk=;
-        b=ilMxIBCPgrciB2LSRj8SVKbmNTL1dzgUP5ox9PsZD6T7EKcST0KJsS3ftDfkrFqYAK
-         IFvg467Lh4Z96jtD5ezo2uuNI97/zolXRYeMuGDBtjsretN70vkAlRU78D3mdmPyL2Bl
-         czOKmlTw0wIJMmMJT9+HleGAa3FrBz9rD09syO96EJUqMO7GXL3EMubga6PvEB+I8w29
-         U4YUwZFLoB3c4I4HlgNiOEaXGGQd2+6eq083olNrzaFqwNJhRCov18m1UZFDNQEy7iK7
-         Mp/yEzkWnE15dwl1GbaK3hsAf8FU9WfdSsKWjGk51UTT8fS5Rw3Ud7MjpwtJhme6fU0+
-         1OCQ==
+        bh=oHZ89fUZaqLhG2gLRcqAGxFtzKJXPiWO3BKVEeUsxnc=;
+        b=t8lWN1kC/lvUEwUiC9hQa9/5IGBL0XutVFegRCjiYJeMWVqLaXg7x7fq7QJ8rA0FdM
+         Oz0h58o070L4dFYzZU93H4+hZBpRuBJXHlouykkAaKNm0CSkhHBe6weFwk3qnhOSQrI1
+         3fBcM5JdZa4hX+w91DPnNYe2MKO92v0iiYs86l4H/boyjeIMqji2R1tZGz97UoQCFddh
+         Y4DJ3ThjICA9vw4LBbrOLESy2xsQ25V6SNQT7HEA8KcXjwJIk3Kf9f7pGJGdxKXrHl0w
+         iwr/JnnMdJnQ90HIW7OJsl/Txal0RRypeX7tsix2OBc/ZF2bnwBq7t0vhGQ/VdCS+fOJ
+         dMIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=IEl25AYhpESDF17rG72PTwFBOu0NX/lWkRMifME0lsk=;
-        b=Rg8iyBZZ6GZfnjITlOtclUf/OLHYUg7n4JHEb4R2kmFSHDNyfML5Mx95Am65EJkvSh
-         Cw1evqd1WGDZ7FcNHgXSFifI6RmyLDO1vLnJ9X8d1nHP7UkMlYhfafLe1sq3nM/sojUc
-         uYi4m1k2qN+D8X/r1ynA4Hef7SxjqdZEolQRhaPtQMYorN459fxAX1YAEVBvjI3p1R8W
-         VU4EXNiDMi8P6Vly2CCclFgI8SPTZbxHgtNNaNhCg7VhlntMnlZs3tscOZCZxZVauVCE
-         EI2R48U2aehgB7Og9jv5yubLgDGUPEcQeJQBdbIvMRhC0+70C9yXMUFMS+e258PHkA2d
-         xnGg==
-X-Gm-Message-State: AKS2vOzJhp83DbfsvoW+auAE+IZ5X5z5hIjkc6luaD2WLKoezJ9z7YlQ
-        roQc8pbFQM7s+OTg
-X-Received: by 10.98.214.195 with SMTP id a64mr24168854pfl.40.1498852073420;
-        Fri, 30 Jun 2017 12:47:53 -0700 (PDT)
+        bh=oHZ89fUZaqLhG2gLRcqAGxFtzKJXPiWO3BKVEeUsxnc=;
+        b=QdWycP9WJazzIipLE8rDhqKgTwqdiUcTfZSRbL0qg0vO6r2WCr2gUd1+lr79Y5ddHJ
+         Un5fJomRPIs94dIWGGFaeFe+zTzdI0i+LwKXWeyTj5JdzW41FmQBzerFEiBdU7a5rtS5
+         +0uknDi5tLanM+9rNS0QS5D5gIvJdonllPIJJ+3DrmczDNMtb5gg4Z9ubIfVSJBAbwcN
+         0rgvwgeeOM0WTH+em8lVU/r8DeeKkKSf2+j0LUm0Vqw5tv4/QGU1SvA2QtosStpKjfLP
+         E0A1gm2P97qSTJ2nShXiYbXn/5YXLyam9sN+mqcwS6HlyqecmvFZcG09A4OXqsQ4N357
+         NlMA==
+X-Gm-Message-State: AKS2vOzWC4nAwYpHfozVqrG/7AsToec8ckqXmHWNv9iDuvz1LlmF/62G
+        hNl3ay+HY+Nvm5an
+X-Received: by 10.84.229.71 with SMTP id d7mr26676130pln.231.1498852067522;
+        Fri, 30 Jun 2017 12:47:47 -0700 (PDT)
 Received: from prathampc-X550JX.domain.name ([116.73.72.60])
-        by smtp.gmail.com with ESMTPSA id g10sm20972131pfc.38.2017.06.30.12.47.50
+        by smtp.gmail.com with ESMTPSA id g10sm20972131pfc.38.2017.06.30.12.47.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 12:47:53 -0700 (PDT)
+        Fri, 30 Jun 2017 12:47:46 -0700 (PDT)
 From:   Prathamesh Chavan <pc44800@gmail.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, christian.couder@gmail.com, gitster@pobox.com,
         Prathamesh Chavan <pc44800@gmail.com>
-Subject: [GSoC][PATCH 3/5 v3] submodule: port set_name_rev() from shell to C
-Date:   Sat,  1 Jul 2017 01:17:25 +0530
-Message-Id: <20170630194727.29787-3-pc44800@gmail.com>
+Subject: [GSoC][PATCH 1/5 v3] submodule--helper: introduce get_submodule_displaypath()
+Date:   Sat,  1 Jul 2017 01:17:23 +0530
+Message-Id: <20170630194727.29787-1-pc44800@gmail.com>
 X-Mailer: git-send-email 2.13.0
-In-Reply-To: <20170630194727.29787-1-pc44800@gmail.com>
+In-Reply-To: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
 References: <CAME+mvUrr8EA-6jbCZdpB7dMZ5CN3RyY7yoRoUBoiZw=sH6Ysw@mail.gmail.com>
- <20170630194727.29787-1-pc44800@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Function set_name_rev() is ported from git-submodule to the
-submodule--helper builtin. The function get_name_rev() generates the
-value of the revision name as required, and the function
-print_name_rev() handles the formating and printing of the obtained
-revision name.
+Introduce function get_submodule_displaypath() to replace the code
+occurring in submodule_init() for generating displaypath of the
+submodule with a call to it.
+
+This new function will also be used in other parts of the system
+in later patches.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 ---
- builtin/submodule--helper.c | 69 +++++++++++++++++++++++++++++++++++++++++++++
- git-submodule.sh            | 16 ++---------
- 2 files changed, 71 insertions(+), 14 deletions(-)
+The patch series is updated, and is based on 'master' branch.
+
+This patch series contains updates patches about
+Introduction of the function: get_submodule_displaypath()
+(This patch wasn't posted in the last update by mistake)
+Introduction of the function: for_each_submodule()
+Port shell function set_name_rev() to C
+Port submodule subcommand 'status' from shell to C
+Port submodule subcommand 'sync' from shell to C
+
+Complete build report of this patch-series is available at:
+https://travis-ci.org/pratham-pc/git/builds
+Branch: patch-series-1
+Build #114
+
+Also, the above series was also build by basing it on the 'next'
+branch for the purpose of testing the code.
+Since the function is_submodule_initialized changed to
+is_submodule_active, this change was required to be added in the
+above patches while basing it on next.
+After doing the required changes,
+Complete build report of the above is available at:
+https://travis-ci.org/pratham-pc/git/builds
+Branch: patch-series-1-next
+Build #116
+
+I have held back the following patch since some work is still
+required to be done:
+Port submodule subcommand 'foreach' from shell to C
+Port submodule subcommand 'deinit' from shell to C
+Port submodule subcommand 'summary' from shell to C
+I hope to complete this and post these patches later with the
+weekly updates.
+
+ builtin/submodule--helper.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c4286aac5..4103e40e4 100644
+index 8517032b3..1bfc91bca 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -244,6 +244,74 @@ static char *get_submodule_displaypath(const char *path, const char *prefix)
- 	}
+@@ -220,6 +220,27 @@ static int resolve_relative_url_test(int argc, const char **argv, const char *pr
+ 	return 0;
  }
  
-+enum describe_step {
-+	step_bare,
-+	step_tags,
-+	step_contains,
-+	step_all_always,
-+	step_end
-+};
-+
-+static char *get_name_rev(const char *sub_path, const char* object_id)
++static char *get_submodule_displaypath(const char *path, const char *prefix)
 +{
-+	struct strbuf sb = STRBUF_INIT;
-+	enum describe_step cur_step;
++	const char *super_prefix = get_super_prefix();
 +
-+	for (cur_step = step_bare; cur_step < step_end; cur_step++) {
-+		struct child_process cp = CHILD_PROCESS_INIT;
-+		prepare_submodule_repo_env(&cp.env_array);
-+		cp.dir = sub_path;
-+		cp.git_cmd = 1;
-+		cp.no_stderr = 1;
-+
-+		switch (cur_step) {
-+			case step_bare:
-+				argv_array_pushl(&cp.args, "describe",
-+						 object_id, NULL);
-+				break;
-+			case step_tags:	
-+				argv_array_pushl(&cp.args, "describe",
-+						 "--tags", object_id, NULL);
-+				break;
-+			case step_contains:
-+				argv_array_pushl(&cp.args, "describe",
-+						 "--contains", object_id,
-+						 NULL);
-+				break;
-+			case step_all_always:
-+				argv_array_pushl(&cp.args, "describe",
-+						 "--all", "--always",
-+						 object_id, NULL);
-+				break;
-+			default:
-+				BUG("unknown describe step '%d'", cur_step);
-+		}
-+
-+		if (!capture_command(&cp, &sb, 0) && sb.len) {
-+			strbuf_strip_suffix(&sb, "\n");
-+			return strbuf_detach(&sb, NULL);
-+		}
-+
++	if (prefix && super_prefix) {
++		BUG("cannot have prefix '%s' and superprefix '%s'",
++		    prefix, super_prefix);
++	} else if (prefix) {
++		struct strbuf sb = STRBUF_INIT;
++		char *displaypath = xstrdup(relative_path(path, prefix, &sb));
++		strbuf_release(&sb);
++		return displaypath;
++	} else if (super_prefix) {
++		int len = strlen(super_prefix);
++		const char *format = is_dir_sep(super_prefix[len - 1]) ? "%s%s" : "%s/%s";
++		return xstrfmt(format, super_prefix, path);
++	} else {
++		return xstrdup(path);
 +	}
-+
-+	strbuf_release(&sb);
-+	return NULL;
-+}
-+
-+static int print_name_rev(int argc, const char **argv, const char *prefix)
-+{
-+	char *namerev;
-+	if (argc != 3)
-+		die("print-name-rev only accepts two arguments: <path> <sha1>");
-+
-+	namerev = get_name_rev(argv[1], argv[2]);
-+	if (namerev && namerev[0])
-+		printf(" (%s)", namerev);
-+	printf("\n");
-+
-+	return 0;
 +}
 +
  struct module_list {
  	const struct cache_entry **entries;
  	int alloc, nr;
-@@ -1242,6 +1310,7 @@ static struct cmd_struct commands[] = {
- 	{"relative-path", resolve_relative_path, 0},
- 	{"resolve-relative-url", resolve_relative_url, 0},
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
-+	{"print-name-rev", print_name_rev, 0},
- 	{"init", module_init, SUPPORT_SUPER_PREFIX},
- 	{"remote-branch", resolve_remote_submodule_branch, 0},
- 	{"push-check", push_check, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index e131760ee..e988167e0 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -759,18 +759,6 @@ cmd_update()
+@@ -339,16 +360,7 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 
+ 	/* Only loads from .gitmodules, no overlay with .git/config */
+ 	gitmodules_config();
+-
+-	if (prefix && get_super_prefix())
+-		die("BUG: cannot have prefix and superprefix");
+-	else if (prefix)
+-		displaypath = xstrdup(relative_path(path, prefix, &sb));
+-	else if (get_super_prefix()) {
+-		strbuf_addf(&sb, "%s%s", get_super_prefix(), path);
+-		displaypath = strbuf_detach(&sb, NULL);
+-	} else
+-		displaypath = xstrdup(path);
++	displaypath = get_submodule_displaypath(path, prefix);
+ 
+ 	sub = submodule_from_path(null_sha1, path);
+ 
+@@ -363,7 +375,6 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+ 	 * Set active flag for the submodule being initialized
+ 	 */
+ 	if (!is_submodule_initialized(path)) {
+-		strbuf_reset(&sb);
+ 		strbuf_addf(&sb, "submodule.%s.active", sub->name);
+ 		git_config_set_gently(sb.buf, "true");
  	}
- }
- 
--set_name_rev () {
--	revname=$( (
--		sanitize_submodule_env
--		cd "$1" && {
--			git describe "$2" 2>/dev/null ||
--			git describe --tags "$2" 2>/dev/null ||
--			git describe --contains "$2" 2>/dev/null ||
--			git describe --all --always "$2"
--		}
--	) )
--	test -z "$revname" || revname=" ($revname)"
--}
- #
- # Show commit summary for submodules in index or working tree
- #
-@@ -1042,14 +1030,14 @@ cmd_status()
- 		fi
- 		if git diff-files --ignore-submodules=dirty --quiet -- "$sm_path"
- 		then
--			set_name_rev "$sm_path" "$sha1"
-+			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
- 			say " $sha1 $displaypath$revname"
- 		else
- 			if test -z "$cached"
- 			then
- 				sha1=$(sanitize_submodule_env; cd "$sm_path" && git rev-parse --verify HEAD)
- 			fi
--			set_name_rev "$sm_path" "$sha1"
-+			revname=$(git submodule--helper print-name-rev "$sm_path" "$sha1")
- 			say "+$sha1 $displaypath$revname"
- 		fi
- 
 -- 
 2.13.0
 
