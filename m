@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACC27201A0
-	for <e@80x24.org>; Fri, 30 Jun 2017 17:34:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FEF3201A0
+	for <e@80x24.org>; Fri, 30 Jun 2017 17:39:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752016AbdF3ReF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 13:34:05 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36637 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751657AbdF3ReE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 13:34:04 -0400
-Received: by mail-pf0-f193.google.com with SMTP id z6so17771115pfk.3
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 10:34:04 -0700 (PDT)
+        id S1751935AbdF3Rjs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 13:39:48 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34997 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751322AbdF3Rjs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 13:39:48 -0400
+Received: by mail-pf0-f195.google.com with SMTP id s66so17758277pfs.2
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 10:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=bpV0TZU69404vUGhOa/wwIQDCFMp0x+N/XHG4uKEw6E=;
-        b=GBgsBAwbQtxC8LjYH89vXsKRZzQWeUZ/YlbWuaCOBq8Be9XvAQEKK/k3LcqmIrYcEf
-         d53iBxDEZJOHQq5rgaEjhuPsvv8bX52k62KJfNPHzlZsBSH09uRoD5rMJLabDfrVc3/C
-         qqTG6tHIusUMWVZmvTk8jEq6zxFyMOxCArhLLg/QCEvhFLqejljH/5jRMwc0K1kTyVs6
-         CfDkAoXLDYPhhhOUFLZHKTltdyCA9/CpumBZhYt6xC3DWX3kYiYhPmn3TxtBkWehWMA/
-         zF9DH4Va1PPb/PndMCPbDli30IN3HnpuWKZLfbo1i/gfpqR/+u++mt1EL9elyIiTnGRE
-         ANRQ==
+        bh=ZpqkagvHidDoRrjRTLOt6AddqGtNifNJpvbzKDLnUXM=;
+        b=cZ8sbmwqsm92y81Kob3FRzeMjTyOQ207kX+4TYAvKbVDM+MLtpMHwE1t5NKLaqWwR0
+         JgxCH6hILkQL/28mp/X2PEYzxI/fiXIIfcLK6hxC90JGGWhnAg1ANhlYMepJ/Y1bHLac
+         D3NRgKlsbZz1oLlZJsa18Stdd2lUWnC4okXG40yayMKRYnvlxu86TaXiQty391uok641
+         ySMk96qfFg50KCWnNWjJN0fU9l6PxzQA+2ctP9+GMQ4MDRrIwQs3EfK16pRQWve+By6D
+         NbL4pVYASzkkiYyqqSpe22zVQqU20SYsF1VOpBOtpRiyKSH8dhgxWxTeC+xIot2vbGxm
+         MW7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=bpV0TZU69404vUGhOa/wwIQDCFMp0x+N/XHG4uKEw6E=;
-        b=mAwa9wKAnINpauaLdf/HKOw59y8nXAfvzj+PP2tpYyVk+2zKltx/wEhNHrGjawc6DC
-         Sqqulv3LlY6HlsAxnRd5eAAyzW/8sM7YCb7dzuaQmStaki+NBUIGk4gFldrkXbf6KwrH
-         PzXH27lZXo2HrH/vH7Q6o84CkBsRZJWgOeBqPGKp74fYE8jn1zdzOdOCWzvvb0sBQATF
-         J3XZYfxl3E5Siuy1p0H0lyXTszWshAJFT49iio4JgW1lHEdDZTx0jQ3gMIfLxBDBrJmu
-         J01C+ixtp8o4eOWeujRQ1moYihZuRjMb3SbrJ4JSENOGpo819Nc6ZGNSTGOSN80B29qF
-         u/xg==
-X-Gm-Message-State: AKS2vOyJkD8XIjKVw4Xb0tuI4GrcH0brPbepFiEHjyGykHAO1axXoF6C
-        ZnIlG4K8rVBn0A==
-X-Received: by 10.98.65.198 with SMTP id g67mr23263354pfd.196.1498844043664;
-        Fri, 30 Jun 2017 10:34:03 -0700 (PDT)
+        bh=ZpqkagvHidDoRrjRTLOt6AddqGtNifNJpvbzKDLnUXM=;
+        b=EqFNNlb8s+rMaDyYzEtBzfm+mEA7EqIesLSYer1o/9FvfHVj8ee665r8ZUgfEeQ6dp
+         yl/IswxDfmvLvS6uBtfhqxo0diIFwbzKKAmu0Mc8C/d4XhA3o8tpVgSORN/p67vmO4X2
+         xQq4B7G48b7L6OpcsMLVEB3ObkA8+MEHv/3CQsNbYRZln83sJ99ciptqxYxPv6kdCaIM
+         H0QrCI2CBmpUDz/s5qKeDsVZfyG1i8GBu/jxIMeM/AjS15fNkr825AtUPGUKMYzEalXt
+         SAmpRVfHGh+uPk8n1IZlzIIXGWrSTchyKKh4/bXv8TPpaP05viEwEZplhXNKOprTR7r+
+         ic6Q==
+X-Gm-Message-State: AKS2vOzdHP4qcZFkt3kUyLinP3TUSG5ee7K17exevgGVj6FdFmx9lawI
+        +mhxDmFwVTxCsA==
+X-Received: by 10.99.114.19 with SMTP id n19mr22022031pgc.81.1498844387269;
+        Fri, 30 Jun 2017 10:39:47 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:54f:b41d:dd9d:3de0])
-        by smtp.gmail.com with ESMTPSA id d89sm19813065pfl.7.2017.06.30.10.34.02
+        by smtp.gmail.com with ESMTPSA id 67sm19611610pfa.83.2017.06.30.10.39.46
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 10:34:02 -0700 (PDT)
+        Fri, 30 Jun 2017 10:39:46 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org, jrnieder@gmail.com, git@jeffhostetler.com
@@ -55,10 +55,10 @@ Subject: Re: [PATCHv2 1/2] hashmap.h: compare function has access to a data fiel
 References: <20170629011334.11173-1-sbeller@google.com>
         <20170629235336.28460-1-sbeller@google.com>
         <20170629235336.28460-2-sbeller@google.com>
-Date:   Fri, 30 Jun 2017 10:34:01 -0700
+Date:   Fri, 30 Jun 2017 10:39:45 -0700
 In-Reply-To: <20170629235336.28460-2-sbeller@google.com> (Stefan Beller's
         message of "Thu, 29 Jun 2017 16:53:35 -0700")
-Message-ID: <xmqqlgo9s7li.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqh8yxs7by.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,39 +69,45 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
-> When using the hashmap a common need is to have access to arbitrary data
-> in the compare function. A couple of times we abuse the keydata field
-> to pass in the data needed. This happens for example in patch-ids.c.
-
-It is not "arbitrary data"; it is very important to streess that we
-are not just passing random crud, but adding a mechanism to
-tailor/curry the function in a way that is fixed throughout the
-lifetime of a hashmap.
-
-> diff --git a/hashmap.h b/hashmap.h
-> index de6022a3a9..1c26bbad5b 100644
-> --- a/hashmap.h
-> +++ b/hashmap.h
-> @@ -33,11 +33,12 @@ struct hashmap_entry {
->  };
+> diff --git a/patch-ids.c b/patch-ids.c
+> index 9c0ab9e67a..b9b2ebbad0 100644
+> --- a/patch-ids.c
+> +++ b/patch-ids.c
+> @@ -37,6 +37,7 @@ int commit_patch_id(struct commit *commit, struct diff_options *options,
+>   */
+>  static int patch_id_cmp(struct patch_id *a,
+>  			struct patch_id *b,
+> +			const void *unused_keydata,
+>  			struct diff_options *opt)
+>  {
+>  	if (is_null_oid(&a->patch_id) &&
+> @@ -57,7 +58,8 @@ int init_patch_ids(struct patch_ids *ids)
+>  	ids->diffopts.detect_rename = 0;
+>  	DIFF_OPT_SET(&ids->diffopts, RECURSIVE);
+>  	diff_setup_done(&ids->diffopts);
+> -	hashmap_init(&ids->patches, (hashmap_cmp_fn)patch_id_cmp, 256);
+> +	hashmap_init(&ids->patches, (hashmap_cmp_fn)patch_id_cmp,
+> +		     &ids->diffopts, 256);
+>  	return 0;
+>  }
 >  
->  typedef int (*hashmap_cmp_fn)(const void *entry, const void *entry_or_key,
-> -		const void *keydata);
-> +		const void *keydata, const void *cbdata);
+> @@ -93,7 +95,7 @@ struct patch_id *has_commit_patch_id(struct commit *commit,
+>  	if (init_patch_id_entry(&patch, commit, ids))
+>  		return NULL;
+>  
+> -	return hashmap_get(&ids->patches, &patch, &ids->diffopts);
+> +	return hashmap_get(&ids->patches, &patch, NULL);
+>  }
 
-As I view the new "data" thing the C's (read: poor-man's) way to
-cutomize the function, I would have tweaked the function signature
-by giving the customization data at the front, i.e.
+This actually makes me wonder if we can demonstrate an existing
+breakage in tests.  The old code used to pass NULL to the diffopts,
+causing it to be passed down through commit_patch_id() function down
+to diff_tree_oid() or diff_root_tree_oid().  When the codepath
+triggers the issue that Peff warned about in his old article (was it
+about rehashing or something?) that makes two entries compared
+(i.e. not using keydata, because we are not comparing an existing
+entry with a key and data only to see if that already exists in the
+hashmap), wouldn't that cause ll_diff_tree_oid() that is called from
+diff_tree_oid() to dereference NULL?
 
-	fn(fndata, entry, entry_or_key, keydata);
-
-That would hopefully make it more obvious that the new thing is
-pairs with fn, not with other arguments (and entry-or-key and
-keydata pairs, instead of three old arguments standing as equals).
-
-As I think the way we wish to be able to express it in a better
-language would have been something like:
-
-	(partial_apply(fn, fndata))(entry, entry_or_key, keydata)
-
-that order would match what is going on better.
+Thanks.
