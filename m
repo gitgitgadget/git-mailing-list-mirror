@@ -2,75 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E31220209
-	for <e@80x24.org>; Fri, 30 Jun 2017 07:09:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5587320209
+	for <e@80x24.org>; Fri, 30 Jun 2017 07:12:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751772AbdF3HJE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 03:09:04 -0400
-Received: from mx2.suse.de ([195.135.220.15]:54418 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1751565AbdF3HJD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 03:09:03 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 3339AAC60;
-        Fri, 30 Jun 2017 07:09:02 +0000 (UTC)
-Date:   Fri, 30 Jun 2017 09:08:54 +0200
-From:   Borislav Petkov <bp@suse.de>
-To:     "Luck, Tony" <tony.luck@intel.com>
-Cc:     Dave Hansen <dave.hansen@intel.com>,
-        Naoya Horiguchi <n-horiguchi@ah.jp.nec.com>, x86@kernel.org,
-        linux-mm@kvack.org, linux-kernel@vger.kernel.org,
-        Yazen Ghannam <yazen.ghannam@amd.com>, git@vger.kernel.org
-Subject: Re: git send-email (w/o Cc: stable)
-Message-ID: <20170630070833.rwevr2yvp4wwo3ou@pd.tnic>
-References: <20170616190200.6210-1-tony.luck@intel.com>
- <20170619180147.qolal6mz2wlrjbxk@pd.tnic>
- <20170621174740.npbtg2e4o65tyrss@intel.com>
- <20170622093904.ajzoi43vlkejqgi3@pd.tnic>
- <20170629221136.xbybfjb7tyloswf3@intel.com>
+        id S1751651AbdF3HMW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 03:12:22 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:41572 "EHLO
+        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751565AbdF3HMV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 03:12:21 -0400
+Received: from tigra (unknown [192.168.2.102])
+        by hermes.domain007.com (Postfix) with ESMTP id B3362D400C6;
+        Fri, 30 Jun 2017 10:12:19 +0300 (MSK)
+Date:   Fri, 30 Jun 2017 10:12:19 +0300
+From:   Konstantin Khomoutov <kostix+git@007spb.ru>
+To:     =?utf-8?B?0KHQtdGA0LPQtdC5INCo0LXRgdGC0LDQutC+0LI=?= 
+        <s_shestakov@playrix.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug with automated processing of git status results
+Message-ID: <20170630071219.m757vvyccrp3afli@tigra>
+References: <CAM1TZMGXiDpzt3uhpDaE41KR8GWyjMq=+Mcvz5Zrj0EffNrGrw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170629221136.xbybfjb7tyloswf3@intel.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <CAM1TZMGXiDpzt3uhpDaE41KR8GWyjMq=+Mcvz5Zrj0EffNrGrw@mail.gmail.com>
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 29, 2017 at 03:11:37PM -0700, Luck, Tony wrote:
-> So there is a "--cc-cmd" option that can do the same as those "-cc" arguments.
-> Combine that with --suppress-cc=bodycc and things get a bit more automated.
+On Fri, Jun 30, 2017 at 09:00:14AM +0300, Сергей Шестаков wrote:
 
-Yeah, whatever works for you.
+> I am trying to make an automated processing of "git status" results.
+> I execute the command
+> 
+> git status -z -uno
+> 
+> I expect that it has stable output format. However, it still can print
+> warnings like
+> 
+> warning: CRLF will be replaced by LF in somefile.xml
+> 
+> I understand that we can turn off core.safecrlf, but it's
+> inconvinient. It would be better if "git status" command had an
+> optional parameter that disables any other output besides changed
+> files.
 
-I did play with cc-cmd somewhat but can't be bothered to generate the CC
-list per hand each time.
+The `git status` command supposedly writes their "regular" data to its
+standard output while warnings go to its standard error stream.
+Is this not the case?
 
-I'd prefer if that switch:
-
-	--suppress-cc=<category>
-
-had the obvious <category> of single email address too:
-
-	--suppress-cc=stable@vger.kernel.org
-
-so that we can send patches and unconditionally suppress only that
-single recipient from the CC list.
-
-And maybe there is a way...
-
-Let me CC the git ML.
-
--- 
-Regards/Gruss,
-    Boris.
-
-SUSE Linux GmbH, GF: Felix Imendörffer, Jane Smithard, Graham Norton, HRB 21284 (AG Nürnberg)
--- 
