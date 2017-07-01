@@ -7,99 +7,80 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9120120209
-	for <e@80x24.org>; Sat,  1 Jul 2017 12:49:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8834320209
+	for <e@80x24.org>; Sat,  1 Jul 2017 12:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751826AbdGAMto (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 08:49:44 -0400
-Received: from mout.web.de ([212.227.17.12]:55191 "EHLO mout.web.de"
+        id S1751862AbdGAMvC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 08:51:02 -0400
+Received: from mout.web.de ([212.227.17.12]:51515 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751805AbdGAMtn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2017 08:49:43 -0400
-Received: from [192.168.209.79] ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MKrPw-1dRHqB3d68-0005Za; Sat, 01
- Jul 2017 14:49:35 +0200
-Subject: Re: [PATCH] status: suppress additional warning output in plumbing
- modes
-To:     Stefan Beller <sbeller@google.com>, s_shestakov@playrix.com,
-        kostix+git@007spb.ru, Matthieu.Moy@grenoble-inp.fr
-Cc:     git@vger.kernel.org
-References: <70c9a162-ac2f-c347-d13b-f24ac24d1133@web.de>
- <20170630162826.27711-1-sbeller@google.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <d401dcc7-cb4c-e895-e52a-cd54c8130a65@web.de>
-Date:   Sat, 1 Jul 2017 14:49:29 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.2.1
+        id S1751805AbdGAMvB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2017 08:51:01 -0400
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MEEiK-1dXtYg3iEy-00FRmQ; Sat, 01
+ Jul 2017 14:50:58 +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2 1/2] Check DB_ENVIRONMENT using is_directory()
+Date:   Sat,  1 Jul 2017 14:50:57 +0200
+Message-Id: <20170701125057.16169-1-tboegi@web.de>
+X-Mailer: git-send-email 2.10.0
 MIME-Version: 1.0
-In-Reply-To: <20170630162826.27711-1-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:GoU4Sczb/mD85NdqH20qV7s+99poUwb8M2jmc2e/sb2eA0i0bLr
- IiRu6X71czUidT2A8wiMyZ+rEUx4+IUrZhQMoCbC7faR9L392RjjO/OlA4FX1zxy4Ww4akR
- diKYsrzXv1ic+zLdE31E/j+4HHiASEa2Nz8Q5TAJw8vKXhuhAuNutB0rne/kwbZln+crMhe
- eSo9GrvOCjmEh1uA5KswA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Fi1/rCEgdkg=:FchsfWA7THesvEBR9Jx68n
- Ch6A90ECOwC8LAAtCkWGYU8KlltLtJ3Yan05VGyDCGoaVEox8Tk2pJI0sc16ZDKY46wTLHiGF
- SqlgfXiqj3rQV4gqFtzEz4nNfiXee1ukFVyQWjSmHpIXiyX5ifM2YofAk350jP1kS/qP1Q9ER
- DRb7BR2a20FeyXR4fGqp8GJrFI+i9abXtPMUpCAhcqtKVrAph36AjG0fXVg1z0wFAvcPMlPu6
- lhGzQMeeyBtOr4g0E2z3c0hz3YdnlujAw4HVrD8aw9k4hvczUvHCkGjWLBJm3iP9fRAXyaM7i
- acbMghTD/KzWYjAExYbHsruG3V+iFb/tXwQgm8Qwa7vU+lrLbPX0/ARZDZnqGX9GbRzKo+nTN
- nyogJtBVUbXNcEBErS2DVeq3oD2eRyAy6VYE/SdlVyYcgQHusfeXPF7SM8Ft1idLipLVGPiyZ
- 6VaTgw8fP4uLJa/269Z1N1fU5VKAsE7/glrRQAQimb7u+Ds1Uc9WWsZW3dQ7QaMzWKMlZFilf
- wv9DczH8M6F11Bpz9hgSrNRulTMJKnZL8DVfvuAD6F7/TFifNF1TAlzB0DaipIRxzBCIaGW2y
- A3V5GTMj6Ajp1aDWphYTdYkEJIcP3h0/E3uvGSopRs104Hp7tQhEj9SOjT06xAWo0kC13IVam
- /DBDbFsC7WSk4zzMzrpxaFXvK8of+rpCU2zZUoheEkvhVsaRULSfNC03ihOEi44qcqSJ9i5vx
- sQuCzEthcpvb7GlF/Knn+t0Au2V2lf7G18ZZgdwv7HZJd7O7N40aMEr9EGwc98dCRKWil9wCh
- qsOuk1V
+In-Reply-To: <20170628162958.519-1-tboegi@web.de>
+References: <20170628162958.519-1-tboegi@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:Fnu4D2qVqkIkn9e1Qrh1yukVivfTIMdlElqfonnisvNMkLxM0ft
+ urzl93Of3HVuUBfhITI5W7jIpXJf5aqOqX278s4MB81UE/PtHlFi1dvKjGZCSK+/C3ok47G
+ 60UO9sPdgaNpt2rWnJ8wjncoAk9XuP6d9fEsAFdD0SN6t+GGv4CVFX2zQtLEs863j2VI0Ix
+ RxZ9566Dha3ylhZPAt8ow==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VfAXz7I8NLw=:D4P/OKWWhTXnL/Xgp4f8FM
+ f+FEB0Yj2PCFj34OSltSt4xm+nzHoOuEq4hex6BM/pZtmLpHfYuA/In3jylSB1YeK3/aat8vY
+ ksza2K1fzi80l53PjSvVC3SwC6MynYJiuJOh8A4L6mPzXV4OiVdmBImasxdvZOaQTRAdxKkYE
+ wlbBd0yG8oPAfsojLrmVLB2GNuXJF0ZVCoiJb1uO68Hz/ffNDOsB9Kyv6gK8wYMqPpQJkMHvA
+ iLe2YAQQ5fQiyIWFqtonSmDpy5sdpQmP2aUPOcruw0SM99DuxbXzN8LeVSrXs0xQEUpDP8mhV
+ w7xnVNRBLLr11xe/bgkzs5DHEICgIMITcRdtkWs74cEihaBkxfLKsXgaWatA6tYL6HsuVQ0NF
+ BsWpZo780ro5LZ81maVyqlpFxMeKwmArDQ+RSUqOIEFwotl04buto09IEAzQbV9c9LFaV6Q8I
+ KL86oJRcwXZGtgu2+kk9D0mvicJ7KvOISGUrSuJQ/JPN1cRgq3ii8zx4kjFtsax2MvbFXQzaL
+ WVTWeZnwn7QNKrmMcG5D4Elyqd2PztbxFBeh6imul11avfwA6vx+Zrx4pMz6Fx1yS4BaxvU50
+ tIKN0L94+yYgaHsuZVCuTHwD55iOLfm+1ZEd6HKrA6noRKa2dde7Os7AKuyRoC2LY9TW44n+5
+ 1MRsu+kVlEQZ6Za5PbRX/ZddSeEZw/bOx4yyzB1F336ZZyR2jiLi1DbBlwxJYwAZv2ftprfhj
+ BAuCMhI73wIiNp4R+XNBEynrBWcacbvD54T3HmvJbqivyD8R66Zns04YUJRz2FX6GHEGBAHTm
+ rYv4yVy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Torsten Bögershausen <tboegi@web.de>
 
+In setup.c is_git_directory() checks a Git directory using access(X_OK).
+This does not check, if path is a file or a directory.
+Check path with is_directory() instead.
+---
+After all the discussions (and lots of tests) I found that this patch
+works for my setup.
+All in all could the error reporting be improvved for is_git_directory(),
+as there may be "access denied", or "not a directory" or others, but
+that is for another day.
 
- >On 30/06/17 18:28, Stefan Beller wrote:
+setup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The patch makes a lot of sense - thanks for the fast reply.
-A question: does the header correspond to the patch ?
+diff --git a/setup.c b/setup.c
+index 358fbc2..5a7ee2e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -321,7 +321,7 @@ int is_git_directory(const char *suspect)
+ 
+ 	/* Check non-worktree-related signatures */
+ 	if (getenv(DB_ENVIRONMENT)) {
+-		if (access(getenv(DB_ENVIRONMENT), X_OK))
++		if (!is_directory(getenv(DB_ENVIRONMENT)))
+ 			goto done;
+ 	}
+ 	else {
+-- 
+2.10.0
 
-< [PATCH] status: suppress additional warning output in plumbing modes
- > [PATCH] status: suppress CRLF warnings in porcelain modes
-
-(And may be the comment in the code:)
-
-< / * suppress all additional output in porcelain mode */
- > / * suppress CRLF conversion warnings in porcelain mode */
-
-> When status is called with '--porcelain' (as implied by '-z'), we promise
-> to output only messages as described in the man page.
-> 
-> Suppress CRLF warnings.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> 
-> Maybe something like this?
-> 
->   builtin/commit.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 00a01f07c3..3705d5ec6f 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1126,6 +1126,11 @@ static void finalize_deferred_config(struct wt_status *s)
->   			die(_("--long and -z are incompatible"));
->   	}
->   
-> +	/* suppress all additional output in porcelain mode */
-> +	if (status_format == STATUS_FORMAT_PORCELAIN ||
-> +	    status_format == STATUS_FORMAT_PORCELAIN_V2)
-> +		safe_crlf = SAFE_CRLF_FALSE;
-> +
->   	if (use_deferred_config && status_format == STATUS_FORMAT_UNSPECIFIED)
->   		status_format = status_deferred_config.status_format;
->   	if (status_format == STATUS_FORMAT_UNSPECIFIED)
-> 
