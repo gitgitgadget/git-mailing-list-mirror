@@ -2,111 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA34F20209
-	for <e@80x24.org>; Sat,  1 Jul 2017 18:15:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C257820209
+	for <e@80x24.org>; Sat,  1 Jul 2017 18:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751921AbdGASP1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 14:15:27 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:59095 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751851AbdGASP1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 1 Jul 2017 14:15:27 -0400
-X-AuditID: 12074411-d03ff700000033ea-e5-5957e6bb61aa
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 2C.7A.13290.BB6E7595; Sat,  1 Jul 2017 14:15:25 -0400 (EDT)
-Received: from [192.168.69.190] (p57BCCCEF.dip0.t-ipconnect.de [87.188.204.239])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v61IFKvL009530
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sat, 1 Jul 2017 14:15:22 -0400
-Subject: Re: [PATCH v2 29/29] read_packed_refs(): die if `packed-refs`
- contains bogus data
-To:     Jeff King <peff@peff.net>
-References: <cover.1498200513.git.mhagger@alum.mit.edu>
- <1e08748aa5a6dc05003b08207a9a4bc344758ca2.1498200513.git.mhagger@alum.mit.edu>
- <20170623195845.pz7rdyqocjqu5edp@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Turner <novalis@novalis.org>,
-        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <9d988f17-ca61-d855-c950-2b20617ce48d@alum.mit.edu>
-Date:   Sat, 1 Jul 2017 20:15:20 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1751946AbdGASQT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 14:16:19 -0400
+Received: from mail-ua0-f173.google.com ([209.85.217.173]:36788 "EHLO
+        mail-ua0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751851AbdGASQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2017 14:16:19 -0400
+Received: by mail-ua0-f173.google.com with SMTP id g40so91400916uaa.3
+        for <git@vger.kernel.org>; Sat, 01 Jul 2017 11:16:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Z06fOektcIlVBRxqgwO9JtxOblmRmmU6ihpicsZ2uWg=;
+        b=XH8EbHPQCGe6fqOgytPG8f213SwGlRo/kei1VotgoNNjWmXQvgsbszEZ5GZ0kxn5d4
+         dj2+Bv5clrg/BKtOoDh5aw+4dpgBcGc6WPwFD9GCSVtec1ebBgdRbO3vUUxIknELAn3u
+         8e0iAjeA0pyRXiv0cCd5Z9/2HnlwFmsIQmORw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Z06fOektcIlVBRxqgwO9JtxOblmRmmU6ihpicsZ2uWg=;
+        b=rk1jF933w2KzylwsQ7poI0DwLk/VFIwKMcBeUxkbAx96pBnlAWWnMn5NG+YbMd1N+o
+         44sncuajwH7cqcjxMcUQovBuPjsoDFvoZtCKLMxQU6UoOTIpCA2zbR9lL60khCJY7wvb
+         SCUYrkgC8BZgYuaHdR0pDsZnsI9nukto6rQ6LnkGQ9LCRDZF1B9hEZz26z6FhW4P/DTb
+         gaj03gKkeSA6Jp3wGXh3Wq7UMujgN+5qfoseG2xV/v6isixjHbJSn54meeH/uT6QjJmo
+         NOEgS4VWbDsAgFBKc6JBIu8jESWD4P2gFOFCj/5NfzXoQH1qoLgrqP7+k6rU9YEGJyVO
+         gRsg==
+X-Gm-Message-State: AIVw110/qY3TqfWGu0r14wuJ+LhivL3TQmPz5JU436or1M/MCp4G1rR8
+        +mKYQ3xV/N661cQhZNaXsF2pkS66J/SPC6ExmQ==
+X-Received: by 10.176.24.80 with SMTP id j16mr1632616uag.120.1498932978161;
+ Sat, 01 Jul 2017 11:16:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170623195845.pz7rdyqocjqu5edp@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixO6iqLv3WXikwYzLxhZrn91hsni+/gS7
-        RdeVbiaLht4rzBZLHr5mtuie8pbR4kdLD7PF5s3tLA4cHjtn3WX3WLCp1KOr/Qibx7PePYwe
-        Fy8pe3zeJBfAFsVlk5Kak1mWWqRvl8CV0Xf3DmvBEoGKo9/vsTQwTuLtYuTgkBAwkWj6V9zF
-        yMUhJLCDSWLi4XssEM55JokZj84ydzFycggLxEh0rZ3PCmKLCMhKfD+8kRGi6BCjxJmFzewg
-        DrPAQyaJq3dfg1WxCehKLOppZgKxeQXsJT5v/Qw2iUVAReLVv16wuKhAhMTDzl3sEDWCEidn
-        PmEBsTkFXCSu7f0ONodZQF3iz7xLzBC2vMT2t3OYJzDyz0LSMgtJ2SwkZQsYmVcxyiXmlObq
-        5iZm5hSnJusWJyfm5aUW6Zrq5WaW6KWmlG5ihIS84A7GGSflDjEKcDAq8fBuCAmLFGJNLCuu
-        zD3EKMnBpCTKu/JaaKQQX1J+SmVGYnFGfFFpTmox0O8czEoivOz3wiOFeFMSK6tSi/JhUtIc
-        LErivHxL1P2EBNITS1KzU1MLUotgsjIcHEoSvJeeAjUKFqWmp1akZeaUIKSZODhBhvMADV94
-        F2R4cUFibnFmOkT+FKMuR8eMn9+YhFjy8vNSpcR5PUEGCYAUZZTmwc2BpapXjOJAbwlDVPEA
-        0xzcpFdAS5iAlgjPCAFZUpKIkJJqYNRR82N/sasx5oVEUaHWoa9bVfSWhk5d+NGu+1vanoQJ
-        fF5r5+wRq7W3Up3zIO+d2HkthnPBoZpcnew7/9d/KN71992U9W6aD8MY3t96a++aZJR1u+3m
-        wqinK5b4We2rn/uz4cLTC08yPx/ZWWCtXVh9b8HUzQs4taP+XTKUX/3h1/SpnvdsZ/1SYinO
-        SDTUYi4qTgQApW76TDADAAA=
+Received: by 10.176.69.194 with HTTP; Sat, 1 Jul 2017 11:15:57 -0700 (PDT)
+In-Reply-To: <xmqqbmp4nj9u.fsf@gitster.mtv.corp.google.com>
+References: <CAHv71zK5SqbwrBFX=a8-DY9H3KT4FEyMgv__p2gZzNr0WUAPUw@mail.gmail.com>
+ <xmqqbmp4nj9u.fsf@gitster.mtv.corp.google.com>
+From:   Dan Kohn <dan@linuxfoundation.org>
+Date:   Sat, 1 Jul 2017 14:15:57 -0400
+Message-ID: <CAHv71zJZfG3AGNL_J5KqYiut6AyyNdUyBG-sZ9aZ-zoGVdOr+w@mail.gmail.com>
+Subject: Re: Request for git merge --signoff
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/23/2017 09:58 PM, Jeff King wrote:
-> On Fri, Jun 23, 2017 at 09:01:47AM +0200, Michael Haggerty wrote:
-> 
->> The old code ignored any lines that it didn't understand. This is
->> dangerous. Instead, `die()` if the `packed-refs` file contains any
->> lines that we don't know how to handle.
-> 
-> This seems like a big improvement. Is it worth adding a test for a
-> corrupted file?
+On Sat, Jul 1, 2017 at 1:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Dan Kohn <dan@linuxfoundation.org> writes:
 
-That's a good idea. While I'm at it, I'll distinguish between
-unterminated lines and lines that are invalid for other reasons, because
-the error message should differ for these cases.
+>> Could you please add a `--signoff` option to `git merge`?
 
-> I assume this isn't something you saw in the wild, but just a deficiency
-> you noticed while reading the code.
+> The reason why we changed the default for "git merge" to start an
+> editor at around v1.7.10 was because we wanted to encourage people
+> to write log message that more meaningfully documents the change,
+> and adding sign-off is probably in line with that.
 
-Correct, I've never seen this problem in the wild. Though, since Git
-would have covered up the problem while it existed and obliterated it at
-the next `pack-refs`, it's the kind of thing that would be easy to
-overlook and hard to prove afterwards.
+> I've done that "commit --amend" on a merge to tweak its message
+> myself number of times, but I have to admit that I never did so for
+> sign-off, but why not? ;-)
 
-> I suspect this laxness may have been what allowed us to add the optional
-> peeled values long ago. But I think I'd rather see us be more strict and
-> notice corruption or nonsense rather than quietly ignoring (especially
-> because an operation like "git pack-refs" would then overwrite it,
-> dropping whatever entries we didn't understand).
+I'm not opposed to starting the editor, although in the case of our
+workflow there's not much more to say beyond "Merged in master". I
+would just like the Sign-Off line to appear by default in the commit
+message if I do `git merge origin/master --signoff`. I know it seems
+trivial, but many GitHub users aren't familiar with the exact header
+syntax to use, as they're used to just doing `git commit -sam 'New
+Feature'`.
 
-That's an interesting consideration. I suppose we could plan in some way
-to extend the `packed-refs` format in a backwards-transparent fashion,
-if there is ever an extension that old versions of git would be free to
-ignore, while leaving the format strict enough that genuine corruption
-would be unlikely to be overlooked. For example, we could reserve one or
-more special characters which, when they appear at the beginning of a
-line, mean that the line should be ignored.
-
-But such an extension would only be practical if other Git
-implementations are similarly lax. But libgit2 is currently strict about
-rejecting unrecognized lines, so such an extension couldn't be
-backwards-compatible with old versions of libgit2. So it doesn't seem
-very useful.
-
-Michael
-
+Separately, I just came back from Beijing where Linus spoke at LC3
+<https://www.lfasiallc.com/linuxcon-containercon-cloudopen-china>. He
+was asked about git and explained that he had largely bowed out of any
+development after the first few months and credited your stewardship.
+Even if you turn down my request for a new flag here, thanks for the
+amazing project!
+--
+Dan Kohn <mailto:dan@linuxfoundation.org>
+Executive Director, Cloud Native Computing Foundation <https://cncf.io/>
+tel:+1-415-233-1000
