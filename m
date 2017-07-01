@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C975201A0
-	for <e@80x24.org>; Sat,  1 Jul 2017 00:29:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F612201A0
+	for <e@80x24.org>; Sat,  1 Jul 2017 00:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752153AbdGAA27 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 20:28:59 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33563 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752138AbdGAA25 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 20:28:57 -0400
-Received: by mail-pf0-f173.google.com with SMTP id e7so74264528pfk.0
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 17:28:52 -0700 (PDT)
+        id S1752165AbdGAA3B (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 20:29:01 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:33349 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752143AbdGAA2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 20:28:54 -0400
+Received: by mail-pg0-f41.google.com with SMTP id f127so70380942pgc.0
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 17:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YbU3TJvy0oUKTIOPvlSG6E0qGMm8MQl+S2IZTD6KXgI=;
-        b=YxgHQ+LzR6D+AkCu+y7U9dIgsTLfEjTPLB/1dlmZV+nY0YjltQFKghxqTK1UXgnJBc
-         +E0jbZo5kfgeZEFMPAZMiP9i+85sXrn4eN1KT4V/Iyjdq/VEBo2o75XuA8DY63bgxGLx
-         1YZUkepd8mhgvPd7+o2trCgbT/YB5cMVKtDtm0uz5WiHtNVUUuffTJIOStaZWO4i237d
-         K3pZgcRrnevE1PX1zkp1XOP8whva+P+d2HMz3znHPbiqOrzV7MHbkF5asIMCYs18j5Mo
-         svrb3fT9v7ICXaV6ZfMk4MHcckmUxLAbx1wmNwafuScrMtwx0GDVLzc7d/pyZIC5WayF
-         VxUw==
+        bh=8qkn9FmByF8IXJBIBU5eZkBQ6hXS1jjgkGu4UNLZgGE=;
+        b=M+Z+TZ97tLcJK8a1+GmGfZf+gGyNKnjWLJ4TBlvwJ/9UhVfwv2tZsa681imqKJy2HG
+         g6cc5rM+n9z4KE4AzhUdbEiucirLn4+56V/RReKeZ9Glb9BkTzvnfpDbaSBw3I+jJmsK
+         z9+NjBAH43L/Oym3qjVbKFltGL5J6X/mjwsTLr+UjE71rrGpvFJBt3/NnFWqtfeTg84y
+         LCzGG//FwzY/DDTHbBh4LSoLThcv+DO5gmaS5AxbjGnAUm/jB1TNcYpQbO3C16WACEYP
+         0E3dVUVdzsIXFJMX8RcXD2usrLrST4K/1Ol19t2RlRUbtReOHIvwi/iZoTlK3z02AOWU
+         U3DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YbU3TJvy0oUKTIOPvlSG6E0qGMm8MQl+S2IZTD6KXgI=;
-        b=L5hHPmc683YSmuxDSF6TCQ+l6wtB1gg1K7k76NemteT4rWecEJre1TD72ZbeVoikF3
-         GTLhZgosfcp4nuLfa15i8W3wujiWSq5JYzGBTXwHqT0QREXJ82zCRdSWnioyhnPp+LSO
-         9WQ/1V70rTPD97Nm2M2KzPKdv+lJnQ1Q/BHjTB9YJT7+3MCKqXVxkpZr5tIOWYBrovqh
-         KErni3qt/i9A2SETF3UiuxcXYs/mlZ3KKeZwXS77bt8cddt47YA0SuzEK88gdj8LnXt2
-         opvB5nqAJcg8ZFOxS6wcZUYY58DQwJ8IWj7pQ0Jua6RYeetCn9v+O66I253ucvnISJOA
-         1vFQ==
-X-Gm-Message-State: AKS2vOxPotq//M7YWM3ZtXSAwkiI9xG7O4FM9aabSBY1i011dl5TYvvk
-        4BJkzpIXU9Y5LDyT5/d59A==
-X-Received: by 10.98.23.3 with SMTP id 3mr25261756pfx.55.1498868931261;
-        Fri, 30 Jun 2017 17:28:51 -0700 (PDT)
+        bh=8qkn9FmByF8IXJBIBU5eZkBQ6hXS1jjgkGu4UNLZgGE=;
+        b=bubVL2P5j5R1Db3BlggyeNaV1uyoeQY+PwSbN7KnD+wYjs0UYfXXZCF4F8XxO0fiI+
+         aR1fb5kyU77+5HSIpdmuVMmEqVLCKtUmKfG6Yx5e0njwgKR5TLoyVK++H04+QipnprS8
+         SgkPHLREzI1vSL25QNMg99w7zZYV1wQu5gq8gLrLY2YRcbATQJXcZ7mJ7rSgDsSWq7q0
+         3cCf0pXM3iPkmv+u4jhyzT6z8Znk/exLrQ5GF33BUdUdYpCfk70QucmRfXh2t9iwLlKc
+         MduwigfRhLDW8U7JTJZAxz1ja9xTPVy5Veq5CbvH4FdfvxtHkF3raiZYb89yO2GyjBH9
+         ojNA==
+X-Gm-Message-State: AKS2vOylElHyzZkLrjFNoSQ22haOpWbA0dpcaFoVyvJ5FkVqvw/VMcix
+        VWAPsOjOHyuChPptLQy1UQ==
+X-Received: by 10.84.128.69 with SMTP id 63mr26895232pla.54.1498868928921;
+        Fri, 30 Jun 2017 17:28:48 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:cc8b:7c8c:8e14:f9b5])
-        by smtp.gmail.com with ESMTPSA id t67sm19030619pfj.98.2017.06.30.17.28.50
+        by smtp.gmail.com with ESMTPSA id e189sm18932978pfe.100.2017.06.30.17.28.48
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 17:28:50 -0700 (PDT)
+        Fri, 30 Jun 2017 17:28:48 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 08/10] submodule-config.c: drop hashmap_cmp_fn cast
-Date:   Fri, 30 Jun 2017 17:28:36 -0700
-Message-Id: <20170701002838.22785-9-sbeller@google.com>
+Subject: [PATCH 06/10] patch-ids.c: drop hashmap_cmp_fn cast
+Date:   Fri, 30 Jun 2017 17:28:34 -0700
+Message-Id: <20170701002838.22785-7-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
 In-Reply-To: <20170701002838.22785-1-sbeller@google.com>
 References: <20170701002838.22785-1-sbeller@google.com>
@@ -62,53 +63,43 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule-config.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ patch-ids.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/submodule-config.c b/submodule-config.c
-index 0e1126183d..edc8dd04b6 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -35,27 +35,33 @@ static struct submodule_cache the_submodule_cache;
- static int is_cache_init;
- 
- static int config_path_cmp(const void *unused_cmp_data,
--			   const struct submodule_entry *a,
--			   const struct submodule_entry *b,
-+			   const void *entry,
-+			   const void *entry_or_key,
- 			   const void *unused_keydata)
+diff --git a/patch-ids.c b/patch-ids.c
+index b4166b0f38..9ea523984b 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -35,11 +35,16 @@ int commit_patch_id(struct commit *commit, struct diff_options *options,
+  * the side of safety.  The actual value being negative does not have
+  * any significance; only that it is non-zero matters.
+  */
+-static int patch_id_cmp(struct diff_options *opt,
+-			struct patch_id *a,
+-			struct patch_id *b,
++static int patch_id_cmp(const void *cmpfn_data,
++			const void *entry,
++			const void *entry_or_key,
+ 			const void *unused_keydata)
  {
-+	const struct submodule_entry *a = entry;
-+	const struct submodule_entry *b = entry_or_key;
++	/* NEEDSWORK: const correctness? */
++	struct diff_options *opt = (void*)cmpfn_data;
++	struct patch_id *a = (void*)entry;
++	struct patch_id *b = (void*)entry_or_key;
 +
- 	return strcmp(a->config->path, b->config->path) ||
- 	       hashcmp(a->config->gitmodules_sha1, b->config->gitmodules_sha1);
+ 	if (is_null_oid(&a->patch_id) &&
+ 	    commit_patch_id(a->commit, opt, &a->patch_id, 0))
+ 		return error("Could not get patch ID for %s",
+@@ -58,8 +63,7 @@ int init_patch_ids(struct patch_ids *ids)
+ 	ids->diffopts.detect_rename = 0;
+ 	DIFF_OPT_SET(&ids->diffopts, RECURSIVE);
+ 	diff_setup_done(&ids->diffopts);
+-	hashmap_init(&ids->patches, (hashmap_cmp_fn)patch_id_cmp,
+-		     &ids->diffopts, 256);
++	hashmap_init(&ids->patches, patch_id_cmp, &ids->diffopts, 256);
+ 	return 0;
  }
  
- static int config_name_cmp(const void *unused_cmp_data,
--			   const struct submodule_entry *a,
--			   const struct submodule_entry *b,
-+			   const void *entry,
-+			   const void *entry_or_key,
- 			   const void *unused_keydata)
- {
-+	const struct submodule_entry *a = entry;
-+	const struct submodule_entry *b = entry_or_key;
-+
- 	return strcmp(a->config->name, b->config->name) ||
- 	       hashcmp(a->config->gitmodules_sha1, b->config->gitmodules_sha1);
- }
- 
- static void cache_init(struct submodule_cache *cache)
- {
--	hashmap_init(&cache->for_path, (hashmap_cmp_fn) config_path_cmp, NULL, 0);
--	hashmap_init(&cache->for_name, (hashmap_cmp_fn) config_name_cmp, NULL, 0);
-+	hashmap_init(&cache->for_path, config_path_cmp, NULL, 0);
-+	hashmap_init(&cache->for_name, config_name_cmp, NULL, 0);
- }
- 
- static void free_one_config(struct submodule_entry *entry)
 -- 
 2.13.0.31.g9b732c453e
 
