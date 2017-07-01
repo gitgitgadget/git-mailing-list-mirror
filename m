@@ -2,89 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EF2E20209
-	for <e@80x24.org>; Sat,  1 Jul 2017 13:00:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EBD620209
+	for <e@80x24.org>; Sat,  1 Jul 2017 13:16:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751817AbdGANAt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 09:00:49 -0400
-Received: from mout.web.de ([212.227.15.3]:52735 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751364AbdGANAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2017 09:00:48 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M5bEe-1dgaqM3Nu4-00xY3T; Sat, 01
- Jul 2017 15:00:22 +0200
-Subject: Re: [PATCH v6 2/2] strbuf: change an always NULL/"" strbuf_addftime()
- param to bool
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <20170701125507.27214-1-avarab@gmail.com>
- <20170701125507.27214-2-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <10b2f9ba-89d1-851d-bf3c-bf70abebc8a7@web.de>
-Date:   Sat, 1 Jul 2017 15:00:20 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751828AbdGANQP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 09:16:15 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34789 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751364AbdGANQP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2017 09:16:15 -0400
+Received: by mail-wm0-f65.google.com with SMTP id p204so12445876wmg.1
+        for <git@vger.kernel.org>; Sat, 01 Jul 2017 06:16:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=EwNvAt3cXNeURK1NcJekFCHkDZ6xixIGFT1WWR1fKa8=;
+        b=uejlWwhpRu0w4sibHqo8pWMeeZpmkSXwIjKjrGZ5+JXz0gBFMjpm9JFibOLSBBdsng
+         dqwXNJ6RwTr5tH1fv6D6hrCn9gAlQ2gl2MR2M58LDQjR+XylGZRYKZ6RsLPfS+5/gXqi
+         tXHVhBtkEDHPTc0qXuh+jLMa7q0xZhQZmRcBSI3iFcR/hxyLeQooB3vaIMjP5uGjHU8r
+         jVFiKz9S3jZ+UWdYLY+67W3iw7xL1n/T3JOBcVf2SWNEAtxfl02QpWNMgdb7TmOnZyo7
+         NQcXmqLKOyID7GJ7LylHywKjwNbOyuDTWFUDMtZVD54Nei1S0eSRh74OvzdNZ0AMY2DE
+         sz9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=EwNvAt3cXNeURK1NcJekFCHkDZ6xixIGFT1WWR1fKa8=;
+        b=G7WjZy3jnREvasgNuAelKymzL//6jHhQggtPW6pfgvQYnw3c3YMYIeRE9oTWWmmkU/
+         W7g9TXDjAQxGybwSf//jnkypWdKwPY2wNCTbO3Swqh8bha9QC4coqJJW4Wy1yTRwZFBi
+         ZOyz+afslv5l7fAEGRry2SvROrmSXmO0yxo9aj6n0iTQ5VuK1QDZEmjsqUhdYqyUKXdZ
+         1I+ch6vpqYP4uJWCd8Ur1X8yre5dyLUBZMxtLrjpvgZbzQO6PwkJLzXS+ZS4xrWHfQOQ
+         JhObnUapVInrjQhycDeoqpqZSPI1+EnodAaffhwUJ/B3/0IM33ufsSXM8ADZnnbunf7J
+         Fc0A==
+X-Gm-Message-State: AKS2vOzgiWd13E6LqFJJWealaMUolMxPQIj5IlNDwEgV9TlZak0jXBZZ
+        X6Mv1gqOq/Hhd7Blrck=
+X-Received: by 10.80.222.138 with SMTP id c10mr8025076edl.97.1498914973312;
+        Sat, 01 Jul 2017 06:16:13 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id c56sm4537622ede.21.2017.07.01.06.16.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 01 Jul 2017 06:16:11 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v7 1/2] strbuf.h comment: discuss strbuf_addftime() arguments in order
+Date:   Sat,  1 Jul 2017 13:15:46 +0000
+Message-Id: <20170701131547.973-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1
+In-Reply-To: <10b2f9ba-89d1-851d-bf3c-bf70abebc8a7@web.de>
+References: <10b2f9ba-89d1-851d-bf3c-bf70abebc8a7@web.de>
 MIME-Version: 1.0
-In-Reply-To: <20170701125507.27214-2-avarab@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:Ev2hraCxQ4+xoJazn96g5TL+0rZYazdjxQdX2BVcnL7i7N6IfU/
- Dl3YMDXcvWnC52N4eLZ1KE6h7vjlORqBmmQIGOVkluEJXyeD3jFERu0YuK7RNefbqgTXM8q
- svWp4UttsPqtdLjuBFWcMOjBHgB937T46uiBMaSE0zyQqkKrUawirC6O54NTcBjXvqn1po5
- B+Ea5ISie0e/0FIQBHoSg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4PzRRqth3rs=:Kk4WHwUJINGjacP1Hlr77U
- Kma1JANTTyUaAzUFtp9dj/w8SYtKJRnPbbdaQOIRs50pCoIsiEYF3XmKTnycB4LWqb7one3uy
- 9gdWzVel5U1ze+agBx1Qx0dFLZql1/WcLDWX7mVJYUX+Dc4AH7YWZMx6v/gUq0b6LMYQzzIdo
- a7UnzRWbQCZjxhZOiECljlOM5kZC+ddOuwMJf3lQK0sBezLojBL5RyotcOd+BY1zoIOdDn1nv
- Sedy0IAKnx7jMRgjiIWoPMKK1V5UUVCxuB8l8R8hsWgl6RwWOYMU+/iqLaLC+6n2RN98HvjTS
- 5hy0eFtpakTZnATx29fHPIUB4a2eIgW5sNo14w01j7aCt/ICA2iaMjI7FQ12kKU15a/OsL5wT
- RI8r3QxDNBvbMHxnfN97ZOMYnZ65k38TcubGYRGM3s9YShiqWGckQYj7yUEMIbX5asEcg+Imd
- aeowXxm7gp3av3NQ//d2NR4OVxsTVXlUR2Iw2IOtWze7vTJuKniBCyEVOMWod9pvzacaeP/Mb
- bNYDyhj8eOkDYF+7pX9pnt5NZteKMqSQ9oyFWIUqBtX7mtt0agYoqrfZ4KvO10ekc3c4jou81
- KNmwFD5o/1JehfGRvBzKqcajmnF8Rd2FUGPe24RA2Hq78MtgTmnMhNsAmao0aAb9JNGUQlSzj
- ozipkfIZyYrMWkK1c0xwdnLjZvmGDzlnGfBt/nWd1wFpKNk1+dnDjZeTR1WRQO+UWWQGe15SX
- JJoS21h1dKqxMrpByddJ7HeihPMsN+pqfVJnc6cKEHRKMxs0tb08/i67viXdbU0g8XIq0KgIJ
- pMAc40E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.07.2017 um 14:55 schrieb Ævar Arnfjörð Bjarmason:
-> strbuf_addstr() allows callers to pass a time zone name for expanding
-   ^^^^^^^^^^^^^^^
-That should be "strbuf_addftime()" instead (my typo), as Junio noted.
+Change the comment documenting the strbuf_addftime() function to
+discuss the parameters in the order in which they appear, which makes
+this easier to read than discussing them out of order.
 
-> %Z. The only current caller either passes the empty string or NULL, in
-> which case %Z is handed over verbatim to strftime(3).  Replace that
-> string parameter with a flag controlling whether to remove %Z from the
-> format specification. This simplifies the code.
-> 
-> Commit-message-by: René Scharfe <l.s.r@web.de>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> 
-> On Sat, Jun 24 2017, Junio C. Hamano jotted:
->> René Scharfe <l.s.r@web.de> writes:
->>> Here's an attempt at a commit message that would have be easier to
->>> understand for me:
->>>
->>>    strbuf_addstr() allows callers to pass a time zone name for expanding
->>>    %Z.  The only current caller either passes the empty string or NULL,
->>>    in which case %Z is handed over verbatim to strftime(3).  Replace that
->>>    string parameter with a flag controlling whether to remove %Z from the
->>>    format specification.  This simplifies the code.
->>
->> I think the first one is strbuf_addftime(); other than that, I think
->> this version explains what is going on in this patch than the
->> original.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ strbuf.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-René
+diff --git a/strbuf.h b/strbuf.h
+index 3646a6291b..6809d7daa8 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -334,10 +334,10 @@ extern void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
+ 
+ /**
+  * Add the time specified by `tm`, as formatted by `strftime`.
+- * `tz_name` is used to expand %Z internally unless it's NULL.
+  * `tz_offset` is in decimal hhmm format, e.g. -600 means six hours west
+  * of Greenwich, and it's used to expand %z internally.  However, tokens
+  * with modifiers (e.g. %Ez) are passed to `strftime`.
++ * `tz_name` is used to expand %Z internally unless it's NULL.
+  */
+ extern void strbuf_addftime(struct strbuf *sb, const char *fmt,
+ 			    const struct tm *tm, int tz_offset,
+-- 
+2.13.1.611.g7e3b11ae1
+
