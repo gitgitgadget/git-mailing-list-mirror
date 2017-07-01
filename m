@@ -2,93 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8802E20209
-	for <e@80x24.org>; Sat,  1 Jul 2017 17:45:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA34F20209
+	for <e@80x24.org>; Sat,  1 Jul 2017 18:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751890AbdGARpU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 13:45:20 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:34284 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751389AbdGARpT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2017 13:45:19 -0400
-Received: by mail-pg0-f53.google.com with SMTP id t186so77544927pgb.1
-        for <git@vger.kernel.org>; Sat, 01 Jul 2017 10:45:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=w0zGylEkqyUFNk0fKgqLdIOrE9T2IcVY/ayn2b9O3bA=;
-        b=uJGZyZcZaseGMn+4PNt2GKcM3qVE4giZ9Q1EczayVO78QQLh5U4kjyZS5WgVkxxrKl
-         Xlp7mIUD7wafMIiS+Q9JK8c5Qy5e72idjOZpMrE8WfR7TACrSpk6WxhYoQd6NpSiNKGs
-         inUM/IP2iM0HdsUv2YP3qUh7lQ5Ypc5s5jI103zi56TQOX7ZPWyI3IVGRH9njspSszNY
-         tTcl+ZqdN4fJVFyNCacLykhuSYZRiAwn9QHYnJj6e0BMcpk/ZNi7CE6RBlncmMyTV1Py
-         aacBjCIkfe0TCehxdKZbP+WCxwp4Kk4GZBGUUGUN0CaxgYIz+V+NjZvJHxhDbak8vzDI
-         iEzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=w0zGylEkqyUFNk0fKgqLdIOrE9T2IcVY/ayn2b9O3bA=;
-        b=swWfpzJAxw0tYy+tD/Aw5uwEgCAuKBBoQqfaM0On7dwaDpzLbrX5R+Y5Jg0cQIsMlE
-         PCXYbkOKwS69MhTCRLzn6H7liJcW0kmH7TjuiWD42pNJiE4wVpB2SBUcjxt3OAvgM5xA
-         vW+5t/ks6qO6wS3ajhd1jEz0nUXF2JG6/xhdX2W5F4/r+O7Dy04SZ7gmU62GmieVC+oE
-         K95rAN5NiTEPWtWETEZMK33EYuDcQLUZqPSu5RK9ssfHICXwqtNxlkfGp6H+dr6MIehw
-         262exZypA0nP8stZEWBu1ywapF5+39LOSWkjxpjrVPI/oEG70IoaheNS0HOMkpjJBCUX
-         WEHA==
-X-Gm-Message-State: AIVw110V6nxM22t1sTXohe7zePhtnXFqyug6Et3eC0ghFiD3y2kOtBJt
-        M1W0Rahz4O31Rg==
-X-Received: by 10.84.232.14 with SMTP id h14mr1712410plk.28.1498931118704;
-        Sat, 01 Jul 2017 10:45:18 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:fd45:ceab:278e:5d13])
-        by smtp.gmail.com with ESMTPSA id i126sm26987850pgc.6.2017.07.01.10.45.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 01 Jul 2017 10:45:17 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dan Kohn <dan@linuxfoundation.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Request for git merge --signoff
-References: <CAHv71zK5SqbwrBFX=a8-DY9H3KT4FEyMgv__p2gZzNr0WUAPUw@mail.gmail.com>
-Date:   Sat, 01 Jul 2017 10:45:17 -0700
-In-Reply-To: <CAHv71zK5SqbwrBFX=a8-DY9H3KT4FEyMgv__p2gZzNr0WUAPUw@mail.gmail.com>
-        (Dan Kohn's message of "Sat, 1 Jul 2017 11:24:20 -0400")
-Message-ID: <xmqqbmp4nj9u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751921AbdGASP1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 14:15:27 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:59095 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751851AbdGASP1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 1 Jul 2017 14:15:27 -0400
+X-AuditID: 12074411-d03ff700000033ea-e5-5957e6bb61aa
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 2C.7A.13290.BB6E7595; Sat,  1 Jul 2017 14:15:25 -0400 (EDT)
+Received: from [192.168.69.190] (p57BCCCEF.dip0.t-ipconnect.de [87.188.204.239])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v61IFKvL009530
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sat, 1 Jul 2017 14:15:22 -0400
+Subject: Re: [PATCH v2 29/29] read_packed_refs(): die if `packed-refs`
+ contains bogus data
+To:     Jeff King <peff@peff.net>
+References: <cover.1498200513.git.mhagger@alum.mit.edu>
+ <1e08748aa5a6dc05003b08207a9a4bc344758ca2.1498200513.git.mhagger@alum.mit.edu>
+ <20170623195845.pz7rdyqocjqu5edp@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        David Turner <novalis@novalis.org>,
+        Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <9d988f17-ca61-d855-c950-2b20617ce48d@alum.mit.edu>
+Date:   Sat, 1 Jul 2017 20:15:20 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20170623195845.pz7rdyqocjqu5edp@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprLKsWRmVeSWpSXmKPExsUixO6iqLv3WXikwYzLxhZrn91hsni+/gS7
+        RdeVbiaLht4rzBZLHr5mtuie8pbR4kdLD7PF5s3tLA4cHjtn3WX3WLCp1KOr/Qibx7PePYwe
+        Fy8pe3zeJBfAFsVlk5Kak1mWWqRvl8CV0Xf3DmvBEoGKo9/vsTQwTuLtYuTgkBAwkWj6V9zF
+        yMUhJLCDSWLi4XssEM55JokZj84ydzFycggLxEh0rZ3PCmKLCMhKfD+8kRGi6BCjxJmFzewg
+        DrPAQyaJq3dfg1WxCehKLOppZgKxeQXsJT5v/Qw2iUVAReLVv16wuKhAhMTDzl3sEDWCEidn
+        PmEBsTkFXCSu7f0ONodZQF3iz7xLzBC2vMT2t3OYJzDyz0LSMgtJ2SwkZQsYmVcxyiXmlObq
+        5iZm5hSnJusWJyfm5aUW6Zrq5WaW6KWmlG5ihIS84A7GGSflDjEKcDAq8fBuCAmLFGJNLCuu
+        zD3EKMnBpCTKu/JaaKQQX1J+SmVGYnFGfFFpTmox0O8czEoivOz3wiOFeFMSK6tSi/JhUtIc
+        LErivHxL1P2EBNITS1KzU1MLUotgsjIcHEoSvJeeAjUKFqWmp1akZeaUIKSZODhBhvMADV94
+        F2R4cUFibnFmOkT+FKMuR8eMn9+YhFjy8vNSpcR5PUEGCYAUZZTmwc2BpapXjOJAbwlDVPEA
+        0xzcpFdAS5iAlgjPCAFZUpKIkJJqYNRR82N/sasx5oVEUaHWoa9bVfSWhk5d+NGu+1vanoQJ
+        fF5r5+wRq7W3Up3zIO+d2HkthnPBoZpcnew7/9d/KN71992U9W6aD8MY3t96a++aZJR1u+3m
+        wqinK5b4We2rn/uz4cLTC08yPx/ZWWCtXVh9b8HUzQs4taP+XTKUX/3h1/SpnvdsZ/1SYinO
+        SDTUYi4qTgQApW76TDADAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dan Kohn <dan@linuxfoundation.org> writes:
+On 06/23/2017 09:58 PM, Jeff King wrote:
+> On Fri, Jun 23, 2017 at 09:01:47AM +0200, Michael Haggerty wrote:
+> 
+>> The old code ignored any lines that it didn't understand. This is
+>> dangerous. Instead, `die()` if the `packed-refs` file contains any
+>> lines that we don't know how to handle.
+> 
+> This seems like a big improvement. Is it worth adding a test for a
+> corrupted file?
 
-> This alternative workflow works, but is obviously tedious:
->
-> ```sh
-> # First 3 steps are the same
-> (feature-branch)$ git merge origin/master
-> # Save default commit message
-> (feature-branch)$ git commit --amend -s
-> # Commit message now has signoff line
-> (feature-branch)$ git push
-> # This now passes the DCObot check.
-> ```
->
-> Or, I could manually add the Signoff line to the proposed git merge
-> commit message, which would allow me to skip the `--amend` step.
->
-> Could you please add a `--signoff` option to `git merge`?
+That's a good idea. While I'm at it, I'll distinguish between
+unterminated lines and lines that are invalid for other reasons, because
+the error message should differ for these cases.
 
-The reason why we changed the default for "git merge" to start an
-editor at around v1.7.10 was because we wanted to encourage people
-to write log message that more meaningfully documents the change,
-and adding sign-off is probably in line with that.  
+> I assume this isn't something you saw in the wild, but just a deficiency
+> you noticed while reading the code.
 
-I've done that "commit --amend" on a merge to tweak its message
-myself number of times, but I have to admit that I never did so for
-sign-off, but why not? ;-)
+Correct, I've never seen this problem in the wild. Though, since Git
+would have covered up the problem while it existed and obliterated it at
+the next `pack-refs`, it's the kind of thing that would be easy to
+overlook and hard to prove afterwards.
+
+> I suspect this laxness may have been what allowed us to add the optional
+> peeled values long ago. But I think I'd rather see us be more strict and
+> notice corruption or nonsense rather than quietly ignoring (especially
+> because an operation like "git pack-refs" would then overwrite it,
+> dropping whatever entries we didn't understand).
+
+That's an interesting consideration. I suppose we could plan in some way
+to extend the `packed-refs` format in a backwards-transparent fashion,
+if there is ever an extension that old versions of git would be free to
+ignore, while leaving the format strict enough that genuine corruption
+would be unlikely to be overlooked. For example, we could reserve one or
+more special characters which, when they appear at the beginning of a
+line, mean that the line should be ignored.
+
+But such an extension would only be practical if other Git
+implementations are similarly lax. But libgit2 is currently strict about
+rejecting unrecognized lines, so such an extension couldn't be
+backwards-compatible with old versions of libgit2. So it doesn't seem
+very useful.
+
+Michael
 
