@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53A9320209
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F74E20209
 	for <e@80x24.org>; Sat,  1 Jul 2017 18:31:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751997AbdGASb0 (ORCPT <rfc822;e@80x24.org>);
+        id S1751994AbdGASb0 (ORCPT <rfc822;e@80x24.org>);
         Sat, 1 Jul 2017 14:31:26 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:59121 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751919AbdGASbZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 1 Jul 2017 14:31:25 -0400
-X-AuditID: 1207440c-c65ff70000001e54-0d-5957ea7c1446
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:59448 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751968AbdGASbY (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 1 Jul 2017 14:31:24 -0400
+X-AuditID: 1207440f-b69ff7000000740c-dc-5957ea772dfd
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id C5.2E.07764.C7AE7595; Sat,  1 Jul 2017 14:31:24 -0400 (EDT)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 4C.41.29708.87AE7595; Sat,  1 Jul 2017 14:31:22 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCCEF.dip0.t-ipconnect.de [87.188.204.239])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v61IVBBH010294
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v61IVBBF010294
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sat, 1 Jul 2017 14:31:22 -0400
+        Sat, 1 Jul 2017 14:31:18 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -35,137 +35,128 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         <avarab@gmail.com>, David Turner <novalis@novalis.org>,
         Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 04/30] packed_ref_store: move `packed_refs_path` here
-Date:   Sat,  1 Jul 2017 20:30:42 +0200
-Message-Id: <aaaee3174089ccefc6e3d628163edfda5de16a4b.1498933362.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 02/30] add_packed_ref(): teach function to overwrite existing refs
+Date:   Sat,  1 Jul 2017 20:30:40 +0200
+Message-Id: <7f88f3ecbbaccc6d5f517494a1c33c063967b8ba.1498933362.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1498933362.git.mhagger@alum.mit.edu>
 References: <cover.1498933362.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsUixO6iqFvzKjzSYOEKRYu1z+4wWTxff4Ld
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqFv1KjzS4MNFUYu1z+4wWTxff4Ld
         outKN5NFQ+8VZovbK+YzWyx5+JrZonvKW0aLHy09zBabN7ezOHB6/H3/gclj56y77B4LNpV6
-        dLUfYfN41ruH0ePiJWWPz5vkAtijuGxSUnMyy1KL9O0SuDKe9k1mKzgvU3H06Rz2BsY74l2M
-        nBwSAiYSM57+ZO1i5OIQEtjBJHHtzlt2kISQwEkmiQn/kkFsNgFdiUU9zUwgtoiAmsTEtkMs
-        IA3MApOYJd5eWwiU4OAQFvCQuHvUBaSGRUBVYvqGGcwgNq9AlMTOh70sEMvkJXa1XWQFsTkF
-        LCT+tK1nhthlLtF8sI9lAiPPAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6hnq5mSV6qSml
-        mxghIcezg/HbOplDjAIcjEo8vBtCwiKFWBPLiitzDzFKcjApifKuvBYaKcSXlJ9SmZFYnBFf
-        VJqTWnyIUYKDWUmEN/d5eKQQb0piZVVqUT5MSpqDRUmcV3WJup+QQHpiSWp2ampBahFMVoaD
-        Q0mClwkYW0KCRanpqRVpmTklCGkmDk6Q4TxAwxfeBRleXJCYW5yZDpE/xajL8WrC/29MQix5
-        +XmpUuK8rS+BigRAijJK8+DmwFLFK0ZxoLeEeSNeAFXxANMM3KRXQEuYgJYIzwgBWVKSiJCS
-        amDUWaOwnv/Yqxd2+vlBvW9ub3h3WP9vqIjB3q0fn9+1ezB7s3L7fxal2YLq+nMsspclXjw+
-        34r/69JtH6UypCcs994mtXSJiPvLCmPWKdyK58TWzw18kOd4YnPQFqZtfLfO3PZ7unbK2qdu
-        C9YEv+J98pBzhmZ94q6zv89P3Pv5q6u2s6CP6nNxNyWW4oxEQy3mouJEAKuE5/PwAgAA
+        dLUfYfN41ruH0ePiJWWPz5vkAtijuGxSUnMyy1KL9O0SuDLu7/jNVDBbvuJKy17mBsabkl2M
+        nBwSAiYSk27MYgOxhQR2MEk0b07sYuQCsk8ySexdchsswSagK7Gop5kJxBYRUJOY2HaIBaSI
+        WWASs8TbawvBEsICoRI923aygtgsAqoSH3c+ZQaxeQWiJJ7/388IsU1eYlfbRbAaTgELiT9t
+        65khNptLNB/sY5nAyLOAkWEVo1xiTmmubm5iZk5xarJucXJiXl5qka6JXm5miV5qSukmRkjQ
+        8e9g7Fovc4hRgINRiYd3Q0hYpBBrYllxZe4hRkkOJiVR3pXXQiOF+JLyUyozEosz4otKc1KL
+        DzFKcDArifDmPg+PFOJNSaysSi3Kh0lJc7AoifOqL1H3ExJITyxJzU5NLUgtgsnKcHAoSfBO
+        egnUKFiUmp5akZaZU4KQZuLgBBnOAzR84V2Q4cUFibnFmekQ+VOMuhyvJvz/xiTEkpeflyol
+        ztsKMkgApCijNA9uDixZvGIUB3pLmDfiBVAVDzDRwE16BbSECWiJ8IwQkCUliQgpqQZGLrMY
+        65XC3ZyBlj4Tz81+WasUlhP4j+GV5BGOvPQpPUzrHk7TYdi8aqNzxv/QyX15J1OU5BtnXzrS
+        cPlDuLhW0WFDgeJc09mN8cnZJx3TLeZkqHx+VbHsy/T055MtHK4uO7Tv447XrlKaSyZZ/H32
+        gFs9SmZjos7p2x/mZp2JWGmqHr42kkNHiaU4I9FQi7moOBEA2d1oE/ECAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move `packed_refs_path` from `files_ref_store` to `packed_ref_store`,
-and rename it to `path` since its meaning is clear from its new
-context.
-
-Inline `files_packed_refs_path()`.
+Teach `add_packed_ref()` to overwrite an existing entry if one already
+exists for the specified `refname`. This means that we can call it
+from `files_pack_refs()`, thereby reducing the amount that the latter
+function needs to know about the internals of packed-reference
+handling.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ refs/files-backend.c | 40 ++++++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 2efb71cee9..c4b8e2f63b 100644
+index b040bb3b0a..87cecde231 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -54,6 +54,9 @@ struct packed_ref_cache {
- struct packed_ref_store {
- 	unsigned int store_flags;
- 
-+	/* The path of the "packed-refs" file: */
-+	char *path;
-+
- 	/*
- 	 * A cache of the values read from the `packed-refs` file, if
- 	 * it might still be current; otherwise, NULL.
-@@ -61,11 +64,13 @@ struct packed_ref_store {
- 	struct packed_ref_cache *cache;
- };
- 
--static struct packed_ref_store *packed_ref_store_create(unsigned int store_flags)
-+static struct packed_ref_store *packed_ref_store_create(
-+		const char *path, unsigned int store_flags)
- {
- 	struct packed_ref_store *refs = xcalloc(1, sizeof(*refs));
- 
- 	refs->store_flags = store_flags;
-+	refs->path = xstrdup(path);
- 	return refs;
+@@ -413,15 +413,16 @@ static struct ref_dir *get_packed_refs(struct files_ref_store *refs)
  }
  
-@@ -79,7 +84,6 @@ struct files_ref_store {
- 
- 	char *gitdir;
- 	char *gitcommondir;
--	char *packed_refs_path;
- 
- 	struct ref_cache *loose;
- 
-@@ -154,8 +158,8 @@ static struct ref_store *files_ref_store_create(const char *gitdir,
- 	get_common_dir_noenv(&sb, gitdir);
- 	refs->gitcommondir = strbuf_detach(&sb, NULL);
- 	strbuf_addf(&sb, "%s/packed-refs", refs->gitcommondir);
--	refs->packed_refs_path = strbuf_detach(&sb, NULL);
--	refs->packed_ref_store = packed_ref_store_create(flags);
-+	refs->packed_ref_store = packed_ref_store_create(sb.buf, flags);
-+	strbuf_release(&sb);
- 
- 	return ref_store;
- }
-@@ -343,11 +347,6 @@ static struct packed_ref_cache *read_packed_refs(const char *packed_refs_file)
- 	return packed_refs;
- }
- 
--static const char *files_packed_refs_path(struct files_ref_store *refs)
--{
--	return refs->packed_refs_path;
--}
--
- static void files_reflog_path(struct files_ref_store *refs,
- 			      struct strbuf *sb,
- 			      const char *refname)
-@@ -401,7 +400,7 @@ static void validate_packed_ref_cache(struct files_ref_store *refs)
- {
- 	if (refs->packed_ref_store->cache &&
- 	    !stat_validity_check(&refs->packed_ref_store->cache->validity,
--				 files_packed_refs_path(refs)))
-+				 refs->packed_ref_store->path))
- 		clear_packed_ref_cache(refs);
- }
- 
-@@ -415,7 +414,7 @@ static void validate_packed_ref_cache(struct files_ref_store *refs)
+ /*
+- * Add a reference to the in-memory packed reference cache.  This may
+- * only be called while the packed-refs file is locked (see
+- * lock_packed_refs()).  To actually write the packed-refs file, call
+- * commit_packed_refs().
++ * Add or overwrite a reference in the in-memory packed reference
++ * cache. This may only be called while the packed-refs file is locked
++ * (see lock_packed_refs()). To actually write the packed-refs file,
++ * call commit_packed_refs().
   */
- static struct packed_ref_cache *get_packed_ref_cache(struct files_ref_store *refs)
+ static void add_packed_ref(struct files_ref_store *refs,
+ 			   const char *refname, const struct object_id *oid)
  {
--	const char *packed_refs_file = files_packed_refs_path(refs);
-+	const char *packed_refs_file = refs->packed_ref_store->path;
+-	struct packed_ref_cache *packed_ref_cache = get_packed_ref_cache(refs);
++	struct ref_dir *packed_refs;
++	struct ref_entry *packed_entry;
  
  	if (!is_lock_file_locked(&refs->packed_refs_lock))
- 		validate_packed_ref_cache(refs);
-@@ -1352,7 +1351,7 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
- 	}
+ 		die("BUG: packed refs not locked");
+@@ -429,8 +430,17 @@ static void add_packed_ref(struct files_ref_store *refs,
+ 	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
+ 		die("Reference has invalid format: '%s'", refname);
  
- 	if (hold_lock_file_for_update_timeout(
--			    &refs->packed_refs_lock, files_packed_refs_path(refs),
-+			    &refs->packed_refs_lock, refs->packed_ref_store->path,
- 			    flags, timeout_value) < 0)
- 		return -1;
+-	add_ref_entry(get_packed_ref_dir(packed_ref_cache),
+-		      create_ref_entry(refname, oid, REF_ISPACKED));
++	packed_refs = get_packed_refs(refs);
++	packed_entry = find_ref_entry(packed_refs, refname);
++	if (packed_entry) {
++		/* Overwrite the existing entry: */
++		oidcpy(&packed_entry->u.value.oid, oid);
++		packed_entry->flag = REF_ISPACKED;
++		oidclr(&packed_entry->u.value.peeled);
++	} else {
++		packed_entry = create_ref_entry(refname, oid, REF_ISPACKED);
++		add_ref_entry(packed_refs, packed_entry);
++	}
+ }
  
-@@ -1633,7 +1632,7 @@ static int repack_without_refs(struct files_ref_store *refs,
- 		return 0; /* no refname exists in packed refs */
+ /*
+@@ -1526,12 +1536,10 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
+ 		files_downcast(ref_store, REF_STORE_WRITE | REF_STORE_ODB,
+ 			       "pack_refs");
+ 	struct ref_iterator *iter;
+-	struct ref_dir *packed_refs;
+ 	int ok;
+ 	struct ref_to_prune *refs_to_prune = NULL;
  
- 	if (lock_packed_refs(refs, 0)) {
--		unable_to_lock_message(files_packed_refs_path(refs), errno, err);
-+		unable_to_lock_message(refs->packed_ref_store->path, errno, err);
- 		return -1;
- 	}
- 	packed = get_packed_refs(refs);
+ 	lock_packed_refs(refs, LOCK_DIE_ON_ERROR);
+-	packed_refs = get_packed_refs(refs);
+ 
+ 	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL, 0);
+ 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+@@ -1540,8 +1548,6 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
+ 		 * in the packed ref cache. If the reference should be
+ 		 * pruned, also add it to refs_to_prune.
+ 		 */
+-		struct ref_entry *packed_entry;
+-
+ 		if (!should_pack_ref(iter->refname, iter->oid, iter->flags,
+ 				     flags))
+ 			continue;
+@@ -1552,17 +1558,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
+ 		 * we don't copy the peeled status, because we want it
+ 		 * to be re-peeled.
+ 		 */
+-		packed_entry = find_ref_entry(packed_refs, iter->refname);
+-		if (packed_entry) {
+-			/* Overwrite existing packed entry with info from loose entry */
+-			packed_entry->flag = REF_ISPACKED;
+-			oidcpy(&packed_entry->u.value.oid, iter->oid);
+-		} else {
+-			packed_entry = create_ref_entry(iter->refname, iter->oid,
+-							REF_ISPACKED);
+-			add_ref_entry(packed_refs, packed_entry);
+-		}
+-		oidclr(&packed_entry->u.value.peeled);
++		add_packed_ref(refs, iter->refname, iter->oid);
+ 
+ 		/* Schedule the loose reference for pruning if requested. */
+ 		if ((flags & PACK_REFS_PRUNE)) {
 -- 
 2.11.0
 
