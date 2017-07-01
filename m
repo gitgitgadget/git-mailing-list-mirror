@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F184201A0
-	for <e@80x24.org>; Sat,  1 Jul 2017 00:28:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96A9D201A0
+	for <e@80x24.org>; Sat,  1 Jul 2017 00:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751974AbdGAA2p (ORCPT <rfc822;e@80x24.org>);
+        id S1752086AbdGAA2r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 20:28:47 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:35526 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751680AbdGAA2p (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 30 Jun 2017 20:28:45 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34240 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751900AbdGAA2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 20:28:44 -0400
-Received: by mail-pg0-f50.google.com with SMTP id t186so70725910pgb.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 17:28:43 -0700 (PDT)
+Received: by mail-pf0-f173.google.com with SMTP id c73so74248540pfk.2
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 17:28:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TbeX2qNS0t3WmJt+bfFRxQxo9+WX1w6CVgDzDRXbW3s=;
-        b=nueQ5NGJS9UJH50mq9T4hgccAkIklrk3iA7mg1Fnw9ur7b6oZnXKL3uLzOeiiwFHqZ
-         CHhVUJNbBGFy9D+A/aI11v2yCO9fh9C6CwM2LkY8ZPBGo0tJr8Xu1ro09fFPe3hBvUFA
-         g2sucEbLxZi9imhCsouMUIPy8iNoNLkO9ZV9/6kYQr9yi2aaAdu0ZNnvaIITLTyFghC0
-         LKi3ddnZ0+hbIYfg+k/Arc7buKuI4gnZYLhdpvJiOhBkHlhCCVzECf5ecSfWfMCHspFn
-         nBGIcO+4spur32Wyex4pz7XzYKQrWLMmtC7IS/cCzNPzDnhy1d/dnbfstNU5gFRNX91K
-         7r6g==
+        bh=58CScvg2AnfeDayBLOTmLmD5lJEl4h7CxPk3fTGw3sk=;
+        b=bdZ8vpuGxb49HS+8DVxoUv/wAmL5JMvvpZshLacPZFO5MyOiXpUh1fSDz31lIBaUbW
+         TTfZKBTNsizxdpb2ErNif1y6UA8+7HGgPZw5uwYI3g9d+67gbxySAj/8Y/+EKQvtld8w
+         oZi5rone4n8jt4R3pQzA7vtQuzEoZGhMD7oaSOpMRuPJVghkFiQo2aG+GCw//RYxwuPW
+         zr22YqOxadgM13XNV8NfM5lBCb9kChln7wa8NUnNo/RAjkxs4rrQlpcNxptyvyTdV2tY
+         nzbxfW5wminpYv4rEiry4Fn5zlbb0on0QyzOlvj5a5lrmj0hvoB+BmDVlYUuPlzY43xj
+         yDgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=TbeX2qNS0t3WmJt+bfFRxQxo9+WX1w6CVgDzDRXbW3s=;
-        b=oIXwpPNn9ZVui3w5j7rC4UN9DXRqrVIQlkrr8iwINDkjh72uaQgHKrwQOVveFTiyL/
-         fyzMJfJpf/3Rhy6FOkBM4pA5L/3cbClU05u/nM3Ik/HUWtx2992XqYArvbotgDqHp0vm
-         K9ngWhqdMlePXEQ4Q1TMRT5PJzOHg5L2ZvzsnH608nFbgDMoV57luWLKZ5ir6dcNJ3la
-         ELTzw8cTQPO45HiPAzz5urG6sFlW74P0PKdJkmQQ5aU1Fu5IMcGXShZRHHpwTC1VwL3Y
-         1jB1TGkVEvpo2SHbK/ztITPqk4jTr8JcFoQRhyCI4of6ukyOOCl5QbeAspMWoyAzuCxv
-         w6jQ==
-X-Gm-Message-State: AKS2vOzoaXba3DNg6RVitWHeMqxYKNHdyjUv1fpASlQhEVpXpCoMyCTn
-        mdWxXNThHduXqcQjtCdtMw==
-X-Received: by 10.98.10.68 with SMTP id s65mr6042508pfi.89.1498868923145;
-        Fri, 30 Jun 2017 17:28:43 -0700 (PDT)
+        bh=58CScvg2AnfeDayBLOTmLmD5lJEl4h7CxPk3fTGw3sk=;
+        b=PU/O9pUcHLIyySIDSTzeWeAUVD4//RIikreStfr9ScRnluhTXpDAErd0rlnIuxkHuN
+         HTlJoKmpf6DLaBb0CQXGTQOaeUqwqJ9XtMduQ8rdBAZf8KVIPni26aAY3efJZoYzG6wa
+         ra90OEwrJGKFvFVSa9V5QLgyNnn9LJry3o0rmET7PY/FlRAtjggT5KVmpnzajLqdynpV
+         motkWpyUWWZ7LU+ltPiKkIX2svTfapePCmIts0gF9wf5/WKk2q95FMULa9i6YCodF3D/
+         9+UcL5YCSIefU8L0JezEncCcw0svumD9JDD1LRdPUyD6myZM0frVLd31w0jTcjSwpZEU
+         SoEQ==
+X-Gm-Message-State: AKS2vOxAneP3NYvfR+0JV072Y6KE3WoIVGp5eIThaea/zmkFSHF8SDmy
+        Aum3TgQbQBML72OzHdgRBQ==
+X-Received: by 10.98.103.18 with SMTP id b18mr25113928pfc.171.1498868924286;
+        Fri, 30 Jun 2017 17:28:44 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:cc8b:7c8c:8e14:f9b5])
-        by smtp.gmail.com with ESMTPSA id y192sm14945777pgd.38.2017.06.30.17.28.42
+        by smtp.gmail.com with ESMTPSA id s87sm176558pfa.86.2017.06.30.17.28.43
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 17:28:42 -0700 (PDT)
+        Fri, 30 Jun 2017 17:28:43 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 01/10] attr.c: drop hashmap_cmp_fn cast
-Date:   Fri, 30 Jun 2017 17:28:29 -0700
-Message-Id: <20170701002838.22785-2-sbeller@google.com>
+Subject: [PATCH 02/10] builtin/difftool.c: drop hashmap_cmp_fn cast
+Date:   Fri, 30 Jun 2017 17:28:30 -0700
+Message-Id: <20170701002838.22785-3-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
 In-Reply-To: <20170701002838.22785-1-sbeller@google.com>
 References: <20170701002838.22785-1-sbeller@google.com>
@@ -61,45 +60,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-MAke the code more readable and less error prone by avoiding the cast
-of the compare function pointer in hashmap_init, but instead have the
-correctly named void pointers to casted to the specific data structure.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- attr.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ builtin/difftool.c | 37 ++++++++++++++++++++++---------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index 56961f0236..2f49151736 100644
---- a/attr.c
-+++ b/attr.c
-@@ -76,18 +76,20 @@ struct attr_hash_entry {
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index a1a26ba891..8864d846f8 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -131,10 +131,12 @@ struct working_tree_entry {
  };
  
- /* attr_hashmap comparison function */
--static int attr_hash_entry_cmp(void *unused_cmp_data,
--			       const struct attr_hash_entry *a,
--			       const struct attr_hash_entry *b,
--			       void *unused_keydata)
-+static int attr_hash_entry_cmp(const void *unused_cmp_data,
-+			       const void *entry,
-+			       const void *entry_or_key,
-+			       const void *unused_keydata)
+ static int working_tree_entry_cmp(const void *unused_cmp_data,
+-				  struct working_tree_entry *a,
+-				  struct working_tree_entry *b,
+-				  void *unused_keydata)
++				  const void *entry,
++				  const void *entry_or_key,
++				  const void *unused_keydata)
  {
-+	const struct attr_hash_entry *a = entry;
-+	const struct attr_hash_entry *b = entry_or_key;
- 	return (a->keylen != b->keylen) || strncmp(a->key, b->key, a->keylen);
++	const struct working_tree_entry *a = entry;
++	const struct working_tree_entry *b = entry_or_key;
+ 	return strcmp(a->path, b->path);
  }
  
- /* Initialize an 'attr_hashmap' object */
- static void attr_hashmap_init(struct attr_hashmap *map)
+@@ -149,9 +151,13 @@ struct pair_entry {
+ };
+ 
+ static int pair_cmp(const void *unused_cmp_data,
+-		    struct pair_entry *a, struct pair_entry *b,
+-		    void *unused_keydata)
++		    const void *entry,
++		    const void *entry_or_key,
++		    const void *unused_keydata)
  {
--	hashmap_init(&map->map, (hashmap_cmp_fn) attr_hash_entry_cmp, NULL, 0);
-+	hashmap_init(&map->map, attr_hash_entry_cmp, NULL, 0);
++	const struct pair_entry *a = entry;
++	const struct pair_entry *b = entry_or_key;
++
+ 	return strcmp(a->path, b->path);
  }
  
- /*
+@@ -179,9 +185,13 @@ struct path_entry {
+ };
+ 
+ static int path_entry_cmp(const void *unused_cmp_data,
+-			  struct path_entry *a, struct path_entry *b,
+-			  void *key)
++			  const void *entry,
++			  const void *entry_or_key,
++			  const void *key)
+ {
++	const struct path_entry *a = entry;
++	const struct path_entry *b = entry_or_key;
++
+ 	return strcmp(a->path, key ? key : b->path);
+ }
+ 
+@@ -372,10 +382,9 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	rdir_len = rdir.len;
+ 	wtdir_len = wtdir.len;
+ 
+-	hashmap_init(&working_tree_dups,
+-		     (hashmap_cmp_fn)working_tree_entry_cmp, NULL, 0);
+-	hashmap_init(&submodules, (hashmap_cmp_fn)pair_cmp, NULL, 0);
+-	hashmap_init(&symlinks2, (hashmap_cmp_fn)pair_cmp, NULL, 0);
++	hashmap_init(&working_tree_dups, working_tree_entry_cmp, NULL, 0);
++	hashmap_init(&submodules, pair_cmp, NULL, 0);
++	hashmap_init(&symlinks2, pair_cmp, NULL, 0);
+ 
+ 	child.no_stdin = 1;
+ 	child.git_cmd = 1;
+@@ -585,10 +594,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	 * in the common case of --symlinks and the difftool updating
+ 	 * files through the symlink.
+ 	 */
+-	hashmap_init(&wt_modified, (hashmap_cmp_fn)path_entry_cmp,
+-		     NULL, wtindex.cache_nr);
+-	hashmap_init(&tmp_modified, (hashmap_cmp_fn)path_entry_cmp,
+-		     NULL, wtindex.cache_nr);
++	hashmap_init(&wt_modified, path_entry_cmp, NULL, wtindex.cache_nr);
++	hashmap_init(&tmp_modified, path_entry_cmp, NULL, wtindex.cache_nr);
+ 
+ 	for (i = 0; i < wtindex.cache_nr; i++) {
+ 		struct hashmap_entry dummy;
 -- 
 2.13.0.31.g9b732c453e
 
