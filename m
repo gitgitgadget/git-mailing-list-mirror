@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F168720209
-	for <e@80x24.org>; Sat,  1 Jul 2017 18:32:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADFBC20209
+	for <e@80x24.org>; Sat,  1 Jul 2017 18:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752168AbdGAScY (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 14:32:24 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:59137 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752156AbdGAScX (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 1 Jul 2017 14:32:23 -0400
-X-AuditID: 1207440c-c65ff70000001e54-3b-5957eab62832
+        id S1752191AbdGASc2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 14:32:28 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:43717 "EHLO
+        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752156AbdGASc0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 1 Jul 2017 14:32:26 -0400
+X-AuditID: 12074414-4f7ff70000001c95-3f-5957eaaf85ab
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id BA.2E.07764.6BAE7595; Sat,  1 Jul 2017 14:32:22 -0400 (EDT)
+        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 5F.25.07317.FAAE7595; Sat,  1 Jul 2017 14:32:15 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCCEF.dip0.t-ipconnect.de [87.188.204.239])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v61IVBBg010294
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v61IVBBd010294
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sat, 1 Jul 2017 14:32:20 -0400
+        Sat, 1 Jul 2017 14:32:13 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -35,80 +35,52 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         <avarab@gmail.com>, David Turner <novalis@novalis.org>,
         Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 29/30] t3210: add some tests of bogus packed-refs file contents
-Date:   Sat,  1 Jul 2017 20:31:07 +0200
-Message-Id: <70b7e80537793270c4e3a01358f3922090b8b3be.1498933362.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 26/30] clear_packed_ref_cache(): don't protest if the lock is held
+Date:   Sat,  1 Jul 2017 20:31:04 +0200
+Message-Id: <8de06c76181aff06d7236d3a5f7305500f728bde.1498933362.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1498933362.git.mhagger@alum.mit.edu>
 References: <cover.1498933362.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrCIsWRmVeSWpSXmKPExsUixO6iqLvtVXikwYHDkhZrn91hsni+/gS7
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrMIsWRmVeSWpSXmKPExsUixO6iqLv+VXikwfcrBhZrn91hsni+/gS7
         RdeVbiaLht4rzBa3V8xntljy8DWzRfeUt4wWP1p6mC02b25nceD0+Pv+A5PHzll32T0WbCr1
-        6Go/wubxrHcPo8fFS8oenzfJBbBHcdmkpOZklqUW6dslcGVc/exTsFSgYuaHS6wNjG94uxg5
-        OSQETCSu7Ghg6mLk4hAS2MEksbN3MwuEc5JJ4sq1RjaQKjYBXYlFPc1MILaIgJrExLZDYEXM
-        ApOYJd5eWwiWEBYIkvjb9ATMZhFQlXi+ZSOYzSsQJbHqykxWiHXyErvaLoLZnAIWEn/a1jOD
-        2EIC5hLNB/tYJjDyLGBkWMUol5hTmqubm5iZU5yarFucnJiXl1qka6iXm1mil5pSuokREnQ8
-        Oxi/rZM5xCjAwajEw7shJCxSiDWxrLgy9xCjJAeTkijvymuhkUJ8SfkplRmJxRnxRaU5qcWH
-        GCU4mJVEeHOfh0cK8aYkVlalFuXDpKQ5WJTEeVWXqPsJCaQnlqRmp6YWpBbBZGU4OJQkeJmA
-        0SUkWJSanlqRlplTgpBm4uAEGc4DNHzhXZDhxQWJucWZ6RD5U4zGHHN+7/jCxPFqwv9vTEIs
-        efl5qVLivK0vgUoFQEozSvPgpsESxytGcaDnhHkZQJbyAJMO3LxXQKuYgFYJzwgBWVWSiJCS
-        amD0tDV3XK/9aYHhda07jUyS1m88drmmdpe0Bi+ZtP3syebUPWWBYfdMPWym26x1OeLTcb5k
-        2kbbGJ0mNed6CYO4pkcrhZ79igudZvJZLPqkophWrqT1pOfXYiN3aKvYnE0sL37Xqvqaha96
-        zux4Bu7GLKM9/F3nlyo21s/h8++/LRtqdkLgshJLcUaioRZzUXEiAP5uVtH3AgAA
+        6Go/wubxrHcPo8fFS8oenzfJBbBHcdmkpOZklqUW6dslcGUsOX+KqWA7W8XHk5ENjKtYuxg5
+        OSQETCQWPz8CZgsJ7GCS6PnL38XIBWSfZJKYN+MrWIJNQFdiUU8zE4gtIqAmMbHtEAtIEbPA
+        JGaJt9cWgiWEBUIl/r6eywxiswioSjScPscOYvMKREk0L+2E2iYvsavtIpjNKWAh8adtPTPE
+        ZnOJ5oN9LBMYeRYwMqxilEvMKc3VzU3MzClOTdYtTk7My0st0rXQy80s0UtNKd3ECAk5kR2M
+        R07KHWIU4GBU4uHdEBIWKcSaWFZcmXuIUZKDSUmUd+W10EghvqT8lMqMxOKM+KLSnNTiQ4wS
+        HMxKIry5z8MjhXhTEiurUovyYVLSHCxK4rzfFqv7CQmkJ5akZqemFqQWwWRlODiUJHgnvQRq
+        FCxKTU+tSMvMKUFIM3FwggznARq+8C7I8OKCxNzizHSI/ClGY46mD1u+MHG8mvD/G5MQS15+
+        XqqUOG8ryDgBkNKM0jy4abC08YpRHOg5YV4GYBIR4gGmHLh5r4BWMQGtEp4RArKqJBEhJdXA
+        GMvxyFNg9cS1wVEuppbn7TzW2h3m37z/WfK/MwlaO3Z47py2XUKw807JqptPCl9XMC1Kfvt8
+        a0lEya/iC75HgnbfDn9v0SQqJLE1SEnh1HYv2XSjkFk/Op0jGmynnTOUnGj0etEr48x/dk+v
+        FHP0rTpvUztXcXPtIo8/X13D3fq81DLOb9K4ocRSnJFoqMVcVJwIAEdlPdf2AgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If `packed-refs` contains indecipherable lines, we should emit an
-error and quit rather than just skipping the lines. Unfortunately, we
-currently do the latter. Add some failing tests demonstrating the
-problem.
-
-This will be fixed in the next commit.
+The existing callers already check that the lock isn't held just
+before calling `clear_packed_ref_cache()`, and in the near future we
+want to be able to call this function when the lock is held.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- t/t3210-pack-refs.sh | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ refs/packed-backend.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index 9b182a0c32..4b65836283 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -194,6 +194,33 @@ test_expect_success 'notice d/f conflict with existing ref' '
- 	test_must_fail git branch foo/bar/baz/lots/of/extra/components
- '
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index f27943f9a1..96d92a5eea 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -133,8 +133,6 @@ static void clear_packed_ref_cache(struct packed_ref_store *refs)
+ 	if (refs->cache) {
+ 		struct packed_ref_cache *cache = refs->cache;
  
-+test_expect_failure 'reject packed-refs with unterminated line' '
-+	cp .git/packed-refs .git/packed-refs.bak &&
-+	test_when_finished "mv .git/packed-refs.bak .git/packed-refs" &&
-+	printf "%s" "$HEAD refs/zzzzz" >>.git/packed-refs &&
-+	echo "fatal: unterminated line in .git/packed-refs: $HEAD refs/zzzzz" >expected_err &&
-+	test_must_fail git for-each-ref >out 2>err &&
-+	test_cmp expected_err err
-+'
-+
-+test_expect_failure 'reject packed-refs containing junk' '
-+	cp .git/packed-refs .git/packed-refs.bak &&
-+	test_when_finished "mv .git/packed-refs.bak .git/packed-refs" &&
-+	printf "%s\n" "bogus content" >>.git/packed-refs &&
-+	echo "fatal: unexpected line in .git/packed-refs: bogus content" >expected_err &&
-+	test_must_fail git for-each-ref >out 2>err &&
-+	test_cmp expected_err err
-+'
-+
-+test_expect_failure 'reject packed-refs with a short SHA-1' '
-+	cp .git/packed-refs .git/packed-refs.bak &&
-+	test_when_finished "mv .git/packed-refs.bak .git/packed-refs" &&
-+	printf "%.7s %s\n" $HEAD refs/zzzzz >>.git/packed-refs &&
-+	printf "fatal: unexpected line in .git/packed-refs: %.7s %s\n" $HEAD refs/zzzzz >expected_err &&
-+	test_must_fail git for-each-ref >out 2>err &&
-+	test_cmp expected_err err
-+'
-+
- test_expect_success 'timeout if packed-refs.lock exists' '
- 	LOCK=.git/packed-refs.lock &&
- 	>"$LOCK" &&
+-		if (is_lock_file_locked(&refs->lock))
+-			die("BUG: packed-ref cache cleared while locked");
+ 		refs->cache = NULL;
+ 		release_packed_ref_cache(cache);
+ 	}
 -- 
 2.11.0
 
