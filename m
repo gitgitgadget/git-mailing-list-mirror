@@ -2,87 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAA3C20209
-	for <e@80x24.org>; Sat,  1 Jul 2017 20:33:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19ED720209
+	for <e@80x24.org>; Sat,  1 Jul 2017 21:00:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752046AbdGAUd0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 16:33:26 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36132 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751968AbdGAUdZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2017 16:33:25 -0400
-Received: by mail-pf0-f196.google.com with SMTP id z6so21127091pfk.3
-        for <git@vger.kernel.org>; Sat, 01 Jul 2017 13:33:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=gdgcMb2hI+erWxHoZBXZtAOfodGa8OqzeAfcbHe9n1Y=;
-        b=OkcLfBVCx0RaD9HYSLCgKTINUyQznQXO20YXN5BTQtCOJoqp79HADxwU4qJzrgOFDn
-         jiu9wqXLQQa/sWNcU8fgmP2h9U5Tl/ihvElxVBB7bAxLIkj4rPPfj30q4QNMzZ/KbFDC
-         i3dq7DqGTg+ogkQSoaF9Rj836f0VPvqXFi7Xj1CZKhFrhNS9DEKMw8Yuo79D9ynBFRav
-         VFjbL5omLdl7cONWJY/aaRqz3IIH6YW0qMP9evvHuMJWmheZXHvODcfUagL938d88DJo
-         4LB6OAsOZrCi9UGbytEK2nYzL5pyaaxzscvsWA/5mwo5mmNUTJ5wtqJHCP4qDquZUL5b
-         VtNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=gdgcMb2hI+erWxHoZBXZtAOfodGa8OqzeAfcbHe9n1Y=;
-        b=LYpzmkGLErDZEyyQZZutxjGNyq97TVToLj/pqCt9za/raBE5ZSzA/CbJRNorlA2Gyz
-         DEqnWIgcVBmrQtKwFfvW06BA6ZCNH6M0rMrR4aARUnJGPPOoiUOMSvupSEDW043lt9iM
-         xHHn/LVWHLU/uVqoqlf9CpxWjoAszGPztTm1Yfw0s6MoTJ039W9nEdLYO02z3xpnu2RI
-         xlkM8U/G+kv6YZtlkHieJ+uFLZJOhj1FnOMMVYm9BACSzJwzXdUeiXWKgSudO7Pqx8Gg
-         ibHMoAo7ZE51SFaht5L/xm5FWGeVNlONtqOHTz5L7ZbGX9c8+1ogfT1fbLvsr6rSrS/k
-         9HWQ==
-X-Gm-Message-State: AIVw111VZQzPvjsuVlZJ91PFAq01Mgza1yUBVIKpiJGW1PZ638EBd64H
-        RYhOaI7E02V7qA==
-X-Received: by 10.84.217.220 with SMTP id d28mr2344779plj.218.1498941204430;
-        Sat, 01 Jul 2017 13:33:24 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:fd45:ceab:278e:5d13])
-        by smtp.gmail.com with ESMTPSA id d1sm27178763pfj.51.2017.07.01.13.33.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 01 Jul 2017 13:33:23 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Ben Peart <peartben@gmail.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC/PATCH v4 00/49] Add initial experimental external ODB support
-References: <20170620075523.26961-1-chriscool@tuxfamily.org>
-        <4be750af-b093-6644-7f0e-82983327766a@gmail.com>
-        <CAP8UFD2hghBePr-WVLiA6P0rS5=JPLmsxqJ_6rEWrqG3VEd7Dg@mail.gmail.com>
-Date:   Sat, 01 Jul 2017 13:33:23 -0700
-In-Reply-To: <CAP8UFD2hghBePr-WVLiA6P0rS5=JPLmsxqJ_6rEWrqG3VEd7Dg@mail.gmail.com>
-        (Christian Couder's message of "Sat, 1 Jul 2017 21:41:02 +0200")
-Message-ID: <xmqqtw2vnbho.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752355AbdGAVAt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 17:00:49 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:41769 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752335AbdGAVAs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2017 17:00:48 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id RPVQd1yrD23YCRPVQdalzx; Sat, 01 Jul 2017 22:00:41 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=Cob9STwD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=pGLkceISAAAA:8 a=UMwOizj0kBD1GnZPNPgA:9 a=wPNLvfGTeEIA:10
+ a=ezPG0ZpnnpEA:10 a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
+ a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <A35B0D040EE544D8A7EA0B9A31E74F0D@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Kaartic Sivaraam" <kaarticsivaraam91196@gmail.com>,
+        <git@vger.kernel.org>,
+        "Christian Couder" <christian.couder@gmail.com>
+References: <20170630154306.26993-1-kaarticsivaraam91196@gmail.com>        <xmqq1sq1togq.fsf@gitster.mtv.corp.google.com>        <1498918546.4321.1.camel@gmail.com>        <xmqqfuegnjnt.fsf@gitster.mtv.corp.google.com>        <54E752528FED4662912D8CC94B19513D@PhilipOakley> <xmqq37afoqa5.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH] hooks: add signature to the top of the commit message
+Date:   Sat, 1 Jul 2017 22:00:42 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170630-2, 30/06/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfESuAKxUuehhlu8SRYZOMPIussZ3HVxpefX34583LyR/hRvOceeoSH30DadZNvqmpbyTzLxvZaeTOl0/mi7N8kVAsZheBUDeiU1YdHtL+JgEYIp8SRqi
+ dhtayciP1a1xRZu1NrbODl8gQBEM981S3Y0ibjpDL57J5T893snqklMV9XCPb1oS9JpNpKEgG2smgFMg7BhsxVwNRqbs4lsKabbZMGmo7ZP9/6wFqFKCzciN
+ nDdafJa8qPdbKPxzHJGCzAlUHJ5TxU0sCpA1fvWmhJo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
-
->> I think it would be good to ensure the
->> interface is robust and performant enough to actually replace the current
->> object store interface (even if we don't actually do that just yet).
+From: "Junio C Hamano" <gitster@pobox.com>
+> "Philip Oakley" <philipoakley@iee.org> writes:
 >
-> I agree that it should be robust and performant, but I don't think it
-> needs to be as performant in all cases as the current object store
-> right now.
+>> From: "Junio C Hamano" <gitster@pobox.com>
+>>> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+>>>
+>>>>> By the way, the one that is still actually enabled is no longer
+>>>>> needed.  The commit template generated internally was corrected some
+>>>>> time ago not to add the "Conflicts:" section without commenting it
+>>>>> out.
+>>>>>
+>>>> I'll send in another patch that removes it but it seems removing it
+>>>> would leave sample hook without anything turned on by default. That
+>>>> doesn't sound fine, does it?
+>>>
+>>> Actually I was wondering if it is a good idea to remove it, as it
+>>> seems to have outlived its usefulness.
+>>
+>> Personally, I like the comfort of seeing the Conflicts: list, but if
+>> others have indicated otherwise...
+>
+> Oh, I think you misread the discussion while arriving from the
+> sideways.  My "it" in the "remove it" refers to the sample
+> prepare-commit-msg hook; among the three examples in that hook, only
+> one of them is enabled but that one was to comment out the "Conflicts"
+> section in the log message editor.  These days, that section already
+> appears in a commented-out form without the help of that hook, so
+> there is nothing useful in there---hence a suggestion for removal of
+> the sample.
+>
 
-That sounds like starting from a defeatest position.  Is there a
-reason why you think using an external interface could never perform
-well enough to be usable in everyday work?
+Thanks, yes I had misread it. I hadn't managed the time to follow the 
+details. Problem solved.
+
+Philip 
+
