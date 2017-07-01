@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 400C7201A0
-	for <e@80x24.org>; Sat,  1 Jul 2017 00:28:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF6C8201A0
+	for <e@80x24.org>; Sat,  1 Jul 2017 00:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752137AbdGAA2x (ORCPT <rfc822;e@80x24.org>);
+        id S1752144AbdGAA2y (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 20:28:54 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33566 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752134AbdGAA2x (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 30 Jun 2017 20:28:53 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34247 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752019AbdGAA2r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 20:28:47 -0400
-Received: by mail-pg0-f51.google.com with SMTP id t186so70726291pgb.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 17:28:47 -0700 (PDT)
+Received: by mail-pf0-f180.google.com with SMTP id e7so74264695pfk.0
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 17:28:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=X2jGHnaRECFJGdTn12VH8ZEK04nlvekjCEEEKcsGXTg=;
-        b=OYIUpF1WVYS+bf2NriQG161ZHANq6W9wzSt+GB4BNskqPWj440nxbLjeAVqm6HBMAQ
-         D+7f4PwknULPQSsowiZjvIq3W6sAO5yX23tbp8/XkXk3yO32gVaKQhBfK478P0hLLqCt
-         uM/wKnO/C8kyN31WyiDu1xfZJoeUkrQxq6heSLfs5vJlvjLlMbL3QwatsL564iuX1JU6
-         n+j6V5fWOOU01aM5VX/41kzFbG59R3DjNPWMV+PRLVKTx/G+8h1LqtBFL7MYWOC/2g+5
-         JoLClhsvm89eEPA5IY+QG8uhAWcwzwIjMcRUwjUI8OBa4PRwSpqBMsZDopoTwKDlKVTx
-         /HAA==
+        bh=j9YClPTjWiSoXm3KxjVTtutgRZnw4tDdJfdKbseAncg=;
+        b=njxAMAmsLneCKfkZfAIkKYQMEkepbWv0kX2ko0/MWuuj74iSnMAov+CwGmMsLaUqVn
+         PjlqfkeeHoc35TBGwKHVIWy8TmjMibDOwOtlQ/DYt8NuxkGBazCtULSsWAvvWum81dma
+         ifPVCyNaMKmkJRhjtEWiFRa8panHND0Lsdinob8LJ3EUQU7cXpDQygckMKI3+wF22OxC
+         xxOw6CL1BJeDq97I4BZsqY7wx5v6+X0G9wH2bQt3lDIuRSk0hfJVOjYa1hdw+MDHtYRu
+         /5P9gCqyg6mKoxa5fB9g2JHSeYPmMIICusUseT/TWZZqN7wt/gvRinHfxxq6ecBWRo23
+         aPdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=X2jGHnaRECFJGdTn12VH8ZEK04nlvekjCEEEKcsGXTg=;
-        b=skA4OxCdMAC0jOtxYS3PDz+6ciUQtbtRdB5kYzV0WdGsf/9t6tIz3PtsYX/pRrucWh
-         0muMFif/hSE8K5DhE6qgLHmlcexl3+PPfwceNgnIcn/J9nmuhAGyTklszvjKV+uznmPU
-         FWy8Uo0MUcb5KyJwJ+SU/CoVFhvukYedyrs6FgyucA2i0ooD1RgFrG8kCidzYPCGVw9W
-         FOOd+fc8rnkeEaAc1luWGPxTWAhl3h1kPDA30BGE89INzErJqmbXAf8ePOSsFCYEsqHg
-         Adww6CYpma7m4p+OPhojtApoppPleb3EnNg2LmK9RY2HpatjHmAAOtdgjEF7t3ffqoGf
-         s7LQ==
-X-Gm-Message-State: AKS2vOyft9oSfuU+iqih1CNNkmhWyrLjjKYIjR7uOkcDfklz3juRLCec
-        tBmF2JXJ2h+CKepdX5VIvQ==
-X-Received: by 10.99.55.19 with SMTP id e19mr24239195pga.28.1498868926706;
-        Fri, 30 Jun 2017 17:28:46 -0700 (PDT)
+        bh=j9YClPTjWiSoXm3KxjVTtutgRZnw4tDdJfdKbseAncg=;
+        b=hFXyOMc57DNevecQROgSQgUki+FPwTkzBi5TE9I16iiBPsmp/hNgR2J/cuetj/JSy+
+         n18rIfIj4Xe2jDcmLf4fH7xa1Yvx0NCK7z8iPkv1FzhZdlmziF3eXyM2E+8N718MWE0I
+         6PCBmvLXAXuKZC3kHaXigGPRUVN69MMGQuN7haxauCXgw8bqbrlPUmg7x4ze7GNDTZsw
+         nWh4u7YDcVK1UK7XDqjvB4oKixUZ+KohGMi2YHUJK3miEo0vlR7COqxOhjNs3G4QZGdC
+         iy8QR4Wr9BuDXTywV5izCy51kD1K+0AGk1JUAo69s8UH2vZx7d+esDBDyhVeXwbFTRZD
+         fjqA==
+X-Gm-Message-State: AKS2vOz6rkzzvsfg3HVZuX30EfsfOUmZryNc2ZObJshvfpd7ZNEXsH8R
+        O6+XMBkGtBHabOIpdEXA3g==
+X-Received: by 10.98.69.219 with SMTP id n88mr25415655pfi.192.1498868932562;
+        Fri, 30 Jun 2017 17:28:52 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:cc8b:7c8c:8e14:f9b5])
-        by smtp.gmail.com with ESMTPSA id t26sm23313049pfe.88.2017.06.30.17.28.45
+        by smtp.gmail.com with ESMTPSA id b7sm23127229pfl.44.2017.06.30.17.28.51
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 17:28:46 -0700 (PDT)
+        Fri, 30 Jun 2017 17:28:51 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 04/10] config.c: drop hashmap_cmp_fn cast
-Date:   Fri, 30 Jun 2017 17:28:32 -0700
-Message-Id: <20170701002838.22785-5-sbeller@google.com>
+Subject: [PATCH 09/10] name-hash.c: drop hashmap_cmp_fn cast
+Date:   Fri, 30 Jun 2017 17:28:37 -0700
+Message-Id: <20170701002838.22785-10-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.31.g9b732c453e
 In-Reply-To: <20170701002838.22785-1-sbeller@google.com>
 References: <20170701002838.22785-1-sbeller@google.com>
@@ -62,37 +62,59 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- config.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ name-hash.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/config.c b/config.c
-index 4a31e31ac3..30ff700629 100644
---- a/config.c
-+++ b/config.c
-@@ -1754,17 +1754,19 @@ static int configset_add_value(struct config_set *cs, const char *key, const cha
- }
+diff --git a/name-hash.c b/name-hash.c
+index 0e10f3eab8..bd8dc7a6a7 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -17,10 +17,14 @@ struct dir_entry {
+ };
  
- static int config_set_element_cmp(const void *unused_cmp_data,
--				  const struct config_set_element *e1,
--				  const struct config_set_element *e2,
-+				  const void *entry,
-+				  const void *entry_or_key,
- 				  const void *unused_keydata)
+ static int dir_entry_cmp(const void *unused_cmp_data,
+-			 const struct dir_entry *e1,
+-			 const struct dir_entry *e2,
+-			 const char *name)
++			 const void *entry,
++			 const void *entry_or_key,
++			 const void *keydata)
  {
-+	const struct config_set_element *e1 = entry;
-+	const struct config_set_element *e2 = entry_or_key;
++	const struct dir_entry *e1 = entry;
++	const struct dir_entry *e2 = entry_or_key;
++	const char *name = keydata;
 +
- 	return strcmp(e1->key, e2->key);
+ 	return e1->namelen != e2->namelen || strncasecmp(e1->name,
+ 			name ? name : e2->name, e1->namelen);
+ }
+@@ -110,10 +114,12 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
  }
  
- void git_configset_init(struct config_set *cs)
+ static int cache_entry_cmp(const void *unused_cmp_data,
+-			   const struct cache_entry *ce1,
+-			   const struct cache_entry *ce2,
++			   const void *entry,
++			   const void *entry_or_key,
+ 			   const void *remove)
  {
--	hashmap_init(&cs->config_hash, (hashmap_cmp_fn)config_set_element_cmp,
--		     NULL, 0);
-+	hashmap_init(&cs->config_hash, config_set_element_cmp, NULL, 0);
- 	cs->hash_initialized = 1;
- 	cs->list.nr = 0;
- 	cs->list.alloc = 0;
++	const struct cache_entry *ce1 = entry;
++	const struct cache_entry *ce2 = entry_or_key;
+ 	/*
+ 	 * For remove_name_hash, find the exact entry (pointer equality); for
+ 	 * index_file_exists, find all entries with matching hash code and
+@@ -574,10 +580,8 @@ static void lazy_init_name_hash(struct index_state *istate)
+ {
+ 	if (istate->name_hash_initialized)
+ 		return;
+-	hashmap_init(&istate->name_hash, (hashmap_cmp_fn) cache_entry_cmp,
+-			NULL, istate->cache_nr);
+-	hashmap_init(&istate->dir_hash, (hashmap_cmp_fn) dir_entry_cmp,
+-			NULL, istate->cache_nr);
++	hashmap_init(&istate->name_hash, cache_entry_cmp, NULL, istate->cache_nr);
++	hashmap_init(&istate->dir_hash, dir_entry_cmp, NULL, istate->cache_nr);
+ 
+ 	if (lookup_lazy_params(istate)) {
+ 		hashmap_disallow_rehash(&istate->dir_hash, 1);
 -- 
 2.13.0.31.g9b732c453e
 
