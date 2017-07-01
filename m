@@ -2,93 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19ED720209
-	for <e@80x24.org>; Sat,  1 Jul 2017 21:00:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05D1E20209
+	for <e@80x24.org>; Sat,  1 Jul 2017 22:06:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752355AbdGAVAt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 17:00:49 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:41769 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752335AbdGAVAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2017 17:00:48 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id RPVQd1yrD23YCRPVQdalzx; Sat, 01 Jul 2017 22:00:41 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=Cob9STwD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=xtxXYLxNAAAA:8 a=pGLkceISAAAA:8 a=UMwOizj0kBD1GnZPNPgA:9 a=wPNLvfGTeEIA:10
- a=ezPG0ZpnnpEA:10 a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
- a=6kGIvZw6iX1k4Y-7sg4_:22
-Message-ID: <A35B0D040EE544D8A7EA0B9A31E74F0D@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Kaartic Sivaraam" <kaarticsivaraam91196@gmail.com>,
-        <git@vger.kernel.org>,
-        "Christian Couder" <christian.couder@gmail.com>
-References: <20170630154306.26993-1-kaarticsivaraam91196@gmail.com>        <xmqq1sq1togq.fsf@gitster.mtv.corp.google.com>        <1498918546.4321.1.camel@gmail.com>        <xmqqfuegnjnt.fsf@gitster.mtv.corp.google.com>        <54E752528FED4662912D8CC94B19513D@PhilipOakley> <xmqq37afoqa5.fsf@gitster.mtv.corp.google.com>
-Subject: Re: [PATCH] hooks: add signature to the top of the commit message
-Date:   Sat, 1 Jul 2017 22:00:42 +0100
-Organization: OPDS
+        id S1751636AbdGAWGA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 18:06:00 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35481 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751605AbdGAWF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2017 18:05:59 -0400
+Received: by mail-wm0-f67.google.com with SMTP id u23so13883756wma.2
+        for <git@vger.kernel.org>; Sat, 01 Jul 2017 15:05:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=+ZKB3y5r9FRBQZ8Hcssv+Kcvps9sEDwjTJMlHhjejZQ=;
+        b=OAGJIzOxua/L7qfFpRSUpKLg7MjiRW12iHXxKwu8Ap2zZ2Ch+81i2x3OWT1q7L197E
+         x/kDD1DP3vwEl5eJLSPC1V3bLaLcUAjp0nQoLZFuznzGBDpYKcUkAZOf3V14alVQNfX1
+         19/195H/q7CKcZZ59Xt0JMMTnyZgRfs+ZFLu65RehPt9vXMjnK8bvHbHIP5nunaImOGV
+         2+r5ehX+aPLLIEacfUDkmA/jYYXccVLTCF3BjIS81DppPNQu8cmVGGPHGk2fGa/IbNuq
+         sbk7k/ZBnghQzXsAys7Ltm0hENCy9wCbBd1dxGdIx4pVhpDgBzuEt3cwDyDdpIvcSagc
+         HuKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=+ZKB3y5r9FRBQZ8Hcssv+Kcvps9sEDwjTJMlHhjejZQ=;
+        b=GArTwBnAVMJb8lS39MaGiDY4Wmcm21JxwHyHB3/I/t39JgROOikJ/Yp9DmTajBZ9vd
+         +TdT8ovwhy/atBdHb3jv6se/ca4s/ALqacA/7gqvL9/ZFU5OImGTH2SF0oMdyeP1vY1j
+         K34MW6b3sVmvwJ6vqkKPSHduhni1pcYDoFKgPbSnpVv/ry7ZPhFndWjgrtN1EmR+PDEL
+         8tsAXMxvZnk9sUiOGytVadUZJ9+A/s9BdfLy6RVsduq3W206/TnZcBSQv6ONN6bmzdo4
+         R4Vh1CGM/rwwR052qLjzHjJoD5pMyQWsXN2ptLjHXs2Z1OAQ296iP7jQ9SmZFCKrKPjH
+         08Qw==
+X-Gm-Message-State: AKS2vOw/W9W1VUd1eAsqD0Y1EVbqqemHpDPN+H8AH3ked0OuQ7RdHn2i
+        WV6PN5AQcB0RKkNISIM=
+X-Received: by 10.80.173.132 with SMTP id a4mr7722942edd.180.1498946757357;
+        Sat, 01 Jul 2017 15:05:57 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id e54sm4208643eda.27.2017.07.01.15.05.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 01 Jul 2017 15:05:56 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Michael Kebe <michael.kebe@gmail.com>,
+        "Liam R . Howlett" <Liam.Howlett@Oracle.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/3] Update sha1dc from upstream
+Date:   Sat,  1 Jul 2017 22:05:44 +0000
+Message-Id: <20170701220547.10464-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1
+In-Reply-To: <20170627121718.12078-1-avarab@gmail.com>
+References: <20170627121718.12078-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Antivirus: AVG (VPS 170630-2, 30/06/2017), Outbound message
-X-Antivirus-Status: Clean
-X-CMAE-Envelope: MS4wfESuAKxUuehhlu8SRYZOMPIussZ3HVxpefX34583LyR/hRvOceeoSH30DadZNvqmpbyTzLxvZaeTOl0/mi7N8kVAsZheBUDeiU1YdHtL+JgEYIp8SRqi
- dhtayciP1a1xRZu1NrbODl8gQBEM981S3Y0ibjpDL57J5T893snqklMV9XCPb1oS9JpNpKEgG2smgFMg7BhsxVwNRqbs4lsKabbZMGmo7ZP9/6wFqFKCzciN
- nDdafJa8qPdbKPxzHJGCzAlUHJ5TxU0sCpA1fvWmhJo=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> From: "Junio C Hamano" <gitster@pobox.com>
->>> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
->>>
->>>>> By the way, the one that is still actually enabled is no longer
->>>>> needed.  The commit template generated internally was corrected some
->>>>> time ago not to add the "Conflicts:" section without commenting it
->>>>> out.
->>>>>
->>>> I'll send in another patch that removes it but it seems removing it
->>>> would leave sample hook without anything turned on by default. That
->>>> doesn't sound fine, does it?
->>>
->>> Actually I was wondering if it is a good idea to remove it, as it
->>> seems to have outlived its usefulness.
->>
->> Personally, I like the comfort of seeing the Conflicts: list, but if
->> others have indicated otherwise...
->
-> Oh, I think you misread the discussion while arriving from the
-> sideways.  My "it" in the "remove it" refers to the sample
-> prepare-commit-msg hook; among the three examples in that hook, only
-> one of them is enabled but that one was to comment out the "Conflicts"
-> section in the log message editor.  These days, that section already
-> appears in a commented-out form without the help of that hook, so
-> there is nothing useful in there---hence a suggestion for removal of
-> the sample.
->
+The upstream discussion about solving Big Endian detection concluded
+with something that hopefully works on all our platforms, see
+https://github.com/cr-marcstevens/sha1collisiondetection/pull/34
 
-Thanks, yes I had misread it. I hadn't managed the time to follow the 
-details. Problem solved.
+This updates us to the latest upstream commit.
 
-Philip 
+Junio C Hamano (1):
+  sha1collisiondetection: automatically enable when submodule is
+    populated
+
+Ævar Arnfjörð Bjarmason (2):
+  sha1dc: update from upstream
+  sha1dc: optionally use sha1collisiondetection as a submodule
+
+ .gitmodules            |  4 +++
+ Makefile               | 16 +++++++++
+ hash.h                 |  4 +++
+ sha1collisiondetection |  1 +
+ sha1dc/sha1.c          | 90 +++++++++++++++++++++++++++++++++++++-------------
+ 5 files changed, 92 insertions(+), 23 deletions(-)
+ create mode 100644 .gitmodules
+ create mode 160000 sha1collisiondetection
+
+-- 
+2.13.1.611.g7e3b11ae1
 
