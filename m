@@ -2,190 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1076820209
-	for <e@80x24.org>; Sat,  1 Jul 2017 17:23:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1699020209
+	for <e@80x24.org>; Sat,  1 Jul 2017 17:24:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751895AbdGARXU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 13:23:20 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34387 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751389AbdGARXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2017 13:23:19 -0400
-Received: by mail-pg0-f65.google.com with SMTP id j186so18659917pge.1
-        for <git@vger.kernel.org>; Sat, 01 Jul 2017 10:23:19 -0700 (PDT)
+        id S1751916AbdGARYm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 13:24:42 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:36601 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751871AbdGARYl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2017 13:24:41 -0400
+Received: by mail-pg0-f52.google.com with SMTP id u62so77023144pgb.3
+        for <git@vger.kernel.org>; Sat, 01 Jul 2017 10:24:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:in-reply-to:references
-         :disposition-notification-to:date:mime-version
-         :content-transfer-encoding;
-        bh=l/uW75u+4nBGJK1foiLahB1n3OGW2pq4FH/f/weZO00=;
-        b=jnefKCwzS+8BHyeiJWXdeP4gE++K1FfJRJxdUVlfy+ZJUqEfhsfQ3Lr2SYoOlFVWj7
-         w/YPEyBXIt/8WqSocFhvtrKu6MR6qKgkuWNquU/jNZhn1shizKi5zqHQcCUXk4xA2B01
-         e/hVYBRtxxtnn1PGGi2Aw17I+AEbZXFsKt/5lQYq1lbSj9f0my6ztGlNgxmVW2M1Qxay
-         Ejv9xs6538qiCanFKzCpAAneX3h6DvPaAQK8RwS3fSOQ8NFABoYPLtx2/hnugrPtFGfG
-         ByaLcze12M8XqBhG2cr9IESrmWQRfAtTbmpm7X4rgTCdWZMINm2F4T7ThuvODjGJuZik
-         EAlw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=wWvtHuPCekdkn1e7Qw5F1C5AO1cv43Cd/TDWGL0Y0S4=;
+        b=jwtCxnYmBIBFW5cwiVadhQdCYNJ2fcic4nJhIWT6amTI4MSiCGupA7uyCocrIR4hpl
+         JNcWYImj0brzyVU9cDBj9WGxqXDNHq7+Ya+5OG1kf/VQktPoOgd6rg6/IKKIevwxSZUb
+         TDw97AmJOF9ewuowIny1CgMe9x3u0uf1w+L44I/rcgNV1Wk+P47VhEO43ywaTqYG0ELx
+         EcZPpGnifOKRF6IrPMhyyH+O1bDVIckK7pcCxsQmZ2v4NAyTgSQPGP0tABHIn6CEyTqW
+         3rcKIl3IwhmnHZSC8gjfKw93TFqhz7j6DGDqR7F5CtV2U/qfKvw0p9ykh6tTDY6btMXe
+         ch3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
-         :references:disposition-notification-to:date:mime-version
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=l/uW75u+4nBGJK1foiLahB1n3OGW2pq4FH/f/weZO00=;
-        b=k42za1OkOBXeUw0/nZ/ElDCxYjqpvOaydQhRu355YxcQH3ylLlxKzUIREjbOBMjYuW
-         LCqw8HCGkf3uQAZPD3kmjJ42CeaGh4EB2IEknN//aVtR1O2LhyJeWGqaNCCuQzHogmKH
-         sBbZaWnVFy0F4xXY0Q+j4V5WxC3+NN+cdEHJL7HqtndYo8FIToDrQ1sAhKXHdX9UG7Y/
-         bGFRwud70qR27rCOjVh3/FwOWJxjxAwPQ+lfNnML3ypS/kw7zuWLD4zB4i1jKImp+0Au
-         43J/XfW193wfeHrti3+DojGhNpkYf132AHHprnrUUCIlQJCfGMMt1dET+BVNFMY4b0YK
-         xpJQ==
-X-Gm-Message-State: AIVw110N7i5diTYESJDmBK3tP6/ARfVvfGpRG3stKjFgX3Py1rEL2qN/
-        U6fsWkrJ2Ksv4Q==
-X-Received: by 10.99.147.19 with SMTP id b19mr1689928pge.154.1498929798764;
-        Sat, 01 Jul 2017 10:23:18 -0700 (PDT)
-Received: from unique-pc ([218.248.21.162])
-        by smtp.googlemail.com with ESMTPSA id x64sm26171092pfk.20.2017.07.01.10.23.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 01 Jul 2017 10:23:18 -0700 (PDT)
-Message-ID: <1498925790.4321.7.camel@gmail.com>
-Subject: "git intepret-trailers" vs. "sed script" to add the signature
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-In-Reply-To: <1498918546.4321.1.camel@gmail.com>
-References: <20170630154306.26993-1-kaarticsivaraam91196@gmail.com>
-         <xmqq1sq1togq.fsf@gitster.mtv.corp.google.com>
-         <1498918546.4321.1.camel@gmail.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Sat, 01 Jul 2017 21:46:30 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
+        bh=wWvtHuPCekdkn1e7Qw5F1C5AO1cv43Cd/TDWGL0Y0S4=;
+        b=nCeSqE0a3gHvGhU9H0Klf/iuTfly+A9LnCe9LiZtd8zK2FhKq045tDGN30OAAdIISv
+         ybDSKtdBMRdGIR/QPUkNERcn4bYb5a0S6UYZ2M905gZZa935Fi4QFVhfDFkV0/+e9wkp
+         wav580BnwWSjJIU8zEKC2K4M8H2eQETNCEBXDLFk0h+0wTpr0leG4/huaxLuplyIv4nB
+         m21s0tR4xKovQ4kGfrNgYpbH5l5XvxJEYgh8dzvzXDGlAVVmbjYciFpw1FRXGdetdoDG
+         SqPWUsdczQtzP/u5aXxzvaAACDOU52HWFDBry10upKxQNQH4ucwa+CuXvND999ZnkzQM
+         poRg==
+X-Gm-Message-State: AIVw112RgotGXLEaBvOVdHjwh4V/LRMGHAM37kl3aQL3WxByH6XAjvmS
+        iTAUnDRkMDRTppWvTX4=
+X-Received: by 10.84.224.75 with SMTP id a11mr1665145plt.286.1498929880596;
+        Sat, 01 Jul 2017 10:24:40 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:fd45:ceab:278e:5d13])
+        by smtp.gmail.com with ESMTPSA id y66sm24365892pfa.54.2017.07.01.10.24.39
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sat, 01 Jul 2017 10:24:39 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] Check DB_ENVIRONMENT using is_directory()
+References: <20170628162958.519-1-tboegi@web.de>
+        <20170701125057.16169-1-tboegi@web.de>
+Date:   Sat, 01 Jul 2017 10:24:39 -0700
+In-Reply-To: <20170701125057.16169-1-tboegi@web.de> (tboegi@web.de's message
+        of "Sat, 1 Jul 2017 14:50:57 +0200")
+Message-ID: <xmqqr2y0nk88.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2017-07-01 at 19:45 +0530, Kaartic Sivaraam wrote:
-> On Fri, 2017-06-30 at 09:44 -0700, Junio C Hamano wrote:
-> > It does look like a hack.  I was wondering if "interpret-trailers"
-> > is mature enough and can be used for this by now.
-> 
-> It does look promising except for a few differences from the hook
-> which
-> I'll explain in the following mail.
+tboegi@web.de writes:
 
-interpet-trailers
-=================
+> From: Torsten BÃ¶gershausen <tboegi@web.de>
+>
+> In setup.c is_git_directory() checks a Git directory using access(X_OK).
+> This does not check, if path is a file or a directory.
+> Check path with is_directory() instead.
+> ---
+> After all the discussions (and lots of tests) I found that this patch
+> works for my setup.
+> All in all could the error reporting be improvved for is_git_directory(),
+> as there may be "access denied", or "not a directory" or others, but
+> that is for another day.
 
-After enabling the script I tried the following (shown here as a diff)
-to add the signature with "interpret-trailers",
+Wouldn't this be a slight regression, though?  
 
-    diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-    index 6473bcacd..9f8cbe7fd 100755
-    --- a/templates/hooks--prepare-commit-msg.sample
-    +++ b/templates/hooks--prepare-commit-msg.sample
-    @@ -33,4 +33,4 @@ case "$2,$3" in
-     esac
-     
-     SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
-    -grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
-    +git interpret-trailers --in-place --trailer "$SOB" "$1"
+We used to ignore an unsearchable directory but now we blindly say
+"ah, it is a directory".
 
-It adds the signature if it's not present in the following cases,
+Checking is_directory() in addition to the existing access() would
+be making a progress by fixing one bug (i.e. we no longer are
+confused by an executable file there); skipping that access() based
+on the filesystem quirks can be left for another day, of course.
 
-* commit
-* merge
-* commit --amend
-* commit -F
-* cherry-pick
-
-It's pretty good in adding the signature except that it's not in line
-with "git commit -s" whose resulting "spacing" (new lines before and
-after) as shown in the editor is given below,
-
-> 
-> 
-> Signed-off-by: Test <hello@example.org>
-> 
-> # Please enter the commit message for your changes. Lines starting
-> # with '#' will be ignored, and an empty message aborts the commit.
-> ...
-
-The spacing of "git interpret-trailers" in the editor for the relevant
-cases are,
-
-commit
-------
-
-> 
-> Signed-off-by: Test <hello@example.org>
-> # Please enter the commit message for your changes. Lines starting
-> # with '#' will be ignored, and an empty message aborts the commit.
-> ...
-
-
-commit --amend
---------------
-
-> Empty commit to test amending 
->  
-> Signed-off-by: Test <hello@example.org> 
->  
-> # Please enter the commit message for your changes. Lines starting 
-> # with '#' will be ignored, and an empty message aborts the commit. 
-> ...
-
-
-merge
------
-> Merge branch 'hook-test' into hook-test-merge
-> 
-> Signed-off-by: Test <hello@example.org>
-> 
-> # Please enter a commit message to explain why this merge is necessary,
-> # especially if it merges an updated upstream into a topic branch.
-> #
-> # Lines starting with '#' will be ignored, and an empty message aborts
-> # the commit.
-
-So, it seems that excepting for 'commit' it has quite a nice spacing. I
-guess we could add something like the following to fix that,
-
-    # Add new line after SOB in case of "git commit"
-    NEW_LINE='\
-    '
-    if [ -z "$2" ]
-    then
-      sed -i "1i$NEW_LINE" "$1"
-    fi
-
-
-sed-script
-==========
-I also tried to add the signature that immitates the "-s" option
-of "git commit" using "sed" but it works only in following cases,
-
-* commit
-* commit --amend
-* merge
-
-It doesn't seem to work in cases where user doesn't edit the message
-using the editor. I'm not sure why.
-
-I'm not including a patch of my manual way here as "git interpret-
-trailers" (with the fix added) seems quite promising (at least to me).
-
-I'll send a typical patch that uses "git interpret-headers" as a
-follow-up.
-
--- 
-Regards,
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+> setup.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/setup.c b/setup.c
+> index 358fbc2..5a7ee2e 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -321,7 +321,7 @@ int is_git_directory(const char *suspect)
+>  
+>  	/* Check non-worktree-related signatures */
+>  	if (getenv(DB_ENVIRONMENT)) {
+> -		if (access(getenv(DB_ENVIRONMENT), X_OK))
+> +		if (!is_directory(getenv(DB_ENVIRONMENT)))
+>  			goto done;
+>  	}
+>  	else {
