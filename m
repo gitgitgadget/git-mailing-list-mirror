@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8834320209
-	for <e@80x24.org>; Sat,  1 Jul 2017 12:51:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA4F620209
+	for <e@80x24.org>; Sat,  1 Jul 2017 12:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751862AbdGAMvC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 08:51:02 -0400
-Received: from mout.web.de ([212.227.17.12]:51515 "EHLO mout.web.de"
+        id S1751868AbdGAMvD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 08:51:03 -0400
+Received: from mout.web.de ([212.227.17.12]:65296 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751805AbdGAMvB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2017 08:51:01 -0400
+        id S1751828AbdGAMvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2017 08:51:02 -0400
 Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MEEiK-1dXtYg3iEy-00FRmQ; Sat, 01
- Jul 2017 14:50:58 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M7sw0-1deOrU0y7k-00vPAu; Sat, 01
+ Jul 2017 14:51:00 +0200
 From:   tboegi@web.de
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v2 1/2] Check DB_ENVIRONMENT using is_directory()
-Date:   Sat,  1 Jul 2017 14:50:57 +0200
-Message-Id: <20170701125057.16169-1-tboegi@web.de>
+Subject: [PATCH v2 2/2] cygwin: Allow pushing to UNC paths
+Date:   Sat,  1 Jul 2017 14:50:59 +0200
+Message-Id: <20170701125059.16210-1-tboegi@web.de>
 X-Mailer: git-send-email 2.10.0
 MIME-Version: 1.0
 In-Reply-To: <20170628162958.519-1-tboegi@web.de>
 References: <20170628162958.519-1-tboegi@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:Fnu4D2qVqkIkn9e1Qrh1yukVivfTIMdlElqfonnisvNMkLxM0ft
- urzl93Of3HVuUBfhITI5W7jIpXJf5aqOqX278s4MB81UE/PtHlFi1dvKjGZCSK+/C3ok47G
- 60UO9sPdgaNpt2rWnJ8wjncoAk9XuP6d9fEsAFdD0SN6t+GGv4CVFX2zQtLEs863j2VI0Ix
- RxZ9566Dha3ylhZPAt8ow==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VfAXz7I8NLw=:D4P/OKWWhTXnL/Xgp4f8FM
- f+FEB0Yj2PCFj34OSltSt4xm+nzHoOuEq4hex6BM/pZtmLpHfYuA/In3jylSB1YeK3/aat8vY
- ksza2K1fzi80l53PjSvVC3SwC6MynYJiuJOh8A4L6mPzXV4OiVdmBImasxdvZOaQTRAdxKkYE
- wlbBd0yG8oPAfsojLrmVLB2GNuXJF0ZVCoiJb1uO68Hz/ffNDOsB9Kyv6gK8wYMqPpQJkMHvA
- iLe2YAQQ5fQiyIWFqtonSmDpy5sdpQmP2aUPOcruw0SM99DuxbXzN8LeVSrXs0xQEUpDP8mhV
- w7xnVNRBLLr11xe/bgkzs5DHEICgIMITcRdtkWs74cEihaBkxfLKsXgaWatA6tYL6HsuVQ0NF
- BsWpZo780ro5LZ81maVyqlpFxMeKwmArDQ+RSUqOIEFwotl04buto09IEAzQbV9c9LFaV6Q8I
- KL86oJRcwXZGtgu2+kk9D0mvicJ7KvOISGUrSuJQ/JPN1cRgq3ii8zx4kjFtsax2MvbFXQzaL
- WVTWeZnwn7QNKrmMcG5D4Elyqd2PztbxFBeh6imul11avfwA6vx+Zrx4pMz6Fx1yS4BaxvU50
- tIKN0L94+yYgaHsuZVCuTHwD55iOLfm+1ZEd6HKrA6noRKa2dde7Os7AKuyRoC2LY9TW44n+5
- 1MRsu+kVlEQZ6Za5PbRX/ZddSeEZw/bOx4yyzB1F336ZZyR2jiLi1DbBlwxJYwAZv2ftprfhj
- BAuCMhI73wIiNp4R+XNBEynrBWcacbvD54T3HmvJbqivyD8R66Zns04YUJRz2FX6GHEGBAHTm
- rYv4yVy
+X-Provags-ID: V03:K0:m37Jvh/a1/dHjhcXi5jFL6AefvG4wo7ZaPdqShmQNoa6xJ+VHB3
+ 9J9dXt/JeurFHNaMYlbvLrb2YQE/ggl2iWXDxm/ihXNVDszUCrImZ08D3p/jXXHWd498J3h
+ 5CKgOqA1Zz7GtcDYn1W6sI+H/sdTy3tv1db15C2NdYRNpaZTjGuNxreuebwaz53wSM2kIKg
+ 1fIDsACXKJXohchmh3fDA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:c3qqEcS+4Bs=:PUhjl1HdEiOcdIuM3a7dTf
+ 3EZPAsU+SyCga20LOMJlzfzSbJB1sFj8mO0SpNBDlK3uwko03LiD/KXRqd96WDqwPZTvKJRlM
+ ZF1xANr+8dwggXBDgDagAPUgUA7hyjq96EqvN1U9EI4syz9Jo/prENCq87O9VPUEZ/A4JJq7f
+ JVRUPJsmoxB8ES5AraqS53nqOuoOkhyes1zH7jZEGWhSKjAiEZocZdaUxeqyhE7qwDV7oWWwn
+ 92cGi0kQVmGD23ozyZ2VRSOfL1CnzEOmxisQq0dKUbrziDDmjod6Y5EKiFe1R6ENRBBMotUrU
+ Hf6XH772/CNAmSgftWeYZyf6a8eVqHA2BoT+hyIuU9Q70emQsfW9RmRCsV34NFp/MtWZ+XAO6
+ ZV8OcGuUlWJFoVK8DTCgE3gbgQGImYCh7qbnbFPzg/dX8IwWpHw12ooNeRjg8HBOtcHprLE2S
+ DJ4RMc4j/YAkB6uWiiKB7ftZepI2xhMFOdXhcNEX4kkNuXNPj0uStpjqVk49mLN7Q99nivogV
+ Ctopr0G16DIoRnY45hroq9WzMqAvJqnu2zaTD0ynzkR47vEuE/1ycBJcuyCuBIkYhTNK0X2SF
+ UkVW4El1KYHCG/UuX/TCW7cKUJMZpiXwPnr7YDD86v+NmBEaj8YbPPHQkM5FWR8PJjXPnl2uO
+ PJaw726pf9Xt4XRI87bLD3EUBvhufv3MVGvhqFS2Mvwnpl7l/jtJoBRQeE4owifUfZbSBTF99
+ 8RcdnwMcoRJYB6R3qCHumjjLbCNmHOvd/Y7pZ/wRTW5ZrF9Q2EvLrzgBMV28Hj1pzBv/XCJxk
+ KTr6E38
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,32 +55,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Torsten Bögershausen <tboegi@web.de>
 
-In setup.c is_git_directory() checks a Git directory using access(X_OK).
-This does not check, if path is a file or a directory.
-Check path with is_directory() instead.
+ cygwin can use an UNC path like //server/share/repo
+ $ cd //server/share/dir
+ $ mkdir test
+ $ cd test
+ $ git init --bare
+
+ However, when we try to push from a local Git repository to this repo,
+ there is a problem: Git converts the leading "//" into a single "/".
+
+ As cygwin handles an UNC path so well, Git can support them better:
+ - Introduce cygwin_offset_1st_component() which keeps the leading "//",
+   similar to what Git for Windows does.
+ - Move CYGWIN out of the POSIX in the tests for path normalization in t0060.
 ---
-After all the discussions (and lots of tests) I found that this patch
-works for my setup.
-All in all could the error reporting be improvved for is_git_directory(),
-as there may be "access denied", or "not a directory" or others, but
-that is for another day.
+ config.mak.uname      | 1 +
+ git-compat-util.h     | 3 +++
+ t/t0060-path-utils.sh | 2 ++
+ 3 files changed, 6 insertions(+)
 
-setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/setup.c b/setup.c
-index 358fbc2..5a7ee2e 100644
---- a/setup.c
-+++ b/setup.c
-@@ -321,7 +321,7 @@ int is_git_directory(const char *suspect)
+diff --git a/config.mak.uname b/config.mak.uname
+index adfb90b..551e465 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -184,6 +184,7 @@ ifeq ($(uname_O),Cygwin)
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
+ 	SPARSE_FLAGS = -isystem /usr/include/w32api -Wno-one-bit-signed-bitfield
+ 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
++	COMPAT_OBJS += compat/cygwin.o
+ endif
+ ifeq ($(uname_S),FreeBSD)
+ 	NEEDS_LIBICONV = YesPlease
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 047172d..db9c22d 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -189,6 +189,9 @@
+ #include <sys/sysctl.h>
+ #endif
  
- 	/* Check non-worktree-related signatures */
- 	if (getenv(DB_ENVIRONMENT)) {
--		if (access(getenv(DB_ENVIRONMENT), X_OK))
-+		if (!is_directory(getenv(DB_ENVIRONMENT)))
- 			goto done;
- 	}
- 	else {
++#if defined(__CYGWIN__)
++#include "compat/cygwin.h"
++#endif
+ #if defined(__MINGW32__)
+ /* pull in Windows compatibility stuff */
+ #include "compat/mingw.h"
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 444b5a4..7ea2bb5 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -70,6 +70,8 @@ ancestor() {
+ case $(uname -s) in
+ *MINGW*)
+ 	;;
++*CYGWIN*)
++	;;
+ *)
+ 	test_set_prereq POSIX
+ 	;;
 -- 
 2.10.0
 
