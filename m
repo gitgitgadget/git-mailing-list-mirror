@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66CD520209
-	for <e@80x24.org>; Sat,  1 Jul 2017 18:32:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 543BE20209
+	for <e@80x24.org>; Sat,  1 Jul 2017 18:32:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752155AbdGAScV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 14:32:21 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:45228 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752120AbdGAScO (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 1 Jul 2017 14:32:14 -0400
-X-AuditID: 12074412-b97ff70000000fed-dc-5957eaa81f6a
+        id S1752160AbdGAScW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 14:32:22 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:59137 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752121AbdGAScV (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 1 Jul 2017 14:32:21 -0400
+X-AuditID: 1207440c-c4dff70000001e54-3a-5957eab4419e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 40.75.04077.8AAE7595; Sat,  1 Jul 2017 14:32:08 -0400 (EDT)
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 1A.2E.07764.4BAE7595; Sat,  1 Jul 2017 14:32:20 -0400 (EDT)
 Received: from bagpipes.fritz.box (p57BCCCEF.dip0.t-ipconnect.de [87.188.204.239])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v61IVBBa010294
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v61IVBBf010294
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sat, 1 Jul 2017 14:32:06 -0400
+        Sat, 1 Jul 2017 14:32:18 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -35,121 +35,205 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         <avarab@gmail.com>, David Turner <novalis@novalis.org>,
         Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 23/30] packed_refs_lock(): function renamed from lock_packed_refs()
-Date:   Sat,  1 Jul 2017 20:31:01 +0200
-Message-Id: <4d04ba165888245f384df461f981a664d2c5ffce.1498933362.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 28/30] repack_without_refs(): don't lock or unlock the packed refs
+Date:   Sat,  1 Jul 2017 20:31:06 +0200
+Message-Id: <5354fb6b0a1ac30061ecf30852ee877b599ae1ac.1498933362.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1498933362.git.mhagger@alum.mit.edu>
 References: <cover.1498933362.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLIsWRmVeSWpSXmKPExsUixO6iqLviVXikwbmJkhZrn91hsni+/gS7
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixO6iqLvlVXikwfzDohZrn91hsni+/gS7
         RdeVbiaLht4rzBa3V8xntljy8DWzRfeUt4wWP1p6mC02b25nceD0+Pv+A5PHzll32T0WbCr1
-        6Go/wubxrHcPo8fFS8oenzfJBbBHcdmkpOZklqUW6dslcGXM2phZ8EC2Yu5x8wbGpxJdjJwc
-        EgImEkeeP2XsYuTiEBLYwSRxfM5ZdgjnJJPEqjPn2EGq2AR0JRb1NDOB2CICahIT2w6xgBQx
-        C0xilnh7bSFYQlggTKJj1jM2EJtFQFXizvRprCA2r0CUxKw3U9gh1slL7Gq7CBbnFLCQ+NO2
-        nhnEFhIwl2g+2McygZFnASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdM73czBK91JTSTYyQ
-        kBPawbj+pNwhRgEORiUe3g0hYZFCrIllxZW5hxglOZiURHlXXguNFOJLyk+pzEgszogvKs1J
-        LT7EKMHBrCTCm/s8PFKINyWxsiq1KB8mJc3BoiTO+3Oxup+QQHpiSWp2ampBahFMVoaDQ0mC
-        d9JLoEbBotT01Iq0zJwShDQTByfIcB6g4QvvggwvLkjMLc5Mh8ifYtTleDXh/zcmIZa8/LxU
-        KXHeVpBBAiBFGaV5cHNgqeIVozjQW8K8DMDEIcQDTDNwk14BLWECWiI8IwRkSUkiQkqqgdE+
-        U2GH3YKKFYU+LLG2SrVvF3Q4Nskc110d+0gsy6KKa2vpo08eq7xWnTgvsPvNNxHzVQ8T1649
-        1STv7F4XGpL8yFVW7UpexvWGU1NCbB8qG2TxWk6pbXka0Pz8FkN7qMbusotsRj8b3RZ9nynz
-        cfsr+7LToj9eKK47enZWyRO5yoYZ1kq3WZRYijMSDbWYi4oTAWXcEoXwAgAA
+        6Go/wubxrHcPo8fFS8oenzfJBbBHcdmkpOZklqUW6dslcGUsfDyLrWC/XsXsd0YNjNdUuxg5
+        OSQETCRaXk1h7GLk4hAS2MEksWLecyYI5ySTxKRXfxhBqtgEdCUW9TQzgdgiAmoSE9sOsYAU
+        MQtMYpZ4e20hWEJYIFTiybQPYDaLgKrE0bbdrCA2r0CUxKnbf9kh1slL7Gq7CBbnFLCQ+NO2
+        nhnEFhIwl2g+2McygZFnASPDKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdQ73czBK91JTSTYyQ
+        oOPZwfhtncwhRgEORiUe3g0hYZFCrIllxZW5hxglOZiURHlXXguNFOJLyk+pzEgszogvKs1J
+        LT7EKMHBrCTCm/s8PFKINyWxsiq1KB8mJc3BoiTOq7pE3U9IID2xJDU7NbUgtQgmK8PBoSTB
+        ywSMLiHBotT01Iq0zJwShDQTByfIcB6g4QvvggwvLkjMLc5Mh8ifYtTleDXh/zcmIZa8/LxU
+        KXHe1pdARQIgRRmleXBzYMniFaM40FvCvAwg63iAiQZu0iugJUxAS4RnhIAsKUlESEk1MDaq
+        HrzLwrzL6Oz1ijkxnwtyHfMN/ugfE/Z5ovrfzHntX6cTOw/PtCw/zH40eF3svzCXdf6tAYJx
+        +X0y+jLmNsxcz4/qTLky089TiKlq4dcdpUFeB/cdYORab1m2m3vZbolLimlpl3P1ur1e35ou
+        k3BN16ic5aJa6xKN/L2XotQm6nJsD740RYmlOCPRUIu5qDgRAHc1a83xAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rename `lock_packed_refs()` to `packed_refs_lock()` for consistency
-with how other methods are named. Also, it's about to get some
-companions.
+Change `repack_without_refs()` to expect the packed-refs lock to be
+held already, and not to release the lock before returning. Change the
+callers to deal with lock management.
+
+This change makes it possible for callers to hold the packed-refs lock
+for a longer span of time, a possibility that will eventually make it
+possible to fix some longstanding races.
+
+The only semantic change here is that `repack_without_refs()` used to
+forget to release the lock in the `if (!removed)` exit path. That
+omission is now fixed.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c  |  4 ++--
- refs/packed-backend.c | 10 +++++-----
- refs/packed-backend.h |  2 +-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ refs/files-backend.c  | 47 +++++++++++++++++++++++++++++++----------------
+ refs/packed-backend.c | 32 ++++++++------------------------
+ 2 files changed, 39 insertions(+), 40 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 2810785efc..88de907148 100644
+index 93bdc8f0c8..e9b95592b6 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1096,7 +1096,7 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 	struct ref_to_prune *refs_to_prune = NULL;
- 	struct strbuf err = STRBUF_INIT;
+@@ -1149,24 +1149,16 @@ static int files_delete_refs(struct ref_store *ref_store, const char *msg,
+ 	if (!refnames->nr)
+ 		return 0;
  
--	lock_packed_refs(refs->packed_ref_store, LOCK_DIE_ON_ERROR);
-+	packed_refs_lock(refs->packed_ref_store, LOCK_DIE_ON_ERROR);
+-	result = repack_without_refs(refs->packed_ref_store, refnames, &err);
+-	if (result) {
+-		/*
+-		 * If we failed to rewrite the packed-refs file, then
+-		 * it is unsafe to try to remove loose refs, because
+-		 * doing so might expose an obsolete packed value for
+-		 * a reference that might even point at an object that
+-		 * has been garbage collected.
+-		 */
+-		if (refnames->nr == 1)
+-			error(_("could not delete reference %s: %s"),
+-			      refnames->items[0].string, err.buf);
+-		else
+-			error(_("could not delete references: %s"), err.buf);
++	if (packed_refs_lock(refs->packed_ref_store, 0, &err))
++		goto error;
  
- 	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL, 0);
- 	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
-@@ -2679,7 +2679,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+-		goto out;
++	if (repack_without_refs(refs->packed_ref_store, refnames, &err)) {
++		packed_refs_unlock(refs->packed_ref_store);
++		goto error;
+ 	}
+ 
++	packed_refs_unlock(refs->packed_ref_store);
++
+ 	for (i = 0; i < refnames->nr; i++) {
+ 		const char *refname = refnames->items[i].string;
+ 
+@@ -1174,9 +1166,24 @@ static int files_delete_refs(struct ref_store *ref_store, const char *msg,
+ 			result |= error(_("could not remove reference %s"), refname);
+ 	}
+ 
+-out:
+ 	strbuf_release(&err);
+ 	return result;
++
++error:
++	/*
++	 * If we failed to rewrite the packed-refs file, then it is
++	 * unsafe to try to remove loose refs, because doing so might
++	 * expose an obsolete packed value for a reference that might
++	 * even point at an object that has been garbage collected.
++	 */
++	if (refnames->nr == 1)
++		error(_("could not delete reference %s: %s"),
++		      refnames->items[0].string, err.buf);
++	else
++		error(_("could not delete references: %s"), err.buf);
++
++	strbuf_release(&err);
++	return -1;
+ }
+ 
+ /*
+@@ -2569,11 +2576,19 @@ static int files_transaction_finish(struct ref_store *ref_store,
  		}
  	}
  
--	if (lock_packed_refs(refs->packed_ref_store, 0)) {
-+	if (packed_refs_lock(refs->packed_ref_store, 0)) {
- 		strbuf_addf(err, "unable to lock packed-refs file: %s",
- 			    strerror(errno));
++	if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
++		ret = TRANSACTION_GENERIC_ERROR;
++		goto cleanup;
++	}
++
+ 	if (repack_without_refs(refs->packed_ref_store, &refs_to_delete, err)) {
  		ret = TRANSACTION_GENERIC_ERROR;
++		packed_refs_unlock(refs->packed_ref_store);
+ 		goto cleanup;
+ 	}
+ 
++	packed_refs_unlock(refs->packed_ref_store);
++
+ 	/* Delete the reflogs of any references that were deleted: */
+ 	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
+ 		strbuf_reset(&sb);
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 71f92ed6f0..cd214e07a1 100644
+index 5cf6b3d40e..377c775adb 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -321,7 +321,7 @@ static struct ref_dir *get_packed_refs(struct packed_ref_store *refs)
- /*
-  * Add or overwrite a reference in the in-memory packed reference
-  * cache. This may only be called while the packed-refs file is locked
-- * (see lock_packed_refs()). To actually write the packed-refs file,
-+ * (see packed_refs_lock()). To actually write the packed-refs file,
-  * call commit_packed_refs().
-  */
- void add_packed_ref(struct ref_store *ref_store,
-@@ -515,11 +515,11 @@ static int write_packed_entry(FILE *fh, const char *refname,
- 	return 0;
+@@ -669,25 +669,12 @@ int commit_packed_refs(struct ref_store *ref_store, struct strbuf *err)
+ 	return -1;
  }
  
--int lock_packed_refs(struct ref_store *ref_store, int flags)
-+int packed_refs_lock(struct ref_store *ref_store, int flags)
- {
- 	struct packed_ref_store *refs =
- 		packed_downcast(ref_store, REF_STORE_WRITE | REF_STORE_MAIN,
--				"lock_packed_refs");
-+				"packed_refs_lock");
- 	static int timeout_configured = 0;
- 	static int timeout_value = 1000;
- 	struct packed_ref_cache *packed_ref_cache;
-@@ -567,7 +567,7 @@ static const char PACKED_REFS_HEADER[] =
+-/*
+- * Rollback the lockfile for the packed-refs file, and discard the
+- * in-memory packed reference cache.  (The packed-refs file will be
+- * read anew if it is needed again after this function is called.)
+- */
+-static void rollback_packed_refs(struct packed_ref_store *refs)
+-{
+-	packed_assert_main_repository(refs, "rollback_packed_refs");
+-
+-	if (!is_lock_file_locked(&refs->lock))
+-		die("BUG: packed-refs not locked");
+-	packed_refs_unlock(&refs->base);
+-	clear_packed_ref_cache(refs);
+-}
+-
  /*
-  * Write the current version of the packed refs cache from memory to
-  * disk. The packed-refs file must already be locked for writing (see
-- * lock_packed_refs()). Return zero on success. On errors, rollback
-+ * packed_refs_lock()). Return zero on success. On errors, rollback
-  * the lockfile, write an error message to `err`, and return a nonzero
-  * value.
+  * Rewrite the packed-refs file, omitting any refs listed in
+  * 'refnames'. On error, leave packed-refs unchanged, write an error
+- * message to 'err', and return a nonzero value.
++ * message to 'err', and return a nonzero value. The packed refs lock
++ * must be held when calling this function; it will still be held when
++ * the function returns.
+  *
+  * The refs in 'refnames' needn't be sorted. `err` must not be NULL.
   */
-@@ -698,7 +698,7 @@ int repack_without_refs(struct ref_store *ref_store,
+@@ -700,11 +687,13 @@ int repack_without_refs(struct ref_store *ref_store,
+ 	struct ref_dir *packed;
+ 	struct string_list_item *refname;
+ 	int needs_repacking = 0, removed = 0;
+-	int ret;
+ 
+ 	packed_assert_main_repository(refs, "repack_without_refs");
+ 	assert(err);
+ 
++	if (!is_lock_file_locked(&refs->lock))
++		die("BUG: repack_without_refs called without holding lock");
++
+ 	/* Look for a packed ref */
+ 	for_each_string_list_item(refname, refnames) {
+ 		if (get_packed_ref(refs, refname->string)) {
+@@ -717,9 +706,6 @@ int repack_without_refs(struct ref_store *ref_store,
  	if (!needs_repacking)
  		return 0; /* no refname exists in packed refs */
  
--	if (lock_packed_refs(&refs->base, 0)) {
-+	if (packed_refs_lock(&refs->base, 0)) {
- 		unable_to_lock_message(refs->path, errno, err);
- 		return -1;
- 	}
-diff --git a/refs/packed-backend.h b/refs/packed-backend.h
-index 3d4057b65b..dbc00d3396 100644
---- a/refs/packed-backend.h
-+++ b/refs/packed-backend.h
-@@ -9,7 +9,7 @@ struct ref_store *packed_ref_store_create(const char *path,
-  * hold_lock_file_for_update(). Return 0 on success. On errors, set
-  * errno appropriately and return a nonzero value.
-  */
--int lock_packed_refs(struct ref_store *ref_store, int flags);
-+int packed_refs_lock(struct ref_store *ref_store, int flags);
+-	if (packed_refs_lock(&refs->base, 0, err))
+-		return -1;
+-
+ 	packed = get_packed_refs(refs);
  
- void add_packed_ref(struct ref_store *ref_store,
- 		    const char *refname, const struct object_id *oid);
+ 	/* Remove refnames from the cache */
+@@ -731,14 +717,12 @@ int repack_without_refs(struct ref_store *ref_store,
+ 		 * All packed entries disappeared while we were
+ 		 * acquiring the lock.
+ 		 */
+-		rollback_packed_refs(refs);
++		clear_packed_ref_cache(refs);
+ 		return 0;
+ 	}
+ 
+ 	/* Write what remains */
+-	ret = commit_packed_refs(&refs->base, err);
+-	packed_refs_unlock(ref_store);
+-	return ret;
++	return commit_packed_refs(&refs->base, err);
+ }
+ 
+ static int packed_init_db(struct ref_store *ref_store, struct strbuf *err)
 -- 
 2.11.0
 
