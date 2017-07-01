@@ -2,126 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8938320209
-	for <e@80x24.org>; Sat,  1 Jul 2017 17:33:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67F7720209
+	for <e@80x24.org>; Sat,  1 Jul 2017 17:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751892AbdGARdG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 13:33:06 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34203 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751851AbdGARdF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2017 13:33:05 -0400
-Received: by mail-pg0-f68.google.com with SMTP id j186so18674917pge.1
-        for <git@vger.kernel.org>; Sat, 01 Jul 2017 10:33:05 -0700 (PDT)
+        id S1751917AbdGARfw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 13:35:52 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35703 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751851AbdGARfv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2017 13:35:51 -0400
+Received: by mail-pf0-f195.google.com with SMTP id s66so20801919pfs.2
+        for <git@vger.kernel.org>; Sat, 01 Jul 2017 10:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pfUx4LW1eqf3m6n+8sU4zU0qGKNBsWaKQSwO4Pxgxg8=;
-        b=XQL7Y+ZiHL60JSEDtvfT0p9KhgKRs9VV/7Y1N7ukiCt3IxnIGLRVDy/RSZ0SdM/uUM
-         i47tAvMJajgMnSS+r1Cyt4tg85/ieKikfAVvsT7VoQnSNiDiyLP4Taxm8NRrP/lWAIxN
-         1mNbzbHEUaxNXTkLox9pv8Nb70heWD15Hjh+ancumqg9R9EungRuuTx/hnFYarptY4+b
-         Yr7q2NbbSYFUxcM7wB7Q3D6WbT/iRbc5xXGRfPvGA1cqbUFr+BV78o40LahbJenAGdcV
-         JNMK/pa7ND28wiUnV0DHjFwkyFvKHloDGzr79bU10A15gDuQJxkGY6cNqZ6kGPRv74fF
-         nn6Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=7wHeeUOAV79r6f0iAUvh7Go0BFPZOgo0nEsWzN68Pzs=;
+        b=DSOyAJK8rHDHmI7GKNHuEvQiV1I/uiDFHCvxBdIxovbTwnmk1CIGKBp39gDq49rvs/
+         NpNV7MlyjmFFb0+SJAdCAfY7SCg03glzeEsWxsAsH2HsDVIXCD8smAFumY8UyBOYXIns
+         Ibrnd9XAb2dBOAmPk83/P85YSV1RtA7e064qnT74zJBUyMzqD96QwdyVyxQlHwE18evG
+         qdj4iOroA/ZI/wQqTzjnHPs6V2RtN0YnXrzrDq/o6gTNHAnih7cHB8sL3bvkkl86Hwea
+         T3P7fMPOFdWZPIzgCCHdHmJ2RXzTcCBh2gQIrmTsIrnGIIB1uSUHZB8X3xqBggNqnj54
+         vlbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=pfUx4LW1eqf3m6n+8sU4zU0qGKNBsWaKQSwO4Pxgxg8=;
-        b=tEPgOBmlv4Zm2EIUa9KXVIgITHINTsXmNmzac5KMM8gNU5NMWCZq+qAJt6ZWohKvmE
-         0UEq1XhimNhAxxDXUFa8x3Dj+OofmGWLNL0rjh3HwkVSSXYAfYSZtNTgPST/1ByR3KN2
-         /Nf0gFdefKQnqf9uMaepAmbXtvUumV+dfJ74m3r7osYgHoKNYoyheVaggTUoTAM99S8a
-         01vvVOogoQyBQtpXZb8671lHr61XIGELPv2j/yXOySEEmZrR6ufSa+op+93EZhDi7xL3
-         WQvHJcGNbefhMYtHwhgUSX3CYnswdyJqpJSdWmqcQWKLI1ami6O/6YfH2Cfxzj4rG9oL
-         vD3w==
-X-Gm-Message-State: AIVw112g5TekxOvE69hERhJW6GlNGaxdnmReNas1iiRZouIBxDEHfn0R
-        ymqdeAm0/rTIqg==
-X-Received: by 10.84.129.71 with SMTP id 65mr1660982plb.183.1498930385015;
-        Sat, 01 Jul 2017 10:33:05 -0700 (PDT)
-Received: from localhost.localdomain ([157.50.10.225])
-        by smtp.gmail.com with ESMTPSA id e189sm24056963pfe.100.2017.07.01.10.33.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 01 Jul 2017 10:33:04 -0700 (PDT)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org
-Subject: [PATCH/RFC] hooks: add signature using "interpret-trailers"
-Date:   Sat,  1 Jul 2017 23:02:57 +0530
-Message-Id: <20170701173257.11272-1-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <1498925790.4321.7.camel@gmail.com>
-References: <1498925790.4321.7.camel@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=7wHeeUOAV79r6f0iAUvh7Go0BFPZOgo0nEsWzN68Pzs=;
+        b=GfwQH2IxxIsuvkwF3VQKHjjqpdsbS2QEe+T2e8dJIuRlJzL/oHSuNREibfrqw5d2me
+         r+LiG//WE+m9CbnP6G57VAPgHcdARB1FzgeijN1a6DTHAC8LObk+X43E0FDixxrgFwae
+         bOI0ayjJjp0HE8HEWeV0Snlp4gb27i/c3Btym3RCbz6Qozl/oXy+bGgr0vAvPR2CvcKj
+         /+tlkS/Iea1Cr5siuMBm/r4mlW7E3EwET/r+LwTx280Z1QP8tCC9SoccHX5xvY92v7AE
+         OLbqqQgh4uUWDg+/kJBmhfidiYuiy9gmnhd8dJUPnLPtou4p6cA9pDkZoODeGncAdToQ
+         Fd7w==
+X-Gm-Message-State: AIVw113nCJHsyaFU/Txhbs1rf4Nt52ktVT4cHykJAEPMNcTnAEZyOFW7
+        WVDHC79ZBVm0SQ==
+X-Received: by 10.84.224.133 with SMTP id s5mr1684940plj.93.1498930550961;
+        Sat, 01 Jul 2017 10:35:50 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:fd45:ceab:278e:5d13])
+        by smtp.gmail.com with ESMTPSA id v8sm23059413pfa.10.2017.07.01.10.35.50
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sat, 01 Jul 2017 10:35:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     s_shestakov@playrix.com, kostix+git@007spb.ru,
+        Matthieu.Moy@grenoble-inp.fr, tboegi@web.de, git@vger.kernel.org
+Subject: Re: [PATCH] status: suppress additional warning output in plumbing modes
+References: <70c9a162-ac2f-c347-d13b-f24ac24d1133@web.de>
+        <20170630162826.27711-1-sbeller@google.com>
+Date:   Sat, 01 Jul 2017 10:35:49 -0700
+In-Reply-To: <20170630162826.27711-1-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 30 Jun 2017 09:28:26 -0700")
+Message-ID: <xmqqk23snjpm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The sample hook to prepare the commit message before
-a commit allows users to opt-in to add the signature
-to the commit message. The signature is added at a place
-that isn't consistent with the "-s" option of "git commit".
-Further, it could go out of view in certain cases.
+Stefan Beller <sbeller@google.com> writes:
 
-Add the signature in a way similar to "-s" option of
-"git commit" using git's interpret-trailers command.
+> When status is called with '--porcelain' (as implied by '-z'), we promise
+> to output only messages as described in the man page.
+>
+> Suppress CRLF warnings.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>
+> Maybe something like this?
 
-It works well in all cases except when the user invokes
-"git commit" without any arguments. In that case manually
-add a new line after the first line to ensure it's consistent
-with the output of "-s" option.
+This looks to me like a stimulus having enough time to go to the
+spinal cord to induce a knee-jerk reaction, without giving a chance
+to the brain to think things through.
 
-While at it, name the input parameters to improve readability
-of script.
+Surely the reported symptom may have only been about CRLF, but who
+says that would be the only kind of warning that would be seen
+during "status --porcelain" codepath?
 
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- I've tried the various commands that I could think of and it 
- seems to work well. I guess it's safe to use.
+I tend to agree with Ævar's "output for the script can be read from
+our standard output" should probably be our first response.
 
- templates/hooks--prepare-commit-msg.sample | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+The patch _is_ a good start to document that we may want to do
+something differently under _PORCELAIN output modes and one location
+in the code that may be a good place to make that decision, but if
+we are to squelch the warnings, we should make sure we do not give
+any warning, not limited to squelching the safe-crlf warning, to the
+standard error, but still diagnose errors and show error messages,
+or something like that, I would think.
 
-diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-index 86b8f227e..c44a0a056 100755
---- a/templates/hooks--prepare-commit-msg.sample
-+++ b/templates/hooks--prepare-commit-msg.sample
-@@ -20,17 +20,27 @@
- # The third example adds a Signed-off-by line to the message, that can
- # still be edited.  This is rarely a good idea.
- 
--case "$2,$3" in
-+COMMIT_MSG_FILE=$1
-+COMMIT_SOURCE=$2
-+SHA1=$3
-+NEW_LINE='\
-+'
-+
-+case "$COMMIT_SOURCE,$SHA1" in
-   merge,)
--    @PERL_PATH@ -i.bak -ne 's/^/# /, s/^# #/#/ if /^Conflicts/ .. /#/; print' "$1" ;;
-+    @PERL_PATH@ -i.bak -ne 's/^/# /, s/^# #/#/ if /^Conflicts/ .. /#/; print' "$COMMIT_MSG_FILE" ;;
- 
- # ,|template,)
- #   @PERL_PATH@ -i.bak -pe '
- #      print "\n" . `git diff --cached --name-status -r`
--#	 if /^#/ && $first++ == 0' "$1" ;;
-+#	 if /^#/ && $first++ == 0' "$COMMIT_MSG_FILE" ;;
- 
-   *) ;;
- esac
- 
- # SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
--# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
-+# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
-+# if [ -z "$COMMIT_SOURCE" ]
-+# then
-+#  sed -i "1i$NEW_LINE" "$COMMIT_MSG_FILE"
-+# fi
--- 
-2.11.0
-
+>
+>  builtin/commit.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 00a01f07c3..3705d5ec6f 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1126,6 +1126,11 @@ static void finalize_deferred_config(struct wt_status *s)
+>  			die(_("--long and -z are incompatible"));
+>  	}
+>  
+> +	/* suppress all additional output in porcelain mode */
+> +	if (status_format == STATUS_FORMAT_PORCELAIN ||
+> +	    status_format == STATUS_FORMAT_PORCELAIN_V2)
+> +		safe_crlf = SAFE_CRLF_FALSE;
+> +
+>  	if (use_deferred_config && status_format == STATUS_FORMAT_UNSPECIFIED)
+>  		status_format = status_deferred_config.status_format;
+>  	if (status_format == STATUS_FORMAT_UNSPECIFIED)
