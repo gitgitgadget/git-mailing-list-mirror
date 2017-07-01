@@ -2,81 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCD3D202A7
-	for <e@80x24.org>; Sat,  1 Jul 2017 09:10:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28D0D202A7
+	for <e@80x24.org>; Sat,  1 Jul 2017 11:45:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751899AbdGAJKf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Jul 2017 05:10:35 -0400
-Received: from mout.web.de ([212.227.15.3]:50120 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751400AbdGAJKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Jul 2017 05:10:34 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MfHUw-1d6q1m45xS-00Omdt; Sat, 01
- Jul 2017 11:10:29 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] apply: use starts_with() in gitdiff_verify_name()
-Message-ID: <185fd8c0-e0bf-2522-77e3-3f9fce8a5d44@web.de>
-Date:   Sat, 1 Jul 2017 11:10:07 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751914AbdGALpI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Jul 2017 07:45:08 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:36168 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751683AbdGALpH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Jul 2017 07:45:07 -0400
+Received: by mail-wm0-f50.google.com with SMTP id 62so130470656wmw.1
+        for <git@vger.kernel.org>; Sat, 01 Jul 2017 04:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=wsmyYOgS9rXLurgIBj/6mYOx2rWZBVKQ765dHcfkXic=;
+        b=B01jn6gMJsMZ7PiEC0PkV/u7D9wT6sNxaZ38wJf6Nzk5MxnRenOqnmMUS3+FGwhBn5
+         GaG6bg4xORHbIZMVfXF3cBqo0LUtxyppNNt5lW4UNUGcJIyg3Tnmjq7K0kcYFe9dws7R
+         vxz4xEiJ3JttKcgQrEm6cjoHyO5ry0L+HE1IFiKL14twb9kZd31X7flitffA8ujtHrHh
+         ZEGPRC6HoHa5/6BtAFR1P1b5eRUQAjdsj8wLSZt4mYJj+MVBTvPM2BUSPN3LDPhToZpz
+         QYWzyfvfxd/4SBNfzEMctchBmruN+yWZF9gMwJUlyIWdFLP0uCl6QWN54Luol4OQLh0s
+         3WRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=wsmyYOgS9rXLurgIBj/6mYOx2rWZBVKQ765dHcfkXic=;
+        b=M+WH/1DjhvWJr+FH47nui6y2teIuCI0KbI3xYHAqtlXD/dyDWzzpatHLUBYpn1myW/
+         kk71Y1JVlSB0faLazKMZKSUYcm/d7QnHMEZ/IEUw765pMNnPsCgHmyu7IhGgsawGz2Vu
+         V54UUt+IvdIDv2LjMHTiPEDzl4hKloWNRAVnZ6tVlQydGW021gAd7G1pvX2z3Gl+xiYO
+         bFS9ggv4W4V2EUtjutFK3sQcYy82XeE4osi9CeNWNKIjth4GfLh+4WiHaRu918bnJR4E
+         XxC8X1NN3VUEArVMLgT953Cj9JnIP6VnP0u/lzT9lBuwBTZrXWaMwtNp2gik37qCRMdi
+         kCnQ==
+X-Gm-Message-State: AKS2vOyrbdgI6T1Cvekn6N0pnmL123SG23fV31a8sA3Sn2BPgLBfSinZ
+        6wUepeTHiuV8Hw==
+X-Received: by 10.28.91.213 with SMTP id p204mr17551886wmb.97.1498909506369;
+        Sat, 01 Jul 2017 04:45:06 -0700 (PDT)
+Received: from snth (g74110.upc-g.chello.nl. [80.57.74.110])
+        by smtp.gmail.com with ESMTPSA id x21sm9584311wme.24.2017.07.01.04.45.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 01 Jul 2017 04:45:03 -0700 (PDT)
+Received: from avar by snth with local (Exim 4.84_2)
+        (envelope-from <avarab@gmail.com>)
+        id 1dRGpb-0004Oq-M4; Sat, 01 Jul 2017 13:44:55 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] commit-template: distinguish status information unconditionally
+References: <1498792731.2063.5.camel@gmail.com> <20170630121221.3327-1-kaarticsivaraam91196@gmail.com> <20170630121221.3327-2-kaarticsivaraam91196@gmail.com> <xmqqa84pttmh.fsf@gitster.mtv.corp.google.com> <1498874344.2245.0.camel@gmail.com>
+User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <1498874344.2245.0.camel@gmail.com>
+Date:   Sat, 01 Jul 2017 13:44:55 +0200
+Message-ID: <87mv8oe5zc.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:Uqx8rPIfwxcPJGTA3yQ4iMZV2TV0QwhRG3YjYOhh9JQGLXE2OgH
- soQxbU4z1zttNmayO9F3f3qer2mp6+MJaDE7JoWYAGDSCGa1vqNrA5M9kIQEZlSSyLmOm90
- zgO+jKvV5rf6XKvd6/o8k+NSlvFVDR+mgkUHZIy5VbwlqGF+nuzUaoK86/ViN+eVGw6FlgP
- oh1zuSeTkX01tsJd+Z8Dg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9sRLXvPZ7II=:hGdxFAPqnF37BiGLTU0qlJ
- +VqMTbne1QKaV7/W4P4u+YMHXJso1gRUySzruhcW80WWkq0ofhYsN/ivrj+1AHxB7ftiedJhf
- pfi2bYF3d3LrOcyYCXcHZmlK6wTpw2m80cYRIA7y0ZVZRG4MFUPFhxcJPhM4xwB5IXAtnF0+1
- FCctyvsEDaqOSf8wKLIZW+PrHwcBmt3VZc6DjhjlWKw9FeD/BgjfigxyzeDxk1djyjQzxlko4
- cB2A5NKshvJWBWjBzZYAlTCiUTEzc3LeXv2+O+1GKVvbuTz7OCngm0ZKTArWbYvIi4iYGS6C1
- H7KzRxHtD4RLl3Zlxp+yFQDnqOpDVIcOC4xsBzMGLVOr6+HNAKhj4gq8c0VDVytjwH2fXdZsb
- NvaumSAgndAUCAjAYeebKe0Cvwz0ei5oLzco9nsrqVGBEXpDFvOk0ZHTjCOUfySgyqsGhbHog
- R2sI7gyL+5LNYsXLq9FyznScosmKp4ztcwNxU4Uoou2PrM7Fp/+TxIspTnzRdlCScHEHoB5OG
- BusHuJHFfezdSRQnT5Ff5lB6da+jaz/uEBSbI6EMueGSrb5SepZ5PBW2RvAFypc2kwcn8GM+q
- ytb0rzbkQRi1tm9xJqrjgaHsc1zi4rM/HvRnuDMcSXxy5Tui0qxaX8OxXP2dyH0pAoSH8AWcJ
- jNJnftEmZOIoMZJHHw6ITKujKyjZe6dVjLwkq5eICMKtlqU7nIc6L1S56Fxx+wOP84ReFtuLe
- s4nk46t2xeNVw7Lqx/37lRikeV+si9VJm6EdvwFF2Xa6dKIET6gSY4AShVpy5MYrZh9FMkHtv
- thvZAsw
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Avoid running over the end of line -- a C string whose length is not
-known to this function -- by using starts_with() instead of memcmp(3)
-for checking if it starts with "/dev/null".  Also simply include the
-newline in the string constant to compare against.  Drop a comment that
-just states the obvious.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- apply.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+On Sat, Jul 01 2017, Kaartic Sivaraam jotted:
 
-diff --git a/apply.c b/apply.c
-index c442b89328..946be4d2f5 100644
---- a/apply.c
-+++ b/apply.c
-@@ -976,8 +976,7 @@ static int gitdiff_verify_name(struct apply_state *state,
- 		}
- 		free(another);
- 	} else {
--		/* expect "/dev/null" */
--		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
-+		if (!starts_with(line, "/dev/null\n"))
- 			return error(_("git apply: bad git-diff - expected /dev/null on line %d"), state->linenr);
- 	}
- 
--- 
-2.13.2
+> On Fri, 2017-06-30 at 07:52 -0700, Junio C Hamano wrote:
+>> Thanks, both looks good.Will queue.
+> You're welcome :)
+
+Just as someone reading this from the sidelines, very nice to have
+someone working this part of the UI, but it would be much easier to
+review if you included before/after examples of changes, e.g. (for this
+hypothetical change):
+
+    
+    Before we'd say:
+    
+        # Please enter the commit message for your changes. Lines starting
+        # with '#' will be ignored, and an empty message aborts the commit.
+        #
+        # Date:      <date>
+        #
+        # On branch master
+        # Your branch is up-to-date with 'origin/master'.
+    
+    Now:
+    
+        # Please enter the commit message for your changes. Lines starting
+        # with '#' will be ignored, and an empty message aborts the commit.
+        #
+        # Date:      <date>
+        #
+        # On branch master
+        # Your current branch is up-to-date with 'origin/master'.
+    
+    And as a word-diff:
+    
+        [...]
+        # Your {+current+} branch is up-to-date with 'origin/master'.
+
+Or something like that, much easier to read something like that than
+read the code and mentally glue together what it's going to change.
