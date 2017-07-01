@@ -2,101 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3497F201A0
-	for <e@80x24.org>; Sat,  1 Jul 2017 00:29:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A76A201A0
+	for <e@80x24.org>; Sat,  1 Jul 2017 01:59:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752166AbdGAA3J (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Jun 2017 20:29:09 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34254 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751998AbdGAA2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Jun 2017 20:28:50 -0400
-Received: by mail-pg0-f50.google.com with SMTP id t186so70726647pgb.1
-        for <git@vger.kernel.org>; Fri, 30 Jun 2017 17:28:50 -0700 (PDT)
+        id S1751680AbdGAB7H (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Jun 2017 21:59:07 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36228 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751370AbdGAB7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Jun 2017 21:59:06 -0400
+Received: by mail-pf0-f169.google.com with SMTP id q86so74806042pfl.3
+        for <git@vger.kernel.org>; Fri, 30 Jun 2017 18:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LV9mcEBrqMpqM+gZHZbJ57mDZSLRCRZKfNQ0khXuvrs=;
-        b=uH/8iMKMyEvZnZeolIFCyqdGwn7QDHVYJ7pu5Voe/cMDYFAq5wcSs+YcHp6FivkbKg
-         l6zC8Qc/aFYh2CSAOkyGMGtQ/3bQz3e06Z9qhENE87j74ZzaAuChqVYZ+GyA99Bm3W/g
-         lgYJJ1ciR+Cas3vmr0QR8bXEoSmhlmEe18itujugnhHTNVPyL4o75lxiHmGwkARt0gPt
-         y6CR4ejE7CqKkj/1/hAHPrjTL7pYsUO6P058CyVvOpSxNkzjPX3vnQT1lHDU7T9AFTB1
-         tDPKQQbPizUtAmJaUHwqi2UXZxIhVtgIMjnymaH6ZCsQLV4zD1l3Q/rt7M2L+IUT9J7k
-         Al3A==
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=9LZiWf8+nMeRInyOQS4AqXhLFjB149nvvoLwU9/1gjk=;
+        b=UpCyX9PL59EmRVV+bElKjlmrwVioMG4cLAWoP2i+eiy8bNh4EqQX4O3weN1qm4yLTN
+         xQAnj6Zs5qFzbYUSp8G25EH5+nhhdc58SHWGAghM3r4S4TYSno2/cmdbdbmUKOwvSmOd
+         lYwvZZeRUsgTa1n4BDQCdniRvn+S6X7bqcq+KAi6f+JszfvbxRz6RJsgisYqd1Tdg36Y
+         VXAAGq079x5Vw37Ymi6XI7CIMrRKaA6h3tRZuB+998hhJuZUaRmsOZCMtYMGiD/pLgUQ
+         zQD2PB2eXtvhaGHZ2H3/UpXQ/TzdtGkB/+wBE3Hd58OsCI74NSD8BWhlJF7mrV3uog0h
+         uaOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=LV9mcEBrqMpqM+gZHZbJ57mDZSLRCRZKfNQ0khXuvrs=;
-        b=ulTboND+CFW8MnSrDA/Aq5HoWl2J1+1fEAoWAnCYxGRB7YwxbEhHyFLOJQGoNPTrnC
-         oNcvDOrRKtqN9fQ9iApqY2kZxupuqKNXSq8voQr+CRcvsqruBI6O3p0rngAk4K7t+Jhu
-         eG/1vYgAv7wCzAnsIz/XK5aRIvyY5DygvBIoHxAB7/HYX5owZdY1oN7FIYdG5qiqj74F
-         eAcj9JEs76A4vVyqNAXtaDrWpo4mnPAxU/V6IB3vViy89J4SOVJnPWxfN2IND12jiMVP
-         y/pES/bGhv/13/j/rQ1n/WOCGwuQ35Wi45VOdzux/KlF1S/5LBf43qJdaFiGCnwViPGg
-         eIXw==
-X-Gm-Message-State: AKS2vOyzWJuDe12rp++YQc+vNi1qDegWOU0fG/SZPtv8sbcmO2MoXGlu
-        TAeK6/Eq+kpemtXt+g2jQA==
-X-Received: by 10.84.236.1 with SMTP id q1mr27765964plk.187.1498868930077;
-        Fri, 30 Jun 2017 17:28:50 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:cc8b:7c8c:8e14:f9b5])
-        by smtp.gmail.com with ESMTPSA id p76sm18220667pfa.53.2017.06.30.17.28.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 30 Jun 2017 17:28:49 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 07/10] remote.c: drop hashmap_cmp_fn cast
-Date:   Fri, 30 Jun 2017 17:28:35 -0700
-Message-Id: <20170701002838.22785-8-sbeller@google.com>
-X-Mailer: git-send-email 2.13.0.31.g9b732c453e
-In-Reply-To: <20170701002838.22785-1-sbeller@google.com>
-References: <20170701002838.22785-1-sbeller@google.com>
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=9LZiWf8+nMeRInyOQS4AqXhLFjB149nvvoLwU9/1gjk=;
+        b=ac+F9aHR+iml0U5uHSq+DhWeR5iqcOijJ6tUnPR9l3ealZzlpddYgPGxkwpXGYSQfl
+         gAqa6dI/Mea2++Cf6E702Lj0ZYBPu5QyF3HeBf31pX/0P4FSt2gt30VGqN5ag/rZxWHj
+         16T3xtdk8L8piil8jnQG8SmLXu3bDTNuxK2YQyV7rlmKyXnEcenxE7D5AK4log19uNRV
+         3d1zyLlsRfx5ki87eDbkOWYs9dMABa1xZHrzd2RDVn/TWnSfznNKuQ2jWlirF8/T6d3w
+         AHnsoMQK75UWqSEppwEaGeYe1Dckl1UCvfun8NqvZmBy4Pf0q8WRhtDYDiOAlkAKHPso
+         X21w==
+X-Gm-Message-State: AKS2vOzeNHO6H4C4ENi/UXmkWE3mNX0vze0U2T/oq5s1fWG9mCKiWJHc
+        B5BjhzKOCg5qyA==
+X-Received: by 10.98.59.152 with SMTP id w24mr25360998pfj.107.1498874345801;
+        Fri, 30 Jun 2017 18:59:05 -0700 (PDT)
+Received: from unique-pc ([218.248.21.162])
+        by smtp.googlemail.com with ESMTPSA id 73sm6042240pfp.103.2017.06.30.18.59.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 30 Jun 2017 18:59:05 -0700 (PDT)
+Message-ID: <1498874344.2245.0.camel@gmail.com>
+Subject: Re: [PATCH 2/2] commit-template: distinguish status information
+ unconditionally
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Date:   Sat, 01 Jul 2017 07:29:04 +0530
+In-Reply-To: <xmqqa84pttmh.fsf@gitster.mtv.corp.google.com>
+References: <1498792731.2063.5.camel@gmail.com>
+         <20170630121221.3327-1-kaarticsivaraam91196@gmail.com>
+         <20170630121221.3327-2-kaarticsivaraam91196@gmail.com>
+         <xmqqa84pttmh.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- remote.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/remote.c b/remote.c
-index 60d0043921..3efa358558 100644
---- a/remote.c
-+++ b/remote.c
-@@ -134,10 +134,14 @@ struct remotes_hash_key {
- };
- 
- static int remotes_hash_cmp(const void *unused_cmp_data,
--			    const struct remote *a,
--			    const struct remote *b,
--			    const struct remotes_hash_key *key)
-+			    const void *entry,
-+			    const void *entry_or_key,
-+			    const void *keydata)
- {
-+	const struct remote *a = entry;
-+	const struct remote *b = entry_or_key;
-+	const struct remotes_hash_key *key = keydata;
-+
- 	if (key)
- 		return strncmp(a->name, key->str, key->len) || a->name[key->len];
- 	else
-@@ -147,7 +151,7 @@ static int remotes_hash_cmp(const void *unused_cmp_data,
- static inline void init_remotes_hash(void)
- {
- 	if (!remotes_hash.cmpfn)
--		hashmap_init(&remotes_hash, (hashmap_cmp_fn)remotes_hash_cmp, NULL, 0);
-+		hashmap_init(&remotes_hash, remotes_hash_cmp, NULL, 0);
- }
- 
- static struct remote *make_remote(const char *name, int len)
--- 
-2.13.0.31.g9b732c453e
-
+On Fri, 2017-06-30 at 07:52 -0700, Junio C Hamano wrote:
+> Thanks, both looks good.  Will queue.
+You're welcome :)
