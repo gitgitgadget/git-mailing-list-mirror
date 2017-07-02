@@ -2,110 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2FAD20209
-	for <e@80x24.org>; Sun,  2 Jul 2017 04:25:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6D95201A0
+	for <e@80x24.org>; Sun,  2 Jul 2017 11:19:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750732AbdGBEZe (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Jul 2017 00:25:34 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34605 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750714AbdGBEZe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Jul 2017 00:25:34 -0400
-Received: by mail-io0-f181.google.com with SMTP id r36so41043659ioi.1
-        for <git@vger.kernel.org>; Sat, 01 Jul 2017 21:25:33 -0700 (PDT)
+        id S1752029AbdGBLTH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Jul 2017 07:19:07 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35367 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751973AbdGBLTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Jul 2017 07:19:06 -0400
+Received: by mail-pg0-f65.google.com with SMTP id d193so1826659pgc.2
+        for <git@vger.kernel.org>; Sun, 02 Jul 2017 04:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xG5tT/8Kg0+mOnee1cTDBeVyVA58Ma+2M2J38cg+bMc=;
-        b=af5FV4fxnSpazOgGKTaJQL/Ygch+KR4cFV/CUHoOincssXjCRjS7QK4Wtw68o1L9k+
-         hAmQIls9MiH1FSnvSSMRI5kssQOht9BEjvgczubNmBUautS3QZMRbO5mFOXLjjw3jL8q
-         /OCMwLr+KVhBRBs0YMoCWs0GJZ/TxhBcv9r4H9If++DdUtIE2X0UhCPEiUfdpBckRUZ3
-         ACgIiAnIKuRnMrsiRyYf5tHqEmvrnWxa0fZZo+b/dCz0TJgKOUCLbo+ck4t/+Kt0pcoF
-         cKlbvawv3dV2eh7iqYw/ctpJS+k9e0y2oTZaBTcD2I0lSaZMtaSnJgRUIcNckMACJUpF
-         wfZQ==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=rfHZfW1YOWRWrpMHY67xjaCD+n7QMaTFl7AmOZJXwVs=;
+        b=YGJSBIEO3Goifw2U0POGR7UGvM7THGeLZhTqK0B/tHPYAD0M2Wa1Azz2mkU6jptTIQ
+         sn9HWmrZJ+H7avRMsAF89wzO+dIO1pyvdoEa5WIkI+d276QpzSqr09LgD6rnt0YLQihp
+         lA5+VjiKQ7wMJiIUIZ4TEFwHHrk/ufOImDuiTms4uZWYMuJSTDfyLmF7qhwsmv6r50O+
+         PpmemPko3jKAx74oQFCiZTdf8kz6Xt0eY2QnEvgt/k3yz8q6iCVs0KBimBAH+z4zud4Q
+         7w9x9YFB8zdCWBJdmKYPtUkIpMM0HtAQ7b3b6yXk6X+mMJQAOMpPrtOjE4E4oDPyLqnX
+         zj1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xG5tT/8Kg0+mOnee1cTDBeVyVA58Ma+2M2J38cg+bMc=;
-        b=jIjQpc2x4chgVQ8aQuyunQGUfofk9pzqCfRYN2tUQMzpLwMjuzslp0yOdSzU1lKtme
-         uB23GEogjGIcRKbBg8+Q3+uwnBiym2F8Dl1JUQ3ADd2Y5++S74dkbzNC5Jn0XmdB7dnM
-         qFQTQATfKoF2YRg52xFzvev6zzp/6w/J4TVPug7HF/4xx+KunhklaRGDLSGJKW3uJVQg
-         ESfiKgPsadQ3peky3fPG3ziwXI0JXHUYU9Ei1VnIpmlXiDCnMuvHzya0pnJVetNWr4Q6
-         rLTGar9+O7KjXnhzcYyAOog8sWN9ofsXZ1lB7ekI4vamWyinMyLqPye9l3WR5pDo9Prp
-         TpSg==
-X-Gm-Message-State: AKS2vOzSGphPdGyXoDWiSjeETkOJb6cjggypLAsui73ZvZDhVgfWHclX
-        RhZ+VDqQtiumRwiuaDwc418PP2soVw==
-X-Received: by 10.107.41.4 with SMTP id p4mr27744673iop.126.1498969533101;
- Sat, 01 Jul 2017 21:25:33 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.40.70 with HTTP; Sat, 1 Jul 2017 21:25:32 -0700 (PDT)
-In-Reply-To: <xmqqtw2vnbho.fsf@gitster.mtv.corp.google.com>
-References: <20170620075523.26961-1-chriscool@tuxfamily.org>
- <4be750af-b093-6644-7f0e-82983327766a@gmail.com> <CAP8UFD2hghBePr-WVLiA6P0rS5=JPLmsxqJ_6rEWrqG3VEd7Dg@mail.gmail.com>
- <xmqqtw2vnbho.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 2 Jul 2017 06:25:32 +0200
-Message-ID: <CAP8UFD3YPXRDc8ThSuTWjKDQ2i+zqNrhBi6JfEuTPXnNA6LUiw@mail.gmail.com>
-Subject: Re: [RFC/PATCH v4 00/49] Add initial experimental external ODB support
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=rfHZfW1YOWRWrpMHY67xjaCD+n7QMaTFl7AmOZJXwVs=;
+        b=JB9Wg88E6RFc73pcOFY2Ru2x4ey8XBYoQCeYccGCFRG1UFMnFS2Vqa++XdFWKkZAC9
+         bRbGGfEJkoOPxEO59CnZa2xUOqkVZa49+fROcvTiLYHim2Em9tqabf2V9wZkuuLPEZom
+         8OMkfsal8RSay6YaEBh3L8RQggtE547TOmvfrV+qn+kae8fqZAySI975NmAXX89xF2Ef
+         OHDQ9YI8l5/1z6TgwyjsYdJITcXLg6hCjdKQ3hliFBdk9tQjG9VwAEJv4NFf40IlYg3F
+         mEbhWGX6COB6wHrbiBq3OVRuhbAM+sNQpoLzEG5ryE3w3O8grOkvT1QS3fgL6zvYIEyK
+         X3RQ==
+X-Gm-Message-State: AIVw111InAT1LMHmTtq1qL2bq9nYpaoChUaXe9BkZ7mwbx1OIsBvUFn0
+        yx+DN8hFcy/SYA==
+X-Received: by 10.84.141.3 with SMTP id 3mr5011902plu.227.1498994345490;
+        Sun, 02 Jul 2017 04:19:05 -0700 (PDT)
+Received: from unique-pc ([218.248.21.162])
+        by smtp.googlemail.com with ESMTPSA id u9sm30801841pfg.127.2017.07.02.04.19.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 02 Jul 2017 04:19:05 -0700 (PDT)
+Message-ID: <1498994345.1667.5.camel@gmail.com>
+Subject: Re: [PATCH] hooks: add signature to the top of the commit message
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <peartben@gmail.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 02 Jul 2017 16:49:05 +0530
+In-Reply-To: <xmqqy3s7nbkm.fsf@gitster.mtv.corp.google.com>
+References: <20170630154306.26993-1-kaarticsivaraam91196@gmail.com>
+         <xmqq1sq1togq.fsf@gitster.mtv.corp.google.com>
+         <1498918546.4321.1.camel@gmail.com>
+         <xmqqfuegnjnt.fsf@gitster.mtv.corp.google.com>
+         <1498935127.11617.1.camel@gmail.com>
+         <xmqqy3s7nbkm.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 1, 2017 at 10:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->>> I think it would be good to ensure the
->>> interface is robust and performant enough to actually replace the current
->>> object store interface (even if we don't actually do that just yet).
->>
->> I agree that it should be robust and performant, but I don't think it
->> needs to be as performant in all cases as the current object store
->> right now.
->
-> That sounds like starting from a defeatest position.  Is there a
-> reason why you think using an external interface could never perform
-> well enough to be usable in everyday work?
+On Sat, 2017-07-01 at 13:31 -0700, Junio C Hamano wrote:
+> That sounds like a sample that is there not because it would be
+> useful, but because we couldn't think of any useful example.
+> 
+> IOW, I view it just as useful as a sample that does
+> 
+> 	#!/bin/sh
+> 	echo "# useless cruft" >>"$1"
+> 
+> whose sole value is to demonstrate that you could affect what you
+> see in the editor by modifying "$1".
+I thought it would be useful as it could serve as a simple example
+about what could be done using hooks and further would help save some
+vertical spacing for users who are acquainted with that message and
+wouldn't want to see it anymore.
 
-Perhaps in the future we will be able to make it as performant as, or
-perhaps even more performant, than the current object store, but in
-the current implementation the following issues mean that it will be
-less performant:
+Sending a typical patch as a follow-up.
 
-- The external object stores are searched for an object after the
-object has not been found in the current object store. This means that
-searching for an object will be slower if the object is in an external
-object store. To overcome this the "have" information (when the
-external helper implements it) could be merged with information about
-what objects are in the current object store, for example in a big
-table or bitmap, so that only one lookup in this table or bitmap would
-be needed to know if an object is available and in which object store
-it is. But I really don't want to get into this right now.
+Apart from that I would like to share a patch of my attempt to give
+"notes" about a commit while writing the commit message itself. It was
+an attempt to combine three hooks at once to achieve the outcome. I
+just wanted to share it so that it might be of use to someone.
 
-- When an external odb helper retrieves an object and passes it to
-Git, Git (or the helper itself in "fault in" mode) then stores the
-object in the current object store. This is because we assume that it
-will be faster to retrieve it again if it is cached in the current
-object store. There could be a capability that asks Git to not cache
-the objects that are retrieved from the external odb, but again I
-don't think it is necessary at all to implement this right now.
-
-I still think though that in some cases, like when the external odb is
-used to implement a bundle clone, using the external odb mechanism can
-already be more performant.
+-- 
+Kaartic
