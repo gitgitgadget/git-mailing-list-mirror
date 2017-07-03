@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AD7F201A0
-	for <e@80x24.org>; Mon,  3 Jul 2017 18:56:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EEA5201A0
+	for <e@80x24.org>; Mon,  3 Jul 2017 18:56:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752114AbdGCS4H (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jul 2017 14:56:07 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:53000 "EHLO
+        id S1754001AbdGCS4G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jul 2017 14:56:06 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:53012 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753469AbdGCSzy (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Jul 2017 14:55:54 -0400
+        by vger.kernel.org with ESMTP id S1752378AbdGCSzz (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Jul 2017 14:55:55 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 30E4D280B5;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 70BDA280B7;
         Mon,  3 Jul 2017 18:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1499108148;
-        bh=q5F9K/PNZsfHoiJK/GTJv+aFHUtmdLbvb7jS25ndNyo=;
+        bh=QRUIsMZjOxNLcaLscdqwh7hw5ELC7z7vQ+gs7+90ZHo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Tm/PEhyybYu2qLnXTbN4xbxyN3wRg3a6NNkFNw0+46StEtgikwQitjcBRPZ9wofms
-         4hl7076duU4dIGPxlPX1iLH/Y3Q2TezWeG+0o54SXnVEXjDAKmrzOOiwWU6Wi8dmuA
-         pW+zqJNt16WKXHL/JLmFpL/+mJIC2VzQeqgZwy/JSjX9s7KxDEdfTWrRdEvv8XDHGe
-         0iBz23DyZu3NzblnbHQTGCpPMprnI8UD93kyMSrP1DWd893yDp88aRKXNm5rn6DZ7Y
-         VK7nxZkvT2ZHL43rTjvttMmJe+3dB88Tik1rlX3LJHoVawdyrdkv7E9/cO042lmThW
-         5pOckEh/YbvKkPJJekCJeLAfatq6cVWyxDqcklK3II92ohr7f/S59sbtT5NuY1kJai
-         C/gDukmNuMAUhNS8WwjJ8Tc0a0IV+GU6FQrH9+RV8zXghINRDYo18ePF4AYfLaMRuR
-         ne8Wlt+d2DNj1LJqIVp7eMz5lH1GA4RQuN3uvHPbt/TjzrPG1y1
+        b=OtvXQ16mE6W8FL/mnc9KufKPHfMNgG7blmt2G0LzNoDwPpKB6o9YpTnAbCi8NV8p1
+         tT7rSHRvdwJNVtjsXQ9kU1frV+QlTHgzHNF9Y7nXGXzokgwLdF0U3xhZ9V0/8qwCmx
+         w9C6JF4q0sHCOKJCxpFGUT0oNvpRFykSBZCDF9E9QbntJiMgnIixSynxpZi/5qF0nP
+         uE719mS6qolmndY+N8c6LSjWAUm6HZq4xREbCLs9MZe+j9peNnXgzA0/zVAaKw6JDE
+         vnEP2mVvCXtlQ2BQY8VlQc9Tk711uVVjlFFuLieA2gXo3BQn0ZkMMsXqaAOBRFhwwa
+         Sqb4F29EoT/GNjiAj3dIhfR3se4n7yJ1FlazSONzmHFggCmVKA/+t9q0SB83x7wsGd
+         wvkXCnvnfSNYVj/W3J61PLApQgm8ec1cIUrUcPBPByXkxUDdxsaPipc6JfDjg5yN2R
+         L15pDY7Dev7p0uMhycfRK9BXw098lyb6leK5xJvvLPeOUrA90vM
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
         Stefan Beller <stefanbeller@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 08/12] builtin/unpack-file: convert to struct object_id
-Date:   Mon,  3 Jul 2017 18:55:29 +0000
-Message-Id: <20170703185533.51530-9-sandals@crustytoothpaste.net>
+Subject: [PATCH 10/12] Convert remaining callers of get_sha1 to get_oid.
+Date:   Mon,  3 Jul 2017 18:55:31 +0000
+Message-Id: <20170703185533.51530-11-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.2.753.g7f5404b18
 In-Reply-To: <20170703185533.51530-1-sandals@crustytoothpaste.net>
 References: <20170703185533.51530-1-sandals@crustytoothpaste.net>
@@ -50,50 +50,48 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/unpack-file.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ builtin/receive-pack.c | 4 ++--
+ mailmap.c              | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/unpack-file.c b/builtin/unpack-file.c
-index 73f133419..281ca1db6 100644
---- a/builtin/unpack-file.c
-+++ b/builtin/unpack-file.c
-@@ -1,7 +1,7 @@
- #include "builtin.h"
- #include "config.h"
- 
--static char *create_temp_file(unsigned char *sha1)
-+static char *create_temp_file(struct object_id *oid)
- {
- 	static char path[50];
- 	void *buf;
-@@ -9,9 +9,9 @@ static char *create_temp_file(unsigned char *sha1)
- 	unsigned long size;
- 	int fd;
- 
--	buf = read_sha1_file(sha1, &type, &size);
-+	buf = read_sha1_file(oid->hash, &type, &size);
- 	if (!buf || type != OBJ_BLOB)
--		die("unable to read blob object %s", sha1_to_hex(sha1));
-+		die("unable to read blob object %s", oid_to_hex(oid));
- 
- 	xsnprintf(path, sizeof(path), ".merge_file_XXXXXX");
- 	fd = xmkstemp(path);
-@@ -23,15 +23,15 @@ static char *create_temp_file(unsigned char *sha1)
- 
- int cmd_unpack_file(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 71c0c768d..1efa48fec 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -919,9 +919,9 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+  */
+ static int head_has_history(void)
  {
 -	unsigned char sha1[20];
 +	struct object_id oid;
  
- 	if (argc != 2 || !strcmp(argv[1], "-h"))
- 		usage("git unpack-file <sha1>");
--	if (get_sha1(argv[1], sha1))
-+	if (get_oid(argv[1], &oid))
- 		die("Not a valid object name %s", argv[1]);
- 
- 	git_config(git_default_config, NULL);
- 
--	puts(create_temp_file(sha1));
-+	puts(create_temp_file(&oid));
- 	return 0;
+-	return !get_sha1("HEAD", sha1);
++	return !get_oid("HEAD", &oid);
  }
+ 
+ static const char *push_to_deploy(unsigned char *sha1,
+diff --git a/mailmap.c b/mailmap.c
+index c1a79c100..cb921b4db 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -214,17 +214,17 @@ static int read_mailmap_blob(struct string_list *map,
+ 			     const char *name,
+ 			     char **repo_abbrev)
+ {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	char *buf;
+ 	unsigned long size;
+ 	enum object_type type;
+ 
+ 	if (!name)
+ 		return 0;
+-	if (get_sha1(name, sha1) < 0)
++	if (get_oid(name, &oid) < 0)
+ 		return 0;
+ 
+-	buf = read_sha1_file(sha1, &type, &size);
++	buf = read_sha1_file(oid.hash, &type, &size);
+ 	if (!buf)
+ 		return error("unable to read mailmap object at %s", name);
+ 	if (type != OBJ_BLOB)
