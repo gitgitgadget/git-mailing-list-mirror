@@ -2,82 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A41CD20209
-	for <e@80x24.org>; Mon,  3 Jul 2017 07:01:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3B7E20209
+	for <e@80x24.org>; Mon,  3 Jul 2017 09:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752669AbdGCHB0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jul 2017 03:01:26 -0400
-Received: from mail.peralex.com ([41.164.8.44]:57461 "EHLO mail.peralex.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752552AbdGCHBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2017 03:01:20 -0400
-Received: from [192.168.1.188] (noel1.ct [192.168.1.188])
-        by mail.peralex.com (Postfix) with ESMTPSA id 7FF1F336F5C;
-        Mon,  3 Jul 2017 09:01:08 +0200 (SAST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=peralex.com;
-        s=default; t=1499065268;
-        bh=XFYOTC/KYZF7b/Ftzi8l4Ie9sNG+iEC2+AQ1vHPDwfo=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=H/8DhpGjuRxufzm2TWBsNpjo7/mzk2QoBoPHkoPUY5Ur+84C/F8NEEumFvMj0ePQz
-         I4EOvLX+tVSKs64Xr/V19EOanr7Awhhgf9O1+uFm1g3XDbqqkrttDUAxeLD0gwBtGR
-         V7EccWbQZdNASGaHemBeCs5FABhbVToN2Zod2ZOY=
-Subject: Re: speeding up git pull from a busy gerrit instance over a slow
- link?
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-References: <19ee7852-efcc-66d0-24ad-3462a4d5eaf6@peralex.com>
- <20170630145912.1047890d@twelve2.svl.corp.google.com>
-From:   Noel Grandin <noel@peralex.com>
-Message-ID: <e68b650f-7e16-6935-9867-f54e391b9eaf@peralex.com>
-Date:   Mon, 3 Jul 2017 09:01:14 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1753730AbdGCJ51 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jul 2017 05:57:27 -0400
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:37308
+        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753383AbdGCJ50 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Jul 2017 05:57:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1499075843;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=bN/RTZ9ZBV/kkHHW6pzQkWmxwVCBTYjTEuF2A0wb1Js=;
+        b=GT8QCfiupugTL+ldWIw8tez6St4sTDC6iV2/yS9CnJm9pIg4i8NGaqj7J5ZVrI9X
+        4Tbxuubkocg6qvmNjIOV+3Fsnk0QiFmiPOYjpCmVeJJqrArlJMXsW6y62ilKs8uqPAZ
+        fms4eiJSmJ+YylS7IKVh+STh/T31xOvCf43bDCrk=
+From:   =?UTF-8?Q?=C5=81ukasz_Gryglicki?= <lukaszgryglicki@o2.pl>
+To:     git@vger.kernel.org
+Message-ID: <0102015d07e215ae-a711670e-8315-40b9-90cf-f95075525622-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] area: git-merge: add --signoff flag to git-merge
 MIME-Version: 1.0
-In-Reply-To: <20170630145912.1047890d@twelve2.svl.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.2 (mail.peralex.com [0.0.0.0]); Mon, 03 Jul 2017 09:01:08 +0200 (SAST)
-X-Scanned-By: MIMEDefang 2.78 on 41.164.8.44
+Date:   Mon, 3 Jul 2017 09:57:23 +0000
+X-SES-Outgoing: 2017.07.03-54.240.7.20
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017/06/30 11:59 PM, Jonathan Tan wrote:
->
-> Out of curiosity, what is the timestamp difference between the first and
-> last GIT_TRACE_PACKET log message containing "refs/changes"?
->
+Added --signoff flag to `git-merge` command, added test coverage,
+updated documentation.
 
-Cut down log looks like:
+Signed-off-by: lukaszgryglicki <lukaszgryglicki@o2.pl>
+---
+ Documentation/git-merge.txt  |  8 ++++++
+ builtin/merge.c              |  4 +++
+ t/t9904-git-merge-signoff.sh | 60 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 72 insertions(+)
+ create mode 100755 t/t9904-git-merge-signoff.sh
 
-08:37:17.734527 pkt-line.c:80           packet:        fetch< baeb5486c43d39b063371f91cfaae8efc2c8700b 
-refs/changes/00/1000/1
-... 3 minutes ..
-08:40:10.983005 pkt-line.c:80           packet:        fetch< b0dd80238089dfcc0b3bf7bed99564adce649397 
-refs/changes/99/6799/2
-08:40:10.983054 pkt-line.c:80           packet:        fetch< 5c5dd57b54e3107b3069dc8f82df74df63d13555 
-refs/heads/distro/collabora/cp-4.0
-..
-08:40:11.134355 pkt-line.c:80           packet:        fetch< f8c345808ceafe87be6207e5ae304a9fa6c4cd16 refs/heads/master
-08:40:11.134404 pkt-line.c:80           packet:        fetch< 3cacadc5c9e6a0780a4c75cd3614eddc8db8e933 
-refs/remotes/origin/HEAD
-...
-08:40:11.173013 pkt-line.c:80           packet:        fetch< 6c1b76c38f0fc469a2cbf41ffacde4d76df11ead 
-refs/remotes/origin/origin/feature/submodules
-08:40:11.173025 pkt-line.c:80           packet:        fetch< a7d2fe68fd1db70f16a827f828dc541954f9d0f2 refs/tags/COOL_1.0
-...
-08:40:11.814181 pkt-line.c:80           packet:        fetch< 9125509a7c6e65336330b8ac42a293aa77b18ee3 
-refs/tags/windows_build_successful_2011_11_08^{}
-...
-08:40:12.724809 pkt-line.c:80           packet:     sideband< 0000
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 04fdd8cf086db..6b308ab6d0b52 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -64,6 +64,14 @@ OPTIONS
+ -------
+ include::merge-options.txt[]
+ 
++--signoff::
++	Add Signed-off-by line by the committer at the end of the commit
++	log message.  The meaning of a signoff depends on the project,
++	but it typically certifies that committer has
++	the rights to submit this work under the same license and
++	agrees to a Developer Certificate of Origin
++	(see http://developercertificate.org/ for more information).
++
+ -S[<keyid>]::
+ --gpg-sign[=<keyid>]::
+ 	GPG-sign the resulting merge commit. The `keyid` argument is
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 900bafdb45d0b..cb09f4138136b 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -70,6 +70,7 @@ static int continue_current_merge;
+ static int allow_unrelated_histories;
+ static int show_progress = -1;
+ static int default_to_upstream = 1;
++static int signoff;
+ static const char *sign_commit;
+ 
+ static struct strategy all_strategy[] = {
+@@ -233,6 +234,7 @@ static struct option builtin_merge_options[] = {
+ 	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
+ 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
++	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+ 	OPT_END()
+ };
+ 
+@@ -775,6 +777,8 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 	strbuf_stripspace(&msg, 0 < option_edit);
+ 	if (!msg.len)
+ 		abort_commit(remoteheads, _("Empty commit message."));
++	if (signoff)
++		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
+ 	strbuf_release(&merge_msg);
+ 	strbuf_addbuf(&merge_msg, &msg);
+ 	strbuf_release(&msg);
+diff --git a/t/t9904-git-merge-signoff.sh b/t/t9904-git-merge-signoff.sh
+new file mode 100755
+index 0000000000000..eed15b9a85371
+--- /dev/null
++++ b/t/t9904-git-merge-signoff.sh
+@@ -0,0 +1,60 @@
++#!/bin/sh
++
++test_description='git merge --signoff
++
++This test runs git merge --signoff and make sure that it works.
++'
++
++. ./test-lib.sh
++
++# A simple files to commit
++cat >file1 <<EOF
++1
++EOF
++
++cat >file2 <<EOF
++2
++EOF
++
++cat >file3 <<EOF
++3
++EOF
++
++# Expected commit message after merge --signoff
++cat >expected-signed <<EOF
++Merge branch 'master' into other-branch
++
++Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
++EOF
++
++# Expected commit message after merge without --signoff (or with --no-signoff)
++cat >expected-unsigned <<EOF
++Merge branch 'master' into other-branch
++EOF
++
++
++# We configure an alias to do the merge --signoff so that
++# on the next subtest we can show that --no-signoff overrides the alias
++test_expect_success 'merge --signoff adds a sign-off line' '
++	git commit --allow-empty -m "Initial empty commit" &&
++  git checkout -b other-branch &&
++	git add file1 && git commit -m other-branch &&
++  git checkout master &&
++	git add file2 && git commit -m master-branch &&
++  git checkout other-branch &&
++  git config alias.msob "merge --signoff --no-edit" &&
++	git msob master &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
++	test_cmp expected-signed actual
++'
++
++test_expect_success 'master --no-signoff does not add a sign-off line' '
++	git checkout master &&
++  git add file3 && git commit -m master-branch-2 &&
++  git checkout other-branch &&
++	git msob --no-signoff master &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
++	test_cmp expected-unsigned actual
++'
++
++test_done
 
-
-Disclaimer: http://www.peralex.com/disclaimer.html
-
-
+--
+https://github.com/git/git/pull/381
