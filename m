@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 596F1201A0
-	for <e@80x24.org>; Mon,  3 Jul 2017 20:11:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B6CA201A0
+	for <e@80x24.org>; Mon,  3 Jul 2017 20:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752267AbdGCULs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jul 2017 16:11:48 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34513 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751986AbdGCULs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2017 16:11:48 -0400
-Received: by mail-pg0-f66.google.com with SMTP id j186so24060217pge.1
-        for <git@vger.kernel.org>; Mon, 03 Jul 2017 13:11:47 -0700 (PDT)
+        id S1752835AbdGCUTt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jul 2017 16:19:49 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33519 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752827AbdGCUTs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2017 16:19:48 -0400
+Received: by mail-pf0-f180.google.com with SMTP id e7so104743760pfk.0
+        for <git@vger.kernel.org>; Mon, 03 Jul 2017 13:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=09ofhXTBWKPqg0BsjkzTgs+kwGW7tD5PQf3scpvkrBU=;
-        b=hpWYvn01q3hwPmTrg2tzt700Y/Atneiv7KgvUZnJTrqko7VPJ4WntNorcR9BKFaJFq
-         IoutAbsUyTlgzlybRKX2ITDBQ8m6XIw2lKu63t+O/2fYLaczLQGcJ31jEpa33Vw+nyQ4
-         AaBcnq2oCAESr4xxEpdv14MNzc/wTIdLAZikRpNTklxpzNmHHs+Q9S+686TiMIyE0OiU
-         4MQ/wKtbx8lRFx89MT4YVERi2jEYTlfRGWEA2Zgor6PgDrN75Ps+LjLyliRgHsSRNT+1
-         8Fo210jaZthKRyd75rPXXHtkB+uWFLRayqHXZ0304bQGwbASzODPRypBFbx3soL8OUfg
-         SGmw==
+        bh=060mYyBYSvOuuF8cWS7xP75kcsHf++JejOuvpUce+Zo=;
+        b=AXqFYm1A81nlY8kutXwX67Zlevm3sENvIckJYBYHU8unT/ymyHGqCmPD7T1RzDA+Qd
+         arTFLElM1LrT7surAQJFiocMWZ0kXoDalBG2WyLlzfQL8tRLRZ1wmjjtsp/T0Gs5y+P7
+         ZI28VbJn6azqXZ/LQ1k5AHzqu+BXBGSgQIeDtkMKGYth2vAJLLPlEhlcvnJjFcKtaXX6
+         qgS5U373MokKy7GczNmFbv+nwamG3H02TctOcMsbI2I6bGCwDxjAl0m13oilMMOf7v2/
+         +TWxoPLe0UHa+HiyKw7uChq4NbHaSbYzbrBicaZreuaJPcAlEHENIbBKPbfnyx90trgk
+         QdSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=09ofhXTBWKPqg0BsjkzTgs+kwGW7tD5PQf3scpvkrBU=;
-        b=BDOjZUswUgAd7ZmdIxlX62s8PV9lmxO/GsGUSZ7MGQLjyaNu+IygaYCtPNOvpMN3Iq
-         QbLHLGrqkY+/B6IeToBcvp6W8+qBGUWMubL21leoSN3oj1Dt0vVFNV7tmmLeZLaQPnPU
-         xk0Efpj1ppE4C6tOURktQ/nqm97O2ByFJvQWrH8Q2Wp9F5Imt4A66fB/Mzfvy2sZQMbe
-         R5H3JqY60bAwAs0/Y6sk2g58taHbd0Yb1BY5FvFPRDNPeU5yIePdl4FBPPWXCTSzbpsS
-         7cSwuR7s6WxZXKlRa3zokkyc1QQF9V0DKfwoZdjAQW7oSBkZvC8HOToLy28fgOzcOPnP
-         Ikkw==
-X-Gm-Message-State: AIVw111hVUSSqrUb2aX5A3dGF9PLewA07kz5Ut+K9aCQiXct8jvh2esz
-        lq4veHCvDBGXFw==
-X-Received: by 10.98.106.6 with SMTP id f6mr11681773pfc.53.1499112707194;
-        Mon, 03 Jul 2017 13:11:47 -0700 (PDT)
+        bh=060mYyBYSvOuuF8cWS7xP75kcsHf++JejOuvpUce+Zo=;
+        b=E0fTPTvq8cDQFnY/tgtU19tYaGahpBchX0zRt8Rk2pZfSUN/hHGp44WTB8sSY7vKth
+         +76Hpk3fwEMuRUwWjeUKaLXMK3w8roeT1MVOzJSf+5ufenQY+XK7JEwTOnBOO+cMqe/M
+         MWCOSVWbj7oQ1GdqYeFcBi8KZByQxp3dp1+DIdE6G+moYgNFPKMyQELvWVNx9I5yHkYx
+         SZiaIRib49A8yFepx9OHuEUygwLECdRPq7EmJ6TF6FV4mkg0UwwzF43PTSLlftz8CSYs
+         OzReilVHQ40em4M3PErkbN5q9fklWIhpBuqo3Mt9mnHGKPPP6sy2STDz5MoG4FsUWaSp
+         1HSg==
+X-Gm-Message-State: AIVw112eG4l1VSDmLohK4HvNSr3TsYuo1uQ7EgY0OvO7xkzzerRkDtPh
+        oIekvFgRRNdbRg==
+X-Received: by 10.98.28.71 with SMTP id c68mr11747853pfc.116.1499113187817;
+        Mon, 03 Jul 2017 13:19:47 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:30:4739:ca21:b5b4])
-        by smtp.gmail.com with ESMTPSA id x25sm39930029pfi.58.2017.07.03.13.11.43
+        by smtp.gmail.com with ESMTPSA id b7sm40790983pfl.44.2017.07.03.13.19.46
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 03 Jul 2017 13:11:45 -0700 (PDT)
+        Mon, 03 Jul 2017 13:19:46 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Help needed for solving a few issues with building git
-References: <1499087898.4156.6.camel@gmail.com>
-        <xmqqshidl76n.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 03 Jul 2017 13:11:43 -0700
-In-Reply-To: <xmqqshidl76n.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 03 Jul 2017 11:13:52 -0700")
-Message-ID: <xmqqk23pl1q8.fsf@gitster.mtv.corp.google.com>
+To:     "Philip Oakley" <philipoakley@iee.org>
+Cc:     <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jun 2017, #09; Fri, 30)
+References: <xmqqk23tp2jk.fsf@gitster.mtv.corp.google.com>
+        <4374FA169AD7465AA39BDB477A348B02@PhilipOakley>
+        <xmqqo9t1l6vi.fsf@gitster.mtv.corp.google.com>
+        <C31723137B784D54A3CDB1B7D9432D7E@PhilipOakley>
+Date:   Mon, 03 Jul 2017 13:19:46 -0700
+In-Reply-To: <C31723137B784D54A3CDB1B7D9432D7E@PhilipOakley> (Philip Oakley's
+        message of "Mon, 3 Jul 2017 20:13:02 +0100")
+Message-ID: <xmqqfuedl1ct.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,40 +68,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
->> While trying to build (without the 'gettext' library that's required
->> for localization) I get the following error,
->>
->>     Manifying 8 pod documents
->>         SUBDIR templates
->>         MSGFMT po/build/locale/pt_PT/LC_MESSAGES/git.mo
->>     /bin/sh: 1: msgfmt: not found
->>     Makefile:2179: recipe for target
->>     'po/build/locale/pt_PT/LC_MESSAGES/git.mo' failed
->>     make: *** [po/build/locale/pt_PT/LC_MESSAGES/git.mo] Error 127
->>
->>     What could I be missing?
->
-> There is
->
->     ifndef NO_GETTEXT
->     all:: $(MOFILES)
->     endif
->
-> which attempts to avoid generating *.mo files, but that does not
-> seem to be working.
+> Am I right that the What's cooking  is prepared by a script?
 
-The above comes from one of the Tcl things (probably gitk-git)
-For now
+Because I have to keep track of so many topics, its maintenance is
+heavily helped by a script. I do not think it is sensible to expect
+me to (or it would be good use of my time) correctly update the list
+of commits manually every time a topic is replaced with its new
+version.
 
-    $ make NO_GETTEXT=1 NO_MSGFMT=1
+But I consider the use of the script just like my use of Emacs to
+edit the final end result.  Yes, I use tools to prepare it, and the
+tools know certain rules that I prefer to apply to the document,
+such as "a topic that has not been touched since the previous issue
+by default does not need its description updated."
 
-may help.
+Does that answer your question?
 
-NO_GETTEXT is "My build environment may or may not be capable of
-doing the gettext things, but I choose not to use it in my build
-result" but NO_MSGFMT is simply "I do not have the msgfmt tool".
-
-Having to specify both is rather unfortunate and we may want to
-streamline this.
