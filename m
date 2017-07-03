@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A03E3201A0
-	for <e@80x24.org>; Mon,  3 Jul 2017 18:55:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CC5E201A0
+	for <e@80x24.org>; Mon,  3 Jul 2017 18:55:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753534AbdGCSzz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jul 2017 14:55:55 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:52978 "EHLO
+        id S1753594AbdGCSz4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jul 2017 14:55:56 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:52968 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752479AbdGCSzs (ORCPT
+        by vger.kernel.org with ESMTP id S1752233AbdGCSzs (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 3 Jul 2017 14:55:48 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B2903280B2;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 97259280B1;
         Mon,  3 Jul 2017 18:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1499108147;
-        bh=+33nfaEwSwcz+hmuAnQePfQhZS1XDMjS/Y6wr2Q8kQQ=;
+        bh=blCre5SH+tA+K/QYqdIje5hYhg2VjFpTGAHaqYOP7Zo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=g4s1CP3h92/Me1MSB8IdLYlbcnALV/vYgLnn9rtX1Nf5yzZkzVECbdO6637ymEtl4
-         ylONBW4Dk5EAfgXbkEy74eO1atZSY6xLLoIvBKJVW93d+7HCJpE1VRLMumvR0pHyfm
-         YbsOPZW/gerk3q9AJ/brEdBP4gNHp6UUylhfHA12sUDG35fzeY5X05bBiyby5hbHYi
-         CtFb18DJ9afttj2zXjxh/V3He2fEVMONTbjBPiFsvAMZE3vqpXpOU3fB3kU3OIE5JJ
-         Kg7C3RfxTJoVMPGLkSbHdNFhmGhLYCm48gr09FwvxthEBWRU11PtO+2QE5I3x2oqjP
-         R0JTkmUyy/rQ7u94RCx1vFViykDh9qpBs+VI+uJKRivHr1f9FmNistlzl2PomXooEn
-         PtiS9c/pS7apqdD0+mVP1bWuJGlsz+SzEz+28Yh/8aEyt6MviuN7L/lFO+FhuzpJeA
-         InuVOcZZr8XCnjrAClIHpAie4NwqD5Y7yBaQpz/1w5uK59G3WTJ
+        b=zUoDu8eLnCNpKH4xzGi1Juw5BWS4OZrBg8MoTwOwDZgOLeBW9WIUWrv9pxrGwmXJF
+         d0Kl6CibYu0WyQVi5rBT2A5EYGs7OsX0oItsSWc8mRLygvhs7/Nbl+/C3dqRi39Kkd
+         6j6qQBTN1Ny++vsse9I7q/Mgs+Hb+JDpBMPJTUIFWOK4kyF0Vie/Zm5esGAr44JQUo
+         3ld54e4lYQHqkEzTK/jvXL48sfjEMdr4xlSGkg+LcaNgN0wKGbmfqxANmjkRwgpXyO
+         3s3u/SUdHOY2G4FgB/2ekfZdhCtGc5jsMKuE4/3v2Pz0eCjk9uhS0bVFZS6p4ECM6F
+         /agqrEvQX92AYQBtBFoRHO8hZ/f3mS4y1pkuu9hMg3176q1l5OlQdWVOUG5u9xSujl
+         y7YExy0OqxX44vCzAfUlEPfhMXSuITY0m1BmVRMHuRixhCJpqM3j6k8CaHh48GOkA+
+         OjThr6d56wmvKFQD1vjLyUlPDg2HyPkMx4C6+3/PCx4KhhSNh2Y
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
         Stefan Beller <stefanbeller@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 05/12] sequencer: convert to struct object_id
-Date:   Mon,  3 Jul 2017 18:55:26 +0000
-Message-Id: <20170703185533.51530-6-sandals@crustytoothpaste.net>
+Subject: [PATCH 04/12] remote: convert struct push_cas to struct object_id
+Date:   Mon,  3 Jul 2017 18:55:25 +0000
+Message-Id: <20170703185533.51530-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.2.753.g7f5404b18
 In-Reply-To: <20170703185533.51530-1-sandals@crustytoothpaste.net>
 References: <20170703185533.51530-1-sandals@crustytoothpaste.net>
@@ -48,201 +48,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the remaining instances of unsigned char * to struct object_id.
-This removes several calls to get_sha1.
+This gets rid of one use of get_sha1.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- sequencer.c | 59 ++++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 30 insertions(+), 29 deletions(-)
+ remote.c | 6 +++---
+ remote.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 3010faf86..16d48a4fb 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -691,7 +691,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- 
- static int is_original_commit_empty(struct commit *commit)
- {
--	const unsigned char *ptree_sha1;
-+	const struct object_id *ptree_oid;
- 
- 	if (parse_commit(commit))
- 		return error(_("could not parse commit %s\n"),
-@@ -701,12 +701,12 @@ static int is_original_commit_empty(struct commit *commit)
- 		if (parse_commit(parent))
- 			return error(_("could not parse parent commit %s\n"),
- 				oid_to_hex(&parent->object.oid));
--		ptree_sha1 = parent->tree->object.oid.hash;
-+		ptree_oid = &parent->tree->object.oid;
- 	} else {
--		ptree_sha1 = EMPTY_TREE_SHA1_BIN; /* commit is root */
-+		ptree_oid = &empty_tree_oid; /* commit is root */
- 	}
- 
--	return !hashcmp(ptree_sha1, commit->tree->object.oid.hash);
-+	return !oidcmp(ptree_oid, &commit->tree->object.oid);
+diff --git a/remote.c b/remote.c
+index d87482573..9da9040bf 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2294,8 +2294,8 @@ static int parse_push_cas_option(struct push_cas_option *cas, const char *arg, i
+ 	if (!*colon)
+ 		entry->use_tracking = 1;
+ 	else if (!colon[1])
+-		hashclr(entry->expect);
+-	else if (get_sha1(colon + 1, entry->expect))
++		oidclr(&entry->expect);
++	else if (get_oid(colon + 1, &entry->expect))
+ 		return error("cannot parse expected object name '%s'", colon + 1);
+ 	return 0;
  }
- 
- /*
-@@ -896,18 +896,18 @@ static int update_squash_messages(enum todo_command command,
- 
- static void flush_rewritten_pending(void) {
- 	struct strbuf buf = STRBUF_INIT;
--	unsigned char newsha1[20];
-+	struct object_id newoid;
- 	FILE *out;
- 
--	if (strbuf_read_file(&buf, rebase_path_rewritten_pending(), 82) > 0 &&
--	    !get_sha1("HEAD", newsha1) &&
-+	if (strbuf_read_file(&buf, rebase_path_rewritten_pending(), (GIT_MAX_HEXSZ + 1) * 2) > 0 &&
-+	    !get_oid("HEAD", &newoid) &&
- 	    (out = fopen_or_warn(rebase_path_rewritten_list(), "a"))) {
- 		char *bol = buf.buf, *eol;
- 
- 		while (*bol) {
- 			eol = strchrnul(bol, '\n');
- 			fprintf(out, "%.*s %s\n", (int)(eol - bol),
--					bol, sha1_to_hex(newsha1));
-+					bol, oid_to_hex(&newoid));
- 			if (!*eol)
- 				break;
- 			bol = eol + 1;
-@@ -1594,36 +1594,37 @@ static int rollback_is_safe(void)
- 	return !oidcmp(&actual_head, &expected_head);
- }
- 
--static int reset_for_rollback(const unsigned char *sha1)
-+static int reset_for_rollback(const struct object_id *oid)
- {
- 	const char *argv[4];	/* reset --merge <arg> + NULL */
- 
- 	argv[0] = "reset";
- 	argv[1] = "--merge";
--	argv[2] = sha1_to_hex(sha1);
-+	argv[2] = oid_to_hex(oid);
- 	argv[3] = NULL;
- 	return run_command_v_opt(argv, RUN_GIT_CMD);
- }
- 
- static int rollback_single_pick(void)
- {
--	unsigned char head_sha1[20];
-+	struct object_id head_oid;
- 
- 	if (!file_exists(git_path_cherry_pick_head()) &&
- 	    !file_exists(git_path_revert_head()))
- 		return error(_("no cherry-pick or revert in progress"));
--	if (read_ref_full("HEAD", 0, head_sha1, NULL))
-+	if (read_ref_full("HEAD", 0, head_oid.hash, NULL))
- 		return error(_("cannot resolve HEAD"));
--	if (is_null_sha1(head_sha1))
-+	if (is_null_oid(&head_oid))
- 		return error(_("cannot abort from a branch yet to be born"));
--	return reset_for_rollback(head_sha1);
-+	return reset_for_rollback(&head_oid);
- }
- 
- int sequencer_rollback(struct replay_opts *opts)
- {
- 	FILE *f;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct strbuf buf = STRBUF_INIT;
-+	const char *p;
- 
- 	f = fopen(git_path_head_file(), "r");
- 	if (!f && errno == ENOENT) {
-@@ -1643,12 +1644,12 @@ int sequencer_rollback(struct replay_opts *opts)
- 		goto fail;
- 	}
- 	fclose(f);
--	if (get_sha1_hex(buf.buf, sha1) || buf.buf[40] != '\0') {
-+	if (parse_oid_hex(buf.buf, &oid, &p) || *p != '\0') {
- 		error(_("stored pre-cherry-pick HEAD file '%s' is corrupt"),
- 			git_path_head_file());
- 		goto fail;
- 	}
--	if (is_null_sha1(sha1)) {
-+	if (is_null_oid(&oid)) {
- 		error(_("cannot abort from a branch yet to be born"));
- 		goto fail;
- 	}
-@@ -1658,7 +1659,7 @@ int sequencer_rollback(struct replay_opts *opts)
- 		warning(_("You seem to have moved HEAD. "
- 			  "Not rewinding, check your HEAD!"));
- 	} else
--	if (reset_for_rollback(sha1))
-+	if (reset_for_rollback(&oid))
- 		goto fail;
- 	strbuf_release(&buf);
- 	return sequencer_remove_state(opts);
-@@ -1788,13 +1789,13 @@ static int make_patch(struct commit *commit, struct replay_opts *opts)
- 
- static int intend_to_amend(void)
- {
--	unsigned char head[20];
-+	struct object_id head;
- 	char *p;
- 
--	if (get_sha1("HEAD", head))
-+	if (get_oid("HEAD", &head))
- 		return error(_("cannot read HEAD"));
- 
--	p = sha1_to_hex(head);
-+	p = oid_to_hex(&head);
- 	return write_message(p, strlen(p), rebase_path_amend(), 1);
- }
- 
-@@ -2079,10 +2080,10 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 		if (read_oneliner(&head_ref, rebase_path_head_name(), 0) &&
- 				starts_with(head_ref.buf, "refs/")) {
- 			const char *msg;
--			unsigned char head[20], orig[20];
-+			struct object_id head, orig;
- 			int res;
- 
--			if (get_sha1("HEAD", head)) {
-+			if (get_oid("HEAD", &head)) {
- 				res = error(_("cannot read HEAD"));
- cleanup_head_ref:
- 				strbuf_release(&head_ref);
-@@ -2090,7 +2091,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 				return res;
- 			}
- 			if (!read_oneliner(&buf, rebase_path_orig_head(), 0) ||
--					get_sha1_hex(buf.buf, orig)) {
-+					get_oid_hex(buf.buf, &orig)) {
- 				res = error(_("could not read orig-head"));
- 				goto cleanup_head_ref;
- 			}
-@@ -2101,7 +2102,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			}
- 			msg = reflog_message(opts, "finish", "%s onto %s",
- 				head_ref.buf, buf.buf);
--			if (update_ref(msg, head_ref.buf, head, orig,
-+			if (update_ref(msg, head_ref.buf, head.hash, orig.hash,
- 					REF_NODEREF, UPDATE_REFS_MSG_ON_ERR)) {
- 				res = error(_("could not update %s"),
- 					head_ref.buf);
-@@ -2205,16 +2206,16 @@ static int commit_staged_changes(struct replay_opts *opts)
- 
- 	if (file_exists(rebase_path_amend())) {
- 		struct strbuf rev = STRBUF_INIT;
--		unsigned char head[20], to_amend[20];
-+		struct object_id head, to_amend;
- 
--		if (get_sha1("HEAD", head))
-+		if (get_oid("HEAD", &head))
- 			return error(_("cannot amend non-existing commit"));
- 		if (!read_oneliner(&rev, rebase_path_amend(), 0))
- 			return error(_("invalid file: '%s'"), rebase_path_amend());
--		if (get_sha1_hex(rev.buf, to_amend))
-+		if (get_oid_hex(rev.buf, &to_amend))
- 			return error(_("invalid contents: '%s'"),
- 				rebase_path_amend());
--		if (hashcmp(head, to_amend))
-+		if (oidcmp(&head, &to_amend))
- 			return error(_("\nYou have uncommitted changes in your "
- 				       "working tree. Please, commit them\n"
- 				       "first and then run 'git rebase "
+@@ -2342,7 +2342,7 @@ static void apply_cas(struct push_cas_option *cas,
+ 			continue;
+ 		ref->expect_old_sha1 = 1;
+ 		if (!entry->use_tracking)
+-			hashcpy(ref->old_oid_expect.hash, cas->entry[i].expect);
++			oidcpy(&ref->old_oid_expect, &entry->expect);
+ 		else if (remote_tracking(remote, ref->name, &ref->old_oid_expect))
+ 			oidclr(&ref->old_oid_expect);
+ 		return;
+diff --git a/remote.h b/remote.h
+index 6c28cd3e4..2ecf4c8c7 100644
+--- a/remote.h
++++ b/remote.h
+@@ -282,7 +282,7 @@ struct ref *get_stale_heads(struct refspec *refs, int ref_count, struct ref *fet
+ struct push_cas_option {
+ 	unsigned use_tracking_for_rest:1;
+ 	struct push_cas {
+-		unsigned char expect[20];
++		struct object_id expect;
+ 		unsigned use_tracking:1;
+ 		char *refname;
+ 	} *entry;
