@@ -2,107 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B865B202A7
-	for <e@80x24.org>; Sun,  2 Jul 2017 20:36:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A41CD20209
+	for <e@80x24.org>; Mon,  3 Jul 2017 07:01:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751928AbdGBUgJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Jul 2017 16:36:09 -0400
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:35997 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751876AbdGBUgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Jul 2017 16:36:08 -0400
-Received: by mail-wr0-f182.google.com with SMTP id c11so225381619wrc.3
-        for <git@vger.kernel.org>; Sun, 02 Jul 2017 13:36:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=l2+BYCvqeSYUtlGj00jSU/iJtYrnl2A4mOr3sHLWO0I=;
-        b=dxjDL792wD5YOCqu3OzVu/qlmiDrrrsBuJ6RUaC2c+0HzZIqtOrF2AzNyfJMYYbWWY
-         qxzppUie4mm4MY1of0FT8TH805K2aWAlYSk2ctB0yZ9Q0y87hy63EzOhL3/pm47Dvnyc
-         +eEp9WbHiqrPG1d/r3eXDexStqlxIqnJ97JgA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=l2+BYCvqeSYUtlGj00jSU/iJtYrnl2A4mOr3sHLWO0I=;
-        b=AyX89awIWhuhQmLzPMgbudz4FTb6o4KPjL+6Z2sYqJQ5NQ8Tm+SyLPcx6OVQwJU9hs
-         Be6L5oT5A1JCE9ubJ5gaMgEZM84jdHrYqyVVfaz8BmywSezNi/ebeGoVocUmLY0GgMRn
-         oPRIUXbPXtO8iSxF9JaFHcb/lZpUzmMmyFF4y0/heD5dOkWvv65UqTN48WVoPbJsyWsl
-         hcd1cn+YCmMxcIV6SONgMylsyTCqrolA4wPBTZJBjtA4LKTW+FGK0YMhRKUF+hp6rUWj
-         8Lvk5d3/JzNJCtYuHldf7mtlkbu46CAMjMwNWq+J4j1z+wRjyNXkjKXz5utvd0lUAf9l
-         Io/A==
-X-Gm-Message-State: AKS2vOz+FZbV3KzDlWAeE8do/yvDvzHOWupQiC1ZKZrW1vqBK+Y4Gs4a
-        IUfhxfPkg9y6Kfjy
-X-Received: by 10.223.166.139 with SMTP id t11mr30049829wrc.39.1499027766561;
-        Sun, 02 Jul 2017 13:36:06 -0700 (PDT)
-Received: from dinwoodie.org ([2001:ba8:0:1c0::9:1])
-        by smtp.gmail.com with ESMTPSA id p34sm14489788wrc.66.2017.07.02.13.36.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 02 Jul 2017 13:36:05 -0700 (PDT)
-Date:   Sun, 2 Jul 2017 21:35:48 +0100
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Continous Integration (was: RE: Git v2.13.1 SHA1 very broken)
-Message-ID: <20170702203548.GA26574@dinwoodie.org>
-References: <20170605203409.GB25777@dinwoodie.org>
- <CACBZZX6vOr+ZjUaAf8i1xdjEFfY_Exj+_Xn2-1u0RcWoLy+X1g@mail.gmail.com>
- <xmqq4lvtap3m.fsf@gitster.mtv.corp.google.com>
- <20170606100355.GC25777@dinwoodie.org>
- <xmqqmv9l8h5z.fsf@gitster.mtv.corp.google.com>
- <20170606124323.GD25777@dinwoodie.org>
- <6D15A44412C346E2822A74A91FDF77B1@blackfat>
- <CF387D0C-6743-4B88-A4CC-D6310A634E03@gmail.com>
+        id S1752669AbdGCHB0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jul 2017 03:01:26 -0400
+Received: from mail.peralex.com ([41.164.8.44]:57461 "EHLO mail.peralex.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752552AbdGCHBU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2017 03:01:20 -0400
+Received: from [192.168.1.188] (noel1.ct [192.168.1.188])
+        by mail.peralex.com (Postfix) with ESMTPSA id 7FF1F336F5C;
+        Mon,  3 Jul 2017 09:01:08 +0200 (SAST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=peralex.com;
+        s=default; t=1499065268;
+        bh=XFYOTC/KYZF7b/Ftzi8l4Ie9sNG+iEC2+AQ1vHPDwfo=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=H/8DhpGjuRxufzm2TWBsNpjo7/mzk2QoBoPHkoPUY5Ur+84C/F8NEEumFvMj0ePQz
+         I4EOvLX+tVSKs64Xr/V19EOanr7Awhhgf9O1+uFm1g3XDbqqkrttDUAxeLD0gwBtGR
+         V7EccWbQZdNASGaHemBeCs5FABhbVToN2Zod2ZOY=
+Subject: Re: speeding up git pull from a busy gerrit instance over a slow
+ link?
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+References: <19ee7852-efcc-66d0-24ad-3462a4d5eaf6@peralex.com>
+ <20170630145912.1047890d@twelve2.svl.corp.google.com>
+From:   Noel Grandin <noel@peralex.com>
+Message-ID: <e68b650f-7e16-6935-9867-f54e391b9eaf@peralex.com>
+Date:   Mon, 3 Jul 2017 09:01:14 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CF387D0C-6743-4B88-A4CC-D6310A634E03@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20170630145912.1047890d@twelve2.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.6.2 (mail.peralex.com [0.0.0.0]); Mon, 03 Jul 2017 09:01:08 +0200 (SAST)
+X-Scanned-By: MIMEDefang 2.78 on 41.164.8.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 06, 2017 at 05:04:32PM +0200, Lars Schneider wrote:
-> > On 06 Jun 2017, at 16:47, Jason Pyeron <jpyeron@pdinc.us> wrote:
-> > 
-> > Do we have Jenkins (or something else) setup for Git?
-> > 
-> > We would be happy to donate (slave) VMs for cygwin builds og Git.  
-> > 
-> > -Jason Pyeron
-> > 
-> 
-> We use TravisCI for Linux, Mac, and (in a special way) Windows: 
-> https://travis-ci.org/git/git
-> 
-> Windows is not supported by TravisCI. We just use TravisCI to
-> trigger a build on MS Azure and read the results:
-> https://github.com/git/git/commit/029aeeed55f6bfe8014e8ffe5fc7a6f2e5b110fc
-> 
-> Maybe we could trigger a Cgywin build on your slaves in the same way?
+On 2017/06/30 11:59 PM, Jonathan Tan wrote:
+>
+> Out of curiosity, what is the timestamp difference between the first and
+> last GIT_TRACE_PACKET log message containing "refs/changes"?
+>
 
-I tried setting up a Cygwin Git build on AppVeyor a little while ago,
-but the problem I found is that Cygwin builds are slow, particularly if
-you want to also run the test suite.  I do the builds for the Cygwin
-distribution on my normal PC (so reasonably powerful but definitely not
-devoted to the purpose), and doing the build and running the default
-tests takes in the region of 8 hours for the 64-bit build and 12 hours
-for the 32-bit build.
+Cut down log looks like:
 
-At the moment, I'm trying to set up automated regular builds on my PC
-using BuildBot.  I think that, short of someone donating some fairly
-significant resources for Cygwin builds, that's going to be the closest
-I'll be able to find for spotting problems early.  It's a project in my
-currently limited spare time, though, and not something I've done
-before, so it's taking a little while to get going.
+08:37:17.734527 pkt-line.c:80           packet:        fetch< baeb5486c43d39b063371f91cfaae8efc2c8700b 
+refs/changes/00/1000/1
+... 3 minutes ..
+08:40:10.983005 pkt-line.c:80           packet:        fetch< b0dd80238089dfcc0b3bf7bed99564adce649397 
+refs/changes/99/6799/2
+08:40:10.983054 pkt-line.c:80           packet:        fetch< 5c5dd57b54e3107b3069dc8f82df74df63d13555 
+refs/heads/distro/collabora/cp-4.0
+..
+08:40:11.134355 pkt-line.c:80           packet:        fetch< f8c345808ceafe87be6207e5ae304a9fa6c4cd16 refs/heads/master
+08:40:11.134404 pkt-line.c:80           packet:        fetch< 3cacadc5c9e6a0780a4c75cd3614eddc8db8e933 
+refs/remotes/origin/HEAD
+...
+08:40:11.173013 pkt-line.c:80           packet:        fetch< 6c1b76c38f0fc469a2cbf41ffacde4d76df11ead 
+refs/remotes/origin/origin/feature/submodules
+08:40:11.173025 pkt-line.c:80           packet:        fetch< a7d2fe68fd1db70f16a827f828dc541954f9d0f2 refs/tags/COOL_1.0
+...
+08:40:11.814181 pkt-line.c:80           packet:        fetch< 9125509a7c6e65336330b8ac42a293aa77b18ee3 
+refs/tags/windows_build_successful_2011_11_08^{}
+...
+08:40:12.724809 pkt-line.c:80           packet:     sideband< 0000
 
-Adam
+
+Disclaimer: http://www.peralex.com/disclaimer.html
+
+
