@@ -2,167 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3B7E20209
-	for <e@80x24.org>; Mon,  3 Jul 2017 09:57:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3720A201A0
+	for <e@80x24.org>; Mon,  3 Jul 2017 12:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753730AbdGCJ51 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jul 2017 05:57:27 -0400
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:37308
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753383AbdGCJ50 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Jul 2017 05:57:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1499075843;
-        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=bN/RTZ9ZBV/kkHHW6pzQkWmxwVCBTYjTEuF2A0wb1Js=;
-        b=GT8QCfiupugTL+ldWIw8tez6St4sTDC6iV2/yS9CnJm9pIg4i8NGaqj7J5ZVrI9X
-        4Tbxuubkocg6qvmNjIOV+3Fsnk0QiFmiPOYjpCmVeJJqrArlJMXsW6y62ilKs8uqPAZ
-        fms4eiJSmJ+YylS7IKVh+STh/T31xOvCf43bDCrk=
-From:   =?UTF-8?Q?=C5=81ukasz_Gryglicki?= <lukaszgryglicki@o2.pl>
-To:     git@vger.kernel.org
-Message-ID: <0102015d07e215ae-a711670e-8315-40b9-90cf-f95075525622-000000@eu-west-1.amazonses.com>
-Subject: [PATCH] area: git-merge: add --signoff flag to git-merge
+        id S1753292AbdGCMe0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jul 2017 08:34:26 -0400
+Received: from mout.gmx.net ([212.227.15.15]:60515 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752081AbdGCMeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2017 08:34:25 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lug8u-1dsZra3wKu-00znrV; Mon, 03
+ Jul 2017 14:34:15 +0200
+Date:   Mon, 3 Jul 2017 14:34:13 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Adam Dinwoodie <adam@dinwoodie.org>
+cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: Continous Integration (was: RE: Git v2.13.1 SHA1 very broken)
+In-Reply-To: <20170702203548.GA26574@dinwoodie.org>
+Message-ID: <alpine.DEB.2.21.1.1707031429560.84669@virtualbox>
+References: <20170605203409.GB25777@dinwoodie.org> <CACBZZX6vOr+ZjUaAf8i1xdjEFfY_Exj+_Xn2-1u0RcWoLy+X1g@mail.gmail.com> <xmqq4lvtap3m.fsf@gitster.mtv.corp.google.com> <20170606100355.GC25777@dinwoodie.org> <xmqqmv9l8h5z.fsf@gitster.mtv.corp.google.com>
+ <20170606124323.GD25777@dinwoodie.org> <6D15A44412C346E2822A74A91FDF77B1@blackfat> <CF387D0C-6743-4B88-A4CC-D6310A634E03@gmail.com> <20170702203548.GA26574@dinwoodie.org>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 3 Jul 2017 09:57:23 +0000
-X-SES-Outgoing: 2017.07.03-54.240.7.20
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:0glQYbvc4qd3rbVqy/zX1c42n2eRQeiqT2D0bt+Cn7T5TxDA/9F
+ rqv962yuiJ+fPO/1iUR4OZgXoMdvSCYv3uohB93ZOPkmimCgVLSgpSDq2sZ7N33VphWCevG
+ BzuTkfgw/HNG7KHEwmxcQwj9d2zCFO5GwRIlYYbU5ZQy7NviXLiAux6lnnTs9HHSDejvV5O
+ d710UxRHjz2PiY02wdX/g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3Fonns/Atek=:XCSCmwF5+7ToOfmge7ypfP
+ 6Q1WXNNyjD6Zygva2dQL9XgMCLNOoFA19SyXM7QfoOIo62IhaC9pEEsgXsG+Y2KoljmtK0hsy
+ r1Bg+ZTfFvTtXMT/QmyTI0/tfOMP5y0pXwpahfNmfBtwdpGCmlnOKIC0nS+lMtYXwIS/utnxA
+ vm4pT3Rc4B/UWCybnZgk1HFs8FB21BI1GBCMRFz5rNN4O1pRXPKX591mR9Pm2QpQfzMLUfxeu
+ qY/YIz/yQ396kAgNU13dTmqYu/c902FjS+J6MqG3bq0lClEQWN3ofU616MVzWmKjfeDkwInYV
+ udajqmVksRHCRqNfDTcv3HFwtOnehedS5djUuUpREwARoR/HSjGC0Pmvjh2EUMHd7YP9TuPqD
+ MbR2naG08DBmLGXS5cJcj55onhiENctPapEwGWEamSlWdVlJzF0H/YpM1cnxRzcaqhRG/mHbZ
+ isxCuUx2N8Ptk2+cUHC1ehcGpNHua0StL0a/5mZyydOuQyozhZvnZpyLZqNDtzUwmHaTxZa+k
+ di3+RB5PjLynfqCbS0GSQ5hRUfU9KwpKVOZdEeJgy855GLoGgSqxUTzaBGqBNeyndyaHsRVow
+ DOAW7HtCH+7fypcCM3CDDsV0OfSCkXvxGk+Y2jzEDglDWyiwPTB1udm8Aa/Q4ZHStCaK+wW5Z
+ KIqEAZDireoiLFqXsoDU4Wyml9QUvb35tZZC96WR/Yn5RbWwcn/nErG4Pa0NeIwyKLt/WErTA
+ sCRCtG3+6hhamlnep0em38l/yijfXJgZsAPhtkWYFnEMD1KNu1Di3vdJetyePTN95CIYiFR2h
+ ykxZ+m9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Added --signoff flag to `git-merge` command, added test coverage,
-updated documentation.
+Hi Adam,
 
-Signed-off-by: lukaszgryglicki <lukaszgryglicki@o2.pl>
----
- Documentation/git-merge.txt  |  8 ++++++
- builtin/merge.c              |  4 +++
- t/t9904-git-merge-signoff.sh | 60 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 72 insertions(+)
- create mode 100755 t/t9904-git-merge-signoff.sh
+On Sun, 2 Jul 2017, Adam Dinwoodie wrote:
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 04fdd8cf086db..6b308ab6d0b52 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -64,6 +64,14 @@ OPTIONS
- -------
- include::merge-options.txt[]
- 
-+--signoff::
-+	Add Signed-off-by line by the committer at the end of the commit
-+	log message.  The meaning of a signoff depends on the project,
-+	but it typically certifies that committer has
-+	the rights to submit this work under the same license and
-+	agrees to a Developer Certificate of Origin
-+	(see http://developercertificate.org/ for more information).
-+
- -S[<keyid>]::
- --gpg-sign[=<keyid>]::
- 	GPG-sign the resulting merge commit. The `keyid` argument is
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 900bafdb45d0b..cb09f4138136b 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -70,6 +70,7 @@ static int continue_current_merge;
- static int allow_unrelated_histories;
- static int show_progress = -1;
- static int default_to_upstream = 1;
-+static int signoff;
- static const char *sign_commit;
- 
- static struct strategy all_strategy[] = {
-@@ -233,6 +234,7 @@ static struct option builtin_merge_options[] = {
- 	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
- 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
- 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
-+	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
- 	OPT_END()
- };
- 
-@@ -775,6 +777,8 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 	strbuf_stripspace(&msg, 0 < option_edit);
- 	if (!msg.len)
- 		abort_commit(remoteheads, _("Empty commit message."));
-+	if (signoff)
-+		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
- 	strbuf_release(&merge_msg);
- 	strbuf_addbuf(&merge_msg, &msg);
- 	strbuf_release(&msg);
-diff --git a/t/t9904-git-merge-signoff.sh b/t/t9904-git-merge-signoff.sh
-new file mode 100755
-index 0000000000000..eed15b9a85371
---- /dev/null
-+++ b/t/t9904-git-merge-signoff.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+
-+test_description='git merge --signoff
-+
-+This test runs git merge --signoff and make sure that it works.
-+'
-+
-+. ./test-lib.sh
-+
-+# A simple files to commit
-+cat >file1 <<EOF
-+1
-+EOF
-+
-+cat >file2 <<EOF
-+2
-+EOF
-+
-+cat >file3 <<EOF
-+3
-+EOF
-+
-+# Expected commit message after merge --signoff
-+cat >expected-signed <<EOF
-+Merge branch 'master' into other-branch
-+
-+Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
-+EOF
-+
-+# Expected commit message after merge without --signoff (or with --no-signoff)
-+cat >expected-unsigned <<EOF
-+Merge branch 'master' into other-branch
-+EOF
-+
-+
-+# We configure an alias to do the merge --signoff so that
-+# on the next subtest we can show that --no-signoff overrides the alias
-+test_expect_success 'merge --signoff adds a sign-off line' '
-+	git commit --allow-empty -m "Initial empty commit" &&
-+  git checkout -b other-branch &&
-+	git add file1 && git commit -m other-branch &&
-+  git checkout master &&
-+	git add file2 && git commit -m master-branch &&
-+  git checkout other-branch &&
-+  git config alias.msob "merge --signoff --no-edit" &&
-+	git msob master &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
-+	test_cmp expected-signed actual
-+'
-+
-+test_expect_success 'master --no-signoff does not add a sign-off line' '
-+	git checkout master &&
-+  git add file3 && git commit -m master-branch-2 &&
-+  git checkout other-branch &&
-+	git msob --no-signoff master &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
-+	test_cmp expected-unsigned actual
-+'
-+
-+test_done
+> I do the builds for the Cygwin distribution on my normal PC (so
+> reasonably powerful but definitely not devoted to the purpose), and
+> doing the build and running the default tests takes in the region of 8
+> hours for the 64-bit build and 12 hours for the 32-bit build.
 
---
-https://github.com/git/git/pull/381
+Wow. 8 hours. I take it that you are bitten by the same issue as Git for
+Windows, where Git's test suite uses Unix shell scripting rather heavily,
+and Unix shell simply requiring tons of expensive emulation to run
+decently on Windows.
+
+> At the moment, I'm trying to set up automated regular builds on my PC
+> using BuildBot.  I think that, short of someone donating some fairly
+> significant resources for Cygwin builds, that's going to be the closest
+> I'll be able to find for spotting problems early.  It's a project in my
+> currently limited spare time, though, and not something I've done
+> before, so it's taking a little while to get going.
+
+How automated is your process? (Including, most importantly, updating
+the Cygwin build setup...)
+
+I ask because I could possibly set up something using the existing
+infrastructure for Git for Windows' testing, as long as
+
+1) everything is scripted, and
+
+2) you do not need interactive access to any box (I mainly use Docker
+   containers to run the builds)
+
+If you are interested, feel free to ping me via private mail.
+
+Ciao,
+Johannes
