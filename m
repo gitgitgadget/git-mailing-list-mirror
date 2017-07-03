@@ -2,95 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3720A201A0
-	for <e@80x24.org>; Mon,  3 Jul 2017 12:34:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1220A201A0
+	for <e@80x24.org>; Mon,  3 Jul 2017 13:18:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753292AbdGCMe0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jul 2017 08:34:26 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60515 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752081AbdGCMeZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2017 08:34:25 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lug8u-1dsZra3wKu-00znrV; Mon, 03
- Jul 2017 14:34:15 +0200
-Date:   Mon, 3 Jul 2017 14:34:13 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Adam Dinwoodie <adam@dinwoodie.org>
-cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Jason Pyeron <jpyeron@pdinc.us>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: Continous Integration (was: RE: Git v2.13.1 SHA1 very broken)
-In-Reply-To: <20170702203548.GA26574@dinwoodie.org>
-Message-ID: <alpine.DEB.2.21.1.1707031429560.84669@virtualbox>
-References: <20170605203409.GB25777@dinwoodie.org> <CACBZZX6vOr+ZjUaAf8i1xdjEFfY_Exj+_Xn2-1u0RcWoLy+X1g@mail.gmail.com> <xmqq4lvtap3m.fsf@gitster.mtv.corp.google.com> <20170606100355.GC25777@dinwoodie.org> <xmqqmv9l8h5z.fsf@gitster.mtv.corp.google.com>
- <20170606124323.GD25777@dinwoodie.org> <6D15A44412C346E2822A74A91FDF77B1@blackfat> <CF387D0C-6743-4B88-A4CC-D6310A634E03@gmail.com> <20170702203548.GA26574@dinwoodie.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:0glQYbvc4qd3rbVqy/zX1c42n2eRQeiqT2D0bt+Cn7T5TxDA/9F
- rqv962yuiJ+fPO/1iUR4OZgXoMdvSCYv3uohB93ZOPkmimCgVLSgpSDq2sZ7N33VphWCevG
- BzuTkfgw/HNG7KHEwmxcQwj9d2zCFO5GwRIlYYbU5ZQy7NviXLiAux6lnnTs9HHSDejvV5O
- d710UxRHjz2PiY02wdX/g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3Fonns/Atek=:XCSCmwF5+7ToOfmge7ypfP
- 6Q1WXNNyjD6Zygva2dQL9XgMCLNOoFA19SyXM7QfoOIo62IhaC9pEEsgXsG+Y2KoljmtK0hsy
- r1Bg+ZTfFvTtXMT/QmyTI0/tfOMP5y0pXwpahfNmfBtwdpGCmlnOKIC0nS+lMtYXwIS/utnxA
- vm4pT3Rc4B/UWCybnZgk1HFs8FB21BI1GBCMRFz5rNN4O1pRXPKX591mR9Pm2QpQfzMLUfxeu
- qY/YIz/yQ396kAgNU13dTmqYu/c902FjS+J6MqG3bq0lClEQWN3ofU616MVzWmKjfeDkwInYV
- udajqmVksRHCRqNfDTcv3HFwtOnehedS5djUuUpREwARoR/HSjGC0Pmvjh2EUMHd7YP9TuPqD
- MbR2naG08DBmLGXS5cJcj55onhiENctPapEwGWEamSlWdVlJzF0H/YpM1cnxRzcaqhRG/mHbZ
- isxCuUx2N8Ptk2+cUHC1ehcGpNHua0StL0a/5mZyydOuQyozhZvnZpyLZqNDtzUwmHaTxZa+k
- di3+RB5PjLynfqCbS0GSQ5hRUfU9KwpKVOZdEeJgy855GLoGgSqxUTzaBGqBNeyndyaHsRVow
- DOAW7HtCH+7fypcCM3CDDsV0OfSCkXvxGk+Y2jzEDglDWyiwPTB1udm8Aa/Q4ZHStCaK+wW5Z
- KIqEAZDireoiLFqXsoDU4Wyml9QUvb35tZZC96WR/Yn5RbWwcn/nErG4Pa0NeIwyKLt/WErTA
- sCRCtG3+6hhamlnep0em38l/yijfXJgZsAPhtkWYFnEMD1KNu1Di3vdJetyePTN95CIYiFR2h
- ykxZ+m9
+        id S1754067AbdGCNSn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jul 2017 09:18:43 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:32874 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752820AbdGCNSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2017 09:18:42 -0400
+Received: by mail-pf0-f170.google.com with SMTP id e7so100344316pfk.0
+        for <git@vger.kernel.org>; Mon, 03 Jul 2017 06:18:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:disposition-notification-to:date
+         :mime-version:content-transfer-encoding;
+        bh=uyaL+7Tjm+V/28GTrB8jGA4ewIlWsQdnpBj44vuxhvk=;
+        b=Xesu5wHFyqjFbR2sP3dxuJKunvvtWufZBpZ0gC1nFIWDxjkLHpltRirrY2T/FTtkyY
+         veHz3cXZY5+WBXRuBJM/KI7gLJ9SjA6u/KyV1i4RyiEMbbt41F5kloeRrNojrd7cdGx/
+         XDUcx0Q7H1Sc1AO9s5WOIJiBWG0814YHhV1kBw59+6kKwdc331k6CXWTiP2Nj/jMHbgt
+         2lylx8CGjf/A5TSK//aQKLDu72kyjCasAZX5gVmC02FaRWdJq3cm9faV1Xal2X311oho
+         iAjlqsU9iLruReaLt7sHDhCj+q1j06r1JmYhVtcWtPLtYwzDE+i9SlwIQq4BiGDYSp8E
+         YGcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to
+         :disposition-notification-to:date:mime-version
+         :content-transfer-encoding;
+        bh=uyaL+7Tjm+V/28GTrB8jGA4ewIlWsQdnpBj44vuxhvk=;
+        b=OH5eKUstAWq/JYLkNL/faFO8ruw+vf06blzmkhDaYgn5E390OFyTkT9H5zB05NROr2
+         E52POJX2wyR8HnynkwHe+9E4R6jiEmnpQ/X1/KLS006z0kSMhV8CA8ycdoSTbJYVJhpR
+         wnS7lyydOrUPx56gQKpfMqfsA/lLqokqjJeS/deWuAqdNHqxJeshBqSdimINJ88HD0fL
+         6UXsybULRsb07P0LTbz6XK6Vq2P4w/irnlOvCL5Cf/P9UV7CLKn/BGVRqae49v63Lp4H
+         BXWK1Mg2jAikFick612K4b1nTv9f9YHeUw+eFYOo+ap8fv5a5JLXwgMqSSrA5i3at8Jb
+         v+RA==
+X-Gm-Message-State: AIVw113vKvBUh9dOcYosRc6WmR8PId4tw+Jvs2TkVAQAmmAefPgJU/vg
+        duOG2+65I/kLmXgpk3Y=
+X-Received: by 10.99.102.68 with SMTP id a65mr10506746pgc.252.1499087921909;
+        Mon, 03 Jul 2017 06:18:41 -0700 (PDT)
+Received: from unique-pc ([182.73.109.146])
+        by smtp.googlemail.com with ESMTPSA id u9sm38085637pfg.127.2017.07.03.06.18.39
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 03 Jul 2017 06:18:41 -0700 (PDT)
+Message-ID: <1499087898.4156.6.camel@gmail.com>
+Subject: Help needed for solving a few issues with building git
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Mon, 03 Jul 2017 18:48:18 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.22.6-1 
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Adam,
+Hello all,
 
-On Sun, 2 Jul 2017, Adam Dinwoodie wrote:
+Building without localization support
+------------------------------------
+I tried to build git from source without localization support by adding
+the following line to the Makefile,
 
-> I do the builds for the Cygwin distribution on my normal PC (so
-> reasonably powerful but definitely not devoted to the purpose), and
-> doing the build and running the default tests takes in the region of 8
-> hours for the 64-bit build and 12 hours for the 32-bit build.
+    NO_GETTEXT=1
 
-Wow. 8 hours. I take it that you are bitten by the same issue as Git for
-Windows, where Git's test suite uses Unix shell scripting rather heavily,
-and Unix shell simply requiring tons of expensive emulation to run
-decently on Windows.
+It doesn't seem to be working for reasons I'm unable to find. I used
+the following commands to build git.
 
-> At the moment, I'm trying to set up automated regular builds on my PC
-> using BuildBot.  I think that, short of someone donating some fairly
-> significant resources for Cygwin builds, that's going to be the closest
-> I'll be able to find for spotting problems early.  It's a project in my
-> currently limited spare time, though, and not something I've done
-> before, so it's taking a little while to get going.
+    make prefix=$CUSTOM_BUILD_LOCATION
+    make install prefix=$CUSTOM_BUILD_LOCATION
 
-How automated is your process? (Including, most importantly, updating
-the Cygwin build setup...)
+While trying to build (without the 'gettext' library that's required
+for localization) I get the following error,
 
-I ask because I could possibly set up something using the existing
-infrastructure for Git for Windows' testing, as long as
+    Manifying 8 pod documents
+        SUBDIR templates
+        MSGFMT po/build/locale/pt_PT/LC_MESSAGES/git.mo
+    /bin/sh: 1: msgfmt: not found
+    Makefile:2179: recipe for target
+    'po/build/locale/pt_PT/LC_MESSAGES/git.mo' failed
+    make: *** [po/build/locale/pt_PT/LC_MESSAGES/git.mo] Error 127
 
-1) everything is scripted, and
+    What could I be missing?
 
-2) you do not need interactive access to any box (I mainly use Docker
-   containers to run the builds)
 
-If you are interested, feel free to ping me via private mail.
+    Adding HTTPS support
+    --------------------
+    I tried to add HTTP/HTTPS support to the custom built version for which
+    AFAIK 'git' depends on 'curl'. I tried providing the location of the
+    curl source in the Makefile using the following line after reading the
+    instructions in the Makefile.
 
-Ciao,
-Johannes
+    CURLDIR=/path/to/curl/source
+
+    Even after doing this the custom built git errors with the following
+    message when I try to use the 'git fetch' command,
+
+    fatal: Unable to find remote helper for 'https'
+
+    Any thing I'm missing?
+
+    Note: In case you were wondering, I was able to build 'git' after
+    installing the dependant package which I find useless as I don't
+    require any localization messages.
+
+-- 
+Kaartic
