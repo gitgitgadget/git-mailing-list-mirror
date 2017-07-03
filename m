@@ -6,71 +6,110 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E795E202AB
-	for <e@80x24.org>; Mon,  3 Jul 2017 18:55:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 509A4201A0
+	for <e@80x24.org>; Mon,  3 Jul 2017 18:55:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753227AbdGCSzt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jul 2017 14:55:49 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:52948 "EHLO
+        id S1752913AbdGCSzs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jul 2017 14:55:48 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:52934 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752057AbdGCSzs (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Jul 2017 14:55:48 -0400
+        by vger.kernel.org with ESMTP id S1751907AbdGCSzr (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Jul 2017 14:55:47 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 57919280AE;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 251EE280AD;
         Mon,  3 Jul 2017 18:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1499108146;
-        bh=pe5YrZ54j2WuJd8S2/Cg8zTJd49z6hwLL+ENqZRwHXg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UuBWy0V0MbD8bst7Lla0nAA79P88SVJu1FPHMOxX89Tjs87Y2riwsEYdvORCti5FH
-         2m9kQY9A0kEBZgU3QjHQD9kvTJhpQ8eemDkIx510+QLUC7Ec5D+KQaaXZQI5bya33s
-         rg+GQiCAKWQSBjwNeSeg//9zttogeWk6b4pss2etqK9HLy1zj3gd+yA0Rg8SJo0m2W
-         87WmadY5Itf22lYTFfIe8eI1VGCK43kSPAfdQxSxWwD5jplapI7TRDOEY/Jmu+sQ9d
-         Si/RluRSTPSoK9Cdc8tSP/z/KlrNGSMwr9bIA18C9MXpzqnf/wFuaoyoWR+XyDqB4O
-         OY0R5/e1QIRhFQQaxthmzudtQKBuDug4yv348KorZDy5DaFPdbBzf+u6SjVBJVbnBD
-         YQ/7qPlcQ5+d51JfU7MZB3rLv0ujhrxV6vzcNTG7vmYMJ/7ti/EeaqDOrMedT74Fhn
-         LkQH2Ki+KVMhcKsLvUt4KJ7Xw1f7q1QLe+w5j/+wlo02jJa/LwB
+        bh=F4yzVUhQq8t1OAizbxgA0+vb9TdVtFhrTAXlv2XrCTc=;
+        h=From:To:Cc:Subject:Date:From;
+        b=NtqMGvDrQcDawGMuzLYDK9SXJCszjmrxRKI6hhObhf+wc9kD2aiRdnG2zQXOBpSAD
+         nR3FziuXDL4zdhmlpe+kkASN4yI6i5BCe3BQ+a+NdibJ+dNQtreyvP/ubUu7ToFkCp
+         CoQCSXKvgibS7lMv4tQx185ym123Ds6C0iyuEVB6PLuZ722icr/9gYhv/EyZf8uyo1
+         O4CFJTuu5U3E8RzlB0JC2xwH0lKXJKO/PFh99r7xnK4mkvXEvAm9idM73Sb3fqKqos
+         8MWVl1xST5ZExlOTjtOyck/j2oqV6YvhUo3gsW5OqxTFirHdieHgPJSvbloXMWn01G
+         5bn1cJq0TRPccSxb5P9a0i4aWx9RLW55M4/beXqzeRJcaIP8t3J9zQ0tgMOW3DFitq
+         hZP204S1uoZd/SF4B4vsLF9J+bKFMhq/dJiDWubewCt+7eLVYNzCsFt01Mvwcl4gDB
+         /Qo1k1eI+lhcjoVWfVyqZgXjmquNSBK33m27UJ1tPj4WWsnPsmR
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
         Stefan Beller <stefanbeller@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 01/12] builtin/fsck: convert remaining caller of get_sha1 to object_id
-Date:   Mon,  3 Jul 2017 18:55:22 +0000
-Message-Id: <20170703185533.51530-2-sandals@crustytoothpaste.net>
+Subject: [PATCH 00/12] object_id part 9
+Date:   Mon,  3 Jul 2017 18:55:21 +0000
+Message-Id: <20170703185533.51530-1-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.2.753.g7f5404b18
-In-Reply-To: <20170703185533.51530-1-sandals@crustytoothpaste.net>
-References: <20170703185533.51530-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- builtin/fsck.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+This is the ninth in a series of series to convert Git to use struct
+object_id.  This series converts the remaining callers of get_sha1 and
+friends to take and use struct object_id, and in doing so, renames them
+to get_oid and friends.
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 87c675689..d601d07fd 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -738,12 +738,12 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 	heads = 0;
- 	for (i = 0; i < argc; i++) {
- 		const char *arg = argv[i];
--		unsigned char sha1[20];
--		if (!get_sha1(arg, sha1)) {
--			struct object *obj = lookup_object(sha1);
-+		struct object_id oid;
-+		if (!get_oid(arg, &oid)) {
-+			struct object *obj = lookup_object(oid.hash);
- 
- 			if (!obj || !(obj->flags & HAS_OBJ)) {
--				error("%s: object missing", sha1_to_hex(sha1));
-+				error("%s: object missing", oid_to_hex(&oid));
- 				errors_found |= ERROR_OBJECT;
- 				continue;
- 			}
+It is possible there will be some other conflicts with in flight topics,
+as get_sha1 is commonly used in the codebase.  This is unavoidable to
+some extent, but should be kept in mind.  My experience is that usually
+the required changes for conversion are minimal.
+
+This series is much reduced in size thanks to the conversion work done
+by Brandon Williams in his earlier series touching the notes code.
+
+brian m. carlson (12):
+  builtin/fsck: convert remaining caller of get_sha1 to object_id
+  builtin/merge-tree: convert remaining caller of get_sha1 to object_id
+  submodule: convert submodule config lookup to use object_id
+  remote: convert struct push_cas to struct object_id
+  sequencer: convert to struct object_id
+  builtin/update_ref: convert to struct object_id
+  bisect: convert bisect_checkout to struct object_id
+  builtin/unpack-file: convert to struct object_id
+  builtin/verify-tag: convert to struct object_id
+  Convert remaining callers of get_sha1 to get_oid.
+  sha1_name: convert get_sha1* to get_oid*
+  sha1_name: convert GET_SHA1* flags to GET_OID*
+
+ apply.c                          |   4 +-
+ archive.c                        |   2 +-
+ bisect.c                         |  18 +--
+ builtin/am.c                     |   6 +-
+ builtin/cat-file.c               |   8 +-
+ builtin/commit-tree.c            |   4 +-
+ builtin/commit.c                 |   8 +-
+ builtin/fsck.c                   |   8 +-
+ builtin/grep.c                   |   8 +-
+ builtin/log.c                    |   4 +-
+ builtin/merge-tree.c             |   6 +-
+ builtin/receive-pack.c           |   4 +-
+ builtin/replace.c                |   4 +-
+ builtin/reset.c                  |  10 +-
+ builtin/rev-parse.c              |   8 +-
+ builtin/show-branch.c            |   8 +-
+ builtin/submodule--helper.c      |   8 +-
+ builtin/unpack-file.c            |  12 +-
+ builtin/update-ref.c             |  69 ++++++------
+ builtin/verify-tag.c             |   8 +-
+ cache.h                          |  45 ++++----
+ commit.c                         |   4 +-
+ config.c                         |  12 +-
+ config.h                         |   4 +-
+ mailmap.c                        |   6 +-
+ notes.c                          |   2 +-
+ refs.c                           |   2 +-
+ remote.c                         |   8 +-
+ remote.h                         |   2 +-
+ revision.c                       |  16 +--
+ sequencer.c                      |  65 +++++------
+ sha1_name.c                      | 234 +++++++++++++++++++--------------------
+ submodule-config.c               |  36 +++---
+ submodule-config.h               |  10 +-
+ submodule.c                      |  32 +++---
+ submodule.h                      |   2 +-
+ t/helper/test-submodule-config.c |  10 +-
+ transport-helper.c               |   2 +-
+ 38 files changed, 345 insertions(+), 354 deletions(-)
+
