@@ -2,138 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A63E201A0
-	for <e@80x24.org>; Mon,  3 Jul 2017 18:13:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9C60201A0
+	for <e@80x24.org>; Mon,  3 Jul 2017 18:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755297AbdGCSNz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Jul 2017 14:13:55 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:33575 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752233AbdGCSNy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Jul 2017 14:13:54 -0400
-Received: by mail-pf0-f178.google.com with SMTP id e7so103602898pfk.0
-        for <git@vger.kernel.org>; Mon, 03 Jul 2017 11:13:54 -0700 (PDT)
+        id S1753776AbdGCSUh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Jul 2017 14:20:37 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:34673 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753408AbdGCSUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Jul 2017 14:20:35 -0400
+Received: by mail-pg0-f65.google.com with SMTP id j186so23849904pge.1
+        for <git@vger.kernel.org>; Mon, 03 Jul 2017 11:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=eu+uT4i+hKWPiEo7Rbyula2kgZM+kuoZ0sHslI/VB7o=;
-        b=AhVRuoz+7GYogALsaBOHQAb3vSVZyKrBlUsWrH29XYSvO+dA67Pq8ffKteRO8NfrWq
-         IUEtbYRCO7SsvqDbP+IJ6pKrRH0jlyXEPlFiBvQTUMv0N/3LpU/uqASeVh4SHttazTl7
-         8mRqmxJI7bIrXDrOPwFn3T1UZjBg6irOWdGc8hvTxEp74CGIPJY7rYCr7GCNGFWu9LGR
-         YaJMzo2/5arFDr+kcXHUWV0UfFtOsN/C9+C4fCXsPOoHnB+tiO7aGBOx3z+DVML7RnMg
-         y96uDWS00e71UDQ/8qo5DM0RXj02wILVnTyNjdStfasjJm3kuTtIVRO1JNcsFyolr2in
-         sk6g==
+         :user-agent:mime-version;
+        bh=t5MHdEK0jZtlGRaNXCrFVjCBovZU23RRejzsijFW+NQ=;
+        b=d0Bpl+ze1hWdr3b+Dc0DxVWZuIr7wqJ/XhGahnkKc7QkZSgIDO/3rEpMfDDzn96HZO
+         +bGhewnqnjGSGLsA6oDa/tZ3rYk/pEi1Ld8WTsScM5bfqfaja4mRnV+NQegUFGxmmeAD
+         K7G3Hwc4jbc4umN4se8/NYjAE5OHOSGE5G7zkb+NzaXdTwcKAUHgX0XBpHCMix9mtMS1
+         EuHQ0UoIljcoLh04E4AK0THw+p+oi1G/PHlUpwa2EZQBfMZ5aJZxQ+MzCxomqUxyVnNb
+         7kNMxFVw591YcQTSCZE+hTKMzd5AGz3IihLFPD7y+V++8UxoHPmlW2vdp9GIo/4WzBoS
+         OdHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=eu+uT4i+hKWPiEo7Rbyula2kgZM+kuoZ0sHslI/VB7o=;
-        b=Ay274M4fN3x/RBc17IkCN+qM/lgR1y9iO4U6kSjM4QTDJprw0TdcS90JkbIFZJzDwy
-         UxqBT4kNIvFOKsrww03sUmOpd576aH44fPYBlprIeDmIraL834CXf0ZkEzNwib6nYVlH
-         R547kAHitrx1UBehE5QVUJUSVziKB6QO4E91zScZjRTrO3D1loJEjg7+JEqDyuwWZDRl
-         bNic+Cr8famWtziUlHFF11X4rBG0Go7UZNCo5bnC6vMunL6kBYXiHWh2W0b3sH21X6D/
-         O9rcp4KewyPGN3R0Yp7MzzsH76jgvYuC8d4w04m46+TJ/qQmOgJmWBRgpf6LQSY384c6
-         z9VA==
-X-Gm-Message-State: AIVw110dm7aA4mHeEQWc2iSLIrv6BphrBtUfsaKY0SkYLS2rUaCVkwuB
-        EVJ96jLAcXNzUg==
-X-Received: by 10.99.114.73 with SMTP id c9mr11288933pgn.267.1499105633914;
-        Mon, 03 Jul 2017 11:13:53 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=t5MHdEK0jZtlGRaNXCrFVjCBovZU23RRejzsijFW+NQ=;
+        b=m4jQzm07sco/riKJpUsohLXSVphjb6UXq7uatcry3V9Lt6Cv4XV2aZZz3MWH+6y/2O
+         6ytcyiodH3cFJiYuzr3hWfzBT1dLL6tgHKesLuXliZbvuJ5itjttFIX+ctN/u47AVmWg
+         DH/4xK9BcO4NsoJKgqkb4jGnpLXYPO2jUYsY2DJ3YpF9Ua+JzkGcZbSQ7pVtP8fhnE8O
+         t2YAIKrmUPlX6Nb6q8RCXlK0MB3pJbS+jasU0SuQwxRvepJOZdotrriCZhbj0AFkW0uE
+         C0W9YddUSwaoyJxdskZOSziZC8wYCEaEZEETy1U4/oc79r3zXd3AkLGyM0NPXpxojkbO
+         u19g==
+X-Gm-Message-State: AIVw1133T1fYUclkX2R8HByZTwzHPQseK4lj/U8gy4oFBmRil/joPKE8
+        IqzgrmP8HqbufA==
+X-Received: by 10.101.91.137 with SMTP id i9mr11531445pgr.27.1499106034927;
+        Mon, 03 Jul 2017 11:20:34 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:30:4739:ca21:b5b4])
-        by smtp.gmail.com with ESMTPSA id t67sm34016309pfj.98.2017.07.03.11.13.53
+        by smtp.gmail.com with ESMTPSA id b7sm40484825pfl.44.2017.07.03.11.20.33
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 03 Jul 2017 11:13:53 -0700 (PDT)
+        Mon, 03 Jul 2017 11:20:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Help needed for solving a few issues with building git
-References: <1499087898.4156.6.camel@gmail.com>
-Date:   Mon, 03 Jul 2017 11:13:52 -0700
-In-Reply-To: <1499087898.4156.6.camel@gmail.com> (Kaartic Sivaraam's message
-        of "Mon, 03 Jul 2017 18:48:18 +0530")
-Message-ID: <xmqqshidl76n.fsf@gitster.mtv.corp.google.com>
+To:     "Philip Oakley" <philipoakley@iee.org>
+Cc:     <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jun 2017, #09; Fri, 30)
+References: <xmqqk23tp2jk.fsf@gitster.mtv.corp.google.com>
+        <4374FA169AD7465AA39BDB477A348B02@PhilipOakley>
+Date:   Mon, 03 Jul 2017 11:20:33 -0700
+In-Reply-To: <4374FA169AD7465AA39BDB477A348B02@PhilipOakley> (Philip Oakley's
+        message of "Sun, 2 Jul 2017 15:26:02 +0100")
+Message-ID: <xmqqo9t1l6vi.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-> Hello all,
+> Junio,
+> Is it possible to include a table of contents that lists the
+> integration branches, split by your categories, to help find areas of
+> interest?
 >
-> Building without localization support
-> ------------------------------------
-> I tried to build git from source without localization support by adding
-> the following line to the Makefile,
+> [Graduated to "master"]
+> * topic list
+> [New Topics]
+> [Stalled]
+> [Cooking]
+> [Discarded]
 >
->     NO_GETTEXT=1
->
-> It doesn't seem to be working for reasons I'm unable to find. I used
-> the following commands to build git.
->
->     make prefix=$CUSTOM_BUILD_LOCATION
->     make install prefix=$CUSTOM_BUILD_LOCATION
->
-> While trying to build (without the 'gettext' library that's required
-> for localization) I get the following error,
->
->     Manifying 8 pod documents
->         SUBDIR templates
->         MSGFMT po/build/locale/pt_PT/LC_MESSAGES/git.mo
->     /bin/sh: 1: msgfmt: not found
->     Makefile:2179: recipe for target
->     'po/build/locale/pt_PT/LC_MESSAGES/git.mo' failed
->     make: *** [po/build/locale/pt_PT/LC_MESSAGES/git.mo] Error 127
->
->     What could I be missing?
+> The TOC wouldn't need the [] or * markings if that's a problem.
 
-There is
+I am not sure what you are asking.  Is this the command you are
+looking for?
 
-    ifndef NO_GETTEXT
-    all:: $(MOFILES)
-    endif
+ $ grep -e "^[[*]" whats-cooking.txt
 
-which attempts to avoid generating *.mo files, but that does not
-seem to be working.
-
->
->
->     Adding HTTPS support
->     --------------------
->     I tried to add HTTP/HTTPS support to the custom built version for which
->     AFAIK 'git' depends on 'curl'. I tried providing the location of the
->     curl source in the Makefile using the following line after reading the
->     instructions in the Makefile.
->
->     CURLDIR=/path/to/curl/source
-
-Shouldn't this point at an installed location (iow, we do not build
-curl from the source while building Git)?
-
-    # Define CURLDIR=/foo/bar if your curl header and library files are in
-    # /foo/bar/include and /foo/bar/lib directories.
-
-
->     Even after doing this the custom built git errors with the following
->     message when I try to use the 'git fetch' command,
->
->     fatal: Unable to find remote helper for 'https'
-
-This is probably because you are trying to run without installing?
-Ask the "git" you built what its --exec-path is, and run "ls" on
-that directory to see if you have git-remote-https installed?
-
-Trying a freshly built Git binaries without installing is done by
-setting GIT_EXEC_PATH to point at bin-wrappers/ directory at the
-top-level of your build tree (that is how our tests can run on an
-otherwise virgin box with no Git installed).
