@@ -2,87 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C4B6202AC
-	for <e@80x24.org>; Tue,  4 Jul 2017 20:03:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C72A7202AC
+	for <e@80x24.org>; Tue,  4 Jul 2017 21:24:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752201AbdGDUD0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jul 2017 16:03:26 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:36374 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752161AbdGDUDZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jul 2017 16:03:25 -0400
-Received: by mail-pf0-f173.google.com with SMTP id q86so119063823pfl.3
-        for <git@vger.kernel.org>; Tue, 04 Jul 2017 13:03:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=iu9Am5RNKlAyZLpGdLmdmvYpeH0rNhAnZeGG4acH7CY=;
-        b=ZV8QffJ55MxPrAJRiSyRQt7w6AZ9VzETVrmRCSEDmbXH8FoqoLwB9+rY8NFjOqRMiR
-         Sm6JEuo15cnfIHGfq4Pxds+TrKCsfI0uG2+jMtS+cC11DBsi4/p2dmRalePglJOssLiH
-         ZX1LsC6lVzRURdKIIY+q/59HbTft3DK/saHtytCCD0rJyi1j+d7e8W/9vPmVf0vJ026G
-         pIYFN6rFm9KKfoNefO1AHVeCXfywJzuQhAJFUTzjxev2KAz7hSOsjBc8zYspjRFaVkjr
-         Do7ngO2HUBu2JeiwO9HGWW/uIt+AVy/Wk6AExlA+0oRPq5J5iDY/B7tx4uqAAuwshOoO
-         DtaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=iu9Am5RNKlAyZLpGdLmdmvYpeH0rNhAnZeGG4acH7CY=;
-        b=I8uyfcN4ic+hCx4ahyrZI5tZbfa2OWmgJhXFp6cN17ZMySLpgh5cvFHPU4tLYrvspo
-         sMlJ61x5UNC6Yq/96COk/amqUQJRdH7AsDwxbCDPgwDP3v3oyEJncA2BVujwKqIQ4gtG
-         aCGbNSaEZnH0qIVIuRxG1K4b8n/1GO0SfbHRokdY9be6SzF8TEH7gsEficP2u16wuSBc
-         +HK5GIMZpkzlzMKDbicFMS4V2Z1oOM+xwF54R9g8QH8jraabtFMbBVZCeWEk67GE67od
-         FiqOVnqMqW3kbGzh413uqp+iKHfb08cTsaJrLtSzFURlyinjNrM5Gh7TBtHwsGvkMlZF
-         oRug==
-X-Gm-Message-State: AIVw111yw3ifLNOriuNQDh7AVhGEhTyr/3p/UPpDEGhCMSom0gjc+eEQ
-        9f2NAmDkPGVXZA==
-X-Received: by 10.99.117.68 with SMTP id f4mr11172135pgn.56.1499198604626;
-        Tue, 04 Jul 2017 13:03:24 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id g15sm41650956pfe.70.2017.07.04.13.03.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 04 Jul 2017 13:03:24 -0700 (PDT)
-Message-ID: <1499198607.6428.9.camel@gmail.com>
-Subject: Re: Why doesn't merge fail if message has only sign-off?
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Wed, 05 Jul 2017 01:33:27 +0530
-In-Reply-To: <xmqq60f9mo6b.fsf@gitster.mtv.corp.google.com>
-References: <1498996988.26970.1.camel@gmail.com>
-         <xmqq60f9mo6b.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        id S1752380AbdGDVYP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jul 2017 17:24:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59542 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752169AbdGDVYL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jul 2017 17:24:11 -0400
+Received: (qmail 27837 invoked by uid 109); 4 Jul 2017 21:24:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 04 Jul 2017 21:24:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3829 invoked by uid 111); 4 Jul 2017 21:24:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 04 Jul 2017 17:24:20 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Jul 2017 17:24:08 -0400
+Date:   Tue, 4 Jul 2017 17:24:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
+        Sahil Dua <sahildua2305@gmail.com>
+Subject: Re: Truncating HEAD reflog on branch move
+Message-ID: <20170704212408.xy6jciggoueq6qsu@sigill.intra.peff.net>
+References: <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net>
+ <xmqqziczkh4k.fsf@gitster.mtv.corp.google.com>
+ <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
+ <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
+ <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
+ <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
+ <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
+ <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
+ <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
+ <20170704195806.ndbykl776t3vigya@genre.crustytoothpaste.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170704195806.ndbykl776t3vigya@genre.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2017-07-03 at 10:21 -0700, Junio C Hamano wrote:
-> I think that it is not by design that it doesn't fail.  It's not
-> like we decided to allow s-o-b only merge because we found a reason
-> why it is a good idea to do so.
-> 
-> So I do not think anybody minds too deeply if somebody came up a
-> patch to "fix" it.  It's just that nobody tried to create such a
-> silly merge in real life so far (I do not think you did, either--you
-> found this out by playing around trying to find corner cases, no?)
-> 
-Yes and no. I found this out while playing around with the "insert
-notes in the commit template" patch I sent previously. I wasn't trying
-to find corner cases, though.
+On Tue, Jul 04, 2017 at 07:58:06PM +0000, brian m. carlson wrote:
 
--- 
-Kaartic
+> > And here's one more patch on top of those that's necessary to get the
+> > tests to pass (I don't expect anybody to necessarily be applying this
+> > slow string of patches; it's just to show the direction I'm looking in).
+> 
+> I've looked at your original patch, which modified reflog-walk.c, and it
+> does fix the issue.  I'm happy to send in a patch with that and a test
+> (provided you're okay with me adding your sign-off), or if you wanted to
+> send in something a bit more complete, like the series of patches here,
+> that's fine, too.
+
+I've been on vacation for the past week, but wrapping this up is on my
+todo. I'll try to get to it tonight.
+
+-Peff
