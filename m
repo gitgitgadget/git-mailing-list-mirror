@@ -2,66 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EB57202A7
-	for <e@80x24.org>; Tue,  4 Jul 2017 07:19:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35344202A7
+	for <e@80x24.org>; Tue,  4 Jul 2017 08:10:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752081AbdGDHTN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jul 2017 03:19:13 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:40892 "EHLO
-        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751631AbdGDHTM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jul 2017 03:19:12 -0400
-Received: from tigra (tigra.domain007.com [192.168.2.102])
-        by hermes.domain007.com (Postfix) with ESMTP id DF3C4D400BD;
-        Tue,  4 Jul 2017 10:19:09 +0300 (MSK)
-Date:   Tue, 4 Jul 2017 10:19:09 +0300
-From:   Konstantin Khomoutov <kostix+git@007spb.ru>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git ML <git@vger.kernel.org>
-Subject: Re: Should "head" also work for "HEAD" on case-insensitive FS?
-Message-ID: <20170704071909.phs4bf5ybdord2lv@tigra>
-References: <87ziclb2pa.fsf@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+        id S1752100AbdGDIKw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jul 2017 04:10:52 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:55161 "EHLO
+        continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752141AbdGDIKw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jul 2017 04:10:52 -0400
+X-Greylist: delayed 770 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Jul 2017 04:10:51 EDT
+Received: (from krey@localhost)
+        by continuum.iocl.org (8.11.3/8.9.3) id v647vwD22637;
+        Tue, 4 Jul 2017 09:57:58 +0200
+Date:   Tue, 4 Jul 2017 09:57:58 +0200
+From:   Andreas Krey <a.krey@gmx.de>
+To:     git@vger.kernel.org
+Subject: Flurries of 'git reflog expire'
+Message-ID: <20170704075758.GA22249@inner.h.apk.li>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87ziclb2pa.fsf@gmail.com>
-User-Agent: NeoMutt/20170306 (1.8.0)
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 04, 2017 at 12:00:49AM +0200, Ævar Arnfjörð Bjarmason wrote:
+Hi everyone,
 
-> I don't have a OSX box, but was helping a co-worker over Jabber the
-> other day, and he pasted something like:
-> 
->     $ git merge-base github/master head
-> 
-> Which didn't work for me, and I thought he had a local "head" branch
-> until realizing that of course we were just resolving HEAD on the FS.
-> 
-> Has this come up before? I think it makes sense to warn/error about
-> these magic /HEAD/ revisions if they're not upper-case.
-> 
-> This is likely unintentional and purely some emergent effect of how it's
-> implemented, and leads to unportable git invocations.
+how is 'git reflog expire' triggered? We're occasionally seeing a lot
+of the running in parallel on a single of our repos (atlassian bitbucket),
+and this usually means that the machine is not very responsive for
+twenty minutes, the repo being as big as it is.
 
-JFTR this is one common case of confusion on Windows as well.
-To the point that I saw people purposedly using "head" on StackOverflow
-questions.  That is, they appear to think (for some reason) that
-branches in Git have case-insensitive names and prefer to spell "head"
-since it (supposedly) easier to type.
+The server is still on git 2.6.2 (and bitbucket 4.14.5).
 
-I don't know what to do about it.
-Ideally we'd just have a way to perform a final check on the file into
-which a ref name was resolved to see its "real" name but I don't know
-whether all popular filesystems are case preserving (HFS+ and NTFS are,
-IIRC) and even if they are, whether the appropriate platform-specific
-APIs exists to perform such a check.
+Questions:
 
+What can be done about this? Cronjob 'git reflog expire' at midnight,
+so the heuristic don't trigger during the day? (The relnotes don't
+mention anything after 2.4.0, so I suppose a git upgrade won't help.)
+
+What is the actual cause? Bad heuristics in git itself, or does
+bitbucket run them too often (improbable)?
+
+Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
