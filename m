@@ -2,115 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8908F201A0
-	for <e@80x24.org>; Tue,  4 Jul 2017 14:45:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74E3A202AC
+	for <e@80x24.org>; Tue,  4 Jul 2017 17:26:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751972AbdGDOpw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jul 2017 10:45:52 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:53584 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750872AbdGDOpv (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 4 Jul 2017 10:45:51 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0C16B280AD;
-        Tue,  4 Jul 2017 14:45:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1499179550;
-        bh=FAbCi0yLsjyNBnVfxwMteFrbGfgdMON3Mi4hvjzmUwg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fP91ovrqG0dtUKQOynjvzDh5zXtCvWgDJZsqiaht71fGAyMxfh0N4ELCE4OQpjq8R
-         OFptAz1HA076ji19sdq8ygLrpASU3LLFUXiMfR5i4HABy84lOkU27HnaLRJZmj9oJ7
-         YM+d7pPF11oSNs08qG5l2okyz9pMtFGir1kIMZb/+0twBAkxvCMqlQn18ZEj+YJZ35
-         C7BQPck3Cu47gNllQ3AAZoIHoE4iH0c5WpdBNUyK0X7hesfWvs2lX55KWyLGMrXxPe
-         SBwcYOL2KwjvOlkbOGFfQ9tBm+Q43mcVLjpIc+kaXRiBkySRbYjX6Oix2o5Wg1tAfC
-         s2Xvl5wbGk4F7ae0/auexIiAeve+FpLp3CqFnKIAeuiWOCST66EmLPXdVsHL2uE1OL
-         fFA7U1oVZSPR5Q4s8hqosryY6cNET/yMs5st8yMGqRji/8aYdclnjOF41+IfGc0dh8
-         gMjqcnykzDhznt7I6tifLVTySi0nWMJEzIkN1pm6xaIvdH40Ky9
-Date:   Tue, 4 Jul 2017 14:45:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S1752447AbdGDR0u (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jul 2017 13:26:50 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35248 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752415AbdGDR0t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jul 2017 13:26:49 -0400
+Received: by mail-pf0-f193.google.com with SMTP id q85so2060109pfq.2
+        for <git@vger.kernel.org>; Tue, 04 Jul 2017 10:26:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=cY5FNWVN+s4Mk//jukQycghPozgPAShfl5XDdA4NlOE=;
+        b=jA9p0oTLLo5L1qu15QQEcuUz4nQEqeoi2PF4pGVvaTX0fpD3YGgyTbTlu9pMszcdEs
+         jhV/3OKvV+thSQLC3AlrwgIHS2sKlUrO7fuvgmJuBNDoNozpG7vT80M50w/fXegSzZuo
+         hf+dAPxojZ+lu7QZq540T2jRMNaV+1b1uGE6/6ig85bcXR5/fQR6ikjBCYXCXMaOCn7f
+         bp4uw4R8/37ZC6cbOc5mj3JrdF4kZLuUnurDY9L6QxJg0C5+letTHUuWvP1vC/51Vdmn
+         OrrWoZkmdRdp6q7AeNMidso69pQqccvDLBFTaaVKhH22+lylAABMmJArfZOlfqIcAdPU
+         5now==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=cY5FNWVN+s4Mk//jukQycghPozgPAShfl5XDdA4NlOE=;
+        b=C9Qs1lzoG01zmrMLuJRLm5JwLo0Yuh19kAGDpi3lIXH37/M1HHa2Y70ikhUnHWbgFn
+         aljrCAgi2FJ19r6/SOd8Z79l6qKIExoTI8wp8yT3ePJWXKvnYysgkTIUZqVV18pKKqJ4
+         nKtbkSZLJ/PWmNMJ0NC/7J84HLE9jkbs7/17NALYYF8I1ARzsrP28qf1XVjPodcvaubK
+         4XKe05px6+XathmgrJ7lL/pFZ3kFMpU09mnoVSIAYwz2GspxHd+fus/RdKQf/KfYx6x9
+         Ux7wtUtoilnYl7mpaVM/7Pe//IBFbbeHBo7LkEaZPi7bi7Qk5wE7D8+NGu8I8nUj8U1c
+         NKHQ==
+X-Gm-Message-State: AIVw111cEA637YSA0+61dP2CURXqPmQxX8JcAsRYWxqff1NidJXn344+
+        N8OfDw+BvrtvUQ==
+X-Received: by 10.84.128.39 with SMTP id 36mr17358801pla.226.1499189208469;
+        Tue, 04 Jul 2017 10:26:48 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:58ac:d78a:789c:c809])
+        by smtp.gmail.com with ESMTPSA id g10sm45790663pfc.38.2017.07.04.10.26.47
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 04 Jul 2017 10:26:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 06/12] builtin/update_ref: convert to struct object_id
-Message-ID: <20170704144544.zo2lkf2p7jnzxyzf@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Stefan Beller <stefanbeller@gmail.com>, Jeff King <peff@peff.net>
-References: <20170703185533.51530-1-sandals@crustytoothpaste.net>
- <20170703185533.51530-7-sandals@crustytoothpaste.net>
- <8737adckkc.fsf@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Michael Kebe <michael.kebe@gmail.com>,
+        "Liam R . Howlett" <Liam.Howlett@Oracle.com>,
+        Adam Dinwoodie <adam@dinwoodie.org>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v3 2/3] sha1dc: optionally use sha1collisiondetection as a submodule
+References: <20170701220547.10464-1-avarab@gmail.com>
+        <20170627121718.12078-1-avarab@gmail.com>
+        <20170701220547.10464-3-avarab@gmail.com>
+        <xmqqa84lmonj.fsf@gitster.mtv.corp.google.com>
+        <874lutclie.fsf@gmail.com>
+Date:   Tue, 04 Jul 2017 10:26:46 -0700
+In-Reply-To: <874lutclie.fsf@gmail.com> (=?utf-8?B?IsOGdmFyIEFybmZqw7Zy?=
+ =?utf-8?B?w7A=?= Bjarmason"'s message
+        of "Mon, 03 Jul 2017 22:29:13 +0200")
+Message-ID: <xmqq4luskt9l.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="36vjxheipz6jqhjd"
-Content-Disposition: inline
-In-Reply-To: <8737adckkc.fsf@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-3-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
---36vjxheipz6jqhjd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>>> diff --git a/.gitmodules b/.gitmodules
+>>> new file mode 100644
+>>> index 0000000000..cbeebdab7a
+>>> --- /dev/null
+>>> +++ b/.gitmodules
+>>> @@ -0,0 +1,4 @@
+>>> +[submodule "sha1collisiondetection"]
+>>> +	path = sha1collisiondetection
+>>> +	url = https://github.com/cr-marcstevens/sha1collisiondetection.git
+>>> +	branch = master
+>>
+>> Do we need to say this "branch" bit?
+>
+> Yes, it's to make future updates easier, see b928922727 ("submodule add:
+> If --branch is given, record it in .gitmodules", 2012-12-19).
 
-On Mon, Jul 03, 2017 at 10:49:39PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> On Mon, Jul 03 2017, brian m. carlson jotted:
-> > [...]
-> >  1 file changed, 34 insertions(+), 35 deletions(-)
-> > [...]
-> >  	struct strbuf err =3D STRBUF_INIT;
-> >  	char *refname;
-> > -	unsigned char new_sha1[20];
-> > -	unsigned char old_sha1[20];
-> > +	struct object_id new_oid, old_oid;
-> > [...]
->=20
-> It's easier to skim these when you leave changes in the number of lines
-> to separate commits which do more than just rename boilerplate code,
-> e.g. as in 05/12 where `const char *p` is introduced.
+Why?  It's not like we want to _follow_ the 'master' branch of that
+sha1collisiondetection repository.  We declare that a specific
+commit from the (sub)module is suited for our project, and do not
+really care to automatically update from whatever happens to be at
+the tip of 'master' there.
 
-I can do that in the future.  I've received feedback in the past that I
-could coalesce them into one line instead of needing multiple lines, but
-since I don't have a preference either way, I'm happy to do whatever
-makes review easier.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---36vjxheipz6jqhjd
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.21 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAllbqhgACgkQv1NdgR9S
-9otBohAAo9Ou2pztvJkFuJ8fFlgbwiuSaFS94rYo5QJ8h+IdYwufnAzTLKKjyjMk
-mjcnEez+qhLLq4ahRIbQmYxpjtoELZMBkwE97gid3q/ezYq6OmZzN+Kxpf83gUc3
-8tTmdadnnKMpcDigtjtB1q9bPNPVUrdGrrHabFHwEkmlP8k2ON0oBqjN6nbIjy/j
-+DVZrGc++LWDgB//niYTjnGU8U1RhYcPtVLAzNGcA/f77qz12KClo1A4pnAHty0Q
-L8MJQuQqqa+KPV5u02nL8UnKzd1bFwseJeoZFJdICL2jxJHmqKux8LUKxDg5vdgf
-kFMDqXm8l78Q+CLWIojiJbUF4in3SlvuC+1Hx+32Re9h+8eB5IfoYlJVr3AcVkTh
-7mmeaRJZw55V+f3uhc2VTc822CfrZKD2WFU59AT2kFvOzCPXCga0uVl6Z0oXW6aK
-N1aphayP9ALPvSmRj4XFFedknhJcPLrR2DVAQqqOKtZO1CtdwaKUp3jFllTYmTe1
-bWLzh50deqdRu1pKYiRiYnYVRVYiLUCEkLI0gVj6iawrufK7+4xtEcdRAAGY1m7K
-N/mv0tRo8M8XYinuNAKZmhc88f42qM9XOQNmEaz6+Lz7OrpgHSra6rh0B6dOWI4C
-wFZJolCzLlk6z8pKg5cxL32+asWJkTh+7y849CndNlT1RfPsgIo=
-=x9IR
------END PGP SIGNATURE-----
-
---36vjxheipz6jqhjd--
+>
+>> Other than that looks good to me.
+>>
+>> Thanks.
