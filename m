@@ -2,120 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C32BF202AC
-	for <e@80x24.org>; Tue,  4 Jul 2017 19:16:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73A31202AC
+	for <e@80x24.org>; Tue,  4 Jul 2017 19:58:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752220AbdGDTQo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jul 2017 15:16:44 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34104 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752212AbdGDTQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jul 2017 15:16:43 -0400
-Received: by mail-pg0-f68.google.com with SMTP id j186so28407796pge.1
-        for <git@vger.kernel.org>; Tue, 04 Jul 2017 12:16:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=d83+nB8CT0tbCbalTdreZeNkEWQZLNhHEbUXgF6GRxQ=;
-        b=n6muLgzDESng+8MbPXzuWgbKoOO4iDyGfhl4moFooZBypYHTjG7RaadjoLAjwJIR5p
-         naNRzLHQaP2/Y8bX4uF7GmNZJu5enXlXY+O3VnvZK5yTLflKC7fRqRz/j/mD1B/5FqxS
-         BpO4LcpJfpRVPaR4gtlVkkFXU+NAOi9jVIf/ZCLwwa3hAbWvPprHjNI5f8Y7qzEYYm78
-         Xgb5ZaL+xl1zWG5PqvVsJl10IUI56WpnxCZNijCXf4GWTn8WhyeOn2cPR6cF47kP5ts+
-         KG7mFQXJhB5ntfwP1QMsPho6nFaz0zHEXZIr7E3ng6o0y9QA4yBo8U730bbbfEMJDOgh
-         bvCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=d83+nB8CT0tbCbalTdreZeNkEWQZLNhHEbUXgF6GRxQ=;
-        b=VD2LhJcsQl7J4VsGfUv6NaSL5ywbjiBqwZRs9DGWKS83SJKJgX4u+rimNsoFBVCmWW
-         XQs1wgKMJX1Gf0DV/mKy7rgWBPLcIbS7MC12D9nHT6LJg/E8RvFCHrtqpGAHs4F+OiPa
-         qsn7KwruJCavTQanfs2RVOYvlQ7O6Ty/X3Hi/g1VZfk8AVONd5nP0j7jUnCuV0R4u+NY
-         YAP+2idC0kqUuxkW0ueo7av29k40zakjoiq6qQjKAiNHVkaPjPov8EH6T77iAlSyhYnv
-         mD2Nhdz5O8kiXKSexg5EQovbwdEqixOhUrdkibV/055UM1U0GK9cv+4DpK1sCoM8lpjQ
-         2PjA==
-X-Gm-Message-State: AIVw110qbGxRtnEnqrexYmE7hjltQt31sMyNHdCw9QJoG5n/52ml0omF
-        dwdOnyLckc3FBg==
-X-Received: by 10.84.133.7 with SMTP id 7mr13040591plf.32.1499195802732;
-        Tue, 04 Jul 2017 12:16:42 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id e90sm42669516pfd.75.2017.07.04.12.16.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 04 Jul 2017 12:16:42 -0700 (PDT)
-Message-ID: <1499195804.6428.2.camel@gmail.com>
-Subject: Re: "git intepret-trailers" vs. "sed script" to add the signature
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 05 Jul 2017 00:46:44 +0530
-In-Reply-To: <xmqqh8ytmp7y.fsf@gitster.mtv.corp.google.com>
-References: <20170630154306.26993-1-kaarticsivaraam91196@gmail.com>
-         <xmqq1sq1togq.fsf@gitster.mtv.corp.google.com>
-         <1498918546.4321.1.camel@gmail.com> <1498925790.4321.7.camel@gmail.com>
-         <xmqqh8ytmp7y.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        id S1752179AbdGDT6O (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jul 2017 15:58:14 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:53736 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752161AbdGDT6N (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 4 Jul 2017 15:58:13 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5EDAF280AD;
+        Tue,  4 Jul 2017 19:58:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1499198292;
+        bh=Ur5jtZfP2u/mCEFY9Pny6kJBaJvuNLBuiXula9+LGXQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jn0BSYUssbflYjLXejmqzTe3V62BYlL2OdVMGSMgxXzsEKG6qm5LrBMSC79wxyPLk
+         RGrhdyvTDBIPmZuqfw29UMX8P23bsCz2NoieWFnipdHsEFeeEqG3jTKp8Nx5rMnqGj
+         ETai96y8FqQ8lsRviIHQiAIt3yC/cUc5lf8ZEQDNKH+CNdUnT3WB6SS7oP8DLH1pyf
+         t7AXMj0TcuSdXwoxWFuEGTKOOHB35jYshNHyC2OXr1UeP09PT1hbR/5zl6ui8+FSD9
+         YAi254P3vLHt1ro18TY10ZHu2orE4wubQgKym9Q/DOxv/WerSiEJNfNyYRZp6B7C6o
+         iZGh8utVQZbKnCuHTkwYdFEgYz7C9BPn/sQbWl9LKpt2CdE+kMjQjWKBis1B4YU+wc
+         nJ+zmFTiKgl5o5E0F1qXCJKifnUV3ktwKyNpW9tkmP33HfAIitlewqLbuC9F1Cc/ia
+         lWRyQPnccFugJ75SWb5DLeeWFq6E8mnSHXiQz3q5YToFq15Twcf
+Date:   Tue, 4 Jul 2017 19:58:06 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>,
+        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
+Subject: Re: Truncating HEAD reflog on branch move
+Message-ID: <20170704195806.ndbykl776t3vigya@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
+        Sahil Dua <sahildua2305@gmail.com>
+References: <87efud7xjd.fsf@kyleam.com>
+ <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net>
+ <xmqqziczkh4k.fsf@gitster.mtv.corp.google.com>
+ <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
+ <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
+ <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
+ <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
+ <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
+ <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
+ <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="dl57uqa5kfxbrnlo"
+Content-Disposition: inline
+In-Reply-To: <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.11.0-1-amd64)
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2017-07-03 at 09:58 -0700, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
-> 
-> > So, it seems that excepting for 'commit' it has quite a nice
-> > spacing. I
-> > guess we could add something like the following to fix that,
-> > 
-> >     # Add new line after SOB in case of "git commit"
-> >     NEW_LINE='\
-> >     '
-> >     if [ -z "$2" ]
-> >     then
-> >       sed -i "1i$NEW_LINE" "$1"
-> >     fi
-> 
-> Isn't "sed -i" GNUism that is not portable?
-> 
-It does seem to be the case. Then the alternative would be the
-following,
 
-    if [ -z "$2" ]
-    then
-      sed -e "1i$NEW_LINE" "$1" >"sed-output.temp"
-      mv "sed-output.temp" "$1"
-    fi
+--dl57uqa5kfxbrnlo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Actually the GNU's sed documentation tricked me into believing '-i'
-wasn't a GNU extension. The '-i' option works with the '--posix' option
-of GNU sed which made me believe it isn't an extension.
+On Thu, Jun 22, 2017 at 11:13:15PM -0400, Jeff King wrote:
+> On Thu, Jun 22, 2017 at 06:25:46PM -0400, Jeff King wrote:
+>=20
+> > So here's a patch on top of what I posted before that pushes the reflog
+> > check into the loop (it just decides whether to pull from the reflogs or
+> > from the commit queue at the top of the loop).
+> >=20
+> > I was surprised to find, though, that simplify_commit() does not
+> > actually do the pathspec limiting! It's done by
+> > try_to_simplify_commit(), which is part of add_parents_to_list(). I
+> > hacked around it in the later part of the loop by calling
+> > try_to_simplify myself and checking the TREESAME flag. But I have a
+> > feeling I'm missing something about how the traversal is supposed to
+> > work.
+> >=20
+> > This does behave sensibly with "--no-merges" and "--merges", as well as
+> > pathspec limiting.
+>=20
+> And here's one more patch on top of those that's necessary to get the
+> tests to pass (I don't expect anybody to necessarily be applying this
+> slow string of patches; it's just to show the direction I'm looking in).
 
-> > I'll send a typical patch that uses "git interpret-headers" as a
-> > follow-up.
-> 
-> When you say a "typical" patch, what do you exactly mean?  Does
-> anybody else send typical patches (or atypical ones for that matter)
-> to the list?
-> 
-I apologise for the inconsistent wordings. I try to mean a patch which
-I'm not sure is acceptable (or) not. I guess that's [PATCH/RFC] in the
-language of this list. I'm not acquainted to the wordings as I'm an
-"off-list" person trying to help and get help! I'll try to use
-consistent wordings as far as I could. Once again, please excuse my
-ignorance.
+I've looked at your original patch, which modified reflog-walk.c, and it
+does fix the issue.  I'm happy to send in a patch with that and a test
+(provided you're okay with me adding your sign-off), or if you wanted to
+send in something a bit more complete, like the series of patches here,
+that's fine, too.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
--- 
-Kaartic
+--dl57uqa5kfxbrnlo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.21 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAllb804ACgkQv1NdgR9S
+9otqYxAAyI8vfVOI7HKWJ+gZv9ZlufUK8vZARdJt0L0vEGlbJEh+GOyBT1Hc4bh2
+v3YCs1/WEDjQJtS9Y/wDCj9vSaH4BubKcd/aKrx7BuYYcbj1YSMbA6lsXw1rC4mR
+wuLphki990Sz3wdsuadVrwQ/RlGGT2Fju14Iwgry+CY3dG+McpcahBLhHM6WKfyG
+nrcB9ylXwIy2ZdVAQzewG5ije2NFfRqz5pzThfLdz0n4xotcHrRo+KaVJun5N6ZP
+9UzcVE2L3w+h/4L1lt5jM1kYGoYOvgRA0X5gIlVhmPLn4ZfHn6peC1KCCqCMPjeZ
+N5beIiQpTbVp9FKeFj6NsTr3zY7nyYj3HkrodTxXjNoQB8p6Ueyc/JAw6XBeXhJG
+KiYhhtgt4AEOrGveogrKylw4FNY3DFCb05Ymfdoza6mBJeYYQqH9NAzyGGC8dC6W
+6EbrPzRimMmgZoW9UXMavPUnhygwrqhZIoU8Bgz1zGlo5xCBt1i5ygbTU3/sz6EV
+xlR7wdNAj58B4yjEoNBSG4aUo5RpCEGF84e651/xDtFZs9lu4FSbI60CMXmLvld2
+zc+mXg3D02h9eqHsjrxL63QufykBmM0AmjGKeLIGM00M0c74vgbgepBst78/FZWM
+k1vzCbvg3EuqFMs5MRP8lJ+/Cun6FiWMoPZ0j5wxQJ/xESncIo0=
+=cvaq
+-----END PGP SIGNATURE-----
+
+--dl57uqa5kfxbrnlo--
