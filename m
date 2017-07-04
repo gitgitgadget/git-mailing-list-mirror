@@ -2,194 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B0B5202A7
-	for <e@80x24.org>; Tue,  4 Jul 2017 09:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1643202A7
+	for <e@80x24.org>; Tue,  4 Jul 2017 09:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752123AbdGDJdJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jul 2017 05:33:09 -0400
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:50782
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752052AbdGDJdJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 4 Jul 2017 05:33:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1499160787;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=jvjeMX4SkKt+9Zi1FyA+O711POsD1wDi0sUVRD4O/8w=;
-        b=ASB3luKsg5OAy7QcMfcQ20rlmIEjUrj8bCaWKZc0RodiB6zNzzQfGkbZjnY3xuEk
-        YgRB1FQNhMIXaD8AFkleKpcVqLxqbNQ3qSwft7Ufp39AS+lKcaDqPeSPfQvxKLufTxp
-        vZ1/asSKSj7ujL6xYVDdGhcKcJcib1+MH3qs9e7I=
-From:   =?UTF-8?Q?=C5=81ukasz_Gryglicki?= <lukaszgryglicki@o2.pl>
-To:     git@vger.kernel.org
-Message-ID: <0102015d0cf235f7-9be8e1fc-a926-4e6f-8180-c131da1c4161-000000@eu-west-1.amazonses.com>
-In-Reply-To: <0102015d0c41db74-34ff8613-05e2-44bb-a05b-2624108c36c8-000000@eu-west-1.amazonses.com>
-References: <0102015d0c41db74-34ff8613-05e2-44bb-a05b-2624108c36c8-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v3] merge: add a --signoff flag.
+        id S1752043AbdGDJnh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jul 2017 05:43:37 -0400
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:33200 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751910AbdGDJnh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jul 2017 05:43:37 -0400
+Received: by mail-wr0-f176.google.com with SMTP id r103so246284105wrb.0
+        for <git@vger.kernel.org>; Tue, 04 Jul 2017 02:43:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=AQYXyH0VMDux/aiXEKF+kh0AMndEmtd6xphLOzkrXp4=;
+        b=Bey++Zs5aPTufsLfKHVgWCRNETNMjVHNEbKP+4/Deft4gneX3M0fj4gz6iT97gqOTU
+         GdRLqBmbZ4Hw+KbEswMvTozhJcElQc++M71/nAt16fgnbLM81DVjqcm2u7UqzdAI6HEO
+         /r3FN+4+A4oARN6oy2QPv208QXANhO0t9nDvCIoU6c5RzLClr885LC3IuANrpDoLueQO
+         eQWwKz+HMK5Ys1GBThVI1LfieD2GYB4G0y40lYZdOUAD9UGvVXT6TzSnkSt9hHpBbks6
+         7N+CMiCrMIM8UVAHcq/Sc3zbJAoM5gVpg3Efjk9b/NirvbDgVpBpCXOYu8M/F9Ui8yYh
+         jMTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=AQYXyH0VMDux/aiXEKF+kh0AMndEmtd6xphLOzkrXp4=;
+        b=cdSX1cU1uPaD3D+KbaFc5V9jM5d69rqoHns7xj2/HyPMzFWhrXlqlfy8+pi6evk1hR
+         Q7UjwpRZsYoSek7oqQwUN89GbA0h2GvL8oLhHIKYz9wjTxmgdml6Ev0dN+RwyLFOU4qa
+         v/vlqjBlalN6qf+kJOl6pd1tlzOzzHNY4zhsr9qhHxvg5Xwc8ajwqPbk+bjmLQmzzIAZ
+         9VMQuLnUSijJjMDNdC7koruUdp3i0Ey6hCA54x3MJZsnYGWMwYA0TKNMDVW8JbUxNd3W
+         j1D8NqlSmJ38zg2ZgJpRTefQFTd5HgdcfWTajlCVYthvGnZKP5p0z+n4XZ2PLHdeBOod
+         CVmQ==
+X-Gm-Message-State: AKS2vOzi0LezBVGj76eI0V9WtfHSL+PRtHsrzMrERb0IfG18486E2ezb
+        ffRNg5jvdTL2Xw==
+X-Received: by 10.223.142.80 with SMTP id n74mr41148235wrb.131.1499161415578;
+        Tue, 04 Jul 2017 02:43:35 -0700 (PDT)
+Received: from snth (proxy-gw-l.booking.com. [5.57.20.8])
+        by smtp.gmail.com with ESMTPSA id 24sm22057109wrw.0.2017.07.04.02.43.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 04 Jul 2017 02:43:34 -0700 (PDT)
+Received: from avar by snth with local (Exim 4.84_2)
+        (envelope-from <avarab@gmail.com>)
+        id 1dSKMn-0006St-Li; Tue, 04 Jul 2017 11:43:33 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Andreas Krey <a.krey@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: Flurries of 'git reflog expire'
+References: <20170704075758.GA22249@inner.h.apk.li>
+User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <20170704075758.GA22249@inner.h.apk.li>
+Date:   Tue, 04 Jul 2017 11:43:33 +0200
+Message-ID: <87podgbkqi.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 4 Jul 2017 09:33:06 +0000
-X-SES-Outgoing: 2017.07.04-54.240.7.20
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some projects require every commit to be signed off.
-Our workflow is to create feature branches and require every commit to
-be signed off. When feature is finally approved we need to merge it into
-master. Merge itself is usually trivial and is done by
-`git merge origin/master`.
 
-Unfortunatelly `merge` command have no --signoff
-flag, so we need to either add signoff line manually or use
-`git commit --amend -s` after the merge.
+On Tue, Jul 04 2017, Andreas Krey jotted:
 
-First solution is not ideal because not all developers are familiar with
-exact sign-off syntax. The second solution works, but is obviously tedious.
+> Hi everyone,
+>
+> how is 'git reflog expire' triggered? We're occasionally seeing a lot
+> of the running in parallel on a single of our repos (atlassian bitbucket),
+> and this usually means that the machine is not very responsive for
+> twenty minutes, the repo being as big as it is.
 
-This patch adds --signoff support to `git-merge` command.
-It works just like --signoff in `git-commit` command.
+Assuming Linux, what does 'ps auxf' look like when this happens? Is the
+parent a 'git gc --auto'?
 
-More details can be found here:
-https://public-inbox.org/git/CAHv71zK5SqbwrBFX=a8-DY9H3KT4FEyMgv__p2gZzNr0WUAPUw@mail.gmail.com/T/#u
+> The server is still on git 2.6.2 (and bitbucket 4.14.5).
 
-Signed-off-by: lukaszgryglicki <lukaszgryglicki@o2.pl>
----
- Documentation/git-merge.txt |  8 ++++++
- builtin/merge.c             |  4 +++
- t/t7614-merge-signoff.sh    | 69 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 81 insertions(+)
- create mode 100755 t/t7614-merge-signoff.sh
+You might want to upgrade, we've had a bunch of changes since then,
+maybe some of this fixes it:
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 04fdd8cf086db..6b308ab6d0b52 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -64,6 +64,14 @@ OPTIONS
- -------
- include::merge-options.txt[]
- 
-+--signoff::
-+	Add Signed-off-by line by the committer at the end of the commit
-+	log message.  The meaning of a signoff depends on the project,
-+	but it typically certifies that committer has
-+	the rights to submit this work under the same license and
-+	agrees to a Developer Certificate of Origin
-+	(see http://developercertificate.org/ for more information).
-+
- -S[<keyid>]::
- --gpg-sign[=<keyid>]::
- 	GPG-sign the resulting merge commit. The `keyid` argument is
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 900bafdb45d0b..78c36e9bf353b 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -70,6 +70,7 @@ static int continue_current_merge;
- static int allow_unrelated_histories;
- static int show_progress = -1;
- static int default_to_upstream = 1;
-+static int signoff;
- static const char *sign_commit;
- 
- static struct strategy all_strategy[] = {
-@@ -233,6 +234,7 @@ static struct option builtin_merge_options[] = {
- 	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
- 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
- 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
-+	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
- 	OPT_END()
- };
- 
-@@ -763,6 +765,8 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 	strbuf_addch(&msg, '\n');
- 	if (0 < option_edit)
- 		strbuf_commented_addf(&msg, _(merge_editor_comment), comment_line_char);
-+	if (signoff)
-+		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
- 	write_file_buf(git_path_merge_msg(), msg.buf, msg.len);
- 	if (run_commit_hook(0 < option_edit, get_index_file(), "prepare-commit-msg",
- 			    git_path_merge_msg(), "merge", NULL))
-diff --git a/t/t7614-merge-signoff.sh b/t/t7614-merge-signoff.sh
-new file mode 100755
-index 0000000000000..c1b8446f491dc
---- /dev/null
-+++ b/t/t7614-merge-signoff.sh
-@@ -0,0 +1,69 @@
-+#!/bin/sh
-+
-+test_description='git merge --signoff
-+
-+This test runs git merge --signoff and makes sure that it works.
-+'
-+
-+. ./test-lib.sh
-+
-+# Setup test files
-+test_setup() {
-+	# Expected commit message after merge --signoff
-+	cat >expected-signed <<EOF &&
-+Merge branch 'master' into other-branch
-+
-+Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
-+EOF
-+
-+	# Expected commit message after merge without --signoff (or with --no-signoff)
-+	cat >expected-unsigned <<EOF &&
-+Merge branch 'master' into other-branch
-+EOF
-+
-+	# Initial commit and feature branch to merge master into it.
-+	git commit --allow-empty -m "Initial empty commit" &&
-+	git checkout -b other-branch &&
-+	test_commit other-branch file1 1
-+}
-+
-+# Setup repository, files & feature branch
-+# This step must be run if You want to test 2,3 or 4
-+# Order of 2,3,4 is not important, but 1 must be run before
-+# For example `-r 1,4` or `-r 1,4,2 -v` etc
-+# But not `-r 2` or `-r 4,3,2,1`
-+test_expect_success 'setup' '
-+	test_setup
-+'
-+
-+# Test with --signoff flag
-+test_expect_success 'git merge --signoff adds a sign-off line' '
-+	git checkout master &&
-+	test_commit master-branch-2 file2 2 &&
-+	git checkout other-branch &&
-+	git merge master --signoff --no-edit &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	test_cmp expected-signed actual
-+'
-+
-+# Test without --signoff flag
-+test_expect_success 'git merge does not add a sign-off line' '
-+	git checkout master &&
-+	test_commit master-branch-3 file3 3 &&
-+	git checkout other-branch &&
-+	git merge master --no-edit &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	test_cmp expected-unsigned actual
-+'
-+
-+# Test for --no-signoff flag
-+test_expect_success 'git merge --no-signoff flag cancels --signoff flag' '
-+	git checkout master &&
-+	test_commit master-branch-4 file4 4 &&
-+	git checkout other-branch &&
-+	git merge master --no-edit --signoff --no-signoff &&
-+	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
-+	test_cmp expected-unsigned actual
-+'
-+
-+test_done
+    git log --reverse -p -L'/^static.*lock_repo_for/,/^}/:builtin/gc.c'
 
---
-https://github.com/git/git/pull/383
+> Questions:
+>
+> What can be done about this? Cronjob 'git reflog expire' at midnight,
+> so the heuristic don't trigger during the day? (The relnotes don't
+> mention anything after 2.4.0, so I suppose a git upgrade won't help.)
+>
+> What is the actual cause? Bad heuristics in git itself, or does
+> bitbucket run them too often (improbable)?
+
+You can set gc.auto=0 in the repo to disable auto-gc, and play with
+e.g. the reflog expire values, see the git-gc manpage.
+
+But then you need to run your own gc, which is not a bad idea anyway
+with a dedicated git server.
+
+But it would be good to get to the bottom of this, we shouldn't be
+running these concurrently.
