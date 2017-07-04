@@ -2,127 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73A31202AC
-	for <e@80x24.org>; Tue,  4 Jul 2017 19:58:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED000202AC
+	for <e@80x24.org>; Tue,  4 Jul 2017 20:00:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752179AbdGDT6O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jul 2017 15:58:14 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:53736 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752161AbdGDT6N (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 4 Jul 2017 15:58:13 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5EDAF280AD;
-        Tue,  4 Jul 2017 19:58:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1499198292;
-        bh=Ur5jtZfP2u/mCEFY9Pny6kJBaJvuNLBuiXula9+LGXQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jn0BSYUssbflYjLXejmqzTe3V62BYlL2OdVMGSMgxXzsEKG6qm5LrBMSC79wxyPLk
-         RGrhdyvTDBIPmZuqfw29UMX8P23bsCz2NoieWFnipdHsEFeeEqG3jTKp8Nx5rMnqGj
-         ETai96y8FqQ8lsRviIHQiAIt3yC/cUc5lf8ZEQDNKH+CNdUnT3WB6SS7oP8DLH1pyf
-         t7AXMj0TcuSdXwoxWFuEGTKOOHB35jYshNHyC2OXr1UeP09PT1hbR/5zl6ui8+FSD9
-         YAi254P3vLHt1ro18TY10ZHu2orE4wubQgKym9Q/DOxv/WerSiEJNfNyYRZp6B7C6o
-         iZGh8utVQZbKnCuHTkwYdFEgYz7C9BPn/sQbWl9LKpt2CdE+kMjQjWKBis1B4YU+wc
-         nJ+zmFTiKgl5o5E0F1qXCJKifnUV3ktwKyNpW9tkmP33HfAIitlewqLbuC9F1Cc/ia
-         lWRyQPnccFugJ75SWb5DLeeWFq6E8mnSHXiQz3q5YToFq15Twcf
-Date:   Tue, 4 Jul 2017 19:58:06 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>,
-        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
-Subject: Re: Truncating HEAD reflog on branch move
-Message-ID: <20170704195806.ndbykl776t3vigya@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
-        Sahil Dua <sahildua2305@gmail.com>
-References: <87efud7xjd.fsf@kyleam.com>
- <20170622151603.rrh2j7zsotyt2jxe@sigill.intra.peff.net>
- <xmqqziczkh4k.fsf@gitster.mtv.corp.google.com>
- <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
- <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
- <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
- <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
- <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
- <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
- <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dl57uqa5kfxbrnlo"
-Content-Disposition: inline
-In-Reply-To: <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.11.0-1-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
+        id S1752194AbdGDUAV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jul 2017 16:00:21 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:34289 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752161AbdGDUAU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Jul 2017 16:00:20 -0400
+Received: by mail-pg0-f44.google.com with SMTP id t186so114372320pgb.1
+        for <git@vger.kernel.org>; Tue, 04 Jul 2017 13:00:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=cVmw3cIEF+qwcKm3wDykINQB/SMc5TVxFeTVhyuPBbU=;
+        b=RWKWpf6TIAunncw/vJakmbN5YZLJwA0fbwLaEtYsZ3BJ4r8fwoo4yyAy8EKA11l719
+         jYXr7PvkYVzkQB8txt+MIizqkN/UKNav/AyEqyNdrrWczjQ/1lZrvY/E3yqwp0G9ml4s
+         r6MFMpF18gthpMSrVDI/8OUGXPdPq3os9Lz2kurR+Gg9/pB0rk75iJRgQMm2oZ8h/IGL
+         2JXiB+lV3nzAn9b/lR1XIq0E/Hyo02ttBvrfobhXCw48c8T68XOHNN2AVDI5E+9ZYp6F
+         Me5Ba58L2pCJrHYtA2QiLzIJagpx2A8ri6GP59YFH1H59r5ZJH3flwiKpf9bycJT4Stu
+         y1Lw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=cVmw3cIEF+qwcKm3wDykINQB/SMc5TVxFeTVhyuPBbU=;
+        b=Sz0zVF3jOu4U8l+Xu+MOXfRC6Ko0/blFyFxvsox6byBeAbMKjjB01WuBSKC7I3cuG6
+         AvSXj7iX4j79tEHI9zFPb6I/bFZl9ax5QYNxC/IfSqiITEtjv1xy0+wZj80Pd8OO/Tkl
+         phpkZVi0uXXIA/kS5jcg7SsyUQQfAyMIgfoRBXpH9IWYm3niunvciuk3R5fiG6emSeLi
+         nmHx7CpnBf8pARdNBKl7M8hyfu9hG5Kv7VURMpfHorRyBx8UrJLSDwl4nvmCl8n0K1mV
+         xfL+v/Vsu5gSl5HadAioHb3jWb9PVhQT1BhOVACq4owPhofvm0AyPD6/t9wcD51x/fCq
+         vwFw==
+X-Gm-Message-State: AIVw112GHTGjSKf2IVqdcTp7y2YJjaT6++hzgqceS36L49Pkl53HL9Wi
+        HGJ0oeTZB0OkLQ==
+X-Received: by 10.99.2.69 with SMTP id 66mr17694752pgc.61.1499198418134;
+        Tue, 04 Jul 2017 13:00:18 -0700 (PDT)
+Received: from unique-pc ([182.73.109.146])
+        by smtp.googlemail.com with ESMTPSA id u9sm46256610pfd.56.2017.07.04.13.00.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 04 Jul 2017 13:00:17 -0700 (PDT)
+Message-ID: <1499198419.6428.7.camel@gmail.com>
+Subject: Re: Help needed for solving a few issues with building git
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Date:   Wed, 05 Jul 2017 01:30:19 +0530
+In-Reply-To: <xmqqk23pl1q8.fsf@gitster.mtv.corp.google.com>
+References: <1499087898.4156.6.camel@gmail.com>
+         <xmqqshidl76n.fsf@gitster.mtv.corp.google.com>
+         <xmqqk23pl1q8.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 2017-07-03 at 11:13 -0700, Junio C Hamano wrote:
+>     Adding HTTPS support
+> > >     --------------------
+> > >     I tried to add HTTP/HTTPS support to the custom built version
+> > > for which
+> > >     AFAIK 'git' depends on 'curl'. I tried providing the location
+> > > of the
+> > >     curl source in the Makefile using the following line after
+> > > reading the
+> > >     instructions in the Makefile.
+> > > 
+> > >     CURLDIR=/path/to/curl/source
+> > 
+>  Shouldn't this point at an installed location (iow, we do not build
+>  curl from the source while building Git)?
+>  
+>      # Define CURLDIR=/foo/bar if your curl header and library files
+>  are in
+>      # /foo/bar/include and /foo/bar/lib directories.
+I tried pointing it to the installed location, it doesn't seem to be
+working. To elaborate a little on what I did,
 
---dl57uqa5kfxbrnlo
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+        * I installed the "libcurl4-openssl-dev" package b
+        * I found that the 'include' directory to be present  at
+        '/usr/include/x86_64-linux-gnu/curl'. I wasn't sure if
+        '/usr/lib/x86_64-linux-gnu/' is the corresponding library
+        directory. 
+        * I took the common parent of both '/usr' and ran the following 
+          commands to build 'git'
 
-On Thu, Jun 22, 2017 at 11:13:15PM -0400, Jeff King wrote:
-> On Thu, Jun 22, 2017 at 06:25:46PM -0400, Jeff King wrote:
->=20
-> > So here's a patch on top of what I posted before that pushes the reflog
-> > check into the loop (it just decides whether to pull from the reflogs or
-> > from the commit queue at the top of the loop).
-> >=20
-> > I was surprised to find, though, that simplify_commit() does not
-> > actually do the pathspec limiting! It's done by
-> > try_to_simplify_commit(), which is part of add_parents_to_list(). I
-> > hacked around it in the later part of the loop by calling
-> > try_to_simplify myself and checking the TREESAME flag. But I have a
-> > feeling I'm missing something about how the traversal is supposed to
-> > work.
-> >=20
-> > This does behave sensibly with "--no-merges" and "--merges", as well as
-> > pathspec limiting.
->=20
-> And here's one more patch on top of those that's necessary to get the
-> tests to pass (I don't expect anybody to necessarily be applying this
-> slow string of patches; it's just to show the direction I'm looking in).
+            $ make CURLDIR=/usr prefix=/custom/location
+            $ make CURLDIR=/usr install prefix=/custom/location
 
-I've looked at your original patch, which modified reflog-walk.c, and it
-does fix the issue.  I'm happy to send in a patch with that and a test
-(provided you're okay with me adding your sign-off), or if you wanted to
-send in something a bit more complete, like the series of patches here,
-that's fine, too.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+        * The build did succeed but I get an error that "'https' helper
+        is not found"
 
---dl57uqa5kfxbrnlo
-Content-Type: application/pgp-signature; name="signature.asc"
+Was anything I did, wrong?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.21 (GNU/Linux)
+>  This is probably because you are trying to run without installing?
+Nope. I'm *installing* git not using the binary wrappers.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAllb804ACgkQv1NdgR9S
-9otqYxAAyI8vfVOI7HKWJ+gZv9ZlufUK8vZARdJt0L0vEGlbJEh+GOyBT1Hc4bh2
-v3YCs1/WEDjQJtS9Y/wDCj9vSaH4BubKcd/aKrx7BuYYcbj1YSMbA6lsXw1rC4mR
-wuLphki990Sz3wdsuadVrwQ/RlGGT2Fju14Iwgry+CY3dG+McpcahBLhHM6WKfyG
-nrcB9ylXwIy2ZdVAQzewG5ije2NFfRqz5pzThfLdz0n4xotcHrRo+KaVJun5N6ZP
-9UzcVE2L3w+h/4L1lt5jM1kYGoYOvgRA0X5gIlVhmPLn4ZfHn6peC1KCCqCMPjeZ
-N5beIiQpTbVp9FKeFj6NsTr3zY7nyYj3HkrodTxXjNoQB8p6Ueyc/JAw6XBeXhJG
-KiYhhtgt4AEOrGveogrKylw4FNY3DFCb05Ymfdoza6mBJeYYQqH9NAzyGGC8dC6W
-6EbrPzRimMmgZoW9UXMavPUnhygwrqhZIoU8Bgz1zGlo5xCBt1i5ygbTU3/sz6EV
-xlR7wdNAj58B4yjEoNBSG4aUo5RpCEGF84e651/xDtFZs9lu4FSbI60CMXmLvld2
-zc+mXg3D02h9eqHsjrxL63QufykBmM0AmjGKeLIGM00M0c74vgbgepBst78/FZWM
-k1vzCbvg3EuqFMs5MRP8lJ+/Cun6FiWMoPZ0j5wxQJ/xESncIo0=
-=cvaq
------END PGP SIGNATURE-----
+>  Ask the "git" you built what its --exec-path is, and run "ls" on
+>  that directory to see if you have git-remote-https installed?
+>  
+Obviously, I don't see any 'git-remote-https' binary in the folder to
+which I built git.
 
---dl57uqa5kfxbrnlo--
+>  Trying a freshly built Git binaries without installing is done by
+>  setting GIT_EXEC_PATH to point at bin-wrappers/ directory at the
+>  top-level of your build tree (that is how our tests can run on an
+>  otherwise virgin box with no Git installed).
+> 
+
+
+On Mon, 2017-07-03 at 13:11 -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>     $ make NO_GETTEXT=1 NO_MSGFMT=1
+> 
+> may help.
+> 
+Ok, I seem to have crapped a little. It seems following the intructions
+in the Makefile blindly led to this issue. Reading the instruction
+"Define NO_GETTEXT if you don't want Git output to be translated.", I
+defined NO_GETTEXT=1 in the Makefile itself! (as specified in the
+previous thread)
+
+I'm able to build git without localization support by using the
+following command,
+
+    make NO_GETTEXT=1 prefix=/custom/location
+
+> NO_GETTEXT is "My build environment may or may not be capable of
+> doing the gettext things, but I choose not to use it in my build
+> result" but NO_MSGFMT is simply "I do not have the msgfmt tool".
+> 
+> Having to specify both is rather unfortunate and we may want to
+> streamline this.
+I guess it's not required!
+
+-- 
+Kaartic
