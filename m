@@ -2,104 +2,195 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65057201A0
-	for <e@80x24.org>; Tue,  4 Jul 2017 06:02:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87092201A0
+	for <e@80x24.org>; Tue,  4 Jul 2017 06:20:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750893AbdGDGCK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Jul 2017 02:02:10 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34538 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750798AbdGDGCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Jul 2017 02:02:09 -0400
-Received: by mail-pg0-f68.google.com with SMTP id j186so25263362pge.1
-        for <git@vger.kernel.org>; Mon, 03 Jul 2017 23:02:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=blvVBnpRAZw66WaVQpnRnMQqhtev4m0A0z0LJXX9lIY=;
-        b=O1bdoWcnCussg46UVQU8QEmjNCo6MV5yURtZDDgcR27rfJz3fsW80AQA3o8Vu7Az8B
-         1B+gdEsOB9H6ChDXYjnWvxGl23k6YNE/1dcAQBJnQDUi++kfTvUuXcXShucqTwrZceYb
-         GwnGoo3b/pwNKm05RHh9tZKiuUn1smBTgH7LK2vuA+C3jyaRkmHLaSIAYhk6YqWBVLa8
-         PpYmZQL9YwmKJV01HnOW1zdxiAkiPtjEKkmyI6jYt2knonjpAkvNgpv4p4cBTNL5669p
-         rdSdKjkUKXSoaViXJySBZ/N9Q/WXf+wr76WIt3SW9aLa49HmxU8DDiB2RwzulTRM9rA4
-         NoYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=blvVBnpRAZw66WaVQpnRnMQqhtev4m0A0z0LJXX9lIY=;
-        b=V6CCrTOoxu8AIYW3bJNNsSW6ykeP1avhWG8p1GiETguRi8hvHdhrHpxa+TWPswu+qn
-         WtB7aBzyujcEsJiEQhSkUvkB80o9zhRBnNJg4Zk2YoVZWnY3M7+qClMFltpjfTcNxgzS
-         HALEmhjMCslTfrOpnBDGyxGP83omtGmwVP4GitDT1vhwXmgJdbsiFUAbnQ2OoD4eeSI4
-         kHc0S5G7XQ6Nj4Ut+Y2Thx/W0DwOQEGtM46Mf1pxclpYajYyVa+OjYeNwPEhotu9Ksgy
-         2QwAkCL8odehK6Z4QrZVrNCzR+kJ7kZP2PaLl+cueNR/N3l8KxTC8FKF5tKf03qBY4Ur
-         ueZQ==
-X-Gm-Message-State: AIVw1136PQYyj/2VMsV1SKOISAn906FWtzV3uUFYkdT2/LVb+Bp2HsTV
-        Nql7iaVqgV0O0Q==
-X-Received: by 10.84.224.11 with SMTP id r11mr14815926plj.267.1499148128552;
-        Mon, 03 Jul 2017 23:02:08 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:30:4739:ca21:b5b4])
-        by smtp.gmail.com with ESMTPSA id o13sm41904111pfa.120.2017.07.03.23.02.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 03 Jul 2017 23:02:06 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philip Oakley" <philipoakley@iee.org>
-Cc:     <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jun 2017, #09; Fri, 30)
-References: <xmqqk23tp2jk.fsf@gitster.mtv.corp.google.com>
-        <4374FA169AD7465AA39BDB477A348B02@PhilipOakley>
-        <xmqqo9t1l6vi.fsf@gitster.mtv.corp.google.com>
-        <C31723137B784D54A3CDB1B7D9432D7E@PhilipOakley>
-Date:   Mon, 03 Jul 2017 23:02:04 -0700
-In-Reply-To: <C31723137B784D54A3CDB1B7D9432D7E@PhilipOakley> (Philip Oakley's
-        message of "Mon, 3 Jul 2017 20:13:02 +0100")
-Message-ID: <xmqq8tk4loyr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751734AbdGDGUd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Jul 2017 02:20:33 -0400
+Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:52520
+        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750830AbdGDGUc (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 4 Jul 2017 02:20:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1499149230;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=cU2hHARSS2UPKITzNHDESvoVFOS7wXZ6wPvXCuMk73M=;
+        b=CiZBFOXeK5MXO6HdJpe4F7ggtRXLvgQl8eK9I2l4EbAfjz65wyOszdsUlZM35srm
+        vSHSjd268zFcLsQ1glJHpJ3Aw1H1zPbBuZhk7R7InCWKig7/SfU5a+lDr4cHQy9Txce
+        GiP6I1Qbt5BP8BikgQfIHXFl4d/NFpP1i/MYDugo=
+From:   =?UTF-8?Q?=C5=81ukasz_Gryglicki?= <lukaszgryglicki@o2.pl>
+To:     git@vger.kernel.org
+Message-ID: <0102015d0c41db74-34ff8613-05e2-44bb-a05b-2624108c36c8-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015d07e215ae-a711670e-8315-40b9-90cf-f95075525622-000000@eu-west-1.amazonses.com>
+References: <0102015d07e215ae-a711670e-8315-40b9-90cf-f95075525622-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v2] add --signoff flag to `git-merge` command.
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 4 Jul 2017 06:20:28 +0000
+X-SES-Outgoing: 2017.07.04-54.240.7.20
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philip Oakley" <philipoakley@iee.org> writes:
+Some projects require every commit to be signed off.
+Our workflow is to create feature branches and require every commit to
+be signed off. When feature is finally approved we need to merge it into
+master. Merge itself is usually trivial and is done by
+`git merge origin/master`. Unfortunatelly this command have no --signoff
+flag, so we need to either add signoff line manually or use
+`git commit --amend -s` after the merge. First solution is not ideal
+because not all developers are familiar with exact sign-off syntax.
+The second solution works, but is obviously tedious.
+This patch adds --signoff support to git-merge command. It works just
+like --signoff in `git-commit` command.
+More details here:
+https://public-inbox.org/git/CAHv71zK5SqbwrBFX=a8-DY9H3KT4FEyMgv__p2gZzNr0WUAPUw@mail.gmail.com/T/#u
 
-> From: "Junio C Hamano" <gitster@pobox.com>
->
->> I am not sure what you are asking.  Is this the command you are
->> looking for?
->>
->> $ grep -e "^[[*]" whats-cooking.txt
->>
-> Ah, thanks.
->
-> It does presume that one has extracted the email to the text file,
-> which is easier on some systems and mail clients than others ;-)
+Signed-off-by: lukaszgryglicki <lukaszgryglicki@o2.pl>
+---
+ Documentation/git-merge.txt  |  8 +++++
+ builtin/merge.c              |  4 +++
+ t/t9904-git-merge-signoff.sh | 75 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 87 insertions(+)
+ create mode 100755 t/t9904-git-merge-signoff.sh
 
-Perhaps you would want to find an e-mail client that can handle text
-files better, then? ;-)
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 04fdd8cf086db..6b308ab6d0b52 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -64,6 +64,14 @@ OPTIONS
+ -------
+ include::merge-options.txt[]
+ 
++--signoff::
++	Add Signed-off-by line by the committer at the end of the commit
++	log message.  The meaning of a signoff depends on the project,
++	but it typically certifies that committer has
++	the rights to submit this work under the same license and
++	agrees to a Developer Certificate of Origin
++	(see http://developercertificate.org/ for more information).
++
+ -S[<keyid>]::
+ --gpg-sign[=<keyid>]::
+ 	GPG-sign the resulting merge commit. The `keyid` argument is
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 900bafdb45d0b..78c36e9bf353b 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -70,6 +70,7 @@ static int continue_current_merge;
+ static int allow_unrelated_histories;
+ static int show_progress = -1;
+ static int default_to_upstream = 1;
++static int signoff;
+ static const char *sign_commit;
+ 
+ static struct strategy all_strategy[] = {
+@@ -233,6 +234,7 @@ static struct option builtin_merge_options[] = {
+ 	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
+ 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+ 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
++	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+ 	OPT_END()
+ };
+ 
+@@ -763,6 +765,8 @@ static void prepare_to_commit(struct commit_list *remoteheads)
+ 	strbuf_addch(&msg, '\n');
+ 	if (0 < option_edit)
+ 		strbuf_commented_addf(&msg, _(merge_editor_comment), comment_line_char);
++	if (signoff)
++		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
+ 	write_file_buf(git_path_merge_msg(), msg.buf, msg.len);
+ 	if (run_commit_hook(0 < option_edit, get_index_file(), "prepare-commit-msg",
+ 			    git_path_merge_msg(), "merge", NULL))
+diff --git a/t/t9904-git-merge-signoff.sh b/t/t9904-git-merge-signoff.sh
+new file mode 100755
+index 0000000000000..f542f136f5dda
+--- /dev/null
++++ b/t/t9904-git-merge-signoff.sh
+@@ -0,0 +1,75 @@
++#!/bin/sh
++
++test_description='git merge --signoff
++
++This test runs git merge --signoff and makes sure that it works.
++'
++
++. ./test-lib.sh
++
++# Setup test files
++test_setup() {
++	# A simples files to commit
++	echo "1" >file1
++	echo "2" >file2
++	echo "3" >file3
++	echo "4" >file4
++
++	# Expected commit message after merge --signoff
++	cat >expected-signed <<EOF
++Merge branch 'master' into other-branch
++
++Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
++EOF
++
++	# Expected commit message after merge without --signoff (or with --no-signoff)
++	cat >expected-unsigned <<EOF
++Merge branch 'master' into other-branch
++EOF
++
++	# Initial commit and feature branch to merge master into it.
++	git commit --allow-empty -m "Initial empty commit"
++	git checkout -b other-branch
++	git add file1
++	git commit -m other-branch
++}
++
++# Setup repository, files & feature branch
++test_expect_success 'setup' '
++	test_setup
++'
++
++# Test with --signoff flag
++test_expect_success 'git merge --signoff adds a sign-off line' '
++	git checkout master &&
++	git add file2 &&
++	git commit -m master-branch &&
++	git checkout other-branch &&
++	git merge master --signoff --no-edit &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	test_cmp expected-signed actual
++'
++
++# Test without --signoff flag
++test_expect_success 'git merge does not add a sign-off line' '
++	git checkout master &&
++	git add file3 &&
++	git commit -m master-branch-2 &&
++	git checkout other-branch &&
++	git merge master --no-edit &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	test_cmp expected-unsigned actual
++'
++
++# Test for --no-signoff flag
++test_expect_success 'git merge --no-signoff flag cancels --signoff flag' '
++	git checkout master &&
++	git add file4 &&
++	git commit -m master-branch-3 &&
++	git checkout other-branch &&
++	git merge master --no-edit --signoff --no-signoff &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" >actual &&
++	test_cmp expected-unsigned actual
++'
++
++test_done
 
-If you are cloning and following along my tree from one of these
-places:
-
-    git://repo.or.cz/alt-git.git/
-    git://git.kernel.org/pub/scm/git/git.git/
-    git://github.com/git/git.git/
-
-the 'todo' branch in these repositories keeps track of the
-whats-cooking.txt report (among other things), so you can also:
-
-    $ git cat-file -p origin/todo:whats-cooking.txt |
-      grep -e "^[[*]"
-
-to get the same effect.
-
-
-
-
+--
+https://github.com/git/git/pull/382
