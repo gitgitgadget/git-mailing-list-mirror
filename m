@@ -2,87 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14903202AB
-	for <e@80x24.org>; Wed,  5 Jul 2017 08:05:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24F5B202AB
+	for <e@80x24.org>; Wed,  5 Jul 2017 08:07:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752122AbdGEIFQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 04:05:16 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:35230 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751127AbdGEIFN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 04:05:13 -0400
-Received: by mail-qk0-f177.google.com with SMTP id 16so183612744qkg.2
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 01:05:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mazzo-li.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=yxZkS/o5QPNt7ONQxbL2LDR4gdofQ2Mz+PLSbb0IU7s=;
-        b=b7iAfs2lTt7Mt6CfEFFEYeQv50VGZkkcgk3J4pueYkI7SSXDMKvWR+vfs02nErXjip
-         79rOUmec2UmnbuThRbhokRlaOPRIFSe0aH4iskq3uGoO/ltf1j0bZ8BIU2eV6+j3mVij
-         GVn8TDMvuSwj96Sp6Lm7wddWODWLAXNADm4jKddMAF9yKtB/dMvneQD9UzVK9n9reHkW
-         e71oSmh6TF4xWE2waURLSdQuTFbcpzikg0F84yX4RcRZlbwPGycmxFhyiEfRxpROJKjp
-         1UQTxITMY2+QAkKj1dASRsoC+LfAJ6/AyO0s6plU7cUzvuuA9GpS1MbAeMrqgETOIHIr
-         PFHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=yxZkS/o5QPNt7ONQxbL2LDR4gdofQ2Mz+PLSbb0IU7s=;
-        b=ZjMDFo9fDF4xLVr534qAqzZJsXy60RU525WJW/8ld6jBed0pXBPtbtxiNv8XPn9asf
-         vn+UP7XHyWD7N7tIQ30USc3Z/ednn7Bdx4JlPhdwMIh6wX/lVEG12B+pcFO/P7+FCSdG
-         OpHYIZIR4Y+WsQjR9DL2JSCW3NqL6qMDdScQ58tDMk7hCPF8y4PSqMTQ/cP+yXwFQvPG
-         W6drntQDlDvj13U8RcZ+weLxaO6MqqS6QHEhQqa9w/M+tG4KBIAWlSDocujvsCvQGv/d
-         xEq9NYpCxLs1BIT5q9/WRBTWgolHfzSAQe1JxJmjCDHIDPf4jPE6w6hqH3CyZKffQEBL
-         Zhhg==
-X-Gm-Message-State: AIVw111haIsJ7iBq38EX/oDgkgdWGYd53d0FmpRDh/kDHp6RRFhGeN9a
-        WRyJHrMT8AdarLcPfEZNpuXj8sDdIgfIopgcvw==
-X-Received: by 10.55.53.202 with SMTP id c193mr39055411qka.232.1499241912899;
- Wed, 05 Jul 2017 01:05:12 -0700 (PDT)
+        id S1752571AbdGEIHG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 04:07:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59816 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752558AbdGEIHD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 04:07:03 -0400
+Received: (qmail 21815 invoked by uid 109); 5 Jul 2017 08:06:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Jul 2017 08:06:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5777 invoked by uid 111); 5 Jul 2017 08:07:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Jul 2017 04:07:07 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jul 2017 04:06:56 -0400
+Date:   Wed, 5 Jul 2017 04:06:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>,
+        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
+Subject: [PATCH 5/6] rev-list: check reflog_info before showing usage
+Message-ID: <20170705080655.giw6wjsblepcf5aw@sigill.intra.peff.net>
+References: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.12.140.67 with HTTP; Wed, 5 Jul 2017 01:04:32 -0700 (PDT)
-In-Reply-To: <CAPc5daXn=PJ47JkZQNnReNNSUhQK3eJm0Namd-A+e9TM4Dnr2A@mail.gmail.com>
-References: <1499116727-757-1-git-send-email-f@mazzo.li> <xmqqvan8jdje.fsf@gitster.mtv.corp.google.com>
- <CAPB=P5xsssm=RiAkEuAtpxe52+-sNAPVP2qnQGctLjNZFYznkg@mail.gmail.com> <CAPc5daXn=PJ47JkZQNnReNNSUhQK3eJm0Namd-A+e9TM4Dnr2A@mail.gmail.com>
-From:   Francesco Mazzoli <f@mazzo.li>
-Date:   Wed, 5 Jul 2017 10:04:32 +0200
-Message-ID: <CAPB=P5z7MA+TuVaFLUQQdOoJXUb74YxEPS6k4O+NorneVpLitg@mail.gmail.com>
-Subject: Re: [PATCH] push: add config option to --force-with-lease by default.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5 July 2017 at 09:43, Junio C Hamano <gitster@pobox.com> wrote:
-> On Tue, Jul 4, 2017 at 11:34 PM, Francesco Mazzoli <f@mazzo.li> wrote:
->>
->> Could you clarify the danger you're referring to? E.g. give an example
->> of surprising --force-with-lease behavior that we do not want to
->> encourage?
->
-> https://public-inbox.org/git/1491617750.2149.10.camel@mattmccutchen.net/
+When git-rev-list sees no pending commits, it shows a usage
+message. This works even when reflog-walking is requested,
+because the reflog-walk code currently puts the reflog tips
+into the pending queue.
 
-Thanks for clarifying, I had not encountered this because of my git workflow.
-I'd also be happy with a config item  that simply disables `--force`
-and suggests
-`--force-with-lease`, but then we'd need a flag to override that config item
-when the user definitely wants to force push.
+In preparation for refactoring the reflog-walk code, let's
+explicitly check whether we have any reflogs to walk. For
+now this is a noop, but the existing reflog tests will make
+sure that it kicks in after the refactoring. Likewise, we'll
+add a test that "rev-list -g" without specifying any reflogs
+continues to fail (so that we know our check does not kick
+in too aggressively).
 
-So we would have something like
+Note that the implementation needs to go into its own
+sub-function, as the walk code does not expose its innards
+outside of reflog-walk.c.
 
-* `push.disableForce`: config flag that disables `--force` and suggests
-    `--force-with-lease` instead;
-* `--disable-force` and `--no-disable-force`, config flags to tune the above
-    config parameter at will.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is actually the main "gotcha" I'm worried about with this series.
+I'm not sure if any other code would care about seeing the pending items
+in revs->commits. I still think the series is the right direction; if
+there is such a place, we'd want to teach it to handle reflog walking in
+a similar way, too.
 
-What do you think?
+ builtin/rev-list.c     | 3 ++-
+ reflog-walk.c          | 5 +++++
+ reflog-walk.h          | 2 ++
+ t/t1414-reflog-walk.sh | 3 +++
+ 4 files changed, 12 insertions(+), 1 deletion(-)
 
-Thanks,
-Francesco
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 95d84d5cda..53a746dd89 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -11,6 +11,7 @@
+ #include "graph.h"
+ #include "bisect.h"
+ #include "progress.h"
++#include "reflog-walk.h"
+ 
+ static const char rev_list_usage[] =
+ "git rev-list [OPTION] <commit-id>... [ -- paths... ]\n"
+@@ -348,7 +349,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		/* Only --header was specified */
+ 		revs.commit_format = CMIT_FMT_RAW;
+ 
+-	if ((!revs.commits &&
++	if ((!revs.commits && reflog_walk_empty(revs.reflog_info) &&
+ 	     (!(revs.tag_objects || revs.tree_objects || revs.blob_objects) &&
+ 	      !revs.pending.nr)) ||
+ 	    revs.diff)
+diff --git a/reflog-walk.c b/reflog-walk.c
+index b7e489ad32..89e719c459 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -358,3 +358,8 @@ void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
+ 		strbuf_release(&selector);
+ 	}
+ }
++
++int reflog_walk_empty(struct reflog_walk_info *info)
++{
++	return !info || !info->reflogs.nr;
++}
+diff --git a/reflog-walk.h b/reflog-walk.h
+index 27886f793e..af32361072 100644
+--- a/reflog-walk.h
++++ b/reflog-walk.h
+@@ -20,4 +20,6 @@ extern void get_reflog_selector(struct strbuf *sb,
+ 		const struct date_mode *dmode, int force_date,
+ 		int shorten);
+ 
++extern int reflog_walk_empty(struct reflog_walk_info *walk);
++
+ #endif
+diff --git a/t/t1414-reflog-walk.sh b/t/t1414-reflog-walk.sh
+index bb847f797d..fba6788e94 100755
+--- a/t/t1414-reflog-walk.sh
++++ b/t/t1414-reflog-walk.sh
+@@ -79,5 +79,8 @@ test_expect_failure 'walk prefers reflog to ref tip' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'rev-list -g complains when there are no reflogs' '
++	test_must_fail git rev-list -g
++'
+ 
+ test_done
+-- 
+2.13.2.892.g25f9b59978
+
