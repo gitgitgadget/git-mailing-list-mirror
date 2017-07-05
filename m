@@ -2,112 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 618D2202A7
-	for <e@80x24.org>; Wed,  5 Jul 2017 17:06:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD697202A7
+	for <e@80x24.org>; Wed,  5 Jul 2017 17:07:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751896AbdGERGz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 13:06:55 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:36517 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751695AbdGERGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 13:06:54 -0400
-Received: by mail-pg0-f43.google.com with SMTP id u62so127207276pgb.3
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 10:06:54 -0700 (PDT)
+        id S1751784AbdGERHX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 13:07:23 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:36466 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751659AbdGERHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 13:07:22 -0400
+Received: by mail-pf0-f173.google.com with SMTP id q86so132621198pfl.3
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 10:07:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=fFuoiYPil2JVZwtaxncbPyFJREGGyGX3/G5dJOGOxaQ=;
-        b=QS/wa5FXHfbM4Y+eMnjLsyEBOd+leUtsM2INQGwvgIwFgZNHD0hBKg/W47uZX6z0p5
-         Af39wWJJm+R0wFjakOatGgLf5vt+BdbI8vr+yzxRmt6KEbdm/XMU8z95mDwMyfzkyfWM
-         kDtZbrkuQ9uEzo+ngE8pOHmjIVlT16Z5lNjHuG7l3II9feqaxyjzmedQLdKD7ZYo417P
-         Md6LzCDQCvKve1au6b3ZAuHb1OiPx09WFuL8HgDXqBccodW8Z+c83UkDF8bpuKgnJyvQ
-         RlUJ1Bq1KWODaP5g6vXJhZIlu6UcdGyI2/vwPfhWVsjslcwhkdK77t64eN8M0i2NPEP9
-         FCsA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=+sVAOqlqR3ECezhYWlncBVqInU9H0S/iyLCojD6wqxM=;
+        b=EUW3Vf0IqYpojjHtx+D5iyhBUhicaDbMS+2+FkpFcUSpzcT3OntdfW1pWu9j3sEBY/
+         UC2V4Y7d1xtISgdPVHMGyNq7SGOzzRpl0LrZtJqaveoO/IRmjA4p0LJLLGT/7K1R2hkN
+         ZmBoeaCML/w32zg22mRiIGBmCRkgYdsAOtzu5lAYL/++MKpjZJLcLttQ8fyV8ApYLwMz
+         Dvub9y9BSapEMSdbsw2jys17Wp2gtPQGJBTW6P1ft56DNWZ6HlDc7dDEDLrwyQiam5a/
+         evE7MVjOamyXMXN9BK+4kBYbwykDsHkcGDX+R9fZWFl0/66CbM33ROWFhYs97Ih83ksd
+         +Isw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=fFuoiYPil2JVZwtaxncbPyFJREGGyGX3/G5dJOGOxaQ=;
-        b=rQALvwMiFXKGZj8/ct0lbWdIm1bMd6mGEJdCC5iadkNQJKlZWClfcQc7+JGxaXdt5w
-         Km4+W2PJyrYsTe4UW154SclGQbldPI6GLoRLGtkUFU/+Rq5vFBiUA2bygO0h7mi7a7Ni
-         r5RA05ac8/VrQGj6GXH/ypLGckXtkWe0ebpl0pPa5O/IoVknQ15NcxhWxOyQAJwPIihM
-         nKkPbZ3ZJI/9fsoA22ePfcmUiRRXXumfqFhiftg8R1IySuRzan29VQTaDiOiccfyMp6w
-         afw1Art+t7Ya9R/peTtkgcxlSo5sPLioast4hOj7AySYxwytyLeNunm52NcXf0cyAvK9
-         /21w==
-X-Gm-Message-State: AIVw110UFUQ+EXRw7infhEySkWjI5ahZpx8mxANh+Df8vM3mb0+Vlr+P
-        6RuzXCZQPT5yxg==
-X-Received: by 10.84.135.129 with SMTP id 1mr22999271plj.12.1499274413633;
-        Wed, 05 Jul 2017 10:06:53 -0700 (PDT)
-Received: from unique-pc ([117.209.172.103])
-        by smtp.googlemail.com with ESMTPSA id w85sm64807107pfj.115.2017.07.05.10.06.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 05 Jul 2017 10:06:53 -0700 (PDT)
-Message-ID: <1499274396.16389.4.camel@gmail.com>
-Subject: Re: Help needed for solving a few issues with building git
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Wed, 05 Jul 2017 22:36:36 +0530
-In-Reply-To: <1499198419.6428.7.camel@gmail.com>
-References: <1499087898.4156.6.camel@gmail.com>
-         <xmqqshidl76n.fsf@gitster.mtv.corp.google.com>
-         <xmqqk23pl1q8.fsf@gitster.mtv.corp.google.com>
-         <1499198419.6428.7.camel@gmail.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=+sVAOqlqR3ECezhYWlncBVqInU9H0S/iyLCojD6wqxM=;
+        b=Xj6IjkNnqr1zyepXpz2gjZk7q36p5zIwp94AxGIJy2VvnOd/CFHPuLE4A84y9maxEg
+         MveYX0TCN6kbgycTfbkpLy+vmchFyrHhj3/sPqDHtFKS/CS2jDiv9EzhrVV9rCrs0bIs
+         FHnxPnIpw5EvUY8ldYQzfuNYJpjrW8u5hyipylZeGLbCTP6BdGTRIjJ1V690VyUEb5ix
+         OMz5l6mWLunJ8J28ngJNJmG2ab+Lu5gSAFtqZwNnq+qpKBXOKKodnV3j72mdYjG9ltHn
+         hPihKoqLSa7Z0QhltFov7c+QOrfzhFTtYSMHW4z1voHeUL/2NZQqhQsGWjui7Dhg7JBG
+         vKxA==
+X-Gm-Message-State: AIVw113BeF2NdsaGAmMDTIvSrvyUTewuBrYOx8XKVwHRERV5G/rwSmfI
+        8rYwQZW73SqnZg==
+X-Received: by 10.84.193.101 with SMTP id e92mr23330173pld.209.1499274441896;
+        Wed, 05 Jul 2017 10:07:21 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:ad13:9505:c2bc:e887])
+        by smtp.gmail.com with ESMTPSA id t83sm47039562pfg.91.2017.07.05.10.07.21
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 05 Jul 2017 10:07:21 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Konstantin Khomoutov <kostix+git@007spb.ru>,
+        Git ML <git@vger.kernel.org>
+Subject: Re: Should "head" also work for "HEAD" on case-insensitive FS?
+References: <87ziclb2pa.fsf@gmail.com> <20170704071909.phs4bf5ybdord2lv@tigra>
+        <87van8boe9.fsf@gmail.com>
+        <20170705083611.jgxbp4sqogicfwdb@sigill.intra.peff.net>
+Date:   Wed, 05 Jul 2017 10:07:20 -0700
+In-Reply-To: <20170705083611.jgxbp4sqogicfwdb@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 5 Jul 2017 04:36:11 -0400")
+Message-ID: <xmqqshiaizhz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2017-07-05 at 01:30 +0530, Kaartic Sivaraam wrote:
-> I tried pointing it to the installed location, it doesn't seem to be
-> working. To elaborate a little on what I did,
-> 
->         * I installed the "libcurl4-openssl-dev" package b
->         * I found that the 'include' directory to be present  at
->         '/usr/include/x86_64-linux-gnu/curl'. I wasn't sure if
->         '/usr/lib/x86_64-linux-gnu/' is the corresponding library
->         directory. 
->         * I took the common parent of both '/usr' and ran the
-> following 
->           commands to build 'git'
-> 
->             $ make CURLDIR=/usr prefix=/custom/location
->             $ make CURLDIR=/usr install prefix=/custom/location
-> 
->         * The build did succeed but I get an error that "'https'
-> helper
->         is not found"
-> 
-> Was anything I did, wrong?
-> 
-Ok, at last I was able to build git with https support using 'curl'
-built from it's source. Anyways, thanks for the help, folks.
+Jeff King <peff@peff.net> writes:
 
-> >  This is probably because you are trying to run without installing?
-> 
-> Nope. I'm *installing* git not using the binary wrappers.
-> 
-> >  Ask the "git" you built what its --exec-path is, and run "ls" on
-> >  that directory to see if you have git-remote-https installed?
-> >  
-> 
-> Obviously, I don't see any 'git-remote-https' binary in the folder to
-> which I built git.
-> 
-> >  Trying a freshly built Git binaries without installing is done by
-> >  setting GIT_EXEC_PATH to point at bin-wrappers/ directory at the
-> >  top-level of your build tree (that is how our tests can run on an
-> >  otherwise virgin box with no Git installed).
-> > 
-> 
+> Ultimately I think the path forward is to have a ref backend that
+> behaves uniformly (either because it avoids the filesystem, or because
+> it encodes around the differences). See:
+>
+>   http://public-inbox.org/git/xmqqvb4udyf9.fsf@gitster.mtv.corp.google.com/
+>
+> and its reply.
+
+Once Michael's packed-refs backend stabilizes, we may have a nice
+calm period in the refs subsystem and I expect that this will become
+a good medium-sized project for a contributor who does not have to 
+be so experienced (but not a complete newbie).
+
+It needs to:
+
+ - add icase-files-backend, preferrably sharing as much code as the
+   existing files-backend, in refs/.
+
+ - design a mechanism to configure which refs backend to use at
+   runtime; as this has to be done fairly early in the control flow,
+   this will likely to use early configuration mechanism and will
+   probably need to be done in the set-up code, but doing it lazy
+   may even be nicer, as not all subcommands need access to refs.
+
+Thanks for a pointer to the archive.
