@@ -2,174 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCD4C202A7
-	for <e@80x24.org>; Wed,  5 Jul 2017 16:22:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE87A202A7
+	for <e@80x24.org>; Wed,  5 Jul 2017 16:26:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751866AbdGEQWU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 12:22:20 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34977 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751678AbdGEQWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 12:22:16 -0400
-Received: by mail-pf0-f171.google.com with SMTP id c73so132101107pfk.2
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 09:22:16 -0700 (PDT)
+        id S1751878AbdGEQ0U (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 12:26:20 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33892 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751696AbdGEQ0T (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 12:26:19 -0400
+Received: by mail-pf0-f196.google.com with SMTP id c24so21983500pfe.1
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 09:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=O6TedDjL+uofvo2U5O0eDJnX+shI1ywzGk+RlPG+9y8=;
-        b=Nj2OwQMx3YbHoPwGpn2IpZcLU5OPv/0XU/cVIMXHE83bHD256RJxEbMUuXVy4L8XCL
-         BbUeDXpDIxnAKE1BGuBe5qPTLhKPUBBj3mq9osQV18VKSTKajhDjmyVm6KKFPBTQ67nR
-         deaeLbueFk1IaGmhQZ5MrGklBmC9wvcVIJgaSj8iy7Sh7GVmYOoGa6GxEXGnAUveoPRi
-         4YSns7NZemP72L+3IlGuYtd9a9nO/O2nUUzrbT2bP+eQbIY5ZMymbngqF3/9Ygch4Mgr
-         rYadcdfY7/vyww9t1X1t+NwjslGfuCTTWi1ngZNoQvanxM4ZiX7AWN0WDPzvUrK9S1rp
-         T60g==
+         :user-agent:mime-version;
+        bh=fQOE0dTkEVvP54QRAmyMCiqVlJNS0NRB11wvttkqUcg=;
+        b=hSCn/81Xh5R86d6KyjMVKzT/c/aeCGz1WJSN+80QHDSkYg3JynNp1cV4xMjhOkmGVR
+         N7a1iakY4BW5TeDfHRqI8Cmb/W4Whn+6yWWWNKSpGXGP7Nere8nGcdz5zrPCJ+RlVSlh
+         zdvhtAZrmtRce8o8Wnjfcgnu6X0Ucd3JAWA5pZdoyNpA2EQd7Uu0MZL1pMUJZye08gnA
+         BNJpxiA5Jw84JAfighuCbwSMbCuNibbR7pi+4UbNCHucHkHtgFjCaSQPzZv00fjj8+P8
+         po1DkKXD0KpJLvMnDFBbF/9k75z8jURXxuR7vbit6qXkdfnLuH8guIa/opJUoWAPeFYW
+         lglw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=O6TedDjL+uofvo2U5O0eDJnX+shI1ywzGk+RlPG+9y8=;
-        b=K3lEIifpwROBfUujr08GseY9G/jjj7+yq/UWPV4zcUG+Jl6jAFWH3o8rNS2j6W80rF
-         ZdHJePsqM6MKSw3srIuwLvelvpOfGxilWGuoD8H81ZZ3GlZJ/KbbTHSzWAv1ONNOMvgt
-         jiah39QVpMoJyuF+tHKJUQfepqiYBTNjA7bE32XECg+x9u1OdG9Od8VTEM2WCj8/zfYe
-         ZjgADv35FUeT34JfxPTZ0fc9Uc1COvGl3jEbH02ugos0QMx5WUv1wGOiBTiKvHmdNoK2
-         tTR0X0MrpKTZHxXZKDK7Z+CabhLb0HAKKzfCN4FouEvnVlhhCRinxckmGjN6BMHBlMOB
-         ft7g==
-X-Gm-Message-State: AIVw113HdP7CTVRv43WcSwmuaRZ/mC0Kxks4jeV5OwtwHXnxWwmEz8cm
-        FJyJp+AVaVY6iMb6/VE=
-X-Received: by 10.98.80.198 with SMTP id g67mr21769593pfj.146.1499271736028;
-        Wed, 05 Jul 2017 09:22:16 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=fQOE0dTkEVvP54QRAmyMCiqVlJNS0NRB11wvttkqUcg=;
+        b=tSkXtlXttYlo3yqxhxoYDrY2SPuPOyORxb72YfKlSB4VIrPwi26sYRzwy2KurP93q0
+         aiuD7vf6mnk/i+omwFVbkg5WF12rFEWfodGWN2+pK38SYVGA26JiF58FHf0rngQLJ+Po
+         tM1S1z7UtezdZ5XInVdjfV8UrlKjfXu3zvN7Zl1JXnvvtRje8kDBZe+YCA/0f2aukNxW
+         Mw/MN6nB8mPfcIv1xEf6F1c8sHAa7NsXR3KoI4anxDYWlpYyUFYiy4W3I4GK4DqiX0vM
+         rCqWhauu+vQoPPZIn0i7nhRw37d/OmVPjXec4Y+Hj431nqdZ6mHG6p+knysNgf2GgO1b
+         6FEw==
+X-Gm-Message-State: AIVw111fEp22m2sWgJd+eXsx2+5bzGES2+s9qKkFUPeRkmXAK4rZJ9FA
+        dsziJ+u/eR9CVQ==
+X-Received: by 10.84.215.135 with SMTP id l7mr13376853pli.194.1499271978611;
+        Wed, 05 Jul 2017 09:26:18 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:ad13:9505:c2bc:e887])
-        by smtp.gmail.com with ESMTPSA id r69sm52864669pfg.28.2017.07.05.09.22.14
+        by smtp.gmail.com with ESMTPSA id c22sm54931904pfl.97.2017.07.05.09.26.16
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 05 Jul 2017 09:22:14 -0700 (PDT)
+        Wed, 05 Jul 2017 09:26:16 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, xiaoqiang zhao <zxq_yx_007@163.com>,
-        Emily Xie <emilyxxie@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2017, #09; Fri, 30)
-References: <xmqqk23tp2jk.fsf@gitster.mtv.corp.google.com>
-        <87podkehcx.fsf@gmail.com>
-Date:   Wed, 05 Jul 2017 09:22:13 -0700
-In-Reply-To: <87podkehcx.fsf@gmail.com> (=?utf-8?B?IsOGdmFyIEFybmZqw7Zy?=
- =?utf-8?B?w7A=?= Bjarmason"'s message
-        of "Sat, 01 Jul 2017 09:39:10 +0200")
-Message-ID: <xmqq60f6kg5m.fsf@gitster.mtv.corp.google.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] t5534: fix misleading grep invocation
+References: <936f43ce2c993e545deaee5e196c018933375214.1499254650.git.johannes.schindelin@gmx.de>
+Date:   Wed, 05 Jul 2017 09:26:15 -0700
+In-Reply-To: <936f43ce2c993e545deaee5e196c018933375214.1499254650.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Wed, 5 Jul 2017 13:37:49 +0200
+        (CEST)")
+Message-ID: <xmqq1spukfyw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> On Fri, Jun 30 2017, Junio C. Hamano jotted:
+> It seems to be a little-known feature of `grep` (and it certainly came
+> as a surprise to this here developer who believed to know the Unix tools
+> pretty well) that multiple patterns can be passed in the same
+> command-line argument simply by separating them by newlines. Watch, and
+> learn:
 >
->> * xz/send-email-batch-size (2017-05-23) 1 commit
->>  - send-email: --batch-size to work around some SMTP server limit
->>
->>  "git send-email" learned to overcome some SMTP server limitation
->>  that does not allow many pieces of e-mails to be sent over a single
->>  session.
->>
->>  Waiting for a response.
->>  cf. <CACBZZX5GYV50rjg9X602JHqFPaoofH9TwDf_-r_MDu8-rmNV6Q@mail.gmail.com>
->>  cf. <xmqqo9tfff2w.fsf@gitster.mtv.corp.google.com>
->>
->>  """I thought your wish (which I found reasonable) was to record
->>  whatever information that would help us in the future in the log
->>  message?  I was waiting for that to happen."""
+> 	$ printf '1\n2\n3\n' | grep "$(printf '1\n3\n')"
+> 	1
+> 	3
 >
-> I think it's fine in lieu of xiaoqiang zhao not being responsive to just
-> merge this as-is. The info that can help us in the future is in the ML
-> archive, which should be good enough.
+> That behavior also extends to patterns passed via `-e`, and it is not
+> modified by passing the option `-E` (but trying this with -P issues the
+> error "grep: the -P option only supports a single pattern").
+>
+> It seems that there are more old Unix hands who are surprised by this
+> behavior, as grep invocations of the form
+>
+> 	grep "$(git rev-parse A B) C" file
+>
+> were introduced in a85b377d041 (push: the beginning of "git push
+> --signed", 2014-09-12), and later faithfully copy-edited in b9459019bbb
+> (push: heed user.signingkey for signed pushes, 2014-10-22).
+>
+> Please note that the output of `git rev-parse A B` separates the object
+> IDs via *newlines*, not via spaces, and those newlines are preserved
+> because the interpolation is enclosed in double quotes.
+>
+> As a consequence, these tests try to validate that the file contains
+> either A's object ID, or B's object ID followed by C, or both. Clearly,
+> however, what the test wanted to see is that there is a line that
+> contains all of them.
+>
+> This is clearly unintended, and the grep invocations in question really
+> match too many lines.
+>
+> Fix the test by avoiding the newlines in the patterns.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-OK.  I'll amend to add a few lines of note to the commit log and
-then merge it down.
+The invocation this fixes is not just misleading but simply wrong.
+Nicely spotted.
 
-> So my WIP is, and I'd like feedback on the viability of the general approach:
->
->     create_test_file() {
->     	file=$1
->
->     	# `touch .` will succeed but obviously not do what we intend
->     	# here.
+Thanks, will queue.
 
-If you want to create, do not use "touch" that gives readers a false
-and confusing impression that you care about the timestamp of the
-thing being updated.  If you say ">./$file", you can get an error from
-the shell just fine, I think.
-
->     	test "$file" = "." && return 1
->     	# We cannot create a file with an empty filename.
->     	test "$file" = "" && return 1
-
-Likewise, as that would become ">./".
-
->     	# The tests that are testing that e.g. foo//bar is matched by
->     	# foo/*/bar can't be tested on filesystems since there's no
->     	# way we're getting a double slash.
->     	echo "$file" | grep -F '//' && return 1
->     	dirs=$(echo "$file" | sed -r 's!/[^/]+$!!')
-
-GNUism already pointed out, I think.
+>  t/t5534-push-signed.sh | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
 >
->     	# We touch "./$file" instead of "$file" because even an
->     	# escaped "touch -- -" means something different.
->     	if test "$file" != "$dirs"
->     	then
->     		mkdir -p -- "$dirs" 2>/dev/null &&
->     		touch -- "./$file" 2>/dev/null &&
->     		return 0
->     	else
->     		touch -- "./$file" 2>/dev/null &&
->     		return 0
->     	fi
->     	return 1
->     }
+> diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
+> index 5bcb288f5c4..464ffdd147a 100755
+> --- a/t/t5534-push-signed.sh
+> +++ b/t/t5534-push-signed.sh
+> @@ -119,8 +119,11 @@ test_expect_success GPG 'signed push sends push certificate' '
+>  		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
+>  	) >expect &&
+>  
+> -	grep "$(git rev-parse noop ff) refs/heads/ff" dst/push-cert &&
+> -	grep "$(git rev-parse noop noff) refs/heads/noff" dst/push-cert &&
+> +	noop=$(git rev-parse noop) &&
+> +	ff=$(git rev-parse ff) &&
+> +	noff=$(git rev-parse noff) &&
+> +	grep "$noop $ff refs/heads/ff" dst/push-cert &&
+> +	grep "$noop $noff refs/heads/noff" dst/push-cert &&
+>  	test_cmp expect dst/push-cert-status
+>  '
+>  
+> @@ -200,8 +203,11 @@ test_expect_success GPG 'fail without key and heed user.signingkey' '
+>  		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
+>  	) >expect &&
+>  
+> -	grep "$(git rev-parse noop ff) refs/heads/ff" dst/push-cert &&
+> -	grep "$(git rev-parse noop noff) refs/heads/noff" dst/push-cert &&
+> +	noop=$(git rev-parse noop) &&
+> +	ff=$(git rev-parse ff) &&
+> +	noff=$(git rev-parse noff) &&
+> +	grep "$noop $ff refs/heads/ff" dst/push-cert &&
+> +	grep "$noop $noff refs/heads/noff" dst/push-cert &&
+>  	test_cmp expect dst/push-cert-status
+>  '
+>  
 >
-> And then later on for the tests I do:
->
-> 	# The existing test
-> 	test_expect_success "wildmatch:     match '$text' '$pattern'" "
-> 		test-wildmatch wildmatch '$text' '$pattern'
-> 	"
->
-> 	# My new test
-> 	if create_test_file "$text"
-> 	then
-> 		test_expect_success "wildmatch(ls): match '$pattern' '$text'" "
-> 			test_when_finished \"
-> 				rm -rf -- * &&
-> 				git reset
-> 			\" &&
-> 			git add -A &&
-> 			>expect.err &&
-> 			printf '%s' '$text' >expect &&
-> 			git --glob-pathspecs ls-files -z -- '$pattern' 2>actual.err | tr -d '\0' >actual &&
-> 			test_cmp expect.err actual.err &&
-> 			test_cmp expect actual
-> 		"
-> 	else
-> 		test_expect_failure "wildmatch(ls): match skip '$pattern' '$text'" 'false'
-> 	fi
->
-> This still needs to be cleaned up a bit to be parameterized (i.e. the
-> --glob-pathspecs argument, whether it should error etc.).
->
-> It works for me on Linux, but I'm wondering if others see any issues
-> with the approach, does simply trying to create bizarro filenames on
-> some OSs cause issues? I don't think so, but let's make sure.
-
-Issues meaning that the test wants to see how a pathname with ^I in
-it works but create_test_file step would fail?  Your above construct
-covers that with the if/then/else test_expect_failure/fi just fine,
-I think.
+> base-commit: 5116f791c12dda6b6c22fa85b600a8e30dfa168a
