@@ -2,124 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CD65202AE
-	for <e@80x24.org>; Wed,  5 Jul 2017 23:06:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 35FFF202AE
+	for <e@80x24.org>; Wed,  5 Jul 2017 23:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752086AbdGEXGe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 19:06:34 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:35622 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751941AbdGEXGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 19:06:33 -0400
-Received: by mail-pf0-f170.google.com with SMTP id c73so1652967pfk.2
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 16:06:27 -0700 (PDT)
+        id S1752559AbdGEXPV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 19:15:21 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36089 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752467AbdGEXPU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 19:15:20 -0400
+Received: by mail-wr0-f196.google.com with SMTP id 77so883351wrb.3
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 16:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ktd7reCSO3IEgZwYo9+4RomqyJnggq8/vSSEeIMWv0M=;
-        b=kpGLDL7THIwNgzLdbQQJDqENt9Cbm5PN944ZlSIptdV81kpkqnf6TLHyiRZyLdUzGe
-         wv6x4Wm2WZBegzfk/3lr7nos1bIVYNTJi0/iNu/AWQ/yQY2O1HELql541znu0Utf7yo2
-         2RDf20R9ztGGwuZ0gzwP4m6+DlP78FxhCBEdn/KptjaKtyEo5MifrmIw5f/nKa7Otjw2
-         npFbUiWYKmYEQthBJeh9Iz1odTVwu1OOegKeYRbhpzueE0Wmr4BsawETg1+Y/F+BtmYR
-         QGCvnnEuB75tPkVn/SFVY9ntkTYRZLi7QDfsWPGZdwJlXe2fG6LxZHTZyMwRC8YK3LlK
-         cHrw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=bPq8UsyDrk0mb5LDCsYXMtkEBq7boLn3e28f4zF5QZ0=;
+        b=XR71rqjiRyq4/64qwHgLlx1Ah8sdZTE4jA53tKsXND9ST+qbGsyKBR0J2Y4U8rR3Vt
+         kRMMX9acRq6Bbly6oAuNlHND4K/KvUqnU8Imw8CqnyG44g2kcoe3X41qDU2VbQAF1FdE
+         NopofW2tEMMYGWgFZgqqIffkfEzKV2u1jCboEECvNAXdaD+e3GDUFtMuSE7g6RxIZGK2
+         V+U8stiYmBjiYVHE8SNs772Nw+VbUb2BScTOJ1Oyn4jTvI2YbqXMYIz/FAfhIuoo06m/
+         MNJ4siiu1kfgpTCsu16g6LT+Rf7VxLsd2Ih1mh4fxhnBuBl4T3xo+JolWqSylNlO+dj8
+         qhOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ktd7reCSO3IEgZwYo9+4RomqyJnggq8/vSSEeIMWv0M=;
-        b=DRJrLb7BMo0M1VMxJ1ECGu84JvDVylq5IAGnAID2/qRCfkYIxl6nInrh882WbPSsY6
-         12ziuU+etzDLp2YsbWBqvb/FRteEtmSXOqUI+N3qpoaA8iNV65IB1+DY05T86ZccpOBa
-         8KulcC5jBtJyLZD52zXnqm4u70H/AF68SQaXc1Plf0iwX+tQPML2lri/XAlwRbYhdFah
-         FUfqiboNoSy5uu6mhdQtD4DWfODnVAnN/wle8LPxikFG9+0qjM/SQ2/0TtbJB3A3UQya
-         1u62BQDszvICqakwRnJ5Tf2SjKXryRNe6/YdcsvipPH3JySzV09zVqKuNDrvV0FxnIff
-         Pp1g==
-X-Gm-Message-State: AIVw112jD0rPqhQD5LfF+4Ika8PAG+BTxH3XgG69NVr9hsV71z//xaoB
-        rJyepPU2fTvvsrr6o1N5Bv4ChASNAMGF287LiQ==
-X-Received: by 10.84.224.74 with SMTP id a10mr24498758plt.210.1499295986898;
- Wed, 05 Jul 2017 16:06:26 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.183.170 with HTTP; Wed, 5 Jul 2017 16:06:26 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=bPq8UsyDrk0mb5LDCsYXMtkEBq7boLn3e28f4zF5QZ0=;
+        b=QwFYUkQPierG2ICKZ7IPntWt+bYoDAI+ZE1DTK5iEuhN85XIclTnw1JYZ3kXIhmR/X
+         fRULlCKdH8odbFp/EN1GqniPTqLCu/K5DP+kMu4YHRBvxkIdnodhRUy7EUXlJM0Akq6L
+         QAKsCc3uEk6bs1FOVKrGTTkV9PseMiHbgQyBRGJRQIzGkaGjJs2kV9nDsBfTrkDDE+pH
+         CK60phC+2BcnH7E25UmhPgFIHG06vEDtX9fr8xVepdUm9A/Wkv40YzwNrqUYtsJZetGZ
+         gGQ4VDChCLlESrj/mmvSq0aOvCvJhpajv0XVPJqczGCa+pps7Nb1YYukLBZGDDUhAEDa
+         GM7g==
+X-Gm-Message-State: AIVw113ORCCcKJ8JRnqLmfdk1CRQytSziJQ1qw/ZTVGcPCDTyRWcBjap
+        OWQ5ybM5HG7ruAguz3o=
+X-Received: by 10.80.207.203 with SMTP id i11mr6118097edk.112.1499296518941;
+        Wed, 05 Jul 2017 16:15:18 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id x36sm8834938edb.64.2017.07.05.16.15.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Jul 2017 16:15:17 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Sahil Dua <sahildua2305@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/3] branch: add a --copy to go with --move
+Date:   Wed,  5 Jul 2017 23:14:51 +0000
+Message-Id: <20170705231454.15666-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1
 In-Reply-To: <xmqqeftuh5q7.fsf@gitster.mtv.corp.google.com>
 References: <xmqqeftuh5q7.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 5 Jul 2017 16:06:26 -0700
-Message-ID: <CAGZ79kamhPAQrE3GBC=fG=PNNtdHj7iStsqjOojkVMpNy_VEWw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2017, #01; Wed, 5)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> [Graduated to "master"]
+On Wed, Jul 05 2017, Junio C. Hamano jotted:
+
+> * sd/branch-copy (2017-06-18) 3 commits
+>  - branch: add a --copy (-c) option to go with --move (-m)
+>  - branch: add test for -m renaming multiple config sections
+>  - config: create a function to format section headers
 >
-> * bw/repo-object (2017-06-23) 21 commits
-...
+>  "git branch" learned "-c/-C" to create and switch to a new branch
+>  by copying an existing one.
 >
->  Introduce a "repository" object to eventually make it easier to
->  work in multiple repositories (the primary focus is to work with
->  the superproject and its submodules) in a single process.
+>  Has a bit of interaction with mh/packed-ref-store and bw/config-h,
+>  so perhaps needs to wait for the former to stabilize a bit more
+>  and possibly rebasing on them.
 
-It's pretty rad to see this advancing to master.
-FYI: I started working on teaching the object store how to work
-with repository objects. This would allow us to get rid of hacks in
-submodule.c: namely add_submodule_odb, which adds submodule
-objects to the (main) object store for processing. Ideally we want
-to free the objects of a submodule once we are done with a submodule.
-(or integrate it into our try_to_free_routine)
+Now that bw/config-h has landed in master here's a version that's
+rebased on that. No changes from v1 except:
 
-> * sb/hashmap-cleanup (2017-07-05) 10 commits
-...
->  Will wait for feedback, then merge to and cook in 'next'.
+ - moving the new config header addition from cache.h to config.h,
+   corresponding to what was done in bw/config-h.
 
-Thanks.
+ - fixing a trivial comment whitespace issue which I see you applied
+   locally.
 
-> * sb/pull-rebase-submodule (2017-06-27) 4 commits
->  - builtin/fetch cleanup: always set default value for submodule recursing
->  - pull: optionally rebase submodules (remote submodule changes only)
->  - builtin/fetch: parse recurse-submodules-default at default options parsing
->  - builtin/fetch: factor submodule recurse parsing out to submodule config
->
->  "git pull --rebase --recurse-submodules" learns to rebase the
->  branch in the submodules to an updated base.
+Even though this modifies some of the same files as
+mh/packed-ref-store it looks to me like this doesn't conflict with
+that topic in any meaningful way, but I may be missing something. I
+can't get a merge between this & gitster/mh/packed-ref-store
+compiling, but that's due to issues in the latter which seem to be
+fixed by some subsequent merge/fixup in pu, not something to do with a
+genuine conflict with this topic.
 
-Speaking of submodules, It's not just features, but I also send bug fixes. ;)
-https://public-inbox.org/git/20170630003851.17288-1-sbeller@google.com/
-(That patch is not related to this series, except for working in the submodule
-area, but I consider that patch more important than e.g. this series.)
+Hopefully this'll allow this topic to land in 2.14.
 
-> * sb/submodule-doc (2017-06-22) 1 commit
->  - submodules: overhaul documentation
->
->  Doc update.
->
->  What's the status of this thing?
+Sahil Dua (2):
+  config: create a function to format section headers
+  branch: add a --copy (-c) option to go with --move (-m)
 
-There was some review on the list (mostly from Brandon and Jonathan T.),
-but I felt like it was bikeshedding, as there is no black/white correctness
-with words. (Same for code, but for code it is easier to come to a
-consensus at least.)
+Ævar Arnfjörð Bjarmason (1):
+  branch: add test for -m renaming multiple config sections
 
-So I had a couple of internal rounds with them on a Google doc, hence
-I assume they agree on this patch being ok as-is.  But it has been a while
-I can reread it myself to check. But I guess most valuable input
-would come from others.
+ Documentation/git-branch.txt |  14 ++-
+ builtin/branch.c             |  67 ++++++++---
+ config.c                     | 115 +++++++++++++++----
+ config.h                     |   2 +
+ refs.c                       |  11 ++
+ refs.h                       |   9 +-
+ refs/files-backend.c         |  46 ++++++--
+ refs/refs-internal.h         |   4 +
+ t/t3200-branch.sh            | 256 +++++++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 476 insertions(+), 48 deletions(-)
 
-> * sb/diff-color-move (2017-06-30) 26 commits
-...
->  Will merge to 'next'.
+-- 
+2.13.1.611.g7e3b11ae1
 
-cool. Let's see how a larger audience reacts to this one. Maybe there
-is more input for a good heuristic.
-
-Thanks,
-Stefan
