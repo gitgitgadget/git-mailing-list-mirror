@@ -2,91 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SBL_CSS,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE256202A7
-	for <e@80x24.org>; Wed,  5 Jul 2017 18:19:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A79DA202A7
+	for <e@80x24.org>; Wed,  5 Jul 2017 18:38:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752076AbdGESTp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 14:19:45 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:36122 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751692AbdGESTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 14:19:44 -0400
-Received: by mail-pg0-f41.google.com with SMTP id u62so128079853pgb.3
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 11:19:44 -0700 (PDT)
+        id S1752030AbdGESiy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 14:38:54 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33867 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751680AbdGESix (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 14:38:53 -0400
+Received: by mail-pf0-f194.google.com with SMTP id c24so22506161pfe.1
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 11:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=hlFX2pQbnwLK7JN94RVieTcv/H8S23No0p6oGIGWF1k=;
-        b=puxuq+qkzYcbdo7Odxaptxgb7UjEkgVMwe3YdDSiz/oq/ea1tuCWsa0qQ5R1ctzRvL
-         ah9YP93zJ9wSvYlAglPp44yjX61TcSMz4DrXFE4Xy/Hsp0Uodo6cKm81DJr7GDU+plVf
-         JTHk4lVAeQpUu0cFRUfneCC4QWTfxdBSA0+t4oTC9mfmO6fVuZ+8WqyB3trFuULhei1+
-         xJy0dhceXKGf8zbpCKKUT+Q7MiDzSUkMli1ihkxzqhTP7tl7iqNH+j+wecpe9t2/mFzO
-         dlH9ijxtbN1dY/ww6U5w/tmx+W2cN5GkWt2zJYBvjuEmZx5pPuq6VxdokQACJEimyHFf
-         npyQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=VnFzvK8q0F0krN6uKiGzOOMZocmkx3qWVx9BDFlqf30=;
+        b=B+4r++bY6d8MaVmrFEvkQSwCw0vjbOy8W1LrAOwWs0q6h93coEnTysNkAnITrzKdBr
+         MTY9YNBpW0b0vU/9YOqvj25MRntGtdquXJEv8MynMcYyXoQJLdX/z+CTZcrUPrisPhui
+         SPyj0RsKFPi8RgZ1Kb0kBkn1JagQ/Tft6TxMbJvnLX/3fJ5MvfSYpdkZwnqGyNLVqsh9
+         cBXAAEnP+gHLjxle2fS7ShAzwh5eqtyEyqV8mNP9/PtgFi0n1sNyzG+TIyqABTSqfAxB
+         xBO6vUAtB76Vp+P0BB2mdkiV2PWFGrPmrxWxLyKisZYLxge/8AvB0UsynMCA5knmMXIh
+         Vbbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=hlFX2pQbnwLK7JN94RVieTcv/H8S23No0p6oGIGWF1k=;
-        b=qcjVfwTxRZNfzn8RMHAZSjbpPiLt0btTC/t6UBtZCjTRoEJP0GLiiZGfaY/+2MD6Ky
-         U7D1YUUCe1QRMQCGFXRgSdltn8Cis7gPmwhUwN1KlbQTcnfS5o8QznnyI3XFFdi+o35N
-         z3XIa2uLgnqPayQZCCKxOr5A+08OwqknZFx5BVypf1cj7gAARp/bFsKT2I4GY5z/rigZ
-         E8hecwBjt/4sKaqdMlZTANgp8h+asdfwfZRMJf/xW6m8gyOcHGFv8aykMmIKXgBGAL4M
-         PG9dIXhdpIxCxlmhGAWWb+SFKwNbwL9E9rWkhmbDKSWo2OHso7PgxlW5meOfHHn1du0r
-         am9w==
-X-Gm-Message-State: AIVw112OUfppqpPczksrAWTdHIaDDiNLnEspgu5Hb6SVdDLodF/2zhdu
-        ujYIZhXwf5aBBw==
-X-Received: by 10.98.80.198 with SMTP id g67mr22262065pfj.146.1499278784121;
-        Wed, 05 Jul 2017 11:19:44 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id r69sm53255894pfg.28.2017.07.05.11.19.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 05 Jul 2017 11:19:43 -0700 (PDT)
-Message-ID: <1499278787.1791.2.camel@gmail.com>
-Subject: Re: Requesting suggestions for a good sample "prepare-commit-msg"
- hook
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Wed, 05 Jul 2017 23:49:47 +0530
-In-Reply-To: <1499275601.16389.6.camel@gmail.com>
-References: <1499273152.16389.2.camel@gmail.com>
-         <xmqqwp7miztv.fsf@gitster.mtv.corp.google.com>
-         <1499275601.16389.6.camel@gmail.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=VnFzvK8q0F0krN6uKiGzOOMZocmkx3qWVx9BDFlqf30=;
+        b=tpy8lMd4rzeRPP3YRiS9s+Zb6YQ6k/uQbs0H+CT0l52+ntQA9ywL6UB8SgTE9qNeBE
+         usLSa+82LKgNyQNvGA15p40B+C72Lnux3QnK6NRpWZC7YIXa24gxYgtk+M86Ey6e7l3m
+         iSnHNF1K4PSmOt7Qwtt3rmbuKcYvPMbDiFN44CiVgWt1ST5LaNf8hwhj/VBlM2b8T9/D
+         tetRkrtB1zHlxRbutqZBC7Z3KfsktAvDNKl3aB55t3qdTUIIjgY9MZJ1HRYbUILHyqV9
+         BM0eo2mDbbXzopGwSIYQqIBH6pDA2L2MpfOn9l/D1RljPKIcB06wA79LBwvfQMR0JPBu
+         1ujA==
+X-Gm-Message-State: AIVw113vxCsZcPWm0vfu6wf9/PepjWpEJRptC6PJFNUC585gAqAc2FaI
+        iro/6t7fxaOV/A==
+X-Received: by 10.99.121.75 with SMTP id u72mr22242135pgc.53.1499279932705;
+        Wed, 05 Jul 2017 11:38:52 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:ad13:9505:c2bc:e887])
+        by smtp.gmail.com with ESMTPSA id w85sm65147197pfj.115.2017.07.05.11.38.51
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 05 Jul 2017 11:38:52 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 11/12] sha1_name: convert get_sha1* to get_oid*
+References: <20170703185533.51530-1-sandals@crustytoothpaste.net>
+        <20170703185533.51530-12-sandals@crustytoothpaste.net>
+        <CAGZ79kYWKUPhfMvg2N+1h6b49d3Bqw_3Moes9XscjkmXAumz8Q@mail.gmail.com>
+Date:   Wed, 05 Jul 2017 11:38:51 -0700
+In-Reply-To: <CAGZ79kYWKUPhfMvg2N+1h6b49d3Bqw_3Moes9XscjkmXAumz8Q@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 5 Jul 2017 11:01:07 -0700")
+Message-ID: <xmqq4luqiv9g.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Wed, 2017-07-05 at 10:00 -0700, Junio C Hamano wrote:
-> > I am not so sure that we are searching for them, to be honest (who
-> > are we in this context anyway?)
-> 
-Imagining HTML could be used in plain-text,
+Stefan Beller <sbeller@google.com> writes:
 
-<strike> I think I misinterpreted your sentence in one of the other
-mails (found below), </strike> Sorry for that sloppy sentence. More
-correctly, the "we" in that context is the same as the "we" in the
-context of the text quoted below,
+>> @@ -636,7 +636,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1,
+>>                 int detached;
+>>
+>>                 if (interpret_nth_prior_checkout(str, len, &buf) > 0) {
+>> -                       detached = (buf.len == 40 && !get_sha1_hex(buf.buf, sha1));
+>> +                       detached = (!get_oid_hex(buf.buf, oid));
+>
+> omitting the length check here?
 
->     That sounds like a sample that is there not because it would be
->     useful, but because we couldn't think of any useful example.
-> 
-
-Link to the post that has the quoted text,
-http://public-inbox.org/git/%3Cxmqqy3s7nbkm.fsf@gitster.mtv.corp.google.com%3E/
+Good eyes.  It probably should check with the possible oid lengths.
