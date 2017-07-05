@@ -2,138 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40451202AE
-	for <e@80x24.org>; Wed,  5 Jul 2017 17:46:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78B8D202A7
+	for <e@80x24.org>; Wed,  5 Jul 2017 17:56:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751772AbdGERqX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 13:46:23 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:34944 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751692AbdGERqW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 13:46:22 -0400
-Received: by mail-pg0-f47.google.com with SMTP id j186so127696704pge.2
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 10:46:22 -0700 (PDT)
+        id S1751878AbdGER4q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 13:56:46 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35505 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751716AbdGER4p (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 13:56:45 -0400
+Received: by mail-pg0-f65.google.com with SMTP id d193so14751964pgc.2
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 10:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=f9GTHrENr3L2+S66AOS15FsCRXA1xvKWl8fCIh8pYKA=;
-        b=tUGZBs/AXj5+dXhnRxw0mOn9u+8wqFiEvJkZVZ8c4mU6zf23OKK9OIobHzike87kAt
-         lk9r+aGYksH3PYTYoCL1XPfJesrpD9IJGq2bxJ70xKVN+0GmRB94QrrKLpMvQEfZri5O
-         bY1nhTJJThujQHlqJXgyWuU4pOd3YBRXWQDiyuASM19btJ//JzlvrAip98UoCIpa5gu/
-         363RqKd9MMjFXQajtm5OVktqKnZXz5PD9MONKKuXWzNbw+hurfo6iytK2738IF3i4HX8
-         1vjnr49Y3g8xpincU/Zxr7AFbh/8QstwDZVDK70XOMBCTEHnO3UOHErCLW2HOBaZvYHU
-         Bjxw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=bzmLp8V0W3ifwWs61wDg3luOnL6y/YigCxHTX2FC7kc=;
+        b=avEEax5cFuxE2jKuxmtw+EwOE/dFXmR+q54k0jiVdIB+tUoE2LdWE+nYHkENfmhISl
+         Jmux7w8RZxDbo/CT43jSh+5kVNGefB2Nn0ABX3ThLGkBhuzeehxyMeEbygK7T7eOksgP
+         NP7wBJGJytOXOLmx0yU/nyl3myNCVZ+6xkqj2BAvi69cTIufC+KpOclcEMW2iJLUS7ID
+         RHasv+2fyEaJBh4ZdnqbioFDKRofkhkjjcN6nrPGGHgxnYztQhstr7U1VlP6x7dSZkRm
+         wFNt2MZcYg/+kI8djPItPVcjyFmVYuMUFkuTwU8Ar1MZDe7iERdrLCZNFaqg0d3VapIx
+         2A8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=f9GTHrENr3L2+S66AOS15FsCRXA1xvKWl8fCIh8pYKA=;
-        b=LrouP5QUDZ/GR5oCYRrGeXcJAjpzETHkBjhmJ+5FdZID9DTWuDTGGdQ1BgPlL/6dDX
-         RxVgo82BOtTmHMx7rgKlxEhwyKqgt3gpdsYjaajLN0Bz+j9MhoFdlQ9GwmmMePNrDdU3
-         5S8RbJzvln8Y6mkJkcOiTJOLhcHWq2BmiAK9JlbGVy0k6vU3sAlcZ5Qu6LC6YN//SgRb
-         cDl5obfzOA8z7Xe/Bq+Khn6y39Cn4EzYcPBcJb90qskIXPJKfuUgS+tyyR/acpQXGi34
-         CyMWraFfcxoCErky1Tv0Yum7LhhxZj78ixJtxxvvhkT5C2XfbOCAAe7yN3p8mKKpk8IP
-         bwkg==
-X-Gm-Message-State: AIVw1103SPvrP6YNcnj6lVtNKoW+r6qdqj4XEUyduLQeHukFOOwQ83Ll
-        RRGi0aUgBtPHYY26sZuIbvBW/H5jO3OiAII=
-X-Received: by 10.84.224.74 with SMTP id a10mr23224706plt.210.1499276781987;
- Wed, 05 Jul 2017 10:46:21 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=bzmLp8V0W3ifwWs61wDg3luOnL6y/YigCxHTX2FC7kc=;
+        b=Yz9SMzH7/NisFswPNPMMSOLNrYfsqmxo1LOfWAH4/LWSEjIDr+QWeOpkP0VjTqprNm
+         Jxd1z2nVWByAYfRRMcv3blSRBls5tAwE8kJ1+dicatBmplgXsZLKORUj6idn/xIUQ9cF
+         SweVQ7uX1J9gGr0k64grtiGyBP6jOApClpGwiKCYERk7SjbuernKwsi53ozQ/0O1CGvp
+         ArjXfIx1KuA6iLxdUilW20l9nwEkvdJzMVs5Z+7+2STNFigAHoO0Qzqsbxgj+YyQsfaD
+         kWA7rC9XXNc7Y1DeKXoN4S4o8KpDQWFzeICREZHU7AMPmynAclLLZe2c+KSM2t48Mukf
+         b2IQ==
+X-Gm-Message-State: AIVw111e79PQksrVuYnNp/3WOOSrXDQ5V8/EPL5vKF1PlMW+eM/5lj+m
+        QgKOa2qTaHEBcQ==
+X-Received: by 10.98.56.195 with SMTP id f186mr21607088pfa.199.1499277404589;
+        Wed, 05 Jul 2017 10:56:44 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:ad13:9505:c2bc:e887])
+        by smtp.gmail.com with ESMTPSA id u194sm47629464pgb.24.2017.07.05.10.56.42
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 05 Jul 2017 10:56:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
+        Sahil Dua <sahildua2305@gmail.com>
+Subject: Re: [PATCH 2/6] t1414: document some reflog-walk oddities
+References: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
+        <20170705080036.qxzy7havcy72mvff@sigill.intra.peff.net>
+Date:   Wed, 05 Jul 2017 10:56:42 -0700
+In-Reply-To: <20170705080036.qxzy7havcy72mvff@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 5 Jul 2017 04:00:36 -0400")
+Message-ID: <xmqqh8yqix7p.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.183.170 with HTTP; Wed, 5 Jul 2017 10:46:21 -0700 (PDT)
-In-Reply-To: <xmqqinj7k5ot.fsf@gitster.mtv.corp.google.com>
-References: <20170701220547.10464-1-avarab@gmail.com> <20170627121718.12078-1-avarab@gmail.com>
- <20170701220547.10464-3-avarab@gmail.com> <xmqqa84lmonj.fsf@gitster.mtv.corp.google.com>
- <874lutclie.fsf@gmail.com> <xmqq4luskt9l.fsf@gitster.mtv.corp.google.com>
- <87fuebbyvl.fsf@gmail.com> <CAGZ79kZqF3_PyrCnCMDyLNAUMRnvq96L3yoE0j=yzMigu4LUzg@mail.gmail.com>
- <xmqqinj7k5ot.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 5 Jul 2017 10:46:21 -0700
-Message-ID: <CAGZ79kaHLi7iotAT-eKkFv5fsG1fTA2k4SYZAPAmU7h3uAA8Jw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] sha1dc: optionally use sha1collisiondetection as a submodule
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Michael Kebe <michael.kebe@gmail.com>,
-        "Liam R . Howlett" <Liam.Howlett@oracle.com>,
-        Adam Dinwoodie <adam@dinwoodie.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 4, 2017 at 6:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+Jeff King <peff@peff.net> writes:
+
+> Since its inception, the general strategy of the reflog-walk
+> code has been to start with the tip commit for the ref, and
+> as we traverse replace each commit's parent pointers with
+> fake parents pointing to the previous reflog entry.
 >
->> On Tue, Jul 4, 2017 at 3:50 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
->> <avarab@gmail.com> wrote:
->>
->>>
->>> I think some invocation of "git submodule update ???" will do the same,
->>> but I can't from the docs see what that is right now.
->>
->> '--remote' is what you are looking for.
->>
->> When we have the branch field configured, the workflow for *creating*
->> the patch sent
->> to Junio might be different than it currently is. Currently, you would
->> send a patch that is
->> produced as:
->>
->>   git -C sha1collisiondetection pull origin master
->>   git add sha1collisiondetection
->>   git commit -m "serious reasoning in the commit message"
->>
->> This could be 'simplified' to
->>
->>   git submodule update --remote
->>   git add sha1collisiondetection
->>   git commit -m "serious reasoning in the commit message"
->>
->> but as we had different branches in the submodule field,
->> I wonder how much of an ease this is.
->>
->> For Junio the workflow stays the same, as he would just
->> apply the patch, so I understand why he might see the
->> branch field as pollution.
+> This lets us traverse the reflog as if it were a real
+> history, but it has some user-visible oddities. Namely:
 >
-> My reaction was more about "the rest of us", not me or those who
-> choose to bind a new/different commit in the submodule to the
-> superproject.
+>   1. The fake parents are used for commit selection and
+>      display. So for example, "--merges" or "--no-merges"
+>      are useful, because the history appears as a linear
 
-Currently the rest of us would not care IMHO, as there is no
-difference with the field recorded or not. (I just checked if it
-would provide slight benefits for shallow clones, but not so)
+s/useful/useless/ perhaps?
 
-> I was recalling a wish by submodule users in a distant past that
-> lets "submodule update" to detach to the tip of the named branch in
-> the submodule, regardless of what commit the superproject points at
-> with its gitlink.
-
-Yes, I heard that a couple times when poking around for opinions
-and I think the issue has 2 facets:
-* They actually want to be on a branch, such that the workflow
-  is 'normal'. (Whatever that means, "detached HEAD" sounds
-  scary, but workflow-wise it is not. It just requires an additional
-  "checkout -b" once the work done seems worth preserving)
-* None of the people I talked to wanted to get rid of exact-tracking,
-  solely. But they always came in trade off with the first point
-  outweighing the benefits of exact tracking.
-  Although for this purpose the "update --remote" also doesn't
-  quite fit as it does not re-attach the HEAD to a branch at
-  the same commit as the remote tracking branch.
-
-> When those merely following along with this project did "pull &&
-> submodule update", I do not want the submodule directory to check
-> out the commit that happens to be at the tip of their 'master'
-> branch.  If "submodule update" requires an explicit "--remote"
-> option to work in that way, then my worry is allayed, greatly.
+>      string. Likewise, pathspec limiting is based on the
+>      diff between adjacent entries, not the changes actually
+>      introduced by a commit.
+> ...
+> This commit adds several expect_failure tests, to show how
+> the tool ought to behave.
 >
-> Thanks.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+
+> diff --git a/t/t1414-reflog-walk.sh b/t/t1414-reflog-walk.sh
+> new file mode 100755
+> index 0000000000..bb847f797d
+> --- /dev/null
+> +++ b/t/t1414-reflog-walk.sh
+> @@ -0,0 +1,83 @@
+> +#!/bin/sh
+> +
+> +test_description='various tests of reflog walk (log -g) behavior'
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'set up some reflog entries' '
+> +	test_commit one &&
+> +	test_commit two &&
+> +	git checkout -b side HEAD^ &&
+> +	test_commit three &&
+> +	git merge --no-commit master &&
+> +	echo evil-merge-content >>one.t &&
+> +	test_tick &&
+> +	git commit --no-edit -a
+> +'
+
+Mental note: logically, what we want to see in the log are:
+
+    master:  one-->two
+    side:                one-->three-->(evil)
+    HEAD:    one-->two-->one-->three-->(evil)
+
+where the middle one in HEAD is "switching from master to side".
+
+> +test_expect_failure 'pathspec limiting handles merges' '
+> +	sed -n "1p;3p;5p" expect.all >expect &&
+> +	do_walk -- one.t >actual &&
+> +	test_cmp expect actual
+> +'
+
+OK (it was a bit tricky to see why the topmost one should, but the
+evilness of the merge makes it eligible).
+
+> +test_expect_failure '--parents shows true parents' '
+> +	# convert newlines to spaces
+> +	echo $(git rev-parse HEAD HEAD^1 HEAD^2) >expect &&
+
+I saw something related to this nearby this morning.  Good thinking
+to add a comment on this 'echo' ;-).
+
+> +	git rev-list -g --parents -1 HEAD >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_failure 'walking multiple reflogs shows both' '
+> +	{
+> +		do_walk HEAD &&
+> +		do_walk side
+> +	} >expect &&
+> +	do_walk HEAD side >actual &&
+> +	test_cmp expect actual
+> +'
+
+I somehow find this one a bit iffy.  
+
+The order that commits appear in the "walk from HEAD and side at the
+same time" may want to be different from what this test expects.
+"rev-list --since=3.days -g master next", for example, would want to
+refrain from reading the reflog of 'master' for all 90 days before
+switching to the reflog of 'next', no?
+
+All others I did not comment on and omitted from quoting make sense
+to me.
+
+Thanks.
