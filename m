@@ -2,70 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 353FF202AB
-	for <e@80x24.org>; Wed,  5 Jul 2017 07:43:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EAC1202AB
+	for <e@80x24.org>; Wed,  5 Jul 2017 07:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752459AbdGEHne (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 03:43:34 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34827 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752448AbdGEHne (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 03:43:34 -0400
-Received: by mail-io0-f181.google.com with SMTP id h134so81499030iof.2
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 00:43:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=I1P8MbHpaRup4JGGKPWB94bhhW6bKO0EZvLmOwc/T4c=;
-        b=ExO5elvcB0tPCq4Sw+WcqFOILmDL9yCfGXqeHbjzey2Xw0GKbJMnpDZtpXhJYGEeHs
-         zWkcEi1G0s/7UNSz5xnMc3iVv7DH+oyh4GdsU3KiKgai95uqBNXGXq4d6ngZzU4ckbpT
-         DRS6A7Flp9Pr7/A0lZyL6jBbQFxp9y2yV/gdXvRHhcu4vl2VnP5HfHvxeS1/DiA/N/Fn
-         sM356ow5TKjFF9tGohEcYrCaUoka/Qm8BJCX3J8ncfp2GhxHKDILkoCwGA6Q5gQNWAvV
-         i5rzIvDgD5LeV1cOpbkeYl6TjhGqnezV+jtB2dR1yl+Wy1vuH4WWsn8RJ8f5SVUOZu7O
-         LZkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=I1P8MbHpaRup4JGGKPWB94bhhW6bKO0EZvLmOwc/T4c=;
-        b=T4JOPQ0ULm74GmhjgK+LpzcX7lpFnK19SEIUtT0deAJn3RQXP+zBk4u2hOcFoMMX7H
-         wunR3e/ehlvN56xP3KuJobQJlK8J6D70BLJdYIqCZCntFKFpgF3vDkN9FKnR8hEtqHEb
-         Ca0qf/+Ag4wHzP1oQbce1NjgPcu7xmGCmg+BBOd9ZhA0BQcrp0f9iq5pI+5wm+lSyBK3
-         WzUYIbrFgulBBkYUEBdSNwLhjNUZgy64BnDHUp1pyFTN0MwsrBclQCGhj2YpnDzILKIB
-         gByQc/LvYnrQrfkVoineGU4xClwHRjBwJ05dA0nU9wLijWFfndVWQ1f7OL9mIteV6wX6
-         Y1Pg==
-X-Gm-Message-State: AKS2vOy9ryAKeEsns6yinM2p2PcwHwpvWXvMN+BwuSyd3GskDMWZBuem
-        K4jKw77lDhz0GbXSAacuO7Z4MaPK99nHa/I=
-X-Received: by 10.107.11.201 with SMTP id 70mr43385441iol.222.1499240608026;
- Wed, 05 Jul 2017 00:43:28 -0700 (PDT)
+        id S1752301AbdGEHzL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 03:55:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59742 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752125AbdGEHzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 03:55:10 -0400
+Received: (qmail 21306 invoked by uid 109); 5 Jul 2017 07:55:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Jul 2017 07:55:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5641 invoked by uid 111); 5 Jul 2017 07:55:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Jul 2017 03:55:20 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jul 2017 03:55:08 -0400
+Date:   Wed, 5 Jul 2017 03:55:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>,
+        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
+Subject: [PATCH 0/6] fixing reflog-walk oddities
+Message-ID: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
+References: <xmqqziczkh4k.fsf@gitster.mtv.corp.google.com>
+ <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
+ <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
+ <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
+ <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
+ <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
+ <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
+ <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
+ <20170704195806.ndbykl776t3vigya@genre.crustytoothpaste.net>
+ <20170704212408.xy6jciggoueq6qsu@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.107.20.136 with HTTP; Wed, 5 Jul 2017 00:43:07 -0700 (PDT)
-In-Reply-To: <CAPB=P5xsssm=RiAkEuAtpxe52+-sNAPVP2qnQGctLjNZFYznkg@mail.gmail.com>
-References: <1499116727-757-1-git-send-email-f@mazzo.li> <xmqqvan8jdje.fsf@gitster.mtv.corp.google.com>
- <CAPB=P5xsssm=RiAkEuAtpxe52+-sNAPVP2qnQGctLjNZFYznkg@mail.gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-Date:   Wed, 5 Jul 2017 00:43:07 -0700
-X-Google-Sender-Auth: Mr3LZpY-jOVLP36C3MXipxYMP9Q
-Message-ID: <CAPc5daXn=PJ47JkZQNnReNNSUhQK3eJm0Namd-A+e9TM4Dnr2A@mail.gmail.com>
-Subject: Re: [PATCH] push: add config option to --force-with-lease by default.
-To:     Francesco Mazzoli <f@mazzo.li>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170704212408.xy6jciggoueq6qsu@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 4, 2017 at 11:34 PM, Francesco Mazzoli <f@mazzo.li> wrote:
->
-> Could you clarify the danger you're referring to? E.g. give an example
-> of surprising --force-with-lease behavior that we do not want to
-> encourage?
+On Tue, Jul 04, 2017 at 05:24:08PM -0400, Jeff King wrote:
 
-https://public-inbox.org/git/1491617750.2149.10.camel@mattmccutchen.net/
+> On Tue, Jul 04, 2017 at 07:58:06PM +0000, brian m. carlson wrote:
+> 
+> > > And here's one more patch on top of those that's necessary to get the
+> > > tests to pass (I don't expect anybody to necessarily be applying this
+> > > slow string of patches; it's just to show the direction I'm looking in).
+> > 
+> > I've looked at your original patch, which modified reflog-walk.c, and it
+> > does fix the issue.  I'm happy to send in a patch with that and a test
+> > (provided you're okay with me adding your sign-off), or if you wanted to
+> > send in something a bit more complete, like the series of patches here,
+> > that's fine, too.
+> 
+> I've been on vacation for the past week, but wrapping this up is on my
+> todo. I'll try to get to it tonight.
+
+OK, so here's what I came up with.
+
+The first patch is my original small fix with an extra test. I think
+that would be appropriate for 'maint'. Its behavior still has some
+quirks, but it avoids the confusion that you experienced and has a low
+risk of breaking anything else.
+
+The rest of it replaces the fake-parent thing with a more
+straight-forward iteration over the reflogs (i.e., a cleanup of the
+further patches I've been posting). After digging into it and especially
+after writing the new tests, I think I've convinced myself that this is
+the right way forward.
+
+I tried to anticipate the behavior changes and I think all of them are
+improvements. I won't be surprised if there's some hidden gotcha,
+though, so this is definitely not for 'maint'. The patches do textually
+depend on the fix from 1/6; my intent was that they'd be applied in
+sequence and only merge up the first one to maint.
+
+  [1/6]: reflog-walk: skip over double-null oid due to HEAD rename
+  [2/6]: t1414: document some reflog-walk oddities
+  [3/6]: log: do not free parents when walking reflog
+  [4/6]: get_revision_1(): replace do-while with an early return
+  [5/6]: rev-list: check reflog_info before showing usage
+  [6/6]: reflog-walk: stop using fake parents
+
+ builtin/log.c          |   4 +-
+ builtin/rev-list.c     |   3 +-
+ reflog-walk.c          | 117 ++++++++++++++-----------------------------------
+ reflog-walk.h          |   6 ++-
+ revision.c             |  39 ++++++++++-------
+ t/t1414-reflog-walk.sh |  86 ++++++++++++++++++++++++++++++++++++
+ t/t3200-branch.sh      |  10 +++++
+ 7 files changed, 160 insertions(+), 105 deletions(-)
+ create mode 100755 t/t1414-reflog-walk.sh
+
+-Peff
