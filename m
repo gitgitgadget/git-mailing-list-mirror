@@ -2,91 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34D57202AB
-	for <e@80x24.org>; Wed,  5 Jul 2017 08:04:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14903202AB
+	for <e@80x24.org>; Wed,  5 Jul 2017 08:05:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751965AbdGEIEh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 04:04:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59800 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750867AbdGEIEf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 04:04:35 -0400
-Received: (qmail 21714 invoked by uid 109); 5 Jul 2017 08:04:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Jul 2017 08:04:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5735 invoked by uid 111); 5 Jul 2017 08:04:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Jul 2017 04:04:45 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jul 2017 04:04:33 -0400
-Date:   Wed, 5 Jul 2017 04:04:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>,
-        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
-Subject: [PATCH 4/6] get_revision_1(): replace do-while with an early return
-Message-ID: <20170705080433.sqscxa76dgsosc5q@sigill.intra.peff.net>
-References: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
+        id S1752122AbdGEIFQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 04:05:16 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:35230 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751127AbdGEIFN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 04:05:13 -0400
+Received: by mail-qk0-f177.google.com with SMTP id 16so183612744qkg.2
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 01:05:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mazzo-li.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yxZkS/o5QPNt7ONQxbL2LDR4gdofQ2Mz+PLSbb0IU7s=;
+        b=b7iAfs2lTt7Mt6CfEFFEYeQv50VGZkkcgk3J4pueYkI7SSXDMKvWR+vfs02nErXjip
+         79rOUmec2UmnbuThRbhokRlaOPRIFSe0aH4iskq3uGoO/ltf1j0bZ8BIU2eV6+j3mVij
+         GVn8TDMvuSwj96Sp6Lm7wddWODWLAXNADm4jKddMAF9yKtB/dMvneQD9UzVK9n9reHkW
+         e71oSmh6TF4xWE2waURLSdQuTFbcpzikg0F84yX4RcRZlbwPGycmxFhyiEfRxpROJKjp
+         1UQTxITMY2+QAkKj1dASRsoC+LfAJ6/AyO0s6plU7cUzvuuA9GpS1MbAeMrqgETOIHIr
+         PFHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yxZkS/o5QPNt7ONQxbL2LDR4gdofQ2Mz+PLSbb0IU7s=;
+        b=ZjMDFo9fDF4xLVr534qAqzZJsXy60RU525WJW/8ld6jBed0pXBPtbtxiNv8XPn9asf
+         vn+UP7XHyWD7N7tIQ30USc3Z/ednn7Bdx4JlPhdwMIh6wX/lVEG12B+pcFO/P7+FCSdG
+         OpHYIZIR4Y+WsQjR9DL2JSCW3NqL6qMDdScQ58tDMk7hCPF8y4PSqMTQ/cP+yXwFQvPG
+         W6drntQDlDvj13U8RcZ+weLxaO6MqqS6QHEhQqa9w/M+tG4KBIAWlSDocujvsCvQGv/d
+         xEq9NYpCxLs1BIT5q9/WRBTWgolHfzSAQe1JxJmjCDHIDPf4jPE6w6hqH3CyZKffQEBL
+         Zhhg==
+X-Gm-Message-State: AIVw111haIsJ7iBq38EX/oDgkgdWGYd53d0FmpRDh/kDHp6RRFhGeN9a
+        WRyJHrMT8AdarLcPfEZNpuXj8sDdIgfIopgcvw==
+X-Received: by 10.55.53.202 with SMTP id c193mr39055411qka.232.1499241912899;
+ Wed, 05 Jul 2017 01:05:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
+Received: by 10.12.140.67 with HTTP; Wed, 5 Jul 2017 01:04:32 -0700 (PDT)
+In-Reply-To: <CAPc5daXn=PJ47JkZQNnReNNSUhQK3eJm0Namd-A+e9TM4Dnr2A@mail.gmail.com>
+References: <1499116727-757-1-git-send-email-f@mazzo.li> <xmqqvan8jdje.fsf@gitster.mtv.corp.google.com>
+ <CAPB=P5xsssm=RiAkEuAtpxe52+-sNAPVP2qnQGctLjNZFYznkg@mail.gmail.com> <CAPc5daXn=PJ47JkZQNnReNNSUhQK3eJm0Namd-A+e9TM4Dnr2A@mail.gmail.com>
+From:   Francesco Mazzoli <f@mazzo.li>
+Date:   Wed, 5 Jul 2017 10:04:32 +0200
+Message-ID: <CAPB=P5z7MA+TuVaFLUQQdOoJXUb74YxEPS6k4O+NorneVpLitg@mail.gmail.com>
+Subject: Re: [PATCH] push: add config option to --force-with-lease by default.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The get_revision_1() function tries to avoid entering its
-main loop at all when there are no commits to look at. But
-it's perfectly safe to call pop_commit() on an empty list
-(in which case it will return NULL). Switching to an early
-return from the loop lets us skip repeating the loop
-condition before we enter the do-while. That will get more
-important when we start pulling reflog-walk commits from a
-source besides the revs->commits queue, as that condition
-will get much more complicated.
+On 5 July 2017 at 09:43, Junio C Hamano <gitster@pobox.com> wrote:
+> On Tue, Jul 4, 2017 at 11:34 PM, Francesco Mazzoli <f@mazzo.li> wrote:
+>>
+>> Could you clarify the danger you're referring to? E.g. give an example
+>> of surprising --force-with-lease behavior that we do not want to
+>> encourage?
+>
+> https://public-inbox.org/git/1491617750.2149.10.camel@mattmccutchen.net/
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- revision.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+Thanks for clarifying, I had not encountered this because of my git workflow.
+I'd also be happy with a config item  that simply disables `--force`
+and suggests
+`--force-with-lease`, but then we'd need a flag to override that config item
+when the user definitely wants to force push.
 
-diff --git a/revision.c b/revision.c
-index e181ad1b70..4dc7c63654 100644
---- a/revision.c
-+++ b/revision.c
-@@ -3109,12 +3109,12 @@ static void track_linear(struct rev_info *revs, struct commit *commit)
- 
- static struct commit *get_revision_1(struct rev_info *revs)
- {
--	if (!revs->commits)
--		return NULL;
--
--	do {
-+	while (1) {
- 		struct commit *commit = pop_commit(&revs->commits);
- 
-+		if (!commit)
-+			return NULL;
-+
- 		if (revs->reflog_info) {
- 			save_parents(revs, commit);
- 			fake_reflog_parent(revs->reflog_info, commit);
-@@ -3148,8 +3148,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 				track_linear(revs, commit);
- 			return commit;
- 		}
--	} while (revs->commits);
--	return NULL;
-+	}
- }
- 
- /*
--- 
-2.13.2.892.g25f9b59978
+So we would have something like
 
+* `push.disableForce`: config flag that disables `--force` and suggests
+    `--force-with-lease` instead;
+* `--disable-force` and `--no-disable-force`, config flags to tune the above
+    config parameter at will.
+
+What do you think?
+
+Thanks,
+Francesco
