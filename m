@@ -7,47 +7,48 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35FFF202AE
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B3BB202AE
 	for <e@80x24.org>; Wed,  5 Jul 2017 23:15:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752559AbdGEXPV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 19:15:21 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36089 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752467AbdGEXPU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 19:15:20 -0400
-Received: by mail-wr0-f196.google.com with SMTP id 77so883351wrb.3
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 16:15:20 -0700 (PDT)
+        id S1752573AbdGEXP0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 19:15:26 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:34359 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752467AbdGEXPY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 19:15:24 -0400
+Received: by mail-wr0-f195.google.com with SMTP id k67so896973wrc.1
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 16:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bPq8UsyDrk0mb5LDCsYXMtkEBq7boLn3e28f4zF5QZ0=;
-        b=XR71rqjiRyq4/64qwHgLlx1Ah8sdZTE4jA53tKsXND9ST+qbGsyKBR0J2Y4U8rR3Vt
-         kRMMX9acRq6Bbly6oAuNlHND4K/KvUqnU8Imw8CqnyG44g2kcoe3X41qDU2VbQAF1FdE
-         NopofW2tEMMYGWgFZgqqIffkfEzKV2u1jCboEECvNAXdaD+e3GDUFtMuSE7g6RxIZGK2
-         V+U8stiYmBjiYVHE8SNs772Nw+VbUb2BScTOJ1Oyn4jTvI2YbqXMYIz/FAfhIuoo06m/
-         MNJ4siiu1kfgpTCsu16g6LT+Rf7VxLsd2Ih1mh4fxhnBuBl4T3xo+JolWqSylNlO+dj8
-         qhOA==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=rFx81qT9JFO0XLzHujv6dO9B6CN1DvaULUaHJ6V/WMs=;
+        b=uo4I6FAUS6bDTLsO26mF3Kbf1jayqFUwpO7uXSBvYQbrmgUlsD6DMZJO7zyYAImdZa
+         7MHUkzMwbfiUmYhuMyq6ISUlkUupjyFMxv3yJX9Korrx1gPx45gYq9KntgqTq6OaD82W
+         mj05/fBk//MGWpoC3tW7fIQMv+Wsm+Ogqwcp5XnEAZEyaLH1pjyPzof9hIWeks2XIBk8
+         N4cLDOCFpVFPCytunpzSdJgfUlGR9R6r2eCUhTeu5RVIXLyusYnZw3CIKlTjpofJtbb0
+         EA+dsm9frxLkbZq7z73kOS5pq/QrN0Bs7DWfsr8gFeplU5Qb+r33aagjV0tbHBmecxmd
+         WEbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bPq8UsyDrk0mb5LDCsYXMtkEBq7boLn3e28f4zF5QZ0=;
-        b=QwFYUkQPierG2ICKZ7IPntWt+bYoDAI+ZE1DTK5iEuhN85XIclTnw1JYZ3kXIhmR/X
-         fRULlCKdH8odbFp/EN1GqniPTqLCu/K5DP+kMu4YHRBvxkIdnodhRUy7EUXlJM0Akq6L
-         QAKsCc3uEk6bs1FOVKrGTTkV9PseMiHbgQyBRGJRQIzGkaGjJs2kV9nDsBfTrkDDE+pH
-         CK60phC+2BcnH7E25UmhPgFIHG06vEDtX9fr8xVepdUm9A/Wkv40YzwNrqUYtsJZetGZ
-         gGQ4VDChCLlESrj/mmvSq0aOvCvJhpajv0XVPJqczGCa+pps7Nb1YYukLBZGDDUhAEDa
-         GM7g==
-X-Gm-Message-State: AIVw113ORCCcKJ8JRnqLmfdk1CRQytSziJQ1qw/ZTVGcPCDTyRWcBjap
-        OWQ5ybM5HG7ruAguz3o=
-X-Received: by 10.80.207.203 with SMTP id i11mr6118097edk.112.1499296518941;
-        Wed, 05 Jul 2017 16:15:18 -0700 (PDT)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=rFx81qT9JFO0XLzHujv6dO9B6CN1DvaULUaHJ6V/WMs=;
+        b=BXkSHF8oatEDLAOhw8fekI3ifG/C8GlUpB3kuiqPelAIAHoHvWK4GtGuKbgb1dUqvP
+         aUyr2f1DAiDsSU4dgfCcBmen84sDqAsURKhv6rBOxKW+opBcp6INxiv3HXJecfD+cY2l
+         uPHP3xHq3MPoSUVMaUDS0hD0w5sP5IZwUGLDcnJCB4emRLj2vsJThE5M68F552w8/fkA
+         sPNOpaObGsSn26txyQm0/xsKt3aKls7FzviF5sxs9H2oNcHKDzRYjOJWtAN7CUWp3Ki8
+         U+sox2pOnGpc4kSCAxh56ZUIopAGNjSosdPFfsVEn+yAQwQEUHrOhk+3/CmgBAWpj52E
+         Hy/w==
+X-Gm-Message-State: AKS2vOy/xQ3u69CsvurxAQgcstikrnCmd+s9tXtmnXywroELebyNMPst
+        aOdCD8+Z+bajyKnPjDA=
+X-Received: by 10.80.206.22 with SMTP id y22mr23860904edi.20.1499296522482;
+        Wed, 05 Jul 2017 16:15:22 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id x36sm8834938edb.64.2017.07.05.16.15.17
+        by smtp.gmail.com with ESMTPSA id x36sm8834938edb.64.2017.07.05.16.15.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Jul 2017 16:15:17 -0700 (PDT)
+        Wed, 05 Jul 2017 16:15:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,11 +58,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 0/3] branch: add a --copy to go with --move
-Date:   Wed,  5 Jul 2017 23:14:51 +0000
-Message-Id: <20170705231454.15666-1-avarab@gmail.com>
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH v2 1/3] config: create a function to format section headers
+Date:   Wed,  5 Jul 2017 23:14:52 +0000
+Message-Id: <20170705231454.15666-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.13.1.611.g7e3b11ae1
+In-Reply-To: <20170705231454.15666-1-avarab@gmail.com>
+References: <20170705231454.15666-1-avarab@gmail.com>
 In-Reply-To: <xmqqeftuh5q7.fsf@gitster.mtv.corp.google.com>
 References: <xmqqeftuh5q7.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
@@ -72,57 +75,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 05 2017, Junio C. Hamano jotted:
+From: Sahil Dua <sahildua2305@gmail.com>
 
-> * sd/branch-copy (2017-06-18) 3 commits
->  - branch: add a --copy (-c) option to go with --move (-m)
->  - branch: add test for -m renaming multiple config sections
->  - config: create a function to format section headers
->
->  "git branch" learned "-c/-C" to create and switch to a new branch
->  by copying an existing one.
->
->  Has a bit of interaction with mh/packed-ref-store and bw/config-h,
->  so perhaps needs to wait for the former to stabilize a bit more
->  and possibly rebasing on them.
+Factor out the logic which creates section headers in the config file,
+e.g. the 'branch.foo' key will be turned into '[branch "foo"]'.
 
-Now that bw/config-h has landed in master here's a version that's
-rebased on that. No changes from v1 except:
+This introduces no function changes, but is needed for a later change
+which adds support for copying branch sections in the config file.
 
- - moving the new config header addition from cache.h to config.h,
-   corresponding to what was done in bw/config-h.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Signed-off-by: Sahil Dua <sahildua2305@gmail.com>
+---
+ config.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
- - fixing a trivial comment whitespace issue which I see you applied
-   locally.
-
-Even though this modifies some of the same files as
-mh/packed-ref-store it looks to me like this doesn't conflict with
-that topic in any meaningful way, but I may be missing something. I
-can't get a merge between this & gitster/mh/packed-ref-store
-compiling, but that's due to issues in the latter which seem to be
-fixed by some subsequent merge/fixup in pu, not something to do with a
-genuine conflict with this topic.
-
-Hopefully this'll allow this topic to land in 2.14.
-
-Sahil Dua (2):
-  config: create a function to format section headers
-  branch: add a --copy (-c) option to go with --move (-m)
-
-Ævar Arnfjörð Bjarmason (1):
-  branch: add test for -m renaming multiple config sections
-
- Documentation/git-branch.txt |  14 ++-
- builtin/branch.c             |  67 ++++++++---
- config.c                     | 115 +++++++++++++++----
- config.h                     |   2 +
- refs.c                       |  11 ++
- refs.h                       |   9 +-
- refs/files-backend.c         |  46 ++++++--
- refs/refs-internal.h         |   4 +
- t/t3200-branch.sh            | 256 +++++++++++++++++++++++++++++++++++++++++++
- 9 files changed, 476 insertions(+), 48 deletions(-)
-
+diff --git a/config.c b/config.c
+index 4638b0696a..b7afb5941b 100644
+--- a/config.c
++++ b/config.c
+@@ -2244,10 +2244,10 @@ static int write_error(const char *filename)
+ 	return 4;
+ }
+ 
+-static int store_write_section(int fd, const char *key)
++static struct strbuf store_create_section(const char *key)
+ {
+ 	const char *dot;
+-	int i, success;
++	int i;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+ 	dot = memchr(key, '.', store.baselen);
+@@ -2263,6 +2263,15 @@ static int store_write_section(int fd, const char *key)
+ 		strbuf_addf(&sb, "[%.*s]\n", store.baselen, key);
+ 	}
+ 
++	return sb;
++}
++
++static int store_write_section(int fd, const char *key)
++{
++	int success;
++
++	struct strbuf sb = store_create_section(key);
++
+ 	success = write_in_full(fd, sb.buf, sb.len) == sb.len;
+ 	strbuf_release(&sb);
+ 
 -- 
 2.13.1.611.g7e3b11ae1
 
