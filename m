@@ -2,112 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 601E0202AE
-	for <e@80x24.org>; Wed,  5 Jul 2017 22:45:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CD65202AE
+	for <e@80x24.org>; Wed,  5 Jul 2017 23:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752259AbdGEWpG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 18:45:06 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35654 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751964AbdGEWpF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 18:45:05 -0400
-Received: by mail-pg0-f66.google.com with SMTP id d193so334710pgc.2
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 15:45:05 -0700 (PDT)
+        id S1752086AbdGEXGe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 19:06:34 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:35622 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751941AbdGEXGd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 19:06:33 -0400
+Received: by mail-pf0-f170.google.com with SMTP id c73so1652967pfk.2
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 16:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=p+JmVGYm0yQ52wSQJYm5Wb+OBYREZERptbZRy4RQcZs=;
-        b=NCPcyy9KdDiDksHUU64l/t2RBUFwjenLFCrz33cg+9J5RrfFW5sl4uFJHfzRLgo4AA
-         c55dIGANnv77GLxCWhF1dKF+am3xqM503hVdLR6tOu7DErJ6sXvnKM1pI8TXCGfoLtor
-         l0zz17XPR+LrywSqrQuB5ULx3zPp/SzYPyyDKNDjbJgY2UiyRbA9P8ebeVQDCA3NyCdc
-         13MOqIiSvqJmL+ABLfDVHGSmSLzUP/qH29UjKMCHOjLsiP3wk0NVJDpO0F1uXVq1DZsM
-         P4lbimsmmkK5NhsU48TqBgKx+vCyI/SJfQ9E3l2HhbWD60Zcwek6HZJjX+oE1Ld91Sy6
-         yuNw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ktd7reCSO3IEgZwYo9+4RomqyJnggq8/vSSEeIMWv0M=;
+        b=kpGLDL7THIwNgzLdbQQJDqENt9Cbm5PN944ZlSIptdV81kpkqnf6TLHyiRZyLdUzGe
+         wv6x4Wm2WZBegzfk/3lr7nos1bIVYNTJi0/iNu/AWQ/yQY2O1HELql541znu0Utf7yo2
+         2RDf20R9ztGGwuZ0gzwP4m6+DlP78FxhCBEdn/KptjaKtyEo5MifrmIw5f/nKa7Otjw2
+         npFbUiWYKmYEQthBJeh9Iz1odTVwu1OOegKeYRbhpzueE0Wmr4BsawETg1+Y/F+BtmYR
+         QGCvnnEuB75tPkVn/SFVY9ntkTYRZLi7QDfsWPGZdwJlXe2fG6LxZHTZyMwRC8YK3LlK
+         cHrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=p+JmVGYm0yQ52wSQJYm5Wb+OBYREZERptbZRy4RQcZs=;
-        b=A0m94R+1GBkfXCIDG7+rsMIrmaNH+pCKv17n2g3KLgTQyWAzAItz6MKXw4oXad21XL
-         VLjAim/pGkZwTSexPsrA5Hq8bdjLHiWmT9KlIWmciDyiq0wNRxVlx7XlfNRrtCSnluup
-         ynaDgMUkMLMyKO1i+qgqm32wCBH7COejD8OYQ8JRA7P28VoCiLjRm+lu89fxsU/v70y8
-         yUvbdP/Qp01ar5UPYGvSnR/uMAy7kP6n7w3tW7yFoDYgI3uODN4meoiIke5PhdlisEwd
-         mtqQlhTO7QYi1xYmf1AfwGgNjvq6ySdiTnk4QLgTCqjfaZvCtMk+nMyvcXVOLYXm/Xnu
-         CFsA==
-X-Gm-Message-State: AIVw1108WkpQh3ZmE+dbdzwN2f/9JooHt9V93ZVfmYCLxmFlaJJ5O/3m
-        NpQFClG+jw2nnQ==
-X-Received: by 10.98.137.81 with SMTP id v78mr7523862pfd.9.1499294704538;
-        Wed, 05 Jul 2017 15:45:04 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:ad13:9505:c2bc:e887])
-        by smtp.gmail.com with ESMTPSA id e189sm258214pfe.100.2017.07.05.15.45.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 05 Jul 2017 15:45:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
-        Sahil Dua <sahildua2305@gmail.com>
-Subject: Re: [PATCH 2/6] t1414: document some reflog-walk oddities
-References: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
-        <20170705080036.qxzy7havcy72mvff@sigill.intra.peff.net>
-        <xmqqh8yqix7p.fsf@gitster.mtv.corp.google.com>
-        <20170705212757.3ygxiasbi2e7v27p@sigill.intra.peff.net>
-Date:   Wed, 05 Jul 2017 15:45:03 -0700
-In-Reply-To: <20170705212757.3ygxiasbi2e7v27p@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 5 Jul 2017 17:27:57 -0400")
-Message-ID: <xmqqa84ih5ao.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ktd7reCSO3IEgZwYo9+4RomqyJnggq8/vSSEeIMWv0M=;
+        b=DRJrLb7BMo0M1VMxJ1ECGu84JvDVylq5IAGnAID2/qRCfkYIxl6nInrh882WbPSsY6
+         12ziuU+etzDLp2YsbWBqvb/FRteEtmSXOqUI+N3qpoaA8iNV65IB1+DY05T86ZccpOBa
+         8KulcC5jBtJyLZD52zXnqm4u70H/AF68SQaXc1Plf0iwX+tQPML2lri/XAlwRbYhdFah
+         FUfqiboNoSy5uu6mhdQtD4DWfODnVAnN/wle8LPxikFG9+0qjM/SQ2/0TtbJB3A3UQya
+         1u62BQDszvICqakwRnJ5Tf2SjKXryRNe6/YdcsvipPH3JySzV09zVqKuNDrvV0FxnIff
+         Pp1g==
+X-Gm-Message-State: AIVw112jD0rPqhQD5LfF+4Ika8PAG+BTxH3XgG69NVr9hsV71z//xaoB
+        rJyepPU2fTvvsrr6o1N5Bv4ChASNAMGF287LiQ==
+X-Received: by 10.84.224.74 with SMTP id a10mr24498758plt.210.1499295986898;
+ Wed, 05 Jul 2017 16:06:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.183.170 with HTTP; Wed, 5 Jul 2017 16:06:26 -0700 (PDT)
+In-Reply-To: <xmqqeftuh5q7.fsf@gitster.mtv.corp.google.com>
+References: <xmqqeftuh5q7.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 5 Jul 2017 16:06:26 -0700
+Message-ID: <CAGZ79kamhPAQrE3GBC=fG=PNNtdHj7iStsqjOojkVMpNy_VEWw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2017, #01; Wed, 5)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
->> > +test_expect_failure 'walking multiple reflogs shows both' '
->> > +	{
->> > +		do_walk HEAD &&
->> > +		do_walk side
->> > +	} >expect &&
->> > +	do_walk HEAD side >actual &&
->> > +	test_cmp expect actual
->> > +'
->> 
->> I somehow find this one a bit iffy.  
->> 
->> The order that commits appear in the "walk from HEAD and side at the
->> same time" may want to be different from what this test expects.
->> "rev-list --since=3.days -g master next", for example, would want to
->> refrain from reading the reflog of 'master' for all 90 days before
->> switching to the reflog of 'next', no?
+> [Graduated to "master"]
 >
-> I did make the ordering intentional. We process each reflog sequentially
-> in turn. I don't think it would be wrong to interleave them by date, but
-> I actually think it's useful for somebody who switches that behavior to
-> consciously update the test. Maybe it's worth calling out in the commit
-> message.
+> * bw/repo-object (2017-06-23) 21 commits
+...
 >
-> I stopped short of actually documenting and guaranteeing that behavior
-> to the user. I don't know how comfortable we would be changing it later.
+>  Introduce a "repository" object to eventually make it easier to
+>  work in multiple repositories (the primary focus is to work with
+>  the superproject and its submodules) in a single process.
 
-I somehow feel that the "showing all entries from HEAD and then
-showing all from side" is simply a buggy behaviour.  I do not think
-our users would terribly mind if we changed it later.  But I may be
-missing the reason why (sometimes?) the sequential behaviour may be
-useful.
+It's pretty rad to see this advancing to master.
+FYI: I started working on teaching the object store how to work
+with repository objects. This would allow us to get rid of hacks in
+submodule.c: namely add_submodule_odb, which adds submodule
+objects to the (main) object store for processing. Ideally we want
+to free the objects of a submodule once we are done with a submodule.
+(or integrate it into our try_to_free_routine)
 
-> (As an aside, I also prowled through the documentation looking for any
-> guarantees we make to the user about the fake-parent thing, but I
-> couldn't find any. So I considered its user-visible effects an unwanted
-> side effect of the implementation).
+> * sb/hashmap-cleanup (2017-07-05) 10 commits
+...
+>  Will wait for feedback, then merge to and cook in 'next'.
 
-Yes, I think the corner cases you documented here in these tests are
-not something we desired to have in the first place.  Rather they
-are merely fallouts from the hackyness of the implementation.
+Thanks.
+
+> * sb/pull-rebase-submodule (2017-06-27) 4 commits
+>  - builtin/fetch cleanup: always set default value for submodule recursing
+>  - pull: optionally rebase submodules (remote submodule changes only)
+>  - builtin/fetch: parse recurse-submodules-default at default options parsing
+>  - builtin/fetch: factor submodule recurse parsing out to submodule config
+>
+>  "git pull --rebase --recurse-submodules" learns to rebase the
+>  branch in the submodules to an updated base.
+
+Speaking of submodules, It's not just features, but I also send bug fixes. ;)
+https://public-inbox.org/git/20170630003851.17288-1-sbeller@google.com/
+(That patch is not related to this series, except for working in the submodule
+area, but I consider that patch more important than e.g. this series.)
+
+> * sb/submodule-doc (2017-06-22) 1 commit
+>  - submodules: overhaul documentation
+>
+>  Doc update.
+>
+>  What's the status of this thing?
+
+There was some review on the list (mostly from Brandon and Jonathan T.),
+but I felt like it was bikeshedding, as there is no black/white correctness
+with words. (Same for code, but for code it is easier to come to a
+consensus at least.)
+
+So I had a couple of internal rounds with them on a Google doc, hence
+I assume they agree on this patch being ok as-is.  But it has been a while
+I can reread it myself to check. But I guess most valuable input
+would come from others.
+
+> * sb/diff-color-move (2017-06-30) 26 commits
+...
+>  Will merge to 'next'.
+
+cool. Let's see how a larger audience reacts to this one. Maybe there
+is more input for a good heuristic.
+
+Thanks,
+Stefan
