@@ -2,82 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AF30202AC
-	for <e@80x24.org>; Wed,  5 Jul 2017 04:10:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA96B202AB
+	for <e@80x24.org>; Wed,  5 Jul 2017 06:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750837AbdGEEKk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 00:10:40 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:35361 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750767AbdGEEKj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 00:10:39 -0400
-Received: by mail-pg0-f67.google.com with SMTP id d193so11287194pgc.2
-        for <git@vger.kernel.org>; Tue, 04 Jul 2017 21:10:39 -0700 (PDT)
+        id S1751957AbdGEGfC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 02:35:02 -0400
+Received: from mail-qk0-f177.google.com ([209.85.220.177]:35377 "EHLO
+        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751068AbdGEGfB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 02:35:01 -0400
+Received: by mail-qk0-f177.google.com with SMTP id 16so182295381qkg.2
+        for <git@vger.kernel.org>; Tue, 04 Jul 2017 23:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=6/KgC8XpGFqv9p+bJ9IEgEXG5FnvtzTDWJzPcVh+U1Y=;
-        b=f3ZZQw40GE5jN3kgKdWda2hnnosKIy0sPq9HQj+uKAq4DzWE2iYzmWjEA29CCUTG7L
-         o7wG6gnCV07Z1lO3HOpeTaRBVdf90r06ultDI/LdnbqJV2xATug6hhwsGEVOvSfrjGwN
-         z31kxOe4Ab8B6B8FP39fp58Q/g9OSdj04pd4Tk46F9GacGQvrPpnCKkibwOWB9caZhfw
-         25frJcuEse4qsMPbe0cw8tJDanzT/jgeSwNyZiuugW6HhNbc4BO+VKIL72hGB1r9CR2h
-         qLQIMuuKyTeLJqWTUGdnWRR8Cf1p9ysacZ1jSW6eBuyjx5uyYg+5h7pYRJu9Wvfy832+
-         hwRg==
+        d=mazzo-li.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WfmPaKsyi51YxbbBfp42TF+rE12M2lju/RnlhEosmLM=;
+        b=bW3Qrr0PpTSNyv07hO9WpQKyT/amAZtAMP3P6qJYJ60w+WNC/HyFFeVc0ofo73nTNi
+         LJGxT2QNFs4PlQQ0xCD/8cy8rKftSnPeywwqk93IJDjcp0kdLO4l1xVwKjDSvI4ZgZjr
+         tSuPmel8KcM3lSD/9xH9yPSzO6jrRpfvqFsmYLnj1NOyqSwErr7uM7HF4oPdUDZdNpuK
+         3TNseLR6vEExkLsO4Zg7lBv+MrivTpZQ9qXSWNtMgG8PVGC9GJBCps786Q3AWnX3Hz3P
+         BWgf68odNNJfeVmugf8MfGXXn3zqsPqTQLCPwVTzGVwZk5muIn37j+K+RdhDrVBM4D7y
+         qHWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=6/KgC8XpGFqv9p+bJ9IEgEXG5FnvtzTDWJzPcVh+U1Y=;
-        b=limn754bLn6PmHVYj1Kc2ethr+rarezp2NTCFqAJgFkx7KXFRhtvEnoRHEt13T+QFK
-         bN1rbWZAMdFU6AZa9bFefdZt6tdv1zxC3WOFOBklWk61ZekpsBsWVAOkZeHDrNOkcUMg
-         x2EQ4lQA5epiq2VrKqwiGZbB4+sxLI9WtEB6ASVBjGr3M1be6jZ0Mh2G2z2caAo4GAIz
-         RxizRSdTDMguR9wIzw56rQUjpZFmJmQSs15tdAowT7/pLf13XKqSRK2XceuE0ZHU5SUu
-         Mzm4OH0quAvyM8ijs8xDj8y94o/k8TxSBlXa1ab2apCypPY/JmwoigJDLE1uR7L4HVsZ
-         nSDw==
-X-Gm-Message-State: AIVw113n4L2VaM8dMzxnAqULMMUJAMRDJC7dPGB8/XjbQHZDJB27kxvt
-        hOegdfX/5e5AmlQbawU=
-X-Received: by 10.84.132.39 with SMTP id 36mr19666812ple.237.1499227838738;
-        Tue, 04 Jul 2017 21:10:38 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:58ac:d78a:789c:c809])
-        by smtp.gmail.com with ESMTPSA id a125sm23810454pgc.37.2017.07.04.21.10.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 04 Jul 2017 21:10:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/12] object_id part 9
-References: <20170703185533.51530-1-sandals@crustytoothpaste.net>
-Date:   Tue, 04 Jul 2017 21:10:35 -0700
-In-Reply-To: <20170703185533.51530-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Mon, 3 Jul 2017 18:55:21 +0000")
-Message-ID: <xmqqeftvjzgk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WfmPaKsyi51YxbbBfp42TF+rE12M2lju/RnlhEosmLM=;
+        b=XtzEGamiVLwr/+xdOruQtUzDQxSof+q+xRIpJBfSTsE23brgy+B5MbLQS1t0Qx+Vy2
+         RGMstvd57zJYWLhxQJkCDkEw3ezNsDHM7gmtzkJhE99tfmP2Dh7m62+XkHV0A5/bwmSP
+         Sbx/Ide59UlLYDHCwo7dHVwgzzv/qKirl39dUjsjwSUU3suOCvCHQxuZdiY/CDIi5O/l
+         BoJc2026JT/Oje9fV9CI4PnApQ5xDBDqCkvSiQcwr2rNGAhVUuIrraDpsuJlmQ4oJlwa
+         Tkn7SpWeMVziT5yp1Er1jjrmEQjSiCBZQAf5th/bP0U/8NZio53P6q+28ZWm6JfUvEtc
+         GiGg==
+X-Gm-Message-State: AKS2vOzlwUhx4HW2qnou9e/agEstkXrbbi3yBLHSgtTGJakDUtPJx+8i
+        byUXY3/8Zy4rPvGqPKfvhKiD8V1Gnh9j
+X-Received: by 10.55.146.133 with SMTP id u127mr53001871qkd.17.1499236500370;
+ Tue, 04 Jul 2017 23:35:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.140.67 with HTTP; Tue, 4 Jul 2017 23:34:19 -0700 (PDT)
+In-Reply-To: <xmqqvan8jdje.fsf@gitster.mtv.corp.google.com>
+References: <1499116727-757-1-git-send-email-f@mazzo.li> <xmqqvan8jdje.fsf@gitster.mtv.corp.google.com>
+From:   Francesco Mazzoli <f@mazzo.li>
+Date:   Wed, 5 Jul 2017 08:34:19 +0200
+Message-ID: <CAPB=P5xsssm=RiAkEuAtpxe52+-sNAPVP2qnQGctLjNZFYznkg@mail.gmail.com>
+Subject: Re: [PATCH] push: add config option to --force-with-lease by default.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On 4 July 2017 at 19:51, Junio C Hamano <gitster@pobox.com> wrote:
+> People have been burned by the lazy "--force-with-lease" that does
+> not say what object to expect there and forces the command to DWIM
+> incorrectly what the remote's ref ought to be pointing at.  This
+> change encourages its use without the user being painfully aware of
+> that danger.  Whenever you say "push --force", you'd be using the
+> dangerous "--force-with-lease" that does not specify what the
+> expected current state of the remote is.  The end result gives an
+> illusion of being safer than a simple "--force", without being
+> not really safer.
 
-> It is possible there will be some other conflicts with in flight topics,
-> as get_sha1 is commonly used in the codebase.  This is unavoidable to
-> some extent, but should be kept in mind.  My experience is that usually
-> the required changes for conversion are minimal.
+Could you clarify the danger you're referring to? E.g. give an example
+of surprising --force-with-lease behavior that we do not want to
+encourage?
 
-Thanks. 
-
-It did have a few conflicts in submodule area and sequencer, but
-they were (hopefully) trivial to resolve.  The result is queued at
-the tip of 'pu'.  It seems to pass the tests locally and also at
-Travis.
-
-
+Thanks,
+Francesco
