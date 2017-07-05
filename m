@@ -2,77 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA96B202AB
-	for <e@80x24.org>; Wed,  5 Jul 2017 06:35:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46AC3202AB
+	for <e@80x24.org>; Wed,  5 Jul 2017 07:30:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751957AbdGEGfC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 02:35:02 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:35377 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751068AbdGEGfB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 02:35:01 -0400
-Received: by mail-qk0-f177.google.com with SMTP id 16so182295381qkg.2
-        for <git@vger.kernel.org>; Tue, 04 Jul 2017 23:35:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mazzo-li.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WfmPaKsyi51YxbbBfp42TF+rE12M2lju/RnlhEosmLM=;
-        b=bW3Qrr0PpTSNyv07hO9WpQKyT/amAZtAMP3P6qJYJ60w+WNC/HyFFeVc0ofo73nTNi
-         LJGxT2QNFs4PlQQ0xCD/8cy8rKftSnPeywwqk93IJDjcp0kdLO4l1xVwKjDSvI4ZgZjr
-         tSuPmel8KcM3lSD/9xH9yPSzO6jrRpfvqFsmYLnj1NOyqSwErr7uM7HF4oPdUDZdNpuK
-         3TNseLR6vEExkLsO4Zg7lBv+MrivTpZQ9qXSWNtMgG8PVGC9GJBCps786Q3AWnX3Hz3P
-         BWgf68odNNJfeVmugf8MfGXXn3zqsPqTQLCPwVTzGVwZk5muIn37j+K+RdhDrVBM4D7y
-         qHWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WfmPaKsyi51YxbbBfp42TF+rE12M2lju/RnlhEosmLM=;
-        b=XtzEGamiVLwr/+xdOruQtUzDQxSof+q+xRIpJBfSTsE23brgy+B5MbLQS1t0Qx+Vy2
-         RGMstvd57zJYWLhxQJkCDkEw3ezNsDHM7gmtzkJhE99tfmP2Dh7m62+XkHV0A5/bwmSP
-         Sbx/Ide59UlLYDHCwo7dHVwgzzv/qKirl39dUjsjwSUU3suOCvCHQxuZdiY/CDIi5O/l
-         BoJc2026JT/Oje9fV9CI4PnApQ5xDBDqCkvSiQcwr2rNGAhVUuIrraDpsuJlmQ4oJlwa
-         Tkn7SpWeMVziT5yp1Er1jjrmEQjSiCBZQAf5th/bP0U/8NZio53P6q+28ZWm6JfUvEtc
-         GiGg==
-X-Gm-Message-State: AKS2vOzlwUhx4HW2qnou9e/agEstkXrbbi3yBLHSgtTGJakDUtPJx+8i
-        byUXY3/8Zy4rPvGqPKfvhKiD8V1Gnh9j
-X-Received: by 10.55.146.133 with SMTP id u127mr53001871qkd.17.1499236500370;
- Tue, 04 Jul 2017 23:35:00 -0700 (PDT)
+        id S1752190AbdGEHai (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 03:30:38 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:48879 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751651AbdGEHai (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 03:30:38 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id Selfd1d4KjUsYSelfd459I; Wed, 05 Jul 2017 08:30:36 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=R5RBIpZX c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=VjiaLYd78G_vTfj2y88A:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <DEBF0737E2B74FC89FF1C4E4DB8AC45B@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>
+References: <xmqqk23tp2jk.fsf@gitster.mtv.corp.google.com><4374FA169AD7465AA39BDB477A348B02@PhilipOakley><xmqqo9t1l6vi.fsf@gitster.mtv.corp.google.com><C31723137B784D54A3CDB1B7D9432D7E@PhilipOakley> <xmqqfuedl1ct.fsf@gitster.mtv.corp.google.com>
+Subject: Re: What's cooking in git.git (Jun 2017, #09; Fri, 30)
+Date:   Wed, 5 Jul 2017 08:30:35 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.12.140.67 with HTTP; Tue, 4 Jul 2017 23:34:19 -0700 (PDT)
-In-Reply-To: <xmqqvan8jdje.fsf@gitster.mtv.corp.google.com>
-References: <1499116727-757-1-git-send-email-f@mazzo.li> <xmqqvan8jdje.fsf@gitster.mtv.corp.google.com>
-From:   Francesco Mazzoli <f@mazzo.li>
-Date:   Wed, 5 Jul 2017 08:34:19 +0200
-Message-ID: <CAPB=P5xsssm=RiAkEuAtpxe52+-sNAPVP2qnQGctLjNZFYznkg@mail.gmail.com>
-Subject: Re: [PATCH] push: add config option to --force-with-lease by default.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170704-4, 04/07/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfLyBIIGdK6kjT2NHhKMiA1t/YTgkuvKUpjX0wuYWh7S6kHRUeg3jt4ylY+dOS6VX+BVGLXRKQbvhMY5YY8HjcINShAVGonGKhWUMdtkpJwayvT7WeYXv
+ cX7RgMMreQCdWJuSkT9dNQ8ueUo2cuJiKufhYATSFWmpbfmxUv8vMvhHP7XZu1dn88qPV2WIFYagVA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4 July 2017 at 19:51, Junio C Hamano <gitster@pobox.com> wrote:
-> People have been burned by the lazy "--force-with-lease" that does
-> not say what object to expect there and forces the command to DWIM
-> incorrectly what the remote's ref ought to be pointing at.  This
-> change encourages its use without the user being painfully aware of
-> that danger.  Whenever you say "push --force", you'd be using the
-> dangerous "--force-with-lease" that does not specify what the
-> expected current state of the remote is.  The end result gives an
-> illusion of being safer than a simple "--force", without being
-> not really safer.
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Monday, July 03, 2017 9:19 PM
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> Am I right that the What's cooking  is prepared by a script?
+>
+> Because I have to keep track of so many topics, its maintenance is
+> heavily helped by a script. I do not think it is sensible to expect
+> me to (or it would be good use of my time) correctly update the list
+> of commits manually every time a topic is replaced with its new
+> version.
+>
+Definately. I was hoping that a 'contents list' element (at the point of 
+sending the emails) could also be part of the automated scripting.
 
-Could you clarify the danger you're referring to? E.g. give an example
-of surprising --force-with-lease behavior that we do not want to
-encourage?
+> But I consider the use of the script just like my use of Emacs to
+> edit the final end result.  Yes, I use tools to prepare it, and the
+> tools know certain rules that I prefer to apply to the document,
+> such as "a topic that has not been touched since the previous issue
+> by default does not need its description updated."
+>
+> Does that answer your question?
+>
+I see the script's location is given in a follow up response. I'll see what 
+opportunities for a TOC there may be within the flow, though my local todo 
+list is getting a bit long with other personal matters.
+--
+Philip 
 
-Thanks,
-Francesco
