@@ -2,134 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 877BD202AB
-	for <e@80x24.org>; Wed,  5 Jul 2017 11:38:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7D05202AE
+	for <e@80x24.org>; Wed,  5 Jul 2017 15:17:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751804AbdGELh7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 07:37:59 -0400
-Received: from mout.gmx.net ([212.227.15.19]:64018 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750909AbdGELh6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 07:37:58 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtIZH-1drYg90vnf-012snY; Wed, 05
- Jul 2017 13:37:50 +0200
-Date:   Wed, 5 Jul 2017 13:37:49 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] t5534: fix misleading grep invocation
-Message-ID: <936f43ce2c993e545deaee5e196c018933375214.1499254650.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751700AbdGEPRP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 11:17:15 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:32975 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751664AbdGEPRO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 11:17:14 -0400
+Received: by mail-pf0-f177.google.com with SMTP id e7so131302255pfk.0
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 08:17:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4tpW1uEbbuPm9MLPROGMDQfIgi01rU7c0najMxc8Yuc=;
+        b=e9uPSx3LynVAxgngynKFJnP53Am9lgF/LiXn5sC3ZhA80P+mY20YZA9N/YAi+YPGAQ
+         2dN3/bTMs3Ya3yJQOZt6xzJRMTPH+V4hPa28a8AIfQww3MFetehNStEpimC/e+zzlTEt
+         oHZp/Fw3Aq7pIPcglv8uubTF/uucQcYdn3TDST5dK1hXM1R0BnDLXb8HBoD7d+P/ylZP
+         bSkJqCMKV47zyNY2KZeFeAHpUDyVeqIKVgztLAzBXJ08WYtnISYXBu1B9KEyn7/IkmPZ
+         XvlkoRXf2n1bB/ifFL6/OdMRtei2lamEjBPmhzN1zhH6bqhhN0rty49r6RsSfshFHDVK
+         pYGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4tpW1uEbbuPm9MLPROGMDQfIgi01rU7c0najMxc8Yuc=;
+        b=X0T4Id/Kz9zHPtKVUcWG5Lzc6EAXcEpvFyku8Ko+ZdC1+6Eig4IuIWjWHvY6Zyj1Wr
+         XdLxGNTV1hjE5nS/V/W2Hx5iU+bfDAf/pG2t48goAArAqH+Z2zhR0+JjPPe/G1Mwk8kx
+         TaHroYjv6KXzpxs4OPPQ1gR1lR9Ccf0u2xguP4LHkuFZ8li6EpjYsOoQh4lXxgpOtkwW
+         3EAysa71XQorTxdm1OBzyaJGv99ChUV2DPYq/s7vG3038KkxpQKKmbgoa01nsJxOUmYk
+         xMi9EMm6KdYgdKmeuzvNSq4RRBvlVyC6U7D8eCCR5GGybu757DNEmGu6w1ZwM/zUKyVi
+         +SvQ==
+X-Gm-Message-State: AIVw110sMfcoHvfUhT08IAhtrPzc+FyaRKaODI23ckGiyfKp8Y/N0c/i
+        yu+fMqlRRhP9Lg==
+X-Received: by 10.98.74.194 with SMTP id c63mr20555320pfj.58.1499267833183;
+        Wed, 05 Jul 2017 08:17:13 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:ad13:9505:c2bc:e887])
+        by smtp.gmail.com with ESMTPSA id l3sm46320596pfk.34.2017.07.05.08.17.11
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 05 Jul 2017 08:17:11 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Francesco Mazzoli <f@mazzo.li>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] push: add config option to --force-with-lease by default.
+References: <1499116727-757-1-git-send-email-f@mazzo.li>
+        <xmqqvan8jdje.fsf@gitster.mtv.corp.google.com>
+        <CAPB=P5xsssm=RiAkEuAtpxe52+-sNAPVP2qnQGctLjNZFYznkg@mail.gmail.com>
+        <CAPc5daXn=PJ47JkZQNnReNNSUhQK3eJm0Namd-A+e9TM4Dnr2A@mail.gmail.com>
+        <CAPB=P5z7MA+TuVaFLUQQdOoJXUb74YxEPS6k4O+NorneVpLitg@mail.gmail.com>
+Date:   Wed, 05 Jul 2017 08:17:10 -0700
+In-Reply-To: <CAPB=P5z7MA+TuVaFLUQQdOoJXUb74YxEPS6k4O+NorneVpLitg@mail.gmail.com>
+        (Francesco Mazzoli's message of "Wed, 5 Jul 2017 10:04:32 +0200")
+Message-ID: <xmqqa84ikj61.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:6uD0w8ZDQbAu6hlrdC8lAEj9KFwl2rjTed4CYdo9EvwFEMjvBrw
- D87CBvnKxORPHxx0lWYMKLDOki1NFm0BBt6J6wCjvAXCNRwoaoimC3xk8m75g334B6nSaZe
- S1k2s727IpPgZ4gJlzZfnV9kUdFwe7amK+Rd1AJj/lmIzX2JO67VFZpuHxmsU4Ogk93TDQM
- LuuCLaR8XpH57TfHP13KQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:n+RxD3YPTCw=:dqdhhTUV0qLakBVKp1hrkl
- gVTz9Nar1WzjKN3ief/RavLRFiIJO1jIBUTtP+Uv59b/EeUXvAnYRIah4BdI4fdvnE4a086QE
- g3lccA5iwEVEo75sn7sm15Xh3MV17LGy8He4tb7Dt02Oqz+DGLdRbcrJgILFItLoAQiKGgJhi
- Pt8yL3n/vjNpGYnzPC0BPi5YisbZ7ayqfrMoJ631gV2eahUKQGM34nXGT6WUcqJbqX7/IlaMP
- jV7ox9j6rwj2dtuLHiE3g1sG0FxlW71F1d0oEh5RxPLqzNut6gllcgGHV5Bci+Km4plFcve9u
- XO8+uhMbg5EMsQ40TVvxo9b+O2Uvzg2Xv6Uah57449TQvgEOuvf1UBM6esScgbFlQXRfjeFjV
- ZFMEuGe0RcYCG6R+lXT2lAQQb9iAunHKyOVzNzaQIRgYEJUH0MtOxsPZIp17r8kd30o7oPubu
- RgeUrwGzHDgvkn3xDyGn1hJKZQ+XVLvUEyl0LdKSjwG9Uhbk5OcQJxee0deRhdmT1O2Wq5/6X
- MWr9/Fk6qWgBVQH+InolVNGpZtZ5UGcp2y/whbHGy5uUQ24bpKtjplhSePx2gGhrD0FgcklT4
- bK2DBuO2YIoSm1p+TjHb6aF59qIfDOl2VZUTUTeK0YtqwNgo6d4Kx0we7Dr06x+0eXPmTr6Ds
- Gjc43aRybcqGz+/v6Hqe7vtGji/yrb7gU9GUbJESiN/ZxVtUFKbXuqV4WoOC2aMMM0jtKRu1O
- nmjplzOL+LO064f9g0DvrXZ7zNJkccE01AZODmNGNv+HtaczawyA54FJlceOmSh3dko/G06WH
- 2ZC0fFQ
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It seems to be a little-known feature of `grep` (and it certainly came
-as a surprise to this here developer who believed to know the Unix tools
-pretty well) that multiple patterns can be passed in the same
-command-line argument simply by separating them by newlines. Watch, and
-learn:
+Francesco Mazzoli <f@mazzo.li> writes:
 
-	$ printf '1\n2\n3\n' | grep "$(printf '1\n3\n')"
-	1
-	3
+> So we would have something like
+>
+> * `push.disableForce`: config flag that disables `--force` and suggests
+>     `--force-with-lease` instead;
+> * `--disable-force` and `--no-disable-force`, config flags to tune the above
+>     config parameter at will.
+>
+> What do you think?
 
-That behavior also extends to patterns passed via `-e`, and it is not
-modified by passing the option `-E` (but trying this with -P issues the
-error "grep: the -P option only supports a single pattern").
+The take-away lesson that the earlier thread gave me was that the
+order in which the three options are ranked by their desirebility
+in the UI (and the order we would like to encourage users to use)
+is, from the most to the least preferrable:
 
-It seems that there are more old Unix hands who are surprised by this
-behavior, as grep invocations of the form
+ - "--force-with-lease=<ref>:<expect>" that is safer than "--force";
 
-	grep "$(git rev-parse A B) C" file
+ - "--force" that is known to be dangerous, and does not pretend to
+   be anything but;
 
-were introduced in a85b377d041 (push: the beginning of "git push
---signed", 2014-09-12), and later faithfully copy-edited in b9459019bbb
-(push: heed user.signingkey for signed pushes, 2014-10-22).
+ - "--force-with-lease" that pretends to be safer but is not.
 
-Please note that the output of `git rev-parse A B` separates the object
-IDs via *newlines*, not via spaces, and those newlines are preserved
-because the interpolation is enclosed in double quotes.
+The last form should eventually be eliminated, as there is no way to
+correctly intuit what the expected object should be.
 
-As a consequence, these tests try to validate that the file contains
-either A's object ID, or B's object ID followed by C, or both. Clearly,
-however, what the test wanted to see is that there is a line that
-contains all of them.
+To me, a disableForce configuration that encourages use of either
+the best one or the worst one alone does not look like a step
+forward, unless we also have a change to disable the last form.
 
-This is clearly unintended, and the grep invocations in question really
-match too many lines.
-
-Fix the test by avoiding the newlines in the patterns.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t5534-push-signed.sh | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
-
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index 5bcb288f5c4..464ffdd147a 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -119,8 +119,11 @@ test_expect_success GPG 'signed push sends push certificate' '
- 		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
- 	) >expect &&
- 
--	grep "$(git rev-parse noop ff) refs/heads/ff" dst/push-cert &&
--	grep "$(git rev-parse noop noff) refs/heads/noff" dst/push-cert &&
-+	noop=$(git rev-parse noop) &&
-+	ff=$(git rev-parse ff) &&
-+	noff=$(git rev-parse noff) &&
-+	grep "$noop $ff refs/heads/ff" dst/push-cert &&
-+	grep "$noop $noff refs/heads/noff" dst/push-cert &&
- 	test_cmp expect dst/push-cert-status
- '
- 
-@@ -200,8 +203,11 @@ test_expect_success GPG 'fail without key and heed user.signingkey' '
- 		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
- 	) >expect &&
- 
--	grep "$(git rev-parse noop ff) refs/heads/ff" dst/push-cert &&
--	grep "$(git rev-parse noop noff) refs/heads/noff" dst/push-cert &&
-+	noop=$(git rev-parse noop) &&
-+	ff=$(git rev-parse ff) &&
-+	noff=$(git rev-parse noff) &&
-+	grep "$noop $ff refs/heads/ff" dst/push-cert &&
-+	grep "$noop $noff refs/heads/noff" dst/push-cert &&
- 	test_cmp expect dst/push-cert-status
- '
- 
-
-base-commit: 5116f791c12dda6b6c22fa85b600a8e30dfa168a
--- 
-2.13.2.windows.1
-
-Published-As: https://github.com/dscho/git/releases/tag/t5534-fix-grep-pattern-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git t5534-fix-grep-pattern-v1
