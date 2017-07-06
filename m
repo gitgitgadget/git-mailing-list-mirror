@@ -7,56 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E19AB202AB
-	for <e@80x24.org>; Thu,  6 Jul 2017 16:22:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9DE6202AB
+	for <e@80x24.org>; Thu,  6 Jul 2017 16:23:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751813AbdGFQWR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jul 2017 12:22:17 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33585 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751751AbdGFQWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jul 2017 12:22:16 -0400
-Received: by mail-pf0-f196.google.com with SMTP id e199so900716pfh.0
-        for <git@vger.kernel.org>; Thu, 06 Jul 2017 09:22:16 -0700 (PDT)
+        id S1751853AbdGFQXE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jul 2017 12:23:04 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34299 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751653AbdGFQXE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jul 2017 12:23:04 -0400
+Received: by mail-pg0-f67.google.com with SMTP id j186so796154pge.1
+        for <git@vger.kernel.org>; Thu, 06 Jul 2017 09:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=VHZQyzf/cWtJGZGiDKUF62gGWoFtq3e2OVlZ3iUtmQ8=;
-        b=flTkgpLcoZ+9EbqyKmlLw7Oai2tL7Xo8Mgj6yd6MlAPVW+r78Htzfn0XOuHrTsb6nA
-         yzOfVfnAyR0EtO9dIdL5jlfR4cUOKRzzojekDg+D3weEtYSQMB8CEJuW+fGWhbk5Hcon
-         LWYLKCf+Vps9/t1t13LGpqFLOBO2Poie/7gzYHnrga4v5OtoYwP7i/X+2bS5gRfH/QJe
-         4lH9BIcf5Ev1Dth/R6dxYOyS80matYSHhZ+fiEfDQDNjvxc+nd+P9H3aMP9gHkdsLQ7b
-         fl4FYyeIYr00BAeTvR0K8pgxYwu19plk2dlyv2t+nRtYYKe5tQ72RVTPfv1Lh2UmhF5P
-         j4yg==
+        bh=REp5rx0xWiWvyf0FUgLy1OZ8UjFG6X2AhAWI+Qdo5vI=;
+        b=I3kiSjyT/7yqwrPJMUO9UZ9LKX6a9YiV+DjZm6mvwrWJWY4WSqW2L+A/0RO5qrFxcZ
+         26ezinTwAaKNoKlE8aybdMKj3M07deZoAhF2O4mVcuiiBkbOEpmPGkpjWEO5RBSMIaGb
+         wcYvdiC1iEzl/ut7cmph8P0pqPE87wTr+y0tVmLwG0YC3K9ySjo5/OeWU/Ja8/V4Tw7t
+         3gUkQU8hjMsxi81LtkfsYX3RFcURN0Uu1OziYjo1ltpyHuchN0IeslFDLduezc4aJFco
+         xiRrln5FHDr+zc6HRxgFgbQg4Qp9HkdNXnqqXwBSTiBuhUq+jItlAjAVKiRYmhR8HusV
+         07GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=VHZQyzf/cWtJGZGiDKUF62gGWoFtq3e2OVlZ3iUtmQ8=;
-        b=Hsie9sdz33GDzgGl7zj+q2GqdEmWfHpSU75xrSaB/gkkXeWj28fA6J6LGdv018qbjb
-         6pjRkJL3GSOjuKghVnla9a3CV4RTEaibXN4v0txDjsCvxrCapbNu/d6fsEaWUYVuamF5
-         2tcj6674Z6s6Qlcwtj69AsM3M2fUhJHGV034PdM8fLKzfHopEHHZzsNVQVTexdNYCY/i
-         MRzaAoQNVmqnh2pNqhSTbOLcA3PDUYpnqqoiKTxrR2zKIw8SE+2cSamsVMv52pwpAQnW
-         RJl8GbZ+pg1RUo0swZ6Lryk2BCF4rnQoFHTvKeWiMfJ49aHocoih2we62PWuAAryDX8D
-         Gl2w==
-X-Gm-Message-State: AIVw112ILhSIvIQ/t715K9rlGqDMWp+x748iYifpubH5u60y4D4hmego
-        sdap40j3WDQH7Q==
-X-Received: by 10.99.119.12 with SMTP id s12mr26795189pgc.143.1499358135869;
-        Thu, 06 Jul 2017 09:22:15 -0700 (PDT)
+        bh=REp5rx0xWiWvyf0FUgLy1OZ8UjFG6X2AhAWI+Qdo5vI=;
+        b=NzX7CNV+xHg5hqKZb7Km7U6y/ulP3yJjDY1Ap76i46PiYCUrj/knZJEz/S+auHdRWQ
+         SaiaRw0E3+/nT0VanAeV5pC08tu2lqH+/3EAVmWNVLqDPMDZhO7Lc29DX/4isKhzIkXu
+         qjDCFgXgifHDQIkH1SH7dGYEOJo/jYogFd0cYzKTVofWbuqUMKA3kx7/Eif0B0Ajwoon
+         g/DsVGe947CsjGSzjdcJH47XeT+GvMSx94AqFLicbMmsguiXe7YdHw4ut45kb2H8R9WZ
+         J0J42neMebC11OP00HCIPAR85URST+CE5nprHyVMd9gTYmaotiKANWdKJ8jfUtTv4N6c
+         rxyQ==
+X-Gm-Message-State: AIVw113ebGZcnNQibvovzatcNRdUglpjUDX6AxQOGtJightj2W8VledJ
+        PtpIypUY7EmZqQ==
+X-Received: by 10.84.216.71 with SMTP id f7mr29148390plj.266.1499358183362;
+        Thu, 06 Jul 2017 09:23:03 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:f878:6796:f790:dc38])
-        by smtp.gmail.com with ESMTPSA id v70sm1098806pfi.110.2017.07.06.09.22.15
+        by smtp.gmail.com with ESMTPSA id j29sm1169025pfj.68.2017.07.06.09.23.02
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 06 Jul 2017 09:22:15 -0700 (PDT)
+        Thu, 06 Jul 2017 09:23:02 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Todd Lewis <utoddl@email.unc.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: bug report: dates on diff
-References: <b28bc109-b06f-0acf-960b-0b6761b0ee38@email.unc.edu>
-Date:   Thu, 06 Jul 2017 09:22:14 -0700
-In-Reply-To: <b28bc109-b06f-0acf-960b-0b6761b0ee38@email.unc.edu> (Todd
-        Lewis's message of "Thu, 6 Jul 2017 08:54:14 -0400")
-Message-ID: <xmqqo9sxfscp.fsf@gitster.mtv.corp.google.com>
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] t5534: fix misleading grep invocation
+References: <936f43ce2c993e545deaee5e196c018933375214.1499254650.git.johannes.schindelin@gmx.de>
+        <xmqq1spukfyw.fsf@gitster.mtv.corp.google.com>
+        <22feab0a-ca75-2aea-1ec9-2f71fe40c9d0@grubix.eu>
+Date:   Thu, 06 Jul 2017 09:23:02 -0700
+In-Reply-To: <22feab0a-ca75-2aea-1ec9-2f71fe40c9d0@grubix.eu> (Michael
+        J. Gruber's message of "Thu, 6 Jul 2017 11:20:06 +0200")
+Message-ID: <xmqqk23lfsbd.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,45 +68,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Lewis <utoddl@email.unc.edu> writes:
+Michael J Gruber <git@grubix.eu> writes:
 
-> [utoddl@tarna gitbug]$ git diff master@{01-01-2012} charter.txt
-> warning: Log for 'master' only goes back to Thu, 6 Jul 2017 08:19:45 -0400.
+> Junio C Hamano venit, vidit, dixit 05.07.2017 18:26:
+>
+>> The invocation this fixes is not just misleading but simply wrong.
+>> Nicely spotted.
+>
+> In addition, the patch makes sure to catch any rev-parse failures which
+> the original invocation shove under the rug.
 
-What you observed is how <ref>@{<selector>} syntax is designed to
-work, and is not limited to "git diff".  Any Git command e.g. "git
-rev-parse master@{01-01-2012}", would and should behave the same
-way.
+Yeah, good thing that this got fixed ;-)
 
-The thing to note is that the syntax does not pay any attention to
-author or committer dates recorded in the commit objects.  In fact,
-if you have a ref that points at an object that is not a commit-ish,
-you can still use the syntax.  If you did this, for example
-
-    $ git config core.logallrefupdates always
-
-    $ one=$(echo one | git hash-object --stdin -w)
-    $ git update-ref refs/my/blob $one
-
-    ... time passes ...
-
-    $ two=$(echo two | git hash-object --stdin -w)
-    $ git update-ref refs/my/blob $two
-
-then "git show my/blob@{2.minutes.ago}" will show the blob object
-your refs/my/blob ref was pointing at 2 minutes ago.
-
-And as you may know, blobs do not record any timestamp.  So how does
-this work?  
-
-The reason why this works is because the time in <ref>@{$time}
-syntax is about asking what was pointed by the <ref> back in $time
-in your repository.  It does not matter what timestamp the object
-that was pointed by the <ref> has (or does not have).
-
-If you didn't create this repository back in 2012, then the syntax
-"master@{01-01-2012}" that asks "Back at the beginning of 2012, what
-object did the master branch point at?" does not have a sensible
-answer.  That can be seen in the warning you got from Git.
-
-Hope this clarifies.
