@@ -2,81 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9DE6202AB
-	for <e@80x24.org>; Thu,  6 Jul 2017 16:23:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B143202AB
+	for <e@80x24.org>; Thu,  6 Jul 2017 16:53:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751853AbdGFQXE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jul 2017 12:23:04 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34299 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751653AbdGFQXE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jul 2017 12:23:04 -0400
-Received: by mail-pg0-f67.google.com with SMTP id j186so796154pge.1
-        for <git@vger.kernel.org>; Thu, 06 Jul 2017 09:23:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=REp5rx0xWiWvyf0FUgLy1OZ8UjFG6X2AhAWI+Qdo5vI=;
-        b=I3kiSjyT/7yqwrPJMUO9UZ9LKX6a9YiV+DjZm6mvwrWJWY4WSqW2L+A/0RO5qrFxcZ
-         26ezinTwAaKNoKlE8aybdMKj3M07deZoAhF2O4mVcuiiBkbOEpmPGkpjWEO5RBSMIaGb
-         wcYvdiC1iEzl/ut7cmph8P0pqPE87wTr+y0tVmLwG0YC3K9ySjo5/OeWU/Ja8/V4Tw7t
-         3gUkQU8hjMsxi81LtkfsYX3RFcURN0Uu1OziYjo1ltpyHuchN0IeslFDLduezc4aJFco
-         xiRrln5FHDr+zc6HRxgFgbQg4Qp9HkdNXnqqXwBSTiBuhUq+jItlAjAVKiRYmhR8HusV
-         07GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=REp5rx0xWiWvyf0FUgLy1OZ8UjFG6X2AhAWI+Qdo5vI=;
-        b=NzX7CNV+xHg5hqKZb7Km7U6y/ulP3yJjDY1Ap76i46PiYCUrj/knZJEz/S+auHdRWQ
-         SaiaRw0E3+/nT0VanAeV5pC08tu2lqH+/3EAVmWNVLqDPMDZhO7Lc29DX/4isKhzIkXu
-         qjDCFgXgifHDQIkH1SH7dGYEOJo/jYogFd0cYzKTVofWbuqUMKA3kx7/Eif0B0Ajwoon
-         g/DsVGe947CsjGSzjdcJH47XeT+GvMSx94AqFLicbMmsguiXe7YdHw4ut45kb2H8R9WZ
-         J0J42neMebC11OP00HCIPAR85URST+CE5nprHyVMd9gTYmaotiKANWdKJ8jfUtTv4N6c
-         rxyQ==
-X-Gm-Message-State: AIVw113ebGZcnNQibvovzatcNRdUglpjUDX6AxQOGtJightj2W8VledJ
-        PtpIypUY7EmZqQ==
-X-Received: by 10.84.216.71 with SMTP id f7mr29148390plj.266.1499358183362;
-        Thu, 06 Jul 2017 09:23:03 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:f878:6796:f790:dc38])
-        by smtp.gmail.com with ESMTPSA id j29sm1169025pfj.68.2017.07.06.09.23.02
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 06 Jul 2017 09:23:02 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] t5534: fix misleading grep invocation
-References: <936f43ce2c993e545deaee5e196c018933375214.1499254650.git.johannes.schindelin@gmx.de>
-        <xmqq1spukfyw.fsf@gitster.mtv.corp.google.com>
-        <22feab0a-ca75-2aea-1ec9-2f71fe40c9d0@grubix.eu>
-Date:   Thu, 06 Jul 2017 09:23:02 -0700
-In-Reply-To: <22feab0a-ca75-2aea-1ec9-2f71fe40c9d0@grubix.eu> (Michael
-        J. Gruber's message of "Thu, 6 Jul 2017 11:20:06 +0200")
-Message-ID: <xmqqk23lfsbd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751846AbdGFQxf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jul 2017 12:53:35 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56797 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751654AbdGFQxf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jul 2017 12:53:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F19895817
+        for <git@vger.kernel.org>; Thu,  6 Jul 2017 12:53:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+        :subject:date:message-id:mime-version:content-type; s=sasl; bh=i
+        3cIfgHEiR1NGmNtPWK0efyWd48=; b=R63pHvJHtVk1jQz0YxbU01xQMs9m2F3Qo
+        Jr1+uOOGwAoiAn9ywChB2JDR1RtYBjZNqe6Tad9GWto1GZtRBs7jUtMFTlwN6oz+
+        i5vMU2sE1rtHH1URR1SvybSAO8SqEdvnVNhTaTu7q41qeQTpAuKBTaa0We+BExyN
+        CUF8EsMGa4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9897B95816
+        for <git@vger.kernel.org>; Thu,  6 Jul 2017 12:53:26 -0400 (EDT)
+Received: from localhost (unknown [24.60.167.92])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 152EE95815
+        for <git@vger.kernel.org>; Thu,  6 Jul 2017 12:53:26 -0400 (EDT)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     git@vger.kernel.org
+Subject: name-rev: anchor pattern without --exclude?
+Date:   Thu, 06 Jul 2017 12:53:25 -0400
+Message-ID: <87k23ltsl6.fsf@kyleam.com>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: A10B0B00-626B-11E7-86FF-61520C78B957-24757444!pb-smtp2.pobox.com
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=mesmtp;
+ bh=i3cIfgHEiR1NGmNtPWK0efyWd48=;
+ b=ZCLXfbyJhsEJzO9rzua5fmnHWXI7WdBgDNR3o3CkodTWLT79La4QnwUiaGF15HJ/DGTVrTRUyptisB/acG2KS4fJYZjjpOUY0ir6HlMJFZ/013RYtB0eXQQ5FKS6x3yNvuSBuJbTMbhxqkm17P1CkWxLQybhhxcd3MdkoYjB1Jg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@grubix.eu> writes:
+Hello,
 
-> Junio C Hamano venit, vidit, dixit 05.07.2017 18:26:
->
->> The invocation this fixes is not just misleading but simply wrong.
->> Nicely spotted.
->
-> In addition, the patch makes sure to catch any rev-parse failures which
-> the original invocation shove under the rug.
+I'm trying to restrict name-rev's output to a ref whose name begins with
+the supplied pattern [*].  Looking at "man git-name-rev",
+builtin/name-rev.c, and wildmatch.c, I don't see a way to accomplish
+this with "--refs=<pattern>".
 
-Yeah, good thing that this got fixed ;-)
+Say, for example, that I want to limit name-rev's output to a ref in the
+"refs/heads/" namespace.
 
+    * cc8f7dc (master) c
+    * ad6d6f0 b
+    | * 49a2156 (refs/wip/wtree/refs/heads/master) d
+    |/  
+    * b91f97a a
+
+    --------------------------------------------------
+
+    $ git name-rev b91f97a
+    b91f97a wip/wtree/refs/heads/master~1
+
+    $ git name-rev --refs="refs/heads/*" b91f97a
+    b91f97a wip/wtree/refs/heads/master~1
+
+    $ git name-rev --refs="^refs/heads/*" b91f97a
+    b91f97a undefined
+
+Starting with v2.13.0, I can get my desired output using the --exclude
+option.
+
+    $ git name-rev --refs="refs/heads/*" --exclude="*/refs/heads/*" b91f97a
+    b91f97a master~2
+
+But, unfortunately, I'm trying to find a solution that works with
+earlier Git versions (back to v1.9.4).
+
+Am I overlooking a way to do this without the --exclude option?
+
+
+[*] A bit more information on why I'm trying to do this: In Magit, we
+    have a work-in-progress feature that takes "snapshots" of changes
+    before they are committed.  These snapshots are stored as
+    "refs/wip/{wtree,index}/<full refname>".
+
+    We want to use name-rev to map a commit to a name in "refs/heads/",
+    ignoring these snapshot refs.
+
+-- 
+Kyle
