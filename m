@@ -2,148 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66F53202A7
-	for <e@80x24.org>; Thu,  6 Jul 2017 09:20:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65CD8202AB
+	for <e@80x24.org>; Thu,  6 Jul 2017 12:20:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751786AbdGFJUP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jul 2017 05:20:15 -0400
-Received: from mout.kundenserver.de ([217.72.192.73]:51620 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750998AbdGFJUN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jul 2017 05:20:13 -0400
-Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
- mrelayeu.kundenserver.de (mreue102 [212.227.15.183]) with ESMTPSA (Nemesis)
- id 0M1Fnc-1diexr38um-00tDJw; Thu, 06 Jul 2017 11:20:07 +0200
-Subject: Re: [PATCH] t5534: fix misleading grep invocation
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-References: <936f43ce2c993e545deaee5e196c018933375214.1499254650.git.johannes.schindelin@gmx.de>
- <xmqq1spukfyw.fsf@gitster.mtv.corp.google.com>
-From:   Michael J Gruber <git@grubix.eu>
-Message-ID: <22feab0a-ca75-2aea-1ec9-2f71fe40c9d0@grubix.eu>
-Date:   Thu, 6 Jul 2017 11:20:06 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <xmqq1spukfyw.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
+        id S1752707AbdGFMUU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jul 2017 08:20:20 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:32881 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752686AbdGFMUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jul 2017 08:20:16 -0400
+Received: by mail-it0-f68.google.com with SMTP id 188so66587itx.0
+        for <git@vger.kernel.org>; Thu, 06 Jul 2017 05:20:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=6OxhvF0SJLbWgeqO0/rIkfgCPErp+Qm6anxZEmMn/xc=;
+        b=b0zuBgNEhKxfXlBsiS/ifZg6NNa8fI5kFIdDNpVe4yRJPgqsEEFbE1hIxrhmkkCpxw
+         kHrVWLkwMDK2caLhpBGusvht4kYzudEgWoBi3yNv193zqzHJcAFpU0TiPReeolx4E5vg
+         GZBnuB0CCF7jyXLRJI2LSeHagsofqSz+3sD7U0lp+ytVMR9dGFWcd4u6Y/cd70ZmR9w7
+         TU+wERjVtwGKvy79z3at3Dv5UbwSFb71YLe7Wn3vm/SL66i+AqW513ZDuUlDigIbhKfj
+         kcAvt3FKHKkFmBqcW6GX+gmA+9aS2ka00UlDurpOsE1FLblVhnA0J4KkFq8wcXF25qFS
+         Iwvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=6OxhvF0SJLbWgeqO0/rIkfgCPErp+Qm6anxZEmMn/xc=;
+        b=MDEJy9yfgNJI4e7eN5VHn9rIEI31Wr+p0MxEBLCQ3xFVf9ooBkb8p43NC1IXrlgTLy
+         HFhnXaIj2ISsCevaPrApM25BqCg9Sv8kuXc/6sZfrnyX1cSeK+/GzTT76fYZs1Uqi/nE
+         3id2jPs2r6sPy9HeGzONOdDbpmOleTdyJVlIaI+LI+1gTw42cOfOPALNUwl2npnwj10S
+         R+6/uxZaJQK2eAnQueNtZQy21eCBAeS3it6F3FB+tzOgl0h+pFJgGDOuKdZc1sHsdwIt
+         5ZiyB1Z3p2e7+91yncQqL+6xiavY4vhiHpz/8Wo9hLFMQRz67nj/+QF6USGqc7P0X8nD
+         B1jw==
+X-Gm-Message-State: AIVw111T9W3OWjT7tf7UXJTvUhhDQQypqHTOHOl4GnVACQiO53FMdhoA
+        /u4E+a8Hgm+wHA==
+X-Received: by 10.107.26.79 with SMTP id a76mr16726811ioa.224.1499343605536;
+        Thu, 06 Jul 2017 05:20:05 -0700 (PDT)
+Received: from unique-pc ([182.73.109.146])
+        by smtp.googlemail.com with ESMTPSA id 131sm86683itk.10.2017.07.06.05.20.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 06 Jul 2017 05:20:05 -0700 (PDT)
+Message-ID: <1499343609.2239.3.camel@gmail.com>
+Subject: Re: [PATCH] merge-message: change meaning of "empty merge message"
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Kevin Daudt <me@ikke.info>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Date:   Thu, 06 Jul 2017 17:50:09 +0530
+In-Reply-To: <20170706044640.GA11020@alpha.vpn.ikke.info>
+References: <xmqq60f9mo6b.fsf@gitster.mtv.corp.google.com>
+         <20170706033149.6275-1-kaarticsivaraam91196@gmail.com>
+         <20170706044640.GA11020@alpha.vpn.ikke.info>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:NvtBE0ErzSDruIzbmFG5wg22q4r7NIKb4wJjAbJK/cw3mYI/q8U
- 6ptY9IuEhXyk7+A4qytndA3wLPqkGOZ3i9XhM06rBd6ppe/lYy31dESlOe9FcDfUIafS7Sx
- hrunpc4xXQBT3SeeYizzcz3++fiewFeoyyvZFsftAt7M9WKsjkI5hEIxHEusbiHfu+NsrPb
- G+1f7hLXsAw+4nnmzTNeg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VigLFgB9yrk=:vie5nCF1OniZsU5tHlQR5Y
- M8pgqgFXIwt8SRWvwaEC8fGeIYgTy+qKPGQo16fvoJC3dnMUM/SJvHW+E/tUazUZWS3noBTFq
- m4I4zA5VsCl/9QIUqJkNQIB0ANFRpb8S3NQ3MBwlQSIryQEwRrUxj4N1a4963c7Cajy46iHmr
- RzStY30PKt0xBgWBBZQLRL1DuvqScY45zlqlDiVBOq0tOqw9II8k4obHLvIcLfWJAPPVxJcXF
- VEpch9rAMZPJC9FFCf/PwpGEhr4d2jQ/nSBL2B88flzFu5l5tpjGzijDWzFUDPKYN9yhHjZwu
- BSl6OUQYBknAEZ76bj6sJNqe+WU0x88N/IPbZf8ipG7HcD4CZqTgTlBVODiTOy1HJ1J8cw+79
- 7RJ9OMv5BqChWiaa8FL3+zKiF+8wjNdlLulmgSwx2uG8TWk39X3zpmWSnQMaM2ki8KPJzauk4
- zQNuxxKdALjSHAVUa0UEjfZ/dp7LujKP5wjj03x9Js9V7RKwsAL5ZRv5vgUnPz1U92T+5ecvp
- cBI4iGanAMyxphUVrzShfwZE338GPX70KvYLg8cEQLapWtrmN/92uNWK15mn+X59XM42ImHKE
- XJfUpBvlfeLw97vLsynaPDK9Tfvz5qMJIbFm6kup4ro/fVs2MDOYiR+IK24Yvek4JOoraRf01
- pTh5T+9khosNJiWwVGrDUzeG1TkwrDi27LL3tvbOIEv9Zsbziicx4+mEE7lYZ/U3cX+0vhFjJ
- FTLqRwHqU65gh68Y
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano venit, vidit, dixit 05.07.2017 18:26:
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On Thu, 2017-07-06 at 06:46 +0200, Kevin Daudt wrote:
 > 
->> It seems to be a little-known feature of `grep` (and it certainly came
->> as a surprise to this here developer who believed to know the Unix tools
->> pretty well) that multiple patterns can be passed in the same
->> command-line argument simply by separating them by newlines. Watch, and
->> learn:
->>
->> 	$ printf '1\n2\n3\n' | grep "$(printf '1\n3\n')"
->> 	1
->> 	3
->>
->> That behavior also extends to patterns passed via `-e`, and it is not
->> modified by passing the option `-E` (but trying this with -P issues the
->> error "grep: the -P option only supports a single pattern").
->>
->> It seems that there are more old Unix hands who are surprised by this
->> behavior, as grep invocations of the form
->>
->> 	grep "$(git rev-parse A B) C" file
->>
->> were introduced in a85b377d041 (push: the beginning of "git push
->> --signed", 2014-09-12), and later faithfully copy-edited in b9459019bbb
->> (push: heed user.signingkey for signed pushes, 2014-10-22).
->>
->> Please note that the output of `git rev-parse A B` separates the object
->> IDs via *newlines*, not via spaces, and those newlines are preserved
->> because the interpolation is enclosed in double quotes.
->>
->> As a consequence, these tests try to validate that the file contains
->> either A's object ID, or B's object ID followed by C, or both. Clearly,
->> however, what the test wanted to see is that there is a line that
->> contains all of them.
->>
->> This is clearly unintended, and the grep invocations in question really
->> match too many lines.
->>
->> Fix the test by avoiding the newlines in the patterns.
->>
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
+> The function is called "rest_is_empty".
 > 
-> The invocation this fixes is not just misleading but simply wrong.
-> Nicely spotted.
+Thanks for correcting that!
 
-In addition, the patch makes sure to catch any rev-parse failures which
-the original invocation shove under the rug.
+> But isn't it better that commit and merge use the same code, instead
+> of
+> duplicating it again? Otherwise one may be updated, and the other
+> forgotten, getting differences in behaviur, which is what you want to
+> solve.
+> 
+Yes, I did think of that. It *seems* that neither "message_is_empty" or
+the "rest_is_empty" are exposed to other files. Have to work on that.
 
-> Thanks, will queue.
-
-Thanks from the faithful copy-editor ;)
-
-How did you spot this? Are there grep versions that behave differently?
-
->>  t/t5534-push-signed.sh | 14 ++++++++++----
->>  1 file changed, 10 insertions(+), 4 deletions(-)
->>
->> diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
->> index 5bcb288f5c4..464ffdd147a 100755
->> --- a/t/t5534-push-signed.sh
->> +++ b/t/t5534-push-signed.sh
->> @@ -119,8 +119,11 @@ test_expect_success GPG 'signed push sends push certificate' '
->>  		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
->>  	) >expect &&
->>  
->> -	grep "$(git rev-parse noop ff) refs/heads/ff" dst/push-cert &&
->> -	grep "$(git rev-parse noop noff) refs/heads/noff" dst/push-cert &&
->> +	noop=$(git rev-parse noop) &&
->> +	ff=$(git rev-parse ff) &&
->> +	noff=$(git rev-parse noff) &&
->> +	grep "$noop $ff refs/heads/ff" dst/push-cert &&
->> +	grep "$noop $noff refs/heads/noff" dst/push-cert &&
->>  	test_cmp expect dst/push-cert-status
->>  '
->>  
->> @@ -200,8 +203,11 @@ test_expect_success GPG 'fail without key and heed user.signingkey' '
->>  		sed -n -e "s/^nonce /NONCE=/p" -e "/^$/q" dst/push-cert
->>  	) >expect &&
->>  
->> -	grep "$(git rev-parse noop ff) refs/heads/ff" dst/push-cert &&
->> -	grep "$(git rev-parse noop noff) refs/heads/noff" dst/push-cert &&
->> +	noop=$(git rev-parse noop) &&
->> +	ff=$(git rev-parse ff) &&
->> +	noff=$(git rev-parse noff) &&
->> +	grep "$noop $ff refs/heads/ff" dst/push-cert &&
->> +	grep "$noop $noff refs/heads/noff" dst/push-cert &&
->>  	test_cmp expect dst/push-cert-status
->>  '
->>  
->>
->> base-commit: 5116f791c12dda6b6c22fa85b600a8e30dfa168a
+-- 
+Kaartic
