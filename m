@@ -2,87 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SBL_CSS,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DA1C202AE
-	for <e@80x24.org>; Thu,  6 Jul 2017 03:17:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F254202AE
+	for <e@80x24.org>; Thu,  6 Jul 2017 03:20:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752466AbdGFDRV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Jul 2017 23:17:21 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35837 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751914AbdGFDRV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Jul 2017 23:17:21 -0400
-Received: by mail-pf0-f195.google.com with SMTP id q85so1157784pfq.2
-        for <git@vger.kernel.org>; Wed, 05 Jul 2017 20:17:20 -0700 (PDT)
+        id S1752637AbdGFDUT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Jul 2017 23:20:19 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34845 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752315AbdGFDUS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Jul 2017 23:20:18 -0400
+Received: by mail-pf0-f194.google.com with SMTP id q85so1165838pfq.2
+        for <git@vger.kernel.org>; Wed, 05 Jul 2017 20:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=zLUWenRq1Q0YxIE8hb970dUIggcP2OIbPC+YlW3KT3Y=;
-        b=g7Wa2XL+M/DKCBnJIwagVt+09Seic9WY7UCLYwDQaYrN018xVZ/gePRjKW8hR2VpkA
-         3o39Ndc6jvyvAvc/Ev+iQV8Z/sJ9/0/yUCz/gfRIrzzF5YToGIgRfUjK81/2qElevVDV
-         +NLIeXdldZ1y1ua9ZZ5zp7xsLdrrqmNqJ2OWCV81vJxI1dUgi5KsYENXOtpTRKWLQq4a
-         lmTOgR0xZks7DCA1pW37gSkTZbpzOayEhQAPJfkB0zt4412K0aMMixwvTjBb2lpSrhnw
-         rGUbEU+BTa23VhTBVbv1K5dAkSTLB5cPYPU4Y/t/d+ODk8aUQRohP1cCMCV7q0Hb2Du7
-         rByw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=7jvnRwuoawLQ/W8+uwdfz2msAORLU8onyEB45U36kOw=;
+        b=rT+nm5pFkbFFtHO81uh/NxaNIo15/I7v4iiqFLppRpUqDrNl6YeznZ0isIMXX32LVC
+         zAlSPhssZtCVgl5B1xjYMI9JfEWgK3yq3Xk7N8ew0lp5A9bRNtckdB4kLGV00rxmQvE4
+         xiJ/N5Qknj2K6Ol6q75mvm6iFLlgFGdsnwLGWtpkNRJsRWVwk13EnsebHeW56+mQ8w8Y
+         k+XiF2wtRISXN6Fa0fnNYbhQg1BNwOzfHZZGYUvJVKDjgPz+I46r4uGkQcnf25aWZUMQ
+         vVIDyNyyvNAejZRyf2KNdfScp12SPN176DJqrGwJL0o6hUbLpPtST3aM4bjSv5C3YqMJ
+         gz1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=zLUWenRq1Q0YxIE8hb970dUIggcP2OIbPC+YlW3KT3Y=;
-        b=oWM5JDyaZEFxztYMc1IHE9fDno5i2nLhdY4hDtpzjYt4c2lSMoKaURINHZGjf4XXXI
-         cRErejUz5np5XNWJzlgCrZDRKtM+BT+w8hRYPM0pEIo9f2I6ePj+DEdKTCatDJmM6e0l
-         vYE/9KH197r1xkBLaqpwXBmcadeVXnVqs64VqA2bbtMqoxo/sU2RGT3qXCUOnRrGCBZ1
-         JQkx3f9JzKizWfMghdCTLkBahInyH71pGqKhc7qYTcVoYVOjwqy/xIXwzJzyPK2sEzRK
-         4avpb9EKKnE/JQWz5AZs2eM7klx7d/Ncg9ofgS4sVR5A4osL6a9PXXvXPHLuTxWqIkWG
-         V4ZA==
-X-Gm-Message-State: AIVw112+aqqNnpBAf+A7bZg9VGcaXXdJvYXzYSMd3CziImVUk1jb5Ec3
-        +1LKjDb0lJsPK+dSKmE=
-X-Received: by 10.99.44.68 with SMTP id s65mr19086041pgs.101.1499311040353;
-        Wed, 05 Jul 2017 20:17:20 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id v62sm983481pfa.6.2017.07.05.20.17.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 05 Jul 2017 20:17:19 -0700 (PDT)
-Message-ID: <1499311044.1776.1.camel@gmail.com>
-Subject: Re: [PATCH] comment: fix a typo in the comment
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=7jvnRwuoawLQ/W8+uwdfz2msAORLU8onyEB45U36kOw=;
+        b=RUU6lGL9iBIg9Gpmnrgyi51Lp9dF6uzPgo+I7mgmnUgNtUrImZI7k4bRwWjWEIk5On
+         G8lJgTgRyuLRRY6Pxi4fkigBnsxzPt3V/ks9Xm2lMnOgScIe4RQvlmkQoNIfC8RmeoMF
+         9FsmuZ24g7LZ0ZCQQb9zzRHPkaFLdp7PDrCozoHmyV62bu/w+yIHGp3/By144fwDSYtV
+         Cf+9M7ON1iTRpklum3zSdYTiwa6yfJRf9VXGbhzaFu4reYOt+OsY5vUNcjrq8n5qy6UH
+         Y8zANrBnZhGeL3jiZRwchlA1lhUk0VpxCQaAezzADu2it09I4ZGv9chr2Xbu5zGFcBwC
+         t8Hg==
+X-Gm-Message-State: AIVw111+xEVIdOJ7qoGC1XDS5h239KGFRCb5vV8wH/ilgCQtv0p7zkPg
+        724UMMPBntimIg==
+X-Received: by 10.84.224.11 with SMTP id r11mr26336286plj.267.1499311212856;
+        Wed, 05 Jul 2017 20:20:12 -0700 (PDT)
+Received: from unique-pc.sce.com ([117.246.77.117])
+        by smtp.gmail.com with ESMTPSA id x85sm949583pff.92.2017.07.05.20.20.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Jul 2017 20:20:12 -0700 (PDT)
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+To:     gitster@pobox.com
 Cc:     git@vger.kernel.org
-Date:   Thu, 06 Jul 2017 08:47:24 +0530
+Subject: [PATCH] comment: fix a typo in the comment
+Date:   Thu,  6 Jul 2017 08:49:57 +0530
+Message-Id: <20170706031957.5782-1-kaarticsivaraam91196@gmail.com>
+X-Mailer: git-send-email 2.11.0
 In-Reply-To: <xmqq8tk2iw87.fsf@gitster.mtv.corp.google.com>
-References: <20170705170324.21026-1-kaarticsivaraam91196@gmail.com>
-         <xmqq8tk2iw87.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+References: <xmqq8tk2iw87.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2017-07-05 at 11:18 -0700, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
-> 
-> > ---
-> >  Though very trivial, I wanted to correct this as I didn't
-> >  want to ignore it after seeing it.
-> 
-> Thanks for sharp eyes.  Sign-off?  (or Sign-of? ;-))
-> 
-I should also thank you for your sharp eyes! BTW, this won't repeat
-again as I have made 'git' worry about adding the signed-off-by to the
-commits I do on my local version of git.git :)
+Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+---
+ builtin/commit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 8d1cac062..aff6bf7aa 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -984,7 +984,7 @@ static int rest_is_empty(struct strbuf *sb, int start)
+ 	int i, eol;
+ 	const char *nl;
+ 
+-	/* Check if the rest is just whitespace and Signed-of-by's. */
++	/* Check if the rest is just whitespace and Signed-off-by's. */
+ 	for (i = start; i < sb->len; i++) {
+ 		nl = memchr(sb->buf + i, '\n', sb->len - i);
+ 		if (nl)
 -- 
-Kaartic
+2.11.0
+
