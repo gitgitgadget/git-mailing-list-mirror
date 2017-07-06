@@ -2,144 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BA16202AB
-	for <e@80x24.org>; Thu,  6 Jul 2017 17:01:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2797A202AB
+	for <e@80x24.org>; Thu,  6 Jul 2017 17:04:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751813AbdGFRBJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jul 2017 13:01:09 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:37718 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751751AbdGFRBI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jul 2017 13:01:08 -0400
-Received: by mail-it0-f44.google.com with SMTP id m84so9659793ita.0
-        for <git@vger.kernel.org>; Thu, 06 Jul 2017 10:01:08 -0700 (PDT)
+        id S1752257AbdGFRDy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jul 2017 13:03:54 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:34804 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752181AbdGFRDw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jul 2017 13:03:52 -0400
+Received: by mail-pg0-f54.google.com with SMTP id t186so3914315pgb.1
+        for <git@vger.kernel.org>; Thu, 06 Jul 2017 10:03:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=aLxloZ6QhfHqZhBZ2nKkuikVZfkW/uNtv/uq/hK68JU=;
-        b=YkTMrNgKNGpQSSJZ/iK+52YUd8p9+7hfsc7PHA/YTAlJij3FwUVbaGDVw57aR82xud
-         kFWyw9mcm5trBP9spQSufz42mrXq/cZgL3dughx7R4Y0oyGsgGKrwVleSyADWo3bCNas
-         RPTiVPz0l+HUgYteXZz/w4CWx6fmY6+dcET6Wg8hkAz7ruB/9iv01c+Hx6AzTXiad2Xk
-         gEdZNFFh5FJPO9te7wSuiHYF5F1AwjfxegYL10MGT3LyN/UvETTqBbhr3XMHdBdFn9/j
-         3f5XYb4bsNyoxq5e8E+0aPmJnn2LOGIxFc32NmMPew3APozci0d6w8NyXyqFERmf18md
-         6bUw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=MXDok89871I6fvaOHj4nT+jQ/lFE7dn10cmfQ4DBmy8=;
+        b=qIYRyB/BSeRnb2zY4B8HTkVaNAw5mEal+F1LN5R7HErikuU2+Cp+lVLw+DzCCOC90O
+         /aOSB3QgI02Qabm4PWWZgl/uyhKuhy+sh1ucz70LsSVUNgDl9+QjHggDLOvrC41KSp/w
+         CcSnfZeHDvuV1eSighJpY45iUbPd+A8FHVQEQe7ET+yoHG5SNE/FO0mGzf5Ig5Uw+/G0
+         hhVq3aSjB9+oD312QM+LuwKiNw4PkSdQ8rYWL5i6O/wVufekkhEWH7pQUfu+fn/xo9vB
+         EB1+DD5Ck6y6P4rL2WsDEa0zgv+Hr8WO6jcT1teTgRQdY/Y8yuDyejI83vL/84UxYQLz
+         R4hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=aLxloZ6QhfHqZhBZ2nKkuikVZfkW/uNtv/uq/hK68JU=;
-        b=S0y5Vif8HjlrXemE0778CbA/tIEkz/MMH4s9GAD6jxcFc3PREWTJdd7zMT38lmg31i
-         gvI9A3LHm9iM7uE2ySwzRAbpFiyoa0B/5nudMXoJj4GMzqile0WuueG1P4tMb4nIP3BI
-         9AYEQES3JHIf8eBy2aAwDcee26U6J1z2VadoLzO3O21zaUXJ7yUw+KKPMvPhd9666/1/
-         rbC3fxBc/gNfILD9lGbbjRYtTGvF88zj7qj8tjLfoQoyTNGeRQJKB7Se0TL+3BMvOZvg
-         EE4tifykXdC9kx/pZuHfpKIKnVotWp7ILk7Nti+wXARTbiQV2BxBbtrOW1qBF9ixrttx
-         fvjQ==
-X-Gm-Message-State: AIVw111DVzFOzGdLa9m4BwhRsCClvs66tfqFDGyaBVMghcFwRFhNGI0R
-        dSbMUWfEExux6TkNm3y8KFus3AgU686XYDqxNg==
-X-Received: by 10.36.203.3 with SMTP id u3mr378523itg.101.1499360466751; Thu,
- 06 Jul 2017 10:01:06 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=MXDok89871I6fvaOHj4nT+jQ/lFE7dn10cmfQ4DBmy8=;
+        b=AhzsRJXFbKpqOJsl4KH2m3Imu2ikN/RdVs8zywZgEZ1Bn22FWRCyqS+L0TH1M5xY3z
+         iMow0DRNdh6s+vPg8yHoctIhaG+2bAxdlrL5uwIU0D5oO8OYTaswLVrMi4CbPamW3Ap5
+         Xz3RujhUTKqq4f3cbiFpVZsi4Kxcf/3SVrnKQomvPjkkzCAftA4A6zm2UHBxujJjUgM6
+         Dac51QY2OemZTVADiN584POAEw/q5I2awxSBJHLyopSdkk082ryQfd6AhpL5+RqR4A5B
+         46Xmlt36mQwAIMTuOVhhDK5paZS1OSihD1GyeySTmMgJEIY2b9HvNBiMQ8naqbGZbvXn
+         nxMg==
+X-Gm-Message-State: AIVw110Yc2e8bFTJ3VAUXplF4TrTEwIOq1bcmP4JYzeYJlOdah8xvuPY
+        tul5oZkpYu7btnmYtSc=
+X-Received: by 10.84.210.106 with SMTP id z97mr29794405plh.6.1499360631957;
+        Thu, 06 Jul 2017 10:03:51 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:f878:6796:f790:dc38])
+        by smtp.gmail.com with ESMTPSA id a4sm1303646pfc.22.2017.07.06.10.03.50
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 06 Jul 2017 10:03:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kyle Meyer <kyle@kyleam.com>
+Cc:     git@vger.kernel.org
+Subject: Re: name-rev: anchor pattern without --exclude?
+References: <87k23ltsl6.fsf@kyleam.com>
+Date:   Thu, 06 Jul 2017 10:03:49 -0700
+In-Reply-To: <87k23ltsl6.fsf@kyleam.com> (Kyle Meyer's message of "Thu, 06 Jul
+        2017 12:53:25 -0400")
+Message-ID: <xmqqfue9fqfe.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.196.153 with HTTP; Thu, 6 Jul 2017 10:01:05 -0700 (PDT)
-In-Reply-To: <20170706133124.GB1216@inner.h.apk.li>
-References: <20170704075758.GA22249@inner.h.apk.li> <20170705082027.ujddejajjlvto7bp@sigill.intra.peff.net>
- <20170706133124.GB1216@inner.h.apk.li>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Thu, 6 Jul 2017 10:01:05 -0700
-Message-ID: <CAGyf7-FnaWM=XNb_Skb1qR4vu_jAw-5swkgWpEDQqwM0NNq3YQ@mail.gmail.com>
-Subject: Re: Flurries of 'git reflog expire'
-To:     Andreas Krey <a.krey@gmx.de>
-Cc:     Jeff King <peff@peff.net>, Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm one of the Bitbucket Server developers. My apologies; I just
-noticed this thread or I would have jumped in sooner!
+Kyle Meyer <kyle@kyleam.com> writes:
 
-On Thu, Jul 6, 2017 at 6:31 AM, Andreas Krey <a.krey@gmx.de> wrote:
-> On Wed, 05 Jul 2017 04:20:27 +0000, Jeff King wrote:
->> On Tue, Jul 04, 2017 at 09:57:58AM +0200, Andreas Krey wrote:
-> ...
->> And what does the process tree look like?
+> [*] A bit more information on why I'm trying to do this: In Magit, we
+>     have a work-in-progress feature that takes "snapshots" of changes
+>     before they are committed.  These snapshots are stored as
+>     "refs/wip/{wtree,index}/<full refname>".
 >
-> Lots (~ 10) of
->
->           \_ /usr/bin/git receive-pack /opt/apps/atlassian/bitbucket-data/shared/data/repositories/68
->           |   \_ git gc --auto --quiet
->           |       \_ git reflog expire --all
->
-> plus another dozen gc/expire pairs where the parent is already gone.
-> All with the same arguments - auto GC.
+>     We want to use name-rev to map a commit to a name in "refs/heads/",
+>     ignoring these snapshot refs.
 
-Do you know what version of Bitbucket Server is in use? Based on the
-fact that it's "git gc --auto" triggered from a "git receive-pack",
-that implies two things:
-- You're on a 4.x version of Bitbucket Server
-- The repository (68) has never been forked
+What is the <full refname> in the above supposed to represent?  When
+a user sees two refs "refs/wip/{wtree,index}/<full refname>", does
+it mean: "These two represent a snapshot for changes while the user
+was working on this branch"?
 
-Depending on your Bitbucket Server version (this being the reason I
-asked), there are a couple different fixes available:
+Isn't name-rev a wrong tool to find that information?  What is the
+answer desired by your application when two or more branches point
+at the same commit you are interested in?  Pick one at random?  An
+error saying it cannot decide where to place the snapshot?
 
-- Fork the repository. You don't need to _use_ the fork, but having a
-fork existing will trigger Bitbucket Server to disable auto GC and
-fully manage that itself. That includes managing both _concurrency_
-and _frequency_ of GC. This works on all versions of Bitbucket Server.
+I am wondering if you are looking for "symbolic-ref HEAD".
 
-- Run "git config gc.auto 0" in
-/opt/apps/atlassian/bitbucket-data/shared/data/repositories/68 to
-disable auto GC yourself. This may be preferable to forking the
-repository, which, in addition to disabling auto GC, also disables
-object pruning. However, you must be running at least Bitbucket Server
-4.6.0 for this approach to work. Otherwise auto GC will simply be
-reenabled the first time Bitbucket Server goes to trigger GC, when it
-detects that the repository has no forks.
-
-Assuming you're on 4.6.0 or newer, either approach should fix the
-issue. If you're on 4.5 or older, forking is the only viable approach
-unless you upgrade Bitbucket Server first.
-
-I also want to add that Bitbucket Server 5.x includes totally
-rewritten GC handling. 5.0.x automatically disables auto GC in all
-repositories and manages it explicitly, and 5.1.x fully removes use of
-"git gc" in favor of running relevant plumbing commands directly. We
-moved away from "git gc" specifically to avoid the "git reflog expire
---all", because there's no config setting that _fully disables_
-forking that process. By default our bare clones only have reflogs for
-pull request refs, and we've explicitly configured those to never
-expire, so all "git reflog expire --all" can do is use up I/O and,
-quite frequently, fail because refs are updated. Since we stopped
-running "git gc", we've not yet seen any GC failures on our internal
-Bitbucket Server clusters.
-
-Bitbucket Server 5.1.x also includes a new "gc.log" (not to be
-confused with the one Git itself writes) which retains a record of
-every GC-related process we run in each repository, and how long that
-process took to complete. That can be useful for getting clearer
-insight into both how often GC work is being done, and how long it's
-taking.
-
-Upgrading to 5.x can be a bit of an undertaking, since the major
-version brings API changes, so it's totally understandable that many
-organizations haven't upgraded yet. I'm just noting that these
-improvements are there for when such an upgrade becomes viable.
-
-Hope this helps!
-Bryan
-
->
-> I'd wager that each push sees that a GC is in order,
-> and doesn't notice that there is one already running.
->
-> - Andreas
->
-> --
-> "Totally trivial. Famous last words."
-> From: Linus Torvalds <torvalds@*.org>
-> Date: Fri, 22 Jan 2010 07:29:21 -0800
