@@ -2,89 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6437B202AB
-	for <e@80x24.org>; Thu,  6 Jul 2017 18:02:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C554202AB
+	for <e@80x24.org>; Thu,  6 Jul 2017 18:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751873AbdGFSCI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jul 2017 14:02:08 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:37159 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751057AbdGFSCH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jul 2017 14:02:07 -0400
-Received: by mail-it0-f43.google.com with SMTP id m84so11524539ita.0
-        for <git@vger.kernel.org>; Thu, 06 Jul 2017 11:02:07 -0700 (PDT)
+        id S1752093AbdGFSDi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Jul 2017 14:03:38 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:36375 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751057AbdGFSDh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Jul 2017 14:03:37 -0400
+Received: by mail-pg0-f45.google.com with SMTP id u62so4568690pgb.3
+        for <git@vger.kernel.org>; Thu, 06 Jul 2017 11:03:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vMdaws/Pk0fIH4dekKckmqNch+bgB1ORMOsMXkdyMiE=;
-        b=MaoC6XfCEq+zC5C2MpDP0C4gMSaqgL1AAAIeiX9CfRMLE5iLdXMadlB/iq47oANv/N
-         BBY/VgQz/ayALljuV3pkPrlmP27ruq13KyRValNrY/ztMSysKLRIINzqQ2+u+Tkh59Sa
-         rbnD1Bx8MNRpti11lPZszFBZWFxJPYaLPbrDghPN85aVicLrbeLKmPiMP7m5LD4UM76y
-         1LEIt3uARRqoM12bl1DXyLTvHbPNNEocRTfQIe5h94QtPMwDOKe9z8Gh5LYpR8ff7BPl
-         NvkZfpvwlyjfLCB1u5zwZwpsnLMy0wRFTogJIxBk8KS/jUkxw30Zvf9ydDbLjFQYkWlD
-         bgPA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HqCKSjsx3/gE0o05Qgnci43+jmIRfRDfyhg92v3ZSqY=;
+        b=GNrqN/NF9ki0kj3Ha77Qm/968HvreaZ6Yodnzv1brLswkxtxU8Xb3Ky1U7dTMXfReJ
+         9s3lns0SvHL8gVLmjekN6fcrA7S3hykFsCv2D3HLJx/UuliXULY3YyeLLZ9Gb9s+gdy5
+         wC0YfeX1DDQ8h1hIlX+gcvEcsE06HaxBg5P51k5yMztIWROHDmOx2wXaqKE2+v/QZrJQ
+         SdoR32rbSH6eiQEk4mEwRhoY9agS96Q7I0czV6wnevmwJhnIlbKzLMEWFPrZ0pbEwY62
+         2SIpvVVFmxF0PfJfyWyPXLynBmc96Ka+dZUc/ZIeIMfRGXXzYhkzhmBW4oo4Ps7QfUvE
+         VItg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vMdaws/Pk0fIH4dekKckmqNch+bgB1ORMOsMXkdyMiE=;
-        b=CqDoRFpudaQI9sI6Lg19NRtiA4r5nZPYuo/JDtLRfwJPQA2h4szsC6MwS7mW8Y+Fp0
-         LOgY8ueRPQnpmOdgngjt6+DS6qkz45ckVRTXoNs4BZO1j+qUydgaWsaNH5OTDiFiD2DB
-         uOxMN9X01BYBTNFbHGHAhhNN4SfXn1oCPCkrWdJOP/SzqTVciiYp+9JV7Din+GOC+zfK
-         1vm3KftSWAcIoMC0JkkbXzmcZ06Gl2nuUssuJ2s95GklS4gOu1URewasf9d/A2Nbjwk8
-         HKWDP20RJktUAbe+ipqvhI8In+eeczhR4L6AKE/C8nEUMaoK3ElLHBbL6sqVDxK8YZKy
-         6sKg==
-X-Gm-Message-State: AKS2vOxHh0ojFxionigRGDrAvBVdTTi+9v3wxvPH7fJN3h/FGOYwrUdJ
-        p1nR6EExjwqQfGXdcIs6PaXJQ+OhLo0uaCiG7w==
-X-Received: by 10.107.19.168 with SMTP id 40mr48040248iot.51.1499364126480;
- Thu, 06 Jul 2017 11:02:06 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HqCKSjsx3/gE0o05Qgnci43+jmIRfRDfyhg92v3ZSqY=;
+        b=Iu/6/QZfywozsAt7euVmFGfrfxOzZNwnGq83k6JTIit7lfOsZ2R6MTsvckLMUnF6GE
+         CJGRZMzCVVj9IFx6/cCv0PdbHHZf2/r6Ffq87zvxXTSBpszqc8rXBF1uSEH5ebVCqwNw
+         FP81CSuzwG4IiY53Hh7lIioPg7pZO4Fdmv91vhRaJeA8BXo81tEli8ORG0aFWN5K9ffR
+         hYtrxQG+ufxL1F2Gfcn1cVIkadyqOknyLpqSnHWgK2C2zmTLQ6KLuVYlIx/Q3hH1Cqdu
+         weZj26xijbdWPjqJBlM9uB3VLfBcND5/2k+gJEyp4bwUNBPEC2YNDa3i0glas5l98yf4
+         orkg==
+X-Gm-Message-State: AIVw112m0ymVIn2NQO6ts45reSURrsABL1ExSMqZ4pauIRZaCp5ks26I
+        t45nI+c7GIsCvg==
+X-Received: by 10.84.170.67 with SMTP id i61mr30460377plb.114.1499364216869;
+        Thu, 06 Jul 2017 11:03:36 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:f878:6796:f790:dc38])
+        by smtp.gmail.com with ESMTPSA id h90sm1610152pfh.133.2017.07.06.11.03.35
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 06 Jul 2017 11:03:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Todd Lewis <utoddl@email.unc.edu>
+Cc:     git@vger.kernel.org
+Subject: Re: bug report: dates on diff
+References: <b28bc109-b06f-0acf-960b-0b6761b0ee38@email.unc.edu>
+        <xmqqo9sxfscp.fsf@gitster.mtv.corp.google.com>
+        <53f97d43-6984-6a46-bde2-a8cf64e7bb9e@email.unc.edu>
+Date:   Thu, 06 Jul 2017 11:03:35 -0700
+In-Reply-To: <53f97d43-6984-6a46-bde2-a8cf64e7bb9e@email.unc.edu> (Todd
+        Lewis's message of "Thu, 6 Jul 2017 13:32:02 -0400")
+Message-ID: <xmqqbmoxfnns.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.196.153 with HTTP; Thu, 6 Jul 2017 11:02:05 -0700 (PDT)
-In-Reply-To: <87h8yptr7t.fsf@kyleam.com>
-References: <87k23ltsl6.fsf@kyleam.com> <xmqqfue9fqfe.fsf@gitster.mtv.corp.google.com>
- <87h8yptr7t.fsf@kyleam.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Thu, 6 Jul 2017 11:02:05 -0700
-Message-ID: <CAGyf7-HiwR+CDtDCvQ7q9Dd_TYfvN0133UOYTO65F=4qOHqy9w@mail.gmail.com>
-Subject: Re: name-rev: anchor pattern without --exclude?
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 6, 2017 at 10:23 AM, Kyle Meyer <kyle@kyleam.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->> Kyle Meyer <kyle@kyleam.com> writes:
->
->> What is the answer desired by your application when two or more
->> branches point at the same commit you are interested in?  Pick one at
->> random?  An error saying it cannot decide where to place the snapshot?
->
-> Our use of name-rev is just to get a friendly name for a hash.  If two
-> branches point to the same commit, we're fine with whatever decision
-> "git name-rev" makes; we just want to limit it to refs in the
-> "refs/heads/" namespace.
+Todd Lewis <utoddl@email.unc.edu> writes:
 
-If you don't need the ancestor traversals "git name-rev" provides,
-"git for-each-ref --count 1 --format "%(refname:short)" --points-at
-<hash> refs/heads/" might work. That only goes back to Git 2.7.0,
-though; still quite a ways off your 1.9 target. ("git branch
---points-at" does the same thing, I should add, and only for branches,
-but you can't directly limit its output like you can with
-"for-each-ref".. Perhaps that doesn't matter for your use case.) If
-you want names like "master~2", from your example, though,
-"--points-at" won't do what you need.
+> Trying not to sound snide, but, what's the point of "--date=" on commits if you
+> can't use it later? Granted, things always seem harder until you understand how
+> the work. Thanks again.
 
-Bryan
+You do not sound snide at all, at least to me ;-)
 
->
-> --
-> Kyle
+Imagine this scenario:
+
+ - Contributor A writes a change on 2017-07-01 and send it in to me
+ - Contributor B writes a change on 2017-07-03 and send it in to me
+ - I apply change from B on 2017-07-04 on 'master'
+ - I apply change from A on 2017-07-05 on 'master'
+ - You clone the resulting repository from me on 2017-07-06
+
+Now, you have at the tip of 'master' in your repository the commit
+that records the change by contributor A.
+
+And there are three times that are relevant to your tip of 'master'.
+
+ - When was the commit that sits at the tip of 'master' made?
+ - When was the change recorded in that commit made?
+ - When was the commit made at the tip of _your_ 'master'?
+
+and the answers are 2017-07-01, 2017-07-05 and 2017-07-06, respectively.
+They are called "committer", "author" and "reflog" timestamps.
+
+The 'master@{<time>}' syntax is about the reflog timestamp.  It
+never looks at the former two.  In general whenever you see <ref>@{...},
+that is talking about the information that is stored in "reflog",
+the record of when and in what order the <ref> in _your_ repository
+pointed at various objects.
+
+The "commit --date=<time>" is about tweaking the "author" timestamp
+the commit records.  It does not affect the "committer" timestamp.
+By definition (of what "reflog" is), it will not affect the reflog
+timestamp, because the reflog timestamp for a particular commit
+would be different across repositories.  I had A's commit on _my_
+master on 2017-07-05, but the time you had it on _your_ master was
+not until 2017-07-06.
+
+I think the best way to do this properly would be to extend the
+"<ref>^{...}" syntax so that we can say e.g.
+
+    git show "master^{#author-time > 2017-01-01}"
+
+to mean "traverse from the tip of 'master' and find the first commit
+that satisfies the given expression, "author-time > 2017-01-01", i.e.
+has author timestamp that is later than the specified date.  Which
+would be in line with the existing
+
+    git show "master^{/my commit message}"
+
+that means "traverse from the tip of 'master' and find the first
+commit that has 'my commit message' in the log message".
+
+Note that "git log --since=<time> --until=<time> master" would be
+the thing that is closest to what you would want that already
+exists, but that limits by the "committer" timestamp.  You _could_
+lie about both author and committer timestamp when building the
+backdated history and use this mechanism, but we have author and
+committer timestamps that are distinct for a reason, so it is a
+rather poor workaround.
+
+
