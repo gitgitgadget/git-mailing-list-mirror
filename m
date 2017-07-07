@@ -6,103 +6,82 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C896202B3
-	for <e@80x24.org>; Fri,  7 Jul 2017 03:15:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8219202AE
+	for <e@80x24.org>; Fri,  7 Jul 2017 05:19:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753325AbdGGDPM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Jul 2017 23:15:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33158 "HELO cloud.peff.net"
+        id S1750905AbdGGFT5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 01:19:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33224 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753296AbdGGDPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Jul 2017 23:15:11 -0400
-Received: (qmail 27158 invoked by uid 109); 7 Jul 2017 03:15:11 -0000
+        id S1750855AbdGGFT4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 01:19:56 -0400
+Received: (qmail 31849 invoked by uid 109); 7 Jul 2017 05:19:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 03:15:11 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 05:19:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19197 invoked by uid 111); 7 Jul 2017 03:15:21 -0000
+Received: (qmail 19662 invoked by uid 111); 7 Jul 2017 05:20:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 06 Jul 2017 23:15:21 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 01:20:06 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Jul 2017 23:15:09 -0400
-Date:   Thu, 6 Jul 2017 23:15:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jul 2017 01:19:54 -0400
+Date:   Fri, 7 Jul 2017 01:19:54 -0400
 From:   Jeff King <peff@peff.net>
-To:     Eric Wong <e@80x24.org>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
         Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
-        Sahil Dua <sahildua2305@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH 6/6] reflog-walk: stop using fake parents
-Message-ID: <20170707031508.kujsp6lsbgxdygvq@sigill.intra.peff.net>
+        Sahil Dua <sahildua2305@gmail.com>
+Subject: Re: [PATCH 2/6] t1414: document some reflog-walk oddities
+Message-ID: <20170707051954.rpej3taew6onv3oo@sigill.intra.peff.net>
 References: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
- <20170705080904.idlpm6ecslzfbm75@sigill.intra.peff.net>
- <20170707003239.GA13431@untitled>
- <20170707030224.4iubuzsz2qwdhgiw@sigill.intra.peff.net>
+ <20170705080036.qxzy7havcy72mvff@sigill.intra.peff.net>
+ <xmqqh8yqix7p.fsf@gitster.mtv.corp.google.com>
+ <20170705212757.3ygxiasbi2e7v27p@sigill.intra.peff.net>
+ <xmqqa84ih5ao.fsf@gitster.mtv.corp.google.com>
+ <20170706071606.doxirwm6cqx3duzg@sigill.intra.peff.net>
+ <xmqq1spth8qy.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170707030224.4iubuzsz2qwdhgiw@sigill.intra.peff.net>
+In-Reply-To: <xmqq1spth8qy.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 06, 2017 at 11:02:24PM -0400, Jeff King wrote:
+On Thu, Jul 06, 2017 at 08:42:45AM -0700, Junio C Hamano wrote:
 
-> On Fri, Jul 07, 2017 at 12:32:39AM +0000, Eric Wong wrote:
+> >> I somehow feel that the "showing all entries from HEAD and then
+> >> showing all from side" is simply a buggy behaviour.  I do not think
+> >> our users would terribly mind if we changed it later.  But I may be
+> >> missing the reason why (sometimes?) the sequential behaviour may be
+> >> useful.
+> >
+> > If we think it's buggy, we can fix it now. But I'm not convinced that
+> > sequential iteration is that bad. It's at least _simple_ and easy to
+> > explain.
 > 
-> > I'm not sure why, but this is causing t1414.8 failures on 32-bit
-> > x86 with the latest pu with Debian jessie (oldstable).
-> > 
-> > Reverting this (beafb2c62947a6d4a97b9c3baf99fe62ec8e830f) in pu
-> > seems to fix the test for me.
-> > 
-> > +Cc: Ramsay since he also had a 32-bit environment.
-> 
-> Thanks, I was able to reproduce with CFLAGS=-m32.
-> 
-> > --- expect	2017-07-07 00:30:57.796325232 +0000
-> > +++ actual	2017-07-07 00:30:57.796325232 +0000
-> > @@ -3,6 +3,8 @@
-> >  HEAD@{2} checkout: moving from master to side
-> >  HEAD@{3} commit: two
-> >  HEAD@{4} commit (initial): one
-> > -side@{0} commit (merge): Merge branch 'master' into side
-> > -side@{1} commit: three
-> > -side@{2} branch: Created from HEAD^
-> > +HEAD@{0} commit (merge): Merge branch 'master' into side
-> > +HEAD@{1} commit: three
-> > +HEAD@{2} checkout: moving from master to side
-> > +HEAD@{3} commit: two
-> > +HEAD@{4} commit (initial): one
-> 
-> That's quite an unexpected error (to show the HEAD reflog twice). Given
-> that it triggers with 32-bit builds, it's like there's some funny memory
-> error. And indeed, running it under valgrind shows a problem in
-> add_reflog_for_walk. I'll try to dig into it. Thanks for reporting.
+> Yes, I agree that sequential is easy to explain, but only when I
+> consider use of "log" family without "-n 30" or "--since 3.days".
+> It still is easy to explain---we show from one and then from the
+> other, but because we stop after showing 30 of them, and the first
+> one has more than that, you do not see any from the latter.
 
-Ah, it's a bug in the existing code. It inserts an entry into a string
-list and then frees the memory, but the string list wasn't asked to make
-a copy of the string. You can see the bug by running t1414 with
---valgrind even before any of the code changes (though note that you'll
-have to look at the "-v" output, since it's already marked as
-expect-failure).
+Ah, right, I didn't think of limiting like that. I agree that makes a
+strong argument in favor of the date-ordered queue.
 
-This fixes it:
+I suspect that "--since 3.days" is still quite buggy (even with a single
+reflog) because it checks commit timestamps and stops traversing when we
+go too bar back. But in a reflog, the commits may be totally out of
+order. I'm not sure what it should do. Either:
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index b7e489ad32..c1f61c524a 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -136,6 +136,7 @@ struct reflog_walk_info {
- void init_reflog_walk(struct reflog_walk_info **info)
- {
- 	*info = xcalloc(1, sizeof(struct reflog_walk_info));
-+	(*info)->complete_reflogs.strdup_strings = 1;
- }
- 
- int add_reflog_for_walk(struct reflog_walk_info *info,
+  1. During a reflog walk, --since and --until should respect reflog
+     timestamps instead of commit timestamps. You can already do
+     "--until" there by simply starting the traversal later, but there's
+     no way to cut it off with --since.
 
-I'll add that to the 'maint' portion of the series.
+  2. Limit commits shown by --since/--until as usual, but skip the "stop
+     traversing" optimization when we see too many "old" commits. I.e.,
+     omit a 4.days.ago commit, but keep walking to find other recent
+     commits.
 
 -Peff
