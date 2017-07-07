@@ -2,91 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SBL_CSS,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF558202A7
-	for <e@80x24.org>; Fri,  7 Jul 2017 15:15:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD4E2202A7
+	for <e@80x24.org>; Fri,  7 Jul 2017 15:24:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750882AbdGGPPl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 11:15:41 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35613 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750726AbdGGPPk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 11:15:40 -0400
-Received: by mail-pg0-f65.google.com with SMTP id d193so4453435pgc.2
-        for <git@vger.kernel.org>; Fri, 07 Jul 2017 08:15:40 -0700 (PDT)
+        id S1751059AbdGGPYZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 11:24:25 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:35716 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750974AbdGGPYY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 11:24:24 -0400
+Received: by mail-pf0-f171.google.com with SMTP id c73so18728237pfk.2
+        for <git@vger.kernel.org>; Fri, 07 Jul 2017 08:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=8UUp4uFhfL2W7ccphns3wAMyIyTO1xSOpNnR4gVMkzA=;
-        b=LATiF1bh+NYkhh4llZP6yQ2BHmiaXqdDcvrTR9jD0YdbPJd03FVWW/5UoMsUPPxuX/
-         SpDlgknkoxnABtJ/7z99QugT8utsGQsSc91tyEea3AOgjRVUbSJbDL1NkXSbYGiMHED8
-         q2G3HkkxWxl/UVsXinOKiV0xPP1xkSg4wR9b7VcAYXtOu05izN7fE9xcEFKYiceQYjhk
-         SknaSBKhxmka0OK5wYxE6aXpfTuNh2JMSGuMoJg2OvsCflkmsOjGCe8Ds9lsxsws3iAN
-         X1CPG5Jy9WruvzHR7bGx+Jq2fC+w85By+BNeo2kzvZqUq817aTJH4OchALe3elmS5fFn
-         gxsQ==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=sTlG3aaMOFXshMLMoyEFT4kT6hG3k3XR1J6NKMcLBzw=;
+        b=aOVbgu6ctBv0XQNJjzGSpKYMGFuCY8sBf6Hw5WXTj5u4J7dyaoBI2SbdmdOcp6CgIh
+         2A5dZ0O+CvPBO7T2RJlp2OHPKFUFREyVugP76ieHWVpfD3RrLe3vzwV4k4/Ps63ugi6A
+         lHMaKC0Lds+kntTgZbHseVDQmhP7vLCs2WwSpOkqpxawjbtjmGScOnkYq0Udq5SrfnWJ
+         Hjw42ZRJ9dZReBqY+Qbyr/XOxqv0j3New3zOtOJpXCcIKYjpaUTGARvOTR2dHMcmmydR
+         kV966Ct86+QcrOU74w7YDZ7izRz/A4OD6qWY70jG7Ejh2Bx1F00ZMvb1AdYbqmhY+PeU
+         sYfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
          :content-transfer-encoding;
-        bh=8UUp4uFhfL2W7ccphns3wAMyIyTO1xSOpNnR4gVMkzA=;
-        b=ZqiS9Fs2dL2GsUfQBE+YhL7JHHymY+XvlycOxERFGJMSKXTv8SuIvVOYrfzVGXCAEI
-         bYDQC3fuyi3/ZIujE49umB3AJGl6cLk2lNDsEkv/qGcm4wxz0Urm4BkmbtDAPcDP2+s7
-         G/lT3QsxJH4DgBqQdhN22DdAcGFiEbF+cmuS8pfxIDEQsR0CvvW+5SvAJyUSvJuGOUug
-         wORCKDrgHNwi1hnJ3p2FFEaPFmOQgDEmB5Gba8fvxYAGbncvUPKDmXozglSYOVYBp6At
-         2hHfDWYhIfl5KC1akYjHm3iQ4i2RMlC65DtvHrX/ZWaCrcp0YIvpKFIniJHb6bbNj+i2
-         WnJQ==
-X-Gm-Message-State: AIVw112JJc8QTD1IRzTlCTBgQk9pU/htJdY5u6oqIe8SUk5pKX9hPt1m
-        g85TLO68GbcX8w==
-X-Received: by 10.99.121.1 with SMTP id u1mr2098182pgc.20.1499440534552;
-        Fri, 07 Jul 2017 08:15:34 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:ac1c:ce85:2088:9c06])
-        by smtp.gmail.com with ESMTPSA id s123sm7513448pgs.2.2017.07.07.08.15.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 07 Jul 2017 08:15:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Stefan Haller <lists@haller-berlin.de>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Matt McCutchen <matt@mattmccutchen.net>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Mike Rappazzo <rappazzo@gmail.com>,
-        Francesco Mazzoli <f@mazzo.li>
-Subject: Re: [PATCH] push: disable lazy --force-with-lease by default
-References: <xmqq37a9fl8a.fsf_-_@gitster.mtv.corp.google.com>
-        <1n8sh3u.1lsabkd1pislrwM%lists@haller-berlin.de>
-        <8760f4bmig.fsf@gmail.com>
-Date:   Fri, 07 Jul 2017 08:15:32 -0700
-In-Reply-To: <8760f4bmig.fsf@gmail.com> (=?utf-8?B?IsOGdmFyIEFybmZqw7Zy?=
- =?utf-8?B?w7A=?= Bjarmason"'s message
-        of "Fri, 07 Jul 2017 11:54:15 +0200")
-Message-ID: <xmqqlgo0cm7f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        bh=sTlG3aaMOFXshMLMoyEFT4kT6hG3k3XR1J6NKMcLBzw=;
+        b=t0wsyt9X4jPjjKyPCiq0f0pVKOgHqmXS+GdE0rbvz0L5XJ5ejj1NDpysYtg/WYxrEz
+         7XnvAcmyZQ87nbjhll4TytspNJtW3GCvZMcw6w3RE/XjUxNR4Juli3WHa2D1pJEI/XMF
+         gTA812W2r4J+Z30cHHMHr2vBV3xlfez3zoPfvXreu2KEsfup+k9Q6jNoiCKLZ0k5iq0p
+         5w0pzf2kwM+RdoEbW/xNFtHEdicEgBYXrjmL/y/shWAhXiHocgDpbLAiJaCtOutTeUPm
+         kV75nDXG2nqmQprojytGqOh3scTSZydmxgWNp4keCKeHfyV6RgthX91OOIWa230CvSGP
+         UpLA==
+X-Gm-Message-State: AIVw113rD2wXAru9aZAfx9CFKGxHFIU4vGOdpwxd60s+DKu1omf0cx0Z
+        g7amZ0Iw8vAAt/KznqU=
+X-Received: by 10.99.121.133 with SMTP id u127mr2067496pgc.31.1499441063387;
+        Fri, 07 Jul 2017 08:24:23 -0700 (PDT)
+Received: from unique-pc ([182.73.109.146])
+        by smtp.googlemail.com with ESMTPSA id 83sm9453513pfa.113.2017.07.07.08.24.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 07 Jul 2017 08:24:23 -0700 (PDT)
+Message-ID: <1499441062.6829.1.camel@gmail.com>
+Subject: Re: [PATCH] hooks: replace irrelevant hook sample
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Date:   Fri, 07 Jul 2017 20:54:22 +0530
+In-Reply-To: <xmqqwp7kcmoi.fsf@gitster.mtv.corp.google.com>
+References: <20170702112728.15757-1-kaarticsivaraam91196@gmail.com>
+         <20170705165114.20662-1-kaarticsivaraam91196@gmail.com>
+         <xmqqr2xuhde1.fsf@gitster.mtv.corp.google.com>
+         <1499428393.1849.3.camel@gmail.com>
+         <xmqqwp7kcmoi.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Fri, 2017-07-07 at 08:05 -0700, Junio C Hamano wrote:
+> That is because I wear multiple hats, because I try to help in
+> different ways, and because open source is not a battle to see whose
+> idea is more right, but is a cooperative process to find a better
+> solution together.
+> 
+Thanks for helping and being kind!
 
-> Which is why I think we should take Francesco's patch (with fixes from
-> feedback), instead of Junio's.
+> As a fellow contributor, I do not think that removing the hint that
+> is commented out, which is meant to be helpful to users while in
+> their editor and which will be removed after the editor finishes
+> anyway, is a useful enough example to keep the now otherwise useless
+> sample hook.  But as the maintainer, I can see that you are still
+> making sincere efforts to come up with a useful example and improve
+> the end-user experience, and more importantly, I haven't heard from
+> other people what they think---the only thing I have are different
+> opinions from two people.  That is why I am not deciding and telling
+> you to go find another area to hack in.
+> 
+> At the same time, I found that your implementation of the idea, i.e.
+> removal of the commented-out hint, can be improved.  With an
+> improved implementation of the proposed solution, it may have a
+> better chance to be supported by others on the list, and equally
+> importantly, if it turns out that other people do support what this
+> patch tries to do, i.e. keep the sample hook alive by replacing the
+> now useless examples with this one, we would have a better
+> implementation of it.  And that is something I can help with, while
+> I, the maintainer, is waiting.
+> 
+So, I'll improve it and of course wait for any replies. BTW, thanks for
+clearing off the little confusion I had. I'm not used to these
+multiple-hat replies from single person. Thanks for exposing me to it.
 
-The patch in this discussion is not meant as a replacement for the
-one from Francesco.  It was meant as a companion patch.  
+> Oh, by the way, what the maintainer is waiting for is not just "me
+> too"s; this is not exactly a "having more people wins" democracy.
+Got it.
 
-As I view the form of the option that relies on the stability of
-remote-tracking branches strictly worse than the honest "--force"
-that loudly advertises itself as dangerous (as opposed to being
-advertised as a safer option, when it isn't), I consider the change
-to require users to opt into relying on remote-tracking branches as
-a prerequisite before we can recommend the form as a safer version
-of "--force".
+-- 
+Quote: “The most valuable person on any team is the person who makes
+everyone else on the team more valuable”
+
+Regards,
+Kaartic
