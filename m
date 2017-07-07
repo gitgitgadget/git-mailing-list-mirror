@@ -2,122 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E83ED202A7
-	for <e@80x24.org>; Fri,  7 Jul 2017 16:10:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA2A5202B1
+	for <e@80x24.org>; Fri,  7 Jul 2017 16:41:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751897AbdGGQIM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 12:08:12 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33008 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751809AbdGGQHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 12:07:42 -0400
-Received: by mail-pf0-f193.google.com with SMTP id e199so5154363pfh.0
-        for <git@vger.kernel.org>; Fri, 07 Jul 2017 09:07:41 -0700 (PDT)
+        id S1752115AbdGGQlw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 12:41:52 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33902 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751099AbdGGQlu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 12:41:50 -0400
+Received: by mail-pf0-f196.google.com with SMTP id c24so5255684pfe.1
+        for <git@vger.kernel.org>; Fri, 07 Jul 2017 09:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=9okjQvURh3BIbWwboKb6C7nggMUrmpquA0zfp5kZl7Q=;
-        b=Gdo0ZhFlmr6YzOr24HdkiUfblbQL/OQaVwn7ARy9gfpBxgKa52mYlBc/1fNrpob2Ga
-         7Ee44hGpwfru7ZjnARxKmgwMb2YgJbDw8Y1lcbABdlai1leLgUZXsJWDhrgrBHSS8Bkt
-         0iG66fkqrI4EX4YZJFrCoKt+hzjyuzT0tJ1jscgOLvn3CFNJczFLObnRfrfNgsqRlSN4
-         x75d7Itm+iWE5k4WA1XFp5LmnLqu99/MjQU7EoF8ors9oD0+Z0yGvLDZZ2VYl1EEN2ZR
-         gwmHTfSv3VUi9gi3f36sVlh6ye2hJOMrEqZwwGXXDKktrlaI+DmrqbJ9XMyza9sVL0Ke
-         5HVA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=QvQlUCtw+cAmXMSGoDNuiRDbV++4Hjr5NlZudt5jN5o=;
+        b=rKAzACRp2Ny+kiHq83pTmVmGT/vIFDSOw7evbC+z++HnZVMlIFNQ7qf/ijxkdHeFXh
+         6iypTZx3L2z+rEGCDAolg1eZsmnLEFQ64aggKKnGY6vnKIU9zF6tJnxkB9EZnTKV0Qq4
+         /jO2op1uvYoSWXXKTUWAuwQFjlfSmXG2Zfy5SZKAPkmzGzJFPJSWqPvNCvqebFCtYzSl
+         /MVP7eMuoP31b3+xGKu2p7Pho5suXPBGd8ZjKYM4Jos+mAU2B47/C4TiWEXFUY/hfpMO
+         fwFUq0cNZ01tBTtf+ejnhIS09LB+VUZb591C1wQeyFlZzIhxVOLXqVdNnTg+0mujdUC/
+         xRVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=9okjQvURh3BIbWwboKb6C7nggMUrmpquA0zfp5kZl7Q=;
-        b=K/Ic19jVwXFffvf6GK2E+GulWiSj1XSgVWaumyJgjzxowGxMkxOoKVSlanlWuUybQc
-         kvkGY4SD3Z5pirOPLNIc/K/P+PSaO1DPlFvCieuycoZlwxRx0YcgSPk9rAKNS8h3Lmdo
-         h3okuJzan1Vyph7LjgIEke/Mq+zQ1pfMSk47KoPzIP4BVUQuuPt3A4DpAPew7qDeCZ/X
-         Guzt0ukWLQfoaO/yQ1isBxjGXAOVbAPsChFjSYBY+tU+UrGNNl38v0rbAjelxnwQ+uCC
-         adtZaj5znFbzeNTe1Ku/WZk+XR1gt+kLpmH0lgTTFj9frGSozBNsERRx14w1IEWm2hFe
-         /mSw==
-X-Gm-Message-State: AIVw111GNevzmk2h/OaJKpqtMocWpglw+qObH8tdBj6j1ZcFzB4Oz0OX
-        MdZ8av3cH4goTQ==
-X-Received: by 10.99.113.76 with SMTP id b12mr2167947pgn.114.1499443661281;
-        Fri, 07 Jul 2017 09:07:41 -0700 (PDT)
-Received: from localhost.localdomain ([117.243.19.92])
-        by smtp.gmail.com with ESMTPSA id 10sm7778603pfo.134.2017.07.07.09.07.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Jul 2017 09:07:40 -0700 (PDT)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org
-Subject: [PATCH 2/2] hooks: add signature using "interpret-trailers"
-Date:   Fri,  7 Jul 2017 21:37:40 +0530
-Message-Id: <20170707160740.9748-2-kaarticsivaraam91196@gmail.com>
-X-Mailer: git-send-email 2.13.2.879.g2ab69f31a.dirty
-In-Reply-To: <20170707160740.9748-1-kaarticsivaraam91196@gmail.com>
-References: <1499441062.6829.1.camel@gmail.com>
- <20170707160740.9748-1-kaarticsivaraam91196@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=QvQlUCtw+cAmXMSGoDNuiRDbV++4Hjr5NlZudt5jN5o=;
+        b=szk1+mqwFwBpvDq4rz/TQrYA7Nl42BvZ9xyPPSStbrMVgW9/XrhrbTlG2ifJg14ZoT
+         Ko3ps3xxXYcBlLmIfBbW/dSa+4zl4nF7KIR1Ci6nGivNfzvAuhuoly21eBiK9LIQuvG7
+         R4xayUvs4AewmqMbO8tCmWOBScikup/aJPxtmI5u1ll3FovRlU6dwSvakTzTSFk+otya
+         VAimSuNZnBM+t/NNej0DNILbpquMdAYLGnsPFPj/12p1qDXv4HzKfsZQLQouSBmJFKlj
+         im7OvG07KxiZ/J/7NXsKEL9+z9sLXW6GKfUv9l4FqhDM8FT9vFWWQ/ZwAfmtGxBQVBFM
+         A7KA==
+X-Gm-Message-State: AIVw112PJ4sJMjbgDhdVvbmLyMbe0l9v5DrcgV8WW24r45N32Fv2ALq1
+        NPHB5pAXtG5aNjDOboc=
+X-Received: by 10.84.198.3 with SMTP id o3mr4019917pld.84.1499445709655;
+        Fri, 07 Jul 2017 09:41:49 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:ac1c:ce85:2088:9c06])
+        by smtp.gmail.com with ESMTPSA id x5sm6029176pgq.18.2017.07.07.09.41.46
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 07 Jul 2017 09:41:46 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
+Subject: Re: [PATCH] t5534: fix misleading grep invocation
+References: <936f43ce2c993e545deaee5e196c018933375214.1499254650.git.johannes.schindelin@gmx.de>
+        <xmqq1spukfyw.fsf@gitster.mtv.corp.google.com>
+        <22feab0a-ca75-2aea-1ec9-2f71fe40c9d0@grubix.eu>
+        <alpine.DEB.2.21.1.1707071259550.84669@virtualbox>
+Date:   Fri, 07 Jul 2017 09:41:45 -0700
+In-Reply-To: <alpine.DEB.2.21.1.1707071259550.84669@virtualbox> (Johannes
+        Schindelin's message of "Fri, 7 Jul 2017 13:13:06 +0200 (CEST)")
+Message-ID: <xmqq8tk0ci7q.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The sample hook to prepare the commit message before
-a commit allows users to opt-in to add the signature
-to the commit message. The signature is added at a place
-that isn't consistent with the "-s" option of "git commit".
-Further, it could go out of view in certain cases.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Add the signature in a way similar to "-s" option of
-"git commit" using git's interpret-trailers command.
+> Yes, there are grep versions that behave differently... how did you guess?
+>
+> I am in the middle of an extended investigation trying to assess how
+> feasible it would be to use a native Win32 port of BusyBox (started by
+> long-time Git contributor Nguyễn Thái Ngọc Duy) in Git for Windows to
+> execute the many, many remaining Unix shell scripts that are a core part
+> of Git (including crucial functionality such as bisect, rebase, stash and
+> submodule, for which we suffer portability and performance problems).
 
-It works well in all cases except when the user invokes
-"git commit" without any arguments. In that case manually
-add a new line after the first line to ensure it's consistent
-with the output of "-s" option.
+I've long thought that BusyBox was primarily about size and not
+about performance, but I can imagine that it would be a big win to
+be able to run things like "mkdir" and "rm" without fork/exec, as it
+is likely to be extermely more expensive than preparing to call and
+actually making system calls mkdir(2), unlink(2), etc.
 
-While at it, name the input parameters to improve readability
-of script.
+Interesting.  I learned a new thing today, but apparently that
+FEATURE_SH_NOFORK was not a very new development.  I do not think
+anybody is crazy enough to attempt making Git a nofork applet,
+though ;-)
 
-Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
----
- templates/hooks--prepare-commit-msg.sample | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-index 5a638ebda..7495078cb 100755
---- a/templates/hooks--prepare-commit-msg.sample
-+++ b/templates/hooks--prepare-commit-msg.sample
-@@ -21,7 +21,12 @@
- # The third example adds a Signed-off-by line to the message, that can
- # still be edited.  This is rarely a good idea.
- 
--sed -e '/^. Please enter the commit message /,/^#$/d' "$1" >'.sed-output.temp' && mv '.sed-output.temp' "$1"
-+COMMIT_MSG_FILE=$1
-+COMMIT_SOURCE=$2
-+SHA1=$3
-+
-+SED_OUTPUT_TEMP='.sed-output-temp'
-+sed -e '/^. Please enter the commit message /,/^#$/d' "$COMMIT_MSG_FILE" >"$SED_OUTPUT_TEMP" && mv "$SED_OUTPUT_TEMP" "$1"
- 
- # case "$2,$3" in
- # ,|template,)
-@@ -32,5 +37,14 @@ sed -e '/^. Please enter the commit message /,/^#$/d' "$1" >'.sed-output.temp' &
- #  *) ;;
- # esac
- 
-+# TEMP_FILE='.template-temp'
- # SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
--# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
-+# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
-+# if test -z "$COMMIT_SOURCE"
-+# then
-+#   {
-+#     echo
-+#     cat "$COMMIT_MSG_FILE"
-+#   } >"$TEMP_FILE"
-+#   mv "$TEMP_FILE" "$COMMIT_MSG_FILE"
-+# fi
--- 
-2.13.2.879.g2ab69f31a.dirty
 
