@@ -6,98 +6,111 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2ECE202AC
-	for <e@80x24.org>; Fri,  7 Jul 2017 08:36:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3177F202AC
+	for <e@80x24.org>; Fri,  7 Jul 2017 08:37:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751833AbdGGIgk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 04:36:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33352 "HELO cloud.peff.net"
+        id S1751865AbdGGIhO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 04:37:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33372 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751757AbdGGIgj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 04:36:39 -0400
-Received: (qmail 7106 invoked by uid 109); 7 Jul 2017 08:36:38 -0000
+        id S1750950AbdGGIhN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 04:37:13 -0400
+Received: (qmail 7156 invoked by uid 109); 7 Jul 2017 08:37:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 08:36:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 08:37:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20462 invoked by uid 111); 7 Jul 2017 08:36:49 -0000
+Received: (qmail 20495 invoked by uid 111); 7 Jul 2017 08:37:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 04:36:49 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 04:37:23 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jul 2017 04:36:37 -0400
-Date:   Fri, 7 Jul 2017 04:36:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jul 2017 04:37:11 -0400
+Date:   Fri, 7 Jul 2017 04:37:11 -0400
 From:   Jeff King <peff@peff.net>
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>,
         git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>,
         Eric Wong <e@80x24.org>
-Subject: [PATCH v2 0/4] reflog-walk fixes for maint
-Message-ID: <20170707083636.kjsr5ry3237paeiv@sigill.intra.peff.net>
-References: <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
- <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
- <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
- <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
- <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
- <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
- <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
- <20170704195806.ndbykl776t3vigya@genre.crustytoothpaste.net>
- <20170704212408.xy6jciggoueq6qsu@sigill.intra.peff.net>
- <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
+Subject: [PATCH v2 1/4] reflog-walk: skip over double-null oid due to HEAD
+ rename
+Message-ID: <20170707083710.35efbobjysrti3w2@sigill.intra.peff.net>
+References: <20170707083636.kjsr5ry3237paeiv@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
+In-Reply-To: <20170707083636.kjsr5ry3237paeiv@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 05, 2017 at 03:55:08AM -0400, Jeff King wrote:
+Since 39ee4c6c2f (branch: record creation of renamed branch
+in HEAD's log, 2017-02-20), a rename on the currently
+checked out branch will create two entries in the HEAD
+reflog: one where the branch goes away (switching to the
+null oid), and one where it comes back (switching away from
+the null oid).
 
-> The first patch is my original small fix with an extra test. I think
-> that would be appropriate for 'maint'. Its behavior still has some
-> quirks, but it avoids the confusion that you experienced and has a low
-> risk of breaking anything else.
-> 
-> The rest of it replaces the fake-parent thing with a more
-> straight-forward iteration over the reflogs (i.e., a cleanup of the
-> further patches I've been posting). After digging into it and especially
-> after writing the new tests, I think I've convinced myself that this is
-> the right way forward.
+This confuses the reflog-walk code. When walking backwards,
+it first sees the null oid in the "old" field of the second
+entry. Thanks to the "root commit" logic added by 71abeb753f
+(reflog: continue walking the reflog past root commits,
+2016-06-03), we keep looking for the next entry by scanning
+the "new" field from the previous entry. But that field is
+also null! We need to go just a tiny bit further, and look
+at its "old" field. But with the current code, we decide the
+reflog has nothing else to show and just give up. To the
+user this looks like the reflog was truncated by the rename
+operation, when in fact those entries are still there.
 
-Here's an updated version of the bug-fix patch, along with the fix for
-the problem that Eric noticed, and some other problems I noticed while
-fixing that one. So I've split these immediate fixes for maint off into
-their own series.
+This patch does the absolute minimal fix, which is to look
+back that one extra level and keep traversing.
 
-These are based on maint itself, rather than Kyle's original commit that
-introduces the double-null reflog, since some of the bugs came later in
-the v2.13 cycle (if we really wanted to, we could split it again into
-two more series, but I don't think it's worth the trouble).
+The resulting behavior may not be the _best_ thing to do in
+the long run (for example, we show both reflog entries each
+with the same commit id), but it's a simple way to fix the
+problem without risking further regressions.
 
-  [1/4]: reflog-walk: skip over double-null oid due to HEAD rename
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ reflog-walk.c     |  2 ++
+ t/t3200-branch.sh | 11 +++++++++++
+ 2 files changed, 13 insertions(+)
 
-    This is the fix for the pseudo-truncation in v2.13, and is the same
-    as the previous round.
+diff --git a/reflog-walk.c b/reflog-walk.c
+index c63eb1a3fd..f7ffd1caa3 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -259,6 +259,8 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
+ 		/* a root commit, but there are still more entries to show */
+ 		reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
+ 		logobj = parse_object(reflog->noid.hash);
++		if (!logobj)
++			logobj = parse_object(reflog->ooid.hash);
+ 	}
+ 
+ 	if (!logobj || logobj->type != OBJ_COMMIT) {
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 48d152b9a9..dd37ac47c5 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -162,6 +162,17 @@ test_expect_success 'git branch -M baz bam should add entries to .git/logs/HEAD'
+ 	grep "^0\{40\}.*$msg$" .git/logs/HEAD
+ '
+ 
++test_expect_success 'resulting reflog can be shown by log -g' '
++	oid=$(git rev-parse HEAD) &&
++	cat >expect <<-EOF &&
++	HEAD@{0} $oid $msg
++	HEAD@{1} $oid $msg
++	HEAD@{2} $oid checkout: moving from foo to baz
++	EOF
++	git log -g --format="%gd %H %gs" -3 HEAD >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'git branch -M baz bam should succeed when baz is checked out as linked working tree' '
+ 	git checkout master &&
+ 	git worktree add -b baz bazdir &&
+-- 
+2.13.2.1000.g8590c1af5d
 
-  [2/4]: reflog-walk: duplicate strings in complete_reflogs list
-
-    This fixes Eric's bug, and is the same as what I showed earlier.
-    It's a triggerable use-after-free, which is why I think it's
-    important to get it into maint.
-
-  [3/4]: reflog-walk: don't free reflogs added to cache
-
-    This is another use-after-free, though it's slightly harder to
-    trigger.
-
-  [4/4]: reflog-walk: include all fields when freeing complete_reflogs
-
-    This one is an optional cleanup, but worth doing, I think.
-
-
- reflog-walk.c          | 33 +++++++++++++++++++++------------
- t/t1411-reflog-show.sh | 10 ++++++++++
- t/t3200-branch.sh      | 11 +++++++++++
- 3 files changed, 42 insertions(+), 12 deletions(-)
-
--Peff
