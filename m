@@ -6,107 +6,226 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B45A202AC
-	for <e@80x24.org>; Fri,  7 Jul 2017 09:05:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83E0E202AC
+	for <e@80x24.org>; Fri,  7 Jul 2017 09:06:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752092AbdGGJFK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 05:05:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33436 "HELO cloud.peff.net"
+        id S1752021AbdGGJGN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 05:06:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33454 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751833AbdGGJFK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 05:05:10 -0400
-Received: (qmail 8256 invoked by uid 109); 7 Jul 2017 09:05:09 -0000
+        id S1751782AbdGGJGM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 05:06:12 -0400
+Received: (qmail 8319 invoked by uid 109); 7 Jul 2017 09:06:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 09:05:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 09:06:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20678 invoked by uid 111); 7 Jul 2017 09:05:20 -0000
+Received: (qmail 20711 invoked by uid 111); 7 Jul 2017 09:06:22 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 05:05:20 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 05:06:22 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jul 2017 05:05:07 -0400
-Date:   Fri, 7 Jul 2017 05:05:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jul 2017 05:06:10 -0400
+Date:   Fri, 7 Jul 2017 05:06:10 -0400
 From:   Jeff King <peff@peff.net>
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>,
         git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>,
         Eric Wong <e@80x24.org>
-Subject: [PATCH v2 0/7] fixing reflog-walk oddities
-Message-ID: <20170707090507.ko2ygry7j4zv7t3s@sigill.intra.peff.net>
-References: <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
- <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
- <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
- <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
- <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
- <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
- <20170704195806.ndbykl776t3vigya@genre.crustytoothpaste.net>
- <20170704212408.xy6jciggoueq6qsu@sigill.intra.peff.net>
- <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
- <20170707083636.kjsr5ry3237paeiv@sigill.intra.peff.net>
+Subject: [PATCH v2 1/7] t1414: document some reflog-walk oddities
+Message-ID: <20170707090610.x2vodxgc7yr6o5pi@sigill.intra.peff.net>
+References: <20170707090507.ko2ygry7j4zv7t3s@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170707083636.kjsr5ry3237paeiv@sigill.intra.peff.net>
+In-Reply-To: <20170707090507.ko2ygry7j4zv7t3s@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 07, 2017 at 04:36:36AM -0400, Jeff King wrote:
+Since its inception, the general strategy of the reflog-walk
+code has been to start with the tip commit for the ref, and
+as we traverse replace each commit's parent pointers with
+fake parents pointing to the previous reflog entry.
 
-> Here's an updated version of the bug-fix patch, along with the fix for
-> the problem that Eric noticed, and some other problems I noticed while
-> fixing that one. So I've split these immediate fixes for maint off into
-> their own series.
+This lets us traverse the reflog as if it were a real
+history, but it has some user-visible oddities. Namely:
 
-And here's the parent-less walk for master. This must be applied on a
-merge of the bug-fix series to the current master. I didn't do it all on
-"maint" because a lot of it depends on the timestamp_t work which is
-only in master. And trying to use "unsigned long" and merge that up to
-master correctly is error-prone. It not only doesn't create textual
-conflicts, but the semantic conflicts it generates are really subtle and
-only break on certain systems.
+  1. The fake parents are used for commit selection and
+     display. So for example, "--merges" or "--no-merges"
+     are not useful, because the history appears as a linear
+     string of commits. Likewise, pathspec limiting is based
+     on the diff between adjacent entries, not the changes
+     actually introduced by a commit.
 
-This should address all of the comments on v1, including the
-multi-reflog iteration order and the --since/--until bits. There are a
-few new fixes, too.
+     These are often the same (e.g., because the entry was
+     just running "git commit" and the adjacent entry _is_
+     the true parent), but it may not be in several common
+     cases. For instance, using "git reset" to jump around
+     history, or "git checkout" to move HEAD.
 
-  [v2 1/7]: t1414: document some reflog-walk oddities
+  2. We reverse-map each commit back to its reflog. So when
+     it comes time to show commit X, we say "a-ha, we added
+     X because it was at the tip of the 'foo' reflog, so
+     let's show the foo reflog". But this leads to nonsense
+     results when you ask to traverse multiple reflogs: if
+     two reflogs have the same tip commit, we only map back
+     to one of them.  Instead, we should show both.
 
-    The big change is that this expects the interleaved order in the
-    multi-reflog test. There are a few updated comments and some
-    adaptations to cover some bits from the bug-fix series.
+  3. If the tip of the reflog and the ref tip disagree on
+     the current value, we show the ref tip but give no
+     indication of the value in the reflog.  This situation
+     isn't supposed to happen (since any ref update should
+     touch the reflog). But if it does, given that the
+     requested operation is to show the reflog, it makes
+     sense to prefer that.
 
-  [v2 2/7]: revision: disallow reflog walking with revs->limited
+This commit adds a new script with several expect_failure
+tests to demonstrate the problems.  This could be part of
+the existing t1411, but it's a bit easier to start from a
+fresh state, where we know exactly what will be in the log.
 
-    This is new, and just cleanly disallows some already-broken cases.
+Since the new multiple-reflog tests are checking the actual
+output, we can drop the "make sure we don't segfault" tests
+from t1411, which are a strict subset of what we're doing
+here.
 
-  [v2 3/7]: log: do not free parents when walking reflog
-  [v2 4/7]: get_revision_1(): replace do-while with an early return
-  [v2 5/7]: rev-list: check reflog_info before showing usage
-
-    These ones are the same as before.
-
-  [v2 6/7]: reflog-walk: stop using fake parents
-
-    The big change here is the interleaved output. This is largely what
-    I showed earlier, but with a few cleanups.
-
-  [v2 7/7]: reflog-walk: apply --since/--until to reflog dates
-
-    This is new, and is a cleaned-up version of what I showed earlier.
-    See the commit message for some discussion. These options _do_
-    actually work sanely after 6/7, but I think the semantics given here
-    are probably more useful and what people would expect.
-
- builtin/log.c          |   4 +-
- builtin/rev-list.c     |   3 +-
- reflog-walk.c          | 152 ++++++++++++++++++++++---------------------------
- reflog-walk.h          |   7 ++-
- revision.c             |  57 ++++++++++++-------
- t/t1411-reflog-show.sh |  10 ----
- t/t1414-reflog-walk.sh | 135 +++++++++++++++++++++++++++++++++++++++++++
- t/t3200-branch.sh      |   3 +-
- 8 files changed, 249 insertions(+), 122 deletions(-)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t1411-reflog-show.sh |  10 -----
+ t/t1414-reflog-walk.sh | 105 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 105 insertions(+), 10 deletions(-)
  create mode 100755 t/t1414-reflog-walk.sh
 
--Peff
+diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
+index b9cb76654b..6ac7734d79 100755
+--- a/t/t1411-reflog-show.sh
++++ b/t/t1411-reflog-show.sh
+@@ -171,14 +171,4 @@ test_expect_success 'reflog exists works' '
+ 	! git reflog exists refs/heads/nonexistent
+ '
+ 
+-# The behavior with two reflogs is buggy and the output is in flux; for now
+-# we're just checking that the program works at all without segfaulting.
+-test_expect_success 'showing multiple reflogs works' '
+-	git log -g HEAD HEAD >actual
+-'
+-
+-test_expect_success 'showing multiple reflogs with an old date' '
+-	git log -g HEAD@{1979-01-01} HEAD >actual
+-'
+-
+ test_done
+diff --git a/t/t1414-reflog-walk.sh b/t/t1414-reflog-walk.sh
+new file mode 100755
+index 0000000000..6426829352
+--- /dev/null
++++ b/t/t1414-reflog-walk.sh
+@@ -0,0 +1,105 @@
++#!/bin/sh
++
++test_description='various tests of reflog walk (log -g) behavior'
++. ./test-lib.sh
++
++test_expect_success 'set up some reflog entries' '
++	test_commit one &&
++	test_commit two &&
++	git checkout -b side HEAD^ &&
++	test_commit three &&
++	git merge --no-commit master &&
++	echo evil-merge-content >>one.t &&
++	test_tick &&
++	git commit --no-edit -a
++'
++
++do_walk () {
++	git log -g --format="%gd %gs" "$@"
++}
++
++sq="'"
++test_expect_success 'set up expected reflog' '
++	cat >expect.all <<-EOF
++	HEAD@{0} commit (merge): Merge branch ${sq}master${sq} into side
++	HEAD@{1} commit: three
++	HEAD@{2} checkout: moving from master to side
++	HEAD@{3} commit: two
++	HEAD@{4} commit (initial): one
++	EOF
++'
++
++test_expect_success 'reflog walk shows expected logs' '
++	do_walk >actual &&
++	test_cmp expect.all actual
++'
++
++test_expect_failure 'reflog can limit with --no-merges' '
++	grep -v merge expect.all >expect &&
++	do_walk --no-merges >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure 'reflog can limit with pathspecs' '
++	grep two expect.all >expect &&
++	do_walk -- two.t >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure 'pathspec limiting handles merges' '
++	# we pick up:
++	#   - the initial commit of one
++	#   - the checkout back to commit one
++	#   - the evil merge which touched one
++	sed -n "1p;3p;5p" expect.all >expect &&
++	do_walk -- one.t >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure '--parents shows true parents' '
++	# convert newlines to spaces
++	echo $(git rev-parse HEAD HEAD^1 HEAD^2) >expect &&
++	git rev-list -g --parents -1 HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure 'walking multiple reflogs shows all' '
++	# We expect to see all entries for all reflogs, but interleaved by
++	# date, with order no the command line breaking ties. We
++	# can use "sort" on the separate lists to generate this,
++	# but note two tricks:
++	#
++	#   1. We use "{" as the delimiter, which lets us skip to the reflog
++	#      date specifier as our second field, and then our "-n" numeric
++	#      sort ignores the bits after the timestamp.
++	#
++	#   2. POSIX leaves undefined whether this is a stable sort or not. So
++	#      we use "-k 1" to ensure that we see HEAD before master before
++	#      side when breaking ties.
++	{
++		do_walk --date=unix HEAD &&
++		do_walk --date=unix side &&
++		do_walk --date=unix master
++	} >expect.raw &&
++	sort -t "{" -k 2nr -k 1 <expect.raw >expect &&
++	do_walk --date=unix HEAD master side >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'date-limiting does not interfere with other logs' '
++	do_walk HEAD@{1979-01-01} HEAD >actual &&
++	test_cmp expect.all actual
++'
++
++test_expect_failure 'walk prefers reflog to ref tip' '
++	head=$(git rev-parse HEAD) &&
++	one=$(git rev-parse one) &&
++	ident="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE" &&
++	echo "$head $one $ident	broken reflog entry" >>.git/logs/HEAD &&
++
++	echo $one >expect &&
++	git log -g --format=%H -1 >actual &&
++	test_cmp expect actual
++'
++
++test_done
+-- 
+2.13.2.1000.g8590c1af5d
+
