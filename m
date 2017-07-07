@@ -2,74 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86DFD202AC
-	for <e@80x24.org>; Fri,  7 Jul 2017 09:24:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 608F4202AC
+	for <e@80x24.org>; Fri,  7 Jul 2017 09:32:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751659AbdGGJYg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 05:24:36 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33586 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750903AbdGGJYf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 05:24:35 -0400
-Received: (qmail 9152 invoked by uid 109); 7 Jul 2017 09:24:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 09:24:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20897 invoked by uid 111); 7 Jul 2017 09:24:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 05:24:45 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jul 2017 05:24:33 -0400
-Date:   Fri, 7 Jul 2017 05:24:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>,
-        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v2 6/7] reflog-walk: stop using fake parents
-Message-ID: <20170707092432.u7dz3zniprp4zvkr@sigill.intra.peff.net>
-References: <20170707090507.ko2ygry7j4zv7t3s@sigill.intra.peff.net>
- <20170707091407.nm4pm3bdvx6alohs@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170707091407.nm4pm3bdvx6alohs@sigill.intra.peff.net>
+        id S1750904AbdGGJcD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 05:32:03 -0400
+Received: from dd28836.kasserver.com ([85.13.147.76]:54909 "EHLO
+        dd28836.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750882AbdGGJcC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 05:32:02 -0400
+X-Greylist: delayed 466 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Jul 2017 05:32:02 EDT
+Received: from [192.168.42.152] (dslb-178-008-096-147.178.008.pools.vodafone-ip.de [178.8.96.147])
+        by dd28836.kasserver.com (Postfix) with ESMTPSA id 7067930024D;
+        Fri,  7 Jul 2017 11:24:15 +0200 (CEST)
+To:     gitster@pobox.com (Junio C Hamano), git@vger.kernel.org (git)
+Cc:     avarab@gmail.com (=?ISO-8859-1?Q?=C6var_Arnfj=F6r=3F_Bjarmason?=),
+        peff@peff.net (Jeff King),
+        matt@mattmccutchen.net (Matt McCutchen),
+        jacob.keller@gmail.com (Jacob Keller),
+        rappazzo@gmail.com (Mike Rappazzo),
+        f@mazzo.li (Francesco Mazzoli)
+In-Reply-To: <xmqq37a9fl8a.fsf_-_@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH] push: disable lazy --force-with-lease by default
+From:   lists@haller-berlin.de (Stefan Haller)
+Date:   Fri, 7 Jul 2017 11:24:15 +0200
+Message-ID: <1n8sh3u.1lsabkd1pislrwM%lists@haller-berlin.de>
+User-Agent: MacSOUP/2.8.6b1 (Mac OS 10.12.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 07, 2017 at 05:14:07AM -0400, Jeff King wrote:
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> @@ -3132,7 +3132,10 @@ static struct commit *get_revision_1(struct rev_info *revs)
->  			if (revs->max_age != -1 &&
->  			    (commit->date < revs->max_age))
->  				continue;
-> -			if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
-> +
-> +			if (revs->reflog_info)
-> +				try_to_simplify_commit(revs, commit);
-> +			else if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
->  				if (!revs->ignore_missing_links)
->  					die("Failed to traverse parents of commit %s",
->  						oid_to_hex(&commit->object.oid));
+> It turns out that some people use third-party tools that fetch from
+> remote and update the remote-tracking branches behind users' back,
+> defeating the safety relying on the stability of the remote-tracking
+> branches.
 
-There's one other subtle change from v1 here. In my original, we called
-try_to_simplify_commit() much later, and then we had to check whether it
-marked the commit as TREESAME. That felt really hacky to me, and the
-reason is because I was using the function wrong. The intent is for
-try_to_simplify to be called earlier (i.e., here), when we start looking
-at the commit's parents. And then the TREESAME flag it sets is later
-picked up by get_commit_action(), which is called by simplify_commit(),
-which is used later in get_revision_1().
+Third-party tools are not the only problem. They may make the problem
+more likely to occur, but it can also happen without them. (See below.)
 
-So by calling try_to_simplify here, where it would normally be called
-for a non-reflog walk, that's all we have to do. I don't think the
-original patch had any visible bugs, but this way is much cleaner and
-more future-proof.
+> Let's disable the form that relies on the stability of remote-tracking
+> branches by default, and allow users who _know_ their remote-tracking
+> branches are stable to enable it with a configuration variable.
 
--Peff
+I'm wondering if people who claim they know they are safe really do.
+Elsewhere in the other thread somebody said "I only ever explicitly
+fetch, so I know I'm safe". Are you sure?
+
+Consider this example:
+
+$ git checkout the-branch-i-am-collaborating-on-with-my-collegue
+$ git pull # make sure I have their latest work
+$ git rebase -i ... # do some history rewriting
+# OK, so as we need to force-push anyway, let's take the opportunity and
+# rebase onto the latest master:
+$ git fetch # get latest master
+$ git rebase origin/master
+$ git push --force-with-lease
+
+This is a very common thing to do at my workplace. And it's unsafe,
+because the git fetch may move the remote-tracking branch of the branch
+I'm working on.
+
+To make this safe, I guess you'd have to replace "git fetch" with
+something like
+$ git fetch refs/heads/master:refs/remotes/origin/master
+
+Personally I have never used this form of fetch myself, and I'd be
+surprised if any of my coworkers even know it exists.
+
+So know you could decide that _any_ fetch is unsafe, and never use it;
+only use git pull. You are still not safe:
+
+$ git checkout the-branch-i-am-collaborating-on-with-my-collegue
+$ git pull
+$ git rebase -i
+# Now another collegue walks in and asks me to look at the regression
+# they just introduced on some other branch, so I do
+$ git checkout that-other-branch
+$ git pull
+$ <try to debug their problem>
+$ <can't find it either, giving up, shrug>
+# go back to what I was doing:
+$ git checkout the-branch-i-am-collaborating-on-with-my-collegue
+$ git push --force-with-lease
+
+Again, the git pull may have moved the remote-tracking branch of the
+branch that I want to force-push. Again, it could be solved by given an
+explicit refspec to git pull, but few people ever do this in my
+experience, and I certainly never want to.
+
+What I'm getting at is that there's a lot of things that you have to
+remember to not do in order to make --force-with-lease without parameter
+a useful tool.
+
+
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
