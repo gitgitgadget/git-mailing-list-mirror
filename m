@@ -2,90 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D92E202A7
-	for <e@80x24.org>; Fri,  7 Jul 2017 15:53:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E505C202A7
+	for <e@80x24.org>; Fri,  7 Jul 2017 15:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751023AbdGGPxm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 11:53:42 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:33816 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750848AbdGGPxl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 11:53:41 -0400
-Received: by mail-pf0-f169.google.com with SMTP id q85so19072218pfq.1
-        for <git@vger.kernel.org>; Fri, 07 Jul 2017 08:53:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Iw+SpIa/3wE/xNUUnlBILkL8koabbDT/Nb03II3bNRg=;
-        b=LV2YYwFA2f4ZbBtSqHRvyAG7S1RbbQAmiRKF+IcR11eWPnHxcWxKW2BCblCF1DZ2cv
-         Eicg8bmCT16TE8zEkP8vaDJssQg9u34AOXPORf2ktgd82ykuGvVeAHfJ2DFq9WUuHOht
-         4yAG+Z66v3irnBu4nuLMqH56UAvRPkFsOOPpQnpUfptfRVNFXLTGmJyfa9rwYZFJpZHn
-         /8wFbudiNucx02pKIOAG4JcHYn9rYucb12vRhRM4tJWWiNm7jhOp7kFoMjCbSkgT0dfD
-         Uc19Kc42416OZ4vHmG2pLnlWKO7TD+as6m0S5XQcbTp7lZ3dZeAb/cEMi6XX87nL2HlB
-         Rfpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Iw+SpIa/3wE/xNUUnlBILkL8koabbDT/Nb03II3bNRg=;
-        b=osEFOzlpZRuLO9jdCIIHhiolrDpBpzurmFJnmn3C4wGtAhBjRZbGditEmq6Z7T4a8F
-         5+5SflfuKkbm0Hqa5lqLwNgQcBy78HFckWl9mUqa4g6cWu6jJdPbw6dWGxElnX/zpA7I
-         AXQxSokPYJ9EfqjRiQeeJhSuWRAOX96Axiy24PjkhC2KoCD2AnxTuGh5qmFpMi3rjYxT
-         40DcZkR2VbUarhqctEYqaqeLTQ3n1BBKeiIke3XBsp1MZRdGBehCxnucZFb7viT1rcIO
-         tf/IeYsw8vFw5soempu5MmvAZoztGBIzf4EZoQZB6/4KozvnlV3JnHYCdPTDBW4zzQu9
-         TJSg==
-X-Gm-Message-State: AIVw112oPGauuU5p9TyHrxvn/foj3xh4rSE7dpR5r8PqIFBdVs4ws/u/
-        ntgJKT2JZpZKUQ==
-X-Received: by 10.99.119.194 with SMTP id s185mr2097670pgc.256.1499442820722;
-        Fri, 07 Jul 2017 08:53:40 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:ac1c:ce85:2088:9c06])
-        by smtp.gmail.com with ESMTPSA id t67sm7910286pfj.98.2017.07.07.08.53.39
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 07 Jul 2017 08:53:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bug during checkout of remote branch and uncommited changes ?
-References: <20170707123727.dgd5rub2ycrg525y@ltop.local>
-Date:   Fri, 07 Jul 2017 08:53:39 -0700
-In-Reply-To: <20170707123727.dgd5rub2ycrg525y@ltop.local> (Luc Van
-        Oostenryck's message of "Fri, 7 Jul 2017 14:37:28 +0200")
-Message-ID: <xmqqd19cckfw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751100AbdGGPyJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 11:54:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59152 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751034AbdGGPyJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 11:54:09 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BB3357AF07;
+        Fri,  7 Jul 2017 11:54:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=MDTbK7Sg3pSiSFUL6V89Pu/nNeQ=; b=tW/B5V
+        YuH8lT95k/P7RwFmsJpfeQbGoNo5x+Yv7hiaiygu0l4QWuWfBpVZEE/PFO4zCW15
+        qc5YUBkbXcfxPerc/QEKRZTvDBnLJuJKNROyQEB6jNLmKvWeQfh0SbYAfCqzdTA6
+        Fc5Kmk4s0NX3sg1tkyKM0704pJ2615tC6ZmHo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B27087AF05;
+        Fri,  7 Jul 2017 11:54:07 -0400 (EDT)
+Received: from localhost (unknown [24.60.167.92])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 21A307AF04;
+        Fri,  7 Jul 2017 11:54:07 -0400 (EDT)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Sahil Dua <sahildua2305@gmail.com>, Eric Wong <e@80x24.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 6/7] reflog-walk: stop using fake parents
+In-Reply-To: <20170707091407.nm4pm3bdvx6alohs@sigill.intra.peff.net>
+References: <20170707090507.ko2ygry7j4zv7t3s@sigill.intra.peff.net> <20170707091407.nm4pm3bdvx6alohs@sigill.intra.peff.net>
+Date:   Fri, 07 Jul 2017 11:54:05 -0400
+Message-ID: <87van48cpu.fsf@kyleam.com>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 8228D944-632C-11E7-9F6E-EFB41968708C-24757444!pb-smtp1.pobox.com
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=MDTbK7Sg3pSiSFUL6V89Pu/nNeQ=; b=AQxCFDU7/5NidE8zFGyMT+R5zFFwFIjee8xInmOQ+eQdJ5y29razIB8sY0xtp5PIx/H2Gp8uJ/8jmoK1YISjJUopZMt7s6qlObnpXYYy9A3+mOo9M0E1IxmcOyqpKMXakxh3F94hMEXztlyCvafwYCjAxN5DWcluuVUlcDUXE7w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luc Van Oostenryck <luc.vanoostenryck@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> 	$ git reset --hard
-> 	patching file afile.c
-
-Is that a message from something?  It does not sound like something
-"git reset --hard" would say.
-
-> 	$ git co <abranch>
-> 	fatal: Not tracking: ambiguous information for ref refs/remotes/<aremote>/<abranch>
+>      Prior to this commit, we show both entries with
+>      identical reflog messages. After this commit, we show
+>      only the "comes back" entry. See the update in t3200
+>      which demonstrates this.
 >
-> What can be ambiguous here?
+>      Arguably either is fine, as the whole double-entry
+>      thing is a bit hacky in the first place. And until a
+>      recent fix, we truncated the traversal in such a case
+>      anyway, which was _definitely_ wrong.
 
-I think the message "Not tracking" is given when there is a remote
-other than <aremote> that also has <abranch>.  Between the time you
-got the message and the time you tried to checkout <abranch>, did
-anything happen to cause the second attempt succeed?
+Yeah, I agree that the double-entry thing is a bit hacky and only
+showing the "comes back" entry makes sense.
 
-> Strangely, trying a second time, succeed:
-> 	$ git co <abranch>
-> 	Previous HEAD position was ...
-> 	Switched to branch '<abranch>'
->
-> -- Luc Van Oostenryck
+And with this change, I believe that the display of a rename event will
+be the same for HEAD's log and the renamed branch's log, despite the
+underlying entries having a different representation.
+
+-- 
+Kyle
