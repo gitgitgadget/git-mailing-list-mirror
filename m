@@ -2,99 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6647C20357
-	for <e@80x24.org>; Fri,  7 Jul 2017 21:07:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2748320357
+	for <e@80x24.org>; Fri,  7 Jul 2017 21:22:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752235AbdGGVHk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 17:07:40 -0400
-Received: from mail-ua0-f182.google.com ([209.85.217.182]:32945 "EHLO
-        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750941AbdGGVHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 17:07:39 -0400
-Received: by mail-ua0-f182.google.com with SMTP id w19so27486085uac.0
-        for <git@vger.kernel.org>; Fri, 07 Jul 2017 14:07:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=DLwCopP9udGaMGlI1hOnGGc0oC5qOAaQeFnkzrZDDxM=;
-        b=Y/wXEYhL67RNWcB1qj0hMSi0h7JEljhUV37QB7U9pzFMLxKS9BS7UDwCsbiT662nC5
-         00dyeDl7oLF8b2ShyV5A+TLedR6yWwTJ75XACa7uErp9okrT8tNAgPz588HdDthdoxtg
-         06hXHzzRR1gS3pY4tHldclZCT+iL/372kdLs9EmoCR3bYd+TldLnTiw+cTJG5IBz4bN1
-         rTavP0YiZnAP49F4ORBDJcgLBO2y3W3DfFiwm8d3nZvL0liIi4Hl2Cgtf/3kS8nvi4yc
-         yeDJvzNcOPjg5wqnXJ8egDWhtpP95lQF+yG6m6OXqzZYy6KRmuJSvkbM6Li0yxw1zAZh
-         X2Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=DLwCopP9udGaMGlI1hOnGGc0oC5qOAaQeFnkzrZDDxM=;
-        b=Tyx7XsnW01ze9QExGr+gq6IGZ2DKNYwRVQeGs5/co3S7tTSJbY62hvzmrrrDeZW27J
-         ewcN2O8Sv1/1wcZexJMrymVqhDhcmLrUtWT4j+Cz/18z4yGGVU9gOcsj/f9FE8i5L4NY
-         miQ5rGfcOkwo7a9/HEpIcPjG5kMol3dwqktJo3X0sJ/yOsYvJsGlapjwHs2eWO31fImI
-         NrsXBlsrEbSQgEQWPPTV3ysj60SxVYom2qbU/utqwX32Jert6TKT+fDgjeQcpqT82fgC
-         bdLrnoDUNqFWFClvKtk/lURCqQfSdPRZyfsPazET6gA1znmlWjphEgyu1LhyCsdUjfRc
-         OCzg==
-X-Gm-Message-State: AIVw110Oo9ryV5ecK/G+7K5o2mzO1SvjDv5+DL9TNLqCmFZdtCGmES45
-        LpaEWaYGyScAvfXaUbO3cm2/orFk4A==
-X-Received: by 10.159.48.156 with SMTP id j28mr1847199uab.42.1499461658531;
- Fri, 07 Jul 2017 14:07:38 -0700 (PDT)
+        id S1751809AbdGGVWJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 17:22:09 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:55714 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750941AbdGGVWI (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 7 Jul 2017 17:22:08 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 26BFB280AD;
+        Fri,  7 Jul 2017 21:22:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1499462527;
+        bh=hn4+XUOVkQy9yRIxTPt6uqj65HMpS4Nzab2FK9+88kQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ROgbXHHl/d1ye0XGtUkgg9m3bzOMVzbdFNt4dq8Ckzp6g6dOwa1FrfhZ6bnZYPUEl
+         AXtxjpzclkqIECe9dp8o5rh/ykKpJqRDHFtLHH+nTcodD/owHufjnBC2m2SsETnZpr
+         tLe8QtgqtWJo457kEBD+waU1rtjqmpM4BHUzWuvE5xiEB7zUUL9atP3g8Tmu3BKcHe
+         VPDqui4Zoz/G+qg1d3s/Vyp5BcQWi7UCkJlJubm7fjdIwE9T7Lk1CfRybFoyQXHK4T
+         9rswXRfCF0KlTyRs/pDAD/qLs9wSzx1XgC3OM153iKwA1FLL+pkBRh22EfbjWd4mAZ
+         15e4cvaMtvoAkoi9Ypx4vEWTpZEW5K9P3dRjDFGIGCwtQ/pCbWacObb8m0BJp8AOsh
+         uCAihr0iUQXHP3QmT3bXBDemXqQZ4vasY4jOUK/+CEhtxBKnWkqvYdSwv5FWCd8pen
+         6zB2axej8Z91If98F8SKnY6oja+1gqfuhB0d0HSloA9BOFE//A/
+Date:   Fri, 7 Jul 2017 21:22:01 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 11/12] sha1_name: convert get_sha1* to get_oid*
+Message-ID: <20170707212201.ofdgjaips2tw3koy@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Stefan Beller <stefanbeller@gmail.com>, Jeff King <peff@peff.net>
+References: <20170703185533.51530-1-sandals@crustytoothpaste.net>
+ <20170703185533.51530-12-sandals@crustytoothpaste.net>
+ <CAGZ79kYWKUPhfMvg2N+1h6b49d3Bqw_3Moes9XscjkmXAumz8Q@mail.gmail.com>
+ <xmqq4luqiv9g.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.176.91.2 with HTTP; Fri, 7 Jul 2017 14:07:18 -0700 (PDT)
-From:   Martin Langhoff <martin.langhoff@gmail.com>
-Date:   Fri, 7 Jul 2017 17:07:18 -0400
-Message-ID: <CACPiFC+Lc+ewmPe6u=dUo4rJRcgLqRfG-EG+vudg8mapnH-d9w@mail.gmail.com>
-Subject: Dropping a merge from history -- rebase or filter-branch or ...?
-To:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="rz35kajygomsxxs5"
+Content-Disposition: inline
+In-Reply-To: <xmqq4luqiv9g.fsf@gitster.mtv.corp.google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.11.0-1-amd64)
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi git-folk!
 
-long time no see! I'm trying to do one of those "actually, please
-don't" things that turn out to be needed in the field.
+--rz35kajygomsxxs5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I need to open our next "for release" development branch from our
-master, but without a couple of disruptive feature branches, which
-have been merged into master already. We develop in github, so I'll
-call them Pull Requests (PRs) as gh does.
+On Wed, Jul 05, 2017 at 11:38:51AM -0700, Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>=20
+> >> @@ -636,7 +636,7 @@ static int get_sha1_basic(const char *str, int len=
+, unsigned char *sha1,
+> >>                 int detached;
+> >>
+> >>                 if (interpret_nth_prior_checkout(str, len, &buf) > 0) {
+> >> -                       detached =3D (buf.len =3D=3D 40 && !get_sha1_h=
+ex(buf.buf, sha1));
+> >> +                       detached =3D (!get_oid_hex(buf.buf, oid));
+> >
+> > omitting the length check here?
+>=20
+> Good eyes.  It probably should check with the possible oid lengths.
 
-So I'd like to run a filter-branch or git-rebase --interactive
---preserve-merges that drops some PRs. Problem is, they don't work!
+I'll reroll.  This may have been a bad conflict resolution on my part.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-filter-branch --commit-filter is fantastic, and gives me all the
-control I want... except that it will "skip the commit", but still use
-the trees in the later commits, so the code changes brought in by
-those commits I wanted to avoid will be there. I think the docs/help
-that discuss  "skip commit" should have a big warning there!
+--rz35kajygomsxxs5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-rebase --interactive --preserve-merges  --keep-empty made a complete
-hash of things. Nonsense conflicts all over on the merge commits; I
-think it re-ran the merge without picking up the conflict resolutions
-we had applied.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.21 (GNU/Linux)
 
-The changes we want to avoid are fairly localized -- a specific module
-got refactored in 3 stages. The rest of the history should replay
-cleanly. I don't want to delete the module.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAllf+3gACgkQv1NdgR9S
+9osphw//VeHUoQp5NwgCQzfLN4r8IRYwOxAJVDfyyZOWAHa7x73CaYsO/2T9ftEk
+ujJ16JxyadO2fqVJdSM2+0GeVAxRp2hShRS4yvhm1k8qV3VQNFiMrIcXEjwAk9z7
+iotTbfXbv/TdUrUM7uNfRcq/3hYz/8IwmE/LZmhc+pnOjmwf4+eXrW5CO/lZEUK4
+pgtXfAduEcH7OZJ3oAhj5urzs48zvSoCPW3L2Tz5wgA97Ub7F5X50hsXgEArH3z9
+JEHRf7QxPGzCG6rLU2KqK54ttakdiE/tzaRMeo81X8eiah7a2bQEuryAsAKtI0Yz
+k4M2zPhai8t+4BXFMjc59QjNzEKZboqgr8Ou7NITiHA+UvvAe+FQO7i98Y6QrcdB
+xFoltGICguQC5l6abwXFB7FDrTHyKQLlbNgKLzlVYfZYw4QEyekYd2JQoIgbgp43
+A+nYh+DL0JlYI3AkbcJPEL3ANY8TTgRxWbrAbE/n1xXfjGaUaOS/kScX/5Q2UgDR
+BDZGPnf8jgLs3rkoZZ46G8G2ab+dJp7O9DsrC3GLGQE8qQHINJnT4VojWLKQsiiA
+ycJGHxfbGQsTYHk8r79nA8Kq/zAv4Ys/LvoeaX0VogiaE4/fMdDSa4gqW2WenV9F
+me89n7iCRk4KEAhungmpBKbPYG3c6WIJuwyN1WUqMaVfYN/9lts=
+=D4hU
+-----END PGP SIGNATURE-----
 
-My fallback is a manually constructed revert. While still an option, I
-think it's better to have a clean stat without sizable feature-branch
-reverts.
-
-cheers,
-
-
-
-m
--- 
- martin.langhoff@gmail.com
- - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
- - don't be distracted        ~  http://github.com/martin-langhoff
-   by shiny stuff
+--rz35kajygomsxxs5--
