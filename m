@@ -2,149 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E65C202AC
-	for <e@80x24.org>; Fri,  7 Jul 2017 09:54:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEE76202AC
+	for <e@80x24.org>; Fri,  7 Jul 2017 11:13:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750883AbdGGJyU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 05:54:20 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:36383 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752123AbdGGJyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 05:54:19 -0400
-Received: by mail-wr0-f177.google.com with SMTP id c11so39361249wrc.3
-        for <git@vger.kernel.org>; Fri, 07 Jul 2017 02:54:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=asF2greNkwvrzziGRsd39MAhBz6qZm48SYbPFPra96s=;
-        b=Zdga6o/L3DF8k63U38bBZP4WJwNuyO8gA8Cfu8t7p55AV07kIjIjNL8JXZOKSdISfK
-         ujOBxmlvjl9UpRgWG8zDJ+s8+0+EbNiS0OMW0ZHu42bYh/I2+gxHpfabx2Fs+2HcKPK/
-         mK+BWtwgzMH08rYZOMV9qeE9X8muW/3miW9K+X/Pm5NQKfIVPrJYnAT6tghBxzMGY9mS
-         HITy07BbSUylALbXcWL3LyCBXI9HomiCXFvXVbPAHwiePLq+InsOOxdI//Pn96EqQ5Fu
-         4HDRKvM7iCHstT50OFT8ratEFYF0nD5KIMxwWNvOEhA0SIjtPH3D4XGYoVzB9y9mmDBt
-         U2sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=asF2greNkwvrzziGRsd39MAhBz6qZm48SYbPFPra96s=;
-        b=OkGKWF3J8+xZrz9UHnhM+oWbstnrtRsj1wlJD6+USK2Y+YRo4dchUAXs92C6bo2RFP
-         8U9e4gUK5u3f7uy5dHhn057t+yIdm2Bvb3wsoNWOW+S+xRNOuivCsO6CwAw3SHaCWU4A
-         buEmlgD5UgPdtM9ApmvPn9/PaMY99NuuhmBm5Jh8Kh400bezubDbC7ug7q+kc6V0bS7x
-         TQMrdf80v4EVFhXzSh/SGHvJI//8mLVg4BJufJAZz43f2DuS0ZeQFxlbQgepYhaMXINc
-         or+xSgJktjrz9rGVDPUzkPLN8J7MN1EWccfQJum1Gu/W5v4jZyoZC7UhuOObBBlX8uxd
-         AD/w==
-X-Gm-Message-State: AIVw112oST6k6bURljrA/+kEjsTd9qWsJ77nNdBgX0WKTK1rI2dXIX5y
-        BuIy/CAKuSXSAQ==
-X-Received: by 10.223.182.170 with SMTP id j42mr270701wre.87.1499421258053;
-        Fri, 07 Jul 2017 02:54:18 -0700 (PDT)
-Received: from snth ([5.57.20.48])
-        by smtp.gmail.com with ESMTPSA id o131sm3139097wmd.26.2017.07.07.02.54.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Jul 2017 02:54:16 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dTPxn-0005ac-TK; Fri, 07 Jul 2017 11:54:15 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Stefan Haller <lists@haller-berlin.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Matt McCutchen <matt@mattmccutchen.net>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Mike Rappazzo <rappazzo@gmail.com>,
-        Francesco Mazzoli <f@mazzo.li>
-Subject: Re: [PATCH] push: disable lazy --force-with-lease by default
-References: <xmqq37a9fl8a.fsf_-_@gitster.mtv.corp.google.com> <1n8sh3u.1lsabkd1pislrwM%lists@haller-berlin.de>
-User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <1n8sh3u.1lsabkd1pislrwM%lists@haller-berlin.de>
-Date:   Fri, 07 Jul 2017 11:54:15 +0200
-Message-ID: <8760f4bmig.fsf@gmail.com>
+        id S1750984AbdGGLNN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 07:13:13 -0400
+Received: from mout.gmx.net ([212.227.15.15]:65322 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750768AbdGGLNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 07:13:12 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M3igT-1dkpYQ1H6H-00rJRh; Fri, 07
+ Jul 2017 13:13:07 +0200
+Date:   Fri, 7 Jul 2017 13:13:06 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Michael J Gruber <git@grubix.eu>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] t5534: fix misleading grep invocation
+In-Reply-To: <22feab0a-ca75-2aea-1ec9-2f71fe40c9d0@grubix.eu>
+Message-ID: <alpine.DEB.2.21.1.1707071259550.84669@virtualbox>
+References: <936f43ce2c993e545deaee5e196c018933375214.1499254650.git.johannes.schindelin@gmx.de> <xmqq1spukfyw.fsf@gitster.mtv.corp.google.com> <22feab0a-ca75-2aea-1ec9-2f71fe40c9d0@grubix.eu>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323329-403794951-1499425987=:84669"
+X-Provags-ID: V03:K0:Wik7KnocOyrlgPHGgcC4Gnx4gpUpkbfGtN8TCC2XJMJ89Lk7VIE
+ knLXnij8NvKs1OhZTkkGv0zT5fiVfeh2xldcYH0SU0YKkjZQK8dypcgScNfU16E4jCPb6+2
+ Xwq8JfOFBEa4ThQPJTlK2C+wkl/dD8va6Nb6q19IXeuPpLMdFJZch4GgKiGfe7J31V3XjKj
+ ZQVHQ+AcaoPhxF1gNxgQA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1FJCSyXRW/8=:/1a24bwF99P1FG51KTm7+x
+ PweYGVWVPVKxIAI6cYiTt2XRW6eIetu0ca9PhoQNM6kNyJzUeqfNbhIqY+7O2rl2slShRcvKS
+ aSXol5gtDwEd7/4BztmjtNRT7S42ZAWROsGC3l/ST5/QnKKJ70WJl4VZ9miGA8sxHxlPdGtx7
+ NQJdhGNsvNh0OWgCm+kGE+95G6R6nERaAG0Fum1DPemAPO4SdHR/ya6yD5rAlC/ZEmJHVD7ak
+ U3hyS7XF004Nxlq8KWniG9xQqUWCLq54x5sWYjxdFZFB4LoAmoYYjtl11GfFhABeiMZU3/pom
+ aZOJ6oEuJaCPThLAGngiw+yP0f6sstCtjszBKSvkITKLOws6No4sWAKjFSEFIke/E2Vol9IFR
+ /7VKF9tGRWufH8RsmTMWsr5UqF0fcP37I9T29iTM3+SNImnPz31k+/okulXJcfOEn7CR3JA0s
+ +WAfEUOLIbjZW1yGwpLV3USWtQ2NkH9ZoKGcH243oPLhDlAlNG46GXHqGM9q1CYSHVI1hkVNh
+ rnEuVnfM6ZkJTDlmSpIUy1Wcle58QwFHwL0UwiaUZfzYUd/tRH0wmAn5WaYR1ulDgcgBBM/Fb
+ M2N7aaqgz0RWf8wqfJyvgqIjS+3NThieGZRZZ94xiuROQryvALUISnFsroTiTBAVEIjcB5wQL
+ /9PFInWCjidt7ZLJQILO6fXVJCkiMSL2z13DjB95yajwT/VjKJh25Bc1yJqWoPqh7XN9aKQn5
+ CmJf8LSFS7jhg+XYIzXw34P4oy7WxDJA4QEGR5wEbipoPYos5y4zlJWMMgxrDABsI0/MBiwmd
+ BunGL2+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, Jul 07 2017, Stefan Haller jotted:
+--8323329-403794951-1499425987=:84669
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Junio C Hamano <gitster@pobox.com> wrote:
+Hi Michael,
+
+On Thu, 6 Jul 2017, Michael J Gruber wrote:
+
+> Junio C Hamano venit, vidit, dixit 05.07.2017 18:26:
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >=20
+> >> It seems to be a little-known feature of `grep` (and it certainly came
+> >> as a surprise to this here developer who believed to know the Unix too=
+ls
+> >> pretty well) that multiple patterns can be passed in the same
+> >> command-line argument simply by separating them by newlines. Watch, an=
+d
+> >> learn:
+> >>
+> >> =09$ printf '1\n2\n3\n' | grep "$(printf '1\n3\n')"
+> >> =091
+> >> =093
+> >>
+> >> That behavior also extends to patterns passed via `-e`, and it is not
+> >> modified by passing the option `-E` (but trying this with -P issues th=
+e
+> >> error "grep: the -P option only supports a single pattern").
+> >>
+> >> It seems that there are more old Unix hands who are surprised by this
+> >> behavior, as grep invocations of the form
+> >>
+> >> =09grep "$(git rev-parse A B) C" file
+> >>
+> >> were introduced in a85b377d041 (push: the beginning of "git push
+> >> --signed", 2014-09-12), and later faithfully copy-edited in b9459019bb=
+b
+> >> (push: heed user.signingkey for signed pushes, 2014-10-22).
+> >>
+> >> Please note that the output of `git rev-parse A B` separates the objec=
+t
+> >> IDs via *newlines*, not via spaces, and those newlines are preserved
+> >> because the interpolation is enclosed in double quotes.
+> >>
+> >> As a consequence, these tests try to validate that the file contains
+> >> either A's object ID, or B's object ID followed by C, or both. Clearly=
+,
+> >> however, what the test wanted to see is that there is a line that
+> >> contains all of them.
+> >>
+> >> This is clearly unintended, and the grep invocations in question reall=
+y
+> >> match too many lines.
 >
->> It turns out that some people use third-party tools that fetch from
->> remote and update the remote-tracking branches behind users' back,
->> defeating the safety relying on the stability of the remote-tracking
->> branches.
+> [...]
 >
-> Third-party tools are not the only problem. They may make the problem
-> more likely to occur, but it can also happen without them. (See below.)
->
->> Let's disable the form that relies on the stability of remote-tracking
->> branches by default, and allow users who _know_ their remote-tracking
->> branches are stable to enable it with a configuration variable.
->
-> I'm wondering if people who claim they know they are safe really do.
-> Elsewhere in the other thread somebody said "I only ever explicitly
-> fetch, so I know I'm safe". Are you sure?
->
-> Consider this example:
+> How did you spot this? Are there grep versions that behave differently?
 
-Both of your examples explicitly fetch. Yes this could be confusing to
-someone who doesn't understand that "git fetch" doesn't just fetch the
-current remote branch, but all branches.
+Yes, there are grep versions that behave differently... how did you guess?
 
-> What I'm getting at is that there's a lot of things that you have to
-> remember to not do in order to make --force-with-lease without parameter
-> a useful tool.
+I am in the middle of an extended investigation trying to assess how
+feasible it would be to use a native Win32 port of BusyBox (started by
+long-time Git contributor Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy) in Git=
+ for Windows to
+execute the many, many remaining Unix shell scripts that are a core part
+of Git (including crucial functionality such as bisect, rebase, stash and
+submodule, for which we suffer portability and performance problems).
 
-Fully agreed, it's confusing, but it's less shitty than --force.
+And it is BusyBox' grep that does not handle newlines in the pattern
+argument to split it into two alternative patterns.
 
-The concern I have with Junio's patch above (but I like Francesco
-Mazzoli's approach better) is that the safety of the various --force
-options, from least safe to most safe, is:
+I first considered patching BusyBox to adhere to the expected behavior,
+but then I looked closer and saw that the test's grep invocations actually
+matched two lines instead of what I expected. An even closer look made me
+suspect that the original intention was different from what the script
+actually does, and for once I tried to be nice in my commit message.
 
- 1. --force: You blow away the remote history, no idea what's there, or
-    if your local ref mirrors what you just wiped.
-
- 2. --force-with-lease: Even if you have a `git fetch` in the
-     background, at least if you wipe a remote ref you have a copy in a
-     local reflog to restore it.
-
- 3. --force-with-lease=master:origin/master: More explicit, but still
-     subject to the caveat with background fetching.
-
- 4. --force-with-lease=master:<manually copied sha1>: You know exactly
-     what you're wiping, and have likely reviewed that exact commit.
-
-Yes, #4 is the safest, #2 & #3 are similar but subject to various
-caveats with background fetching / users not realizing "git pull"
-fetches everything etc.
-
-But I think we have to keep our eye on the ball here. Which is to enact
-a net increase in user safety.
-
-Right now most users who want to force a remote branch just use
---force. E.g. Stack Overflow shows >100k results for git + --force, but
-just 500 for git + --force-with-lease.
-
-You and others are rightly pointing out that --force-with-lease has lots
-of caveats, but that as an argument-less flag is something we could
-(with Francesco patch) turn on by default as a --force replacement.
-
-This would leave users better off than they were before, because now
-when they accidentally wipe something they at least have a local copy if
-they did the wrong thing.
-
-Moving everyone from #1 to #2 would be a net increase in user safety
-without more complex UX. Not having #2 would, for a lot of users who'd
-otherwise be happy to use #2, mean they'll just use #1 (the least safe
-option!) instead of the more ideal #4.
-
-Which is why I think we should take Francesco's patch (with fixes from
-feedback), instead of Junio's.
+Ciao,
+Dscho
+--8323329-403794951-1499425987=:84669--
