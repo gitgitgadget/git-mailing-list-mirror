@@ -6,164 +6,98 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15699202AE
-	for <e@80x24.org>; Fri,  7 Jul 2017 06:22:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2ECE202AC
+	for <e@80x24.org>; Fri,  7 Jul 2017 08:36:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751034AbdGGGWP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 02:22:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33298 "HELO cloud.peff.net"
+        id S1751833AbdGGIgk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 04:36:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33352 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750950AbdGGGWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 02:22:14 -0400
-Received: (qmail 1768 invoked by uid 109); 7 Jul 2017 06:22:14 -0000
+        id S1751757AbdGGIgj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 04:36:39 -0400
+Received: (qmail 7106 invoked by uid 109); 7 Jul 2017 08:36:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 06:22:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 08:36:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20191 invoked by uid 111); 7 Jul 2017 06:22:24 -0000
+Received: (qmail 20462 invoked by uid 111); 7 Jul 2017 08:36:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 02:22:24 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Jul 2017 04:36:49 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jul 2017 02:22:11 -0400
-Date:   Fri, 7 Jul 2017 02:22:11 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jul 2017 04:36:37 -0400
+Date:   Fri, 7 Jul 2017 04:36:37 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
-        Sahil Dua <sahildua2305@gmail.com>
-Subject: Re: [PATCH 2/6] t1414: document some reflog-walk oddities
-Message-ID: <20170707062211.a7336zi7rn7pal3z@sigill.intra.peff.net>
-References: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
- <20170705080036.qxzy7havcy72mvff@sigill.intra.peff.net>
- <xmqqh8yqix7p.fsf@gitster.mtv.corp.google.com>
- <20170705212757.3ygxiasbi2e7v27p@sigill.intra.peff.net>
- <xmqqa84ih5ao.fsf@gitster.mtv.corp.google.com>
- <20170706071606.doxirwm6cqx3duzg@sigill.intra.peff.net>
- <xmqq1spth8qy.fsf@gitster.mtv.corp.google.com>
- <20170707051954.rpej3taew6onv3oo@sigill.intra.peff.net>
- <xmqq37a8eqhe.fsf@gitster.mtv.corp.google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>,
+        git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>,
+        Eric Wong <e@80x24.org>
+Subject: [PATCH v2 0/4] reflog-walk fixes for maint
+Message-ID: <20170707083636.kjsr5ry3237paeiv@sigill.intra.peff.net>
+References: <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
+ <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
+ <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
+ <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
+ <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
+ <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
+ <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
+ <20170704195806.ndbykl776t3vigya@genre.crustytoothpaste.net>
+ <20170704212408.xy6jciggoueq6qsu@sigill.intra.peff.net>
+ <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq37a8eqhe.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 06, 2017 at 11:00:13PM -0700, Junio C Hamano wrote:
+On Wed, Jul 05, 2017 at 03:55:08AM -0400, Jeff King wrote:
 
-> Jeff King <peff@peff.net> writes:
+> The first patch is my original small fix with an extra test. I think
+> that would be appropriate for 'maint'. Its behavior still has some
+> quirks, but it avoids the confusion that you experienced and has a low
+> risk of breaking anything else.
 > 
-> > I suspect that "--since 3.days" is still quite buggy (even with a single
-> > reflog) because it checks commit timestamps and stops traversing when we
-> > go too bar back. But in a reflog, the commits may be totally out of
-> > order. I'm not sure what it should do. Either:
-> >
-> >   1. During a reflog walk, --since and --until should respect reflog
-> >      timestamps instead of commit timestamps. You can already do
-> >      "--until" there by simply starting the traversal later, but there's
-> >      no way to cut it off with --since.
-> >
-> >   2. Limit commits shown by --since/--until as usual, but skip the "stop
-> >      traversing" optimization when we see too many "old" commits. I.e.,
-> >      omit a 4.days.ago commit, but keep walking to find other recent
-> >      commits.
-> 
-> I think 1. is more logical, and I was imagining that it should be
-> doable, now we are not constrained by (ab)using the commit_list with
-> the fake-parent thing, but are pulling the entries directly from the
-> reflog iterator and the timestamp would be already available to the
-> iterator.
-> 
-> But I recall that the max_age and min_age cutoff is done long after
-> a commit is pulled out of the "iterator mechanism" (be it the
-> commit_list or your direct reflog iterator) by comparing
-> commit->date with the cut-off, so it may be a bit more involved to
-> arrange than I imagined X-<.  Hmph...
+> The rest of it replaces the fake-parent thing with a more
+> straight-forward iteration over the reflogs (i.e., a cleanup of the
+> further patches I've been posting). After digging into it and especially
+> after writing the new tests, I think I've convinced myself that this is
+> the right way forward.
 
-It's probably not too bad.
+Here's an updated version of the bug-fix patch, along with the fix for
+the problem that Eric noticed, and some other problems I noticed while
+fixing that one. So I've split these immediate fixes for maint off into
+their own series.
 
-We do some of the limiting in limit_list(), which tries to mark commits
-as UNINTERESTING. But I think in general that limit_list is incompatible
-with reflog traversals (though I wouldn't be surprised if we fail to
-flag all the options that set revs->limited as incompatible).
+These are based on maint itself, rather than Kyle's original commit that
+introduces the double-null reflog, since some of the bugs came later in
+the v2.13 cycle (if we really wanted to, we could split it again into
+two more series, but I don't think it's worth the trouble).
 
-We handle max_age in get_revision_1() itself, which should be pretty
-straightforward. For min_age, we do it in get_commit_action(), which
-would need access to the reflog timestamp. But we do have the rev_info
-there.
+  [1/4]: reflog-walk: skip over double-null oid due to HEAD rename
 
-So something like the patch below would work, I think.
+    This is the fix for the pseudo-truncation in v2.13, and is the same
+    as the previous round.
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index fbee9e0126..74ebe5148f 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -264,6 +264,18 @@ const char *get_reflog_ident(struct reflog_walk_info *reflog_info)
- 	return info->email;
- }
- 
-+timestamp_t get_reflog_timestamp(struct reflog_walk_info *reflog_info)
-+{
-+	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
-+	struct reflog_info *info;
-+
-+	if (!commit_reflog)
-+		return 0;
-+
-+	info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
-+	return info->timestamp;
-+}
-+
- void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
- 			 const struct date_mode *dmode, int force_date)
- {
-diff --git a/reflog-walk.h b/reflog-walk.h
-index 373388cd14..7553c448fe 100644
---- a/reflog-walk.h
-+++ b/reflog-walk.h
-@@ -13,6 +13,7 @@ extern void show_reflog_message(struct reflog_walk_info *info, int,
- extern void get_reflog_message(struct strbuf *sb,
- 		struct reflog_walk_info *reflog_info);
- extern const char *get_reflog_ident(struct reflog_walk_info *reflog_info);
-+extern timestamp_t get_reflog_timestamp(struct reflog_walk_info *reflog_info);
- extern void get_reflog_selector(struct strbuf *sb,
- 		struct reflog_walk_info *reflog_info,
- 		const struct date_mode *dmode, int force_date,
-diff --git a/revision.c b/revision.c
-index 5fc01f2d26..c248a16974 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2973,8 +2973,13 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
- 		return commit_show;
- 	if (commit->object.flags & UNINTERESTING)
- 		return commit_ignore;
--	if (revs->min_age != -1 && (commit->date > revs->min_age))
--		return commit_ignore;
-+	if (revs->min_age != -1) {
-+		timestamp_t date = revs->reflog_info ?
-+				   get_reflog_timestamp(revs->reflog_info) :
-+				   commit->date;
-+		if (date > revs->min_age)
-+			return commit_ignore;
-+	}
- 	if (revs->min_parents || (revs->max_parents >= 0)) {
- 		int n = commit_list_count(commit->parents);
- 		if ((n < revs->min_parents) ||
-@@ -3127,9 +3132,13 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 		 * that we'd otherwise have done in limit_list().
- 		 */
- 		if (!revs->limited) {
--			if (revs->max_age != -1 &&
--			    (commit->date < revs->max_age))
--				continue;
-+			if (revs->max_age != -1) {
-+				timestamp_t date = revs->reflog_info ?
-+						   get_reflog_timestamp(revs->reflog_info) :
-+						   commit->date;
-+				if (date < revs->max_age)
-+					continue;
-+			}
- 			if (!revs->reflog_info &&
- 			    add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
- 				if (!revs->ignore_missing_links)
+  [2/4]: reflog-walk: duplicate strings in complete_reflogs list
+
+    This fixes Eric's bug, and is the same as what I showed earlier.
+    It's a triggerable use-after-free, which is why I think it's
+    important to get it into maint.
+
+  [3/4]: reflog-walk: don't free reflogs added to cache
+
+    This is another use-after-free, though it's slightly harder to
+    trigger.
+
+  [4/4]: reflog-walk: include all fields when freeing complete_reflogs
+
+    This one is an optional cleanup, but worth doing, I think.
+
+
+ reflog-walk.c          | 33 +++++++++++++++++++++------------
+ t/t1411-reflog-show.sh | 10 ++++++++++
+ t/t3200-branch.sh      | 11 +++++++++++
+ 3 files changed, 42 insertions(+), 12 deletions(-)
+
+-Peff
