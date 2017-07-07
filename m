@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B95D202A7
-	for <e@80x24.org>; Fri,  7 Jul 2017 15:43:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D92E202A7
+	for <e@80x24.org>; Fri,  7 Jul 2017 15:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751943AbdGGPnh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 11:43:37 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:33576 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751867AbdGGPng (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 11:43:36 -0400
-Received: by mail-pg0-f49.google.com with SMTP id k14so19097857pgr.0
-        for <git@vger.kernel.org>; Fri, 07 Jul 2017 08:43:36 -0700 (PDT)
+        id S1751023AbdGGPxm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 11:53:42 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:33816 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750848AbdGGPxl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 11:53:41 -0400
+Received: by mail-pf0-f169.google.com with SMTP id q85so19072218pfq.1
+        for <git@vger.kernel.org>; Fri, 07 Jul 2017 08:53:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=vfLaWMYDgkJcU5Z/j7CYPkwSONKjI919eim7ON7gUv8=;
-        b=OJDWiG0HYoUjEgx0NbZoyhcMG8NlJXvwQl1IX/MYbgv7wTs+Q95T8PwMyo0SGb95cJ
-         /5xyrCVnGkRRNh2J5msFABnQ2iUSUln5NB5GeKHdIF6zSIl8QLUe88yBvSR1exqCvqt0
-         pw8p6SJ9dKD6q3RDpyqBsESK7uZvQiJ/kW6Ke8X8iu1eiha7NOhS3T3JY2hiJrUrKB2i
-         yUjuazYpZp0Sev4SYJ+37rzrAjEbWAJ70URAMA11jJDITk5EaaOTcggZT3B/dumOf8K0
-         ZRYbWB4ML9OIZeb+tPIEhWq0NunA5cdRIzvHw6QhnNHG2Q78IOSnDRXfS4rDvVvnviup
-         NQmA==
+        bh=Iw+SpIa/3wE/xNUUnlBILkL8koabbDT/Nb03II3bNRg=;
+        b=LV2YYwFA2f4ZbBtSqHRvyAG7S1RbbQAmiRKF+IcR11eWPnHxcWxKW2BCblCF1DZ2cv
+         Eicg8bmCT16TE8zEkP8vaDJssQg9u34AOXPORf2ktgd82ykuGvVeAHfJ2DFq9WUuHOht
+         4yAG+Z66v3irnBu4nuLMqH56UAvRPkFsOOPpQnpUfptfRVNFXLTGmJyfa9rwYZFJpZHn
+         /8wFbudiNucx02pKIOAG4JcHYn9rYucb12vRhRM4tJWWiNm7jhOp7kFoMjCbSkgT0dfD
+         Uc19Kc42416OZ4vHmG2pLnlWKO7TD+as6m0S5XQcbTp7lZ3dZeAb/cEMi6XX87nL2HlB
+         Rfpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=vfLaWMYDgkJcU5Z/j7CYPkwSONKjI919eim7ON7gUv8=;
-        b=ojU/yJnrOlpAgrok5wNq0AklX+OhXHaJ9nQdqRwQO0/oBvu1rlxUv2jAaUQf1yx7pb
-         PO14mxlL+q3j2rfdUSuVI7aQX3Brw31WnIBea3DgE+KX/8ZjfLFQmVuCpCmB37Oj3Qlz
-         uLnaIszSPlkk7PuF28aiFSSS1ueSJU5OHzWS+B3dZAVakBDKtRHcUdOc/NArdNYIxc+Y
-         hTeXKMeGHDKLbfmBedBiVNIzJt/TzQftpGYVXgxrHgW+nngMv7F5Zfj62Y48DyR2PGPB
-         5aPptOZNQD9rEiykXAgp7C9iaiNvefPn89PHuESgSGEKNuzCNmQguiSgxTxhVERkEaVu
-         kisQ==
-X-Gm-Message-State: AIVw111WSPUxfrPbet7r8S54kSp/4OhkLf80BRD9EQbUkEPA0/aT93Wt
-        VrpwWy7P1VAtrA==
-X-Received: by 10.98.202.12 with SMTP id n12mr32645741pfg.187.1499442215402;
-        Fri, 07 Jul 2017 08:43:35 -0700 (PDT)
+        bh=Iw+SpIa/3wE/xNUUnlBILkL8koabbDT/Nb03II3bNRg=;
+        b=osEFOzlpZRuLO9jdCIIHhiolrDpBpzurmFJnmn3C4wGtAhBjRZbGditEmq6Z7T4a8F
+         5+5SflfuKkbm0Hqa5lqLwNgQcBy78HFckWl9mUqa4g6cWu6jJdPbw6dWGxElnX/zpA7I
+         AXQxSokPYJ9EfqjRiQeeJhSuWRAOX96Axiy24PjkhC2KoCD2AnxTuGh5qmFpMi3rjYxT
+         40DcZkR2VbUarhqctEYqaqeLTQ3n1BBKeiIke3XBsp1MZRdGBehCxnucZFb7viT1rcIO
+         tf/IeYsw8vFw5soempu5MmvAZoztGBIzf4EZoQZB6/4KozvnlV3JnHYCdPTDBW4zzQu9
+         TJSg==
+X-Gm-Message-State: AIVw112oPGauuU5p9TyHrxvn/foj3xh4rSE7dpR5r8PqIFBdVs4ws/u/
+        ntgJKT2JZpZKUQ==
+X-Received: by 10.99.119.194 with SMTP id s185mr2097670pgc.256.1499442820722;
+        Fri, 07 Jul 2017 08:53:40 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:ac1c:ce85:2088:9c06])
-        by smtp.gmail.com with ESMTPSA id 133sm6673175pgc.19.2017.07.07.08.43.33
+        by smtp.gmail.com with ESMTPSA id t67sm7910286pfj.98.2017.07.07.08.53.39
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 07 Jul 2017 08:43:33 -0700 (PDT)
+        Fri, 07 Jul 2017 08:53:39 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Beat Bolli <dev+git@drbeat.li>
+To:     Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] unicode: update the width tables to Unicode 10
-References: <20170707120844.18049-1-dev+git@drbeat.li>
-Date:   Fri, 07 Jul 2017 08:43:32 -0700
-In-Reply-To: <20170707120844.18049-1-dev+git@drbeat.li> (Beat Bolli's message
-        of "Fri, 7 Jul 2017 14:08:44 +0200")
-Message-ID: <xmqqh8yockwr.fsf@gitster.mtv.corp.google.com>
+Subject: Re: bug during checkout of remote branch and uncommited changes ?
+References: <20170707123727.dgd5rub2ycrg525y@ltop.local>
+Date:   Fri, 07 Jul 2017 08:53:39 -0700
+In-Reply-To: <20170707123727.dgd5rub2ycrg525y@ltop.local> (Luc Van
+        Oostenryck's message of "Fri, 7 Jul 2017 14:37:28 +0200")
+Message-ID: <xmqqd19cckfw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,15 +65,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Beat Bolli <dev+git@drbeat.li> writes:
+Luc Van Oostenryck <luc.vanoostenryck@gmail.com> writes:
 
-> Now that the Unicode 10 has been announced[0], update the character
-> width tables to the new version.
->
-> [0] http://blog.unicode.org/2017/06/announcing-unicode-standard-version-100.html
->
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
-> ---
+> 	$ git reset --hard
+> 	patching file afile.c
 
-Thanks, again, for keeping an eye on the progress in the external
-world ;-)  Will apply.
+Is that a message from something?  It does not sound like something
+"git reset --hard" would say.
+
+> 	$ git co <abranch>
+> 	fatal: Not tracking: ambiguous information for ref refs/remotes/<aremote>/<abranch>
+>
+> What can be ambiguous here?
+
+I think the message "Not tracking" is given when there is a remote
+other than <aremote> that also has <abranch>.  Between the time you
+got the message and the time you tried to checkout <abranch>, did
+anything happen to cause the second attempt succeed?
+
+> Strangely, trying a second time, succeed:
+> 	$ git co <abranch>
+> 	Previous HEAD position was ...
+> 	Switched to branch '<abranch>'
+>
+> -- Luc Van Oostenryck
