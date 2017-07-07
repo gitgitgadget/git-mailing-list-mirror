@@ -3,453 +3,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61569202A7
-	for <e@80x24.org>; Fri,  7 Jul 2017 14:56:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F5B3202A7
+	for <e@80x24.org>; Fri,  7 Jul 2017 15:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751943AbdGGO4g (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 10:56:36 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:33062 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751850AbdGGO4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 10:56:34 -0400
-Received: by mail-qt0-f195.google.com with SMTP id c20so4536625qte.0
-        for <git@vger.kernel.org>; Fri, 07 Jul 2017 07:56:34 -0700 (PDT)
+        id S1751757AbdGGPFV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 11:05:21 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:34055 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751099AbdGGPFU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 11:05:20 -0400
+Received: by mail-pg0-f65.google.com with SMTP id j186so4426191pge.1
+        for <git@vger.kernel.org>; Fri, 07 Jul 2017 08:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+tn8Hxivg21BxtWVUa3cZnkkqkwc3aqIppmI8AB2yME=;
-        b=q9s4jQqJfjQbEUmUHcX+5tNxgZuCHgq3fVOU3uYxrT9l8+HXyHLHqPAtv/ZVospZKv
-         C4qVAlObDpELPnM7fwZj9ZaLIcbjR2kF08p2O9R9YjRsxv6aNivK8d4J6pfNkOL+pdE5
-         HdQLP29fTv83JdE70pUouwSplQ8LfFPs6WM6c08rgFLSY3fRmFiRbR2e/rmz4otrRQp1
-         caeiUPG3xgKFbZZgj6IFDAHbjNgdtttvjuh3Vg3bQpaez5vpz1vyVtBdg8aBplOlw++E
-         z2zzmfASSUCroxD+hkH56f6pcqxikRMHOsptqCpv8vHomhGRtryl5kVQfFUw96oLOb4c
-         yp9g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=DFjdc9vV3km7rWJpRqUND/UaYQOisoAu52A1NJaHarU=;
+        b=f1B7LC2Dykz3R7NsUA/kYGxiJRtemQce3mfNskKWHxIpqncD/Y+YgX/4Q6AgrDx5OY
+         JWDbA/x8K0OuAiNKCR2Cfuc1hCJH1Td4tBaaJHxcz+V7KxilKex8ybMC95vxMLgxMiVM
+         9Gyb1X70c5cffx7EWmdNSm/MDHIe8aWjLM7s9yajnQkYkyC156Is/hRMbyJT/vOQoAO0
+         b4yvVi4O8G9rWu6+1hLHpylzzEIujGLOvgzeQJATbeb1JB5Q1aODII3uhZzfCSzVj1PP
+         ArdPU18twh1ynDnRrMi8x5fbq7LT0+sS38RR5GhOSwBfAMJc0K87Jbva627RO7y8CCcz
+         VXeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+tn8Hxivg21BxtWVUa3cZnkkqkwc3aqIppmI8AB2yME=;
-        b=PGFFt503Kcilx8BO3FlF9vTx1kzH99q1rVJHeCKByqQrpGblwD7/Paz8S9WJbm0bl8
-         roUJfWhmRoSVRJ/pmsv6vMVQHPX9sI/zsgbztE9nUKl6hLn1bZXrmNoXZiNlSYSsATuK
-         /4N5jcC4+fL+7miqJJUkeWKRxBaRc9+IEKcFWmvZil7T1hH/XS4/QHu7WpUXFf2pHUMF
-         P1xv2T5p1bW8VistC8OJA95FB8u6D2jlp3lTVVc/ckayx3xHPfuHomjmhul5pvaAi4/p
-         NaQjQEIG3gSxUQFqOk3Ctz710sjbJso2N3VDDU8suUUP6uQtm0WM3VkNcyO08Eh2Fp9p
-         sVaw==
-X-Gm-Message-State: AKS2vOyn07a96ZtWsLUYG+k4UwOOPqo0T4YJ/6mndrMst1oPnpsj7Gsa
-        ulBRIa1dk4ONwg==
-X-Received: by 10.200.4.7 with SMTP id v7mr64004852qtg.166.1499439393247;
-        Fri, 07 Jul 2017 07:56:33 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id m49sm2788911qtf.32.2017.07.07.07.56.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Jul 2017 07:56:31 -0700 (PDT)
-Subject: Re: [RFC/WIP PATCH] object store classification
-To:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-References: <20170706202739.6056-1-sbeller@google.com>
- <xmqq7ezldlhe.fsf@gitster.mtv.corp.google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <c9a6f3f0-e338-a200-6b57-48b5d926d31c@gmail.com>
-Date:   Fri, 7 Jul 2017 10:56:30 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=DFjdc9vV3km7rWJpRqUND/UaYQOisoAu52A1NJaHarU=;
+        b=n3vz2bFEjUbT6Ks1ifs2/nh2HD2VVPW8P1tmE4Y46bkHCys7PHNHGGn0UyAMZPczDH
+         1WSUrkzSQRrsmQO/cDyQs8eHADlJUigNA6E5SV2++iPcumrHY0ap1ozw3CKmQPwg8z6Y
+         R93EiPuFK1AWRz9W0myKd8UlouXJ5xDzbyLen9dpk4HHiCxjn31zs/hnQQFbOwq65uEG
+         mij7GgWZWMuusXyPZv6B1NDIrQHFvLROTZMkmd3NH70I0dfjuuHTmVzmi8s7KbLNYtqS
+         eJhQ5e3qVKA1qz94CJP4Civ+m/o2+f+YwM/ZNl2g8bhQ9rftA4kqVdNefzwAGaIst/2Z
+         uB7w==
+X-Gm-Message-State: AIVw113lbaRG7QJBreZQEpaftbUuaMTUXJQ0ZqL3YgP/SepeKch5sZwe
+        ZBtYf3DvUMy0QQ==
+X-Received: by 10.99.240.69 with SMTP id s5mr1969314pgj.23.1499439919177;
+        Fri, 07 Jul 2017 08:05:19 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:ac1c:ce85:2088:9c06])
+        by smtp.gmail.com with ESMTPSA id s64sm9167114pfd.77.2017.07.07.08.05.17
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 07 Jul 2017 08:05:17 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] hooks: replace irrelevant hook sample
+References: <20170702112728.15757-1-kaarticsivaraam91196@gmail.com>
+        <20170705165114.20662-1-kaarticsivaraam91196@gmail.com>
+        <xmqqr2xuhde1.fsf@gitster.mtv.corp.google.com>
+        <1499428393.1849.3.camel@gmail.com>
+Date:   Fri, 07 Jul 2017 08:05:17 -0700
+In-Reply-To: <1499428393.1849.3.camel@gmail.com> (Kaartic Sivaraam's message
+        of "Fri, 07 Jul 2017 17:23:13 +0530")
+Message-ID: <xmqqwp7kcmoi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq7ezldlhe.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
 
+> That said, in case my interpretation that "'prepare-commit-msg' hook is
+> not to be shipped due to it's uselessness" is correct, the reply of
+> this mail as a whole seems to contradict it.
 
-On 7/6/2017 10:33 PM, Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
-> 
->> Subject: Re: [RFC/WIP PATCH] object store classification
-> 
-> I thought you are writing different object-store backends and
-> classifying them into many categories (e.g. local, networked,
-> telepathic, etc.)
-> 
-> It is a logical next step to put per-repository things into
-> the_repository.  I skimmed the patch and the changes smelled sane,
-> but I didn't read it really carefully with fine toothed comb.
-> 
-> Thanks.  The remainder kept for reference, but no additional
-> comments in there.
-> 
->> This continues the efforts of bw/repo-object, making our code base
->> more object oriented by adding the object store to the the repository struct.
->>
+That is because I wear multiple hats, because I try to help in
+different ways, and because open source is not a battle to see whose
+idea is more right, but is a cooperative process to find a better
+solution together.
 
-It's great to see this effort continuing.
+As a fellow contributor, I do not think that removing the hint that
+is commented out, which is meant to be helpful to users while in
+their editor and which will be removed after the editor finishes
+anyway, is a useful enough example to keep the now otherwise useless
+sample hook.  But as the maintainer, I can see that you are still
+making sincere efforts to come up with a useful example and improve
+the end-user experience, and more importantly, I haven't heard from
+other people what they think---the only thing I have are different
+opinions from two people.  That is why I am not deciding and telling
+you to go find another area to hack in.
 
->> Long term goal of the series that would evolve from this discussion:
->> * Easier to implement submodule features as it can be in the same process.
->>
->> Short term goal:
->> * get rid of 'add_submodule_odb' in submodule.c
->>    When fetching or pushing we need to determine if a submodule needs processing
->>    by finding out if certain commits are present.  To do this we add the submodule
->>    objects as an alternate object database and do the processing in the same
->>    process. In case of multiple submodules, this would pollute the object store
->>    hence being slower and increasing memory usage, too.
->>
->> This patch only changes the object store code to be object oriented based
->> on the repository struct.
->>
->> To go for the short term goal we'd need to convert a few more places, mostly
->> all the construction (blob.c, tree.c, commit.c)
->>
+At the same time, I found that your implementation of the idea, i.e.
+removal of the commented-out hint, can be improved.  With an
+improved implementation of the proposed solution, it may have a
+better chance to be supported by others on the list, and equally
+importantly, if it turns out that other people do support what this
+patch tries to do, i.e. keep the sample hook alive by replacing the
+now useless examples with this one, we would have a better
+implementation of it.  And that is something I can help with, while
+I, the maintainer, is waiting.
 
-For more API/state design purity, I wonder if there should be an 
-object_store structure that is passed to each of the object store APIs 
-instead of passing the repository object. The repository object could 
-then contain an instance of the object_store structure.
-
-That said, I haven't take a close look at all the code in object.c to 
-see if all the data needed can be cleanly abstracted into an 
-object_store structure.
-
-One concern I have is that the global state refactoring effort will just 
-result in all the global state getting moved into a single (global) 
-repository object thus limiting it's usefulness.
-
-I'd also love to see this followed up with additional patches that would 
-remove the back compat macros.  Should be a relatively straight forward 
-"search and replace" series of patches.  That will eliminate the code 
-readability/maintenance issues that comes along with macros in addition 
-to the APIs themselves.
-
-No additional comments below...
-
->> This is marked RFC as I'd want to gather feedback if the approach, presented
->> in the header files is sound.
->>
->> Thanks!
->>
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>
->>    Peff, this area of the code seems performance sensitive for a variety of
->>    use cases, specifically yours. So I cc'd you here. :)
->>
->>   object.c     | 77 +++++++++++++++++++++++++++++++++++-------------------------
->>   object.h     | 51 ++++++++++++++++++++++++++++++++--------
->>   repository.h |  6 +++++
->>   3 files changed, 92 insertions(+), 42 deletions(-)
->>
->> diff --git a/object.c b/object.c
->> index 06ba3a11d8..b5ec0bb2f9 100644
->> --- a/object.c
->> +++ b/object.c
->> @@ -5,17 +5,15 @@
->>   #include "commit.h"
->>   #include "tag.h"
->>   
->> -static struct object **obj_hash;
->> -static int nr_objs, obj_hash_size;
->> -
->> -unsigned int get_max_object_index(void)
->> +unsigned int object_store_get_max_index(struct repository *r)
->>   {
->> -	return obj_hash_size;
->> +	return r->objects.obj_hash_size;
->>   }
->>   
->> -struct object *get_indexed_object(unsigned int idx)
->> +struct object *object_store_get_indexed(struct repository *r,
->> +					unsigned int idx)
->>   {
->> -	return obj_hash[idx];
->> +	return r->objects.obj_hash[idx];
->>   }
->>   
->>   static const char *object_type_strings[] = {
->> @@ -82,11 +80,15 @@ static void insert_obj_hash(struct object *obj, struct object **hash, unsigned i
->>    * Look up the record for the given sha1 in the hash map stored in
->>    * obj_hash.  Return NULL if it was not found.
->>    */
->> -struct object *lookup_object(const unsigned char *sha1)
->> +struct object *object_store_lookup(struct repository *r,
->> +				   const unsigned char *sha1)
->>   {
->>   	unsigned int i, first;
->>   	struct object *obj;
->>   
->> +	struct object **obj_hash = r->objects.obj_hash;
->> +	int obj_hash_size = r->objects.obj_hash_size;
->> +
->>   	if (!obj_hash)
->>   		return NULL;
->>   
->> @@ -114,29 +116,31 @@ struct object *lookup_object(const unsigned char *sha1)
->>    * power of 2 (but at least 32).  Copy the existing values to the new
->>    * hash map.
->>    */
->> -static void grow_object_hash(void)
->> +static void grow_object_hash(struct repository *r)
->>   {
->>   	int i;
->>   	/*
->>   	 * Note that this size must always be power-of-2 to match hash_obj
->>   	 * above.
->>   	 */
->> -	int new_hash_size = obj_hash_size < 32 ? 32 : 2 * obj_hash_size;
->> +	int new_hash_size = r->objects.obj_hash_size < 32 ?
->> +			32 : 2 * r->objects.obj_hash_size;
->>   	struct object **new_hash;
->>   
->>   	new_hash = xcalloc(new_hash_size, sizeof(struct object *));
->> -	for (i = 0; i < obj_hash_size; i++) {
->> -		struct object *obj = obj_hash[i];
->> +	for (i = 0; i < r->objects.obj_hash_size; i++) {
->> +		struct object *obj = r->objects.obj_hash[i];
->>   		if (!obj)
->>   			continue;
->>   		insert_obj_hash(obj, new_hash, new_hash_size);
->>   	}
->> -	free(obj_hash);
->> -	obj_hash = new_hash;
->> -	obj_hash_size = new_hash_size;
->> +	free(r->objects.obj_hash);
->> +	r->objects.obj_hash = new_hash;
->> +	r->objects.obj_hash_size = new_hash_size;
->>   }
->>   
->> -void *create_object(const unsigned char *sha1, void *o)
->> +void *object_store_create(struct repository *r,
->> +			  const unsigned char *sha1, void *o)
->>   {
->>   	struct object *obj = o;
->>   
->> @@ -145,15 +149,17 @@ void *create_object(const unsigned char *sha1, void *o)
->>   	obj->flags = 0;
->>   	hashcpy(obj->oid.hash, sha1);
->>   
->> -	if (obj_hash_size - 1 <= nr_objs * 2)
->> -		grow_object_hash();
->> +	if (r->objects.obj_hash_size - 1 <= r->objects.nr_objs * 2)
->> +		grow_object_hash(r);
->>   
->> -	insert_obj_hash(obj, obj_hash, obj_hash_size);
->> -	nr_objs++;
->> +	insert_obj_hash(obj, r->objects.obj_hash, r->objects.obj_hash_size);
->> +	r->objects.nr_objs++;
->>   	return obj;
->>   }
->>   
->> -void *object_as_type(struct object *obj, enum object_type type, int quiet)
->> +void *object_as_type(struct object *obj,
->> +		     enum object_type type,
->> +		     int quiet)
->>   {
->>   	if (obj->type == type)
->>   		return obj;
->> @@ -172,15 +178,20 @@ void *object_as_type(struct object *obj, enum object_type type, int quiet)
->>   	}
->>   }
->>   
->> -struct object *lookup_unknown_object(const unsigned char *sha1)
->> +struct object *object_store_lookup_unknown_object(struct repository *r,
->> +						  const unsigned char *sha1)
->>   {
->> -	struct object *obj = lookup_object(sha1);
->> +	struct object *obj = object_store_lookup(r, sha1);
->>   	if (!obj)
->> -		obj = create_object(sha1, alloc_object_node());
->> +		obj = object_store_create(r, sha1, alloc_object_node());
->>   	return obj;
->>   }
->>   
->> -struct object *parse_object_buffer(const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p)
->> +struct object *object_store_parse_object_buffer(struct repository *r,
->> +						const struct object_id *oid,
->> +						enum object_type type,
->> +						unsigned long size,
->> +						void *buffer, int *eaten_p)
->>   {
->>   	struct object *obj;
->>   	*eaten_p = 0;
->> @@ -230,17 +241,19 @@ struct object *parse_object_buffer(const struct object_id *oid, enum object_type
->>   	return obj;
->>   }
->>   
->> -struct object *parse_object_or_die(const struct object_id *oid,
->> -				   const char *name)
->> +struct object *object_store_parse_object_or_die(struct repository *r,
->> +						const struct object_id *oid,
->> +						const char *name)
->>   {
->> -	struct object *o = parse_object(oid);
->> +	struct object *o = object_store_parse_object(r, oid);
->>   	if (o)
->>   		return o;
->>   
->>   	die(_("unable to parse object: %s"), name ? name : oid_to_hex(oid));
->>   }
->>   
->> -struct object *parse_object(const struct object_id *oid)
->> +struct object *object_store_parse_object(struct repository *r,
->> +					 const struct object_id *oid)
->>   {
->>   	unsigned long size;
->>   	enum object_type type;
->> @@ -413,12 +426,12 @@ void object_array_remove_duplicates(struct object_array *array)
->>   	}
->>   }
->>   
->> -void clear_object_flags(unsigned flags)
->> +void object_store_clear_object_flags(struct repository *r, unsigned flags)
->>   {
->>   	int i;
->>   
->> -	for (i=0; i < obj_hash_size; i++) {
->> -		struct object *obj = obj_hash[i];
->> +	for (i = 0; i < r->objects.obj_hash_size; i++) {
->> +		struct object *obj = r->objects.obj_hash[i];
->>   		if (obj)
->>   			obj->flags &= ~flags;
->>   	}
->> diff --git a/object.h b/object.h
->> index 33e5cc9943..1b2ab8ee88 100644
->> --- a/object.h
->> +++ b/object.h
->> @@ -1,6 +1,8 @@
->>   #ifndef OBJECT_H
->>   #define OBJECT_H
->>   
->> +#include "repository.h"
->> +
->>   struct object_list {
->>   	struct object *item;
->>   	struct object_list *next;
->> @@ -59,12 +61,15 @@ extern int type_from_string_gently(const char *str, ssize_t, int gentle);
->>   /*
->>    * Return the current number of buckets in the object hashmap.
->>    */
->> -extern unsigned int get_max_object_index(void);
->> +extern unsigned int object_store_get_max_index(struct repository *r);
->> +#define get_max_object_index() object_store_get_max_index(the_repository)
->>   
->>   /*
->>    * Return the object from the specified bucket in the object hashmap.
->>    */
->> -extern struct object *get_indexed_object(unsigned int);
->> +extern struct object *object_store_get_indexed(struct repository *r,
->> +					       unsigned int);
->> +#define get_indexed_object(i) object_store_get_indexed(the_repository, i)
->>   
->>   /*
->>    * This can be used to see if we have heard of the object before, but
->> @@ -78,34 +83,59 @@ extern struct object *get_indexed_object(unsigned int);
->>    * half-initialised objects, the caller is expected to initialize them
->>    * by calling parse_object() on them.
->>    */
->> -struct object *lookup_object(const unsigned char *sha1);
->> +extern struct object *object_store_lookup(struct repository *r,
->> +					  const unsigned char *sha1);
->> +#define lookup_object(hash) object_store_lookup(the_repository, hash)
->>   
->> -extern void *create_object(const unsigned char *sha1, void *obj);
->> +extern void *object_store_create(struct repository *r,
->> +				 const unsigned char *sha1,
->> +				 void *obj);
->> +#define create_object(sha1, obj) object_store_create(the_repository, sha1, obj)
->>   
->> -void *object_as_type(struct object *obj, enum object_type type, int quiet);
->> +extern void *object_as_type(struct object *obj,
->> +			    enum object_type type,
->> +			    int quiet);
->>   
->>   /*
->>    * Returns the object, having parsed it to find out what it is.
->>    *
->>    * Returns NULL if the object is missing or corrupt.
->>    */
->> -struct object *parse_object(const struct object_id *oid);
->> +extern struct object *object_store_parse_object(struct repository *r,
->> +						const struct object_id *oid);
->> +#define parse_object(sha1) \
->> +	object_store_parse_object(the_repository, sha1)
->>   
->>   /*
->>    * Like parse_object, but will die() instead of returning NULL. If the
->>    * "name" parameter is not NULL, it is included in the error message
->>    * (otherwise, the hex object ID is given).
->>    */
->> -struct object *parse_object_or_die(const struct object_id *oid, const char *name);
->> +extern struct object *object_store_parse_object_or_die(struct repository *r,
->> +						       const struct object_id *oid,
->> +						       const char *name);
->> +#define parse_object_or_die(oid, name) \
->> +	object_store_parse_object_or_die(the_repository, oid, name)
->>   
->>   /* Given the result of read_sha1_file(), returns the object after
->>    * parsing it.  eaten_p indicates if the object has a borrowed copy
->>    * of buffer and the caller should not free() it.
->>    */
->> -struct object *parse_object_buffer(const struct object_id *oid, enum object_type type, unsigned long size, void *buffer, int *eaten_p);
->> +struct object *object_store_parse_object_buffer(struct repository *r,
->> +						const struct object_id *oid,
->> +						enum object_type type,
->> +						unsigned long size,
->> +						void *buffer,
->> +						int *eaten_p);
->> +#define parse_object_buffer(oid, type, size, buffer, eaten_p) \
->> +	object_store_parse_object_buffer(the_repository, oid, type, \
->> +					 size, buffer, eaten_p)
->>   
->>   /** Returns the object, with potentially excess memory allocated. **/
->> -struct object *lookup_unknown_object(const unsigned  char *sha1);
->> +struct object *object_store_lookup_unknown_object(struct repository *r,
->> +						  const unsigned char *sha1);
->> +#define lookup_unknown_object(sha1) \
->> +	object_store_lookup_unknown_object(the_repository, sha1)
->>   
->>   struct object_list *object_list_insert(struct object *item,
->>   				       struct object_list **list_p);
->> @@ -138,6 +168,7 @@ void object_array_remove_duplicates(struct object_array *array);
->>    */
->>   void object_array_clear(struct object_array *array);
->>   
->> -void clear_object_flags(unsigned flags);
->> +extern void object_store_clear_object_flags(struct repository *r, unsigned flags);
->> +#define clear_object_flags(flags) object_store_clear_object_flags(the_repository, flags);
->>   
->>   #endif /* OBJECT_H */
->> diff --git a/repository.h b/repository.h
->> index 417787f3ef..aeb50a19bc 100644
->> --- a/repository.h
->> +++ b/repository.h
->> @@ -1,6 +1,8 @@
->>   #ifndef REPOSITORY_H
->>   #define REPOSITORY_H
->>   
->> +#include "object.h"
->> +
->>   struct config_set;
->>   struct index_state;
->>   struct submodule_cache;
->> @@ -24,6 +26,10 @@ struct repository {
->>   	 * Cannot be NULL after initialization.
->>   	 */
->>   	char *objectdir;
->> +	struct object_store {
->> +		struct object **obj_hash;
->> +		int nr_objs, obj_hash_size;
->> +	} objects;
->>   
->>   	/*
->>   	 * Path to the repository's graft file.
-> 
+Oh, by the way, what the maintainer is waiting for is not just "me
+too"s; this is not exactly a "having more people wins" democracy.
