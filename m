@@ -2,80 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C79920357
-	for <e@80x24.org>; Fri,  7 Jul 2017 20:16:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6647C20357
+	for <e@80x24.org>; Fri,  7 Jul 2017 21:07:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752485AbdGGUQC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Jul 2017 16:16:02 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35441 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752456AbdGGUP5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Jul 2017 16:15:57 -0400
-Received: by mail-pf0-f196.google.com with SMTP id q85so5851504pfq.2
-        for <git@vger.kernel.org>; Fri, 07 Jul 2017 13:15:57 -0700 (PDT)
+        id S1752235AbdGGVHk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Jul 2017 17:07:40 -0400
+Received: from mail-ua0-f182.google.com ([209.85.217.182]:32945 "EHLO
+        mail-ua0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750941AbdGGVHj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Jul 2017 17:07:39 -0400
+Received: by mail-ua0-f182.google.com with SMTP id w19so27486085uac.0
+        for <git@vger.kernel.org>; Fri, 07 Jul 2017 14:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=c8aRaOkN0qmUMf7EldpKY0Q64XBLsVaFu1H/d3oDKB0=;
-        b=RsQjorpYARbR69QzaRudZLNOHBGi4C3JeYkEAKHKiHCbcwpUtHsULdbT0w6NVmVNIR
-         HRoNC8KnhPPDMFJaFeX3zVbdDXNV9kGlVjoMYd6E8tdEOrrBBHhYNM0ZIckrcqVs89E5
-         NsD3P1JSdcclb1v5fRmPS0xCmsRKbEhqJOS/e6naNbKFcuOY/ON4gasFp+XhJrUhhofS
-         qkI2ogRTwvWjC0yEYlgwvbobQvOk66ZX651S38inWLyI4Addd74hEggDKyAjSWHZj/64
-         HSDMQPRJlLGRIIfyQ8LIyP30szdQwCWZSFFo3t9WHsP4EH3KHt47Yuvav/+ObR7+catN
-         D7Eg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=DLwCopP9udGaMGlI1hOnGGc0oC5qOAaQeFnkzrZDDxM=;
+        b=Y/wXEYhL67RNWcB1qj0hMSi0h7JEljhUV37QB7U9pzFMLxKS9BS7UDwCsbiT662nC5
+         00dyeDl7oLF8b2ShyV5A+TLedR6yWwTJ75XACa7uErp9okrT8tNAgPz588HdDthdoxtg
+         06hXHzzRR1gS3pY4tHldclZCT+iL/372kdLs9EmoCR3bYd+TldLnTiw+cTJG5IBz4bN1
+         rTavP0YiZnAP49F4ORBDJcgLBO2y3W3DfFiwm8d3nZvL0liIi4Hl2Cgtf/3kS8nvi4yc
+         yeDJvzNcOPjg5wqnXJ8egDWhtpP95lQF+yG6m6OXqzZYy6KRmuJSvkbM6Li0yxw1zAZh
+         X2Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=c8aRaOkN0qmUMf7EldpKY0Q64XBLsVaFu1H/d3oDKB0=;
-        b=Wwlzy71VeN3q0TZqqC96hEYEjPIRbf3bb/MKZPQez856iJE0kTlBVUyzusGM7jqHnH
-         /4qks7fWf2QDHSFkcZJvIFO/W8gUBW894USNm/Q0Yqm0ssTGKYmC70LAAhvY2Ypzlojd
-         oq1AXb6pkzoYFKYpVm6odlktNoF8SmBBbcyim+trX9T7vMBfXXfcoSLkZgclXWEm1hP0
-         5YLk4IKkfdRVTDxUTZrNWL3nhBVm8+xQNy1ryUq3UhLs8yVICBIgPrrSIDUJItE2bJ2I
-         r8txxNqefe0cdS4N3NWigZtu5xwZUWP1Lf7C+Z/ysgye7a1MghVlbztkm+KMoHpjxY13
-         cSKQ==
-X-Gm-Message-State: AIVw112Xt4peIG12ty1MxAvHfNv1XzPektl8ZCOWbblj/PoDykYkAeD4
-        imJ9BTJ4PF+f5A==
-X-Received: by 10.84.232.77 with SMTP id f13mr4830519pln.172.1499458557124;
-        Fri, 07 Jul 2017 13:15:57 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:ac1c:ce85:2088:9c06])
-        by smtp.gmail.com with ESMTPSA id o6sm6183698pgs.43.2017.07.07.13.15.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 07 Jul 2017 13:15:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
-        Sahil Dua <sahildua2305@gmail.com>, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v2 0/4] reflog-walk fixes for maint
-References: <20170622184516.kq3y7nxwohm3coq4@sigill.intra.peff.net>
-        <xmqqvannkfp8.fsf@gitster.mtv.corp.google.com>
-        <20170622202146.cxrkjca636xl4dgk@sigill.intra.peff.net>
-        <xmqqd19vix03.fsf@gitster.mtv.corp.google.com>
-        <20170622215235.to6yleo3adt5klv2@sigill.intra.peff.net>
-        <20170622222545.yewnynklle24ebtf@sigill.intra.peff.net>
-        <20170623031315.7aw5qd7c4wdqlyf6@sigill.intra.peff.net>
-        <20170704195806.ndbykl776t3vigya@genre.crustytoothpaste.net>
-        <20170704212408.xy6jciggoueq6qsu@sigill.intra.peff.net>
-        <20170705075508.c5ul23vivzpklpy6@sigill.intra.peff.net>
-        <20170707083636.kjsr5ry3237paeiv@sigill.intra.peff.net>
-Date:   Fri, 07 Jul 2017 13:15:54 -0700
-In-Reply-To: <20170707083636.kjsr5ry3237paeiv@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 7 Jul 2017 04:36:37 -0400")
-Message-ID: <xmqqy3s09f5x.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=DLwCopP9udGaMGlI1hOnGGc0oC5qOAaQeFnkzrZDDxM=;
+        b=Tyx7XsnW01ze9QExGr+gq6IGZ2DKNYwRVQeGs5/co3S7tTSJbY62hvzmrrrDeZW27J
+         ewcN2O8Sv1/1wcZexJMrymVqhDhcmLrUtWT4j+Cz/18z4yGGVU9gOcsj/f9FE8i5L4NY
+         miQ5rGfcOkwo7a9/HEpIcPjG5kMol3dwqktJo3X0sJ/yOsYvJsGlapjwHs2eWO31fImI
+         NrsXBlsrEbSQgEQWPPTV3ysj60SxVYom2qbU/utqwX32Jert6TKT+fDgjeQcpqT82fgC
+         bdLrnoDUNqFWFClvKtk/lURCqQfSdPRZyfsPazET6gA1znmlWjphEgyu1LhyCsdUjfRc
+         OCzg==
+X-Gm-Message-State: AIVw110Oo9ryV5ecK/G+7K5o2mzO1SvjDv5+DL9TNLqCmFZdtCGmES45
+        LpaEWaYGyScAvfXaUbO3cm2/orFk4A==
+X-Received: by 10.159.48.156 with SMTP id j28mr1847199uab.42.1499461658531;
+ Fri, 07 Jul 2017 14:07:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.176.91.2 with HTTP; Fri, 7 Jul 2017 14:07:18 -0700 (PDT)
+From:   Martin Langhoff <martin.langhoff@gmail.com>
+Date:   Fri, 7 Jul 2017 17:07:18 -0400
+Message-ID: <CACPiFC+Lc+ewmPe6u=dUo4rJRcgLqRfG-EG+vudg8mapnH-d9w@mail.gmail.com>
+Subject: Dropping a merge from history -- rebase or filter-branch or ...?
+To:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks.  All made sense to me after reading them twice.
+Hi git-folk!
 
+long time no see! I'm trying to do one of those "actually, please
+don't" things that turn out to be needed in the field.
+
+I need to open our next "for release" development branch from our
+master, but without a couple of disruptive feature branches, which
+have been merged into master already. We develop in github, so I'll
+call them Pull Requests (PRs) as gh does.
+
+So I'd like to run a filter-branch or git-rebase --interactive
+--preserve-merges that drops some PRs. Problem is, they don't work!
+
+filter-branch --commit-filter is fantastic, and gives me all the
+control I want... except that it will "skip the commit", but still use
+the trees in the later commits, so the code changes brought in by
+those commits I wanted to avoid will be there. I think the docs/help
+that discuss  "skip commit" should have a big warning there!
+
+rebase --interactive --preserve-merges  --keep-empty made a complete
+hash of things. Nonsense conflicts all over on the merge commits; I
+think it re-ran the merge without picking up the conflict resolutions
+we had applied.
+
+The changes we want to avoid are fairly localized -- a specific module
+got refactored in 3 stages. The rest of the history should replay
+cleanly. I don't want to delete the module.
+
+My fallback is a manually constructed revert. While still an option, I
+think it's better to have a clean stat without sizable feature-branch
+reverts.
+
+cheers,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
+ - don't be distracted        ~  http://github.com/martin-langhoff
+   by shiny stuff
