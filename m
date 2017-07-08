@@ -2,69 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CEB4202AE
-	for <e@80x24.org>; Sat,  8 Jul 2017 11:08:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFADE202AE
+	for <e@80x24.org>; Sat,  8 Jul 2017 11:08:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752836AbdGHLI2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Jul 2017 07:08:28 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:37232 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752751AbdGHLI1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jul 2017 07:08:27 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 3x4THF5v9Zz1qrdW;
-        Sat,  8 Jul 2017 13:08:24 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 3x4THD5kkKz3jgYD;
-        Sat,  8 Jul 2017 13:08:24 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id yW4BfrstQzHt; Sat,  8 Jul 2017 13:08:24 +0200 (CEST)
-X-Auth-Info: 3xhc1+1y1YQKT5DhuycDtFsJa2FKkfD6M1Sz5+8goOpOxiCkLrOa+1/hMJh84K/u
-Received: from igel.home (ppp-88-217-9-219.dynamic.mnet-online.de [88.217.9.219])
-        (using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Sat,  8 Jul 2017 13:08:24 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-        id 75A8D2C3186; Sat,  8 Jul 2017 13:08:23 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] apply: use strcmp(3) for comparing strings in gitdiff_verify_name()
+        id S1752847AbdGHLIi (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Jul 2017 07:08:38 -0400
+Received: from avasout05.plus.net ([84.93.230.250]:33068 "EHLO
+        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752751AbdGHLIh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2017 07:08:37 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout05 with smtp
+        id iB8b1v00118PUFB01B8c3p; Sat, 08 Jul 2017 12:08:36 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Iav3YSia c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=0jZBXOGl-rx64QDzl0wA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] apply: use strcmp(3) for comparing strings in
+ gitdiff_verify_name()
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
 References: <d1bb978b-a7df-48a8-15c8-80730c77e11c@web.de>
-X-Yow:  Am I SHOPLIFTING?
-Date:   Sat, 08 Jul 2017 13:08:23 +0200
-In-Reply-To: <d1bb978b-a7df-48a8-15c8-80730c77e11c@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 8 Jul 2017 10:58:42 +0200")
-Message-ID: <87tw2ngp94.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <d83d2395-e667-9e52-cc94-af5fbec6054c@ramsayjones.plus.com>
+Date:   Sat, 8 Jul 2017 12:08:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
+In-Reply-To: <d1bb978b-a7df-48a8-15c8-80730c77e11c@web.de>
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Jul 08 2017, René Scharfe <l.s.r@web.de> wrote:
 
+
+On 08/07/17 09:58, René Scharfe wrote:
 > Avoid running over the end of another -- a C string whose length we
 > don't know -- by using strcmp(3) instead of memcmp(3) for comparing it
 > with another C string.
 
-That's not a good justification for the change, since memcmp never reads
-past the differing characters.
+I had to read this twice, along with the patch text, before this
+made any sense. ;-) The missing information being that 'another'
+was the name of the string variable that we were potentially
+'running over the end of'.
 
-Andreas.
+ATB,
+Ramsay Jones
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+> 
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  apply.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/apply.c b/apply.c
+> index 946be4d2f5..9b3df8a3aa 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -962,13 +962,12 @@ static int gitdiff_verify_name(struct apply_state *state,
+>  	}
+>  
+>  	if (*name) {
+> -		int len = strlen(*name);
+>  		char *another;
+>  		if (isnull)
+>  			return error(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
+>  				     *name, state->linenr);
+>  		another = find_name(state, line, NULL, state->p_value, TERM_TAB);
+> -		if (!another || memcmp(another, *name, len + 1)) {
+> +		if (!another || strcmp(another, *name)) {
+>  			free(another);
+>  			return error((side == DIFF_NEW_NAME) ?
+>  			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
+> 
