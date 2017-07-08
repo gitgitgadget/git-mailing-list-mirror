@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D7DF202AC
-	for <e@80x24.org>; Sat,  8 Jul 2017 22:33:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5833F202AC
+	for <e@80x24.org>; Sat,  8 Jul 2017 23:03:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751786AbdGHWdz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Jul 2017 18:33:55 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35595 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751021AbdGHWdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jul 2017 18:33:54 -0400
-Received: by mail-pg0-f65.google.com with SMTP id d193so8241437pgc.2
-        for <git@vger.kernel.org>; Sat, 08 Jul 2017 15:33:54 -0700 (PDT)
+        id S1751529AbdGHXDk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Jul 2017 19:03:40 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36404 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750952AbdGHXDk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2017 19:03:40 -0400
+Received: by mail-pf0-f196.google.com with SMTP id z6so9417069pfk.3
+        for <git@vger.kernel.org>; Sat, 08 Jul 2017 16:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=63lcctCr4w96qafwJe5dbXTQGV4W+wMLa4kl52aecDw=;
-        b=QNa2i99TWHk3wCIX5wW3ksmQI+m3E4ratxdcoqNlBwaI/+gOj9y6HL5RS1qF70t12u
-         jUQ5TLrRkDmvzex1KovvbsB15Go9P4F+CFG91pB7PhQv2tyiVVGaIxPP+ZSK+qeAhkms
-         L3YNJ7PaQJY9NB0Xi28SLKW+OFAoKk/2pRDcf+BZ0llJhwbWYDtHX41rfKUFP961gCBi
-         VICjr6AqIAaUL3EHTtzXPFN9nLDPGM2ylxgQdZPgQGGS8PXelrH32rK9TzCrIvoeD3OC
-         D+wTbE+/M2nBpyYq41+QlZkEryRoViol92IVvA1K9MNeDZMLxBiEf6gYDON4wGrWKaBz
-         2Irw==
+        bh=DFi3qP4wexPYMFGq4/w3fOHwsZdg4BqoE1mzOMLDZ/c=;
+        b=gmzXfjCRZwoicwv9KbdCm8MWeiVWCHFArSPPhpaOkRDCNn6tOKg4FSOA4kxf/hSjvR
+         45c5Gi0zJ4f2ao4ZaXQPgOpdlvrvtfEFc+0MzsQq9d8gdYoRZolW+QJBRx7Lpyb84JYO
+         t0N//StHLd1jVcSg2QpLo3akjO6Z5pxjogsFt+YBB0P5xja5aKcFWdRqkTmE4X4sYUS3
+         SjjSvGkM0Ozm21rUdMFVscdoWacyZjpg7FgtjBjZXP5dB50pCGPXtNulZUMCa8lUuSvN
+         6W4KArXyx4o1oz6xUV/XDNyzPil3L7WgiTBiyRZ2sDNzIkpcF3J+lWg92h0ZnFbuP/5Y
+         MlZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=63lcctCr4w96qafwJe5dbXTQGV4W+wMLa4kl52aecDw=;
-        b=Kz+d+IFOlfR8k1UZX174015v45GGDN51uEaDGvBI1Dcwq6+1by1KX03srmKJkG2Dno
-         Qxji/aPd8oRFtwzHg5u6p1f5dNQhD4YK3KhDP2N0jSAS939ZkvIEfKwdLhH0RS3AqyGJ
-         WT6QirGFGgx+Yh2rHs3E4LlUS3LtU6GW39AymEsOJ2J99QQnYX6QcTQcgqGTyKXSIith
-         Sn2ZaTcvgFvoMEZsztDxV0FpMgRN58XWiJYviGXdmJN9qY25w6jtitoz8M5CbucVqMHn
-         DqtvJLmBlGqWj5BhlpI9fv+POEkcAQZ5+Y9IFV+j5srzh6zLOEl+pqyDe3KRaG1lSmzj
-         pw6Q==
-X-Gm-Message-State: AIVw111/GYUBoYwP8dT6WOVTeaxlvycGFUDx6bBquCne+ozy5/h8It65
-        M3K+lZR/wuRUXw==
-X-Received: by 10.84.134.162 with SMTP id 31mr10051804plh.170.1499553233715;
-        Sat, 08 Jul 2017 15:33:53 -0700 (PDT)
+        bh=DFi3qP4wexPYMFGq4/w3fOHwsZdg4BqoE1mzOMLDZ/c=;
+        b=J528dfu9lP1IlPEq/BkvsksUVQ8zfAESmdv3hYdCYFsrfBnyG3um309SnK8ptUH7l5
+         4ovPpmlIae4CO9gAmPjyI7prqz2wZFubGSt4hzrUbpt1mSyCx2biABu/j2I/epaNak1X
+         cFs/4jHOy3YFgHwLR8cHP7unplUEt/nj8hOlQkf/+ZOYaWT+AzfCa/hr3g8w4nW+iIIV
+         udxaBEaNPKeH6fVXbKXLBs1nx9+pI/kDCLTYcqQALfKp+lE9tHX44+4Tix6yt0TO2CH4
+         XYz5C4LDHI210PWpXyJYfQnE8LNYwUVNOpHTjKAS32nT0eBpi0on6hO3gFWsQD5Jt/zO
+         HkIg==
+X-Gm-Message-State: AIVw112QIuHTRxVjU0rJQ/p9Rmzu17JAFmC35N1GFpfYpuD0WphFfIx0
+        xv0UVYGsig64Hg==
+X-Received: by 10.99.7.129 with SMTP id 123mr7626626pgh.171.1499555019143;
+        Sat, 08 Jul 2017 16:03:39 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:49f8:bc86:d515:b7dd])
-        by smtp.gmail.com with ESMTPSA id q67sm16629977pfi.81.2017.07.08.15.33.52
+        by smtp.gmail.com with ESMTPSA id e13sm13855923pfh.96.2017.07.08.16.03.38
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 08 Jul 2017 15:33:53 -0700 (PDT)
+        Sat, 08 Jul 2017 16:03:38 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     astian <astian@eclipso.at>
 Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2017, #02; Fri, 7)
-References: <xmqqa84gaw0l.fsf@gitster.mtv.corp.google.com>
-        <1499518240.1914.1.camel@gmail.com>
-Date:   Sat, 08 Jul 2017 15:33:52 -0700
-In-Reply-To: <1499518240.1914.1.camel@gmail.com> (Kaartic Sivaraam's message
-        of "Sat, 08 Jul 2017 18:20:40 +0530")
-Message-ID: <xmqqk23ia78v.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 1/4] Doc/config.txt: explain repeated sections
+References: <20170708203413.16442-1-astian@eclipso.at>
+        <20170708203413.16442-2-astian@eclipso.at>
+Date:   Sat, 08 Jul 2017 16:03:37 -0700
+In-Reply-To: <20170708203413.16442-2-astian@eclipso.at> (astian@eclipso.at's
+        message of "Sat, 8 Jul 2017 20:34:10 +0000")
+Message-ID: <xmqqfue6a5va.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,20 +66,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+astian <astian@eclipso.at> writes:
 
-> Just wanted to know something out of curiosity. How am I actually
-> receiving these "What's cooking" emails though I'm not a subscriber to
-> the mailing list to which this is being addressed?
+> Add a paragraph explaining what happens when a section name is repeated
+> in the configuration file(s).
+>
+> The example configuration file shown in this document already implied
+> Git's behaviour, this patch simply tries to make it explicit.
+>
+> Signed-off-by: astian <astian@eclipso.at>
+> ---
+>  Documentation/config.txt | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index d5c9c4cab..afce25705 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -31,6 +31,10 @@ characters, `-` and `.` are allowed in section names.  Each variable
+>  must belong to some section, which means that there must be a section
+>  header before the first setting of a variable.
+>  
+> +Multiple occurrences of the same section are all logically merged.  (There's
+> +no special treatment for variables defined multiple times across physically
+> +different sections, the variable is simply made multivalued.)
+> +
 
-By having a contribution listed in the particular issue of the report,
-you get BCC'ed to let you know the status of your topic.
+Looks correct; it's a bit surprising that we didn't already mention
+multiple occurrences, but I do not find it so this is a good
+addition. 
 
-> Further, my email address isn't list in the To, Cc or Bcc fields.
+I do not see a strong reason for () around the second sentence,
+though.
 
-That is how a message that is BCC'ed to you is supposed to look
-like, isn't it?  The point of blind carbon copy is so that the
-recipients do not know to whom the message was BCC'ed, so there are
-other people who are getting the message just like you do, but you
-do not see who they are (and they do not know you are getting a
-copy, either).
+By the way, with something that is supposed to hopefully have some
+legal value down the line if somebody starts making noises, it
+really would be nice to have a real person to associate things with.
+It would be embarrassing later if there is no way to even look you
+up somehow.  Documentation/SubmittingPatches asks you to sign-off
+with a real name for a reason.
+
+Thanks.
