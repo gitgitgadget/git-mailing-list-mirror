@@ -2,116 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6AEA202AE
-	for <e@80x24.org>; Sat,  8 Jul 2017 07:19:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A2C1202AE
+	for <e@80x24.org>; Sat,  8 Jul 2017 08:59:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752496AbdGHHTM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Jul 2017 03:19:12 -0400
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:33364 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751175AbdGHHTL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jul 2017 03:19:11 -0400
-Received: by mail-qt0-f177.google.com with SMTP id r30so42543374qtc.0
-        for <git@vger.kernel.org>; Sat, 08 Jul 2017 00:19:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=f775nh5coYxA3MsshE/XM2zGk7gDrEDnQ9UQdXDoznU=;
-        b=DCJ3QJScXwEIK9qCg0XecImi+cKkEiCOkcz/s8xmu/5cN3STGMnaQptz/piTj4GYHZ
-         oxeUAG0ZdFiyLmp0SSPiv96xXkiNheLcup6grSmQKT0//YA1jwQUw/+9pzOaI9Owljv5
-         CXMXeDb99qhLI96kBws0Mt31IblIUQyfQuiSlHt21QkjJAdkR9VkKAZH8GF/KUgdFErj
-         vy2krbwA2Yo5u5c20XlVpWhOr+wumPRutTL91sXw4fYgI+kmFVgob+nhUkU7Ya+srmJu
-         XE8YvpNYXxlBtqeZYVkNAtyZcGpXUieb9jK6xldj1ex8S8cv+F5dekNaosTzgXX1o5tJ
-         uyAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=f775nh5coYxA3MsshE/XM2zGk7gDrEDnQ9UQdXDoznU=;
-        b=CG+Lg4w+flnngwWmmKlgXiofuM2fanCOqplzsMCOiYBFAIwgLEu1j6LsfZIVYCHz/q
-         uoQfr2TmjHFxVZd5UmvsQXzqjAGdfsI04m9iMbsmUYwZEsBXPQVClriebBESz7umY7SI
-         BDZ7+TU6LF8J8ZLTiP7SjqoZPeGshnlXRT18aHMm+mvSctyoCW/w8oFpWJiC0Zc5XEzv
-         HjR5hvZ+slo7VvgOWhLwxTxRGF8K+/lV/GnApWHiIBFPgjcoEzp8BnhyhNup2+WJU24o
-         OYLFPq/rCBOXyv1XdwiTi4MYRBHFaWB22KEgY1hSFKTYouIFhsi1OhSRA9MHdtdlR/Rw
-         U5Nw==
-X-Gm-Message-State: AKS2vOz7qKJ5ww/7tuo3AfaUKBB2tcUWPF8BLO7LzpfGy3p8Xu7mfsWP
-        u9rvieVR/VWcXTXaVTOCDwyuCGYfPw==
-X-Received: by 10.200.53.151 with SMTP id k23mr76690529qtb.104.1499498350008;
- Sat, 08 Jul 2017 00:19:10 -0700 (PDT)
+        id S1752760AbdGHI7D (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Jul 2017 04:59:03 -0400
+Received: from mout.web.de ([212.227.15.4]:54321 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752690AbdGHI7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2017 04:59:02 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MeSLv-1dKjHN0Kjf-00QAf7; Sat, 08
+ Jul 2017 10:58:46 +0200
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] apply: use strcmp(3) for comparing strings in
+ gitdiff_verify_name()
+Message-ID: <d1bb978b-a7df-48a8-15c8-80730c77e11c@web.de>
+Date:   Sat, 8 Jul 2017 10:58:42 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.55.31.94 with HTTP; Sat, 8 Jul 2017 00:19:09 -0700 (PDT)
-In-Reply-To: <xmqqeftsayeg.fsf@gitster.mtv.corp.google.com>
-References: <20170610134026.104552-1-benpeart@microsoft.com>
- <20170610134026.104552-8-benpeart@microsoft.com> <xmqqo9tsn9qg.fsf@gitster.mtv.corp.google.com>
- <9c1ed8d4-6bdb-e709-758d-4b010525e9e3@gmail.com> <xmqqvany2z84.fsf@gitster.mtv.corp.google.com>
- <7ec36d90-7fbc-c30f-e15e-f06d39e1f206@gmail.com> <xmqqeftsayeg.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 8 Jul 2017 09:19:09 +0200
-Message-ID: <CAP8UFD1hEtiBhRWvrMq+uugkez74fsaHnZLfC=tyEnMNeLGW8g@mail.gmail.com>
-Subject: Re: [PATCH v5 7/7] fsmonitor: add a performance test
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <peartben@gmail.com>, git <git@vger.kernel.org>,
-        Ben Peart <benpeart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        David Turner <David.Turner@twosigma.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:hzPHXVCoU5FT9Rfeau3/zyEvmLLh4v9ZFnUhtbaHkkgmgdAbAsu
+ EhiD/sJIcZ4AhgTp+MQP4LakHtl/lHPBYv4zzRrION9V0v2dfBQg6JbO2bK2t50FIRAzPaS
+ lpRg+MMehUiBGBkPKQW92CnNWDpxIV3TBjA3mboHBcZovAngAM4dCBBm5x6FNXBxzPpXPnN
+ 40rokoqX2thUdGKz6fwaQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xCOaPjXhGQY=:y9ufkAhsEQjWI8IluCXPSD
+ GNNTIUXZC0lYwtsHCLlyRYkMYKelVH0+u5ZQFkfo5TL4Dxbd/7HpdkB3my0D27rIX6d/54cXZ
+ 5YXZtboymaZBEPxpeKOKgdenyUAe8Vt1D7p0z2U2SCFUAbi0qCWdGXVznecNYNfpu1VWUBTDB
+ jAgm1XHiis5CZV3JV6E4lqylmnzqeCTy5xqz2D4t025LiK0SS/XyDnCDZKGyLQIm77iQiegEM
+ 7XDOj1eopVllys16zMuayLuUFLWvRx47xf4zTBMe7c6cmtAViMDbL+7Q+zZ/N+mqLSELUFhpb
+ M8sch099hlX0h8oiap88ZbfV+iba4f5JhmBh6xr25UttSmpx2hazjLj8zdzrey3TGiHBz1ykP
+ 7K6tUPqZxEJ9buIpfu6lsXlp+0JIcW0o/5m+105thhgNHXboQXHBe2zUBpYOdC00xxK32z2Sd
+ 4D3uYk0Ha0e4AhhFuQcLv+1rvpiCTE9kNz6anVQUcARtSt872PwfnESvx9k4lpK2nHdojptw8
+ EuQ5d6hUC6LD7QEBPfF5jROEhKR+LuuHGjxjhhoTHKG1OJu3Lvsn8l76ICZxY2SabV64/S8a1
+ hnc5u+Z+/otR2SZ8txXC745CjfjxJCDqOUMQxbqSri6KPfV41iJ8pXT2KbRCf+uEJYtiTYu6Q
+ /PMH2b4YQgwxDq2cLA6ahwc/QpazjXNo8jFD/+qh1r3wtIBNtXWN7Ipnn8IdQaWYszvR4tk0a
+ iZPcJkHsqO0c46rYk+kN/m9JudgGKEJx7DQt5mw/YiEdD8EW3H1PvylYBGhHBU5STFBiDComD
+ ggzQ26o
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 7, 2017 at 8:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ben Peart <peartben@gmail.com> writes:
->
->> On 6/14/2017 2:36 PM, Junio C Hamano wrote:
->>> Ben Peart <peartben@gmail.com> writes:
->>>
->>>>> Having said all that, I think you are using this ONLY on windows;
->>>>> perhaps it is better to drop #ifdef GIT_WINDOWS_NATIVE from all of
->>>>> the above and arrange Makefile to build test-drop-cache only on that
->>>>> platform, or something?
->>>>
->>>> I didn't find any other examples of Windows only tools.  I'll update
->>>> the #ifdef to properly dump the file system cache on Linux as well and
->>>> only error out on other platforms.
->>>
->>> If this will become Windows-only, then I have no problem with
->>> platform specfic typedef ;-) I have no problem with CamelCase,
->>> either, as that follows the local convention on the platform
->>> (similar to those in compat/* that are only for Windows).
->>>
->>> Having said all that.
->>>
->>> Another approach is to build this helper on all platforms, ...
->
-> ... and having said all that, I think it is perfectly fine to do
-> such a clean-up long after the series gets more exposure to wider
-> audiences as a follow-up patch.  Let's get the primary part that
-> affects people's everyday use of Git right and then worry about the
-> test details later.
->
-> A quick show of hands to the list audiences.  How many of you guys
-> actually tried this series on 'pu' and checked to see its
-> performance (and correctness ;-) characteristics?
+Avoid running over the end of another -- a C string whose length we
+don't know -- by using strcmp(3) instead of memcmp(3) for comparing it
+with another C string.
 
-As you can guess from my previous replies to this thread (and the
-previous version of this patch series), I lightly tried it and checked
-its performance for Booking.com.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ apply.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-> Do you folks like it?  Rather not have such complexity in the core
-> part of the system?  A good first step to start adding more
-> performance improvements?  No opinion?
-
-I already gave my opinion which I think is shared with =C3=86var. In short
-I don't think it should be a hook, as that limits the performance and
-is not necessary, but it is going in the right direction.
+diff --git a/apply.c b/apply.c
+index 946be4d2f5..9b3df8a3aa 100644
+--- a/apply.c
++++ b/apply.c
+@@ -962,13 +962,12 @@ static int gitdiff_verify_name(struct apply_state *state,
+ 	}
+ 
+ 	if (*name) {
+-		int len = strlen(*name);
+ 		char *another;
+ 		if (isnull)
+ 			return error(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
+ 				     *name, state->linenr);
+ 		another = find_name(state, line, NULL, state->p_value, TERM_TAB);
+-		if (!another || memcmp(another, *name, len + 1)) {
++		if (!another || strcmp(another, *name)) {
+ 			free(another);
+ 			return error((side == DIFF_NEW_NAME) ?
+ 			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
+-- 
+2.13.2
