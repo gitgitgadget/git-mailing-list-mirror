@@ -2,53 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 166FA202AC
-	for <e@80x24.org>; Sat,  8 Jul 2017 19:30:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1024F202AC
+	for <e@80x24.org>; Sat,  8 Jul 2017 20:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753079AbdGHTaa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Jul 2017 15:30:30 -0400
-Received: from homie.mail.dreamhost.com ([208.97.132.208]:55252 "EHLO
-        homiemail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753016AbdGHTaa (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 8 Jul 2017 15:30:30 -0400
-X-Greylist: delayed 99189 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Jul 2017 15:30:29 EDT
-Received: from homiemail-a1.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a1.g.dreamhost.com (Postfix) with ESMTP id 153E4348070;
-        Sat,  8 Jul 2017 12:30:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jidanni.org; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type:
-        content-transfer-encoding; s=jidanni.org; bh=9fhLK3APxpnikhNowq6
-        sRMm3I4k=; b=XTjsPorgrc/rDiDkGJyhzyM1LbknHeE0qUq3T6l+Rus7LzwUeT8
-        YG+KtWRNaxVRlVTMWUAFMw+b6C43UdN6Lnwd+tQEIgpNADTskET3m2GE1tLssxAU
-        sRDnAmI4OPRO/W2bGxMqYd481MDFbsa0oizd7Makf0w9x3dfDNWoWkk8=
-Received: from jidanni.org (220-140-14-219.dynamic-ip.hinet.net [220.140.14.219])
-        (using TLSv1 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jidanni@jidanni.org)
-        by homiemail-a1.g.dreamhost.com (Postfix) with ESMTPSA id D108D34806F;
-        Sat,  8 Jul 2017 12:30:28 -0700 (PDT)
-From:   =?utf-8?B?56mN5Li55bC8?= Dan Jacobson <jidanni@jidanni.org>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, 867600-done@bugs.debian.org
-Subject: Re: 0 bytes/s vs. =?utf-8?Q?=E2=88=9E?= bytes/s
-References: <87lgo02qat.fsf@jidanni.org>
-Date:   Sun, 09 Jul 2017 03:30:25 +0800
-Message-ID: <87eftqiv5a.fsf@jidanni.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        id S1750990AbdGHUju (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Jul 2017 16:39:50 -0400
+Received: from mail.eclipso.de ([217.69.254.104]:48794 "EHLO mail.eclipso.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750910AbdGHUjt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Jul 2017 16:39:49 -0400
+X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Jul 2017 16:39:49 EDT
+Received: from localhost.localdomain (136.ip-92-222-84.eu [92.222.84.136])
+        by mail.eclipso.de with ESMTPS id 200DF4C2
+        for <git@vger.kernel.org>; Sat, 08 Jul 2017 22:34:43 +0200 (CEST)
+X-ESMTP-Authenticated-User: 00022B69
+From:   astian <astian@eclipso.at>
+To:     git@vger.kernel.org
+Cc:     astian <astian@eclipso.at>
+Subject: [PATCH 0/4] Misc. documentation fixes
+Date:   Sat,  8 Jul 2017 20:34:09 +0000
+Message-Id: <20170708203413.16442-1-astian@eclipso.at>
+X-Mailer: git-send-email 2.13.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-RS> Subject: [PATCH] progress: show overall rate in last update
-RS> Reported-by: =E7=A9=8D=E4=B8=B9=E5=B0=BC Dan Jacobson <jidanni@jidann=
-i.org>
-RS> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-Thanks!
+Hi there,
+
+I was looking into adding a new option to git-send-email (and I may
+later send the patches implementing that) but as I looked over the code
+and associated documentation I found a few places where I thought
+improvement could be made.  So here are some documentation fixes and
+clarifications that you might find useful.
+
+They apply cleanly on top of commit 8b2efe2a0 (Fifteenth batch for 2.14).
+
+Note 1: even though I'm sending them as a "series", all of these are in
+fact independent of each other.
+
+Note 2: see below for a couple of patch-specific comments.
+
+astian (4):
+  Doc/config.txt: explain repeated sections
+  Doc/config.txt: fix typos
+  Doc/git-send-email.txt: clarify a couple of options
+
+    Still to fix:
+      --smtp-encryption:
+        The current nomenclarure is braindamaged: what's currently
+        called "ssl" should be called "tls", what's currently called
+        "tls" should be called "starttls".
+
+      --smtp-server-option:
+        IMO the option is wrongly named: this option only works with a
+        local sendmail-like binary.  When talking to that program, SMTP
+        is not used.
+
+  Doc/config.txt: fix documentation for smtpEncryption
+
+    I don't know what's the story behind this, but IMO having
+    "smtpEncryption" configurable from "sendemail.<identity>"
+    subsections is useful and should be preserved.
+
+    For example, one can set "ssl" (meaning TLS) as global configuration
+    (under "sendemail"), but set it to "none" (that is, plain text) for
+    a particular identity that actually connects to an i2p or onion
+    server, i.e. through an already encrypted transport.
+
+ Documentation/config.txt         |  5 +----
+ Documentation/git-send-email.txt | 15 +++++++++------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+-- 
+2.13.2
+
+
+
