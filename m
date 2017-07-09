@@ -7,80 +7,100 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0532202AE
-	for <e@80x24.org>; Sun,  9 Jul 2017 13:26:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47C22202AE
+	for <e@80x24.org>; Sun,  9 Jul 2017 14:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752350AbdGIN0U (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 09:26:20 -0400
-Received: from mout.web.de ([212.227.15.14]:59736 "EHLO mout.web.de"
+        id S1752350AbdGIOBs (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 10:01:48 -0400
+Received: from mout.web.de ([212.227.15.3]:62297 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752317AbdGIN0T (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 09:26:19 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MMZck-1dbLd20wTm-008KLK; Sun, 09
- Jul 2017 15:26:06 +0200
-Subject: Re: [PATCH] sha1_file: add slash once in
- for_each_file_in_obj_subdir()
-To:     Jeff King <peff@peff.net>
+        id S1752149AbdGIOBs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 10:01:48 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M7bhn-1drD741Oxr-00xItb; Sun, 09
+ Jul 2017 16:01:41 +0200
+Subject: Re: [PATCH] use DIV_ROUND_UP
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <f59c8256-716b-9305-2a4f-d4fe49f666ff@web.de>
- <20170709110016.nusy62u2morqvwmm@sigill.intra.peff.net>
+References: <4d2c274a-f6cb-6ea5-304f-51a3152cc436@web.de>
+ <CAN0heSr0qJv7VqaasLGNFbNDbqYOoqmi3FyLkb=co4E10Y9VOg@mail.gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f83adfa6-89f9-9c0e-bd69-eca56d3fcf25@web.de>
-Date:   Sun, 9 Jul 2017 15:26:03 +0200
+Message-ID: <be5b6900-9e5e-0796-c16a-03c1b72cfa50@web.de>
+Date:   Sun, 9 Jul 2017 16:01:39 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <20170709110016.nusy62u2morqvwmm@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <CAN0heSr0qJv7VqaasLGNFbNDbqYOoqmi3FyLkb=co4E10Y9VOg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:9EkUftF5qIPVAlNoMY34dNJZI13G0YDiEqQsigQbz8p+3x9B+mn
- W6uzRxKl67hQnhLVbxMzeBNfeg/cnr4q6eOoIFwbOAYljXIUgQE+hc24mBZEs2hfamW/K+9
- pG8YDsWn7FEK9qoXf49ekj8sLq63aQP9sW+Y+9sosVcAwjfPk8jCin0BXkpgA/XW+3mhYd6
- XZhWFb8NFKyTqtx79PI8Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:x9cmALZiDIU=:GBJTfueaYNhC0qYwpFUrnk
- cGTU2p3YsRB1oSWVFeveGcTVuMRLk2gAfME633nSpFIft1Ujkh7pBJlHDxwbSRoLCwWrXGsoj
- bPGKzzngRNGxjTb1+jpGiIBVeO0lw5SDgj/9KyvT6DVDyEIvXhNmCWu7ktq32u6Td/jo1NqBt
- 4orvYYJvrjSyco/iSjunvmLyqN4rexk4O34sJy38SBpfBrRFmKxXdVjGjHaGR/Dl0ac31ImjY
- nWmAznXWt/b3sDYm4HQJcfT/OozHeMPehJjiPo/omtdMmN/+N+IFyvWSux7du/bUEDubK/ZVT
- r4DnPV91FVw+6RZrNJDEw7F+DGriz2DdHNjJKAuJ7/a9zgZUcYY85gKhIALU0EyJlJsgfuCf6
- VJOkDKoE/oN0izFJgtINH+IlzN1nzt9cqEGdNRAdmFp9sVeJFfGr8wBz0tQy3yAmVmNnaIIn2
- ltx+SBfApwvGBg9dqrDMbb2X1K5QIRKc7/Ghgn8SRgojR8U3P9rcmnqWPGYiV+Fb0AWEC3Q8D
- vYh1Q02Rfn5p9ChdxTuGXjXWAqhvqGYHV85vWe6NgNN9zQTd6VfBt2pa6PiPMEqbXma1YvB4i
- qmbOmysjW7gjLKUMJm7gNyDAsPuj4xiXLNMWrDTeE19Uv525KiGGZsizsY96Ql1qUnlV861Jt
- qxAQNnI+HrT3BrjzWVfYPPYJiLHDPjuxoI0EVgqpEJC46WBfSWf2/ywNqwcl69gJruIUyibGj
- qgujo12mnNnvR8R+lUeSrQyW13PyR1z/EhMMzKSDfIgrqDZNG3+0GcbMRQuWx/QjWoY0ZhxSq
- 6vTVZoo
+X-Provags-ID: V03:K0:kA7ZGGBZ52qGDhz6EgwEwq3nfy8btNqT+7yZYDQ+I690aaMI3rC
+ k095ty3zmyfgZAgI0OPwsE1HsWmkdGjsUWbloRdDGvOrIHkbvF9hk8xOWRmXWvFGmWh80Ea
+ sDiuXdAwe9YnCnwa7fubfsdqR/eaJhKQIU1zKg4hlVegjvJRAroW997Z1nYuKVDNDTwP6bI
+ Z56lQ64ucV9h7/JqhYl5g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wp0x3viEGaI=:uMU+B2Zey3X4vt2j2tyiGw
+ bqnOcKMiFgRK3b1WAkEA60r2zgduWHgPz+NuLptwku4QP0X3ICw05q35SH6W0jFzbM64invox
+ RxlOQTESxJmiZVVLALf9dxXH74HZqGBEEeRs+wjhJvorzCRBGHY/1aEVmTxiGvJ1P8/lS937y
+ zcacckE/F4nCMQK3j0FF0WCN8VeoawCT6MMh98azH4zwVB7FvKNNdCjNzdaL1jCSW7HeJHYQP
+ DL1+kYaFzpp10xueRc6p7Hz1z1Fg7QgjYiISSNcqys5/Ax5mf9RNWcCwYgC9v2zVsJLn39X/o
+ e7yAaOlkaXPevrgggYrmAuzbOabQ7qd2cw48SOC5Nk2aP8W3rGPZ4xohnwHD54LKJdPRExELo
+ DX6I88bu+BuK1qikj9cZK467G4OYwUAq8+YaSVMugc9+a4cK5hr03W3GKPhOJmGy7rvGeebyA
+ wQa6VAZ3Y6dA6/Ki30xypUeVlb1xpBUfX0Vig8XlS7EZ1qSCpl3iWW3H7xs2w2kr/adzGethv
+ P0iK4J3YWwE31pIarB9d1RBz3j7Kv9JyzwQ0FimzL3y4wGpJkPD658gpkkoVdcUMFoDRNobAr
+ bMkX87rNWKi+Rve4H7lo1MuOOeQ5ir65J3HYzPLlp3pZ+OObEGOY42wmR5qKDWXae77ztInQt
+ 8bM27vNGYxR2RoKFmup7InFWU+qMutqb/SlxEMTldG08uyn7iDtVVPVHS0kLC5WmcFXA00nAG
+ aBgfsTiJCFvMRW32tPzPYMxIHmaWh6pfLEaDtaNWzcPoDIhe4bDIKIMjzDlr+IsLbIxNrP9es
+ OEiChoy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.07.2017 um 13:00 schrieb Jeff King:
-> On Sat, Jul 08, 2017 at 10:59:06AM +0200, René Scharfe wrote:
+Am 09.07.2017 um 15:25 schrieb Martin Ågren:
+> On 8 July 2017 at 12:35, René Scharfe <l.s.r@web.de> wrote:
+>> Convert code that divides and rounds up to use DIV_ROUND_UP to make the
+>> intent clearer and reduce the number of magic constants.
+> ...
+>> diff --git a/sha1_name.c b/sha1_name.c
+>> index e7f7b12ceb..8c513dbff6 100644
+>> --- a/sha1_name.c
+>> +++ b/sha1_name.c
+>> @@ -492,7 +492,7 @@ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
+>>                   * together we need to divide by 2; but we also want to round
+>>                   * odd numbers up, hence adding one before dividing.
+>>                   */
+>> -               len = (len + 1) / 2;
+>> +               len = DIV_ROUND_UP(len, 2);
 > 
->> Add the slash between loose object subdirectory and file name just once
->> outside the loop instead of overwriting it with each readdir call.
->> Redefine baselen as the length with that slash, and add dirlen for the
->> length without it.  The result is slightly less wasteful and can use the
->> the cheaper strbuf_addstr instead of strbuf_addf without losing clarity.
+> Since the addition is now an implementation detail of DIV_ROUND_UP,
+> should the comment be adjusted, maybe simply by removing ", hence
+> adding one before dividing"?
 > 
-> This patch looks correct to me.
-> 
-> I'm a little lukewarm on it overall, though. I'd be shocked if the
-> efficiency change is measurable. What I really care about is whether the
-> result is easier to read or not.
-> 
-> On the plus side, this moves an invariant out of the loop. On the minus
-> side, it has to introduce an extra variable for "length we add on to"
-> versus "dir length to pass to the subdir_cb". That's not rocket science,
-> but it does slightly complicate things (though I note we already have
-> "origlen", so this is bumping us from 2 to 3 length variables, not 1 to
-> 2).
+> Or perhaps even better, "... divide by 2; but since len might be odd,
+> we need to make sure we round up as we divide". My thinking being,
+> we're not actually rounding odd numbers up (presumably to even
+> numbers), but we're rounding the result of the division up (to the
+> smallest larger integer).
 
-Admittedly this is more of an OCD thing.  Overwriting a character 200
-times or parsing a format string don't very long compared to the rest
-of the function, but it's a bit itchy.
+Good point; perhaps just squash this in?
 
-René
+---
+ sha1_name.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/sha1_name.c b/sha1_name.c
+index 8c513dbff6..74fcb6d788 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -489,8 +489,7 @@ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
+ 		 * We now know we have on the order of 2^len objects, which
+ 		 * expects a collision at 2^(len/2). But we also care about hex
+ 		 * chars, not bits, and there are 4 bits per hex. So all
+-		 * together we need to divide by 2; but we also want to round
+-		 * odd numbers up, hence adding one before dividing.
++		 * together we need to divide by 2 and round up.
+ 		 */
+ 		len = DIV_ROUND_UP(len, 2);
+ 		/*
+-- 
+2.13.2
