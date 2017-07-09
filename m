@@ -2,105 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47C22202AE
-	for <e@80x24.org>; Sun,  9 Jul 2017 14:01:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2245B202AE
+	for <e@80x24.org>; Sun,  9 Jul 2017 15:14:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752350AbdGIOBs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 10:01:48 -0400
-Received: from mout.web.de ([212.227.15.3]:62297 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752149AbdGIOBs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 10:01:48 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M7bhn-1drD741Oxr-00xItb; Sun, 09
- Jul 2017 16:01:41 +0200
-Subject: Re: [PATCH] use DIV_ROUND_UP
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <4d2c274a-f6cb-6ea5-304f-51a3152cc436@web.de>
- <CAN0heSr0qJv7VqaasLGNFbNDbqYOoqmi3FyLkb=co4E10Y9VOg@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <be5b6900-9e5e-0796-c16a-03c1b72cfa50@web.de>
-Date:   Sun, 9 Jul 2017 16:01:39 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1752146AbdGIPOy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 11:14:54 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35765 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750910AbdGIPOx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 11:14:53 -0400
+Received: by mail-pf0-f194.google.com with SMTP id q85so11176633pfq.2
+        for <git@vger.kernel.org>; Sun, 09 Jul 2017 08:14:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3o+Svz8N1DJzC4KsV2w5DzDpTMfun2fsIgsO/4l5lj0=;
+        b=pM/MsI//PrZmDJDXg4iAPk3lM/zAfyouYd2wND0zDQRmBe6qZ8jOM06MIDF06AQErk
+         V5Mpks/6ZU6akjq3bLZd12e95KAmWEnYmxTJ/J9pNF3Cf4yZGV2TnEM2Rg13ym6J+UuV
+         5WmG/8KRL+Ee8hupKTssV89sEymt/L1mQPccoyvDMVaDds6YmpLMhPo41jeF5cjI73lj
+         LpdRIrM01/7noOi6y/pPXbRuatlr1Ti3dvezETpa+A1XuQqCFS7yGwJ7GTQffIX+bhRV
+         OOlemqf/gkSaq9a/Rkc2jOmemSN48yDq+SGj9tiAEjvh/pYcpP57Vu9+67C5t542rX8s
+         /t5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3o+Svz8N1DJzC4KsV2w5DzDpTMfun2fsIgsO/4l5lj0=;
+        b=RjvvnZ9FvMzx2qtAGo9ugZszZ5L5HXO5JAZbO1XmgpTWk9KzBwRrPVjSE9+gADQ00o
+         EOvzov+angnTNl3M5yNUkhwg+A1IqJSIdp5a3debbsJJUb9KA3YNkMQepF3DjlDqzY0/
+         Qu1JsLnG5bGfAuXupfoab2WCc0JdNtlT99R4Cr8cxkd3BS31gkr9FLsqjY5kVNLUTEL0
+         6MKhXV0wFRwiHxwmMFjoMk9uMdSAyy7A23lVZSylcTqTf8hWKNNDSsscpTU7AAcLtv/c
+         7483wgd3v8g4x2xZBET2Ez1TaUsCG6ZNZFAdp6XjBDLVWw5ePJd+84YXVxyyQcVm+Ic8
+         hI3g==
+X-Gm-Message-State: AIVw110hGkNlwFA1wZE9nj+FIKCM8iLC1p5msMqlHBs/pIJ/CoZwukeJ
+        bTG3JLV5HZ+snum2LRItGErb2O6uSA==
+X-Received: by 10.98.192.204 with SMTP id g73mr40249672pfk.26.1499613293108;
+ Sun, 09 Jul 2017 08:14:53 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSr0qJv7VqaasLGNFbNDbqYOoqmi3FyLkb=co4E10Y9VOg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:kA7ZGGBZ52qGDhz6EgwEwq3nfy8btNqT+7yZYDQ+I690aaMI3rC
- k095ty3zmyfgZAgI0OPwsE1HsWmkdGjsUWbloRdDGvOrIHkbvF9hk8xOWRmXWvFGmWh80Ea
- sDiuXdAwe9YnCnwa7fubfsdqR/eaJhKQIU1zKg4hlVegjvJRAroW997Z1nYuKVDNDTwP6bI
- Z56lQ64ucV9h7/JqhYl5g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wp0x3viEGaI=:uMU+B2Zey3X4vt2j2tyiGw
- bqnOcKMiFgRK3b1WAkEA60r2zgduWHgPz+NuLptwku4QP0X3ICw05q35SH6W0jFzbM64invox
- RxlOQTESxJmiZVVLALf9dxXH74HZqGBEEeRs+wjhJvorzCRBGHY/1aEVmTxiGvJ1P8/lS937y
- zcacckE/F4nCMQK3j0FF0WCN8VeoawCT6MMh98azH4zwVB7FvKNNdCjNzdaL1jCSW7HeJHYQP
- DL1+kYaFzpp10xueRc6p7Hz1z1Fg7QgjYiISSNcqys5/Ax5mf9RNWcCwYgC9v2zVsJLn39X/o
- e7yAaOlkaXPevrgggYrmAuzbOabQ7qd2cw48SOC5Nk2aP8W3rGPZ4xohnwHD54LKJdPRExELo
- DX6I88bu+BuK1qikj9cZK467G4OYwUAq8+YaSVMugc9+a4cK5hr03W3GKPhOJmGy7rvGeebyA
- wQa6VAZ3Y6dA6/Ki30xypUeVlb1xpBUfX0Vig8XlS7EZ1qSCpl3iWW3H7xs2w2kr/adzGethv
- P0iK4J3YWwE31pIarB9d1RBz3j7Kv9JyzwQ0FimzL3y4wGpJkPD658gpkkoVdcUMFoDRNobAr
- bMkX87rNWKi+Rve4H7lo1MuOOeQ5ir65J3HYzPLlp3pZ+OObEGOY42wmR5qKDWXae77ztInQt
- 8bM27vNGYxR2RoKFmup7InFWU+qMutqb/SlxEMTldG08uyn7iDtVVPVHS0kLC5WmcFXA00nAG
- aBgfsTiJCFvMRW32tPzPYMxIHmaWh6pfLEaDtaNWzcPoDIhe4bDIKIMjzDlr+IsLbIxNrP9es
- OEiChoy
+Received: by 10.100.163.102 with HTTP; Sun, 9 Jul 2017 08:14:52 -0700 (PDT)
+In-Reply-To: <be5b6900-9e5e-0796-c16a-03c1b72cfa50@web.de>
+References: <4d2c274a-f6cb-6ea5-304f-51a3152cc436@web.de> <CAN0heSr0qJv7VqaasLGNFbNDbqYOoqmi3FyLkb=co4E10Y9VOg@mail.gmail.com>
+ <be5b6900-9e5e-0796-c16a-03c1b72cfa50@web.de>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sun, 9 Jul 2017 17:14:52 +0200
+Message-ID: <CAN0heSpaLqfD_ZU=6K=bQs3E4iBj0BjQEVruivc7LXCWoXi2tg@mail.gmail.com>
+Subject: Re: [PATCH] use DIV_ROUND_UP
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.07.2017 um 15:25 schrieb Martin Ågren:
-> On 8 July 2017 at 12:35, René Scharfe <l.s.r@web.de> wrote:
->> Convert code that divides and rounds up to use DIV_ROUND_UP to make the
->> intent clearer and reduce the number of magic constants.
-> ...
->> diff --git a/sha1_name.c b/sha1_name.c
->> index e7f7b12ceb..8c513dbff6 100644
->> --- a/sha1_name.c
->> +++ b/sha1_name.c
->> @@ -492,7 +492,7 @@ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
->>                   * together we need to divide by 2; but we also want to round
->>                   * odd numbers up, hence adding one before dividing.
->>                   */
->> -               len = (len + 1) / 2;
->> +               len = DIV_ROUND_UP(len, 2);
-> 
-> Since the addition is now an implementation detail of DIV_ROUND_UP,
-> should the comment be adjusted, maybe simply by removing ", hence
-> adding one before dividing"?
-> 
-> Or perhaps even better, "... divide by 2; but since len might be odd,
-> we need to make sure we round up as we divide". My thinking being,
-> we're not actually rounding odd numbers up (presumably to even
-> numbers), but we're rounding the result of the division up (to the
-> smallest larger integer).
+On 9 July 2017 at 16:01, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> Am 09.07.2017 um 15:25 schrieb Martin =C3=85gren:
+>> On 8 July 2017 at 12:35, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+>>> Convert code that divides and rounds up to use DIV_ROUND_UP to make the
+>>> intent clearer and reduce the number of magic constants.
+>> ...
+>>> diff --git a/sha1_name.c b/sha1_name.c
+>>> index e7f7b12ceb..8c513dbff6 100644
+>>> --- a/sha1_name.c
+>>> +++ b/sha1_name.c
+>>> @@ -492,7 +492,7 @@ int find_unique_abbrev_r(char *hex, const unsigned =
+char *sha1, int len)
+>>>                   * together we need to divide by 2; but we also want t=
+o round
+>>>                   * odd numbers up, hence adding one before dividing.
+>>>                   */
+>>> -               len =3D (len + 1) / 2;
+>>> +               len =3D DIV_ROUND_UP(len, 2);
+>>
+>> Since the addition is now an implementation detail of DIV_ROUND_UP,
+>> should the comment be adjusted, maybe simply by removing ", hence
+>> adding one before dividing"?
+>>
+>> Or perhaps even better, "... divide by 2; but since len might be odd,
+>> we need to make sure we round up as we divide". My thinking being,
+>> we're not actually rounding odd numbers up (presumably to even
+>> numbers), but we're rounding the result of the division up (to the
+>> smallest larger integer).
+>
+> Good point; perhaps just squash this in?
+>
+> ---
+>  sha1_name.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 8c513dbff6..74fcb6d788 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -489,8 +489,7 @@ int find_unique_abbrev_r(char *hex, const unsigned ch=
+ar *sha1, int len)
+>                  * We now know we have on the order of 2^len objects, whi=
+ch
+>                  * expects a collision at 2^(len/2). But we also care abo=
+ut hex
+>                  * chars, not bits, and there are 4 bits per hex. So all
+> -                * together we need to divide by 2; but we also want to r=
+ound
+> -                * odd numbers up, hence adding one before dividing.
+> +                * together we need to divide by 2 and round up.
+>                  */
+>                 len =3D DIV_ROUND_UP(len, 2);
+>                 /*
 
-Good point; perhaps just squash this in?
-
----
- sha1_name.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index 8c513dbff6..74fcb6d788 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -489,8 +489,7 @@ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
- 		 * We now know we have on the order of 2^len objects, which
- 		 * expects a collision at 2^(len/2). But we also care about hex
- 		 * chars, not bits, and there are 4 bits per hex. So all
--		 * together we need to divide by 2; but we also want to round
--		 * odd numbers up, hence adding one before dividing.
-+		 * together we need to divide by 2 and round up.
- 		 */
- 		len = DIV_ROUND_UP(len, 2);
- 		/*
--- 
-2.13.2
+Much better than my suggestions.
