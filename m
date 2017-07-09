@@ -2,95 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 842CD20357
-	for <e@80x24.org>; Sun,  9 Jul 2017 07:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA85B20357
+	for <e@80x24.org>; Sun,  9 Jul 2017 07:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751135AbdGIHHC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 03:07:02 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35952 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751041AbdGIHHB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 03:07:01 -0400
-Received: by mail-pg0-f65.google.com with SMTP id u36so8981008pgn.3
-        for <git@vger.kernel.org>; Sun, 09 Jul 2017 00:07:01 -0700 (PDT)
+        id S1751122AbdGIH5M (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 03:57:12 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36461 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751096AbdGIH5L (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 03:57:11 -0400
+Received: by mail-pg0-f68.google.com with SMTP id u36so9061756pgn.3
+        for <git@vger.kernel.org>; Sun, 09 Jul 2017 00:57:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=o1kr5dP81HQmENaa+7qYDvZXmn1lN5OwzEgEVwXG0HI=;
-        b=MBGgV/BDtVnL0ZuCMnkUU2+zmb08PAZ41EdHYpsbLzf9O2B9NzmvE6jqkwpqnc9mHz
-         toD/YzWuMhvrzFDuHgDYm7lDgrb0cZIc5tsGiGZyuS8N983U+jcE7YjyajKbLdwXq/ba
-         TqK4JxWB/aPwH8kRnHBPat9PW+ItB+omsrKSova1cvUM9se8yjN/SdVJpxLejZEeCeIE
-         FYhr39UFdf9P6Lve8EyNYWptdnf8waXd9Eqc0ml8ViI2+VxCFot5jDiLt507pA2OHygT
-         1HOFldmbiN/xhwGZcF1a2A/zJfwok7loej7E9fvMMlBrCeAOEX3g2gFPeM9g3ab2+wX1
-         tpVA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=cDoB+4iQK8yHOW1+vh8pAAZ2+PPgfVr9mvJ1h42vzDM=;
+        b=JinkDXSB6DvUhZlY2T+tXSf5xYFARm1W5p0xjHugliQvLOFutXxhszwkszi6J+GZTc
+         YIxWYrJ50fiJFy+2XkbXbmM/Wq8cwnT4Uip0J9rr3N0oHJrzgK9RVbYrvV7EV17lkmor
+         pVYoly0hazrNCX9BkBhA299dJOOWDLLD7VczX69F06kWMXf4wEGczTyBll1ILsGD8U41
+         411dClGMbl+aZzr1uFuPSTHouWp8I1QoePuyjLhm1JLZCB9UrGtedKg6TqWdl1o/OIRe
+         7smLt13BnRtmp3DVBjfQVos9CAhmQhEzRnY3UsxIICqNfwGjdowPwm2RuM3nz55u1Zo1
+         520A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=o1kr5dP81HQmENaa+7qYDvZXmn1lN5OwzEgEVwXG0HI=;
-        b=jo5QJDvCg+4o2Ia/rdOqf06WKzAzE5mkC1c3AOqLBXtgkC3tGcFtZIPw2bYoiUGpmA
-         UF4BP00qcVG+Psom18SjLCEee+vV/btV8SlwL9rpxn0kkAmZrBNL5uixJC39J2R26MH4
-         ylTJiWRPDhZDoMTls00vWqUaFxjpdeR3koO0IOvDuItaEbnmu29Ehlej9kJ1n6+naC15
-         wI143HXlMZF0qlIO121OA7vX8qaJhLQcnVptCgHqKVKA56JVFay7yLvW4yn12ZjfdtQA
-         nIshb4ppO250P5rTXlibMSlwQjHwubgASBqh3G8BmYJcNhD2rtc/mjduPl/eXiR9Y+zh
-         cchg==
-X-Gm-Message-State: AIVw111Dn4Mqfd8Xtdo3iehBavhWgu28UQTBbZBCvxJrxtWRXSOMgMdE
-        SJsNrYUmABix0cmr0oI=
-X-Received: by 10.98.211.140 with SMTP id z12mr40032473pfk.231.1499584021049;
-        Sun, 09 Jul 2017 00:07:01 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id 66sm12134414pgh.59.2017.07.09.00.06.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 09 Jul 2017 00:07:00 -0700 (PDT)
-Message-ID: <1499584028.5659.1.camel@gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2017, #02; Fri, 7)
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=cDoB+4iQK8yHOW1+vh8pAAZ2+PPgfVr9mvJ1h42vzDM=;
+        b=NWZu/laXDlzzgtVu7G6h5yH2XP82mIL0ovr2pKbzsKE2ub48p350mRrUz0MwB6oyuW
+         Mhrb+5gFsVe3a8Ph7o31RfKuaZZhGC6wgyxqtTrYz4mIiO4U5QSLMwP5qm4EdWj8EtFi
+         xyK+iOlQVepqyVLrHfYwTOKfuf5vgQWViod4Os8JZktr/Otr9/tZPFmbhON5z1uY4IEI
+         z8ocYkA2ZzOSzqkzdbs2MbddWGAEuqsLgGkT59outKE9zsX6uPg9pomxUv9bOLlXuMj4
+         etfv/GPAVhDZM14U611wgIBpiu3x2vSWLWaHJ6zsd2en1re1rowj1E11yK7mYVNPdq3a
+         bagg==
+X-Gm-Message-State: AIVw11107HkMBsCL5d11v7rh2n+8lDkMT8HWUV4GqSNszFgreyC1vcKh
+        Gyd82hIAXhc3BwUeRC4=
+X-Received: by 10.99.123.18 with SMTP id w18mr9247259pgc.122.1499587030225;
+        Sun, 09 Jul 2017 00:57:10 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:49f8:bc86:d515:b7dd])
+        by smtp.gmail.com with ESMTPSA id w66sm17451421pfi.63.2017.07.09.00.57.07
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 09 Jul 2017 00:57:08 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     astian <astian@eclipso.at>
 Cc:     git@vger.kernel.org
-Date:   Sun, 09 Jul 2017 12:37:08 +0530
-In-Reply-To: <xmqqk23ia78v.fsf@gitster.mtv.corp.google.com>
-References: <xmqqa84gaw0l.fsf@gitster.mtv.corp.google.com>
-         <1499518240.1914.1.camel@gmail.com>
-         <xmqqk23ia78v.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+Subject: Re: [PATCH 1/4] Doc/config.txt: explain repeated sections
+References: <20170708203413.16442-1-astian@eclipso.at>
+        <20170708203413.16442-2-astian@eclipso.at>
+        <xmqqfue6a5va.fsf@gitster.mtv.corp.google.com>
+Date:   Sun, 09 Jul 2017 00:57:07 -0700
+In-Reply-To: <xmqqfue6a5va.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sat, 08 Jul 2017 16:03:37 -0700")
+Message-ID: <xmqq7ezi9h64.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2017-07-08 at 15:33 -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> That is how a message that is BCC'ed to you is supposed to look
-> like, isn't it?
-May be not. rfc5322 (Internet Message Format) seems to clear the
-confusion,
+>> +Multiple occurrences of the same section are all logically merged.  (There's
+>> +no special treatment for variables defined multiple times across physically
+>> +different sections, the variable is simply made multivalued.)
+>> +
+>
+> Looks correct; it's a bit surprising that we didn't already mention
+> multiple occurrences, but I do not find it so this is a good
+> addition. 
+>
+> I do not see a strong reason for () around the second sentence,
+> though.
 
-    There are three ways in which the "Bcc:" field is used.  In the first case,
-    when a message containing a "Bcc:" field is prepared to be sent, the "Bcc:"
-    line is removed even though all of the recipients (including those specified
-    in the "Bcc:" field) are sent a copy of the message.  In the second
-    case, recipients specified in the "To:" and "Cc:" lines each are sent
-    a copy of the message with the "Bcc:" line removed as above, but the
-    recipients on the "Bcc:" line get a separate copy of the message
-    containing a "Bcc:" line.
+After re-reading this, I am wondering if the "made multivalued"
+above need to be made less confusing.  For a variable that is single
+valued, the usual "the last one wins" rule is applied---it's not
+like
 
-Until recently, I have only witnessed the second case as a result of
-which I was confused. :)
+    [user] 
+	name = astian
+	name = gitster
 
--- 
-Kaartic
+makes user.name "gitster" while
 
+    [user] 
+	name = astian
+    [user]
+	name = gitster
+
+makes user.name "multivalued".  In either case, the last one wins,
+and it comes not from the syntax but from the semantics assigned to
+the variable in question.  What we want to say is not "multi-valued",
+but the above two forms both mean the same thing.
+
+But perhaps I am needlessly worried about possible confusion too
+much.  I dunno.
+
+Thanks.
