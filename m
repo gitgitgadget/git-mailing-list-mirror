@@ -2,124 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6F76202AE
-	for <e@80x24.org>; Sun,  9 Jul 2017 20:12:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3A8A202AE
+	for <e@80x24.org>; Sun,  9 Jul 2017 20:26:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752566AbdGIUMp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 16:12:45 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60253 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752430AbdGIUMo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 16:12:44 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEsXW-1dRab53jly-00Fx5e; Sun, 09
- Jul 2017 22:12:41 +0200
-Date:   Sun, 9 Jul 2017 22:12:41 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git-for-windows@googlegroups.com
-cc:     git@vger.kernel.org
-Subject: Call to developers with access to Windows XP
-Message-ID: <alpine.DEB.2.21.1.1707092143560.84669@virtualbox>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:sWMARttdX7J2NDbuNXo+ThrlNXjttgeV/RWP1yBzU2QrfI+/MGh
- D/FaaTPRv+kYF+t8IMAGnWVuEgKyyjTl2rso84gEJ4/d0qcRyqxWkmV2OEZVvEs6qtpSJoj
- uxEkPmT3P4WZ83seEisn8rSXWWyPHCkhxGfZwRYOdbg43h+4pyZWDCIsp9czPTUswPrX5QF
- 0q/2551+FSDa7P3GvA3Ew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UamAIgrrEMs=:R4eSheR/QvfQ3xzZYIEKDr
- VnFxuPRiAtZ31UbyzIM1wb9EBpyk6WpINfaBjQd7Y71krY5YDNstz08eUIaZLUo44C3w39OHC
- 3oyaU3F1/S6zwVaiPXQ6+IrBMfsn08NZkZAU8npJrw+ZO9FLYzgviWlgUWYBzE0Kl5VyfPZOu
- 8BTPtFd12KQjwhAy2So5V/Dq+/ZhPl586NPgRpD2dAP3ulY/+dhz7EcTkZReRh7juQX8a0C3C
- QR0fSJtQ7OJ8Cy1o59+Ge6Nkdb30hPa1/3cI0fmZ3w/9AK2KStM1FWyJTToTMeVhU2UB958Ep
- ps1L1C0JGwn9rCfx7FDJaI357pJe/jixmZ+5I4eu/d+QuYeDse6dhl/IgPLIHXLjDnHPnM0Yj
- nr8xxoVJEmiXAwTZESWFcRtEG1fGqBIO2WTT5VxdODSoBlVWpbfcCXU59cDCNjsEV4EbhU5PR
- Ymw6xazsraZeFXCoAhJ1HcFXT5YFXSJNd7PDrgSEiEK/K9I0KeJQnWq66b4oWVeGKFMWrFXSH
- Np+IVubZy5l7TgLIFLz9VNoTLaN7jY+H9RekmQ0pgXtW9tWK1PbWufygBbkdxt2B6YRvb7MEB
- nHpJSvAWTjLyrD5nu4+2j7rO0v8XLRztt+zzRfREY2pvDv3nswtm+8kUYZIGVjYRECaZVcPkL
- 2mPWFNufQukAOWDV814sfcw2riK2jL0Q8cm4f+MgdXCQvpdC2bTdnPCFCUzZxhllzZ8Gc8hXJ
- NIPyfTdm390KB9pxGFavipPrsumaEBfZ2Z8+IT6N3D4AKPzSc/3JxTLAg30SAC6FVi9TxQMnn
- WKL7t9U
+        id S1752622AbdGIUZb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 16:25:31 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:34646 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752430AbdGIUZa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 16:25:30 -0400
+Received: by mail-wr0-f194.google.com with SMTP id k67so20537954wrc.1
+        for <git@vger.kernel.org>; Sun, 09 Jul 2017 13:25:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=HaPNCUayMh1NvECDjCYvljv33jnAMDQtIaBAbmoDbV4=;
+        b=YWWSuROBQo899snf7lM6lQb3Nak0VAXafOzqDwtSRbPg5h4ehq3yhgALNyDpAPKhN7
+         3CYAYYtPG6epmVz8iWMQZShGyWX87TWqj52uAnvvpD0yV9U1MJFB9FRlivPukknEHPLG
+         XpiGeTpVlCkEB0orm8hj8mc19oROZ45LdTVjNY8EIgaYp0QC72TvLPbYxsaND3WHGr72
+         fM9zl1jhzDTFwIFth5Qz01tzlnZ0as6/tT1Vzc1eTEkWb6pVx6QnmO6mq+PhW8eg3+Ea
+         T7LWdVnVIlyCH8Cw8vtJuUOatRbVn8pvlqvec/oMKZ8+s/sVbfMQ3gvJvno7W0akZztc
+         ZHTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=HaPNCUayMh1NvECDjCYvljv33jnAMDQtIaBAbmoDbV4=;
+        b=o+1foeyZhpXnfUKrwYkRHyImF9VtMO29UyzsikTKru05clmLfE4F/7nrfIM5an7nVi
+         o0JCj8UVqfnDqBHTaKyABOJW1S1mWee7ChB6zF+2TbYGtrvzMj7RxGi//zu43muiOXwx
+         GghFMDWXP3Sdagp/Bt/fY2FT29S/mzPhmoyJ71uQeh3ox41/m1hrrFlB6QEsQ75Dw96i
+         IzgGBwgpZcQi0ygh9/iz2+ocnYl6ZmQYkxPLRNRrF4A5wmYtSI19m25t5mkISs/Lcag4
+         3utSfN7brcSe2sAWk/refZlRinnE/vdl63rmDPJAS5Rj6SXUjy95fhqrWj7FGoolbej1
+         +nxw==
+X-Gm-Message-State: AIVw1110HYaj86gP+dDSlLoGGu8vnV9/jvvCjpY6/dXikwIwcdXXIR1Z
+        O003PdBBGaQAS4n2
+X-Received: by 10.28.148.67 with SMTP id w64mr5362144wmd.55.1499631928461;
+        Sun, 09 Jul 2017 13:25:28 -0700 (PDT)
+Received: from localhost.localdomain (vil93-6-82-233-248-1.fbx.proxad.net. [82.233.248.1])
+        by smtp.gmail.com with ESMTPSA id z190sm7984344wmz.31.2017.07.09.13.25.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 09 Jul 2017 13:25:27 -0700 (PDT)
+From:   William Duclot <william.duclot@gmail.com>
+To:     git@vger.kernel.org
+Cc:     William Duclot <william.duclot@gmail.com>
+Subject: [PATCH/RFC] rebase: make resolve message clearer for inexperienced users
+Date:   Sun,  9 Jul 2017 22:25:20 +0200
+Message-Id: <20170709202520.21739-1-william.duclot@gmail.com>
+X-Mailer: git-send-email 2.13.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+The git UI can be improved by addressing the error messages to those
+they help: inexperienced and casual git users. To this intent, it is
+helpful to make sure the terms used in those messages can be understood
+by this segment of users, and that they guide them to resolve the
+problem.
 
-it has been a while since Windows XP support has been dropped from Git for
-Windows (v2.10.0 was the last version to support it), mainly due to the
-code changes inherited from Cygwin's code base, which discontinued
-supporting Windows XP after version 2.5.2 (because it became way too
-cumbersome).
+In particular, failure to apply a patch during a git rebase is a common
+problem that can be very destabilizing for the inexperienced user. It is
+important to lead them toward the resolution of the conflict (which is a
+3-steps process, thus complex) and reassure them that they can escape a
+situation they can't handle with "--abort". This commit answer those two
+points by detailling the resolution process and by avoiding cryptic git
+linguo.
 
-Now, as some of you recall, I was not all too happy about having to drop
-the Windows XP support, but I saw no alternative seeing as it would have
-taken me a good chunk of time (which I have to spend instead on keeping
-Git for Windows working on Windows versions that are *not* past their
-end-of-life) to reinstate XP support, and it would have taken even more
-time to keep it that way, backporting changes all the time from
-quickly-advancing Open Source projects moving away from XP support at a
-fast pace.
+Signed-off-by: William Duclot <william.duclot@gmail.com>
+---
+While I do not expect that this V1 wording will be to the liking of
+everyone, I think (know?) that the heart of this patch isn't something
+that I'm the only one bothered with :) I'd very much like to hear your
+opinions about it
 
-All the same, I tried to make sure that developers out there who are eager
-to have Windows XP support know that I am fully willing to assist them in
-getting it back. Assisting, not as in "just whine enough and eventually I
-will cave in and solve your problem for you", but as in "you are eager,
-but do not know where to start? I can tell you all about it, and if you
-get stuck, I'll help you get unstuck".
+ git-rebase.sh | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-It has been over 9 months now since the first non-XP version of Git for
-Windows has been released, and all I heard was that some developers found
-workarounds that work for themselves only, without even trying to share
-anything helpful for other developers in a similar plight.
-
-This is not enough.
-
-We are now finally at a road fork where I need to know, soon, whether
-there is anybody out there who is willing to step up to trying to get
-Windows XP support back into Git for Windows.
-
-Side note: At this point, I am a bit sick and tired of hearing so many
-opinions that *I* should work on that. So that won't fly. Just don't. If
-you feel the need to whine how unfair I am even while you are unwilling to
-lift so much as a finger to reinstate Windows XP support, just write it on
-a piece of paper and flush it down somewhere. Don't write that email,
-because all it would ensure is that I personally would rip out all
-remaining XP support from Git's own source code, just to rid myself of
-this kind of "helpful" advice. It's not worth your time, and certainly not
-mine, either.
-
-Back to the subject.
-
-The reason for this call is a Pull Request I would like to merge:
-https://github.com/git-for-windows/git/pull/1214. It simplifies Git for
-Windows' pthreads emulation rather dramatically, but due to my
-(misguided?) request, it tries to keep Windows XP support as a
-compile-time option.
-
-The thing is, this code will bit-rot if there is nobody willing to spend
-even a little bit of time on Windows XP support in Git for Windows.
-Meaning: it will add to my maintenance burden, which is not okay.
-
-So my current preference would be for me to go back to the contributor of
-PR #1214 with a profound apology for making that suggestion and wasting
-their time unnecessarily. And then just drop the XP support of our pthread
-emulation.
-
-However, I am not quite certain that I have really exhausted all my
-options for reaching active developers who are interested enough in
-Git for Windows' reinstating Windows XP support that they are willing to
-put in the effort to make it so.
-
-Did I reach you, active developers? This is my final attempt to do so...
-
-Ciao,
-Johannes
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 2cf73b88e..50457f687 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -55,9 +55,10 @@ LF='
+ '
+ ok_to_skip_pre_rebase=
+ resolvemsg="
+-$(gettext 'When you have resolved this problem, run "git rebase --continue".
+-If you prefer to skip this patch, run "git rebase --skip" instead.
+-To check out the original branch and stop rebasing, run "git rebase --abort".')
++$(gettext 'Resolve this conflict manually, mark it as resolved with "git add <conflicted_file>",
++then run "git rebase --continue".
++You can instead skip this commit: run "git rebase --skip".
++To stop the whole rebasing and get back to your pre-rebase state, run "git rebase --abort".')
+ "
+ unset onto
+ unset restrict_revision
+-- 
+2.13.0
 
