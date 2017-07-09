@@ -2,87 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27217202AE
-	for <e@80x24.org>; Sun,  9 Jul 2017 18:58:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C722202AE
+	for <e@80x24.org>; Sun,  9 Jul 2017 19:30:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752553AbdGIS56 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 14:57:58 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35022 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752430AbdGIS55 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 14:57:57 -0400
-Received: by mail-pg0-f65.google.com with SMTP id d193so10176855pgc.2
-        for <git@vger.kernel.org>; Sun, 09 Jul 2017 11:57:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=reE2mDbyPZP5GjkewtEr+wbKFpNwko+6z0tEWAT+TZM=;
-        b=UWm/R1LdAlcPPk4sPGGdhM1tbJOLxmgbDcQldetEgEnwXkiJQF7En+Ltd4Aww5yxHK
-         b3Hqyx8r3u/+Xzv6kA8XpWATSYYdEZ0QwShHu0sniUxbYd2DD0JvRKyDuWGd8Twum2Gs
-         qtfWN+aa1slRw1xq0ZdgIb1UtDtlWPwsdJEKtKyLL7xv2cj73kmLdAoSsTIsKgTozrbd
-         YDwkKp3xQKDbhlJOafU8jWNWP1d/cS2U7rWJ4HrbiDuT1v1smM8VKp3iS0co1UwoyHzD
-         FpGSrrbUWpLptEGyfDfY6AVPBUlxn58znEE3jzFv3gUfbO49HpLJnmk+HA3og8c1owAu
-         zVvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=reE2mDbyPZP5GjkewtEr+wbKFpNwko+6z0tEWAT+TZM=;
-        b=Iq+DW8IV/zA+R/Pi0CY03p+YuCHMuASTTeqP0XA+2Vx7iGVdcRtw2I+rMDqn90URy2
-         Q48vqahZoutXmBIM6jVv9X+MB8GdpMKvES4mOBfzh0+nHyfUBEAoau0i1xOYfs6q7JuM
-         a80kBDObx4dbGLMEB+SFl/UcmsYUsjppbw5KZFXvPc/GatPnKY8MrCE3Qse3+Ny2ZOG9
-         BnCoHcfQEnm9M/UHxoykhpjZ20NbkJMEo7Fm5G7QsGarP15AgX6418WjbcItUXD6r62u
-         BecFSATzapaJouUAQic38VChfzbvbglkCqQCOM7ymEeYPARSYieIuNBaf/QPs8ObtBG3
-         PAxA==
-X-Gm-Message-State: AIVw111hLE7ch/jnufGBTPhDtbIzuSVsitERjdPXbeE4zmSe4oSeQEpy
-        nx/V088Zd6Ld+Q==
-X-Received: by 10.84.138.131 with SMTP id 3mr14306441plp.293.1499626676700;
-        Sun, 09 Jul 2017 11:57:56 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:dc1e:60e1:7751:9c92])
-        by smtp.gmail.com with ESMTPSA id w125sm7152727pfb.117.2017.07.09.11.57.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 09 Jul 2017 11:57:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+        id S1752512AbdGITUY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 15:20:24 -0400
+Received: from mout.gmx.net ([212.227.17.20]:61235 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752149AbdGITUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 15:20:23 -0400
+Received: from [192.168.178.24] ([78.54.56.184]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtUHA-1de9af2Mho-010vlR; Sun, 09
+ Jul 2017 21:20:17 +0200
+Subject: Re: enhancement request : If 2 commits to be squashed together do
+ have the same title and comment ...
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: "Branch exists" error while trying to rename a non-existing branch to an existing one
-References: <1499624859.8552.9.camel@gmail.com>
-Date:   Sun, 09 Jul 2017 11:57:55 -0700
-In-Reply-To: <1499624859.8552.9.camel@gmail.com> (Kaartic Sivaraam's message
-        of "Sun, 09 Jul 2017 23:57:39 +0530")
-Message-ID: <xmqqd1998mks.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+References: <66e0ec72-699c-f71b-55c7-e1f780111853@gmx.de>
+ <xmqqlgnx8muc.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?Toralf_F=c3=b6rster?= <toralf.foerster@gmx.de>
+Message-ID: <b3e9aea7-df98-a1db-643b-ce992200ecb8@gmx.de>
+Date:   Sun, 9 Jul 2017 21:20:15 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqlgnx8muc.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:IGGKX4KxwMyOW28gnFFYo9gN0R8dJ202MBrQS3uGLMM4GHSRlh1
+ B9ILttgEB6+GLpr7/8o/YQtGD9CZx6tJj+LOCFmv9IZ2NeM0eRpRNWxPpD+1zMpmjla5NnL
+ AunLjOdJa8SwFlxCMQBXGvJPM0+3P/cnrO8Lq33qw6GXdki9yVkQBfrFmMU9wuiJZdvGi/N
+ JEd2eGyrHxXN66btqX96Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vTgav1CP0Uw=:9o3q/J8kupyS6i8WdJlj+L
+ dvKZdvQXX9PsCyrEEK/drzVdjIAFrEZv7bxyJ/J1lz3OFNsIRQ5FMQA7G4ci6wrwrmfFitgog
+ bbWdabMgILnwf0EounN71RrNhk9KjEHQCI9EtgoCeZ+1Zqwz1SFHoUadraydJmHojNO3fmoU7
+ +uMxFGvkCtzbNc51BqWYXVpAkYHcVragnAsiup7FaAi3bCQlFsisRLDSCmmZZ3de1XFDBaD7p
+ VtMyZ6hJaaCLioLJ3k2epUQVC3LREOsZkPL5Oe8aCltzjda9/marZRUxyP0iFEEGyz5zVXLKQ
+ OYpGY6zWxyy2psPgI0OsrsLLl7b+gaWzwIHLkBp3gKEvJ1PNzeSa4r6RrJruNus9yFIzlxV92
+ anL6Tcw1K4emg2xx26x7x+7cncRZ0CJrJvtiHr/uwiU3IWhix9d1VzRUKcpUINquPiwn93yVL
+ iDUcfZs+WpkwvtE6oiKxvhFd8ml/5CTvTY7/Gj0tG/whdEVNMpccOZprAKQDDDs/Z3LEHJPNR
+ fXwccdiOu8KxdFw5Cij/F0p6K3OOOJQ8ZX9HGSSugnIFPb6kRYRY/X8b2Y3U/djHz1G5NuO/h
+ tdxWEGTVs9ZsIePTRDBnja8xqC5GFoa2gSPu7Y06ZY/8blNnzNKJLfcc1QJIGg84BwzFagpoa
+ hWif7peJCzjTcs1YWECxYPxbnmxOvQIv2whvwA3An9EqPq3I+0cJKhpJRRN6acKEn1HBjOrHw
+ mH9NtL9g5wyL5QgPUYt+OsXxFVv8UyFCLco21krBOGign4Kix3MN5VHPdbnYPpWDq9YVpxM8q
+ yB5Ol4I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+On 07/09/2017 08:52 PM, Junio C Hamano wrote:
+> In the form, it is valid---sending a message to git@vger.kernel.org
+> is the right way to describe a problem and ask for a help (or better
+> yet, propose a solution ;-).
+> 
+> I am guessing that you are talking about "squash" in "rebase -i"
+> command?  If so, instead of saying "squash", you can say "fixup",
+> which will squish the change into the commit to be corrected while
+> retaining the log message of it, which makes the new feature you
+> are looking for unnecessary, I think.
+> 
+> Unless I misunderstood what you want, that is.
 
-> I recently got the following error message by change as a result of the
-> command,
->
->     $ git branch -m no-branch master
->     fatal: A branch named 'master' already exists.
->
-> Note: no-branch is an hypothetical branch that doesn't exist.
->
-> Shouldn't I get a 'no-branch' doesn't exist before that?
+Thx - answered my questions ! :-)
 
-This is borderline "meh" at least to me.  An argument against a
-hypothetical version of Git that "fixes" your issue would be that no
-matter what the source of renaming is, as long as 'master' exists,
-"branch -m" shouldn't overwrite it, and it is a good thing to remind
-the user that 'master' exists and the user meant to rename it to
-something else.
 
-Of course you can make the error message three-way, but I do not
-think it is worth it.
+-- 
+Toralf
+PGP C4EACDDE 0076E94E
