@@ -2,141 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46EA1202AE
-	for <e@80x24.org>; Sun,  9 Jul 2017 16:59:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65CFB202AE
+	for <e@80x24.org>; Sun,  9 Jul 2017 17:05:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752268AbdGIQ7h (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 12:59:37 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:35297 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752149AbdGIQ7g (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 12:59:36 -0400
-Received: by mail-pf0-f195.google.com with SMTP id q85so11382286pfq.2
-        for <git@vger.kernel.org>; Sun, 09 Jul 2017 09:59:36 -0700 (PDT)
+        id S1752225AbdGIRFw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 13:05:52 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:34958 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752146AbdGIRFv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 13:05:51 -0400
+Received: by mail-pg0-f51.google.com with SMTP id j186so38114061pge.2
+        for <git@vger.kernel.org>; Sun, 09 Jul 2017 10:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ixG/JsaFcjOdWhC0OZ2i6BtgM2Oh638UPQt+zJu4BzY=;
-        b=hF8mB8Mc+j9YjSvrk0+8SGXNgdnJriESJGPBuMusu9rQzjOE7ejxR44px2EGUI9ryy
-         23zue9rnhsSTpD8WbKMUwh/9xCneuxBFw0CdCzXG6w62SaZpIGSsEPmvbCGC0/8TYssM
-         6zgNXL/ZQiDqAFAI7iiHDi7EZVB2LkvzemmNyzv6WwjAIEtZ5TyCeuCXLsna1MpVyda5
-         PqVvaXE4Ql56548BWkdRRh52w38NcpPzK3CJVRM23z/zsumwvsLasAkdBdqOpvamkXjK
-         0H3GBczeCA00fZ2AuiTHXDcOCQsCpAogsBVVsV2V++8XLEklo8Z1iZP8olXSypa7YSba
-         /dhA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=tupx4SKNNMaBbZJd9pupJ6c0X3NaYnqUsUJg+Fdmx9c=;
+        b=RnG9z8rjTHmrTh8UZ3ePNl9sU44cHgVHD8vHI+kJEa7Alou0WgvIyKr6vz7XU0+6rK
+         6oQnONHiLQQfdPK0q56P2g0fEV7iWM+3qUB0c66MksO8eZTjDTVM2+budIzmB3pYsOm1
+         kzEpV75pxFgy6CY/H+Xp3QtPGgVDSJ64MvBOmzkM5GgkSC6fEhX0kA+f3suJtz5crJFb
+         1GgEmwz4yR0geWhgb2dWhDqhJkIwYxtFPv/BJYWVx9rmWAGVdw8Snue1qMh9jd9Q+G8a
+         RxtmBjg93xlMyZqz7dbq+5xJ5ahb/KkKhhxn/PCuGM9lolNBEvkzLmEre6X9ABnl5gi6
+         04PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ixG/JsaFcjOdWhC0OZ2i6BtgM2Oh638UPQt+zJu4BzY=;
-        b=fG0r5VEzYaMy+s03w6NKbBIlb3/ZoA7csY07VVpv4gVjANEy+HDYpyvxrK7/jS0rfn
-         FDv9c5Q20S8+nKFlIY5SELZ+9om9hndYmBeUCVBNhHGTDxQtiLzcfLk1z5QDow8PXbNE
-         n2U8Toxw9J8TVSJ7QD/yXZDeXYKEj3EdSYjEOlhxl2NFKcEbC0GXwqsYewXVTzR61VSk
-         E7Qn1UmeX6GcuWk6r2z35UE6uCNrqUdnaqjy20RCHNrcFlXvJumeyQhVO06eNxZWrbaf
-         5Yzrg2Ukk5W6ywx1pVckRCWG1dkCjH4xWpi0UeLb/bEOXLSkKlDlOMTwbu9dX57UKe6B
-         HMww==
-X-Gm-Message-State: AIVw113ruSDXRe1Viy+WfWazBQ+Yaiky9r2jpLVFs5sdhte0h25RO8oQ
-        VOlXF39zb+RzcQ==
-X-Received: by 10.84.224.15 with SMTP id r15mr13593863plj.78.1499619575560;
-        Sun, 09 Jul 2017 09:59:35 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=tupx4SKNNMaBbZJd9pupJ6c0X3NaYnqUsUJg+Fdmx9c=;
+        b=Ma3zq3H5llXprS0Wkp6F+B4iH/SqBXJFNt22Lup8Ue/aMFInazaRuuGt30ultiDEaw
+         e9/c0awn5H/0CD/Wa9r3HYC2QrllV3UfiJtprX0DCW9wb4uxJHUE8D+Do3A+CKZN3Vwq
+         tngzHIfUEkOftYNXHstaIigTVMILX2akhOrwzZrVXThK/fjFQY/cdpMQt+WUa49+loZM
+         uOoF5HXIOjmokI6xZJsh/m1Ibo1sstYmZA4T3YA8CsT54iQ6pjWfAHik2TzzuzVYPv7/
+         C8NnvHlXTt9+ITXLm9KnNqXbrMGjZ8gGr158FTECf1zKx1ivPh8LPWr8ARoqwVjpnjw3
+         Q+yA==
+X-Gm-Message-State: AIVw112w/OGjxsGGGO0+Gc1Florsj7oVDrRGfbaAOmwgHuBzdiK8UHG0
+        Jih7Q+3r81vTZhCj0Xk=
+X-Received: by 10.84.131.71 with SMTP id 65mr13907351pld.35.1499619950791;
+        Sun, 09 Jul 2017 10:05:50 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:dc1e:60e1:7751:9c92])
-        by smtp.gmail.com with ESMTPSA id g73sm18778636pfk.19.2017.07.09.09.59.34
+        by smtp.gmail.com with ESMTPSA id v17sm23976776pgn.4.2017.07.09.10.05.49
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 09 Jul 2017 09:59:34 -0700 (PDT)
+        Sun, 09 Jul 2017 10:05:49 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
-        Sahil Dua <sahildua2305@gmail.com>, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v2 3/7] log: do not free parents when walking reflog
-References: <20170707090507.ko2ygry7j4zv7t3s@sigill.intra.peff.net>
-        <20170707090734.x2ki7lluawf66g4a@sigill.intra.peff.net>
-        <xmqqwp7kb2ap.fsf@gitster.mtv.corp.google.com>
-        <20170709101351.qcwgtzly72wwvwmq@sigill.intra.peff.net>
-Date:   Sun, 09 Jul 2017 09:59:33 -0700
-In-Reply-To: <20170709101351.qcwgtzly72wwvwmq@sigill.intra.peff.net> (Jeff
-        King's message of "Sun, 9 Jul 2017 06:13:51 -0400")
-Message-ID: <xmqqtw2l8s22.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Andreas Schwab <schwab@linux-m68k.org>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] apply: use strcmp(3) for comparing strings in gitdiff_verify_name()
+References: <d1bb978b-a7df-48a8-15c8-80730c77e11c@web.de>
+        <87tw2ngp94.fsf@linux-m68k.org>
+        <e46a7de9-3e0e-4eeb-c9a3-a8b5f22620b4@web.de>
+        <87o9svgia8.fsf@linux-m68k.org>
+        <df3bd047-6ddd-c120-54dd-4165d2257bb0@web.de>
+        <87lgnxpyzu.fsf@linux-m68k.org>
+        <52d0ac32-7b3d-990d-8ad9-42ef9ee8d8cf@web.de>
+Date:   Sun, 09 Jul 2017 10:05:49 -0700
+In-Reply-To: <52d0ac32-7b3d-990d-8ad9-42ef9ee8d8cf@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 9 Jul 2017 15:19:53 +0200")
+Message-ID: <xmqqpod98rrm.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> On Fri, Jul 07, 2017 at 10:10:54AM -0700, Junio C Hamano wrote:
->
->> > diff --git a/builtin/log.c b/builtin/log.c
->> > index 8ca1de9894..9c8bb3b5c3 100644
->> > --- a/builtin/log.c
->> > +++ b/builtin/log.c
->> > @@ -374,9 +374,9 @@ static int cmd_log_walk(struct rev_info *rev)
->> >  		if (!rev->reflog_info) {
->> >  			/* we allow cycles in reflog ancestry */
->> >  			free_commit_buffer(commit);
->> > +			free_commit_list(commit->parents);
->> > +			commit->parents = NULL;
->> 
->> After step 6/7, we no longer "allow cycles in reflog ancestry", as
->> there will be no reflog ancestry to speak of ;-), so it would be
->> nice to remove the comment above in that step.  But alternatively,
->> we can rephrase the comment here, to say something like "the same
->> commit can be shown multiple times while showing entries from the
->> reflog" instead.
->
-> I actually think the comment is a bit obtuse in the first place. The
-> real issue is that we show commits multiple times. That's caused by
-> cycles, yes, but also by us clearing the SEEN flag. ;)
->
-> Maybe this on top?
+> I wonder when we can begin to target C99 in git's source, though. :)
 
-Yup, that is a much better version of what I had in mind that can go
-either before this step as a preparatory cleanup, squashed into this
-as "while at it", or after the series as a finishing touches.  The
-last one will let the codebase lie for a short while, though, so I am
-likely to squash it in or wiggle it under.
+Let's get the ball rolling by starting to use some of the useful
+features like designated initializers, perhaps, in a small, critical
+and reasonably stable part of the system that anybody must compile,
+leave it in one full release cycle or two, and when we hear nobody
+complains, introduce it en masse for the remainder of the system?
 
-Thanks.
+That way, we will see if there are people who need pre-C99 soon
+enough, and we won't have to scramble reverting too many changes
+when it happens.
 
-
-
->
-> -- >8 --
-> Subject: [PATCH] log: clarify comment about reflog cycles
->
-> When we're walking reflogs, we leave the commit buffer and
-> parents in place. A comment explains that this is due to
-> "cycles". But the interesting thing is the unsaid
-> implication: that the cycles (plus our clearing of the SEEN
-> flag) will cause us to show commits multiple times. Let's
-> spell it out.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/log.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 9c8bb3b5c..630d6cff2 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -372,7 +372,10 @@ static int cmd_log_walk(struct rev_info *rev)
->  			 */
->  			rev->max_count++;
->  		if (!rev->reflog_info) {
-> -			/* we allow cycles in reflog ancestry */
-> +			/*
-> +			 * We may show a given commit multiple times when
-> +			 * walking the reflogs.
-> +			 */
->  			free_commit_buffer(commit);
->  			free_commit_list(commit->parents);
->  			commit->parents = NULL;
