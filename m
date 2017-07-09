@@ -2,105 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7806B202AC
-	for <e@80x24.org>; Sat,  8 Jul 2017 23:09:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 842CD20357
+	for <e@80x24.org>; Sun,  9 Jul 2017 07:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751994AbdGHXJa (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Jul 2017 19:09:30 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33848 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751023AbdGHXJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Jul 2017 19:09:29 -0400
-Received: by mail-pf0-f196.google.com with SMTP id c24so9422242pfe.1
-        for <git@vger.kernel.org>; Sat, 08 Jul 2017 16:09:29 -0700 (PDT)
+        id S1751135AbdGIHHC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 03:07:02 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35952 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751041AbdGIHHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 03:07:01 -0400
+Received: by mail-pg0-f65.google.com with SMTP id u36so8981008pgn.3
+        for <git@vger.kernel.org>; Sun, 09 Jul 2017 00:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=RPfwrW1y+ZuoJ//tC+ShEJFHffy/G0DAGm6Knxt+Nm0=;
-        b=Sr4diqUzzGrG8Tfh3cE00bpxNc1uRzLxlbDgVntSnu7HwnxxTBpslWEFP2iNuIg5oN
-         gUNaDZkdtjt2uRRqbmrPlFVa0gxIh3acAPweVp1NZI5YuXCXuznNlEp2vBqS+l8tRKyr
-         XZXSp9F41pL+B5Puh3dDmxuM08ic3T4ccSVekWuNeLWoA0N4zm7898WPBrLa3uy1G9a/
-         dy2YJ2T/UOK2Byfb/8BV0FU/gUgBHHQa1KiWxgW9Kyf5SoITbgOsJX3SdXMVUgAPBwfJ
-         ImWkmKCbrpNKyf6vV3tsTAPKyNYrmQDaqvvVtizc0makZXGWI7IU9ykY/htE+fsZVfEj
-         9lIw==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=o1kr5dP81HQmENaa+7qYDvZXmn1lN5OwzEgEVwXG0HI=;
+        b=MBGgV/BDtVnL0ZuCMnkUU2+zmb08PAZ41EdHYpsbLzf9O2B9NzmvE6jqkwpqnc9mHz
+         toD/YzWuMhvrzFDuHgDYm7lDgrb0cZIc5tsGiGZyuS8N983U+jcE7YjyajKbLdwXq/ba
+         TqK4JxWB/aPwH8kRnHBPat9PW+ItB+omsrKSova1cvUM9se8yjN/SdVJpxLejZEeCeIE
+         FYhr39UFdf9P6Lve8EyNYWptdnf8waXd9Eqc0ml8ViI2+VxCFot5jDiLt507pA2OHygT
+         1HOFldmbiN/xhwGZcF1a2A/zJfwok7loej7E9fvMMlBrCeAOEX3g2gFPeM9g3ab2+wX1
+         tpVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=RPfwrW1y+ZuoJ//tC+ShEJFHffy/G0DAGm6Knxt+Nm0=;
-        b=oV6Zf/XPBHSIBqCX9p6mDqAeP3wVOpDPI18yjvH8x5Dcty1SDZD3GtGGgwjSpL3Nif
-         l2kZ5m1583TvZ1PK6+OAv2EMgyudp70ADROUvJppp75iy1Sy3Va4FKO97Yd8kOz/eTpP
-         cD5w+u/FwgfdFVPKuBGTlG/5xX7c98SPvLTMcTr1XWyvT1lCtYdSWiXPshaQmxePVQTv
-         mQKHn7NBUl3ee/vvKm7FnCunDuTmf28bcrjbKMDAkK8lRnGzGeKxEu2fuMdFJinnxPyW
-         VYtyd755IO3Z/v7SauipIwpW1S5fEQxW3BzpzwRptlvoCW/J8PGGg3xpRbJo4HGi3L7u
-         jz9w==
-X-Gm-Message-State: AIVw110jfx4LmIzMLVzHy53FBVPJ8fX1Qw/8d/VW/5LSz5yz/AcglFm5
-        ljrMMkRrquEa9A==
-X-Received: by 10.99.121.133 with SMTP id u127mr8042744pgc.31.1499555368852;
-        Sat, 08 Jul 2017 16:09:28 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:49f8:bc86:d515:b7dd])
-        by smtp.gmail.com with ESMTPSA id p77sm13161994pfd.62.2017.07.08.16.09.27
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 08 Jul 2017 16:09:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     astian <astian@eclipso.at>
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
+         :content-transfer-encoding;
+        bh=o1kr5dP81HQmENaa+7qYDvZXmn1lN5OwzEgEVwXG0HI=;
+        b=jo5QJDvCg+4o2Ia/rdOqf06WKzAzE5mkC1c3AOqLBXtgkC3tGcFtZIPw2bYoiUGpmA
+         UF4BP00qcVG+Psom18SjLCEee+vV/btV8SlwL9rpxn0kkAmZrBNL5uixJC39J2R26MH4
+         ylTJiWRPDhZDoMTls00vWqUaFxjpdeR3koO0IOvDuItaEbnmu29Ehlej9kJ1n6+naC15
+         wI143HXlMZF0qlIO121OA7vX8qaJhLQcnVptCgHqKVKA56JVFay7yLvW4yn12ZjfdtQA
+         nIshb4ppO250P5rTXlibMSlwQjHwubgASBqh3G8BmYJcNhD2rtc/mjduPl/eXiR9Y+zh
+         cchg==
+X-Gm-Message-State: AIVw111Dn4Mqfd8Xtdo3iehBavhWgu28UQTBbZBCvxJrxtWRXSOMgMdE
+        SJsNrYUmABix0cmr0oI=
+X-Received: by 10.98.211.140 with SMTP id z12mr40032473pfk.231.1499584021049;
+        Sun, 09 Jul 2017 00:07:01 -0700 (PDT)
+Received: from unique-pc ([182.73.109.146])
+        by smtp.googlemail.com with ESMTPSA id 66sm12134414pgh.59.2017.07.09.00.06.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 09 Jul 2017 00:07:00 -0700 (PDT)
+Message-ID: <1499584028.5659.1.camel@gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2017, #02; Fri, 7)
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/4] Doc/config.txt: fix documentation for smtpEncryption
-References: <20170708203413.16442-1-astian@eclipso.at>
-        <20170708203413.16442-5-astian@eclipso.at>
-Date:   Sat, 08 Jul 2017 16:09:27 -0700
-In-Reply-To: <20170708203413.16442-5-astian@eclipso.at> (astian@eclipso.at's
-        message of "Sat, 8 Jul 2017 20:34:13 +0000")
-Message-ID: <xmqqbmoua5lk.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Date:   Sun, 09 Jul 2017 12:37:08 +0530
+In-Reply-To: <xmqqk23ia78v.fsf@gitster.mtv.corp.google.com>
+References: <xmqqa84gaw0l.fsf@gitster.mtv.corp.google.com>
+         <1499518240.1914.1.camel@gmail.com>
+         <xmqqk23ia78v.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-astian <astian@eclipso.at> writes:
+On Sat, 2017-07-08 at 15:33 -0700, Junio C Hamano wrote:
 
-> Stop saying that smtpEncryption (a configuration variable used by
-> git-send-email) is not usable in "sendemail.<identity>" subsections,
-> because that's false.
+> That is how a message that is BCC'ed to you is supposed to look
+> like, isn't it?
+May be not. rfc5322 (Internet Message Format) seems to clear the
+confusion,
 
-Hmph, does anybody know when this stopped being true, or was it
-incorrect from the very beginning?
+    There are three ways in which the "Bcc:" field is used.  In the first case,
+    when a message containing a "Bcc:" field is prepared to be sent, the "Bcc:"
+    line is removed even though all of the recipients (including those specified
+    in the "Bcc:" field) are sent a copy of the message.  In the second
+    case, recipients specified in the "To:" and "Cc:" lines each are sent
+    a copy of the message with the "Bcc:" line removed as above, but the
+    recipients on the "Bcc:" line get a separate copy of the message
+    containing a "Bcc:" line.
 
->
-> Signed-off-by: astian <astian@eclipso.at>
-> ---
->  Documentation/config.txt | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index d5c9c4cab..f40758c31 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2899,10 +2899,6 @@ sendemail.identity::
->  	values in the 'sendemail' section. The default identity is
->  	the value of `sendemail.identity`.
->  
-> -sendemail.smtpEncryption::
-> -	See linkgit:git-send-email[1] for description.  Note that this
-> -	setting is not subject to the 'identity' mechanism.
-> -
->  sendemail.smtpssl (deprecated)::
->  	Deprecated alias for 'sendemail.smtpEncryption = ssl'.
->  
-> @@ -2933,6 +2929,7 @@ sendemail.suppresscc::
->  sendemail.suppressFrom::
->  sendemail.to::
->  sendemail.smtpDomain::
-> +sendemail.smtpEncryption::
->  sendemail.smtpServer::
->  sendemail.smtpServerPort::
->  sendemail.smtpServerOption::
+Until recently, I have only witnessed the second case as a result of
+which I was confused. :)
+
+-- 
+Kaartic
+
