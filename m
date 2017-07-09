@@ -6,88 +6,88 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5044820357
-	for <e@80x24.org>; Sun,  9 Jul 2017 10:00:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C75CE20357
+	for <e@80x24.org>; Sun,  9 Jul 2017 10:08:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751906AbdGIKAs (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 06:00:48 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34720 "HELO cloud.peff.net"
+        id S1751774AbdGIKIq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 06:08:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34740 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751774AbdGIKAr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 06:00:47 -0400
-Received: (qmail 2992 invoked by uid 109); 9 Jul 2017 10:00:47 -0000
+        id S1751122AbdGIKIp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 06:08:45 -0400
+Received: (qmail 3433 invoked by uid 109); 9 Jul 2017 10:08:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Jul 2017 10:00:47 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Jul 2017 10:08:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32333 invoked by uid 111); 9 Jul 2017 10:00:58 -0000
+Received: (qmail 32460 invoked by uid 111); 9 Jul 2017 10:08:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Jul 2017 06:00:58 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Jul 2017 06:08:51 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jul 2017 06:00:45 -0400
-Date:   Sun, 9 Jul 2017 06:00:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jul 2017 06:08:38 -0400
+Date:   Sun, 9 Jul 2017 06:08:38 -0400
 From:   Jeff King <peff@peff.net>
-To:     Leo Razoumov <slonik.az@gmail.com>
-Cc:     Karthik Nayak <karthik.188@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 3/3] branch: set remote color in ref-filter branch immediately
-Message-ID: <20170709100045.neb5ovc776wnfphs@sigill.intra.peff.net>
-References: <20170709095708.moymrozmqdv2oixx@sigill.intra.peff.net>
+To:     Kyle Meyer <kyle@kyleam.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Sahil Dua <sahildua2305@gmail.com>, Eric Wong <e@80x24.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 6/7] reflog-walk: stop using fake parents
+Message-ID: <20170709100837.kr5fs2kva6bdrole@sigill.intra.peff.net>
+References: <20170707090507.ko2ygry7j4zv7t3s@sigill.intra.peff.net>
+ <20170707091407.nm4pm3bdvx6alohs@sigill.intra.peff.net>
+ <87van48cpu.fsf@kyleam.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170709095708.moymrozmqdv2oixx@sigill.intra.peff.net>
+In-Reply-To: <87van48cpu.fsf@kyleam.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We set the current and local branch colors at the top of the
-build_format() function. Let's do the same for the remote
-color. This saves a little bit of repetition, but more
-importantly it puts all of the color-setting in the same
-place. That makes it easier to see that we are coloring all
-possibilities.
+On Fri, Jul 07, 2017 at 11:54:05AM -0400, Kyle Meyer wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/branch.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+> Jeff King <peff@peff.net> writes:
+> 
+> >      Prior to this commit, we show both entries with
+> >      identical reflog messages. After this commit, we show
+> >      only the "comes back" entry. See the update in t3200
+> >      which demonstrates this.
+> >
+> >      Arguably either is fine, as the whole double-entry
+> >      thing is a bit hacky in the first place. And until a
+> >      recent fix, we truncated the traversal in such a case
+> >      anyway, which was _definitely_ wrong.
+> 
+> Yeah, I agree that the double-entry thing is a bit hacky and only
+> showing the "comes back" entry makes sense.
+> 
+> And with this change, I believe that the display of a rename event will
+> be the same for HEAD's log and the renamed branch's log, despite the
+> underlying entries having a different representation.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index ee4e93c3a..8a0595e11 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -338,7 +338,8 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %s%%(end)",
- 		    branch_get_color(BRANCH_COLOR_CURRENT),
- 		    branch_get_color(BRANCH_COLOR_LOCAL));
--	strbuf_addf(&remote, "  ");
-+	strbuf_addf(&remote, "  %s",
-+		    branch_get_color(BRANCH_COLOR_REMOTE));
- 
- 	if (filter->verbose) {
- 		struct strbuf obname = STRBUF_INIT;
-@@ -361,17 +362,17 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 		else
- 			strbuf_addf(&local, "%%(if)%%(upstream:track)%%(then)%%(upstream:track) %%(end)%%(contents:subject)");
- 
--		strbuf_addf(&remote, "%s%%(align:%d,left)%s%%(refname:lstrip=2)%%(end)%s"
-+		strbuf_addf(&remote, "%%(align:%d,left)%s%%(refname:lstrip=2)%%(end)%s"
- 			    "%%(if)%%(symref)%%(then) -> %%(symref:short)"
- 			    "%%(else) %s %%(contents:subject)%%(end)",
--			    branch_get_color(BRANCH_COLOR_REMOTE), maxwidth, quote_literal_for_format(remote_prefix),
-+			    maxwidth, quote_literal_for_format(remote_prefix),
- 			    branch_get_color(BRANCH_COLOR_RESET), obname.buf);
- 		strbuf_release(&obname);
- 	} else {
- 		strbuf_addf(&local, "%%(refname:lstrip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
- 			    branch_get_color(BRANCH_COLOR_RESET));
--		strbuf_addf(&remote, "%s%s%%(refname:lstrip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
--			    branch_get_color(BRANCH_COLOR_REMOTE), quote_literal_for_format(remote_prefix),
-+		strbuf_addf(&remote, "%s%%(refname:lstrip=2)%s%%(if)%%(symref)%%(then) -> %%(symref:short)%%(end)",
-+			    quote_literal_for_format(remote_prefix),
- 			    branch_get_color(BRANCH_COLOR_RESET));
- 	}
- 
--- 
-2.13.2.1066.gabaed60bd
+There's one minor difference: the numbering for HEAD will show a "hole"
+in the reflog. So on the branch you might see something like:
+
+  $ git log -g --oneline other
+  269000b other@{0}: Branch: renamed refs/heads/master to refs/heads/other
+  269000b other@{1}: commit (initial): foo
+
+but the HEAD reflog will show:
+
+  $ git log -g --oneline HEAD
+  269000b HEAD@{0}: Branch: renamed refs/heads/master to refs/heads/other
+  269000b HEAD@{2}: commit (initial): foo
+
+This is pretty minor. I do wonder if there are other bits that might be
+confused, though. Looking at the hole is odd:
+
+  $ git show --oneline HEAD@{1}
+  warning: Log for ref HEAD unexpectedly ended on Sun, 9 Jul 2017 06:07:05 -0400.
+  269000b foo
+
+Despite the warning, we do seem to correctly walk past it, though:
+
+  $ git show --oneline HEAD@{2}
+  269000b foo
+
+-Peff
