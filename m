@@ -6,88 +6,101 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C75CE20357
-	for <e@80x24.org>; Sun,  9 Jul 2017 10:08:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7741F20357
+	for <e@80x24.org>; Sun,  9 Jul 2017 10:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751774AbdGIKIq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 06:08:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34740 "HELO cloud.peff.net"
+        id S1751824AbdGIKNy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 06:13:54 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34756 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1751122AbdGIKIp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 06:08:45 -0400
-Received: (qmail 3433 invoked by uid 109); 9 Jul 2017 10:08:39 -0000
+        id S1751667AbdGIKNx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 06:13:53 -0400
+Received: (qmail 3762 invoked by uid 109); 9 Jul 2017 10:13:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Jul 2017 10:08:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Jul 2017 10:13:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32460 invoked by uid 111); 9 Jul 2017 10:08:51 -0000
+Received: (qmail 32481 invoked by uid 111); 9 Jul 2017 10:14:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Jul 2017 06:08:51 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Jul 2017 06:14:04 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jul 2017 06:08:38 -0400
-Date:   Sun, 9 Jul 2017 06:08:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Jul 2017 06:13:51 -0400
+Date:   Sun, 9 Jul 2017 06:13:51 -0400
 From:   Jeff King <peff@peff.net>
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Sahil Dua <sahildua2305@gmail.com>, Eric Wong <e@80x24.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 6/7] reflog-walk: stop using fake parents
-Message-ID: <20170709100837.kr5fs2kva6bdrole@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
+        Sahil Dua <sahildua2305@gmail.com>, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v2 3/7] log: do not free parents when walking reflog
+Message-ID: <20170709101351.qcwgtzly72wwvwmq@sigill.intra.peff.net>
 References: <20170707090507.ko2ygry7j4zv7t3s@sigill.intra.peff.net>
- <20170707091407.nm4pm3bdvx6alohs@sigill.intra.peff.net>
- <87van48cpu.fsf@kyleam.com>
+ <20170707090734.x2ki7lluawf66g4a@sigill.intra.peff.net>
+ <xmqqwp7kb2ap.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87van48cpu.fsf@kyleam.com>
+In-Reply-To: <xmqqwp7kb2ap.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 07, 2017 at 11:54:05AM -0400, Kyle Meyer wrote:
+On Fri, Jul 07, 2017 at 10:10:54AM -0700, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > diff --git a/builtin/log.c b/builtin/log.c
+> > index 8ca1de9894..9c8bb3b5c3 100644
+> > --- a/builtin/log.c
+> > +++ b/builtin/log.c
+> > @@ -374,9 +374,9 @@ static int cmd_log_walk(struct rev_info *rev)
+> >  		if (!rev->reflog_info) {
+> >  			/* we allow cycles in reflog ancestry */
+> >  			free_commit_buffer(commit);
+> > +			free_commit_list(commit->parents);
+> > +			commit->parents = NULL;
 > 
-> >      Prior to this commit, we show both entries with
-> >      identical reflog messages. After this commit, we show
-> >      only the "comes back" entry. See the update in t3200
-> >      which demonstrates this.
-> >
-> >      Arguably either is fine, as the whole double-entry
-> >      thing is a bit hacky in the first place. And until a
-> >      recent fix, we truncated the traversal in such a case
-> >      anyway, which was _definitely_ wrong.
-> 
-> Yeah, I agree that the double-entry thing is a bit hacky and only
-> showing the "comes back" entry makes sense.
-> 
-> And with this change, I believe that the display of a rename event will
-> be the same for HEAD's log and the renamed branch's log, despite the
-> underlying entries having a different representation.
+> After step 6/7, we no longer "allow cycles in reflog ancestry", as
+> there will be no reflog ancestry to speak of ;-), so it would be
+> nice to remove the comment above in that step.  But alternatively,
+> we can rephrase the comment here, to say something like "the same
+> commit can be shown multiple times while showing entries from the
+> reflog" instead.
 
-There's one minor difference: the numbering for HEAD will show a "hole"
-in the reflog. So on the branch you might see something like:
+I actually think the comment is a bit obtuse in the first place. The
+real issue is that we show commits multiple times. That's caused by
+cycles, yes, but also by us clearing the SEEN flag. ;)
 
-  $ git log -g --oneline other
-  269000b other@{0}: Branch: renamed refs/heads/master to refs/heads/other
-  269000b other@{1}: commit (initial): foo
+Maybe this on top?
 
-but the HEAD reflog will show:
+-- >8 --
+Subject: [PATCH] log: clarify comment about reflog cycles
 
-  $ git log -g --oneline HEAD
-  269000b HEAD@{0}: Branch: renamed refs/heads/master to refs/heads/other
-  269000b HEAD@{2}: commit (initial): foo
+When we're walking reflogs, we leave the commit buffer and
+parents in place. A comment explains that this is due to
+"cycles". But the interesting thing is the unsaid
+implication: that the cycles (plus our clearing of the SEEN
+flag) will cause us to show commits multiple times. Let's
+spell it out.
 
-This is pretty minor. I do wonder if there are other bits that might be
-confused, though. Looking at the hole is odd:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/log.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-  $ git show --oneline HEAD@{1}
-  warning: Log for ref HEAD unexpectedly ended on Sun, 9 Jul 2017 06:07:05 -0400.
-  269000b foo
+diff --git a/builtin/log.c b/builtin/log.c
+index 9c8bb3b5c..630d6cff2 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -372,7 +372,10 @@ static int cmd_log_walk(struct rev_info *rev)
+ 			 */
+ 			rev->max_count++;
+ 		if (!rev->reflog_info) {
+-			/* we allow cycles in reflog ancestry */
++			/*
++			 * We may show a given commit multiple times when
++			 * walking the reflogs.
++			 */
+ 			free_commit_buffer(commit);
+ 			free_commit_list(commit->parents);
+ 			commit->parents = NULL;
+-- 
+2.13.2.1066.gabaed60bd
 
-Despite the warning, we do seem to correctly walk past it, though:
-
-  $ git show --oneline HEAD@{2}
-  269000b foo
-
--Peff
