@@ -8,62 +8,58 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF066202AE
-	for <e@80x24.org>; Sun,  9 Jul 2017 17:55:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7794202AE
+	for <e@80x24.org>; Sun,  9 Jul 2017 18:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752467AbdGIRzd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 13:55:33 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35300 "EHLO
+        id S1752522AbdGIS1e (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 14:27:34 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35539 "EHLO
         mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752335AbdGIRzb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 13:55:31 -0400
-Received: by mail-pg0-f68.google.com with SMTP id d193so10082764pgc.2
-        for <git@vger.kernel.org>; Sun, 09 Jul 2017 10:55:31 -0700 (PDT)
+        with ESMTP id S1752430AbdGIS1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 14:27:34 -0400
+Received: by mail-pg0-f68.google.com with SMTP id d193so10131900pgc.2
+        for <git@vger.kernel.org>; Sun, 09 Jul 2017 11:27:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=CvbXDwVXKVUthoT5rjxCSMwZkcDOvY16SJ98jAKjsYs=;
-        b=OMBRiZ/vElMw6gZ0TNKmucWb2K8T4pLLNfA3biiNbgKdLrvIqOxukZaZiwh3wr9mYs
-         s7FYcutHF1zDw7d5yz8FYR58AUAbRJskut1r+RAnXi5fkxn6mqS4qJF+EgSQmr3+zaNs
-         DBzXCq5Tygb/8SkY/mGhVuWbIGOYIR57mWmn69EKjrotu3KjfTJwY+Lla5xOqfB9vSuH
-         YFoh1/VIyAUrHBhl+EyQdgKKn4PUYGmKBUoje3wHirSkQ1S9YpRys1RRLebsF7P4K3/O
-         pgHeJfeLEiGTGPEWDbSat2joI+9Fc0T+OmsLHcCV32UsHra3g1M1q9RuD3ulakVSl9Fs
-         +dJA==
+        h=message-id:subject:from:to:date:disposition-notification-to
+         :mime-version:content-transfer-encoding;
+        bh=vInOaoaC0yvbcxM+TapHQvry58pTJNgeSTul3mlI0Tc=;
+        b=Vd434173PnXGtN90aLcwGpS6WTwgOFfwfItCsWWvAXTcU0vQ5ene73QeSXamQSeZEl
+         VWTas/Sdpibp9DOuvJJqIrDeloot9KodBHsfEdChNHz+B4cxDnrdXyVd3KL1o6hY1v+C
+         uAqW4PTFsRSOvOyU9753LUzWCDVmcUy7cMb7VoMoVHK5A87QW3tETrOJg2QyTA2E5j+a
+         SBXudQHkEHJQ3jMWhofg6fpEEGnGf53bjKAMlCFnPQF9kpKcEMXHlco5BHfV5B8lgf09
+         xLWB9NMFUf/WP/DoplSb+wdpJ2Qne+tVW1LivxUTv0PSGCgvMJf954F8OiBLBItTy5gr
+         pjPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=CvbXDwVXKVUthoT5rjxCSMwZkcDOvY16SJ98jAKjsYs=;
-        b=L7PsD17uN/b/2a6/mseVgT5tP97lRiQNfhU3nWUsru6MWOKWRtlkmCVqn1o+jmVuRM
-         kG46RoMN4ZWt0tP2wPDCpkhm0/oKo1S1Oj0NTZkId2Ts+EX38oX2SSGJp1oehoVK6DnL
-         Y4LsPBZbDLr2XAVkpxt7vCZC91oQUp/fp4cyP40BV00riBVvMTU9XZMHwIA1e0SwoXTs
-         yaEwYahKfTyMTy5a7QMflCz5ea/bZokoVw15pZHwXO65/Bj9l6l7cDh0G15o7b7HiSwQ
-         UZr7a6jw34cXatCGRaXN4RDpL/kmuUZmf4Opu+hEj4vi2/AkGcz+D7QghOHm+BhiC2d5
-         g2Rw==
-X-Gm-Message-State: AIVw111huOaixH01sS+JpqkMGvLGOoIBUhNK9sW5J0bZDcfkxA9TpDj8
-        3freNvpnL2NrUA==
-X-Received: by 10.98.86.193 with SMTP id h62mr40975688pfj.205.1499622931138;
-        Sun, 09 Jul 2017 10:55:31 -0700 (PDT)
+        h=x-gm-message-state:message-id:subject:from:to:date
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=vInOaoaC0yvbcxM+TapHQvry58pTJNgeSTul3mlI0Tc=;
+        b=Incwcy4BKvYrsGkna/VIm5ROktgX1adj4TZhv1G2ad046k3f4teX37l4dIJ4IOZBK6
+         lTwkj9Am/13a7I0oFJw8oYOQvNA5ycW5Bh1Ov3Tlnjba69Ev3Dz9P3vy5JJbMW+FUQyO
+         byj4nF451dnJ/OM0M8SjhDLKSbhvKyPkdyEkns1YBFkAgj7cGxv9aIWwcrXVgQVJduLv
+         YMiKJa6e8XGR2p2fBG2Ay2obPluCMzcdA4hcZbraT3Q0wj7rrSug7ndEpOqI3Pq+DnhF
+         0mLuEmElsce+Ztxr2xe+TlPZWcBIVhICP55dyS+X+PDkrKk4/3N40l6YR1SpCeyKwkw3
+         4dtg==
+X-Gm-Message-State: AIVw110BIkcYYxfIB99M0FvP14l882FJjNW6G19bkHDDbe7Rnw//l+q1
+        SWCRGQJj4BToub3FCMk=
+X-Received: by 10.84.232.7 with SMTP id h7mr14154591plk.193.1499624853099;
+        Sun, 09 Jul 2017 11:27:33 -0700 (PDT)
 Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id u62sm19580767pfa.18.2017.07.09.10.55.28
+        by smtp.googlemail.com with ESMTPSA id n3sm1530616pfb.87.2017.07.09.11.27.31
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 09 Jul 2017 10:55:30 -0700 (PDT)
-Message-ID: <1499622873.8552.2.camel@gmail.com>
-Subject: Re: [PATCH 1/2] commit-template: remove outdated notice about
- explicit paths
+        Sun, 09 Jul 2017 11:27:32 -0700 (PDT)
+Message-ID: <1499624859.8552.9.camel@gmail.com>
+Subject: "Branch exists" error while trying to rename a non-existing branch
+ to an existing one
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org
-Date:   Sun, 09 Jul 2017 23:24:33 +0530
-In-Reply-To: <20170630121221.3327-1-kaarticsivaraam91196@gmail.com>
-References: <1498792731.2063.5.camel@gmail.com>
-         <20170630121221.3327-1-kaarticsivaraam91196@gmail.com>
+To:     git@vger.kernel.org
+Date:   Sun, 09 Jul 2017 23:57:39 +0530
 Content-Type: text/plain; charset="ISO-8859-15"
 X-Mailer: Evolution 3.22.6-1 
 Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Cyberoam-smtpxy-version: 1.0.6.3
 X-Cyberoam-AV-Policy: default
 X-CTCH-Error: Unable to connect local ctasd
@@ -72,27 +68,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2017-06-30 at 17:42 +0530, Kaartic Sivaraam wrote:
-> The notice that "git commit <paths>" default to "git commit
-> --only <paths>" was there since 756e3ee0 ("Merge branch
-> 'jc/commit'", 2006-02-14).  Back then, existing users of Git
-> expected the command doing "git commit --include <paths>", and
-> after the behaviour of the command was changed to align with
-> other people's "$scm commit <paths>", the text was added to help
-> them transition their expectations.
-> 
-> Remove the message that now has outlived its usefulness.
-> 
-It just recently dawned on me that the message,
+Hello all,
 
-    Explicit paths specified without -i or -o; assuming --only paths..
+I recently got the following error message by change as a result of the
+command,
 
-is translated and "git grep" shows it's presence in the files present
-in the 'po' directory. What should be done to them? Should the
-translators be notified? 
+    $ git branch -m no-branch master
+    fatal: A branch named 'master' already exists.
 
-BTW what does the word 'po' stand for in the first place? I digged a
-bit but couldn't find much from the log.
+Note: no-branch is an hypothetical branch that doesn't exist.
+
+Shouldn't I get a 'no-branch' doesn't exist before that? Wouldn't this
+behaviour make the users search for the non-existing 'no-branch' in
+their repo?
+
+I tried digging the implementation a little and what I could interpret
+from it is,
+
+    * only the validity of new branch name (master, in the above case)
+    is checked
+    * checking for existence of the branch being renamed(no-branch) is
+    not done at all. It seems to be left to the lower level commands to
+    identify.
+
+I'm puzzled by seeing this. Why isn't there any check for the existence
+of the branch being renamed and warning the user about that first?
 
 -- 
 Kaartic
