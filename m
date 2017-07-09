@@ -2,88 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D63A202AE
-	for <e@80x24.org>; Sun,  9 Jul 2017 13:25:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0532202AE
+	for <e@80x24.org>; Sun,  9 Jul 2017 13:26:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752333AbdGINZt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 09:25:49 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33645 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752313AbdGINZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 09:25:48 -0400
-Received: by mail-pf0-f193.google.com with SMTP id e199so10962500pfh.0
-        for <git@vger.kernel.org>; Sun, 09 Jul 2017 06:25:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nTUzjEM/O9/jkWtsmgpsYvKMKtBQ903zyPq/zRcLmcc=;
-        b=u8BzAhbuRd99/yF/mFKOvYgFPr7KV0MxrLE/MeGEPPGnEfLjR+icOkVgLAzwlnKJMR
-         XdNTIwoYs1O1xzwyFeG6wm3lsOcXbFZjFRmd7RNQAwM2I0lsZl7eq3Ndp0S74fHJNTud
-         OmdkXxbQmts1RHcrc+jLvg8isE2c95xSr1iQqxcQuM2Ps2sfQE0UW4jrsLc+EYHjJbzu
-         mfYwHMsP3xXkLrRjgHcXVQWxr/MNvxM2CvV9uv43Tz6PiJuKt5MRwPHTWLBQ/o1m3swG
-         iaBg/OzyyB3NqbrQkD1ibip3VPQBh4f8ihXYafgvj4yssinsEjr+9q8jmPzn56c2BUqR
-         jlUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nTUzjEM/O9/jkWtsmgpsYvKMKtBQ903zyPq/zRcLmcc=;
-        b=HXQSoUtnA1UqcGLGsEO38z2oEsbWmhUAZxX39+xK6M81IBXk0b3BLVkMRolEm4UHTM
-         6OlyjHD0AvHrZmIJKjgdULU8/oYWqW3XEnZNIsc0m1p+OcxiGMJe3Ce1E5H55GDqJTKe
-         XCKVCLA52UNtnXPHPvZhoAgHX38986pYQbWbKaLYZTQQe43FVDBFAH9G/hQwKcetrL0V
-         IGMH0dXH3kN+MBKeunqTFtquZYrXKbG/B9JvxAsof3G5f86zZClz4mwpR0S1N2WEpUpy
-         KZAt3/edqH9bncqKh6IsmLBwSMVt+mQ/X98DxX2MVtsYNQGjM1Dvpb4775vwANiUutMm
-         DyIg==
-X-Gm-Message-State: AIVw111v8BlTFTsuZPFGVeqz0V71A//2li9oCn+D0dXeG6WZP+0HsLq6
-        j4KVVzPvdpTuEz2xslWqzALAfUkh8JMK
-X-Received: by 10.98.222.3 with SMTP id h3mr39440665pfg.93.1499606747640; Sun,
- 09 Jul 2017 06:25:47 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.163.102 with HTTP; Sun, 9 Jul 2017 06:25:46 -0700 (PDT)
-In-Reply-To: <4d2c274a-f6cb-6ea5-304f-51a3152cc436@web.de>
-References: <4d2c274a-f6cb-6ea5-304f-51a3152cc436@web.de>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 9 Jul 2017 15:25:46 +0200
-Message-ID: <CAN0heSr0qJv7VqaasLGNFbNDbqYOoqmi3FyLkb=co4E10Y9VOg@mail.gmail.com>
-Subject: Re: [PATCH] use DIV_ROUND_UP
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+        id S1752350AbdGIN0U (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 09:26:20 -0400
+Received: from mout.web.de ([212.227.15.14]:59736 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752317AbdGIN0T (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 09:26:19 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MMZck-1dbLd20wTm-008KLK; Sun, 09
+ Jul 2017 15:26:06 +0200
+Subject: Re: [PATCH] sha1_file: add slash once in
+ for_each_file_in_obj_subdir()
+To:     Jeff King <peff@peff.net>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <f59c8256-716b-9305-2a4f-d4fe49f666ff@web.de>
+ <20170709110016.nusy62u2morqvwmm@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f83adfa6-89f9-9c0e-bd69-eca56d3fcf25@web.de>
+Date:   Sun, 9 Jul 2017 15:26:03 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
+MIME-Version: 1.0
+In-Reply-To: <20170709110016.nusy62u2morqvwmm@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:9EkUftF5qIPVAlNoMY34dNJZI13G0YDiEqQsigQbz8p+3x9B+mn
+ W6uzRxKl67hQnhLVbxMzeBNfeg/cnr4q6eOoIFwbOAYljXIUgQE+hc24mBZEs2hfamW/K+9
+ pG8YDsWn7FEK9qoXf49ekj8sLq63aQP9sW+Y+9sosVcAwjfPk8jCin0BXkpgA/XW+3mhYd6
+ XZhWFb8NFKyTqtx79PI8Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:x9cmALZiDIU=:GBJTfueaYNhC0qYwpFUrnk
+ cGTU2p3YsRB1oSWVFeveGcTVuMRLk2gAfME633nSpFIft1Ujkh7pBJlHDxwbSRoLCwWrXGsoj
+ bPGKzzngRNGxjTb1+jpGiIBVeO0lw5SDgj/9KyvT6DVDyEIvXhNmCWu7ktq32u6Td/jo1NqBt
+ 4orvYYJvrjSyco/iSjunvmLyqN4rexk4O34sJy38SBpfBrRFmKxXdVjGjHaGR/Dl0ac31ImjY
+ nWmAznXWt/b3sDYm4HQJcfT/OozHeMPehJjiPo/omtdMmN/+N+IFyvWSux7du/bUEDubK/ZVT
+ r4DnPV91FVw+6RZrNJDEw7F+DGriz2DdHNjJKAuJ7/a9zgZUcYY85gKhIALU0EyJlJsgfuCf6
+ VJOkDKoE/oN0izFJgtINH+IlzN1nzt9cqEGdNRAdmFp9sVeJFfGr8wBz0tQy3yAmVmNnaIIn2
+ ltx+SBfApwvGBg9dqrDMbb2X1K5QIRKc7/Ghgn8SRgojR8U3P9rcmnqWPGYiV+Fb0AWEC3Q8D
+ vYh1Q02Rfn5p9ChdxTuGXjXWAqhvqGYHV85vWe6NgNN9zQTd6VfBt2pa6PiPMEqbXma1YvB4i
+ qmbOmysjW7gjLKUMJm7gNyDAsPuj4xiXLNMWrDTeE19Uv525KiGGZsizsY96Ql1qUnlV861Jt
+ qxAQNnI+HrT3BrjzWVfYPPYJiLHDPjuxoI0EVgqpEJC46WBfSWf2/ywNqwcl69gJruIUyibGj
+ qgujo12mnNnvR8R+lUeSrQyW13PyR1z/EhMMzKSDfIgrqDZNG3+0GcbMRQuWx/QjWoY0ZhxSq
+ 6vTVZoo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8 July 2017 at 12:35, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Convert code that divides and rounds up to use DIV_ROUND_UP to make the
-> intent clearer and reduce the number of magic constants.
-...
-> diff --git a/sha1_name.c b/sha1_name.c
-> index e7f7b12ceb..8c513dbff6 100644
-> --- a/sha1_name.c
-> +++ b/sha1_name.c
-> @@ -492,7 +492,7 @@ int find_unique_abbrev_r(char *hex, const unsigned ch=
-ar *sha1, int len)
->                  * together we need to divide by 2; but we also want to r=
-ound
->                  * odd numbers up, hence adding one before dividing.
->                  */
-> -               len =3D (len + 1) / 2;
-> +               len =3D DIV_ROUND_UP(len, 2);
+Am 09.07.2017 um 13:00 schrieb Jeff King:
+> On Sat, Jul 08, 2017 at 10:59:06AM +0200, René Scharfe wrote:
+> 
+>> Add the slash between loose object subdirectory and file name just once
+>> outside the loop instead of overwriting it with each readdir call.
+>> Redefine baselen as the length with that slash, and add dirlen for the
+>> length without it.  The result is slightly less wasteful and can use the
+>> the cheaper strbuf_addstr instead of strbuf_addf without losing clarity.
+> 
+> This patch looks correct to me.
+> 
+> I'm a little lukewarm on it overall, though. I'd be shocked if the
+> efficiency change is measurable. What I really care about is whether the
+> result is easier to read or not.
+> 
+> On the plus side, this moves an invariant out of the loop. On the minus
+> side, it has to introduce an extra variable for "length we add on to"
+> versus "dir length to pass to the subdir_cb". That's not rocket science,
+> but it does slightly complicate things (though I note we already have
+> "origlen", so this is bumping us from 2 to 3 length variables, not 1 to
+> 2).
 
-Since the addition is now an implementation detail of DIV_ROUND_UP,
-should the comment be adjusted, maybe simply by removing ", hence
-adding one before dividing"?
+Admittedly this is more of an OCD thing.  Overwriting a character 200
+times or parsing a format string don't very long compared to the rest
+of the function, but it's a bit itchy.
 
-Or perhaps even better, "... divide by 2; but since len might be odd,
-we need to make sure we round up as we divide". My thinking being,
-we're not actually rounding odd numbers up (presumably to even
-numbers), but we're rounding the result of the division up (to the
-smallest larger integer).
+René
