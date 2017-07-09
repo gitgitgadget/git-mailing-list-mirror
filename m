@@ -2,89 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65CFB202AE
-	for <e@80x24.org>; Sun,  9 Jul 2017 17:05:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF066202AE
+	for <e@80x24.org>; Sun,  9 Jul 2017 17:55:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752225AbdGIRFw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 13:05:52 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34958 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752146AbdGIRFv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 13:05:51 -0400
-Received: by mail-pg0-f51.google.com with SMTP id j186so38114061pge.2
-        for <git@vger.kernel.org>; Sun, 09 Jul 2017 10:05:51 -0700 (PDT)
+        id S1752467AbdGIRzd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 13:55:33 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35300 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752335AbdGIRzb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 13:55:31 -0400
+Received: by mail-pg0-f68.google.com with SMTP id d193so10082764pgc.2
+        for <git@vger.kernel.org>; Sun, 09 Jul 2017 10:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=tupx4SKNNMaBbZJd9pupJ6c0X3NaYnqUsUJg+Fdmx9c=;
-        b=RnG9z8rjTHmrTh8UZ3ePNl9sU44cHgVHD8vHI+kJEa7Alou0WgvIyKr6vz7XU0+6rK
-         6oQnONHiLQQfdPK0q56P2g0fEV7iWM+3qUB0c66MksO8eZTjDTVM2+budIzmB3pYsOm1
-         kzEpV75pxFgy6CY/H+Xp3QtPGgVDSJ64MvBOmzkM5GgkSC6fEhX0kA+f3suJtz5crJFb
-         1GgEmwz4yR0geWhgb2dWhDqhJkIwYxtFPv/BJYWVx9rmWAGVdw8Snue1qMh9jd9Q+G8a
-         RxtmBjg93xlMyZqz7dbq+5xJ5ahb/KkKhhxn/PCuGM9lolNBEvkzLmEre6X9ABnl5gi6
-         04PA==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :disposition-notification-to:mime-version:content-transfer-encoding;
+        bh=CvbXDwVXKVUthoT5rjxCSMwZkcDOvY16SJ98jAKjsYs=;
+        b=OMBRiZ/vElMw6gZ0TNKmucWb2K8T4pLLNfA3biiNbgKdLrvIqOxukZaZiwh3wr9mYs
+         s7FYcutHF1zDw7d5yz8FYR58AUAbRJskut1r+RAnXi5fkxn6mqS4qJF+EgSQmr3+zaNs
+         DBzXCq5Tygb/8SkY/mGhVuWbIGOYIR57mWmn69EKjrotu3KjfTJwY+Lla5xOqfB9vSuH
+         YFoh1/VIyAUrHBhl+EyQdgKKn4PUYGmKBUoje3wHirSkQ1S9YpRys1RRLebsF7P4K3/O
+         pgHeJfeLEiGTGPEWDbSat2joI+9Fc0T+OmsLHcCV32UsHra3g1M1q9RuD3ulakVSl9Fs
+         +dJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:disposition-notification-to:mime-version
          :content-transfer-encoding;
-        bh=tupx4SKNNMaBbZJd9pupJ6c0X3NaYnqUsUJg+Fdmx9c=;
-        b=Ma3zq3H5llXprS0Wkp6F+B4iH/SqBXJFNt22Lup8Ue/aMFInazaRuuGt30ultiDEaw
-         e9/c0awn5H/0CD/Wa9r3HYC2QrllV3UfiJtprX0DCW9wb4uxJHUE8D+Do3A+CKZN3Vwq
-         tngzHIfUEkOftYNXHstaIigTVMILX2akhOrwzZrVXThK/fjFQY/cdpMQt+WUa49+loZM
-         uOoF5HXIOjmokI6xZJsh/m1Ibo1sstYmZA4T3YA8CsT54iQ6pjWfAHik2TzzuzVYPv7/
-         C8NnvHlXTt9+ITXLm9KnNqXbrMGjZ8gGr158FTECf1zKx1ivPh8LPWr8ARoqwVjpnjw3
-         Q+yA==
-X-Gm-Message-State: AIVw112w/OGjxsGGGO0+Gc1Florsj7oVDrRGfbaAOmwgHuBzdiK8UHG0
-        Jih7Q+3r81vTZhCj0Xk=
-X-Received: by 10.84.131.71 with SMTP id 65mr13907351pld.35.1499619950791;
-        Sun, 09 Jul 2017 10:05:50 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:dc1e:60e1:7751:9c92])
-        by smtp.gmail.com with ESMTPSA id v17sm23976776pgn.4.2017.07.09.10.05.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 09 Jul 2017 10:05:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Andreas Schwab <schwab@linux-m68k.org>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] apply: use strcmp(3) for comparing strings in gitdiff_verify_name()
-References: <d1bb978b-a7df-48a8-15c8-80730c77e11c@web.de>
-        <87tw2ngp94.fsf@linux-m68k.org>
-        <e46a7de9-3e0e-4eeb-c9a3-a8b5f22620b4@web.de>
-        <87o9svgia8.fsf@linux-m68k.org>
-        <df3bd047-6ddd-c120-54dd-4165d2257bb0@web.de>
-        <87lgnxpyzu.fsf@linux-m68k.org>
-        <52d0ac32-7b3d-990d-8ad9-42ef9ee8d8cf@web.de>
-Date:   Sun, 09 Jul 2017 10:05:49 -0700
-In-Reply-To: <52d0ac32-7b3d-990d-8ad9-42ef9ee8d8cf@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 9 Jul 2017 15:19:53 +0200")
-Message-ID: <xmqqpod98rrm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        bh=CvbXDwVXKVUthoT5rjxCSMwZkcDOvY16SJ98jAKjsYs=;
+        b=L7PsD17uN/b/2a6/mseVgT5tP97lRiQNfhU3nWUsru6MWOKWRtlkmCVqn1o+jmVuRM
+         kG46RoMN4ZWt0tP2wPDCpkhm0/oKo1S1Oj0NTZkId2Ts+EX38oX2SSGJp1oehoVK6DnL
+         Y4LsPBZbDLr2XAVkpxt7vCZC91oQUp/fp4cyP40BV00riBVvMTU9XZMHwIA1e0SwoXTs
+         yaEwYahKfTyMTy5a7QMflCz5ea/bZokoVw15pZHwXO65/Bj9l6l7cDh0G15o7b7HiSwQ
+         UZr7a6jw34cXatCGRaXN4RDpL/kmuUZmf4Opu+hEj4vi2/AkGcz+D7QghOHm+BhiC2d5
+         g2Rw==
+X-Gm-Message-State: AIVw111huOaixH01sS+JpqkMGvLGOoIBUhNK9sW5J0bZDcfkxA9TpDj8
+        3freNvpnL2NrUA==
+X-Received: by 10.98.86.193 with SMTP id h62mr40975688pfj.205.1499622931138;
+        Sun, 09 Jul 2017 10:55:31 -0700 (PDT)
+Received: from unique-pc ([182.73.109.146])
+        by smtp.googlemail.com with ESMTPSA id u62sm19580767pfa.18.2017.07.09.10.55.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 09 Jul 2017 10:55:30 -0700 (PDT)
+Message-ID: <1499622873.8552.2.camel@gmail.com>
+Subject: Re: [PATCH 1/2] commit-template: remove outdated notice about
+ explicit paths
+From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org
+Date:   Sun, 09 Jul 2017 23:24:33 +0530
+In-Reply-To: <20170630121221.3327-1-kaarticsivaraam91196@gmail.com>
+References: <1498792731.2063.5.camel@gmail.com>
+         <20170630121221.3327-1-kaarticsivaraam91196@gmail.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+X-Mailer: Evolution 3.22.6-1 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Cyberoam-smtpxy-version: 1.0.6.3
+X-Cyberoam-AV-Policy: default
+X-CTCH-Error: Unable to connect local ctasd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren√© Scharfe <l.s.r@web.de> writes:
+On Fri, 2017-06-30 at 17:42 +0530, Kaartic Sivaraam wrote:
+> The notice that "git commit <paths>" default to "git commit
+> --only <paths>" was there since 756e3ee0 ("Merge branch
+> 'jc/commit'", 2006-02-14).††Back then, existing users of Git
+> expected the command doing "git commit --include <paths>", and
+> after the behaviour of the command was changed to align with
+> other people's "$scm commit <paths>", the text was added to help
+> them transition their expectations.
+> 
+> Remove the message that now has outlived its usefulness.
+> 
+It just recently dawned on me that the message,
 
-> I wonder when we can begin to target C99 in git's source, though. :)
+    Explicit paths specified without -i or -o; assuming --only paths..
 
-Let's get the ball rolling by starting to use some of the useful
-features like designated initializers, perhaps, in a small, critical
-and reasonably stable part of the system that anybody must compile,
-leave it in one full release cycle or two, and when we hear nobody
-complains, introduce it en masse for the remainder of the system?
+is translated and "git grep" shows it's presence in the files present
+in the 'po' directory. What should be done to them? Should the
+translators be notified?†
 
-That way, we will see if there are people who need pre-C99 soon
-enough, and we won't have to scramble reverting too many changes
-when it happens.
+BTW what does the word 'po' stand for in the first place? I digged a
+bit but couldn't find much from the log.
 
+-- 
+Kaartic
