@@ -2,92 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E37B202AE
-	for <e@80x24.org>; Sun,  9 Jul 2017 12:20:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 288A4202AE
+	for <e@80x24.org>; Sun,  9 Jul 2017 12:38:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752139AbdGIMUk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 08:20:40 -0400
-Received: from mout.web.de ([212.227.15.14]:59028 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752081AbdGIMUj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 08:20:39 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lwq4m-1djnFe0LqC-016L61; Sun, 09
- Jul 2017 14:20:30 +0200
-Subject: Re: [PATCH] apply: use strcmp(3) for comparing strings in
- gitdiff_verify_name()
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Git List <git@vger.kernel.org>
+        id S1752255AbdGIMhx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Jul 2017 08:37:53 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:41013 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752146AbdGIMhv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Jul 2017 08:37:51 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3x57Cr4MrQz1qsCM;
+        Sun,  9 Jul 2017 14:37:43 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 3x57Cq3Hpqz3jgY8;
+        Sun,  9 Jul 2017 14:37:43 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id v3oseHbP-qoD; Sun,  9 Jul 2017 14:37:42 +0200 (CEST)
+X-Auth-Info: TlYODJWjDxJ7TXcso5n263uttgD88EYnUFEnw67DeQHdzfCwoM0nwvzyWbd36/zD
+Received: from igel.home (ppp-88-217-2-240.dynamic.mnet-online.de [88.217.2.240])
+        (using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Sun,  9 Jul 2017 14:37:42 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id C4DCB2C38AB; Sun,  9 Jul 2017 14:37:41 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] apply: use strcmp(3) for comparing strings in gitdiff_verify_name()
 References: <d1bb978b-a7df-48a8-15c8-80730c77e11c@web.de>
- <d83d2395-e667-9e52-cc94-af5fbec6054c@ramsayjones.plus.com>
- <8bd7c4c6-c545-723b-ec4b-262abd8a7f5f@web.de>
- <xmqqo9sua7gz.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <147f287a-e66e-11b2-c76f-b7d54e076a6b@web.de>
-Date:   Sun, 9 Jul 2017 14:20:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        <87tw2ngp94.fsf@linux-m68k.org>
+        <e46a7de9-3e0e-4eeb-c9a3-a8b5f22620b4@web.de>
+        <87o9svgia8.fsf@linux-m68k.org>
+        <df3bd047-6ddd-c120-54dd-4165d2257bb0@web.de>
+X-Yow:  UH-OH!!  We're out of AUTOMOBILE PARTS and RUBBER GOODS!
+Date:   Sun, 09 Jul 2017 14:37:41 +0200
+In-Reply-To: <df3bd047-6ddd-c120-54dd-4165d2257bb0@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 9 Jul 2017 14:20:32 +0200")
+Message-ID: <87lgnxpyzu.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqo9sua7gz.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ALPlBX6kzHcWZgUdiu4VdSOUHFV5dwUmCaCIrlnaYkMT74RDk9O
- mS66VIUT6f4WrvrS5TKdu5wefPk65Suc8Wzj9HFwaOZsrhVFQxvKDPXZkahtCCMRfBlOzQe
- dOuE5qXuI2YXfWMfc9qUOy3yMZ7eQWcKUVnhrmzXdpa/bZfs+ojyhY5Ea24xGucZHnH6CIs
- OlCbWC2++oou+zU5jRKBA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:G547dsNa06I=:21uOLTKTEXmW4g3qsAP5Yw
- yji6lf4UR3uYtXlgOUmEogp8fIE2oSuR5NjhkbrJZT81LNJ/w6Ijchodv+a7tYLNchWOQw79w
- yn/bGP4XgXN+RXRBpELlDR6IjemR0RcUUJJbkpAq6ksprjOCYTN/cudEy+Npi2bu9Fks+QuV8
- hY2P5QPmZHACwvQzEaUoCw/7hdLqrhcdKPAEbyENyEIqT7j9NEOc3Qsm5LQhKraM8ycg0ilbe
- lMpsii7BJaEUxA+lnIfkOVX+4KOlwL88fFVwEBepsQhinHve9GepygWHcferqxTymGt/enh/T
- fOouQLbOA8laUx5490NN3p7oLQJIvmdrQC+XvG9CiNGIioVwVaj9AfkQH6wW8oz+Oxh5Fck9+
- PE2IBLNX9AkQsqqRzZNJw3xgY1kfp7ZZYkpAefE0tNNbEweexCgnnYXcCq5XErD3F65zixZTO
- Nre22wjRz/PfZ4Y8SIqVbI4LsH2Ol7D/k6DrVC1ckEAqTN8+awUQlqXUO1iY6E8BRVyZDi89d
- 34FgV0F51DJI5WJ5mBSYoKI2ENogca7owZC0L3bi2yRmhJvR6C/ODzSJqwX861gUO7GtkkAQg
- 3uyItNR0yh7F4jGXZ/Le0qpjOnw/q+Q3l7n8kjZUzoOcHk0Z0jMykUSFjSY5izufDTt9zyit/
- pBpWD/PK34xx9AJjXLcwL8MZTVQwbnI+Q3Q0Df1zQkJ4EbyqNKZRcjHOxfFsEMD77cmcjpZnE
- t0Fnv3W4mQqMyBDtsXwRnCT5qoQ8l7RSOXakS5Bz1gbLgp4uclozPWHTzDiML03CJYBV327Fw
- tkHjcEU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 09.07.2017 um 00:29 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> Am 08.07.2017 um 13:08 schrieb Ramsay Jones:
->>> On 08/07/17 09:58, René Scharfe wrote:
->>>> Avoid running over the end of another -- a C string whose length we
->>>> don't know -- by using strcmp(3) instead of memcmp(3) for comparing it
->>>> with another C string.
->>>
->>> I had to read this twice, along with the patch text, before this
->>> made any sense. ;-) The missing information being that 'another'
->>> was the name of the string variable that we were potentially
->>> 'running over the end of'.
->>
->> Yeah, sorry, encasing that unusual variable name in quotes would
->> probably have helped.
-> 
-> What makes it even more confusing is that the variable with the
-> problematic name is referred to as "it" in the last part of the
-> description--- the second occurrence of 'another' is actually not
-> referring to that variable but yet another string that is being
-> compared with it ;-)
+On Jul 09 2017, René Scharfe <l.s.r@web.de> wrote:
 
-Perhaps like this instead?
+> [2] http://pubs.opengroup.org/onlinepubs/009695399/functions/memchr.html
 
-We don't know the length of the C string "another".  It could be
-shorter than "name", which we compare it to using memchr(3).  Call
-strcmp(3) instead to avoid running over the end of the former, and
-get rid of a strlen(3) call as a bonus.
+You are using an old revision.
 
-René
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
