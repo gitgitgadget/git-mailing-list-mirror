@@ -6,70 +6,101 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24D9220357
-	for <e@80x24.org>; Mon, 10 Jul 2017 16:04:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B2A820357
+	for <e@80x24.org>; Mon, 10 Jul 2017 16:09:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754540AbdGJQEf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 12:04:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35648 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754534AbdGJQEe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 12:04:34 -0400
-Received: (qmail 23974 invoked by uid 109); 10 Jul 2017 16:04:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 16:04:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6609 invoked by uid 111); 10 Jul 2017 16:04:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 12:04:46 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Jul 2017 12:04:32 -0400
-Date:   Mon, 10 Jul 2017 12:04:32 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] strbuf: use designated initializers in STRBUF_INIT
-Message-ID: <20170710160432.4mmcoqh7yi5cqdhy@sigill.intra.peff.net>
-References: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net>
- <4d4f2af7-60b9-5866-50bc-ecf002f74cba@gmail.com>
+        id S1754555AbdGJQJb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 12:09:31 -0400
+Received: from ser-smtp-vm-1.dakosy.de ([195.244.0.87]:55991 "EHLO
+        ser-smtp-vm-1.dakosy.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754547AbdGJQJb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 12:09:31 -0400
+Received: from [10.7.2.114] (helo=ser-smtpdak-vm-1.dakosy.de)
+        by ser-smtp-vm-1.dakosy.de with esmtps (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+        (Exim 4.76)
+        (envelope-from <neuling@dakosy.de>)
+        id 1dUbFZ-0000Tw-ON
+        for git@vger.kernel.org; Mon, 10 Jul 2017 18:09:29 +0200
+Received: from daktales1.dakosy.de ([10.7.2.20])
+        by ser-smtpdak-vm-1.dakosy.de with esmtp (Exim 4.82)
+        (envelope-from <neuling@dakosy.de>)
+        id 1dUbFZ-0003rP-G9
+        for git@vger.kernel.org; Mon, 10 Jul 2017 18:09:29 +0200
+To:     git@vger.kernel.org
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4d4f2af7-60b9-5866-50bc-ecf002f74cba@gmail.com>
+Subject: Performance improvement for git pull rebase and autostash 
+X-KeepSent: 9C7EC4BE:7EA71FCD-C1258159:003A60B3;
+ type=4; name=$KeepSent
+Message-ID: <OF9C7EC4BE.7EA71FCD-ONC1258159.003A60B3-C1258159.0058C18F@dakosy.de>
+From:   neuling@dakosy.de
+Date:   Mon, 10 Jul 2017 18:09:27 +0200
+Content-Type: text/plain; charset="US-ASCII"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 10, 2017 at 10:57:57AM -0400, Ben Peart wrote:
+Hi,
 
-> > If this patch can survive a few releases without complaint,
-> > then we can feel more confident that designated initializers
-> > are widely supported by our user base.  It also is an
-> > indication that other C99 features may be supported, but not
-> > a guarantee (e.g., gcc had designated initializers before
-> > C99 existed).
-> 
-> Correct.  MSVC also supports designated initializers but does not fully
-> support C99.
+I have some suggestions to improve performance of 'git pull --rebase'.
 
-Out of curiosity, does MSVC define __STDC_VERSION__, and if so, to what?
+1. If I have no new local commits "git pull --rebase" will do a fast 
+forward merge. But if I have changes to local files I have to stash them 
+also if they are not affected by the new commits from origin. I think in 
+that case git should not reject changes to every local file and has to use 
+the fast forward merge validation instead.
 
-> > And obviously before releasing this or anything similar, it would be
-> > nice to see results from people building pu. I'm especially curious
-> > whether MSVC would work with this (or if people even still use it, since
-> > Git for Windows is pretty mature?).
-> 
-> We do use MSVC internally as that gives us access to the great debuggers and
-> profilers on the Windows platform.  Fortunately, this particular C99
-> construct _is_ supported by MSVC.  I applied the patch below and complied it
-> with both MSVC and gcc for Windows and both builds succeeded.
+2. If I have no changes to local files and I use 'git pull --rebase 
+--autostash' no stashing should take place.
 
-Thanks. This kind of prompt testing and response is very appreciated. It
-is unfortunate if we have to pick and choose C99-isms rather than using
-the whole thing as a base. But that's probably just reality.
 
--Peff
+The improved workflow would look like as follows.
+
+
+                         git pull rebase = true or preserve
+                               |
+                               |
+                               |
+                               |
+                               |
+                        check if local branch has no new commits
+                               |
+         no                    |                   yes
+          ---------------------+--------------------- 
+          |                                         |
+          |                                         |
+          |                                         |
+   rebase validation                      ff merge validation for 
+   for local changes                      conflicting local changes 
+          |                                         |
+no changes|      changes             no conflicts   |    has conflicts 
+  --------+---------                    ------------+----------
+  |                |                    |                     |
+  |                |                    |                     |
+  |                |                    |                     |
+do rebase     use autostash?         do ff merge         use autostash?
+  |                |                    |                     |
+  |        no      |      yes           |            no       |      yes
+  |        --------+---------           |            ---------+---------
+  |        |                |           |            |                 |
+  |        |                |           |            |                 |
+  |   conflict error   stash changes    |      conflict error     stash 
+changes
+  |        |                |           |            |                 |
+  |        |                |           |            |                 |
+  |        |            do rebase       |            |            do ff 
+merge
+  |        |                |           |            |                 |
+  |        |                |           |            |                 |
+  |        |            pop stash       |            |             pop 
+stash
+  |        |                |           |            |                 |
+  |        |                |           |            |                 |
+success  abort           success     success       abort success
+
+
+
+Regarda,
+Mattias
+
+
