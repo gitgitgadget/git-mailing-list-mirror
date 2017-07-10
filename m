@@ -2,108 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACE0520357
-	for <e@80x24.org>; Mon, 10 Jul 2017 19:53:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4BC20357
+	for <e@80x24.org>; Mon, 10 Jul 2017 19:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754572AbdGJTxJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 15:53:09 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36766 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754284AbdGJTxI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 15:53:08 -0400
-Received: by mail-pf0-f196.google.com with SMTP id z6so15846068pfk.3
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 12:53:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=n24VxG5s0n0evqVmimG0m2HNKxHwFxtIn1vc4KUYWXM=;
-        b=REm0IDQTVrBbzhyXsyKs0HA6x86bK3guf2pYwfaswfilr2ZHZTj2roppWTdrOZSDIJ
-         xlBy67EuzHqQhY6nO8QxFx/6XsZroUKMDI0FZWn/WHN7pjwDEY6r6522hihToBuop8Rh
-         rB70+0aK63nR/+vBDf0YNgByHeBtpeFlaeDufo1477uTRSaaNvvCWL1LRSi/uDZhZPVI
-         tx/DOmkkBLbeKWKD6Qr2AsXUSalSWM4HKqwCfzij0+03cHaOtrIVnnOLot8ktyrJgsvg
-         /22dIAumFpzAleXvj+f6Oxyr1W6pk7hjMom0bxoxT+5zWLlP4VSE3ykm12VON9KodV35
-         ZSIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=n24VxG5s0n0evqVmimG0m2HNKxHwFxtIn1vc4KUYWXM=;
-        b=YQGgpG6s8JM24Q0z5JlZu8ds/oS3n9jvdhAQA6c6IG1eTqSYfNo0wMjrBe/iLvGz9K
-         IaaqHp//9n/77HIGrqjfnKS5njk/FO6v5+ar34sbBzyQAxaws8uXltR2tQMPq0bJQhF9
-         GxkWuj68gNFTaY5ZzUG5FHZVQVDEPF9EzRuq4nB1/4jpS431LeFVzf+Zr+S9adIXrYFG
-         41Pn0R6d2A2U/xwKidaOOIq04URD6L82wrkq3YgXVWjw6jVpk24Q8yANES9k+eczRyOz
-         mxJ3IU7EOg2f8S2XTrIY/sJZQFosGwUUVgqJLpWvjCmwTwMtiyaX9u/MA99RiVsgd4rB
-         GqAw==
-X-Gm-Message-State: AIVw1122EShlutmUrFHTqNpaUHjLk+hscPfGnodZGlTWUQI46Ih7cOCI
-        bsvLMOby0OCxEQ==
-X-Received: by 10.99.127.23 with SMTP id a23mr16364305pgd.47.1499716387775;
-        Mon, 10 Jul 2017 12:53:07 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:79e6:b06d:25fb:addc])
-        by smtp.gmail.com with ESMTPSA id o13sm20865147pgr.40.2017.07.10.12.53.06
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Jul 2017 12:53:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/4] hook: add signature using "interpret-trailers"
-References: <xmqqinj4ayqb.fsf@gitster.mtv.corp.google.com>
-        <20170710141744.8541-1-kaarticsivaraam91196@gmail.com>
-        <20170710141744.8541-3-kaarticsivaraam91196@gmail.com>
-        <2e957be5-980b-1d7b-812f-bf18d12313d6@ramsayjones.plus.com>
-Date:   Mon, 10 Jul 2017 12:53:06 -0700
-In-Reply-To: <2e957be5-980b-1d7b-812f-bf18d12313d6@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Mon, 10 Jul 2017 16:13:39 +0100")
-Message-ID: <xmqqfue45asd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1754622AbdGJT5o (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 15:57:44 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:43975 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754183AbdGJT5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 15:57:43 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 3x5wx12KjQz5tlD;
+        Mon, 10 Jul 2017 21:57:41 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id AE694139;
+        Mon, 10 Jul 2017 21:57:40 +0200 (CEST)
+Subject: Re: [PATCH] strbuf: use designated initializers in STRBUF_INIT
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Git List <git@vger.kernel.org>
+References: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <c349f324-8f6d-2fe0-8982-2e37869d37b5@kdbg.org>
+Date:   Mon, 10 Jul 2017 21:57:40 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Am 10.07.2017 um 09:03 schrieb Jeff King:
+> On Sun, Jul 09, 2017 at 10:05:49AM -0700, Junio C Hamano wrote:
+> 
+>> René Scharfe <l.s.r@web.de> writes:
+>>
+>>> I wonder when we can begin to target C99 in git's source, though. :)
+>>
+>> Let's get the ball rolling...
 
->> It works well in all cases except when the user invokes
->> "git commit" without any arguments. In that case manually
->> add a new line after the first line to ensure it's consistent
->> with the output of "-s" option.
->> 
->
-> Again, s/signature/sign-off/g, or similar (including subject line).
+Good to know that you do not resist moving to a more modern build 
+environment.
 
-Thanks for being a careful reader.
+>> by starting to use some of the useful
+>> features like designated initializers,
 
->> Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
->> ---
->>  templates/hooks--prepare-commit-msg.sample | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->> 
->> diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
->> index 708f0e92c..a15d6d634 100755
->> --- a/templates/hooks--prepare-commit-msg.sample
->> +++ b/templates/hooks--prepare-commit-msg.sample
->> @@ -32,4 +32,8 @@ SHA1=$3
->>  # esac
->>  
->>  # SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
->> -# grep -qs "^$SOB" "$COMMIT_MSG_FILE" || echo "$SOB" >> "$COMMIT_MSG_FILE"
->> +# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
->> +# if test -z "$COMMIT_SOURCE"
->> +# then
->> +#   @PERL_PATH@ -i.bak -pe 'print "\n" if($first_line++ == 0)' "$COMMIT_MSG_FILE"
->> +# fi
+It's a pity, though, that you do not suggest something even more useful, 
+such as C++14.
 
-I think we should do
+> Subject: [PATCH] strbuf: use designated initializers in STRBUF_INIT
 
-	print "\n" if !$first_line++
+> -#define STRBUF_INIT  { 0, 0, strbuf_slopbuf }
+> +#define STRBUF_INIT  { .alloc = 0, .len = 0, .buf = strbuf_slopbuf }
 
-for brevity (and also avoid "if(" that lacks SP) here.
+While this may serve as a test balloon, changing STRBUF_INIT, or any of 
+those _INIT macros, is actually the least interesting. The interesting 
+instances are initializations for which we do *not* have a macro.
 
+-- Hannes
