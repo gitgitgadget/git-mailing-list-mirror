@@ -2,69 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B055E20357
-	for <e@80x24.org>; Mon, 10 Jul 2017 23:45:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 919A020357
+	for <e@80x24.org>; Mon, 10 Jul 2017 23:53:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755053AbdGJXpO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 19:45:14 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:35000 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754982AbdGJXpN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 19:45:13 -0400
-Received: by mail-qt0-f170.google.com with SMTP id b40so86207558qtb.2
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 16:45:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=R19GVWt/JRYogf4WrhHDkX15iontu1nvQ8RRbRTPazU=;
-        b=ZoBal7qEcC69OXMgF+cubYtS+ull2O/Jtgh+z1rDUSM7adcO3p797eVfQVmNqiNjjr
-         m9534KvwdOyO+nEGc+D9EVqmm1nOstG4YNhPAHSmfZNiUoYyAYgqvU28LnyVDW0shl54
-         eKsavmKgdX4qCpM6BOi160OeWFZmU+wjHVQUrlXLp6jKSTT4C4uf93T25jPqV7qwZIu9
-         3bhhMykOAp3M52243JerPNFqyhr2dCii4isO+HcOW8FsWKNfvII9jnnXY7AEsFYCufqk
-         TiU3RGfapdQoWYogdOKnM9+9S8y+8/syPHBsNMKrpIO3t4+uDa7AhoA+thi3TH2mApT/
-         fJrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=R19GVWt/JRYogf4WrhHDkX15iontu1nvQ8RRbRTPazU=;
-        b=HWwXIXJfDYsFuPu6Yk9LH9EN81DdgbndcnjCBbRcFopFE/OyU03cO4aSEXwsNVdM5g
-         7YUAK5I3h7CBGucLG4isd0IObE8SNo2wL8BsSa4GnS4A8U5tDTEa8XOI1mZP8xZOt3bg
-         frU0JYxBNTOB4EvOfdBbBlQErQbifDVIK0Jhqv1qCSkaJOipaAlywYJ0rzEM6lo/dtZt
-         6ox6mI4BfT/SMMHR8Vlb9hZEgxArGgtmJmP+ARKwLlCNpfQT0wP5B8Kk3du3U20j2hBt
-         DXdiLpxx+YXaHPmJbSkWO6Nwi1gAQSpYZr1vorIQtFxqm2+RowVb1KNUKHPOPhxwAVaD
-         iR1A==
-X-Gm-Message-State: AIVw110720CzDzgfXn5pA2vJ60ne72VnEABkm/7Q+UBiJO/i9kt/IqnK
-        zflmpmmaZ+3Lnq8OsZ1+4/s+0r+ScneL
-X-Received: by 10.237.42.20 with SMTP id c20mr7564974qtd.74.1499730312700;
- Mon, 10 Jul 2017 16:45:12 -0700 (PDT)
+        id S1754964AbdGJXx1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 19:53:27 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:57640 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754832AbdGJXx0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 10 Jul 2017 19:53:26 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2B1EB280AD;
+        Mon, 10 Jul 2017 23:53:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1499730805;
+        bh=Ux4xLAOU+GpiCuXVS27dvfO5J7znM9CQ19Sr+17B0PU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=T9A+GUn5sZAXVaLS4miyoeND1ai7qEbg4nLTKcxsePwhqnc159PQdpNilU4Gmb808
+         1v/Qn1wfXp8kwGp8gDApnqwn2XxMY0ZaHoQSeYrO/qWo9JSfAdbiBwjr0Mg3nh8hcZ
+         cbYyrqHcczdHuHRupVLIG4WA0+flRGQYumUKd7X2ySy7XwTVAHFk7VWrSBd55BjMNf
+         q2h0FSuD6iQCRXzCDBtTI1fgJgE9Isv0o//xNhtR/so4v/HBIHwfJS0a9ND3DMZWHJ
+         COh2OWts+jru8uZnh0yefaP7emJ12ESQyJEY8zQkqS7oYuJb2472n/JED/Vfh7zs9+
+         M6j1RQmnYKIm8Ne6zV1B+8gERGWwfrF3QYrygyDVe0U7H1Zsiuw8nICvNSYisZaIDv
+         /EhwCB2U1rzVS3BbDb9DgOyu/bEdetVx1VvJpjweLWX8bqnem2I+2m0bU19HlwnVAy
+         uMIFu2PSlQKAFjXbz+rmhkHRweVEJQsbkpSSl1qFzCoJmpAmamP
+Date:   Mon, 10 Jul 2017 23:53:21 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Steve Kallestad <kallestad@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug - Dirty submodule differences between OSX/Ubuntu
+Message-ID: <20170710235321.m3xfx2lfsvyirzme@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Steve Kallestad <kallestad@gmail.com>, git@vger.kernel.org
+References: <CALs7=Px4nqr6LhOTEQY80WbahRRuaKut-Us5tP7Puda0kb5EdQ@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.237.45.7 with HTTP; Mon, 10 Jul 2017 16:45:12 -0700 (PDT)
-From:   Peter Eckersley <peter.eckersley@gmail.com>
-Date:   Mon, 10 Jul 2017 16:45:12 -0700
-Message-ID: <CAOYJvnJ1FxevnWf+Aj0-5r6WfmfPkzWhOk_n4y4Yz7HvvfvaBQ@mail.gmail.com>
-Subject: Weirdness with git change detection
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="jh4nrx5kipftrj6v"
+Content-Disposition: inline
+In-Reply-To: <CALs7=Px4nqr6LhOTEQY80WbahRRuaKut-Us5tP7Puda0kb5EdQ@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.11.0-1-amd64)
+User-Agent: NeoMutt/20170609 (1.8.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have a local git repo that's in some weird state where changes
-appear to be detected by "git diff" and prevent operations like "git
-checkout" from switching branches, but those changes are not removed
-by a "git reset --hard" or "git stash".
 
-Here's an example of the behaviour, with "git reset --hard" failing to
-clear a diff in the index:
+--jh4nrx5kipftrj6v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-https://paste.debian.net/975811/
+On Sun, Jul 09, 2017 at 01:42:47PM -0700, Steve Kallestad wrote:
+> change into the submodule directory and run status
+> cd python-mode.el
+> git status
+>=20
+> On ubuntu:
+> On branch master
+> Your branch is up-to-date with 'origin/master'.
+> nothing to commit, working directory clean
+>=20
+> On OSX:
+> On branch master
+> Your branch is up-to-date with 'origin/master'.
+> Changes not staged for commit:
+>   (use "git add/rm <file>..." to update what will be committed)
+>   (use "git checkout -- <file>..." to discard changes in working director=
+y)
+>=20
+>     deleted:    EXTENSIONS
+>=20
+> no changes added to commit (use "git add" and/or "git commit -a")
 
-Happy to collect additional debugging information if it's useful.
--- 
-Peter
+This is an artifact of using a case-insensitive file system.  There is a
+directory called "extensions" and so git has not checked out the file
+"EXTENSIONS", as there's already a file system object.  It therefore
+sees it as deleted, since git tracks only files (and not really
+directories, but trees of files).
+
+This repository is always going to show as modified on a
+case-insensitive file system.  You can either ask the maintainers to
+change it, or reformat your disk with a case-sensitive file system.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
+https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--jh4nrx5kipftrj6v
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.21 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAllkE3EACgkQv1NdgR9S
+9ouIbxAAm0iaInlEfAM5Qp9iMyuzVU9Wt0I/sj9aWTe2Jy0HkyC8q4yAk9g1WZI6
+7CLhFYfaZ+6Ra/mpYBTwn/+CsoOls+mZrJFCtB8R6X/QIpImoxJA0lOwxlxIpj9d
+dtQRpPr2vlJApwc7209/a4Dpmm+fTza5nYGHVwz4/tQZJbFXZqqd7Bedq40w94ih
+rTgdMEt7a+EYjWt12lABZ4y9xKLsPVPCR1fvmqDLSEoCO8oM01vFGzaoeObarron
+GHB4X3w8HCQIZSM03mLILUNc0L3WZBravBDUi8Yb1EwEADHFq6dGgZlRGgMycMZ5
+mr3osIaeS2QBmiLFar4M3CU5KsfGSHFLqgvxW9+bJ8esyt0ApR77ir1OTMmmG6ZV
+TXPmMQspMOwn/96MKng+NIXtH282tFBbef66wV6d2gH6x9TKhZ44xymmRcMc9rLR
+OQEqkDmxRubw98TS7wPLMHmnQVdbj+HKdXIGJjJeMvJO+nV8T63FFHTKDAKkMm28
+neCwV7r7l3fK5k9Kxgw0mp3Lnwop/KHpjBnvnZ7sBMhcS8vmQ/946apL+hX/k+yv
+/ex15V/5Ayc2udUC1c6A+bkS1PfNPikCZXXt8k16G6+aafUUE29+cjL7hU9lSQsG
+DFfYjanNAuVoXEY0Z1U53kq7+D4F/iXZ8UWlEw+0HtduIlPnBmc=
+=nFWN
+-----END PGP SIGNATURE-----
+
+--jh4nrx5kipftrj6v--
