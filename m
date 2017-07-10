@@ -2,142 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA11820357
-	for <e@80x24.org>; Mon, 10 Jul 2017 14:40:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 641C220357
+	for <e@80x24.org>; Mon, 10 Jul 2017 14:40:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753704AbdGJOkS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 10:40:18 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:33270 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753426AbdGJOkQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 10:40:16 -0400
-Received: by mail-qt0-f196.google.com with SMTP id c20so12878744qte.0
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 07:40:16 -0700 (PDT)
+        id S1753920AbdGJOkq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 10:40:46 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:34752 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753673AbdGJOkp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 10:40:45 -0400
+Received: by mail-wr0-f193.google.com with SMTP id k67so25340310wrc.1
+        for <git@vger.kernel.org>; Mon, 10 Jul 2017 07:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=je/6aeaP3ytWVgQNbG54iAhYELI3mzT+kXg38qYWwHw=;
-        b=GiGr0XGwLQOCtcOLpEgF7luYGTVh838gvVvwusn+U9b09R7v2tao7khDhcVO3josA0
-         PSSQtI72L1M9eUfVL2T+IO0gBedXCCS6oiYP7TpRqZsXhJ7LXMhwGjMOZ6rPVltUG6iL
-         iFNhBZByJ+LdmGtv5ojW4MaXNTl5JErN74ZnRf/O9kpwHP06CJFHtfxbn/uwPMkbHAUM
-         VmbK8TLrVjji5nIc+rZ6ZJ9ttEFbKpTKEqalYrkO/474Waal6j6OqDvchIDCkPiAl+bA
-         efthnZyFzSYWTer3DCzemxEHN+Wc5cjXyPzzKWBqT0vn99xq7z9Ni9TXNrUl+OhsjPkv
-         574w==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=DBxmt9OQJoLEYpRnFY8jvrooPwwn0/jlNffe5TgvVQE=;
+        b=RXMheI6lyRT1jBJYwl25D3rOjItZdmFwymiYg5JXB3q2zSUy8GVh9xsjrYyRBKAOJv
+         ot5jkiI/APgsXyoG4YcRlMCTTpUsH9wsdWIFFibJshmdQhudscNcwR3+1YdvbJ/8YpvH
+         xgSz4cWLfH47Cmvv3DNr7tQ4EKYbYaTxCDiYlW1+VxbgsTsVzHNPDR6mBPVXGMPpeA1k
+         0QSMywU3PiHUD4FBWotE7dktK7+Q9m1fZoRU14GK2sac0ci+IZ5D/q0v+Y19WWqwVzuY
+         Nu0vVwpm6lSS1JtOE1qRHRMq7BBnaVFKve/K/H82kckGmWE8/645A3XrtpRsfRFbgImn
+         i4dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=je/6aeaP3ytWVgQNbG54iAhYELI3mzT+kXg38qYWwHw=;
-        b=fuIjgRr5p8uth0xy8XKJ7toilWMRlJlIB2A0pIHVKMCGGrvJkEFPT5mU/Bv8e3lwBV
-         1hhFv2Ki/hWRXMzFHatYC6jyTpuCuktKwtgT3ssoWESGCZ8AB3pqqpb9lQhwdd05tUak
-         LhN7WnXBGbXCoEdkiRtUIA5NSz8reeFS4dDlHySuT/ymz2ROLopJd/g3/6Af7Zlvs5U8
-         vDW7zP1xkEqmQhqpIuJmnHnvIcFkO44TsyhV23wQnL94gByVbwZnn/GgNMvnXWWy498Q
-         e/eQwlxOyohb87VGeIzQgT6EX0MTQxXcCR6DmWecz4IT1DDaovXFSe+oaxiLhqNdi8jb
-         Hm8Q==
-X-Gm-Message-State: AIVw113LSreFcvu+EiumL27RbaQKNL5Y/b8w34fyRV6rPUwAxwlkTckT
-        DRVlu0WsFXA/Hg==
-X-Received: by 10.200.46.100 with SMTP id s33mr5178083qta.48.1499697615779;
-        Mon, 10 Jul 2017 07:40:15 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id i8sm8979034qtb.40.2017.07.10.07.40.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Jul 2017 07:40:15 -0700 (PDT)
-Subject: Re: [PATCH v5 0/7] Fast git status via a file system watcher
-From:   Ben Peart <peartben@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        David Turner <David.Turner@twosigma.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20170610134026.104552-1-benpeart@microsoft.com>
- <CAP8UFD3LA1WvjOZN9WgzMQhuTTXNX7yKgChgAJsLFHX0Ag17JA@mail.gmail.com>
- <9b1af00c-2451-501c-5315-7ed2b81f3f18@gmail.com>
-Message-ID: <97342e22-c2ca-9c09-4db0-24cac014b689@gmail.com>
-Date:   Mon, 10 Jul 2017 10:40:15 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <9b1af00c-2451-501c-5315-7ed2b81f3f18@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=DBxmt9OQJoLEYpRnFY8jvrooPwwn0/jlNffe5TgvVQE=;
+        b=ZQjAl4kT+qVovWjlQFIXtHYJrCIrCIfGMTPAJ5szLgOQ3yRBVSCahzG7ysc0tFo/tY
+         gnLI5RkvA17W1A/vnTqhPqlZJnbEbbAZtBKkHyohrdS5vJX03e1xcyNIJvlGqI1Ri58s
+         wK7cKFrTjPzS0IsegdXQB7RorG9BB34euOLNO8lz23+3oTFXvR/pQazUqOTxQshSeAhY
+         3SWOKMGX8HuAZ9AJNwcBR0bMAHEcb8Ffdl1kvyzbGZY5AtdtpWqi7kO82pPzXn1V+4OZ
+         chxinkanqIOBbTPAJoLEGTYs2oGjoAMuJEEiZOeX3NC5Y5uDYyajQ1fxWao498e/umj1
+         XpBg==
+X-Gm-Message-State: AIVw110xEJBtU099f1nuCwaQdXNWA8usWahsmPmrpGfGEBTC6G4tt1/r
+        wMAObrP5HqX4iUVM/hg=
+X-Received: by 10.223.135.237 with SMTP id c42mr8049239wrc.10.1499697644453;
+        Mon, 10 Jul 2017 07:40:44 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id 143sm9128576wmo.11.2017.07.10.07.40.43
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 10 Jul 2017 07:40:43 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH 0/5] building git with clang/gcc address sanitizer
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <20170710132418.d6bvzxwvbejretb4@sigill.intra.peff.net>
+Date:   Mon, 10 Jul 2017 16:40:42 +0200
+Cc:     git@vger.kernel.org
 Content-Transfer-Encoding: 7bit
+Message-Id: <40D62A0D-5636-4EC2-ABCB-14175FC541F9@gmail.com>
+References: <20170710132418.d6bvzxwvbejretb4@sigill.intra.peff.net>
+To:     Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+> On 10 Jul 2017, at 15:24, Jeff King <peff@peff.net> wrote:
+> 
+> I mentioned recently that I sometimes run the test suite with ASan, so
+> here are a few tweaks to make this easier (most of which I've been
+> carrying in my personal config.mak for a few years).
+> 
+> In my experience ASan does at least as well as valgrind at finding
+> memory bugs, and runs way faster. With this series, running:
+> 
+>  make SANITIZE=address test
+> 
+> takes about 4.5 minutes on my machine. A normal build+test is about 1.5
+> minutes on the same machine. I haven't timed a full run with --valgrind
+> recently, but I know that it is much much slower. :)
+> 
+> If you want to see it in action, you can do:
+> 
+>  make SANITIZE=address
+>  ./git log -g HEAD HEAD >/dev/null
+> 
+> which finds a bug I recently fixed (but the fix isn't in master yet).
 
-On 7/10/2017 9:36 AM, Ben Peart wrote:
-> 
-> 
-> On 6/28/2017 1:11 AM, Christian Couder wrote:
->> On Sat, Jun 10, 2017 at 3:40 PM, Ben Peart <peartben@gmail.com> wrote:
->>> Changes from V4 include:
->> ...
->>
->> I took a look at this patch series except the last patch ([PATCH v5
->> 7/7] fsmonitor: add a performance test) as Junio reviewed it already,
->> and had only a few comments on patches 3/7 and 4/7.
->>
->> I am still not convinced by the discussions following v2
->> (http://public-inbox.org/git/20170518201333.13088-1-benpeart@microsoft.com/) 
->>
->> about using a hook instead of for example a "core.fsmonitorcommand".
->>
->> I think using a hook is not necessary and might not be a good match
->> for later optimizations. For example people might want to use a
->> library or some OS specific system calls to do what the hook does.
->>
->> AEvar previously reported some not so great performance numbers on
->> some big Booking.com boxes with a big monorepo and it seems that using
->> taskset for example to make sure that the hook is run on the same CPU
->> improves these numbers significantly. So avoiding to run a separate
->> process can be important in some cases.
->>
-> 
-> Using a hook is the only pattern I've seen in git that provides a way to 
-> enable OS specific calls.  I used a hook so that different file 
-> monitoring services could be plugged in depending on the OS or tools 
-> available.  The Watchman integration script was mostly intended as a 
-> sample that could be used where Watchman is available and works well.
-> 
-> I had not heard about the taskset issues you mention above.  If there is 
-> something else that can be done to make this work better, please let me 
-> know the details.
-> 
-> If I'm understanding you correctly, you are suggesting that someone 
-> should be able to configure a setting (core.fsmonitorcommand) that gives 
-> a custom command line that would be run instead of running the 
-> query-fsmonitor hook.
-> 
-> I'm not entirely sure how that should work.  There are command line 
-> options that need to be passed (currently the interface version as well 
-> as the current clock in nanoseconds).  How would those passed when using 
-> the custom command?
-> 
-> Is it OK to just append them to the given command line?  Does there need 
-> to be some substitution token to indicate where they should be inserted 
-> (ie "mycustomcommand --custom --options %version% --more-options 
-> %timestamp%").  Are there any other tokens that should be supported (ie 
-> PID or processor mask?).
-> 
-> Is there a design pattern already used somewhere in git that I can 
-> follow or is this all blazing a new trail?
-> 
+Do you think it would make sense to run these sanitizers on TravisCI
+to ensure they keep clean? If yes, should we run only "address" or all
+of them (if they run clean)?
 
-My co-worker reminded me about git difftool - is this what you had in mind?
+- Lars
 
-> Thanks for continuing to look into this. Feedback is good!
+
 > 
+> There are other sanitizers, too. I _thought_ I had
 > 
+>  make SANITIZE=undefined test
+> 
+> running cleanly at one point, but it's definitely not clean now. Patch 5
+> helps a little by disabling unaligned loads in our get_be32() macros.
+> Once upon a time I had to set INTERNAL_QSORT, but it isn't necessary
+> anymore since everything goes through sane_qsort(). Most of the
+> remaining bugs are of a similar form, doing something like:
+> 
+>  memcpy(NULL, NULL, 0);
+> 
+> I don't know if it's worth having a sane_memcpy() there, or simply
+> tweaking the code to avoid the call (almost all of them are a single
+> call from apply.c:2870).
+> 
+> It looks like we also have a case of shifting off the left side of a
+> signed int, which is undefined.
+> 
+> You can also try:
+> 
+>  make SANITIZE=thread test
+> 
+> but it's not clean. I poked at some of the errors, and I don't think
+> there a problem in practice (though they may be worth cleaning up in the
+> name of code hygiene).
+> 
+> There's also:
+> 
+>  make SANITIZE=memory test
+> 
+> This is clang-only. It's supposed to find uses of uninitialized memory.
+> But it complains about writing out anything that zlib has touched. I
+> seem to recall that valgrind had a similar problem. I'm not sure what
+> zlib does to confuse these analyzers. For valgrind we were able to add a
+> suppression. We could probably do the same here, but I haven't looked
+> into it.
+> 
+>  [1/5]: test-lib: set ASAN_OPTIONS variable before we run git
+>  [2/5]: test-lib: turn on ASan abort_on_error by default
+>  [3/5]: Makefile: add helper for compiling with -fsanitize
+>  [4/5]: Makefile: turn off -fomit-frame-pointer with sanitizers
+>  [5/5]: Makefile: disable unaligned loads with UBSan
+> 
+> Makefile      |  8 ++++++++
+> t/test-lib.sh | 11 ++++++++---
+> 2 files changed, 16 insertions(+), 3 deletions(-)
+> 
+> -Peff
+
