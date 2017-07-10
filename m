@@ -6,74 +6,70 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C163220357
-	for <e@80x24.org>; Mon, 10 Jul 2017 15:58:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24D9220357
+	for <e@80x24.org>; Mon, 10 Jul 2017 16:04:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754394AbdGJP6e (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 11:58:34 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35634 "HELO cloud.peff.net"
+        id S1754540AbdGJQEf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 12:04:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35648 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1754176AbdGJP6d (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 11:58:33 -0400
-Received: (qmail 23734 invoked by uid 109); 10 Jul 2017 15:58:33 -0000
+        id S1754534AbdGJQEe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 12:04:34 -0400
+Received: (qmail 23974 invoked by uid 109); 10 Jul 2017 16:04:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 15:58:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 16:04:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6587 invoked by uid 111); 10 Jul 2017 15:58:45 -0000
+Received: (qmail 6609 invoked by uid 111); 10 Jul 2017 16:04:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 11:58:45 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 12:04:46 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Jul 2017 11:58:31 -0400
-Date:   Mon, 10 Jul 2017 11:58:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Jul 2017 12:04:32 -0400
+Date:   Mon, 10 Jul 2017 12:04:32 -0400
 From:   Jeff King <peff@peff.net>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/5] building git with clang/gcc address sanitizer
-Message-ID: <20170710155831.3zxijp7bvbquvlau@sigill.intra.peff.net>
-References: <20170710132418.d6bvzxwvbejretb4@sigill.intra.peff.net>
- <40D62A0D-5636-4EC2-ABCB-14175FC541F9@gmail.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] strbuf: use designated initializers in STRBUF_INIT
+Message-ID: <20170710160432.4mmcoqh7yi5cqdhy@sigill.intra.peff.net>
+References: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net>
+ <4d4f2af7-60b9-5866-50bc-ecf002f74cba@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <40D62A0D-5636-4EC2-ABCB-14175FC541F9@gmail.com>
+In-Reply-To: <4d4f2af7-60b9-5866-50bc-ecf002f74cba@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 10, 2017 at 04:40:42PM +0200, Lars Schneider wrote:
+On Mon, Jul 10, 2017 at 10:57:57AM -0400, Ben Peart wrote:
 
-> > If you want to see it in action, you can do:
-> > 
-> >  make SANITIZE=address
-> >  ./git log -g HEAD HEAD >/dev/null
-> > 
-> > which finds a bug I recently fixed (but the fix isn't in master yet).
+> > If this patch can survive a few releases without complaint,
+> > then we can feel more confident that designated initializers
+> > are widely supported by our user base.  It also is an
+> > indication that other C99 features may be supported, but not
+> > a guarantee (e.g., gcc had designated initializers before
+> > C99 existed).
 > 
-> Do you think it would make sense to run these sanitizers on TravisCI
-> to ensure they keep clean? If yes, should we run only "address" or all
-> of them (if they run clean)?
+> Correct.  MSVC also supports designated initializers but does not fully
+> support C99.
 
-Maybe. It's expensive and it's relatively rare that it catches anything.
-I used to run valgrind (which is even more expensive) once every release
-or so. This is much cheaper, but I've noticed that the Travis
-environment is a lot slower than my laptop. So it might take an hour to
-run there, which I think would trigger some timeouts?
+Out of curiosity, does MSVC define __STDC_VERSION__, and if so, to what?
 
-I guess the best way is to try it and see. I probably wouldn't do an
-ASan run for each environment, but just one Linux ASan run, due to the
-CPU expense. (TBH, I think the existing gcc versus clang on both
-platforms is already slight overkill. But I guess if we have CPU to
-burn, more coverage is better than less).
+> > And obviously before releasing this or anything similar, it would be
+> > nice to see results from people building pu. I'm especially curious
+> > whether MSVC would work with this (or if people even still use it, since
+> > Git for Windows is pretty mature?).
+> 
+> We do use MSVC internally as that gives us access to the great debuggers and
+> profilers on the Windows platform.  Fortunately, this particular C99
+> construct _is_ supported by MSVC.  I applied the patch below and complied it
+> with both MSVC and gcc for Windows and both builds succeeded.
 
-I think "address" is the only one that runs clean right now. With some
-work I think we could get "undefined" to run clean. The others, I'm not
-so sure.
-
-Some of them can actually be combined in a single build, but I'd have to
-dig into the documentation to see which (I think "thread" and "address"
-don't work well together, but "undefined" and "address" might). My
-SANITIZE trick doesn't handle multiple entries, but it could probably be
-taught to.
+Thanks. This kind of prompt testing and response is very appreciated. It
+is unfortunate if we have to pick and choose C99-isms rather than using
+the whole thing as a base. But that's probably just reality.
 
 -Peff
