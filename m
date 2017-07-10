@@ -2,110 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D44502035A
-	for <e@80x24.org>; Mon, 10 Jul 2017 02:51:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1F3F202AC
+	for <e@80x24.org>; Mon, 10 Jul 2017 06:47:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753128AbdGJCvQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Jul 2017 22:51:16 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:33000 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753056AbdGJCvQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Jul 2017 22:51:16 -0400
-Received: by mail-pg0-f43.google.com with SMTP id k14so42096142pgr.0
-        for <git@vger.kernel.org>; Sun, 09 Jul 2017 19:51:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+HtfT7RYotbEMijN7RfoImoduJ4H4Fa3Ufl9mJhlwDk=;
-        b=DSJuFmAoOux8fCkIF6ZtIZb0If02co+hJLCh0SKeODGgZwmTGAZfMjnu8C6lc2OAXI
-         UKN+c6hXWNbhR7rPI+v2UKC2Qzi6e6C5RBDDwm5hgd9r+8UhstoW1zBGkgXXwDvNWBjG
-         6lh4OSEzbwjLh4xuWBFR4AQY3esyiAtjfQAtK0KtqClI1Kr3cFgdjVqFGZ8YQkrx+9U1
-         LJ3HQOZHIkI4UFEosjzw0RZSaLkCJbaZiQRHn04961Zv18MdOahRZa8F/96Cf8SrytHr
-         gW5y0ODGxFEo/EU/vMdUJrFSJy2kkFGc1PxGqZu/gU8fjYcol9Ih7CssqxHCDVgTdZ/c
-         E6yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+HtfT7RYotbEMijN7RfoImoduJ4H4Fa3Ufl9mJhlwDk=;
-        b=qbKGFrEMHxZXN+KohQVAeQw10snLo2ze1ZsV7QgN+YCn7p/0mPcBFk5ooU+Ve+KC5m
-         yjdwCtqDU82YrpRxMGTGCfBotDE+gvTt7Qy0pRlFiwLK5p9v4NjES64wbTKpPpXDoJUt
-         LLInxBzs/Pg5iSpBCN1RnNVzByXrqG52hHVHcBdYAZVo52O5QrzxAZRpxHmBgVXzGROX
-         9FsaFSvqawrTCi84NIaj991/tUwObvrXqPUA4vk9zeUY6jruTLlio4F2JYbg5BlHiYxo
-         rO7uVL36JjI30U6BnR5NE9BxUNLMEHMln1pDbneigQSrPx03ijGi+02djmkY2Cr5LqJo
-         2NoA==
-X-Gm-Message-State: AIVw1134kXf/hvR+XUZjzM13VuLtR5CY5AIDtoQ47AqmEXY+BFw1ihyl
-        s4oaHtchbcZNVdgdb8VRsrcTCuXwqfYRQa4=
-X-Received: by 10.98.81.1 with SMTP id f1mr8862049pfb.94.1499655075335; Sun,
- 09 Jul 2017 19:51:15 -0700 (PDT)
+        id S1752516AbdGJGr1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 02:47:27 -0400
+Received: from mout.gmx.net ([212.227.15.19]:64084 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752497AbdGJGr0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 02:47:26 -0400
+Received: from [192.168.2.104] ([178.3.92.196]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LxPNC-1djVAs0gQ6-016zah for
+ <git@vger.kernel.org>; Mon, 10 Jul 2017 08:47:24 +0200
+To:     git@vger.kernel.org
+From:   Andre Hinrichs <andre.hinrichs@gmx.de>
+Subject: Small typo in german translation
+Message-ID: <f11120c3-30fb-bdfe-a597-8ceb41097209@gmx.de>
+Date:   Mon, 10 Jul 2017 08:47:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.100.183.170 with HTTP; Sun, 9 Jul 2017 19:51:14 -0700 (PDT)
-In-Reply-To: <d70bf87c-f8b3-9f02-14bd-b3ceb5e9f7e4@web.de>
-References: <d70bf87c-f8b3-9f02-14bd-b3ceb5e9f7e4@web.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Sun, 9 Jul 2017 19:51:14 -0700
-Message-ID: <CAGZ79kZgJpLttFOT01XOD-dj8Ag6A_1kkwGngbH2MMaO=_F-NA@mail.gmail.com>
-Subject: Re: [PATCH] wt-status: use separate variable for result of shorten_unambiguous_ref
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: de-DE
+X-Provags-ID: V03:K0:rstZbDWj331DEHHNiIF3kIUpoDLRKFaAawW8d2dtePa4tEmR5tD
+ dSPVsPcHrQrzA+um+1DUktmXiptckX8ETEjChPsXXLhWXBA+b0dlk3Hx4OH5d4ebXGzDq+T
+ Y3ubFB5KSUTic0DfvbHyf2n8wWJd1ZeZSXTFoyvkrQvh93P7W9YfcNQkjm6BCMw3PSieTJq
+ FbLt9IGjP3ZPUckXelCAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OQT5al7EYV4=:PvHAZXMk/UKPiMV75jVyw9
+ XwDMtJf7YNQFhCxbnddpeQ93T1g6vqo4R6CxWAut4xut329gXB8z0MYvVv+4u5mACvEW1wX+V
+ MIM1maXBSJSDQ+LF1E/YyRh2QZqvzdb1kB0n1cdQ7gXrh+Mv36+Ih85XhlNlLJ1pOC92G2sNR
+ oysFMRFGTG0RefugVpd6AgiHA4eC6+Wgd8bezhqQp+So0wTsXSnONE/gootPJ7/I1SieeIWfR
+ bfxdGNODyaaHsqjeEpIag+pvEdSWTWyMTzXskVnBlRxMOg2P8pYO6tb1I2VKGsF6Dalz0N/DE
+ mFNMyFuwEaxzzyPRu+vO3xfPh3JCU+tpfFapsDZSnEg1nu5BtfkbJm/ULFh/QJg0Y78aBzIbL
+ VDGfRkAIwUUJsGi3gXgB3qA3KXv6r7JnMDkqP587goCDsUhz0/oa+02qCRP0bc2zr57FfYJG4
+ Ou6inunDgZ4TI0Mn4oQDrgRNXG36hClzFSMTOpTSQjeE9TncODKcWjqkDEVFNhtpBhmn/uciM
+ fhVGWwixMAisXbbZ+UnRfn1NfVgD5wOJidDwitlBSsVztrmL98EyHfNvACJqXAk3BPZ4fX2ym
+ B1ZXhIwhajda2iBXELMR89xM9L71LKT/TbluhMkcUK3BUaeNJHKi9sg/SijB2g9Sz0Xtr2j0m
+ sYPVcmEbqteyxzYkvN37ZhtTW2mDtgRVoN1eQETzoTSOnQcLY6zG5IewB/WFHs9U8HQCPHzeC
+ 3phogOVSq8zgHC6PM6h6fTKdh0uPux46sXZuEY/CFoqZUf3oWWQ/s4AzWWcwIicOOLoOLgSU9
+ 4Des9O6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 8, 2017 at 3:51 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Store the pointer to the string allocated by shorten_unambiguous_ref in
-> a dedicated variable, short_base, and keep base unchanged.  A non-const
-> variable is more appropriate for such an object.  It avoids having to
-> cast const away on free and stops redefining the meaning of base, making
-> the code slightly clearer.
->
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+Hi Git-Developers!
 
-Thanks,
-Reviewed-by: Stefan Beller <sbeller@google.com>
+I've found a small typo in git/po/de.po
+In line 8567 the word "erwzingen" should be "erzwingen".
+Please fix.
 
-> ---
->  wt-status.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/wt-status.c b/wt-status.c
-> index 8d2fb35b08..77c27c5113 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -1763,6 +1763,7 @@ static void wt_shortstatus_print_tracking(struct wt=
-_status *s)
->         const char *branch_color_remote =3D color(WT_STATUS_REMOTE_BRANCH=
-, s);
->
->         const char *base;
-> +       char *short_base;
->         const char *branch_name;
->         int num_ours, num_theirs;
->         int upstream_is_gone =3D 0;
-> @@ -1797,10 +1798,10 @@ static void wt_shortstatus_print_tracking(struct =
-wt_status *s)
->                 upstream_is_gone =3D 1;
->         }
->
-> -       base =3D shorten_unambiguous_ref(base, 0);
-> +       short_base =3D shorten_unambiguous_ref(base, 0);
->         color_fprintf(s->fp, header_color, "...");
-> -       color_fprintf(s->fp, branch_color_remote, "%s", base);
-> -       free((char *)base);
-> +       color_fprintf(s->fp, branch_color_remote, "%s", short_base);
-> +       free(short_base);
->
->         if (!upstream_is_gone && !num_ours && !num_theirs)
->                 goto conclude;
-> --
-> 2.13.2
->
+Thanks
+
