@@ -6,116 +6,80 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC0602035B
-	for <e@80x24.org>; Mon, 10 Jul 2017 07:04:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF01B202AC
+	for <e@80x24.org>; Mon, 10 Jul 2017 07:27:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753367AbdGJHEF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 03:04:05 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35192 "HELO cloud.peff.net"
+        id S1752707AbdGJH1J (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 03:27:09 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35204 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752396AbdGJHEE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 03:04:04 -0400
-Received: (qmail 3219 invoked by uid 109); 10 Jul 2017 07:03:44 -0000
+        id S1752427AbdGJH1I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 03:27:08 -0400
+Received: (qmail 4118 invoked by uid 109); 10 Jul 2017 07:27:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 07:03:44 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 07:27:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3591 invoked by uid 111); 10 Jul 2017 07:03:56 -0000
+Received: (qmail 3668 invoked by uid 111); 10 Jul 2017 07:27:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 03:03:56 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Jul 2017 03:27:14 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Jul 2017 03:03:42 -0400
-Date:   Mon, 10 Jul 2017 03:03:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Jul 2017 03:27:01 -0400
+Date:   Mon, 10 Jul 2017 03:27:01 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Git List <git@vger.kernel.org>
-Subject: [PATCH] strbuf: use designated initializers in STRBUF_INIT
-Message-ID: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use DIV_ROUND_UP
+Message-ID: <20170710072701.cqzztww6mrqr7sli@sigill.intra.peff.net>
+References: <4d2c274a-f6cb-6ea5-304f-51a3152cc436@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <4d2c274a-f6cb-6ea5-304f-51a3152cc436@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 09, 2017 at 10:05:49AM -0700, Junio C Hamano wrote:
+On Sat, Jul 08, 2017 at 12:35:35PM +0200, René Scharfe wrote:
 
-> René Scharfe <l.s.r@web.de> writes:
-> 
-> > I wonder when we can begin to target C99 in git's source, though. :)
-> 
-> Let's get the ball rolling by starting to use some of the useful
-> features like designated initializers, perhaps, in a small, critical
-> and reasonably stable part of the system that anybody must compile,
-> leave it in one full release cycle or two, and when we hear nobody
-> complains, introduce it en masse for the remainder of the system?
-> 
-> That way, we will see if there are people who need pre-C99 soon
-> enough, and we won't have to scramble reverting too many changes
-> when it happens.
+> Convert code that divides and rounds up to use DIV_ROUND_UP to make the
+> intent clearer and reduce the number of magic constants.
 
-Neat idea. Something like this?
+Sounds like a good idea.
 
--- >8 --
-Subject: [PATCH] strbuf: use designated initializers in STRBUF_INIT
+> -	auto_threshold = (gc_auto_threshold + 255) / 256;
+> +	auto_threshold = DIV_ROUND_UP(gc_auto_threshold, 256);
 
-There are certain C99 features that might be nice to use in
-our code base, but we've hesitated to do so in order to
-avoid breaking compatibility with older compilers. But we
-don't actually know if people are even using pre-C99
-compilers these days.
+DIV_ROUND_UP(n,d) is defined as (n+d-1)/d. So this is clearly a
+mechanical conversion and thus correct. And most cases are like this,
+but...
 
-One way to figure that out is to introduce a very small use
-of a feature, and see if anybody complains. The strbuf code
-is a good place to do this for a few reasons:
+> diff --git a/ewah/ewah_bitmap.c b/ewah/ewah_bitmap.c
+> index 2dc9c82ecf..06c479f70a 100644
+> --- a/ewah/ewah_bitmap.c
+> +++ b/ewah/ewah_bitmap.c
+> @@ -210,8 +210,8 @@ size_t ewah_add(struct ewah_bitmap *self, eword_t word)
+>  void ewah_set(struct ewah_bitmap *self, size_t i)
+>  {
+>  	const size_t dist =
+> -		(i + BITS_IN_EWORD) / BITS_IN_EWORD -
+> -		(self->bit_size + BITS_IN_EWORD - 1) / BITS_IN_EWORD;
+> +		DIV_ROUND_UP(i + 1, BITS_IN_EWORD) -
+> +		DIV_ROUND_UP(self->bit_size, BITS_IN_EWORD);
 
-  - it always gets compiled, no matter which Makefile knobs
-    have been tweaked.
+...this first one is a bit trickier. Our "n" in the first one is now
+"i+1".  But that's because the original was implicitly canceling the
+"-1" and "+1" terms.
 
-  - it's very stable; this definition hasn't changed in a
-    long time and is not likely to (so if we have to revert,
-    it's unlikely to cause headaches)
+So I think it's a true mechanical conversion, but I have to admit the
+original is confusing. Without digging I suspect it's correct, though,
+just because a simple bug here would mean that our ewah bitmaps totally
+don't work. So it's probably not worth spending time on.
 
-If this patch can survive a few releases without complaint,
-then we can feel more confident that designated initializers
-are widely supported by our user base.  It also is an
-indication that other C99 features may be supported, but not
-a guarantee (e.g., gcc had designated initializers before
-C99 existed).
+> [...]
 
-And if we do get complaints, then we'll have gained some
-data and we can easily revert this patch.
+And all the others are straight-forward and obviously correct. So this
+patch looks good to me.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I suspected we could also do something with __STDC_VERSION__, though I
-wonder what compilers set it to when not in standards-compliant mode.
-gcc-6 claims C11 when no specific -std flag is given.
-
-And obviously before releasing this or anything similar, it would be
-nice to see results from people building pu. I'm especially curious
-whether MSVC would work with this (or if people even still use it, since
-Git for Windows is pretty mature?).
-
- strbuf.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/strbuf.h b/strbuf.h
-index 2075384e0..e705b94db 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -68,7 +68,7 @@ struct strbuf {
- };
- 
- extern char strbuf_slopbuf[];
--#define STRBUF_INIT  { 0, 0, strbuf_slopbuf }
-+#define STRBUF_INIT  { .alloc = 0, .len = 0, .buf = strbuf_slopbuf }
- 
- /**
-  * Life Cycle Functions
--- 
-2.13.2.1071.gcd8104b61
-
+-Peff
