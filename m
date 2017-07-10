@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3CBB020357
-	for <e@80x24.org>; Mon, 10 Jul 2017 16:18:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F338F20357
+	for <e@80x24.org>; Mon, 10 Jul 2017 16:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754212AbdGJQSA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 12:18:00 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33554 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753890AbdGJQR7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 12:17:59 -0400
-Received: by mail-pf0-f196.google.com with SMTP id e199so15150631pfh.0
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 09:17:59 -0700 (PDT)
+        id S1754555AbdGJQXN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 12:23:13 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:34338 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754548AbdGJQXM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 12:23:12 -0400
+Received: by mail-wr0-f194.google.com with SMTP id k67so25933527wrc.1
+        for <git@vger.kernel.org>; Mon, 10 Jul 2017 09:23:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=AaIVzrl/gCDq+OsM2JIIFUP1IZ9VEc+f+7WIPgGfDZ0=;
-        b=GYsXBLU6gbLuDr8oC8zOGhzuaxbLm1NYwAyh/iYHujeDinXX4oYawxw/TpTiQ+rQTm
-         foGWAxAkK0zMqrDpZyur8la5h66YhSPPTwD70Rb8HkbvjZn32P83dDO3NGhaHB8m17LK
-         wbb9dY7D1mvWyvLMinMaen3l0B2ji3F25q4mXaGc4PKQVNircuty7oMNK2dL9m0s/Dbf
-         3YNxP51Wu/dW9unXHgMHBLuda4xWoYbseQftryjVYFC1wf/5rYobCxh+AyzyXF26GfRe
-         ZW1tCI164LXLvOtr4YfebUgL7j0xU4TA6KE/RgChsj/Uc2HyODIjsyxj23l6xMkEGXp3
-         HMfA==
+        h=from:to:cc:subject:date:message-id:mime-version:in-reply-to
+         :references:content-transfer-encoding;
+        bh=qoIGU6hEWjloxAkUAhYIzHNqPtGVc5AhKaylCzJHHbw=;
+        b=pTX3qlnoQgincq7IzSB6ZApKgznBDKx2qfVvpHKz98oR3sakkdYQQ40D+LEptfSF/9
+         zThhepj6Ohyh+c9IZePCW5DnCOkZnUy7fvYwNpG8cltiF+43eWmKUJWHIemySmEBeNab
+         J0H4zAsaag3e3kYeDZv8a/xsb+bVpj/vZQoJhXkHOZQX3gCMbhPkRVW4FbPS5fTyuNoQ
+         EvXQgFrG7YMhVrodmDWLywuSXr4mwA1LhsxqI7hEKdpzDpmx/YVS1DWgNllRJkIVSdPx
+         oxtwrwLjFXqhjxpZcnzXrn6745fHGZQVxEqiEUfTXyvo6HJIqdxfi590UuQVS4g5rG56
+         vriw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=AaIVzrl/gCDq+OsM2JIIFUP1IZ9VEc+f+7WIPgGfDZ0=;
-        b=I0WaRdXQo4We4nc53FjAu3ohc//Xtc6vNe2oY2cZHseZGwEgtNQYaIhnXgICP0qItD
-         6o9rtHZ27PiMTlKPAbgk5POMHwhsSrGbK/xf6niAVqfQHValbctoMilUix6budDSe3ci
-         O4Ig3qab/5WsR3r5pIN7yg/YOEpFOMlzbmxeLdj3kacuErdmS0eIB1/Ga1yptMHk11/y
-         EMHoAT7kg+AdQoe2/UcNiWLt/I+G59tQUGBC2Eqms7fxaHxLycPVbTxt1slaFcc1F3dd
-         lDq9Dfv32u/7XY+6t55+REjtANIvuZs1u4VFFqafbC55ESqe7/QPIOYYhpQJfsKimchC
-         A5nA==
-X-Gm-Message-State: AIVw111PtVnyUddoGUQUmT+lhkGAz+BwtWdyEgwM1dEA3PIfcAANk9O6
-        TOKGT8Vt4OXmAg==
-X-Received: by 10.98.63.220 with SMTP id z89mr44836824pfj.84.1499703478634;
-        Mon, 10 Jul 2017 09:17:58 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:79e6:b06d:25fb:addc])
-        by smtp.gmail.com with ESMTPSA id y1sm27424980pff.13.2017.07.10.09.17.57
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Jul 2017 09:17:57 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     astian <astian@eclipso.at>, git@vger.kernel.org
-Subject: Re: [PATCH 1/4] Doc/config.txt: explain repeated sections
-References: <20170708203413.16442-1-astian@eclipso.at>
-        <20170708203413.16442-2-astian@eclipso.at>
-        <xmqqfue6a5va.fsf@gitster.mtv.corp.google.com>
-        <xmqq7ezi9h64.fsf@gitster.mtv.corp.google.com>
-        <20170710073229.mwf7zufx3xmszkde@sigill.intra.peff.net>
-Date:   Mon, 10 Jul 2017 09:17:56 -0700
-In-Reply-To: <20170710073229.mwf7zufx3xmszkde@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 10 Jul 2017 03:32:29 -0400")
-Message-ID: <xmqqzicc6zbf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :in-reply-to:references:content-transfer-encoding;
+        bh=qoIGU6hEWjloxAkUAhYIzHNqPtGVc5AhKaylCzJHHbw=;
+        b=A+yWPYuvOZNKTWmN3tFTPLyTWypvf4Wxf2vjy1NhjquoJLAv9OU+akc0Lio9oDTat6
+         UjNS8z4p9UhJzLCc+QzhugKBT8rDyszabLC3wwgMndOfj/rutZkRfA2lz04OXZ3PoSDg
+         yB/3KbB9t/rhaLY72IynmoGs6olCmrIdzk68itlZA/gw/rT6TDwGWrT2iDQ/9wbh4T0R
+         0ZKyCpMQCRTmqjDx/B8MNOtyopCD6MicJuOJRZO4tmtFo/ARZiABZba3pJ+yvS3Ho0ct
+         RkvgWXVAe6SrwIXaOWsBX0cp03eEsv6cTeD8IVoly9fOBw6tJrupS9PgbzsG/SfkyvNx
+         T7Uw==
+X-Gm-Message-State: AIVw111hApCcTWWB2sZcykdWDotwzIX5qIJ8xtlNqj9uhXLfVLQcBKje
+        GQH5EaZ6QEGN3A==
+X-Received: by 10.223.133.99 with SMTP id 90mr7786555wrh.44.1499703791508;
+        Mon, 10 Jul 2017 09:23:11 -0700 (PDT)
+Received: from localhost (cable-62-117-17-78.cust.telecolumbus.net. [62.117.17.78])
+        by smtp.gmail.com with ESMTPSA id i136sm8158488wmf.33.2017.07.10.09.23.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Jul 2017 09:23:09 -0700 (PDT)
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+To:     andre.hinrichs@gmx.de
+Cc:     git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: fix typo
+Date:   Mon, 10 Jul 2017 18:23:08 +0200
+Message-Id: <20170710162308.22108-1-ralf.thielow@gmail.com>
+X-Mailer: git-send-email 2.13.2.648.g700819c
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <f11120c3-30fb-bdfe-a597-8ceb41097209@gmx.de>
+References: <f11120c3-30fb-bdfe-a597-8ceb41097209@gmx.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Reported-by: Andre Hinrichs <andre.hinrichs@gmx.de>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+Hi Andre,
 
-> FWIW, the use of "multivalued" here tickled my spider sense, too. I
-> think when talking on the list we generally reserve "multivalued" for
-> true "we expect this to be a list" variables. But the only mention of
-> "multivalued" in the config documentation seems to be:
->
->   Some variables may appear multiple times; we say then that the
->   variable is multivalued.
->
-> I think the proposed use is consistent with that (and that line is only
-> 2 paragraphs above the proposed paragraph).
+thanks for the bugreport!
 
-Thanks for careful reading.
+Ralf
+
+ po/de.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/po/de.po b/po/de.po
+index 679f8f4..42c4508 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -8564,7 +8564,7 @@ msgstr "\"auto-gc\" Modus aktivieren"
+ #: builtin/gc.c:362
+ msgid "force running gc even if there may be another gc running"
+ msgstr ""
+-"Ausführung von \"git gc\" erwzingen, selbst wenn ein anderes\n"
++"Ausführung von \"git gc\" erzwingen, selbst wenn ein anderes\n"
+ "\"git gc\" bereits ausgeführt wird"
+ 
+ #: builtin/gc.c:379
+-- 
+2.7.4
 
