@@ -2,154 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E25A220357
-	for <e@80x24.org>; Mon, 10 Jul 2017 22:41:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 118B620357
+	for <e@80x24.org>; Mon, 10 Jul 2017 22:42:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754864AbdGJWli (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 18:41:38 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:32936 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754420AbdGJWlh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 18:41:37 -0400
-Received: by mail-pf0-f171.google.com with SMTP id e7so56822990pfk.0
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 15:41:37 -0700 (PDT)
+        id S1754641AbdGJWmR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 18:42:17 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35753 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754106AbdGJWmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 18:42:16 -0400
+Received: by mail-pg0-f67.google.com with SMTP id d193so14294748pgc.2
+        for <git@vger.kernel.org>; Mon, 10 Jul 2017 15:42:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=WB+7hn9kqAAyLrSNhrXWmdoIIlJFOYSJmpNeiE2dJSk=;
-        b=PfYL26d3qWjHDtQUShZFgB48NwdyoqMoBDrE+QxaLvwD+BqntkgjMYuH+2LIhWRAab
-         dpFzwwjoZ7P4groVIAIJVjh77EH5DaY4dW5Y1641c74LeVsXv8BQnn1WpAcDwccKZmOt
-         IEd8U6dZd2LwqRiB+6WGIzvvxGHC1ZGFrw5Sa4uTP+hg+7MOM5Zq1QRkeW3Zk5ClX/AY
-         ysZ+8RhQT/85BBBtSots706UAFBPZzZQ49RzIxv/fXycz3rvUC1dRf+xUdIi6qndNl+5
-         6BoWgbAP0k1OgByv23PCzoCcNVHWmUbPUKJFNMtqhEFVy2vBCnCleCS4LyXx4lDz1D7R
-         +Vrg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=FXcdbpJ/QmkQSHAXAjLGldu6VRPhbeD968BAVX2+Ybs=;
+        b=EV10+oHK1D2piqn1CqcRg9hdGGOabENnS6XuUKyJj6oLOkm5hW/EnvAOlcAWr7i5D7
+         u3YRY1P8eF1/AIMGV6XbhpXe+KA8hk99Hwndivudew8z6fiFtI+s4YqWgCWr9we0S5i0
+         dRbj+99ldQDvnUPnLGQ1lJ21T8eNPZtrlhdNL6kUHgKSeKx4nTJ3RiyF3rDDW8Vgzq68
+         nU3pS2IevbxLOk9wEeQBfEC2TbyGYoBZpyEXN93FFmQ9P0Uz3Kt8yrokeoeMgM2BE4xj
+         g7u7jI+VQtHjTNkwln5GUlkWhAQDzDW5MZ6T1LHU75KVBs4ltrZb3B6b++BQlBBOC/fA
+         rZYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=WB+7hn9kqAAyLrSNhrXWmdoIIlJFOYSJmpNeiE2dJSk=;
-        b=VN0lUjvlWtTLqN6l7bOx2HJLIoEpcogtVSTqX+eHYOz4ERLXzv+bf0vZEh/edETwQz
-         1Z0R7yhvc8Vs9K73TCY/EetfIsL6nn/2DITdPQKnTskztjdp6t4qHKnfAkLCGWBG6XOM
-         fOgKPAUowNUYj2yktT3yvsqr5ZFGBQ6wu0GStYqmlwPuRxNd4WaALCv3uSPaQ2r8TyOB
-         zdr4WfTwXp92xsiTmuMtx6hvRNm+qlsU9sSbBF/fqBdE6Hmu090LuMX7VScpUl4MoQZx
-         43pIV5DHDT+Dw7NvLohqWNjPacGuMsvnDPIVdbWx9tpOF6BwNg3eseaPftoQeX/08MuR
-         7/cA==
-X-Gm-Message-State: AIVw111Dds+A9L2aVwa/OhaPFX44/WVweYfcZHQETxBn0TwwyMGvDYqt
-        jL3BTHevvMZs2xdw+IJITg==
-X-Received: by 10.98.85.131 with SMTP id j125mr24442861pfb.48.1499726497050;
-        Mon, 10 Jul 2017 15:41:37 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:c8d3:611:f474:c770])
-        by smtp.gmail.com with ESMTPSA id h184sm23063541pge.66.2017.07.10.15.41.35
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=FXcdbpJ/QmkQSHAXAjLGldu6VRPhbeD968BAVX2+Ybs=;
+        b=q8S14KAhYqI/yiKRayrCma8wV7ySowmIOaENf9tCAtGex5nqiwp33JR4g2BmGMdkAG
+         9jh+bsb2Z9ypOGdoerbSIAls7ae1m1EQTc9cP+DKXXyNshWfTumv8z6gsGlnMdNdzAAI
+         hptnES/ZxJAWfn4koF5GZeOGazN9L9L3VWWCIjVRMOYFjmjlr9C9ZnNY1ki3Sc8+uazt
+         23Jwz9O/99/RA0c+G36dTZ3Sx/wyh/crB7raPDYWqVejGiJknTkEbTpno1eyAG2Qo+XP
+         5AWHOjNko/ZZiClef3AZRlURRIpaxhsxIjjvzaYPXRnrg07jmD5LCCVy4Uz7TBxaUsDz
+         XhSw==
+X-Gm-Message-State: AIVw111m0Nf3hHgQfjUh+DxT2qUpMb1mIefo388CTE4eVFlZUfY9FLoX
+        9mIpyj+SiSby0Y8SIUk=
+X-Received: by 10.98.141.23 with SMTP id z23mr46926073pfd.34.1499726536011;
+        Mon, 10 Jul 2017 15:42:16 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:79e6:b06d:25fb:addc])
+        by smtp.gmail.com with ESMTPSA id s15sm25086065pgo.48.2017.07.10.15.42.15
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Jul 2017 15:41:35 -0700 (PDT)
-Date:   Mon, 10 Jul 2017 15:41:34 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] strbuf: use designated initializers in STRBUF_INIT
-Message-ID: <20170710224134.GA161700@google.com>
-References: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net>
+        Mon, 10 Jul 2017 15:42:15 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH 0/7] tag: more fine-grained pager-configuration
+References: <cover.1499723297.git.martin.agren@gmail.com>
+Date:   Mon, 10 Jul 2017 15:42:14 -0700
+In-Reply-To: <cover.1499723297.git.martin.agren@gmail.com> ("Martin
+ =?utf-8?Q?=C3=85gren=22's?=
+        message of "Mon, 10 Jul 2017 23:55:13 +0200")
+Message-ID: <xmqqpod752yh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/10, Jeff King wrote:
-> On Sun, Jul 09, 2017 at 10:05:49AM -0700, Junio C Hamano wrote:
-> 
-> > René Scharfe <l.s.r@web.de> writes:
-> > 
-> > > I wonder when we can begin to target C99 in git's source, though. :)
-> > 
-> > Let's get the ball rolling by starting to use some of the useful
-> > features like designated initializers, perhaps, in a small, critical
-> > and reasonably stable part of the system that anybody must compile,
-> > leave it in one full release cycle or two, and when we hear nobody
-> > complains, introduce it en masse for the remainder of the system?
-> > 
-> > That way, we will see if there are people who need pre-C99 soon
-> > enough, and we won't have to scramble reverting too many changes
-> > when it happens.
-> 
-> Neat idea. Something like this?
-> 
-> -- >8 --
-> Subject: [PATCH] strbuf: use designated initializers in STRBUF_INIT
-> 
-> There are certain C99 features that might be nice to use in
-> our code base, but we've hesitated to do so in order to
-> avoid breaking compatibility with older compilers. But we
-> don't actually know if people are even using pre-C99
-> compilers these days.
-> 
-> One way to figure that out is to introduce a very small use
-> of a feature, and see if anybody complains. The strbuf code
-> is a good place to do this for a few reasons:
-> 
->   - it always gets compiled, no matter which Makefile knobs
->     have been tweaked.
-> 
->   - it's very stable; this definition hasn't changed in a
->     long time and is not likely to (so if we have to revert,
->     it's unlikely to cause headaches)
-> 
-> If this patch can survive a few releases without complaint,
-> then we can feel more confident that designated initializers
-> are widely supported by our user base.  It also is an
-> indication that other C99 features may be supported, but not
-> a guarantee (e.g., gcc had designated initializers before
-> C99 existed).
-> 
-> And if we do get complaints, then we'll have gained some
-> data and we can easily revert this patch.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I suspected we could also do something with __STDC_VERSION__, though I
-> wonder what compilers set it to when not in standards-compliant mode.
-> gcc-6 claims C11 when no specific -std flag is given.
-> 
-> And obviously before releasing this or anything similar, it would be
-> nice to see results from people building pu. I'm especially curious
-> whether MSVC would work with this (or if people even still use it, since
-> Git for Windows is pretty mature?).
-> 
->  strbuf.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/strbuf.h b/strbuf.h
-> index 2075384e0..e705b94db 100644
-> --- a/strbuf.h
-> +++ b/strbuf.h
-> @@ -68,7 +68,7 @@ struct strbuf {
->  };
->  
->  extern char strbuf_slopbuf[];
-> -#define STRBUF_INIT  { 0, 0, strbuf_slopbuf }
-> +#define STRBUF_INIT  { .alloc = 0, .len = 0, .buf = strbuf_slopbuf }
+Martin Ã…gren <martin.agren@gmail.com> writes:
 
-I love that this is happening!  And maybe someday soon we can do:
+> Using, e.g., `git -c pager.tag tag -a new-tag` results in errors
+> such as "Vim: Warning: Output is not to a terminal" and a garbled
+> terminal. A user who makes use of `git tag -a` and `git tag -l`
+> will probably choose not to configure `pager.tag` or to set it to
+> "no", so that `git tag -a` will actually work, at the cost of not
+> getting the pager with `git tag -l`.
+>
+> In the discussion at [1], it was brought up that 1) the individual
+> builtins should be in charge of setting up the paging (as opposed
+> to git.c which has no knowledge about what the command is about to
+> do) and that 2) there could then be a configuration
+> `pager.tag.list` to address the specific problem of `git tag`.
+>
+> This is an attempt to implement something like that. I decided to
+> let `pager.tag.list` fall back to `pager.tag` before falling back
+> to "on". The default for `pager.tag` is still "off". I can see how
+> that might seem confusing. However, my argument is that it would
+> be awkward for `git tag -l` to ignore `pager.tag` -- we are after
+> all running a subcommand of `git tag`. Also, this avoids a
+> regression for someone who has set `pager.tag` and uses `git tag
+> -l`.
+>
+> I am not moving all builtins to handling the pager on their own,
+> but instead introduce a flag IGNORE_PAGER_CONFIG and use it only
+> with the tag builtin. That means there's another flag to reason
+> about, but it avoids moving all builtins to handling the paging
+> themselves just to make one of them do something more "clever".
 
-  for (int i = 0; i < n; i++)
+All of the above smells like taking us in a sensible direction.  I
+agree with these design decisions described in the above, i.e.
+'pager.tag.list falling back to pager.tag', making this an opt-in to
+make code transition easier.
 
-So that we can scope loop variables to the loops themselves.
+Even though it is purely internal thing, IGNORE_PAGER_CONFIG
+probably is a bit confusion-inducing name.  After all, the
+subcommand specific configuration is not being ignored---we are
+merely delaying our reaction to it---instead of acting on it inside
+git.c without giving the subcommand a chance to make a decision, we
+are still letting (and we do expect) the subcommand to react to it.
 
--- 
-Brandon Williams
+But that is a fairly minor thing we can fix.
+
+> A review would be much appreciated. Comments on the way I
+> structured the series would be just as welcome as ones on the
+> final result.
+
+I see you CC'ed Peff who's passionate in this area, so these patches
+are in good hands already ;-) I briefly skimmed your patches myself,
+and did not spot anything glaringly wrong.
+
+Thanks.
