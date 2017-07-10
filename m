@@ -2,123 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8BBA20357
-	for <e@80x24.org>; Mon, 10 Jul 2017 18:31:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44BC020357
+	for <e@80x24.org>; Mon, 10 Jul 2017 18:44:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754698AbdGJSbN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 14:31:13 -0400
-Received: from mail-wr0-f182.google.com ([209.85.128.182]:33630 "EHLO
-        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754374AbdGJSbG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 14:31:06 -0400
-Received: by mail-wr0-f182.google.com with SMTP id r103so150167666wrb.0
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 11:31:06 -0700 (PDT)
+        id S1754501AbdGJSoh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 14:44:37 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33587 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754009AbdGJSoh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 14:44:37 -0400
+Received: by mail-pf0-f195.google.com with SMTP id e199so15632980pfh.0
+        for <git@vger.kernel.org>; Mon, 10 Jul 2017 11:44:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2zExnUzmAMsd6FE+XfTNxfOzoIZ1W5iyGn8pQK3uePA=;
-        b=Sz+sssJrHgpvo9PaD5mO6IJ9MHZuW9FKD+ia7bOZ8CUwkAAIDhwq/eYCPF7K3EsV3S
-         42yIKDb35Ay35Jc9Uyb41JKnNCy60TMfij35YWO4EVtIUrEDnVG0Oit7zarycNfIRCKX
-         uyEsA2A2eDxJJ5E/fjFC8jwStr7QXIpX9YahC4KZOmiUMRMemRt+qRwcyBfxuwakXhsq
-         fB4xlMZdECgXj2r7huXi1bRp0NRuRzEl9HS2Nr6QXUwlWnHcz97xJk1NfaIl3XSZl0WN
-         QOhOKjLBbim8Bwd0VvyjatggygqNJQNVJAnhV872/bfbT3PFV9XYDf3vY2N6sLOY36fR
-         yUOg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=QrUG88H6wFW7XeW8I3QDU7zSGV7WrJ3LRHcU/NKq2w4=;
+        b=dMpKhFXdzzM6Wj1qw2FLoa2t5E4wP4Bmm9mZzQeD33w5WAtrTHp1nGFTMpsqy5KPmZ
+         3K2OpYWChgTzr6mYtrLrIrePMeSQtZ3iTHhTTj10fUVNUZf0HAGMxzDnkecXFDdp3gMj
+         Iag2saOS+d8FpoNb728A3qFhl5n614E4OIC0QPLwohbXdB1QaVOR+Y8Ha7OM0COokO4e
+         KOcneWsZB8MvQgjZSrxAfBPnqgFtErj04tMszsDbsZooNaKc4BiwC/ESLlWz8MYuUDwX
+         HItXjmIx+5qSISRZ8fe+mgkNyThAEwK1kcgb7Hh/UImOZEzPXEDN+ZA+gbmkJH2KTMhd
+         tZpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2zExnUzmAMsd6FE+XfTNxfOzoIZ1W5iyGn8pQK3uePA=;
-        b=czPBtv8NQB1efzorN0UkjGmvNCcpR59yqGQFFWI8N6WwJknVsNZpPLO1BMVnYGA/n1
-         YUFYRqyuIaqVGzm6KOpeiWagYXMvgo84K1JDgg8HrwCfpVG4pQVRdYKsrCcUUVsKGIAF
-         +XGTJeFXDtZXVz++iPByYMjOufiU2D6pcFyTXZyW/Q8PMIjdrRlIgC45kzIfcx2R8lF7
-         d3IvNDfLdfubdQm7MXYrovmQ4KkXGvE+sookGxsiIk+eS2foBi1TUrhYW/3IDkseKwVJ
-         HA8N+UHeE6M9hm0D4dB4NzWpKKReHni+2ojhLeCRx6HMZGva0r2g98NaVYzWe9s9T5ID
-         ba4A==
-X-Gm-Message-State: AIVw1106eEaQfW8l7+oZVxlzSQP9gFN0kbCDjhta8UvNg+mObushkc1f
-        SB139TAz7OxOjNLq
-X-Received: by 10.223.170.7 with SMTP id p7mr7621008wrd.79.1499711465445;
-        Mon, 10 Jul 2017 11:31:05 -0700 (PDT)
-Received: from Haydn (vil93-6-82-233-248-1.fbx.proxad.net. [82.233.248.1])
-        by smtp.gmail.com with ESMTPSA id u135sm543197wmu.12.2017.07.10.11.31.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Jul 2017 11:31:04 -0700 (PDT)
-Date:   Mon, 10 Jul 2017 20:31:01 +0200
-From:   William Duclot <william.duclot@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] rebase: make resolve message clearer for
- inexperienced users
-Message-ID: <20170710183101.GA13122@Haydn>
-References: <20170709202520.21739-1-william.duclot@gmail.com>
- <xmqqvan06yo8.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QrUG88H6wFW7XeW8I3QDU7zSGV7WrJ3LRHcU/NKq2w4=;
+        b=uBthmw4bzOjMM3jW1bmXLjwio45SGeJSVKqbNKmW/OAUOsw2hIN7A7pClp+8ot1ByV
+         ucHv771KUauXeHMy/ykRSU2NPizlgX0aXbPAsSxiSt29nQ+faEwW2qvphyoKHM5ftzWR
+         VkKc9nZ3IIIUKRTrifCvpYyavcDbXGlO2Uz2Q8G4uC7Ze61jpIp9ezWIGDeAlFqFxxf8
+         LcPNjjTp1fge3oGlzoqHK8uSAO8+dD5XQm5HlArWFbV7mbMFYbeYnldmBTz8owKGkhOo
+         7OU/5VxsownMveoAnkBwkjIRWsOsnu3IO6DG3Oz6e/lLGh4WNo/X2JMpZFiUiJb7MmMm
+         ZACw==
+X-Gm-Message-State: AIVw112XkmBx/uULyiTW7evBsW/uYV4lBAUqDnZIVFpyAwqxCCMPyPEH
+        /0m2/ZEp16HJQg==
+X-Received: by 10.84.231.203 with SMTP id g11mr18961489pln.241.1499712276434;
+        Mon, 10 Jul 2017 11:44:36 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:79e6:b06d:25fb:addc])
+        by smtp.gmail.com with ESMTPSA id 63sm22205730pgd.57.2017.07.10.11.44.35
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 10 Jul 2017 11:44:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ralf Thielow <ralf.thielow@gmail.com>
+Cc:     andre.hinrichs@gmx.de, git@vger.kernel.org
+Subject: Re: [PATCH] l10n: de.po: fix typo
+References: <f11120c3-30fb-bdfe-a597-8ceb41097209@gmx.de>
+        <20170710162308.22108-1-ralf.thielow@gmail.com>
+Date:   Mon, 10 Jul 2017 11:44:34 -0700
+In-Reply-To: <20170710162308.22108-1-ralf.thielow@gmail.com> (Ralf Thielow's
+        message of "Mon, 10 Jul 2017 18:23:08 +0200")
+Message-ID: <xmqqwp7g5dyl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqvan06yo8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.8.2 (2017-04-18)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano writes:
-> William Duclot <william.duclot@gmail.com> writes:
-> 
-> > diff --git a/git-rebase.sh b/git-rebase.sh
-> > index 2cf73b88e..50457f687 100755
-> > --- a/git-rebase.sh
-> > +++ b/git-rebase.sh
-> > @@ -55,9 +55,10 @@ LF='
-> >  '
-> >  ok_to_skip_pre_rebase=
-> >  resolvemsg="
-> > -$(gettext 'When you have resolved this problem, run "git rebase --continue".
-> > -If you prefer to skip this patch, run "git rebase --skip" instead.
-> > -To check out the original branch and stop rebasing, run "git rebase --abort".')
-> > +$(gettext 'Resolve this conflict manually, mark it as resolved with "git add <conflicted_file>",
-> > +then run "git rebase --continue".
-> > +You can instead skip this commit: run "git rebase --skip".
-> > +To stop the whole rebasing and get back to your pre-rebase state, run "git rebase --abort".')
-> >  "
-> 
-> I find the updated one easier to follow in general.
-> Disecting the phrases in the above:
-> 
->  - The original said "When you have resolved this problem", without
->    giving a guidance how to resolve, and without saying what the
->    problem is.  The updated one says "conflict" to clarify the
->    "problem", and suggests "git add" as the tool to use after a
->    manual resolition.  
-> 
->    Modulo that there are cases where "git rm" is the right tool, the
->    updated one is strict improvement.
+Ralf Thielow <ralf.thielow@gmail.com> writes:
 
-I also wrote "<conflicted_file>" when there could be several. Maybe
-'mark it as resolved with "git add/rm"' would be a better (and shorter)
-formulation?
+> Reported-by: Andre Hinrichs <andre.hinrichs@gmx.de>
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+> Hi Andre,
+>
+> thanks for the bugreport!
+>
+> Ralf
 
->  - The original said "to check out the original branch and stop
->    rebasing", and the updated one says "to stop and get back to",
->    which is in a more logical order.  
-> 
->    "the whole rebasing" used as a noun feels something is missing
->    there, though.  I wonder if "To get back to the state before you
->    started 'rebase -i', run 'git rebase --abort'" is sufficient,
->    without saying anything further about abandoning the rebase in
->    progress (i.e. "and stop rebasing" or "stop the whole rebasing").
-
-Definitely seems clearer to me: straight to the point.
-
-> Thanks.
-
-Happy to see this patch seems interesting to you. I feel like a lot of
-git messages could be improved this way to offer a UI more welcoming to
-inexperienced user (which is a *broad* segment of users). But I am not
-aware of the cost of translation of this kind of patch: would several
-patches like this one be welcomed?
+Thanks.  Let me take it directly to 'maint'.
