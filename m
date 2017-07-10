@@ -2,145 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57D8220357
-	for <e@80x24.org>; Mon, 10 Jul 2017 20:02:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C1A720357
+	for <e@80x24.org>; Mon, 10 Jul 2017 20:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932097AbdGJUC2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 16:02:28 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:48225 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932077AbdGJUC1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 16:02:27 -0400
-Received: from [10.0.2.15] ([143.159.212.52])
-        by avasout06 with smtp
-        id j82Q1v00118PUFB0182R9e; Mon, 10 Jul 2017 21:02:25 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
- a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
- a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=mDV3o1hIAAAA:8 a=-3BjKxIydEC2PMrN7yYA:9
- a=v3Q-ytTE9il85BdD:21 a=WYcJBxUQ_Tqfo-05:21 a=QEXdDO2ut3YA:10
- a=q92HNjYiIAC_jH7JDaYf:22 a=_FVE-zBwftR9WsbkzFJk:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 3/5] Makefile: add helper for compiling with -fsanitize
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <20170710132418.d6bvzxwvbejretb4@sigill.intra.peff.net>
- <20170710132442.epsox4rawxlyvrw3@sigill.intra.peff.net>
- <xmqqefto6vqb.fsf@gitster.mtv.corp.google.com>
- <20170710174454.jbkednmzwts7yr7z@sigill.intra.peff.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <752db1ea-8416-3a98-babf-78b766432f0f@ramsayjones.plus.com>
-Date:   Mon, 10 Jul 2017 21:02:24 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1754511AbdGJUPm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 16:15:42 -0400
+Received: from mail-vk0-f48.google.com ([209.85.213.48]:32877 "EHLO
+        mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754473AbdGJUPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 16:15:41 -0400
+Received: by mail-vk0-f48.google.com with SMTP id r126so54074568vkg.0
+        for <git@vger.kernel.org>; Mon, 10 Jul 2017 13:15:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=DEz7XFT0Cro4JWOxykQZ5QNTGdUa8wqxcGMYOfM0BQM=;
+        b=MsdakY1Bxyyjz+BoOiTcSbTjFfItBGZy87yHowZCVr7ppZVESuUae+AMw5IgJHmpsw
+         dBOR1RlIFQ2xW6K40A8vhu0Yg0Rx31Ctcsgtb5J4xVJ+mf9E9LRd8EGK5vJT/TjHWU+B
+         aDZG1Ytkkq0Uc9Tau1q2oBjqQpjY6okMttvIj0cUC39NHTqO/b+v9piqRZ5tTIkWtyyK
+         15EzuLhS/GfdLkJvaKHnlXRsZUlctbPaUrPwVYjqtbJw4flun4Vc700Ae7Nk1iMwalK3
+         PZm1+RQJGOOUVOynX3n0d08cUPaULpY91g0fuJrmoxALjod4RUhBNaF0ZEZqC9Rum5F5
+         UiSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=DEz7XFT0Cro4JWOxykQZ5QNTGdUa8wqxcGMYOfM0BQM=;
+        b=CMTCacwBUKt8WerrOAfZabeAv7Bx3JO//wN2FZSrYa4qKAtbqc7afwh20ACS+Owr8L
+         5UymwHmARFjiO6UcZaIcbg3MxfF5ErOYv13Ht2A3fWnHJqfUjxGKI87eXzkSrD3CfTFr
+         ymOEKRXBDS+II2c7wlhKRrxCvT/O5Gmvn7Sa/poaDSBTvRArScKKD3E/oexdnWBpz0sF
+         Tj+4xqsYp4esyrc/chNMgUe1eGglsHnkL+etCi0X98Oc3IxIpa+iZ2fh73NZBbrrKg8o
+         3BpkFRIKGiit0FeGl4q4mJUXM2thY9pFk2D/TfavhsCadOwdSN4wd9u9ARfqE4H7c6XO
+         ph9Q==
+X-Gm-Message-State: AIVw111hgjs09LRSLkt7U1BBfJrQQFpOBn28D+Sq5fJZN8h6nRC1CHyw
+        MvJF+bUE6RQBgC4jCZwsX2+ch7AU7x94
+X-Received: by 10.31.69.82 with SMTP id s79mr7920861vka.118.1499717740404;
+ Mon, 10 Jul 2017 13:15:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170710174454.jbkednmzwts7yr7z@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Received: by 10.103.44.8 with HTTP; Mon, 10 Jul 2017 13:15:40 -0700 (PDT)
+From:   kinchit raja <kinchit15@gmail.com>
+Date:   Mon, 10 Jul 2017 13:15:40 -0700
+Message-ID: <CAKvSMhhO7RwiZfpcLR3cK2TXF-v9MrO1N33t8BqX=8f9z=Gd0w@mail.gmail.com>
+Subject: Bug: Git checkout case Insensitive branch name compare
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Bugs Details:
 
+Git checkout case Insensitive branch name compare
 
-On 10/07/17 18:44, Jeff King wrote:
-> On Mon, Jul 10, 2017 at 10:35:24AM -0700, Junio C Hamano wrote:
-> 
->> Jeff King <peff@peff.net> writes:
->>
->>> You can already build and test with ASan by doing:
->>>
->>>   make CFLAGS=-fsanitize=address test
->>>
->>> but there are a few slight annoyances:
->>>
->>>   1. It's a little long to type.
->>>
->>>   2. It override your CFLAGS completely. You'd probably
->>>      still want -O2, for instance.
->>>
->>>   3. It's a good idea to also turn off "recovery", which
->>>      lets the program keep running after a problem is
->>>      detected (with the intention of finding as many bugs as
->>>      possible in a given run). Since Git's test suite should
->>>      generally run without triggering any problems, it's
->>>      better to abort immediately and fail the test when we
->>>      do find an issue.
->>
->> Unfortunately I do not think Comparing between versions in
->> https://gcc.gnu.org/onlinedocs, it appears that -fsanitize-recover
->> is not configurable for folks still with GCC 4.x series, and this
->> patch is not very useful unless you disable the recovery for the
->> purpose of running our tests as you said X-<.
-> 
-> I didn't actually dig into the history of gcc support at all. Back in
-> the 4.x time-frame I tried using ASan and couldn't get it to work at
-> all. I ended up just always building with clang (which from my
-> mostly-ignorant view seems to to be the primary platform for ASan
-> development).
-> 
-> Since this is an optional build that doesn't need to be available
-> everywhere, I'd actually be fine with saying "just use clang". But as
-> far as I can tell, gcc seems to work fine these days. I consider this
-> mostly a best-effort tool.
-> 
-> I'm also not sure of the behavior without -fno-sanitize-recover. I think
-> ASan may barf either way. The commit message for my config.mak from a
-> year or two ago claims that the problem was actually with UBSan. It
-> would be useful in the long run for that to work, too.
+Steps to Reproduce:
 
-Just FYI, I had a quick look at this tonight. I applied your
-patches to master, the tried 'make SANITIZE=address test', which
-worked fine. I then tried 'make SANITIZE=undefined test' and I had
-to control+C it after nearly two hours on one test! ;-) (somewhere
-in the t4xxx - unfortunately I overwrote the output file without
-thinking).
+ I have a remote branch which is as shown below.
+Example: feature_12345_write.netCodeForSomeFeature
 
-[BTW I am on Linux Mint 18.2 x86_64, gcc version 5.4.0]
+ I used the git command on git bash and typed
+"feature_12345_write.NetCodeForSomeFeature" thinking I am mapping
+"feature_12345_write.netCodeForSomeFeature" locally.
 
-After a quick look at the ./t0000-basic.sh test, I managed to get
-the test to complete (with 15 tests failing), with the following
-patch applied:
+So after I got the branch locally, I tried git pull and I see the following
+"Your configuration specifies to merge with the ref
+'refs/heads/feature_12345_write.NetCodeForSomeFeature' from the
+remote, but no such ref was fetched.
 
--- >8 --
-diff --git a/Makefile b/Makefile
-index 3c341b2a6..8e6433738 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1016,7 +1016,7 @@ ifdef SANITIZE
- BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
- BASIC_CFLAGS += -fno-omit-frame-pointer
- ifeq ($(SANITIZE),undefined)
--BASIC_CFLAGS += -DNO_UNALIGNED_LOADS
-+BASIC_CFLAGS += -DNO_UNALIGNED_LOADS -DSHA1DC_FORCE_ALIGNED_ACCESS
- endif
- endif
- 
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index 25eded139..3baddc636 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -118,6 +118,10 @@
- #define SHA1DC_ALLOW_UNALIGNED_ACCESS
- #endif /*UNALIGNMENT DETECTION*/
- 
-+#if defined(SHA1DC_ALLOW_UNALIGNED_ACCESS) && defined(SHA1DC_FORCE_ALIGNED_ACCESS)
-+#undef SHA1DC_ALLOW_UNALIGNED_ACCESS
-+#endif
-+
- 
- #define rotate_right(x,n) (((x)>>(n))|((x)<<(32-(n))))
- #define rotate_left(x,n)  (((x)<<(n))|((x)>>(32-(n))))
---------
+ Although when I did "git log", it shows proper history for
+"feature_12345_write.netCodeForSomeFeature" branch.
 
-Hmm, hopefully that is not whitespace damaged.
+However when I use the command "git pull --rebase origin branch" it
+says "fatal: Couldn't find remote ref
+feature_12345_write.NetCodeForSomeFeature"
+Because the remote branch has 'n' instead of 'N' in '.net' for branch name.
 
-ATB,
-Ramsay Jones
+This is because I used "git checkout branch" instead of "git checkout
+branch origin/remote branch name" since the local branch name I wanted
+was the same as the remote branch name.
 
+I don't see this in other branches.
+
+I think the command is not considering case sensitivity of characters
+in the branch name.
+
+Thanks.
+
+-- 
+Best Regards,
+Kinchit Raja
