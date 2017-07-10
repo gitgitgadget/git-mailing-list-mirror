@@ -2,112 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A09120357
-	for <e@80x24.org>; Mon, 10 Jul 2017 14:14:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52DD920357
+	for <e@80x24.org>; Mon, 10 Jul 2017 14:17:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932355AbdGJOOZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 10:14:25 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:32951 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932217AbdGJOOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 10:14:24 -0400
-Received: by mail-pf0-f178.google.com with SMTP id e7so50705684pfk.0
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 07:14:24 -0700 (PDT)
+        id S932329AbdGJORz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 10:17:55 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35213 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932298AbdGJORy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 10:17:54 -0400
+Received: by mail-pg0-f66.google.com with SMTP id d193so12912854pgc.2
+        for <git@vger.kernel.org>; Mon, 10 Jul 2017 07:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=XtfcbrDKeI3IZBWUTONuaYJt+faNBDR4EW6JVW5/CYg=;
-        b=TrfVKC9SUuriJLnM7Rnc+S2T4P8X4vl491zbCMxLrxzUgogErbDp4L0BM3vkZToblf
-         bLLCz454tGe2xYow2RiZ6gaxLyoZK7otOCro9KvMGew6bx2MU2iIeDsjW1yJGRGjS4Hi
-         Ni4fFVoxJB30BoFwvMMon/rvQOA3Q/+g2kFNJf3cBHvVVvPsw86h6vcM/nrJZYjk4mac
-         M6KvTNTtffBhQ7h1PebOebiviBpgSAMd0KZv8WwDvClmYiEie2TgdnBQz24a0UeYqF3G
-         ZLYt4bYp/vHG41IjvczNMEI0Qm+q63R/RRa/snKoZ9QrF1GqkeaRHDzEErZLsjkX243m
-         hw0A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=cu85KT4VJGvcUdYeaENgqvY78qjCyEzmgOi9U9cmPUg=;
+        b=Y7nUI7WatbBqBrGxfEHYDtOL6eTba/RXX/9bZ3nINBbUoxaoUveP2+dhfV+6Zi8waO
+         XDsnSsgby51MducYrNi4ZVJdd55kjb8BX4+Q9mtZmrcKEGQeQm96R7JmCpamAO7crCUj
+         VdGcpU9PUm51X0YXT/kK9pjx+a+3tPpL1DowPksRjPciFzaNJaFzRnbzwZ2jLyCgsuim
+         icopmSQsMJ2sJipS/sxO/a2C2CHZ8C/eQKrn5ybc+DqJWSnkoC6yFnBe5VE/Az+eyOVR
+         F22v0pPP1Xbxc40r01itVQXydzujYqR3S946ARyMHYc/CCNNrlQfuG1cDgOn3gA3OlX2
+         bnpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=XtfcbrDKeI3IZBWUTONuaYJt+faNBDR4EW6JVW5/CYg=;
-        b=Qhgq4bZoSqLmaDMlpczN3dG26//yooSzRDSYOPvJCAkvhaXqeyiR5zbAbnrCGHBg7A
-         PhsiJ/VxK9FYYAdmAInAoZ8w9vuC+wT23lEO1GRyDbV1S0cut1pI8ck7+gMdDOo0OAko
-         eeqAJumwxEwO36e0V3MutJ7UZdPG0/xvQ+U31hCaB3TqB8UtD6em4baImmFjwyXzWaru
-         0UFX8N7I2JlyopKOCPlXICphfTN4DjM3MxsmPVZb5GDwyuOfoG426AGzUf9U0dFWeQfr
-         4t1DiesAmjstuuz7CnBvMUJrGDkVR1bI7/I3/QFcrJj6sntRtZykqFuPfzau2VhQEHz9
-         OKHA==
-X-Gm-Message-State: AIVw11043oewwA2fbKscePyRJ+l2h00mtfma85G5rz7gal0zVz7GqoVz
-        5TqQayFEyBIBbQ==
-X-Received: by 10.99.250.69 with SMTP id g5mr14830754pgk.11.1499696063471;
-        Mon, 10 Jul 2017 07:14:23 -0700 (PDT)
-Received: from unique-pc ([117.209.165.116])
-        by smtp.googlemail.com with ESMTPSA id m5sm18205269pfg.22.2017.07.10.07.14.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Jul 2017 07:14:22 -0700 (PDT)
-Message-ID: <1499696071.1647.2.camel@gmail.com>
-Subject: Re: "Branch exists" error while trying to rename a non-existing
- branch to an existing one
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=cu85KT4VJGvcUdYeaENgqvY78qjCyEzmgOi9U9cmPUg=;
+        b=YhcZUTUedaP2sWMIFCJfUVvirguripwDekjP7IxEZcruYQYMQbviiU07tqXJJjb+Qm
+         9ypLLsS1y+OmmzhZpzkby2OskM20GQC87zL1e71b34n/ESQZO4I0tJG1NSjQB6Ape265
+         4V6eaQPJRccoLwkjTf3XqNJ0gYMHKlPhk8oj5vNrk/XOVvIK5OgtGi4rRoRp3W5BpSqo
+         E79WEeyGxF1HGaaQqeYTl9b9Ty4R8QQF1oU+RHx1BzNK6DjxUUAT0uG2cXheZRTJ/Ci7
+         UaFvsKFW5ncKIWDW9yuboHoVCkUytx81gz75KoncCEhYCFqgpmx2qHMEoAcGeegM8zsY
+         hQlw==
+X-Gm-Message-State: AIVw110F+M4vMKEBlJo7HgaGOFonrSj15Trb04oRbYWa0vZVPiqdi8ui
+        b5s0WHTQ3Lquvw==
+X-Received: by 10.99.38.69 with SMTP id m66mr14859524pgm.72.1499696273780;
+        Mon, 10 Jul 2017 07:17:53 -0700 (PDT)
+Received: from localhost.localdomain ([117.209.158.50])
+        by smtp.gmail.com with ESMTPSA id t78sm25469923pfa.48.2017.07.10.07.17.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Jul 2017 07:17:53 -0700 (PDT)
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+To:     gitster@pobox.com
 Cc:     git@vger.kernel.org
-Date:   Mon, 10 Jul 2017 19:44:31 +0530
-In-Reply-To: <xmqqd1998mks.fsf@gitster.mtv.corp.google.com>
-References: <1499624859.8552.9.camel@gmail.com>
-         <xmqqd1998mks.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH 1/4] hook: cleanup script
+Date:   Mon, 10 Jul 2017 19:47:41 +0530
+Message-Id: <20170710141744.8541-1-kaarticsivaraam91196@gmail.com>
+X-Mailer: git-send-email 2.13.2.957.g457671ade
+In-Reply-To: <xmqqinj4ayqb.fsf@gitster.mtv.corp.google.com>
+References: <xmqqinj4ayqb.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2017-07-09 at 11:57 -0700, Junio C Hamano wrote:
-> This is borderline "meh" at least to me.  An argument against a
-> hypothetical version of Git that "fixes" your issue would be that no
-> matter what the source of renaming is, as long as 'master' exists,
-> "branch -m" shouldn't overwrite it, and it is a good thing to remind
-> the user that 'master' exists and the user meant to rename it to
-> something else.
-> 
-I'm not against the fact of reminding the user about an existing
-branch. I'm with the fact that, warn him when he really has to care
-about a branch being overwritten i.e., when he tries to rename an
-"existing" branch to one that refers to another existing branch.
+Prepare the 'preare-commit-msg' sample script for
+upcoming changes. Preparation includes removal of
+an example that has outlived it's purpose. The example
+is the one that comments the "Conflicts:" part of a
+merge commit message. It isn't relevant anymore as
+it's done by default since 261f315b ("merge & sequencer:
+turn "Conflicts:" hint into a comment", 2014-08-28).
 
-I found this behaviour odd as I try to relate it with the 'mv' command.
-It's behaviour is as follows,
+Further remove the relevant comments from the sample script
+and update the documentation.
 
-    $ ls
-    file  some_file
-    $ mv nothing file
-    mv: cannot stat 'nothing': No such file or directory
+Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+---
+ Documentation/githooks.txt                 |  3 ---
+ templates/hooks--prepare-commit-msg.sample | 20 ++++++++------------
+ 2 files changed, 8 insertions(+), 15 deletions(-)
 
-If I haven't missed anything the following patch seems to fix the
-problem,
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 48a513a84..2869aaca8 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -476,7 +476,10 @@ static void rename_branch(const char *oldname, const char *newname, int force)
-         */
-        clobber_head_ok = !strcmp(oldname, newname);
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 706091a56..fdc01aa25 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -121,9 +121,6 @@ it is not suppressed by the `--no-verify` option.  A non-zero exit
+ means a failure of the hook and aborts the commit.  It should not
+ be used as replacement for pre-commit hook.
  
--       validate_new_branchname(newname, &newref, force, clobber_head_ok);
-+       if(ref_exists(oldref.buf))
-+               validate_new_branchname(newname, &newref, force, clobber_head_ok);
-+       else
-+               die(_("Branch '%s' does not exist."), oldname);
+-The sample `prepare-commit-msg` hook that comes with Git comments
+-out the `Conflicts:` part of a merge's commit message.
+-
+ commit-msg
+ ~~~~~~~~~~
  
-        reject_rebase_or_bisect_branch(oldref.buf);
-
-
+diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
+index 86b8f227e..b8ba335cf 100755
+--- a/templates/hooks--prepare-commit-msg.sample
++++ b/templates/hooks--prepare-commit-msg.sample
+@@ -9,8 +9,7 @@
+ #
+ # To enable this hook, rename this file to "prepare-commit-msg".
+ 
+-# This hook includes three examples.  The first comments out the
+-# "Conflicts:" part of a merge commit.
++# This hook includes three examples.
+ #
+ # The second includes the output of "git diff --name-status -r"
+ # into the message, just before the "git status" output.  It is
+@@ -20,17 +19,14 @@
+ # The third example adds a Signed-off-by line to the message, that can
+ # still be edited.  This is rarely a good idea.
+ 
+-case "$2,$3" in
+-  merge,)
+-    @PERL_PATH@ -i.bak -ne 's/^/# /, s/^# #/#/ if /^Conflicts/ .. /#/; print' "$1" ;;
+ 
+-# ,|template,)
+-#   @PERL_PATH@ -i.bak -pe '
+-#      print "\n" . `git diff --cached --name-status -r`
+-#	 if /^#/ && $first++ == 0' "$1" ;;
+-
+-  *) ;;
+-esac
++# case "$2,$3" in
++#  ,|template,)
++#    @PERL_PATH@ -i.bak -pe '
++#       print "\n" . `git diff --cached --name-status -r`
++# 	 if /^#/ && $first++ == 0' "$1" ;;
++#  *) ;;
++# esac
+ 
+ # SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+ # grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
 -- 
-Kaartic
+2.13.2.957.g457671ade
+
