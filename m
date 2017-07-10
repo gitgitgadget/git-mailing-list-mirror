@@ -2,144 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B19120357
-	for <e@80x24.org>; Mon, 10 Jul 2017 21:56:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25AE420357
+	for <e@80x24.org>; Mon, 10 Jul 2017 22:32:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754875AbdGJV4l (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 17:56:41 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:32827 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754864AbdGJV4h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 17:56:37 -0400
-Received: by mail-lf0-f66.google.com with SMTP id t72so12344317lff.0
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 14:56:37 -0700 (PDT)
+        id S1754696AbdGJWcY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 18:32:24 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:34001 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754550AbdGJWcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 18:32:22 -0400
+Received: by mail-pg0-f43.google.com with SMTP id t186so56539415pgb.1
+        for <git@vger.kernel.org>; Mon, 10 Jul 2017 15:32:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LAqZ612AvTN8Ew0gScp45dnWNABlK3YHhIaRPlCmSvg=;
-        b=dqNBX6/e2ZXKvbhn0/FzHb33Jkct+lz4U7nrFbXJS42aJHXKmnPXm+yaIdjt1rwBAx
-         +2N4O61BEamHXHIU0JZqY7im/4bybYdlTG0X8rI7AVPm7NJMQx44GNPpv6QufHcJCSCc
-         AZSdFmT8uirO0JJZgyay4yR4Fkj/UkkT9x0pck2/arqfbyonFRsngkxpDw/5L8iyr0Zo
-         bmk/BtPfk6p0LWdyG8QP8KMNWCM8TTguP8L/X30lEF2rlojw0i1mCTaO+QXABQyuMKrN
-         D6AsVT/Ez6nfwsqZG6iKp1JOw1sLSv+WbdlNBaKytOlSYe/0NcCLzxKxWQCK0GcHhb4g
-         FugQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vVRwwa1Dx0Nn7hI0EMAaaGJ+bqEWBclG0h8Aqmlp9/U=;
+        b=vX/YtcpM4G6P+ZY1k0PgcnDhf1VNgHCzI3j0XnvpWdFDuCWyxsbY5hNWbriaCM1GOx
+         H7C2pfm5EoHCAo8TF7/FFq0r0X27lHVJNzzlV3/Wb3ZWj4wZmdAVj7lIHxcrApikATrq
+         y3ZaioSP8FNSMlKxS/4yEqK7q1CUXDhyn7h6e94O9dIDA0QKcABxRhvdSe+07kZQGoYE
+         ZqzzTbJefzbhHRJmG6fkXsIZO93aM71wKi37UxOF9088MZsfYlaDOnu3vc9V5hV24tG2
+         0fIUv9WzBe5CLyrVYYrtjyET/4t/2G+XGTz11MoaYRkSGz7phnlfNL/lwiHiLblDXdJs
+         VUBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LAqZ612AvTN8Ew0gScp45dnWNABlK3YHhIaRPlCmSvg=;
-        b=ockNQDYHlwDCObC1tPjUSL9lX/BW+KjJI29E3DnowVRRLCcO9cgdF7R5Zx3CgqNYVu
-         wv/6+YHUjmqRfFNxZSV7GAczxR1iYPLKIyEfaPt2ypVIYN3CqUizy1EqfkYdlDVfyeOT
-         vo9b8VVGGoO5hUhI8PnIwbSc+EzLEQOPFDvIX+S8OL/AFTvYr/BD3eGY1Gd9LX7yiBog
-         EtesY2Ifb34Eanv4lcxvHpBMbob91q8aXf0IuMaY7OyA1ofyvl7pEkUPd1hnjCRDmSit
-         ktVqBoSltgRBf9hzjX2U+asA1m+QwkDT/grWRq42lvhXrpmvET3L2DoaXSCH74QcU9w+
-         JklA==
-X-Gm-Message-State: AIVw112wYMJBCo54WRvISHDRhlaQuJVdXKBkj3VoCfOxXNKN8kRNFYIk
-        R1HCwdOUvYWKLc35Zho=
-X-Received: by 10.25.225.8 with SMTP id y8mr2030026lfg.34.1499723795894;
-        Mon, 10 Jul 2017 14:56:35 -0700 (PDT)
-Received: from localhost.localdomain (78-66-223-92-no2204.tbcn.telia.com. [78.66.223.92])
-        by smtp.gmail.com with ESMTPSA id x13sm2617077ljd.64.2017.07.10.14.56.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Jul 2017 14:56:35 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>
-Subject: [PATCH 7/7] tag: make git tag -l use pager by default
-Date:   Mon, 10 Jul 2017 23:55:20 +0200
-Message-Id: <e893a0b87b14143af6fc162d1acb21012523af69.1499723297.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.13.2.653.gfb5159d
-In-Reply-To: <cover.1499723297.git.martin.agren@gmail.com>
-References: <cover.1499723297.git.martin.agren@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vVRwwa1Dx0Nn7hI0EMAaaGJ+bqEWBclG0h8Aqmlp9/U=;
+        b=qDhcMkwgYKGCsUgKidkNO6OWG76/y3poEy2+qrC2l5r/JhwnqT8IwwLUQ10N2DTdeS
+         44hn0VxlipOPcz+udvDf/c4h0eGW3rKlQHQR+rG1lCf2iGM/C2YpmvmFDW66tS+I6soA
+         DFH4SzcFEaVNzA/V1m+M8nc612nof+Mp0p72iSOfIc7fZKTDwWl8uDty+BHYqtPpZb4z
+         F10UObmilFr3fIK/QBYn1gQtUqJ4iQbrW/4OZTn88NTXvP+gvdMZL36YAt0kLn79S9WB
+         Zulsh3E+IMSohvzBwMPbxUFHCGv7KXH7ynUaPj644nNuiEg9A4e0ibAw+88wGH+6arMM
+         b4gw==
+X-Gm-Message-State: AIVw112HzySZtiEftHz4I9dII/GjEyftjX+saVnrOZhvi+d1r/KGGieF
+        rAZUBhrTVs0TizSse7nVAhtw4EOF80u8
+X-Received: by 10.99.54.73 with SMTP id d70mr17219332pga.195.1499725942017;
+ Mon, 10 Jul 2017 15:32:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.100.183.170 with HTTP; Mon, 10 Jul 2017 15:32:21 -0700 (PDT)
+In-Reply-To: <xmqqk23ldwbv.fsf@gitster.mtv.corp.google.com>
+References: <CA+P7+xqS1Fh0aDV=QYbVMdRa=M4e-mBtjvknR=U_RShDoccNjQ@mail.gmail.com>
+ <1n47so5.9e6qvf1bbqww4M%haller@ableton.com> <CA+P7+xq6MJa-J5cj2Om20d+g7KBretShpxH=13HWV7vFR9be8g@mail.gmail.com>
+ <CACBZZX48RanjHsv1UsnxkbxRtqKRGgMcgmtVqQmR84H5j8awqQ@mail.gmail.com>
+ <CA+P7+xowo+qXZ+Vr5vYg8wSpNzF44X9RsV34s_fKhBtVcddBvw@mail.gmail.com>
+ <CAPc5daXVYA8MsseJxge6Qo6ASc=CL6ySt2K61LpOtZ=3H3gWuw@mail.gmail.com>
+ <xmqq37a9fl8a.fsf_-_@gitster.mtv.corp.google.com> <CAGZ79kbCo3EjRGR_iE=6CJ2ou=4gMv3=t+s1ctGhUbZg8UDixA@mail.gmail.com>
+ <xmqqk23ldwbv.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 10 Jul 2017 15:32:21 -0700
+Message-ID: <CAGZ79ka3ZA_9kE+b=bC28dG5fW3REgC0Ecfn7vie1eRiExxOjg@mail.gmail.com>
+Subject: Re: [PATCH] push: disable lazy --force-with-lease by default
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Haller <haller@ableton.com>, Jeff King <peff@peff.net>,
+        Matt McCutchen <matt@mattmccutchen.net>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Mike Rappazzo <rappazzo@gmail.com>,
+        Francesco Mazzoli <f@mazzo.li>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous patch introduced `pager.tag.list`. Its default was to use
-the value of `pager.tag` or, if that was also not set, to fall back to
-"off".
+On Thu, Jul 6, 2017 at 3:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
+>
+>>> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+>>> index 0a639664fd..1fa01210a2 100644
+>>> --- a/Documentation/git-push.txt
+>>> +++ b/Documentation/git-push.txt
+>>> @@ -212,8 +212,9 @@ must not already exist.
+>>>  +
+>>>  Note that all forms other than `--force-with-lease=<refname>:<expect>`
+>>>  that specifies the expected current value of the ref explicitly are
+>>> -still experimental and their semantics may change as we gain experience
+>>
+>> This indicates that this feature is not 'experimental' any more, but disabled
+>> (for safety reasons as described below). This implies we will not change the
+>> heuristic for push.allowLazyForceWithLease easily.
+>
+> I actually wanted to say it was a failed experiment, but I see your
+> point.  Let's leave the "still experimental" label.
+>
 
-Change that fallback value to "on". Let the default value for
-`pager.tag` remain at "off". Update documentation and tests.
+After rethinking this feature and how to make it safer, we could actually
+*ask* the user to confirm the sha1:
 
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Documentation/git-tag.txt |  2 +-
- builtin/tag.c             |  2 +-
- t/t7006-pager.sh          | 12 ++++++------
- 3 files changed, 8 insertions(+), 8 deletions(-)
+    # implicit lease:
+    $ git push --force-with-lease <remote/refspec>
+    # either do an implicit fetch for the refspec first
+    # or use the remote tracking branch:
+    This would lose HEAD=27956ac767, including
+    the following commits on <remote/refspec> :
+    27956ac767 Merge branch 'js/rebase-i-final' into pu
+    a1b1c5eb04 Merge branch 'sb/hashmap-cleanup' into pu
+    ... and 13 more
+    Confirm to lose commits by typing yes: yes
+    ... normal push
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 6ad5811a2..fbdfb3f59 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -103,7 +103,7 @@ as `--contains` is provided. See the documentation for each of those
- options for details.
- +
- When determining whether to use a pager, `pager.tag.list` is considered
--before `pager.tag`.
-+before `pager.tag`. If neither is set, the default is to use a pager.
- See linkgit:git-config[1].
- 
- --sort=<key>::
-diff --git a/builtin/tag.c b/builtin/tag.c
-index e96ef7d70..ec69fca61 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -447,7 +447,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, git_tag_usage, 0);
- 
- 	if (cmdmode == 'l')
--		setup_auto_pager("tag.list", 0);
-+		setup_auto_pager("tag.list", 1);
- 	setup_auto_pager("tag", 0);
- 
- 	if (keyid) {
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index ed34c6734..94df89a5f 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -134,22 +134,22 @@ test_expect_success TTY 'configuration can enable pager (from subdir)' '
- 	}
- '
- 
--test_expect_success TTY 'git tag -l defaults to not paging' '
-+test_expect_success TTY 'git tag -l defaults to paging' '
- 	rm -f paginated.out &&
- 	test_terminal git tag -l &&
--	! test -e paginated.out
-+	test -e paginated.out
- '
- 
- test_expect_success TTY 'git tag -l respects pager.tag' '
- 	rm -f paginated.out &&
--	test_terminal git -c pager.tag tag -l &&
--	test -e paginated.out
-+	test_terminal git -c pager.tag=false tag -l &&
-+	! test -e paginated.out
- '
- 
- test_expect_success TTY 'git tag -l respects pager.tag.list' '
- 	rm -f paginated.out &&
--	test_terminal git -c pager.tag=false -c pager.tag.list tag -l &&
--	test -e paginated.out
-+	test_terminal git -c pager.tag -c pager.tag.list=false tag -l &&
-+	! test -e paginated.out
- '
- 
- test_expect_success TTY 'git tag -l respects --no-pager' '
--- 
-2.13.2.653.gfb5159d
+But that may be more effort than this patch originally intended to be,
+but I would think this makes the lease effective.
 
+Downside is the I/O (Have we any command that is taking
+user input as such? -p option for reset/add may come to mind)
+and the unfriendlyness to scripts, but scripting may rely on the
+non-lazy form of leases.
