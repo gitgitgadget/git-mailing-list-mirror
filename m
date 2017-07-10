@@ -2,136 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA28920357
-	for <e@80x24.org>; Mon, 10 Jul 2017 20:02:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57D8220357
+	for <e@80x24.org>; Mon, 10 Jul 2017 20:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754467AbdGJUCK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 16:02:10 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34089 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754284AbdGJUCI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 16:02:08 -0400
-Received: by mail-pg0-f66.google.com with SMTP id j186so13923511pge.1
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 13:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=AE4brVia+gJ5fJ+yLjJwxy4k7VOyMwmTTAhg6aFID2c=;
-        b=rpO2FF/wPzUJ514DWLFzsDYYF79a+FsH7cTqcsKrQD7EQaO4K0PNHzWm64Yb1+c+kZ
-         191iPPLtsVH9+thOORS3C7AU4vRfzKHWiNeqXIUNhuYm2U4jG3rB3/hKyile3u0a3oyF
-         avdrb7xVJbG/KxrLcGt/7/IgAnwxCkcPQV5o+KPelV9CcqposrMVJHs3I0IqpP5d+HoC
-         EefsWCfrwXMBkj2s7bPLJCHO2aBvIWD8GJh5H1nZYwGtLx4tStp+665OdkF/oyH5TUPe
-         DavZrlrzZHD6i5go5GCpQ073QJeE3mAU57l6uJ2kKP0J1C6A3D8oeTENSQVDVKdPorNW
-         ixlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=AE4brVia+gJ5fJ+yLjJwxy4k7VOyMwmTTAhg6aFID2c=;
-        b=A+1hU8X8ozDzsU5WGVYDmO4ku0bJ3cPpwgyH4ZwZC7eJioMIEcJDX0v6eGUoCG0ECG
-         SeBPeKxSqC9YYpNbahvRJrPZK+nF5z+8J+Sm7hpVhLv+5p/YpW8v4Epmhb2PHGSjplwq
-         re9DGIkqJ4jqhaYpbRXeB1ZVYKyMjL16xmBh5bpfFfnha2q7sQDnpwqGfUpxaEHBLFl+
-         Dl2YMt4/nKYme0JowucGGweFx/XU0ahsSQ4UjO0yxL+krTIM1R+WnAXX7XidUQ3thXpC
-         HOnOa9lQQos3oPcWuccQYcMNW2uQUr9hCpGf73Tc9/SF8O9EpTC91XzFR8a4lEVw7ssJ
-         BotA==
-X-Gm-Message-State: AIVw110pm8hmeCL/9g7ankZZZjQebxh3Y5MVI0VHibN9tUCkzpfdJO/2
-        JhTs+aIkrMbdpw==
-X-Received: by 10.99.123.17 with SMTP id w17mr16347753pgc.100.1499716928089;
-        Mon, 10 Jul 2017 13:02:08 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:79e6:b06d:25fb:addc])
-        by smtp.gmail.com with ESMTPSA id p5sm25732830pgf.50.2017.07.10.13.02.06
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Jul 2017 13:02:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
+        id S932097AbdGJUC2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 16:02:28 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:48225 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932077AbdGJUC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 16:02:27 -0400
+Received: from [10.0.2.15] ([143.159.212.52])
+        by avasout06 with smtp
+        id j82Q1v00118PUFB0182R9e; Mon, 10 Jul 2017 21:02:25 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
+ a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
+ a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=mDV3o1hIAAAA:8 a=-3BjKxIydEC2PMrN7yYA:9
+ a=v3Q-ytTE9il85BdD:21 a=WYcJBxUQ_Tqfo-05:21 a=QEXdDO2ut3YA:10
+ a=q92HNjYiIAC_jH7JDaYf:22 a=_FVE-zBwftR9WsbkzFJk:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 3/5] Makefile: add helper for compiling with -fsanitize
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/4] hook: add a simple first example
-References: <xmqqinj4ayqb.fsf@gitster.mtv.corp.google.com>
-        <20170710141744.8541-1-kaarticsivaraam91196@gmail.com>
-        <20170710141744.8541-4-kaarticsivaraam91196@gmail.com>
-Date:   Mon, 10 Jul 2017 13:02:06 -0700
-In-Reply-To: <20170710141744.8541-4-kaarticsivaraam91196@gmail.com> (Kaartic
-        Sivaraam's message of "Mon, 10 Jul 2017 19:47:44 +0530")
-Message-ID: <xmqqbmos5add.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+References: <20170710132418.d6bvzxwvbejretb4@sigill.intra.peff.net>
+ <20170710132442.epsox4rawxlyvrw3@sigill.intra.peff.net>
+ <xmqqefto6vqb.fsf@gitster.mtv.corp.google.com>
+ <20170710174454.jbkednmzwts7yr7z@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <752db1ea-8416-3a98-babf-78b766432f0f@ramsayjones.plus.com>
+Date:   Mon, 10 Jul 2017 21:02:24 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20170710174454.jbkednmzwts7yr7z@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
-
->  I made an attempt to make the second example work with amending 
->  with the aim of making it suitable for usage out of the box. It
->  seems that it's not easy to make it work as the status of a file
->  cannot be determined correctly when the index while amending
->  introduces changes to a file that has a change in the commit being
->  amended.
->
->  Is there any way in which the second example could be made to work with
->  amending without much effort? I'm asking this assuming something might
->  have happened, since the script was added, that could ease the task.
-
-Sorry, but I do not understand what you are asking here.
-
-Ahh, do you mean if we can avoid doing one half of the 1/4 (i.e. the
-part that removes the commented out 'diff --name-status') and instead
-make it a useful example (while still removing the thing that
-comments out the "conflicts:")?
-
-After going back and checking 1/4, I realize that I misread the patch.
-you did keep the commented out 'diff --name-status' thing, so it still
-has three---it just lost one half of the original "first" example.  So
-please disregard my earlier "do we still have three, not two?"
 
 
+On 10/07/17 18:44, Jeff King wrote:
+> On Mon, Jul 10, 2017 at 10:35:24AM -0700, Junio C Hamano wrote:
+> 
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> You can already build and test with ASan by doing:
+>>>
+>>>   make CFLAGS=-fsanitize=address test
+>>>
+>>> but there are a few slight annoyances:
+>>>
+>>>   1. It's a little long to type.
+>>>
+>>>   2. It override your CFLAGS completely. You'd probably
+>>>      still want -O2, for instance.
+>>>
+>>>   3. It's a good idea to also turn off "recovery", which
+>>>      lets the program keep running after a problem is
+>>>      detected (with the intention of finding as many bugs as
+>>>      possible in a given run). Since Git's test suite should
+>>>      generally run without triggering any problems, it's
+>>>      better to abort immediately and fail the test when we
+>>>      do find an issue.
+>>
+>> Unfortunately I do not think Comparing between versions in
+>> https://gcc.gnu.org/onlinedocs, it appears that -fsanitize-recover
+>> is not configurable for folks still with GCC 4.x series, and this
+>> patch is not very useful unless you disable the recovery for the
+>> purpose of running our tests as you said X-<.
+> 
+> I didn't actually dig into the history of gcc support at all. Back in
+> the 4.x time-frame I tried using ASan and couldn't get it to work at
+> all. I ended up just always building with clang (which from my
+> mostly-ignorant view seems to to be the primary platform for ASan
+> development).
+> 
+> Since this is an optional build that doesn't need to be available
+> everywhere, I'd actually be fine with saying "just use clang". But as
+> far as I can tell, gcc seems to work fine these days. I consider this
+> mostly a best-effort tool.
+> 
+> I'm also not sure of the behavior without -fno-sanitize-recover. I think
+> ASan may barf either way. The commit message for my config.mak from a
+> year or two ago claims that the problem was actually with UBSan. It
+> would be useful in the long run for that to work, too.
 
->  Documentation/githooks.txt                 | 3 +++
->  templates/hooks--prepare-commit-msg.sample | 5 ++++-
->  2 files changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index fdc01aa25..59f38efba 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -121,6 +121,9 @@ it is not suppressed by the `--no-verify` option.  A non-zero exit
->  means a failure of the hook and aborts the commit.  It should not
->  be used as replacement for pre-commit hook.
->  
-> +The sample `prepare-commit-msg` hook that comes with Git removes the
-> +help message found in the commented portion of the commit template.
-> +
->  commit-msg
->  ~~~~~~~~~~
->  
-> diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-> index a15d6d634..a84c3e5a8 100755
-> --- a/templates/hooks--prepare-commit-msg.sample
-> +++ b/templates/hooks--prepare-commit-msg.sample
-> @@ -9,7 +9,8 @@
->  #
->  # To enable this hook, rename this file to "prepare-commit-msg".
->  
-> -# This hook includes three examples.
-> +# This hook includes three examples.  The first one removes the
-> +# "# Please enter the commit message..." help message.
->  #
->  # The second includes the output of "git diff --name-status -r"
->  # into the message, just before the "git status" output.  It is
-> @@ -23,6 +24,8 @@ COMMIT_MSG_FILE=$1
->  COMMIT_SOURCE=$2
->  SHA1=$3
->  
-> +@PERL_PATH@ -i.bak -ne 'print unless(m/^. Please enter the commit message/..m/^#$/)' "$COMMIT_MSG_FILE"
-> +
->  # case "$COMMIT_SOURCE,$SHA1" in
->  #  ,|template,)
->  #    @PERL_PATH@ -i.bak -pe '
+Just FYI, I had a quick look at this tonight. I applied your
+patches to master, the tried 'make SANITIZE=address test', which
+worked fine. I then tried 'make SANITIZE=undefined test' and I had
+to control+C it after nearly two hours on one test! ;-) (somewhere
+in the t4xxx - unfortunately I overwrote the output file without
+thinking).
+
+[BTW I am on Linux Mint 18.2 x86_64, gcc version 5.4.0]
+
+After a quick look at the ./t0000-basic.sh test, I managed to get
+the test to complete (with 15 tests failing), with the following
+patch applied:
+
+-- >8 --
+diff --git a/Makefile b/Makefile
+index 3c341b2a6..8e6433738 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1016,7 +1016,7 @@ ifdef SANITIZE
+ BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
+ BASIC_CFLAGS += -fno-omit-frame-pointer
+ ifeq ($(SANITIZE),undefined)
+-BASIC_CFLAGS += -DNO_UNALIGNED_LOADS
++BASIC_CFLAGS += -DNO_UNALIGNED_LOADS -DSHA1DC_FORCE_ALIGNED_ACCESS
+ endif
+ endif
+ 
+diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+index 25eded139..3baddc636 100644
+--- a/sha1dc/sha1.c
++++ b/sha1dc/sha1.c
+@@ -118,6 +118,10 @@
+ #define SHA1DC_ALLOW_UNALIGNED_ACCESS
+ #endif /*UNALIGNMENT DETECTION*/
+ 
++#if defined(SHA1DC_ALLOW_UNALIGNED_ACCESS) && defined(SHA1DC_FORCE_ALIGNED_ACCESS)
++#undef SHA1DC_ALLOW_UNALIGNED_ACCESS
++#endif
++
+ 
+ #define rotate_right(x,n) (((x)>>(n))|((x)<<(32-(n))))
+ #define rotate_left(x,n)  (((x)<<(n))|((x)>>(32-(n))))
+--------
+
+Hmm, hopefully that is not whitespace damaged.
+
+ATB,
+Ramsay Jones
+
