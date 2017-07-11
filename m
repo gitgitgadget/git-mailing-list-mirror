@@ -2,281 +2,314 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3EDB2035A
-	for <e@80x24.org>; Tue, 11 Jul 2017 22:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B27F12035A
+	for <e@80x24.org>; Tue, 11 Jul 2017 22:38:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933769AbdGKWfw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 18:35:52 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:35242 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932740AbdGKWfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 18:35:51 -0400
-Received: by mail-qk0-f169.google.com with SMTP id 16so5403617qkg.2
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 15:35:50 -0700 (PDT)
+        id S933905AbdGKWin (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 18:38:43 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:33298 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933058AbdGKWim (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 18:38:42 -0400
+Received: by mail-pg0-f41.google.com with SMTP id k14so2959117pgr.0
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 15:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=pej9+myZHi2e+iJ69BZAnGc8cRYE6UtTMMrYQzA0qLI=;
-        b=BdEzLmXSlEzRCZzxQOoL+DwpXVXbEO4V64ZtqAK3mKJm3z8xZetRLAbC8vdK2SNIGM
-         3yoFTpPi2w/llVi2YQQODk1saISMvUE8hJEGYIg/2wW3SPgQ6uI2USFrJSp7QMC/Oaw6
-         3NOh2zgvQiH3oHPUeFDUimGbKJQsp80JVbuJtUiJpOXFn47QqroyPNSuH+MZcStu+8gI
-         fcX6DaHv5Io02brwtQX77sgqqf9UjoWOo/VaXbtgO4LHfOh7m4S5YOtN1pgdRBRno6LV
-         41kBiHoXzcbb0W/nuInFG3M8JrTt4z6nB4PPXoDHngY4IRiQ2aPTfOwR+xUJK0QQUHGB
-         zzZg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sICfKd+I35RIJwHcACMZLUWJYT73dFdvCIQ/Z9sUDgk=;
+        b=Qw8efbWX0iypVmRM01cb6prVAY2BpQ0Ba9gX1ld8Evhyou2thpSr+5LX6qBjZQLO5W
+         qK2d+Fkfg7LClgNkLbP+8BzaWMO1S/20yiM44EElsrP2UHRb434RidLDzTRSHhHfs3xS
+         MJECbBSCllEwCen1kXhTP0Hf9kL5lyg1euz0jBc6GfmK+Y4zewGl/QJhhUQssb8fJ9O9
+         vtMHnfEQ3d+QHbgMvD6OUI9+npq69zjUPC7U/AIhju+MOQxfoI+GsYTzJ6jKlwt6Vewt
+         DjZXSS8yCdmLhVTGKam6u76vTfB7EM37xFlaCdGcygc2G7Q1ONdRgEwqYMG5Hygj3ZDv
+         V3+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=pej9+myZHi2e+iJ69BZAnGc8cRYE6UtTMMrYQzA0qLI=;
-        b=e37bPAdHFjoYhtgVgasYnvxxQFq52fAqv8wcsO2hnf541WZ1ApHz/U04ncgSNyvea4
-         B8v9EraZWrqABFLW9VA4FIS3F2yD2Jz2F15AxnUuYPwOID+UvJadubpeioR6PFMRYfyL
-         2jSSOtORNxO9dyx0fobDJV/XmhNNimqZNrZY0/cQ38MSvmRoDziWQ+3PsTZCYUMuFW3O
-         96z/q8kjYEYCFyu6sFBq6dzQ31dzHeRfzs+ccruGDmSxJy2FC70pZsRZLPj0uvtMOgQx
-         jAzOTwb4qDYp5AYrpHxA1u+RB5Y/t/UUqTiFMAjxgYfUL5Mxl25s9nwbtmr/VFo201Ku
-         OMoQ==
-X-Gm-Message-State: AIVw111QFlFh13zs+/eH4KttwiT5gnsBip1Hcy34ye36WLH+1P/1t4DF
-        1Vt9LQjZA9m+9LRKFjUcrjtWcOaVFw==
-X-Received: by 10.55.19.152 with SMTP id 24mr2769212qkt.78.1499812550218; Tue,
- 11 Jul 2017 15:35:50 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sICfKd+I35RIJwHcACMZLUWJYT73dFdvCIQ/Z9sUDgk=;
+        b=oJKifxnYKhlLW5WQQ0i/OOg4kzwCZgx8Ys8U/So7UxVaCFaphtX5AxVLDX0mqzuzHY
+         FrvgSgh0OyIJUbrJqP4J6OptyZUBx34IXAMZqaBZvhU7pTvk8mbGoAr9iqLzkS0Dy2RX
+         EkZGl+vsQDFL29Geo86IcXocwp30DJxyanJ39FzTgKDVY+JqcrhU5WO8B5oUD+1IZdH0
+         xlOb9SJpNshLqFzRUUSd4MF8jYh9MeP6bHB09T3KJ+oagDm2X4GOje9dXx+O8LRqJSm4
+         zXTQ7JHxcM/x6dfJ8MuiLgnLMjHyOF4isfWT8oMuzIUVoHvTOPYN9py8z/SJx2+JLm6v
+         KPsQ==
+X-Gm-Message-State: AIVw112ti/T8ZWWkk+heMFUzGY3Zotl4Xhbn59z0yWtXQcw86YShddzW
+        riuarBI4R3nOh4SmtEOP1tfRDVIJ3rZN
+X-Received: by 10.99.149.83 with SMTP id t19mr678461pgn.247.1499812721536;
+ Tue, 11 Jul 2017 15:38:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.237.63.198 with HTTP; Tue, 11 Jul 2017 15:35:49 -0700 (PDT)
-In-Reply-To: <CAE5ih7-Sy9YmGbLs=wzfxXCSFLkEotqLRuu_xNz9x=7BhvrvnA@mail.gmail.com>
-References: <94F87EDC-4F34-455E-88D5-F99C606EF628@gmail.com>
- <20170703225731.21212-1-miguel.torroja@gmail.com> <CAE5ih7-Sy9YmGbLs=wzfxXCSFLkEotqLRuu_xNz9x=7BhvrvnA@mail.gmail.com>
-From:   Miguel Torroja <miguel.torroja@gmail.com>
-Date:   Wed, 12 Jul 2017 00:35:49 +0200
-X-Google-Sender-Auth: kWEf7XpECL5p-g_aPYGkrI5uknA
-Message-ID: <CAKYtbVbNMzPe17rBUihm5Q+mgsJUhWMs3LKDp5jEJFdL+ieafg@mail.gmail.com>
-Subject: Re: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Users <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 10.100.167.81 with HTTP; Tue, 11 Jul 2017 15:38:40 -0700 (PDT)
+In-Reply-To: <34efd9e9936fdab331655f5a33a098a72dc134f4.1499800530.git.jonathantanmy@google.com>
+References: <cover.1499800530.git.jonathantanmy@google.com> <34efd9e9936fdab331655f5a33a098a72dc134f4.1499800530.git.jonathantanmy@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 11 Jul 2017 15:38:40 -0700
+Message-ID: <CAGZ79kbdyOyu8ni6tLzb+eMcOuT0ahzVWZxgnSfO+8XYn48=Wg@mail.gmail.com>
+Subject: Re: [RFC PATCH 3/3] sha1_file: add promised blob hook support
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Luke,
+On Tue, Jul 11, 2017 at 12:48 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+> Teach sha1_file to invoke a hook whenever a blob is requested and
+> unavailable but is promised. The hook is a shell command that can be
+> configured through "git config"; this hook takes in a list of hashes and
+> writes (if successful) the corresponding objects to the repo's local
+> storage.
+>
+> This is meant as a temporary measure to ensure that all Git commands
+> work in such a situation. Future patches will update some commands to
+> either tolerate promised blobs (without invoking the hook) or be more
+> efficient in invoking the promised blob hook.
+>
+> In order to determine the code changes in sha1_file.c necessary, I
+> investigated the following:
+>  (1) functions in sha1_file that take in a hash, without the user
+>      regarding how the object is stored (loose or packed)
+>  (2) functions in sha1_file that operate on packed objects (because I
+>      need to check callers that know about the loose/packed distinction
+>      and operate on both differently, and ensure that they can handle
+>      the concept of objects that are neither loose nor packed)
+>
+> (1) is handled by the modification to sha1_object_info_extended().
+>
+> For (2), I looked at for_each_packed_object and at the packed-related
+> functions that take in a hash. For for_each_packed_object, the callers
+> either already work or are fixed in this patch:
+>  - reachable - only to find recent objects
+>  - builtin/fsck - already knows about promised blobs
+>  - builtin/cat-file - fixed in this commit
+>
+> Callers of the other functions do not need to be changed:
+>  - parse_pack_index
+>    - http - indirectly from http_get_info_packs
+>  - find_pack_entry_one
+>    - this searches a single pack that is provided as an argument; the
+>      caller already knows (through other means) that the sought object
+>      is in a specific pack
+>  - find_sha1_pack
+>    - fast-import - appears to be an optimization to not store a
+>      file if it is already in a pack
+>    - http-walker - to search through a struct alt_base
+>    - http-push - to search through remote packs
+>  - has_sha1_pack
+>    - builtin/fsck - already knows about promised blobs
+>    - builtin/count-objects - informational purposes only (check if loose
+>      object is also packed)
+>    - builtin/prune-packed - check if object to be pruned is packed (if
+>      not, don't prune it)
+>    - revision - used to exclude packed objects if requested by user
+>    - diff - just for optimization
+>
+> An alternative design that I considered but rejected:
+>
+>  - Adding a hook whenever a packed blob is requested, not on any blob.
+>    That is, whenever we attempt to search the packfiles for a blob, if
+>    it is missing (from the packfiles and from the loose object storage),
+>    to invoke the hook (which must then store it as a packfile), open the
+>    packfile the hook generated, and report that the blob is found in
+>    that new packfile. This reduces the amount of analysis needed (in
+>    that we only need to look at how packed blobs are handled), but
+>    requires that the hook generate packfiles (or for sha1_file to pack
+>    whatever loose objects are generated), creating one packfile for each
+>    missing blob and potentially very many packfiles that must be
+>    linearly searched. This may be tolerable now for repos that only have
+>    a few missing blobs (for example, repos that only want to exclude
+>    large blobs), and might be tolerable in the future if we have
+>    batching support for the most commonly used commands, but is not
+>    tolerable now for repos that exclude a large amount of blobs.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+
+>
+> +core.promisedBlobCommand::
+> +       If set, whenever a blob in the local repo is attempted to be read, but
+> +       is both missing and a promised blob, invoke this shell command to
+> +       generate or obtain that blob before reporting an error. This shell
+> +       command should take one or more hashes, each terminated by a newline,
+> +       as standard input, and (if successful) should write the corresponding
+> +       objects to the local repo (packed or loose).
+
+Any git command invoked here behaves differently as
+GIT_IGNORE_PROMISED_BLOBS is set.
+GIT_IGNORE_PROMISED_BLOBS needs documentation.
 
 
-My bad as I didn't check that case.
-It was p4CmdList as you said. the default value of the new field
-skip_info (set to True) ignores any info messages. and the script is
-waiting for a valid message.
-If I set it to False, then it does return an info entry and it accepts
-the submit change
+> +int request_promised_blobs(const struct oid_array *blobs)
 
-I'm sending another patch update
+> +       if (i == blobs->nr)
+> +               /* Nothing to fetch */
 
-On Tue, Jul 11, 2017 at 10:35 AM, Luke Diamand <luke@diamand.org> wrote:
-> On 3 July 2017 at 23:57, Miguel Torroja <miguel.torroja@gmail.com> wrote:
->> The option -G of p4 (python marshal output) gives more context about the
->> data being output. That's useful when using the command "change -o" as
->> we can distinguish between warning/error line and real change description.
->>
->> Some p4 triggers in the server side generate some warnings when
->> executed. Unfortunately those messages are mixed with the output of
->> "p4 change -o". Those extra warning lines are reported as {'code':'info'}
->> in python marshal output (-G). The real change output is reported as
->> {'code':'stat'}
->>
->> the function p4CmdList accepts a new argument: skip_info. When set to
->> True it ignores any 'code':'info' entry (skip_info=True by default).
->>
->> A new test has been created to t9807-git-p4-submit.sh adding a p4 trigger
->> that outputs extra lines with "p4 change -o" and "p4 changes"
+s/to fetch/to get/ ? Might be to nitpicky.
+
+So this function takes an array of blobs and obtains any that
+are promised.
+
+> +
+> +       argv[0] = promised_blob_command;
+> +       cp.argv = argv;
+> +       cp.env = env;
+
+I had the impression that we'd favor .args and .env_array
+nowdays, such that we'd not need to construct the NULL
+terminated array ourselves. (e.g. whenever we'd change argv,
+we'd need to make sure it contains enough NULL at the end)
+
+    argv_array_push(&cp.args, promised_blob_command);
+    argv_array_push(&cp.env_array, \
+        "GIT_IGNORE_PROMISED_BLOBS=1");
+
+would have the same effect.
+
+
+> +/*
+> + * If any of the given blobs are promised blobs, invokes
+> + * core.promisedblobcommand with those blobs and returns the number of blobs
+> + * requested. No check is made as to whether the invocation actually populated
+> + * the repository with the promised blobs.
+> + *
+> + * If none of the given blobs are promised blobs, this function does not invoke
+> + * anything and returns 0.
+
+Thanks for the docs here.
+  offtopic: As a general thing for our patches, can we configure
+  (or even convince Git in general), that headers ought to be sent *before*
+  its accompanying source? I think that would help reviewers like me, who
+  tend to start reading linearly and then giving random thoughts, because the
+  header prepares the reviewer for the source code with expectations. Also
+  by having it the other way around, the review first focuses on design (Is this
+  function signature sane; the docs said it would do X while not doing
+Y, is that
+  sane?) instead of code.
+
+  IIRC Gerrit has an option (or default) that the header is before the source,
+  despite the order violating the git sorting of files.
+
+
+
+> + */
+> +int request_promised_blobs(const struct oid_array *blobs);
+> +
+>  #endif
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 5862386cd..5778a6dbd 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -28,6 +28,11 @@
+>  #include "list.h"
+>  #include "mergesort.h"
+>  #include "quote.h"
+> +#include "iterator.h"
+> +#include "dir-iterator.h"
+> +#include "sha1-lookup.h"
+> +#include "promised-blob.h"
+> +#include "sha1-array.h"
 >
-> The latest version of mt/p4-parse-G-output (09521c7a0) seems to break
-> t9813-git-p4-preserve-users.sh.
+>  #define SZ_FMT PRIuMAX
+>  static inline uintmax_t sz_fmt(size_t s) { return s; }
+> @@ -2983,6 +2988,7 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+>         const unsigned char *real = (flags & OBJECT_INFO_LOOKUP_REPLACE) ?
+>                                     lookup_replace_object(sha1) :
+>                                     sha1;
+> +       int already_retried = 0;
 >
-> I don't quite know why, but I wonder if it's the change to p4CmdList() ?
+>         if (!oi)
+>                 oi = &blank_oi;
+> @@ -3007,30 +3013,40 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+>                 }
+>         }
 >
-> Luke
+> -       if (!find_pack_entry(real, &e)) {
+> -               /* Most likely it's a loose object. */
+> -               if (!sha1_loose_object_info(real, oi, flags)) {
+> -                       oi->whence = OI_LOOSE;
+> -                       return 0;
+> -               }
+> +retry:
+> +       if (find_pack_entry(real, &e))
+> +               goto found_packed;
 >
->>
->> Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
->> ---
->>  git-p4.py                | 90 ++++++++++++++++++++++++++++++++----------------
->>  t/t9807-git-p4-submit.sh | 30 ++++++++++++++++
->>  2 files changed, 91 insertions(+), 29 deletions(-)
->>
->> diff --git a/git-p4.py b/git-p4.py
->> index 8d151da91..a262e3253 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -509,7 +509,7 @@ def isModeExec(mode):
->>  def isModeExecChanged(src_mode, dst_mode):
->>      return isModeExec(src_mode) != isModeExec(dst_mode)
->>
->> -def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
->> +def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=True):
->>
->>      if isinstance(cmd,basestring):
->>          cmd = "-G " + cmd
->> @@ -545,6 +545,9 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
->>      try:
->>          while True:
->>              entry = marshal.load(p4.stdout)
->> +            if skip_info:
->> +                if 'code' in entry and entry['code'] == 'info':
->> +                    continue
->>              if cb is not None:
->>                  cb(entry)
->>              else:
->> @@ -879,8 +882,12 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
->>              cmd += ["%s...@%s" % (p, revisionRange)]
->>
->>          # Insert changes in chronological order
->> -        for line in reversed(p4_read_pipe_lines(cmd)):
->> -            changes.add(int(line.split(" ")[1]))
->> +        for entry in reversed(p4CmdList(cmd)):
->> +            if entry.has_key('p4ExitCode'):
->> +                die('Error retrieving changes descriptions ({})'.format(entry['p4ExitCode']))
->> +            if not entry.has_key('change'):
->> +                continue
->> +            changes.add(int(entry['change']))
->>
->>          if not block_size:
->>              break
->> @@ -1526,37 +1533,62 @@ class P4Submit(Command, P4UserMap):
->>
->>          [upstream, settings] = findUpstreamBranchPoint()
->>
->> -        template = ""
->> +        template = """\
->> +# A Perforce Change Specification.
->> +#
->> +#  Change:      The change number. 'new' on a new changelist.
->> +#  Date:        The date this specification was last modified.
->> +#  Client:      The client on which the changelist was created.  Read-only.
->> +#  User:        The user who created the changelist.
->> +#  Status:      Either 'pending' or 'submitted'. Read-only.
->> +#  Type:        Either 'public' or 'restricted'. Default is 'public'.
->> +#  Description: Comments about the changelist.  Required.
->> +#  Jobs:        What opened jobs are to be closed by this changelist.
->> +#               You may delete jobs from this list.  (New changelists only.)
->> +#  Files:       What opened files from the default changelist are to be added
->> +#               to this changelist.  You may delete files from this list.
->> +#               (New changelists only.)
->> +"""
->> +        files_list = []
->>          inFilesSection = False
->> +        change_entry = None
->>          args = ['change', '-o']
->>          if changelist:
->>              args.append(str(changelist))
->> -
->> -        for line in p4_read_pipe_lines(args):
->> -            if line.endswith("\r\n"):
->> -                line = line[:-2] + "\n"
->> -            if inFilesSection:
->> -                if line.startswith("\t"):
->> -                    # path starts and ends with a tab
->> -                    path = line[1:]
->> -                    lastTab = path.rfind("\t")
->> -                    if lastTab != -1:
->> -                        path = path[:lastTab]
->> -                        if settings.has_key('depot-paths'):
->> -                            if not [p for p in settings['depot-paths']
->> -                                    if p4PathStartsWith(path, p)]:
->> -                                continue
->> -                        else:
->> -                            if not p4PathStartsWith(path, self.depotPath):
->> -                                continue
->> +        for entry in p4CmdList(args):
->> +            if not entry.has_key('code'):
->> +                continue
->> +            if entry['code'] == 'stat':
->> +                change_entry = entry
->> +                break
->> +        if not change_entry:
->> +            die('Failed to decode output of p4 change -o')
->> +        for key, value in change_entry.iteritems():
->> +            if key.startswith('File'):
->> +                if settings.has_key('depot-paths'):
->> +                    if not [p for p in settings['depot-paths']
->> +                            if p4PathStartsWith(value, p)]:
->> +                        continue
->>                  else:
->> -                    inFilesSection = False
->> -            else:
->> -                if line.startswith("Files:"):
->> -                    inFilesSection = True
->> -
->> -            template += line
->> -
->> +                    if not p4PathStartsWith(value, self.depotPath):
->> +                        continue
->> +                files_list.append(value)
->> +                continue
->> +        # Output in the order expected by prepareLogMessage
->> +        for key in ['Change','Client','User','Status','Description','Jobs']:
->> +            if not change_entry.has_key(key):
->> +                continue
->> +            template += '\n'
->> +            template += key + ':'
->> +            if key == 'Description':
->> +                template += '\n'
->> +            for field_line in change_entry[key].splitlines():
->> +                template += '\t'+field_line+'\n'
->> +        if len(files_list) > 0:
->> +            template += '\n'
->> +            template += 'Files:\n'
->> +        for path in files_list:
->> +            template += '\t'+path+'\n'
->>          return template
->>
->>      def edit_template(self, template_file):
->> diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
->> index 3457d5db6..b630895a7 100755
->> --- a/t/t9807-git-p4-submit.sh
->> +++ b/t/t9807-git-p4-submit.sh
->> @@ -409,6 +409,36 @@ test_expect_success 'description with Jobs section and bogus following text' '
->>         )
->>  '
->>
->> +test_expect_success 'description with extra lines from verbose p4 trigger' '
->> +       test_when_finished cleanup_git &&
->> +       git p4 clone --dest="$git" //depot &&
->> +       (
->> +               p4 triggers -i <<-EOF
->> +               Triggers: p4triggertest-command command pre-user-change "echo verbose trigger"
->> +               EOF
->> +       ) &&
->> +       (
->> +               p4 change -o |  grep -s "verbose trigger"
->> +       ) &&
->> +       (
->> +               cd "$git" &&
->> +               git config git-p4.skipSubmitEdit true &&
->> +               echo file20 >file20 &&
->> +               git add file20 &&
->> +               git commit -m file20 &&
->> +               git p4 submit
->> +       ) &&
->> +       (
->> +               p4 triggers -i <<-EOF
->> +               Triggers:
->> +               EOF
->> +       ) &&
->> +       (
->> +               cd "$cli" &&
->> +               test_path_is_file file20
->> +       )
->> +'
->> +
->>  test_expect_success 'submit --prepare-p4-only' '
->>         test_when_finished cleanup_git &&
->>         git p4 clone --dest="$git" //depot &&
->> --
->> 2.11.0
->>
+> -               /* Not a loose object; someone else may have just packed it. */
+> -               if (flags & OBJECT_INFO_QUICK) {
+> -                       return -1;
+> -               } else {
+> -                       reprepare_packed_git();
+> -                       if (!find_pack_entry(real, &e))
+> -                               return -1;
+> +       /* Most likely it's a loose object. */
+> +       if (!sha1_loose_object_info(real, oi, flags)) {
+> +               oi->whence = OI_LOOSE;
+> +               return 0;
+> +       }
+> +
+> +       /* Not a loose object; someone else may have just packed it. */
+> +       reprepare_packed_git();
+> +       if (find_pack_entry(real, &e))
+> +               goto found_packed;
+> +
+> +       /* Check if it is a promised blob */
+> +       if (!already_retried) {
+> +               struct oid_array promised = OID_ARRAY_INIT;
+> +               oid_array_append_sha1(&promised, real);
+> +               if (request_promised_blobs(&promised)) {
+> +                       already_retried = 1;
+> +                       goto retry;
+
+Once we have the promised blob, do we want to
+remove it from the list of promised blobs?
+(Maybe check first if we have it actually?)
+
+Or is the opposite true:
+We rather want to keep the promised blobs list,
+such that we can easily get rid of good candidates
+to make space on the local fs?
+
+
+> @@ -26,4 +26,40 @@ test_expect_success '...but fails again with GIT_IGNORE_PROMISED_BLOBS' '
+>         unset GIT_IGNORE_PROMISED_BLOBS
+>  '
+>
+> +test_expect_success 'sha1_object_info_extended (through git cat-file)' '
+> +       rm -rf server client &&
+
+Did you take these rm -rf as the first line of a test from any other tests?
+(If so I'd call them out as bad examples)
+
+I think it is better if we'd do
+
+    test_when_finished "rm -rf ..." &&
+
+in a test, as then each test is self contained and cleans up
+after itself as opposed to cleaning up for the guy in front of you.
+
+> +       git init server &&
+
+test_create_repo maybe?
+
+> +       test_commit -C server 1 1.t abcdefgh &&
+> +       HASH=$(git hash-object server/1.t) &&
+> +
+> +       git init client &&
+> +       git -C client config core.promisedblobcommand \
+> +               "git -C \"$(pwd)/server\" pack-objects --stdout |
+> +                git unpack-objects" &&
+
+Nothing is wrong with absolute path, except relative paths
+may be easier to read here. Is the core.promisedblobcommand
+promised to run in a particular directory? Do we want to make that
+promise (if so, we'd want the test with relative path IMHO).
+
+I like the series! A pleasant read, though I am tossing back
+a lot of questions.
+
+Thanks,
+Stefan
