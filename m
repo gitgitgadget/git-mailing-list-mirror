@@ -2,119 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 919A020357
-	for <e@80x24.org>; Mon, 10 Jul 2017 23:53:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6165A20357
+	for <e@80x24.org>; Tue, 11 Jul 2017 00:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754964AbdGJXx1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 19:53:27 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:57640 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754832AbdGJXx0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 10 Jul 2017 19:53:26 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2B1EB280AD;
-        Mon, 10 Jul 2017 23:53:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1499730805;
-        bh=Ux4xLAOU+GpiCuXVS27dvfO5J7znM9CQ19Sr+17B0PU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T9A+GUn5sZAXVaLS4miyoeND1ai7qEbg4nLTKcxsePwhqnc159PQdpNilU4Gmb808
-         1v/Qn1wfXp8kwGp8gDApnqwn2XxMY0ZaHoQSeYrO/qWo9JSfAdbiBwjr0Mg3nh8hcZ
-         cbYyrqHcczdHuHRupVLIG4WA0+flRGQYumUKd7X2ySy7XwTVAHFk7VWrSBd55BjMNf
-         q2h0FSuD6iQCRXzCDBtTI1fgJgE9Isv0o//xNhtR/so4v/HBIHwfJS0a9ND3DMZWHJ
-         COh2OWts+jru8uZnh0yefaP7emJ12ESQyJEY8zQkqS7oYuJb2472n/JED/Vfh7zs9+
-         M6j1RQmnYKIm8Ne6zV1B+8gERGWwfrF3QYrygyDVe0U7H1Zsiuw8nICvNSYisZaIDv
-         /EhwCB2U1rzVS3BbDb9DgOyu/bEdetVx1VvJpjweLWX8bqnem2I+2m0bU19HlwnVAy
-         uMIFu2PSlQKAFjXbz+rmhkHRweVEJQsbkpSSl1qFzCoJmpAmamP
-Date:   Mon, 10 Jul 2017 23:53:21 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Steve Kallestad <kallestad@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Bug - Dirty submodule differences between OSX/Ubuntu
-Message-ID: <20170710235321.m3xfx2lfsvyirzme@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Steve Kallestad <kallestad@gmail.com>, git@vger.kernel.org
-References: <CALs7=Px4nqr6LhOTEQY80WbahRRuaKut-Us5tP7Puda0kb5EdQ@mail.gmail.com>
+        id S1755079AbdGKAFO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 20:05:14 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:36216 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755044AbdGKAFO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 20:05:14 -0400
+Received: by mail-pf0-f181.google.com with SMTP id q86so57595703pfl.3
+        for <git@vger.kernel.org>; Mon, 10 Jul 2017 17:05:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=U3e7JEt1ZnxddEWg/kytxLv+CssGt0nsrvdOj4Uslwg=;
+        b=R1q8EqfRrfncMAyoN3vgjTUbGqmjJE8wMBLp3OlCmGXbWgS1C8ps6utcisWTcF90qI
+         6R/K6+i1+pHhGLS+D1i2kxaaKuW0pi7LjorRBo2ylp/lN5Gkh+67/zI4JafhUUqezuPz
+         4DzA0urG6RBWe2TzN1MYBcl5eJt3ioE/O0yiURq/R5u6L69wcAK8jrkq/IckJrGiLdSP
+         V8qcrq8SwzVifARvDLRNeeDzNMZrBri2nK91B9WrhO5K70fqWkzN14yMy1EsHItFOu9r
+         KmfLf23HokwM00/b1qm7LWjQHrfuip/9csBIT3aQDVa5dCBamwtwLuuQFjyFjXXnAJUk
+         e+6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=U3e7JEt1ZnxddEWg/kytxLv+CssGt0nsrvdOj4Uslwg=;
+        b=W4wu8oBW649uBjfXepvjkzdUxvTbwZKf4ktV4SXUUg97aNUD6bL8Z+jWLNZuG5+FDm
+         /ElqWwA8AgZ5nwS1DDH5GYFZ7DHOK0xgTsxZ/tdpXzNMVhXX//kTUfnBcjZLsAzQKwky
+         FyzXI0Mn43Xh+CvnIE9vKpyXSJEtrtHvjRWkjyO9KTMLYMdhTZT0qogtk8xtGL2m5k9Z
+         4ZlVV1qeySthmbegS/wvA7iFeaMq0wZMyhu/+UulJcV0Lgc7GSVyKc32z7DUrBeJA8/y
+         upeg1pgnO1dWXwVeL6zgfl4KHzmOF35T2gV7r/lgbLZsHBArWLkGj+fkYi6pyd5IsnC4
+         cWuw==
+X-Gm-Message-State: AIVw1136YfV2ao7EpMfJT1lMixPB8rVeWg2YHVUsEdPniBjfVrGmFF8T
+        l2TriRkQAOG/VCVV8FT0ocbsEGovnBV7
+X-Received: by 10.99.44.206 with SMTP id s197mr17202974pgs.116.1499731513400;
+ Mon, 10 Jul 2017 17:05:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="jh4nrx5kipftrj6v"
-Content-Disposition: inline
-In-Reply-To: <CALs7=Px4nqr6LhOTEQY80WbahRRuaKut-Us5tP7Puda0kb5EdQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.11.0-1-amd64)
-User-Agent: NeoMutt/20170609 (1.8.3)
+Received: by 10.100.183.170 with HTTP; Mon, 10 Jul 2017 17:05:12 -0700 (PDT)
+In-Reply-To: <20170710235321.m3xfx2lfsvyirzme@genre.crustytoothpaste.net>
+References: <CALs7=Px4nqr6LhOTEQY80WbahRRuaKut-Us5tP7Puda0kb5EdQ@mail.gmail.com>
+ <20170710235321.m3xfx2lfsvyirzme@genre.crustytoothpaste.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 10 Jul 2017 17:05:12 -0700
+Message-ID: <CAGZ79kYNL7-TPkn2F_i3g5kO4C+1VeZh8ERigA4LTqck1ktLzw@mail.gmail.com>
+Subject: Re: Bug - Dirty submodule differences between OSX/Ubuntu
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Steve Kallestad <kallestad@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Jul 10, 2017 at 4:53 PM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Sun, Jul 09, 2017 at 01:42:47PM -0700, Steve Kallestad wrote:
+>> change into the submodule directory and run status
+>> cd python-mode.el
+>> git status
+>>
+>> On ubuntu:
+>> On branch master
+>> Your branch is up-to-date with 'origin/master'.
+>> nothing to commit, working directory clean
+>>
+>> On OSX:
+>> On branch master
+>> Your branch is up-to-date with 'origin/master'.
+>> Changes not staged for commit:
+>>   (use "git add/rm <file>..." to update what will be committed)
+>>   (use "git checkout -- <file>..." to discard changes in working directory)
+>>
+>>     deleted:    EXTENSIONS
+>>
+>> no changes added to commit (use "git add" and/or "git commit -a")
+>
+> This is an artifact of using a case-insensitive file system.  There is a
+> directory called "extensions" and so git has not checked out the file
+> "EXTENSIONS", as there's already a file system object.  It therefore
+> sees it as deleted, since git tracks only files (and not really
+> directories, but trees of files).
+>
+> This repository is always going to show as modified on a
+> case-insensitive file system.  You can either ask the maintainers to
+> change it, or reformat your disk with a case-sensitive file system.
 
---jh4nrx5kipftrj6v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, Jul 09, 2017 at 01:42:47PM -0700, Steve Kallestad wrote:
-> change into the submodule directory and run status
-> cd python-mode.el
-> git status
->=20
-> On ubuntu:
-> On branch master
-> Your branch is up-to-date with 'origin/master'.
-> nothing to commit, working directory clean
->=20
-> On OSX:
-> On branch master
-> Your branch is up-to-date with 'origin/master'.
-> Changes not staged for commit:
->   (use "git add/rm <file>..." to update what will be committed)
->   (use "git checkout -- <file>..." to discard changes in working director=
-y)
->=20
->     deleted:    EXTENSIONS
->=20
-> no changes added to commit (use "git add" and/or "git commit -a")
-
-This is an artifact of using a case-insensitive file system.  There is a
-directory called "extensions" and so git has not checked out the file
-"EXTENSIONS", as there's already a file system object.  It therefore
-sees it as deleted, since git tracks only files (and not really
-directories, but trees of files).
-
-This repository is always going to show as modified on a
-case-insensitive file system.  You can either ask the maintainers to
-change it, or reformat your disk with a case-sensitive file system.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---jh4nrx5kipftrj6v
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.21 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAllkE3EACgkQv1NdgR9S
-9ouIbxAAm0iaInlEfAM5Qp9iMyuzVU9Wt0I/sj9aWTe2Jy0HkyC8q4yAk9g1WZI6
-7CLhFYfaZ+6Ra/mpYBTwn/+CsoOls+mZrJFCtB8R6X/QIpImoxJA0lOwxlxIpj9d
-dtQRpPr2vlJApwc7209/a4Dpmm+fTza5nYGHVwz4/tQZJbFXZqqd7Bedq40w94ih
-rTgdMEt7a+EYjWt12lABZ4y9xKLsPVPCR1fvmqDLSEoCO8oM01vFGzaoeObarron
-GHB4X3w8HCQIZSM03mLILUNc0L3WZBravBDUi8Yb1EwEADHFq6dGgZlRGgMycMZ5
-mr3osIaeS2QBmiLFar4M3CU5KsfGSHFLqgvxW9+bJ8esyt0ApR77ir1OTMmmG6ZV
-TXPmMQspMOwn/96MKng+NIXtH282tFBbef66wV6d2gH6x9TKhZ44xymmRcMc9rLR
-OQEqkDmxRubw98TS7wPLMHmnQVdbj+HKdXIGJjJeMvJO+nV8T63FFHTKDAKkMm28
-neCwV7r7l3fK5k9Kxgw0mp3Lnwop/KHpjBnvnZ7sBMhcS8vmQ/946apL+hX/k+yv
-/ex15V/5Ayc2udUC1c6A+bkS1PfNPikCZXXt8k16G6+aafUUE29+cjL7hU9lSQsG
-DFfYjanNAuVoXEY0Z1U53kq7+D4F/iXZ8UWlEw+0HtduIlPnBmc=
-=nFWN
------END PGP SIGNATURE-----
-
---jh4nrx5kipftrj6v--
+While this is certainly not the answer Steve hoped for, we should
+see if there are any implications by the user of submodules, i.e.
+is this behavior reproducable without submodules? (In case it is not,
+do we want to have the same checks in place for gitlinks as for
+directories?)
