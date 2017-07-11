@@ -2,267 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3B102035A
-	for <e@80x24.org>; Tue, 11 Jul 2017 22:53:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79AA42035A
+	for <e@80x24.org>; Tue, 11 Jul 2017 23:38:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754769AbdGKWx3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 18:53:29 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36460 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754198AbdGKWx2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 18:53:28 -0400
-Received: by mail-wr0-f193.google.com with SMTP id 77so1595466wrb.3
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 15:53:27 -0700 (PDT)
+        id S1756191AbdGKXif (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 19:38:35 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:35066 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756185AbdGKXie (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 19:38:34 -0400
+Received: by mail-pg0-f52.google.com with SMTP id j186so3485462pge.2
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 16:38:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=QbtP9+YwyW2ZTdC35DjDhjfvVc+lBkwMywWxP47naMs=;
-        b=nYDQl2DD3giehTe6Ad33GEHp/LqPQpFoBNDSdNhRtRQ3KzSrleoEGXlJJfE6Nrukw0
-         ywsU1C5wn30UoCX6QMXnZigDaW2ZAZPd5zdIWHmyiFTy4W7YZgJIBZva6+Hwzrw5ujE3
-         HgF+PSP7PUVKQdcUjpWTzSg4kGSlHsX3lW0D6VmpC3Skj53/0kvqo8qQkVeyb1eXHdEc
-         4iGiBXtRBCpwIc1WN02rL2u7Ovx0bQZNzyTb79LZFux2MRnXmvxYq0IDbahj9cJswZrP
-         SgzbWdQfZ7mXcTjTk53Rg/T5EkFCkWUTfDt6BVyZFbCSHyryCPV1GHkZ+/gNOsDm5AZ3
-         YuEA==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=SkP5YViWWNZq/0r2hpNfALY0yRvMVV6V17+ExjFshoA=;
+        b=vAE3ee3iZSEUWMwdU2gAMEWZQEqVDOAcwZMY/V4WUaNlY3+zYdYln+1YHmfWKjzuiq
+         +WdIuvEkcQjQJJgn33lbuns4iuGlFjfm3yEQdEmR+BlTJB5dcs+njsjBTVGcwA1KuU6x
+         8gyXHmxbtemvycEu40K0qW8Y6mFmZ80oShA44KOdz6JL2GxgLrxYXm2Fu8Q8L5peLi6B
+         TWj/Cf0Jh1q4tkP6BEb9VKePeLtAhJ3MJJUb/OevTwgd43pM+H5KyrgM3TqM+CnPif6U
+         tY7UedHiFN+ONNQcboTBLqxxitRqGLrtBUOqJMUtT44ZGYsN3yxK3RlG9HtWAX3hhHwq
+         S7DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references;
-        bh=QbtP9+YwyW2ZTdC35DjDhjfvVc+lBkwMywWxP47naMs=;
-        b=iFEkQm0W+M5pEZR8Jh1KDVAK71oAz5ErHQy74J7JB3xhZvfjkiVNlJPm8pg/QiHQqL
-         kBjjcxsr6lCAhX2njMkkPqDjNFrTaaajIAMVSQrwkC4h5HTCz8Epwiihg3tJHpd9aLQL
-         25E/i11XXFTRKqSSoTzEyNAiHgafry+wajhfeHk69RlzTU2ehI/UQThD1QoiJHiCvHDL
-         kZczPDshYYRBohor6O5Q/Gp6SpiL/bpwwZ5BporgNv3ITbmr6WMW+0arQ+Vp0r2c+myC
-         AlHoXZw2u0lNRCzrfdiwjP8KoCl7VnfBpjmF1lipY6sXbbnHvEP59XenVeg2qJjGGh+P
-         P9dw==
-X-Gm-Message-State: AIVw112N+ExOJvQVln7PlITo3ktluBc7Qso4OxbVolk/lnxD1dkr+Qv+
-        6spcUc7DM0P7hVrrrg8=
-X-Received: by 10.28.168.145 with SMTP id r139mr352793wme.102.1499813606717;
-        Tue, 11 Jul 2017 15:53:26 -0700 (PDT)
-Received: from berenguela.telefonica.net (152.red-95-120-155.dynamicip.rima-tde.net. [95.120.155.152])
-        by smtp.gmail.com with ESMTPSA id u18sm512942wrc.14.2017.07.11.15.53.25
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Jul 2017 15:53:25 -0700 (PDT)
-From:   Miguel Torroja <miguel.torroja@gmail.com>
-To:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Miguel Torroja <miguel.torroja@gmail.com>
-Subject: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
-Date:   Wed, 12 Jul 2017 00:53:16 +0200
-Message-Id: <20170711225316.10608-1-miguel.torroja@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <CAE5ih7-Sy9YmGbLs=wzfxXCSFLkEotqLRuu_xNz9x=7BhvrvnA@mail.gmail.com>
-References: <CAE5ih7-Sy9YmGbLs=wzfxXCSFLkEotqLRuu_xNz9x=7BhvrvnA@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=SkP5YViWWNZq/0r2hpNfALY0yRvMVV6V17+ExjFshoA=;
+        b=IJ0zntagxsbX2mmPsq3m8fvGhr/sojr5rKvlwNC705wEtzmSAJiAJa9ITNd85mNDuC
+         D6h5xsPxpve1W+EPnbCmgQi7Gg1hT8DVU6V8S3F5Q/HbbeiRAcI1b/QlmM7WwHoPE5MI
+         iquZG4P55oPvOP39F5t4B4Ou0EFGdOPwBbSp6c9r1mQVRbB2S58TyaZip8lKlU/k2437
+         mjHUSJxA9Mps6AmlXSrYv06Zo5lVQPGeNnCkaXSns6iGmZRuLr6LOew7UHYtKxdQKhOE
+         sJZrHxk8AKcrOh8f6LLtlsWaCi9JeqrYB/7KvrxW53kUZhamPZEfNCjb26f546+qo4dA
+         jsQQ==
+X-Gm-Message-State: AIVw111RZEUkscpAc5mOCcZoOkO5cAjvpNu7w3Tmhyj06yUGM3lL57qj
+        ugkF+pc3YisHrZXGsHQqHA==
+X-Received: by 10.98.150.16 with SMTP id c16mr48173143pfe.64.1499816313035;
+        Tue, 11 Jul 2017 16:38:33 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:c5c5:d093:97f5:26db])
+        by smtp.gmail.com with ESMTPSA id f70sm802259pfk.27.2017.07.11.16.38.31
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 11 Jul 2017 16:38:32 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     jonathantanmy@google.com, Stefan Beller <sbeller@google.com>
+Subject: [PATCH] RFC: Introduce '.gitorderfile' 
+Date:   Tue, 11 Jul 2017 16:38:27 -0700
+Message-Id: <20170711233827.23486-1-sbeller@google.com>
+X-Mailer: git-send-email 2.13.2.695.g117ddefdb4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The option -G of p4 (python marshal output) gives more context about the
-data being output. That's useful when using the command "change -o" as
-we can distinguish between warning/error line and real change description.
+Conceptually the file order as set with command line -O or via the config
+'diff.orderFile' is interesting to both the author (when I run a quick git
+ diff locally) as well as reviewer (a patch floating on the mailing list),
+so it is not just the author who should be responsible for getting their
+config in order, but a project would benefit when they could give a good
+default for such an order.
 
-Some p4 triggers in the server side generate some warnings when
-executed. Unfortunately those messages are mixed with the output of
-"p4 change -o". Those extra warning lines are reported as {'code':'info'}
-in python marshal output (-G). The real change output is reported as
-{'code':'stat'}
+While the change in this RFC patch to diff.c may look uncontroversial,
+(Oh look! it's just another knob we can turn!), the change to the
+newly introduced '.gitorderfile' may be more controversial. Here is my
+rationale for proposing it:
 
-the function p4CmdList accepts a new argument: skip_info. When set to
-True it ignores any 'code':'info' entry (skip_info=True by default).
+  I want to force myself to think about the design before pointing out
+  memory leaks and coding style, so the least I would wish for is:
+    *.h
+    *.c
+  but as we have more to look at, I would want to have the most abstract
+  thing to come first. And most abstract from the actual code is the
+  user interaction, the documentation.  I heard the claim that the git
+  project deliberately names the directory 'Documentation/' with a capital
+  D such that we had this property by default already. With a patch like
+  this we could rename Documentation/ to docs and still enjoy reading the
+  docs first.
+  Given this alibi, I would claim that t/ is misnamed though! I personally
+  would prefer to review tests just after the documentation instead of
+  after the code as the tests are more abstract and encode promises to the
+  user unlike the code itself that is truth at the end of the day.
 
-A new test has been created in t9807-git-p4-submit.sh adding a p4 trigger
-that outputs extra lines with "p4 change -o" and "p4 changes"
-
-Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- git-p4.py                | 92 ++++++++++++++++++++++++++++++++----------------
- t/t9807-git-p4-submit.sh | 30 ++++++++++++++++
- 2 files changed, 92 insertions(+), 30 deletions(-)
 
-diff --git a/git-p4.py b/git-p4.py
-index 8d151da91..1facf32db 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -509,7 +509,7 @@ def isModeExec(mode):
- def isModeExecChanged(src_mode, dst_mode):
-     return isModeExec(src_mode) != isModeExec(dst_mode)
+I wrote:
+> offtopic: As a general thing for our patches, can we configure
+> (or even convince Git in general), that headers ought to be sent *before*
+> its accompanying source? I think that would help reviewers like me, who
+> tend to start reading linearly and then giving random thoughts, because the
+> header prepares the reviewer for the source code with expectations. Also
+> by having it the other way around, the review first focuses on design
+> (Is this function signature sane; the docs said it would do X while not
+> doing Y, is that sane?) instead of code.
+
+and hence I came up with this patch, as I think we would want to expose
+such a good feature ('diff.orderFile') even for those who are not looking
+for it themselves.
+
+Thanks,
+Stefan
+
+
+ .gitorderfile |  6 ++++++
+ diff.c        | 11 +++++++++++
+ 2 files changed, 17 insertions(+)
+ create mode 100644 .gitorderfile
+
+diff --git a/.gitorderfile b/.gitorderfile
+new file mode 100644
+index 0000000000..5131ede927
+--- /dev/null
++++ b/.gitorderfile
+@@ -0,0 +1,6 @@
++Documentation/*
++t/*
++*.sh
++*.h
++*.c
++Makefile
+diff --git a/diff.c b/diff.c
+index 00b4c86698..8d537db06a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3398,6 +3398,17 @@ void diff_setup(struct diff_options *options)
+ 	if (diff_indent_heuristic)
+ 		DIFF_XDL_SET(options, INDENT_HEURISTIC);
  
--def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
-+def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=True):
- 
-     if isinstance(cmd,basestring):
-         cmd = "-G " + cmd
-@@ -545,6 +545,9 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
-     try:
-         while True:
-             entry = marshal.load(p4.stdout)
-+            if skip_info:
-+                if 'code' in entry and entry['code'] == 'info':
-+                    continue
-             if cb is not None:
-                 cb(entry)
-             else:
-@@ -879,8 +882,12 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
-             cmd += ["%s...@%s" % (p, revisionRange)]
- 
-         # Insert changes in chronological order
--        for line in reversed(p4_read_pipe_lines(cmd)):
--            changes.add(int(line.split(" ")[1]))
-+        for entry in reversed(p4CmdList(cmd)):
-+            if entry.has_key('p4ExitCode'):
-+                die('Error retrieving changes descriptions ({})'.format(entry['p4ExitCode']))
-+            if not entry.has_key('change'):
-+                continue
-+            changes.add(int(entry['change']))
- 
-         if not block_size:
-             break
-@@ -1494,7 +1501,7 @@ class P4Submit(Command, P4UserMap):
-         c['User'] = newUser
-         input = marshal.dumps(c)
- 
--        result = p4CmdList("change -f -i", stdin=input)
-+        result = p4CmdList("change -f -i", stdin=input,skip_info=False)
-         for r in result:
-             if r.has_key('code'):
-                 if r['code'] == 'error':
-@@ -1526,37 +1533,62 @@ class P4Submit(Command, P4UserMap):
- 
-         [upstream, settings] = findUpstreamBranchPoint()
- 
--        template = ""
-+        template = """\
-+# A Perforce Change Specification.
-+#
-+#  Change:      The change number. 'new' on a new changelist.
-+#  Date:        The date this specification was last modified.
-+#  Client:      The client on which the changelist was created.  Read-only.
-+#  User:        The user who created the changelist.
-+#  Status:      Either 'pending' or 'submitted'. Read-only.
-+#  Type:        Either 'public' or 'restricted'. Default is 'public'.
-+#  Description: Comments about the changelist.  Required.
-+#  Jobs:        What opened jobs are to be closed by this changelist.
-+#               You may delete jobs from this list.  (New changelists only.)
-+#  Files:       What opened files from the default changelist are to be added
-+#               to this changelist.  You may delete files from this list.
-+#               (New changelists only.)
-+"""
-+        files_list = []
-         inFilesSection = False
-+        change_entry = None
-         args = ['change', '-o']
-         if changelist:
-             args.append(str(changelist))
--
--        for line in p4_read_pipe_lines(args):
--            if line.endswith("\r\n"):
--                line = line[:-2] + "\n"
--            if inFilesSection:
--                if line.startswith("\t"):
--                    # path starts and ends with a tab
--                    path = line[1:]
--                    lastTab = path.rfind("\t")
--                    if lastTab != -1:
--                        path = path[:lastTab]
--                        if settings.has_key('depot-paths'):
--                            if not [p for p in settings['depot-paths']
--                                    if p4PathStartsWith(path, p)]:
--                                continue
--                        else:
--                            if not p4PathStartsWith(path, self.depotPath):
--                                continue
-+        for entry in p4CmdList(args):
-+            if not entry.has_key('code'):
-+                continue
-+            if entry['code'] == 'stat':
-+                change_entry = entry
-+                break
-+        if not change_entry:
-+            die('Failed to decode output of p4 change -o')
-+        for key, value in change_entry.iteritems():
-+            if key.startswith('File'):
-+                if settings.has_key('depot-paths'):
-+                    if not [p for p in settings['depot-paths']
-+                            if p4PathStartsWith(value, p)]:
-+                        continue
-                 else:
--                    inFilesSection = False
--            else:
--                if line.startswith("Files:"):
--                    inFilesSection = True
--
--            template += line
--
-+                    if not p4PathStartsWith(value, self.depotPath):
-+                        continue
-+                files_list.append(value)
-+                continue
-+        # Output in the order expected by prepareLogMessage
-+        for key in ['Change','Client','User','Status','Description','Jobs']:
-+            if not change_entry.has_key(key):
-+                continue
-+            template += '\n'
-+            template += key + ':'
-+            if key == 'Description':
-+                template += '\n'
-+            for field_line in change_entry[key].splitlines():
-+                template += '\t'+field_line+'\n'
-+        if len(files_list) > 0:
-+            template += '\n'
-+            template += 'Files:\n'
-+        for path in files_list:
-+            template += '\t'+path+'\n'
-         return template
- 
-     def edit_template(self, template_file):
-diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
-index 3457d5db6..b630895a7 100755
---- a/t/t9807-git-p4-submit.sh
-+++ b/t/t9807-git-p4-submit.sh
-@@ -409,6 +409,36 @@ test_expect_success 'description with Jobs section and bogus following text' '
- 	)
- '
- 
-+test_expect_success 'description with extra lines from verbose p4 trigger' '
-+	test_when_finished cleanup_git &&
-+	git p4 clone --dest="$git" //depot &&
-+	(
-+		p4 triggers -i <<-EOF
-+		Triggers: p4triggertest-command command pre-user-change "echo verbose trigger"
-+		EOF
-+	) &&
-+	(
-+		p4 change -o |  grep -s "verbose trigger"
-+	) &&
-+	(
-+		cd "$git" &&
-+		git config git-p4.skipSubmitEdit true &&
-+		echo file20 >file20 &&
-+		git add file20 &&
-+		git commit -m file20 &&
-+		git p4 submit
-+	) &&
-+	(
-+		p4 triggers -i <<-EOF
-+		Triggers:
-+		EOF
-+	) &&
-+	(
-+		cd "$cli" &&
-+		test_path_is_file file20
-+	)
-+'
++	if (!diff_order_file_cfg) {
++		struct stat st;
++		int c = lstat(".gitorderfile", &st);
++		if (c == 0 && S_ISREG(st.st_mode))
++			diff_order_file_cfg = ".gitorderfile";
++		else if (c < 0 && errno == ENOENT)
++			; /* File does not exist. no preset. */
++		else
++			die_errno("stat '.gitorderfile'");
++	}
 +
- test_expect_success 'submit --prepare-p4-only' '
- 	test_when_finished cleanup_git &&
- 	git p4 clone --dest="$git" //depot &&
+ 	options->orderfile = diff_order_file_cfg;
+ 
+ 	if (diff_no_prefix) {
 -- 
-2.11.0
+2.13.2.695.g117ddefdb4
 
