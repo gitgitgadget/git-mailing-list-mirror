@@ -2,83 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACEF32035A
-	for <e@80x24.org>; Tue, 11 Jul 2017 22:06:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED1FB2035B
+	for <e@80x24.org>; Tue, 11 Jul 2017 22:28:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755457AbdGKWGN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 18:06:13 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:34266 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754028AbdGKWGM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 18:06:12 -0400
-Received: by mail-pg0-f49.google.com with SMTP id t186so2619349pgb.1
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 15:06:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=qmXXJaM711y+pW7F+fhnsQS/WcCbdixOWtZEh3Hd4iA=;
-        b=lkenIbXI8mFdnYUjcxGA/Vg+VXOc/NgjJj2b1P570XEzKBI/JduGLs1tkgL58dukT2
-         Ny/YPi1gvbGtYbx13/y/KNh8Af8YhNUC10u+cqyZearVcpmj38ZYZ94EOZWILyTllnG/
-         3HXCV2o6VpSeOsNUuWz9FF/0XAkkAjhPylG+dFThy2yI0alH/zqxs1JUU47dVw7O6mkD
-         4rsU4z5+P3VUhAlCKDhZeFp7dZP0magEWpDGnWSjzBL+f69blUuXvdTUO9wnPvlCXuxl
-         OS9cUQPHcy/8LttCFE2EnbmDQR28XSvZ4wo+5BSnyOmJKCuejteBh+mK9kX3D0mFnaBy
-         uXmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=qmXXJaM711y+pW7F+fhnsQS/WcCbdixOWtZEh3Hd4iA=;
-        b=b2dscEo/0xBQrhimGQxQ7kClIfn6IF9d8lsWaXO7i1QM0BHHbHPWortxgQ6bv3SyCG
-         X/hOuTBxVNkRRUmweIP1I/aphWymCbK4RjRGUkxiPvt2d8jXJ3mXJMCv8WQy/QIq1MMS
-         9DXGcA8C4Qhvi8s2nwu0y+AlFY3A6+3nbxRig3rBLnibVDzOL2NWZiyVQZKMpa9VWKX5
-         Lwa+jqQ98bQhzxhDHu+c4ODgZ6YFrq3hgnH+4epNVH0PJo8X9cCaF8a0sy6r5UdhdOUh
-         gS17xurDU5gTOHLcSeN+Lm+yD2nF/kkE2FTsizXGr2J9LziW/NfVkZ6E6W3FGOlYPJKp
-         rXDQ==
-X-Gm-Message-State: AIVw113+XEWui9sUMSuZTcKG9A33j368Umsl8q7T2e8eWkTG31eVhRtr
-        VglAuZJ7Y0GieEnSPPnZ1pLpXmxndzlfdhEWag==
-X-Received: by 10.84.232.74 with SMTP id f10mr618609pln.154.1499810772200;
- Tue, 11 Jul 2017 15:06:12 -0700 (PDT)
+        id S932475AbdGKW16 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 18:27:58 -0400
+Received: from mail.eclipso.de ([217.69.254.104]:53648 "EHLO mail.eclipso.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756130AbdGKW15 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 18:27:57 -0400
+Received: from [127.0.0.1] (185.170.42.4 [185.170.42.4])
+        by mail.eclipso.de with ESMTPS id 5A6646EB
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 00:27:55 +0200 (CEST)
+X-ESMTP-Authenticated-User: 00022B69
+Subject: Re: "groups of files" in Git?
+To:     git@vger.kernel.org
+References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
+Cc:     Nikolay Shustov <nikolay.shustov@gmail.com>
+From:   astian <astian@eclipso.at>
+Message-ID: <0793138e-5971-d8f6-b25e-215ed5028dae@eclipso.at>
+Date:   Tue, 11 Jul 2017 22:27:00 +0000
 MIME-Version: 1.0
-Received: by 10.100.129.65 with HTTP; Tue, 11 Jul 2017 15:06:11 -0700 (PDT)
-In-Reply-To: <523f64e1395124a02316071329bedf9884757479.1499800530.git.jonathantanmy@google.com>
-References: <cover.1499800530.git.jonathantanmy@google.com> <523f64e1395124a02316071329bedf9884757479.1499800530.git.jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 11 Jul 2017 15:06:11 -0700
-Message-ID: <CAGZ79kZ9Ewxv=8fnRZZaQjpyAdv8df81a9aLRkJzEt5ZU0VcTA@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/3] sha1-array: support appending unsigned char hash
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 11, 2017 at 12:48 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> In a subsequent patch, sha1_file will need to append object names in the
-> form of "unsigned char *" to oid arrays. Teach sha1-array support for
-> that.
+Nikolay Shustov wrote:
+> With Perforce, I can have multiple changelists opened, that group the
+> changed files as needed.
 >
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> With Git I cannot seem to finding the possibility to figure out how to
+> achieve the same result. And the problem is that putting change sets
+> on different Git branches (or workdirs, or whatever Git offers that
+> makes the changes to be NOT in the same source tree) is not a viable
+> option from me as I would have to re-build code as I re-integrate the
+> changes between the branches (or whatever changes separation Git
+> feature is used).
+> Build takes time and resources and considering that I have to do it on
+> multiple platforms (I do cross-platform development) it really
+> denominates the option of not having multiple changes in the same code
+> tree.
+>
+> Am I ignorant about some Git feature/way of using Git that would help?
+> Is it worth considering adding to Git a feature like "group of files"
+> that would offer some virtutal grouping of the locally changed files
+> in the checked-out branch?
 
-This breaks the oid/sha1 barrier?
+I never used Perforce and I'm not even sure I understand your problem,
+but I thought I'd mention something that nobody else seems to have yet
+(unless I missed it):
 
-I would have expected the caller to do a
+First, one thing that seems obvious to me from your description is that
+these "parallel features" you work on are obviously interdependent,
+therefore I would rather consider the whole thing as a single feature.
+Therefore, it makes sense to me to work in a single "topic branch".
 
-  oid_array_append_oid(&array, sha1_to_oid(sha1));
+This doesn't preclude one from separating the changes in logically
+sensible pieces.  Indeed this is par for the course in Git and people do
+it all the time by dividing the bulk of changes into a carefully chosen
+series of commits.
 
-with sha1_to_oid working off some static memory, such that the
-call to oid_array_append_oid (which we have as oid_array_append)
-is just as cheap?
+I think the most common way of doing this is to simply work on the whole
+thing and once you're happy with it you use "git rebase --interative" in
+order to "prettify" your history.
 
-Could you say more in the commit message on why we collude
-sha1 and oids here?
+But, and here comes the part I think nobody mentioned yet, if your
+feature work is considerably large or spans a considerably long time it
+may be undesirable to postpone all that work until the very end (perhaps
+by then you already forgot important information, or perhaps too many
+changes have accumulated so reviewing them all becomes significantly
+less efficient).  In that case, one solution is to use a "patch
+management system" which will let you do that work incrementally (going
+back and forth as needed).
 
-Thanks,
-Stefan
+If you know mercurial, this is "hg mq".  I don't think Git has any such
+system built-in, but I know there are at least these external tools that
+integrate with Git:
+https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools#Patch-management_Interface_layers
+
+Feel free to ignore this if I totally misunderstood your use case.
+
+Cheers.
+
+
