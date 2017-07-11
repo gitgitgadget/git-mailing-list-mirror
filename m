@@ -2,111 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C37DE202AC
-	for <e@80x24.org>; Tue, 11 Jul 2017 13:30:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64170202AC
+	for <e@80x24.org>; Tue, 11 Jul 2017 13:46:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755512AbdGKN3l (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 09:29:41 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35372 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752577AbdGKN3k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 09:29:40 -0400
-Received: by mail-pf0-f176.google.com with SMTP id c73so67213564pfk.2
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 06:29:40 -0700 (PDT)
+        id S1755896AbdGKNqK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 09:46:10 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33291 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755296AbdGKNqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 09:46:09 -0400
+Received: by mail-pf0-f194.google.com with SMTP id e199so13585pfh.0
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 06:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=m16OYsbqzBFueznhyKKrhkLoBdkO9a9ZudKZuCIIPYg=;
-        b=orP1PtT0Ck9ciJIgaCnjKBBfHGY7Wi5rnaYOR7cgBgKMNuFTET8dcL2JnlzWkuM19P
-         XSFVU86CAtpK/307RRZxKZRIzmJcq3qZpDlY7kICqLTvHmiU8p2peNABxDAO8IcYmM8V
-         hRMgKaI04ODgA71wT4oNclSriZK7+OxZx+P5FEcRToO+L2oD+hG03w+Y9Ngai2qfwl/8
-         Mfa1SkLJGVVTb77zsyXxFqTwXImMjnjPlXWxEF7DdFyg8I0LUg3Qn0xoQ1vRcXayK9fX
-         rCpoRmw6d+cGBAeDs8TmlSXlWcnXn8Atl9o9ySrvC+8hL15ZQDsib6AzsVTq/ISSYuAU
-         TygA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=FgHGbZ9ThbKQou2UO4ET0HmIOl3txfAnVF3vFPrvMfc=;
+        b=JG1XKEuqi1KynRyoC27J2q/lhqXtCT+D91XScphE6PS+TlTIJ8DUrh04bFAuwrdS2l
+         ej1hpkomwnnU62j/0DR5qXGSRzKy4NgmdPkJsM/yczovc6yEJrKfy1TffJVHbLoGLQ2Q
+         Pkel7uBNbR87BdoUNrvar+3Wj+i1aT7syadOCN8Xy4PK07xp/YgizQbDWcH3iBKNbU/A
+         RRRKdJR9xtESV6rU2HUmNU/Br3DESRmPw2tR69jmZVAeptmblxx3b4X4k4OmjGJyC1mO
+         DP7RCyLx4JTzZJYvUJf+7KwoR4f1NflJkcCstPM8sgm6tO/jV7OUpLhYOMIw7nd6Dkhe
+         Tnxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=m16OYsbqzBFueznhyKKrhkLoBdkO9a9ZudKZuCIIPYg=;
-        b=U1FjmpXbd5vjkt+HGpDb1qb5Z6AjPtIyeBcm7z1F56NAIACLbGB2g8dkFkHil7ZXBc
-         T0ZJiSb9m6oJZKEXaMREthF0aC7feQBGlM0jWGsAvscgILxn/0ISktOj5QyfLYrCLpvp
-         jl2fHVM8+w8GBb6kFpOGXJ3qbolG7nzLb9uTnWftZxYPzJKu/3Eo1EkJCcXAuwASFibr
-         OZ0GPZhu6lFNblhrPGdVxnWGC94ixcbZHROPbLyznkDFA3D1qucIrgXjjEfDK7XsvHVf
-         kcNYuZEusZE8twbtAMy42Xeko/WD6Rw6Z5dKa8kcEZiLlWvtdIWrI7+5JJYy5yOVL8RC
-         1QOQ==
-X-Gm-Message-State: AIVw113+i1fDCQO62rhuKFTPNMnwE+sraRbvsdQ6lJVugO6CdOanJf8P
-        1YQHQoGX9GTXxA==
-X-Received: by 10.101.77.6 with SMTP id i6mr20239422pgt.43.1499779779896;
-        Tue, 11 Jul 2017 06:29:39 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id 10sm31406779pfo.134.2017.07.11.06.29.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 11 Jul 2017 06:29:39 -0700 (PDT)
-Message-ID: <1499779787.1740.5.camel@gmail.com>
-Subject: Re: [PATCH 4/4] hook: add a simple first example
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Tue, 11 Jul 2017 18:59:47 +0530
-In-Reply-To: <xmqqbmos5add.fsf@gitster.mtv.corp.google.com>
-References: <xmqqinj4ayqb.fsf@gitster.mtv.corp.google.com>
-         <20170710141744.8541-1-kaarticsivaraam91196@gmail.com>
-         <20170710141744.8541-4-kaarticsivaraam91196@gmail.com>
-         <xmqqbmos5add.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="ISO-8859-15"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=FgHGbZ9ThbKQou2UO4ET0HmIOl3txfAnVF3vFPrvMfc=;
+        b=EvhAdLXCMjzrQ4xnY5wSFVmcuPVrKwUJVHp+iCz/BlCK9CCHGW5ijLsBxHVYMGLRW7
+         Ws/HBFTtKew7z3FBGuf4NZiVulv2eX9NNjLtki04VMjouJzHsQ0bj57GseM/rinrwyAx
+         Ly5vo+vpzBxPypmkdia20g46f/BwF/saYUvx9cx405Eaop9+wx8+x6yYHH0gWkKURqpU
+         ZCQIWHHY3IwMQd3Dzhjx4oc30BaI8xX3ELvwkGzt/a8elQ0Y6HjItNhR3z56tLv3WUci
+         1wRhL695wdBFo1fQXbTFtaGIivzIpm61PuoHZMLBNMi95oPY4MrkoOMHwfav0xXTUX/r
+         3bxA==
+X-Gm-Message-State: AIVw112hPLqZaCr2V3xAh5H63uFqJiyK4yPi1lzNFG6jMLgyHxUQd/BA
+        9amQZofpFJUZ9gbrO0SOm346AuLzBQ==
+X-Received: by 10.84.225.19 with SMTP id t19mr23740155plj.238.1499780768659;
+ Tue, 11 Jul 2017 06:46:08 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.163.102 with HTTP; Tue, 11 Jul 2017 06:46:08 -0700 (PDT)
+In-Reply-To: <20170711102451.27r3yaa2mgjgk4qv@sigill.intra.peff.net>
+References: <cover.1499723297.git.martin.agren@gmail.com> <62a5a588d880d1a41d6cdd54cd92ee577a0451fa.1499723297.git.martin.agren@gmail.com>
+ <20170711102451.27r3yaa2mgjgk4qv@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 11 Jul 2017 15:46:08 +0200
+Message-ID: <CAN0heSqLX1WNk3KC9U3f=qem0SYV-g=-HU+XHepi_CbuHatCOg@mail.gmail.com>
+Subject: Re: [PATCH 2/7] git.c: let builtins opt for handling `pager.foo` themselves
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2017-07-10 at 13:02 -0700, Junio C Hamano wrote:
-> Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
-> 
-> >  I made an attempt to make the second example work with amending 
-> >  with the aim of making it suitable for usage out of the box. It
-> >  seems that it's not easy to make it work as the status of a file
-> >  cannot be determined correctly when the index while amending
-> >  introduces changes to a file that has a change in the commit being
-> >  amended.
-> > 
-> >  Is there any way in which the second example could be made to work
-> > with
-> >  amending without much effort? I'm asking this assuming something
-> > might
-> >  have happened, since the script was added, that could ease the
-> > task.
-> 
-> Sorry, but I do not understand what you are asking here.
-> 
-I'm was trying to ask, "Is there any way to change the second example
-(diff --name-status) to make it work with "commit --amend" so that it
-could be uncommented by default ?" 
+On 11 July 2017 at 12:24, Jeff King <peff@peff.net> wrote:
+> On Mon, Jul 10, 2017 at 11:55:15PM +0200, Martin =C3=85gren wrote:
+>
+>> To allow individual builtins to make more informed decisions about when
+>> to respect `pager.foo`, introduce a flag IGNORE_PAGER_CONFIG. If the fla=
+g
+>> is set, do not check `pager.foo`. This applies to two code-paths -- one
+>> in run_builtin() and one in execv_dashed_external().
+>
+> Can this ever trigger in execv_dashed_external()? We should only get
+> there if get_builtin() returned NULL in the first place. Otherwise, we'd
+> run and exited via handle_builtin().
 
-If there was a way then the patch 4/4 could be dropped as the name
-status example would be enough make the script live (I think). 
+I can trigger it with this:
 
-> After going back and checking 1/4, I realize that I misread the
-> patch.
-> you did keep the commented out 'diff --name-status' thing, so it
-> still
-> has three---it just lost one half of the original "first"
-> example.  So
-> please disregard my earlier "do we still have three, not two?"
-> 
-Actually speaking, I did think of promoting the second to the first to
-make the sub-patches independent of each other. I held myself as I
-thought it would be overkill. Anyways, I'll just overkill it!
+$ git -c pager.tag=3D"echo paging" -c pager.tag.list=3Dno -c alias.t=3Dtag =
+t -l
+
+where the alias is what triggers it and the two pager-configurations
+demonstrate the effect.
+
+> So I think this hunk:
+>
+>> @@ -543,11 +550,14 @@ static void execv_dashed_external(const char **arg=
+v)
+>>  {
+>>       struct child_process cmd =3D CHILD_PROCESS_INIT;
+>>       int status;
+>> +     struct cmd_struct *builtin;
+>>
+>>       if (get_super_prefix())
+>>               die("%s doesn't support --super-prefix", argv[0]);
+>>
+>> -     if (use_pager =3D=3D -1)
+>> +     builtin =3D get_builtin(argv[0]);
+>> +     if (use_pager =3D=3D -1 &&
+>> +         !(builtin && builtin->option & IGNORE_PAGER_CONFIG))
+>>               use_pager =3D check_pager_config(argv[0]);
+>>       commit_pager_choice();
+>
+> ...can just go away.
+
+If I remove this, the call I gave above will page although it
+shouldn't, and it doesn't if I keep this hunk. There's this in
+run_argv: "If we tried alias and futzed with our environment, it no
+longer is safe to invoke builtins directly in general.  We have to
+spawn them as dashed externals." There's also a NEEDSWORK.
+
+Although, thinking about it, I'm not sure why when I remove this hunk,
+the child process doesn't set up the paging correctly. Maybe something
+related to my using "-c", or something about the launching of child
+processes. Those are both areas where I lack knowledge. Will look into
+it.
+
+Martin
