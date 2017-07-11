@@ -2,186 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6820E2035B
-	for <e@80x24.org>; Tue, 11 Jul 2017 01:06:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D53C520357
+	for <e@80x24.org>; Tue, 11 Jul 2017 01:17:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754277AbdGKBGr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Jul 2017 21:06:47 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:32833 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752332AbdGKBGr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Jul 2017 21:06:47 -0400
-Received: by mail-pg0-f48.google.com with SMTP id k14so57991439pgr.0
-        for <git@vger.kernel.org>; Mon, 10 Jul 2017 18:06:46 -0700 (PDT)
+        id S1754957AbdGKBRy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Jul 2017 21:17:54 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:33254 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751069AbdGKBRx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Jul 2017 21:17:53 -0400
+Received: by mail-pf0-f179.google.com with SMTP id e7so58365231pfk.0
+        for <git@vger.kernel.org>; Mon, 10 Jul 2017 18:17:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=cYlhbB+edTAhrkfdvxeJWHS+nVonJw+VbIKXINPlB6E=;
-        b=EQXRamH4Qot+JOL0Bg+/F5K/oriUQsybxVVJJFrpnN+CURyTyg/1No6O0zMoZiQdFD
-         Z+FgMbR1/YccgnyJfjljJa9xaXL0+MzYW+7D9rMrm+o/LXpoghVV4CChPXcloh33GD2o
-         8TkpAOJllcL33AwGONESvn2/PG/cb9TRTLYRQv7iPwSfDqlCMDCrU8AHKwSB1iCHg7Mu
-         lZieEP5+i8idwhuXSx6XpUyMMep+ZvsJrFYcKQWwVvfmYOEuNh4oX6GpWRo1EBalzAmj
-         L9i0c8CyZ/aSJti4BoKT/TmLdCxNPOAR/WEnhNRVl67OFz93lPDawqnFra68xeOE5c5g
-         dN9A==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Qcfmxl2dIEc/Zj0+xlgjRupIFJEe+p3zQxP4WEvmb9c=;
+        b=eWuNdByj6qsjfcdxXAehJezymJ/0KeVqHbBtvTtJoCj2EOidhN6B3FCkuXn6m52ooW
+         N6elwbezhxHCZUDm/A+BjznBM2XHZ903SgsEeCSUzns+yviuMM9XdMDuYzmwDBdKM1tg
+         AE98auczssgJ05s5OGgyQ3QPw+lgWt7xjMa/dqhTaeHZ7crLR0dSSbLNKEDVd2O0bWsm
+         KrhnDOn3fakh5WQPI2esOSGf3PJtHBiaisbIMFOvxCHABKBQC2PztJ0EPvnqjjhDoPk0
+         p4Bz9lVyEphFgxgRZlTdBzD1IIxgxu9NDLDuSpwqqkLo2elvNGOazA1FR3KXQqeekv6G
+         HxNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=cYlhbB+edTAhrkfdvxeJWHS+nVonJw+VbIKXINPlB6E=;
-        b=mhhLeoHH3TirnxSFfvxpxYwQgaEmULnNG6n/SuJ2dfBrz/UPpWMXX9jd8oBOSp+tvK
-         3TirsUjAJDFPNVPBSa0jUrxJ5dVuENbarwt8vlaVI556VA/zYyQ39nRbuhvgin6nQYfb
-         hLrQ3fGU9+WOuQYU6NpQedFosUEq3DAn/uIxPyMjbBaAgn8hr9qDJcqoHSQa2KD3hO9n
-         rzOZbsqPIcT0/WJ3f54bSIGv4UKRh31I2RNee07F/juVzmSnAVpvB/cuMuQ3XrxK68rJ
-         w4XT/7MOfkVw86Uxb8UwzE0lYL5UswyFrWSRtAAQq9RKsuK/96+CYvNiui8gyPubDl+A
-         LvqQ==
-X-Gm-Message-State: AIVw1138FaWW+ragC26qNvdGOcZfENIrlv7xNLNhwJpXiVe3IWK+Y/yq
-        GLUtHLnPK0nMlibtWkm6og==
-X-Received: by 10.84.224.134 with SMTP id s6mr20645188plj.263.1499735205929;
-        Mon, 10 Jul 2017 18:06:45 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:cc2a:f1e8:36c9:e743])
-        by smtp.gmail.com with ESMTPSA id q29sm34636231pfg.11.2017.07.10.18.06.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Jul 2017 18:06:45 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Qcfmxl2dIEc/Zj0+xlgjRupIFJEe+p3zQxP4WEvmb9c=;
+        b=al0ydC4RCt845ub5Ow2wzXwEOATKgTbCkbkdsUtAsfXN8kq23ALyo8yI7cjyiDQVHw
+         r1/WjccMfApuWWGBzZtEjh8DYlCRAybkq7eeCuh6O6OX2jtBOxyAx/W9xGYotg8eVA98
+         yv6qBUbq08vsen1o2NJ1zJ8+zqMB5jC6yK0NLRPXvucRyqqsbVkP6LqAP3cqZPQ1St1k
+         BQWrEpFo3wkxpCL8OD7KxUDnytlWAgFLzvo+Ct5wAk5fN/UOtSaU/SgOqqMl9O3jYo47
+         ApLwqv7dKMVsKiG/I3ccg+vnYOkCHjAfVigWRvWVTJzQ759a9YbcIxr7emLcwcfF0gsh
+         AoNw==
+X-Gm-Message-State: AIVw112QaW3PNYzl0mdop2ORZG55Ds+rspbxOdL9j1ivA08sL4qRMJB0
+        OA19gO6RFO3/Qm13oaoIOwbxmhYulDQ0
+X-Received: by 10.84.129.69 with SMTP id 63mr21741101plb.0.1499735872764; Mon,
+ 10 Jul 2017 18:17:52 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.183.170 with HTTP; Mon, 10 Jul 2017 18:17:52 -0700 (PDT)
+In-Reply-To: <xmqq4luochtv.fsf@gitster.mtv.corp.google.com>
+References: <20170706202739.6056-1-sbeller@google.com> <xmqq7ezldlhe.fsf@gitster.mtv.corp.google.com>
+ <c9a6f3f0-e338-a200-6b57-48b5d926d31c@gmail.com> <xmqq4luochtv.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [PATCH] RFC: A new type of symbolic refs
-Date:   Mon, 10 Jul 2017 18:06:39 -0700
-Message-Id: <20170711010639.31398-1-sbeller@google.com>
-X-Mailer: git-send-email 2.13.2.695.g117ddefdb4
+Date:   Mon, 10 Jul 2017 18:17:52 -0700
+Message-ID: <CAGZ79kbTzZLD5FDidDG8SUrKpgRGvA7f9HAu77w+iW8A8zLMAw@mail.gmail.com>
+Subject: Re: [RFC/WIP PATCH] object store classification
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <peartben@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A symbolic ref can currently only point at (another symbolic) ref.
-However are use cases for symbolic refs to point at other things
-representing a commit-ish, such as gitlink entries in other
-repositories.  In this use case we can use such a symbolic link
-to strengthen the relationship between a submodule and a superproject.
-Examples:
+On Fri, Jul 7, 2017 at 9:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ben Peart <peartben@gmail.com> writes:
+>
+>> For more API/state design purity, I wonder if there should be an
+>> object_store structure that is passed to each of the object store APIs
+>> instead of passing the repository object. The repository object could
+>> then contain an instance of the object_store structure.
+>>
+>> That said, I haven't take a close look at all the code in object.c to
+>> see if all the data needed can be cleanly abstracted into an
+>> object_store structure.
+>
+> My gut feeling was it is just the large hashtable that keeps track of
+> objects we have seen, but the object replacement/grafts and other
+> things may also want to become per-repository.
 
-1) It makes it easier to explain when we recurse into submodules and
-   to which sha1 the submodule is updated.
+This is similar to the_index which is referenced by the_repository.
+But as we do not have anything like the_object_store already, we are
+free to design it, as the required work that needs to be put in is the
+same.
 
-   Currently a submodule (or any repo) is either on a branch (i.e.
-   HEAD is a symbolic ref) or is in 'detached HEAD' state (HEAD is
-   a direct ref).
-   For submodules it is wrong to be on its own branch if it wants to be
-   controlled by the superproject as being on its own branch signals that
-   the submodule is independent and can move the HEAD freely.
-   Being in 'detached HEAD' state is the alternative to that and was
-   chosen when git-submodule was implemented, but it is equally wrong;
-   the lesser of two evils.
+With the object replacements/grafts coming up as well as alternates,
+we definitely want that to be per repository, the question is if we rather
+want
 
-   Semantically the correct way to state a submodule is part of the
-   superproject is by pointing its HEAD to the superproject.
+  the_repository -> many object_stores (one for each, alternate, grafts,
+      and the usual place at $GIT_DIR/objects
+  where the object_store is a hashmap, maybe an additional describing
+  string or path.
 
-   We do have "reset/checkout --recurse-submodules" now, but it is
-   hard to explain what actually happens there (Which submodules are
-   updated? All of them! -- But I want a subset only!)
+or
 
-   With this new mode of symbolic refs, any submodule that tracks the
-   superproject, would 'automatically follow' the superproject as the
-   submodules HEAD moves when the superproject changes.
+  the_repository -> the_object_store
+  but the object store is a complex beast having different hash tables
+  for the different alternates.
 
-2) "git -C submodule commit" would behave the same as it would on branch
-   nowadays: It would make the commit in the submodule and then change
-   the target of the symbolic ref which would be the index of the
-   superproject! That implies that you do not need to 'git add' the
-   submodule to the superproject, but have it done automatically.
+or
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- cache.h              |  2 ++
- refs/files-backend.c | 10 ++++++++++
- submodule.c          | 40 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 52 insertions(+)
+  the_repository -> the_object_store_hash_map
+  which is this patch that would try to put any object related to this
+  repository into the same hashmap and the hashmap is not special
+  for each of the different object locations.
 
-diff --git a/cache.h b/cache.h
-index 71fe092644..4f79d23202 100644
---- a/cache.h
-+++ b/cache.h
-@@ -2029,4 +2029,6 @@ void sleep_millisec(int millisec);
-  */
- void safe_create_dir(const char *dir, int share);
- 
-+extern int read_external_symref(struct strbuf *from, struct strbuf *out);
-+
- #endif /* CACHE_H */
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0404f2c233..f56f7b87ce 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -713,6 +713,16 @@ static int files_read_raw_ref(struct ref_store *ref_store,
- 		goto out;
- 	}
- 
-+	if (starts_with(buf, "repo:")) {
-+		if (read_external_symref(&sb_contents, referent)) {
-+			*type |= REF_ISBROKEN;
-+			ret = -1;
-+			goto out;
-+		}
-+		*type |= REF_ISSYMREF;
-+		ret = 0;
-+	}
-+
- 	/*
- 	 * Please note that FETCH_HEAD has additional
- 	 * data after the sha.
-diff --git a/submodule.c b/submodule.c
-index da2b484879..7297f90485 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2037,3 +2037,43 @@ int submodule_to_gitdir(struct strbuf *buf, const char *submodule)
- cleanup:
- 	return ret;
- }
-+
-+int read_external_symref(struct strbuf *from, struct strbuf *out)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	const char *repo, *gitlink;
-+	int hint, code;
-+	struct strbuf **split = strbuf_split(from, 0);
-+	struct strbuf cmd_out = STRBUF_INIT;
-+
-+	if (!split[0] || !split[1])
-+		return -1;
-+
-+	repo = split[0]->buf + 5; /* skip 'repo:' */
-+	gitlink = split[1]->buf;
-+
-+	argv_array_pushl(&cp.args,
-+			"ignored-first-arg",
-+			"-C", repo,
-+			"ls-tree", "-z", "HEAD", "--", gitlink, NULL);
-+
-+	/*
-+	 * 17 accounts for '160000 commit ',
-+	 * the \t before path and trailing \0.
-+	 */
-+	hint = 17 + GIT_SHA1_HEXSZ + split[1]->len;
-+	code = capture_command(&cp, &cmd_out, hint);
-+
-+	strbuf_release(split[0]);
-+	strbuf_release(split[1]);
-+
-+	if (!code) {
-+		strbuf_reset(out);
-+		strbuf_add(out, cmd_out.buf + strlen("160000 commit "),
-+			   GIT_SHA1_HEXSZ);
-+	} else
-+		return -1;
-+
-+	return 0;
-+}
-+
--- 
-2.13.2.695.g117ddefdb4
 
+>
+>> One concern I have is that the global state refactoring effort will
+>> just result in all the global state getting moved into a single
+>> (global) repository object thus limiting it's usefulness.
+>
+> I actually am not worried about it that much, and I say this with
+> the background of having done the same "grouping a set of global
+> state variables into a single structure and turning them into a
+> single default instance" for the_index.  Whether you like it or not,
+> the majority of operations do work on the default instance---that
+> was why the operations could live with just "a set of global state
+> variables" in the first place, and the convenience compatibility
+> macros that allow you to operate on the fields of the default
+> instance as if they were separate variables have been a huge
+> typesaver that also reduces the cognitive burden.  I'd expect that
+> the same will hold for the new "repository" and the "object_store"
+> abstractions.
+
+Sounds reasonable to expect.
+
+Thanks,
+Stefan
