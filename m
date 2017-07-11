@@ -2,250 +2,267 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 605102035A
-	for <e@80x24.org>; Tue, 11 Jul 2017 22:46:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3B102035A
+	for <e@80x24.org>; Tue, 11 Jul 2017 22:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932475AbdGKWqJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 18:46:09 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34501 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754887AbdGKWqH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 18:46:07 -0400
-Received: by mail-wr0-f196.google.com with SMTP id k67so1578261wrc.1
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 15:46:07 -0700 (PDT)
+        id S1754769AbdGKWx3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 18:53:29 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:36460 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754198AbdGKWx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 18:53:28 -0400
+Received: by mail-wr0-f193.google.com with SMTP id 77so1595466wrb.3
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 15:53:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=4gPXPN+8aFj1ZdFiCfHq3HdBbHiW1p5yX3r1S18sJ+s=;
-        b=ROYzAp6TiACS8tMX/ZC1Rdp3S5d9euV5FN05QaxkSBy66g9QzLyW71jZYJQLWE/S6h
-         pvwWZXgyenabRrzn0b0QK66H498R2dX1UJh+Wx2RfEq8PmvFTWs/7V3l3xS9eZeR9Brn
-         9n/QygUfM1SB+D6qh4J0vLsqtzs9kmpFu6Eo8E23MqzLGEYs8w2nhw122qZ/fus0LzzO
-         yZfnoR0VNAxVpLoYRBKkxlmRbs+r/7+U0qwR6pwnj4OmB/LCh6zaMDjxKQJOlD7BOrzV
-         3OMBFIy+XoRxxK6mkSMy1Fcfto3Ook3yJS3BOqNN4ubDQzIlgBY3ixvEE4zLgcG5P0On
-         x4BQ==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=QbtP9+YwyW2ZTdC35DjDhjfvVc+lBkwMywWxP47naMs=;
+        b=nYDQl2DD3giehTe6Ad33GEHp/LqPQpFoBNDSdNhRtRQ3KzSrleoEGXlJJfE6Nrukw0
+         ywsU1C5wn30UoCX6QMXnZigDaW2ZAZPd5zdIWHmyiFTy4W7YZgJIBZva6+Hwzrw5ujE3
+         HgF+PSP7PUVKQdcUjpWTzSg4kGSlHsX3lW0D6VmpC3Skj53/0kvqo8qQkVeyb1eXHdEc
+         4iGiBXtRBCpwIc1WN02rL2u7Ovx0bQZNzyTb79LZFux2MRnXmvxYq0IDbahj9cJswZrP
+         SgzbWdQfZ7mXcTjTk53Rg/T5EkFCkWUTfDt6BVyZFbCSHyryCPV1GHkZ+/gNOsDm5AZ3
+         YuEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=4gPXPN+8aFj1ZdFiCfHq3HdBbHiW1p5yX3r1S18sJ+s=;
-        b=s6HbPU0Fqejr9vXyMEauimUi32Gwt1qZdg7D2l7Ydh3o16EF1O9Ts8cEtFL0KhVLcX
-         vOLMyoaFyDBX84c6ZZO9ZgCuIlIj3qLfo0F3UlNvWSuNNIAxJ3IVMJpd66QY2fIGKSvd
-         XOmOcnWpL+fQQ+d+wDNDDub/GaeQrMMzp7GSEU4Fv12R2Tzq+DF5GHp9MFH/55r9+Htt
-         ZQhf+XNLqkQfece+hx3IhFKGod51fNmKKSXTXZ2HSVvnzmzEhde/MVHrOqUjTkZ/uU7w
-         e6vgQvljaKc4ih/pNGXKwfXkSHvsnvBwvsRuI9jjE1m6+llp1WXjJqmuztR4sbzSJmwm
-         JBCg==
-X-Gm-Message-State: AIVw112+Q5vsXF7/VWMHc95R+43MOIPDM+ZN+YPSl3tLtQ0XDahzeiAx
-        E5EOt3ibFM7tv91u+CDHNA==
-X-Received: by 10.223.153.165 with SMTP id y34mr1178068wrb.41.1499813165851;
-        Tue, 11 Jul 2017 15:46:05 -0700 (PDT)
-Received: from [192.168.5.102] (cable-24-135-63-71.dynamic.sbb.rs. [24.135.63.71])
-        by smtp.gmail.com with ESMTPSA id 142sm538781wmi.1.2017.07.11.15.46.04
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references;
+        bh=QbtP9+YwyW2ZTdC35DjDhjfvVc+lBkwMywWxP47naMs=;
+        b=iFEkQm0W+M5pEZR8Jh1KDVAK71oAz5ErHQy74J7JB3xhZvfjkiVNlJPm8pg/QiHQqL
+         kBjjcxsr6lCAhX2njMkkPqDjNFrTaaajIAMVSQrwkC4h5HTCz8Epwiihg3tJHpd9aLQL
+         25E/i11XXFTRKqSSoTzEyNAiHgafry+wajhfeHk69RlzTU2ehI/UQThD1QoiJHiCvHDL
+         kZczPDshYYRBohor6O5Q/Gp6SpiL/bpwwZ5BporgNv3ITbmr6WMW+0arQ+Vp0r2c+myC
+         AlHoXZw2u0lNRCzrfdiwjP8KoCl7VnfBpjmF1lipY6sXbbnHvEP59XenVeg2qJjGGh+P
+         P9dw==
+X-Gm-Message-State: AIVw112N+ExOJvQVln7PlITo3ktluBc7Qso4OxbVolk/lnxD1dkr+Qv+
+        6spcUc7DM0P7hVrrrg8=
+X-Received: by 10.28.168.145 with SMTP id r139mr352793wme.102.1499813606717;
+        Tue, 11 Jul 2017 15:53:26 -0700 (PDT)
+Received: from berenguela.telefonica.net (152.red-95-120-155.dynamicip.rima-tde.net. [95.120.155.152])
+        by smtp.gmail.com with ESMTPSA id u18sm512942wrc.14.2017.07.11.15.53.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Jul 2017 15:46:04 -0700 (PDT)
-Subject: Re: "groups of files" in Git?
-To:     Lars Schneider <larsxschneider@gmail.com>,
-        Nikolay Shustov <nikolay.shustov@gmail.com>
-Cc:     git@vger.kernel.org
-References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
- <B5FDF25C-ED5A-4CD1-AAD7-04BD8D705C59@gmail.com>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <6e4096fd-cbab-68f0-7a23-654382cb810e@gmail.com>
-Date:   Wed, 12 Jul 2017 00:46:02 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
-MIME-Version: 1.0
-In-Reply-To: <B5FDF25C-ED5A-4CD1-AAD7-04BD8D705C59@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Tue, 11 Jul 2017 15:53:25 -0700 (PDT)
+From:   Miguel Torroja <miguel.torroja@gmail.com>
+To:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Miguel Torroja <miguel.torroja@gmail.com>
+Subject: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
+Date:   Wed, 12 Jul 2017 00:53:16 +0200
+Message-Id: <20170711225316.10608-1-miguel.torroja@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <CAE5ih7-Sy9YmGbLs=wzfxXCSFLkEotqLRuu_xNz9x=7BhvrvnA@mail.gmail.com>
+References: <CAE5ih7-Sy9YmGbLs=wzfxXCSFLkEotqLRuu_xNz9x=7BhvrvnA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For starters, let me say that I consider myself a mere advanced 
-beginner Git user, and I haven`t used Perforce ever before (did some 
-reading now), but still, for what it`s worth, here are my thoughts, 
-please bare with me :)
+The option -G of p4 (python marshal output) gives more context about the
+data being output. That's useful when using the command "change -o" as
+we can distinguish between warning/error line and real change description.
 
-Do feel free to correct me if I miss something.
+Some p4 triggers in the server side generate some warnings when
+executed. Unfortunately those messages are mixed with the output of
+"p4 change -o". Those extra warning lines are reported as {'code':'info'}
+in python marshal output (-G). The real change output is reported as
+{'code':'stat'}
 
-On 11/07/2017 19:39, Lars Schneider wrote:
-> 
->> On 11 Jul 2017, at 17:45, Nikolay Shustov <nikolay.shustov@gmail.com> wrote:
->>
->> Hi,
->> I have been recently struggling with migrating my development workflow
->> from Perforce to Git, all because of the following thing:
->>
->> I have to work on several features in the same code tree parallel, in
->> the same Perforce workspace. The major reason why I cannot work on one
->> feature then on another is just because I have to make sure that the
->> changes in the related areas of the product play together well.
->>
->> With Perforce, I can have multiple changelists opened, that group the
->> changed files as needed.
->>
->> With Git I cannot seem to finding the possibility to figure out how to
->> achieve the same result. And the problem is that putting change sets
->> on different Git branches (or workdirs, or whatever Git offers that
->> makes the changes to be NOT in the same source tree) is not a viable
->> option from me as I would have to re-build code as I re-integrate the
->> changes between the branches (or whatever changes separation Git
->> feature is used).
->> Build takes time and resources and considering that I have to do it on
->> multiple platforms (I do cross-platform development) it really
->> denominates the option of not having multiple changes in the same code
->> tree.
->>
->> Am I ignorant about some Git feature/way of using Git that would help?
->> Is it worth considering adding to Git a feature like "group of files"
->> that would offer some virtutal grouping of the locally changed files
->> in the checked-out branch?
-> 
-> Interesting question that came up at my workplace, too.
-> 
-> Here is what I suggested:
-> 1. Keep working on a single branch and make commits for all features
-> 2. If you make a commit, prefix the commit message with the feature name
-> 3. After you are done with a feature create a new feature branch based on
->    your combined feature branch. Use `git rebase -i` [1] to remove all
->    commits that are not relevant for the feature. Alternatively you could
->    cherry pick the relevant commits [2] if this is faster.
-> 
-> I wonder what others think about this solution. Maybe there is a better
-> solution that I overlooked?
-> 
-> - Lars
-> 
-> [1] https://robots.thoughtbot.com/git-interactive-rebase-squash-amend-rewriting-history
-> [2] http://think-like-a-git.net/sections/rebase-from-the-ground-up/cherry-picking-explained.html
+the function p4CmdList accepts a new argument: skip_info. When set to
+True it ignores any 'code':'info' entry (skip_info=True by default).
 
-This "single branch, related commits" approach is exactly what came 
-to my mind as well.
+A new test has been created in t9807-git-p4-submit.sh adding a p4 trigger
+that outputs extra lines with "p4 change -o" and "p4 changes"
 
-But, isn`t Perforce "changelist" an "atomic" group of changes - like 
-"commit" in Git, "changeset" in Team Foundation Version Control, 
-etc...?
+Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
+---
+ git-p4.py                | 92 ++++++++++++++++++++++++++++++++----------------
+ t/t9807-git-p4-submit.sh | 30 ++++++++++++++++
+ 2 files changed, 92 insertions(+), 30 deletions(-)
 
-If so, it would mean that this "multiple pending changelists" flow 
-would/should be translated to "multiple pending commits" in Git, 
-where in the end _a single_ Perforce "changelist" is _a single_ Git 
-"commit".
+diff --git a/git-p4.py b/git-p4.py
+index 8d151da91..1facf32db 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -509,7 +509,7 @@ def isModeExec(mode):
+ def isModeExecChanged(src_mode, dst_mode):
+     return isModeExec(src_mode) != isModeExec(dst_mode)
+ 
+-def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
++def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=True):
+ 
+     if isinstance(cmd,basestring):
+         cmd = "-G " + cmd
+@@ -545,6 +545,9 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
+     try:
+         while True:
+             entry = marshal.load(p4.stdout)
++            if skip_info:
++                if 'code' in entry and entry['code'] == 'info':
++                    continue
+             if cb is not None:
+                 cb(entry)
+             else:
+@@ -879,8 +882,12 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
+             cmd += ["%s...@%s" % (p, revisionRange)]
+ 
+         # Insert changes in chronological order
+-        for line in reversed(p4_read_pipe_lines(cmd)):
+-            changes.add(int(line.split(" ")[1]))
++        for entry in reversed(p4CmdList(cmd)):
++            if entry.has_key('p4ExitCode'):
++                die('Error retrieving changes descriptions ({})'.format(entry['p4ExitCode']))
++            if not entry.has_key('change'):
++                continue
++            changes.add(int(entry['change']))
+ 
+         if not block_size:
+             break
+@@ -1494,7 +1501,7 @@ class P4Submit(Command, P4UserMap):
+         c['User'] = newUser
+         input = marshal.dumps(c)
+ 
+-        result = p4CmdList("change -f -i", stdin=input)
++        result = p4CmdList("change -f -i", stdin=input,skip_info=False)
+         for r in result:
+             if r.has_key('code'):
+                 if r['code'] == 'error':
+@@ -1526,37 +1533,62 @@ class P4Submit(Command, P4UserMap):
+ 
+         [upstream, settings] = findUpstreamBranchPoint()
+ 
+-        template = ""
++        template = """\
++# A Perforce Change Specification.
++#
++#  Change:      The change number. 'new' on a new changelist.
++#  Date:        The date this specification was last modified.
++#  Client:      The client on which the changelist was created.  Read-only.
++#  User:        The user who created the changelist.
++#  Status:      Either 'pending' or 'submitted'. Read-only.
++#  Type:        Either 'public' or 'restricted'. Default is 'public'.
++#  Description: Comments about the changelist.  Required.
++#  Jobs:        What opened jobs are to be closed by this changelist.
++#               You may delete jobs from this list.  (New changelists only.)
++#  Files:       What opened files from the default changelist are to be added
++#               to this changelist.  You may delete files from this list.
++#               (New changelists only.)
++"""
++        files_list = []
+         inFilesSection = False
++        change_entry = None
+         args = ['change', '-o']
+         if changelist:
+             args.append(str(changelist))
+-
+-        for line in p4_read_pipe_lines(args):
+-            if line.endswith("\r\n"):
+-                line = line[:-2] + "\n"
+-            if inFilesSection:
+-                if line.startswith("\t"):
+-                    # path starts and ends with a tab
+-                    path = line[1:]
+-                    lastTab = path.rfind("\t")
+-                    if lastTab != -1:
+-                        path = path[:lastTab]
+-                        if settings.has_key('depot-paths'):
+-                            if not [p for p in settings['depot-paths']
+-                                    if p4PathStartsWith(path, p)]:
+-                                continue
+-                        else:
+-                            if not p4PathStartsWith(path, self.depotPath):
+-                                continue
++        for entry in p4CmdList(args):
++            if not entry.has_key('code'):
++                continue
++            if entry['code'] == 'stat':
++                change_entry = entry
++                break
++        if not change_entry:
++            die('Failed to decode output of p4 change -o')
++        for key, value in change_entry.iteritems():
++            if key.startswith('File'):
++                if settings.has_key('depot-paths'):
++                    if not [p for p in settings['depot-paths']
++                            if p4PathStartsWith(value, p)]:
++                        continue
+                 else:
+-                    inFilesSection = False
+-            else:
+-                if line.startswith("Files:"):
+-                    inFilesSection = True
+-
+-            template += line
+-
++                    if not p4PathStartsWith(value, self.depotPath):
++                        continue
++                files_list.append(value)
++                continue
++        # Output in the order expected by prepareLogMessage
++        for key in ['Change','Client','User','Status','Description','Jobs']:
++            if not change_entry.has_key(key):
++                continue
++            template += '\n'
++            template += key + ':'
++            if key == 'Description':
++                template += '\n'
++            for field_line in change_entry[key].splitlines():
++                template += '\t'+field_line+'\n'
++        if len(files_list) > 0:
++            template += '\n'
++            template += 'Files:\n'
++        for path in files_list:
++            template += '\t'+path+'\n'
+         return template
+ 
+     def edit_template(self, template_file):
+diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
+index 3457d5db6..b630895a7 100755
+--- a/t/t9807-git-p4-submit.sh
++++ b/t/t9807-git-p4-submit.sh
+@@ -409,6 +409,36 @@ test_expect_success 'description with Jobs section and bogus following text' '
+ 	)
+ '
+ 
++test_expect_success 'description with extra lines from verbose p4 trigger' '
++	test_when_finished cleanup_git &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		p4 triggers -i <<-EOF
++		Triggers: p4triggertest-command command pre-user-change "echo verbose trigger"
++		EOF
++	) &&
++	(
++		p4 change -o |  grep -s "verbose trigger"
++	) &&
++	(
++		cd "$git" &&
++		git config git-p4.skipSubmitEdit true &&
++		echo file20 >file20 &&
++		git add file20 &&
++		git commit -m file20 &&
++		git p4 submit
++	) &&
++	(
++		p4 triggers -i <<-EOF
++		Triggers:
++		EOF
++	) &&
++	(
++		cd "$cli" &&
++		test_path_is_file file20
++	)
++'
++
+ test_expect_success 'submit --prepare-p4-only' '
+ 	test_when_finished cleanup_git &&
+ 	git p4 clone --dest="$git" //depot &&
+-- 
+2.11.0
 
-Might be this is where the confusion is coming from, trying to fit 
-natural Git "multiple commits per feature" (but "single feature per 
-branch") concept into a "single changelist per feature" Perforce 
-concept, described/required here?
-
-I don`t think there is a firm concept of such "multiple pending 
-commits" in Git, but the point is the author is having multiple 
-changelists/commits, and it actively updates them (the _same ones_), 
-until they`re ready to be merged (submitted, in Perforce)... which 
-you can do in Git, and might be quite easily :)
-
-So... In Git, you can create a separate commit for each changelist 
-you have in Perforce (all these commits being on the same branch, as 
-desired). Then, when you would have wanted to "update" the pending 
-Perforce changelist (not sure what the corresponding command is in 
-Perforce), you would just `git commit` your current state with 
-additional "--squash" or "--fixup" parameters (depending on if you 
-would like to add more description to existing/original commit 
-message, or not), and the original commit SHA1.
-
-In the end, when everything is tested together and you would like to 
-commit features separately (like submitting changelists in Perforce), 
-you would just need to `git rebase -i --autosquash` your branch, 
-where Git would squash all your "update" commits (fixup/squash ones, 
-that is) to the original/initial ones you made as per your 
-changelists/features. No need for manual rearranging, cherry-picking, 
-or whatever.
-
-An example flow, with two "changelists" for two features (I`ll be 
-using capital letters A, B, C... instead of commit SHA1, for 
-simplicity):
-
-	... do some "Feature 1" work...
-	$ git commit -m "Feature 1"
-	... do some "Feature 2" work...
-	$ git commit -m "Feature 2"
-	... do some "Feature 1" work...
-	$ git commit --fixup A
-	... do some "Feature 1" work...
-	$ git commit --fixup A
-	... do some "Feature 2" work...
-	$ git commit --squash B
-	... do some "Feature 1" work...
-	$ git commit --fixup A
-	... do some "Feature 1" work...
-	$ git commit --squash A
-	... do some "Feature 2" work...
-	$ git commit --fixup B
-
-
-Branch history would look something like this (H is latest commit):
-
-	H fixup! Feature 2
-	G squash! Feature 1
-	F fixup! Feature 1
-	E squash! Feature 2
-	D fixup! Feature 1
-	C fixup! Feature 1
-	B Feature 2
-	A Feature 1
-
-
-When you finally do `git rebase -i --autosquash A^`, you should get a 
-list like this[1]:
-
-	pick A Feature 1
-	fixup C fixup! Feature 1
-	fixup D fixup! Feature 1
-	fixup F fixup! Feature 1
-	squash G squash! Feature 1
-	pick B Feature 2
-	squash E squash! Feature 2
-	fixup H fixup! Feature 2
-
-
-Once rebase is finished, you`ll end up with branch history looking 
-like this:
-
-	B' Feature 2
-	A' Feature 1
-
-... where commits A, C, D, F and G have been squashed into a single 
-commit A', and commits B, E and H have been squashed into a single 
-commit B'. These two single commits should correspond to your two 
-Perforce changelists.
-
-Now you can merge your commits separately, as desired ("submit" the 
-"changelists").
-
-You can even first rearrange/split/squash them further, or make 
-separate branches out of them, whatever you find appropriate - you 
-can do whatever you like to them while they`re your local commits 
-("pending changelists"), before making them live/visible for other 
-users as well (merge them to a public branch, "submit changelist").
-
-p.s. Doesn`t the flow required here look similar to Mercurial patch
-"queues" approach (again, resembling "quilt" functionality)? If so, 
-"Guilt"[2] may be an option here as well... if the described flow 
-can`t be altered a bit to align better with Git itself, might be 
-profiting on the side of overall workflow simplicity ;)
-
-[1] Having commits automatically grouped/ordered, you can even 
-    replace some "fixup" and "squash" with "reword", for example, so 
-    those commits are kept as separate ones, providing you a chance 
-    to edit their messages.
-[2] http://repo.or.cz/w/guilt.git
-
-Regards,
-Buga
