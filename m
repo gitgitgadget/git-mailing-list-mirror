@@ -2,125 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB6312035A
-	for <e@80x24.org>; Tue, 11 Jul 2017 20:03:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDF092035A
+	for <e@80x24.org>; Tue, 11 Jul 2017 20:20:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932680AbdGKUDJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 16:03:09 -0400
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:33977 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932446AbdGKUDI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 16:03:08 -0400
-Received: by mail-lf0-f44.google.com with SMTP id t72so1707006lff.1
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 13:03:08 -0700 (PDT)
+        id S932810AbdGKUUl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 16:20:41 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:35804 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932351AbdGKUUk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 16:20:40 -0400
+Received: by mail-wr0-f193.google.com with SMTP id z45so796719wrb.2
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 13:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9JFsEs+lS4o2XGhVbrtZYlfLF1m9osKUX+9Hi+GFhxQ=;
-        b=fFDU1bSL9RokQRG36o1VzQwsbaV2icGbSz94n0YZfYZRl+2wJcEdtgbPjm+xFnGNbD
-         4KKMF4JQvGfA48WVEyJZ/fwAwNqYwtLNAnz8TGkVH4Sx8HGdfQ8AnEN6eE0T85Klw2qD
-         PxL/t9R+mlpZZnU5UzZ0IY/pakWrdJVUTvDI/Cj5ugewhZpKA57hIwz4zr5aBjjagx+A
-         C7XQeJ+t4g0eToZ036yqcaPiRN42Zmk2277gpDFwJS9NexY7PRodH87Ru13Gkiq1PGLf
-         euhxqOQ6eyY8NrpBM9QnjjeU4MYQmQY4V4wAWrKLsok01j1BdUztb1ScCrTnWQ16PGWa
-         sEZA==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gRJHOLwcyKIeobN9gqvHVE3m4YtDiXzA/6QzBrGyYQM=;
+        b=kDXQgdEuOX0PBzYNrQdtvdo5/y5oSF2fBKndD/AIVerR1i+LeHU+5iqvpXAkMw6z/f
+         xlVrFXNcHIxvy89ylOV0sTtBSZ156Qj5UjcGC4hw2D1xh51JawyBbt7P3zYkaGC0mLPA
+         QSwY82Hq6oTHvQERaoCfCq0phPvplQo30HPVWfjuJOFi9XsmhWDuLhDx0G+vaGoFGseO
+         SR1DOLxRt+2MAXksQSO+gP2ddbVMCra7d4si7B80fWiypuf63a6q1lkmGl1/UAhcSiEs
+         sIweaXYDt//mOSL4Cdibyn8DyiDOn/aH9phfmVQL61Q98X3KhF5HAtzVoekYWwrCI7J9
+         8jEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9JFsEs+lS4o2XGhVbrtZYlfLF1m9osKUX+9Hi+GFhxQ=;
-        b=fHbAl4LrZInxRaQIhOz8/ayKub+0WGqOxeDWb/wHNqwLxX1jkv6Kw/qIPpdS96xK79
-         mphyCeJtjS6nVkmndR0cIdn4tyHYc1VtmKkposuqXv1Re+bttZr/YXrJsrpxzY6AUrqP
-         Ov3+5A6qjCVmVHyTXzUR/t1QoEJFGxhm7BNDO7sPxd1d9Px7eHISfsrghS81r7PWPdF6
-         0bXARR0kT/SbqEv7l5QeHV9traiplLSHS+KhFshSeSg69eRc5asXfm1+O1okyQhf655S
-         c9FqtWgjMrI+7bLmhRHO9a38+6VeHSWkhjm9+Et3lgRE6CWY+2mez0uj/UHYIJMQ5Kgg
-         xS2Q==
-X-Gm-Message-State: AIVw111nvUoUUJJtKaBeSg5zbrvgQvWvFr8LvIhChN2iTCQL7UtqSc8b
-        bf+QM0akEt0/63Dd
-X-Received: by 10.46.0.170 with SMTP id e42mr633628lji.25.1499803387190;
-        Tue, 11 Jul 2017 13:03:07 -0700 (PDT)
-Received: from debian (c83-253-195-111.bredband.comhem.se. [83.253.195.111])
-        by smtp.gmail.com with ESMTPSA id u13sm46022ljd.42.2017.07.11.13.03.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Jul 2017 13:03:06 -0700 (PDT)
-Received: from iveqy by debian with local (Exim 4.84)
-        (envelope-from <iveqy@paksenarrion.iveqy.com>)
-        id 1dV1Tm-0002QL-84; Tue, 11 Jul 2017 22:09:54 +0200
-Date:   Tue, 11 Jul 2017 22:09:54 +0200
-From:   Fredrik Gustafsson <iveqy@iveqy.com>
-To:     Nikolay Shustov <nikolay.shustov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: "groups of files" in Git?
-Message-ID: <20170711200954.GA14625@paksenarrion.iveqy.com>
-References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
-MIME-Version: 1.0
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gRJHOLwcyKIeobN9gqvHVE3m4YtDiXzA/6QzBrGyYQM=;
+        b=m4euicI46TmAp5HEIuakiKD1U+E3kF9H9Y8tBrGJkvmXPsFD2zJSATo4d7GXP2CsCB
+         D/EQ3PAjnGosSih93HfRi/HtoyLqDPCP0LE/e1eIjDjbUkLvTKSQZnhafQ2ML+CVbVYS
+         Ef5grO6QzX21dJcIdAVe63iV0FdRHLHpQz18/H911YETCHlB3FDzc2aVNyS759KoVJQ1
+         z4EZwnr7qBGBc8wAp9jUL/OCyTadZrtYw7Q61MKEZzeg3zGaBA+8sRS3+YyzyMNPI/Yl
+         OyVTRdpsfZW0GafArPgDkUxf8I56jwIm1xWIzVesAHuWkLAJnTpHFZ2x73OMGw1LFXYw
+         4tMQ==
+X-Gm-Message-State: AIVw112JrTSYOHvX6Dx5RbJTMoyFvNDE54LZH5E7EbK8dgr56Yy05EJk
+        RsnW5xuZD5ting==
+X-Received: by 10.28.105.28 with SMTP id e28mr69775wmc.42.1499804438857;
+        Tue, 11 Jul 2017 13:20:38 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB4E2D.dip0.t-ipconnect.de. [93.219.78.45])
+        by smtp.gmail.com with ESMTPSA id v102sm299722wrc.53.2017.07.11.13.20.37
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 11 Jul 2017 13:20:38 -0700 (PDT)
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: "groups of files" in Git?
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <CAEcERAxR_G-tVKsUZ7G97E5B8zCzBoqGqAK2U0fz-p5FvRwfUg@mail.gmail.com>
+Date:   Tue, 11 Jul 2017 22:20:37 +0200
+Cc:     Git Users <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5FDE1F7C-9C01-4C50-996C-920F6E0E2DCB@gmail.com>
+References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com> <B5FDF25C-ED5A-4CD1-AAD7-04BD8D705C59@gmail.com> <CAEcERAxR_G-tVKsUZ7G97E5B8zCzBoqGqAK2U0fz-p5FvRwfUg@mail.gmail.com>
+To:     Nikolay Shustov <nikolay.shustov@gmail.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-I will choose a bit of a less diplomatic path here. Instead of trying to
-tell you how you can make git fit your needs, I would say that you
-shouldn't. I've two arguments:
+> On Tue, Jul 11, 2017 at 1:39 PM, Lars Schneider
+> <larsxschneider@gmail.com> wrote:
+>>=20
+>>> On 11 Jul 2017, at 17:45, Nikolay Shustov =
+<nikolay.shustov@gmail.com> wrote:
+>>>=20
+>>> Hi,
+>>> I have been recently struggling with migrating my development =
+workflow
+>>> from Perforce to Git, all because of the following thing:
+>>>=20
+>>> I have to work on several features in the same code tree parallel, =
+in
+>>> the same Perforce workspace. The major reason why I cannot work on =
+one
+>>> feature then on another is just because I have to make sure that the
+>>> changes in the related areas of the product play together well.
+>>>=20
+>>> With Perforce, I can have multiple changelists opened, that group =
+the
+>>> changed files as needed.
+>>>=20
+>>> With Git I cannot seem to finding the possibility to figure out how =
+to
+>>> achieve the same result. And the problem is that putting change sets
+>>> on different Git branches (or workdirs, or whatever Git offers that
+>>> makes the changes to be NOT in the same source tree) is not a viable
+>>> option from me as I would have to re-build code as I re-integrate =
+the
+>>> changes between the branches (or whatever changes separation Git
+>>> feature is used).
+>>> Build takes time and resources and considering that I have to do it =
+on
+>>> multiple platforms (I do cross-platform development) it really
+>>> denominates the option of not having multiple changes in the same =
+code
+>>> tree.
+>>>=20
+>>> Am I ignorant about some Git feature/way of using Git that would =
+help?
+>>> Is it worth considering adding to Git a feature like "group of =
+files"
+>>> that would offer some virtutal grouping of the locally changed files
+>>> in the checked-out branch?
+>>=20
+>> Interesting question that came up at my workplace, too.
+>>=20
+>> Here is what I suggested:
+>> 1. Keep working on a single branch and make commits for all features
+>> 2. If you make a commit, prefix the commit message with the feature =
+name
+>> 3. After you are done with a feature create a new feature branch =
+based on
+>>   your combined feature branch. Use `git rebase -i` [1] to remove all
+>>   commits that are not relevant for the feature. Alternatively you =
+could
+>>   cherry pick the relevant commits [2] if this is faster.
+>>=20
+>> I wonder what others think about this solution. Maybe there is a =
+better
+>> solution that I overlooked?
+>>=20
+>> - Lars
+>>=20
+>> [1] =
+https://robots.thoughtbot.com/git-interactive-rebase-squash-amend-rewritin=
+g-history
+>> [2] =
+http://think-like-a-git.net/sections/rebase-from-the-ground-up/cherry-pick=
+ing-explained.html
+>>=20
 
-1.
-It's always painful when you try to use a tool in some way it's not
-intended or used to work. If you're doing something different than
-anyone else using that tool, you're probably doing something wrong!
+> On 11 Jul 2017, at 19:54, Nikolay Shustov <nikolay.shustov@gmail.com> =
+wrote:
+>=20
+> Thank you for the idea, however I am having troubles with basically
+> maintaining the uncommitted groups of files: I would prefer the clear
+> distinction that "those files belong to feature A" and "these files
+> belong to feature B", before I commit anything. Committing separately
+> every change for feature A and for feature B would probably a good
+> option unless I have many changes and then cherry-picking the proper
+> commits to create a single changeset for the integration would become
+> a nightmare.
 
-I doubt that your case is so special, so my suggestion is to either use
-git the way most people use it, with one branch for each feature, or do
-not use git at all, since perforce seems to be better with your
-workstyle.
+I see. Why so complicated with gitattributes then?
 
-2.
-Git is a snapshot based SCM system. That means that each commit unique
-identify a version of the code. With your system (as well as any time
-you're not commiting all changed files) the commit is never tested.
-You've no idea of actually knowing if your two changes is dependent or
-not. Of course you can guess, but it's still a guess and in your current
-work way with perforce you have no way of knowing if your changesets
-have a dependency between eachother or not since you never test them
-individually.
+How about this:
+Let's say you start working on featureX that affects file1 and file2
+and featureY that affects file8 and file9
 
---
+1. Create aliases to add the files:
+   $ git config --local alias.featx 'add file1 file2'
+   $ git config --local alias.featy 'add file8 file9'
 
-Please let me know if you feel that I've missed something.
+2. Work on the features. Whenever you have something ready for featureX
+   run this:
+   $ git featx
+   $ git commit
 
-I can see four solutions:
+   Whenever you have something ready for featureY run this:
+   $ git featy
+   $ git commit
 
-1.
-Now I would suggest that you have each feature in a commit and simply
-run your tests every few commits so you don't have to run it for each
-commit.
+Wouldn't that work?
 
-2.
-Improve your build and test time. I'm sure there's things here to
-improve.
+- Lars
 
-3.
-Continue to use perforce. If I recall correctly perforce has even a git
-integration today.
 
-4.
-Use integration branches in git and run the tests on that branch. This
-can be easy todo if you write some scripts for it.
-
-Good luck!
-
--- 
-Fredrik Gustafsson
-
-phone: +46 733-608274
-e-mail: iveqy@iveqy.com
-website: http://www.iveqy.com
