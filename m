@@ -2,150 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79AA42035A
-	for <e@80x24.org>; Tue, 11 Jul 2017 23:38:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D8C02035A
+	for <e@80x24.org>; Tue, 11 Jul 2017 23:51:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756191AbdGKXif (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 19:38:35 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:35066 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756185AbdGKXie (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 19:38:34 -0400
-Received: by mail-pg0-f52.google.com with SMTP id j186so3485462pge.2
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 16:38:33 -0700 (PDT)
+        id S1756119AbdGKXvV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 19:51:21 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33737 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755886AbdGKXvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 19:51:20 -0400
+Received: by mail-pf0-f195.google.com with SMTP id e199so861925pfh.0
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 16:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=SkP5YViWWNZq/0r2hpNfALY0yRvMVV6V17+ExjFshoA=;
-        b=vAE3ee3iZSEUWMwdU2gAMEWZQEqVDOAcwZMY/V4WUaNlY3+zYdYln+1YHmfWKjzuiq
-         +WdIuvEkcQjQJJgn33lbuns4iuGlFjfm3yEQdEmR+BlTJB5dcs+njsjBTVGcwA1KuU6x
-         8gyXHmxbtemvycEu40K0qW8Y6mFmZ80oShA44KOdz6JL2GxgLrxYXm2Fu8Q8L5peLi6B
-         TWj/Cf0Jh1q4tkP6BEb9VKePeLtAhJ3MJJUb/OevTwgd43pM+H5KyrgM3TqM+CnPif6U
-         tY7UedHiFN+ONNQcboTBLqxxitRqGLrtBUOqJMUtT44ZGYsN3yxK3RlG9HtWAX3hhHwq
-         S7DA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Ki48SMjgQRdJ+mLiO3FBsFhV1vvhUPvwyOlpIYsjLWg=;
+        b=DqLOpWcYym0PIB8n0l9VTl7uz7OJtzV7mwPwZWX42cL7gO1G5+7nvzw6e5ifnOzQSU
+         PA4T933LeVciVbEy/6ckOMXGODMWUhVY8sAPNXVTbF4ow7LygFv6Inj2xUoOvpyZUsoc
+         30UmmYqqAzqjfJMXrgiAlk97m7NvKOBEIoTC2gTGgWPhVO5gFRf2FMNMagxA4R7CSk67
+         9cbSp5aP8c2Qv16Re6H1PWmMrOdOpqsu/Mb/zs/dAIKb06f68yBiln28KTU/BMnPJmaH
+         rPPP8oSoCw4C4m2qc2eg6965gGYYJXFyAbAWWHBiqFANXc3N7nyXMvGhpqusnCp+8ZlD
+         JFgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=SkP5YViWWNZq/0r2hpNfALY0yRvMVV6V17+ExjFshoA=;
-        b=IJ0zntagxsbX2mmPsq3m8fvGhr/sojr5rKvlwNC705wEtzmSAJiAJa9ITNd85mNDuC
-         D6h5xsPxpve1W+EPnbCmgQi7Gg1hT8DVU6V8S3F5Q/HbbeiRAcI1b/QlmM7WwHoPE5MI
-         iquZG4P55oPvOP39F5t4B4Ou0EFGdOPwBbSp6c9r1mQVRbB2S58TyaZip8lKlU/k2437
-         mjHUSJxA9Mps6AmlXSrYv06Zo5lVQPGeNnCkaXSns6iGmZRuLr6LOew7UHYtKxdQKhOE
-         sJZrHxk8AKcrOh8f6LLtlsWaCi9JeqrYB/7KvrxW53kUZhamPZEfNCjb26f546+qo4dA
-         jsQQ==
-X-Gm-Message-State: AIVw111RZEUkscpAc5mOCcZoOkO5cAjvpNu7w3Tmhyj06yUGM3lL57qj
-        ugkF+pc3YisHrZXGsHQqHA==
-X-Received: by 10.98.150.16 with SMTP id c16mr48173143pfe.64.1499816313035;
-        Tue, 11 Jul 2017 16:38:33 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:c5c5:d093:97f5:26db])
-        by smtp.gmail.com with ESMTPSA id f70sm802259pfk.27.2017.07.11.16.38.31
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Ki48SMjgQRdJ+mLiO3FBsFhV1vvhUPvwyOlpIYsjLWg=;
+        b=BWY+URLaYP4eKMFWhy27Ed2UupcbgLdELBggBydS0XzCsCkx+9DJbFJuwXtgG/wLSJ
+         2x8sPkR/FoGCyaIOBE2Hhn/sioGWtoOjughxs/GCpvydLg3ZmlyVVPvxUQ9/5Ne+ngmr
+         OEztXeGIjpFVDEHlkOuysT1lgngcLet4SHJ7F9l7zIre4EerahNvEwIGfEobnDfJlGl3
+         zNFuosW3i6tOWUFs8rhkFApMtqIqoeESBKj0bEy3Fd9KaiSparG3TOgCmWLje7de3M8x
+         k0uNgzZ9LAZCFlK2oD/XWd5d4sD4q1BUGTTZ2YahYVvsQrVNYDBkEmGATS17+qXqDXJZ
+         gBgA==
+X-Gm-Message-State: AIVw111jnwc2vPLg4IPeZd3/m9+7boX7ItECShdBTBENxKUux1w5GhKJ
+        U5vozIqzOpjJwoOd/tQ=
+X-Received: by 10.99.95.147 with SMTP id t141mr919435pgb.263.1499817079898;
+        Tue, 11 Jul 2017 16:51:19 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:114c:7a1:940:72cc])
+        by smtp.gmail.com with ESMTPSA id l4sm735516pgr.21.2017.07.11.16.51.18
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 11 Jul 2017 16:38:32 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     jonathantanmy@google.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] RFC: Introduce '.gitorderfile' 
-Date:   Tue, 11 Jul 2017 16:38:27 -0700
-Message-Id: <20170711233827.23486-1-sbeller@google.com>
-X-Mailer: git-send-email 2.13.2.695.g117ddefdb4
+        Tue, 11 Jul 2017 16:51:18 -0700 (PDT)
+Date:   Tue, 11 Jul 2017 16:51:16 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH 1/3] repo_read_index: don't discard the index
+Message-ID: <20170711235116.GB93855@aiede.mtv.corp.google.com>
+References: <20170711220408.173269-1-bmwill@google.com>
+ <20170711220408.173269-2-bmwill@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170711220408.173269-2-bmwill@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Conceptually the file order as set with command line -O or via the config
-'diff.orderFile' is interesting to both the author (when I run a quick git
- diff locally) as well as reviewer (a patch floating on the mailing list),
-so it is not just the author who should be responsible for getting their
-config in order, but a project would benefit when they could give a good
-default for such an order.
+Brandon Williams wrote:
 
-While the change in this RFC patch to diff.c may look uncontroversial,
-(Oh look! it's just another knob we can turn!), the change to the
-newly introduced '.gitorderfile' may be more controversial. Here is my
-rationale for proposing it:
+> Have 'repo_read_index()' behave more like the other read_index family of
+> functions and don't discard the index if it has already been populated.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  repository.c | 2 --
+>  1 file changed, 2 deletions(-)
 
-  I want to force myself to think about the design before pointing out
-  memory leaks and coding style, so the least I would wish for is:
-    *.h
-    *.c
-  but as we have more to look at, I would want to have the most abstract
-  thing to come first. And most abstract from the actual code is the
-  user interaction, the documentation.  I heard the claim that the git
-  project deliberately names the directory 'Documentation/' with a capital
-  D such that we had this property by default already. With a patch like
-  this we could rename Documentation/ to docs and still enjoy reading the
-  docs first.
-  Given this alibi, I would claim that t/ is misnamed though! I personally
-  would prefer to review tests just after the documentation instead of
-  after the code as the tests are more abstract and encode promises to the
-  user unlike the code itself that is truth at the end of the day.
+How did you discover this?  E.g. was it from code inspection or does
+this make the function more convenient to use for some kinds of callers?
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-I wrote:
-> offtopic: As a general thing for our patches, can we configure
-> (or even convince Git in general), that headers ought to be sent *before*
-> its accompanying source? I think that would help reviewers like me, who
-> tend to start reading linearly and then giving random thoughts, because the
-> header prepares the reviewer for the source code with expectations. Also
-> by having it the other way around, the review first focuses on design
-> (Is this function signature sane; the docs said it would do X while not
-> doing Y, is that sane?) instead of code.
-
-and hence I came up with this patch, as I think we would want to expose
-such a good feature ('diff.orderFile') even for those who are not looking
-for it themselves.
-
-Thanks,
-Stefan
-
-
- .gitorderfile |  6 ++++++
- diff.c        | 11 +++++++++++
- 2 files changed, 17 insertions(+)
- create mode 100644 .gitorderfile
-
-diff --git a/.gitorderfile b/.gitorderfile
-new file mode 100644
-index 0000000000..5131ede927
---- /dev/null
-+++ b/.gitorderfile
-@@ -0,0 +1,6 @@
-+Documentation/*
-+t/*
-+*.sh
-+*.h
-+*.c
-+Makefile
-diff --git a/diff.c b/diff.c
-index 00b4c86698..8d537db06a 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3398,6 +3398,17 @@ void diff_setup(struct diff_options *options)
- 	if (diff_indent_heuristic)
- 		DIFF_XDL_SET(options, INDENT_HEURISTIC);
- 
-+	if (!diff_order_file_cfg) {
-+		struct stat st;
-+		int c = lstat(".gitorderfile", &st);
-+		if (c == 0 && S_ISREG(st.st_mode))
-+			diff_order_file_cfg = ".gitorderfile";
-+		else if (c < 0 && errno == ENOENT)
-+			; /* File does not exist. no preset. */
-+		else
-+			die_errno("stat '.gitorderfile'");
-+	}
-+
- 	options->orderfile = diff_order_file_cfg;
- 
- 	if (diff_no_prefix) {
--- 
-2.13.2.695.g117ddefdb4
-
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
