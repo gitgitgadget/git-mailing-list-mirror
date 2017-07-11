@@ -2,139 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89A11202AC
-	for <e@80x24.org>; Tue, 11 Jul 2017 14:11:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52455202AC
+	for <e@80x24.org>; Tue, 11 Jul 2017 14:11:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932653AbdGKOLZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 10:11:25 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35612 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755627AbdGKOLY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 10:11:24 -0400
-Received: by mail-pf0-f196.google.com with SMTP id q85so83971pfq.2
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 07:11:24 -0700 (PDT)
+        id S932758AbdGKOLa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 10:11:30 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36841 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755627AbdGKOL3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 10:11:29 -0400
+Received: by mail-pg0-f68.google.com with SMTP id y129so82004pgy.3
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 07:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=OEFsHj+87pX/OglN59pVelbz4t3EEM5MY29VsymPS94=;
-        b=vZKV75OPkerwibu5UDtidHlyMOGk6AdEyHgi2mUcxAuP/pOny28BWhmG1BUeI0/ZKg
-         EHhVRLkdwUnwykaA2TvD4KhsV1KM8eov6r4nswbhhdPK1Y57UwXskLzHrz45VZNMPd0G
-         s1iTZUq257zLogZgSJrGzLnoSd8HeJ004S023a2/81BF1UMuRBN4xYYtpN8S+rN0qSzB
-         lCZBR+aVNYgW1dVQ3NJMjJtgw1Zki7QVNRsQKgFPmsvOb8MAvdbsNonQONQ0srAZtKWO
-         oGbeTrXTgxTmlEGHwnrbYrnke/N5q5GUeZqIwSCBxj7uOa05OED5et09+jobzcb0cz3d
-         pZrA==
+        bh=F72mUzuxlCPPX7nxU+mwJz4R/fB7avNBQQB1zxy60Rk=;
+        b=lhlOEIVyHC31WieIAhRqWTav4b6lTSEfZRj1YFGSk6WV0YUAGdXbqmy2U/YuTX3We+
+         z0d7Wtj++rIgCCqOhoUg/ni6/qm13z+Sv0dWDBofiKTE+axHZmvgSRiuvXpQTAC4AWlf
+         JLuqDj8ANyE4wYDlp/AUyFHur9boT8sXVft5kE9brojzjEFafMKv0E8J8kJVcmwvZME0
+         oMeHLQwJYo5bUG7SYzLJZJ1cyBcpwk/KGuvyhOUlWrkik42f9g3J9kbx8VrJGiawkVJL
+         qkRaDEXwKjBJZ/ugvcfDzyDcBpWOWYREsS/hZ2wRug7zssXMgFzeeDUBv4RVnodch7cq
+         srIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=OEFsHj+87pX/OglN59pVelbz4t3EEM5MY29VsymPS94=;
-        b=fboH151LzUv+R1uhehEKLnGBJypjtapq+9iNHJpS21/vagwVsley0RCT1mWF56ZcsE
-         BTDglrAS0dVtT9t9SSHfmgFTlFbZXwx318LIqxogI7rrRfkOfYRAF7OU52WE8zLmgoPh
-         FiPfcmzx9goshUWhEm8BdPMCc7PxOzABIroD+Z5dtVk42oDlSiAza22lg/hxSaKm8sLb
-         iIwIAYiYK0L2YS4PZYVqbl4/NfMLAPIWz8BIWoGc/E3Pl+lmMJr+3ATQMrdmWsXzh5g2
-         lVaLrSbOHYuEFykyz/5ODDrKjU2DLDGo44nWWba5pt+DHU4bLAd1lOkIJsqM1D0vSUQ+
-         7jsQ==
-X-Gm-Message-State: AIVw112r1YkkdrneL64qpvMmoaqkKZB/iPJcERrREN81wsCiir0HwUFv
-        Sq/gkLfA/fVMpg==
-X-Received: by 10.99.98.193 with SMTP id w184mr86177pgb.155.1499782283802;
-        Tue, 11 Jul 2017 07:11:23 -0700 (PDT)
+        bh=F72mUzuxlCPPX7nxU+mwJz4R/fB7avNBQQB1zxy60Rk=;
+        b=RTyhjKpufzXzd8c1ZqOE+/YkD4sJwigCgouBpgZrbdZgbDA9nyjogvDugQIprKAqJd
+         VUpOPJmMvMLEuv4OWNNhD4qsTpss1j1ywV76L3Lgq3Zs5GrTYyAa5jMHwNeukO3MEimF
+         yFF+s+CdQsSNjAu92ZuNS0Qe2/cAV+jzgyjE29napWw4hSjL/azZCvUBvi/touzK7uDY
+         rnQH9Dq+2Q1tNNVBBRSruMFmfktQ9zwerDIl6tAGGek4fcGHTtzZ22ZbumGnhppwQIAV
+         NyZQVnmC4AhaQAMK+4AoiuGIiuD5KEsO8hB/maFA/7OUHCUMfe7JkwkimDglyRwjDNPq
+         kHvA==
+X-Gm-Message-State: AIVw112146dz8/9bKoUBfadCNRjL0jHp3O05ZHvM6vtAvSQUd3Z2Fc6a
+        mesyORv6UyRZ0Q==
+X-Received: by 10.99.167.72 with SMTP id w8mr112763pgo.202.1499782289169;
+        Tue, 11 Jul 2017 07:11:29 -0700 (PDT)
 Received: from localhost.localdomain ([117.249.129.113])
-        by smtp.gmail.com with ESMTPSA id i19sm98579pfj.78.2017.07.11.07.11.21
+        by smtp.gmail.com with ESMTPSA id i19sm98579pfj.78.2017.07.11.07.11.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Jul 2017 07:11:23 -0700 (PDT)
+        Tue, 11 Jul 2017 07:11:28 -0700 (PDT)
 From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org
-Subject: [PATCH 1/4] hook: cleanup script
-Date:   Tue, 11 Jul 2017 19:41:08 +0530
-Message-Id: <20170711141111.7538-1-kaarticsivaraam91196@gmail.com>
+Subject: [PATCH 3/4] hook: add sign-off using "interpret-trailers"
+Date:   Tue, 11 Jul 2017 19:41:10 +0530
+Message-Id: <20170711141111.7538-3-kaarticsivaraam91196@gmail.com>
 X-Mailer: git-send-email 2.13.2.957.g457671ade
-In-Reply-To: <xmqqfue45asd.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170711141111.7538-1-kaarticsivaraam91196@gmail.com>
 References: <xmqqfue45asd.fsf@gitster.mtv.corp.google.com>
+ <20170711141111.7538-1-kaarticsivaraam91196@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Prepare the 'preare-commit-msg' sample script for
-upcoming changes. Preparation includes removal of
-an example that has outlived it's purpose. The example
-is the one that comments the "Conflicts:" part of a
-merge commit message. It isn't relevant anymore as
-it's done by default since 261f315b ("merge & sequencer:
-turn "Conflicts:" hint into a comment", 2014-08-28).
+The sample hook to prepare the commit message before
+a commit allows users to opt-in to add the sign-off
+to the commit message. The sign-off is added at a place
+that isn't consistent with the "-s" option of "git commit".
+Further, it could go out of view in certain cases.
 
-Further update the relevant comments from the sample script
-and update the documentation.
+Add the sign-off in a way similar to "-s" option of
+"git commit" using git's interpret-trailers command.
+
+It works well in all cases except when the user invokes
+"git commit" without any arguments. In that case manually
+add a new line after the first line to ensure it's consistent
+with the output of "-s" option.
 
 Signed-off-by: Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
 ---
- Documentation/githooks.txt                 |  3 ---
- templates/hooks--prepare-commit-msg.sample | 24 ++++++++++--------------
- 2 files changed, 10 insertions(+), 17 deletions(-)
+ templates/hooks--prepare-commit-msg.sample | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 706091a56..fdc01aa25 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -121,9 +121,6 @@ it is not suppressed by the `--no-verify` option.  A non-zero exit
- means a failure of the hook and aborts the commit.  It should not
- be used as replacement for pre-commit hook.
- 
--The sample `prepare-commit-msg` hook that comes with Git comments
--out the `Conflicts:` part of a merge's commit message.
--
- commit-msg
- ~~~~~~~~~~
- 
 diff --git a/templates/hooks--prepare-commit-msg.sample b/templates/hooks--prepare-commit-msg.sample
-index 86b8f227e..279ddc1a7 100755
+index eb5912163..87d770592 100755
 --- a/templates/hooks--prepare-commit-msg.sample
 +++ b/templates/hooks--prepare-commit-msg.sample
-@@ -9,28 +9,24 @@
- #
- # To enable this hook, rename this file to "prepare-commit-msg".
- 
--# This hook includes three examples.  The first comments out the
--# "Conflicts:" part of a merge commit.
-+# This hook includes two examples.
- #
--# The second includes the output of "git diff --name-status -r"
-+# The first includes the output of "git diff --name-status -r"
- # into the message, just before the "git status" output.  It is
- # commented because it doesn't cope with --amend or with squashed
- # commits.
- #
--# The third example adds a Signed-off-by line to the message, that can
-+# The second example adds a Signed-off-by line to the message, that can
- # still be edited.  This is rarely a good idea.
- 
--case "$2,$3" in
--  merge,)
--    @PERL_PATH@ -i.bak -ne 's/^/# /, s/^# #/#/ if /^Conflicts/ .. /#/; print' "$1" ;;
- 
--# ,|template,)
--#   @PERL_PATH@ -i.bak -pe '
--#      print "\n" . `git diff --cached --name-status -r`
--#	 if /^#/ && $first++ == 0' "$1" ;;
--
--  *) ;;
--esac
-+# case "$2,$3" in
-+#  ,|template,)
-+#    @PERL_PATH@ -i.bak -pe '
-+#       print "\n" . `git diff --cached --name-status -r`
-+# 	 if /^#/ && $first++ == 0' "$1" ;;
-+#  *) ;;
-+# esac
+@@ -32,4 +32,8 @@ SHA1=$3
+ # esac
  
  # SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
- # grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
+-# grep -qs "^$SOB" "$COMMIT_MSG_FILE" || echo "$SOB" >> "$COMMIT_MSG_FILE"
++# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
++# if test -z "$COMMIT_SOURCE"
++# then
++#   @PERL_PATH@ -i.bak -pe 'print "\n" if !$first_line++' "$COMMIT_MSG_FILE"
++# fi
 -- 
 2.13.2.957.g457671ade
 
