@@ -6,59 +6,90 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35F9120357
-	for <e@80x24.org>; Tue, 11 Jul 2017 07:12:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E62EC20357
+	for <e@80x24.org>; Tue, 11 Jul 2017 07:25:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932190AbdGKHMh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 03:12:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36602 "HELO cloud.peff.net"
+        id S1755279AbdGKHZk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 03:25:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36612 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S932162AbdGKHMh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 03:12:37 -0400
-Received: (qmail 27250 invoked by uid 109); 11 Jul 2017 07:12:36 -0000
+        id S1754269AbdGKHZj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 03:25:39 -0400
+Received: (qmail 27807 invoked by uid 109); 11 Jul 2017 07:25:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Jul 2017 07:12:36 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Jul 2017 07:25:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13485 invoked by uid 111); 11 Jul 2017 07:12:48 -0000
+Received: (qmail 13514 invoked by uid 111); 11 Jul 2017 07:25:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Jul 2017 03:12:48 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Jul 2017 03:25:51 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jul 2017 03:12:34 -0400
-Date:   Tue, 11 Jul 2017 03:12:34 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jul 2017 03:25:37 -0400
+Date:   Tue, 11 Jul 2017 03:25:37 -0400
 From:   Jeff King <peff@peff.net>
-To:     Kenneth Hsu <kennethhsu@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bug: HEAD vs. head on case-insensitive filesystems
-Message-ID: <20170711071234.bj3kzfn5xii4e33w@sigill.intra.peff.net>
-References: <20170711033236.GA11492@lenny.localdomain>
+To:     Andreas Krey <a.krey@gmx.de>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: [BUG] detached auto-gc does not respect lock for 'reflog expire',
+ was Re: Flurries of 'git reflog expire'
+Message-ID: <20170711072536.ijpldg4uxb5pbtdw@sigill.intra.peff.net>
+References: <20170704075758.GA22249@inner.h.apk.li>
+ <20170705082027.ujddejajjlvto7bp@sigill.intra.peff.net>
+ <20170706133124.GB1216@inner.h.apk.li>
+ <CAGyf7-FnaWM=XNb_Skb1qR4vu_jAw-5swkgWpEDQqwM0NNq3YQ@mail.gmail.com>
+ <20170711044553.GG3786@inner.h.apk.li>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170711033236.GA11492@lenny.localdomain>
+In-Reply-To: <20170711044553.GG3786@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 10, 2017 at 08:32:36PM -0700, Kenneth Hsu wrote:
+[Updating the subject since I think this really is a bug].
 
-> I'm not sure what the general consensus is regarding the use of "head"
-> vs. "HEAD" on case insensitive filesystems, but it appears that some
-> confusing behavior (bug?) may have arisen.
+On Tue, Jul 11, 2017 at 06:45:53AM +0200, Andreas Krey wrote:
 
-Generally, the advice on "head" is "don't". It's an accident that
-it works at all, and as you noticed, there are odd corner cases. There
-are similar oddities when mixing and matching case for other refnames on
-case-insensitive filesystems, too.
+> > I also want to add that Bitbucket Server 5.x includes totally
+> > rewritten GC handling. 5.0.x automatically disables auto GC in all
+> > repositories and manages it explicitly, and 5.1.x fully removes use of
+> > "git gc" in favor of running relevant plumbing commands directly.
+> 
+> That's the part that irks me. This shouldn't be necessary - git itself
+> should make sure auto GC isn't run in parallel. Now I probably can't
+> evaluate whether a git upgrade would fix this, but given that you
+> are going the do-gc-ourselves route I suppose it wouldn't.
 
-I was going to point you to the recent thread in
+It's _supposed_ to take a lock, even in older versions. See 64a99eb47
+(gc: reject if another gc is running, unless --force is given,
+2013-08-08).
 
-  http://public-inbox.org/git/87ziclb2pa.fsf@gmail.com/
+But it looks like before we take that lock, we sometimes run pack-refs
+and reflog expire. This is due to 62aad1849 (gc --auto: do not lock refs
+in the background, 2014-05-25). IMHO this is buggy; it should be
+checking the lock before calling gc_before_repack() and daemonizing.
 
-but I see you already participated there. So if your mail here is
-"here's a summary of how HEAD/head don't quite work", then OK, that
-might be handy. But I think the ultimate resolution is not "let's make
-them work", but "let's consistently enforce case-sensitivity in ref
-names, regardless of the underlying filesystem".
+Annoyingly, the lock code interacts badly with daemonizing because that
+latter will fork to a new process. So the simple solution like:
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 2ba50a287..79480124a 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -414,6 +414,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 			if (report_last_gc_error())
+ 				return -1;
+ 
++			if (lock_repo_for_gc(force, &pid))
++				return 0;
++
+ 			if (gc_before_repack())
+ 				return -1;
+ 			/*
+
+means that anybody looking at the lockfile will report the wrong pid
+(and thus think the lock is invalid). I guess we'd need to update it in
+place after daemonizing.
 
 -Peff
