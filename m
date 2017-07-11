@@ -7,52 +7,51 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55A48202AC
-	for <e@80x24.org>; Tue, 11 Jul 2017 13:48:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3F99202AC
+	for <e@80x24.org>; Tue, 11 Jul 2017 13:50:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932501AbdGKNsb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 09:48:31 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34247 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752619AbdGKNsa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 09:48:30 -0400
-Received: by mail-pg0-f65.google.com with SMTP id j186so19259pge.1
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 06:48:30 -0700 (PDT)
+        id S932658AbdGKNum (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 09:50:42 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:36019 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932404AbdGKNuk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 09:50:40 -0400
+Received: by mail-pg0-f46.google.com with SMTP id u62so59449pgb.3
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 06:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=P2kiaAUlfzq2R8v65VDs0hBHSxc8JSMFC1u3yA9nHHU=;
-        b=JWDWb+lX+ywTl7XqyyEQE8IRG5KVobyErpoG4DEnw5Z9L3tBAQD8N/i0ENCDbpRurg
-         6BmE8hlMQuNyZWcCuNr0Gpy2oREPtqk9HCpg5ZBKcjHffpD1x+1ZSoypb/lqbRPK5B11
-         hqcTwFhjgYf12cJaGdUdskmESLpR28nqTFG5v7nwfcQuf07lqwBFQ3MMKmELMnSAvPt/
-         +LH2LvAt+vEkVOrwYRrlqbJHJlFzL3jCztgGlU6k9CDTGiRXEJwV3EcmHHsf12YBawZt
-         xd5Woi5kAJzWCNEQxb+v6jiUGiQ2w/mYtoHrqBUg3Pcyzsqk7IHbAustDM7B9CCUgJ8B
-         sm5Q==
+        bh=vBJZL+k3zrcekt783TR5Vutmo3cMkZwEoj6ba9fxRFM=;
+        b=nC2QPs2PTqQRJlSVDodmmbFmgPEXB2HflRJAQbsh99xWqKLtM5wvgOm7agnIFKlNHr
+         PXA7N7EnN/8OkbOHpsTNtR+6d20GB7pe9Ot6XL8c5VjXJR11zqnShOxAg6+IQVXXxcL+
+         Ex5C5ayj+GoDmcAkjjULab5xCFRvHMwo8DNPSaTsIx7mhUkB6k2OaSj1wnbjEUuJV/sU
+         niYVPpAr7SYtU3TDf6qkLBd0qA5UW8wTIHF/p42jkw/DKTYzGkp0Uaap8auKezxNcfto
+         lUeRwDhBj3U3JA9V6dWu8DSPNQFg7xaAKo+I5AZPrClP57RNnQIechuRS2U/ZIl77SHY
+         08Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=P2kiaAUlfzq2R8v65VDs0hBHSxc8JSMFC1u3yA9nHHU=;
-        b=YXGz3K7F2IT99U+rrCq121l1UHugkIZx0PmQEn43WlFD9Bc2Id17RZWVPqxf2AC0iN
-         aVKWmSU3SbgmJ33+9BfYM7SPY729HoxTeVgpQc5IzZ5c2m4chjJEHwsAUCY3aXuRNRdr
-         wlkkZ7hFBY4FDATzuYnFNOM4IFqoOHwgJgfjwZJnPPj9JV5swuNcpQDkeI3VITIgX+9p
-         td60YDgFbD8agFbp27MRpB0xlaJ3vFc9cHjte0z2/orEN7UK/O7Sjlgtelt1KJPWa+Q0
-         Hbcy+uuzKRvXOl0qIx16kU5Rv+/lIAORjedtPAosTZe0u3dT3j+YhoNYJ5TCy85Zz3Sy
-         3Gsw==
-X-Gm-Message-State: AIVw110oHqg8PZGdbQ1tXd9KgfRG3F2bvFdlJm7BawAuR0szyjBs3iHK
-        CSiEJzvoysyHL285WyPx/r1u0LhcUg==
-X-Received: by 10.99.97.76 with SMTP id v73mr7371pgb.188.1499780910035; Tue,
- 11 Jul 2017 06:48:30 -0700 (PDT)
+        bh=vBJZL+k3zrcekt783TR5Vutmo3cMkZwEoj6ba9fxRFM=;
+        b=sODXcKVp/apXZ2F/vsTIuxFMkuiXk++K3SB1gTg6OpFwtiRJMFx3TB+Oihelot5plx
+         fOr5Sx/wH6moL8GlqeImE2L3mha9WBCVJnszMckKwD8HIfs2RKI2M1KP+eEb7YohCCfb
+         VnkeER720/99crMWAPVC+BRAB6BlxuLXZgYPXEgHp0GaBi8W5cXaJYLRTCsEU+++Y8Fx
+         tUSUwGOiyTmGZ4aiGdkJ6WlBFrZs/McZY9+AibaNI82SJo25QtUGQLoJq8SrZPuebZUU
+         iL1SDJEmOqsgH/HLP521dBY2Br63mXnM+SsSF1EsAhUXQwkZwBcDpUTmKD46WfYBB9pQ
+         PeYQ==
+X-Gm-Message-State: AIVw111sx7+06KIGj44Kv+aL6vR5ZKwKgtgAeZaERxX2OUr1iv5GvRZv
+        Hg4L5sNoBJZXTPlYiew6s0KfKiSpzA==
+X-Received: by 10.98.222.3 with SMTP id h3mr49065726pfg.93.1499781040124; Tue,
+ 11 Jul 2017 06:50:40 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.163.102 with HTTP; Tue, 11 Jul 2017 06:48:29 -0700 (PDT)
-In-Reply-To: <20170711104108.vfkdo5vfoigcajdo@sigill.intra.peff.net>
-References: <cover.1499723297.git.martin.agren@gmail.com> <27ca13ea5b520d492f96ea319ae47d6f4b431e94.1499723297.git.martin.agren@gmail.com>
- <20170711104108.vfkdo5vfoigcajdo@sigill.intra.peff.net>
+Received: by 10.100.163.102 with HTTP; Tue, 11 Jul 2017 06:50:39 -0700 (PDT)
+In-Reply-To: <20170711101942.h2uwxtgzvgguzivu@sigill.intra.peff.net>
+References: <cover.1499723297.git.martin.agren@gmail.com> <20170711101942.h2uwxtgzvgguzivu@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 11 Jul 2017 15:48:29 +0200
-Message-ID: <CAN0heSqbxf+BNb6PUds364j3h1oJJpMFxXG-raPfFu9XLD5WXQ@mail.gmail.com>
-Subject: Re: [PATCH 6/7] tag: make git tag -l consider new config `pager.tag.list`
+Date:   Tue, 11 Jul 2017 15:50:39 +0200
+Message-ID: <CAN0heSqN6SJ_dppbYEDYVs+pSzVdLvLUDL4_VSNn79ro6c_8=g@mail.gmail.com>
+Subject: Re: [PATCH 0/7] tag: more fine-grained pager-configuration
 To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Jonathan Nieder <jrnieder@gmail.com>,
@@ -65,36 +64,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11 July 2017 at 12:41, Jeff King <peff@peff.net> wrote:
-> On Mon, Jul 10, 2017 at 11:55:19PM +0200, Martin =C3=85gren wrote:
+On 11 July 2017 at 12:19, Jeff King <peff@peff.net> wrote:
+> On Mon, Jul 10, 2017 at 11:55:13PM +0200, Martin =C3=85gren wrote:
 >
->> diff --git a/builtin/tag.c b/builtin/tag.c
->> index e0f129872..e96ef7d70 100644
->> --- a/builtin/tag.c
->> +++ b/builtin/tag.c
->> @@ -446,6 +446,8 @@ int cmd_tag(int argc, const char **argv, const char =
-*prefix)
->>
->>       argc =3D parse_options(argc, argv, prefix, options, git_tag_usage,=
- 0);
->>
->> +     if (cmdmode =3D=3D 'l')
->> +             setup_auto_pager("tag.list", 0);
->>       setup_auto_pager("tag", 0);
+>> Using, e.g., `git -c pager.tag tag -a new-tag` results in errors such
+>> as "Vim: Warning: Output is not to a terminal" and a garbled terminal.
+>> A user who makes use of `git tag -a` and `git tag -l` will probably
+>> choose not to configure `pager.tag` or to set it to "no", so that `git
+>> tag -a` will actually work, at the cost of not getting the pager with
+>> `git tag -l`.
 >
-> Ideally this would kick in whenever we are in list mode, even if the
-> user didn't say "-l". So:
+> Right, I think we are all agreed that "pager.tag" as it is now is
+> essentially worthless.
 >
->   $ git tag
+> If I understand your series correctly, though, it adds pager.tag.list
+> but leaves "pager.tag" behaving more or less the same. It's good that we
+> now have a way for a user to do the thing they actually want, but it
+> feels like we're leaving pager.tag behind as a booby-trap.
 >
-> should probably respect the list config. Likewise, certain options like
-> "--contains" trigger list mode. I think the pager setup could just be
-> bumped a few lines down, past the "if (!cmdmode)" block that sets up
-> those defaults.
+> Should we disable it entirely (or only respect it in list mode)?
+>
+> At which point, I wonder if we actually need pager.tag.list at all.
+> Slicing up the namespace further would be valuable if there were a
+> command which had two pager-worthy modes, and somebody might want to
+> enable the pager for one but not the other. But it seems like most
+> commands in this boat (e.g., tag, branch, stash) really have two modes:
+> listing things or creating things.
+>
+> Would it makes sense to just have git-tag respect pager.tag in listing
+> mode, and otherwise ignore it completely?
 
-Oops, that's embarassing. Thanks. That means the paging starts
-slightly later, but what happens in those few lines looks fairly
-trivial, so there shouldn't be any real difference in behavior. I'll
-add one or two tests.
+Yes. I doubt anyone would notice, and no-one should mind with the
+change (famous last words).
+
+It does mean there's a precedence for individual commands to get to
+choose when to honor pager.foo. If more such exceptions are added, at
+some point, some command will learn to ignore pager.foo in some
+particular situation and someone will consider it a regression.
+
+> One nice side effect is that it keeps the multi-level pager.X.Y
+> namespace clear. We've talked about transitioning to allow:
+>
+>   [pager "foo"]
+>   enable =3D true
+>   command =3D some-custom-pager
+>
+> to configure aspects of the pager separately for git-foo. This has two
+> benefits:
+>
+>   1. Syntactically, it allows configuration for commands whose names
+>      aren't valid config keys.
+>
+>   2. It would allow setting a command with "enable=3Dfalse", so that "git
+>      foo" did not paginate, but "git -p foo" paginated with a custom
+>      command.
+>
+> Those are admittedly minor features. And assuming we don't go crazy with
+> the multi-level names, we could have "pager.tag.list" live alongside
+> "pager.tag.command". So it's not really an objection, so much as wonder
+> out loud whether we can keep this as simple as possible.
+
+Well, I respect your hunch about .enable and .command and I certainly
+don't want to take things in a direction that makes that approach less
+clean. You have convinced me that I will instead try to teach git tag
+to be more clever about when to use the pager, at least to see what
+that looks like.
+
+Let's call such a "git tag" the "future git tag". Just to convince
+myself I've thought through the implications -- how would
+pager.tag.enable=3Dtrue affect that future git tag? Would it be fair to
+say that enable=3Dfalse means "definitely don't start the pager (unless
+--paginate)" and that enable=3Dtrue means "feel free to use it (unless
+--no-paginate)"? The future git tag would default to using
+enable=3Dtrue. Would --paginate also be "feel free to use it", or rather
+"the pager must be used"?
+
+At some point, I thought about "true"/"false"/"maybe", where "maybe"
+would be what the future git tag implements. Of course, there's a fair
+chance not everyone will agree what exactly should be paged with
+"maybe". So it's back to adding various knobs. ;)
+
+Anyway, this is more my thinking out loud. I'll drop pager.tag.list in
+v2 and will instead make pager.tag more clever. That should force me
+to think through this some more.
+
+>> This is an attempt to implement something like that. I decided to let
+>> `pager.tag.list` fall back to `pager.tag` before falling back to "on".
+>> The default for `pager.tag` is still "off". I can see how that might
+>> seem confusing. However, my argument is that it would be awkward for
+>> `git tag -l` to ignore `pager.tag` -- we are after all running a
+>> subcommand of `git tag`. Also, this avoids a regression for someone
+>> who has set `pager.tag` and uses `git tag -l`.
+>
+> Yeah, I agree that turning "pager.tag" into a complete noop is probably
+> a bad idea. But if we made it a silent noop for the non-list cases, that
+> would be OK (and the hypothetical user who set it to make `git tag -l`
+> work would see a strict improvement; they'd still get their paging but
+> not the weird breakage with non-list modes). And I think that applies
+> whether we have a pager.tag.list in addition or not.
+
+Good thinking.
+
+Thanks a lot for your comments. I appreciate it.
 
 Martin
