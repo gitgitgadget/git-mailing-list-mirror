@@ -2,105 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6870202DD
-	for <e@80x24.org>; Wed, 12 Jul 2017 17:29:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BCB0202DD
+	for <e@80x24.org>; Wed, 12 Jul 2017 17:30:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754096AbdGLR3O (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 13:29:14 -0400
-Received: from siwi.pair.com ([209.68.5.199]:15919 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753913AbdGLR3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 13:29:13 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 26A3F8457E;
-        Wed, 12 Jul 2017 13:29:12 -0400 (EDT)
-Received: from [10.160.98.76] (unknown [167.220.148.229])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id E2C3084579;
-        Wed, 12 Jul 2017 13:29:11 -0400 (EDT)
-Subject: Re: [RFC PATCH 1/3] promised-blob, fsck: introduce promised blobs
-To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-References: <cover.1499800530.git.jonathantanmy@google.com>
- <f9c7d4b3f800ea31e85e4897ee7048fec1e3c2f0.1499800530.git.jonathantanmy@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <890a36fc-be16-83bc-fec6-94e21d0f7d0a@jeffhostetler.com>
-Date:   Wed, 12 Jul 2017 13:29:11 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1754056AbdGLRa1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 13:30:27 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:36231 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753913AbdGLRa1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 13:30:27 -0400
+Received: by mail-pf0-f181.google.com with SMTP id q86so16166635pfl.3
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 10:30:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ztng5/7cbvHLsaehEMr4b3Fa4Mhhv/QmBv6CmzTjL0o=;
+        b=GkcpJWsyTr466/0WtfRr34LRTy7Hjj4CbIQR6D6tpvV2WDd3gMimU6I1KPivvZAYg7
+         kU3v7S9YjlwcYVFzVn+AH/9z/T2r04Jp2XpkKsxhWhxeFU4vAON6QLyQIoyLz4nIFOxH
+         4cJzTuAbTnzosD199YGI6KTBpO/6qivI1eZ9Iig/rfeIIKC782rvFlsLZl2qzP5Zg2IX
+         NlhwAT5zit19eQsfNqMf8hJZ+EEKc25lsYTHLQSZgJ7AH3ITwbpJaDpLbYQq5QALpETo
+         Dg9rh9QfUwmi6R/AUjNLlmRvszG1S+aEIUKhCwFSBbYagKH0zVpriXKul1gu/jwIOzsN
+         9qCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ztng5/7cbvHLsaehEMr4b3Fa4Mhhv/QmBv6CmzTjL0o=;
+        b=HOI2DTDg/9UxZ2ylZw9sHoL/HJ0X1bA9SZCpO1qKHzfD4oFv0r5kZd92MnEMcQ+fOF
+         cp0c+AnqwOLJacK+ITd3Geu8USWUK8pyOny7sKCVN7uPGilo1ObXInFqYUbT0Rq9YL/y
+         zgRgBz2sGY0wtNg1fEBRCftYjSIz+7fEle5qBahVUGAgDrbM4sDcc7EOGAXVz26nElbO
+         7UBgA4fLBneqLrvThWzeqTOUwrrvxm0yCiroxmRgG+wPFX9Ysx7C/SH6+V1cYK8U+IrV
+         VwT/tE6wUAIBNNwj2F3kCbKuubROfcLIFeJLRRhePG+cAuPk4e/zK932bGwo0jKj48Hb
+         qFvA==
+X-Gm-Message-State: AIVw113enpYk1VQO4iTjAqK5d3MA4ulya4dB+oWhXMiuuamoDBV++ltP
+        F7HcruxYrgexPAq8
+X-Received: by 10.99.123.28 with SMTP id w28mr4957074pgc.183.1499880626163;
+        Wed, 12 Jul 2017 10:30:26 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:3d1f:bb9:8897:56b4])
+        by smtp.gmail.com with ESMTPSA id n90sm7172806pfk.105.2017.07.12.10.30.24
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 12 Jul 2017 10:30:24 -0700 (PDT)
+Date:   Wed, 12 Jul 2017 10:30:23 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH 2/3] setup: have the_repository use the_index
+Message-ID: <20170712173023.GC65927@google.com>
+References: <20170711220408.173269-1-bmwill@google.com>
+ <20170711220408.173269-3-bmwill@google.com>
+ <20170712000042.GC93855@aiede.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <f9c7d4b3f800ea31e85e4897ee7048fec1e3c2f0.1499800530.git.jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170712000042.GC93855@aiede.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 7/11/2017 3:48 PM, Jonathan Tan wrote:
-> Currently, Git does not support repos with very large numbers of blobs
-> or repos that wish to minimize manipulation of certain blobs (for
-> example, because they are very large) very well, even if the user
-> operates mostly on part of the repo, because Git is designed on the
-> assumption that every blob referenced by a tree object is available
-> somewhere in the repo storage.
+On 07/11, Jonathan Nieder wrote:
+> Hi,
 > 
-> As a first step to reducing this problem, introduce the concept of
-> promised blobs. Each Git repo can contain a list of promised blobs and
-> their sizes at $GIT_DIR/objects/promisedblob. This patch contains
-> functions to query them; functions for creating and modifying that file
-> will be introduced in later patches.
+> Brandon Williams wrote:
+> 
+> > Have the index state which is stored in 'the_repository' be a pointer to
+> > the in-core instead 'the_index'.  This makes it easier to begin
+> > transitioning more parts of the code base to operate on a 'struct
+> > repository'.
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  setup.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/setup.c b/setup.c
+> > index 860507e1f..b370bf3c1 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -1123,6 +1123,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+> >  			setup_git_env();
+> >  		}
+> >  	}
+> > +	the_repository->index = &the_index;
+> 
+> I wonder if this can be done sooner.  For example, does the following
+> work?  This way, 'the_repository->index == &the_index' would be an
+> invariant that always holds, even in the early setup stage before
+> setup_git_directory_gently has run completely.
+> 
+> Thanks,
+> Jonathan
+> 
+> diff --git i/repository.c w/repository.c
+> index edca907404..bdc1f93282 100644
+> --- i/repository.c
+> +++ w/repository.c
+> @@ -4,7 +4,7 @@
+>  #include "submodule-config.h"
+>  
+>  /* The main repository */
+> -static struct repository the_repo;
+> +static struct repository the_repo = { .index = &the_index };
+>  struct repository *the_repository = &the_repo;
+>  
+>  static char *git_path_from_env(const char *envvar, const char *git_dir,
 
+I agree with your approach, though as stefan pointed out we may not be
+able to use the syntax just yet...but we should still be able to use the
+bulky old syntax for the time being.
 
-As part of my on-going effort on partial/narrow clone/fetch I've also
-looked at how to represent the set of omitted objects and whether or
-not we should even try.
-
-My primary concern is scale and managing the list of objects over time.
-
-My fear is that this list will be quite large.  If we only want to omit
-the very large blobs, then maybe not.  But if we want to expand that
-scope to also omit other objects (such as a clone synchronized with a
-sparse checkout), then that list will get large on large repos.  For
-example, on the Windows repo we have (conservatively) 100M+ blobs (and
-growing).  Assuming 28 bytes per, gives a 2.8GB list to be manipulated.
-
-If I understand your proposal, newly-omitted blobs would need to be
-merged into the promised-blob list after each fetch.  The fetch itself
-may not have that many new entries, but inserting them into the existing
-list will be slow.  Also, mmap'ing and bsearch'ing will likely have
-issues.  And there's likely to be a very expensive step to remove
-entries from the list as new blobs are received (or locally created).
-
-In such a "sparse clone", it would be nice to omit unneeded tree objects
-in addition to just blobs.   I say that because we are finding with GVFS
-on the Windows repo, that even with commits-and-trees-only filtering,
-the number of tree objects is overwhelming.  So I'm also concerned about
-limiting the list to just blobs.  If we need to have this list, it
-should be able to contain any object.  (Suggesting having an object type
-in the entry.)
-
-I assume that we'll also need a promised-blob.lock file to control
-access during list manipulation.  This is already a sore spot with the
-index; I'd hate to create another one.
-
-I also have to wonder about the need to have a complete list of omitted
-blobs up front.  It may be better to just relax the consistency checks
-and assume a missing blob is "intentionally missing" rather than
-indicating a corruption somewhere.  And then let the client do a later
-round-trip to either demand-load the object -or- demand-load the
-existence/size info if/when it really matters.
-
-Maybe we should add a verb to your new fetch-blob endpoint to just get
-the size of one or more objects to help with this.
-
-Thanks,
-Jeff
-
+-- 
+Brandon Williams
