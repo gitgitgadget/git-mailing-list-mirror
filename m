@@ -7,59 +7,62 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4751320357
-	for <e@80x24.org>; Wed, 12 Jul 2017 21:37:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B72220357
+	for <e@80x24.org>; Wed, 12 Jul 2017 21:40:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754056AbdGLVhW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 17:37:22 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35553 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752363AbdGLVhV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 17:37:21 -0400
-Received: by mail-pg0-f65.google.com with SMTP id d193so4421048pgc.2
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 14:37:21 -0700 (PDT)
+        id S1754128AbdGLVkx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 17:40:53 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:34826 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753083AbdGLVkw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 17:40:52 -0400
+Received: by mail-pf0-f194.google.com with SMTP id q85so4638500pfq.2
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 14:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=AlAAGCObQMe+LyLG5wxS/59j/oodwRBnchQtBOPhGFE=;
-        b=lljoVc5Atllrd3prAEJpI5YuW6P4j9C+fpTPkAxjnbpYgOz5N1fboWBgkbwXKUy9SO
-         +MvXBYZW9VgDZyXfp//TDpsI9+1ZDkcj31BvW2LGkoa+ed8RNLcJZPX5IOhEMhvOWqsS
-         UNO1GngA5vJ5uO4O4BdQf+SzjTrSleUZA6y9bMpJK+DfUKGCSz0LFyPJZXTdHzlB242w
-         bZvD+uyK8fRYyO23b4wpeUZ015965Y+9SvhuqVh8vq8Kokqo+VwQjVgiPs/KG4DjeP8w
-         lT8WwRb/pEkYmxVsQyVGJBTLcfJtmmoInN6/ugdyiqmp16Fcqsgsji4IkOOpsYukdMR0
-         7DuA==
+        bh=TNtm2TknqjOkh2ct9jR2Q1hw3rojhTcdylZRJPPHHEQ=;
+        b=mAlE50Vvq/huumX8jsWbHzhXhnNMcH4bcTeSs1n54YcsWcsFgpx3RpFjtUBlYB3iJo
+         dVmMx5o7OQUJuOm9QqZVpJxOKPClg7IL/i+zgdiE1hYqBi4QI65m8U02ZG8lOZoIjTnW
+         2Yu1A0LXEhSjIAV8MPsnemkHYvQEVoeDD76lllu3rA97K/pfXYAVOqhAZYv0awaHBXCz
+         iu+cjS+ACFKVRW+354/k4gXoZSjU4+AjQrzJumk2UZPW93UPIm3MShh3/vFwG7LmOg50
+         ME9O/0HyzLRCVhyS+gok7Wmk2i+wwOwZUaFItpy1us59tjzbRM//m/Tkf/HuqHXXW9n2
+         /yQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=AlAAGCObQMe+LyLG5wxS/59j/oodwRBnchQtBOPhGFE=;
-        b=dxtlH1zJ6jVqNzO0aZM8Qvvfah34LqMf4Zipvwjk16gi4tPGCZ3Wd2KOH5WBEHKyje
-         jFQhZLwKPKqEzF2PXQj7cMtqc+MLhK510r1bgGya1N9ns0KnRl97yNTTVOD00TrrLrYp
-         I9S1Tbf0PxzPoS1EZbqqjzTiPkcFIM/jzkEGFOSzIPFmrZoPYZBDm/iXNaJsVTwDmVma
-         lcIyiHgXjxTtPh84u+nvcpCjdkffpxg359OHzT/3sgAGEdQ7Xw4/3Fn+xDXTp5TcIGZN
-         2tPRKU0ndcH7sUuK90ylevm9Mdhw07HelVeX1MtcVsUZN7cBy9DpzZQTAt4KOzzLUEj7
-         uo4g==
-X-Gm-Message-State: AIVw113djyutfNQ6cFfqypJznHa/OBXnXESMFm/9LV6sb3FvBQOMLiiY
-        Jis8V24FXofGbA==
-X-Received: by 10.84.218.136 with SMTP id r8mr6488336pli.205.1499895435492;
-        Wed, 12 Jul 2017 14:37:15 -0700 (PDT)
+        bh=TNtm2TknqjOkh2ct9jR2Q1hw3rojhTcdylZRJPPHHEQ=;
+        b=k6xpNTAyltAGgz/5guEozfEYCKvwRgmfUs7x7JvqVNoiKTzK2u9t1VJqznkQJqPkXI
+         U/6RDtzvzmoUx58H8CLSONZyUq8DcyMl4Ea/rLyAxwGVWBFYm+dvNj7UGsm50LobC7yJ
+         cvQZnTPiKwTAXB9RdyxfMrjdppfQ91wAx7a/9G0HsQ28RXvdP8wHZsEFwGDPF8s7eS+L
+         YBVH+baprCkc4a8UJsRK0c+pjRhYBkLCQmqoaoCUb1ENGa6CZ0DHbMUEBV/f73J6sYhS
+         AiLaroVbZXy0Aa3duRnzxHjWYUDZ8XTs+hoQ8FhNhw+TJ9ND1VPfch61oS6HU3sA0/pb
+         zlqg==
+X-Gm-Message-State: AIVw1103QysDkGAgJ9594ZahCReXfdJvVh7CkqrVvn87AiWm4ar1tuve
+        eoRNnK4uG8UbGpMbU7g=
+X-Received: by 10.99.184.2 with SMTP id p2mr5868802pge.194.1499895651305;
+        Wed, 12 Jul 2017 14:40:51 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:8c0d:cddc:dbb9:7a95])
-        by smtp.gmail.com with ESMTPSA id y14sm6845274pgr.1.2017.07.12.14.37.14
+        by smtp.gmail.com with ESMTPSA id d70sm4870849pga.49.2017.07.12.14.40.50
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 12 Jul 2017 14:37:14 -0700 (PDT)
+        Wed, 12 Jul 2017 14:40:50 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] RFC: Introduce '.gitorderfile'
-References: <20170711233827.23486-1-sbeller@google.com>
-        <xmqqinix1j29.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kYftkxbDY2E_=2w0VYx8COF_yc61h78gs2qaraK9HRSuA@mail.gmail.com>
-Date:   Wed, 12 Jul 2017 14:37:13 -0700
-In-Reply-To: <CAGZ79kYftkxbDY2E_=2w0VYx8COF_yc61h78gs2qaraK9HRSuA@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 12 Jul 2017 13:58:52 -0700")
-Message-ID: <xmqqzic9z69i.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org,
+        sbeller@google.com
+Subject: Re: [PATCH 2/3] setup: have the_repository use the_index
+References: <20170711220408.173269-1-bmwill@google.com>
+        <20170711220408.173269-3-bmwill@google.com>
+        <xmqqzica1pli.fsf@gitster.mtv.corp.google.com>
+        <20170712180143.GD65927@google.com>
+        <xmqqmv891jct.fsf@gitster.mtv.corp.google.com>
+        <20170712213339.GI93855@aiede.mtv.corp.google.com>
+Date:   Wed, 12 Jul 2017 14:40:49 -0700
+In-Reply-To: <20170712213339.GI93855@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 12 Jul 2017 14:33:39 -0700")
+Message-ID: <xmqqvamxz63i.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,28 +71,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> 2. collaboration.
->     When I want to review a patch from the mailing list,
->     I could (a) download the patch, apply locally, see the diff
->     formatted nicely according to diff.orderFile.
+>
+> All that said, I don't have a strong opinion on this.  Both the 1-word
+> approach (a pointer) and 24-word approach (embedding) are tolerable
+> and there are reasons to prefer each.
 
-If you are not doing a review of a patch with complex changes that
-benefits by a local diff.orderfile (i.e. only in the mail client
-without applying and viewing the changes in wider context), then you
-either (1) have a much greater memory than I do and know all the
-code outside the patch context by heart, or (2) not reviewing them
-properly in context.
-
-I tend to suspect that it is the latter case, so that argument does
-not sound convincing at least to me.
-
-No, I do not apply all patches before commenting from my mailbox; a
-one or two-pager patch can often be viewed and judged without much
-surrounding context, and can be answered in the mail client, perhaps
-while running "less" on some related files that may or may not be
-touched by the patch in another terminal, without applying the
-patch.  But such a one or two-pager patch can be viewed in any
-presentation order and do not behefit much fro diff.orderfile
-anyway.
+I do not care too much about 24-word wastage.  If this were not "a
+pointer pretending to be embedded object", the fix in 1/3 wouldn't
+have been necessary.  I am worried about this being an invitations
+for such unnecesasry bugs.
