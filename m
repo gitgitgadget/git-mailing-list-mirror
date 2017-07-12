@@ -2,127 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A62C120357
-	for <e@80x24.org>; Wed, 12 Jul 2017 21:55:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5410020357
+	for <e@80x24.org>; Wed, 12 Jul 2017 22:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754618AbdGLVzp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 17:55:45 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:33437 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754446AbdGLVzn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 17:55:43 -0400
-Received: by mail-pg0-f54.google.com with SMTP id k14so19329130pgr.0
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 14:55:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=c3ihHNT1/Enj5GqfRchm//twIG/D3Y2DLrRqji95+I4=;
-        b=OnEB+c6qBnLZILDYkcBa1PKBTDIU6jH6eZ7H5sVsRjOUFARRh9Yo47kl42ugO63DSV
-         fsTixeO8U67B7Eb5mn8foxwT5eZK6nuwn3NJeBSqhcZU+sq3sINhh0m8JfOTu0vEXkMG
-         TvxZb0FgQ9rNw+rs2BIKtpHTeYVnRZ+RTzwqO/Mvq1OGMGi0TjktZ9909zw7vROyiwDd
-         JSIE9I96q7dzkrqDzXbJv+yQqqGGBcvGcUZG1NdV0WZUq68R8PWSZv+Rj4BCn2Rf3lMv
-         tDiobCkE/WApJsEx8lPZRTpW3Z1TcCICZJo9O2Zdx8ywL2/YXHvaySO8PbhbVDPNXfun
-         u2pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=c3ihHNT1/Enj5GqfRchm//twIG/D3Y2DLrRqji95+I4=;
-        b=kMT+1z9EIdRssvBxnUBtBxmPgu9zjDiX18O/geFmJDmoyQyCswhUdBSJ5kxrzs45vD
-         m7hOvBsphQP5sfm4e3BfvTJ+ngP6/p5S6BDJD7jHnF5b8HXcYaBycDEpx1V7RDtGUB/o
-         NqsSaCVeELurQ1X2z+JrRIdg20jtKiE+o041nwnrG0d5IW9Vjhlp6QCU4NLVL4ozH28G
-         gr8hn4Y7nJ268myflzlChLHTR+KrJi1Nrde9jLR1NcFVw7p2EJraFmJV4wCxhfuZNTBz
-         TmlRex6alY2khtsyx9xCS0rUWLs8CEWA79Yr1I/bEZtG+oqsETZLf0aUp3iX2zAtj3LQ
-         WW9Q==
-X-Gm-Message-State: AIVw111cVokbrSebM1kmlBEZsEVRvkgNR8n34H1e/naEDl/DCMEgdFAA
-        s4Kpd+TAOftpWsMWLCrzTu3JiUZmG65SUJqJdw==
-X-Received: by 10.84.129.69 with SMTP id 63mr6601787plb.0.1499896542709; Wed,
- 12 Jul 2017 14:55:42 -0700 (PDT)
+        id S1752095AbdGLWOG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 18:14:06 -0400
+Received: from 5.itsy.de ([188.40.84.14]:33852 "EHLO 5.itsy.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750705AbdGLWOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 18:14:05 -0400
+Received: from [192.168.0.13] (84-72-0-73.dclient.hispeed.ch [84.72.0.73])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by 5.itsy.de (Postfix) with ESMTPSA id 04FF6648E3
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 00:14:02 +0200 (CEST)
+Subject: Re: Mirroring for offline use - best practices?
+To:     Git Mailing List <git@vger.kernel.org>
+References: <81052ff7-cece-400d-1742-e13693fae7e3@durchholz.org>
+ <CAGZ79ka59qkekqGCSmVHb0=H--4HtjC7Ts9eXj_hb6f2cRQ4ww@mail.gmail.com>
+From:   Joachim Durchholz <jo@durchholz.org>
+Message-ID: <42f0df64-5747-c2d2-832f-10d921fa2efa@durchholz.org>
+Date:   Thu, 13 Jul 2017 00:14:01 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Wed, 12 Jul 2017 14:55:42 -0700 (PDT)
-In-Reply-To: <xmqqzic9z69i.fsf@gitster.mtv.corp.google.com>
-References: <20170711233827.23486-1-sbeller@google.com> <xmqqinix1j29.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kYftkxbDY2E_=2w0VYx8COF_yc61h78gs2qaraK9HRSuA@mail.gmail.com> <xmqqzic9z69i.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 12 Jul 2017 14:55:42 -0700
-Message-ID: <CAGZ79kZuMirZVrWTQ5eU7izYWyM8YtvDzMh4gRzvGXXVp=NMkQ@mail.gmail.com>
-Subject: Re: [PATCH] RFC: Introduce '.gitorderfile'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79ka59qkekqGCSmVHb0=H--4HtjC7Ts9eXj_hb6f2cRQ4ww@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 12, 2017 at 2:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> 2. collaboration.
->>     When I want to review a patch from the mailing list,
->>     I could (a) download the patch, apply locally, see the diff
->>     formatted nicely according to diff.orderFile.
->
-> If you are not doing a review of a patch with complex changes that
-> benefits by a local diff.orderfile (i.e. only in the mail client
-> without applying and viewing the changes in wider context), then you
-> either (1) have a much greater memory than I do and know all the
-> code outside the patch context by heart, or (2) not reviewing them
-> properly in context.
->
-> I tend to suspect that it is the latter case, so that argument does
-> not sound convincing at least to me.
+Am 12.07.2017 um 19:40 schrieb Stefan Beller:
 
-Note that this request originated from
-https://public-inbox.org/git/cover.1499800530.git.jonathantanmy@google.com/
+Thanks for the feedback - it's been very, very useful to me!
 
-There are different sorts of patches to review:
-(a) major new features, introducing radically new concepts.
-    Example given above.
+ > Yes, a local path implies --local in git-clone, which (a) uses hardlinks
+ > and (b) avoids some other protocol overhead.
 
-    In this case I neither need (1) nor (2). I want to get the abstract
-    design and then decide if it is worth my time to pursue reviewing the
-    details of the patch.
+I guess (a) is the most important one for repositories large enough to 
+make this kind of stuff matter.
+I had gathered so much, but I wasn't sure - my own repos aren't large 
+enough to take any measurements.
 
-    The order file makes an impact!
+ >> Ramification 1:
+ >>
+ >> I'm not sure how best to prepare patches for push-to-upstream.
+ >> Is there value in collecting them locally into a push-to-upstream 
+repo, or
+ >> is it better to just push from each local clone individually?
+ >
+ > It depends on a lot of things:
+ > * How critical is the latency in the desired workflow?
+ >
+ >    Say you have this setup on a cruise ship and only push once when
+ >    you are in a harbor, then (a) you want to make sure you pushed 
+everything
+ >    and (b) you care less about latency. Hence you would prefer to collect
+ >    everything in one repo so nothing gets lost.
 
-(b) minor new features (in the big picture of a major feature), refactorings
-    Examples: 96dc883b3c, repository: enable initialization of submodules
-    lb/status-stash-count
+Yeah, that's the kind of scenario I'm having.
+Less cruise ship (I wish!) and more on-train work during commutes, but 
+it's similar.
 
-    Reviewing these patches requires more diving into code, but you'd
-    still want to make a call early on whether to reject the design
-    before calling out the memory leak that you found after applying
-    the patch.
+But I think the "make sure nothing gets lost" aspect is the most 
+important one. It's so easy to forget to push some sideline branch, 
+particularly if you're in a workflow that uses many branches.
 
-    The order file *may* be useful.
+So... an "outbox" repository would be the Right Thing for me.
+Not sure how generally applicable this is - what do other people think?
 
-(c) updating existing things
-    (bug fixes, documentation, improving performance)
-    Example: jk/reflog-walk-maint
+ >    Say you are in a fast paced environment, where you want instant 
+feedback
+ >    on your patches as they are mostly exploratory designs. Then you 
+want to
+ >    push directly from the local clone individually to minimize 
+latency, I would
+ >    imagine.
 
-    When looking at these changes, (2) is the answer.
-    I look at surrounding code (there may be no need to apply
-    the patch though, it depends)
+That's for online work I think.
 
-    The order file is useless, IMHO, but also does not produce harm.
+Of course, there's the situation where you're sometimes offline and 
+sometimes online.
+I'm not sure how to best handle that - have a script that switches 
+configurations? Just stick with that outbox workflow because switching 
+workflows would invite error?
 
-> No, I do not apply all patches before commenting from my mailbox; a
-> one or two-pager patch can often be viewed and judged without much
-> surrounding context, and can be answered in the mail client, perhaps
-> while running "less" on some related files that may or may not be
-> touched by the patch in another terminal, without applying the
-> patch.  But such a one or two-pager patch can be viewed in any
-> presentation order and do not behefit much fro diff.orderfile
-> anyway.
+One thing that's specific to me is that I tend to be active in multiple 
+projects, so I might get home and have queued up pushes in multiple repos.
+I'm not sure how to best make sure that I don't forget a push.
+OTOH maybe I'm overly optimistic about for how many repositories I might 
+be working on a day, and it's a non-issue.
 
-This sounds like (c), which we have a lot more of than (a) or (b).
+ > * Does a local clone have any value for having the work from
+ >    another local clone available? In that case you may want to
+ >    have all your changes accumulated into the mirror.
 
-Thanks for your thoughts,
-Stefan
+Yeah, definitely.
+A repository I work on might be used as a submodule, and I might want to 
+check the ramifications.
+
+ > When a submodule gets deleted (git rm <submodule> && git commit),
+ > then all entries for that submodule in the .gitmodules file are also 
+removed.
+ > That seems ok, but in an ideal world we may have a tombstone in there
+ > (e.g. the submodule.NAME.path still set) that would help for tasks 
+like finding
+ > all submodules in the future.
+
+I wouldn't want to use tombstone entries actually, because the content 
+of .gitconfig and .gitmodules might have been modified for any number of 
+reasons.
+
+The incantations that I'm using for my own "gitmirror" script are:
+1. Get all commits that touch .gitmodules via
+   git rev-list --all --full-history -- .gitmodules
+2. Get a list of all module names mentioned in that .gitmodules version via
+   git config \
+   --blob "${commit}:.gitmodules" \
+   --name-only \
+   --get-regexp "^submodule\..*\.path$"
+3. Given the module name, extract path and url via
+   git config \
+     --blob "${commit}:.gitmodules" \
+     --get "submodule.${module_name}.path"
+resp.
+     --get "submodule.${module_name}.url" \
+
+It's not the most efficient way conceivable, but it's using git's 
+configuration parser, and it won't get put off by manual edits in 
+configuration files .
+
+It's nothing you'd do on the command line, hence the scripting :-)
+
+ >> I'm seeing the --recurse-submodules option for git fetch, so this 
+might (or
+ >> might not) be the Right Thing.
+ >
+ > That only works for currently initialized (active) submodules. The 
+submodules
+ > of the past and those which you do not have, are not fetched.
+
+Aww.
+Ah well.
+
+ > Without the submodule ramifications, I would have advised to have
+ > have the local mirror a 'bare' repo.
+I'm currently steering towards having a cache for all repositories I 
+ever downloaded, which would live in ~/.cache/gitmirror.
+
+I can turn this script into a public, maintained project if there's 
+interest.
+Current state is two files, the script itself and a unit test script. 
+It's still in a state of flux so sharing would be for the code reviews 
+at this time, general usefulness would come later.
+
+Regards,
+Jo
