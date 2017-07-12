@@ -2,115 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF0482035A
-	for <e@80x24.org>; Wed, 12 Jul 2017 00:11:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADA6F2035A
+	for <e@80x24.org>; Wed, 12 Jul 2017 00:25:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755934AbdGLALZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 20:11:25 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34230 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752939AbdGLALY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 20:11:24 -0400
-Received: by mail-pg0-f65.google.com with SMTP id j186so849761pge.1
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 17:11:23 -0700 (PDT)
+        id S1755374AbdGLAZi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 20:25:38 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35667 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753701AbdGLAZh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 20:25:37 -0400
+Received: by mail-pf0-f194.google.com with SMTP id q85so939509pfq.2
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 17:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PqJ2rAj178Mjpj4hJPf6jjQbqmD0AolhEdnN/Cvkx9g=;
-        b=kq0PVysMu27MD/cbdREue+Za/k+VsqQUMX//4QTiGiVpqVIDeC5iUZAdUPB3zGSMd+
-         4aejWBRSzZc3CeZXkbZoyKCRxhrorKOdeoPJjLfDmWpF92xnTmPOu+C+jJuYZytWggDO
-         gk4ZmLM2ZcCVblKqwUjyxSP+LlIc08H7gwbCSpA4J+mQwaSTT2WkWHF5fidWWTCFakFD
-         j2/pOzHwmNNBQIVgHSatQIvDeOfIbb5P9zAthlIiiozkxMjZvEAQQRP3F+Y2zcmDnFup
-         toA7e3AXGVeCZ1/3OwjGxgnS0O/KtIth9H/C59qH78hapTYPTqRaA3XWigWDyaJTHwDz
-         2WlA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=l9XnKMzRtF3tHkKLHn6J8Acj2B/Z+HMC9RkeK0ZG/DY=;
+        b=YGCHWmLMg3tqqhiXzFg6uy1+JL8iLljd1WvdmTmpeH0KyxomrZ1QyRvTcUKSPhfs8f
+         pf7rtcDOG8D40qk7oD211v3GgelNLd2/zcGc7OpJbzIH0H1CaVf7KDWDngEglnZ9Cbmn
+         ahXubSvHVVCVGTlCeC4sXeX5hSGUt7cqOFGtsM3z2rdz7ZFO/NCjx6cQh/Q7fvY3R9uu
+         Q2q1Gm18hAbT0KFbWr7fjJUCa/o59I9rIxNcUUaCoZnuQjC9QbSIOaNSdVZtN961pUHZ
+         uQa4rq7r1stExtdli7m1GiQrvBsjsQih/qTsYmbezP7R6WdRos5LYLzNqetSXMIuPWS8
+         +IaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PqJ2rAj178Mjpj4hJPf6jjQbqmD0AolhEdnN/Cvkx9g=;
-        b=nDQJH4KsQV1QD5SdaxoQ4W2Kid2gnPM3U4qrrqc7QFrYyMrHPuL6MV/u9P75NQdhkq
-         YYimFmAuyPlo6WxMPSAS28le3E0G9+wTxucU6CF/rLKhuMy/LRmAcnXBw1boTBF+SAbl
-         NA18vPC4zv6/U/WLCArc8DuQXA1Ylz+rHa1Vrs8VqCGisbCILmnGArDGe6D4k2kvJvzr
-         uAnrwKTPseB9LX9I+xapLGIEvQI1S/HWOZ6cARn8wXzb8sknga4GuvH7t5fO4EYmFsQu
-         fvS5p/8Ge/P5VH3hjsCe3JLD3OtC0jP6ol6wjPdJ1k3EyKBSvrCiAGvrqbRq27Q1LOmt
-         Pg0Q==
-X-Gm-Message-State: AIVw112Nm04eAV+AQgBCXSBSBMwuqdeGfCKsvwdHgKfP5u0eLxYzfq2t
-        i3FVhobeUN7M0g==
-X-Received: by 10.99.185.28 with SMTP id z28mr1045962pge.123.1499818283075;
-        Tue, 11 Jul 2017 17:11:23 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:fdda:b931:7ea7:8e3c])
-        by smtp.gmail.com with ESMTPSA id r27sm893920pfe.0.2017.07.11.17.11.22
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=l9XnKMzRtF3tHkKLHn6J8Acj2B/Z+HMC9RkeK0ZG/DY=;
+        b=MQbAQape8H/rqMpylkynnQqCkLpvA043Y7ihhw+uCB82RBcJlTEBuuMXYsDtMiZ1TO
+         uMWOrBiK5MdSq4NhDKSBF/hjr2wlh7LzxE5Wx+gXA6f/JTjOHrMRUULy1PW0tbkomdcg
+         V1s3hQN1znCLdXaOzFd7RgZ1FVgVcYoRYACPBueA39P2qclXAF7al0D8PF6VhU0rFN7J
+         slKBkGmVOGJDtZESCh0ljDMElF+Bptgci0cw1cFDo4w+liti5Z6jtWPZBywJ8N0uYrTn
+         YLlCwllOMnLXDBLLlddLVXBgRPSKziqzMnEWDliTUKwKbGci1P7RQvgfRJLm7qhvKAGp
+         mGfg==
+X-Gm-Message-State: AIVw113lrsUQ3TXqWeCLmE47TEQpJJw2pxVaRjTzlIQUj0KYp/SRdtx/
+        Xv0x5EVQB4EdX2GV0JA=
+X-Received: by 10.84.130.42 with SMTP id 39mr1149694plc.60.1499819136376;
+        Tue, 11 Jul 2017 17:25:36 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:114c:7a1:940:72cc])
+        by smtp.gmail.com with ESMTPSA id l78sm925355pfb.59.2017.07.11.17.25.34
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 11 Jul 2017 17:11:22 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        Tue, 11 Jul 2017 17:25:35 -0700 (PDT)
+Date:   Tue, 11 Jul 2017 17:25:33 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Brandon Williams <bmwill@google.com>
 Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH 2/3] setup: have the_repository use the_index
+Subject: Re: [PATCH 3/3] grep: recurse in-process using 'struct repository'
+Message-ID: <20170712002533.GD93855@aiede.mtv.corp.google.com>
 References: <20170711220408.173269-1-bmwill@google.com>
-        <20170711220408.173269-3-bmwill@google.com>
-Date:   Tue, 11 Jul 2017 17:11:21 -0700
-In-Reply-To: <20170711220408.173269-3-bmwill@google.com> (Brandon Williams's
-        message of "Tue, 11 Jul 2017 15:04:07 -0700")
-Message-ID: <xmqqzica1pli.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+ <20170711220408.173269-4-bmwill@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170711220408.173269-4-bmwill@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Hi,
 
-> Have the index state which is stored in 'the_repository' be a pointer to
-> the in-core instead 'the_index'.  This makes it easier to begin
-> transitioning more parts of the code base to operate on a 'struct
-> repository'.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  setup.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/setup.c b/setup.c
-> index 860507e1f..b370bf3c1 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1123,6 +1123,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
->  			setup_git_env();
->  		}
->  	}
-> +	the_repository->index = &the_index;
+Brandon Williams wrote:
+
+> Convert grep to use 'struct repository' which enables recursing into
+> submodules to be handled in-process.
+
+\o/
+
+This will be even nicer with the changes described at
+https://public-inbox.org/git/20170706202739.6056-1-sbeller@google.com/.
+Until then, I fear it will cause a regression --- see (*) below.
+
+[...]
+>  Documentation/git-grep.txt |   7 -
+>  builtin/grep.c             | 390 +++++++++------------------------------------
+>  cache.h                    |   1 -
+>  git.c                      |   2 +-
+>  grep.c                     |  13 --
+>  grep.h                     |   1 -
+>  setup.c                    |  12 +-
+>  7 files changed, 81 insertions(+), 345 deletions(-)
+
+Yay, tests still pass.
+
+[..]
+> --- a/Documentation/git-grep.txt
+> +++ b/Documentation/git-grep.txt
+> @@ -95,13 +95,6 @@ OPTIONS
+>  	<tree> option the prefix of all submodule output will be the name of
+>  	the parent project's <tree> object.
 >  
->  	strbuf_release(&dir);
->  	strbuf_release(&gitdir);
+> ---parent-basename <basename>::
+> -	For internal use only.  In order to produce uniform output with the
+> -	--recurse-submodules option, this option can be used to provide the
+> -	basename of a parent's <tree> object to a submodule so the submodule
+> -	can prefix its output with the parent's name rather than the SHA1 of
+> -	the submodule.
 
-I would have expected this to be going in the different direction,
-i.e. there is an embedded instance of index_state in a repository
-object, and the_repository.index is defined to be the old the_index,
-i.e.
+Being able to get rid of this is a very nice change.
 
-	#define the_index (the_repository.index)
+[...]
+> +++ b/builtin/grep.c
+[...]
+> @@ -366,14 +349,10 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+>  {
+>  	struct strbuf buf = STRBUF_INIT;
+>  
+> -	if (super_prefix)
+> -		strbuf_addstr(&buf, super_prefix);
+> -	strbuf_addstr(&buf, filename);
+> -
+>  	if (opt->relative && opt->prefix_length) {
+> -		char *name = strbuf_detach(&buf, NULL);
+> -		quote_path_relative(name, opt->prefix, &buf);
+> -		free(name);
+> +		quote_path_relative(filename, opt->prefix, &buf);
+> +	} else {
+> +		strbuf_addstr(&buf, filename);
+>  	}
 
-When a Git command that recurses into submodules in-core using
-the_repository that represents the top-level superproject and
-another repository object tht represents a submodule, don't we want
-the repository object for the submodule also have its own default
-index without having to allocate one and point at it with the index
-field?
+style micronit: can avoid these braces since both branches are
+single-line.
 
-I dunno.  Being able to leave the index field NULL lets you say
-"this is a bare repository and there is no place for the index file
-for it", but even if we never write out the in-core index to an
-index file on disk, being able to populate the in-core index that is
-default for the repository object from a tree-ish and iterating over
-it (e.g.  running in-core merge of trees) is a useful thing to do,
-so I do not consider "index field can be set to NULL to signify a
-bare repository" a very strong plus.
+[...]
+> @@ -421,284 +400,80 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
+>  		exit(status);
+>  }
+>  
+> -static void compile_submodule_options(const struct grep_opt *opt,
+> -				      const char **argv,
+> -				      int cached, int untracked,
+> -				      int opt_exclude, int use_index,
+> -				      int pattern_type_arg)
+> -{
+[...]
+> -	/*
+> -	 * Limit number of threads for child process to use.
+> -	 * This is to prevent potential fork-bomb behavior of git-grep as each
+> -	 * submodule process has its own thread pool.
+> -	 */
+> -	argv_array_pushf(&submodule_options, "--threads=%d",
+> -			 (num_threads + 1) / 2);
 
+Being able to get rid of this is another very nice change.
+
+[...]
+> +	/* add objects to alternates */
+> +	add_to_alternates_memory(submodule.objectdir);
+
+(*) This sets up a single in-memory object store with all the
+processed submodules.  Processed objects are never freed.
+This means that if I run a command like
+
+	git grep --recurse-submodules -e neverfound HEAD
+
+in a project with many submodules then memory consumption scales in
+the same way as if the project were all one repository.  By contrast,
+without this patch, git is able to take advantage of the implicit
+free() when each child exits to limit its memory usage.
+
+Worse, this increases the number of pack files git has to pay
+attention to the sum of the numbers of pack files in all the
+repositories processed so far.  A single object lookup can take
+O(number of packs * log(number of objects in each pack)) time.  That
+means performance is likely to suffer as the number of submodules
+increases (n^2 performance) even on systems with a lot of memory.
+
+Once the object store is part of the repository struct and freeable,
+those problems go away and this patch becomes a no-brainer.
+
+What should happen until then?  Should this go in "next" so we can get
+experience with it but with care not to let it graduate to "master"?
+
+Aside from those two concerns, this patch looks very good from a quick
+skim, though I haven't reviewed it closely line-by-line.  Once we know
+how to go forward, I'm happy to look at it again.
+
+Thanks,
+Jonathan
