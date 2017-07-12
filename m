@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F32B202DD
-	for <e@80x24.org>; Wed, 12 Jul 2017 13:46:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3795D202DD
+	for <e@80x24.org>; Wed, 12 Jul 2017 13:47:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752455AbdGLNq5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 09:46:57 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:36189 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752182AbdGLNqy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 09:46:54 -0400
-Received: by mail-wr0-f195.google.com with SMTP id 77so5924400wrb.3
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 06:46:53 -0700 (PDT)
+        id S1752569AbdGLNrC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 09:47:02 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:35034 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752518AbdGLNrB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 09:47:01 -0400
+Received: by mail-wr0-f196.google.com with SMTP id y28so1400687wrd.2
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 06:46:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZguaG4V15TYDgNVuB/OcjKQj9WK7074ckKURWOezifs=;
-        b=lZiRvouyLgVQgd/DYqUzY26L13dMDe/mdJlYwPDL6OIJjhZZqJ9kL8SgAiemXkOh5M
-         slK8iLABAOaK0tDXvLG87w4nHqYSz2Q4ErCcva98Z3vohL7UMDP728csVa9IcRZzoD0f
-         MML52tlsn7Gu3WOy6Q789deJmGZmGs3ZItbqnKIoWlgsimlWu7mIA+EHj6kyzANCTq1z
-         ke8PHenVrQC/OkQ7GDCEerqqaaRGpmVodD0natT83K+OpFO1joEZPJ56vNLFW6I+Xj4N
-         Yz+s0TEu0FYDgVumLLpQufLIqCHuauH6kEXVVfNaAlFz27fbgSomkIPEz3LUg3EYaWe5
-         rhcA==
+        bh=/Ex3PotA+OJNmmTo0QeBlRJB3m/DUo0Oj2RVARN2q+o=;
+        b=ROIw/TcuWjoI7l2NC2e+FO2Ps0D05tHTZ+G05oUvkPplIMZKZ0QS3cIbn2P6kC1qhs
+         MZYcVI9J78se0WrDlZBEEI03bMxdE+napBS80IIeitoFQvC8MoMhka4ZOKzCyo2SEyqa
+         KkEDsgJ0Hfrx/EtkfaVQ973VNszCIkPy7e2JQwotHm5Y8bhxOaXfjmt2OQ/t58Zs1QHl
+         bGJP0g5bBSAd7+2OcRTK6Rq6Xb+QMcZEwztaOdDeyJXPpeuyxmFWQV+vIY+SEPf/Susi
+         CjzhDQ/ZBCOnbu0qodEWvfp1B5+bYTuSz/qWBxj18hLqycjcwqpw41PycvfMQmplV8bq
+         rzJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=ZguaG4V15TYDgNVuB/OcjKQj9WK7074ckKURWOezifs=;
-        b=TBJBp9Zk11Fn3re+xxmhkf3q133IJatQdgTPL8JPrx58+OYpWeUOr5rcO6B7uqyH0P
-         5dHXiPHiv3iMo9a3utVCnWbO6n1FHha/oNJYJ/clLRldDBlKHVL94UzBbij2eB6rHKTf
-         eJ3+Fe08hzIhcT21X09M77r+zrrF7KDNty/epfqlaYJlpYs1AT5AdC2i/mCwwJGWpOBj
-         4/na4aeDFqyro9P8nfK+z3r4NofWLEkRE/SCug+YiM5wXBHGJ/iuGkmmeRb0crQIZYg7
-         /yDWKTDWcs7s0fD4lf7H4aqaNnJzdjRgFy5mXiHVP+MlFXVO9tRtqEV/tJMbLAo8yPuq
-         OnLw==
-X-Gm-Message-State: AIVw1112lNccwQ1puyHO9g5+9hTz+Dbpg9kuaLSK/5nUQqpthb2nrEN8
-        Alr4OHWSIUqFzQyRPkQ=
-X-Received: by 10.223.148.129 with SMTP id 1mr3183513wrr.28.1499867212716;
-        Wed, 12 Jul 2017 06:46:52 -0700 (PDT)
+        bh=/Ex3PotA+OJNmmTo0QeBlRJB3m/DUo0Oj2RVARN2q+o=;
+        b=gQF+oYdLnqJ4b8n6Pn6qcoFhRSM+Thyf4fZk76PnJXb/5igKGjw2wxmwv5PcrmX+UQ
+         ckT3pD28OxbFm0e3KPH3XOHLv8M5lUcQgs+igSnitCDfZpKdlGRemksbR0MvNfFoqFJP
+         8mCY7bK6zt2oxsuatvcbI3I4iDb+vb+KuBCM/GUq78ViCFtQX6GZX3wykOjG1DzRpsRA
+         bjTnZb2goLFJSnCdyTWQ1sRBz7kcnPKkSqSfhDalUB4WGmP/lXb6rw5+Hi7pldThSGex
+         KMFk0cjyxrAUOQe45mXm3gECTpid2rWij9Beac99IVFmTi8ecHvF1mrqnKcH7Npp6TDk
+         ti5w==
+X-Gm-Message-State: AIVw111mpv37IhZp0E3y+mx6UdnDHKx+TDOlCdcewqxQibo+q9uA1GWp
+        KgsyIKiUOUii0r6uypY=
+X-Received: by 10.223.131.99 with SMTP id 90mr3064506wrd.123.1499867214234;
+        Wed, 12 Jul 2017 06:46:54 -0700 (PDT)
 Received: from donizetti.redhat.com (94-39-191-51.adsl-ull.clienti.tiscali.it. [94.39.191.51])
-        by smtp.gmail.com with ESMTPSA id 55sm3437950wrt.36.2017.07.12.06.46.51
+        by smtp.gmail.com with ESMTPSA id 55sm3437950wrt.36.2017.07.12.06.46.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Jul 2017 06:46:52 -0700 (PDT)
+        Wed, 12 Jul 2017 06:46:53 -0700 (PDT)
 From:   Paolo Bonzini <bonzini@gnu.org>
 To:     git@vger.kernel.org
 Cc:     Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 2/3] trailers: export action enums and corresponding lookup functions
-Date:   Wed, 12 Jul 2017 15:46:45 +0200
-Message-Id: <20170712134646.17179-3-bonzini@gnu.org>
+Subject: [PATCH 3/3] interpret-trailers: add options for actions
+Date:   Wed, 12 Jul 2017 15:46:46 +0200
+Message-Id: <20170712134646.17179-4-bonzini@gnu.org>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170712134646.17179-1-bonzini@gnu.org>
 References: <20170712134646.17179-1-bonzini@gnu.org>
@@ -63,185 +63,282 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-Separate the mechanical changes out of the next patch.  The functions
-are changed to take a pointer to enum, because struct conf_info is not
-going to be public.
+Allow using non-default values for trailers without having to set
+them up in .gitconfig first.  For example, if you have the following
+configuration
 
-Write down the defaults explicitly in default_conf_info, since they are
-not anymore close to default_conf_info and it's not obvious which
-constant has value 0.
+     trailer.signed-off-by.where = end
+
+you may use "--where before" when a patch author forgets his
+Signed-off-by and provides it in a separate email.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- trailer.c | 51 +++++++++++++++++++++++++--------------------------
- trailer.h | 22 ++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 26 deletions(-)
+ Documentation/git-interpret-trailers.txt | 16 ++++++++++
+ builtin/interpret-trailers.c             | 40 +++++++++++++++++++++++++
+ t/t7513-interpret-trailers.sh            | 51 ++++++++++++++++++++++++++++++++
+ trailer.c                                | 28 ++++++++++++++++--
+ trailer.h                                |  6 ++++
+ 5 files changed, 138 insertions(+), 3 deletions(-)
 
-diff --git a/trailer.c b/trailer.c
-index a3eb42818..558c52431 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -10,11 +10,6 @@
-  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
-  */
+diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
+index 31cdeaecd..f4d67b8a1 100644
+--- a/Documentation/git-interpret-trailers.txt
++++ b/Documentation/git-interpret-trailers.txt
+@@ -80,6 +80,22 @@ OPTIONS
+ 	trailer to the input messages. See the description of this
+ 	command.
  
--enum action_where { WHERE_END, WHERE_AFTER, WHERE_BEFORE, WHERE_START };
--enum action_if_exists { EXISTS_ADD_IF_DIFFERENT_NEIGHBOR, EXISTS_ADD_IF_DIFFERENT,
--			EXISTS_ADD, EXISTS_REPLACE, EXISTS_DO_NOTHING };
--enum action_if_missing { MISSING_ADD, MISSING_DO_NOTHING };
--
- struct conf_info {
- 	char *name;
- 	char *key;
-@@ -24,7 +19,11 @@ struct conf_info {
- 	enum action_if_missing if_missing;
++--where <placement>::
++	Specify where all new trailers will be added.  This option
++	overrides all configuration variables.
++
++--if-exists <action>::
++	Specify what action will be performed when there is already at
++	least one trailer with the same <token> in the message.  This
++	option applies to all '--trailer' options and overrides all
++	configuration variables.
++
++--if-missing <action>::
++	Specify what action will be performed when there is no other
++	trailer with the same <token> in the message.  This option
++	applies to all '--trailer' options and overrides all
++	configuration variables.
++
+ CONFIGURATION VARIABLES
+ -----------------------
+ 
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index 6528680b5..5f05f0af0 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -16,6 +16,39 @@ static const char * const git_interpret_trailers_usage[] = {
+ 	NULL
  };
  
--static struct conf_info default_conf_info;
-+static struct conf_info default_conf_info = {
-+	.where = WHERE_END,
-+	.if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR,
-+	.if_missing = MISSING_ADD,
-+};
- 
- struct trailer_item {
- 	struct list_head list;
-@@ -374,44 +373,44 @@ static void process_trailers_lists(struct list_head *head,
- 	}
- }
- 
--static int set_where(struct conf_info *item, const char *value)
-+int set_where(enum action_where *item, const char *value)
++static int option_parse_where(const struct option *opt,
++			      const char *arg, int unset)
++{
++	enum action_where *where = opt->value;
++
++	if (unset)
++		return 0;
++
++	return set_where(where, arg);
++}
++
++static int option_parse_if_exists(const struct option *opt,
++				  const char *arg, int unset)
++{
++	enum action_if_exists *if_exists = opt->value;
++
++	if (unset)
++		return 0;
++
++	return set_if_exists(if_exists, arg);
++}
++
++static int option_parse_if_missing(const struct option *opt,
++				   const char *arg, int unset)
++{
++	enum action_if_missing *if_missing = opt->value;
++
++	if (unset)
++		return 0;
++
++	return set_if_missing(if_missing, arg);
++}
++
+ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
  {
- 	if (!strcasecmp("after", value))
--		item->where = WHERE_AFTER;
-+		*item = WHERE_AFTER;
- 	else if (!strcasecmp("before", value))
--		item->where = WHERE_BEFORE;
-+		*item = WHERE_BEFORE;
- 	else if (!strcasecmp("end", value))
--		item->where = WHERE_END;
-+		*item = WHERE_END;
- 	else if (!strcasecmp("start", value))
--		item->where = WHERE_START;
-+		*item = WHERE_START;
- 	else
- 		return -1;
+ 	struct trailer_opts opts = { 0 };
+@@ -24,6 +57,13 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "in-place", &opts.in_place, N_("edit files in place")),
+ 		OPT_BOOL(0, "trim-empty", &opts.trim_empty, N_("trim empty trailers")),
++		OPT_CALLBACK(0, "where", &opts.where, N_("action"),
++			     N_("where to place the new trailer"), option_parse_where),
++		OPT_CALLBACK(0, "if-exists", &opts.if_exists, N_("action"),
++			     N_("action if trailer already exists"), option_parse_if_exists),
++		OPT_CALLBACK(0, "if-missing", &opts.if_missing, N_("action"),
++			     N_("action if trailer is missing"), option_parse_if_missing),
++
+ 		OPT_STRING_LIST(0, "trailer", &trailers, N_("trailer"),
+ 				N_("trailer(s) to add")),
+ 		OPT_END()
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 0c6f91c43..49f4f823d 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -681,6 +681,21 @@ test_expect_success 'using "where = before"' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'overriding configuration with "--where after"' '
++	git config trailer.ack.where "before" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Fixes: Z
++		Acked-by= Z
++		Acked-by= Peff
++		Reviewed-by: Z
++		Signed-off-by: Z
++	EOF
++	git interpret-trailers --where after --trailer "ack: Peff" \
++		complex_message >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'using "where = after"' '
+ 	git config trailer.ack.where "after" &&
+ 	cat complex_message_body >expected &&
+@@ -947,6 +962,23 @@ test_expect_success 'using "ifExists = add" with "where = after"' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'overriding configuration with "--if-exists replace"' '
++	git config trailer.fix.key "Fixes: " &&
++	git config trailer.fix.ifExists "add" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Bug #42
++		Acked-by= Z
++		Reviewed-by:
++		Signed-off-by: Z
++		Fixes: 22
++	EOF
++	git interpret-trailers --if-exists replace --trailer "review:" \
++		--trailer "fix=53" --trailer "fix=22" --trailer "bug: 42" \
++		<complex_message >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'using "ifExists = replace"' '
+ 	git config trailer.fix.key "Fixes: " &&
+ 	git config trailer.fix.ifExists "replace" &&
+@@ -1026,6 +1058,25 @@ test_expect_success 'the default is "ifMissing = add"' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'overriding configuration with "--if-missing doNothing"' '
++	git config trailer.ifmissing "add" &&
++	cat complex_message_body >expected &&
++	sed -e "s/ Z\$/ /" >>expected <<-\EOF &&
++		Fixes: Z
++		Acked-by= Z
++		Acked-by= Junio
++		Acked-by= Peff
++		Reviewed-by:
++		Signed-off-by: Z
++	EOF
++	git interpret-trailers --if-missing doNothing \
++		--trailer "review:" --trailer "fix=53" \
++		--trailer "cc=Linus" --trailer "ack: Junio" \
++		--trailer "fix=22" --trailer "bug: 42" --trailer "ack: Peff" \
++		<complex_message >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'when default "ifMissing" is "doNothing"' '
+ 	git config trailer.ifmissing "doNothing" &&
+ 	cat complex_message_body >expected &&
+diff --git a/trailer.c b/trailer.c
+index 558c52431..78e88f98d 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -549,14 +549,36 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
  	return 0;
  }
  
--static int set_if_exists(struct conf_info *item, const char *value)
-+int set_if_exists(enum action_if_exists *item, const char *value)
+-static void ensure_configured(void)
++static void apply_config_overrides(struct conf_info *conf, struct trailer_opts *opts)
  {
- 	if (!strcasecmp("addIfDifferent", value))
--		item->if_exists = EXISTS_ADD_IF_DIFFERENT;
-+		*item = EXISTS_ADD_IF_DIFFERENT;
- 	else if (!strcasecmp("addIfDifferentNeighbor", value))
--		item->if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
-+		*item = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
- 	else if (!strcasecmp("add", value))
--		item->if_exists = EXISTS_ADD;
-+		*item = EXISTS_ADD;
- 	else if (!strcasecmp("replace", value))
--		item->if_exists = EXISTS_REPLACE;
-+		*item = EXISTS_REPLACE;
- 	else if (!strcasecmp("doNothing", value))
--		item->if_exists = EXISTS_DO_NOTHING;
-+		*item = EXISTS_DO_NOTHING;
- 	else
- 		return -1;
- 	return 0;
++	if (!opts)
++		return;
++	if (opts->where != WHERE_DEFAULT)
++		conf->where = opts->where;
++	if (opts->if_exists != EXISTS_DEFAULT)
++		conf->if_exists = opts->if_exists;
++	if (opts->if_missing != MISSING_DEFAULT)
++		conf->if_missing = opts->if_missing;
++}
++
++static void ensure_configured(struct trailer_opts *opts)
++{
++	struct arg_item *item;
++	struct list_head *pos;
++
+ 	if (configured)
+ 		return;
+ 
+ 	/* Default config must be setup first */
+ 	git_config(git_trailer_default_config, NULL);
++	apply_config_overrides(&default_conf_info, opts);
++
+ 	git_config(git_trailer_config, NULL);
++	list_for_each(pos, &conf_head) {
++		item = list_entry(pos, struct arg_item, list);
++		apply_config_overrides(&item->conf, opts);
++	}
++
+ 	configured = 1;
  }
  
--static int set_if_missing(struct conf_info *item, const char *value)
-+int set_if_missing(enum action_if_missing *item, const char *value)
- {
- 	if (!strcasecmp("doNothing", value))
--		item->if_missing = MISSING_DO_NOTHING;
-+		*item = MISSING_DO_NOTHING;
- 	else if (!strcasecmp("add", value))
--		item->if_missing = MISSING_ADD;
-+		*item = MISSING_ADD;
- 	else
- 		return -1;
- 	return 0;
-@@ -471,15 +470,15 @@ static int git_trailer_default_config(const char *conf_key, const char *value, v
- 	variable_name = strrchr(trailer_item, '.');
- 	if (!variable_name) {
- 		if (!strcmp(trailer_item, "where")) {
--			if (set_where(&default_conf_info, value) < 0)
-+			if (set_where(&default_conf_info.where, value) < 0)
- 				warning(_("unknown value '%s' for key '%s'"),
- 					value, conf_key);
- 		} else if (!strcmp(trailer_item, "ifexists")) {
--			if (set_if_exists(&default_conf_info, value) < 0)
-+			if (set_if_exists(&default_conf_info.if_exists, value) < 0)
- 				warning(_("unknown value '%s' for key '%s'"),
- 					value, conf_key);
- 		} else if (!strcmp(trailer_item, "ifmissing")) {
--			if (set_if_missing(&default_conf_info, value) < 0)
-+			if (set_if_missing(&default_conf_info.if_missing, value) < 0)
- 				warning(_("unknown value '%s' for key '%s'"),
- 					value, conf_key);
- 		} else if (!strcmp(trailer_item, "separators")) {
-@@ -533,15 +532,15 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
- 		conf->command = xstrdup(value);
- 		break;
- 	case TRAILER_WHERE:
--		if (set_where(conf, value))
-+		if (set_where(&conf->where, value))
- 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
- 		break;
- 	case TRAILER_IF_EXISTS:
--		if (set_if_exists(conf, value))
-+		if (set_if_exists(&conf->if_exists, value))
- 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
- 		break;
- 	case TRAILER_IF_MISSING:
--		if (set_if_missing(conf, value))
-+		if (set_if_missing(&conf->if_missing, value))
- 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
- 		break;
- 	default:
+@@ -977,7 +999,7 @@ void process_trailers(const char *file, struct trailer_opts *opts,
+ 	int trailer_end;
+ 	FILE *outfile = stdout;
+ 
+-	ensure_configured();
++	ensure_configured(opts);
+ 
+ 	read_input_file(&sb, file);
+ 
+@@ -1013,7 +1035,7 @@ void trailer_info_get(struct trailer_info *info, const char *str)
+ 	size_t nr = 0, alloc = 0;
+ 	char **last = NULL;
+ 
+-	ensure_configured();
++	ensure_configured(NULL);
+ 
+ 	patch_start = find_patch_start(str);
+ 	trailer_end = find_trailer_end(str, patch_start);
 diff --git a/trailer.h b/trailer.h
-index e90ba1270..f306bf059 100644
+index f306bf059..634643c9d 100644
 --- a/trailer.h
 +++ b/trailer.h
-@@ -1,11 +1,33 @@
- #ifndef TRAILER_H
+@@ -2,12 +2,14 @@
  #define TRAILER_H
  
-+enum action_where {
-+	WHERE_END,
-+	WHERE_AFTER,
-+	WHERE_BEFORE,
-+	WHERE_START
-+};
-+enum action_if_exists {
-+	EXISTS_ADD_IF_DIFFERENT_NEIGHBOR,
-+	EXISTS_ADD_IF_DIFFERENT,
-+	EXISTS_ADD,
-+	EXISTS_REPLACE,
-+	EXISTS_DO_NOTHING
-+};
-+enum action_if_missing {
-+	MISSING_ADD,
-+	MISSING_DO_NOTHING
-+};
-+
+ enum action_where {
++	WHERE_DEFAULT,
+ 	WHERE_END,
+ 	WHERE_AFTER,
+ 	WHERE_BEFORE,
+ 	WHERE_START
+ };
+ enum action_if_exists {
++	EXISTS_DEFAULT,
+ 	EXISTS_ADD_IF_DIFFERENT_NEIGHBOR,
+ 	EXISTS_ADD_IF_DIFFERENT,
+ 	EXISTS_ADD,
+@@ -15,6 +17,7 @@ enum action_if_exists {
+ 	EXISTS_DO_NOTHING
+ };
+ enum action_if_missing {
++	MISSING_DEFAULT,
+ 	MISSING_ADD,
+ 	MISSING_DO_NOTHING
+ };
+@@ -22,6 +25,9 @@ enum action_if_missing {
  struct trailer_opts {
  	int in_place;
  	int trim_empty;
++	enum action_where where;
++	enum action_if_exists if_exists;
++	enum action_if_missing if_missing;
  };
  
-+int set_where(enum action_where *item, const char *value);
-+int set_if_exists(enum action_if_exists *item, const char *value);
-+int set_if_missing(enum action_if_missing *item, const char *value);
-+
- struct trailer_info {
- 	/*
- 	 * True if there is a blank line before the location pointed to by
+ int set_where(enum action_where *item, const char *value);
 -- 
 2.13.0
-
 
