@@ -2,84 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A972B2035E
-	for <e@80x24.org>; Wed, 12 Jul 2017 21:34:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4751320357
+	for <e@80x24.org>; Wed, 12 Jul 2017 21:37:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754564AbdGLVeO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 17:34:14 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:35130 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754535AbdGLVeN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 17:34:13 -0400
-Received: by mail-wr0-f193.google.com with SMTP id y28so3125372wrd.2
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 14:34:07 -0700 (PDT)
+        id S1754056AbdGLVhW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 17:37:22 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35553 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752363AbdGLVhV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 17:37:21 -0400
+Received: by mail-pg0-f65.google.com with SMTP id d193so4421048pgc.2
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 14:37:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=P/7kCH4iel2/gxP1arfaVZKcuXCO4/IVuIWxm4UNA8I=;
-        b=CqsUU4uo2EmCdVzN6RWZE1IrP7pneJdmnK7pHss0I/nSddigeDPBcfTHo4SonkerVk
-         5KQUhI3p2/24o6lAKi2SfgPBYB1aFnqL1ikWI7MRJWdBW9aq91A3BcbUVzP52Nu/QLvK
-         Y3QDA/2hgDVxItu855pbpAEjKMLRm9ChokgYLr5FxwvUYs13cLGDDy4fT2ptOnA5Y8Fs
-         RcO1OmgFGkw7BEbtO2hqhaFbsB7tYePIRbgCsZc9SrPHaJDB5mw3NHWoeCiQwkUp7cbQ
-         FIPNos5CJ8LhUzMIfe+rpb1bYIawdqjV+/3FzTDTbDro98DERdNi6lGLmNyeQdcXiBX7
-         XNfQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=AlAAGCObQMe+LyLG5wxS/59j/oodwRBnchQtBOPhGFE=;
+        b=lljoVc5Atllrd3prAEJpI5YuW6P4j9C+fpTPkAxjnbpYgOz5N1fboWBgkbwXKUy9SO
+         +MvXBYZW9VgDZyXfp//TDpsI9+1ZDkcj31BvW2LGkoa+ed8RNLcJZPX5IOhEMhvOWqsS
+         UNO1GngA5vJ5uO4O4BdQf+SzjTrSleUZA6y9bMpJK+DfUKGCSz0LFyPJZXTdHzlB242w
+         bZvD+uyK8fRYyO23b4wpeUZ015965Y+9SvhuqVh8vq8Kokqo+VwQjVgiPs/KG4DjeP8w
+         lT8WwRb/pEkYmxVsQyVGJBTLcfJtmmoInN6/ugdyiqmp16Fcqsgsji4IkOOpsYukdMR0
+         7DuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:subject:to:cc:references:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=P/7kCH4iel2/gxP1arfaVZKcuXCO4/IVuIWxm4UNA8I=;
-        b=RkenOClkILBfSTfW+Dk2E5gPaHYDRPVy+ifZT2jNLXImrVH1bvk0Tt1e0aeZqRZCTV
-         +4tbccOiTbJdTkWLcf2aD4bMyiZbMGwu59b98wQvSMTc3KL+CnGS0IEUj5Pnsj9I5BJm
-         3Faa1ZRbICHV7Cdey/70p+STOJdWkAt8sdeanHQES3Samfa3p1Okl8MoeP/lEA3B+1Gj
-         qQ/bi9YIqksMx03K3PNOsl58C4xFak65imfYumHB4W5WRFiZdUmcuhUQ8NePFABlwzhN
-         9y8AXNOQgvCqggjbOcEFo1jeoB2qXGS6Pg4CvIXWExWxz/h/ntgUh0laDB+5Ca/CaMy7
-         Efig==
-X-Gm-Message-State: AIVw113N1wvBY14ZDLMkG0hKCydNN/YJyvlmMoefpgW06k2TDyjS0ESy
-        OBfAIpt2CctSu7i3eD0=
-X-Received: by 10.223.134.226 with SMTP id 31mr268049wry.63.1499895241741;
-        Wed, 12 Jul 2017 14:34:01 -0700 (PDT)
-Received: from [192.168.10.150] (94-39-191-51.adsl-ull.clienti.tiscali.it. [94.39.191.51])
-        by smtp.googlemail.com with ESMTPSA id u18sm3126433wrc.14.2017.07.12.14.34.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jul 2017 14:34:00 -0700 (PDT)
-Subject: Re: [PATCH 3/3] interpret-trailers: add options for actions
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20170712134646.17179-1-bonzini@gnu.org>
- <20170712134646.17179-4-bonzini@gnu.org>
- <20170712141028.2d6beecc@twelve2.svl.corp.google.com>
-From:   Paolo Bonzini <bonzini@gnu.org>
-Message-ID: <02354996-dccc-b2fb-a3b5-aa819229caa0@gnu.org>
-Date:   Wed, 12 Jul 2017 23:33:59 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=AlAAGCObQMe+LyLG5wxS/59j/oodwRBnchQtBOPhGFE=;
+        b=dxtlH1zJ6jVqNzO0aZM8Qvvfah34LqMf4Zipvwjk16gi4tPGCZ3Wd2KOH5WBEHKyje
+         jFQhZLwKPKqEzF2PXQj7cMtqc+MLhK510r1bgGya1N9ns0KnRl97yNTTVOD00TrrLrYp
+         I9S1Tbf0PxzPoS1EZbqqjzTiPkcFIM/jzkEGFOSzIPFmrZoPYZBDm/iXNaJsVTwDmVma
+         lcIyiHgXjxTtPh84u+nvcpCjdkffpxg359OHzT/3sgAGEdQ7Xw4/3Fn+xDXTp5TcIGZN
+         2tPRKU0ndcH7sUuK90ylevm9Mdhw07HelVeX1MtcVsUZN7cBy9DpzZQTAt4KOzzLUEj7
+         uo4g==
+X-Gm-Message-State: AIVw113djyutfNQ6cFfqypJznHa/OBXnXESMFm/9LV6sb3FvBQOMLiiY
+        Jis8V24FXofGbA==
+X-Received: by 10.84.218.136 with SMTP id r8mr6488336pli.205.1499895435492;
+        Wed, 12 Jul 2017 14:37:15 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:8c0d:cddc:dbb9:7a95])
+        by smtp.gmail.com with ESMTPSA id y14sm6845274pgr.1.2017.07.12.14.37.14
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 12 Jul 2017 14:37:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] RFC: Introduce '.gitorderfile'
+References: <20170711233827.23486-1-sbeller@google.com>
+        <xmqqinix1j29.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kYftkxbDY2E_=2w0VYx8COF_yc61h78gs2qaraK9HRSuA@mail.gmail.com>
+Date:   Wed, 12 Jul 2017 14:37:13 -0700
+In-Reply-To: <CAGZ79kYftkxbDY2E_=2w0VYx8COF_yc61h78gs2qaraK9HRSuA@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 12 Jul 2017 13:58:52 -0700")
+Message-ID: <xmqqzic9z69i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170712141028.2d6beecc@twelve2.svl.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07/2017 23:10, Jonathan Tan wrote:
-> When I would expect the last 2 commands to produce the same output. Maybe
-> invoke set_where(where, NULL) when "unset" is true? And change set_where()
-> accordingly. Same for the other two option parsing functions.
+Stefan Beller <sbeller@google.com> writes:
 
-Sounds good, and I'll also add a test case of course.
+> 2. collaboration.
+>     When I want to review a patch from the mailing list,
+>     I could (a) download the patch, apply locally, see the diff
+>     formatted nicely according to diff.orderFile.
 
-In fact arg is already NULL if unset is true, so the code of the three
-option parsing functions becomes simpler.
+If you are not doing a review of a patch with complex changes that
+benefits by a local diff.orderfile (i.e. only in the mail client
+without applying and viewing the changes in wider context), then you
+either (1) have a much greater memory than I do and know all the
+code outside the patch context by heart, or (2) not reviewing them
+properly in context.
 
-Thanks!
+I tend to suspect that it is the latter case, so that argument does
+not sound convincing at least to me.
 
-Paolo
+No, I do not apply all patches before commenting from my mailbox; a
+one or two-pager patch can often be viewed and judged without much
+surrounding context, and can be answered in the mail client, perhaps
+while running "less" on some related files that may or may not be
+touched by the patch in another terminal, without applying the
+patch.  But such a one or two-pager patch can be viewed in any
+presentation order and do not behefit much fro diff.orderfile
+anyway.
