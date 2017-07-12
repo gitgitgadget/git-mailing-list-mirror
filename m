@@ -2,102 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D04A6202DD
-	for <e@80x24.org>; Wed, 12 Jul 2017 16:01:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFCA5202DD
+	for <e@80x24.org>; Wed, 12 Jul 2017 16:46:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753427AbdGLQBq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 12:01:46 -0400
-Received: from ms-fb53.so-net.ne.jp ([202.238.84.157]:19798 "EHLO
-        ms-fb53.so-net.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753177AbdGLQBq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 12:01:46 -0400
-X-Greylist: delayed 4552 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Jul 2017 12:01:45 EDT
-Received: from ms-omx53.so-net.ne.jp (ms-omx53.plus.so-net.ne.jp [10.240.84.98])
-        by ms-fb53.so-net.ne.jp  with ESMTP id v6CEjrCR020173
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 23:45:54 +0900
-Received: from ms-omx61.so-net.ne.jp (ms-omx61.plus.so-net.ne.jp [10.240.84.163])
-        by ms-omx53.plus.so-net.ne.jp  with ESMTP id v6CEjkUf019706;
-        Wed, 12 Jul 2017 23:45:46 +0900
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tc4.so-net.ne.jp;
-        s=sn2017; t=1499870746;
-        bh=GN2BYJrONemGicfOzfxX6xVqktx6w9Q7S6Zf+V5bbWA=;
-        h=Date:From:To:Subject:References:In-Reply-To;
-        b=EbhLaMghN0LLbjc4XiExgpeFAoH2DfWn2zunejNq6jioieZ0pZa4bx3i0IOYOuzCK
-         ncoTwmrEr72XO3EvxoQOYiKQB2aZI740QnUnDAzb0AISSRQkiHozngPhO9TE6tUFfd
-         popCf6ZlsXbjOIiOFbGhiGUDxw1/+ywlg2bftE39RrAHXIivqtPF2Rd9Jl1k+8Eyy9
-         tsjFAcP32aWZiijchUIN12J6fODrb2qEcclj0kxXDeg8rXis45ffvOiglEELtnIrz5
-         Fd0MZh1TF6XThQfbH6PKYOtXOaGkq+vlvmM9ucH6ZNikyqU2FptlSPQLqX6rA88zzm
-         ZZQsqFOm7R6MQ==
-Received: from goofy.localdomain ([IPv6:240f:f:1023:1:71ac:83be:141b:873b])
-        (authenticated)
-        by ms-omx61.plus.so-net.ne.jp  with ESMTP id v6CEjk63018006
-        (using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-        Wed, 12 Jul 2017 23:45:46 +0900
-Received: from osamu by goofy.localdomain with local (Exim 4.89)
-        (envelope-from <osamu.aoki@tc4.so-net.ne.jp>)
-        id 1dVIte-0002mI-Hd; Wed, 12 Jul 2017 23:45:46 +0900
-Date:   Wed, 12 Jul 2017 23:45:46 +0900
-From:   Osamu Aoki <osamu.aoki@tc4.so-net.ne.jp>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: git <-> cvs synch script with git cvsexportcommit -W
-Message-ID: <20170712144546.ac3pvwe3jwxqf675@tc4.so-net.ne.jp>
-References: <20150713123855.GA3773@goofy.local>
- <alpine.DEB.2.21.1.1707121540460.4193@virtualbox>
+        id S1753672AbdGLQqb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 12:46:31 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34793 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753543AbdGLQqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 12:46:30 -0400
+Received: by mail-pf0-f193.google.com with SMTP id c24so3864400pfe.1
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 09:46:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zw7kBsR9OIIOPAEElb+ieX78JlkPHaVG5RmwCTr21/Q=;
+        b=TZV/1HK9abw5moAU8a3XHivSz9LqqrPua7jSXByCipow2VzVfMeY/iT4PhHR33snYk
+         3yfwzHdJvdNIrXZpGHwcZiiLWoBPJm6eDINnc7aupltv4GSeG+mcsuf/AtBENMAPegAV
+         8YfsazYnREMuNASmyvP9Csco1TEgdrr12HXa/BojJmTxCBWCfLBCiW8n80RhEuRsvwEG
+         hRhjPIE/vJBt05T7s/qVn7cXbIrSdxpO+dHcVd0mCpHjVbWV+REH+ujrJTQFYtjz2skO
+         XdP28XBsP0zhUDsiby5P9Qbg4t5U+hOls4hSLPS2F6hSlXZsvyDM5/S0IO+Z3sNg3m4d
+         v8LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zw7kBsR9OIIOPAEElb+ieX78JlkPHaVG5RmwCTr21/Q=;
+        b=Nvx532gdu1OtcrBxhlF6zdxCdzPc2q+MOSzj0Kro3455nBHrMnbE6EvXQANC5UW8fC
+         Bs7h8OvJ3B8yPBYKD0sLer8Zr4JojERlborzNGWYXRYPSHcSfuogF5E/py5LKj+iWrsq
+         8kTlpE0pAI0gn0hQB4+ITEqDvZxImxnou30Q7Egm8H3rkYFHlKFGaBN1Io4XRm4oX5c/
+         vaQA5iTaICdL+/uiDOlXh8ZwA+j6djQ3R6uJihM5nRoChLOoVb2Z7JTAOrQDQVNwBYwx
+         we1BLRTdyjEf+LHhlG7P4ZPxEFo5ETb7Fo8eeK1jFg3wkBIa3SQXJaLJVPvOoOVSjv8q
+         myVQ==
+X-Gm-Message-State: AIVw110bOFpHdx/aRLq5Emzk4rIi4twwkkKKjxHjISDJB+gSqeLkHiuj
+        IFANujh9ru2EHg==
+X-Received: by 10.84.229.79 with SMTP id d15mr5251207pln.4.1499877989868;
+        Wed, 12 Jul 2017 09:46:29 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:8c0d:cddc:dbb9:7a95])
+        by smtp.gmail.com with ESMTPSA id h90sm8697305pfh.133.2017.07.12.09.46.25
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 12 Jul 2017 09:46:26 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Andreas Krey <a.krey@gmx.de>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [PATCH] gc: run pre-detach operations under lock
+References: <20170704075758.GA22249@inner.h.apk.li>
+        <20170705082027.ujddejajjlvto7bp@sigill.intra.peff.net>
+        <20170706133124.GB1216@inner.h.apk.li>
+        <CAGyf7-FnaWM=XNb_Skb1qR4vu_jAw-5swkgWpEDQqwM0NNq3YQ@mail.gmail.com>
+        <20170711044553.GG3786@inner.h.apk.li>
+        <20170711072536.ijpldg4uxb5pbtdw@sigill.intra.peff.net>
+        <20170711090635.swowex7yry7kqb7v@sigill.intra.peff.net>
+Date:   Wed, 12 Jul 2017 09:46:25 -0700
+In-Reply-To: <20170711090635.swowex7yry7kqb7v@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 11 Jul 2017 05:06:35 -0400")
+Message-ID: <xmqqvamx1u3i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.21.1.1707121540460.4193@virtualbox>
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-Here is my old mail with updated pointer.  This may be useful for people
-to migrate git to cvs while keeping cvs up-to-date.
+> Instead, we can do something a bit simpler: take the lock
+> only for the duration of the pre-detach work, then detach,
+> then take it again for the post-detach work. Technically,
+> this means that the post-detach lock could lose to another
+> process doing pre-detach work. But in the long run this
+> works out.
 
-On Wed, Jul 12, 2017 at 03:41:58PM +0200, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 13 Jul 2015, Osamu Aoki wrote:
-> 
-> > Thanks for "git cvsexportcommit -W" feature.
-> >   http://git.kernel.org/cgit/git/git.git/commit/?id=d775734c40afed216160437c59a45c93bdf28689
-> > 
-> > It took me a while to get this working right.  I may have made a bit of
-> > error in the way, but it looks like I need to have 
-> > 
-> >  $ cat .git/info/exclude
-> > CVS
-> > 
-> > to avaid error when commiting more than 2 commts.  Is this what you
-> > expect?
-> > 
-> > I am trying to emulate git-svn for CVS using this and others.  I am
-> > making a first trial script as seen at:
-> >   https://wiki.debian.org/CvsusingGit
-> >   https://people.debian.org/~osamu/git-cvs.sh (my current trial script.)
+You might have found this part gross, but I actually don't.  It
+looks like a reasonable practical compromise, and I tried to think
+of a scenario that this would do a wrong thing but I didn't---it is
+not like we carry information off-disk from the pre-detach to
+post-detach work to cause the latter make decisions on it, so this
+"split into two phrases" looks fairly safe.
 
-Since then I updated wiki page and then moved script to github.
-
-https://github.com/osamuaoki/git-cvs
-
-> Sorry, this completely slipped through and bit-rotted in my inbox for two
-> years (there are still 2,000+ friends in my inbox that paid your mail
-> company).
-
-Oh, well happens.
-
-> Would you mind sending a mail about git-cvs.sh to git@vger.kernel.org for
-> much wider visibility?
-
-OK.  Here we go.
-
-Osamu
