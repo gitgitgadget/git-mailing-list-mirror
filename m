@@ -2,164 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E63711F661
-	for <e@80x24.org>; Wed, 12 Jul 2017 20:30:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FD951F661
+	for <e@80x24.org>; Wed, 12 Jul 2017 20:38:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753198AbdGLUac (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 16:30:32 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:36222 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753175AbdGLUa3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 16:30:29 -0400
-Received: by mail-wm0-f51.google.com with SMTP id 62so4988537wmw.1
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 13:30:29 -0700 (PDT)
+        id S1752710AbdGLUi1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 16:38:27 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:33607 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751862AbdGLUi0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 16:38:26 -0400
+Received: by mail-pf0-f178.google.com with SMTP id e7so18371704pfk.0
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 13:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Ny0SJaz/KscxfPilntobm/1KibGov9VHgV7+WlK5Kmo=;
-        b=ee3W/SX1tcmjvzRhOu3Je6/6+MWLvOBOrzEDCVyoQBCdyTPj+RSRs+d/56K7UbUxap
-         S0FcUQoMK8IAAgGqwGdvbgLATsFrIAwGzwA69tdiiX8Z5hvMmCUrSbM+EsFWvqrkblcC
-         r4WqkDLOfmyVAY7IXeA2gzcn8ZzyDX11Zix6uDaTFeQJZn6wSJ2ixqLeiqioyYVfA6uD
-         G+e5SkcUEZOUmU7eiPhLVDopY6uYoPu3yHiGlscF4a4BvQqbrbKNz9mpmmwZx85anRTo
-         Fvo4Z6XcNLXHgVLZ0UJkC0LbK1YHQ51TO2DVEu4FXcW0Y17o/LGIZE9DiFfYX+kMGcFQ
-         ku7g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=u9CeYCYQM1MRBS1zhQ/CuCtE+U6xYg0J0k4053ci+DU=;
+        b=A/TUbfI5fIVN9ywXdIE/qN6M3W8s3r+yEZsgC6eWIRT342dfoToH7fhLwes1Jb3c3X
+         BdBm8i7djaCJTfzt5Sla8G6ochJ1RXE+VQlgIyQw3oiZfIvy6uZjvDt+HUKvHrwyX/J2
+         dbIm2NMMJ/NdoVNPVj1eB9s0Nh9FBzl+7OKgihibN07KNhlj5NiEzdtYUYHckOU/u3So
+         91smXF8nyAU0Xp+Esgy1O6yif+pTmYJ92IV4cqtqHA22Vaj1Ni7+Trcg8bNXZCy8T1AA
+         w7Zg1y+9Rqwb59St1ZNiXPv/Xw0/E2zbxF5dPHhr0nqjVAyKXxWKz8sCwwP2yd6EO2Z1
+         lGgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Ny0SJaz/KscxfPilntobm/1KibGov9VHgV7+WlK5Kmo=;
-        b=BKbHcMNl1Dsa6e9TVfnb9yyBk/500YuCO4zs/H/VI6d3yvWS+k3HcV4H8osQGRqOWi
-         T7HIM4s52wrXeHPmdWtlLyhpAQmkPPjv+usZD8XZPtwNG9K+6EApttdmWad2UZ0Stk5m
-         054ZoMBa2KtY/Dq48XuxP5r5WPLz3NYreWTN0Zc1+lspeu9eJfTf4ehTmHLSy81Jn7bg
-         RtHB1HrEmhuUDCr51tHNM5MPi0bXNVM/aF6o2SlocH0A8IGCb6Nn2mHQ+XpLRqEbhlbP
-         vCbOm4QNbWjKpSD+y+LznpAkHQmAb/JG9Q4vZA7vnkmZDWhINMd2qb4Eltbe32uXNIyu
-         mYwQ==
-X-Gm-Message-State: AIVw113JJufUJnvnuv7dyNrBvaO/bhAnEne2FZYTL6szKZg9dTaRwNdR
-        JRGQjCod+2PLJWmn8Ac=
-X-Received: by 10.28.55.5 with SMTP id e5mr3997086wma.32.1499891428097;
-        Wed, 12 Jul 2017 13:30:28 -0700 (PDT)
-Received: from snth (g74110.upc-g.chello.nl. [80.57.74.110])
-        by smtp.gmail.com with ESMTPSA id c2sm2727950wre.22.2017.07.12.13.30.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Jul 2017 13:30:26 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dVOHB-0005ul-DD; Wed, 12 Jul 2017 22:30:25 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: git gc --auto aquires *.lock files that make a subsequent git-fetch error out
-References: <20130126224038.GA20849@sigill.intra.peff.net> <87bmopzbqx.fsf@gmail.com> <20170712200054.mxcabiyttijpbkbb@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <20170712200054.mxcabiyttijpbkbb@sigill.intra.peff.net>
-Date:   Wed, 12 Jul 2017 22:30:25 +0200
-Message-ID: <87a849z9cu.fsf@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=u9CeYCYQM1MRBS1zhQ/CuCtE+U6xYg0J0k4053ci+DU=;
+        b=KM9phQuXn+aXzMYmNlyN98ruDmM3xp8vFnSp7GOGrFLx7h6TV/LF+XDF6ug5tDl7Az
+         qOQu5X38Sk8J2J85R/nIPbJIcmaG53CkCGDzaQktCTaA5FX+6wwoghzp/fhLicFS2hAk
+         ODUBhRK9xyoBnQJM+CO+V+ahY95WudNktf4imNvoWBju1xTcoIcQ6yAN37X+AkMqMNvq
+         IW6q6TyJYaMHrVH/x8f5CI4id5Ij1yq7/yxAzY02UvUbarqvjRCeFnUp+vwQlcS1ii60
+         kPS6ExwApwlArPICi4SgdpZ0ceDW1UHRRZsmzm1rBXFKK4ViO4+FBlgkh4Tzo66841sg
+         n5kQ==
+X-Gm-Message-State: AIVw110Vz/ST9wAptQhRkKPfGoasOT358JmSheymuh3KKSkU5IWkoJPZ
+        FwrTYp3dbhE7r52pCeY=
+X-Received: by 10.98.97.66 with SMTP id v63mr37199422pfb.230.1499891905807;
+        Wed, 12 Jul 2017 13:38:25 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:25ad:9264:1cd0:bb62])
+        by smtp.gmail.com with ESMTPSA id i27sm7896749pfi.82.2017.07.12.13.38.24
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 12 Jul 2017 13:38:24 -0700 (PDT)
+Date:   Wed, 12 Jul 2017 13:38:22 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 3/3] sha1_file: add promised blob hook support
+Message-ID: <20170712203822.GH93855@aiede.mtv.corp.google.com>
+References: <cover.1499800530.git.jonathantanmy@google.com>
+ <34efd9e9936fdab331655f5a33a098a72dc134f4.1499800530.git.jonathantanmy@google.com>
+ <8366d1de-3552-50fc-7a6c-7cfc3219181b@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8366d1de-3552-50fc-7a6c-7cfc3219181b@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Wed, Jul 12 2017, Jeff King jotted:
+Ben Peart wrote:
+> On 7/11/2017 3:48 PM, Jonathan Tan wrote:
 
-> On Wed, Jul 12, 2017 at 09:38:46PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>> Teach sha1_file to invoke a hook whenever a blob is requested and
+>> unavailable but is promised. The hook is a shell command that can be
+>> configured through "git config"; this hook takes in a list of hashes and
+>> writes (if successful) the corresponding objects to the repo's local
+>> storage.
 >
->> In 131b8fcbfb ("fetch: run gc --auto after fetching", 2013-01-26) first
->> released with v1.8.2 Jeff changed git-fetch to run "git gc --auto"
->> afterwards.
->>
->> This means that if you run two git fetches in a row the second one may
->> fail because it can't acquire the *.lock files on the remote branches you
->> have & which the next git-fetch needs to update.
->
-> Is it really "in a row" that's a problem? The second fetch should not
-> begin until the first one is done, including until its auto-gc exits.
-> And even with background gc, we do the ref-locking operations first, due
-> to 62aad1849 (gc --auto: do not lock refs in the background,
-> 2014-05-25).
->
->> I happen to run into this on a git.git which has a lot of remotes (most
->> people on-list whose remotes I know about) and fetch them in parallel:
->>
->>     $ git config alias.pfetch
->>     !parallel 'git fetch {}' ::: $(git remote)
->
-> Ah, so it's not in a row. It's parallel. Then yes, you may run into
-> problems with the gc locks conflicting with real operations. This isn't
-> really unique to fetch. Any simultaneous operation can run into problems
-> (e.g., on a busy server repo you may see conflicts between pack-refs and
-> regular pushes).
+> This would seem to work well for promised blobs but does it
+> currently support other object types?  In our large mono repos, we
+> have to support missing commits and trees as well.
 
-This is what I thought at first, and I've only encountered the issue in
-this parallel mode (mainly because it's tedious to reproduce). But I
-think the traces below show that it would happen with "git fetch --all"
-& "git remote update" as well, so the parallel invocations didn't
-matter.
+Can you elaborate on this?  This is the first time I've heard about
+it.
 
-I.e. I'd just update my first remote, then git-gc would start in the
-background and lock refs for my other remotes, which I'd then fail to
-update.
+Are you omitting commits and trees today?  How does that work with
+commits --- is it something different from shallow clone?
 
->> And so would 'git fetch --all':
->>
->>     $ GIT_TRACE=1 git fetch --all 2>&1|grep --line-buffered built-in|grep -v rev-list
->>     19:31:26.273577 git.c:328               trace: built-in: git 'fetch' '--all'
->>     19:31:26.278869 git.c:328               trace: built-in: git 'fetch' '--append' 'origin'
->>     19:31:27.993312 git.c:328               trace: built-in: git 'gc' '--auto'
->>     19:31:27.995855 git.c:328               trace: built-in: git 'fetch' '--append' 'avar'
->>     19:31:29.656925 git.c:328               trace: built-in: git 'gc' '--auto'
->>
->> I think those two cases are bugs (but ones which I don't have the
->> inclination to chase myself beyond sending this E-Mail). We should be
->> running the 'git gc --auto' at the very end of the entire program, not
->> after fetching every single remote.
->>
->> Passing some env variable (similar to the config we pass via the env) to
->> subprograms to make them avoid "git gc --auto" so the main process can
->> do it would probably be the most simple solution.
->
-> Yes, I agree that's poor. Ideally there would be a command-line option
-> to tell the sub-fetches not to run auto-gc. It could be done with:
->
->   git -c gc.auto=0 fetch --append ...
->
-> Or we could even take the "--append" as a hint not to run auto-gc.
->
->> The more general case (such as with my parallel invocation) is harder to
->> solve.
->
-> Yes, I don't think it can solved. The most general case is two totally
-> unrelated processes which know nothing about each other.
->
->> Maybe "git gc --auto" should have a heuristic so it checks whether
->> there's been recent activity on the repo, and waits until there's been
->> say 60 seconds of no activity, or alternatively if it's waited 600
->> seconds and hasn't run gc yet.
->
-> That sounds complicated.
->
->> Ideally a "real" invocation like git-fetch would have a way to simply
->> steal any *.lock a background "git gc --auto" creates, aborting the gc
->> but allowing the "real" invocation to proceed. But that sounds even
->> trickier to implement, and might without an extra heuristic on top
->> postpone gc indefinitely.
->
-> The locks are generally due to ref-packing and reflog expiration.  I
-> think in the long run, it would be nice to move to a ref store that
-> didn't need packing, and that could do reflog expiration more
-> atomically.
->
-> I think the way "reflog expire" is done holds the locks for a lot longer
-> than is strictly necessary, too (it actually computes reachability for
-> --expire-unreachable on the fly while holding some locks).
->
-> -Peff
+[...]
+> There are a couple of related patch series in flight that are
+> playing in this area. We should definitely coordinate these various
+> efforts.
+
+In that spirit, I've created
+https://github.com/jrn/git-large-repositories so we have a shared
+place to keep track of pointers to the mailing list, etc.  I'll push
+the links mentioned to there now.
+
+I'm also usually available on IRC (channel #git-devel on freenode,
+username jrnieder) for real-time conversation.  Logs are available at
+http://colabti.org/irclogger/irclogger_logs/git-devel.  You can
+prepend a message with [off] if you want it not to be logged.
+
+Thanks,
+Jonathan
