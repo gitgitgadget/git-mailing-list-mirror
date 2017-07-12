@@ -6,74 +6,68 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 664292035A
-	for <e@80x24.org>; Wed, 12 Jul 2017 00:05:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42A7D2035A
+	for <e@80x24.org>; Wed, 12 Jul 2017 00:07:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755735AbdGLAFA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 20:05:00 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34518 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755627AbdGLAFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 20:05:00 -0400
-Received: by mail-pg0-f51.google.com with SMTP id t186so3766874pgb.1
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 17:04:59 -0700 (PDT)
+        id S1755819AbdGLAHK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 20:07:10 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:33434 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754818AbdGLAHJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 20:07:09 -0400
+Received: by mail-pg0-f54.google.com with SMTP id k14so3804268pgr.0
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 17:07:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=WqUusuB/9Qa8UnZylcDF8UWfNFNwNsgSc5dkccx6M8Q=;
-        b=ExQ5SO5uWBUt/DXBRN3NMbz6UgF/DZiGWuy3spDQC6s5dZ3wiuQDutvUr8hbFF2Z6p
-         ZE8lF5onXS1B3cd+F0C6Uf1829aQqIb58DkXJkUaUJ2yR4GnyGjYfYR51CrKJVZrd3V0
-         +/BHVQjadw06eHrH1J/Wf6odJbcOQIygeZRsLFk3uFYS063TjYT8UzrapdGTzN0+V34u
-         5mUCOmEHhIHPRdXU446oQBL6cspzUwAp6O6K6e11QgXN12Phu7xBD/yXktTdY/NfCuO7
-         gc7CRONl4STSarQ7Ue2hyCvzeKn8f6ekwM/EDiqqxLuPUmNaopPti6ol6Mc8pSEGW+U8
-         a3Sg==
+        bh=pgLx+KwsiZYRVTZw0LtIPYi+roCwYL/a8tl+pu7zK5M=;
+        b=Wh2C/FQFohS1pmY4J9DnbIpfSQHsp+hGX2axVutcfT4/1sfx+/sFKuXE/LDicdH7wL
+         2HFaaFI0f8PG2bbSrs6j69P4O9WUJokT6RWDTQc4tEdvYxAelkeA4Cm07p9wCQpo+qVX
+         w7tGR3K1Wr8qNcSEQZ00F+74xPr8KTMuvQjwZqSMHlXJ8W03jyZz1SR4qzjMgGFYi4Y2
+         QXVR7KJiuj/zWdXZj0IISrK9sxCcnhH8G8ZWNZOTvFmKPAxgk2xIbL6Ywbp/pJP+nELp
+         hoRqPTiw6qVRl/Um6P/5fphanxz4q9nqDqvVlWF9rwtJfrgwDsurQuYVIPGFjQC/trJD
+         cZqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=WqUusuB/9Qa8UnZylcDF8UWfNFNwNsgSc5dkccx6M8Q=;
-        b=ub5G67ckVWf0hrkuOmaEmrwyreEGv//EZXuYWANDkkFOtvbNHbUjB0N/be+M4AkadC
-         R8W5b5vIlXLIttgyhMij1Lzwun7ksPS9r9PH11Q6wb5LRsorIzjIodhCXgDnNzBaDwAR
-         Dh0wz3nNapS+jNmj8mtCVzdguCHc6R9lKRTBddi2cipRIxbSpor3WXheuUhrUfNuTeRM
-         Df2wvcstPffCD2U/d5DcTq5WiiokjfdNLHOUsqWzKsxqGx450lMbKe3otURuRr2PuqfE
-         2u09rFW2d1CCrIbAaFTU8HEugNCMHELM66SjYwwndBHUbZ5JQNtrZkiJg+4OuUt0hy0t
-         OB1Q==
-X-Gm-Message-State: AIVw110jjX/4SW4UC7BCSRb4K38ShfPUlWjUmtJpDvYjvUQ1sXkf5L21
-        PAcoO/qn1cvT7WmMnq28GeqN1Q8QYhQA4Yy6Jg==
-X-Received: by 10.99.149.83 with SMTP id t19mr982881pgn.247.1499817898853;
- Tue, 11 Jul 2017 17:04:58 -0700 (PDT)
+        bh=pgLx+KwsiZYRVTZw0LtIPYi+roCwYL/a8tl+pu7zK5M=;
+        b=Dt6Uj+0/DyMVqJ9PSpHSW1dVPjy3EdUV5yaU8zwnQS0kXzQWOxFcX4ev3Vj1RuV1Pr
+         vbopjpGN8rlNWdW/BSF26eWeg1fKmUqNlqNgbjy/e7dWARWC3AEqYz136HNi20FK+TIQ
+         PlEIXbzoIn8iZqEjUz3xq9bd3gWrf3XlRDvwrmvwJLXfRlpia/ge5xtmPfmT53pzKH7H
+         vMfZPB4wyoEV/jliv4Btk8Jan8EAyc2L9iFEKsJFxWwCfYv7n6Digm0ONTr19XOLswSp
+         iQPAqqbhON0DJiR5Z9Z8j/RGkdYYPyEeFuwYlMmMCwqEnzfVWWAiN/rsMUf0eUrk9uf0
+         jo/g==
+X-Gm-Message-State: AIVw112yNc38CEy3R2im79qbJ31Q3rt+BqLa4b2eyiaHdkoi7BY90RFk
+        +qQhzBTw0xmK5MSxMafZxX5zyaBCbRQz
+X-Received: by 10.99.54.73 with SMTP id d70mr1016767pga.195.1499818028392;
+ Tue, 11 Jul 2017 17:07:08 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Tue, 11 Jul 2017 17:04:58 -0700 (PDT)
-In-Reply-To: <20170711220408.173269-4-bmwill@google.com>
-References: <20170711220408.173269-1-bmwill@google.com> <20170711220408.173269-4-bmwill@google.com>
+Received: by 10.100.167.81 with HTTP; Tue, 11 Jul 2017 17:07:07 -0700 (PDT)
+In-Reply-To: <20170712000042.GC93855@aiede.mtv.corp.google.com>
+References: <20170711220408.173269-1-bmwill@google.com> <20170711220408.173269-3-bmwill@google.com>
+ <20170712000042.GC93855@aiede.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 11 Jul 2017 17:04:58 -0700
-Message-ID: <CAGZ79kbUggNeiijOWdZX__HSd5uZ1M+TnVb2Gkik9AZpZZeQKQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] grep: recurse in-process using 'struct repository'
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Tue, 11 Jul 2017 17:07:07 -0700
+Message-ID: <CAGZ79kYet0aE20EoPEwy9CRsbzJ_oBNMr2km4J2L+6hXk9dDYg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] setup: have the_repository use the_index
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 11, 2017 at 3:04 PM, Brandon Williams <bmwill@google.com> wrote:
+On Tue, Jul 11, 2017 at 5:00 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> +       if (repo_submodule_init(&submodule, superproject, path))
-> +               return 0;
+>  /* The main repository */
+> -static struct repository the_repo;
+> +static struct repository the_repo = { .index = &the_index };
 
-What happens if we go through the "return 0", do we rather want to
-print an error ?
-
-> +       /* add objects to alternates */
-> +       add_to_alternates_memory(submodule.objectdir);
-
-Not trying to make my object series more important than it is... but
-we really don't want to spread this add_to_alternates_memory hack. :/
-
-I agree with Jacob that a patch with such a diffstat is a joy to review. :)
-
-Thanks,
-Stefan
+https://public-inbox.org/git/20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net/
+specifically said we'd not use all the features today
+but want to have the test balloon long enough up in
+the air? (So this is just a critique of the syntax, I agree on the content)
