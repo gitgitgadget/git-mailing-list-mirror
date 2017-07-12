@@ -2,91 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02F96202DD
-	for <e@80x24.org>; Wed, 12 Jul 2017 17:27:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6870202DD
+	for <e@80x24.org>; Wed, 12 Jul 2017 17:29:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754047AbdGLR1s (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 13:27:48 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:34959 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753913AbdGLR1r (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 13:27:47 -0400
-Received: by mail-pf0-f173.google.com with SMTP id c73so16181847pfk.2
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 10:27:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=U/7wg4dzozwcxC+fIizvSZHzk+FXz1quazkBBsXBzqA=;
-        b=ec70Eom+TdmAPgpHus1ixMmIMMEl2fwJjO11ezlATNPVZzWSSMv4lHapm7RiktmRVd
-         Fg0d+wZ5cgw9MiTAO7PPPvaKzQFYpHfmTmagydHq1EjbidNBrFiw3jwbcHzt2x5YaFPr
-         HPqwfEkHZkAAuEHx3SjW5QK0iL0CfjjJsR4dkuPv58KzzIYZ136XinQKJUXbQOgGUxxK
-         frcZKUPql3y1pDofps7hl0K5tC3oSxFnzahzs35C/uJ2nYH5Egki7hot5jgSjxLNRAa/
-         ELCX6U42QQ/ldDXIOvAzx+LW4G0HrfAEH+UW8QxjhsuqTJcOUOnauzHUC5VOYbCuiIdl
-         N9BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=U/7wg4dzozwcxC+fIizvSZHzk+FXz1quazkBBsXBzqA=;
-        b=q4mwGKqtTIWuiwSkOJ2sueQGV0BdaT8A6ZJ44n4q/reh/51+4bpGjtmib1pn4GLCby
-         ORnI8Ppz1suPVK5tuliqs05r79DiYyn+cXrI3hIXRstxAARyOrpq+zIOV+ScHAV4PU7P
-         PnsCh1UsQfkjfD0bx15V2O4NAkx0K4TbA1OPAAxITZ7GkqU+Vglpmne6wNfoym4Vv17F
-         lsNZ5Aq/ZQy3zOch8ZrWChEi+tW2eY6fCv0y4Wg98N4deXme1VEJsmV4uDOEUqwPD3ou
-         f7yGRHFUXNL+O9Jwb33ISUDZpw4ASmLU0OzaCHRZ+9nLDbDuFPcjKNGFZASfszY6OEb8
-         LoxA==
-X-Gm-Message-State: AIVw113dW4pD5an+KZg5ThPsDZhHVAwTeiBbNFrC5IXK4ow3f/T/DGlA
-        L6OfR8vHHSHCgCYS
-X-Received: by 10.99.104.129 with SMTP id d123mr4882817pgc.236.1499880466554;
-        Wed, 12 Jul 2017 10:27:46 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:3d1f:bb9:8897:56b4])
-        by smtp.gmail.com with ESMTPSA id f2sm5839117pgc.17.2017.07.12.10.27.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 12 Jul 2017 10:27:45 -0700 (PDT)
-Date:   Wed, 12 Jul 2017 10:27:44 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH 1/3] repo_read_index: don't discard the index
-Message-ID: <20170712172744.GB65927@google.com>
-References: <20170711220408.173269-1-bmwill@google.com>
- <20170711220408.173269-2-bmwill@google.com>
- <20170711235116.GB93855@aiede.mtv.corp.google.com>
+        id S1754096AbdGLR3O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 13:29:14 -0400
+Received: from siwi.pair.com ([209.68.5.199]:15919 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753913AbdGLR3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 13:29:13 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 26A3F8457E;
+        Wed, 12 Jul 2017 13:29:12 -0400 (EDT)
+Received: from [10.160.98.76] (unknown [167.220.148.229])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id E2C3084579;
+        Wed, 12 Jul 2017 13:29:11 -0400 (EDT)
+Subject: Re: [RFC PATCH 1/3] promised-blob, fsck: introduce promised blobs
+To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+References: <cover.1499800530.git.jonathantanmy@google.com>
+ <f9c7d4b3f800ea31e85e4897ee7048fec1e3c2f0.1499800530.git.jonathantanmy@google.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <890a36fc-be16-83bc-fec6-94e21d0f7d0a@jeffhostetler.com>
+Date:   Wed, 12 Jul 2017 13:29:11 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170711235116.GB93855@aiede.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <f9c7d4b3f800ea31e85e4897ee7048fec1e3c2f0.1499800530.git.jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/11, Jonathan Nieder wrote:
-> Brandon Williams wrote:
-> 
-> > Have 'repo_read_index()' behave more like the other read_index family of
-> > functions and don't discard the index if it has already been populated.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  repository.c | 2 --
-> >  1 file changed, 2 deletions(-)
-> 
-> How did you discover this?  E.g. was it from code inspection or does
-> this make the function more convenient to use for some kinds of callers?
 
-When working on another series I realized that some code paths may end
-up calling read_index() a bunch and I want to prevent discarding and
-then re-reading the same index over and over again if/when those calls
-are migrated to using repo_read_index.
 
+On 7/11/2017 3:48 PM, Jonathan Tan wrote:
+> Currently, Git does not support repos with very large numbers of blobs
+> or repos that wish to minimize manipulation of certain blobs (for
+> example, because they are very large) very well, even if the user
+> operates mostly on part of the repo, because Git is designed on the
+> assumption that every blob referenced by a tree object is available
+> somewhere in the repo storage.
 > 
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> As a first step to reducing this problem, introduce the concept of
+> promised blobs. Each Git repo can contain a list of promised blobs and
+> their sizes at $GIT_DIR/objects/promisedblob. This patch contains
+> functions to query them; functions for creating and modifying that file
+> will be introduced in later patches.
 
--- 
-Brandon Williams
+
+As part of my on-going effort on partial/narrow clone/fetch I've also
+looked at how to represent the set of omitted objects and whether or
+not we should even try.
+
+My primary concern is scale and managing the list of objects over time.
+
+My fear is that this list will be quite large.  If we only want to omit
+the very large blobs, then maybe not.  But if we want to expand that
+scope to also omit other objects (such as a clone synchronized with a
+sparse checkout), then that list will get large on large repos.  For
+example, on the Windows repo we have (conservatively) 100M+ blobs (and
+growing).  Assuming 28 bytes per, gives a 2.8GB list to be manipulated.
+
+If I understand your proposal, newly-omitted blobs would need to be
+merged into the promised-blob list after each fetch.  The fetch itself
+may not have that many new entries, but inserting them into the existing
+list will be slow.  Also, mmap'ing and bsearch'ing will likely have
+issues.  And there's likely to be a very expensive step to remove
+entries from the list as new blobs are received (or locally created).
+
+In such a "sparse clone", it would be nice to omit unneeded tree objects
+in addition to just blobs.   I say that because we are finding with GVFS
+on the Windows repo, that even with commits-and-trees-only filtering,
+the number of tree objects is overwhelming.  So I'm also concerned about
+limiting the list to just blobs.  If we need to have this list, it
+should be able to contain any object.  (Suggesting having an object type
+in the entry.)
+
+I assume that we'll also need a promised-blob.lock file to control
+access during list manipulation.  This is already a sore spot with the
+index; I'd hate to create another one.
+
+I also have to wonder about the need to have a complete list of omitted
+blobs up front.  It may be better to just relax the consistency checks
+and assume a missing blob is "intentionally missing" rather than
+indicating a corruption somewhere.  And then let the client do a later
+round-trip to either demand-load the object -or- demand-load the
+existence/size info if/when it really matters.
+
+Maybe we should add a verb to your new fetch-blob endpoint to just get
+the size of one or more objects to help with this.
+
+Thanks,
+Jeff
+
