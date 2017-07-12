@@ -2,90 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DB4B202DD
-	for <e@80x24.org>; Wed, 12 Jul 2017 15:02:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D04A6202DD
+	for <e@80x24.org>; Wed, 12 Jul 2017 16:01:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752928AbdGLPCh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 11:02:37 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:37150 "EHLO mx1.redhat.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751054AbdGLPCg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 11:02:36 -0400
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mx1.redhat.com (Postfix) with ESMTPS id A1E7B61D0F;
-        Wed, 12 Jul 2017 15:02:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com A1E7B61D0F
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=pbonzini@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com A1E7B61D0F
-Received: from [10.36.116.38] (ovpn-116-38.ams2.redhat.com [10.36.116.38])
-        by smtp.corp.redhat.com (Postfix) with ESMTPS id D0F4A6046D;
-        Wed, 12 Jul 2017 15:02:34 +0000 (UTC)
-Subject: Re: [PATCH 0/3] interpret-trailers: add --where, --if-exists,
- --if-missing
-To:     Christian Couder <christian.couder@gmail.com>,
-        Paolo Bonzini <bonzini@gnu.org>
-Cc:     git <git@vger.kernel.org>
-References: <20170712134646.17179-1-bonzini@gnu.org>
- <CAP8UFD0bwb+Zeqn8Xg24J_Z639NiT3Awjzstk6o_L-Q+Wh+c0g@mail.gmail.com>
-From:   Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <3be619bd-9018-f328-7cbe-1dd8c93b8d19@redhat.com>
-Date:   Wed, 12 Jul 2017 17:02:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.0
+        id S1753427AbdGLQBq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 12:01:46 -0400
+Received: from ms-fb53.so-net.ne.jp ([202.238.84.157]:19798 "EHLO
+        ms-fb53.so-net.ne.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753177AbdGLQBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 12:01:46 -0400
+X-Greylist: delayed 4552 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Jul 2017 12:01:45 EDT
+Received: from ms-omx53.so-net.ne.jp (ms-omx53.plus.so-net.ne.jp [10.240.84.98])
+        by ms-fb53.so-net.ne.jp  with ESMTP id v6CEjrCR020173
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 23:45:54 +0900
+Received: from ms-omx61.so-net.ne.jp (ms-omx61.plus.so-net.ne.jp [10.240.84.163])
+        by ms-omx53.plus.so-net.ne.jp  with ESMTP id v6CEjkUf019706;
+        Wed, 12 Jul 2017 23:45:46 +0900
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tc4.so-net.ne.jp;
+        s=sn2017; t=1499870746;
+        bh=GN2BYJrONemGicfOzfxX6xVqktx6w9Q7S6Zf+V5bbWA=;
+        h=Date:From:To:Subject:References:In-Reply-To;
+        b=EbhLaMghN0LLbjc4XiExgpeFAoH2DfWn2zunejNq6jioieZ0pZa4bx3i0IOYOuzCK
+         ncoTwmrEr72XO3EvxoQOYiKQB2aZI740QnUnDAzb0AISSRQkiHozngPhO9TE6tUFfd
+         popCf6ZlsXbjOIiOFbGhiGUDxw1/+ywlg2bftE39RrAHXIivqtPF2Rd9Jl1k+8Eyy9
+         tsjFAcP32aWZiijchUIN12J6fODrb2qEcclj0kxXDeg8rXis45ffvOiglEELtnIrz5
+         Fd0MZh1TF6XThQfbH6PKYOtXOaGkq+vlvmM9ucH6ZNikyqU2FptlSPQLqX6rA88zzm
+         ZZQsqFOm7R6MQ==
+Received: from goofy.localdomain ([IPv6:240f:f:1023:1:71ac:83be:141b:873b])
+        (authenticated)
+        by ms-omx61.plus.so-net.ne.jp  with ESMTP id v6CEjk63018006
+        (using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
+        Wed, 12 Jul 2017 23:45:46 +0900
+Received: from osamu by goofy.localdomain with local (Exim 4.89)
+        (envelope-from <osamu.aoki@tc4.so-net.ne.jp>)
+        id 1dVIte-0002mI-Hd; Wed, 12 Jul 2017 23:45:46 +0900
+Date:   Wed, 12 Jul 2017 23:45:46 +0900
+From:   Osamu Aoki <osamu.aoki@tc4.so-net.ne.jp>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: git <-> cvs synch script with git cvsexportcommit -W
+Message-ID: <20170712144546.ac3pvwe3jwxqf675@tc4.so-net.ne.jp>
+References: <20150713123855.GA3773@goofy.local>
+ <alpine.DEB.2.21.1.1707121540460.4193@virtualbox>
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD0bwb+Zeqn8Xg24J_Z639NiT3Awjzstk6o_L-Q+Wh+c0g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Wed, 12 Jul 2017 15:02:35 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.21.1.1707121540460.4193@virtualbox>
+User-Agent: NeoMutt/20170113 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/07/2017 16:47, Christian Couder wrote:
-> On Wed, Jul 12, 2017 at 3:46 PM, Paolo Bonzini <bonzini@gnu.org> wrote:
->>
->> These options are useful to experiment with "git interpret-trailers"
->> without having to tinker with .gitconfig.  It can also be useful in the
->> oddball case where you want a different placement for the trailer.
->>
->> The case that stimulated the creation of the patches was configuring
->>
->>      trailer.signed-off-by.where = end
->>
->> and then wanting "--where before" when a patch author forgets his
->> Signed-off-by and provides it in a separate email.
+Hi,
+
+Here is my old mail with updated pointer.  This may be useful for people
+to migrate git to cvs while keeping cvs up-to-date.
+
+On Wed, Jul 12, 2017 at 03:41:58PM +0200, Johannes Schindelin wrote:
+> Hi,
 > 
-> Maybe you could have used the following to temporarily override the config:
+> On Mon, 13 Jul 2015, Osamu Aoki wrote:
 > 
-> git -c trailer.signed-off-by.where=before interpret-trailers ...
-> 
-> But it could be helpful and more straightforward to provide the
-> options you implemented.
+> > Thanks for "git cvsexportcommit -W" feature.
+> >   http://git.kernel.org/cgit/git/git.git/commit/?id=d775734c40afed216160437c59a45c93bdf28689
+> > 
+> > It took me a while to get this working right.  I may have made a bit of
+> > error in the way, but it looks like I need to have 
+> > 
+> >  $ cat .git/info/exclude
+> > CVS
+> > 
+> > to avaid error when commiting more than 2 commts.  Is this what you
+> > expect?
+> > 
+> > I am trying to emulate git-svn for CVS using this and others.  I am
+> > making a first trial script as seen at:
+> >   https://wiki.debian.org/CvsusingGit
+> >   https://people.debian.org/~osamu/git-cvs.sh (my current trial script.)
 
-That works indeed---and I have now learnt that $GIT_CONFIG_PARAMETERS
-makes "git -c" work across my thick layers of aliases!  The main
-disadvantage is that it is harder to discover than a command-line option.
+Since then I updated wiki page and then moved script to github.
 
-Also, I have scripts which pass the --trailer argument is passed
-unmodified to "git interpret-trailers", and the command-line argument
-avoids the need to parse the trailer to figure out the -c option.  In
-particular, in my case the separator is always ":", but in general that
-may not be the case.
+https://github.com/osamuaoki/git-cvs
 
-> I am not sure also if --where should override both "trailer.where" and
-> "trailer.<token>.where", or if should just override the former.
+> Sorry, this completely slipped through and bit-rotted in my inbox for two
+> years (there are still 2,000+ friends in my inbox that paid your mail
+> company).
 
-I think it should override both, otherwise you have different behavior
-depending on whether trailer.<token>.where is defined or not.
+Oh, well happens.
 
-Paolo
+> Would you mind sending a mail about git-cvs.sh to git@vger.kernel.org for
+> much wider visibility?
+
+OK.  Here we go.
+
+Osamu
