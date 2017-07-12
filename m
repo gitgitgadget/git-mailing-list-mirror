@@ -2,156 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 212B620357
-	for <e@80x24.org>; Wed, 12 Jul 2017 19:06:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D6C7202DD
+	for <e@80x24.org>; Wed, 12 Jul 2017 19:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752827AbdGLTGz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 15:06:55 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:33117 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752434AbdGLTGz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 15:06:55 -0400
-Received: by mail-pg0-f47.google.com with SMTP id k14so17508099pgr.0
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 12:06:54 -0700 (PDT)
+        id S1752321AbdGLTNA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 15:13:00 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34048 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751075AbdGLTM7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 15:12:59 -0400
+Received: by mail-wm0-f66.google.com with SMTP id p204so732589wmg.1
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 12:12:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gDI7mfNGVoUvs8DOHjBv1lv2hdOHxoKfW0Dki0cU89w=;
-        b=oV8L2qF/POiUsvLR0SESNEl4LVrP+toSdmb9RoBMlD+2HTHtiCjgqDZ0fd0fxrgCKi
-         baPVJ1Ku2e1uRp1KS/cpsTVijjBmduI7+Cdhljv2n0olprby9JcigLf69ihBaS72Bgxi
-         XWnf/U/+NQXcelTKOWCvzz4WjksOPVM6nten4N31YZ6gXtavSYYPdGZEj6K+CLzddB6i
-         aRhZJ8CbAd0uvGLacEg2ApaBuLZInZX0T0UptZY8OFASyrTLWjbSxFC2Mene2z0w6xhb
-         Aqf/pPBAX7CJg+XQVrS+WFPxjLC9IpUE6FRmdYHbDypnClsh7tA/B7IdsaaCtjIMWPve
-         mEeQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=gyNr4H9JybGT6J6rL+dJf4vU0e+65DITFx73XX6Yhi4=;
+        b=F94ARoieg/5XKirqnVrXDXtahCUhc9j1sCvFlVfJ92jiracjVI3hBMW+LWTa+/IPlW
+         dnPdVgWBiGAXtjhNdh0uWyuZprLSK8I3dxFQK2sNNIWi9CSngzX4obZ5gwTaZqAsQXEq
+         kO3FZAMLaNtiqYLaN33Z1CBieRIc8iVKoSeamQUen+pUqTBgs/DpTk7x95XXlHsYayKU
+         WsMFmqXX/it6RFQk9KDuVyorRwQdpllJCR+Bj/KnsH4PGnLcCof8dc/8Z/8w9gpS++Z0
+         j3iAfuIBi18O19W94g+Yvt2pVDG/0fRjSfrBaAeG4IwsIt0QeCGWDzgayBnxFRFZWDrQ
+         NYOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=gDI7mfNGVoUvs8DOHjBv1lv2hdOHxoKfW0Dki0cU89w=;
-        b=iqQO3pBiaLs7jgHKkI0aLZL1kJWYsVCQlbT+Q8ggv5B4LQ8s5xzreC6lSiR/Bt8KzM
-         X2Oju15Dpp9XHj1b3n6EvYl6nXEsyT3M/LUm4KTWfKmjWKI9CRiwlauSK2jnK+sVZZ2e
-         a1cTAXNKIWVQu01Gyhyuk/YVr93y2NlGtkIQMOvcREpGIh855KH/j+K40a0lP3QtG85f
-         gMBTP0HftVQoSQOsxzKFyPnWWMMzGmIdaMebSylXrCx3GSXEXMDAezDgESSIhZM8Xt+u
-         fv31kiCv0QbQr6OVsF7NXejiqqGiLQlQSeSgootwRNhDpsl5PcOt0D6GrT7tuMX8+JKq
-         qP0w==
-X-Gm-Message-State: AIVw111Pages1UIt8e7UZXp60BUHIO2mbTzAQ0YHIpj3v8khBLMqw7lM
-        iqIvTtoRFNx9xAdA
-X-Received: by 10.99.158.18 with SMTP id s18mr5173899pgd.113.1499886413970;
-        Wed, 12 Jul 2017 12:06:53 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:1ce6:29df:5a5f:94ee])
-        by smtp.gmail.com with ESMTPSA id g79sm6853284pfg.121.2017.07.12.12.06.53
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 12 Jul 2017 12:06:53 -0700 (PDT)
-Date:   Wed, 12 Jul 2017 12:06:47 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC/PATCH v4 00/49] Add initial experimental external ODB
- support
-Message-ID: <20170712120647.6340f75a@twelve2.svl.corp.google.com>
-In-Reply-To: <20170620075523.26961-1-chriscool@tuxfamily.org>
-References: <20170620075523.26961-1-chriscool@tuxfamily.org>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=gyNr4H9JybGT6J6rL+dJf4vU0e+65DITFx73XX6Yhi4=;
+        b=qD6DMn3955/I79YzaNoLAtUFtMKyvJ0UbmvX+adGlqCDxMG/kIAJGAhu69t/PEf8yf
+         C1kneaUllDOPOV9MtDahLTHn0uX0d3IRRsesPkJhZcn6/pC3U0utzAo8yNwaMykxPyzN
+         ua6iZRl52/TffKsEMVFQhir6L8TyG0HdxOduheMipnZDJqnpMmRsOOfUuAtOzGljJF2D
+         IikTpS8csxx2TK/WzEwuctz1YOEKa0oLLz8kdTwFcfp+tppLu61VuGApb/f091nTap9V
+         90i7GJKzXUtwAYncImWjf2FGfCJFZciu1XNCRnYRu6Mgbm2LliKBo0RcjGjW1G3Od7oB
+         gFsg==
+X-Gm-Message-State: AIVw112MxUGEN3/qircktxI4RSwb7MkTXnN9BzRUhMg3ORS8eePJsSax
+        KVTHGdtIR4xwuA==
+X-Received: by 10.28.225.5 with SMTP id y5mr3759209wmg.18.1499886777716;
+        Wed, 12 Jul 2017 12:12:57 -0700 (PDT)
+Received: from snth (g74110.upc-g.chello.nl. [80.57.74.110])
+        by smtp.gmail.com with ESMTPSA id k45sm2781057wrk.45.2017.07.12.12.12.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 12 Jul 2017 12:12:56 -0700 (PDT)
+Received: from avar by snth with local (Exim 4.84_2)
+        (envelope-from <avarab@gmail.com>)
+        id 1dVN4B-0004gk-JU; Wed, 12 Jul 2017 21:12:55 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>,
+        =?utf-8?Q?R?= =?utf-8?Q?en=C3=A9?= Scharfe <l.s.r@web.de>,
+        Andreas Schwab <schwab@linux-m68k.org>,
+        Git List <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] strbuf: use designated initializers in STRBUF_INIT
+References: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net> <4d4f2af7-60b9-5866-50bc-ecf002f74cba@gmail.com> <xmqqeftn3s7t.fsf@gitster.mtv.corp.google.com>
+User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
+In-reply-to: <xmqqeftn3s7t.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 12 Jul 2017 21:12:55 +0200
+Message-ID: <87d195zcy0.fsf@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 20 Jun 2017 09:54:34 +0200
-Christian Couder <christian.couder@gmail.com> wrote:
 
-> Git can store its objects only in the form of loose objects in
-> separate files or packed objects in a pack file.
-> 
-> To be able to better handle some kind of objects, for example big
-> blobs, it would be nice if Git could store its objects in other object
-> databases (ODB).
+On Tue, Jul 11 2017, Junio C. Hamano jotted:
 
-Thanks for this, and sorry for the late reply. It's good to know that
-others are thinking about "missing" objects in repos too.
+> Ben Peart <peartben@gmail.com> writes:
+>
+>>> If this patch can survive a few releases without complaint,
+>>> then we can feel more confident that designated initializers
+>>> are widely supported by our user base.  It also is an
+>>> indication that other C99 features may be supported, but not
+>>> a guarantee (e.g., gcc had designated initializers before
+>>> C99 existed).
+>>
+>> Correct.  MSVC also supports designated initializers but does not
+>> fully support C99.
+>
+> Thanks for a datapoint.
+>
+> Just so that people do not misunderstand, it is not our goal to
+> declare that now you need a fully C99 compiler to build Git.
+>
+> When deciding what shell scripting tools with what options in our
+> scripted Porcelains and tests, we use POSIX.1 as a rough guideline.
+> We say "let's not use this, as it is not even in POSIX" but we never
+> say "use of it is OK because it is in POSIX", and we sometimes even
+> say "even it is in POSIX, various implementation of it is buggy and
+> it does not work properly in practice" to certain things [*1*].
+>
+> C89 has been the base of such a guideline for our C programs, and
+> people must not to view this patch as an attempt to raise the base
+> to C99.  It is rather an attempt to see how far we can safely raise
+> the base by checking some selected useful new features [*2*] that we
+> have had occasions to wish that they were available, and designated
+> initializer for structure fields is one of them.
+>
+> We may find out that, after starting with "C89, plus this and that
+> feature that are known to be commonly supported", the guideline may
+> become more succinct to say "C99, minus this and that feature that
+> are not usable on some platforms", if it turns out that majority of
+> the systems that are not fully C99 have all of the things we care
+> about.  We do not know yet, and we are only at the beginning of the
+> journey to find it out.
 
->   - "have": the helper should respond with the sha1, size and type of
->     all the objects the external ODB contains, one object per line.
+I think in the context of this desire Johannes Sixt's "Actually, I'm
+serious [about let's compile with c++]"[1] should be given some more
+consideration.
 
-This should work well if we are not caching this "have" information
-locally (that is, if the object store can be accessed with low latency),
-but I am not sure if this will work otherwise. I see that you have
-proposed a local cache-using method later in the e-mail - my comments on
-that are below.
+I've just compiled Git with it and it passes all tests. I think the
+endeavor is worthwhile in itself as C++ source-level compatibility for
+git.git is clearly easy to achieve, and would effectively give us access
+to more compilers (albeit in different modes, but they may discover
+novel bugs that also apply to the C mode code).
 
->   - "get <sha1>": the helper should then read from the external ODB
->     the content of the object corresponding to <sha1> and pass it to
-> Git.
+Most of his patch is just avoiding C++ keywords, e.g. new -> wen, try ->
+try_, this -> this_, namespace -> name_space, template -> templ
+etc. It's going to be relatively easy to avoid a few keywords as
+variable names, especially if we set up CI for it via Travis.
 
-This makes sense - I have some patches [1] that implement this with the
-"fault_in" mechanism described in your e-mail.
+But why do it? Aside from the "more compilers" argument, we may find
+that it's going to be much easier to use some C99 features we want by
+having C++ source-level compatibility, and on compilers like that may
+not support those features in C use the C++ mode that may support those.
 
-[1] https://public-inbox.org/git/cover.1499800530.git.jonathantanmy@google.com/
+I don't know enough about e.g. MSVC to say if that's the case, but if so
+that might be an easier way to use some C99 features.
 
-> * Transfering information
-> 
-> To tranfer information about the blobs stored in external ODB, some
-> special refs, called "odb ref", similar as replace refs, are used in
-> the tests of this series, but in general nothing forces the helper to
-> use that mechanism.
-> 
-> The external odb helper is responsible for using and creating the refs
-> in refs/odbs/<odbname>/, if it wants to do that. It is free for
-> example to just create one ref, as it is also free to create many
-> refs. Git would just transmit the refs that have been created by this
-> helper, if Git is asked to do so.
-> 
-> For now in the tests there is one odb ref per blob, as it is simple
-> and as it is similar to what git-lfs does. Each ref name is
-> refs/odbs/<odbname>/<sha1> where <sha1> is the sha1 of the blob stored
-> in the external odb named <odbname>.
-> 
-> These odb refs point to a blob that is stored in the Git
-> repository and contain information about the blob stored in the
-> external odb. This information can be specific to the external odb.
-> The repos can then share this information using commands like:
-> 
-> `git fetch origin "refs/odbs/<odbname>/*:refs/odbs/<odbname>/*"`
-> 
-> At the end of the current patch series, "git clone" is teached a
-> "--initial-refspec" option, that asks it to first fetch some specified
-> refs. This is used in the tests to fetch the odb refs first.
-> 
-> This way only one "git clone" command can setup a repo using the
-> external ODB mechanism as long as the right helper is installed on the
-> machine and as long as the following options are used:
-> 
->   - "--initial-refspec <odbrefspec>" to fetch the odb refspec
->   - "-c odb.<odbname>.command=<helper>" to configure the helper
+If not C++ support would be interesting for other reasons. Johannes
+Sixt: It would be very nice to get those patches on-list.
 
-A method like this means that information about every object is
-downloaded, regardless of which branches were actually cloned, and
-regardless of what parameters (e.g. max blob size) were used to control
-the objects that were actually cloned.
+1. 962da692-8874-191c-59d4-65b9562cf87f@kdbg.org
+   (https://public-inbox.org/git/962da692-8874-191c-59d4-65b9562cf87f@kdbg.org/)
 
-We could make, say, one "odb ref" per size and branch - for example,
-"refs/odbs/master/0", "refs/odbs/master/1k", "refs/odbs/master/1m", etc.
-- and have the client know which one to download. But this wouldn't
-scale if we introduce different object filters in the clone and fetch
-commands.
-
-I think that it is best to have upload-pack send this information
-together with the packfile, since it knows exactly what objects were
-omitted, and therefore what information the client needs. As discussed
-in a sibling e-mail, clone/fetch already needs to be modified to omit
-objects anyway.
+> [Footnote]
+>
+> *1* Like `backtick` command substitutions that is very hard to make
+>     them nest properly and impossible to mix portably with quoting.
+>
+> *2* New, relative to our current practice, that is.
