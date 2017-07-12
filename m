@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89334202DD
-	for <e@80x24.org>; Wed, 12 Jul 2017 13:46:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F32B202DD
+	for <e@80x24.org>; Wed, 12 Jul 2017 13:46:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752448AbdGLNqz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 09:46:55 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36149 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752305AbdGLNqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 09:46:53 -0400
-Received: by mail-wr0-f196.google.com with SMTP id 77so5924069wrb.3
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 06:46:52 -0700 (PDT)
+        id S1752455AbdGLNq5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 09:46:57 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:36189 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752182AbdGLNqy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 09:46:54 -0400
+Received: by mail-wr0-f195.google.com with SMTP id 77so5924400wrb.3
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 06:46:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RF1fj0iKpRnjjU3Olp+1SH+aD6aot3Qdk9bhbRLjJVg=;
-        b=UFb0WAZioesH/SQ/Jx59kI3Sx8xhBBw63cW8HWvEI+TFiamsB6aWInBsAn4QfkG1Qn
-         9VNE3PlAVdNhdm1m9k6BOpJIWZrK8VV1vpK4CoJ3388ZRkyotJLBINte+/NoYRld11jz
-         pDcFhs3SYDQHxjr5PPFhNxCd9LzqVwLlqJe2elCnjZ4o6K8ODTLpobeDIAZblfASDmad
-         4hzt+me535CpuECW/qx1ouptVR0ZqTE3+BLR/SkfJJhISSKrU+n1l458cYKgHnxap7pT
-         huQFkI3E9sn0uzROqbv22WIREDeA/KN6CQL4PeKhuyVU6hpfqpC/pNF+jdovhvQozYcD
-         on3w==
+        bh=ZguaG4V15TYDgNVuB/OcjKQj9WK7074ckKURWOezifs=;
+        b=lZiRvouyLgVQgd/DYqUzY26L13dMDe/mdJlYwPDL6OIJjhZZqJ9kL8SgAiemXkOh5M
+         slK8iLABAOaK0tDXvLG87w4nHqYSz2Q4ErCcva98Z3vohL7UMDP728csVa9IcRZzoD0f
+         MML52tlsn7Gu3WOy6Q789deJmGZmGs3ZItbqnKIoWlgsimlWu7mIA+EHj6kyzANCTq1z
+         ke8PHenVrQC/OkQ7GDCEerqqaaRGpmVodD0natT83K+OpFO1joEZPJ56vNLFW6I+Xj4N
+         Yz+s0TEu0FYDgVumLLpQufLIqCHuauH6kEXVVfNaAlFz27fbgSomkIPEz3LUg3EYaWe5
+         rhcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=RF1fj0iKpRnjjU3Olp+1SH+aD6aot3Qdk9bhbRLjJVg=;
-        b=d6TLj5pG8xcxMp3jMd1bekkFaxiYPrUQcIrfr91RnxTMFfiLueFj/Rz3pCdBdPjI3j
-         O0rVgw+3kaKJd6tB5+mhmjQ7y9ZbPB0l8/3EsfW+N+SWle5bRMiuIqqwj6Bxt/tpVK0/
-         536a0r6MXrg+TSs6PNjZDJj+RVowZ8lNftxx1I4PC5vLTVXvAScoRT6fnirdAzSk4Gk+
-         9X6zSKMYoSon36X4lblSdf7syOIb4pw7ouI7SnjcSC4Iawcl40FHrEgTDRXdLAUWBXko
-         H7v6dww+RuQSEcaQ9kyZZikBQxx6bW123Zio6PxXMbh+qJnkF65mzblgkazqglT86RdX
-         tBlQ==
-X-Gm-Message-State: AIVw113b6kh91nbixVgIQh9EiTS5AWhpFMJ0ntf2HUF+Th8DMWMQ2X5j
-        3onBjWbCj+e58n/4W7c=
-X-Received: by 10.28.220.212 with SMTP id t203mr2725719wmg.13.1499867211487;
-        Wed, 12 Jul 2017 06:46:51 -0700 (PDT)
+        bh=ZguaG4V15TYDgNVuB/OcjKQj9WK7074ckKURWOezifs=;
+        b=TBJBp9Zk11Fn3re+xxmhkf3q133IJatQdgTPL8JPrx58+OYpWeUOr5rcO6B7uqyH0P
+         5dHXiPHiv3iMo9a3utVCnWbO6n1FHha/oNJYJ/clLRldDBlKHVL94UzBbij2eB6rHKTf
+         eJ3+Fe08hzIhcT21X09M77r+zrrF7KDNty/epfqlaYJlpYs1AT5AdC2i/mCwwJGWpOBj
+         4/na4aeDFqyro9P8nfK+z3r4NofWLEkRE/SCug+YiM5wXBHGJ/iuGkmmeRb0crQIZYg7
+         /yDWKTDWcs7s0fD4lf7H4aqaNnJzdjRgFy5mXiHVP+MlFXVO9tRtqEV/tJMbLAo8yPuq
+         OnLw==
+X-Gm-Message-State: AIVw1112lNccwQ1puyHO9g5+9hTz+Dbpg9kuaLSK/5nUQqpthb2nrEN8
+        Alr4OHWSIUqFzQyRPkQ=
+X-Received: by 10.223.148.129 with SMTP id 1mr3183513wrr.28.1499867212716;
+        Wed, 12 Jul 2017 06:46:52 -0700 (PDT)
 Received: from donizetti.redhat.com (94-39-191-51.adsl-ull.clienti.tiscali.it. [94.39.191.51])
-        by smtp.gmail.com with ESMTPSA id 55sm3437950wrt.36.2017.07.12.06.46.50
+        by smtp.gmail.com with ESMTPSA id 55sm3437950wrt.36.2017.07.12.06.46.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Jul 2017 06:46:50 -0700 (PDT)
+        Wed, 12 Jul 2017 06:46:52 -0700 (PDT)
 From:   Paolo Bonzini <bonzini@gnu.org>
 To:     git@vger.kernel.org
 Cc:     Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 1/3] trailers: create struct trailer_opts
-Date:   Wed, 12 Jul 2017 15:46:44 +0200
-Message-Id: <20170712134646.17179-2-bonzini@gnu.org>
+Subject: [PATCH 2/3] trailers: export action enums and corresponding lookup functions
+Date:   Wed, 12 Jul 2017 15:46:45 +0200
+Message-Id: <20170712134646.17179-3-bonzini@gnu.org>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170712134646.17179-1-bonzini@gnu.org>
 References: <20170712134646.17179-1-bonzini@gnu.org>
@@ -63,134 +63,184 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-Pass the command-line arguments as a pointer to a new struct.  This
-will be extended soon to include more options.
+Separate the mechanical changes out of the next patch.  The functions
+are changed to take a pointer to enum, because struct conf_info is not
+going to be public.
+
+Write down the defaults explicitly in default_conf_info, since they are
+not anymore close to default_conf_info and it's not obvious which
+constant has value 0.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- builtin/interpret-trailers.c | 13 ++++++-------
- trailer.c                    | 14 ++++++++------
- trailer.h                    |  7 ++++++-
- 3 files changed, 20 insertions(+), 14 deletions(-)
+ trailer.c | 51 +++++++++++++++++++++++++--------------------------
+ trailer.h | 22 ++++++++++++++++++++++
+ 2 files changed, 47 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 175f14797..6528680b5 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -18,13 +18,12 @@ static const char * const git_interpret_trailers_usage[] = {
- 
- int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- {
--	int in_place = 0;
--	int trim_empty = 0;
-+	struct trailer_opts opts = { 0 };
- 	struct string_list trailers = STRING_LIST_INIT_NODUP;
- 
- 	struct option options[] = {
--		OPT_BOOL(0, "in-place", &in_place, N_("edit files in place")),
--		OPT_BOOL(0, "trim-empty", &trim_empty, N_("trim empty trailers")),
-+		OPT_BOOL(0, "in-place", &opts.in_place, N_("edit files in place")),
-+		OPT_BOOL(0, "trim-empty", &opts.trim_empty, N_("trim empty trailers")),
- 		OPT_STRING_LIST(0, "trailer", &trailers, N_("trailer"),
- 				N_("trailer(s) to add")),
- 		OPT_END()
-@@ -36,11 +35,11 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
- 	if (argc) {
- 		int i;
- 		for (i = 0; i < argc; i++)
--			process_trailers(argv[i], in_place, trim_empty, &trailers);
-+			process_trailers(argv[i], &opts, &trailers);
- 	} else {
--		if (in_place)
-+		if (opts.in_place)
- 			die(_("no input file given for in-place editing"));
--		process_trailers(NULL, in_place, trim_empty, &trailers);
-+		process_trailers(NULL, &opts, &trailers);
- 	}
- 
- 	string_list_clear(&trailers, 0);
 diff --git a/trailer.c b/trailer.c
-index 751b56c00..a3eb42818 100644
+index a3eb42818..558c52431 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -164,13 +164,14 @@ static void print_tok_val(FILE *outfile, const char *tok, const char *val)
- 		fprintf(outfile, "%s%c %s\n", tok, separators[0], val);
- }
+@@ -10,11 +10,6 @@
+  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
+  */
  
--static void print_all(FILE *outfile, struct list_head *head, int trim_empty)
-+static void print_all(FILE *outfile, struct list_head *head,
-+		      struct trailer_opts *opts)
- {
- 	struct list_head *pos;
- 	struct trailer_item *item;
- 	list_for_each(pos, head) {
- 		item = list_entry(pos, struct trailer_item, list);
--		if (!trim_empty || strlen(item->value) > 0)
-+		if (!opts->trim_empty || strlen(item->value) > 0)
- 			print_tok_val(outfile, item->token, item->value);
+-enum action_where { WHERE_END, WHERE_AFTER, WHERE_BEFORE, WHERE_START };
+-enum action_if_exists { EXISTS_ADD_IF_DIFFERENT_NEIGHBOR, EXISTS_ADD_IF_DIFFERENT,
+-			EXISTS_ADD, EXISTS_REPLACE, EXISTS_DO_NOTHING };
+-enum action_if_missing { MISSING_ADD, MISSING_DO_NOTHING };
+-
+ struct conf_info {
+ 	char *name;
+ 	char *key;
+@@ -24,7 +19,11 @@ struct conf_info {
+ 	enum action_if_missing if_missing;
+ };
+ 
+-static struct conf_info default_conf_info;
++static struct conf_info default_conf_info = {
++	.where = WHERE_END,
++	.if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR,
++	.if_missing = MISSING_ADD,
++};
+ 
+ struct trailer_item {
+ 	struct list_head list;
+@@ -374,44 +373,44 @@ static void process_trailers_lists(struct list_head *head,
  	}
  }
-@@ -968,7 +969,8 @@ static FILE *create_in_place_tempfile(const char *file)
- 	return outfile;
+ 
+-static int set_where(struct conf_info *item, const char *value)
++int set_where(enum action_where *item, const char *value)
+ {
+ 	if (!strcasecmp("after", value))
+-		item->where = WHERE_AFTER;
++		*item = WHERE_AFTER;
+ 	else if (!strcasecmp("before", value))
+-		item->where = WHERE_BEFORE;
++		*item = WHERE_BEFORE;
+ 	else if (!strcasecmp("end", value))
+-		item->where = WHERE_END;
++		*item = WHERE_END;
+ 	else if (!strcasecmp("start", value))
+-		item->where = WHERE_START;
++		*item = WHERE_START;
+ 	else
+ 		return -1;
+ 	return 0;
  }
  
--void process_trailers(const char *file, int in_place, int trim_empty, struct string_list *trailers)
-+void process_trailers(const char *file, struct trailer_opts *opts,
-+		      struct string_list *trailers)
+-static int set_if_exists(struct conf_info *item, const char *value)
++int set_if_exists(enum action_if_exists *item, const char *value)
  {
- 	LIST_HEAD(head);
- 	LIST_HEAD(arg_head);
-@@ -980,7 +982,7 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
+ 	if (!strcasecmp("addIfDifferent", value))
+-		item->if_exists = EXISTS_ADD_IF_DIFFERENT;
++		*item = EXISTS_ADD_IF_DIFFERENT;
+ 	else if (!strcasecmp("addIfDifferentNeighbor", value))
+-		item->if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
++		*item = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
+ 	else if (!strcasecmp("add", value))
+-		item->if_exists = EXISTS_ADD;
++		*item = EXISTS_ADD;
+ 	else if (!strcasecmp("replace", value))
+-		item->if_exists = EXISTS_REPLACE;
++		*item = EXISTS_REPLACE;
+ 	else if (!strcasecmp("doNothing", value))
+-		item->if_exists = EXISTS_DO_NOTHING;
++		*item = EXISTS_DO_NOTHING;
+ 	else
+ 		return -1;
+ 	return 0;
+ }
  
- 	read_input_file(&sb, file);
- 
--	if (in_place)
-+	if (opts->in_place)
- 		outfile = create_in_place_tempfile(file);
- 
- 	/* Print the lines before the trailers */
-@@ -990,14 +992,14 @@ void process_trailers(const char *file, int in_place, int trim_empty, struct str
- 
- 	process_trailers_lists(&head, &arg_head);
- 
--	print_all(outfile, &head, trim_empty);
-+	print_all(outfile, &head, opts);
- 
- 	free_all(&head);
- 
- 	/* Print the lines after the trailers as is */
- 	fwrite(sb.buf + trailer_end, 1, sb.len - trailer_end, outfile);
- 
--	if (in_place)
-+	if (opts->in_place)
- 		if (rename_tempfile(&trailers_tempfile, file))
- 			die_errno(_("could not rename temporary file to %s"), file);
- 
+-static int set_if_missing(struct conf_info *item, const char *value)
++int set_if_missing(enum action_if_missing *item, const char *value)
+ {
+ 	if (!strcasecmp("doNothing", value))
+-		item->if_missing = MISSING_DO_NOTHING;
++		*item = MISSING_DO_NOTHING;
+ 	else if (!strcasecmp("add", value))
+-		item->if_missing = MISSING_ADD;
++		*item = MISSING_ADD;
+ 	else
+ 		return -1;
+ 	return 0;
+@@ -471,15 +470,15 @@ static int git_trailer_default_config(const char *conf_key, const char *value, v
+ 	variable_name = strrchr(trailer_item, '.');
+ 	if (!variable_name) {
+ 		if (!strcmp(trailer_item, "where")) {
+-			if (set_where(&default_conf_info, value) < 0)
++			if (set_where(&default_conf_info.where, value) < 0)
+ 				warning(_("unknown value '%s' for key '%s'"),
+ 					value, conf_key);
+ 		} else if (!strcmp(trailer_item, "ifexists")) {
+-			if (set_if_exists(&default_conf_info, value) < 0)
++			if (set_if_exists(&default_conf_info.if_exists, value) < 0)
+ 				warning(_("unknown value '%s' for key '%s'"),
+ 					value, conf_key);
+ 		} else if (!strcmp(trailer_item, "ifmissing")) {
+-			if (set_if_missing(&default_conf_info, value) < 0)
++			if (set_if_missing(&default_conf_info.if_missing, value) < 0)
+ 				warning(_("unknown value '%s' for key '%s'"),
+ 					value, conf_key);
+ 		} else if (!strcmp(trailer_item, "separators")) {
+@@ -533,15 +532,15 @@ static int git_trailer_config(const char *conf_key, const char *value, void *cb)
+ 		conf->command = xstrdup(value);
+ 		break;
+ 	case TRAILER_WHERE:
+-		if (set_where(conf, value))
++		if (set_where(&conf->where, value))
+ 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
+ 		break;
+ 	case TRAILER_IF_EXISTS:
+-		if (set_if_exists(conf, value))
++		if (set_if_exists(&conf->if_exists, value))
+ 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
+ 		break;
+ 	case TRAILER_IF_MISSING:
+-		if (set_if_missing(conf, value))
++		if (set_if_missing(&conf->if_missing, value))
+ 			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
+ 		break;
+ 	default:
 diff --git a/trailer.h b/trailer.h
-index 65cc5d79c..e90ba1270 100644
+index e90ba1270..f306bf059 100644
 --- a/trailer.h
 +++ b/trailer.h
-@@ -1,6 +1,11 @@
+@@ -1,11 +1,33 @@
  #ifndef TRAILER_H
  #define TRAILER_H
  
-+struct trailer_opts {
-+	int in_place;
-+	int trim_empty;
++enum action_where {
++	WHERE_END,
++	WHERE_AFTER,
++	WHERE_BEFORE,
++	WHERE_START
 +};
++enum action_if_exists {
++	EXISTS_ADD_IF_DIFFERENT_NEIGHBOR,
++	EXISTS_ADD_IF_DIFFERENT,
++	EXISTS_ADD,
++	EXISTS_REPLACE,
++	EXISTS_DO_NOTHING
++};
++enum action_if_missing {
++	MISSING_ADD,
++	MISSING_DO_NOTHING
++};
++
+ struct trailer_opts {
+ 	int in_place;
+ 	int trim_empty;
+ };
+ 
++int set_where(enum action_where *item, const char *value);
++int set_if_exists(enum action_if_exists *item, const char *value);
++int set_if_missing(enum action_if_missing *item, const char *value);
 +
  struct trailer_info {
  	/*
  	 * True if there is a blank line before the location pointed to by
-@@ -22,7 +27,7 @@ struct trailer_info {
- 	size_t trailer_nr;
- };
- 
--void process_trailers(const char *file, int in_place, int trim_empty,
-+void process_trailers(const char *file, struct trailer_opts *opts,
- 		      struct string_list *trailers);
- 
- void trailer_info_get(struct trailer_info *info, const char *str);
 -- 
 2.13.0
 
