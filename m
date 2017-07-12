@@ -2,102 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B48220357
-	for <e@80x24.org>; Wed, 12 Jul 2017 21:29:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15B8420357
+	for <e@80x24.org>; Wed, 12 Jul 2017 21:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754074AbdGLV31 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 17:29:27 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:32879 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752363AbdGLV30 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 17:29:26 -0400
-Received: by mail-pf0-f194.google.com with SMTP id e199so4623674pfh.0
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 14:29:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=4CNV/hmSNmMxXreNss9vhFtPUvhpXBuSrrVHrRsdGSc=;
-        b=bXiFtnFFshphcqJfvIlrPgyqAQSOL4XJK8W2XjCgX6lAdBRIJpZ1IDvsBEf0+3c64c
-         kkw7r1GilC0hTcGSwO1roP+vW3fhAVr6fcnL7rJMJ/izwqfLRYdr1DhO+WgUznJFh9im
-         s8nZwxSaeeN2RJ9k+eVEOOfFDElbSn8cq1IqKC+++8az3NTVgmaaC5b/CdgPZxIRJ2ZV
-         ywnQQBtUH8fKAt2sl4RkFGeHn9Berga0VuEEpU7Ido+WkhTfF+nbGZg237HgVZqHDIj7
-         b5cSi3TVIptrBgbraPFl/rV5mV6Ipr6SwKg116Dffi0R6XyPNYlNEZpMsPbKeQp1aCIm
-         PlEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=4CNV/hmSNmMxXreNss9vhFtPUvhpXBuSrrVHrRsdGSc=;
-        b=RHbWuKoYjA1troUrLtX7hHfhOm0yOPie0+2zr4/PZQ9AdXmYUmg/jg9YV5UrcuRbty
-         yfr5hUbDuS8BlhcMx/EGIbdyrJhg2d75yge0PU1sSdgHJ90MULo2AtUpRusQG99bXKa6
-         IKe1kIdxQNkwO9tAGei8sP/145P4zGE49wpepOx3/+XJAVS1Hn3+ZRgDfBnVHl7acrNM
-         4ZpAZEH/1e6syFLJjyHGGtcY8XXCWgceZdUj59vqKCMhLN6jltVOt0cxAKb43hfDrc0Q
-         XOZv3PMictnzh6STEwcB9OU3R9PpyQJAabFPhyOCkgfOGH4qj/UyL1WNoYgUbQ0AeSG+
-         TtBw==
-X-Gm-Message-State: AIVw110Oj5Bmq/f3FW4A3VL2O8VHxVVD8IVb8b72nbwtrcdkrHdNXe8c
-        w7P8o8QznsQdCw==
-X-Received: by 10.84.231.194 with SMTP id g2mr6424986pln.5.1499894965260;
-        Wed, 12 Jul 2017 14:29:25 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:8c0d:cddc:dbb9:7a95])
-        by smtp.gmail.com with ESMTPSA id x85sm7403833pff.92.2017.07.12.14.29.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 12 Jul 2017 14:29:24 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     William Duclot <william.duclot@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] rebase: make resolve message clearer for inexperienced users
-References: <20170709202520.21739-1-william.duclot@gmail.com>
-        <xmqqvan06yo8.fsf@gitster.mtv.corp.google.com>
-        <20170710183101.GA13122@Haydn>
-Date:   Wed, 12 Jul 2017 14:29:23 -0700
-In-Reply-To: <20170710183101.GA13122@Haydn> (William Duclot's message of "Mon,
-        10 Jul 2017 20:31:01 +0200")
-Message-ID: <xmqq4luh1gzw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1754329AbdGLV3i (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 17:29:38 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:29173 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754228AbdGLV3g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 17:29:36 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id VPCQdRWdx23YCVPCQdojQc; Wed, 12 Jul 2017 22:29:34 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=Cob9STwD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8
+ a=uT3usiLa3QTkdZrSUroA:9 a=6U2dePAeCLcMc06K:21 a=7jjeSjo8S4f7f79F:21
+ a=QEXdDO2ut3YA:10
+Message-ID: <2A653C761F9D4326800F8223FE316913@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+        <git-for-windows@googlegroups.com>
+Cc:     <git@vger.kernel.org>
+References: <alpine.DEB.2.21.1.1707092143560.84669@virtualbox>
+Subject: Re: [git-for-windows] Call to developers with access to Windows XP
+Date:   Wed, 12 Jul 2017 22:29:32 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        format=flowed;
+        charset="UTF-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170712-10, 12/07/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfP6IB57FHsoBxIS9lDl3u7e2IFAxQy2xlu1E2OaT9tMz8a/w5q5Otd/5ERFqG1lzi/37604Htlmpe8xE/AvHXnyWhnZlOqhHEIm9/pRhrjuu7W7Zcfm6
+ G01qwsXl09xCuTkRFATMWh6SC+qy+wU7YhUN1YzXA2DDyy8T2oMSwKkWqKUvFeBjO39cGK5XtEtwf+iOrDHCb72EKLIXOO37FdE21QbmSL1x8ZiYh2TrEtah
+ m58oGy/Pqgtfj7yY6EeudQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-William Duclot <william.duclot@gmail.com> writes:
-
->>  - The original said "When you have resolved this problem", without
->>    giving a guidance how to resolve, and without saying what the
->>    problem is.  The updated one says "conflict" to clarify the
->>    "problem", and suggests "git add" as the tool to use after a
->>    manual resolition.  
->> 
->>    Modulo that there are cases where "git rm" is the right tool, the
->>    updated one is strict improvement.
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> Hi all,
 >
-> I also wrote "<conflicted_file>" when there could be several. Maybe
-> 'mark it as resolved with "git add/rm"' would be a better (and shorter)
-> formulation?
+> it has been a while since Windows XP support has been dropped from Git for
+> Windows (v2.10.0 was the last version to support it), mainly due to the
+> code changes inherited from Cygwin's code base, which discontinued
+> supporting Windows XP after version 2.5.2 (because it became way too
+> cumbersome).
+>
+> Now, as some of you recall, I was not all too happy about having to drop
+> the Windows XP support,
 
-Another potential source of confusion is if we are seeing "a"
-conflict, or multiple ones.  I'd say it is OK to treat the whole
-thing as "a conflict" that Git needs help with by the user editing
-multiple files and using multiple "git add" or "git rm".  So "mark
-it as resolved with 'git add/rm'" is fine, I would think, but
-anything that I say about UI's understandability to new people needs
-to be taken with a large grain of salt ;-).
+Thank you for having the concern. It is appreciated, at least by me.
 
-> ... I feel like a lot of git messages could be improved this way
-> to offer a UI more welcoming to inexperienced user (which is a
-> *broad* segment of users). But I am not aware of the cost of
-> translation of this kind of patch: would several patches like this
-> one be welcomed?
+> but I saw no alternative seeing as it would have
+> taken me a good chunk of time (which I have to spend instead on keeping
+> Git for Windows working on Windows versions that are *not* past their
+> end-of-life) to reinstate XP support, and it would have taken even more
+> time to keep it that way, backporting changes all the time from
+> quickly-advancing Open Source projects moving away from XP support at a
+> fast pace.
+>
+> All the same, I tried to make sure that developers out there who are eager
+> to have Windows XP support know that I am fully willing to assist them in
+> getting it back. Assisting, not as in "just whine enough and eventually I
+> will cave in and solve your problem for you", but as in "you are eager,
+> but do not know where to start? I can tell you all about it, and if you
+> get stuck, I'll help you get unstuck".
+>
+> It has been over 9 months now since the first non-XP version of Git for
+> Windows has been released, and all I heard was that some developers found
+> workarounds that work for themselves only, without even trying to share
+> anything helpful for other developers in a similar plight.
+>
+> This is not enough.
+>
+> We are now finally at a road fork where I need to know, soon, whether
+> there is anybody out there who is willing to step up to trying to get
+> Windows XP support back into Git for Windows.
 
-Surely, as long as I can depend on other reviewers who are more
-passionate about end-user experience than I am, I'll take such
-patches with their help.
+I suapect that the XP 'community' split into two parts (and not of equal 
+size).
 
-Thanks.
+The first is those who for many and various local reasons are still on/using 
+an XP machine, and would like to keep up with the Git community and the 
+coding of Git. This requires only a minimal level of competence in the deep 
+OS stuff of Windows compatability. I'm pretty much in this camp.
+
+The second sort are those who for other reasons are involved and 
+knowledgeable in the deep OS XP compatibility stuff, haven't progressed to 
+the newer and even more improved (as they say) versions of Win 7,8,10 and 
+still want to have the latest Git compiling on XP (as opposed to simply 
+accepting the last XP compative GfW version). It looks like that group is 
+thin on the ground, leaving too many issues to fall though the cracks.
+
+>
+> Side note: At this point, I am a bit sick and tired of hearing so many
+> opinions that *I* should work on that. So that won't fly. Just don't. If
+> you feel the need to whine how unfair I am even while you are unwilling to
+> lift so much as a finger to reinstate Windows XP support, just write it on
+> a piece of paper and flush it down somewhere. Don't write that email,
+> because all it would ensure is that I personally would rip out all
+> remaining XP support from Git's own source code, just to rid myself of
+> this kind of "helpful" advice. It's not worth your time, and certainly not
+> mine, either.
+>
+> Back to the subject.
+>
+> The reason for this call is a Pull Request I would like to merge:
+> https://github.com/git-for-windows/git/pull/1214. It simplifies Git for
+> Windows' pthreads emulation rather dramatically, but due to my
+> (misguided?) request, it tries to keep Windows XP support as a
+> compile-time option.
+>
+> The thing is, this code will bit-rot if there is nobody willing to spend
+> even a little bit of time on Windows XP support in Git for Windows.
+> Meaning: it will add to my maintenance burden, which is not okay.
+>
+> So my current preference would be for me to go back to the contributor of
+> PR #1214 with a profound apology for making that suggestion and wasting
+> their time unnecessarily. And then just drop the XP support of our pthread
+> emulation.
+>
+> However, I am not quite certain that I have really exhausted all my
+> options for reaching active developers who are interested enough in
+> Git for Windows' reinstating Windows XP support that they are willing to
+> put in the effort to make it so.
+>
+> Did I reach you, active developers? This is my final attempt to do so...
+
+While it is still regrettable, I think your initial decision, as noted at 
+the beginning, is/will be the right decision. I'm happy to accept that, and 
+do thank you for all the effort on maintining GfW, and its XP support for as 
+long as you did. Many thanks.
+
+At some point I will have to update my tech, once the family budget holder 
+releases the funds ;-)
+--
+Philip
+
+
+>
+> Ciao,
+> Johannes
+>
+> 
+
