@@ -2,84 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8A0720357
-	for <e@80x24.org>; Wed, 12 Jul 2017 21:19:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B48220357
+	for <e@80x24.org>; Wed, 12 Jul 2017 21:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753791AbdGLVTJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Jul 2017 17:19:09 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:33717 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753598AbdGLVTI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Jul 2017 17:19:08 -0400
-Received: by mail-pg0-f41.google.com with SMTP id k14so18955774pgr.0
-        for <git@vger.kernel.org>; Wed, 12 Jul 2017 14:19:08 -0700 (PDT)
+        id S1754074AbdGLV31 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Jul 2017 17:29:27 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:32879 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752363AbdGLV30 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Jul 2017 17:29:26 -0400
+Received: by mail-pf0-f194.google.com with SMTP id e199so4623674pfh.0
+        for <git@vger.kernel.org>; Wed, 12 Jul 2017 14:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/dBpcCrZafpQW9Uxsr0L1lxz6hmbMeApcrClT4f4nB0=;
-        b=Qvli74RReB5m8Jju0zBdIeFmW9iEAnYLnTzs5lS6Ya0/ZmxlrgfrAw1DwPQ76m01K5
-         t3dC8egfXq/a1qR/VnXQuWDZW40JGPVky+o5/WS+sqHtc3bMHoVGeDzLD8O19a23J8Q5
-         lA5EvAAYNxojAbYdgf9meyoob4Sg1x/WpWJeVwoB/eQoIvgXX02dUVPf/8ZAbrMT2fV6
-         305XBHQFtKj7uEMW0Yi8O4Y7WWsm0ENtgqSU+4/zCjpSztMyAxhWguP9BtvHFAxl62os
-         ge+pNi2bzV1ZoEBc4OE5BMxtxBJU8AwlAwrHjEbNDkK0kxt8vosV+/e/d7CEM/ndVMQi
-         /yfg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4CNV/hmSNmMxXreNss9vhFtPUvhpXBuSrrVHrRsdGSc=;
+        b=bXiFtnFFshphcqJfvIlrPgyqAQSOL4XJK8W2XjCgX6lAdBRIJpZ1IDvsBEf0+3c64c
+         kkw7r1GilC0hTcGSwO1roP+vW3fhAVr6fcnL7rJMJ/izwqfLRYdr1DhO+WgUznJFh9im
+         s8nZwxSaeeN2RJ9k+eVEOOfFDElbSn8cq1IqKC+++8az3NTVgmaaC5b/CdgPZxIRJ2ZV
+         ywnQQBtUH8fKAt2sl4RkFGeHn9Berga0VuEEpU7Ido+WkhTfF+nbGZg237HgVZqHDIj7
+         b5cSi3TVIptrBgbraPFl/rV5mV6Ipr6SwKg116Dffi0R6XyPNYlNEZpMsPbKeQp1aCIm
+         PlEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/dBpcCrZafpQW9Uxsr0L1lxz6hmbMeApcrClT4f4nB0=;
-        b=Qlmou4vz9CqJnGbnStENWfrEIn2g+gsgUT+9nGUre1ejM907cWSwyM33ENh0xBkDXv
-         OpCCrtvNdBQN7s9h/mfof3klp9x9Wo/G1rAzuOhxBrZ11HHad2eY+ggP2tg2PNcyUPR3
-         BRrFtwM6fn3VpCVwt+I11lnBQkpJpOaXax3ofRfo/OzDly21tLYX/bTP4fHL9pfwWtKv
-         sHYL97utKOYJAXKoK0mlEOrwnuB2QHp+xGYIWLQiIaACt2O1CcIq80/GMiZheU7PTMzR
-         T4cUaT9EibTKIr/kptlpkLZV8JFZLPp7L03bHTJg0wO7VT/FcemLgOW51VmX88oUfa20
-         4rHQ==
-X-Gm-Message-State: AIVw113eOSWYVXtWvf4o5dvrOGFP6Qa7mdngZMheuHe6P71SL6/piqq4
-        9hgAFrUG1pJHaizrBEEqXg==
-X-Received: by 10.84.217.214 with SMTP id d22mr6220610plj.269.1499894348054;
-        Wed, 12 Jul 2017 14:19:08 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:1ce6:29df:5a5f:94ee])
-        by smtp.gmail.com with ESMTPSA id z86sm7867168pfl.40.2017.07.12.14.19.07
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4CNV/hmSNmMxXreNss9vhFtPUvhpXBuSrrVHrRsdGSc=;
+        b=RHbWuKoYjA1troUrLtX7hHfhOm0yOPie0+2zr4/PZQ9AdXmYUmg/jg9YV5UrcuRbty
+         yfr5hUbDuS8BlhcMx/EGIbdyrJhg2d75yge0PU1sSdgHJ90MULo2AtUpRusQG99bXKa6
+         IKe1kIdxQNkwO9tAGei8sP/145P4zGE49wpepOx3/+XJAVS1Hn3+ZRgDfBnVHl7acrNM
+         4ZpAZEH/1e6syFLJjyHGGtcY8XXCWgceZdUj59vqKCMhLN6jltVOt0cxAKb43hfDrc0Q
+         XOZv3PMictnzh6STEwcB9OU3R9PpyQJAabFPhyOCkgfOGH4qj/UyL1WNoYgUbQ0AeSG+
+         TtBw==
+X-Gm-Message-State: AIVw110Oj5Bmq/f3FW4A3VL2O8VHxVVD8IVb8b72nbwtrcdkrHdNXe8c
+        w7P8o8QznsQdCw==
+X-Received: by 10.84.231.194 with SMTP id g2mr6424986pln.5.1499894965260;
+        Wed, 12 Jul 2017 14:29:25 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:8c0d:cddc:dbb9:7a95])
+        by smtp.gmail.com with ESMTPSA id x85sm7403833pff.92.2017.07.12.14.29.23
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 12 Jul 2017 14:19:07 -0700 (PDT)
-Date:   Wed, 12 Jul 2017 14:19:05 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Paolo Bonzini <bonzini@gnu.org>
-Cc:     git@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 1/3] trailers: create struct trailer_opts
-Message-ID: <20170712141905.14c812b4@twelve2.svl.corp.google.com>
-In-Reply-To: <20170712134646.17179-2-bonzini@gnu.org>
-References: <20170712134646.17179-1-bonzini@gnu.org>
-        <20170712134646.17179-2-bonzini@gnu.org>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        Wed, 12 Jul 2017 14:29:24 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     William Duclot <william.duclot@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH/RFC] rebase: make resolve message clearer for inexperienced users
+References: <20170709202520.21739-1-william.duclot@gmail.com>
+        <xmqqvan06yo8.fsf@gitster.mtv.corp.google.com>
+        <20170710183101.GA13122@Haydn>
+Date:   Wed, 12 Jul 2017 14:29:23 -0700
+In-Reply-To: <20170710183101.GA13122@Haydn> (William Duclot's message of "Mon,
+        10 Jul 2017 20:31:01 +0200")
+Message-ID: <xmqq4luh1gzw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 12 Jul 2017 15:46:44 +0200
-Paolo Bonzini <bonzini@gnu.org> wrote:
+William Duclot <william.duclot@gmail.com> writes:
 
-> -static void print_all(FILE *outfile, struct list_head *head, int trim_empty)
-> +static void print_all(FILE *outfile, struct list_head *head,
-> +		      struct trailer_opts *opts)
+>>  - The original said "When you have resolved this problem", without
+>>    giving a guidance how to resolve, and without saying what the
+>>    problem is.  The updated one says "conflict" to clarify the
+>>    "problem", and suggests "git add" as the tool to use after a
+>>    manual resolition.  
+>> 
+>>    Modulo that there are cases where "git rm" is the right tool, the
+>>    updated one is strict improvement.
+>
+> I also wrote "<conflicted_file>" when there could be several. Maybe
+> 'mark it as resolved with "git add/rm"' would be a better (and shorter)
+> formulation?
 
-This can be "const struct trailer_opts *", I think. (Same for the other
-functions in this patch.)
+Another potential source of confusion is if we are seeing "a"
+conflict, or multiple ones.  I'd say it is OK to treat the whole
+thing as "a conflict" that Git needs help with by the user editing
+multiple files and using multiple "git add" or "git rm".  So "mark
+it as resolved with 'git add/rm'" is fine, I would think, but
+anything that I say about UI's understandability to new people needs
+to be taken with a large grain of salt ;-).
 
-> +struct trailer_opts {
-> +	int in_place;
-> +	int trim_empty;
-> +};
+> ... I feel like a lot of git messages could be improved this way
+> to offer a UI more welcoming to inexperienced user (which is a
+> *broad* segment of users). But I am not aware of the cost of
+> translation of this kind of patch: would several patches like this
+> one be welcomed?
 
-I was going to suggest that you make these "unsigned in_place : 1" etc.,
-but I think OPT_BOOL doesn't support those. (And OPT_BIT is probably not
-worth it.)
+Surely, as long as I can depend on other reviewers who are more
+passionate about end-user experience than I am, I'll take such
+patches with their help.
+
+Thanks.
