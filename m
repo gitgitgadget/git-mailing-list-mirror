@@ -2,120 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 994792035A
-	for <e@80x24.org>; Wed, 12 Jul 2017 02:06:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 719DF2035A
+	for <e@80x24.org>; Wed, 12 Jul 2017 02:37:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755516AbdGLCGy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Jul 2017 22:06:54 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:32874 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754512AbdGLCGx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Jul 2017 22:06:53 -0400
-Received: by mail-pf0-f176.google.com with SMTP id e7so5016033pfk.0
-        for <git@vger.kernel.org>; Tue, 11 Jul 2017 19:06:53 -0700 (PDT)
+        id S1756610AbdGLChR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Jul 2017 22:37:17 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:33306 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756607AbdGLChR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Jul 2017 22:37:17 -0400
+Received: by mail-pf0-f175.google.com with SMTP id e7so5335648pfk.0
+        for <git@vger.kernel.org>; Tue, 11 Jul 2017 19:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+LcA+5SU7HysRdSrBCDKR3LXyJF0AFTZhNGstp4f9F8=;
-        b=TiyyphJwg8j9RxYy3M9Cb3G7DDDV4rKpkGdJZwPDxCI4JXZT250k5MzV/2tC3ExpI6
-         srlbfdhwzbqrRfBzCwX62TvXZfauUU2llXa0ryE6TRCKbuzlwKyK+niz+3YzBxuVWMSK
-         n/q0yX/ixiXGGdl5SGIuMvnH6/ZMT7MsFPSXGo2Zy27PPbUEixyOX6OkqEJNdegj07Re
-         bfVR82YNCV9TCNjjEjGAap8/73R6uxcwvenQysQ1jctqFQX8/TgRdkBRc/C6A4/tpz8U
-         a7rBL/AEemA+ehKIgF1ZrLU4D6WzyhHiOoXBpxuf1z9s46mg0CBbiSJyEeXtsDUfic9H
-         Wpyg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=voxFyOshn3FuWSMELJpLxbp1KKYU51wcWLf+uM/xi9c=;
+        b=PcICyU26kDTefCq4QqblLBkdl2DCajdGIIbFd60wi1FaHCjCshBK55MT1tjwVbt21w
+         VLUbpu/AgIY+WGv6rRtHAfhH07TPO2VzWzDmitA8ZNgHNYWRSbEzm3XjDDq3uFhqKfJr
+         ghShwCQFRtbOamZoA2M/LsXlm6CpnCks5ax9xWokqL2GIp1rCaNn0Ji35jFdlp8nDb2w
+         LhO+WIcFSq/MH1Wv+RIkrPuUzAhp1oq38p6PyHfmLFZarbXlDkGEaSQeroZLj1X9VTA7
+         /IoTgTgniNFVldkuE5F71mnJ/oUEWl4Mr1AnhNMf5JGwvF6AAY1gLoLUWOZGAyu4cA7G
+         L8cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+LcA+5SU7HysRdSrBCDKR3LXyJF0AFTZhNGstp4f9F8=;
-        b=cvT49p4fuWKPqj9xJtUIVblTTPpcwMxjX0Pbmn98ijAGiyQUJNU87yGdRrx3x+PVXS
-         fjIwBpO7prtoM8hZ6EvF++JAq47Pvj3C65Z50eklbRkBFcTlWVuCD2KdM9kCSOq2xQ/E
-         r49y2Pxb2IUOWzod+MPxHSKwY5alfGgH8+/aBxLygs4F35DTrj4/RuYBgz2HWhKyV79B
-         WvuYmUaA1vE5kbvAlCLO7Haq4EIJNQS6P8tNiNqhXtmTIiXjHQQ1twP+IvR8gpeQ1SSK
-         wfjPqs+7xTEfMXjGkeaRUGUY/D5P5BZLYtIDnuKqQGRRc/hnyeu+1hJPIZo12Dy0m9Vo
-         nwDA==
-X-Gm-Message-State: AIVw112VQJRXqZVrYazusx4aj3p9XunWMKAuFa12a/x/S+E4DXZNgOls
-        f3KmpmSq0j16a9NDvwtcyS9yL6UiBw==
-X-Received: by 10.84.195.131 with SMTP id j3mr1522550pld.147.1499825212770;
- Tue, 11 Jul 2017 19:06:52 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=voxFyOshn3FuWSMELJpLxbp1KKYU51wcWLf+uM/xi9c=;
+        b=VWYhO6xEQeZ/2/SQiA6NXdkn0mZ10PlGZJp3FnWLR/qxxcg9z1OC6uKQBMkgN1AAmS
+         TeufsWolNIosTjGAhtIa58E9WftMAB3iPCEf6XO7UZw+dPr9sq5kLI+ntqEkJ0NOsPFs
+         YEViAW1t+WRl7ZFEHTrrTIe+N+QoazrHWQ6mKMTXXwcGNss3mtC0RGHA3a3S+7uNkWiK
+         q3gkF/ZyN4PEo4lwwzaRPn8izEAuYS6sYzt7V9F8MaLdNuwbkS2LLbjcrfT4n9MAGdB7
+         7/dDwIYB/yw2uqXrLAK0z+a9auI0hKNApiRrrZ8Hkv16lZ4JtNPI9OSoaCgdZdmzu6ar
+         uVkg==
+X-Gm-Message-State: AIVw112w0cGilmMF7aXEaQDohUC2LgePKF3cRLaqW84N+YtgyfgDHFML
+        9xu6BFN7WQtEzw==
+X-Received: by 10.99.143.21 with SMTP id n21mr1529258pgd.145.1499827036245;
+        Tue, 11 Jul 2017 19:37:16 -0700 (PDT)
+Received: from lenny.localdomain ([136.24.158.154])
+        by smtp.gmail.com with ESMTPSA id 79sm1061245pgg.46.2017.07.11.19.37.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 11 Jul 2017 19:37:15 -0700 (PDT)
+Date:   Tue, 11 Jul 2017 19:37:10 -0700
+From:   Kenneth Hsu <kennethhsu@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: bug: HEAD vs. head on case-insensitive filesystems
+Message-ID: <20170712023655.GA15598@lenny.localdomain>
+References: <20170711033236.GA11492@lenny.localdomain>
+ <20170711071234.bj3kzfn5xii4e33w@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.100.176.173 with HTTP; Tue, 11 Jul 2017 19:06:12 -0700 (PDT)
-In-Reply-To: <CACPiFC+Lc+ewmPe6u=dUo4rJRcgLqRfG-EG+vudg8mapnH-d9w@mail.gmail.com>
-References: <CACPiFC+Lc+ewmPe6u=dUo4rJRcgLqRfG-EG+vudg8mapnH-d9w@mail.gmail.com>
-From:   Andrew Ardill <andrew.ardill@gmail.com>
-Date:   Wed, 12 Jul 2017 12:06:12 +1000
-Message-ID: <CAH5451mGTkVVoNJS44Y1AMwvHVeuYNZv5Tp89LDp0skx8ZNeYQ@mail.gmail.com>
-Subject: Re: Dropping a merge from history -- rebase or filter-branch or ...?
-To:     Martin Langhoff <martin.langhoff@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170711071234.bj3kzfn5xii4e33w@sigill.intra.peff.net>
+User-Agent: Mutt/1.8.3 (2017-05-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Martin,
+> I was going to point you to the recent thread in
+> 
+>   http://public-inbox.org/git/87ziclb2pa.fsf@gmail.com/
+> 
+> but I see you already participated there. So if your mail here is
+> "here's a summary of how HEAD/head don't quite work", then OK, that
+> might be handy. But I think the ultimate resolution is not "let's make
+> them work", but "let's consistently enforce case-sensitivity in ref
+> names, regardless of the underlying filesystem".
 
-From the sound of it you really just want to revert the merge of the
-pull requests. A really good description of options for this is at
-https://git-scm.com/blog/2010/03/02/undoing-merges.html
-
-There is also a section there about bringing the changes back in at a
-future date, depending on how you do the revert.
-
-Does that page describe what you're trying to do?
-
-Regards,
-
-Andrew Ardill
-
-
-On 8 July 2017 at 07:07, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> Hi git-folk!
->
-> long time no see! I'm trying to do one of those "actually, please
-> don't" things that turn out to be needed in the field.
->
-> I need to open our next "for release" development branch from our
-> master, but without a couple of disruptive feature branches, which
-> have been merged into master already. We develop in github, so I'll
-> call them Pull Requests (PRs) as gh does.
->
-> So I'd like to run a filter-branch or git-rebase --interactive
-> --preserve-merges that drops some PRs. Problem is, they don't work!
->
-> filter-branch --commit-filter is fantastic, and gives me all the
-> control I want... except that it will "skip the commit", but still use
-> the trees in the later commits, so the code changes brought in by
-> those commits I wanted to avoid will be there. I think the docs/help
-> that discuss  "skip commit" should have a big warning there!
->
-> rebase --interactive --preserve-merges  --keep-empty made a complete
-> hash of things. Nonsense conflicts all over on the merge commits; I
-> think it re-ran the merge without picking up the conflict resolutions
-> we had applied.
->
-> The changes we want to avoid are fairly localized -- a specific module
-> got refactored in 3 stages. The rest of the history should replay
-> cleanly. I don't want to delete the module.
->
-> My fallback is a manually constructed revert. While still an option, I
-> think it's better to have a clean stat without sizable feature-branch
-> reverts.
->
-> cheers,
->
->
->
-> m
-> --
->  martin.langhoff@gmail.com
->  - ask interesting questions  ~  http://linkedin.com/in/martinlanghoff
->  - don't be distracted        ~  http://github.com/martin-langhoff
->    by shiny stuff
+Thanks, that makes sense.  Perhaps it's best to just view my original
+message as, "here's a new example of where 'head' doesn't work".
