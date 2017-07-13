@@ -2,100 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FE9420357
-	for <e@80x24.org>; Thu, 13 Jul 2017 08:41:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3CCB202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 12:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751240AbdGMIl4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 04:41:56 -0400
-Received: from mout.web.de ([217.72.192.78]:49747 "EHLO mout.web.de"
+        id S1751267AbdGMMoY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 08:44:24 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50689 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751165AbdGMIlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 04:41:55 -0400
-Received: from [192.168.88.103] ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MbhNZ-1dCftX2mEn-00J3ud; Thu, 13
- Jul 2017 10:41:38 +0200
-Subject: Re: Git on macOS shows committed files as untracked
-To:     Jeff King <peff@peff.net>, roeder.git@mailnull.com
-Cc:     git@vger.kernel.org
-References: <20170712222128.A2F7A246E3@outside.256stuff.com>
- <20170712231557.lu7ppj3bric2fahi@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <130b338b-2e77-65d6-a3fa-f272ac43b81c@web.de>
-Date:   Thu, 13 Jul 2017 10:42:29 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.2.1
+        id S1751193AbdGMMoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 08:44:23 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lm6IP-1e4hB50yy9-00Zfos; Thu, 13
+ Jul 2017 14:44:10 +0200
+Date:   Thu, 13 Jul 2017 14:44:09 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2017, #03; Mon, 10)
+In-Reply-To: <xmqqlgnv52oq.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1707131435220.4193@virtualbox>
+References: <xmqqlgnv52oq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20170712231557.lu7ppj3bric2fahi@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:OH0o63lgnVc5giviOEVykI56h3IO0hAYpsCIHqESR02oR5ykaOL
- JjcqdqC0st+mh3MusyYb0YWdrOLGaaLsHO8UzMtdxRYfXbiKJAOw2raQqZr9lztAEVURJmF
- pvyNzMPrhCIz6EC6IQXtQp7fULxZ5zPBSXp9fXfQl/YbX6FEeGOMRMkLsYJ9O1dv55kOiEJ
- nB6O9WArX2kIn75lyhEpQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Sg8cctfzRlc=:MDJuzfTNSuhCUpLLJj9zMX
- lJ8UNCA22TSLdB/IUrhKEAIqfrdhZb2NKMrxZ07UbQjHqGf/96GuvPFD+MCwTad0+1FspvKYP
- Hpl8bmUqlUw/9CW2bxhA5Xw1h/Az6oKtFvHnnjn6EZEWpiuMM0kuz58ERuUNj1JzwX+NDvvfC
- JR3sFG826FsfUlNM5Nu/IC3qEbFM/iJPNZj+7cqCH0oTivz9SjwusCxgyw3jLoksw8fqwmkIz
- P2UmMTWD+euoW26XkVaQLiLh8rBUVEb4+RdWEJjl2ZqiSn7GkCW1ViinLN1a8J2+//CcSr9aE
- tnpVZWz4vWrt0GrbQuRSE8C0fHVapPk6QwvasdTZ2Q67lJRhWGV2nW4SS01c3dQu3Nw2jn5QC
- TPNMLAOgv8ZuVwwKRWtOAKKaP6mKVOy4YjNG1E8sM19Tp+7IcMnzpBhA274gioj82oFPRFl9j
- CK33AvgrouCOiwdurkLdixxN/kxgMqJ44QD7rMoa096RvydzvpkdfHkZUlQ9KdAlqpdRG6dwa
- HU7+OSSBc2Lkljslz+IfuK0xZSUOMS++qwb3VPO4Jb8Yt5FNU9sXFXLZl5V/Dbt6T2LqJYNBE
- oVqgodacin66GL3oOUbKXlAR/yekmu8/ciqtGLpeG1T2yCEf5jLgqp9V4NQlSI20bBLDVYzgK
- 2IghVxwEWYVqpTqJQ+L4/ZCNv+nU4uCGkhr6jvb5lr5MeMZS1666ibssdGBtjQBG4JE2GSr59
- iTwVCEBS0A0IzlJu2by2hd1tXpdlUzndyk0YyMl8OovVBAksQr0XMhimIu36j76ErkxZ3kwxB
- hUk1MiJ
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ciJ/OzfQYAn3Z8GxJysVWOQOwl6MDrKAeXnzp9f8RWY63qzV2kb
+ FxNxtZmb28QEE1pcVKjv6Ni2tit7AISjSGYmGT/kc8MorzTtIDBz0Sh+JVeF6615RT3znZY
+ IFNUn10+CcTtnYly8KQuTBAUTaS1ucycSUUlRXuj07EHl8dLydKcWfPzF6Jm6pxGAyFWVKE
+ uNk/yWm8FzqoUlDW3jJFA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6fOVOrzVE6o=:a+2irAPYf24UiZrvTxeTUQ
+ tLZgDzNaUbV7Rufw0IB9rOaXCW7z+hfv1sFSVK0nwpuUxb2uu6MVUy9biJDCPIN3BvSvQKYYU
+ lzsYlYdxJAza0d4kvtGpnkAUsFeUy902XrdIGZa40ffhcr2MD8lhdqm98lE3KjUkGD5dWIc80
+ alD9ztp/YuFLqXu01vegHDEzJ0rOSwYCFv3tQqGfgmz4Iwqzal2Ej45QbEziIYuffWgJ8V1Ji
+ QEiyO0wXzozARLk0mqhVGjPx55kT+oNqaqYpW3D1FzpfL/TgR8FYVoSKqRcVoLPjzGoCHcOw+
+ wwofkfVirDTZ+cVj8fUfGIEf+t7qgrND+wUgxEWFj6nakALUEJ1fMdZNBgU2rjzjrCCZ4lVKQ
+ JilbNytYw7wpPEV7n60Ifl9swPaTpLwZ0MdqoJPRt4Y3rrp8UYvWI83gQvOqYFFXr4CaqpXY1
+ JiO4tsqfbAF41yaYBJtLscUUHe8ia+Ixb9r4/JnjKUBx7UDVq9Ajb2Ye0BKq0sC/onLU1AniQ
+ 94DtG7hE5CIxj5wsNHAvGqpcyIgGnbPSGhsk0+XDJ52J9WLbCZF/NqdLMKPU1wo+TNLTzOwvc
+ QkuoCd/Lx0pZfB31HkJE2t1/N9vHiLQcXHe2azlA/MqusUcW4qmA/j3CnuMo51k8JLVVcWsGs
+ 3obng2nkjGet9YSv0Ln0jKVzyV9tlN2WR7h4xe4GWWVVF2t3v/V2CkWir9Pjii7GmYOcuIgB2
+ XxoZRdpLfGb0AG4YmjAd8POkjuO59HIn0e44+m62ZH8MAHpWglGH81SycxSV1d9Edo8Mx3f1R
+ 4t2b0B9Vz+qp/h7EgvLgec7+RlW9KSOXrozexPQuQHV+vmplO0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
+On Mon, 10 Jul 2017, Junio C Hamano wrote:
 
-On 13/07/17 01:15, Jeff King wrote:
-> On Wed, Jul 12, 2017 at 06:21:28PM -0400, roeder.git@mailnull.com wrote:
+> * jc/allow-lazy-cas (2017-07-06) 1 commit
+>  - push: disable lazy --force-with-lease by default
 > 
->> In Git on macOS (git version 2.13.2 | brew install git) the status
->> command will show folders as untracked even though they are committed
->> and checked out from the repository. Does not reproduce on Windows and
->> Ubuntu.
->> [...]
->>
->> 	"d\314\207\316\271\314\223\314\200\342\225\223\316\265\357\256\257\360\222\221\217\342\227\213\342\225\223\320\243\314\213/"
+>  Because "git push --force-with-lease[=<ref>]" that relies on the
+>  stability of remote-tracking branches is unsafe when something
+>  fetches into the repository behind user's back, it is now disabled
+>  by default.  A new configuration variable can be used to enable it
+>  by users who know what they are doing.  This would pave the way to
+>  possibly turn `--force` into `--force-with-lease`.
 > 
-> Probably the issue has to do with Unicode normalization, and you have
-> files in your repository that can't be represented on your filesystem.
-> For example, the first two code-points above are "d" followed by U+0307,
-> "COMBINING DOT ABOVE". That pair can also be represented as U+1E0B,
-> "LATIN SMALL LETTER D WITH DOT ABOVE".
-> 
-> I don't recall which form HFS+ normalizes to, but basically what happens
-> is that Git opens the file with some name, and the filesystem quietly
-> rewrites that under the hood to a different, normalized name. Then when
-> Git walks the directory later to ask which files are present, it sees
-> this other filename that it has no clue about.
-> 
-> Generally the solution is to commit the normalized name. There's some
-> logic inside Git to "precompose" names to the right normalization, but I
-> think that only affects new files you add. Existing committed files with
-> the wrong normalization run into this issue.
-> 
-> -Peff
-> 
-Thanks for the fast analyzes -
-in short:
-what does
-git -c core.precomposeunicode=true status
-say ?
+>  Will wait for feedback, then merge to and cook in 'next'.
 
+I wonder whether the --force-with-lease option would benefit (and counter
+the "unsafe because of behind-the-back operations" argument) from doing
+some kind of "reverse pull --rebase".
 
-The easiest thing may be to set
-git config --global core.precomposeunicode true
+In other words, --force-with-lease could verify that the upstream branch
+has no commits that weren't seen in the current branch's reflog, i.e. that
+`git rev-parse HEAD@{upstream}` is identical to `git merge-base
+--fork-point HEAD HEAD@{upstream}`.
 
+The assumption would be that you typically want to push with a lease only
+when following the `pull --rebase` workflow. Meaning that you would only
+want to force-push when your local branch had the upstream branch
+integrated at some stage [*1*].
 
+I could imagine, though, that this should be an opt-in option for now, and
+could be turned into an opt-out option later. Or maybe just make it
+opt-out, adding a kick-ass error message explaining the situation properly
+(and how to override the safe-guard from the command-line).
+
+Ciao,
+Dscho
+
+Footnote *1*: Of course, if you merge upstream, do some stuff and then
+reset --hard to the previous state, this safeguard will not catch. It
+would *still* catch when aborting a rebase onto upstream, though.
