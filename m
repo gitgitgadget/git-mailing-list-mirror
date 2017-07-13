@@ -2,88 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6FAD202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 19:30:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 444A9202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 19:31:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752760AbdGMTag (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 15:30:36 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:33299 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752545AbdGMTaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 15:30:35 -0400
-Received: by mail-pf0-f179.google.com with SMTP id e7so34071762pfk.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:30:35 -0700 (PDT)
+        id S1752805AbdGMTbD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 15:31:03 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:37221 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752545AbdGMTbC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 15:31:02 -0400
+Received: by mail-it0-f54.google.com with SMTP id m84so2996119ita.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:31:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Y4TU3Un9CqPjEqQG0kMqtQkTcpQEPGCvtzeQdEWdjXE=;
-        b=oSWiIqzoGIPi6kOjQ3D2YFnfBMm7wuY6YvPFhKhLcUDNuj2UPEY6d5pWXcqdRuPLJK
-         4/xSdIVtW8E6QeVDS5GTm9QYydq0Tb5IWc4yxjk8bjYq79UNRCsPUc9hYfvzuayDuPWf
-         vpROtxZZe34Q8THUC77M2EZgoNOqCT8m/Jubf7PO5e4x7Mkr7BykETRyNRIcRFoh9YQJ
-         m4jwbUlbpqKrTQ5+jeEMJmEW7GwP4HnGkIHV9CW3YUMMJ1nEwgwNQ1wmWBuEvWFYF4nk
-         qh675sraxFOra0+xypXIVgEkfYtPnHF6BgqMcaTM8rzzENiLKEv/L0lI2PxiKZIN8idu
-         aZjQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Jpv2QJClqEqyDvsjs4KaljtXsg8JY+/+HqZPBpKEXQA=;
+        b=N5vO8CWkWmNbO30PZYMA1PnOlaR4c9ngcL1KofcUO9SsxxQDmQF7hLRHgx/qQC7y/z
+         OZfCoSjoOh+RS5rEu4++rN74AHlUnjWAZkZh1P1SPiRJVq0gDxNZ+OwYHmQF4wJrEP/W
+         LiO8D3YzJyfKmeK96YQf1YpmTVcA84OjLkO/bvob20EvnKCw9oTtmNQ8Gb+fTUTYLg+X
+         tRIfzsrC3qzY/925hEMrsef0EHxi5cfuXL8PUsZuMcZGeSH60QmxWDPikX+jRiLubroD
+         zkaZpjAHPyj30OmFqQtFF17oJy+0uWCKhQlw1PzS2OCSGwMKMeiBX3jWVLAGw+llo27P
+         yUkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Y4TU3Un9CqPjEqQG0kMqtQkTcpQEPGCvtzeQdEWdjXE=;
-        b=bWhxK4UOIeriO4+6UBn+iftrTfdcA2gl+d3dUbF7B8LTyuUlJAozluzXOLopOsF4J9
-         KA6VydSIP0jsaBlwglHHowK7vTqw3Y5P6QeoBLa/Tzk1U3IIZxzL2WgbFWY1FLmRXvju
-         sIym96oYht1mpknCC6s9zDTgYn0agCRJzA8UaFOymbUwPqnPjukSRU4gf21dIi7mZIqD
-         SUi8toFZn/ADFEf+GY1nnqTN12CXKDw7frJzwTZeNammw68nDLLyUSZkOaBvByaiGV/Z
-         kGpOB5N+pr6oLnG9ZJuuCyhGPoEjP/XUVTNEWv+GoGpkG01dJsooVyJsgqYET+q0UxKn
-         Drrg==
-X-Gm-Message-State: AIVw111+lm9EwUwcMIvViwTj5Xu7DV6Tofkr9m7d0mllDZWCDyciMV2p
-        KrkPa/ZwMzx9+Q==
-X-Received: by 10.99.127.11 with SMTP id a11mr10873474pgd.213.1499974234852;
-        Thu, 13 Jul 2017 12:30:34 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id x14sm13836111pfe.83.2017.07.13.12.30.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 12:30:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Miguel Torroja <miguel.torroja@gmail.com>
-Cc:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>,
-        Lars Schneider <larsxschneider@gmail.com>
-Subject: Re: [PATCH] git-p4: parse marshal output "p4 -G" in p4 changes
-References: <CAE5ih7-Sy9YmGbLs=wzfxXCSFLkEotqLRuu_xNz9x=7BhvrvnA@mail.gmail.com>
-        <20170711225316.10608-1-miguel.torroja@gmail.com>
-        <CAE5ih78mrTz1sfJbRSuPTNojxWyH_1JFDY2pe7GMAZdPhzcvpA@mail.gmail.com>
-        <CAKYtbVb8T=edPG5539=uwDjHnCerLO2Oejy8bWK+giSS8nNGig@mail.gmail.com>
-        <xmqqr2xl1suy.fsf@gitster.mtv.corp.google.com>
-        <CAKYtbVaxR0sdL_k=vy-aT5wEzvCTzDcM6Q-i0hO6jLMzjEUwmA@mail.gmail.com>
-Date:   Thu, 13 Jul 2017 12:30:33 -0700
-In-Reply-To: <CAKYtbVaxR0sdL_k=vy-aT5wEzvCTzDcM6Q-i0hO6jLMzjEUwmA@mail.gmail.com>
-        (Miguel Torroja's message of "Thu, 13 Jul 2017 09:12:32 +0200")
-Message-ID: <xmqqa848w2w6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Jpv2QJClqEqyDvsjs4KaljtXsg8JY+/+HqZPBpKEXQA=;
+        b=AOvloRPGFIV7ZBvBBNvwNMWm8Y9tem/MVuHouaSBgsGyKxfiob4t4ox17pLLPmp49z
+         W/zm8+6cokniikrFLVvVKfNb+jESVUqEf7/pwC4bycUfOTV3bAKHqVNeDPeVtd0tEfu0
+         kzb0VH9fO9lvbH1yP5O19ojdXoOcJK3QnzmrGRbZ5y54g43ndQCWflPjhbavqprqa+NX
+         otd7wK5iPuXKFMs6w1IEDdkleQsBOkSjpLD4fLeFedL4OJjxOIpPeYbEeIi99w00XePb
+         /LNgqgygrLCfl1bvzGmFUCM7TXjICe2/QybQ2vOjzi7kvqtcALt1EYMDEVzN6XslzMuK
+         U5GA==
+X-Gm-Message-State: AIVw113xjNTDvjNJ6Z63MtzawFmFJ5FkvWSy/jU1qDXB4M7ZptgzkqGT
+        gMlz1G9+FkT4bQd97y3zlexiw+T5vcIU
+X-Received: by 10.36.214.150 with SMTP id o144mr285441itg.57.1499974261810;
+ Thu, 13 Jul 2017 12:31:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.26.138 with HTTP; Thu, 13 Jul 2017 12:31:01 -0700 (PDT)
+In-Reply-To: <xmqqmv88xl7f.fsf@gitster.mtv.corp.google.com>
+References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
+ <B5FDF25C-ED5A-4CD1-AAD7-04BD8D705C59@gmail.com> <6e4096fd-cbab-68f0-7a23-654382cb810e@gmail.com>
+ <CAEcERAxRmRh5pp=nXN7X9u=HQsJdSQfsXoedM_5eCDgDWwAkKg@mail.gmail.com> <xmqqmv88xl7f.fsf@gitster.mtv.corp.google.com>
+From:   Nikolay Shustov <nikolay.shustov@gmail.com>
+Date:   Thu, 13 Jul 2017 15:31:01 -0400
+Message-ID: <CAEcERAyf+np9U-o-SGSOCWsibVPyEWPh2yY+uEOgLL+qYFe1mw@mail.gmail.com>
+Subject: Re: "groups of files" in Git?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Igor Djordjevic <igor.d.djordjevic@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Miguel Torroja <miguel.torroja@gmail.com> writes:
+Thank you, but I am not sure I quite understand the idea.
+Could you please elaborate on it for the following example?
 
-> I've just sent in reply to your previous e-mail three different patches.
+I have two Perforce changelists ("A" and "B") that group uncommitted
+sets of files (paths to each of files could be different):
+
+changelist A:
+file1
+file2
+
+changelist B:
+file3
+file4
+
+In Perforce, I am able to do the following:
+- move files between changelists (e.g. file1 could be moved to changelist B)
+- add new files to changeslit (e.g. changelist B can get additional file5)
+- revert file changes which would effectively remove file from the
+changelst (e.g. revert file2 will remove it from changelist A)
+
+How would I do it with sets of files that would belong to Git commit?
+
+
+On Thu, Jul 13, 2017 at 2:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nikolay Shustov <nikolay.shustov@gmail.com> writes:
 >
-> * The first patch is just to show some broken tests,
-> * Second patch is to fix the original issue I had (the one that
-> initiated this thread)
-> * Third patch is the one that filters out "info" messages in p4CmdList
-> (this time default is reversed and set to False, what is the original
-> behaviour). The two test cases that are cured with this change have to
-> set explicitely skip_info=True.
-
-The approach looks reasonable.  By having tests that expect failure
-upfront, the series clearly shows how the code changes in later
-steps make things better.
-
-Thanks.  Will replace.
+>> Thank you for the detailed explanation, it looks like merging the
+>> commits would be helpful in my case. And I think it is a very good
+>> analogy that Perforce changelists are like multiple pending committs,
+>> if Git were supporting such.
+>>
+>> What it won't be achieving by using commits in this schema is the
+>> following thing I can do in Perforce:
+>> In the uncommitted Perforce changelists I can revert the changed file
+>> to the original state and move the files between the changelists.
+>> Quite often, while working on something, in the middle I would decide
+>> to isolate changes to a certain set of files to a separate changelsit
+>> - but then I might change my mind. It is all flexible until I actually
+>> commit my Perforce changelist, after which it becomes very much as
+>> committed changes in any other source control.
+>> This is actual flexibility I am looking for achieving in Git.
+>
+> I actually think we already have such a flexibility.  Unlike
+> Perforce, Git is distributed, and the most important aspect of the
+> distinction is that what happens _in_ your local Git repository may
+> be called "committed" in Git lingo, but not visible to the public.
+>
+> You can consider these commits you make in your repository "pending"
+> when you think of your workflow in Perforce terms, until you merge
+> and push out the result, which roughly corresponds to "submitting"
+> in Perforce lingo.
+>
+> Once you start treating your local commits that you haven't pushed
+> out as changes that are still "pending" when observed from the
+> outside world, you'd realize that you have as much flexibilty, if
+> not more, to dice and slice them with the local tools like "rebase
+> -i", "add -p", etc., as you would have in your Perforce workflow,
+> I would think.
+>
+>
