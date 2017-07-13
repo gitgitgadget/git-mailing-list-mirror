@@ -2,82 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B7DC2035A
-	for <e@80x24.org>; Thu, 13 Jul 2017 16:00:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 670A1202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 16:32:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753359AbdGMQAS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 12:00:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39248 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1753036AbdGMQAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 12:00:17 -0400
-Received: (qmail 26832 invoked by uid 109); 13 Jul 2017 16:00:17 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 16:00:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 491 invoked by uid 111); 13 Jul 2017 16:00:29 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 12:00:29 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jul 2017 12:00:14 -0400
-Date:   Thu, 13 Jul 2017 12:00:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        jonathantanmy@google.com
-Subject: Re: [PATCH] RFC: Introduce '.gitorderfile'
-Message-ID: <20170713160014.laowcywx7pb5we77@sigill.intra.peff.net>
-References: <20170711233827.23486-1-sbeller@google.com>
- <xmqqinix1j29.fsf@gitster.mtv.corp.google.com>
- <20170712205734.h77fgbbkavwpkr4h@sigill.intra.peff.net>
- <xmqqa849yzwh.fsf@gitster.mtv.corp.google.com>
+        id S1752364AbdGMQcd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 12:32:33 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:35238 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751267AbdGMQcc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 12:32:32 -0400
+Received: by mail-it0-f52.google.com with SMTP id v202so44154235itb.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 09:32:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=t3DowLBUbVDLfqwm503SC828t0hf+EmNNlrIXo3LUS8=;
+        b=Ac+QnnJeLBXUc9p8bv/xG6UlHU/3lRN3GPGbU+2U1fvSzc+L4OD1wcnRjuxLSC49Qw
+         osvP5pCjiru9jZH2kCLaWUh2tr2yI7ZLRvYDKulKzbE5PwiiOhOlpeMxA1kOY8dVQNx8
+         UiedJnup3pq1fWNN1zqWWyy0dr6V/YnpWYyxRzzhh6GaE7khZ4FPG4x2sxqklRK6MBrD
+         4dIH7QEDueGETBn8Gem0wS9UImNp6xo4n2MHdXleGvNhgfGHUzhtn0QIV91q0mghvEUk
+         OLDUFP2fpzItIFAarvspIUJUYeGbq5pS+s9orgvb1cZwzUZfAc46htyM0kX41SMgrziI
+         xYSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=t3DowLBUbVDLfqwm503SC828t0hf+EmNNlrIXo3LUS8=;
+        b=kxh9VilbIosR0teIThL+UJ2wjPekCSc+mxJnX/E1D9geYD/ZBzdQP1hwUZ0m/evjLT
+         YWWZpUpfIqTzRtTcj2wVNyKXtLDQhW0vZyg4xTI5pK+UCswmVPtEJLGfUx6Ra93+z931
+         VGG6JXaL2huOqyP6VSRLor/iOybzlnQG+rEIamHF92A0vbbTevmedlr3LnG0hs6KiqqS
+         EvEea6T/Tk8TunBofJBt0Jb+lJL0QytWv/GAklDkYEkRMWHT1ZXUdTfT4jJS58/nQXky
+         HW+DDSPJ6JZTQAhuIBvnBz6GIqR3WcP+Um0V0aoybaBF0k/8Vsd7R/AOccy0+XIQCUed
+         CkkA==
+X-Gm-Message-State: AIVw111tpZVRU2xz40A1nzcvmIbBdYUX3mDRULjxHIlF4LydQvLDf+7Q
+        HIVukWyrhcTIvgoADpeGK09aovWwaQ==
+X-Received: by 10.36.78.83 with SMTP id r80mr15105916ita.70.1499963551266;
+ Thu, 13 Jul 2017 09:32:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa849yzwh.fsf@gitster.mtv.corp.google.com>
+Received: by 10.107.20.136 with HTTP; Thu, 13 Jul 2017 09:32:10 -0700 (PDT)
+In-Reply-To: <20170713155313.whucxkoita6nvmhz@sigill.intra.peff.net>
+References: <xmqqlgnv52oq.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.21.1.1707131435220.4193@virtualbox>
+ <xmqqzic8xsxd.fsf@gitster.mtv.corp.google.com> <20170713155313.whucxkoita6nvmhz@sigill.intra.peff.net>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Thu, 13 Jul 2017 09:32:10 -0700
+X-Google-Sender-Auth: srRQwhUWH2PkdNHhqZ8LbH_ZJIQ
+Message-ID: <CAPc5daVp5SY552ic+X_zjN3h5NOWY7M_QUcJpfOt1SvZ_3EGRw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2017, #03; Mon, 10)
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 12, 2017 at 04:54:38PM -0700, Junio C Hamano wrote:
+On Thu, Jul 13, 2017 at 8:53 AM, Jeff King <peff@peff.net> wrote:
+> So I'd say this is not really force-with-lease at all, but rather a
+> special mode that is somewhere between a normal fast-forward and a true
+> force-with-lease. I don't know if it would make sense to give it a
+> different name, or just lump it under force-with-lease.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I could see somebody arguing that format-patch should respect a project
-> > preference, since its primary purpose is to communicate your work to the
-> > rest of the project.
-> >
-> > But then you could make a similar argument for other diff options, too.
-> 
-> Yeah, and that opens a whole can of worms.
-> 
-> We let projects to ship clean/smudge or textconv filters and also
-> mark paths to which these tools may be of help, but we do not let
-> projects to automatically enable them in the cloned repository.  The
-> projects must _tell_ the user how to run the last step (e.g. "There
-> is a tools/setup-my-clone script shipped with the source; running it
-> will add necessary configurations to work better with our project").
-> 
-> I do not think usefulness of diff.orderfile is being questioned, but
-> I think it is something we should treat just like any other thing
-> that affects repository configuration.  A .gitorderfile that allows
-> the project to behave as if we allowed to auto-enable just one thing
-> in the clone, while not allowing others, a source of issues and
-> unnecessary headaches later.
-
-Thanks for writing this out. That was exactly what I was trying to imply
-with my final statement, but you said it much better. :)
-
-> Besides, diff-order is *not* the only order that matters in the use
-> of the system, and we _will_ regret the name ".gitorderfile" later,
-> as people would start making noises about forcing ls-files and other
-> things to also show the list following that order.
-
-I'd also agree with this.
-
--Peff
+Yes. I think these are separate problems that needs separate mechanisms
+to solve, and I agree with you that it is also a separate issue if a single UI
+"safer non-ff push" that covers both (and other problems that will be
+discovered later) problems is desired or if a separate options (e.g.
+"--force=lease=...,reflog=...," with nicer names and syntax) is better.
