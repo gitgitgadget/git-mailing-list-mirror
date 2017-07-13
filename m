@@ -2,104 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3597A202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 18:40:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D6EB202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 18:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752517AbdGMSkf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 14:40:35 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:36402 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751337AbdGMSke (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 14:40:34 -0400
-Received: by mail-pg0-f46.google.com with SMTP id u62so33609966pgb.3
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 11:40:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZONXI8I+NYXcfIFl9lC7NUZ1oO4jHcHJGLmHRVuQoOo=;
-        b=AyPfxOVHdDWt1ukQlfFKR3xeMk8m1RbIAMeo6zgPXpiFaUZoKl45EyNejOzUxZnIqh
-         EznJeQXa/dmSOlF+QHC1jaSWQbol7dlnYH569d1GbryB8yIRM7kLmijfvP8DBrm5so6I
-         I5l6mNK+TYdsh+/l3avupoQTPkXEIazq6qzX6kBiVs5md65sywTRh4H8nlLepstNlu1X
-         KamInShz5kEHXRJZmWH1eTp0naFaUiMVlviaDwhuvgxyNiayQDLxlTirSdlTzLktOZUO
-         YyB5BBlUfzvjHgKex4F5zr14CTkRtTiPTzRXsGhK2tu/VemWY19hSHMOC6Kdtpm2WvOK
-         1hFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZONXI8I+NYXcfIFl9lC7NUZ1oO4jHcHJGLmHRVuQoOo=;
-        b=c7FEtZjZRBvEZJfAgzceSlxJS+9dec3HtWAB7LXD+Ob0oXXaM6n+OMFY9yg819bz7x
-         ff2E7O7u3khK01LaDXPNzGzgTQ6OCY4Tn9/42FgBYvMz3y5cjkhsPypsvb34v2vxr3/O
-         Lad+MPrA5K8tHuBw8Lof7XuY6mx+xbAw9aODb9J21pSje/6T2nshzjqV1NLy5vscJGnO
-         UEK6WU+Bw1cH22bMXox6M2QSigFxQzY592uxuZ3lVlwPDopIWmaU5D0aHzmGpdPaezme
-         eYVfU7+EvN4mjR/JeMySXVWX6gY7Eb7D01KAtAjTLNMxmz5Mf1ACJsp8OHi9aunKY2ag
-         ouqg==
-X-Gm-Message-State: AIVw111DDphZO97KQRtIxL85E62P4iVjBnDBTGAXs854nCoTcVggQZsG
-        Ol7vVYmMnwephc1hvvhtuk++UbLOjWlc
-X-Received: by 10.99.149.83 with SMTP id t19mr10607082pgn.247.1499971233216;
- Thu, 13 Jul 2017 11:40:33 -0700 (PDT)
+        id S1752779AbdGMSkz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 14:40:55 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39620 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752525AbdGMSky (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 14:40:54 -0400
+Received: (qmail 927 invoked by uid 109); 13 Jul 2017 18:40:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 18:40:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3224 invoked by uid 111); 13 Jul 2017 18:41:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 14:41:06 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jul 2017 14:40:52 -0400
+Date:   Thu, 13 Jul 2017 14:40:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v1 0/4] Teach 'run' perf script to read config files
+Message-ID: <20170713184051.fcwg76o6ovnsjjbm@sigill.intra.peff.net>
+References: <20170713065050.19215-1-chriscool@tuxfamily.org>
+ <20170713165840.e5cdw7pa2m6haaen@sigill.intra.peff.net>
+ <xmqqeftkxkax.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 11:40:32 -0700 (PDT)
-In-Reply-To: <20170713145841.4win5tbx4efwjsa2@sigill.intra.peff.net>
-References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net> <20170713145841.4win5tbx4efwjsa2@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Jul 2017 11:40:32 -0700
-Message-ID: <CAGZ79kaE7wjFR-=DiPU5xwknS1nxDHR5+S6+UGPFTF0uNBA3dQ@mail.gmail.com>
-Subject: Re: [PATCH 03/15] t: use test_decode_color rather than literal ANSI codes
-To:     Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqeftkxkax.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2017 at 7:58 AM, Jeff King <peff@peff.net> wrote:
+On Thu, Jul 13, 2017 at 11:29:10AM -0700, Junio C Hamano wrote:
 
-> I really only need t6300 and t6006 converted to build on for the rest of
-> the series. But t4207 was easy to do. t4026 still uses raw codes, but
-> converting it would be a pretty big job, so I punted.
->
+> > So then I think your config file primarily becomes about defining the
+> > properties of each run. I'm not sure if it would look like what you're
+> > starting on here or not.
+> 
+> Yeah, I suspect that the final shape that defines the matrix might
+> have to become quite a bit different.
 
-I think it is good to have raw codes in at least one place to test
-that raw codes work, but then again it could be specific test calling
-out that this is tested.
+I think it would help if the perf code was split better into three
+distinct bits:
 
-> @@ -59,7 +54,8 @@ EOF
->  # to this test since it does not contain any decoration, hence --first-parent
->  test_expect_success 'Commit Decorations Colored Correctly' '
->         git log --first-parent --abbrev=10 --all --decorate --oneline --color=always |
-> -       sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" >out &&
-> +       sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" |
-> +       test_decode_color >out &&
+  1. A data-store capable of storing the run tuples along with their
+     outcomes for each test.
 
-Just some thoughts:
+  2. A "run" front-end that runs various profiles (based on config,
+     command-line options, etc) and writes the results to the data
+     store.
 
-This extension of the pipe-chain is not making it worse as gits exit code
-is already hidden.
+  3. A flexible viewer which can slice and dice the contents of the data
+     store according to different parameters.
 
-The sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" is sort of funny, because
-I would have expected it to break in the future with e.g. the sha1 to longer
-hash conversion. But as we specify --abbrev=10, this seems future proof.
-In an ideal world this would be encapsulated in a function (c.f. t/diff-lib.sh).
+We're almost there now. The "run" script actually does store results,
+and you can view them via "aggregate.pl" without actually re-running the
+tests. But the data store only indexes on one property: the tree that
+was tested (and all of the other properties are ignored totally; you can
+get some quite confusing results if you do a "./run" using say git.git
+as your test repo, and then a followup with "linux.git").
 
+I have to imagine that somebody else has written such a system already
+that we could reuse.  I don't know of one off-hand, but this is also not
+an area where I've spent a lot of time.
 
+We're sort of drifting off topic from Christian's patches here. But if
+we did have a third-party system, I suspect the interesting work would
+be setting up profiles for the "run" tool to kick off. And we might be
+stuck in such a case using whatever format the tool prefers. So having a
+sense of what the final solution looks like might help us know whether
+it makes sense to introduce a custom config format here.
 
-> @@ -61,8 +61,9 @@ test_format () {
->  # Feed to --format to provide predictable colored sequences.
->  AUTO_COLOR='%C(auto,red)foo%C(auto,reset)'
->  has_color () {
-> -       printf '\033[31mfoo\033[m\n' >expect &&
-> -       test_cmp expect "$1"
-> +       test_decode_color <"$1" >decoded &&
-> +       echo "<RED>foo<RESET>" >expect &&
-> +       test_cmp expect decoded
->  }
-
-Thanks for removing hard coded colors :)
+-Peff
