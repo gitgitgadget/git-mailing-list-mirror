@@ -2,107 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34E7820365
-	for <e@80x24.org>; Thu, 13 Jul 2017 20:34:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C99EA202A5
+	for <e@80x24.org>; Thu, 13 Jul 2017 20:35:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753193AbdGMUew (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 16:34:52 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:36607 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752889AbdGMUeu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 16:34:50 -0400
-Received: by mail-pg0-f53.google.com with SMTP id u62so34858650pgb.3
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 13:34:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=aW9+d8DYdNgW2XwEIqZVUSiA7II4etZVgCARk4Fqg5M=;
-        b=AGeGLaAaB6FW76P4mdy+MBlgG+/bSs+9G30CXiE+s0jZisjlpIxtI75vmtp4HX9h4C
-         6jjfivN86JCr8B35MKDCMy6jaPKi1gKznr3XqshzqtfE/m4hbD5FeIQ0VAAT/7gOiUld
-         B6h6f8BBuSrk6Iz4HhcJw0Ay8pZ4aFt0wwW2aL16PC446WqsI+zPUP+3To1HgdbF3Mnn
-         +JhlqDuPllWYTnVq/O/8CtohgLViIAV0vM1J1Q9EXDn+qYluYJkiV8x2+C7Ns4OQFK3t
-         LtxbD1c8eWTfAg0aEGmgFoLp64VTrFOBzWVIrc/fdaf5F5M2+1xDE9Rryqcj4vLbufIG
-         IYBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=aW9+d8DYdNgW2XwEIqZVUSiA7II4etZVgCARk4Fqg5M=;
-        b=AQdThgMLVq8Hhva0nSoHoaQpO1T43ZyuYhpOXAu6dKDMppsWRZCkxnS5DanrUQ6teq
-         b65gL0vaUuxAVQRWvwQIfyCKRMKGjYc0oFYXyo7hjPDGuqoshXhlevwW52fVg2pNG8m7
-         MUhAJRCSLhr3rtXlMViZxawtfmTuY3+DqrL1BuqNSFtzgCxxWJvWTz1tg6XrPaQjSS0K
-         pNyczE7jbuwVWPUNaC+rqrIRFoD2NN+kXJlNilloqHIXTEnIaJUF+hRaMhemSPeLLm+9
-         kG0p/Rp3pNEbkawEx2cPjGDYV3g7aLbpUYdzMdg0tBYT139Wflj49lv3TYiXe5upY8gp
-         Nllg==
-X-Gm-Message-State: AIVw1128nYlR35BSKUTLHvOqpOxVyZIi3ZqcRx6gNMfHQkIDAXcgeX4o
-        8UkmcN3vfuPE9g==
-X-Received: by 10.98.89.129 with SMTP id k1mr1481107pfj.28.1499978090004;
-        Thu, 13 Jul 2017 13:34:50 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id 83sm12722892pfa.113.2017.07.13.13.34.48
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 13:34:48 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1752926AbdGMUfh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 16:35:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39924 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1752847AbdGMUfg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 16:35:36 -0400
+Received: (qmail 5563 invoked by uid 109); 13 Jul 2017 20:35:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 20:35:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4948 invoked by uid 111); 13 Jul 2017 20:35:48 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 16:35:48 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jul 2017 16:35:33 -0400
+Date:   Thu, 13 Jul 2017 16:35:33 -0400
+From:   Jeff King <peff@peff.net>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff King <peff@peff.net>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 05/15] ref-filter: abstract ref format into its own struct
-References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
-        <20170713150118.eof3xgu4zujmo6u6@sigill.intra.peff.net>
-        <CAGZ79kag1B37FBrmDzbRFNVODHp=n1h=xSq_pi1b7Fs4wLoRBg@mail.gmail.com>
-Date:   Thu, 13 Jul 2017 13:34:47 -0700
-In-Reply-To: <CAGZ79kag1B37FBrmDzbRFNVODHp=n1h=xSq_pi1b7Fs4wLoRBg@mail.gmail.com>
-        (Stefan Beller's message of "Thu, 13 Jul 2017 11:51:44 -0700")
-Message-ID: <xmqqlgnsulco.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+Cc:     Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
+Subject: Re: reftable: new ref storage format
+Message-ID: <20170713203533.vcfyf5iei46g4tcf@sigill.intra.peff.net>
+References: <CAJo=hJtyof=HRy=2sLP0ng0uZ4=S-DpZ5dR1aF+VHVETKG20OQ@mail.gmail.com>
+ <20170713193234.fkxf73t6jevj4svg@sigill.intra.peff.net>
+ <CAGZ79kbY_t=Xtpb7fy0sZ9TWOy-UOUx8X5+_qLx60Dtg48Ok-g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbY_t=Xtpb7fy0sZ9TWOy-UOUx8X5+_qLx60Dtg48Ok-g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Thu, Jul 13, 2017 at 12:56:54PM -0700, Stefan Beller wrote:
 
-> On Thu, Jul 13, 2017 at 8:01 AM, Jeff King <peff@peff.net> wrote:
->
->>  builtin/branch.c       | 14 +++++++-------
->>  builtin/for-each-ref.c | 22 ++++++++++++----------
->>  builtin/tag.c          | 30 ++++++++++++++++--------------
->>  builtin/verify-tag.c   | 12 ++++++------
->>  ref-filter.c           | 22 ++++++++++++----------
->>  ref-filter.h           | 22 +++++++++++++++++-----
->>  6 files changed, 70 insertions(+), 52 deletions(-)
->
-> The patch looks good to me. So some off-topic comments:
-> I reviewed this patch from bottom up, i.e. I started looking at
-> ref-filter.h, then  ref-filter.c and then the rest. If only you had formatted
-> the patches with an orderfile. ;)
+> >> ### Problem statement
+> >>
+> >> Some repositories contain a lot of references (e.g.  android at 866k,
+> >> rails at 31k).  The existing packed-refs format takes up a lot of
+> >> space (e.g.  62M), and does not scale with additional references.
+> >> Lookup of a single reference requires linearly scanning the file.
+> >
+> > I think the linear scan is actually an implementation short-coming. Even
+> > though the records aren't fixed-length, the fact that newlines can only
+> > appear as end-of-record is sufficient to mmap and binary search a
+> > packed-refs file (you just have to backtrack a little when you land in
+> > the middle of a record).
+> 
+> Except that a record is a "delta" to the previous record, so it's not
+> just finding a record, but reconstructing it. Example for records:
 
-As a reviewer, for this particular patchq, I actually appreciated
-that ref-filter.[ch] came at the end.  That forced me to think.
+I was still talking about the existing packed-refs implementation here.
 
-When I see something that used to be 0 is lost from the parameter
-list of show_ref_array_item() at a callsite, I was forced to guess
-what it is by looking at what is moved into the new structure
-nearby, and keep doing that "figure out what is going on" game until
-the "author's answer" is revealed at the end of the patch.  
+I agree that a full binary search of a reftable is harder because of the
+prefix compression (it may still be possible by scanning backwards, but
+I think there are ambiguities when you land in the middle of a record,
+since there's no unambiguous end-of-record character). But I don't think
+it matters. If you binary-search to a constant-sized block, then a
+linear scan of the block is acceptable.
 
-By the time I reached ref-filter.[ch], I had a pretty good idea what
-was done by only looking at the callers and being able to see if my
-understanding matched the "author's answer" at the end of the patch
-turned out to be a very good way to double-check if the patch was
-sane.  If I were given the author's answer upfront, especially an
-answer by somebody as competent as Peff, I'm sure I would have been
-swayed into believing that whatever is written in the patch must be
-correct without thinking the changes needed in the patch myself.
+> >> - Occupy less disk space for large repositories.
+> >
+> > Good goal.  Just to play devil's advocate, the simplest way to do that
+> > with the current code would be to gzip packed-refs (and/or store sha1s
+> > as binary). That works against the "mmap and binary search" plan,
+> > though. :)
+> 
+> Given the compression by delta-ing the name to the previous change and
+> the fact that Gerrit has
+> 
+>   refs/heads/changes/1
+>   refs/heads/changes/2
+>   refs/heads/changes/3
+>   ...
+> 
+> I think this format would trump a "dumb" zip.
+> (Github having sequentially numbered pull requests would also
+> benefit here)
 
-I do want to present from Doc to header to code when I am showing my
-patch to others, so this is probably a good example that illustrates
-that the preferred presentation order is not just personal
-preference, but is different on occasion even for the same person.
+You may be surprised. Let's imagine that you have a set of 4096 refs in
+refs/changes/1, refs/changes/2, etc:
+
+  for i in $(seq 1 4096)
+  do
+    echo refs/changes/$i
+  done >input
+
+Now let's do a prefix compression, with a single byte for "how many
+characters to reuse from the last entry":
+
+  perl -lne '
+    my $common;
+    if (defined $last) {
+      chop $last while !/\Q$last\E/;
+      $common = length($last);
+    } else {
+      $common = 0;
+    }
+    print chr($common), substr($_, $common);
+    $last = $_;
+  ' <input >prefix
+
+And a gzip:
+
+  gzip -c -9 <input >zip
+
+And the results:
+
+  $ wc -c prefix; wc -c zip
+  12754 prefix
+  10116 zip
+
+The secret sauce is most likely that gzip is bit-packing, using only a
+few bits per character and not aligning with byte boundaries.
+
+Not that I'm recommending just gzipping the whole packed-refs file. It
+ruins the fast-lookup. We _could_ consider gzipping individual blocks of
+a reftable (or any structure that allows you to search to a
+constant-sized block and do a linear search from there). But given that
+they're in the same ballpark, I'm happy with whatever ends up the
+simplest to code and debug. ;)
+
+Just for fun, here's the decoding script for the prefix-compression:
+
+  perl -e '
+    while (read(STDIN, $common, 1)) {
+      $common = ord($common);
+      $rest = <STDIN>;
+      if ($common > 0) {
+        $rest = substr($last, 0, $common) . $rest
+      }
+      print $rest;
+      $last = $rest}' <prefix
+  '
+
+> > OK, let me try to summarize to see if I understand.
+> 
+> When Shawn presented the proposal, a couple of colleagues here
+> were as excited as I was, but the daring question is, why Shawn
+> did not give the whole thing in BNF format from top down:
+> 
+>   initial-block
+>   content-blocks*
+>   (index-block)
+>   footer
+
+Yeah, I agree it took me a bit to figure out what was going on. A
+high-level overview of the format would have been nice.
+
+> >  So lookup really is more
+> > like O(block_size * log(n/block_size)), but block_size being a constant,
+> > it drops out to O(log n).
+> 
+> There is also an index block such that you can binary search across
+> blocks, so
+> 
+> O( log(block_count) + log(intra_block_restarting_points) + small linear scan)
+> 
+> There are 2 binary searches, and the block size is an interesting
+> thing to look at when making up trade offs.
+
+Right, the cross-block index was what I was trying to account for.
+Either way, from a big-O perspective the block size and the number of
+restarts are constants with respect to the total number of entries. I'm
+happy with log(n), though. It's hard to do better.
+
+-Peff
