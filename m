@@ -2,105 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FD70202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 19:20:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DDB9202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 19:21:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752983AbdGMTUM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 15:20:12 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:32904 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753188AbdGMTUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 15:20:11 -0400
-Received: by mail-pf0-f169.google.com with SMTP id e7so33958859pfk.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:20:10 -0700 (PDT)
+        id S1752948AbdGMTVN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 15:21:13 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36605 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752587AbdGMTVM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 15:21:12 -0400
+Received: by mail-pg0-f68.google.com with SMTP id y129so7953840pgy.3
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/uz9VUR/k2EWNzse1l7Oqm/gitTO1eQICpT1LqwZ4+c=;
-        b=eeKaM6cTzJYspJc8swnyEplzo/UkC76bbHYcIIqiRZ2lY8z12SvLxITxtaeT9agudC
-         7SZ4MHL8fb1qoqTEKSERTd1AnbsYwULUuY4K+ho3P3jNRjGa+vTfY4m/phksU7EvGjHN
-         5YOwWmNO6LyF0z7AyCRH337/w8mDkGHNguO4mXwdBa3whedDWpY2+OURw7qJgzbzsF8L
-         1CpJFHQ1r4NhzMOUBGK6t4OVcoj8Y4korC6Kxu2OEKv4vK/DCwLDgNqHGfA41e2t5e+x
-         JAcAFz9rsWkJqQlGyxvFqc/dxYLpSev+pHakyhlcdawWlqJHbOAx9LTJe0NvWOelxzb0
-         8Htw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=QFFeIdslMTHoQ6rwmGvdHkf09OSkFYcw/8b3VbVTlzA=;
+        b=pHWJh93TcaJgEqlWcYk6UrtV8novHKzYOgvSKpFh48YasWP+1NCENH8Me6xZy2wnG8
+         Atz8IpnNfSPLDhsp8Xb3D/tdTZhOI7rgNuImesM8vkgTH3Ny/JWW7a7raz+w6+tIzRTY
+         aJZe2OoWD+uamIq5QcXpeKVAqEK9zJEqbdT1/56JbQJUh3vNNi0Bu+vOpn/D4vhWVqQF
+         3QWRFCpddN/7UZKzHbmG6VpORip6TR9G46cZFFBcCd07w6AQrsdIgc90YIpmuWKcEUE9
+         CdBy84xVBF/2WdilPOELkwl7M7xNdufeBv4C7EPQt88dSOo1wZlgPZi+1M7mwzmmJHqw
+         8riQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/uz9VUR/k2EWNzse1l7Oqm/gitTO1eQICpT1LqwZ4+c=;
-        b=jTzAQgmCB2Qs1YLAj0q3DYDgOhbYOz6uSil8+hYrbIc54bRzPc0piHEywIsOrx1NeJ
-         CzdCE1kkLMutIxxwcDfcHADGYzBdthWvLLsdDZhtaDBdmCzcm4+tg+/T/v4p/4Hfj6wq
-         qTlN5/+0C3ILw0YdeGbl4rI9SLWr+5ofO6smMrnJqheKraZne38z+I9OmnQuPqQsZUUC
-         kK3Xq9wAfu7N9uR44GEYCK6387468SM1aBCuniZfN185jh5IObhzNI7rz8hUdJSz9t1h
-         Mq3tQefZVWu1Cdaoj7gh2qqhjGYMsfuV6Nncrm6tpWfylzYZPe7dhGNGuBD3yGO9A4lW
-         trug==
-X-Gm-Message-State: AIVw1108AUuv4cSnhwVhRkAORKnI4zt66oDm9PFQWDWIpHcSE6lOPC6J
-        bEuVAjECKZtEAGBUCFMUeRNDjPvGbU36+ltbNQ==
-X-Received: by 10.84.232.74 with SMTP id f10mr11685460pln.154.1499973610266;
- Thu, 13 Jul 2017 12:20:10 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QFFeIdslMTHoQ6rwmGvdHkf09OSkFYcw/8b3VbVTlzA=;
+        b=SPqcTNbSzeGLnxsbMnqjfMPFwN071uFekI3b+FWf47UMsWbA5U+h8RwkFDJziXkQPZ
+         bxz4Ac6HtStHHkjudp9TPROMi7LSbx1Gm/BpALXWnwB1WqUFrDbS7FkcZt+N0Joy4Pys
+         oNOfp+yJG0hHEXYWCgimA5R4MvRlDQyQcjAZyLEuwXIpdxqDC/z3jsOuNpfuHh+9ikcQ
+         t6M2smzcUOZK0HXt0Q2iV2qwled0xpxF6wuqoKLUjvhzxZm7NYKvwg13pBa+aAqbkTsS
+         j93br30d6GiMlgNNnfAYUflGNxInQOkci8pl4Z4bvIQM0Wx7uOinwOnb57Wg6+7jONn9
+         YuPQ==
+X-Gm-Message-State: AIVw112JrpuKmAQev/rL+noaomMeEvxk/djcar/2ArF3Gt6STBDmEuKB
+        9qum93kIyq1h/w==
+X-Received: by 10.84.133.38 with SMTP id 35mr11770170plf.141.1499973671487;
+        Thu, 13 Jul 2017 12:21:11 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
+        by smtp.gmail.com with ESMTPSA id o1sm12383129pgq.10.2017.07.13.12.21.10
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Jul 2017 12:21:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v1 0/4] Teach 'run' perf script to read config files
+References: <20170713065050.19215-1-chriscool@tuxfamily.org>
+        <20170713165840.e5cdw7pa2m6haaen@sigill.intra.peff.net>
+        <xmqqeftkxkax.fsf@gitster.mtv.corp.google.com>
+        <20170713184051.fcwg76o6ovnsjjbm@sigill.intra.peff.net>
+Date:   Thu, 13 Jul 2017 12:21:10 -0700
+In-Reply-To: <20170713184051.fcwg76o6ovnsjjbm@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 13 Jul 2017 14:40:52 -0400")
+Message-ID: <xmqqmv88w3bt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 12:20:09 -0700 (PDT)
-In-Reply-To: <xmqqr2xkw3qt.fsf@gitster.mtv.corp.google.com>
-References: <20170711233827.23486-1-sbeller@google.com> <xmqqinix1j29.fsf@gitster.mtv.corp.google.com>
- <20170712205734.h77fgbbkavwpkr4h@sigill.intra.peff.net> <CAGZ79kYYg6-UMrKRPeJTbHdGR0juZ2OwFZmkuYgeYe5X+cm_sQ@mail.gmail.com>
- <20170713155923.a2nissoyczvewoh3@sigill.intra.peff.net> <CAGZ79kbgypimtWE32SnDrG-QWT6gF3WGxR5mi785F_rwvRPOuA@mail.gmail.com>
- <xmqqr2xkw3qt.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Jul 2017 12:20:09 -0700
-Message-ID: <CAGZ79kao8=L33jqSFdmYp4NhKfCKDmoqYWvCzuMJ2+Pfq=SYEA@mail.gmail.com>
-Subject: Re: [PATCH] RFC: Introduce '.gitorderfile'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2017 at 12:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> On Thu, Jul 13, 2017 at 8:59 AM, Jeff King <peff@peff.net> wrote:
->>>> This triggers two reactions for me:
->>>>
->>>> (a) We should totally do that.
->>>
->>>> (b) It's a rabbit hole to go down.
->>>
->>> And yes, I had both of those reactions, too. We've had the
->>> "project-level .gitconfig" discussion many times over the years. And it
->>> generally comes back to "you can ship a snippet of config and then give
->>> people a script which adds it to their repo".
->>
->> I see this "project-level .gitconfig" via the .gitmodules file.
->> See GITMODULES(5), anything except submodule.<name>.path is
->> just project-level .gitconfig,...
->
-> They were from day one meant as a suggestion made by the project.
-> You do not have to follow them and you are free to update them,
-> i.e. after "submodule init" copied URL to point at a closer mirror,
-> for example.
+Jeff King <peff@peff.net> writes:
 
-The URL is somewhat special as its copying into the .git/config
-also marks the submodule as interesting (no matter if the URL is
-changed by the user).
+> ... But if
+> we did have a third-party system, I suspect the interesting work would
+> be setting up profiles for the "run" tool to kick off. And we might be
+> stuck in such a case using whatever format the tool prefers. So having a
+> sense of what the final solution looks like might help us know whether
+> it makes sense to introduce a custom config format here.
 
-The point I was trying to make is best demonstrated in
-t5526-fetch-submodules.sh:
+Agreed.
 
-> ok 7 - using fetchRecurseSubmodules=true in .gitmodules recurses into submodules
-> ok 8 - --no-recurse-submodules overrides .gitmodules config
-> ok 9 - using fetchRecurseSubmodules=false in .git/config overrides setting in .gitmodules
-
-They were not suggestions, but defaults dictated by the project.
-
-If the user did not change their config, they did as the project
-said. I was not there on day one to remember if they are merely
-meant as suggestions, but their behavior is asserting.
+Thanks.
