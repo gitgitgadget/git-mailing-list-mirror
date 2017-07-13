@@ -6,29 +6,29 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5647B202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 15:08:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E06C202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 15:09:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752396AbdGMPIt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 11:08:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39168 "HELO cloud.peff.net"
+        id S1752640AbdGMPJl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 11:09:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39174 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752251AbdGMPIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 11:08:48 -0400
-Received: (qmail 24454 invoked by uid 109); 13 Jul 2017 15:08:48 -0000
+        id S1752477AbdGMPJj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 11:09:39 -0400
+Received: (qmail 24494 invoked by uid 109); 13 Jul 2017 15:09:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 15:08:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 15:09:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32309 invoked by uid 111); 13 Jul 2017 15:09:00 -0000
+Received: (qmail 32325 invoked by uid 111); 13 Jul 2017 15:09:47 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 11:09:00 -0400
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 11:09:47 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jul 2017 11:08:46 -0400
-Date:   Thu, 13 Jul 2017 11:08:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jul 2017 11:09:32 -0400
+Date:   Thu, 13 Jul 2017 11:09:32 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 14/15] pretty: respect color settings for %C placeholders
-Message-ID: <20170713150845.yodu6al56po662so@sigill.intra.peff.net>
+Subject: [PATCH 15/15] ref-filter: consult want_color() before emitting colors
+Message-ID: <20170713150932.y6i7un63b5fzmaei@sigill.intra.peff.net>
 References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -39,251 +39,254 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The color placeholders have traditionally been
-unconditional, showing colors even when git is not otherwise
-configured to do so. This was not so bad for their original
-use, which was on the command-line (and the user could
-decide at that moment whether to add colors or not). But
-these days we have configured formats via pretty.*, and
-those should operate correctly in multiple contexts.
+When color placeholders like %(color:red) are used in a
+ref-filter format, we unconditionally output the colors,
+even if the user has asked us for no colors. This usually
+isn't a problem when the user is constructing a --format on
+the command line, but it means we may do the wrong thing
+when the format is fed from a script or alias. For example:
 
-In 3082517 (log --format: teach %C(auto,black) to respect
-color config, 2012-12-17), we gave an extended placeholder
-that could be used to accomplish this. But it's rather
-clunky to use, because you have to specify it individually
-for each color (and their matching resets) in the format.
-We shied away from just switching the default to auto,
-because it is technically breaking backwards compatibility.
+   $ git config alias.b 'branch --format=%(color:green)%(refname)'
+   $ git b --no-color
 
-However, there's not really a use case for unconditional
-colors. The most plausible reason you would want them is to
-redirect "git log" output to a file. But there, the right
-answer is --color=always, as it does the right thing both
-with custom user-format colors and git-generated colors.
+should probably omit the green color. Likewise, running:
 
-So let's switch to the more useful default. In the
-off-chance that somebody really does find a use for
-unconditional colors without wanting to enable the rest of
-git's colors, we provide a new %C(always,...) to enable the
-old behavior. And we can remind them of --color=always in
-the documentation.
+   $ git b >branches
+
+should probably also omit the color, just as we would for
+all baked-in coloring (and as we recently started to do for
+user-specified colors in --pretty formats).
+
+This commit makes both of those cases work by teaching
+the ref-filter code to consult want_color() before
+outputting any color. The color flag in ref_format defaults
+to "-1", which means we'll consult color.ui, which in turn
+defaults to the usual isatty() check on stdout. However,
+callers like git-branch which support their own color config
+(and command-line options) can override that.
+
+The new tests independently cover all three of the callers
+of ref-filter (for-each-ref, tag, and branch). Even though
+these seem redundant, it confirms that we've correctly
+plumbed through all of the necessary config to make colors
+work by default.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-The test diff is a lot easier to read with "-w", as it moves all of the
-%C(auto,...) tests into a loop that checks all three variants.
+The "correctly plumbed" bits happened in the earlier patches. But it was
+these tests that showed me they were broken.
 
- Documentation/pretty-formats.txt | 18 +++++----
- pretty.c                         | 27 +++++++++++--
- t/t6006-rev-list-format.sh       | 84 ++++++++++++++++++++++++----------------
- 3 files changed, 84 insertions(+), 45 deletions(-)
+ builtin/branch.c         |  1 +
+ ref-filter.c             |  8 ++++++++
+ ref-filter.h             |  3 ++-
+ t/t3203-branch-output.sh | 31 +++++++++++++++++++++++++++++++
+ t/t6300-for-each-ref.sh  | 37 ++++++++++++++++++++++++++-----------
+ t/t7004-tag.sh           | 25 +++++++++++++++++++++++++
+ 6 files changed, 93 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 4d6dac577..973d19606 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -173,13 +173,17 @@ endif::git-rev-list[]
- - '%Cblue': switch color to blue
- - '%Creset': reset color
- - '%C(...)': color specification, as described under Values in the
--  "CONFIGURATION FILE" section of linkgit:git-config[1];
--  adding `auto,` at the beginning (e.g. `%C(auto,red)`) will emit
--  color only when colors are enabled for log output (by `color.diff`,
--  `color.ui`, or `--color`, and respecting the `auto` settings of the
--  former if we are going to a terminal). `auto` alone (i.e.
--  `%C(auto)`) will turn on auto coloring on the next placeholders
--  until the color is switched again.
-+  "CONFIGURATION FILE" section of linkgit:git-config[1].
-+  By default, colors are shown only when enabled for log output (by
-+  `color.diff`, `color.ui`, or `--color`, and respecting the `auto`
-+  settings of the former if we are going to a terminal). `%C(auto,...)`
-+  is accepted as a historical synonym for the default (e.g.,
-+  `%C(auto,red)`). Specifying `%C(always,...) will show the colors
-+  even when color is not otherwise enabled (though consider
-+  just using `--color=always` to enable color for the whole output,
-+  including this format and anything else git might color).  `auto`
-+  alone (i.e. `%C(auto)`) will turn on auto coloring on the next
-+  placeholders until the color is switched again.
- - '%m': left (`<`), right (`>`) or boundary (`-`) mark
- - '%n': newline
- - '%%': a raw '%'
-diff --git a/pretty.c b/pretty.c
-index e4b561c58..fd781e54f 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -947,6 +947,7 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
- 			  struct format_commit_context *c)
- {
- 	const char *rest = placeholder;
-+	const char *basic_color = NULL;
+diff --git a/builtin/branch.c b/builtin/branch.c
+index d852ded49..16d391b40 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -409,6 +409,7 @@ static void print_ref_list(struct ref_filter *filter, struct ref_sorting *sortin
  
- 	if (placeholder[1] == '(') {
- 		const char *begin = placeholder + 2;
-@@ -955,23 +956,41 @@ static size_t parse_color(struct strbuf *sb, /* in UTF-8 */
+ 	if (!format->format)
+ 		format->format = to_free = build_format(filter, maxwidth, remote_prefix);
++	format->use_color = branch_use_color;
  
- 		if (!end)
- 			return 0;
-+
- 		if (skip_prefix(begin, "auto,", &begin)) {
- 			if (!want_color(c->pretty_ctx->color))
- 				return end - placeholder + 1;
-+		} else if(skip_prefix(begin, "always,", &begin)) {
-+			/* nothing to do; we do not respect want_color at all */
-+		} else {
-+			/* the default is the same as "auto" */
-+			if (!want_color(c->pretty_ctx->color))
-+				return end - placeholder + 1;
- 		}
-+
- 		if (color_parse_mem(begin, end - begin, color) < 0)
- 			die(_("unable to parse --pretty format"));
- 		strbuf_addstr(sb, color);
- 		return end - placeholder + 1;
- 	}
-+
+ 	if (verify_ref_format(format))
+ 		die(_("unable to parse format string"));
+diff --git a/ref-filter.c b/ref-filter.c
+index 129a63677..bc591f4f3 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -104,6 +104,12 @@ static void color_atom_parser(const struct ref_format *format, struct used_atom
+ 		die(_("expected format: %%(color:<color>)"));
+ 	if (color_parse(color_value, atom->u.color) < 0)
+ 		die(_("unrecognized color: %%(color:%s)"), color_value);
 +	/*
-+	 * We handle things like "%C(red)" above; for historical reasons, there
-+	 * are a few colors that can be specified without parentheses (and
-+	 * they cannot support things like "auto" or "always" at all).
++	 * We check this after we've parsed the color, which lets us complain
++	 * about syntactically bogus color names even if they won't be used.
 +	 */
- 	if (skip_prefix(placeholder + 1, "red", &rest))
--		strbuf_addstr(sb, GIT_COLOR_RED);
-+		basic_color = GIT_COLOR_RED;
- 	else if (skip_prefix(placeholder + 1, "green", &rest))
--		strbuf_addstr(sb, GIT_COLOR_GREEN);
-+		basic_color = GIT_COLOR_GREEN;
- 	else if (skip_prefix(placeholder + 1, "blue", &rest))
--		strbuf_addstr(sb, GIT_COLOR_BLUE);
-+		basic_color = GIT_COLOR_BLUE;
- 	else if (skip_prefix(placeholder + 1, "reset", &rest))
--		strbuf_addstr(sb, GIT_COLOR_RESET);
-+		basic_color = GIT_COLOR_RESET;
-+
-+	if (basic_color && want_color(c->pretty_ctx->color))
-+		strbuf_addstr(sb, basic_color);
-+
- 	return rest - placeholder;
++	if (!want_color(format->use_color))
++		color_parse("", atom->u.color);
  }
  
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index 7b97a90ba..b326d550f 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -59,7 +59,10 @@ test_format () {
+ static void refname_atom_parser_internal(struct refname_atom *atom,
+@@ -675,6 +681,8 @@ int verify_ref_format(struct ref_format *format)
+ 		if (skip_prefix(used_atom[at].name, "color:", &color))
+ 			format->need_color_reset_at_eol = !!strcmp(color, "reset");
+ 	}
++	if (format->need_color_reset_at_eol && !want_color(format->use_color))
++		format->need_color_reset_at_eol = 0;
+ 	return 0;
  }
  
- # Feed to --format to provide predictable colored sequences.
-+BASIC_COLOR='%Credfoo%Creset'
-+COLOR='%C(red)foo%C(reset)'
- AUTO_COLOR='%C(auto,red)foo%C(auto,reset)'
-+ALWAYS_COLOR='%C(always,red)foo%C(always,reset)'
- has_color () {
- 	test_decode_color <"$1" >decoded &&
- 	echo "<RED>foo<RESET>" >expect &&
-@@ -177,7 +180,7 @@ test_expect_success 'basic colors' '
- 	<RED>foo<GREEN>bar<BLUE>baz<RESET>xyzzy
- 	EOF
- 	format="%Credfoo%Cgreenbar%Cbluebaz%Cresetxyzzy" &&
--	git rev-list --format="$format" -1 master >actual.raw &&
-+	git rev-list --color --format="$format" -1 master >actual.raw &&
+diff --git a/ref-filter.h b/ref-filter.h
+index 1ffc3ca81..0d98342b3 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -79,12 +79,13 @@ struct ref_format {
+ 	 */
+ 	const char *format;
+ 	int quote_style;
++	int use_color;
+ 
+ 	/* Internal state to ref-filter */
+ 	int need_color_reset_at_eol;
+ };
+ 
+-#define REF_FORMAT_INIT { NULL, 0 }
++#define REF_FORMAT_INIT { NULL, 0, -1 }
+ 
+ /*  Macros for checking --merged and --no-merged options */
+ #define _OPT_MERGED_NO_MERGED(option, filter, h) \
+diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+index a428ae670..d2aec0f38 100755
+--- a/t/t3203-branch-output.sh
++++ b/t/t3203-branch-output.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git branch display tests'
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+ test_expect_success 'make commits' '
+ 	echo content >file &&
+@@ -239,4 +240,34 @@ test_expect_success 'git branch --format option' '
+ 	test_i18ncmp expect actual
+ '
+ 
++test_expect_success "set up color tests" '
++	echo "<RED>master<RESET>" >expect.color &&
++	echo "master" >expect.bare &&
++	color_args="--format=%(color:red)%(refname:short) --list master"
++'
++
++test_expect_success '%(color) omitted without tty' '
++	TERM=vt100 git branch $color_args >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect.bare actual
++'
++
++test_expect_success TTY '%(color) present with tty' '
++	test_terminal env TERM=vt100 git branch $color_args >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect.color actual
++'
++
++test_expect_success 'color.branch=always overrides auto-color' '
++	git -c color.branch=always branch $color_args >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect.color actual
++'
++
++test_expect_success '--color overrides auto-color' '
++	git branch --color $color_args >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect.color actual
++'
++
+ test_done
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 7872a2f54..2274a4b73 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -7,6 +7,7 @@ test_description='for-each-ref test'
+ 
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+ # Mon Jul 3 23:18:43 2006 +0000
+ datestamp=1151968723
+@@ -412,19 +413,33 @@ test_expect_success 'Check for invalid refname format' '
+ 	test_must_fail git for-each-ref --format="%(refname:INVALID)"
+ '
+ 
+-cat >expected <<EOF
+-$(git rev-parse --short refs/heads/master) <GREEN>master<RESET>
+-$(git rev-parse --short refs/remotes/origin/master) <GREEN>origin/master<RESET>
+-$(git rev-parse --short refs/tags/testtag) <GREEN>testtag<RESET>
+-$(git rev-parse --short refs/tags/two) <GREEN>two<RESET>
+-EOF
++test_expect_success 'set up color tests' '
++	cat >expected.color <<-EOF &&
++	$(git rev-parse --short refs/heads/master) <GREEN>master<RESET>
++	$(git rev-parse --short refs/remotes/origin/master) <GREEN>origin/master<RESET>
++	$(git rev-parse --short refs/tags/testtag) <GREEN>testtag<RESET>
++	$(git rev-parse --short refs/tags/two) <GREEN>two<RESET>
++	EOF
++	sed "s/<[^>]*>//g" <expected.color >expected.bare &&
++	color_format="%(objectname:short) %(color:green)%(refname:short)"
++'
+ 
+-test_expect_success 'Check %(color:...) ' '
+-	git for-each-ref \
+-		--format="%(objectname:short) %(color:green)%(refname:short)" \
+-		>actual.raw &&
++test_expect_success TTY '%(color) shows color with a tty' '
++	test_terminal env TERM=vt100 \
++		git for-each-ref --format="$color_format" >actual.raw &&
  	test_decode_color <actual.raw >actual &&
+-	test_cmp expected actual
++	test_cmp expected.color actual
++'
++
++test_expect_success '%(color) does not show color without tty' '
++	TERM=vt100 git for-each-ref --format="$color_format" >actual &&
++	test_cmp expected.bare actual
++'
++
++test_expect_success 'color.ui=always can override tty check' '
++	git -c color.ui=always for-each-ref --format="$color_format" >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expected.color actual
+ '
+ 
+ cat >expected <<\EOF
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 0ef7b9439..dd5ba450e 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -9,6 +9,7 @@ Tests for operations with tags.'
+ 
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
++. "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+ # creating and listing lightweight tags:
+ 
+@@ -1900,6 +1901,30 @@ test_expect_success '--format should list tags as per format given' '
  	test_cmp expect actual
  '
-@@ -188,48 +191,61 @@ test_expect_success 'advanced colors' '
- 	<BOLD;RED;BYELLOW>foo<RESET>
- 	EOF
- 	format="%C(red yellow bold)foo%C(reset)" &&
--	git rev-list --format="$format" -1 master >actual.raw &&
-+	git rev-list --color --format="$format" -1 master >actual.raw &&
- 	test_decode_color <actual.raw >actual &&
- 	test_cmp expect actual
- '
  
--test_expect_success '%C(auto,...) does not enable color by default' '
--	git log --format=$AUTO_COLOR -1 >actual &&
--	has_no_color actual
--'
--
--test_expect_success '%C(auto,...) enables colors for color.diff' '
--	git -c color.diff=always log --format=$AUTO_COLOR -1 >actual &&
--	has_color actual
--'
--
--test_expect_success '%C(auto,...) enables colors for color.ui' '
--	git -c color.ui=always log --format=$AUTO_COLOR -1 >actual &&
--	has_color actual
--'
-+for spec in \
-+	"%Cred:$BASIC_COLOR" \
-+	"%C(...):$COLOR" \
-+	"%C(auto,...):$AUTO_COLOR"
-+do
-+	desc=${spec%%:*}
-+	color=${spec#*:}
-+	test_expect_success "$desc does not enable color by default" '
-+		git log --format=$color -1 >actual &&
-+		has_no_color actual
-+	'
- 
--test_expect_success '%C(auto,...) respects --color' '
--	git log --format=$AUTO_COLOR -1 --color >actual &&
--	has_color actual
--'
-+	test_expect_success "$desc enables colors for color.diff" '
-+		git -c color.diff=always log --format=$color -1 >actual &&
-+		has_color actual
-+	'
- 
--test_expect_success '%C(auto,...) respects --no-color' '
--	git -c color.ui=always log --format=$AUTO_COLOR -1 --no-color >actual &&
--	has_no_color actual
--'
-+	test_expect_success "$desc enables colors for color.ui" '
-+		git -c color.ui=always log --format=$color -1 >actual &&
-+		has_color actual
-+	'
- 
--test_expect_success TTY '%C(auto,...) respects --color=auto (stdout is tty)' '
--	test_terminal env TERM=vt100 \
--		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
--	has_color actual
--'
-+	test_expect_success "$desc respects --color" '
-+		git log --format=$color -1 --color >actual &&
-+		has_color actual
-+	'
- 
--test_expect_success '%C(auto,...) respects --color=auto (stdout not tty)' '
--	(
--		TERM=vt100 && export TERM &&
--		git log --format=$AUTO_COLOR -1 --color=auto >actual &&
-+	test_expect_success "$desc respects --no-color" '
-+		git -c color.ui=always log --format=$color -1 --no-color >actual &&
- 		has_no_color actual
--	)
-+	'
++test_expect_success "set up color tests" '
++	echo "<RED>v1.0<RESET>" >expect.color &&
++	echo "v1.0" >expect.bare &&
++	color_args="--format=%(color:red)%(refname:short) --list v1.0"
++'
 +
-+	test_expect_success TTY "$desc respects --color=auto (stdout is tty)" '
-+		test_terminal env TERM=vt100 \
-+			git log --format=$color -1 --color=auto >actual &&
-+		has_color actual
-+	'
++test_expect_success '%(color) omitted without tty' '
++	TERM=vt100 git tag $color_args >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect.bare actual
++'
 +
-+	test_expect_success "$desc respects --color=auto (stdout not tty)" '
-+		(
-+			TERM=vt100 && export TERM &&
-+			git log --format=$color -1 --color=auto >actual &&
-+			has_no_color actual
-+		)
-+	'
-+done
++test_expect_success TTY '%(color) present with tty' '
++	test_terminal env TERM=vt100 git tag $color_args >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect.color actual
++'
 +
-+test_expect_success '%C(always,...) enables color even without tty' '
-+	git log --format=$ALWAYS_COLOR -1 >actual &&
-+	has_color actual
- '
- 
- test_expect_success '%C(auto) respects --color' '
++test_expect_success 'color.ui=always overrides auto-color' '
++	git -c color.ui=always tag $color_args >actual.raw &&
++	test_decode_color <actual.raw >actual &&
++	test_cmp expect.color actual
++'
++
+ test_expect_success 'setup --merged test tags' '
+ 	git tag mergetest-1 HEAD~2 &&
+ 	git tag mergetest-2 HEAD~1 &&
 -- 
 2.13.2.1157.gc6daca446
-
