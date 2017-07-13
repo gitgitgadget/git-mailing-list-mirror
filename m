@@ -2,142 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9744F202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 19:40:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B03F202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 19:45:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753167AbdGMTkD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 15:40:03 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:36146 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752970AbdGMTkC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 15:40:02 -0400
-Received: by mail-pg0-f51.google.com with SMTP id u62so34267559pgb.3
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:39:57 -0700 (PDT)
+        id S1752835AbdGMTpY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 15:45:24 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:33964 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752587AbdGMTpX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 15:45:23 -0400
+Received: by mail-qk0-f179.google.com with SMTP id d78so59470453qkb.1
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yXjzrZmtxtgIcB8yjsj7R7RX16xeZ4aL0nOr4IMPMRQ=;
-        b=TZDgWS9CuyE8MmVezaHCqc9SLmyn0Lw2FsouvSc4SfX3PMITi/BLZxaMOYWD9cF7zD
-         oljRp1dzG0KJtF/j5O22R7yAuYv4yc/T8vOwGPzAMDtPhx9Y4Oenw/YNi9pXTdH+jcC+
-         TY+VKgzAtlvRStNucs9ZTzKnh7DzTF4Rx01/raqadvGva3J/8APdbipzVg0pcDrZvrao
-         r9dE8MiL9o3960CwWC3GvqoKPLV/fQDmmXduYjuHJ++WY+AuZyaJSHjkGNlvaZvzx95E
-         xU5vvwTLe91tqHy46XTUOMH9y90XX60Ria9/qq4S0HWw5lKuhRK4iseFhB4hXsc+0Tqs
-         tcYg==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=aztXITNSANOXTSk8uQwm80mzKaERyl2ILWxrExsCAjY=;
+        b=UFs74badXM6fyhtc/U8kdWACdfPsfidjYrm1u80+5gX+qSR5tbHddXIPWX7Utopmsr
+         GiZ4H1Zm6Nh4pLC9r1mopIbXZe4FeNAB1e+DggBoAw8CLlTtJMNVEKWCt8pqPPlrA7T7
+         YLnhitqQDI05UcXli4qdw5r4ueLu0Fcnaq0PYO6jKM8lvkqiDlcYoNlhOvWLGuSFDrbb
+         urePK1Gu169WOtSalD5eBW4ZX1GiGniSld/j+JI1uw6m1PLeV8nkjkT+GlPCsyFaqlsy
+         f7hxSEgrSIpSmcPciVp6rRqeUNvZlVGsmgo52yGRBz/k17AMyZ26ZiIQIDIh0OW7D89O
+         7GMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yXjzrZmtxtgIcB8yjsj7R7RX16xeZ4aL0nOr4IMPMRQ=;
-        b=GZJsK95mgXXHbByTAp5dtaC7UTF6BUFQHOns/0OLaPxFlb6GTr1BOpKfUkwIDNSQap
-         VQ/K9uFBGc346jKjzpNrKekF2OkIzncTpP7nd3usNImOmqX93dUWOwHRdOebMzYSQ3JL
-         AanQC/syklfzS9xZhANQgaT/k29AX87m8Qyg9EOrnbxFPI248TKa9Ydl9EKTeQbdRs35
-         Xxf72HzxhZSyF5jZZmvAcJ783M59bPcNpTlNab1+hSTrqLqu4u9ODTxEs27/q1ygSwb3
-         qb7UyT2yjcol6AJAD4bW5jeiPGmU+KaaiydDztU6s6G2zFX7AwAUG2tySQH/MWMtLP1g
-         tkrA==
-X-Gm-Message-State: AIVw113L8Z6YGFjGDWY7pnJQEr92nurZmss1ntr3HUqKuO13kR+L2jxL
-        3JKNzadDz/LFHnQA
-X-Received: by 10.98.158.139 with SMTP id f11mr1233104pfk.208.1499974796474;
-        Thu, 13 Jul 2017 12:39:56 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:fdeb:d456:6ee8:3fad])
-        by smtp.gmail.com with ESMTPSA id z74sm14936333pfd.112.2017.07.13.12.39.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 12:39:56 -0700 (PDT)
-Date:   Thu, 13 Jul 2017 12:39:51 -0700
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [RFC PATCH 1/3] promised-blob, fsck: introduce promised blobs
-Message-ID: <20170713123951.5cab1adc@twelve2.svl.corp.google.com>
-In-Reply-To: <890a36fc-be16-83bc-fec6-94e21d0f7d0a@jeffhostetler.com>
-References: <cover.1499800530.git.jonathantanmy@google.com>
-        <f9c7d4b3f800ea31e85e4897ee7048fec1e3c2f0.1499800530.git.jonathantanmy@google.com>
-        <890a36fc-be16-83bc-fec6-94e21d0f7d0a@jeffhostetler.com>
-X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=aztXITNSANOXTSk8uQwm80mzKaERyl2ILWxrExsCAjY=;
+        b=uHoI8Icr4CXi4dGjIkFC0yA2aFNqnUYFAxKugKvypsjC/GbwBKM0vJzI3DU68uUinC
+         LLZUJuIoqBGFZ0cdsohz+y7SRPCW5gHeYz1EMAn+2dWRRHbvwi3At3be9gwliUafQUUg
+         egm12gCZoSHcFOexX27Z4Vv6UkwF/yz4dRMSuNiswJzKX+S4mpPjZBeZe+PhfL2sFGsj
+         EL42tMnk42eKeOlFDR03PKk+/BsQvmwHVG7C4bamOa5BDO5etnpOX+J0iwwyLty8Cz6N
+         RWCS03LNu+NxjYjeTKse6641E3GCCb7nzRtWMUsiUa6l6jDoWvSOL/jZBTD9cBj7J332
+         ZmHg==
+X-Gm-Message-State: AIVw111LVFDsWoR73f3RkZEPUkB8ify2D3R5gWLSdQyXdZ3qJQI4vmvJ
+        t4rwQMIifJGP9yK7LX1gsiS3XUOmVA==
+X-Received: by 10.55.152.71 with SMTP id a68mr6521359qke.210.1499975122690;
+ Thu, 13 Jul 2017 12:45:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Received: by 10.55.31.13 with HTTP; Thu, 13 Jul 2017 12:45:22 -0700 (PDT)
+In-Reply-To: <20170713184051.fcwg76o6ovnsjjbm@sigill.intra.peff.net>
+References: <20170713065050.19215-1-chriscool@tuxfamily.org>
+ <20170713165840.e5cdw7pa2m6haaen@sigill.intra.peff.net> <xmqqeftkxkax.fsf@gitster.mtv.corp.google.com>
+ <20170713184051.fcwg76o6ovnsjjbm@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 13 Jul 2017 21:45:22 +0200
+Message-ID: <CAP8UFD1ZfdV2+9Z6pjUvtxWitxdwquPjycWr+H-XR3Uw9pruBg@mail.gmail.com>
+Subject: Re: [PATCH v1 0/4] Teach 'run' perf script to read config files
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 12 Jul 2017 13:29:11 -0400
-Jeff Hostetler <git@jeffhostetler.com> wrote:
+On Thu, Jul 13, 2017 at 8:40 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Jul 13, 2017 at 11:29:10AM -0700, Junio C Hamano wrote:
+>
+>> > So then I think your config file primarily becomes about defining the
+>> > properties of each run. I'm not sure if it would look like what you're
+>> > starting on here or not.
+>>
+>> Yeah, I suspect that the final shape that defines the matrix might
+>> have to become quite a bit different.
+>
+> I think it would help if the perf code was split better into three
+> distinct bits:
+>
+>   1. A data-store capable of storing the run tuples along with their
+>      outcomes for each test.
+>
+>   2. A "run" front-end that runs various profiles (based on config,
+>      command-line options, etc) and writes the results to the data
+>      store.
+>
+>   3. A flexible viewer which can slice and dice the contents of the data
+>      store according to different parameters.
+>
+> We're almost there now. The "run" script actually does store results,
+> and you can view them via "aggregate.pl" without actually re-running the
+> tests. But the data store only indexes on one property: the tree that
+> was tested (and all of the other properties are ignored totally; you can
+> get some quite confusing results if you do a "./run" using say git.git
+> as your test repo, and then a followup with "linux.git").
 
-> My primary concern is scale and managing the list of objects over time.
-> 
-> My fear is that this list will be quite large.  If we only want to omit
-> the very large blobs, then maybe not.  But if we want to expand that
-> scope to also omit other objects (such as a clone synchronized with a
-> sparse checkout), then that list will get large on large repos.  For
-> example, on the Windows repo we have (conservatively) 100M+ blobs (and
-> growing).  Assuming 28 bytes per, gives a 2.8GB list to be manipulated.
-> 
-> If I understand your proposal, newly-omitted blobs would need to be
-> merged into the promised-blob list after each fetch.  The fetch itself
-> may not have that many new entries, but inserting them into the existing
-> list will be slow.  Also, mmap'ing and bsearch'ing will likely have
-> issues.  And there's likely to be a very expensive step to remove
-> entries from the list as new blobs are received (or locally created).
-> 
-> In such a "sparse clone", it would be nice to omit unneeded tree objects
-> in addition to just blobs.   I say that because we are finding with GVFS
-> on the Windows repo, that even with commits-and-trees-only filtering,
-> the number of tree objects is overwhelming.
+Yeah I agree, but if possible I'd like to avoid working on the three
+different parts at the same time.
 
-I know that discussion has shifted to the possibility of not having this
-list at all, and not sending size information together with the fetch,
-but going back to this...maybe omitting trees *is* the solution to both
-the large local list and the large amount of size information needing to
-be transferred.
+I haven't thought much about how to improve the data store yet.
+I may have to look at that soon though.
 
-So the large-blob (e.g. Android) and many-blob (e.g. Windows) cases
-would look like this:
+> I have to imagine that somebody else has written such a system already
+> that we could reuse.  I don't know of one off-hand, but this is also not
+> an area where I've spent a lot of time.
 
- * Large-blob repositories have no trees omitted and a few blobs
-   omitted, and we have sizes for all of them.
- * Many-blob repositories have many trees omitted and either all
-   blobs omitted (and we have size information for them, useful for FUSE
-   or FUSE-like things, for example) or possibly no blobs omitted (for
-   example, if shallow clones are going to be the norm, there won't be
-   many blobs to begin with if trees are omitted).
+Actually about the viewer AEvar suggested having something like
+speed.python.org and speed.pypy.org which seem to be made using
+https://github.com/tobami/codespeed
 
-This seems better than an intermediate solution for the many-blob
-repository case in which we still keep all the trees but also try to
-avoid sending and storing as much information about the blobs as
-possible, because that doesn't seem to provide us with much savings
-(because the trees as a whole are just as large, if not larger, than the
-blob information).
+So unless something else is suggested, I plan to make it possible to
+import the results of the perf tests into codespeed, but I haven't
+looked at that much yet.
 
-> So I'm also concerned about
-> limiting the list to just blobs.  If we need to have this list, it
-> should be able to contain any object.  (Suggesting having an object type
-> in the entry.)
+> We're sort of drifting off topic from Christian's patches here. But if
+> we did have a third-party system, I suspect the interesting work would
+> be setting up profiles for the "run" tool to kick off. And we might be
+> stuck in such a case using whatever format the tool prefers. So having a
+> sense of what the final solution looks like might help us know whether
+> it makes sense to introduce a custom config format here.
 
-This makes sense - I'll add it in.
+I don't think we should completely switch to a third-party system for
+everything.
+Though it would simplify my work if we decide to do that.
 
-> I also have to wonder about the need to have a complete list of omitted
-> blobs up front.  It may be better to just relax the consistency checks
-> and assume a missing blob is "intentionally missing" rather than
-> indicating a corruption somewhere.  And then let the client do a later
-> round-trip to either demand-load the object -or- demand-load the
-> existence/size info if/when it really matters.
-> 
-> Maybe we should add a verb to your new fetch-blob endpoint to just get
-> the size of one or more objects to help with this.
+I think people might want different viewers, so we should just make
+sure that we can easily massage the results from the run script, so
+that it will be easy to provide them as input to many different
+viewers.
 
-If we allow the omission of trees, I don't think the added complexity of
-demand-loading sizes is worth it.
-
-What do you think of doing this:
- * add a "type" field to the list of promised objects (formerly the list
-   of promised blobs)
- * retain mandatory size for blobs
- * retain single file containing list of promised objects (I don't feel
-   too strongly about this, but it has a slight simplicity and
-   in-between-GC performance advantage)
+So we are pretty free to decide how we specify which tests should be
+performed on which revision, and I think a config file is the best
+way.
