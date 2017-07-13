@@ -2,174 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC99B2027C
-	for <e@80x24.org>; Thu, 13 Jul 2017 22:39:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A89AE2027C
+	for <e@80x24.org>; Thu, 13 Jul 2017 22:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752745AbdGMWja (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 18:39:30 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36752 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751017AbdGMWj3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 18:39:29 -0400
-Received: by mail-wr0-f196.google.com with SMTP id 77so10387328wrb.3
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 15:39:29 -0700 (PDT)
+        id S1752446AbdGMWoL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 18:44:11 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:32971 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751216AbdGMWoK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 18:44:10 -0400
+Received: by mail-pg0-f54.google.com with SMTP id k14so36379774pgr.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 15:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xojAaO984d18DNnmJsYhXA+oYhNCqgT9kXCcnT78tKw=;
-        b=CPQm25T1bUqG+bLGhvlMAz8FjZn3QwhcNHeG8Q4tKyNKTlGVnOi0Rh97vdZYpmSbfg
-         swHIzZXM3q4cgkPViZGgfJ1piaWvSz4H+RtswOU5ttS1O8ez0Pc9ez1/h1aDv/F4K50s
-         +ojLembsR2+xEhFsH5P4z3dN9yNAC3VYOKvW5dhNVRa08vlIaKsKMCXcagUvSDfcLB8z
-         4NTv7NJTHrHMdZwhzXPfToj2pYy34mQlYxF7Gg38RKikJuA2kATaZZunk/hF5UB7b8c7
-         TInUTPB14H/flDMOkmyPHn9OXMHb91tj67Dyas8RChWJbr8lleFgvmDcNtYKFgenEQzn
-         eHlQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lS0N+cHZvDZyPJmxm+M1diZimM5T0HDH45eGl7wSIGM=;
+        b=cTAB5+G/OZTtXBvt00p/hIUwwR9sN59MAWfy6jpgp+Y4M+NA1cZXGE+Hw1R9Qd6ptJ
+         iNm8+/sKGBWliGKBhEaPHMuPFfWP2IrX24xwz4MantwPajeDU4i/R3qiJjF0zoHIxSt6
+         f7PhbmAAJXRAUy5hsbEoYvtBioF0mPNyHQMo/3NioUdsAImbfhdhuvh+IZQOXm0CdC7K
+         mQLKf3nwK/hf62cDkJy02Ty1CcLqX29501qoluePyjaAaXEhE4LSJhIqRse420BSnFPM
+         ng5dC9DQpPuXIG7gqG/OslK1bUQrj26MQrU8mxzoeS2Wmg8SSYvmYIE/U2el4mN3AYmM
+         4HfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xojAaO984d18DNnmJsYhXA+oYhNCqgT9kXCcnT78tKw=;
-        b=Mzj3seKNrG9wcLctYgfdILlSYu3v9tHwp1HivrGe/o85q6n6r7Njty1M/XqHe6WU52
-         L2lJbEKiUjHHPE4CLmt1Int//4N1yre9pShOuXWxCr0bnOYt2lAbYmy1DLrGpDRdktde
-         X3wEnJEKA3F0bfjjMqo9Roou2A3qbDhwSz40LaqVEA+M8MVR25hxY1sYjQIDIzBpHoMh
-         2PKJtilxqfbtRg4GSKxTmnVyhr5Vv/CPHfk0xa5xaKCC3rC8joND3T84grPaNQr2PsLJ
-         Bf5ShfAuyD72iAtwnUR/tA61x/F2W5vK6TPOipMICiXfvxG50hhbo1uZZtk3y2HFUusi
-         DOWw==
-X-Gm-Message-State: AIVw113fiJpkOmiet8adcxA3oCNqEUc0R/YDaZ4yDQKi8P91gYzUQGIj
-        y4GUGvtelXJNkb3agn8rNg==
-X-Received: by 10.223.147.132 with SMTP id 4mr2759850wrp.107.1499985568105;
-        Thu, 13 Jul 2017 15:39:28 -0700 (PDT)
-Received: from [192.168.5.102] (cable-24-135-63-71.dynamic.sbb.rs. [24.135.63.71])
-        by smtp.gmail.com with ESMTPSA id 82sm749886wmt.17.2017.07.13.15.39.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jul 2017 15:39:27 -0700 (PDT)
-Subject: Re: "groups of files" in Git?
-To:     Junio C Hamano <gitster@pobox.com>,
-        Nikolay Shustov <nikolay.shustov@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
- <CAGZ79kZaf7=uwCPJoPoDiAO9QS21bchaKZvDzWJi=ewPZw9PXQ@mail.gmail.com>
- <xmqqiniwxkmj.fsf@gitster.mtv.corp.google.com>
- <CAEcERAxJRnB55Ardhs7LDW8M8EG-y+YE-He8hiiQv3wDqtVD3g@mail.gmail.com>
- <xmqqzic8t4oi.fsf@gitster.mtv.corp.google.com>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <27a3c650-5843-d446-1f59-64fabe5434a3@gmail.com>
-Date:   Fri, 14 Jul 2017 00:39:25 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lS0N+cHZvDZyPJmxm+M1diZimM5T0HDH45eGl7wSIGM=;
+        b=EEn3mw6fcWVJ/f9mFOv8L6YrsUB6ybcS3sJTrX4mXfi8x+a/ZGsiSxW/PJotDMKc2N
+         MaTjtji9wjY3YKyK0HToTVtWpKmy9PkZg3R49tIhq8KCOkFld2mOH+r6cGuF+Crq7pGk
+         xOuZxQqObptgMwZueWK7sKvdR6uddwcbirL+6Mzgolrs2WzQVr075W//D/kQnU723awy
+         O/jEyQVnd+JBiDNHDb75LjcVYaaTbqWkPupXu22HMEAZGNUURb5tkCHlWzvqBs1eGtg7
+         Rfo7zyypmWtg7/JKn1pfQzCMaZJr1ro2U+fdpC5agoD5VeRMZ3CQZonFQQEbXNmlJ0Hf
+         eLBQ==
+X-Gm-Message-State: AIVw110oXFkSVA85Mjjbqjtb9QywHXBWMmLOV4zBUNPBy7x4wEbJQJCC
+        BRa5rGNq9SYTotozCcBd/+M4gxaBWVan
+X-Received: by 10.84.215.197 with SMTP id g5mr12520137plj.297.1499985849991;
+ Thu, 13 Jul 2017 15:44:09 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqzic8t4oi.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 15:44:09 -0700 (PDT)
+In-Reply-To: <20170713200538.25806-4-pc44800@gmail.com>
+References: <20170630194727.29787-1-pc44800@gmail.com> <20170713200538.25806-1-pc44800@gmail.com>
+ <20170713200538.25806-4-pc44800@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 13 Jul 2017 15:44:09 -0700
+Message-ID: <CAGZ79kb18z5zc9iu3Vv5aVZWJmoZzmwbMVpy89VC-t-ei2M+bw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 4/5 v4] submodule: port submodule subcommand
+ 'status' from shell to C
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/07/2017 23:20, Junio C Hamano wrote:
-> Nikolay Shustov <nikolay.shustov@gmail.com> writes:
->> My question was about how to robustly handle "multiple pending
->> commits" which in Perforce are represented by concept of pending
->> changelists.
-> 
-> And in Git, they are represented by concept of commits that are not
-> yet pushed out to the public repository to become the final history
-> carved in stone.
+On Thu, Jul 13, 2017 at 1:05 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+> This aims to make git-submodule 'status' a built-in. Hence, the function
+> cmd_status() is ported from shell to C. This is done by introducing
+> three functions: module_status(), submodule_status() and print_status().
+>
+> The function module_status() acts as the front-end of the subcommand.
+> It parses subcommand's options and then calls the function
+> module_list_compute() for computing the list of submodules. Then
+> this functions calls for_each_submodule_list() looping through the
+> list obtained.
+>
+> Then for_each_submodule_list() calls submodule_status() for each of the
+> submodule in its list. The function submodule_status() is responsible
+> for generating the status each submodule it is called for, and
+> then calls print_status().
+>
+> Finally, the function print_status() handles the printing of submodule's
+> status.
+>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+> ---
+> In this new version of patch:
+>
+> Instead of using cmd_diff_files(), the process is optimized
+> by using ce_match_stat().
 
-If I may, I don`t think "multiple pending commits" is the issue here 
-(as that is indeed what a private branch is), but more something like 
-"multiple branches pending/live merge branch", or something.
+Apart from this I have reviewed the patch and found it a faithful
+conversion.
 
-To illustrate, let`s say this is our starting position:
-
-(1)      o---o---o (featureA)
-        /         \
-    ---o---o---o---M (master, HEAD)
-        \         /
-         o---o---o (featureB)
-
-
-We`re currently on commit "M", being a merge commit between our 
-"master" and two feature branches.
-
-Now, what seems lacking, while still possible through a series of 
-steps, is an easy (single step) way to modify current state and 
-commit the change to the _feature branch_, while still being on the 
-"master" branch, still having everything merged in.
-
-So after I make a "featureA" related change while on "M", to be able 
-to issue a single command, for example:
- 
-    $ git commit --branch=featureA
-
-... or:
- 
-    $ git commit -b featureA 
- 
-..., where "featureA" would need to be one of the parents of the 
-current commit we are at (commit "M", in our case), and get a 
-situation like this:
-
-(2)      o---o---o---A (featureA)
-        /             \
-    ---o---o---o-------M' (master, HEAD)
-        \             /
-         o---o---o---/ (featureB)
+I am not an expert in the diff area  and wonder how
+the cmd_diff_files functionality is achieved with just a stat call
+and then comparing it to  ce_match_stat. 'Using "dirty" ignores
+all changes to the work tree of submodules, only changes to the
+commits stored in the superproject are shown.' So I'd have
+expected ce->oid to be compared (is there an index entry differing,
+i.e. more than one stage?)
 
 
-Here, "A" is a new commit/change I`ve just made (while still being on 
-the "master" branch), and it is automatically commited to related 
-"featureA" branch, with merge commit "M" now recreated into "M'" to 
-hold the new "featureA" commit "A" as well.
+> Also, the child_process running the command 'rev-parse --verify HEAD'
+> is removed for optimization reasons, and instead head_ref_submodule()
+> is used with callback function handle_submodule_head_ref().
 
-I guess it would be a kind of alias to doing:
-
-    $ git checkout featureA
-    $ git add ...
-    $ git commit
-    $ git checkout master
-    $ git reset --hard HEAD^
-    $ git merge featureA featureB
-
-... or something, where last merge step would need to remember 
-previous merge commit "M" parent branches and merge them again to 
-produce an updated "M'" merge commit.
-
-In the same manner, it should be possible to drop a commit from the 
-feature branch in a single step, for example returning to the state 
-as shown in (1), or even "port" it from one branch to the other, like
-this (without a need for it to be the last commit, even):
-
-(3)      o---o---o---\ (featureA)
-        /             \
-    ---o---o---o-------M' (master, HEAD)
-        \             /
-         o---o---A'--o (featureB)
-
-
-Something like "rebase on steroids", lol, keeping the HEAD where it 
-is, and its merge commit beneath updated.
-
-This indeed seems similar to Mercurial`s patch "queues", except being 
-much better as everything is still version controlled at all times, 
-no additional tools needed to version control the patches (unless 
-that`s already been addressed in Mercurial as well, dunno).
- 
-And it still seems to be following Git`s "multiple commits per 
-feature, single feature per branch" spirit, just allowing for 
-easier/faster branch integration testing.
-
-p.s. Even if my short sample might be flawed in one way or the other, 
-it should show the essence of the functionality we`re discussing 
-here, I think.
-
-Regards,
-Buga
+Cool.
