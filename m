@@ -2,261 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56152202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 15:37:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E70A202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 15:53:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752427AbdGMPhW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 11:37:22 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:38334 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751204AbdGMPhV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 11:37:21 -0400
-Received: by mail-it0-f46.google.com with SMTP id k192so49275269ith.1
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 08:37:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NDzMYPjmZSkWsvUDEpsaoNA7r+ZdLyu32jo1vnqw/Tg=;
-        b=mn44bYqy4AN+YdVHWsPFQpit/fHld9DW/acZkzgteXDZ0sKNLQGSWuCMnZXHAa4cra
-         05NTJBAnhM7/HOry59GA333Gn380RiqT5bZ2xW4vlIQb9PMqoR6NsNpGWan7u0L+ZNUu
-         PaL80TplsPQDEvEwlgvpbA044jMhdsecF3Mm4RnuhRQEraLUucErPYyuvQfpa9oSGS8g
-         p3oEm9B+uwGip6uqqSsE/AD4DDO4i0FuymCTUlkqEneBiKhooD4Lfd/Cy9hOCkgHu6wY
-         4Uh8xKro+ij8NkaXXtTRRVSgisPXq6ZSQHOvwB2TS2CwsfRz9AAIJtsrv858I8txZ9S7
-         HkWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NDzMYPjmZSkWsvUDEpsaoNA7r+ZdLyu32jo1vnqw/Tg=;
-        b=cR2QcGCeaKWmTNX/wFhWRbZaZfdbVMRPenORS5S5y6xTOPcqiwBn4elbytYo/kYhQY
-         pi/hCRr7NXsjqVrVOBkFLcPSqDV/4wOvUHYBkHy1hG4SNak2jADcv1vwPz/5vNc/chIR
-         kf/pH+L9hnGq8ePzGZWYrnK+AUnwBdPViQt3GfjmcvH2aqqa1/64gZ8f8ss9da1wCesK
-         KBX3Q1nZXDh9g7qKkI8K3JiNzeSWFvsHA/22h2iR8IDShCkzGctjsi/fxvMx0vKYrzzB
-         fMEXC0draejE7ZXVKHOPivPFgXhbLZlsTj2YI7RtO6mTWy3RsotsPDfVppxLBsD7svgd
-         EcnA==
-X-Gm-Message-State: AIVw110H8RUt341gp4+OHy68++4JlIGZMclrx+Olxj10NxzDaFenrBSv
-        YO+xWSh9D4lI3EFuDs8btOPZx4s6Aw==
-X-Received: by 10.107.144.134 with SMTP id s128mr3891297iod.166.1499960240862;
- Thu, 13 Jul 2017 08:37:20 -0700 (PDT)
+        id S1753853AbdGMPx2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 11:53:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39220 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1753825AbdGMPx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 11:53:26 -0400
+Received: (qmail 26472 invoked by uid 109); 13 Jul 2017 15:53:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 15:53:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32725 invoked by uid 111); 13 Jul 2017 15:53:28 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 11:53:28 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jul 2017 11:53:13 -0400
+Date:   Thu, 13 Jul 2017 11:53:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2017, #03; Mon, 10)
+Message-ID: <20170713155313.whucxkoita6nvmhz@sigill.intra.peff.net>
+References: <xmqqlgnv52oq.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.21.1.1707131435220.4193@virtualbox>
+ <xmqqzic8xsxd.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.26.138 with HTTP; Thu, 13 Jul 2017 08:37:20 -0700 (PDT)
-In-Reply-To: <6e4096fd-cbab-68f0-7a23-654382cb810e@gmail.com>
-References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
- <B5FDF25C-ED5A-4CD1-AAD7-04BD8D705C59@gmail.com> <6e4096fd-cbab-68f0-7a23-654382cb810e@gmail.com>
-From:   Nikolay Shustov <nikolay.shustov@gmail.com>
-Date:   Thu, 13 Jul 2017 11:37:20 -0400
-Message-ID: <CAEcERAxRmRh5pp=nXN7X9u=HQsJdSQfsXoedM_5eCDgDWwAkKg@mail.gmail.com>
-Subject: Re: "groups of files" in Git?
-To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzic8xsxd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for the detailed explanation, it looks like merging the
-commits would be helpful in my case. And I think it is a very good
-analogy that Perforce changelists are like multiple pending committs,
-if Git were supporting such.
+On Thu, Jul 13, 2017 at 08:22:54AM -0700, Junio C Hamano wrote:
 
-What it won't be achieving by using commits in this schema is the
-following thing I can do in Perforce:
-In the uncommitted Perforce changelists I can revert the changed file
-to the original state and move the files between the changelists.
-Quite often, while working on something, in the middle I would decide
-to isolate changes to a certain set of files to a separate changelsit
-- but then I might change my mind. It is all flexible until I actually
-commit my Perforce changelist, after which it becomes very much as
-committed changes in any other source control.
-This is actual flexibility I am looking for achieving in Git.
+> > In other words, --force-with-lease could verify that the upstream branch
+> > has no commits that weren't seen in the current branch's reflog, i.e. that
+> > `git rev-parse HEAD@{upstream}` is identical to `git merge-base
+> > --fork-point HEAD HEAD@{upstream}`.
+> >
+> > The assumption would be that you typically want to push with a lease only
+> > when following the `pull --rebase` workflow. Meaning that you would only
+> > want to force-push when your local branch had the upstream branch
+> > integrated at some stage [*1*].
+> 
+> I suspect that the problem "--force-with-lease" wants to solve does
+> not even appear in "pull --rebase" workflow, but let me think aloud
+> to see where this leads, as the idea sounds interesting, even though
+> I may have misunderstood what you meant by the above.
+> 
+> If you do a "pull --rebase", you first rewind to the upstream and
+> then reapply your changes on top, meaning that the result would
+> normally be based on what was once at the tip of the upstream and
+> should fast-forward.  The only situation that a result of "pull
+> --rebase" needs a non-ff push is when somebody else pushed there in
+> the meantime, adding commits that you haven't seen yet.  And you
+> do not want to force your push to lose their work with "--force",
+> with or without any lease.
 
+That assumes that you're pushing back to the upstream. You could be
+doing a "pull --rebase" from upstream and then pushing up to another ref
+(or even another repo).
 
-On Tue, Jul 11, 2017 at 6:46 PM, Igor Djordjevic
-<igor.d.djordjevic@gmail.com> wrote:
-> For starters, let me say that I consider myself a mere advanced
-> beginner Git user, and I haven`t used Perforce ever before (did some
-> reading now), but still, for what it`s worth, here are my thoughts,
-> please bare with me :)
->
-> Do feel free to correct me if I miss something.
->
-> On 11/07/2017 19:39, Lars Schneider wrote:
->>
->>> On 11 Jul 2017, at 17:45, Nikolay Shustov <nikolay.shustov@gmail.com> wrote:
->>>
->>> Hi,
->>> I have been recently struggling with migrating my development workflow
->>> from Perforce to Git, all because of the following thing:
->>>
->>> I have to work on several features in the same code tree parallel, in
->>> the same Perforce workspace. The major reason why I cannot work on one
->>> feature then on another is just because I have to make sure that the
->>> changes in the related areas of the product play together well.
->>>
->>> With Perforce, I can have multiple changelists opened, that group the
->>> changed files as needed.
->>>
->>> With Git I cannot seem to finding the possibility to figure out how to
->>> achieve the same result. And the problem is that putting change sets
->>> on different Git branches (or workdirs, or whatever Git offers that
->>> makes the changes to be NOT in the same source tree) is not a viable
->>> option from me as I would have to re-build code as I re-integrate the
->>> changes between the branches (or whatever changes separation Git
->>> feature is used).
->>> Build takes time and resources and considering that I have to do it on
->>> multiple platforms (I do cross-platform development) it really
->>> denominates the option of not having multiple changes in the same code
->>> tree.
->>>
->>> Am I ignorant about some Git feature/way of using Git that would help?
->>> Is it worth considering adding to Git a feature like "group of files"
->>> that would offer some virtutal grouping of the locally changed files
->>> in the checked-out branch?
->>
->> Interesting question that came up at my workplace, too.
->>
->> Here is what I suggested:
->> 1. Keep working on a single branch and make commits for all features
->> 2. If you make a commit, prefix the commit message with the feature name
->> 3. After you are done with a feature create a new feature branch based on
->>    your combined feature branch. Use `git rebase -i` [1] to remove all
->>    commits that are not relevant for the feature. Alternatively you could
->>    cherry pick the relevant commits [2] if this is faster.
->>
->> I wonder what others think about this solution. Maybe there is a better
->> solution that I overlooked?
->>
->> - Lars
->>
->> [1] https://robots.thoughtbot.com/git-interactive-rebase-squash-amend-rewriting-history
->> [2] http://think-like-a-git.net/sections/rebase-from-the-ground-up/cherry-picking-explained.html
->
-> This "single branch, related commits" approach is exactly what came
-> to my mind as well.
->
-> But, isn`t Perforce "changelist" an "atomic" group of changes - like
-> "commit" in Git, "changeset" in Team Foundation Version Control,
-> etc...?
->
-> If so, it would mean that this "multiple pending changelists" flow
-> would/should be translated to "multiple pending commits" in Git,
-> where in the end _a single_ Perforce "changelist" is _a single_ Git
-> "commit".
->
-> Might be this is where the confusion is coming from, trying to fit
-> natural Git "multiple commits per feature" (but "single feature per
-> branch") concept into a "single changelist per feature" Perforce
-> concept, described/required here?
->
-> I don`t think there is a firm concept of such "multiple pending
-> commits" in Git, but the point is the author is having multiple
-> changelists/commits, and it actively updates them (the _same ones_),
-> until they`re ready to be merged (submitted, in Perforce)... which
-> you can do in Git, and might be quite easily :)
->
-> So... In Git, you can create a separate commit for each changelist
-> you have in Perforce (all these commits being on the same branch, as
-> desired). Then, when you would have wanted to "update" the pending
-> Perforce changelist (not sure what the corresponding command is in
-> Perforce), you would just `git commit` your current state with
-> additional "--squash" or "--fixup" parameters (depending on if you
-> would like to add more description to existing/original commit
-> message, or not), and the original commit SHA1.
->
-> In the end, when everything is tested together and you would like to
-> commit features separately (like submitting changelists in Perforce),
-> you would just need to `git rebase -i --autosquash` your branch,
-> where Git would squash all your "update" commits (fixup/squash ones,
-> that is) to the original/initial ones you made as per your
-> changelists/features. No need for manual rearranging, cherry-picking,
-> or whatever.
->
-> An example flow, with two "changelists" for two features (I`ll be
-> using capital letters A, B, C... instead of commit SHA1, for
-> simplicity):
->
->         ... do some "Feature 1" work...
->         $ git commit -m "Feature 1"
->         ... do some "Feature 2" work...
->         $ git commit -m "Feature 2"
->         ... do some "Feature 1" work...
->         $ git commit --fixup A
->         ... do some "Feature 1" work...
->         $ git commit --fixup A
->         ... do some "Feature 2" work...
->         $ git commit --squash B
->         ... do some "Feature 1" work...
->         $ git commit --fixup A
->         ... do some "Feature 1" work...
->         $ git commit --squash A
->         ... do some "Feature 2" work...
->         $ git commit --fixup B
->
->
-> Branch history would look something like this (H is latest commit):
->
->         H fixup! Feature 2
->         G squash! Feature 1
->         F fixup! Feature 1
->         E squash! Feature 2
->         D fixup! Feature 1
->         C fixup! Feature 1
->         B Feature 2
->         A Feature 1
->
->
-> When you finally do `git rebase -i --autosquash A^`, you should get a
-> list like this[1]:
->
->         pick A Feature 1
->         fixup C fixup! Feature 1
->         fixup D fixup! Feature 1
->         fixup F fixup! Feature 1
->         squash G squash! Feature 1
->         pick B Feature 2
->         squash E squash! Feature 2
->         fixup H fixup! Feature 2
->
->
-> Once rebase is finished, you`ll end up with branch history looking
-> like this:
->
->         B' Feature 2
->         A' Feature 1
->
-> ... where commits A, C, D, F and G have been squashed into a single
-> commit A', and commits B, E and H have been squashed into a single
-> commit B'. These two single commits should correspond to your two
-> Perforce changelists.
->
-> Now you can merge your commits separately, as desired ("submit" the
-> "changelists").
->
-> You can even first rearrange/split/squash them further, or make
-> separate branches out of them, whatever you find appropriate - you
-> can do whatever you like to them while they`re your local commits
-> ("pending changelists"), before making them live/visible for other
-> users as well (merge them to a public branch, "submit changelist").
->
-> p.s. Doesn`t the flow required here look similar to Mercurial patch
-> "queues" approach (again, resembling "quilt" functionality)? If so,
-> "Guilt"[2] may be an option here as well... if the described flow
-> can`t be altered a bit to align better with Git itself, might be
-> profiting on the side of overall workflow simplicity ;)
->
-> [1] Having commits automatically grouped/ordered, you can even
->     replace some "fixup" and "squash" with "reword", for example, so
->     those commits are kept as separate ones, providing you a chance
->     to edit their messages.
-> [2] http://repo.or.cz/w/guilt.git
->
-> Regards,
-> Buga
+Consider something like a topic branch whose @{upstream} is
+origin/master, but you use the "current" push.default. If you do:
+
+  $ git pull --rebase
+  $ git push
+
+then the push is a non-ff, because you're pushing the rebased commits.
+You'd ideally want a way to force that without clobbering a push that
+somebody else made to the topic branch.
+
+I do think Dscho is on to something with the "see if it was ever in our
+reflog" idea. What you really want as a default for force-with-lease is
+some way to say "I want to change that ref from X to Y, but only for
+values of X that I know Y has already considered and incorporated". So
+the danger in using the tracking branch is that you may not have
+incorporated that value (either because somebody fetched behind your
+back, or because you simply forgot to merge it into your local branch
+when doing your history-rewriting operation).
+
+So even forgetting "git pull --rebase", doing:
+
+  $ git fetch
+  $ git rebase HEAD~2
+  $ git push --force-with-lease
+
+is bad, because your rebase didn't take into account what was fetched in
+step 1. But imagine force-with-lease rule were more like: when pushing
+branch "foo" to remote branch "bar", allow only if the current value of
+"bar" is an ancestor of some entry in the reflog of "foo".
+
+That degrades to the usual fast-forward rule if you just check the ref
+tip.  And when checking the reflog entries, it shows that at some point
+you had your local branch set to something that covered all of the
+destination, but then later rewound or rewrote history. We don't have to
+care what that operation was. "rebase" is a likely one, but "git reset
+--hard HEAD^ && git push" would fall out naturally from the same rule.
+
+It's not quite as safe as a true force-with-lease with a value would be.
+For instance, if _upstream_ rewound by a commit, we'd happily undo that
+rewind. But then, so does a normal non-forced fast-forward push.
+
+So I'd say this is not really force-with-lease at all, but rather a
+special mode that is somewhere between a normal fast-forward and a true
+force-with-lease. I don't know if it would make sense to give it a
+different name, or just lump it under force-with-lease.
+
+-Peff
