@@ -2,150 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A506F202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 19:47:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16A181FA4D
+	for <e@80x24.org>; Thu, 13 Jul 2017 19:56:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753094AbdGMTrj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 15:47:39 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:37753 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752880AbdGMTri (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 15:47:38 -0400
-Received: by mail-it0-f53.google.com with SMTP id m84so3458439ita.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:47:38 -0700 (PDT)
+        id S1753177AbdGMT45 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 15:56:57 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:33243 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753018AbdGMT44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 15:56:56 -0400
+Received: by mail-pf0-f175.google.com with SMTP id e7so34355623pfk.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:56:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=y1Q+mXqw5635rqrA/TSxyuhzVYh5mMBQYoQKnLscQrE=;
-        b=gmJrRUI+xtlRNdF/j0k9TgxZ+g2h8mSn3966NCQ41SW/ERuYBA5Mdpv2mUO2SorzPl
-         1rQ9HrISqSA1/2nGhZ7yCCZviso8hqwSBNlN0FQEwZWm8MU/AO7l9huPDIGWxYaS1Nc9
-         mWecXMVN+FT/nM0c4FJ3QYbQK9C8yN8aDyoz01C/AKQoEQEnKTkTV8LbsDtgLUdDHNvA
-         /RgpDFpmlT7Uo0Qk9gPmPBjj1EqgLSfq9CIDBAKQzHJu1s9qaCyEMB1B5LmDtdnsmoZm
-         h2sBmZREJUJTx1QFc6JAug3+5dUBrPyDZ6I3NY14R4+H0VCkG4hKbDPzhImmJciZ2G4a
-         6cQA==
+        bh=jVBUYmys8Y9h7xIEQSBBQ9vWWYvepVJ2LQGjh1x024U=;
+        b=XQ42twClgrDO9ljz+uA9H4iR/HxDyu5NntnR0Zf8l95jq2dx6FFXe5NieiXq/UEQOf
+         48fQCqRaJFj04DppSQIO38o0a2Oe6IeyF3Nvm5c3SVEjmHqqKU76aEo9BeHkKHn9IfgY
+         MQCl3t9NtgKDyfikyKqRkMrFSFsFxTN2265hpuzuuySTCmHE7yWfi8Pjv74QQY1KDDBC
+         YAf8SOSMTm3sPTp3MneL+dsMV6QVPsraFerMaUAtIAQYV5sFCGqa08pOM8DHSZjNrzkx
+         nXqELgVWFR1DqSsluUiAb8YI2LUJgu9mze2j3AuZ+g1KoNrWWZejw9x+MGA/Yi7Ct1JO
+         gNcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=y1Q+mXqw5635rqrA/TSxyuhzVYh5mMBQYoQKnLscQrE=;
-        b=MkOCJkvv9RAuqClw+0UsExAYw6Uh0nXGF9bv5IFBZU7TgGBpGafA+eSwJMLQRw0PUk
-         ins471Jsh5IwEYfUg7H0DGzdgW4F1whxJR1XydCpxkI0tZsaL4XMpaYn8Gcw/YGD6XNh
-         8WkkKYh4Zlvg1QLHbvPVccRtlIs5AjDOQF7B1JVhUmg2c8CZwsR8SMS1T2v9W5ciTRHR
-         gNoX3d9iLIqABraU3y+eIwDeMhlTcOdqaCE2qggf3F5aR3i7hcct8/+TcUB6GRpC5Du8
-         QCtF1/D/0S8TZhrp3NAOtcAfFVAwFjSjceKdaWELoEuVzkAWm3IbYN9ZKh+jjq+shj+I
-         1/vg==
-X-Gm-Message-State: AIVw113SeOUaS3yzI/tinY1GrdBXHAaUgN36MgnjZa4CpMdzKckWIKDL
-        N9MwDkn6bYRIiNoM7ca3M+awcq3eWhux
-X-Received: by 10.107.12.13 with SMTP id w13mr4758687ioi.207.1499975257671;
- Thu, 13 Jul 2017 12:47:37 -0700 (PDT)
+        bh=jVBUYmys8Y9h7xIEQSBBQ9vWWYvepVJ2LQGjh1x024U=;
+        b=R4NhfFD1ojajfoDMB3ABFWdn98ghSPf6RUn6eoVYe86BUQrl7Fniisn3XLvsdRRwmO
+         jQnY68pR5qSkjoJiwyqYZj8d/LQwsB4obKesAGpMAMcRrIHR3EYt/QI09ISMYrFPITfz
+         HegluiPjAle3Hx0cURj0iwEU/u0d7/65BKbFc/rAsK2vEbRfYRZINX27nJGnXa1G+kcN
+         zhnGmzQjA13rNLTJP2fXLQ9GMo49C6cPIdQUZ4iOuyaIXaExS846sxz8SnjJg1WV6bDC
+         es3G1ZH+nmTxZwnhcRHexNcxBurcb706aJF+CdjQ021MJ/uOeaASU96RYdOVgmIjWClL
+         Mxcw==
+X-Gm-Message-State: AIVw112CMrjDqWCFBnW8PqMW2U0Wfk4EA/zibZHBpQZbU79Q9qMdbgb/
+        Q4CQfS4eS3AXzuG5JPqgVWdpkeLblBA6
+X-Received: by 10.99.149.83 with SMTP id t19mr10904285pgn.247.1499975815255;
+ Thu, 13 Jul 2017 12:56:55 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.26.138 with HTTP; Thu, 13 Jul 2017 12:47:36 -0700 (PDT)
-In-Reply-To: <xmqqiniwxkmj.fsf@gitster.mtv.corp.google.com>
-References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
- <CAGZ79kZaf7=uwCPJoPoDiAO9QS21bchaKZvDzWJi=ewPZw9PXQ@mail.gmail.com> <xmqqiniwxkmj.fsf@gitster.mtv.corp.google.com>
-From:   Nikolay Shustov <nikolay.shustov@gmail.com>
-Date:   Thu, 13 Jul 2017 15:47:36 -0400
-Message-ID: <CAEcERAxJRnB55Ardhs7LDW8M8EG-y+YE-He8hiiQv3wDqtVD3g@mail.gmail.com>
-Subject: Re: "groups of files" in Git?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 12:56:54 -0700 (PDT)
+In-Reply-To: <20170713193234.fkxf73t6jevj4svg@sigill.intra.peff.net>
+References: <CAJo=hJtyof=HRy=2sLP0ng0uZ4=S-DpZ5dR1aF+VHVETKG20OQ@mail.gmail.com>
+ <20170713193234.fkxf73t6jevj4svg@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 13 Jul 2017 12:56:54 -0700
+Message-ID: <CAGZ79kbY_t=Xtpb7fy0sZ9TWOy-UOUx8X5+_qLx60Dtg48Ok-g@mail.gmail.com>
+Subject: Re: reftable: new ref storage format
+To:     Jeff King <peff@peff.net>
+Cc:     Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For me the roadblock for multiple iterations through merging of the
-different parts (S, C, then C+S) is the time that will be spent on
-rebuilding the mainline.
-That's why I would like to have C+S in the same source tree then run
-tests for S, tests for C (if they can be run standalone) and C+S
-tests, then tests for whatever other pieces may be affected. (As I
-mentioned, there are more layers than client + server in my situation,
-e.g. client  + transport + server).
-
-I am not really try to ignite the holy war between Perforce and Git
-(and why would one???), but if you are interested in the answer on how
-you'd do your scenario in Perforce, it would be: "use shelved
-changelists".
-In Perforce, you could "shelve" the changelist, similar to "stash" in
-Git, but the difference is that the Perforce shelved changes are
-accessible across clients. I.e. the other developer can "unshelve"
-these pending changes to its sandbox (to the same or the different
-branch) so that sandbox would get the pending changes as well. That
-would be like the developer made these changes himself. Whatever
-automated/manual process is involved, it is typical to run "a trial
-build/tests" on shelved changelist (i.e. uncommitted yet files) to
-verify the quality of changes.
-Git achieves the same through the ease of manipulation with branches
-and I like the way it does it much more.
-
-My question was about how to robustly handle "multiple pending
-commits" which in Perforce are represented by concept of pending
-changelists.
-
-On Thu, Jul 13, 2017 at 2:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Thu, Jul 13, 2017 at 12:32 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Jul 12, 2017 at 05:17:58PM -0700, Shawn Pearce wrote:
 >
->> On Tue, Jul 11, 2017 at 8:45 AM, Nikolay Shustov
+>> We've been having scaling problems with insane number of references
+>> (>866k), so I started thinking a lot about improving ref storage.
 >>
->>> With Git I cannot seem to finding the possibility to figure out how to
->>> achieve the same result. And the problem is that putting change sets
->>> on different Git branches (or workdirs, or whatever Git offers that
->>> makes the changes to be NOT in the same source tree) is not a viable
->>> option from me as I would have to re-build code as I re-integrate the
->>> changes between the branches (or whatever changes separation Git
->>> feature is used).
+>> I've written a simple approach, and implemented it in JGit.
+>> Performance is promising:
 >>
->> you would merge the branches and then run the tests/integration. Yes that
->> seems cumbersome.
+>>   - 62M packed-refs compresses to 27M
+>>   - 42.3 usec lookup
 >
-> Sometimes the need to make trial merge for testing cannot be avoided
-> and having branches for separate topics is the only sensible
-> approach, at least in the Git world.
+> Exciting. I'd love for us to have a simple-ish on-disk structure that
+> scales well and doesn't involve a dependency on a third-party database
+> structure.
 >
-> Imagine your project has two components that are interrelated, say,
-> the server and the client, that have to work well with each other.
-> In addition, you want to make sure your updated server works well
-> with existing clients, and vice versa.
+> Let me see what holes I can poke in your proposal, though. :)
 >
-> One way that naturally maps this scenario to the development
-> workflow is to have a server-update topic and a client-update topic
-> branches, and separate changes to update each side with their own
-> commits:
+>> ### Problem statement
+>>
+>> Some repositories contain a lot of references (e.g.  android at 866k,
+>> rails at 31k).  The existing packed-refs format takes up a lot of
+>> space (e.g.  62M), and does not scale with additional references.
+>> Lookup of a single reference requires linearly scanning the file.
 >
->              s---s---S    server-update topic
->             /
->     ---o---o----o----M    mainline
->             \
->              c---c---C    client-update topic
+> I think the linear scan is actually an implementation short-coming. Even
+> though the records aren't fixed-length, the fact that newlines can only
+> appear as end-of-record is sufficient to mmap and binary search a
+> packed-refs file (you just have to backtrack a little when you land in
+> the middle of a record).
+
+Except that a record is a "delta" to the previous record, so it's not
+just finding a record, but reconstructing it. Example for records:
+
+    varint( prefix_length )
+    varint( (suffix_length << 2) | type )
+    suffix
+    value?
+
+First record:
+
+ 0,
+ 16 << 2 | 0x01,
+  "refs/heads/maint"
+  08f9c32463bf9e578acb7ac5f77afd36e803c6bc
+
+next record (refs/heads/master):
+
+  13
+  4 << 2 | 0x01
+  "ster",
+  80145b1e412719c960036c8c62a9e35dd23a5b2d
+
+Now if you found the second one, you cannot reconstruct its
+real name (refs/heads/master) without knowing the name
+of the first. The name of the first is easy because the prefix_length
+is 0. If it also had a prefix length != 0 you'd have to go back more.
+
+
+>> - Occupy less disk space for large repositories.
 >
-> And during the development of these *-update topics, you try three
-> merges:
+> Good goal.  Just to play devil's advocate, the simplest way to do that
+> with the current code would be to gzip packed-refs (and/or store sha1s
+> as binary). That works against the "mmap and binary search" plan,
+> though. :)
+
+Given the compression by delta-ing the name to the previous change and
+the fact that Gerrit has
+
+  refs/heads/changes/1
+  refs/heads/changes/2
+  refs/heads/changes/3
+  ...
+
+I think this format would trump a "dumb" zip.
+(Github having sequentially numbered pull requests would also
+benefit here)
+
+>> ## File format
 >
->  (1) Merge S to the mainline M and test the whole thing, to make sure
->      that existing client will still be able to talk with the
->      updated server.
->
->  (2) Merge C to the mainline M and test the whole thing, to make
->      sure that updated clients will still be able to talk with the
->      existing server.
->
->  (3) Merge both S and C to the mainline M and test the whole thing,
->      to make sure the updated ones talk to each other.
->
-> If there is no significant development going on on the mainline in
-> the meantime, (1) and (2) can be done by trying out S and C alone
-> without making a trial merge with M.  The same for (3)---it can be
-> just a trial merge between S and C without updates that happened on
-> the mainline.
->
-> I'd love to hear from folks in Perforce or other world how they
-> address this scenario with their system.
+> OK, let me try to summarize to see if I understand.
+
+When Shawn presented the proposal, a couple of colleagues here
+were as excited as I was, but the daring question is, why Shawn
+did not give the whole thing in BNF format from top down:
+
+  initial-block
+  content-blocks*
+  (index-block)
+  footer
+
+> The reftable file is a sequence of blocks, each of which contains a
+> finite set of heavily-compressed refs. You have to read each block
+> sequentially,
+
+Each block may have restarting points, that allow for intra-block
+binary search.
+
+> but since they're a fixed size, that's still a
+> constant-time operation (I'm ignoring the "restarts" thing for now). You
+> find the right block by reading the index.
+
+or by reading the footer at the end. If the footer and the index differ
+in block size (one bit flipped), we can ask the CRC of the footer
+for more guidance.
+
+>  So lookup really is more
+> like O(block_size * log(n/block_size)), but block_size being a constant,
+> it drops out to O(log n).
+
+There is also an index block such that you can binary search across
+blocks, so
+
+O( log(block_count) + log(intra_block_restarting_points) + small linear scan)
+
+There are 2 binary searches, and the block size is an interesting
+thing to look at when making up trade offs.
