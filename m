@@ -6,100 +6,102 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C702202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 19:23:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80546202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 19:27:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752802AbdGMTXs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 15:23:48 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:32893 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751384AbdGMTXr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 15:23:47 -0400
-Received: by mail-pg0-f51.google.com with SMTP id k14so34314185pgr.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:23:47 -0700 (PDT)
+        id S1752935AbdGMT1p (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 15:27:45 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:36369 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752849AbdGMT1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 15:27:44 -0400
+Received: by mail-pg0-f54.google.com with SMTP id u62so34134853pgb.3
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=0ATo9fSpxUoLs0zPLN5TK6ukQ6biRlPFbzxnAs96V68=;
-        b=oBj7syenljETBe2gHZ1v/siAPnCHEE+CL3QrFP3Vecd/o6L9Wt4dfJdpQrtzg2rqum
-         t2Jk0KbnVkK/bVBS0h6tVlWvPMQ5TkZFTuYgwRS6xwtPeRWuBmR9lNzGCY08Z/jOcRLt
-         A59vm4myLEs4yMQBQRKsUX3WDAbHiSqks12IwS7Ap07S4Do3sRD/Mn+DEAsCxL/lpzEk
-         f4S8EKloaTLy9zGmPtheyOu6Nxsuv1gLi9eoaVzRmJtU1jHbHDP+FvzAWz52ZMbMmBF5
-         COIRsIDWkwzXCh9AySScYKUqlHEFgHZ0KJZcyDFxO6KKcvlgN7Wry/zl6WZeg2FQ08oo
-         ApBQ==
+         :user-agent:mime-version;
+        bh=n6o8eUgrkNIs1WqrrUMgo3pPANgtpGXfQ2eCD7tq6ds=;
+        b=XSnDbkni2F/oEU2h/xTVsZzsbzglapl3CF0zBMmI6YE8zI9lL6JU4qk+lObeTxTkbB
+         XGcc6qjbNAz3cc4Xk+n67fER/fiBtSQXVS1HhDmjqIo2didoGx8frwp1nDAo5u8GhZ3K
+         /6brlJB04mwRv63xJP+KFeY4tazKArPrTIm//KMGQSPGGeVBFY5iV+vYtLiHSxf5hwH/
+         obYb9Z1ihTjuI08ll87ZwHxD+QkZzV0NxeyyzaLNS70Ekz8Lfw8mCd9LXILimHLVG5z5
+         UM4TICWInPTfYwME52/AeGR9hu7VvQFLA0iPV1nieGTlNzXuftf5DZnZsrkxWKMcVvlB
+         BGtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=0ATo9fSpxUoLs0zPLN5TK6ukQ6biRlPFbzxnAs96V68=;
-        b=tz7fgY1dkouQVnkDaq9iskaLpkCSDxEi2PNB87fc70Jy8scOM8pS7gOVnR1nku6My1
-         gLmbXXfXGeDeVoEaXKnfwEvWUnh+35c/fEMcIrt9TP+FdjBSO9JeGU8TPGWTM53Tnyrl
-         hwyaXqHAvtYBM+R6PUko5cBQsh0j+9X7eTAk8ZlvFnpTsx9wBErC/MuECv/PZe0S57FW
-         OEu1Ylfw9o/pH1BxADE3yneO2nm2OOo+EvYUWi5YtJvG4VLzu+4Tbr+ajS+b9LOf+0Fd
-         imTX4fzPnbf7w29mSvXkof6EZIAc53yXMyFPA5QvSfXWUI0lq6MRzGPSHEwsu6Ukpip+
-         cnXQ==
-X-Gm-Message-State: AIVw112l+gq1bfWvWND4lr0SJfJCkD0VsYhS8ZVZQ5ENx+/ZCCTo+08b
-        Uur2nwPmHdM7mg==
-X-Received: by 10.84.225.129 with SMTP id u1mr11987534plj.70.1499973826454;
-        Thu, 13 Jul 2017 12:23:46 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=n6o8eUgrkNIs1WqrrUMgo3pPANgtpGXfQ2eCD7tq6ds=;
+        b=j9KiLseJLGDQ/hro6rJ1yixJzIki1IBvsY1eWJ4f6yYPsKWosapoEsl0zyeHnC2He8
+         HAG60hA96Yil1v0Ed0EsG0dr6iS/NoG0HuNy49yKk30KO3Y/WHO7Id+pGwL5XLuFkZps
+         HBxXGoLQ8+389HIeDVt5NAnT57t6KDqf34fdOCI7u6gRFlwe+45xtSfwgTifTMFXK+GJ
+         3XkpOZEVNjWCAdu2oxMaJhrkwqAqeEo/EMqx9nJWOcmQCxg5NMohT5aaMk5JIxpAXIx+
+         mSl4t+tL78FmougeloVl+7XUgib7SezFTGH3JLLPurG2HmjaJmrUbljMr6JIlTIEEaRQ
+         xwuw==
+X-Gm-Message-State: AIVw112HnWwdVrvuMcjDtaxkzj4ShtSMLJ3O9Seoddyp99qAma3xVBUN
+        bxGNKaoiCpu9mQ==
+X-Received: by 10.99.56.21 with SMTP id f21mr10667084pga.235.1499974063272;
+        Thu, 13 Jul 2017 12:27:43 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id t26sm15740429pfe.88.2017.07.13.12.23.45
+        by smtp.gmail.com with ESMTPSA id d89sm15295380pfl.7.2017.07.13.12.27.42
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 12:23:45 -0700 (PDT)
+        Thu, 13 Jul 2017 12:27:42 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-Cc:     git@vger.kernel.org, me@ikke.info
-Subject: Re: [PATCH] commit & merge: modularize the empty message validator
-References: <20170706044640.GA11020@alpha.vpn.ikke.info>
-        <20170711141254.7747-1-kaarticsivaraam91196@gmail.com>
-        <xmqq8tju3eqp.fsf@gitster.mtv.corp.google.com>
-        <1499969722.5973.2.camel@gmail.com>
-Date:   Thu, 13 Jul 2017 12:23:45 -0700
-In-Reply-To: <1499969722.5973.2.camel@gmail.com> (Kaartic Sivaraam's message
-        of "Thu, 13 Jul 2017 23:45:22 +0530")
-Message-ID: <xmqqiniww37i.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 03/15] t: use test_decode_color rather than literal ANSI codes
+References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
+        <20170713145841.4win5tbx4efwjsa2@sigill.intra.peff.net>
+        <CAGZ79kaE7wjFR-=DiPU5xwknS1nxDHR5+S6+UGPFTF0uNBA3dQ@mail.gmail.com>
+        <20170713184541.ferc3eif7j4mazpg@sigill.intra.peff.net>
+Date:   Thu, 13 Jul 2017 12:27:41 -0700
+In-Reply-To: <20170713184541.ferc3eif7j4mazpg@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 13 Jul 2017 14:45:41 -0400")
+Message-ID: <xmqqeftkw30y.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kaartic Sivaraam <kaarticsivaraam91196@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> I have a few doubts for which I need clarification to move on with
-> this.
+>> > @@ -59,7 +54,8 @@ EOF
+>> >  # to this test since it does not contain any decoration, hence --first-parent
+>> >  test_expect_success 'Commit Decorations Colored Correctly' '
+>> >         git log --first-parent --abbrev=10 --all --decorate --oneline --color=always |
+>> > -       sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" >out &&
+>> > +       sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" |
+>> > +       test_decode_color >out &&
+>> 
+>> Just some thoughts:
+>> 
+>> This extension of the pipe-chain is not making it worse as gits exit code
+>> is already hidden.
 >
->     1. If we abort when the <message> part is empty wouldn't it be too
->     restrictive ?
+> Yes, I noticed the existing pipe-chain. We can fix it while we're here,
+> though I think it's not a big deal in practice.
 >
->     IOW, Wouldn't it affect users of "git commit -‍-cleanup=verbatim"
->     who wish to commit only the comments or parts of it ?
->     (I'm not sure if someone would find that useful)
->
->     2. Is it ok to use the "find_trailer_start" function of "trailer.c"
->     to locate the trailer? 
->
->     Note: It has a little issue that it wouldn't detect the trailer if
->     the message comprises of one trailer alone and no other text. This
->     case occurs while aborting a commit started using "git commit -s".
->     Any possibilities to overcome the issue?
->
->     3. Ignoring point 1 for now, What other helper methods except the
->     ones listed below could be helpful in the separating the cleaned up
->     commit message into the <message>, <trailer>, <junk-at-tail> ?
->
->         * ignore_non_trailer
->         * find_trailer_start
+>> The sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" is sort of funny, because
+>> I would have expected it to break in the future with e.g. the sha1 to longer
+>> hash conversion. But as we specify --abbrev=10, this seems future proof.
+>> In an ideal world this would be encapsulated in a function (c.f. t/diff-lib.sh).
 
-All good points; if it bothers you that "commit" and "merge" define
-"emptyness" of the buffer differently too much, I think you could
-persuade me to unify them to "the buffer _must_ contain no bytes",
-i.e. not special-casing sign-off lines only "commit".
+Actually, --abbrev=10 does not guarantee that the hex part is always
+10 bytes long, so it is not future-proofing, but I expect it would
+work out fine in practice.
 
-It would be a backward incompatible tightening of the established
-rule, but it may not be a bad change.
+> I agree it's a bit gross. Possibly:
+>
+>   git log --format='%C(auto)%d %s'
+>
+> would be easier for the test to parse (I'm pretty sure that didn't exist
+> back when this test was written).
+
+Yeah, that may make the test easier to read, too.
+
+Thanks.
