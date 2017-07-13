@@ -2,93 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7AA3202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 19:35:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78E46202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 19:39:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752757AbdGMTfy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 15:35:54 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:36209 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752545AbdGMTfx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 15:35:53 -0400
-Received: by mail-pf0-f179.google.com with SMTP id q86so34071250pfl.3
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:35:53 -0700 (PDT)
+        id S1752848AbdGMTjX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 15:39:23 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:34897 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752611AbdGMTjW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 15:39:22 -0400
+Received: by mail-pg0-f44.google.com with SMTP id j186so34284193pge.2
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=83RMwU1ulyJZnMMYz5S+V00dAP2g/YAlsH9T8be2TDQ=;
-        b=L2p3N5piqfLHJAuRvCcZoIATiOuOxlit2b6EjD3wAmsH91BI2ahr6OmQsplLs2m/tz
-         f6Ra5CV/yBKKHkoPtidG7fXoicGbt1U0SFZVD942jIUXsyoqcjkSftbR2XB8hv/QopAa
-         Ne/1WjiNud3cy7nDWzM2v8A+0MTIUFm5w7p4+m80AwJ2z1sWpWD6ltwL81XdaOkk+PkM
-         2QNacmxHnuYc+Xd0v+Ky6x0/NFYOdvtzYOAa6AucIrlmFvCDPQWuKf1UB97viTrCI4Bg
-         Y1P8KUED5TgxxLPuD5i1idco915ucSsMEjJqCEmu+fbaFYIY9AGZyri3KxPMo9Z6oaqa
-         Zwwg==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Fn/K1LV/n6laAz0XrzSwAKSjak4/APZBsGaoNu8Fo40=;
+        b=HNfTEg8muD/RXx0CYSUfkQ7Nw44Pt/cWAmj+5EiIRujpFZby43wokd0QH/+gcpCUWG
+         efD2hcIAREBFUSlGZcQeTs+TgmrmYkzAoePZucVyvLu7lk5gU15lGklXy1OqHTcSSCtE
+         6mf/pgauZr51e2gziZRVCTqWTcVHfhi7gI3QMPDTGmUIMLDi8m7Y1ed6EKK0QklPqpjN
+         IAJVt82gnqVVA34N31Jy2Boh4JDriVoHFfAHngpJJ0uEgPc2c9H2cPmMq3G+zt5IvmvL
+         Urwzaw7r0kmpWr1J+dto+FClZX1EzG7L/pggWlJfOeBXA6gZlORkhwkejkcw9i7lplBG
+         dEVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=83RMwU1ulyJZnMMYz5S+V00dAP2g/YAlsH9T8be2TDQ=;
-        b=l7I+8PsC8gjIUNXpcHx1SFxXIEhDutC3d/OUF+WhShMFyol3cE7hGD7GcDWUCAI/GV
-         vWwGM+wOlAtyz44brqs2R8ODbd1y0jgujJRJlK5KJ5d36D9yA63UAGnjy7f2lDphyaGh
-         a/1Eo5DfPJK70e5g1xaBpZ7rf1OyIATqLBFinPT1ZT15M6KL4Hy4sLTIVWvTnV8kI1/x
-         IZsjyjXzDCSGFUNxxqyS4oABWvibPlLjStJA3PYMExwUrKwQVt/vIXv58gXbyljQV0v5
-         I5ONLSa8NAQBRyfdVCyjL4kvqrJXo6JxdXrmF67WfsKJbCHjVaEO87zCMnbR2qXYQRG3
-         S/zA==
-X-Gm-Message-State: AIVw111bwRkbZVW0t8RgOHhm/NKJVbWSAkLhnzLjJlcbIkKqgGeekiTI
-        LmcH/kHx1pzEBQ==
-X-Received: by 10.84.129.132 with SMTP id b4mr2181269plb.12.1499974552427;
-        Thu, 13 Jul 2017 12:35:52 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id p68sm15736503pfj.26.2017.07.13.12.35.51
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 12:35:51 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Jeff King <peff@peff.net>, roeder.git@mailnull.com,
-        git@vger.kernel.org
-Subject: Re: Git on macOS shows committed files as untracked
-References: <20170712222128.A2F7A246E3@outside.256stuff.com>
-        <20170712231557.lu7ppj3bric2fahi@sigill.intra.peff.net>
-        <130b338b-2e77-65d6-a3fa-f272ac43b81c@web.de>
-Date:   Thu, 13 Jul 2017 12:35:50 -0700
-In-Reply-To: <130b338b-2e77-65d6-a3fa-f272ac43b81c@web.de> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Thu, 13 Jul 2017 10:42:29
- +0200")
-Message-ID: <xmqq60eww2nd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Fn/K1LV/n6laAz0XrzSwAKSjak4/APZBsGaoNu8Fo40=;
+        b=ECz7e6EPq0VL7gMFRQK5UlWXhU8QEHfo6bg+Qj3G+1H7tpA2Z0TtHzCvCrOb1kz8bJ
+         I6G1YIpC2I6e73XlHiTTG73eqPCcbK/oYEM5yzSJ53ChevdVYwKazWUA88T+MaSaI7l6
+         JtALOWpneyowQINvXIDefQ8OOHkxupp79345lhpazPZppoqIWBkkXXG6rJ714RFQTLYu
+         LxRRWoXKYBdaHhDzO+5FjVGF4Fjq6o6iukZxvG2OK0+yamofM2ImPN0V5066ISrO0T1R
+         S2gsj6qz/yzOSG4U10EozyLJB24JAlBr43A4bxhTx2OyBxDF8NE7EUtl+AU0zaCFfCrc
+         7sjg==
+X-Gm-Message-State: AIVw113WqRNXXwygDDRfYg2wU0eBQ9+i4OzfmFUOUoC1G1US/JKD2moU
+        gpMrqcb8TvwIIpMQFjQvfhjTvNSWdRaJVnRdQA==
+X-Received: by 10.98.147.142 with SMTP id r14mr1271594pfk.150.1499974761416;
+ Thu, 13 Jul 2017 12:39:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 12:39:20 -0700 (PDT)
+In-Reply-To: <xmqqa848xjxr.fsf@gitster.mtv.corp.google.com>
+References: <20170712234504.15811-1-sbeller@google.com> <20170713000117.GJ93855@aiede.mtv.corp.google.com>
+ <xmqq60exyx5k.fsf@gitster.mtv.corp.google.com> <CAGZ79kaHX-YCMv01T-QE=mYeymjTnwrpg9-bsOrCjg3NWEunDA@mail.gmail.com>
+ <xmqqa848xjxr.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 13 Jul 2017 12:39:20 -0700
+Message-ID: <CAGZ79kYtRbHvfC6d=+eEXCceJam4wwo9XqvY752c_pg6kq90DA@mail.gmail.com>
+Subject: Re: [PATCH] submodule: use cheaper check for submodule pushes
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten Bögershausen <tboegi@web.de> writes:
+On Thu, Jul 13, 2017 at 11:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
 
-> Thanks for the fast analyzes -
-> in short:
-> what does
-> git -c core.precomposeunicode=true status
-> say ?
 >
-> The easiest thing may be to set
-> git config --global core.precomposeunicode true
+> I think Jonathan's question (which I concurred) is if we also ended
+> up relying on the side effect of calling that function (i.e. being
+> able to now find objects that are not in our repository but in the
+> submodule's object store).  By looking at the eb21c732d6, we can
+> tell that the original didn't mean to and didn't add any code that
+> relies on the ability to be able to read from the submodule object
+> store.  I am not sure if that is still true after 5 years (i.e. is
+> there any new code added in the meantime that made us depend on the
+> ability to read from submodule object store?).
 
-Good suggestion.
+Yes we are safe, because the function itself only spawns a child process
+(not using any of the objects).
 
-I learned a new thing today.  I somehow thought that precompose
-trick was only about argv[] when a program starts up and did not
-apply to paths readdir(3) finds through dir.c, e.g.
+It's only caller push_unpushed_submodules also doesn't rely on objects
+loaded after calling push_submodule.
 
-    $ git add .
+The caller of push_unpushed_submodules (transport.c, transport_push)
+also doesn't need submodule objects loaded.
 
-But apparently there is replacement readdir() used in compat/ for
-MacOSX so the paths from the system are also covered by the
-configuration.
+> My hunch (and hope) is that we are probably safe, but that is a lot
+> weaker than "yes this is a good change we want to apply".
+
+Given the above (I went through the code), all I can do is repeating
+"yes this is a good change we want to apply".
+
+Thanks,
+Stefan
