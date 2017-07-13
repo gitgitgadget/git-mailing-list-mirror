@@ -7,60 +7,66 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F28DF20365
-	for <e@80x24.org>; Thu, 13 Jul 2017 23:06:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0B122027C
+	for <e@80x24.org>; Thu, 13 Jul 2017 23:33:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752298AbdGMXGx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 19:06:53 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34410 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751271AbdGMXGw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 19:06:52 -0400
-Received: by mail-wm0-f66.google.com with SMTP id p204so7829609wmg.1
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 16:06:51 -0700 (PDT)
+        id S1752314AbdGMXdA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 19:33:00 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:32849 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751198AbdGMXdA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 19:33:00 -0400
+Received: by mail-wr0-f194.google.com with SMTP id g46so139167wrd.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 16:32:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
+        h=subject:from:to:cc:references:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=QIcGx9OsoyyJSCmAKGJCy5cfmC1WvT+Yl8MDRpMVk6A=;
-        b=D0KG2OTTsMa7J/Ar+Nvs6aKL/w1ndZcUWx4oC+Sgg8x85tuGjSMxn6vdMOAchuvBe2
-         qcuahfgReUJSvwnQwwrcBWOAA2HQCrgpzjbuVXMstTMjhbBZErvwo3gBMcp0AGQnCCdA
-         TWf7zm57sBtvMXzB26d4hCRvgtHrwCcD3wurwwWitQGOOoqGcJI60R3AcU0ng5L7hgOM
-         6OmUrwYPWLIgrcHrQGCrlL46MCYK39mbyebIrWJMBo2NQFOUDmuTb1fW4MFshGB1Mg9v
-         sdTBSwrgJbWSecx9pZGM3HcG8V7GQGcxwiNMdB+SfJlf2dOXB6Davzu8Y8Lciz4lAk/8
-         wT+w==
+        bh=mJAmszMEvTLuG4A1nyB/yXFQMy6jZLphZFUduo2Mn9I=;
+        b=EkgHGK8CzeSbxxKnGFH1EKi9hx5BnTuXRT5quSHK0a5JoITF+KJ7UHRr1fxD/MZklw
+         pNZ4cSoH8vHWj2R7nhmRkSbjyo1QUNkAIonTKqkaOPVerWL9urQ3L6jqJ/t9M0wxq6nC
+         DS27NHRGc+B1WRJAwLnFjeGmASv5oHhjNUGsECNlfWX02GfGo6xoN+JNc/ZJmiyCe7cA
+         tMjBwYbZUFdyl+BCbKyW3EOaGQkHUjWiLScYKnP4eYoQbbswX6lxzkpCtcwP/mtv9vM2
+         iezCK1nHz8X2lRVhK6jX8WoSOkTaZO68xi9HHkHN+LZD8aMgiImxhq/PNmvGHtEYSrHi
+         xMzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=QIcGx9OsoyyJSCmAKGJCy5cfmC1WvT+Yl8MDRpMVk6A=;
-        b=O2Xkb5V+NiQpY8O58OoVYN1v3hr/yLWZI+TteyCnRd5cF7w5s5YDzZl9J3W6xoBKT3
-         Z/cimjtVKsfwJrgDYW0UYSNs9P72Uyzu68sI7OVJC38sX4S6ScCHbml7qf1TfUuHjZyT
-         jVNay8oCJTqpWT1eGoZGEE2T0xeemAoHTcMcDKr7pflD3N4qM/MOcQxiQAQBGKPWEev5
-         VR9DUOzJWUgSi4UJ7cC9dd9ur8Td1kNLU2wzoG/+IT4Vq/q+OnbFmY9tNhFsJxx867hC
-         GofSeLK1dX9167d6g+8cP/u9jQrJFrjbF5xnpCJ187w/3+xvLR+5fnkVchrUCZZI7ao9
-         HOFQ==
-X-Gm-Message-State: AIVw113pBs/d3ZcTH0O4d7Ku2reRMZ+o2kJJcS/mqfPuZvQ9Gr52bkp4
-        dZTYHm9Epxa+5w==
-X-Received: by 10.28.157.205 with SMTP id g196mr582342wme.84.1499987210927;
-        Thu, 13 Jul 2017 16:06:50 -0700 (PDT)
+        bh=mJAmszMEvTLuG4A1nyB/yXFQMy6jZLphZFUduo2Mn9I=;
+        b=V9rcdj4DfSc4n1iRiGS3B8N9USre4TEltIol/3SfAzM5hSAJG/CAqlhROyQWlhOYYT
+         iICpn7fPTtJHNcvKuvYdlEqZ/7WWWtonJNUr28tOABOFTUJ1vsYbzqQAGBuW5tpk/TB9
+         Chg4yknSHz8Vhbm5oRc/uHCoQIL245zDOe8G628gVWtLU/1W2Gh+LRZ9F3ion6ZYh3fl
+         XFibwrmkV8v3cQDDwI4S5lATOh492w3Q+8tNOzJ0Vp7YaTRtr7z/YQSnv27WQn3xoMCK
+         r1rOcbcjo6s1oWBJb4oU/dE9XTW+btMS2Lz68Cs0RUGmVrqNTAPxT2rd1nXjJ3fKN+FV
+         iV/g==
+X-Gm-Message-State: AIVw111HEG/nFieEyk/OootJOFJOUfHWOhDHiJOt9vnLUCD5E/IWp8MJ
+        Zv62KsrjHGS8EnCzqH11Aw==
+X-Received: by 10.223.132.163 with SMTP id 32mr3236586wrg.204.1499988778374;
+        Thu, 13 Jul 2017 16:32:58 -0700 (PDT)
 Received: from [192.168.5.102] (cable-24-135-63-71.dynamic.sbb.rs. [24.135.63.71])
-        by smtp.gmail.com with ESMTPSA id 9sm829230wml.25.2017.07.13.16.06.49
+        by smtp.gmail.com with ESMTPSA id j190sm847183wmd.22.2017.07.13.16.32.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jul 2017 16:06:50 -0700 (PDT)
+        Thu, 13 Jul 2017 16:32:57 -0700 (PDT)
 Subject: Re: "groups of files" in Git?
-To:     astian <astian@eclipso.at>, git@vger.kernel.org
-Cc:     Nikolay Shustov <nikolay.shustov@gmail.com>
-References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
- <0793138e-5971-d8f6-b25e-215ed5028dae@eclipso.at>
 From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <ee79581c-d1ad-42c8-945a-505efad1037a@gmail.com>
-Date:   Fri, 14 Jul 2017 01:06:48 +0200
+To:     Junio C Hamano <gitster@pobox.com>,
+        Nikolay Shustov <nikolay.shustov@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
+ <CAGZ79kZaf7=uwCPJoPoDiAO9QS21bchaKZvDzWJi=ewPZw9PXQ@mail.gmail.com>
+ <xmqqiniwxkmj.fsf@gitster.mtv.corp.google.com>
+ <CAEcERAxJRnB55Ardhs7LDW8M8EG-y+YE-He8hiiQv3wDqtVD3g@mail.gmail.com>
+ <xmqqzic8t4oi.fsf@gitster.mtv.corp.google.com>
+ <27a3c650-5843-d446-1f59-64fabe5434a3@gmail.com>
+Message-ID: <40292f8e-e8a9-8b7a-112f-ef4b183a6b35@gmail.com>
+Date:   Fri, 14 Jul 2017 01:32:52 +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <0793138e-5971-d8f6-b25e-215ed5028dae@eclipso.at>
+In-Reply-To: <27a3c650-5843-d446-1f59-64fabe5434a3@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -69,79 +75,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi astian,
+Just a small update/fixup:
 
-On 12/07/2017 00:27, astian wrote:
-> Nikolay Shustov wrote:
->> With Perforce, I can have multiple changelists opened, that group the
->> changed files as needed.
->>
->> With Git I cannot seem to finding the possibility to figure out how to
->> achieve the same result. And the problem is that putting change sets
->> on different Git branches (or workdirs, or whatever Git offers that
->> makes the changes to be NOT in the same source tree) is not a viable
->> option from me as I would have to re-build code as I re-integrate the
->> changes between the branches (or whatever changes separation Git
->> feature is used).
->> Build takes time and resources and considering that I have to do it on
->> multiple platforms (I do cross-platform development) it really
->> denominates the option of not having multiple changes in the same code
->> tree.
->>
->> Am I ignorant about some Git feature/way of using Git that would help?
->> Is it worth considering adding to Git a feature like "group of files"
->> that would offer some virtutal grouping of the locally changed files
->> in the checked-out branch?
+On 14/07/2017 00:39, Igor Djordjevic wrote:
+> I guess it would be a kind of alias to doing:
 > 
-> I never used Perforce and I'm not even sure I understand your problem,
-> but I thought I'd mention something that nobody else seems to have yet
-> (unless I missed it):
+>     $ git checkout featureA
+>     $ git add ...
+>     $ git commit
+>     $ git checkout master
+>     $ git reset --hard HEAD^
+>     $ git merge featureA featureB
 > 
-> First, one thing that seems obvious to me from your description is that
-> these "parallel features" you work on are obviously interdependent,
-> therefore I would rather consider the whole thing as a single feature.
-> Therefore, it makes sense to me to work in a single "topic branch".
-> 
-> This doesn't preclude one from separating the changes in logically
-> sensible pieces.  Indeed this is par for the course in Git and people do
-> it all the time by dividing the bulk of changes into a carefully chosen
-> series of commits.
-> 
-> I think the most common way of doing this is to simply work on the whole
-> thing and once you're happy with it you use "git rebase --interative" in
-> order to "prettify" your history.
-> 
-> But, and here comes the part I think nobody mentioned yet, if your
-> feature work is considerably large or spans a considerably long time it
-> may be undesirable to postpone all that work until the very end (perhaps
-> by then you already forgot important information, or perhaps too many
-> changes have accumulated so reviewing them all becomes significantly
-> less efficient).  In that case, one solution is to use a "patch
-> management system" which will let you do that work incrementally (going
-> back and forth as needed).
-> 
-> If you know mercurial, this is "hg mq".  I don't think Git has any such
-> system built-in, but I know there are at least these external tools that
-> integrate with Git:
-> https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools#Patch-management_Interface_layers
-> 
-> Feel free to ignore this if I totally misunderstood your use case.
-> 
-> Cheers
-This message actually creeped me out the first time I read it, after 
-writing an e-mail reply of my own[1].
 
-The tone it`s written in, the points you make, and even the 
-conclusion about "hg mg" -- as if you were reading my mind.
+This should, in fact, be:    
+    
+    $ git checkout featureA
+    $ git commit
+    $ git checkout master
+    $ git reset --hard HEAD^
+    $ git merge <HEAD@{1} parents>
+    
+(removed "git add" step, as that is needed for proposed single step 
+solution as well, as a usual step preceding the commit; also replaced 
+concrete branch names in the last step with a more generic 
+description, better communicating real intent)
 
-Yours was sent a bit before mine, but I guess we were writing it at 
-the same time as well... Just spooky, lol.
+> In the same manner, it should be possible to drop a commit from the 
+> feature branch in a single step, for example returning to the state 
+> as shown in (1), or even "port" it from one branch to the other, like
+> this (without a need for it to be the last commit, even):
+> 
+> (3)      o---o---o---\ (featureA)
+>         /             \
+>     ---o---o---o-------M' (master, HEAD)
+>         \             /
+>          o---o---A'--o (featureB)
 
-That said, I totally understand what you`re talking about, and I gave 
-an example of the desired (yet missing?) Git work flow here[2] :)
+Here, the diagram should look like this:
 
-[1] https://public-inbox.org/git/6e4096fd-cbab-68f0-7a23-654382cb810e@gmail.com/
-[2] https://public-inbox.org/git/27a3c650-5843-d446-1f59-64fabe5434a3@gmail.com/
+(3)      o---o---o---\ (featureA)
+        /             \
+    ---o---o---o-------M'' (master, HEAD)
+        \             /
+         o---o---A''-o (featureB)
+
+(replaced leftover M' from the previous diagram with M'' to show it`s 
+yet another (updated) merge commit, different from both M and M' in 
+terms of SHA1, yet the contents would probably, but not necessarily, 
+be the same for all three; same for leftover A', replaced with A'')
 
 Regards,
 Buga
