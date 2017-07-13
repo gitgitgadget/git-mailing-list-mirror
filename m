@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A0C32035A
-	for <e@80x24.org>; Thu, 13 Jul 2017 07:01:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1B5120357
+	for <e@80x24.org>; Thu, 13 Jul 2017 07:01:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751027AbdGMHBF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 03:01:05 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:33912 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750949AbdGMHBE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 03:01:04 -0400
-Received: by mail-wr0-f195.google.com with SMTP id k67so8370866wrc.1
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 00:01:03 -0700 (PDT)
+        id S1751170AbdGMHBS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 03:01:18 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33168 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751036AbdGMHBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 03:01:17 -0400
+Received: by mail-wr0-f196.google.com with SMTP id n18so415855wrb.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 00:01:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/nHuzzrJrZNorgo3oNINJow3rRyqe0YuR8n6qvvI0pQ=;
-        b=l08AVLECFex+uYtuBoDk5/+idet3kfDOG8rhicfBUl0AlqP3VRZ0cosJTDEyJPbtCd
-         dHUUqX8NXrkTvUZKhgidL/oDckH52h269LAwqk3DQr4G2MzxUXqXE9MM/wZnJhSJa9Ds
-         56fAyN8gOh/PB5fOnFwvVYI21zkeiBlnZvL7Oli7phgHndoAuz9d0G8/YsLEvPW9T4YU
-         u6lygaw/d49Wjpo/JIxXWjIwQlpEOgOjEYacG2ZI858Aky0akyHkb80mlURLRM5Yzk7P
-         0azr4VmXR+v8eEAy0iRi+FaBhNWEtbZV5xaKVTf3XvRSA4nsbE+cyRGloHbt5yDQt8N5
-         3jgg==
+        bh=sBfyI3yNhMzTVHnxpyRSQumTxCp498VNzpyepiFUzoM=;
+        b=IJXuE7lf2kSXqsAtl59aH3ydqaDGAHWAdcIylfbTLQqjGhevpqXjlVt/PRKxqA80Xm
+         lGMOGU2lkH6RcRT8YHzqzN/Ugu10NY5upuNpByxF5sb7Vl020lEgrLk4j2iH7mN/fX5Y
+         X6VFtTnC4l24ja23XugWIynybYd20+jxca9USxy4dNnYwDdGNAOp9I6aLyU5OWaNr0vT
+         oaY+zxOTimkhg1cs0cxIwJ78SKSlSUzp0KePzQqGvfsTsIRF3W3HHcD711N55HD8IvUq
+         Kx3PC8LZb96PXejqOjUElKsjWCi5HFhCLWN/VA5ngnsE2mKm7i/i2PPBLhM/kWM1CdeC
+         uusw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=/nHuzzrJrZNorgo3oNINJow3rRyqe0YuR8n6qvvI0pQ=;
-        b=JOD/BT6MaqjbxIW2zcmdhI0k+ixpIiwKQUGQDkslaQwaSxySzMKrgw8W+VZemYJpdU
-         49ReSHqLqOV85+5MonDtidb4ysK58ddr2IYJcURr2BaLBx9jy3vdP6pP83RgmkxPLuHZ
-         iTCUk+19oMX6U4zlrFOpo/XRfgzUyqA986LhHC+C/a+okf/UtnSy+mnt6EIm809une/W
-         Y3pxfnnHiCJRVM11pEwL/NABKDtGgUuZtVhRJ7b46dgNki6fVYJ0D224hu7NxgZtX6NT
-         hb+jikZ2vzKQNF6CMU8iUTwPVPVrkBwQLr/hT8nUHq1dv3rYtIT6SYfnDLulrgHOgim/
-         Q1pw==
-X-Gm-Message-State: AIVw113LqKd7kYL8aJmRzXUo7Y8DUy5StgyzTZDqgo2W0UucOarFQjVy
-        qOcdCXFwnaThGA==
-X-Received: by 10.223.171.3 with SMTP id q3mr591672wrc.12.1499929262683;
-        Thu, 13 Jul 2017 00:01:02 -0700 (PDT)
+        bh=sBfyI3yNhMzTVHnxpyRSQumTxCp498VNzpyepiFUzoM=;
+        b=guq5HxqiucWjvJUPz/uIGJTGRqHx8JPj/yqUOD0EYrTxX+q1j93kMNK2VxD6u0icZO
+         Dc7bSMSfPXXXGufi/g5TU7bDQ/DLH5OSZ9EvgfvQh0Al1f34QvsWf+p+U5L8CJEYEfrD
+         MXnVSziu3dzq9q2AYuAXxd0CBDQ3Kx3tZVVoujyob1fDOQ+Pfk5CzI+eTJoTpKnVvA+C
+         cjzM6ganwJLTnx4V36khR1IrbIagg6OEketiJqbnEde4Qv4G5lfYgFI7bX9XOFJk+oP6
+         cZQBArPvwnSypM426Q8Ys7KtVPdVOHAqjhJ5qNwrQpnI/vdInlKknLHkXeScuaWn9KbN
+         ZB5Q==
+X-Gm-Message-State: AIVw113MCwYv5ireGEl6LeKMBAG5cV6NVWS8lMaUsVA+GYiKxmGyzqv3
+        KY/LFAr1gG2CEQ==
+X-Received: by 10.223.152.3 with SMTP id v3mr644925wrb.8.1499929264391;
+        Thu, 13 Jul 2017 00:01:04 -0700 (PDT)
 Received: from berenguela.telefonica.net (152.red-95-120-155.dynamicip.rima-tde.net. [95.120.155.152])
-        by smtp.gmail.com with ESMTPSA id r200sm4049927wmd.20.2017.07.13.00.01.01
+        by smtp.gmail.com with ESMTPSA id r200sm4049927wmd.20.2017.07.13.00.01.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Jul 2017 00:01:01 -0700 (PDT)
+        Thu, 13 Jul 2017 00:01:03 -0700 (PDT)
 From:   Miguel Torroja <miguel.torroja@gmail.com>
 To:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
 Cc:     Lars Schneider <larsxschneider@gmail.com>,
         Miguel Torroja <miguel.torroja@gmail.com>
-Subject: [PATCH 2/3] git-p4: parse marshal output "p4 -G" in p4 changes
-Date:   Thu, 13 Jul 2017 09:00:34 +0200
-Message-Id: <20170713070035.12731-2-miguel.torroja@gmail.com>
+Subject: [PATCH 3/3] git-p4: filter for {'code':'info'} in p4CmdList
+Date:   Thu, 13 Jul 2017 09:00:35 +0200
+Message-Id: <20170713070035.12731-3-miguel.torroja@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170713070035.12731-1-miguel.torroja@gmail.com>
 References: <xmqqr2xl1suy.fsf@gitster.mtv.corp.google.com>
@@ -65,139 +65,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The option -G of p4 (python marshal output) gives more context about the
-data being output. That's useful when using the command "change -o" as
-we can distinguish between warning/error line and real change description.
+The function p4CmdList accepts a new argument: skip_info. When set to
+True it ignores any 'code':'info' entry (skip_info=False by default).
 
-This fixes the case where a p4 trigger for  "p4 change" is set and the command git-p4 submit is run.
+That allows us to fix some of the tests in t9831-git-p4-triggers.sh
+known to be broken with verobse p4 triggers
 
 Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
 ---
- git-p4.py                  | 85 +++++++++++++++++++++++++++++++---------------
- t/t9831-git-p4-triggers.sh |  2 +-
- 2 files changed, 58 insertions(+), 29 deletions(-)
+ git-p4.py                  | 9 ++++++---
+ t/t9831-git-p4-triggers.sh | 4 ++--
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 8d151da91..e3a2791e0 100755
+index e3a2791e0..2fa581789 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -879,8 +879,12 @@ def p4ChangesForPaths(depotPaths, changeRange, requestedBlockSize):
-             cmd += ["%s...@%s" % (p, revisionRange)]
+@@ -313,7 +313,7 @@ def p4_move(src, dest):
+     p4_system(["move", "-k", wildcard_encode(src), wildcard_encode(dest)])
  
-         # Insert changes in chronological order
--        for line in reversed(p4_read_pipe_lines(cmd)):
--            changes.add(int(line.split(" ")[1]))
-+        for entry in reversed(p4CmdList(cmd)):
-+            if entry.has_key('p4ExitCode'):
-+                die('Error retrieving changes descriptions ({})'.format(entry['p4ExitCode']))
-+            if not entry.has_key('change'):
-+                continue
-+            changes.add(int(entry['change']))
+ def p4_last_change():
+-    results = p4CmdList(["changes", "-m", "1"])
++    results = p4CmdList(["changes", "-m", "1"], skip_info=True)
+     return int(results[0]['change'])
  
-         if not block_size:
-             break
-@@ -1526,37 +1530,62 @@ class P4Submit(Command, P4UserMap):
+ def p4_describe(change):
+@@ -321,7 +321,7 @@ def p4_describe(change):
+        the presence of field "time".  Return a dict of the
+        results."""
  
-         [upstream, settings] = findUpstreamBranchPoint()
+-    ds = p4CmdList(["describe", "-s", str(change)])
++    ds = p4CmdList(["describe", "-s", str(change)], skip_info=True)
+     if len(ds) != 1:
+         die("p4 describe -s %d did not return 1 result: %s" % (change, str(ds)))
  
--        template = ""
-+        template = """\
-+# A Perforce Change Specification.
-+#
-+#  Change:      The change number. 'new' on a new changelist.
-+#  Date:        The date this specification was last modified.
-+#  Client:      The client on which the changelist was created.  Read-only.
-+#  User:        The user who created the changelist.
-+#  Status:      Either 'pending' or 'submitted'. Read-only.
-+#  Type:        Either 'public' or 'restricted'. Default is 'public'.
-+#  Description: Comments about the changelist.  Required.
-+#  Jobs:        What opened jobs are to be closed by this changelist.
-+#               You may delete jobs from this list.  (New changelists only.)
-+#  Files:       What opened files from the default changelist are to be added
-+#               to this changelist.  You may delete files from this list.
-+#               (New changelists only.)
-+"""
-+        files_list = []
-         inFilesSection = False
-+        change_entry = None
-         args = ['change', '-o']
-         if changelist:
-             args.append(str(changelist))
--
--        for line in p4_read_pipe_lines(args):
--            if line.endswith("\r\n"):
--                line = line[:-2] + "\n"
--            if inFilesSection:
--                if line.startswith("\t"):
--                    # path starts and ends with a tab
--                    path = line[1:]
--                    lastTab = path.rfind("\t")
--                    if lastTab != -1:
--                        path = path[:lastTab]
--                        if settings.has_key('depot-paths'):
--                            if not [p for p in settings['depot-paths']
--                                    if p4PathStartsWith(path, p)]:
--                                continue
--                        else:
--                            if not p4PathStartsWith(path, self.depotPath):
--                                continue
-+        for entry in p4CmdList(args):
-+            if not entry.has_key('code'):
-+                continue
-+            if entry['code'] == 'stat':
-+                change_entry = entry
-+                break
-+        if not change_entry:
-+            die('Failed to decode output of p4 change -o')
-+        for key, value in change_entry.iteritems():
-+            if key.startswith('File'):
-+                if settings.has_key('depot-paths'):
-+                    if not [p for p in settings['depot-paths']
-+                            if p4PathStartsWith(value, p)]:
-+                        continue
-                 else:
--                    inFilesSection = False
--            else:
--                if line.startswith("Files:"):
--                    inFilesSection = True
--
--            template += line
--
-+                    if not p4PathStartsWith(value, self.depotPath):
-+                        continue
-+                files_list.append(value)
-+                continue
-+        # Output in the order expected by prepareLogMessage
-+        for key in ['Change', 'Client', 'User', 'Status', 'Description', 'Jobs']:
-+            if not change_entry.has_key(key):
-+                continue
-+            template += '\n'
-+            template += key + ':'
-+            if key == 'Description':
-+                template += '\n'
-+            for field_line in change_entry[key].splitlines():
-+                template += '\t'+field_line+'\n'
-+        if len(files_list) > 0:
-+            template += '\n'
-+            template += 'Files:\n'
-+        for path in files_list:
-+            template += '\t'+path+'\n'
-         return template
+@@ -509,7 +509,7 @@ def isModeExec(mode):
+ def isModeExecChanged(src_mode, dst_mode):
+     return isModeExec(src_mode) != isModeExec(dst_mode)
  
-     def edit_template(self, template_file):
+-def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
++def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False):
+ 
+     if isinstance(cmd,basestring):
+         cmd = "-G " + cmd
+@@ -545,6 +545,9 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
+     try:
+         while True:
+             entry = marshal.load(p4.stdout)
++            if skip_info:
++                if 'code' in entry and entry['code'] == 'info':
++                    continue
+             if cb is not None:
+                 cb(entry)
+             else:
 diff --git a/t/t9831-git-p4-triggers.sh b/t/t9831-git-p4-triggers.sh
-index 28cafe469..871544b1c 100755
+index 871544b1c..bbcf14c66 100755
 --- a/t/t9831-git-p4-triggers.sh
 +++ b/t/t9831-git-p4-triggers.sh
-@@ -66,7 +66,7 @@ test_expect_failure 'import with extra info lines from verbose p4 trigger' '
+@@ -20,7 +20,7 @@ test_expect_success 'init depot' '
  	)
  '
  
--test_expect_failure 'submit description with extra info lines from verbose p4 change trigger' '
-+test_expect_success 'submit description with extra info lines from verbose p4 change trigger' '
+-test_expect_failure 'clone with extra info lines from verbose p4 trigger' '
++test_expect_success 'clone with extra info lines from verbose p4 trigger' '
  	test_when_finished cleanup_git &&
  	(
  		p4 triggers -i <<-EOF
+@@ -38,7 +38,7 @@ test_expect_failure 'clone with extra info lines from verbose p4 trigger' '
+ 	)
+ '
+ 
+-test_expect_failure 'import with extra info lines from verbose p4 trigger' '
++test_expect_success 'import with extra info lines from verbose p4 trigger' '
+ 	test_when_finished cleanup_git &&
+ 	(
+ 		cd "$cli" &&
 -- 
 2.11.0
 
