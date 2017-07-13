@@ -2,101 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21B6F202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 19:39:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9744F202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 19:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752983AbdGMTjc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 15:39:32 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33327 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752587AbdGMTjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 15:39:31 -0400
-Received: by mail-pf0-f172.google.com with SMTP id e7so34167476pfk.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:39:31 -0700 (PDT)
+        id S1753167AbdGMTkD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 15:40:03 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:36146 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752970AbdGMTkC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 15:40:02 -0400
+Received: by mail-pg0-f51.google.com with SMTP id u62so34267559pgb.3
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0gPdrd2T6J+z/o461OIR0CIXIZ1pe6f0VDm4GK38iq8=;
-        b=WgHy8CiWceZipT/JO9a3cChBGpvG664JHE8Uc00hQNq45QZmF+BRaRJqjyyPtWYWzF
-         74Iz1aPShl/vHPe/Kl7Xhj6c8u6hlkQiu9Aq35iMXOxzmq1CBu9pD4tR9im/Z1aiqBBc
-         Hv9TszkHUF0Qu7abHoRviWPtulp3aG89MqKkkrXPnlpBqM8GsJZqRvBmQrD7foaC/88t
-         1SkU11VRqu0wtjPAmj+obr1JdbXMXTlvGqmLuhJUd17nTCoAffW2HzrZbdsKHmmFlPok
-         jXWrfzBmZ06aCa0EJ8W28f518OVt6/kUXMHK8c2T/5+lHIblm3ZJU2VDQ+I9XE6DghGy
-         EbDg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=yXjzrZmtxtgIcB8yjsj7R7RX16xeZ4aL0nOr4IMPMRQ=;
+        b=TZDgWS9CuyE8MmVezaHCqc9SLmyn0Lw2FsouvSc4SfX3PMITi/BLZxaMOYWD9cF7zD
+         oljRp1dzG0KJtF/j5O22R7yAuYv4yc/T8vOwGPzAMDtPhx9Y4Oenw/YNi9pXTdH+jcC+
+         TY+VKgzAtlvRStNucs9ZTzKnh7DzTF4Rx01/raqadvGva3J/8APdbipzVg0pcDrZvrao
+         r9dE8MiL9o3960CwWC3GvqoKPLV/fQDmmXduYjuHJ++WY+AuZyaJSHjkGNlvaZvzx95E
+         xU5vvwTLe91tqHy46XTUOMH9y90XX60Ria9/qq4S0HWw5lKuhRK4iseFhB4hXsc+0Tqs
+         tcYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0gPdrd2T6J+z/o461OIR0CIXIZ1pe6f0VDm4GK38iq8=;
-        b=LR51IBb/jtwRfXimmttNbRgVqOA69M2IuqNtewwUIj7/4bEUZiWnnlQwEPTzbKPzUk
-         RTeFvoAEK7FdcukEzYa6jE1qZhlfdvz3EpABhBu1pDz6XAy0zGqymApeJEVDvzojZybR
-         FyCHXWEuk5qVi9rv6D1vx2dbe0DbQboVBGblrtTukPN4RVqYbaIVRY5kgsJ0JX86xY9Z
-         GYtVYHiwGwc0GmF3ubU6a1EFf+TGprIU6H78TXQ7NBPTBGEVagRVqz/BczRCoou/rZix
-         Ig2NrpGqfw99SZyUTYJ/AmbPFbu83X8x2+0oY6q0y6W4HFx/AePrnC/8c05f8pBIpz9Z
-         siXg==
-X-Gm-Message-State: AIVw113ayE5Pw944R9m9XdyNvYTnHZ79Mekc5fgMVEPn6oaaJQ28W5Ld
-        vPIEWkfRiAOf4g==
-X-Received: by 10.98.60.157 with SMTP id b29mr1236142pfk.170.1499974770997;
-        Thu, 13 Jul 2017 12:39:30 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id 75sm12364777pfk.84.2017.07.13.12.39.30
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=yXjzrZmtxtgIcB8yjsj7R7RX16xeZ4aL0nOr4IMPMRQ=;
+        b=GZJsK95mgXXHbByTAp5dtaC7UTF6BUFQHOns/0OLaPxFlb6GTr1BOpKfUkwIDNSQap
+         VQ/K9uFBGc346jKjzpNrKekF2OkIzncTpP7nd3usNImOmqX93dUWOwHRdOebMzYSQ3JL
+         AanQC/syklfzS9xZhANQgaT/k29AX87m8Qyg9EOrnbxFPI248TKa9Ydl9EKTeQbdRs35
+         Xxf72HzxhZSyF5jZZmvAcJ783M59bPcNpTlNab1+hSTrqLqu4u9ODTxEs27/q1ygSwb3
+         qb7UyT2yjcol6AJAD4bW5jeiPGmU+KaaiydDztU6s6G2zFX7AwAUG2tySQH/MWMtLP1g
+         tkrA==
+X-Gm-Message-State: AIVw113L8Z6YGFjGDWY7pnJQEr92nurZmss1ntr3HUqKuO13kR+L2jxL
+        3JKNzadDz/LFHnQA
+X-Received: by 10.98.158.139 with SMTP id f11mr1233104pfk.208.1499974796474;
+        Thu, 13 Jul 2017 12:39:56 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:fdeb:d456:6ee8:3fad])
+        by smtp.gmail.com with ESMTPSA id z74sm14936333pfd.112.2017.07.13.12.39.55
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 12:39:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2017, #03; Mon, 10)
-References: <xmqqlgnv52oq.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1707131435220.4193@virtualbox>
-        <xmqqzic8xsxd.fsf@gitster.mtv.corp.google.com>
-        <20170713155313.whucxkoita6nvmhz@sigill.intra.peff.net>
-        <xmqqvamwxm1y.fsf@gitster.mtv.corp.google.com>
-        <20170713181350.tb6gndxc66ewpggj@sigill.intra.peff.net>
-        <xmqqvamww3tc.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 13 Jul 2017 12:39:29 -0700
-In-Reply-To: <xmqqvamww3tc.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 13 Jul 2017 12:10:39 -0700")
-Message-ID: <xmqq1spkw2ha.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        Thu, 13 Jul 2017 12:39:56 -0700 (PDT)
+Date:   Thu, 13 Jul 2017 12:39:51 -0700
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [RFC PATCH 1/3] promised-blob, fsck: introduce promised blobs
+Message-ID: <20170713123951.5cab1adc@twelve2.svl.corp.google.com>
+In-Reply-To: <890a36fc-be16-83bc-fec6-94e21d0f7d0a@jeffhostetler.com>
+References: <cover.1499800530.git.jonathantanmy@google.com>
+        <f9c7d4b3f800ea31e85e4897ee7048fec1e3c2f0.1499800530.git.jonathantanmy@google.com>
+        <890a36fc-be16-83bc-fec6-94e21d0f7d0a@jeffhostetler.com>
+X-Mailer: Claws Mail 3.9.3 (GTK+ 2.24.23; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, 12 Jul 2017 13:29:11 -0400
+Jeff Hostetler <git@jeffhostetler.com> wrote:
 
-> Jeff King <peff@peff.net> writes:
->
->> [1] Another sticking point is that this really does need to be in the
->>     reflog of the ref we are pushing (and not, e.g., HEAD). But one does
->>     not always push from a ref. I suspect that's OK in practice, though.
->>     If you are doing "git push --force-with-lease HEAD~2:master", it is
->>     probably OK for us to error out with "uh, lease from what?".
->
-> I actually expect this to bite me personally, as I often do not
-> rewind the actual "topic" ref that is my target of rewriting,
-> because I am a chicken---I detach the HEAD and build a history there
-> to see if I can come up with a better history, compare the result
-> with what is on the "topic" (which is not touched at all during the
-> rewriting), and after all is done, do a "checkout -B topic".  The
-> "remote tip must appear in the local reflog" rule will never be
-> satisfied.
+> My primary concern is scale and managing the list of objects over time.
+> 
+> My fear is that this list will be quite large.  If we only want to omit
+> the very large blobs, then maybe not.  But if we want to expand that
+> scope to also omit other objects (such as a clone synchronized with a
+> sparse checkout), then that list will get large on large repos.  For
+> example, on the Windows repo we have (conservatively) 100M+ blobs (and
+> growing).  Assuming 28 bytes per, gives a 2.8GB list to be manipulated.
+> 
+> If I understand your proposal, newly-omitted blobs would need to be
+> merged into the promised-blob list after each fetch.  The fetch itself
+> may not have that many new entries, but inserting them into the existing
+> list will be slow.  Also, mmap'ing and bsearch'ing will likely have
+> issues.  And there's likely to be a very expensive step to remove
+> entries from the list as new blobs are received (or locally created).
+> 
+> In such a "sparse clone", it would be nice to omit unneeded tree objects
+> in addition to just blobs.   I say that because we are finding with GVFS
+> on the Windows repo, that even with commits-and-trees-only filtering,
+> the number of tree objects is overwhelming.
 
-Well "bite" is not quite accurate, as I do not push to a repository
-racing with others, and there is no reason for me to use --force
-with lease.  I always push '+pu', and push '+next" once after each
-release, and there is no need for any lease when I push things out.
+I know that discussion has shifted to the possibility of not having this
+list at all, and not sending size information together with the fetch,
+but going back to this...maybe omitting trees *is* the solution to both
+the large local list and the large amount of size information needing to
+be transferred.
 
-But if I were collaborating with others in another project that uses
-a shared central repository workflow, and if I were in the mood to
-see how well/better this "improved safer DWIM" mode behaves, then it
-would bite me.
+So the large-blob (e.g. Android) and many-blob (e.g. Windows) cases
+would look like this:
 
+ * Large-blob repositories have no trees omitted and a few blobs
+   omitted, and we have sizes for all of them.
+ * Many-blob repositories have many trees omitted and either all
+   blobs omitted (and we have size information for them, useful for FUSE
+   or FUSE-like things, for example) or possibly no blobs omitted (for
+   example, if shallow clones are going to be the norm, there won't be
+   many blobs to begin with if trees are omitted).
+
+This seems better than an intermediate solution for the many-blob
+repository case in which we still keep all the trees but also try to
+avoid sending and storing as much information about the blobs as
+possible, because that doesn't seem to provide us with much savings
+(because the trees as a whole are just as large, if not larger, than the
+blob information).
+
+> So I'm also concerned about
+> limiting the list to just blobs.  If we need to have this list, it
+> should be able to contain any object.  (Suggesting having an object type
+> in the entry.)
+
+This makes sense - I'll add it in.
+
+> I also have to wonder about the need to have a complete list of omitted
+> blobs up front.  It may be better to just relax the consistency checks
+> and assume a missing blob is "intentionally missing" rather than
+> indicating a corruption somewhere.  And then let the client do a later
+> round-trip to either demand-load the object -or- demand-load the
+> existence/size info if/when it really matters.
+> 
+> Maybe we should add a verb to your new fetch-blob endpoint to just get
+> the size of one or more objects to help with this.
+
+If we allow the omission of trees, I don't think the added complexity of
+demand-loading sizes is worth it.
+
+What do you think of doing this:
+ * add a "type" field to the list of promised objects (formerly the list
+   of promised blobs)
+ * retain mandatory size for blobs
+ * retain single file containing list of promised objects (I don't feel
+   too strongly about this, but it has a slight simplicity and
+   in-between-GC performance advantage)
