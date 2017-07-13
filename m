@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14F81202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 17:35:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5604F202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 17:35:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752477AbdGMRfb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 13:35:31 -0400
-Received: from siwi.pair.com ([209.68.5.199]:38849 "EHLO siwi.pair.com"
+        id S1752564AbdGMRfe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 13:35:34 -0400
+Received: from siwi.pair.com ([209.68.5.199]:10995 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751267AbdGMRfb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 13:35:31 -0400
+        id S1752525AbdGMRfd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 13:35:33 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 908C0844E3;
-        Thu, 13 Jul 2017 13:35:30 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 3540C844E3;
+        Thu, 13 Jul 2017 13:35:32 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id E33FF844E5;
-        Thu, 13 Jul 2017 13:35:29 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 87143844E5;
+        Thu, 13 Jul 2017 13:35:31 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, ethomson@edwardthomson.com,
         jonathantanmy@google.com, jrnieder@gmail.com,
         jeffhost@microsoft.com
-Subject: [PATCH v2 01/19] dir: refactor add_excludes()
-Date:   Thu, 13 Jul 2017 17:34:41 +0000
-Message-Id: <20170713173459.3559-2-git@jeffhostetler.com>
+Subject: [PATCH v2 03/19] list-objects: filter objects in traverse_commit_list
+Date:   Thu, 13 Jul 2017 17:34:43 +0000
+Message-Id: <20170713173459.3559-4-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170713173459.3559-1-git@jeffhostetler.com>
 References: <20170713173459.3559-1-git@jeffhostetler.com>
@@ -41,120 +41,226 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Refactor add_excludes() to separate the reading of the
-exclude file into a buffer and the parsing of the buffer
-into exclude_list items.
+Create traverse_commit_list_filtered() and add filtering
+interface to allow certain objects to be omitted (not shown)
+during a traversal.
 
-Add add_excludes_from_blob_to_list() to allow an exclude
-file be specified with an OID.
+Update traverse_commit_list() to be a wrapper for the above.
+
+Filtering will be used in a future commit by rev-list and
+pack-objects for narrow/partial clone/fetch to omit certain
+blobs from the output.
+
+traverse_bitmap_commit_list() does not work with filtering.
+If a packfile bitmap is present, it will not be used.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- dir.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++--
- dir.h |  4 ++++
- 2 files changed, 55 insertions(+), 2 deletions(-)
+ list-objects.c | 66 ++++++++++++++++++++++++++++++++++++++++++++--------------
+ list-objects.h | 30 ++++++++++++++++++++++++++
+ 2 files changed, 80 insertions(+), 16 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 31f9343..aeba965 100644
---- a/dir.c
-+++ b/dir.c
-@@ -725,6 +725,11 @@ static void invalidate_directory(struct untracked_cache *uc,
- 		dir->dirs[i]->recurse = 0;
+diff --git a/list-objects.c b/list-objects.c
+index f3ca6aa..8dddeda 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -13,10 +13,13 @@ static void process_blob(struct rev_info *revs,
+ 			 show_object_fn show,
+ 			 struct strbuf *path,
+ 			 const char *name,
+-			 void *cb_data)
++			 void *cb_data,
++			 filter_object_fn filter,
++			 void *filter_data)
+ {
+ 	struct object *obj = &blob->object;
+ 	size_t pathlen;
++	list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_SHOW;
+ 
+ 	if (!revs->blob_objects)
+ 		return;
+@@ -24,11 +27,15 @@ static void process_blob(struct rev_info *revs,
+ 		die("bad blob object");
+ 	if (obj->flags & (UNINTERESTING | SEEN))
+ 		return;
+-	obj->flags |= SEEN;
+ 
+ 	pathlen = path->len;
+ 	strbuf_addstr(path, name);
+-	show(obj, path->buf, cb_data);
++	if (filter)
++		r = filter(LOFT_BLOB, obj, path->buf, &path->buf[pathlen], filter_data);
++	if (r & LOFR_MARK_SEEN)
++		obj->flags |= SEEN;
++	if (r & LOFR_SHOW)
++		show(obj, path->buf, cb_data);
+ 	strbuf_setlen(path, pathlen);
  }
  
-+static int add_excludes_from_buffer(
-+	char *buf, size_t size,
-+	const char *base, int baselen,
-+	struct exclude_list *el);
-+
- /*
-  * Given a file with name "fname", read it (either from disk, or from
-  * the index if "check_index" is non-zero), parse it and store the
-@@ -739,9 +744,9 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 			struct sha1_stat *sha1_stat)
+@@ -69,7 +76,9 @@ static void process_tree(struct rev_info *revs,
+ 			 show_object_fn show,
+ 			 struct strbuf *base,
+ 			 const char *name,
+-			 void *cb_data)
++			 void *cb_data,
++			 filter_object_fn filter,
++			 void *filter_data)
  {
- 	struct stat st;
--	int fd, i, lineno = 1;
-+	int fd;
- 	size_t size = 0;
--	char *buf, *entry;
-+	char *buf;
+ 	struct object *obj = &tree->object;
+ 	struct tree_desc desc;
+@@ -77,6 +86,7 @@ static void process_tree(struct rev_info *revs,
+ 	enum interesting match = revs->diffopt.pathspec.nr == 0 ?
+ 		all_entries_interesting: entry_not_interesting;
+ 	int baselen = base->len;
++	list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_SHOW;
  
- 	fd = open(fname, O_RDONLY);
- 	if (fd < 0 || fstat(fd, &st) < 0) {
-@@ -798,6 +803,18 @@ static int add_excludes(const char *fname, const char *base, int baselen,
- 		}
+ 	if (!revs->tree_objects)
+ 		return;
+@@ -90,9 +100,13 @@ static void process_tree(struct rev_info *revs,
+ 		die("bad tree object %s", oid_to_hex(&obj->oid));
  	}
  
-+	add_excludes_from_buffer(buf, size, base, baselen, el);
-+	return 0;
-+}
-+
-+static int add_excludes_from_buffer(
-+	char *buf, size_t size,
-+	const char *base, int baselen,
-+	struct exclude_list *el)
-+{
-+	int i, lineno = 1;
-+	char *entry;
-+
- 	el->filebuf = buf;
+-	obj->flags |= SEEN;
+ 	strbuf_addstr(base, name);
+-	show(obj, base->buf, cb_data);
++	if (filter)
++		r = filter(LOFT_BEGIN_TREE, obj, base->buf, &base->buf[baselen], filter_data);
++	if (r & LOFR_MARK_SEEN)
++		obj->flags |= SEEN;
++	if (r & LOFR_SHOW)
++		show(obj, base->buf, cb_data);
+ 	if (base->len)
+ 		strbuf_addch(base, '/');
  
- 	if (skip_utf8_bom(&buf, size))
-@@ -826,6 +843,38 @@ int add_excludes_from_file_to_list(const char *fname, const char *base,
- 	return add_excludes(fname, base, baselen, el, check_index, NULL);
+@@ -112,7 +126,7 @@ static void process_tree(struct rev_info *revs,
+ 			process_tree(revs,
+ 				     lookup_tree(entry.oid->hash),
+ 				     show, base, entry.path,
+-				     cb_data);
++				     cb_data, filter, filter_data);
+ 		else if (S_ISGITLINK(entry.mode))
+ 			process_gitlink(revs, entry.oid->hash,
+ 					show, base, entry.path,
+@@ -121,8 +135,17 @@ static void process_tree(struct rev_info *revs,
+ 			process_blob(revs,
+ 				     lookup_blob(entry.oid->hash),
+ 				     show, base, entry.path,
+-				     cb_data);
++				     cb_data, filter, filter_data);
+ 	}
++
++	if (filter) {
++		r = filter(LOFT_END_TREE, obj, base->buf, &base->buf[baselen], filter_data);
++		if (r & LOFR_MARK_SEEN)
++			obj->flags |= SEEN;
++		if (r & LOFR_SHOW)
++			show(obj, base->buf, cb_data);
++	}
++
+ 	strbuf_setlen(base, baselen);
+ 	free_tree_buffer(tree);
+ }
+@@ -183,10 +206,10 @@ static void add_pending_tree(struct rev_info *revs, struct tree *tree)
+ 	add_pending_object(revs, &tree->object, "");
  }
  
-+int add_excludes_from_blob_to_list(
-+	struct object_id *oid,
-+	const char *base, int baselen,
-+	struct exclude_list *el)
-+{
-+	char *buf;
-+	unsigned long size;
-+	enum object_type type;
-+
-+	buf = read_sha1_file(oid->hash, &type, &size);
-+	if (!buf)
-+		return -1;
-+
-+	if (type != OBJ_BLOB) {
-+		free(buf);
-+		return -1;
-+	}
-+
-+	if (size == 0) {
-+		free(buf);
-+		return 0;
-+	}
-+
-+	if (buf[size - 1] != '\n') {
-+		buf = xrealloc(buf, st_add(size, 1));
-+		buf[size++] = '\n';
-+	}
-+
-+	add_excludes_from_buffer(buf, size, base, baselen, el);
-+	return 0;
-+}
-+
- struct exclude_list *add_exclude_list(struct dir_struct *dir,
- 				      int group_type, const char *src)
+-void traverse_commit_list(struct rev_info *revs,
+-			  show_commit_fn show_commit,
+-			  show_object_fn show_object,
+-			  void *data)
++void traverse_commit_list_filtered(
++	struct rev_info *revs,
++	show_commit_fn show_commit, show_object_fn show_object, void *show_data,
++	filter_object_fn filter, void *filter_data)
  {
-diff --git a/dir.h b/dir.h
-index edb5fda..8e754e5 100644
---- a/dir.h
-+++ b/dir.h
-@@ -242,6 +242,10 @@ extern struct exclude_list *add_exclude_list(struct dir_struct *dir,
- extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
- 					  struct exclude_list *el, int check_index);
- extern void add_excludes_from_file(struct dir_struct *, const char *fname);
-+extern int add_excludes_from_blob_to_list(
-+	struct object_id *oid,
-+	const char *base, int baselen,
-+	struct exclude_list *el);
- extern void parse_exclude_pattern(const char **string, int *patternlen, unsigned *flags, int *nowildcardlen);
- extern void add_exclude(const char *string, const char *base,
- 			int baselen, struct exclude_list *el, int srcpos);
+ 	int i;
+ 	struct commit *commit;
+@@ -200,7 +223,7 @@ void traverse_commit_list(struct rev_info *revs,
+ 		 */
+ 		if (commit->tree)
+ 			add_pending_tree(revs, commit->tree);
+-		show_commit(commit, data);
++		show_commit(commit, show_data);
+ 	}
+ 	for (i = 0; i < revs->pending.nr; i++) {
+ 		struct object_array_entry *pending = revs->pending.objects + i;
+@@ -211,19 +234,19 @@ void traverse_commit_list(struct rev_info *revs,
+ 			continue;
+ 		if (obj->type == OBJ_TAG) {
+ 			obj->flags |= SEEN;
+-			show_object(obj, name, data);
++			show_object(obj, name, show_data);
+ 			continue;
+ 		}
+ 		if (!path)
+ 			path = "";
+ 		if (obj->type == OBJ_TREE) {
+ 			process_tree(revs, (struct tree *)obj, show_object,
+-				     &base, path, data);
++				     &base, path, show_data, filter, filter_data);
+ 			continue;
+ 		}
+ 		if (obj->type == OBJ_BLOB) {
+ 			process_blob(revs, (struct blob *)obj, show_object,
+-				     &base, path, data);
++				     &base, path, show_data, filter, filter_data);
+ 			continue;
+ 		}
+ 		die("unknown pending object %s (%s)",
+@@ -232,3 +255,14 @@ void traverse_commit_list(struct rev_info *revs,
+ 	object_array_clear(&revs->pending);
+ 	strbuf_release(&base);
+ }
++
++void traverse_commit_list(struct rev_info *revs,
++			  show_commit_fn show_commit,
++			  show_object_fn show_object,
++			  void *show_data)
++{
++	traverse_commit_list_filtered(
++		revs,
++		show_commit, show_object, show_data,
++		NULL, NULL);
++}
+diff --git a/list-objects.h b/list-objects.h
+index 0cebf85..964e7d3 100644
+--- a/list-objects.h
++++ b/list-objects.h
+@@ -8,4 +8,34 @@ void traverse_commit_list(struct rev_info *, show_commit_fn, show_object_fn, voi
+ typedef void (*show_edge_fn)(struct commit *);
+ void mark_edges_uninteresting(struct rev_info *, show_edge_fn);
+ 
++enum list_objects_filter_result {
++	LOFR_ZERO      = 0,
++	LOFR_MARK_SEEN = 1<<0,
++	LOFR_SHOW      = 1<<1,
++};
++
++/* See object.h and revision.h */
++#define FILTER_REVISIT (1<<25)
++
++enum list_objects_filter_type {
++	LOFT_BEGIN_TREE,
++	LOFT_END_TREE,
++	LOFT_BLOB
++};
++
++typedef enum list_objects_filter_result list_objects_filter_result;
++typedef enum list_objects_filter_type list_objects_filter_type;
++
++typedef list_objects_filter_result (*filter_object_fn)(
++	list_objects_filter_type filter_type,
++	struct object *obj,
++	const char *pathname,
++	const char *filename,
++	void *filter_data);
++
++void traverse_commit_list_filtered(
++	struct rev_info *,
++	show_commit_fn, show_object_fn, void *show_data,
++	filter_object_fn filter, void *filter_data);
++
+ #endif
 -- 
 2.9.3
 
