@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85B4F202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 17:36:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98303202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 17:36:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752685AbdGMRf5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 13:35:57 -0400
-Received: from siwi.pair.com ([209.68.5.199]:11127 "EHLO siwi.pair.com"
+        id S1752705AbdGMRgG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 13:36:06 -0400
+Received: from siwi.pair.com ([209.68.5.199]:11037 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752642AbdGMRfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 13:35:55 -0400
+        id S1752525AbdGMRfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 13:35:37 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 51BA6844EA;
-        Thu, 13 Jul 2017 13:35:45 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 56B50844E3;
+        Thu, 13 Jul 2017 13:35:36 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A3F14844E3;
-        Thu, 13 Jul 2017 13:35:44 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id A8D9B844E5;
+        Thu, 13 Jul 2017 13:35:35 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, ethomson@edwardthomson.com,
         jonathantanmy@google.com, jrnieder@gmail.com,
         jeffhost@microsoft.com
-Subject: [PATCH v2 19/19] fetch: add object filtering to fetch
-Date:   Thu, 13 Jul 2017 17:34:59 +0000
-Message-Id: <20170713173459.3559-20-git@jeffhostetler.com>
+Subject: [PATCH v2 08/19] rev-list: add object filtering support
+Date:   Thu, 13 Jul 2017 17:34:48 +0000
+Message-Id: <20170713173459.3559-9-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170713173459.3559-1-git@jeffhostetler.com>
 References: <20170713173459.3559-1-git@jeffhostetler.com>
@@ -41,84 +41,142 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Teach rev-list to use the filtering provided by the
+traverse_commit_list_filtered() interface to omit
+unwanted objects from the result.
+
+This feature is only enabled when one of the "--objects*"
+options are used.
+
+When the "--filter-print-manifest" option is used, the
+omitted objects and their sizes are printed at the end.
+These are marked with a "~".  This can be combined with
+"--quiet" to get a list of just the omitted objects.
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/fetch.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ builtin/rev-list.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 56 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 5f2c2ab..306c165 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -16,6 +16,7 @@
- #include "connected.h"
- #include "argv-array.h"
- #include "utf8.h"
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index bcf77f0..fd9a7e5 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -3,6 +3,8 @@
+ #include "diff.h"
+ #include "revision.h"
+ #include "list-objects.h"
++#include "list-objects-filters.h"
 +#include "object-filter.h"
+ #include "pack.h"
+ #include "pack-bitmap.h"
+ #include "builtin.h"
+@@ -52,6 +54,7 @@ static const char rev_list_usage[] =
  
- static const char * const builtin_fetch_usage[] = {
- 	N_("git fetch [<options>] [<repository> [<refspec>...]]"),
-@@ -52,6 +53,7 @@ static const char *recurse_submodules_default;
- static int shown_url = 0;
- static int refmap_alloc, refmap_nr;
- static const char **refmap_array;
+ static struct progress *progress;
+ static unsigned progress_counter;
 +static struct object_filter_options filter_options;
  
- static int option_parse_recurse_submodules(const struct option *opt,
- 				   const char *arg, int unset)
-@@ -141,6 +143,14 @@ static struct option builtin_fetch_options[] = {
- 			TRANSPORT_FAMILY_IPV4),
- 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
- 			TRANSPORT_FAMILY_IPV6),
-+
-+	OPT_PARSE_FILTER_OMIT_ALL_BLOBS(&filter_options),
-+	OPT_PARSE_FILTER_OMIT_LARGE_BLOBS(&filter_options),
-+	OPT_PARSE_FILTER_USE_SPARSE(&filter_options),
-+
-+	/* OPT_PARSE_FILTER_PRINT_MANIFEST(&filter_options), */
-+	/* OPT_PARSE_FILTER_RELAX(&filter_options), */
-+
- 	OPT_END()
- };
+ static void finish_commit(struct commit *commit, void *data);
+ static void show_commit(struct commit *commit, void *data)
+@@ -178,8 +181,20 @@ static void finish_commit(struct commit *commit, void *data)
+ static void finish_object(struct object *obj, const char *name, void *cb_data)
+ {
+ 	struct rev_list_info *info = cb_data;
+-	if (obj->type == OBJ_BLOB && !has_object_file(&obj->oid))
++	if (obj->type == OBJ_BLOB && !has_object_file(&obj->oid)) {
++		if (filter_options.relax) {
++			/*
++			 * Relax consistency checks to not complain about
++			 * omitted objects (presumably caused by use of
++			 * the previous use of the 'filter-objects' feature).
++			 *
++			 * Note that this is independent of any filtering that
++			 * we are doing in this run.
++			 */
++			return;
++		}
+ 		die("missing blob object '%s'", oid_to_hex(&obj->oid));
++	}
+ 	if (info->revs->verify_objects && !obj->parsed && obj->type != OBJ_COMMIT)
+ 		parse_object(obj->oid.hash);
+ }
+@@ -199,6 +214,16 @@ static void show_edge(struct commit *commit)
+ 	printf("-%s\n", oid_to_hex(&commit->object.oid));
+ }
  
-@@ -733,6 +743,14 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 	const char *filename = dry_run ? "/dev/null" : git_path_fetch_head();
- 	int want_status;
- 	int summary_width = transport_summary_width(ref_map);
-+	struct check_connected_options opt = CHECK_CONNECTED_INIT;
++static void print_omitted_object(int i, int i_limit, struct oidset2_entry *e, void *cb_data)
++{
++	/* struct rev_list_info *info = cb_data; */
 +
-+	/*
-+	 * Relax consistency check to allow missing blobs (presumably
-+	 * because they are exactly the set that we requested be
-+	 * omitted.
-+	 */
-+	opt.filter_relax = object_filter_enabled(&filter_options);
++	if (e->object_length == -1)
++		printf("~%s\n", oid_to_hex(&e->oid));
++	else
++		printf("~%s %"PRIuMAX"\n", oid_to_hex(&e->oid), e->object_length);
++}
++
+ static void print_var_str(const char *var, const char *val)
+ {
+ 	printf("%s='%s'\n", var, val);
+@@ -276,6 +301,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	int bisect_find_all = 0;
+ 	int use_bitmap_index = 0;
+ 	const char *show_progress = NULL;
++	oidset2_foreach_cb fn_filter_print = NULL;
  
- 	fp = fopen(filename, "a");
- 	if (!fp)
-@@ -744,7 +762,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 		url = xstrdup("foreign");
+ 	git_config(git_default_config, NULL);
+ 	init_revisions(&revs, prefix);
+@@ -329,6 +355,14 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			show_progress = arg;
+ 			continue;
+ 		}
++		if (object_filter_hand_parse_arg(&filter_options, arg, 1, 1)) {
++			if (!revs.blob_objects)
++				die(_("object filtering requires --objects"));
++			if (filter_options.use_sparse &&
++			    !oidcmp(&filter_options.sparse_oid, &null_oid))
++				die(_("invalid sparse value"));
++			continue;
++		}
+ 		usage(rev_list_usage);
  
- 	rm = ref_map;
--	if (check_connected(iterate_ref_map, &rm, NULL)) {
-+	if (check_connected(iterate_ref_map, &rm, &opt)) {
- 		rc = error(_("%s did not send all necessary objects\n"), url);
- 		goto abort;
  	}
-@@ -885,6 +903,13 @@ static int quickfetch(struct ref *ref_map)
- 	struct check_connected_options opt = CHECK_CONNECTED_INIT;
+@@ -353,6 +387,11 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	if (revs.show_notes)
+ 		die(_("rev-list does not support display of notes"));
  
- 	/*
-+	 * Relax consistency check to allow missing blobs (presumably
-+	 * because they are exactly the set that we requested be
-+	 * omitted.
-+	 */
-+	opt.filter_relax = object_filter_enabled(&filter_options);
++	if (object_filter_enabled(&filter_options)) {
++		if (use_bitmap_index)
++			die(_("cannot combine --use-bitmap-index with object filtering"));
++	}
 +
-+	/*
- 	 * If we are deepening a shallow clone we already have these
- 	 * objects reachable.  Running rev-list here will return with
- 	 * a good (0) exit status and we'll bypass the fetch that we
+ 	save_commit_buffer = (revs.verbose_header ||
+ 			      revs.grep_filter.pattern_list ||
+ 			      revs.grep_filter.header_list);
+@@ -397,7 +436,22 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			return show_bisect_vars(&info, reaches, all);
+ 	}
+ 
+-	traverse_commit_list(&revs, show_commit, show_object, &info);
++	if (filter_options.print_manifest)
++		fn_filter_print = print_omitted_object;
++
++	if (filter_options.omit_all_blobs)
++		traverse_commit_list_omit_all_blobs(
++			&revs, show_commit, show_object, fn_filter_print, &info);
++	else if (filter_options.omit_large_blobs)
++		traverse_commit_list_omit_large_blobs(
++			&revs, show_commit, show_object, fn_filter_print, &info,
++			(int64_t)(uint64_t)filter_options.large_byte_limit);
++	else if (filter_options.use_sparse)
++		traverse_commit_list_use_sparse(
++			&revs, show_commit, show_object, fn_filter_print, &info,
++			&filter_options.sparse_oid);
++	else
++		traverse_commit_list(&revs, show_commit, show_object, &info);
+ 
+ 	stop_progress(&progress);
+ 
 -- 
 2.9.3
 
