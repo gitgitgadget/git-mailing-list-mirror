@@ -2,109 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A89AE2027C
-	for <e@80x24.org>; Thu, 13 Jul 2017 22:44:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFD202027C
+	for <e@80x24.org>; Thu, 13 Jul 2017 22:45:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752446AbdGMWoL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 18:44:11 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:32971 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751216AbdGMWoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 18:44:10 -0400
-Received: by mail-pg0-f54.google.com with SMTP id k14so36379774pgr.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 15:44:10 -0700 (PDT)
+        id S1752902AbdGMWp2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 18:45:28 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:36612 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751828AbdGMWp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 18:45:27 -0400
+Received: by mail-pf0-f172.google.com with SMTP id q86so36008634pfl.3
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 15:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=lS0N+cHZvDZyPJmxm+M1diZimM5T0HDH45eGl7wSIGM=;
-        b=cTAB5+G/OZTtXBvt00p/hIUwwR9sN59MAWfy6jpgp+Y4M+NA1cZXGE+Hw1R9Qd6ptJ
-         iNm8+/sKGBWliGKBhEaPHMuPFfWP2IrX24xwz4MantwPajeDU4i/R3qiJjF0zoHIxSt6
-         f7PhbmAAJXRAUy5hsbEoYvtBioF0mPNyHQMo/3NioUdsAImbfhdhuvh+IZQOXm0CdC7K
-         mQLKf3nwK/hf62cDkJy02Ty1CcLqX29501qoluePyjaAaXEhE4LSJhIqRse420BSnFPM
-         ng5dC9DQpPuXIG7gqG/OslK1bUQrj26MQrU8mxzoeS2Wmg8SSYvmYIE/U2el4mN3AYmM
-         4HfQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=/YZCOs/HEDwWXYDU+q81kX9h0zs0vHWaIV0whDeLrDM=;
+        b=R9HjG5vv5pSbeXbVkzXEDsXH3PZCpTbcLcZ2q8dkmMYIKPERcAOfXrb6ez1fLaujLu
+         nU/49VtZUsWKsdqBqF8tRxhQwESTSx+8Ov3LGHy0qsU7VpKwU/YIe8EOyEOXlcXHI7H3
+         nnp6LMXOmxcwY424msOljTqUBEZXSQ7ULAwBbPJV0KMB5h06/3s2ATaGfh4SgK6n+xH7
+         bJpJF6kYJ1pA7e+6LNy+BcsrMBFis8koeXpZwvxHbUYwhJQCoB500QMIEop3kvQnMV6v
+         3HCa6kvQdw0Qt4586TMxgHrL9inrgJFJNMjrewQAg4tX2plLEd41devaZ3fV0CDPUo0T
+         12CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=lS0N+cHZvDZyPJmxm+M1diZimM5T0HDH45eGl7wSIGM=;
-        b=EEn3mw6fcWVJ/f9mFOv8L6YrsUB6ybcS3sJTrX4mXfi8x+a/ZGsiSxW/PJotDMKc2N
-         MaTjtji9wjY3YKyK0HToTVtWpKmy9PkZg3R49tIhq8KCOkFld2mOH+r6cGuF+Crq7pGk
-         xOuZxQqObptgMwZueWK7sKvdR6uddwcbirL+6Mzgolrs2WzQVr075W//D/kQnU723awy
-         O/jEyQVnd+JBiDNHDb75LjcVYaaTbqWkPupXu22HMEAZGNUURb5tkCHlWzvqBs1eGtg7
-         Rfo7zyypmWtg7/JKn1pfQzCMaZJr1ro2U+fdpC5agoD5VeRMZ3CQZonFQQEbXNmlJ0Hf
-         eLBQ==
-X-Gm-Message-State: AIVw110oXFkSVA85Mjjbqjtb9QywHXBWMmLOV4zBUNPBy7x4wEbJQJCC
-        BRa5rGNq9SYTotozCcBd/+M4gxaBWVan
-X-Received: by 10.84.215.197 with SMTP id g5mr12520137plj.297.1499985849991;
- Thu, 13 Jul 2017 15:44:09 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=/YZCOs/HEDwWXYDU+q81kX9h0zs0vHWaIV0whDeLrDM=;
+        b=B+XY5YozuDt55i2B5tMw5TetsV7XaxpcLTXxSTs8WrqXuhTct3y4XbIFkBGRYG3k40
+         FxZyA70TOgTVE80DT8zTOniF85HgGj/3ow2YpO3XfPAXsbfBzIam8BjA5+rl3kyUyACt
+         jrHnJY5bd7rS3BdECERSOVnK/znK9KwRV2DHUosohM//XeZOP7Iou9Q5KZr/OeexQlO1
+         s8mFW/lTgEKn4iqkVRcFb4qkKniWk2kUrxLUsW2FNr7i/RuxODt1fmb0wJtw2L/0mCBj
+         UuPc0b+EoOiKbXVODw9ioC3DsL8BUGHTa09EU7L+5Dwp4RVxm+tBapxgDRUXUxZkp5rx
+         fjhA==
+X-Gm-Message-State: AIVw110TRu+auhQE5jzXInMIbFSgUrkc3pxf5CNK30j+eK5LpAkE1UHH
+        25FvQrPLfeumBQ==
+X-Received: by 10.98.79.130 with SMTP id f2mr1897253pfj.133.1499985927030;
+        Thu, 13 Jul 2017 15:45:27 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
+        by smtp.gmail.com with ESMTPSA id k194sm11170219pgc.31.2017.07.13.15.45.26
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Jul 2017 15:45:26 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jeff King <peff@peff.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 05/15] ref-filter: abstract ref format into its own struct
+References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
+        <20170713150118.eof3xgu4zujmo6u6@sigill.intra.peff.net>
+        <CAGZ79kag1B37FBrmDzbRFNVODHp=n1h=xSq_pi1b7Fs4wLoRBg@mail.gmail.com>
+        <xmqqlgnsulco.fsf@gitster.mtv.corp.google.com>
+        <xmqqmv88t444.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaOfcvVGUewVZMyZ7zVUcVESyzsdOBnAvG6FebuZ5HFQw@mail.gmail.com>
+Date:   Thu, 13 Jul 2017 15:45:25 -0700
+In-Reply-To: <CAGZ79kaOfcvVGUewVZMyZ7zVUcVESyzsdOBnAvG6FebuZ5HFQw@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 13 Jul 2017 15:01:19 -0700")
+Message-ID: <xmqqd194t0qi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 15:44:09 -0700 (PDT)
-In-Reply-To: <20170713200538.25806-4-pc44800@gmail.com>
-References: <20170630194727.29787-1-pc44800@gmail.com> <20170713200538.25806-1-pc44800@gmail.com>
- <20170713200538.25806-4-pc44800@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Jul 2017 15:44:09 -0700
-Message-ID: <CAGZ79kb18z5zc9iu3Vv5aVZWJmoZzmwbMVpy89VC-t-ei2M+bw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 4/5 v4] submodule: port submodule subcommand
- 'status' from shell to C
-To:     Prathamesh Chavan <pc44800@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2017 at 1:05 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
-> This aims to make git-submodule 'status' a built-in. Hence, the function
-> cmd_status() is ported from shell to C. This is done by introducing
-> three functions: module_status(), submodule_status() and print_status().
->
-> The function module_status() acts as the front-end of the subcommand.
-> It parses subcommand's options and then calls the function
-> module_list_compute() for computing the list of submodules. Then
-> this functions calls for_each_submodule_list() looping through the
-> list obtained.
->
-> Then for_each_submodule_list() calls submodule_status() for each of the
-> submodule in its list. The function submodule_status() is responsible
-> for generating the status each submodule it is called for, and
-> then calls print_status().
->
-> Finally, the function print_status() handles the printing of submodule's
-> status.
->
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Stefan Beller <sbeller@google.com>
-> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
-> ---
-> In this new version of patch:
->
-> Instead of using cmd_diff_files(), the process is optimized
-> by using ce_match_stat().
+Stefan Beller <sbeller@google.com> writes:
 
-Apart from this I have reviewed the patch and found it a faithful
-conversion.
+>> So when somebody wants to do a "from design and explanation to
+>> provider to consumer", we would probably want "doc, *.h, *.c at the
+>> top-level and then things inside builtin/ subdirectory" order.  Of
+>> course, on the other hand, "I do not trust me not getting swayed by
+>> the fact that a developer more competent than me wrote the patch"
+>> reviewer would want to use the reverse order.
+>
+> I do not understand what you say here? Are you saying:
+> "I can be tricked easier when the order is top-down,
+> specifically when the more competent developer tries to?"
 
-I am not an expert in the diff area  and wonder how
-the cmd_diff_files functionality is achieved with just a stat call
-and then comparing it to  ce_match_stat. 'Using "dirty" ignores
-all changes to the work tree of submodules, only changes to the
-commits stored in the superproject are shown.' So I'd have
-expected ce->oid to be compared (is there an index entry differing,
-i.e. more than one stage?)
+I am not worried about the case in which patch author actively
+"tries to" deceive.  It is more like "I am more likely to fail to
+spot mistakes the patch author failed to spot himself", when I start
+with reasoning, service provider implementations and then service
+consumer.  When I am forced to think the problem myself before
+seeing the answer and then compare the result with patch author's
+answer, I am more likely to find such a mistake.
 
+>> Can we actually express "top-level first and then builtin/*" order
+>> with the diff.orderfile mechanism?
+>
+> By reading the code, I think we snap to the first match. And matching
+> is done via the wildmatch.{c,h}, that claims it has special-case '/' matching,
+> and '**' **  work differently than '*',
 
-> Also, the child_process running the command 'rev-parse --verify HEAD'
-> is removed for optimization reasons, and instead head_ref_submodule()
-> is used with callback function handle_submodule_head_ref().
-
-Cool.
+I took a brief look at diffcore-order.c; I do not think "/*.c" would
+match only top-level .c files like gitignore files would.
