@@ -2,112 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBF32202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 18:15:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A387202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 18:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752788AbdGMSPM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 14:15:12 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:35768 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751017AbdGMSPL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 14:15:11 -0400
-Received: by mail-pf0-f172.google.com with SMTP id c73so33215681pfk.2
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 11:15:11 -0700 (PDT)
+        id S1752478AbdGMSWQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 14:22:16 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36333 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751218AbdGMSWP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 14:22:15 -0400
+Received: by mail-pf0-f194.google.com with SMTP id z6so8082900pfk.3
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 11:22:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :disposition-notification-to:mime-version:content-transfer-encoding;
-        bh=XahfnCKdoZCWSW20BuKCiaiZ3y8Utwbxhdfs3NIWeFQ=;
-        b=p0DeSxvCn1r2ygYqdEiCD6O//9H93cWmk5HZoHdpN6suOVfL9p2Q6qV5j8yBxbNdeE
-         rhTunf8BwNnf664U+TmipY7pK83aR7XWI/pZ14WrzUwbn0kn0wninsh6IW6yAxcuvchP
-         tHeDjCRcOItvJNOmcTt2IaI8uV+vn0H8YroZGnbUVPxJom7MXzjHjsvvk7qFya5pZY3R
-         j86Fi7OCfRXQxho9S59yOysvYXmen6E0mIwCZYfQ/S7DaY4igciT7YjTcJUU+pIEainC
-         dgXcRQIvNMyWa3EROxapS5b37161nJM2I8zkie2xjvxuK38yO8yhcKLOXJxtNsU4Ij8g
-         R8tQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=KJyFKnM3GXlINgWcy1AzpCGSEZuqxmBDI6pINZXJeXU=;
+        b=UeJAaDvm4QGuF57W7vdzpNjtkGCuW6ys01TKHVXBtz8IQO3TS0B/jaavYJAgW0KJOO
+         pMjxogFGSqqLF2VWmCJGPhKoHI4UbXlqXnXP4+S6XLgL5hP9aV99ntWRRPu6oy+WFMeb
+         528p7UtWQ9RvY+zVWmMeVdKXHxCN25GD4ySaIS7CHOncCBEc9OEuWSvltmt9zqXd8bqL
+         9hVvtjZYIWD9ESJOdJXFBTbfQHx6FlrRIrZhVAsvd57F7hmO7DjwV7bIJYniaF6J5eEB
+         2i2z7M3pxBkQo2UWakoMfxeyFX4EFjqX/Jf4sdKQyWd1MBFmbjiirCykelNkXHM0CVtn
+         7GnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:disposition-notification-to:mime-version
-         :content-transfer-encoding;
-        bh=XahfnCKdoZCWSW20BuKCiaiZ3y8Utwbxhdfs3NIWeFQ=;
-        b=ZIKWxHT3CSvOmfPvkxHVf9OSipPDWcMzB3D0Dyd3CkYGWib/7rh3nw8UhfZpfzvkjl
-         LkQZROq/rBFhajPctviflGcQxLhNooBltfAUm2jDRgZojocGpL+zqzKSmqa/D0fx4iLL
-         sxzQtGE/2PTMlk841ontNVIyIhAyvPSN9Qhtz/tD3fTW9qfh1UmE1VoeR5y9mysvVSmX
-         7iUR01R1U/wxfVk5R1UZng8KN3hHnpiINQGeUnXW0cqHiRqZwicSGIrLt3FOL8IEg8O7
-         Xr2ORkUyupQ97BrkAVKEmfDhN/u6ZFcEK7aQtqgMkO/Vxa6d3DTMCuuOS/aLEOLza9+E
-         x1jQ==
-X-Gm-Message-State: AIVw1125RAutmLzuHGrfVi/bQ1C8Fae6LDHecuSC6p4V5RJxO6oGlaO4
-        Im13fd61Ak8MYQ==
-X-Received: by 10.99.171.66 with SMTP id k2mr10644632pgp.248.1499969711070;
-        Thu, 13 Jul 2017 11:15:11 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id 28sm15399900pfq.125.2017.07.13.11.15.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 11:15:10 -0700 (PDT)
-Message-ID: <1499969722.5973.2.camel@gmail.com>
-Subject: Re: [PATCH] commit & merge: modularize the empty message validator
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, me@ikke.info
-Date:   Thu, 13 Jul 2017 23:45:22 +0530
-In-Reply-To: <xmqq8tju3eqp.fsf@gitster.mtv.corp.google.com>
-References: <20170706044640.GA11020@alpha.vpn.ikke.info>
-         <20170711141254.7747-1-kaarticsivaraam91196@gmail.com>
-         <xmqq8tju3eqp.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=KJyFKnM3GXlINgWcy1AzpCGSEZuqxmBDI6pINZXJeXU=;
+        b=YOw4gKaNJwZ/w+2VWCE7xFh4bWsgYmolTSzeU7AeDR616Hx7e3UYm8oFh6xUwxduJU
+         607hyzCzHR/mdZT/TFYgiXNzkwTaqdNNzyJk71R0Pxv8fkacPOpwGarjX/J2n32e8U0v
+         DU7BZdU4k3GpdXYnk+Nn4xeT3/WA4Hs+ZXFMhe+yNbrQ7jqTaa0nTXSFNIEUiUCFnSlu
+         B7BviXqjiIuuD394wCX68ToyblDq4B/aqu70B7k+TQ13NUOVs+XxK077WkSTmHtNM1fi
+         r0DC32eznxP3t/oBJYw4THcdyRi9b2UuN8HPzEpTh7wXbYASGTItL+vQAR4iw6S3FYpL
+         je5g==
+X-Gm-Message-State: AIVw110YUvUoJ6CUAH8/3yGZr2+TXf43JUnqLo5GXlJupRebvydE3E1v
+        ke544WXDj1V3Kg==
+X-Received: by 10.99.123.17 with SMTP id w17mr10574071pgc.100.1499970134654;
+        Thu, 13 Jul 2017 11:22:14 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
+        by smtp.gmail.com with ESMTPSA id y2sm10166045pgy.60.2017.07.13.11.22.13
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Jul 2017 11:22:13 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Nikolay Shustov <nikolay.shustov@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: "groups of files" in Git?
+References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
+        <CAGZ79kZaf7=uwCPJoPoDiAO9QS21bchaKZvDzWJi=ewPZw9PXQ@mail.gmail.com>
+Date:   Thu, 13 Jul 2017 11:22:12 -0700
+In-Reply-To: <CAGZ79kZaf7=uwCPJoPoDiAO9QS21bchaKZvDzWJi=ewPZw9PXQ@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 11 Jul 2017 10:18:00 -0700")
+Message-ID: <xmqqiniwxkmj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2017-07-11 at 13:22 -0700, Junio C Hamano wrote:
-> I think the "validation" done with the rest_is_empty() is somewhat
-> bogus.  Why should we reject a commit without a message and a
-> trailer block with only signed-off-by lines, while accepting a
-> commit without a message and a trailer block as long as the trailer
-> block has something equally meaningless by itself, like
-> "Helped-by:"?  I think we should inspect the proposed commit log
-> message taken from the editor, find its tail ignoring the trailing
-> comment using ignore_non_trailer, and further separate the result
-> into (<message>, <trailers>, <junk at the tail>) using the same
-> logic used by the interpret-trailers tool, and then complain when
-> <message> turns out to be empty, to be truly useful and consistent.
-> 
-I have a few doubts for which I need clarification to move on with
-this. 
+Stefan Beller <sbeller@google.com> writes:
 
-    1. If we abort when the <message> part is empty wouldn't it be too
-    restrictive ?
+> On Tue, Jul 11, 2017 at 8:45 AM, Nikolay Shustov
+>
+>> With Git I cannot seem to finding the possibility to figure out how to
+>> achieve the same result. And the problem is that putting change sets
+>> on different Git branches (or workdirs, or whatever Git offers that
+>> makes the changes to be NOT in the same source tree) is not a viable
+>> option from me as I would have to re-build code as I re-integrate the
+>> changes between the branches (or whatever changes separation Git
+>> feature is used).
+>
+> you would merge the branches and then run the tests/integration. Yes that
+> seems cumbersome.
 
-    IOW, Wouldn't it affect users of "git commit -‍-cleanup=verbatim"
-    who wish to commit only the comments or parts of it ?
-    (I'm not sure if someone would find that useful)
+Sometimes the need to make trial merge for testing cannot be avoided
+and having branches for separate topics is the only sensible
+approach, at least in the Git world.
 
-    2. Is it ok to use the "find_trailer_start" function of "trailer.c"
-    to locate the trailer? 
+Imagine your project has two components that are interrelated, say,
+the server and the client, that have to work well with each other.
+In addition, you want to make sure your updated server works well
+with existing clients, and vice versa.
 
-    Note: It has a little issue that it wouldn't detect the trailer if
-    the message comprises of one trailer alone and no other text. This
-    case occurs while aborting a commit started using "git commit -s".
-    Any possibilities to overcome the issue?
+One way that naturally maps this scenario to the development
+workflow is to have a server-update topic and a client-update topic
+branches, and separate changes to update each side with their own
+commits:
 
-    3. Ignoring point 1 for now, What other helper methods except the
-    ones listed below could be helpful in the separating the cleaned up
-    commit message into the <message>, <trailer>, <junk-at-tail> ?
+             s---s---S    server-update topic
+            /
+    ---o---o----o----M    mainline
+            \
+             c---c---C    client-update topic
 
-        * ignore_non_trailer
-        * find_trailer_start
+And during the development of these *-update topics, you try three
+merges:
 
--- 
-Kaartic
+ (1) Merge S to the mainline M and test the whole thing, to make sure
+     that existing client will still be able to talk with the
+     updated server.
+
+ (2) Merge C to the mainline M and test the whole thing, to make
+     sure that updated clients will still be able to talk with the
+     existing server.
+
+ (3) Merge both S and C to the mainline M and test the whole thing,
+     to make sure the updated ones talk to each other.
+
+If there is no significant development going on on the mainline in
+the meantime, (1) and (2) can be done by trying out S and C alone
+without making a trial merge with M.  The same for (3)---it can be
+just a trial merge between S and C without updates that happened on
+the mainline.
+
+I'd love to hear from folks in Perforce or other world how they
+address this scenario with their system.
