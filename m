@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FB7F202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 17:35:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6237D202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 17:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752580AbdGMRfg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 13:35:36 -0400
-Received: from siwi.pair.com ([209.68.5.199]:11019 "EHLO siwi.pair.com"
+        id S1752602AbdGMRfi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 13:35:38 -0400
+Received: from siwi.pair.com ([209.68.5.199]:11031 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752525AbdGMRff (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 13:35:35 -0400
+        id S1752569AbdGMRfg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 13:35:36 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id A4127844EA;
-        Thu, 13 Jul 2017 13:35:34 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 84CEF844EE;
+        Thu, 13 Jul 2017 13:35:35 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id F1AA1844E5;
-        Thu, 13 Jul 2017 13:35:33 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id C4A54844E5;
+        Thu, 13 Jul 2017 13:35:34 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, ethomson@edwardthomson.com,
         jonathantanmy@google.com, jrnieder@gmail.com,
         jeffhost@microsoft.com
-Subject: [PATCH v2 06/19] list-objects-filters: add use-sparse-checkout filter
-Date:   Thu, 13 Jul 2017 17:34:46 +0000
-Message-Id: <20170713173459.3559-7-git@jeffhostetler.com>
+Subject: [PATCH v2 07/19] object-filter: common declarations for object filtering
+Date:   Thu, 13 Jul 2017 17:34:47 +0000
+Message-Id: <20170713173459.3559-8-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170713173459.3559-1-git@jeffhostetler.com>
 References: <20170713173459.3559-1-git@jeffhostetler.com>
@@ -41,235 +41,389 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create a filter for traverse_commit_list_filtered() to omit the
-blobs that would not be needed by a sparse checkout using the
-given sparse-checkout spec.
-
-This filter will be used in a future commit by rev-list and
-pack-objects for partial/narrow clone/fetch.
-
-A future enhancement should be able to also omit tree objects
-not needed by such a sparse checkout, but that is not currently
-supported.
+Create common routines and defines for parsing
+object-filter-related command line arguments and
+pack-protocol fields.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- list-objects-filters.c | 179 +++++++++++++++++++++++++++++++++++++++++++++++++
- list-objects-filters.h |  16 +++++
- 2 files changed, 195 insertions(+)
+ Makefile        |   1 +
+ object-filter.c | 201 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ object-filter.h | 145 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 347 insertions(+)
+ create mode 100644 object-filter.c
+ create mode 100644 object-filter.h
 
-diff --git a/list-objects-filters.c b/list-objects-filters.c
-index f04d70e..cacf645 100644
---- a/list-objects-filters.c
-+++ b/list-objects-filters.c
-@@ -180,3 +180,182 @@ void traverse_commit_list_omit_large_blobs(
- 
- 	oidset2_clear(&d.omits);
- }
+diff --git a/Makefile b/Makefile
+index 48fdcf2..daa9ea2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -791,6 +791,7 @@ LIB_OBJS += notes-cache.o
+ LIB_OBJS += notes-merge.o
+ LIB_OBJS += notes-utils.o
+ LIB_OBJS += object.o
++LIB_OBJS += object-filter.o
+ LIB_OBJS += oidset.o
+ LIB_OBJS += oidset2.o
+ LIB_OBJS += pack-bitmap.o
+diff --git a/object-filter.c b/object-filter.c
+new file mode 100644
+index 0000000..5be6129
+--- /dev/null
++++ b/object-filter.c
+@@ -0,0 +1,201 @@
++#include "cache.h"
++#include "commit.h"
++#include "revision.h"
++#include "list-objects.h"
++#include "oidset2.h"
++#include "list-objects-filters.h"
++#include "object-filter.h"
 +
-+/*
-+ * A filter driven by a sparse-checkout specification to only
-+ * include blobs that a sparse checkout would populate.
-+ *
-+ * The sparse-checkout spec is loaded from the blob with the
-+ * given OID (rather than .git/info/sparse-checkout) because
-+ * the repo may be bare.
-+ */
-+struct frame {
-+	int defval;
-+	int child_prov_omit : 1;
-+};
-+
-+struct filter_use_sparse_data {
-+	struct oidset2 omits;
-+	struct exclude_list el;
-+
-+	size_t nr, alloc;
-+	struct frame *array_frame;
-+};
-+
-+static list_objects_filter_result filter_use_sparse(
-+	list_objects_filter_type filter_type,
-+	struct object *obj,
-+	const char *pathname,
-+	const char *filename,
-+	void *filter_data_)
++int parse_filter_omit_all_blobs(struct object_filter_options *filter_options)
 +{
-+	struct filter_use_sparse_data *filter_data = filter_data_;
-+	int64_t object_length = -1;
-+	int val, dtype;
-+	unsigned long s;
-+	enum object_type t;
-+	struct frame *frame;
++	if (object_filter_enabled(filter_options))
++		die(_("multiple object filter types cannot be combined"));
 +
-+	switch (filter_type) {
-+	default:
-+		die("unkown filter_type");
-+		return LOFR_ZERO;
++	filter_options->omit_all_blobs = 1;
++	return 0;
++}
 +
-+	case LOFT_BEGIN_TREE:
-+		assert(obj->type == OBJ_TREE);
-+		dtype = DT_DIR;
-+		val = is_excluded_from_list(pathname, strlen(pathname),
-+					    filename, &dtype, &filter_data->el);
-+		if (val < 0)
-+			val = filter_data->array_frame[filter_data->nr].defval;
++int parse_filter_omit_large_blobs(struct object_filter_options *filter_options,
++				  const char *arg)
++{
++	if (object_filter_enabled(filter_options))
++		die(_("multiple object filter types cannot be combined"));
 +
-+		ALLOC_GROW(filter_data->array_frame, filter_data->nr + 1,
-+			   filter_data->alloc);
-+		filter_data->nr++;
-+		filter_data->array_frame[filter_data->nr].defval = val;
-+		filter_data->array_frame[filter_data->nr].child_prov_omit = 0;
++	filter_options->omit_large_blobs = 1;
 +
++	/* we allow "<digits>[kmg]" */
++	if (!git_parse_ulong(arg, &filter_options->large_byte_limit))
++		die(_("invalid size limit for large object filter"));
++
++	filter_options->large_byte_limit_string = strdup(arg);
++	return 0;
++}
++
++int parse_filter_use_sparse(struct object_filter_options *filter_options,
++			    const char *arg)
++{
++	struct object_context oc;
++
++	if (object_filter_enabled(filter_options))
++		die(_("multiple object filter types cannot be combined"));
++
++	filter_options->use_sparse = 1;
++
++	/*
++	 * The command line argument needs to resolve to an known OID
++	 * representing the content of the desired sparse-checkout file.
++	 * We allow various syntax forms for the convenience of the user.
++	 * See sha1_name.c:get_sha1_with_context_1().
++	 *
++	 * Try to evaluate the arg locally in case they use one of the
++	 * convenience patterns.  This must resolve to a blob.
++	 */
++	if (get_sha1_with_context(arg, GET_SHA1_BLOB,
++				  filter_options->sparse_oid.hash, &oc)) {
 +		/*
-+		 * A directory with this tree OID may appear in multiple
-+		 * places in the tree. (Think of a directory move, with
-+		 * no other changes.)  And with a different pathname, the
-+		 * is_excluded...() results for this directory and items
-+		 * contained within it may be different.  So we cannot
-+		 * mark it SEEN (yet), since that will prevent process_tree()
-+		 * from revisiting this tree object with other pathnames.
-+		 *
-+		 * Only SHOW the tree object the first time we visit this
-+		 * tree object.
-+		 *
-+		 * We always show all tree objects.  A future optimization
-+		 * may want to attempt to narrow this.
++		 * If that fails, keep the original string in case a client
++		 * command wants to send it to the server.  This allows the
++		 * client to name an OID for a blob they don't have.
 +		 */
-+		if (obj->flags & FILTER_REVISIT)
-+			return LOFR_ZERO;
-+		obj->flags |= FILTER_REVISIT;
-+		return LOFR_SHOW;
-+
-+	case LOFT_END_TREE:
-+		assert(obj->type == OBJ_TREE);
-+		assert(filter_data->nr > 0);
-+
-+		frame = &filter_data->array_frame[filter_data->nr];
-+		filter_data->nr--;
-+
++		filter_options->sparse_value = strdup(arg);
++		oidcpy(&filter_options->sparse_oid, &null_oid);
++	} else {
 +		/*
-+		 * Tell our parent directory if any of our children were
-+		 * provisionally omitted.
++		 * Round-trip the found OID to normalize it.
 +		 */
-+		filter_data->array_frame[filter_data->nr].child_prov_omit |=
-+			frame->child_prov_omit;
-+
-+		/*
-+		 * If there are NO provisionally omitted child objects (ALL child
-+		 * objects in this folder were INCLUDED), then we can mark the
-+		 * folder as SEEN (so we will not have to revisit it again).
-+		 */
-+		if (!frame->child_prov_omit)
-+			return LOFR_MARK_SEEN;
-+		return LOFR_ZERO;
-+
-+	case LOFT_BLOB:
-+		assert(obj->type == OBJ_BLOB);
-+		assert((obj->flags & SEEN) == 0);
-+
-+		frame = &filter_data->array_frame[filter_data->nr];
-+
-+		/*
-+		 * If we previously provisionally omitted this blob because
-+		 * its pathname was not in the sparse-checkout AND this
-+		 * reference to the blob has the same pathname, we can avoid
-+		 * repeating the exclusion logic on this pathname and just
-+		 * continue to provisionally omit it.
-+		 */
-+		if (obj->flags & FILTER_REVISIT) {
-+			struct oidset2_entry *entry_prev;
-+			entry_prev = oidset2_get(&filter_data->omits, &obj->oid);
-+			if (entry_prev && !strcmp(pathname, entry_prev->pathname)) {
-+				frame->child_prov_omit = 1;
-+				return LOFR_ZERO;
-+			}
-+		}
-+
-+		dtype = DT_REG;
-+		val = is_excluded_from_list(pathname, strlen(pathname),
-+					    filename, &dtype, &filter_data->el);
-+		if (val < 0)
-+			val = frame->defval;
-+		if (val > 0)
-+			return LOFR_MARK_SEEN | LOFR_SHOW;
-+
-+		t = sha1_object_info(obj->oid.hash, &s);
-+		assert(t == OBJ_BLOB);
-+		object_length = (int64_t)((uint64_t)(s));
-+
-+		/*
-+		 * Provisionally omit it.  We've already established that
-+		 * this pathname is not in the sparse-checkout specification,
-+		 * so we WANT to omit this blob.  However, a pathname elsewhere
-+		 * in the tree may also reference this same blob, so we cannot
-+		 * reject it yet.  Leave the LOFR_ bits unset so that if the
-+		 * blob appears again in the traversal, we will be asked again.
-+		 *
-+		 * The pathname we associate with this omit is just the first
-+		 * one we saw for this blob.  Other instances of this blob may
-+		 * have other pathnames and that is fine.  We just use it for
-+		 * perf because most of the time, the blob will be in the same
-+		 * place as we walk the commits.
-+		 */
-+		oidset2_insert(&filter_data->omits, &obj->oid, object_length,
-+			       pathname);
-+		obj->flags |= FILTER_REVISIT;
-+		frame->child_prov_omit = 1;
-+		return LOFR_ZERO;
++		filter_options->sparse_value =
++			strdup(oid_to_hex(&filter_options->sparse_oid));
 +	}
++	
++	return 0;
 +}
 +
-+void traverse_commit_list_use_sparse(
-+	struct rev_info *revs,
-+	show_commit_fn show_commit,
-+	show_object_fn show_object,
-+	oidset2_foreach_cb print_omitted_object,
-+	void *ctx_data,
-+	struct object_id *oid)
++int parse_filter_print_manifest(struct object_filter_options *filter_options)
 +{
-+	struct filter_use_sparse_data d;
-+
-+	memset(&d, 0, sizeof(d));
-+	if (add_excludes_from_blob_to_list(oid, NULL, 0, &d.el) < 0)
-+		die("filter_use_sparse could not load specification");
-+	ALLOC_GROW(d.array_frame, d.nr + 1, d.alloc);
-+	d.array_frame[d.nr].defval = 0; /* default to include */
-+	d.array_frame[d.nr].child_prov_omit = 0;
-+
-+	traverse_commit_list_filtered(revs, show_commit, show_object, ctx_data,
-+				      filter_use_sparse, &d);
-+
-+	if (print_omitted_object)
-+		oidset2_foreach(&d.omits, print_omitted_object, ctx_data);
-+
-+	oidset2_clear(&d.omits);
++	filter_options->print_manifest = 1;
++	return 0;
 +}
-diff --git a/list-objects-filters.h b/list-objects-filters.h
-index 32b2833..52e507b 100644
---- a/list-objects-filters.h
-+++ b/list-objects-filters.h
-@@ -26,4 +26,20 @@ void traverse_commit_list_omit_large_blobs(
- 	void *ctx_data,
- 	int64_t large_byte_limit);
- 
-+/*
-+ * A filter driven by a sparse-checkout specification to only
-+ * include blobs that a sparse checkout would populate.
-+ *
-+ * The sparse-checkout spec is loaded from the blob with the
-+ * given OID (rather than .git/info/sparse-checkout) because
-+ * the repo may be bare.
-+ */
-+void traverse_commit_list_use_sparse(
-+	struct rev_info *revs,
-+	show_commit_fn show_commit,
-+	show_object_fn show_object,
-+	oidset2_foreach_cb print_omitted_object,
-+	void *ctx_data,
-+	struct object_id *oid);
 +
- #endif /* LIST_OBJECTS_FILTERS_H */
++int parse_filter_relax(struct object_filter_options *filter_options)
++{
++	filter_options->relax = 1;
++	return 0;
++}
++
++int opt_parse_filter_omit_all_blobs(const struct option *opt,
++				    const char *arg, int unset)
++{
++	struct object_filter_options *filter_options = opt->value;
++
++	assert(!arg);
++	assert(!unset);
++
++	return parse_filter_omit_all_blobs(filter_options);
++}
++
++int opt_parse_filter_omit_large_blobs(const struct option *opt,
++				      const char *arg, int unset)
++{
++	struct object_filter_options *filter_options = opt->value;
++
++	assert(arg);
++	assert(!unset);
++
++	return parse_filter_omit_large_blobs(filter_options, arg);
++}
++
++int opt_parse_filter_use_sparse(const struct option *opt,
++				const char *arg, int unset)
++{
++	struct object_filter_options *filter_options = opt->value;
++
++	assert(arg);
++	assert(!unset);
++
++	return parse_filter_use_sparse(filter_options, arg);
++}
++
++int opt_parse_filter_print_manifest(const struct option *opt,
++				    const char *arg, int unset)
++{
++	struct object_filter_options *filter_options = opt->value;
++
++	assert(!arg);
++	assert(!unset);
++
++	return parse_filter_print_manifest(filter_options);
++}
++
++int opt_parse_filter_relax(const struct option *opt,
++			   const char *arg, int unset)
++{
++	struct object_filter_options *filter_options = opt->value;
++
++	assert(!arg);
++	assert(!unset);
++
++	return parse_filter_relax(filter_options);
++}
++
++int object_filter_hand_parse_arg(struct object_filter_options *filter_options,
++				 const char *arg,
++				 int allow_print_manifest,
++				 int allow_relax)
++{
++	if (!strcmp(arg, ("--"CL_ARG_FILTER_OMIT_ALL_BLOBS))) {
++		parse_filter_omit_all_blobs(filter_options);
++		return 1;
++	}
++	if (skip_prefix(arg, ("--"CL_ARG_FILTER_OMIT_LARGE_BLOBS"="), &arg)) {
++		parse_filter_omit_large_blobs(filter_options, arg);
++		return 1;
++	}
++	if (skip_prefix(arg, ("--"CL_ARG_FILTER_USE_SPARSE"="), &arg)) {
++		parse_filter_use_sparse(filter_options, arg);
++		return 1;
++	}
++
++	if (allow_print_manifest &&
++	    !strcmp(arg, ("--"CL_ARG_FILTER_PRINT_MANIFEST))) {
++		parse_filter_print_manifest(filter_options);
++		return 1;
++	}
++
++	if (allow_relax && !strcmp(arg, ("--"CL_ARG_FILTER_RELAX))) {
++		parse_filter_relax(filter_options);
++		return 1;
++	}
++
++	return 0;
++}
++
++int object_filter_hand_parse_protocol(struct object_filter_options *filter_options,
++				      const char *arg,
++				      int allow_print_manifest,
++				      int allow_relax)
++{
++	if (!strcmp(arg, CL_ARG_FILTER_OMIT_ALL_BLOBS)) {
++		parse_filter_omit_all_blobs(filter_options);
++		return 1;
++	}
++	if (skip_prefix(arg, (CL_ARG_FILTER_OMIT_LARGE_BLOBS" "), &arg)) {
++		parse_filter_omit_large_blobs(filter_options, arg);
++		return 1;
++	}
++	if (skip_prefix(arg, (CL_ARG_FILTER_USE_SPARSE" "), &arg)) {
++		parse_filter_use_sparse(filter_options, arg);
++		return 1;
++	}
++
++	if (allow_print_manifest &&
++	    !strcmp(arg, CL_ARG_FILTER_PRINT_MANIFEST)) {
++		parse_filter_print_manifest(filter_options);
++		return 1;
++	}
++	if (allow_relax && !strcmp(arg, CL_ARG_FILTER_RELAX)) {
++		parse_filter_relax(filter_options);
++		return 1;
++	}
++
++	return 0;
++}
+diff --git a/object-filter.h b/object-filter.h
+new file mode 100644
+index 0000000..f1ca5fb
+--- /dev/null
++++ b/object-filter.h
+@@ -0,0 +1,145 @@
++#ifndef OBJECT_FILTER_H
++#define OBJECT_FILTER_H
++
++#include "parse-options.h"
++
++/*
++ * Common declarations and utilities for filtering objects (such as omitting
++ * large blobs) during fetch-pack, upload-pack, and the pack-protocol.  These
++ * are intended for partial/narrow clone/fetch.
++ */
++
++struct object_filter_options {
++	/*
++	 * blob-ish path or value that get_sha1_with_context() can turn into
++	 * an OID to find the blob containing the sparse-checkout specification.
++	 * only used when use_sparse is set.
++	 */
++	const char *sparse_value;
++	struct object_id sparse_oid;
++
++	/*
++	 * blob size byte limit for filtering.  only blobs smaller than this
++	 * value will be included.  a value of zero, omits all blobs.
++	 * only used when omit_large_blobs is set.  Integer and string versions
++	 * of this are kept for convenience.
++	 */
++	unsigned long large_byte_limit;
++	const char *large_byte_limit_string;
++
++	/* valid filter types (only one may be used at a time) */
++	unsigned omit_all_blobs : 1;
++	unsigned omit_large_blobs : 1;
++	unsigned use_sparse : 1;
++
++	/* true if the filter should output a manifest of the omitted objects. */
++	unsigned print_manifest : 1;
++
++	/* true to suppress missing object errors during consistency checks */
++	unsigned relax : 1;
++};
++
++/*
++ * Return true if a filter is enabled.
++ */
++inline int object_filter_enabled(const struct object_filter_options *p)
++{
++	return p->omit_all_blobs || p->omit_large_blobs || p->use_sparse;
++}
++
++/* See Documentation/technical/protocol-capabilities.txt */
++#define PROTOCOL_CAPABILITY_FILTER_OBJECTS         "filter-objects"
++
++/* See Documentation/technical/pack-protocol.txt */
++#define PROTOCOL_REQUEST_FILTER_OMIT_ALL_BLOBS     "filter-omit-all-blobs"
++#define PROTOCOL_REQUEST_FILTER_OMIT_LARGE_BLOBS   "filter-omit-large-blobs"
++#define PROTOCOL_REQUEST_FILTER_USE_SPARSE         "filter-use-sparse"
++
++/* Normalized command line arguments */
++#define CL_ARG_FILTER_OMIT_ALL_BLOBS     "filter-omit-all-blobs"
++#define CL_ARG_FILTER_OMIT_LARGE_BLOBS   "filter-omit-large-blobs"
++#define CL_ARG_FILTER_USE_SPARSE         "filter-use-sparse"
++#define CL_ARG_FILTER_PRINT_MANIFEST     "filter-print-manifest"
++#define CL_ARG_FILTER_RELAX              "filter-relax"
++
++/*
++ * Common command line argument parsing for object-filter-related
++ * arguments (whether from a hand-parsed or parse-options style
++ * parser.
++ */
++int parse_filter_omit_all_blobs(struct object_filter_options *filter_options);
++int parse_filter_omit_large_blobs(struct object_filter_options *filter_options,
++				  const char *arg);
++int parse_filter_use_sparse(struct object_filter_options *filter_options,
++			    const char *arg);
++int parse_filter_print_manifest(struct object_filter_options *filter_options);
++int parse_filter_relax(struct object_filter_options *filter_options);
++
++/*
++ * Common command line argument parsers for object-filter-related
++ * arguments comming from parse-options style parsers.
++ */
++
++int opt_parse_filter_omit_all_blobs(const struct option *opt,
++				    const char *arg, int unset);
++int opt_parse_filter_omit_large_blobs(const struct option *opt,
++				      const char *arg, int unset);
++int opt_parse_filter_use_sparse(const struct option *opt,
++				const char *arg, int unset);
++int opt_parse_filter_print_manifest(const struct option *opt,
++				    const char *arg, int unset);
++int opt_parse_filter_relax(const struct option *opt,
++			   const char *arg, int unset);
++
++#define OPT_PARSE_FILTER_OMIT_ALL_BLOBS(fo) \
++	{ OPTION_CALLBACK, 0, CL_ARG_FILTER_OMIT_ALL_BLOBS, fo, NULL, \
++	  N_("omit all blobs from result"), PARSE_OPT_NOARG | PARSE_OPT_NONEG, \
++	  opt_parse_filter_omit_all_blobs }
++
++#define OPT_PARSE_FILTER_OMIT_LARGE_BLOBS(fo) \
++	{ OPTION_CALLBACK, 0, CL_ARG_FILTER_OMIT_LARGE_BLOBS, fo, N_("size"), \
++	  N_("omit large blobs from result"), PARSE_OPT_NONEG, \
++	  opt_parse_filter_omit_large_blobs }
++
++#define OPT_PARSE_FILTER_USE_SPARSE(fo) \
++	{ OPTION_CALLBACK, 0, CL_ARG_FILTER_USE_SPARSE, fo, N_("object"), \
++	  N_("filter results using sparse-checkout specification"), PARSE_OPT_NONEG, \
++	  opt_parse_filter_use_sparse }
++
++#define OPT_PARSE_FILTER_PRINT_MANIFEST(fo) \
++	{ OPTION_CALLBACK, 0, CL_ARG_FILTER_PRINT_MANIFEST, fo, NULL,	\
++	  N_("print manifest of omitted objects"), PARSE_OPT_NOARG | PARSE_OPT_NONEG, \
++	  opt_parse_filter_print_manifest }
++
++#define OPT_PARSE_FILTER_RELAX(fo) \
++	{ OPTION_CALLBACK, 0, CL_ARG_FILTER_RELAX, fo, NULL, \
++	  N_("relax consistency checks for previously omitted objects"), \
++	  PARSE_OPT_NOARG | PARSE_OPT_NONEG, opt_parse_filter_relax }
++
++/*
++ * Hand parse known object-filter command line options.
++ * Use this when the caller DOES NOT use the normal OPT_
++ * routines.
++ *
++ * Here we assume args of the form "--<key>" or "--<key>=<value>".
++ * Note the literal dash-dash and equals.
++ *
++ * Returns 1 if we handled the argument.
++ */
++int object_filter_hand_parse_arg(struct object_filter_options *filter_options,
++				 const char *arg,
++				 int allow_print_manifest,
++				 int allow_relax);
++
++/*
++ * Hand parse known object-filter protocol lines.
++ *
++ * Here we assume args of the form "<key>" or "<key> <value>".
++ * Note the literal space before between the key and value.
++ */ 
++int object_filter_hand_parse_protocol(struct object_filter_options *filter_options,
++				      const char *arg,
++				      int allow_print_manifest,
++				      int allow_relax);
++
++#endif /* OBJECT_FILTER_H */
 -- 
 2.9.3
 
