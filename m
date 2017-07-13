@@ -2,88 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B51B202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 19:14:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FD70202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 19:20:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752659AbdGMTO2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 15:14:28 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:33753 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752517AbdGMTO1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 15:14:27 -0400
-Received: by mail-pg0-f41.google.com with SMTP id k14so34210659pgr.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:14:27 -0700 (PDT)
+        id S1752983AbdGMTUM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 15:20:12 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:32904 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753188AbdGMTUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 15:20:11 -0400
+Received: by mail-pf0-f169.google.com with SMTP id e7so33958859pfk.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=p8PrEEqRe2fmEr3eUv5ZvCYqWadBSSSFznZZxLvufS0=;
-        b=qr3qgQamY3z2c6GXL1T3i6v6ntNh7GJavldZqtOP0tJtW5d4WCkhVAYxb1XMVieR/I
-         sCwKk5RRU2zWGlQn3xC3q1ouBN6tJWQhZcnZCPAQ24CLMZVbTZwNOahDly7ehhNMqpQe
-         bXfzj+0Ru+6hDsUuW7o5+cGfS4O3NQhY7lrAIw6/IpjCcZVDJqzsnQbxgrZWGTc31HY0
-         al7fqVp+RNp5BF5aiALkrHIz8zi3hIOw8GyuNP9CbOcDmLPhWy/lg5Ygbjmhkxd+y0Nx
-         uSMEaxMCBZlc75QWgSsZEw4vgekLVIR7ugkPDqtzAY21amNLwqW49bSUDxxc+9fbScW8
-         9NvQ==
+        bh=/uz9VUR/k2EWNzse1l7Oqm/gitTO1eQICpT1LqwZ4+c=;
+        b=eeKaM6cTzJYspJc8swnyEplzo/UkC76bbHYcIIqiRZ2lY8z12SvLxITxtaeT9agudC
+         7SZ4MHL8fb1qoqTEKSERTd1AnbsYwULUuY4K+ho3P3jNRjGa+vTfY4m/phksU7EvGjHN
+         5YOwWmNO6LyF0z7AyCRH337/w8mDkGHNguO4mXwdBa3whedDWpY2+OURw7qJgzbzsF8L
+         1CpJFHQ1r4NhzMOUBGK6t4OVcoj8Y4korC6Kxu2OEKv4vK/DCwLDgNqHGfA41e2t5e+x
+         JAcAFz9rsWkJqQlGyxvFqc/dxYLpSev+pHakyhlcdawWlqJHbOAx9LTJe0NvWOelxzb0
+         8Htw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=p8PrEEqRe2fmEr3eUv5ZvCYqWadBSSSFznZZxLvufS0=;
-        b=aGF9id2wTCnG3i0+AfVgawfZCNm4MY73Gb8cROEKioEOw0Pyfq+EJKUR2L2HnF0ytI
-         4CiXmnHPI+8P1fqU6YiziMh3KdVwGuA/W9OTlC8VT0ZT5A5qNaUjZjU97XSpuL/Fqq+O
-         UtM/wZBc3XRQtERhfrmq/y6oC1NPXwiuUXJ5xHmcwC5FMuux0qL485Xq6UBzzZUvjZY1
-         8wpO6o/yfy8KLbvLn3x2ah0pFGFIalpheqB7PKh4XEOTnSAl9DW9HTUlTmE4qhQ5T9TW
-         jFjD30+udGwL8AmMSOSUNhWVrIrNZwIObumhzVrbn6p20Rf11eZ7zk40N8K6+tfKG/jo
-         YFaA==
-X-Gm-Message-State: AIVw113D1gV81yd9DHZdz4N0dhElZ3OVGVJZFkcf0hXZ+qJ8ldl96ndt
-        IscP3lTOhIDQL7LzqAVwRgNLyDluuydPXUI=
-X-Received: by 10.99.44.206 with SMTP id s197mr10734939pgs.116.1499973266602;
- Thu, 13 Jul 2017 12:14:26 -0700 (PDT)
+        bh=/uz9VUR/k2EWNzse1l7Oqm/gitTO1eQICpT1LqwZ4+c=;
+        b=jTzAQgmCB2Qs1YLAj0q3DYDgOhbYOz6uSil8+hYrbIc54bRzPc0piHEywIsOrx1NeJ
+         CzdCE1kkLMutIxxwcDfcHADGYzBdthWvLLsdDZhtaDBdmCzcm4+tg+/T/v4p/4Hfj6wq
+         qTlN5/+0C3ILw0YdeGbl4rI9SLWr+5ofO6smMrnJqheKraZne38z+I9OmnQuPqQsZUUC
+         kK3Xq9wAfu7N9uR44GEYCK6387468SM1aBCuniZfN185jh5IObhzNI7rz8hUdJSz9t1h
+         Mq3tQefZVWu1Cdaoj7gh2qqhjGYMsfuV6Nncrm6tpWfylzYZPe7dhGNGuBD3yGO9A4lW
+         trug==
+X-Gm-Message-State: AIVw1108AUuv4cSnhwVhRkAORKnI4zt66oDm9PFQWDWIpHcSE6lOPC6J
+        bEuVAjECKZtEAGBUCFMUeRNDjPvGbU36+ltbNQ==
+X-Received: by 10.84.232.74 with SMTP id f10mr11685460pln.154.1499973610266;
+ Thu, 13 Jul 2017 12:20:10 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 12:14:26 -0700 (PDT)
-In-Reply-To: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
-References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
+Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 12:20:09 -0700 (PDT)
+In-Reply-To: <xmqqr2xkw3qt.fsf@gitster.mtv.corp.google.com>
+References: <20170711233827.23486-1-sbeller@google.com> <xmqqinix1j29.fsf@gitster.mtv.corp.google.com>
+ <20170712205734.h77fgbbkavwpkr4h@sigill.intra.peff.net> <CAGZ79kYYg6-UMrKRPeJTbHdGR0juZ2OwFZmkuYgeYe5X+cm_sQ@mail.gmail.com>
+ <20170713155923.a2nissoyczvewoh3@sigill.intra.peff.net> <CAGZ79kbgypimtWE32SnDrG-QWT6gF3WGxR5mi785F_rwvRPOuA@mail.gmail.com>
+ <xmqqr2xkw3qt.fsf@gitster.mtv.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Jul 2017 12:14:26 -0700
-Message-ID: <CAGZ79kY_Vt5hK0FbzJgSZOxhNMKJ0f8N+uSmTTuF8nXu0vA-Xg@mail.gmail.com>
-Subject: Re: [PATCH 0/15] making user-format colors conditional on config/tty
-To:     Jeff King <peff@peff.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Thu, 13 Jul 2017 12:20:09 -0700
+Message-ID: <CAGZ79kao8=L33jqSFdmYp4NhKfCKDmoqYWvCzuMJ2+Pfq=SYEA@mail.gmail.com>
+Subject: Re: [PATCH] RFC: Introduce '.gitorderfile'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2017 at 7:55 AM, Jeff King <peff@peff.net> wrote:
-> This is a cleanup of the patch I posted last October:
+On Thu, Jul 13, 2017 at 12:12 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
->   https://public-inbox.org/git/20161010151517.6wszhuyp57yfncaj@sigill.intra.peff.net/
+>> On Thu, Jul 13, 2017 at 8:59 AM, Jeff King <peff@peff.net> wrote:
+>>>> This triggers two reactions for me:
+>>>>
+>>>> (a) We should totally do that.
+>>>
+>>>> (b) It's a rabbit hole to go down.
+>>>
+>>> And yes, I had both of those reactions, too. We've had the
+>>> "project-level .gitconfig" discussion many times over the years. And it
+>>> generally comes back to "you can ship a snippet of config and then give
+>>> people a script which adds it to their repo".
+>>
+>> I see this "project-level .gitconfig" via the .gitmodules file.
+>> See GITMODULES(5), anything except submodule.<name>.path is
+>> just project-level .gitconfig,...
 >
-> The general idea is that it's rather confusing that "%C(red)" in a
-> pretty-print format does not currently respect color.ui, --no-color, or
-> the usual isatty check on stdout. This series changes that. Note that
-> this is a backwards-incompatible change, but the general sentiment in
-> that earlier thread seemed to be that the existing behavior is arguably
-> buggy. See patch 14 for more discussion.
->
-> The patch stalled back then because I wanted to make sure that
-> ref-filter's color placeholders behaved the same. That required some
-> refactoring which conflicted badly with kn/ref-filter-branch-list. Now
-> that it has graduated, I was able to rebase on top.
->
-> This version also takes into account feedback from the original thread.
-> And as I added tests, it surfaced a few corner cases around color config
-> that I've dealt with here.  The last two patches are the most
-> interesting bits.
->
+> They were from day one meant as a suggestion made by the project.
+> You do not have to follow them and you are free to update them,
+> i.e. after "submodule init" copied URL to point at a closer mirror,
+> for example.
 
-I have reviewed these slightly and think this series is a good change.
+The URL is somewhat special as its copying into the .git/config
+also marks the submodule as interesting (no matter if the URL is
+changed by the user).
 
-Thanks,
-Stefan
+The point I was trying to make is best demonstrated in
+t5526-fetch-submodules.sh:
+
+> ok 7 - using fetchRecurseSubmodules=true in .gitmodules recurses into submodules
+> ok 8 - --no-recurse-submodules overrides .gitmodules config
+> ok 9 - using fetchRecurseSubmodules=false in .git/config overrides setting in .gitmodules
+
+They were not suggestions, but defaults dictated by the project.
+
+If the user did not change their config, they did as the project
+said. I was not there on day one to remember if they are merely
+meant as suggestions, but their behavior is asserting.
