@@ -2,95 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 244DB20365
-	for <e@80x24.org>; Thu, 13 Jul 2017 21:00:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAA642027C
+	for <e@80x24.org>; Thu, 13 Jul 2017 21:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752435AbdGMVA1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 17:00:27 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:34231 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751153AbdGMVA0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 17:00:26 -0400
-Received: by mail-pg0-f44.google.com with SMTP id t186so35322901pgb.1
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 14:00:25 -0700 (PDT)
+        id S1752012AbdGMVUQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 17:20:16 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35476 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751153AbdGMVUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 17:20:16 -0400
+Received: by mail-pg0-f41.google.com with SMTP id j186so35358124pge.2
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 14:20:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Epbhz5RYQTRi2boei+V41UERspOfZqA8WB9UyzHpXZA=;
-        b=IhhtREsniYKtNbikXVSwwp0Lpd45pQWCDhK0qnWy/mkNmBv2ZmWbIRyDzqC+MUI9OS
-         m+pHZF4AB/B3dUElNw4QpykgCQ58XfOV7gfW+kx1lKh9CCIakghXUQbyZGpKA0Sqj4DD
-         ftts46nvYx7BzuDIzO86RxV/OI357fqzcWIYbpWIs/122tYT/mYOlRpDfHsHEddo50lW
-         wwoR875e3mCbUbcD2m5QXFN665zGHX844w0EZIKykmhKNzd3efUWfcu4/zP4RIhXhJvj
-         mgIMvYY7N2byGTZ/GKLnU26+fDhadAI5QB2Mq5WE2bo1ZTL+g8bPZZhau/psClj7v1MT
-         mSRQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=38hxzISxeeaSwc1emRE2ADdMtV3UZa9IelxVu40YsSI=;
+        b=UmDWcc/jrAvtg4LGXpmCG/0HtxekQDvcWxf2xbTnT1HLTFmgGmEaTrVNt2A9Lb7Bx9
+         xi5Cp+Ocrc4B6b560tU5gQ6y7oSq/8K9/xh8FbGRl2lxltfTmczX3UI5OMDc+EJ8Exrf
+         oyXDNz8uNZS1TjRpPDH/lapf1+Xe5wg/mOAbZMSUJS9u2Nh3/USzTadkiRAFxRMyBeia
+         wyHq1xcM0p9zvdbTWhwBeSUhpeldxfZ/Nz8QKVWw8qa7Ba98HfL3KBh2RkyPUW6nMSgO
+         uMxBRx0aIhSoaq+OaWLf9fljuFGa6BkU7v3B9cXOIv0KL/bgCyeYTS0DlQUq0sgez1IE
+         axjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Epbhz5RYQTRi2boei+V41UERspOfZqA8WB9UyzHpXZA=;
-        b=VA/Ou61E2VwEq29CW49/nHYLCEjOA6yiRptZiI3geXnBVkTg8h0YNTPl5Kk6ftu6JP
-         Wvq8z59r1Bh9QqfYOWjh586wq0GmMR8ys61IysuH2kRCK/GrBtHCCzbqxTUZ6LQhgpzl
-         6NHMjMmbsbpxvqgLUBD1NzgxsFzpBjPJT1IuUCiLp8MYXBa5eNO9Gbi/ebHmX5nm6II7
-         1twd17/tL1bpG9JP6syKXWGMlDF8FAF+Hoyats+qrqpKLC3JmAXLEBgEhoEmeIeH1hKy
-         4FsyAEpbmtUgl7Dz1081hkOY2R4Hu5RAaQBwTDY/tiYy8moEBBq7f3/OmdHNp20Q78yD
-         1qJQ==
-X-Gm-Message-State: AIVw113HDmGVmWgJmOSAzeAoXe081N7xjUICRID62rb0pIamKRUq2YPi
-        DFHJXxRrp/2e6+yobczeDRwhBSfHzgu0
-X-Received: by 10.99.54.73 with SMTP id d70mr11403473pga.195.1499979625273;
- Thu, 13 Jul 2017 14:00:25 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=38hxzISxeeaSwc1emRE2ADdMtV3UZa9IelxVu40YsSI=;
+        b=OBK9nJ0CIIC3bJ2eoAIWnbhVnOrNyDPP+ITpAIOMN5/JhuSJbSddH+Kd6UzFvuiEcl
+         XJVVsVyz36Tvf9I/eQcjzmxnTugWAHJzx/bL2s4NWz2zRaApnCciYC73tDmkMyX1PYa3
+         WzOVxhj6Ip7bj4y0HXeT0n5EOmsA9IKsG+jcyy+7CU6z6TmEhHkCBu0EwYndbd5CD6jv
+         cxqhKOaAkIxaYbkmuBmcj68UcL/bxSXYQK57/Qk1FnGshMpKUjulsoz1UtJn2MFM6Tuf
+         FYRlgws1JnD14wFKOgdfN8Vxvhr94v6ZGC+FqVImL4+hc9Q3BO7+lZfcwZ6043YzujuH
+         p5RA==
+X-Gm-Message-State: AIVw112+AmYDxFQ3GrqivReSIB/1rlvjFC7WGLw7WUBAXDeK11lvrqp9
+        3YvpU3cBFUTXUsoZ+tg=
+X-Received: by 10.99.148.26 with SMTP id m26mr1884660pge.222.1499980815137;
+        Thu, 13 Jul 2017 14:20:15 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
+        by smtp.gmail.com with ESMTPSA id c19sm13319904pfj.15.2017.07.13.14.20.14
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Jul 2017 14:20:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Nikolay Shustov <nikolay.shustov@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: "groups of files" in Git?
+References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
+        <CAGZ79kZaf7=uwCPJoPoDiAO9QS21bchaKZvDzWJi=ewPZw9PXQ@mail.gmail.com>
+        <xmqqiniwxkmj.fsf@gitster.mtv.corp.google.com>
+        <CAEcERAxJRnB55Ardhs7LDW8M8EG-y+YE-He8hiiQv3wDqtVD3g@mail.gmail.com>
+Date:   Thu, 13 Jul 2017 14:20:13 -0700
+In-Reply-To: <CAEcERAxJRnB55Ardhs7LDW8M8EG-y+YE-He8hiiQv3wDqtVD3g@mail.gmail.com>
+        (Nikolay Shustov's message of "Thu, 13 Jul 2017 15:47:36 -0400")
+Message-ID: <xmqqzic8t4oi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 14:00:24 -0700 (PDT)
-In-Reply-To: <xmqq4lugukju.fsf@gitster.mtv.corp.google.com>
-References: <20170713004415.5051-1-sbeller@google.com> <20170713004415.5051-2-sbeller@google.com>
- <xmqq4lugukju.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Jul 2017 14:00:24 -0700
-Message-ID: <CAGZ79kb3_K8NxpHuzAdHhSLWUcbw_X3qVVspPeuSNA4sAeT-Kw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] tag: convert gpg_verify_tag to use struct object_id
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2017 at 1:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
->> index f9a5f7535a..ed8329340f 100644
->> --- a/builtin/verify-tag.c
->> +++ b/builtin/verify-tag.c
->> @@ -56,20 +56,21 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
->>       }
->>
->>       while (i < argc) {
->> -             unsigned char sha1[20];
->> +             struct object_id oid;
->>               const char *name = argv[i++];
->> -             if (get_sha1(name, sha1)) {
->> +
->> +             if (get_oid(name, &oid)) {
->>                       had_error = !!error("tag '%s' not found.", name);
->>                       continue;
->>               }
->
-> This part is already done, it seems, in bc/object-id topic, even
-> though other parts are not yet done?
+Nikolay Shustov <nikolay.shustov@gmail.com> writes:
 
-Oops. I assumed the latest bc/object-id would have been in master
-already, but after checking it is not. 967635dc3c2
-(builtin/verify-tag: convert to struct object_id)
-converts this part, although there are 2 differences:
-* I added a stray newline before get_oid
-* The argument to gpg_verify_tag is a sha1 or oid
+> I am not really try to ignite the holy war between Perforce and Git
+> (and why would one???), but if you are interested in the answer on how
+> you'd do your scenario in Perforce, it would be: "use shelved
+> changelists".
 
-So yes, this produces a merge conflict. :/
+Oh, that was not my intention, either.  My interest was to see if
+there is a good solution that we could steal from other world.
 
-There rest (tag.{c,h}, builtin/tag.c) is not found in brians series.
+> In Perforce, you could "shelve" the changelist, similar to "stash" in
+> Git, but the difference is that the Perforce shelved changes are
+> accessible across clients. I.e. the other developer can "unshelve"
+> these pending changes to its sandbox (to the same or the different
+> branch) so that sandbox would get the pending changes as well. That
+> would be like the developer made these changes himself. Whatever
+> automated/manual process is involved, it is typical to run "a trial
+> build/tests" on shelved changelist (i.e. uncommitted yet files) to
+> verify the quality of changes.
+> Git achieves the same through the ease of manipulation with branches
+> and I like the way it does it much more.
+
+Thanks.  Shelving and letting others unshelve is like keeping the
+changes in separate branches and privately share them among
+developers, so they sound pretty much equivalent features to me.
+
+> My question was about how to robustly handle "multiple pending
+> commits" which in Perforce are represented by concept of pending
+> changelists.
+
+And in Git, they are represented by concept of commits that are not
+yet pushed out to the public repository to become the final history
+carved in stone.
