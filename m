@@ -2,110 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA3A82027C
-	for <e@80x24.org>; Thu, 13 Jul 2017 21:32:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B454D2027C
+	for <e@80x24.org>; Thu, 13 Jul 2017 21:49:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752151AbdGMVcb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 17:32:31 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:33957 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751153AbdGMVca (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 17:32:30 -0400
-Received: by mail-pf0-f173.google.com with SMTP id q85so35338632pfq.1
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 14:32:30 -0700 (PDT)
+        id S1752677AbdGMVta (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 17:49:30 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:33768 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751216AbdGMVt3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 17:49:29 -0400
+Received: by mail-pf0-f181.google.com with SMTP id e7so35531607pfk.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 14:49:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=G3xVwan74AY5baVGudjRQ8pF+Etp6vit0irAGXjG7fM=;
-        b=G2xbvw4emeLaSX45g+NnQG8KFHiLbOc0c13GcyyU8inLmS7nOOOvPkB0rSoeDf0AdS
-         wYtq2Y9F2PyvQ25+Hg8B0yOqmSurJ4TIB9XrbMA1SoJOBbUHuHBco9J13i7WKkt7oHGm
-         yqtV8aJl5qigma2e4DqCetqT63foidw5obAEwO6MWpjnhT3VuR0/JJW+ECuFSxkS2K+k
-         4p+7J04Cpcj2Uitz9byhqLSzNGhrXN1VnYFWXOFmvB/9fbS0aWnm6L50QovtbxvqEBT4
-         W+0mOkfqpSpyszgyPXB8ZM+g1TCkMN5UCGIp0fEW/DNni+6DYAlYbikbEP/h3phI2ZoQ
-         vwvQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=CX4rC4ONws44nNLPNwFzWye7vY60WbSXPatSJ0bJ7FU=;
+        b=MPJWWuMmu9rC42U63fnaC57HGa1VwHrjfVOYQx69Q6E6SALkVrCact/XITe4dI2s7a
+         iTANzbl9ZnCLglVclD/LWYWSLpkProemP/Z1aEXEUQf/nfP55pZRJGtdrtLu3/ieGYE9
+         O1loqtReGQkAS6M33CmOg5ussP+xGeBpX6WnoYVKyOhxMCJcbOdaIDX7E3jLpHn4C7qO
+         Tskf0HUc40ngZqPYxx6xqxM+5yGk3eaPXlU2ng4lzi+94Z/wAz9IRoXvcylv52MkvhlH
+         rhyPnNzf8WpNdgg712+QdRdmM8mJgAp2YJf+gDgSqaHIcc5YX4g0sLdCPHmtaHxQCO9M
+         aeqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=G3xVwan74AY5baVGudjRQ8pF+Etp6vit0irAGXjG7fM=;
-        b=WJk2EKknlcceiXTek403nx+1sC0pq2M7iaqP0TAKA/MkEMEcSgG/GZwxolJY5hiGUc
-         ZV7aIZDWdjAgsmtbTdlLpHYldg7VmEKSlUYIFV1QmrCJUkOsfvOXgMNliebnAnjg7LLT
-         K2tVbSoor/De7IkBoOo+4eqWMCjE8Ifrq3zuVl0h79Qeq5pWfB3zBe+k/3WUv2Wq542A
-         gc8k00cd12qLXd2ZehX6Bvs2uVIbcFiGcJEXvSZKmvR/UVEiH7CiZSB6xWyAmgHPjBaQ
-         boM4OEPGtG8BI8c1JN8PRmKBFG1BrumfDYrVupOMTKOfFFToARZ6iaaC6OriLgFIL7xB
-         CP9Q==
-X-Gm-Message-State: AIVw111K73tsUnmtboaoA4tEAb6hKFYTzbz/47c/JQoxHvagmOyz8mi7
-        UKq0ijMROmWJdA==
-X-Received: by 10.99.44.68 with SMTP id s65mr11527679pgs.101.1499981549364;
-        Thu, 13 Jul 2017 14:32:29 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id w125sm13677928pfb.117.2017.07.13.14.32.28
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 14:32:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff King <peff@peff.net>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 05/15] ref-filter: abstract ref format into its own struct
-References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
-        <20170713150118.eof3xgu4zujmo6u6@sigill.intra.peff.net>
-        <CAGZ79kag1B37FBrmDzbRFNVODHp=n1h=xSq_pi1b7Fs4wLoRBg@mail.gmail.com>
-        <xmqqlgnsulco.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 13 Jul 2017 14:32:27 -0700
-In-Reply-To: <xmqqlgnsulco.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 13 Jul 2017 13:34:47 -0700")
-Message-ID: <xmqqmv88t444.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=CX4rC4ONws44nNLPNwFzWye7vY60WbSXPatSJ0bJ7FU=;
+        b=m3U0Gp+dJcAevrqj+Q29uZe6GIRgZetGg/T25F2jzEgMMdnymxsNI0sZQwNDlsxuvY
+         t85mhqLafc8h5GTuplinmHVSaawVPTH7aynYsZ+cUiCCFPquisnKBqNhXwR11R2+SMIk
+         RjGGZNC2WPD4j/qkKS8fBR730FSDg2QZtacDrDDBFjW2MVzFSwE3YgAakRn12rqqAMN2
+         1i7+tSXd4F7fBuO63I6nv5Acs0+cRxsv/4zA2WlHVZzRpIDCE7zgnn3OkQyQKy2z5K9X
+         UcVPoN1lFmj39S5/UPQzspXUWkmcmYEl4O/62NsHa4GpEvoTfH9TGiZxAqN3YFz2Xme2
+         QFNA==
+X-Gm-Message-State: AIVw112CsrE7cSALTBnbcM0nXkE5uAgIFaKUQ9TAXClHB/SXtCvV8SOi
+        +HPjThnfrvY/4b0V5AQ8OzAVAl7OtJTS
+X-Received: by 10.99.144.65 with SMTP id a62mr11366828pge.108.1499982568714;
+ Thu, 13 Jul 2017 14:49:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 14:49:28 -0700 (PDT)
+In-Reply-To: <xmqqvamwt4ju.fsf@gitster.mtv.corp.google.com>
+References: <20170713004415.5051-1-sbeller@google.com> <20170713004415.5051-2-sbeller@google.com>
+ <xmqq4lugukju.fsf@gitster.mtv.corp.google.com> <CAGZ79kb3_K8NxpHuzAdHhSLWUcbw_X3qVVspPeuSNA4sAeT-Kw@mail.gmail.com>
+ <xmqqvamwt4ju.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 13 Jul 2017 14:49:28 -0700
+Message-ID: <CAGZ79kZOCtk9YM0=dUic5MHMWLZgb8xeYsFX0VaMNbFrjw=sUA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] tag: convert gpg_verify_tag to use struct object_id
+To:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On Thu, Jul 13, 2017 at 2:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > Stefan Beller <sbeller@google.com> writes:
 >
->> On Thu, Jul 13, 2017 at 8:01 AM, Jeff King <peff@peff.net> wrote:
+>> On Thu, Jul 13, 2017 at 1:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Stefan Beller <sbeller@google.com> writes:
+>>>
+>>>> diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+>>>> index f9a5f7535a..ed8329340f 100644
+>>>> --- a/builtin/verify-tag.c
+>>>> +++ b/builtin/verify-tag.c
+>>>> @@ -56,20 +56,21 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
+>>>>       }
+>>>>
+>>>>       while (i < argc) {
+>>>> -             unsigned char sha1[20];
+>>>> +             struct object_id oid;
+>>>>               const char *name = argv[i++];
+>>>> -             if (get_sha1(name, sha1)) {
+>>>> +
+>>>> +             if (get_oid(name, &oid)) {
+>>>>                       had_error = !!error("tag '%s' not found.", name);
+>>>>                       continue;
+>>>>               }
+>>>
+>>> This part is already done, it seems, in bc/object-id topic, even
+>>> though other parts are not yet done?
 >>
->>>  builtin/branch.c       | 14 +++++++-------
->>>  builtin/for-each-ref.c | 22 ++++++++++++----------
->>>  builtin/tag.c          | 30 ++++++++++++++++--------------
->>>  builtin/verify-tag.c   | 12 ++++++------
->>>  ref-filter.c           | 22 ++++++++++++----------
->>>  ref-filter.h           | 22 +++++++++++++++++-----
->>>  6 files changed, 70 insertions(+), 52 deletions(-)
+>> Oops. I assumed the latest bc/object-id would have been in master
+>> already, but after checking it is not. 967635dc3c2
+>> (builtin/verify-tag: convert to struct object_id)
+>> converts this part, although there are 2 differences:
+>> * I added a stray newline before get_oid
+>> * The argument to gpg_verify_tag is a sha1 or oid
 >>
->> The patch looks good to me. So some off-topic comments:
->> I reviewed this patch from bottom up, i.e. I started looking at
->> ref-filter.h, then  ref-filter.c and then the rest. If only you had formatted
->> the patches with an orderfile. ;)
+>> So yes, this produces a merge conflict. :/
 >
-> As a reviewer, for this particular patchq, I actually appreciated
-> that ref-filter.[ch] came at the end.  That forced me to think.
-> ...
-> I do want to present from Doc to header to code when I am showing my
-> patch to others, so this is probably a good example that illustrates
-> that the preferred presentation order is not just personal
-> preference, but is different on occasion even for the same person.
+> That is OK.  This actually shouldn't create any meaningful conflict.
+> Both try to do the same code, with only a blank-line difference.
+>
+> As Brian said bc/object-id would be rerolled, I was wondering if I
+> should queue these two patches (even though I already queued them)
+> myself, or it would be better for you to send them to Brian to make
+> it part of his series.
 
-So when somebody wants to do a "from design and explanation to
-provider to consumer", we would probably want "doc, *.h, *.c at the
-top-level and then things inside builtin/ subdirectory" order.  Of
-course, on the other hand, "I do not trust me not getting swayed by
-the fact that a developer more competent than me wrote the patch"
-reviewer would want to use the reverse order.
++cc Brian
 
-Can we actually express "top-level first and then builtin/*" order
-with the diff.orderfile mechanism?  It's been a while since I last
-looked at the orderfile matching (which was when I originally wrote
-it) and I do not offhand know if we now allow wildmatch patterns and
-the directory level anchoring "/*.c" like we do in .gitignore files,
-without which it would be cumbersome to make ref-filter.c listed
-before builtin/branch.c in a generic way.
+Snarkily I wanted to link to an essay "large patch series
+considered harmful"[1], but could not find any. So a couple
+of bullet points:
+(a) humans dislike larger series, hence fewer reviewers
+(b) the likelihood of a mistake in new code is proportional to its size
+  We can use the number of patches as a proxy for size
+(c) If a mistake is found, the whole series needs rerolling.
+  The effort of rerolling a series can be approximated with
+  its size as well.
+
+From combining (b) and (c), we conclude that the effort to
+land a patch series is O(n^2) with n as the number of patches.
+Also from (a) we conclude that two smaller series containing
+the same output as one large series, has better code quality.
+So with that, we conclude that all series shall be as small
+as possible.
+
+So I'd ask to queue these 2 separately, asking Brian to drop
+"builtin/verify-tag: convert to struct object_id"
+
+[1] https://www.cs.princeton.edu/~dpw/papers/hotos.pdf, 2005
+    seems interesting to me in hindsight.
+
+I can also send my patches to Brian, as you (both) like.
+
+Thanks,
+Stefan
