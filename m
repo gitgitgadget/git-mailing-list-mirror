@@ -2,69 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BE6C2027C
-	for <e@80x24.org>; Thu, 13 Jul 2017 21:24:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA3A82027C
+	for <e@80x24.org>; Thu, 13 Jul 2017 21:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752045AbdGMVYR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 17:24:17 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:32838 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751216AbdGMVYQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 17:24:16 -0400
-Received: by mail-pg0-f43.google.com with SMTP id k14so35598690pgr.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 14:24:16 -0700 (PDT)
+        id S1752151AbdGMVcb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 17:32:31 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:33957 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751153AbdGMVca (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 17:32:30 -0400
+Received: by mail-pf0-f173.google.com with SMTP id q85so35338632pfq.1
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 14:32:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=uye/99EEs5RZZU+HRbUDAfwG4Q3n7E+TwAHN9uJFIGs=;
-        b=g8auDE8ibfdLnC/u9gzRYtWq4/OJaemt6Mu1Ii/kn7QJzppLYHEUs0A8ABHNoUzDhY
-         P8dSDCPx5dx5v9tHMgm1UtMSA2EKXHludFd9CkXOvPWaV2ZOBS+DWqbgPC+knAASRwqr
-         LAavb9q1eJH5zSd+XIYC0UJin0DtWgkTY0xb1RgxS0DzEBC/D8lLafmVGexktQ9wzd7r
-         n5rSD91n86NmWyErcrmXVDKcFQ1L5Wwor7W1JujRzq0v2ZWn2ANVYXuG/uBdOFtnfeNY
-         BUkjLsSFszDeLS4ShD4EpCXhQMnlAt8J3ZxcoQDudxLyi5m1tjbWepdFvzVWsIsYN/Lb
-         3nbw==
+        bh=G3xVwan74AY5baVGudjRQ8pF+Etp6vit0irAGXjG7fM=;
+        b=G2xbvw4emeLaSX45g+NnQG8KFHiLbOc0c13GcyyU8inLmS7nOOOvPkB0rSoeDf0AdS
+         wYtq2Y9F2PyvQ25+Hg8B0yOqmSurJ4TIB9XrbMA1SoJOBbUHuHBco9J13i7WKkt7oHGm
+         yqtV8aJl5qigma2e4DqCetqT63foidw5obAEwO6MWpjnhT3VuR0/JJW+ECuFSxkS2K+k
+         4p+7J04Cpcj2Uitz9byhqLSzNGhrXN1VnYFWXOFmvB/9fbS0aWnm6L50QovtbxvqEBT4
+         W+0mOkfqpSpyszgyPXB8ZM+g1TCkMN5UCGIp0fEW/DNni+6DYAlYbikbEP/h3phI2ZoQ
+         vwvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=uye/99EEs5RZZU+HRbUDAfwG4Q3n7E+TwAHN9uJFIGs=;
-        b=NOaZ5oIAmudYFwrfisBsfOuRc3Iu/hXR6tUGPjpR5RxT+Y1k/5r+Cqxb4B+F+TyRAO
-         p6Qf9ioqBebzynIQg5dFZ47oj3zhxjXSIvDaocrindToevmBN/dRi1qJKNJJuQItDWDa
-         nRI1QHxudHPiGCBj4iDWhVd2n2hcbDn4Jxz1Uz9RY91Eo55UO8QdGQ4/wKVfksn+K+8k
-         FhqWoTVCsgNlk+rQ5XR5rWpmK1rzBHsBYNr1Lc8kKVrqsQcBoH3fXuuzXyjm9SZdy7xD
-         glCbZ+9UldZhr0FtAgMd5z9yHbrCV+OoV/BwlUszmYmzE3c1Hd0RuIFOrFAf3A/c7F9W
-         ibQA==
-X-Gm-Message-State: AIVw113YObmERBtKYh5rhaz71UJoUXEizI9fKcOWXOsUdPhkrJTT0nls
-        lCfxgTeNFf+tGQ==
-X-Received: by 10.99.114.19 with SMTP id n19mr11164762pgc.81.1499981055534;
-        Thu, 13 Jul 2017 14:24:15 -0700 (PDT)
+        bh=G3xVwan74AY5baVGudjRQ8pF+Etp6vit0irAGXjG7fM=;
+        b=WJk2EKknlcceiXTek403nx+1sC0pq2M7iaqP0TAKA/MkEMEcSgG/GZwxolJY5hiGUc
+         ZV7aIZDWdjAgsmtbTdlLpHYldg7VmEKSlUYIFV1QmrCJUkOsfvOXgMNliebnAnjg7LLT
+         K2tVbSoor/De7IkBoOo+4eqWMCjE8Ifrq3zuVl0h79Qeq5pWfB3zBe+k/3WUv2Wq542A
+         gc8k00cd12qLXd2ZehX6Bvs2uVIbcFiGcJEXvSZKmvR/UVEiH7CiZSB6xWyAmgHPjBaQ
+         boM4OEPGtG8BI8c1JN8PRmKBFG1BrumfDYrVupOMTKOfFFToARZ6iaaC6OriLgFIL7xB
+         CP9Q==
+X-Gm-Message-State: AIVw111K73tsUnmtboaoA4tEAb6hKFYTzbz/47c/JQoxHvagmOyz8mi7
+        UKq0ijMROmWJdA==
+X-Received: by 10.99.44.68 with SMTP id s65mr11527679pgs.101.1499981549364;
+        Thu, 13 Jul 2017 14:32:29 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id o6sm11668404pgs.43.2017.07.13.14.24.14
+        by smtp.gmail.com with ESMTPSA id w125sm13677928pfb.117.2017.07.13.14.32.28
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 14:24:14 -0700 (PDT)
+        Thu, 13 Jul 2017 14:32:28 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2017, #03; Mon, 10)
-References: <xmqqlgnv52oq.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.21.1.1707131435220.4193@virtualbox>
-        <xmqqzic8xsxd.fsf@gitster.mtv.corp.google.com>
-        <20170713155313.whucxkoita6nvmhz@sigill.intra.peff.net>
-        <xmqqvamwxm1y.fsf@gitster.mtv.corp.google.com>
-        <20170713181350.tb6gndxc66ewpggj@sigill.intra.peff.net>
-        <xmqqvamww3tc.fsf@gitster.mtv.corp.google.com>
-        <20170713204946.wfshkwpqoiwqgkft@sigill.intra.peff.net>
-Date:   Thu, 13 Jul 2017 14:24:14 -0700
-In-Reply-To: <20170713204946.wfshkwpqoiwqgkft@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 13 Jul 2017 16:49:46 -0400")
-Message-ID: <xmqqr2xkt4ht.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jeff King <peff@peff.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH 05/15] ref-filter: abstract ref format into its own struct
+References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
+        <20170713150118.eof3xgu4zujmo6u6@sigill.intra.peff.net>
+        <CAGZ79kag1B37FBrmDzbRFNVODHp=n1h=xSq_pi1b7Fs4wLoRBg@mail.gmail.com>
+        <xmqqlgnsulco.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 13 Jul 2017 14:32:27 -0700
+In-Reply-To: <xmqqlgnsulco.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 13 Jul 2017 13:34:47 -0700")
+Message-ID: <xmqqmv88t444.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,19 +68,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Sorry, I mean the case where you do a merge from the other side, but
-> then you end up rewinding the history in some way, taking into account
-> that merge and everything they did. For example:
+> Stefan Beller <sbeller@google.com> writes:
 >
->   $ git pull
->   $ git rebase  ;# this will flatten the merge
->   $ git push --force-with-lease
+>> On Thu, Jul 13, 2017 at 8:01 AM, Jeff King <peff@peff.net> wrote:
+>>
+>>>  builtin/branch.c       | 14 +++++++-------
+>>>  builtin/for-each-ref.c | 22 ++++++++++++----------
+>>>  builtin/tag.c          | 30 ++++++++++++++++--------------
+>>>  builtin/verify-tag.c   | 12 ++++++------
+>>>  ref-filter.c           | 22 ++++++++++++----------
+>>>  ref-filter.h           | 22 +++++++++++++++++-----
+>>>  6 files changed, 70 insertions(+), 52 deletions(-)
+>>
+>> The patch looks good to me. So some off-topic comments:
+>> I reviewed this patch from bottom up, i.e. I started looking at
+>> ref-filter.h, then  ref-filter.c and then the rest. If only you had formatted
+>> the patches with an orderfile. ;)
 >
-> There was never a moment where the other side's tip ref was in your
-> local branch, but you did incorporate it via the merge.
+> As a reviewer, for this particular patchq, I actually appreciated
+> that ref-filter.[ch] came at the end.  That forced me to think.
+> ...
+> I do want to present from Doc to header to code when I am showing my
+> patch to others, so this is probably a good example that illustrates
+> that the preferred presentation order is not just personal
+> preference, but is different on occasion even for the same person.
 
-Ah, OK, now it is clear what you meant.
+So when somebody wants to do a "from design and explanation to
+provider to consumer", we would probably want "doc, *.h, *.c at the
+top-level and then things inside builtin/ subdirectory" order.  Of
+course, on the other hand, "I do not trust me not getting swayed by
+the fact that a developer more competent than me wrote the patch"
+reviewer would want to use the reverse order.
 
-Thanks.
+Can we actually express "top-level first and then builtin/*" order
+with the diff.orderfile mechanism?  It's been a while since I last
+looked at the orderfile matching (which was when I originally wrote
+it) and I do not offhand know if we now allow wildmatch patterns and
+the directory level anchoring "/*.c" like we do in .gitignore files,
+without which it would be cumbersome to make ref-filter.c listed
+before builtin/branch.c in a generic way.
