@@ -2,164 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F207202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 18:54:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 54818202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 18:57:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752602AbdGMSyI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 14:54:08 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35677 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752415AbdGMSyH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 14:54:07 -0400
-Received: by mail-pf0-f193.google.com with SMTP id q85so8138163pfq.2
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 11:54:07 -0700 (PDT)
+        id S1752611AbdGMS5E (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 14:57:04 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:34854 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752525AbdGMS5D (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 14:57:03 -0400
+Received: by mail-qt0-f193.google.com with SMTP id w12so7202568qta.2
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 11:57:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=iySgA3Yq8RXn25l1g8TVlVx6u2vtIMcJyOJgWw0c+Fw=;
-        b=krb7xYD+YUk3CtbAckFtD2XAzgRcePOco+CR1RrY85V2m/rSdzklQO4YCrdx1zZZCf
-         SEvWH5HyxbffosDheEWg7ypat0XCMNYJjhQ6SvNWiTjVZGEOeIHmd4nT9O+2REyR5i1d
-         jB00BIIdTle5mfwMLVaORXy203KO46tbG3CnoL420j/4PWx3rg8g2Y1HZvJvh4DkTU2O
-         x6mJRhOtTYqT+ZeDwGWmsuThSFqTZM8onntyuR1VkyjN3x2eXIZ0rmebOpd8PS72kHbu
-         9lMjaIV5EO2TdqeDM5VnJAA/W8RzAIDVhJcWB2zWm/yaMdn9JNlWX4kXDQABUoh3MbAJ
-         JE6g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=bvz+5yT0OmVXvtBId5WkLbXlVXlgGxA9TOBKVAf38tA=;
+        b=arzImtQVHLnffbYew05rwBci4hwzdqmpxlkTRUYaM4Zupm2rrTE+hdM6VMO69Pr2SI
+         +z8OwL+20Z73giRmC3eoWqc6uZuJMjGf3sO4Y4pXp2+YiPWtSVolKHKTLfxHfonpOgsN
+         h1PbVcEGl3UiFeqYGuoMXSv/jxyTdN91DV8W/f3Djpep+qD3ZbnRmYes+22qPqmxzU/c
+         4wY80o0ol4IvL1WPtLAfwQTwovwxgP3dGqfPpv+oj6x+V3424b2Y1DShAjlt6DcnKs8T
+         dvGLdWoPuXgL4R1cqR7tv3avLaHm/cnjnFJZqjnrTOmC7lh/Nv9OnlrT0uqOv5CXc67Z
+         Sm/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=iySgA3Yq8RXn25l1g8TVlVx6u2vtIMcJyOJgWw0c+Fw=;
-        b=KvwCIyDMvDsy0+O4syJiOOfyEKcX4Tt+oYUHEmDUgvJ4Cw+RoKrX/j6Gy595PZsp4W
-         KF080+VGOjKcNcOvXC2lwxJzfZHDG4/m3jn7qr0bZybSMc4JGqY2BrV1gnWTla9gXC6g
-         gmfA9QIX3k2GZxmMWOqm0m/iSlbB+29S2y6KZdbt/8lkJ8Q1fWGbhSqtlfsKlkqOaMoy
-         wgIBHpiLT6KjMcTFcDTxooBw2nPNdYx2lr+o2t+TXElrhezcyeA2XpBAcHKwschVAzIX
-         P+VDvJcvc14H4FaaNdb174+ffvpTW1KG/1t7GEE+5yTBR7axV09VFLNI6rOqYiy90zeZ
-         aKYw==
-X-Gm-Message-State: AIVw110jGHuXS/XUqrHoadwXmVAM2WOzOx8TjadbmNPxJGawzPdSFt59
-        Amh29bnwyNEIHg==
-X-Received: by 10.99.53.135 with SMTP id c129mr10608036pga.68.1499972046365;
-        Thu, 13 Jul 2017 11:54:06 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id b8sm15731486pfd.65.2017.07.13.11.54.05
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 11:54:05 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] commit: convert lookup_commit_graft to struct object_id
-References: <20170713004415.5051-1-sbeller@google.com>
-Date:   Thu, 13 Jul 2017 11:54:04 -0700
-In-Reply-To: <20170713004415.5051-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 12 Jul 2017 17:44:14 -0700")
-Message-ID: <xmqq60ewxj5f.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=bvz+5yT0OmVXvtBId5WkLbXlVXlgGxA9TOBKVAf38tA=;
+        b=tpHsaudGWAh+qFriAT2x/A36maVcE2L8ks3x96fmCE9OKjEvqeVPjSFYhRlBl/i1Ue
+         0XEaiImI1J11euyWbVXaIKPuv3K/bD6iME7JKOK/WwpEhRS6H2fctKdDexgSlvYIOjEC
+         8f3a7Se58Jo1ADmncGnI5bVhWY5kssqS/f07XPRW4SEihkszwsLRkuHj33/KmK7+iYxa
+         SUacihUoFP9fflmlPDXuCDbKI7nXVGSSULzCy5w3oEbRx1WziImnajml3mSeyVyh1AWL
+         uW9n2gHeJC67meQrhrHyVnDTAVTIlMWcQuRmYLSzn3HCRWoclvMqN3vNpgUNQ0K7VX5U
+         C46w==
+X-Gm-Message-State: AIVw113lIDL5V0kQgQMGU4fb2TYR1Z3Ao/ZGhmhDd5epEPXNs1XmKx++
+        fQQ9WxVV4rJ2X3de18hu6BUG6/lu+PaG
+X-Received: by 10.237.46.99 with SMTP id j90mr7481271qtd.76.1499972222732;
+ Thu, 13 Jul 2017 11:57:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.55.31.13 with HTTP; Thu, 13 Jul 2017 11:57:01 -0700 (PDT)
+In-Reply-To: <20170713165840.e5cdw7pa2m6haaen@sigill.intra.peff.net>
+References: <20170713065050.19215-1-chriscool@tuxfamily.org> <20170713165840.e5cdw7pa2m6haaen@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 13 Jul 2017 20:57:01 +0200
+Message-ID: <CAP8UFD3VnpMuMpcfRcTwL4nRpOF5URj6zsQqiEWYwo=1pi5Phw@mail.gmail.com>
+Subject: Re: [PATCH v1 0/4] Teach 'run' perf script to read config files
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> With this patch, commit.h doesn't contain the string 'sha1' any more.
-
-;-)  Nice.
-
-commit_graft_pos() still thinks we only deal with SHA-1, but that
-needs to wait for oid_pos().  The function has only two callers that
-do not pass X->oid.hash so it may be a good candidate to convert.
-
+On Thu, Jul 13, 2017 at 6:58 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Jul 13, 2017 at 08:50:46AM +0200, Christian Couder wrote:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
+>> Goal
+>> ~~~~
+>>
+>> Using many long environment variables to give parameters to the 'run'
+>> script is error prone and tiring.
+>>
+>> We want to make it possible to store the parameters to the 'run'
+>> script in a config file. This will make it easier to store, reuse,
+>> share and compare parameters.
 >
-> Before diving into the "RFC object store" series further, I want to get
-> rid of the final sha1s in {commit,tag}.{c,h}.
+> Because perf-lib is built on test-lib, it already reads
+> GIT-BUILD-OPTIONS.
+
+Actually the 'run' script also sources GIT-BUILD-OPTIONS, so maybe
+this is not necessary.
+Also are the variables in GIT-BUILD-OPTIONS exported already?
+
+> And the Makefile copies several perf-related values
+> into it, including GIT_PERF_MAKE_OPTS and GIT_PERF_REPEAT_COUNT. So you
+> can already do:
 >
->  commit.c  | 6 +++---
->  commit.h  | 2 +-
->  fsck.c    | 2 +-
->  shallow.c | 4 ++--
->  4 files changed, 7 insertions(+), 7 deletions(-)
+>   echo 'GIT_PERF_REPEAT_COUNT = 10' >>config.mak
+>   echo 'GIT_PERF_MAKE_OPTS = CFLAGS="-O2" DEVELOPER=1' >>config.mak
+>   make
+
+The "make" here might not even be needed as in the 'run' script
+"config.mak" is copied into the "build/$rev" directory where "make" is
+run to build the $rev version.
+
+>   cd t/perf
+>   ./run <versions-and-scripts>
 >
-> diff --git a/commit.c b/commit.c
-> index cbfd689939..e0888cf0f7 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -199,11 +199,11 @@ static void prepare_commit_graft(void)
->  	commit_graft_prepared = 1;
->  }
->  
-> -struct commit_graft *lookup_commit_graft(const unsigned char *sha1)
-> +struct commit_graft *lookup_commit_graft(const struct object_id *oid)
->  {
->  	int pos;
->  	prepare_commit_graft();
-> -	pos = commit_graft_pos(sha1);
-> +	pos = commit_graft_pos(oid->hash);
->  	if (pos < 0)
->  		return NULL;
->  	return commit_graft[pos];
-> @@ -335,7 +335,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
->  	bufptr += tree_entry_len + 1; /* "tree " + "hex sha1" + "\n" */
->  	pptr = &item->parents;
->  
-> -	graft = lookup_commit_graft(item->object.oid.hash);
-> +	graft = lookup_commit_graft(&item->object.oid);
->  	while (bufptr + parent_entry_len < tail && !memcmp(bufptr, "parent ", 7)) {
->  		struct commit *new_parent;
->  
-> diff --git a/commit.h b/commit.h
-> index 4127c298cb..6d857f06c1 100644
-> --- a/commit.h
-> +++ b/commit.h
-> @@ -249,7 +249,7 @@ typedef int (*each_commit_graft_fn)(const struct commit_graft *, void *);
->  
->  struct commit_graft *read_graft_line(char *buf, int len);
->  int register_commit_graft(struct commit_graft *, int);
-> -struct commit_graft *lookup_commit_graft(const unsigned char *sha1);
-> +struct commit_graft *lookup_commit_graft(const struct object_id *oid);
->  
->  extern struct commit_list *get_merge_bases(struct commit *rev1, struct commit *rev2);
->  extern struct commit_list *get_merge_bases_many(struct commit *one, int n, struct commit **twos);
-> diff --git a/fsck.c b/fsck.c
-> index b4204d772b..2d2d2e9432 100644
-> --- a/fsck.c
-> +++ b/fsck.c
-> @@ -736,7 +736,7 @@ static int fsck_commit_buffer(struct commit *commit, const char *buffer,
->  		buffer += 41;
->  		parent_line_count++;
->  	}
-> -	graft = lookup_commit_graft(commit->object.oid.hash);
-> +	graft = lookup_commit_graft(&commit->object.oid);
->  	parent_count = commit_list_count(commit->parents);
->  	if (graft) {
->  		if (graft->nr_parent == -1 && !parent_count)
-> diff --git a/shallow.c b/shallow.c
-> index 54359d5490..f5591e56da 100644
-> --- a/shallow.c
-> +++ b/shallow.c
-> @@ -107,7 +107,7 @@ struct commit_list *get_shallow_commits(struct object_array *heads, int depth,
->  		cur_depth++;
->  		if ((depth != INFINITE_DEPTH && cur_depth >= depth) ||
->  		    (is_repository_shallow() && !commit->parents &&
-> -		     (graft = lookup_commit_graft(commit->object.oid.hash)) != NULL &&
-> +		     (graft = lookup_commit_graft(&commit->object.oid)) != NULL &&
->  		     graft->nr_parent < 0)) {
->  			commit_list_insert(commit, &result);
->  			commit->object.flags |= shallow_flag;
-> @@ -398,7 +398,7 @@ void prepare_shallow_info(struct shallow_info *info, struct oid_array *sa)
->  	for (i = 0; i < sa->nr; i++) {
->  		if (has_object_file(sa->oid + i)) {
->  			struct commit_graft *graft;
-> -			graft = lookup_commit_graft(sa->oid[i].hash);
-> +			graft = lookup_commit_graft(&sa->oid[i]);
->  			if (graft && graft->nr_parent < 0)
->  				continue;
->  			info->ours[info->nr_ours++] = i;
+> I suspect there are still a lot of things that could be made easier with
+> a config file, so I'm not against the concept. Your example here:
+>
+>> [perf "with libpcre"]
+>>         makeOpts = DEVELOPER=1 CFLAGS='-g -O0' USE_LIBPCRE=YesPlease
+>> [perf "without libpcre"]
+>>         makeOpts = DEVELOPER=1 CFLAGS='-g -O0'
+>
+> is a lot more compelling. But right now the perf suite is not useful at
+> all for comparing two builds of the same tree. For that, I think it
+> would be more useful if we could define a tuple of parameters for a run.
+> One of which could be the tree we're testing. Build opts are another.
+> Tested repository is another. And then we'd fill in a table of results
+> and let you slice up the table by any column (e.g., compare times for
+> runs against a single tree but with differing build options).
+
+Yeah, improving the output part is another thing that I have discussed
+with AEvar and that I have planned to work on.
