@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A2672035A
-	for <e@80x24.org>; Thu, 13 Jul 2017 17:37:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE884202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 17:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752554AbdGMRfe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 13:35:34 -0400
-Received: from siwi.pair.com ([209.68.5.199]:10985 "EHLO siwi.pair.com"
+        id S1752632AbdGMRhY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 13:37:24 -0400
+Received: from siwi.pair.com ([209.68.5.199]:10995 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752517AbdGMRfc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 13:35:32 -0400
+        id S1752545AbdGMRfe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 13:35:34 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6318C844EA;
-        Thu, 13 Jul 2017 13:35:31 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id CD771844E3;
+        Thu, 13 Jul 2017 13:35:33 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id B4B87844E5;
-        Thu, 13 Jul 2017 13:35:30 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 2B464844E5;
+        Thu, 13 Jul 2017 13:35:33 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, ethomson@edwardthomson.com,
         jonathantanmy@google.com, jrnieder@gmail.com,
         jeffhost@microsoft.com
-Subject: [PATCH v2 02/19] oidset2: create oidset subclass with object length and pathname
-Date:   Thu, 13 Jul 2017 17:34:42 +0000
-Message-Id: <20170713173459.3559-3-git@jeffhostetler.com>
+Subject: [PATCH v2 05/19] list-objects-filters: add omit-large-blobs filter
+Date:   Thu, 13 Jul 2017 17:34:45 +0000
+Message-Id: <20170713173459.3559-6-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170713173459.3559-1-git@jeffhostetler.com>
 References: <20170713173459.3559-1-git@jeffhostetler.com>
@@ -41,204 +41,145 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Create subclass of oidset where each entry has a
-field to store the length of the object's content
-and an optional pathname.
+Create a filter for traverse_commit_list_filtered() to omit
+blobs larger than a requested size from the result, but always
+include ".git*" special files.
 
-This will be used in a future commit to build a
-manifest of omitted objects in a partial/narrow
-clone/fetch.
+This filter will be used in a future commit by rev-list and
+pack-objects for partial/narrow clone/fetch.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile  |   1 +
- oidset2.c | 101 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- oidset2.h |  56 ++++++++++++++++++++++++++++++++++
- 3 files changed, 158 insertions(+)
- create mode 100644 oidset2.c
- create mode 100644 oidset2.h
+ list-objects-filters.c | 97 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ list-objects-filters.h | 12 +++++++
+ 2 files changed, 109 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index ffa6da7..d590508 100644
---- a/Makefile
-+++ b/Makefile
-@@ -791,6 +791,7 @@ LIB_OBJS += notes-merge.o
- LIB_OBJS += notes-utils.o
- LIB_OBJS += object.o
- LIB_OBJS += oidset.o
-+LIB_OBJS += oidset2.o
- LIB_OBJS += pack-bitmap.o
- LIB_OBJS += pack-bitmap-write.o
- LIB_OBJS += pack-check.o
-diff --git a/oidset2.c b/oidset2.c
-new file mode 100644
-index 0000000..806d153
---- /dev/null
-+++ b/oidset2.c
-@@ -0,0 +1,101 @@
-+#include "cache.h"
-+#include "oidset2.h"
+diff --git a/list-objects-filters.c b/list-objects-filters.c
+index f29d8bc..f04d70e 100644
+--- a/list-objects-filters.c
++++ b/list-objects-filters.c
+@@ -83,3 +83,100 @@ void traverse_commit_list_omit_all_blobs(
+ 
+ 	oidset2_clear(&d.omits);
+ }
 +
-+static int oidset2_hashcmp(const void *va, const void *vb,
-+			  const void *vkey)
++/*
++ * A filter for list-objects to omit large blobs,
++ * but always include ".git*" special files.
++ */
++struct filter_omit_large_blobs_data {
++	struct oidset2 omits;
++	int64_t max_bytes;
++};
++
++static list_objects_filter_result filter_omit_large_blobs(
++	list_objects_filter_type filter_type,
++	struct object *obj,
++	const char *pathname,
++	const char *filename,
++	void *filter_data_)
 +{
-+	const struct oidset2_entry *a = va, *b = vb;
-+	const struct object_id *key = vkey;
-+	return oidcmp(&a->oid, key ? key : &b->oid);
-+}
++	struct filter_omit_large_blobs_data *filter_data = filter_data_;
++	int64_t object_length = -1;
++	unsigned long s;
++	enum object_type t;
 +
-+struct oidset2_entry *oidset2_get(const struct oidset2 *set, const struct object_id *oid)
-+{
-+	struct hashmap_entry key;
-+	struct oidset2_entry *value;
++	switch (filter_type) {
++	default:
++		die("unkown filter_type");
++		return LOFR_ZERO;
 +
-+	if (!set->map.cmpfn)
-+		return NULL;
++	case LOFT_BEGIN_TREE:
++		assert(obj->type == OBJ_TREE);
++		/* always include all tree objects */
++		return LOFR_MARK_SEEN | LOFR_SHOW;
 +
-+	hashmap_entry_init(&key, sha1hash(oid->hash));
-+	value = hashmap_get(&set->map, &key, oid);
++	case LOFT_END_TREE:
++		assert(obj->type == OBJ_TREE);
++		return LOFR_ZERO;
 +
-+	return value;
-+}
++	case LOFT_BLOB:
++		assert(obj->type == OBJ_BLOB);
++		assert((obj->flags & SEEN) == 0);
 +
-+int oidset2_contains(const struct oidset2 *set, const struct object_id *oid)
-+{
-+	return !!oidset2_get(set, oid);
-+}
++		/*
++		 * If previously provisionally omitted (because of size), see if the
++		 * current filename is special and force it to be included.
++		 */
++		if (oidset2_contains(&filter_data->omits, &obj->oid)) {
++			if ((strncmp(filename, ".git", 4) == 0) && filename[4]) {
++				oidset2_remove(&filter_data->omits, &obj->oid);
++				return LOFR_MARK_SEEN | LOFR_SHOW;
++			}
++			return LOFR_ZERO; /* continue provisionally omitting it */
++		}
 +
-+int oidset2_insert(struct oidset2 *set, const struct object_id *oid,
-+		   int64_t object_length, const char *pathname)
-+{
-+	struct oidset2_entry *entry;
++		t = sha1_object_info(obj->oid.hash, &s);
++		assert(t == OBJ_BLOB);
++		object_length = (int64_t)((uint64_t)(s));
 +
-+	if (!set->map.cmpfn)
-+		hashmap_init(&set->map, oidset2_hashcmp, 0);
++		if (object_length < filter_data->max_bytes)
++			return LOFR_MARK_SEEN | LOFR_SHOW;
 +
-+	if (oidset2_contains(set, oid))
-+		return 1;
-+
-+	entry = xcalloc(1, sizeof(*entry));
-+	hashmap_entry_init(&entry->hash, sha1hash(oid->hash));
-+	oidcpy(&entry->oid, oid);
-+
-+	entry->object_length = object_length;
-+	if (pathname)
-+	    entry->pathname = strdup(pathname);
-+
-+	hashmap_add(&set->map, entry);
-+	return 0;
-+}
-+
-+void oidset2_remove(struct oidset2 *set, const struct object_id *oid)
-+{
-+	struct hashmap_entry key;
-+	struct oidset2_entry *e;
-+
-+	hashmap_entry_init(&key, sha1hash(oid->hash));
-+	e = hashmap_remove(&set->map, &key, oid);
-+
-+	free(e->pathname);
-+	free(e);
-+}
-+
-+void oidset2_clear(struct oidset2 *set)
-+{
-+	hashmap_free(&set->map, 1);
-+}
-+
-+static int oidset2_cmp(const void *a, const void *b)
-+{
-+	const struct oidset2_entry *ae = *((const struct oidset2_entry **)a);
-+	const struct oidset2_entry *be = *((const struct oidset2_entry **)b);
-+
-+	return oidcmp(&ae->oid, &be->oid);
-+}
-+
-+void oidset2_foreach(struct oidset2 *set, oidset2_foreach_cb cb, void *cb_data)
-+{
-+	struct hashmap_iter iter;
-+	struct oidset2_entry **array;
-+	struct oidset2_entry *e;
-+	int j, k;
-+
-+	array = xcalloc(set->map.size, sizeof(*e));
-+
-+	hashmap_iter_init(&set->map, &iter);
-+	k = 0;
-+	while ((e = hashmap_iter_next(&iter)))
-+		array[k++] = e;
-+
-+	QSORT(array, k, oidset2_cmp);
-+
-+	for (j = 0; j < k; j++) {
-+		e = array[j];
-+		cb(j, k, e, cb_data);
++		/*
++		 * Provisionally omit it.  We've already established that this blob
++		 * is too big and doesn't have a special filename, so we WANT to
++		 * omit it.  However, there may be a special file elsewhere in the
++		 * tree that references this same blob, so we cannot reject it yet.
++		 * Leave the LOFR_ bits unset so that if the blob appears again in
++		 * the traversal, we will be asked again.
++		 *
++		 * No need for a pathname, since we only test for special filenames
++		 * above.
++		 */
++		oidset2_insert(&filter_data->omits, &obj->oid, object_length,
++			       NULL);
++		return LOFR_ZERO;
 +	}
-+
-+	free(array);
 +}
-diff --git a/oidset2.h b/oidset2.h
-new file mode 100644
-index 0000000..c498eae
---- /dev/null
-+++ b/oidset2.h
-@@ -0,0 +1,56 @@
-+#ifndef OIDSET2_H
-+#define OIDSET2_H
 +
-+/**
-+ * oidset2 is a variant of oidset, but allows additional fields for each object.
++void traverse_commit_list_omit_large_blobs(
++	struct rev_info *revs,
++	show_commit_fn show_commit,
++	show_object_fn show_object,
++	oidset2_foreach_cb print_omitted_object,
++	void *ctx_data,
++	int64_t large_byte_limit)
++{
++	struct filter_omit_large_blobs_data d;
++
++	memset(&d, 0, sizeof(d));
++	d.max_bytes = large_byte_limit;
++
++	traverse_commit_list_filtered(revs, show_commit, show_object, ctx_data,
++				      filter_omit_large_blobs, &d);
++
++	if (print_omitted_object)
++		oidset2_foreach(&d.omits, print_omitted_object, ctx_data);
++
++	oidset2_clear(&d.omits);
++}
+diff --git a/list-objects-filters.h b/list-objects-filters.h
+index b981020..32b2833 100644
+--- a/list-objects-filters.h
++++ b/list-objects-filters.h
+@@ -14,4 +14,16 @@ void traverse_commit_list_omit_all_blobs(
+ 	oidset2_foreach_cb print_omitted_object,
+ 	void *ctx_data);
+ 
++/*
++ * A filter for list-objects to omit large blobs,
++ * but always include ".git*" special files.
 + */
++void traverse_commit_list_omit_large_blobs(
++	struct rev_info *revs,
++	show_commit_fn show_commit,
++	show_object_fn show_object,
++	oidset2_foreach_cb print_omitted_object,
++	void *ctx_data,
++	int64_t large_byte_limit);
 +
-+/**
-+ * A single oidset2; should be zero-initialized (or use OIDSET2_INIT).
-+ */
-+struct oidset2 {
-+	struct hashmap map;
-+};
-+
-+#define OIDSET2_INIT { { NULL } }
-+
-+struct oidset2_entry {
-+	struct hashmap_entry hash;
-+	struct object_id oid;
-+
-+	int64_t object_length;	/* This is SIGNED. Use -1 when unknown. */
-+	char *pathname;
-+};
-+
-+struct oidset2_entry *oidset2_get(const struct oidset2 *set, const struct object_id *oid);
-+
-+/**
-+ * Returns true iff `set` contains `oid`.
-+ */
-+int oidset2_contains(const struct oidset2 *set, const struct object_id *oid);
-+
-+/**
-+ * Insert the oid into the set; a copy is made, so "oid" does not need
-+ * to persist after this function is called.
-+ *
-+ * Returns 1 if the oid was already in the set, 0 otherwise. This can be used
-+ * to perform an efficient check-and-add.
-+ */
-+int oidset2_insert(struct oidset2 *set, const struct object_id *oid,
-+		   int64_t object_length, const char *pathname);
-+
-+void oidset2_remove(struct oidset2 *set, const struct object_id *oid);
-+
-+typedef void (*oidset2_foreach_cb)(
-+	int i, int i_limit,
-+	struct oidset2_entry *e, void *cb_data);
-+
-+void oidset2_foreach(struct oidset2 *set, oidset2_foreach_cb cb, void *cb_data);
-+
-+/**
-+ * Remove all entries from the oidset2, freeing any resources associated with
-+ * it.
-+ */
-+void oidset2_clear(struct oidset2 *set);
-+
-+#endif /* OIDSET2_H */
+ #endif /* LIST_OBJECTS_FILTERS_H */
 -- 
 2.9.3
 
