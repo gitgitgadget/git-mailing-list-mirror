@@ -2,83 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB3F2027C
-	for <e@80x24.org>; Thu, 13 Jul 2017 23:48:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE51420365
+	for <e@80x24.org>; Thu, 13 Jul 2017 23:49:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751828AbdGMXsV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 19:48:21 -0400
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:33230 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751198AbdGMXsU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 19:48:20 -0400
-Received: by mail-lf0-f54.google.com with SMTP id z78so45287289lff.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 16:48:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=WCMrQDTAD9CR3vyfSWVzOtjsis9UZD3+D4cwGGQn59o=;
-        b=geCNOoIQ6PyQRiQ38Yvu6Md4YdwrrucNXX6wXvt3opTr1f0eM77X3p9rz5wEaT3SQu
-         LHyvcT+Myq5i+B30d6kNjoDvdRvqB+s96j3vQZIM+EbvaAjZ2VPqTipVp6xd57sU8pUV
-         hUTcT3b9A19JnDx5Z1AWDf1Hpas7kExnUarNPvmKYoj9sw0LtjaXBT0RhEqH/VbriDer
-         gTaHhmtXEU9CtQjG426T7wS/EzhMlSnHkXlObXbeCKLPJlOIVmcFozRCMIgLnt1sZv3s
-         f7ggtOpqMKkHniPwyZXMvhuiahE+b926x/BG1dUz2HWf3A4M5Eqy98umde6NvpG1jRWa
-         46YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=WCMrQDTAD9CR3vyfSWVzOtjsis9UZD3+D4cwGGQn59o=;
-        b=Yf1B8UqZwRmn/itqa6UrAv876trZWSWZYSCnsQAhTzFyvfWUDkFrfwAjEsqRgTXc+9
-         LvULHwm/qG9qaJXKpBUgyPW1TREGzit7CSPmLbpDh3eyqu7gilqd0S7nPxv0zspwUXIb
-         B1GqMkOLKG5BNNtz5xLylwzQ7BpD4gacm2F8ecsvkXsG+4Jix5CanV2beMyVg+ElwVX4
-         Bc7O8SOWShNAXQDcFPGg94AlkdXpbbZJbpk8PdWZLkaIIzflH9pt/Jb6PAmxqq7xYmpb
-         lde/HCUOjMmNMIbLTuzNuBr2exTjtt8XATa7jAQKDZ04MCCUL0WFnJMx2ZfiIrGJ/jvY
-         Nsxg==
-X-Gm-Message-State: AIVw112eBRzq9QF0WdQx4jmDT9eApOyvDEhvTBC63L2gDE4kTPGDhIUs
-        IFXhchMhhBxTFNhTOUwrOjO8u4t4N1gdiHE=
-X-Received: by 10.25.79.9 with SMTP id d9mr2299259lfb.133.1499989698650; Thu,
- 13 Jul 2017 16:48:18 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.46.83.7 with HTTP; Thu, 13 Jul 2017 16:48:18 -0700 (PDT)
-From:   Ben Reed <benvreed@gmail.com>
-Date:   Thu, 13 Jul 2017 18:48:18 -0500
-Message-ID: <CAEAWK2Nso0uFnn29B6=m=iV6-HjAEFTrrUg+b+7QzRhQ8TpZ6g@mail.gmail.com>
-Subject: Strange behavior with Git add -p in version 2.13.3
+        id S1752884AbdGMXth (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 19:49:37 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:59662 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752783AbdGMXtf (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 Jul 2017 19:49:35 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 178AF280AE;
+        Thu, 13 Jul 2017 23:49:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1499989774;
+        bh=YemzINMgvkIRF97oe25+IgIiZoB8Bp4vBGR61JGZChI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=AgT/V6BALNz1D7zJDfG0eWW+9LyLZDPb4rKNy6WbLJRg4ilnFSfFH2MZCpMfNPXGA
+         21xq+HSD1oZRO2hw9eYYrM5P66QcgPDhNTTa1GuP1zmj2veyiZM5LjQQ20iUwv9/j0
+         17FRYKJ3R/rz1mZuEa4nX0GOYmH9bg8KLqRoIddhd98ltkFRLEAFimTQ4CsZAbxM3I
+         0IgVW2LU4du0ZCZ2+RAqdAQsDaFxsKVY0bqC0KGrl76jcAu9vJKxzQeC4tNdbRet+7
+         lhlBvmith1lUmk469KPkZCcDkamybL5c4oeH34bWjMBstFZxzA2bVy14/fzxPTVPzJ
+         NOffNZNoC6tKKoV5+mig2P+YsFoqro+dgLCSPbsZAI2JXI2K0SfalnSJPx+83TJMAq
+         kvcBINFE+OUCYGfaq7pOsauYJi7pSvdJptNObtNm+YaDEYze9mbktCkSpbUkIUjxgL
+         S7HkSRpUL4i/wSB76GkHhXLBx/hNOv/Dx77Kq87VnruP6JnlC4U
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Brandon Williams <bmwill@google.com>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH v2 01/13] builtin/fsck: convert remaining caller of get_sha1 to object_id
+Date:   Thu, 13 Jul 2017 23:49:18 +0000
+Message-Id: <20170713234930.949612-2-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.13.2.932.g7449e964c
+In-Reply-To: <20170713234930.949612-1-sandals@crustytoothpaste.net>
+References: <20170713234930.949612-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, I updated Git to 2.13.3, and now selecting 's' to split a
-change on a call to `git add -p` is not working. It's showing the list
-of options as if 's' is not a valid choice...
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/fsck.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Particularly, I'm getting...
-Stage this hunk [y,n,q,a,d,/,e,?]? s
-y - stage this hunk
-n - do not stage this hunk
-q - quit; do not stage this hunk or any of the remaining ones
-a - stage this hunk and all later hunks in the file
-d - do not stage this hunk or any of the later hunks in the file
-g - select a hunk to go to
-/ - search for a hunk matching the given regex
-j - leave this hunk undecided, see next undecided hunk
-J - leave this hunk undecided, see next hunk
-k - leave this hunk undecided, see previous undecided hunk
-K - leave this hunk undecided, see previous hunk
-s - split the current hunk into smaller hunks
-e - manually edit the current hunk
-? - print help
-
-Is anyone else having this problem? Does anybody know how to resolve
-it? I'm running on macOS Version 10.12.5.
-
-Thanks in advance!
-
--Ben
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 99dea7adf6..0e5a18e843 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -738,12 +738,12 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 	heads = 0;
+ 	for (i = 0; i < argc; i++) {
+ 		const char *arg = argv[i];
+-		unsigned char sha1[20];
+-		if (!get_sha1(arg, sha1)) {
+-			struct object *obj = lookup_object(sha1);
++		struct object_id oid;
++		if (!get_oid(arg, &oid)) {
++			struct object *obj = lookup_object(oid.hash);
+ 
+ 			if (!obj || !(obj->flags & HAS_OBJ)) {
+-				error("%s: object missing", sha1_to_hex(sha1));
++				error("%s: object missing", oid_to_hex(&oid));
+ 				errors_found |= ERROR_OBJECT;
+ 				continue;
+ 			}
