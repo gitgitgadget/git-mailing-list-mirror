@@ -2,103 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAA642027C
-	for <e@80x24.org>; Thu, 13 Jul 2017 21:20:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 775D12027C
+	for <e@80x24.org>; Thu, 13 Jul 2017 21:21:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752012AbdGMVUQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 17:20:16 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:35476 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751153AbdGMVUQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 17:20:16 -0400
-Received: by mail-pg0-f41.google.com with SMTP id j186so35358124pge.2
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 14:20:15 -0700 (PDT)
+        id S1752760AbdGMVVg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 17:21:36 -0400
+Received: from mail-qk0-f179.google.com ([209.85.220.179]:33836 "EHLO
+        mail-qk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752527AbdGMVVf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 17:21:35 -0400
+Received: by mail-qk0-f179.google.com with SMTP id d78so61494781qkb.1
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 14:21:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=38hxzISxeeaSwc1emRE2ADdMtV3UZa9IelxVu40YsSI=;
-        b=UmDWcc/jrAvtg4LGXpmCG/0HtxekQDvcWxf2xbTnT1HLTFmgGmEaTrVNt2A9Lb7Bx9
-         xi5Cp+Ocrc4B6b560tU5gQ6y7oSq/8K9/xh8FbGRl2lxltfTmczX3UI5OMDc+EJ8Exrf
-         oyXDNz8uNZS1TjRpPDH/lapf1+Xe5wg/mOAbZMSUJS9u2Nh3/USzTadkiRAFxRMyBeia
-         wyHq1xcM0p9zvdbTWhwBeSUhpeldxfZ/Nz8QKVWw8qa7Ba98HfL3KBh2RkyPUW6nMSgO
-         uMxBRx0aIhSoaq+OaWLf9fljuFGa6BkU7v3B9cXOIv0KL/bgCyeYTS0DlQUq0sgez1IE
-         axjA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=vY/oxd5wRC5W8IIfzduqyyvuQZfPUYz6HNU+p5oHIpg=;
+        b=WRRw9ZBIZJ3sGBnSH2FkNni9gINVuSGMLdlSN+XR60Q3bKRN9KHHQrRt3jBFqFNOZg
+         JqrVccNHe6Xd64bjZdquXZShlxmfrECQKr/ItpqIuXTbgwep/UZtHyPgb6JhdINQAMcn
+         RtUtWXJEH2DdzIcpdeAyxsybt0MJL04HZWD0gpBGqWkcbBBxbWlma5GVbF3mfpeKsSQv
+         lyh9vTPYoeQYZ/zc5Ydi4zC8aYuoKu4t1G0P/SSFYiT/D7j5JJrdsZE81eIhG9fDl2aP
+         7x3NHFX/wu5YeG+R7rpFpNtuqVLAZdEpqa4xyL/UN9oI4eFiedMckcDWsIw4YVpLiQQq
+         fgiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=38hxzISxeeaSwc1emRE2ADdMtV3UZa9IelxVu40YsSI=;
-        b=OBK9nJ0CIIC3bJ2eoAIWnbhVnOrNyDPP+ITpAIOMN5/JhuSJbSddH+Kd6UzFvuiEcl
-         XJVVsVyz36Tvf9I/eQcjzmxnTugWAHJzx/bL2s4NWz2zRaApnCciYC73tDmkMyX1PYa3
-         WzOVxhj6Ip7bj4y0HXeT0n5EOmsA9IKsG+jcyy+7CU6z6TmEhHkCBu0EwYndbd5CD6jv
-         cxqhKOaAkIxaYbkmuBmcj68UcL/bxSXYQK57/Qk1FnGshMpKUjulsoz1UtJn2MFM6Tuf
-         FYRlgws1JnD14wFKOgdfN8Vxvhr94v6ZGC+FqVImL4+hc9Q3BO7+lZfcwZ6043YzujuH
-         p5RA==
-X-Gm-Message-State: AIVw112+AmYDxFQ3GrqivReSIB/1rlvjFC7WGLw7WUBAXDeK11lvrqp9
-        3YvpU3cBFUTXUsoZ+tg=
-X-Received: by 10.99.148.26 with SMTP id m26mr1884660pge.222.1499980815137;
-        Thu, 13 Jul 2017 14:20:15 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id c19sm13319904pfj.15.2017.07.13.14.20.14
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 14:20:14 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Nikolay Shustov <nikolay.shustov@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: "groups of files" in Git?
-References: <CAEcERAz3vYekvJ8SM1FfdAVsP3LMVqA1O3yoJVThvg-0fPtVCg@mail.gmail.com>
-        <CAGZ79kZaf7=uwCPJoPoDiAO9QS21bchaKZvDzWJi=ewPZw9PXQ@mail.gmail.com>
-        <xmqqiniwxkmj.fsf@gitster.mtv.corp.google.com>
-        <CAEcERAxJRnB55Ardhs7LDW8M8EG-y+YE-He8hiiQv3wDqtVD3g@mail.gmail.com>
-Date:   Thu, 13 Jul 2017 14:20:13 -0700
-In-Reply-To: <CAEcERAxJRnB55Ardhs7LDW8M8EG-y+YE-He8hiiQv3wDqtVD3g@mail.gmail.com>
-        (Nikolay Shustov's message of "Thu, 13 Jul 2017 15:47:36 -0400")
-Message-ID: <xmqqzic8t4oi.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=vY/oxd5wRC5W8IIfzduqyyvuQZfPUYz6HNU+p5oHIpg=;
+        b=OMM4iTZ8D1Q8YV4j0uFqA5Zm9x0gHYpeZjVkA4Cihg7ZJetZpQR/fp2osvzA9kcC8j
+         P4At8MtHauKGiOvgLeG8gioxZXK7pThDgHhlYbySDjcD6PNdBCWP3NOOwEAEFXSeAIjg
+         Ywy9+iK9kolXVhDS50PwABEP0YcnqqbSKwiSNeoJW6M3PI1GuUYc5yy/Q1WianRR6gII
+         UCpNlv7r4orn2+awVRcnYwRZbFSNhm5hhbL56Sxupf55mAZBkMD8klenjRgxiRoGj6uE
+         B9FzyPIFdtedEGkP2xYtm6f6hE9+vdsgCOiS64MIP4he9zXMa/+Dakia20RBsHUApTJG
+         T3Pg==
+X-Gm-Message-State: AIVw111f0UuEaSKSfZ+Yq8vIZqV7QN97SiDCORhrJBs1pu/1zhdnFwls
+        bmRZO3/TFCAJhPe5Xuy6+1KgRqDF5uGr
+X-Received: by 10.55.77.13 with SMTP id a13mr6910046qkb.194.1499980894634;
+ Thu, 13 Jul 2017 14:21:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.12.131.67 with HTTP; Thu, 13 Jul 2017 14:21:34 -0700 (PDT)
+In-Reply-To: <xmqqeftlz0dv.fsf@gitster.mtv.corp.google.com>
+References: <xmqqeftlz0dv.fsf@gitster.mtv.corp.google.com>
+From:   Lars Schneider <larsxschneider@gmail.com>
+Date:   Thu, 13 Jul 2017 23:21:34 +0200
+Message-ID: <CADJMNYmGR8Ti0S77y2ykPdSZB68DrBb8O0wfX6PaezV1+j2bnw@mail.gmail.com>
+Subject: Re: Reducing redundant build at Travis?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nikolay Shustov <nikolay.shustov@gmail.com> writes:
+On Thu, Jul 13, 2017 at 1:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> I usually try to stay as late as possible to finish all the
+> integration branches in order before pushing out the result; it is
+> more efficient to be able to batch things (for humans).
+>
+> I however noticed that This often means we would have multiple build
+> jobs at Travis for branches and builds on Windows often fails
 
-> I am not really try to ignite the holy war between Perforce and Git
-> (and why would one???), but if you are interested in the answer on how
-> you'd do your scenario in Perforce, it would be: "use shelved
-> changelists".
+The Windows build has some kind of problem since June 22.
+Somehow building gitk-git just blocks the build and waits until
+the timeout. I had no time, yet, to investigate this further.
 
-Oh, that was not my intention, either.  My interest was to see if
-there is a good solution that we could steal from other world.
 
-> In Perforce, you could "shelve" the changelist, similar to "stash" in
-> Git, but the difference is that the Perforce shelved changes are
-> accessible across clients. I.e. the other developer can "unshelve"
-> these pending changes to its sandbox (to the same or the different
-> branch) so that sandbox would get the pending changes as well. That
-> would be like the developer made these changes himself. Whatever
-> automated/manual process is involved, it is typical to run "a trial
-> build/tests" on shelved changelist (i.e. uncommitted yet files) to
-> verify the quality of changes.
-> Git achieves the same through the ease of manipulation with branches
-> and I like the way it does it much more.
+> waiting for its response.  Since I tagged the tip of 'maint', and I
+> wanted to give all the build a fair chance to succeed without other
+> build jobs starving it of resources, I pushed out 'maint' and the
+> tag before others, even though I already have all the other
+> integration branches ready.
+>
+> Unfortunately, https://travis-ci.org/git/git/builds/ shows that it
+> does not care if it spawned a job to build the tip of 'maint' and
+> another for 'v2.13.3' that point at the same thing.
 
-Thanks.  Shelving and letting others unshelve is like keeping the
-changes in separate branches and privately share them among
-developers, so they sound pretty much equivalent features to me.
+That is indeed suprising and wasteful. Looks like other people
+did run into the same issue. How about something like this?
+https://github.com/mockito/mockito/blob/release/2.x/.travis.yml#L26-L29
 
-> My question was about how to robustly handle "multiple pending
-> commits" which in Perforce are represented by concept of pending
-> changelists.
 
-And in Git, they are represented by concept of commits that are not
-yet pushed out to the public repository to become the final history
-carved in stone.
+- Lars
