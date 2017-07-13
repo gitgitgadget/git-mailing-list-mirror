@@ -2,177 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C99EA202A5
-	for <e@80x24.org>; Thu, 13 Jul 2017 20:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF48220365
+	for <e@80x24.org>; Thu, 13 Jul 2017 20:37:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752926AbdGMUfh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 16:35:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39924 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1752847AbdGMUfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 16:35:36 -0400
-Received: (qmail 5563 invoked by uid 109); 13 Jul 2017 20:35:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 20:35:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4948 invoked by uid 111); 13 Jul 2017 20:35:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 16:35:48 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jul 2017 16:35:33 -0400
-Date:   Thu, 13 Jul 2017 16:35:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-Subject: Re: reftable: new ref storage format
-Message-ID: <20170713203533.vcfyf5iei46g4tcf@sigill.intra.peff.net>
-References: <CAJo=hJtyof=HRy=2sLP0ng0uZ4=S-DpZ5dR1aF+VHVETKG20OQ@mail.gmail.com>
- <20170713193234.fkxf73t6jevj4svg@sigill.intra.peff.net>
- <CAGZ79kbY_t=Xtpb7fy0sZ9TWOy-UOUx8X5+_qLx60Dtg48Ok-g@mail.gmail.com>
+        id S1753135AbdGMUhC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 16:37:02 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:32816 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753095AbdGMUhB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 16:37:01 -0400
+Received: by mail-pf0-f193.google.com with SMTP id e199so8393981pfh.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 13:37:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=WUEFdYLkwD/S30q4To05xxSSmsa3upCLLWGtU3+KgEU=;
+        b=dRFlPNjr7fpd4BHU2vk4vkjOi5rzKKcFAvHCto+pbJX2j7VQSmoqS4PlV8V99k/2xN
+         6KaRs9elpC+wz8fW4xe0F+ytZcPpbwkIXdjCJc3mw4RRziZwtLdt0QfFaLDWvfJ46eym
+         9ALzgQL+YN11RGlEItDH9tx1LvdG+AW0n/IJ5/3umGWfeWH6rauwoVO5EdBrD308ICuI
+         DUJqdfO8ifjJcKFhsaTx3h6Bc3gPCxpf6htfIitikhyBpimM3W+XswBCgmT1qS4oQgXe
+         YiMI87G2W2eMf5HPFvHN6iqhA/QfZHcYtXs8TJK10kDivAQwuxnZKUc0DaTKVEKptN+m
+         +1hQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=WUEFdYLkwD/S30q4To05xxSSmsa3upCLLWGtU3+KgEU=;
+        b=Q9nkUXHECyqn0bLbT5s7bcUR0Cc2IIuZtx09RUOun0CT8wx0qaBQekB1VxhuWA2OUp
+         M/dSYLKkjj30sCVmvHoZJJ3I9jROxFxxdLtSM8ykdQJlYmdsSSszVP/LTGXz/vtXt8Yn
+         2jI86F3tdlZb0UcL/nbXovuSwxutAoRFSnBu68YbNtYBle2fIA7ENz4hz27hCwhmRt6Z
+         XboyxIxF1ZBFAmck5HWmRpEnDvTCHD0Nx1a/dECccqGvNWNwO2t216jq2yW1drB0Yehf
+         PrvYo846sm6YlTi/eNiIbsY4+rdKd/p6rPzOcHfWzy1SNOg+AFutGXZZZBgKljkXCFPU
+         yIYg==
+X-Gm-Message-State: AIVw1112vOiEMavi0ZEBYidZgJPGFffDdfjUHhv7F/izfIN4VSBGoTb5
+        BYCO/PE7JLIIKQ==
+X-Received: by 10.99.2.213 with SMTP id 204mr11033931pgc.180.1499978220940;
+        Thu, 13 Jul 2017 13:37:00 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
+        by smtp.gmail.com with ESMTPSA id e13sm11748517pfh.96.2017.07.13.13.37.00
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Jul 2017 13:37:00 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 06/15] ref-filter: move need_color_reset_at_eol into ref_format
+References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
+        <20170713150230.sy7zuksbgjcrllxh@sigill.intra.peff.net>
+Date:   Thu, 13 Jul 2017 13:36:59 -0700
+In-Reply-To: <20170713150230.sy7zuksbgjcrllxh@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 13 Jul 2017 11:02:30 -0400")
+Message-ID: <xmqqh8ygul90.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbY_t=Xtpb7fy0sZ9TWOy-UOUx8X5+_qLx60Dtg48Ok-g@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2017 at 12:56:54PM -0700, Stefan Beller wrote:
+Jeff King <peff@peff.net> writes:
 
-> >> ### Problem statement
-> >>
-> >> Some repositories contain a lot of references (e.g.  android at 866k,
-> >> rails at 31k).  The existing packed-refs format takes up a lot of
-> >> space (e.g.  62M), and does not scale with additional references.
-> >> Lookup of a single reference requires linearly scanning the file.
-> >
-> > I think the linear scan is actually an implementation short-coming. Even
-> > though the records aren't fixed-length, the fact that newlines can only
-> > appear as end-of-record is sufficient to mmap and binary search a
-> > packed-refs file (you just have to backtrack a little when you land in
-> > the middle of a record).
-> 
-> Except that a record is a "delta" to the previous record, so it's not
-> just finding a record, but reconstructing it. Example for records:
+> Calling verify_ref_format() doesn't just confirm that the
+> format is sane; it actually sets some global variables that
+> will be used later when formatting the refs. These logically
+> should belong to the ref_format, which would make it
+> possible to use multiple formats within a single program
+> invocation.
+>
+> Let's move one such flag into the ref_format struct. There
+> are still others that would need to be moved before it would
+> be safe to use multiple formats, but this commit gives a
+> blueprint for how that should look.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> This commit is strictly optional for this series, but I wanted to give a
+> sense of how the rest of the movement might look, since I was thinking
+> about it. The big thing to move would be the used_atoms array, but I
+> punted on that for now.
 
-I was still talking about the existing packed-refs implementation here.
+Heh, when I saw the hunk at 661,+7, used_atom[] was what immediately
+came to mind.  It is OK to punt for the purpose of this patch, but
+moving these statics into the ref-format structure would be a good
+move in the longer term.
 
-I agree that a full binary search of a reftable is harder because of the
-prefix compression (it may still be possible by scanning backwards, but
-I think there are ambiguities when you land in the middle of a record,
-since there's no unambiguous end-of-record character). But I don't think
-it matters. If you binary-search to a constant-sized block, then a
-linear scan of the block is acceptable.
+Thanks.
 
-> >> - Occupy less disk space for large repositories.
-> >
-> > Good goal.  Just to play devil's advocate, the simplest way to do that
-> > with the current code would be to gzip packed-refs (and/or store sha1s
-> > as binary). That works against the "mmap and binary search" plan,
-> > though. :)
-> 
-> Given the compression by delta-ing the name to the previous change and
-> the fact that Gerrit has
-> 
->   refs/heads/changes/1
->   refs/heads/changes/2
->   refs/heads/changes/3
->   ...
-> 
-> I think this format would trump a "dumb" zip.
-> (Github having sequentially numbered pull requests would also
-> benefit here)
-
-You may be surprised. Let's imagine that you have a set of 4096 refs in
-refs/changes/1, refs/changes/2, etc:
-
-  for i in $(seq 1 4096)
-  do
-    echo refs/changes/$i
-  done >input
-
-Now let's do a prefix compression, with a single byte for "how many
-characters to reuse from the last entry":
-
-  perl -lne '
-    my $common;
-    if (defined $last) {
-      chop $last while !/\Q$last\E/;
-      $common = length($last);
-    } else {
-      $common = 0;
-    }
-    print chr($common), substr($_, $common);
-    $last = $_;
-  ' <input >prefix
-
-And a gzip:
-
-  gzip -c -9 <input >zip
-
-And the results:
-
-  $ wc -c prefix; wc -c zip
-  12754 prefix
-  10116 zip
-
-The secret sauce is most likely that gzip is bit-packing, using only a
-few bits per character and not aligning with byte boundaries.
-
-Not that I'm recommending just gzipping the whole packed-refs file. It
-ruins the fast-lookup. We _could_ consider gzipping individual blocks of
-a reftable (or any structure that allows you to search to a
-constant-sized block and do a linear search from there). But given that
-they're in the same ballpark, I'm happy with whatever ends up the
-simplest to code and debug. ;)
-
-Just for fun, here's the decoding script for the prefix-compression:
-
-  perl -e '
-    while (read(STDIN, $common, 1)) {
-      $common = ord($common);
-      $rest = <STDIN>;
-      if ($common > 0) {
-        $rest = substr($last, 0, $common) . $rest
-      }
-      print $rest;
-      $last = $rest}' <prefix
-  '
-
-> > OK, let me try to summarize to see if I understand.
-> 
-> When Shawn presented the proposal, a couple of colleagues here
-> were as excited as I was, but the daring question is, why Shawn
-> did not give the whole thing in BNF format from top down:
-> 
->   initial-block
->   content-blocks*
->   (index-block)
->   footer
-
-Yeah, I agree it took me a bit to figure out what was going on. A
-high-level overview of the format would have been nice.
-
-> >  So lookup really is more
-> > like O(block_size * log(n/block_size)), but block_size being a constant,
-> > it drops out to O(log n).
-> 
-> There is also an index block such that you can binary search across
-> blocks, so
-> 
-> O( log(block_count) + log(intra_block_restarting_points) + small linear scan)
-> 
-> There are 2 binary searches, and the block size is an interesting
-> thing to look at when making up trade offs.
-
-Right, the cross-block index was what I was trying to account for.
-Either way, from a big-O perspective the block size and the number of
-restarts are constants with respect to the total number of entries. I'm
-happy with log(n), though. It's hard to do better.
-
--Peff
+>
+>  ref-filter.c | 7 +++----
+>  ref-filter.h | 3 +++
+>  2 files changed, 6 insertions(+), 4 deletions(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 66d234bb1..178396e1f 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -97,7 +97,6 @@ static struct used_atom {
+>  	} u;
+>  } *used_atom;
+>  static int used_atom_cnt, need_tagged, need_symref;
+> -static int need_color_reset_at_eol;
+>  
+>  static void color_atom_parser(struct used_atom *atom, const char *color_value)
+>  {
+> @@ -661,7 +660,7 @@ int verify_ref_format(struct ref_format *format)
+>  {
+>  	const char *cp, *sp;
+>  
+> -	need_color_reset_at_eol = 0;
+> +	format->need_color_reset_at_eol = 0;
+>  	for (cp = format->format; *cp && (sp = find_next(cp)); ) {
+>  		const char *color, *ep = strchr(sp, ')');
+>  		int at;
+> @@ -673,7 +672,7 @@ int verify_ref_format(struct ref_format *format)
+>  		cp = ep + 1;
+>  
+>  		if (skip_prefix(used_atom[at].name, "color:", &color))
+> -			need_color_reset_at_eol = !!strcmp(color, "reset");
+> +			format->need_color_reset_at_eol = !!strcmp(color, "reset");
+>  	}
+>  	return 0;
+>  }
+> @@ -2083,7 +2082,7 @@ void format_ref_array_item(struct ref_array_item *info,
+>  		sp = cp + strlen(cp);
+>  		append_literal(cp, sp, &state);
+>  	}
+> -	if (need_color_reset_at_eol) {
+> +	if (format->need_color_reset_at_eol) {
+>  		struct atom_value resetv;
+>  		resetv.s = GIT_COLOR_RESET;
+>  		append_atom(&resetv, &state);
+> diff --git a/ref-filter.h b/ref-filter.h
+> index 2bb58879d..9e1e89c19 100644
+> --- a/ref-filter.h
+> +++ b/ref-filter.h
+> @@ -79,6 +79,9 @@ struct ref_format {
+>  	 */
+>  	const char *format;
+>  	int quote_style;
+> +
+> +	/* Internal state to ref-filter */
+> +	int need_color_reset_at_eol;
+>  };
+>  
+>  #define REF_FORMAT_INIT { NULL, 0 }
