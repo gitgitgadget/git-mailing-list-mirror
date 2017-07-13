@@ -2,93 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78E46202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 19:39:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21B6F202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 19:39:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752848AbdGMTjX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 15:39:23 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:34897 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752611AbdGMTjW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 15:39:22 -0400
-Received: by mail-pg0-f44.google.com with SMTP id j186so34284193pge.2
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:39:22 -0700 (PDT)
+        id S1752983AbdGMTjc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 15:39:32 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:33327 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752587AbdGMTjb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 15:39:31 -0400
+Received: by mail-pf0-f172.google.com with SMTP id e7so34167476pfk.0
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 12:39:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Fn/K1LV/n6laAz0XrzSwAKSjak4/APZBsGaoNu8Fo40=;
-        b=HNfTEg8muD/RXx0CYSUfkQ7Nw44Pt/cWAmj+5EiIRujpFZby43wokd0QH/+gcpCUWG
-         efD2hcIAREBFUSlGZcQeTs+TgmrmYkzAoePZucVyvLu7lk5gU15lGklXy1OqHTcSSCtE
-         6mf/pgauZr51e2gziZRVCTqWTcVHfhi7gI3QMPDTGmUIMLDi8m7Y1ed6EKK0QklPqpjN
-         IAJVt82gnqVVA34N31Jy2Boh4JDriVoHFfAHngpJJ0uEgPc2c9H2cPmMq3G+zt5IvmvL
-         Urwzaw7r0kmpWr1J+dto+FClZX1EzG7L/pggWlJfOeBXA6gZlORkhwkejkcw9i7lplBG
-         dEVQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=0gPdrd2T6J+z/o461OIR0CIXIZ1pe6f0VDm4GK38iq8=;
+        b=WgHy8CiWceZipT/JO9a3cChBGpvG664JHE8Uc00hQNq45QZmF+BRaRJqjyyPtWYWzF
+         74Iz1aPShl/vHPe/Kl7Xhj6c8u6hlkQiu9Aq35iMXOxzmq1CBu9pD4tR9im/Z1aiqBBc
+         Hv9TszkHUF0Qu7abHoRviWPtulp3aG89MqKkkrXPnlpBqM8GsJZqRvBmQrD7foaC/88t
+         1SkU11VRqu0wtjPAmj+obr1JdbXMXTlvGqmLuhJUd17nTCoAffW2HzrZbdsKHmmFlPok
+         jXWrfzBmZ06aCa0EJ8W28f518OVt6/kUXMHK8c2T/5+lHIblm3ZJU2VDQ+I9XE6DghGy
+         EbDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Fn/K1LV/n6laAz0XrzSwAKSjak4/APZBsGaoNu8Fo40=;
-        b=ECz7e6EPq0VL7gMFRQK5UlWXhU8QEHfo6bg+Qj3G+1H7tpA2Z0TtHzCvCrOb1kz8bJ
-         I6G1YIpC2I6e73XlHiTTG73eqPCcbK/oYEM5yzSJ53ChevdVYwKazWUA88T+MaSaI7l6
-         JtALOWpneyowQINvXIDefQ8OOHkxupp79345lhpazPZppoqIWBkkXXG6rJ714RFQTLYu
-         LxRRWoXKYBdaHhDzO+5FjVGF4Fjq6o6iukZxvG2OK0+yamofM2ImPN0V5066ISrO0T1R
-         S2gsj6qz/yzOSG4U10EozyLJB24JAlBr43A4bxhTx2OyBxDF8NE7EUtl+AU0zaCFfCrc
-         7sjg==
-X-Gm-Message-State: AIVw113WqRNXXwygDDRfYg2wU0eBQ9+i4OzfmFUOUoC1G1US/JKD2moU
-        gpMrqcb8TvwIIpMQFjQvfhjTvNSWdRaJVnRdQA==
-X-Received: by 10.98.147.142 with SMTP id r14mr1271594pfk.150.1499974761416;
- Thu, 13 Jul 2017 12:39:21 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=0gPdrd2T6J+z/o461OIR0CIXIZ1pe6f0VDm4GK38iq8=;
+        b=LR51IBb/jtwRfXimmttNbRgVqOA69M2IuqNtewwUIj7/4bEUZiWnnlQwEPTzbKPzUk
+         RTeFvoAEK7FdcukEzYa6jE1qZhlfdvz3EpABhBu1pDz6XAy0zGqymApeJEVDvzojZybR
+         FyCHXWEuk5qVi9rv6D1vx2dbe0DbQboVBGblrtTukPN4RVqYbaIVRY5kgsJ0JX86xY9Z
+         GYtVYHiwGwc0GmF3ubU6a1EFf+TGprIU6H78TXQ7NBPTBGEVagRVqz/BczRCoou/rZix
+         Ig2NrpGqfw99SZyUTYJ/AmbPFbu83X8x2+0oY6q0y6W4HFx/AePrnC/8c05f8pBIpz9Z
+         siXg==
+X-Gm-Message-State: AIVw113ayE5Pw944R9m9XdyNvYTnHZ79Mekc5fgMVEPn6oaaJQ28W5Ld
+        vPIEWkfRiAOf4g==
+X-Received: by 10.98.60.157 with SMTP id b29mr1236142pfk.170.1499974770997;
+        Thu, 13 Jul 2017 12:39:30 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
+        by smtp.gmail.com with ESMTPSA id 75sm12364777pfk.84.2017.07.13.12.39.30
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Jul 2017 12:39:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2017, #03; Mon, 10)
+References: <xmqqlgnv52oq.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.21.1.1707131435220.4193@virtualbox>
+        <xmqqzic8xsxd.fsf@gitster.mtv.corp.google.com>
+        <20170713155313.whucxkoita6nvmhz@sigill.intra.peff.net>
+        <xmqqvamwxm1y.fsf@gitster.mtv.corp.google.com>
+        <20170713181350.tb6gndxc66ewpggj@sigill.intra.peff.net>
+        <xmqqvamww3tc.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 13 Jul 2017 12:39:29 -0700
+In-Reply-To: <xmqqvamww3tc.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 13 Jul 2017 12:10:39 -0700")
+Message-ID: <xmqq1spkw2ha.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Thu, 13 Jul 2017 12:39:20 -0700 (PDT)
-In-Reply-To: <xmqqa848xjxr.fsf@gitster.mtv.corp.google.com>
-References: <20170712234504.15811-1-sbeller@google.com> <20170713000117.GJ93855@aiede.mtv.corp.google.com>
- <xmqq60exyx5k.fsf@gitster.mtv.corp.google.com> <CAGZ79kaHX-YCMv01T-QE=mYeymjTnwrpg9-bsOrCjg3NWEunDA@mail.gmail.com>
- <xmqqa848xjxr.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Jul 2017 12:39:20 -0700
-Message-ID: <CAGZ79kYtRbHvfC6d=+eEXCceJam4wwo9XqvY752c_pg6kq90DA@mail.gmail.com>
-Subject: Re: [PATCH] submodule: use cheaper check for submodule pushes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2017 at 11:37 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Jeff King <peff@peff.net> writes:
 >
-> I think Jonathan's question (which I concurred) is if we also ended
-> up relying on the side effect of calling that function (i.e. being
-> able to now find objects that are not in our repository but in the
-> submodule's object store).  By looking at the eb21c732d6, we can
-> tell that the original didn't mean to and didn't add any code that
-> relies on the ability to be able to read from the submodule object
-> store.  I am not sure if that is still true after 5 years (i.e. is
-> there any new code added in the meantime that made us depend on the
-> ability to read from submodule object store?).
+>> [1] Another sticking point is that this really does need to be in the
+>>     reflog of the ref we are pushing (and not, e.g., HEAD). But one does
+>>     not always push from a ref. I suspect that's OK in practice, though.
+>>     If you are doing "git push --force-with-lease HEAD~2:master", it is
+>>     probably OK for us to error out with "uh, lease from what?".
+>
+> I actually expect this to bite me personally, as I often do not
+> rewind the actual "topic" ref that is my target of rewriting,
+> because I am a chicken---I detach the HEAD and build a history there
+> to see if I can come up with a better history, compare the result
+> with what is on the "topic" (which is not touched at all during the
+> rewriting), and after all is done, do a "checkout -B topic".  The
+> "remote tip must appear in the local reflog" rule will never be
+> satisfied.
 
-Yes we are safe, because the function itself only spawns a child process
-(not using any of the objects).
+Well "bite" is not quite accurate, as I do not push to a repository
+racing with others, and there is no reason for me to use --force
+with lease.  I always push '+pu', and push '+next" once after each
+release, and there is no need for any lease when I push things out.
 
-It's only caller push_unpushed_submodules also doesn't rely on objects
-loaded after calling push_submodule.
+But if I were collaborating with others in another project that uses
+a shared central repository workflow, and if I were in the mood to
+see how well/better this "improved safer DWIM" mode behaves, then it
+would bite me.
 
-The caller of push_unpushed_submodules (transport.c, transport_push)
-also doesn't need submodule objects loaded.
-
-> My hunch (and hope) is that we are probably safe, but that is a lot
-> weaker than "yes this is a good change we want to apply".
-
-Given the above (I went through the code), all I can do is repeating
-"yes this is a good change we want to apply".
-
-Thanks,
-Stefan
