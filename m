@@ -2,238 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8BFF202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 15:05:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09EE9202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 15:07:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751267AbdGMPFM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 11:05:12 -0400
-Received: from siwi.pair.com ([209.68.5.199]:22499 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751193AbdGMPFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 11:05:11 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 0D94784533;
-        Thu, 13 Jul 2017 11:05:10 -0400 (EDT)
-Received: from [10.160.98.223] (unknown [167.220.148.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id D0C978452E;
-        Thu, 13 Jul 2017 11:05:09 -0400 (EDT)
-Subject: Re: [RFC PATCH 1/3] promised-blob, fsck: introduce promised blobs
-From:   Jeff Hostetler <git@jeffhostetler.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-References: <cover.1499800530.git.jonathantanmy@google.com>
- <f9c7d4b3f800ea31e85e4897ee7048fec1e3c2f0.1499800530.git.jonathantanmy@google.com>
- <890a36fc-be16-83bc-fec6-94e21d0f7d0a@jeffhostetler.com>
- <20170712192831.GG93855@aiede.mtv.corp.google.com>
- <4b326d17-3896-a374-9d7a-d0c89954c943@jeffhostetler.com>
-Message-ID: <e44c0778-326e-9f9c-ecb3-eba5da170bd0@jeffhostetler.com>
-Date:   Thu, 13 Jul 2017 11:05:09 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1752429AbdGMPGs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 11:06:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39144 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1751280AbdGMPGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 11:06:47 -0400
+Received: (qmail 24344 invoked by uid 109); 13 Jul 2017 15:06:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 15:06:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32237 invoked by uid 111); 13 Jul 2017 15:06:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Jul 2017 11:06:55 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Jul 2017 11:06:40 -0400
+Date:   Thu, 13 Jul 2017 11:06:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 10/15] ref-filter: pass ref_format struct to atom parsers
+Message-ID: <20170713150640.qnefucyb4buggo6q@sigill.intra.peff.net>
+References: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <4b326d17-3896-a374-9d7a-d0c89954c943@jeffhostetler.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170713145553.3epnsw23zajwg3ee@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The callback for parsing each formatting atom gets to see
+only the atom struct (which it's filling in) and the text to
+be parsed. This doesn't leave any room for it to behave
+differently based on context known only to the ref_format.
 
+We can solve this by passing in the surrounding ref_format
+to each parser. Note that this makes things slightly awkward
+for sort strings, which parse atoms without having a
+ref_format. We'll solve that by using a dummy ref_format
+with default parameters.
 
-On 7/13/2017 10:48 AM, Jeff Hostetler wrote:
-> 
-> 
-> On 7/12/2017 3:28 PM, Jonathan Nieder wrote:
->> Hi,
->>
->> Jeff Hostetler wrote:
->>
->>> My primary concern is scale and managing the list of objects over time.
->> [...]
->>>                                                                   For
->>> example, on the Windows repo we have (conservatively) 100M+ blobs (and
->>> growing).  Assuming 28 bytes per, gives a 2.8GB list to be manipulated.
->>>
->>> If I understand your proposal, newly-omitted blobs would need to be
->>> merged into the promised-blob list after each fetch.  The fetch itself
->>> may not have that many new entries, but inserting them into the existing
->>> list will be slow.
->>
->> This is a good point.  An alternative would be to avoid storing the
->> list and instead use a repository extension that treats all missing
->> blobs in the repository similarly to promised blobs (with a weaker
->> promise, where the server is allowed to return 404).  The downsides:
->>
->> - blob sizes are not available without an additional request, e.g. for
->>    directory listings
->>
->> - the semantics of has_object_file become more complicated.  If it
->>    is allowed to return false for omitted blobs, then callers have to
->>    be audited to tolerate that and try to look up the blob anyway.
->>    If it has to contact the server to find out whether an omitted blob
->>    is available, then callers have to be audited to skip this expensive
->>    operation when possible.
->>
->> - similarly, the semantics of sha1_object_info{,_extended} become more
->>    complicated.  If they are allowed to return -1 for omitted blobs,
->>    then callers have to be audited to handle that. If they have to
->>    contact the server to find the object type and size, it becomes
->>    expensive in a way that affects callers.
->>
->> - causes futile repeated requests to the server for objects that don't
->>    exist.  Caching negative lookups is fussy because a later push could
->>    cause those objects to exist --- though it should be possible for
->>    fetches to invalidate entries in such a cache using the list of
->>    promised blobs sent by the server.
-> 
-> Also good points. :-)
-> 
-> Would it be better to:
-> [] let fetch-pack/index-pack on the client compute the set of missing
->     objects based upon the commit range in the response.
-> [] build a "pack-<id>.promised" as a peer of the "pack-<id>.[pack,idx]"
->     files.
-> [] Use Jonathan's binary format with (-1LL) for the sizes, but also add
->     a flags/object-type word.  Since the local commit/object traversal
->     usually knows the type of object (either by context or the mode field
->     in the parent entry), index-pack can set it immediately.
-> [] Repack would "do the right thing" when building new packfiles from
->     existing packfiles (and merge/prune/etc. a new promise file).
-> 
-> Conceptually, these "pack-<id>.promised" files would be read-only once
-> created, like the corresponding .pack/.idx files.  But since we have a
-> fixed record size, we could let the dynamic object size requests update
-> the sizes in-place.   (And if an update failed for some reason, the
-> client could just go on and use the result (as we do when trying to
-> update mtime info in the index).)
-> 
-> This gives us the full set of omitted objects without the network
-> overhead and without the overhead of merging them into a single list.
-> And we defer the cost of getting an object's size until we actually
-> need the info.
-> 
-> 
->> [...]
->>> In such a "sparse clone", it would be nice to omit unneeded tree objects
->>> in addition to just blobs.   I say that because we are finding with GVFS
->>> on the Windows repo, that even with commits-and-trees-only filtering,
->>> the number of tree objects is overwhelming.  So I'm also concerned about
->>> limiting the list to just blobs.  If we need to have this list, it
->>> should be able to contain any object.  (Suggesting having an object type
->>> in the entry.)
->>
->> Would it work to have a separate lists of blobs and trees (either in
->> separate files or in the same file)?
->>
->> One option would be to add a version number / magic string to the start
->> of the file.  That would allow making format changes later without a
->> proliferation of distinct repository extensions.
-> 
-> As I suggested above, we could just put them in the same file with a
-> flags/object-type field.
-> 
-> Without getting too nerdy here, we could even say that the size doesn't
-> need to be a int:64 -- definitely bigger than int:32, but we don't need
-> the full int:64.  We could make the size a int:40 or int:48 and use the
-> rest of the QWORD for flags/object-type.
-> 
-> 
->> [...]
->>> I assume that we'll also need a promised-blob.lock file to control
->>> access during list manipulation.  This is already a sore spot with the
->>> index; I'd hate to create another one.
->>
->> Can you say more about this concern?  My experience with concurrent
->> fetches has already not been great (since one fetch process is not
->> aware of what the other has fetched) --- is your concern that the
->> promised-blob facility would affect pushes as well some day?
-> 
-> [I wrote this before I wrote the multi-peer-file suggestion above.]
-> 
-> I'm assuming that anyone adding a new promised-blob to the single file
-> will use the standard "read foo, write foo.lock, rename" trick.  If we
-> have a large number of omitted blobs, this file will be large and the
-> insert will take a non-trivial amount of time.
-> 
-> Concurrent fetches does sound a bit silly, so we only have to worry
-> about the time to copy the bits on disk.
-> 
-> If other operations (such as demand loading missing blobs in a log or
-> diff) need to remove promised-blobs from the list as they create
-> loose blobs, then they will get stuck on the lock.  I suppose we could
-> just say that the promised-blob list may have false-positives in it
-> (because lookups in it won't happen until the packed and loose objects
-> have been searched and failed) and just wait for GC to clean it.
-> 
-> And there's always that stale lock problem where something dies holding
-> the lock and doesn't delete it.
-> 
-> Some of these could be addressed with a DB or something that allows
-> incremental and atomic updates rather than a regular index-like
-> flat file, but I don't want to dive into that here.
-> 
-> 
->>> I also have to wonder about the need to have a complete list of omitted
->>> blobs up front.  It may be better to just relax the consistency checks
->>> and assume a missing blob is "intentionally missing" rather than
->>> indicating a corruption somewhere.
->>
->> We've discussed this previously on list and gone back and forth. :)
->>
->>>                                      And then let the client do a later
->>> round-trip to either demand-load the object -or- demand-load the
->>> existence/size info if/when it really matters.
->>
->> The cost of demand-loading this existence/size information is what
->> ultimately convinced me of this approach.
->>
->> But I can see how the tradeoffs differ between the omit-large-blobs
->> case and the omit-all-blobs case.  We might end up having to support
->> both modes. :(
-> 
-> I think I've been in both camps myself.
-> 
-> I'm not sure it would be that hard to support both (other than being
-> unfortunate), assuming pack-objects could build the same binary data
-> as I suggested be computed by fetch-pack/index-pack above.  It could
-> then just be a run-time decision.
-> 
-> I could even see it being useful -- do the initial clone with
-> client-side computation (because you're getting mostly ancient data
-> that you don't care about) and then let fetches use server-side
-> computation (because you're more likely to care about the sizes of
-> objects near your branch heads).
-> 
-> 
->>> Maybe we should add a verb to your new fetch-blob endpoint to just get
->>> the size of one or more objects to help with this.
->>
->> No objections from me, though we don't need it yet.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+If we eventually do move used_atoms into the format, we'd probably need
+to either have a separate ref_format for the sorting atoms, or have them
+share with the struct used for actual formatting. At this point I don't
+think it matters at all. You can do nonsense like:
 
-I think it would also be helpful to consider more than one type of size
-request.
-[1] get the size of a single objects
-[2] get the sizes of a set of objects
-[3] get the sizes for all objects directly referenced by a tree.
-     if both sides have a tree object, then we don't need to send a list
-     blobs -- just ask for all the blobs referenced by the tree object.
-     the server could just return an array of sizes ordered by blob
-     position in the tree.
-[4] recursive version of [3].
-[5] recursive for a commit (basically just a convenience on [4] and the
-     tree root).
+  git for-each-ref --sort='%(color:red)'
 
-This would let the clone do a client-side computation and then (in a
-request to the new end-point) get the sizes of everything in HEAD, for
-example.
+and after this series it will not respect your color.ui setting. But
+since in either case it's a ridiculous sort key (whether it shows the
+color or not, it's the same for all refs and so can't affect the
+sorting), it's not worth caring about.
 
-Thanks
-Jeff
+If we do eventually refactor ref_format more such that the dummy struct
+doesn't cut it, I think we can deal with the issue then.
+
+ ref-filter.c | 42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
+
+diff --git a/ref-filter.c b/ref-filter.c
+index 080f5aceb..129a63677 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -98,7 +98,7 @@ static struct used_atom {
+ } *used_atom;
+ static int used_atom_cnt, need_tagged, need_symref;
+ 
+-static void color_atom_parser(struct used_atom *atom, const char *color_value)
++static void color_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *color_value)
+ {
+ 	if (!color_value)
+ 		die(_("expected format: %%(color:<color>)"));
+@@ -126,7 +126,7 @@ static void refname_atom_parser_internal(struct refname_atom *atom,
+ 		die(_("unrecognized %%(%s) argument: %s"), name, arg);
+ }
+ 
+-static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
++static void remote_ref_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	struct string_list params = STRING_LIST_INIT_DUP;
+ 	int i;
+@@ -160,28 +160,28 @@ static void remote_ref_atom_parser(struct used_atom *atom, const char *arg)
+ 	string_list_clear(&params, 0);
+ }
+ 
+-static void body_atom_parser(struct used_atom *atom, const char *arg)
++static void body_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	if (arg)
+ 		die(_("%%(body) does not take arguments"));
+ 	atom->u.contents.option = C_BODY_DEP;
+ }
+ 
+-static void subject_atom_parser(struct used_atom *atom, const char *arg)
++static void subject_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	if (arg)
+ 		die(_("%%(subject) does not take arguments"));
+ 	atom->u.contents.option = C_SUB;
+ }
+ 
+-static void trailers_atom_parser(struct used_atom *atom, const char *arg)
++static void trailers_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	if (arg)
+ 		die(_("%%(trailers) does not take arguments"));
+ 	atom->u.contents.option = C_TRAILERS;
+ }
+ 
+-static void contents_atom_parser(struct used_atom *atom, const char *arg)
++static void contents_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	if (!arg)
+ 		atom->u.contents.option = C_BARE;
+@@ -201,7 +201,7 @@ static void contents_atom_parser(struct used_atom *atom, const char *arg)
+ 		die(_("unrecognized %%(contents) argument: %s"), arg);
+ }
+ 
+-static void objectname_atom_parser(struct used_atom *atom, const char *arg)
++static void objectname_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	if (!arg)
+ 		atom->u.objectname.option = O_FULL;
+@@ -218,7 +218,7 @@ static void objectname_atom_parser(struct used_atom *atom, const char *arg)
+ 		die(_("unrecognized %%(objectname) argument: %s"), arg);
+ }
+ 
+-static void refname_atom_parser(struct used_atom *atom, const char *arg)
++static void refname_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	refname_atom_parser_internal(&atom->u.refname, arg, atom->name);
+ }
+@@ -234,7 +234,7 @@ static align_type parse_align_position(const char *s)
+ 	return -1;
+ }
+ 
+-static void align_atom_parser(struct used_atom *atom, const char *arg)
++static void align_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	struct align *align = &atom->u.align;
+ 	struct string_list params = STRING_LIST_INIT_DUP;
+@@ -273,7 +273,7 @@ static void align_atom_parser(struct used_atom *atom, const char *arg)
+ 	string_list_clear(&params, 0);
+ }
+ 
+-static void if_atom_parser(struct used_atom *atom, const char *arg)
++static void if_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	if (!arg) {
+ 		atom->u.if_then_else.cmp_status = COMPARE_NONE;
+@@ -287,7 +287,7 @@ static void if_atom_parser(struct used_atom *atom, const char *arg)
+ 	}
+ }
+ 
+-static void head_atom_parser(struct used_atom *atom, const char *arg)
++static void head_atom_parser(const struct ref_format *format, struct used_atom *atom, const char *arg)
+ {
+ 	struct object_id unused;
+ 
+@@ -297,7 +297,7 @@ static void head_atom_parser(struct used_atom *atom, const char *arg)
+ static struct {
+ 	const char *name;
+ 	cmp_type cmp_type;
+-	void (*parser)(struct used_atom *atom, const char *arg);
++	void (*parser)(const struct ref_format *format, struct used_atom *atom, const char *arg);
+ } valid_atom[] = {
+ 	{ "refname" , FIELD_STR, refname_atom_parser },
+ 	{ "objecttype" },
+@@ -364,7 +364,8 @@ struct atom_value {
+ /*
+  * Used to parse format string and sort specifiers
+  */
+-static int parse_ref_filter_atom(const char *atom, const char *ep)
++static int parse_ref_filter_atom(const struct ref_format *format,
++				 const char *atom, const char *ep)
+ {
+ 	const char *sp;
+ 	const char *arg;
+@@ -412,7 +413,7 @@ static int parse_ref_filter_atom(const char *atom, const char *ep)
+ 		arg = used_atom[at].name + (arg - atom) + 1;
+ 	memset(&used_atom[at].u, 0, sizeof(used_atom[at].u));
+ 	if (valid_atom[i].parser)
+-		valid_atom[i].parser(&used_atom[at], arg);
++		valid_atom[i].parser(format, &used_atom[at], arg);
+ 	if (*atom == '*')
+ 		need_tagged = 1;
+ 	if (!strcmp(valid_atom[i].name, "symref"))
+@@ -668,7 +669,7 @@ int verify_ref_format(struct ref_format *format)
+ 		if (!ep)
+ 			return error(_("malformed format string %s"), sp);
+ 		/* sp points at "%(" and ep points at the closing ")" */
+-		at = parse_ref_filter_atom(sp + 2, ep);
++		at = parse_ref_filter_atom(format, sp + 2, ep);
+ 		cp = ep + 1;
+ 
+ 		if (skip_prefix(used_atom[at].name, "color:", &color))
+@@ -2075,7 +2076,9 @@ void format_ref_array_item(struct ref_array_item *info,
+ 		ep = strchr(sp, ')');
+ 		if (cp < sp)
+ 			append_literal(cp, sp, &state);
+-		get_ref_atom_value(info, parse_ref_filter_atom(sp + 2, ep), &atomv);
++		get_ref_atom_value(info,
++				   parse_ref_filter_atom(format, sp + 2, ep),
++				   &atomv);
+ 		atomv->handler(atomv, &state);
+ 	}
+ 	if (*cp) {
+@@ -2116,8 +2119,13 @@ void pretty_print_ref(const char *name, const unsigned char *sha1,
+ 
+ static int parse_sorting_atom(const char *atom)
+ {
++	/*
++	 * This parses an atom using a dummy ref_format, since we don't
++	 * actually care about the formatting details.
++	 */
++	struct ref_format dummy = REF_FORMAT_INIT;
+ 	const char *end = atom + strlen(atom);
+-	return parse_ref_filter_atom(atom, end);
++	return parse_ref_filter_atom(&dummy, atom, end);
+ }
+ 
+ /*  If no sorting option is given, use refname to sort as default */
+-- 
+2.13.2.1157.gc6daca446
+
