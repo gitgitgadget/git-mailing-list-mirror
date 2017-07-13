@@ -6,32 +6,34 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D0DF202AC
-	for <e@80x24.org>; Thu, 13 Jul 2017 17:35:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14F81202AC
+	for <e@80x24.org>; Thu, 13 Jul 2017 17:35:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752456AbdGMRfX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 13:35:23 -0400
-Received: from siwi.pair.com ([209.68.5.199]:61602 "EHLO siwi.pair.com"
+        id S1752477AbdGMRfb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 13:35:31 -0400
+Received: from siwi.pair.com ([209.68.5.199]:38849 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751267AbdGMRfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 13:35:22 -0400
+        id S1751267AbdGMRfb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 13:35:31 -0400
 Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 5EAD4844E9;
-        Thu, 13 Jul 2017 13:35:21 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTP id 908C0844E3;
+        Thu, 13 Jul 2017 13:35:30 -0400 (EDT)
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id B06C8844E5;
-        Thu, 13 Jul 2017 13:35:20 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id E33FF844E5;
+        Thu, 13 Jul 2017 13:35:29 -0400 (EDT)
 From:   Jeff Hostetler <git@jeffhostetler.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, ethomson@edwardthomson.com,
         jonathantanmy@google.com, jrnieder@gmail.com,
         jeffhost@microsoft.com
-Subject: [PATCH v2 00/19] WIP object filtering for partial clone
-Date:   Thu, 13 Jul 2017 17:34:40 +0000
-Message-Id: <20170713173459.3559-1-git@jeffhostetler.com>
+Subject: [PATCH v2 01/19] dir: refactor add_excludes()
+Date:   Thu, 13 Jul 2017 17:34:41 +0000
+Message-Id: <20170713173459.3559-2-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20170713173459.3559-1-git@jeffhostetler.com>
+References: <20170713173459.3559-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -39,129 +41,120 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-This WIP is a follow up to my earlier patch series to teach
-pack-objects to omit large blobs from packfiles. [1]
+Refactor add_excludes() to separate the reading of the
+exclude file into a buffer and the parsing of the buffer
+into exclude_list items.
 
-Like the previous version, this version builds upon a suggestion from
-Peff [2] to use the traverse_commit_list() machinery to allow custom
-object filtering using a filter callback.  This hides the filtering
-logic in list-objects.c and list-objects-filters.c and minimizes the
-changes to actual commands, such as pack-objects.
+Add add_excludes_from_blob_to_list() to allow an exclude
+file be specified with an OID.
 
-This version adds that same filtering capability to rev-list allowing
-filtering to be demonstrated without building a packfile.  Filtered
-blobs are printed with a leading "~" (along with their sizes).
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ dir.c | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ dir.h |  4 ++++
+ 2 files changed, 55 insertions(+), 2 deletions(-)
 
-    $ ./git rev-list --objects HEAD~1..HEAD
-    74f806c70507317b8bdbcf3b08459c7c83906bee
-    818617707aac81ae4620239182b514f65638e37e 
-    d21329bffeb9801682d8d6d6acedc2958d17f4e0 builtin
-    306c16551e548ace12c709a332bfea22adcc395f builtin/fetch.c
-
-    $ ./git rev-list --objects --filter-omit-all-blobs --filter-print-manifest HEAD~1..HEAD
-    74f806c70507317b8bdbcf3b08459c7c83906bee
-    818617707aac81ae4620239182b514f65638e37e 
-    d21329bffeb9801682d8d6d6acedc2958d17f4e0 builtin
-    ~306c16551e548ace12c709a332bfea22adcc395f 40732
-
-    $ ./git rev-list --objects --filter-omit-all-blobs --filter-print-manifest --quiet HEAD~1..HEAD
-    ~306c16551e548ace12c709a332bfea22adcc395f 40732
-
-This version contains 3 filters:
-1. filter-omit-all-blobs to exclude all blobs (trees and commits only).
-
-2. filter-omit-large-blobs=<n>[kmg] to exclude blobs larger than <n>
-   (but always including ".git*" special files).
-
-3. filter-use-sparse=<blob-ish> to exclude blobs not needed by the
-   corresponding sparse-checkout.
-
-Sparse-checkout filtering is currently limited to filtering unneeded blobs.
-A later enhancement should be able to also filter unneeded tree objects.
-
-This version updates clone, fetch, fetch-pack, and upload-pack commands
-to pass the additional object-filter parameters.
-
-As a (possibly) temporary measure, some commands have been updated to
-relax missing blob errors during consistency checks.  Maintining info
-on missing blobs is currently being discussed in [3].
-
-TODO
-1. Incorporate with a patch series like [4] to dynamically fetch a
-   missing blob from the server in read_object on demand.
-2. Resolve missing blob consistency check issue.
-3. Store filter options from clone in config or .git/info and default
-   to them in subsequent fetches.
-4. fsck, gc, and assorted commands.
-5. testing.
-
-
-[1] https://public-inbox.org/git/20170622203615.34135-1-git@jeffhostetler.com/
-[2] https://public-inbox.org/git/20170309073117.g3br5btsfwntcdpe@sigill.intra.peff.net/
-[3] https://public-inbox.org/git/cover.1499800530.git.jonathantanmy@google.com/
-[4] https://public-inbox.org/git/20170505152802.6724-1-benpeart@microsoft.com/
-
-
-Jeff Hostetler (19):
-  dir: refactor add_excludes()
-  oidset2: create oidset subclass with object length and pathname
-  list-objects: filter objects in traverse_commit_list
-  list-objects-filters: add omit-all-blobs filter
-  list-objects-filters: add omit-large-blobs filter
-  list-objects-filters: add use-sparse-checkout filter
-  object-filter: common declarations for object filtering
-  rev-list: add object filtering support
-  rev-list: add filtering help text
-  t6112: rev-list object filtering test
-  pack-objects: add object filtering support
-  pack-objects: add filtering help text
-  upload-pack: add filter-objects to protocol documentation
-  upload-pack: add object filtering
-  fetch-pack: add object filtering support
-  connected: add filter_allow_omitted option to API
-  clone: add filter arguments
-  index-pack: relax consistency checks for omitted objects
-  fetch: add object filtering to fetch
-
- Documentation/git-pack-objects.txt                |  14 +
- Documentation/git-rev-list.txt                    |   7 +-
- Documentation/rev-list-options.txt                |  26 ++
- Documentation/technical/pack-protocol.txt         |  16 +
- Documentation/technical/protocol-capabilities.txt |   7 +
- Makefile                                          |   3 +
- builtin/clone.c                                   |  28 ++
- builtin/fetch-pack.c                              |   3 +
- builtin/fetch.c                                   |  27 +-
- builtin/index-pack.c                              |  15 +
- builtin/pack-objects.c                            |  33 +-
- builtin/rev-list.c                                |  58 +++-
- connected.c                                       |   3 +
- connected.h                                       |   6 +
- dir.c                                             |  53 +++-
- dir.h                                             |   4 +
- fetch-pack.c                                      |  28 ++
- fetch-pack.h                                      |   2 +
- list-objects-filters.c                            | 361 ++++++++++++++++++++++
- list-objects-filters.h                            |  45 +++
- list-objects.c                                    |  66 +++-
- list-objects.h                                    |  30 ++
- object-filter.c                                   | 201 ++++++++++++
- object-filter.h                                   | 145 +++++++++
- oidset2.c                                         | 101 ++++++
- oidset2.h                                         |  56 ++++
- t/t6112-rev-list-filters-objects.sh               |  37 +++
- transport.c                                       |  27 ++
- transport.h                                       |   8 +
- upload-pack.c                                     |  39 ++-
- 30 files changed, 1425 insertions(+), 24 deletions(-)
- create mode 100644 list-objects-filters.c
- create mode 100644 list-objects-filters.h
- create mode 100644 object-filter.c
- create mode 100644 object-filter.h
- create mode 100644 oidset2.c
- create mode 100644 oidset2.h
- create mode 100644 t/t6112-rev-list-filters-objects.sh
-
+diff --git a/dir.c b/dir.c
+index 31f9343..aeba965 100644
+--- a/dir.c
++++ b/dir.c
+@@ -725,6 +725,11 @@ static void invalidate_directory(struct untracked_cache *uc,
+ 		dir->dirs[i]->recurse = 0;
+ }
+ 
++static int add_excludes_from_buffer(
++	char *buf, size_t size,
++	const char *base, int baselen,
++	struct exclude_list *el);
++
+ /*
+  * Given a file with name "fname", read it (either from disk, or from
+  * the index if "check_index" is non-zero), parse it and store the
+@@ -739,9 +744,9 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 			struct sha1_stat *sha1_stat)
+ {
+ 	struct stat st;
+-	int fd, i, lineno = 1;
++	int fd;
+ 	size_t size = 0;
+-	char *buf, *entry;
++	char *buf;
+ 
+ 	fd = open(fname, O_RDONLY);
+ 	if (fd < 0 || fstat(fd, &st) < 0) {
+@@ -798,6 +803,18 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 		}
+ 	}
+ 
++	add_excludes_from_buffer(buf, size, base, baselen, el);
++	return 0;
++}
++
++static int add_excludes_from_buffer(
++	char *buf, size_t size,
++	const char *base, int baselen,
++	struct exclude_list *el)
++{
++	int i, lineno = 1;
++	char *entry;
++
+ 	el->filebuf = buf;
+ 
+ 	if (skip_utf8_bom(&buf, size))
+@@ -826,6 +843,38 @@ int add_excludes_from_file_to_list(const char *fname, const char *base,
+ 	return add_excludes(fname, base, baselen, el, check_index, NULL);
+ }
+ 
++int add_excludes_from_blob_to_list(
++	struct object_id *oid,
++	const char *base, int baselen,
++	struct exclude_list *el)
++{
++	char *buf;
++	unsigned long size;
++	enum object_type type;
++
++	buf = read_sha1_file(oid->hash, &type, &size);
++	if (!buf)
++		return -1;
++
++	if (type != OBJ_BLOB) {
++		free(buf);
++		return -1;
++	}
++
++	if (size == 0) {
++		free(buf);
++		return 0;
++	}
++
++	if (buf[size - 1] != '\n') {
++		buf = xrealloc(buf, st_add(size, 1));
++		buf[size++] = '\n';
++	}
++
++	add_excludes_from_buffer(buf, size, base, baselen, el);
++	return 0;
++}
++
+ struct exclude_list *add_exclude_list(struct dir_struct *dir,
+ 				      int group_type, const char *src)
+ {
+diff --git a/dir.h b/dir.h
+index edb5fda..8e754e5 100644
+--- a/dir.h
++++ b/dir.h
+@@ -242,6 +242,10 @@ extern struct exclude_list *add_exclude_list(struct dir_struct *dir,
+ extern int add_excludes_from_file_to_list(const char *fname, const char *base, int baselen,
+ 					  struct exclude_list *el, int check_index);
+ extern void add_excludes_from_file(struct dir_struct *, const char *fname);
++extern int add_excludes_from_blob_to_list(
++	struct object_id *oid,
++	const char *base, int baselen,
++	struct exclude_list *el);
+ extern void parse_exclude_pattern(const char **string, int *patternlen, unsigned *flags, int *nowildcardlen);
+ extern void add_exclude(const char *string, const char *base,
+ 			int baselen, struct exclude_list *el, int srcpos);
 -- 
 2.9.3
 
