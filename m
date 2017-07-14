@@ -2,103 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CC3320357
-	for <e@80x24.org>; Fri, 14 Jul 2017 19:28:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D9AE20365
+	for <e@80x24.org>; Fri, 14 Jul 2017 19:35:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751032AbdGNT2n (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 15:28:43 -0400
-Received: from mail-wr0-f169.google.com ([209.85.128.169]:36328 "EHLO
-        mail-wr0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750786AbdGNT2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 15:28:42 -0400
-Received: by mail-wr0-f169.google.com with SMTP id v60so5362127wrc.3
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 12:28:41 -0700 (PDT)
+        id S1751134AbdGNTfj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 15:35:39 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35731 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751056AbdGNTfi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 15:35:38 -0400
+Received: by mail-pf0-f182.google.com with SMTP id c73so49842070pfk.2
+        for <git@vger.kernel.org>; Fri, 14 Jul 2017 12:35:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=bWBEBbMgQ4ZgjzbcRlAIwqDJqK30ux8BisawukIjGMM=;
-        b=aIdAyw9GGbFD9zmTle7pXlYOPGeWaBqtRYjqMRHvEMDsILTtb8Vgp0fNEy2rWp6GVO
-         WTLlsr8+nYoXI/V3EmTRm/SukOwGGsoIrr/rdiO+XKtpt77Gk2Y8jv5Y+qwxvXlP7nuP
-         xz6SLSB9beQ+s7yiTzaBxttf5A1Mq5NSZAh3oJ/CmjHAmKjaJB86JDNP/URe8Ny4cURz
-         h+IW+4P7WJft1eZiirXpHUI1xTekcjZonXcXEdeJsxfT/jBAVFxcU2uhrmx1mvmx/9T1
-         k+Bf9pMl60/1A2GpfMWO+LMZK5zxcnIZj73rYoJ1NXpD3PtdaVF5mc4PUxMNbuKvkdRv
-         ZZAw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rhnsWTcVrd57j2s4UB3iaFsfiDbKoXNf1R+kAJPBRsA=;
+        b=fP2uWHehbVAn7yMzJRyYgQNqEX15uwZV8ISoPXO7RdMVOJFaS9vG6TPNieuA8Z1aaD
+         zwZZBtD+4fgN442+LmKhTtzDlrqast/+gyufrCumjdaRnWSpLwfRZR2CxrUJzgmvUXPh
+         RqaQwjlLuFE1UKKruLoouaVC5O4+MdKKNd+udW8fy81kHgEzPbtH9b/oZXlM6gdb2KrT
+         zgJGXBtNSd64jgu2MB4Nhj8Ex7pIG9YOVw7Sr5q21GdoDLVzNzztWEeQCcPHGCqgKpJI
+         U7wPBBwFKnu0wOBp4PYgSZaXgCB0guIROqM8MLw92N3i/l6uxKihQpa/g6FvlHo4a9na
+         MBug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=bWBEBbMgQ4ZgjzbcRlAIwqDJqK30ux8BisawukIjGMM=;
-        b=H+jJSXnVaCpW51m6o6i0Du4pzIbCXQnHbKyJIfOfdAANjcZDWhCli3m7SkiZwntYHy
-         VIkPiHc7+vGgDqqye73jY5ZC1mlzw2u5UgT8N5v2FVjGfeWbPQNPkHIk1jGfyMoJfkYl
-         cu3NbYTiUZ6zDPgMXVuj27TQlfhS5r2HLYY98roZAhO+K6bOhZTEm8SLi07lspgDuaFk
-         LLdiRjp01uGiCtdEAYNgsbwsNCGFmqeoh5cHcUK+acS+Bh3jHGd+llRwd9t1jeZHsFSJ
-         1/VWtj2uQIqXDA+e6mfh1WA2pAKsHDvztaKGjpe5Lcpdy5YAjNfLH1TzrM1D5O4L7/ut
-         mecg==
-X-Gm-Message-State: AIVw113Nt8cfIQYA52aQXrmYWK2qJoxCZHBXzQG2A5K1IMOCTDMOnP6I
-        Z7u58WJd/Qx2tKlBIx4=
-X-Received: by 10.223.177.142 with SMTP id q14mr5023287wra.200.1500060520746;
-        Fri, 14 Jul 2017 12:28:40 -0700 (PDT)
-Received: from snth (g74110.upc-g.chello.nl. [80.57.74.110])
-        by smtp.gmail.com with ESMTPSA id n71sm8324406wrb.62.2017.07.14.12.28.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Jul 2017 12:28:39 -0700 (PDT)
-Received: from avar by snth with local (Exim 4.84_2)
-        (envelope-from <avarab@gmail.com>)
-        id 1dW6GU-0007RK-Lu; Fri, 14 Jul 2017 21:28:38 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?utf-8?Q?R?= =?utf-8?Q?en=C3=A9?= Scharfe <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] strbuf: use designated initializers in STRBUF_INIT
-References: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net> <c349f324-8f6d-2fe0-8982-2e37869d37b5@kdbg.org> <xmqq4luk58ot.fsf@gitster.mtv.corp.google.com> <962da692-8874-191c-59d4-65b9562cf87f@kdbg.org> <xmqqy3rw3rc8.fsf@gitster.mtv.corp.google.com> <xmqqlgnrq9qi.fsf@gitster.mtv.corp.google.com>
-User-agent: Debian GNU/Linux 8.8 (jessie); Emacs 25.1.1; mu4e 0.9.19
-In-reply-to: <xmqqlgnrq9qi.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 14 Jul 2017 21:28:38 +0200
-Message-ID: <87pod23jix.fsf@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rhnsWTcVrd57j2s4UB3iaFsfiDbKoXNf1R+kAJPBRsA=;
+        b=GPcUF7lju2V6/UMS2OK7y63wHwTJceGN7jq2LNxLKtTSL5cnIyLKPWSzl8zD0G2YIL
+         a72yzC73QB1w6A1J6BvToX4Bz5Mp5KM/XVuuVWh/O3qnscY6FHvxELTtZ+X8nDtpHzNU
+         l9Thxc0PTs7KJ7ltUS85USY+ILCZuVxMRKu4FssNMceciXRCMoEIHgm4q9uUCbvvrhGB
+         YNGBoSX72ndgtQksbRgob3LAGgSA1Enl8Tp/7oC0NugYVzplbNCO4uAy0GabDf3gMmg6
+         V9cSe+dZA8OCVd4GEami+P4ToiDb5hCH6MzDgiiKLH/81mDQww3cRKsFDhkNRAIUbnTY
+         42HQ==
+X-Gm-Message-State: AIVw110xCAB97eSkyaXLKaPCpMNS9GoIHXyyPR9glif+SZwFM8oGxxug
+        EBCxfwHb9qf1me3MM+wzNA==
+X-Received: by 10.99.171.67 with SMTP id k3mr16470950pgp.128.1500060937675;
+        Fri, 14 Jul 2017 12:35:37 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:c565:3d46:ed5:e0fb])
+        by smtp.gmail.com with ESMTPSA id u194sm15416967pgb.24.2017.07.14.12.35.36
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 14 Jul 2017 12:35:36 -0700 (PDT)
+Date:   Fri, 14 Jul 2017 12:35:35 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 00/13] object_id part 9
+Message-ID: <20170714193535.GA50015@google.com>
+References: <20170713234930.949612-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170713234930.949612-1-sandals@crustytoothpaste.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 07/13, brian m. carlson wrote:
+> This is the ninth in a series of series to convert Git to use struct
+> object_id.  This series converts the remaining callers of get_sha1 and
+> friends to take and use struct object_id, and in doing so, renames them
+> to get_oid and friends.
+> 
+> This patch should probably be based Stefan Beller's series, in which case
+> patch 9 can be dropped.
+> 
+> Changes from v1:
+> * Restore the check for length in get_sha1_basic.
+> * Add a patch converting some uses of 40 to GIT_SHA1_HEXSZ as suggested.  This
+>   is a separate patch because I wanted to minimize the non-automated portions of
+>   the patch in question.
+> 
 
-On Fri, Jul 14 2017, Junio C. Hamano jotted:
+I've looked through v2 and it looks good to me as nothing crazy stood
+out to me.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->  - This may be showing I am not just old fashioned but also am
->    ignorant, but I do not see much point in using the following in
->    our codebase (iow, I am not aware of places in the existing code
->    that they can be improved by employing these features):
->
->    . // comments
+Thanks!
 
-[Feel free to ignore this E-Mail and my fascination with C syntax
-trivia]
+> brian m. carlson (13):
+>   builtin/fsck: convert remaining caller of get_sha1 to object_id
+>   builtin/merge-tree: convert remaining caller of get_sha1 to object_id
+>   submodule: convert submodule config lookup to use object_id
+>   remote: convert struct push_cas to struct object_id
+>   sequencer: convert to struct object_id
+>   builtin/update_ref: convert to struct object_id
+>   bisect: convert bisect_checkout to struct object_id
+>   builtin/unpack-file: convert to struct object_id
+>   builtin/verify-tag: convert to struct object_id
+>   Convert remaining callers of get_sha1 to get_oid.
+>   sha1_name: convert get_sha1* to get_oid*
+>   sha1_name: convert GET_SHA1* flags to GET_OID*
+>   sha1_name: convert uses of 40 to GIT_SHA1_HEXSZ
+> 
+>  apply.c                          |   4 +-
+>  archive.c                        |   2 +-
+>  bisect.c                         |  18 +--
+>  builtin/am.c                     |   6 +-
+>  builtin/cat-file.c               |   8 +-
+>  builtin/commit-tree.c            |   4 +-
+>  builtin/commit.c                 |   8 +-
+>  builtin/fsck.c                   |   8 +-
+>  builtin/grep.c                   |   8 +-
+>  builtin/log.c                    |   4 +-
+>  builtin/merge-tree.c             |   6 +-
+>  builtin/receive-pack.c           |   4 +-
+>  builtin/replace.c                |   4 +-
+>  builtin/reset.c                  |  10 +-
+>  builtin/rev-parse.c              |   8 +-
+>  builtin/show-branch.c            |   8 +-
+>  builtin/submodule--helper.c      |   8 +-
+>  builtin/unpack-file.c            |  12 +-
+>  builtin/update-ref.c             |  69 ++++++-----
+>  builtin/verify-tag.c             |   8 +-
+>  cache.h                          |  45 ++++----
+>  commit.c                         |   4 +-
+>  config.c                         |  12 +-
+>  config.h                         |   4 +-
+>  mailmap.c                        |   6 +-
+>  notes.c                          |   2 +-
+>  refs.c                           |   2 +-
+>  remote.c                         |   8 +-
+>  remote.h                         |   2 +-
+>  repository.c                     |   2 +-
+>  revision.c                       |  16 +--
+>  sequencer.c                      |  65 +++++------
+>  sha1_name.c                      | 240 +++++++++++++++++++--------------------
+>  submodule-config.c               |  38 +++----
+>  submodule-config.h               |  12 +-
+>  submodule.c                      |  32 +++---
+>  submodule.h                      |   2 +-
+>  t/helper/test-submodule-config.c |  10 +-
+>  transport-helper.c               |   2 +-
+>  39 files changed, 351 insertions(+), 360 deletions(-)
+> 
 
-I wouldn't advocate switching to them on this basis, but since you asked
-for cases where things could be improved with // comments:
-
-The other day I submitted a patch that included this line in a comment:
-
-    +        * "t/**.sh" and then conclude that there's a directory "t",
-
-Which you fixed up to, before integrating it:
-
-    +        * "t/" + "**.sh" and then conclude that there's a directory "t",
-
-That was only necessary due to limitations in one of two comment
-syntaxes modern C supports.
-
-Well, it wasn't *necessary*, but a compiler warned about the /* there as
-a possibly confusing construct, and any compiler would have ended the
-comment right there + errored out if it contained "t/**/*.sh".
+-- 
+Brandon Williams
