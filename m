@@ -2,82 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9164D20357
-	for <e@80x24.org>; Fri, 14 Jul 2017 15:25:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F28DE20357
+	for <e@80x24.org>; Fri, 14 Jul 2017 15:30:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754177AbdGNPZ1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 11:25:27 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35116 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754031AbdGNPZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 11:25:26 -0400
-Received: by mail-pg0-f68.google.com with SMTP id d193so10990835pgc.2
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 08:25:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HtYFpxlPVqzZfV87uPtjQzLNQyX8igH18htXW/HFCm0=;
-        b=o7snAcxiVpDw4454aBcyRz/x7SNOYKK5q0JoIkcgrjZ3+/mUvmvqFQvTobHTxEwRDF
-         cy0o86iF2brsHqGAKauOjSOEKPK1r1C0C2oxha2fkINSNgVsbCj5o1SevRARAnRSdJva
-         ZbXYygUldNPUwhuaP5FfQlMyjlv2mELoDWBwjQm+ra/Qh4cX4eK9CbVGIS+tVdLUCizC
-         Yh+sWYeDQ5oWk3YSbpnTtSsYhF0cRB+hWm5CnPNaQB0Spi+dUGEQeSgf2AwxStSLaBzf
-         f431IBvKUyUgM5aYvOxdjilUVfDsk3ABfnyiXZF2MHwdR74p3MgSm7McyxXn9EK0uQL/
-         yDFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HtYFpxlPVqzZfV87uPtjQzLNQyX8igH18htXW/HFCm0=;
-        b=eggmQeeeLu1qw+GhGXOUVeBYk/5LfxzIpI+4ZFTmmaY3sviFS2oCfsWOqFld0WOAiE
-         7Zt++pZxusI47hA0pPRTKD0boIr2bh1nMEpWfXFc+LhEuI89/4LSQM17zHlKmFtdYFIK
-         hA0M1Bngoz1SVK4qZwgbrkh2gWpXL1zz8wdBLbat/DC1Ju+S49oNZtKpQwN+zvYYKqZJ
-         iWYA+MOEfXhZ/P6p2lwhQ/6pmK9KLPnXSFd07wPFwm3B0i27/NNNaK/0PgwFNzgCw45y
-         Go6dmWXB8SDFNgYjha+VwBjaxUnsrgBVNUfIammc6XyGlHT/I0SO8mTdsHUv1O7ccGJm
-         YknA==
-X-Gm-Message-State: AIVw110Aw6Z2BMtrVbiylBDmFJoWy30+a9NeiSqn6bnedtEVPw07q7gH
-        RyA2qNh+nBOB5A==
-X-Received: by 10.84.215.150 with SMTP id l22mr16967443pli.29.1500045925474;
-        Fri, 14 Jul 2017 08:25:25 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:d522:5f:8052:2b20])
-        by smtp.gmail.com with ESMTPSA id 204sm18629524pfc.32.2017.07.14.08.25.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 14 Jul 2017 08:25:24 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Santiago Torres <santiago@nyu.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2017, #04; Thu, 13)
-References: <xmqqo9snsy0k.fsf@gitster.mtv.corp.google.com>
-        <20170714002754.jyck5qmykbmuado7@LykOS.localdomain>
-        <xmqqfudzsq7u.fsf@gitster.mtv.corp.google.com>
-        <20170714140241.mqg5256ml3grmrn6@LykOS.localdomain>
-Date:   Fri, 14 Jul 2017 08:25:23 -0700
-In-Reply-To: <20170714140241.mqg5256ml3grmrn6@LykOS.localdomain> (Santiago
-        Torres's message of "Fri, 14 Jul 2017 10:02:42 -0400")
-Message-ID: <xmqqwp7bqbvg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1754181AbdGNPaT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 11:30:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40812 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1754076AbdGNPaT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 11:30:19 -0400
+Received: (qmail 24512 invoked by uid 109); 14 Jul 2017 15:30:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Jul 2017 15:30:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12116 invoked by uid 111); 14 Jul 2017 15:30:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Jul 2017 11:30:31 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Jul 2017 11:30:16 -0400
+Date:   Fri, 14 Jul 2017 11:30:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Fix regression: CamelCased aliases
+Message-ID: <20170714153015.crklfqaa2qc573zo@sigill.intra.peff.net>
+References: <cover.1500021526.git.johannes.schindelin@gmx.de>
+ <20170714090256.ne4gqgppt2qshtak@sigill.intra.peff.net>
+ <xmqq60evrqyd.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq60evrqyd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Santiago Torres <santiago@nyu.edu> writes:
+On Fri, Jul 14, 2017 at 08:14:18AM -0700, Junio C Hamano wrote:
 
->> Combined with the unknown-ness of the root cause of the issue, I can
->> only say that the patch may be raising an issue worth addressing,
->> but it is too sketchy to tell if it is a right solution or what the
->> exact problem being solved is.
->
-> I'll dig into this. This sounds a way more reasonable approach.
+> >> It was possible before v2.13.3 to invoke:
+> >> 
+> >> 	git config alias.CamelCased <something>
+> >> 	git CamelCased
+> >> 
+> >> This regressed (due to a stupid mistake of mine that was not caught in
+> >> patch review, sadly) in v2.13.3.
+> >
+> > Interesting. I don't think this was ever intended to work.
+> > ...
+> > The patches look obviously correct.
+> 
+> How can something be "(n)ever intended to work" and yet patches to
+> make it work be "obviously correct"? ;-)
 
-Thanks.  Another thing that may help, if it turns out that we do
-want to let agent run when it wants to, may be to study and mimick
-the way our webserver tests arrange how the servers are killed at
-the end of the test.
+You snipped the part where I said "this is probably reasonable to do in
+the meantime." :)
+
+My "obviously correct" is only that the patches fulfill that.
+
+> But I think that it is still reasonable for an end user to expect
+> that 'git Foo' would trigger that alias.  And that is what was
+> recently changed, inadvertently.
+> 
+> So the problem may need to be explained better in this series, but I
+> think the usage was expected to work and the series is fixing a real
+> regression.
+
+Sort of. It did not work until it accidentally did work, and now it
+accidentally does not work again. So "usage was expected to work" was
+certainly not true for Git developers (or at least nobody intentionally
+wrote code to make it so). And anybody relying on it started doing so
+since v2.2.0.
+
+But like I said, it's probably reasonable to make it work. There's
+little harm in doing so.  The only downside I can see is that doing:
+
+  git config alias.foo <something>
+  git Foo
+
+now triggers the alias. That seems like at worst a minor bug, and
+possibly even the right thing to do (see below).
+
+> Do we want to promise to keep the following "working"?
+> 
+>     git config alias.Foo <something>
+>     git foo
+> 
+> By designing the system in such a way that an alias is created with
+> a two-level name in our system, we are saying that alias names are
+> case insensitive to the end users, so I _think_ the above is
+> intended to work, and we are effectively promising that it will keep
+> working.
+
+Yes, I think we must. Keys are case-insensitive, and you are allowed to
+write them in whatever case you like. The more interesting case is the
+reverse, that I showed above. I think there are basically two mental
+models that are reasonable:
+
+  1. Uppercase in key names is treated the same as lowercase. Therefore
+     we must allow "alias.Foo" to match "git foo", but "git Foo" can
+     never have a match (in the current schema).
+
+  2. Keys are case-insensitive, and anything that matches them is
+     considered case-insensitive, too. That means "Foo" and "foo" are
+     identical for these purposes, and you can never have two aliases
+     "Foo" and "foo".
+
+In either mental model, "alias.Foo" for "git foo" must work. But the
+reverse only works in (2).
+
+I think either model is fine. These patches push us into (2).
+
+-Peff
