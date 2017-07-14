@@ -2,96 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAAE220357
-	for <e@80x24.org>; Fri, 14 Jul 2017 15:15:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA6B20357
+	for <e@80x24.org>; Fri, 14 Jul 2017 15:18:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754595AbdGNPP2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 11:15:28 -0400
-Received: from gproxy6-pub.mail.unifiedlayer.com ([67.222.39.168]:60150 "EHLO
-        gproxy6.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1754575AbdGNPPW (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 14 Jul 2017 11:15:22 -0400
-Received: from cmgw2 (unknown [10.0.90.83])
-        by gproxy6.mail.unifiedlayer.com (Postfix) with ESMTP id 28F221E41B3
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 09:03:17 -0600 (MDT)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by cmgw2 with 
-        id kf3D1v01Q0QvKlu01f3Gn1; Fri, 14 Jul 2017 09:03:17 -0600
-X-Authority-Analysis: v=2.2 cv=UvYTD64B c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=IkcTkHD0fZMA:10 a=G3gG6ho9WtcA:10 a=WsYW0WPVLPCSxBESKZwA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=6gFpvJx6E00xCGt9Jq7Ysqv7FKnOo9+56z8zhlWe6Q0=; b=hUGsHJl06oc2yq1EKg0knhGTgc
-        yQNVTB8CwwcbMUK5TV4gCYXwdPRRvQpYx579ZioSITRqa0jGgwxYakFdRIG5JONxJ3fqT2RVKp4SS
-        jQck0XkhNY2HBZ9kdVggQ2izc;
-Received: from [50.226.24.42] (port=46046 helo=pdsdesk)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.87)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1dW27d-001b9H-KD; Fri, 14 Jul 2017 09:03:13 -0600
-Message-ID: <1500044588.25789.109.camel@mad-scientist.net>
-Subject: Re: Git Bash Bug
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Kavita Desai <kvdesai2@illinois.edu>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Date:   Fri, 14 Jul 2017 11:03:08 -0400
-In-Reply-To: <CAAu0pLdjvcxda0rip8JOzt1q0HNuu4dBNHvEzJbeey6yRSyCCQ@mail.gmail.com>
-References: <CAAu0pLedy5xqUgF7drMf=tQgMJD4rXq+JvKaiE54EdRFZWuTkQ@mail.gmail.com>
-         <alpine.DEB.2.21.1.1707141625150.4193@virtualbox>
-         <CAAu0pLdmGc_kq_w0Fm6W4XDqOe=iKSyAyLct+yH6y+7FPUHtnA@mail.gmail.com>
-         <1500043024.25789.105.camel@mad-scientist.net>
-         <CAAu0pLdjvcxda0rip8JOzt1q0HNuu4dBNHvEzJbeey6yRSyCCQ@mail.gmail.com>
-Organization: GNU's Not UNIX!
+        id S1754545AbdGNPSa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 11:18:30 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:34078 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754399AbdGNPS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 11:18:29 -0400
+Received: by mail-qk0-f173.google.com with SMTP id d78so77805462qkb.1
+        for <git@vger.kernel.org>; Fri, 14 Jul 2017 08:18:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=21SDbAtNIzyckvptVjjd3LlRV9WYJQA7IOzzUgRa3D8=;
+        b=X9ZpNgQUFSyb2gpsWCEWax/dgYC1X47nT+rlgyYTCi86HJbXgvAa9zKpwS6E4pBTWv
+         rrt6kc/D6Ti6bgHqWx4a0VFOQP/7igsY2/0L9KPGre96r2/ikkV4i4cJL5+RNhPo9Pvl
+         /tw+ZtGC95uhBFwgGXL5/2YjIPDdmdkhmf6wBcVOkGqHmDK+Bshy1qiRhSk5LIFUvsdZ
+         DKvqwvCBJZyI6rMLJ40T55Q/Danx7QUBDnV5wgqlnSD+B6HnR2OESjOesskYnf/9LAgR
+         e//XmE7ufD6DzoaWXN6RzPg8EPOLuvgy+TlnVmb/WWky3w/LOzMtFlVrUMRZvTuNG3Jb
+         ba/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=21SDbAtNIzyckvptVjjd3LlRV9WYJQA7IOzzUgRa3D8=;
+        b=I+ZJzl6ASDFl4eVYdudNK4IFzrzus2zmjglRHvbqK836dYjJV/GSNYaZJQI3dK6UtY
+         IT4sx68sdEm0fXBtmKNzNqB51d30O+inoMREIPqgW8uBhD9ZUq0UJKIjJPP5P6Fx5P19
+         +8S/fmoF8DOPlVm4twFrrzPM7i0hggmMbqT1aflIEM6eBQN1qnLFvmVA9eG0h44FZ6a3
+         V1T0bYYj4P7Brfub2qJ6v9B3urJgBYgxbfBALrLRWA6siQsatFNtX25ojO390+KzcOsb
+         GSIHiQf+e26PsT7pStGCclMGlT2FzAjad598CyX9q8JzVuY+ib40TLV3U0oOpCKNMQNo
+         XpAg==
+X-Gm-Message-State: AIVw111rieh7Ppr8sIHguMW7p614fhL4WhsbN5XO24YoYCk13KEJVX6l
+        Bueur6WcTnJFD495nnPd+ZTNP0F2Rw==
+X-Received: by 10.55.124.67 with SMTP id x64mr11392609qkc.98.1500045508363;
+ Fri, 14 Jul 2017 08:18:28 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.55.31.13 with HTTP; Fri, 14 Jul 2017 08:18:27 -0700 (PDT)
+In-Reply-To: <20170714132651.170708-2-benpeart@microsoft.com>
+References: <20170714132651.170708-1-benpeart@microsoft.com> <20170714132651.170708-2-benpeart@microsoft.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 14 Jul 2017 17:18:27 +0200
+Message-ID: <CAP8UFD2tQQ3Dyx64LMtt_+WRoDS9V+AbMtvdCcngqiL5kCBFTg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] sha1_file: Add support for downloading blobs on demand
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 50.226.24.42
-X-Exim-ID: 1dW27d-001b9H-KD
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (pdsdesk) [50.226.24.42]:46046
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2017-07-14 at 09:59 -0500, Kavita Desai wrote:
-> What does "echo $PATH" show?
-> /c/Users/Kavita/
+On Fri, Jul 14, 2017 at 3:26 PM, Ben Peart <peartben@gmail.com> wrote:
 
-Well, there you go.  That's clearly wrong.
+> diff --git a/contrib/long-running-read-object/example.pl b/contrib/long-running-read-object/example.pl
+> new file mode 100755
+> index 0000000000..b8f37f836a
+> --- /dev/null
+> +++ b/contrib/long-running-read-object/example.pl
 
-You absolutely have to have /bin and /usr/bin on your PATH, _at least_
-if you want to be able to run standard UNIX tools.  And most likely
-you'll have a ton of other directories on your PATH as well.
+[...]
 
-I would investigate the shell configuration files etc. and see where
-you've messed up resetting your PATH variable.
+> +sub packet_bin_read {
+> +       my $buffer;
+> +       my $bytes_read = read STDIN, $buffer, 4;
+> +       if ( $bytes_read == 0 ) {
+> +
+> +               # EOF - Git stopped talking to us!
+> +               exit();
+> +       }
+> +       elsif ( $bytes_read != 4 ) {
+> +               die "invalid packet: '$buffer'";
+> +       }
+> +       my $pkt_size = hex($buffer);
+> +       if ( $pkt_size == 0 ) {
+> +               return ( 1, "" );
+> +       }
+> +       elsif ( $pkt_size > 4 ) {
+> +               my $content_size = $pkt_size - 4;
+> +               $bytes_read = read STDIN, $buffer, $content_size;
+> +               if ( $bytes_read != $content_size ) {
+> +                       die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
+> +               }
+> +               return ( 0, $buffer );
+> +       }
+> +       else {
+> +               die "invalid packet size: $pkt_size";
+> +       }
+> +}
+> +
+> +sub packet_txt_read {
+> +       my ( $res, $buf ) = packet_bin_read();
+> +       unless ( $buf =~ s/\n$// ) {
+> +               die "A non-binary line MUST be terminated by an LF.";
+> +       }
+> +       return ( $res, $buf );
+> +}
+> +
+> +sub packet_bin_write {
+> +       my $buf = shift;
+> +       print STDOUT sprintf( "%04x", length($buf) + 4 );
+> +       print STDOUT $buf;
+> +       STDOUT->flush();
+> +}
+> +
+> +sub packet_txt_write {
+> +       packet_bin_write( $_[0] . "\n" );
+> +}
+> +
+> +sub packet_flush {
+> +       print STDOUT sprintf( "%04x", 0 );
+> +       STDOUT->flush();
+> +}
 
-> What does "type -a ls" show?
-> ls is aliased to `ls -F --color=auto --show-control-chars'
+The above could reuse the refactoring of t0021/rot13-filter.pl into
+perl/Git/Packet.pm that is at the beginning of my patch series.
 
-Yep.  There is no ls binary found.
+> diff --git a/t/t0410/read-object b/t/t0410/read-object
+> new file mode 100755
+> index 0000000000..85e997c930
+> --- /dev/null
+> +++ b/t/t0410/read-object
+
+[...]
+
+> +sub packet_bin_read {
+> +       my $buffer;
+> +       my $bytes_read = read STDIN, $buffer, 4;
+> +       if ( $bytes_read == 0 ) {
+> +
+> +               # EOF - Git stopped talking to us!
+> +               exit();
+> +       }
+> +       elsif ( $bytes_read != 4 ) {
+> +               die "invalid packet: '$buffer'";
+> +       }
+> +       my $pkt_size = hex($buffer);
+> +       if ( $pkt_size == 0 ) {
+> +               return ( 1, "" );
+> +       }
+> +       elsif ( $pkt_size > 4 ) {
+> +               my $content_size = $pkt_size - 4;
+> +               $bytes_read = read STDIN, $buffer, $content_size;
+> +               if ( $bytes_read != $content_size ) {
+> +                       die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
+> +               }
+> +               return ( 0, $buffer );
+> +       }
+> +       else {
+> +               die "invalid packet size: $pkt_size";
+> +       }
+> +}
+> +
+> +sub packet_txt_read {
+> +       my ( $res, $buf ) = packet_bin_read();
+> +       unless ( $buf =~ s/\n$// ) {
+> +               die "A non-binary line MUST be terminated by an LF.";
+> +       }
+> +       return ( $res, $buf );
+> +}
+> +
+> +sub packet_bin_write {
+> +       my $buf = shift;
+> +       print STDOUT sprintf( "%04x", length($buf) + 4 );
+> +       print STDOUT $buf;
+> +       STDOUT->flush();
+> +}
+> +
+> +sub packet_txt_write {
+> +       packet_bin_write( $_[0] . "\n" );
+> +}
+> +
+> +sub packet_flush {
+> +       print STDOUT sprintf( "%04x", 0 );
+> +       STDOUT->flush();
+> +}
+
+Same thing about the above and perl/Git/Packet.pm.
+
+Otherwise thanks for updating this!
