@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B52E20357
-	for <e@80x24.org>; Fri, 14 Jul 2017 14:45:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E9CC20357
+	for <e@80x24.org>; Fri, 14 Jul 2017 14:45:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754543AbdGNOph (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 10:45:37 -0400
-Received: from mout.gmx.net ([212.227.17.20]:51044 "EHLO mout.gmx.net"
+        id S1754548AbdGNOpl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 10:45:41 -0400
+Received: from mout.gmx.net ([212.227.17.20]:61847 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754530AbdGNOpg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 10:45:36 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MC7em-1dNGQ511H6-008p68; Fri, 14
- Jul 2017 16:45:29 +0200
-Date:   Fri, 14 Jul 2017 16:45:28 +0200 (CEST)
+        id S1754530AbdGNOpj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 10:45:39 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3NEK-1dnQEo01Ng-00qzos; Fri, 14
+ Jul 2017 16:45:26 +0200
+Date:   Fri, 14 Jul 2017 16:45:25 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -28,70 +28,268 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH v6 09/10] t3415: test fixup with wrapped oneline
+Subject: [PATCH v6 08/10] rebase -i: skip unnecessary picks using the
+ rebase--helper
 In-Reply-To: <cover.1500043436.git.johannes.schindelin@gmx.de>
-Message-ID: <3883eb7fcc4efb414aab51f586474d846241e8a1.1500043437.git.johannes.schindelin@gmx.de>
+Message-ID: <7f234693bdce5a4539ef6890569185c6a0ddda5a.1500043437.git.johannes.schindelin@gmx.de>
 References: <cover.1500043436.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iBUfJ4ysx3xJX2pIkrPD+olPeqlwgYcEn8DtpywlGnOyidOXawM
- Ueq/tRbVKYb47IUOd5CJF/1Ujc9rIsb+5LWZzvVKwlPfe3hsPl5VWC1PjIoicK2AWSGDLPh
- 21reufGT6dkzjYDSvTYcaeLUNshKYQtEQG5Xt4Mgq0+iaRvQiiLGuDl9h0d7IRqP4K055ly
- HS4zmJ1NeJBiZn1gYAWvg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:D6IT9WRxb7s=:BmaKTvzfFNoX4H0oKCBMDf
- efC9VMq0Gkqlzjq9zx+2F0ATFLt6OHGZjacPiUJ8VSLSYf5QbS4yB9NCHHCwLQmOUnPmNZ49M
- rHrLSiKBpGzEL7SYnfitj140sSQ0139gRVfeOXAGSUD9f75xOOtV7nW7k2GokraXFXQ3OYcVR
- mFGJBnJSHZ8Snl1vywSTQ3b30HEvThyBtKIr/CyAex/RZyBLgHjjM/Yt/gxVHJVVUbmYB8Bb5
- 0sP9H4km9NW4kAQDLuJblVawuWXKsui1kn/j/ps9sdwNMlUZtNP6iN7deX0JEOCFn3ipJ7+eA
- UVVf1R6p2jcpeHKwTAUw1renRPptVydbmiPGH2RKut2PWv7NdnMcMVBRHNSOZ+5eRsoXTLu2J
- jcH71YIrG6S+4cllcVp0guglx0hRdeZm3tfNtC+KO0vwnqwF7I+fLt+EzKXf8LcSHMkDKE/hA
- 7R9Xh9AVHSoL/OLKZrbCskIpAC0u25wG+pYx/n8REn2R6Yb2x1QZdDYgZi4UF92gKwpHhLXeY
- dJqbxYMfSO66lmq4X/99Yvf0BrbZU2sViAnK9fgbOdzmruD7JOBI9lTmQK/I3BfynS8bL7yt6
- Rq/84cO7cEdDtk/r55Rk1LwSnSxf6veMA4wZUPZM6s9ZbhpaEo+psOkBACbHcKyp/wu+kMwJg
- JJY+fAwpcVH4+8/Hp2MQFX/zaYsrQDGmQNFQYsIW+Aam2ZFNRl/6WpFRnPwkAUTODV2h7fDtx
- rdf+Ep9gJn6Rt2XAe6csgemTMeoZzUCGSifkGVzdDZQC40XAstXWICK1U2KyHfwUicQV1Crle
- TtnolXcQ1AHQCKCMNt834lLI7SLGQihGeNS7q92dxqKUX6/cJA=
+X-Provags-ID: V03:K0:nSHjbGoXnnw/OFDMsXQ+YlL3TT2J/oAww2Fj4u+H0HHAw4AN73S
+ Fqzfyz5VrApMtS2j+Rh4EuSKuwCZMACQzge9g+HwJjDY/m1/qXL5yEWfz41aaO0XJKIYBqB
+ CPfJfXMvIkP2o7lnBhbaRanQmkGDAWcvJ/iItbqQDOgUsB2/x1DvRV0Os1rhKMu6gjxjFYY
+ 6+P4P0tYrBzt9L2x6kKzA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QUZpSFd6vsY=:EtE8swyBxkFtEZze2gcNGg
+ Z/QolIvy1jntXT4RjKa0429iBe24ttA4QTl3dvZaFB13MgWulY1ZvBYwMFVrwBGUt6pSzFzYT
+ 8qrPgWus27a4RTxDRU3uOgyiOyQP+QjN5x+jZu2NVrV/TQbl5tdXWX5yCOsoyZfJTtW2iz2VC
+ BERCQTn9UbwZpd5UEIDte6voeNJKi56tlqSc5LrTp0Yg4qZbb0eo0Q1nAX1mCOH/NddhHfbyg
+ 1JGPkFygl21bPXJ6t0cmKsfCS2LTqmXCUUYQupMbB8CAnY0Ehb+0V8VTSzgDPF8CaChTbSbUU
+ uBOE23ENXV58fuC81yHvIpOLINKaD/kSNkVY3pgiXRR9/HUUmcnTlB1wau0CDvbgalKXQCs5t
+ pTc1x2mV56NB4UuhRtPp5W2ZFMpRfvk72d1PmotDU/lfbo7SPoBANLqWMzXeS2sZMCO0hgH0C
+ VRv3tJWfEF0nMXXej5qP8QzvhLw/cWbonZs2tZlgZdZo9AJtVGvWG4jPx9gJJocII1uG8o4w9
+ ZvvloY02TkWNwuVbi2VNXv1OJeTuk32/BYRgWvEtpGKQ26PuZWVoO9Ts7uOOIpeh2MzDsv3Qv
+ NC2rvx7khYyTcT/pwLpOyRE82C4gnIuZrpTlwKaK/bs2KZ+xGfEKEgngKl8ZeS/msto2Oh+wt
+ tspltpbr7kzu6gVHLIHqPft7W9rbPuoaghHCuDTFXpYlrT2Lnr4HxTT4MNgG3J1nbei2nE35D
+ O/1A/y48yQLzJzKsgeKOzpdATy48esAmox9A/t4evrYEgrDQhJhsiJlatuBmzdRNDz0ZiblkC
+ dArjsGyh2a0/0yjYx2d8WhoE6e8IE6XfuDjxzPE7nEh9ZEorPk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `git commit --fixup` command unwraps wrapped onelines when
-constructing the commit message, without wrapping the result.
+In particular on Windows, where shell scripts are even more expensive
+than on MacOSX or Linux, it makes sense to move a loop that forks
+Git at least once for every line in the todo list into a builtin.
 
-We need to make sure that `git rebase --autosquash` keeps handling such
-cases correctly, in particular since we are about to move the autosquash
-handling into the rebase--helper.
+Note: The original code did not try to skip unnecessary picks of root
+commits but punts instead (probably --root was not considered common
+enough of a use case to bother optimizing). We do the same, for now.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3415-rebase-autosquash.sh | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ builtin/rebase--helper.c   |   6 ++-
+ git-rebase--interactive.sh |  41 ++---------------
+ sequencer.c                | 107 +++++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h                |   1 +
+ 4 files changed, 116 insertions(+), 39 deletions(-)
 
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index 6d99f624b62..62cb977e4ec 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -316,4 +316,18 @@ test_expect_success 'extra spaces after fixup!' '
- 	test $base = $parent
- '
+diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+index 305adb5b707..057ae7102ff 100644
+--- a/builtin/rebase--helper.c
++++ b/builtin/rebase--helper.c
+@@ -15,7 +15,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 	int keep_empty = 0;
+ 	enum {
+ 		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_SHA1S, EXPAND_SHA1S,
+-		CHECK_TODO_LIST
++		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS
+ 	} command = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
+@@ -32,6 +32,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 			N_("expand SHA-1s in the todo list"), EXPAND_SHA1S),
+ 		OPT_CMDMODE(0, "check-todo-list", &command,
+ 			N_("check the todo list"), CHECK_TODO_LIST),
++		OPT_CMDMODE(0, "skip-unnecessary-picks", &command,
++			N_("skip unnecessary picks"), SKIP_UNNECESSARY_PICKS),
+ 		OPT_END()
+ 	};
  
-+test_expect_success 'wrapped original subject' '
-+	if test -d .git/rebase-merge; then git rebase --abort; fi &&
-+	base=$(git rev-parse HEAD) &&
-+	echo "wrapped subject" >wrapped &&
-+	git add wrapped &&
-+	test_tick &&
-+	git commit --allow-empty -m "$(printf "To\nfixup")" &&
-+	test_tick &&
-+	git commit --allow-empty -m "fixup! To fixup" &&
-+	git rebase -i --autosquash --keep-empty HEAD~2 &&
-+	parent=$(git rev-parse HEAD^) &&
-+	test $base = $parent
-+'
+@@ -56,5 +58,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		return !!transform_todo_ids(0);
+ 	if (command == CHECK_TODO_LIST && argc == 1)
+ 		return !!check_todo_list();
++	if (command == SKIP_UNNECESSARY_PICKS && argc == 1)
++		return !!skip_unnecessary_picks();
+ 	usage_with_options(builtin_rebase_helper_usage, options);
+ }
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index c8cad318fa4..af8d7bd77fb 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -713,43 +713,6 @@ do_rest () {
+ 	done
+ }
+ 
+-# skip picking commits whose parents are unchanged
+-skip_unnecessary_picks () {
+-	fd=3
+-	while read -r command rest
+-	do
+-		# fd=3 means we skip the command
+-		case "$fd,$command" in
+-		3,pick|3,p)
+-			# pick a commit whose parent is current $onto -> skip
+-			sha1=${rest%% *}
+-			case "$(git rev-parse --verify --quiet "$sha1"^)" in
+-			"$onto"*)
+-				onto=$sha1
+-				;;
+-			*)
+-				fd=1
+-				;;
+-			esac
+-			;;
+-		3,"$comment_char"*|3,)
+-			# copy comments
+-			;;
+-		*)
+-			fd=1
+-			;;
+-		esac
+-		printf '%s\n' "$command${rest:+ }$rest" >&$fd
+-	done <"$todo" >"$todo.new" 3>>"$done" &&
+-	mv -f "$todo".new "$todo" &&
+-	case "$(peek_next_command)" in
+-	squash|s|fixup|f)
+-		record_in_rewritten "$onto"
+-		;;
+-	esac ||
+-		die "$(gettext "Could not skip unnecessary pick commands")"
+-}
+-
+ expand_todo_ids() {
+ 	git rebase--helper --expand-ids
+ }
+@@ -1149,7 +1112,9 @@ git rebase--helper --check-todo-list || {
+ 
+ expand_todo_ids
+ 
+-test -d "$rewritten" || test -n "$force_rebase" || skip_unnecessary_picks
++test -d "$rewritten" || test -n "$force_rebase" ||
++onto="$(git rebase--helper --skip-unnecessary-picks)" ||
++die "Could not skip unnecessary pick commands"
+ 
+ checkout_onto
+ if test -z "$rebase_root" && test ! -d "$rewritten"
+diff --git a/sequencer.c b/sequencer.c
+index 15107de1e1c..96d43aec764 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2641,3 +2641,110 @@ int check_todo_list(void)
+ 
+ 	return res;
+ }
 +
- test_done
++/* skip picking commits whose parents are unchanged */
++int skip_unnecessary_picks(void)
++{
++	const char *todo_file = rebase_path_todo();
++	struct strbuf buf = STRBUF_INIT;
++	struct todo_list todo_list = TODO_LIST_INIT;
++	struct object_id onto_oid, *oid = &onto_oid, *parent_oid;
++	int fd, i;
++
++	if (!read_oneliner(&buf, rebase_path_onto(), 0))
++		return error(_("could not read 'onto'"));
++	if (get_oid(buf.buf, &onto_oid)) {
++		strbuf_release(&buf);
++		return error(_("need a HEAD to fixup"));
++	}
++	strbuf_release(&buf);
++
++	fd = open(todo_file, O_RDONLY);
++	if (fd < 0) {
++		return error_errno(_("could not open '%s'"), todo_file);
++	}
++	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
++		close(fd);
++		return error(_("could not read '%s'."), todo_file);
++	}
++	close(fd);
++	if (parse_insn_buffer(todo_list.buf.buf, &todo_list) < 0) {
++		todo_list_release(&todo_list);
++		return -1;
++	}
++
++	for (i = 0; i < todo_list.nr; i++) {
++		struct todo_item *item = todo_list.items + i;
++
++		if (item->command >= TODO_NOOP)
++			continue;
++		if (item->command != TODO_PICK)
++			break;
++		if (parse_commit(item->commit)) {
++			todo_list_release(&todo_list);
++			return error(_("could not parse commit '%s'"),
++				oid_to_hex(&item->commit->object.oid));
++		}
++		if (!item->commit->parents)
++			break; /* root commit */
++		if (item->commit->parents->next)
++			break; /* merge commit */
++		parent_oid = &item->commit->parents->item->object.oid;
++		if (hashcmp(parent_oid->hash, oid->hash))
++			break;
++		oid = &item->commit->object.oid;
++	}
++	if (i > 0) {
++		int offset = i < todo_list.nr ?
++			todo_list.items[i].offset_in_buf : todo_list.buf.len;
++		const char *done_path = rebase_path_done();
++
++		fd = open(done_path, O_CREAT | O_WRONLY | O_APPEND, 0666);
++		if (fd < 0) {
++			error_errno(_("could not open '%s' for writing"),
++				    done_path);
++			todo_list_release(&todo_list);
++			return -1;
++		}
++		if (write_in_full(fd, todo_list.buf.buf, offset) < 0) {
++			error_errno(_("could not write to '%s'"), done_path);
++			todo_list_release(&todo_list);
++			close(fd);
++			return -1;
++		}
++		close(fd);
++
++		fd = open(rebase_path_todo(), O_WRONLY, 0666);
++		if (fd < 0) {
++			error_errno(_("could not open '%s' for writing"),
++				    rebase_path_todo());
++			todo_list_release(&todo_list);
++			return -1;
++		}
++		if (write_in_full(fd, todo_list.buf.buf + offset,
++				todo_list.buf.len - offset) < 0) {
++			error_errno(_("could not write to '%s'"),
++				    rebase_path_todo());
++			close(fd);
++			todo_list_release(&todo_list);
++			return -1;
++		}
++		if (ftruncate(fd, todo_list.buf.len - offset) < 0) {
++			error_errno(_("could not truncate '%s'"),
++				    rebase_path_todo());
++			todo_list_release(&todo_list);
++			close(fd);
++			return -1;
++		}
++		close(fd);
++
++		todo_list.current = i;
++		if (is_fixup(peek_command(&todo_list, 0)))
++			record_in_rewritten(oid, peek_command(&todo_list, 0));
++	}
++
++	todo_list_release(&todo_list);
++	printf("%s\n", oid_to_hex(oid));
++
++	return 0;
++}
+diff --git a/sequencer.h b/sequencer.h
+index 878dd296f8c..04a57e09a1d 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -50,6 +50,7 @@ int sequencer_make_script(int keep_empty, FILE *out,
+ 
+ int transform_todo_ids(int shorten_ids);
+ int check_todo_list(void);
++int skip_unnecessary_picks(void);
+ 
+ extern const char sign_off_header[];
+ 
 -- 
 2.13.3.windows.1.13.gaf0c2223da0
 
