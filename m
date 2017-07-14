@@ -2,77 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EB4420357
-	for <e@80x24.org>; Fri, 14 Jul 2017 14:27:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D052A20357
+	for <e@80x24.org>; Fri, 14 Jul 2017 14:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754199AbdGNO1r (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 10:27:47 -0400
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:34868 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754028AbdGNO1q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 10:27:46 -0400
-Received: by mail-qk0-f178.google.com with SMTP id p73so13176792qka.2
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 07:27:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=C5Cjxw9NIu46P7VgFq1Ha12AdPW+kff05ecUmOz/Sjg=;
-        b=lNafKK4fl3J+KfsnoXCaUpZD9XcP88liEGokRJ8S+EuwSOyRlqLXFvKmd/5n5BAPat
-         vSQgW59eYBarcDqyWgnzB7TSEgouXRMOZ06DbEleDdJOZmJtKA3hYwBHRGzV+deRI1Hu
-         /8G051HbwLlkoeVIkYHDbx0+YIIhsIXlEt8IUukBRDFLc+i6397RTx8YKAXqpcTu+O1z
-         xT5LOSZmYDLOQ/jhK7rs4vflEy7Qr4hyKMFObr47YiBXeSdgkolQqI1hTOEl2blHwbHQ
-         3NYIPCiiN6c5YwtxxaP2j57rFKMMo78Pkl+YvJrg9fq0MJ9vCxKIoFr7iRD58dECqSZB
-         6sAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=C5Cjxw9NIu46P7VgFq1Ha12AdPW+kff05ecUmOz/Sjg=;
-        b=Q1CIr74AUmycXSQZDTT1Q6SzoM0YTIBaEJ8ouASamPh/FjCaz+L/A/1XwfmeQfqr0V
-         dnjusxBc752oYBl/WBkRevvFlqtEJGAoroYfFC6NXQZkMIAVNYB++TNLxzn3iUDHt2o2
-         Xk1cCHYDA11uBEtDxZepoRI3rHtlUWrFM5ugb8pCf2fNqTlI5gxQ/vwOlf5aig7aFx8o
-         OT7lnkkdoAnI0YpH7Kh1ghd8miQyAFqKLfR2or4lBBgSl4wjriek8p8I6V/1qFWc9/a+
-         SU8Szy5TgP4L1gwUkOw+42SJxRUcgthN9IFdNRlpo2D82suMeW0a6IcD/PHBhGpc7iej
-         GLLA==
-X-Gm-Message-State: AIVw111IJ8MECACCu/3EkudCJ0nLs3JShIlA96h0Ay9j332jLFIXPA+J
-        mse5LYzMrhIr3Yvs1SWCPb2NqN4DzTGq
-X-Received: by 10.233.235.132 with SMTP id b126mr12209934qkg.262.1500042464857;
- Fri, 14 Jul 2017 07:27:44 -0700 (PDT)
+        id S1754162AbdGNO2s (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 10:28:48 -0400
+Received: from mout.gmx.net ([212.227.17.22]:63698 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754007AbdGNO2r (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 10:28:47 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9bYB-1dMzRN1NzL-00Cy2Q; Fri, 14
+ Jul 2017 16:28:42 +0200
+Date:   Fri, 14 Jul 2017 16:28:40 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Kavita Desai <kvdesai2@illinois.edu>
+cc:     git@vger.kernel.org
+Subject: Re: Git Bash Bug
+In-Reply-To: <CAAu0pLedy5xqUgF7drMf=tQgMJD4rXq+JvKaiE54EdRFZWuTkQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1707141625150.4193@virtualbox>
+References: <CAAu0pLedy5xqUgF7drMf=tQgMJD4rXq+JvKaiE54EdRFZWuTkQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.140.31.54 with HTTP; Fri, 14 Jul 2017 07:27:24 -0700 (PDT)
-In-Reply-To: <CAJo=hJts=wY4vBaLsOtoH8+LBFK_drBhHMxPvKoQcqtpOfJOog@mail.gmail.com>
-References: <CAJo=hJtyof=HRy=2sLP0ng0uZ4=S-DpZ5dR1aF+VHVETKG20OQ@mail.gmail.com>
- <20170713193234.fkxf73t6jevj4svg@sigill.intra.peff.net> <CAJo=hJts=wY4vBaLsOtoH8+LBFK_drBhHMxPvKoQcqtpOfJOog@mail.gmail.com>
-From:   Dave Borowitz <dborowitz@google.com>
-Date:   Fri, 14 Jul 2017 10:27:24 -0400
-Message-ID: <CAD0k6qRdq7n=LM7TFJYKvC4uiMMCus8kff-Lm28GiC_G-Feb2Q@mail.gmail.com>
-Subject: Re: reftable: new ref storage format
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:L/tyO/CBpQWiAoN/bcEDpNYhKEr0I2cL+8/1ykO77UvQwlM6yBH
+ 07j/2LejusyAv8PfF40WKOqYq5DtaKtwqWbxR7RcNkNNLzGRCYFs17QbN0klR2Risvni55L
+ 5utjXV2gtcrdiS3zSE0rD8MuIKKtwHjaCUt7gkzrldt+YJW7VgOnyOy/ciNobC6jvOUewWn
+ K0DLK0VRcgD10Kps2QPUw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MCJL073/5Gc=:yeCc66vrXLL9+hXODjWzni
+ aco9Cw7ZoVXWBrH0tK+w0Q6EaKRZYkXPfGdDp7qpjOLyx4JjuS8+LrYIbS5SL3ym+4qsP07gf
+ D42bV5sdHrd4rvzGmiyOXRMy6uW1Zx18dyi0Kc3G3rksT9SmHgA7jqNi4trIsBFKIoQaGc7mX
+ a0ZNll1rEIoJEGQWWK18ZJ+65BuSSmn3MbY5ORhhKCN1k/InL8+xAQ1d0+y1gtf5x5u1Y0uAG
+ nqdSyS70o30ah0l3wdkNoQ2k1SPy/m+rKNmmn4vMNmh9txsF5DvxrXclJj5XqBphb0mTf6DpS
+ +n9gb0N2I02qsvs6GB5fkbPwwvhCrr18bjxYqPodgDTgsv260KAOUytbOzdEE7Jv2kVwbpp00
+ vtIt0qP+J3Fe6F+oA2gR0pLGcpp7AHRGwBRRSAGWmgfqZ+qkGgEJ3ul5RGyZ9fNua8KnxhzEO
+ swoLD1qSBICVVvvPBFi24FnAju98M5/LblOrJ/mKf76tvK3dP1BJU9EhZUfV2VVdUbJ9ihR+P
+ F0W/1sBgqY+msrqK9+5Ndtv+cdabz0l0Zpegg5RsyKyLg373m4PySlWl5Jw6mezu4xHDCT/nJ
+ aBRNylzb+WXM5VR91ztCo6NDRoFgqlfV01C/dYx3vJBIS4M8K/pLkuc7Cu/Fe9L8Es5X7yUrB
+ 3RuBtoec+luGsjCJ2YMJRgg1YVIuAySx6wrqvdJLyCFYnQZvRatrvl6IFJkWkV9E2Iedho7B0
+ Yu63HlYLiBdfp9vit+7rkAa8yZH7ghopxReI5goX0FR/T/LhZlarOX5dyNOANKKlyJ2tlmjkP
+ eK+4EhTb/cpFd2Tb2rC2gd4P6BXgFIyTBevmH6w0cPdTzXNi6w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 13, 2017 at 8:11 PM, Shawn Pearce <spearce@spearce.org> wrote:
-> In another (Gerrit Code Review), we disable reflogs for
-> the insane refs/changes/ namespace, as nearly every reference is
-> created once, and never modified.
+Hi Kavita,
 
-Apologies for the tangent, but this is not true in the most recent
-Gerrit implementation. We update refs/changes/CD/ABCD/1 and
-refs/changes/CD/ABCD/meta in a single BatchRefUpdate, and we set a
-reflog message on the BatchRefUpdate instance, which updates the
-reflog for all refs in the batch. The reflog message on /meta is
-important, and arguably it's useful to be able to correlate that with
-the reflog on /1.
+On Fri, 14 Jul 2017, Kavita Desai wrote:
 
-If you think storing reflogs on patch set refs is going to be a
-problem wrt on-disk storage, we should discuss this offline :)
+> Originally, when I first had Git Bash everything was working
+> perfectly. Randomly one day, my bash commands were not working.
+
+There are a gazillion ways how commands can "not work". You *need* to be
+more specific here. In the least, a precise pasted output of a failed
+command is necessary.
+
+In addition, a couple of other points of interest would be good to know,
+the issue reporting template at
+https://github.com/git-for-windows/git/issues/new tries to help you
+provide as much important information as you can. Maybe give it a try?
+
+Ciao,
+Johannes
