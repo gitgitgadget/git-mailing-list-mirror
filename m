@@ -2,75 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D67D420357
-	for <e@80x24.org>; Fri, 14 Jul 2017 14:34:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2A7420357
+	for <e@80x24.org>; Fri, 14 Jul 2017 14:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932094AbdGNOef (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 10:34:35 -0400
-Received: from mout.gmx.net ([212.227.17.20]:61494 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754449AbdGNOee (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 10:34:34 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMTZa-1dZrQH234g-008H4a for
- <git@vger.kernel.org>; Fri, 14 Jul 2017 16:34:31 +0200
-Date:   Fri, 14 Jul 2017 16:34:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-Subject: Regression in v2.13.3, fixed in master: aliases in worktrees
-Message-ID: <alpine.DEB.2.21.1.1707141629400.4193@virtualbox>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:xQloN90jQmdNu9YsrgLj0bF6JQ3yxMV+pY1O4I3+uao6fMG1ylu
- 2ZxfaGUR5+t8/QrghbE+EmxVdLAJL5KHQeWeivZHYUUr692YB3fRL8uaxbpU+sFg1KNKwq6
- UcNT5f4SfbJq0m5yWi2Ma9mjxmoGUiwRPG+IhejFkmA6nvuYqfJJGmb9mcXxucEJlJERi2Q
- rWV1YYDiUO+yh3fdp4cmg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4ZsX6GSSGHM=:jE1fEajOrpmnooPdRduWZB
- 9xvjs14l64cmsV2yFZPAcj4WzVEWstqF/S+Ao9FFm1r4bqknNU+qwTd1Mp3m9/LsCcOlGGmTT
- IJaXf8ryYNIIBPla1EQ+7nKsoYoh1LV8c+o3ikg4Zg2bZt37Xf7zGVyLq+YFuhSDFroqfw0tB
- uksnd9pnzSdr3uCsJiUlrP+kKuyjnq/ut3n/2vRndINegCZLFRXiX6BacTvQDrPszkr8Tbvx/
- qnT3cqsHXPmTTFXeYCy+FxSFUV92Apevb305QzfHu7x1CEaXx5NqhOdEyzDV3aTN+Cp+Z+I7b
- BnrV6teEivHeNqjmDjHykUMmxfsyQ/F4qFEJayTFuCu+hLHyvn9sBN98JIoFGUmmWDHHPLVUN
- 2xjKWF6p6zbPxAGFi4kxxgD15V0jjfdCDyo8W5imuj+WdfWJX+2y65C8e+UCNVsBoHnvNTsTn
- SN97/rTsIvHuqCDoyOor6yY7b09DytQBHDePbdH823p3GoxihavrcPS0bYRd4V4//LWInMg2U
- oej8uQrKBUyREJEwN2x1E5GwDtVlAzWbW1tC8slD+ZxfXSrMnCFA2APQKcW7HMuLFQpMTwztj
- q1cxh0rKCVqCPe0tcmBB0mHGCXNe0Bgj+760W42zHdVazjaRbIv6glAdNxMZSN3OtHA/TDDhX
- oa3WSpvdqh6DkDkEZYjgo+q506QJO/nbiTyvwy14MlhK2AI0P1S3ppy+1/Pum+Z0eUSFHyTJK
- iEHX/HFK8aupKF84EJ9XlQhbTBcjP9lDb/ixNbiahYwm2++ToxIfr2oGxdRIbvh4BBuHQep5a
- m1frmmfmb84+6dEK8dDZuxFs4QhBe1vpmPbYmQPmUOLaVW49js=
+        id S1754076AbdGNOhK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 10:37:10 -0400
+Received: from gproxy9-pub.mail.unifiedlayer.com ([69.89.20.122]:58634 "EHLO
+        gproxy9.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1754026AbdGNOhK (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 14 Jul 2017 10:37:10 -0400
+Received: from CMOut01 (unknown [10.0.90.82])
+        by gproxy9.mail.unifiedlayer.com (Postfix) with ESMTP id 5EF401E0812
+        for <git@vger.kernel.org>; Fri, 14 Jul 2017 08:37:09 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by CMOut01 with 
+        id ked61v0060QvKlu01ed91N; Fri, 14 Jul 2017 08:37:09 -0600
+X-Authority-Analysis: v=2.2 cv=FvB1xyjq c=1 sm=1 tr=0
+ a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
+ a=IkcTkHD0fZMA:10 a=G3gG6ho9WtcA:10 a=3vy_hqDwxLy2yP-djEgA:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=L/V+P6ynl9hplpGhPhy1WZb54TTHLLVOF7u4prYDkrI=; b=cptEnTsuin9cOETnvZQ/KFX6tz
+        HaAejEzx8bhgbAkvM9bjR2lbVahTCRoecPlWP1cOrGmdoD1gOwh+uI3n3bLsQZESZrQ46UAU3FBKn
+        NXn06ca6aAB7UFhLH/k3tKfQW;
+Received: from [65.112.16.22] (port=45754 helo=pdsdesk)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.87)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1dW1iL-001OwK-Ss; Fri, 14 Jul 2017 08:37:05 -0600
+Message-ID: <1500043024.25789.105.camel@mad-scientist.net>
+Subject: Re: Git Bash Bug
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Kavita Desai <kvdesai2@illinois.edu>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Date:   Fri, 14 Jul 2017 10:37:04 -0400
+In-Reply-To: <CAAu0pLdmGc_kq_w0Fm6W4XDqOe=iKSyAyLct+yH6y+7FPUHtnA@mail.gmail.com>
+References: <CAAu0pLedy5xqUgF7drMf=tQgMJD4rXq+JvKaiE54EdRFZWuTkQ@mail.gmail.com>
+         <alpine.DEB.2.21.1.1707141625150.4193@virtualbox>
+         <CAAu0pLdmGc_kq_w0Fm6W4XDqOe=iKSyAyLct+yH6y+7FPUHtnA@mail.gmail.com>
+Organization: GNU's Not UNIX!
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 65.112.16.22
+X-Exim-ID: 1dW1iL-001OwK-Ss
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (pdsdesk) [65.112.16.22]:45754
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On Fri, 2017-07-14 at 09:34 -0500, Kavita Desai wrote:
+> Sorry for not being specific. What I meant by not working was that the
+> bash commands are not found.
+> Here is an example
+> 
+> $ ls
+> bash: ls: command not found
 
-just to let you know that repository-local aliases stopped working in
-v2.13.3. This is due to my "aliases via early config" work that made it
-into a maintenance release...
+The most obvious issue is your PATH is wrong.
 
-The bug is fixed in master already, and I cherry-picked Brandon's config-h
-series that contains the fix into Git for Windows' master branch.
+What does "echo $PATH" show?
 
-I only had to add one add-on patch that falls back to opts->git_dir when
-opts->commondir is NULL (no idea whether that can happen in Git's master,
-but it can happen in Git for Windows' master at least).
-
-It *may* be worth it to cherry-pick this to `maint`, too, but then, it
-looks as if I am the only really serious user of worktrees anyway (given
-that auto-gc still corrupts worktrees' reflogs, and it is a known bug for
-2 years and counting).
-
-So I dunno. Maybe not worth bothering about in `maint`. Less work for you,
-Junio.
-
-Ciao,
-Johannes
-
+What does "type -a ls" show?
