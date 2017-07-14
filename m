@@ -2,119 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B73120357
-	for <e@80x24.org>; Fri, 14 Jul 2017 15:14:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAAE220357
+	for <e@80x24.org>; Fri, 14 Jul 2017 15:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754452AbdGNPOW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 11:14:22 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34715 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754177AbdGNPOV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 11:14:21 -0400
-Received: by mail-pf0-f169.google.com with SMTP id q85so46903003pfq.1
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 08:14:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=sEkvj2FdUrRM8ECRL+UJjg8W6k+FLnEynPuaaky+9Dw=;
-        b=DfrmyFxD4dH/5oh5BIaULeKl3DD+jRcyu9pDdvD5vb5oJLivwCanKliRVCytsi/ofg
-         E+MuLAvvawel8my6qY8CGMd3iDm5flgTTMdxMm41Rcd2IOKPhYmCiy7/AWuf26oFLORU
-         sin8HJRWocgv4aQxESqhXEbNxHJ9RLpm2ErIs6yQKgaxxwnGblxcyo3muLD66dvOOkqb
-         0K2PFFXZULFsQ0UjUNZdLb6wR723K+vHT6kCBpOSYgwYH/5w7JGRsez0DTp23wbrayE1
-         YX/Wdf1HBxcD3KwFhhxT+OsXVCTPcwIvOXGKVk+Z66zIg4Iyry+qq/BZZV/tw40Vs7JN
-         yGyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=sEkvj2FdUrRM8ECRL+UJjg8W6k+FLnEynPuaaky+9Dw=;
-        b=jnh+fpXlztQeg8iTyffDuyKK7vM8HUFn5HHIcIdEBqbIfmPnaUlXC6RTHG56Kk56Y0
-         P6GaFfJHCJLDJ6M5APYsIDJxPw6xjemPclvlAxWrt3fqoCmzlKmKYNxAbRyRruhfD9Dh
-         M7MZ3M6IrmPp+6teH2NRvE45JJsATWy43NiYOmbi5zbYk+V04thHriTkx6Lpp6qNEjLF
-         55k4g0YjtgAhO0vD/FeLLH6de/E2si2sU/z6/226s/Lqand2glza1Sz3eg3xrR2Yr5Fh
-         hmS5ZDg2vq1NonN4iaS+BCHh3ekbRLtVzr41S+eLazpTvr4qUkopBuTgXZlTNW91fCdm
-         WLOQ==
-X-Gm-Message-State: AIVw110MBtGLeqhYOXRNKfcOgVdDinVbf8YxOS8Nk/d5Q21vz7ZXMwqL
-        196toDN9Zn8XWsdMcKw=
-X-Received: by 10.98.211.89 with SMTP id q86mr5850325pfg.37.1500045260781;
-        Fri, 14 Jul 2017 08:14:20 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:d522:5f:8052:2b20])
-        by smtp.gmail.com with ESMTPSA id k67sm17115000pfg.37.2017.07.14.08.14.19
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 14 Jul 2017 08:14:19 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        id S1754595AbdGNPP2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 11:15:28 -0400
+Received: from gproxy6-pub.mail.unifiedlayer.com ([67.222.39.168]:60150 "EHLO
+        gproxy6.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1754575AbdGNPPW (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 14 Jul 2017 11:15:22 -0400
+Received: from cmgw2 (unknown [10.0.90.83])
+        by gproxy6.mail.unifiedlayer.com (Postfix) with ESMTP id 28F221E41B3
+        for <git@vger.kernel.org>; Fri, 14 Jul 2017 09:03:17 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmgw2 with 
+        id kf3D1v01Q0QvKlu01f3Gn1; Fri, 14 Jul 2017 09:03:17 -0600
+X-Authority-Analysis: v=2.2 cv=UvYTD64B c=1 sm=1 tr=0
+ a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
+ a=IkcTkHD0fZMA:10 a=G3gG6ho9WtcA:10 a=WsYW0WPVLPCSxBESKZwA:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=6gFpvJx6E00xCGt9Jq7Ysqv7FKnOo9+56z8zhlWe6Q0=; b=hUGsHJl06oc2yq1EKg0knhGTgc
+        yQNVTB8CwwcbMUK5TV4gCYXwdPRRvQpYx579ZioSITRqa0jGgwxYakFdRIG5JONxJ3fqT2RVKp4SS
+        jQck0XkhNY2HBZ9kdVggQ2izc;
+Received: from [50.226.24.42] (port=46046 helo=pdsdesk)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.87)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1dW27d-001b9H-KD; Fri, 14 Jul 2017 09:03:13 -0600
+Message-ID: <1500044588.25789.109.camel@mad-scientist.net>
+Subject: Re: Git Bash Bug
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Kavita Desai <kvdesai2@illinois.edu>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Fix regression: CamelCased aliases
-References: <cover.1500021526.git.johannes.schindelin@gmx.de>
-        <20170714090256.ne4gqgppt2qshtak@sigill.intra.peff.net>
-Date:   Fri, 14 Jul 2017 08:14:18 -0700
-In-Reply-To: <20170714090256.ne4gqgppt2qshtak@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 14 Jul 2017 05:02:56 -0400")
-Message-ID: <xmqq60evrqyd.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Date:   Fri, 14 Jul 2017 11:03:08 -0400
+In-Reply-To: <CAAu0pLdjvcxda0rip8JOzt1q0HNuu4dBNHvEzJbeey6yRSyCCQ@mail.gmail.com>
+References: <CAAu0pLedy5xqUgF7drMf=tQgMJD4rXq+JvKaiE54EdRFZWuTkQ@mail.gmail.com>
+         <alpine.DEB.2.21.1.1707141625150.4193@virtualbox>
+         <CAAu0pLdmGc_kq_w0Fm6W4XDqOe=iKSyAyLct+yH6y+7FPUHtnA@mail.gmail.com>
+         <1500043024.25789.105.camel@mad-scientist.net>
+         <CAAu0pLdjvcxda0rip8JOzt1q0HNuu4dBNHvEzJbeey6yRSyCCQ@mail.gmail.com>
+Organization: GNU's Not UNIX!
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 50.226.24.42
+X-Exim-ID: 1dW27d-001b9H-KD
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (pdsdesk) [50.226.24.42]:46046
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, 2017-07-14 at 09:59 -0500, Kavita Desai wrote:
+> What does "echo $PATH" show?
+> /c/Users/Kavita/
 
-> On Fri, Jul 14, 2017 at 10:39:24AM +0200, Johannes Schindelin wrote:
->
->> It was possible before v2.13.3 to invoke:
->> 
->> 	git config alias.CamelCased <something>
->> 	git CamelCased
->> 
->> This regressed (due to a stupid mistake of mine that was not caught in
->> patch review, sadly) in v2.13.3.
->
-> Interesting. I don't think this was ever intended to work.
-> ...
-> The patches look obviously correct.
+Well, there you go.  That's clearly wrong.
 
-How can something be "(n)ever intended to work" and yet patches to
-make it work be "obviously correct"? ;-)
+You absolutely have to have /bin and /usr/bin on your PATH, _at least_
+if you want to be able to run standard UNIX tools.  And most likely
+you'll have a ton of other directories on your PATH as well.
 
-My first/knee-jerk reation to the title of the series also was
-"letter cases are not supposed to work in aliases", but that depends
-on the definition of "work".  When you add 'alias.Foo', you are not
-supposed to be able to make 'git foo' behave differently from that
-alias you defined.  In order to make that, which is not supposed to
-work, work, we'd need to introduce alias.Foo.commmand, as you said.
+I would investigate the shell configuration files etc. and see where
+you've messed up resetting your PATH variable.
 
-But I think that it is still reasonable for an end user to expect
-that 'git Foo' would trigger that alias.  And that is what was
-recently changed, inadvertently.
+> What does "type -a ls" show?
+> ls is aliased to `ls -F --color=auto --show-control-chars'
 
-So the problem may need to be explained better in this series, but I
-think the usage was expected to work and the series is fixing a real
-regression.
-
-Do we want to promise to keep the following "working"?
-
-    git config alias.Foo <something>
-    git foo
-
-By designing the system in such a way that an alias is created with
-a two-level name in our system, we are saying that alias names are
-case insensitive to the end users, so I _think_ the above is
-intended to work, and we are effectively promising that it will keep
-working.
-
-It is a different matter if that design decision was sensible,
-though.
-
-> As a meta-comment, I find splitting the tests from the fix like this
-> makes review more tedious.
-
-I agree.
+Yep.  There is no ls binary found.
