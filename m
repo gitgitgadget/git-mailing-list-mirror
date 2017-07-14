@@ -2,60 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1C2C2027C
-	for <e@80x24.org>; Fri, 14 Jul 2017 01:53:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 912032027C
+	for <e@80x24.org>; Fri, 14 Jul 2017 02:32:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752983AbdGNBxx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 21:53:53 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:33055 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752569AbdGNBxw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 21:53:52 -0400
-Received: by mail-pg0-f54.google.com with SMTP id k14so38172388pgr.0
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 18:53:52 -0700 (PDT)
+        id S1752902AbdGNCck (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Jul 2017 22:32:40 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34027 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752774AbdGNCck (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Jul 2017 22:32:40 -0400
+Received: by mail-pg0-f67.google.com with SMTP id j186so8894677pge.1
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 19:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=HZze9bBqF6eZZpvlcpEMwQkGW0+RVT6HPjnhTG1TkFg=;
-        b=hxkUI7RrK10Y+5o6oWinau842TlOfpjIxFG7xSPYLTBr+sqjMgynpH3hpNaiCMI52G
-         adD5la1fpRFV134jrXaSN54heyEISMSxIU9/B1+Cye3klEBrRrku5mEnJ/5kOahLoof5
-         2SaIgiIEsf4+EZk1MGaWRJm/CkxQUJs1YHApPFoCXVGkBb3L+qTDTKyCTg0lNJPATzQU
-         dbYmh5JChdTHjyHPTHiny100kG/q/hbWhgMiYsAGXO2ef6BaPcsjPtKzovgy1lM0M8Qr
-         M49Do3wsFQaG0II6IRDovei0RmSu3KKiCpkOHBzYPgRZ/X8RNv7xYtVPqBuf95bA1NED
-         UKNg==
+        bh=/xCG5vcNlUT4WKdcrnYpqvwU9J+DqK/vMu+1DqUuidM=;
+        b=Ep6KZjsI52Ot3jSnBF2blZklvLYFQXnOpyNkTcc/tHhdLDdgM570unLEY+wRRXtYJF
+         3NSwtR2RVmc/LcYB1O9uyJhnxAPsM7A6YFZTzYBAWYRiQUIXtu8jhCwWg9/CV8oQ0FU/
+         rFw+5eG6f5g2/bSMeuNw18+I8939y0UhCZ8Lw418ih8hD7VZW9gme75sEym+JOBZqlHv
+         0OWXanQPt0TFUcLqLUQR0HIXiq3WWUhJgjufjkStJzrqo6jiqb9iJPqoab/RiI3zkgKo
+         BT429eW6IylaHRSCBeghgxWkEetA+hklR9uZ0dads5s+DV334Khf8IUuVL0A1mX3oJ63
+         16vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=HZze9bBqF6eZZpvlcpEMwQkGW0+RVT6HPjnhTG1TkFg=;
-        b=U441rLkGOkXsm/RnUZlH8t/vRbHIZGQebLONmhKj4aJIAOx36ELe/7S3Ysc0Y/NxsA
-         C/NYtRIlAEymIy//HXH2XLFQ5eDyB2Bu7aAuQ7ZWFARC9nmjoEk5fsJU99sM5Un6jjEc
-         Lz3hteLNDLVIpIimZhd4xiCFw/vOxKffHEnqacEZiRDvvsBwMgM4i/uU0X3FYa9V+cQR
-         jaEyW9A0v9hYjDf8p6lHhSp6fgDAJ7KM65PLKKJ+At+uP6ZqgF/EihG2LwgeP6RJt3bp
-         ISMZ3xlk8vRvuoX7Z0SyhZC+6mEgFmfx8xbNFH9IDwuFSFK4RGqT3nVzRAh16oBr6CDp
-         HQFw==
-X-Gm-Message-State: AIVw111+zqTlgUi6HSYu3Zzulzmjmuc7IgmydUqvhM2gjL05GF0PLRUy
-        /HzNT74Z5hrLVQ==
-X-Received: by 10.98.11.4 with SMTP id t4mr2678419pfi.104.1499997231633;
-        Thu, 13 Jul 2017 18:53:51 -0700 (PDT)
+        bh=/xCG5vcNlUT4WKdcrnYpqvwU9J+DqK/vMu+1DqUuidM=;
+        b=fiK3aTgh/F/QEugq7c7CjxmVZagijUkZVe6yS5A/GUxagjCEpRSUlYgHiBzj9AGdQP
+         X9nytXnvGy+p1W4vCMfQgroviwukSXSGXSzlKIMMSs7ioKlUSmAJZ+Ixhj8imVaDtxH1
+         Ou96BjxIHjv3Ev6nqquJq5mfhwXBq8R92a4slTkHQiuBmfyaur5bLmqk/GSJ9mU4ODsy
+         kfrbV6fNd0kGjv1zG7foPuoM8jn7B01BnWfe/8CDFOOn+Bazg+ghRBVzHJoWjEiXpHwd
+         amVwq2gu1URIZIiY3KXM3BUp4Vd4mCZ0AdM92hZQoo/14LulNz7mSVI62BeJv/YFiBrh
+         OXWQ==
+X-Gm-Message-State: AIVw113/p4ZW2EowHQjYeXRlV6m1DtWafeC+OtZDKajCmsl5PKwdKw/Y
+        wnUVh1BGT5HgEw==
+X-Received: by 10.84.211.137 with SMTP id c9mr13312615pli.96.1499999558990;
+        Thu, 13 Jul 2017 19:32:38 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id e77sm12799509pfk.123.2017.07.13.18.53.50
+        by smtp.gmail.com with ESMTPSA id s11sm12741592pgr.53.2017.07.13.19.32.37
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 18:53:50 -0700 (PDT)
+        Thu, 13 Jul 2017 19:32:37 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Reed <benvreed@gmail.com>
+To:     Santiago Torres <santiago@nyu.edu>
 Cc:     git@vger.kernel.org
-Subject: Re: Strange behavior with Git add -p in version 2.13.3
-References: <CAEAWK2Nso0uFnn29B6=m=iV6-HjAEFTrrUg+b+7QzRhQ8TpZ6g@mail.gmail.com>
-Date:   Thu, 13 Jul 2017 18:53:49 -0700
-In-Reply-To: <CAEAWK2Nso0uFnn29B6=m=iV6-HjAEFTrrUg+b+7QzRhQ8TpZ6g@mail.gmail.com>
-        (Ben Reed's message of "Thu, 13 Jul 2017 18:48:18 -0500")
-Message-ID: <xmqqk23bss0i.fsf@gitster.mtv.corp.google.com>
+Subject: Re: What's cooking in git.git (Jul 2017, #04; Thu, 13)
+References: <xmqqo9snsy0k.fsf@gitster.mtv.corp.google.com>
+        <20170714002754.jyck5qmykbmuado7@LykOS.localdomain>
+Date:   Thu, 13 Jul 2017 19:32:37 -0700
+In-Reply-To: <20170714002754.jyck5qmykbmuado7@LykOS.localdomain> (Santiago
+        Torres's message of "Thu, 13 Jul 2017 20:27:55 -0400")
+Message-ID: <xmqqfudzsq7u.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -64,80 +66,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Reed <benvreed@gmail.com> writes:
+Santiago Torres <santiago@nyu.edu> writes:
 
-> Hello, I updated Git to 2.13.3, and now selecting 's' to split a
-> change on a call to `git add -p` is not working. It's showing the list
-> of options as if 's' is not a valid choice...
+>> Here are the topics that have been cooking.  
 >
-> Particularly, I'm getting...
-> Stage this hunk [y,n,q,a,d,/,e,?]? s
-> y - stage this hunk
-> n - do not stage this hunk
-> q - quit; do not stage this hunk or any of the remaining ones
-> a - stage this hunk and all later hunks in the file
-> d - do not stage this hunk or any of the later hunks in the file
-> g - select a hunk to go to
-> / - search for a hunk matching the given regex
-> j - leave this hunk undecided, see next undecided hunk
-> J - leave this hunk undecided, see next hunk
-> k - leave this hunk undecided, see previous undecided hunk
-> K - leave this hunk undecided, see previous hunk
-> s - split the current hunk into smaller hunks
-> e - manually edit the current hunk
-> ? - print help
->
-> Is anyone else having this problem? Does anybody know how to resolve
-> it? I'm running on macOS Version 10.12.5.
+> I sent (a patch almost a week ago) that would probably[1] be labeled
+> as "uninteresting" (as per the notes from the maintainer), but I wanted
+> to make sure it wasn't lost in the noise -- I see that theres a lot of
+> active development lately. I checked the latest iterations of "what's
+> cooking" to see if it was going to be discarded or so, but I see no
+> mention of it.
 
-I do not think it is MacOSX specific.  I notice that the prompt does
-not even offer 's' as a valid choice, which typically means that the
-hunk you are looking at is not splittable.
+I postponed it when I saw it the first time to see if anybody
+comments on it, and then it turns out nobody was interested, and it
+remained uninteresting to the list to this day.  
 
-A splittable hunk has more than one blocks of "+addition" and/or
-"-deletion" lines separated by at least one " context" line.  If
-your hunk looks like this, for example:
+Now, after looking at the message again, from the patch description,
+I would believe you that you experienced _some_ trouble when the
+gpg-agent that is auto-spawned by gpg gets left behind (as I do not
+see any hits from "git grep gpg-agent t/", we are not deliberately
+using the agent).  However, I could not convince myself that the
+solution is credible.  Here is an excerpt from the patch:
 
--- >8 --
-diff --git a/COPYING b/COPYING
-index 536e55524d..35c4dd4473 100644
---- a/COPYING
-+++ b/COPYING
-@@ -3,7 +3,7 @@
-  is concerned is _this_ particular version of the license (ie v2, not
-  v2.2 or v3.x or whatever), unless explicitly otherwise stated.
+> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
+> index ec2aa8f68..22ef2fa87 100755
+> --- a/t/lib-gpg.sh
+> +++ b/t/lib-gpg.sh
+> @@ -31,6 +31,7 @@ then
+>  		chmod 0700 ./gpghome &&
+>  		GNUPGHOME="$(pwd)/gpghome" &&
+>  		export GNUPGHOME &&
+> +		gpgconf --kill gpg-agent &&
+>  		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import \
+>  			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
+>  		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import-ownertrust \
+> -- 
 
-- HOWEVER, in order to allow a migration to GPLv3 if that seems like
-+ However, in order to allow a migration to GPLv3 if that seems like
-  a good idea, I also ask that people involved with the project make
-  their preferences known. In particular, if you trust me to make that
-  decision, you might note so in your copyright message, ie something
-Stage this hunk [y,n,q,a,d,/,e,?]?
--- 8< --
+but the current directory of this part is the $TRASH_DIRECTORY,
+which is always created anew from the beginning in a test.  What
+agent process could possibly be running there immedately after
+creating ./gpghome (which happens with "mkdir gpghome &&" without
+"-p" just before the context of this hunk---if the agent was running
+already, the directory would have been there, and mkdir would have
+failed, which would have caused "test_set_prereq GPG" at the end of
+the "&&" cascade to be skipped.  In other words, it is unclear to
+me, and your log message does not sufficiently explain, why this is
+the right solution (or what the exact cause of the symptom is, for
+that matter).
 
-you would not see 's' offered as a valid choice.  If you are looking
-at a splittable hunk, on the other hand:
+Or perhaps the gpg-agent socket is created somewhere outside the
+GNUPGHOME and stays behind even after a previous run of the same
+test finishes and $TRASH_DIRECTORY gets cleared (I am guessing the
+"what the exact cause is" part, as the log message did not explain
+it)?  If that is the case, it makes me wonder if either of the two
+alternative may be a more robust solution: (1) running gpg tests
+telling gpg never to use agent, or (2) telling gpg and gpg-agent to
+use a socket inside GNUPGHOME.
 
--- >8 --
-diff --git a/COPYING b/COPYING
-index 536e55524d..02a5c58938 100644
---- a/COPYING
-+++ b/COPYING
-@@ -3,9 +3,9 @@
-  is concerned is _this_ particular version of the license (ie v2, not
-  v2.2 or v3.x or whatever), unless explicitly otherwise stated.
+After all, "kill"ing agent blindly like the above patch would mean
+you do not know what other party is relying on the proper operation
+of the thing you are killing.  That sounds more like a workaround
+that a solution (unless it is explained with a solid reason why that
+is the right way to run more than one instances of GPG).
 
-- HOWEVER, in order to allow a migration to GPLv3 if that seems like
-+ However, in order to allow a migration to GPLv3 if that seems like
-  a good idea, I also ask that people involved with the project make
-- their preferences known. In particular, if you trust me to make that
-+ *their* preferences known. In particular, if you trust me to make that
-  decision, you might note so in your copyright message, ie something
-  like
+Perhaps everybody else is running these gpg tests without having to
+worry about gpg-agent already because their environment is more
+vanilla, but you have some configuration or environment that cause
+gpg to use agent, and that is the reason why nobody is interested
+(because they have never seen the symptom)?  It is possible that the
+part of t/test-lib.sh that tries to cleanse environment variables
+and other "external influence" to give us a predictable and
+repeatable test is unaware of such a knob that only some developers
+(including you) have and the rest of us were merely lucky.  Perhaps
+we need to throw GPG_AGENT_INFO SSH_AUTH_SOCK etc. into the list of
+envirionment variables to nuke there?
 
-Stage this hunk [y,n,q,a,d,/,s,e,?]?
--- 8< --
-
-you will see 's' offered as a valid choice.
-
-
+Combined with the unknown-ness of the root cause of the issue, I can
+only say that the patch may be raising an issue worth addressing,
+but it is too sketchy to tell if it is a right solution or what the
+exact problem being solved is.
