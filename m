@@ -2,105 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1ABA20357
-	for <e@80x24.org>; Fri, 14 Jul 2017 21:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 825F520357
+	for <e@80x24.org>; Fri, 14 Jul 2017 21:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751062AbdGNVMv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 17:12:51 -0400
-Received: from gproxy1-pub.mail.unifiedlayer.com ([69.89.25.95]:46398 "EHLO
-        outbound-ss-1812.hostmonster.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1751004AbdGNVMu (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 14 Jul 2017 17:12:50 -0400
-Received: from CMOut01 (cmgw2 [10.0.90.82])
-        by gproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id 008A8175B3E
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 15:12:49 -0600 (MDT)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by CMOut01 with 
-        id klCm1v00g0QvKlu01lCpsw; Fri, 14 Jul 2017 15:12:49 -0600
-X-Authority-Analysis: v=2.2 cv=FvB1xyjq c=1 sm=1 tr=0
- a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
- a=IkcTkHD0fZMA:10 a=G3gG6ho9WtcA:10 a=jPaFA2pgRzsEYp5H1wUA:9 a=QEXdDO2ut3YA:10
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=kwIdOFVmgUb1DPHQfMCag5MmNvdNXsyFDmEApI/avFY=; b=T7t3iKIns3kSfV+hB7OSig85ev
-        lsKjdcTlFlWyMucBDOb/mnmE5fw2B94p1dtttRBoPH9rZZoiY8Fq19EVra33KJmRkktuOsudHydOx
-        kf0fKLQqv2yaeTQSlFch3osAr;
-Received: from [65.112.16.22] (port=49200 helo=pdsdesk)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.87)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1dW7tG-0049ZV-EX; Fri, 14 Jul 2017 15:12:46 -0600
-Message-ID: <1500066765.25789.111.camel@mad-scientist.net>
-Subject: Re: Git Bash Bug
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Kavita Desai <kvdesai2@illinois.edu>, git@vger.kernel.org
-Date:   Fri, 14 Jul 2017 17:12:45 -0400
-In-Reply-To: <alpine.DEB.2.21.1.1707142227240.4193@virtualbox>
-References: <CAAu0pLedy5xqUgF7drMf=tQgMJD4rXq+JvKaiE54EdRFZWuTkQ@mail.gmail.com>
-                 <alpine.DEB.2.21.1.1707141625150.4193@virtualbox>
-                 <CAAu0pLdmGc_kq_w0Fm6W4XDqOe=iKSyAyLct+yH6y+7FPUHtnA@mail.gmail.com>
-                 <1500043024.25789.105.camel@mad-scientist.net>
-         <CAAu0pLdjvcxda0rip8JOzt1q0HNuu4dBNHvEzJbeey6yRSyCCQ@mail.gmail.com>
-         <1500044588.25789.109.camel@mad-scientist.net>
-         <alpine.DEB.2.21.1.1707142227240.4193@virtualbox>
-Organization: GNU's Not UNIX!
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 65.112.16.22
-X-Exim-ID: 1dW7tG-0049ZV-EX
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (pdsdesk) [65.112.16.22]:49200
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+        id S1751081AbdGNVaX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 17:30:23 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:34513 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751004AbdGNVaW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 17:30:22 -0400
+Received: by mail-pg0-f65.google.com with SMTP id j186so11816161pge.1
+        for <git@vger.kernel.org>; Fri, 14 Jul 2017 14:30:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WV1D2cTBn/VMML+rhKjL/zee2+FOEWmiGMkJyxJ4/CU=;
+        b=ZI5qDTPDP2McdTfY/npg+nESxzE0l5IH6EaV/RaA+o10EvJK/HwJmg14/Jas5ggCXj
+         J06TMR8qr/e50aa8uqy+g+zWF2yi0VJHMk880BayOhsABvt22t2tTR/UXfKH2oH8yg4o
+         U/GVq84e07LyFCdaWbB2V5hMf2aIYpbybvHRDTtxoj8MrnYO8gmg9y1vpkEL/GGHRDxu
+         ZHs7/VEdL5/jvhQxKxyNDGHlPxGm5nSB/uBsokJro3A/W5n0vOdURpWz9uZzkYZ3Zlt1
+         hV291oupIGA0Mw7kzGZFvrIrQC7smzPs/NfcPI9cjfsMi6AxJiwK8TdYP++Qe6obJIaY
+         DcIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WV1D2cTBn/VMML+rhKjL/zee2+FOEWmiGMkJyxJ4/CU=;
+        b=AUfeidHO1fPkKuQgM7nSrIdQhgCnB/c2EM0uZp0wHyEwYkewo1bPpIWCtMXLuowSG6
+         WyDWryNnd0gaf/hDAzgO9JoQbWIrLSafLujznnclM7fdsUk9v8jLoxpY31r0W2Vh4S5j
+         QBylMNw2hVXx14ExIXU/5OQade62QcQHcUnGWyToLqOk+xehtcP6QjY6coLGk2ZQhpZS
+         por9+Y+iT8bv3tI/ycyh1EubX7JgMj9CQalrHL52kwGXZoLOB4nBZQZc4BfZs4+L4/Hi
+         x7AQKalKrdcUza7XWimcsbKfz8FLz58wBqCuUaYV/FtVYnNM6jorJ7YCGq5X5vLWLKRb
+         TQMw==
+X-Gm-Message-State: AIVw1130wpfVXqzSpfYpmzhxkrpsoRGI+37dYTrQVy5em8shx3DGFODA
+        fllbep6ij/BS2V4lc+4=
+X-Received: by 10.98.113.71 with SMTP id m68mr7407084pfc.220.1500067821922;
+        Fri, 14 Jul 2017 14:30:21 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:a88b:f9f7:b07a:c72d])
+        by smtp.gmail.com with ESMTPSA id p28sm23597894pfl.102.2017.07.14.14.30.20
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 14 Jul 2017 14:30:20 -0700 (PDT)
+Date:   Fri, 14 Jul 2017 14:30:18 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/3] promised-blob, fsck: introduce promised blobs
+Message-ID: <20170714213018.GK93855@aiede.mtv.corp.google.com>
+References: <cover.1499800530.git.jonathantanmy@google.com>
+ <f9c7d4b3f800ea31e85e4897ee7048fec1e3c2f0.1499800530.git.jonathantanmy@google.com>
+ <890a36fc-be16-83bc-fec6-94e21d0f7d0a@jeffhostetler.com>
+ <20170713123951.5cab1adc@twelve2.svl.corp.google.com>
+ <4d0849b0-1340-5b82-ba3c-03a1f5c42f33@jeffhostetler.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4d0849b0-1340-5b82-ba3c-03a1f5c42f33@jeffhostetler.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2017-07-14 at 22:33 +0200, Johannes Schindelin wrote:
-> > You absolutely have to have /bin and /usr/bin on your PATH,
-> 
-> As Kavita talks about Git Bash, it is probably Git for Windows, for
-> which /bin should not be in the PATH but /mingw64/bin or /mingw32/bin
-> (depending on the architecture).
+Jeff Hostetler wrote:
+> On 7/13/2017 3:39 PM, Jonathan Tan wrote:
 
-I did check this with my Git for Windows installation before posting. 
-Mine is older (2.7.0) though so maybe things have changed:
+>> I know that discussion has shifted to the possibility of not having this
+>> list at all, and not sending size information together with the fetch,
+>> but going back to this...maybe omitting trees *is* the solution to both
+>> the large local list and the large amount of size information needing to
+>> be transferred.
+>>
+>> So the large-blob (e.g. Android) and many-blob (e.g. Windows) cases
+>> would look like this:
+>>
+>>   * Large-blob repositories have no trees omitted and a few blobs
+>>     omitted, and we have sizes for all of them.
+>>   * Many-blob repositories have many trees omitted and either all
+>>     blobs omitted (and we have size information for them, useful for FUSE
+>>     or FUSE-like things, for example) or possibly no blobs omitted (for
+>>     example, if shallow clones are going to be the norm, there won't be
+>>     many blobs to begin with if trees are omitted).
+>
+> I'm not sure I understand what you're saying here.  Does omitting a tree
+> object change the set of blob sizes we receive?  Are you saying that if
+> we omit a tree, then we implicitly omit all the blobs it references and
+> don't send size info those blobs?  So that the local list only has
+> reachable objects?  So faulting-in a tree would also have to send size
+> info for the newly referenced blobs?
+>
+> Would this make it more similar to a shallow clone (in that none of the
+> have_object tests work for items beyond the cut point) ?
 
-  pds@build-win MINGW64 ~
-  $ type -a ls
-  ls is aliased to `ls -F --color=auto --show-control-chars'
-  ls is /usr/bin/ls
-  ls is /bin/ls
-  ls is /usr/bin/ls
-  ls is /usr/bin/ls
+Correct.  After the server sends a promise instead of a tree object, the
+client has no reason to try to access blobs pointed to by that tree, any
+more than it has reason to try to access commits on a branch it has not
+fetched.  This means the client does not have to be aware of those blobs
+until it fetches the tree and associated blob promises.
 
-Clearly I have a lot of duplicates on my PATH now that I notice :)
+[...]
+> For the former case, if you just have a few omitted objects, then a
+> second round-trip to mget their sizes isn't that much work.
 
-I have /mingw64/bin on my PATH as well but looking there it has git,
-gettext, edit, a bunch of DLL's, etc. but it doesn't contain ls or
-other coreutils programs.
+For the client, that is true.  For the server, decreasing the number
+of requests even when requests are small and fast can be valuable.
 
-Cheers!
+[...]
+> I think for the latter, forcing a full promise-list on clone is just
+> too much data to send -- data that we likely won't ever need.
+
+What did you think of the suggestion to not send promises for objects
+that are only referenced by objects that weren't sent?
+
+[...]
+>> What do you think of doing this:
+>>   * add a "type" field to the list of promised objects (formerly the list
+>>     of promised blobs)
+>>   * retain mandatory size for blobs
+>>   * retain single file containing list of promised objects (I don't feel
+>>     too strongly about this, but it has a slight simplicity and
+>>     in-between-GC performance advantage)
+>
+> The single promise-set is problematic.  I think it will grow too
+> large (in our case) and will need all the usual lock juggling
+> and merging.
+>
+> I still prefer my suggestion for a per-packfile promise-set for all
+> of the reasons I stated the other day.  This can be computed quickly
+> during index-pack, is (nearly) read-only, and doesn't require the
+> whole file rewrite lock file.  It also has the benefit of being
+> portable -- in that I can also copy the .promise file if I copy the
+> .pack and .idx file to another repo.
+
+Okay.
+
+Thanks,
+Jonathan
