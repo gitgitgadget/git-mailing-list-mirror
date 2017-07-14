@@ -2,81 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 029CD20357
-	for <e@80x24.org>; Fri, 14 Jul 2017 20:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1ABA20357
+	for <e@80x24.org>; Fri, 14 Jul 2017 21:12:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751140AbdGNUjf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 16:39:35 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51923 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751133AbdGNUje (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 16:39:34 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8Nik-1dst2p3EFG-00vxKQ; Fri, 14
- Jul 2017 22:39:21 +0200
-Date:   Fri, 14 Jul 2017 22:39:19 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Liam Beguin <liambeguin@gmail.com>
-Subject: Re: [PATCH v6 00/10] The final building block for a faster rebase
- -i
-In-Reply-To: <CAGZ79kbGqSadRDSQbg3N6pj04igFQG1x15S_vDUD4A6sXRSzXA@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1707142237310.4193@virtualbox>
-References: <cover.1500043436.git.johannes.schindelin@gmx.de> <CAGZ79kbGqSadRDSQbg3N6pj04igFQG1x15S_vDUD4A6sXRSzXA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:aV6DKHy4+vy5rbCqAWwAVoKjttphSuUyx554AeOO1oDmCDOKHTg
- 6t0SYdpHJK9CxE5fvLWvVpsrMz3YT3Uoz3STVEFaH2k5/teAbC8FwQDtAF0Q5mIbQJ10gyh
- JYS/79hUDbLv54g+b+6Wjukl7Mp1yMKTWASeeS1fRql3rNgQUbwqqSDKCE1Jr8B+I9wYW90
- Ydn1usqq9udPsfBEH3Xfw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MOw1DVDTmco=:BNnaa+W5qh3hoBeTfhyqs8
- 3L3DtOI5KuGOiC28XUy2LFVaNabwAWfyQxViRNKI0HGJYtjQE3KNH//rrHRe6iuDZWUyWALOh
- p/M13y1lBjYRB143Isz6AW4aayj/v+y470RH/Ai5HNtPq+UCauJ2S6ghE3D528Fznsj3PjpmX
- Sn2Qxy4yCwd/VHb70VCvNDLluDlHSrN5ZR3z0IR9UFpOZAnQO2evf6v8lrMd3WF5EJbza1FqA
- RXykTWdySawWg52fOes+KIFwH/Mv/grWvoNDZbNzOegvdwHZ5j6jQam9FfGISkhlnMvBgGPSK
- Np++ZNYl9PmF1k7ziD6ahySz4npLt/SQcsTLp++UYkFRZ7DuNXcI3aCnLSpM16W4t3rWZBzgq
- F6BfW72t+B3WewADgml3+HVvg2zsI11UnMyRkxEx/UDoEyMFAov1T+T+cWGmAfHqC7ZQEUHlm
- w3oA05BtOXPNNV5m5tjJKHsGz5lrjK6svhH1ABTi8V8RpoxrMizTIgna9FnA35LS/wVhrR+Kq
- arguS/AJcvNISNfXMqFE/JO3+c4QIhArrMHpvbQxXfOlRV6IERLPD7Ji3lDN9vbyERWJvD5Kf
- 731aj4ljB/GdnIq0V7doLuz7lMLbvow2Ra2lh58LIx2FH6Lo7nDZuuTe5TFOF0T5xqh6EHrAw
- vbMYJYFhB55sk0pKWq2PRaeAtBxNArJzL65FNGHSiyrKhi1GfWWGWtGi259p6/eJyAdwcnOQV
- pHPRgTTVLfXC2/GDPq+hpbF8aSsk2dbqlTe0sOHbNteSn61RVWw78SaNvPCo03wGzGQ/I3P6B
- ulF9f985WdxG0QhQgFtPpMded2aibImdJJaFhavtqyqf/sDtas=
+        id S1751062AbdGNVMv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 17:12:51 -0400
+Received: from gproxy1-pub.mail.unifiedlayer.com ([69.89.25.95]:46398 "EHLO
+        outbound-ss-1812.hostmonster.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1751004AbdGNVMu (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 14 Jul 2017 17:12:50 -0400
+Received: from CMOut01 (cmgw2 [10.0.90.82])
+        by gproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id 008A8175B3E
+        for <git@vger.kernel.org>; Fri, 14 Jul 2017 15:12:49 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by CMOut01 with 
+        id klCm1v00g0QvKlu01lCpsw; Fri, 14 Jul 2017 15:12:49 -0600
+X-Authority-Analysis: v=2.2 cv=FvB1xyjq c=1 sm=1 tr=0
+ a=gch/BGY/Gm5DEW28s2kmlQ==:117 a=gch/BGY/Gm5DEW28s2kmlQ==:17
+ a=IkcTkHD0fZMA:10 a=G3gG6ho9WtcA:10 a=jPaFA2pgRzsEYp5H1wUA:9 a=QEXdDO2ut3YA:10
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.net; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=kwIdOFVmgUb1DPHQfMCag5MmNvdNXsyFDmEApI/avFY=; b=T7t3iKIns3kSfV+hB7OSig85ev
+        lsKjdcTlFlWyMucBDOb/mnmE5fw2B94p1dtttRBoPH9rZZoiY8Fq19EVra33KJmRkktuOsudHydOx
+        kf0fKLQqv2yaeTQSlFch3osAr;
+Received: from [65.112.16.22] (port=49200 helo=pdsdesk)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.87)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1dW7tG-0049ZV-EX; Fri, 14 Jul 2017 15:12:46 -0600
+Message-ID: <1500066765.25789.111.camel@mad-scientist.net>
+Subject: Re: Git Bash Bug
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Kavita Desai <kvdesai2@illinois.edu>, git@vger.kernel.org
+Date:   Fri, 14 Jul 2017 17:12:45 -0400
+In-Reply-To: <alpine.DEB.2.21.1.1707142227240.4193@virtualbox>
+References: <CAAu0pLedy5xqUgF7drMf=tQgMJD4rXq+JvKaiE54EdRFZWuTkQ@mail.gmail.com>
+                 <alpine.DEB.2.21.1.1707141625150.4193@virtualbox>
+                 <CAAu0pLdmGc_kq_w0Fm6W4XDqOe=iKSyAyLct+yH6y+7FPUHtnA@mail.gmail.com>
+                 <1500043024.25789.105.camel@mad-scientist.net>
+         <CAAu0pLdjvcxda0rip8JOzt1q0HNuu4dBNHvEzJbeey6yRSyCCQ@mail.gmail.com>
+         <1500044588.25789.109.camel@mad-scientist.net>
+         <alpine.DEB.2.21.1.1707142227240.4193@virtualbox>
+Organization: GNU's Not UNIX!
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 65.112.16.22
+X-Exim-ID: 1dW7tG-0049ZV-EX
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (pdsdesk) [65.112.16.22]:49200
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
-
-On Fri, 14 Jul 2017, Stefan Beller wrote:
-
-> On Fri, Jul 14, 2017 at 7:44 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
->
-> >  -static int subject2item_cmp(const struct subject2item_entry *a,
-> >  -      const struct subject2item_entry *b, const void *key)
-> >  +static int subject2item_cmp(const void *fndata,
+On Fri, 2017-07-14 at 22:33 +0200, Johannes Schindelin wrote:
+> > You absolutely have to have /bin and /usr/bin on your PATH,
 > 
-> This could also be named unused_fndata.
+> As Kavita talks about Git Bash, it is probably Git for Windows, for
+> which /bin should not be in the PATH but /mingw64/bin or /mingw32/bin
+> (depending on the architecture).
 
-Sure. I simply took the version Junio used when he merged the previous
-patch series iteration into `pu`.
+I did check this with my Git for Windows installation before posting. 
+Mine is older (2.7.0) though so maybe things have changed:
 
-The function is short enough, though, that I feel it obvious that the
-parameter is unused.
+  pds@build-win MINGW64 ~
+  $ type -a ls
+  ls is aliased to `ls -F --color=auto --show-control-chars'
+  ls is /usr/bin/ls
+  ls is /bin/ls
+  ls is /usr/bin/ls
+  ls is /usr/bin/ls
 
-Ciao,
-Dscho
+Clearly I have a lot of duplicates on my PATH now that I notice :)
+
+I have /mingw64/bin on my PATH as well but looking there it has git,
+gettext, edit, a bunch of DLL's, etc. but it doesn't contain ls or
+other coreutils programs.
+
+Cheers!
