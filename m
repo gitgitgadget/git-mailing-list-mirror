@@ -2,98 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B957820357
-	for <e@80x24.org>; Fri, 14 Jul 2017 14:34:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D67D420357
+	for <e@80x24.org>; Fri, 14 Jul 2017 14:34:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754424AbdGNOeK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 10:34:10 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:35237 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754381AbdGNOeI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 10:34:08 -0400
-Received: by mail-it0-f47.google.com with SMTP id v202so22679044itb.0
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 07:34:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=illinois-edu.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zPc/3SlsFV06FhhOgW+WkBqt0EW+wVu6I7y8UfePMNY=;
-        b=C3hiY9t/Q+lzA5a+ifE2JIN6MkVQUju8xNClTfmQ6BrpwlJe9nf3jKJt9fBoNpnwud
-         wKbidjgOI0mPj7lt0KLOU3IqnDf8ext3LnNyOtkfrlSUhhulnlUkp32LDm6Cs8Bz0aL+
-         Jmo6OKq7S2ebVP8Ua5tZxYp3AxwS0lLzeshqPPAmYdIBHf3Zvlq91tOWWHrWWwN5Yavp
-         iRRI32MYU1ajC3JlaNZJKWylNeyXgKrsxNn4qa2stTvyeH25h4VXrZPWNlt/YpU1jygv
-         rd1CXjSKtbeLej3EbMdcO85+2VIR27Kid9tweuZcP6YSrN9OfOmoU39FmnzFgTsxC400
-         nJig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zPc/3SlsFV06FhhOgW+WkBqt0EW+wVu6I7y8UfePMNY=;
-        b=OOSab7JJcT97MhCRjmWcuyEplO7BFC3+9i+NmcLGCuDKEZWAGrLBV1ChIAnaLRRAfO
-         2aNW1GpJFK1ONUkNQ5ZqQrjJVuKMJtzcM6a64dK9+JeSilcBmPs9QdJzR1rotxetgqes
-         NPCqfYqRPEd4x0/Brr9r74Aq4h08EWzjCKRdOkmRrEhZsPxREboIVSA+x2dIHUqcQEI+
-         B7xngRwhbgDVAcAWhTGWn5UQJGqKOD5m8E1j9D/mK4sBY5kbeEICsQIhn08D4RZO+eQL
-         HEvLYMIj34o6tryRWPzSOXLk4BrpRWnUuy8HMSuvsozNT054mC1dhQ76oODI9U7ETRWw
-         RMQw==
-X-Gm-Message-State: AIVw113csho+8sxC8PCts1xDEhVRQRRFWSlNBuvfLEv9W7N+pITcdvwe
-        sNsygx0Eg3VLxbn19TvloXUgkCcy2Nu+
-X-Received: by 10.36.107.214 with SMTP id v205mr3966522itc.33.1500042842905;
- Fri, 14 Jul 2017 07:34:02 -0700 (PDT)
+        id S932094AbdGNOef (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 10:34:35 -0400
+Received: from mout.gmx.net ([212.227.17.20]:61494 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754449AbdGNOee (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 10:34:34 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMTZa-1dZrQH234g-008H4a for
+ <git@vger.kernel.org>; Fri, 14 Jul 2017 16:34:31 +0200
+Date:   Fri, 14 Jul 2017 16:34:30 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+Subject: Regression in v2.13.3, fixed in master: aliases in worktrees
+Message-ID: <alpine.DEB.2.21.1.1707141629400.4193@virtualbox>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.107.34.16 with HTTP; Fri, 14 Jul 2017 07:34:02 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1707141625150.4193@virtualbox>
-References: <CAAu0pLedy5xqUgF7drMf=tQgMJD4rXq+JvKaiE54EdRFZWuTkQ@mail.gmail.com>
- <alpine.DEB.2.21.1.1707141625150.4193@virtualbox>
-From:   Kavita Desai <kvdesai2@illinois.edu>
-Date:   Fri, 14 Jul 2017 09:34:02 -0500
-Message-ID: <CAAu0pLdmGc_kq_w0Fm6W4XDqOe=iKSyAyLct+yH6y+7FPUHtnA@mail.gmail.com>
-Subject: Re: Git Bash Bug
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:xQloN90jQmdNu9YsrgLj0bF6JQ3yxMV+pY1O4I3+uao6fMG1ylu
+ 2ZxfaGUR5+t8/QrghbE+EmxVdLAJL5KHQeWeivZHYUUr692YB3fRL8uaxbpU+sFg1KNKwq6
+ UcNT5f4SfbJq0m5yWi2Ma9mjxmoGUiwRPG+IhejFkmA6nvuYqfJJGmb9mcXxucEJlJERi2Q
+ rWV1YYDiUO+yh3fdp4cmg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4ZsX6GSSGHM=:jE1fEajOrpmnooPdRduWZB
+ 9xvjs14l64cmsV2yFZPAcj4WzVEWstqF/S+Ao9FFm1r4bqknNU+qwTd1Mp3m9/LsCcOlGGmTT
+ IJaXf8ryYNIIBPla1EQ+7nKsoYoh1LV8c+o3ikg4Zg2bZt37Xf7zGVyLq+YFuhSDFroqfw0tB
+ uksnd9pnzSdr3uCsJiUlrP+kKuyjnq/ut3n/2vRndINegCZLFRXiX6BacTvQDrPszkr8Tbvx/
+ qnT3cqsHXPmTTFXeYCy+FxSFUV92Apevb305QzfHu7x1CEaXx5NqhOdEyzDV3aTN+Cp+Z+I7b
+ BnrV6teEivHeNqjmDjHykUMmxfsyQ/F4qFEJayTFuCu+hLHyvn9sBN98JIoFGUmmWDHHPLVUN
+ 2xjKWF6p6zbPxAGFi4kxxgD15V0jjfdCDyo8W5imuj+WdfWJX+2y65C8e+UCNVsBoHnvNTsTn
+ SN97/rTsIvHuqCDoyOor6yY7b09DytQBHDePbdH823p3GoxihavrcPS0bYRd4V4//LWInMg2U
+ oej8uQrKBUyREJEwN2x1E5GwDtVlAzWbW1tC8slD+ZxfXSrMnCFA2APQKcW7HMuLFQpMTwztj
+ q1cxh0rKCVqCPe0tcmBB0mHGCXNe0Bgj+760W42zHdVazjaRbIv6glAdNxMZSN3OtHA/TDDhX
+ oa3WSpvdqh6DkDkEZYjgo+q506QJO/nbiTyvwy14MlhK2AI0P1S3ppy+1/Pum+Z0eUSFHyTJK
+ iEHX/HFK8aupKF84EJ9XlQhbTBcjP9lDb/ixNbiahYwm2++ToxIfr2oGxdRIbvh4BBuHQep5a
+ m1frmmfmb84+6dEK8dDZuxFs4QhBe1vpmPbYmQPmUOLaVW49js=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for not being specific. What I meant by not working was that the
-bash commands are not found.
-Here is an example
+Hi all,
 
-$ ls
-bash: ls: command not found
+just to let you know that repository-local aliases stopped working in
+v2.13.3. This is due to my "aliases via early config" work that made it
+into a maintenance release...
 
-Kavita
+The bug is fixed in master already, and I cherry-picked Brandon's config-h
+series that contains the fix into Git for Windows' master branch.
 
-On Fri, Jul 14, 2017 at 9:28 AM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Kavita,
->
-> On Fri, 14 Jul 2017, Kavita Desai wrote:
->
->> Originally, when I first had Git Bash everything was working
->> perfectly. Randomly one day, my bash commands were not working.
->
-> There are a gazillion ways how commands can "not work". You *need* to be
-> more specific here. In the least, a precise pasted output of a failed
-> command is necessary.
->
-> In addition, a couple of other points of interest would be good to know,
-> the issue reporting template at
-> https://github.com/git-for-windows/git/issues/new tries to help you
-> provide as much important information as you can. Maybe give it a try?
->
-> Ciao,
-> Johannes
+I only had to add one add-on patch that falls back to opts->git_dir when
+opts->commondir is NULL (no idea whether that can happen in Git's master,
+but it can happen in Git for Windows' master at least).
 
+It *may* be worth it to cherry-pick this to `maint`, too, but then, it
+looks as if I am the only really serious user of worktrees anyway (given
+that auto-gc still corrupts worktrees' reflogs, and it is a known bug for
+2 years and counting).
 
+So I dunno. Maybe not worth bothering about in `maint`. Less work for you,
+Junio.
 
--- 
-Kavita Desai
-UIUC Engineering Physics 2018
-Engineering Outreach Society Engineering Open House Chair
-UIUC Housing Ike. South Front Desk Clerk
+Ciao,
+Johannes
+
