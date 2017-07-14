@@ -2,106 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8097420357
-	for <e@80x24.org>; Fri, 14 Jul 2017 22:26:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D6C820357
+	for <e@80x24.org>; Fri, 14 Jul 2017 22:28:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751116AbdGNW0O (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 18:26:14 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:34327 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751049AbdGNW0N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 18:26:13 -0400
-Received: by mail-pf0-f176.google.com with SMTP id q85so51325162pfq.1
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 15:26:13 -0700 (PDT)
+        id S1751105AbdGNW2r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 18:28:47 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:33689 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751085AbdGNW2q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 18:28:46 -0400
+Received: by mail-pg0-f53.google.com with SMTP id k14so51813970pgr.0
+        for <git@vger.kernel.org>; Fri, 14 Jul 2017 15:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=pvBbXnAIaeHPzHoOsc29DtXAVX5XRtf4uNKelTNOk8I=;
-        b=LKrWo1uTZPlPlIhm+9dmaxFG5osz525KtWaYRdOJMVJ3MSSPLtI49CSIpMuSz/a1KA
-         vjKSinkGiKhBm63u9uW9mHIMNLduX+7ZstB0lfCCxyGd2BRLlHXN83Nwj/hYR+eXcXd2
-         TCsIrsKdEsXResIJmBktc76epqQDNGxxDv6EOO5AXzSZ0qBsqBtio604reyhjgpV3CD9
-         s0M3xDe/xKZC2g3WS2y6hvfZra25p1lbUYsmwGbts2NDwEjbgD95OO12r17dRZbFVTWV
-         voGb/xzsrHJqDvgQ6h/U3J3LY1QXmiT+3h5dTu3q0fR5uUSTrA4PeX69JWxpf6iU76xV
-         5AoA==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=kGi7rD39wT2Je3fpnea3lumt4A19BMptjYttl7wLsjQ=;
+        b=UzONSatahsdweHl93TAMbNBOs6/DcXRBI/W5AbGGecpW5y+DJoTemPrcjzMRwfzxps
+         wk73MVFAKVU/iVeo0qUsAaS9ukeSX53wL55UaYwKLVuwWou8SQOyZ69Gr50jJNxbwyM2
+         Je0DYCit6KFwRQFoIRixUc+HnExQMudQd65ap2zzx8zcBqQqTysIgc/lKE7w6AZTRuzJ
+         AJMuYkWoPdSvqB0/F+4fiwOPJU6FqDDgA/Pmu2o+KoyPc08DzuesI03EevJsC63BUENI
+         abJRLrnX6fzRAufskH5MQ7LMn49HDQK57e7XmJK+qp+hv4aLX9m8ldV2v7GF8XHzbuo5
+         7oGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=pvBbXnAIaeHPzHoOsc29DtXAVX5XRtf4uNKelTNOk8I=;
-        b=l59tf7e0gO1sNp0yo9HwJI/B5y7lKtNE0D5ZyHMd8QSV0eEkoheXSwlKUpIm76R54v
-         WNI7xZDxxdTH9LxbkiItimXRhOSMSiC18Eb+AQ5uR8sZtteCkE7xthzfN90igln4gA1V
-         jQL6JqGgleZDhiDHAJBNcEpkZnvk5GADG7u3uus8O6RvDUBfKChRCGKekAupcBVhpJas
-         oNDyunrQBznZO7XRs3JXnHlHmD9i/AWKmzC3T9p6qwfnUwn+mvSxKDl0s3/JkIPAD2vg
-         ZmaVt5FU0i8ykNEvpKylflelvx+TYx55eOv22uVYKw/KjBDh6c8BjfJIZALOvWhZstYC
-         JEPA==
-X-Gm-Message-State: AIVw112pYepF5BL4OmznUigvn28y9EpBupjaamgMbRCOSHNUIjmJk/Hl
-        zbsand2Tfc7GcsKpW5Q=
-X-Received: by 10.99.54.138 with SMTP id d132mr17510678pga.156.1500071172898;
-        Fri, 14 Jul 2017 15:26:12 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:d522:5f:8052:2b20])
-        by smtp.gmail.com with ESMTPSA id d74sm20839851pfb.31.2017.07.14.15.26.11
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 14 Jul 2017 15:26:11 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Andreas Schwab <schwab@linux-m68k.org>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] strbuf: use designated initializers in STRBUF_INIT
-References: <20170710070342.txmlwwq6gvjkwtw7@sigill.intra.peff.net>
-        <c349f324-8f6d-2fe0-8982-2e37869d37b5@kdbg.org>
-        <xmqq4luk58ot.fsf@gitster.mtv.corp.google.com>
-        <962da692-8874-191c-59d4-65b9562cf87f@kdbg.org>
-        <xmqqy3rw3rc8.fsf@gitster.mtv.corp.google.com>
-        <xmqqlgnrq9qi.fsf@gitster.mtv.corp.google.com>
-        <87pod23jix.fsf@gmail.com>
-Date:   Fri, 14 Jul 2017 15:26:10 -0700
-In-Reply-To: <87pod23jix.fsf@gmail.com> (=?utf-8?B?IsOGdmFyIEFybmZqw7Zy?=
- =?utf-8?B?w7A=?= Bjarmason"'s message
-        of "Fri, 14 Jul 2017 21:28:38 +0200")
-Message-ID: <xmqq4luer6yl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=kGi7rD39wT2Je3fpnea3lumt4A19BMptjYttl7wLsjQ=;
+        b=rQwrWadP9e8ta6ZstGHncDcxe+rdXiT6qhKrDy9ehNSdFYE/QM+31Wcs393zIgLb/Q
+         64MI7EM7UtHYJC0cwSgcB3whU5uudoXdoYGwK2axZm41M0f/7mGCCoDo+fHHTb7yVcGF
+         VPiyGfqYPDlm7xkxbclLjS3oLcl6ciOLfd48uedqqsh31i1R137sYJU6zgs+3yWF+Vo3
+         7ekx5+DEc5BEG5kQXBk0ZoJV7V2mAnebovt195/3p6Mk19k65Nof7zcXckYMjuC21afY
+         lie+XJTtxeW1dL0O2X9JT/LbT3lmftgFz4LKTP+5Wb4g3fUDqzInfezkjhF1JzvCmeox
+         WpyA==
+X-Gm-Message-State: AIVw112dnRSU2c5RK2+eq89rrKD9xrDZ7xEuu50wtiXGWjwCdIAb2vz1
+        vfQoMdjiILiCM71s0reo1A==
+X-Received: by 10.98.113.71 with SMTP id m68mr7600275pfc.220.1500071325858;
+        Fri, 14 Jul 2017 15:28:45 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id 204sm19749989pfc.32.2017.07.14.15.28.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 14 Jul 2017 15:28:44 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, peff@peff.net, gitster@pobox.com,
+        jrnieder@gmail.com, jacob.keller@gmail.com,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH v2 0/3] Convert grep to recurse in-process
+Date:   Fri, 14 Jul 2017 15:28:23 -0700
+Message-Id: <20170714222826.81148-1-bmwill@google.com>
+X-Mailer: git-send-email 2.13.2.932.g7449e964c-goog
+In-Reply-To: <20170711220408.173269-1-bmwill@google.com>
+References: <20170711220408.173269-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Changes in v2:
+* small style nits fixed.
+* Comment describing function contract for repo_read_index
+* NEEDSWORK comment in grep to describe the issue with adding the submodule's
+  object store as an alternate.
+* the_repository->index = &the_index was removed from setup.c and instead this
+  is done as a static initializer.
 
-> On Fri, Jul 14 2017, Junio C. Hamano jotted:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>  - This may be showing I am not just old fashioned but also am
->>    ignorant, but I do not see much point in using the following in
->>    our codebase (iow, I am not aware of places in the existing code
->>    that they can be improved by employing these features):
->>
->>    . // comments
->
-> [Feel free to ignore this E-Mail and my fascination with C syntax
-> trivia]
->
-> I wouldn't advocate switching to them on this basis, but since you asked
-> for cases where things could be improved with // comments:
->
-> The other day I submitted a patch that included this line in a comment:
->
->     +        * "t/**.sh" and then conclude that there's a directory "t",
+Brandon Williams (3):
+  repo_read_index: don't discard the index
+  repository: have the_repository use the_index
+  grep: recurse in-process using 'struct repository'
 
-Yes, obviously I am very aware of this one.  
+ Documentation/git-grep.txt |   7 -
+ builtin/grep.c             | 396 ++++++++++-----------------------------------
+ cache.h                    |   1 -
+ git.c                      |   2 +-
+ grep.c                     |  13 --
+ grep.h                     |   1 -
+ repository.c               |   6 +-
+ repository.h               |   8 +
+ setup.c                    |  12 +-
+ 9 files changed, 99 insertions(+), 347 deletions(-)
 
-The thing is, I had to do this only once in the 10+ year since
-project inception.  I find that much more relevant anecdata ;-).
+-- 
+2.13.2.932.g7449e964c-goog
 
