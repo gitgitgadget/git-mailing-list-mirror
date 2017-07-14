@@ -2,146 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 912032027C
-	for <e@80x24.org>; Fri, 14 Jul 2017 02:32:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF3192027C
+	for <e@80x24.org>; Fri, 14 Jul 2017 04:51:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752902AbdGNCck (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Jul 2017 22:32:40 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34027 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752774AbdGNCck (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Jul 2017 22:32:40 -0400
-Received: by mail-pg0-f67.google.com with SMTP id j186so8894677pge.1
-        for <git@vger.kernel.org>; Thu, 13 Jul 2017 19:32:39 -0700 (PDT)
+        id S1750914AbdGNEvX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 00:51:23 -0400
+Received: from mail-ua0-f172.google.com ([209.85.217.172]:33839 "EHLO
+        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750819AbdGNEvX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 00:51:23 -0400
+Received: by mail-ua0-f172.google.com with SMTP id z22so45777221uah.1
+        for <git@vger.kernel.org>; Thu, 13 Jul 2017 21:51:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/xCG5vcNlUT4WKdcrnYpqvwU9J+DqK/vMu+1DqUuidM=;
-        b=Ep6KZjsI52Ot3jSnBF2blZklvLYFQXnOpyNkTcc/tHhdLDdgM570unLEY+wRRXtYJF
-         3NSwtR2RVmc/LcYB1O9uyJhnxAPsM7A6YFZTzYBAWYRiQUIXtu8jhCwWg9/CV8oQ0FU/
-         rFw+5eG6f5g2/bSMeuNw18+I8939y0UhCZ8Lw418ih8hD7VZW9gme75sEym+JOBZqlHv
-         0OWXanQPt0TFUcLqLUQR0HIXiq3WWUhJgjufjkStJzrqo6jiqb9iJPqoab/RiI3zkgKo
-         BT429eW6IylaHRSCBeghgxWkEetA+hklR9uZ0dads5s+DV334Khf8IUuVL0A1mX3oJ63
-         16vQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=pp7GjyySNriFLVJgIhWLXQL+JkbPQvraBJL0Zhdn93Q=;
+        b=iGYfkKb7JH5sQYoejlyOnSDBV5qV7TNhonAT1fXO+c2R5p1rYl2IWqDuPKHDGSfW4/
+         2q5lQuQ+t9kgqsRcEfjy+zm8abrqOAgdYtdJtFUWw4MbqraZLlkV3OzrtwbCoEh2rEna
+         Y+xLOguKMITcdkvyjyMS4cBYiW71hzRfEti/qeJhOhUFG+0yebBb2aOFncUoeJ7tU3aJ
+         bY2VGXtKwCzNS6FZCL8fnGpiH3L1J+ndHsRFg/r4vpoUilawEJEzy4JuJI8KYb+UsxJC
+         m8vJwIltK3phiZkGWlbnl5Ihmj/NITrXOcZQSThpy9p79a3RO61TmynhYaOuvME7kiwx
+         d3DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/xCG5vcNlUT4WKdcrnYpqvwU9J+DqK/vMu+1DqUuidM=;
-        b=fiK3aTgh/F/QEugq7c7CjxmVZagijUkZVe6yS5A/GUxagjCEpRSUlYgHiBzj9AGdQP
-         X9nytXnvGy+p1W4vCMfQgroviwukSXSGXSzlKIMMSs7ioKlUSmAJZ+Ixhj8imVaDtxH1
-         Ou96BjxIHjv3Ev6nqquJq5mfhwXBq8R92a4slTkHQiuBmfyaur5bLmqk/GSJ9mU4ODsy
-         kfrbV6fNd0kGjv1zG7foPuoM8jn7B01BnWfe/8CDFOOn+Bazg+ghRBVzHJoWjEiXpHwd
-         amVwq2gu1URIZIiY3KXM3BUp4Vd4mCZ0AdM92hZQoo/14LulNz7mSVI62BeJv/YFiBrh
-         OXWQ==
-X-Gm-Message-State: AIVw113/p4ZW2EowHQjYeXRlV6m1DtWafeC+OtZDKajCmsl5PKwdKw/Y
-        wnUVh1BGT5HgEw==
-X-Received: by 10.84.211.137 with SMTP id c9mr13312615pli.96.1499999558990;
-        Thu, 13 Jul 2017 19:32:38 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3079:9e61:8883:4f9c])
-        by smtp.gmail.com with ESMTPSA id s11sm12741592pgr.53.2017.07.13.19.32.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Jul 2017 19:32:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Santiago Torres <santiago@nyu.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2017, #04; Thu, 13)
-References: <xmqqo9snsy0k.fsf@gitster.mtv.corp.google.com>
-        <20170714002754.jyck5qmykbmuado7@LykOS.localdomain>
-Date:   Thu, 13 Jul 2017 19:32:37 -0700
-In-Reply-To: <20170714002754.jyck5qmykbmuado7@LykOS.localdomain> (Santiago
-        Torres's message of "Thu, 13 Jul 2017 20:27:55 -0400")
-Message-ID: <xmqqfudzsq7u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=pp7GjyySNriFLVJgIhWLXQL+JkbPQvraBJL0Zhdn93Q=;
+        b=KthCya/xxYRvsD5tRpfwyJUu8m/HPbSygar4AN7jSja9QgvzsdkHntdTzac/JRi7nA
+         h2xajX7GG1xegu2zZUUZnYQ0qdQYT7c6LycrKb59BqloCPZdkolo7L6bIaVnnv/KMXno
+         aUT9vikEEhVsiEeLZNjAp9V6GDI3bpF8/xYYWlqSBwfHqHnh4Mkhg8+s8Et+c1ugJGAy
+         mgxGaks1WI1uKvmCnRAPs+VAph7sAs8RBeIxW4Zp8CWw5ztx2s3EXVqEjqbJTLtb09Am
+         gm1H9s3P+zZrPmLCS8SwNcMIirxyyJSQ1xiHleRpqcwqjfXpZIyYVV3xXf1Q+jb8xsYt
+         RXLw==
+X-Gm-Message-State: AIVw110BNPS89WphEmAL1GhDyykbpdMGkE2JvQp2B9HLhIy0HqY3UIyL
+        5g19evQoACuIBm2Vda+3XDmmW9aTNg==
+X-Received: by 10.176.2.184 with SMTP id 53mr1395834uah.22.1500007882370; Thu,
+ 13 Jul 2017 21:51:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.103.69.91 with HTTP; Thu, 13 Jul 2017 21:51:21 -0700 (PDT)
+In-Reply-To: <CANmutwCSGgLxESPmTJZXkid6P1N6HwwOTaz=7QHOsSPrrHQ4EQ@mail.gmail.com>
+References: <CANmutwCSGgLxESPmTJZXkid6P1N6HwwOTaz=7QHOsSPrrHQ4EQ@mail.gmail.com>
+From:   Lutz Roeder <lutz.noreply@gmail.com>
+Date:   Thu, 13 Jul 2017 21:51:21 -0700
+Message-ID: <CANmutwAJd3qUbNmPv5WpD4zr=rt=Zt3sJ3Ackuasu=pOCRz-5g@mail.gmail.com>
+Subject: Re: Git on macOS shows committed files as untracked
+To:     peff@peff.net, git@vger.kernel.org, tboegi@web.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Santiago Torres <santiago@nyu.edu> writes:
+Using precomposeunicode still reproduces the issue:
 
->> Here are the topics that have been cooking.  
+Repro steps:
+
+1. Download https://www.dropbox.com/s/0q5pbpqpckwzj7b/gitstatusrepro.zip?dl=
+=3D0
+2. unzip gitstatusrepro.zip && cd gitstatusrepro
+3. git reset --hard
+4. git -c core.precomposeunicode=3Dtrue status
+
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+"d\314\207\316\271\314\223\314\200\342\225\223\316\265\357\256\257\360\222\=
+221\217\342\227\213\342\225\223\320\243\314\213/"
+
+nothing added to commit but untracked files present (use "git add" to track=
+)
+
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
 >
-> I sent (a patch almost a week ago) that would probably[1] be labeled
-> as "uninteresting" (as per the notes from the maintainer), but I wanted
-> to make sure it wasn't lost in the noise -- I see that theres a lot of
-> active development lately. I checked the latest iterations of "what's
-> cooking" to see if it was going to be discarded or so, but I see no
-> mention of it.
-
-I postponed it when I saw it the first time to see if anybody
-comments on it, and then it turns out nobody was interested, and it
-remained uninteresting to the list to this day.  
-
-Now, after looking at the message again, from the patch description,
-I would believe you that you experienced _some_ trouble when the
-gpg-agent that is auto-spawned by gpg gets left behind (as I do not
-see any hits from "git grep gpg-agent t/", we are not deliberately
-using the agent).  However, I could not convince myself that the
-solution is credible.  Here is an excerpt from the patch:
-
-> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-> index ec2aa8f68..22ef2fa87 100755
-> --- a/t/lib-gpg.sh
-> +++ b/t/lib-gpg.sh
-> @@ -31,6 +31,7 @@ then
->  		chmod 0700 ./gpghome &&
->  		GNUPGHOME="$(pwd)/gpghome" &&
->  		export GNUPGHOME &&
-> +		gpgconf --kill gpg-agent &&
->  		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import \
->  			"$TEST_DIRECTORY"/lib-gpg/keyring.gpg &&
->  		gpg --homedir "${GNUPGHOME}" 2>/dev/null --import-ownertrust \
-> -- 
-
-but the current directory of this part is the $TRASH_DIRECTORY,
-which is always created anew from the beginning in a test.  What
-agent process could possibly be running there immedately after
-creating ./gpghome (which happens with "mkdir gpghome &&" without
-"-p" just before the context of this hunk---if the agent was running
-already, the directory would have been there, and mkdir would have
-failed, which would have caused "test_set_prereq GPG" at the end of
-the "&&" cascade to be skipped.  In other words, it is unclear to
-me, and your log message does not sufficiently explain, why this is
-the right solution (or what the exact cause of the symptom is, for
-that matter).
-
-Or perhaps the gpg-agent socket is created somewhere outside the
-GNUPGHOME and stays behind even after a previous run of the same
-test finishes and $TRASH_DIRECTORY gets cleared (I am guessing the
-"what the exact cause is" part, as the log message did not explain
-it)?  If that is the case, it makes me wonder if either of the two
-alternative may be a more robust solution: (1) running gpg tests
-telling gpg never to use agent, or (2) telling gpg and gpg-agent to
-use a socket inside GNUPGHOME.
-
-After all, "kill"ing agent blindly like the above patch would mean
-you do not know what other party is relying on the proper operation
-of the thing you are killing.  That sounds more like a workaround
-that a solution (unless it is explained with a solid reason why that
-is the right way to run more than one instances of GPG).
-
-Perhaps everybody else is running these gpg tests without having to
-worry about gpg-agent already because their environment is more
-vanilla, but you have some configuration or environment that cause
-gpg to use agent, and that is the reason why nobody is interested
-(because they have never seen the symptom)?  It is possible that the
-part of t/test-lib.sh that tries to cleanse environment variables
-and other "external influence" to give us a predictable and
-repeatable test is unaware of such a knob that only some developers
-(including you) have and the rest of us were merely lucky.  Perhaps
-we need to throw GPG_AGENT_INFO SSH_AUTH_SOCK etc. into the list of
-envirionment variables to nuke there?
-
-Combined with the unknown-ness of the root cause of the issue, I can
-only say that the patch may be raising an issue worth addressing,
-but it is too sketchy to tell if it is a right solution or what the
-exact problem being solved is.
+> Thanks for the fast analyzes -
+> in short:
+> what does
+> git -c core.precomposeunicode=3Dtrue status
+> say ?
+>
+>
+> The easiest thing may be to set
+> git config --global core.precomposeunicode true
