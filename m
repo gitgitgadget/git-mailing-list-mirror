@@ -2,193 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EA6B20357
-	for <e@80x24.org>; Fri, 14 Jul 2017 15:18:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A015F20357
+	for <e@80x24.org>; Fri, 14 Jul 2017 15:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754545AbdGNPSa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 11:18:30 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:34078 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754399AbdGNPS3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 11:18:29 -0400
-Received: by mail-qk0-f173.google.com with SMTP id d78so77805462qkb.1
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 08:18:29 -0700 (PDT)
+        id S1754641AbdGNPUN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 11:20:13 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35030 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754215AbdGNPUM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 11:20:12 -0400
+Received: by mail-pg0-f65.google.com with SMTP id d193so10977231pgc.2
+        for <git@vger.kernel.org>; Fri, 14 Jul 2017 08:20:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=21SDbAtNIzyckvptVjjd3LlRV9WYJQA7IOzzUgRa3D8=;
-        b=X9ZpNgQUFSyb2gpsWCEWax/dgYC1X47nT+rlgyYTCi86HJbXgvAa9zKpwS6E4pBTWv
-         rrt6kc/D6Ti6bgHqWx4a0VFOQP/7igsY2/0L9KPGre96r2/ikkV4i4cJL5+RNhPo9Pvl
-         /tw+ZtGC95uhBFwgGXL5/2YjIPDdmdkhmf6wBcVOkGqHmDK+Bshy1qiRhSk5LIFUvsdZ
-         DKvqwvCBJZyI6rMLJ40T55Q/Danx7QUBDnV5wgqlnSD+B6HnR2OESjOesskYnf/9LAgR
-         e//XmE7ufD6DzoaWXN6RzPg8EPOLuvgy+TlnVmb/WWky3w/LOzMtFlVrUMRZvTuNG3Jb
-         ba/A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=km8w5kSrqzh9N6oa3nPrSJglFzp7RTbpskXcOUZfp0U=;
+        b=dn2FwhOCVd6E+h9R+bzgRF3oe223rNlaioJ//p8KT3ruywktHnWYXgh/gNyHjv+UZ0
+         VJ1b3EVIMsSZAL+bJKTgpEx6+vUQeyERu9EkuBXpakYfVAP7jznyPlKCByVtLgH1W+uA
+         r1Y/xFFi3oMCdDBePH8B6SbYPuE9v+YHuqwR1//q1fLZKE6j4MP53JyYiwCsiPdOZuTV
+         WSkkSKxchdhD3BPi/9aKRiqRVs02aPS5Sowm9sKgsDGhkGmSYf3OAJVjqaKGObLFPGK2
+         CIailYbo06IzouguVgdQRoTTkPjK38AD+oRUW6ghzq34YKc+3t0Tvilz7jqhH1zQafoR
+         Khxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=21SDbAtNIzyckvptVjjd3LlRV9WYJQA7IOzzUgRa3D8=;
-        b=I+ZJzl6ASDFl4eVYdudNK4IFzrzus2zmjglRHvbqK836dYjJV/GSNYaZJQI3dK6UtY
-         IT4sx68sdEm0fXBtmKNzNqB51d30O+inoMREIPqgW8uBhD9ZUq0UJKIjJPP5P6Fx5P19
-         +8S/fmoF8DOPlVm4twFrrzPM7i0hggmMbqT1aflIEM6eBQN1qnLFvmVA9eG0h44FZ6a3
-         V1T0bYYj4P7Brfub2qJ6v9B3urJgBYgxbfBALrLRWA6siQsatFNtX25ojO390+KzcOsb
-         GSIHiQf+e26PsT7pStGCclMGlT2FzAjad598CyX9q8JzVuY+ib40TLV3U0oOpCKNMQNo
-         XpAg==
-X-Gm-Message-State: AIVw111rieh7Ppr8sIHguMW7p614fhL4WhsbN5XO24YoYCk13KEJVX6l
-        Bueur6WcTnJFD495nnPd+ZTNP0F2Rw==
-X-Received: by 10.55.124.67 with SMTP id x64mr11392609qkc.98.1500045508363;
- Fri, 14 Jul 2017 08:18:28 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=km8w5kSrqzh9N6oa3nPrSJglFzp7RTbpskXcOUZfp0U=;
+        b=qYMOinYjCvPPRmdGiJGeZj1XLSF2rp59bdI7rxoOaWatDm6OUlWgbM7YmlWBSW/m/F
+         IKXsRu/8awBr3ThM6a59pymrhGDIZLSz2FKCA2w1ZXxe38EsTGWVJBRdeoCEiUYteUQJ
+         iRjWlghKO1aXWJMxrRNT0J0ehpo+umEVxKo/TCoNx8/aiYIpZr5yyEJTIzmcseW++Y+w
+         rQ31prM1gNvfYYD4t5sbuz77MO7voHnD9eZM7HwgfIGeDzBohbcUhJDNXJGXCxtC/AmM
+         l0Q6bKrQdrhGKWbaJkkUMYWvksFZjNXZJp++2APhEKizvwI7+vAZziNML2Xs8Cf/rkxq
+         GbUA==
+X-Gm-Message-State: AIVw111YaNQrD9MfGzm5KvfB7R3A8ugdq2OOOxUyj2H3w86TkMIzubNF
+        CTShjG+1r3bDKQ==
+X-Received: by 10.84.232.7 with SMTP id h7mr16645196plk.193.1500045606591;
+        Fri, 14 Jul 2017 08:20:06 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:d522:5f:8052:2b20])
+        by smtp.gmail.com with ESMTPSA id p28sm22466741pfl.102.2017.07.14.08.20.05
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 14 Jul 2017 08:20:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: Regression in v2.13.3, fixed in master: aliases in worktrees
+References: <alpine.DEB.2.21.1.1707141629400.4193@virtualbox>
+Date:   Fri, 14 Jul 2017 08:20:04 -0700
+In-Reply-To: <alpine.DEB.2.21.1.1707141629400.4193@virtualbox> (Johannes
+        Schindelin's message of "Fri, 14 Jul 2017 16:34:30 +0200 (CEST)")
+Message-ID: <xmqq1spjrqor.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Fri, 14 Jul 2017 08:18:27 -0700 (PDT)
-In-Reply-To: <20170714132651.170708-2-benpeart@microsoft.com>
-References: <20170714132651.170708-1-benpeart@microsoft.com> <20170714132651.170708-2-benpeart@microsoft.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 14 Jul 2017 17:18:27 +0200
-Message-ID: <CAP8UFD2tQQ3Dyx64LMtt_+WRoDS9V+AbMtvdCcngqiL5kCBFTg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] sha1_file: Add support for downloading blobs on demand
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 14, 2017 at 3:26 PM, Ben Peart <peartben@gmail.com> wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> diff --git a/contrib/long-running-read-object/example.pl b/contrib/long-running-read-object/example.pl
-> new file mode 100755
-> index 0000000000..b8f37f836a
-> --- /dev/null
-> +++ b/contrib/long-running-read-object/example.pl
+> The bug is fixed in master already, and I cherry-picked Brandon's config-h
+> series that contains the fix into Git for Windows' master branch.
 
-[...]
+As you can see in Documentation/RelNotes/2.14.0.txt, I actually have
+been debating myself if that series should be merged down to 'maint'
+as a general bugfix around multi-worktree area for about 3 weeks.
 
-> +sub packet_bin_read {
-> +       my $buffer;
-> +       my $bytes_read = read STDIN, $buffer, 4;
-> +       if ( $bytes_read == 0 ) {
-> +
-> +               # EOF - Git stopped talking to us!
-> +               exit();
-> +       }
-> +       elsif ( $bytes_read != 4 ) {
-> +               die "invalid packet: '$buffer'";
-> +       }
-> +       my $pkt_size = hex($buffer);
-> +       if ( $pkt_size == 0 ) {
-> +               return ( 1, "" );
-> +       }
-> +       elsif ( $pkt_size > 4 ) {
-> +               my $content_size = $pkt_size - 4;
-> +               $bytes_read = read STDIN, $buffer, $content_size;
-> +               if ( $bytes_read != $content_size ) {
-> +                       die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
-> +               }
-> +               return ( 0, $buffer );
-> +       }
-> +       else {
-> +               die "invalid packet size: $pkt_size";
-> +       }
-> +}
-> +
-> +sub packet_txt_read {
-> +       my ( $res, $buf ) = packet_bin_read();
-> +       unless ( $buf =~ s/\n$// ) {
-> +               die "A non-binary line MUST be terminated by an LF.";
-> +       }
-> +       return ( $res, $buf );
-> +}
-> +
-> +sub packet_bin_write {
-> +       my $buf = shift;
-> +       print STDOUT sprintf( "%04x", length($buf) + 4 );
-> +       print STDOUT $buf;
-> +       STDOUT->flush();
-> +}
-> +
-> +sub packet_txt_write {
-> +       packet_bin_write( $_[0] . "\n" );
-> +}
-> +
-> +sub packet_flush {
-> +       print STDOUT sprintf( "%04x", 0 );
-> +       STDOUT->flush();
-> +}
-
-The above could reuse the refactoring of t0021/rot13-filter.pl into
-perl/Git/Packet.pm that is at the beginning of my patch series.
-
-> diff --git a/t/t0410/read-object b/t/t0410/read-object
-> new file mode 100755
-> index 0000000000..85e997c930
-> --- /dev/null
-> +++ b/t/t0410/read-object
-
-[...]
-
-> +sub packet_bin_read {
-> +       my $buffer;
-> +       my $bytes_read = read STDIN, $buffer, 4;
-> +       if ( $bytes_read == 0 ) {
-> +
-> +               # EOF - Git stopped talking to us!
-> +               exit();
-> +       }
-> +       elsif ( $bytes_read != 4 ) {
-> +               die "invalid packet: '$buffer'";
-> +       }
-> +       my $pkt_size = hex($buffer);
-> +       if ( $pkt_size == 0 ) {
-> +               return ( 1, "" );
-> +       }
-> +       elsif ( $pkt_size > 4 ) {
-> +               my $content_size = $pkt_size - 4;
-> +               $bytes_read = read STDIN, $buffer, $content_size;
-> +               if ( $bytes_read != $content_size ) {
-> +                       die "invalid packet ($content_size bytes expected; $bytes_read bytes read)";
-> +               }
-> +               return ( 0, $buffer );
-> +       }
-> +       else {
-> +               die "invalid packet size: $pkt_size";
-> +       }
-> +}
-> +
-> +sub packet_txt_read {
-> +       my ( $res, $buf ) = packet_bin_read();
-> +       unless ( $buf =~ s/\n$// ) {
-> +               die "A non-binary line MUST be terminated by an LF.";
-> +       }
-> +       return ( $res, $buf );
-> +}
-> +
-> +sub packet_bin_write {
-> +       my $buf = shift;
-> +       print STDOUT sprintf( "%04x", length($buf) + 4 );
-> +       print STDOUT $buf;
-> +       STDOUT->flush();
-> +}
-> +
-> +sub packet_txt_write {
-> +       packet_bin_write( $_[0] . "\n" );
-> +}
-> +
-> +sub packet_flush {
-> +       print STDOUT sprintf( "%04x", 0 );
-> +       STDOUT->flush();
-> +}
-
-Same thing about the above and perl/Git/Packet.pm.
-
-Otherwise thanks for updating this!
