@@ -2,89 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 120CF202DD
-	for <e@80x24.org>; Fri, 14 Jul 2017 08:05:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C95AF202DD
+	for <e@80x24.org>; Fri, 14 Jul 2017 08:39:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751056AbdGNIFz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 04:05:55 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40442 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1750799AbdGNIFw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 04:05:52 -0400
-Received: (qmail 4965 invoked by uid 109); 14 Jul 2017 08:05:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Jul 2017 08:05:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8807 invoked by uid 111); 14 Jul 2017 08:06:00 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Jul 2017 04:06:00 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Jul 2017 04:05:44 -0400
-Date:   Fri, 14 Jul 2017 04:05:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v1 0/4] Teach 'run' perf script to read config files
-Message-ID: <20170714080544.3nzndfx3p2yaxmac@sigill.intra.peff.net>
-References: <20170713065050.19215-1-chriscool@tuxfamily.org>
- <20170713165840.e5cdw7pa2m6haaen@sigill.intra.peff.net>
- <CAP8UFD3VnpMuMpcfRcTwL4nRpOF5URj6zsQqiEWYwo=1pi5Phw@mail.gmail.com>
- <20170713205535.otzi3gjd63ubb2dm@sigill.intra.peff.net>
- <CAP8UFD1FXPtzHF1J5ZfcsmMiHrfXQOd=qEghJQp3eFYsVd-nxQ@mail.gmail.com>
+        id S1751402AbdGNIjd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Jul 2017 04:39:33 -0400
+Received: from mout.gmx.net ([212.227.17.20]:55990 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751362AbdGNIjb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Jul 2017 04:39:31 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzGV3-1djOQu304H-014Q2B; Fri, 14
+ Jul 2017 10:39:25 +0200
+Date:   Fri, 14 Jul 2017 10:39:24 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/2] Fix regression: CamelCased aliases
+Message-ID: <cover.1500021526.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1FXPtzHF1J5ZfcsmMiHrfXQOd=qEghJQp3eFYsVd-nxQ@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:hZEOm/eZ7BJlBQlp9yHMGrLFlZ7uBx74l568rTR1d82RTR2fKiP
+ 30yZKWiykwSoPBxHLQJ9e6i/octBxXDk+CqQRx5hJh0KIKlem06zFFihPHxK2B448unyXpH
+ tZdK5GP4qCHYgqEaMaJYIlTZVUzxV51K5W3SvtvfJpYfdAvA/u82QSemCR7DYL7nvuWKEOh
+ PBkmrPBpDat38cqOt6LvQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tWf7ibml/hM=:+e5euHbnQ0aw+vVhN8Miz3
+ 3IAZ9biPCxvhR9PdrvxnKiHuaoM8wMNf4FYnkmqy7RFIi3kApcUgCsXzeDcVTPt8q/6iaE9Mz
+ lDz3BzLyd3fXE3nME0mabnc3m11jzhiCyIpiE3b7+UORgQ1IauAejeNvgUJS/qkvWaK3zMVWM
+ 9xP9JN1EHIAdKsTWpYsZDVpxwMNUh2ah94yH2ZzjK/f3IXvk08eEerHvPAOMUmHHxDNEuuxtN
+ cVrDmEOft4+QZFHz7mjlqqQwEcnFQa+JuwolHrmzggFyvTdSEpp67o3mwJpHohTXIj1ISah9x
+ //QhifJoD5sRSVDJ/3hdBzswus01n9rZDG08S9xQtNOPlZmwpUSrDYT2VL85FmRmlcGmYTln1
+ Y3dEF8bMGpm7lvzEGWWADohA7B+A15k1YmBi1JZ9igUpqpiVq2lkKKTWZkiH5kx4vvtmOjMm5
+ ztq6mY27QtDJGFd871bYGDPJZjhfWnfshdDvORDNnhGkulDxL33h3DkMcE+uoZoJtdcgjkFdQ
+ hy+9VXleNxm+NWDjzG0gHLBcowfSfZKI65Fp6L1q8+6zRtUvz5quuK9ZaI6ebGcgCcGS/YKTs
+ s3Qz55U8ibxmHUy6GFpT+1tRi94iWs9MLD21Ot6toY5Otf0MZ0A+w98+lSEApl37XZIUl0nfl
+ aG8U0HoM0eW1nxjU9yBCe6u9H7m/3mYXPjELZFzwzgs4dQxH1dTHzhbFf0cYum0ZLF84EVpSX
+ BCp8dlzMuFKWESSf0kF+kIof03dWO5EV3nXHGYMKDvz8/BWcDkW6VP/ByzYBevnrL61v6XbGy
+ 6PPEYkr2cP54zZchctXS0waQ35zwOsRbJJ0hmz1BvTDhvSDgQ8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 14, 2017 at 08:27:53AM +0200, Christian Couder wrote:
+It was possible before v2.13.3 to invoke:
 
-> The whole thing seems really complex to me though. And this makes me
-> think that people might want to specify different GIT-BUILD-OPTIONS
-> and config.mak files to be used when running perf tests, so that the
-> results from perf tests can easily be reproduced later even if they
-> have changed their build options in their development Git repo in the
-> meantime.
+	git config alias.CamelCased <something>
+	git CamelCased
 
-I agree with the complexity. The general idea is that your currently
-built HEAD is a snapshot in time of options. But that doesn't have to be
-so, and laying out the options in a config file does seem like an
-improvement.
+This regressed (due to a stupid mistake of mine that was not caught in
+patch review, sadly) in v2.13.3.
 
-There is another implicit dependency, though: the set of (and exact
-content of) the tests depends on your HEAD, too. So if I do:
+And this patch series fixes it again, introducing a regression test to
+ensure that it does not get broken again.
 
-  git checkout v2.5.0
-  cd t/perf
-  ./run v2.0.0 v2.1.0
 
-I might get different results if I replace "v2.5.0" in the first command
-with some other version, because the content of the tests will be
-different. I'm not sure how to account for that in storing results. Most
-of the time the version of the tests you ran is not going to be
-interesting. But it can be a source of confusing discrepancies if a test
-subtly changed between two runs. It probably happens infrequently enough
-that it's not worth worrying about.
+Johannes Schindelin (2):
+  t1300: demonstrate that CamelCased aliases regressed
+  alias: compare alias name *case-insensitively*
 
-> So perhaps the config file should make it possible to specify a
-> directory where all the build files (GIT-BUILD-OPTIONS, config.mak,
-> config.mak.autogen and config.status) that should be used should be
-> taken. And then it could also let people change some variables to
-> override what is in those files which is needed to run perf tests with
-> different parameters.
+ alias.c                | 2 +-
+ t/t1300-repo-config.sh | 7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-That sounds reasonable. I think you could ditch GIT-BUILD-OPTIONS
-entirely. It's only needed to pull in GIT_PERF variables that would be
-better served by being in the config in the first place.
 
--Peff
+base-commit: f3da2b79be9565779e4f76dc5812c68e156afdf0
+Published-As: https://github.com/dscho/git/releases/tag/CamelCased-aliases-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git CamelCased-aliases-v1
+-- 
+2.13.3.windows.1.13.gaf0c2223da0
+
