@@ -7,54 +7,65 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B51C20357
-	for <e@80x24.org>; Sat, 15 Jul 2017 04:09:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DA4C20357
+	for <e@80x24.org>; Sat, 15 Jul 2017 05:06:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751131AbdGOEJf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Jul 2017 00:09:35 -0400
-Received: from mail-qk0-f173.google.com ([209.85.220.173]:32788 "EHLO
-        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750850AbdGOEJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jul 2017 00:09:34 -0400
-Received: by mail-qk0-f173.google.com with SMTP id a66so75511032qkb.0;
-        Fri, 14 Jul 2017 21:09:34 -0700 (PDT)
+        id S1751256AbdGOFGV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Jul 2017 01:06:21 -0400
+Received: from mail-qk0-f171.google.com ([209.85.220.171]:36246 "EHLO
+        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751019AbdGOFGU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jul 2017 01:06:20 -0400
+Received: by mail-qk0-f171.google.com with SMTP id v17so83847106qka.3
+        for <git@vger.kernel.org>; Fri, 14 Jul 2017 22:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=gU52zYaUV3h71DuBS00huvSfBGnIahkTNbn4fvz592Q=;
-        b=C8jY+Z4eVOINpllaQOn0p6YtHRC3VRN75sv2dTbgFSKB8kT6NSnayenw36M+GN3j9X
-         1l/JaSaUKXD+PWTh1xe/o4frgB/EaNSEvHdAB9z5N63Za5YKrNwE9Yd9FmVXQO7yOQU5
-         1Ad/89e0+q72uikgSoovjgitojA11cEWdDs+U3Z/qTEcwjiuQBPs4O2S6m7tKqH8+aBB
-         zPIHc8Q7SnjlgTUktFqJhgG8PFxg8cb3jm+xBCUUoQ8eZGMop1abl7Krv6EXkGLArVlg
-         cWbsh29MvSYoPgijtzCkdt73crPC2nS4f25Bnttw/KbfoVuwHQ9CleiP7Ou64rqYNgoZ
-         y8Vw==
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=WcVEMUHRQIxpjA1Be1cPWSVpQ5v2H8ljxFFYBJDPJiQ=;
+        b=Crm4weX+mhpR2toig2mNj8xmkKx8RCHjIOzu7jgo5eEDRt+mKTFijruAvz2ApH/aJ4
+         PeYfxmWkxeIxKMWsY6VsVXwY4gRzOuK4a6scre9pM1tbTFugWbnI81PHHn5iK8p1gQjb
+         ymncNvRnKq6SNjj+T50CZaf5s30wwGX3YcZ5erUkN7VgKzx4JCmX0sN33Ba64F+BXZMg
+         iDy1cQqfQ+8Ox796ZzhMNBhFx+JcfFeFoxGCXmNsXiZ7724cMoLEKZSOF0aLV/IITGJY
+         9OhwrrRrn+CHkYlmCTUFoCEsNfMaATW93kXjLNF5t4tIYPsYR4hWZ9/+oY+/EwgTa1Va
+         QsyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=gU52zYaUV3h71DuBS00huvSfBGnIahkTNbn4fvz592Q=;
-        b=VadPb1WlpqXzwwworzLJuHZ0m5dp7bbyhVJmkMvEPZ2bHfEE8nvYYd+cazGviKQBDi
-         NxlCPOyUzu9Giz8EpGQfQ+m7zLgqcaaB5EZcgza+nyr1FK2/wv11MU9YEHYeO2piP2mU
-         8KdOqsbMJ3Aqv8XclH9wzVBj4gYGaE45efn6fYJZVq/KLTMKD16sIOST9+lC1Tqko2Xd
-         fiYvTQO1qvIJ2AzF+vg143wD2D+lUjBjCF6qvVEZGQUmhq1o2IgmSfbILc+ruiBbK16a
-         NB65Bh94mE+ptLWgp5N7EcPyI4XCNzZ+s7fMSDgl39IO+HZvDYw+AUpxBjEZgzATrVtA
-         BOVQ==
-X-Gm-Message-State: AIVw110yXgY+0cV7hv7Q0yH7XkD2kgbGYJxeq6YY+XhDzIzyjEYaQFFx
-        0guXnntUEULgso1FlilsL9b9jJsvxg==
-X-Received: by 10.55.203.17 with SMTP id d17mr14518279qkj.147.1500091773559;
- Fri, 14 Jul 2017 21:09:33 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=WcVEMUHRQIxpjA1Be1cPWSVpQ5v2H8ljxFFYBJDPJiQ=;
+        b=SgXZ7ClTaOChmt8JDFJAZODIuRl4uSPPitg3s0/l0qu9iEhs2fOTyeXy+PstmU65Bj
+         pNCmtqSEN7dz0CgXp9QNI5Vt01ri6tTON1jHDDfjIuCz7Y+9KLY6TzoCIVd474tLbnkx
+         /JGtmtauJB3YSUyCAi+O18mU9Lkp9HQ+AkeudTkkfvaLvXo3RE6EbeQ2Xtt2r02Lw6wu
+         qsov6it54dlxBDRNXGGZHj1GVbt/kksNUhaCRrc5avY4VUzvYd0GALVWFaCgNvSMKMTH
+         ymIdJSooWaWfNKSb2N7rBJHZJY/XVUpRNbMHoJ6MgLlcNgMS532ayrX2EHBcDx+DNfTL
+         8HLQ==
+X-Gm-Message-State: AIVw110J+EGuzLpqztYQeHDgwcetAVCBs7sJkFeFCmlE+DN1u9qgov6Z
+        238R7guLhLfbjXjq6BoU/YusZOVLKg==
+X-Received: by 10.55.191.7 with SMTP id p7mr10135799qkf.223.1500095180082;
+ Fri, 14 Jul 2017 22:06:20 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.55.31.13 with HTTP; Fri, 14 Jul 2017 21:09:32 -0700 (PDT)
-In-Reply-To: <87mv8638y5.fsf@gmail.com>
-References: <xmqqzic7sy2g.fsf@gitster.mtv.corp.google.com> <87mv8638y5.fsf@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 15 Jul 2017 06:09:32 +0200
-Message-ID: <CAP8UFD3Xe=bxWhQdm_Jh0yfB=Cv3UUNxmO6ji5akaa4PH_KurQ@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.14.0-rc0
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Linux Kernel <linux-kernel@vger.kernel.org>
+Received: by 10.12.193.38 with HTTP; Fri, 14 Jul 2017 22:06:19 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sat, 15 Jul 2017 13:06:19 +0800
+Message-ID: <CANYiYbET27mNrZZTNmn_dKBHLLEb4wJiznZ2O1X=WQ_GtamN7w@mail.gmail.com>
+Subject: [L10N] Kickoff of translation for Git 2.14.0 round 1
+To:     Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Nelson Martell <nelson6e65@gmail.com>,
+        Brian Gesiak <modocache@gmail.com>, m4sk1n <m4sk1n@o2.pl>,
+        Vitaly <vitaly.gorodetsky@gmail.com>,
+        "Ying Ruei Liang (KK)" <thumbd03803@gmail.com>,
+        babycaseny <babycaseny@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -62,20 +73,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 15, 2017 at 1:17 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> On Thu, Jul 13 2017, Junio C. Hamano jotted:
+Hi,
 
->>  * "git send-email" learned to overcome some SMTP server limitation
->>    that does not allow many pieces of e-mails to be sent over a single
->>    session.
->
-> Makes it sound like it does that automatically, also "pieces of e-mails"
-> and "sent over" is odd, maybe:
->
-> * "git send-email" now has --batch-size and --relogin-delay options
->    which can be used to overcome limitations on SMTP servers that have
->    limits on how many of e-mails can be sent in a single session.
+Git v2.14.0-rc0 has been released, and it's time to start new round of git =
+l10n.
+This time there are 30+ updated messages need to be translated since last
+update:
 
-Maybe s/that have limits on how/that restrict how/
+    l10n: git.pot: v2.14.0 round 1 (34 new, 23 removed)
+
+    Generate po/git.pot from v2.14.0-rc0 for git v2.14.0 l10n round 1.
+
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+
+You can get it from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
+
+--
+Jiang Xin
