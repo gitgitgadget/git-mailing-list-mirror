@@ -2,107 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE31220357
-	for <e@80x24.org>; Sat, 15 Jul 2017 00:01:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B51C20357
+	for <e@80x24.org>; Sat, 15 Jul 2017 04:09:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751193AbdGOABk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Jul 2017 20:01:40 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:32860 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751178AbdGOABj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Jul 2017 20:01:39 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 123so419774pgd.0
-        for <git@vger.kernel.org>; Fri, 14 Jul 2017 17:01:39 -0700 (PDT)
+        id S1751131AbdGOEJf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Jul 2017 00:09:35 -0400
+Received: from mail-qk0-f173.google.com ([209.85.220.173]:32788 "EHLO
+        mail-qk0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750850AbdGOEJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jul 2017 00:09:34 -0400
+Received: by mail-qk0-f173.google.com with SMTP id a66so75511032qkb.0;
+        Fri, 14 Jul 2017 21:09:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=07WBlvFlNjqDHIo+PnuYH+EkYswuZ3x6n3GnUgd5Yj4=;
-        b=H0SZsoCn/eS1EL0i6lksowdeaHl8cSOZXCrOGWOXftjCP1YQannWJyNJX1zeLBEjNd
-         q+3KYjVAAwA7JSTZE6f22/vmHsxWpa9XJTPPufHAb0eSMVc58BTjxHDDbrUvYTgTstRZ
-         wslxr/Wf4ncAqXGX9MXLtvnuJwNH4sVJjURz37LWzDcn2tBhx3rWs4vlswjkyuKYBo1I
-         eWCgKalnpQ9VMe9Tx5WuWKAteEt/Kl6aNYXeJ5vLFwaUrnEn39plFUo4CcBB/Mt6opvZ
-         8h4qwskAFthPrF24+VK6hsS+JLev7K20x8qtFFFWkMp1O4xiNFcXgefdMbii1cyWdT43
-         5T4Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=gU52zYaUV3h71DuBS00huvSfBGnIahkTNbn4fvz592Q=;
+        b=C8jY+Z4eVOINpllaQOn0p6YtHRC3VRN75sv2dTbgFSKB8kT6NSnayenw36M+GN3j9X
+         1l/JaSaUKXD+PWTh1xe/o4frgB/EaNSEvHdAB9z5N63Za5YKrNwE9Yd9FmVXQO7yOQU5
+         1Ad/89e0+q72uikgSoovjgitojA11cEWdDs+U3Z/qTEcwjiuQBPs4O2S6m7tKqH8+aBB
+         zPIHc8Q7SnjlgTUktFqJhgG8PFxg8cb3jm+xBCUUoQ8eZGMop1abl7Krv6EXkGLArVlg
+         cWbsh29MvSYoPgijtzCkdt73crPC2nS4f25Bnttw/KbfoVuwHQ9CleiP7Ou64rqYNgoZ
+         y8Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=07WBlvFlNjqDHIo+PnuYH+EkYswuZ3x6n3GnUgd5Yj4=;
-        b=F0kMzHh5c+P6gomW4Zj1FxgD0J+1nxxxyYedY0/uSweQhPztgxRLf4nrCvGFrH8lUA
-         sbG7Y//zx4vsPTdw6OMNHO9s7cZWHbzi4KFjjOJwNb1NdFvVXi7Y4wLjzxm/8Sj7CMC9
-         Mrk1anTz34TUwcVKoogaYKoU5tO/QhOthld2hItoaxivdzrCMRtS4PUoRPCWCJSGzqMZ
-         MmoAQ7V6HSyRcmDltbJv7h17hL2nKCHWbKKivsCsUov++KEhY+NOUZrjwEram8CV6moO
-         ZXKqFSRQsU2lgMK/9hhdIfNVe1/DZWBWkpbVV4GraSinwmCNY48XARfch2Kxah7/ziN4
-         KN9w==
-X-Gm-Message-State: AIVw1128ZtQNbqsW8j2UgK2tyNLufNLR0VFcs3VDsrLwJgU2xEQyGn8S
-        BMrp0clD5bP4HTtVx6M=
-X-Received: by 10.84.172.131 with SMTP id n3mr18343639plb.14.1500076899181;
-        Fri, 14 Jul 2017 17:01:39 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:d522:5f:8052:2b20])
-        by smtp.gmail.com with ESMTPSA id b28sm23189211pfm.9.2017.07.14.17.01.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 14 Jul 2017 17:01:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     astian <astian@eclipso.at>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Fix regression: CamelCased aliases
-References: <cover.1500021526.git.johannes.schindelin@gmx.de>
-        <20170714090256.ne4gqgppt2qshtak@sigill.intra.peff.net>
-        <xmqq60evrqyd.fsf@gitster.mtv.corp.google.com>
-        <20170714153015.crklfqaa2qc573zo@sigill.intra.peff.net>
-        <xmqqh8yfq8pr.fsf@gitster.mtv.corp.google.com>
-        <1d79b017-38b3-e1cb-a4bf-1153dc4fdbca@eclipso.at>
-        <20170714174002.xjizkofjxlirgnaj@sigill.intra.peff.net>
-Date:   Fri, 14 Jul 2017 17:01:35 -0700
-In-Reply-To: <20170714174002.xjizkofjxlirgnaj@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 14 Jul 2017 13:40:02 -0400")
-Message-ID: <xmqqzic6pnz4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=gU52zYaUV3h71DuBS00huvSfBGnIahkTNbn4fvz592Q=;
+        b=VadPb1WlpqXzwwworzLJuHZ0m5dp7bbyhVJmkMvEPZ2bHfEE8nvYYd+cazGviKQBDi
+         NxlCPOyUzu9Giz8EpGQfQ+m7zLgqcaaB5EZcgza+nyr1FK2/wv11MU9YEHYeO2piP2mU
+         8KdOqsbMJ3Aqv8XclH9wzVBj4gYGaE45efn6fYJZVq/KLTMKD16sIOST9+lC1Tqko2Xd
+         fiYvTQO1qvIJ2AzF+vg143wD2D+lUjBjCF6qvVEZGQUmhq1o2IgmSfbILc+ruiBbK16a
+         NB65Bh94mE+ptLWgp5N7EcPyI4XCNzZ+s7fMSDgl39IO+HZvDYw+AUpxBjEZgzATrVtA
+         BOVQ==
+X-Gm-Message-State: AIVw110yXgY+0cV7hv7Q0yH7XkD2kgbGYJxeq6YY+XhDzIzyjEYaQFFx
+        0guXnntUEULgso1FlilsL9b9jJsvxg==
+X-Received: by 10.55.203.17 with SMTP id d17mr14518279qkj.147.1500091773559;
+ Fri, 14 Jul 2017 21:09:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.55.31.13 with HTTP; Fri, 14 Jul 2017 21:09:32 -0700 (PDT)
+In-Reply-To: <87mv8638y5.fsf@gmail.com>
+References: <xmqqzic7sy2g.fsf@gitster.mtv.corp.google.com> <87mv8638y5.fsf@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 15 Jul 2017 06:09:32 +0200
+Message-ID: <CAP8UFD3Xe=bxWhQdm_Jh0yfB=Cv3UUNxmO6ji5akaa4PH_KurQ@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.14.0-rc0
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
->> There is also this:
->> 
->>   $ git branch
->>   * master
->>   $ git BRANCH
->>   git: 'BRANCH' is not a git command. See 'git --help'.
->>   $ git config alias.branch 'branch -v'
->>   $ git branch
->>   * master
->>   $ git BRANCH
->>   * master 51c785c initial
+On Sat, Jul 15, 2017 at 1:17 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> That is an interesting side effect, especially the latter BRANCH/branch
-> one. We usually do not allow overrides of actual git commands, but this
-> "fools" that check.
+> On Thu, Jul 13 2017, Junio C. Hamano jotted:
 
-This one is tricky.  An obvious fix would be, because users expect
-that their aliases are case insensitive, the rule that forbids and
-ignores an alias that masks a real git subcommand should also apply
-case insensitively.  But that opens another can of worms.  If "git
-Branch" is forbidden to be an alias, it should not just fail but
-invoke "git branch", which would mean that Git subcommands should
-also be looked up case insensitively!  I am not sure if we want to
-go there.
+>>  * "git send-email" learned to overcome some SMTP server limitation
+>>    that does not allow many pieces of e-mails to be sent over a single
+>>    session.
+>
+> Makes it sound like it does that automatically, also "pieces of e-mails"
+> and "sent over" is odd, maybe:
+>
+> * "git send-email" now has --batch-size and --relogin-delay options
+>    which can be used to overcome limitations on SMTP servers that have
+>    limits on how many of e-mails can be sent in a single session.
 
-> I agree it's an unexpected fallout. On the other hand, unless you are
-> _trying_ to do something funny, I don't think you'd ever hit on this
-> behavior. And if you are trying to do something funny, I think this
-> behaves in a reasonable and predictable manner.
-
-OK.
+Maybe s/that have limits on how/that restrict how/
