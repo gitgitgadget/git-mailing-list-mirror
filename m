@@ -2,123 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4AF42082F
-	for <e@80x24.org>; Sat, 15 Jul 2017 16:22:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E75B32082F
+	for <e@80x24.org>; Sat, 15 Jul 2017 17:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751116AbdGOQV6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Jul 2017 12:21:58 -0400
-Received: from elasmtp-galgo.atl.sa.earthlink.net ([209.86.89.61]:39656 "EHLO
-        elasmtp-galgo.atl.sa.earthlink.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751079AbdGOQV5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 15 Jul 2017 12:21:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=earthlink.net;
-        s=dk12062016; t=1500135717; bh=pJ+Db1ya7iU7cy01mF9mmQvoHFpeJoXy+8he
-        47uLSkk=; h=Received:Received:Date:From:Reply-To:To:Cc:Message-ID:
-         Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-         X-Mailer:X-ELNK-Trace:X-Originating-IP; b=ZsAFE00EFILL06mgtQgQfTbK
-        96I0hnqxlRqK1pIAtH656GkVx/fi+AjFAhhgxN0IcXApzPPKu0YdUuISlp2UiyYCGMu
-        l6woYn1m1xXa3sGBhYKT7IGN9G9r0VI1HhODFe753Lba9SEfg87mPC6IB6CfDldCDw8
-        q1zywQhpRRVxNAFO5kVc7lSp5pC306UNThyks/YzMkW4OnBERb3fj7aConuCNVZEGFb
-        B9E8NRwCqRGhmObhg3Zc53GW6x4m5TO0/y+Yp0GnvFFlqaR5XwaYrvQsaMNNS4+Bbqd
-        MWJv0INE6mElZ12j8e8Eaj2STLFttdE/OnhyDsAwB9ggNLIDdg==
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=dk12062016; d=earthlink.net;
-  b=F15OrS2T4ZOuD5ghO8VbPouSQuggxkGCy69LWvsgCimC5J0WqkycjlRMjUWxnoBpjxcMjc7R1ZBAZQWMx19kkQaO0IT4zGEAkgUKFqfL5Mxp9PVCa36wy73+z3qQz1vVxb7A3ZaBnsEqI30suOagujC62IzLOQGS7ct+Q/W3oKvXmzz5thSpiMvubUKLW5QbMG7f1YRVQp/weM+DvHpdZQQV20Xr7gdtrHq+oqkZ5Qm0Tx5WNkoiBRn9+qbY3ENgksG7kk5d5eJdhHz4pSC0CV0+gkI/ooWY4bdFdvV5ThtZZZmYDnqATfDF2XcSc+NO9IAjNSI+8TcGnGG894qg3g==;
-  h=Date:From:Reply-To:To:Cc:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:X-Mailer:X-ELNK-Trace:X-Originating-IP;
-Received: from [209.86.224.37] (helo=elwamui-karabash.atl.sa.earthlink.net)
-        by elasmtp-galgo.atl.sa.earthlink.net with esmtpa (Exim 4.67)
-        (envelope-from <jjfoerch@earthlink.net>)
-        id 1dWPpN-0005gJ-0n; Sat, 15 Jul 2017 12:21:57 -0400
-Received: from 98.250.1.226 by webmail.earthlink.net with HTTP; Sat, 15 Jul 2017 12:21:56 -0400
-Date:   Sat, 15 Jul 2017 12:21:56 -0400 (GMT-04:00)
-From:   John J Foerch <jjfoerch@earthlink.net>
-Reply-To: John J Foerch <jjfoerch@earthlink.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Message-ID: <19245062.3672.1500135717004@elwamui-karabash.atl.sa.earthlink.net>
-Subject: Re: [FEATURE] git-commit option to prepend filename to commit
- message
+        id S1751177AbdGORTI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Jul 2017 13:19:08 -0400
+Received: from mout.web.de ([212.227.17.12]:50304 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751088AbdGORTI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jul 2017 13:19:08 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LzsGF-1djTP926KJ-014zaA; Sat, 15
+ Jul 2017 19:18:56 +0200
+Subject: Re: [PATCH 5/5] Makefile: disable unaligned loads with UBSan
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20170710132418.d6bvzxwvbejretb4@sigill.intra.peff.net>
+ <20170710132450.yxojk5cybejy7und@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <de9c876c-f018-ad6b-3813-576ea73dd49a@web.de>
+Date:   Sat, 15 Jul 2017 19:18:56 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170710132450.yxojk5cybejy7und@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Mailer: EarthLink Zoo Mail 1.0
-X-ELNK-Trace: c53e46bc05df04c91aa676d7e74259b7b3291a7d08dfec79fe9b6d2647db47ae03495118f072d045350badd9bab72f9c350badd9bab72f9c350badd9bab72f9c
-X-Originating-IP: 209.86.224.37
+X-Provags-ID: V03:K0:MbCCCtnm7uD/xcuwo7Sk2+LMf+TbbnzjHbJ+vW3mliVg427oyOF
+ 5f846491zPVogw74rz0UbPbbtgr1+i7MlaQ9NDZqwSLKBTgnEsOdKNS5oOveViIOJjr3vCT
+ J/Ft6NnSB7sTEuJqni6piQyPMltEyVZanOKLhJC3eNkeZqJYykLBF97c8r/c/TIgSnu9eJ1
+ b75cXN8B4ZoaytuON9XrA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:88/1PPcy/kE=:dZ1GjWfYm3Zkem+OwhR8B+
+ W7Fdhd15mauqIu2BzBq8Pazkqc76mO3NmQo0MflUnR1cKD0f3ceynLpbaq+iDRo9/b7yiBh+p
+ fkS2835XUvcD/y5BDDjqFDsxqrkQ9QuJ5G1ST8V0431AtkTTuskT27OmcebBkAsjEylEHvN39
+ L28EZNd7FU6PolweNkbeaf4jyiKN8JF3jZifruapIGrmaSx813LkQ2xloaalM9vr1ReKnMrfm
+ bY0dgyrn0adwcRr2OMDTySfE9zdi1gbNYmAe5Sw1mvgQbNW3dBT6xCWHd+7fhSRxl25k+0hsM
+ UrL79NLOzfMWO4ez6YzpGkMzz7LYLMSPTxqOARfLt13Bg2Std6IugyUphazReRQv7VilGEI1n
+ VYboregvbf9NfIwKsS2Wzn6MvuvhUEViGud3bA1bcX/WFybMwXF/o2s8aQPbTcwsnftG0oksU
+ ZrMrOWF8H6v53hoksntqSil3wvOy408aKaOzvkOmuBbzXAiOqgnUoAZrHwxBkV5teczBYLRnt
+ 9wAZ/s2I3JMMy2QsWj94kZ5BZOfCVSPCv/BFXYibeNyiZI71dhj6mf0o00C8RMLx6kjW9rQoO
+ OA+uNSpTa42JeJhlCCYEBMQIoB8Gik8i74nb4XxQhhhwUd0TdmBvhEeZb11yrGXDWZMD4dTpO
+ SXAOvkwe4sbf7BEjrw+15LgvLxFXaTzBQnL0qMrWOW+11FknIHbX+bKHWzhMfGL4k01OvAkE9
+ OJl6UTpJ+005bIislc2eefxCB0oLd8aaGpQmfR44sWMvCc1nw+v3SbXxnOPckFtl7iPJd2NP0
+ 47o9rrtPWm1ws5TXe4QsteLCgFUsc04GmxbfC1B5+IXWlOCOqU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 10.07.2017 um 15:24 schrieb Jeff King:
+> The undefined behavior sanitizer complains about unaligned
+> loads, even if they're OK for a particular platform in
+> practice. It's possible that they _are_ a problem, of
+> course, but since it's a known tradeoff the UBSan errors are
+> just noise.
+> 
+> Let's quiet it automatically by building with
+> NO_UNALIGNED_LOADS when SANITIZE=undefined is in use.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   Makefile | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/Makefile b/Makefile
+> index cc03b3c95..3c341b2a6 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1015,6 +1015,9 @@ endif
+>   ifdef SANITIZE
+>   BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
+>   BASIC_CFLAGS += -fno-omit-frame-pointer
+> +ifeq ($(SANITIZE),undefined)
+> +BASIC_CFLAGS += -DNO_UNALIGNED_LOADS
+> +endif
+>   endif
+>   
+>   ifndef sysconfdir
 
+Nice, but let's be even nicer!
 
+-- >8 --
+Subject: [PATCH] Makefile: allow combining UBSan with other sanitizers
 
------Original Message-----
->From: Jeff King <peff@peff.net>
->Sent: Jul 15, 2017 12:05 PM
->To: John J Foerch <jjfoerch@earthlink.net>
->Cc: git@vger.kernel.org
->Subject: Re: [FEATURE] git-commit option to prepend filename to commit message
->
->On Sat, Jul 15, 2017 at 10:19:34AM -0400, John J Foerch wrote:
->
->> The feature would be a command line option for git commit that would
->> automatically prepend the "<filename>: " to the commit message.  The
->> different cases of its behavior could be:
->> 
->>  - commit affecting a single file, with commit message given by -m:
->> 
->>    : prepend "<filename>: " to the message given by -m
->> 
->>  - commit affecting a single file, with commit message from editor:
->> 
->>    : pre-fill commit message template with "<filename>: "
->> 
->>  - commit affecting multiple files:
->> 
->>    : use common base directory of all affected files for <filename>, behaviors as above for use with -m or editor.
->> 
->> Anybody think that this or something like it would be a good convenience?
->
->Johannes already pointed you to the prepare-commit-msg hook, which I
->think is the right solution. I wrote a rough sketch for fun (note that
->you could write it in whatever language you like if the mix of
->perl/shell isn't to your liking):
->
->-- >8 --
->#!/bin/sh
->
-># only kick in for vanilla commit, or "-m"
->case "$2" in
->""|message) ;;
->*) exit 0
->esac
->
-># common prefix of all changed files
->prefix=$(
->        git diff-index --name-only HEAD |
->        perl -lne '
->                if (!defined $prefix) {
->                        $prefix = $_;
->                } else {
->                        chop $prefix while !/^\Q$prefix\E/;
->                }
->                END {
->                        # trim trailing slash if present
->                        $prefix =~ s{/$}{};
->                        print $prefix
->                }
->        '
->)
->
-># now stick the prefix at the start of the message-in-progress
->{
->        printf '%s' "$prefix: "
->        cat "$1"
->} >"$1".tmp &&
->mv "$1".tmp "$1"
+Multiple sanitizers can be specified as a comma-separated list.  Set
+the flag NO_UNALIGNED_LOADS even if UndefinedBehaviorSanitizer is not
+the only sanitizer to build with.
 
-Thank you for that!
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ Makefile | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index ba4359ef8d..9b98535a04 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1022,10 +1022,15 @@ ifdef DEVELOPER
+ CFLAGS += $(DEVELOPER_CFLAGS)
+ endif
+ 
++comma := ,
++empty :=
++space := $(empty) $(empty)
++
+ ifdef SANITIZE
++SANITIZERS := $(foreach flag,$(subst $(comma),$(space),$(SANITIZE)),$(flag))
+ BASIC_CFLAGS += -fsanitize=$(SANITIZE) -fno-sanitize-recover=$(SANITIZE)
+ BASIC_CFLAGS += -fno-omit-frame-pointer
+-ifeq ($(SANITIZE),undefined)
++ifneq ($(filter undefined,$(SANITIZERS)),)
+ BASIC_CFLAGS += -DNO_UNALIGNED_LOADS
+ endif
+ endif
+-- 
+2.13.3
