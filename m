@@ -2,79 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E1682027C
-	for <e@80x24.org>; Sun, 16 Jul 2017 17:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CC3B2027C
+	for <e@80x24.org>; Sun, 16 Jul 2017 19:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751234AbdGPRhV (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Jul 2017 13:37:21 -0400
-Received: from mail-qk0-f171.google.com ([209.85.220.171]:35946 "EHLO
-        mail-qk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751216AbdGPRhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Jul 2017 13:37:20 -0400
-Received: by mail-qk0-f171.google.com with SMTP id v17so100385062qka.3
-        for <git@vger.kernel.org>; Sun, 16 Jul 2017 10:37:20 -0700 (PDT)
+        id S1751244AbdGPTme (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Jul 2017 15:42:34 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:34579 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751230AbdGPTmd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Jul 2017 15:42:33 -0400
+Received: by mail-wr0-f195.google.com with SMTP id o105so541735wrc.1
+        for <git@vger.kernel.org>; Sun, 16 Jul 2017 12:42:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=ghAU4ZAH1eq9UX4VQzlBlNIAztyp26d0b8/Rt5sBvBk=;
-        b=nkOS5VzVObfxMszoHNjhYMp4tCvx62dq1pk8753lE72SNAxJcmdLPK0E6VV7HwPKOk
-         iZ947ysWGyAQcolTJ1jCYtSMSwUGY7V5L0a8R9+uF/8wyBVWT8HtQtt6zG8yny0fyCsN
-         SpvqbtRMbf8qXtNxWE0Vpq1QPWYpEWGTYlUJ/q9C4ntbmyLl+5weZrNGyTVzM7trR7MF
-         +Mhfl3WdJJkUsAal8hWnvgytTaRl3cf7lmtt22LGD53q5I6oYUAFZoPqnEinWKMdfKFW
-         BtvAUkxCuULSwt1FnKq3Y+gSd7oMfITJtqfusmT6UzgdXYKdXwBTtLZetfUowGYzz3+S
-         spgw==
+        h=from:to:cc:subject:date:message-id;
+        bh=1PtHizTZSQWOemgndBtVP04pjQM1cpm/o93EzFqbb44=;
+        b=a+N7KCdc4VKDQqokXQos+bqd7ZrLYwovI18zyORJ1B3iynLzwoYL2TECf4KP9tZjaS
+         vJ9mXIm1eP1GRSrrzS2hYO0uhpAoWU0jhvnbqOYmmMcjqJa98YpgDsmfcTwI85VsH1Y+
+         WrDQQaB3Bxb+zPN/0JUZ0HKfjz2GD3eKfT9PXuiwJhAxAa6ZEUzJWhqtY0tnAbL/Ejqc
+         fNZTAA6sZ6feP1lIAROBE9lQhornYKLv9+NqfSR5lwN/f5Dwlvw74gvS0d3b6aWnQcAx
+         dTdV597q5pCpdYMSnEXQOJMyBldFlKFRxrZoITtCRBf1EHdNKagtol7EL+nfvqpn5vFR
+         57JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=ghAU4ZAH1eq9UX4VQzlBlNIAztyp26d0b8/Rt5sBvBk=;
-        b=YCU/BsKnVeyKjTfbSM7OhQexvmd0SK4l+kL4UzKpVqQ1LgJqRYOQSGQ2u3HjGRP/JZ
-         Wx85mmZG7MeUWoiYIx4kYRPAcVlLs9ftMbbQewW3FV/clxz+1UfjDYqnmyyDYKBtbHZF
-         G6mtSZcMm/9yvdg+chb67mUQKrjZlzssKxXygQ3GLN5RROhfaBQ+CYDAQC7t45Rs2T0m
-         s8WJe7OufxGGGS9cL1X9R3s//8ulLJLZ/mwitg5qvQ1Dq8s1oa0rxL4Tlk9jtpCQDkmr
-         O63k4aieDIp7Ls5X+KiS1Z3Uz3NE+ldPhwwsNZQheGCwaXc40sgxIin/GGs7VTX8EJyh
-         exIA==
-X-Gm-Message-State: AIVw1129uFWlRhNDNw51PzoQmqxEjvB5K/0SiDck+z4uCuJ+tUlbHBYl
-        mnJJY4aGR2KVAF7JaH5eSe32mdFFP5VkTjc=
-X-Received: by 10.55.198.4 with SMTP id b4mr22799810qkj.200.1500226639518;
- Sun, 16 Jul 2017 10:37:19 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.178.138 with HTTP; Sun, 16 Jul 2017 10:37:19 -0700 (PDT)
-From:   Jacques Viviers <jacques.viviers@gmail.com>
-Date:   Sun, 16 Jul 2017 19:37:19 +0200
-Message-ID: <CAA=CdW25uWyZA_7RVnr35dNuK06=8_+fk_tBMt5OSf_xY4LWFA@mail.gmail.com>
-Subject: [L10N] af.po: New translation workflow
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=1PtHizTZSQWOemgndBtVP04pjQM1cpm/o93EzFqbb44=;
+        b=ZYqsF37S4Jur35S9xDtzzSINxullTrNj3/yATn7VjY+LeYFL0RHqH5jujb60f1in2S
+         I6FUMt592/ndXpXkmVmLgSCbiKhluyLQZWkaiHRv0MaAKm7GkZdT+n7KNRylgmytO/A7
+         CzpXajbqsG02dIoyyzjd8INdyTfcKhpEWhO6ybSo64+dDi3CBtyF87xOxsikEd09Xfwq
+         J1Kn6o5vqXqRyr+74O2oUmfIl/d55xIF0yuL7SFJXgOqpWUmmNFwkuLxMmpt9kLPaiND
+         c/d5oSj7GsK9vKs9AyXsx3E8w9/UCfgQcIgvGvhDWA+5dybFpg6xX8IZb2kPSATz4nAH
+         B3dQ==
+X-Gm-Message-State: AIVw110dV2K87xYe0su7OOPmJt4ufLxr62+EWHe0u/O000U/UZaMaXv/
+        2PzrLfcENnV0a8bt
+X-Received: by 10.223.173.69 with SMTP id p63mr8726096wrc.25.1500234152490;
+        Sun, 16 Jul 2017 12:42:32 -0700 (PDT)
+Received: from localhost.localdomain (vil93-6-82-233-248-1.fbx.proxad.net. [82.233.248.1])
+        by smtp.gmail.com with ESMTPSA id g5sm6574960wmf.5.2017.07.16.12.42.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 16 Jul 2017 12:42:31 -0700 (PDT)
+From:   William Duclot <william.duclot@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Jiang Xin <worldhello.net@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     gitster@pobox.com, William Duclot <william.duclot@gmail.com>
+Subject: [PATCH] rebase: make resolve message clearer for inexperienced users
+Date:   Sun, 16 Jul 2017 21:42:20 +0200
+Message-Id: <20170716194220.1304-1-william.duclot@gmail.com>
+X-Mailer: git-send-email 2.13.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+The git UI can be improved by addressing the error messages to those
+they help: inexperienced and casual git users. To this intent, it is
+helpful to make sure the terms used in those messages can be understood
+by this segment of users, and that they guide them to resolve the
+problem.
 
-I have started a new translation af.po at:
-(https://github.com/jbviviers/git-po)
+In particular, failure to apply a patch during a git rebase is a common
+problem that can be very destabilizing for the inexperienced user. It is
+important to lead them toward the resolution of the conflict (which is a
+3-steps process, thus complex) and reassure them that they can escape a
+situation they can't handle with "--abort". This commit answer those two
+points by detailling the resolution process and by avoiding cryptic git
+linguo.
 
-The translation is far from complete. Should I wait until it is all
-done before I submit the patch, or is it better to submit as I go
-along?
+Signed-off-by: William Duclot <william.duclot@gmail.com>
+---
+Those new messages have been written thanks to Junio feedbacks and users
+tests with a few inexperienced git users.
 
-Although it is unlikely that someone else is busy with the same thing,
-it would still be better to somehow notify other potential translators
-that this work is in progress.
+ git-rebase.sh   | 7 ++++---
+ t/t5520-pull.sh | 4 ++--
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-There is a few of my colleagues that indicated they would help with
-this translation. How does that collaboration work? Do I merge
-everyone's contributions as I see fit and then send in the set of
-patches?
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 2cf73b88e..ef3409679 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -55,9 +55,10 @@ LF='
+ '
+ ok_to_skip_pre_rebase=
+ resolvemsg="
+-$(gettext 'When you have resolved this problem, run "git rebase --continue".
+-If you prefer to skip this patch, run "git rebase --skip" instead.
+-To check out the original branch and stop rebasing, run "git rebase --abort".')
++$(gettext 'Resolve all conflicts manually, mark them as resolved with
++"git add/rm <conflicted_files>", then run "git rebase --continue".
++You can instead skip this commit: run "git rebase --skip".
++To abort and get back to the state before "git rebase -i", run "git rebase --abort".')
+ "
+ unset onto
+ unset restrict_revision
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index f15f7a332..59c4b778d 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -305,7 +305,7 @@ test_expect_success '--rebase with conflicts shows advice' '
+ 	test_tick &&
+ 	git commit -m "Create conflict" seq.txt &&
+ 	test_must_fail git pull --rebase . seq 2>err >out &&
+-	test_i18ngrep "When you have resolved this problem" out
++	test_i18ngrep "Resolve all conflicts manually" out
+ '
+ 
+ test_expect_success 'failed --rebase shows advice' '
+@@ -319,7 +319,7 @@ test_expect_success 'failed --rebase shows advice' '
+ 	git checkout -f -b fails-to-rebase HEAD^ &&
+ 	test_commit v2-without-cr file "2" file2-lf &&
+ 	test_must_fail git pull --rebase . diverging 2>err >out &&
+-	test_i18ngrep "When you have resolved this problem" out
++	test_i18ngrep "Resolve all conflicts manually" out
+ '
+ 
+ test_expect_success '--rebase fails with multiple branches' '
+-- 
+2.13.0
 
-Some advice would be much appreciated.
-
-Kind regards,
-Jacques
