@@ -2,115 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC7152027C
-	for <e@80x24.org>; Sun, 16 Jul 2017 15:18:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 153382027C
+	for <e@80x24.org>; Sun, 16 Jul 2017 15:23:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751245AbdGPPSp (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Jul 2017 11:18:45 -0400
-Received: from mout.web.de ([212.227.15.3]:55385 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751219AbdGPPSo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Jul 2017 11:18:44 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M2dt7-1dp7Td1jGv-00sNKx; Sun, 16
- Jul 2017 17:18:28 +0200
-Subject: Re: [PATCH] dir: support platforms that require aligned reads
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-References: <d3db2984-f238-7166-affa-f1f7df566404@web.de>
- <20170716140409.3ywepgvo5c6ognsy@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <84b4d5aa-956f-932b-4e95-f181243215bc@web.de>
-Date:   Sun, 16 Jul 2017 17:18:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751229AbdGPPXL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Jul 2017 11:23:11 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:10634 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751211AbdGPPXK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Jul 2017 11:23:10 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id WlO0dtc4fQ527WlO0dR3D2; Sun, 16 Jul 2017 16:23:08 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=MI8io4Rl c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=1XWaLZrsAAAA:8
+ a=NEAV23lmAAAA:8 a=5rxgeBVgAAAA:8 a=7Z7lRQPynSVTmlnBxFoA:9 a=wPNLvfGTeEIA:10
+ a=PwKx63F5tFurRwaNxrlG:22
+Message-ID: <C299C45128634A21AF9D65E1B2B52C5B@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Jonathan Tan" <jonathantanmy@google.com>, <git@vger.kernel.org>
+Cc:     "Jonathan Tan" <jonathantanmy@google.com>,
+        "Ben Peart" <peartben@gmail.com>
+References: <cover.1499800530.git.jonathantanmy@google.com>
+Subject: Re: [RFC PATCH 0/3] Partial clone: promised blobs (formerly "missing blobs")
+Date:   Sun, 16 Jul 2017 16:23:06 +0100
+Organization: OPDS
 MIME-Version: 1.0
-In-Reply-To: <20170716140409.3ywepgvo5c6ognsy@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:gHT7qLBguxtvDsbd6BWA1kMZrsl2NgM2fjR11vOC3vKAxViagks
- UOCSQVu7iNEiqmD7NYR955DJrSO7NfK5fS0XG0b/YecdL7ABo8Fc2Ci2UJKiuvn/B3XGTqx
- 10sTEf1ydp/N2Hf/gGqkXBeMUQccQPCxVBlzds5sPQa36+ILYj7xVA5wAx7EsTGrpk0eWgL
- UB8w6VS2KO8V5D64zT6yQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:izp1ptIz/Qw=:3rX+FKsjElHDbyPiQqa9iS
- sTQk1/evfnUt4dLPsuOpaCT3Mt0mrPIAxOtyYm2xgn+zenYF9rMpe2n1a3uHx0ylsylYb7yZh
- 5zOXUPpakeGI7ovfiJLv4CzbNFw33l1RC6NBrlkm3USyvNPEOUn8jnd6e0RTJtcHGcFbZXZU4
- nPVGVclqKvZot49062EPTMIYfhSVfdzugWR8Ht1ngXTmIylg/2otJlAkJaV70NPFD/wuxQq5m
- s/3amA+sE5wE/1iTHIeZc07SMxn0VzCzgMA+2muh+olvwaP8+FRTrcje2Do+7XeK6sy2zwI/L
- WbsHTCBDFS91fverd0OxhaPFi9ES3mMiLJitSI6xTftG4STzS6h1/YJY0H+M2SwNrRXbz6VcA
- GY66s6ilU1bZlPeO5pqYlra7KNjO0zDjmlboZB/I+ntMw1KbW59Fyeo8WztWbFT0HR6NI5QBF
- o58WqdnE+9rynGnywAuk3lWw/DyKvxxVwHa+1fu8i6C4jQSa1r/iFLfmDV2faUya7CSTqJCft
- MY7fEi4Um5RreqoE/+tp3QZg9YWicnN+y1n+XVfDqVrAiyXkyVHeft65mujjLRfBY4DTks98J
- TOyb2boGnx8LT73j5qzKTf+sqDU83AlpbFoTDglFCtzONN4JDwqi7tr1V+BjnHB/OFRkDCa7T
- OECVW66bII4GmOdEB7R7X8GTpQh/yuqlOIilmWAUh99NGZou9UDVPWkye68SrjAjMmzJpyLlK
- vQQ07JjIVL+wkkFYbCL2mVVFumj77Rl8Sv2rH6h+vuvQJbvXkKIZ0nXg+uAie+MIYfz2s74Tv
- VJ0LT0zSJ513D6/lTYuaYxGuR4IC6kgHmudjqoACxGzPapy/vI=
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170716-0, 16/07/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfDJvLPni0qqo2H3vEU7T9PHpdxYS4cEIABnoq7l2JcblepGX/JWa3IBtaQzgBct6/IcKCIRw7MLK1Rj+cZ2srj0i2xVzQRsy85Lrn98AOhCnieAbz2/x
+ QVhCSJS36/rDuysAeg/QBbmAGzeLdl+d4C7tKm+JfLJ2RKBc00HP73SW9kyjaDNSHIa+gLy4P40pERQKruohWOVeWla5zZHfk9opHJL2cA8w8Kcn2E2AITW2
+ Bk2KUxV7w+Q6R708V6LATNK8OuR7HGc5xK1D9rixOjY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.07.2017 um 16:04 schrieb Jeff King:
-> On Sun, Jul 16, 2017 at 02:17:37PM +0200, René Scharfe wrote:
-> 
->> -static void stat_data_from_disk(struct stat_data *to, const struct stat_data *from)
->> +static void stat_data_from_disk(struct stat_data *to, const unsigned char *data)
->>   {
->> -	to->sd_ctime.sec  = get_be32(&from->sd_ctime.sec);
->> -	to->sd_ctime.nsec = get_be32(&from->sd_ctime.nsec);
->> -	to->sd_mtime.sec  = get_be32(&from->sd_mtime.sec);
->> -	to->sd_mtime.nsec = get_be32(&from->sd_mtime.nsec);
->> -	to->sd_dev	  = get_be32(&from->sd_dev);
->> -	to->sd_ino	  = get_be32(&from->sd_ino);
->> -	to->sd_uid	  = get_be32(&from->sd_uid);
->> -	to->sd_gid	  = get_be32(&from->sd_gid);
->> -	to->sd_size	  = get_be32(&from->sd_size);
->> +	memcpy(to, data, sizeof(*to));
->> +	to->sd_ctime.sec  = ntohl(to->sd_ctime.sec);
->> +	to->sd_ctime.nsec = ntohl(to->sd_ctime.nsec);
->> +	to->sd_mtime.sec  = ntohl(to->sd_mtime.sec);
->> +	to->sd_mtime.nsec = ntohl(to->sd_mtime.nsec);
->> +	to->sd_dev	  = ntohl(to->sd_dev);
->> +	to->sd_ino	  = ntohl(to->sd_ino);
->> +	to->sd_uid	  = ntohl(to->sd_uid);
->> +	to->sd_gid	  = ntohl(to->sd_gid);
->> +	to->sd_size	  = ntohl(to->sd_size);
->>   }
-> 
-> Hmm. I would have written this to pull the bytes directly out of the
-> array, like:
-> 
->    to->sd_ctime.sec  = get_be32(data); data += 4;
->    to->sd_ctime.nsec = get_be32(data); data += 4;
-> 
-> etc. Or even a helper to do the advancing like:
-> 
->    to->sd_ctime.sec = parse_be32(&data);
-> 
-> That reduces assumptions about padding in "struct stat_data". But
-> looking more at this code, and reading your comment:
-> 
->> Side note: The OS name is not enough for determining the layout of
->> struct ondisk_untracked_cache.  Different platforms can have different
->> int sizes and padding.  Adding the machine type could help, but that
->> would be a breaking change.  At that point we would be better off
->> defining a machine-independent format, no?
-> 
-> it looks like assumptions about struct layout are pervasive and part of
-> the on-disk format. Yuck. :(
+From: "Jonathan Tan" <jonathantanmy@google.com>
+Sent: Tuesday, July 11, 2017 8:48 PM
+> These patches are part of a set of patches implementing partial clone,
+> as you can see here:
+>
+> https://github.com/jonathantanmy/git/tree/partialclone
+>
+> In that branch, clone with batch checkout works, as you can see in the
+> README. The code and tests are generally done, but some patches are
+> still missing documentation and commit messages.
+>
+> These 3 patches implement the foundational concept - formerly known as
+> "missing blobs" in the "missing blob manifest", I decided to call them
+> "promised blobs". The repo knows their object names and sizes. It also
+> does not have the blobs themselves, but can be configured to know how to
+> fetch them.
+>
+If I understand correctly, this method doesn't give any direct user 
+visibility of missing blobs in the file system. Is that correct?
 
-Assuming that there is no padding probably even works for the platforms
-the code currently supports (basically x86), but I don't know about
-others.  We'd need to change the writing side as well to match, though.
-Which is probably a good idea, but I tried to keep the patch small and
-its impact low.  Cross-machine usability is currently explicitly not
-supported -- not sure why, though.
+I was hoping that eventually the various 'on demand' approaches would still 
+allow users to continue to work as they go off-line such that they can see 
+directly (in the FS) where the missing blobs (and trees) are located, so 
+that they can continue to commit new work on existing files.
 
-René
+I had felt that some sort of 'gitlink' should be present (huma readable) as 
+a place holder for the missing blob/tree. e.g. 'gitblob: 1234abcd' (showing 
+the missing oid, jsut like sub-modules can do - it's no different really.
+
+I'm concerned that the various GVFS extensions haven't fully achieved a 
+separation of concerns surrounding the DVCS capability for on-line/off-line 
+conversion as comms drop in and out. The GVFS looks great for a fully 
+networked, always on, environment, but it would be good to also have the 
+sepration for those who (will) have shallow/narrow clones that may also need 
+to work with a local upstream that is also shallow/narrow.
+
+--
+Philip
+I wanted to at least get my thoughts into the discussion before it all 
+passes by.
+
+> An older version of these patches was sent as a single demonstration
+> patch in versions 1 to 3 of [1]. In there, Junio suggested that I have
+> only one file containing missing blob information. I have made that
+> suggested change in this version.
+>
+> One thing remaining is to add a repository extension [2] so that older
+> versions of Git fail immediately instead of trying to read missing
+> blobs, but I thought I'd send these first in order to get some initial
+> feedback.
+>
+> [1] 
+> https://public-inbox.org/git/cover.1497035376.git.jonathantanmy@google.com/
+> [2] Documentation/technical/repository-version.txt
+>
+> Jonathan Tan (3):
+>  promised-blob, fsck: introduce promised blobs
+>  sha1-array: support appending unsigned char hash
+>  sha1_file: add promised blob hook support
+>
+> Documentation/config.txt               |   8 ++
+> Documentation/gitrepository-layout.txt |   8 ++
+> Makefile                               |   1 +
+> builtin/cat-file.c                     |   9 ++
+> builtin/fsck.c                         |  13 +++
+> promised-blob.c                        | 170 
+> +++++++++++++++++++++++++++++++++
+> promised-blob.h                        |  27 ++++++
+> sha1-array.c                           |   7 ++
+> sha1-array.h                           |   1 +
+> sha1_file.c                            |  44 ++++++---
+> t/t3907-promised-blob.sh               |  65 +++++++++++++
+> t/test-lib-functions.sh                |   6 ++
+> 12 files changed, 345 insertions(+), 14 deletions(-)
+> create mode 100644 promised-blob.c
+> create mode 100644 promised-blob.h
+> create mode 100755 t/t3907-promised-blob.sh
+>
+> -- 
+> 2.13.2.932.g7449e964c-goog
+> 
+
