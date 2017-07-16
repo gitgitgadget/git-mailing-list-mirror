@@ -7,79 +7,88 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BC8E20357
-	for <e@80x24.org>; Sun, 16 Jul 2017 11:02:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2070120357
+	for <e@80x24.org>; Sun, 16 Jul 2017 11:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751261AbdGPLC4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Jul 2017 07:02:56 -0400
-Received: from mout.web.de ([212.227.15.4]:52052 "EHLO mout.web.de"
+        id S1751244AbdGPLG4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Jul 2017 07:06:56 -0400
+Received: from mout.web.de ([212.227.15.14]:51825 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751087AbdGPLCz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Jul 2017 07:02:55 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lj2XW-1e4Nuj0HLq-00dJDN; Sun, 16
- Jul 2017 13:02:47 +0200
-Subject: Re: [PATCH 5/5] Makefile: disable unaligned loads with UBSan
+        id S1751087AbdGPLGz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Jul 2017 07:06:55 -0400
+Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LyUy6-1dkZeL1nwk-015pw9; Sun, 16
+ Jul 2017 13:06:47 +0200
+Subject: Re: [PATCH] ls-files: don't try to prune an empty index
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <20170710132418.d6bvzxwvbejretb4@sigill.intra.peff.net>
- <20170710132450.yxojk5cybejy7und@sigill.intra.peff.net>
- <de9c876c-f018-ad6b-3813-576ea73dd49a@web.de>
- <20170716101744.2g3x7v2dtasg45ll@sigill.intra.peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <bbc51fb0-70ce-3b02-274b-31b5dc035e29@web.de>
+ <20170716104114.7tfcuilsy3ab74n6@sigill.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <840f246f-e735-2a84-d9b9-95d8e4a9d99c@web.de>
-Date:   Sun, 16 Jul 2017 13:02:46 +0200
+Message-ID: <e91c204d-0bcb-9614-b62d-cd87c03b92e1@web.de>
+Date:   Sun, 16 Jul 2017 13:06:45 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <20170716101744.2g3x7v2dtasg45ll@sigill.intra.peff.net>
+In-Reply-To: <20170716104114.7tfcuilsy3ab74n6@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ruDZeR2+Rf2hGXQqPtcKdmAOSLQys+j6xqqM1Pf/lhRsfF8T1z0
- 42jQFLgpkdhl50m3+yxTv6kiKNjhBTEJIElou/8aWbUcA/VWBZQNxelzApN3lPE8jTBlrer
- Y5ifvS6VnVIxqThonottb1AfFA+L3+iLMbpKwSVH6RDsi0MjzWbnSVtd4fe1BBOo/Y8U+wJ
- iHHPOVRZJOTfDiKOE/ASQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YVBrWjiK9a8=:C+TqzSNABTVLNcM3pL6OUt
- G4iz9YDK50KL2ZGcYQzJDKFGQE6+rbAJIM22bqi6jWY6IjNS2fdQnUKaa/syRp3/rlWRzFGIE
- Sg8qUY7gUV92aW8FHy5xOBNuqtOj9zKowsbEA+/naX66/VtWc/HTsMF7RmWNWMpxP37eioeB0
- dWl4IxsnXKujqFXgvvBaWdYYjDZ+5PkCLxO7OUCynBLF/yMa1lFXTmyDFr0jTvXSHcOh/XXdd
- d+YMwwLFIJhOmO7OmZ3IuOBwhWrhGrS00Uu1l/W0IZBvol9zsB7aCHZHb1qdJyggYaFSY7hbv
- nR07I+bYGC24+JAJ6Ij9gy2V5+hVM04aq8mhV7oDxfZJZ+jsmSvTbIHvJ24uUvVSoxQrHJvnU
- qrcv5Oz0BvbAjXzJnmzzRUTvujUpnwufFq1nA6jKzjQv/Hd/HovBh7XNSle+t4swtMM+byIvG
- XdA03Fw/d2xbmEc97aKwqWlfadD4e1WrvcGn7jCEQ4OPsCAW4MMrj+VNk9FpOv7+FGc12gvkc
- rG/wVS8iZfUwquyaIkGpg63bYK11OLr4uQ2sXH+wcnkk6RpkxmJQ42Z1hnCmSNMbEj/u3LcwQ
- +7YvgbQMJbcMSz+POoItPqciyAwPciyBxRBaz3NTjQoAYx2re9qu30bIhzN+lQll+O6wRNrTe
- V5bzYEaJ6Znro+U72b/X2t8J7kzk7ksyYNGPR5TjoBtC8SpTh4E0NxhQv8fJwRubQQLfK3/bs
- k+Thc0aE7XioqpsWO4TDVP4ZF7Jxs3I5rUrTQDv632PXVZyY6rMP0c4jP8it+zLyQBw/Zc0q3
- mCPg4hFAesZ+J+q8LwgtJaAHbx/k1SRTz1E9EMUlgic/cev/6A=
+X-Provags-ID: V03:K0:HPpJ7Cdmmx4QkOFHQ7S96nQdHhKALzXQ7kb6pOQocLvlJGcZXW9
+ 6CVckZIwJPJt9LT64mW+I4SBJ62iEBYmkdo4b8AAmKF50aE0yrqK8fw5k9/IG8XlDd1Bagb
+ 5ITyayyHtTHLI+KNqHkeAy3vRMo12BI56PAhtSThtTEog2urks590ArNbWTMxU3syWDaPdY
+ 10dTUVo6xIKi88WOgEr1Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ngCEQVf2qPY=:4ye7PObVqe4acxHdS95Anm
+ qQCmklgEixo6/Od/AjmCxsBy1HubiRWVG2Sl3t21j1fQ8LV/bYOoUZGM8D9edSnTqgFXyNaGf
+ KiulCFhk1MGhaAFHlqTZ5MJRRlR5iPCKRNjPcJaHfZaLGHluzHjZ3YahoB1pC3MGBwyYQKvA3
+ Lyvc2C9wr82is84AzXQ3VmPiGRtwxxljkQTiGKX8o5yTxaCG/HdGmv+2pkn3XNc75qbPePvwY
+ cEpsgv+JKbVtrbbx+c1eMHb+nuDkg5DfB+AgWNkMsQvaLss0E6dQtf+jnLHwRvCNIUFhXK5l0
+ A6DP1UO/nBEeTFkFszOTnRINElL4/y8VQl1ukgvu4EhKKdeLHXeOsKMdfWslfhWvT+hbSztSX
+ wKDfYAZZg4WvS4VLIFt0EPARR8oxRAIjgSWKMuUiap6YsDdCCLG95os/VRXomnySeQn9/WoOg
+ XH25MWDt0E5l5Gs6kZTbS+hmrZkH3NPxg99hv6G/VOmWLW7n7JUZXgso+qTglLW+BC+41qlJU
+ /BrCtpQi8t/Qxqrk81TtGPnkm1G8d8GOi4doAMLP75pnEyEBgRQisYEO12CwOI0/ozO4Z6e4o
+ hvjP+iGxc7Sxu81vWCxb0pIgYD0ZT1VeEbesrXQJQPOsyDvxeKV2jb756K85tgyrGp53GRYxw
+ Sd0Q8BC2nbpLSPz0KyS+WmzyCT6saZ/vnxGAHESNsGbQrG48zftMfbIirqzSAnY072tnrqI4Q
+ 5uR9eBSH4ZLrGgNxHpozeFb+Wi1+GuMPdEiIG5uztHUpurDmM9bBdTv66rZ5C4nZXZpNsuYI1
+ OiAOqtC3C2KH7HhbsVipmSi+hPkR6+6cAA4WdL7iivDt0e5/yQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.07.2017 um 12:17 schrieb Jeff King:
-> On Sat, Jul 15, 2017 at 07:18:56PM +0200, René Scharfe wrote:
+Am 16.07.2017 um 12:41 schrieb Jeff King:
+> On Sat, Jul 15, 2017 at 10:11:20PM +0200, René Scharfe wrote:
 > 
->> -- >8 --
->> Subject: [PATCH] Makefile: allow combining UBSan with other sanitizers
+>> Exit early when asked to prune an index that contains no
+>> entries to begin with.  This avoids pointer arithmetic on
+>> istate->cache, which is possibly NULL in that case.
 >>
->> Multiple sanitizers can be specified as a comma-separated list.  Set
->> the flag NO_UNALIGNED_LOADS even if UndefinedBehaviorSanitizer is not
->> the only sanitizer to build with.
+>> Found with Clang's UBSan.
 > 
-> Nice, I didn't know you could do comma-separation here. ;)
+> Makes sense. We could use MOVE_ARRAY() here, but this is a sensible
+> short-circuit to the whole function.
 > 
-> I always just built the various sanitizers separately since I was
-> testing whether each one worked. But if we can get UBSan to build
-> cleanly, I agree that "make SANITIZE=address,undefined test" would be a
-> nice thing to run periodically.
+> Looks like a good solution.
+> 
+>> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+>> index b8514a0029..adf572da68 100644
+>> --- a/builtin/ls-files.c
+>> +++ b/builtin/ls-files.c
+>> @@ -362,7 +362,7 @@ static void prune_index(struct index_state *istate,
+>>   	int pos;
+>>   	unsigned int first, last;
+>>
+>> -	if (!prefix)
+>> +	if (!prefix || !istate->cache_nr)
+>>   		return;
+>>   	pos = index_name_pos(istate, prefix, prefixlen);
+>>   	if (pos < 0)
+> 
+> "git am" complained that this does not apply to its blobs. Did you
+> hand-edit?
 
-There are *some* restrictions: You can only use one of address, memory
-and thread, as mentioned here:
-
-http://clang.llvm.org/docs/UsersManual.html#controlling-code-generation
-
-Combining ASan and UBSan works fine.
+I didn't, but perhaps I messed up the order of patches?  MOVE_ARRAY
+patch 2 touches the same file, but I wouldn't expect the two changes to
+conflict.  So not sure what's going on.
 
 René
