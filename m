@@ -2,104 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E20F2082F
-	for <e@80x24.org>; Sun, 16 Jul 2017 00:31:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 495F020834
+	for <e@80x24.org>; Sun, 16 Jul 2017 00:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751214AbdGPAbJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Jul 2017 20:31:09 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:52594 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751207AbdGPAbJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Jul 2017 20:31:09 -0400
-Received: from [10.0.2.15] ([143.159.212.52])
-        by avasout06 with smtp
-        id lCX61v00918PUFB01CX7gT; Sun, 16 Jul 2017 01:31:08 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=GetnpUfL c=1 sm=1 tr=0
- a=CKmocqUIrzA4K3l9YJ19NQ==:117 a=CKmocqUIrzA4K3l9YJ19NQ==:17
- a=IkcTkHD0fZMA:10 a=8RfyjxSGyL6rWo5ZcYwA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH 3/2] apply: use COPY_ARRAY and MOVE_ARRAY in
- update_image()
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <ec78a849-36e4-4b1d-1ad6-46dcc39a1396@web.de>
- <2b2c8a6b-b493-84b1-1e47-5ea4585610da@web.de>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <636e2b70-2687-a925-e52d-32aa966ae9a9@ramsayjones.plus.com>
-Date:   Sun, 16 Jul 2017 01:31:06 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        id S1751223AbdGPA72 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Jul 2017 20:59:28 -0400
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:36104 "EHLO
+        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751198AbdGPA71 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Jul 2017 20:59:27 -0400
+Received: by mail-lf0-f52.google.com with SMTP id h22so69694119lfk.3
+        for <git@vger.kernel.org>; Sat, 15 Jul 2017 17:59:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:openpgp:organization:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=gUgDGO1XzWV0LN/UDqZlCwtNRYfVyJWVqNt37CBwCog=;
+        b=cnuIUFUhctzTpi9gLZMcXABH+oGYd6ugaieBrOOclwhSaPpDkbK90N15Jc/0B+UJyl
+         2f0GC1iBCGTmUduGKFDj5yskb0EUSEt6KCgO5HYg3cYi4U4U+2mLsWt7GiXgwZq0Xkvs
+         jUORHmFULBLVuMWHQ2J/uGYO23JAAJqelgGDyIl1puDWOmSrarlfDPc+8+6pGw3hhhPt
+         yRAyJuMUaOYhQZnP7MTkNftAG/xW/DvN506M7j9qyNd6OM+bLyKNkhDrtI4OFS3H+Uio
+         iyk0MlJoEt+Nt2urOTHFaeK1c3XrAl05SUmfSZRTknEUlxSrFfmZ+t2AUUHZz2RL/Nkt
+         ToJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:openpgp:organization:message-id
+         :date:user-agent:mime-version:content-language
+         :content-transfer-encoding;
+        bh=gUgDGO1XzWV0LN/UDqZlCwtNRYfVyJWVqNt37CBwCog=;
+        b=EgZPsOfc/CxAGLCET6k+6vHLTAvbdKc2Ic21i87xO4n3pwtBJGdOMGEdCn/AHk/iKT
+         rXqK8TF08W+mSyx5JxFxdfn4qjo1TOtngm/IGsqUDScaKF/9KkatYop6krOsiBMEsCoR
+         aGmyYZJMEZ+3SsRpioMY/9By64GA+LkuywZi6EHYv69UoFyWV79r0iGLTBdmjXRA0FIJ
+         EyuFvIjhvL0bvMH2iPPsshYdpTZGh3+HzDkGkCKIgXlUlJdXwOxXcMFaZrmRtMrne3Cu
+         CQnjEDfxIBs2Ti8ehE5rTFJWuX+yEnNk+Q/3g6I5EG1ho6BA1IZ07cyBkJYVw4orFGs2
+         CiEQ==
+X-Gm-Message-State: AIVw112LpW0a3G400Ly34zGJ5KqrRkf0UgEmpNI5YLZF24kVYJwSGxpm
+        OxrdZEiSNLbTAxKsch4=
+X-Received: by 10.46.1.209 with SMTP id f78mr2798651lji.55.1500166765514;
+        Sat, 15 Jul 2017 17:59:25 -0700 (PDT)
+Received: from gauss.local (81-235-138-217-no63.tbcn.telia.com. [81.235.138.217])
+        by smtp.gmail.com with ESMTPSA id b126sm2941823lfe.39.2017.07.15.17.59.24
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 15 Jul 2017 17:59:24 -0700 (PDT)
+To:     git@vger.kernel.org
+From:   Jan Danielsson <jan.m.danielsson@gmail.com>
+Subject: Keeping a non-1:1 mirror in sync and keeping private branches
+Openpgp: id=C714C43356FB8176822FC591EB087C6291361CDA
+Organization: La Cosa Nostra
+Message-ID: <699d0274-285f-3d30-654d-d9ca59fe4dce@gmail.com>
+Date:   Sun, 16 Jul 2017 02:59:23 +0200
+User-Agent: Mozilla/5.0 (X11; NetBSD amd64; rv:52.0) Gecko/20100101
  Thunderbird/52.2.1
 MIME-Version: 1.0
-In-Reply-To: <2b2c8a6b-b493-84b1-1e47-5ea4585610da@web.de>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
+   Let's say there'a s hosting service hosting a repository which I want
+to self-host.  I don't just want to do a mirror, but I want to keep it
+in sync (using a cronjob).  In addition, I want to have private branches
+on the self-hosted repository.  (In this particular case, the "hosting
+service" is github, and "self-hosting" is bitbucket -- but I'm looking
+for a solution which is agnostic with regards to hosting service(s)).
 
-On 15/07/17 21:20, René Scharfe wrote:
-> Simplify the code by using the helper macros COPY_ARRAY and MOVE_ARRAY,
-> which also makes them more robust in the case we copy or move no lines,
-> as they allow using NULL points in that case, while memcpy(3) and
-> memmove(3) don't.
-> 
-> Found with Clang's UBSan.
-> 
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
-> I don't know why the rules in contrib/coccinelle/array.cocci didn't
-> match. :-?
-> 
->  apply.c | 11 ++++-------
->  1 file changed, 4 insertions(+), 7 deletions(-)
-> 
-> diff --git a/apply.c b/apply.c
-> index f2d599141d..40707ca50c 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -2809,13 +2809,10 @@ static void update_image(struct apply_state *state,
->  		img->line_allocated = img->line;
->  	}
->  	if (preimage_limit != postimage->nr)
-> -		memmove(img->line + applied_pos + postimage->nr,
-> -			img->line + applied_pos + preimage_limit,
-> -			(img->nr - (applied_pos + preimage_limit)) *
-> -			sizeof(*img->line));
-> -	memcpy(img->line + applied_pos,
-> -	       postimage->line,
-> -	       postimage->nr * sizeof(*img->line));
-> +		MOVE_ARRAY(img->line + applied_pos + postimage->nr,
-> +			   img->line + applied_pos + preimage_limit,
-> +			   img->nr - (applied_pos + preimage_limit));
-> +	COPY_ARRAY(img->line + applied_pos, postimage->line, postimage->nr);
+   Searching, reading and asking around led me to the following (these
+are scripts which are run on a separate system which acts as a git bridge):
 
-My patch looks like:
+   init:
 
--       memcpy(img->line + applied_pos,
--              postimage->line,
--              postimage->nr * sizeof(*img->line));
-+       if (postimage->line && postimage->nr)
-+               memcpy(img->line + applied_pos,
-+                      postimage->line,
-+                      postimage->nr * sizeof(*img->line));
+   git clone --mirror $UPSTREAMURL $DSTDIR
+   cd $DSTDIR
+   git remote rename origin upstream
+   git config remotes.default 'upstream'
+   git remote add --mirror=push origin $DOWNSTREAMURL
 
-... which I think I prefer (slightly).
+   And then to keep self-hosted repository in sync with upstream:
 
+   cd $DSTDIR
+   git remote update --prune
+   git push
 
-ATB,
-Ramsay Jones
+   This seems to accomplish everything I want except that the the "git
+push" deletes any branches I have created on my self-hosted repository.
 
->  	if (!state->allow_overlap)
->  		for (i = 0; i < postimage->nr; i++)
->  			img->line[applied_pos + i].flag |= LINE_PATCHED;
-> 
+   Am I doing it completely wrong?  If not, how do I make my branches
+survive the push?
+
+-- 
+Kind regards,
+Jan Danielsson
+
