@@ -2,99 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3331320357
-	for <e@80x24.org>; Sun, 16 Jul 2017 11:32:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F1BC20357
+	for <e@80x24.org>; Sun, 16 Jul 2017 11:39:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751247AbdGPLcd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Jul 2017 07:32:33 -0400
-Received: from mout.web.de ([212.227.15.4]:62892 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751087AbdGPLcc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Jul 2017 07:32:32 -0400
-Received: from [192.168.178.36] ([79.237.60.227]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MODW0-1dcDZ401rw-005ZOQ; Sun, 16
- Jul 2017 13:32:22 +0200
-Subject: Re: [PATCH] ls-files: don't try to prune an empty index
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <bbc51fb0-70ce-3b02-274b-31b5dc035e29@web.de>
- <20170716104114.7tfcuilsy3ab74n6@sigill.intra.peff.net>
- <e91c204d-0bcb-9614-b62d-cd87c03b92e1@web.de>
- <20170716110831.c442ihan6tzf7gmn@sigill.intra.peff.net>
- <31e6bebd-f2f5-b85d-2865-49611aecb2b8@web.de>
-Message-ID: <c408be84-c35f-bf3a-4699-9dd0b5de93ef@web.de>
-Date:   Sun, 16 Jul 2017 13:32:19 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1751248AbdGPLjU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Jul 2017 07:39:20 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:54515 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751087AbdGPLjU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Jul 2017 07:39:20 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id WhtOdTmvO0DqZWhtOdQFHV; Sun, 16 Jul 2017 12:39:18 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=PvPRVEE3 c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=pGLkceISAAAA:8 a=wa_UfRSMaioVwd9_nx4A:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=6kGIvZw6iX1k4Y-7sg4_:22
+Message-ID: <7E67FF115BB146A49D486E77404882F2@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>,
+        "William Duclot" <william.duclot@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <20170709202520.21739-1-william.duclot@gmail.com>        <xmqqvan06yo8.fsf@gitster.mtv.corp.google.com>        <20170710183101.GA13122@Haydn> <xmqq4luh1gzw.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH/RFC] rebase: make resolve message clearer for inexperienced users
+Date:   Sun, 16 Jul 2017 12:39:16 +0100
+Organization: OPDS
 MIME-Version: 1.0
-In-Reply-To: <31e6bebd-f2f5-b85d-2865-49611aecb2b8@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ZHkFGE8QldyqImvpMkze7zWeiNuZ5ryJ3GTN9DMGrFqwGONNELP
- p2tlmDSGdfr9W+vUTjYI75tBGj2djdheWvKtsx/rWcUrIHEk+ZNkg7odMwehaL5abZqytmJ
- DylVn6fqN/H9dAX4WzH5u6dstntFZ0xEJl6K4RzU2rLg+eyrYHfvoQHG6gt0wY+rNGkj2ao
- PqW/w3/QUnvdGPYOapDpA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NYXU9zpMzWs=:ApNdPlM8HfqbGm9si+M41e
- Ki5Cv3TdBCQTZ9wV2uB3zALdWTSuWlI71+zbJzPM9AlaT9gcjWz+Ytreg31eLl/TcO4ZiIavb
- RAk+MFmCar3VXwiEwvycm53R5Vizzm9pnXEFZNMWTgSM3BL8wtCZ8AvRvmaj/RDVvuLqnBzMs
- LzVav5Amhsh9yuAXmkOhNLVjXH/tJ5jziTHnM6uQ4OeQpG5ojBzEhtvL7H8z9ksRZ/cLFSuHL
- 4oj3cfQC30IpR2pyF6MOi9Jolght2jH7bBf5fyLaMhYIb/6kq7jhopbd2jpX8cZKeOY2CViqk
- iYAYfBOwDdkznTRxWCK1DFNZ9EG4qpOtMc9Ry6fpcD13vXZ7umMwrOdjS1JF5kRBoxEf+aq7E
- ToinakmDLyxorQgq/F6JMlfMRhQ1RzOAI8vx6s7OXZFGQKysIQSXvHJePbT6sCc0A6NuqoYQq
- uSzf3yu/Oq2/owXj++Az7r8m4bNE0+caFf+ZDzMZn1rBEEnsSMxuXt2NHa1fnI3kusBRh2aZo
- tLnJkEjvNS8CSDBH2IXDdHaHh1snNqPH5ZCwIpH0MrHX+Enmgjf2ZuSz+Xg/63K61Si0sonHF
- CIc2N7+BB+TTJVloK5voPYzCRbv61jwbEOPCZtQWs0rum5gsg55H1zhsG3iL45U/kMkBAdvfX
- bLEquT6N9k4UXGxE66bDqlX6V4cg9/EER45SI8I526ZJijRHanP8ZBLnhb+26s2Cnft9aqPt4
- bu+nKCZFC3R3Bszx9Ks/Mf7UXpbA9FkEQcApPjhPy0+GSs1+/hHcSr/qjVrp05PFLkYeVghOY
- 4vdHDmaok5ugGBSHZy8BnxOp75cO7jz4rFXOch9DzB2dh5Y3CQ=
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Antivirus: AVG (VPS 170715-0, 15/07/2017), Outbound message
+X-Antivirus-Status: Clean
+X-CMAE-Envelope: MS4wfPpQcUM9RfHIl8S3VSJlKMzPtghGzIO9NNHjqc1f8ui6KNBbtGBkRFswvlVKSUarxDiWiuuB4fulfk35lsyq6zeFrQq5YlENKcHUdbxNk24CSmZmod6D
+ fCFwGIllVNQKp0WEPBOiQWv6UD5DRUBvbPA5PhbGtKp/f+NsmAk5Cr52eOWswV8sqM1DXDwI3FW4OvN5AWSQwvm2D3k9dkHt4+rck8yFiV5Ak5ot8TOcYjpC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.07.2017 um 13:15 schrieb René Scharfe:
-> Am 16.07.2017 um 13:08 schrieb Jeff King:
->> On Sun, Jul 16, 2017 at 01:06:45PM +0200, René Scharfe wrote:
->>
->>>>> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
->>>>> index b8514a0029..adf572da68 100644
->>>>> --- a/builtin/ls-files.c
->>>>> +++ b/builtin/ls-files.c
->>>>> @@ -362,7 +362,7 @@ static void prune_index(struct index_state 
->>>>> *istate,
->>>>>        int pos;
->>>>>        unsigned int first, last;
->>>>>
->>>>> -    if (!prefix)
->>>>> +    if (!prefix || !istate->cache_nr)
->>>>>            return;
->>>>>        pos = index_name_pos(istate, prefix, prefixlen);
->>>>>        if (pos < 0)
->>>>
->>>> "git am" complained that this does not apply to its blobs. Did you
->>>> hand-edit?
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Wednesday, July 12, 2017 10:29 PM
+> William Duclot <william.duclot@gmail.com> writes:
+>
+>>>  - The original said "When you have resolved this problem", without
+>>>    giving a guidance how to resolve, and without saying what the
+>>>    problem is.  The updated one says "conflict" to clarify the
+>>>    "problem", and suggests "git add" as the tool to use after a
+>>>    manual resolition.
 >>>
->>> I didn't, but perhaps I messed up the order of patches?  MOVE_ARRAY
->>> patch 2 touches the same file, but I wouldn't expect the two changes to
->>> conflict.  So not sure what's going on.
+>>>    Modulo that there are cases where "git rm" is the right tool, the
+>>>    updated one is strict improvement.
 >>
->> For some reason there's an extra space before the tab on each of the
->> context lines. MUA issue or cut-and-paste, maybe?
-> 
-> That's possible.  Will resend.
+>> I also wrote "<conflicted_file>" when there could be several. Maybe
+>> 'mark it as resolved with "git add/rm"' would be a better (and shorter)
+>> formulation?
+>
+> Another potential source of confusion is if we are seeing "a"
+> conflict, or multiple ones.  I'd say it is OK to treat the whole
+> thing as "a conflict" that Git needs help with by the user editing
+> multiple files and using multiple "git add" or "git rm".  So "mark
+> it as resolved with 'git add/rm'" is fine, I would think, but
+> anything that I say about UI's understandability to new people needs
+> to be taken with a large grain of salt ;-).
+>
+>> ... I feel like a lot of git messages could be improved this way
+>> to offer a UI more welcoming to inexperienced user (which is a
+>> *broad* segment of users). But I am not aware of the cost of
+>> translation of this kind of patch: would several patches like this
+>> one be welcomed?
+>
+> Surely, as long as I can depend on other reviewers who are more
+> passionate about end-user experience than I am, I'll take such
+> patches with their help.
+>
+> Thanks.
 
-... pressed Send to fast.  Thanks for reporting the broken patch!
+One of the other confusions I had / have (and I have a saved note to remind 
+me) is when rebase stops with a conflict, and asks the user to "fix" it, 
+then ues "--continue".
 
-I use the extension Toggle Word Wrap with Thunderbird, but it wraps by
-default with no way to change that, so I forgot toggling this time.
-Grr, I've had enough of this!  Went past the warranty warning and set
-mailnews.wraplength=0 now.
+I always expect that Git will do the 'add' of the resolved conflict because 
+that is what it would do normally as the next step after the merge.
 
-René
+I also had a similar issue with the --allow-empty case of 'nothing added to 
+commit but untracked files present' where I had been expecting the commit to 
+be simply omitted. You have to go through a reset dance before continuing.
+
+Philip
+[I'll be off line till Friday] 
+
