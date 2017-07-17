@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3FD020357
-	for <e@80x24.org>; Mon, 17 Jul 2017 20:11:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F12D420357
+	for <e@80x24.org>; Mon, 17 Jul 2017 20:11:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751346AbdGQULf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 16:11:35 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:33731 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751317AbdGQULe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 16:11:34 -0400
-Received: by mail-lf0-f65.google.com with SMTP id t72so26599lff.0
-        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:11:34 -0700 (PDT)
+        id S1751355AbdGQULj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jul 2017 16:11:39 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:36174 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751317AbdGQULh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2017 16:11:37 -0400
+Received: by mail-lf0-f67.google.com with SMTP id c199so4515lfg.3
+        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wqGgWG0RDQlbd+kjzTujhcVanUgLp0E0e0LzdG4NYXU=;
-        b=Pv760MiZGDGb08cH1TQWgFY0RvG2aldUK04eDAKU0Y81QQlMYt/ZgldFAnvx/oiJQ8
-         0ysgbgDm7r1iBq1HT1u8UOLQD74R7MD4aAZmZb8gVfpT1rcgP3Q78k8eFha5E9L5dtCK
-         XwuM36ckJRaTS9+Csn5zcFMGMl91RppzS5Ip0qHkbCjVRZ+AWxShktdWBq2HBWywSb6N
-         uJpgO33xZHoRv0I5xofmpM0ZqVEA6iNy1eC2bEywgSvAYimsYvX/mCVszydP+Y5VAb1S
-         30Wy4kEUsfhoPo2l8RHzPPFvRjLToC6xs+s1OLZ+Cp7i1Gp46GxEs7pxCFgV8Aj6jxCd
-         0Chw==
+        bh=iCzFDYKrW+ewsgvh9/1LJ32/qPTU1/VLEqtGl8+nZe4=;
+        b=AnZzWPZIDwYTMZOVTSyVP3xCzM9aCvVExXpBYH5wWTI4TBPNGPFoR2w+PgXtw2d24n
+         pJKhh6iivX0P3yuFugrJkaWjQHe3dwyhMMTtRZmRrIPO7j37kODICI8t/auEaIfqwwiU
+         73BGSLL+VtDB+cwNeGokdFhh2pY6w4rl1ourCfa1M1a+4+t9+QPusicVCG5bLY/8nVYF
+         IZ+F8HELPfLUPTFtr/MFSp6Yasa3WKHlloJpmJbOCJVOtIp2ZwjrJ9pmPSPnZZgBw3jI
+         SDhWhvVytSKGQBGst2qlXodTQRItP+2BUA+XuqRDZaPNzxexrso2NuZa3rZd6pccMmAL
+         ON6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wqGgWG0RDQlbd+kjzTujhcVanUgLp0E0e0LzdG4NYXU=;
-        b=ifmOElEAcS7OOAibAJgxR4xz36X/apv3DWCUWiBy+F4HhetLhs2at2UNQsw79PP4t8
-         r9oCsfykDJHT3VRJ5M4T3B5+ehdvgtWQYc8A3r4uaGp7w/fbj44V5JwXdolJcyioddW7
-         IXaY+r6pSA7FNgamopmqF4BYi97bXhEHrZo8ndTQGy4ZRIkyRJhFb7xLXCYaavr68Grh
-         aVBE6GA5S2LEuI/rBjWmOn81egCDarRomxQ0IG+Zz3wiWxRZ8MddutAx9ZCafh+OTIwe
-         p0HAQD21TP3CMbp4L6YUhFT9YDYZnjF2BEfbZRxymRXSAgvr4Ic5aMc9knaNhm1QtIy8
-         coRQ==
-X-Gm-Message-State: AIVw112gmbQ3tpmhfJD8TvorxYlCdttWUoYdpplxrtLDEwrwtcYT4oUY
-        Y/1/bF5Z7uwl9ytR
-X-Received: by 10.25.212.69 with SMTP id l66mr6473542lfg.56.1500322293103;
-        Mon, 17 Jul 2017 13:11:33 -0700 (PDT)
+        bh=iCzFDYKrW+ewsgvh9/1LJ32/qPTU1/VLEqtGl8+nZe4=;
+        b=fMAMj9HC6RkwgS2naCIK2JlzIH31ATs6Pd2g3ggxYNHLDxhCIw9lWupM/LJJOiU/Ry
+         +cvOThRC645vvmtLoKduUsAtxPpi+XJshkag0I+M/Aqu7ADEq9M31AsosbynYllGxj6j
+         aybHLbDilqMf/I3wgU6XKoi8twycWffit6Uwh2sXNw6zePmTCX7Yyi4FgYFvJIf+T1Fh
+         WD3Ck9yeTM2dt7rVe4s0ihjk63ogSqDjwNqCSFoNFOnVKEwsz1Ha6i5KF+lpjTxjkTTV
+         uV0F8FxWIVK3qjVsTot5KI/K7900gh8rDT6BHe9bB7kUGuqJ8v3bmlBaA4qkRc+Natah
+         7ujA==
+X-Gm-Message-State: AIVw111BOVjk0CIGuvp0vi2IDtWuJOooDakrGbh3UIqJmuF6GnbdVlPT
+        NPkwF9aYe2zicexL
+X-Received: by 10.46.69.85 with SMTP id s82mr2223472lja.69.1500322295768;
+        Mon, 17 Jul 2017 13:11:35 -0700 (PDT)
 Received: from localhost.localdomain (c83-248-253-33.bredband.comhem.se. [83.248.253.33])
-        by smtp.gmail.com with ESMTPSA id l12sm30752ljb.39.2017.07.17.13.11.31
+        by smtp.gmail.com with ESMTPSA id l12sm30752ljb.39.2017.07.17.13.11.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 17 Jul 2017 13:11:32 -0700 (PDT)
+        Mon, 17 Jul 2017 13:11:34 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 03/10] builtin.h: document SUPPORT_SUPER_PREFIX
-Date:   Mon, 17 Jul 2017 22:10:45 +0200
-Message-Id: <715342d85810ddae1372fb4a1c5e300d323a2b58.1500321657.git.martin.agren@gmail.com>
+Subject: [PATCH v2 04/10] git.c: let builtins opt for handling `pager.foo` themselves
+Date:   Mon, 17 Jul 2017 22:10:46 +0200
+Message-Id: <be05f05ba0066cae1f222c90464798fa5013a585.1500321657.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.0.rc0
 In-Reply-To: <cover.1500321657.git.martin.agren@gmail.com>
 References: <cover.1499723297.git.martin.agren@gmail.com> <cover.1500321657.git.martin.agren@gmail.com>
@@ -66,37 +66,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 74866d75 ("git: make super-prefix option", 2016-10-07) introduced
-SUPPORT_SUPER_PREFIX as a builtin flag without documenting it. The next
-patch will add another flag, so document SUPPORT_SUPER_PREFIX, thereby
-bringing the documentation up to date with the available flags.
+Before launching a builtin git foo and unless mechanisms with precedence
+are in use, we check for and handle the `pager.foo` config. This is done
+without considering exactly how git foo is being used, and indeed, git.c
+cannot (and should not) know what the arguments to git foo are supposed
+to achieve.
 
-While at it, correct '3 more things to do' to '4 more things to do'.
+In practice this means that, e.g., `git -c pager.tag tag -a new-tag`
+results in errors such as "Vim: Warning: Output is not to a terminal"
+and a garbled terminal. A user who makes use of `git tag -a` and `git
+tag -l` will probably choose not to configure `pager.tag` or to set it
+to "no", so that `git tag -a` will actually work, at the cost of not
+getting the pager with `git tag -l`.
 
+To allow individual builtins to make more informed decisions about when
+to respect `pager.foo`, introduce a flag DELAY_PAGER_CONFIG. If the flag
+is set, do not check `pager.foo`.
+
+Do not check for DELAY_PAGER_CONFIG in `execv_dashed_external()`. That
+call site is arguably wrong, although in a way that is not yet visible,
+and will be changed in a slightly different direction in a later patch.
+
+Don't add any users of DELAY_PAGER_CONFIG just yet, one will follow in a
+later patch.
+
+Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- builtin.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ builtin.h | 8 ++++++++
+ git.c     | 4 +++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/builtin.h b/builtin.h
-index 62f22b547..7bcc08456 100644
+index 7bcc08456..4186635de 100644
 --- a/builtin.h
 +++ b/builtin.h
-@@ -51,9 +51,13 @@
-  *	on bare repositories.
-  *	This only makes sense when `RUN_SETUP` is also set.
+@@ -55,6 +55,14 @@
   *
-+ * `SUPPORT_SUPER_PREFIX`::
+  *	The builtin supports `--super-prefix`.
+  *
++ * `DELAY_PAGER_CONFIG`::
 + *
-+ *	The builtin supports `--super-prefix`.
++ *	If RUN_SETUP or RUN_SETUP_GENTLY is set, git.c normally handles
++ *	the `pager.<cmd>`-configuration. If this flag is used, git.c
++ *	will skip that step, instead allowing the builtin to make a
++ *	more informed decision, e.g., by ignoring `pager.<cmd>` for
++ *	certain subcommands.
 + *
   * . Add `builtin/foo.o` to `BUILTIN_OBJS` in `Makefile`.
   *
-- * Additionally, if `foo` is a new command, there are 3 more things to do:
-+ * Additionally, if `foo` is a new command, there are 4 more things to do:
-  *
-  * . Add tests to `t/` directory.
-  *
+  * Additionally, if `foo` is a new command, there are 4 more things to do:
+diff --git a/git.c b/git.c
+index 489aab4d8..79195ebbd 100644
+--- a/git.c
++++ b/git.c
+@@ -283,6 +283,7 @@ static int handle_alias(int *argcp, const char ***argv)
+  */
+ #define NEED_WORK_TREE		(1<<3)
+ #define SUPPORT_SUPER_PREFIX	(1<<4)
++#define DELAY_PAGER_CONFIG	(1<<5)
+ 
+ struct cmd_struct {
+ 	const char *cmd;
+@@ -306,7 +307,8 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+ 			prefix = setup_git_directory_gently(&nongit_ok);
+ 		}
+ 
+-		if (use_pager == -1 && p->option & (RUN_SETUP | RUN_SETUP_GENTLY))
++		if (use_pager == -1 && p->option & (RUN_SETUP | RUN_SETUP_GENTLY) &&
++		    !(p->option & DELAY_PAGER_CONFIG))
+ 			use_pager = check_pager_config(p->cmd);
+ 		if (use_pager == -1 && p->option & USE_PAGER)
+ 			use_pager = 1;
 -- 
 2.14.0.rc0
 
