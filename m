@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD6220357
-	for <e@80x24.org>; Mon, 17 Jul 2017 20:11:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2041320357
+	for <e@80x24.org>; Mon, 17 Jul 2017 20:11:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751379AbdGQULv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 16:11:51 -0400
-Received: from mail-lf0-f65.google.com ([209.85.215.65]:32785 "EHLO
-        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751373AbdGQULu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 16:11:50 -0400
-Received: by mail-lf0-f65.google.com with SMTP id t72so27199lff.0
-        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:11:49 -0700 (PDT)
+        id S1751383AbdGQULz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jul 2017 16:11:55 -0400
+Received: from mail-lf0-f67.google.com ([209.85.215.67]:32792 "EHLO
+        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751349AbdGQULy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2017 16:11:54 -0400
+Received: by mail-lf0-f67.google.com with SMTP id t72so27276lff.0
+        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:11:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OtJPwgyMxIGugXYOXhutD/wqKFjii3KTDjEGTN6HJQQ=;
-        b=FARHVU01JB7qv+fMADN4DKj9NPDGvQfGO2g11SjgO6EthW3KMAxCvRSXrHg3axkoim
-         tmvLWGgdcPHcwqPgsEjXDuhXO9oy0H6l6H42kBNYr7A5MIFG/m4EAvgri1rAL9R+BOdQ
-         /e4K1iFHXRLW1lAM8x0tRhDu4SwAQ//OfgnWYncE52Cf4MJtu/7kZ/9PHYeIasC6vu8d
-         cnaMai+X7p1EB0HcXmQlKj+FiFAzDErHfMx5VetdLG7rGqcu7cAmrUbal/0Okz633mA8
-         oezHKoAxRUOr6JLiXTB74wl/uq8GMi7LpppAkQvd9lFFxuhk1A33bKowM/mvvj0WNxhr
-         uFCg==
+        bh=CkFgF11etwswCquMZBDgwcMXrNW/JOefYAz0g5u+y8Y=;
+        b=LksTKVwdHCsQWtc5+JieHZsi3s2oK1hzNt5KkVtNvsPDlFf/I+YfyMDn/4qFeeFt5/
+         CWUfoMWQu3T9xVlLXnwvzENR9e5aCzia2jKfAwTdYEsyt5cfA0e0BgmfrV09YvTMiwMK
+         af20mT/wIR0JBYwa8zq21loMIcHyXgpbTWATtOB9JBGWsYNsVG6FANzqD5zhLQGmWWxh
+         ViisbN+mdtJV8aBcsXjeUNibJi9nUqVOqlsKSBXtowsJrg5ZHTtEgSDwUqwJP2irNvdf
+         uhS7tRkPUpXVOAz7MvQ3CeQnHDpMFhAeveDc8q0iQoC4xwnIVEaFwLwxuYr0g7h6fIf7
+         vRhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OtJPwgyMxIGugXYOXhutD/wqKFjii3KTDjEGTN6HJQQ=;
-        b=Nfym9FRjys+2blGFcClnavxJMKmsRibuCI51vOonpxkylka5VHhMywljpXdcAwNx2Y
-         c3nVeXTsvGGhBwVHZl/EZ/1zsyuhy/OjuTXEiy0gms4Wn39P/BeW7WgPduMReD1v759L
-         7esRq0tLcotVCvkrahx3GFxPyMP2Dfbn3D5H+rCndtewipOq+IVyCGuFdMD11clqSHLs
-         R1cpHi6+c7w8SxFVf2HNmWSj9KtsS+DI3/rwY3V29fuXVBOTpIQtt41ywToZF/o6vmr2
-         vGHV10Mi3A97FR1S3iGJR2qDuB3D5Tgu0prlsuJvO3loy64O/5BmSRDfHdaeuTvzfpAK
-         gISw==
-X-Gm-Message-State: AIVw1117th4hjUE2/Jn782VCeNEbvFTAOTi2lEv/yoSvOJZy76KYCgWg
-        T/2T7RzD1Z2BjHAZ
-X-Received: by 10.46.5.151 with SMTP id 145mr5647771ljf.91.1500322308545;
-        Mon, 17 Jul 2017 13:11:48 -0700 (PDT)
+        bh=CkFgF11etwswCquMZBDgwcMXrNW/JOefYAz0g5u+y8Y=;
+        b=Tn4x1XBB7/ZuG6gwKSbbCPeSN/vTZKInWv8GzfG2NkYbdL6HcTaeKsXV0LQff+SAW7
+         sb+QgPZV42dNNPKK4xX7CUlbNLm86bCROOP5MlM71yFgHUHCdOMWUbtppJsb5bvqcvek
+         Px4A/d4qeYehn6VGGHdTE+2VWeIiMQmPS2FAy3iCPRn2MRBDhtJT2J7hq4144AlPU9L2
+         jLVfAYYSjLPZwrNohphXu0DUsLsZn4G5nov+Kt7VMR9MTsU8mQbK1D2mKFnKJ/McKUYJ
+         D1TP/Z8c5acG7ZHGuiNqsk4hnOvgs7AXiQUlhqCDHV4954fCAOXp91fiqJ3wE1PoUOJK
+         s1FQ==
+X-Gm-Message-State: AIVw111xAnkxHBy1QITDUWVltnmBa4O9I4wi/c91tOcaYhZvhba5wNY3
+        19OGViKmmA6fcLma
+X-Received: by 10.25.196.66 with SMTP id u63mr7665438lff.159.1500322312311;
+        Mon, 17 Jul 2017 13:11:52 -0700 (PDT)
 Received: from localhost.localdomain (c83-248-253-33.bredband.comhem.se. [83.248.253.33])
-        by smtp.gmail.com with ESMTPSA id l12sm30752ljb.39.2017.07.17.13.11.47
+        by smtp.gmail.com with ESMTPSA id l12sm30752ljb.39.2017.07.17.13.11.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 17 Jul 2017 13:11:47 -0700 (PDT)
+        Mon, 17 Jul 2017 13:11:51 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 09/10] tag: change default of `pager.tag` to "on"
-Date:   Mon, 17 Jul 2017 22:10:51 +0200
-Message-Id: <86ab09419c951ebeee2435c9c294f4b3f8816775.1500321658.git.martin.agren@gmail.com>
+Subject: [PATCH v2 10/10] git.c: ignore pager.* when launching builtin as dashed external
+Date:   Mon, 17 Jul 2017 22:10:52 +0200
+Message-Id: <fa91f778e1acff812ddadb313e9979c470edc43b.1500321658.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.0.rc0
 In-Reply-To: <cover.1500321657.git.martin.agren@gmail.com>
 References: <cover.1499723297.git.martin.agren@gmail.com> <cover.1500321657.git.martin.agren@gmail.com>
@@ -66,125 +66,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The previous patch taught `git tag` to only respect `pager.tag` in
-list-mode. That patch left the default value of `pager.tag` at "off".
+When running, e.g., `git -c alias.bar=foo bar`, we expand the alias and
+execute `git-foo` as a dashed external. This is true even if git foo is
+a builtin. That is on purpose, and is motivated in a comment which was
+added in commit 441981bc ("git: simplify environment save/restore
+logic", 2016-01-26).
 
-After that patch, it makes sense to let the default value be "on"
-instead, since it will help with listing many tags, but will not hurt
-users of `git tag -a` as it would have before. Make that change. Update
-documentation and tests.
+Shortly before we launch a dashed external, and unless we have already
+found out whether we should use a pager, we check `pager.foo`. This was
+added in commit 92058e4d ("support pager.* for external commands",
+2011-08-18). If the dashed external is a builtin, this does not match
+that commit's intention and is arguably wrong, since it would be cleaner
+if we let the "dashed external builtin" handle `pager.foo`.
+
+This has not mattered in practice, but a recent patch taught `git-tag`
+to ignore `pager.tag` under certain circumstances. But, when started
+using an alias, it doesn't get the chance to do so, as outlined above.
+That recent patch added a test to document this breakage.
+
+Do not check `pager.foo` before launching a builtin as a dashed
+external, i.e., if we recognize the name of the external as a builtin.
+Change the test to use `test_expect_success`.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/git-tag.txt |  2 +-
- t/t7006-pager.sh          | 28 ++++++++++++++--------------
- builtin/tag.c             |  2 +-
- 3 files changed, 16 insertions(+), 16 deletions(-)
+One could address this in run_argv(), by making the second call to
+execv_dashed_external() conditional on "!is_builtin()" whereas a builtin
+would be started as "git foo". (Possibly after unrolling and cleaning up
+the "while (1)"-loop.) That seems like the wrong fix for this particular
+issue, but might be a wanted change on its own -- or maybe not --, since
+it would mean one could relay, e.g., "-c baz" to "git -c baz foo" (but
+only for builtins...).
 
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 875d135e0..d97aad343 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -206,7 +206,7 @@ it in the repository configuration as follows:
- -------------------------------------
- 
- `pager.tag` is only respected when listing tags, i.e., when `-l` is
--used or implied.
-+used or implied. The default is to use a pager.
- See linkgit:git-config[1].
- 
- DISCUSSION
+ t/t7006-pager.sh | 2 +-
+ git.c            | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
 diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index a357436e1..df258c5d4 100755
+index df258c5d4..8b2ffb1aa 100755
 --- a/t/t7006-pager.sh
 +++ b/t/t7006-pager.sh
-@@ -134,16 +134,16 @@ test_expect_success TTY 'configuration can enable pager (from subdir)' '
- 	}
+@@ -201,7 +201,7 @@ test_expect_success TTY 'git tag -a respects --paginate' '
+ 	test -e paginated.out
  '
  
--test_expect_success TTY 'git tag -l defaults to not paging' '
-+test_expect_success TTY 'git tag -l defaults to paging' '
- 	rm -f paginated.out &&
- 	test_terminal git tag -l &&
--	! test -e paginated.out
-+	test -e paginated.out
- '
+-test_expect_failure TTY 'git tag as alias ignores pager.tag with -a' '
++test_expect_success TTY 'git tag as alias ignores pager.tag with -a' '
+ 	# git-tag will be launched as a dashed external, which
+ 	# 1) is the source of a potential bug, and
+ 	# 2) is why we use test_config and not -c.
+diff --git a/git.c b/git.c
+index 82ac2a092..6b6d9f68e 100644
+--- a/git.c
++++ b/git.c
+@@ -559,7 +559,7 @@ static void execv_dashed_external(const char **argv)
+ 	if (get_super_prefix())
+ 		die("%s doesn't support --super-prefix", argv[0]);
  
- test_expect_success TTY 'git tag -l respects pager.tag' '
- 	rm -f paginated.out &&
--	test_terminal git -c pager.tag tag -l &&
--	test -e paginated.out
-+	test_terminal git -c pager.tag=false tag -l &&
-+	! test -e paginated.out
- '
+-	if (use_pager == -1)
++	if (use_pager == -1 && !is_builtin(argv[0]))
+ 		use_pager = check_pager_config(argv[0]);
+ 	commit_pager_choice();
  
- test_expect_success TTY 'git tag -l respects --no-pager' '
-@@ -152,32 +152,32 @@ test_expect_success TTY 'git tag -l respects --no-pager' '
- 	! test -e paginated.out
- '
- 
--test_expect_success TTY 'git tag with no args defaults to not paging' '
-+test_expect_success TTY 'git tag with no args defaults to paging' '
- 	# no args implies -l so this should page like -l
- 	rm -f paginated.out &&
- 	test_terminal git tag &&
--	! test -e paginated.out
-+	test -e paginated.out
- '
- 
- test_expect_success TTY 'git tag with no args respects pager.tag' '
- 	# no args implies -l so this should page like -l
- 	rm -f paginated.out &&
--	test_terminal git -c pager.tag tag &&
--	test -e paginated.out
-+	test_terminal git -c pager.tag=no tag &&
-+	! test -e paginated.out
- '
- 
--test_expect_success TTY 'git tag --contains defaults to not paging' '
-+test_expect_success TTY 'git tag --contains defaults to paging' '
- 	# --contains implies -l so this should page like -l
- 	rm -f paginated.out &&
- 	test_terminal git tag --contains &&
--	! test -e paginated.out
-+	test -e paginated.out
- '
- 
- test_expect_success TTY 'git tag --contains respects pager.tag' '
- 	# --contains implies -l so this should page like -l
- 	rm -f paginated.out &&
--	test_terminal git -c pager.tag tag --contains &&
--	test -e paginated.out
-+	test_terminal git -c pager.tag=false tag --contains &&
-+	! test -e paginated.out
- '
- 
- test_expect_success TTY 'git tag -a defaults to not paging' '
-@@ -214,9 +214,9 @@ test_expect_failure TTY 'git tag as alias ignores pager.tag with -a' '
- 
- test_expect_success TTY 'git tag as alias respects pager.tag with -l' '
- 	rm -f paginated.out &&
--	test_config pager.tag true &&
-+	test_config pager.tag false &&
- 	test_terminal git -c alias.t=tag t -l &&
--	test -e paginated.out
-+	! test -e paginated.out
- '
- 
- # A colored commit log will begin with an appropriate ANSI escape
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 5ad1af252..ea83df5e1 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -462,7 +462,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (cmdmode == 'l')
--		setup_auto_pager("tag", 0);
-+		setup_auto_pager("tag", 1);
- 
- 	if ((create_tag_object || force) && (cmdmode != 0))
- 		usage_with_options(git_tag_usage, options);
 -- 
 2.14.0.rc0
 
