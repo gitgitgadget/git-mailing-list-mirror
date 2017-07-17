@@ -2,121 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8448B20357
-	for <e@80x24.org>; Mon, 17 Jul 2017 16:06:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FF6520834
+	for <e@80x24.org>; Mon, 17 Jul 2017 17:10:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751487AbdGQQGb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 12:06:31 -0400
-Received: from mout.gmx.net ([212.227.15.18]:57938 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751481AbdGQQGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 12:06:30 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MAhWl-1dMwLD13fv-00Bw9O; Mon, 17
- Jul 2017 18:06:24 +0200
-Date:   Mon, 17 Jul 2017 18:06:22 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+        id S1751404AbdGQRK3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jul 2017 13:10:29 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:33918 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751372AbdGQRK1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2017 13:10:27 -0400
+Received: by mail-pf0-f172.google.com with SMTP id q85so79391496pfq.1
+        for <git@vger.kernel.org>; Mon, 17 Jul 2017 10:10:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=cApApxJkpMjBLOaDq2VTPFomPahH8KbAAdwR1Adj+FI=;
+        b=Zv3y1FIWBpyy8KVNdlXF6bvgSSO+JyuIGAHUqt3bRM3QWrGWV9UH9mOkswZjE/WZY3
+         0tBD2hQK1bTwHBJ3wgUjAhMmMhWMtX2w5xFAGGGnb8nMVFns5xbl6yRV9aGVXkp+AgIl
+         aeJOmgPcyVpDIROyCjA1nQhZXDZHnv3RCZpKTBOl8SzNu3akcqWmvKkyfJYvrTKbelmT
+         oVj048iZJoliHT8auW2CpQGETmiJhwtF/AZOZzpLdPPBAlVdC0oiPqLB/CVsn9DzyN5h
+         jWGVutJ6yN3K9EO4a6ekisY0oMnFk321lo8jcHaY75g+bbh+izON53kxN0YclKtB4opv
+         lGzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=cApApxJkpMjBLOaDq2VTPFomPahH8KbAAdwR1Adj+FI=;
+        b=dBim60UEBgt15Ete1cQnN+JIYhXMEn5hsoOdbeYwrajcgsnJ+GErnjIshRaKDhN9nc
+         YAyXexuXqIevBQ8Z++8zdFK98gG9uaITPQ6wkSWn/uIcY5s6UCcUzv4t4QRe7eKrDaQo
+         eGhF6r9BKZrO9JzedUSdSb8yY8Mi6luA+GdMYyXyPc4/3p50FjnrJam0jsypqCsw6zmq
+         gJIafVX1DVbhuP8sWzByx3CkxSTjsXoo2SD+mmmctMESIMqGKslMHVYnATQR5jLY6JAC
+         j/ZCKAySteoBgmemrfd+IsuxARMmGYOtJTq0vTk+oof0vTEfKASQjdyN/o+QGrCyBCZg
+         atcA==
+X-Gm-Message-State: AIVw1118wCHl+okYMmEC3rLiKEUS1JDMI5isyEz5QpBsAt8lryKyJU71
+        ioQEmM9vxp03WA==
+X-Received: by 10.99.176.71 with SMTP id z7mr29153260pgo.78.1500311426365;
+        Mon, 17 Jul 2017 10:10:26 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:480d:579b:4a3b:27f3])
+        by smtp.gmail.com with ESMTPSA id c82sm38561018pfd.5.2017.07.17.10.10.25
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 17 Jul 2017 10:10:25 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jiang Xin <worldhello.net@gmail.com>
-cc:     =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?Q?Tr=E1=BA=A7n_Ng=E1=BB=8Dc_Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Nelson Martell <nelson6e65@gmail.com>,
-        Brian Gesiak <modocache@gmail.com>, m4sk1n <m4sk1n@o2.pl>,
-        Vitaly <vitaly.gorodetsky@gmail.com>,
-        "Ying Ruei Liang (KK)" <thumbd03803@gmail.com>,
-        babycaseny <babycaseny@gmail.com>,
-        Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [L10N] Kickoff of translation for Git 2.14.0 round 1
-In-Reply-To: <CANYiYbGyCbzxPuiUUD5XBo2zAfKiZ9XQcEu_=s8XxsMGP1J4Og@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1707171805460.4193@virtualbox>
-References: <CANYiYbET27mNrZZTNmn_dKBHLLEb4wJiznZ2O1X=WQ_GtamN7w@mail.gmail.com> <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr> <CANYiYbGyCbzxPuiUUD5XBo2zAfKiZ9XQcEu_=s8XxsMGP1J4Og@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
+References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
+        <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
+Date:   Mon, 17 Jul 2017 10:10:24 -0700
+In-Reply-To: <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
+        (Jiang Xin's message of "Mon, 17 Jul 2017 23:23:43 +0800")
+Message-ID: <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1938505165-1500307584=:4193"
-X-Provags-ID: V03:K0:RZhIQSnFNpocGCCqmS5bum/gzsaasKaAAU/GBxbvJKXsx29ok4y
- e0D4V7irNi5aj/PxOYQ0W8jIKaODcvw3I1J8J3tgieHXWFUPDc0UbQ3zU+tZetdHiiAXNu1
- vrV7kL/RnI7ldIE1TboRpzznvmiuKuJMmRTl+Gjte4yIMBBDFxfzgHZGLlxgsRCAxrcOCda
- lL/8+2hE6znIrYCebUu7Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7+tLcmIrVmo=:fHJbVFQdMRKBbLlOsvqbAq
- HsQpIt/Y/u3BhPvrTCVaHioEqWeDL049SvCOPtX5Qs1m4SVVwBX5jcy76t9cxDsVZ+WW1Dkrq
- SEWfePI3vo6Zsi4W8oXisof5q4n2D37u+GGJ27gsIVBrVL2ltotjpv0sBqEd/DOnxMvQe5oCG
- 2Z28UDVT2fSy1w/jgaEwLtNY7jxnbuRQhd1jp60qFR/dAmRbAFzAbUOShUbq7HlmJPlXp4bh7
- smiemrC/ZR+wlTx9fv7w0AFkkYxVwMqnIvcsp+EqSHXL+7Jy1OaaCQFzXBXkjqQU2KQ0qO3lZ
- g75mWe53OWvI6ohFGyROgr4Dkwas96/+/+YLfRyaRP5424UEda8ksyhh46IJqbrW89+GtOXBS
- soVSXLJpqISPMgEObxISO8zARiE5j2YlAfinO0KSXp2pqNWJxKhvwmsHhnjH9hwbt26tD4mlY
- RCu2dZ2+97rSAvEZz+3TYzhkLirL0xNYSCMnlOuOYLcdFRasfYKuY63L90TceKu57a/+PYqa3
- 9F+BFPJ/OUM84WGhCYjtBnzaRNBUxXBcMoZFF6FSKpHrTqyglExCUB5lXqdCBX71G1CD4OCSZ
- 5kS2oiV2m5o6GNH83FHIpqo3LtXKtVekgf+qrn3qi4U4GRUxbCt/2kY2I15W0Apz3ZZf1aZ3o
- 74eSyvAUArKA72wuVz8etR+AfDAlsSUbA2niCQ/zQm3+pp6jKwiabhkWTHjO8kgb+cTmkLYg0
- gorpy7HpIekbw/wBayXSJhiYWLVC5IZiKa+JauLqROBukXlBjyYhC0lVLOaKJ1DMM5jpNu3IF
- jvGWd2u4siODG+gJDXDR52/CxH4FvyTGzZDvFC2bk/PjnpSayY=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Jiang Xin <worldhello.net@gmail.com> writes:
 
---8323329-1938505165-1500307584=:4193
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Commit cb71f8bdb5 ("PRItime: introduce a new "printf format" for
+> timestamps", 2017-04-21) does not play well with i18n framework. The
+> static string concatenation cannot be correctly interpreted by
+> gettext utilities, such as xgettext.
+>
+> Wrap PRItime in format_raw_time() function, so that we can extract
+> correct l10n messages into "po/git.pot".
+>
+> Reported-by: Jean-Noël Avila <jn.avila@free.fr>
+> Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+> ...
+> @@ -191,6 +200,15 @@ struct date_mode *date_mode_from_type(enum date_mode_type type)
+>  	return &mode;
+>  }
+>  
+> +const char *format_raw_time(timestamp_t time)
+> +{
+> +	static struct strbuf time_buf = STRBUF_INIT;
+> +
+> +	strbuf_reset(&time_buf);
+> +	strbuf_addf(&time_buf, "%"PRItime, time);
+> +	return time_buf.buf;
+> +}
 
-Hi,
+Hmm.
 
-On Mon, 17 Jul 2017, Jiang Xin wrote:
+Two potential issues are:
 
-> 2017-07-16 3:30 GMT+08:00 Jean-No=C3=ABl Avila <jn.avila@free.fr>:
-> >
-> >
-> > A few remarks on i18n:
-> >
-> >  * commit cb71f8bdb5 ("PRItime: introduce a new "printf format" for
-> > timestamps") does not play well with i18n framework. The static string
-> > concatenation cannot be correctly interpreted by msgmerge. I don't know
-> > how we can combine variable format indicators with translatable strings=
-=2E
-> >
->=20
-> We can add a new wrapper for raw timestamp like:
->=20
->     +const char *format_raw_time(timestamp_t time)
->     +{
->     +       static struct strbuf time_buf =3D STRBUF_INIT;
->     +
->     +       strbuf_reset(&time_buf);
->     +       strbuf_addf(&time_buf, "%"PRItime, time);
->     +       return time_buf.buf;
->     +}
->=20
->=20
-> , and replace macro PRItime in i18n messages with format_raw_time
-> wrapper, like this:
->=20
->     -                       strbuf_addf(&sb, Q_("%"PRItime" year",
-> "%"PRItime" years", years), years);
->     +                       strbuf_addf(&sb, Q_("%s year", "%s years",
-> years), format_raw_time(years));
+ - After this patch, there still are quite a many 
 
-That would come at the price of complexifying the code just to accommodate
-a translation tool.
+	printf("time is %"PRItime" ...\n", timestamp)
 
-How do you gentle people deal with PRIuMAX?
+   so the burden on the programmers having to remember when it is
+   required to use format_raw_time() becomes unclear, and makes the
+   change/churn larger when an existing message needs to be marked
+   for translation.
 
-Ciao,
-Dscho
---8323329-1938505165-1500307584=:4193--
+ - The static struct strbuf here is a cheap way to avoid leaks, but
+   at the same time it is unfriendly to threaded code.  We could
+   instead do:
+
+        void append_PRItime(struct strbuf *buf, timestamp_t time);
+
+   to fix that trivially, but the damage to the caller obviously is
+   much larger going this way.
+
