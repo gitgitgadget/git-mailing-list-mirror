@@ -2,131 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4969820357
-	for <e@80x24.org>; Mon, 17 Jul 2017 19:34:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4591820357
+	for <e@80x24.org>; Mon, 17 Jul 2017 19:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751320AbdGQTeo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 15:34:44 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:32775 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751316AbdGQTen (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 15:34:43 -0400
-Received: by mail-io0-f196.google.com with SMTP id z62so404407ioi.0
-        for <git@vger.kernel.org>; Mon, 17 Jul 2017 12:34:43 -0700 (PDT)
+        id S1751335AbdGQTvq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jul 2017 15:51:46 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:35683 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751316AbdGQTvp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2017 15:51:45 -0400
+Received: by mail-pg0-f49.google.com with SMTP id v190so26949353pgv.2
+        for <git@vger.kernel.org>; Mon, 17 Jul 2017 12:51:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaust.edu.sa; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ErTCVK+qgDTSns9j2gFMT3+tojIjrEzwzCYkCBzsHZY=;
-        b=b90g++qaYLdvmTpwwhM67UP3mSpmrszU/dkL4YmXZEOBuI9g0111KrWkuta8yBGd7S
-         hRfMa+Wtnd0LjxdXYXeMAjvwbr8H8UhDy5ZMj9wgmWgtU9SkZQSYCJrgEyKpfw4ersPY
-         tRzX1o+tcPqMJpRqP8tlK2vxWQ1KldvXzvHkc=
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=DcHGtlHd4M3Qlwf+SQQRZW8UkhDiu/emVrVuduN0qdg=;
+        b=WHJ1oUVUnCg1P827jlzam3wWElkNDBLVnJ5B4UTUOby35jOrLRi3pWTGEmx+gESIXC
+         2UaSZvG3FAUxQwRxD9kETUcR9M+kdGqhNmYiukM9wHzEP5Te54NhfDQyQ1I7Obpf5KtS
+         MCCq65EiUyFf1GG/oasYg6edSGRdXLtonGdtT/upVMsuC98OPFkFH3xc54ZLHfDKe9nm
+         4Ds9LK739FtPzfdMGxpYKufW5Dq+EDls6E7b5g+Vp1vh595zl5A6VgBhrIOvF4NXzLRX
+         WOyKHa1eXZvfZNwIjeRV4zhBuBFmEWVXKNpaW2kjDRUwJEINhbwBvBXeyzsbS/o0rSsm
+         FgDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ErTCVK+qgDTSns9j2gFMT3+tojIjrEzwzCYkCBzsHZY=;
-        b=EmirRqf6O/Uh1rDtI2S3zR6kH26FbhSB0kUhk7g+YChvMAu2LwMXwSGwxQo6mv6idu
-         7kzhf3ewc9WAD6g6zo25hq+yAyqhoNgEbDCwj9g10TS3FdqxaabYOZEIch2k9CBjdGFC
-         G6usjYU2iI3YUGHvPnc+Kftsm5p4W8uxWIJBlF9b4Kocn9wmS7jOvb4qphwSLf76oGoG
-         iiARmoMa3pRw+Qn365AtiTjiSmpjGov7X7RrIn2PoOaaILfdidw/+bQjaz79tA3eYEJv
-         0wLdi9sMxgnODUlHdsfJP5S4Xr6n7e6crgWtRiehHsrsWKfgzXtOnDAaOQuYl3OaQGc0
-         Ab+A==
-X-Gm-Message-State: AIVw113RdJLCOHdHkIx6BLYc10H7cxy3haN6VT8Y0qPm6HkuGU3svMIw
-        X9iiCNB50SI5+LxasAcwJ2mE0B/Jxtmc4i1hn5MLb4rZwguZOKhEsNhCD3v3V4DXGFmWJ6d61jJ
-        U9/x6pfQ675T0hg==
-X-Received: by 10.107.151.21 with SMTP id z21mr20025683iod.205.1500320082395;
- Mon, 17 Jul 2017 12:34:42 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=DcHGtlHd4M3Qlwf+SQQRZW8UkhDiu/emVrVuduN0qdg=;
+        b=JkO8eRo+VWzrpnFnnQsU0PVGUsKqwMCp7pX6CoybzBtuOzootPsu5jTTNoKn8GIH0B
+         g6W4XvayMUXuyZ/z9Ekt5/SFQanbK4H9WXhyxE1mpS2Q5iD0BsyNdsqpbsyVAhcDCcJZ
+         RfOHJeKIqZbEENVhZnXc7davRgFlDZ+B7EAqb2Sbl0Ovi+nu7nlELvk3pRXF5MOAYSwo
+         MF+fzxF7jVe1FPnuefo6xJ21TyqsrvJRBL4d3yi5nBqojocYvzNsDAUtADkX7Fvh8qCV
+         PpOWnljV6lTXdOWH+MM7tEU6uOMjKsnsGw39/jk1d9WR3HIdgChw+bz6wk9oOtvoJ39q
+         dYKg==
+X-Gm-Message-State: AIVw112a/oaoVQ6GsdkC2EWgKUtl1jkA2rqKuP+pawYWzFoDxcEipKLV
+        Z1d/P1vP87kPfo8XHB8=
+X-Received: by 10.84.195.3 with SMTP id i3mr31440832pld.65.1500321104872;
+        Mon, 17 Jul 2017 12:51:44 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:480d:579b:4a3b:27f3])
+        by smtp.gmail.com with ESMTPSA id g7sm139661pfj.29.2017.07.17.12.51.43
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 17 Jul 2017 12:51:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shawn Pearce <spearce@spearce.org>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: reftable [v2]: new ref storage format
+References: <CAJo=hJtTp2eA3z9wW9cHo-nA7kK40vVThqh6inXpbCcqfdMP9g@mail.gmail.com>
+Date:   Mon, 17 Jul 2017 12:51:42 -0700
+In-Reply-To: <CAJo=hJtTp2eA3z9wW9cHo-nA7kK40vVThqh6inXpbCcqfdMP9g@mail.gmail.com>
+        (Shawn Pearce's message of "Mon, 17 Jul 2017 08:01:44 -0700")
+Message-ID: <xmqqlgnmhmep.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.129.152 with HTTP; Mon, 17 Jul 2017 12:34:41 -0700 (PDT)
-From:   Yazeed Sabri <yazeed.sabri@kaust.edu.sa>
-Date:   Mon, 17 Jul 2017 14:34:41 -0500
-Message-ID: <CAL+VFimBfxTrRVme_aMzF4yYRnru0hHD4VzxEtD8hHY6rx2ykA@mail.gmail.com>
-Subject: Documentation lingering inconsistency between working directory and
- working tree
-To:     git@vger.kernel.org
-X-KAUSTGmailUsers: PPSPAMCheckPass
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Shawn Pearce <spearce@spearce.org> writes:
 
-I have been reading the git documentation for a while now and came to
-realize that in a
-lot of commands the documentation is ambiguous when it comes to the difference
-between "working directory" and "working tree". I'm aware of the
-changes to status
-in this commit for example:
+> This is an updated draft after discussion on list with Peff, Michael
+> Haggerty, and Dave Borowitz.
+>
+> You can read a rendered version of this here:
+> https://googlers.googlesource.com/sop/jgit/+/reftable/Documentation/technical/reftable.md
+>
+> Biggest changes from the first proposal are:
+>
+> - reflog is now integrated into reftable
+> - block headers slightly different
+> - Peff's stack management idea is used
+> - Michael's compaction idea is used
 
+Just a few comments.
 
-commit 2a0e6cdedab306eccbd297c051035c13d0266343
-Author: Lars Vogel <lars.vogel@gmail.com>
-Date:   Thu Jun 9 20:19:30 2016 +0200
+> A variable number of 4-byte `restart_offset` values follows the
+> records.  Offsets are relative to the start of the block (0 in first
+> block to include file header) and refer to the first byte of any
+> `ref_record` whose name has not been prefixed compressed.  Readers can
+> start linear scans from any of these records.
 
-    Use "working tree" instead of "working directory" for git status
+It is unclear what "0 in first block to include file header" wants
+to say.  Do I write "8" if I want to express the offset of the first
+record in the first block, or do I write "0"?
 
-    Working directory can be easily confused with the current directory.
-    In one of my patches I already updated the usage of working
-directory
-    with working tree for the man page but I noticed that git status
-also
-    uses this incorrect term.
+> The 2-byte `number_of_restarts + 1` stores the number of entries in
+> the `restart_offset` list.
 
-    Signed-off-by: Lars Vogel <Lars.Vogel@vogella.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+It is unclear whose responsibility it is to add this "1".  Does this
+mean a reader thinks there is one entry in the restart table when it
+sees "0" in the number_of_restarts field (hence you can have max
+65536 entries in total)?
 
-diff --git a/wt-status.c b/wt-status.c
-index 4f27bd62a..4ce4e35ac 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1554,7 +1554,7 @@ void wt_status_print(struct wt_status *s)
-                        else
-                                printf(_("nothing to commit\n"));
-                } else
--                       printf(_("nothing to commit, working directory
-clean\n"));
-+                       printf(_("nothing to commit, working tree
-clean\n"));
-        }
- }
+> Readers can use the restart count to binary search between restarts
+> before starting a linear scan.  The `number_of_restarts` field must be
+> the last 2 bytes of the block as specified by `block_len` from the
+> block header.
 
+Does the new term "restart count" mean the same thing as
+number_of_restarts?
 
+> ### Log block format
+>
+> A log block is written as:
+>
+>     'g'
+>     uint24( block_len )
+>     zlib_deflate {
+>       log_record*
+>       int32( restart_offset )*
+>       int16( number_of_restarts )
+>     }
+>
+> Log blocks look similar to ref blocks, except `block_type = 'g'`.
 
-and more frequently used commands like add are consistent as well. But a
-grep on the documentation to a pull I did today, shows that a lot of
-commands are still
-not updated accordingly.
+Is there a general recommended strategy for writers to choose how
+many entries to include in a single physical block?  I understand
+that the deflated whole must fit in the physical block whose length
+is defined in the footer of the whole file, and in general you would
+not know how small the data deflates down to before compressing,
+right?
 
-This brings me to my next point, so what is the precise definition of
-each concept? Is
-working directory just an outdated mistake?
+> Log record keys are structured as:
+>
+>     ref_name '\0' reverse_int32( time_sec )
+>
+> where `time_sec` is the update time in seconds since the epoch.  The
+> `reverse_int32` function inverses the value so lexographical ordering
+> the network byte order time sorts more recent records first:
+>
+>     reverse_int(int32 t) {
+>       return 0xffffffff - t;
+>     }
 
-Was the change in status above made to solve the confusion and denote
-that status
-is unique per-working tree given its HEAD? If this is the case, then
-is gc unique
-per-working tree too, or is it done on the "database" like fsck? Same
-idea with stash,
-does stash care on what working tree it was called? If not, does it
-make sense for
-it to do so?
+Is 2038 an issue, or by that time we'd all be retired together with
+this file format and it won't be our problem?
 
+As the file format uses delta compression with restarts, a reader
+needs to sequencially scan some bounded number of entries to get the
+contents of a specific entry anyway, so I am wondering if it is
+worth storing a longer timestamp in varint() for an restart entry
+and express the timestamp on delta entries as difference to the
+previous entry.
 
-Best,
-Yazeed
+> ### Log index
+>
+> The log index stores the log key (`refname \0 reverse_int32(time_sec)`)
+> for the last log record of every log block in the file, supporting
+> bounded-time lookup.
 
--- 
+This assumes that timestamps never wildly rewind in the reflog,
+doesn't it?  Is that a sensible assumption?
 
-------------------------------
-This message and its contents, including attachments are intended solely 
-for the original recipient. If you are not the intended recipient or have 
-received this message in error, please notify me immediately and delete 
-this message from your computer system. Any unauthorized use or 
-distribution is prohibited. Please consider the environment before printing 
-this email.
+Or does "the last log record" in the above mean "the log record with
+largest timestamp?  ... ah, not that is still not sufficient.  You'd
+still need to assume that timestamps on entries in one log block must
+be all older than the ones on entries in later log blocks.  Hmph...
+
+Also it is not clear to me how reflogs for two refs would be
+intermixed in the log blocks, and what log keys for the entries must
+be recorded in the log index, to facilitate efficient lookup.  Is it
+assumed that a consecutive sequence of log blocks record reflogs for
+the same ref, before the sequence of log blocks switch to record
+reflogs for another ref, or something?
+
+> A log index block must be written if 2 or more log blocks are written
+> to the file.  If present, the log index appears after the first log
+> block.  There is no padding used to align the log index to block
+> alignment.
+>
+> Log index format is identical to ref index, except the keys are 5
+> bytes longer to include `'\0'` and the 4-byte `reverse_int32(time)`.
+> Records use `block_offset` to refer to the start of a log block.
+
+I am assuming that we do not care about being able to quickly
+determine master@{24028}; I would imagine that it wouldn't be too
+hard to add an index to help such query, but I offhand would not
+know the details until I figure out how the format handles reflog
+entries for multiple refs first.
