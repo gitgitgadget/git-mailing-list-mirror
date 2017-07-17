@@ -2,61 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 371F22082F
-	for <e@80x24.org>; Mon, 17 Jul 2017 09:52:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DADB2082F
+	for <e@80x24.org>; Mon, 17 Jul 2017 11:17:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751380AbdGQJwN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 05:52:13 -0400
-Received: from 256bit.org ([144.76.87.176]:37766 "EHLO 256bit.org"
+        id S1751330AbdGQLR0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jul 2017 07:17:26 -0400
+Received: from 5.itsy.de ([188.40.84.14]:36532 "EHLO 5.itsy.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751265AbdGQJwM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 05:52:12 -0400
-X-Greylist: delayed 2573 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Jul 2017 05:52:12 EDT
-Received: from chrisbra by 256bit.org with local (Exim 4.86_2)
-        (envelope-from <cb@256bit.org>)
-        id 1dX218-0006yj-UM
-        for git@vger.kernel.org; Mon, 17 Jul 2017 11:08:39 +0200
-Date:   Mon, 17 Jul 2017 11:08:38 +0200
-From:   Christian Brabandt <cb@256bit.org>
-To:     git@vger.kernel.org
-Subject: Re: [PATCH] commit & merge: modularize the empty message validator
-Message-ID: <20170717090838.GA17826@256bit.org>
-Mail-Followup-To: git@vger.kernel.org
-References: <20170706044640.GA11020@alpha.vpn.ikke.info>
- <20170711141254.7747-1-kaarticsivaraam91196@gmail.com>
- <xmqq8tju3eqp.fsf@gitster.mtv.corp.google.com>
- <1499950837.2427.1.camel@gmail.com>
- <xmqqr2xkxlpo.fsf@gitster.mtv.corp.google.com>
+        id S1751318AbdGQLRY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2017 07:17:24 -0400
+Received: from [192.168.0.13] (84-72-0-73.dclient.hispeed.ch [84.72.0.73])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by 5.itsy.de (Postfix) with ESMTPSA id BE6DF6463C
+        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:17:22 +0200 (CEST)
+To:     Git Mailing List <git@vger.kernel.org>
+From:   Joachim Durchholz <jo@durchholz.org>
+Subject: Detect invalid submodule names from script?
+Message-ID: <41004589-4a98-2084-b542-51b7458f607b@durchholz.org>
+Date:   Mon, 17 Jul 2017 13:17:22 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqr2xkxlpo.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi all
 
-On Do, 13 Jul 2017, Junio C Hamano wrote:
+I'm hacking some script that calls into git, and I need to detect 
+whether a repository was configured with a submodule name that will work 
+on "git submodule init" and friends.
+I *can* run a git init and see whether it works, but I need to be 100% 
+sure that the error was due to an invalid submodule name and not 
+something else. Bonus points for every version of git for which it works.
 
-> I think many people know about and do use the "delete all lines"
-> (i.e. ":1,$d" in vi, or \M-< \C-SPC \M-> \C-w in Emacs) to abort out
-> of a commit or a merge.  I just do not think it is likely for them
-> to leave Sign-off lines and remove everything else, which is more
-> work than to delete everything, hence my reaction.
+Any suggestions?
+Thanks!
 
-In Vim you can also abort the commit message using :cq which exits the 
-editor with an error code.
-
-Best,
-Christian
--- 
-Das Werk soll den Meister loben.
+Regards,
+Jo
