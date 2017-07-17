@@ -7,107 +7,102 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C489320357
-	for <e@80x24.org>; Mon, 17 Jul 2017 20:18:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BABB20357
+	for <e@80x24.org>; Mon, 17 Jul 2017 20:42:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751336AbdGQUSj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 16:18:39 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:34015 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751320AbdGQUSi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 16:18:38 -0400
-Received: by mail-pf0-f170.google.com with SMTP id q85so284416pfq.1
-        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:18:38 -0700 (PDT)
+        id S1751340AbdGQUmD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jul 2017 16:42:03 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36715 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751317AbdGQUmB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2017 16:42:01 -0400
+Received: by mail-pg0-f66.google.com with SMTP id y129so99807pgy.3;
+        Mon, 17 Jul 2017 13:42:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=d8boI5Vxoweh6E/bK9oOaK1xTP6VzOfb8bTpF+rrIt4=;
-        b=DgvW02RADvd61zQag4x4YKwlN7+ZB9OqgCI/rg1Ujcgu1lM/1o+4wNA+cM9mMuUvbh
-         15Dkne1B7uXxfIPHevBRfc1RQI4R31LJCqEJM8+z7ZSYWlzy/QvIc/3r46+G6hce6FjZ
-         7RZpncjMmb+GrefzkkJNoWg4e2vTBv3WPyF1fh2NQaT6JiFBcXbZaDwoyq3FUsQR58DE
-         C+fDzmYvv8P7ZjNkKxbNELt4xq2EKoapW56SZLy060IB/d+VX2qunqf5O0Tz8TLQs8DU
-         Ylo1HUf5ZJO2rKqTro/wq7F5ZiGmrc3a/rcbGzDBB/b40FmoCsh/tom+kA7+wpIsP0dK
-         NQgw==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=lPwCFzxyuRoeQme5lHGLC3LmQY5pPCuJGsmSEuvfBV0=;
+        b=BhnXG2lKuYuLosRRjSv/8MaKim/mPVa30dfTflMWIkr+WvU+ReHD7dkTeVxTgK0SHj
+         7tF55pHiaxmt2JM11AxX+VwVIACMKp/9kAkDLnFWj9pOk9XofLtJNzMSkfp8DFxlFSel
+         8vI2fhlK+7aCzB1S5JfvDllSiq7wTBDD7XEWxmoqVCIlTT1yklfYS9WRMT4f+Zp7/ATG
+         PKehEAnhkLrb6pCP/oK9nvrejpH/dd1G0SRRrBbaoNg34+klzMIPKL4tR02AKJLl/3d9
+         USMi2eqEik+1NXXg7p+E7w9NqWKQmxZRoECrcNd5eFL2ahC0p811fesBbEGvUxQc0U8a
+         Y4rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=d8boI5Vxoweh6E/bK9oOaK1xTP6VzOfb8bTpF+rrIt4=;
-        b=i8CwT0hkjMWyFJO3l0ryD4F40b/2Llrbm35VpNSrI6hQI25PiIOBca9PrcEtGqhAry
-         Cq6pmdkWGtYgArllorrCjAAlhDiJjJ/afcckdN1GrlO1+87w1ofGUidWdgfc51tNqy5T
-         OvGfCnGiacI/X/MpiKphtdiMv9cC6FEUQdLd+HeczPfiSngfsxVz4IGcmJ7EO7nIxL2N
-         xB9JWYOZ4wfEF3X4HdKGIgAmXHpmT8V4RNx4qsYOA1PxcG31R9302VwbLtuCzFWmxtXK
-         k1CzKk7ziqF0NMspWBfThGaJU5SEVw+Em3Y7iUABrXBPw6ucPnYuscHj9wl1tWbZ0Fl1
-         3wQA==
-X-Gm-Message-State: AIVw1109RVPAydfUDosCJNWNFJOdNY7onMfEU05S+i40jw8fDDH6z7ba
-        Gbx0In5yYoEfQQ==
-X-Received: by 10.98.65.194 with SMTP id g63mr3936380pfd.196.1500322717982;
-        Mon, 17 Jul 2017 13:18:37 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=lPwCFzxyuRoeQme5lHGLC3LmQY5pPCuJGsmSEuvfBV0=;
+        b=V8uHq+xJEiKbHmCWBUQaNCzH9aL5nb517AfJhXhmmJ+ZDpPElwA/ZfODcvG4PBHUet
+         isU1/P+TOkUDN1OpaOTx7sklP3g2JExiBh/VWouqqjc22JfB0IYD2jy6uwQs7hpRTK5V
+         EeDokjo6pypw5eRsiEWk88w6dfqqZtNavktMRYHCuULhli36v8vBzlXx56MOCQRQyfB/
+         WArQp99wRXqIImmM8ElP4XpRyk0GZnXW2QDX42rH9tvzyHU5uT19A5DhJ9mhHS/zGULx
+         dtG54G+ZLt3yOpcayvEpygf6fhK6W7nzAz2ZnN/bo/nTpAdW+mWmBa+ZWEdPCym0wbAX
+         lqJw==
+X-Gm-Message-State: AIVw111L5bJ5q/1nMBXqmS+mSUi+NlgVoKSul23DBd0sIqvHv3X/MBZ+
+        +1fWwFIV/YWDFg==
+X-Received: by 10.84.210.172 with SMTP id a41mr2225012pli.194.1500324120783;
+        Mon, 17 Jul 2017 13:42:00 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:480d:579b:4a3b:27f3])
-        by smtp.gmail.com with ESMTPSA id k127sm169524pfc.75.2017.07.17.13.18.37
+        by smtp.gmail.com with ESMTPSA id i67sm189859pfc.122.2017.07.17.13.41.57
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 17 Jul 2017 13:18:37 -0700 (PDT)
+        Mon, 17 Jul 2017 13:41:58 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Hielke Christian Braun <hcb@unco.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] check for search permission
-References: <0102015d5203f2ae-c7f1daeb-a6ab-413d-9036-c8da816c4c18-000000@eu-west-1.amazonses.com>
-Date:   Mon, 17 Jul 2017 13:18:36 -0700
-In-Reply-To: <0102015d5203f2ae-c7f1daeb-a6ab-413d-9036-c8da816c4c18-000000@eu-west-1.amazonses.com>
-        (Hielke Christian Braun's message of "Mon, 17 Jul 2017 19:26:16
-        +0000")
-Message-ID: <xmqqd18yhl5v.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git v2.14.0-rc0
+References: <xmqqzic7sy2g.fsf@gitster.mtv.corp.google.com>
+        <87mv8638y5.fsf@gmail.com>
+Date:   Mon, 17 Jul 2017 13:41:57 -0700
+In-Reply-To: <87mv8638y5.fsf@gmail.com> (=?utf-8?B?IsOGdmFyIEFybmZqw7Zy?=
+ =?utf-8?B?w7A=?= Bjarmason"'s message
+        of "Sat, 15 Jul 2017 01:17:06 +0200")
+Message-ID: <xmqq7ez6hk2y.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hielke Christian Braun <hcb@unco.de> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> ---
->  gitweb/gitweb.perl | 2 ++
->  1 file changed, 2 insertions(+)
-
-Thanks for trying to help and welcome to Git development community.
-But
-
- (1) Please double-check the title of your change.  Imagine that the
-     title appears in a list of 600 other commits that goes in a
-     single release in "git shortlog --no-merges" output.  Does it
-     tell readers of the list what the change is about?  We cannot
-     even guess that it is about the project list that appears in
-     gitweb output.
-
- (2) Please explain what problem this is trying to solve; that is
-     what the blank space before "---" line we see up above is for.
-     What happens in the current code under what condition, until we
-     do not apply this patch, and why is it a bad thing to happen?
-     Once we apply this patch, in what way the situation gets
-     improved?
-
- (3) Please sign-off your patch (see SubmittingPatches in
-     Documentation).
-
-Thanks.
-
+> On Thu, Jul 13 2017, Junio C. Hamano jotted:
 >
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 3d4a8ee27c96a..9208f42ed1753 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3071,6 +3071,8 @@ sub git_get_projects_list {
->  				return if (m!^[/.]$!);
->  				# only directories can be git repositories
->  				return unless (-d $_);
-> +				# need search permission
-> +				return unless (-x $_);
->  				# don't traverse too deep (Find is super slow on os x)
->  				# $project_maxdepth excludes depth of $projectroot
->  				if (($File::Find::name =~ tr!/!!) - $pfxdepth > $project_maxdepth) {
+> Proposed improvements for the release notes (is this a good way to
+> propose RelNotes changes?)
+
+Thanks.  You could also throw a patch just like any bugfix/update
+to documentation, I would think.
+
+> I think this may explain it better:
 >
-> --
-> https://github.com/git/git/pull/384
+>  * The "[includeIf "gitdir:$dir"] path=..." mechanism introduced in
+>    2.13.0 would canonicalize the path of the gitdir being
+>    matched.
+>
+>    Therefore it wouldn't match e.g. "gitdir:~/work/*" against a repo in
+>    "~/work/main" if ~/work was a symlink to "/mnt/storage/work".
+>
+>    Now we match both the resolved canonical path and what "pwd" would
+>    show. The include will happen if either one matches.
+
+Will use this (and some others) verbatim ;-)  Thanks.
+
+>>  * Update "perl-compatible regular expression" support to enable JIT
+>>    and also allow linking with the newer PCRE v2 library.
+>
+> At the risk of advertising work I've done too much, I think it makes
+> sense to split this into two separate and somewhat more verbose items:
+
+As I shoot for shorter summary, going down to too much detail in
+these entries is not welcome.
+
+However, an exception is the top part of the release notes where we
+discuss backward incompatible changes etc. that helps people to
+decide the deployment strategy.  Encouraging migration from v1 to v2
+belongs there, I would think.
