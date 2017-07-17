@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BED6420357
-	for <e@80x24.org>; Mon, 17 Jul 2017 20:11:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12AC120357
+	for <e@80x24.org>; Mon, 17 Jul 2017 20:11:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751330AbdGQULX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 16:11:23 -0400
-Received: from mail-lf0-f66.google.com ([209.85.215.66]:33689 "EHLO
-        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751317AbdGQULW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 16:11:22 -0400
-Received: by mail-lf0-f66.google.com with SMTP id t72so26263lff.0
-        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:11:22 -0700 (PDT)
+        id S1751335AbdGQULb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jul 2017 16:11:31 -0400
+Received: from mail-lf0-f68.google.com ([209.85.215.68]:36153 "EHLO
+        mail-lf0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751317AbdGQULa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2017 16:11:30 -0400
+Received: by mail-lf0-f68.google.com with SMTP id c199so4326lfg.3
+        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:11:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QAk8WnaTfXD/T0rtRXJ6D9wvRAQ3g1Pfw6wQBn+Ci1k=;
-        b=kmiRFnKnYVqqZT01BvueBFmOVRXIZQwXxjCByaKB3F+zc0awwM3AOfd79zSZDE1rn1
-         k9BWMecpTpzy2xSatB1HAvYKuydIu47eyUJHaDIqWFACjU5pLfEXyUcmJiZDYdmGq1u4
-         zC80vMpo6+iY0nVS15RaUH+0MUMd0ApTFuSnmX5EGeHtIlSZImYCatoeBVf7qi8unOOT
-         XSu1F/H4ig8FeWdfrXUlT7MV4U5aWdcxf6fpfPxcnzuaoWIHDKwLCmkuIL8Q2t6r7ExX
-         IwYVo1+yInIbssAfQ9ZnVZAbIh5uPcXFvokxKngm4MD5qpY/BwlLnK36/TaVQ3mA3dEX
-         4H3w==
+        bh=x3IaTl+qRKZ/AWAMLd9c9/n5o/FsWQJ3mfjiJpbx5OI=;
+        b=gc+6xDWiXQ/QFTSIHfp2XiFN7/nskokX/OHQ/xDHk7XO+WVJhLaUIvAxYyEU4LsSmg
+         BELtpcaSCp+1FauVLvaSb6eWB2L10roMSGQvnFeQIkEyl5NdrxPIVWK/8LJ/LGDnWA73
+         haEWi0SSvNHmgDosoA0YktQsC59Rx0A1swHEQnnWuyv1wOeO5RjI8DSqQ/qwNTyCx6e9
+         Mi1cWCCWHnEnLytE31+NNOm6sQJ4uX8Xi+vyUm+GrkUbd5RYaJEHVU5Gt6B29Ijzz3wr
+         RrQzetRkqQSSnPUJQxFSv5eS4zXCHg8irwQT1a18QHvsPR83TBRGroN1bHnp+8eEPUGj
+         lLpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QAk8WnaTfXD/T0rtRXJ6D9wvRAQ3g1Pfw6wQBn+Ci1k=;
-        b=N8f8/mokuh//Sv9Zm1zi2zWZbWjBz0tpBoEY5OCqugGbr/Qq5jzuG0WvallQECoCuf
-         KwneRWKt0k5Mjz/koGUAAna8+TayYbtRFruT/7PrE42WAnASIe/qbEH61Xoah5EsBgox
-         xOMpT+nJBzWWMcgYrekpCdfQFddtPRVqcY9rvc6u3Yz97LldKSImh/Sbis41L6r0Un5d
-         vQN6cmoOZN1fXInRmBxcfK+bVQAgSQeP/+b2aVBY98FauhJ2tdSPv8QDIivtMSqwedEd
-         uuOzNSCtWxoJlJNYTzvRq0DRHqfiVlpD4U0d0pZMDgkN1zO1cnEbtBWcaT38IusQDYjY
-         7POg==
-X-Gm-Message-State: AIVw113/mYKEkE770BNwyE8xvhRuh0JwNkCrpilaT2SzioR0TRMggowT
-        7I9Sb0DPHKq8HYai
-X-Received: by 10.25.77.213 with SMTP id a204mr7830676lfb.121.1500322280884;
-        Mon, 17 Jul 2017 13:11:20 -0700 (PDT)
+        bh=x3IaTl+qRKZ/AWAMLd9c9/n5o/FsWQJ3mfjiJpbx5OI=;
+        b=VV02JBfLPBNU7CI5cmANmxJ97iPzWG+Fq97mRAR72Kdf9mOhhpWiMnJAtpfFjntCeU
+         cDhoqrjGUWRKlQ8ujW43aVJ/5Ef9e8Ii8YUwlLS5+BwsBGqtR+9AFoZWMCMl2F5jFy94
+         JsC1pIU3S9fTJmT+oruN2MVTIJ5Wnwm4+YpgkehQAYyLsBM/IYomHOhCmk4gq/KjIPnz
+         D9eU37pC1QaXLi4oKlWTUttxFOqcK0x/kndrRbw5OP1d1Cnjx37GwRUVlhqjcfsUz5sw
+         qISMSAoA+FO5ESFwATJGQ79CRNHeEA24Bn82Nb94iq0rzjWTlLQfOzqduZOIFJfb5rxY
+         9bWg==
+X-Gm-Message-State: AIVw111CbWmWA4niKfptMO5LKj/k+DEBALL41VR0PLSryov0N4sLgZZO
+        HKDK+osKf7e5HBOG
+X-Received: by 10.25.157.202 with SMTP id g193mr8144164lfe.184.1500322288303;
+        Mon, 17 Jul 2017 13:11:28 -0700 (PDT)
 Received: from localhost.localdomain (c83-248-253-33.bredband.comhem.se. [83.248.253.33])
-        by smtp.gmail.com with ESMTPSA id l12sm30752ljb.39.2017.07.17.13.11.19
+        by smtp.gmail.com with ESMTPSA id l12sm30752ljb.39.2017.07.17.13.11.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 17 Jul 2017 13:11:19 -0700 (PDT)
+        Mon, 17 Jul 2017 13:11:27 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 00/10] tag: only respect `pager.tag` in list-mode
-Date:   Mon, 17 Jul 2017 22:10:42 +0200
-Message-Id: <cover.1500321657.git.martin.agren@gmail.com>
+Subject: [PATCH v2 01/10] builtin.h: take over documentation from api-builtin.txt
+Date:   Mon, 17 Jul 2017 22:10:43 +0200
+Message-Id: <77fdbe70b0807bb9593714f4d43ae96404a73538.1500321657.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.14.0.rc0
-In-Reply-To: <cover.1499723297.git.martin.agren@gmail.com>
-References: <cover.1499723297.git.martin.agren@gmail.com>
+In-Reply-To: <cover.1500321657.git.martin.agren@gmail.com>
+References: <cover.1499723297.git.martin.agren@gmail.com> <cover.1500321657.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,62 +66,185 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the second version of "[PATCH 0/7] tag: more fine-grained
-pager-configuration" [1]. That series introduced `pager.tag.list` to
-address the fact that `pager.tag` can be useful with `git tag -l` but
-actively hostile with `git tag -a`. Thanks to Junio, Peff and Brandon
-for helpful feedback.
+Delete Documentation/technical/api-builtin.txt and move its content
+verbatim into builtin.h. Just wrap it in /* ... */. In order to make
+the move obviously correct, do not change any formatting, not even to
+format the comment into Git's preferred style. That will be done in a
+follow-up patch.
 
-After that feedback, v2 drops `pager.tag.list` and instead teaches
-`git tag` to only consider `pager.tag` in list-mode, as suggested by
-Peff.
-
-Patches 1-3/10 replace patch 1/7. They move Documentation/technical/
-api-builtin.txt into builtin.h, tweak the formatting and bring it up to
-date. I may have gone overboard making this 3 patches...
-
-Patches 4-7/10 correspond to patches 2-5/7. `setup_auto_pager()' is now
-much simpler since we do not need to handle "tag.list" with a clever
-fallback strategy. IGNORE_PAGER_CONFIG is now called DELAY_PAGER_CONFIG.
-I now check with pager_in_use() and I moved the handling of `pager.tag`
-a bit further down.
-
-Patches 8-9/10 teach `git tag` to only respect `pager.tag` in list-mode
-and flip the default value for that config to "on".
-
-Patch 10/10 is somewhat similar to a hunk in patch 2/7, but is now a
-bug-fix instead of a feature. It teaches `execv_dashed_external()` not
-to check `pager.foo` when launching `git-foo` where foo is a builtin.
-I waffled about where to put this patch. Putting it earlier in the
-series as a preparatory step, I couldn't come up with a way of writing a
-test. So patch 8/10 introduces a `test_expect_failure` which this patch
-then fixes.
-
-Martin
-
-[1] https://public-inbox.org/git/cover.1499723297.git.martin.agren@gmail.com/T/
-
-Martin Ågren (10):
-  builtin.h: take over documentation from api-builtin.txt
-  builtin.h: format documentation-comment properly
-  builtin.h: document SUPPORT_SUPER_PREFIX
-  git.c: let builtins opt for handling `pager.foo` themselves
-  git.c: provide setup_auto_pager()
-  t7006: add tests for how git tag paginates
-  tag: handle `pager.tag`-configuration within the builtin
-  tag: respect `pager.tag` in list-mode only
-  tag: change default of `pager.tag` to "on"
-  git.c: ignore pager.* when launching builtin as dashed external
-
- Documentation/git-tag.txt               |  3 +
- Documentation/technical/api-builtin.txt | 73 -------------------------
- t/t7006-pager.sh                        | 85 +++++++++++++++++++++++++++++
- builtin.h                               | 97 +++++++++++++++++++++++++++++++++
- builtin/tag.c                           |  3 +
- git.c                                   | 18 +++++-
- 6 files changed, 203 insertions(+), 76 deletions(-)
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/technical/api-builtin.txt | 73 -------------------------------
+ builtin.h                               | 76 +++++++++++++++++++++++++++++++++
+ 2 files changed, 76 insertions(+), 73 deletions(-)
  delete mode 100644 Documentation/technical/api-builtin.txt
 
+diff --git a/Documentation/technical/api-builtin.txt b/Documentation/technical/api-builtin.txt
+deleted file mode 100644
+index 22a39b929..000000000
+--- a/Documentation/technical/api-builtin.txt
++++ /dev/null
+@@ -1,73 +0,0 @@
+-builtin API
+-===========
+-
+-Adding a new built-in
+----------------------
+-
+-There are 4 things to do to add a built-in command implementation to
+-Git:
+-
+-. Define the implementation of the built-in command `foo` with
+-  signature:
+-
+-	int cmd_foo(int argc, const char **argv, const char *prefix);
+-
+-. Add the external declaration for the function to `builtin.h`.
+-
+-. Add the command to the `commands[]` table defined in `git.c`.
+-  The entry should look like:
+-
+-	{ "foo", cmd_foo, <options> },
+-+
+-where options is the bitwise-or of:
+-
+-`RUN_SETUP`::
+-	If there is not a Git directory to work on, abort.  If there
+-	is a work tree, chdir to the top of it if the command was
+-	invoked in a subdirectory.  If there is no work tree, no
+-	chdir() is done.
+-
+-`RUN_SETUP_GENTLY`::
+-	If there is a Git directory, chdir as per RUN_SETUP, otherwise,
+-	don't chdir anywhere.
+-
+-`USE_PAGER`::
+-
+-	If the standard output is connected to a tty, spawn a pager and
+-	feed our output to it.
+-
+-`NEED_WORK_TREE`::
+-
+-	Make sure there is a work tree, i.e. the command cannot act
+-	on bare repositories.
+-	This only makes sense when `RUN_SETUP` is also set.
+-
+-. Add `builtin/foo.o` to `BUILTIN_OBJS` in `Makefile`.
+-
+-Additionally, if `foo` is a new command, there are 3 more things to do:
+-
+-. Add tests to `t/` directory.
+-
+-. Write documentation in `Documentation/git-foo.txt`.
+-
+-. Add an entry for `git-foo` to `command-list.txt`.
+-
+-. Add an entry for `/git-foo` to `.gitignore`.
+-
+-
+-How a built-in is called
+-------------------------
+-
+-The implementation `cmd_foo()` takes three parameters, `argc`, `argv,
+-and `prefix`.  The first two are similar to what `main()` of a
+-standalone command would be called with.
+-
+-When `RUN_SETUP` is specified in the `commands[]` table, and when you
+-were started from a subdirectory of the work tree, `cmd_foo()` is called
+-after chdir(2) to the top of the work tree, and `prefix` gets the path
+-to the subdirectory the command started from.  This allows you to
+-convert a user-supplied pathname (typically relative to that directory)
+-to a pathname relative to the top of the work tree.
+-
+-The return value from `cmd_foo()` becomes the exit status of the
+-command.
+diff --git a/builtin.h b/builtin.h
+index 498ac80d0..51cb0249d 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -6,6 +6,82 @@
+ #include "cache.h"
+ #include "commit.h"
+ 
++/*
++builtin API
++===========
++
++Adding a new built-in
++---------------------
++
++There are 4 things to do to add a built-in command implementation to
++Git:
++
++. Define the implementation of the built-in command `foo` with
++  signature:
++
++	int cmd_foo(int argc, const char **argv, const char *prefix);
++
++. Add the external declaration for the function to `builtin.h`.
++
++. Add the command to the `commands[]` table defined in `git.c`.
++  The entry should look like:
++
++	{ "foo", cmd_foo, <options> },
+++
++where options is the bitwise-or of:
++
++`RUN_SETUP`::
++	If there is not a Git directory to work on, abort.  If there
++	is a work tree, chdir to the top of it if the command was
++	invoked in a subdirectory.  If there is no work tree, no
++	chdir() is done.
++
++`RUN_SETUP_GENTLY`::
++	If there is a Git directory, chdir as per RUN_SETUP, otherwise,
++	don't chdir anywhere.
++
++`USE_PAGER`::
++
++	If the standard output is connected to a tty, spawn a pager and
++	feed our output to it.
++
++`NEED_WORK_TREE`::
++
++	Make sure there is a work tree, i.e. the command cannot act
++	on bare repositories.
++	This only makes sense when `RUN_SETUP` is also set.
++
++. Add `builtin/foo.o` to `BUILTIN_OBJS` in `Makefile`.
++
++Additionally, if `foo` is a new command, there are 3 more things to do:
++
++. Add tests to `t/` directory.
++
++. Write documentation in `Documentation/git-foo.txt`.
++
++. Add an entry for `git-foo` to `command-list.txt`.
++
++. Add an entry for `/git-foo` to `.gitignore`.
++
++
++How a built-in is called
++------------------------
++
++The implementation `cmd_foo()` takes three parameters, `argc`, `argv,
++and `prefix`.  The first two are similar to what `main()` of a
++standalone command would be called with.
++
++When `RUN_SETUP` is specified in the `commands[]` table, and when you
++were started from a subdirectory of the work tree, `cmd_foo()` is called
++after chdir(2) to the top of the work tree, and `prefix` gets the path
++to the subdirectory the command started from.  This allows you to
++convert a user-supplied pathname (typically relative to that directory)
++to a pathname relative to the top of the work tree.
++
++The return value from `cmd_foo()` becomes the exit status of the
++command.
++ */
++
+ #define DEFAULT_MERGE_LOG_LEN 20
+ 
+ extern const char git_usage_string[];
 -- 
 2.14.0.rc0
 
