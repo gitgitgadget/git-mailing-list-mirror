@@ -2,167 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC73A20357
-	for <e@80x24.org>; Mon, 17 Jul 2017 17:55:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4796F20357
+	for <e@80x24.org>; Mon, 17 Jul 2017 18:03:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751318AbdGQRzG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 13:55:06 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34582 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751311AbdGQRzE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 13:55:04 -0400
-Received: by mail-pg0-f50.google.com with SMTP id 123so10555465pgj.1
-        for <git@vger.kernel.org>; Mon, 17 Jul 2017 10:55:04 -0700 (PDT)
+        id S1751324AbdGQSD2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jul 2017 14:03:28 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34999 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751301AbdGQSD1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2017 14:03:27 -0400
+Received: by mail-pf0-f193.google.com with SMTP id q85so20329492pfq.2
+        for <git@vger.kernel.org>; Mon, 17 Jul 2017 11:03:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=j6Vf9LfGW7I5EV1b9+S25GrZWLclSeLik2U10N48Fj4=;
-        b=mCzO+LrFX8GagVV2KWAOIsoX5JTrZw7zCpUMrtu2++WqD2PMxYS7BODprhjDx6B8uv
-         axktTZ5l4m71mo6k6T1Dsdfj2dINCfJR6DiAau//ccaveYzMt1O61Xx+h6qswmnL6lIE
-         4J0a7udWNu/yINToBtcdAW/ZhIj4AsaXtlPfTQ6A00KOkvAl/RjDtaXZLscRjJPMPD0s
-         cK+rcujOlaEGzbRChsMwuzqc88rrQes3oWrg8Kbqv+7lxXquvuiQaG9v+AVV6I00Uftl
-         t1sdwBwzQvtWm3cEAFtMBd9wwuLgsvlLiY8kqGjqveJG8XVLCKb2JKEbdauq7n2gNkq5
-         QjoA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=4wq1ZkbXL/DOspuOd5CRtfWkGlIjan/8UC+ywridV8c=;
+        b=EkA1ChrutJDskGHejgVcSnQCip/s4rFnCocpMDuyeWKg//tP5HjNCtsR08bEnD5vYa
+         tJxQ7kP1IMwO0Gd4i1jcoX5RUGWf2UFmAOwUSHNg07FaHHUghLrYdgC5bRaCu0cdJTU8
+         QMxlriZmgYo+xCZSBTE8aIcpSef761mX6HzL0gD5axCvBuKCYD/gq4ge11Gmx4TID13l
+         7I3Kcx8ndRooxu8h4LsitcedTSZXyrEV0tClLHUhLrWyj7it1/twWFnEB0DsTyARcpyG
+         27qeq+2FUJ6UoMrq4UPLoHHRRWbEtgS1yrM2uHHpZA3HT87C3k1Eme0lj8JYcdlP6KOb
+         X9PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=j6Vf9LfGW7I5EV1b9+S25GrZWLclSeLik2U10N48Fj4=;
-        b=pVvfupMM7LD85IKu8/mb3z9+LayyJ4v837ozwhgIw+7WcLAJu4vJNKe+PwYj0CvbMn
-         euGqXBHG5G3k/rEGV1y1bH1UjUXxRdIQoLUbPHh+wpgerV8MxiirROZMcnRPO16Vb0q1
-         bPrGOwXeKtuTq7hqKDUR9+rmXsER1iAi9kk0GDcCZXMMTNhyZmdk5dtxALobCJF0V5+C
-         Kzpl6HtPkerdOS8ayhyTVopKkzobigbMCWvSdjg5GUg5FUj3txTXxNH0/VrRut+RTXPc
-         Ld4Zi5M/7cfq8/s+zqLkTDHv7Eg9uvb6dklgTC26SPAm0dn74suuqd2w3YrXAbHJh96n
-         LYjg==
-X-Gm-Message-State: AIVw1135BRwWhYmguUPfEoNTJZvhmUx12FxRk3ggDzEttCdbyOvqkCeY
-        xvseLw3l5ZlYxiOeuP0=
-X-Received: by 10.98.153.196 with SMTP id t65mr20520202pfk.160.1500314102954;
-        Mon, 17 Jul 2017 10:55:02 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:480d:579b:4a3b:27f3])
-        by smtp.gmail.com with ESMTPSA id 68sm41857757pfi.69.2017.07.17.10.55.01
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4wq1ZkbXL/DOspuOd5CRtfWkGlIjan/8UC+ywridV8c=;
+        b=sN0qHWhsHwbwLhy3SWUc4GUtx4hSghLkxFySIm62+s9D08DvUftqKQBeT+W4o+GNRm
+         gdbw73G44X1W2tsjCXjtrI4JY3cLvI3WHlGFAzZ65cNbUBNsC+Ky5wzPEeqtVf5o/P/t
+         dhOKm11Xx5oXwzfWd4QaMFdL4ejg1QlgeGvwsYyYQZlEjEPjT4cpvHVjDp/oIJLGXbfX
+         CRJnxA/1sSIhM+CkWWkZk+vL6UJRd4wKUZL4cdmZ+w5kRUSwLt5FSKxEHVqV8HwuUfff
+         e9msn2iGGw7BICuxG+eY2ikk2ybvbE3G6+A2VcqkG6IrgANS30Ojr88PclC3q64acz4S
+         6foA==
+X-Gm-Message-State: AIVw110Bj33vpLBlYuvuxJRXuqIvpAPjH1ZZL2kgKik+4JVtngWw/clj
+        RuoiynUKr9BQYA==
+X-Received: by 10.84.237.8 with SMTP id s8mr31216004plk.163.1500314606816;
+        Mon, 17 Jul 2017 11:03:26 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:100e:402:8ce8:54ee:549a:2508])
+        by smtp.gmail.com with ESMTPSA id b8sm40538198pfd.65.2017.07.17.11.03.24
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 17 Jul 2017 10:55:02 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Sahil Dua <sahildua2305@gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2017, #04; Thu, 13)
-References: <xmqqo9snsy0k.fsf@gitster.mtv.corp.google.com>
-        <87iniu2bty.fsf@gmail.com>
-Date:   Mon, 17 Jul 2017 10:55:01 -0700
-In-Reply-To: <87iniu2bty.fsf@gmail.com> (=?utf-8?B?IsOGdmFyIEFybmZqw7Zy?=
- =?utf-8?B?w7A=?= Bjarmason"'s message
-        of "Sat, 15 Jul 2017 13:12:25 +0200")
-Message-ID: <xmqqtw2bgd8q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        Mon, 17 Jul 2017 11:03:24 -0700 (PDT)
+Date:   Mon, 17 Jul 2017 11:03:22 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Ben Peart <peartben@gmail.com>
+Subject: Re: [RFC PATCH 0/3] Partial clone: promised blobs (formerly "missing
+ blobs")
+Message-ID: <20170717180322.GM93855@aiede.mtv.corp.google.com>
+References: <cover.1499800530.git.jonathantanmy@google.com>
+ <C299C45128634A21AF9D65E1B2B52C5B@PhilipOakley>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <C299C45128634A21AF9D65E1B2B52C5B@PhilipOakley>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Hi Philip,
 
-> Let's see what *nix does:
+Philip Oakley wrote:
+> From: "Jonathan Tan" <jonathantanmy@google.com>
+
+>> These patches are part of a set of patches implementing partial clone,
+>> as you can see here:
+>>
+>> https://github.com/jonathantanmy/git/tree/partialclone
+[...]
+> If I understand correctly, this method doesn't give any direct user
+> visibility of missing blobs in the file system. Is that correct?
 >
->     $ rm -rf /tmp/{master,backup}; mkdir /tmp/master && cd /tmp/master && mv /tmp/{master,backup} ; file /tmp/{master,backup}
+> I was hoping that eventually the various 'on demand' approaches
+> would still allow users to continue to work as they go off-line such
+> that they can see directly (in the FS) where the missing blobs (and
+> trees) are located, so that they can continue to commit new work on
+> existing files.
 >
-> Similarly to that, when you're on "master" "git branch --move backup"
-> could have left you on an orphan branch, but it doesn't, it's the
-> equivalent of "mv && cd" in *nix terms.
+> I had felt that some sort of 'gitlink' should be present (huma
+> readable) as a place holder for the missing blob/tree. e.g.
+> 'gitblob: 1234abcd' (showing the missing oid, jsut like sub-modules
+> can do - it's no different really.
 
-And with the same analogy,
+That's a reasonable thing to want, but it's a little different from
+the use cases that partial clone work so far has aimed to support.
+They are:
 
-	mkdir /tmp/master
-	cd /tmp/master
-	cp -R /tmp/master /tmp/backup
-	pwd
+ A. Avoiding downloading all blobs (and likely trees as well) that are
+    not needed in the current operation (e.g. checkout).  This blends
+    well with the sparse checkout feature, which allows the current
+    checkout to be fairly small in a large repository.
 
-would show you that you are still in /tmp/master.  Which is quite
-different from what happens with "mv".  So what's your point?
+    GVFS uses a trick that makes it a little easier to widen a sparse
+    checkout upon access of a directory.  But the same building blocks
+    should work fine with a sparse checkout that has been set up
+    explicitly.
 
-In any case, you already realize that it is a crazy and convoluted
-example nobody does in real life to go in to one directory *and*
-rename it while you are inside it, don't you?
+ B. Avoiding downloading large blobs, except for those needed in the
+    current operation (e.g. checkout).
 
-The reason why I do not think it is wise to move to the backup
-branch when you did
+    When not using sparse checkout, the main benefit out of the box is
+    avoiding downloading *historical versions* of large blobs.
 
-	git checkout master
-	git branch --copy master backup
+It sounds like you are looking for a sort of placeholder outside the
+sparse checkout area.  In a way, that's orthogonal to these patches:
+even if you have all relevant blobs, you may want to avoid inflating
+them to check them out and reading them to compare to the index (i.e.
+the usual benefits of sparse checkout).  In a sparse checkout, you
+still might like to be able to get a listing of files outside the
+sparse area (which you can get with "git ls-tree") and you may even
+want to be able to get such a listing with plain "ls" (as with your
+proposal).
 
-is not because of that crazy analogy, though.  It is primarily that
-I think one of the major reasons people want to do a "copy" to a
-backup is to keep the pre-modification state of a thing that they
-may be able to later come back to when it turns out to be needed.
-For that workflow, with the above "branch --copy", your user is
-planning to make a change that is not usually kept track of by Git
-to the "master" branch (perhaps branch.*.description is changed,
-perhaps the remote-tracking branch it is set to integrate with is
-changed, etc.), but the user is unsuare, and preparing a backup that
-can be used with "gir branch -M backup master" to come back to.  
-
-You can do all that even if your "branch --copy" initially takes you
-to the "backup" branch you just created, but then the user has to
-immediately come back to "master" to start doing the major surgery
-on "master", for which the "copy" was a preparation to recover.
-
-> So since our --move is really --move-and-checkout I think it would be
-> confusing to introduce a --copy sister option that has the semantics of
-> --copy-no-checkout instead of a corresponding --copy-and-checkout.
-
-Our --move is *NOT* --move-and-checkout.
-
-	git chekckout master
-	git branch naster
-	git branch -m naster aster
-
-will *not* move "naster" to "aster" and check it out.  During the
-whole exercise, you will stay on "master".  
-
-When you rename the current branch so that the name of the current
-branch will no longer exist in the system, you _could_ detach the
-HEAD, or you _could_ move the current branch to the new name.  There
-is no sensible alternative other than these two, but either way, you
-need to have a special case for renaming the current branch.  It's
-just the latter is more useful in practice and that is the only
-reason why it moves _you_ along with the current branch if you
-happen to be on that branch being renamed.
-
-I do not see much reason why such a special case has to apply to
-"copy".  The source of the copy is not going away, and in the
-"backup" scenario, moving away from the thing that is backed up, in
-preparation for further work that may have to be reverted, is
-actively counter-productive.
-
-There however _is_ an opposite use case.  You may want to start
-working on a _new_ branch that is more similarly set up to what your
-current branch is, _and_ you want the new branch to start at your
-current branch.  But I think that should be done by adding an
-enhanced mode of "checkout -b".  IOW, I think
-
-	git checkout master
-	git checkout -b --with-configuration naster [master]
-
-is a very sensible thing to desire; if "master" is set to integrate
-with refs/remotes/origin/master, the new "naster" branch may want to
-integrate with refs/remotes/origin/naster (instead of the local
-"master", which is what the traditional "checkout -b" would do), for
-example.  Or you could do the same thing with
-
-	git branch --copy master naster
-	git checkout naster
-
-if your "branch --copy" does not switch out of the current branch.
-
-
-
-
+Thanks and hope that helps,
+Jonathan
