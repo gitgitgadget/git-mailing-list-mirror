@@ -2,170 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A362F20357
-	for <e@80x24.org>; Mon, 17 Jul 2017 20:09:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BED6420357
+	for <e@80x24.org>; Mon, 17 Jul 2017 20:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751348AbdGQUJV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 16:09:21 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:35687 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751317AbdGQUJU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 16:09:20 -0400
-Received: by mail-qt0-f195.google.com with SMTP id h15so49278qte.2
-        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:09:20 -0700 (PDT)
+        id S1751330AbdGQULX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Jul 2017 16:11:23 -0400
+Received: from mail-lf0-f66.google.com ([209.85.215.66]:33689 "EHLO
+        mail-lf0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751317AbdGQULW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Jul 2017 16:11:22 -0400
+Received: by mail-lf0-f66.google.com with SMTP id t72so26263lff.0
+        for <git@vger.kernel.org>; Mon, 17 Jul 2017 13:11:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=U4kc9/04QcSVEybKzc3FPvSt6G/+de/MRj50Cne1G7Y=;
-        b=EzfDyu4zq7LmncVoYKdUAHmH/XaHQ7vLmlLuCmM4fbW2Ke9w6huikteIi4U/NNXUf6
-         bzSEW7XHnWQjVFhWauyNbqd0zL/vGUaCIupkZkGzy5Or5XfEJ15Qn6OQc1QkKc41DfaF
-         +LGNHi72LQXshNr43nvrGl3ervrtfdieNM6ZPDZYUllqr+AMAl8eAH/6S1FLUho/cm6L
-         ZFkrzvylZMiO5oIfN8I6vDALapQaprjcdJOxfCFCHbX6SkBN7qtjNCx9qaQonQ/RILqM
-         /HVLjLZx1buF5lUk9Qaopvaws5eFXQTHfUS63eGIV9Q7S4LUqZ+wMNFPWTJA0B2ltvX2
-         6Slw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=QAk8WnaTfXD/T0rtRXJ6D9wvRAQ3g1Pfw6wQBn+Ci1k=;
+        b=kmiRFnKnYVqqZT01BvueBFmOVRXIZQwXxjCByaKB3F+zc0awwM3AOfd79zSZDE1rn1
+         k9BWMecpTpzy2xSatB1HAvYKuydIu47eyUJHaDIqWFACjU5pLfEXyUcmJiZDYdmGq1u4
+         zC80vMpo6+iY0nVS15RaUH+0MUMd0ApTFuSnmX5EGeHtIlSZImYCatoeBVf7qi8unOOT
+         XSu1F/H4ig8FeWdfrXUlT7MV4U5aWdcxf6fpfPxcnzuaoWIHDKwLCmkuIL8Q2t6r7ExX
+         IwYVo1+yInIbssAfQ9ZnVZAbIh5uPcXFvokxKngm4MD5qpY/BwlLnK36/TaVQ3mA3dEX
+         4H3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=U4kc9/04QcSVEybKzc3FPvSt6G/+de/MRj50Cne1G7Y=;
-        b=tu5dAzEEh1VG4ttTHd9ay+h05U66799VVhM6ZjyQrT0cDVvXmX7NQIu+YRjndcT9+S
-         ZskRo+GLGP3z2tWLKaLjCMpv/a/I+F6WFn6XCDNtfEGSX/4wFqvguZWMr7ycon2ckslN
-         nGgH4eWQd1P8yEfUbvHZ87GdquuX7bzmOZqV+osxesI3sUAuWou0AP8sqwffY8wU7ylg
-         WSVG0ZvEXnLNkRpTnvWGxGwQ7HaDAFBqZA1jMj5ElnT2kh/CRq0RH+7d2Ze84AvfAw15
-         Gz2glfyX2XVmVNMrWb3wzYqMiOAQf6p+5S2RDSRTM0HhZgpP7amdN7Fo9phf1pmiW29a
-         fo/Q==
-X-Gm-Message-State: AIVw1137A+waTRgGS4wagF+T/WVM0+JmD5ikMSbbDelYeWtleaC6+NoX
-        awuTawVIOXET8g==
-X-Received: by 10.237.45.194 with SMTP id i60mr4415605qtd.121.1500322159805;
-        Mon, 17 Jul 2017 13:09:19 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id 59sm111367qtc.35.2017.07.17.13.09.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Jul 2017 13:09:18 -0700 (PDT)
-Subject: Re: [PATCH v2 1/1] sha1_file: Add support for downloading blobs on
- demand
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, benpeart@microsoft.com,
-        pclouds@gmail.com, christian.couder@gmail.com,
-        git@jeffhostetler.com
-References: <20170714132651.170708-1-benpeart@microsoft.com>
- <20170714132651.170708-2-benpeart@microsoft.com>
- <20170717110602.6fac89ea@twelve2.svl.corp.google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <d3f1f884-7b8a-885f-47cb-eca2b8ef0ecf@gmail.com>
-Date:   Mon, 17 Jul 2017 16:09:17 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=QAk8WnaTfXD/T0rtRXJ6D9wvRAQ3g1Pfw6wQBn+Ci1k=;
+        b=N8f8/mokuh//Sv9Zm1zi2zWZbWjBz0tpBoEY5OCqugGbr/Qq5jzuG0WvallQECoCuf
+         KwneRWKt0k5Mjz/koGUAAna8+TayYbtRFruT/7PrE42WAnASIe/qbEH61Xoah5EsBgox
+         xOMpT+nJBzWWMcgYrekpCdfQFddtPRVqcY9rvc6u3Yz97LldKSImh/Sbis41L6r0Un5d
+         vQN6cmoOZN1fXInRmBxcfK+bVQAgSQeP/+b2aVBY98FauhJ2tdSPv8QDIivtMSqwedEd
+         uuOzNSCtWxoJlJNYTzvRq0DRHqfiVlpD4U0d0pZMDgkN1zO1cnEbtBWcaT38IusQDYjY
+         7POg==
+X-Gm-Message-State: AIVw113/mYKEkE770BNwyE8xvhRuh0JwNkCrpilaT2SzioR0TRMggowT
+        7I9Sb0DPHKq8HYai
+X-Received: by 10.25.77.213 with SMTP id a204mr7830676lfb.121.1500322280884;
+        Mon, 17 Jul 2017 13:11:20 -0700 (PDT)
+Received: from localhost.localdomain (c83-248-253-33.bredband.comhem.se. [83.248.253.33])
+        by smtp.gmail.com with ESMTPSA id l12sm30752ljb.39.2017.07.17.13.11.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 17 Jul 2017 13:11:19 -0700 (PDT)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH v2 00/10] tag: only respect `pager.tag` in list-mode
+Date:   Mon, 17 Jul 2017 22:10:42 +0200
+Message-Id: <cover.1500321657.git.martin.agren@gmail.com>
+X-Mailer: git-send-email 2.14.0.rc0
+In-Reply-To: <cover.1499723297.git.martin.agren@gmail.com>
+References: <cover.1499723297.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20170717110602.6fac89ea@twelve2.svl.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is the second version of "[PATCH 0/7] tag: more fine-grained
+pager-configuration" [1]. That series introduced `pager.tag.list` to
+address the fact that `pager.tag` can be useful with `git tag -l` but
+actively hostile with `git tag -a`. Thanks to Junio, Peff and Brandon
+for helpful feedback.
 
+After that feedback, v2 drops `pager.tag.list` and instead teaches
+`git tag` to only consider `pager.tag` in list-mode, as suggested by
+Peff.
 
-On 7/17/2017 2:06 PM, Jonathan Tan wrote:
-> About the difference between this patch and my patch set [1], besides
-> the fact that this patch does not spawn separate processes for each
-> missing object, which does seem like an improvement to me, this patch
-> (i) does not use a list of promised objects (but instead communicates
-> with the hook for each missing object), and (ii) provides backwards
-> compatibility with other Git code (that does not know about promised
-> objects) in a different way.
-> 
-> The costs and benefits of (i) are being discussed here [2]. As for (ii),
-> I still think that my approach is better - I have commented more about
-> this below.
-> 
-> Maybe the best approach is a combination of both our approaches.
+Patches 1-3/10 replace patch 1/7. They move Documentation/technical/
+api-builtin.txt into builtin.h, tweak the formatting and bring it up to
+date. I may have gone overboard making this 3 patches...
 
-Yes, in the context of the promised objects model patch series, the 
-value of this patch series is primarily as a sample of how to use the 
-sub-process mechanism to create a versioned interface for retrieving 
-objects.
+Patches 4-7/10 correspond to patches 2-5/7. `setup_auto_pager()' is now
+much simpler since we do not need to handle "tag.list" with a clever
+fallback strategy. IGNORE_PAGER_CONFIG is now called DELAY_PAGER_CONFIG.
+I now check with pager_in_use() and I moved the handling of `pager.tag`
+a bit further down.
 
-> 
-> [1] https://public-inbox.org/git/34efd9e9936fdab331655f5a33a098a72dc134f4.1499800530.git.jonathantanmy@google.com/
-> 
-> [2] https://public-inbox.org/git/20170713123951.5cab1adc@twelve2.svl.corp.google.com/
-> 
-> On Fri, 14 Jul 2017 09:26:51 -0400
-> Ben Peart <peartben@gmail.com> wrote:
-> 
->> +------------------------
->> +packet: git> command=get
->> +packet: git> sha1=0a214a649e1b3d5011e14a3dc227753f2bd2be05
->> +packet: git> 0000
->> +------------------------
-> 
-> It would be useful to have this command support more than one SHA-1, so
-> that hooks that know how to batch can do so.
-> 
+Patches 8-9/10 teach `git tag` to only respect `pager.tag` in list-mode
+and flip the default value for that config to "on".
 
-I agree.  Since nothing was using that capability yet, I decided to keep 
-it simple and not add support for a feature that wasn't being used. The 
-reason the interface is versioned is so that if/when something does need 
-that capability, it can be added.
+Patch 10/10 is somewhat similar to a hunk in patch 2/7, but is now a
+bug-fix instead of a feature. It teaches `execv_dashed_external()` not
+to check `pager.foo` when launching `git-foo` where foo is a builtin.
+I waffled about where to put this patch. Putting it earlier in the
+series as a preparatory step, I couldn't come up with a way of writing a
+test. So patch 8/10 introduces a `test_expect_failure` which this patch
+then fixes.
 
->> +static int subprocess_map_initialized;
->> +static struct hashmap subprocess_map;
-> 
-> The documentation of "tablesize" in "struct hashmap" states that it can
-> be used to check if the hashmap is initialized, so
-> subprocess_map_initialized is probably unnecessary.
-> 
+Martin
 
-Nice.  That will make things a little simpler.
+[1] https://public-inbox.org/git/cover.1499723297.git.martin.agren@gmail.com/T/
 
->>   static int check_and_freshen(const unsigned char *sha1, int freshen)
->>   {
->> -	return check_and_freshen_local(sha1, freshen) ||
->> -	       check_and_freshen_nonlocal(sha1, freshen);
->> +	int ret;
->> +	int already_retried = 0;
->> +
->> +retry:
->> +	ret = check_and_freshen_local(sha1, freshen) ||
->> +		check_and_freshen_nonlocal(sha1, freshen);
->> +	if (!ret && core_virtualize_objects && !already_retried) {
->> +		already_retried = 1;
->> +		if (!read_object_process(sha1))
->> +			goto retry;
->> +	}
->> +
->> +	return ret;
->>   }
-> 
-> Is this change meant to ensure that Git code that operates on loose
-> objects directly (bypassing storage-agnostic functions such as
-> sha1_object_info_extended() and has_sha1_file()) still work? If yes,
-> this patch appears incomplete (for example, read_loose_object() needs to
-> be changed too), and this seems like a difficult task - in my patch set
-> [1], I ended up deciding to create a separate type of storage and
-> instead looked at the code that operates on *packed* objects directly
-> (because there were fewer such methods) to ensure that they would work
-> correctly in the presence of a separate type of storage.
-> 
+Martin Ågren (10):
+  builtin.h: take over documentation from api-builtin.txt
+  builtin.h: format documentation-comment properly
+  builtin.h: document SUPPORT_SUPER_PREFIX
+  git.c: let builtins opt for handling `pager.foo` themselves
+  git.c: provide setup_auto_pager()
+  t7006: add tests for how git tag paginates
+  tag: handle `pager.tag`-configuration within the builtin
+  tag: respect `pager.tag` in list-mode only
+  tag: change default of `pager.tag` to "on"
+  git.c: ignore pager.* when launching builtin as dashed external
 
-Yes, with this set of patches, we've been running successfully on 
-completely sparse clones (no commits, trees, or blobs) for several 
-months.  read_loose_object() is only called by fsck when it is 
-enumerating existing loose objects so does not need to be updated.
+ Documentation/git-tag.txt               |  3 +
+ Documentation/technical/api-builtin.txt | 73 -------------------------
+ t/t7006-pager.sh                        | 85 +++++++++++++++++++++++++++++
+ builtin.h                               | 97 +++++++++++++++++++++++++++++++++
+ builtin/tag.c                           |  3 +
+ git.c                                   | 18 +++++-
+ 6 files changed, 203 insertions(+), 76 deletions(-)
+ delete mode 100644 Documentation/technical/api-builtin.txt
 
-We have a few thousand developers making ~100K commits per week so in 
-our particular usage, I'm fairly confident it works correctly.  That 
-said, it is possible there is some code path I've missed. :)
+-- 
+2.14.0.rc0
 
-> [1] https://public-inbox.org/git/34efd9e9936fdab331655f5a33a098a72dc134f4.1499800530.git.jonathantanmy@google.com/
-> 
