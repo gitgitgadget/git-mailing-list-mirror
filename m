@@ -2,80 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C568D20387
-	for <e@80x24.org>; Tue, 18 Jul 2017 20:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E89F620387
+	for <e@80x24.org>; Tue, 18 Jul 2017 20:06:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751569AbdGRUDm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 16:03:42 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60872 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751457AbdGRUDl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 16:03:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1312379CF5;
-        Tue, 18 Jul 2017 16:03:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zbUMClzxMTge64Bfo6vx4KNVUa0=; b=m249EA
-        heGmxBQAHgWFMqyT54y+5uyTED5JjZUi3ZwJyq5aQ8iBFCZ+vG9oQhSgcv8otlsb
-        E5z00P+hEqbF9xFgnD3hn3UDoIaNsUd5o9WVyTfIrv8xOMqteINfOCODqJWQcghO
-        wvYRc5EsVLtnK/IQnf6JsVOuvO2TQBAgoXjyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=GKGCX1EW8UzNSKgxL3i3n0r2uvSg0b0A
-        IHDv49r/J05rtX6wiqttqzbiBP+DrHS6Yw83ehLvTIq2vs+XOUrVtbMSstACspXp
-        MEd5eOU8okT+jzjCDn/GwKXVWh5piC4ARApOf12eb9K1vlTcIvDs8CdG+dbUM6O2
-        HDbHC5RN5RI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B0E079CF3;
-        Tue, 18 Jul 2017 16:03:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6EF5979CF2;
-        Tue, 18 Jul 2017 16:03:33 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.14.0-rc0
-References: <xmqqzic7sy2g.fsf@gitster.mtv.corp.google.com>
-        <87mv8638y5.fsf@gmail.com>
-        <xmqq7ez6hk2y.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 18 Jul 2017 13:03:32 -0700
-In-Reply-To: <xmqq7ez6hk2y.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 17 Jul 2017 13:41:57 -0700")
-Message-ID: <xmqqfudto6ln.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752218AbdGRUGF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 16:06:05 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:34813 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751881AbdGRUGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 16:06:04 -0400
+Received: by mail-pf0-f177.google.com with SMTP id q85so16349385pfq.1
+        for <git@vger.kernel.org>; Tue, 18 Jul 2017 13:06:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=LWs1aGUeVcaU8UyzgY1YqEyiYwIpQggk3HPN6OYY9/0=;
+        b=IWvcVX4P/8iPY6DsRHvKO3Eq+vWAhQbGlkbSbBBUzwQrwRriIRe08uRZB5L2xYw9cC
+         D1wd+gbxO0wNd0ZEys5yj4eF6/oF7ZQ7B4BRbamY9BLoiWjWu7sHissQDaefooqC1UAw
+         jYA7L8mjXQSsLALrYPfaTWVKEhHRfWHwdlmyljUotygWCrxqqajU+mhNHxnnb3NXo928
+         if1pFrs2CCMkrKlGv6Xiz2hSnAxQ0/w1c7xmziAgOndVr8fK0la3iZVlryRExmPkQl38
+         cCy881L+Q6H4GNGIsmQ9zd6r5ZtKRnET+83wL2zOggH6WDjAoKey0OV4atisWFHs/4Ai
+         T+/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=LWs1aGUeVcaU8UyzgY1YqEyiYwIpQggk3HPN6OYY9/0=;
+        b=OKEw8bLeBT22l0rW4G12y2q44FKt+fl+yABfSkSagDFVHgZn7mZ/7BTCVJ5syZf2SU
+         0S3w/T/tCyiEnTQeIzFVlQp65RfFYCIFWOXaDB9il5VAUI0w1ZFDA3cJgae8sdYGbw30
+         q/cMniRW3OCxCchrMrFyARZgTySmM/0IksXloe8xpnydzjBwS4Vuk275kpbSj6w79/iX
+         FhKiLRcpDZvDTGsoHOTuAHp/cw/AppscuYaUslosKUf/ak15gA1lx6IIWdXTdJBi5DKL
+         w+g9AnlBuTGL64pTTufY+8YEOeI7JgzpRzgiU5rePJ1ygnN13RW0YzzwJy8ZCfqI96Rc
+         4hXw==
+X-Gm-Message-State: AIVw110t3Tfccbd9gLugC+48kgGuo0caA48hHpETD2wyQ9uWEZVBVAHs
+        UyFBZG/Gayyi+Tta
+X-Received: by 10.99.101.132 with SMTP id z126mr3456949pgb.64.1500408364187;
+        Tue, 18 Jul 2017 13:06:04 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:dcfd:2921:5eb0:198b])
+        by smtp.gmail.com with ESMTPSA id 73sm7732475pfp.103.2017.07.18.13.06.02
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 18 Jul 2017 13:06:03 -0700 (PDT)
+Date:   Tue, 18 Jul 2017 13:06:01 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com
+Subject: Re: [PATCH v3 00/10] Convert grep to recurse in-process
+Message-ID: <20170718200601.GB22656@google.com>
+References: <20170714222826.81148-1-bmwill@google.com>
+ <20170718190527.78049-1-bmwill@google.com>
+ <xmqqo9sho7v5.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2D52579E-6BF4-11E7-BFAA-EFB41968708C-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo9sho7v5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 07/18, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > Changes in v3:
+> >  * Fixes a bug with repo_read_gitmodules() where it was possible to
+> >    segfault when a repository didn't have a worktree.  
+> >  * In order to fix the above bug repo_read_gitmodules() and gitmodules_config()
+> >    were merged so that there won't be any duplicate logic.  In order to merge
+> >    these functions the parsing of submodule.fetchjobs and
+> >    fetch.recursesubmodules were removed from the submodule-config parsing logic
+> >    and instead moved into fetch and update-clone.  This also makes it easier to
+> >    ensure that no additonal non-submodule specific configuration like this will
+> >    be added to .gitmodules in the future.
+> 
+> Sounds good.  
+> 
+> Has this been rebased and if so on top of what?  It seems that I am
+> getting "am -3" conflicts at around 05/10---I think I can cope with,
+> but it is one unnecessary source of potential bugs, so...
 
-> As I shoot for shorter summary, going down to too much detail in
-> these entries is not welcome.
->
-> However, an exception is the top part of the release notes where we
-> discuss backward incompatible changes etc. that helps people to
-> decide the deployment strategy.  Encouraging migration from v1 to v2
-> belongs there, I would think.
+Oh sorry I also forgot to mention that I rebased it on top of current
+master.  The changes to remove the fetch.recursesubmodules and
+submdoule.fetchjobs from the config parsing had some weird conflicts
+with a series from Stefan that recently hit master.
 
-I added this at the end of the "Backward compatibility notes" at the
-beginning of the release notes, and renamed the entire section to
-"Backward compatibility notes and other notable changes."
+> 
+> > Brandon Williams (10):
+> >   repo_read_index: don't discard the index
+> >   repository: have the_repository use the_index
+> >   cache.h: add GITMODULES_FILE macro
+> >   config: add config_from_gitmodules
+> >   submodule: remove submodule.fetchjobs from submodule-config parsing
+> >   submodule: remove fetch.recursesubmodules from submodule-config
+> >     parsing
+> >   submodule: check for unstaged .gitmodules outside of config parsing
+> >   submodule: check for unmerged .gitmodules outside of config parsing
+> >   submodule: merge repo_read_gitmodules and gitmodules_config
+> >   grep: recurse in-process using 'struct repository'
+> >
+> >  Documentation/git-grep.txt  |   7 -
+> >  builtin/fetch.c             |  26 ++-
+> >  builtin/grep.c              | 396 ++++++++++----------------------------------
+> >  builtin/mv.c                |   2 +-
+> >  builtin/rm.c                |   2 +-
+> >  builtin/submodule--helper.c |  17 +-
+> >  cache.h                     |   2 +-
+> >  config.c                    |  17 ++
+> >  config.h                    |  10 ++
+> >  git.c                       |   2 +-
+> >  grep.c                      |  13 --
+> >  grep.h                      |   1 -
+> >  repository.c                |   6 +-
+> >  repository.h                |   8 +
+> >  setup.c                     |  12 +-
+> >  submodule-config.c          |   8 +
+> >  submodule-config.h          |   1 +
+> >  submodule.c                 | 147 +++++++---------
+> >  submodule.h                 |   6 +-
+> >  19 files changed, 240 insertions(+), 443 deletions(-)
 
- * Git can now be built with PCRE v2 instead of v1 of the PCRE
-   library. Replace USE_LIBPCRE=YesPlease with USE_LIBPCRE2=YesPlease
-   in existing build scripts to build against the new version.  As the
-   upstream PCRE maintainer has abandoned v1 maintenance for all but
-   the most critical bug fixes, use of v2 is recommended.
-
-Thanks.
+-- 
+Brandon Williams
