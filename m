@@ -2,95 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C13D720356
-	for <e@80x24.org>; Tue, 18 Jul 2017 17:41:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98D8F20356
+	for <e@80x24.org>; Tue, 18 Jul 2017 17:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751408AbdGRRlA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 13:41:00 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58247 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751379AbdGRRk7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 13:40:59 -0400
-X-Greylist: delayed 342 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Jul 2017 13:40:59 EDT
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A512748B2;
-        Tue, 18 Jul 2017 13:35:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8HLZzlng9ZNptauSViYeSPqvbak=; b=Cdj51i
-        XMCCDhbmjo1Tl2wftBbH7r/6uuMx3iV4Wn29JQap62QYc31GM37VWQTS9PFCJkV4
-        Q+FmhNqMzfQCT2gBoWZzDNYMTR1tpA1e98ghvr1CpA7v0EZ7tLGh6+j2Nu0v/LVX
-        obdElODMAhWoP+tb/cHLFLSmMwwRLFxdUxr7k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q9u/IbXFrw11S5ztbCTMydeDoYhcQSiW
-        usQsAPBdiLEYbdC0LNH5k7rwN/8eFpb8n3oniSd5ilmJX+ZS8m0imKy34utNBzh5
-        T5hVVsByQvCzi1keAeoCtP8GsVSoQHf7x3LMSUGLrs1cqQ2krq4k0BHqtwTuJFw3
-        YlePdCjJFGE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 43309748B1;
-        Tue, 18 Jul 2017 13:35:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A8F97748B0;
-        Tue, 18 Jul 2017 13:35:13 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
-References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
-        <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
-        <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
-        <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
-Date:   Tue, 18 Jul 2017 10:35:12 -0700
-In-Reply-To: <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
-        (Jiang Xin's message of "Tue, 18 Jul 2017 09:33:43 +0800")
-Message-ID: <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751427AbdGRRlX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 13:41:23 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:35326 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751379AbdGRRlW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 13:41:22 -0400
+Received: by mail-pf0-f173.google.com with SMTP id e199so14656131pfh.2
+        for <git@vger.kernel.org>; Tue, 18 Jul 2017 10:41:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=mkdgBJxGC4L7sP5cf1uyuzmN4FYsSI6iijmEOA04OhY=;
+        b=LJ3FlPqS1O8+YOmV+aDHCaPb2lmfSazarv8NUx1ot2+JsT+3FYBENNI48R6RTZxQ3W
+         vs/JnUgQc6oEnQGmbjG7iMIMJrXl22w34yqxZLmZ7B9wS87rLdTNei71yb85HyEDrnMv
+         a/L424nJiv9Xzav7w642ehCQRkoAw6ShlEE1pI8rU9NwIj6h0IutgDGSIOEv0vnlQ81x
+         ThPOzn+4DW7sWpmugbpgGs0IKg/ilcXwwyX522UewMySMDUHifLhR1X+JDX1/gmJU1Kv
+         dyxBOA4Wc1Kz0uXxUZ47ikl6XxovTtHVCbOl/zt0X504L5SB37pcm0ucWymUeV54TrKO
+         P0sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=mkdgBJxGC4L7sP5cf1uyuzmN4FYsSI6iijmEOA04OhY=;
+        b=auQGkW+n3HP6K7Cox5t4M8JVJfTAwZ339EPSCYKjqb7sLg1txRLxy2lKdKIxytXV2D
+         DffV+nLHj/mX8QtzjcgbgUxk5XDkVjPAHTbWiCBD7oMsqv5avPLb2d7QMtedzOZW1JBo
+         NHN0o8toW7HXHOACPOEzFtGW2EnRznJVSgiBs6bZC5DFM23w2opuu92pVWd0hQH6hTWM
+         ZuRW7mVcPKDhrua0q0mK0hAERNcPTDIb2MoV1O/PPWCxPXkB9OWh0hm8FMIQAUHzA4pj
+         JVwFOF6bSvKeyGeWkteIV3h6rUgn7nkS1nNMGG4AyN0BBKyUGPsn9XfNPNvsXQ9LVYEz
+         BFUg==
+X-Gm-Message-State: AIVw110ELa9iKvy45q9QnZU/SfsDod1SyiCr0sDWCqIjLboazzcTahpz
+        KHC4WRidDLAThu3BzIJBZ9sObAnAMR25
+X-Received: by 10.99.54.9 with SMTP id d9mr2879974pga.195.1500399682306; Tue,
+ 18 Jul 2017 10:41:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 74A65BC8-6BDF-11E7-9E7A-EFB41968708C-77302942!pb-smtp1.pobox.com
+Received: by 10.100.167.81 with HTTP; Tue, 18 Jul 2017 10:41:21 -0700 (PDT)
+In-Reply-To: <xmqqa841fylf.fsf@gitster.mtv.corp.google.com>
+References: <596ddaa620821_77f83e7330107c4@ss1435.mail> <CAGZ79kaPFDMn2K0f529-Crzv+vhU3XUMsSM6w3QV4RXKBv5s_g@mail.gmail.com>
+ <xmqqa841fylf.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 18 Jul 2017 10:41:21 -0700
+Message-ID: <CAGZ79kYohev8BdBEL9qnfmZ6quMwZPDRqZ44qCKV_wMwR=Etiw@mail.gmail.com>
+Subject: Re: Fwd: New Defects reported by Coverity Scan for git
+To:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>
+Cc:     Jeff King <peff@peff.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jiang Xin <worldhello.net@gmail.com> writes:
-
->> Two potential issues are:
->>
->>  - After this patch, there still are quite a many
->>
->>         printf("time is %"PRItime" ...\n", timestamp)
->>
->>    so the burden on the programmers having to remember when it is
->>    required to use format_raw_time() becomes unclear, and makes the
->>    change/churn larger when an existing message needs to be marked
->>    for translation.
->>
->>  - The static struct strbuf here is a cheap way to avoid leaks, but
->>    at the same time it is unfriendly to threaded code.  We could
->>    instead do:
->>
->>         void append_PRItime(struct strbuf *buf, timestamp_t time);
->>
->>    to fix that trivially, but the damage to the caller obviously is
->>    much larger going this way.
->>
+On Tue, Jul 18, 2017 at 10:23 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> I wonder if we can replace the original %lu for timestamp with PRIuMAX
-> instead.  PRIuMAX works fine with gettext utils.
+>> I looked at this report for a while. My current understanding:
+>> * its detection was triggered by including rs/move-array,
+>>   f331ab9d4c (use MOVE_ARRAY, 2017-07-15)
+>> * But it is harmless, because the scan logic does not understand
+>>   how ALLOC_GROW works. It assumes that
+>>   done_pbase_paths_alloc can be larger
+>>   than done_pbase_paths_num + 1, while done_pbase_paths
+>>   is NULL, such that the memory allocation is not triggered.
+>>   If that were the case, then we have 2 subsequent dereferences
+>>   of a NULL pointer right after that. But by inspecting the use
+>>   of _alloc and _num the initial assumption does not seem possible.
+>
+> Yes, it does appear that way.  ALLOC_GROW() calls REALLOC_ARRAY()
+> which safely can realloc NULL to specified size via xrealloc().
+>
+> I'd be more worried about segfault we seem to be getting only on
+> Windows from this:
+>
+>     git -C parent grep -e "(1|2)d(3|4)" --recurse-submodules HEAD^ > actual
+>
+> in https://travis-ci.org/git/git/jobs/254654195 by the way.
 
-I think the question can better be answered if we know how gettext
-tools special case PRIuMAX.  One thing that may be problematic is
-that timestamp can later become a signed type and use of one level
-of redirection in the current code via PRItime and via timestamp_t
-is a good way to keep such a transition much easier.  Reverting it
-to use PRIuMAX would make such a transition much harder.
+Thanks for bringing that to my attention, (I do not follow the travis builds
+as closely, as there is no yelling email in my inbox).
+
+Windows builds on travis seem to be flaky.
+(sometimes they do not start), but there are also
+successful builds, including the -rc0, which may indicate
+bw/grep-recurse-submodules may be faulty on Windows.
