@@ -6,77 +6,76 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 230872082F
-	for <e@80x24.org>; Tue, 18 Jul 2017 19:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C568D20387
+	for <e@80x24.org>; Tue, 18 Jul 2017 20:03:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751794AbdGRTib (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 15:38:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63602 "EHLO
+        id S1751569AbdGRUDm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 16:03:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60872 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751443AbdGRTia (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 15:38:30 -0400
+        with ESMTP id S1751457AbdGRUDl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 16:03:41 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D712479743;
-        Tue, 18 Jul 2017 15:38:23 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1312379CF5;
+        Tue, 18 Jul 2017 16:03:34 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZP0PJ+0M3Iap6JuociBrK/eUvTE=; b=xqB+ml
-        M9vTPeouzIhg4VQ/7hPX7g8DDgowi7JsrJhqGmukTtTh4gtBiS1H/eDOp6MNTKel
-        etAKnvR53LQCRD7uH0T6WhcSFbGJ5DZsgn8jJdQyk/0R67dxdoy+Vl6je4xFxKIU
-        J5q/zaJ30HLLXeYfcfSg/AdJ9BV8WIGsy3u+4=
+        :content-type; s=sasl; bh=zbUMClzxMTge64Bfo6vx4KNVUa0=; b=m249EA
+        heGmxBQAHgWFMqyT54y+5uyTED5JjZUi3ZwJyq5aQ8iBFCZ+vG9oQhSgcv8otlsb
+        E5z00P+hEqbF9xFgnD3hn3UDoIaNsUd5o9WVyTfIrv8xOMqteINfOCODqJWQcghO
+        wvYRc5EsVLtnK/IQnf6JsVOuvO2TQBAgoXjyM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Xpo59HmY8PkPoug146y7ZVm4NucpBQfD
-        Y0OLzwSWIfUOx8MFU0d4Dym6V5691xPfWTXfjSZ0lCr1HYuuQx6HNRNY4baVePMN
-        mRovUongXRX6fC093e1FgSMjtIzJ8S+LN6/JPvvlXd8PKBM+7zv5eNGm9KKEEZfj
-        92VlTwHYlko=
+        :content-type; q=dns; s=sasl; b=GKGCX1EW8UzNSKgxL3i3n0r2uvSg0b0A
+        IHDv49r/J05rtX6wiqttqzbiBP+DrHS6Yw83ehLvTIq2vs+XOUrVtbMSstACspXp
+        MEd5eOU8okT+jzjCDn/GwKXVWh5piC4ARApOf12eb9K1vlTcIvDs8CdG+dbUM6O2
+        HDbHC5RN5RI=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D022E79742;
-        Tue, 18 Jul 2017 15:38:23 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0B0E079CF3;
+        Tue, 18 Jul 2017 16:03:34 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14A0779740;
-        Tue, 18 Jul 2017 15:38:23 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6EF5979CF2;
+        Tue, 18 Jul 2017 16:03:33 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] t8008: rely on rev-parse'd HEAD instead of sha1 value
-References: <20170718002020.14309-1-sbeller@google.com>
-        <xmqqwp75o8qi.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kbTQ=eSoDCRFTt_B3kjDbWZDkcPwc3fMvhd8dEKPWr-8A@mail.gmail.com>
-Date:   Tue, 18 Jul 2017 12:38:21 -0700
-In-Reply-To: <CAGZ79kbTQ=eSoDCRFTt_B3kjDbWZDkcPwc3fMvhd8dEKPWr-8A@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 18 Jul 2017 12:22:35 -0700")
-Message-ID: <xmqqk235o7rm.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.14.0-rc0
+References: <xmqqzic7sy2g.fsf@gitster.mtv.corp.google.com>
+        <87mv8638y5.fsf@gmail.com>
+        <xmqq7ez6hk2y.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 18 Jul 2017 13:03:32 -0700
+In-Reply-To: <xmqq7ez6hk2y.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Mon, 17 Jul 2017 13:41:57 -0700")
+Message-ID: <xmqqfudto6ln.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A9122D4A-6BF0-11E7-BA50-EFB41968708C-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 2D52579E-6BF4-11E7-BFAA-EFB41968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Tue, Jul 18, 2017 at 12:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> Remove hard coded sha1 values, obtain the values using 'git rev-parse HEAD'
->>> which should be future proof regardless of the hash function used.
->>
->> Don't hardcoded lengths of the hashes defeat this future-proofing
->> effort, though?  It shouldn't be too hard to do the equivalent of
->> the auto computation of abbreviation in this script, which would be
->> true future-proofing, I guess.
+> As I shoot for shorter summary, going down to too much detail in
+> these entries is not welcome.
 >
-> It depends on the definition of future proofing.
-> My definition here only included the change of the hash function,
-> not the change of display length in git-blame for a small artificial repo
-> with 2 commits . These seem to be unrelated, so in case we'd change
-> the length of the abbreviated displayed hash, we'd still want to have
-> a test to tell us?
+> However, an exception is the top part of the release notes where we
+> discuss backward incompatible changes etc. that helps people to
+> decide the deployment strategy.  Encouraging migration from v1 to v2
+> belongs there, I would think.
 
-The thing is that depending on how these 2 commits hash and share
-prefixes, the length needed to disambiguate changes.
+I added this at the end of the "Backward compatibility notes" at the
+beginning of the release notes, and renamed the entire section to
+"Backward compatibility notes and other notable changes."
+
+ * Git can now be built with PCRE v2 instead of v1 of the PCRE
+   library. Replace USE_LIBPCRE=YesPlease with USE_LIBPCRE2=YesPlease
+   in existing build scripts to build against the new version.  As the
+   upstream PCRE maintainer has abandoned v1 maintenance for all but
+   the most critical bug fixes, use of v2 is recommended.
+
+Thanks.
