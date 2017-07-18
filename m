@@ -2,104 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7114720356
-	for <e@80x24.org>; Tue, 18 Jul 2017 18:06:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DA3420356
+	for <e@80x24.org>; Tue, 18 Jul 2017 18:46:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751436AbdGRSGo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 14:06:44 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:35340 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751392AbdGRSGn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 14:06:43 -0400
-Received: by mail-pf0-f170.google.com with SMTP id e199so14944111pfh.2
-        for <git@vger.kernel.org>; Tue, 18 Jul 2017 11:06:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=VP41wFbnA78/OvlA2iaz7QilE/whbAGHfdEYzS3Pfyc=;
-        b=E7FF5FgkdYH8JTgI7DFMaOHEadtZyINKzOLsyoPoOG8H99Klqs35KWlUQPX3rGIw4h
-         W2Pw1uRoJw56Y3ot1hbfzw9MbuYToFM+mRWaxIz+7WVQKXJdOD2CyhBDkATfQ1DH4DTP
-         I7nozusMuNfhk2VQkYxXhfX05kXybAE43GvBX15AYwwAXI5j7TK63ZVe7gz6vZYLgir6
-         twS9u1TvP3IZGvPx9sGlssLQ8zg46FQHBSASoZ7nmzCbd4buMywLL3QQ3rhjGHg/6kEX
-         sUo6nFU1sjG3Sn+qSj3sUyI3N3v1dzVlR8FJqmVPP91f2KyjBPLJU5RPw1yxzh+XNFxt
-         by5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=VP41wFbnA78/OvlA2iaz7QilE/whbAGHfdEYzS3Pfyc=;
-        b=GDE5hZLJgxsyMY9JmM4BEAtTxABhszkhilDQz7fr57KGBUDOmsPiIXNk6Qk3fNTbgC
-         bsfVmHDQqgytTZw+fVL/y1yix1bP/4nCh/0jGgy/zqNGVaauqerE0NCRBI0vl1PHcYDy
-         LtW98CjgiVNqsgWi1N6hB5zDpOcNRmjDXSUxy+GT1d1D3/F5urE28XwgwS0jvyv7whIv
-         vZxARya69R29ZTYXR/kXZXjOzjsL97/W32S+gdp6oPP0kJm4rZD84SkYeB4Uy0JV3mAc
-         Lyxptpba5y+lCXwciGalvjg7Y19CtKS3NAtn4omJjNXv+JDLmdtp1oFIsd+HyqkS0uyU
-         YuZA==
-X-Gm-Message-State: AIVw113oRB1rL8THUnQS08qSWLwmaWyXftV/g3hWkS8wp9W5mTgA2cWg
-        rmnvlTNPg7GnIk/GIQZneojU2RSPqK4ShQE=
-X-Received: by 10.101.76.206 with SMTP id n14mr3006682pgt.154.1500401202397;
- Tue, 18 Jul 2017 11:06:42 -0700 (PDT)
+        id S1751408AbdGRSqQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 14:46:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56385 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751388AbdGRSqQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 14:46:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3F4557B941;
+        Tue, 18 Jul 2017 14:46:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IwTueAvg19WUH4ZYwoMfp3xUSBw=; b=lB+5GP
+        3b25EwdZZWIKbf/IXfMlYNtdb2fyQ5j6VI6dhyxgJCQciQKiEYogaoK1Q3SGLGQ5
+        4fSh5ai6smHCclwqa4TzYPHtguMmv1f+j4lCmQ/QJCXztAlrRYBehvYxyIR7QbjC
+        ofEjgtrle8bneUa8mf2YG/6uqpsH1Fhp/l6OA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SWEfZooJra3UYGAzsQswOFpJcOKLrwDE
+        Dlp5uEnjPU5VHRGFCtPME8xi4PnZ9SoIpkUMmwfl2kD2JzWciT5OACBfs+uIVKcJ
+        EnEu10mCAnSxQ35KZ0afdwqmOVI76cQZ6mwjm5pjorlHLpi7h1DC32l0PlEY7yqS
+        HrOetxGP4LE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37AFD7B940;
+        Tue, 18 Jul 2017 14:46:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A15E77B93E;
+        Tue, 18 Jul 2017 14:46:07 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Santiago Torres <santiago@nyu.edu>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2017, #04; Thu, 13)
+References: <xmqqo9snsy0k.fsf@gitster.mtv.corp.google.com>
+        <20170714002754.jyck5qmykbmuado7@LykOS.localdomain>
+        <xmqqfudzsq7u.fsf@gitster.mtv.corp.google.com>
+        <20170714140241.mqg5256ml3grmrn6@LykOS.localdomain>
+        <xmqqwp7bqbvg.fsf@gitster.mtv.corp.google.com>
+        <20170717214241.yui75hywg2ddkfsb@LykOS.localdomain>
+        <xmqqmv82g1g7.fsf@gitster.mtv.corp.google.com>
+        <20170718175458.hadk64c3yccyv57t@LykOS.localdomain>
+Date:   Tue, 18 Jul 2017 11:46:06 -0700
+In-Reply-To: <20170718175458.hadk64c3yccyv57t@LykOS.localdomain> (Santiago
+        Torres's message of "Tue, 18 Jul 2017 13:54:59 -0400")
+Message-ID: <xmqqeftdpor5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Tue, 18 Jul 2017 11:06:41 -0700 (PDT)
-In-Reply-To: <20170718180057.GA22656@google.com>
-References: <596ddaa620821_77f83e7330107c4@ss1435.mail> <CAGZ79kaPFDMn2K0f529-Crzv+vhU3XUMsSM6w3QV4RXKBv5s_g@mail.gmail.com>
- <xmqqa841fylf.fsf@gitster.mtv.corp.google.com> <CAGZ79kYohev8BdBEL9qnfmZ6quMwZPDRqZ44qCKV_wMwR=Etiw@mail.gmail.com>
- <xmqqy3rleijv.fsf@gitster.mtv.corp.google.com> <20170718180057.GA22656@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 18 Jul 2017 11:06:41 -0700
-Message-ID: <CAGZ79kZrybXdUXosb=2qoS9jaSYvrkhiBOb6ka=nPZMO3Xt2WA@mail.gmail.com>
-Subject: Re: Fwd: New Defects reported by Coverity Scan for git
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5C3692BA-6BE9-11E7-942F-61520C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 18, 2017 at 11:00 AM, Brandon Williams <bmwill@google.com> wrote:
-> On 07/18, Junio C Hamano wrote:
->> Stefan Beller <sbeller@google.com> writes:
->>
->> >> I'd be more worried about segfault we seem to be getting only on
->> >> Windows from this:
->> >>
->> >>     git -C parent grep -e "(1|2)d(3|4)" --recurse-submodules HEAD^ > actual
->> >>
->> >> in https://travis-ci.org/git/git/jobs/254654195 by the way.
->> >
->> > Thanks for bringing that to my attention, (I do not follow the travis builds
->> > as closely, as there is no yelling email in my inbox).
->> >
->> > Windows builds on travis seem to be flaky.
->> > (sometimes they do not start), but there are also
->> > successful builds, including the -rc0, which may indicate
->> > bw/grep-recurse-submodules may be faulty on Windows.
->>
->> I can get valgrind complaints locally from
->>
->>     $ cd t && sh t7814-grep*.sh --valgrind -i -v
->>
->> so this may not be Windows only.  Can repo_worktree_path() return a NULL
->> in repo_read_gitmodules() to cause git_config_from_file() barf on a NULL
->> gitmodule_path?
+Santiago Torres <santiago@nyu.edu> writes:
+
+> On Mon, Jul 17, 2017 at 03:09:44PM -0700, Junio C Hamano wrote:
+>> I am not sure if it is merely "if it's even necessary"; if there are
+>> two tests running in parallel, with their own separate
+>> $TRASH_DIRECTORY, and one of them say "kill the agent" at the
+>> beginning, would it affect the other test, depending on the timing?
 >
-> Yep that's most likely the cause.  The issue is if a repository doesn't
-> have a worktree then what should a worktree path look like?
-> repo_read_gitmodules() should check if there is a worktree before trying
-> to load the gitmodules file.  I actually noticed this and have it fixed locally in
-> another series I'm working on right now.  Looks like I may have to get
-> that change in first though.  Thanks for finding this.
+> This shouldn't happen, provided their respective GNUPGHOME env vars
+> aren't the same. A gpg-agent process is spawned per GNUPGHOME on the
+> versions that I've tested.
+>
+>> 
+>> I would imagine that the sockets are kept per GNUPGHOME and they are
+>> not going to interfere, so if that is the case, I do not think we
+>> mind helping folks with a buggy versions of GnuPG by having a "let's
+>> be cautious and kill a leftover agent before starting to test"
+>> patch, as long as the reason why we do so is clearly understood and
+>> documented.
+>
+> I double checked the patch/solutions/causes just to be sure I'm not
+> doing anything crazy. Here's a v2 of the patch that kills the agent upon
+> cleanup rather than startup.
 
-If there is no worktree, we could fallback to read it from the tree
-HEAD:.gitmodules, if that doesn't exist, then there are no submodules.
+Thanks.  
 
-Thanks,
-Stefan
+The workaround of killing the lingering agent makes sense to me, but
+is test_done the right place to do so?  When "sh t7004-tag.sh -i"
+dies in the middle, I do not think the control even reaches the
+invocation of that shell function at the end.
+
+The httpd tests seem to do this in start_httpd shell function:
+
+	start_httpd () {
+		prepare_httpd 
+		trap 'code=$?; stop_httpd: (exit $code); die' EXIT
+		...
+
+and I can see how this would avoid the "'-i' option can stop the
+test script in the middle" issue.  Because the GPG tests do not have
+a clear "start agent" step, we'd need to arrange the "trap" in the
+case arm in t/lib-gpg.sh where we set GPG prerequisite if we were to
+use the same approach.  Or killing a possibly lingering one like your
+first patch did may be simpler (we need to make sure &&-chain works
+well with "gpgconf --kill all").
+
+Oh, wait, I can run "gpg" just fine, but I do not seem to have
+gpgconf.
+
+	$ type gpgconf
+	bash: type: gpgconf: not found
+
+The patch may need a bit more cross-version work, it seems.
+
+
+-- >8 --
+From: Santiago Torres <santiago@nyu.edu>
+Date: Tue, 18 Jul 2017 13:16:11 -0400
+Subject: [RFC/PATCH] t: test-lib: flush gpg agent on cleanup
+
+When running gpg-relevant tests, a gpg-daemon is spawned for each
+GNUPGHOME used. This daemon may stay running after the testand cache ile
+descriptors for the trash directories, even after the trash directory is
+removed. This leads to ENOENT errors when attempting to create files if
+tests are run multiple times.
+
+Add a cleanup script to force flushing the gpg-agent when before
+removing the trash directory if the test is GPG-relevant.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Santiago Torres <santiago@nyu.edu>
+---
+ t/test-lib.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 1b6e53f78..ed8796d7a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -732,6 +732,11 @@ test_done () {
+ 		EOF
+ 	fi
+ 
++	if test_have_prereq GPG
++	then
++		GNUPGHOME="$TRASH_DIRECTORY/gpghome" gpgconf --kill all
++	fi
++
+ 	if test "$test_fixed" != 0
+ 	then
+ 		say_color error "# $test_fixed known breakage(s) vanished; please update test(s)"
+-- 
+2.13.3
+
+
