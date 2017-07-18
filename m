@@ -2,79 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AC8920292
-	for <e@80x24.org>; Tue, 18 Jul 2017 03:27:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFB0B2082F
+	for <e@80x24.org>; Tue, 18 Jul 2017 07:16:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751346AbdGRD1A (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Jul 2017 23:27:00 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36828 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751332AbdGRD07 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Jul 2017 23:26:59 -0400
-Received: by mail-pg0-f66.google.com with SMTP id y129so1086682pgy.3
-        for <git@vger.kernel.org>; Mon, 17 Jul 2017 20:26:59 -0700 (PDT)
+        id S1751353AbdGRHQx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 03:16:53 -0400
+Received: from mail-ua0-f171.google.com ([209.85.217.171]:36408 "EHLO
+        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751336AbdGRHQw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 03:16:52 -0400
+Received: by mail-ua0-f171.google.com with SMTP id 35so13118177uax.3
+        for <git@vger.kernel.org>; Tue, 18 Jul 2017 00:16:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:mime-version
-         :content-transfer-encoding;
-        bh=atuT0VvNxjskyN78T0Ielsomys80as5eaZVZq8usdu8=;
-        b=l2Gpq5HRP1gV69yQ4EOg66z9emXYrZpHCWZWZI8yxHdunkAO3BD5pBKGh8FNa0CpTP
-         bltONTrdn/2Qfc2+TqCv7+/OSzGSxyZ9l9+QCtxKCWLq53uUymdLKwBfV2z6kJW/maRb
-         DL10qrdodmvsQOAutYcw61fwRjj1704MYZV9SqUotE2b7lVUbfyakYoUWEu1PahOvwsm
-         y/9e9ad+WhXOuFTvbRmib469pUMd5oqzBQAiPEm9BJoh+OAoGFyuhVdg1iuf1xqEf6i9
-         9wbrUjC81AxXBxAxR1dtMoMirgYxQO6swzarnWAKxHRH0xIrHtk32U8j6o0B6jl1yVtW
-         m5ag==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JSPPhhLtWTcq4hbXgpJ5KPgyx/cBmQudfCrgwfXaEXk=;
+        b=YCf62P2TqNzOLboJVnXiyd33Omxns4DuBaTbJgQ7ZIU3LMpbaqTs2BAbnxPiq0uFiD
+         D/oPtc8ATRMBcHDKS6nsP2BN3uOBJoYccYrvgAnq+WdO/06xXgcPls5gvRu5eIhUcMth
+         m+2MKpd+6RMD6+tbi/Ls8znV3/WPfkqXJWRjMbCWLJCgXGLXb6euv4inwTMi/9jDlc+W
+         GsXcggPsXoqaTEzMKgmjYpw8fSl11g2PVDIlKcWcKn4Xjh1aq+A68x+AQ1YsZz1SoaR7
+         Ge7lPfVJXhUwJ7NaHRhyBvfwBNU0gW3SN948TCGbyCNdL1NwHxa5FViTCKbNWiC69CKY
+         zSLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:mime-version
-         :content-transfer-encoding;
-        bh=atuT0VvNxjskyN78T0Ielsomys80as5eaZVZq8usdu8=;
-        b=q1YbbQ+5ctGknfHR/nTPQexpKJspVo5EJ/VYFCpw7Gzy41FTJREUni+wMOgjA96vWl
-         nDMf6UIK5lI1Lz+JCB0y6xLQdUflnuWdSkPIzUVNabIw2jvDo1R3kyA1hnyxNMMIyQge
-         TPSEhcXt0AehkTgFKyjfng40/JWWzGX8sAJeboRgER6SUl7/7U5ir407NGs4FehCjkV4
-         zo5uvk4f90ftON7lQB54KC9DSCkPTfsS95XqLpx+c0361Qjc5j1O2isXQgqPiZN3Paj3
-         pNeY4iPcVmRUjbCg3A4IGIm2o5I39mp3we8RlSu6g8IgOnoZVbVkSQISHq6KXDBkwWS6
-         zwGg==
-X-Gm-Message-State: AIVw110fQ7TMX4+rgbCj8oEeSbwiWyB4ZUZ1g7Hguiy9qm7UZfABoI2l
-        ObxXKhfCbrIFzg==
-X-Received: by 10.99.119.194 with SMTP id s185mr831854pgc.256.1500348419230;
-        Mon, 17 Jul 2017 20:26:59 -0700 (PDT)
-Received: from unique-pc ([182.73.109.146])
-        by smtp.googlemail.com with ESMTPSA id z6sm1145742pge.20.2017.07.17.20.26.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 17 Jul 2017 20:26:58 -0700 (PDT)
-Message-ID: <1500348436.3691.2.camel@gmail.com>
-Subject: Re: [L10N] Kickoff of translation for Git 2.14.0 round 1
-From:   Kaartic Sivaraam <kaarticsivaraam91196@gmail.com>
-To:     worldhello.net@gmail.com
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="ISO-8859-15"
-Date:   Tue, 18 Jul 2017 08:57:16 +0530
-Mime-Version: 1.0
-X-Mailer: Evolution 3.22.6-1 
-Content-Transfer-Encoding: 7bit
-X-Cyberoam-smtpxy-version: 1.0.6.3
-X-Cyberoam-AV-Policy: default
-X-CTCH-Error: Unable to connect local ctasd
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JSPPhhLtWTcq4hbXgpJ5KPgyx/cBmQudfCrgwfXaEXk=;
+        b=s6msCe6vUkut+FpLx912uDAQ61xG21bmv6NyzlIzNGKj05dNccWkNk8EVkZoOKjfQn
+         Zq3GJHgy9QC38ArmXELJdtzEizdBUmxXsosgFnNVX6WQGBFTxlD1YnPK5dk3v7Ufsj06
+         PukMOnV5bWmXJU+qgFuKrB7B2reTA9RwWEFZl+Fh5E5h9nCnuoY2YtcbP7/hCRJGODGW
+         EQT5hFa3LH8tsMYULwxSECQpBKus2EGthtvPBRry/XHGRoNPsp0JV+Ojfw6l4Zv8ENTb
+         mzGKEUsr9pCLG2dHM2Fe8i6CDUl0Zyct4bBE9v57+QfrkcMoP+1HGq5yH3m2sfPToaZ0
+         LFPA==
+X-Gm-Message-State: AIVw111bOco5khBmE0fwXHVAxNZ9hS5FLTKANx/wEiDi9Rgq5qYDqt68
+        HsgvX9vSOVqieDBeSroRf0MmPYZIqg==
+X-Received: by 10.31.0.69 with SMTP id 66mr106112vka.31.1500362211539; Tue, 18
+ Jul 2017 00:16:51 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.176.18.223 with HTTP; Tue, 18 Jul 2017 00:16:50 -0700 (PDT)
+In-Reply-To: <xmqqinjdqo1i.fsf@gitster.mtv.corp.google.com>
+References: <CAFirYm_LLCUNdppZ7kKGwijJNNvhCaQtoJzRBVRsvhF+=bqgrw@mail.gmail.com>
+ <xmqqefu2tyzc.fsf@gitster.mtv.corp.google.com> <CAGZ79kYd+3OoUBcsTS9=S9qEUwKj9ypyHyjXLBW=KjWOVoae4A@mail.gmail.com>
+ <CAFirYm_UzUe=zSefAVpt45OuEwKyn7bAZbumLXYWbPFVRahPew@mail.gmail.com> <xmqqinjdqo1i.fsf@gitster.mtv.corp.google.com>
+From:   Laurent Humblet <laurent.humblet@gmail.com>
+Date:   Tue, 18 Jul 2017 09:16:50 +0200
+Message-ID: <CAFirYm8G-8DAfapeSvuRk1QghBZE1W0Pa1h+NDMvVNT5Kd354w@mail.gmail.com>
+Subject: Re: Warning suggestion for git stash drop
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Oh great, an answer 20 days later ... Sorry about this.
 
-As a heads up (and because I have been pulled into this thread :)), I
-wanted to bring to the notice of translators that the commit,
+I have been reading a bit on the topic and found that for Bash we
+should be using shell functions over aliases so I wrote this function
+to be simply added to the .bashrc:
 
-b884244c8 commit-template: remove outdated notice about explicit paths
+# 'git stash drop' confirm shell function
+git() {
+    if [[ $@ == "stash drop" ]]; then
+        read -r -p "Are you sure you want to drop your stash? [y/N] " response
+        case "$response" in
+            [yY][eE][sS]|[yY])
+                command git "$@"
+                ;;
+        esac
+    else
+        command git "$@"
+    fi
+}
 
-*removes* a message ("Explicit paths specified without -i or -o;
-assuming --only paths...") that's currently being translated.
+Be careful, I'm no Bash expert and I don't believe it is fully POSIX
+compliant but it's a good start I think.  This could also be used for
+the 'rm -rf' command or any other potentially dangerous command I
+believe.  Maybe there is a place for a .bashrc_safe_shell_functions
+that could be loaded by the user to add confirmation before all
+potentially dangerous commands but it'll be for another thread.
 
--- 
-Kaartic
+Thank you for your help guys and keep up with your excellent work on Git!
+
+All the best,
+Laurent
+
+
+On 30 June 2017 at 21:21, Junio C Hamano <gitster@pobox.com> wrote:
+> Laurent Humblet <laurent.humblet@gmail.com> writes:
+>
+>> Thank you for your feedback.
+>>
+>> I suppose that turning a hypothetical confirmation option 'on' would
+>> impact a stash pop for instance as it automatically drops the stash if
+>> it was applied without conflicts.
+>>
+>> What about a --confirm flag?  You could then simply alias 'git stash
+>> drop --confirm' locally and it wouldn't impact anything else?
+>
+> I think that is probably trivial to add, but how would you make sure
+> you give it?  One way may be to train your fingers to type "git sd"
+> with something like this in your ~/.gitconfig:
+>
+>         [alias] sd = "stash drop --confirm"
+>
+> but at that point, you could instead have something like the
+> following in you ~/bin/git-sd and get the same effect:
+>
+>         #!/bin/sh
+>         if tty -s
+>         then
+>                 echo >&2 "are you sure you want to drop all stash entries?"
+>                 case "$(read)" in
+>                 [Yy]*) ;;
+>                 *) echo >&2 "ok, let's not drop 'em"; exit 0 ;;
+>                 esac
+>         fi
+>         exec git stash drop
+>
+> without adding the "--confirm" option at all.
+>
+> So I am not sure that would get us closer to a satisfactory solution
+> to your original problem.
+>
+> Retroactively adding an end-user safety is hard.
+>
+>> Have a great week-end!
+>
+> You too.
