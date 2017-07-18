@@ -2,106 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F231A1FF30
-	for <e@80x24.org>; Tue, 18 Jul 2017 22:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1CB91FF30
+	for <e@80x24.org>; Tue, 18 Jul 2017 22:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753021AbdGRW26 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 18:28:58 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:36172 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752290AbdGRW24 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 18:28:56 -0400
-Received: by mail-pg0-f42.google.com with SMTP id u5so19860935pgq.3
-        for <git@vger.kernel.org>; Tue, 18 Jul 2017 15:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=30MJP0pTaegGwhwEFj2OoVauzZFmcPsuEUnbb/TZcbA=;
-        b=Wi/9Le4BewTxFoFJZHEmoKmHR0xE3+eBA8qqid91xQ+UIpNZEvggYhzRDZXl459qjD
-         d2aj8s+geuS9dB04GNvHgjXytrAEsY/deG+kdVAKAX/fqROiwqB11onhkxMD9CTxmmO9
-         BUVRSJ6vgoU4F72vAZAN7WZpDQ4ZSkQyMAOpOWK+Uqt74yWlTZkRP2suV/Kvkm8zGOGs
-         vD/5lENrx6atKk6/2zkaMQazEfzCvpT5DXEdgqsfSgzuMmAjPc7DuKZh1RDelzgvzKkm
-         lJXoa3c8fYZpwcUASubnyjWCGAU0iMVUSAnjEFNogZKhaH783jcgVoUATOyPlWQrOASr
-         uu0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=30MJP0pTaegGwhwEFj2OoVauzZFmcPsuEUnbb/TZcbA=;
-        b=NWA65GoJ8UR5Dk70djONjEB8hfHu6VzcIwJuGc341X4Wf5y3ete+Apa9A+6sdD988U
-         zUKLvlQPtkyjTXeloqDzRB2jw/Km8pCodH8de9mtDQvrKdMuGM0sEVv/ua3YixdFGEWm
-         iveFLuHlVk2dKRqu9HTZvNN0YUcgm471zjnFk2mK8AdB7Zy3HTxLhBtKFvS/IgbZvwYl
-         48qn5yroCLCncHIXuJ04HM57dMB3sO0yOINuypN45o3EiM7Jt0CieDSWuImcHVFBixPj
-         831z15CSMq+oiiLQkWTPrtkon192fd+ROzuutZyC7a8QKKXQxj4k3c1AkTfdf7aIdm94
-         wzsg==
-X-Gm-Message-State: AIVw110SL4wT8J+KDWxg1hSdG1JCYNAAfh/PdU2LOK1TEoWuVpel+ywx
-        22u5RxykPNKaZ85q9KUTCw==
-X-Received: by 10.99.37.131 with SMTP id l125mr3967187pgl.251.1500416935855;
-        Tue, 18 Jul 2017 15:28:55 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id o4sm6058564pga.47.2017.07.18.15.28.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 18 Jul 2017 15:28:54 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH] fsck: remove redundant parse_tree() invocation
-Date:   Tue, 18 Jul 2017 15:28:48 -0700
-Message-Id: <20170718222848.1453-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.13.2.932.g7449e964c-goog
+        id S1752095AbdGRWcz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 18:32:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64215 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751997AbdGRWcy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 18:32:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1BDCB80C77;
+        Tue, 18 Jul 2017 18:32:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=tX0KaH6CdDruqbtVTNwBP42UUSc=; b=i0xGH0
+        IowqaSm02H9sb67Lm/6GCCH5wo4fn0NSfs3fvIateV9wDlYqwMe/9lGw4UwCyvWC
+        NfQKGh4fNedkD51AgHjq3rjOUsxhfiX4FsZ6rYWuhB6ESqkK/jFvotl/Ok+ecbUN
+        ZrdWRGd9fQ1E1ZJmXMPatpVsyTt0JFs8c0lqg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=KbZJ4l7mHTVNC1nOKRDaJHTal3Ebc2Kw
+        HdAMFoa1ttXQSxHGykIJ/gaZLqKmtf6ok5Yd2yv0Ssm1s95zj1S2t39Yaw0Fwkia
+        pMl0LeBhZzhMd/4zey4xiUiESb+mJsMOzvnjYFlUZRtxtFQtUxKVePr698hY7UyZ
+        ymKT5UjGLXY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1525280C76;
+        Tue, 18 Jul 2017 18:32:47 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6A00880C74;
+        Tue, 18 Jul 2017 18:32:46 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Prathamesh Chavan <pc44800@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [GSoC][PATCH 4/8] submodule: port submodule subcommand 'status' from shell to C
+References: <20170718204904.3768-1-pc44800@gmail.com>
+        <20170718204904.3768-5-pc44800@gmail.com>
+        <CAGZ79kb48kNggPv64ubbBNK-Sk8AW4eXxhZt=PZZCPKr9OiuLQ@mail.gmail.com>
+Date:   Tue, 18 Jul 2017 15:32:45 -0700
+In-Reply-To: <CAGZ79kb48kNggPv64ubbBNK-Sk8AW4eXxhZt=PZZCPKr9OiuLQ@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 18 Jul 2017 14:39:39 -0700")
+Message-ID: <xmqqmv81ml4i.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 05B6CA3E-6C09-11E7-BC23-61520C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If obj->type == OBJ_TREE, an invocation of fsck_walk() will invoke
-parse_tree() and return quickly if that returns nonzero, so it is of no
-use for traverse_one_object() to invoke parse_tree() in this situation
-before invoking fsck_walk(). Remove that code.
+Stefan Beller <sbeller@google.com> writes:
 
-The behavior of traverse_one_object() is changed slightly in that it now
-returns -1 instead of 1 in the case that parse_tree() fails, but this is
-not an issue because its only caller (traverse_reachable) does not care
-about the value as long as it is nonzero.
+>> +       if (!lstat(list_item->name, &st) && !ce_match_stat(list_item, &st, 0)) {
+>> +               print_status(info, ' ', list_item->name, sub_sha1, displaypath);
+>
+> The question from the last round still stands
+> https://public-inbox.org/git/CAGZ79kb18z5zc9iu3Vv5aVZWJmoZzmwbMVpy89VC-t-ei2M+bw@mail.gmail.com/
+>
+>   I am not an expert in the diff area  and wonder how
+>   the cmd_diff_files functionality is achieved with just a stat call
+>   and then comparing it to  ce_match_stat. 'Using "dirty" ignores
+>   all changes to the work tree of submodules, only changes to the
+>   commits stored in the superproject are shown.' So I'd have
+>   expected ce->oid to be compared (is there an index entry differing,
+>   i.e. more than one stage?)
 
-This code was introduced in commit 271b8d2 ("builtin-fsck: move away
-from object-refs to fsck_walk", 2008-02-25). The same issue existed in
-that commit.
+ce_match_stat() calls into ce_compare_gitlink() for a 160000 entry,
+which would resolve HEAD ref there and compares ce->oid with it.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Here's a code cleanup. I noticed this while looking at modifying fsck.
----
- builtin/fsck.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
-
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 99dea7adf..4ba311cda 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -168,18 +168,7 @@ static void mark_object_reachable(struct object *obj)
- 
- static int traverse_one_object(struct object *obj)
- {
--	int result;
--	struct tree *tree = NULL;
--
--	if (obj->type == OBJ_TREE) {
--		tree = (struct tree *)obj;
--		if (parse_tree(tree) < 0)
--			return 1; /* error already displayed */
--	}
--	result = fsck_walk(obj, obj, &fsck_walk_options);
--	if (tree)
--		free_tree_buffer(tree);
--	return result;
-+	return fsck_walk(obj, obj, &fsck_walk_options);
- }
- 
- static int traverse_reachable(void)
--- 
-2.13.2.932.g7449e964c-goog
-
+But as you said, this is probably insufficient to emulate the
+original.  Shouldn't it call into run_diff_files(), which is the
+in-core way to run the equivalent of "diff-files"?
