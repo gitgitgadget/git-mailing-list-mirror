@@ -2,118 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F7941FF30
-	for <e@80x24.org>; Tue, 18 Jul 2017 21:38:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88D101FF30
+	for <e@80x24.org>; Tue, 18 Jul 2017 21:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752598AbdGRVig (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 17:38:36 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63972 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752360AbdGRVif (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 17:38:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 35AA58008F;
-        Tue, 18 Jul 2017 17:38:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=auF9V3syuoFDj8UvQoeWvA3liAk=; b=KmugyE
-        s8bOgfpZpTNu+xQCY/wRUUekyfg9+SLHWtW+qMjbZVYWQ6anAVVAl9oxIwAPni1x
-        xb++WFyGkkYydA6pGDwwIv5HG5dqgdI4PRIegE6QGmzMlHnLj9At+oy3MSbzSbkO
-        jfwVnKeSsYe2TDw8vQ1njl5MC1+O2PDc0vxfU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kYwpLppegwp9ZlfKPKM4dMbPnGKRXC6X
-        O2gxJVLcHJoYnogfJdV1WjTAdrE9Jr2EsVAbLDBsOlS79toS1IHxdVHDngNGnKvm
-        cpPcsyURsjUZsndMQpvKBMDX4wkuY3W81RbweMvXJSx6lOFQn74WZscLdgtu3qJP
-        weThyqECTdg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2D16F8008E;
-        Tue, 18 Jul 2017 17:38:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6C4CA8008D;
-        Tue, 18 Jul 2017 17:38:33 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Santiago Torres <santiago@nyu.edu>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jul 2017, #04; Thu, 13)
-References: <xmqqo9snsy0k.fsf@gitster.mtv.corp.google.com>
-        <20170714002754.jyck5qmykbmuado7@LykOS.localdomain>
-        <xmqqfudzsq7u.fsf@gitster.mtv.corp.google.com>
-        <20170714140241.mqg5256ml3grmrn6@LykOS.localdomain>
-        <xmqqwp7bqbvg.fsf@gitster.mtv.corp.google.com>
-        <20170717214241.yui75hywg2ddkfsb@LykOS.localdomain>
-        <xmqqmv82g1g7.fsf@gitster.mtv.corp.google.com>
-        <20170718175458.hadk64c3yccyv57t@LykOS.localdomain>
-        <xmqqeftdpor5.fsf@gitster.mtv.corp.google.com>
-        <20170718211651.rcnbkhcwem4sbcb5@LykOS.localdomain>
-Date:   Tue, 18 Jul 2017 14:38:32 -0700
-In-Reply-To: <20170718211651.rcnbkhcwem4sbcb5@LykOS.localdomain> (Santiago
-        Torres's message of "Tue, 18 Jul 2017 17:16:52 -0400")
-Message-ID: <xmqqvampmnmv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752632AbdGRVjl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 17:39:41 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:33662 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752557AbdGRVjk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 17:39:40 -0400
+Received: by mail-pg0-f46.google.com with SMTP id k14so19460777pgr.0
+        for <git@vger.kernel.org>; Tue, 18 Jul 2017 14:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=qKg/m/AlDAICTrcjikZjzU1+7UWBzWpmwW0uR2slsZY=;
+        b=t35DseInHBD2TPZogFlX9s6svsEYKChVKzVbK1PgVDLT8G/JAEyeDvwdixYFp2/IYD
+         gF0+X+wWYIZdDxdXiYTMyDRJG8Q9S3vPFJ5p//JraQZzgMNYi9dg/L2jVWs2B0unAe/O
+         IphoDCI0rOCyeyFEvV9ynkSNTdreUons+9J0fox8nAC9P3H1KsZxFdRpI2lTAdk/DNvo
+         I3A/chzruG8e8S7bAwLR1ycOiySTCI1zi6JL/0Hxa8sSNkKa3y0NCoDbESrOurFluNFW
+         /tNXaTNomfgolp7zhDAMoSZtLGa+UT8KkyRMwbWbGGT4XrLIMTZ6wzM4JPsNFck5wp50
+         XGlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=qKg/m/AlDAICTrcjikZjzU1+7UWBzWpmwW0uR2slsZY=;
+        b=dexRKewIHVINTQKN61MEj2TMjUVw7o+e88y7Q4TwEfwCLRbBdrzP3myp+EIC/oN6qK
+         iLRfb2rIfJ8OS/gCv55ilIEpLDC9Zk9yp8Zck1hMSKpRBoD2uOgfz2D1XpKUrKN194Zk
+         nzBY53qAP3FbU/gK3PI89E9Wjyu7/Hrb/GtxHMcJubXs5nVHsQtXPBiUZ1QRSt7lYVP2
+         HRnFlXvg6xCJsYqCFJDHjifxdG+4FwbYXL3XNfQiiEEy31Ltt1Gx/6g8YEqlliQtxCqk
+         8p0DsbnFDtbHQhyp1UNU9b2zWRLX8+Aval8fLp6Q1hLGxkWaiHlNDOerWYlLr2wDGcF4
+         URbw==
+X-Gm-Message-State: AIVw113nVs9+lxXrCL1qdqwR6GK3lHEHcrcEukl8bbGHnlTKmypFw/WZ
+        2zcxpVN5WKxUSTzOxdPnpr90XRs+JaJ7
+X-Received: by 10.84.232.74 with SMTP id f10mr3834680pln.154.1500413979607;
+ Tue, 18 Jul 2017 14:39:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 72C7FCB8-6C01-11E7-9C54-61520C78B957-77302942!pb-smtp2.pobox.com
+Received: by 10.100.167.81 with HTTP; Tue, 18 Jul 2017 14:39:39 -0700 (PDT)
+In-Reply-To: <20170718204904.3768-5-pc44800@gmail.com>
+References: <20170718204904.3768-1-pc44800@gmail.com> <20170718204904.3768-5-pc44800@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 18 Jul 2017 14:39:39 -0700
+Message-ID: <CAGZ79kb48kNggPv64ubbBNK-Sk8AW4eXxhZt=PZZCPKr9OiuLQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 4/8] submodule: port submodule subcommand 'status'
+ from shell to C
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Santiago Torres <santiago@nyu.edu> writes:
-
-> ... It seems Debian oldstable and other variants still ship gpg1,
-> which doesn't have it. Would it make sense to have a fallthrough branch
-> on the switch statement for gpg2.1 instead? something like the attached patch.
-
-If the problem of leftover agent is limited to a narrow versions of
-GPG2, alternatively we could unconditionally attempt to use gpgconf
-and ignore the failure ;-), but as long as we know all problematic
-ones identify themselves as "gpg (GnuPG) 2.1*", then your patch
-(with s/;&/;;/ of course ;-)) sounds very sensible.
-
-> Thanks,
-
-Thank *you* for working on this.
-
-> From 07ab87c1ddb31197a3a5c124ad5a2462a460d4e3 Mon Sep 17 00:00:00 2001
-> From: Santiago Torres <santiago@nyu.edu>
-> Date: Tue, 18 Jul 2017 13:16:11 -0400
-> Subject: [RFC/PATCH] t: lib-gpg: flush gpg agent on startup
-
-Perhaps it is about time we lost RFC/ mark from here.
-
+On Tue, Jul 18, 2017 at 1:49 PM, Prathamesh Chavan <pc44800@gmail.com> wrote:
+> This aims to make git-submodule 'status' a built-in. Hence, the function
+> cmd_status() is ported from shell to C. This is done by introducing
+> three functions: module_status(), submodule_status() and print_status().
 >
-> When running gpg-relevant tests, a gpg-daemon is spawned for each
-> GNUPGHOME used. This daemon may stay running after the test and cache
-> file descriptors for the trash directories, even after the trash
-> directory is removed. This leads to ENOENT errors when attempting to
-> create files if tests are run multiple times.
+> The function module_status() acts as the front-end of the subcommand.
+> It parses subcommand's options and then calls the function
+> module_list_compute() for computing the list of submodules. Then
+> this functions calls for_each_submodule_list() looping through the
+> list obtained.
 >
-> Add a cleanup script to force flushing the gpg-agent for that GNUPGHOME
-> (if any) before setting up the GPG relevant-environment.
+> Then for_each_submodule_list() calls submodule_status() for each of the
+> submodule in its list. The function submodule_status() is responsible
+> for generating the status each submodule it is called for, and
+> then calls print_status().
 >
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Santiago Torres <santiago@nyu.edu>
+> Finally, the function print_status() handles the printing of submodule's
+> status.
+>
+> Mentored-by: Christian Couder <christian.couder@gmail.com>
+> Mentored-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
 > ---
->  t/lib-gpg.sh | 2 ++
->  1 file changed, 2 insertions(+)
+>  builtin/submodule--helper.c | 146 ++++++++++++++++++++++++++++++++++++++++++++
+>  git-submodule.sh            |  49 +--------------
+>  2 files changed, 147 insertions(+), 48 deletions(-)
 >
-> diff --git a/t/lib-gpg.sh b/t/lib-gpg.sh
-> index ec2aa8f68..ffb20a438 100755
-> --- a/t/lib-gpg.sh
-> +++ b/t/lib-gpg.sh
-> @@ -10,6 +10,8 @@ then
->  	'gpg (GnuPG) 1.0.6'*)
->  		say "Your version of gpg (1.0.6) is too buggy for testing"
->  		;;
-> +	'gpg (GnuPG) 2.1'*)
-> +		GNUPGHOME="$(pwd)/gpghome" gpgconf --kill all ;&
->  	*)
->  		# Available key info:
->  		# * Type DSA and Elgamal, size 2048 bits, no expiration date,
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 80f744407..9c1630495 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -560,6 +560,151 @@ static int module_init(int argc, const char **argv, const char *prefix)
+>         return 0;
+>  }
+>
+> +struct status_cb {
+> +       const char *prefix;
+> +       unsigned int quiet: 1;
+> +       unsigned int recursive: 1;
+> +       unsigned int cached: 1;
+> +};
+> +#define STATUS_CB_INIT { NULL, 0, 0, 0 }
+> +
+> +static void print_status(struct status_cb *info, char state, const char *path,
+> +                        char *sub_sha1, char *displaypath)
+> +{
+> +       if (info->quiet)
+> +               return;
+> +
+> +       printf("%c%s %s", state, sub_sha1, displaypath);
+> +
+> +       if (state == ' ' || state == '+') {
+> +               struct argv_array name_rev_args = ARGV_ARRAY_INIT;
+> +
+> +               argv_array_pushl(&name_rev_args, "print-name-rev",
+> +                                path, sub_sha1, NULL);
+> +               print_name_rev(name_rev_args.argc, name_rev_args.argv,
+> +                              info->prefix);
+> +       } else {
+> +               printf("\n");
+> +       }
+> +}
+> +
+> +static int handle_submodule_head_ref(const char *refname,
+> +                                    const struct object_id *oid, int flags,
+> +                                    void *cb_data)
+> +{
+> +       struct strbuf *output = cb_data;
+> +       if (oid)
+> +               strbuf_addstr(output, oid_to_hex(oid));
+> +       return 0;
+> +}
+> +
+> +static void status_submodule(const struct cache_entry *list_item, void *cb_data)
+> +{
+> +       struct status_cb *info = cb_data;
+> +       char *sub_sha1 = xstrdup(oid_to_hex(&list_item->oid));
+> +       char *displaypath;
+> +       struct stat st;
+> +
+> +       if (!submodule_from_path(null_sha1, list_item->name))
+> +               die(_("no submodule mapping found in .gitmodules for path '%s'"),
+> +                     list_item->name);
+> +
+> +       displaypath = get_submodule_displaypath(list_item->name, info->prefix);
+> +
+> +       if (list_item->ce_flags) {
+> +               print_status(info, 'U', list_item->name,
+> +                            sha1_to_hex(null_sha1), displaypath);
+> +               goto cleanup;
+> +       }
+> +
+> +       if (!is_submodule_active(the_repository, list_item->name)) {
+> +               print_status(info, '-', list_item->name, sub_sha1, displaypath);
+> +               goto cleanup;
+> +       }
+> +
+> +       if (!lstat(list_item->name, &st) && !ce_match_stat(list_item, &st, 0)) {
+> +               print_status(info, ' ', list_item->name, sub_sha1, displaypath);
+
+The question from the last round still stands
+https://public-inbox.org/git/CAGZ79kb18z5zc9iu3Vv5aVZWJmoZzmwbMVpy89VC-t-ei2M+bw@mail.gmail.com/
+
+  I am not an expert in the diff area  and wonder how
+  the cmd_diff_files functionality is achieved with just a stat call
+  and then comparing it to  ce_match_stat. 'Using "dirty" ignores
+  all changes to the work tree of submodules, only changes to the
+  commits stored in the superproject are shown.' So I'd have
+  expected ce->oid to be compared (is there an index entry differing,
+  i.e. more than one stage?)
