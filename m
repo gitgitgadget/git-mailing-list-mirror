@@ -2,78 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E25820356
-	for <e@80x24.org>; Tue, 18 Jul 2017 19:22:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF79D1FF30
+	for <e@80x24.org>; Tue, 18 Jul 2017 19:36:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751839AbdGRTWi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 15:22:38 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34424 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751402AbdGRTWg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 15:22:36 -0400
-Received: by mail-pg0-f51.google.com with SMTP id 123so17801925pgj.1
-        for <git@vger.kernel.org>; Tue, 18 Jul 2017 12:22:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=kSQ6oKt9kBhhJwIFS0HpShsRI19g3dKR3w6aUrF5QVE=;
-        b=imMj26kYXpa/bSbZx3ezrY2oe8UMHi3f1zq6sksKt3E2xnBvbJSgElq460wuISkKaW
-         p4QHrfYUBgxcSX1nZQgng/0U0bv8rXS7rRPMO7uD0D0XV2W19WkkwgdDB8OQYn283Sl/
-         PGG89l45r8a373eMZGjYOMQc/mW92mucIh084GsBCkALuimHQw0FLibfxZR0dVtJiheG
-         F2VElaJlmRHF1NyFUQdyMG2rbygRRBIMED7hVi/1SURzGta+k5fDzMtPxobHFT/tWXuR
-         0rvd65B61LeS9li2sf5F/aT26vDxnQln7Eqi+INvnnGBZJixKm/TBRIl52TnpGQxzNQc
-         Uyhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=kSQ6oKt9kBhhJwIFS0HpShsRI19g3dKR3w6aUrF5QVE=;
-        b=oPPLNwNzNd/vi+EhoEAUYVx/tJi1RZpeSGHcJXtluH6v+eJxB0zOSUl0IzBA6rb9Ag
-         nyEEixwgGtc1iNaev0oWpD5APThcj+8VSkeTt/jlXq1DYViLBnWJWsMioXrJbtiZZMFV
-         8ffGVd/3/Jfdr2BaYPKA4+Fmv3CDwNcS5cBHv1eb2wMaH4Eb3IhR8EDZPKnidp7HIhza
-         BdQITOUN13j49SB5Ngrly8my/SXs627wnVepCju+fvW1VzfqxBPHbY9t74kBSsjk8JFw
-         s6bQ9cMbEgOGzOzg2YwcJYEjDRlky2Iz5GIzjHuIE8jJfqxhvcD8j12vDT//+g28mEKv
-         CIfQ==
-X-Gm-Message-State: AIVw1131Dk2dYlxck6AKFD6Jm99cAbVuD42zsY44qr5ol23r/mS68zdn
-        HMrjrAn950obW/UAXLJFMFXcmLXnsr4pZsc=
-X-Received: by 10.99.149.79 with SMTP id t15mr3233341pgn.247.1500405755746;
- Tue, 18 Jul 2017 12:22:35 -0700 (PDT)
+        id S1751510AbdGRTgS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 15:36:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53710 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751413AbdGRTgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 15:36:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2FAE07D503;
+        Tue, 18 Jul 2017 15:36:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xmEzPB2FeaymH6RxfIR4yVJocbg=; b=PmEUAa
+        ZynY7zdv+5ZY2hRcf5wKndLEh2wEsHMPEI2ggvzmRa/m0/kQRs4fTTHOzEqklO6I
+        jTJJ9pwSJmn7+cQgC99o15MrNJ9ASfKIGp86UnjfFWAuwgNEWBfl6jakncPMpwdg
+        WmNsyKzMpCsC5d9VTXt2XTj4VqFJSb35IaYQQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bhnrl/Kltga0XnjVdq1fGSck3WHxFD4Y
+        2GZ0GG8V0460zx7kdjWi0cA7h3aulgtSDDmHF+KXuPSSGwaJGisnvVq7vydVKjrb
+        NzD5OCPKycE0zZ2x9g0I73eqWElQW7N/NsOqtlYq6lmYM4HHshY56yui8aRVxnpZ
+        VU2H8AVfric=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2106D7D502;
+        Tue, 18 Jul 2017 15:36:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1FEAF7D500;
+        Tue, 18 Jul 2017 15:36:16 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com
+Subject: Re: [PATCH v3 00/10] Convert grep to recurse in-process
+References: <20170714222826.81148-1-bmwill@google.com>
+        <20170718190527.78049-1-bmwill@google.com>
+Date:   Tue, 18 Jul 2017 12:36:14 -0700
+In-Reply-To: <20170718190527.78049-1-bmwill@google.com> (Brandon Williams's
+        message of "Tue, 18 Jul 2017 12:05:17 -0700")
+Message-ID: <xmqqo9sho7v5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.167.81 with HTTP; Tue, 18 Jul 2017 12:22:35 -0700 (PDT)
-In-Reply-To: <xmqqwp75o8qi.fsf@gitster.mtv.corp.google.com>
-References: <20170718002020.14309-1-sbeller@google.com> <xmqqwp75o8qi.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 18 Jul 2017 12:22:35 -0700
-Message-ID: <CAGZ79kbTQ=eSoDCRFTt_B3kjDbWZDkcPwc3fMvhd8dEKPWr-8A@mail.gmail.com>
-Subject: Re: [PATCH] t8008: rely on rev-parse'd HEAD instead of sha1 value
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5D67CED6-6BF0-11E7-AA5B-61520C78B957-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 18, 2017 at 12:17 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
->
->> Remove hard coded sha1 values, obtain the values using 'git rev-parse HEAD'
->> which should be future proof regardless of the hash function used.
->
-> Don't hardcoded lengths of the hashes defeat this future-proofing
-> effort, though?  It shouldn't be too hard to do the equivalent of
-> the auto computation of abbreviation in this script, which would be
-> true future-proofing, I guess.
+Brandon Williams <bmwill@google.com> writes:
 
-It depends on the definition of future proofing.
-My definition here only included the change of the hash function,
-not the change of display length in git-blame for a small artificial repo
-with 2 commits . These seem to be unrelated, so in case we'd change
-the length of the abbreviated displayed hash, we'd still want to have
-a test to tell us?
+> Changes in v3:
+>  * Fixes a bug with repo_read_gitmodules() where it was possible to
+>    segfault when a repository didn't have a worktree.  
+>  * In order to fix the above bug repo_read_gitmodules() and gitmodules_config()
+>    were merged so that there won't be any duplicate logic.  In order to merge
+>    these functions the parsing of submodule.fetchjobs and
+>    fetch.recursesubmodules were removed from the submodule-config parsing logic
+>    and instead moved into fetch and update-clone.  This also makes it easier to
+>    ensure that no additonal non-submodule specific configuration like this will
+>    be added to .gitmodules in the future.
+
+Sounds good.  
+
+Has this been rebased and if so on top of what?  It seems that I am
+getting "am -3" conflicts at around 05/10---I think I can cope with,
+but it is one unnecessary source of potential bugs, so...
+
+> Brandon Williams (10):
+>   repo_read_index: don't discard the index
+>   repository: have the_repository use the_index
+>   cache.h: add GITMODULES_FILE macro
+>   config: add config_from_gitmodules
+>   submodule: remove submodule.fetchjobs from submodule-config parsing
+>   submodule: remove fetch.recursesubmodules from submodule-config
+>     parsing
+>   submodule: check for unstaged .gitmodules outside of config parsing
+>   submodule: check for unmerged .gitmodules outside of config parsing
+>   submodule: merge repo_read_gitmodules and gitmodules_config
+>   grep: recurse in-process using 'struct repository'
+>
+>  Documentation/git-grep.txt  |   7 -
+>  builtin/fetch.c             |  26 ++-
+>  builtin/grep.c              | 396 ++++++++++----------------------------------
+>  builtin/mv.c                |   2 +-
+>  builtin/rm.c                |   2 +-
+>  builtin/submodule--helper.c |  17 +-
+>  cache.h                     |   2 +-
+>  config.c                    |  17 ++
+>  config.h                    |  10 ++
+>  git.c                       |   2 +-
+>  grep.c                      |  13 --
+>  grep.h                      |   1 -
+>  repository.c                |   6 +-
+>  repository.h                |   8 +
+>  setup.c                     |  12 +-
+>  submodule-config.c          |   8 +
+>  submodule-config.h          |   1 +
+>  submodule.c                 | 147 +++++++---------
+>  submodule.h                 |   6 +-
+>  19 files changed, 240 insertions(+), 443 deletions(-)
