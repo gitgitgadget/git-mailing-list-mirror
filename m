@@ -2,124 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D04620356
-	for <e@80x24.org>; Tue, 18 Jul 2017 17:28:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C13D720356
+	for <e@80x24.org>; Tue, 18 Jul 2017 17:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751718AbdGRR2j (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Jul 2017 13:28:39 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:33289 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751671AbdGRR2h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Jul 2017 13:28:37 -0400
-Received: by mail-io0-f172.google.com with SMTP id 5so16940568iow.0
-        for <git@vger.kernel.org>; Tue, 18 Jul 2017 10:28:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=+oCSSX80Ft9q8run9c0rGB44/6+i+6Q1lG3/HC3LBPU=;
-        b=S2MlR7LoyqXfwhFg10vGn9ZSC/IJQ4mm7zZmsieAhEbRFJ9cEr7hQaDZAfPRUtRu8l
-         vzBkplAJQ53OSRahdn5R99GDnRVjmTMFs3lwAf7GhmZeBNCtA651kEZSfYFVRIaCUXH5
-         jQT2fZtBaDiFneryi5Wnfi0GQZf1ON9OiSnKhAzLw0TVTasH2eMym7BjoQUl6Dybfrhi
-         Nfe6xS4D5ao0JdIZOuNLw+uP+f7KPBYIzSWCusfXFjEqq1//OOJHiycUR5NIaGJQQ9+6
-         tZp/jjqxWG8DTbFVyqOBfPjm5NTpmBjsvBkyM/Y9d+yILYUvu9GIzvXmeLU8E8kB9Bke
-         ljgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=+oCSSX80Ft9q8run9c0rGB44/6+i+6Q1lG3/HC3LBPU=;
-        b=bRBrIfg9eZyuggLJtCgPkt6Np2pTZ61uYjhgcc8zsuWvzgJOkDITty2g6AL4V38Wr+
-         5Hq8hZilAezbD8NPDcXFyppcA4zqbKt/932eZaKgA2WI4QOM9p6mMDB8uiN02gD794dr
-         FPxf8o3Jiw1Y1oha+NKeuTcoPbe2nphX6HuVFkbup+RuK60IYb26U+/xWcK5rmxwh5ZT
-         PTLPNgI11L/4RgwAjLQ3PjyRK+WGqA5xMFXL1gh1JRqMxyGzTdG1LtaFCckjObbNgwnO
-         8+lDt+CdVIuifgsPpWonVeg+pYab6hX9S9Dq8144Va0iaHfsgslUKNppQ4KY/mKKFCWp
-         YY6Q==
-X-Gm-Message-State: AIVw112X3nSQHYYhtQZdN9+k3uBEP6/bYqB29kvdVfFEfpCG8lEpXUPa
-        er6vKLTiJNuo3rg8bSR3nJSGBafalBfT
-X-Received: by 10.107.12.166 with SMTP id 38mr2583840iom.151.1500398916844;
- Tue, 18 Jul 2017 10:28:36 -0700 (PDT)
+        id S1751408AbdGRRlA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Jul 2017 13:41:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58247 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751379AbdGRRk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Jul 2017 13:40:59 -0400
+X-Greylist: delayed 342 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Jul 2017 13:40:59 EDT
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A512748B2;
+        Tue, 18 Jul 2017 13:35:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8HLZzlng9ZNptauSViYeSPqvbak=; b=Cdj51i
+        XMCCDhbmjo1Tl2wftBbH7r/6uuMx3iV4Wn29JQap62QYc31GM37VWQTS9PFCJkV4
+        Q+FmhNqMzfQCT2gBoWZzDNYMTR1tpA1e98ghvr1CpA7v0EZ7tLGh6+j2Nu0v/LVX
+        obdElODMAhWoP+tb/cHLFLSmMwwRLFxdUxr7k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Q9u/IbXFrw11S5ztbCTMydeDoYhcQSiW
+        usQsAPBdiLEYbdC0LNH5k7rwN/8eFpb8n3oniSd5ilmJX+ZS8m0imKy34utNBzh5
+        T5hVVsByQvCzi1keAeoCtP8GsVSoQHf7x3LMSUGLrs1cqQ2krq4k0BHqtwTuJFw3
+        YlePdCjJFGE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 43309748B1;
+        Tue, 18 Jul 2017 13:35:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A8F97748B0;
+        Tue, 18 Jul 2017 13:35:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] PRItime: wrap PRItime for better l10n compatibility
+References: <249ac6f8-af3c-4b20-5bf0-87a82866cc7a@free.fr>
+        <3ccfa2fb49d471f807d77d9a280e4b7cfe56faea.1500304209.git.worldhello.net@gmail.com>
+        <xmqq7ez7htvj.fsf@gitster.mtv.corp.google.com>
+        <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
+Date:   Tue, 18 Jul 2017 10:35:12 -0700
+In-Reply-To: <CANYiYbEcMrriaor9OT4c2qtfh9Ja5NJ9KBSxa3XhPAuoN0t42A@mail.gmail.com>
+        (Jiang Xin's message of "Tue, 18 Jul 2017 09:33:43 +0800")
+Message-ID: <xmqq60epfy27.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.79.29.78 with HTTP; Tue, 18 Jul 2017 10:28:36 -0700 (PDT)
-From:   Gilbert Catipon <gcatipon@gmail.com>
-Date:   Tue, 18 Jul 2017 10:28:36 -0700
-Message-ID: <CABdvCd2ntSJT_9G2NnTHLeLA8zRStyECPaMSfifW_5JYzye4Qw@mail.gmail.com>
-Subject: git command unrecognized argument issue?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 74A65BC8-6BDF-11E7-9E7A-EFB41968708C-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-I noticed a surprise inconsistency when using the git command. Using
-git version 2.7.4 and trying most of the commands listed by git =E2=80=93he=
-lp
-usually output error: and usage text when passing an invalid argument.
+>> Two potential issues are:
+>>
+>>  - After this patch, there still are quite a many
+>>
+>>         printf("time is %"PRItime" ...\n", timestamp)
+>>
+>>    so the burden on the programmers having to remember when it is
+>>    required to use format_raw_time() becomes unclear, and makes the
+>>    change/churn larger when an existing message needs to be marked
+>>    for translation.
+>>
+>>  - The static struct strbuf here is a cheap way to avoid leaks, but
+>>    at the same time it is unfriendly to threaded code.  We could
+>>    instead do:
+>>
+>>         void append_PRItime(struct strbuf *buf, timestamp_t time);
+>>
+>>    to fix that trivially, but the damage to the caller obviously is
+>>    much larger going this way.
+>>
+>
+> I wonder if we can replace the original %lu for timestamp with PRIuMAX
+> instead.  PRIuMAX works fine with gettext utils.
 
-The exception was the commands log and show. Looks like a cosmetic
-issue but I didn=E2=80=99t know if this is a dup issue/already in issue
-tracker.
-
-Thanks,
-Gilbert Catipon
-
-
-So to reproduce the issue:
-
-gilbert@tea:~/dev/profile$ git log --foobar
-fatal: unrecognized argument: --foobar
-
-=E2=80=A2 Using a for loop to check a list of commands returns 2 fatal comm=
-ands:
-
-gilbert@tea:~/dev/profile$ for k in bisect grep log show status; do
-echo $k; git $k --foobarf; done
-
-log
-fatal: unrecognized argument: --foobarf
-show
-fatal: unrecognized argument: --foobarf
-status
-error: unknown option `foobarf'
-usage: git status [<options>] [--] <pathspec>...
-
-=E2=80=A2 All these commands gave expected error
-for k in branch checkout commit diff merge rebase tag; do echo $k ;
-git $k --asdfasd; done
-
-=E2=80=A2 On ubuntu
-gilbert@tea:~/dev/profile$ uname -a
-Linux tea 4.4.0-83-generic #106-Ubuntu SMP Mon Jun 26 17:54:43 UTC
-2017 x86_64 x86_64 x86_64 GNU/Linux
-
-=E2=80=A2 Setting GIT_TRACE=3D/tmp/git_trace.log
-
-gilbert@tea:~/dev/profile$ cat /tmp/git_trace.log
-09:59:47.703082 git.c:561               trace: exec: 'git-bisect' '--foobar=
-f'
-09:59:47.703164 run-command.c:334       trace: run_command:
-'git-bisect' '--foobarf'
-09:59:47.710513 git.c:344               trace: built-in: git
-'rev-parse' '--git-dir'
-09:59:47.712607 git.c:344               trace: built-in: git
-'rev-parse' '--show-cdup'
-09:59:47.714954 git.c:344               trace: built-in: git
-'rev-parse' '--git-path' 'objects'
-09:59:47.720353 git.c:344               trace: built-in: git 'grep' '--foob=
-arf'
-09:59:47.723324 git.c:344               trace: built-in: git 'log' '--fooba=
-rf'
-09:59:47.726310 git.c:344               trace: built-in: git 'show' '--foob=
-arf'
-09:59:47.729065 git.c:344               trace: built-in: git 'status'
-'--foobarf'
-gilbert@tea:~/dev/profile$
+I think the question can better be answered if we know how gettext
+tools special case PRIuMAX.  One thing that may be problematic is
+that timestamp can later become a signed type and use of one level
+of redirection in the current code via PRItime and via timestamp_t
+is a good way to keep such a transition much easier.  Reverting it
+to use PRIuMAX would make such a transition much harder.
